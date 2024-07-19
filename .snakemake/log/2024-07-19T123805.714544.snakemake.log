@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+all          1
+total        1
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Jul 19 12:38:05 2024]
+localrule all:
+    input: first.py
+    jobid: 0
+    reason: Rules with a run or shell declaration but no output are always executed.
+    resources: tmpdir=C:\Users\User\AppData\Local\Temp
+
+[Fri Jul 19 12:38:05 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake\log\2024-07-19T123805.714544.snakemake.log
