@@ -1,54 +1,97 @@
-# Lecture plan and breakdown 
+# Lecture plan and breakdown
 
-- Lecture 1: Orientation / Course Overview
+## 2024–2025 STUDIJŲ METŲ RUDENS SEMESTRAS
 
-- Lecture 2: Intro to CERN and knowledge transfer
+| **First Week**                 | **Second Week**         |
+| ------------------------------ | ----------------------- |
+| ~~rugsėjo 2–8 d.~~ (CERN)      | rugsėjo 10 d.           |
+| ~~rugsėjo 16–22 d.~~ (CERN)    | rugsėjo 24 d.           |
+| spalio 1 d.                    | spalio 8 d.             |
+| spalio 15 d.                   | ~~spalio 22 d.~~ (CHEP) |
+| spalio 29                      | lapkričio 5 d.          |
+| lapkričio 12 d.                | lapkričio 19 d.         |
+| lapkričio 26 d.                | gruodžio 3 d.           |
+| gruodžio 10 d.                 | gruodžio 17.            |
+| ~~gruodžio 24 d.~~ (Christmas) | –                       |
 
-- Lecture 3: Overview of Computing Principles 
+---
 
-    - Infrastructure and components
-    - Main working principles
+- ### Lecture 1: Orientation / Course Overview
 
-- Lecture 4: Overview of Computing Architectures and Tools 
+---
 
-    - Different OS's 
-    - Different Programming Languages
-    - IDEs 
+- ### Lecture 2: Intro to CERN and Knowledge Transfer
 
-- Lecture 5: Overview of Tools and Environments
+---
 
-- Lecture 6: Intro to Python
+- ### Lecture 3: Overview of Computing Principles
 
-    - Good Coding practices
+  - Infrastructure and components
+  - Main working principles
 
-- Lecture 7: Best practices in Coding
+---
 
-    - Readability
-    - Version Control
-    - Modularity 
+- ### Lecture 4: Overview of Computing Architectures and Tools
 
-- Lecture 8: Best practices in Data Analysis
+  - Different OS's
+  - Different Programming Languages
+  - IDEs (VS Code)
 
-    - Universality
-    - Modularity
-    - Reproducibility
-    
-- Lecture 9: Effective Problem Solving Techniques: 
+---
 
-    - Workflow oriented logic
-    - Extensibility
+- ### Lecture 5: Overview of Tools and Environments
 
-- Lecture 10: Basic statistical analysis with Python
+    - Multi-line edditting (VS Code)
 
-    - Basics of Statistics
-    - Examples in Python
+---
 
-- Lecture 11: Analysis Preservation and Reproducibility
+- ### Lecture 6: Intro to Python
 
-- Project Preparation 
+  - Good Coding practices
 
-    - Examples / Demos
+---
 
-- Project Preparation
+- ### Lecture 7: Best practices in Coding
 
-    - Examples / Demos
+  - Readability
+  - Version Control
+  - Modularity
+
+---
+
+- ### Lecture 8: Best practices in Data Analysis
+
+  - Universality
+  - Modularity
+  - Reproducibility
+
+---
+
+- ### Lecture 9: Effective Problem Solving Techniques:
+
+  - Workflow oriented logic
+  - Extensibility
+  - LaTeX 
+  
+---
+
+- ### Lecture 10: Basic statistical analysis with Python
+
+  - Basics of Statistics
+  - Examples in Python
+
+---
+
+- ### Lecture 11: Analysis Preservation and Reproducibility
+
+---
+
+- ### Project Preparation
+
+  - Examples / Demos
+
+---
+
+- ### Project Preparation
+
+  - Examples / Demos
