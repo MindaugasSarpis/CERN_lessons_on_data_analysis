@@ -1,0 +1,6 @@
+# File Types
+*.log
+
+
+# Directories
+.snakemake
