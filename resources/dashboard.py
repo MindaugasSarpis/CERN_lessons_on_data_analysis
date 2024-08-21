@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 # Sample data
-df = pd.DataFrame({
+df = pDataFrame({
     'Category': ['A', 'B', 'C', 'D'],
     'Values': [450, 250, 100, 200]
 })
@@ -74,8 +74,8 @@ app.layout = html.Div(style={'backgroundColor': '#2c2c2c', 'padding': '20px', 'f
 @app.callback(Output('live-update-graph', 'figure'),
               Input('interval-component', 'n_intervals'))
 def update_graph_live(n):
-    line_data = pd.DataFrame({
-        'Time': pd.date_range(start='1/1/2020', periods=n+10),
+    line_data = pDataFrame({
+        'Time': pdate_range(start='1/1/2020', periods=n+10),
         'Value': np.random.randint(1, 20, size=n+10)
     })
     
