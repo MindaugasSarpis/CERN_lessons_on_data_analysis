@@ -63,31 +63,7 @@ marp: true
 | December 10th                 | December 17th           |
 | ~~December 24th~~ (Christmas) |                         |
 
----
-
-
-# Course Overview*
-
-- ### Lecture 1: Orientation / Course Overview / Intro to CERN 
-- ### Lecture 2: Intro to data analysis workflow
-- python 
-- ### Lecture 3: Overview of Computing Principles and Hardware  
-- ### Lecture 4: Different OS / CLI vs GUI / Bash 
-- ### Lecture 5: IDEs / GitHub Clasroom
-- ### Lecture 6: Python
-
-\*not fixed
 
 ---
 
-- ### Lecture 7: Best practices in Coding
-- ### Lecture 8: Best practices in Data Analysis
-- ### Lecture 9: Effective Problem Solving Techniques
-- ### Lecture 10: Basic statistical Analysis with Python
-- ### Lecture 11: Analysis Preservation and Reproducibility
-- ### Project Preparation
-- ### Project Preparation
-
----
-
-# Overview of usefull tools and resources
+# Intro to CERN 

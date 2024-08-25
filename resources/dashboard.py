@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 # Sample data
-df = pDataFrame({
+df = pd.DataFrame({
     'Category': ['A', 'B', 'C', 'D'],
     'Values': [450, 250, 100, 200]
 })
@@ -64,8 +64,16 @@ app.layout = html.Div(style={'backgroundColor': '#2c2c2c', 'padding': '20px', 'f
         html.H3('Items List', style={'textAlign': 'center', 'color': '#00e6e6'}),
         html.Ul(style={'listStyleType': 'none', 'padding': '0', 'textAlign': 'center'}, children=[
             html.Li('Item 1', style={'padding': '10px', 'backgroundColor': '#1f77b4', 'margin': '5px', 'color': '#ffffff'}),
-            html.Li('Item 2', style={'padding': '10px', 'backgroundColor': '#ff7f0e', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 1', style={'padding': '10px', 'backgroundColor': '#1f77b4', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 1', style={'padding': '10px', 'backgroundColor': '#1f77b4', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 1', style={'padding': '10px', 'backgroundColor': '#1f77b4', 'margin': '5px', 'color': '#ffffff'}),
             html.Li('Item 3', style={'padding': '10px', 'backgroundColor': '#2ca02c', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 2', style={'padding': '10px', 'backgroundColor': '#ff7f0e', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 2', style={'padding': '10px', 'backgroundColor': '#ff7f0e', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 2', style={'padding': '10px', 'backgroundColor': '#ff7f0e', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 2', style={'padding': '10px', 'backgroundColor': '#ff7f0e', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 2', style={'padding': '10px', 'backgroundColor': '#ff7f0e', 'margin': '5px', 'color': '#ffffff'}),
+            html.Li('Item 2', style={'padding': '10px', 'backgroundColor': '#ff7f0e', 'margin': '5px', 'color': '#ffffff'}),
             html.Li('Item 4', style={'padding': '10px', 'backgroundColor': '#d62728', 'margin': '5px', 'color': '#ffffff'})
         ])
     ])
@@ -74,8 +82,8 @@ app.layout = html.Div(style={'backgroundColor': '#2c2c2c', 'padding': '20px', 'f
 @app.callback(Output('live-update-graph', 'figure'),
               Input('interval-component', 'n_intervals'))
 def update_graph_live(n):
-    line_data = pDataFrame({
-        'Time': pdate_range(start='1/1/2020', periods=n+10),
+    line_data = pd.DataFrame({
+        'Time': pd.date_range(start='1/1/2020', periods=n+10),
         'Value': np.random.randint(1, 20, size=n+10)
     })
     
