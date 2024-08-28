@@ -1,5 +1,6 @@
 ---
 marp: true
+
 ---
 
 # Dr. Mindaugas Šarpis
@@ -76,3 +77,7 @@ Tools](./resources/lecture_2/image_slides_lecture_2/slide1.png)
 - ### Lecture 13: Quiz 
 - ### Project Preparation
 - ### Project Preparation
+
+---
+
+# Homework

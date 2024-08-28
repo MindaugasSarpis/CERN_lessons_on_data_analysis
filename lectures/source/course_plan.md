@@ -4,15 +4,15 @@
 
 | **First Week**                 | **Second Week**         |
 | ------------------------------ | ----------------------- |
-| ~~rugsėjo 2–8 ~~ (CERN)      | rugsėjo 10            |
-| ~~rugsėjo 16–22 ~~ (CERN)    | rugsėjo 24            |
+| ~~rugsėjo 2–8~~ (CERN)      | rugsėjo 10            |
+| ~~rugsėjo 16–22~~ (CERN)    | rugsėjo 24            |
 | October 1                     | October 8              |
-| October 15                    | ~~October 22 ~~ (CHEP) |
+| October 15                    | ~~October 22~~ (CHEP) |
 | October 29                      | November 5           |
 | November 12                 | November 19          |
 | November 26                 | December 3            |
 | December 10                  | December 17.            |
-| ~~December 24 ~~ (Christmas) | –                       |
+| ~~December 24~~ (Christmas) | –                       |
 
 ---
 
@@ -270,3 +270,4 @@ Parsing HTML and Saving Data
 Python Introduction
 Python Functions and Collections
 Python Iteration and Modules
+
