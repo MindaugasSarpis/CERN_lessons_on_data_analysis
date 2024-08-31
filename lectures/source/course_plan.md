@@ -4,8 +4,8 @@
 
 | **First Week**                 | **Second Week**         |
 | ------------------------------ | ----------------------- |
-| ~~rugsėjo 2–8~~ (CERN)      | rugsėjo 10            |
-| ~~rugsėjo 16–22~~ (CERN)    | rugsėjo 24            |
+| ~~September 2–8~~ (CERN)      | September 10            |
+| ~~September 16–22~~ (CERN)    | September 24            |
 | October 1                     | October 8              |
 | October 15                    | ~~October 22~~ (CHEP) |
 | October 29                      | November 5           |
@@ -17,6 +17,14 @@
 ---
 
 - ### Lecture 1: Orientation / Course Overview Intro to CERN 
+
+  - Introduction to CERN, history and motivation 
+  - Explain how knowledge transfer is done at CERN 
+  - Why we can benefit a lot from fundamental science
+
+  \* md slides from orientation
+
+  \** Resources from invited seminars (pptx, videos) 
 
 ---
 
@@ -237,9 +245,6 @@ Things to talk about:
 - Data Visualization
 - Data Preservation
 
-
-
-
 How to use Jupyter Notebooks Intro
 Jupyter Notebooks Cells
 Jupyter Notebooks Importing and Exporting Data
@@ -271,3 +276,29 @@ Python Introduction
 Python Functions and Collections
 Python Iteration and Modules
 
+
+---
+
+# Course Overview*
+
+- ### Lecture 1: Orientation / Course Overview / Intro to CERN 
+- ### Lecture 2: Intro to Data Analysis
+- ### Lecture 3: Overview of Computing Principles and Hardware  
+- ### Lecture 4: Different OS / CLI vs GUI / Bash 
+- ### Lecture 5: Python w Jupyter Notebooks
+- ### Lecture 6: IDEs / GitHub Clasroom
+- ### Lecture 7: Quiz 
+\*not fixed
+
+---
+
+- ### Lecture 8: Best practices in Coding
+- ### Lecture 9: Best practices in Data Analysis
+- ### Lecture 10: Effective Problem Solving Techniques
+- ### Lecture 11: Basic statistical Analysis with Python
+- ### Lecture 12: Analysis Preservation and Reproducibility
+- ### Lecture 13: Quiz 
+- ### Project Preparation
+- ### Project Preparation
+
+---

@@ -18,16 +18,130 @@ marp: true
 ---
 
 
-# Data analysis is a process of **inspecting, cleaning, transforming, and modeling data** with the goal of **discovering useful information, informing conclusions,e and supporting decision-making**.
+# Data analysis is a process of **inspecting, cleaning, transforming, and modeling data** with the goal of **discovering useful information, informing conclusions, and supporting decision-making**.
 
 ## Wikipedia
+
 ---
 
 # Key Ideas 
 
-- ## Any **experiment** (study or analysis) in any field of science **should have** a **data analysis** component
-- ## This is stage of **interpretation of the results** of the experiment. 
+- ## Any **experiment** (study or analysis) in any field of science **will have** a **data analysis** component
+- ## This is the stage of **interpretation of the results** of the experiment. 
 - ## Normally, the **results of data analysis** appear in scientific publications.
+
+--- 
+
+# Examples of significance of data analysis in different fields of science and beyond 
+
+---
+
+# Biomedicine and Genomics
+
+ - ## Genome Sequencing
+ - ## Clinical Trials
+
+---
+
+ # Environmental Sciences
+
+- ## Climate Change Models
+- ## Pollution Monitoring
+- ## Biodiversity Studies
+
+---
+
+ # Social Sciences
+
+- ## Economic Forecasting
+- ## Social Behavior Studies
+
+---
+
+# Astronomy 
+
+- ## Observational Data Analysis
+- ## Gravitational Waves
+
+---
+
+# Engineering
+
+- ## Predictive Maintenance
+- ## Quality Control
+- ## Structural Health Monitoring
+
+---
+
+# Healthcare
+
+- ## Epidemiology
+- ## Health Policy
+
+---
+
+# Finance 
+
+- ## Stock Market Analysis
+- ## Risk Management
+- ## Algorithmic Trading
+
+---
+
+# Sports Analytics 
+
+- ## Performance Analysis
+- ## Fan Engagement
+
+---
+
+# Steps of Data Analysis 
+
+---
+
+# 1. Define the Problem or Research Question 
+
+- ## Formulation
+- ## Experimental Design
+
+---
+
+# 2. Collect Data 
+
+- ## Data Acquisition
+- ## Data Collection
+- ## Data Retrieval
+
+---
+
+# 3. Clean Data 
+
+- ## Data Selection 
+- ## Data Stripping 
+- ## Data Skimming 
+- ## ...
+
+---
+
+# 4. Analyze Data
+
+- ## Data Exploration
+- ## Data Mining
+- ## Statistical Analysis 
+- ## Model Building
+- ## Machine Learning
+- ## Classification (...AI...)
+
+---
+
+# 5. Visualize the Data
+
+---
+
+# 6. Interpret the Results
+
+- ## Obtaining Results
+- ## Draw Conclusions from Data
 
 ---
 
@@ -39,10 +153,10 @@ Tools](./resources/lecture_2/image_slides_lecture_2/slide1.png)
 # Proprietary tools 
 
 - ## Expensive
-- ## Limited 
+- ## Limited in scope
 - ## Lack compatibility 
 - ## Lack flexibility
-- ## Easy to learn / use 
+- ## Easy to learn / use (GUI)
 
 ---
 
@@ -51,33 +165,8 @@ Tools](./resources/lecture_2/image_slides_lecture_2/slide1.png)
 - ## Open Source
 - ## Free
 - ## Powerful 
-- ## Steep leraning curve
+- ## Steep leraning curve (CLI)
 
 ---
 
-# Course Overview*
-
-- ### Lecture 1: Orientation / Course Overview / Intro to CERN 
-- ### Lecture 2: Intro to Data Analysis
-- ### Lecture 3: Overview of Computing Principles and Hardware  
-- ### Lecture 4: Different OS / CLI vs GUI / Bash 
-- ### Lecture 5: Python w Jupyter Notebooks
-- ### Lecture 6: IDEs / GitHub Clasroom
-- ### Lecture 7: Quiz 
-\*not fixed
-
----
-
-
-- ### Lecture 8: Best practices in Coding
-- ### Lecture 9: Best practices in Data Analysis
-- ### Lecture 10: Effective Problem Solving Techniques
-- ### Lecture 11: Basic statistical Analysis with Python
-- ### Lecture 12: Analysis Preservation and Reproducibility
-- ### Lecture 13: Quiz 
-- ### Project Preparation
-- ### Project Preparation
-
----
-
-# Homework
+# Analysis Pipeline (Workflow)

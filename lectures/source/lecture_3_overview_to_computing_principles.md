@@ -1,27 +1,71 @@
-<!-- # Lecture Title: Introduction to Computing Principles
-
-**Lecture Duration: 3 Hours**
+---
+marp: true
 
 ---
 
-## Part 1: Overview of Computing Infrastructure and Components (1 Hour 30 Minutes)
+# Dr. Mindaugas Šarpis
+# Lessons on Data Analysis from CERN
 
-### 1.1 Introduction to Computing Infrastructure (30 Minutes)
-- **Definition and Importance of Computing Infrastructure**:
-  - What constitutes computing infrastructure?
-  - The role of computing infrastructure in various domains (e.g., research, business, everyday life).
-  - Historical evolution from mainframes to cloud computing.
-- **Types of Computing Infrastructure**:
-  - On-premises computing vs. Cloud computing.
-  - Public, Private, and Hybrid Clouds.
-  - Introduction to Distributed Computing: Grid and Cluster Computing.
 
-### 1.2 Core Components of Computing Infrastructure (1 Hour)
-- **1.2.1 Hardware Components**:
-  - **Central Processing Unit (CPU)**:
-    - Architecture: Cores, Threads, Clock Speed.
-    - Role of the CPU in computation.
-    - Differences between CPUs for general-purpose computing and specialized processors (e.g., GPUs).
+## Lecture 3
+
+### Overview of Computing Principles
+
+---
+
+# Computing Infrastructure 
+
+---
+
+  - ## What constitutes computing infrastructure?
+  - ## The role of computing infrastructure in various domains 
+    - ### Research
+    - ### Business
+    - ### Everyday life
+
+---
+
+# Interlude to CERN Computing ... 
+
+--- 
+# Core Components of Computing Infrastructure
+
+---
+
+# Hardware Components
+  - ## Central Processing Unit (CPU)
+  - ## Memory (RAM)
+  - ## Storage Devices
+  - ## Input/Output (I/O) Devices
+  - ## Specialized Processors (e.g., GPUs)
+--- 
+
+# CPU 
+
+ - ## Architecture
+    - ###  Cores
+    - ###  Threads
+    - ###  Clock Speed
+
+  - ## Role of the CPU in computation - **the brain of the computer**
+  - ## Limitations of the CPU
+    
+---
+
+<!-- _backgroundColor: black -->
+![CPU1](./resources/lecture_3/images/cpu1.avif)
+
+--- 
+
+<!-- _backgroundColor: black -->
+![CPU2](./resources/lecture_3/images/cpu2.jpg)
+
+--- 
+
+<!-- _backgroundColor: black -->
+![CPU2](./resources/lecture_3/images/cpu3.jpg)
+
+--- 
   - **Memory (RAM)**:
     - Function of RAM in computing.
     - Types of RAM and their characteristics (e.g., DDR, SDRAM).
@@ -33,6 +77,8 @@
   - **Input/Output (I/O) Devices**:
     - Overview of I/O devices (e.g., keyboards, mice, monitors, network interfaces).
     - Importance of I/O in user interaction and system communication.
+
+
 - **1.2.2 Software Components**:
   - **Operating Systems (OS)**:
     - Role of the OS in managing hardware and software resources.
@@ -89,4 +135,4 @@
   - Address any questions from students about the lecture content.
   - Discuss practical examples and encourage students to relate the concepts to real-world scenarios.
 
---- -->
+--- 

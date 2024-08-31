@@ -36,7 +36,7 @@ marp: true
 - ## 2 x 20% Quiz
 - ## 1 x 60% Final Project
 
-###### \*Project can be presented at any stage during the course or at the en
+###### \*Project can be presented at any stage during the course or at the end
 
 ###### \*\*Students are graded according to their previous expertise. One should be able to explain what they did, how and why.
 
