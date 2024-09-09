@@ -16,9 +16,9 @@ marp: true
 
 - ## Lectures
   - ### Theory / Overviews
-    Main goal is exposure.
+    Main goal is exposure
   - ### Discussion
-    Building intuition. Interactivity is important.
+    Building intuition. Interactivity is important
 
 ---
 
@@ -27,7 +27,7 @@ marp: true
   - ### Hands on Sessions
   - ### Case Studies
 
-###### \*Seminar / Lecture ratio may change depending on the topic and deman Please follow communication by coordinators.
+###### \*Seminar / Lecture ratio may change depending on the topic and demand Please follow communication by coordinators.
 
 ---
 
