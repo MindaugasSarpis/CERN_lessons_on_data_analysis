@@ -302,3 +302,19 @@ Python Iteration and Modules
 - ### Project Preparation
 
 ---
+
+Progression: 
+
+Computing infrastructures / hardware
+
+Operating systems
+
+CLI vs GUI
+
+IDEs 
+
+Python Jupyter Notebooks
+
+Python IDE
+
+Working with files (datasets)
