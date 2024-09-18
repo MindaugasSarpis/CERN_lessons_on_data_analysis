@@ -13,12 +13,12 @@ marp: true
 
 ---
 
-# What is data analysis? 
+# What is **data** analysis? 
 
 ---
 
 
-# Data analysis is a process of **inspecting, cleaning, transforming, and modeling data** with the goal of **discovering useful information, informing conclusions, and supporting decision-making**.
+# **Data analysis** is a process of inspecting, cleaning, transforming, and modeling data with the goal of **discovering** useful **information**, informing conclusions, and supporting decision-making.
 
 ## Wikipedia
 
