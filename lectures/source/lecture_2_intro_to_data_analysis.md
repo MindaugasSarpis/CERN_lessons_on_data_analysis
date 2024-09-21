@@ -1,5 +1,6 @@
 ---
 marp: true
+paginate: true
 
 ---
 
@@ -13,7 +14,9 @@ marp: true
 
 ---
 
-# What is **data** analysis? 
+# What is **Data Analysis**? 
+
+\* What is **Data**? 
 
 ---
 
@@ -24,7 +27,7 @@ marp: true
 
 ---
 
-# What is Data Science?
+# What is **Data Science**?
 
 ---
 
@@ -116,7 +119,7 @@ marp: true
 - ## Formulation
 - ## Experimental Design
 
-- ## This might steer the choises in the following steps
+This might steer the choices in the following steps
 
 ---
 
@@ -226,8 +229,6 @@ Tools](./resources/lecture_2/image_slides_lecture_2/slide1.png)
 
 # **Discussion**  
 
-- # When to use proprietary tools?
-- # Whas should you be using?  
-
-- # saturation of achieved proficiency 
-
+- ## When to use proprietary tools?
+- ## Whas should you be using?  
+- ## saturation of achieved proficiency 
