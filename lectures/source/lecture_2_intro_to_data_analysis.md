@@ -13,7 +13,7 @@ marp: true
 
 ---
 
-# What is data analysis? 
+# What is **data** analysis? 
 
 ---
 

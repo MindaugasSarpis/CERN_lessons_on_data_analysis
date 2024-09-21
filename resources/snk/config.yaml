@@ -1,0 +1,9 @@
+# config.yaml
+dataset: "data.csv"
+output_dir: "plots/"
+number_of_colors: 100
+line_styles:
+  solid: '-'
+  dashed: '--'
+  dashdot: '-.'
+  dotted: ':'

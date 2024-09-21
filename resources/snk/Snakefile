@@ -1,0 +1,18 @@
+import matplotlib.colors as mcolors
+cl = mcolors.CSS4_COLORS
+
+configfile: "config.yaml"
+
+# Rule to generate all plots
+rule all:
+    input:
+            expand(
+                config["output_dir"] + "plot_{line_style}_{col}.png", line_style=list(config["line_styles"].keys()), col = list(cl.keys()))
+       
+
+# Rule to plot each individual file
+rule plot_wavy_spectrum:
+    output:
+        config["output_dir"] + "plot_{line_style}_{col}.png",
+    shell:
+        "python3 spectrum.py --output {output} --line_style {wildcards.line_style} --col {wildcards.col}"
