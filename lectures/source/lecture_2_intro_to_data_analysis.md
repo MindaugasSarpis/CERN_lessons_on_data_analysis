@@ -18,7 +18,17 @@ marp: true
 ---
 
 
-# Data analysis is a process of **inspecting, cleaning, transforming, and modeling data** with the goal of **discovering useful information, informing conclusions, and supporting decision-making**.
+# **Data analysis** is a process of inspecting, cleaning, transforming, and modeling data with the goal of discovering useful **information**, informing conclusions, and supporting decision-making.
+
+## Wikipedia
+
+---
+
+# What is Data Science?
+
+---
+
+# **Data science** is an interdisciplinary academic field that uses statistics, scientific computing, scientific methods, processing, scientific visualization, algorithms and systems to extract or extrapolate **knowledge and insights** from potentially noisy, structured, or unstructured data.
 
 ## Wikipedia
 
@@ -27,8 +37,10 @@ marp: true
 # Key Ideas 
 
 - ## Any **experiment** (study or analysis) in any field of science **will have** a **data analysis** component
-- ## This is the stage of **interpretation of the results** of the experiment. 
-- ## Normally, the **results of data analysis** appear in scientific publications.
+- ## Normally, the **results of data analysis** appear in scientific **publications**\*
+
+***"...lacking excellence..."*** 
+***"...aimed at serving the industry..."*** 
 
 --- 
 
@@ -104,21 +116,24 @@ marp: true
 - ## Formulation
 - ## Experimental Design
 
+- ## This might steer the choises in the following steps
+
 ---
 
 # 2. Collect Data 
 
-- ## Data Acquisition
-- ## Data Collection
-- ## Data Retrieval
+- ## How much data do you need? 
+- ## What sort of data do you need?
+- ## What data formats should you chose?
 
 ---
 
 # 3. Clean Data 
 
-- ## Data Selection 
+- ## Data Selection
 - ## Data Stripping 
-- ## Data Skimming 
+- ## Data Skimming
+- ## Data Wrangling 
 - ## ...
 
 ---
@@ -130,18 +145,58 @@ marp: true
 - ## Statistical Analysis 
 - ## Model Building
 - ## Machine Learning
-- ## Classification (...AI...)
+- ## Classification (***...AI...***)
 
 ---
 
-# 5. Visualize the Data
+# 5. Visualize the data
+
+- ## What's your target audience? 
+- ## What is the message you want to convey?
 
 ---
 
-# 6. Interpret the Results
+# 6. Interpret and report the results
 
-- ## Obtaining Results
 - ## Draw Conclusions from Data
+- ## Report Findings
+
+---
+
+# Data Higiene
+
+---
+
+![FAIR](https://www.nlm.nih.gov/oet/ed/cde/tutorial/img/06aCDE.png)
+
+--- 
+
+# The first step in **(re)using data** is to find them. **Metadata** and data should be easy to find for both humans and computers. Machine-readable metadata are essential for automatic discovery of datasets and services, so this is an essential component of the FAIRification process.
+
+---
+
+# Findable data
+
+- ## F1. (Meta)data are assigned a globally **unique and persistent identifier**
+- ## F2. Data are described with **rich metadata** 
+- ## F3. **Metadata** clearly and explicitly **include the identifier** of the data they describe
+- ## F4. (Meta)data are registered or indexed in a **searchable resource**
+
+---
+
+# Accessible data
+
+---
+
+# Interoperable data
+
+---
+
+# Reusable data
+
+---
+
+# Different tools used for data analysis
 
 ---
 
@@ -169,6 +224,10 @@ Tools](./resources/lecture_2/image_slides_lecture_2/slide1.png)
 
 ---
 
-# Analysis Pipeline (Workflow)
+# **Discussion**  
 
----
+- # When to use proprietary tools?
+- # Whas should you be using?  
+
+- # saturation of achieved proficiency 
+
