@@ -144,11 +144,10 @@ This might steer the choices in the following steps
 # 4. Analyze Data
 
 - ## Data Exploration
-- ## Data Mining
 - ## Statistical Analysis 
 - ## Model Building
 - ## Machine Learning
-- ## Classification (***...AI...***)
+- ## Classification (**...AI...**)
 
 ---
 
@@ -189,13 +188,35 @@ This might steer the choices in the following steps
 
 # Accessible data
 
+- ## A1. **(Meta)data** are retrievable by their **identifier** using a standardised communications protocol
+
+    - ## A1.1 The protocol is **open**, free, and universally implementable
+
+    - ## A1.2 The protocol allows for an **authentication** and **authorisation** procedure, where necessary
+
+- ## A2. Metadata are accessible, even when the data are no longer available
+
 ---
 
 # Interoperable data
 
+- ## I1. (Meta)data use a formal, accessible, shared, and broadly applicable **language for knowledge representation**.
+
+- ## I2. (Meta)data use vocabularies that follow FAIR principles
+
+- ## I3. (Meta)data include qualified references to other (meta)data
+
 ---
 
 # Reusable data
+
+- ## R1. (Meta)data are richly described with a plurality of accurate and relevant attributes
+
+    - ## R1.1. (Meta)data are released with a clear and accessible data usage license
+
+    - ## R1.2. (Meta)data are associated with detailed provenance
+
+    - ## R1.3. (Meta)data meet domain-relevant community standards
 
 ---
 
