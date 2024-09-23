@@ -5,7 +5,7 @@ paginate: true
 ---
 
 # Dr. Mindaugas Šarpis
-# Lessons on Data Analysis from CERN
+# Lessons on **Data Analysis** from **CERN**
 
 
 ## Lecture 2
@@ -18,8 +18,9 @@ paginate: true
 
 \* What is **Data**? 
 
----
+***interactive exercise***
 
+---
 
 # **Data analysis** is a process of inspecting, cleaning, transforming, and modeling data with the goal of discovering useful **information**, informing conclusions, and supporting decision-making.
 
@@ -37,6 +38,10 @@ paginate: true
 
 ---
 
+![heatmap_4d](./resources/lecture_2/images/Heatmap_4D.jpg)
+
+---
+
 # Key Ideas 
 
 - ## Any **experiment** (study or analysis) in any field of science **will have** a **data analysis** component
@@ -47,7 +52,7 @@ paginate: true
 
 --- 
 
-# Examples of significance of data analysis in different fields of science and beyond 
+# Examples of **significance** of **data analysis** in different fields of science and beyond 
 
 ---
 
@@ -55,6 +60,8 @@ paginate: true
 
  - ## Genome Sequencing
  - ## Clinical Trials
+ \* 23andMe anyone (ancestry services)?
+ \** comparing against *reference populations*
 
 ---
 
@@ -64,6 +71,8 @@ paginate: true
 - ## Pollution Monitoring
 - ## Biodiversity Studies
 
+\* again a *living analysis* 
+
 ---
 
  # Social Sciences
@@ -71,12 +80,19 @@ paginate: true
 - ## Economic Forecasting
 - ## Social Behavior Studies
 
+\* may be qualitative analysis 
+
 ---
 
 # Astronomy 
 
 - ## Observational Data Analysis
 - ## Gravitational Waves
+
+---
+
+
+![heatmap_4d](./resources/lecture_2/images/ligo.png)
 
 ---
 
@@ -114,24 +130,26 @@ paginate: true
 
 ---
 
-# 1. Define the Problem or Research Question 
+# 1. **Define** the Problem or Research Question 
 
 - ## Formulation
 - ## Experimental Design
 
-This might steer the choices in the following steps
+\* This might steer the choices in the following steps
+
+***Interactive exercise*** 
 
 ---
 
-# 2. Collect Data 
+# 2. **Collect** Data 
 
-- ## How much data do you need? 
+- ## How much data do you need?
 - ## What sort of data do you need?
 - ## What data formats should you chose?
 
 ---
 
-# 3. Clean Data 
+# 3. **Clean** Data 
 
 - ## Data Selection
 - ## Data Stripping 
@@ -141,7 +159,7 @@ This might steer the choices in the following steps
 
 ---
 
-# 4. Analyze Data
+# 4. **Analyze** Data
 
 - ## Data Exploration
 - ## Statistical Analysis 
@@ -151,21 +169,21 @@ This might steer the choices in the following steps
 
 ---
 
-# 5. Visualize the data
+# 5. **Visualize** the data
 
 - ## What's your target audience? 
 - ## What is the message you want to convey?
 
 ---
 
-# 6. Interpret and report the results
+# 6. **Interpret** and **report** the results
 
 - ## Draw Conclusions from Data
 - ## Report Findings
 
 ---
 
-# Data Higiene
+# Data **Higiene**
 
 ---
 
@@ -177,7 +195,7 @@ This might steer the choices in the following steps
 
 ---
 
-# Findable data
+# **Findable** data
 
 - ## F1. (Meta)data are assigned a globally **unique and persistent identifier**
 - ## F2. Data are described with **rich metadata** 
@@ -186,7 +204,7 @@ This might steer the choices in the following steps
 
 ---
 
-# Accessible data
+# **Accessible** data
 
 - ## A1. **(Meta)data** are retrievable by their **identifier** using a standardised communications protocol
 
@@ -198,34 +216,34 @@ This might steer the choices in the following steps
 
 ---
 
-# Interoperable data
+# **Interoperable** data
 
 - ## I1. (Meta)data use a formal, accessible, shared, and broadly applicable **language for knowledge representation**.
 
-- ## I2. (Meta)data use vocabularies that follow FAIR principles
+- ## I2. (Meta)data use vocabularies that follow **FAIR principles**
 
-- ## I3. (Meta)data include qualified references to other (meta)data
-
----
-
-# Reusable data
-
-- ## R1. (Meta)data are richly described with a plurality of accurate and relevant attributes
-
-    - ## R1.1. (Meta)data are released with a clear and accessible data usage license
-
-    - ## R1.2. (Meta)data are associated with detailed provenance
-
-    - ## R1.3. (Meta)data meet domain-relevant community standards
+- ## I3. (Meta)data include **qualified references** to other (meta)data
 
 ---
 
-# Different tools used for data analysis
+# **Reusable** data
+
+- ## R1. (Meta)data are **richly described** with a plurality of accurate and relevant attributes
+
+    - ## R1.1. (Meta)data are released with a clear and **accessible** data usage **license**
+
+    - ## R1.2. (Meta)data are associated with detailed **provenance**
+
+    - ## R1.3. (Meta)data meet **domain-relevant community standards**
+
+---
+
+# Examples of **Tools** used for **Data Analysis**
 
 ---
 
 ![Data Analysis
-Tools](./resources/lecture_2/image_slides_lecture_2/slide1.png)
+Tools](./resources/lecture_2/image_s_lecture_2/1.png)
 
 ---
 
@@ -253,3 +271,202 @@ Tools](./resources/lecture_2/image_slides_lecture_2/slide1.png)
 - ## When to use proprietary tools?
 - ## Whas should you be using?  
 - ## saturation of achieved proficiency 
+
+--- 
+
+# Seminar
+
+# Introduction to **Python**
+
+---
+
+# Naming **Conventions** for **Variables**
+
+---
+
+# **Single lowercase** letter
+
+##  a 
+##  b
+##  c 
+
+---
+
+<!--
+_color: red
+--> 
+
+# Never use l (lima)
+
+--- 
+
+# **Single Uppercase** letter
+
+##  A
+
+##  B
+
+##  C
+
+---
+
+<!--
+_color: red
+--> 
+
+# Never use O (oscar) or I (india) 
+
+---
+
+# **lowercase**
+
+- ## velocity
+- ## temperature
+- ## total 
+
+---
+
+# **lower_case_with_underscores**
+
+- ## user_age
+- ## file_name
+- ## calculate_total
+
+--- 
+
+# **UPPERCASE**
+
+- ## PI = 3.14159
+- ## MAX_SIZE = 100
+- ## DEFAULT_TIMEOUT = 30
+- ## DEBUG_MODE = True
+
+---
+
+# **UPPER_CASE_WITH_UNDERSCORES**
+
+- ## DEFAULT_USER_ROLE = "guest"
+- ## CONNECTION_TIMEOUT_LIMIT = 60
+- ## MAX_BUFFER_SIZE = 1024
+
+---
+
+# **CamelCase**
+
+- ## DataProcessor
+- ## HTTPRequestHandler 
+- ## XMLParser
+
+\* Acronyms are capitalized
+
+--- 
+
+# **mixedCase**
+
+- ## fileReader
+- ## isEnabled
+- ## getValue
+
+
+---
+
+
+# **Python** as a **Calculator**
+
+---
+
+##  1: Basic Arithmetic Operations
+
+Try these calculations in the Python terminal:
+
+- Calculate the sum of 25 and 75.
+- Subtract 150 from 300.
+- Multiply 12 by 15.
+- Divide 144 by 12.
+
+---
+
+##  2: Order of Operations
+
+Evaluate the following expressions, keeping the order of operations in mind:
+
+- `10 + 20 * 5`
+- `(8 + 4) * (6 - 2)`
+- `10**3 - 3 * 5 + 1`
+
+---
+
+##  3: Floating-Point Arithmetic
+
+Explore floating-point arithmetic:
+
+- Divide 7 by 3 and observe the result.
+- Compute `22 / 7` and compare it to `22 // 7`.
+- Multiply 5.5 by 2.3.
+
+---
+
+##  4: Power and Modulus Operations
+
+Practice power and modulus calculations:
+
+- Find `2**8` (2 raised to the power of 8).
+- Compute `17 % 5` to find the remainder.
+
+---
+
+##  5: Using `_` for Last Result
+
+Use the underscore (`_`) to refer to the last result:
+
+1. Perform `45 + 55`.
+2. Multiply the last result (`_`) by 2.
+3. Subtract 50 from the previous result using `_`.
+
+---
+
+##  6: Variable Assignments
+
+Assign values to variables and perform calculations:
+
+- Assign `x = 50`, then calculate `x * 2`.
+- Set `a = 10` and `b = 25`, then find the sum of `a` and `b`.
+- Change `a` to 15 and calculate `a * b`.
+
+---
+
+##  7: String Operations
+
+Experiment with string operations:
+
+- Concatenate `"Hello"` and `" World!"`.
+- Repeat `"Python!"` three times.
+- Find the length of the string `"Learning Python"`.
+
+---
+
+##  8: Variables in String Operations
+
+Manipulate strings using variables:
+
+- Assign `name = "Alice"`. Create the greeting: `"Hello, Alice!"`.
+- Set `word = "Python"`. Check the result of `word * 5`.
+
+---
+
+##  9: String Slicing and Indexing
+
+Try string slicing and indexing:
+
+- Assign `text = "Python Programming"`. Extract the first 6 characters.
+- Get the last character of `text`.
+- Slice to get "Programming" from `text`.
+
+---
+
+##  10: Basic Mathematical Expressions
+
+Solve these simple mathematical problems:
+
+- Calculate the area of a circle with radius 7 using `π ≈ 3.14` (`area = π * radius**2`).
+- Compute the square root of 144 using the power operator.
