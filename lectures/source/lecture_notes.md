@@ -18,6 +18,7 @@ https://docs.python.org/3/tutorial/introduction.html#id3
 
 https://swcarpentry.github.io/shell-novice/instructor/02-filedir.html
 
+https://www.simplilearn.com/tutorials/python-tutorial/python-variables
 
 
 ```python
