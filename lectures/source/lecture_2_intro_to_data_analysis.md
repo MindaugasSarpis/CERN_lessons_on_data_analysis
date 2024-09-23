@@ -13,7 +13,7 @@ marp: true
 
 ---
 
-# What is **data** analysis? 
+# What is **Data** Analysis? 
 
 ---
 
@@ -27,7 +27,7 @@ marp: true
 # Key Ideas 
 
 - ## Any **experiment** (study or analysis) in any field of science **will have** a **data analysis** component
-- ## This is the stage of **interpretation of the results** of the experiment. 
+- ## This is the stage of **interpretation of the results** of the experiment 
 - ## Normally, the **results of data analysis** appear in scientific publications.
 
 --- 
@@ -95,7 +95,7 @@ marp: true
 
 ---
 
-# Steps of Data Analysis 
+# Steps of **Data Analysis** 
 
 ---
 

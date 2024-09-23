@@ -25,6 +25,16 @@ marp: true
 
 ---
 
+# Crash Course on **Main Principles Computing**  
+
+\* Blackboard exercise
+
+---
+
+
+
+---
+
 # Interlude to CERN Computing ... 
 
 --- 
