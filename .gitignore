@@ -1,6 +1,6 @@
 # File Types
 *.log
-
+.DS_Store
 
 # Directories
 .snakemake
