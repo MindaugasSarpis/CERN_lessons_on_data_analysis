@@ -9,7 +9,16 @@
 
 - The difference between applications and programming languages
 
+  - Explain about scope, GUI, CLI, and learning curve
+  
+
 - Seminar - intro to python
+
+https://docs.python.org/3/tutorial/introduction.html#id3
+
+https://swcarpentry.github.io/shell-novice/instructor/02-filedir.html
+
+
 
 ```python
 import os

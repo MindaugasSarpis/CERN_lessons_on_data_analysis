@@ -243,11 +243,11 @@ paginate: true
 ---
 
 ![Data Analysis
-Tools](./resources/lecture_2/image_s_lecture_2/1.png)
+Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 
 ---
 
-# Proprietary tools 
+# Proprietary Tools 
 
 - ## Expensive
 - ## Limited in scope
@@ -257,7 +257,7 @@ Tools](./resources/lecture_2/image_s_lecture_2/1.png)
 
 ---
 
-# Programming languages 
+# Programming Languages 
 
 - ## Open Source
 - ## Free
@@ -269,8 +269,14 @@ Tools](./resources/lecture_2/image_s_lecture_2/1.png)
 # **Discussion**  
 
 - ## When to use proprietary tools?
-- ## Whas should you be using?  
+- ## What should you be using?  
 - ## saturation of achieved proficiency 
+
+---
+
+# **Project Ideas**  
+
+- ## Something Useful to you
 
 --- 
 
@@ -470,3 +476,7 @@ Solve these simple mathematical problems:
 
 - Calculate the area of a circle with radius 7 using `π ≈ 3.14` (`area = π * radius**2`).
 - Compute the square root of 144 using the power operator.
+
+--- 
+
+# We have just used **CLI** - **Command Line Interface** 
