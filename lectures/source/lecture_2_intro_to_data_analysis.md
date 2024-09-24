@@ -247,7 +247,7 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 
 ---
 
-# Proprietary Tools 
+# **Proprietary** Tools 
 
 - ## Expensive
 - ## Limited in scope
@@ -257,7 +257,7 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 
 ---
 
-# Programming Languages 
+# **Programming** Languages 
 
 - ## Open Source
 - ## Free
@@ -274,7 +274,7 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 
 ---
 
-# **Project Ideas**  
+# **Project** Ideas  
 
 - ## Something Useful to you
 
@@ -479,4 +479,17 @@ Solve these simple mathematical problems:
 
 --- 
 
-# We have just used **CLI** - **Command Line Interface** 
+# We have just used **CLI** - **Command Line Interface**
+
+---
+
+# Set up Teams
+# Set up GitHub Classroom 
+
+---
+
+# Fun with **Touchtyping**
+
+---
+
+# Intro to **UNIX Shell**
