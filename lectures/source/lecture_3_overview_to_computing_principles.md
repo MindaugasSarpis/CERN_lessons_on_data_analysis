@@ -4,7 +4,7 @@ marp: true
 ---
 
 # Dr. Mindaugas Šarpis
-# Lessons on Data Analysis from CERN
+# Lessons on **Data Analysis** from **CERN**
 
 
 ## Lecture 3
@@ -13,52 +13,40 @@ marp: true
 
 ---
 
-# Computing Infrastructure 
+# **Computing** Infrastructure 
 
 ---
 
-  - ## What constitutes computing infrastructure?
-  - ## The role of computing infrastructure in various domains 
-    - ### Research
-    - ### Business
-    - ### Everyday life
-
----
-
-# Crash Course on **Main Principles Computing**  
-
-\* Blackboard exercise
-
----
-
-
-
----
-
-# Interlude to CERN Computing ... 
-
---- 
-# Core Components of Computing Infrastructure
-
+  ##  What constitutes **computing infrastructure**?
+  
 ---
 
 # Hardware Components
-  - ## Central Processing Unit (CPU)
-  - ## Memory (RAM)
-  - ## Storage Devices
-  - ## Input/Output (I/O) Devices
-  - ## Specialized Processors (e.g., GPUs)
+  - ## Central Processing Unit (**CPU**)
+  - ## Memory (**RAM**)
+  - ## Storage Devices (**HDD, SSD, NVMe**)
+  - ## Input/Output (**I/O**) Devices
+  - ## Specialized Processors (**GPUs**, **TPUs**)
 --- 
 
-# CPU 
+# **CPU** (Central Processing Unit) 
 
- - ## Architecture
-    - ###  Cores
-    - ###  Threads
-    - ###  Clock Speed
+  - ## Basic arithmetic, logic, control, and input/output operations
+  - ## CPU sub-comopnents
+    - ### Control Unit (CU)
+    - ### Arithmetic Logic Unit (ALU)
+    - ### Registers 
+    - ### Cache
+    - ### Buses
 
-  - ## Role of the CPU in computation - **the brain of the computer**
-  - ## Limitations of the CPU
+  --- 
+
+# **CPU Performance** Factors:
+
+  - ## Clock Speed
+  - ## Number of Cores
+  - ## Cache Size
+  - ## Power Efficiency
     
 ---
 
@@ -76,17 +64,63 @@ marp: true
 ![CPU2](./resources/lecture_3/images/cpu3.jpg)
 
 --- 
-  - **Memory (RAM)**:
-    - Function of RAM in computing.
-    - Types of RAM and their characteristics (e.g., DDR, SDRAM).
-    - The relationship between memory and performance.
-  - **Storage Devices**:
-    - Different types of storage: HDD, SSD, NVMe.
-    - How storage impacts system performance.
-    - Data storage hierarchy: Caches, RAM, and Disk Storage.
-  - **Input/Output (I/O) Devices**:
-    - Overview of I/O devices (e.g., keyboards, mice, monitors, network interfaces).
-    - Importance of I/O in user interaction and system communication.
+  # **RAM** (Ramdom Access Memory)
+  - ## Volatile memory
+  - ## High-Speed Access
+  - ## Temporary Storage
+  - ## Capacity (GB or TB) 
+  - ## Performance (MHz or GHz)
+
+---
+
+<!-- _backgroundColor: black -->
+![CPU2](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*6k9X6LPiM4XKyssm.jpg)
+
+---
+
+<!-- _backgroundColor: black -->
+![CPU2](https://www.pcworld.com/wp-content/uploads/2023/04/corsair-dominator-memory-100884308-orig-1.jpg?quality=50&strip=all)
+
+---
+
+  # **Storage** Devices:
+  - ## **HDD** (Hard Disk Drive)
+  - ## **SSD** (Solid State Drive)
+  - ## **SSHD** (Solid State Hybrid Drive)
+  - ## **NVMe** (Non-Volatile Memory Express)
+   ## Caches $\rightarrow$ RAM $\rightarrow$ Disk Storage
+
+---
+
+  # Input/Output (**I/O**) Devices
+
+---
+
+
+- ## Software
+- ## Networking
+- ## Data Storage and Management
+- ## Virtualization and Cloud Computing
+- ## Security
+- ## Power and Cooling
+- ## Monitoring and Management Tools
+
+
+
+---
+
+# Interlude to **CERN Computing** ... 
+
+--- 
+
+
+# Crash Course on **Main Principles Computing**  
+
+***Blackboard exercise***
+
+
+
+---
 
 
 - **1.2.2 Software Components**:
