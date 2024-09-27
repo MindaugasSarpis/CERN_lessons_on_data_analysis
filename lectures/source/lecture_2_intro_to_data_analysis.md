@@ -270,7 +270,7 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 
 - ## When to use proprietary tools?
 - ## What should you be using?  
-- ## saturation of achieved proficiency 
+- ## Ssaturation of achieved proficiency 
 
 ---
 
