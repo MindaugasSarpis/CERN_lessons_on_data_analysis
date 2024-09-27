@@ -1,5 +1,6 @@
 ---
 marp: true
+paginate: true
 
 ---
 
@@ -21,7 +22,7 @@ marp: true
   
 ---
 
-# Hardware Components
+# **Hardware** Components
   - ## Central Processing Unit (**CPU**)
   - ## Memory (**RAM**)
   - ## Storage Devices (**HDD, SSD, NVMe**)
@@ -83,6 +84,11 @@ marp: true
 
 ---
 
+![CPU2](https://www.varle.lt/static/uploads/products/2/sam/samsung-so-dimm-8gb-ddr4-1rx16-3200mhz-pc4-25600-021d28bc98.jpeg
+)
+
+---
+
   # **Storage** Devices:
   - ## **HDD** (Hard Disk Drive)
   - ## **SSD** (Solid State Drive)
@@ -92,91 +98,80 @@ marp: true
 
 ---
 
+![](https://www.datarecoveryspecialists.co.uk/ckfinder/userfiles/images/datarecoveryhdd.jpg)
+
+---
+
+![](https://i5.walmartimages.com/asr/62a9abd1-926c-4ff9-8f93-a3c2f4d4314d_1.b263a12f4422d31e6c24560b928b4418.jpeg)
+
+---
+
+![](https://www.1stop.lt/storage/shop/products/108000-109000/108483/89965735_6703580015.jpeg)
+
+---
+
   # Input/Output (**I/O**) Devices
 
 ---
 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjQyi32pI29QmiqyRfk0zuJFeaNGW8UaS3DxZug5Lsh088ta52L7JTXhG3bmSWOoDVygE1kSUyewXNUS2iUbFUN_9jcjXgZxJ6DWc41Is1BjisXnMYQP_R-Y837yxu-OR83Lni5IQU2Zdk/s1600/Input+output+devices+tech+dlight.png)
 
-- ## Software
-- ## Networking
-- ## Data Storage and Management
-- ## Virtualization and Cloud Computing
-- ## Security
-- ## Power and Cooling
-- ## Monitoring and Management Tools
+---
 
+# Specialized **Processors**:
+  - ## **GPU** (Graphics Processing Unit)
+  - ## **TPU** (Tensor Processing Unit)
+  - ## **FPGA** (Field-Programmable Gate Array)
+  - ## **ASIC** (Application-Specific Integrated Circuit)
 
+---
 
+  # **GPU** (Graphics Processing Unit)
+
+  - ## Graphics Rendering
+  - ## Parallel Processing Power
+  - ## Accelerating Machine Learning and AI
+  - ## Scientific and Data Analysis Computing
+  - ## Video Processing and Encoding
+
+---
+
+![](https://www.ixbt.com/video2/images/ref/r9600xt-scan-front.jpg)
+
+---
+
+<!-- _backgroundColor: black -->
+
+[![](https://cdn.mos.cms.futurecdn.net/xd2Hw9Cki3qhzbC2WxNBcA.jpg)](https://www.youtube.com/watch?v=1vXFxEzozcE&ab_channel=NVIDIAGeForce)
+
+---
+
+- # Power and Cooling
+- # Networking
+- # Monitoring and Management Tools
+
+---
+
+- # Security
+- # Software
+- # Virtualization and Cloud Computing
+
+---
+
+# **Software** Components
+  - ## Operating Systems (**OS**)
+    - ### Windows
+    - ### macOS
+    - ### Linux
+  - ## **Middleware** and Virtualization
+  - ## **Application** Software
+    
 ---
 
 # Interlude to **CERN Computing** ... 
 
 --- 
 
-
 # Crash Course on **Main Principles Computing**  
 
 ***Blackboard exercise***
-
-
-
----
-
-
-- **1.2.2 Software Components**:
-  - **Operating Systems (OS)**:
-    - Role of the OS in managing hardware and software resources.
-    - Introduction to popular operating systems (Windows, Linux, macOS).
-    - Kernel, drivers, and system services.
-  - **Middleware and Virtualization**:
-    - Role of middleware in software interaction and integration.
-    - Introduction to virtualization: Hypervisors and Virtual Machines.
-  - **Application Software**:
-    - Different categories of software: System software vs. Application software.
-    - Examples of application software relevant to computing (e.g., IDEs, data analysis tools).
-
-## Break (10 Minutes)
-
----
-
-## Part 2: Main Working Principles of Computing Systems (1 Hour 20 Minutes)
-
-### 2.1 Basic Concepts in Computing (30 Minutes)
-- **2.1.1 Binary and Data Representation**:
-  - Introduction to binary number system.
-  - How data is represented in computers: Bits, bytes, and data types.
-  - Encoding of characters (ASCII, Unicode).
-- **2.1.2 Logic Gates and Boolean Algebra**:
-  - Overview of basic logic gates (AND, OR, NOT, NAND, NOR, XOR).
-  - Introduction to Boolean algebra and its application in computing.
-  - Building simple circuits using logic gates.
-
-### 2.2 Working Principles of a Computer System (50 Minutes)
-- **2.2.1 The Fetch-Decode-Execute Cycle**:
-  - Detailed explanation of the Fetch-Decode-Execute cycle.
-  - Role of the CPU, memory, and buses in executing instructions.
-  - Examples of basic machine instructions.
-- **2.2.2 Memory Management**:
-  - How the OS manages memory allocation and deallocation.
-  - Introduction to virtual memory and paging.
-  - Concepts of memory hierarchy: Cache memory, primary memory, secondary memory.
-- **2.2.3 Input/Output (I/O) Operations**:
-  - Overview of how data is transferred between the CPU and peripheral devices.
-  - Concepts of polling, interrupts, and DMA (Direct Memory Access).
-  - Examples of I/O devices and their interaction with the system.
-
-### 2.3 Computing Performance and Optimization
-- **2.3.1 Understanding Performance Metrics**:
-  - Introduction to key performance metrics: CPU speed, FLOPS, IOPS, latency, and throughput.
-  - How hardware and software optimization impacts performance.
-- **2.3.2 Parallel Computing**:
-  - Basic introduction to parallel processing and multi-threading.
-  - The importance of parallelism in modern computing (e.g., multi-core processors).
-  - Real-world applications of parallel computing.
-
-## Q&A and Discussion (10 Minutes)
-- **Open Q&A Session**:
-  - Address any questions from students about the lecture content.
-  - Discuss practical examples and encourage students to relate the concepts to real-world scenarios.
-
---- 
