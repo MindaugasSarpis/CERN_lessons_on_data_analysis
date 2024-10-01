@@ -33,7 +33,7 @@ paginate: true
 # **CPU** (Central Processing Unit) 
 
   - ## Basic arithmetic, logic, control, and input/output operations
-  - ## CPU sub-components
+  - ## CPU sub-comopnents
     - ### Control Unit (CU)
     - ### Arithmetic Logic Unit (ALU)
     - ### Registers 
@@ -46,7 +46,7 @@ paginate: true
 
   - ## Clock Speed
   - ## Number of Cores
-  - ## Cache Size˚
+  - ## Cache Size
   - ## Power Efficiency
     
 ---
@@ -65,7 +65,7 @@ paginate: true
 ![CPU2](./resources/lecture_3/images/cpu3.jpg)
 
 --- 
-  # **RAM** (Random Access Memory)
+  # **RAM** (Ramdom Access Memory)
   - ## Volatile memory
   - ## High-Speed Access
   - ## Temporary Storage

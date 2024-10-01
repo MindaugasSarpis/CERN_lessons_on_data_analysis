@@ -32,3 +32,19 @@ def clear():
     os.system('cls||echo -e \\\\033c')
 ```
 
+##  Lecture 3 - Computing Infrastructure
+
+- Start from Python Basics recap
+- Show lists and dictionaries and functions 
+- Explain where the problem with iPython is 
+- Create a python file (wrong extension (show file extensions))
+- Run in IDLE 
+- Explain what VS Code is 
+- Chosing Theme 
+- Opening Files 
+- IntelliSense
+- Running code
+
+- Go to Mac, show thesis and analysis 
+
+- Set up GitHub Classroom 
