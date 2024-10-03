@@ -2,7 +2,7 @@
 
 ## Lecture 1 - Motivation and intro to CERN 
 
-## Lecture 2 - Introduction to Data Analysis
+## Lecture 2 - Introduction to Data Analysis (Python Basics installing, syntax, variables, data types)
 
 - Interactive game with age - converting data to information. Clean and
   not-clean data. 
@@ -32,7 +32,7 @@ def clear():
     os.system('cls||echo -e \\\\033c')
 ```
 
-##  Lecture 3 - Computing Infrastructure
+##  Lecture 3 - Computing Infrastructure (todo computing principles) (Python Basics IDEs / Scripting / container types functions )
 
 - Start from Python Basics recap (for a student to do) (10 problems from L2)
 - Show lists and dictionaries and functions 
@@ -48,3 +48,15 @@ def clear():
 - Go to Mac, show thesis and analysis 
 
 - Set up GitHub Classroom 
+
+## Lecture 4 - Computing Principles (matplotlib)
+
+- Recap on Python Basics
+  - Running python on windows 
+  - Python Interpreter CLI (show iPython)
+- Recap on Lists / Tuples / List Comprehensions (mult. element vise .* is matlab)
+- Dictionaries
+- Comparisons 
+- Control Flow (if, elif, else, for, while)
+- Packages / Modules / Libraries
+- Matplotlib (plotting data)
