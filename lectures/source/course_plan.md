@@ -283,8 +283,8 @@ Python Iteration and Modules
 
 - ### Lecture 1: Orientation / Course Overview / Intro to CERN 
 - ### Lecture 2: Intro to Data Analysis
-- ### Lecture 3: Overview of Computing Principles and Hardware  
-- ### Lecture 4: Different OS / CLI vs GUI / Bash 
+- ### Lecture 3: Overview of Computing Principles  
+- ### Lecture 4: Overview of Computing Infrastructure  
 - ### Lecture 5: Python w Jupyter Notebooks
 - ### Lecture 6: IDEs / GitHub Clasroom
 - ### Lecture 7: Quiz 

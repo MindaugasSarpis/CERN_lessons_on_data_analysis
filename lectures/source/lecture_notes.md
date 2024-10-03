@@ -34,7 +34,7 @@ def clear():
 
 ##  Lecture 3 - Computing Infrastructure
 
-- Start from Python Basics recap
+- Start from Python Basics recap (for a student to do) (10 problems from L2)
 - Show lists and dictionaries and functions 
 - Explain where the problem with iPython is 
 - Create a python file (wrong extension (show file extensions))
