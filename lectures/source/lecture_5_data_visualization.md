@@ -8,23 +8,11 @@ paginate: true
 # Lessons on **Data Analysis** from **CERN**
 
 
-## Lecture 4
+## Lecture 3
 
 ### Overview of **Computing Principles**
 
 --- 
-
-# **Info** 
-
-## First Test on the 22nd of October
-
-- ### 22 Multiple Choice Questions
-- ### 1 Bonus Open Question
-- ### Topics from Lectures and Seminars 
-    - ### Main Logic and Principles of Data Analysis 
-    - ### Python Basics
-
----
 
 # Crash Course on **Main Principles Computing**  
 
@@ -57,3 +45,11 @@ paginate: true
 - ## One of the strengths of python is its vast library ecosystem or powerful specialized libraries
 
 ---
+
+# Data **Visualization** with **Python**
+
+--- 
+
+---
+
+# Many libraries are available 
