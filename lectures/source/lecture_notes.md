@@ -11,7 +11,6 @@
 
   - Explain about scope, GUI, CLI, and learning curve
   
-
 - Seminar - intro to python
 
 https://docs.python.org/3/tutorial/introduction.html#id3
@@ -19,7 +18,6 @@ https://docs.python.org/3/tutorial/introduction.html#id3
 https://swcarpentry.github.io/shell-novice/instructor/02-filedir.html
 
 https://www.simplilearn.com/tutorials/python-tutorial/python-variables
-
 
 ```python
 import os
@@ -31,7 +29,6 @@ def clear():
     '''
     os.system('cls||echo -e \\\\033c')
 ```
-
 ##  Lecture 3 - Computing Infrastructure (todo computing principles) (Python Basics IDEs / Scripting / container types functions )
 
 - Start from Python Basics recap (for a student to do) (10 problems from L2)
@@ -51,10 +48,16 @@ def clear():
 
 ## Lecture 4 - Computing Principles (matplotlib)
 
+- history of computing at cern 
+- Start with Unary, Binary, computing principles 
+
+- 5 bananas exercise 
+
 - Recap on Python Basics
   - Running python on windows 
   - Python Interpreter CLI (show iPython)
 - Recap on Lists / Tuples / List Comprehensions (mult. element vise .* is matlab)
+- Data structures FIFO LIFO 
 - Dictionaries
 - Comparisons 
 - Control Flow (if, elif, else, for, while)
