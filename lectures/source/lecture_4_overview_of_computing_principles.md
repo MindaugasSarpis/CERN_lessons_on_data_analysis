@@ -47,9 +47,3 @@ paginate: true
 ---
 
 # Data **Visualization** with **Python**
-
---- 
-
----
-
-# Many libraries are available 

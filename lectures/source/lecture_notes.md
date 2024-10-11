@@ -54,9 +54,29 @@ def clear():
 - Recap on Python Basics
   - Running python on windows 
   - Python Interpreter CLI (show iPython)
-- Recap on Lists / Tuples / List Comprehensions (mult. element vise .* is matlab)
-- Dictionaries
-- Comparisons 
-- Control Flow (if, elif, else, for, while)
+
+  - Comparisons 
+  - Control Flow (if, elif, else, for, while)
+
+- Recap on Lists / Tuples / List Comprehensions (mult. element vise .* is
+  matlab)
+
+len(a) returns the length of a, i.e. the number of elements it contains,
+max(a) returns the largest element of a,
+min(a) returns the smallest element of a,
+sum(a) returns the sum of the elements of a,
+a.sort() sorts the elements of a,
+a.append(x) adds a new element at the end of the listw, containing the contents of x,
+a.insert(i, x) adds a new element containing x at location `a[i]``, shifting later elements ‘backwards’ by one,
+a.remove(x) finds the first occurrence of x in the list and removes it,
+a.count(x) counts the number of occurrences of x in the list,
+a.index(x) returns the index of the first occurrence of x in the list,
+a.reverse() flips the order of elements in a list, and
+a.pop(i) removes and return the element at index i in the list (or if no
+argument is provided, the last element in the list).
+
+- Dictionaries (show how variables are referenced again, in dicts)
+
 - Packages / Modules / Libraries
+
 - Matplotlib (plotting data)
