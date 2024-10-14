@@ -16,28 +16,28 @@ paginate: true
 
 # Data **Visualization**
 
-- One of the key components of data analysis 
-    - Interpreting Results 
-    - Reporting Results
-
+- ## One of the key components of data analysis 
+    - ### Interpreting Results 
+    - ### Reporting Findings
+- ## Chosing appropriate method of visualization and representation is crucial
 
 --- 
 
-![alt text](image-1.png)
+![alt text](resources/lecture_5/image-1.png)
 
 ---
 
-![alt text](image-4.png)
+![alt text](resources/lecture_5/image-4.png)
 
 ---
 
-![alt text](image-3.png)
+![alt text](resources/lecture_5/image-3.png)
 
 ---
 
 # **Aesthetics** of Data Visualization
 
-![alt text](image-6.png)
+![alt text](resources/lecture_5/image-5.png)
 
 ---
 
@@ -50,23 +50,31 @@ paginate: true
 
 ---
 
-# Legend / Grid
+# **Legend**
 
 ---
 
-![alt text](image-7.png)
+![alt text](image-1.png)
 
 ---
 
-![alt text](image-11.png)
+![alt text](resources/lecture_5/image-7.png)
 
 ---
 
-![alt text](image-9.png)
+![alt text](resources/lecture_5/image-11.png)
 
 ---
 
-![alt text](image-10.png)
+# Axis and overall **Scale**
+
+---
+
+![alt text](resources/lecture_5/image-9.png)
+
+---
+
+![alt text](resources/lecture_5/image-10.png)
 
 ---
 
@@ -79,46 +87,73 @@ paginate: true
 
 ---
 
-![alt text](image-12.png)
+![alt text](resources/lecture_5/image-12.png)
 
 ---
 
-![alt text](image-14.png)
+![alt text](resources/lecture_5/image-14.png)
 
 ---
 
-![alt text](image-15.png)
+![alt text](resources/lecture_5/image-15.png)
 
 ---
 
-![alt text](image-16.png)
+![alt text](resources/lecture_5/image-16.png)
 
 ---
 
-![alt text](image-17.png)
+![alt text](resources/lecture_5/image-17.png)
 
 ---
 
-![alt text](image-18.png)
+![alt text](resources/lecture_5/image-18.png)
 
 ---
 
-![alt text](image-19.png)
+![alt text](resources/lecture_5/image-20.png)
 
 ---
 
-![alt text](image-20.png)
+![alt text](resources/lecture_5/image-21.png)
 
 ---
 
-![alt text](image-21.png)
+![alt text](resources/lecture_5/image-19.png)
 
 ---
 
-![alt text](image-22.png)
+![alt text](resources/lecture_5/image-22.png)
 
 ---
 
-
+# Histograms 
 
 ---
+
+![alt text](image-2.png)
+
+---
+
+![alt text](image-3.png)
+
+---
+
+![alt text](image-4.png)
+
+---
+
+![alt text](image-5.png)
+
+--- 
+
+# Error Bars
+
+---
+
+![alt text](image-6.png)
+
+---
+
+![alt text](image-7.png)
+
