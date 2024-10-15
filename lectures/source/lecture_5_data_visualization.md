@@ -41,11 +41,11 @@ paginate: true
 
 ---
 
-# Continuous and Discrete Data
+# **Continuous** and **Discrete** Data
 
 - ## Quantitative / Numerical Data
 - ## Qualitative / Categorical Data
-- ## Date or Time 
+- ## Date and Time 
 - ## Text 
 
 ---
@@ -127,7 +127,7 @@ paginate: true
 
 ---
 
-# Histograms 
+# **Histograms** 
 
 ---
 
@@ -143,11 +143,15 @@ paginate: true
 
 ---
 
+# **Color** 
+
+---
+
 ![alt text](image-5.png)
 
 --- 
 
-# Error Bars
+# **Error** Bars
 
 ---
 
