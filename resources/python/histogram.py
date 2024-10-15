@@ -1,9 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from matplotlib import colors
-from matplotlib.ticker import PercentFormatter
-
 # plt.xkcd()
 
 # Create a random number generator with a fixed seed for reproducibility
