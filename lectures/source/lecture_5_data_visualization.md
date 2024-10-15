@@ -167,4 +167,5 @@ paginate: true
 
 ---
 
-![alt text](resources/lecture_5/anatomy.webp)
+![alt text](resources/lecture_5/anatomy.png)
+
