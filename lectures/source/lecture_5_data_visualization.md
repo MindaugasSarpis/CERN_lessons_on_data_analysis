@@ -161,3 +161,10 @@ paginate: true
 
 ![alt text](image-7.png)
 
+---
+
+# Anatomy of a **Plot**
+
+---
+
+![alt text](resources/lecture_5/anatomy.webp)
