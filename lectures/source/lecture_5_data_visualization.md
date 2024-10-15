@@ -131,15 +131,15 @@ paginate: true
 
 ---
 
-![alt text](image-2.png)
+![alt text](ximage-2.png)
 
 ---
 
-![alt text](image-3.png)
+![alt text](ximage-3.png)
 
 ---
 
-![alt text](image-4.png)
+![alt text](ximage-4.png)
 
 ---
 
@@ -147,7 +147,7 @@ paginate: true
 
 ---
 
-![alt text](image-5.png)
+![alt text](ximage-5.png)
 
 --- 
 
@@ -155,11 +155,11 @@ paginate: true
 
 ---
 
-![alt text](image-6.png)
+![alt text](ximage-6.png)
 
 ---
 
-![alt text](image-7.png)
+![alt text](ximage-7.png)
 
 ---
 
