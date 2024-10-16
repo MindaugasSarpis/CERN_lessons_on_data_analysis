@@ -103,4 +103,8 @@ append()	Used for adding elements to the end of the List.
 
 - Packages / Modules / Libraries
 
+# Lecture 5 Data Visualization and Matplotlib
+
 - Matplotlib (plotting data)
+
+# Lecture 6 - MarkDown, git, GitHub, 
