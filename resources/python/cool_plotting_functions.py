@@ -2,28 +2,28 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def super_function(dist1, n_bins,):
+def super_function(dist1, n_bins, width=16, height=9):
 
     # Set the desired aspect ratio, e.g., 3:4
-    aspect_ratio = (1, 1)  # width:height
+    aspect_ratio = (width, height)  # width:height
 
     # Dynamically calculate the figure size while maintaining the aspect ratio
-    fig_width = 9  # Adjust this width to suit your needs
-    fig_height = fig_width * aspect_ratio[1] / aspect_ratio[0]
-    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    width = 9  # Adjust this width to suit your needs
+    fig_height = width * aspect_ratio[1] / aspect_ratio[0]
+    fig, ax = plt.subplots(figsize=(width, fig_height))
 
     # Dynamically adjust font sizes and label padding based on figure size
-    font_size = fig_width * 1.5  # Scale font size by figure width
-    label_pad = fig_width * 0.5  # Scale label padding by figure width
-    tick_label_size = fig_width * 1.2  # Scale tick label size
+    font_size = width * 1.5  # Scale font size by figure width
+    label_pad = width * 0.5  # Scale label padding by figure width
+    tick_label_size = width * 1.2  # Scale tick label size
 
     # Customize labels and tick marks with dynamic font sizes
     ax.set_xlabel('Value', fontsize=font_size, loc='right')
     ax.set_ylabel('Frequency', fontsize=font_size, labelpad=label_pad, loc='top')
 
     # Customize tick params with dynamic sizes
-    ax.tick_params(axis='both', labelsize=tick_label_size, size=fig_width * 0.8, width=fig_width * 0.3, top=True, right=True, direction='inout')
-    [ax.spines[i].set_linewidth(fig_width * 0.2) for i in ['top', 'right', 'left', 'bottom']]
+    ax.tick_params(axis='both', labelsize=tick_label_size, size=width * 0.8, width=width * 0.3, top=True, right=True, direction='inout')
+    # [ax.spines[i].set_linewidth(width * 0.2) for i in ['top', 'right', 'left', 'bottom']]
 
     # Set ticks on x and y axis
     ax.set_xticks([-5, -2.5, 0, 2.5, 5])

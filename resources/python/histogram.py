@@ -6,7 +6,7 @@ import numpy as np
 # Create a random number generator with a fixed seed for reproducibility
 rng = np.random.default_rng(19680801)
 N_points = 100000
-n_bins = 20
+n_bins = 100
 # Generate two normal distributions
 dist1 = rng.standard_normal(N_points)
 
@@ -29,4 +29,4 @@ n, bins, patches = ax.hist(dist1, bins=n_bins)
 max_height = np.max(n)
 
 # print(max_height)
-plt.savefig('Important_Histo.pdf')
+plt.show()
