@@ -6,6 +6,7 @@ rng = np.random.default_rng(19680801)
 N_points = 10000000  # You can change this, and the y-limits will adjust automatically
 n_bins = 1000
 
+
 distribution = rng.standard_normal(N_points)
 
-super_function(distribution, n_bins, width=1, height=1)
+plot_hist(distribution, n_bins, width=1, height=1)

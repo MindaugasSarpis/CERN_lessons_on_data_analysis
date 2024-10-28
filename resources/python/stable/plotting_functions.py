@@ -2,15 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def super_function(dist1, n_bins, width=16, height=9):
+def plot_hist(data, n_bins, width=16, height=9, xlow = 0, xup = 21):
 
-    # Set the desired aspect ratio, e.g., 3:4
-    aspect_ratio = (width, height)  # width:height
-
-    # Dynamically calculate the figure size while maintaining the aspect ratio
-    width = 9  # Adjust this width to suit your needs
-    fig_height = width * aspect_ratio[1] / aspect_ratio[0]
-    fig, ax = plt.subplots(figsize=(width, fig_height))
+    fig, ax = plt.subplots(figsize=(width, height))
 
     # Dynamically adjust font sizes and label padding based on figure size
     font_size = width * 1.5  # Scale font size by figure width
@@ -23,26 +17,27 @@ def super_function(dist1, n_bins, width=16, height=9):
 
     # Customize tick params with dynamic sizes
     ax.tick_params(axis='both', labelsize=tick_label_size, size=width * 0.8, width=width * 0.3, top=True, right=True, direction='inout')
-    # [ax.spines[i].set_linewidth(width * 0.2) for i in ['top', 'right', 'left', 'bottom']]
+    [ax.spines[i].set_linewidth(2) for i in ['top', 'right', 'left', 'bottom']] 
 
     # Set ticks on x and y axis
-    ax.set_xticks([-5, -2.5, 0, 2.5, 5])
-    ax.set_xlim(-5, 5)
+    ax.set_xticks(np.linspace(xlow, xup, n_bins))
+    ax.set_xlim(xlow, xup)
     # Plot the histogram and capture the bin heights
-    n, bins, patches = ax.hist(dist1, bins=n_bins)
+    n, bins, patches = ax.hist(data, bins=n_bins, align='mid', edgecolor='black', linewidth=1.2)
 
     # Automatically set the y-axis limit based on the histogram data
     max_height = np.max(n)
 
+    divisor = 1
     # Round y_limit to the nearest 500 (or other suitable rounding)
-    y_limit = np.ceil(max_height*1.1 / 500.0) * 500  # Rounds up to the nearest 500
+    y_limit = np.ceil(max_height*1.1 / divisor) * divisor  # Rounds up to the nearest 500
 
     # Set the y-axis limit with the rounded value
     ax.set_ylim(0, y_limit)
 
     # Set y-ticks with rounded and nicely spaced values
-    y_ticks = np.linspace(0, y_limit, 11)  # 11 evenly spaced ticks from 0 to y_limit
-    ax.set_yticks(y_ticks)
+    # y_ticks = np.linspace(0, y_limit, 11)  # 11 evenly spaced ticks from 0 to y_limit
+    # ax.set_yticks(y_ticks)
 
     # Save the figure
     plt.savefig('Important_Histo.pdf')
