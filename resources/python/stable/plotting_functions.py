@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-def plot_hist(data, n_bins = None, axis_padding = None, width=16, height=9, xlow=0, xup=21):
-
+def format_fig(width = 16, height = 9):
     fig, ax = plt.subplots(figsize=(width, height))
 
     # Dynamically adjust font sizes and label padding based on figure size
@@ -28,20 +26,28 @@ def plot_hist(data, n_bins = None, axis_padding = None, width=16, height=9, xlow
     
     [ax.spines[i].set_linewidth(2) for i in ["top", "right", "left", "bottom"]]
 
+
+    return fig, ax 
+
+def plot_hist(data, n_bins = None, axis_padding = None, width=16, height=9, xlow=0, xup=21):
+
+    fig, ax = format_fig(width, height)
+    
     # Set ticks on x and y axis
     
     if n_bins is None:
         n_bins = xup - xlow + 1
     
-    xtics = np.linspace(xlow, xup, xup - xlow + 1)
-    print(xtics)
-    ax.set_xticks(xtics)
-    ax.set_xlim(xlow, xup)
-        
     # Plot the histogram and capture the bin heights
     n, bins, patches = ax.hist(
-        data, bins=n_bins, edgecolor="black", linewidth=1.2, range = (xlow, xup+1)
+        data, bins=n_bins, edgecolor="black", linewidth=1.2, range = (np.floor(xlow), np.floor(xup)+1), 
     )
+
+    x_range = np.floor(xup) - np.floor(xlow)
+    xtics = np.linspace(np.floor(xlow), np.floor(xup), int(x_range) + 1)
+
+    ax.set_xticks(xtics)
+    ax.set_xlim(np.floor(xlow), np.floor(xup))
 
     print(bins)
     # Automatically set the y-axis limit based on the histogram data
@@ -65,3 +71,29 @@ def plot_hist(data, n_bins = None, axis_padding = None, width=16, height=9, xlow
     plt.show()
 
     return n, bins, patches
+
+from collections import Counter
+
+
+def grade_chart(data):
+    
+    grades = list(range(0, 11))  # Grades from 0 to 10
+
+    # Count occurrences of each grade and ensure all grades from 0 to 10 are included
+    counts = Counter(data)
+    full_grade_counts = [counts.get(grade, 0) for grade in grades]  # Convert to list of counts
+
+    fig, ax = format_fig()
+
+    # Create the bar chart
+    plt.bar(grades, full_grade_counts, color='skyblue', edgecolor='black')
+
+    # Labeling the axes and adding a title
+    plt.xlabel('Grades')
+    plt.ylabel('Number of Students')
+
+    # Setting the ticks on the x-axis to show each grade
+    plt.xticks(grades)
+
+    # Display the plot
+    plt.show()
