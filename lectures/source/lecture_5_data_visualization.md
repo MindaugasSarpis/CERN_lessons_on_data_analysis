@@ -2,6 +2,21 @@
 marp: true
 paginate: true
 
+# You can also start simply with 'default'
+theme: seriph
+
+# apply unocss classes to the current slide
+class: text-left
+
+drawings:
+  persist: false
+
+transition: slide-left
+
+mdc: true
+
+overviewSnapshots: true
+
 ---
 
 # Dr. Mindaugas Šarpis
@@ -23,21 +38,21 @@ paginate: true
 
 --- 
 
-![alt text](resources/lecture_5/image-1.png)
+![alt text](./resources/lecture_5/image-1.png)
 
 ---
 
-![alt text](resources/lecture_5/image-4.png)
+![alt text](./resources/lecture_5/image-4.png)
 
 ---
 
-![alt text](resources/lecture_5/image-3.png)
+![alt text](./resources/lecture_5/image-3.png)
 
 ---
 
 # **Aesthetics** of Data Visualization
 
-![alt text](resources/lecture_5/image-5.png)
+![alt text](./resources/lecture_5/image-5.png)
 
 ---
 
@@ -54,15 +69,15 @@ paginate: true
 
 ---
 
-![alt text](image-1.png)
+![alt text](./resources/lecture_5/ximage-1.png)
 
 ---
 
-![alt text](resources/lecture_5/image-7.png)
+![alt text](./resources/lecture_5/image-7.png)
 
 ---
 
-![alt text](resources/lecture_5/image-11.png)
+![alt text](./resources/lecture_5/image-11.png)
 
 ---
 
@@ -70,11 +85,11 @@ paginate: true
 
 ---
 
-![alt text](resources/lecture_5/image-9.png)
+![alt text](./resources/lecture_5/image-9.png)
 
 ---
 
-![alt text](resources/lecture_5/image-10.png)
+![alt text](./resources/lecture_5/image-10.png)
 
 ---
 
@@ -87,43 +102,43 @@ paginate: true
 
 ---
 
-![alt text](resources/lecture_5/image-12.png)
+![alt text](./resources/lecture_5/image-12.png)
 
 ---
 
-![alt text](resources/lecture_5/image-14.png)
+![alt text](./resources/lecture_5/image-14.png)
 
 ---
 
-![alt text](resources/lecture_5/image-15.png)
+![alt text](./resources/lecture_5/image-15.png)
 
 ---
 
-![alt text](resources/lecture_5/image-16.png)
+![alt text](./resources/lecture_5/image-16.png)
 
 ---
 
-![alt text](resources/lecture_5/image-17.png)
+![alt text](./resources/lecture_5/image-17.png)
 
 ---
 
-![alt text](resources/lecture_5/image-18.png)
+![alt text](./resources/lecture_5/image-18.png)
 
 ---
 
-![alt text](resources/lecture_5/image-20.png)
+![alt text](./resources/lecture_5/image-20.png)
 
 ---
 
-![alt text](resources/lecture_5/image-21.png)
+![alt text](./resources/lecture_5/image-21.png)
 
 ---
 
-![alt text](resources/lecture_5/image-19.png)
+![alt text](./resources/lecture_5/image-19.png)
 
 ---
 
-![alt text](resources/lecture_5/image-22.png)
+![alt text](./resources/lecture_5/image-22.png)
 
 ---
 
@@ -131,15 +146,15 @@ paginate: true
 
 ---
 
-![alt text](ximage-2.png)
+![alt text](./resources/lecture_5/x.png)
 
 ---
 
-![alt text](ximage-3.png)
+![alt text](./resources/lecture_5/ximage-3.png)
 
 ---
 
-![alt text](ximage-4.png)
+![alt text](./resources/lecture_5/ximage-4.png)
 
 ---
 
@@ -147,7 +162,7 @@ paginate: true
 
 ---
 
-![alt text](ximage-5.png)
+![alt text](./resources/lecture_5/ximage-5.png)
 
 --- 
 
@@ -155,11 +170,11 @@ paginate: true
 
 ---
 
-![alt text](ximage-6.png)
+![alt text](./resources/lecture_5/ximage-6.png)
 
 ---
 
-![alt text](ximage-7.png)
+![alt text](./resources/lecture_5/ximage-7.png)
 
 ---
 
@@ -167,5 +182,5 @@ paginate: true
 
 ---
 
-![alt text](resources/lecture_5/anatomy.png)
+![alt text](./resources/lecture_5/anatomy.png)
 
