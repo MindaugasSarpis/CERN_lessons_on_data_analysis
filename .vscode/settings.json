@@ -1,0 +1,6 @@
+{
+    "slidev.include": [
+        "**/slides.md",
+        "lectures/source/lecture_8_version_control.md"
+    ]
+}
