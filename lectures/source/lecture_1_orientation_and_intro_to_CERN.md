@@ -62,17 +62,17 @@ marp: true
 
 ---
 
-| <!-- -->                      | <!-- -->                |
-| ----------------------------- | ----------------------- |
-| ~~September 3rd.~~ (CERN)      | September 10th          |
-| ~~September 17th~~ (CERN)     | September 24th          |
-| October 1st                   | October 8th             |
-| October 15th                  | ~~October 22nd~~ (CHEP) |
-| October 29th                  | November 5th            |
-| November 12th                 | ~~November 19th~~ (ROME)           |
-| ~~November 26th~~                 | December 3rd            |
-| December 10th                 | December 17th           |
-| ~~December 24th~~ (Christmas) |                         |
+| <!-- -->                        | <!-- -->                 |
+| ------------------------------- | ------------------------ |
+| ~~September 3rd.~~ (CERN)       | September 10th           |
+| ~~September 17th~~ (CERN)       | September 24th           |
+| October 1st                     | October 8th              |
+| October 15th                    | ~~October 22nd~~ (CHEP)  |
+| October 29th                    | November 5th             |
+| November 12th (project details) | ~~November 19th~~ (ROME) |
+| ~~November 26th~~ (CERN)        | December 3rd             |
+| December 10th                   | December 17th (projects) |
+| ~~December 24th~~ (Christmas)   |                          |
 
 ---
 

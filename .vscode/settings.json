@@ -1,8 +1,0 @@
-{
-    "slidev.include": [
-        "**/slides.md",
-        "lectures/source/lecture_6_version_control.md",
-        "lectures/source/quiz_feedback.md"
-    ],
-    "slidev.port": 3030
-}
