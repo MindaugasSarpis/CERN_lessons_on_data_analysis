@@ -1,12 +1,5 @@
-# File Types
-*.log
-.DS_Store
-
-# Directories
-.snakemake
-.slidev
-
 node_modules
+.DS_Store
 dist
 *.local
 .vite-inspect
