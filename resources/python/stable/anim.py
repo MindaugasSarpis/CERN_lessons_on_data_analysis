@@ -48,14 +48,14 @@ def plot_hist_animation(data, xlow=0, xup=21, width=16, height=9):
             rect.set_height(h)
         return bar_container.patches
 
-    total_frames = 10000
+    total_frames = 100
     anim = FuncAnimation(
         fig, animate, frames=total_frames, interval=50, blit=True
     )
-    anim.save('animated_histogram.gif', writer='pillow')
+    anim.save('animated_histogram.mp4', writer='ffmpeg')
 
     plt.show()
 
 # Example usage:
-data = pd.read_csv('../../data/quiz_1.csv')
+data = pd.read_csv('../../../data/quiz_1.csv')
 plot_hist_animation(data, xlow=14, xup=22)
