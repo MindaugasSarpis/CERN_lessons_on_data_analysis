@@ -2,5 +2,8 @@
     "slidev.include": [
         "**/slides.md",
         "lectures/source/lecture_8_version_control.md"
-    ]
+    ],
+    "slidev.port": 3031,
+    "slidev.preview-sync": false,
+    "slidev.force-enabled": true
 }
