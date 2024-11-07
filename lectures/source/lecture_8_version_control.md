@@ -38,7 +38,7 @@ backgroundSize: contain
 # Tracking Changes (differences)  
 
 - ## Rather than saving multiple copies of the same file, we can track changes.
-- ## git is an open-source version control system that is used to track changes in files.
+- ## `git` is an open-source version control system that is used to track changes in files.
 
 ![](./resources/git/play-changes.svg)
 
