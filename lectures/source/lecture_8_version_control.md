@@ -204,8 +204,22 @@ layout: two-cols
 
 ![](./resources/git/git-staging-area.svg)
 
+- ### When staged files are present, the output of `git status` will be:
 
-<!-- - ### To commit the files in the staging area use:
+```bash
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   <file>
+```
+
+---
+layout: two-cols
+---
+
+- ### To commit the files in the staging area use:
 
   ```bash
   git commit -m "A message describing the changes"
@@ -215,11 +229,9 @@ layout: two-cols
 - ### Changes to files can be viewed with:
   ```bash
   git diff
-  ``` -->
-
-
----
-
+  ```
+  
+::right::
 ![](./resources/git/git-committing.svg)
 
 ---
@@ -230,9 +242,6 @@ layout: two-cols
 
 ![](./resources/git/git-restore.svg)
 
----
-
-![](./resources/git/git-staging-area.svg)
 
 ---
 
@@ -241,19 +250,3 @@ layout: two-cols
 ---
 
 ![](./resources/git/github-repo-after-first-push.svg)
-
----
-
-![](./resources/git/merge.svg)
-
----
-
-![](./resources/git/versions.svg)
-
---- 3
-
-```bash
-git init
-```
-
----
