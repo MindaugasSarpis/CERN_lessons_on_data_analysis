@@ -18,7 +18,7 @@ transition: fade
 
 ## Lecture **8**
 
-### **Version** Control using Git
+### **Version Control** using Git
 
 ---
 layout: image-right
@@ -37,8 +37,9 @@ backgroundSize: contain
 
 # Tracking Changes (differences)  
 
-- ## Rather than saving multiple copies of the same file, we can track changes.
-- ## `git` is an open-source version control system that is used to track changes in files.
+- ### Rather than saving multiple copies of the same file, we can track changes.
+- ###  Word processors and other software have some changes-tracking functionality but it is limited (no synchronous editing, no change history, etc.).
+- ### `git` is an open-source version control system that is used to track changes in files.
 
 ![](./resources/git/play-changes.svg)
 
@@ -50,8 +51,8 @@ backgroundSize: contain
 
 # Different Versions 
 
-- An eddit to a file might overwrite some of the content in the previous version.
-- This *divergences* may arrise while working alone, but they are really common when multiple people are working on the same file.
+- ### An eddit to a file might overwrite some of the content in the previous version.
+- ### This *divergences* may arrise while working alone, but they are really common when multiple people are working on the same file.
 
 ---
 layout: image-right
@@ -63,27 +64,34 @@ backgroundSize: contain
 
 - ### `git` has great functionality for merging different versions of the same file.
 - ### If the previous content is not overwritten, or deleted, merge just combines the changes into one file.
+- ### If changes over-write each other a so-called **merge conflict** arises.
 
 ---
 layout: two-cols
 ---
 
-# When using `git` for the first time 
+# Using `git` for the first time 
 
-- ### You need to configure your user name and email address.
+- ### The user name and email address need to configured.
 
 ```bash
 git config --global user.name "Mindaugas Sarpis"
 git config --global user.email "mindaugas.sarpis@cern.ch"
 ```
 
-- ### You can check the configuration with
+- ### Check the configuration with:
 
 ```bash
 git config --list
 ```
 
-- ### You can open the help with
+- ### Edit the configuration with:
+  
+```bash
+git config --global --edit
+```
+
+- ### Open configuration help:
    
 ```bash
 git config --h
@@ -180,7 +188,7 @@ layout: two-cols
 
 # Staging Area
 
-- ### `git` has a staging area where files are placed before they are committed to the repository.
+- ### `git` has a staging area where files are placed to track the changes made to them.  
 
 - ###  To move a file to the staging area use: 
   
@@ -200,6 +208,11 @@ layout: two-cols
     git restore --staged <file>
     ```
  
+- ### Changes to files can be viewed with:
+  ```bash
+  git diff
+  ```
+
 ::right::
 
 ![](./resources/git/git-staging-area.svg)
@@ -219,24 +232,187 @@ Changes to be committed:
 layout: two-cols
 ---
 
-- ### To commit the files in the staging area use:
+# Committing Changes
+
+- ### Files are committed to the repository from the staging area with:
 
   ```bash
   git commit -m "A message describing the changes"
   ```
-- ### Any new changes to the files in the repository are now tracked by `git`.
+- ### Commit is a snapshot of the repository at a given time.
 
-- ### Changes to files can be viewed with:
-  ```bash
-  git diff
-  ```
+- ### Only changes to files are tracked, not the directories themselves. 
+- ### It's best to keep the commits small and focused on a single change.
+- ### The commit message should be descriptive and concise.
+- ### The commit message should be in the present tense.
   
+
 ::right::
 ![](./resources/git/git-committing.svg)
 
 ---
+layout: two-cols
+---
+
+# Restoring Changes
+
+- ### Changes to files can be restored to the last commit with:
+
+  ```bash
+  git restore < file >
+  ```
+
+- ### Changes to files can be restored to the last commit and the staging area with:
+
+  ```bash
+  git restore --staged < file >
+  ```
+
+- ### Changes to files from previous commits can be restored using the *hash* of the commit:
+
+  ```bash
+  git restore --source=<hash> < file >
+  ```
+::right::
+
+![](./resources/git/git-restore.svg)
+
+- ### A new commit reverting the changes can be made with:
+  ```bash
+  git revert < hash >
+  ```
+
+- ### The entire repository can be restored to the last commit with deleting the changes:
+
+  ```bash
+  git reset --hard < hash >
+  ```
+
+---
+layout: image
+image: ./resources/git/git_staging.svg
+backgroundSize: contain
+---
+
+---
+layout: two-cols
+---
+
+# Ignoring Files and Directories 
+
+- ### There might be files that you don't want to track with `git`.
+
+  - #### Temporary files
+  - #### Output files 
+  - #### Files with sensitive information
+  - #### Large files
+
+- ### These files can be ignored by creating a `.gitignore` file in the repository.
+
+::right:: 
+
+```bash {*}{maxHeight:'400px'}
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+```
+
+---
+layout: two-cols
+---
+
+# Git Remotes
+
+- ### One of the most powerful features of `git` is the ability to work with remote repositories.
+- ### Remote repositories are copies of the repository that are stored on a server.
+- ### Using one of the remote providers (GitHub, GitLab, Bitbucket, etc.) you can store your repository in the cloud.
+- ### This enables collaboration with other people and provides a backup of your work.
+::right::
 
 ![](./resources/git/git-freshly-made-github-repo.svg)
+
+---
+layout: image
+image: 
+backgroundSize: contain
+---
+
+---
 
 ---
 
