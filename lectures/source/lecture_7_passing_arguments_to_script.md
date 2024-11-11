@@ -18,9 +18,9 @@ transition: slide-left
 # Dr. Mindaugas Šarpis
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 6
+## Lecture 7
 
-### **Version** Control
+### Passing arguments to a script
 
 ---
 
