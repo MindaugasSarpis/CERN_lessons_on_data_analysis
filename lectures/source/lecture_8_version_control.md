@@ -38,7 +38,7 @@ backgroundSize: contain
 # Tracking Changes (differences)  
 
 - ### Rather than saving multiple copies of the same file, we can track changes.
-- ###  Word processors and other software have some changes-tracking functionality but it is limited (no synchronous editing, no change history, etc.).
+- ###  Word processors and other software have some change-tracking functionality but it is limited (no synchronous editing, no change history, etc.).
 - ### `git` is an open-source version control system that is used to track changes in files.
 
 ![](./resources/git/play-changes.svg)
@@ -108,8 +108,8 @@ Config file location
     --system              use system config file
     --local               use repository config file
     --worktree            use per-worktree config file
-    -f, --file <file>     use given config file
-    --blob <blob-id>      read config from given blob object
+    -f, --file < file >     use given config file
+    --blob < blob-id >      read config from given blob object
 
 Action
     --get                 get value: name [value-pattern]
@@ -143,7 +143,7 @@ Other
     --includes            respect include directives on lookup
     --show-origin         show origin of config (file, standard input, blob, command line)
     --show-scope          show scope of config (worktree, local, global, system, command)
-    --default <value>     with --get, use default value when missing entry
+    --default < value >     with --get, use default value when missing entry
 ```
 
 ---
@@ -225,7 +225,7 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-        modified:   <file>
+        modified:   < file >
 ```
 
 ---
@@ -311,7 +311,7 @@ layout: two-cols
 
 ::right:: 
 
-```bash {*}{maxHeight:'400px'}
+```bash {*}{maxHeight:'350px'}
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -393,7 +393,9 @@ venv.bak/
 ```
 
 ---
-layout: two-cols
+layout: image-right
+image: ./resources/git/git-freshly-made-github-repo.svg
+backgroundSize: contain
 ---
 
 # Git Remotes
@@ -402,27 +404,76 @@ layout: two-cols
 - ### Remote repositories are copies of the repository that are stored on a server.
 - ### Using one of the remote providers (GitHub, GitLab, Bitbucket, etc.) you can store your repository in the cloud.
 - ### This enables collaboration with other people and provides a backup of your work.
-::right::
-
-![](./resources/git/git-freshly-made-github-repo.svg)
 
 ---
-layout: image
-image: 
+layout: image-right
+image: ./resources/git/git-freshly-made-github-repo.svg
 backgroundSize: contain
 ---
 
----
+# Git Remotes
+
+- ### The remote is created via the remote provider (GitHub, GitLab, Bitbucket, etc.).
+- ### A remote URL needs to be added to the local repository with: 
+
+```bash
+git remote add origin git@github.com:mygithub/myremote.git
+```
+
+- ### To check which remotes are added: 
+  
+```bash
+  git remote -v
+```
 
 ---
+layout: image-right
+image: ./resources/git/github-repo-after-first-push.svg
+backgroundSize: contain
+---
 
-![](./resources/git/git-restore.svg)
+# Push / Pull Operations
 
+- ### Changes to the local repository can be pushed to the remote repository with:
+
+```bash
+git push origin main
+```
+
+- ### Changes to the remote repository can be pulled to the local repository with:
+
+```bash
+git pull
+```
+
+---
+layout: image-right
+image: ./resources/git/github-collaboration.svg
+backgroundSize: contain
+---
+
+# Cloning Repositories
+
+- ### A repository can be cloned from a remote repository with:
+
+```bash
+git clone < URL >
+```
 
 ---
 
-![](./resources/git/github-collaboration.svg)
+# Branches 
 
----
+- ### `git` has a powerful branching system that allows for multiple versions of the repository to be worked on simultaneously.
+- ### The default branch is called `main`.
+- ### A new branch can be created with:
 
-![](./resources/git/github-repo-after-first-push.svg)
+```bash
+git branch < branch-name >
+```
+
+- ### The branch can be switched with:
+
+```bash
+git checkout < branch-name >
+```
