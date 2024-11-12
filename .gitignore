@@ -7,11 +7,3 @@
 
 # Directories
 .snakemake
-.slidev
-
-node_modules
-dist
-*.local
-.vite-inspect
-.remote-assets
-components.d.ts
