@@ -1,0 +1,163 @@
+category: LODAC_Quiz_2
+questions:
+  - type: multichoice
+    text: 'What is the purpose of the .gitignore file in Git?'
+    answers:
+      - text: 'To track changes in binary files'
+      - text: 'To list files that should be ignored by Git'
+        correct: true
+      - text: 'To ignore Git repositories'
+      - text: 'To store commit messages'
+
+  - type: multichoice
+    text: 'Which command stages all changes for the next Git commit?'
+    answers:
+      - text: 'git commit -a'
+      - text: 'git add --all'
+        correct: true
+      - text: 'git status'
+      - text: 'git push'
+
+  - type: multichoice
+    text: 'In data analysis, what does a histogram display?'
+    answers:
+      - text: 'Relationships between two variables'
+      - text: 'Frequency distribution of a dataset'
+        correct: true
+      - text: 'Categorical data'
+      - text: 'Summary statistics'
+
+  - type: multichoice
+    text: 'In Git, what command displays the commit history?'
+    answers:
+      - text: 'git commit'
+      - text: 'git log'
+        correct: true
+      - text: 'git history'
+      - text: 'git status'
+
+  - type: multichoice
+    text: 'Which of the following is a Python library used for plotting data?'
+    answers:
+      - text: 'pandas'
+      - text: 'matplotlib'
+        correct: true
+      - text: 'numpy'
+      - text: 'scipy'
+
+  - type: multichoice
+    text: 'What does the command git clone do?'
+    answers:
+      - text: 'It deletes the repository from a remote server.'
+      - text: 'It copies a repository from a remote server to your local machine.'
+        correct: true
+      - text: 'It creates a new branch.'
+      - text: 'It merges branches.'
+
+  - type: multichoice
+    text: 'In Python, which keyword is used to define a function?'
+    answers:
+      - text: 'define'
+      - text: 'function'
+      - text: 'def'
+        correct: true
+      - text: 'func'
+
+  - type: multichoice
+    text: 'Which of the following commands shows the status of a Git repository?'
+    answers:
+      - text: 'git log'
+      - text: 'git status'
+        correct: true
+      - text: 'git branch'
+      - text: 'git clone'
+
+  - type: multichoice
+    text: 'Which chart type would be most appropriate for visualizing the relationship between two continuous variables?'
+    answers:
+      - text: 'Bar chart'
+      - text: 'Scatter plot'
+        correct: true
+      - text: 'Pie chart'
+      - text: 'Box plot'
+
+  - type: multichoice
+    text: 'What is the primary purpose of data visualization?'
+    answers:
+      - text: 'To clean data'
+      - text: 'To explore, understand, and communicate data insights'
+        correct: true
+      - text: 'To store data'
+      - text: 'To generate raw data'
+
+  - type: multichoice
+    text: 'What does the command git pull do?'
+    answers:
+      - text: 'Merges changes from the local branch to the remote'
+      - text: 'Fetches and integrates changes from a remote branch to the current branch'
+        correct: true
+      - text: 'Deletes the current branch'
+      - text: 'Displays the commit history'
+
+  - type: multichoice
+    text: 'What is a heatmap typically used for in data visualization?'
+    answers:
+      - text: 'To display categorical data'
+      - text: 'To show the correlation or intensity between variables'
+        correct: true
+      - text: 'To visualize time series data'
+      - text: 'To represent 3D data'
+
+  - type: multichoice
+    text: 'Which chart type is useful for showing data distribution over different categories?'
+    answers:
+      - text: 'Scatter plot'
+      - text: 'Bar chart'
+        correct: true
+      - text: 'Line chart'
+      - text: 'Heatmap'
+
+  - type: multichoice
+    text: 'In programming, what does "hardcoding" mean?'
+    answers:
+      - text: 'Writing code without using any libraries'
+      - text: 'Embedding fixed values directly in the code instead of using variables or parameters'
+        correct: true
+      - text: 'Using only built-in functions'
+      - text: 'Writing code that cannot run on different systems'
+
+  - type: multichoice
+    text: 'Which approach helps avoid hardcoding in data analysis scripts?'
+    answers:
+      - text: 'Using specific values directly within the code'
+      - text: 'Using configuration files or input parameters'
+        correct: true
+      - text: 'Using print statements'
+      - text: 'Running the code multiple times with different values'
+
+  - type: multichoice
+    text: 'How can using variables help in avoiding hardcoding?'
+    answers:
+      - text: 'They make it easier to change values in one place instead of throughout the code'
+        correct: true
+      - text: 'They store fixed values only'
+      - text: 'They make the code slower'
+      - text: 'They increase the complexity of code without benefits'
+
+  - type: multichoice
+    text: 'Which tool in Python helps you pass values into a script without hardcoding them?'
+    answers:
+      - text: 'argparse'
+        correct: true
+      - text: 'import'
+      - text: 'if-else statements'
+      - text: 'print function'
+
+  - type: multichoice
+    text: 'In data analysis, why is it good practice to avoid hardcoding file paths?'
+    answers:
+      - text: 'It allows the script to be reused with different datasets and file locations'
+        correct: true
+      - text: 'It makes the code run faster'
+      - text: 'It prevents syntax errors'
+      - text: 'It reduces the file size'
