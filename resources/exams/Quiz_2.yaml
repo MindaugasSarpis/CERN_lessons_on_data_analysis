@@ -161,3 +161,21 @@ questions:
       - text: 'It makes the code run faster'
       - text: 'It prevents syntax errors'
       - text: 'It reduces the file size'
+
+  - type: multichoice
+    text: 'When creating a histogram, what is a "bin"?'
+    answers:
+      - text: 'A range of values that groups data points into intervals'
+        correct: true
+      - text: 'The mean value of the data'
+      - text: 'A marker for the median of data'
+      - text: 'The total number of data points in the dataset'
+
+  - type: multichoice
+    text: 'In a histogram, what do the heights of the bars represent?'
+    answers:
+       - text: 'The sum of all values'
+       - text: 'The frequency or count of data points within each interval'
+         correct: true
+       - text: 'The standard deviation of the data'
+       - text: 'The cumulative percentage of data points'
