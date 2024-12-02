@@ -1,5 +1,12 @@
 ---
-marp: true
+background: ./resources/global/background.jpg
+# apply unocss classes to the current slide
+class: text-left
+
+drawings:
+  persist: false
+
+transition: fade
 ---
 
 # Dr. Mindaugas Šarpis

@@ -1,7 +1,4 @@
 ---
-marp: true
-paginate: true
-
 background: ./resources/global/background.jpg
 # apply unocss classes to the current slide
 class: text-left
