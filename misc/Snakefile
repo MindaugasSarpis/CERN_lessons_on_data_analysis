@@ -1,5 +1,0 @@
-rule all:
-    input:
-        "first.py" 
-    shell:
-        "echo 'All done!'"
