@@ -42,36 +42,53 @@ transition: fade
 
 # Grading Structure
 
-## - **2 x 20% Quiz**
+- ## **2 x 20%** Quiz
 
-## - **1 x 60% Final Project**
-
-&nbsp;
-
-### \* Project can be presented at any stage during the course or at the end  
+- ## **1 x 60%** Final Project
 
 &nbsp;
 
-### \*\* Students are graded according to their previous expertise. One should be able to explain what they did, how, and why
+### \* One quiz from data analysis part and one from AI part. 
+
+&nbsp;
+
+### \*\* Students are graded on the project according to their previous expertise. One should be able to explain what they did, how, and why
 
 ---
 
-# Main Goals
+# **Main Goals**
 
-- ## **Build intuition for good practices.**
+- ## Build intuition for good practices
 
-- ## **Be aware of a plethora of available free tools.**
+- ## Be aware of a plethora of available free tools
 
-- ## **Build competences in relevant areas.**
+- ## Build competences in relevant areas
 
-- ## **Use what you have learned for your own projects.**
+- ## Use what you have learned for your own projects
 
 ---
 
-# Project Details
+# **Project Details**
 
-- ## **Should include elements of data analysis, using good practices and tools.**
+- ## Should include elements of data analysis, using good practices and tools
 
-- ## **May be related to your field of study/current work.**
+- ## May be related to your field of study/current work
 
-- ## **Can focus on a specific tool/method/algorithm or a broader**
+- ## Can focus on a specific tool/method/algorithm or a broader
+
+---
+
+# **Data Analysis Part Lecture Plan**
+
+|                         |                            |
+| ----------------------- | -------------------------- |
+| February 6 (2 lectures) | March 20 (2 lectures)      |
+| February 7 (2 lectures) | March 21 (2 lectures)      |
+| February 8 (4 lectures) | March 22 (4 lectures)      |
+|                         | Hands-on and Presentations |
+
+---
+layout: fact
+---
+
+# Intro to CERN
