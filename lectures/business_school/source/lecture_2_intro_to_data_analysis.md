@@ -289,10 +289,6 @@ layout: quote
 
 ---
 
-# Examples of **Tools** used for **Data Analysis**
-
----
-
 ![Data Analysis
 Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 
@@ -300,19 +296,27 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 
 # **Proprietary** Tools 
 
+
 - ## Expensive
+
 - ## Limited in scope
-- ## Lack compatibility 
+
+- ## Lack compatibility
+
 - ## Lack flexibility
+
 - ## Easy to learn / use (GUI)
 
 ---
 
-# **Programming** Languages 
+# **Programming** Languages
 
 - ## Open Source
+
 - ## Free
-- ## Powerful 
+
+- ## Powerful
+
 - ## Steep learning curve (CLI)
 
 ---
@@ -320,7 +324,9 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 # **Discussion**  
 
 - ## When to use proprietary tools?
+
 - ## What should you be using?  
-- ## Saturation of achieved proficiency 
+
+- ## Saturation of achieved proficiency
 
 ---
