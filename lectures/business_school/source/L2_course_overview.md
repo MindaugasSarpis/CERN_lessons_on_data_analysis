@@ -1,14 +1,16 @@
 ---
-background: /images/background.jpg
+background: /images/intro_background.jpg
 
 class: text-left
 colorSchema: dark
 
-theme: seriph
+theme: ./theme
 drawings:
   persist: false
 
 transition: fade
+
+
 ---
 
 # Dr. Mindaugas Šarpis
@@ -19,10 +21,12 @@ transition: fade
 ### Overview of the Course Content
 
 ---
-layout: center
+layout: center-bkg
 ---
 
 # Interactive Exercise
+
+
 
 ---
 layout: center
@@ -34,4 +38,7 @@ layout: center
 layout: default
 ---
 
-Hi
+# Data Analysis Course $\to$ Computer Literacy course
+
+- **Data Analysis** is a **Computer Literacy** course
+- **Data Analysis** is a **Computer Literacy** course
