@@ -10,7 +10,6 @@ drawings:
 
 transition: fade
 
-
 ---
 
 # Dr. Mindaugas Šarpis
@@ -25,20 +24,3 @@ layout: center-bkg
 ---
 
 # Interactive Exercise
-
-
-
----
-layout: center
----
-
-# Data Analysis Course $\to$ Computer Literacy course 
-
---- 
-layout: default
----
-
-# Data Analysis Course $\to$ Computer Literacy course
-
-- **Data Analysis** is a **Computer Literacy** course
-- **Data Analysis** is a **Computer Literacy** course
