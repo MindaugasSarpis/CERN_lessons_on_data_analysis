@@ -39,7 +39,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: \lectures\business_school\source\dist
+          path: dist
 
   deploy:
     environment:
