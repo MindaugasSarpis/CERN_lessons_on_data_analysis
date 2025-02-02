@@ -19,4 +19,15 @@ Intro to CERN
 
 ## Lecture 2 (February 6)
 
-- "lecture_2_intro_to_data_analysis.md"
+- "L2_course_overview.md"
+
+  - Interactivate Exercise - Inverse classroom
+    - [**easy**] give 10 grades, create a figure of them
+    - [**medium**] using dating_app.csv plot age:swiping history
+  
+  - Run analysis on lxplus on anyones pc
+  
+    - Windows
+
+      - `Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0`
+      - Putty

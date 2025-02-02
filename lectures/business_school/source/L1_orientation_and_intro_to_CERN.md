@@ -48,9 +48,7 @@ transition: fade
 
 &nbsp;
 
-### \* One quiz from data analysis part and one from AI part. 
-
-&nbsp;
+### \* One quiz from data analysis part and one from AI part.
 
 ### \*\* Students are graded on the project according to their previous expertise. One should be able to explain what they did, how, and why
 
@@ -74,7 +72,13 @@ transition: fade
 
 - ## May be related to your field of study/current work
 
-- ## Can focus on a specific tool/method/algorithm or a broader
+- ## Can focus on a specific tool/method/algorithm or a broader workflow
+
+- ## Codebase made available on GitHub
+
+- ## Project written up in a one-page report
+
+- ## Final presentation at the end of the course is graded on the spot
 
 ---
 
