@@ -1,5 +1,5 @@
 ---
-background: /images/intro_background.jpg
+background: /intro_background.jpg
 
 class: text-left
 colorSchema: dark
@@ -20,7 +20,7 @@ transition: fade
 ### Overview of the Course Content
 
 ---
-layout: center-bkg
+layout: center
 ---
 
 # Interactive Exercise

@@ -11,6 +11,7 @@
         "@slidev/cli": "latest",
         "express": "^4.21.2",
         "slidev-addon-python-runner": "^0.1.3",
+        "theme": "^0.1.0",
         "vite-svg-loader": "latest",
         "vue": "latest"
     },
