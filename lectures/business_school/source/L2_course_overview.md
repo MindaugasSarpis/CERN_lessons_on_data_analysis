@@ -4,7 +4,7 @@ background: /intro_background.jpg
 class: text-left
 colorSchema: dark
 
-theme: ./theme
+# theme: ./theme
 drawings:
   persist: false
 
