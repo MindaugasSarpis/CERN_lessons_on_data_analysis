@@ -1,0 +1,23 @@
+{
+    "name": "lodac",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "build": "slidev build",
+        "dev": "slidev --open",
+        "export": "slidev export"
+    },
+    "dependencies": {
+        "@slidev/cli": "latest",
+        "express": "^4.21.2",
+        "slidev-addon-python-runner": "^0.1.3",
+        "vite-svg-loader": "latest",
+        "vue": "latest"
+    },
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
