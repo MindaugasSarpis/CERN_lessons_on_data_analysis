@@ -3,7 +3,7 @@ background: ./background.jpg
 
 class: text-left
 
-theme: seriph
+theme: ./theme
 drawings:
   persist: false
 
