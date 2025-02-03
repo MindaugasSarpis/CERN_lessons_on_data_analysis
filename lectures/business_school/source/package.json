@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "codemirror-theme-vars": "^0.1.2",
+    "prism-theme-vars": "^0.2.5"
+  }
+}

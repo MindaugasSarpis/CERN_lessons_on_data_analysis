@@ -16,7 +16,7 @@ transition: fade
 
 ## Lecture 2
 
-### Overview of the Course Content and main Goals
+### Overview of the Course Content and Main Goals
 
 ---
 
@@ -81,6 +81,12 @@ layout: section
 - ## Be able to adapt to new tools and technologies quicker
   
 </v-clicks>
+
+---
+layout: section
+---
+
+# **Common pitfalls in working with computers**
 
 ---
 
