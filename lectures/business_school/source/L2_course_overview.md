@@ -89,4 +89,107 @@ layout: section
 # **Common pitfalls in working with computers**
 
 ---
+layout: two-cols-header
+---
 
+# File management chaos
+
+::left:: 
+
+<v-click>
+
+## Common issues:
+
+</v-click>
+
+<v-clicks>
+
+- "I have no idea where I saved that file"
+  
+- "My file is gone!"
+
+- "I have 10 files with the same name, which one is the right one?"
+
+  - `final_final_v2.docx`,  `asdfasdf.docx`, `asdfasdf.docx`
+
+- "I have overwritten my file with the wrong version"
+
+</v-clicks>
+
+::right::
+
+<v-click>
+
+## How to avoid:
+
+</v-click>
+
+<v-clicks>
+
+- Create a consistent folder structure
+
+- Use descriptive filenames and version numbers
+
+- Employ file tagging, search filters, or integrated version control systems like Git to help keep track of changes.
+
+</v-clicks>
+
+---
+layout: two-cols
+---
+
+<v-click>
+
+## No backups
+
+</v-click>
+
+<v-clicks>
+
+  - "I lost all my data"
+
+  - "I accidentally deleted my file"
+
+  - "My computer crashed and I lost everything"
+
+  - "I spilled tea on my laptop now my thesis is gone"
+
+</v-clicks>
+
+
+::right::
+
+<v-click>
+
+## How to avoid:
+
+</v-click>
+
+<v-clicks>
+
+- Use automatic cloud backup services (Dropbox, Google Drive, OneDrive).
+
+- Keep external backups on physical drives, ensuring they’re in a separate location.
+
+- Consider version control for text-based files (Git), so you can revert to an
+older version if needed.
+
+</v-clicks>
+
+---
+
+## Compatibility issues
+
+<v-clicks>
+
+  - "I can't open this file"
+  
+  - "This only works on my old laptop"
+
+  - "I have a mac so this probably won't work"
+  
+  - "I opened this word file but it's all broken"
+
+  - "The script was running ok but now I get errors"
+
+</v-clicks>

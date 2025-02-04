@@ -26,11 +26,11 @@ hideInToc: true
 <Toc text-sm minDepth="1" maxDepth="1" columns="2" />
 
 ---
-src: ./L1_orientation_and_intro_to_CERN.md#2-
+src: ./L1_orientation_and_intro_to_CERN.md#
 hide: false
 ---
 
 ---
-src: ./L2_course_overview.md#2-
+src: ./L2_course_overview.md#
 hide: false
 ---

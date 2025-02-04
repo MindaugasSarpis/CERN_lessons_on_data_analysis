@@ -13,7 +13,9 @@
         "slidev-addon-python-runner": "^0.1.3",
         "theme": "^0.1.0",
         "vite-svg-loader": "latest",
-        "vue": "latest"
+        "vue": "latest",
+        "prism-theme-vars" : "latest",
+        "codemirror-theme-vars" : "latest"
     },
     "version": "1.0.0",
     "description": "",
