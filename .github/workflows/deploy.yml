@@ -26,8 +26,8 @@ jobs:
           node-version: 'lts/*'
 
       - name: Setup @antfu/ni
-        run: npm i -g @antfu/ni
-
+        run: npm i -g @antfu/ni prism-theme-vars codemirror-theme-vars
+      
       - name: Install dependencies
         run: nci
 
