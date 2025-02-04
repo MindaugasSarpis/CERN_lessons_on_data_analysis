@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{github.event.repository.name}}/dist
+          path: dist
 
   deploy:
     environment:
