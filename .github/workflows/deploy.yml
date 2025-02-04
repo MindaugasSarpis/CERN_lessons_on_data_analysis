@@ -32,7 +32,8 @@ jobs:
         run: nci
 
       - name: Build
-        run: nr build --base /${{github.event.repository.name}}/
+        # run: nr build --base /${{github.event.repository.name}}/
+        run: nr build --base /lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
