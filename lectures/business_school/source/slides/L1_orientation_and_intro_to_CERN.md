@@ -1,5 +1,5 @@
 ---
-background: ./background.jpg
+background: ./intro_background.jpg
 
 class: text-left
 
@@ -9,15 +9,14 @@ drawings:
 
 transition: fade
 title: "Lecture 1: Course Orientation and Motivation"
+layout: cover
 ---
 
-# Lessons on Data Analysis from CERN
+# Dr. Mindaugas Šarpis
 
-## Dr. Mindaugas Šarpis
+# Lessons on **Data Analysis** from **CERN**
 
-&nbsp;
-
-## Lecture 1
+## Lecture 1:
 
 ## Course Orientation and Motivation
 
@@ -25,43 +24,65 @@ title: "Lecture 1: Course Orientation and Motivation"
 hideInToc: true
 ---
 
-# Course Structure
+# <v-click>  **Course Structure** </v-click>
+
+<v-clicks depth="3">
 
 - ## Lectures
   
-  - **Theory / Overviews**
-    - Main goal is exposure.
-  - **Discussion**
+  - ### Theory / Overviews
+
+    - #### Main goal is exposure
+
+  - ### Discussion
+  
     - Building intuition. Interactivity is important.
 
 - ## Seminars
   
-  - **Demos**
-  - **Hands-on Sessions**
-    - *Inverted Classroom*
-  - **Case Studies**
+  - ### Demos
+
+  - ### Hands-on Sessions
+
+    - #### *Inverted Classroom*
+  
+  - ### Case Studies
+
+</v-clicks>
 
 ---
 hideInToc: true
 ---
 
-# Grading Structure
+# <v-click> Grading Structure </v-click>
+
+<v-clicks>
 
 - ## **2 x 20%** Quiz
 
 - ## **1 x 60%** Final Project
 
+</v-clicks>
+
 &nbsp;
 
-### \* One quiz from data analysis part and one from AI part.
+<v-clicks>
 
-### \*\* Students are graded on the project according to their previous expertise. One should be able to explain what they did, how, and why
+### \* One quiz from data analysis part and one from AI part
+
+### \*\* Students are graded on the project according to their previous expertise
+
+### One should be able to explain what they did, how, and why
+
+</v-clicks>
 
 ---
 hideInToc: true
 ---
 
-# **Main Goals**
+# <v-click> **Main Goals** </v-click>
+
+<v-clicks>
 
 - ## Build intuition for good practices
 
@@ -69,13 +90,17 @@ hideInToc: true
 
 - ## Build competences in relevant areas
 
-- ## Use what you have learned for your own projects
+- ## Use what you learned for your own projects
+
+</v-clicks>
 
 ---
 hideInToc: true
 ---
 
-# **Project Details**
+# <v-click> **Project Details** </v-click>
+
+<v-clicks>
 
 - ## Should include elements of data analysis, using good practices and tools
 
@@ -89,18 +114,19 @@ hideInToc: true
 
 - ## Final presentation at the end of the course is graded on the spot
 
+</v-clicks>
+
 ---
 hideInToc: true
 ---
 
-# **Data Analysis Part Lecture Plan**
+# **Lecture Plan for the Data Analysis Part**
 
 |                         |                            |
 | ----------------------- | -------------------------- |
 | February 6 (2 lectures) | March 20 (2 lectures)      |
 | February 7 (2 lectures) | March 21 (2 lectures)      |
 | February 8 (4 lectures) | March 22 (4 lectures)      |
-|                         | Hands-on and Presentations |
 
 ---
 layout: fact

@@ -21,7 +21,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Index of Lectures
+# **Index of Lectures**
 
 <Toc text-sm minDepth="1" maxDepth="1" columns="1" />
 

@@ -9,15 +9,18 @@ drawings:
   persist: false
 
 transition: fade
+
 title: "Lecture 2: Overview of the Course Content and Main Goals"
+layout: cover
 ---
 
 # Dr. Mindaugas Šarpis
+
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 2
+## Lecture 2:
 
-### Overview of the Course Content and Main Goals
+## Overview of the Course Content and Main Goals
 
 ---
 hideInToc: true
@@ -67,7 +70,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# After this course you should: 
+# **After this course you should:**
 
 <v-clicks>
 
@@ -101,13 +104,13 @@ layout: two-cols-header
 hideInToc: true
 ---
 
-# File management chaos
+# **File management chaos**
 
 ::left:: 
 
 <v-click>
 
-## Common issues:
+## **Common issues:**
 
 </v-click>
 
@@ -129,7 +132,7 @@ hideInToc: true
 
 <v-click>
 
-## How to avoid:
+## **How to avoid:**
 
 </v-click>
 
@@ -150,7 +153,7 @@ hideInToc: true
 
 <v-click>
 
-## No backups
+## **No backups**
 
 </v-click>
 
@@ -170,7 +173,7 @@ hideInToc: true
 
 <v-click>
 
-## How to avoid:
+## **How to avoid:**
 
 </v-click>
 
@@ -186,10 +189,11 @@ older version if needed.
 </v-clicks>
 
 ---
+layout: two-cols
 hideInToc: true
 ---
 
-## Compatibility issues
+## **Compatibility issues**
 
 <v-clicks>
 
@@ -202,6 +206,28 @@ hideInToc: true
 - "I opened this word file but it's all broken"
 
 - "The script was running ok but now I get errors"
+
+</v-clicks>
+
+::right::
+
+##  <v-click> **How to avoid:** </v-click>
+
+<v-clicks>
+
+- Use open-source software and file formats whenever possible
+
+- Use cloud-based tools that work across different platforms
+
+- Use virtual machines or containers to ensure compatibility
+
+- Use version control to track changes and revert to a working version
+
+- Use software that is actively maintained and updated
+
+- Use software that is widely used and has a large user base
+
+- Agree on software and file formats with collaborators
 
 </v-clicks>
 
