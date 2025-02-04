@@ -39,7 +39,7 @@ jobs:
 
       - name: Build
         run:  |
-          nr build --output /${{github.event.repository.name}}/dist lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md --base /${{github.event.repository.name}}/
+          nr build --output ${{github.event.repository.name}}/dist lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md --base /${{github.event.repository.name}}/
           ls
 
       - name: Setup Pages
@@ -47,7 +47,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ${{github.event.repository.name}}/dist
 
   deploy:
     environment:
