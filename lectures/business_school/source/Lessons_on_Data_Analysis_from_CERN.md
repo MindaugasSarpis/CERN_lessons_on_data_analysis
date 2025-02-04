@@ -23,14 +23,14 @@ hideInToc: true
 
 # Index of Lectures
 
-<Toc text-sm minDepth="1" maxDepth="1" columns="2" />
+<Toc text-sm minDepth="1" maxDepth="1" columns="1" />
 
 ---
-src: ./L1_orientation_and_intro_to_CERN.md#
+src: slides/L1_orientation_and_intro_to_CERN.md#
 hide: false
 ---
 
 ---
-src: ./L2_course_overview.md#
+src: slides/L2_course_overview.md#
 hide: false
 ---

@@ -8,6 +8,7 @@ drawings:
   persist: false
 
 transition: fade
+title: "Lecture 1: Course Orientation and Motivation"
 ---
 
 # Lessons on Data Analysis from CERN
@@ -20,6 +21,8 @@ transition: fade
 
 ## Course Orientation and Motivation
 
+---
+hideInToc: true
 ---
 
 # Course Structure
@@ -39,6 +42,8 @@ transition: fade
   - **Case Studies**
 
 ---
+hideInToc: true
+---
 
 # Grading Structure
 
@@ -53,6 +58,8 @@ transition: fade
 ### \*\* Students are graded on the project according to their previous expertise. One should be able to explain what they did, how, and why
 
 ---
+hideInToc: true
+---
 
 # **Main Goals**
 
@@ -64,6 +71,8 @@ transition: fade
 
 - ## Use what you have learned for your own projects
 
+---
+hideInToc: true
 ---
 
 # **Project Details**
@@ -81,6 +90,8 @@ transition: fade
 - ## Final presentation at the end of the course is graded on the spot
 
 ---
+hideInToc: true
+---
 
 # **Data Analysis Part Lecture Plan**
 
@@ -93,6 +104,7 @@ transition: fade
 
 ---
 layout: fact
+hideInToc: true
 ---
 
 # Intro to CERN

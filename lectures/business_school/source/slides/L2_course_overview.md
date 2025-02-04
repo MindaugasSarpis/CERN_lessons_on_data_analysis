@@ -9,6 +9,7 @@ drawings:
   persist: false
 
 transition: fade
+title: "Lecture 2: Overview of the Course Content and Main Goals"
 ---
 
 # Dr. Mindaugas Šarpis
@@ -18,6 +19,8 @@ transition: fade
 
 ### Overview of the Course Content and Main Goals
 
+---
+hideInToc: true
 ---
 
 # **Course content** (prone to change)
@@ -48,16 +51,20 @@ transition: fade
 
 ---
 layout: section
+hideInToc: true
 ---
 
 # **Goals of the course**
 
 ---
 layout: section
+hideInToc: true
 ---
 
 # ***Interactive Exercise***
 
+---
+hideInToc: true
 ---
 
 # After this course you should: 
@@ -84,12 +91,14 @@ layout: section
 
 ---
 layout: section
+hideInToc: true
 ---
 
 # **Common pitfalls in working with computers**
 
 ---
 layout: two-cols-header
+hideInToc: true
 ---
 
 # File management chaos
@@ -136,6 +145,7 @@ layout: two-cols-header
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 <v-click>
@@ -146,16 +156,15 @@ layout: two-cols
 
 <v-clicks>
 
-  - "I lost all my data"
+- "I lost all my data"
 
-  - "I accidentally deleted my file"
+- "I accidentally deleted my file"
 
-  - "My computer crashed and I lost everything"
+- "My computer crashed and I lost everything"
 
-  - "I spilled tea on my laptop now my thesis is gone"
+- "I spilled tea on my laptop now my thesis is gone"
 
 </v-clicks>
-
 
 ::right::
 
@@ -177,19 +186,23 @@ older version if needed.
 </v-clicks>
 
 ---
+hideInToc: true
+---
 
 ## Compatibility issues
 
 <v-clicks>
 
-  - "I can't open this file"
+- "I can't open this file"
   
-  - "This only works on my old laptop"
+- "This only works on my old laptop"
 
-  - "I have a mac so this probably won't work"
+- "I have a mac so this probably won't work"
   
-  - "I opened this word file but it's all broken"
+- "I opened this word file but it's all broken"
 
-  - "The script was running ok but now I get errors"
+- "The script was running ok but now I get errors"
 
 </v-clicks>
+
+---
