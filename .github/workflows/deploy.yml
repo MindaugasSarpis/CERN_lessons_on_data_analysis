@@ -39,7 +39,7 @@ jobs:
 
       - name: Build
         run:  |
-          nr build --output dist lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md --base /${{github.event.repository.name}}/
+          nr build --output ../../../dist lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md --base /${{github.event.repository.name}}/
             
       - name: Verify Build Output
         run: ls -l dist
