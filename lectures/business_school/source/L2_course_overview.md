@@ -178,7 +178,7 @@ older version if needed.
 
 ---
 
-## Compatibility issues 
+## Compatibility issues
 
 <v-clicks>
 

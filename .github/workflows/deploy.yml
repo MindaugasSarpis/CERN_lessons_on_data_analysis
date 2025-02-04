@@ -39,7 +39,7 @@ jobs:
 
       - name: Build
         run: nr build --output dist lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md --base /${{github.event.repository.name}}/
-             ls -R dist
+             ls dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
