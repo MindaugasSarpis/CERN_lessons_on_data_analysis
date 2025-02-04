@@ -32,7 +32,7 @@ jobs:
         run: nci
 
       - name: Build
-        run: nr build /lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md \
+        run: nr build lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md \
             --base /${{github.event.repository.name}}/
         
       - name: Setup Pages
