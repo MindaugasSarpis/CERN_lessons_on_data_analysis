@@ -129,6 +129,13 @@ hideInToc: true
 | February 8 (4 lectures) | March 22 (4 lectures)      |
 
 ---
+hideInToc: true
+layout: fact
+---
+
+# Who am I talking to?
+
+---
 layout: fact
 hideInToc: true
 ---
