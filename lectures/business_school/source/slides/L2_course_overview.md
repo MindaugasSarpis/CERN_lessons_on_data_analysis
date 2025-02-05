@@ -118,15 +118,15 @@ hideInToc: true
 
 <v-clicks>
 
-- "I have no idea where I saved that file"
+- ### "I have no idea where I saved that file"
   
-- "My file is gone!"
+- ### "My file is gone!"
 
-- "I have 10 files with the same name, which one is the right one?"
+- ### "I have 10 files with the same name, which one is the right one?"
 
-  - `final_final_v2.docx`,  `asdfasdf.docx`, `asdfasdf.docx`
+  - ### `final_final_v2.docx`,  `asdfasdf.docx`, `asdfasdf.docx`
 
-- "I have overwritten my file with the wrong version"
+- ### "I have overwritten my file with the wrong version"
 
 </v-clicks>
 
@@ -372,17 +372,9 @@ hideInToc: true
 </v-clicks>
 
 ---
-layout: section
-hideInToc: true
----
-
-# ***Interactive Exercise***
-
-#### Files and Extensions 
-
----
 layout: two-cols-header
 hideInToc: true
+class: "pt-30"  # modifies spacing on the overall layout
 ---
 
 # <v-click> **Two different file types** </v-click>
@@ -419,5 +411,18 @@ hideInToc: true
 
 </v-clicks>
 
---- 
+---
+layout: section
+hideInToc: true
+---
+
+# ***Interactive Exercise***
+
+#### Files and Extensions 
+
+---
+layout: iframe
+hideInToc: true
+url: https://datacarpentry.github.io/rr-organization1/01-file-naming/index.html
+---
 
