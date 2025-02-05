@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 2: Overview of the Course Content and Main Goals"
+title: "Lecture 2: File Handling and Directory Structure"
 layout: cover
 ---
 
@@ -20,44 +20,7 @@ layout: cover
 
 ## Lecture 2:
 
-## Overview of the Course Content and Main Goals
-
----
-hideInToc: true
----
-
-# **Course content** (prone to change)
-
-<v-clicks>
-
-- ## More on the goals of the course
-
-- ## Common pitfalls in working with computers
-  
-- ## Main principles of computing
-  
-- ## Computing infrastructure
-
-- ## Main principles of Data Analysis
-
-- ## Crash course on Python
-
-- ## Different Computing Environments
-
-- ## Creating robust workflows
-
-- ## Crash course on statistics
-
-- ## Ideas for projects
-
-</v-clicks>
-
----
-layout: section
-hideInToc: true
----
-
-# **Goals of the course**
+## File Handling and Directory Structure
 
 ---
 layout: section
@@ -67,32 +30,6 @@ hideInToc: true
 # ***Interactive Exercise***
 
 #### Analysis on the Fly
-
----
-hideInToc: true
----
-
-# **After this course you should:**
-
-<v-clicks>
-
-- ## Understand main concepts of computing
-  
-- ## Know which tools to chose for a specific task
-
-- ## Be able to implement simple data analysis workflows on the fly
-
-- ## Be safe from common pitfalls in working with computer
-
-- ## Gain knowledge on mathematics and statistics needed for data analysis
-
-- ## Understand the basics of machine learning and AI
-
-- ## Become platform and tool agnostic in your work
-
-- ## Be able to adapt to new tools and technologies quicker
-  
-</v-clicks>
 
 ---
 layout: section
@@ -144,7 +81,7 @@ hideInToc: true
 
 - ### Use descriptive filenames and version numbers
 
-- ### Employ file tagging, search filters, or integrated version control systems like Git to help keep track of changes.
+- ### Employ file tagging, search filters, or integrated version control systems like Git to help keep track of changes
 
 </v-clicks>
 
@@ -426,3 +363,49 @@ hideInToc: true
 url: https://datacarpentry.github.io/rr-organization1/01-file-naming/index.html
 ---
 
+---
+hideInToc: true
+layout: two-cols-header
+class: "pt-30"  # modifies spacing on the overall layout
+---
+
+# **Directory Structure**
+
+::left::
+
+## Organized by File type
+
+```bash
+|- Data/
+|  |- Processed/
+|  |- Raw/
+|- Results/
+|  |- Figure1.tif
+|  |- Figure2.tif
+|  |- Models/
+|  |  |- Model1/
+```
+
+::right::
+
+## Organized by Analysis
+
+```bash
+|- Figure1/
+|  |- Data/
+|  |- Results
+|  |  |- Figure1.tif
+|- Figure2/
+|  |- Data/
+|  |- Results/
+|  |  |- Figure2.tif
+```
+
+---
+layout: center
+hideInToc: true
+---
+
+[<img src="/RDM_Lifecycle.png" class="inline w-140"/>](https://datamanagement.hms.harvard.edu/)
+
+---
