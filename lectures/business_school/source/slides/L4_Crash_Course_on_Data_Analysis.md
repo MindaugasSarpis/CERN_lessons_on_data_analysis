@@ -1,32 +1,42 @@
 ---
-background: ./background.jpg
+background: /intro_background.jpg
 
 class: text-left
+colorSchema: dark
 
-theme: seriph
+theme: ./theme
 drawings:
   persist: false
 
 transition: fade
+
+title: "Lecture 3: File Handling and Directory Structure"
+layout: cover
 ---
 
 # Dr. Mindaugas Šarpis
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 2
+## Lecture 4
 
-### Introduction to Data Analysis
+## Introduction to Data Analysis
 
+---
+hideInToc: true
+layout: fact
 ---
 
 # What is **Data Analysis**? 
 
-## <v-click> What is **Data**? </v-click>
+## <div v-click> What is **Data**? </div>
 
 &nbsp;
 
-###### interactive exercise
+#### <div v-after>  interactive exercise </div>
 
+---
+hideInToc: true
+layout: quote
 ---
 
 ## **Data analysis** is a process of inspecting, cleaning, transforming, and modeling **data** with the goal of discovering useful **information**, informing conclusions, and supporting decision-making
@@ -36,9 +46,15 @@ transition: fade
 # Wikipedia
 
 ---
+hideInToc: true
+layout: fact
+---
 
 # What is **Data Science**?
 
+---
+hideInToc: true
+layout: quote
 ---
 
 ## **Data science** is an interdisciplinary academic field that uses statistics, scientific computing, scientific methods, processing, scientific visualization, algorithms and systems to extract or extrapolate **knowledge and insights** from potentially noisy, structured, or unstructured data
@@ -48,24 +64,33 @@ transition: fade
 # Wikipedia
 
 ---
+hideInToc: true
+---
 
-# **Key** Ideas 
+<v-clicks depth="2">
 
-- ## Any experiment (study or analysis) in any field of science will have a data analysis component
-  
-- ## Normally, the **results of data analysis** appear in scientific **publications**
-  
-- ## In business data analysis is imperative for **decision making**
+- # **Key Ideas** 
+
+  - ## Any experiment (study or analysis) in any field of science will have a data analysis component
+
+  - ## Normally, the **results of data analysis** appear in scientific **publications**
+
+  - ## In business data analysis is imperative for **decision making**
+
+</v-clicks>
 
 ---
 layout: section
+hideInToc: true
 ---
 
 # Examples of **data analysis** in different fields of science and industry 
 
 ---
+hideInToc: true
+---
 
-# Bio medicine and Genomics
+# **Bio medicine and Genomics**
 
 - ## Genome Sequencing
   
@@ -73,13 +98,15 @@ layout: section
 
 &nbsp;
 
-### \* 23andMe anyone (ancestry services)?
+### **23andMe** anyone (ancestry services)?
 
-### \** comparing against *reference populations*
+### Comparing against *reference populations*
 
 ---
+hideInToc: true
+---
 
-# Environmental Sciences
+# **Environmental Sciences**
 
 - ## Climate Change Models
 
@@ -90,8 +117,10 @@ layout: section
 ###### living analysis 
 
 ---
+hideInToc: true
+---
 
- # Social Sciences
+# **Social Sciences**
 
 - ## Economic Forecasting
   
@@ -100,8 +129,10 @@ layout: section
 ###### may be qualitative analysis 
 
 ---
+hideInToc: true
+---
 
-# Astronomy 
+# **Astronomy** 
 
 - ## Observational Data Analysis
   
@@ -110,8 +141,10 @@ layout: section
 - ## ...
 
 ---
+hideInToc: true
+---
 
-# Engineering
+# **Engineering**
 
 - ## Predictive Maintenance
 
@@ -120,8 +153,10 @@ layout: section
 - ## Structural Health Monitoring
 
 ---
+hideInToc: true
+---
 
-# Healthcare
+# **Healthcare**
 
 - ## Epidemiology
   
@@ -130,8 +165,10 @@ layout: section
 - ## ... 
   
 ---
+hideInToc: true
+---
 
-# Finance 
+# **Finance** 
 
 - ## Stock Market Analysis
 
@@ -140,8 +177,10 @@ layout: section
 - ## Algorithmic Trading
 
 ---
+hideInToc: true
+---
 
-# Sports Analytics 
+# **Sports Analytics** 
 
 - ## Performance Analysis
   
@@ -149,96 +188,117 @@ layout: section
 
 ---
 layout: section
+hideInToc: true
 ---
 
-# Steps of **Data Analysis** 
+# **Steps of Data Analysis** 
 
 ---
+hideInToc: true
+---
 
- # 1. **Define** the Problem or Research Question 
+- # 1. **Define the Problem or Research Question**
 
-- ## Formulation
+  - ## Formulation
   
-  This might steer the choices in the following steps
+    This might steer the choices in the following steps
 
-- ## Experimental Design
+  - ## Experimental Design
 
 ###### Interactive exercise 
 
 ---
-
-# 2. **Collect** Data 
-
-- ## How much data do you need?
-
-- ## What sort of data do you need?
-
-- ## What data formats should you chose?
-  
-- ## Can you trust the data?
-
-- ## Can you collect the data?
-
+hideInToc: true
 ---
 
-# 3. **Clean** Data 
+- # 2. **Collect Data** 
 
-- ## Data Selection
+  - ## How much data do you need?
 
-- ## Data Stripping
+  - ## What sort of data do you need?
 
-- ## Data Skimming
+  - ## What data formats should you chose?
 
-- ## Data Wrangling
+  - ## Can you trust the data?
 
-- ## ...
-
----
-
-# 4. **Analyze** Data
-
-- ## Data Exploration
-
-- ## Statistical Analysis
-
-- ## Model Building
-
-- ## Machine Learning
-
-- ## Classification (...**AI**...)
+  - ## Can you collect the data?
 
 ---
-
-# 5. **Visualize** the data
-
-- ## What's your target audience?
-  
-- ## What is the message you want to convey?
-
+hideInToc: true
 ---
 
-# 6. **Interpret** and **report** the results
+- # 3. **Clean Data**
 
-- ## Draw Conclusions from Data
-  
-- ## Report Findings
+  - ## Data Selection
+
+  - ## Data Stripping
+
+  - ## Data Skimming
+
+  - ## Data Wrangling
+
+  - ## ...
+
+---
+hideInToc: true
+---
+
+- # 4. **Analyze Data**
+
+  - ## Data Exploration
+
+  - ## Statistical Analysis
+
+  - ## Model Building
+
+  - ## Machine Learning
+
+  - ## Classification (...**AI**...)
+
+---
+hideInToc: true
+---
+
+- # 5. **Visualize the data**
+
+  - ## What's your target audience?
+
+  - ## What is the message you want to convey?
+
+---
+hideInToc: true
+---
+
+- # 6. **Interpret and report the results**
+
+  - ## Draw Conclusions from Data
+
+  - ## Report Findings
 
 ---
 layout: section
---- 
-
-# Data **Hygiene**
-
+hideInToc: true
 ---
 
-![FAIR](https://www.nlm.nih.gov/oet/ed/cde/tutorial/img/06aCDE.png)
+# **Data Hygiene**
+
+---
+hideInToc: true
+layout: section
+---
+
+# **F A I R**
 
 --- 
 layout: quote
+hideInToc: true
 ---
+
 
 ## The first step in **(re)using data** is to find them. **Metadata** and data should be easy to find for both humans and computers. Machine-readable metadata are essential for automatic discovery of datasets and services, so this is an essential component of the FAIRification process.
 
+---
+hideInToc: true
 ---
 
 # **Findable** data
@@ -254,6 +314,9 @@ layout: quote
 ###### What's metadata?
 
 ---
+hideInToc: true
+---
+
 
 # **Accessible** data
 
@@ -266,6 +329,9 @@ layout: quote
 - ## **A2.** Metadata are accessible, even when the data are no longer available
 
 ---
+hideInToc: true
+---
+
 
 # **Interoperable** data
 
@@ -275,6 +341,8 @@ layout: quote
 
 - ## **I3.** (Meta)data include **qualified references** to other (meta)data
 
+---
+hideInToc: true
 ---
 
 # **Reusable** data
@@ -288,10 +356,37 @@ layout: quote
   - ## **R1.3.** (Meta)data meet **domain-relevant community standards**
 
 ---
+layout: center
+class: 'text-center'
+---
 
-![Data Analysis
-Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
+<!-- Titles for the columns -->
+<div class="grid grid-cols-2 gap-8 w-full mb-8">
+  <h2 class="text-2xl font-bold">Proprietary Tools</h2>
+  <h2 class="text-2xl font-bold">Programming Languages</h2>
+</div>
 
+<!-- Logos in two columns -->
+<div class="grid grid-cols-2 gap-8 w-full">
+
+  <!-- Column 1 -->
+  <div class="flex flex-col items-center gap-6">
+    <!-- Logo 1 -->
+    <img src="/tableau_logo.png" alt="Logo 3" class="w-auto h-32" />
+    <img src="/origin_logo.png" alt="Logo 1" class="w-auto h-32" />
+    <img src="/excel_logo.png" alt="Logo 2" class="w-auto h-32" />
+  </div>
+
+  <!-- Column 2 -->
+  <div class="flex flex-col items-center gap-6">
+    <img src="/python_logo.png" alt="Logo 4" class="w-auto h-32" />
+    <img src="/R_logo.png" alt="Logo 6" class="w-auto h-32" />
+    <img src="/julia_logo.png" alt="Logo 5" class="w-auto h-32" />
+  </div>
+
+</div>
+---
+hideInToc: true
 ---
 
 # **Proprietary** Tools 
@@ -308,6 +403,9 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 - ## Easy to learn / use (GUI)
 
 ---
+hideInToc: true
+---
+
 
 # **Programming** Languages
 
@@ -320,6 +418,8 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 - ## Steep learning curve (CLI)
 
 ---
+hideInToc: true
+---
 
 # **Discussion**  
 
@@ -328,5 +428,3 @@ Tools](./resources/lecture_2/image_slides_lecture_2/Slide1.png)
 - ## What should you be using?  
 
 - ## Saturation of achieved proficiency
-
----

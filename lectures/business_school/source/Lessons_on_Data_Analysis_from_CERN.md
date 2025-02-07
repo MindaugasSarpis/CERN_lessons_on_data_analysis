@@ -27,10 +27,12 @@ hideInToc: true
 
 ---
 src: slides/L1_orientation_and_intro_to_CERN.md
-hide: false
 ---
 
 ---
-src: slides/L2_File_Handling_and_Directory_Structure.md
-hide: false
+src: slides/L3_File_Handling_and_Directory_Structure.md
 ---
+
+--- 
+src: slides/L4_Crash_Course_on_Data_Analysis.md
+--- 

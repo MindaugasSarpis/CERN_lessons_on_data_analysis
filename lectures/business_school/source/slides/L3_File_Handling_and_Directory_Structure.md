@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 2: File Handling and Directory Structure"
+title: "Lecture 3: File Handling and Directory Structure"
 layout: cover
 ---
 
@@ -18,18 +18,9 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 2:
+## Lecture 3:
 
 ## File Handling and Directory Structure
-
----
-layout: section
-hideInToc: true
----
-
-# ***Interactive Exercise***
-
-#### Analysis on the Fly
 
 ---
 layout: section
@@ -353,7 +344,7 @@ layout: section
 hideInToc: true
 ---
 
-# ***Interactive Exercise***
+# ***Demo***
 
 #### Files and Extensions 
 

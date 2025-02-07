@@ -8,14 +8,14 @@
         "export": "slidev export"
     },
     "dependencies": {
-        "@slidev/cli": "latest",
+        "@slidev/cli": "^51.1.0",
+        "codemirror-theme-vars": "latest",
         "express": "^4.21.2",
+        "prism-theme-vars": "latest",
         "slidev-addon-python-runner": "^0.1.3",
         "theme": "^0.1.0",
         "vite-svg-loader": "latest",
-        "vue": "latest",
-        "prism-theme-vars" : "latest",
-        "codemirror-theme-vars" : "latest"
+        "vue": "latest"
     },
     "version": "1.0.0",
     "description": "",

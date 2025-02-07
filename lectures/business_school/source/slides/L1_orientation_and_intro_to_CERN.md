@@ -201,7 +201,8 @@ layout: fact
 
 ---
 layout: fact
-hideInToc: true
+hideInToc: false
+title: "Lecture 2: Intro to CERN"
 ---
 
 # Intro to CERN
