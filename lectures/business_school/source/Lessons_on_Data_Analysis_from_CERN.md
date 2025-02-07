@@ -26,11 +26,11 @@ hideInToc: true
 <Toc text-sm minDepth="1" maxDepth="1" columns="1" />
 
 ---
-src: slides/L1_orientation_and_intro_to_CERN.md#
+src: slides/L1_orientation_and_intro_to_CERN.md
 hide: false
 ---
 
 ---
-src: slides/L2_course_overview.md#
+src: slides/L2_File_Handling_and_Directory_Structure.md
 hide: false
 ---
