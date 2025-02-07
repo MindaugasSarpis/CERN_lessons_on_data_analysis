@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 3: File Handling and Directory Structure"
+title: "Lecture 4: Introduction to Data Analysis"
 layout: cover
 ---
 
