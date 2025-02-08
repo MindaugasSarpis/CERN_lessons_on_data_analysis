@@ -26,7 +26,11 @@ hideInToc: true
 <Toc text-sm minDepth="1" maxDepth="1" columns="1" />
 
 ---
-src: slides/L1_orientation_and_intro_to_CERN.md
+src: slides/L1_Course_Orientation.md
+---
+
+---
+src: slides/L2_Intro_to_CERN.md
 ---
 
 ---
@@ -34,5 +38,10 @@ src: slides/L3_File_Handling_and_Directory_Structure.md
 ---
 
 --- 
-src: slides/L4_Crash_Course_on_Data_Analysis.md
+src: slides/L4_Main_Concepts_of_Data_Analysis.md
 --- 
+
+--- 
+src: slides/L5_Crash_Course_on_Computer_Science.md
+--- 
+

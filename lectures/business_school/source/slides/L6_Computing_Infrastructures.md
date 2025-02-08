@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 5: Crash Course on Computer Science"
+title: "Lecture 6: Computing Infrastructures"
 layout: cover
 ---
 
@@ -18,11 +18,15 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 5:
+## Lecture 6:
 
-## Crash Course on Computer Science
+## Computing Infrastructures
 
 ---
 layout: section
 hideInToc: true
 ---
+
+# ***Interactive Exercise***
+
+#### Analysis on the Fly

@@ -198,11 +198,3 @@ layout: fact
 ---
 
 # Who am I talking to?
-
----
-layout: fact
-hideInToc: false
-title: "Lecture 2: Intro to CERN"
----
-
-# Intro to CERN

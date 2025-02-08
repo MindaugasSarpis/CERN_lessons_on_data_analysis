@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 5: Crash Course on Computer Science"
+title: "Lecture 7: Crash Course on Python Programming"
 layout: cover
 ---
 
@@ -18,11 +18,15 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 5:
+## Lecture 7:
 
-## Crash Course on Computer Science
+## Crash Course on Python Programming
 
 ---
 layout: section
 hideInToc: true
 ---
+
+# ***Interactive Exercise***
+
+#### Analysis on the Fly
