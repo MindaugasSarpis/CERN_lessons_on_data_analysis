@@ -38,10 +38,9 @@ src: slides/L3_File_Handling_and_Directory_Structure.md
 ---
 
 --- 
-src: slides/L4_Main_Concepts_of_Data_Analysis.md
---- 
+src: slides/L4_Concepts_of_Data_Analysis.md
+---
 
 --- 
 src: slides/L5_Crash_Course_on_Computer_Science.md
---- 
-
+---

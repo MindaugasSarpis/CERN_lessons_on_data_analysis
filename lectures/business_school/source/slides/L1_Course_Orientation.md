@@ -137,17 +137,17 @@ hideInToc: true
 
 <v-clicks>
 
-- ## More on the goals of the course
-
 - ## Common pitfalls in working with computers
+
+- ## File handling and directory structure
   
+- ## Concepts of Data Analysis
+
 - ## Main principles of computing
   
 - ## Computing infrastructure
 
-- ## Main principles of Data Analysis
-
-- ## Crash course on Python
+- ## Crash course on Python programming
 
 - ## Different Computing Environments
 

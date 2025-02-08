@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 4: Introduction to Data Analysis"
+title: "Lecture 4: Concepts of Data Analysis"
 layout: cover
 ---
 
@@ -19,7 +19,7 @@ layout: cover
 
 ## Lecture 4
 
-## Introduction to Data Analysis
+## Concepts of Data Analysis
 
 ---
 hideInToc: true

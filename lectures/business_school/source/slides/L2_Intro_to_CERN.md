@@ -21,8 +21,8 @@ layout: cover
 ## Intro to CERN
 
 ---
-layout: fact
+layout: section
 hideInToc: true
 ---
 
-# This is a lecture about CERN - The European Organization for Nuclear Research. This is not examinable, just for ones general knowledge.
+# No slides provided for this lecture. If you are interested in CERN, please visit [CERN's website](https://home.cern/). There are many resources available for you to explore.
