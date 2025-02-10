@@ -23,10 +23,12 @@ layout: cover
 ## Crash Course on Python Programming
 
 ---
-layout: section
 hideInToc: true
 ---
 
-# ***Interactive Exercise***
+# Useful Resources for starting with Python
 
-#### Analysis on the Fly
+- [Python Official Documentation](https://docs.python.org/)
+- [Python Tutorial](https://docs.python.org/3/tutorial/index.html)
+- [Python for Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
+- Free introductory courses on codecademy, coursera, udemy, etc.
