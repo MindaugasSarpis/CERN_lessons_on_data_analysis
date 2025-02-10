@@ -48,3 +48,7 @@ src: slides/L5_Crash_Course_on_Computer_Science.md
 ---
 src: slides/L6_Computing_Infrastructure.md
 ---
+
+---
+src: slides/L7_Crash_Course_on_Python_Programming.md
+---

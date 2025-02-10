@@ -21,10 +21,3 @@ layout: cover
 ## Lecture 7:
 
 ## Crash Course on Python Programming
-
----
-layout: quote
-hideInToc: true
----
-
-# The main goals 
