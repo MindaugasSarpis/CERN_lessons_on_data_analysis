@@ -24,6 +24,7 @@ layout: cover
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # The Importance of Version Control
@@ -41,6 +42,8 @@ layout: two-cols
 <img src="/comic_version.jfif" style="max-height: 500px; margin-left: 30px">
 
 ---
+hideInToc: true
+---
 
 # Tracking Changes (differences)
 
@@ -54,6 +57,7 @@ layout: two-cols
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Different Versions
@@ -68,6 +72,7 @@ layout: two-cols
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Merging
@@ -84,6 +89,7 @@ layout: two-cols
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Using `git` for the first time 
@@ -174,6 +180,7 @@ Other
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Creating a new repository
@@ -214,6 +221,7 @@ nothing to commit (create/copy files and use "git add" to track)
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Staging Area
@@ -269,6 +277,7 @@ Changes to be committed:
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Committing Changes
@@ -296,6 +305,7 @@ git commit -m "A message describing the changes"
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Restoring Changes
@@ -340,10 +350,12 @@ layout: two-cols
 layout: image
 image: /git_staging.svg
 backgroundSize: contain
+hideInToc: true
 ---
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 # Ignoring Files and Directories 
@@ -447,6 +459,7 @@ venv.bak/
 layout: image-right
 image: /git-freshly-made-github-repo.svg
 backgroundSize: contain
+hideInToc: true
 ---
 
 # Git Remotes
@@ -460,6 +473,7 @@ backgroundSize: contain
 layout: image-right
 image: /git-freshly-made-github-repo.svg
 backgroundSize: contain
+hideInToc: true
 ---
 
 # Git Remotes
@@ -481,6 +495,7 @@ git remote add origin git@github.com:mygithub/myremote.git
 layout: image-right
 image: /github-repo-after-first-push.svg
 backgroundSize: contain
+hideInToc: true
 ---
 
 # Push / Pull Operations
@@ -501,6 +516,7 @@ git pull
 layout: image-right
 image: /github-collaboration.svg
 backgroundSize: contain
+hideInToc: true
 ---
 
 # Cloning Repositories
@@ -511,6 +527,8 @@ backgroundSize: contain
 git clone < URL >
 ```
 
+---
+hideInToc: true
 ---
 
 # Branches 

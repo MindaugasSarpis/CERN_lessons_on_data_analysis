@@ -31,3 +31,16 @@ Intro to CERN
 
       - `Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0`
       - Putty
+
+## Lecture 7 (Python)
+
+- Recap importing packages, libraries 
+
+## Lecture 8 (Markdown)
+
+- Show markdown, marp, with ChapGPT and github copilot
+
+## Lecture 9 (Version Control)
+
+- Show git, github
+- Everyone creates a branch, makes a change, and creates a pull request

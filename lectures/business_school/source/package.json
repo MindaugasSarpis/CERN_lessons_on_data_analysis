@@ -1,6 +1,11 @@
 {
   "dependencies": {
-    "mermaid": "^11.4.1",
+    "@slidev/cli": "^51.4.0",
+    "codemirror-theme-vars": "^0.1.2",
+    "prism-theme-vars": "^0.2.5",
     "pyodide": "^0.27.3"
+  },
+  "devDependencies": {
+    "mermaid": "^11.5.0"
   }
 }

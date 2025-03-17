@@ -13,9 +13,11 @@ hideInToc: true
 
 # addons:
 #   - slidev-addon-python-runner
-# PYODIDE_BUNDLE : true
+PYODIDE_BUNDLE : true
 # monaco: true
 # monacoTypesSource: cdn
+
+mermaid: true
 
 ---
 
@@ -66,4 +68,8 @@ src: slides/L8_Markdown.md
 
 ---
 src: slides/L9_Version_Control.md
+---
+
+---
+src: slides/L10_Data_Visualization.md
 ---

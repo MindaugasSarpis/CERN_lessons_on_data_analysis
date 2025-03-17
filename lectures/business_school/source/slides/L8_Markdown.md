@@ -23,6 +23,8 @@ layout: cover
 ## Markdown
 
 ---
+hideInToc: true
+---
 
 # Markdown 
 
