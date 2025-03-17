@@ -10,6 +10,13 @@ drawings:
 
 transition: fade
 hideInToc: true
+
+# addons:
+#   - slidev-addon-python-runner
+# PYODIDE_BUNDLE : true
+# monaco: true
+# monacoTypesSource: cdn
+
 ---
 
 # Dr. Mindaugas Šarpis

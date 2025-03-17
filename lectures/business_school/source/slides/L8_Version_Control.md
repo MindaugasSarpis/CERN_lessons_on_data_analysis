@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 7: Crash Course on Python Programming"
+title: "Lecture 8: Version Control"
 layout: cover
 ---
 
@@ -18,6 +18,6 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 7:
+## Lecture 8:
 
-## Crash Course on Python Programming
+## Version Control
