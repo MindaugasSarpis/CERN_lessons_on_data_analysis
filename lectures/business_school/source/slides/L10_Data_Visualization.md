@@ -136,36 +136,32 @@ backgroundSize: contain
 ---
 
 ---
+hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-7.png
+---
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-11.png
 ---
-
-![alt text](/image-7.png)
-
----
-hideInToc: true
----
-
-![alt text](/image-11.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-9.png
 ---
-
-# Axis and overall **Scale**
-
----
-hideInToc: true
----
-
-![alt text](/image-9.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-10.png
 ---
-
-![alt text](/image-10.png)
 
 ---
 hideInToc: true
@@ -174,45 +170,54 @@ hideInToc: true
 #  Visualizing **Amounts**
 
 - ## Bar Charts
+
 - ## Grouped Bar Charts
+
 - ## Stacked Bar Charts
+
 - ## Heat Maps
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-14.png
 ---
-
-![alt text](/image-12.png)
-
----
-hideInToc: true
----
-
-![alt text](/image-14.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-12.png
 ---
-
-![alt text](/image-15.png)
-
----
-hideInToc: true
----
-
-![alt text](/image-16.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-15.png
 ---
-
-![alt text](/image-17.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-16.png
 ---
 
-![alt text](/image-18.png)
+---
+hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-17.png
+---
+
+---
+hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-18.png
+---
 
 ---
 hideInToc: true
@@ -293,8 +298,3 @@ hideInToc: true
 ![alt text](/ximage-7.png)
 
 ---
-hideInToc: true
----
-
-# Anatomy of a **Plot**
-

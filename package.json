@@ -8,7 +8,7 @@
         "export": "slidev export"
     },
     "dependencies": {
-        "@slidev/cli": "^51.1.0",
+        "@slidev/cli": "^51.4.0",
         "@slidev/theme-default": "^0.25.0",
         "codemirror-theme-vars": "latest",
         "express": "^4.21.2",
