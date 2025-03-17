@@ -59,3 +59,11 @@ src: slides/L6_Computing_Infrastructure.md
 ---
 src: slides/L7_Crash_Course_on_Python_Programming.md
 ---
+
+---
+src: slides/L8_Markdown.md
+---
+
+---
+src: slides/L9_Version_Control.md
+---

@@ -236,7 +236,8 @@ finally:
 - `finally` block always executes
 
 ---
-
+hideInToc: true
+---
 #### Modules and Imports
 
 <div style="max-width: 500px;">
