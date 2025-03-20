@@ -170,6 +170,20 @@ layout: center
 
 ---
 hideInToc: true
+layout: image
+image: /hdd_schematic.png
+backgroundSize: contain
+---
+
+---
+hideInToc: true
+layout: image
+image: /hdd_magnetic_domains.png
+backgroundSize: contain
+---
+
+---
+hideInToc: true
 layout: center
 ---
 
@@ -181,6 +195,20 @@ layout: center
 ---
 
 <img src="/nvme.png" class="w-auto">
+
+---
+hideInToc: true
+layout: image
+image: /ssd_floating_gate_3d.webp
+backgroundSize: contain
+---
+
+---
+hideInToc: true
+layout: image
+image: /ssd_floating_gate.png
+backgroundSize: contain
+---
 
 ---
 hideInToc: true
@@ -233,6 +261,14 @@ image: https://cdn.mos.cms.futurecdn.net/xd2Hw9Cki3qhzbC2WxNBcA.jpg
 ---
 
 [press](https://www.youtube.com/watch?v=1vXFxEzozcE&ab_channel=NVIDIAGeForce)
+
+---
+hideInToc: true
+layout: image
+image: https://cdn.mos.cms.futurecdn.net/xd2Hw9Cki3qhzbC2WxNBcA.jpg
+---
+
+[How does a GPU work](https://www.youtube.com/watch?v=h9Z4oGN89MU&ab_channel=BranchEducation)
 
 ---
 hideInToc: true

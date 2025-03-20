@@ -221,80 +221,74 @@ image: /image-18.png
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-20.png
 ---
 
-![alt text](/image-20.png)
+---
+hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-21.png
+---
+
+---
+hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-19.png
+---
+
+---
+hideInToc: true
+layout: image
+backgroundSize: contain
+image: /image-22.png
+---
 
 ---
 hideInToc: true
 ---
 
-![alt text](/image-21.png)
+---
+hideInToc: true
+layout: image
+backgroundSize: contain
+image: /x.png
+---
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /ximage-3.png
 ---
-
-![alt text](/image-19.png)
-
----
-hideInToc: true
----
-
-![alt text](/image-22.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /ximage-4.png
 ---
-
-# **Histograms** 
-
----
-hideInToc: true
----
-
-![alt text](/x.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /ximage-5.png
 ---
-
-![alt text](/ximage-3.png)
-
----
-hideInToc: true
----
-
-![alt text](/ximage-4.png)
 
 ---
 hideInToc: true
+layout: image
+backgroundSize: contain
+image: /ximage-6.png
 ---
-
-# **Color** 
-
----
-hideInToc: true
----
-
-![alt text](/ximage-5.png)
 
 ---
 hideInToc: true
---- 
-
-# **Error** Bars
-
----
-hideInToc: true
----
-
-![alt text](/ximage-6.png)
-
----
-hideInToc: true
----
-
-![alt text](/ximage-7.png)
-
+layout: image
+backgroundSize: contain
+image: /ximage-7.png
 ---
