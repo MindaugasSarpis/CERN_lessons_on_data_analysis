@@ -1,0 +1,1271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$module$/top/lodac_quiz_1</text>
+    </category>
+    <info format="html">
+      <text></text>
+    </info>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 1</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Which of the following best describes the principle of modularization in data analysis?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Breaking down a program into smaller, reusable parts.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Combining multiple data sources into a single dataset.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Visualizing data using modules.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Encrypting data for security purposes.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 2</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Where would you store a lot of experimental data which you need to access once every 5 years?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>USB Drive</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>SSD</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>RAM</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>HDD / Tape Storage</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 3</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The FAIR principles stand for:</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Fast, Accurate, Intelligent, Reliable.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Flexible, Adaptable, Integrative, Robust.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Findable, Accessible, Interoperable, Reusable.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Free, Available, Interactive, Real-time.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 4</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In data analysis, data cleaning refers to:</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Organizing data into tables.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Removing or correcting errors in the dataset.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Deleting unused datasets.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Encrypting data for privacy.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 5</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The term reproducibility in data analysis means:</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Sharing data publicly.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Visualizing data in multiple formats.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Achieving the same results using the same data and methods.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Using proprietary software.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 6</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Modularity in programming helps in:</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Achieving higher complexity of the codebase.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Making code less readable.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Reusing code and simplifying debugging.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Slowing down program execution.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 7</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Data interoperability refers to:</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>The ability to use data across different systems.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>The speed at which data is processed.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>The size of the dataset.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>The security level of data storage.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 8</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The open data movement encourages:</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Keeping data proprietary.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Charging fees for data access.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Sharing data freely for transparency and collaboration.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Encrypting all data.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 9</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The purpose of data visualization is to:</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Encrypt data for security.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Represent data graphically to identify patterns and insights.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Store data more efficiently.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Increase data redundancy.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 10</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What is the correct way to create a list in Python?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>my_list = (1, 2, 3)</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>my_list = [1, 2, 3]</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>my_list = {1, 2, 3}</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>my_list = <1, 2, 3></p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 11</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What is the output of the following code?\n\nprint(2 ** 3)</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>6</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>8</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>9</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>23</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 12</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>How do you start a function definition in Python?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>function my_func():</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>def my_func():</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>define my_func():</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>func my_func():</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 13</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What is the output of the following code?\n\nprint('Hello' + 'World')</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Hello World</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>HelloWorld</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Hello+World</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Error</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 14</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What does IDE stand for?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Integrated Development Environment</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Interactive Data Exploration</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Intelligent Data Extraction</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Integrated Data Encryption</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 15</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In data analysis, what is metadata?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Data that provides information about other data.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Data collected from metadata analysis.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Raw data obtained from experiments.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Encrypted data used for secure storage.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 16</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Which of the following best describes good file naming conventions?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Using clear, descriptive, and consistent names to facilitate organization and retrieval.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Using very short names with random characters to ensure uniqueness.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Including spaces and special characters to enhance readability.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Changing file names frequently to reflect every minor update.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 17</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What does it mean when data is machine readable?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Data that can be easily processed and understood by computers.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Data that is formatted for human readability.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Data that is stored in encrypted files.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Data that is accessible only via specialized software.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 18</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What is the primary difference between binary files and text-based files?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Binary files store data in a machine-readable binary format, whereas text-based files store data in a human-readable text format.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Binary files can be opened and edited easily in any text editor, while text-based files require special software.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Binary files are always larger in size compared to text-based files.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Text-based files are exclusively used for programming, while binary files are used for data storage.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 19</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Which file structure is most appropriate for a well-organized data analysis project?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Placing all files in a single directory for easy access.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Using separate directories for raw data, processed data, scripts, and results.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Naming files randomly to avoid conflicts.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Storing only processed data in folders.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name format="txt">
+      <text>lodac_quiz_1 20</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Which of the following is considered best practice for writing comments in code?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>editorfilepicker</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>10</responsefieldlines>
+    <attachments>-1</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>none</answernumbering>
+    <correctfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
+    </incorrectfeedback>
+    <shownumcorrect></shownumcorrect>
+    <answer fraction="100.0" format="html">
+      <text><![CDATA[<p>Writing clear and concise explanations that clarify complex logic.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Commenting every single line, regardless of necessity.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Using comments to store code backups.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Avoiding comments to keep the code clean.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+</quiz>

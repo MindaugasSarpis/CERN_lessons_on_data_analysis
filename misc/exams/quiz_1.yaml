@@ -1,0 +1,184 @@
+category: lodac_quiz_1
+
+questions:
+  # Part I: Fundamentals of Data Analysis
+  - type: multichoice
+    text: "Which of the following best describes the principle of modularization in data analysis?"
+    answers:
+      - text: "Breaking down a program into smaller, reusable parts."
+        correct: true
+      - text: "Combining multiple data sources into a single dataset."
+      - text: "Visualizing data using modules."
+      - text: "Encrypting data for security purposes."
+
+  - type: multichoice
+    text: "Where would you store a lot of experimental data which you need to access once every 5 years?"
+    answers:
+      - text: "USB Drive"
+      - text: "SSD"
+      - text: "RAM"
+      - text: "HDD / Tape Storage"
+        correct: true
+
+  - type: multichoice
+    text: "The FAIR principles stand for:"
+    answers:
+      - text: "Fast, Accurate, Intelligent, Reliable."
+      - text: "Flexible, Adaptable, Integrative, Robust."
+      - text: "Findable, Accessible, Interoperable, Reusable."
+        correct: true
+      - text: "Free, Available, Interactive, Real-time."
+
+  - type: multichoice
+    text: "In data analysis, data cleaning refers to:"
+    answers:
+      - text: "Organizing data into tables."
+      - text: "Removing or correcting errors in the dataset."
+        correct: true
+      - text: "Deleting unused datasets."
+      - text: "Encrypting data for privacy."
+
+  - type: multichoice
+    text: "The term reproducibility in data analysis means:"
+    answers:
+      - text: "Sharing data publicly."
+      - text: "Visualizing data in multiple formats."
+      - text: "Achieving the same results using the same data and methods."
+        correct: true
+      - text: "Using proprietary software."
+
+  - type: multichoice
+    text: "Modularity in programming helps in:"
+    answers:
+      - text: "Achieving higher complexity of the codebase."
+      - text: "Making code less readable."
+      - text: "Reusing code and simplifying debugging."
+        correct: true
+      - text: "Slowing down program execution."
+
+  - type: multichoice
+    text: "Data interoperability refers to:"
+    answers:
+      - text: "The ability to use data across different systems."
+        correct: true
+      - text: "The speed at which data is processed."
+      - text: "The size of the dataset."
+      - text: "The security level of data storage."
+
+  - type: multichoice
+    text: "The open data movement encourages:"
+    answers:
+      - text: "Keeping data proprietary."
+      - text: "Charging fees for data access."
+      - text: "Sharing data freely for transparency and collaboration."
+        correct: true
+      - text: "Encrypting all data."
+
+  - type: multichoice
+    text: "The purpose of data visualization is to:"
+    answers:
+      - text: "Encrypt data for security."
+      - text: "Represent data graphically to identify patterns and insights."
+        correct: true
+      - text: "Store data more efficiently."
+      - text: "Increase data redundancy."
+
+  # Part II: Python Fundamentals
+  - type: multichoice
+    text: "What is the correct way to create a list in Python?"
+    answers:
+      - text: "my_list = (1, 2, 3)"
+      - text: "my_list = [1, 2, 3]"
+        correct: true
+      - text: "my_list = {1, 2, 3}"
+      - text: "my_list = <1, 2, 3>"
+
+  - type: multichoice
+    text: "What is the output of the following code?\n\nprint(2 ** 3)"
+    answers:
+      - text: "6"
+      - text: "8"
+        correct: true
+      - text: "9"
+      - text: "23"
+
+  - type: multichoice
+    text: "How do you start a function definition in Python?"
+    answers:
+      - text: "function my_func():"
+      - text: "def my_func():"
+        correct: true
+      - text: "define my_func():"
+      - text: "func my_func():"
+
+  - type: multichoice
+    text: "What is the output of the following code?\n\nprint('Hello' + 'World')"
+    answers:
+      - text: "Hello World"
+      - text: "HelloWorld"
+        correct: true
+      - text: "Hello+World"
+      - text: "Error"
+
+  - type: multichoice
+    text: "What does IDE stand for?"
+    answers:
+      - text: "Integrated Development Environment"
+        correct: true
+      - text: "Interactive Data Exploration"
+      - text: "Intelligent Data Extraction"
+      - text: "Integrated Data Encryption"
+
+  - type: multichoice
+    text: "In data analysis, what is metadata?"
+    answers:
+      - text: "Data that provides information about other data."
+        correct: true
+      - text: "Data collected from metadata analysis."
+      - text: "Raw data obtained from experiments."
+      - text: "Encrypted data used for secure storage."
+
+  - type: multichoice
+    text: "Which of the following best describes good file naming conventions?"
+    answers:
+      - text: "Using clear, descriptive, and consistent names to facilitate organization and retrieval."
+        correct: true
+      - text: "Using very short names with random characters to ensure uniqueness."
+      - text: "Including spaces and special characters to enhance readability."
+      - text: "Changing file names frequently to reflect every minor update."
+
+  - type: multichoice
+    text: "What does it mean when data is machine readable?"
+    answers:
+      - text: "Data that can be easily processed and understood by computers."
+        correct: true
+      - text: "Data that is formatted for human readability."
+      - text: "Data that is stored in encrypted files."
+      - text: "Data that is accessible only via specialized software."
+
+  - type: multichoice
+    text: "What is the primary difference between binary files and text-based files?"
+    answers:
+      - text: "Binary files store data in a machine-readable binary format, whereas text-based files store data in a human-readable text format."
+        correct: true
+      - text: "Binary files can be opened and edited easily in any text editor, while text-based files require special software."
+      - text: "Binary files are always larger in size compared to text-based files."
+      - text: "Text-based files are exclusively used for programming, while binary files are used for data storage."
+
+  - type: multichoice
+    text: "Which file structure is most appropriate for a well-organized data analysis project?"
+    answers:
+      - text: "Placing all files in a single directory for easy access."
+      - text: "Using separate directories for raw data, processed data, scripts, and results."
+        correct: true
+      - text: "Naming files randomly to avoid conflicts."
+      - text: "Storing only processed data in folders."
+
+  - type: multichoice
+    text: "Which of the following is considered best practice for writing comments in code?"
+    answers:
+      - text: "Writing clear and concise explanations that clarify complex logic."
+        correct: true
+      - text: "Commenting every single line, regardless of necessity."
+      - text: "Using comments to store code backups."
+      - text: "Avoiding comments to keep the code clean."

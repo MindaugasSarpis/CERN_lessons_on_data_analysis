@@ -249,10 +249,6 @@ image: /image-22.png
 
 ---
 hideInToc: true
----
-
----
-hideInToc: true
 layout: image
 backgroundSize: contain
 image: /x.png
