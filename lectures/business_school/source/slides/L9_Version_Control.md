@@ -1,4 +1,5 @@
 ---
+marp: true
 background: /intro_background.jpg
 
 class: text-left
@@ -29,7 +30,7 @@ hideInToc: true
 
 # The Importance of Version Control
 
-- ### Even if working alone, many different version of the same file will exist
+- ### Even if working alone, many different versions of the same file will exist
 
 - ### Some overwritten changes might be needed later
 
@@ -546,3 +547,9 @@ git branch < branch-name >
 ```bash
 git checkout < branch-name >
 ```
+
+---
+hideInToc: true
+---
+
+# [An interactive git playground](https://learngitbranching.js.org/)

@@ -2,6 +2,7 @@
   "dependencies": {
     "@slidev/cli": "^51.4.0",
     "codemirror-theme-vars": "^0.1.2",
+    "playwright-chromium": "^1.51.1",
     "prism-theme-vars": "^0.2.5",
     "pyodide": "^0.27.3"
   },
