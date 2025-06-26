@@ -94,7 +94,7 @@ questions:
       - text: "my_list = <1, 2, 3>"
 
   - type: multichoice
-    text: "What is the output of the following code?\n\nprint(2 ** 3)"
+    text: "What is the output of the following code? print(2 ** 3)"
     answers:
       - text: "6"
       - text: "8"
