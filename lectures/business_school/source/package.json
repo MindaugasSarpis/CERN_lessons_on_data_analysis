@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "mermaid": "^11.4.1",
-    "pyodide": "^0.27.3"
-  }
-}
