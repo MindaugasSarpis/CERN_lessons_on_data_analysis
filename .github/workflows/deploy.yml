@@ -3,7 +3,7 @@ name: Deploy pages
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [ff2025]
 
 permissions:
   contents: read
@@ -39,7 +39,7 @@ jobs:
 
       - name: Build
         run:  |
-          nr build --out ../../../dist lectures/business_school/source/Lessons_on_Data_Analysis_from_CERN.md --base /${{github.event.repository.name}}/
+          nr build --out ../../../dist lectures/content/Lessons_on_Data_Analysis_from_CERN.md --base /${{github.event.repository.name}}/
             
       - name: Verify Build Output
         run: ls -l dist
