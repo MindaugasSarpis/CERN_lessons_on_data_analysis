@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@slidev/cli": "^51.4.0"
+  },
+  "devDependencies": {
+    "mermaid": "^11.5.0"
+  }
+}
