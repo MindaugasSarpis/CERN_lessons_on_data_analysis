@@ -1,5 +1,5 @@
 ---
-background: /intro_background.jpg
+background: /background_intro.jpg
 
 class: text-left
 colorSchema: dark

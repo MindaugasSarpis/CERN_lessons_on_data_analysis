@@ -1,5 +1,5 @@
 ---
-background: ./intro_background.jpg
+background: ./background_default.jpg
 
 class: text-left
 

@@ -87,7 +87,7 @@
 }
 
 .slidev-layout {
-  background: url('/default_background.jpg') no-repeat center center;
+  background: url('/background_default.jpg') no-repeat center center;
   background-size: cover;
 }
 
