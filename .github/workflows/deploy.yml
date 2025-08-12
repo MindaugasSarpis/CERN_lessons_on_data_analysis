@@ -3,7 +3,7 @@ name: Deploy pages
 on:
   workflow_dispatch:
   push:
-    branches: [ main, ff2025 ]
+    branches: [ff2025]
 
 permissions:
   contents: read
@@ -17,9 +17,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      # For project Pages: prod needs "/<repo>/" base; previews use "/"
-      BASE_PATH: ${{ github.ref == 'refs/heads/main' && format('/{0}/', github.event.repository.name) || '/' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -33,10 +30,8 @@ jobs:
 
       - name: Build
         run: |
-          npx -y @slidev/cli@latest build \
-            --out ../../dist \
-            lectures/content/Lessons_on_Data_Analysis_from_CERN.md \
-            --base "${BASE_PATH}"
+          npx -y @slidev/cli@latest build --out ../../dist lectures/content/Lessons_on_Data_Analysis_from_CERN.md \
+            --base "/${{ github.event.repository.name }}/" \
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -46,26 +41,13 @@ jobs:
         with:
           path: dist
 
-  deploy-prod:
-    if: github.ref == 'refs/heads/main'
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages           # production (stable URL)
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages (prod)
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  deploy-preview:
-    if: github.ref == 'refs/heads/ff2025'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: staging-pages          # preview (ephemeral URL)
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages (preview)
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
