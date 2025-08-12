@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: |
           npx -y @slidev/cli@latest build \
-            --out dist \
+            --out ../../../dist \
             lectures/content/Lessons_on_Data_Analysis_from_CERN.md \
             --base "${BASE_PATH}"
 
