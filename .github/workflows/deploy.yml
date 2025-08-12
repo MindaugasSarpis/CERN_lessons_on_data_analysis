@@ -30,9 +30,8 @@ jobs:
 
       - name: Build
         run: |
-          npx -y @slidev/cli@latest build lectures/content/Lessons_on_Data_Analysis_from_CERN.md \
+          npx -y @slidev/cli@latest build --out ../../dist lectures/content/Lessons_on_Data_Analysis_from_CERN.md \
             --base "/${{ github.event.repository.name }}/" \
-            --out dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
