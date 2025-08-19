@@ -16,7 +16,7 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 1:
+## Lecture 1
 
 ## Course Orientation and Motivation
 
@@ -24,9 +24,7 @@ layout: cover
 hideInToc: true
 ---
 
-# <v-click>  **Course Structure** </v-click>
-
-<v-clicks depth="3">
+#   **Course Structure** 
 
 - ## Lectures
   
@@ -48,25 +46,16 @@ hideInToc: true
   
   - ### Case Studies
 
-</v-clicks>
-
 ---
 hideInToc: true
 ---
 
-# <v-click> Grading Structure </v-click>
-
-<v-clicks>
-
+#  Grading Structure 
 - ## **2 x 20%** Quiz
 
 - ## **1 x 60%** Final Project
 
-</v-clicks>
-
 &nbsp;
-
-<v-clicks>
 
 ### \* One quiz from data analysis part and one from AI part
 
@@ -74,15 +63,11 @@ hideInToc: true
 
 ### One should be able to explain what they did, how, and why
 
-</v-clicks>
-
 ---
 hideInToc: true
 ---
 
-# <v-click> **Main Goals** </v-click>
-
-<v-clicks>
+#  **Main Goals** 
 
 - ## Build intuition for good practices
 
@@ -92,17 +77,17 @@ hideInToc: true
 
 - ## Use what you learned for your own projects
 
-</v-clicks>
+- ## Work together and practice problem solving
 
 ---
 hideInToc: true
 ---
 
-# <v-click> **Project Details** </v-click>
+#  **Project Details** 
 
-<v-clicks>
-
-- ## Should include elements of data analysis, using good practices and tools
+- ## Should include elements of data analysis and/or automation
+  
+- ## Using good practices and tools
 
 - ## May be related to your field of study/current work
 
@@ -114,28 +99,28 @@ hideInToc: true
 
 - ## Final presentation at the end of the course is graded on the spot
 
-</v-clicks>
-
 ---
 hideInToc: true
 ---
 
-# **Lecture Plan for the Data Analysis Part**
+<div class="text-4xl">
 
-|                         |                            |
-| ----------------------- | -------------------------- |
-| February 6 (2 lectures) | March 20 (2 lectures)      |
-| February 7 (2 lectures) | March 21 (2 lectures)      |
-| February 8 (4 lectures) | March 22 (4 lectures)      |
+|           |     |           |     |           |     |
+| --------- | --- | --------- | --- | --------- | --- |
+| September | 2   | September | 9   | September | 16  |
+| ~~September~~ | ~~23~~  | September | 30  | October   | 7   |
+| October   | 14  | October   | 21  | October   | 28  |
+| November  | 4   | November  | 11  | November  | 18  |
+| November  | 25  | December  | 2   | December  | 9   |
+| December  | 16  | ~~December~~  | ~~23~~  |           |     |
 
+</div>
 
 ---
 hideInToc: true
 ---
 
 # **Course content** (prone to change)
-
-<v-clicks>
 
 - ## Common pitfalls in working with computers
 
@@ -157,8 +142,6 @@ hideInToc: true
 
 - ## Ideas for projects
 
-</v-clicks>
-
 ---
 layout: section
 hideInToc: true
@@ -172,15 +155,13 @@ hideInToc: true
 
 # **After this course you should:**
 
-<v-clicks>
-
 - ## Understand main concepts of computing
   
 - ## Know which tools to chose for a specific task
 
 - ## Be able to implement simple data analysis workflows on the fly
 
-- ## Be safe from common pitfalls in working with computer
+- ## Be safe from common pitfalls in working with computers
 
 - ## Gain knowledge on mathematics and statistics needed for data analysis
 
@@ -190,11 +171,28 @@ hideInToc: true
 
 - ## Be able to adapt to new tools and technologies quicker
   
-</v-clicks>
-
 ---
 hideInToc: true
 layout: fact
 ---
 
 # Who am I talking to?
+
+--- 
+hideInToc: true
+layout: fact
+---
+
+# Introduction to CERN
+
+---
+layout: center
+---
+
+<iframe
+  src="https://videos.cern.ch/video/CERN-VIDEO-2025-015-001"
+  width="1080"
+  height="1080"
+  allow="autoplay; fullscreen"
+  allowfullscreen>
+</iframe>
