@@ -31,3 +31,11 @@ hideInToc: true
 ---
 src: slides/L1_Course_Orientation.md
 ---
+
+---
+# src: slides/L2_Crash_Course_on_Computing_Science.md
+---
+
+---
+# src: slides/L3_Computing_Infrastructure.md
+---

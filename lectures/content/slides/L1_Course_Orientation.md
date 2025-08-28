@@ -186,13 +186,15 @@ layout: fact
 # Introduction to CERN
 
 ---
+hideInToc: true
 layout: center
 ---
 
+<div class="absolute inset-0 p-0 m-0">
+  
 <iframe
   src="https://videos.cern.ch/video/CERN-VIDEO-2025-015-001"
-  width="1080"
-  height="1080"
-  allow="autoplay; fullscreen"
-  allowfullscreen>
-</iframe>
+    class="w-full h-full"
+  >
+  </iframe>
+</div>
