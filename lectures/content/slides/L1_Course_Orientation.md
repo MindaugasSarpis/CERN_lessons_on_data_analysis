@@ -170,31 +170,24 @@ hideInToc: true
 - ## Become platform and tool agnostic in your work
 
 - ## Be able to adapt to new tools and technologies quicker
-  
----
-hideInToc: true
-layout: fact
----
-
-# Who am I talking to?
-
---- 
-hideInToc: true
-layout: fact
----
-
-# Introduction to CERN
 
 ---
 hideInToc: true
 layout: center
 ---
 
-<div class="absolute inset-0 p-0 m-0">
-  
-<iframe
-  src="https://videos.cern.ch/video/CERN-VIDEO-2025-015-001"
-    class="w-full h-full"
-  >
-  </iframe>
-</div>
+# Main course communication on eMokymai (Moodle)
+
+---
+hideInToc: true
+layout: fact
+---
+
+# Breaks... 
+
+---
+hideInToc: true
+layout: fact
+---
+
+# Who am I talking to?
