@@ -8,7 +8,7 @@ drawings:
   persist: false
 
 transition: fade
-title: "Lecture 1: Course Orientation and Motivation"
+title: "Lecture 2: Introduction to CERN"
 layout: cover
 ---
 
@@ -16,9 +16,9 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 1
+## Lecture 2
 
-## Course Orientation and Motivation
+## Introduction to CERN
 
 --- 
 hideInToc: true
