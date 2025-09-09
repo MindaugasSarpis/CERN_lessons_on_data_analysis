@@ -1,11 +1,8 @@
 {
   "dependencies": {
-    "@pyodide/pyodide": "latest",
-    "@slidev/cli": "^51.4.0",
+    "@slidev/cli": "^51.4.0"
   },
   "devDependencies": {
-    "@slidev/types": "^52.1.0",
-    "mermaid": "^11.5.0",
-    "monaco-editor": "^0.52.2"
+    "mermaid": "^11.5.0"
   }
 }
