@@ -11,6 +11,8 @@ drawings:
 transition: fade
 hideInToc: true
 
+addons:
+  - slidev-addon-python-runner
 mermaid: true
 
 ---
@@ -29,7 +31,8 @@ hideInToc: true
 <Toc text-xl minDepth="1" maxDepth="1" columns="1" />
 
 ---
-src: slides/L1_Course_Orientation.md
+# src: slides/L1_Course_Orientation.md
+src: slides/LX_Python_Interactive.md
 # src: slides/L2_Crash_Course_on_Computing_Science.md
 # src: slides/L3_Computing_Infrastructure.md
 ---
