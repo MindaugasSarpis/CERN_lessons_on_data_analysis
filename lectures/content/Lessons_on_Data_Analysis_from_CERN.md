@@ -11,8 +11,8 @@ drawings:
 transition: fade
 hideInToc: true
 
-addons:
-  - slidev-addon-python-runner
+# addons:
+#   - slidev-addon-python-runner
 mermaid: true
 
 ---
