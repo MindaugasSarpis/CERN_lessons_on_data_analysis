@@ -46,6 +46,10 @@
 
   - Show how to exit (quit(), exit(), Ctrl-D, Ctrl-Z)
 
+  - Show how to get help (help(), help('keywords'))
+
+  - [tutorial](https://docs.python.org/3/tutorial/introduction.html)
+
     ```python
     2 + 2
 
