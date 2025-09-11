@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 2: Crash Course on Computer Science"
+title: "Lecture 3: Crash Course on Computer Science"
 layout: cover
 download: true
 ---
@@ -19,7 +19,7 @@ download: true
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 2:
+## Lecture 3:
 
 ## Crash Course on Computer Science
 
@@ -478,7 +478,7 @@ hideInToc: true
 
 # ASCII
 
-## American Standard Code for Information Interchan
+## American Standard Code for Information Interchange
 
 ### 7 bit
 

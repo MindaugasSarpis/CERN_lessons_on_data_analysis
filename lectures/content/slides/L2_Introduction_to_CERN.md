@@ -27,16 +27,9 @@ layout: fact
 
 # Introduction to CERN
 
----
+--- 
 hideInToc: true
-layout: center
+layout: quote
 ---
 
-<div class="absolute inset-0 p-0 m-0">
-  
-<iframe
-  src="https://videos.cern.ch/video/CERN-VIDEO-2025-015-001"
-    class="w-full h-full"
-  >
-  </iframe>
-</div>
+# This content in not examinable and for your general knowledge only. Presentation given in-class only.

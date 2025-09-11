@@ -6,4 +6,8 @@ Regenerate `package-lock.json`
 
 ## Teachers Workbook
 
-[Lecture 1](lectures/lecture_1.md)
+[Lecture 1](lectures/lecture_1.md) Induction
+
+[Lecture 2](lectures/lecture_2.md) Intro to CERN
+
+[Lecture 3](lectures/lecture_3.md) Crash Course on Computer Science

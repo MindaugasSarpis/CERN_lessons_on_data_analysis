@@ -2,5 +2,7 @@ site_name: Lessons on Data Analysis from CERN
 
 nav:
   - Home: index.md
-  - Lessons:
-      - Lesson 1: lectures/lecture_1.md
+  - Lectures:
+      - Lecture 1: lectures/lecture_1.md
+      - Lecture 2: lectures/lecture_2.md
+      - Lecture 3: lectures/lecture_3.md

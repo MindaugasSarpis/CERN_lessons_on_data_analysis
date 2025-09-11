@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 3: Computing Infrastructure"
+title: "Lecture 4: Computing Infrastructure"
 layout: cover
 ---
 
@@ -18,7 +18,7 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 3:
+## Lecture 4:
   
 ## Computing Infrastructure
 
