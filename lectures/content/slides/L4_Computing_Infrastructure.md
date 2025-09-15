@@ -328,3 +328,70 @@ hideInToc: true
   - ## **Middleware** and Virtualization
 
   - ## **Application** Software
+
+---
+layout: section
+hideInToc: true
+---
+
+# Memory Hierarchy
+
+---
+hideInToc: true
+---
+
+# The Memory Pyramid
+
+<div class="text-center">
+
+```mermaid
+graph TD
+    A[CPU Registers<br/>~1 cycle<br/>Few KB] 
+    B[L1 Cache<br/>~3 cycles<br/>32-64 KB]
+    C[L2 Cache<br/>~10 cycles<br/>256 KB - 1 MB]
+    D[L3 Cache<br/>~40 cycles<br/>8-32 MB]
+    E[RAM<br/>~100-300 cycles<br/>4-32 GB]
+    F[SSD<br/>~100,000 cycles<br/>256 GB - 4 TB]
+    G[HDD<br/>~10,000,000 cycles<br/>1-10 TB]
+    
+    A --- B --- C --- D --- E --- F --- G
+    
+    style A fill:#ff6b6b
+    style B fill:#ffa500
+    style C fill:#ffff00
+    style D fill:#90ee90
+    style E fill:#87ceeb
+    style F fill:#dda0dd
+    style G fill:#f0e68c
+```
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Memory Access Times
+
+| **Storage Type** | **Access Time** | **Relative Cost** |
+|------------------|-----------------|-------------------|
+| CPU Register     | 1 ns            | 1x                |
+| L1 Cache         | 2-4 ns          | 2-4x              |
+| L2 Cache         | 10-20 ns        | 10-20x            |
+| RAM              | 100-300 ns      | 100-300x          |
+| SSD              | 100 μs          | 100,000x          |
+| HDD              | 10 ms           | 10,000,000x       |
+
+---
+hideInToc: true
+---
+
+# Why This Matters for Data Analysis
+
+- ## **Locality matters**: Keep related data close together
+
+- ## **Vectorization**: Process arrays in chunks that fit in cache
+
+- ## **File formats**: Columnar formats (Parquet) are cache-friendly
+
+- ## **Algorithm choice**: Memory access patterns affect performance more than computation
