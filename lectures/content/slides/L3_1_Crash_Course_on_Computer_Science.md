@@ -885,7 +885,7 @@ $-6.022 \times 10^{23}$
 
 &nbsp;
 
-- ## e = exponent (integer power of 10)
+- ## e = exponent (integer power of 2)
 
 &nbsp;
 
