@@ -1,5 +1,5 @@
 ---
-background: /intro_background.jpg
+background: /background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 8: Markdown"
+title: "Lecture 3.3: Markdown"
 layout: cover
 ---
 
@@ -18,7 +18,7 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 8:
+## Lecture 3:
 
 ## Markdown
 

@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 3: Crash Course on Computer Science"
+title: "Lecture 3.1: Crash Course on Computer Science"
 layout: cover
 download: true
 ---
@@ -51,6 +51,8 @@ graph LR
     linkStyle 1 stroke-width:3px;
 ```
 
+---
+hideInToc: true
 ---
 
 # A bit of foresight 
@@ -822,6 +824,8 @@ hideInToc: true
   - ## precision bits (significant figures)
 
 ---
+hideInToc: true
+---
 
 # Scientific Notation in Decimal
 
@@ -841,6 +845,8 @@ $N = s \times m \times 10^e$
 
 - ## e = exponent (integer power of 10)
 
+---
+hideInToc: true
 ---
 
 # Scientific Notation in Decimal
