@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 3.2: Command Line Interfaces"
+title: "Command Line Interfaces"
 layout: cover
 ---
 

@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 4: Computing Infrastructure"
+title: "Computing Infrastructure"
 layout: cover
 ---
 

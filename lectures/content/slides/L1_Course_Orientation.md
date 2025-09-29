@@ -8,7 +8,7 @@ drawings:
   persist: false
 
 transition: fade
-title: "Lecture 1: Course Orientation and Motivation"
+title: "Course Orientation and Motivation"
 layout: cover
 ---
 

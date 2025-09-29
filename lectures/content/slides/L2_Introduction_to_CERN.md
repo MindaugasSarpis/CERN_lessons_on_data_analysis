@@ -8,7 +8,7 @@ drawings:
   persist: false
 
 transition: fade
-title: "Lecture 2: Introduction to CERN"
+title: "Introduction to CERN"
 layout: cover
 ---
 

@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 3.1: Crash Course on Computer Science"
+title: "Crash Course on Computer Science"
 layout: cover
 download: true
 ---

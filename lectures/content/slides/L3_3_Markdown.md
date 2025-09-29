@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Lecture 3.3: Markdown"
+title: "Markdown"
 layout: cover
 ---
 
