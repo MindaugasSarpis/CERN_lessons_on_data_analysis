@@ -45,6 +45,14 @@ hideInToc: true
 
   - ## Specialized Processors (**GPUs**, **TPUs**)
 
+  - ## Power and Cooling
+
+  - ## Networking
+
+  - ## Monitoring and Management Tools
+
+  - ## Security
+
 ---
 hideInToc: true
 ---
@@ -94,7 +102,7 @@ image: /cpu2.jpg
 ---
 hideInToc: true
 layout: image
-image: /cpu3.jpg
+image: /cpu_apple_M4.webp
 ---
 
 ---
@@ -276,20 +284,6 @@ layout: full
 </div>
 
 
----
-hideInToc: true
-layout: full
----
-
-<div class="absolute inset-0 p-0 m-0">
-  <iframe
-    src="https://www.youtube.com/embed/h9Z4oGN89MU?si=238qvmSpbhkseW2I"
-    class="w-full h-full"
-    style="border:0;"
-    allow="fullscreen"
-    allowfullscreen>
-  </iframe>
-</div>
 
 ---
 hideInToc: true
@@ -335,17 +329,6 @@ hideInToc: true
 ---
 
 # Memory Hierarchy
-
----
-hideInToc: true
----
-
-# The Memory Pyramid
-
-<div class="text-center">
-
-```mermaid
-graph TD
     A[CPU Registers<br/>~1 cycle<br/>Few KB] 
     B[L1 Cache<br/>~3 cycles<br/>32-64 KB]
     C[L2 Cache<br/>~10 cycles<br/>256 KB - 1 MB]
@@ -353,16 +336,43 @@ graph TD
     E[RAM<br/>~100-300 cycles<br/>4-32 GB]
     F[SSD<br/>~100,000 cycles<br/>256 GB - 4 TB]
     G[HDD<br/>~10,000,000 cycles<br/>1-10 TB]
-    
-    A --- B --- C --- D --- E --- F --- G
-    
-    style A fill:#ff6b6b
-    style B fill:#ffa500
-    style C fill:#ffff00
-    style D fill:#90ee90
-    style E fill:#87ceeb
-    style F fill:#dda0dd
-    style G fill:#f0e68c
+
+---
+hideInToc: true
+---
+
+# The Memory Pyramid
+
+
+<div style="text-align: center;">
+
+```mermaid
+graph LR
+    A[CPU Registers<br/>~1 cycle<br/>Few KB] --> 
+    B[L1 Cache<br/>~3 cycles<br/>32-64 KB] -->
+    C[L2 Cache<br/>~10 cycles<br/>256 KB - 1 MB] -->
+    D[L3 Cache<br/>~40 cycles<br/>8-32 MB]    
+
+    classDef box fill:none,stroke:white,stroke-width:3px,font-size:24px;
+
+    class A box;
+    class B box;
+    class C box;
+    class D box;
+```
+
+```mermaid {scale: 1}
+graph LR
+    E[RAM<br/>~100-300 cycles<br/>4-32 GB] -->
+    F[SSD<br/>~100,000 cycles<br/>256 GB - 4 TB] -->
+    G[HDD<br/>~10M cycles<br/>1-10 TB] 
+
+    classDef box fill:none,stroke:white,stroke-width:3px,font-size:24px;
+
+    class E box;
+    class F box;
+    class G box;
+
 ```
 
 </div>
@@ -395,3 +405,18 @@ hideInToc: true
 - ## **File formats**: Columnar formats (Parquet) are cache-friendly
 
 - ## **Algorithm choice**: Memory access patterns affect performance more than computation
+
+---
+hideInToc: true
+layout: full
+---
+
+<div class="absolute inset-0 p-0 m-0">
+  <iframe
+    src="https://www.youtube.com/embed/h9Z4oGN89MU?si=238qvmSpbhkseW2I"
+    class="w-full h-full"
+    style="border:0;"
+    allow="fullscreen"
+    allowfullscreen>
+  </iframe>
+</div>
