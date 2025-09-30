@@ -33,7 +33,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-- # **Hardware Components**
+- # **Hardware Components******
 
   - ## Central Processing Unit (**CPU**)
 
@@ -324,25 +324,10 @@ hideInToc: true
   - ## **Application** Software
 
 ---
-layout: section
 hideInToc: true
 ---
 
-# Memory Hierarchy
-    A[CPU Registers<br/>~1 cycle<br/>Few KB] 
-    B[L1 Cache<br/>~3 cycles<br/>32-64 KB]
-    C[L2 Cache<br/>~10 cycles<br/>256 KB - 1 MB]
-    D[L3 Cache<br/>~40 cycles<br/>8-32 MB]
-    E[RAM<br/>~100-300 cycles<br/>4-32 GB]
-    F[SSD<br/>~100,000 cycles<br/>256 GB - 4 TB]
-    G[HDD<br/>~10,000,000 cycles<br/>1-10 TB]
-
----
-hideInToc: true
----
-
-# The Memory Pyramid
-
+# The Memory Hierarchy
 
 <div style="text-align: center;">
 
@@ -398,13 +383,19 @@ hideInToc: true
 
 # Why This Matters for Data Analysis
 
-- ## **Locality matters**: Keep related data close together
+- ## **Locality matters**:
 
-- ## **Vectorization**: Process arrays in chunks that fit in cache
+  - ### Keep related data close together
 
-- ## **File formats**: Columnar formats (Parquet) are cache-friendly
+- ## **Vectorization**: 
 
-- ## **Algorithm choice**: Memory access patterns affect performance more than computation
+  - ### Process arrays in chunks that fit in cache
+
+- ## **File formats**:
+  - ### Columnar formats (Parquet) are cache-friendly
+
+- ## **Algorithm choice**:
+  - ### Memory access patterns affect performance more than computation
 
 ---
 hideInToc: true
