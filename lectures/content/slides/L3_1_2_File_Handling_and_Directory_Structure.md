@@ -10,15 +10,13 @@ drawings:
 
 transition: fade
 
-title: "Lecture 3: File Handling and Directory Structure"
+title: "File Handling and Directory Structure"
 layout: cover
 ---
 
 # Dr. Mindaugas Šarpis
 
 # Lessons on **Data Analysis** from **CERN**
-
-## Lecture 3:
 
 ## File Handling and Directory Structure
 

@@ -30,31 +30,6 @@ hideInToc: true
 
 <Toc text-xl minDepth="1" maxDepth="1" columns="1" />
 
-
 ---
-src: slides/L1_Course_Orientation.md
----
-
----
-src: slides/L2_Introduction_to_CERN.md
----
-
----
-src: slides/L3_1_1_Crash_Course_on_Computer_Science.md
----
-
----
-src: slides/L3_1_2_File_Handling_and_Directory_Structure.md
----
-
----
-src: slides/L3_2_Command_Line.md
----
-
----
-src: slides/L3_3_Markdown.md
----
-
----
-src: slides/L4_Computing_Infrastructure.md
+src: slides/L6_Concepts_of_Data_Analysis.md
 ---
