@@ -81,7 +81,7 @@ layout: two-cols-header
 
 ::right::
 
-- ### **Comments** 
+- ### **Comments**
 
 <div style="max-width: 350px;">
 

@@ -611,31 +611,43 @@ class: text-center
 <div>
 <h3>AND (&)</h3>
 <table class="mx-auto">
+<thead>
 <tr><th>A</th><th>B</th><th>A&B</th></tr>
+</thead>
+<tbody>
 <tr><td>0</td><td>0</td><td>0</td></tr>
 <tr><td>0</td><td>1</td><td>0</td></tr>
 <tr><td>1</td><td>0</td><td>0</td></tr>
 <tr><td>1</td><td>1</td><td>1</td></tr>
+</tbody>
 </table>
 </div>
 
 <div>
 <h3>OR (|)</h3>
 <table class="mx-auto">
+<thead>
 <tr><th>A</th><th>B</th><th>A|B</th></tr>
+</thead>
+<tbody>
 <tr><td>0</td><td>0</td><td>0</td></tr>
 <tr><td>0</td><td>1</td><td>1</td></tr>
 <tr><td>1</td><td>0</td><td>1</td></tr>
 <tr><td>1</td><td>1</td><td>1</td></tr>
+</tbody>
 </table>
 </div>
 
 <div>
 <h3>NOT (~)</h3>
 <table class="mx-auto">
+<thead>
 <tr><th>A</th><th>~A</th></tr>
+</thead>
+<tbody>
 <tr><td>0</td><td>1</td></tr>
 <tr><td>1</td><td>0</td></tr>
+</tbody>
 </table>
 </div>
 

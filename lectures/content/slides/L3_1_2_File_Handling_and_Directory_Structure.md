@@ -1,5 +1,5 @@
 ---
-background: /intro_background.jpg
+background: /background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -34,15 +34,9 @@ hideInToc: true
 
 # **File management chaos**
 
-::left:: 
-
-<v-click>
+::left::
 
 ## **Common issues:**
-
-</v-click>
-
-<v-clicks>
 
 - ### "I have no idea where I saved that file"
   
@@ -54,17 +48,9 @@ hideInToc: true
 
 - ### "I have overwritten my file with the wrong version"
 
-</v-clicks>
-
 ::right::
 
-<v-click>
-
 ## **How to avoid:**
-
-</v-click>
-
-<v-clicks>
 
 - ### Create a consistent folder structure
 
@@ -72,20 +58,12 @@ hideInToc: true
 
 - ### Employ file tagging, search filters, or integrated version control systems like Git to help keep track of changes
 
-</v-clicks>
-
 ---
 layout: two-cols
 hideInToc: true
 ---
 
-<v-click>
-
 ## **No backups**
-
-</v-click>
-
-<v-clicks>
 
 - ### "I lost all my data"
 
@@ -95,17 +73,9 @@ hideInToc: true
 
 - ### "I spilled tea on my laptop now my thesis is gone"
 
-</v-clicks>
-
 ::right::
 
-<v-click>
-
 ## **How to avoid:**
-
-</v-click>
-
-<v-clicks>
 
 - ### Use automatic cloud backup services (Dropbox, Google Drive, OneDrive).
 
@@ -113,16 +83,12 @@ hideInToc: true
 
 - ### Consider version control for text-based files (Git), so you can revert to an older version if needed.
 
-</v-clicks>
-
 ---
 layout: two-cols
 hideInToc: true
 ---
 
 ## **Compatibility issues**
-
-<v-clicks>
 
 - ### "I can't open this file"
   
@@ -134,13 +100,9 @@ hideInToc: true
 
 - ### "The script was running ok but now I get errors"
 
-</v-clicks>
-
 ::right::
 
-##  <v-click> **How to avoid:** </v-click>
-
-<v-clicks>
+##  **How to avoid:** 
 
 - ### Use open-source software and file formats whenever possible
 
@@ -156,19 +118,15 @@ hideInToc: true
 
 - ### Agree on software and file formats with collaborators
 
-</v-clicks>
-
 ---
 hideInToc: true
 layout: two-cols-header
 class: "pt-20"  # modifies spacing on the overall layout
 ---
 
-# <v-click> **File Naming Conventions** </v-click>
+# **File Naming Conventions**
 
 ::left::
-
-<v-clicks depth="2">
 
 - ## **Think about your files beforehand**
 
@@ -178,18 +136,14 @@ class: "pt-20"  # modifies spacing on the overall layout
 
   - ### Check for established file naming conventions in your discipline or group
 
-</v-clicks>
-
 ::right::
 
-<v-click> <img src="/file_naming_comic.png" class="inline w-40" /> </v-click>
+<img src="/file_naming_comic.png" class="inline w-40" />
 
 ---
 hideInToc: true
 layout: two-cols
 ---
-
-<v-clicks depth="2">
 
 - ## **Identify metadata**
 
@@ -207,11 +161,7 @@ layout: two-cols
 
   - ### Experiment number or sample ID
 
-</v-clicks>
-
 ::right::
-
-<v-clicks depth="2">
 
 - ## **Abbreviate and encode metadata in the file name**
 
@@ -221,13 +171,9 @@ layout: two-cols
 
   - ### Be sure to document these codes
 
-</v-clicks>
-
 ---
 hideInToc: true
 ---
-
-<v-clicks depth="2">
 
 - ## **Use Versioning**
 
@@ -239,13 +185,9 @@ hideInToc: true
   
   - ### Use the version date (use ISO 8601 format: YYYYMMDD or YYYY-MM-DD)
 
-</v-clicks>
-
 ---
 hideInToc: true
 ---
-
-<v-clicks depth="2">
 
 - ## **Ensure Files are Searchable**
   
@@ -257,13 +199,9 @@ hideInToc: true
   
   - ### Use ISO 8601-formatted dates (YYYYMMDD or YYYY-MM-DD)
 
-</v-clicks>
-
 ---
 hideInToc: true
 ---
-
-<v-clicks depth="3">
 
 - ## **Separate Metadata Elements**
   
@@ -279,13 +217,9 @@ hideInToc: true
 
   - ### Avoid special characters, such as: ~ ! @ # $ % ^ & * ( ) ` ; : < > ? . , [ ] { } ' " |
 
-</v-clicks>
-
 ---
 hideInToc: true
 ---
-
-<v-clicks depth="3">
 
 - ## **Write down your naming conventions**
   
@@ -295,19 +229,15 @@ hideInToc: true
 
   - ### If you find that you are encoding a large amount of metadata in the file names, you should consider storing this metadata in a master spreadsheet with your data for future reference
 
-</v-clicks>
-
 ---
 layout: two-cols-header
 hideInToc: true
 class: "pt-30"  # modifies spacing on the overall layout
 ---
 
-# <v-click> **Two different file types** </v-click>
+# **Two different file types**
 
 ::left::
-
-<v-clicks depth="3">
 
 - ## **Text File**
 
@@ -319,11 +249,7 @@ class: "pt-30"  # modifies spacing on the overall layout
 
   - ### Usually config files, logs, or scripts
 
-</v-clicks>
-
 ::right::
-
-<v-clicks depth="3">
 
 - ## **Binary File**
 
@@ -335,17 +261,6 @@ class: "pt-30"  # modifies spacing on the overall layout
 
   - ### Usually images, videos, or executables
 
-</v-clicks>
-
----
-layout: section
-hideInToc: true
----
-
-# ***Demo***
-
-#### Files and Extensions 
-
 ---
 layout: iframe
 hideInToc: true
@@ -355,7 +270,6 @@ url: https://datacarpentry.github.io/rr-organization1/01-file-naming/index.html
 ---
 hideInToc: true
 layout: two-cols-header
-class: "pt-30"  # modifies spacing on the overall layout
 ---
 
 # **Directory Structure**
@@ -363,6 +277,8 @@ class: "pt-30"  # modifies spacing on the overall layout
 ::left::
 
 ## Organized by File type
+
+<div style="max-width: 300px;">
 
 ```bash
 |- Data/
@@ -375,9 +291,13 @@ class: "pt-30"  # modifies spacing on the overall layout
 |  |  |- Model1/
 ```
 
+</div>
+
 ::right::
 
 ## Organized by Analysis
+
+<div style="max-width: 300px; margin-top: 0px">
 
 ```bash
 |- Figure1/
@@ -389,6 +309,8 @@ class: "pt-30"  # modifies spacing on the overall layout
 |  |- Results/
 |  |  |- Figure2.tif
 ```
+
+</div>
 
 ---
 layout: center
