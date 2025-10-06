@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: lock
+        run: npm install --package-lock-only
+
       - name: Build
         run: |
           npx -y @slidev/cli@latest build --out ../../dist lectures/content/Lessons_on_Data_Analysis_from_CERN.md \
