@@ -30,14 +30,8 @@ hideInToc: true
 
 <Toc text-xl minDepth="1" maxDepth="1" columns="1" />
 
----
-src: slides/L5_Crash_Course_on_Python_Programming.md
----
 
 ---
 src: slides/L6_Concepts_of_Data_Analysis.md
 ---
 
----
-src: slides/L7_Data_Visualisation.md
----
