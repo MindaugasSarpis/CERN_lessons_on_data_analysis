@@ -62,7 +62,3 @@ src: slides/L4_Computing_Infrastructure.md
 ---
 src: slides/L5_Crash_Course_on_Python_Programming.md
 ---
-
----
-src: slides/L7_Data_Visualisation.md
----
