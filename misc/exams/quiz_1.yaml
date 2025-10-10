@@ -3,6 +3,7 @@ category: lodac_quiz_1
 questions:
   # Part I: Fundamentals of Data Analysis
   - type: multichoice
+    name: modularization_principle
     text: "Which of the following best describes the principle of modularization in data analysis?"
     answers:
       - text: "Breaking down a program into smaller, reusable parts."
@@ -10,44 +11,51 @@ questions:
       - text: "Combining multiple data sources into a single dataset."
       - text: "Visualizing data using modules."
       - text: "Encrypting data for security purposes."
+    explanation: |
+      The principle of modularization (also called modular programming) involves separating program functionality into independent modules or pieces. Breaking a large program into smaller pieces makes development, testing and maintenance easier【38431632689495†L334-L343】.
 
   - type: multichoice
+    name: storage_question
     text: "Where would you store a lot of experimental data which you need to access once every 5 years?"
     answers:
-      - text: "USB Drive"
+      - text: "USB Stick"
       - text: "SSD"
+        correct: true
       - text: "RAM"
-      - text: "HDD / Tape Storage"
-        correct: true
+      - text: "CPU Cache"
 
   - type: multichoice
-    text: "The FAIR principles stand for:"
+    name: cpu_function
+    text: "Which component of a computer is responsible for performing arithmetic and logical operations?"
     answers:
-      - text: "Fast, Accurate, Intelligent, Reliable."
-      - text: "Flexible, Adaptable, Integrative, Robust."
-      - text: "Findable, Accessible, Interoperable, Reusable."
+      - text: "Central Processing Unit (CPU)"
         correct: true
-      - text: "Free, Available, Interactive, Real-time."
-
+      - text: "Random Access Memory (RAM)"
+      - text: "Hard Disk Drive (HDD)"
+      - text: "Power Supply Unit (PSU)"
+  
   - type: multichoice
-    text: "In data analysis, data cleaning refers to:"
+    name: cern_acronym
+    text: "What does the acronym CERN stand for?"
     answers:
-      - text: "Organizing data into tables."
-      - text: "Removing or correcting errors in the dataset."
+      - text: "Conseil Européen pour la Recherche Nucléaire (European Council for Nuclear Research)"
         correct: true
-      - text: "Deleting unused datasets."
-      - text: "Encrypting data for privacy."
+      - text: "Central European Nuclear Reactor Network"
+      - text: "Center for Energy Research and Nuclearization"
+      - text: "Cosmic Energy Research Network"
 
   - type: multichoice
-    text: "The term reproducibility in data analysis means:"
+    name: readme_purpose
+    text: "What is the primary purpose of a README file in a data analysis project?"
     answers:
-      - text: "Sharing data publicly."
-      - text: "Visualizing data in multiple formats."
-      - text: "Achieving the same results using the same data and methods."
+      - text: "To provide an overview and instructions on how to use or reproduce the project"
         correct: true
-      - text: "Using proprietary software."
+      - text: "To store raw experimental data"
+      - text: "To encrypt sensitive information"
+      - text: "To compile the code automatically"
 
   - type: multichoice
+    name: modularity_benefits
     text: "Modularity in programming helps in:"
     answers:
       - text: "Achieving higher complexity of the codebase."
@@ -55,8 +63,11 @@ questions:
       - text: "Reusing code and simplifying debugging."
         correct: true
       - text: "Slowing down program execution."
+    explanation: |
+      Modular programs are split into functions or files with clear interfaces. This separation improves readability, testing and reusability of code【38431632689495†L334-L396】, making debugging and maintenance easier.
 
   - type: multichoice
+    name: data_interoperability
     text: "Data interoperability refers to:"
     answers:
       - text: "The ability to use data across different systems."
@@ -64,27 +75,24 @@ questions:
       - text: "The speed at which data is processed."
       - text: "The size of the dataset."
       - text: "The security level of data storage."
+    explanation: |
+      A glossary of open‑data terms defines data interoperability as the ability of computer systems to exchange and use data smoothly even when data come in different formats or structures【968129597014473†L169-L182】. In other words, interoperable data can be shared and reused across systems.
 
   - type: multichoice
-    text: "The open data movement encourages:"
+    name: data_formats
+    text: "Which of the following is NOT a common data format used in data analysis?"
     answers:
-      - text: "Keeping data proprietary."
-      - text: "Charging fees for data access."
-      - text: "Sharing data freely for transparency and collaboration."
+      - text: "CSV"
+      - text: "JSON"
+      - text: "XML"
+      - text: "MP3"
         correct: true
-      - text: "Encrypting all data."
-
-  - type: multichoice
-    text: "The purpose of data visualization is to:"
-    answers:
-      - text: "Encrypt data for security."
-      - text: "Represent data graphically to identify patterns and insights."
-        correct: true
-      - text: "Store data more efficiently."
-      - text: "Increase data redundancy."
+    explanation: |
+      The HowToFAIR list of file formats categorizes CSV, JSON and XML as common data formats for databases, while MP3 is listed under sound formats【142299601338246†L93-L104】. MP3 files store compressed audio, not tabular or structured data.
 
   # Part II: Python Fundamentals
   - type: multichoice
+    name: python_list_creation
     text: "What is the correct way to create a list in Python?"
     answers:
       - text: "my_list = (1, 2, 3)"
@@ -92,8 +100,11 @@ questions:
         correct: true
       - text: "my_list = {1, 2, 3}"
       - text: "my_list = <1, 2, 3>"
+    explanation: |
+      Python uses square brackets for lists. A Python primer explains that lists are created with square brackets (`[]`); parentheses `()` create tuples, and curly braces `{}` define sets or dictionaries【547935076185032†L23-L27】.
 
   - type: multichoice
+    name: python_exponentiation
     text: "What is the output of the following code? print(2 ** 3)"
     answers:
       - text: "6"
@@ -101,8 +112,11 @@ questions:
         correct: true
       - text: "9"
       - text: "23"
+    explanation: |
+      The exponentiation operator `**` raises a number to a power. Thus `2 ** 3` computes `2×2×2 = 8`【581091886762810†L139-L144】.
 
   - type: multichoice
+    name: python_function_definition
     text: "How do you start a function definition in Python?"
     answers:
       - text: "function my_func():"
@@ -110,17 +124,23 @@ questions:
         correct: true
       - text: "define my_func():"
       - text: "func my_func():"
+    explanation: |
+      Python defines functions using the `def` keyword. For example, W3Schools shows a function defined as `def my_function():`【47578158549431†L871-L879】.
 
   - type: multichoice
-    text: "What is the output of the following code?\n\nprint('Hello' + 'World')"
+    name: python_string_concatenation
+    text: "What is the output of the following code? print('Hello' + 'World')"
     answers:
       - text: "Hello World"
       - text: "HelloWorld"
         correct: true
       - text: "Hello+World"
       - text: "Error"
+    explanation: |
+      In Python, the `+` operator concatenates strings without adding spaces. For example, concatenating "Hello" and "World" yields "HelloWorld"【829399180172172†L105-L112】.
 
   - type: multichoice
+    name: ide_definition
     text: "What does IDE stand for?"
     answers:
       - text: "Integrated Development Environment"
@@ -128,17 +148,11 @@ questions:
       - text: "Interactive Data Exploration"
       - text: "Intelligent Data Extraction"
       - text: "Integrated Data Encryption"
+    explanation: |
+      An integrated development environment (IDE) is a software application that provides comprehensive facilities for software development—such as a source‑code editor, build tools and a debugger【166591150080586†L308-L314】.
 
   - type: multichoice
-    text: "In data analysis, what is metadata?"
-    answers:
-      - text: "Data that provides information about other data."
-        correct: true
-      - text: "Data collected from metadata analysis."
-      - text: "Raw data obtained from experiments."
-      - text: "Encrypted data used for secure storage."
-
-  - type: multichoice
+    name: file_naming_conventions
     text: "Which of the following best describes good file naming conventions?"
     answers:
       - text: "Using clear, descriptive, and consistent names to facilitate organization and retrieval."
@@ -146,8 +160,11 @@ questions:
       - text: "Using very short names with random characters to ensure uniqueness."
       - text: "Including spaces and special characters to enhance readability."
       - text: "Changing file names frequently to reflect every minor update."
+    explanation: |
+      The UT Dallas data management guide advises establishing a naming convention using descriptive names that include elements such as project identifiers, dates and version numbers. It also recommends avoiding special characters, using underscores or hyphens instead of spaces, and keeping names consistent【434043833459505†screenshot】. Clear, descriptive names make files easier to organize and retrieve.
 
   - type: multichoice
+    name: machine_readable_data
     text: "What does it mean when data is machine readable?"
     answers:
       - text: "Data that can be easily processed and understood by computers."
@@ -155,26 +172,35 @@ questions:
       - text: "Data that is formatted for human readability."
       - text: "Data that is stored in encrypted files."
       - text: "Data that is accessible only via specialized software."
+    explanation: |
+      The Open Data Handbook explains that machine‑readable data is in a structured format (such as CSV, JSON or XML) that can be automatically read and processed by a computer【644654196923106†screenshot】. Non‑digital or unstructured documents (like scanned PDFs) are not considered machine‑readable.
 
   - type: multichoice
-    text: "What is the primary difference between binary files and text-based files?"
+    name: binary_vs_text_files
+    text: "What is the primary difference between binary files and text‑based files?"
     answers:
-      - text: "Binary files store data in a machine-readable binary format, whereas text-based files store data in a human-readable text format."
+      - text: "Binary files store data in a machine‑readable binary format, whereas text‑based files store data in a human‑readable text format."
         correct: true
-      - text: "Binary files can be opened and edited easily in any text editor, while text-based files require special software."
-      - text: "Binary files are always larger in size compared to text-based files."
-      - text: "Text-based files are exclusively used for programming, while binary files are used for data storage."
+      - text: "Binary files can be opened and edited easily in any text editor, while text‑based files require special software."
+      - text: "Binary files are always larger in size compared to text‑based files."
+      - text: "Text‑based files are exclusively used for programming, while binary files are used for data storage."
+    explanation: |
+      According to GeeksforGeeks, text files store data as ASCII characters and are organised as lines of readable text, whereas binary files store data in the same form as it is held in memory and can only be read by a program【462767502781845†screenshot】. Text files are human‑readable; binary files are meant for machine processing.
 
   - type: multichoice
-    text: "Which file structure is most appropriate for a well-organized data analysis project?"
+    name: project_file_structure
+    text: "Which file structure is most appropriate for a well‑organized data analysis project?"
     answers:
       - text: "Placing all files in a single directory for easy access."
       - text: "Using separate directories for raw data, processed data, scripts, and results."
         correct: true
       - text: "Naming files randomly to avoid conflicts."
       - text: "Storing only processed data in folders."
+    explanation: |
+      Guidance on structuring analytical projects recommends that each project reside in its own folder with subfolders separating raw data, documentation, source code and results【919731275718942†L155-L160】. Organising files by type (inputs, scripts, outputs) makes projects easier to navigate and reproduce.
 
   - type: multichoice
+    name: code_commenting_best_practices
     text: "Which of the following is considered best practice for writing comments in code?"
     answers:
       - text: "Writing clear and concise explanations that clarify complex logic."
@@ -182,3 +208,29 @@ questions:
       - text: "Commenting every single line, regardless of necessity."
       - text: "Using comments to store code backups."
       - text: "Avoiding comments to keep the code clean."
+    explanation: |
+      The Stack Overflow blog on commenting best practices lists several rules: comments should not duplicate code; they should not excuse unclear code; if you cannot write a clear comment there may be a problem with the code; and comments should dispel confusion【688617452247084†L61-L74】. Effective comments therefore provide clear, concise explanations to aid understanding rather than cluttering the code.
+
+  - type: multichoice
+    name: python_for_loop
+    text: "What does a for loop do in Python?"
+    answers:
+      - text: "Iterates over each item of a sequence (such as a list, string or tuple) in order."
+        correct: true
+      - text: "Executes code exactly once."
+      - text: "Repeats code until a condition becomes false."
+      - text: "Declares a function."
+    explanation: |
+      Python's `for` statement iterates over the items of any sequence in the order they appear【423252314313429†L110-L114】. For example, looping through a list prints each element and its length【423252314313429†L118-L125】.
+
+  - type: multichoice
+    name: python_dictionary
+    text: "Which Python data structure stores data values in key–value pairs?"
+    answers:
+      - text: "Dictionary"
+        correct: true
+      - text: "List"
+      - text: "Tuple"
+      - text: "Set"
+    explanation: |
+      The Python tutorial notes that a dictionary (also known as an associative array) is a data type indexed by keys rather than positions. It is best thought of as a set of key:value pairs with unique keys【26135806748985†L530-L544】.
