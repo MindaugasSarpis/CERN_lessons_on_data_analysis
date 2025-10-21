@@ -8,4 +8,6 @@
 
 [Lecture 4](lectures/lecture_4.md) Computer infrastructure
 
+[Data Visualisation](lectures/data_visualisation.md)
+
 [misc](lectures/misc.md) Miscellaneous
