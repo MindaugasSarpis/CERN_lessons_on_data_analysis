@@ -1,7 +1,6 @@
 ---
 background: ./background_default.jpg
 
-class: text-left
 
 theme: ./theme
 drawings:
@@ -11,15 +10,31 @@ transition: fade
 title: "Lecture 1: Course Orientation and Motivation"
 layout: cover
 
-
-
-
 class: text-left
 
-monaco: true
-monacoTypesSource: cdn
+addons:
+  - slidev-addon-python-runner
 
-title: "Lecture X"
+# Optional configuration for this runner
+python:
+  # Install packages from PyPI. Default: []
+  installs: ["cowsay"]
+
+  # Code executed to set up the environment. Default: ""
+  prelude: |
+    GREETING_FROM_PRELUDE = "Hello, Slidev!"
+
+  # Automatically load the imported builtin packages. Default: true
+  loadPackagesFromImports: true
+
+  # Disable annoying warning from `pandas`. Default: true
+  suppressDeprecationWarnings: true
+
+  # Always reload the Python environment when the code changes. Default: false
+  alwaysReload: false
+
+  # Options passed to `loadPyodide`. Default: {}
+  loadPyodideOptions: {}
 
 ---
 
@@ -33,8 +48,10 @@ title: "Lecture X"
 
 ---
 
-```python {monaco} {run}
-print("Hello, World!")
+```py {monaco-run}
+from termcolor import colored
+
+print(colored("Hello, Slidev!", "blue"))
 ```
 
 ---
