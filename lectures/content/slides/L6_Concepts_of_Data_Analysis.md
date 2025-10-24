@@ -1,4 +1,5 @@
 ---
+marp: true
 background: /background_intro.jpg
 
 class: text-left
