@@ -1,5 +1,6 @@
 ---
 marp: true
+mermaid: true
 background: /background_intro.jpg
 
 class: text-left
@@ -22,36 +23,10 @@ layout: cover
 
 ---
 hideInToc: true
----
-
-# Session Objectives
-
-- ## Build a shared vocabulary for **data, analytics, and decision-making**
-
-- ## Walk through the **end-to-end lifecycle** of data analysis projects
-
-- ## Recognize the **tooling, roles, and collaboration** needed for success
-
-- ## Practice spotting **real-world opportunities** and pitfalls in your domain
-
----
-hideInToc: true
----
-
-# Icebreaker · Where do you meet data?
-
-- ## Share a recent decision where <br> data played a role (or should have!)
-
-- ## What data sources did you trust, and which felt risky?
-
----
-hideInToc: true
 layout: fact
 ---
 
 # What is **Data Analysis**? 
-
-## <div v-click> What is **Data**? </div>
 
 ---
 hideInToc: true
@@ -118,17 +93,68 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Example
+
+- ## Raw Data: 
+
+    ###  `2025-10-24, 22.3°C`
+
+- ## Information:
+
+    ### `Lab A was 22.3°C at 10:24 on Oct 24, 2025.`
+
+- ## Knowledge:
+
+    ### `Lab A runs 1.5°C hotter on Fridays due to load.`
+
+- ## Wisdom:
+
+  ### `Shift calibration earlier on Fridays to reduce drift.`
+
+---
+hideInToc: true
+---
+
 # How disciplines overlap
 
-- ## **Statistics** underpins inference, uncertainty, and experimental design
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
 
-- ## **Data Engineering** ensures data are collected, stored, and discoverable
+<div>
 
-- ## **Data Analysis** explores, explains, and communicates what the data say
+## **Statistics**
 
-- ## **Data Science** fuses engineering, analysis, and machine learning
+### underpins inference, uncertainty, and experimental design
 
-- ## **Decision Science** closes the loop with impact tracking and action
+<br>
+
+## **Data Engineering**
+
+### ensures data are collected, stored, and discoverable
+
+<br>
+
+## **Data Analysis**
+
+### explores, explains, and communicates what the data say
+
+</div>
+
+<div>
+
+
+## **Data Science**
+
+### fuses engineering, analysis, and machine learning
+
+<br>
+
+## **Decision Science**
+
+### closes the loop with impact tracking and action
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -136,9 +162,21 @@ hideInToc: true
 
 # Why data analysis matters now
 
-- ## Exploding **volume, velocity, and variety** of data in every industry
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
 
-- ## Competitive edge comes from **evidence-based** decisions
+<div>
+
+## Exploding **volume, velocity, and variety** of data in every industry
+
+</div>
+
+<div>
+
+## Competitive edge comes from **evidence-based** decisions
+
+</div>
+
+</div>
 
 - ## Regulations demand **traceability**, **privacy**, and **explainability**
 
@@ -146,19 +184,43 @@ hideInToc: true
 
 - ## Audiences expect stories backed by **data narratives**
 
+&nbsp;
+
+### CERN angle
+
+- ## High-throughput pipelines, reproducible workflows, and rigorous uncertainty quantification are non-negotiable.
+
 ---
 hideInToc: true
 ---
 
 # Four flavours of analytics
 
-- ## **Descriptive** · What happened?
+<div style="margin-top: 2rem; font-size: 1.25em;">
 
-- ## **Diagnostic** · Why did it happen?
+| **Flavour** | **Question** | **Example** |
+|:------------|:-------------|:------------|
+| **Descriptive** | What happened? | Event rate rose 12% last run |
+| **Diagnostic** | Why did it happen? | Rate rose due to trigger threshold change |
+| **Predictive** | What is likely next? | Projected 8% rate increase next fill |
+| **Prescriptive** | What should we do? | Raise threshold by 0.3 to maintain buffer |
 
-- ## **Predictive** · What is likely next?
+</div>
 
-- ## **Prescriptive** · What should we do about it?
+---
+hideInToc: true
+---
+
+<div style="margin-top: 2rem;">
+
+# Each layer builds on the previous one
+
+- ## **Descriptive** establishes baseline facts
+- ## **Diagnostic** uncovers root causes
+- ## **Predictive** forecasts future states
+- ## **Prescriptive** recommends optimal actions
+
+</div>
 
 ---
 hideInToc: true
@@ -184,15 +246,285 @@ hideInToc: true
 hideInToc: true
 ---
 
+# End-to-end Lifecycle
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+
+<div>
+
+## **Problem Framing**
+- Hypotheses
+- Success Metrics
+
+</div>
+
+<div>
+
+## **Data Discovery**
+- Access
+- Quality Assessment
+
+</div>
+
+<div>
+
+## **Preparation**
+- Cleaning
+- Joining
+- Feature/Variable Selection
+
+</div>
+
+<div>
+
+## **Exploration**
+- Profiling
+- Visualization
+- Sanity Checks
+
+</div>
+
+<div>
+
+## **Modeling/Inference**
+- Statistical Tests
+- Machine Learning
+
+</div>
+
+<div>
+
+## **Evaluation**
+- Validation
+- Uncertainty
+- Sensitivity
+
+</div>
+
+<div>
+
+## **Communication**
+- Narrative
+- Visuals
+- Decisions
+
+</div>
+
+<div>
+
+## **Operationalization**
+- Notebooks
+- Scripts
+- Pipelines
+
+</div>
+
+<div>
+
+## **Monitoring**
+- Drift
+- Quality
+- Impact
+
+</div>
+
+</div>
+
+
+---
+hideInToc: true
+class: text-center
+---
+
+# Lifecycle blueprint
+<div style="display: flex; justify-content: center; align-items: center;">
+
+<Transform :scale="0.8">
+```mermaid
+flowchart TB
+  P[Plan & Frame] --> D[Discover Data]
+  D --> Prep[Prepare & Clean]
+  Prep --> Exp[Explore & Profile]
+  Exp --> Mod[Model & Test]
+  Mod --> Eval[Evaluate & Stress Test]
+  Eval --> Share[Communicate & Decide]
+  Share --> Prod[Operationalize]
+  Prod --> Mon[Monitor & Iterate]
+  Mon -.-> P
+
+  G[Governance · Ethics · Quality] -.-> P
+  G -.-> D
+  G -.-> Prep
+  G -.-> Mod
+  G -.-> Prod
+
+  classDef stage fill:#0b2236,stroke:#44c0f5,stroke-width:2px,color:#e5f6ff;
+  classDef overlay fill:none,stroke:#f5a623,stroke-dasharray:6 4,color:#ffe7c7;
+  class P,D,Prep,Exp,Mod,Eval,Share,Prod,Mon stage;
+  class G overlay;
+```
+</Transform>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Spotting opportunities
 
-- ## Map stakeholders → decisions → data supporting them
+- ## Map stakeholders → decisions → supporting data
 
 - ## Ask how outcomes are measured today
 
 - ## Identify gaps between available data and needed insight
 
 - ## Check feasibility: access, quality, ethics, skills, time
+
+---
+hideInToc: true
+---
+
+# Data quality checklist
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+
+<div>
+
+## **Completeness**
+### Missingness patterns and mechanisms
+
+<br>
+
+## **Consistency**
+### Units, schemas, timezones
+
+<br>
+
+## **Validity**
+### Ranges, constraints, outliers (legit vs error)
+
+</div>
+
+<div>
+
+## **Timeliness**
+### Latency, freshness
+
+<br>
+
+## **Lineage**
+### Provenance, versioning, reproducibility
+
+<br>
+
+## **Ethics**
+### Consent, privacy, bias, fairness
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Uncertainty and inference
+
+- ## Always report uncertainty: CIs, credible intervals, SEs
+- ## Beware p-hacking; pre-register when possible
+- ## Power matters: effect size, N, variance
+- ## Distinguish correlation from causation
+- ## Sensitivity analyses: robustness to assumptions
+
+---
+hideInToc: true
+---
+
+# Visualization principles
+
+- ## Choose encodings that match the variable type
+- ## Show context: baselines, denominators, time windows
+- ## Avoid deceit: truncated axes, cherry-picked ranges
+- ## Use small multiples for comparisons
+- ## Tell the story: title as takeaway, caption as why
+
+---
+hideInToc: true
+---
+
+# Reproducibility practices
+
+- ## Keep code with results (notebook discipline)
+- ## Parameterize and record environment (env.yaml)
+- ## Version data/queries or capture snapshots
+- ## Seed randomness; log configs and hashes
+- ## Automate critical paths (Makefile/CI)
+
+---
+hideInToc: true
+---
+
+# Roles and collaboration
+
+- ## Domain expert: frames problems, validates insights
+- ## Analyst/Scientist: explores, models, communicates
+- ## Engineer: data access, reliability, pipelines
+- ## PM/Lead: scope, impact, trade-offs
+- ## Shared artifacts: glossary, metrics, dashboards
+
+---
+hideInToc: true
+---
+
+# Mini case study
+
+## Scenario
+
+- Detector shows intermittent spike counts on night shifts.
+
+## Plan
+
+- Define metric (spike rate/hour), segment by shift.
+- Pull two weeks of logs; check missingness.
+- Visualize rates; annotate configuration changes.
+- Test difference-in-means with bootstrap CI (resampling-based confidence intervals).
+- Prescribe mitigation if effect is robust.
+
+---
+hideInToc: true
+---
+
+# Common pitfalls
+
+- ## Overfitting pretty charts to noisy data
+- ## Confusing proxy metrics with outcomes
+- ## Ignoring units/timezones and data joins
+- ## Confirmation bias; not seeking disconfirming evidence
+- ## Shipping insights without reproducibility
+
+---
+hideInToc: true
+---
+
+# Useful patterns
+
+- ## Start with a checklist (quality, ethics, uncertainty)
+- ## Write the “results” slide first; work backward
+- ## Keep a decisions log with assumptions
+- ## Pair-review visuals and statistical claims
+- ## Maintain a lightweight data dictionary
+
+---
+hideInToc: true
+---
+
+# Takeaways
+
+- ## Define decisions and metrics early
+- ## Treat data quality and uncertainty as first-class
+- ## Communicate with clarity and integrity
+- ## Make it reproducible; make it useful
 
 ---
 layout: section
@@ -880,35 +1212,15 @@ hideInToc: true
 - ## Domain-specific tools (ROOT at CERN, SAS, MATLAB, SPSS)
 
 ---
-layout: center
-class: 'text-center'
+hideInToc: true
 ---
 
-<!-- Titles for the columns -->
-<div class="grid grid-cols-2 gap-8 w-full mb-8">
-  <h2 class="text-2xl font-bold">Proprietary Tools</h2>
-  <h2 class="text-2xl font-bold">Programming Languages</h2>
-</div>
+# Tool snapshots
 
-<!-- Logos in two columns -->
-<div class="grid grid-cols-2 gap-8 w-full">
+- ## Proprietary: Tableau, Origin, Excel
+- ## Languages: Python, R, Julia
+- ## Tip: mix surface-level ease with depth and reproducibility
 
-  <!-- Column 1 -->
-  <div class="flex flex-col items-center gap-6">
-    <!-- Logo 1 -->
-    <img src="/tableau_logo.png" alt="Logo 3" class="w-auto h-32" />
-    <img src="/origin_logo.png" alt="Logo 1" class="w-auto h-32" />
-    <img src="/excel_logo.png" alt="Logo 2" class="w-auto h-32" />
-  </div>
-
-  <!-- Column 2 -->
-  <div class="flex flex-col items-center gap-6">
-    <img src="/python_logo.png" alt="Logo 4" class="w-auto h-32" />
-    <img src="/R_logo.png" alt="Logo 6" class="w-auto h-32" />
-    <img src="/julia_logo.png" alt="Logo 5" class="w-auto h-32" />
-  </div>
-
-</div>
 ---
 hideInToc: true
 ---
@@ -1003,7 +1315,6 @@ hideInToc: true
 
 ---
 hideInToc: true
-layout: fact
 ---
 
 # Why data hygiene matters
