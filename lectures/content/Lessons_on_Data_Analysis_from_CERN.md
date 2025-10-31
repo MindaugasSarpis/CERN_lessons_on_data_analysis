@@ -66,3 +66,7 @@ src: slides/L5_Crash_Course_on_Python_Programming.md
 ---
 src: slides/L7_Data_Visualisation.md
 ---
+
+---
+src: slides/L8_Version_Control.md
+---
