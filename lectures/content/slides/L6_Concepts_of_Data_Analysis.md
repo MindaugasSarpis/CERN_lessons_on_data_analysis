@@ -1,4 +1,4 @@
----
+﻿---
 marp: true
 mermaid: true
 background: /background_intro.jpg
@@ -79,7 +79,7 @@ layout: quote
 hideInToc: true
 ---
 
-# Data → Information → Knowledge
+# Data â†’ Information â†’ Knowledge
 
 - ## **Data** capture observations (numbers, text, images, signals)
 
@@ -238,7 +238,7 @@ hideInToc: true
 
   - ## Data analysis is a **multi-disciplinary** field
 
-  - ## Expect to **iterate**—insight rarely appears in a single pass
+  - ## Expect to **iterate — insight rarely appears in a single pass
 
   - ## Trust is earned through **transparency**, **reproducibility**, and **storytelling**
 
@@ -539,9 +539,9 @@ hideInToc: true
 
 # **Bio medicine and Genomics**
 
-- ## Genome Sequencing → identifying variants & gene expression patterns
+- ## Genome Sequencing â†’ identifying variants & gene expression patterns
 
-- ## Clinical Trials → monitoring safety, efficacy, adaptive designs
+- ## Clinical Trials â†’ monitoring safety, efficacy, adaptive designs
 
 - ## Population health dashboards & personalised medicine
 
@@ -549,7 +549,7 @@ hideInToc: true
 
 &nbsp;
 
-### **23andMe** or **Ancestry.com** (ancestry services)?
+### **23andMe** or **Ancestry.com** (°Cestry services)?
 ### Comparing against *reference populations*
 
 ---
@@ -566,7 +566,7 @@ hideInToc: true
 
 - ## Supports policy making, disaster response, conservation funding
 
-#### Living analysis → data feeds update models continuously
+#### Living analysis â†’ data feeds update models continuously
 
 ---
 hideInToc: true
@@ -606,7 +606,7 @@ hideInToc: true
 
 # **Particle Physics (CERN)**
 
-- ## Petabytes of collision data → reconstruct events, filter noise
+- ## Petabytes of collision data â†’ reconstruct events, filter noise
 
 - ## Multivariate analysis to isolate rare signals (e.g. Higgs boson)
 
@@ -716,13 +716,13 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Reflection · Which example resonates?
+# Reflection — Which example resonates?
 
 - ## Where could similar data exist in your context?
 
 - ## What decisions would better data unlock?
 
-- ## What obstacles—technical, ethical, organisational—stand in the way?
+- ## What obstacles — technical, ethical, organisational — stand in the way?
 
 ---
 layout: section
@@ -737,7 +737,7 @@ hideInToc: true
 
 # Data comes in many shapes
 
-- ## Tabular: rows × columns (experiments, business metrics)
+- ## Tabular: rows Ã— columns (experiments, business metrics)
 
 - ## Hierarchical: JSON/XML, nested logs, documents
 
@@ -773,13 +773,13 @@ hideInToc: true
 
 # Levels of measurement
 
-- ## **Nominal** · categories without order (blood type, product ID)
+- ## **Nominal** — categories without order (blood type, product ID)
 
-- ## **Ordinal** · ranked categories (survey Likert scales)
+- ## **Ordinal** — ranked categories (survey Likert scales)
 
-- ## **Interval** · consistent differences, no true zero (°C, calendar dates)
+- ## **Interval** — consistent differences, no true zero (Â°C, calendar dates)
 
-- ## **Ratio** · meaningful zero & ratios (mass, revenue, counts)
+- ## **Ratio** — meaningful zero & ratios (mass, revenue, counts)
 
 - ## Measurement level dictates valid summaries & visualisations
 
@@ -831,17 +831,17 @@ hideInToc: true
 
 # Data quality dimensions
 
-- ## **Accuracy** · does it reflect reality?
+- ## **Accuracy** Â· does it reflect reality?
 
-- ## **Completeness** · are key fields missing?
+- ## **Completeness** Â· are key fields missing?
 
-- ## **Consistency** · same definition across sources?
+- ## **Consistency** Â· same definition across sources?
 
-- ## **Timeliness** · fresh enough to act on?
+- ## **Timeliness** Â· fresh enough to act on?
 
-- ## **Validity** · conforms to rules and business logic?
+- ## **Validity** Â· conforms to rules and business logic?
 
-- ## **Uniqueness** · no unintended duplicates?
+- ## **Uniqueness** Â· no unintended duplicates?
 
 ---
 hideInToc: true
@@ -892,7 +892,7 @@ classDef node fill:none,stroke:white,stroke-width:3px,font-size:30px;
 hideInToc: true
 ---
 
-# Exercise · Audit your data sources
+# Exercise Â· Audit your data sources
 
 - ## Pick one dataset you rely on
 
@@ -913,17 +913,17 @@ hideInToc: true
 
 # End-to-end lifecycle
 
-- ## **Plan** · clarify problem, stakeholders, success criteria
+- ## **Plan** Â· clarify problem, stakeholders, success criteria
 
-- ## **Acquire** · collect, ingest, or access relevant data
+- ## **Acquire** Â· collect, ingest, or access relevant data
 
-- ## **Store** · organise, catalogue, secure
+- ## **Store** Â· organise, catalogue, secure
 
-- ## **Process** · clean, transform, feature engineer
+- ## **Process** Â· clean, transform, feature engineer
 
-- ## **Analyse** · explore, model, evaluate
+- ## **Analyse** Â· explore, model, evaluate
 
-- ## **Share** · communicate, deploy, monitor, iterate
+- ## **Share** Â· communicate, deploy, monitor, iterate
 
 ---
 hideInToc: true
@@ -945,7 +945,7 @@ hideInToc: true
 
 # Analysis is iterative
 
-- ## Expect to loop between question ↔ data ↔ analysis ↔ insight
+- ## Expect to loop between question â†” data â†” analysis â†” insight
 
 - ## Dead ends reveal where data, methods, or framing must change
 
@@ -990,7 +990,7 @@ hideInToc: true
 
   - ## Plan the experimental or observational design
 
-#### Interactive exercise · Draft a SMART question for your project
+#### Interactive exercise Â· Draft a SMART question for your project
 
 ---
 hideInToc: true
@@ -1100,13 +1100,13 @@ hideInToc: true
 
 # Team checkpoints per phase
 
-- ## Kickoff → align on question, scope, success metrics
+- ## Kickoff â†’ align on question, scope, success metrics
 
-- ## Midpoint → share exploratory findings, data quality flags
+- ## Midpoint â†’ share exploratory findings, data quality flags
 
-- ## Pre-delivery → rehearse narrative, anticipate objections
+- ## Pre-delivery â†’ rehearse narrative, anticipate objections
 
-- ## Retrospective → document lessons, update playbooks
+- ## Retrospective â†’ document lessons, update playbooks
 
 ---
 hideInToc: true
@@ -1252,7 +1252,7 @@ hideInToc: true
 
 # DataOps & automation
 
-- ## Schedule data pipelines with orchestration tools (Airflow, Prefect)
+- ## Schedule data pipelines with orchestration tools (°Ct)
 
 - ## Leverage CI/CD for tests, linting, deployment
 
@@ -1468,7 +1468,7 @@ layout: section
 hideInToc: true
 ---
 
-# Case Study · CERN Open Data
+# Case Study Â· CERN Open Data
 
 ---
 hideInToc: true
@@ -1504,23 +1504,23 @@ hideInToc: true
 
 # Risks & mitigations
 
-- ## Detector anomalies → continuous monitoring & calibration
+- ## Detector anomalies â†’ continuous monitoring & calibration
 
-- ## Bias in selection cuts → blind analyses & control regions
+- ## Bias in selection cuts â†’ blind analyses & control regions
 
-- ## Reproducibility → containerised environments, notebooks, docs
+- ## Reproducibility â†’ containerised environments, notebooks, docs
 
-- ## Communication → translate particle jargon for broader audiences
+- ## Communication â†’ translate particle jargon for broader audiences
 
 ---
 hideInToc: true
 ---
 
-# Exercise · Plan your own analysis
+# Exercise Â· Plan your own analysis
 
 - ## Pick a dataset (CERN or your organisation)
 
-- ## Draft a 6-step workflow referencing today’s framework
+- ## Draft a 6-step workflow referencing todayâ€™s framework
 
 - ## Identify stakeholders, success metrics, and key risks
 
@@ -1532,7 +1532,7 @@ hideInToc: true
 
 # Lessons from CERN for everyone else
 
-- ## Document everything—you never know who will re-run it
+- ## Document everythingâ€”you never know who will re-run it
 
 - ## Invest in shared tooling and platforms early
 

@@ -91,3 +91,39 @@
   background-size: cover;
 }
 
+/* Mermaid diagram styling */
+.slidev-layout .mermaid {
+  @apply mx-auto my-4;
+  max-width: 95%;
+  max-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slidev-layout .mermaid svg {
+  max-width: 100%;
+  max-height: 70vh;
+  height: auto;
+  width: auto;
+}
+
+/* Improve mermaid diagram readability on dark backgrounds */
+.slidev-layout .mermaid .node rect,
+.slidev-layout .mermaid .node circle,
+.slidev-layout .mermaid .node ellipse,
+.slidev-layout .mermaid .node polygon {
+  stroke-width: 2px;
+}
+
+.slidev-layout .mermaid .edgeLabel {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.slidev-layout .mermaid .label {
+  color: #000;
+}
+

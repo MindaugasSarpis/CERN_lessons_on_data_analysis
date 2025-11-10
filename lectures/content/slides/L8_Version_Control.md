@@ -1,6 +1,6 @@
 ---
 marp: true
-background: /intro_background.jpg
+background: /background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -11,15 +11,13 @@ drawings:
 
 transition: fade
 
-title: "Lecture 9: Version Control"
+title: "Version Control"
 layout: cover
 ---
 
 # Dr. Mindaugas Šarpis
 
 # Lessons on **Data Analysis** from **CERN**
-
-## Lecture 9:
 
 ## Version Control
 
@@ -549,6 +547,7 @@ git checkout < branch-name >
 ```
 
 ---
+layout: center
 hideInToc: true
 ---
 

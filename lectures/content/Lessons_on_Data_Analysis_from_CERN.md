@@ -70,3 +70,11 @@ src: slides/L6_Concepts_of_Data_Analysis.md
 ---
 src: slides/L7_Data_Visualisation.md
 ---
+
+---
+src: slides/L8_Version_Control.md
+---
+
+---
+src: slides/L9_Probability_and_Statistics.md
+---
