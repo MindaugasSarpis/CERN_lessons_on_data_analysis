@@ -94,39 +94,59 @@ hideInToc: true
 
 # What is Probability?
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+<div class="grid-2 mt-lg">
+
+<div class="card card-primary">
+
+## 📊 **Frequentist View**
+
+<div class="card-content">
+
+**Probability = long-run frequency**
+
+💡 Example: Flip a coin 10,000 times → ~50% heads
+
+</div>
+
+</div>
+
+<div class="card card-secondary">
+
+## 🧠 **Bayesian View**
+
+<div class="card-content">
+
+**Probability = degree of belief**
+
+💡 Example: "70% chance of rain" reflects knowledge
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-accent mt-lg">
+
+## ⚖️ **Both Views are Useful**
+
+<div class="grid-2 mt-sm text-base">
 
 <div>
 
-## **Frequentist view**
+✅ **Frequentist** for repeated trials
 
-### Probability = long-run frequency of an event
-
-### Example: Flip a coin 10,000 times → ~50% heads
-
-<br>
-
-## **Bayesian view**
-
-### Probability = degree of belief or uncertainty
-
-### Example: "70% chance of rain" reflects our knowledge
+✅ **Bayesian** for updating beliefs
 
 </div>
 
 <div>
 
-## **Both views are useful**
+⚛️ **Physics:** mostly frequentist
 
-### Frequentist for experiments with repeated trials
+🤖 **ML:** increasingly Bayesian
 
-### Bayesian for updating beliefs with new data
-
-<br>
-
-### **In physics**: mostly frequentist
-
-### **In machine learning**: increasingly Bayesian
+</div>
 
 </div>
 
@@ -138,95 +158,135 @@ hideInToc: true
 
 # Basic Concepts
 
-<div style="margin-top: 2rem;">
+<div class="grid-2 container-centered mt-lg">
 
-## **Experiment**
-### Any process that produces an observation or outcome
+<div class="card card-primary">
 
-## **Sample Space (Ω)**
-### Set of all possible outcomes
+## 🔬 **Experiment**
 
-## **Event**
-### A subset of the sample space (collection of outcomes)
+<div class="card-content text-md">
 
-## **Probability P(A)**
-### A number between 0 and 1 assigned to event A
+Any repeatable process that produces an observation or outcome.
+
+</div>
+
+</div>
+
+<div class="card card-secondary">
+
+## 🌐 **Sample Space (Ω)**
+
+<div class="card-content text-md">
+
+Complete set of all possible outcomes of the experiment.
+
+</div>
+
+</div>
+
+<div class="card card-accent">
+
+## 🎯 **Event**
+
+<div class="card-content text-md">
+
+A subset of Ω — the outcomes that satisfy a condition of interest.
+
+</div>
+
+</div>
+
+<div class="card card-info">
+
+## 📊 **Probability P(A)**
+
+<div class="card-content text-md">
+
+A number between 0 and 1 that quantifies how likely event A is.
+
+</div>
+
+</div>
 
 </div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
-# Example: Rolling a Die
+# Visualizing the Sample Space
 
-## **Sample Space**
-### Ω = {1, 2, 3, 4, 5, 6}
+<div class="container-centered mt-lg">
 
-<br>
+<div class="card card-info">
 
-## **Events**
-### A = "roll an even number" = {2, 4, 6}
-### B = "roll greater than 4" = {5, 6}
-### C = "roll a 3" = {3}
+## 🎲 Sample Space Ω = {1, 2, 3, 4, 5, 6}
 
-::right::
+<div class="card-content text-base">
 
-<br>
-<br>
+Each die outcome is equally likely, so Ω is a tidy set of six values.
 
-## **Probabilities**
+</div>
 
-### For a fair die:
-```
-P(1) = P(2) = ... = P(6) = 1/6
-```
+</div>
 
-### P(A) = P(even) = 3/6 = 1/2
+<div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.8rem; margin-top: 1.5rem;">
 
-### P(B) = P(>4) = 2/6 = 1/3
+<div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); padding: 1.4rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; border: 2px solid rgba(255,255,255,0.25); color: #f8fafc;">
+1
+</div>
 
-### P(C) = P(3) = 1/6
+<div style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%); padding: 1.4rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; border: 2px solid rgba(255,255,255,0.25); color: #f8fafc;">
+2
+</div>
+
+<div style="background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-light) 100%); padding: 1.4rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; border: 2px solid rgba(255,255,255,0.25); color: #f8fafc;">
+3
+</div>
+
+<div style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%); padding: 1.4rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; border: 2px solid rgba(255,255,255,0.25); color: #f8fafc;">
+4
+</div>
+
+<div style="background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-light) 100%); padding: 1.4rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; border: 2px solid rgba(255,255,255,0.25); color: #f8fafc;">
+5
+</div>
+
+<div style="background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%); padding: 1.4rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; border: 2px solid rgba(255,255,255,0.25); color: #f8fafc;">
+6
+</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-# Visualizing Sample Space and Events
+# Events on Ω
 
-```mermaid
-graph TB
-    subgraph "Sample Space Ω"
-        A["Event A<br/>(even numbers)"]
-        B["Event B<br/>(> 4)"]
-        C["Event C<br/>(= 3)"]
-        O1[1]
-        O2[2]
-        O3[3]
-        O4[4]
-        O5[5]
-        O6[6]
-    end
+<div class="grid-2 container-centered mt-lg">
 
-    style A fill:#6bcf7f,stroke:#2d5f3f,stroke-width:2px,color:#000
-    style B fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#000
-    style C fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style O1 fill:#f5f5f5,stroke:#666,stroke-width:1px
-    style O2 fill:#6bcf7f,stroke:#2d5f3f,stroke-width:2px
-    style O3 fill:#4dabf7,stroke:#1565c0,stroke-width:2px
-    style O4 fill:#6bcf7f,stroke:#2d5f3f,stroke-width:2px
-    style O5 fill:#ff9800,stroke:#e65100,stroke-width:2px
-    style O6 fill:#ff9800,stroke:#e65100,stroke-width:2px
-```
+<div class="card card-success text-base">
+<strong>Event A (even):</strong> {2, 4, 6}<br/>
+Every outcome divisible by 2.
+</div>
 
-<div style="margin-top: 1rem; font-size: 1.1em;">
+<div class="card card-warning text-base">
+<strong>Event B (> 4):</strong> {5, 6}<br/>
+Large outcomes only.
+</div>
 
-### **Rolling a die**: Ω = {1, 2, 3, 4, 5, 6}
-- **Event A** (green): {2, 4, 6} - even numbers
-- **Event B** (orange): {5, 6} - greater than 4
-- **Event C** (blue): {3} - rolled a 3
-- **A ∩ B** (overlap): {6} - even AND > 4
+<div class="card card-info text-base">
+<strong>Event C (exact):</strong> {3}<br/>
+A single-number event.
+</div>
+
+<div class="card card-accent text-base">
+<strong>A ∩ B (even &gt; 4):</strong> {6}<br/>
+Only outcomes satisfying both properties.
+</div>
 
 </div>
 
@@ -236,21 +296,43 @@ hideInToc: true
 
 # Axioms of Probability (Kolmogorov)
 
-<div style="font-size: 1.3em; margin-top: 2rem;">
+<div class="grid-auto container-centered mt-lg">
 
-## **Axiom 1: Non-negativity**
-### For any event A: P(A) ≥ 0
+<div class="card card-primary">
 
-<br>
+## ✅ **Axiom 1: Non-negativity**
 
-## **Axiom 2: Normalization**
-### P(Ω) = 1 (something must happen)
+<div class="card-content">
 
-<br>
+For any event A: **P(A) ≥ 0**
 
-## **Axiom 3: Additivity**
-### If A and B are mutually exclusive (disjoint):
-### P(A ∪ B) = P(A) + P(B)
+</div>
+
+</div>
+
+<div class="card card-secondary">
+
+## 🌍 **Axiom 2: Normalization**
+
+<div class="card-content">
+
+**P(Ω) = 1** — something must happen
+
+</div>
+
+</div>
+
+<div class="card card-accent">
+
+## ➕ **Axiom 3: Additivity**
+
+<div class="card-content">
+
+If A and B are mutually exclusive: **P(A ∪ B) = P(A) + P(B)**
+
+</div>
+
+</div>
 
 </div>
 
@@ -260,22 +342,49 @@ hideInToc: true
 
 # Useful Rules from the Axioms
 
-<div style="margin-top: 1.5rem;">
+<div class="grid-auto container-centered mt-lg">
 
-## **Complement Rule**
+<div class="card card-warning">
+
+## 🔄 **Complement Rule**
+
+<div class="card-content">
+
 ```
 P(not A) = P(Aᶜ) = 1 − P(A)
 ```
 
-## **Addition Rule (general)**
+</div>
+
+</div>
+
+<div class="card card-info">
+
+## ➕ **Addition Rule (general)**
+
+<div class="card-content">
+
 ```
 P(A ∪ B) = P(A) + P(B) − P(A ∩ B)
 ```
 
-## **Multiplication Rule (independent events)**
+</div>
+
+</div>
+
+<div class="card card-success">
+
+## ✖️ **Multiplication Rule (independent events)**
+
+<div class="card-content">
+
 ```
 P(A ∩ B) = P(A) × P(B)
 ```
+
+</div>
+
+</div>
 
 </div>
 
@@ -287,41 +396,47 @@ hideInToc: true
 # Conditional Probability
 
 ## **Definition**
-### Probability of A given that B has occurred:
+
+<div class="card card-primary text-base">
+
+<div class="card-content">
+
+Knowing that B happened shrinks the universe of outcomes to B. The probability of A in that restricted world is
 
 ```
-P(A|B) = P(A ∩ B) / P(B)
+P(A | B) = P(A ∩ B) / P(B),    P(B) > 0.
 ```
 
-### (assuming P(B) > 0)
+</div>
 
-<br>
+</div>
 
-## **Intuition**
-### Restricts sample space to only outcomes where B is true
+<div class="card card-secondary text-base mt-md">
+
+<div class="card-content">
+
+Think of it as running the experiment again but keeping only the trials where B occurred.
+
+</div>
+
+</div>
 
 ::right::
 
-<br>
+## **Two-dice example**
 
-## **Example: Two dice**
+<div class="card card-accent text-base">
 
-### A = "sum is 8"
-### B = "first die shows 3"
+- Event A: total sum is 8 (5 ways out of 36).  
+- Event B: first die shows 3 (6 ways out of 36).
 
-<br>
+Once B happens, the only compatible pair giving sum 8 is (3, 5), so
 
-### P(A) = 5/36
+```
+P(A | B) = 1 / 6.
+```
 
-### P(B) = 6/36 = 1/6
-
-### P(A|B) = ?
-
-<br>
-
-### If first die = 3, second must be 5 for sum = 8
-
-### P(A|B) = 1/6
+</div>
 
 ---
 hideInToc: true
@@ -329,27 +444,53 @@ hideInToc: true
 
 # Independence
 
-<div style="margin-top: 2rem;">
+<div class="grid-2 mt-lg">
 
-## **Definition**
-### Events A and B are independent if:
+<div class="card card-primary">
+
+## 📐 **Definition**
+
+<div class="card-content text-md">
+
+Events A and B are independent if:
+
 ```
 P(A ∩ B) = P(A) × P(B)
 ```
 
-### Equivalently: P(A|B) = P(A)
+**Equivalently:** P(A|B) = P(A)
 
-<br>
+</div>
 
-## **Intuition**
-### Knowing B occurred doesn't change the probability of A
+</div>
 
-<br>
+<div class="card card-secondary">
 
-## **Examples**
-- ### Flipping two coins: outcomes are independent
-- ### Drawing cards *without* replacement: NOT independent
-- ### Drawing cards *with* replacement: independent
+## 💡 **Intuition**
+
+<div class="card-content text-md">
+
+Knowing B occurred doesn't change the probability of A
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-success mt-lg">
+
+## 📚 **Examples**
+
+<div class="card-content text-md">
+
+✅ **Flipping two coins:** outcomes are independent
+
+❌ **Drawing cards *without* replacement:** NOT independent
+
+✅ **Drawing cards *with* replacement:** independent
+
+</div>
 
 </div>
 
@@ -360,31 +501,26 @@ hideInToc: true
 # Bayes' Theorem Flow
 
 ```mermaid
-graph TB
-    subgraph "Input Components"
-        A["<b>Prior P(A)</b><br/>Initial belief<br/>before data"]
-        B["<b>Likelihood P(B|A)</b><br/>How probable is<br/>the data given<br/>hypothesis"]
-        D["<b>Evidence P(B)</b><br/>Total probability<br/>of observing data<br/>P(B|A)P(A) + P(B|Ā)P(Ā)"]
-    end
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0b2540',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102e4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 60, 'rankSpacing': 70}}%%
+flowchart LR
+    Prior["Prior<br/>P(A)"]:::input --> Update
+    Likelihood["Likelihood<br/>P(B|A)"]:::input --> Update
+    Evidence["Evidence<br/>P(B)"]:::support --> Update
+    Update["Bayes update<br/>P(A|B) = P(B|A)·P(A)/P(B)"]:::process --> Posterior
+    Posterior["Posterior<br/>Updated belief after data"]:::output
 
-    subgraph "Calculation"
-        E["<b>Bayes' Formula</b><br/>P(A|B) = P(B|A)×P(A)/P(B)"]
-    end
-
-    subgraph "Output"
-        C["<b>Posterior P(A|B)</b><br/>Updated belief<br/>after seeing data"]
-    end
-
-    A --> E
-    B --> E
-    D --> E
-    E --> C
-
-    style A fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style B fill:#ff6b6b,stroke:#8b0000,stroke-width:3px,color:#000
-    style D fill:#ffd93d,stroke:#b8860b,stroke-width:3px,color:#000
-    style E fill:#bb86fc,stroke:#6200ee,stroke-width:3px,color:#000
-    style C fill:#4dabf7,stroke:#1565c0,stroke-width:3px,color:#000
+    classDef input fill:#123b75,stroke:#60a5fa,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef support fill:#0f2b4c,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef process fill:#0b1f36,stroke:#94a3b8,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
+    classDef output fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
 ```
 
 <div style="margin-top: 1rem;">
@@ -471,30 +607,41 @@ hideInToc: true
 # Visualizing the Medical Test
 
 ```mermaid
-graph TD
-    A["<b>Population</b><br/>N = 10,000 people"] --> B["<b>Has Disease</b><br/>1% prevalence<br/>100 people"]
-    A --> C["<b>No Disease</b><br/>99%<br/>9,900 people"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#0ea5e9',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 55, 'rankSpacing': 65}}%%
+flowchart LR
+    Population["Population<br/>10,000 people"]:::hub --> HasDisease["Has disease<br/>1% → 100"]:::branch
+    Population --> NoDisease["No disease<br/>99% → 9,900"]:::branch
 
-    B --> D["<b>Test Positive ✓</b><br/>Sensitivity: 95%<br/>True Positives<br/>95 people<br/>0.95 × 100 = 95"]
-    B --> E["<b>Test Negative ✗</b><br/>5% missed<br/>False Negatives<br/>5 people<br/>0.05 × 100 = 5"]
+    HasDisease --> TruePos["Test +<br/>true positives<br/>95"]:::positive
+    HasDisease --> FalseNeg["Test -<br/>false negatives<br/>5"]:::negative
 
-    C --> F["<b>Test Positive ✓</b><br/>Specificity failure: 10%<br/>False Positives<br/>990 people<br/>0.10 × 9,900 = 990"]
-    C --> G["<b>Test Negative ✗</b><br/>Specificity: 90%<br/>True Negatives<br/>8,910 people<br/>0.90 × 9,900 = 8,910"]
+    NoDisease --> FalsePos["Test +<br/>false positives<br/>990"]:::alert
+    NoDisease --> TrueNeg["Test -<br/>true negatives<br/>8,910"]:::positive
 
-    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:4px,color:#000
-    style B fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style C fill:#95e1d3,stroke:#00695c,stroke-width:3px,color:#000
-    style D fill:#4caf50,stroke:#1b5e20,stroke-width:3px,color:#000
-    style E fill:#ffcdd2,stroke:#c62828,stroke-width:2px,color:#000
-    style F fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style G fill:#a5d6a7,stroke:#2e7d32,stroke-width:2px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#e2e8f0,rx:16px,ry:16px;
+    classDef branch fill:#132f5d,stroke:#38bdf8,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef positive fill:#0f4c81,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:14px,ry:14px;
+    classDef alert fill:#b45309,stroke:#ffb74d,stroke-width:2px,color:#fff7ed,rx:14px,ry:14px;
+    classDef negative fill:#8b2f39,stroke:#f87171,stroke-width:2px,color:#fee2e2,rx:14px,ry:14px;
 ```
 
-<div style="margin-top: 1rem; font-size: 1.1em;">
+<div class="card card-info mt-md text-base">
 
-### **Key Insight**: Total Test Positive = 95 + 990 = **1,085 people**
-### **P(Disease | Positive) = 95 / 1,085 = 8.8%**
-### Only 8.8% of positive tests actually have the disease! (False positive problem with rare diseases)
+<div class="card-content">
+
+- Total positive tests = 95 true + 990 false = **1,085**.  
+- **P(Disease | Positive) = 95 / 1,085 = 8.8%** despite an accurate test.  
+- False positives dominate when the disease is rare.
+
+</div>
 
 </div>
 
@@ -537,25 +684,30 @@ hideInToc: true
 # Types of Random Variables
 
 ```mermaid
-graph TB
-    RV["<b>Random Variable X</b><br/>Maps outcomes to numbers"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 55, 'rankSpacing': 65}}%%
+flowchart TB
+    RV["Random variable X<br/>Maps outcomes → numbers"]:::hub
+    RV --> Discrete["Discrete<br/>Countable values"]:::branch
+    RV --> Continuous["Continuous<br/>Real-valued interval"]:::branch
 
-    RV --> Discrete["<b>Discrete</b><br/>Countable values<br/>{0, 1, 2, 3, ...}"]
-    RV --> Continuous["<b>Continuous</b><br/>Interval values<br/>Any real number in [a, b]"]
+    Discrete --> PMF["PMF<br/>P(X = x) at each point"]:::detail
+    Continuous --> PDF["PDF<br/>f(x) is a density"]:::detail
 
-    Discrete --> PMF["<b>PMF</b><br/>P(X = x)<br/>Probability at each point"]
-    Continuous --> PDF["<b>PDF</b><br/>f(x)<br/>Probability density"]
+    PMF --> DiscEx["Examples:<br/>coin flips, particle counts, dice"]:::example
+    PDF --> ContEx["Examples:<br/>measurements, energies, timing"]:::example
 
-    PMF --> DiscEx["<b>Examples</b><br/>• Coin flips<br/>• Dice rolls<br/>• Particle counts<br/>• Number of events"]
-    PDF --> ContEx["<b>Examples</b><br/>• Measurements<br/>• Particle energies<br/>• Time intervals<br/>• Velocities"]
-
-    style RV fill:#bb86fc,stroke:#6200ee,stroke-width:4px,color:#000
-    style Discrete fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style Continuous fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style PMF fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style PDF fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style DiscEx fill:#e8f5e9,stroke:#2d5f3f,stroke-width:1px,color:#000
-    style ContEx fill:#fff3e0,stroke:#e65100,stroke-width:1px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
+    classDef branch fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef detail fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef example fill:#1d3a64,stroke:#38bdf8,stroke-width:1.5px,color:#e2e8f0,rx:14px,ry:14px;
 ```
 
 ---
@@ -865,29 +1017,55 @@ hideInToc: true
 
 # Measures of Spread
 
-<div style="margin-top: 1.5rem;">
+<div class="grid-auto container-centered mt-lg">
 
-## **Range**
+<div class="card card-warning">
+
+## 📏 **Range**
+
+<div class="card-content">
+
 ```
 Range = max − min
 ```
-### Simple but not robust
 
-<br>
+Simple but not robust
 
-## **Variance**
+</div>
+
+</div>
+
+<div class="card card-accent">
+
+## 📊 **Variance**
+
+<div class="card-content">
+
 ```
 σ² = Σ(xᵢ − μ)² / n
 ```
-### Average squared deviation from mean
 
-<br>
+Average squared deviation from mean
 
-## **Standard Deviation**
+</div>
+
+</div>
+
+<div class="card card-info">
+
+## 📈 **Standard Deviation**
+
+<div class="card-content">
+
 ```
 σ = √(variance)
 ```
-### Same units as the data • Most commonly reported
+
+Same units as the data • Most commonly reported
+
+</div>
+
+</div>
 
 </div>
 
@@ -1058,42 +1236,32 @@ hideInToc: true
 # Distribution Landscape
 
 ```mermaid
-graph TB
-    D["<b>Probability Distributions</b>"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 50, 'rankSpacing': 60}}%%
+flowchart TB
+    Root["Probability distributions"]:::hub
+    Root --> Disc["Discrete<br/>countable outcomes"]:::category
+    Root --> Cont["Continuous<br/>real-valued"]:::category
 
-    D --> Disc["<b>Discrete</b><br/>Countable outcomes"]
-    D --> Cont["<b>Continuous</b><br/>Real-valued"]
+    Disc --> Bern["Bernoulli<br/>Single trial<br/>P(X=1)=p"]:::discrete
+    Disc --> Binom["Binomial<br/>n trials, count successes"]:::discrete
+    Disc --> Pois["Poisson<br/>Rare events per interval"]:::discrete
 
-    Disc --> Bern["<b>Bernoulli</b><br/>Single trial<br/>Success/Failure<br/>P(X=1) = p"]
-    Disc --> Binom["<b>Binomial</b><br/>n Bernoulli trials<br/>Count successes<br/>P(X=k) = C(n,k)p^k(1-p)^(n-k)"]
-    Disc --> Pois["<b>Poisson</b><br/>Rare events<br/>Fixed interval<br/>P(X=k) = λ^k·e^(-λ)/k!"]
+    Cont --> Unif["Uniform<br/>Equal likelihood on [a,b]"]:::continuous
+    Cont --> Exp["Exponential<br/>Wait time to event"]:::continuous
+    Cont --> Norm["Normal<br/>Bell curve, μ & σ"]:::continuous
 
-    Cont --> Unif["<b>Uniform</b><br/>Equal likelihood<br/>f(x) = 1/(b-a)"]
-    Cont --> Exp["<b>Exponential</b><br/>Time to event<br/>f(x) = λe^(-λx)"]
-    Cont --> Norm["<b>Normal</b><br/>Bell curve<br/>f(x) = exp(-(x-μ)²/2σ²)/√(2πσ²)"]
-
-    Bern --> BernUse["Coin flip<br/>Pass/Fail"]
-    Binom --> BinomUse["# heads in n flips<br/>Clinical trials"]
-    Pois --> PoisUse["Radioactive decay<br/>Arrivals/hour"]
-    Unif --> UnifUse["Random number<br/>generator"]
-    Exp --> ExpUse["Time between<br/>events"]
-    Norm --> NormUse["Measurements<br/>Errors<br/>Heights"]
-
-    style D fill:#bb86fc,stroke:#6200ee,stroke-width:4px,color:#000
-    style Disc fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style Cont fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style Bern fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Binom fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Pois fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Unif fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style Exp fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style Norm fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style BernUse fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,color:#000
-    style BinomUse fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,color:#000
-    style PoisUse fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,color:#000
-    style UnifUse fill:#ffebee,stroke:#8b0000,stroke-width:1px,color:#000
-    style ExpUse fill:#ffebee,stroke:#8b0000,stroke-width:1px,color:#000
-    style NormUse fill:#ffebee,stroke:#8b0000,stroke-width:1px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:18px,ry:18px;
+    classDef category fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:16px,ry:16px;
+    classDef discrete fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e0f2fe,rx:14px,ry:14px;
+    classDef continuous fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:14px,ry:14px;
 ```
 
 ---
@@ -1278,23 +1446,85 @@ hideInToc: true
 
 # Why the Normal Distribution is Special
 
-<div style="margin-top: 2rem;">
+<div class="grid-3 mt-lg">
 
-- ## **Most important distribution in statistics**
+<div class="card card-primary">
 
-- ## Arises naturally in many phenomena
+## 🏆 **Most Important**
 
-- ## Justified by the **Central Limit Theorem**
+<div class="card-content text-base">
 
-- ## Measurement errors often approximately normal
+Most important distribution
 
-- ## Foundation for many statistical tests
+</div>
 
-- ## Two parameters: μ (mean), σ² (variance)
+</div>
 
-<br>
+<div class="card card-secondary">
 
-### **"The normal distribution is the pattern of patterns"**
+## 🌿 **Natural**
+
+<div class="card-content text-base">
+
+Arises naturally
+
+</div>
+
+</div>
+
+<div class="card card-info">
+
+## 🎯 **CLT Foundation**
+
+<div class="card-content text-base">
+
+Central Limit Theorem
+
+</div>
+
+</div>
+
+<div class="card card-success">
+
+## 🔬 **Measurement Errors**
+
+<div class="card-content text-base">
+
+Errors are normal
+
+</div>
+
+</div>
+
+<div class="card card-warning">
+
+## 🧪 **Statistical Tests**
+
+<div class="card-content text-base">
+
+Foundation for tests
+
+</div>
+
+</div>
+
+<div class="card card-accent">
+
+## ⚙️ **Two Parameters**
+
+<div class="card-content text-base">
+
+μ (mean), σ² (variance)
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mt-lg" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+
+### 🌟 **"The normal distribution is the pattern of patterns"**
 
 </div>
 
@@ -1352,21 +1582,45 @@ hideInToc: true
 
 # The 68-95-99.7 Rule
 
-<div style="margin-top: 2rem; font-size: 1.3em;">
+<div class="grid-auto container-centered mt-lg">
 
-## For X ~ N(μ, σ²):
+<div style="text-align: center; font-size: 1.3em; font-weight: bold; margin-bottom: 0.5rem;">
 
-- ### **68%** of data within μ ± σ
+For X ~ N(μ, σ²):
 
-- ### **95%** of data within μ ± 2σ
+</div>
 
-- ### **99.7%** of data within μ ± 3σ
+<div class="card card-success">
 
-<br>
+## 📊 **68%** of data within μ ± σ
 
-### **Practical implication**: A measurement 3σ away from the mean is extremely rare (0.3% chance)
+</div>
 
-#### In particle physics: 5σ is the gold standard for discovery (1 in 3.5 million chance if no signal)
+<div class="card card-info">
+
+## 📈 **95%** of data within μ ± 2σ
+
+</div>
+
+<div class="card card-primary">
+
+## 🎯 **99.7%** of data within μ ± 3σ
+
+</div>
+
+</div>
+
+<div class="card card-warning mt-lg">
+
+## 💡 **Practical Implication**
+
+<div class="card-content text-md">
+
+A measurement **3σ away** is **extremely rare** (0.3% chance)
+
+⚛️ **In particle physics**: 5σ is gold standard (1 in 3.5M chance)
+
+</div>
 
 </div>
 
@@ -1603,26 +1857,53 @@ hideInToc: true
 
 # Standard Error
 
-<div style="margin-top: 2rem; font-size: 1.25em;">
+<div class="grid-auto container-centered mt-lg">
 
-## **Definition**
-### Standard deviation of the sample mean:
+<div class="card card-primary">
+
+## 📐 **Definition**
+
+<div class="card-content">
+
+Standard deviation of the sample mean:
+
 ```
 SE = σ / √n
 ```
 
-<br>
+</div>
 
-## **Interpretation**
-- ### Uncertainty in our estimate of μ
-- ### Decreases with sample size (√n)
-- ### To halve the error, need 4× more data
+</div>
 
-<br>
+<div class="card card-warning">
 
-## **Usage**
-### Report results as: **mean ± SE**
-### Or: **mean ± 2×SE** for ~95% confidence
+## 🔍 **Interpretation**
+
+<div class="card-content text-md">
+
+📊 Uncertainty in our estimate of μ
+
+📉 Decreases with sample size (√n)
+
+🔢 To halve error, need **4× more data**
+
+</div>
+
+</div>
+
+<div class="card card-success">
+
+## 📝 **Usage**
+
+<div class="card-content">
+
+Report results as: **mean ± SE**
+
+Or: **mean ± 2×SE** for ~95% confidence
+
+</div>
+
+</div>
 
 </div>
 
@@ -1640,47 +1921,27 @@ hideInToc: true
 # The Statistical Inference Process
 
 ```mermaid
-graph LR
-    subgraph "Population"
-        P["<b>Population</b><br/>Unknown parameters:<br/>μ, σ, θ"]
-    end
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 55, 'rankSpacing': 60}}%%
+flowchart TB
+    Population["Population\n(μ, σ, θ) unknown"]:::hub --> Sample["Sample data\nx₁ … xₙ"]:::input
+    Sample --> Stats["Summaries\nx̄, s², graphs"]:::process
+    Stats --> Estimation["Estimation\npoint + interval"]:::process
+    Estimation --> Inference["Inference\nhypothesis tests / models"]:::process
+    Inference --> Decision["Decision\nreport, conclude, quantify uncertainty"]:::output
+    Decision -.-> Population
 
-    subgraph "Data Collection"
-        S["<b>Sample</b><br/>Observed data:<br/>x₁, x₂, ..., xₙ"]
-    end
-
-    subgraph "Estimation"
-        PE["<b>Point Estimate</b><br/>x̄, s²"]
-        IE["<b>Interval Estimate</b><br/>Confidence Intervals"]
-    end
-
-    subgraph "Inference"
-        HT["<b>Hypothesis Testing</b><br/>Test claims<br/>Compute p-values"]
-        MP["<b>Model Parameters</b><br/>Fit models<br/>Make predictions"]
-    end
-
-    subgraph "Conclusion"
-        D["<b>Decision</b><br/>Accept/Reject<br/>Quantify uncertainty"]
-    end
-
-    P -->|Random sampling| S
-    S -->|Calculate statistics| PE
-    S -->|Estimate range| IE
-    PE --> HT
-    IE --> HT
-    PE --> MP
-    IE --> MP
-    HT --> D
-    MP --> D
-    D -.->|Update beliefs| P
-
-    style P fill:#bb86fc,stroke:#6200ee,stroke-width:3px,color:#000
-    style S fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style PE fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style IE fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style HT fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#000
-    style MP fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#000
-    style D fill:#ff6b6b,stroke:#8b0000,stroke-width:3px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:18px,ry:18px;
+    classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:16px,ry:16px;
+    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:16px,ry:16px;
+    classDef output fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:16px,ry:16px;
 ```
 
 ---
@@ -1823,43 +2084,37 @@ hideInToc: true
 # Data Fitting Workflow
 
 ```mermaid
-graph TB
-    Data["<b>Data</b><br/>(x₁,y₁), (x₂,y₂), ..., (xₙ,yₙ)"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 45, 'rankSpacing': 55}}%%
+flowchart TB
+    Data["Data<br/>(xᵢ, yᵢ)"]:::input --> Model["Propose model<br/>y = f(x; θ) + ε"]:::process
+    Model --> Method{"Select method"}:::decision
+    Method --> LS["Least squares<br/>min Σ(yᵢ − f(xᵢ))²"]:::option
+    Method --> MLE["Maximum likelihood<br/>max P(data | θ)"]:::option
+    Method --> Chi["Chi-squared<br/>min Σ[(yᵢ − f(xᵢ))/σᵢ]²"]:::option
 
-    Data --> Model["<b>Propose Model</b><br/>y = f(x; θ) + ε<br/>ε ~ N(0, σ²)"]
-
-    Model --> Method["<b>Choose Method</b>"]
-
-    Method --> LS["<b>Least Squares</b><br/>Minimize Σ(yᵢ - f(xᵢ))²"]
-    Method --> MLE["<b>Maximum Likelihood</b><br/>Maximize P(data | θ)"]
-    Method --> Chi["<b>Chi-squared</b><br/>Minimize Σ[(yᵢ-f(xᵢ))/σᵢ]²"]
-
-    LS --> Fit["<b>Fit Parameters</b><br/>θ̂ = best fit values"]
+    LS --> Fit
     MLE --> Fit
     Chi --> Fit
+    Fit["Fit parameters<br/>θ̂ and residuals"]:::process --> Uncertainty["Quantify uncertainty<br/>SEs, confidence intervals"]:::process
+    Uncertainty --> Diagnostics["Diagnostics<br/>χ², residuals, visuals"]:::process
+    Diagnostics --> Decision{"Good enough?"}:::decision
+    Decision -->|Yes| Report["Report fit<br/>θ̂ ± error, plots"]:::output
+    Decision -->|No| Model
+    Report --> Predict["Predict / deploy<br/>f(x_new; θ̂)"]:::output
 
-    Fit --> Unc["<b>Quantify Uncertainty</b><br/>Standard errors<br/>Confidence intervals"]
-
-    Unc --> GoF["<b>Goodness of Fit</b><br/>χ² test<br/>Residual analysis"]
-
-    GoF --> Good{Good fit?}
-    Good -->|Yes| Report["<b>Report Results</b><br/>θ̂ ± uncertainty<br/>Visualize fit"]
-    Good -->|No| Model
-
-    Report --> Predict["<b>Make Predictions</b><br/>f(x_new; θ̂) ± error"]
-
-    style Data fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style Model fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Method fill:#bb86fc,stroke:#6200ee,stroke-width:2px,color:#000
-    style LS fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
-    style MLE fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
-    style Chi fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
-    style Fit fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style Unc fill:#ffd93d,stroke:#b8860b,stroke-width:2px,color:#000
-    style GoF fill:#ffd93d,stroke:#b8860b,stroke-width:2px,color:#000
-    style Good fill:#bb86fc,stroke:#6200ee,stroke-width:2px,color:#000
-    style Report fill:#4caf50,stroke:#1b5e20,stroke-width:3px,color:#000
-    style Predict fill:#4caf50,stroke:#1b5e20,stroke-width:2px,color:#000
+    classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:16px,ry:16px;
+    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:16px,ry:16px;
+    classDef decision fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:18px,ry:18px;
+    classDef option fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:14px,ry:14px;
+    classDef output fill:#1c3d5a,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:16px,ry:16px;
 ```
 
 ---
@@ -2327,89 +2582,84 @@ hideInToc: true
 
 # Practical Advice
 
-- ## **Always visualize** your data first
+<div class="grid-3 mt-lg">
 
-- ## **Check assumptions** (normality, independence)
+<div class="card card-primary">
 
-- ## **Report uncertainties** alongside estimates
+## 📊 **Visualize**
 
-- ## **Understand what your p-value means** (and doesn't mean)
+<div class="card-content text-base">
 
-- ## **Don't over-interpret** small samples
-
-- ## **Use simulation** when theory is unclear
-
-- ## **Document your choices** for reproducibility
-
----
-hideInToc: true
----
-
-# Resources for Further Learning
-
-<div style="margin-top: 2rem;">
-
-## **Books**
-- *Statistics* by Freedman, Pisani, Purves (intuitive)
-- *Statistical Data Analysis* by Glen Cowan (for physicists)
-- *All of Statistics* by Wasserman (mathematical)
-
-<br>
-
-## **Online**
-- Khan Academy: Probability and Statistics
-- Seeing Theory: visual intro to probability (seeing-theory.brown.edu)
-- CERN Statistics Lectures (indico.cern.ch)
-
-<br>
-
-## **Software**
-- Python: NumPy, SciPy, statsmodels
-- R: built-in statistical functions
-- ROOT: CERN's framework (root.cern.ch)
+Visualize data first
 
 </div>
 
----
-layout: fact
-hideInToc: true
----
+</div>
 
-# Questions?
+<div class="card card-secondary">
 
----
-hideInToc: true
----
+## ✓ **Check**
 
-# Exercise: Practice Problems
+<div class="card-content text-base">
 
-<div style="margin-top: 1.5rem;">
-
-## **1. Probability**
-### A detector has 95% efficiency. You observe 90 particles. How many were actually produced? Include uncertainty.
-
-<br>
-
-## **2. Distributions**
-### Generate 1000 random numbers from N(5, 2²). Compute mean and std dev. How close to 5 and 2?
-
-<br>
-
-## **3. Confidence Intervals**
-### Measure: 12.3, 12.7, 12.1, 12.5, 12.4. Compute 95% CI for the mean (assume normal).
-
-<br>
-
-## **4. Hypothesis Test**
-### Expected: 50 ± 7 events. Observed: 68. Is this a significant excess? Compute p-value.
+Verify assumptions
 
 </div>
 
----
-layout: end
-hideInToc: true
----
+</div>
 
-# Thank you!
+<div class="card card-info">
 
-## Next: **Data Fitting and Regression**
+## 📏 **Report**
+
+<div class="card-content text-base">
+
+Include uncertainties
+
+</div>
+
+</div>
+
+<div class="card card-success">
+
+## 🎯 **Understand**
+
+<div class="card-content text-base">
+
+Know p-values
+
+</div>
+
+</div>
+
+<div class="card card-warning">
+
+## ⚠️ **Caution**
+
+<div class="card-content text-base">
+
+Small sample limits
+
+</div>
+
+</div>
+
+<div class="card card-accent">
+
+## 🔬 **Simulate**
+
+<div class="card-content text-base">
+
+When unclear
+
+</div>
+
+</div>
+
+<div class="card card-primary" style="grid-column: 1 / -1;">
+
+## 📝 **Document for Reproducibility**
+
+</div>
+
+</div>
