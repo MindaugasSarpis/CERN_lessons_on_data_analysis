@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "@slidev/cli": "^52.2.4"
+    "@slidev/cli": "^52.2.4",
+    "pnpm": "^10.19.0"
   },
   "devDependencies": {
     "mermaid": "^11.12.0"
