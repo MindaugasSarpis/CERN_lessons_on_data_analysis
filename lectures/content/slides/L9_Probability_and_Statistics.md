@@ -131,37 +131,37 @@ hideInToc: true
 
 # Basic Concepts
 
-<div class="grid-2 mt-md" style="gap: 1rem;">
+<div class="grid-2 mt-md gap-tight">
 
-<div class="card card-primary" style="padding: 0.8rem 1rem;">
+<div class="card card-primary pad-tight">
 
 ### 🔬 **Experiment**
 
-<div style="font-size: 0.9em; margin-top: 0.3rem;">Repeatable process producing an outcome</div>
+<div class="note-text mt-xs">Repeatable process producing an outcome</div>
 
 </div>
 
-<div class="card card-secondary" style="padding: 0.8rem 1rem;">
+<div class="card card-secondary pad-tight">
 
 ### 🌐 **Sample Space (Ω)**
 
-<div style="font-size: 0.9em; margin-top: 0.3rem;">All possible outcomes</div>
+<div class="note-text mt-xs">All possible outcomes</div>
 
 </div>
 
-<div class="card card-accent" style="padding: 0.8rem 1rem;">
+<div class="card card-accent pad-tight">
 
 ### 🎯 **Event**
 
-<div style="font-size: 0.9em; margin-top: 0.3rem;">Subset of Ω satisfying a condition</div>
+<div class="note-text mt-xs">Subset of Ω satisfying a condition</div>
 
 </div>
 
-<div class="card card-info" style="padding: 0.8rem 1rem;">
+<div class="card card-info pad-tight">
 
 ### 📊 **Probability P(A)**
 
-<div style="font-size: 0.9em; margin-top: 0.3rem;">Number in [0,1] quantifying likelihood</div>
+<div class="note-text mt-xs">Number in [0,1] quantifying likelihood</div>
 
 </div>
 
@@ -208,31 +208,31 @@ All outcomes are equally likely: P(each) = 1/6
 
 <div style="display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem;">
 
-<div class="card card-success" style="padding: 0.8rem 1.2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<strong style="font-size: 1.05em;">Event A (even):</strong>
-<span style="font-family: monospace; font-size: 1.1em; font-weight: 600;">{2, 4, 6}</span>
+<div class="card card-success pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">Event A (even):</strong>
+<span class="mono-strong">{2, 4, 6}</span>
 </div>
 </div>
 
-<div class="card card-warning" style="padding: 0.8rem 1.2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<strong style="font-size: 1.05em;">Event B (&gt; 4):</strong>
-<span style="font-family: monospace; font-size: 1.1em; font-weight: 600;">{5, 6}</span>
+<div class="card card-warning pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">Event B (&gt; 4):</strong>
+<span class="mono-strong">{5, 6}</span>
 </div>
 </div>
 
-<div class="card card-info" style="padding: 0.8rem 1.2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<strong style="font-size: 1.05em;">Event C (exact):</strong>
-<span style="font-family: monospace; font-size: 1.1em; font-weight: 600;">{3}</span>
+<div class="card card-info pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">Event C (exact):</strong>
+<span class="mono-strong">{3}</span>
 </div>
 </div>
 
-<div class="card card-accent" style="padding: 0.8rem 1.2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<strong style="font-size: 1.05em;">A ∩ B (even &amp; &gt; 4):</strong>
-<span style="font-family: monospace; font-size: 1.1em; font-weight: 600;">{6}</span>
+<div class="card card-accent pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">A ∩ B (even &amp; &gt; 4):</strong>
+<span class="mono-strong">{6}</span>
 </div>
 </div>
 
@@ -248,35 +248,35 @@ hideInToc: true
 
 # Axioms of Probability (Kolmogorov)
 
-<div class="grid-3 mt-md" style="gap: 1rem;">
+<div class="grid-3 mt-md gap-tight">
 
-<div class="card card-primary" style="padding: 0.8rem 1rem;">
+<div class="card card-primary pad-tight">
 
 ### ✅ **Axiom 1**
 
 **Non-negativity**
 
-<div style="font-size: 0.9em; margin-top: 0.4rem;">$P(A) \geq 0$ for any event A</div>
+<div class="note-text-lg">$P(A) \geq 0$ for any event A</div>
 
 </div>
 
-<div class="card card-secondary" style="padding: 0.8rem 1rem;">
+<div class="card card-secondary pad-tight">
 
 ### 🌍 **Axiom 2**
 
 **Normalization**
 
-<div style="font-size: 0.9em; margin-top: 0.4rem;">$P(\Omega) = 1$</div>
+<div class="note-text-lg">$P(\Omega) = 1$</div>
 
 </div>
 
-<div class="card card-accent" style="padding: 0.8rem 1rem;">
+<div class="card card-accent pad-tight">
 
 ### ➕ **Axiom 3**
 
 **Additivity**
 
-<div style="font-size: 0.9em; margin-top: 0.4rem;">Mutually exclusive: $P(A \cup B) = P(A) + P(B)$</div>
+<div class="note-text-lg">Mutually exclusive: $P(A \cup B) = P(A) + P(B)$</div>
 
 </div>
 
@@ -288,9 +288,9 @@ hideInToc: true
 
 # Useful Rules from the Axioms
 
-<div class="grid-3 mt-md" style="gap: 1rem;">
+<div class="grid-3 mt-md gap-tight">
 
-<div class="card card-warning" style="padding: 0.8rem 1rem;">
+<div class="card card-warning pad-tight">
 
 ### 🔄 **Complement**
 
@@ -298,7 +298,7 @@ $$P(A^c) = 1 - P(A)$$
 
 </div>
 
-<div class="card card-info" style="padding: 0.8rem 1rem;">
+<div class="card card-info pad-tight">
 
 ### ➕ **Addition**
 
@@ -306,13 +306,13 @@ $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
 </div>
 
-<div class="card card-success" style="padding: 0.8rem 1rem;">
+<div class="card card-success pad-tight">
 
 ### ✖️ **Multiplication**
 
 $$P(A \cap B) = P(A) \times P(B)$$
 
-<div style="font-size: 0.85em; margin-top: 0.3rem;">if independent</div>
+<div class="meta-caption">if independent</div>
 
 </div>
 
@@ -433,7 +433,7 @@ hideInToc: true
   'tertiaryColor': '#143860',
   'lineColor': '#5eead4',
   'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 40, 'rankSpacing': 50}}%%
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 50}}%%
 flowchart LR
     Prior["Prior<br/>P(A)"]:::input --> Update
     Likelihood["Likelihood<br/>P(B|A)"]:::input --> Update
@@ -447,7 +447,7 @@ flowchart LR
     classDef output fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
 ```
 
-<div style="margin-top: 0.5rem; font-size: 0.9em; line-height: 1.5;">
+<div class="note-text mt-sm">
 
 **1.** Prior P(A): Belief before data • **2.** Likelihood P(B|A): Data probability • **3.** Evidence P(B): Normalization • **4.** Posterior P(A|B): Updated belief
 
@@ -459,7 +459,7 @@ hideInToc: true
 
 # Bayes' Theorem
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block-lg">
 
 ## **Formula**
 $$P(A \mid B) = \frac{P(B \mid A) \times P(A)}{P(B)}$$
@@ -524,7 +524,7 @@ hideInToc: true
   'tertiaryColor': '#0ea5e9',
   'lineColor': '#5eead4',
   'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 35, 'rankSpacing': 45}}%%
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 45}}%%
 flowchart LR
     Population["Population<br/>10,000"]:::hub --> HasDisease["Disease<br/>1% → 100"]:::branch
     Population --> NoDisease["No disease<br/>99% → 9,900"]:::branch
@@ -542,9 +542,9 @@ flowchart LR
     classDef negative fill:#8b2f39,stroke:#f87171,stroke-width:2px,color:#fee2e2,rx:12px,ry:12px;
 ```
 
-<div class="card card-info" style="margin-top: 0.8rem; padding: 0.8rem 1rem;">
+<div class="card card-info pad-tight mermaid-note">
 
-<div style="font-size: 0.9em; line-height: 1.5;">
+<div class="note-text">
 
 Total positive: 95 + 990 = **1,085** • **P(Disease | +) = 95/1,085 = 8.8%** • False positives dominate when disease is rare
 
@@ -565,7 +565,7 @@ hideInToc: true
 
 # What is a Random Variable?
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 ## **Definition**
 Function mapping outcomes to numbers
@@ -593,7 +593,7 @@ hideInToc: true
   'tertiaryColor': '#143860',
   'lineColor': '#5eead4',
   'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 35, 'rankSpacing': 45}}%%
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 45}}%%
 flowchart TB
     RV["Random variable X<br/>Maps outcomes → numbers"]:::hub
     RV --> Discrete["Discrete<br/>Countable"]:::branch
@@ -693,7 +693,7 @@ hideInToc: true
 
 # Cumulative Distribution Function (CDF)
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 ## **Definition**
 $$F(x) = P(X \leq x)$$
@@ -764,35 +764,35 @@ hideInToc: true
 
 # Measures of Spread
 
-<div class="grid-3 mt-md" style="gap: 1rem;">
+<div class="grid-3 mt-md gap-tight">
 
-<div class="card card-warning" style="padding: 0.8rem 1rem;">
+<div class="card card-warning pad-tight">
 
 ### 📏 **Range**
 
 $$\text{Range} = \max - \min$$
 
-<div style="font-size: 0.85em; margin-top: 0.3rem;">Simple but not robust</div>
+<div class="meta-caption">Simple but not robust</div>
 
 </div>
 
-<div class="card card-accent" style="padding: 0.8rem 1rem;">
+<div class="card card-accent pad-tight">
 
 ### 📊 **Variance**
 
 $$\sigma^2 = \frac{\sum(x_i - \mu)^2}{n}$$
 
-<div style="font-size: 0.85em; margin-top: 0.3rem;">Average squared deviation</div>
+<div class="meta-caption">Average squared deviation</div>
 
 </div>
 
-<div class="card card-info" style="padding: 0.8rem 1rem;">
+<div class="card card-info pad-tight">
 
 ### 📈 **Standard Deviation**
 
 $$\sigma = \sqrt{\text{variance}}$$
 
-<div style="font-size: 0.85em; margin-top: 0.3rem;">Same units as data</div>
+<div class="meta-caption">Same units as data</div>
 
 </div>
 
@@ -844,7 +844,7 @@ hideInToc: true
 
 # Expectation and Variance (Formal)
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block-lg">
 
 ## **Expected Value E[X]**
 
@@ -888,7 +888,7 @@ hideInToc: true
   'tertiaryColor': '#143860',
   'lineColor': '#5eead4',
   'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
 flowchart TB
     Root["Probability distributions"]:::hub
     Root --> Disc["Discrete<br/>countable"]:::category
@@ -914,7 +914,7 @@ hideInToc: true
 
 # Discrete Distributions
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 ## **Bernoulli**
 Single trial: success/failure • Parameter: $p = P(\text{success})$ • Ex: coin flip
@@ -971,7 +971,7 @@ hideInToc: true
 
 # Continuous Distributions
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 ## **Uniform Distribution**
 All values in [a, b] equally likely • $f(x) = \frac{1}{b-a}$ • $E[X] = \frac{a+b}{2}$, $\text{Var}(X) = \frac{(b-a)^2}{12}$
@@ -998,34 +998,34 @@ hideInToc: true
 
 <div class="grid-3" style="gap: 0.8rem; margin-top: 1.5rem;">
 
-<div class="card card-primary" style="padding: 0.7rem 0.9rem;">
-<div style="font-size: 1.8em;">🏆</div>
-<div style="font-size: 0.85em; font-weight: 600;">Most Important</div>
+<div class="card card-primary pad-compact">
+<div class="emoji-xl">🏆</div>
+<div class="meta-strong">Most Important</div>
 </div>
 
-<div class="card card-secondary" style="padding: 0.7rem 0.9rem;">
-<div style="font-size: 1.8em;">🌿</div>
-<div style="font-size: 0.85em; font-weight: 600;">Arises Naturally</div>
+<div class="card card-secondary pad-compact">
+<div class="emoji-xl">🌿</div>
+<div class="meta-strong">Arises Naturally</div>
 </div>
 
-<div class="card card-info" style="padding: 0.7rem 0.9rem;">
-<div style="font-size: 1.8em;">🎯</div>
-<div style="font-size: 0.85em; font-weight: 600;">CLT Foundation</div>
+<div class="card card-info pad-compact">
+<div class="emoji-xl">🎯</div>
+<div class="meta-strong">CLT Foundation</div>
 </div>
 
-<div class="card card-success" style="padding: 0.7rem 0.9rem;">
-<div style="font-size: 1.8em;">🔬</div>
-<div style="font-size: 0.85em; font-weight: 600;">Measurement Errors</div>
+<div class="card card-success pad-compact">
+<div class="emoji-xl">🔬</div>
+<div class="meta-strong">Measurement Errors</div>
 </div>
 
-<div class="card card-warning" style="padding: 0.7rem 0.9rem;">
-<div style="font-size: 1.8em;">🧪</div>
-<div style="font-size: 0.85em; font-weight: 600;">Statistical Tests</div>
+<div class="card card-warning pad-compact">
+<div class="emoji-xl">🧪</div>
+<div class="meta-strong">Statistical Tests</div>
 </div>
 
-<div class="card card-accent" style="padding: 0.7rem 0.9rem;">
-<div style="font-size: 1.8em;">⚙️</div>
-<div style="font-size: 0.85em; font-weight: 600;">Two Parameters: μ, σ²</div>
+<div class="card card-accent pad-compact">
+<div class="emoji-xl">⚙️</div>
+<div class="meta-strong">Two Parameters: μ, σ²</div>
 </div>
 
 </div>
@@ -1088,30 +1088,30 @@ hideInToc: true
 For $X \sim N(\mu, \sigma^2)$:
 </div>
 
-<div class="grid-3" style="gap: 1rem;">
+<div class="grid-3 gap-tight">
 
-<div class="card card-success" style="padding: 0.9rem 1.1rem; text-align: center;">
-<div style="font-size: 1.4em; font-weight: 700;">📊 68%</div>
-<div style="font-size: 0.9em; margin-top: 0.3rem;">$\mu \pm \sigma$</div>
+<div class="card card-success pad-balanced text-center">
+<div class="text-xl-strong">📊 68%</div>
+<div class="note-text mt-xs">$\mu \pm \sigma$</div>
 </div>
 
-<div class="card card-info" style="padding: 0.9rem 1.1rem; text-align: center;">
-<div style="font-size: 1.4em; font-weight: 700;">📈 95%</div>
-<div style="font-size: 0.9em; margin-top: 0.3rem;">$\mu \pm 2\sigma$</div>
+<div class="card card-info pad-balanced text-center">
+<div class="text-xl-strong">📈 95%</div>
+<div class="note-text mt-xs">$\mu \pm 2\sigma$</div>
 </div>
 
-<div class="card card-primary" style="padding: 0.9rem 1.1rem; text-align: center;">
-<div style="font-size: 1.4em; font-weight: 700;">🎯 99.7%</div>
-<div style="font-size: 0.9em; margin-top: 0.3rem;">$\mu \pm 3\sigma$</div>
+<div class="card card-primary pad-balanced text-center">
+<div class="text-xl-strong">🎯 99.7%</div>
+<div class="note-text mt-xs">$\mu \pm 3\sigma$</div>
 </div>
 
 </div>
 
-<div class="card card-warning" style="margin-top: 1.2rem; padding: 0.9rem 1.1rem;">
+<div class="card card-warning pad-balanced" style="margin-top: 1.2rem;">
 
 ### 💡 **Practical Implication**
 
-<div style="font-size: 0.9em; margin-top: 0.3rem;">
+<div class="note-text mt-xs">
 
 $3\sigma$ measurement = extremely rare (0.3%)
 
@@ -1143,7 +1143,7 @@ hideInToc: true
 
 # Statement of the CLT
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 ## **Informal version**
 
@@ -1205,23 +1205,23 @@ hideInToc: true
 
 # Standard Error
 
-<div class="grid-3 mt-md" style="gap: 1rem;">
+<div class="grid-3 mt-md gap-tight">
 
-<div class="card card-primary" style="padding: 0.9rem 1.1rem;">
+<div class="card card-primary pad-balanced">
 
 ### 📐 **Definition**
 
 $$SE = \frac{\sigma}{\sqrt{n}}$$
 
-<div style="font-size: 0.85em; margin-top: 0.3rem;">Std dev of sample mean</div>
+<div class="meta-caption">Std dev of sample mean</div>
 
 </div>
 
-<div class="card card-warning" style="padding: 0.9rem 1.1rem;">
+<div class="card card-warning pad-balanced">
 
 ### 🔍 **Interpretation**
 
-<div style="font-size: 0.9em; line-height: 1.4;">
+<div class="text-tight">
 
 📊 Uncertainty in $\mu$
 
@@ -1233,11 +1233,11 @@ $$SE = \frac{\sigma}{\sqrt{n}}$$
 
 </div>
 
-<div class="card card-success" style="padding: 0.9rem 1.1rem;">
+<div class="card card-success pad-balanced">
 
 ### 📝 **Usage**
 
-<div style="font-size: 0.9em; line-height: 1.4;">
+<div class="text-tight">
 
 **mean $\pm$ SE**
 
@@ -1273,7 +1273,7 @@ hideInToc: true
   'tertiaryColor': '#143860',
   'lineColor': '#5eead4',
   'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
 flowchart TB
     Population["Population<br/>(μ, σ, θ) unknown"]:::hub --> Sample["Sample<br/>x₁ … xₙ"]:::input
     Sample --> Stats["Summaries<br/>x̄, s²"]:::process
@@ -1294,7 +1294,7 @@ hideInToc: true
 
 # Estimation
 
-<div style="margin-top: 2rem;">
+<div class="mt-xxl">
 
 ## **Point Estimation**
 ### Single "best guess" for parameter
@@ -1357,7 +1357,7 @@ hideInToc: true
 
 # Maximum Likelihood Estimation (MLE)
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 ## **Idea**
 Choose $\theta$ maximizing data probability
@@ -1426,7 +1426,7 @@ hideInToc: true
   'tertiaryColor': '#143860',
   'lineColor': '#5eead4',
   'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'nodeSpacing': 30, 'rankSpacing': 35}}%%
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 30, 'rankSpacing': 35}}%%
 flowchart TB
     Data["Data<br/>(xᵢ, yᵢ)"]:::input --> Model["Model<br/>y = f(x; θ) + ε"]:::process
     Model --> Method{"Method?"}:::decision
@@ -1457,7 +1457,7 @@ hideInToc: true
 
 # From Probability to Fitting
 
-<div style="margin-top: 2rem;">
+<div class="mt-xxl">
 
 ## **Data fitting problem**
 - ### Measurements: $(x_i, y_i)$
@@ -1484,7 +1484,7 @@ hideInToc: true
 
 # Least Squares = MLE (for normal errors)
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 **If errors are independent and normally distributed:**
 
@@ -1505,7 +1505,7 @@ hideInToc: true
 
 # Chi-Squared (χ²) Statistic
 
-<div style="margin-top: 1.5rem; font-size: 1.1em;">
+<div class="lead-block">
 
 ## **Definition**
 $$\chi^2 = \sum \frac{(\text{observed} - \text{expected})^2}{\text{variance}}$$
@@ -1526,7 +1526,7 @@ hideInToc: true
 
 # Hypothesis Testing (Preview)
 
-<div style="margin-top: 2rem;">
+<div class="mt-xxl">
 
 ## **Null hypothesis ($H_0$)**
 ### Statement to test (often "no effect")
@@ -1593,7 +1593,7 @@ hideInToc: true
 
 # Example 1: Counting Experiment
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block-lg">
 
 ## **Scenario**: Measure radioactive decay events
 
@@ -1657,7 +1657,7 @@ hideInToc: true
 
 # Example 3: Comparing Two Samples
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block-lg">
 
 ## **Scenario**: New detector vs old detector
 

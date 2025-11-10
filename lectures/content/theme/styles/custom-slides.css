@@ -205,6 +205,7 @@
 }
 
 /* Content Spacing */
+.mt-xs { margin-top: 0.3rem; }
 .mt-sm { margin-top: 0.5rem; }
 .mt-md { margin-top: var(--gap-md); }
 .mt-lg { margin-top: var(--gap-lg); }
@@ -243,4 +244,102 @@
 .prob-value {
   font-size: 1.2em;
   font-weight: bold;
+}
+
+/* Utility Padding Helpers */
+.pad-tight {
+  padding: 0.8rem 1rem;
+}
+
+.pad-snug {
+  padding: 0.8rem 1.2rem;
+}
+
+.pad-compact {
+  padding: 0.7rem 0.9rem;
+}
+
+.pad-balanced {
+  padding: 0.9rem 1.1rem;
+}
+
+/* Gap and Margin Helpers */
+.gap-tight {
+  gap: 1rem;
+}
+
+.mt-xxl {
+  margin-top: 2rem;
+}
+
+/* Text Utilities */
+.lead-block {
+  margin-top: 1.5rem;
+  font-size: 1.1em;
+  line-height: 1.55;
+}
+
+.lead-block-lg {
+  margin-top: 1.5rem;
+  font-size: 1.15em;
+  line-height: 1.55;
+}
+
+.note-text {
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.note-text-lg {
+  font-size: 0.9em;
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.meta-strong {
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.meta-caption {
+  font-size: 0.85em;
+  margin-top: 0.3rem;
+}
+
+.mono-strong {
+  font-family: monospace;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.text-subhead {
+  font-size: 1.05em;
+}
+
+.text-xl-strong {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.emoji-xl {
+  font-size: 1.8em;
+  line-height: 1;
+}
+
+.text-tight {
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+/* Layout helpers */
+.text-center {
+  text-align: center;
+}
+
+.mermaid-note {
+  margin-top: 0.8rem;
+}
+
+.mermaid-note .text-tight {
+  margin: 0;
 }
