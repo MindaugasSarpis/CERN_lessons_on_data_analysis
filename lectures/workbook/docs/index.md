@@ -1,13 +1,15 @@
-## Teachers Workbook
+# Teachers Workbook
 
-[Lecture 1](lectures/lecture_1.md) Induction
+1. [Induction](lectures/lecture_1.md)
 
-[Lecture 2](lectures/lecture_2.md) Intro to CERN
+2. [Intro to CERN](lectures/lecture_2.md)
 
-[Lecture 3](lectures/lecture_3.md) Crash Course on Computer Science
+3. [Crash Course on Computer Science](lectures/lecture_3.md)
 
-[Lecture 4](lectures/lecture_4.md) Computer infrastructure
+4. [Computer infrastructure](lectures/lecture_4.md)
 
-[Data Visualisation](lectures/data_visualisation.md)
+5. [Data Visualisation](lectures/data_visualisation.md)
 
-[misc](lectures/misc.md) Miscellaneous
+6. [Python Fundamentals](lectures/python_fundamentals.md)
+
+[Miscellaneous](lectures/misc.md)
