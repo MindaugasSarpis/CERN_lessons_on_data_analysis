@@ -256,7 +256,11 @@ hideInToc: true
 
 **Non-negativity**
 
-<div class="note-text-lg">$P(A) \geq 0$ for any event A</div>
+<div class="note-text-lg"> 
+
+$P(A) \geq 0$ for any event A
+
+</div>
 
 </div>
 
@@ -266,7 +270,11 @@ hideInToc: true
 
 **Normalization**
 
-<div class="note-text-lg">$P(\Omega) = 1$</div>
+<div class="note-text-lg">
+
+$P(\Omega) = 1$
+
+</div>
 
 </div>
 
@@ -276,7 +284,12 @@ hideInToc: true
 
 **Additivity**
 
-<div class="note-text-lg">Mutually exclusive: $P(A \cup B) = P(A) + P(B)$</div>
+<div class="note-text-lg">
+
+Mutually exclusive: 
+$$P(A \cup B) = P(A) + P(B)$$
+
+</div>
 
 </div>
 
@@ -302,7 +315,7 @@ $$P(A^c) = 1 - P(A)$$
 
 ### ➕ **Addition**
 
-$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+$P(A \cup B) = P(A) + P(B) - P(A \cap B)$
 
 </div>
 
@@ -509,102 +522,6 @@ $$P(D \mid +) = \frac{P(+ \mid D) \times P(D)}{P(+)}$$
 
 #### Surprisingly low!
 
----
-hideInToc: true
----
-
-# Interactive Demo: Bayes' Theorem Calculator
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Parameters (try changing these!)
-disease_prevalence = 0.01  # P(D) = 1%
-sensitivity = 0.95          # P(+|D) = 95% (true positive rate)
-specificity = 0.90          # P(-|D^c) = 90% (true negative rate)
-
-# Calculate using Bayes' theorem
-# P(D|+) = P(+|D) × P(D) / P(+)
-
-# P(+|D^c) = 1 - specificity (false positive rate)
-false_positive_rate = 1 - specificity
-
-# P(+) = P(+|D)×P(D) + P(+|D^c)×P(D^c)
-prob_positive = sensitivity * disease_prevalence + false_positive_rate * (1 - disease_prevalence)
-
-# P(D|+) using Bayes' theorem
-prob_disease_given_positive = (sensitivity * disease_prevalence) / prob_positive
-
-# Visualization
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-# LEFT PLOT: Component probabilities
-components = ['Prior\nP(D)', 'Likelihood\nP(+|D)', 'Evidence\nP(+)', 'Posterior\nP(D|+)']
-values = [disease_prevalence, sensitivity, prob_positive, prob_disease_given_positive]
-colors = ['#6bcf7f', '#ff6b6b', '#ffd93d', '#4dabf7']
-
-bars = ax1.bar(components, values, color=colors, alpha=0.7, edgecolor='black', width=0.6)
-for bar, val in zip(bars, values):
-    height = bar.get_height()
-    ax1.text(bar.get_x() + bar.get_width()/2., height + 0.02,
-             f'{val:.1%}', ha='center', va='bottom', fontsize=12, fontweight='bold')
-
-ax1.set_ylabel('Probability', fontsize=12, fontweight='bold')
-ax1.set_title('Bayes Theorem Components', fontsize=13, fontweight='bold')
-ax1.set_ylim([0, 1])
-ax1.grid(True, alpha=0.3, axis='y')
-
-# RIGHT PLOT: Population breakdown (per 10,000 people)
-population = 10000
-has_disease = int(disease_prevalence * population)
-no_disease = population - has_disease
-
-true_positives = int(sensitivity * has_disease)
-false_negatives = has_disease - true_positives
-false_positives = int(false_positive_rate * no_disease)
-true_negatives = no_disease - false_positives
-
-# Stacked bar chart
-categories = ['Has Disease\n(Positive)', 'Has Disease\n(Negative)',
-              'No Disease\n(Positive)', 'No Disease\n(Negative)']
-counts = [true_positives, false_negatives, false_positives, true_negatives]
-bar_colors = ['#4caf50', '#ffcdd2', '#ff9800', '#a5d6a7']
-
-bars = ax2.bar(range(len(categories)), counts, color=bar_colors, alpha=0.8, edgecolor='black')
-for i, (bar, count) in enumerate(zip(bars, counts)):
-    height = bar.get_height()
-    ax2.text(bar.get_x() + bar.get_width()/2., height + 100,
-             f'{count}', ha='center', va='bottom', fontsize=11, fontweight='bold')
-
-ax2.set_xticks(range(len(categories)))
-ax2.set_xticklabels(categories, fontsize=10)
-ax2.set_ylabel('Number of People', fontsize=12, fontweight='bold')
-ax2.set_title(f'Population Breakdown (N={population})', fontsize=13, fontweight='bold')
-ax2.grid(True, alpha=0.3, axis='y')
-
-plt.tight_layout()
-plt.show()
-
-# Print results
-print("=" * 70)
-print("BAYES' THEOREM: MEDICAL TEST CALCULATOR")
-print("=" * 70)
-print(f"\nInput Parameters:")
-print(f"  Disease Prevalence: {disease_prevalence:.1%}")
-print(f"  Test Sensitivity (True Positive Rate): {sensitivity:.1%}")
-print(f"  Test Specificity (True Negative Rate): {specificity:.1%}")
-print(f"\nBayes' Theorem Calculation:")
-print(f"  P(+|D) × P(D) = {sensitivity} × {disease_prevalence} = {sensitivity * disease_prevalence:.6f}")
-print(f"  P(+) = {prob_positive:.6f}")
-print(f"  P(D|+) = {sensitivity * disease_prevalence:.6f} / {prob_positive:.6f}")
-print(f"\n>>> P(Disease | Positive Test) = {prob_disease_given_positive:.1%} <<<")
-print(f"\nOut of {true_positives + false_positives} positive tests:")
-print(f"  - {true_positives} are true positives")
-print(f"  - {false_positives} are false positives")
-print(f"\nKey Insight: With rare diseases, even good tests have many false positives!")
-print("\nTry changing the parameters above to explore different scenarios!")
-```
 
 ---
 hideInToc: true
