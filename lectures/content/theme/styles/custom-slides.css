@@ -2,28 +2,45 @@
    CUSTOM SLIDE STYLES - PROBABILITY & STATISTICS
    ============================================
 
+   NOTE: For Mermaid diagram configurations and styles,
+   see:
+   - Mermaid styles: ./mermaid-styles.css
+   - Mermaid config reference: ../mermaid-config.md
+
    USAGE GUIDE:
 
    1. CARDS:
       <div class="card card-primary">Content</div>
       Colors: card-primary, card-secondary, card-accent, card-success, card-warning, card-info
+      Padding: pad-tight, pad-snug, pad-compact, pad-balanced
 
    2. GRIDS:
       <div class="grid-2">...</div>  (2 columns)
       <div class="grid-3">...</div>  (3 columns)
       <div class="grid-auto">...</div>  (1 column, stacked)
+      <div class="grid-2-large">...</div>  (2 columns with large gap)
+      <div class="stack-tight">...</div>  (vertical stack with tight gap)
 
-   3. SPACING:
+   3. DICE/NUMBER BOXES:
+      <div class="dice-grid">
+        <div class="dice-box dice-box-primary">1</div>
+        <div class="dice-box dice-box-success">2</div>
+      </div>
+      Colors: dice-box-primary, dice-box-success, dice-box-info, dice-box-warning, dice-box-accent
+
+   4. SPACING:
       Classes: mt-sm, mt-md, mt-lg, mt-xl (margin-top)
                mb-sm, mb-md, mb-lg (margin-bottom)
+               gap-tight (for grids)
 
-   4. TYPOGRAPHY:
+   5. TYPOGRAPHY:
       Classes: text-sm, text-base, text-md, text-lg
+               caption-text (for explanatory text below diagrams)
 
-   5. CARD CONTENT:
+   6. CARD CONTENT:
       <div class="card-content">Text inside cards</div>
 
-   6. CENTERED CONTAINER:
+   7. CENTERED CONTAINER:
       <div class="container-centered">Content</div>
 
    EXAMPLE:
@@ -342,4 +359,68 @@
 
 .mermaid-note .text-tight {
   margin: 0;
+}
+
+/* Dice/Number Box Styles */
+.dice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+  max-width: 380px;
+}
+
+.dice-box {
+  padding: 1.2rem;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 700;
+  color: #f8fafc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dice-box-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+}
+
+.dice-box-success {
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%);
+}
+
+.dice-box-info {
+  background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-light) 100%);
+}
+
+.dice-box-warning {
+  background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-light) 100%);
+}
+
+.dice-box-accent {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+}
+
+/* Caption text for explanations */
+.caption-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+/* Two-column layout with large gap */
+.grid-2-large {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+/* Vertical stack with gap */
+.stack-tight {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
 }

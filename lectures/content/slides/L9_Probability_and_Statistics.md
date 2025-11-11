@@ -23,18 +23,11 @@ layout: cover
 ## Probability and Statistics
 
 ---
-layout: fact
-hideInToc: true
----
-
-# Why **Probability** and **Statistics**?
-
----
 hideInToc: true
 layout: quote
 ---
 
-## In science, we never measure the *true* value—we collect **samples**, estimate **parameters**, and quantify **uncertainty**. Probability gives us the language; statistics gives us the tools.
+# In science, we never measure the *true* value—we collect **samples**, estimate **parameters**, and quantify **uncertainty**. Probability gives us the language; statistics gives us the tools.
 
 ---
 hideInToc: true
@@ -67,61 +60,69 @@ hideInToc: true
 
 # What is Probability?
 
-<div class="grid-2 mt-lg">
+<div class="card card-info pad-tight">
 
-<div class="card card-primary">
+## 🎲 **Definition**
 
-## 📊 **Frequentist View**
+**Probability** is a numerical measure of the likelihood of an event occurring, constrained to the interval $[0, 1]$:
 
-<div class="card-content">
-
-**Probability = long-run frequency**
-
-💡 Example: Flip a coin 10,000 times → ~50% heads
+- 🚫 $P(A) = 0$ means event $A$ is **impossible**
+- ✅ $P(A) = 1$ means event $A$ is **certain**
+- 🤔 $0 < P(A) < 1$ means event $A$ is **uncertain**
 
 </div>
 
+<div class="card card-primary pad-tight mt-md">
+
+## 🎯 **Purpose**
+
+📊 Quantify uncertainty • 🔮 Make predictions • 📈 Update beliefs with evidence • 🌍 Model random phenomena in nature
+
 </div>
 
-<div class="card card-secondary">
+---
+hideInToc: true
+---
 
-## 🧠 **Bayesian View**
+# Two Interpretations of Probability
 
-<div class="card-content">
+<div class="grid-2 gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📊 **Frequentist**
+
+**Probability = long-run relative frequency**
+
+$$P(A) = \lim_{n \to \infty} \frac{n_A}{n}$$
+
+where $n_A$ = occurrences of $A$ in $n$ trials
+
+💡 **Example:** Flip coin 10,000 times → ~50% heads
+
+**Used for:** Repeated experiments, physical processes
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🧠 **Bayesian**
 
 **Probability = degree of belief**
 
-💡 Example: "70% chance of rain" reflects knowledge
+Subjective confidence updated with evidence
+
+💡 **Example:** "70% chance of rain tomorrow"
+
+**Used for:** One-time events, updating knowledge
 
 </div>
 
 </div>
 
-</div>
+<div class="card card-accent pad-tight mt-md">
 
-<div class="card card-accent mt-lg">
-
-## ⚖️ **Both Views are Useful**
-
-<div class="grid-2 mt-sm text-base">
-
-<div>
-
-✅ **Frequentist** for repeated trials
-
-✅ **Bayesian** for updating beliefs
-
-</div>
-
-<div>
-
-⚛️ **Physics:** mostly frequentist
-
-🤖 **ML:** increasingly Bayesian
-
-</div>
-
-</div>
+⚖️ **Both valid!** • ⚛️ Physics: mostly frequentist • 🤖 ML: increasingly Bayesian
 
 </div>
 
@@ -171,32 +172,59 @@ hideInToc: true
 hideInToc: true
 ---
 
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 45}}}%%
+flowchart TD
+    Exp["🎲 Experiment<br/><b>Roll a die</b>"]:::hub
+    Exp --> SS["🌐 Sample Space Ω<br/><i>{1, 2, 3, 4, 5, 6}</i>"]:::category
+
+    SS --> E1["📊 Event A: Even<br/>{2, 4, 6}<br/>P(A) = 1/2"]:::event
+    SS --> E2["📈 Event B: > 4<br/>{5, 6}<br/>P(B) = 1/3"]:::event
+    SS --> E3["🎯 Intersection A∩B<br/>{6}<br/>P(A∩B) = 1/6"]:::intersection
+    SS --> E4["➕ Union A∪B<br/>{2, 4, 5, 6}<br/>P(A∪B) = 2/3"]:::union
+
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:3px,color:#f8fafc,rx:16px,ry:16px
+    classDef category fill:#133661,stroke:#5eead4,stroke-width:2.5px,color:#e2e8f0,rx:14px,ry:14px
+    classDef event fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px
+    classDef intersection fill:#155e75,stroke:#34d399,stroke-width:2px,color:#d1fae5,rx:12px,ry:12px
+    classDef union fill:#1e3a5f,stroke:#fbbf24,stroke-width:2px,color:#fef3c7,rx:12px,ry:12px
+```
+
+<div class="card card-info pad-tight mermaid-note">
+
+<div class="note-text">
+
+**Key:** Sample space Ω contains all outcomes • Events are subsets • Intersection (∩) = both occur • Union (∪) = at least one occurs
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Visualizing Sample Space & Events
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; align-items: start;">
+<div class="grid-2-large">
 
 <div>
 
 ## 🎲 Sample Space <br>
 ## Ω = {1, 2, 3, 4, 5, 6}
 
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 1.5rem; max-width: 380px;">
+<div class="dice-grid">
 
-<div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">1</div>
-
-<div style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">2</div>
-
-<div style="background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">3</div>
-
-<div style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">4</div>
-
-<div style="background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">5</div>
-
-<div style="background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">6</div>
+<div class="dice-box dice-box-primary">1</div>
+<div class="dice-box dice-box-success">2</div>
+<div class="dice-box dice-box-info">3</div>
+<div class="dice-box dice-box-success">4</div>
+<div class="dice-box dice-box-warning">5</div>
+<div class="dice-box dice-box-accent">6</div>
 
 </div>
 
-<div style="text-align: center; margin-top: 1rem; font-size: 0.9em; opacity: 0.8;">
+<div class="caption-text">
 All outcomes are equally likely: P(each) = 1/6
 </div>
 
@@ -206,7 +234,7 @@ All outcomes are equally likely: P(each) = 1/6
 
 ## 📍 **Events (Subsets of Ω)**
 
-<div style="display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem;">
+<div class="stack-tight">
 
 <div class="card card-success pad-snug">
 <div class="flex-between">
@@ -248,7 +276,15 @@ hideInToc: true
 
 # Axioms of Probability (Kolmogorov)
 
-<div class="grid-3 mt-md gap-tight">
+<div class="card card-info pad-tight mt-md">
+
+## **Axiomatic Foundation**
+
+Given a sample space $\Omega$ and a collection of events, a probability function $P$ assigns to each event $A$ a real number $P(A)$ satisfying three axioms:
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
@@ -256,10 +292,12 @@ hideInToc: true
 
 **Non-negativity**
 
-<div class="note-text-lg"> 
+$$P(A) \geq 0$$
 
-$P(A) \geq 0$ for any event A
+for any event $A$
 
+<div class="meta-caption mt-xs">
+Probabilities cannot be negative
 </div>
 
 </div>
@@ -270,10 +308,10 @@ $P(A) \geq 0$ for any event A
 
 **Normalization**
 
-<div class="note-text-lg">
+$$P(\Omega) = 1$$
 
-$P(\Omega) = 1$
-
+<div class="meta-caption mt-xs">
+The entire sample space has probability 1
 </div>
 
 </div>
@@ -282,13 +320,14 @@ $P(\Omega) = 1$
 
 ### ➕ **Axiom 3**
 
-**Additivity**
+**Countable Additivity**
 
-<div class="note-text-lg">
+If $A$ and $B$ are mutually exclusive $(A \cap B = \emptyset)$:
 
-Mutually exclusive: 
 $$P(A \cup B) = P(A) + P(B)$$
 
+<div class="meta-caption mt-xs">
+Disjoint events add
 </div>
 
 </div>
@@ -301,79 +340,126 @@ hideInToc: true
 
 # Useful Rules from the Axioms
 
-<div class="grid-3 mt-md gap-tight">
+<div class="card card-info pad-tight mt-md">
+
+## **Derived Properties**
+
+From the three axioms, we can derive important rules that make probability calculations tractable.
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-warning pad-tight">
 
-### 🔄 **Complement**
+### 🔄 **Complement Rule**
 
 $$P(A^c) = 1 - P(A)$$
+
+where $A^c$ is the complement of $A$
+
+<div class="meta-caption mt-xs">
+Follows from $A \cup A^c = \Omega$ and $A \cap A^c = \emptyset$
+</div>
 
 </div>
 
 <div class="card card-info pad-tight">
 
-### ➕ **Addition**
+### ➕ **General Addition Rule**
 
-$P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+For any events $A$ and $B$:
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+<div class="meta-caption mt-xs">
+Avoids double-counting the intersection
+</div>
 
 </div>
 
 <div class="card card-success pad-tight">
 
-### ✖️ **Multiplication**
+### ✖️ **Multiplication Rule**
+
+For independent events:
 
 $$P(A \cap B) = P(A) \times P(B)$$
 
-<div class="meta-caption">if independent</div>
+<div class="meta-caption mt-xs">
+Only if $A$ and $B$ are independent
+</div>
 
 </div>
 
 </div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Conditional Probability
 
-## **Definition**
+<div class="card card-info pad-tight">
 
-<div class="card card-primary text-base">
-
-<div class="card-content">
-
-Knowing that B happened shrinks the universe of outcomes to B. The probability of A in that restricted world is
+## 🎯 **Definition**
 
 $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
 
+Probability of $A$ given that $B$ has occurred • Restricts sample space to $B$
+
+</div>
+
+<div class="grid-2 mt-md gap-tight">
+
+<div class="card card-primary pad-tight">
+
+## 📐 **Properties**
+
+$0 \leq P(A \mid B) \leq 1$ • $P(\Omega \mid B) = 1$ • Additive for mutually exclusive events
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🎲 **Example: Two dice**
+
+$A$: sum is 8, $P(A) = 5/36$ • $B$: first die shows 3, $P(B) = 1/6$
+
+$A \cap B = \{(3,5)\}$ → $P(A \mid B) = \frac{1/36}{1/6} = \frac{1}{6}$
+
 </div>
 
 </div>
 
-<div class="card card-secondary text-base mt-md">
+---
+hideInToc: true
+---
 
-<div class="card-content">
+# Conditional Probability Visualization
 
-Think of it as running the experiment again but keeping only the trials where B occurred.
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 45, 'rankSpacing': 50}}}%%
+flowchart LR
+    Start["🌐 Sample Space Ω"]:::hub
+    Start --> Condition["🔍 Given: B occurs"]:::process
+    Condition --> NewSpace["📦 Reduced space: B"]:::category
+    NewSpace --> Question["❓ Check A ∩ B"]:::process
+    Question --> Answer["🎯 P(A|B) = P(A∩B)/P(B)"]:::result
+
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2.5px,color:#f8fafc,rx:14px,ry:14px
+    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
+    classDef category fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
+    classDef result fill:#155e75,stroke:#5eead4,stroke-width:2.5px,color:#e0f2fe,rx:14px,ry:14px
+```
+
+<div class="card card-info pad-tight mermaid-note">
+
+<div class="note-text">
+
+**Flow:** Start with Ω → Given B occurs → Restrict to B → Find A∩B → Calculate ratio P(A∩B)/P(B)
 
 </div>
-
-</div>
-
-::right::
-
-## **Two-dice example**
-
-<div class="card card-accent text-base">
-
-- Event A: total sum is 8 (5 ways out of 36).  
-- Event B: first die shows 3 (6 ways out of 36).
-
-Once B happens, the only compatible pair giving sum 8 is (3, 5), so
-
-$$P(A \mid B) = \frac{1}{6}$$
 
 </div>
 
@@ -383,49 +469,37 @@ hideInToc: true
 
 # Independence
 
-<div class="grid-2 mt-lg">
+<div class="card card-info pad-tight">
 
-<div class="card card-primary">
+## 🔀 **Definition**
 
-## 📐 **Definition**
+Events $A$ and $B$ are **independent** if:
 
-<div class="card-content text-md">
+$$P(A \cap B) = P(A) \cdot P(B) \quad \text{or equivalently} \quad P(A \mid B) = P(A)$$
 
-Events A and B are independent if:
-
-$$P(A \cap B) = P(A) \times P(B)$$
-
-**Equivalently:** $P(A \mid B) = P(A)$
+Knowing $B$ occurred provides **no information** about $A$
 
 </div>
 
-</div>
+<div class="grid-2 mt-md gap-tight">
 
-<div class="card card-secondary">
+<div class="card card-primary pad-tight">
 
-## 💡 **Intuition**
+## ✅ **Independent**
 
-<div class="card-content text-md">
-
-Knowing B occurred doesn't change the probability of A
-
-</div>
+- Flipping two coins
+- Rolling two dice
+- Drawing cards **with** replacement
 
 </div>
 
-</div>
+<div class="card card-warning pad-tight">
 
-<div class="card card-success mt-lg">
+## ❌ **Not Independent**
 
-## 📚 **Examples**
-
-<div class="card-content text-md">
-
-✅ **Flipping two coins:** outcomes are independent
-
-❌ **Drawing cards *without* replacement:** NOT independent
-
-✅ **Drawing cards *with* replacement:** independent
+- Drawing cards **without** replacement
+- Height and weight
+- Temperature and ice cream sales
 
 </div>
 
@@ -435,34 +509,57 @@ Knowing B occurred doesn't change the probability of A
 hideInToc: true
 ---
 
-# Bayes' Theorem Flow
+# Bayes' Theorem Components
 
-```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0b2540',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'secondaryColor': '#102e4c',
-  'tertiaryColor': '#143860',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 50}}%%
-flowchart LR
-    Prior["Prior<br/>P(A)"]:::input --> Update
-    Likelihood["Likelihood<br/>P(B|A)"]:::input --> Update
-    Evidence["Evidence<br/>P(B)"]:::support --> Update
-    Update["Bayes update<br/>P(A|B) = P(B|A)·P(A)/P(B)"]:::process --> Posterior
-    Posterior["Posterior<br/>Updated belief"]:::output
+<div style="display: flex; align-items: center; gap: 1.2rem; margin-top: 2rem; justify-content: center;">
 
-    classDef input fill:#123b75,stroke:#60a5fa,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
-    classDef support fill:#0f2b4c,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
-    classDef process fill:#0b1f36,stroke:#94a3b8,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
-    classDef output fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
-```
+<div class="card card-primary pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
 
-<div class="note-text mt-sm">
+### 📊 **Prior**
+### $P(A)$
 
-**1.** Prior P(A): Belief before data • **2.** Likelihood P(B|A): Data probability • **3.** Evidence P(B): Normalization • **4.** Posterior P(A|B): Updated belief
+<div class="note-text mt-xs">Initial belief</div>
+
+</div>
+
+<div style="font-size: 2.5em; color: #5eead4; font-weight: 700;">×</div>
+
+<div class="card card-secondary pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
+
+### 📈 **Likelihood**
+### $P(B|A)$
+
+<div class="note-text mt-xs">Data probability</div>
+
+</div>
+
+<div style="font-size: 2.5em; color: #5eead4; font-weight: 700;">÷</div>
+
+<div class="card card-info pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
+
+### 📐 **Evidence**
+### $P(B)$
+
+<div class="note-text mt-xs">Normalization</div>
+
+</div>
+
+<div style="font-size: 2.5em; color: #5eead4; font-weight: 700;">=</div>
+
+<div class="card card-accent pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
+
+### 🎯 **Posterior**
+### $P(A|B)$
+
+<div class="note-text mt-xs">Updated belief</div>
+
+</div>
+
+</div>
+
+<div class="card card-success pad-tight" style="margin-top: 1.5rem; text-align: center;">
+
+**The Bayesian Update:** Multiply prior by likelihood, then normalize by evidence to get updated belief
 
 </div>
 
@@ -472,55 +569,75 @@ hideInToc: true
 
 # Bayes' Theorem
 
-<div class="lead-block-lg">
+<div class="card card-info pad-tight">
 
-## **Formula**
-$$P(A \mid B) = \frac{P(B \mid A) \times P(A)}{P(B)}$$
+## 🔄 **Formula**
 
-## **In words**
-$$\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$
+$$P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}$$
 
-<br>
-
-## **Why it matters**
-Reverses conditionals • Bayesian inference • Diagnosis, filters, physics
+**Terminology:** Prior $P(A)$ • Likelihood $P(B \mid A)$ • Evidence $P(B)$ • Posterior $P(A \mid B)$
 
 </div>
 
----
-layout: two-cols
-hideInToc: true
----
+<div class="grid-2 mt-md gap-tight">
+
+<div class="card card-primary pad-tight">
+
+## 💡 **Key Idea**
+
+Reverses conditionals: $P(B \mid A) \to P(A \mid B)$
+
+Update beliefs with new data
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🎯 **Applications**
+
+Medical diagnosis • Spam filters • Parameter estimation • Hypothesis testing • ML
+
+</div>
+
+</div>
 
 # Example: Medical Test
 
-## **Scenario**
-- Disease prevalence: 1%
-- Test sensitivity: 95% (true positive rate)
-- Test specificity: 90% (true negative rate)
+<div class="card card-warning pad-tight">
 
-## **Question**
-### If you test positive, what's the probability you have the disease?
+## 🏥 **Scenario**
 
-::right::
+Disease: 1% prevalence • Test: 95% sensitivity, 90% specificity
 
-<br>
+**Question:** Probability of disease if test is positive?
 
-## **Solution using Bayes**
+</div>
 
-### Let D = disease, + = positive test
+<div class="grid-2 mt-md gap-tight">
 
-$$P(D \mid +) = \frac{P(+ \mid D) \times P(D)}{P(+)}$$
+<div class="card card-primary pad-tight">
 
-### $P(+ \mid D) = 0.95$ (sensitivity)
-### $P(D) = 0.01$ (prevalence)
+## 📊 **Calculation**
 
-### $P(+) = P(+ \mid D)P(D) + P(+ \mid D^c)P(D^c)$
-### $= 0.95 \times 0.01 + 0.10 \times 0.99 = 0.1085$
+$$P(D \mid +) = \frac{P(+ \mid D) \cdot P(D)}{P(+)}$$
 
-### $P(D \mid +) = \frac{0.95 \times 0.01}{0.1085} \approx$ **8.8%**
+$P(+) = 0.95(0.01) + 0.10(0.99) = 0.1085$
 
-#### Surprisingly low!
+$$P(D \mid +) = \frac{0.0095}{0.1085} \approx \textbf{8.8%}$$
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💡 **Insight**
+
+Only **8.8%** chance despite positive test!
+
+**Why?** Rare disease → false positives (990) >> true positives (95)
+
+</div>
+
+</div>
 
 
 ---
@@ -579,16 +696,42 @@ hideInToc: true
 
 # What is a Random Variable?
 
-<div class="lead-block">
+<div class="card card-info pad-tight mt-md">
 
-## **Definition**
-Function mapping outcomes to numbers
+## **Formal Definition**
 
-## **Types**
-**Discrete**: countable (0, 1, 2, ...) • **Continuous**: interval values (any real)
+A **random variable** $X$ is a function that maps each outcome $\omega$ in the sample space $\Omega$ to a real number:
+
+$$X: \Omega \rightarrow \mathbb{R}$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## **Purpose**
+
+Random variables allow us to:
+- Work with numbers instead of abstract outcomes
+- Use calculus and algebra
+- Define probability distributions
+- Calculate expected values and variances
+
+</div>
+
+<div class="card card-secondary pad-tight">
 
 ## **Notation**
-Variable: X, Y, Z (capitals) • Values: x, y, z (lowercase)
+
+- **Random Variable:** $X, Y, Z$ (uppercase)
+- **Specific Value:** $x, y, z$ (lowercase)
+- **Probability:** $P(X = x)$ or $P(X \leq x)$
+
+**Example:**
+- Coin flip: $X = \begin{cases} 1 & \text{if heads} \\ 0 & \text{if tails} \end{cases}$
+
+</div>
 
 </div>
 
@@ -626,80 +769,104 @@ flowchart TB
 ```
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Discrete Random Variables
 
+<div class="card card-info pad-tight mt-md">
+
+## **Definition**
+
+A random variable $X$ is **discrete** if it can only take countable values (e.g., $0, 1, 2, \ldots$ or a finite set).
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
 ## **Probability Mass Function (PMF)**
-### P(X = x) = probability that X takes value x
 
-<br>
+The PMF $p_X(x)$ or $P(X = x)$ gives the probability that $X$ takes the value $x$.
 
-## **Properties**
-- ### P(X = x) ≥ 0 for all x
-- ### Σ P(X = x) = 1
+**Properties:**
+1. $P(X = x) \geq 0$ for all $x$
+2. $\sum_{\text{all } x} P(X = x) = 1$
 
-<br>
+**Example:** Number of heads in 3 coin flips
 
-## **Example: Coin Flips**
-### X = number of heads in 3 flips
+</div>
 
-::right::
+<div class="card card-accent pad-tight">
 
-<br>
-<br>
+## **Example PMF**
 
-## **PMF for X**
+$X$ = number of heads in 3 flips
 
-| x | P(X = x) |
-|---|----------|
-| 0 | 1/8 |
-| 1 | 3/8 |
-| 2 | 3/8 |
-| 3 | 1/8 |
+| $x$ | $P(X = x)$ | Calculation |
+|-----|------------|-------------|
+| 0   | 1/8        | $\binom{3}{0}(0.5)^3$ |
+| 1   | 3/8        | $\binom{3}{1}(0.5)^3$ |
+| 2   | 3/8        | $\binom{3}{2}(0.5)^3$ |
+| 3   | 1/8        | $\binom{3}{3}(0.5)^3$ |
 
-<br>
+$$\sum_{x=0}^{3} P(X = x) = \frac{1+3+3+1}{8} = 1 \quad \checkmark$$
 
-### Sum = 1/8 + 3/8 + 3/8 + 1/8 = 1 ✓
+</div>
+
+</div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Continuous Random Variables
 
+<div class="card card-info pad-tight mt-md">
+
+## **Definition**
+
+A random variable $X$ is **continuous** if it can take any value in an interval or union of intervals (uncountably many values).
+
+**Key Insight:** For continuous $X$, $P(X = x) = 0$ for any specific $x$. Only intervals have non-zero probability.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
 ## **Probability Density Function (PDF)**
-### f(x) ≥ 0
-### ∫ f(x)dx = 1
 
-<br>
-
-## **Key difference**
-### P(X = x) = 0 for any specific x
-### Only intervals have non-zero probability:
+The PDF $f(x)$ is **not** a probability, but a density. Probabilities are computed as:
 
 $$P(a \leq X \leq b) = \int_a^b f(x)\,dx$$
 
-::right::
+**Properties:**
+1. $f(x) \geq 0$ for all $x$
+2. $\int_{-\infty}^{\infty} f(x)\,dx = 1$
+3. $P(X = c) = 0$ for any specific $c$
 
-<br>
+</div>
 
-## **Intuition**
-### The PDF is a *density*, not a probability
+<div class="card card-accent pad-tight">
 
-### Area under the curve = probability
-
-<br>
-
-## **Example: Uniform**
-### X uniformly distributed on [0, 1]
+## **Example: Uniform on [0,1]**
 
 $$f(x) = \begin{cases} 1 & \text{if } 0 \leq x \leq 1 \\ 0 & \text{otherwise} \end{cases}$$
 
-### $P(0.2 \leq X \leq 0.5) = 0.3$
+**Verification:**
+
+$$\int_0^1 1 \, dx = 1 \quad \checkmark$$
+
+**Probability calculation:**
+
+$$P(0.2 \leq X \leq 0.5) = \int_{0.2}^{0.5} 1 \, dx = 0.3$$
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -707,18 +874,45 @@ hideInToc: true
 
 # Cumulative Distribution Function (CDF)
 
-<div class="lead-block">
+<div class="card card-info pad-tight mt-md">
 
 ## **Definition**
+
+For any random variable $X$ (discrete or continuous), the CDF is:
+
 $$F(x) = P(X \leq x)$$
 
+The CDF gives the probability that $X$ takes a value **at most** $x$.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
 ## **Properties**
-$F(x)$ non-decreasing • $F(-\infty) = 0$, $F(\infty) = 1$ • Continuous X: $F'(x) = f(x)$
 
-<br>
+1. **Non-decreasing:** If $x_1 < x_2$, then $F(x_1) \leq F(x_2)$
+2. **Limits:** $\lim_{x \to -\infty} F(x) = 0$ and $\lim_{x \to \infty} F(x) = 1$
+3. **Right-continuous:** $\lim_{h \to 0^+} F(x+h) = F(x)$
+4. **For continuous $X$:** $F'(x) = f(x)$ (PDF is derivative of CDF)
 
-## **Why useful**
-Works for discrete & continuous • Easier math • Direct probabilities: $P(a < X \leq b) = F(b) - F(a)$
+</div>
+
+<div class="card card-accent pad-tight">
+
+## **Why CDFs are useful**
+
+- Works for **both** discrete and continuous RVs
+- Probability of intervals:
+
+$$P(a < X \leq b) = F(b) - F(a)$$
+
+- Quantiles: Find $x$ such that $F(x) = p$
+- Easy to visualize cumulative behavior
+- Foundation for statistical inference
+
+</div>
 
 </div>
 
@@ -856,27 +1050,59 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Expectation and Variance (Formal)
+# Expectation and Variance
 
-<div class="lead-block-lg">
+<div class="card card-info pad-tight mt-md">
 
-## **Expected Value E[X]**
+## **Expected Value (Mean)**
 
-### Discrete: $E[X] = \sum x P(X = x)$
+The **expectation** or **expected value** $E[X]$ (also written $\mu$) is the "average" value of $X$ weighted by probabilities:
 
-### Continuous: $E[X] = \int x f(x)\,dx$
+**Discrete:**
 
-<br>
+$$E[X] = \sum_{\text{all } x} x \cdot P(X = x)$$
 
-## **Variance Var(X)**
-$$\text{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2$$
+**Continuous:**
 
-<br>
+$$E[X] = \int_{-\infty}^{\infty} x \cdot f(x)\,dx$$
 
-## **Properties**
-- ### $E[aX + b] = aE[X] + b$
-- ### $\text{Var}(aX + b) = a^2\text{Var}(X)$
-- ### $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$ if X, Y independent
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## **Variance**
+
+Measures spread around the mean:
+
+$$\text{Var}(X) = E[(X - \mu)^2]$$
+
+**Computational formula:**
+
+$$\text{Var}(X) = E[X^2] - (E[X])^2$$
+
+**Standard deviation:**
+
+$$\sigma = \sqrt{\text{Var}(X)}$$
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## **Key Properties**
+
+**Linearity of Expectation:**
+- $E[aX + b] = aE[X] + b$
+- $E[X + Y] = E[X] + E[Y]$ (always!)
+
+**Variance Properties:**
+- $\text{Var}(aX + b) = a^2\text{Var}(X)$
+- $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$
+
+  (only if $X$ and $Y$ are independent)
+
+</div>
 
 </div>
 
@@ -1051,46 +1277,55 @@ hideInToc: true
 </div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
-# Normal Distribution PDF
+# Normal Distribution
 
-## **Formula**
-$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+<div class="card card-info pad-tight mt-md">
 
-<br>
+## **Probability Density Function**
 
-## **Notation**
-### $X \sim N(\mu, \sigma^2)$
+A random variable $X$ follows a **normal (Gaussian) distribution** with parameters $\mu$ (mean) and $\sigma^2$ (variance), written $X \sim N(\mu, \sigma^2)$, if:
 
-<br>
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad -\infty < x < \infty$$
 
-## **Properties**
-- ### Bell-shaped, symmetric
-- ### Mean = Median = Mode = $\mu$
-- ### Inflection points at $\mu \pm \sigma$
+</div>
 
-::right::
+<div class="grid-2 mt-md gap-md">
 
-<br>
+<div class="card card-primary pad-tight">
+
+## **Key Properties**
+
+1. **Symmetric** about $\mu$
+2. **Bell-shaped** (unimodal)
+3. **Mean = Median = Mode = $\mu$**
+4. **Inflection points** at $x = \mu \pm \sigma$
+5. **Area under curve = 1**
+6. **Asymptotic**: tails approach (but never reach) zero
+
+</div>
+
+<div class="card card-accent pad-tight">
 
 ## **Standard Normal**
-### $Z \sim N(0, 1)$
+
+The **standard normal** $Z \sim N(0, 1)$ has:
 
 $$\phi(z) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{z^2}{2}\right)$$
 
-<br>
+**Z-transformation (standardization):**
 
-## **Standardization**
 $$Z = \frac{X - \mu}{\sigma}$$
 
-### Converts any normal to standard normal
+If $X \sim N(\mu, \sigma^2)$, then $Z \sim N(0, 1)$
 
-<br>
+This allows us to use standard tables/software for any normal distribution.
 
-### Tables and software give $P(Z \leq z)$
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1157,20 +1392,36 @@ hideInToc: true
 
 # Statement of the CLT
 
-<div class="lead-block">
+<div class="card card-info pad-tight mt-md">
 
-## **Informal version**
+## **Theorem Statement**
 
-Let $X_1, X_2, \ldots, X_n$ be independent random variables from *any* distribution with mean $\mu$ and variance $\sigma^2$
+Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed (i.i.d.) random variables with:
+- Mean: $E[X_i] = \mu$
+- Variance: $\text{Var}(X_i) = \sigma^2 < \infty$
 
-Sample mean: $\bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n}$
+Define the sample mean:
 
-As $n \to \infty$, distribution of $\bar{X}$ approaches **$N(\mu, \sigma^2/n)$**
+$$\bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n} = \frac{1}{n}\sum_{i=1}^{n} X_i$$
 
-<br>
+Then as $n \to \infty$:
 
-## **In other words**
-Sum/average → Normal • Any original distribution • Larger $n$ → better approx
+$$\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)$$
+
+Or equivalently, the standardized sum converges in distribution to $N(0,1)$:
+
+$$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1)$$
+
+</div>
+
+<div class="card card-primary pad-tight mt-md">
+
+## **Key Insights**
+
+- Works for **any** underlying distribution (not just normal!)
+- Larger $n$ → better approximation
+- Standard error: $SE = \sigma/\sqrt{n}$ decreases with $\sqrt{n}$
+- Rule of thumb: $n \geq 30$ often sufficient for good approximation
 
 </div>
 
@@ -1364,132 +1615,6 @@ $$CI = \bar{x} \pm z^* \frac{\sigma}{\sqrt{n}}$$
 ### 95% CI $= 125.3 \pm 1.96(0.21)$
 ### $= 125.3 \pm 0.41$
 ### $= [124.89, 125.71]$ GeV
-
----
-hideInToc: true
----
-
-# Interactive Demo: Confidence Intervals
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
-
-# Parameters (try changing these!)
-true_mean = 100           # True population mean
-true_std = 15             # True population std dev
-sample_size = 30          # Sample size
-n_samples = 100           # Number of confidence intervals to generate
-confidence_level = 0.95   # Confidence level (0.90, 0.95, 0.99)
-
-# Generate multiple samples and calculate confidence intervals
-np.random.seed(42)
-sample_means = []
-cis_lower = []
-cis_upper = []
-contains_true_mean = []
-
-# Critical value from t-distribution
-alpha = 1 - confidence_level
-t_critical = stats.t.ppf(1 - alpha/2, sample_size - 1)
-
-for _ in range(n_samples):
-    # Generate a sample
-    sample = np.random.normal(true_mean, true_std, sample_size)
-
-    # Calculate sample mean and standard error
-    sample_mean = np.mean(sample)
-    sample_std = np.std(sample, ddof=1)
-    se = sample_std / np.sqrt(sample_size)
-
-    # Calculate confidence interval
-    margin_of_error = t_critical * se
-    ci_lower = sample_mean - margin_of_error
-    ci_upper = sample_mean + margin_of_error
-
-    # Store results
-    sample_means.append(sample_mean)
-    cis_lower.append(ci_lower)
-    cis_upper.append(ci_upper)
-    contains_true_mean.append(ci_lower <= true_mean <= ci_upper)
-
-# Calculate coverage
-coverage = sum(contains_true_mean) / n_samples
-
-# Create visualization
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
-
-# LEFT PLOT: Confidence intervals
-show_n = min(50, n_samples)  # Show first 50 CIs
-for i in range(show_n):
-    color = 'green' if contains_true_mean[i] else 'red'
-    alpha_val = 0.7 if contains_true_mean[i] else 0.9
-    ax1.plot([i, i], [cis_lower[i], cis_upper[i]], color=color, alpha=alpha_val, linewidth=1.5)
-    ax1.plot(i, sample_means[i], 'o', color=color, markersize=4, alpha=alpha_val)
-
-# Add true mean line
-ax1.axhline(true_mean, color='blue', linestyle='--', linewidth=2, label=f'True Mean = {true_mean}')
-
-ax1.set_xlabel('Sample Number', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Value', fontsize=12, fontweight='bold')
-ax1.set_title(f'{confidence_level*100:.0f}% Confidence Intervals (first {show_n} samples)\n' +
-              f'Green: Contains true mean | Red: Does not contain true mean',
-              fontsize=13, fontweight='bold')
-ax1.legend(loc='best')
-ax1.grid(True, alpha=0.3, axis='y')
-
-# RIGHT PLOT: Distribution of sample means
-ax2.hist(sample_means, bins=30, edgecolor='black', alpha=0.7, density=True, color='steelblue')
-
-# Overlay theoretical distribution of sample means
-x = np.linspace(min(sample_means), max(sample_means), 200)
-theoretical_se = true_std / np.sqrt(sample_size)
-pdf = stats.norm.pdf(x, true_mean, theoretical_se)
-ax2.plot(x, pdf, 'r-', linewidth=2, label='Theoretical Distribution')
-
-# Mark true mean
-ax2.axvline(true_mean, color='blue', linestyle='--', linewidth=2, label=f'True Mean = {true_mean}')
-
-# Mark confidence interval bounds on mean
-mean_ci_lower = true_mean - t_critical * theoretical_se
-mean_ci_upper = true_mean + t_critical * theoretical_se
-ax2.axvline(mean_ci_lower, color='orange', linestyle=':', linewidth=2, alpha=0.7)
-ax2.axvline(mean_ci_upper, color='orange', linestyle=':', linewidth=2, alpha=0.7)
-ax2.fill_betweenx([0, max(pdf)], mean_ci_lower, mean_ci_upper, alpha=0.2, color='orange',
-                   label=f'{confidence_level*100:.0f}% Expected Range')
-
-ax2.set_xlabel('Sample Mean', fontsize=12, fontweight='bold')
-ax2.set_ylabel('Density', fontsize=12, fontweight='bold')
-ax2.set_title('Distribution of Sample Means', fontsize=13, fontweight='bold')
-ax2.legend(loc='best')
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-# Print summary
-print("=" * 70)
-print(f"{confidence_level*100:.0f}% CONFIDENCE INTERVALS SIMULATION")
-print("=" * 70)
-print(f"\nTrue Parameters:")
-print(f"  Population Mean (μ): {true_mean}")
-print(f"  Population Std Dev (σ): {true_std}")
-print(f"  Sample Size (n): {sample_size}")
-print(f"\nSimulation Results:")
-print(f"  Number of samples: {n_samples}")
-print(f"  Confidence level: {confidence_level*100:.0f}%")
-print(f"  Expected coverage: {confidence_level*100:.0f}%")
-print(f"  Actual coverage: {coverage*100:.1f}%")
-print(f"  CIs containing true mean: {sum(contains_true_mean)}/{n_samples}")
-print(f"  CIs NOT containing true mean: {n_samples - sum(contains_true_mean)}/{n_samples}")
-print(f"\nInterpretation:")
-print(f"  In {confidence_level*100:.0f}% of repeated sampling, the CI will contain the true mean.")
-print(f"  Our observed coverage of {coverage*100:.1f}% {'matches' if abs(coverage - confidence_level) < 0.05 else 'is close to'} the expected {confidence_level*100:.0f}%.")
-print(f"\nTry changing confidence_level to 0.90 or 0.99 to see how it affects coverage!")
-```
-
-### Watch how changing the confidence level and sample size affects interval width and coverage!
 
 ---
 hideInToc: true
@@ -1931,7 +2056,7 @@ hideInToc: true
 
 <div class="grid-3 mt-lg">
 
-<div class="card card-primary">
+<div class="card card-primary pad-tight">
 
 ## 📊 **Visualize**
 
@@ -1943,7 +2068,7 @@ Visualize data first
 
 </div>
 
-<div class="card card-secondary">
+<div class="card card-secondary pad-tight">
 
 ## ✓ **Check**
 
@@ -1955,7 +2080,7 @@ Verify assumptions
 
 </div>
 
-<div class="card card-info">
+<div class="card card-info pad-tight">
 
 ## 📏 **Report**
 
@@ -1967,7 +2092,7 @@ Include uncertainties
 
 </div>
 
-<div class="card card-success">
+<div class="card card-success pad-tight">
 
 ## 🎯 **Understand**
 
@@ -1979,7 +2104,7 @@ Know p-values
 
 </div>
 
-<div class="card card-warning">
+<div class="card card-warning pad-tight">
 
 ## ⚠️ **Caution**
 
@@ -1991,7 +2116,7 @@ Small sample limits
 
 </div>
 
-<div class="card card-accent">
+<div class="card card-accent pad-tight">
 
 ## 🔬 **Simulate**
 
@@ -2003,7 +2128,7 @@ When unclear
 
 </div>
 
-<div class="card card-primary" style="grid-column: 1 / -1;">
+<div class="card card-primary pad-tight" style="grid-column: 1 / -1;">
 
 ## 📝 **Document for Reproducibility**
 
