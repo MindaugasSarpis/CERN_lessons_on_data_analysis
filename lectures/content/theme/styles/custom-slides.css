@@ -211,8 +211,9 @@
 
 .grid-3 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-md);
+  width: 100%;
 }
 
 .grid-auto {
@@ -346,6 +347,12 @@
 .text-tight {
   font-size: 0.9em;
   line-height: 1.4;
+}
+
+.example-math {
+  margin-top: 0.4rem;
+  font-size: 0.95em;
+  line-height: 1.5;
 }
 
 /* Layout helpers */
