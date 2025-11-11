@@ -1,0 +1,345 @@
+/* ============================================
+   CUSTOM SLIDE STYLES - PROBABILITY & STATISTICS
+   ============================================
+
+   USAGE GUIDE:
+
+   1. CARDS:
+      <div class="card card-primary">Content</div>
+      Colors: card-primary, card-secondary, card-accent, card-success, card-warning, card-info
+
+   2. GRIDS:
+      <div class="grid-2">...</div>  (2 columns)
+      <div class="grid-3">...</div>  (3 columns)
+      <div class="grid-auto">...</div>  (1 column, stacked)
+
+   3. SPACING:
+      Classes: mt-sm, mt-md, mt-lg, mt-xl (margin-top)
+               mb-sm, mb-md, mb-lg (margin-bottom)
+
+   4. TYPOGRAPHY:
+      Classes: text-sm, text-base, text-md, text-lg
+
+   5. CARD CONTENT:
+      <div class="card-content">Text inside cards</div>
+
+   6. CENTERED CONTAINER:
+      <div class="container-centered">Content</div>
+
+   EXAMPLE:
+   <div class="grid-2 mt-lg">
+     <div class="card card-primary">
+       <h2>Title</h2>
+       <div class="card-content">Text</div>
+     </div>
+   </div>
+
+   TO CHANGE COLORS: Edit CSS variables in :root below
+   ============================================ */
+
+/* Color Variables - Deep Blue Theme */
+:root {
+  --color-primary: #031633;
+  --color-primary-light: #0f4c81;
+  --color-secondary: #051a3d;
+  --color-secondary-light: #102b5c;
+  --color-accent: #042f4e;
+  --color-accent-light: #0ea5e9;
+  --color-success: #063c34;
+  --color-success-light: #14b8a6;
+  --color-warning: #3b1f09;
+  --color-warning-light: #f59e0b;
+  --color-info: #051933;
+  --color-info-light: #38bdf8;
+
+  /* Spacing */
+  --card-padding: 1.1rem;
+  --card-padding-sm: 0.9rem;
+  --card-padding-lg: 1.5rem;
+  --gap-sm: 0.85rem;
+  --gap-md: 1.1rem;
+  --gap-lg: 1.4rem;
+  --gap-xl: 1.7rem;
+
+  /* Typography */
+  --font-size-sm: 0.92em;
+  --font-size-base: 1em;
+  --font-size-md: 1.05em;
+  --font-size-lg: 1.18em;
+  --font-size-xl: 1.25em;
+
+  /* Border Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 10px 20px rgba(2, 6, 23, 0.25);
+  --shadow-md: 0 18px 35px rgba(2, 6, 23, 0.45);
+  --shadow-lg: 0 25px 65px rgba(2, 6, 23, 0.6);
+}
+
+/* Card Styles */
+.card {
+  --card-shadow-default: var(--shadow-md);
+  --card-shadow-hover: var(--shadow-lg);
+  position: relative;
+  padding: var(--card-padding-lg);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    140deg,
+    var(--card-bg-start, rgba(2, 6, 23, 0.92)),
+    var(--card-bg-end, rgba(15, 23, 42, 0.88))
+  );
+  border: 1px solid var(--card-border-color, rgba(148, 163, 184, 0.35));
+  box-shadow: var(--card-shadow-default);
+  color: #e2e8f0;
+  overflow: hidden;
+  isolation: isolate;
+  backdrop-filter: blur(8px);
+  transform: translateZ(0);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.3), transparent 55%);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--radius-lg) - 1px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  border-color: rgba(148, 163, 184, 0.55);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.card-primary {
+  --card-bg-start: var(--color-primary);
+  --card-bg-end: var(--color-primary-light);
+  --card-border-color: rgba(96, 165, 250, 0.45);
+  --card-shadow-default: var(--shadow-md), 0 20px 55px rgba(59, 130, 246, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 35px 80px rgba(59, 130, 246, 0.45);
+}
+
+.card-secondary {
+  --card-bg-start: var(--color-secondary);
+  --card-bg-end: var(--color-secondary-light);
+  --card-border-color: rgba(147, 197, 253, 0.35);
+  --card-shadow-default: var(--shadow-md), 0 18px 45px rgba(37, 99, 235, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 30px 70px rgba(37, 99, 235, 0.45);
+}
+
+.card-accent {
+  --card-bg-start: var(--color-accent);
+  --card-bg-end: var(--color-accent-light);
+  --card-border-color: rgba(103, 232, 249, 0.55);
+  --card-shadow-default: var(--shadow-md), 0 20px 50px rgba(14, 165, 233, 0.4);
+  --card-shadow-hover: var(--shadow-lg), 0 32px 75px rgba(14, 165, 233, 0.45);
+}
+
+.card-success {
+  --card-bg-start: var(--color-success);
+  --card-bg-end: var(--color-success-light);
+  --card-border-color: rgba(52, 211, 153, 0.5);
+  --card-shadow-default: var(--shadow-md), 0 20px 50px rgba(16, 185, 129, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 32px 70px rgba(16, 185, 129, 0.45);
+}
+
+.card-warning {
+  --card-bg-start: var(--color-warning);
+  --card-bg-end: var(--color-warning-light);
+  --card-border-color: rgba(251, 191, 36, 0.45);
+  --card-shadow-default: var(--shadow-md), 0 18px 45px rgba(245, 158, 11, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 30px 65px rgba(245, 158, 11, 0.45);
+}
+
+.card-info {
+  --card-bg-start: var(--color-info);
+  --card-bg-end: var(--color-info-light);
+  --card-border-color: rgba(125, 211, 252, 0.45);
+  --card-shadow-default: var(--shadow-md), 0 20px 55px rgba(56, 189, 248, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 32px 80px rgba(56, 189, 248, 0.45);
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-lg);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--gap-md);
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap-md);
+}
+
+/* Content Spacing */
+.mt-xs { margin-top: 0.3rem; }
+.mt-sm { margin-top: 0.5rem; }
+.mt-md { margin-top: var(--gap-md); }
+.mt-lg { margin-top: var(--gap-lg); }
+.mt-xl { margin-top: var(--gap-xl); }
+
+.mb-sm { margin-bottom: 0.5rem; }
+.mb-md { margin-bottom: var(--gap-md); }
+.mb-lg { margin-bottom: var(--gap-lg); }
+
+/* Typography Utilities */
+.text-sm { font-size: var(--font-size-sm); line-height: 1.5; }
+.text-base { font-size: var(--font-size-base); line-height: 1.5; }
+.text-md { font-size: var(--font-size-md); line-height: 1.5; }
+.text-lg { font-size: var(--font-size-lg); line-height: 1.6; }
+
+.card-content {
+  margin-top: 0.5rem;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+
+/* Centered Container */
+.container-centered {
+  max-width: 950px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Flexbox Utilities */
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prob-value {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Utility Padding Helpers */
+.pad-tight {
+  padding: 0.8rem 1rem;
+}
+
+.pad-snug {
+  padding: 0.8rem 1.2rem;
+}
+
+.pad-compact {
+  padding: 0.7rem 0.9rem;
+}
+
+.pad-balanced {
+  padding: 0.9rem 1.1rem;
+}
+
+/* Gap and Margin Helpers */
+.gap-tight {
+  gap: 1rem;
+}
+
+.mt-xxl {
+  margin-top: 2rem;
+}
+
+/* Text Utilities */
+.lead-block {
+  margin-top: 1.5rem;
+  font-size: 1.1em;
+  line-height: 1.55;
+}
+
+.lead-block-lg {
+  margin-top: 1.5rem;
+  font-size: 1.15em;
+  line-height: 1.55;
+}
+
+.note-text {
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.note-text-lg {
+  font-size: 0.9em;
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.meta-strong {
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.meta-caption {
+  font-size: 0.85em;
+  margin-top: 0.3rem;
+}
+
+.mono-strong {
+  font-family: monospace;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.text-subhead {
+  font-size: 1.05em;
+}
+
+.text-xl-strong {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.emoji-xl {
+  font-size: 1.8em;
+  line-height: 1;
+}
+
+.text-tight {
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+/* Layout helpers */
+.text-center {
+  text-align: center;
+}
+
+.mermaid-note {
+  margin-top: 0.8rem;
+}
+
+.mermaid-note .text-tight {
+  margin: 0;
+}

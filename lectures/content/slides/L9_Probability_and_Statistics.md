@@ -14,33 +14,6 @@ transition: fade
 
 title: "Probability and Statistics"
 layout: cover
-
-addons:
-  - slidev-addon-python-runner
-
-# Configuration for Python runner
-python:
-  # Install required packages from PyPI
-  installs: ["numpy", "matplotlib", "scipy"]
-
-  # Set up the environment
-  prelude: |
-    import numpy as np
-    import matplotlib.pyplot as plt
-    from scipy import stats
-
-    # Configure matplotlib for better display
-    plt.rcParams['figure.dpi'] = 100
-    plt.rcParams['savefig.dpi'] = 100
-
-  # Automatically load imported packages
-  loadPackagesFromImports: true
-
-  # Suppress deprecation warnings
-  suppressDeprecationWarnings: true
-
-  # Options for Pyodide
-  loadPyodideOptions: {}
 ---
 
 # Dr. Mindaugas Šarpis
@@ -94,39 +67,59 @@ hideInToc: true
 
 # What is Probability?
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+<div class="grid-2 mt-lg">
+
+<div class="card card-primary">
+
+## 📊 **Frequentist View**
+
+<div class="card-content">
+
+**Probability = long-run frequency**
+
+💡 Example: Flip a coin 10,000 times → ~50% heads
+
+</div>
+
+</div>
+
+<div class="card card-secondary">
+
+## 🧠 **Bayesian View**
+
+<div class="card-content">
+
+**Probability = degree of belief**
+
+💡 Example: "70% chance of rain" reflects knowledge
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-accent mt-lg">
+
+## ⚖️ **Both Views are Useful**
+
+<div class="grid-2 mt-sm text-base">
 
 <div>
 
-## **Frequentist view**
+✅ **Frequentist** for repeated trials
 
-### Probability = long-run frequency of an event
-
-### Example: Flip a coin 10,000 times → ~50% heads
-
-<br>
-
-## **Bayesian view**
-
-### Probability = degree of belief or uncertainty
-
-### Example: "70% chance of rain" reflects our knowledge
+✅ **Bayesian** for updating beliefs
 
 </div>
 
 <div>
 
-## **Both views are useful**
+⚛️ **Physics:** mostly frequentist
 
-### Frequentist for experiments with repeated trials
+🤖 **ML:** increasingly Bayesian
 
-### Bayesian for updating beliefs with new data
-
-<br>
-
-### **In physics**: mostly frequentist
-
-### **In machine learning**: increasingly Bayesian
+</div>
 
 </div>
 
@@ -138,214 +131,114 @@ hideInToc: true
 
 # Basic Concepts
 
-<div style="margin-top: 2rem;">
+<div class="grid-2 mt-md gap-tight">
 
-## **Experiment**
-### Any process that produces an observation or outcome
+<div class="card card-primary pad-tight">
 
-## **Sample Space (Ω)**
-### Set of all possible outcomes
+### 🔬 **Experiment**
 
-## **Event**
-### A subset of the sample space (collection of outcomes)
+<div class="note-text mt-xs">Repeatable process producing an outcome</div>
 
-## **Probability P(A)**
-### A number between 0 and 1 assigned to event A
+</div>
+
+<div class="card card-secondary pad-tight">
+
+### 🌐 **Sample Space (Ω)**
+
+<div class="note-text mt-xs">All possible outcomes</div>
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+### 🎯 **Event**
+
+<div class="note-text mt-xs">Subset of Ω satisfying a condition</div>
+
+</div>
+
+<div class="card card-info pad-tight">
+
+### 📊 **Probability P(A)**
+
+<div class="note-text mt-xs">Number in [0,1] quantifying likelihood</div>
+
+</div>
 
 </div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
-# Example: Rolling a Die
+# Visualizing Sample Space & Events
 
-## **Sample Space**
-### Ω = {1, 2, 3, 4, 5, 6}
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; align-items: start;">
 
-<br>
+<div>
 
-## **Events**
-### A = "roll an even number" = {2, 4, 6}
-### B = "roll greater than 4" = {5, 6}
-### C = "roll a 3" = {3}
+## 🎲 Sample Space <br>
+## Ω = {1, 2, 3, 4, 5, 6}
 
-::right::
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 1.5rem; max-width: 380px;">
 
-<br>
-<br>
+<div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">1</div>
 
-## **Probabilities**
+<div style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">2</div>
 
-### For a fair die:
-```
-P(1) = P(2) = ... = P(6) = 1/6
-```
+<div style="background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">3</div>
 
-### P(A) = P(even) = 3/6 = 1/2
+<div style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">4</div>
 
-### P(B) = P(>4) = 2/6 = 1/3
+<div style="background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">5</div>
 
-### P(C) = P(3) = 1/6
+<div style="background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%); padding: 1.2rem; border-radius: 14px; text-align: center; font-size: 2em; font-weight: 700; color: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">6</div>
 
----
-hideInToc: true
----
+</div>
 
-# Interactive Demo: Rolling Dice
+<div style="text-align: center; margin-top: 1rem; font-size: 0.9em; opacity: 0.8;">
+All outcomes are equally likely: P(each) = 1/6
+</div>
 
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from collections import Counter
+</div>
 
-# Parameters (try changing these!)
-num_dice = 2         # Number of dice to roll
-num_rolls = 1000     # Number of times to roll
-sides = 6            # Number of sides on each die
+<div>
 
-# Simulate dice rolls
-np.random.seed(42)
-results = []
-for _ in range(num_rolls):
-    roll = np.random.randint(1, sides + 1, num_dice)
-    results.append(np.sum(roll))  # Sum of all dice
+## 📍 **Events (Subsets of Ω)**
 
-# Count outcomes
-outcome_counts = Counter(results)
-possible_outcomes = range(num_dice, num_dice * sides + 1)
+<div style="display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem;">
 
-# Theoretical probabilities for 2 dice
-if num_dice == 2 and sides == 6:
-    theoretical_probs = {
-        2: 1/36, 3: 2/36, 4: 3/36, 5: 4/36, 6: 5/36, 7: 6/36,
-        8: 5/36, 9: 4/36, 10: 3/36, 11: 2/36, 12: 1/36
-    }
-else:
-    theoretical_probs = {}
+<div class="card card-success pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">Event A (even):</strong>
+<span class="mono-strong">{2, 4, 6}</span>
+</div>
+</div>
 
-# Create visualization
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+<div class="card card-warning pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">Event B (&gt; 4):</strong>
+<span class="mono-strong">{5, 6}</span>
+</div>
+</div>
 
-# LEFT PLOT: Frequency distribution
-frequencies = [outcome_counts.get(i, 0) for i in possible_outcomes]
-probabilities = [f / num_rolls for f in frequencies]
+<div class="card card-info pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">Event C (exact):</strong>
+<span class="mono-strong">{3}</span>
+</div>
+</div>
 
-bars = ax1.bar(possible_outcomes, probabilities, alpha=0.7, color='steelblue',
-               edgecolor='black', label='Observed')
+<div class="card card-accent pad-snug">
+<div class="flex-between">
+<strong class="text-subhead">A ∩ B (even &amp; &gt; 4):</strong>
+<span class="mono-strong">{6}</span>
+</div>
+</div>
 
-# Overlay theoretical if available
-if theoretical_probs:
-    theo_probs = [theoretical_probs.get(i, 0) for i in possible_outcomes]
-    ax1.plot(possible_outcomes, theo_probs, 'ro-', linewidth=2, markersize=8,
-             label='Theoretical', alpha=0.7)
+</div>
 
-ax1.set_xlabel(f'Sum of {num_dice} Dice', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Probability', fontsize=12, fontweight='bold')
-ax1.set_title(f'Probability Distribution ({num_rolls} rolls)', fontsize=13, fontweight='bold')
-ax1.legend(loc='upper right')
-ax1.grid(True, alpha=0.3, axis='y')
-ax1.set_xticks(possible_outcomes)
-
-# RIGHT PLOT: Convergence to theoretical
-if theoretical_probs and num_dice == 2:
-    # Show how probability converges as we increase number of rolls
-    convergence_points = [10, 50, 100, 500, 1000]
-    outcomes_to_track = [7, 12]  # Most likely and least likely
-
-    for outcome in outcomes_to_track:
-        observed_probs = []
-        for n in convergence_points:
-            count = sum(1 for r in results[:n] if r == outcome)
-            observed_probs.append(count / n)
-
-        theo_prob = theoretical_probs[outcome]
-        ax2.plot(convergence_points, observed_probs, 'o-', linewidth=2, markersize=6,
-                label=f'Sum={outcome} (observed)', alpha=0.7)
-        ax2.axhline(theo_prob, linestyle='--', linewidth=2, alpha=0.5,
-                   label=f'Sum={outcome} (theoretical = {theo_prob:.3f})')
-
-    ax2.set_xlabel('Number of Rolls', fontsize=12, fontweight='bold')
-    ax2.set_ylabel('Probability', fontsize=12, fontweight='bold')
-    ax2.set_title('Convergence to Theoretical Probability', fontsize=13, fontweight='bold')
-    ax2.set_xscale('log')
-    ax2.legend(loc='best', fontsize=9)
-    ax2.grid(True, alpha=0.3)
-else:
-    # Just show cumulative frequency
-    cumulative_counts = np.cumsum([outcome_counts.get(i, 0) for i in possible_outcomes])
-    ax2.plot(possible_outcomes, cumulative_counts, 'go-', linewidth=2, markersize=6)
-    ax2.fill_between(possible_outcomes, cumulative_counts, alpha=0.3, color='green')
-    ax2.set_xlabel(f'Sum of {num_dice} Dice', fontsize=12, fontweight='bold')
-    ax2.set_ylabel('Cumulative Count', fontsize=12, fontweight='bold')
-    ax2.set_title('Cumulative Distribution', fontsize=13, fontweight='bold')
-    ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-# Print statistics
-print("=" * 60)
-print(f"DICE ROLLING SIMULATION: {num_dice} dice, {num_rolls} rolls")
-print("=" * 60)
-print(f"\nOutcome Distribution:")
-for outcome in sorted(outcome_counts.keys()):
-    freq = outcome_counts[outcome]
-    prob = freq / num_rolls
-    if theoretical_probs and outcome in theoretical_probs:
-        theo = theoretical_probs[outcome]
-        diff = abs(prob - theo)
-        print(f"  Sum = {outcome:2d}: {freq:4d} times ({prob:.3f}) " +
-              f"[Theoretical: {theo:.3f}, Difference: {diff:.3f}]")
-    else:
-        print(f"  Sum = {outcome:2d}: {freq:4d} times ({prob:.3f})")
-
-if theoretical_probs:
-    print(f"\nAs number of rolls increases, observed probabilities converge to theoretical values!")
-print(f"\nTry changing num_dice, num_rolls, or sides to explore different scenarios!")
-```
-
-### Experiment with different numbers of dice and rolls to see the Law of Large Numbers in action!
-
----
-hideInToc: true
----
-
-# Visualizing Sample Space and Events
-
-```mermaid
-graph TB
-    subgraph "Sample Space Ω"
-        A["Event A<br/>(even numbers)"]
-        B["Event B<br/>(> 4)"]
-        C["Event C<br/>(= 3)"]
-        O1[1]
-        O2[2]
-        O3[3]
-        O4[4]
-        O5[5]
-        O6[6]
-    end
-
-    style A fill:#6bcf7f,stroke:#2d5f3f,stroke-width:2px,color:#000
-    style B fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#000
-    style C fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style O1 fill:#f5f5f5,stroke:#666,stroke-width:1px
-    style O2 fill:#6bcf7f,stroke:#2d5f3f,stroke-width:2px
-    style O3 fill:#4dabf7,stroke:#1565c0,stroke-width:2px
-    style O4 fill:#6bcf7f,stroke:#2d5f3f,stroke-width:2px
-    style O5 fill:#ff9800,stroke:#e65100,stroke-width:2px
-    style O6 fill:#ff9800,stroke:#e65100,stroke-width:2px
-```
-
-<div style="margin-top: 1rem; font-size: 1.1em;">
-
-### **Rolling a die**: Ω = {1, 2, 3, 4, 5, 6}
-- **Event A** (green): {2, 4, 6} - even numbers
-- **Event B** (orange): {5, 6} - greater than 4
-- **Event C** (blue): {3} - rolled a 3
-- **A ∩ B** (overlap): {6} - even AND > 4
+</div>
 
 </div>
 
@@ -355,21 +248,37 @@ hideInToc: true
 
 # Axioms of Probability (Kolmogorov)
 
-<div style="font-size: 1.3em; margin-top: 2rem;">
+<div class="grid-3 mt-md gap-tight">
 
-## **Axiom 1: Non-negativity**
-### For any event A: P(A) ≥ 0
+<div class="card card-primary pad-tight">
 
-<br>
+### ✅ **Axiom 1**
 
-## **Axiom 2: Normalization**
-### P(Ω) = 1 (something must happen)
+**Non-negativity**
 
-<br>
+<div class="note-text-lg">$P(A) \geq 0$ for any event A</div>
 
-## **Axiom 3: Additivity**
-### If A and B are mutually exclusive (disjoint):
-### P(A ∪ B) = P(A) + P(B)
+</div>
+
+<div class="card card-secondary pad-tight">
+
+### 🌍 **Axiom 2**
+
+**Normalization**
+
+<div class="note-text-lg">$P(\Omega) = 1$</div>
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+### ➕ **Axiom 3**
+
+**Additivity**
+
+<div class="note-text-lg">Mutually exclusive: $P(A \cup B) = P(A) + P(B)$</div>
+
+</div>
 
 </div>
 
@@ -379,22 +288,33 @@ hideInToc: true
 
 # Useful Rules from the Axioms
 
-<div style="margin-top: 1.5rem;">
+<div class="grid-3 mt-md gap-tight">
 
-## **Complement Rule**
-```
-P(not A) = P(Aᶜ) = 1 − P(A)
-```
+<div class="card card-warning pad-tight">
 
-## **Addition Rule (general)**
-```
-P(A ∪ B) = P(A) + P(B) − P(A ∩ B)
-```
+### 🔄 **Complement**
 
-## **Multiplication Rule (independent events)**
-```
-P(A ∩ B) = P(A) × P(B)
-```
+$$P(A^c) = 1 - P(A)$$
+
+</div>
+
+<div class="card card-info pad-tight">
+
+### ➕ **Addition**
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+</div>
+
+<div class="card card-success pad-tight">
+
+### ✖️ **Multiplication**
+
+$$P(A \cap B) = P(A) \times P(B)$$
+
+<div class="meta-caption">if independent</div>
+
+</div>
 
 </div>
 
@@ -406,41 +326,43 @@ hideInToc: true
 # Conditional Probability
 
 ## **Definition**
-### Probability of A given that B has occurred:
 
-```
-P(A|B) = P(A ∩ B) / P(B)
-```
+<div class="card card-primary text-base">
 
-### (assuming P(B) > 0)
+<div class="card-content">
 
-<br>
+Knowing that B happened shrinks the universe of outcomes to B. The probability of A in that restricted world is
 
-## **Intuition**
-### Restricts sample space to only outcomes where B is true
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
+
+</div>
+
+</div>
+
+<div class="card card-secondary text-base mt-md">
+
+<div class="card-content">
+
+Think of it as running the experiment again but keeping only the trials where B occurred.
+
+</div>
+
+</div>
 
 ::right::
 
-<br>
+## **Two-dice example**
 
-## **Example: Two dice**
+<div class="card card-accent text-base">
 
-### A = "sum is 8"
-### B = "first die shows 3"
+- Event A: total sum is 8 (5 ways out of 36).  
+- Event B: first die shows 3 (6 ways out of 36).
 
-<br>
+Once B happens, the only compatible pair giving sum 8 is (3, 5), so
 
-### P(A) = 5/36
+$$P(A \mid B) = \frac{1}{6}$$
 
-### P(B) = 6/36 = 1/6
-
-### P(A|B) = ?
-
-<br>
-
-### If first die = 3, second must be 5 for sum = 8
-
-### P(A|B) = 1/6
+</div>
 
 ---
 hideInToc: true
@@ -448,27 +370,51 @@ hideInToc: true
 
 # Independence
 
-<div style="margin-top: 2rem;">
+<div class="grid-2 mt-lg">
 
-## **Definition**
-### Events A and B are independent if:
-```
-P(A ∩ B) = P(A) × P(B)
-```
+<div class="card card-primary">
 
-### Equivalently: P(A|B) = P(A)
+## 📐 **Definition**
 
-<br>
+<div class="card-content text-md">
 
-## **Intuition**
-### Knowing B occurred doesn't change the probability of A
+Events A and B are independent if:
 
-<br>
+$$P(A \cap B) = P(A) \times P(B)$$
 
-## **Examples**
-- ### Flipping two coins: outcomes are independent
-- ### Drawing cards *without* replacement: NOT independent
-- ### Drawing cards *with* replacement: independent
+**Equivalently:** $P(A \mid B) = P(A)$
+
+</div>
+
+</div>
+
+<div class="card card-secondary">
+
+## 💡 **Intuition**
+
+<div class="card-content text-md">
+
+Knowing B occurred doesn't change the probability of A
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-success mt-lg">
+
+## 📚 **Examples**
+
+<div class="card-content text-md">
+
+✅ **Flipping two coins:** outcomes are independent
+
+❌ **Drawing cards *without* replacement:** NOT independent
+
+✅ **Drawing cards *with* replacement:** independent
+
+</div>
 
 </div>
 
@@ -479,41 +425,31 @@ hideInToc: true
 # Bayes' Theorem Flow
 
 ```mermaid
-graph TB
-    subgraph "Input Components"
-        A["<b>Prior P(A)</b><br/>Initial belief<br/>before data"]
-        B["<b>Likelihood P(B|A)</b><br/>How probable is<br/>the data given<br/>hypothesis"]
-        D["<b>Evidence P(B)</b><br/>Total probability<br/>of observing data<br/>P(B|A)P(A) + P(B|Ā)P(Ā)"]
-    end
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0b2540',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102e4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 50}}%%
+flowchart LR
+    Prior["Prior<br/>P(A)"]:::input --> Update
+    Likelihood["Likelihood<br/>P(B|A)"]:::input --> Update
+    Evidence["Evidence<br/>P(B)"]:::support --> Update
+    Update["Bayes update<br/>P(A|B) = P(B|A)·P(A)/P(B)"]:::process --> Posterior
+    Posterior["Posterior<br/>Updated belief"]:::output
 
-    subgraph "Calculation"
-        E["<b>Bayes' Formula</b><br/>P(A|B) = P(B|A)×P(A)/P(B)"]
-    end
-
-    subgraph "Output"
-        C["<b>Posterior P(A|B)</b><br/>Updated belief<br/>after seeing data"]
-    end
-
-    A --> E
-    B --> E
-    D --> E
-    E --> C
-
-    style A fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style B fill:#ff6b6b,stroke:#8b0000,stroke-width:3px,color:#000
-    style D fill:#ffd93d,stroke:#b8860b,stroke-width:3px,color:#000
-    style E fill:#bb86fc,stroke:#6200ee,stroke-width:3px,color:#000
-    style C fill:#4dabf7,stroke:#1565c0,stroke-width:3px,color:#000
+    classDef input fill:#123b75,stroke:#60a5fa,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef support fill:#0f2b4c,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef process fill:#0b1f36,stroke:#94a3b8,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
+    classDef output fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#f8fafc,rx:16px,ry:16px;
 ```
 
-<div style="margin-top: 1rem;">
+<div class="note-text mt-sm">
 
-## **The Bayesian Update Process:**
-
-1. **Prior P(A)**: What we believed before seeing data
-2. **Likelihood P(B|A)**: How likely the data is, given our hypothesis
-3. **Evidence P(B)**: Total probability of seeing the data (normalization)
-4. **Posterior P(A|B)**: Updated belief after seeing the data
+**1.** Prior P(A): Belief before data • **2.** Likelihood P(B|A): Data probability • **3.** Evidence P(B): Normalization • **4.** Posterior P(A|B): Updated belief
 
 </div>
 
@@ -523,26 +459,18 @@ hideInToc: true
 
 # Bayes' Theorem
 
-<div style="margin-top: 2rem; font-size: 1.2em;">
+<div class="lead-block-lg">
 
 ## **Formula**
-```
-P(A|B) = P(B|A) × P(A) / P(B)
-```
-
-<br>
+$$P(A \mid B) = \frac{P(B \mid A) \times P(A)}{P(B)}$$
 
 ## **In words**
-```
-posterior = (likelihood × prior) / evidence
-```
+$$\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$
 
 <br>
 
 ## **Why it matters**
-- ### Allows us to *reverse* conditional probabilities
-- ### Foundation of Bayesian inference
-- ### Used in medical diagnosis, spam filters, particle physics
+Reverses conditionals • Bayesian inference • Diagnosis, filters, physics
 
 </div>
 
@@ -569,17 +497,15 @@ hideInToc: true
 
 ### Let D = disease, + = positive test
 
-```
-P(D|+) = P(+|D) × P(D) / P(+)
-```
+$$P(D \mid +) = \frac{P(+ \mid D) \times P(D)}{P(+)}$$
 
-### P(+|D) = 0.95 (sensitivity)
-### P(D) = 0.01 (prevalence)
+### $P(+ \mid D) = 0.95$ (sensitivity)
+### $P(D) = 0.01$ (prevalence)
 
-### P(+) = P(+|D)P(D) + P(+|Dᶜ)P(Dᶜ)
-### = 0.95×0.01 + 0.10×0.99 = 0.1085
+### $P(+) = P(+ \mid D)P(D) + P(+ \mid D^c)P(D^c)$
+### $= 0.95 \times 0.01 + 0.10 \times 0.99 = 0.1085$
 
-### P(D|+) = 0.95×0.01 / 0.1085 ≈ **8.8%**
+### $P(D \mid +) = \frac{0.95 \times 0.01}{0.1085} \approx$ **8.8%**
 
 #### Surprisingly low!
 
@@ -687,30 +613,39 @@ hideInToc: true
 # Visualizing the Medical Test
 
 ```mermaid
-graph TD
-    A["<b>Population</b><br/>N = 10,000 people"] --> B["<b>Has Disease</b><br/>1% prevalence<br/>100 people"]
-    A --> C["<b>No Disease</b><br/>99%<br/>9,900 people"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#0ea5e9',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 45}}%%
+flowchart LR
+    Population["Population<br/>10,000"]:::hub --> HasDisease["Disease<br/>1% → 100"]:::branch
+    Population --> NoDisease["No disease<br/>99% → 9,900"]:::branch
 
-    B --> D["<b>Test Positive ✓</b><br/>Sensitivity: 95%<br/>True Positives<br/>95 people<br/>0.95 × 100 = 95"]
-    B --> E["<b>Test Negative ✗</b><br/>5% missed<br/>False Negatives<br/>5 people<br/>0.05 × 100 = 5"]
+    HasDisease --> TruePos["Test +<br/>TP: 95"]:::positive
+    HasDisease --> FalseNeg["Test -<br/>FN: 5"]:::negative
 
-    C --> F["<b>Test Positive ✓</b><br/>Specificity failure: 10%<br/>False Positives<br/>990 people<br/>0.10 × 9,900 = 990"]
-    C --> G["<b>Test Negative ✗</b><br/>Specificity: 90%<br/>True Negatives<br/>8,910 people<br/>0.90 × 9,900 = 8,910"]
+    NoDisease --> FalsePos["Test +<br/>FP: 990"]:::alert
+    NoDisease --> TrueNeg["Test -<br/>TN: 8,910"]:::positive
 
-    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:4px,color:#000
-    style B fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style C fill:#95e1d3,stroke:#00695c,stroke-width:3px,color:#000
-    style D fill:#4caf50,stroke:#1b5e20,stroke-width:3px,color:#000
-    style E fill:#ffcdd2,stroke:#c62828,stroke-width:2px,color:#000
-    style F fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style G fill:#a5d6a7,stroke:#2e7d32,stroke-width:2px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
+    classDef branch fill:#132f5d,stroke:#38bdf8,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef positive fill:#0f4c81,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
+    classDef alert fill:#b45309,stroke:#ffb74d,stroke-width:2px,color:#fff7ed,rx:12px,ry:12px;
+    classDef negative fill:#8b2f39,stroke:#f87171,stroke-width:2px,color:#fee2e2,rx:12px,ry:12px;
 ```
 
-<div style="margin-top: 1rem; font-size: 1.1em;">
+<div class="card card-info pad-tight mermaid-note">
 
-### **Key Insight**: Total Test Positive = 95 + 990 = **1,085 people**
-### **P(Disease | Positive) = 95 / 1,085 = 8.8%**
-### Only 8.8% of positive tests actually have the disease! (False positive problem with rare diseases)
+<div class="note-text">
+
+Total positive: 95 + 990 = **1,085** • **P(Disease | +) = 95/1,085 = 8.8%** • False positives dominate when disease is rare
+
+</div>
 
 </div>
 
@@ -727,22 +662,16 @@ hideInToc: true
 
 # What is a Random Variable?
 
-<div style="margin-top: 2rem;">
+<div class="lead-block">
 
 ## **Definition**
-### A function that assigns a numerical value to each outcome in the sample space
-
-<br>
+Function mapping outcomes to numbers
 
 ## **Types**
-- ### **Discrete**: takes countable values (0, 1, 2, ...)
-- ### **Continuous**: takes values in an interval (any real number)
-
-<br>
+**Discrete**: countable (0, 1, 2, ...) • **Continuous**: interval values (any real)
 
 ## **Notation**
-- ### Capital letters for the variable: X, Y, Z
-- ### Lower case for specific values: x, y, z
+Variable: X, Y, Z (capitals) • Values: x, y, z (lowercase)
 
 </div>
 
@@ -753,25 +682,30 @@ hideInToc: true
 # Types of Random Variables
 
 ```mermaid
-graph TB
-    RV["<b>Random Variable X</b><br/>Maps outcomes to numbers"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 45}}%%
+flowchart TB
+    RV["Random variable X<br/>Maps outcomes → numbers"]:::hub
+    RV --> Discrete["Discrete<br/>Countable"]:::branch
+    RV --> Continuous["Continuous<br/>Real-valued"]:::branch
 
-    RV --> Discrete["<b>Discrete</b><br/>Countable values<br/>{0, 1, 2, 3, ...}"]
-    RV --> Continuous["<b>Continuous</b><br/>Interval values<br/>Any real number in [a, b]"]
+    Discrete --> PMF["PMF<br/>P(X = x)"]:::detail
+    Continuous --> PDF["PDF<br/>f(x)"]:::detail
 
-    Discrete --> PMF["<b>PMF</b><br/>P(X = x)<br/>Probability at each point"]
-    Continuous --> PDF["<b>PDF</b><br/>f(x)<br/>Probability density"]
+    PMF --> DiscEx["coin flips, counts, dice"]:::example
+    PDF --> ContEx["measurements, energies"]:::example
 
-    PMF --> DiscEx["<b>Examples</b><br/>• Coin flips<br/>• Dice rolls<br/>• Particle counts<br/>• Number of events"]
-    PDF --> ContEx["<b>Examples</b><br/>• Measurements<br/>• Particle energies<br/>• Time intervals<br/>• Velocities"]
-
-    style RV fill:#bb86fc,stroke:#6200ee,stroke-width:4px,color:#000
-    style Discrete fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style Continuous fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style PMF fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style PDF fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style DiscEx fill:#e8f5e9,stroke:#2d5f3f,stroke-width:1px,color:#000
-    style ContEx fill:#fff3e0,stroke:#e65100,stroke-width:1px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:14px,ry:14px;
+    classDef branch fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef detail fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef example fill:#1d3a64,stroke:#38bdf8,stroke-width:1.5px,color:#e2e8f0,rx:12px,ry:12px;
 ```
 
 ---
@@ -830,9 +764,7 @@ hideInToc: true
 ### P(X = x) = 0 for any specific x
 ### Only intervals have non-zero probability:
 
-```
-P(a ≤ X ≤ b) = ∫ₐᵇ f(x)dx
-```
+$$P(a \leq X \leq b) = \int_a^b f(x)\,dx$$
 
 ::right::
 
@@ -848,12 +780,9 @@ P(a ≤ X ≤ b) = ∫ₐᵇ f(x)dx
 ## **Example: Uniform**
 ### X uniformly distributed on [0, 1]
 
-```
-f(x) = 1   if 0 ≤ x ≤ 1
-f(x) = 0   otherwise
-```
+$$f(x) = \begin{cases} 1 & \text{if } 0 \leq x \leq 1 \\ 0 & \text{otherwise} \end{cases}$$
 
-### P(0.2 ≤ X ≤ 0.5) = 0.3
+### $P(0.2 \leq X \leq 0.5) = 0.3$
 
 ---
 hideInToc: true
@@ -861,26 +790,18 @@ hideInToc: true
 
 # Cumulative Distribution Function (CDF)
 
-<div style="margin-top: 2rem; font-size: 1.2em;">
+<div class="lead-block">
 
 ## **Definition**
-```
-F(x) = P(X ≤ x)
-```
-
-<br>
+$$F(x) = P(X \leq x)$$
 
 ## **Properties**
-- ### F(x) is non-decreasing
-- ### F(−∞) = 0, F(∞) = 1
-- ### For continuous X: F'(x) = f(x)
+$F(x)$ non-decreasing • $F(-\infty) = 0$, $F(\infty) = 1$ • Continuous X: $F'(x) = f(x)$
 
 <br>
 
-## **Why it's useful**
-- ### Works for both discrete and continuous variables
-- ### Easier to work with mathematically
-- ### Directly gives probabilities: P(a < X ≤ b) = F(b) − F(a)
+## **Why useful**
+Works for discrete & continuous • Easier math • Direct probabilities: $P(a < X \leq b) = F(b) - F(a)$
 
 </div>
 
@@ -902,9 +823,7 @@ hideInToc: true
 <div>
 
 ## **Mean (Average)**
-```
-μ = Σ xᵢ / n
-```
+$$\mu = \frac{\sum x_i}{n}$$
 ### Most common measure
 ### Sensitive to outliers
 
@@ -940,170 +859,39 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Interactive Demo: Central Tendency
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
-
-# Initial dataset (try changing these values!)
-data = [1, 2, 2, 3, 10]
-
-# Calculate statistics
-mean_val = np.mean(data)
-median_val = np.median(data)
-mode_val = stats.mode(data, keepdims=True)[0][0]
-
-# Create visualization
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-
-# Histogram
-ax1.hist(data, bins=10, edgecolor='black', alpha=0.7)
-ax1.axvline(mean_val, color='red', linestyle='--', linewidth=2, label=f'Mean = {mean_val:.1f}')
-ax1.axvline(median_val, color='blue', linestyle='--', linewidth=2, label=f'Median = {median_val:.1f}')
-ax1.axvline(mode_val, color='green', linestyle='--', linewidth=2, label=f'Mode = {mode_val:.1f}')
-ax1.set_xlabel('Value')
-ax1.set_ylabel('Frequency')
-ax1.set_title('Distribution with Outlier')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
-
-# Without outlier
-data_no_outlier = [1, 2, 2, 3, 3]
-ax2.hist(data_no_outlier, bins=10, edgecolor='black', alpha=0.7, color='orange')
-ax2.axvline(np.mean(data_no_outlier), color='red', linestyle='--', linewidth=2, label=f'Mean = {np.mean(data_no_outlier):.1f}')
-ax2.axvline(np.median(data_no_outlier), color='blue', linestyle='--', linewidth=2, label=f'Median = {np.median(data_no_outlier):.1f}')
-ax2.set_xlabel('Value')
-ax2.set_ylabel('Frequency')
-ax2.set_title('Distribution without Outlier')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-print(f"With outlier: Mean={mean_val:.2f}, Median={median_val:.2f}, Mode={mode_val:.2f}")
-print(f"Without outlier: Mean={np.mean(data_no_outlier):.2f}, Median={np.median(data_no_outlier):.2f}")
-```
-
-### Try modifying the `data` list to see how different values affect the statistics!
-
----
-hideInToc: true
----
-
-# Interactive Demo: Sample Mean Convergence
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Parameters (try changing these!)
-population_mean = 50        # True population mean
-population_std = 10         # True population standard deviation
-max_sample_size = 500       # Maximum sample size to test
-n_experiments = 100         # Number of experiments to average
-
-# Generate data: watch how sample mean converges to true mean
-sample_sizes = np.linspace(5, max_sample_size, 50, dtype=int)
-mean_estimates = []
-std_errors = []
-
-np.random.seed(42)
-
-for n in sample_sizes:
-    # Run multiple experiments with sample size n
-    sample_means = []
-    for _ in range(n_experiments):
-        # Draw n samples from normal distribution
-        sample = np.random.normal(population_mean, population_std, n)
-        sample_means.append(np.mean(sample))
-
-    # Average sample mean and its standard error
-    mean_estimates.append(np.mean(sample_means))
-    std_errors.append(np.std(sample_means))
-
-# Create visualization
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-# LEFT PLOT: Convergence of sample mean
-ax1.plot(sample_sizes, mean_estimates, 'b-', linewidth=2, label='Sample Mean')
-ax1.axhline(population_mean, color='red', linestyle='--', linewidth=2,
-            label=f'True Mean = {population_mean}')
-ax1.fill_between(sample_sizes,
-                  np.array(mean_estimates) - np.array(std_errors),
-                  np.array(mean_estimates) + np.array(std_errors),
-                  alpha=0.3, color='blue', label='±1 Standard Error')
-
-ax1.set_xlabel('Sample Size (n)', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Estimated Mean', fontsize=12, fontweight='bold')
-ax1.set_title('Convergence of Sample Mean to Population Mean', fontsize=13, fontweight='bold')
-ax1.legend(loc='best')
-ax1.grid(True, alpha=0.3)
-
-# RIGHT PLOT: Standard Error vs Sample Size
-theoretical_se = population_std / np.sqrt(sample_sizes)
-ax2.plot(sample_sizes, std_errors, 'go-', linewidth=2, markersize=4,
-         label='Observed Std Error', alpha=0.7)
-ax2.plot(sample_sizes, theoretical_se, 'r--', linewidth=2,
-         label=f'Theoretical: σ/√n = {population_std}/√n')
-
-ax2.set_xlabel('Sample Size (n)', fontsize=12, fontweight='bold')
-ax2.set_ylabel('Standard Error', fontsize=12, fontweight='bold')
-ax2.set_title('Standard Error Decreases with Sample Size', fontsize=13, fontweight='bold')
-ax2.legend(loc='best')
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-print("=" * 60)
-print("SAMPLE MEAN CONVERGENCE DEMO")
-print("=" * 60)
-print(f"\nPopulation Mean (μ): {population_mean}")
-print(f"Population Std Dev (σ): {population_std}")
-print(f"\nKey Observations:")
-print(f"  - With n=5: Standard Error ≈ {population_std/np.sqrt(5):.2f}")
-print(f"  - With n=50: Standard Error ≈ {population_std/np.sqrt(50):.2f}")
-print(f"  - With n=500: Standard Error ≈ {population_std/np.sqrt(500):.2f}")
-print(f"\n✓ As sample size increases:")
-print(f"  1. Sample mean gets closer to true mean")
-print(f"  2. Variability (standard error) decreases as 1/√n")
-print(f"  3. To halve the error, need 4× more samples!")
-```
-
-### Try changing `population_mean`, `population_std`, or `max_sample_size` to explore different scenarios!
-
----
-hideInToc: true
----
-
 # Measures of Spread
 
-<div style="margin-top: 1.5rem;">
+<div class="grid-3 mt-md gap-tight">
 
-## **Range**
-```
-Range = max − min
-```
-### Simple but not robust
+<div class="card card-warning pad-tight">
 
-<br>
+### 📏 **Range**
 
-## **Variance**
-```
-σ² = Σ(xᵢ − μ)² / n
-```
-### Average squared deviation from mean
+$$\text{Range} = \max - \min$$
 
-<br>
+<div class="meta-caption">Simple but not robust</div>
 
-## **Standard Deviation**
-```
-σ = √(variance)
-```
-### Same units as the data • Most commonly reported
+</div>
+
+<div class="card card-accent pad-tight">
+
+### 📊 **Variance**
+
+$$\sigma^2 = \frac{\sum(x_i - \mu)^2}{n}$$
+
+<div class="meta-caption">Average squared deviation</div>
+
+</div>
+
+<div class="card card-info pad-tight">
+
+### 📈 **Standard Deviation**
+
+$$\sigma = \sqrt{\text{variance}}$$
+
+<div class="meta-caption">Same units as data</div>
+
+</div>
 
 </div>
 
@@ -1151,112 +939,27 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Interactive Demo: Variance and Spread
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
-
-# Parameters (try changing these!)
-mean = 50
-std_devs = [2, 5, 10, 15]  # Different standard deviations to compare
-n_samples = 10000
-
-# Create figure
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-axes = axes.flatten()
-
-np.random.seed(42)
-
-for idx, std in enumerate(std_devs):
-    # Generate samples
-    data = np.random.normal(mean, std, n_samples)
-
-    # Create histogram
-    axes[idx].hist(data, bins=50, edgecolor='black', alpha=0.7, density=True)
-
-    # Overlay theoretical normal distribution
-    x = np.linspace(mean - 4*std, mean + 4*std, 200)
-    pdf = stats.norm.pdf(x, mean, std)
-    axes[idx].plot(x, pdf, 'r-', linewidth=2, label='Theoretical PDF')
-
-    # Mark mean
-    axes[idx].axvline(mean, color='blue', linestyle='--', linewidth=2, label=f'Mean = {mean}')
-
-    # Mark ±1, ±2, ±3 standard deviations
-    for k in [1, 2, 3]:
-        axes[idx].axvline(mean + k*std, color='gray', linestyle=':', alpha=0.6)
-        axes[idx].axvline(mean - k*std, color='gray', linestyle=':', alpha=0.6)
-
-    # Shade ±1 std dev region
-    x_fill = x[(x >= mean - std) & (x <= mean + std)]
-    pdf_fill = stats.norm.pdf(x_fill, mean, std)
-    axes[idx].fill_between(x_fill, pdf_fill, alpha=0.3, color='green')
-
-    # Calculate actual variance from samples
-    sample_var = np.var(data, ddof=1)
-    sample_std = np.std(data, ddof=1)
-
-    # Formatting
-    axes[idx].set_xlabel('Value', fontsize=11)
-    axes[idx].set_ylabel('Density', fontsize=11)
-    axes[idx].set_title(f'Normal(μ={mean}, σ={std})\n' +
-                       f'Variance = σ² = {std**2}, Std Dev = σ = {std}\n' +
-                       f'Sample: σ² ≈ {sample_var:.1f}, σ ≈ {sample_std:.1f}',
-                       fontsize=11, fontweight='bold')
-    axes[idx].legend(loc='upper right', fontsize=9)
-    axes[idx].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-print("=" * 70)
-print("VARIANCE AND STANDARD DEVIATION COMPARISON")
-print("=" * 70)
-print(f"\nAll distributions have the same mean (μ = {mean})")
-print(f"But different variances (σ²) and standard deviations (σ):\n")
-
-for std in std_devs:
-    print(f"  σ² = {std**2:>3}, σ = {std:>2}  →  " +
-          f"68% of data between {mean - std:>5.1f} and {mean + std:>5.1f}")
-
-print(f"\n✓ Key Insight:")
-print(f"  - Larger variance/std dev → data more spread out")
-print(f"  - Smaller variance/std dev → data more concentrated")
-print(f"  - Variance measures average squared distance from mean")
-print(f"  - Std dev is in same units as data (easier to interpret)")
-```
-
-### Try changing `mean` or `std_devs` to see how spread affects the shape of distributions!
-
----
-hideInToc: true
----
-
 # Expectation and Variance (Formal)
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block-lg">
 
 ## **Expected Value E[X]**
 
-### Discrete: E[X] = Σ x P(X = x)
+### Discrete: $E[X] = \sum x P(X = x)$
 
-### Continuous: E[X] = ∫ x f(x)dx
+### Continuous: $E[X] = \int x f(x)\,dx$
 
 <br>
 
 ## **Variance Var(X)**
-```
-Var(X) = E[(X − μ)²] = E[X²] − (E[X])²
-```
+$$\text{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2$$
 
 <br>
 
 ## **Properties**
-- ### E[aX + b] = aE[X] + b
-- ### Var(aX + b) = a²Var(X)
-- ### Var(X + Y) = Var(X) + Var(Y) if X, Y independent
+- ### $E[aX + b] = aE[X] + b$
+- ### $\text{Var}(aX + b) = a^2\text{Var}(X)$
+- ### $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$ if X, Y independent
 
 </div>
 
@@ -1274,42 +977,32 @@ hideInToc: true
 # Distribution Landscape
 
 ```mermaid
-graph TB
-    D["<b>Probability Distributions</b>"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
+flowchart TB
+    Root["Probability distributions"]:::hub
+    Root --> Disc["Discrete<br/>countable"]:::category
+    Root --> Cont["Continuous<br/>real-valued"]:::category
 
-    D --> Disc["<b>Discrete</b><br/>Countable outcomes"]
-    D --> Cont["<b>Continuous</b><br/>Real-valued"]
+    Disc --> Bern["Bernoulli<br/>P(X=1)=p"]:::discrete
+    Disc --> Binom["Binomial<br/>n trials"]:::discrete
+    Disc --> Pois["Poisson<br/>rare events"]:::discrete
 
-    Disc --> Bern["<b>Bernoulli</b><br/>Single trial<br/>Success/Failure<br/>P(X=1) = p"]
-    Disc --> Binom["<b>Binomial</b><br/>n Bernoulli trials<br/>Count successes<br/>P(X=k) = C(n,k)p^k(1-p)^(n-k)"]
-    Disc --> Pois["<b>Poisson</b><br/>Rare events<br/>Fixed interval<br/>P(X=k) = λ^k·e^(-λ)/k!"]
+    Cont --> Unif["Uniform<br/>[a,b]"]:::continuous
+    Cont --> Exp["Exponential<br/>wait time"]:::continuous
+    Cont --> Norm["Normal<br/>μ, σ"]:::continuous
 
-    Cont --> Unif["<b>Uniform</b><br/>Equal likelihood<br/>f(x) = 1/(b-a)"]
-    Cont --> Exp["<b>Exponential</b><br/>Time to event<br/>f(x) = λe^(-λx)"]
-    Cont --> Norm["<b>Normal</b><br/>Bell curve<br/>f(x) = exp(-(x-μ)²/2σ²)/√(2πσ²)"]
-
-    Bern --> BernUse["Coin flip<br/>Pass/Fail"]
-    Binom --> BinomUse["# heads in n flips<br/>Clinical trials"]
-    Pois --> PoisUse["Radioactive decay<br/>Arrivals/hour"]
-    Unif --> UnifUse["Random number<br/>generator"]
-    Exp --> ExpUse["Time between<br/>events"]
-    Norm --> NormUse["Measurements<br/>Errors<br/>Heights"]
-
-    style D fill:#bb86fc,stroke:#6200ee,stroke-width:4px,color:#000
-    style Disc fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style Cont fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style Bern fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Binom fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Pois fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Unif fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style Exp fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style Norm fill:#ff6b6b,stroke:#8b0000,stroke-width:2px,color:#000
-    style BernUse fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,color:#000
-    style BinomUse fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,color:#000
-    style PoisUse fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,color:#000
-    style UnifUse fill:#ffebee,stroke:#8b0000,stroke-width:1px,color:#000
-    style ExpUse fill:#ffebee,stroke:#8b0000,stroke-width:1px,color:#000
-    style NormUse fill:#ffebee,stroke:#8b0000,stroke-width:1px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:14px,ry:14px;
+    classDef category fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef discrete fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
+    classDef continuous fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
 ```
 
 ---
@@ -1318,21 +1011,15 @@ hideInToc: true
 
 # Discrete Distributions
 
-<div style="margin-top: 2rem;">
+<div class="lead-block">
 
 ## **Bernoulli**
-- Single trial: success (1) or failure (0)
-- Parameter: p = P(success)
-- Example: single coin flip
+Single trial: success/failure • Parameter: $p = P(\text{success})$ • Ex: coin flip
 
 <br>
 
 ## **Binomial**
-- n independent Bernoulli trials
-- X = number of successes
-- Parameters: n, p
-- P(X = k) = C(n,k) pᵏ (1−p)ⁿ⁻ᵏ
-- Example: number of heads in 10 coin flips
+$n$ independent trials • $X$ = successes • $P(X = k) = C(n,k) p^k (1-p)^{n-k}$ • Ex: heads in 10 flips
 
 </div>
 
@@ -1351,19 +1038,17 @@ hideInToc: true
 <br>
 
 ## **PMF**
-```
-P(X = k) = (λᵏ e⁻ᵏ) / k!
-```
+$$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
 
-### Parameter λ = average rate
+### Parameter $\lambda$ = average rate
 
 ::right::
 
 <br>
 
 ## **Properties**
-- ### E[X] = λ
-- ### Var(X) = λ
+- ### $E[X] = \lambda$
+- ### $\text{Var}(X) = \lambda$
 
 <br>
 
@@ -1383,103 +1068,17 @@ hideInToc: true
 
 # Continuous Distributions
 
-<div style="margin-top: 2rem;">
+<div class="lead-block">
 
 ## **Uniform Distribution**
-- All values in [a, b] equally likely
-- f(x) = 1/(b−a) for x ∈ [a,b]
-- E[X] = (a+b)/2, Var(X) = (b−a)²/12
+All values in [a, b] equally likely • $f(x) = \frac{1}{b-a}$ • $E[X] = \frac{a+b}{2}$, $\text{Var}(X) = \frac{(b-a)^2}{12}$
 
 <br>
 
 ## **Exponential Distribution**
-- Time until first event (continuous analog of Poisson)
-- f(x) = λe⁻ᵏˣ for x ≥ 0
-- E[X] = 1/λ, Var(X) = 1/λ²
-- Memoryless property: P(X > s+t | X > s) = P(X > t)
+Time to first event • $f(x) = \lambda e^{-\lambda x}$ • $E[X] = \frac{1}{\lambda}$, $\text{Var}(X) = \frac{1}{\lambda^2}$ • Memoryless: $P(X > s+t \mid X > s) = P(X > t)$
 
 </div>
-
----
-hideInToc: true
----
-
-# Interactive Demo: Comparing Distributions
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
-
-# Parameters (try changing these!)
-n_binom = 20       # number of trials for binomial
-p_binom = 0.3      # probability for binomial
-lambda_poisson = 6 # rate parameter for Poisson
-mu_normal = 10     # mean for normal
-sigma_normal = 3   # standard deviation for normal
-
-# Create figure with 3 subplots
-fig, axes = plt.subplots(1, 3, figsize=(15, 4))
-
-# 1. Binomial Distribution
-x_binom = np.arange(0, n_binom + 1)
-pmf_binom = stats.binom.pmf(x_binom, n_binom, p_binom)
-
-axes[0].bar(x_binom, pmf_binom, alpha=0.7, color='steelblue', edgecolor='black')
-axes[0].axvline(n_binom * p_binom, color='red', linestyle='--', linewidth=2, label=f'Mean = {n_binom * p_binom}')
-axes[0].set_xlabel('k (number of successes)', fontsize=11)
-axes[0].set_ylabel('Probability', fontsize=11)
-axes[0].set_title(f'Binomial(n={n_binom}, p={p_binom})', fontsize=12, fontweight='bold')
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
-
-# 2. Poisson Distribution
-x_poisson = np.arange(0, int(lambda_poisson * 3))
-pmf_poisson = stats.poisson.pmf(x_poisson, lambda_poisson)
-
-axes[1].bar(x_poisson, pmf_poisson, alpha=0.7, color='coral', edgecolor='black')
-axes[1].axvline(lambda_poisson, color='red', linestyle='--', linewidth=2, label=f'Mean = λ = {lambda_poisson}')
-axes[1].set_xlabel('k (number of events)', fontsize=11)
-axes[1].set_ylabel('Probability', fontsize=11)
-axes[1].set_title(f'Poisson(λ={lambda_poisson})', fontsize=12, fontweight='bold')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
-
-# 3. Normal Distribution
-x_normal = np.linspace(mu_normal - 4*sigma_normal, mu_normal + 4*sigma_normal, 200)
-pdf_normal = stats.norm.pdf(x_normal, mu_normal, sigma_normal)
-
-axes[2].plot(x_normal, pdf_normal, color='green', linewidth=2)
-axes[2].fill_between(x_normal, pdf_normal, alpha=0.3, color='green')
-axes[2].axvline(mu_normal, color='red', linestyle='--', linewidth=2, label=f'Mean = μ = {mu_normal}')
-axes[2].set_xlabel('x', fontsize=11)
-axes[2].set_ylabel('Probability Density', fontsize=11)
-axes[2].set_title(f'Normal(μ={mu_normal}, σ={sigma_normal})', fontsize=12, fontweight='bold')
-axes[2].legend()
-axes[2].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-# Print summary statistics
-print("=== Distribution Comparison ===")
-print(f"\nBinomial(n={n_binom}, p={p_binom}):")
-print(f"  Mean: {n_binom * p_binom:.2f}")
-print(f"  Variance: {n_binom * p_binom * (1 - p_binom):.2f}")
-
-print(f"\nPoisson(λ={lambda_poisson}):")
-print(f"  Mean: {lambda_poisson}")
-print(f"  Variance: {lambda_poisson}")
-
-print(f"\nNormal(μ={mu_normal}, σ={sigma_normal}):")
-print(f"  Mean: {mu_normal}")
-print(f"  Variance: {sigma_normal**2}")
-
-print("\nKey insights:")
-print("- Binomial: Used for counting successes in fixed trials")
-print("- Poisson: Used for counting rare events in intervals")
-print("- Normal: Continuous, symmetric, ubiquitous in nature")
-```
 
 ---
 layout: fact
@@ -1494,23 +1093,43 @@ hideInToc: true
 
 # Why the Normal Distribution is Special
 
-<div style="margin-top: 2rem;">
+<div class="grid-3" style="gap: 0.8rem; margin-top: 1.5rem;">
 
-- ## **Most important distribution in statistics**
+<div class="card card-primary pad-compact">
+<div class="emoji-xl">🏆</div>
+<div class="meta-strong">Most Important</div>
+</div>
 
-- ## Arises naturally in many phenomena
+<div class="card card-secondary pad-compact">
+<div class="emoji-xl">🌿</div>
+<div class="meta-strong">Arises Naturally</div>
+</div>
 
-- ## Justified by the **Central Limit Theorem**
+<div class="card card-info pad-compact">
+<div class="emoji-xl">🎯</div>
+<div class="meta-strong">CLT Foundation</div>
+</div>
 
-- ## Measurement errors often approximately normal
+<div class="card card-success pad-compact">
+<div class="emoji-xl">🔬</div>
+<div class="meta-strong">Measurement Errors</div>
+</div>
 
-- ## Foundation for many statistical tests
+<div class="card card-warning pad-compact">
+<div class="emoji-xl">🧪</div>
+<div class="meta-strong">Statistical Tests</div>
+</div>
 
-- ## Two parameters: μ (mean), σ² (variance)
+<div class="card card-accent pad-compact">
+<div class="emoji-xl">⚙️</div>
+<div class="meta-strong">Two Parameters: μ, σ²</div>
+</div>
 
-<br>
+</div>
 
-### **"The normal distribution is the pattern of patterns"**
+<div style="text-align: center; font-size: 1.1em; font-weight: bold; margin-top: 1.5rem;">
+
+🌟 **"The normal distribution is the pattern of patterns"**
 
 </div>
 
@@ -1522,45 +1141,39 @@ hideInToc: true
 # Normal Distribution PDF
 
 ## **Formula**
-```
-f(x) = (1/(σ√(2π))) exp(−(x−μ)²/(2σ²))
-```
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
 <br>
 
 ## **Notation**
-### X ~ N(μ, σ²)
+### $X \sim N(\mu, \sigma^2)$
 
 <br>
 
 ## **Properties**
 - ### Bell-shaped, symmetric
-- ### Mean = Median = Mode = μ
-- ### Inflection points at μ ± σ
+- ### Mean = Median = Mode = $\mu$
+- ### Inflection points at $\mu \pm \sigma$
 
 ::right::
 
 <br>
 
 ## **Standard Normal**
-### Z ~ N(0, 1)
+### $Z \sim N(0, 1)$
 
-```
-φ(z) = (1/√(2π)) exp(−z²/2)
-```
+$$\phi(z) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{z^2}{2}\right)$$
 
 <br>
 
 ## **Standardization**
-```
-Z = (X − μ) / σ
-```
+$$Z = \frac{X - \mu}{\sigma}$$
 
 ### Converts any normal to standard normal
 
 <br>
 
-### Tables and software give P(Z ≤ z)
+### Tables and software give $P(Z \leq z)$
 
 ---
 hideInToc: true
@@ -1568,92 +1181,42 @@ hideInToc: true
 
 # The 68-95-99.7 Rule
 
-<div style="margin-top: 2rem; font-size: 1.3em;">
+<div style="text-align: center; font-size: 1.1em; font-weight: 600; margin: 1rem 0 0.8rem 0;">
+For $X \sim N(\mu, \sigma^2)$:
+</div>
 
-## For X ~ N(μ, σ²):
+<div class="grid-3 gap-tight">
 
-- ### **68%** of data within μ ± σ
+<div class="card card-success pad-balanced text-center">
+<div class="text-xl-strong">📊 68%</div>
+<div class="note-text mt-xs">$\mu \pm \sigma$</div>
+</div>
 
-- ### **95%** of data within μ ± 2σ
+<div class="card card-info pad-balanced text-center">
+<div class="text-xl-strong">📈 95%</div>
+<div class="note-text mt-xs">$\mu \pm 2\sigma$</div>
+</div>
 
-- ### **99.7%** of data within μ ± 3σ
-
-<br>
-
-### **Practical implication**: A measurement 3σ away from the mean is extremely rare (0.3% chance)
-
-#### In particle physics: 5σ is the gold standard for discovery (1 in 3.5 million chance if no signal)
+<div class="card card-primary pad-balanced text-center">
+<div class="text-xl-strong">🎯 99.7%</div>
+<div class="note-text mt-xs">$\mu \pm 3\sigma$</div>
+</div>
 
 </div>
 
----
-hideInToc: true
----
+<div class="card card-warning pad-balanced" style="margin-top: 1.2rem;">
 
-# Interactive Demo: Normal Distribution
+### 💡 **Practical Implication**
 
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
+<div class="note-text mt-xs">
 
-# Parameters (try changing these!)
-mu = 100      # mean
-sigma = 15    # standard deviation
+$3\sigma$ measurement = extremely rare (0.3%)
 
-# Generate x values
-x = np.linspace(mu - 4*sigma, mu + 4*sigma, 1000)
-y = stats.norm.pdf(x, mu, sigma)
+⚛️ **Physics**: $5\sigma$ = gold standard (1 in 3.5M)
 
-# Create the plot
-fig, ax = plt.subplots(figsize=(12, 6))
+</div>
 
-# Plot the normal distribution
-ax.plot(x, y, 'k-', linewidth=2, label='Normal Distribution')
-
-# Shade regions for 68-95-99.7 rule
-# 1 sigma (68%)
-x1 = x[(x >= mu - sigma) & (x <= mu + sigma)]
-y1 = stats.norm.pdf(x1, mu, sigma)
-ax.fill_between(x1, y1, alpha=0.3, color='green', label='68% (μ ± 1σ)')
-
-# 2 sigma (95%)
-x2 = x[(x >= mu - 2*sigma) & (x <= mu + 2*sigma)]
-y2 = stats.norm.pdf(x2, mu, sigma)
-ax.fill_between(x2, y2, alpha=0.2, color='blue', label='95% (μ ± 2σ)')
-
-# 3 sigma (99.7%)
-x3 = x[(x >= mu - 3*sigma) & (x <= mu + 3*sigma)]
-y3 = stats.norm.pdf(x3, mu, sigma)
-ax.fill_between(x3, y3, alpha=0.1, color='red', label='99.7% (μ ± 3σ)')
-
-# Add vertical lines at mean and sigma boundaries
-ax.axvline(mu, color='black', linestyle='--', linewidth=1.5, label=f'μ = {mu}')
-for i in range(1, 4):
-    ax.axvline(mu + i*sigma, color='gray', linestyle=':', alpha=0.5)
-    ax.axvline(mu - i*sigma, color='gray', linestyle=':', alpha=0.5)
-
-# Labels and formatting
-ax.set_xlabel('Value', fontsize=12)
-ax.set_ylabel('Probability Density', fontsize=12)
-ax.set_title(f'Normal Distribution: N({mu}, {sigma}²)\nThe 68-95-99.7 Rule', fontsize=14, fontweight='bold')
-ax.legend(loc='upper right', fontsize=10)
-ax.grid(True, alpha=0.3)
-
-# Add text annotations
-ax.text(mu, max(y)*0.5, '68%', ha='center', fontsize=14, fontweight='bold', color='green')
-ax.text(mu, max(y)*0.3, '95%', ha='center', fontsize=14, fontweight='bold', color='blue')
-ax.text(mu, max(y)*0.15, '99.7%', ha='center', fontsize=14, fontweight='bold', color='red')
-
-plt.tight_layout()
-plt.show()
-
-print(f"Mean (μ): {mu}")
-print(f"Standard Deviation (σ): {sigma}")
-print(f"68% of data falls between {mu-sigma:.1f} and {mu+sigma:.1f}")
-print(f"95% of data falls between {mu-2*sigma:.1f} and {mu+2*sigma:.1f}")
-print(f"99.7% of data falls between {mu-3*sigma:.1f} and {mu+3*sigma:.1f}")
-```
+</div>
 
 ---
 layout: section
@@ -1677,22 +1240,20 @@ hideInToc: true
 
 # Statement of the CLT
 
-<div style="margin-top: 2rem; font-size: 1.2em;">
+<div class="lead-block">
 
 ## **Informal version**
 
-### Let X₁, X₂, ..., Xₙ be independent random variables from *any* distribution with mean μ and variance σ²
+Let $X_1, X_2, \ldots, X_n$ be independent random variables from *any* distribution with mean $\mu$ and variance $\sigma^2$
 
-### The sample mean X̄ = (X₁ + X₂ + ... + Xₙ)/n
+Sample mean: $\bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n}$
 
-### As n → ∞, the distribution of X̄ approaches **N(μ, σ²/n)**
+As $n \to \infty$, distribution of $\bar{X}$ approaches **$N(\mu, \sigma^2/n)$**
 
 <br>
 
 ## **In other words**
-- ### Sum (or average) of many random variables → Normal
-- ### Works regardless of the original distribution
-- ### Larger n → better approximation
+Sum/average → Normal • Any original distribution • Larger $n$ → better approx
 
 </div>
 
@@ -1704,19 +1265,19 @@ hideInToc: true
 # Why CLT Matters
 
 ## **Measurement errors**
-### Sum of many small independent effects
-### Result: normally distributed errors
+### Many small effects
+### Result: normal errors
 
 <br>
 
 ## **Sampling distributions**
-### Allows us to use normal approximation
-### Even when population is not normal
+### Normal approximation
+### Even non-normal population
 
 <br>
 
 ## **Confidence intervals**
-### Based on CLT assumptions
+### Based on CLT
 
 ::right::
 
@@ -1724,94 +1285,16 @@ hideInToc: true
 
 ## **Example**
 
-### Roll a die n times, average the results
+### Roll die $n$ times, average
 
-- ### Single roll: uniform on {1,2,3,4,5,6}
-- ### Average of 2: slightly peaked
-- ### Average of 10: looks normal!
-- ### Average of 100: very normal
+- ### $n=1$: uniform
+- ### $n=2$: peaked
+- ### $n=10$: normal
+- ### $n=100$: very normal
 
 <br>
 
-#### The "magic" of CLT: any distribution → normal
-
----
-hideInToc: true
----
-
-# Interactive Demo: Central Limit Theorem
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
-
-# Simulate CLT with uniform distribution
-np.random.seed(42)
-
-# Parameters
-population_dist = 'uniform'  # Try: 'uniform', 'exponential', or 'custom'
-sample_sizes = [2, 5, 10, 30, 100]
-n_samples = 1000
-
-fig, axes = plt.subplots(2, 3, figsize=(15, 8))
-axes = axes.flatten()
-
-# Original distribution
-if population_dist == 'uniform':
-    population = np.random.uniform(0, 10, 10000)
-    axes[0].hist(population, bins=50, edgecolor='black', alpha=0.7, density=True)
-    axes[0].set_title('Original Distribution: Uniform')
-elif population_dist == 'exponential':
-    population = np.random.exponential(2, 10000)
-    axes[0].hist(population, bins=50, edgecolor='black', alpha=0.7, density=True)
-    axes[0].set_title('Original Distribution: Exponential')
-else:
-    # Custom bimodal distribution
-    population = np.concatenate([np.random.normal(2, 0.5, 5000),
-                                 np.random.normal(8, 0.5, 5000)])
-    axes[0].hist(population, bins=50, edgecolor='black', alpha=0.7, density=True)
-    axes[0].set_title('Original Distribution: Bimodal')
-
-axes[0].set_xlabel('Value')
-axes[0].set_ylabel('Density')
-axes[0].grid(True, alpha=0.3)
-
-# Sample means distributions
-for idx, n in enumerate(sample_sizes, start=1):
-    sample_means = []
-    for _ in range(n_samples):
-        if population_dist == 'uniform':
-            sample = np.random.uniform(0, 10, n)
-        elif population_dist == 'exponential':
-            sample = np.random.exponential(2, n)
-        else:
-            sample = np.concatenate([np.random.normal(2, 0.5, n//2),
-                                     np.random.normal(8, 0.5, n - n//2)])
-        sample_means.append(np.mean(sample))
-
-    axes[idx].hist(sample_means, bins=40, edgecolor='black', alpha=0.7, density=True, color='orange')
-
-    # Overlay theoretical normal distribution
-    mu = np.mean(sample_means)
-    sigma = np.std(sample_means)
-    x = np.linspace(mu - 4*sigma, mu + 4*sigma, 100)
-    axes[idx].plot(x, stats.norm.pdf(x, mu, sigma), 'r-', linewidth=2, label='Normal fit')
-
-    axes[idx].set_title(f'Sample Size n={n}')
-    axes[idx].set_xlabel('Sample Mean')
-    axes[idx].set_ylabel('Density')
-    axes[idx].legend()
-    axes[idx].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
-print(f"Original distribution: {population_dist}")
-print(f"As sample size increases, the distribution of sample means becomes more normal!")
-```
-
-### Change `population_dist` to 'uniform', 'exponential', or 'custom' to see CLT with different distributions!
+#### CLT "magic": any → normal
 
 ---
 hideInToc: true
@@ -1819,26 +1302,49 @@ hideInToc: true
 
 # Standard Error
 
-<div style="margin-top: 2rem; font-size: 1.25em;">
+<div class="grid-3 mt-md gap-tight">
 
-## **Definition**
-### Standard deviation of the sample mean:
-```
-SE = σ / √n
-```
+<div class="card card-primary pad-balanced">
 
-<br>
+### 📐 **Definition**
 
-## **Interpretation**
-- ### Uncertainty in our estimate of μ
-- ### Decreases with sample size (√n)
-- ### To halve the error, need 4× more data
+$$SE = \frac{\sigma}{\sqrt{n}}$$
 
-<br>
+<div class="meta-caption">Std dev of sample mean</div>
 
-## **Usage**
-### Report results as: **mean ± SE**
-### Or: **mean ± 2×SE** for ~95% confidence
+</div>
+
+<div class="card card-warning pad-balanced">
+
+### 🔍 **Interpretation**
+
+<div class="text-tight">
+
+📊 Uncertainty in $\mu$
+
+📉 Decreases as $\sqrt{n}$
+
+🔢 Halve error: $4\times$ data
+
+</div>
+
+</div>
+
+<div class="card card-success pad-balanced">
+
+### 📝 **Usage**
+
+<div class="text-tight">
+
+**mean $\pm$ SE**
+
+or **mean $\pm 2 \times$ SE**
+
+for ~95% confidence
+
+</div>
+
+</div>
 
 </div>
 
@@ -1856,47 +1362,27 @@ hideInToc: true
 # The Statistical Inference Process
 
 ```mermaid
-graph LR
-    subgraph "Population"
-        P["<b>Population</b><br/>Unknown parameters:<br/>μ, σ, θ"]
-    end
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
+flowchart TB
+    Population["Population<br/>(μ, σ, θ) unknown"]:::hub --> Sample["Sample<br/>x₁ … xₙ"]:::input
+    Sample --> Stats["Summaries<br/>x̄, s²"]:::process
+    Stats --> Estimation["Estimation<br/>point + interval"]:::process
+    Estimation --> Inference["Inference<br/>tests / models"]:::process
+    Inference --> Decision["Decision<br/>report, conclude"]:::output
+    Decision -.-> Population
 
-    subgraph "Data Collection"
-        S["<b>Sample</b><br/>Observed data:<br/>x₁, x₂, ..., xₙ"]
-    end
-
-    subgraph "Estimation"
-        PE["<b>Point Estimate</b><br/>x̄, s²"]
-        IE["<b>Interval Estimate</b><br/>Confidence Intervals"]
-    end
-
-    subgraph "Inference"
-        HT["<b>Hypothesis Testing</b><br/>Test claims<br/>Compute p-values"]
-        MP["<b>Model Parameters</b><br/>Fit models<br/>Make predictions"]
-    end
-
-    subgraph "Conclusion"
-        D["<b>Decision</b><br/>Accept/Reject<br/>Quantify uncertainty"]
-    end
-
-    P -->|Random sampling| S
-    S -->|Calculate statistics| PE
-    S -->|Estimate range| IE
-    PE --> HT
-    IE --> HT
-    PE --> MP
-    IE --> MP
-    HT --> D
-    MP --> D
-    D -.->|Update beliefs| P
-
-    style P fill:#bb86fc,stroke:#6200ee,stroke-width:3px,color:#000
-    style S fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style PE fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style IE fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style HT fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#000
-    style MP fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#000
-    style D fill:#ff6b6b,stroke:#8b0000,stroke-width:3px,color:#000
+    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:14px,ry:14px;
+    classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef output fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
 ```
 
 ---
@@ -1905,25 +1391,25 @@ hideInToc: true
 
 # Estimation
 
-<div style="margin-top: 2rem;">
+<div class="mt-xxl">
 
 ## **Point Estimation**
-### Single "best guess" for a parameter
-- Sample mean x̄ estimates μ
-- Sample variance s² estimates σ²
+### Single "best guess" for parameter
+- Sample mean estimates $\mu$
+- Sample variance estimates $\sigma^2$
 
 <br>
 
 ## **Interval Estimation**
 ### Range of plausible values
-### **Confidence Interval**: range that contains the true parameter with specified probability (e.g., 95%)
+### **Confidence Interval**: contains true parameter with specified probability
 
 <br>
 
 ## **Desirable properties**
 - **Unbiased**: E[estimator] = true parameter
-- **Consistent**: converges to true value as n → ∞
-- **Efficient**: smallest variance among unbiased estimators
+- **Consistent**: converges as $n \to \infty$
+- **Efficient**: smallest variance
 
 </div>
 
@@ -1935,17 +1421,15 @@ hideInToc: true
 # Confidence Intervals
 
 ## **For a mean (known σ)**
-```
-CI = x̄ ± z* (σ/√n)
-```
+$$CI = \bar{x} \pm z^* \frac{\sigma}{\sqrt{n}}$$
 
-### z* = 1.96 for 95% confidence
+### $z^* = 1.96$ for 95% confidence
 
 <br>
 
 ## **Interpretation (careful!)**
-- ### NOT: "95% chance μ is in this interval"
-- ### CORRECT: "95% of such intervals contain μ"
+- ### NOT: "95% chance $\mu$ is in this interval"
+- ### CORRECT: "95% of such intervals contain $\mu$"
 
 ::right::
 
@@ -1954,15 +1438,15 @@ CI = x̄ ± z* (σ/√n)
 ## **Example**
 
 ### Measure particle mass 100 times
-- x̄ = 125.3 GeV
-- σ = 2.1 GeV (known)
-- n = 100
+- $\bar{x} = 125.3$ GeV
+- $\sigma = 2.1$ GeV (known)
+- $n = 100$
 
-### SE = 2.1/√100 = 0.21
+### $SE = 2.1/\sqrt{100} = 0.21$
 
-### 95% CI = 125.3 ± 1.96(0.21)
-### = 125.3 ± 0.41
-### = [124.89, 125.71] GeV
+### 95% CI $= 125.3 \pm 1.96(0.21)$
+### $= 125.3 \pm 0.41$
+### $= [124.89, 125.71]$ GeV
 
 ---
 hideInToc: true
@@ -2096,26 +1580,22 @@ hideInToc: true
 
 # Maximum Likelihood Estimation (MLE)
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block">
 
 ## **Idea**
-### Choose parameter values that make the observed data most probable
+Choose $\theta$ maximizing data probability
 
 <br>
 
 ## **Likelihood Function**
-### L(θ | data) = probability of data given parameter θ
+$L(\theta \mid \text{data})$ = P(data | $\theta$)
 
-### For independent observations x₁, ..., xₙ:
-```
-L(θ) = f(x₁; θ) × f(x₂; θ) × ... × f(xₙ; θ)
-```
+Independent observations: $L(\theta) = \prod f(x_i; \theta)$
 
 <br>
 
 ## **MLE**
-### θ̂ = value that maximizes L(θ)
-### In practice: maximize log L(θ) (easier math)
+$\hat{\theta}$ maximizes $L(\theta)$ • Practice: maximize $\log L(\theta)$
 
 </div>
 
@@ -2127,12 +1607,12 @@ hideInToc: true
 # MLE Example: Normal Mean
 
 ## **Setup**
-- Data: x₁, ..., xₙ
-- Model: X ~ N(μ, σ²) with known σ
-- Find μ̂ that maximizes likelihood
+- Data: $x_1, \ldots, x_n$
+- Model: $X \sim N(\mu, \sigma^2)$ with known $\sigma$
+- Find $\hat{\mu}$ that maximizes likelihood
 
 ## **Result**
-### μ̂ = x̄ (sample mean)
+### $\hat{\mu} = \bar{x}$ (sample mean)
 
 ### Confirms our intuition!
 
@@ -2145,11 +1625,7 @@ hideInToc: true
 - ### Principled approach
 - ### Works for any distribution
 - ### Asymptotically optimal
-- ### Foundation for model fitting
-
-<br>
-
-### **Coming up**: We'll use MLE to fit models to data!
+- ### Foundation for fitting
 
 ---
 layout: section
@@ -2165,43 +1641,37 @@ hideInToc: true
 # Data Fitting Workflow
 
 ```mermaid
-graph TB
-    Data["<b>Data</b><br/>(x₁,y₁), (x₂,y₂), ..., (xₙ,yₙ)"]
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'primaryColor': '#0f1f3d',
+  'primaryBorderColor': '#60a5fa',
+  'primaryTextColor': '#e2e8f0',
+  'secondaryColor': '#102b4c',
+  'tertiaryColor': '#143860',
+  'lineColor': '#5eead4',
+  'fontFamily': 'Inter, Segoe UI, sans-serif'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 30, 'rankSpacing': 35}}%%
+flowchart TB
+    Data["Data<br/>(xᵢ, yᵢ)"]:::input --> Model["Model<br/>y = f(x; θ) + ε"]:::process
+    Model --> Method{"Method?"}:::decision
+    Method --> LS["Least sq"]:::option
+    Method --> MLE["MLE"]:::option
+    Method --> Chi["χ²"]:::option
 
-    Data --> Model["<b>Propose Model</b><br/>y = f(x; θ) + ε<br/>ε ~ N(0, σ²)"]
-
-    Model --> Method["<b>Choose Method</b>"]
-
-    Method --> LS["<b>Least Squares</b><br/>Minimize Σ(yᵢ - f(xᵢ))²"]
-    Method --> MLE["<b>Maximum Likelihood</b><br/>Maximize P(data | θ)"]
-    Method --> Chi["<b>Chi-squared</b><br/>Minimize Σ[(yᵢ-f(xᵢ))/σᵢ]²"]
-
-    LS --> Fit["<b>Fit Parameters</b><br/>θ̂ = best fit values"]
+    LS --> Fit
     MLE --> Fit
     Chi --> Fit
+    Fit["Fit<br/>θ̂"]:::process --> Uncertainty["Uncertainty<br/>SEs, CIs"]:::process
+    Uncertainty --> Diagnostics["Diagnostics<br/>χ², residuals"]:::process
+    Diagnostics --> Decision{"Good?"}:::decision
+    Decision -->|Yes| Report["Report<br/>θ̂ ± error"]:::output
+    Decision -->|No| Model
+    Report --> Predict["Predict<br/>f(x_new; θ̂)"]:::output
 
-    Fit --> Unc["<b>Quantify Uncertainty</b><br/>Standard errors<br/>Confidence intervals"]
-
-    Unc --> GoF["<b>Goodness of Fit</b><br/>χ² test<br/>Residual analysis"]
-
-    GoF --> Good{Good fit?}
-    Good -->|Yes| Report["<b>Report Results</b><br/>θ̂ ± uncertainty<br/>Visualize fit"]
-    Good -->|No| Model
-
-    Report --> Predict["<b>Make Predictions</b><br/>f(x_new; θ̂) ± error"]
-
-    style Data fill:#6bcf7f,stroke:#2d5f3f,stroke-width:3px,color:#000
-    style Model fill:#4dabf7,stroke:#1565c0,stroke-width:2px,color:#000
-    style Method fill:#bb86fc,stroke:#6200ee,stroke-width:2px,color:#000
-    style LS fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
-    style MLE fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
-    style Chi fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
-    style Fit fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
-    style Unc fill:#ffd93d,stroke:#b8860b,stroke-width:2px,color:#000
-    style GoF fill:#ffd93d,stroke:#b8860b,stroke-width:2px,color:#000
-    style Good fill:#bb86fc,stroke:#6200ee,stroke-width:2px,color:#000
-    style Report fill:#4caf50,stroke:#1b5e20,stroke-width:3px,color:#000
-    style Predict fill:#4caf50,stroke:#1b5e20,stroke-width:2px,color:#000
+    classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef decision fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:14px,ry:14px;
+    classDef option fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:10px,ry:10px;
+    classDef output fill:#1c3d5a,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
 ```
 
 ---
@@ -2210,24 +1680,24 @@ hideInToc: true
 
 # From Probability to Fitting
 
-<div style="margin-top: 2rem;">
+<div class="mt-xxl">
 
-## **The data fitting problem**
-- ### We have measurements: (x₁, y₁), (x₂, y₂), ..., (xₙ, yₙ)
-- ### We propose a model: y = f(x; θ) + error
-- ### Goal: find parameters θ that best explain the data
+## **Data fitting problem**
+- ### Measurements: $(x_i, y_i)$
+- ### Model: $y = f(x; \theta) + \text{error}$
+- ### Goal: find best $\theta$
 
 <br>
 
 ## **Statistical foundation**
-- ### Assume errors are random (often normal)
-- ### Use MLE or least squares to estimate θ
-- ### Quantify uncertainty in θ using standard errors
+- ### Random errors (often normal)
+- ### MLE or least squares
+- ### Quantify uncertainty (SEs)
 - ### Test goodness of fit
 
 <br>
 
-### **Next lectures**: Apply these concepts to fitting lines, curves, and complex models
+### **Next**: Lines, curves, models
 
 </div>
 
@@ -2237,26 +1707,18 @@ hideInToc: true
 
 # Least Squares = MLE (for normal errors)
 
-<div style="margin-top: 1.5rem; font-size: 1.2em;">
+<div class="lead-block">
 
-## **If errors are independent and normally distributed:**
+**If errors are independent and normally distributed:**
 
-```
-yᵢ = f(xᵢ; θ) + εᵢ,    εᵢ ~ N(0, σ²)
-```
+$$y_i = f(x_i; \theta) + \varepsilon_i, \quad \varepsilon_i \sim N(0, \sigma^2)$$
 
-<br>
+**Then minimizing sum of squared errors:**
+$$S(\theta) = \sum \left(y_i - f(x_i; \theta)\right)^2$$
 
-## **Then minimizing sum of squared errors:**
-```
-S(θ) = Σ (yᵢ − f(xᵢ; θ))²
-```
+**Is equivalent to maximizing the likelihood**
 
-## **Is equivalent to maximizing the likelihood**
-
-<br>
-
-### This is why least squares fitting is so ubiquitous in science!
+This is why least squares fitting is so ubiquitous in science!
 
 </div>
 
@@ -2266,26 +1728,18 @@ hideInToc: true
 
 # Chi-Squared (χ²) Statistic
 
-<div style="margin-top: 2rem; font-size: 1.2em;">
+<div class="lead-block">
 
 ## **Definition**
-```
-χ² = Σ [(observed − expected)² / variance]
-```
+$$\chi^2 = \sum \frac{(\text{observed} - \text{expected})^2}{\text{variance}}$$
 
-<br>
-
-## **For fitting with uncertainties σᵢ:**
-```
-χ² = Σ [(yᵢ − f(xᵢ; θ)) / σᵢ]²
-```
+## **For fitting with uncertainties $\sigma_i$:**
+$$\chi^2 = \sum \left[\frac{y_i - f(x_i; \theta)}{\sigma_i}\right]^2$$
 
 <br>
 
 ## **Interpretation**
-- ### Measures "badness of fit"
-- ### χ² ≈ (n − p) for a good fit (n data points, p parameters)
-- ### χ²/(n−p) ≈ 1 ideal • χ²/(n−p) >> 1 bad fit or underestimated errors
+Measures "badness of fit" • $\chi^2 \approx (n - p)$ for good fit • $\chi^2/(n-p) \approx 1$ ideal • $\chi^2/(n-p) \gg 1$ bad fit
 
 </div>
 
@@ -2295,26 +1749,26 @@ hideInToc: true
 
 # Hypothesis Testing (Preview)
 
-<div style="margin-top: 2rem;">
+<div class="mt-xxl">
 
-## **Null hypothesis (H₀)**
-### Statement we want to test (often "no effect")
+## **Null hypothesis ($H_0$)**
+### Statement to test (often "no effect")
 
 <br>
 
-## **Alternative hypothesis (H₁)**
-### What we suspect might be true
+## **Alternative ($H_1$)**
+### What we suspect
 
 <br>
 
 ## **Test statistic**
-### Number computed from data that measures compatibility with H₀
+### Measures compatibility with $H_0$
 
 <br>
 
 ## **p-value**
-### Probability of observing data at least as extreme as ours, if H₀ is true
-### Small p-value (< 0.05) → reject H₀
+### P(data as extreme | $H_0$ true)
+### Small (< 0.05) $\to$ reject $H_0$
 
 </div>
 
@@ -2327,25 +1781,25 @@ hideInToc: true
 <div style="margin-top: 1.5rem;">
 
 ## **Confusing probability and statistics**
-- Probability: known model → predict data
-- Statistics: observed data → infer model
+- Probability: model → data
+- Statistics: data → model
 
 <br>
 
-## **Misinterpreting confidence intervals**
-- Not a probability about the parameter
-- It's about the long-run behavior of the method
+## **Misinterpreting CIs**
+- Not probability of parameter
+- Long-run method behavior
 
 <br>
 
 ## **p-hacking**
-- Testing multiple hypotheses until one is "significant"
-- Solution: pre-register analysis, correct for multiple testing
+- Testing until "significant"
+- Pre-register, correct multiple tests
 
 <br>
 
-## **Extrapolation beyond data range**
-- Models are only valid where calibrated
+## **Extrapolation**
+- Models valid only in calibration range
 
 </div>
 
@@ -2362,11 +1816,11 @@ hideInToc: true
 
 # Example 1: Counting Experiment
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block-lg">
 
 ## **Scenario**: Measure radioactive decay events
 
-- ### Expect background: λ_bg = 10 events/minute
+- ### Expect background: $\lambda_{\text{bg}} = 10$ events/minute
 - ### Observe: 23 events in 1 minute
 - ### Is there a signal above background?
 
@@ -2374,119 +1828,12 @@ hideInToc: true
 
 ## **Statistical approach**
 
-- ### Model: Poisson(λ_bg) for background only
-- ### Under H₀: P(X ≥ 23) when λ = 10
-- ### Using Poisson tables or software: p ≈ 0.002
-- ### Strong evidence for signal! (> 3σ)
+- ### Model: $\text{Poisson}(\lambda_{\text{bg}})$ for background only
+- ### Under $H_0$: $P(X \geq 23)$ when $\lambda = 10$
+- ### Using Poisson tables or software: $p \approx 0.002$
+- ### Strong evidence for signal! (> $3\sigma$)
 
 </div>
-
----
-hideInToc: true
----
-
-# Interactive Demo: Counting Experiment
-
-```python {monaco-run}
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
-
-# Parameters (try changing these!)
-lambda_bg = 10      # expected background events
-observed = 23       # observed events
-confidence = 0.95   # confidence level for intervals
-
-# Create figure with 2 subplots
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-# LEFT PLOT: Poisson Distribution
-x_range = np.arange(0, max(30, observed + 5))
-pmf = stats.poisson.pmf(x_range, lambda_bg)
-
-# Plot the PMF
-ax1.bar(x_range, pmf, alpha=0.7, color='steelblue', edgecolor='black', label='Poisson PMF')
-
-# Highlight observed value and beyond
-highlight = x_range >= observed
-ax1.bar(x_range[highlight], pmf[highlight], alpha=0.9, color='red',
-        edgecolor='black', label=f'P(X ≥ {observed})')
-
-# Add mean line
-ax1.axvline(lambda_bg, color='green', linestyle='--', linewidth=2,
-            label=f'Expected λ = {lambda_bg}')
-
-ax1.set_xlabel('Number of Events', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Probability', fontsize=12, fontweight='bold')
-ax1.set_title(f'Poisson Distribution (λ = {lambda_bg})', fontsize=14, fontweight='bold')
-ax1.legend(loc='upper right')
-ax1.grid(True, alpha=0.3)
-
-# RIGHT PLOT: Hypothesis Testing Visualization
-# Calculate p-value: P(X >= observed | λ = lambda_bg)
-p_value = 1 - stats.poisson.cdf(observed - 1, lambda_bg)
-
-# Calculate significance in sigma
-if p_value > 0:
-    z_score = stats.norm.ppf(1 - p_value)
-    sigma_significance = abs(z_score)
-else:
-    sigma_significance = float('inf')
-
-# Confidence intervals
-ci_lower = stats.poisson.ppf((1 - confidence) / 2, lambda_bg)
-ci_upper = stats.poisson.ppf(1 - (1 - confidence) / 2, lambda_bg)
-
-# Create bar chart for hypothesis test
-categories = ['Expected\nBackground', 'Observed\nEvents', f'{confidence*100:.0f}% CI\nUpper']
-values = [lambda_bg, observed, ci_upper]
-colors = ['green', 'red', 'orange']
-
-bars = ax2.bar(categories, values, color=colors, alpha=0.7, edgecolor='black', width=0.6)
-
-# Add value labels on bars
-for bar, val in zip(bars, values):
-    height = bar.get_height()
-    ax2.text(bar.get_x() + bar.get_width()/2., height,
-             f'{val:.1f}', ha='center', va='bottom', fontsize=11, fontweight='bold')
-
-# Add horizontal line for confidence interval
-ax2.axhline(ci_upper, color='orange', linestyle='--', linewidth=2, alpha=0.7)
-ax2.axhline(ci_lower, color='orange', linestyle='--', linewidth=2, alpha=0.7)
-
-ax2.set_ylabel('Number of Events', fontsize=12, fontweight='bold')
-ax2.set_title('Hypothesis Test Results', fontsize=14, fontweight='bold')
-ax2.grid(True, alpha=0.3, axis='y')
-
-plt.tight_layout()
-plt.show()
-
-# Print detailed results
-print("=" * 50)
-print(" COUNTING EXPERIMENT: STATISTICAL ANALYSIS")
-print("=" * 50)
-print(f"\nExpected background (λ): {lambda_bg} events/minute")
-print(f"Observed events: {observed} events/minute")
-print(f"\n--- Hypothesis Testing ---")
-print(f"H₀: Only background present (λ = {lambda_bg})")
-print(f"H₁: Signal + background present (λ > {lambda_bg})")
-print(f"\np-value: {p_value:.6f}")
-print(f"Significance: {sigma_significance:.2f}σ")
-
-if p_value < 0.001:
-    print("\n✓ VERY STRONG evidence for signal (> 3σ)!")
-elif p_value < 0.05:
-    print("\n✓ Strong evidence for signal!")
-else:
-    print("\n✗ Insufficient evidence for signal.")
-
-print(f"\n--- Confidence Intervals ---")
-print(f"{confidence*100:.0f}% CI for background: [{ci_lower:.1f}, {ci_upper:.1f}]")
-
-excess = observed - lambda_bg
-print(f"\nExcess events: {excess:.1f}")
-print(f"Excess significance: {excess/np.sqrt(lambda_bg):.2f}σ (simple estimate)")
-```
 
 ---
 layout: two-cols
@@ -2510,18 +1857,18 @@ hideInToc: true
 
 ## **Analysis**
 
-### Mean: x̄ = 2.992
+### Mean: $\bar{x} = 2.992$
 
-### Std dev: s = 0.025
+### Std dev: $s = 0.025$
 
-### SE = 0.025/√10 = 0.008
+### $SE = 0.025/\sqrt{10} = 0.008$
 
 <br>
 
 ### 95% CI:
-### 2.992 ± 2.26(0.008)
-### = 2.992 ± 0.018
-### = [2.974, 3.010]
+### $2.992 \pm 2.26(0.008)$
+### $= 2.992 \pm 0.018$
+### $= [2.974, 3.010]$
 
 <br>
 
@@ -2533,12 +1880,12 @@ hideInToc: true
 
 # Example 3: Comparing Two Samples
 
-<div style="margin-top: 1.5rem; font-size: 1.15em;">
+<div class="lead-block-lg">
 
 ## **Scenario**: New detector vs old detector
 
-- ### Old: mean = 100, σ = 15, n = 50
-- ### New: mean = 108, σ = 12, n = 60
+- ### Old: mean $= 100$, $\sigma = 15$, $n = 50$
+- ### New: mean $= 108$, $\sigma = 12$, $n = 60$
 
 ## **Question**: Is the difference significant?
 
@@ -2546,13 +1893,13 @@ hideInToc: true
 
 ## **Approach** (two-sample test)
 
-### Difference in means: 108 − 100 = 8
+### Difference in means: $108 - 100 = 8$
 
-### SE of difference: √(15²/50 + 12²/60) ≈ 2.58
+### SE of difference: $\sqrt{15^2/50 + 12^2/60} \approx 2.58$
 
-### Test statistic: z = 8/2.58 ≈ 3.1
+### Test statistic: $z = 8/2.58 \approx 3.1$
 
-### p-value < 0.002 → **significant improvement!**
+### p-value $< 0.002 \to$ **significant improvement!**
 
 </div>
 
@@ -2565,24 +1912,24 @@ hideInToc: true
 <div style="margin-top: 2rem; font-size: 1.15em;">
 
 ## **Histograms**
-- Show empirical distribution
-- Check for normality, outliers, skewness
+- Empirical distribution
+- Check normality, outliers
 
 <br>
 
 ## **Q-Q plots**
-- Compare quantiles of data vs theoretical distribution
-- Straight line → good fit to assumed distribution
+- Data vs theoretical quantiles
+- Straight line = good fit
 
 <br>
 
 ## **Box plots**
-- Show median, quartiles, outliers
-- Easy comparison across groups
+- Median, quartiles, outliers
+- Easy group comparison
 
 <br>
 
-### **Always visualize your data before fitting!**
+### **Always visualize before fitting!**
 
 </div>
 
@@ -2645,21 +1992,17 @@ hideInToc: true
 
 <div style="margin-top: 2rem; font-size: 1.25em;">
 
-## **We now have the foundation to:**
+## **Foundation complete:**
 
-- ### Model data as random variables with distributions
-
-- ### Estimate parameters from measurements
-
-- ### Quantify uncertainty (standard errors, confidence intervals)
-
-- ### Judge fit quality (χ², residuals)
-
-- ### Test hypotheses about our models
+- ### Model data as random variables
+- ### Estimate parameters
+- ### Quantify uncertainty (SE, CIs)
+- ### Judge fit quality ($\chi^2$)
+- ### Test hypotheses
 
 <br>
 
-### **Next up**: Apply these tools to fit lines, curves, and complex functions to real experimental data
+### **Next**: Fit lines, curves to experimental data
 
 </div>
 
@@ -2669,89 +2012,84 @@ hideInToc: true
 
 # Practical Advice
 
-- ## **Always visualize** your data first
+<div class="grid-3 mt-lg">
 
-- ## **Check assumptions** (normality, independence)
+<div class="card card-primary">
 
-- ## **Report uncertainties** alongside estimates
+## 📊 **Visualize**
 
-- ## **Understand what your p-value means** (and doesn't mean)
+<div class="card-content text-base">
 
-- ## **Don't over-interpret** small samples
-
-- ## **Use simulation** when theory is unclear
-
-- ## **Document your choices** for reproducibility
-
----
-hideInToc: true
----
-
-# Resources for Further Learning
-
-<div style="margin-top: 2rem;">
-
-## **Books**
-- *Statistics* by Freedman, Pisani, Purves (intuitive)
-- *Statistical Data Analysis* by Glen Cowan (for physicists)
-- *All of Statistics* by Wasserman (mathematical)
-
-<br>
-
-## **Online**
-- Khan Academy: Probability and Statistics
-- Seeing Theory: visual intro to probability (seeing-theory.brown.edu)
-- CERN Statistics Lectures (indico.cern.ch)
-
-<br>
-
-## **Software**
-- Python: NumPy, SciPy, statsmodels
-- R: built-in statistical functions
-- ROOT: CERN's framework (root.cern.ch)
+Visualize data first
 
 </div>
 
----
-layout: fact
-hideInToc: true
----
+</div>
 
-# Questions?
+<div class="card card-secondary">
 
----
-hideInToc: true
----
+## ✓ **Check**
 
-# Exercise: Practice Problems
+<div class="card-content text-base">
 
-<div style="margin-top: 1.5rem;">
-
-## **1. Probability**
-### A detector has 95% efficiency. You observe 90 particles. How many were actually produced? Include uncertainty.
-
-<br>
-
-## **2. Distributions**
-### Generate 1000 random numbers from N(5, 2²). Compute mean and std dev. How close to 5 and 2?
-
-<br>
-
-## **3. Confidence Intervals**
-### Measure: 12.3, 12.7, 12.1, 12.5, 12.4. Compute 95% CI for the mean (assume normal).
-
-<br>
-
-## **4. Hypothesis Test**
-### Expected: 50 ± 7 events. Observed: 68. Is this a significant excess? Compute p-value.
+Verify assumptions
 
 </div>
 
----
-layout: end
-hideInToc: true
----
+</div>
 
-# Thank you!
+<div class="card card-info">
 
-## Next: **Data Fitting and Regression**
+## 📏 **Report**
+
+<div class="card-content text-base">
+
+Include uncertainties
+
+</div>
+
+</div>
+
+<div class="card card-success">
+
+## 🎯 **Understand**
+
+<div class="card-content text-base">
+
+Know p-values
+
+</div>
+
+</div>
+
+<div class="card card-warning">
+
+## ⚠️ **Caution**
+
+<div class="card-content text-base">
+
+Small sample limits
+
+</div>
+
+</div>
+
+<div class="card card-accent">
+
+## 🔬 **Simulate**
+
+<div class="card-content text-base">
+
+When unclear
+
+</div>
+
+</div>
+
+<div class="card card-primary" style="grid-column: 1 / -1;">
+
+## 📝 **Document for Reproducibility**
+
+</div>
+
+</div>
