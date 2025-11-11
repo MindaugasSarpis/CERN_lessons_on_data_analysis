@@ -1,9 +1,16 @@
 {
   "dependencies": {
-    "@slidev/cli": "^52.2.4",
+    "@slidev/cli": "^52.7.0",
     "slidev-addon-python-runner": "^0.1.3"
   },
   "devDependencies": {
-    "mermaid": "^11.12.0"
+    "mermaid": "^11.12.0",
+    "playwright-chromium": "^1.56.1"
+  },
+  "scripts": {
+    "postinstall": "bash scripts/patch-slidev.sh",
+    "dev": "cd lectures && slidev content/slides/L9_Probability_and_Statistics.md --port 3030",
+    "build": "cd lectures && slidev build content/slides/L9_Probability_and_Statistics.md",
+    "export": "cd lectures && slidev export content/slides/L9_Probability_and_Statistics.md"
   }
 }

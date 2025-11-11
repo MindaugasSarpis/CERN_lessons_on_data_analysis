@@ -193,6 +193,125 @@ P(1) = P(2) = ... = P(6) = 1/6
 hideInToc: true
 ---
 
+# Interactive Demo: Rolling Dice
+
+```python {monaco-run}
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import Counter
+
+# Parameters (try changing these!)
+num_dice = 2         # Number of dice to roll
+num_rolls = 1000     # Number of times to roll
+sides = 6            # Number of sides on each die
+
+# Simulate dice rolls
+np.random.seed(42)
+results = []
+for _ in range(num_rolls):
+    roll = np.random.randint(1, sides + 1, num_dice)
+    results.append(np.sum(roll))  # Sum of all dice
+
+# Count outcomes
+outcome_counts = Counter(results)
+possible_outcomes = range(num_dice, num_dice * sides + 1)
+
+# Theoretical probabilities for 2 dice
+if num_dice == 2 and sides == 6:
+    theoretical_probs = {
+        2: 1/36, 3: 2/36, 4: 3/36, 5: 4/36, 6: 5/36, 7: 6/36,
+        8: 5/36, 9: 4/36, 10: 3/36, 11: 2/36, 12: 1/36
+    }
+else:
+    theoretical_probs = {}
+
+# Create visualization
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+# LEFT PLOT: Frequency distribution
+frequencies = [outcome_counts.get(i, 0) for i in possible_outcomes]
+probabilities = [f / num_rolls for f in frequencies]
+
+bars = ax1.bar(possible_outcomes, probabilities, alpha=0.7, color='steelblue',
+               edgecolor='black', label='Observed')
+
+# Overlay theoretical if available
+if theoretical_probs:
+    theo_probs = [theoretical_probs.get(i, 0) for i in possible_outcomes]
+    ax1.plot(possible_outcomes, theo_probs, 'ro-', linewidth=2, markersize=8,
+             label='Theoretical', alpha=0.7)
+
+ax1.set_xlabel(f'Sum of {num_dice} Dice', fontsize=12, fontweight='bold')
+ax1.set_ylabel('Probability', fontsize=12, fontweight='bold')
+ax1.set_title(f'Probability Distribution ({num_rolls} rolls)', fontsize=13, fontweight='bold')
+ax1.legend(loc='upper right')
+ax1.grid(True, alpha=0.3, axis='y')
+ax1.set_xticks(possible_outcomes)
+
+# RIGHT PLOT: Convergence to theoretical
+if theoretical_probs and num_dice == 2:
+    # Show how probability converges as we increase number of rolls
+    convergence_points = [10, 50, 100, 500, 1000]
+    outcomes_to_track = [7, 12]  # Most likely and least likely
+
+    for outcome in outcomes_to_track:
+        observed_probs = []
+        for n in convergence_points:
+            count = sum(1 for r in results[:n] if r == outcome)
+            observed_probs.append(count / n)
+
+        theo_prob = theoretical_probs[outcome]
+        ax2.plot(convergence_points, observed_probs, 'o-', linewidth=2, markersize=6,
+                label=f'Sum={outcome} (observed)', alpha=0.7)
+        ax2.axhline(theo_prob, linestyle='--', linewidth=2, alpha=0.5,
+                   label=f'Sum={outcome} (theoretical = {theo_prob:.3f})')
+
+    ax2.set_xlabel('Number of Rolls', fontsize=12, fontweight='bold')
+    ax2.set_ylabel('Probability', fontsize=12, fontweight='bold')
+    ax2.set_title('Convergence to Theoretical Probability', fontsize=13, fontweight='bold')
+    ax2.set_xscale('log')
+    ax2.legend(loc='best', fontsize=9)
+    ax2.grid(True, alpha=0.3)
+else:
+    # Just show cumulative frequency
+    cumulative_counts = np.cumsum([outcome_counts.get(i, 0) for i in possible_outcomes])
+    ax2.plot(possible_outcomes, cumulative_counts, 'go-', linewidth=2, markersize=6)
+    ax2.fill_between(possible_outcomes, cumulative_counts, alpha=0.3, color='green')
+    ax2.set_xlabel(f'Sum of {num_dice} Dice', fontsize=12, fontweight='bold')
+    ax2.set_ylabel('Cumulative Count', fontsize=12, fontweight='bold')
+    ax2.set_title('Cumulative Distribution', fontsize=13, fontweight='bold')
+    ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+# Print statistics
+print("=" * 60)
+print(f"DICE ROLLING SIMULATION: {num_dice} dice, {num_rolls} rolls")
+print("=" * 60)
+print(f"\nOutcome Distribution:")
+for outcome in sorted(outcome_counts.keys()):
+    freq = outcome_counts[outcome]
+    prob = freq / num_rolls
+    if theoretical_probs and outcome in theoretical_probs:
+        theo = theoretical_probs[outcome]
+        diff = abs(prob - theo)
+        print(f"  Sum = {outcome:2d}: {freq:4d} times ({prob:.3f}) " +
+              f"[Theoretical: {theo:.3f}, Difference: {diff:.3f}]")
+    else:
+        print(f"  Sum = {outcome:2d}: {freq:4d} times ({prob:.3f})")
+
+if theoretical_probs:
+    print(f"\nAs number of rolls increases, observed probabilities converge to theoretical values!")
+print(f"\nTry changing num_dice, num_rolls, or sides to explore different scenarios!")
+```
+
+### Experiment with different numbers of dice and rolls to see the Law of Large Numbers in action!
+
+---
+hideInToc: true
+---
+
 # Visualizing Sample Space and Events
 
 ```mermaid
@@ -463,6 +582,103 @@ P(D|+) = P(+|D) × P(D) / P(+)
 ### P(D|+) = 0.95×0.01 / 0.1085 ≈ **8.8%**
 
 #### Surprisingly low!
+
+---
+hideInToc: true
+---
+
+# Interactive Demo: Bayes' Theorem Calculator
+
+```python {monaco-run}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters (try changing these!)
+disease_prevalence = 0.01  # P(D) = 1%
+sensitivity = 0.95          # P(+|D) = 95% (true positive rate)
+specificity = 0.90          # P(-|D^c) = 90% (true negative rate)
+
+# Calculate using Bayes' theorem
+# P(D|+) = P(+|D) × P(D) / P(+)
+
+# P(+|D^c) = 1 - specificity (false positive rate)
+false_positive_rate = 1 - specificity
+
+# P(+) = P(+|D)×P(D) + P(+|D^c)×P(D^c)
+prob_positive = sensitivity * disease_prevalence + false_positive_rate * (1 - disease_prevalence)
+
+# P(D|+) using Bayes' theorem
+prob_disease_given_positive = (sensitivity * disease_prevalence) / prob_positive
+
+# Visualization
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+# LEFT PLOT: Component probabilities
+components = ['Prior\nP(D)', 'Likelihood\nP(+|D)', 'Evidence\nP(+)', 'Posterior\nP(D|+)']
+values = [disease_prevalence, sensitivity, prob_positive, prob_disease_given_positive]
+colors = ['#6bcf7f', '#ff6b6b', '#ffd93d', '#4dabf7']
+
+bars = ax1.bar(components, values, color=colors, alpha=0.7, edgecolor='black', width=0.6)
+for bar, val in zip(bars, values):
+    height = bar.get_height()
+    ax1.text(bar.get_x() + bar.get_width()/2., height + 0.02,
+             f'{val:.1%}', ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+ax1.set_ylabel('Probability', fontsize=12, fontweight='bold')
+ax1.set_title('Bayes Theorem Components', fontsize=13, fontweight='bold')
+ax1.set_ylim([0, 1])
+ax1.grid(True, alpha=0.3, axis='y')
+
+# RIGHT PLOT: Population breakdown (per 10,000 people)
+population = 10000
+has_disease = int(disease_prevalence * population)
+no_disease = population - has_disease
+
+true_positives = int(sensitivity * has_disease)
+false_negatives = has_disease - true_positives
+false_positives = int(false_positive_rate * no_disease)
+true_negatives = no_disease - false_positives
+
+# Stacked bar chart
+categories = ['Has Disease\n(Positive)', 'Has Disease\n(Negative)',
+              'No Disease\n(Positive)', 'No Disease\n(Negative)']
+counts = [true_positives, false_negatives, false_positives, true_negatives]
+bar_colors = ['#4caf50', '#ffcdd2', '#ff9800', '#a5d6a7']
+
+bars = ax2.bar(range(len(categories)), counts, color=bar_colors, alpha=0.8, edgecolor='black')
+for i, (bar, count) in enumerate(zip(bars, counts)):
+    height = bar.get_height()
+    ax2.text(bar.get_x() + bar.get_width()/2., height + 100,
+             f'{count}', ha='center', va='bottom', fontsize=11, fontweight='bold')
+
+ax2.set_xticks(range(len(categories)))
+ax2.set_xticklabels(categories, fontsize=10)
+ax2.set_ylabel('Number of People', fontsize=12, fontweight='bold')
+ax2.set_title(f'Population Breakdown (N={population})', fontsize=13, fontweight='bold')
+ax2.grid(True, alpha=0.3, axis='y')
+
+plt.tight_layout()
+plt.show()
+
+# Print results
+print("=" * 70)
+print("BAYES' THEOREM: MEDICAL TEST CALCULATOR")
+print("=" * 70)
+print(f"\nInput Parameters:")
+print(f"  Disease Prevalence: {disease_prevalence:.1%}")
+print(f"  Test Sensitivity (True Positive Rate): {sensitivity:.1%}")
+print(f"  Test Specificity (True Negative Rate): {specificity:.1%}")
+print(f"\nBayes' Theorem Calculation:")
+print(f"  P(+|D) × P(D) = {sensitivity} × {disease_prevalence} = {sensitivity * disease_prevalence:.6f}")
+print(f"  P(+) = {prob_positive:.6f}")
+print(f"  P(D|+) = {sensitivity * disease_prevalence:.6f} / {prob_positive:.6f}")
+print(f"\n>>> P(Disease | Positive Test) = {prob_disease_given_positive:.1%} <<<")
+print(f"\nOut of {true_positives + false_positives} positive tests:")
+print(f"  - {true_positives} are true positives")
+print(f"  - {false_positives} are false positives")
+print(f"\nKey Insight: With rare diseases, even good tests have many false positives!")
+print("\nTry changing the parameters above to explore different scenarios!")
+```
 
 ---
 hideInToc: true
@@ -1747,6 +1963,132 @@ CI = x̄ ± z* (σ/√n)
 ### 95% CI = 125.3 ± 1.96(0.21)
 ### = 125.3 ± 0.41
 ### = [124.89, 125.71] GeV
+
+---
+hideInToc: true
+---
+
+# Interactive Demo: Confidence Intervals
+
+```python {monaco-run}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# Parameters (try changing these!)
+true_mean = 100           # True population mean
+true_std = 15             # True population std dev
+sample_size = 30          # Sample size
+n_samples = 100           # Number of confidence intervals to generate
+confidence_level = 0.95   # Confidence level (0.90, 0.95, 0.99)
+
+# Generate multiple samples and calculate confidence intervals
+np.random.seed(42)
+sample_means = []
+cis_lower = []
+cis_upper = []
+contains_true_mean = []
+
+# Critical value from t-distribution
+alpha = 1 - confidence_level
+t_critical = stats.t.ppf(1 - alpha/2, sample_size - 1)
+
+for _ in range(n_samples):
+    # Generate a sample
+    sample = np.random.normal(true_mean, true_std, sample_size)
+
+    # Calculate sample mean and standard error
+    sample_mean = np.mean(sample)
+    sample_std = np.std(sample, ddof=1)
+    se = sample_std / np.sqrt(sample_size)
+
+    # Calculate confidence interval
+    margin_of_error = t_critical * se
+    ci_lower = sample_mean - margin_of_error
+    ci_upper = sample_mean + margin_of_error
+
+    # Store results
+    sample_means.append(sample_mean)
+    cis_lower.append(ci_lower)
+    cis_upper.append(ci_upper)
+    contains_true_mean.append(ci_lower <= true_mean <= ci_upper)
+
+# Calculate coverage
+coverage = sum(contains_true_mean) / n_samples
+
+# Create visualization
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+
+# LEFT PLOT: Confidence intervals
+show_n = min(50, n_samples)  # Show first 50 CIs
+for i in range(show_n):
+    color = 'green' if contains_true_mean[i] else 'red'
+    alpha_val = 0.7 if contains_true_mean[i] else 0.9
+    ax1.plot([i, i], [cis_lower[i], cis_upper[i]], color=color, alpha=alpha_val, linewidth=1.5)
+    ax1.plot(i, sample_means[i], 'o', color=color, markersize=4, alpha=alpha_val)
+
+# Add true mean line
+ax1.axhline(true_mean, color='blue', linestyle='--', linewidth=2, label=f'True Mean = {true_mean}')
+
+ax1.set_xlabel('Sample Number', fontsize=12, fontweight='bold')
+ax1.set_ylabel('Value', fontsize=12, fontweight='bold')
+ax1.set_title(f'{confidence_level*100:.0f}% Confidence Intervals (first {show_n} samples)\n' +
+              f'Green: Contains true mean | Red: Does not contain true mean',
+              fontsize=13, fontweight='bold')
+ax1.legend(loc='best')
+ax1.grid(True, alpha=0.3, axis='y')
+
+# RIGHT PLOT: Distribution of sample means
+ax2.hist(sample_means, bins=30, edgecolor='black', alpha=0.7, density=True, color='steelblue')
+
+# Overlay theoretical distribution of sample means
+x = np.linspace(min(sample_means), max(sample_means), 200)
+theoretical_se = true_std / np.sqrt(sample_size)
+pdf = stats.norm.pdf(x, true_mean, theoretical_se)
+ax2.plot(x, pdf, 'r-', linewidth=2, label='Theoretical Distribution')
+
+# Mark true mean
+ax2.axvline(true_mean, color='blue', linestyle='--', linewidth=2, label=f'True Mean = {true_mean}')
+
+# Mark confidence interval bounds on mean
+mean_ci_lower = true_mean - t_critical * theoretical_se
+mean_ci_upper = true_mean + t_critical * theoretical_se
+ax2.axvline(mean_ci_lower, color='orange', linestyle=':', linewidth=2, alpha=0.7)
+ax2.axvline(mean_ci_upper, color='orange', linestyle=':', linewidth=2, alpha=0.7)
+ax2.fill_betweenx([0, max(pdf)], mean_ci_lower, mean_ci_upper, alpha=0.2, color='orange',
+                   label=f'{confidence_level*100:.0f}% Expected Range')
+
+ax2.set_xlabel('Sample Mean', fontsize=12, fontweight='bold')
+ax2.set_ylabel('Density', fontsize=12, fontweight='bold')
+ax2.set_title('Distribution of Sample Means', fontsize=13, fontweight='bold')
+ax2.legend(loc='best')
+ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+# Print summary
+print("=" * 70)
+print(f"{confidence_level*100:.0f}% CONFIDENCE INTERVALS SIMULATION")
+print("=" * 70)
+print(f"\nTrue Parameters:")
+print(f"  Population Mean (μ): {true_mean}")
+print(f"  Population Std Dev (σ): {true_std}")
+print(f"  Sample Size (n): {sample_size}")
+print(f"\nSimulation Results:")
+print(f"  Number of samples: {n_samples}")
+print(f"  Confidence level: {confidence_level*100:.0f}%")
+print(f"  Expected coverage: {confidence_level*100:.0f}%")
+print(f"  Actual coverage: {coverage*100:.1f}%")
+print(f"  CIs containing true mean: {sum(contains_true_mean)}/{n_samples}")
+print(f"  CIs NOT containing true mean: {n_samples - sum(contains_true_mean)}/{n_samples}")
+print(f"\nInterpretation:")
+print(f"  In {confidence_level*100:.0f}% of repeated sampling, the CI will contain the true mean.")
+print(f"  Our observed coverage of {coverage*100:.1f}% {'matches' if abs(coverage - confidence_level) < 0.05 else 'is close to'} the expected {confidence_level*100:.0f}%.")
+print(f"\nTry changing confidence_level to 0.90 or 0.99 to see how it affects coverage!")
+```
+
+### Watch how changing the confidence level and sample size affects interval width and coverage!
 
 ---
 hideInToc: true
