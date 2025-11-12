@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@slidev/cli": "^52.7.0",
+    "slidev-addon-python-runner": "^0.1.3"
+  },
+  "devDependencies": {
+    "mermaid": "^11.12.0",
+    "playwright-chromium": "^1.56.1"
+  }
+}
