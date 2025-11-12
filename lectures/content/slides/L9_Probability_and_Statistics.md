@@ -1,5 +1,4 @@
 ---
-marp: true
 mermaid: true
 background: /background_intro.jpg
 

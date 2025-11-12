@@ -402,3 +402,5 @@ with open("test.txt", "r") as file:
 - Use `with open()` to handle file operations safely
 
 - `"r"` for reading, `"w"` for writing, `"a"` for appending
+
+---

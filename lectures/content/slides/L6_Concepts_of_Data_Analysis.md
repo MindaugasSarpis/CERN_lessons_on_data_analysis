@@ -1,20 +1,17 @@
 ﻿---
-marp: true
-mermaid: true
-background: /background_intro.jpg
+background: ./background_default.jpg
 
 class: text-left
-colorSchema: dark
 
 theme: ./theme
 drawings:
   persist: false
 
 transition: fade
-
 title: "Concepts of Data Analysis"
 layout: cover
 ---
+
 
 # Dr. Mindaugas Šarpis
 # Lessons on **Data Analysis** from **CERN**
