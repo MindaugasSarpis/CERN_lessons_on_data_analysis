@@ -12,4 +12,10 @@
 
 6. [Python Fundamentals](lectures/python_fundamentals.md)
 
+7. [Practical Data Fitting in Python](lectures/lecture_10.md)
+
+8. [NumPy, Pandas & Real Data](lectures/lecture_11.md)
+
+9. [Reproducible Workflows & Automation](lectures/lecture_12.md)
+
 [Miscellaneous](lectures/misc.md)

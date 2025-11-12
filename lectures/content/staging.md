@@ -32,5 +32,13 @@ hideInToc: true
 
 
 ---
-src: slides/L9_Probability_and_Statistics.md
+src: slides/L10_Practical_Data_Fitting.md
+---
+
+---
+src: slides/L11_NumPy_Pandas_Real_Data.md
+---
+
+---
+src: slides/L12_Reproducible_Workflows.md
 ---

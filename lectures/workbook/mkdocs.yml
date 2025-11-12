@@ -9,4 +9,7 @@ nav:
       - Lecture 3: lectures/lecture_3.md
       - Lecture 4: lectures/lecture_4.md
       - Data Visualization: lectures/data_visualisation.md
+      - Lecture 10: Practical Data Fitting: lectures/lecture_10.md
+      - Lecture 11: NumPy & Pandas: lectures/lecture_11.md
+      - Lecture 12: Reproducible Workflows: lectures/lecture_12.md
       - Miscellaneous: lectures/misc.md
