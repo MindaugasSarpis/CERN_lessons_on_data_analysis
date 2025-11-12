@@ -1,5 +1,7 @@
-﻿---
-background: ./background_default.jpg
+---
+mermaid: true
+marp: true
+background: /background_intro.jpg
 
 class: text-left
 

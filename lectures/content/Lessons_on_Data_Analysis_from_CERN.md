@@ -28,7 +28,7 @@ hideInToc: true
 
 # **Index of Lectures**
 
-<Toc text-xl minDepth="1" maxDepth="1" columns="1" />
+<Toc text-xl minDepth="1" maxDepth="1" columns="2" />
 
 
 ---

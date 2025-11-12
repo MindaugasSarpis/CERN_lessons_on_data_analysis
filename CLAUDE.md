@@ -1,2 +1,0 @@
-- @lectures/content/slides/L9_Probability_and_Statistics.md this is good, I just need more interactive elements, maybe mermaid diagrams, could even do interactive python in slidev which is now possible to showcase a few examples (say of how mean changes given different sample space ...)
-- @lectures/content/slides/L9_Probability_and_Statistics.md this is good, I just need more interactive elements, maybe mermaid diagrams, could even do interactive python in slidev which is now possible to showcase a few examples (say of how mean changes given different sample space ...)
