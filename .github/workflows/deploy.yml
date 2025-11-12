@@ -32,6 +32,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         run: |
           npx -y @slidev/cli@latest build --out ../../dist lectures/content/Lessons_on_Data_Analysis_from_CERN.md \
             --base "/${{ github.event.repository.name }}/" \
