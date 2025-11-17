@@ -1,13 +1,85 @@
 category: LODAC_Quiz_2
 questions:
   - type: multichoice
-    text: 'What is the purpose of the .gitignore file in Git?'
+    text: 'What is the primary purpose of version control systems like Git?'
     answers:
-      - text: 'To track changes in binary files'
-      - text: 'To list files that should be ignored by Git'
+      - text: 'To compile code faster'
+      - text: 'To track changes in files and enable collaboration'
         correct: true
-      - text: 'To ignore Git repositories'
-      - text: 'To store commit messages'
+      - text: 'To execute programs automatically'
+      - text: 'To compress files for storage'
+
+  - type: multichoice
+    text: 'What is the primary purpose of data visualization?'
+    answers:
+      - text: 'To clean data'
+      - text: 'To explore, understand, and communicate data insights'
+        correct: true
+      - text: 'To store data'
+      - text: 'To collect raw data'
+
+  - type: multichoice
+    text: 'Which of the following is an example of continuous data?'
+    answers:
+      - text: 'Number of students in a class'
+      - text: 'Heights of patients'
+        correct: true
+      - text: 'Blood type categories'
+      - text: 'Customer feedback ratings'
+
+  - type: multichoice
+    text: 'What does the .gitignore file do?'
+    answers:
+      - text: 'Lists files and directories that Git should not track'
+        correct: true
+      - text: 'Stores commit messages'
+      - text: 'Configures user credentials'
+      - text: 'Lists all branches in the repository'
+
+  - type: multichoice
+    text: 'What should axes in a plot include to be properly labeled?'
+    answers:
+      - text: 'Only numbers'
+      - text: 'Variable names, units, and appropriate tick marks'
+        correct: true
+      - text: 'Just the variable names'
+      - text: 'Color codes'
+
+  - type: multichoice
+    text: 'What type of data are categories without a natural order, such as blood type?'
+    answers:
+      - text: 'Nominal'
+        correct: true
+      - text: 'Ordinal'
+      - text: 'Interval'
+      - text: 'Ratio'
+
+  - type: multichoice
+    text: 'What is the Git staging area used for?'
+    answers:
+      - text: 'To permanently delete files'
+      - text: 'To prepare files before committing them to the repository'
+        correct: true
+      - text: 'To store remote repository URLs'
+      - text: 'To configure Git settings'
+
+  - type: multichoice
+    text: 'Which chart type is most appropriate for visualizing the relationship between two continuous variables?'
+    answers:
+      - text: 'Bar chart'
+      - text: 'Scatter plot'
+        correct: true
+      - text: 'Pie chart'
+      - text: 'Histogram'
+
+  - type: multichoice
+    text: 'Which flavour of analytics answers the question "What happened?"'
+    answers:
+      - text: 'Descriptive'
+        correct: true
+      - text: 'Diagnostic'
+      - text: 'Predictive'
+      - text: 'Prescriptive'
 
   - type: multichoice
     text: 'Which command stages all changes for the next Git commit?'
@@ -19,148 +91,31 @@ questions:
       - text: 'git push'
 
   - type: multichoice
-    text: 'In data analysis, what does a histogram display?'
+    text: 'What does a histogram display?'
     answers:
       - text: 'Relationships between two variables'
-      - text: 'Frequency distribution of a dataset'
+      - text: 'The frequency distribution of a single continuous variable'
         correct: true
-      - text: 'Categorical data'
-      - text: 'Summary statistics'
+      - text: 'Categorical comparisons'
+      - text: 'Time series trends'
 
   - type: multichoice
-    text: 'In Git, what command displays the commit history?'
+    text: 'What does the "F" in FAIR data principles stand for?'
     answers:
-      - text: 'git commit'
-      - text: 'git log'
+      - text: 'Fast'
+      - text: 'Findable'
         correct: true
-      - text: 'git history'
-      - text: 'git status'
-
-  - type: multichoice
-    text: 'Which of the following is a Python library used for plotting data?'
-    answers:
-      - text: 'pandas'
-      - text: 'matplotlib'
-        correct: true
-      - text: 'numpy'
-      - text: 'scipy'
+      - text: 'Flexible'
+      - text: 'Formatted'
 
   - type: multichoice
     text: 'What does the command git clone do?'
     answers:
-      - text: 'It deletes the repository from a remote server.'
-      - text: 'It copies a repository from a remote server to your local machine.'
+      - text: 'Deletes a repository from a remote server'
+      - text: 'Copies a repository from a remote server to your local machine'
         correct: true
-      - text: 'It creates a new branch.'
-      - text: 'It merges branches.'
-
-  - type: multichoice
-    text: 'In Python, which keyword is used to define a function?'
-    answers:
-      - text: 'define'
-      - text: 'function'
-      - text: 'def'
-        correct: true
-      - text: 'func'
-
-  - type: multichoice
-    text: 'Which of the following commands shows the status of a Git repository?'
-    answers:
-      - text: 'git log'
-      - text: 'git status'
-        correct: true
-      - text: 'git branch'
-      - text: 'git clone'
-
-  - type: multichoice
-    text: 'Which chart type would be most appropriate for visualizing the relationship between two continuous variables?'
-    answers:
-      - text: 'Bar chart'
-      - text: 'Scatter plot'
-        correct: true
-      - text: 'Pie chart'
-      - text: 'Box plot'
-
-  - type: multichoice
-    text: 'What is the primary purpose of data visualization?'
-    answers:
-      - text: 'To clean data'
-      - text: 'To explore, understand, and communicate data insights'
-        correct: true
-      - text: 'To store data'
-      - text: 'To generate raw data'
-
-  - type: multichoice
-    text: 'What does the command git pull do?'
-    answers:
-      - text: 'Merges changes from the local branch to the remote'
-      - text: 'Fetches and integrates changes from a remote branch to the current branch'
-        correct: true
-      - text: 'Deletes the current branch'
-      - text: 'Displays the commit history'
-
-  - type: multichoice
-    text: 'What is a heatmap typically used for in data visualization?'
-    answers:
-      - text: 'To display categorical data'
-      - text: 'To show the correlation or intensity between variables'
-        correct: true
-      - text: 'To visualize time series data'
-      - text: 'To represent 3D data'
-
-  - type: multichoice
-    text: 'Which chart type is useful for showing data distribution over different categories?'
-    answers:
-      - text: 'Scatter plot'
-      - text: 'Bar chart'
-        correct: true
-      - text: 'Line chart'
-      - text: 'Heatmap'
-
-  - type: multichoice
-    text: 'In programming, what does "hardcoding" mean?'
-    answers:
-      - text: 'Writing code without using any libraries'
-      - text: 'Embedding fixed values directly in the code instead of using variables or parameters'
-        correct: true
-      - text: 'Using only built-in functions'
-      - text: 'Writing code that cannot run on different systems'
-
-  - type: multichoice
-    text: 'Which approach helps avoid hardcoding in data analysis scripts?'
-    answers:
-      - text: 'Using specific values directly within the code'
-      - text: 'Using configuration files or input parameters'
-        correct: true
-      - text: 'Using print statements'
-      - text: 'Running the code multiple times with different values'
-
-  - type: multichoice
-    text: 'How can using variables help in avoiding hardcoding?'
-    answers:
-      - text: 'They make it easier to change values in one place instead of throughout the code'
-        correct: true
-      - text: 'They store fixed values only'
-      - text: 'They make the code slower'
-      - text: 'They increase the complexity of code without benefits'
-
-  - type: multichoice
-    text: 'Which tool in Python helps you pass values into a script without hardcoding them?'
-    answers:
-      - text: 'argparse'
-        correct: true
-      - text: 'import'
-      - text: 'if-else statements'
-      - text: 'print function'
-
-  - type: multichoice
-    text: 'In data analysis, why is it good practice to avoid hardcoding file paths?'
-    answers:
-      - text: 'It allows the script to be reused with different datasets and file locations'
-        correct: true
-      - text: 'It makes the code run faster'
-      - text: 'It prevents syntax errors'
-      - text: 'It reduces the file size'
+      - text: 'Creates a new branch'
+      - text: 'Merges branches'
 
   - type: multichoice
     text: 'When creating a histogram, what is a "bin"?'
@@ -168,14 +123,59 @@ questions:
       - text: 'A range of values that groups data points into intervals'
         correct: true
       - text: 'The mean value of the data'
-      - text: 'A marker for the median of data'
-      - text: 'The total number of data points in the dataset'
+      - text: 'A marker for the median'
+      - text: 'The total count of data points'
+
+  - type: multichoice
+    text: 'What is metadata?'
+    answers:
+      - text: 'Data about data, describing its context and properties'
+        correct: true
+      - text: 'The largest values in a dataset'
+      - text: 'Mathematical transformations of data'
+      - text: 'Deleted or corrupted data'
+
+  - type: multichoice
+    text: 'What does the command git pull do?'
+    answers:
+      - text: 'Pushes local changes to the remote repository'
+      - text: 'Fetches and integrates changes from a remote branch to the current branch'
+        correct: true
+      - text: 'Deletes the current branch'
+      - text: 'Displays the commit history'
 
   - type: multichoice
     text: 'In a histogram, what do the heights of the bars represent?'
     answers:
-       - text: 'The sum of all values'
-       - text: 'The frequency or count of data points within each interval'
-         correct: true
-       - text: 'The standard deviation of the data'
-       - text: 'The cumulative percentage of data points'
+      - text: 'The sum of all values'
+      - text: 'The frequency or count of data points within each interval'
+        correct: true
+      - text: 'The standard deviation'
+      - text: 'The cumulative percentage'
+
+  - type: multichoice
+    text: 'What is reproducibility in data analysis?'
+    answers:
+      - text: 'Running the same code multiple times'
+      - text: 'The ability for others to obtain the same results using the same data and methods'
+        correct: true
+      - text: 'Making copies of your data files'
+      - text: 'Repeating experiments with different datasets'
+
+  - type: multichoice
+    text: 'Which command displays the commit history in Git?'
+    answers:
+      - text: 'git history'
+      - text: 'git log'
+        correct: true
+      - text: 'git commits'
+      - text: 'git show'
+
+  - type: multichoice
+    text: 'Which chart type is most useful for showing data distribution across different categories?'
+    answers:
+      - text: 'Scatter plot'
+      - text: 'Bar chart'
+        correct: true
+      - text: 'Line chart'
+      - text: 'Heatmap'
