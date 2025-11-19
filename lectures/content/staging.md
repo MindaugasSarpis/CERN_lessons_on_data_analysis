@@ -30,15 +30,6 @@ hideInToc: true
 
 <Toc text-xl minDepth="1" maxDepth="1" columns="1" />
 
-
 ---
-src: slides/L10_Practical_Data_Fitting.md
----
-
----
-src: slides/L11_NumPy_Pandas_Real_Data.md
----
-
----
-src: slides/L12_Reproducible_Workflows.md
+src: slides/L10_Data_Fitting.md
 ---
