@@ -2,6 +2,7 @@
 title: "Quiz 1 – Fundamentals of Data & Python"
 theme: seriph
 class: text-left
+background: background_intro.jpg
 ---
 
 # 🧠 Quiz 1 
@@ -156,7 +157,7 @@ class: text-left
 ---
 
 <MCQ
-  question="What is the output of: <code>print('Hello' + 'World')</code>?"
+  question="What is the output of: print('Hello' + 'World')?"
   :options="[
     'Hello World',
     'HelloWorld',

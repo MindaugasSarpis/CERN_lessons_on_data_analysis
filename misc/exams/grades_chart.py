@@ -23,12 +23,15 @@ SCORE_COLUMNS = {
         "ivertinimas",
     )
 }
-FALLBACK_GAUSSIAN = (7.0, 1.5)
-MODE_WITH_CSV = {"CSV only", "CSV + Model overlay"}
-MODE_WITH_MODEL = {"Gaussian (μ, σ)", "Bimodal (2 Gaussians)", "CSV + Model overlay"}
+MODE_WITH_CSV = {"CSV only"}
+MODE_WITH_MODEL = {"Gaussian (μ, σ)", "Bimodal (2 Gaussians)"}
 BIMODAL_MODE = "Bimodal (2 Gaussians)"
 CSV_ANIMATION_DURATION_S = 10.0
 ANIMATION_STATE = {"csv_signature": None}
+
+# Colors
+COLOR_CSV = "#2E86AB"  # Blue
+COLOR_MODEL = "#A23B72"  # Purple
 
 
 def _get_animation_state():
@@ -42,8 +45,6 @@ def _get_animation_state():
     return state
 
 
-def fallback_note(message: str) -> str:
-    return f"⚠️ {message}. Showing Gaussian fallback."
 
 
 mode = pn.widgets.RadioButtonGroup(
@@ -52,12 +53,14 @@ mode = pn.widgets.RadioButtonGroup(
         "CSV only",
         "Gaussian (μ, σ)",
         "Bimodal (2 Gaussians)",
-        "CSV + Model overlay",
     ],
     value="CSV only",
 )
 csv_path = pn.widgets.TextInput(
-    name="CSV path", placeholder="2025_grades_q1.csv (column: Įvertinimas/10.00)"
+    name="CSV path", placeholder="2025_grades_q2.csv (column: Įvertinimas/10.00)"
+)
+show_model_overlay = pn.widgets.Checkbox(
+    name="Show Gaussian overlay", value=False
 )
 n_synth = pn.widgets.IntSlider(
     name="Number of students (model)", start=0, end=100, value=30
@@ -77,6 +80,35 @@ w1 = pn.widgets.FloatSlider(
 ymax = pn.widgets.IntSlider(
     name="Y-axis max (override)", start=0, end=100, step=1, value=0
 )
+
+fit_button = pn.widgets.Button(
+    name="Fit Gaussian to CSV", button_type="primary", width=200
+)
+
+
+def fit_gaussian_to_csv(event):
+    """Fit Gaussian parameters to CSV data and update sliders."""
+    try:
+        series, _ = read_scores(csv_path.value)
+        if series is None or series.empty:
+            return
+
+        # Calculate mean and std from the actual data points
+        mean_val = float(series.mean())
+        std_val = float(series.std())
+
+        # Update the sliders
+        mu.value = round(mean_val, 1)
+        sigma.value = round(max(0.1, std_val), 1)  # Ensure sigma >= 0.1
+        n_synth.value = len(series)
+
+        # Enable overlay to show the fit
+        show_model_overlay.value = True
+    except Exception:
+        pass
+
+
+fit_button.on_click(fit_gaussian_to_csv)
 
 
 def gaussian_bin_counts(mu_value, sigma_value, n_students):
@@ -127,58 +159,66 @@ def counts_in_fixed_bins(values):
 
 def pick_grade_column(columns):
     for col in columns:
-        if col.strip().casefold() in SCORE_COLUMNS:
+        col_normalized = col.strip().casefold()
+        if col_normalized in SCORE_COLUMNS:
             return col
+        # Check if any score column name appears in this column
+        for score_name in SCORE_COLUMNS:
+            if score_name in col_normalized:
+                return col
     return None
 
 
 def read_scores(path_str):
     if not path_str:
-        return None, fallback_note("Provide a CSV path")
+        return None, "⚠️ Provide a CSV path"
     path = Path(path_str)
     if not path.exists():
-        return None, fallback_note(f"CSV '{path_str}' not found")
+        return None, f"⚠️ CSV '{path_str}' not found"
 
     try:
         df = pd.read_csv(path)
-    except Exception:
-        return None, fallback_note(f"Failed to read '{path_str}'")
+    except Exception as e:
+        return None, f"⚠️ Failed to read CSV: {e}"
 
     column = pick_grade_column(df.columns)
     if not column:
-        return None, fallback_note(f"Could not find a grade column in '{path_str}'")
+        return None, f"⚠️ No grade column found (looking for: {', '.join(sorted(list(SCORE_COLUMNS)[:3]))}...)"
 
     series = pd.to_numeric(df[column], errors="coerce").dropna()
     series = series[(series >= 0) & (series <= 10)]
     if series.empty:
-        return None, fallback_note("Grade column contained no values in [0, 10]")
+        return None, "⚠️ No valid grades in [0, 10] range"
     return series, ""
 
 
-def gaussian_fallback_counts(fallback_students):
-    mu, sigma = FALLBACK_GAUSSIAN
-    return gaussian_bin_counts(mu, sigma, max(1, fallback_students))
-
-
-def load_csv_counts(csv_path_value, fallback_students):
+def load_csv_counts(csv_path_value):
     series, note = read_scores(csv_path_value)
     if series is None:
-        return gaussian_fallback_counts(fallback_students), note, False, None
+        return None, note, False, None
     return counts_in_fixed_bins(series), "", True, series.to_numpy()
 
 
-def make_bar_trace(counts, name, offset):
-    return go.Bar(x=CENTERS, y=counts, name=name, offsetgroup=offset, width=0.45)
+def make_bar_trace(counts, name, offset, color):
+    return go.Bar(
+        x=CENTERS,
+        y=counts,
+        name=name,
+        offsetgroup=offset,
+        width=0.45,
+        marker_color=color,
+        marker_line_width=0,
+    )
 
 
-def format_stats(counts, title):
+def format_stats(counts, title, color):
     if counts is None:
-        return f"**{title}**: no data"
+        return f"<div style='padding: 12px; border-left: 4px solid {color}; background: #f8f9fa;'><strong>{title}</strong>: no data</div>"
     total = float(np.sum(counts))
     if total <= 0:
-        return f"**{title}** n=0 | mean≈—"
+        return f"<div style='padding: 12px; border-left: 4px solid {color}; background: #f8f9fa;'><strong>{title}</strong>: n=0 | mean=—</div>"
     mean = np.average(CENTERS, weights=counts)
-    return f"**{title}** n={total:.0f} | mean≈{mean:.2f}"
+    return f"<div style='padding: 12px; border-left: 4px solid {color}; background: #f8f9fa;'><strong style='font-size: 1.1em;'>{title}</strong><br>n = {total:.0f} students | mean = <strong>{mean:.2f}</strong></div>"
 
 
 def build_figure(csv_counts_value, model_counts_value, ymax_value, animate_csv=False):
@@ -187,21 +227,56 @@ def build_figure(csv_counts_value, model_counts_value, ymax_value, animate_csv=F
         csv_display_counts = (
             np.zeros_like(csv_counts_value) if animate_csv else csv_counts_value
         )
-        fig.add_trace(make_bar_trace(csv_display_counts, "CSV / Example", "csv"))
+        fig.add_trace(
+            make_bar_trace(csv_display_counts, "CSV / Example", "csv", COLOR_CSV)
+        )
     if model_counts_value is not None:
-        fig.add_trace(make_bar_trace(model_counts_value, "Model", "model"))
+        # Show as line if overlaying with CSV, otherwise as bars
+        if csv_counts_value is not None:
+            fig.add_trace(
+                go.Scatter(
+                    x=CENTERS,
+                    y=model_counts_value,
+                    name="Model (Gaussian fit)",
+                    mode="lines",
+                    line=dict(color=COLOR_MODEL, width=4),
+                    hovertemplate="Grade: %{x}<br>Students: %{y:.1f}<extra></extra>",
+                )
+            )
+        else:
+            fig.add_trace(
+                make_bar_trace(model_counts_value, "Model", "model", COLOR_MODEL)
+            )
 
     fig.update_layout(
         template="plotly_white",
         barmode="group",
-        xaxis_title="Grade",
-        yaxis_title="Students",
         xaxis=dict(
-            range=[-0.25, 10.25], tickmode="array", tickvals=np.arange(0, 10.5, 0.5)
+            title=dict(text="Grade", font=dict(size=20, color="#333")),
+            range=[0.5, 10.5],
+            tickmode="array",
+            tickvals=np.arange(1, 11, 1),
+            tickfont=dict(size=20, color="#000", family="Arial, sans-serif"),
+            ticktext=[f"<b>{i}</b>" for i in range(1, 11)],
         ),
-        yaxis=dict(range=[0, int(ymax_value)]),
-        bargap=0.1,
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+        yaxis=dict(
+            title=dict(text="Number of Students", font=dict(size=20, color="#333")),
+            range=[0, int(ymax_value)],
+            tickfont=dict(size=18),
+        ),
+        bargap=0.15,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="left",
+            x=0,
+            font=dict(size=14),
+        ),
+        font=dict(family="system-ui, -apple-system, sans-serif", size=14, color="#333"),
+        plot_bgcolor="white",
+        paper_bgcolor="white",
+        margin=dict(l=60, r=40, t=60, b=60),
     )
     return fig
 
@@ -270,10 +345,11 @@ def animate_csv_bins(
     advance()
 
 
-@pn.depends(mode, csv_path, n_synth, mu, sigma, mu1, sigma1, mu2, sigma2, w1, ymax)
+@pn.depends(mode, csv_path, show_model_overlay, n_synth, mu, sigma, mu1, sigma1, mu2, sigma2, w1, ymax)
 def view(
     mode_value,
     csv_path_value,
+    show_overlay,
     n_students,
     mu_value,
     sigma_value,
@@ -287,20 +363,26 @@ def view(
     csv_counts_value, csv_note, csv_has_real_data, csv_points = (None, "", False, None)
     if mode_value in MODE_WITH_CSV:
         csv_counts_value, csv_note, csv_has_real_data, csv_points = load_csv_counts(
-            csv_path_value, n_students
+            csv_path_value
         )
 
-    model_counts_value = model_counts(
-        mode_value,
-        n_students,
-        mu_value,
-        sigma_value,
-        mu1_value,
-        sigma1_value,
-        mu2_value,
-        sigma2_value,
-        w1_value,
-    )
+    # Calculate model counts for model modes OR CSV mode with overlay enabled
+    model_counts_value = None
+    if mode_value in MODE_WITH_MODEL:
+        model_counts_value = model_counts(
+            mode_value,
+            n_students,
+            mu_value,
+            sigma_value,
+            mu1_value,
+            sigma1_value,
+            mu2_value,
+            sigma2_value,
+            w1_value,
+        )
+    elif mode_value in MODE_WITH_CSV and show_overlay:
+        # Show Gaussian overlay in CSV mode
+        model_counts_value = gaussian_bin_counts(mu_value, sigma_value, n_students)
 
     animation_state = _get_animation_state()
     should_animate_csv = False
@@ -329,8 +411,9 @@ def view(
         csv_counts_value, model_counts_value, final_ymax, animate_csv=should_animate_csv
     )
     stats_row = pn.Row(
-        pn.pane.Markdown(format_stats(csv_counts_value, "CSV / Example")),
-        pn.pane.Markdown(format_stats(model_counts_value, "Model")),
+        pn.pane.HTML(format_stats(csv_counts_value, "CSV / Example", COLOR_CSV)),
+        pn.pane.HTML(format_stats(model_counts_value, "Model", COLOR_MODEL)),
+        sizing_mode="stretch_width",
     )
 
     plot = pn.pane.Plotly(
@@ -343,48 +426,108 @@ def view(
     if should_animate_csv:
         animate_csv_bins(plot, csv_counts_value, csv_points)
 
-    note_pane = pn.pane.HTML(csv_note) if csv_note else pn.Spacer(height=0)
+    note_pane = (
+        pn.pane.HTML(
+            f"<div style='padding: 12px; background: #fff3cd; border-left: 4px solid #ffc107; margin-top: 10px; border-radius: 4px;'>{csv_note}</div>"
+        )
+        if csv_note
+        else pn.Spacer(height=0)
+    )
 
     return pn.Column(plot, stats_row, note_pane, sizing_mode="stretch_width")
 
 
-sidebar = [
-    pn.pane.Markdown(
-        "### Controls",
-        styles={
-            "border-bottom": "1px solid #e0e0e0",
-            "padding-bottom": "6px",
-            "margin-bottom": "12px",
-        },
-    ),
-    mode,
-    pn.layout.Divider(),
-    pn.pane.Markdown("### CSV"),
-    csv_path,
-    pn.layout.Divider(),
-    pn.pane.Markdown("### Model (students & shape)"),
-    n_synth,
-    ymax,
-    pn.pane.Markdown(
-        "_Set >0 to override auto scale (max bin + 1)._",
-        styles={"font-size": "0.85em", "color": "#555"},
-    ),
-    pn.pane.Markdown("**Gaussian**"),
-    mu,
-    sigma,
-    pn.pane.Markdown("**Bimodal**"),
-    mu1,
-    sigma1,
-    mu2,
-    sigma2,
-    w1,
-]
+@pn.depends(mode, show_model_overlay)
+def sidebar_content(mode_value, show_overlay):
+    """Generate sidebar content based on selected mode."""
+    items = [
+        pn.pane.Markdown(
+            "## Grade Distribution",
+            styles={
+                "font-size": "1.4em",
+                "font-weight": "600",
+                "margin-bottom": "20px",
+                "color": "#2c3e50",
+            },
+        ),
+        mode,
+        pn.Spacer(height=15),
+    ]
+
+    # CSV section - show if mode uses CSV
+    if mode_value in MODE_WITH_CSV:
+        items.extend([
+            pn.pane.Markdown("### CSV Data", styles={"color": COLOR_CSV, "font-weight": "600"}),
+            csv_path,
+            pn.Spacer(height=10),
+            show_model_overlay,
+            pn.Spacer(height=10),
+            fit_button,
+            pn.pane.Markdown(
+                "_Calculates μ and σ from CSV data_",
+                styles={"font-size": "0.85em", "color": "#666", "margin-top": "4px"},
+            ),
+            pn.Spacer(height=15),
+        ])
+
+        # Show Gaussian parameters if overlay is enabled
+        if show_overlay:
+            items.extend([
+                pn.pane.Markdown("### Gaussian Overlay", styles={"color": COLOR_MODEL, "font-weight": "600"}),
+                n_synth,
+                mu,
+                sigma,
+                pn.Spacer(height=15),
+            ])
+
+    # Model parameters - show if mode uses model
+    if mode_value in MODE_WITH_MODEL:
+        items.extend([
+            pn.pane.Markdown("### Model Parameters", styles={"color": COLOR_MODEL, "font-weight": "600"}),
+            n_synth,
+            pn.Spacer(height=10),
+        ])
+
+        # Gaussian parameters
+        if mode_value == "Gaussian (μ, σ)":
+            items.extend([
+                pn.pane.Markdown("**Gaussian Distribution**"),
+                mu,
+                sigma,
+                pn.Spacer(height=10),
+            ])
+
+        # Bimodal parameters
+        if mode_value == BIMODAL_MODE:
+            items.extend([
+                pn.pane.Markdown("**Bimodal Distribution**"),
+                mu1,
+                sigma1,
+                mu2,
+                sigma2,
+                w1,
+                pn.Spacer(height=10),
+            ])
+
+    # Display options
+    items.extend([
+        pn.Spacer(height=5),
+        pn.pane.Markdown("### Display Options", styles={"font-weight": "600"}),
+        ymax,
+        pn.pane.Markdown(
+            "_Override Y-axis max (0 = auto)_",
+            styles={"font-size": "0.85em", "color": "#666", "margin-top": "4px"},
+        ),
+    ])
+
+    return pn.Column(*items)
 
 template = pn.template.FastListTemplate(
-    title="",
-    sidebar=sidebar,
+    title="Grade Analysis Dashboard",
+    sidebar=[sidebar_content],
     main=[view],
-    sidebar_width=300,
+    sidebar_width=320,
     main_max_width="100%",
+    header_background="#2c3e50",
 )
 template.servable()
