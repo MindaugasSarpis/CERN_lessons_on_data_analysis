@@ -126,3 +126,8 @@
 .slidev-layout .mermaid .label {
   color: #000;
 }
+
+/* Force H1 color override (flat CSS for compatibility) */
+.slidev-layout h1 {
+  color: #ffffff !important;
+}

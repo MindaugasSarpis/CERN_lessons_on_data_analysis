@@ -34,43 +34,30 @@ hideInToc: true
 
 # Motivation
 
-<div class="card card-warning pad-tight mt-md">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning pad-tight">
 
 ## **The Reproducibility Crisis**
 
-Many scientific results cannot be reproduced because:
-- Code is lost or poorly documented
+Results cannot be reproduced because:
+- Code is lost or undocumented
 - Dependencies are unclear
-- Analysis steps are manual and forgotten
+- Analysis steps are manual
 - Data processing is not tracked
 
-**Goal**: Make your analysis reproducible in 5 years (or 5 hours!)
-
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-success pad-tight">
 
-<div class="card card-primary pad-tight">
+## **Benefits of Good Practices**
 
-### 🎯 **Today's Goals**
-
-- Structure projects professionally
-- Automate repetitive tasks
-- Manage dependencies properly
-- Document workflows clearly
-- Version control everything
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-### 🔬 **Real Benefits**
-
-- Faster iteration on analysis
-- Easy collaboration
-- Reliable results
+- Faster iteration & collaboration
+- Reliable, verifiable results
 - Publication-ready code
 - Career-ready skills
+
+**Goal**: Reproducible in 5 years (or 5 hours!)
 
 </div>
 
@@ -89,80 +76,30 @@ hideInToc: true
 
 # The Evolution of Your Analysis
 
-```mermaid
+<div style="display: flex; justify-content: center; align-items: center; height: 80%;">
+
+```mermaid{scale: 1}
 %%{init: {'theme': 'dark', 'themeVariables': {
   'primaryColor': '#0f1f3d',
   'primaryBorderColor': '#60a5fa',
   'primaryTextColor': '#e2e8f0',
   'secondaryColor': '#102b4c',
   'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 50}}%%
+  'fontFamily': 'Inter, Segoe UI, sans-serif',
+  'fontSize': '18px'
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': False, 'nodeSpacing': 10, 'rankSpacing': 80}}}%%
 flowchart LR
-    A["Jupyter<br/>Notebook"]:::stage1 --> B["Python<br/>Script"]:::stage2
-    B --> C["Modular<br/>Code"]:::stage3
-    C --> D["Automated<br/>Pipeline"]:::stage4
-    D --> E["Production<br/>System"]:::stage5
+    A["📓 Jupyter<br/>Notebook"]:::stage1 --> B["📜 Python<br/>Script"]:::stage2
+    B --> C["📦 Modular <br/>Code"]:::stage3
+    C --> D["⚙️ Automated<br/>Pipeline"]:::stage4
+    D --> E["🚀 Production<br/>System"]:::stage5
 
-    classDef stage1 fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
-    classDef stage2 fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
-    classDef stage3 fill:#1c3d5a,stroke:#34d399,stroke-width:2px,color:#d1fae5,rx:12px,ry:12px
-    classDef stage4 fill:#1e3a5f,stroke:#fbbf24,stroke-width:2px,color:#fef3c7,rx:12px,ry:12px
-    classDef stage5 fill:#0b2540,stroke:#f472b6,stroke-width:2px,color:#fce7f3,rx:12px,ry:12px
+    classDef stage1 fill:#0f4c81,stroke:#93c5fd,stroke-width:3px,color:#e2e8f0,rx:14px,ry:14px
+    classDef stage2 fill:#155e75,stroke:#5eead4,stroke-width:3px,color:#e2e8f0,rx:14px,ry:14px
+    classDef stage3 fill:#1c3d5a,stroke:#34d399,stroke-width:3px,color:#d1fae5,rx:14px,ry:14px
+    classDef stage4 fill:#1e3a5f,stroke:#fbbf24,stroke-width:3px,color:#fef3c7,rx:14px,ry:14px
+    classDef stage5 fill:#0b2540,stroke:#f472b6,stroke-width:3px,color:#fce7f3,rx:14px,ry:14px
 ```
-
-<div class="grid-5 mt-md gap-tight">
-
-<div class="card card-primary pad-tight">
-
-### **Stage 1**
-Interactive exploration
-
-Manual execution
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-### **Stage 2**
-Saved as script
-
-Still manual
-
-</div>
-
-<div class="card card-info pad-tight">
-
-### **Stage 3**
-Functions & modules
-
-Reusable code
-
-</div>
-
-<div class="card card-success pad-tight">
-
-### **Stage 4**
-Command-line tools
-
-Config files
-
-</div>
-
-<div class="card card-accent pad-tight">
-
-### **Stage 5**
-CI/CD testing
-
-Containerized
-
-</div>
-
-</div>
-
-<div class="card card-warning pad-tight mt-md">
-
-**You are here** (after L1-L11): somewhere between stages 1-2. Let's reach stage 4!
 
 </div>
 
@@ -172,36 +109,53 @@ hideInToc: true
 
 # Anatomy of a Well-Structured Project
 
-```
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight" style="font-family: monospace; font-size: 0.7em; line-height: 1.5;">
+
+```text
 my_analysis/
-├── README.md                 # Project overview, setup instructions
-├── requirements.txt          # Python dependencies
-├── environment.yml           # Conda environment (alternative)
+├── README.md
+├── requirements.txt
 ├── config/
-│   └── analysis_config.yaml  # Configuration parameters
+│   └── analysis_config.yaml
 ├── data/
-│   ├── raw/                  # Original, immutable data
-│   ├── processed/            # Cleaned, transformed data
-│   └── README.md             # Data sources and descriptions
-├── src/                      # Source code (your modules)
-│   ├── __init__.py
-│   ├── data_loader.py        # Data loading functions
-│   ├── preprocessing.py      # Cleaning, filtering
-│   ├── fitting.py            # Model fitting routines
-│   └── plotting.py           # Visualization functions
-├── scripts/                  # Executable scripts
-│   ├── 1_preprocess.py       # Step 1: Clean data
-│   ├── 2_fit_model.py        # Step 2: Fit models
-│   └── 3_make_plots.py       # Step 3: Generate figures
-├── notebooks/                # Jupyter notebooks (exploration)
-│   └── exploratory_analysis.ipynb
-├── tests/                    # Unit tests
-│   └── test_fitting.py
-├── results/                  # Generated outputs
-│   ├── figures/
-│   └── fitted_parameters.csv
-└── .gitignore                # Files to exclude from git
+│   ├── raw/
+│   └── processed/
+├── src/
+│   ├── data_loader.py
+│   ├── preprocessing.py
+│   ├── fitting.py
+│   └── plotting.py
+├── scripts/
+│   ├── 1_preprocess.py
+│   ├── 2_fit_model.py
+│   └── 3_make_plots.py
+├── notebooks/
+├── tests/
+├── results/
+└── .gitignore
 ```
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85em;">
+
+<div class="card card-info pad-compact">📄 <strong>Root</strong> — README, requirements, config</div>
+
+<div class="card card-secondary pad-compact">📁 <strong>data/</strong> — raw (immutable) → processed</div>
+
+<div class="card card-success pad-compact">📁 <strong>src/</strong> — Reusable modules & functions</div>
+
+<div class="card card-warning pad-compact">📁 <strong>scripts/</strong> — Numbered execution steps</div>
+
+<div class="card card-accent pad-compact">📁 <strong>notebooks/</strong> — Exploration only</div>
+
+<div class="card card-info pad-compact">📁 <strong>tests/</strong> + <strong>results/</strong> — Tests & outputs</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -303,141 +257,83 @@ hideInToc: true
 
 # argparse: Python's Standard Tool
 
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## **Key Features**
+
+- `required=True` for mandatory args
+- `default=value` for optional args
+- `type=int/float/str` for type conversion
+- `nargs=2` for multiple values
+- `action='store_true'` for flags
+- `help='...'` for documentation
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## **Common Argument Types**
+
+```python
+--input file.csv      # required string
+--output results.csv  # optional with default
+--bins 50             # integer
+--range 0 15          # two floats
+--verbose             # boolean flag
+```
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Script Structure with argparse
+
+<div class="card card-info pad-tight mt-md">
+
+## **Typical Script Pattern**
+
 ```python
 import argparse
 
-# Create parser
-parser = argparse.ArgumentParser(
-    description='Fit a model to particle physics data'
-)
-
-# Add arguments
-parser.add_argument('--input', type=str, required=True,
-                    help='Path to input CSV file')
-parser.add_argument('--output', type=str, default='results.csv',
-                    help='Path to output file')
-parser.add_argument('--bins', type=int, default=50,
-                    help='Number of histogram bins')
-parser.add_argument('--range', type=float, nargs=2, default=[0, 15],
-                    help='Histogram range (min max)')
-parser.add_argument('--verbose', action='store_true',
-                    help='Print detailed output')
-
-# Parse arguments
+parser = argparse.ArgumentParser(description='...')
+parser.add_argument('--input', required=True, help='...')
+# ... more arguments ...
 args = parser.parse_args()
 
-# Use arguments
-print(f"Loading data from {args.input}")
-df = pd.read_csv(args.input)
-
-if args.verbose:
-    print(f"Using {args.bins} bins, range {args.range}")
-
-# ... rest of analysis ...
+data = load_data(args.input)
 ```
 
----
-hideInToc: true
----
+</div>
 
-# Complete Example: Configurable Fitting Script
+<div class="grid-2 mt-md gap-md">
 
-```python
-#!/usr/bin/env python3
-"""
-fit_model.py - Fit Gaussian + exponential to data
+<div class="card card-primary pad-tight">
 
-Usage:
-    python fit_model.py --input data.csv --output results.png
-"""
-import argparse
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from scipy.optimize import curve_fit
+### **Benefits**
 
-def model(x, amp, mean, sigma, exp_norm, exp_scale):
-    """Gaussian + exponential model"""
-    gaussian = amp * np.exp(-0.5 * ((x - mean) / sigma)**2)
-    exponential = exp_norm * np.exp(-x / exp_scale)
-    return gaussian + exponential
+- Flexible parameters
+- Self-documenting (`--help`)
+- Scriptable (batch processing)
+- No code changes needed
 
-def main():
-    # Parse command-line arguments
-    parser = argparse.ArgumentParser(description='Fit model to data')
-    parser.add_argument('--input', required=True, help='Input CSV file')
-    parser.add_argument('--output', default='fit_result.png', help='Output plot')
-    parser.add_argument('--bins', type=int, default=50, help='Number of bins')
-    parser.add_argument('--range', type=float, nargs=2, default=[0, 15])
-    args = parser.parse_args()
+</div>
 
-    # Load data
-    print(f"Loading {args.input}...")
-    data = pd.read_csv(args.input)['x'].values
+<div class="card card-secondary pad-tight">
 
-    # Create histogram
-    hist, bin_edges = np.histogram(data, bins=args.bins, range=args.range)
-    bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+### **Tips**
 
-    # Fit
-    print("Fitting model...")
-    initial_guess = [100, 5.0, 1.0, 50, 2.0]
-    popt, pcov = curve_fit(model, bin_centers, hist, p0=initial_guess)
-    errors = np.sqrt(np.diag(pcov))
+- Use meaningful names
+- Provide defaults
+- Add help messages
+- Validate inputs
 
-    # Report results
-    print(f"Fitted mean: {popt[1]:.3f} ± {errors[1]:.3f}")
-    print(f"Fitted sigma: {popt[2]:.3f} ± {errors[2]:.3f}")
-
-    # Plot
-    plt.hist(data, bins=args.bins, range=args.range, alpha=0.5, label='Data')
-    x_smooth = np.linspace(*args.range, 500)
-    plt.plot(x_smooth, model(x_smooth, *popt), 'r-', label='Fit')
-    plt.xlabel('x')
-    plt.ylabel('Counts')
-    plt.legend()
-    plt.savefig(args.output, dpi=150)
-    print(f"Saved plot to {args.output}")
-
-if __name__ == '__main__':
-    main()
-```
-
----
-hideInToc: true
----
-
-# Running Your Script
-
-```bash
-# Basic usage
-python fit_model.py --input sample.csv
-
-# Custom parameters
-python fit_model.py --input sample.csv --output my_fit.png --bins 100
-
-# Get help
-python fit_model.py --help
-```
-
-**Output:**
-```
-usage: fit_model.py [-h] --input INPUT [--output OUTPUT] [--bins BINS]
-                    [--range RANGE RANGE]
-
-Fit model to data
-
-optional arguments:
-  -h, --help           show this help message and exit
-  --input INPUT        Input CSV file
-  --output OUTPUT      Output plot
-  --bins BINS          Number of bins
-  --range RANGE RANGE
-```
-
-<div class="card card-accent pad-tight mt-sm">
-
-**Pro tip**: Add `#!/usr/bin/env python3` at the top and `chmod +x fit_model.py` to make it directly executable: `./fit_model.py --input data.csv`
+</div>
 
 </div>
 
@@ -451,8 +347,6 @@ hideInToc: true
 ---
 hideInToc: true
 ---
-
-# Why Configuration Files?
 
 <div class="card card-info pad-tight mt-md">
 
@@ -519,52 +413,57 @@ hideInToc: true
 
 # YAML Configuration Files
 
-<div class="card card-primary pad-tight mt-md">
+<div class="grid-2 gap-md mt-sm">
 
-## **YAML: Human-Readable Configuration**
+<div class="card card-primary pad-tight">
 
-**YAML** = YAML Ain't Markup Language (recursive acronym!)
+## **YAML: Human-Readable Config**
 
 - Easy to read and write
-- Supports hierarchical structure
-- Comments allowed
-- Common for config files
+- Hierarchical structure
+- Comments with `#`
+- Standard for config files
+
+<strong>Basic syntax:</strong>
+
+```yaml
+key: value          # string
+count: 42           # number
+enabled: true       # boolean
+items: [1, 2, 3]    # list
+```
 
 </div>
 
-```yaml
-# config.yaml - Analysis configuration
+<div class="card card-secondary pad-tight" style="font-size: 0.7em;">
 
-# Data settings
+```yaml
+# config.yaml
 data:
   input_file: "data/raw/sample.csv"
   output_dir: "results/"
 
-# Histogram settings
 histogram:
   bins: 50
   range: [0, 15]
 
-# Model parameters (initial guesses)
 model:
-  signal:
-    mean: 5.0
-    sigma: 1.0
-  background:
-    scale: 2.0
+  signal: { mean: 5.0, sigma: 1.0 }
+  background: { scale: 2.0 }
 
-# Fitting options
 fitting:
-  method: "mle"          # or "least_squares"
+  method: "mle"
   max_iterations: 1000
   tolerance: 1e-6
 
-# Output
 output:
   save_plot: true
-  save_parameters: true
   verbose: true
 ```
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -572,39 +471,51 @@ hideInToc: true
 
 # Loading Config in Python
 
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## **Basic Loading**
+
 ```python
 import yaml
 
-# Load configuration
 with open('config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
 # Access nested values
-input_file = config['data']['input_file']
 n_bins = config['histogram']['bins']
-hist_range = config['histogram']['range']
-signal_mean = config['model']['signal']['mean']
-verbose = config['output']['verbose']
-
-print(f"Loading {input_file}")
-print(f"Histogram: {n_bins} bins, range {hist_range}")
-
-# Use in analysis
-hist, bins = np.histogram(data, bins=n_bins, range=hist_range)
-
-# Initial guess from config
-initial_guess = [
-    100,  # amplitude (not in config, estimated)
-    config['model']['signal']['mean'],
-    config['model']['signal']['sigma'],
-    50,   # exponential norm (estimated)
-    config['model']['background']['scale']
-]
 ```
 
-<div class="card card-accent pad-tight mt-sm">
+</div>
 
-**Best practice**: Validate config (check required fields, types, ranges) before using values
+<div class="card card-secondary pad-tight">
+
+## **Best Practices**
+
+- Use `yaml.safe_load()` (not `load()`)
+- Validate required fields exist
+- Check value types and ranges
+- Provide sensible defaults
+- Handle missing files gracefully
+
+</div>
+
+</div>
+
+<div class="card card-warning pad-tight mt-md" style="display: flex; gap: 2rem; align-items: center;">
+
+<div>
+
+**Why `safe_load()`?** — `yaml.load()` can execute arbitrary code (e.g., `!!python/object/apply:os.system`)
+
+</div>
+
+<div style="font-size: 0.9em;">
+
+`safe_load()` only parses: `str` | `int` | `float` | `bool` | `list` | `dict` | `None`
+
+</div>
 
 </div>
 
@@ -614,49 +525,53 @@ hideInToc: true
 
 # Combining argparse + Config Files
 
-```python
-#!/usr/bin/env python3
-import argparse
-import yaml
-import sys
+<div class="card card-info pad-tight mt-md">
 
-def load_config(config_path):
-    """Load and validate configuration file"""
-    try:
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
-        # Validate required fields
-        required = ['data', 'histogram', 'model']
-        for field in required:
-            if field not in config:
-                raise ValueError(f"Missing required field: {field}")
-        return config
-    except Exception as e:
-        print(f"Error loading config: {e}")
-        sys.exit(1)
+## **The Pattern**
 
-def main():
-    parser = argparse.ArgumentParser(description='Data analysis pipeline')
-    parser.add_argument('--config', required=True, help='Config YAML file')
-    parser.add_argument('--input', help='Override input file')
-    parser.add_argument('--output', help='Override output file')
-    args = parser.parse_args()
+Config file provides defaults; command-line arguments can override specific values.
 
-    # Load config
-    config = load_config(args.config)
+```bash
+# Use config defaults
+python analyze.py --config analysis.yaml
 
-    # Command-line args override config file
-    input_file = args.input or config['data']['input_file']
-    output_dir = args.output or config['data']['output_dir']
-
-    print(f"Configuration loaded from {args.config}")
-    print(f"Processing {input_file} -> {output_dir}")
-
-    # ... rest of analysis using config ...
-
-if __name__ == '__main__':
-    main()
+# Override specific values
+python analyze.py --config analysis.yaml --input new_data.csv
 ```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+### **Config File For**
+
+- Default values
+- Complex nested settings
+- Documentation (comments)
+- Experiment configurations
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+### **CLI Args For**
+
+- Required inputs/outputs
+- Quick overrides
+- Batch processing
+- Scripting workflows
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-tight mt-md">
+
+**See demo** for complete implementation with validation
+
+</div>
 
 ---
 layout: section
@@ -671,37 +586,38 @@ hideInToc: true
 
 # The Dependency Problem
 
-<div class="card card-warning pad-tight mt-md">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning pad-tight">
 
 ## **"It Works on My Machine!"**
 
-Common scenario:
-- You develop analysis on your laptop (NumPy 1.24, Matplotlib 3.7)
-- Collaborator tries to run it (different versions installed)
+- You develop with NumPy 1.24, Matplotlib 3.7
+- Collaborator has different versions
 - Code breaks with mysterious errors
-- 6 months later, you can't reproduce your own results
+- 6 months later: can't reproduce your own results
 
 **Root cause**: Unmanaged dependencies
 
 </div>
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success pad-tight">
 
 ## **Solution: Virtual Environments**
 
-Isolated Python environments with specific package versions
+Isolated Python environments with pinned versions
 
 - Each project has its own environment
-- Reproducible: document exact versions
+- Document exact versions
 - No conflicts between projects
+
+</div>
 
 </div>
 
 ---
 hideInToc: true
 ---
-
-# Creating Virtual Environments
 
 <div class="grid-2 mt-md gap-md">
 
@@ -753,7 +669,9 @@ conda deactivate
 
 **Pros**: Handles non-Python deps (C libs, etc.), popular in science
 
-**Cons**: Heavier, slower
+**Cons**: Heavier, slower 
+  
+  * Use `mamba` if too slow.
 
 </div>
 
@@ -763,15 +681,36 @@ conda deactivate
 hideInToc: true
 ---
 
-# requirements.txt: Documenting Dependencies
+# requirements.txt
 
-<div class="card card-info pad-tight mt-md">
+<div class="grid-2 mt-sm gap-md">
 
-## **requirements.txt: The Package List**
+<div style="display: flex; flex-direction: column; gap: 0.8rem;">
 
-Simple text file listing all required packages (and optionally versions)
+<div class="card card-info pad-compact">
+
+**The Package List** — Simple text file listing required packages with version constraints
 
 </div>
+
+<div class="card card-primary pad-compact">
+
+**Version syntax:**
+- `==2.0.3` — exact version
+- `>=1.24.0` — minimum version
+- `>=1.24,<2.0` — version range
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+**Tip**: `pip freeze` includes transitive deps. Better to manually list direct dependencies only.
+
+</div>
+
+</div>
+
+<div>
 
 ```bash
 # requirements.txt
@@ -786,13 +725,11 @@ pyyaml>=6.0
 # Install all requirements
 pip install -r requirements.txt
 
-# Generate requirements.txt from current environment
+# Generate from current env
 pip freeze > requirements.txt
 ```
 
-<div class="card card-warning pad-tight mt-md">
-
-**Warning**: `pip freeze` includes *everything*, even transitive dependencies. Better to manually list only direct dependencies with flexible version constraints.
+</div>
 
 </div>
 
@@ -800,38 +737,43 @@ pip freeze > requirements.txt
 hideInToc: true
 ---
 
-# environment.yml: Conda Alternative
+# environment.yml
 
-For conda users, use `environment.yml`:
+<div class="grid-2 mt-sm gap-md">
+
+<div style="display: flex; flex-direction: column; gap: 0.8rem;">
+
+<div class="card card-info pad-compact">
+<strong>Conda Alternative</strong> — Env name, channels, Python version, mix conda + pip
+</div>
+
+<div class="card card-success pad-compact">
+<strong>Commands:</strong> <br>
+<code>conda env create -f</code> <br>
+ <code>conda env update -f</code> <br>
+ <code>conda env export ></code>
+</div>
+
+</div>
+
+<div style="font-size: 0.85em;">
 
 ```yaml
-# environment.yml
-name: particle_analysis
+name: my_analysis
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - python=3.11
   - numpy>=1.24
   - pandas>=2.0
   - matplotlib>=3.7
-  - scipy>=1.11
-  - pyyaml>=6.0
-  - pip
   - pip:
-      - some-pip-only-package==1.2.3
+      - some-pip-package
 ```
 
-```bash
-# Create environment from file
-conda env create -f environment.yml
+</div>
 
-# Update existing environment
-conda env update -f environment.yml
-
-# Export current environment
-conda env export > environment.yml
-```
+</div>
 
 ---
 hideInToc: true
@@ -839,48 +781,25 @@ hideInToc: true
 
 # Best Practices: Dependencies
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
-<div class="card card-success pad-tight">
-
-## ✅ **Do**
+<div class="card card-success pad-compact">
+<strong>Do</strong>
 
 - Use virtual environments for every project
-- Document all dependencies
-- Use version constraints (`>=1.24,<2.0`)
-- Pin versions for critical packages
-- Include Python version requirement
-- Update dependencies regularly
+- Document dependencies with version constraints
 - Test on fresh environment before sharing
-
+- Add <code>venv/</code>, <code>.conda/</code> to .gitignore
 </div>
 
-<div class="card card-warning pad-tight">
-
-## ❌ **Don't**
+<div class="card card-warning pad-compact">
+<strong>Don't</strong>
 
 - Install packages globally
-- Use `pip freeze` blindly
-- Pin every single package to exact version (too rigid)
-- Forget to document custom/local packages
-- Mix conda and pip carelessly
+- Use <code>pip freeze</code> output blindly
+- Pin every package to exact version
 - Commit virtual environment to git
-- Assume "latest" will work
-
 </div>
-
-</div>
-
-<div class="card card-accent pad-tight mt-md">
-
-**Add to .gitignore:**
-```
-# Virtual environments
-venv/
-myenv/
-.conda/
-*.egg-info/
-```
 
 </div>
 
@@ -897,48 +816,30 @@ hideInToc: true
 
 # Why Makefiles?
 
-<div class="card card-primary pad-tight mt-md">
+<div class="grid-2 mt-sm gap-md">
 
-## **Automate Your Workflow**
+<div>
 
-Instead of running commands manually:
-```bash
-python scripts/1_preprocess.py
-python scripts/2_fit_model.py
-python scripts/3_make_plots.py
-```
+<div class="card card-primary pad-compact">
+<strong>Automate Your Workflow</strong>
 
-Run a single command:
-```bash
-make all
-```
+Instead of running multiple commands manually, run: <code>make all</code>
+</div>
+
+<div class="card card-info pad-compact mt-sm">
+<strong>Benefits:</strong> One-command execution, tracks dependencies, only reruns what changed, documents workflow
+</div>
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info pad-tight">
-
-### **Benefits**
-
-- One-command execution
-- Tracks dependencies
-- Only reruns what's needed
-- Documents workflow
-- Standard tool (works everywhere)
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-### **Common Uses**
+<div class="card card-secondary pad-compact">
+<strong>Common Uses</strong>
 
 - Run analysis pipeline
 - Run tests
 - Generate figures
 - Build documentation
-- Clean up temporary files
-
+- Clean temporary files
 </div>
 
 </div>
@@ -949,86 +850,58 @@ hideInToc: true
 
 # Basic Makefile Syntax
 
+<div class="grid-2 mt-sm gap-md">
+
+<div style="font-size: 0.82em;">
+
 ```makefile
-# Makefile - Analysis pipeline automation
+# Makefile for analysis pipeline
 
-# Targets and dependencies
-target: dependencies
-	command
+# Main target - runs full pipeline
+all: results/plot.png
 
-# Example: generate plot from data
-results/plot.png: data/processed/clean_data.csv scripts/make_plot.py
-	python scripts/make_plot.py --input data/processed/clean_data.csv --output results/plot.png
+# Plot depends on clean data and script
+results/plot.png: data/clean.csv scripts/plot.py
+	python scripts/plot.py
 
-# Phony targets (not files)
+# Clean data depends on raw data
+data/clean.csv: data/raw.csv scripts/clean.py
+	python scripts/clean.py
+
+# Utility targets (don't create files)
 .PHONY: all clean test
 
-all: results/plot.png results/fit_params.csv
-
 clean:
-	rm -rf results/*
-	rm -rf data/processed/*
+	rm -rf results/* data/clean.csv
 
 test:
 	pytest tests/
 ```
 
-**Key points**:
-- **Target**: What to build (e.g., `results/plot.png`)
-- **Dependencies**: What target needs (e.g., `data.csv`, `script.py`)
-- **Command**: How to build it (must be indented with **TAB**)
-- **Phony**: Targets that don't produce files (like `clean`, `test`)
+</div>
 
----
-hideInToc: true
----
+<div>
 
-# Complete Analysis Makefile
+<div class="card card-info pad-compact">
+<strong>Key Concepts</strong>
 
-```makefile
-# Makefile for particle physics analysis
+- <strong>Target</strong>: File to create
+- <strong>Dependencies</strong>: Files it needs
+- <strong>Command</strong>: How to build (TAB!)
+- <strong>Phony</strong>: Non-file targets
+</div>
 
-# Configuration
-PYTHON := python
-DATA_RAW := data/raw/sample.csv
-DATA_PROCESSED := data/processed/clean_data.csv
-RESULTS_DIR := results
+<div class="card card-success pad-compact mt-sm">
+<strong>Usage</strong>
 
-# Phony targets
-.PHONY: all clean test help
+<code>make all</code> — run pipeline<br>
+<code>make clean</code> — remove outputs<br>
+<code>make test</code> — run tests
+</div>
 
-# Default target
-all: $(RESULTS_DIR)/fit_plot.png $(RESULTS_DIR)/fit_params.csv
+</div>
 
-# Step 1: Preprocess data
-$(DATA_PROCESSED): $(DATA_RAW) scripts/1_preprocess.py
-	$(PYTHON) scripts/1_preprocess.py --input $(DATA_RAW) --output $(DATA_PROCESSED)
-
-# Step 2: Fit model
-$(RESULTS_DIR)/fit_params.csv: $(DATA_PROCESSED) scripts/2_fit_model.py config/fit_config.yaml
-	$(PYTHON) scripts/2_fit_model.py --config config/fit_config.yaml --input $(DATA_PROCESSED) --output $(RESULTS_DIR)/fit_params.csv
-
-# Step 3: Generate plots
-$(RESULTS_DIR)/fit_plot.png: $(RESULTS_DIR)/fit_params.csv scripts/3_make_plots.py
-	$(PYTHON) scripts/3_make_plots.py --params $(RESULTS_DIR)/fit_params.csv --output $(RESULTS_DIR)/fit_plot.png
-
-# Clean up generated files
-clean:
-	rm -rf $(RESULTS_DIR)/*
-	rm -rf data/processed/*
-
-# Run tests
-test:
-	pytest tests/ -v
-
-# Help message
-help:
-	@echo "Available targets:"
-	@echo "  all     - Run complete analysis pipeline"
-	@echo "  clean   - Remove generated files"
-	@echo "  test    - Run unit tests"
-	@echo "  help    - Show this message"
-```
+</div>
 
 ---
 hideInToc: true
@@ -1074,6 +947,111 @@ layout: section
 hideInToc: true
 ---
 
+# Workflow Automation with **Snakemake**
+
+---
+hideInToc: true
+---
+
+# What is Snakemake?
+
+<div class="grid-2 mt-sm gap-md">
+
+<div>
+
+<div class="card card-primary pad-compact">
+<strong>Python-based Workflow Manager</strong>
+
+Like Make, but designed for data science pipelines with Python syntax and extra features.
+</div>
+
+<div class="card card-info pad-compact mt-sm">
+<strong>Key Advantages over Make</strong>
+
+- Python syntax (no TAB issues!)
+- Built-in cluster/cloud support
+- Conda environment integration
+- Automatic parallelization
+- Better for complex pipelines
+</div>
+
+</div>
+
+<div class="card card-success pad-compact">
+<strong>Installation</strong>
+
+<code>pip install snakemake</code><br>
+<code>conda install -c bioconda snakemake</code>
+
+<br><br>
+<strong>Run workflow</strong>
+
+<code>snakemake --cores 4</code><br>
+<code>snakemake -n</code> (dry run)
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Basic Snakemake Syntax
+
+<div class="grid-2 mt-sm gap-md">
+
+<div style="font-size: 0.82em;">
+
+```python
+# Snakefile
+
+rule all:
+    input: "results/plot.png"
+
+rule clean_data:
+    input: "data/raw.csv"
+    output: "data/clean.csv"
+    shell: "python scripts/clean.py"
+
+rule make_plot:
+    input:
+        data="data/clean.csv",
+        script="scripts/plot.py"
+    output: "results/plot.png"
+    shell: "python {input.script}"
+```
+
+</div>
+
+<div>
+
+<div class="card card-info pad-compact">
+<strong>Key Concepts</strong>
+
+- <strong>rule</strong>: Named step in pipeline
+- <strong>input</strong>: Dependencies
+- <strong>output</strong>: What it creates
+- <strong>shell</strong>: Command to run
+</div>
+
+<div class="card card-accent pad-compact mt-sm">
+<strong>Extra Features</strong>
+
+- <code>params:</code> for parameters
+- <code>conda:</code> for environments
+- <code>threads:</code> for parallelization
+- Wildcards: <code>{sample}</code>
+</div>
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
 # Continuous Integration with **GitHub Actions**
 
 ---
@@ -1082,40 +1060,27 @@ hideInToc: true
 
 # What is CI/CD?
 
-<div class="card card-info pad-tight mt-md">
-
-## **Continuous Integration / Continuous Deployment**
-
-Automatically run tasks when you push code to GitHub:
-- Run tests
-- Check code style
-- Build documentation
-- Run analysis pipeline
-- Generate reports
-
-**Benefits**: Catch errors early, ensure reproducibility, automate tedious tasks
-
+<div class="card card-info pad-compact">
+<strong>Continuous Integration / Deployment</strong> — Automatically run tasks when you push code: tests, style checks, build docs, run pipeline. <strong>Benefits:</strong> Catch errors early, ensure reproducibility.
 </div>
 
 ```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4', 'fontFamily': 'Inter'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true}}}%%
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4'}, 'flowchart': {'curve': 'basis'}}}%%
 flowchart LR
-    A[Push Code<br/>to GitHub]:::action --> B[GitHub Actions<br/>Triggered]:::process
-    B --> C[Run Tests]:::step
-    B --> D[Check Style]:::step
-    B --> E[Build Docs]:::step
-    C --> F{Pass?}:::decision
-    D --> F
-    E --> F
-    F -->|Yes| G[✅ Success]:::success
-    F -->|No| H[❌ Fail]:::fail
+    A[Push Code]:::action --> B[GitHub Actions]:::process
+    B --> C[Tests]:::step
+    B --> D[Style]:::step
+    C --> E{Pass?}:::decision
+    D --> E
+    E -->|Yes| F[Success]:::success
+    E -->|No| G[Fail]:::fail
 
-    classDef action fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px
-    classDef process fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px
-    classDef step fill:#1c3d5a,stroke:#34d399,stroke-width:2px,color:#d1fae5,rx:10px
-    classDef decision fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:14px
-    classDef success fill:#134e4a,stroke:#34d399,stroke-width:2px,color:#d1fae5,rx:12px
-    classDef fail fill:#7f1d1d,stroke:#f87171,stroke-width:2px,color:#fee2e2,rx:12px
+    classDef action fill:#0f4c81,stroke:#93c5fd,color:#e2e8f0
+    classDef process fill:#155e75,stroke:#5eead4,color:#e2e8f0
+    classDef step fill:#1c3d5a,stroke:#34d399,color:#d1fae5
+    classDef decision fill:#0b2540,stroke:#fcd34d,color:#fef3c7
+    classDef success fill:#134e4a,stroke:#34d399,color:#d1fae5
+    classDef fail fill:#7f1d1d,stroke:#f87171,color:#fee2e2
 ```
 
 ---
@@ -1124,92 +1089,102 @@ hideInToc: true
 
 # GitHub Actions: Basic Workflow
 
-Create `.github/workflows/test.yml`:
+<div class="grid-2 mt-sm gap-md">
+
+<div style="font-size: 0.78em;">
 
 ```yaml
+# .github/workflows/test.yml
 name: Run Tests
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run tests
-      run: |
-        pytest tests/ -v
+    - run: pip install -r requirements.txt
+    - run: pytest tests/ -v
 ```
 
-Now every push/PR automatically runs your tests!
+</div>
+
+<div>
+
+<div class="card card-info pad-compact">
+<strong>Key Parts</strong>
+
+- <strong>on:</strong> When to trigger (push, PR)
+- <strong>runs-on:</strong> VM type (ubuntu)
+- <strong>steps:</strong> Sequential actions
+- <strong>uses:</strong> Pre-built actions
+- <strong>run:</strong> Shell commands
+</div>
+
+<div class="card card-success pad-compact mt-sm">
+Every push/PR now automatically runs your tests!
+</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-# Advanced: Run Analysis Pipeline on Push
+# Advanced: Analysis Pipeline
+
+<div class="grid-2 mt-sm gap-md">
+
+<div style="font-size: 0.75em;">
 
 ```yaml
 name: Analysis Pipeline
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
-    - name: Download data
-      run: |
-        mkdir -p data/raw
-        wget http://example.com/data.csv -O data/raw/sample.csv
-
-    - name: Run analysis
-      run: make all
-
-    - name: Upload results
-      uses: actions/upload-artifact@v3
+    - run: pip install -r requirements.txt
+    - run: make all
+    - uses: actions/upload-artifact@v4
       with:
-        name: analysis-results
+        name: results
         path: results/
-
-    - name: Commit results to repo (optional)
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add results/
-        git commit -m "Update analysis results" || echo "No changes"
-        git push
 ```
+
+</div>
+
+<div>
+
+<div class="card card-info pad-compact">
+<strong>Pipeline Steps</strong>
+
+1. Checkout code
+2. Setup Python
+3. Install dependencies
+4. Run analysis (<code>make all</code>)
+5. Upload results as artifact
+</div>
+
+<div class="card card-accent pad-compact mt-sm">
+<strong>Optional:</strong> Auto-commit results back to repo, send notifications, deploy to web
+</div>
+
+</div>
+
+</div>
 
 ---
 layout: section
@@ -1230,15 +1205,15 @@ hideInToc: true
 
 ## ✅ **Essential**
 
-- [ ] Use version control (Git)
-- [ ] Document dependencies (requirements.txt)
-- [ ] Use virtual environments
-- [ ] Write README with setup instructions
-- [ ] Separate raw and processed data
-- [ ] Use config files for parameters
-- [ ] Never commit generated files
-- [ ] Add .gitignore
-- [ ] Test on clean environment
+- [ ]  Use version control (Git)
+- [ ]  Document dependencies (requirements.txt)
+- [ ]  Use virtual environments
+- [ ]  Write README with setup instructions
+- [ ]  Separate raw and processed data
+- [ ]  Use config files for parameters
+- [ ]  Never commit generated files
+- [ ]  Add .gitignore
+- [ ]  Test on clean environment
 
 </div>
 
@@ -1246,15 +1221,15 @@ hideInToc: true
 
 ## 🚀 **Advanced**
 
-- [ ] Modular code (functions/classes)
-- [ ] Command-line arguments (argparse)
-- [ ] Automated pipeline (Makefile)
-- [ ] Unit tests (pytest)
-- [ ] CI/CD (GitHub Actions)
-- [ ] Docker container (optional)
-- [ ] Logging instead of print()
-- [ ] Code style checking (black, ruff)
-- [ ] Documentation (Sphinx)
+- [ ]  Modular code (functions/classes)
+- [ ]  Command-line arguments (argparse)
+- [ ]  Automated pipeline (snakemake)
+- [ ]  Unit tests (pytest)
+- [ ]  CI/CD (GitHub Actions)
+- [ ]  Docker container (optional)
+- [ ]  Logging instead of print()
+- [ ]  Code style checking (black, ruff)
+- [ ]  Documentation (Sphinx)
 
 </div>
 
@@ -1266,61 +1241,45 @@ hideInToc: true
 
 # Example README.md
 
-````markdown
-# Particle Physics Data Analysis
+<div class="grid-2 mt-sm gap-md">
 
-Analysis of Higgs → γγ events using CMS Open Data.
+<div class="card card-info pad-compact">
+<strong>README Essentials</strong>
+
+- Title & description
+- Setup instructions
+- How to run analysis
+- Project structure
+- Input/output files
+- Dependencies
+- Citation & license
+</div>
+
+<div style="font-size: 0.75em;">
+
+```markdown
+# D0 Lifetime Analysis
+LHCb Open Data: D0 → K-π+ decay.
 
 ## Setup
-
-```bash
-# Clone repository
-git clone https://github.com/username/higgs-analysis.git
-cd higgs-analysis
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
+    git clone ... && cd d0-lifetime
+    python -m venv venv
+    pip install -r requirements.txt
 
 ## Usage
+    make all    # Full analysis pipeline
+    make test   # Run unit tests
+    make clean  # Remove outputs
 
-```bash
-# Run complete analysis
-make all
-
-# Or step by step:
-python scripts/1_preprocess.py --input data/raw/sample.csv --output data/processed/clean.csv
-python scripts/2_fit_model.py --config config/analysis.yaml
-python scripts/3_make_plots.py --output results/
-
-# Run tests
-make test
+## Structure
+    data/       # Input ROOT files
+    results/    # Plots and fits
+    src/        # Analysis scripts
 ```
 
-## Project Structure
+</div>
 
-```
-.
-├── data/           # Data files (not in git)
-├── scripts/        # Analysis scripts
-├── src/            # Reusable modules
-├── config/         # Configuration files
-├── results/        # Generated outputs
-└── tests/          # Unit tests
-```
-
-## Citation
-
-If you use this code, please cite: [DOI/paper]
-
-## License
-
-MIT License - see LICENSE file
-````
+</div>
 
 ---
 hideInToc: true
@@ -1328,7 +1287,10 @@ hideInToc: true
 
 # Version Control: .gitignore
 
-<div class="card card-warning pad-tight mt-md">
+<div class="grid grid-cols-2 gap-4">
+<div>
+
+<div class="card card-warning pad-tight">
 
 **Never commit**:
 - Large data files (use Git LFS or external storage)
@@ -1338,6 +1300,9 @@ hideInToc: true
 - Credentials/secrets
 
 </div>
+
+</div>
+<div class="overflow-y-auto max-h-85">
 
 ```bash
 # .gitignore for data analysis project
@@ -1368,6 +1333,11 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
+# IDE
+.idea/
+.vscode/
+*.swp
+
 # OS
 .DS_Store
 Thumbs.db
@@ -1376,7 +1346,14 @@ Thumbs.db
 .env
 credentials.json
 *.key
+
+# Logs
+*.log
+logs/
 ```
+
+</div>
+</div>
 
 ---
 layout: section
@@ -1391,9 +1368,12 @@ hideInToc: true
 
 # Why Docker?
 
-<div class="card card-info pad-tight mt-md">
+<div class="grid grid-cols-2 gap-4">
+<div>
 
-## **Ultimate Reproducibility**
+<div class="card card-info pad-tight">
+
+**Ultimate Reproducibility**
 
 **Virtual environments** handle Python packages. **Docker containers** handle *everything*:
 - Operating system
@@ -1405,12 +1385,12 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+</div>
+<div>
 
 <div class="card card-primary pad-tight">
 
-### **Use Cases**
-
+**Use Cases**
 - Share analysis with exact environment
 - Run on HPC clusters
 - Deploy to production
@@ -1418,10 +1398,9 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary pad-tight mt-2">
 
-### **When to Use**
-
+**When to Use**
 - Complex dependencies (ROOT, GEANT4)
 - Collaboration with diverse systems
 - Production deployment
@@ -1430,6 +1409,7 @@ hideInToc: true
 </div>
 
 </div>
+</div>
 
 ---
 hideInToc: true
@@ -1437,13 +1417,12 @@ hideInToc: true
 
 # Basic Dockerfile
 
+<div class="grid grid-cols-2 gap-4">
+<div>
+
 ```dockerfile
 # Dockerfile - Analysis environment
-
-# Base image
 FROM python:3.11-slim
-
-# Set working directory
 WORKDIR /app
 
 # Copy requirements and install
@@ -1456,6 +1435,9 @@ COPY . .
 # Default command
 CMD ["python", "scripts/run_analysis.py"]
 ```
+
+</div>
+<div>
 
 ```bash
 # Build container
@@ -1471,10 +1453,13 @@ docker run -it my-analysis /bin/bash
 docker run -v $(pwd)/data:/app/data my-analysis
 ```
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent pad-tight mt-2">
 
-**Note**: Docker has a learning curve. Start with virtual environments, add Docker when needed.
+**Note**: Start with virtual environments, add Docker when needed.
 
+</div>
+
+</div>
 </div>
 
 ---
@@ -1488,23 +1473,15 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Putting It All Together
+# Putting It All Together: From Chaos to Order
 
-<div class="card card-accent pad-tight mt-md">
-
-## **Complete Workflow: From Chaos to Order**
-
-Let's transform a messy analysis into a professional, reproducible workflow.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid grid-cols-2 gap-4">
 
 <div class="card card-warning pad-tight">
 
-### 😱 **Before**
+**Before**
 
-```
+```text
 analysis_final_FINAL_v3.ipynb
 data.csv
 data_backup.csv
@@ -1519,15 +1496,14 @@ untitled.py
 - Unclear what to run
 - Can't reproduce results
 - No documentation
-- Lost in chaos
 
 </div>
 
 <div class="card card-success pad-tight">
 
-### ✨ **After**
+**After**
 
-```
+```text
 my_analysis/
 ├── README.md
 ├── requirements.txt
@@ -1543,9 +1519,7 @@ my_analysis/
 ```
 
 - Clear workflow (`make all`)
-- Reproducible
-- Tested
-- Documented
+- Reproducible & tested
 
 </div>
 
@@ -1556,6 +1530,9 @@ hideInToc: true
 ---
 
 # Workflow Execution
+
+<div class="grid grid-cols-2 gap-4">
+<div>
 
 ```bash
 # First-time setup (once)
@@ -1568,6 +1545,17 @@ pip install -r requirements.txt
 # Run analysis (any time)
 make all
 
+# Run tests
+make test
+
+# Clean and rerun
+make clean && make all
+```
+
+</div>
+<div>
+
+```bash
 # Output:
 # Step 1/3: Preprocessing data...
 # Step 2/3: Fitting model...
@@ -1576,22 +1564,19 @@ make all
 # Step 3/3: Generating plots...
 # ✅ Analysis complete! Results in results/
 
-# Run tests
-make test
-
-# Clean and rerun
-make clean && make all
-
 # Push results
 git add results/fit_params.csv
 git commit -m "Update fit results"
 git push
 ```
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent pad-tight mt-2">
 
-**One command** runs everything. **Anyone** can reproduce your results. **Future you** will be grateful!
+**One command** runs everything. **Anyone** can reproduce your results!
 
+</div>
+
+</div>
 </div>
 
 ---
@@ -1600,203 +1585,43 @@ hideInToc: true
 
 # Benefits in Practice
 
-<div class="grid-3 mt-md gap-md">
+<div class="grid grid-cols-3 gap-4">
 
 <div class="card card-primary pad-tight">
 
-### **For You**
+**For You**
 
-✅ Faster iteration
-
-✅ Easier to modify
-
-✅ Less debugging
-
-✅ Confidence in results
-
-✅ Easy to revisit old work
+- Faster iteration
+- Easier to modify
+- Less debugging
+- Confidence in results
+- Easy to revisit old work
 
 </div>
 
 <div class="card card-secondary pad-tight">
 
-### **For Collaborators**
+**For Collaborators**
 
-✅ Easy onboarding
-
-✅ Clear workflow
-
-✅ Reproducible results
-
-✅ Parallel work (no conflicts)
-
-✅ Review-friendly code
+- Easy onboarding
+- Clear workflow
+- Reproducible results
+- Parallel work (no conflicts)
+- Review-friendly code
 
 </div>
 
 <div class="card card-info pad-tight">
 
-### **For Science**
+**For Science**
 
-✅ Reproducible research
-
-✅ Transparent methods
-
-✅ Easier peer review
-
-✅ Reusable by others
-
-✅ Career-ready skills
+- Reproducible research
+- Transparent methods
+- Easier peer review
+- Reusable by others
+- Career-ready skills
 
 </div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Summary
-
----
-hideInToc: true
----
-
-# What We Learned Today
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary pad-tight">
-
-## **Core Concepts**
-
-✅ Project structure best practices
-
-✅ Command-line arguments (argparse)
-
-✅ Configuration files (YAML)
-
-✅ Virtual environments (venv, conda)
-
-✅ Dependency management (requirements.txt)
-
-✅ Automation with Makefiles
-
-✅ CI/CD with GitHub Actions
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## **Skills Acquired**
-
-✅ Transform scripts into workflows
-
-✅ Make analysis reproducible
-
-✅ Automate repetitive tasks
-
-✅ Manage dependencies properly
-
-✅ Use industry-standard tools
-
-✅ Collaborate effectively
-
-✅ Publish-ready code
-
-</div>
-
-</div>
-
-<div class="card card-accent pad-tight mt-md">
-
-## 🎯 **The Big Picture**
-
-You've learned the complete data analysis stack: computing fundamentals → Python → statistics → fitting → real data → **reproducible workflows**. You're now equipped to do professional, publication-quality data analysis!
-
-</div>
-
----
-hideInToc: true
----
-
-# Next Steps
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info pad-tight">
-
-## **Immediate Practice**
-
-1. Take an existing analysis and restructure it
-2. Add argparse to your scripts
-3. Create a requirements.txt
-4. Write a Makefile
-5. Set up GitHub Actions
-6. Share with a collaborator
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## **What's Next?**
-
-**L13+: Machine Learning**
-- Supervised learning
-- Classification and regression
-- Neural networks
-- Model evaluation
-- Feature engineering
-
-**Final Project**
-- Apply everything learned
-- Reproducible, version-controlled analysis
-- GitHub repo with documentation
-- Presentation of results
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Resources
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary pad-tight">
-
-## **Tools & Documentation**
-
-- [argparse tutorial](https://docs.python.org/3/howto/argparse.html)
-- [YAML specification](https://yaml.org/)
-- [GNU Make manual](https://www.gnu.org/software/make/manual/)
-- [GitHub Actions docs](https://docs.github.com/en/actions)
-- [Docker getting started](https://docs.docker.com/get-started/)
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## **Books & Guides**
-
-- *Reproducible Research with R and RStudio* (Gandrud) - concepts apply to Python
-- *The Pragmatic Programmer* (Hunt & Thomas)
-- [The Turing Way](https://the-turing-way.netlify.app/) - reproducible research handbook
-- [Research Software Engineering with Python](https://merely-useful.tech/py-rse/)
-
-</div>
-
-</div>
-
-<div class="card card-accent pad-tight mt-md">
-
-## 💡 **Pro Tip**
-
-Start small. Don't try to implement everything at once. Add one improvement per project: argparse this week, Makefile next week, tests the following. Incrementally build good habits.
 
 </div>
 
@@ -1805,13 +1630,11 @@ hideInToc: true
 layout: quote
 ---
 
-# Reproducibility is not a burden—it's a superpower. The time you invest in proper workflows pays back tenfold in reliability, speed, and scientific impact.
+# Start small. Don't try to implement everything at once. Add one improvement per project: argparse this week, Makefile next week, tests the following. Incrementally build good habits.
 
 ---
 hideInToc: true
-layout: end
+layout: quote
 ---
 
-# Questions?
-
-## Next: **Machine Learning** (L13+)
+# Reproducibility is not a burden—it's a superpower. The time you invest in proper workflows pays back tenfold in reliability, speed, and scientific impact.
