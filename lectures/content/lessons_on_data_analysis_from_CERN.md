@@ -82,3 +82,7 @@ src: slides/L9_Probability_and_Statistics.md
 ---
 src: slides/L10_Data_Fitting.md
 ---
+
+---
+src: slides/L12_Reproducible_Workflows.md
+---
