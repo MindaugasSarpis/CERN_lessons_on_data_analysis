@@ -21,245 +21,328 @@ layout: cover
 ## File Handling and Directory Structure
 
 ---
+hideInToc: true
+layout: quote
+---
+
+# Good file management is the invisible foundation of every successful analysis. Name your files well, organise your directories, and your future self will thank you.
+
+---
 layout: section
 hideInToc: true
 ---
 
-# **Common pitfalls in working with computers**
-
----
-layout: two-cols-header
-hideInToc: true
----
-
-# **File management chaos**
-
-::left::
-
-## **Common issues:**
-
-- ### "I have no idea where I saved that file"
-  
-- ### "My file is gone!"
-
-- ### "I have 10 files with the same name, which one is the right one?"
-
-  - ### `final_final_v2.docx`,  `asdfasdf.docx`, `asdfasdf.docx`
-
-- ### "I have overwritten my file with the wrong version"
-
-::right::
-
-## **How to avoid:**
-
-- ### Create a consistent folder structure
-
-- ### Use descriptive filenames and version numbers
-
-- ### Employ file tagging, search filters, or integrated version control systems like Git to help keep track of changes
-
----
-layout: two-cols
-hideInToc: true
----
-
-## **No backups**
-
-- ### "I lost all my data"
-
-- ### "I accidentally deleted my file"
-
-- ### "My computer crashed and I lost everything"
-
-- ### "I spilled tea on my laptop now my thesis is gone"
-
-::right::
-
-## **How to avoid:**
-
-- ### Use automatic cloud backup services (Dropbox, Google Drive, OneDrive).
-
-- ### Keep external backups on physical drives, ensuring they’re in a separate location.
-
-- ### Consider version control for text-based files (Git), so you can revert to an older version if needed.
-
----
-layout: two-cols
-hideInToc: true
----
-
-## **Compatibility issues**
-
-- ### "I can't open this file"
-  
-- ### "This only works on my old laptop"
-
-- ### "I have a mac so this probably won't work"
-  
-- ### "I opened this word file but it's all broken"
-
-- ### "The script was running ok but now I get errors"
-
-::right::
-
-##  **How to avoid:** 
-
-- ### Use open-source software and file formats whenever possible
-
-- ### Use cloud-based tools that work across different platforms
-
-- ### Use virtual machines or containers to ensure compatibility
-
-- ### Use version control to track changes and revert to a working version
-
-- ### Use software that is actively maintained and updated
-
-- ### Use software that is widely used and has a large user base
-
-- ### Agree on software and file formats with collaborators
+# Common Pitfalls in Working with **Computers**
 
 ---
 hideInToc: true
-layout: two-cols-header
-class: "pt-20"  # modifies spacing on the overall layout
 ---
 
-# **File Naming Conventions**
+# File Management Chaos
 
-::left::
+<div class="grid-2 mt-md gap-md">
 
-- ## **Think about your files beforehand**
+<div class="card card-warning pad-tight">
 
-  - ### Identify what group of files your naming convention will cover
+## 😵 **Common Issues**
 
-  - ### You can use different conventions for different file sets
+- "I have no idea where I saved that file"
 
-  - ### Check for established file naming conventions in your discipline or group
+- "My file is gone!"
 
-::right::
+- "I have 10 files with the same name, which one is the right one?"
+
+  - `final_final_v2.docx`,  `asdfasdf.docx`, `asdfasdf.docx`
+
+- "I have overwritten my file with the wrong version"
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **How to Avoid**
+
+- Create a consistent folder structure
+
+- Use descriptive filenames and version numbers
+
+- Employ file tagging, search filters, or integrated version control systems like Git to help keep track of changes
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# No Backups
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning pad-tight">
+
+## 💥 **Common Issues**
+
+- "I lost all my data"
+
+- "I accidentally deleted my file"
+
+- "My computer crashed and I lost everything"
+
+- "I spilled tea on my laptop now my thesis is gone"
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **How to Avoid**
+
+- Use automatic cloud backup services (Dropbox, Google Drive, OneDrive)
+
+- Keep external backups on physical drives, ensuring they're in a separate location
+
+- Consider version control for text-based files (Git), so you can revert to an older version if needed
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Compatibility Issues
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning pad-tight">
+
+## 🔌 **Common Issues**
+
+- "I can't open this file"
+
+- "This only works on my old laptop"
+
+- "I have a mac so this probably won't work"
+
+- "I opened this word file but it's all broken"
+
+- "The script was running ok but now I get errors"
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **How to Avoid**
+
+- Use open-source software and file formats whenever possible
+
+- Use cloud-based tools that work across different platforms
+
+- Use virtual machines or containers to ensure compatibility
+
+- Use version control to track changes and revert to a working version
+
+- Use software that is actively maintained and updated
+
+- Use software that is widely used and has a large user base
+
+- Agree on software and file formats with collaborators
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# File Naming Conventions
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🧠 **Think About Your Files Beforehand**
+
+- Identify what group of files your naming convention will cover
+
+- You can use different conventions for different file sets
+
+- Check for established file naming conventions in your discipline or group
+
+</div>
+
+<div>
 
 <img src="/file_naming_comic.png" class="inline w-40" />
 
----
-hideInToc: true
-layout: two-cols
----
+</div>
 
-- ## **Identify metadata**
-
-  - ### Experiment conditions
-
-  - ### Type of data
-
-  - ### Researcher name/initials
-
-  - ### Lab name/location
-
-  - ### Project or experiment name or acronym
-
-  - ### Date or date range of experiment
-
-  - ### Experiment number or sample ID
-
-::right::
-
-- ## **Abbreviate and encode metadata in the file name**
-
-  - ### Decide what shortened information to keep
-  
-  - ### Standardize the categories and/or replace them with 2- or 3-letter codes
-
-  - ### Be sure to document these codes
+</div>
 
 ---
 hideInToc: true
 ---
 
-- ## **Use Versioning**
+# File Naming: Metadata
 
-  - ### Use versioning to indicate the most current version of a file
-  
-  - ### Track versions of a file by adding version information to end of the file name, e.g. filename_v2.xxx
-  
-  - ### Use a version number (e.g. “v01” or “v02”)
-  
-  - ### Use the version date (use ISO 8601 format: YYYYMMDD or YYYY-MM-DD)
+<div class="grid-2 mt-md gap-md">
 
----
-hideInToc: true
----
+<div class="card card-info pad-tight">
 
-- ## **Ensure Files are Searchable**
-  
-  - ### Think about how you want to sort and search for your files in order to determine the order for the metadata in the file name
-  
-  - ### Decide what metadata should appear at the beginning
-  
-  - ### Use default ordering: alphabetically, numerically, or chronologically
-  
-  - ### Use ISO 8601-formatted dates (YYYYMMDD or YYYY-MM-DD)
+## 🏷️ **Identify Metadata**
 
----
-hideInToc: true
----
+- Experiment conditions
 
-- ## **Separate Metadata Elements**
-  
-  - ### Use dashes (-), underscores (_), or capitalize the first letter of each word
+- Type of data
 
-    - #### Dashes: file-name.xxx
+- Researcher name/initials
 
-    - #### Underscores: file_name.xxx
+- Lab name/location
 
-    - #### No separation: filename.xxx
+- Project or experiment name or acronym
 
-  - ### Camel case (the first letter of each section of text is capitalized): FileName.xxx
+- Date or date range of experiment
 
-  - ### Avoid special characters, such as: ~ ! @ # $ % ^ & * ( ) ` ; : < > ? . , [ ] { } ' " |
+- Experiment number or sample ID
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔤 **Abbreviate & Encode Metadata**
+
+- Decide what shortened information to keep
+
+- Standardize the categories and/or replace them with 2- or 3-letter codes
+
+- Be sure to document these codes
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-- ## **Write down your naming conventions**
-  
-  - ### If the file is moved or shared, users will be able to identify the file from its file name
+# File Naming: Versioning
 
-  - ### File names should be 40-50 characters and conventions should only use alphanumeric characters, dashes, underscores
+<div class="card card-primary pad-tight">
 
-  - ### If you find that you are encoding a large amount of metadata in the file names, you should consider storing this metadata in a master spreadsheet with your data for future reference
+## 🔢 **Use Versioning**
+
+- Use versioning to indicate the most current version of a file
+
+- Track versions of a file by adding version information to end of the file name, e.g. filename_v2.xxx
+
+- Use a version number (e.g. "v01" or "v02")
+
+- Use the version date (use ISO 8601 format: YYYYMMDD or YYYY-MM-DD)
+
+</div>
 
 ---
-layout: two-cols-header
 hideInToc: true
-class: "pt-30"  # modifies spacing on the overall layout
 ---
 
-# **Two different file types**
+# File Naming: Searchability
 
-::left::
+<div class="card card-accent pad-tight">
 
-- ## **Text File**
+## 🔍 **Ensure Files are Searchable**
 
-  - ### Human readable
+- Think about how you want to sort and search for your files in order to determine the order for the metadata in the file name
 
-  - ### Can be opened with any text editor
+- Decide what metadata should appear at the beginning
 
-  - ### Generally larger
+- Use default ordering: alphabetically, numerically, or chronologically
 
-  - ### Usually config files, logs, or scripts
+- Use ISO 8601-formatted dates (YYYYMMDD or YYYY-MM-DD)
 
-::right::
+</div>
 
-- ## **Binary File**
+---
+hideInToc: true
+---
 
-  - ### Not human readable
+# File Naming: Separators
 
-  - ### Requires specific software to open
+<div class="card card-info pad-tight">
 
-  - ### Generally smaller
+## ✂️ **Separate Metadata Elements**
 
-  - ### Usually images, videos, or executables
+- Use dashes (-), underscores (_), or capitalize the first letter of each word
+
+  - Dashes: `file-name.xxx`
+
+  - Underscores: `file_name.xxx`
+
+  - No separation: `filename.xxx`
+
+- Camel case (the first letter of each section of text is capitalized): `FileName.xxx`
+
+- Avoid special characters, such as: ~ ! @ # $ % ^ & * ( ) ` ; : < > ? . , [ ] { } ' " |
+
+</div>
+
+---
+hideInToc: true
+---
+
+# File Naming: Documentation
+
+<div class="card card-secondary pad-tight">
+
+## 📝 **Write Down Your Naming Conventions**
+
+- If the file is moved or shared, users will be able to identify the file from its file name
+
+- File names should be 40-50 characters and conventions should only use alphanumeric characters, dashes, underscores
+
+- If you find that you are encoding a large amount of metadata in the file names, you should consider storing this metadata in a master spreadsheet with your data for future reference
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Two Different File Types
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📄 **Text File**
+
+- Human readable
+
+- Can be opened with any text editor
+
+- Generally larger
+
+- Usually config files, logs, or scripts
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💾 **Binary File**
+
+- Not human readable
+
+- Requires specific software to open
+
+- Generally smaller
+
+- Usually images, videos, or executables
+
+</div>
+
+</div>
 
 ---
 layout: iframe
@@ -269,16 +352,15 @@ url: https://datacarpentry.github.io/rr-organization1/01-file-naming/index.html
 
 ---
 hideInToc: true
-layout: two-cols-header
 ---
 
-# **Directory Structure**
+# Directory Structure
 
-::left::
+<div class="grid-2 mt-md gap-md">
 
-## Organized by File type
+<div class="card card-primary pad-tight">
 
-<div style="max-width: 300px;">
+## 📁 **Organized by File Type**
 
 ```bash
 |- Data/
@@ -293,11 +375,9 @@ layout: two-cols-header
 
 </div>
 
-::right::
+<div class="card card-secondary pad-tight">
 
-## Organized by Analysis
-
-<div style="max-width: 300px; margin-top: 0px">
+## 📊 **Organized by Analysis**
 
 ```bash
 |- Figure1/
@@ -309,6 +389,14 @@ layout: two-cols-header
 |  |- Results/
 |  |  |- Figure2.tif
 ```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Choose the structure that best fits your workflow — either is valid as long as it is consistent.
 
 </div>
 
