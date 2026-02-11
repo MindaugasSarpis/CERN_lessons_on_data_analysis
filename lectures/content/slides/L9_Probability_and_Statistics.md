@@ -85,7 +85,7 @@ hideInToc: true
 
 # Two Interpretations of Probability
 
-<div class="grid-2 gap-md">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
@@ -131,7 +131,7 @@ hideInToc: true
 
 # Basic Concepts
 
-<div class="grid-2 mt-md gap-tight">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
@@ -409,7 +409,7 @@ Probability of $A$ given that $B$ has occurred • Restricts sample space to $B$
 
 </div>
 
-<div class="grid-2 mt-md gap-tight">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
@@ -480,7 +480,7 @@ Knowing $B$ occurred provides **no information** about $A$
 
 </div>
 
-<div class="grid-2 mt-md gap-tight">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
@@ -578,7 +578,7 @@ $$P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}$$
 
 </div>
 
-<div class="grid-2 mt-md gap-tight">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
@@ -616,7 +616,7 @@ Disease: 1% prevalence • Test: 95% sensitivity, 90% specificity
 
 </div>
 
-<div class="grid-2 mt-md gap-tight">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
@@ -1010,7 +1010,7 @@ hideInToc: true
 
 # Measures of Spread
 
-<div class="grid-3 mt-md gap-tight">
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-warning pad-tight">
 
@@ -1405,7 +1405,7 @@ For $X \sim N(\mu, \sigma^2)$:
 
 
 
-<div class="grid-3 gap-tight">
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-success pad-balanced text-center">
 <div class="text-xl-strong">📊 68%</div>
@@ -1534,7 +1534,7 @@ hideInToc: true
 
 # Standard Error
 
-<div class="grid-3 mt-md gap-tight">
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary pad-balanced">
 

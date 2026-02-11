@@ -198,7 +198,7 @@ hideInToc: true
 
 # **Course Content** (prone to change)
 
-<div class="grid-2 mt-sm gap-tight">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-compact">
 
