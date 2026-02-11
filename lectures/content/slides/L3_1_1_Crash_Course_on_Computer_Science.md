@@ -999,7 +999,7 @@ hideInToc: true
 
 <div class="card card-secondary pad-compact">
 
-**m** = mantissa (significant digits, 1 $\leq$ m $<$ 10)
+**m** = mantissa (significant digits, 1 $\leq$ m $<$ 2 in binary)
 
 </div>
 
@@ -1043,6 +1043,45 @@ hideInToc: true
 <div class="text-center text-3xl mt-md">
 
 `0 10000001 01110000000000000000000`
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Floating-Point Gotchas
+
+<div class="card card-warning pad-tight mt-md">
+
+## ⚠️ **Not all decimals are exact in binary**
+
+```python
+print(0.1 + 0.2)            # 0.30000000000000004 (!)
+print(0.1 + 0.2 == 0.3)     # False
+
+# Use tolerance for comparisons
+import math
+math.isclose(0.1 + 0.2, 0.3)  # True
+```
+
+**Why?** 0.1 is a repeating fraction in binary (like 1/3 in decimal). Finite bits mean rounding.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-compact">
+
+🔢 **float32** — ~7 significant digits
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+🔢 **float64** — ~15 significant digits (Python default)
+
+</div>
 
 </div>
 
