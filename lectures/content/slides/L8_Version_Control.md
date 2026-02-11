@@ -1,5 +1,4 @@
 ---
-marp: true
 background: /background_intro.jpg
 
 class: text-left
@@ -22,23 +21,38 @@ layout: cover
 ## Version Control
 
 ---
-layout: two-cols
+hideInToc: true
+layout: quote
+---
+
+# Every file has a history. **Version control** lets you navigate that history, collaborate without conflict, and never lose work again.
+
+---
 hideInToc: true
 ---
 
 # The Importance of Version Control
 
-- ### Even if working alone, many different versions of the same file will exist
+<div class="grid-2 gap-md mt-md">
 
-- ### Some overwritten changes might be needed later
+<div class="card card-warning pad-tight">
 
-- ### A "versioned" file might be needed when implementing comments from supervisor / reviewers
+## ⚠️ **The Problem**
 
-- ### This hold true for written work, code and other files
+- Even if working alone, many different versions of the same file will exist
+- Some overwritten changes might be needed later
+- A "versioned" file might be needed when implementing comments from supervisor / reviewers
+- This holds true for written work, code and other files
 
-::right::
+</div>
 
-<img src="/comic_version.jfif" style="max-height: 500px; margin-left: 30px">
+<div>
+
+<img src="/comic_version.jfif" style="max-height: 450px;">
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -46,90 +60,111 @@ hideInToc: true
 
 # Tracking Changes (differences)
 
-- ### Rather than saving multiple copies of the same file, we can track changes
+<div class="card card-info pad-tight mt-md">
 
-- ### Word processors and other software have some change-tracking functionality but it is limited (no synchronous editing, no change history, etc.)
+## 🔍 **Why Track Changes?**
 
-- ### `git` is an open-source version control system that is used to track changes in files
+- Rather than saving multiple copies of the same file, we can track changes
+- Word processors and other software have some change-tracking functionality but it is limited (no synchronous editing, no change history, etc.)
+- `git` is an open-source version control system that is used to track changes in files
+
+</div>
 
 ![](/play-changes.svg)
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Different Versions
 
-- ### An eddit to a file might overwrite some of the content in the previous version
+<div class="grid-2 gap-md mt-md">
 
-- ### This *divergences* may arrise while working alone, but they are really common when multiple people are working on the same file
+<div class="card card-primary pad-tight">
 
-::right::
+## 🔀 **Diverging Histories**
 
-<img src="/versions.svg" style="max-height: 500px; margin-left: 30px">
+- An edit to a file might overwrite some of the content in the previous version
+- This *divergences* may arrise while working alone, but they are really common when multiple people are working on the same file
+
+</div>
+
+<div>
+
+<img src="/versions.svg" style="max-height: 450px;">
+
+</div>
+
+</div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Merging
 
-- ### `git` has great functionality for merging different versions of the same file
+<div class="grid-2 gap-md mt-md">
 
-- ### If the previous content is not overwritten, or deleted, merge just combines the changes into one file
+<div class="card card-success pad-tight">
 
-- ### If changes over-write each other a so-called **merge conflict** arises
+## 🔗 **Combining Changes**
 
-::right::
+- `git` has great functionality for merging different versions of the same file
+- If the previous content is not overwritten, or deleted, merge just combines the changes into one file
+- If changes over-write each other a so-called **merge conflict** arises
 
-<img src="/merge.svg" style="max-height: 500px; margin-left: 30px">
+</div>
+
+<div>
+
+<img src="/merge.svg" style="max-height: 450px;">
+
+</div>
+
+</div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
-# Using `git` for the first time 
+# Using `git` for the first time
 
-- ### The user name and email address need to configured.
+<div class="grid-2 gap-md mt-md">
 
-<div style="max-width: 350px">
+<div class="card card-primary pad-tight">
+
+## ⚙️ **Configuration**
+
+- The user name and email address need to be configured.
+
 ```bash
 git config --global user.name "Mindaugas Sarpis"
 git config --global user.email "mindaugas.sarpis@cern.ch"
 ```
-</div>
 
-- ### Check the configuration with:
+- Check the configuration with:
 
-<div style="max-width: 350px">
 ```bash
 git config --list
 ```
-</div>
 
-- ### Edit the configuration with:
-  
-<div style="max-width: 350px">
+- Edit the configuration with:
+
 ```bash
 git config --global --edit
 ```
-</div>
 
-- ### Open configuration help:
+- Open configuration help:
 
-<div style="max-width: 350px">
 ```bash
 git config --h
 git config --help
 ```
+
 </div>
 
-::right::
+<div class="card card-secondary pad-tight" style="font-size: 0.7em; overflow: auto; max-height: 475px;">
 
-<div style="max-width: 450px; max-height: 475px; overflow: auto;">
 ```bash
 usage: git config [<options>]
 
@@ -175,40 +210,48 @@ Other
     --show-scope          show scope of config (worktree, local, global, system, command)
     --default < value >     with --get, use default value when missing entry
 ```
+
+</div>
+
 </div>
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Creating a new repository
 
-- ### A repository is initialized with the following command:
+<div class="grid-2 gap-md mt-md">
 
-<div style="max-width: 350px">
+<div class="card card-primary pad-tight">
+
+## 📂 **Initializing a Repository**
+
+- A repository is initialized with the following command:
+
 ```bash
 git init
 ```
-</div>
 
-- ### This command creates a new repository in the current directory. 
+- This command creates a new repository in the current directory.
 
-- ### The repository is a hidden directory called `.git` that contains all the information changes tracked by `git`.
+- The repository is a hidden directory called `.git` that contains all the information changes tracked by `git`.
 
-- ### You can check the status of the repository with:
+- You can check the status of the repository with:
 
-<div style="max-width: 350px">
 ```bash
 git status
 ```
+
 </div>
 
-::right::
+<div>
 
 ![](/git-staging-area.svg)
 
-- ### The repository is empty at this point and the output will be:
+<div class="card card-secondary pad-compact mt-sm">
+
+The repository is empty at this point and the output will be:
 
 ```bash
 On branch main
@@ -218,52 +261,59 @@ No commits yet
 nothing to commit (create/copy files and use "git add" to track)
 ```
 
+</div>
+
+</div>
+
+</div>
+
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Staging Area
 
-- ### `git` has a staging area where files are placed to track the changes made to them.  
+<div class="grid-2 gap-md mt-md">
 
-- ### To move a file to the staging area use: 
-  
-<div style="max-width: 350px">
+<div class="card card-primary pad-tight">
+
+## 📋 **Adding Files to the Stage**
+
+- `git` has a staging area where files are placed to track the changes made to them.
+
+- To move a file to the staging area use:
+
 ```bash
 git add <file>
 ```
-</div>
 
-- ### To move all files to the staging area use:
-  
-<div style="max-width: 350px">
+- To move all files to the staging area use:
+
 ```bash
 git add --all
 ```
-</div>
 
-- ### To unstage a file use:
-  
-<div style="max-width: 350px">
+- To unstage a file use:
+
 ```bash
 git restore --staged <file>
 ```
-</div>
 
-- ### Changes to files can be viewed with:
+- Changes to files can be viewed with:
 
-<div style="max-width: 350px">
 ```bash
 git diff
 ```
+
 </div>
 
-::right::
+<div>
 
 ![](/git-staging-area.svg)
 
-- ### When staged files are present, the output of `git status` will be:
+<div class="card card-info pad-compact mt-sm">
+
+When staged files are present, the output of `git status` will be:
 
 ```bash
 On branch main
@@ -274,76 +324,105 @@ Changes to be committed:
         modified:   < file >
 ```
 
+</div>
+
+</div>
+
+</div>
+
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Committing Changes
 
-- ### Files are committed to the repository from the staging area with:
+<div class="grid-2 gap-md mt-md">
 
-<div style="max-width: 375px">
+<div class="card card-primary pad-tight">
+
+## 📸 **Creating Snapshots**
+
+- Files are committed to the repository from the staging area with:
+
 ```bash
 git commit -m "A message describing the changes"
 ```
+
+- Commit is a snapshot of the repository at a given time
+
+- Only changes to files are tracked, not the directories themselves
+
+- It's best to keep the commits small and focused on a single change
+
+- The commit message should be descriptive and concise
+
+- The commit message should be in the present tense
+
 </div>
 
-- ### Commit is a snapshot of the repository at a given time
+<div>
 
-- ### Only changes to files are tracked, not the directories themselves
-
-- ### It's best to keep the commits small and focused on a single change
-
-- ### The commit message should be descriptive and concise
-
-- ### The commit message should be in the present tense
-  
-::right::
 ![](/git-committing.svg)
 
+</div>
+
+</div>
+
 ---
-layout: two-cols
 hideInToc: true
 ---
 
 # Restoring Changes
 
-- ### Changes to files can be restored to the last commit with:
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## ↩️ **Undoing Changes**
+
+- Changes to files can be restored to the last commit with:
 
   ```bash
   git restore < file >
   ```
 
-- ### Changes to files can be restored to the last commit and the staging area with:
+- Changes to files can be restored to the last commit and the staging area with:
 
   ```bash
   git restore --staged < file >
   ```
 
-- ### Changes to files from previous commits can be restored using the *hash* of the commit:
+- Changes to files from previous commits can be restored using the *hash* of the commit:
 
   ```bash
   git restore --source=<hash> < file >
   ```
 
-- ### A new commit reverting the changes can be made with:
+- A new commit reverting the changes can be made with:
 
   ```bash
   git revert < hash >
   ```
 
-::right::
+</div>
+
+<div>
 
 ![](/git-restore.svg)
 
-&nbsp;
+<div class="card card-warning pad-compact mt-sm">
 
-- ### The entire repository can be restored to the last commit with deleting the changes:
+The entire repository can be restored to the last commit with deleting the changes:
 
-  ```bash
-  git reset --hard < hash >
-  ```
+```bash
+git reset --hard < hash >
+```
+
+</div>
+
+</div>
+
+</div>
 
 ---
 layout: image
@@ -353,25 +432,32 @@ hideInToc: true
 ---
 
 ---
-layout: two-cols
 hideInToc: true
 ---
 
-# Ignoring Files and Directories 
+# Ignoring Files and Directories
 
-- ### There might be files that you don't want to track with `git`
+<div class="grid-2 gap-md mt-md">
 
-  - #### Temporary files
+<div class="card card-warning pad-tight">
 
-  - #### Output files
+## 🚫 **What to Ignore**
 
-  - #### Files with sensitive information
+- There might be files that you don't want to track with `git`
 
-  - #### Large files
+  - Temporary files
 
-- ### These files can be ignored by creating a `.gitignore` file in the repository
+  - Output files
 
-::right::
+  - Files with sensitive information
+
+  - Large files
+
+- These files can be ignored by creating a `.gitignore` file in the repository
+
+</div>
+
+<div>
 
 ```bash {*}{maxHeight:'350px'}
 # Byte-compiled / optimized / DLL files
@@ -454,6 +540,10 @@ env.bak/
 venv.bak/
 ```
 
+</div>
+
+</div>
+
 ---
 layout: image-right
 image: /git-freshly-made-github-repo.svg
@@ -478,14 +568,14 @@ hideInToc: true
 # Git Remotes
 
 - ### The remote is created via the remote provider (GitHub, GitLab, Bitbucket, etc.).
-- ### A remote URL needs to be added to the local repository with: 
+- ### A remote URL needs to be added to the local repository with:
 
 ```bash
 git remote add origin git@github.com:mygithub/myremote.git
 ```
 
-- ### To check which remotes are added: 
-  
+- ### To check which remotes are added:
+
 ```bash
   git remote -v
 ```
@@ -530,21 +620,40 @@ git clone < URL >
 hideInToc: true
 ---
 
-# Branches 
+# Branches
 
-- ### `git` has a powerful branching system that allows for multiple versions of the repository to be worked on simultaneously.
-- ### The default branch is called `main`.
-- ### A new branch can be created with:
+<div class="card card-info pad-tight mt-md">
+
+## 🌿 **Parallel Development**
+
+- `git` has a powerful branching system that allows for multiple versions of the repository to be worked on simultaneously.
+- The default branch is called `main`.
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## ➕ **Create a Branch**
 
 ```bash
 git branch < branch-name >
 ```
 
-- ### The branch can be switched with:
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔄 **Switch Branches**
 
 ```bash
 git checkout < branch-name >
 ```
+
+</div>
+
+</div>
 
 ---
 layout: center
