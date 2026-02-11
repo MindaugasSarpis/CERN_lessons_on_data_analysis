@@ -12,7 +12,6 @@ transition: fade
 
 title: "Crash Course on Computer Science"
 layout: cover
-download: true
 ---
 
 # Dr. Mindaugas Šarpis
@@ -28,7 +27,7 @@ layout: quote
 hideInToc: true
 ---
 
-# The main goal of this lecture is to promote algorithmic thinking and to provide a basic understanding of computer science concepts
+# The main goal of this lecture is to promote **algorithmic thinking** and to provide a basic understanding of **computer science** concepts
 
 ---
 layout: center
@@ -42,7 +41,7 @@ graph LR
     classDef invisible fill:none,stroke:none,font-size:24px;
     classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;
     classDef textStyle font-size:24px;
-    
+
     class A invisible;
     class B transparentBox;
     class C invisible;
@@ -55,19 +54,19 @@ graph LR
 hideInToc: true
 ---
 
-# A bit of foresight 
+# A bit of foresight
 
-- ## Applicable to data analysis routines of arbitrary complexity
+<div class="card card-info pad-tight mt-sm">
 
-- ## You don't have to "see" your data (excell, origin, ...)
+- Applicable to data analysis routines of **arbitrary complexity**
+- You don't have to "see" your data (Excel, Origin, ...)
+- You don't have to "see" your code (Python, R, C++, ...)
+- You look at the **results** (or interim results: tests, plots, ...)
+- Everything is managed from the top (workflow, pipeline, config files)
 
-- ## You don't have to "see" your code (python, R, C++, ...)
+</div>
 
-- ## You look at the results (or interim results (tests, plots, ...))
-
-- ## Everything is managed from the top (workflow, pipeline, config files)
-
-&nbsp;
+<div class="mt-md" style="text-align: center;">
 
 ```mermaid {scale: 2}
 graph LR
@@ -76,7 +75,7 @@ graph LR
     classDef invisible fill:none,stroke:none,font-size:24px;
     classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;
     classDef textStyle font-size:24px;
-    
+
     class A invisible;
     class B transparentBox;
     class C invisible;
@@ -85,12 +84,14 @@ graph LR
     linkStyle 1 stroke-width:3px;
 ```
 
+</div>
+
 ---
 layout: section
 hideInToc: true
 ---
 
-# Representation
+# **Representation**
 
 ---
 layout: fact
@@ -131,7 +132,7 @@ hideInToc: true
 class: text-center
 ---
 
-# **0** 
+# **0**
 
 <img src="/light_bulb_off.png" class="w-auto h-86">
 
@@ -212,7 +213,7 @@ class: text-center
 
 <v-click at="4">
     100 × 0 &nbsp; + &nbsp; 10 × 0 &nbsp; + &nbsp; 1 × 0
-</v-click>  
+</v-click>
 </div>
 
 <style>
@@ -380,13 +381,33 @@ hideInToc: true
 
 # Why Hex in Computing?
 
-- ## **Compact**: 1 hex digit = 4 binary digits
+<div class="stack-tight mt-sm">
 
-- ## **Memory addresses**: 0x1A2B3C4D
+<div class="card card-primary pad-compact">
 
-- ## **Colors**: #FF5733 (red-green-blue)
+🔢 **Compact** — 1 hex digit = 4 binary digits
 
-- ## **Debugging**: Easier to read than long binary strings
+</div>
+
+<div class="card card-secondary pad-compact">
+
+💾 **Memory addresses** — 0x1A2B3C4D
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+🎨 **Colors** — #FF5733 (red-green-blue)
+
+</div>
+
+<div class="card card-info pad-compact">
+
+🐛 **Debugging** — Easier to read than long binary strings
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -553,21 +574,21 @@ hideInToc: true
 
 # Byte = 8 bits
 
---- 
+---
 layout: fact
 hideInToc: true
 ---
 
 # 00000000
 
---- 
+---
 layout: fact
 hideInToc: true
 ---
 
 # 11111111
 
---- 
+---
 layout: fact
 hideInToc: true
 ---
@@ -581,7 +602,7 @@ layout: section
 hideInToc: true
 ---
 
-# Binary Operations
+# Binary **Operations**
 
 ---
 layout: center
@@ -659,7 +680,9 @@ hideInToc: true
 
 # Bitwise Operations Example
 
-- ## Used in: data compression, cryptography, bit manipulation
+<div class="card card-primary pad-tight mt-sm">
+
+**Used in:** data compression, cryptography, bit manipulation
 
 ```python
 a = 0b1100  # 12 in decimal
@@ -670,7 +693,9 @@ print(f"a | b = {a | b:04b}")  # 1110 (14)
 print(f"~a = {~a & 0b1111:04b}")  # 0011 (3)
 ```
 
---- 
+</div>
+
+---
 layout: fact
 hideInToc: true
 ---
@@ -702,7 +727,7 @@ hideInToc: true
 layout: section
 ---
 
-# Text Beyond ASCII
+# Text Beyond **ASCII**
 
 ---
 hideInToc: true
@@ -710,23 +735,39 @@ hideInToc: true
 
 # Unicode and UTF-8
 
-- ## Universally encodes characters as code points
+<div class="grid-2 mt-md gap-md">
 
-  - ## U+0041 = 'A'
+<div class="card card-primary pad-tight">
 
-  - ## U+03B1 = 'α'
+## 🌐 **Unicode**
 
-  - ## U+1F600 = '😀'
+Universally encodes characters as code points
 
-- ## UTF-8 stores code points in 1–4 bytes, backward-compatible with ASCII
+- U+0041 = 'A'
+- U+03B1 = 'α'
+- U+1F600 = '😀'
 
-- ## Pitfalls in data: smart quotes, emojis, mixed encodings, BOM
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📦 **UTF-8**
+
+Stores code points in 1–4 bytes, backward-compatible with ASCII
+
+**Pitfalls in data:** smart quotes, emojis, mixed encodings, BOM
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-# Can use python for conversions
+# Can use Python for conversions
+
+<div class="card card-accent pad-tight mt-sm">
 
 ```python
 # Python: bytes vs str and UTF-8
@@ -737,29 +778,47 @@ len(s), len(b)         # chars vs bytes
 b.decode("utf-8")      # back to str
 ```
 
+</div>
+
 ---
 hideInToc: true
 ---
 
 # Hex and Endianness
 
-- ## Hex is compact binary: 1 hex digit = 4 bits
+<div class="grid-2 mt-md gap-md">
 
-- ## Endianness: byte order for multibyte values
+<div class="card card-primary pad-tight">
 
-- ## 0x12345678
+## 🔢 **Hex is compact binary**
 
-  - ## → big-endian: 12 34 56 78;
+1 hex digit = 4 bits
 
-  - ## → little-endian: 78 56 34 12
+</div>
 
---- 
+<div class="card card-secondary pad-tight">
+
+## 🔄 **Endianness**
+
+Byte order for multibyte values
+
+**0x12345678:**
+- Big-endian: `12 34 56 78`
+- Little-endian: `78 56 34 12`
+
+</div>
+
+</div>
+
+---
 hideInToc: true
 ---
 
 # File formats (extensions)
 
-## Computer needs to know what a sequence of bits is supposed to mean
+<div class="card card-info pad-tight mt-sm">
+
+**Computer needs to know what a sequence of bits is supposed to mean**
 
 | **Text/Data** | **Documents** | **Media/Exec** |
 |--------------|---------------|----------------|
@@ -770,6 +829,7 @@ hideInToc: true
 | .yaml       | .rtf          | .exe           |
 | .md         | .odt          | .apk           |
 
+</div>
 
 ---
 hideInToc: true
@@ -777,9 +837,13 @@ hideInToc: true
 
 # Image Quality vs Bit Depth
 
-## Below are five versions of the same image, saved with **different bit depths**. Notice how fewer bits reduce both **image quality** and **file size**.
+<div class="card card-info pad-tight mt-sm">
 
-<div class="grid grid-cols-5 gap-4 mt-6">
+Below are five versions of the same image, saved with **different bit depths**. Notice how fewer bits reduce both **image quality** and **file size**.
+
+</div>
+
+<div class="grid grid-cols-5 gap-4 mt-md">
   <figure>
     <img src="/elf_24bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">24 bit</figcaption>
@@ -795,7 +859,7 @@ hideInToc: true
   <figure>
     <img src="/elf_2bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">2 bit</figcaption>
- </figure>
+  </figure>
   <figure>
     <img src="/elf_1bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">1 bit</figcaption>
@@ -807,7 +871,7 @@ layout: section
 hideInToc: true
 ---
 
-# Numbers in Computers
+# Numbers in **Computers**
 
 ---
 hideInToc: true
@@ -815,25 +879,35 @@ hideInToc: true
 
 # Floating-Point Basics (IEEE-754)
 
-- ## Float = sign + exponent + mantissa (binary scientific notation)
+<div class="card card-info pad-tight mt-sm">
 
-- ## Finite precision
+**Float** = sign + exponent + mantissa (binary scientific notation)
 
-  - ## Rounding error; some decimals not exact in binary
+**Finite precision** — rounding error; some decimals not exact in binary
 
-&nbsp;
+</div>
 
-- ## **Sign bit** (1 bit):
+<div class="grid-3 mt-md gap-md">
 
-  - ## positive / negative  
+<div class="card card-primary pad-compact">
 
-- ## **Exponent** (8 bits in float32):
+**Sign bit** (1 bit) — positive / negative
 
-  - ## scale (power of 2)  
+</div>
 
-- ## **Mantissa** (23 bits in float32):
+<div class="card card-secondary pad-compact">
 
-  - ## precision bits (significant figures)
+**Exponent** (8 bits in float32) — scale (power of 2)
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+**Mantissa** (23 bits in float32) — precision bits (significant figures)
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -847,15 +921,27 @@ $N = s \times m \times 10^e$
 
 </div>
 
-- ## s = sign +1 or -1
+<div class="grid-3 mt-md gap-md">
 
-&nbsp;
+<div class="card card-primary pad-compact">
 
-- ## m = mantissa (significant digits, 1 $\leq$ m $<$ 10)
+**s** = sign (+1 or -1)
 
-&nbsp;
+</div>
 
-- ## e = exponent (integer power of 10)
+<div class="card card-secondary pad-compact">
+
+**m** = mantissa (significant digits, 1 $\leq$ m $<$ 10)
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+**e** = exponent (integer power of 10)
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -869,16 +955,30 @@ $-6.022 \times 10^{23}$
 
 </div>
 
-- ## Sign = negative  
+<div class="grid-3 mt-md gap-md">
 
-&nbsp;
+<div class="card card-warning pad-compact">
 
-- ## Mantissa = 6.022  
+**Sign** = negative
 
-&nbsp;
-  
-- ## Exponent = 23
+</div>
 
+<div class="card card-primary pad-compact">
+
+**Mantissa** = 6.022
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+**Exponent** = 23
+
+</div>
+
+</div>
+
+---
+hideInToc: true
 ---
 
 ## Binary scientific notation (float32)
@@ -889,20 +989,36 @@ $-6.022 \times 10^{23}$
 
 </div>
 
-- ## s = sign +1 or -1
+<div class="grid-2 mt-md gap-md">
 
-&nbsp;
+<div class="card card-primary pad-compact">
 
-- ## m = mantissa (significant digits, 1 $\leq$ m $<$ 10)
+**s** = sign (+1 or -1)
 
-&nbsp;
+</div>
 
-- ## e = exponent (integer power of 2)
+<div class="card card-secondary pad-compact">
 
-&nbsp;
+**m** = mantissa (significant digits, 1 $\leq$ m $<$ 10)
 
-- ## b = exponent bias (127 for float32)
+</div>
 
+<div class="card card-accent pad-compact">
+
+**e** = exponent (integer power of 2)
+
+</div>
+
+<div class="card card-info pad-compact">
+
+**b** = exponent bias (127 for float32)
+
+</div>
+
+</div>
+
+---
+hideInToc: true
 ---
 
 ## Binary scientific notation (float32)
@@ -913,21 +1029,18 @@ $-6.022 \times 10^{23}$
 
 </div>
 
-- ## 5.75 -> 101.11₂
+<div class="card card-primary pad-tight mt-sm">
 
-- ## In scientific notation: $1.0111_2 \times 2^2$
+- 5.75 → 101.11₂
+- In scientific notation: $1.0111_2 \times 2^2$
+- **s** = 0 (positive)
+- **m** = 01110000000000000000000
+- **e** = 2, but stored with bias = 127, so actually stored as 129 = 10000001₂
+- **b** = exponent bias (127 for float32)
 
-- ## s = 0 (positive)
+</div>
 
-- ## m = 01110000000000000000000
-
-- ## e = 2
-  
-#### but stored with a bias = 127, so actually stored as 129 = 10000001₂
-
-- ## b = exponent bias (127 for float32)
-
-<div class="text-center text-3xl my-8">
+<div class="text-center text-3xl mt-md">
 
 `0 10000001 01110000000000000000000`
 
@@ -939,18 +1052,34 @@ hideInToc: true
 
 # Integers, Overflow, and Arrays
 
-- ## Python ints are arbitrary precision
+<div class="stack-tight mt-sm">
 
-- ## Arrays often use fixed-width ints
+<div class="card card-primary pad-compact">
 
-- ## Overflow wraps in fixed-width types (e.g., int8)
+🐍 Python ints are **arbitrary precision**
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+📊 Arrays often use **fixed-width** ints
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+⚠️ **Overflow** wraps in fixed-width types (e.g., int8)
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Compression & Integrity
+# Compression & **Integrity**
 
 ---
 hideInToc: true
@@ -958,11 +1087,31 @@ hideInToc: true
 
 # Compression Primer
 
-- ## Lossless (CSV, JSON, Parquet, PNG): exact recovery
+<div class="grid-2 mt-md gap-md">
 
-- ## Lossy (JPEG, MP3): small size, info loss acceptable for media
+<div class="card card-success pad-tight">
 
-- ## Intuition: remove redundancy (RLE, Huffman, dictionary coding)
+## 🔒 **Lossless**
+
+CSV, JSON, Parquet, PNG — exact recovery
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 📉 **Lossy**
+
+JPEG, MP3 — small size, info loss acceptable for media
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+💡 **Intuition:** remove redundancy (RLE, Huffman, dictionary coding)
+
+</div>
 
 ---
 hideInToc: true
@@ -970,13 +1119,29 @@ hideInToc: true
 
 # Error Detection & Hashing
 
-- Parity/checksums/CRC detect transfer/storage errors
+<div class="grid-2 mt-md gap-md">
 
-- Cryptographic hashes (SHA-256) verify file integrity
+<div class="card card-primary pad-tight">
+
+## 🔍 **Error Detection**
+
+Parity, checksums, CRC detect transfer/storage errors
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔐 **Hashing**
+
+Cryptographic hashes (SHA-256) verify file integrity
+
+</div>
+
+</div>
 
 ---
 layout: quote
 hideInToc: true
 ---
 
-# If you are interested in learning more basics of computer science, a great resource is an open course by Harward University called **CS50**
+# If you are interested in learning more basics of computer science, a great resource is an open course by Harvard University called **CS50**
