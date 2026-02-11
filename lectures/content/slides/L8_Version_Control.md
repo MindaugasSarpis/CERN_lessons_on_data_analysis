@@ -127,6 +127,58 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Resolving Merge Conflicts
+
+<div class="card card-warning pad-tight mt-md">
+
+## ⚠️ **What a conflict looks like**
+
+When two branches change the same lines, git marks the conflict:
+
+```
+<<<<<<< HEAD
+result = calculate_mean(data)
+=======
+result = calculate_median(data)
+>>>>>>> feature-branch
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔧 **How to resolve**
+
+1. Open the file and choose the correct version
+2. Remove the conflict markers (`<<<<`, `====`, `>>>>`)
+3. Stage and commit the resolved file
+
+```bash
+git add resolved_file.py
+git commit -m "Resolve merge conflict"
+```
+
+</div>
+
+<div class="card card-info pad-compact">
+
+## 💡 **Tips**
+
+- Conflicts are **normal** in collaborative work
+- Pull frequently to minimize conflicts
+- Communicate with teammates about shared files
+- VS Code highlights conflicts with clickable options
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Using `git` for the first time
 
 <div class="grid-2 gap-md mt-md">
@@ -372,6 +424,63 @@ git commit -m "A message describing the changes"
 hideInToc: true
 ---
 
+# Viewing History
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 📜 **Git Log**
+
+```bash
+# Full history
+git log
+
+# Compact view (one line per commit)
+git log --oneline
+
+# Visual branch graph
+git log --oneline --graph --all
+```
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ✍️ **Commit Message Best Practices**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-warning pad-compact">
+
+❌ "fixed stuff"
+
+❌ "update"
+
+❌ "asdf"
+
+</div>
+
+<div class="card card-success pad-compact">
+
+✅ "Add data validation for input CSV"
+
+✅ "Fix off-by-one error in histogram bins"
+
+✅ "Remove unused plot function"
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Restoring Changes
 
 <div class="grid-2 gap-md mt-md">
@@ -412,7 +521,7 @@ hideInToc: true
 
 <div class="card card-warning pad-compact mt-sm">
 
-The entire repository can be restored to the last commit with deleting the changes:
+⚠️ **DANGER:** Reset permanently deletes all uncommitted changes. Cannot be undone.
 
 ```bash
 git reset --hard < hash >
@@ -635,21 +744,79 @@ hideInToc: true
 
 <div class="card card-primary pad-tight">
 
-## ➕ **Create a Branch**
+## ➕ **Create & Switch**
 
 ```bash
-git branch < branch-name >
+# Create and switch in one command
+git checkout -b feature-name
+
+# Or separately
+git branch feature-name
+git checkout feature-name
 ```
 
 </div>
 
 <div class="card card-secondary pad-tight">
 
-## 🔄 **Switch Branches**
+## 🔀 **Merge & Clean Up**
 
 ```bash
-git checkout < branch-name >
+# Switch back to main
+git checkout main
+
+# Merge the feature branch
+git merge feature-name
+
+# Delete merged branch
+git branch -d feature-name
 ```
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Typical Daily Workflow
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-compact">
+
+1️⃣ `git pull` — get latest changes from remote
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+2️⃣ `git checkout -b my-feature` — create a branch for your work
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+3️⃣ *Make changes to files*
+
+</div>
+
+<div class="card card-info pad-compact">
+
+4️⃣ `git add` + `git commit -m "descriptive message"` — save your work
+
+</div>
+
+<div class="card card-success pad-compact">
+
+5️⃣ `git push origin my-feature` — share with remote
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+6️⃣ *Create a Pull Request on GitHub for code review*
 
 </div>
 
