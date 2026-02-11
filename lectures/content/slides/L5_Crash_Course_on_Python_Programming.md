@@ -265,6 +265,53 @@ customer_info = ["Alice", 25, "New York", "Premium", True]
 hideInToc: true
 ---
 
+# List Comprehensions
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+#### 🔄 **Traditional Loop**
+
+```python
+squares = []
+for x in range(5):
+    squares.append(x**2)
+# [0, 1, 4, 9, 16]
+```
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+#### ⚡ **Comprehension (Pythonic)**
+
+```python
+squares = [x**2 for x in range(5)]
+# [0, 1, 4, 9, 16]
+
+# With condition
+evens = [x for x in range(10) if x % 2 == 0]
+# [0, 2, 4, 6, 8]
+```
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+#### 💡 **When to use**
+
+- Simple transformations and filters → comprehension
+- Complex logic with side effects → traditional loop
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Dictionaries
 
 <div class="grid-2 gap-md mt-md">
@@ -289,10 +336,12 @@ hideInToc: true
 person = {"name": "Alice", "age": 25}
 person["city"] = "New York"      # Add key-value pair
 person["age"] += 1               # Update in place
-# Print value of a key (KeyError if missing)
+
+# Safe lookup with default (returns "N/A" if missing)
 print(person.get("role", "N/A"))
-# Safe lookup with default
-print(person["role"])
+
+# Direct lookup (raises KeyError if missing!)
+# print(person["role"])  # KeyError: 'role'
 
 for key, value in person.items():
     print(f"{key}: {value}")
