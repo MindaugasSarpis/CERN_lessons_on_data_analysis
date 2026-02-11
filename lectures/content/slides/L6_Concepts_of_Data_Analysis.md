@@ -1,15 +1,16 @@
 ---
-mermaid: true
-marp: true
 background: /background_intro.jpg
 
 class: text-left
+colorSchema: dark
 
 theme: ./theme
 drawings:
   persist: false
+mermaid: true
 
 transition: fade
+
 title: "Concepts of Data Analysis"
 layout: cover
 ---
@@ -25,7 +26,7 @@ hideInToc: true
 layout: fact
 ---
 
-# What is **Data Analysis**? 
+# What is **Data Analysis**?
 
 ---
 hideInToc: true
@@ -33,8 +34,6 @@ layout: quote
 ---
 
 ## **Data analysis** is a process of inspecting, cleaning, transforming, and modeling **data** with the goal of discovering useful **information**, informing conclusions, and supporting decision-making
-
-&nbsp;
 
 # Wikipedia
 
@@ -52,8 +51,6 @@ layout: quote
 
 ## **Data science** is an interdisciplinary academic field that uses statistics, scientific computing, scientific methods, processing, scientific visualization, algorithms and systems to extract or extrapolate **knowledge and insights** from potentially noisy, structured, or unstructured data
 
-&nbsp;
-
 # Wikipedia
 
 ---
@@ -61,7 +58,7 @@ hideInToc: true
 layout: fact
 ---
 
-# What is Data? 
+# What is Data?
 
 ---
 hideInToc: true
@@ -70,23 +67,45 @@ layout: quote
 
 ## **Data** are a collection of discrete or continuous values that convey information, describing the quantity, quality, fact, statistics, other basic **units of meaning**, or simply sequences of symbols that may be further interpreted formally. **A datum** is an individual value in a collection of data.
 
-&nbsp;
-
 # Wikipedia
 
 ---
 hideInToc: true
 ---
 
-# Data â†’ Information â†’ Knowledge
+# Data → Information → Knowledge
 
-- ## **Data** capture observations (numbers, text, images, signals)
+<div class="stack-tight mt-md">
 
-- ## **Information** emerges when data gain context, structure, and purpose
+<div class="card card-primary pad-tight">
 
-- ## **Knowledge** blends information with experience and domain expertise
+## 📋 **Data**
+Capture observations (numbers, text, images, signals)
 
-- ## **Wisdom** is the responsibility to act on knowledge with judgement
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💡 **Information**
+Emerges when data gain context, structure, and purpose
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🧠 **Knowledge**
+Blends information with experience and domain expertise
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🎯 **Wisdom**
+The responsibility to act on knowledge with judgement
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -94,21 +113,41 @@ hideInToc: true
 
 # Example
 
-- ## Raw Data: 
+<div class="grid-2 gap-md mt-md">
 
-    ###  `2025-10-24, 22.3°C`
+<div class="card card-info pad-tight">
 
-- ## Information:
+## 📋 **Raw Data**
 
-    ### `Lab A was 22.3°C at 10:24 on Oct 24, 2025.`
+###  `2025-10-24, 22.3°C`
 
-- ## Knowledge:
+</div>
 
-    ### `Lab A runs 1.5°C hotter on Fridays due to load.`
+<div class="card card-primary pad-tight">
 
-- ## Wisdom:
+## 💡 **Information**
 
-  ### `Shift calibration earlier on Fridays to reduce drift.`
+### `Lab A was 22.3°C at 10:24 on Oct 24, 2025.`
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🧠 **Knowledge**
+
+### `Lab A runs 1.5°C hotter on Fridays due to load.`
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🎯 **Wisdom**
+
+### `Shift calibration earlier on Fridays to reduce drift.`
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -116,40 +155,53 @@ hideInToc: true
 
 # How disciplines overlap
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+<div class="grid-2 gap-md mt-md">
 
-<div>
+<div class="stack-tight">
 
-## **Statistics**
+<div class="card card-primary pad-tight">
 
-### underpins inference, uncertainty, and experimental design
+## 📊 **Statistics**
 
-<br>
-
-## **Data Engineering**
-
-### ensures data are collected, stored, and discoverable
-
-<br>
-
-## **Data Analysis**
-
-### explores, explains, and communicates what the data say
+<div class="note-text">Underpins inference, uncertainty, and experimental design</div>
 
 </div>
 
-<div>
+<div class="card card-secondary pad-tight">
 
+## 🔧 **Data Engineering**
 
-## **Data Science**
+<div class="note-text">Ensures data are collected, stored, and discoverable</div>
 
-### fuses engineering, analysis, and machine learning
+</div>
 
-<br>
+<div class="card card-accent pad-tight">
 
-## **Decision Science**
+## 🔍 **Data Analysis**
 
-### closes the loop with impact tracking and action
+<div class="note-text">Explores, explains, and communicates what the data say</div>
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-info pad-tight">
+
+## 🧪 **Data Science**
+
+<div class="note-text">Fuses engineering, analysis, and machine learning</div>
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🎯 **Decision Science**
+
+<div class="note-text">Closes the loop with impact tracking and action</div>
+
+</div>
 
 </div>
 
@@ -161,33 +213,49 @@ hideInToc: true
 
 # Why data analysis matters now
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+<div class="grid-2 gap-md mt-md">
 
-<div>
+<div class="card card-primary pad-tight">
 
-## Exploding **volume, velocity, and variety** of data in every industry
-
-</div>
-
-<div>
-
-## Competitive edge comes from **evidence-based** decisions
+## 📈 **Exploding volume, velocity, and variety** of data in every industry
 
 </div>
 
+<div class="card card-secondary pad-tight">
+
+## 🏆 **Competitive edge** comes from **evidence-based** decisions
+
 </div>
 
-- ## Regulations demand **traceability**, **privacy**, and **explainability**
+</div>
 
-- ## Teams need a **shared language** across disciplines
+<div class="stack-tight mt-md">
 
-- ## Audiences expect stories backed by **data narratives**
+<div class="card card-accent pad-tight">
 
-&nbsp;
+## 📜 Regulations demand **traceability**, **privacy**, and **explainability**
 
-### CERN angle
+</div>
 
-- ## High-throughput pipelines, reproducible workflows, and rigorous uncertainty quantification are non-negotiable.
+<div class="card card-info pad-tight">
+
+## 🗣️ Teams need a **shared language** across disciplines
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📖 Audiences expect stories backed by **data narratives**
+
+</div>
+
+</div>
+
+<div class="card card-warning pad-tight mt-md">
+
+### ⚛️ **CERN angle** — High-throughput pipelines, reproducible workflows, and rigorous uncertainty quantification are non-negotiable.
+
+</div>
 
 ---
 hideInToc: true
@@ -195,7 +263,9 @@ hideInToc: true
 
 # Four flavours of analytics
 
-<div style="margin-top: 2rem; font-size: 1.25em;">
+<div class="card card-info pad-tight mt-md">
+
+<div style="font-size: 1.25em;">
 
 | **Flavour** | **Question** | **Example** |
 |:------------|:-------------|:------------|
@@ -206,18 +276,39 @@ hideInToc: true
 
 </div>
 
+</div>
+
 ---
 hideInToc: true
 ---
 
-<div style="margin-top: 2rem;">
-
 # Each layer builds on the previous one
 
-- ## **Descriptive** establishes baseline facts
-- ## **Diagnostic** uncovers root causes
-- ## **Predictive** forecasts future states
-- ## **Prescriptive** recommends optimal actions
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 📋 **Descriptive** — establishes baseline facts
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔍 **Diagnostic** — uncovers root causes
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔮 **Predictive** — forecasts future states
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🎯 **Prescriptive** — recommends optimal actions
+
+</div>
 
 </div>
 
@@ -225,21 +316,53 @@ hideInToc: true
 hideInToc: true
 ---
 
-- # **Key Ideas** 
+# Key Ideas
 
-  - ## Any experiment (study or analysis) in any field of science will have a data analysis component
+<div class="grid-2 gap-md mt-md">
 
-  - ## Normally, the **results of data analysis** appear in scientific **publications**
+<div class="card card-primary pad-tight">
 
-  - ## In business data analysis is imperative for **decision making**
+## 🧪 **Universal Scope**
+Any experiment (study or analysis) in any field of science will have a data analysis component
 
-  - ## Data analysis is a **multi-step** process
+</div>
 
-  - ## Data analysis is a **multi-disciplinary** field
+<div class="card card-secondary pad-tight">
 
-  - ## Expect to **iterate — insight rarely appears in a single pass
+## 📄 **Publications**
+Normally, the **results of data analysis** appear in scientific **publications**
 
-  - ## Trust is earned through **transparency**, **reproducibility**, and **storytelling**
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💼 **Business Impact**
+In business data analysis is imperative for **decision making**
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔄 **Multi-step & Multi-disciplinary**
+Data analysis is a **multi-step** process spanning **multiple disciplines**
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🔁 **Iterative**
+Expect to **iterate** — insight rarely appears in a single pass
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🤝 **Trust**
+Trust is earned through **transparency**, **reproducibility**, and **storytelling**
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -247,80 +370,80 @@ hideInToc: true
 
 # End-to-end Lifecycle
 
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+<div class="grid-3 gap-md mt-md">
 
-<div>
+<div class="card card-primary pad-compact">
 
-## **Problem Framing**
+### 🎯 **Problem Framing**
 - Hypotheses
 - Success Metrics
 
 </div>
 
-<div>
+<div class="card card-secondary pad-compact">
 
-## **Data Discovery**
+### 🔍 **Data Discovery**
 - Access
 - Quality Assessment
 
 </div>
 
-<div>
+<div class="card card-accent pad-compact">
 
-## **Preparation**
+### 🧹 **Preparation**
 - Cleaning
 - Joining
 - Feature/Variable Selection
 
 </div>
 
-<div>
+<div class="card card-info pad-compact">
 
-## **Exploration**
+### 📊 **Exploration**
 - Profiling
 - Visualization
 - Sanity Checks
 
 </div>
 
-<div>
+<div class="card card-success pad-compact">
 
-## **Modeling/Inference**
+### 🧪 **Modeling/Inference**
 - Statistical Tests
 - Machine Learning
 
 </div>
 
-<div>
+<div class="card card-warning pad-compact">
 
-## **Evaluation**
+### ✅ **Evaluation**
 - Validation
 - Uncertainty
 - Sensitivity
 
 </div>
 
-<div>
+<div class="card card-primary pad-compact">
 
-## **Communication**
+### 📢 **Communication**
 - Narrative
 - Visuals
 - Decisions
 
 </div>
 
-<div>
+<div class="card card-secondary pad-compact">
 
-## **Operationalization**
+### ⚙️ **Operationalization**
 - Notebooks
 - Scripts
 - Pipelines
 
 </div>
 
-<div>
+<div class="card card-accent pad-compact">
 
-## **Monitoring**
+### 📡 **Monitoring**
 - Drift
 - Quality
 - Impact
@@ -372,13 +495,33 @@ hideInToc: true
 
 # Spotting opportunities
 
-- ## Map stakeholders → decisions → supporting data
+<div class="stack-tight mt-md">
 
-- ## Ask how outcomes are measured today
+<div class="card card-primary pad-tight">
 
-- ## Identify gaps between available data and needed insight
+## 🗺️ Map stakeholders → decisions → supporting data
 
-- ## Check feasibility: access, quality, ethics, skills, time
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📏 Ask how outcomes are measured today
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔎 Identify gaps between available data and needed insight
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## ✅ Check feasibility: access, quality, ethics, skills, time
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -386,39 +529,61 @@ hideInToc: true
 
 # Data quality checklist
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+<div class="grid-2 gap-md mt-md">
 
-<div>
+<div class="stack-tight">
 
-## **Completeness**
-### Missingness patterns and mechanisms
+<div class="card card-primary pad-tight">
 
-<br>
+## ✅ **Completeness**
 
-## **Consistency**
-### Units, schemas, timezones
-
-<br>
-
-## **Validity**
-### Ranges, constraints, outliers (legit vs error)
+<div class="note-text">Missingness patterns and mechanisms</div>
 
 </div>
 
-<div>
+<div class="card card-secondary pad-tight">
 
-## **Timeliness**
-### Latency, freshness
+## 🔗 **Consistency**
 
-<br>
+<div class="note-text">Units, schemas, timezones</div>
 
-## **Lineage**
-### Provenance, versioning, reproducibility
+</div>
 
-<br>
+<div class="card card-accent pad-tight">
 
-## **Ethics**
-### Consent, privacy, bias, fairness
+## 📐 **Validity**
+
+<div class="note-text">Ranges, constraints, outliers (legit vs error)</div>
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-info pad-tight">
+
+## ⏱️ **Timeliness**
+
+<div class="note-text">Latency, freshness</div>
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🔄 **Lineage**
+
+<div class="note-text">Provenance, versioning, reproducibility</div>
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ⚖️ **Ethics**
+
+<div class="note-text">Consent, privacy, bias, fairness</div>
+
+</div>
 
 </div>
 
@@ -430,11 +595,39 @@ hideInToc: true
 
 # Uncertainty and inference
 
-- ## Always report uncertainty: CIs, credible intervals, SEs
-- ## Beware p-hacking; pre-register when possible
-- ## Power matters: effect size, N, variance
-- ## Distinguish correlation from causation
-- ## Sensitivity analyses: robustness to assumptions
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 📊 Always report uncertainty: CIs, credible intervals, SEs
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Beware p-hacking; pre-register when possible
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔢 Power matters: effect size, N, variance
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔗 Distinguish correlation from causation
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🧪 Sensitivity analyses: robustness to assumptions
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -442,11 +635,39 @@ hideInToc: true
 
 # Visualization principles
 
-- ## Choose encodings that match the variable type
-- ## Show context: baselines, denominators, time windows
-- ## Avoid deceit: truncated axes, cherry-picked ranges
-- ## Use small multiples for comparisons
-- ## Tell the story: title as takeaway, caption as why
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🎨 Choose encodings that match the variable type
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📏 Show context: baselines, denominators, time windows
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Avoid deceit: truncated axes, cherry-picked ranges
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📊 Use small multiples for comparisons
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📖 Tell the story: title as takeaway, caption as why
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -454,11 +675,39 @@ hideInToc: true
 
 # Reproducibility practices
 
-- ## Keep code with results (notebook discipline)
-- ## Parameterize and record environment (env.yaml)
-- ## Version data/queries or capture snapshots
-- ## Seed randomness; log configs and hashes
-- ## Automate critical paths (Makefile/CI)
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 📓 Keep code with results (notebook discipline)
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📦 Parameterize and record environment (env.yaml)
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🗂️ Version data/queries or capture snapshots
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🎲 Seed randomness; log configs and hashes
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ⚙️ Automate critical paths (Makefile/CI)
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -466,11 +715,57 @@ hideInToc: true
 
 # Roles and collaboration
 
-- ## Domain expert: frames problems, validates insights
-- ## Analyst/Scientist: explores, models, communicates
-- ## Engineer: data access, reliability, pipelines
-- ## PM/Lead: scope, impact, trade-offs
-- ## Shared artifacts: glossary, metrics, dashboards
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
+
+<div class="card card-primary pad-tight">
+
+## 🧑‍🔬 **Domain expert**
+
+<div class="note-text">Frames problems, validates insights</div>
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📊 **Analyst/Scientist**
+
+<div class="note-text">Explores, models, communicates</div>
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔧 **Engineer**
+
+<div class="note-text">Data access, reliability, pipelines</div>
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-info pad-tight">
+
+## 📋 **PM/Lead**
+
+<div class="note-text">Scope, impact, trade-offs</div>
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🤝 **Shared artifacts**
+
+<div class="note-text">Glossary, metrics, dashboards</div>
+
+</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -478,11 +773,16 @@ hideInToc: true
 
 # Mini case study
 
-## Scenario
+<div class="card card-info pad-tight mt-md">
 
-- Detector shows intermittent spike counts on night shifts.
+## 📡 **Scenario**
+Detector shows intermittent spike counts on night shifts.
 
-## Plan
+</div>
+
+<div class="card card-primary pad-tight mt-md">
+
+## 📋 **Plan**
 
 - Define metric (spike rate/hour), segment by shift.
 - Pull two weeks of logs; check missingness.
@@ -490,17 +790,47 @@ hideInToc: true
 - Test difference-in-means with bootstrap CI (resampling-based confidence intervals).
 - Prescribe mitigation if effect is robust.
 
+</div>
+
 ---
 hideInToc: true
 ---
 
 # Common pitfalls
 
-- ## Overfitting pretty charts to noisy data
-- ## Confusing proxy metrics with outcomes
-- ## Ignoring units/timezones and data joins
-- ## Confirmation bias; not seeking disconfirming evidence
-- ## Shipping insights without reproducibility
+<div class="stack-tight mt-md">
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Overfitting pretty charts to noisy data
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Confusing proxy metrics with outcomes
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Ignoring units/timezones and data joins
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Confirmation bias; not seeking disconfirming evidence
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Shipping insights without reproducibility
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -508,11 +838,39 @@ hideInToc: true
 
 # Useful patterns
 
-- ## Start with a checklist (quality, ethics, uncertainty)
-- ## Write the “results” slide first; work backward
-- ## Keep a decisions log with assumptions
-- ## Pair-review visuals and statistical claims
-- ## Maintain a lightweight data dictionary
+<div class="stack-tight mt-md">
+
+<div class="card card-success pad-tight">
+
+## ✅ Start with a checklist (quality, ethics, uncertainty)
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ Write the "results" slide first; work backward
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ Keep a decisions log with assumptions
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ Pair-review visuals and statistical claims
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ Maintain a lightweight data dictionary
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -520,17 +878,40 @@ hideInToc: true
 
 # Takeaways
 
-- ## Define decisions and metrics early
-- ## Treat data quality and uncertainty as first-class
-- ## Communicate with clarity and integrity
-- ## Make it reproducible; make it useful
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🎯 Define decisions and metrics early
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📊 Treat data quality and uncertainty as first-class
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📢 Communicate with clarity and integrity
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🔄 Make it reproducible; make it useful
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Examples of **data analysis** in different fields of science and industry 
+# Examples of **data analysis** in different fields of science and industry
 
 ---
 hideInToc: true
@@ -538,18 +919,27 @@ hideInToc: true
 
 # **Bio medicine and Genomics**
 
-- ## Genome Sequencing â†’ identifying variants & gene expression patterns
+<div class="card card-primary pad-tight mt-md">
 
-- ## Clinical Trials â†’ monitoring safety, efficacy, adaptive designs
+<div class="stack-tight">
 
-- ## Population health dashboards & personalised medicine
+- ## 🧬 Genome Sequencing → identifying variants & gene expression patterns
 
-- ## Decisions: targeted therapies, drug discovery, diagnostics
+- ## 💊 Clinical Trials → monitoring safety, efficacy, adaptive designs
 
-&nbsp;
+- ## 📊 Population health dashboards & personalised medicine
 
-### **23andMe** or **Ancestry.com** (°Cestry services)?
-### Comparing against *reference populations*
+- ## 🎯 Decisions: targeted therapies, drug discovery, diagnostics
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+### 🧪 **23andMe** or **Ancestry.com** (ancestry services)? Comparing against *reference populations*
+
+</div>
 
 ---
 hideInToc: true
@@ -557,15 +947,31 @@ hideInToc: true
 
 # **Environmental Sciences**
 
-- ## Climate models integrating satellite, sensor, and historical data
+<div class="card card-accent pad-tight mt-md">
 
-- ## Pollution monitoring at city/block resolution
+<div class="stack-tight">
 
-- ## Biodiversity studies combining field notes + remote sensing
+- ## 🌍 Climate models integrating satellite, sensor, and historical data
 
-- ## Supports policy making, disaster response, conservation funding
+- ## 🏭 Pollution monitoring at city/block resolution
 
-#### Living analysis â†’ data feeds update models continuously
+- ## 🌿 Biodiversity studies combining field notes + remote sensing
+
+- ## 📜 Supports policy making, disaster response, conservation funding
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+<div class="note-text">
+
+#### 🔄 Living analysis → data feeds update models continuously
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -573,31 +979,63 @@ hideInToc: true
 
 # **Social Sciences**
 
-- ## Economic forecasting blending macro indicators & behavioural data
+<div class="card card-secondary pad-tight mt-md">
 
-- ## Social behaviour studies using surveys, logs, ethnography
+<div class="stack-tight">
 
-- ## Text analysis for sentiment, misinformation, community wellbeing
+- ## 📈 Economic forecasting blending macro indicators & behavioural data
 
-- ## Informs policy, marketing, product design, civic planning
+- ## 🧑‍🤝‍🧑 Social behaviour studies using surveys, logs, ethnography
 
-#### Qualitative + quantitative insights reinforce each other
+- ## 💬 Text analysis for sentiment, misinformation, community wellbeing
+
+- ## 🏛️ Informs policy, marketing, product design, civic planning
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+<div class="note-text">
+
+#### 🔗 Qualitative + quantitative insights reinforce each other
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-# **Astronomy** 
+# **Astronomy**
 
-- ## Observational data analysis from telescopes, satellites, detectors
+<div class="card card-primary pad-tight mt-md">
 
-- ## Gravitational wave detection via signal processing & ML
+<div class="stack-tight">
 
-- ## Cataloguing millions of celestial objects, anomaly detection
+- ## 🔭 Observational data analysis from telescopes, satellites, detectors
 
-- ## Requires high-throughput computing, reproducible pipelines
+- ## 🌊 Gravitational wave detection via signal processing & ML
 
-#### Fun fact: many ML innovations came from sky surveys
+- ## 🌟 Cataloguing millions of celestial objects, anomaly detection
+
+- ## 💻 Requires high-throughput computing, reproducible pipelines
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+<div class="note-text">
+
+#### 🤖 Fun fact: many ML innovations came from sky surveys
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -605,13 +1043,21 @@ hideInToc: true
 
 # **Particle Physics (CERN)**
 
-- ## Petabytes of collision data â†’ reconstruct events, filter noise
+<div class="card card-accent pad-tight mt-md">
 
-- ## Multivariate analysis to isolate rare signals (e.g. Higgs boson)
+<div class="stack-tight">
 
-- ## Collaboration across detectors, theory, computing teams
+- ## ⚛️ Petabytes of collision data → reconstruct events, filter noise
 
-- ## Drives advances in distributed computing & open data practices
+- ## 📊 Multivariate analysis to isolate rare signals (e.g. Higgs boson)
+
+- ## 🤝 Collaboration across detectors, theory, computing teams
+
+- ## 🌐 Drives advances in distributed computing & open data practices
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -619,13 +1065,21 @@ hideInToc: true
 
 # **Engineering**
 
-- ## Predictive maintenance on turbines, trains, manufacturing lines
+<div class="card card-secondary pad-tight mt-md">
 
-- ## Quality control with computer vision & statistical process control
+<div class="stack-tight">
 
-- ## Structural health monitoring via sensors + physics-informed models
+- ## 🔧 Predictive maintenance on turbines, trains, manufacturing lines
 
-- ## Outcomes: less downtime, safer infrastructure, cost optimisation
+- ## 👁️ Quality control with computer vision & statistical process control
+
+- ## 📡 Structural health monitoring via sensors + physics-informed models
+
+- ## 🎯 Outcomes: less downtime, safer infrastructure, cost optimisation
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -633,41 +1087,65 @@ hideInToc: true
 
 # **Healthcare Operations**
 
-- ## Epidemiology tracking outbreaks & transmission dynamics
+<div class="card card-warning pad-tight mt-md">
 
-- ## Health policy simulation for capacity planning & funding
+<div class="stack-tight">
 
-- ## Hospital operations: patient flow, staffing, supply chain analytics
+- ## 🦠 Epidemiology tracking outbreaks & transmission dynamics
 
-- ## Ethical considerations: privacy, bias, explainability
+- ## 🏥 Health policy simulation for capacity planning & funding
 
----
-hideInToc: true
----
+- ## 🏗️ Hospital operations: patient flow, staffing, supply chain analytics
 
-# **Finance** 
+- ## ⚖️ Ethical considerations: privacy, bias, explainability
 
-- ## Stock market analysis + algorithmic trading with latency constraints
+</div>
 
-- ## Risk management using stress tests, scenario analysis, VaR
-
-- ## Fraud detection & compliance monitoring with streaming data
-
-- ## Balances profitability with regulation and transparency
+</div>
 
 ---
 hideInToc: true
 ---
 
-# **Sports Analytics** 
+# **Finance**
 
-- ## Performance analysis combining tracking sensors & video
+<div class="card card-primary pad-tight mt-md">
 
-- ## Strategy optimisation: playbooks, opponent scouting
+<div class="stack-tight">
 
-- ## Fan engagement through personalised content & ticket pricing
+- ## 📈 Stock market analysis + algorithmic trading with latency constraints
 
-- ## Data informs coaching, recruitment, business growth
+- ## 🛡️ Risk management using stress tests, scenario analysis, VaR
+
+- ## 🔍 Fraud detection & compliance monitoring with streaming data
+
+- ## ⚖️ Balances profitability with regulation and transparency
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Sports Analytics**
+
+<div class="card card-success pad-tight mt-md">
+
+<div class="stack-tight">
+
+- ## 🏃 Performance analysis combining tracking sensors & video
+
+- ## 🎮 Strategy optimisation: playbooks, opponent scouting
+
+- ## 🎟️ Fan engagement through personalised content & ticket pricing
+
+- ## 📊 Data informs coaching, recruitment, business growth
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -675,13 +1153,21 @@ hideInToc: true
 
 # **Product & Business Analytics**
 
-- ## Growth funnels: acquisition, activation, retention, revenue, referral
+<div class="card card-accent pad-tight mt-md">
 
-- ## Experimentation: A/B tests, feature flagging, causal inference
+<div class="stack-tight">
 
-- ## Customer segmentation & lifetime value in subscription models
+- ## 📊 Growth funnels: acquisition, activation, retention, revenue, referral
 
-- ## Guides product roadmaps, marketing spend, customer success
+- ## 🧪 Experimentation: A/B tests, feature flagging, causal inference
+
+- ## 👥 Customer segmentation & lifetime value in subscription models
+
+- ## 🗺️ Guides product roadmaps, marketing spend, customer success
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -689,13 +1175,21 @@ hideInToc: true
 
 # **Public Policy & Urban Planning**
 
-- ## Smart city sensors to manage transport, energy, waste
+<div class="card card-info pad-tight mt-md">
 
-- ## Open data portals enabling transparency & civic innovation
+<div class="stack-tight">
 
-- ## Geospatial analysis for zoning, emergency response, sustainability
+- ## 🏙️ Smart city sensors to manage transport, energy, waste
 
-- ## Stakeholder engagement & ethical data sharing are crucial
+- ## 📂 Open data portals enabling transparency & civic innovation
+
+- ## 🗺️ Geospatial analysis for zoning, emergency response, sustainability
+
+- ## 🤝 Stakeholder engagement & ethical data sharing are crucial
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -703,13 +1197,21 @@ hideInToc: true
 
 # **Education & Learning Analytics**
 
-- ## Learning management system logs reveal engagement patterns
+<div class="card card-secondary pad-tight mt-md">
 
-- ## Early warning systems for student support
+<div class="stack-tight">
 
-- ## Curriculum design using assessment data & qualitative feedback
+- ## 📚 Learning management system logs reveal engagement patterns
 
-- ## Balances personalisation with fairness and privacy
+- ## 🚨 Early warning systems for student support
+
+- ## 📝 Curriculum design using assessment data & qualitative feedback
+
+- ## ⚖️ Balances personalisation with fairness and privacy
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -717,18 +1219,34 @@ hideInToc: true
 
 # Reflection — Which example resonates?
 
-- ## Where could similar data exist in your context?
+<div class="stack-tight mt-md">
 
-- ## What decisions would better data unlock?
+<div class="card card-primary pad-tight">
 
-- ## What obstacles — technical, ethical, organisational — stand in the way?
+## 🔍 Where could similar data exist in your context?
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🎯 What decisions would better data unlock?
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🚧 What obstacles — technical, ethical, organisational — stand in the way?
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Data Fundamentals
+# Data **Fundamentals**
 
 ---
 hideInToc: true
@@ -736,15 +1254,39 @@ hideInToc: true
 
 # Data comes in many shapes
 
-- ## Tabular: rows Ã— columns (experiments, business metrics)
+<div class="stack-tight mt-md">
 
-- ## Hierarchical: JSON/XML, nested logs, documents
+<div class="card card-primary pad-tight">
 
-- ## Graph: networks, relationships, supply chains
+## 📊 **Tabular** — rows × columns (experiments, business metrics)
 
-- ## Spatial & temporal: GIS layers, time series, event streams
+</div>
 
-- ## Multimedia: images, audio, video, sensor waveforms
+<div class="card card-secondary pad-tight">
+
+## 🌳 **Hierarchical** — JSON/XML, nested logs, documents
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🕸️ **Graph** — networks, relationships, supply chains
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🗺️ **Spatial & temporal** — GIS layers, time series, event streams
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🖼️ **Multimedia** — images, audio, video, sensor waveforms
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -752,19 +1294,43 @@ hideInToc: true
 
 # Structured vs unstructured
 
-- ## **Structured**
-  
-  - ### predefined schema, SQL-friendly (lab results)
+<div class="grid-3 gap-md mt-md">
 
-- ## **Semi-structured**
+<div class="card card-primary pad-tight">
 
-  - ### consistent markers, flexible fields (JSON, HL7)
+## 📐 **Structured**
 
-- ## **Unstructured**
-  
-  - ### natural language, images, free-form signals
+Predefined schema, SQL-friendly (lab results)
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔖 **Semi-structured**
+
+Consistent markers, flexible fields (JSON, HL7)
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📝 **Unstructured**
+
+Natural language, images, free-form signals
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+<div class="note-text">
 
 #### Choose storage, tooling, and cleaning strategies accordingly
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -772,15 +1338,43 @@ hideInToc: true
 
 # Levels of measurement
 
-- ## **Nominal** — categories without order (blood type, product ID)
+<div class="stack-tight mt-md">
 
-- ## **Ordinal** — ranked categories (survey Likert scales)
+<div class="card card-primary pad-tight">
 
-- ## **Interval** — consistent differences, no true zero (Â°C, calendar dates)
+## 🏷️ **Nominal** — categories without order (blood type, product ID)
 
-- ## **Ratio** — meaningful zero & ratios (mass, revenue, counts)
+</div>
 
-- ## Measurement level dictates valid summaries & visualisations
+<div class="card card-secondary pad-tight">
+
+## 📶 **Ordinal** — ranked categories (survey Likert scales)
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📏 **Interval** — consistent differences, no true zero (°C, calendar dates)
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## ⚖️ **Ratio** — meaningful zero & ratios (mass, revenue, counts)
+
+</div>
+
+</div>
+
+<div class="card card-warning pad-tight mt-md">
+
+<div class="note-text">
+
+#### Measurement level dictates valid summaries & visualisations
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -788,13 +1382,33 @@ hideInToc: true
 
 # Granularity & unit of analysis
 
-- ## Define the entity: person, transaction, collision event, sensor ping
+<div class="stack-tight mt-md">
 
-- ## Aggregation level affects signal vs noise
+<div class="card card-primary pad-tight">
 
-- ## Misaligned granularity introduces bias & misleading conclusions
+## 🔬 Define the entity: person, transaction, collision event, sensor ping
 
-- ## Document transformations between granularities
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📊 Aggregation level affects signal vs noise
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Misaligned granularity introduces bias & misleading conclusions
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📝 Document transformations between granularities
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -802,13 +1416,33 @@ hideInToc: true
 
 # Mind the time dimension
 
-- ## Cross-sectional vs time series vs panel data
+<div class="stack-tight mt-md">
 
-- ## Sampling frequency and latency influence what you can see
+<div class="card card-primary pad-tight">
 
-- ## Seasonality, trends, and lag effects require tailored methods
+## 📊 Cross-sectional vs time series vs panel data
 
-- ## Align timestamps, time zones, and calendars early
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ⏱️ Sampling frequency and latency influence what you can see
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📈 Seasonality, trends, and lag effects require tailored methods
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🕐 Align timestamps, time zones, and calendars early
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -816,13 +1450,33 @@ hideInToc: true
 
 # Metadata keeps data alive
 
-- ## Who collected it, when, where, how, and why?
+<div class="stack-tight mt-md">
 
-- ## Variable definitions, units, encoding schemes
+<div class="card card-primary pad-tight">
 
-- ## Data lineage: transformations, assumptions, scripts, owners
+## 👤 Who collected it, when, where, how, and why?
 
-- ## Without metadata the data become a liability, not an asset
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📐 Variable definitions, units, encoding schemes
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔗 Data lineage: transformations, assumptions, scripts, owners
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ Without metadata the data become a liability, not an asset
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -830,17 +1484,45 @@ hideInToc: true
 
 # Data quality dimensions
 
-- ## **Accuracy** Â· does it reflect reality?
+<div class="grid-2 gap-md mt-md">
 
-- ## **Completeness** Â· are key fields missing?
+<div class="card card-primary pad-compact">
 
-- ## **Consistency** Â· same definition across sources?
+### 🎯 **Accuracy** · does it reflect reality?
 
-- ## **Timeliness** Â· fresh enough to act on?
+</div>
 
-- ## **Validity** Â· conforms to rules and business logic?
+<div class="card card-secondary pad-compact">
 
-- ## **Uniqueness** Â· no unintended duplicates?
+### ✅ **Completeness** · are key fields missing?
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+### 🔗 **Consistency** · same definition across sources?
+
+</div>
+
+<div class="card card-info pad-compact">
+
+### ⏱️ **Timeliness** · fresh enough to act on?
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+### 📐 **Validity** · conforms to rules and business logic?
+
+</div>
+
+<div class="card card-success pad-compact">
+
+### 🔢 **Uniqueness** · no unintended duplicates?
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -848,15 +1530,39 @@ hideInToc: true
 
 # Common data issues & biases
 
-- ## Missing data mechanisms (MCAR, MAR, MNAR)
+<div class="stack-tight mt-md">
 
-- ## Outliers: true phenomena or collection errors?
+<div class="card card-warning pad-tight">
 
-- ## Sampling bias & survivorship bias
+## ❓ Missing data mechanisms (MCAR, MAR, MNAR)
 
-- ## Confirmation bias, p-hacking, and multiple testing
+</div>
 
-- ## Ethical blind spots: representation, consent, accessibility
+<div class="card card-warning pad-tight">
+
+## 📊 Outliers: true phenomena or collection errors?
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🎯 Sampling bias & survivorship bias
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🧠 Confirmation bias, p-hacking, and multiple testing
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚖️ Ethical blind spots: representation, consent, accessibility
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -864,11 +1570,29 @@ hideInToc: true
 
 # **Continuous** and **Discrete** Data
 
-- ## Quantitative / Numerical Data
-- ## Qualitative / Categorical Data
-- ## Date and Time
+<div class="grid-3 gap-md mt-md">
 
-<div style="; text-align: center;">
+<div class="card card-primary pad-compact">
+
+### 🔢 Quantitative / Numerical Data
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+### 🏷️ Qualitative / Categorical Data
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+### 📅 Date and Time
+
+</div>
+
+</div>
+
+<div style="text-align: center;" class="mt-md">
 
 ```mermaid
 graph TD;
@@ -891,20 +1615,36 @@ classDef node fill:none,stroke:white,stroke-width:3px,font-size:30px;
 hideInToc: true
 ---
 
-# Exercise Â· Audit your data sources
+# Exercise · Audit your data sources
 
-- ## Pick one dataset you rely on
+<div class="stack-tight mt-md">
 
-- ## Classify type, granularity, measurement levels, quality risks
+<div class="card card-primary pad-tight">
 
-- ## Note missing metadata you would need before analysis
+## 📋 Pick one dataset you rely on
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔬 Classify type, granularity, measurement levels, quality risks
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📝 Note missing metadata you would need before analysis
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Data Lifecycle & Workflow
+# Data Lifecycle & **Workflow**
 
 ---
 hideInToc: true
@@ -912,17 +1652,45 @@ hideInToc: true
 
 # End-to-end lifecycle
 
-- ## **Plan** Â· clarify problem, stakeholders, success criteria
+<div class="stack-tight mt-md">
 
-- ## **Acquire** Â· collect, ingest, or access relevant data
+<div class="card card-primary pad-tight">
 
-- ## **Store** Â· organise, catalogue, secure
+## 🎯 **Plan** · clarify problem, stakeholders, success criteria
 
-- ## **Process** Â· clean, transform, feature engineer
+</div>
 
-- ## **Analyse** Â· explore, model, evaluate
+<div class="card card-secondary pad-tight">
 
-- ## **Share** Â· communicate, deploy, monitor, iterate
+## 📥 **Acquire** · collect, ingest, or access relevant data
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💾 **Store** · organise, catalogue, secure
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔧 **Process** · clean, transform, feature engineer
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📊 **Analyse** · explore, model, evaluate
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 📢 **Share** · communicate, deploy, monitor, iterate
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -930,13 +1698,33 @@ hideInToc: true
 
 # Governance overlays every stage
 
-- ## Security, privacy, compliance, and ethics checks
+<div class="stack-tight mt-md">
 
-- ## Documentation and lineage updates
+<div class="card card-primary pad-tight">
 
-- ## Quality gates and automated tests
+## 🔒 Security, privacy, compliance, and ethics checks
 
-- ## Feedback loops from stakeholders and end users
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📝 Documentation and lineage updates
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## ✅ Quality gates and automated tests
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔄 Feedback loops from stakeholders and end users
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -944,13 +1732,33 @@ hideInToc: true
 
 # Analysis is iterative
 
-- ## Expect to loop between question â†” data â†” analysis â†” insight
+<div class="stack-tight mt-md">
 
-- ## Dead ends reveal where data, methods, or framing must change
+<div class="card card-primary pad-tight">
 
-- ## Maintain versioned checkpoints to compare approaches
+## 🔄 Expect to loop between question ↔ data ↔ analysis ↔ insight
 
-- ## Communicate progress, uncertainty, and trade-offs early
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🚧 Dead ends reveal where data, methods, or framing must change
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🗂️ Maintain versioned checkpoints to compare approaches
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📢 Communicate progress, uncertainty, and trade-offs early
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -958,126 +1766,330 @@ hideInToc: true
 
 # From data to decisions
 
-- ## Translate insights into recommendations & actions
+<div class="stack-tight mt-md">
 
-- ## Align with organisational objectives and constraints
+<div class="card card-primary pad-tight">
 
-- ## Plan how outcomes will be measured post-decision
+## 💡 Translate insights into recommendations & actions
 
-- ## Capture learnings to refine future analyses
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🎯 Align with organisational objectives and constraints
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📏 Plan how outcomes will be measured post-decision
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📝 Capture learnings to refine future analyses
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# **Steps of Data Analysis** 
+# Steps of Data **Analysis**
 
 ---
 hideInToc: true
 ---
 
-- # 1. **Define the Problem or Research Question**
+# 1. **Define the Problem or Research Question**
 
-  - ## Formulate the question with stakeholders and context
+<div class="stack-tight mt-md">
 
-    This might steer the choices in the following steps
+<div class="card card-primary pad-tight">
 
-  - ## Translate goals into measurable metrics & hypotheses
+## 🎯 Formulate the question with stakeholders and context
 
-  - ## Map constraints: data access, time, ethics, skills
+<div class="note-text">This might steer the choices in the following steps</div>
 
-  - ## Plan the experimental or observational design
+</div>
 
-#### Interactive exercise Â· Draft a SMART question for your project
+<div class="card card-secondary pad-tight">
 
----
-hideInToc: true
----
+## 📐 Translate goals into measurable metrics & hypotheses
 
-- # 2. **Collect Data** 
+</div>
 
-  - ## How much data do you need?
+<div class="card card-accent pad-tight">
 
-  - ## What sort of data do you need?
+## 🗺️ Map constraints: data access, time, ethics, skills
 
-  - ## What data formats should you chose?
+</div>
 
-  - ## Can you trust the data?
+<div class="card card-info pad-tight">
 
-  - ## Can you collect the data?
+## 🧪 Plan the experimental or observational design
 
-  - ## Document permissions, consent, and provenance
+</div>
 
-  - ## Automate validation checks at ingestion
+</div>
 
----
-hideInToc: true
----
+<div class="card card-success pad-tight mt-md">
 
-- # 3. **Clean Data**
+<div class="note-text">
 
-  - ## Data Selection
+#### Interactive exercise · Draft a SMART question for your project
 
-  - ## Data Stripping
+</div>
 
-  - ## Data Skimming
-
-  - ## Data Wrangling
-
-  - ## Handle missing values, outliers, inconsistent categories
-
-  - ## Record transformations for reproducibility
+</div>
 
 ---
 hideInToc: true
 ---
 
-- # 4. **Analyze Data**
+# 2. **Collect Data**
 
-  - ## Data Exploration
+<div class="stack-tight mt-md">
 
-  - ## Statistical Analysis
+<div class="card card-primary pad-tight">
 
-  - ## Model Building
+## 📊 How much data do you need?
 
-  - ## Machine Learning
+</div>
 
-  - ## Classification (...**AI**...)
+<div class="card card-secondary pad-tight">
 
-  - ## Evaluate assumptions, uncertainty, and sensitivity
+## 🏷️ What sort of data do you need?
 
-  - ## Compare baseline vs advanced methods
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📁 What data formats should you chose?
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔍 Can you trust the data?
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚙️ Can you collect the data?
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📝 Document permissions, consent, and provenance
+
+</div>
+
+<div class="card card-primary pad-tight">
+
+## ✅ Automate validation checks at ingestion
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-- # 5. **Visualize the data**
+# 3. **Clean Data**
 
-  - ## What's your target audience?
+<div class="grid-2 gap-md mt-md">
 
-  - ## What is the message you want to convey?
+<div class="stack-tight">
 
-  - ## Choose encodings that emphasise the core insight
+<div class="card card-primary pad-tight">
 
-  - ## Iterate quickly with sketches before polishing
+## 🔍 **Data Selection**
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ✂️ **Data Stripping**
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📊 **Data Skimming**
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-info pad-tight">
+
+## 🔧 **Data Wrangling**
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ❓ Handle missing values, outliers, inconsistent categories
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📝 Record transformations for reproducibility
+
+</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-- # 6. **Interpret and report the results**
+# 4. **Analyze Data**
 
-  - ## Draw Conclusions from Data
+<div class="grid-2 gap-md mt-md">
 
-  - ## Report Findings
+<div class="stack-tight">
 
-  - ## Connect to decisions, risks, next steps
+<div class="card card-primary pad-tight">
 
-  - ## Capture limitations and open questions
+## 🔍 **Data Exploration**
 
-  - ## Package reproducible assets (code, dashboards, docs)
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📊 **Statistical Analysis**
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🧪 **Model Building**
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-info pad-tight">
+
+## 🤖 **Machine Learning**
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🧠 **Classification (...AI...)**
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📐 Evaluate assumptions, uncertainty, and sensitivity
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-tight mt-md">
+
+<div class="note-text">
+
+#### Compare baseline vs advanced methods
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# 5. **Visualize the data**
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 👥 What's your target audience?
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💬 What is the message you want to convey?
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🎨 Choose encodings that emphasise the core insight
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## ✏️ Iterate quickly with sketches before polishing
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# 6. **Interpret and report the results**
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🎯 Draw Conclusions from Data
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📄 Report Findings
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔗 Connect to decisions, risks, next steps
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## ❓ Capture limitations and open questions
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📦 Package reproducible assets (code, dashboards, docs)
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1085,13 +2097,33 @@ hideInToc: true
 
 # Validation & monitoring
 
-- ## Split data wisely, guard against leakage
+<div class="stack-tight mt-md">
 
-- ## Assess error bars, confidence intervals, effect sizes
+<div class="card card-primary pad-tight">
 
-- ## Stress test with scenario analysis & sensitivity checks
+## 📊 Split data wisely, guard against leakage
 
-- ## Plan post-deployment monitoring for drift and quality
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📐 Assess error bars, confidence intervals, effect sizes
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🧪 Stress test with scenario analysis & sensitivity checks
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📡 Plan post-deployment monitoring for drift and quality
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1099,13 +2131,33 @@ hideInToc: true
 
 # Team checkpoints per phase
 
-- ## Kickoff â†’ align on question, scope, success metrics
+<div class="stack-tight mt-md">
 
-- ## Midpoint â†’ share exploratory findings, data quality flags
+<div class="card card-primary pad-tight">
 
-- ## Pre-delivery â†’ rehearse narrative, anticipate objections
+## 🚀 **Kickoff** → align on question, scope, success metrics
 
-- ## Retrospective â†’ document lessons, update playbooks
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📊 **Midpoint** → share exploratory findings, data quality flags
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🎤 **Pre-delivery** → rehearse narrative, anticipate objections
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📝 **Retrospective** → document lessons, update playbooks
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1113,22 +2165,46 @@ hideInToc: true
 
 # Communication toolkit
 
-- ## Executive summary (one-pager)
+<div class="stack-tight mt-md">
 
-- ## Notebook or reproducible analysis package
+<div class="card card-primary pad-tight">
 
-- ## Dashboard / data app for continued monitoring
+## 📄 Executive summary (one-pager)
 
-- ## Decision memo outlining options & trade-offs
+</div>
 
-- ## Technical appendix for peers to audit
+<div class="card card-secondary pad-tight">
+
+## 📓 Notebook or reproducible analysis package
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📊 Dashboard / data app for continued monitoring
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📋 Decision memo outlining options & trade-offs
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🔬 Technical appendix for peers to audit
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Tools & Collaboration
+# Tools & **Collaboration**
 
 ---
 hideInToc: true
@@ -1136,15 +2212,39 @@ hideInToc: true
 
 # Modern analytics stack
 
-- ## Data sources: sensors, APIs, files, databases, experiments
+<div class="stack-tight mt-md">
 
-- ## Ingestion: ETL/ELT tools, streaming pipelines, notebooks
+<div class="card card-primary pad-tight">
 
-- ## Storage: data lakes, warehouses, object stores, feature stores
+## 📡 **Data sources** — sensors, APIs, files, databases, experiments
 
-- ## Compute: notebooks, scripts, distributed clusters, cloud services
+</div>
 
-- ## Delivery: dashboards, apps, reports, APIs, alerts
+<div class="card card-secondary pad-tight">
+
+## 📥 **Ingestion** — ETL/ELT tools, streaming pipelines, notebooks
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💾 **Storage** — data lakes, warehouses, object stores, feature stores
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 💻 **Compute** — notebooks, scripts, distributed clusters, cloud services
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📢 **Delivery** — dashboards, apps, reports, APIs, alerts
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1152,15 +2252,39 @@ hideInToc: true
 
 # People & roles
 
-- ## Domain experts anchor context and define value
+<div class="stack-tight mt-md">
 
-- ## Data engineers ensure reliable, scalable pipelines
+<div class="card card-primary pad-tight">
 
-- ## Analysts & scientists explore, model, and interpret
+## 🧑‍🔬 **Domain experts** anchor context and define value
 
-- ## Visualisation designers craft compelling stories
+</div>
 
-- ## Product & ops teams translate insight into action
+<div class="card card-secondary pad-tight">
+
+## 🔧 **Data engineers** ensure reliable, scalable pipelines
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📊 **Analysts & scientists** explore, model, and interpret
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🎨 **Visualisation designers** craft compelling stories
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ⚙️ **Product & ops teams** translate insight into action
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1168,15 +2292,39 @@ hideInToc: true
 
 # Collaboration rituals
 
-- ## Shared backlog with clear owners & due dates
+<div class="stack-tight mt-md">
 
-- ## Version control (git) for notebooks, SQL, scripts
+<div class="card card-primary pad-tight">
 
-- ## Code & analysis reviews to raise quality and share knowledge
+## 📋 Shared backlog with clear owners & due dates
 
-- ## Pair sessions for tricky modelling or cleaning tasks
+</div>
 
-- ## Reproducible environments (conda, containers, Poetry, Nix)
+<div class="card card-secondary pad-tight">
+
+## 🔄 Version control (git) for notebooks, SQL, scripts
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 👁️ Code & analysis reviews to raise quality and share knowledge
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🤝 Pair sessions for tricky modelling or cleaning tasks
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📦 Reproducible environments (conda, containers, Poetry, Nix)
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1184,15 +2332,43 @@ hideInToc: true
 
 # Choosing the right artefact
 
-- ## **Notebooks** for exploration, teaching, storytelling
+<div class="stack-tight mt-md">
 
-- ## **Scripts & packages** for automation and reuse
+<div class="card card-primary pad-tight">
 
-- ## **Dashboards & apps** for ongoing monitoring
+## 📓 **Notebooks** for exploration, teaching, storytelling
 
-- ## **Experiments** for causal claims and product decisions
+</div>
 
-- ## Mix intentionally; document the purpose of each asset
+<div class="card card-secondary pad-tight">
+
+## 📜 **Scripts & packages** for automation and reuse
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📊 **Dashboards & apps** for ongoing monitoring
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🧪 **Experiments** for causal claims and product decisions
+
+</div>
+
+<div class="card card-success pad-tight">
+
+<div class="note-text">
+
+#### Mix intentionally; document the purpose of each asset
+
+</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1200,15 +2376,39 @@ hideInToc: true
 
 # Languages of data
 
-- ## SQL remains foundational for structured data
+<div class="stack-tight mt-md">
 
-- ## Python ecosystem (pandas, Polars, PySpark, SciPy, scikit-learn)
+<div class="card card-primary pad-tight">
 
-- ## R for statistics, visualisation, reproducible reports
+## 🗄️ **SQL** remains foundational for structured data
 
-- ## Julia, Scala, Rust for performance-critical workloads
+</div>
 
-- ## Domain-specific tools (ROOT at CERN, SAS, MATLAB, SPSS)
+<div class="card card-secondary pad-tight">
+
+## 🐍 **Python** ecosystem (pandas, Polars, PySpark, SciPy, scikit-learn)
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📊 **R** for statistics, visualisation, reproducible reports
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🚀 **Julia, Scala, Rust** for performance-critical workloads
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🔬 **Domain-specific** tools (ROOT at CERN, SAS, MATLAB, SPSS)
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1216,22 +2416,60 @@ hideInToc: true
 
 # Tool snapshots
 
-- ## Proprietary: Tableau, Origin, Excel
-- ## Languages: Python, R, Julia
-- ## Tip: mix surface-level ease with depth and reproducibility
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🏢 **Proprietary**
+Tableau, Origin, Excel
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💻 **Languages**
+Python, R, Julia
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💡 **Tip**
+Mix surface-level ease with depth and reproducibility
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-# **Proprietary** Tools 
+# **Proprietary** Tools
 
-- ## Expensive
-- ## Limited in scope
-- ## Lack compatibility
-- ## Lack flexibility
-- ## Easy to learn / use (GUI)
-- ## Great for rapid stakeholder demos & quick wins
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ **Drawbacks**
+
+- Expensive
+- Limited in scope
+- Lack compatibility
+- Lack flexibility
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **Benefits**
+
+- Easy to learn / use (GUI)
+- Great for rapid stakeholder demos & quick wins
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1239,11 +2477,28 @@ hideInToc: true
 
 # **Programming** Languages
 
-- ## Open Source
-- ## Free
-- ## Powerful
-- ## Steep learning curve (CLI)
-- ## Scales from exploration to production
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-success pad-tight">
+
+## ✅ **Benefits**
+
+- Open Source
+- Free
+- Powerful
+- Scales from exploration to production
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ **Drawbacks**
+
+- Steep learning curve (CLI)
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1251,13 +2506,33 @@ hideInToc: true
 
 # DataOps & automation
 
-- ## Schedule data pipelines with orchestration tools (°Ct)
+<div class="stack-tight mt-md">
 
-- ## Leverage CI/CD for tests, linting, deployment
+<div class="card card-primary pad-tight">
 
-- ## Parameterise workflows for reproducibility
+## ⏱️ Schedule data pipelines with orchestration tools
 
-- ## Monitor pipelines for latency, failures, data drift
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔄 Leverage CI/CD for tests, linting, deployment
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📐 Parameterise workflows for reproducibility
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📡 Monitor pipelines for latency, failures, data drift
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1265,15 +2540,39 @@ hideInToc: true
 
 # Testing your analysis
 
-- ## Unit tests for data transforms & calculations
+<div class="stack-tight mt-md">
 
-- ## Data validation (great expectations, pydantic, pandera)
+<div class="card card-primary pad-tight">
 
-- ## Statistical tests to confirm assumptions
+## 🧪 Unit tests for data transforms & calculations
 
-- ## Golden datasets & regression tests for dashboards
+</div>
 
-- ## Peer review before results leave the team
+<div class="card card-secondary pad-tight">
+
+## ✅ Data validation (great expectations, pydantic, pandera)
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📊 Statistical tests to confirm assumptions
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📂 Golden datasets & regression tests for dashboards
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 👁️ Peer review before results leave the team
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1281,36 +2580,80 @@ hideInToc: true
 
 # Documentation & knowledge sharing
 
-- ## Analyst runbooks and playbooks
+<div class="stack-tight mt-md">
 
-- ## Data dictionaries & catalogs
+<div class="card card-primary pad-tight">
 
-- ## Decision logs capturing context and rationale
+## 📖 Analyst runbooks and playbooks
 
-- ## Internal demos & show-and-tell sessions
+</div>
 
-- ## Mentoring to spread tooling fluency
+<div class="card card-secondary pad-tight">
+
+## 📋 Data dictionaries & catalogs
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📝 Decision logs capturing context and rationale
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🎤 Internal demos & show-and-tell sessions
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🤝 Mentoring to spread tooling fluency
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-# **Discussion**  
+# **Discussion**
 
-- ## When to use proprietary tools?
+<div class="stack-tight mt-md">
 
-- ## What should you be using?  
+<div class="card card-primary pad-tight">
 
-- ## Saturation of achieved proficiency
+## 🤔 When to use proprietary tools?
 
-- ## How do we ensure reproducibility when collaborating?
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔧 What should you be using?
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📈 Saturation of achieved proficiency
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔄 How do we ensure reproducibility when collaborating?
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# **Data Hygiene**
+# Data **Hygiene**
 
 ---
 hideInToc: true
@@ -1318,15 +2661,39 @@ hideInToc: true
 
 # Why data hygiene matters
 
-- ## Prevent costly errors & embarrassing corrections
+<div class="stack-tight mt-md">
 
-- ## Build trust with stakeholders & regulators
+<div class="card card-warning pad-tight">
 
-- ## Accelerate future analyses with reusable assets
+## 🚫 Prevent costly errors & embarrassing corrections
 
-- ## Protect sensitive data and maintain compliance
+</div>
 
-- ## Enable others to replicate or extend your work
+<div class="card card-primary pad-tight">
+
+## 🤝 Build trust with stakeholders & regulators
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔄 Accelerate future analyses with reusable assets
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔒 Protect sensitive data and maintain compliance
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📦 Enable others to replicate or extend your work
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1334,15 +2701,39 @@ hideInToc: true
 
 # Hygiene habits to cultivate
 
-- ## Source control for data definitions and transformations
+<div class="stack-tight mt-md">
 
-- ## Automated linting & formatting for notebooks/scripts
+<div class="card card-primary pad-tight">
 
-- ## Clear folder structures & naming conventions
+## 🔄 Source control for data definitions and transformations
 
-- ## Versioned datasets or snapshotting
+</div>
 
-- ## Regular housekeeping: archive, deprecate, document
+<div class="card card-secondary pad-tight">
+
+## ✅ Automated linting & formatting for notebooks/scripts
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📁 Clear folder structures & naming conventions
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🗂️ Versioned datasets or snapshotting
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🧹 Regular housekeeping: archive, deprecate, document
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1350,15 +2741,39 @@ hideInToc: true
 
 # Ethics & responsible analytics
 
-- ## Minimise harm: privacy, consent, security
+<div class="stack-tight mt-md">
 
-- ## Fairness: monitor for disparate impact across groups
+<div class="card card-primary pad-tight">
 
-- ## Transparency: explain methods, assumptions, limitations
+## 🛡️ Minimise harm: privacy, consent, security
 
-- ## Accountability: define owners and escalation paths
+</div>
 
-- ## Sustainability: consider computational & environmental cost
+<div class="card card-secondary pad-tight">
+
+## ⚖️ Fairness: monitor for disparate impact across groups
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔍 Transparency: explain methods, assumptions, limitations
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 👤 Accountability: define owners and escalation paths
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🌍 Sustainability: consider computational & environmental cost
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1366,24 +2781,48 @@ hideInToc: true
 
 # Data governance essentials
 
-- ## Policies for access control and approvals
+<div class="stack-tight mt-md">
 
-- ## Data catalogues & stewardship roles
+<div class="card card-primary pad-tight">
 
-- ## Compliance frameworks (GDPR, HIPAA, CERN policies)
+## 🔐 Policies for access control and approvals
 
-- ## Incident response plans for data breaches or quality issues
+</div>
 
-- ## Training & audits to keep teams aligned
+<div class="card card-secondary pad-tight">
+
+## 📋 Data catalogues & stewardship roles
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📜 Compliance frameworks (GDPR, HIPAA, CERN policies)
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🚨 Incident response plans for data breaches or quality issues
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📚 Training & audits to keep teams aligned
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# **F A I R**
+# **FAIR** Principles
 
---- 
+---
 layout: quote
 hideInToc: true
 ---
@@ -1396,15 +2835,43 @@ hideInToc: true
 
 # **Findable** data
 
-- ## **F1.** (Meta)data are assigned a globally **unique** and persistent **identifier**
+<div class="stack-tight mt-md">
 
-- ## **F2.** Data are described with **rich metadata**
+<div class="card card-primary pad-tight">
 
-- ## **F3.** **Metadata** clearly and explicitly **include the identifier** of the data they describe
+## 🏷️ **F1.** (Meta)data are assigned a globally **unique** and persistent **identifier**
 
-- ## **F4.** (Meta)data are registered or indexed in a **searchable resource**
+</div>
 
-###### What's metadata?
+<div class="card card-secondary pad-tight">
+
+## 📝 **F2.** Data are described with **rich metadata**
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔗 **F3.** **Metadata** clearly and explicitly **include the identifier** of the data they describe
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔍 **F4.** (Meta)data are registered or indexed in a **searchable resource**
+
+</div>
+
+</div>
+
+<div class="card card-warning pad-tight mt-md">
+
+<div class="note-text">
+
+#### What's metadata?
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1412,13 +2879,33 @@ hideInToc: true
 
 # **Accessible** data
 
-- ## **A1.** **(Meta)data** are retrievable by their **identifier** using a standardised communications protocol
+<div class="stack-tight mt-md">
 
-  - ## **A1.1** The protocol is **open**, free, and universally implementable
+<div class="card card-primary pad-tight">
 
-  - ## **A1.2** The protocol allows for an **authentication** and **authorisation** procedure, where necessary
+## 🌐 **A1.** **(Meta)data** are retrievable by their **identifier** using a standardised communications protocol
 
-- ## **A2.** Metadata are accessible, even when the data are no longer available
+</div>
+
+<div class="card card-secondary pad-tight">
+
+### 📖 **A1.1** The protocol is **open**, free, and universally implementable
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+### 🔐 **A1.2** The protocol allows for an **authentication** and **authorisation** procedure, where necessary
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📂 **A2.** Metadata are accessible, even when the data are no longer available
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1426,11 +2913,27 @@ hideInToc: true
 
 # **Interoperable** data
 
-- ## **I1.** (Meta)data use a formal, accessible, shared, and broadly applicable **language for knowledge representation**
+<div class="stack-tight mt-md">
 
-- ## **I2.** (Meta)data use vocabularies that follow **FAIR principles**
+<div class="card card-primary pad-tight">
 
-- ## **I3.** (Meta)data include **qualified references** to other (meta)data
+## 🗣️ **I1.** (Meta)data use a formal, accessible, shared, and broadly applicable **language for knowledge representation**
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔗 **I2.** (Meta)data use vocabularies that follow **FAIR principles**
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📎 **I3.** (Meta)data include **qualified references** to other (meta)data
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1438,13 +2941,33 @@ hideInToc: true
 
 # **Reusable** data
 
-- ## **R1.** (Meta)data are **richly described** with a plurality of accurate and relevant attributes
+<div class="stack-tight mt-md">
 
-  - ## **R1.1.** (Meta)data are released with a clear and **accessible** data usage **license**
+<div class="card card-primary pad-tight">
 
-  - ## **R1.2.** (Meta)data are associated with detailed **provenance**
+## 📋 **R1.** (Meta)data are **richly described** with a plurality of accurate and relevant attributes
 
-  - ## **R1.3.** (Meta)data meet **domain-relevant community standards**
+</div>
+
+<div class="card card-secondary pad-tight">
+
+### 📜 **R1.1.** (Meta)data are released with a clear and **accessible** data usage **license**
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+### 🔗 **R1.2.** (Meta)data are associated with detailed **provenance**
+
+</div>
+
+<div class="card card-info pad-tight">
+
+### 🏛️ **R1.3.** (Meta)data meet **domain-relevant community standards**
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1452,22 +2975,46 @@ hideInToc: true
 
 # FAIR in practice
 
-- ## Assign DOIs or persistent IDs through catalogues
+<div class="stack-tight mt-md">
 
-- ## Publish rich metadata schemas (DCAT, schema.org, Invenio)
+<div class="card card-primary pad-tight">
 
-- ## Provide API/documentation for programmatic access
+## 🏷️ Assign DOIs or persistent IDs through catalogues
 
-- ## Reuse domain ontologies and controlled vocabularies
+</div>
 
-- ## Capture provenance with tools like REANA, DVC, Quilt
+<div class="card card-secondary pad-tight">
+
+## 📝 Publish rich metadata schemas (DCAT, schema.org, Invenio)
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🌐 Provide API/documentation for programmatic access
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📖 Reuse domain ontologies and controlled vocabularies
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🔄 Capture provenance with tools like REANA, DVC, Quilt
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Case Study Â· CERN Open Data
+# Case Study · CERN **Open Data**
 
 ---
 hideInToc: true
@@ -1475,13 +3022,17 @@ hideInToc: true
 
 # Context
 
-- ## CERN releases proton-proton collision datasets via the Open Data portal
+<div class="card card-primary pad-tight mt-md">
 
-- ## Goal: enable students & researchers to reproduce landmark analyses
+- ## 🌐 CERN releases proton-proton collision datasets via the Open Data portal
 
-- ## Data formats: ROOT files, CSV summaries, metadata packages
+- ## 🎯 Goal: enable students & researchers to reproduce landmark analyses
 
-- ## Tooling: ROOT, python, R, Jupyter, cloud notebooks
+- ## 📁 Data formats: ROOT files, CSV summaries, metadata packages
+
+- ## 🔧 Tooling: ROOT, python, R, Jupyter, cloud notebooks
+
+</div>
 
 ---
 hideInToc: true
@@ -1489,13 +3040,17 @@ hideInToc: true
 
 # Collaboration model
 
-- ## Physicists, statisticians, software engineers, detector experts
+<div class="card card-secondary pad-tight mt-md">
 
-- ## Shared code repositories with rigorous review (ROOT macros, python)
+- ## 👥 Physicists, statisticians, software engineers, detector experts
 
-- ## Simulation teams provide synthetic data for validation
+- ## 🔄 Shared code repositories with rigorous review (ROOT macros, python)
 
-- ## Publication committees ensure rigour & messaging
+- ## 🧪 Simulation teams provide synthetic data for validation
+
+- ## 📄 Publication committees ensure rigour & messaging
+
+</div>
 
 ---
 hideInToc: true
@@ -1503,27 +3058,75 @@ hideInToc: true
 
 # Risks & mitigations
 
-- ## Detector anomalies â†’ continuous monitoring & calibration
+<div class="grid-2 gap-md mt-md">
 
-- ## Bias in selection cuts â†’ blind analyses & control regions
+<div class="card card-warning pad-tight">
 
-- ## Reproducibility â†’ containerised environments, notebooks, docs
+## ⚠️ **Detector anomalies**
 
-- ## Communication â†’ translate particle jargon for broader audiences
+<div class="note-text">Continuous monitoring & calibration</div>
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ **Bias in selection cuts**
+
+<div class="note-text">Blind analyses & control regions</div>
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **Reproducibility**
+
+<div class="note-text">Containerised environments, notebooks, docs</div>
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **Communication**
+
+<div class="note-text">Translate particle jargon for broader audiences</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-# Exercise Â· Plan your own analysis
+# Exercise · Plan your own analysis
 
-- ## Pick a dataset (CERN or your organisation)
+<div class="stack-tight mt-md">
 
-- ## Draft a 6-step workflow referencing todayâ€™s framework
+<div class="card card-primary pad-tight">
 
-- ## Identify stakeholders, success metrics, and key risks
+## 📋 Pick a dataset (CERN or your organisation)
 
-- ## Decide what artefact you would deliver
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔧 Draft a 6-step workflow referencing today's framework
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 👥 Identify stakeholders, success metrics, and key risks
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📦 Decide what artefact you would deliver
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1531,22 +3134,46 @@ hideInToc: true
 
 # Lessons from CERN for everyone else
 
-- ## Document everythingâ€”you never know who will re-run it
+<div class="stack-tight mt-md">
 
-- ## Invest in shared tooling and platforms early
+<div class="card card-primary pad-tight">
 
-- ## Open data accelerates innovation beyond your organisation
+## 📝 Document everything — you never know who will re-run it
 
-- ## Rigorous peer review can coexist with fast iteration
+</div>
 
-- ## Celebrate small wins: incremental insights build trust
+<div class="card card-secondary pad-tight">
+
+## 🔧 Invest in shared tooling and platforms early
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🌐 Open data accelerates innovation beyond your organisation
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 👁️ Rigorous peer review can coexist with fast iteration
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🎉 Celebrate small wins: incremental insights build trust
+
+</div>
+
+</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Wrap-up & Next Steps
+# Wrap-up & **Next Steps**
 
 ---
 hideInToc: true
@@ -1554,12 +3181,36 @@ hideInToc: true
 
 # Key takeaways
 
-- ## Start with the decision, not the data
+<div class="grid-2 gap-md mt-md">
 
-- ## Treat data analysis as an iterative, collaborative lifecycle
+<div class="card card-primary pad-tight">
 
-- ## Healthy data hygiene & governance underpin trustworthy insights
+## 🎯 Start with the decision, not the data
 
-- ## Choose tools intentionally to balance speed, scale, and rigour
+</div>
 
-- ## Communicate clearly, ethically, and with empathy for your audience
+<div class="card card-secondary pad-tight">
+
+## 🔄 Treat data analysis as an iterative, collaborative lifecycle
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🧹 Healthy data hygiene & governance underpin trustworthy insights
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔧 Choose tools intentionally to balance speed, scale, and rigour
+
+</div>
+
+</div>
+
+<div class="card card-success pad-tight mt-md">
+
+## 📢 Communicate clearly, ethically, and with empathy for your audience
+
+</div>
