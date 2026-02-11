@@ -19,8 +19,15 @@ layout: cover
 # Lessons on **Data Analysis** from **CERN**
 
 ## Lecture 4:
-  
+
 ## Computing Infrastructure
+
+---
+hideInToc: true
+layout: quote
+---
+
+# Every data analysis depends on the hardware beneath it. Understanding **CPUs**, **memory**, **storage**, and **accelerators** helps you write faster code, choose the right tools, and make the most of the machines you work with.
 
 ---
 layout: fact
@@ -28,65 +35,142 @@ hideInToc: true
 ---
 
 #  What constitutes **computing infrastructure**?
-  
----
-hideInToc: true
----
-
-- # **Hardware Components******
-
-  - ## Central Processing Unit (**CPU**)
-
-  - ## Memory (**RAM**)
-
-  - ## Storage Devices (**HDD, SSD, NVMe**)
-
-  - ## Input/Output (**I/O**) Devices
-
-  - ## Specialized Processors (**GPUs**, **TPUs**)
-
-  - ## Power and Cooling
-
-  - ## Networking
-
-  - ## Monitoring and Management Tools
-
-  - ## Security
 
 ---
 hideInToc: true
 ---
 
-- # **CPU** (Central Processing Unit)
+# Hardware Components
 
-  - ## Basic arithmetic, logic, control, and input/output operations
+<div class="grid-3 mt-md gap-md">
 
-  - ## CPU sub-components
+<div class="card card-primary pad-tight">
 
-    - ### Control Unit (CU)
+## 🖥️ **Core Processing**
 
-    - ### Arithmetic Logic Unit (ALU)
+- Central Processing Unit (**CPU**)
+- Specialized Processors (**GPUs**, **TPUs**)
 
-    - ### Registers
+</div>
 
-    - ### Cache
+<div class="card card-secondary pad-tight">
 
-    - ### Buses
+## 💾 **Memory & Storage**
+
+- Memory (**RAM**)
+- Storage Devices (**HDD, SSD, NVMe**)
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔌 **I/O & Connectivity**
+
+- Input/Output (**I/O**) Devices
+- Networking
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## ⚡ **Infrastructure**
+
+- Power and Cooling
+- Monitoring and Management Tools
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🔒 **Security**
+
+- Physical and logical security
+- Access control
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-- # **CPU Performance** Factors:
+# CPU (Central Processing Unit)
 
-  - ## Clock Speed
+<div class="grid-2 mt-md gap-md">
 
-  - ## Number of Cores
+<div class="card card-primary pad-tight">
 
-  - ## Cache Size
+## 🧠 **What It Does**
 
-  - ## Power Efficiency
-    
+Basic arithmetic, logic, control, and input/output operations
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔧 **CPU Sub-Components**
+
+<div class="stack-tight">
+
+<div class="card card-info pad-compact">⚙️ **Control Unit (CU)** — directs operations</div>
+
+<div class="card card-accent pad-compact">➕ **Arithmetic Logic Unit (ALU)** — math & logic</div>
+
+<div class="card card-success pad-compact">📋 **Registers** — fastest storage</div>
+
+<div class="card card-warning pad-compact">💨 **Cache** — near-CPU memory</div>
+
+<div class="card card-primary pad-compact">🔀 **Buses** — data pathways</div>
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# CPU Performance Factors
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## ⏱️ **Clock Speed**
+
+How many cycles per second the CPU can execute (measured in GHz)
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔢 **Number of Cores**
+
+More cores enable parallel execution of independent tasks
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 💨 **Cache Size**
+
+Larger caches reduce memory access latency for frequently used data
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔋 **Power Efficiency**
+
+Performance per watt matters for sustained workloads and cooling
+
+</div>
+
+</div>
+
 ---
 hideInToc: true
 layout: image
@@ -109,17 +193,31 @@ image: /cpu_apple_M4.webp
 hideInToc: true
 ---
 
-- # **RAM** (Random Access Memory)
+# RAM (Random Access Memory)
 
-  - ## Volatile memory
+<div class="grid-2 mt-md gap-md">
 
-  - ## High-Speed Access
+<div class="card card-primary pad-tight">
 
-  - ## Temporary Storage
+## 📝 **Characteristics**
 
-  - ## Capacity (GB or TB)
+- **Volatile memory** — data lost on power-off
+- **High-Speed Access** — orders of magnitude faster than disk
+- **Temporary Storage** — working space for active processes
 
-  - ## Performance (MHz or GHz)
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📊 **Specifications**
+
+- **Capacity** — measured in GB or TB
+- **Performance** — measured in MHz or GHz
+- Determines how much data can be processed simultaneously
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -144,22 +242,43 @@ layout: center
 hideInToc: true
 ---
 
-- # **Storage** Devices:
+# Storage Devices
 
-  - ## **HDD** (Hard Disk Drive)
+<div class="grid-2 mt-md gap-md">
 
-  - ## **SSD** (Solid State Drive)
+<div class="card card-primary pad-tight">
 
-  - ## **SSHD** (Solid State Hybrid Drive)
+## 💿 **Mechanical**
 
-  - ## **NVMe** (Non-Volatile Memory Express)
+- **HDD** (Hard Disk Drive) — spinning platters, high capacity, slower
 
-<div style="margin-top: 5rem; text-align: center;">
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ⚡ **Solid State**
+
+- **SSD** (Solid State Drive) — flash memory, faster, no moving parts
+- **SSHD** (Solid State Hybrid Drive) — combines HDD + flash cache
+
+</div>
+
+<div class="card card-accent pad-tight" style="grid-column: 1 / -1;">
+
+## 🚀 **NVMe** (Non-Volatile Memory Express)
+
+Direct PCIe connection — fastest consumer storage available
+
+</div>
+
+</div>
+
+<div style="margin-top: 2rem; text-align: center;">
 
 ```mermaid {scale: 1.5}
 graph LR
     A[cashes] --> B[RAM] --> C[Drive Storage]
-    
+
     classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;
 
     class A transparentBox;
@@ -223,37 +342,79 @@ hideInToc: true
 layout: section
 ---
 
-# Input/Output (**I/O**) Devices
+# Input/Output (I/O) **Devices**
 
 ---
 hideInToc: true
 ---
 
-- # Specialized **Processors**:
+# Specialized Processors
 
-  - ## **GPU** (Graphics Processing Unit)
+<div class="grid-2 mt-md gap-md">
 
-  - ## **TPU** (Tensor Processing Unit)
+<div class="card card-primary pad-tight">
 
-  - ## **FPGA** (Field-Programmable Gate Array)
+## 🎮 **GPU** (Graphics Processing Unit)
 
-  - ## **ASIC** (Application-Specific Integrated Circuit)
+Massively parallel — thousands of small cores for throughput
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🤖 **TPU** (Tensor Processing Unit)
+
+Google-designed accelerator optimized for ML tensor operations
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔧 **FPGA** (Field-Programmable Gate Array)
+
+Reconfigurable hardware — customizable logic for specific tasks
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🏭 **ASIC** (Application-Specific Integrated Circuit)
+
+Fixed-function chip — maximum efficiency for a single task
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-- # **GPU** (Graphics Processing Unit)
+# GPU (Graphics Processing Unit)
 
-  - ## Graphics Rendering
+<div class="grid-2 mt-md gap-md">
 
-  - ## Parallel Processing Power
+<div class="card card-primary pad-tight">
 
-  - ## Accelerating Machine Learning and AI
+## 🎯 **Primary Uses**
 
-  - ## Scientific and Data Analysis Computing
+- Graphics Rendering
+- Parallel Processing Power
+- Video Processing and Encoding
 
-  - ## Video Processing and Encoding
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔬 **Scientific Applications**
+
+- Accelerating Machine Learning and AI
+- Scientific and Data Analysis Computing
+- Simulation and modelling
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -289,39 +450,104 @@ layout: full
 hideInToc: true
 ---
 
-- # Power and Cooling
+# Infrastructure & Operations
 
-- # Networking
+<div class="grid-3 mt-md gap-md">
 
-- # Monitoring and Management Tools
+<div class="card card-primary pad-tight">
+
+## ⚡ **Power and Cooling**
+
+Reliable power supply, UPS systems, and thermal management for sustained operation
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🌐 **Networking**
+
+Interconnects, bandwidth, latency — moving data between components and systems
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📈 **Monitoring & Management**
+
+System health, resource utilization, alerting, and capacity planning tools
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-- # Security
+# Security, Software & Cloud
 
-- # Software
+<div class="grid-3 mt-md gap-md">
 
-- # Virtualization and Cloud Computing
+<div class="card card-warning pad-tight">
+
+## 🔒 **Security**
+
+Access control, encryption, firewalls, intrusion detection — protecting data and infrastructure
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💻 **Software**
+
+Operating systems, drivers, middleware, and application software that runs on the hardware
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ☁️ **Virtualization & Cloud**
+
+Abstract hardware into virtual machines and containers — scalable, on-demand resources
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-- # **Software** Components
+# Software Components
 
-  - ## Operating Systems (**OS**)
+<div class="grid-2 mt-md gap-md">
 
-    - ### Windows
+<div class="card card-primary pad-tight">
 
-    - ### macOS
+## 🖥️ **Operating Systems**
 
-    - ### Linux
+<div class="stack-tight">
 
-  - ## **Middleware** and Virtualization
+<div class="card card-info pad-compact">🪟 **Windows** — desktop, enterprise</div>
 
-  - ## **Application** Software
+<div class="card card-accent pad-compact">🍎 **macOS** — Apple ecosystem</div>
+
+<div class="card card-success pad-compact">🐧 **Linux** — servers, HPC, science</div>
+
+</div>
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔗 **Middleware & Applications**
+
+- **Middleware** and Virtualization — bridges OS and applications
+- **Application** Software — the tools you actually use for analysis
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -333,10 +559,10 @@ hideInToc: true
 
 ```mermaid
 graph LR
-    A[CPU Registers<br/>~1 cycle<br/>Few KB] --> 
+    A[CPU Registers<br/>~1 cycle<br/>Few KB] -->
     B[L1 Cache<br/>~3 cycles<br/>32-64 KB] -->
     C[L2 Cache<br/>~10 cycles<br/>256 KB - 1 MB] -->
-    D[L3 Cache<br/>~40 cycles<br/>8-32 MB]    
+    D[L3 Cache<br/>~40 cycles<br/>8-32 MB]
 
     classDef box fill:none,stroke:white,stroke-width:3px,font-size:24px;
 
@@ -350,7 +576,7 @@ graph LR
 graph LR
     E[RAM<br/>~100-300 cycles<br/>4-32 GB] -->
     F[SSD<br/>~100,000 cycles<br/>256 GB - 4 TB] -->
-    G[HDD<br/>~10M cycles<br/>1-10 TB] 
+    G[HDD<br/>~10M cycles<br/>1-10 TB]
 
     classDef box fill:none,stroke:white,stroke-width:3px,font-size:24px;
 
@@ -368,6 +594,10 @@ hideInToc: true
 
 # Memory Access Times
 
+<div class="card card-info pad-tight mt-md">
+
+## ⏱️ **Latency Comparison**
+
 | **Storage Type** | **Access Time** | **Relative Cost** |
 |------------------|-----------------|-------------------|
 | CPU Register     | 1 ns            | 1x                |
@@ -377,25 +607,49 @@ hideInToc: true
 | SSD              | 100 μs          | 100,000x          |
 | HDD              | 10 ms           | 10,000,000x       |
 
+</div>
+
 ---
 hideInToc: true
 ---
 
 # Why This Matters for Data Analysis
 
-- ## **Locality matters**:
+<div class="grid-2 mt-md gap-md">
 
-  - ### Keep related data close together
+<div class="card card-primary pad-tight">
 
-- ## **Vectorization**: 
+## 📍 **Locality Matters**
 
-  - ### Process arrays in chunks that fit in cache
+Keep related data close together in memory — sequential access patterns are dramatically faster than random access
 
-- ## **File formats**:
-  - ### Columnar formats (Parquet) are cache-friendly
+</div>
 
-- ## **Algorithm choice**:
-  - ### Memory access patterns affect performance more than computation
+<div class="card card-secondary pad-tight">
+
+## ⚡ **Vectorization**
+
+Process arrays in chunks that fit in cache — SIMD instructions can operate on multiple data points simultaneously
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📂 **File Formats**
+
+Columnar formats (Parquet) are cache-friendly — read only the columns you need instead of entire rows
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🧮 **Algorithm Choice**
+
+Memory access patterns affect performance more than computation — an algorithm with better locality often beats a "faster" one
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
