@@ -3,7 +3,7 @@ name: Deploy pages
 on:
   workflow_dispatch:
   push:
-    branches: [ff2025]
+    branches: [bs2026]
 
 permissions:
   contents: read
