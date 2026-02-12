@@ -85,7 +85,7 @@ hideInToc: true
 ## 🔀 **Diverging Histories**
 
 - An edit to a file might overwrite some of the content in the previous version
-- This *divergences* may arrise while working alone, but they are really common when multiple people are working on the same file
+- Such *divergence* may arise while working alone, but it is really common when multiple people are working on the same file
 
 </div>
 
@@ -135,12 +135,12 @@ hideInToc: true
 
 When two branches change the same lines, git marks the conflict:
 
-```
-<<<<<<< HEAD
+```text {*}{lines:false}
+{{'<<<<<<< HEAD'}}
 result = calculate_mean(data)
-=======
+{{'======='}}
 result = calculate_median(data)
->>>>>>> feature-branch
+{{'>>>>>>> feature-branch'}}
 ```
 
 </div>
@@ -828,3 +828,23 @@ hideInToc: true
 ---
 
 # [An interactive git playground](https://learngitbranching.js.org/)
+
+---
+hideInToc: true
+---
+
+# Looking Ahead
+
+<div class="card card-info pad-tight mt-md">
+
+## 🔗 **Git in the Bigger Picture**
+
+Version control is one pillar of **reproducible research**. In **L12**, we combine git with:
+
+- **Virtual environments** — isolate dependencies
+- **Automated scripts** — one command runs the full analysis
+- **CI/CD** — run tests and checks on every push
+
+Together, these practices ensure that anyone can reproduce your results — from raw data to final figures.
+
+</div>

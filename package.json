@@ -1,4 +1,12 @@
 {
+  "name": "cern-lessons-on-data-analysis",
+  "private": true,
+  "description": "Lecture slides for Lessons on Data Analysis from CERN",
+  "scripts": {
+    "dev": "slidev lectures/content/lessons_on_data_analysis_from_CERN.md",
+    "build": "slidev build lectures/content/lessons_on_data_analysis_from_CERN.md",
+    "export": "slidev export lectures/content/lessons_on_data_analysis_from_CERN.md"
+  },
   "dependencies": {
     "@slidev/cli": "^52.7.0",
     "slidev-addon-python-runner": "^0.1.3"

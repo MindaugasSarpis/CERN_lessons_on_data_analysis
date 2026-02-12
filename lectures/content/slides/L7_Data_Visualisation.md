@@ -397,3 +397,36 @@ layout: image
 backgroundSize: contain
 image: /data_vis_hist_scientific_2.png
 ---
+
+---
+hideInToc: true
+---
+
+# Key Takeaways
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📊 **Design Principles**
+
+- Every visual encoding (color, shape, size) must be **meaningful**
+- Axes must be clearly labeled with **units**
+- Legends should be **placed carefully** to not obscure data
+- Avoid chart junk — maximize the **data-to-ink ratio**
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔗 **What Comes Next**
+
+- **L11**: Create these plots yourself with `matplotlib` and Pandas
+- **L10**: Visualize fit results with residual plots
+- **L12**: Automate plot generation in reproducible workflows
+
+Good visualization is not decoration — it is **analysis**. A well-chosen plot reveals structure that statistics alone cannot.
+
+</div>
+
+</div>

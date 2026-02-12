@@ -558,7 +558,7 @@ print(df.fillna(df.mean()))
 
 # Forward fill (use previous value)
 print(f"\nForward fill:")
-print(df.fillna(method='ffill'))
+print(df.ffill())
 ```
 
 ---

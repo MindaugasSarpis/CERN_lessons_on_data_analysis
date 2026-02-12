@@ -87,7 +87,7 @@ hideInToc: true
   'lineColor': '#5eead4',
   'fontFamily': 'Inter, Segoe UI, sans-serif',
   'fontSize': '18px'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': False, 'nodeSpacing': 10, 'rankSpacing': 80}}}%%
+}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': false, 'nodeSpacing': 10, 'rankSpacing': 80}}}%%
 flowchart LR
     A["📓 Jupyter<br/>Notebook"]:::stage1 --> B["📜 Python<br/>Script"]:::stage2
     B --> C["📦 Modular <br/>Code"]:::stage3

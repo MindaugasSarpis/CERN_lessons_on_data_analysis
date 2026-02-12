@@ -18,9 +18,14 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 3:
-
 ## Command Line Interfaces
+
+---
+hideInToc: true
+layout: quote
+---
+
+# The command line is the universal interface to computing. Master it once, and you gain **speed**, **automation**, and the ability to work on any machine—from a laptop to a supercomputer cluster.
 
 ---
 hideInToc: true
@@ -28,15 +33,28 @@ hideInToc: true
 
 # Command Line Interfaces (CLI)
 
-- ## **Text-based** communication with the computer
+<div class="grid-2 mt-md gap-md">
 
-- ## **Efficient** for repeatable tasks and automation
+<div class="card card-info pad-tight">
 
-  - ### Can easily chain commands, redirect input/output, and script workflows
+## 💻 **What is the CLI?**
 
-- ## Accessible across **Windows**, **macOS**, and **Linux**
+- **Text-based** communication with the computer
+- **Efficient** for repeatable tasks and automation
+  - Can easily chain commands, redirect input/output, and script workflows
 
-- ## Forms the backbone of **data engineering** and **scientific computing**
+</div>
+
+<div class="card card-primary pad-tight">
+
+## 🌍 **Where does it run?**
+
+- Accessible across **Windows**, **macOS**, and **Linux**
+- Forms the backbone of **data engineering** and **scientific computing**
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -44,15 +62,49 @@ hideInToc: true
 
 # Why Learn the CLI?
 
-- ## **Speed:** execute complex workflows faster than with a mouse
+<div class="stack-tight mt-md">
 
-- ## **Automation:** script repetitive steps and share them openly
+<div class="card card-primary pad-tight">
 
-- ## **Remote work:** manage servers and clusters without a GUI
+## ⚡ **Speed**
 
-- ## **Transparency:** commands document exactly what happened
+Execute complex workflows faster than with a mouse
 
-- ## **Composability:** small tools can be chained into powerful pipelines
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔄 **Automation**
+
+Script repetitive steps and share them openly
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🌐 **Remote Work**
+
+Manage servers and clusters without a GUI
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📝 **Transparency**
+
+Commands document exactly what happened
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🔗 **Composability**
+
+Small tools can be chained into powerful pipelines
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -60,7 +112,11 @@ hideInToc: true
 
 # Shell Fundamentals
 
-## Shells
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🐚 **Shells**
 
 ```bash
 PowerShell
@@ -71,17 +127,32 @@ fish
 - Provide the environment that interprets your commands
 - Offer history, auto-completion, variables, and scripting features
 
-## Prompt Structure
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📍 **Prompt Structure**
 
 ```bash
 user@machine:path $
 PS C:\Users\You>
 ```
+
+<div class="note-text mt-sm">The prompt tells you who you are, where you are, and that the shell is ready for input.</div>
+
+</div>
+
+</div>
+
 ---
 hideInToc: true
 ---
 
 # Basic Command Anatomy
+
+<div class="card card-info pad-tight mt-md">
+
+## 🔧 **Structure**
 
 ```
 command -options arguments
@@ -91,21 +162,40 @@ command -options arguments
 - `options`: tweak behavior, usually start with `-` or `--`
 - `arguments`: the objects being acted on
 
-## Built-ins vs Executables
+</div>
 
-- Shell provides built-in commands (`cd`, `Set-Location`)
-- External executables live in directories listed in `$PATH` / `$Env:Path`
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🏗️ **Built-ins**
+
+Shell provides built-in commands (`cd`, `Set-Location`)
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📦 **Executables**
+
+External executables live in directories listed in `$PATH` / `$Env:Path`
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
-layout: two-cols
 ---
 
-## Navigating the Filesystem
+# Navigating the Filesystem
 
-<div style="max-width: 320px;">
+<div class="grid-2 mt-md gap-md">
 
-### PowerShell
+<div class="card card-primary pad-tight">
+
+## 🪟 **PowerShell**
+
 ```bash
 Get-Location
 Set-Location Documents
@@ -114,9 +204,10 @@ Get-ChildItem
 
 </div>
 
-<div style="max-width: 320px;">
+<div class="card card-secondary pad-tight">
 
-### macOS & Linux
+## 🐧 **macOS & Linux**
+
 ```bash
 pwd
 cd Documents
@@ -125,25 +216,31 @@ ls
 
 </div>
 
-::right::
+</div>
 
-## Key Concepts
+<div class="card card-accent pad-tight mt-md">
+
+## 🔑 **Key Concepts**
 
 - Directories are **hierarchical**
 - `..` means "go up one level"
 - Tab completion reduces typing
 - Use history (`↑`) to rerun previous commands
 
+</div>
+
 ---
 hideInToc: true
-layout: two-cols
 ---
 
-## Inspecting Files
+# Inspecting Files
 
-<div style="max-width: 320px;">
+<div class="grid-2 mt-md gap-md">
 
-### PowerShell
+<div class="card card-primary pad-tight">
+
+## 🪟 **PowerShell**
+
 ```bash
 Get-Content README.md
 Select-String "analysis" *.txt
@@ -151,9 +248,10 @@ Select-String "analysis" *.txt
 
 </div>
 
-<div style="max-width: 320px;">
+<div class="card card-secondary pad-tight">
 
-### macOS & Linux
+## 🐧 **macOS & Linux**
+
 ```bash
 cat README.md
 rg "analysis" *.txt
@@ -161,24 +259,30 @@ rg "analysis" *.txt
 
 </div>
 
-::right::
+</div>
 
-## Practical Uses
+<div class="card card-info pad-tight mt-md">
+
+## 🔍 **Practical Uses**
 
 - Preview configuration or log files quickly
 - Search large codebases without opening an editor
 - Combine with redirection (`>`) to save filtered output
 
+</div>
+
 ---
 hideInToc: true
-layout: two-cols
 ---
 
-## Creating and Editing
+# Creating and Editing
 
-<div style="max-width: 320px;">
+<div class="grid-2 mt-md gap-md">
 
-### PowerShell
+<div class="card card-primary pad-tight">
+
+## 🪟 **PowerShell**
+
 ```bash
 New-Item notes.txt -ItemType File
 Add-Content notes.txt "Result: 42"
@@ -187,9 +291,10 @@ notepad notes.txt
 
 </div>
 
-<div style="max-width: 320px;">
+<div class="card card-secondary pad-tight">
 
-### macOS & Linux
+## 🐧 **macOS & Linux**
+
 ```bash
 touch notes.txt
 echo "Result: 42" >> notes.txt
@@ -198,24 +303,30 @@ nano notes.txt
 
 </div>
 
-::right::
+</div>
 
-## Versioning & Collaboration
+<div class="card card-accent pad-tight mt-md">
+
+## 🔀 **Versioning & Collaboration**
 
 - Pair the CLI with `git` to track work precisely
 - Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
 - Script file creation to keep project structure consistent
 
+</div>
+
 ---
 hideInToc: true
-layout: two-cols
 ---
 
-## Working with Processes
+# Working with Processes
 
-<div style="max-width: 320px;">
+<div class="grid-2 mt-md gap-md">
 
-### PowerShell
+<div class="card card-primary pad-tight">
+
+## 🪟 **PowerShell**
+
 ```bash
 Get-Process python
 Stop-Process -Name python
@@ -224,9 +335,10 @@ Start-Job -ScriptBlock { python script.py }
 
 </div>
 
-<div style="max-width: 320px;">
+<div class="card card-secondary pad-tight">
 
-### macOS & Linux
+## 🐧 **macOS & Linux**
+
 ```bash
 ps aux | grep python
 killall python
@@ -235,22 +347,29 @@ nohup python script.py &
 
 </div>
 
-::right::
+</div>
 
-## Why It Matters
+<div class="card card-warning pad-tight mt-md">
+
+## ⚙️ **Why It Matters**
 
 - Monitor long-running analyses
 - Run jobs in the background while continuing to work
 - Integrate into schedulers or workflow engines
 
+</div>
+
 ---
 hideInToc: true
-layout: two-cols-header
 ---
 
 # Combining Commands
 
-## PowerShell Pipeline
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🪟 **PowerShell Pipeline**
 
 ```bash
 Get-ChildItem *.csv |
@@ -258,13 +377,17 @@ Get-ChildItem *.csv |
   Sort-Object Length -Descending
 ```
 
-## Save Results
+**Save Results:**
 
 ```bash
 ... | Out-File large_files.txt
 ```
 
-## UNIX Pipeline
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🐧 **UNIX Pipeline**
 
 ```bash
 ls -lh *.csv \
@@ -272,25 +395,38 @@ ls -lh *.csv \
   | sort -k2hr
 ```
 
-## Save Results
+**Save Results:**
 
 ```bash
 ... > large_files.txt
 ```
 
-- Pipelines let each tool focus on one job
-- Reuse the same pattern across projects with minimal edits
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+<div class="note-text">
+
+**Key insight:** Pipelines let each tool focus on one job. Reuse the same pattern across projects with minimal edits.
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
-layout: two-cols
 ---
 
-## Getting Help
+# Getting Help
 
-<div style="max-width: 320px;">
+<div class="grid-2 mt-md gap-md">
 
-### PowerShell
+<div class="card card-primary pad-tight">
+
+## 🪟 **PowerShell**
+
 ```bash
 Get-Command *csv*
 Get-Help Get-Content -Examples
@@ -298,9 +434,10 @@ Get-Help Get-Content -Examples
 
 </div>
 
-<div style="max-width: 320px;">
+<div class="card card-secondary pad-tight">
 
-### macOS & Linux
+## 🐧 **macOS & Linux**
+
 ```bash
 apropos csv
 man cat
@@ -308,13 +445,17 @@ man cat
 
 </div>
 
-::right::
+</div>
 
-## Learning Faster
+<div class="card card-accent pad-tight mt-md">
+
+## 📚 **Learning Faster**
 
 - Use `--help` or `/?` flags for quick summaries
 - Explore interactive help (`Get-Help -Online`, `tldr command`)
 - Build a personal cheatsheet for frequent tasks
+
+</div>
 
 ---
 hideInToc: true
@@ -322,15 +463,39 @@ hideInToc: true
 
 # Best Practices
 
-- ## Keep commands **small** and **composable**
+<div class="stack-tight mt-md">
 
-- ## Use **aliases** sparingly—prefer readable scripts
+<div class="card card-primary pad-tight">
 
-- ## Store reusable commands in **scripts** under version control
+## 🧩 **Keep commands small and composable**
 
-- ## Document workflows in README files with **copy-paste** commands
+</div>
 
-- ## Practice regularly to build muscle memory
+<div class="card card-secondary pad-tight">
+
+## 📖 **Use aliases sparingly—prefer readable scripts**
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📁 **Store reusable commands in scripts under version control**
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 📋 **Document workflows in README files with copy-paste commands**
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💪 **Practice regularly to build muscle memory**
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -338,11 +503,27 @@ hideInToc: true
 
 # Demo Challenge
 
-- ## Create a new project folder **from the CLI**
+<div class="stack-tight mt-md">
 
-- ## Create a `README.md` with your plan
+<div class="card card-primary pad-tight">
 
-- ## Share the exact commands you used
+## 📁 **Create a new project folder from the CLI**
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📝 **Create a `README.md` with your plan**
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔗 **Share the exact commands you used**
+
+</div>
+
+</div>
 
 ---
 layout: statement

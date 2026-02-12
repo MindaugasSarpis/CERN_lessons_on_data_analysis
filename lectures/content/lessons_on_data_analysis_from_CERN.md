@@ -84,5 +84,9 @@ src: slides/L10_Data_Fitting.md
 ---
 
 ---
+src: slides/L11_NumPy_Pandas_Real_Data.md
+---
+
+---
 src: slides/L12_Reproducible_Workflows.md
 ---

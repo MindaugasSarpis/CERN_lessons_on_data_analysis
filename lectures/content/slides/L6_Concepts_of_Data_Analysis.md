@@ -15,8 +15,8 @@ title: "Concepts of Data Analysis"
 layout: cover
 ---
 
-
 # Dr. Mindaugas Šarpis
+
 # Lessons on **Data Analysis** from **CERN**
 
 ## Concepts of Data Analysis
@@ -1482,43 +1482,29 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Data quality dimensions
+# Data quality recap + two more dimensions
+
+<div class="card card-info pad-compact mt-md">
+
+**Recall the quality checklist** — completeness, consistency, validity, timeliness, lineage, ethics. Two extra dimensions worth highlighting:
+
+</div>
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary pad-tight">
 
-### 🎯 **Accuracy** · does it reflect reality?
+## 🎯 **Accuracy**
 
-</div>
-
-<div class="card card-secondary pad-compact">
-
-### ✅ **Completeness** · are key fields missing?
+Does the recorded value reflect reality? Measurement error, transcription mistakes, and sensor drift all erode accuracy.
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-success pad-tight">
 
-### 🔗 **Consistency** · same definition across sources?
+## 🔢 **Uniqueness**
 
-</div>
-
-<div class="card card-info pad-compact">
-
-### ⏱️ **Timeliness** · fresh enough to act on?
-
-</div>
-
-<div class="card card-warning pad-compact">
-
-### 📐 **Validity** · conforms to rules and business logic?
-
-</div>
-
-<div class="card card-success pad-compact">
-
-### 🔢 **Uniqueness** · no unintended duplicates?
+Are there unintended duplicates? Deduplication is critical when merging datasets or ingesting repeated feeds.
 
 </div>
 
@@ -1650,45 +1636,51 @@ hideInToc: true
 hideInToc: true
 ---
 
-# End-to-end lifecycle
+# Lifecycle Recap — Six Key Phases
 
-<div class="stack-tight mt-md">
+<div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary pad-compact">
 
-## 🎯 **Plan** · clarify problem, stakeholders, success criteria
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 📥 **Acquire** · collect, ingest, or access relevant data
+🎯 **Plan**
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-secondary pad-compact">
 
-## 💾 **Store** · organise, catalogue, secure
-
-</div>
-
-<div class="card card-info pad-tight">
-
-## 🔧 **Process** · clean, transform, feature engineer
+📥 **Acquire**
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-accent pad-compact">
 
-## 📊 **Analyse** · explore, model, evaluate
+💾 **Store**
+
+</div>
+
+<div class="card card-info pad-compact">
+
+🔧 **Process**
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-success pad-compact">
 
-## 📢 **Share** · communicate, deploy, monitor, iterate
+📊 **Analyse**
 
 </div>
+
+<div class="card card-warning pad-compact">
+
+📢 **Share**
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+Each phase maps to the detailed lifecycle stages we covered earlier. The next slides focus on how these phases connect through governance and iteration.
 
 </div>
 

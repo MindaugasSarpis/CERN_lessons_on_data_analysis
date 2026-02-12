@@ -6,28 +6,30 @@ This repository contains lectures and materials for data analysis courses at CER
 
 ### Prerequisites
 
-- Node.js v25.1.0 (or later)
-- pnpm v10.12.3 (or later)
+- Node.js (v20+ recommended)
+- pnpm
+- Conda or Mamba (for Python environment)
 
 ### Installation
 
 ```bash
+# Node.js dependencies (Slidev, theme, addons)
 pnpm install
-```
 
-This will install all dependencies and automatically apply a compatibility patch for Slidev on Node.js v25.
+# Python environment (for workbook and lecture examples)
+conda env create -f env.yaml
+conda activate lecture
+```
 
 ## Running the Lectures
 
 ### Development Server
 
-To start the Slidev development server for the Probability and Statistics lecture:
-
 ```bash
 pnpm dev
 ```
 
-This will start the server at http://localhost:3030/ with:
+This will start the Slidev server at http://localhost:3030/ with:
 - Public slide show: http://localhost:3030/
 - Presenter mode: http://localhost:3030/presenter/
 - Slides overview: http://localhost:3030/overview/
@@ -49,31 +51,20 @@ pnpm export
 ```
 .
 ├── lectures/
-│   └── content/
-│       └── slides/
-│           └── L9_Probability_and_Statistics.md
-├── scripts/
-│   └── patch-slidev.sh
-├── package.json
+│   ├── content/
+│   │   ├── lessons_on_data_analysis_from_CERN.md  # Master deck entry point
+│   │   ├── slides/           # Individual lecture files (L1–L12)
+│   │   └── theme/            # Custom Slidev theme
+│   └── workbook/             # Student workbook (MkDocs)
+├── env.yaml                  # Conda environment (Python deps)
+├── package.json              # Node.js dependencies
 └── README.md
 ```
 
-## Features
-
-The Probability and Statistics lecture includes:
-
-- Interactive Python code execution (via slidev-addon-python-runner)
-- Mermaid diagrams for visualizing concepts
-- Interactive demos for:
-  - Dice rolling simulations
-  - Bayes' theorem calculator
-  - Central Limit Theorem demonstrations
-  - Confidence interval visualizations
-  - And more!
-
 ## Technologies
 
-- **Slidev**: Modern slide deck framework
-- **Python Runner**: Execute Python code directly in slides
-- **Mermaid**: Create diagrams and flowcharts
-- **UnoCSS**: Utility-first CSS engine
+- **Slidev** — Markdown-based slide framework
+- **slidev-addon-python-runner** — Interactive Python code execution in slides
+- **Mermaid** — Diagrams and flowcharts
+- **UnoCSS** — Utility-first CSS engine
+- **MkDocs** — Student workbook

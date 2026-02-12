@@ -18,8 +18,6 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 1
-
 ## Course Orientation and Motivation
 
 ---
@@ -267,7 +265,7 @@ layout: section
 hideInToc: true
 ---
 
-# **Goals of the course**
+# Goals of the **Course**
 
 ---
 hideInToc: true

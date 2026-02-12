@@ -1,6 +1,7 @@
 ---
-background: ./background_default.jpg
+background: /background_intro.jpg
 
+colorSchema: dark
 
 theme: ./theme
 drawings:

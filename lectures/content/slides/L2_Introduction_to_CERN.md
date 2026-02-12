@@ -1,7 +1,8 @@
 ---
-background: ./background_default.jpg
+background: /background_intro.jpg
 
 class: text-left
+colorSchema: dark
 
 theme: ./theme
 drawings:
@@ -16,8 +17,6 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 2
-
 ## Introduction to CERN
 
 --- 
@@ -26,10 +25,3 @@ layout: fact
 ---
 
 # Introduction to CERN
-
---- 
-hideInToc: true
-layout: quote
----
-
-# This content in not examinable and for your general knowledge only. Presentation given in-class only.

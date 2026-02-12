@@ -18,8 +18,6 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 3:
-
 ## Crash Course on Computer Science
 
 ---
@@ -91,7 +89,7 @@ layout: section
 hideInToc: true
 ---
 
-# **Representation**
+# Data **Representation**
 
 ---
 layout: fact
@@ -784,29 +782,49 @@ b.decode("utf-8")      # back to str
 hideInToc: true
 ---
 
-# Hex and Endianness
+# Endianness
+
+<div class="card card-info pad-tight mt-sm">
+
+## 🔄 **What is Endianness?**
+
+The **order** in which bytes of a multibyte value are stored in memory. When a number needs more than one byte (e.g., a 32-bit integer uses 4 bytes), the system must decide which byte goes first.
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
-## 🔢 **Hex is compact binary**
+## 📦 **Big-Endian**
 
-1 hex digit = 4 bits
+Most significant byte stored **first** (at lowest address)
+
+`0x12345678` → `12 34 56 78`
+
+Used by: **network protocols** (TCP/IP), some file formats
 
 </div>
 
 <div class="card card-secondary pad-tight">
 
-## 🔄 **Endianness**
+## 📦 **Little-Endian**
 
-Byte order for multibyte values
+Least significant byte stored **first** (at lowest address)
 
-**0x12345678:**
-- Big-endian: `12 34 56 78`
-- Little-endian: `78 56 34 12`
+`0x12345678` → `78 56 34 12`
+
+Used by: **x86/x64**, **ARM** (most laptops and phones)
 
 </div>
+
+</div>
+
+<div class="card card-warning pad-tight mt-md">
+
+## ⚠️ **Why It Matters for Data Analysis**
+
+When sharing binary data files across systems, the byte order must match. Tools like NumPy let you specify endianness (e.g., `dtype='>f4'` for big-endian float32). Mismatched endianness produces garbage values.
 
 </div>
 
@@ -1091,23 +1109,45 @@ hideInToc: true
 
 # Integers, Overflow, and Arrays
 
-<div class="stack-tight mt-sm">
+<div class="grid-2 mt-md gap-md">
+
+<div class="stack-tight">
 
 <div class="card card-primary pad-compact">
 
-🐍 Python ints are **arbitrary precision**
+🐍 Python ints are **arbitrary precision** — no overflow possible
 
 </div>
 
 <div class="card card-secondary pad-compact">
 
-📊 Arrays often use **fixed-width** ints
+📊 NumPy/C arrays use **fixed-width** ints (int8, int16, int32, int64)
 
 </div>
 
 <div class="card card-warning pad-compact">
 
-⚠️ **Overflow** wraps in fixed-width types (e.g., int8)
+⚠️ **Overflow** wraps silently in fixed-width types
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🔢 **Overflow Example**
+
+```python
+import numpy as np
+
+a = np.int8(127)   # max value for 8-bit signed
+print(a + 1)       # -128 (wraps around!)
+
+b = np.int8(-128)  # min value
+print(b - 1)       # 127 (wraps around!)
+```
+
+This matters when choosing dtypes in NumPy (L11) — always use a wide enough type for your data range.
 
 </div>
 
@@ -1179,8 +1219,30 @@ Cryptographic hashes (SHA-256) verify file integrity
 </div>
 
 ---
-layout: quote
 hideInToc: true
 ---
 
-# If you are interested in learning more basics of computer science, a great resource is an open course by Harvard University called **CS50**
+# How These Concepts Connect
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔗 **In This Course**
+
+- **File formats** → L3.2 (file handling), L5 (Python I/O)
+- **Floating-point** → L9 (numerical precision in statistics), L10 (fitting)
+- **Binary/hex** → L4 (memory hierarchy), L8 (git hashes)
+- **Compression** → L11 (data formats like Parquet, HDF5)
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📚 **Going Deeper**
+
+If you are interested in learning more basics of computer science, a great resource is an open course by Harvard University called **CS50**
+
+</div>
+
+</div>

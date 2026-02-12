@@ -18,8 +18,6 @@ layout: cover
 
 # Lessons on **Data Analysis** from **CERN**
 
-## Lecture 4:
-
 ## Computing Infrastructure
 
 ---
@@ -277,7 +275,7 @@ Direct PCIe connection — fastest consumer storage available
 
 ```mermaid {scale: 1.5}
 graph LR
-    A[cashes] --> B[RAM] --> C[Drive Storage]
+    A[Caches] --> B[RAM] --> C[Drive Storage]
 
     classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;
 

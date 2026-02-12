@@ -12,6 +12,9 @@ transition: fade
 
 title: "Crash Course on Python Programming"
 layout: cover
+
+addons:
+  - slidev-addon-python-runner
 ---
 
 # Dr. Mindaugas Šarpis
@@ -169,6 +172,16 @@ comment
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Try It — Live Python
+
+```py {monaco-run}
+print("Hello from Python! 🐍", 2 + 2)
+```
 
 ---
 hideInToc: true
@@ -601,6 +614,37 @@ with open("test.txt", "r") as file:
 - `"r"` for reading, `"w"` for writing, `"a"` for appending
 
 </div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# What Comes Next
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔮 **Building on Python**
+
+These basics unlock a powerful ecosystem:
+
+- **L7**: Data visualization with `matplotlib`
+- **L9**: Statistics with `scipy.stats`
+- **L10**: Data fitting with `scipy.optimize`
+- **L11**: NumPy arrays & Pandas DataFrames
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💡 **Key Takeaway**
+
+Python's simplicity is deceptive — the language you just learned is the same one used at CERN to process petabytes of collision data, train machine learning models, and automate entire analysis pipelines.
 
 </div>
 
