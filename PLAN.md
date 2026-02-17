@@ -4,7 +4,7 @@
 
 The target style has these elements:
 - **Frontmatter**: `colorSchema: dark`, `background: /background_intro.jpg`, `mermaid: true` (if mermaid used)
-- **Cover slide**: `# Dr. Mindaugas Šarpis` → `# Lessons on **Data Analysis** from **CERN**` → `## Lecture Title`
+- **Cover slide**: `# Dr. Mindaugas Šarpis` → `# Data analysis and Artificial Intelligence` → `## Lecture Title`
 - **Quote slide** after cover: motivational/thematic quote
 - **Motivation slide**: bullet list with `##` items explaining why the topic matters
 - **Section breaks**: `layout: section` + `hideInToc: true` + `# Section **Name**` (key word bolded)

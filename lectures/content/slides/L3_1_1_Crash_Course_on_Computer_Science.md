@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Crash Course on Computer Science
 
@@ -81,6 +81,18 @@ graph LR
     linkStyle 0 stroke-width:3px;
     linkStyle 1 stroke-width:3px;
 ```
+
+</div>
+
+---
+hideInToc: true
+---
+
+<div class="card card-accent pad-tight mt-sm">
+
+## 🧭 **What's Next**
+
+Before building pipelines, we need to understand how computers **represent data** — numbers, text, images — at the most fundamental level.
 
 </div>
 
@@ -625,7 +637,7 @@ class: text-center
 
 # Logical Operations
 
-<div class="grid grid-cols-3 gap-8 text-5xl">
+<div class="grid grid-cols-3 gap-8 text-3xl">
 
 <div>
 <h3>AND (&)</h3>
@@ -820,7 +832,15 @@ Used by: **x86/x64**, **ARM** (most laptops and phones)
 
 </div>
 
-<div class="card card-warning pad-tight mt-md">
+</div>
+
+---
+hideInToc: true
+---
+
+# ⚠️ Why Endianness Matters
+
+<div class="card card-warning pad-tight mt-sm">
 
 ## ⚠️ **Why It Matters for Data Analysis**
 
@@ -1041,7 +1061,7 @@ hideInToc: true
 
 ## Binary scientific notation (float32)
 
-<div class="text-center text-3xl my-8">
+<div class="text-center text-3xl my-4">
 
   $(-1)^{0} \times 1.m \times 2^{e - b}$
 
@@ -1053,8 +1073,8 @@ hideInToc: true
 - In scientific notation: $1.0111_2 \times 2^2$
 - **s** = 0 (positive)
 - **m** = 01110000000000000000000
-- **e** = 2, but stored with bias = 127, so actually stored as 129 = 10000001₂
-- **b** = exponent bias (127 for float32)
+- **e** = 2, stored as e + bias = 2 + 127 = 129 = 10000001₂
+- **b** = 127 (float32 exponent bias)
 
 </div>
 
@@ -1189,6 +1209,12 @@ JPEG, MP3 — small size, info loss acceptable for media
 <div class="card card-info pad-tight mt-md">
 
 💡 **Intuition:** remove redundancy (RLE, Huffman, dictionary coding)
+
+</div>
+
+<div class="card card-accent pad-compact mt-md">
+
+🔤 **RLE example:** `AAABBBCC` → `3A3B2C` (8 chars → 6 chars)
 
 </div>
 

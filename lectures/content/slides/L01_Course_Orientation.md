@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Course Orientation and Motivation
 
@@ -25,7 +25,7 @@ hideInToc: true
 layout: quote
 ---
 
-# The goal of this course is to build **intuition**, **competence**, and **confidence** in working with data — using the tools and practices of modern science.
+# The goal of this course is to build **intuition**, **competence**, and **confidence** in working with data — using the tools and practices of modern science
 
 ---
 hideInToc: true
@@ -42,6 +42,10 @@ hideInToc: true
 - **Theory / Overviews** — main goal is exposure
 - **Discussion** — building intuition, interactivity is important
 
+Some of the elements require deeper understading in statistics, programming,
+mathematics. The idea is to strike a balance of what to keep as a “black box”
+and what needs to be understood in detail.
+
 </div>
 
 <div class="card card-secondary pad-tight">
@@ -52,9 +56,34 @@ hideInToc: true
 - **Hands-on Sessions** — *Inverted Classroom*
 - **Case Studies** — real-world examples
 
+It is very important to practice throughout the course. Using the tools and
+concepts on your own projects is the best way to learn. 
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# **Schedule**
+
+<div class="text-sm">
+
+|  | Date | Topic | # | Date | Topic |
+| --- | --- | --- | --- | --- | --- |
+| L1 | Sep 2 | Course Orientation | L2 | Sep 9 | Introduction to CERN |
+| L3 | Sep 16 | CS, Files, CLI, Markdown | | ~~Sep 23~~ | |
+| L4 | Sep 30 | Computing Infrastructure | L5 | Oct 7 | Python |
+| L6 | Oct 14 | Data Analysis Concepts | L7 | Oct 21 | Data Visualisation |
+| L8 | Oct 28 | Version Control | L9 | Nov 4 | Probability & Statistics |
+| L10 | Nov 11 | Data Fitting | L11 | Nov 18 | NumPy, Pandas & Real Data |
+| L12 | Nov 25 | Reproducible Workflows | | Dec 2 | Projects |
+| | Dec 9 | Projects | | Dec 16 | Projects |
+| | ~~Dec 23~~ | | | | |
+
+</div>
+
 
 ---
 hideInToc: true
@@ -85,16 +114,6 @@ Quiz 2 (AI)
 ## 🎯 **60%**
 
 Final Project
-
-</div>
-
-</div>
-
-<div class="card card-info pad-tight mt-md">
-
-<div class="note-text">
-
-**\*** One quiz from data analysis part and one from AI part • **\*\*** Students are graded on the project according to their previous expertise • One should be able to explain what they did, how, and why
 
 </div>
 
@@ -171,24 +190,6 @@ hideInToc: true
 
 </div>
 
----
-hideInToc: true
----
-
-# **Schedule**
-
-<div class="text-4xl">
-
-|           |     |           |     |           |     |
-| --------- | --- | --------- | --- | --------- | --- |
-| September | 2   | September | 9   | September | 16  |
-| ~~September~~ | ~~23~~  | September | 30  | October   | 7   |
-| October   | 14  | October   | 21  | October   | 28  |
-| November  | 4   | November  | 11  | November  | 18  |
-| November  | 25  | December  | 2   | December  | 9   |
-| December  | 16  | ~~December~~  | ~~23~~  |           |     |
-
-</div>
 
 ---
 hideInToc: true
@@ -271,7 +272,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# **After this course you should:**
+# **Learning Outcomes (1/2)**
 
 <div class="stack-tight mt-sm">
 
@@ -298,6 +299,16 @@ hideInToc: true
 🛡️ Be safe from **common pitfalls** in working with computers
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Learning Outcomes (2/2)**
+
+<div class="stack-tight mt-sm">
 
 <div class="card card-info pad-compact">
 

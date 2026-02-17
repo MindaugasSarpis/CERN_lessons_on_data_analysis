@@ -17,7 +17,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Probability and Statistics
 
@@ -283,13 +283,11 @@ Given a sample space $\Omega$ and a collection of events, a probability function
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
-### ✅ **Axiom 1**
-
-**Non-negativity**
+### ✅ **Axiom 1 — Non-negativity**
 
 $$P(A) \geq 0$$
 
@@ -303,30 +301,12 @@ Probabilities cannot be negative
 
 <div class="card card-secondary pad-tight">
 
-### 🌍 **Axiom 2**
-
-**Normalization**
+### 🌍 **Axiom 2 — Normalization**
 
 $$P(\Omega) = 1$$
 
 <div class="meta-caption mt-xs">
 The entire sample space has probability 1
-</div>
-
-</div>
-
-<div class="card card-accent pad-tight">
-
-### ➕ **Axiom 3**
-
-**Countable Additivity**
-
-If $A$ and $B$ are mutually exclusive $(A \cap B = \emptyset)$:
-
-$$P(A \cup B) = P(A) + P(B)$$
-
-<div class="meta-caption mt-xs">
-Disjoint events add
 </div>
 
 </div>
@@ -337,9 +317,41 @@ Disjoint events add
 hideInToc: true
 ---
 
-# Useful Rules from the Axioms
+# Axiom 3 — Countable Additivity
+
+<div class="card card-accent pad-tight mt-md">
+
+### ➕ **Axiom 3**
+
+If $A$ and $B$ are **mutually exclusive** $(A \cap B = \emptyset)$:
+
+$$P(A \cup B) = P(A) + P(B)$$
+
+More generally, for any countable collection of pairwise disjoint events $A_1, A_2, \ldots$:
+
+$$P\!\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$$
+
+<div class="meta-caption mt-xs">
+Disjoint events add — this is the foundation for all probability calculations
+</div>
+
+</div>
 
 <div class="card card-info pad-tight mt-md">
+
+## 💡 **Why these axioms matter**
+
+From just these three axioms, every rule of probability can be derived: complement rule, addition rule, conditional probability, Bayes' theorem, and more.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Useful Rules from the Axioms
+
+<div class="card card-info pad-compact mt-md">
 
 ## **Derived Properties**
 
@@ -347,7 +359,7 @@ From the three axioms, we can derive important rules that make probability calcu
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-warning pad-tight">
 
@@ -377,19 +389,11 @@ Avoids double-counting the intersection
 
 </div>
 
-<div class="card card-success pad-tight">
-
-### ✖️ **Multiplication Rule**
-
-For independent events:
-
-$$P(A \cap B) = P(A) \times P(B)$$
-
-<div class="meta-caption mt-xs">
-Only if $A$ and $B$ are independent
 </div>
 
-</div>
+<div class="card card-success pad-tight mt-md">
+
+### ✖️ **Multiplication Rule** — For independent events: $P(A \cap B) = P(A) \times P(B)$
 
 </div>
 
@@ -702,6 +706,8 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Random Variables
+
 <div class="card card-info pad-tight mt-md">
 
 ## **Formal Definition**
@@ -745,6 +751,8 @@ Random variables allow us to:
 hideInToc: true
 ---
 
+# Types of Random Variables
+
 ```mermaid {scale: 0.9}
 %%{init: {'theme': 'dark', 'themeVariables': {
   'primaryColor': '#0f1f3d',
@@ -780,21 +788,19 @@ flowchart TB
 hideInToc: true
 ---
 
-<div class="grid-2 mt-md gap-md">
+# Discrete Random Variables
 
-<div class="stack-tight" style="margin-top: 0;">
+<div class="card card-info pad-tight mt-md">
 
-<div class="card card-info pad-tight">
-
-## **Definition**
+## 🔢 **Definition**
 
 A random variable $X$ is **discrete** if it can only take countable values (e.g., $0, 1, 2, \ldots$ or a finite set).
 
 </div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary pad-tight mt-md">
 
-## **Probability Mass Function**
+## 📊 **Probability Mass Function (PMF)**
 
 The PMF $p_X(x)$ or $P(X = x)$ gives the probability that $X$ takes the value $x$.
 
@@ -802,42 +808,51 @@ The PMF $p_X(x)$ or $P(X = x)$ gives the probability that $X$ takes the value $x
 1. $P(X = x) \geq 0$ for all $x$
 2. $\sum_{\text{all } x} P(X = x) = 1$
 
-**Example:** Number of heads in 3 coin flips
-
 </div>
 
-</div>
+---
+hideInToc: true
+---
 
-<div class="card card-accent pad-tight">
+# PMF Example: Coin Flips
 
-## **Example PMF**
+<div class="card card-accent pad-tight mt-md">
 
-$X$ = number of heads in 3 flips
+## 🎯 **Example PMF**
+
+$X$ = number of heads in 3 fair coin flips
 
 <div class="text-sm mono-strong mt-sm">
 
-| $x$ | $P(X = x)$ | Calculation |
-|-----|------------|-------------|
-| 0   | 1/8        | $\binom{3}{0}(0.5)^3$ |
-| 1   | 3/8        | $\binom{3}{1}(0.5)^3$ |
-| 2   | 3/8        | $\binom{3}{2}(0.5)^3$ |
-| 3   | 1/8        | $\binom{3}{3}(0.5)^3$ |
+| $x$ | 0 | 1 | 2 | 3 |
+|-----|---|---|---|---|
+| $P(X = x)$ | 1/8 | 3/8 | 3/8 | 1/8 |
 
 </div>
 
 <div class="meta-caption mt-sm">
 
-$$\sum_{x=0}^{3} P(X = x) = \frac{1+3+3+1}{8} = 1 \quad \checkmark$$
+Each probability is $\binom{3}{x}(0.5)^3$ — and they sum to 1: $\frac{1+3+3+1}{8} = 1 \;\checkmark$
 
 </div>
 
 </div>
+
+<div class="card card-info pad-tight mt-md">
+
+## 💡 **Reading the PMF**
+
+- The most likely outcomes are $x=1$ and $x=2$ (each with probability 3/8)
+- The extreme outcomes $x=0$ and $x=3$ are equally unlikely (each 1/8)
+- Every valid PMF must sum to exactly 1
 
 </div>
 
 ---
 hideInToc: true
 ---
+
+# Continuous Random Variables
 
 <div class="card card-info pad-tight mt-md">
 
@@ -853,11 +868,13 @@ A random variable $X$ is **continuous** if it can take any value in an interval 
 hideInToc: true
 ---
 
+# Probability Density Function (PDF)
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
-## **Probability Density Function (PDF)**
+## **Definition**
 
 The PDF $f(x)$ is **not** a probability, but a density. Probabilities are computed as:
 
@@ -909,6 +926,8 @@ The CDF gives the probability that $X$ takes a value **at most** $x$.
 ---
 hideInToc: true
 ---
+
+# CDF Properties and Uses
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1075,11 +1094,50 @@ $$
 $$
 s^2 = \frac{1}{n-1}\sum (x_i-\bar{x})^2
 $$
-Bessel’s correction ($n-1$) keeps $s^2$ unbiased.
+Bessel's correction ($n-1$) keeps $s^2$ unbiased.
 </div>
 
 </div>
 
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Sample Statistics and Population Parameters
+
+<div class="card card-info pad-tight mt-md">
+
+## 🔗 **The Bridge**
+
+Every descriptive statistic we compute from data is a **sample estimate** of a true **population parameter**. The sample is what we observe; the population is what we want to learn about.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📊 **Key Correspondences**
+
+- Sample mean $\bar{x}$ estimates population mean $\mu$
+- Sample variance $s^2$ estimates population variance $\sigma^2$
+- Sample proportion $\hat{p}$ estimates population proportion $p$
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💡 **Why it matters**
+
+- More data → estimates converge to true values (consistency)
+- Unbiased estimators are correct "on average" over repeated samples
+- The **standard error** quantifies how far the estimate might be from the truth
+- This is the foundation for confidence intervals and hypothesis tests
+
+</div>
 
 </div>
 
@@ -1109,12 +1167,11 @@ $$E[X] = \int_{-\infty}^{\infty} x \cdot f(x)\,dx$$
 hideInToc: true
 ---
 
-<div class="grid-2 mt-md gap-md">
+# Variance
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary pad-tight mt-md">
 
-
-## **Variance**
+## 📐 **Definition**
 
 Measures spread around the mean:
 
@@ -1130,21 +1187,28 @@ $$\sigma = \sqrt{\text{Var}(X)}$$
 
 </div>
 
-<div class="card card-accent pad-tight">
+---
+hideInToc: true
+---
 
-## **Key Properties**
+# Properties of Expectation and Variance
 
-**Linearity of Expectation:**
+<div class="card card-accent pad-tight mt-md">
+
+## 📏 **Linearity of Expectation**
+
 - $E[aX + b] = aE[X] + b$
-- $E[X + Y] = E[X] + E[Y]$ (always!)
-
-**Variance Properties:**
-- $\text{Var}(aX + b) = a^2\text{Var}(X)$
-- $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$
-
-  (only if $X$ and $Y$ are independent)
+- $E[X + Y] = E[X] + E[Y]$ (always — even for dependent variables!)
 
 </div>
+
+<div class="card card-warning pad-tight mt-md">
+
+## 📊 **Variance Properties**
+
+- $\text{Var}(aX + b) = a^2\text{Var}(X)$ — adding a constant does not change variance
+- $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$ — only if $X$ and $Y$ are **independent**
+- For dependent variables: $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X, Y)$
 
 </div>
 
@@ -1158,6 +1222,8 @@ hideInToc: true
 ---
 hideInToc: true
 ---
+
+# Distribution Overview
 
 ```mermaid {scale: 0.9}
 %%{init: {'theme': 'dark', 'themeVariables': {
@@ -1358,6 +1424,8 @@ $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\righ
 hideInToc: true
 ---
 
+# Normal Distribution Properties
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
@@ -1451,6 +1519,8 @@ hideInToc: true
 hideInToc: true
 ---
 
+# CLT Statement
+
 <div class="card card-info pad-tight mt-md">
 
 ## **Theorem Statement**
@@ -1473,6 +1543,8 @@ $$\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)$$
 hideInToc: true
 ---
 
+# CLT — Equivalent Form
+
 <div class="card card-info pad-tight mt-md">
 
 Or equivalently, the standardized sum converges in distribution to $N(0,1)$:
@@ -1490,6 +1562,14 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}}
 - Larger $n$ → better approximation
 - Standard error: $SE = \sigma/\sqrt{n}$ decreases with $\sqrt{n}$
 - Rule of thumb: $n \geq 30$ often sufficient for good approximation
+
+</div>
+
+<div class="card card-accent pad-tight mt-md">
+
+## 🔗 **Connection to Fitting**
+
+This justifies the normal-error assumption used in fitting: measurement errors typically arise from many small independent effects, so by the CLT they are approximately normally distributed.
 
 </div>
 
@@ -1831,11 +1911,9 @@ $$\chi^2 = \sum \left[\frac{y_i - f(x_i; \theta)}{\sigma_i}\right]^2$$
 hideInToc: true
 ---
 
-# Common Mistakes and Pitfalls
+# Common Mistakes and Pitfalls (1/2)
 
 <div class="grid-2 mt-md gap-md">
-
-<div class="stack-tight" style="margin-top: 0;">
 
 <div class="card card-primary pad-tight">
 
@@ -1852,21 +1930,27 @@ Probability starts with a model and reasons forward to the data, while statistic
 ## **p-hacking**
 
 <div class="card-content text-base">
-Running many tests until one looks “significant” inflates false positives. Pre-register analyses and adjust for multiple comparisons to keep results honest.
+Running many tests until one looks "significant" inflates false positives. Pre-register analyses and adjust for multiple comparisons to keep results honest.
 </div>
 
 </div>
 
 </div>
 
-<div class="stack-tight" style="margin-top: 0;">
+---
+hideInToc: true
+---
+
+# Common Mistakes and Pitfalls (2/2)
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-secondary pad-tight">
 
 ## **Misreading Confidence Intervals**
 
 <div class="card-content text-base">
-A 95% confidence interval does not mean “95% chance the parameter lies here.” It means that, across repeated experiments, the method produces intervals that contain the true value about 95% of the time.
+A 95% confidence interval does not mean "95% chance the parameter lies here." It means that, across repeated experiments, the method produces intervals that contain the true value about 95% of the time.
 </div>
 
 </div>
@@ -1883,92 +1967,90 @@ Models are trustworthy only within the range where they were calibrated. Predict
 
 </div>
 
-</div>
-
 ---
 hideInToc: true
 ---
 
-# Practical Advice
+# Practical Advice (1/2)
 
-<div class="grid-3 mt-lg">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
-## 📊 **Visualize**
+## 📊 **Visualize First**
 
 <div class="card-content text-base">
-
-Visualize data first
-
+Always plot your data before running any analysis. Patterns, outliers, and unexpected structure are often obvious visually.
 </div>
 
 </div>
 
 <div class="card card-secondary pad-tight">
 
-## ✓ **Check**
+## ✓ **Check Assumptions**
 
 <div class="card-content text-base">
-
-Verify assumptions
-
+Verify that the assumptions behind your statistical method actually hold for your data (normality, independence, constant variance).
 </div>
 
 </div>
 
 <div class="card card-info pad-tight">
 
-## 📏 **Report**
+## 📏 **Report Uncertainties**
 
 <div class="card-content text-base">
-
-Include uncertainties
-
+A result without an uncertainty is incomplete. Always include error bars, confidence intervals, or standard errors.
 </div>
 
 </div>
 
 <div class="card card-success pad-tight">
 
-## 🎯 **Understand**
+## 🎯 **Understand p-values**
 
 <div class="card-content text-base">
-
-Know p-values
-
+A p-value is the probability of data this extreme under the null hypothesis — not the probability the null is true.
 </div>
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Practical Advice (2/2)
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-warning pad-tight">
 
-## ⚠️ **Caution**
+## ⚠️ **Respect Small Samples**
 
 <div class="card-content text-base">
-
-Small sample limits
-
+Small samples give noisy estimates. Be cautious about drawing strong conclusions with limited data.
 </div>
 
 </div>
 
 <div class="card card-accent pad-tight">
 
-## 🔬 **Simulate**
+## 🔬 **Simulate When Unclear**
 
 <div class="card-content text-base">
-
-When unclear
-
+When analytical solutions are hard, Monte Carlo simulation can reveal the expected behavior of your estimator or test.
 </div>
 
 </div>
 
-<div class="card card-primary pad-tight" style="grid-column: 1 / -1;">
+</div>
+
+<div class="card card-primary pad-tight mt-md" style="grid-column: 1 / -1;">
 
 ## 📝 **Document for Reproducibility**
 
-</div>
+Record every step of your analysis — data source, cleaning, model choices, software versions — so others (and future you) can reproduce the results.
 
 </div>

@@ -31,7 +31,7 @@ python:
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## NumPy, Pandas & Real Data
 
@@ -151,24 +151,16 @@ hideInToc: true
 import numpy as np
 
 # From Python lists
-arr1 = np.array([1, 2, 3, 4, 5])
-print(f"Array: {arr1}")
-print(f"Type: {type(arr1)}, dtype: {arr1.dtype}")
+arr = np.array([1, 2, 3, 4, 5])
+print(f"Array: {arr}, dtype: {arr.dtype}")
 
-# Create arrays with built-in functions
-zeros = np.zeros(5)
-ones = np.ones(5)
-arange = np.arange(0, 10, 2)  # start, stop, step (like range())
-linspace = np.linspace(0, 1, 5)  # start, stop, num_points (inclusive)
-
-print(f"\nzeros:    {zeros}")
-print(f"ones:     {ones}")
-print(f"arange:   {arange}")
-print(f"linspace: {linspace}")
+# Built-in creation functions
+print(f"zeros:    {np.zeros(5)}")
+print(f"arange:   {np.arange(0, 10, 2)}")   # start, stop, step
+print(f"linspace: {np.linspace(0, 1, 5)}")   # start, stop, num_points
 
 # 2D arrays (matrices)
-matrix = np.array([[1, 2, 3],
-                   [4, 5, 6]])
+matrix = np.array([[1, 2, 3], [4, 5, 6]])
 print(f"\n2D array:\n{matrix}")
 print(f"Shape: {matrix.shape}")  # (rows, columns)
 ```
@@ -182,35 +174,22 @@ hideInToc: true
 ```py {monaco-run}
 import numpy as np
 
-# Create sample data
 x = np.array([1, 2, 3, 4, 5])
 
 # Element-wise operations (no loops needed!)
-print(f"Original:     {x}")
-print(f"x + 10:       {x + 10}")
-print(f"x * 2:        {x * 2}")
-print(f"x ** 2:       {x ** 2}")
-print(f"np.sqrt(x):   {np.sqrt(x)}")
-print(f"np.exp(x):    {np.exp(x)}")
+print(f"x:          {x}")
+print(f"x + 10:     {x + 10}")
+print(f"x ** 2:     {x ** 2}")
+print(f"np.sqrt(x): {np.sqrt(x)}")
 
 # Operations between arrays
 y = np.array([10, 20, 30, 40, 50])
-print(f"\ny:            {y}")
-print(f"x + y:        {x + y}")
-print(f"x * y:        {x * y}")
+print(f"\nx + y: {x + y}")
+print(f"x * y: {x * y}")
 
 # Aggregation functions
-print(f"\nSum:  {x.sum()}")
-print(f"Mean: {x.mean()}")
-print(f"Std:  {x.std()}")
-print(f"Min:  {x.min()}, Max: {x.max()}")
+print(f"\nSum: {x.sum()}, Mean: {x.mean():.2f}, Std: {x.std():.2f}")
 ```
-
-<div class="card card-accent pad-tight mt-sm">
-
-**Key**: All these operations are implemented in C, making them extremely fast even for millions of elements!
-
-</div>
 
 ---
 hideInToc: true
@@ -219,44 +198,28 @@ hideInToc: true
 # Speed Comparison: Lists vs NumPy
 
 ```py {monaco-run}
-import numpy as np
-import time
+import numpy as np, time
 
-# Create large dataset
 n = 100000
-python_list = list(range(n))
-numpy_array = np.arange(n)
+py_list = list(range(n))
+np_arr = np.arange(n)
 
-# Test 1: Sum (Python list with loop)
-start = time.time()
-total = 0
-for x in python_list:
-    total += x
-list_time = time.time() - start
+# Sum benchmark
+t = time.time(); sum(py_list); t1 = time.time() - t
+t = time.time(); np_arr.sum(); t2 = time.time() - t
+print(f"Sum — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/t2:.0f}x faster")
 
-# Test 2: Sum (NumPy)
-start = time.time()
-total_np = numpy_array.sum()
-numpy_time = time.time() - start
-
-print(f"Python list sum: {list_time*1000:.3f} ms")
-print(f"NumPy sum:       {numpy_time*1000:.3f} ms")
-print(f"Speedup:         {list_time/numpy_time:.1f}x faster")
-
-# Test element-wise operations
-start = time.time()
-result_list = [x**2 + 2*x + 1 for x in python_list]
-list_time2 = time.time() - start
-
-start = time.time()
-result_numpy = numpy_array**2 + 2*numpy_array + 1
-numpy_time2 = time.time() - start
-
-print(f"\nPolynomial evaluation:")
-print(f"Python list:     {list_time2*1000:.3f} ms")
-print(f"NumPy:           {numpy_time2*1000:.3f} ms")
-print(f"Speedup:         {list_time2/numpy_time2:.1f}x faster")
+# Polynomial x² + 2x + 1
+t = time.time(); [x**2+2*x+1 for x in py_list]; t1 = time.time() - t
+t = time.time(); np_arr**2 + 2*np_arr + 1; t2 = time.time() - t
+print(f"Poly — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/t2:.0f}x faster")
 ```
+
+<div class="card card-accent pad-tight mt-sm">
+
+**Key**: NumPy operations are implemented in C — extremely fast even for millions of elements!
+
+</div>
 
 ---
 hideInToc: true
@@ -267,36 +230,28 @@ hideInToc: true
 ```py {monaco-run}
 import numpy as np
 
-# 1D arrays
 arr = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90])
-
-print(f"Array: {arr}")
-print(f"arr[0]:     {arr[0]}")      # First element
-print(f"arr[-1]:    {arr[-1]}")     # Last element
-print(f"arr[2:5]:   {arr[2:5]}")    # Slice [start:stop)
-print(f"arr[::2]:   {arr[::2]}")    # Every 2nd element
-print(f"arr[::-1]:  {arr[::-1]}")   # Reverse
+print(f"arr:       {arr}")
+print(f"arr[0]:    {arr[0]},  arr[-1]: {arr[-1]}")
+print(f"arr[2:5]:  {arr[2:5]}")
+print(f"arr[::2]:  {arr[::2]}")
 
 # Boolean indexing (very powerful!)
-mask = arr > 50
-print(f"\nmask (arr > 50): {mask}")
-print(f"arr[arr > 50]:   {arr[mask]}")
+print(f"\narr > 50:      {arr > 50}")
+print(f"arr[arr > 50]: {arr[arr > 50]}")
 
 # 2D arrays
-matrix = np.array([[1, 2, 3],
-                   [4, 5, 6],
-                   [7, 8, 9]])
-print(f"\nMatrix:\n{matrix}")
-print(f"matrix[1, 2]:    {matrix[1, 2]}")     # Row 1, Col 2 = 6
-print(f"matrix[1, :]:    {matrix[1, :]}")     # Entire row 1
-print(f"matrix[:, 2]:    {matrix[:, 2]}")     # Entire column 2
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+print(f"\nmatrix[1, 2]: {matrix[1, 2]}")
+print(f"Row 1:        {matrix[1, :]}")
+print(f"Col 2:        {matrix[:, 2]}")
 ```
 
 ---
 hideInToc: true
 ---
 
-# Broadcasting: Operating on Different Shapes
+# Broadcasting: Concept
 
 <div class="card card-info pad-tight mt-md">
 
@@ -317,28 +272,85 @@ matrix + row_vector
 ```py {monaco-run}
 import numpy as np
 
-# Example 1: Scalar broadcasting
+# Scalar broadcasting
 arr = np.array([1, 2, 3])
 print(f"arr:       {arr}")
 print(f"arr + 100: {arr + 100}")  # 100 broadcast to [100, 100, 100]
 
-# Example 2: Row broadcasting
-matrix = np.array([[1, 2, 3],
-                   [4, 5, 6],
-                   [7, 8, 9]])
+# Row broadcasting
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 row = np.array([10, 20, 30])
+print(f"\nMatrix + row:\n{matrix + row}")  # row added to each row
+```
 
-print(f"\nMatrix:\n{matrix}")
-print(f"Row: {row}")
-print(f"\nMatrix + row:\n{matrix + row}")  # row broadcast to each row
+---
+hideInToc: true
+---
 
-# Example 3: Useful for normalization
-data = np.array([[1, 2], [3, 4], [5, 6]])
+# Broadcasting: Normalization Example
+
+```py {monaco-run}
+import numpy as np
+
+# Useful for normalization: subtract column means
+data = np.array([[1, 2],
+                 [3, 4],
+                 [5, 6]])
 mean = data.mean(axis=0)  # Mean of each column
-print(f"\nData:\n{data}")
+
+print(f"Data:\n{data}")
 print(f"Column means: {mean}")
 print(f"Centered data:\n{data - mean}")  # Subtract mean from each column
+
+# Standardization: (x - mean) / std
+std = data.std(axis=0)
+standardized = (data - mean) / std
+print(f"\nStandardized:\n{standardized}")
 ```
+
+---
+hideInToc: true
+---
+
+# NumPy: When It's Not Enough
+
+<div class="card card-info pad-tight mt-md">
+
+## **Limitations of NumPy**
+
+NumPy is great for numerical computation, but real-world data often needs more:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning pad-tight">
+
+### **NumPy limitations**
+- All elements must be same type
+- No column names or labels
+- No built-in handling of missing values
+- No built-in file I/O (CSV, Excel)
+
+</div>
+
+<div class="card card-success pad-tight">
+
+### **Enter Pandas**
+- Mixed data types per column
+- Named columns and row indices
+- `NaN` for missing data
+- Read/write CSV, Excel, JSON, SQL, HDF5
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-tight mt-md">
+
+**Pandas is built on top of NumPy** — it adds labels, mixed types, and data manipulation tools while keeping NumPy's speed for numerical operations.
+
+</div>
 
 ---
 layout: section
@@ -398,9 +410,7 @@ hideInToc: true
 
 ```py {monaco-run}
 import pandas as pd
-import numpy as np
 
-# Method 1: From dictionary
 data = {
     'name': ['Alice', 'Bob', 'Charlie', 'Diana'],
     'age': [25, 30, 35, 28],
@@ -408,19 +418,11 @@ data = {
     'salary': [75000, 85000, 95000, 80000]
 }
 df = pd.DataFrame(data)
-
 print("DataFrame:")
 print(df)
-print(f"\nShape: {df.shape} (rows, columns)")
-print(f"Columns: {df.columns.tolist()}")
-print(f"Data types:\n{df.dtypes}")
-
-# Accessing columns
-print(f"\nNames: {df['name'].tolist()}")
+print(f"\nShape: {df.shape}, Columns: {df.columns.tolist()}")
 print(f"Average age: {df['age'].mean():.1f}")
-
-# Accessing rows by index
-print(f"\nFirst row:\n{df.iloc[0]}")  # iloc = integer location
+print(f"\nFirst row:\n{df.iloc[0]}")
 ```
 
 ---
@@ -445,40 +447,53 @@ df = pd.read_csv('data.csv')
 import pandas as pd
 import numpy as np
 
-# Simulate reading a CSV by creating sample data
-# In practice, you'd use: df = pd.read_csv('experiment_data.csv')
-
-# Create synthetic experimental data
+# Simulate reading a CSV (in practice: df = pd.read_csv('data.csv'))
 np.random.seed(42)
 df = pd.DataFrame({
     'event_id': range(1, 101),
-    'energy': np.random.gamma(5, 2, 100),  # Particle energy (GeV)
-    'momentum': np.random.normal(10, 3, 100),  # Momentum (GeV/c)
+    'energy': np.random.gamma(5, 2, 100),
+    'momentum': np.random.normal(10, 3, 100),
     'detector': np.random.choice(['A', 'B', 'C'], 100),
-    'is_signal': np.random.choice([True, False], 100, p=[0.3, 0.7])
 })
-
 print("First 5 rows:")
 print(df.head())
-
-print("\nSummary statistics:")
-print(df.describe())
-
-print("\nInfo about dataset:")
-df.info()
 ```
 
 ---
 hideInToc: true
 ---
 
-# Data Exploration: Basic Operations
+# Exploring a DataFrame
 
 ```py {monaco-run}
 import pandas as pd
 import numpy as np
 
-# Create sample particle physics data
+np.random.seed(42)
+df = pd.DataFrame({
+    'event_id': range(1, 101),
+    'energy': np.random.gamma(5, 2, 100),
+    'momentum': np.random.normal(10, 3, 100),
+    'detector': np.random.choice(['A', 'B', 'C'], 100),
+})
+
+print("Summary statistics:")
+print(df.describe())
+
+print("\nData types:")
+print(df.dtypes)
+```
+
+---
+hideInToc: true
+---
+
+# Data Exploration: Selection & Filtering
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+
 np.random.seed(42)
 df = pd.DataFrame({
     'energy': np.random.gamma(5, 2, 100),
@@ -487,24 +502,38 @@ df = pd.DataFrame({
     'is_signal': np.random.choice([True, False], 100, p=[0.3, 0.7])
 })
 
-# Basic operations
 print(f"Number of rows: {len(df)}")
-print(f"Columns: {df.columns.tolist()}")
-
-# Selection
-print(f"\nSignal events: {df['is_signal'].sum()}")
+print(f"Signal events: {df['is_signal'].sum()}")
 print(f"Background events: {(~df['is_signal']).sum()}")
 
 # Filtering (boolean indexing)
-signal_df = df[df['is_signal']]
 high_energy = df[df['energy'] > 10]
+print(f"\nHigh energy events (E > 10): {len(high_energy)}")
+print(high_energy.head())
+```
 
-print(f"\nSignal events with E > 10 GeV: {len(signal_df[signal_df['energy'] > 10])}")
+---
+hideInToc: true
+---
+
+# Data Exploration: New Columns & Sorting
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+
+np.random.seed(42)
+df = pd.DataFrame({
+    'energy': np.random.gamma(5, 2, 100),
+    'momentum': np.random.normal(10, 3, 100),
+    'detector': np.random.choice(['A', 'B', 'C'], 100),
+    'is_signal': np.random.choice([True, False], 100, p=[0.3, 0.7])
+})
 
 # Adding new columns
-df['E/p_ratio'] = df['energy'] / df['momentum']
-print(f"\nNew column 'E/p_ratio' created")
-print(df[['energy', 'momentum', 'E/p_ratio']].head())
+df['E_over_p'] = df['energy'] / df['momentum']
+print("New column 'E_over_p' created:")
+print(df[['energy', 'momentum', 'E_over_p']].head())
 
 # Sorting
 df_sorted = df.sort_values('energy', ascending=False)
@@ -530,34 +559,44 @@ Pandas represents missing data with `NaN` (Not a Number) or `None`
 import pandas as pd
 import numpy as np
 
-# Create data with missing values
+df = pd.DataFrame({
+    'A': [1, 2, np.nan, 4, 5],
+    'B': [10, np.nan, 30, np.nan, 50],
+    'C': [100, 200, 300, 400, 500]
+})
+print("DataFrame with missing values:")
+print(df)
+
+# Check for missing values
+print(f"\nMissing per column:\n{df.isnull().sum()}")
+```
+
+---
+hideInToc: true
+---
+
+# Handling Missing Data: Strategies
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+
 df = pd.DataFrame({
     'A': [1, 2, np.nan, 4, 5],
     'B': [10, np.nan, 30, np.nan, 50],
     'C': [100, 200, 300, 400, 500]
 })
 
-print("DataFrame with missing values:")
-print(df)
-
-# Check for missing values
-print(f"\nMissing values per column:")
-print(df.isnull().sum())
-
-# Drop rows with any missing values
-print(f"\nDrop rows with NaN:")
+# Strategy 1: Drop rows with NaN
+print("Drop rows with NaN:")
 print(df.dropna())
 
-# Fill missing values
-print(f"\nFill NaN with 0:")
-print(df.fillna(0))
-
-# Fill with column mean
-print(f"\nFill NaN with column mean:")
+# Strategy 2: Fill with column mean
+print("\nFill NaN with column mean:")
 print(df.fillna(df.mean()))
 
-# Forward fill (use previous value)
-print(f"\nForward fill:")
+# Strategy 3: Forward fill (use previous value)
+print("\nForward fill:")
 print(df.ffill())
 ```
 
@@ -581,7 +620,26 @@ hideInToc: true
 import pandas as pd
 import numpy as np
 
-# Create particle physics data
+np.random.seed(42)
+df = pd.DataFrame({
+    'energy': np.random.gamma(5, 2, 200),
+    'detector': np.random.choice(['A', 'B', 'C'], 200),
+})
+
+print("Statistics per detector:")
+print(df.groupby('detector')['energy'].agg(['count', 'mean', 'std']))
+```
+
+---
+hideInToc: true
+---
+
+# Group By: Advanced Aggregations
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+
 np.random.seed(42)
 df = pd.DataFrame({
     'energy': np.random.gamma(5, 2, 200),
@@ -589,17 +647,9 @@ df = pd.DataFrame({
     'run_number': np.random.choice([1, 2, 3], 200)
 })
 
-# Group by detector
-print("Statistics per detector:")
-print(df.groupby('detector')['energy'].describe())
-
-# Multiple aggregations
-print("\nCustom aggregations per detector:")
-print(df.groupby('detector')['energy'].agg(['count', 'mean', 'std', 'min', 'max']))
-
 # Group by multiple columns
-print("\nMean energy per detector per run:")
-print(df.groupby(['detector', 'run_number'])['energy'].mean())
+print("Mean energy per detector per run:")
+print(df.groupby(['detector', 'run_number'])['energy'].mean().unstack())
 
 # Count occurrences
 print("\nEvents per detector:")
@@ -616,7 +666,6 @@ hideInToc: true
 import pandas as pd
 import numpy as np
 
-# Create sample dataset
 np.random.seed(42)
 df = pd.DataFrame({
     'energy': np.random.gamma(5, 2, 100),
@@ -625,35 +674,26 @@ df = pd.DataFrame({
     'is_signal': np.random.choice([True, False], 100, p=[0.3, 0.7])
 })
 
-# Method 1: Boolean indexing
-high_energy = df[df['energy'] > 12]
-print(f"High energy events (E > 12): {len(high_energy)}")
-
-# Method 2: Multiple conditions with & (and) | (or)
+# Boolean indexing with multiple conditions
 signal_high_E = df[(df['is_signal']) & (df['energy'] > 10)]
 print(f"Signal events with E > 10: {len(signal_high_E)}")
 
-# Method 3: Query method (more readable for complex conditions)
+# Query method (more readable)
 result = df.query('energy > 10 and detector == "A"')
-print(f"\nDetector A events with E > 10: {len(result)}")
+print(f"Detector A events with E > 10: {len(result)}")
 
 # isin() for multiple values
 detector_AB = df[df['detector'].isin(['A', 'B'])]
 print(f"Events in detectors A or B: {len(detector_AB)}")
-
-# Select specific columns
-subset = df[df['is_signal']][['energy', 'momentum', 'detector']]
-print(f"\nSignal events (selected columns):")
-print(subset.head())
 ```
 
 ---
 hideInToc: true
 ---
 
-# Visualization with Pandas
+# Visualization with Pandas: Histograms
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent pad-compact mt-sm">
 
 Pandas has built-in plotting (uses Matplotlib under the hood)
 
@@ -664,7 +704,33 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Create sample data
+np.random.seed(42)
+df = pd.DataFrame({
+    'energy': np.random.gamma(5, 2, 500),
+    'is_signal': np.random.choice([True, False], 500, p=[0.3, 0.7])
+})
+
+fig, ax = plt.subplots(figsize=(10, 4))
+df['energy'].hist(bins=30, ax=ax, edgecolor='white')
+ax.set_xlabel('Energy (GeV)')
+ax.set_ylabel('Counts')
+ax.set_title('Energy Distribution')
+ax.grid(alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+---
+hideInToc: true
+---
+
+# Visualization: Signal vs Background
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
 np.random.seed(42)
 df = pd.DataFrame({
     'energy': np.random.gamma(5, 2, 500),
@@ -672,30 +738,16 @@ df = pd.DataFrame({
     'is_signal': np.random.choice([True, False], 500, p=[0.3, 0.7])
 })
 
-# Histogram
-fig, axes = plt.subplots(1, 2, figsize=(12, 4))
-
-df['energy'].hist(bins=30, ax=axes[0], edgecolor='white')
-axes[0].set_xlabel('Energy (GeV)')
-axes[0].set_ylabel('Counts')
-axes[0].set_title('Energy Distribution')
-axes[0].grid(alpha=0.3)
-
-# Grouped histogram
-df[df['is_signal']]['energy'].hist(bins=30, alpha=0.5, label='Signal', ax=axes[1])
-df[~df['is_signal']]['energy'].hist(bins=30, alpha=0.5, label='Background', ax=axes[1])
-axes[1].set_xlabel('Energy (GeV)')
-axes[1].set_ylabel('Counts')
-axes[1].set_title('Signal vs Background')
-axes[1].legend()
-axes[1].grid(alpha=0.3)
-
+fig, ax = plt.subplots(figsize=(10, 4))
+df[df['is_signal']]['energy'].hist(bins=30, alpha=0.5, label='Signal', ax=ax)
+df[~df['is_signal']]['energy'].hist(bins=30, alpha=0.5, label='Background', ax=ax)
+ax.set_xlabel('Energy (GeV)')
+ax.set_ylabel('Counts')
+ax.set_title('Signal vs Background')
+ax.legend()
+ax.grid(alpha=0.3)
 plt.tight_layout()
 plt.show()
-
-# Summary statistics
-print("Energy statistics by signal type:")
-print(df.groupby('is_signal')['energy'].describe())
 ```
 
 ---
@@ -728,37 +780,16 @@ You have data from a particle physics experiment looking for Higgs → γγ (two
 ```py {monaco-run}
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Simulate Higgs -> gamma gamma data
 np.random.seed(42)
-n_signal, n_background = 300, 2000
+n_sig, n_bkg = 300, 2000
 
-# Signal: Gaussian around 125 GeV
-signal_mass = np.random.normal(125, 1.5, n_signal)
-signal_df = pd.DataFrame({
-    'mass': signal_mass,
-    'type': 'signal',
-    'photon1_E': np.random.uniform(50, 100, n_signal),
-    'photon2_E': np.random.uniform(40, 90, n_signal)
-})
+signal_df = pd.DataFrame({'mass': np.random.normal(125, 1.5, n_sig), 'type': 'signal'})
+background_df = pd.DataFrame({'mass': np.random.exponential(30, n_bkg) + 105, 'type': 'background'})
 
-# Background: Exponential
-background_mass = np.random.exponential(30, n_background) + 105
-background_df = pd.DataFrame({
-    'mass': background_mass,
-    'type': 'background',
-    'photon1_E': np.random.uniform(40, 110, n_background),
-    'photon2_E': np.random.uniform(35, 100, n_background)
-})
-
-# Combine
 df = pd.concat([signal_df, background_df], ignore_index=True)
-df = df[df['mass'] < 150]  # Analysis window
-
-print(f"Total events: {len(df)}")
-print(f"Signal: {len(signal_df)}, Background: {len(background_df)}")
-print(f"\nFirst few events:")
+df = df[df['mass'] < 150]
+print(f"Total events: {len(df)} (Signal: {n_sig}, Background: {n_bkg})")
 print(df.head())
 ```
 
@@ -766,47 +797,49 @@ print(df.head())
 hideInToc: true
 ---
 
-# Exploratory Data Analysis
+# Exploratory Data Analysis: Statistics
 
 ```py {monaco-run}
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Recreate dataset
 np.random.seed(42)
 signal = pd.DataFrame({'mass': np.random.normal(125, 1.5, 300), 'type': 'signal'})
 background = pd.DataFrame({'mass': np.random.exponential(30, 2000) + 105, 'type': 'background'})
 df = pd.concat([signal, background], ignore_index=True)
 df = df[df['mass'] < 150]
 
-# Basic statistics
-print("Summary statistics:")
+print("Summary statistics by type:")
 print(df.groupby('type')['mass'].describe())
 
-# Visualize
+print(f"\nEvents near Higgs mass (124-126 GeV): {len(df[(df['mass']>124) & (df['mass']<126)])}")
+```
+
+---
+hideInToc: true
+---
+
+# Exploratory Data Analysis: Visualization
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+signal = pd.DataFrame({'mass': np.random.normal(125, 1.5, 300), 'type': 'signal'})
+background = pd.DataFrame({'mass': np.random.exponential(30, 2000) + 105, 'type': 'background'})
+df = pd.concat([signal, background], ignore_index=True)
+df = df[df['mass'] < 150]
+
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-
-# Histogram of all data
 ax1.hist(df['mass'], bins=50, range=(105, 150), edgecolor='white', alpha=0.7)
-ax1.set_xlabel('m$_{γγ}$ (GeV)', fontsize=11)
-ax1.set_ylabel('Events / 0.9 GeV', fontsize=11)
-ax1.set_title('Diphoton Mass Distribution', fontsize=12)
-ax1.grid(alpha=0.3)
-ax1.axvline(125, color='red', linestyle='--', linewidth=1.5, label='Higgs mass')
-ax1.legend()
+ax1.axvline(125, color='red', linestyle='--', label='Higgs mass')
+ax1.set_xlabel('m$_{γγ}$ (GeV)'); ax1.set_ylabel('Events'); ax1.legend()
 
-# Separate signal and background
-ax2.hist(df[df['type']=='background']['mass'], bins=50, range=(105, 150),
-         alpha=0.5, label='Background', edgecolor='white')
-ax2.hist(df[df['type']=='signal']['mass'], bins=50, range=(105, 150),
-         alpha=0.7, label='Signal', edgecolor='white')
-ax2.set_xlabel('m$_{γγ}$ (GeV)', fontsize=11)
-ax2.set_ylabel('Events', fontsize=11)
-ax2.set_title('Signal vs Background', fontsize=12)
-ax2.legend()
-ax2.grid(alpha=0.3)
-
+ax2.hist(df[df['type']=='background']['mass'], bins=50, range=(105,150), alpha=0.5, label='Bkg')
+ax2.hist(df[df['type']=='signal']['mass'], bins=50, range=(105,150), alpha=0.7, label='Signal')
+ax2.set_xlabel('m$_{γγ}$ (GeV)'); ax2.set_ylabel('Events'); ax2.legend()
 plt.tight_layout()
 plt.show()
 ```
@@ -815,47 +848,62 @@ plt.show()
 hideInToc: true
 ---
 
-# Data Filtering and Selection
+# Data Filtering: Quality Cuts
 
 ```py {monaco-run}
 import pandas as pd
 import numpy as np
 
-# Recreate dataset
 np.random.seed(42)
 df = pd.DataFrame({
-    'mass': np.concatenate([
-        np.random.normal(125, 1.5, 300),
-        np.random.exponential(30, 2000) + 105
-    ]),
+    'mass': np.concatenate([np.random.normal(125, 1.5, 300),
+                            np.random.exponential(30, 2000) + 105]),
     'photon1_E': np.random.uniform(40, 110, 2300),
     'photon2_E': np.random.uniform(35, 100, 2300),
     'detector_qual': np.random.choice(['good', 'bad'], 2300, p=[0.9, 0.1])
 })
 df = df[df['mass'] < 150]
-
-# Apply quality cuts
 print(f"Events before cuts: {len(df)}")
 
-# Cut 1: Detector quality
+# Quality cut
 df_qual = df[df['detector_qual'] == 'good']
-print(f"After quality cut: {len(df_qual)}")
+print(f"After quality cut:  {len(df_qual)}")
 
-# Cut 2: Photon energy requirements
+# Energy cuts
 df_cut = df_qual[(df_qual['photon1_E'] > 50) & (df_qual['photon2_E'] > 45)]
-print(f"After energy cuts: {len(df_cut)}")
+print(f"After energy cuts:  {len(df_cut)}")
+```
 
-# Cut 3: Signal region (mass window around Higgs)
-signal_region = df_cut[(df_cut['mass'] > 122) & (df_cut['mass'] < 128)]
+---
+hideInToc: true
+---
+
+# Data Filtering: Signal Region
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+
+np.random.seed(42)
+df = pd.DataFrame({
+    'mass': np.concatenate([np.random.normal(125, 1.5, 300),
+                            np.random.exponential(30, 2000) + 105]),
+    'photon1_E': np.random.uniform(40, 110, 2300),
+    'photon2_E': np.random.uniform(35, 100, 2300),
+    'detector_qual': np.random.choice(['good', 'bad'], 2300, p=[0.9, 0.1])
+})
+df = df[(df['mass'] < 150) & (df['detector_qual'] == 'good')]
+df = df[(df['photon1_E'] > 50) & (df['photon2_E'] > 45)]
+
+# Signal region (mass window around Higgs)
+signal_region = df[(df['mass'] > 122) & (df['mass'] < 128)]
 print(f"Events in signal region (122-128 GeV): {len(signal_region)}")
 
 # Sideband regions (for background estimation)
-sideband_low = df_cut[(df_cut['mass'] > 110) & (df_cut['mass'] < 120)]
-sideband_high = df_cut[(df_cut['mass'] > 130) & (df_cut['mass'] < 140)]
+sideband_low = df[(df['mass'] > 110) & (df['mass'] < 120)]
+sideband_high = df[(df['mass'] > 130) & (df['mass'] < 140)]
 print(f"Sideband events: {len(sideband_low) + len(sideband_high)}")
-
-print(f"\nSignal region statistics:")
-print(signal_region['mass'].describe())
+print(f"\nSignal region statistics:\n{signal_region['mass'].describe()}")
 ```
 
 ---
@@ -873,47 +921,39 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning pad-compact">
 
 ## ⚠️ **Missing Values**
 - Empty cells, NaN, None
 - Measurement failures
-- Detector dead time
-
-**Solutions**: Drop, fill (mean/median/interpolate), or flag
+- **Fix**: Drop, fill (mean/median), or flag
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning pad-compact">
 
 ## ⚠️ **Outliers**
-- Measurement errors
-- Rare events (physics or noise?)
+- Measurement errors or rare events
 - Data entry mistakes
-
-**Solutions**: Statistical tests, domain knowledge, robust statistics
+- **Fix**: Statistical tests, domain knowledge
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning pad-compact">
 
 ## ⚠️ **Duplicates**
 - Repeated measurements
-- Data processing errors
 - Accidental double-counting
-
-**Solutions**: Identify and remove based on unique identifiers
+- **Fix**: Identify and remove via unique IDs
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning pad-compact">
 
 ## ⚠️ **Inconsistent Formats**
 - Mixed units (GeV vs MeV)
-- Date/time formats
-- Categorical encoding
-
-**Solutions**: Standardize, convert, validate
+- Date/time format variations
+- **Fix**: Standardize, convert, validate
 
 </div>
 
@@ -923,62 +963,64 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Detecting and Handling Outliers
+# Detecting Outliers: Z-Score Method
 
 ```py {monaco-run}
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Create data with outliers
 np.random.seed(42)
 normal_data = np.random.normal(100, 10, 95)
-outliers = np.array([200, 210, -50, 250, 180])  # Artificial outliers
+outliers = np.array([200, 210, -50, 250, 180])
 data = np.concatenate([normal_data, outliers])
-
 df = pd.DataFrame({'measurement': data})
 
-# Method 1: Z-score (standard deviations from mean)
+# Z-score: how many standard deviations from mean
 mean, std = df['measurement'].mean(), df['measurement'].std()
 df['z_score'] = np.abs((df['measurement'] - mean) / std)
 outliers_z = df[df['z_score'] > 3]
 
 print(f"Mean: {mean:.2f}, Std: {std:.2f}")
 print(f"Outliers (|z| > 3): {len(outliers_z)}")
-print(outliers_z)
-
-# Method 2: IQR (Interquartile Range)
-Q1 = df['measurement'].quantile(0.25)
-Q3 = df['measurement'].quantile(0.75)
-IQR = Q3 - Q1
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-outliers_iqr = df[(df['measurement'] < lower_bound) | (df['measurement'] > upper_bound)]
-print(f"\nIQR method: {len(outliers_iqr)} outliers")
-print(f"Bounds: [{lower_bound:.2f}, {upper_bound:.2f}]")
-
-# Visualization
-fig, ax = plt.subplots(figsize=(10, 4))
-ax.scatter(range(len(df)), df['measurement'], alpha=0.6, label='Data')
-ax.scatter(outliers_z.index, outliers_z['measurement'], color='red', s=100,
-           marker='x', label='Outliers (Z-score)', zorder=5)
-ax.axhline(mean, color='green', linestyle='--', label='Mean', linewidth=1.5)
-ax.axhline(mean + 3*std, color='orange', linestyle=':', label='±3σ', linewidth=1)
-ax.axhline(mean - 3*std, color='orange', linestyle=':', linewidth=1)
-ax.set_xlabel('Index')
-ax.set_ylabel('Measurement')
-ax.legend()
-ax.grid(alpha=0.3)
-plt.tight_layout()
-plt.show()
+print(outliers_z[['measurement', 'z_score']])
 ```
 
 ---
 hideInToc: true
 ---
 
-# Data Normalization and Scaling
+# Detecting Outliers: IQR Method
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+data = np.concatenate([np.random.normal(100, 10, 95), [200, 210, -50, 250, 180]])
+df = pd.DataFrame({'measurement': data})
+
+# IQR: Interquartile Range
+Q1, Q3 = df['measurement'].quantile(0.25), df['measurement'].quantile(0.75)
+IQR = Q3 - Q1
+lower, upper = Q1 - 1.5*IQR, Q3 + 1.5*IQR
+outliers = df[(df['measurement'] < lower) | (df['measurement'] > upper)]
+print(f"IQR bounds: [{lower:.1f}, {upper:.1f}] → {len(outliers)} outliers")
+
+fig, ax = plt.subplots(figsize=(10, 3.5))
+ax.scatter(range(len(df)), df['measurement'], alpha=0.6, label='Data')
+ax.scatter(outliers.index, outliers['measurement'], color='red', s=100, marker='x', label='Outliers')
+ax.axhline(upper, color='orange', ls=':', label=f'Bounds')
+ax.axhline(lower, color='orange', ls=':')
+ax.legend(); ax.grid(alpha=0.3)
+plt.tight_layout(); plt.show()
+```
+
+---
+hideInToc: true
+---
+
+# Data Normalization: Why and How
 
 <div class="card card-info pad-tight mt-md">
 
@@ -994,34 +1036,46 @@ hideInToc: true
 import pandas as pd
 import numpy as np
 
-# Create dataset with different scales
 np.random.seed(42)
 df = pd.DataFrame({
-    'energy': np.random.uniform(50, 150, 100),      # GeV
-    'momentum': np.random.uniform(1, 5, 100),       # GeV/c
-    'angle': np.random.uniform(0, np.pi, 100)       # radians
+    'energy': np.random.uniform(50, 150, 100),
+    'angle': np.random.uniform(0, np.pi, 100)
+})
+print("Original scales:")
+print(df.describe().loc[['mean', 'std', 'min', 'max']])
+
+# Standardization: (x - mean) / std → mean=0, std=1
+df_std = (df - df.mean()) / df.std()
+print("\nStandardized (z-score):")
+print(df_std.describe().loc[['mean', 'std', 'min', 'max']])
+```
+
+---
+hideInToc: true
+---
+
+# Data Normalization: Min-Max Scaling
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+
+np.random.seed(42)
+df = pd.DataFrame({
+    'energy': np.random.uniform(50, 150, 100),
+    'momentum': np.random.uniform(1, 5, 100),
+    'angle': np.random.uniform(0, np.pi, 100)
 })
 
-print("Original data:")
-print(df.describe())
-
-# Method 1: Standardization (z-score normalization)
-# (x - mean) / std  →  mean=0, std=1
-df_standardized = (df - df.mean()) / df.std()
-print("\nStandardized (z-score):")
-print(df_standardized.describe())
-
-# Method 2: Min-Max scaling
-# (x - min) / (max - min)  →  range [0, 1]
+# Min-Max scaling: (x - min) / (max - min) → range [0, 1]
 df_minmax = (df - df.min()) / (df.max() - df.min())
-print("\nMin-Max scaled [0, 1]:")
-print(df_minmax.describe())
 
-# Verify: all columns now comparable
-print("\nComparison of scales:")
-print(f"Original std: {df.std().values}")
-print(f"Standardized std: {df_standardized.std().values}")
-print(f"Min-Max range: [{df_minmax.min().values}, {df_minmax.max().values}]")
+print("Min-Max scaled [0, 1]:")
+print(df_minmax.describe().loc[['mean', 'std', 'min', 'max']])
+
+# Compare original vs scaled
+print("\nOriginal std:", df.std().values.round(2))
+print("Scaled std:  ", df_minmax.std().values.round(2))
 ```
 
 ---
@@ -1158,39 +1212,47 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Data Analysis Workflow Best Practices
+# Data Analysis: Do's
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-success pad-tight mt-md">
 
-<div class="card card-success pad-tight">
+## ✅ **Best Practices**
 
-## ✅ **Do**
-
-1. **Always visualize first** (distributions, correlations)
-2. **Check for missing values** before analysis
-3. **Document data sources** and preprocessing
-4. **Validate data quality** (ranges, units, consistency)
-5. **Keep raw data separate** from processed
-6. **Use version control** for analysis scripts
-7. **Save intermediate results** for reproducibility
-8. **Write tests** for data processing functions
+1. **Always visualize first** — look at distributions and correlations before analysis
+2. **Check for missing values** before running any computations
+3. **Document data sources** and all preprocessing steps
+4. **Validate data quality** — check ranges, units, and consistency
+5. **Keep raw data separate** from processed data
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-info pad-tight mt-md">
 
-## ❌ **Don't**
-
-1. **Don't assume data is clean** without checking
-2. **Don't delete outliers** without understanding why
-3. **Don't mix data loading and analysis** (separate!)
-4. **Don't hardcode file paths** (use config files)
-5. **Don't work with copies unnecessarily** (memory!)
-6. **Don't forget to document units** and conventions
-7. **Don't skip exploratory analysis**
-8. **Don't trust a single metric**
+**Rule of thumb**: If you can't explain where every number came from, go back and document your pipeline.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Data Analysis: Don'ts
+
+<div class="card card-warning pad-tight mt-md">
+
+## ❌ **Common Mistakes**
+
+1. **Don't assume data is clean** without checking first
+2. **Don't delete outliers** without understanding why they exist
+3. **Don't mix data loading and analysis** — separate your pipeline
+4. **Don't hardcode file paths** — use config files or command-line arguments
+5. **Don't skip exploratory analysis** — jumping to conclusions costs time
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+**Remember**: Version control your analysis scripts and save intermediate results for reproducibility (more in L12!)
 
 </div>
 
@@ -1319,46 +1381,53 @@ Full tutorials and documentation provided!
 hideInToc: true
 ---
 
-# Example: CMS Dimuon Spectrum
+# Example: CMS Dimuon Spectrum — Data
 
-```python
+```py {monaco-run}
 import pandas as pd
-import matplotlib.pyplot as plt
-
-# Real CMS open data (simplified)
-# URL: http://opendata.cern.ch/record/5200
-# df = pd.read_csv('CMS_DoubleMu_Run2011A.csv')
-
-# For demonstration: simulate similar data
 import numpy as np
-np.random.seed(42)
 
-# J/psi peak (~3.1 GeV), Upsilon peaks (~9-10 GeV), continuum background
-jpsi = np.random.normal(3.1, 0.1, 500)
-upsilon = np.random.normal(9.5, 0.2, 200)
-background = np.random.exponential(2.0, 2000)
+# Simulated CMS dimuon data (real data: http://opendata.cern.ch/record/5200)
+np.random.seed(42)
+jpsi = np.random.normal(3.1, 0.1, 500)       # J/ψ peak (~3.1 GeV)
+upsilon = np.random.normal(9.5, 0.2, 200)     # Υ peak (~9.5 GeV)
+background = np.random.exponential(2.0, 2000)  # Continuum background
 
 mass = np.concatenate([jpsi, upsilon, background])
 df = pd.DataFrame({'dimuon_mass': mass[mass < 15]})
 
-# Analysis
 print(f"Total events: {len(df)}")
-print(f"Events in J/psi region (2.8-3.4 GeV): {len(df[(df['dimuon_mass'] > 2.8) & (df['dimuon_mass'] < 3.4)])}")
-print(f"Events in Upsilon region (9-10.5 GeV): {len(df[(df['dimuon_mass'] > 9) & (df['dimuon_mass'] < 10.5)])}")
+print(f"J/ψ region (2.8-3.4 GeV):    {len(df[(df['dimuon_mass']>2.8) & (df['dimuon_mass']<3.4)])}")
+print(f"Υ region (9.0-10.5 GeV):     {len(df[(df['dimuon_mass']>9) & (df['dimuon_mass']<10.5)])}")
+```
 
-# Plot
-plt.figure(figsize=(10, 6))
+---
+hideInToc: true
+---
+
+# Example: CMS Dimuon Spectrum — Plot
+
+```py {monaco-run}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+jpsi = np.random.normal(3.1, 0.1, 500)
+upsilon = np.random.normal(9.5, 0.2, 200)
+background = np.random.exponential(2.0, 2000)
+mass = np.concatenate([jpsi, upsilon, background])
+df = pd.DataFrame({'dimuon_mass': mass[mass < 15]})
+
+plt.figure(figsize=(10, 5))
 plt.hist(df['dimuon_mass'], bins=100, range=(0, 15), edgecolor='white', linewidth=0.3)
 plt.xlabel('Dimuon Mass (GeV/c²)', fontsize=12)
 plt.ylabel('Events', fontsize=12)
 plt.title('Dimuon Mass Spectrum (simulated CMS data)', fontsize=14)
-plt.axvline(3.1, color='red', linestyle='--', label='J/ψ (3.1 GeV)', linewidth=1.5)
-plt.axvline(9.5, color='green', linestyle='--', label='Υ (9.5 GeV)', linewidth=1.5)
-plt.legend()
-plt.grid(alpha=0.3)
-plt.yscale('log')
-plt.tight_layout()
-plt.show()
+plt.axvline(3.1, color='red', ls='--', label='J/ψ (3.1 GeV)', lw=1.5)
+plt.axvline(9.5, color='green', ls='--', label='Υ (9.5 GeV)', lw=1.5)
+plt.legend(); plt.grid(alpha=0.3); plt.yscale('log')
+plt.tight_layout(); plt.show()
 ```
 
 ---
@@ -1372,7 +1441,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# What We Learned Today
+# What We Learned: NumPy & Pandas
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1410,7 +1479,13 @@ hideInToc: true
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+---
+hideInToc: true
+---
+
+# What We Learned: Skills & Next Steps
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-info pad-tight">
 
@@ -1436,16 +1511,16 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+</div>
+
+<div class="card card-accent pad-tight mt-md">
 
 ### **Next Steps**
 
-- Apply to real CERN data
-- Combine with L10 fitting
-- Build analysis pipelines
-- **L12: Automation!**
-
-</div>
+- Apply skills to real CERN open data
+- Combine with L10 fitting techniques
+- Build complete analysis pipelines
+- **L12: Automate your entire workflow!**
 
 </div>
 

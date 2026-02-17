@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Version Control
 
@@ -127,58 +127,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Resolving Merge Conflicts
-
-<div class="card card-warning pad-tight mt-md">
-
-## ⚠️ **What a conflict looks like**
-
-When two branches change the same lines, git marks the conflict:
-
-```text {*}{lines:false}
-{{'<<<<<<< HEAD'}}
-result = calculate_mean(data)
-{{'======='}}
-result = calculate_median(data)
-{{'>>>>>>> feature-branch'}}
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary pad-tight">
-
-## 🔧 **How to resolve**
-
-1. Open the file and choose the correct version
-2. Remove the conflict markers (`<<<<`, `====`, `>>>>`)
-3. Stage and commit the resolved file
-
-```bash
-git add resolved_file.py
-git commit -m "Resolve merge conflict"
-```
-
-</div>
-
-<div class="card card-info pad-compact">
-
-## 💡 **Tips**
-
-- Conflicts are **normal** in collaborative work
-- Pull frequently to minimize conflicts
-- Communicate with teammates about shared files
-- VS Code highlights conflicts with clickable options
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
 # Using `git` for the first time
 
 <div class="grid-2 gap-md mt-md">
@@ -194,73 +142,39 @@ git config --global user.name "Mindaugas Sarpis"
 git config --global user.email "mindaugas.sarpis@cern.ch"
 ```
 
-- Check the configuration with:
-
-```bash
-git config --list
-```
-
 - Edit the configuration with:
 
 ```bash
 git config --global --edit
 ```
 
-- Open configuration help:
+- Open short help for any command:
 
 ```bash
 git config --h
-git config --help
 ```
 
 </div>
 
-<div class="card card-secondary pad-tight" style="font-size: 0.7em; overflow: auto; max-height: 475px;">
+<div class="card card-info pad-tight">
+
+## 🔍 **Checking Your Config**
+
+- View all current settings with:
 
 ```bash
-usage: git config [<options>]
+git config --list
+```
 
-Config file location
-    --global              use global config file
-    --system              use system config file
-    --local               use repository config file
-    --worktree            use per-worktree config file
-    -f, --file < file >     use given config file
-    --blob < blob-id >      read config from given blob object
+- Example output:
 
-Action
-    --get                 get value: name [value-pattern]
-    --get-all             get all values: key [value-pattern]
-    --get-regexp          get values for regexp: name-regex [value-pattern]
-    --get-urlmatch        get value specific for the URL: section[.var] URL
-    --replace-all         replace all matching variables: name value [value-pattern]
-    --add                 add a new variable: name value
-    --unset               remove a variable: name [value-pattern]
-    --unset-all           remove all matches: name [value-pattern]
-    --rename-section      rename section: old-name new-name
-    --remove-section      remove a section: name
-    -l, --list            list all
-    --fixed-value         use string equality when comparing values to 'value-pattern'
-    -e, --edit            open an editor
-    --get-color           find the color configured: slot [default]
-    --get-colorbool       find the color setting: slot [stdout-is-tty]
-
-Type
-    -t, --type <type>     value is given this type
-    --bool                value is "true" or "false"
-    --int                 value is decimal number
-    --bool-or-int         value is --bool or --int
-    --bool-or-str         value is --bool or string
-    --path                value is a path (file or directory name)
-    --expiry-date         value is an expiry date
-
-Other
-    -z, --null            terminate values with NUL byte
-    --name-only           show variable names only
-    --includes            respect include directives on lookup
-    --show-origin         show origin of config (file, standard input, blob, command line)
-    --show-scope          show scope of config (worktree, local, global, system, command)
-    --default < value >     with --get, use default value when missing entry
+```bash
+user.name=Mindaugas Sarpis
+user.email=mindaugas.sarpis@cern.ch
+core.editor=vim
+init.defaultbranch=main
+color.ui=auto
+pull.rebase=false
 ```
 
 </div>
@@ -323,7 +237,7 @@ nothing to commit (create/copy files and use "git add" to track)
 hideInToc: true
 ---
 
-# Staging Area
+# Staging Area — Adding Files
 
 <div class="grid-2 gap-md mt-md">
 
@@ -345,18 +259,6 @@ git add <file>
 git add --all
 ```
 
-- To unstage a file use:
-
-```bash
-git restore --staged <file>
-```
-
-- Changes to files can be viewed with:
-
-```bash
-git diff
-```
-
 </div>
 
 <div>
@@ -369,14 +271,60 @@ When staged files are present, the output of `git status` will be:
 
 ```bash
 On branch main
-Your branch is up to date with 'origin/main'.
-
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   < file >
 ```
 
 </div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Staging Area — Unstaging & Diffing
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔄 **Unstaging Files**
+
+- To unstage a file use:
+
+```bash
+git restore --staged <file>
+```
+
+- This moves the file back to the working directory without discarding your changes.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔍 **Viewing Differences**
+
+- Changes to files can be viewed with:
+
+```bash
+git diff
+```
+
+- To see differences of staged files:
+
+```bash
+git diff --staged
+```
+
+- To compare with a specific commit:
+
+```bash
+git diff <hash>
+```
 
 </div>
 
@@ -481,37 +429,25 @@ git log --oneline --graph --all
 hideInToc: true
 ---
 
-# Restoring Changes
+# Restoring Files
 
 <div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary pad-tight">
 
-## ↩️ **Undoing Changes**
+## ↩️ **Undo Working Directory Changes**
 
-- Changes to files can be restored to the last commit with:
+- Restore a file to the last committed version (discard uncommitted edits):
 
-  ```bash
-  git restore < file >
-  ```
+```bash
+git restore < file >
+```
 
-- Changes to files can be restored to the last commit and the staging area with:
+- Unstage a file while keeping your edits:
 
-  ```bash
-  git restore --staged < file >
-  ```
-
-- Changes to files from previous commits can be restored using the *hash* of the commit:
-
-  ```bash
-  git restore --source=<hash> < file >
-  ```
-
-- A new commit reverting the changes can be made with:
-
-  ```bash
-  git revert < hash >
-  ```
+```bash
+git restore --staged < file >
+```
 
 </div>
 
@@ -519,15 +455,59 @@ hideInToc: true
 
 ![](/git-restore.svg)
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-info pad-compact mt-sm">
 
-⚠️ **DANGER:** Reset permanently deletes all uncommitted changes. Cannot be undone.
+## 💡 **When to Use**
+
+- `git restore <file>` — discard local edits
+- `git restore --staged <file>` — unstage without losing changes
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Reset & Revert
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔙 **Restore from History**
+
+- Restore a file from a previous commit using its *hash*:
+
+```bash
+git restore --source=<hash> < file >
+```
+
+- Create a **new commit** that undoes a previous one:
+
+```bash
+git revert < hash >
+```
+
+`git revert` is safe because it adds history rather than deleting it.
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ **Dangerous: Hard Reset**
+
+`reset --hard` permanently deletes **all uncommitted changes**. Cannot be undone.
 
 ```bash
 git reset --hard < hash >
 ```
 
-</div>
+- Use only when you truly want to throw away work
+- Prefer `git revert` for undoing commits already shared with others
 
 </div>
 
@@ -690,6 +670,48 @@ git remote add origin git@github.com:mygithub/myremote.git
 ```
 
 ---
+hideInToc: true
+---
+
+# SSH Key Setup
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔑 **Why SSH?**
+
+- `git@github.com:` remotes use SSH for authentication
+- SSH keys let you push/pull without entering a password every time
+- More secure than HTTPS with stored passwords
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ⚙️ **Quick Setup**
+
+```bash
+# Generate a new SSH key
+ssh-keygen -t ed25519 -C "your.email@example.com"
+
+# Start the SSH agent
+eval "$(ssh-agent -s)"
+
+# Add the key to the agent
+ssh-add ~/.ssh/id_ed25519
+
+# Copy the public key
+cat ~/.ssh/id_ed25519.pub
+```
+
+Then add the public key to **GitHub > Settings > SSH and GPG keys**.
+
+</div>
+
+</div>
+
+---
 layout: image-right
 image: /github-repo-after-first-push.svg
 backgroundSize: contain
@@ -748,11 +770,11 @@ hideInToc: true
 
 ```bash
 # Create and switch in one command
-git checkout -b feature-name
+git switch -c feature-name
 
 # Or separately
 git branch feature-name
-git checkout feature-name
+git switch feature-name
 ```
 
 </div>
@@ -763,7 +785,7 @@ git checkout feature-name
 
 ```bash
 # Switch back to main
-git checkout main
+git switch main
 
 # Merge the feature branch
 git merge feature-name
@@ -771,6 +793,74 @@ git merge feature-name
 # Delete merged branch
 git branch -d feature-name
 ```
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Merge Conflicts — What They Look Like
+
+<div class="card card-warning pad-tight mt-md">
+
+## ⚠️ **When two branches change the same lines**
+
+- If changes over-write each other a so-called **merge conflict** arises
+- `git` marks the conflict in the file so you can decide which version to keep
+
+</div>
+
+<div class="card card-secondary pad-tight mt-md">
+
+## 🔍 **Conflict Markers**
+
+```text {*}{lines:false}
+{{'<<<<<<< HEAD'}}
+result = calculate_mean(data)
+{{'======='}}
+result = calculate_median(data)
+{{'>>>>>>> feature-branch'}}
+```
+
+- Everything between `<<<<<<< HEAD` and `=======` is **your** version
+- Everything between `=======` and `>>>>>>> feature-branch` is the **incoming** version
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Resolving Merge Conflicts
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔧 **How to resolve**
+
+1. Open the file and choose the correct version
+2. Remove the conflict markers (`<<<<`, `====`, `>>>>`)
+3. Stage and commit the resolved file
+
+```bash
+git add resolved_file.py
+git commit -m "Resolve merge conflict"
+```
+
+</div>
+
+<div class="card card-info pad-compact">
+
+## 💡 **Tips**
+
+- Conflicts are **normal** in collaborative work
+- Pull frequently to minimize conflicts
+- Communicate with teammates about shared files
+- VS Code highlights conflicts with clickable options
 
 </div>
 
@@ -792,7 +882,7 @@ hideInToc: true
 
 <div class="card card-secondary pad-compact">
 
-2️⃣ `git checkout -b my-feature` — create a branch for your work
+2️⃣ `git switch -c my-feature` — create a branch for your work
 
 </div>
 

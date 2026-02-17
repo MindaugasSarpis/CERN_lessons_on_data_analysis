@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Computing Infrastructure
 
@@ -175,17 +175,41 @@ layout: image
 image: /cpu1.avif
 ---
 
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+
+A modern multi-core CPU die — the complex circuitry visible on the silicon wafer integrates billions of transistors for processing, cache, and I/O.
+
+</div>
+</div>
+
 ---
 hideInToc: true
 layout: image
 image: /cpu2.jpg
 ---
 
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+
+Close-up of a CPU package mounted on a motherboard. The metal heat spreader covers the silicon die and conducts heat to the cooler above.
+
+</div>
+</div>
+
 ---
 hideInToc: true
 layout: image
 image: /cpu_apple_M4.webp
 ---
+
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+
+Apple M4 system-on-chip (SoC) — integrates CPU, GPU, Neural Engine, and unified memory on a single die for maximum efficiency.
+
+</div>
+</div>
 
 ---
 hideInToc: true
@@ -223,11 +247,27 @@ layout: image
 image: https://miro.medium.com/v2/resize:fit:1400/format:webp/0*6k9X6LPiM4XKyssm.jpg
 ---
 
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-secondary pad-compact" style="background: rgba(0,0,0,0.7);">
+
+Desktop RAM modules (DIMMs) — each stick contains multiple memory chips that provide fast, volatile storage for active programs and data.
+
+</div>
+</div>
+
 ---
 hideInToc: true
 layout: image
 image: https://www.pcworld.com/wp-content/uploads/2023/04/corsair-dominator-memory-100884308-orig-1.jpg?quality=50&strip=all
 ---
+
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-secondary pad-compact" style="background: rgba(0,0,0,0.7);">
+
+High-performance DDR memory with heat spreaders. Overclocking-grade RAM uses custom PCB designs and binned chips for higher clock speeds.
+
+</div>
+</div>
 
 ---
 hideInToc: true
@@ -235,6 +275,12 @@ layout: center
 ---
 
 <img src="/laptop_ram.png" class="w-auto">
+
+<div class="card card-secondary pad-compact mt-md">
+
+Laptop SO-DIMM RAM modules — smaller form factor than desktop DIMMs, but same underlying technology. Often soldered directly onto the motherboard in modern ultrabooks.
+
+</div>
 
 ---
 hideInToc: true
@@ -273,7 +319,7 @@ Direct PCIe connection — fastest consumer storage available
 
 <div style="margin-top: 2rem; text-align: center;">
 
-```mermaid {scale: 1.5}
+```mermaid {scale: 1.0}
 graph LR
     A[Caches] --> B[RAM] --> C[Drive Storage]
 
@@ -293,12 +339,26 @@ layout: center
 
 <img src="/hdd.png" class="w-auto">
 
+<div class="card card-accent pad-compact mt-md">
+
+Inside a hard disk drive (HDD) — spinning magnetic platters with a read/write head on an actuator arm. Typical speeds are 5400-7200 RPM.
+
+</div>
+
 ---
 hideInToc: true
 layout: image
 image: /hdd_schematic.png
 backgroundSize: contain
 ---
+
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+
+HDD schematic — data is stored in concentric tracks on the platter surface. The actuator arm positions the head over the correct track to read or write data.
+
+</div>
+</div>
 
 ---
 hideInToc: true
@@ -307,12 +367,26 @@ image: /hdd_magnetic_domains.png
 backgroundSize: contain
 ---
 
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+
+Magnetic domains on an HDD platter — each bit is stored as the orientation of a tiny magnetic region. Smaller domains allow higher storage density.
+
+</div>
+</div>
+
 ---
 hideInToc: true
 layout: center
 ---
 
 <img src="/ssd.png" class="w-auto">
+
+<div class="card card-accent pad-compact mt-md">
+
+A solid-state drive (SSD) in the standard 2.5-inch form factor. No moving parts means faster access, lower latency, and better shock resistance than HDDs.
+
+</div>
 
 ---
 hideInToc: true
@@ -321,12 +395,26 @@ layout: center
 
 <img src="/nvme.png" class="w-auto">
 
+<div class="card card-accent pad-compact mt-md">
+
+An NVMe M.2 drive — connects directly to the PCIe bus, bypassing the slower SATA interface. Sequential read speeds can exceed 7 GB/s on modern drives.
+
+</div>
+
 ---
 hideInToc: true
 layout: image
 image: /ssd_floating_gate_3d.webp
 backgroundSize: contain
 ---
+
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+
+3D NAND flash architecture — memory cells are stacked vertically in layers, dramatically increasing storage density without shrinking individual cell sizes.
+
+</div>
+</div>
 
 ---
 hideInToc: true
@@ -335,12 +423,65 @@ image: /ssd_floating_gate.png
 backgroundSize: contain
 ---
 
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+
+Floating gate transistor — the core storage mechanism of flash memory. Electrons trapped on the floating gate change the transistor's threshold voltage to represent 0 or 1.
+
+</div>
+</div>
+
 ---
 hideInToc: true
 layout: section
 ---
 
 # Input/Output (I/O) **Devices**
+
+---
+hideInToc: true
+---
+
+# Input/Output (I/O) Devices
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🔌 **What Is I/O?**
+
+Any transfer of data **into** or **out of** the CPU — reading files from disk, receiving network packets, or sending output to a display.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🚌 **Common I/O Interfaces**
+
+- **PCIe** — high-speed internal bus (GPUs, NVMe, network cards)
+- **USB** — universal external connectivity
+- **SATA** — storage device interface
+- **Ethernet / InfiniBand** — network data transfer
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🚧 **The I/O Bottleneck**
+
+I/O is typically the **slowest link** in the data pipeline. A fast CPU waiting on a slow disk read is effectively idle — this is why SSDs, caching, and async I/O matter.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📊 **Why It Matters for Analysis**
+
+Reading a large dataset from disk or over a network often dominates total runtime. Choosing the right storage, format, and access pattern can cut I/O time by orders of magnitude.
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -421,22 +562,45 @@ layout: center
 
 <img src="/gpu1.webp" class="w-auto">
 
+<div class="card card-primary pad-compact mt-md">
+
+A modern GPU board — the large die under the cooler contains thousands of parallel cores designed for high-throughput computation.
+
+</div>
+
 ---
 hideInToc: true
 layout: image
 image: https://cdn.mos.cms.futurecdn.net/xd2Hw9Cki3qhzbC2WxNBcA.jpg
 ---
 
+<div class="absolute bottom-4 left-4 right-4">
+<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+
+GPU die shot — the highly regular grid pattern reflects the SIMD architecture: thousands of identical cores executing the same instruction on different data in parallel.
+
+</div>
+</div>
+
 ---
 hideInToc: true
-layout: full
 ---
 
-<div class="absolute inset-0 p-0 m-0">
+# CPU vs GPU — Visualized
+
+<div class="card card-info pad-compact mt-md">
+
+## 🎬 **Video: Mythbusters Demo — CPU vs GPU**
+
+A visual demonstration of serial vs. parallel processing. The CPU paints one pixel at a time, while the GPU paints thousands simultaneously — illustrating why GPUs excel at data-parallel workloads.
+
+</div>
+
+<div class="mt-md" style="text-align: center;">
   <iframe
     src="https://www.youtube.com/embed/1vXFxEzozcE?si=E6BKmW_vWHg0F0Pi&rel=0"
-    class="w-full h-full"
-    style="border:0;"
+    width="720" height="340"
+    style="border:0; border-radius: 8px;"
     allow="fullscreen"
     allowfullscreen>
   </iframe>
@@ -651,14 +815,23 @@ Memory access patterns affect performance more than computation — an algorithm
 
 ---
 hideInToc: true
-layout: full
 ---
 
-<div class="absolute inset-0 p-0 m-0">
+# How Computer Memory Works
+
+<div class="card card-info pad-compact mt-md">
+
+## 🎬 **Video: How Computer Memory Works — TED-Ed**
+
+An animated explanation of the memory hierarchy — from CPU registers to hard drives — and why balancing speed, size, and cost shapes every computer system.
+
+</div>
+
+<div class="mt-md" style="text-align: center;">
   <iframe
     src="https://www.youtube.com/embed/h9Z4oGN89MU?si=238qvmSpbhkseW2I"
-    class="w-full h-full"
-    style="border:0;"
+    width="720" height="340"
+    style="border:0; border-radius: 8px;"
     allow="fullscreen"
     allowfullscreen>
   </iframe>

@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## File Handling and Directory Structure
 
@@ -144,9 +144,7 @@ hideInToc: true
 
 - Use version control to track changes and revert to a working version
 
-- Use software that is actively maintained and updated
-
-- Use software that is widely used and has a large user base
+- Use actively maintained software with a large user base
 
 - Agree on software and file formats with collaborators
 
@@ -198,9 +196,7 @@ hideInToc: true
 
 - Type of data
 
-- Researcher name/initials
-
-- Lab name/location
+- Researcher name/initials, lab name/location
 
 - Project or experiment name or acronym
 
@@ -396,7 +392,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-Choose the structure that best fits your workflow — either is valid as long as it is consistent.
+Choose the structure that best fits your workflow — either is valid as long as it is consistent. We'll navigate these structures from the command line in the next lecture.
 
 </div>
 
@@ -405,6 +401,14 @@ layout: center
 hideInToc: true
 ---
 
-[<img src="/RDM_Lifecycle.png" class="inline w-140"/>](https://datamanagement.hms.harvard.edu/)
+<div class="card card-info pad-compact">
+
+## 🔄 **Research Data Management Lifecycle**
+
+The RDM lifecycle shows how data flows through planning, collection, processing, analysis, preservation, and sharing — good file handling supports every stage.
+
+</div>
+
+[<img src="/RDM_Lifecycle.png" class="inline w-120"/>](https://datamanagement.hms.harvard.edu/)
 
 ---

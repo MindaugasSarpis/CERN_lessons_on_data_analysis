@@ -19,7 +19,7 @@ addons:
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Crash Course on Python Programming
 
@@ -187,7 +187,7 @@ print("Hello from Python! 🐍", 2 + 2)
 hideInToc: true
 ---
 
-# Operators & Data Types
+# Operators & Variables
 
 <div class="grid-2 gap-md mt-md">
 
@@ -215,7 +215,11 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight mt-sm">
+</div>
+
+<div>
+
+<div class="card card-secondary pad-tight">
 
 #### 📝 **Variables and Data Types**
 
@@ -228,11 +232,32 @@ is_valid = True    # Boolean
 
 </div>
 
+<div class="card card-info pad-tight mt-sm">
+
+#### 📦 **More Built-in Types**
+
+- **Tuples** — immutable sequences: `point = (3, 4)`
+- **Sets** — unique elements: `unique = {1, 2, 3}`
+- **`range()`** — generates number sequences: `range(0, 10, 2)`
+- **f-strings** — formatted text: `f"Hello, {name}!"`
+
 </div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Strings & Lists
+
+<div class="grid-2 gap-md mt-md">
 
 <div>
 
-<div class="card card-info pad-tight">
+<div class="card card-primary pad-tight">
 
 #### 🔤 **Strings**
 
@@ -249,7 +274,11 @@ print(s.replace("World", "Python")) # Replace
 
 </div>
 
-<div class="card card-accent pad-tight mt-sm">
+</div>
+
+<div>
+
+<div class="card card-accent pad-tight">
 
 #### 📋 **Lists**
 
@@ -267,6 +296,237 @@ numbers.sort()      # Sort list
 ```python
 customer_info = ["Alice", 25, "New York", "Premium", True]
 ```
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Dictionary Basics
+
+<div class="grid-2 gap-md mt-md">
+
+<div>
+
+<div class="card card-primary pad-tight">
+
+### 📖 **Overview**
+
+- Dictionaries map immutable keys (strings, numbers) to values
+- Membership checks are fast: `"age" in person`
+- View objects `.keys()`, `.values()`, `.items()` reflect live data
+
+</div>
+
+<div class="card card-secondary pad-tight mt-sm">
+
+### 💡 **Tips**
+
+- Use `.get()`/`setdefault()` for optional keys; avoid `KeyError`s from direct indexing
+- Nest dictionaries (e.g., parsed JSON) to represent hierarchical structures
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card card-info pad-tight">
+
+##### 🛠️ **Everyday Operations**
+
+```python
+person = {"name": "Alice", "age": 25}
+person["city"] = "New York"      # Add key-value pair
+person["age"] += 1               # Update in place
+
+# Safe lookup with default (returns "N/A" if missing)
+print(person.get("role", "N/A"))
+
+# Direct lookup (raises KeyError if missing!)
+# print(person["role"])  # KeyError: 'role'
+
+for key, value in person.items():
+    print(f"{key}: {value}")
+```
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Dictionary Patterns
+
+<div class="grid-2 gap-md mt-md">
+
+<div>
+
+<div class="card card-primary pad-tight">
+
+##### 🔄 **Dictionary Comprehension**
+
+```python
+squares = {n: n**2 for n in range(5)}
+# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+```
+
+</div>
+
+<div class="card card-info pad-tight mt-sm">
+
+##### 🔑 **Merging Dictionaries**
+
+```python
+defaults = {"color": "blue", "size": 10}
+custom   = {"size": 20, "style": "bold"}
+merged   = {**defaults, **custom}
+# {"color": "blue", "size": 20, "style": "bold"}
+```
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card card-accent pad-tight">
+
+##### 📊 **Counting Word Frequencies**
+
+```python
+text  = "the cat chased the dog and the dog chased the cat"
+words = text.split()
+
+counts = {}  # empty dictionary
+
+for word in words:
+    counts[word] = counts.get(word, 0) + 1
+
+print(counts)
+# {'the': 4, 'cat': 2, 'chased': 2, 'dog': 2, 'and': 1}
+```
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Conditionals & Loops
+
+<div class="grid-2 gap-md mt-md">
+
+<div>
+
+<div class="card card-primary pad-tight">
+
+#### 🔀 **Conditional Statements**
+
+```python
+x = 10
+if x > 5:
+    print("x is greater than 5")
+elif x == 5:
+    print("x is 5")
+else:
+    print("x is less than 5")
+```
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card card-secondary pad-tight">
+
+#### 🔁 **Loops**
+
+```python
+# For loop
+for i in range(5):
+    print(i)  # Prints 0 to 4
+
+# While loop
+x = 0
+while x < 5:
+    print(x)
+    x += 1
+```
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+#### 💡 **Remember**
+
+- Indentation defines blocks — no curly braces needed
+- `range(start, stop, step)` generates sequences of integers
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Functions & Exceptions
+
+<div class="grid-2 gap-md mt-md">
+
+<div>
+
+<div class="card card-info pad-tight">
+
+#### ⚙️ **Functions**
+
+```python
+def greet(name):
+    return f"Hello, {name}!"
+print(greet("Alice"))
+```
+
+- Functions help organize code into reusable blocks
+- Use `return` to return a value from a function
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card card-warning pad-tight">
+
+#### 🛡️ **Exception Handling**
+
+```python
+try:
+    x = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+finally:
+    print("Execution completed")
+```
+
+- Use `try` and `except` to handle errors
+- `finally` block always executes
 
 </div>
 
@@ -325,7 +585,7 @@ evens = [x for x in range(10) if x % 2 == 0]
 hideInToc: true
 ---
 
-# Dictionaries
+# Modules, Imports & File Handling
 
 <div class="grid-2 gap-md mt-md">
 
@@ -333,32 +593,18 @@ hideInToc: true
 
 <div class="card card-primary pad-tight">
 
-### 📖 **Overview**
-
-- Dictionaries hold mutable mappings of hashable keys to values
-- Membership checks are fast: `"age" in person`
-- View objects `.keys()`, `.values()`, `.items()` reflect live data; cast to `list()` only when you need a snapshot
-
-</div>
-
-<div class="card card-info pad-tight mt-sm">
-
-##### 🛠️ Everyday Operations
+#### 📦 **Modules and Imports**
 
 ```python
-person = {"name": "Alice", "age": 25}
-person["city"] = "New York"      # Add key-value pair
-person["age"] += 1               # Update in place
+import math
+print(math.sqrt(16))  # 4.0
 
-# Safe lookup with default (returns "N/A" if missing)
-print(person.get("role", "N/A"))
-
-# Direct lookup (raises KeyError if missing!)
-# print(person["role"])  # KeyError: 'role'
-
-for key, value in person.items():
-    print(f"{key}: {value}")
+from random import randint
+print(randint(1, 10))  # Random number between 1 and 10
 ```
+
+- Use `import` to bring in external modules
+- `from module import function` imports specific functions
 
 </div>
 
@@ -368,34 +614,21 @@ for key, value in person.items():
 
 <div class="card card-secondary pad-tight">
 
-### 💡 **Tips**
-
-- Use `.get()`/`setdefault()` for optional keys; avoid `KeyError`s from direct indexing
-- Nest dictionaries (e.g., parsed JSON) to represent hierarchical structures
-
-</div>
-
-<div class="card card-accent pad-tight mt-sm">
-
-##### 🔄 Common Patterns
+#### 📂 **File Handling**
 
 ```python
-# Dictionary comprehension
-squares = {n: n**2 for n in range(5)}
+# Writing to a file
+with open("test.txt", "w") as file:
+    file.write("Hello, Python!")
 
-# Counting with a default
-# Stand-alone example of counting word frequencies
-
-text = "the cat chased the dog and the dog chased the cat"
-words = text.split()
-
-counts = {}  # empty dictionary
-
-for word in words:
-    counts[word] = counts.get(word, 0) + 1
-
-print(counts)
+# Reading from a file
+with open("test.txt", "r") as file:
+    content = file.read()
+    print(content)
 ```
+
+- Use `with open()` to handle file operations safely
+- `"r"` for reading, `"w"` for writing, `"a"` for appending
 
 </div>
 
@@ -472,146 +705,6 @@ import pandas as pd
 df   = pd.read_excel("data.xlsx", sheet_name=0)  # DataFrame
 rows = df.to_dict(orient="records")             # list[dict]
 ```
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Control Flow & Functions
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-<div class="card card-primary pad-tight">
-
-#### 🔀 **Conditional Statements**
-
-```python
-x = 10
-if x > 5:
-    print("x is greater than 5")
-elif x == 5:
-    print("x is 5")
-else:
-    print("x is less than 5")
-```
-
-</div>
-
-<div class="card card-secondary pad-tight mt-sm">
-
-#### 🔁 **Loops**
-
-```python
-# For loop
-for i in range(5):
-    print(i)  # Prints 0 to 4
-
-# While loop
-x = 0
-while x < 5:
-    print(x)
-    x += 1
-```
-
-</div>
-
-</div>
-
-<div>
-
-<div class="card card-info pad-tight">
-
-#### ⚙️ **Functions**
-
-```python
-def greet(name):
-    return f"Hello, {name}!"
-print(greet("Alice"))
-```
-
-- Functions help organize code into reusable blocks
-- Use `return` to return a value from a function
-
-</div>
-
-<div class="card card-warning pad-tight mt-sm">
-
-#### 🛡️ **Exception Handling**
-
-```python
-try:
-    x = 10 / 0
-except ZeroDivisionError:
-    print("Cannot divide by zero!")
-finally:
-    print("Execution completed")
-```
-
-- Use `try` and `except` to handle errors
-- `finally` block always executes
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Modules, Imports & File Handling
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-<div class="card card-primary pad-tight">
-
-#### 📦 **Modules and Imports**
-
-```python
-import math
-print(math.sqrt(16))  # 4.0
-
-from random import randint
-print(randint(1, 10))  # Random number between 1 and 10
-```
-
-- Use `import` to bring in external modules
-- `from module import function` imports specific functions
-
-</div>
-
-</div>
-
-<div>
-
-<div class="card card-secondary pad-tight">
-
-#### 📂 **File Handling**
-
-```python
-# Writing to a file
-with open("test.txt", "w") as file:
-    file.write("Hello, Python!")
-
-# Reading from a file
-with open("test.txt", "r") as file:
-    content = file.read()
-    print(content)
-```
-
-- Use `with open()` to handle file operations safely
-- `"r"` for reading, `"w"` for writing, `"a"` for appending
 
 </div>
 

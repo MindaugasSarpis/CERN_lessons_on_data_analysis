@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Data Visualization
 
@@ -100,31 +100,59 @@ A legend is a key component of a plot that explains the meaning of the data. It 
 
 ---
 hideInToc: true
-layout: image
-image: /data_vis_legend_error_1.png
-backgroundSize: contain
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Legend placement obscures the data — it overlaps with the plotted points
+
+</div>
+
+<img src="/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-image: /data_vis_legend_error_2.png
-backgroundSize: contain
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Too many legend entries make the chart unreadable — consider direct labeling or grouping
+
+</div>
+
+<img src="/data_vis_legend_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_legend_1.png
 ---
+
+# **Corrected**
+
+<div class="card card-success pad-compact mt-sm">
+
+✅ Legend placed outside the plot area — data is fully visible and the legend is easy to read
+
+</div>
+
+<img src="/data_vis_legend_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_legend_2.png
 ---
+
+# **Corrected**
+
+<div class="card card-success pad-compact mt-sm">
+
+✅ Clean legend with well-chosen colors and clear labels — each group is easily distinguishable
+
+</div>
+
+<img src="/data_vis_legend_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -160,21 +188,9 @@ Axes are the reference lines that define the coordinate system of the plot. They
 
 </div>
 
-<div class="card card-success pad-compact">
-
-🎨 Axes should be **consistent** with the overall design of the plot
-
-</div>
-
 <div class="card card-warning pad-compact">
 
 🔗 Axes should show the **relationship** between different variables in the data
-
-</div>
-
-<div class="card card-info pad-compact">
-
-📊 Axes should be used to **compare** different groups or categories within the data
 
 </div>
 
@@ -246,73 +262,143 @@ When your data represents quantities associated with categories, these are the g
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_error_1.png
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Bars do not start at zero — this exaggerates differences and misleads the viewer
+
+</div>
+
+<img src="/data_vis_bar_chart_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_1.png
 ---
+
+# **Corrected**
+
+<div class="card card-success pad-compact mt-sm">
+
+✅ Y-axis starts at zero — bar lengths accurately represent the data values
+
+</div>
+
+<img src="/data_vis_bar_chart_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_error_2.png
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Categories are unsorted — makes it hard to compare values or spot patterns
+
+</div>
+
+<img src="/data_vis_bar_chart_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_2.png
 ---
+
+# **Corrected**
+
+<div class="card card-success pad-compact mt-sm">
+
+✅ Bars sorted by value — trends and rankings are immediately visible
+
+</div>
+
+<img src="/data_vis_bar_chart_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_error_3.png
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Stacking makes individual group comparisons difficult — consider grouped bars instead
+
+</div>
+
+<img src="/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_stacked.png
 ---
+
+# Stacked Bar Charts
+
+<div class="card card-info pad-compact mt-sm">
+
+📊 Stacked bars work well for **part-to-whole** comparisons — each segment shows a proportion of the total
+
+</div>
+
+<img src="/data_vis_bar_chart_stacked.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_error_4.png
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Too many categories with similar colors — the chart becomes hard to decode
+
+</div>
+
+<img src="/data_vis_bar_chart_error_4.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_error_5.png
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ 3D effects distort perception — bar heights become ambiguous and comparisons unreliable
+
+</div>
+
+<img src="/data_vis_bar_chart_error_5.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_bar_chart_3.png
 ---
+
+# **Corrected**
+
+<div class="card card-success pad-compact mt-sm">
+
+✅ Clean 2D bars with distinct colors and clear labels — easy to read and compare
+
+</div>
+
+<img src="/data_vis_bar_chart_3.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_color_error.png
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Poor color choices — rainbow palettes can confuse meaning and are not accessible to colorblind viewers
+
+</div>
+
+<img src="/data_vis_color_error.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -379,10 +465,17 @@ image: /data_vis_hist_comp.png
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: contain
-image: /data_vis_hist_error.png
 ---
+
+# What's **Wrong?**
+
+<div class="card card-warning pad-compact mt-sm">
+
+⚠️ Bin width too large or too small — the distribution shape is distorted or obscured by noise
+
+</div>
+
+<img src="/data_vis_hist_error.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -402,6 +495,92 @@ image: /data_vis_hist_scientific_2.png
 hideInToc: true
 ---
 
+# More **Plot Types**
+
+<div class="card card-info pad-tight mt-sm">
+
+## 📈 **Beyond Bar Charts and Histograms**
+
+There are many more plot types used in data analysis. Here are a few you will encounter:
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary pad-compact">
+
+📈 **Line Plots** — Show trends over time or continuous variables
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+🔵 **Scatter Plots** — Reveal relationships between two variables
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+📦 **Box Plots** — Summarize distributions with median, quartiles, and outliers
+
+</div>
+
+</div>
+
+<div class="card card-success pad-tight mt-md">
+
+## 🔗 **Coming in Lecture 11**
+
+We will create scatter plots, line plots, box plots, and more **interactively** using Pandas and Matplotlib. You will learn to write Python code that generates publication-quality figures.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Accessibility** in Visualization
+
+<div class="card card-info pad-tight mt-sm">
+
+## 🎨 **Colorblind-Safe Palettes**
+
+Approximately 8% of men and 0.5% of women have some form of color vision deficiency. Your plots must be accessible to **all** readers.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-compact">
+
+✅ Use **colorblind-safe palettes** such as `viridis`, `cividis`, or `plasma` — they are perceptually uniform and distinguishable by colorblind viewers
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+🚫 Avoid **red-green** combinations — the most common form of color blindness confuses these two colors
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+🔲 Use **redundant encodings** — combine color with shape, pattern, or line style so information is not conveyed by color alone
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+🧪 **Test your plots** — tools like Color Oracle or Coblis can simulate how your figures look to colorblind viewers
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Key Takeaways
 
 <div class="grid-2 mt-md gap-md">
@@ -414,6 +593,7 @@ hideInToc: true
 - Axes must be clearly labeled with **units**
 - Legends should be **placed carefully** to not obscure data
 - Avoid chart junk — maximize the **data-to-ink ratio**
+- Use **colorblind-safe palettes** for accessibility
 
 </div>
 
@@ -421,11 +601,53 @@ hideInToc: true
 
 ## 🔗 **What Comes Next**
 
-- **L11**: Create these plots yourself with `matplotlib` and Pandas
+- **L11**: Create scatter, line, and box plots with `matplotlib` and Pandas
 - **L10**: Visualize fit results with residual plots
 - **L12**: Automate plot generation in reproducible workflows
 
 Good visualization is not decoration — it is **analysis**. A well-chosen plot reveals structure that statistics alone cannot.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Practice **Exercise**
+
+<div class="card card-info pad-tight mt-sm">
+
+## 🏋️ **Try It Yourself**
+
+Pick any dataset you find interesting (or use one from a previous lecture) and create the following visualizations:
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-compact">
+
+**1.** Create a **histogram** of a continuous variable — experiment with different bin widths and observe how the shape changes
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+**2.** Create a **bar chart** comparing categories — sort the bars, label the axes, and include units
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+**3.** Add a **title, axis labels, and a legend** to your plot — make sure someone unfamiliar with your data can understand the figure
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+**4.** **Critique** your own plot: Does the y-axis start at zero? Is the color palette accessible? Is the legend clear?
 
 </div>
 

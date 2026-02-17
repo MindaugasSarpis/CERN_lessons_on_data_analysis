@@ -29,9 +29,9 @@ python:
   suppressDeprecationWarnings: true
 ---
 
-# Dr. Mindaugas Šarpis
+# Dr. Mindaugas Sarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Data Fitting
 
@@ -40,7 +40,45 @@ hideInToc: true
 layout: quote
 ---
 
-# Data fitting is how we extract quantitative knowledge from measurements—turning noisy observations into precise parameter estimates with well-understood uncertainties.
+# Data fitting is how we extract quantitative knowledge from measurements---turning noisy observations into precise parameter estimates with well-understood uncertainties.
+
+---
+hideInToc: true
+---
+
+# Why Data Fitting?
+
+<div class="card card-info pad-tight mt-md">
+
+## **Motivation**
+
+Every quantitative science depends on extracting numbers from noisy measurements. Data fitting provides a principled framework for doing this.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## **In the Lab**
+
+- **Calibrating instruments** --- relating raw sensor readings to physical units
+- **Extracting physical constants** --- measuring particle masses, lifetimes, cross-sections
+- **Characterizing signals** --- finding peak positions, widths, amplitudes
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## **In Research**
+
+- **Testing hypotheses** --- does the data support a new theory?
+- **Quantifying uncertainties** --- how precisely do we know a result?
+- **Separating signal from background** --- finding rare processes in noisy data
+
+</div>
+
+</div>
 
 ---
 layout: section
@@ -99,11 +137,11 @@ hideInToc: true
 ```mermaid {scale: 0.9}
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 45}}}%%
 flowchart LR
-    Data["📊 Data<br/>(xᵢ, yᵢ)"]:::input --> Model["📐 Model<br/>f(x; θ)"]:::process
-    Model --> Fit["⚙️ Fit<br/>minimize χ²"]:::process
-    Fit --> Params["🎯 Parameters<br/>θ̂ ± σ"]:::output
-    Params --> Validate["✓ Validate<br/>residuals, χ²/dof"]:::check
-    Validate -->|Good| Report["📝 Report"]:::output
+    Data["Data<br/>(xi, yi)"]:::input --> Model["Model<br/>f(x; theta)"]:::process
+    Model --> Fit["Fit<br/>minimize chi2"]:::process
+    Fit --> Params["Parameters<br/>theta +/- sigma"]:::output
+    Params --> Validate["Validate<br/>residuals, chi2/dof"]:::check
+    Validate -->|Good| Report["Report"]:::output
     Validate -->|Bad| Model
 
     classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
@@ -226,11 +264,13 @@ Combines both approaches
 hideInToc: true
 ---
 
+# What Parameters Represent
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-tight">
 
-## **What parameters represent**
+## **Types of Parameters**
 
 Parameters $\theta$ are the unknowns we want to determine:
 
@@ -238,18 +278,35 @@ Parameters $\theta$ are the unknowns we want to determine:
 - **Shape descriptors**: width, amplitude, position
 - **Nuisance parameters**: background level, resolution
 
-Each parameter has:
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## **Each parameter has**
+
 - A true (unknown) value
 - An estimated value $\hat{\theta}$
 - An uncertainty $\sigma_{\hat{\theta}}$
 
 </div>
 
-<div class="card card-accent pad-tight">
+</div>
 
-## **Example: Gaussian + Exponential**
+---
+hideInToc: true
+---
+
+# Parameter Example: Gaussian + Exponential
+
+<div class="card card-accent pad-tight mt-md">
+
+## **Model**
 
 $$f(x) = A \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}} + N \cdot e^{-x/\lambda}$$
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
 
 | Parameter | Meaning |
 |-----------|---------|
@@ -258,8 +315,6 @@ $$f(x) = A \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}} + N \cdot e^{-x/\lambda}$$
 | $\sigma$ | Signal width (resolution) |
 | $N$ | Background normalization |
 | $\lambda$ | Background decay scale |
-
-</div>
 
 </div>
 
@@ -451,12 +506,16 @@ image: /covariance_matrix_1.png
 backgroundSize: contain
 ---
 
+Covariance matrix: diagonal elements give parameter variances, off-diagonal elements reveal correlations between parameters.
+
 ---
 hideInToc: true
 layout: image
 image: /covariance_matrix_2.png
 backgroundSize: contain
 ---
+
+Visualizing correlations: ellipses show joint confidence regions for pairs of parameters.
 
 ---
 hideInToc: true
@@ -505,9 +564,135 @@ errors = np.sqrt(np.diag(pcov))
 
 <div class="card card-accent pad-tight mt-md">
 
-Under the hood: uses Levenberg-Marquardt algorithm—a hybrid of gradient descent and Gauss-Newton methods.
+Under the hood: uses Levenberg-Marquardt algorithm---a hybrid of gradient descent and Gauss-Newton methods.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Interactive: Linear Fit
+
+<div class="card card-info pad-compact mt-md">
+
+Fit a straight line $y = mx + b$ to noisy data and extract the slope and intercept with uncertainties.
+
+</div>
+
+```python {monaco-run}
+# Generate noisy linear data
+np.random.seed(42)
+x = np.linspace(0, 10, 20)
+y_true = 2.5 * x + 1.0
+y = y_true + np.random.normal(0, 2.0, len(x))
+sigma = np.full_like(x, 2.0)
+
+# Define model and fit
+def linear(x, m, b):
+    return m * x + b
+
+popt, pcov = curve_fit(linear, x, y, sigma=sigma)
+errors = np.sqrt(np.diag(pcov))
+
+# Plot
+fig, (ax1, ax2) = plt.subplots(2, 1, height_ratios=[3, 1], figsize=(7, 4), sharex=True)
+ax1.errorbar(x, y, yerr=sigma, fmt='o', ms=4, label='Data')
+x_fit = np.linspace(0, 10, 100)
+ax1.plot(x_fit, linear(x_fit, *popt), 'r-', label=f'm={popt[0]:.2f}+-{errors[0]:.2f}, b={popt[1]:.2f}+-{errors[1]:.2f}')
+ax1.legend(fontsize=9); ax1.set_ylabel('y')
+residuals = y - linear(x, *popt)
+ax2.errorbar(x, residuals, yerr=sigma, fmt='o', ms=4)
+ax2.axhline(0, color='r', ls='--'); ax2.set_xlabel('x'); ax2.set_ylabel('Residuals')
+chi2 = np.sum((residuals / sigma)**2); dof = len(x) - 2
+fig.suptitle(f'Linear Fit | chi2/dof = {chi2:.1f}/{dof} = {chi2/dof:.2f}', fontsize=11)
+plt.tight_layout(); plt.show()
+```
+
+---
+hideInToc: true
+---
+
+# Interactive: Gaussian Fit
+
+<div class="card card-info pad-compact mt-md">
+
+Fit a Gaussian peak $A \cdot e^{-(x-\mu)^2/2\sigma^2}$ to simulated histogram data --- a common task in particle physics.
+
+</div>
+
+```python {monaco-run}
+# Generate Gaussian-distributed data as a histogram
+np.random.seed(7)
+data = np.concatenate([np.random.normal(5.0, 0.8, 500), np.random.uniform(0, 10, 200)])
+counts, edges = np.histogram(data, bins=40, range=(0, 10))
+centers = 0.5 * (edges[:-1] + edges[1:])
+mask = counts > 0
+x, y, yerr = centers[mask], counts[mask].astype(float), np.sqrt(counts[mask])
+
+# Signal + flat background model
+def gauss_bg(x, A, mu, sigma, bg):
+    return A * np.exp(-(x - mu)**2 / (2 * sigma**2)) + bg
+
+popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=yerr)
+errs = np.sqrt(np.diag(pcov))
+
+# Plot
+fig, (ax1, ax2) = plt.subplots(2, 1, height_ratios=[3, 1], figsize=(7, 4), sharex=True)
+ax1.errorbar(x, y, yerr=yerr, fmt='o', ms=3, label='Data')
+xf = np.linspace(0, 10, 200)
+ax1.plot(xf, gauss_bg(xf, *popt), 'r-', label=f'mu={popt[1]:.2f}+-{errs[1]:.2f}, sig={popt[2]:.2f}+-{errs[2]:.2f}')
+ax1.legend(fontsize=9); ax1.set_ylabel('Counts')
+res = y - gauss_bg(x, *popt)
+ax2.errorbar(x, res / yerr, yerr=1, fmt='o', ms=3)
+ax2.axhline(0, color='r', ls='--'); ax2.set_xlabel('x'); ax2.set_ylabel('Pull')
+chi2 = np.sum((res / yerr)**2); dof = len(x) - 4
+fig.suptitle(f'Gaussian + Background Fit | chi2/dof = {chi2:.1f}/{dof} = {chi2/dof:.2f}', fontsize=11)
+plt.tight_layout(); plt.show()
+```
+
+---
+hideInToc: true
+---
+
+# Interactive: Exponential Decay Fit
+
+<div class="card card-info pad-compact mt-md">
+
+Fit an exponential decay $N_0 \cdot e^{-t/\tau}$ to extract the lifetime $\tau$ --- a key measurement in nuclear and particle physics.
+
+</div>
+
+```python {monaco-run}
+# Simulate radioactive decay counts
+np.random.seed(13)
+t = np.linspace(0.5, 8, 25)
+N_true = 200 * np.exp(-t / 2.5)
+N = np.random.poisson(N_true).astype(float)
+mask = N > 0
+t, N = t[mask], N[mask]
+sigma_N = np.sqrt(N)
+
+# Model and fit
+def decay(t, N0, tau):
+    return N0 * np.exp(-t / tau)
+
+popt, pcov = curve_fit(decay, t, N, p0=[150, 2], sigma=sigma_N)
+errs = np.sqrt(np.diag(pcov))
+
+# Plot
+fig, (ax1, ax2) = plt.subplots(2, 1, height_ratios=[3, 1], figsize=(7, 4), sharex=True)
+ax1.errorbar(t, N, yerr=sigma_N, fmt='o', ms=4, label='Data')
+tf = np.linspace(0.5, 8, 200)
+ax1.plot(tf, decay(tf, *popt), 'r-', label=f'N0={popt[0]:.1f}+-{errs[0]:.1f}, tau={popt[1]:.2f}+-{errs[1]:.2f}')
+ax1.legend(fontsize=9); ax1.set_ylabel('Counts')
+res = N - decay(t, *popt)
+ax2.errorbar(t, res / sigma_N, yerr=1, fmt='o', ms=4)
+ax2.axhline(0, color='r', ls='--'); ax2.set_xlabel('Time'); ax2.set_ylabel('Pull')
+chi2 = np.sum((res / sigma_N)**2); dof = len(t) - 2
+fig.suptitle(f'Exponential Decay Fit | chi2/dof = {chi2:.1f}/{dof} = {chi2/dof:.2f}', fontsize=11)
+plt.tight_layout(); plt.show()
+```
 
 ---
 hideInToc: true
@@ -738,7 +923,7 @@ layout: section
 hideInToc: true
 ---
 
-# Goodness-of-Fit: **χ²**
+# Goodness-of-Fit: **chi-squared**
 
 ---
 hideInToc: true
@@ -752,7 +937,7 @@ hideInToc: true
 
 $$\chi^2 = \sum_{i=1}^{n} \frac{(y_i - f(x_i; \hat{\theta}))^2}{\sigma_i^2}$$
 
-Sum of squared standardized residuals—measures total disagreement weighted by uncertainties.
+Sum of squared standardized residuals---measures total disagreement weighted by uncertainties.
 
 </div>
 
@@ -804,7 +989,7 @@ The reduced chi-squared should be **approximately 1** for a good fit.
 
 <div class="card card-success pad-tight">
 
-### ✅ **χ²/dof ≈ 1**
+### ✅ **chi2/dof ≈ 1**
 
 Good fit
 
@@ -814,7 +999,7 @@ Model describes data well, uncertainties are correct
 
 <div class="card card-warning pad-tight">
 
-### ⚠️ **χ²/dof >> 1**
+### ⚠️ **chi2/dof >> 1**
 
 Poor fit
 
@@ -824,7 +1009,7 @@ Model missing structure, or uncertainties underestimated
 
 <div class="card card-accent pad-tight">
 
-### 🔍 **χ²/dof << 1**
+### 🔍 **chi2/dof << 1**
 
 Suspicious
 
@@ -838,13 +1023,11 @@ Uncertainties overestimated, or too many parameters
 hideInToc: true
 ---
 
-# Interpreting χ² Results
+# Interpreting chi-squared: Large Values
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary pad-tight mt-md">
 
-<div class="card card-primary pad-tight">
-
-## **When χ²/dof is large**
+## **When chi2/dof is large**
 
 Possible causes:
 1. Wrong model (missing terms)
@@ -856,9 +1039,15 @@ Possible causes:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+---
+hideInToc: true
+---
 
-## **When χ²/dof is small**
+# Interpreting chi-squared: Small Values
+
+<div class="card card-secondary pad-tight mt-md">
+
+## **When chi2/dof is small**
 
 Possible causes:
 1. Uncertainties overestimated
@@ -869,11 +1058,9 @@ Possible causes:
 
 </div>
 
-</div>
-
 <div class="card card-warning pad-tight mt-md">
 
-**Important**: χ² alone doesn't tell you the model is correct—only that residuals are consistent with assumed uncertainties. Always combine with visual inspection!
+**Important**: chi-squared alone doesn't tell you the model is correct---only that residuals are consistent with assumed uncertainties. Always combine with visual inspection!
 
 </div>
 
@@ -881,13 +1068,13 @@ Possible causes:
 hideInToc: true
 ---
 
-# p-value from χ²
+# p-value from chi-squared
 
 <div class="card card-info pad-tight mt-md">
 
 ## **Statistical Test**
 
-The p-value answers: "If the model is correct, what's the probability of getting a χ² this large or larger?"
+The p-value answers: "If the model is correct, what's the probability of getting a chi-squared this large or larger?"
 
 $$p = P(\chi^2 > \chi^2_{\text{obs}} \mid H_0)$$
 
@@ -903,7 +1090,7 @@ $$p = P(\chi^2 > \chi^2_{\text{obs}} \mid H_0)$$
 - $p < 0.05$: model may be inadequate
 - $p \ll 0.001$: strong evidence of misfit
 
-**But**: p-values are often misinterpreted. Focus on χ²/dof and residuals.
+**But**: p-values are often misinterpreted. Focus on chi2/dof and residuals.
 
 </div>
 
@@ -934,11 +1121,9 @@ hideInToc: true
 hideInToc: true
 ---
 
-# When Fits Go Wrong
+# When Fits Go Wrong: Convergence Failure
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning pad-tight">
+<div class="card card-warning pad-tight mt-md">
 
 ## **Convergence Failure**
 
@@ -956,7 +1141,13 @@ Fit doesn't converge or gives errors
 
 </div>
 
-<div class="card card-warning pad-tight">
+---
+hideInToc: true
+---
+
+# When Fits Go Wrong: Unreasonable Results
+
+<div class="card card-warning pad-tight mt-md">
 
 ## **Unreasonable Results**
 
@@ -971,8 +1162,6 @@ Parameters have wrong sign or magnitude
 - Multiple starting points
 - Reparameterize model
 - Simplify or change model
-
-</div>
 
 </div>
 
@@ -1056,7 +1245,7 @@ When comparing nested models (e.g., with/without a component), use:
 
 $$\Delta \chi^2 = \chi^2_{\text{simple}} - \chi^2_{\text{complex}}$$
 
-Compare to χ² distribution with Δdof degrees of freedom.
+Compare to chi-squared distribution with delta-dof degrees of freedom.
 
 Large $\Delta \chi^2$ → complex model significantly better
 
@@ -1114,8 +1303,8 @@ hideInToc: true
 
 1. **Check convergence** - did fit succeed?
 2. **Examine residuals** - patterns = problems
-3. **Calculate χ²/dof** - is fit quality acceptable?
-4. **Report results** - parameters ± uncertainties
+3. **Calculate chi2/dof** - is fit quality acceptable?
+4. **Report results** - parameters with uncertainties
 5. **Document** - make it reproducible
 
 </div>
@@ -1138,9 +1327,7 @@ hideInToc: true
 - Use physically motivated models
 - Report uncertainties with results
 - Check residuals for patterns
-- Calculate and report χ²/dof
-- Document your analysis
-- Use multiple starting points
+- Calculate and report chi2/dof
 
 </div>
 
@@ -1153,8 +1340,36 @@ hideInToc: true
 - Report parameters without uncertainties
 - Skip residual analysis
 - Cherry-pick "good" fits
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# More Do's and Don'ts
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success pad-tight">
+
+## ✅ **Also Do**
+
+- Document your analysis fully
+- Use multiple starting points
+- Consider systematic uncertainties
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## ❌ **Also Don't**
+
 - Overfit with too many parameters
 - Extrapolate far beyond data range
+- Ignore the covariance matrix
 
 </div>
 
@@ -1187,12 +1402,10 @@ The Higgs boson was discovered using exactly these fitting methods.
 
 ## **The Analysis**
 
-1. Data: millions of LHC collisions
-2. Signal: Higgs → γγ (two photons)
-3. Background: smooth combinatorics
-4. Model: Gaussian + polynomial
-5. Fit: extract mass and signal yield
-6. Result: 5σ significance at ~125 GeV
+- Signal model: Gaussian peak at ~125 GeV
+- Background: smooth polynomial
+- Fit extracts mass and signal yield
+- Result: 5 sigma significance
 
 </div>
 
@@ -1200,13 +1413,10 @@ The Higgs boson was discovered using exactly these fitting methods.
 
 ## **What They Did**
 
-- χ² minimization (weighted)
-- Systematic uncertainty estimation
-- Model comparison tests
+- chi-squared minimization (weighted)
 - Background-only hypothesis tests
 - Signal significance calculation
-
-**Same concepts, larger scale!**
+- Systematic uncertainty estimation
 
 </div>
 
@@ -1245,7 +1455,7 @@ hideInToc: true
 ### 🌍 **Climate**
 
 - Temperature trends
-- CO₂ models
+- CO2 models
 - Sea level rise
 
 </div>
@@ -1275,7 +1485,7 @@ hideInToc: true
 ### 🤖 **Machine Learning**
 
 Same principles!
-- Cost function = χ²
+- Cost function = chi2
 - Parameters = weights
 - Optimization = training
 
@@ -1345,7 +1555,7 @@ Choose based on physics, not just fit quality
 
 ### 🎯 **Fitting**
 
-Find parameters that minimize disagreement (χ²)
+Find parameters that minimize disagreement (chi2)
 
 Get uncertainties from covariance matrix
 
@@ -1355,9 +1565,9 @@ Get uncertainties from covariance matrix
 
 ### ✓ **Validation**
 
-Always check residuals and χ²/dof
+Always check residuals and chi2/dof
 
-A good fit isn't enough—must make physical sense
+A good fit isn't enough---must make physical sense
 
 </div>
 
@@ -1367,7 +1577,6 @@ A good fit isn't enough—must make physical sense
 
 ## **The Big Picture**
 
-Fitting connects theory to data. It's how we extract quantitative knowledge from measurements—used everywhere from particle physics to machine learning.
+Fitting connects theory to data. It's how we extract quantitative knowledge from measurements---used everywhere from particle physics to machine learning.
 
 </div>
-

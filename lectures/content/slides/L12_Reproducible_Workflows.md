@@ -17,7 +17,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Reproducible Workflows & Automation
 
@@ -172,7 +172,6 @@ hideInToc: true
 - **Data**: Raw vs processed (never modify raw!)
 - **Code**: Reusable functions vs scripts
 - **Config**: Parameters separate from code
-- **Results**: Reproducible outputs
 
 </div>
 
@@ -180,8 +179,7 @@ hideInToc: true
 
 ## **2. Clear Dependencies**
 
-- Document required packages
-- Specify versions
+- Document required packages with versions
 - Use virtual environments
 - Pin critical dependencies
 
@@ -194,7 +192,6 @@ hideInToc: true
 - README explains what & how
 - Code comments explain why
 - Docstrings for functions
-- Config files are readable
 
 </div>
 
@@ -205,7 +202,6 @@ hideInToc: true
 - Scripts run without intervention
 - Results are reproducible
 - Tests validate correctness
-- CI/CD catches errors early
 
 </div>
 
@@ -364,16 +360,10 @@ Dozens of parameters → use configuration files instead!
 
 ```bash
 python analyze.py \
-  --input data.csv \
-  --bins 50 \
-  --range 0 15 \
-  --signal-mean 5.0 \
-  --signal-sigma 1.0 \
-  --bg-scale 2.0 \
-  --fit-method mle \
-  --output results.png \
-  --verbose \
-  --save-params params.json
+  --input data.csv --bins 50 \
+  --signal-mean 5.0 --bg-scale 2.0 \
+  --fit-method mle --output results.png \
+  --verbose --save-params params.json
 ```
 
 Unreadable, error-prone!
@@ -389,18 +379,12 @@ python analyze.py --config analysis_config.yaml
 ```
 
 ```yaml
-# analysis_config.yaml
 input: data.csv
-output: results.png
 bins: 50
-range: [0, 15]
-signal:
-  mean: 5.0
-  sigma: 1.0
-background:
-  scale: 2.0
+signal: { mean: 5.0, sigma: 1.0 }
+background: { scale: 2.0 }
 fit_method: mle
-verbose: true
+output: results.png
 ```
 
 </div>
@@ -453,12 +437,7 @@ model:
 
 fitting:
   method: "mle"
-  max_iterations: 1000
   tolerance: 1e-6
-
-output:
-  save_plot: true
-  verbose: true
 ```
 
 </div>
@@ -669,8 +648,8 @@ conda deactivate
 
 **Pros**: Handles non-Python deps (C libs, etc.), popular in science
 
-**Cons**: Heavier, slower 
-  
+**Cons**: Heavier, slower
+
   * Use `mamba` if too slow.
 
 </div>
@@ -977,6 +956,8 @@ Like Make, but designed for data science pipelines with Python syntax and extra 
 
 </div>
 
+<div>
+
 <div class="card card-success pad-compact">
 <strong>Installation</strong>
 
@@ -988,6 +969,14 @@ Like Make, but designed for data science pipelines with Python syntax and extra 
 
 <code>snakemake --cores 4</code><br>
 <code>snakemake -n</code> (dry run)
+</div>
+
+<div class="card card-accent pad-compact mt-sm">
+
+**Recommendation**: Start with **Make** for simple pipelines. Graduate to **Snakemake** when you need wildcards, cluster support, or conda integration.
+
+</div>
+
 </div>
 
 </div>
@@ -1197,19 +1186,26 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Reproducible Analysis Checklist
+# Reproducible Analysis Checklist (1/2)
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-success pad-tight mt-md">
 
-<div class="card card-success pad-tight">
+## ✅ **Essential Practices**
 
-## ✅ **Essential**
+<div class="grid-2 mt-sm gap-md">
+
+<div>
 
 - [ ]  Use version control (Git)
 - [ ]  Document dependencies (requirements.txt)
 - [ ]  Use virtual environments
 - [ ]  Write README with setup instructions
 - [ ]  Separate raw and processed data
+
+</div>
+
+<div>
+
 - [ ]  Use config files for parameters
 - [ ]  Never commit generated files
 - [ ]  Add .gitignore
@@ -1217,19 +1213,40 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+</div>
 
-## 🚀 **Advanced**
+</div>
+
+---
+hideInToc: true
+---
+
+# Reproducible Analysis Checklist (2/2)
+
+<div class="card card-info pad-tight mt-md">
+
+## 🚀 **Advanced Practices**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div>
 
 - [ ]  Modular code (functions/classes)
 - [ ]  Command-line arguments (argparse)
-- [ ]  Automated pipeline (snakemake)
+- [ ]  Automated pipeline (Make/Snakemake)
 - [ ]  Unit tests (pytest)
 - [ ]  CI/CD (GitHub Actions)
+
+</div>
+
+<div>
+
 - [ ]  Docker container (optional)
 - [ ]  Logging instead of print()
 - [ ]  Code style checking (black, ruff)
 - [ ]  Documentation (Sphinx)
+
+</div>
 
 </div>
 
@@ -1484,18 +1501,14 @@ hideInToc: true
 ```text
 analysis_final_FINAL_v3.ipynb
 data.csv
-data_backup.csv
-fit_attempt1.py
 fit_attempt2_working.py
 plot_results_old.py
-results_oct15.png
 results_oct22_updated.png
 untitled.py
 ```
 
 - Unclear what to run
 - Can't reproduce results
-- No documentation
 
 </div>
 
@@ -1513,9 +1526,6 @@ my_analysis/
 │   ├── 1_preprocess.py
 │   ├── 2_fit.py
 │   └── 3_plot.py
-├── src/fitting.py
-├── tests/test_fitting.py
-└── .github/workflows/test.yml
 ```
 
 - Clear workflow (`make all`)
@@ -1627,14 +1637,77 @@ hideInToc: true
 
 ---
 hideInToc: true
-layout: quote
 ---
 
-# Start small. Don't try to implement everything at once. Add one improvement per project: argparse this week, Makefile next week, tests the following. Incrementally build good habits.
+# What You've Learned: Course Overview
+
+<div class="grid-3 mt-sm gap-md" style="font-size: 0.72em;">
+
+<div class="card card-primary pad-compact">
+
+**Computing Foundations** (L1--L3)
+- Binary, memory, floating-point
+- Terminal, shell, file systems
+- How computers execute code
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+**Python Programming** (L4--L5)
+- Variables, types, control flow
+- Functions, modules, OOP basics
+- Dictionaries, list comprehensions
+
+</div>
+
+<div class="card card-info pad-compact">
+
+**NumPy & Pandas** (L6)
+- Array operations, broadcasting
+- DataFrames, filtering, groupby
+- Efficient numerical computing
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+**Visualization** (L7)
+- Matplotlib, histograms, scatter
+- Styling, subplots, annotations
+- Publication-quality figures
+
+</div>
+
+<div class="card card-success pad-compact">
+
+**Version Control** (L8)
+- Git: commits, branches, merges
+- GitHub: PRs, collaboration
+- Resolving merge conflicts
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+**Statistics & Fitting** (L9--L11)
+- Probability distributions, CLT
+- Hypothesis testing, p-values
+- Chi-squared, ML fits, uncertainties
+
+</div>
+
+</div>
+
+<div class="card card-primary pad-compact mt-sm">
+
+**Reproducible Workflows** (L12) -- Everything today: config files, environments, Make/Snakemake, CI/CD
+
+</div>
 
 ---
 hideInToc: true
 layout: quote
 ---
 
-# Reproducibility is not a burden—it's a superpower. The time you invest in proper workflows pays back tenfold in reliability, speed, and scientific impact.
+# Start small. Don't try to implement everything at once. Add one improvement per project: argparse this week, Makefile next week, tests the following. Incrementally build good habits.

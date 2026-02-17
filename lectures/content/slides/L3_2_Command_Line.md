@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Command Line Interfaces
 
@@ -64,7 +64,7 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary pad-compact">
 
 ## ⚡ **Speed**
 
@@ -72,7 +72,7 @@ Execute complex workflows faster than with a mouse
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary pad-compact">
 
 ## 🔄 **Automation**
 
@@ -80,7 +80,7 @@ Script repetitive steps and share them openly
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent pad-compact">
 
 ## 🌐 **Remote Work**
 
@@ -88,19 +88,11 @@ Manage servers and clusters without a GUI
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info pad-compact">
 
-## 📝 **Transparency**
+## 📝 **Transparency & Composability**
 
-Commands document exactly what happened
-
-</div>
-
-<div class="card card-success pad-tight">
-
-## 🔗 **Composability**
-
-Small tools can be chained into powerful pipelines
+Commands document exactly what happened — and small tools can be chained into powerful pipelines
 
 </div>
 
@@ -254,7 +246,7 @@ Select-String "analysis" *.txt
 
 ```bash
 cat README.md
-rg "analysis" *.txt
+grep "analysis" *.txt
 ```
 
 </div>
@@ -284,9 +276,9 @@ hideInToc: true
 ## 🪟 **PowerShell**
 
 ```bash
+New-Item project -ItemType Directory
 New-Item notes.txt -ItemType File
 Add-Content notes.txt "Result: 42"
-notepad notes.txt
 ```
 
 </div>
@@ -296,9 +288,9 @@ notepad notes.txt
 ## 🐧 **macOS & Linux**
 
 ```bash
+mkdir project
 touch notes.txt
 echo "Result: 42" >> notes.txt
-nano notes.txt
 ```
 
 </div>
@@ -312,6 +304,53 @@ nano notes.txt
 - Pair the CLI with `git` to track work precisely
 - Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
 - Script file creation to keep project structure consistent
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Pipes and Redirection
+
+<div class="card card-primary pad-tight mt-md">
+
+## 🔗 **The Pipe Operator `|`**
+
+The pipe sends the **output** of one command as **input** to another, letting you chain tools together.
+
+```bash
+cat data.csv | grep "error"       # filter lines containing "error"
+ls -l | sort -k5 -n               # list files sorted by size
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary pad-tight">
+
+## 📤 **Overwrite with `>`**
+
+Writes command output to a file, **replacing** any existing content.
+
+```bash
+echo "Hello" > notes.txt
+```
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📎 **Append with `>>`**
+
+Adds command output to the **end** of a file without erasing it.
+
+```bash
+echo "Another line" >> notes.txt
+```
+
+</div>
 
 </div>
 

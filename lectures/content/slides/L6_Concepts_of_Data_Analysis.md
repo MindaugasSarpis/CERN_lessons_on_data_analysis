@@ -17,7 +17,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Lessons on **Data Analysis** from **CERN**
+# Data analysis and Artificial Intelligence
 
 ## Concepts of Data Analysis
 
@@ -368,85 +368,120 @@ Trust is earned through **transparency**, **reproducibility**, and **storytellin
 hideInToc: true
 ---
 
-# End-to-end Lifecycle
+# Thought Exercise — Your Data World
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🤔 **Think** (1 min)
+
+Pick a project, hobby, or job you know well. What data gets generated there? Who uses it, and for what decisions?
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💬 **Discuss** (3 min)
+
+Share with a neighbour: What is one decision that could be improved if the data were better collected, stored, or analysed?
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-tight mt-md">
+
+## 🎯 **Goal**
+
+Connect the abstract lifecycle ideas to your own experience before we see the full framework.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# End-to-end Lifecycle (1/2)
+
+<div class="note-text mt-sm">
+
+Here is the detailed nine-stage view of the analysis lifecycle. A simplified six-phase version appears later in this lecture.
+
+</div>
 
 <div class="grid-3 gap-md mt-md">
 
 <div class="card card-primary pad-compact">
 
 ### 🎯 **Problem Framing**
-- Hypotheses
-- Success Metrics
+Hypotheses & success metrics
 
 </div>
 
 <div class="card card-secondary pad-compact">
 
 ### 🔍 **Data Discovery**
-- Access
-- Quality Assessment
+Access & quality assessment
 
 </div>
 
 <div class="card card-accent pad-compact">
 
 ### 🧹 **Preparation**
-- Cleaning
-- Joining
-- Feature/Variable Selection
+Cleaning, joining, feature selection
 
 </div>
 
 <div class="card card-info pad-compact">
 
 ### 📊 **Exploration**
-- Profiling
-- Visualization
-- Sanity Checks
+Profiling, visualization, sanity checks
 
 </div>
 
 <div class="card card-success pad-compact">
 
 ### 🧪 **Modeling/Inference**
-- Statistical Tests
-- Machine Learning
+Statistical tests & machine learning
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# End-to-end Lifecycle (2/2)
+
+<div class="grid-3 gap-md mt-md">
 
 <div class="card card-warning pad-compact">
 
 ### ✅ **Evaluation**
-- Validation
-- Uncertainty
-- Sensitivity
+Validation, uncertainty, sensitivity
 
 </div>
 
 <div class="card card-primary pad-compact">
 
 ### 📢 **Communication**
-- Narrative
-- Visuals
-- Decisions
+Narrative, visuals, decisions
 
 </div>
 
 <div class="card card-secondary pad-compact">
 
 ### ⚙️ **Operationalization**
-- Notebooks
-- Scripts
-- Pipelines
+Notebooks, scripts, pipelines
 
 </div>
 
 <div class="card card-accent pad-compact">
 
 ### 📡 **Monitoring**
-- Drift
-- Quality
-- Impact
+Drift, quality, impact
 
 </div>
 
@@ -605,7 +640,7 @@ hideInToc: true
 
 <div class="card card-warning pad-tight">
 
-## ⚠️ Beware p-hacking; pre-register when possible
+## ⚠️ Beware p-hacking (selectively analyzing data to get significant results); pre-register (publicly declare your analysis plan before seeing results) when possible
 
 </div>
 
@@ -666,6 +701,12 @@ hideInToc: true
 ## 📖 Tell the story: title as takeaway, caption as why
 
 </div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+📌 Visualization is covered in much greater depth in **Lecture 7**.
 
 </div>
 
@@ -1538,7 +1579,7 @@ hideInToc: true
 
 <div class="card card-warning pad-tight">
 
-## 🧠 Confirmation bias, p-hacking, and multiple testing
+## 🧠 Confirmation bias, p-hacking (see earlier definition), and multiple testing
 
 </div>
 
@@ -1638,6 +1679,16 @@ hideInToc: true
 
 # Lifecycle Recap — Six Key Phases
 
+<div class="card card-info pad-compact mt-sm">
+
+<div class="note-text">
+
+Earlier we saw a detailed 9-stage lifecycle. Here is the same idea distilled into 6 high-level phases — easier to remember and apply day-to-day. The detailed stages nest inside these phases.
+
+</div>
+
+</div>
+
 <div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary pad-compact">
@@ -1675,12 +1726,6 @@ hideInToc: true
 📢 **Share**
 
 </div>
-
-</div>
-
-<div class="note-text mt-md">
-
-Each phase maps to the detailed lifecycle stages we covered earlier. The next slides focus on how these phases connect through governance and iteration.
 
 </div>
 
@@ -1793,6 +1838,8 @@ hideInToc: true
 
 # Steps of Data **Analysis**
 
+Now we walk through each step in detail — these map onto the lifecycle phases above, but focus on the practical "how"
+
 ---
 hideInToc: true
 ---
@@ -1843,7 +1890,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 2. **Collect Data**
+# 2. **Collect Data** — Key Questions
 
 <div class="stack-tight mt-md">
 
@@ -1861,7 +1908,7 @@ hideInToc: true
 
 <div class="card card-accent pad-tight">
 
-## 📁 What data formats should you chose?
+## 📁 What data formats should you choose?
 
 </div>
 
@@ -1871,9 +1918,19 @@ hideInToc: true
 
 </div>
 
+</div>
+
+---
+hideInToc: true
+---
+
+# 2. **Collect Data** — Best Practices
+
+<div class="stack-tight mt-md">
+
 <div class="card card-warning pad-tight">
 
-## ⚙️ Can you collect the data?
+## ⚙️ Can you collect the data? Assess feasibility early
 
 </div>
 
@@ -2038,6 +2095,16 @@ hideInToc: true
 <div class="card card-info pad-tight">
 
 ## ✏️ Iterate quickly with sketches before polishing
+
+</div>
+
+</div>
+
+<div class="card card-warning pad-compact mt-md">
+
+<div class="note-text">
+
+#### 📌 We'll dive deep into visualization techniques, chart types, and storytelling with data in **Lecture 7**
 
 </div>
 
@@ -2843,7 +2910,7 @@ hideInToc: true
 
 <div class="card card-accent pad-tight">
 
-## 🔗 **F3.** **Metadata** clearly and explicitly **include the identifier** of the data they describe
+## 🔗 **F3.** Metadata explicitly **include the identifier** of the data they describe
 
 </div>
 
@@ -2855,13 +2922,25 @@ hideInToc: true
 
 </div>
 
+---
+hideInToc: true
+---
+
+# What is **Metadata**?
+
 <div class="card card-warning pad-tight mt-md">
 
-<div class="note-text">
+## 📋 **Metadata** = data about data
 
-#### What's metadata?
+Metadata describes the who, what, when, where, how, and why of a dataset. Examples: column names and types, units, collection date, author, license, provenance, and schema version.
 
 </div>
+
+<div class="card card-info pad-tight mt-md">
+
+## 🔍 **Why it matters for FAIR**
+
+Without rich metadata, datasets cannot be found, understood, or reused. Machine-readable metadata enables automated discovery and integration across systems.
 
 </div>
 
