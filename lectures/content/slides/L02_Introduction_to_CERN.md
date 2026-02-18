@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Data analysis and Artificial Intelligence
+# Data Analysis and Artificial Intelligence
 
 ## Introduction to CERN
 
@@ -25,23 +25,8 @@ hideInToc: true
 layout: quote
 ---
 
-# Not only is the Universe stranger than we think, it is stranger than we **can** think. — Werner Heisenberg
-
----
-hideInToc: true
----
-
-# Motivation
-
-- ## Understanding **where** modern physics happens
-
-- ## Learning **why** massive data analysis is needed
-
-- ## Seeing how CERN's tools **changed the world**
-
-- ## Connecting particle physics to **your future skills**
-
-#### This lecture introduces the laboratory whose challenges shaped the tools we will learn in this course
+# Not only is the Universe stranger than we think, it is stranger than we **can** think. 
+Werner Heisenberg
 
 ---
 layout: section
@@ -91,13 +76,6 @@ hideInToc: true
 </div>
 
 ---
-layout: section
-hideInToc: true
----
-
-# The Large Hadron **Collider**
-
----
 hideInToc: true
 ---
 
@@ -107,10 +85,10 @@ hideInToc: true
 
 ## ⚙️ **The Machine**
 
-- A **27 km** circumference ring buried **100 m** underground
+- A **27 km** circumference ring situated **100 m** underground
 - Accelerates protons to **99.9999991%** the speed of light
 - Collides particles **~1 billion times per second**
-- Operating temperature: **1.9 K** (colder than outer space)
+- Operating temperature: **1.9 K** (~ -271.1°C) (colder than outer space)
 
 </div>
 
@@ -138,13 +116,6 @@ Nobel Prize in Physics 2013
 </div>
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Data at **CERN**
 
 ---
 hideInToc: true
@@ -178,20 +149,11 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent pad-compact mt-md">
 
-## 💾 **Data Pipeline**
-
-Raw detector signals &#8594; Event reconstruction &#8594; Data filtering (triggers) &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
+💾 **Data Pipeline:** Raw detector signals &#8594; Event reconstruction &#8594; Data filtering (triggers) &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# CERN's Impact **Beyond Physics**
 
 ---
 hideInToc: true
@@ -236,10 +198,5 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 </div>
 
 ---
-hideInToc: true
-layout: end
----
 
-# Questions?
-
-## Next lecture: **Crash Course on Computer Science**
+<VideoPlayer src="LHCb.mp4" fallback="https://example.com/LHCb.mp4"  autoplay loop/>

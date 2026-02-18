@@ -31,7 +31,7 @@ python:
 
 # Dr. Mindaugas Sarpis
 
-# Data analysis and Artificial Intelligence
+# Data Analysis and Artificial Intelligence
 
 ## Data Fitting
 

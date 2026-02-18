@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Data analysis and Artificial Intelligence
+# Data Analysis and Artificial Intelligence
 
 ## Markdown
 

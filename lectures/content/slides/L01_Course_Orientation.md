@@ -16,7 +16,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Data analysis and Artificial Intelligence
+# Data Analysis and Artificial Intelligence
 
 ## Course Orientation and Motivation
 
@@ -57,67 +57,17 @@ and what needs to be understood in detail.
 - **Case Studies** — real-world examples
 
 It is very important to practice throughout the course. Using the tools and
-concepts on your own projects is the best way to learn. 
+concepts on your own projects is the best way to learn.
 </div>
 
 </div>
 
----
-hideInToc: true
----
+<div class="card card-info pad-compact mt-md" style="text-align: center;">
 
-# **Schedule**
-
-<div class="text-sm">
-
-|  | Date | Topic | # | Date | Topic |
-| --- | --- | --- | --- | --- | --- |
-| L1 | Sep 2 | Course Orientation | L2 | Sep 9 | Introduction to CERN |
-| L3 | Sep 16 | CS, Files, CLI, Markdown | | ~~Sep 23~~ | |
-| L4 | Sep 30 | Computing Infrastructure | L5 | Oct 7 | Python |
-| L6 | Oct 14 | Data Analysis Concepts | L7 | Oct 21 | Data Visualisation |
-| L8 | Oct 28 | Version Control | L9 | Nov 4 | Probability & Statistics |
-| L10 | Nov 11 | Data Fitting | L11 | Nov 18 | NumPy, Pandas & Real Data |
-| L12 | Nov 25 | Reproducible Workflows | | Dec 2 | Projects |
-| | Dec 9 | Projects | | Dec 16 | Projects |
-| | ~~Dec 23~~ | | | | |
+⏱️ **48 hours** contact &nbsp;·&nbsp; **212 hours** self study
 
 </div>
 
-
----
-hideInToc: true
----
-
-# **Grading Structure**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-warning pad-tight">
-
-## 📝 **20%**
-
-Quiz 1 (Data Analysis)
-
-</div>
-
-<div class="card card-warning pad-tight">
-
-## 📝 **20%**
-
-Quiz 2 (AI)
-
-</div>
-
-<div class="card card-success pad-tight">
-
-## 🎯 **60%**
-
-Final Project
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -154,37 +104,6 @@ hideInToc: true
 <div class="card card-info pad-compact">
 
 🤝 Work together and practice **problem solving**
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Project Details**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary pad-tight">
-
-## 📋 **Requirements**
-
-- Include elements of data analysis and/or automation
-- Use good practices and tools
-- May be related to your field of study/current work
-- Can focus on a specific tool/method/algorithm or a broader workflow
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 📦 **Deliverables**
-
-- Codebase made available on **GitHub**
-- Project written up in a **one-page report**
-- Final **presentation** at the end of the course (graded on the spot)
 
 </div>
 
@@ -247,26 +166,146 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-compact">
-
-📈 Crash course on statistics
-
-</div>
-
-<div class="card card-success pad-compact">
-
-💡 Ideas for projects
-
-</div>
-
 </div>
 
 ---
-layout: section
 hideInToc: true
 ---
 
-# Goals of the **Course**
+# **Grading Structure**
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 3fr; gap: 0.75rem;" class="mt-md">
+
+<div class="card card-warning pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+
+## 📝 **20%**
+
+Quiz 1 (Data Analysis)
+
+</div>
+
+<div class="card card-warning pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+
+## 📝 **20%**
+
+Quiz 2 (AI)
+
+</div>
+
+<div class="card card-success pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+
+## 🎯 **60%**
+
+Final Project
+
+</div>
+
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 3fr; gap: 0.75rem; margin-top: 0.75rem;">
+
+<div class="card card-warning pad-compact" style="font-size: 0.8em;">
+
+- Multiple Choice
+- Closed book, no external resources
+- On eMokymai platform
+- Must have your on laptop
+- Blitz Quiz
+- Apr 16th, start of the day
+
+</div>
+
+<div class="card card-warning pad-compact" style="font-size: 0.8em;">
+
+- \* TBD by AI lecturer
+- Multiple Choice
+- Closed book, no external resources
+- On eMokymai platform
+- Must have your on laptop
+- Blitz Quiz
+
+</div>
+
+<div class="card card-success pad-compact" style="font-size: 0.8em;">
+
+- A course - long project
+- Can be related to your field of study/current work
+- Must include elements of data analysis and/or automation
+- Use good practices and tools
+- Use Python programming language
+- No proprietary (especially paid) tools allowed
+- Final presentation at the end of the course (graded on the spot)
+- Everyone must attend project presentations of other students
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Project Details**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📋 **Requirements**
+
+- Should be well developed project
+- Students will be graded with respect to their previous experience
+- Can be functional (app, dashboard, website)
+- Can be more educational (application of specific DNN, explaining the concepts)
+- Can use AI tools and component but must understand your code and be able to explain it
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📦 **Deliverables**
+
+- Codebase available on course repository (info in eMokymai)
+- Project written up in a **one-page report** (added to the repository)
+- 10 - 30 second video showcasing the project (linked to the repository)
+- Final **presentation** at the end of the course (graded on the spot)
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+| **Date** | **Topic** |
+| --- | --- |
+| Feb 19 | Data analysis and computing |
+| Feb 20 | Data analysis and computing |
+| Feb 21 | Data analysis and computing |
+| Feb 27 | Artificial Intelligence |
+| Feb 28 | Artificial Intelligence |
+| Apr 16 | Data analysis and computing |
+| Apr 17 | Data analysis and computing |
+| **Apr 18** | **Final Project Presentations** |
+
+<style scoped>
+table {
+  font-size: 1.1em;
+}
+table thead th {
+  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+}
+table td:nth-child(2),
+table th:nth-child(2) {
+  text-align: right;
+}
+table tbody tr:nth-child(3) td,
+table tbody tr:nth-child(5) td,
+table tbody tr:nth-child(7) td {
+  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+}
+</style>
 
 ---
 hideInToc: true
@@ -335,13 +374,6 @@ hideInToc: true
 </div>
 
 </div>
-
----
-hideInToc: true
-layout: center
----
-
-# Main course communication on eMokymai (Moodle)
 
 ---
 hideInToc: true

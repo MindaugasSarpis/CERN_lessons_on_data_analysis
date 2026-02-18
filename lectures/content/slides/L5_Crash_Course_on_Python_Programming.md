@@ -19,7 +19,7 @@ addons:
 
 # Dr. Mindaugas Šarpis
 
-# Data analysis and Artificial Intelligence
+# Data Analysis and Artificial Intelligence
 
 ## Crash Course on Python Programming
 
