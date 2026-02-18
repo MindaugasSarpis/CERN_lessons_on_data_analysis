@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useIsSlideActive } from '@slidev/client'
 
 const REMOTE_BASE = 'https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis/releases/download/videos'
 
@@ -15,12 +16,10 @@ const props = defineProps({
 const localSrc = computed(() => `/videos/${props.src}`)
 const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
 
+const videoRef = ref(null)
 const currentSrc = ref(localSrc.value)
 const status = ref('loading')
-
-function onLoaded() {
-  status.value = 'ready'
-}
+const isActive = useIsSlideActive()
 
 function onError() {
   if (currentSrc.value === localSrc.value) {
@@ -29,6 +28,29 @@ function onError() {
   } else {
     status.value = 'error'
   }
+}
+
+function syncPlayback() {
+  const video = videoRef.value
+  if (!video) return
+  if (isActive.value) {
+    video.currentTime = 0
+    video.muted = true
+    video.play().then(() => {
+      if (!props.muted) video.muted = false
+    }).catch(() => {})
+  } else {
+    video.pause()
+    video.muted = true
+    video.currentTime = 0
+  }
+}
+
+watch(isActive, syncPlayback)
+
+function onLoaded() {
+  status.value = 'ready'
+  syncPlayback()
 }
 </script>
 
@@ -39,12 +61,12 @@ function onError() {
       Video not available: <code>{{ src }}</code>
     </div>
     <video
+      ref="videoRef"
       :key="currentSrc"
       :src="currentSrc"
-      :autoplay="autoplay"
       :loop="loop"
-      :muted="muted"
       :controls="controls"
+      muted
       preload="auto"
       @loadeddata="onLoaded"
       @error="onError"

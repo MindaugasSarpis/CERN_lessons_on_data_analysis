@@ -199,4 +199,64 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 
 ---
 
-<VideoPlayer src="LHCb.mp4" autoplay loop/>
+<VideoPlayer src="LHCb.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080ph265.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="CERN_Overview_Short.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2023-019-001-2160p.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2024-010-002.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="CERN-VIDEO-2020-064-001-2160p.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Drone_Climbing_Mountain.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" autoplay   />
+
+---
+
+<VideoPlayer src="GTC_2020_1080p.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="QGP_Formation.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Telescope.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" autoplay   />
