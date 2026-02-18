@@ -30,7 +30,9 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm remove:*)",
       "Bash(gh release create:*)",
-      "Bash(gh release upload:*)"
+      "Bash(gh release upload:*)",
+      "Bash(gh release:*)",
+      "Bash(gh api:*)"
     ],
     "deny": [],
     "ask": []
