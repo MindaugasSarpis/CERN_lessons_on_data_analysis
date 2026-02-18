@@ -25,7 +25,12 @@
       "Bash(pnpm dev:*)",
       "Bash(curl:*)",
       "Bash(pnpm --version:*)",
-      "Bash(node -e \"\nconst { spawn } = require\\(''child_process''\\);\nconst proc = spawn\\(process.execPath, [''/Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/node_modules/.bin/slidev'', ''lectures/content/lessons_on_data_analysis_from_CERN.md''], {\n  cwd: ''/Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis'',\n  stdio: [''pipe'', ''pipe'', ''pipe''],\n  env: { ...process.env, FORCE_COLOR: ''0'' }\n}\\);\nproc.stdout.on\\(''data'', d => process.stdout.write\\(''OUT: '' + d\\)\\);\nproc.stderr.on\\(''data'', d => process.stderr.write\\(''ERR: '' + d\\)\\);\nproc.on\\(''exit'', \\(code, signal\\) => console.log\\(''EXIT:'', code, signal\\)\\);\nsetTimeout\\(\\(\\) => {\n  console.log\\(''TIMEOUT - checking port...''\\);\n  const http = require\\(''http''\\);\n  http.get\\(''http://localhost:3030/'', res => {\n    console.log\\(''HTTP STATUS:'', res.statusCode\\);\n    process.exit\\(0\\);\n  }\\).on\\(''error'', e => {\n    console.log\\(''HTTP ERROR:'', e.message\\);\n    process.exit\\(1\\);\n  }\\);\n}, 25000\\);\n\")"
+      "Bash(node -e \"\nconst { spawn } = require\\(''child_process''\\);\nconst proc = spawn\\(process.execPath, [''/Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/node_modules/.bin/slidev'', ''lectures/content/lessons_on_data_analysis_from_CERN.md''], {\n  cwd: ''/Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis'',\n  stdio: [''pipe'', ''pipe'', ''pipe''],\n  env: { ...process.env, FORCE_COLOR: ''0'' }\n}\\);\nproc.stdout.on\\(''data'', d => process.stdout.write\\(''OUT: '' + d\\)\\);\nproc.stderr.on\\(''data'', d => process.stderr.write\\(''ERR: '' + d\\)\\);\nproc.on\\(''exit'', \\(code, signal\\) => console.log\\(''EXIT:'', code, signal\\)\\);\nsetTimeout\\(\\(\\) => {\n  console.log\\(''TIMEOUT - checking port...''\\);\n  const http = require\\(''http''\\);\n  http.get\\(''http://localhost:3030/'', res => {\n    console.log\\(''HTTP STATUS:'', res.statusCode\\);\n    process.exit\\(0\\);\n  }\\).on\\(''error'', e => {\n    console.log\\(''HTTP ERROR:'', e.message\\);\n    process.exit\\(1\\);\n  }\\);\n}, 25000\\);\n\")",
+      "WebFetch(domain:videos.cern.ch)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(gh release create:*)",
+      "Bash(gh release upload:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const REMOTE_BASE = 'https://github.com/MindaugasVaitkus2/CERN_lessons_on_data_analysis/releases/download/videos'
+const REMOTE_BASE = 'https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis/releases/download/videos'
 
 const props = defineProps({
   src:      { type: String, required: true },
@@ -16,7 +16,7 @@ const localSrc = computed(() => `/videos/${props.src}`)
 const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
 
 const currentSrc = ref(localSrc.value)
-const status = ref('loading') // 'loading' | 'ready' | 'error'
+const status = ref('loading')
 
 function onLoaded() {
   status.value = 'ready'
@@ -24,7 +24,6 @@ function onLoaded() {
 
 function onError() {
   if (currentSrc.value === localSrc.value) {
-    // Local failed — try remote
     currentSrc.value = remoteSrc.value
     status.value = 'loading'
   } else {
