@@ -32,7 +32,11 @@
       "Bash(gh release create:*)",
       "Bash(gh release upload:*)",
       "Bash(gh release:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(ffprobe:*)",
+      "Bash(brew list:*)",
+      "Bash(brew install:*)",
+      "Bash(do echo \"Replacing $f...\")"
     ],
     "deny": [],
     "ask": []

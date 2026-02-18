@@ -20,6 +20,7 @@ const videoRef = ref(null)
 const currentSrc = ref(localSrc.value)
 const status = ref('loading')
 const isActive = useIsSlideActive()
+const isLocal = computed(() => currentSrc.value === localSrc.value)
 
 function onError() {
   if (currentSrc.value === localSrc.value) {
@@ -67,7 +68,7 @@ function onLoaded() {
       :loop="loop"
       :controls="controls"
       muted
-      preload="auto"
+      :preload="isLocal ? 'auto' : 'none'"
       @loadeddata="onLoaded"
       @error="onError"
       v-show="status === 'ready'"
