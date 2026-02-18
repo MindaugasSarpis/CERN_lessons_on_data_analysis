@@ -1,6 +1,6 @@
 ---
 theme: ./theme
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 class: text-left
 transition: fade
 title: "Quiz 2 – Git, Data Visualization & Data Types"

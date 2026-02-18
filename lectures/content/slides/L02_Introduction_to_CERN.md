@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -207,7 +207,7 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 
 ---
 
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080ph265.mp4" autoplay   />
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" autoplay   />
 
 ---
 

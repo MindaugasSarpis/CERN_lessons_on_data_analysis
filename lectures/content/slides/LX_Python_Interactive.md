@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 colorSchema: dark
 

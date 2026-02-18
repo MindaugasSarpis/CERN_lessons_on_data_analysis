@@ -68,7 +68,9 @@ function onLoaded() {
       :loop="loop"
       :controls="controls"
       muted
-      :preload="isLocal ? 'auto' : 'none'"
+      playsinline
+      webkit-playsinline
+      :preload="isLocal ? 'auto' : 'metadata'"
       @loadeddata="onLoaded"
       @error="onError"
       v-show="status === 'ready'"

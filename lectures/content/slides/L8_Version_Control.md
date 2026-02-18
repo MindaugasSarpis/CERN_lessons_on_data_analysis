@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -48,7 +48,7 @@ hideInToc: true
 
 <div>
 
-<img src="/comic_version.jfif" style="max-height: 450px;">
+<img src="/figures/comic_version.jfif" style="max-height: 450px;">
 
 </div>
 
@@ -70,7 +70,7 @@ hideInToc: true
 
 </div>
 
-![](/play-changes.svg)
+![](/figures/play-changes.svg)
 
 ---
 hideInToc: true
@@ -91,7 +91,7 @@ hideInToc: true
 
 <div>
 
-<img src="/versions.svg" style="max-height: 450px;">
+<img src="/figures/versions.svg" style="max-height: 450px;">
 
 </div>
 
@@ -117,7 +117,7 @@ hideInToc: true
 
 <div>
 
-<img src="/merge.svg" style="max-height: 450px;">
+<img src="/figures/merge.svg" style="max-height: 450px;">
 
 </div>
 
@@ -213,7 +213,7 @@ git status
 
 <div>
 
-![](/git-staging-area.svg)
+![](/figures/git-staging-area.svg)
 
 <div class="card card-secondary pad-compact mt-sm">
 
@@ -263,7 +263,7 @@ git add --all
 
 <div>
 
-![](/git-staging-area.svg)
+![](/figures/git-staging-area.svg)
 
 <div class="card card-info pad-compact mt-sm">
 
@@ -362,7 +362,7 @@ git commit -m "A message describing the changes"
 
 <div>
 
-![](/git-committing.svg)
+![](/figures/git-committing.svg)
 
 </div>
 
@@ -453,7 +453,7 @@ git restore --staged < file >
 
 <div>
 
-![](/git-restore.svg)
+![](/figures/git-restore.svg)
 
 <div class="card card-info pad-compact mt-sm">
 
@@ -515,7 +515,7 @@ git reset --hard < hash >
 
 ---
 layout: image
-image: /git_staging.svg
+image: /figures/git_staging.svg
 backgroundSize: contain
 hideInToc: true
 ---
@@ -635,7 +635,7 @@ venv.bak/
 
 ---
 layout: image-right
-image: /git-freshly-made-github-repo.svg
+image: /figures/git-freshly-made-github-repo.svg
 backgroundSize: contain
 hideInToc: true
 ---
@@ -649,7 +649,7 @@ hideInToc: true
 
 ---
 layout: image-right
-image: /git-freshly-made-github-repo.svg
+image: /figures/git-freshly-made-github-repo.svg
 backgroundSize: contain
 hideInToc: true
 ---
@@ -713,7 +713,7 @@ Then add the public key to **GitHub > Settings > SSH and GPG keys**.
 
 ---
 layout: image-right
-image: /github-repo-after-first-push.svg
+image: /figures/github-repo-after-first-push.svg
 backgroundSize: contain
 hideInToc: true
 ---
@@ -734,7 +734,7 @@ git pull
 
 ---
 layout: image-right
-image: /github-collaboration.svg
+image: /figures/github-collaboration.svg
 backgroundSize: contain
 hideInToc: true
 ---

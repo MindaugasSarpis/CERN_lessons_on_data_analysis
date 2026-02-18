@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -172,7 +172,7 @@ Performance per watt matters for sustained workloads and cooling
 ---
 hideInToc: true
 layout: image
-image: /cpu1.avif
+image: /figures/cpu1.avif
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
@@ -186,7 +186,7 @@ A modern multi-core CPU die — the complex circuitry visible on the silicon waf
 ---
 hideInToc: true
 layout: image
-image: /cpu2.jpg
+image: /figures/cpu2.jpg
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
@@ -200,7 +200,7 @@ Close-up of a CPU package mounted on a motherboard. The metal heat spreader cove
 ---
 hideInToc: true
 layout: image
-image: /cpu_apple_M4.webp
+image: /figures/cpu_apple_M4.webp
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
@@ -274,7 +274,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/laptop_ram.png" class="w-auto">
+<img src="/figures/laptop_ram.png" class="w-auto">
 
 <div class="card card-secondary pad-compact mt-md">
 
@@ -337,7 +337,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/hdd.png" class="w-auto">
+<img src="/figures/hdd.png" class="w-auto">
 
 <div class="card card-accent pad-compact mt-md">
 
@@ -348,7 +348,7 @@ Inside a hard disk drive (HDD) — spinning magnetic platters with a read/write 
 ---
 hideInToc: true
 layout: image
-image: /hdd_schematic.png
+image: /figures/hdd_schematic.png
 backgroundSize: contain
 ---
 
@@ -363,7 +363,7 @@ HDD schematic — data is stored in concentric tracks on the platter surface. Th
 ---
 hideInToc: true
 layout: image
-image: /hdd_magnetic_domains.png
+image: /figures/hdd_magnetic_domains.png
 backgroundSize: contain
 ---
 
@@ -380,7 +380,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/ssd.png" class="w-auto">
+<img src="/figures/ssd.png" class="w-auto">
 
 <div class="card card-accent pad-compact mt-md">
 
@@ -393,7 +393,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/nvme.png" class="w-auto">
+<img src="/figures/nvme.png" class="w-auto">
 
 <div class="card card-accent pad-compact mt-md">
 
@@ -404,7 +404,7 @@ An NVMe M.2 drive — connects directly to the PCIe bus, bypassing the slower SA
 ---
 hideInToc: true
 layout: image
-image: /ssd_floating_gate_3d.webp
+image: /figures/ssd_floating_gate_3d.webp
 backgroundSize: contain
 ---
 
@@ -419,7 +419,7 @@ backgroundSize: contain
 ---
 hideInToc: true
 layout: image
-image: /ssd_floating_gate.png
+image: /figures/ssd_floating_gate.png
 backgroundSize: contain
 ---
 
@@ -560,7 +560,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/gpu1.webp" class="w-auto">
+<img src="/figures/gpu1.webp" class="w-auto">
 
 <div class="card card-primary pad-compact mt-md">
 

@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -35,7 +35,7 @@ hideInToc: true
 
 # **Aesthetics** of Data Visualization
 
-<img src="/data_vis_aesthetics.png" style="display:block;margin:0 auto;width:75%;">
+<img src="/figures/data_vis_aesthetics.png" style="display:block;margin:0 auto;width:75%;">
 
 ---
 layout: iframe
@@ -47,7 +47,7 @@ url: https://datavizcatalogue.com/
 hideInToc: true
 layout: image
 backgroundSize: cover
-image: /data_vis_anatomy_of_a_figure.svg
+image: /figures/data_vis_anatomy_of_a_figure.svg
 ---
 
 ---
@@ -110,7 +110,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -124,7 +124,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_legend_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_legend_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -138,7 +138,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_legend_1.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_legend_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -152,7 +152,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_legend_2.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_legend_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -200,14 +200,14 @@ Axes are the reference lines that define the coordinate system of the plot. They
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /data_vis_axes_1.png
+image: /figures/data_vis_axes_1.png
 ---
 
 ---
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /data_vis_axes_2.png
+image: /figures/data_vis_axes_2.png
 ---
 
 ---
@@ -272,7 +272,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -286,7 +286,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_1.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -300,7 +300,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -314,7 +314,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_2.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -328,7 +328,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -342,7 +342,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_stacked.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_stacked.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -356,7 +356,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_error_4.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_error_4.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -370,7 +370,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_error_5.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_error_5.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -384,7 +384,7 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_bar_chart_3.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_bar_chart_3.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -398,13 +398,13 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_color_error.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_color_error.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /data_vis_heatmap.png
+image: /figures/data_vis_heatmap.png
 ---
 
 ---
@@ -453,14 +453,14 @@ Histograms visualize the **distribution** of a single continuous variable by div
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /data_vis_hist.png
+image: /figures/data_vis_hist.png
 ---
 
 ---
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /data_vis_hist_comp.png
+image: /figures/data_vis_hist_comp.png
 ---
 
 ---
@@ -475,20 +475,20 @@ hideInToc: true
 
 </div>
 
-<img src="/data_vis_hist_error.png" style="display:block;margin:0 auto;max-height:370px;">
+<img src="/figures/data_vis_hist_error.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /data_vis_hist_scientific_1.png
+image: /figures/data_vis_hist_scientific_1.png
 ---
 
 ---
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /data_vis_hist_scientific_2.png
+image: /figures/data_vis_hist_scientific_2.png
 ---
 
 ---

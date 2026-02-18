@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -174,7 +174,7 @@ hideInToc: true
 
 <div>
 
-<img src="/file_naming_comic.png" class="inline w-40" />
+<img src="/figures/file_naming_comic.png" class="inline w-40" />
 
 </div>
 
@@ -409,6 +409,6 @@ The RDM lifecycle shows how data flows through planning, collection, processing,
 
 </div>
 
-[<img src="/RDM_Lifecycle.png" class="inline w-120"/>](https://datamanagement.hms.harvard.edu/)
+[<img src="/figures/RDM_Lifecycle.png" class="inline w-120"/>](https://datamanagement.hms.harvard.edu/)
 
 ---
