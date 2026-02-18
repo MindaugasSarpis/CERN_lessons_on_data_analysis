@@ -199,4 +199,4 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 
 ---
 
-<VideoPlayer src="LHCb.mp4" fallback="https://example.com/LHCb.mp4"  autoplay loop/>
+<VideoPlayer src="LHCb.mp4" fallback="https://videos.cern.ch/video/CERN-FOOTAGE-2022-042-001"  autoplay loop/>
