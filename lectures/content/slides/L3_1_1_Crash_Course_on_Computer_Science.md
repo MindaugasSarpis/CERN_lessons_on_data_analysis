@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -144,7 +144,7 @@ class: text-center
 
 # **0**
 
-<img src="/light_bulb_off.png" class="w-auto h-86">
+<img src="/figures/light_bulb_off.png" class="w-auto h-86">
 
 <style>
 h1 {
@@ -161,7 +161,7 @@ class: text-center
 
 # **1**
 
-<img src="/light_bulb_on.png" class="w-auto h-86">
+<img src="/figures/light_bulb_on.png" class="w-auto h-86">
 
 <style>
 h1 {
@@ -883,23 +883,23 @@ Below are five versions of the same image, saved with **different bit depths**. 
 
 <div class="grid grid-cols-5 gap-4 mt-md">
   <figure>
-    <img src="/elf_24bit.png" class="rounded shadow-md h-48 object-contain" />
+    <img src="/figures/elf_24bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">24 bit</figcaption>
   </figure>
   <figure>
-    <img src="/elf_4bit.png" class="rounded shadow-md h-48 object-contain" />
+    <img src="/figures/elf_4bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">4 bit</figcaption>
   </figure>
   <figure>
-    <img src="/elf_3bit.png" class="rounded shadow-md h-48 object-contain" />
+    <img src="/figures/elf_3bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">3 bit</figcaption>
   </figure>
   <figure>
-    <img src="/elf_2bit.png" class="rounded shadow-md h-48 object-contain" />
+    <img src="/figures/elf_2bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">2 bit</figcaption>
   </figure>
   <figure>
-    <img src="/elf_1bit.png" class="rounded shadow-md h-48 object-contain" />
+    <img src="/figures/elf_1bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">1 bit</figcaption>
   </figure>
 </div>

@@ -1,5 +1,5 @@
 ---
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -199,19 +199,65 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 
 ---
 
-<VideoPlayer src="LHCb.mp4" autoplay   />
+<VideoPlayer src="Skylapse.mp4" autoplay loop   />
 
 ---
 
-<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" autoplay   />
+<VideoPlayer src="Drone_Climbing_Mountain.mp4" autoplay   />
 
 ---
 
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080ph265.mp4" autoplay   />
+<VideoPlayer src="VU_VM_Zoom.mov" autoplay   />
 
 ---
+
+<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" autoplay   />
+
+---
+
 
 <VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Stars_Pan_Audio.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Telescope.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Hubble.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Webb_Reel.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Milky_Way_Sim_Audio.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" autoplay   />
+
+
+---
+
+<VideoPlayer src="QGP_Formation.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="Cloud_Chamber_Audio.mp4" autoplay   />
 
 ---
 
@@ -219,7 +265,28 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 
 ---
 
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" autoplay   />
+
+---
+
+
+<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" autoplay   />
+
+
+---
+
+<VideoPlayer src="LHCb.mp4" autoplay   />
+
+---
+
+
+
 <VideoPlayer src="CERN-FOOTAGE-2023-019-001-2160p.mp4" autoplay   />
+
+---
+
+<VideoPlayer src="CERN-VIDEO-2020-064-001-2160p.mp4" autoplay   />
+
 
 ---
 
@@ -229,34 +296,7 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 
 <VideoPlayer src="CERN-FOOTAGE-2024-010-002.mp4" autoplay   />
 
----
-
-<VideoPlayer src="CERN-VIDEO-2020-064-001-2160p.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Drone_Climbing_Mountain.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" autoplay   />
 
 ---
 
 <VideoPlayer src="GTC_2020_1080p.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" autoplay   />
-
----
-
-<VideoPlayer src="QGP_Formation.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Telescope.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" autoplay   />

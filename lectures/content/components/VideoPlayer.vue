@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { useIsSlideActive } from '@slidev/client'
 
 const REMOTE_BASE = 'https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis/releases/download/videos'
@@ -17,15 +17,29 @@ const localSrc = computed(() => `/videos/${props.src}`)
 const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
 
 const videoRef = ref(null)
+const sourceRef = ref(null)
 const currentSrc = ref(localSrc.value)
 const status = ref('loading')
 const isActive = useIsSlideActive()
 const isLocal = computed(() => currentSrc.value === localSrc.value)
 
+const mimeType = computed(() => {
+  const ext = props.src.split('.').pop()?.toLowerCase()
+  if (ext === 'webm') return 'video/webm'
+  return 'video/mp4'
+})
+
+let switching = false
 function onError() {
+  if (switching) return
   if (currentSrc.value === localSrc.value) {
-    currentSrc.value = remoteSrc.value
+    switching = true
     status.value = 'loading'
+    currentSrc.value = remoteSrc.value
+    nextTick(() => {
+      videoRef.value?.load()
+      switching = false
+    })
   } else {
     status.value = 'error'
   }
@@ -53,6 +67,12 @@ function onLoaded() {
   status.value = 'ready'
   syncPlayback()
 }
+
+onMounted(() => {
+  // Source error events don't bubble to <video> on iOS Safari.
+  // Attach error listener directly on the <source> DOM element.
+  sourceRef.value?.addEventListener('error', onError)
+})
 </script>
 
 <template>
@@ -63,16 +83,18 @@ function onLoaded() {
     </div>
     <video
       ref="videoRef"
-      :key="currentSrc"
-      :src="currentSrc"
       :loop="loop"
       :controls="controls"
       muted
-      :preload="isLocal ? 'auto' : 'none'"
+      playsinline
+      webkit-playsinline
+      preload="auto"
       @loadeddata="onLoaded"
       @error="onError"
-      v-show="status === 'ready'"
-    />
+      :class="{ 'video-ready': status === 'ready' }"
+    >
+      <source ref="sourceRef" :src="currentSrc" :type="mimeType" />
+    </video>
   </div>
 </template>
 
@@ -89,8 +111,16 @@ function onLoaded() {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  /* keep in layout so iOS Safari loads it, but hide visually until ready */
+  opacity: 0;
+  pointer-events: none;
+}
+.video-player video.video-ready {
+  opacity: 1;
+  pointer-events: auto;
 }
 .video-status {
+  position: absolute;
   padding: 2rem;
   opacity: 0.6;
   font-size: 0.9rem;

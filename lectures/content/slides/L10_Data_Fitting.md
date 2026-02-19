@@ -1,6 +1,6 @@
 ---
 mermaid: true
-background: /background_intro.jpg
+background: /figures/background_intro.jpg
 
 class: text-left
 colorSchema: dark
@@ -502,7 +502,7 @@ Important for error propagation!
 ---
 hideInToc: true
 layout: image
-image: /covariance_matrix_1.png
+image: /figures/covariance_matrix_1.png
 backgroundSize: contain
 ---
 
@@ -511,7 +511,7 @@ Covariance matrix: diagonal elements give parameter variances, off-diagonal elem
 ---
 hideInToc: true
 layout: image
-image: /covariance_matrix_2.png
+image: /figures/covariance_matrix_2.png
 backgroundSize: contain
 ---
 
