@@ -36,7 +36,9 @@
       "Bash(ffprobe:*)",
       "Bash(brew list:*)",
       "Bash(brew install:*)",
-      "Bash(do echo \"Replacing $f...\")"
+      "Bash(do echo \"Replacing $f...\")",
+      "Bash(ffmpeg:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
