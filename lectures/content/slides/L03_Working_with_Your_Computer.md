@@ -862,22 +862,12 @@ hideInToc: true
 
 ## 👁️ **Rendered Output**
 
-<p style="font-size: 1.6em; font-weight: bold; margin: 0.15em 0;"><code>#</code> Header 1 — largest</p>
-<p style="font-size: 1.35em; font-weight: bold; margin: 0.15em 0;"><code>##</code> Header 2</p>
-<p style="font-size: 1.15em; font-weight: bold; margin: 0.15em 0;"><code>###</code> Header 3</p>
-<p style="font-size: 1.0em; font-weight: bold; margin: 0.15em 0;"><code>####</code> Header 4</p>
-<p style="font-size: 0.9em; font-weight: bold; margin: 0.15em 0;"><code>#####</code> Header 5</p>
-<p style="font-size: 0.8em; font-weight: bold; margin: 0.15em 0;"><code>######</code> Header 6 — smallest</p>
+<p style="font-size: 1.5em; font-weight: bold; margin: 0.15em 0;"><code>#</code> Header 1 — largest</p>
+<p style="font-size: 1.2em; font-weight: bold; margin: 0.15em 0;"><code>##</code> Header 2</p>
+<p style="font-size: 1.0em; font-weight: bold; margin: 0.15em 0;"><code>###</code> Header 3</p>
+<p style="font-size: 0.85em; font-weight: bold; margin: 0.15em 0;"><code>####</code> – <code>######</code> progressively smaller</p>
 
-<div class="mt-sm">
-
-## *Italic*
-
-## **Bold**
-
-## ~~Strikethrough~~
-
-</div>
+<p style="margin-top: 0.5em;">*Italic* &nbsp; **Bold** &nbsp; ~~Strikethrough~~</p>
 
 </div>
 
@@ -897,20 +887,14 @@ hideInToc: true
 
 ```
 - Item 1
-- Item 2
-  - Subitem 1
-  - Subitem 2
-
+  - Subitem
 1. First
 2. Second
-3. Third
-
-- [x] Task 1 (completed)
-- [ ] Task 2 (pending)
-- [ ] Task 3 (pending)
+- [x] Done
+- [ ] Pending
 ```
 
-<div class="note-text mt-sm">Use `-`, `*`, or `+` for unordered lists. `[x]` marks tasks done. Indent with 2 or 4 spaces for nesting.</div>
+<div class="note-text mt-sm">Use `-`, `*`, or `+` for unordered. `[x]` marks tasks done. Indent 2-4 spaces to nest.</div>
 
 </div>
 
@@ -919,25 +903,13 @@ hideInToc: true
 ## 👁️ **Rendered Output**
 
 - Item 1
-- Item 2
-  - Subitem 1
-  - Subitem 2
-
-<div class="mt-sm">
+  - Subitem
 
 1. First
 2. Second
-3. Third
 
-</div>
-
-<div class="mt-sm">
-
-- [x]  Task 1 (completed)
-- [ ]  Task 2 (pending)
-- [ ]  Task 3 (pending)
-
-</div>
+- [x] Done
+- [ ] Pending
 
 <div class="note-text mt-sm">Task lists are widely used in **GitHub Issues** and **Pull Requests** to track progress.</div>
 

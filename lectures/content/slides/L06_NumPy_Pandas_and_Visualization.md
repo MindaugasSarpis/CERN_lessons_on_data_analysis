@@ -44,7 +44,7 @@ hideInToc: true
 
 <div class="card card-info pad-tight mt-md">
 
-## **From Python to Data Tools**
+## 🛠️ **From Python to Data Tools**
 
 In L5, you learned Python basics. But raw Python is too slow and verbose for real data work:
 - Loops over millions of numbers? Too slow
@@ -94,7 +94,7 @@ hideInToc: true
 
 <div class="card card-primary pad-tight mt-md">
 
-## **NumPy = Numerical Python**
+## 🔢 **NumPy = Numerical Python**
 
 The fundamental package for scientific computing in Python:
 - Multi-dimensional arrays (`ndarray`)
@@ -108,7 +108,7 @@ The fundamental package for scientific computing in Python:
 
 <div class="card card-info pad-tight">
 
-### **Why NumPy?**
+### 🚀 **Why NumPy?**
 
 ✅ **Speed**: 10-100× faster than Python lists
 
@@ -120,7 +120,7 @@ The fundamental package for scientific computing in Python:
 
 <div class="card card-secondary pad-tight">
 
-### **Key Concept**
+### 💡 **Key Concept**
 
 **Vectorization**: Operations on entire arrays without explicit loops
 
@@ -250,7 +250,7 @@ hideInToc: true
 
 <div class="card card-info pad-tight mt-md">
 
-## **Broadcasting Rules**
+## 📐 **Broadcasting Rules**
 
 NumPy automatically "broadcasts" arrays of different shapes to make operations work:
 
@@ -311,7 +311,7 @@ hideInToc: true
 
 <div class="card card-info pad-tight mt-md">
 
-## **Limitations of NumPy**
+## ⚠️ **Limitations of NumPy**
 
 NumPy is great for numerical computation, but real-world data often needs more:
 
@@ -321,7 +321,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 <div class="card card-warning pad-tight">
 
-### **NumPy limitations**
+### 🚫 **NumPy limitations**
 - All elements must be same type
 - No column names or labels
 - No built-in handling of missing values
@@ -331,7 +331,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 <div class="card card-success pad-tight">
 
-### **Enter Pandas**
+### 🐼 **Enter Pandas**
 - Mixed data types per column
 - Named columns and row indices
 - `NaN` for missing data
@@ -362,7 +362,7 @@ hideInToc: true
 
 <div class="card card-primary pad-tight mt-md">
 
-## **Pandas = Panel Data (Python Data Analysis Library)**
+## 🐼 **Pandas = Panel Data (Python Data Analysis Library)**
 
 Built on top of NumPy, adds:
 - **DataFrame**: 2D labeled data structure (like Excel spreadsheet or SQL table)
@@ -377,7 +377,7 @@ Built on top of NumPy, adds:
 
 <div class="card card-info pad-tight">
 
-### **Think of DataFrame as:**
+### 🗂️ **Think of DataFrame as:**
 - Excel spreadsheet
 - SQL table
 - Dictionary of NumPy arrays
@@ -387,7 +387,7 @@ Built on top of NumPy, adds:
 
 <div class="card card-secondary pad-tight">
 
-### **Key Features:**
+### ✨ **Key Features:**
 - Column/row labels (not just indices)
 - Mixed data types per column
 - Missing data handling (NaN)
@@ -428,7 +428,7 @@ hideInToc: true
 
 <div class="card card-primary pad-tight mt-md">
 
-## **Most Common: CSV Files**
+## 📄 **Most Common: CSV Files**
 
 Pandas makes reading data trivial:
 
@@ -544,7 +544,7 @@ hideInToc: true
 
 <div class="card card-warning pad-tight mt-md">
 
-## **Real Data Has Missing Values!**
+## ❓ **Real Data Has Missing Values!**
 
 Pandas represents missing data with `NaN` (Not a Number) or `None`
 
@@ -603,7 +603,7 @@ hideInToc: true
 
 <div class="card card-info pad-tight mt-md">
 
-## **Group By Pattern**
+## 📊 **Group By Pattern**
 
 1. **Split** data into groups based on criteria
 2. **Apply** a function to each group
@@ -1427,7 +1427,7 @@ hideInToc: true
 
 <div class="card card-info pad-tight mt-md">
 
-## **Why Normalize?**
+## 📏 **Why Normalize?**
 
 - Different features have different scales (energy in GeV, angles in radians)
 - Many ML algorithms perform better with normalized data
@@ -1468,9 +1468,9 @@ hideInToc: true
 
 <div class="card card-primary pad-tight mt-md">
 
-## **Pandas Supports Many Formats**
+## 📁 **Pandas Supports Many Formats**
 
-Reading and writing data is easy and consistent across formats
+Reading and writing data follows a consistent pattern: `pd.read_*()` and `df.to_*()`
 
 </div>
 
@@ -1478,46 +1478,26 @@ Reading and writing data is easy and consistent across formats
 
 <div class="card card-info pad-tight">
 
-### **Reading Data**
+### 📥 **Reading Data**
 
 ```python
-# CSV
 df = pd.read_csv('data.csv')
-
-# Excel
 df = pd.read_excel('data.xlsx')
-
-# JSON
 df = pd.read_json('data.json')
-
-# SQL
 df = pd.read_sql(query, connection)
-
-# HDF5 (large datasets)
-df = pd.read_hdf('data.h5', 'key')
 ```
 
 </div>
 
 <div class="card card-secondary pad-tight">
 
-### **Writing Data**
+### 📤 **Writing Data**
 
 ```python
-# CSV
 df.to_csv('output.csv', index=False)
-
-# Excel
 df.to_excel('output.xlsx')
-
-# JSON
 df.to_json('output.json')
-
-# SQL
 df.to_sql('table', connection)
-
-# HDF5
-df.to_hdf('output.h5', 'key')
 ```
 
 </div>
@@ -1588,7 +1568,7 @@ hideInToc: true
 
 <div class="card card-primary pad-tight">
 
-### **NumPy**
+### 🔢 **NumPy**
 
 ✅ Use vectorized operations (no loops!)
 
@@ -1602,7 +1582,7 @@ hideInToc: true
 
 <div class="card card-secondary pad-tight">
 
-### **Pandas**
+### 🐼 **Pandas**
 
 ✅ Use `iterrows()` sparingly (slow!)
 
@@ -1616,7 +1596,7 @@ hideInToc: true
 
 <div class="card card-info pad-tight">
 
-### **General**
+### ⚡ **General**
 
 ✅ Profile code to find bottlenecks
 
@@ -1644,7 +1624,7 @@ layout: section
 hideInToc: true
 ---
 
-# **Summary**
+# Lecture **Summary**
 
 ---
 hideInToc: true
@@ -1656,7 +1636,7 @@ hideInToc: true
 
 <div class="card card-primary pad-tight">
 
-## **NumPy**
+## 🔢 **NumPy**
 
 ✅ ndarray: efficient multi-dimensional arrays
 
@@ -1672,7 +1652,7 @@ hideInToc: true
 
 <div class="card card-secondary pad-tight">
 
-## **Pandas**
+## 🐼 **Pandas**
 
 ✅ DataFrame: labeled 2D data structure
 
@@ -1688,7 +1668,7 @@ hideInToc: true
 
 <div class="card card-accent pad-tight">
 
-## **Visualization**
+## 📊 **Visualization**
 
 ✅ Axes, legends, and labels matter
 
@@ -1714,7 +1694,7 @@ hideInToc: true
 
 <div class="card card-info pad-tight">
 
-### **Skills Acquired**
+### 🎯 **Skills Acquired**
 
 - Create and manipulate NumPy arrays
 - Build and explore Pandas DataFrames
@@ -1726,7 +1706,7 @@ hideInToc: true
 
 <div class="card card-success pad-tight">
 
-### **Best Practices**
+### ✅ **Best Practices**
 
 - Visualize first
 - Document everything
@@ -1740,7 +1720,7 @@ hideInToc: true
 
 <div class="card card-accent pad-tight mt-md">
 
-### **Next Steps**
+### 🔮 **Next Steps**
 
 You now have the tools to work with data efficiently — arrays, tables, and plots. Next, we'll explore the **concepts and principles** of data analysis that guide how you use these tools.
 

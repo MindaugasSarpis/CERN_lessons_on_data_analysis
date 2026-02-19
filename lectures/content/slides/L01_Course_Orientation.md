@@ -450,40 +450,48 @@ Final Project
 
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 3fr; gap: 0.75rem; margin-top: 0.75rem;">
+---
+hideInToc: true
+---
 
-<div class="card card-warning pad-compact" style="font-size: 0.8em;">
+# **Grading Details**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-warning pad-compact">
+
+## 📝 **Quiz 1 (20%)**
 
 - Multiple Choice
 - Closed book, no external resources
 - On eMokymai platform
-- Must have your on laptop
 - Blitz Quiz
 - Apr 16th, start of the day
 
 </div>
 
-<div class="card card-warning pad-compact" style="font-size: 0.8em;">
+<div class="card card-warning pad-compact">
+
+## 📝 **Quiz 2 (20%)**
 
 - \* TBD by AI lecturer
 - Multiple Choice
 - Closed book, no external resources
 - On eMokymai platform
-- Must have your on laptop
 - Blitz Quiz
 
 </div>
 
-<div class="card card-success pad-compact" style="font-size: 0.8em;">
+<div class="card card-success pad-compact">
 
-- A course - long project
-- Can be related to your field of study/current work
-- Must include elements of data analysis and/or automation
-- Use good practices and tools
-- Use Python programming language
-- No proprietary (especially paid) tools allowed
-- Final presentation at the end of the course (graded on the spot)
-- Everyone must attend project presentations of other students
+## 🎯 **Final Project (60%)**
+
+- Course-long project
+- Related to your field of study/work
+- Must include data analysis and/or automation
+- Use Python and good practices
+- Final presentation (graded on the spot)
+- Attend all project presentations
 
 </div>
 

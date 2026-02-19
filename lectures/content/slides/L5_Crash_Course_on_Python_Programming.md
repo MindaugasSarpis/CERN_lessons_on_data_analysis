@@ -1,18 +1,13 @@
 ---
 background: /figures/background_intro.jpg
-
 class: text-left
 colorSchema: dark
-
 theme: ./theme
 drawings:
   persist: false
-
 transition: fade
-
 title: "Crash Course on Python Programming"
 layout: cover
-
 addons:
   - slidev-addon-python-runner
 ---
@@ -107,6 +102,13 @@ A large community of developers and users as well as a large number of libraries
 Python itself and many of its libraries and tools are open-source and free to use and at the same time much more powerful than many commercial tools
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Python **Fundamentals**
 
 ---
 hideInToc: true
@@ -267,6 +269,13 @@ is_valid = True    # Boolean
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Data **Structures**
 
 ---
 hideInToc: true
@@ -494,6 +503,13 @@ print(f"\nUpdated: {experiment['name']} has {experiment['num_detectors']} detect
 ```
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Control **Flow**
+
+---
 hideInToc: true
 ---
 
@@ -653,6 +669,13 @@ stats = describe_data(temperatures)
 for key, value in stats.items():
     print(f"  {key}: {value:.2f}" if isinstance(value, float) else f"  {key}: {value}")
 ```
+
+---
+layout: section
+hideInToc: true
+---
+
+# Advanced **Patterns**
 
 ---
 hideInToc: true
@@ -885,6 +908,13 @@ rows = df.to_dict(orient="records")             # list[dict]
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Hands-On **Practice**
 
 ---
 hideInToc: true
