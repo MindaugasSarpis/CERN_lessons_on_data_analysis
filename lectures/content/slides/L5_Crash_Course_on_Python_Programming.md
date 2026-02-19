@@ -187,6 +187,27 @@ print("Hello from Python! 🐍", 2 + 2)
 hideInToc: true
 ---
 
+# Try It — Variables & Types
+
+```py {monaco-run}
+# Experiment with variables and types
+name = "CERN"
+energy = 13.6  # TeV
+num_detectors = 4
+is_running = True
+
+print(f"Name: {name} (type: {type(name).__name__})")
+print(f"Energy: {energy} TeV (type: {type(energy).__name__})")
+print(f"Detectors: {num_detectors} (type: {type(num_detectors).__name__})")
+print(f"Running: {is_running} (type: {type(is_running).__name__})")
+
+# Try changing the values and re-running!
+```
+
+---
+hideInToc: true
+---
+
 # Operators & Variables
 
 <div class="grid-2 gap-md mt-md">
@@ -302,6 +323,30 @@ customer_info = ["Alice", 25, "New York", "Premium", True]
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Try It — Lists in Action
+
+```py {monaco-run}
+# Working with lists
+measurements = [23.1, 25.4, 22.8, 24.5, 26.1, 23.9]
+
+print(f"Measurements: {measurements}")
+print(f"Count: {len(measurements)}")
+print(f"First: {measurements[0]}, Last: {measurements[-1]}")
+print(f"Sorted: {sorted(measurements)}")
+
+# Add a new measurement
+measurements.append(24.2)
+print(f"After append: {measurements}")
+
+# Filter: only values above 24
+above_24 = [m for m in measurements if m > 24]
+print(f"Above 24: {above_24}")
+```
 
 ---
 hideInToc: true
@@ -426,6 +471,32 @@ print(counts)
 hideInToc: true
 ---
 
+# Try It — Dictionaries for Data
+
+```py {monaco-run}
+# Storing experiment metadata
+experiment = {
+    "name": "ATLAS",
+    "location": "Geneva",
+    "energy_TeV": 13.6,
+    "active": True,
+    "detectors": ["inner tracker", "calorimeter", "muon spectrometer"]
+}
+
+# Access and display
+for key, value in experiment.items():
+    print(f"  {key}: {value}")
+
+# Add new data
+experiment["start_year"] = 2008
+experiment["num_detectors"] = len(experiment["detectors"])
+print(f"\nUpdated: {experiment['name']} has {experiment['num_detectors']} detector systems")
+```
+
+---
+hideInToc: true
+---
+
 # Conditionals & Loops
 
 <div class="grid-2 gap-md mt-md">
@@ -487,6 +558,32 @@ while x < 5:
 hideInToc: true
 ---
 
+# Try It — Loops and Logic
+
+```py {monaco-run}
+# Classify particle energies
+energies = [0.5, 2.3, 8.1, 15.4, 3.2, 50.0, 1.1, 125.0]
+
+for e in energies:
+    if e > 100:
+        label = "very high"
+    elif e > 10:
+        label = "high"
+    elif e > 5:
+        label = "medium"
+    else:
+        label = "low"
+    print(f"  {e:6.1f} GeV → {label}")
+
+# Count per category
+high_count = sum(1 for e in energies if e > 10)
+print(f"\nHigh energy events (>10 GeV): {high_count}/{len(energies)}")
+```
+
+---
+hideInToc: true
+---
+
 # Functions & Exceptions
 
 <div class="grid-2 gap-md mt-md">
@@ -533,6 +630,29 @@ finally:
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Try It — Writing Functions
+
+```py {monaco-run}
+def describe_data(values):
+    """Calculate basic statistics for a list of numbers."""
+    n = len(values)
+    mean = sum(values) / n
+    sorted_vals = sorted(values)
+    median = sorted_vals[n // 2] if n % 2 else (sorted_vals[n//2 - 1] + sorted_vals[n//2]) / 2
+    data_range = max(values) - min(values)
+    return {"n": n, "mean": mean, "median": median, "range": data_range}
+
+# Test it
+temperatures = [22.1, 23.5, 21.8, 24.2, 22.9, 23.1, 25.0, 22.4]
+stats = describe_data(temperatures)
+for key, value in stats.items():
+    print(f"  {key}: {value:.2f}" if isinstance(value, float) else f"  {key}: {value}")
+```
 
 ---
 hideInToc: true
@@ -640,6 +760,60 @@ with open("test.txt", "r") as file:
 hideInToc: true
 ---
 
+# Common Python Errors
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning pad-tight">
+
+## 🐛 **Syntax & Indentation**
+
+```python
+# IndentationError
+if True:
+print("oops")  # missing indent!
+
+# SyntaxError
+print("hello"  # missing closing )
+```
+
+- Python uses **whitespace** for structure
+- Every `if`, `for`, `def` needs an **indented** block
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🐛 **Name & Type Errors**
+
+```python
+# NameError
+print(undefined_variable)
+
+# TypeError
+result = "hello" + 42  # can't add str + int
+# Fix: "hello" + str(42)
+```
+
+- Check **spelling** of variable names
+- Check **types** match the operation
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+## 💡 **Debugging Tip**
+
+Read the error message **bottom to top** — the last line tells you what went wrong, the lines above show where.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Loading Structured Files into Dicts
 
 <div class="grid-2 gap-md mt-md">
@@ -716,6 +890,63 @@ rows = df.to_dict(orient="records")             # list[dict]
 hideInToc: true
 ---
 
+# Mini Project: Analyse Experiment Data
+
+```py {monaco-run}
+# A complete mini data analysis in pure Python
+# (no external libraries needed!)
+
+# Simulated temperature readings from 3 sensors
+data = {
+    "sensor_A": [22.1, 22.4, 22.3, 22.8, 22.5],
+    "sensor_B": [23.5, 23.1, 23.8, 23.2, 23.6],
+    "sensor_C": [21.9, 22.0, 21.7, 22.1, 21.8],
+}
+
+print("=== Sensor Temperature Report ===\n")
+for sensor, readings in data.items():
+    avg = sum(readings) / len(readings)
+    min_val = min(readings)
+    max_val = max(readings)
+    spread = max_val - min_val
+    print(f"{sensor}: avg={avg:.2f}°C  range=[{min_val}, {max_val}]  spread={spread:.1f}°C")
+
+# Find the hottest sensor
+averages = {s: sum(r)/len(r) for s, r in data.items()}
+hottest = max(averages, key=averages.get)
+print(f"\nHottest sensor: {hottest} ({averages[hottest]:.2f}°C)")
+```
+
+---
+hideInToc: true
+---
+
+# Mini Project: Visualise the Results
+
+```py {monaco-run}
+# Simple text-based "bar chart" — no matplotlib needed!
+data = {
+    "sensor_A": [22.1, 22.4, 22.3, 22.8, 22.5],
+    "sensor_B": [23.5, 23.1, 23.8, 23.2, 23.6],
+    "sensor_C": [21.9, 22.0, 21.7, 22.1, 21.8],
+}
+
+averages = {s: sum(r)/len(r) for s, r in data.items()}
+min_avg = min(averages.values())
+
+print("Average Temperature by Sensor")
+print("=" * 40)
+for sensor, avg in averages.items():
+    bar_length = int((avg - 20) * 10)  # scale for display
+    bar = "█" * bar_length
+    print(f"{sensor}: {bar} {avg:.2f}°C")
+print("\nNext up: NumPy and matplotlib will make this MUCH easier!")
+```
+
+---
+hideInToc: true
+---
+
 # What Comes Next
 
 <div class="grid-2 mt-md gap-md">
@@ -726,10 +957,9 @@ hideInToc: true
 
 These basics unlock a powerful ecosystem:
 
-- **L7**: Data visualization with `matplotlib`
-- **L9**: Statistics with `scipy.stats`
-- **L10**: Data fitting with `scipy.optimize`
-- **L11**: NumPy arrays & Pandas DataFrames
+- **Next**: NumPy arrays, Pandas DataFrames & `matplotlib` visualization
+- **Later**: Probability & statistics, data fitting with `scipy`
+- **L12**: Reproducible workflows to automate everything
 
 </div>
 

@@ -706,7 +706,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-📌 Visualization is covered in much greater depth in **Lecture 7**.
+📌 Visualization tools (matplotlib) and principles were covered in the earlier **NumPy, Pandas & Visualization** lecture.
 
 </div>
 
@@ -2104,7 +2104,7 @@ hideInToc: true
 
 <div class="note-text">
 
-#### 📌 We'll dive deep into visualization techniques, chart types, and storytelling with data in **Lecture 7**
+#### 📌 You already learned visualization techniques and matplotlib in the **NumPy, Pandas & Visualization** lecture — apply those skills here
 
 </div>
 

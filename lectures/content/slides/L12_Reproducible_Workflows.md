@@ -1645,37 +1645,37 @@ hideInToc: true
 
 <div class="card card-primary pad-compact">
 
-**Computing Foundations** (L1--L3)
-- Binary, memory, floating-point
-- Terminal, shell, file systems
-- How computers execute code
+**Orientation & CERN** (L1)
+- Course goals and structure
+- Why data analysis matters
+- The CERN data challenge
 
 </div>
 
 <div class="card card-secondary pad-compact">
 
-**Python Programming** (L4--L5)
-- Variables, types, control flow
-- Functions, modules, OOP basics
-- Dictionaries, list comprehensions
+**Computing Foundations** (L2--L4)
+- Binary, memory, floating-point
+- Files, CLI, Markdown
+- Infrastructure & hardware
 
 </div>
 
 <div class="card card-info pad-compact">
 
-**NumPy & Pandas** (L6)
-- Array operations, broadcasting
-- DataFrames, filtering, groupby
-- Efficient numerical computing
+**Python & Data Tools** (L5--L6)
+- Variables, loops, functions
+- NumPy, Pandas, matplotlib
+- Visualization principles
 
 </div>
 
 <div class="card card-accent pad-compact">
 
-**Visualization** (L7)
-- Matplotlib, histograms, scatter
-- Styling, subplots, annotations
-- Publication-quality figures
+**Data Analysis Concepts** (L7)
+- Data lifecycle & workflow
+- Quality, ethics, FAIR principles
+- Tools & collaboration
 
 </div>
 
@@ -1690,10 +1690,10 @@ hideInToc: true
 
 <div class="card card-warning pad-compact">
 
-**Statistics & Fitting** (L9--L11)
-- Probability distributions, CLT
-- Hypothesis testing, p-values
-- Chi-squared, ML fits, uncertainties
+**Stats, Fitting & Real Data** (L9--L11)
+- Probability, distributions, CLT
+- Chi-squared, curve fitting
+- Real CERN data case studies
 
 </div>
 

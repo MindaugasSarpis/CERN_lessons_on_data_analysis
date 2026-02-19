@@ -1,16 +1,12 @@
 ---
 background: /figures/background_intro.jpg
-
 class: text-left
 colorSchema: dark
-
 theme: ./theme
 drawings:
   persist: false
-
 transition: fade
-
-title: "Course Orientation and Motivation"
+title: "Course Orientation and Introduction to CERN"
 layout: cover
 ---
 
@@ -18,7 +14,7 @@ layout: cover
 
 # Data Analysis and Artificial Intelligence
 
-## Course Orientation and Motivation
+## Course Orientation and Introduction to CERN
 
 ---
 hideInToc: true
@@ -26,6 +22,260 @@ layout: quote
 ---
 
 # The goal of this course is to build **intuition**, **competence**, and **confidence** in working with data — using the tools and practices of modern science
+
+---
+layout: section
+hideInToc: true
+---
+
+# What is **CERN**?
+
+---
+hideInToc: true
+---
+
+# What is CERN?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🏛️ **The Organisation**
+
+- **European Organization for Nuclear Research**
+- Founded in **1954** by 12 European states
+- Today: **24 member states**, thousands of visiting scientists
+- Located at the **French-Swiss border** near Geneva
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🎯 **The Mission**
+
+- Probe the **fundamental structure** of matter
+- Build and operate the world's most powerful **particle accelerators**
+- Push the boundaries of **technology and engineering**
+- Train the **next generation** of scientists
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-tight mt-md">
+
+## 🌍 **By the Numbers**
+
+🔬 World's **largest** particle physics laboratory · 👩‍🔬 **17,000+** scientists from **110+ nations** · 🏗️ Operating since **1954** · 🧪 Home to the **Large Hadron Collider**
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Large Hadron Collider (LHC)
+
+<div class="card card-info pad-tight">
+
+## ⚙️ **The Machine**
+
+- A **27 km** circumference ring situated **100 m** underground
+- Accelerates protons to **99.9999991%** the speed of light
+- Collides particles **~1 billion times per second**
+- Operating temperature: **1.9 K** (~ -271.1°C) (colder than outer space)
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-compact">
+
+## 🔭 **Main Experiments**
+
+- **ATLAS** -- general-purpose detector
+- **CMS** -- general-purpose detector
+- **ALICE** -- heavy-ion collisions
+- **LHCb** -- matter-antimatter asymmetry
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+## 🏆 **Key Achievement**
+
+Discovery of the **Higgs boson** in **2012** -- confirmed the mechanism that gives particles their mass
+
+Nobel Prize in Physics 2013
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Why Data Analysis Matters at CERN
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📊 **The Data Challenge**
+
+- LHC produces **~1 PB of data per second** of raw detector output
+- Only **~1 in a billion** collisions contains interesting physics
+- Must filter, reconstruct, and analyse in near real-time
+- Finding the Higgs required sifting through **trillions** of events
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔍 **Needle in a Haystack**
+
+- Collision events produce **detector readings** (energy, momentum, position)
+- Signal events look almost identical to background noise
+- Statistical methods decide if a discovery is **real or a fluctuation**
+- The 5-sigma standard: less than **1 in 3.5 million** chance of being wrong
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-compact mt-md">
+
+💾 **Data Pipeline:** Raw detector signals &#8594; Event reconstruction &#8594; Data filtering (triggers) &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
+
+</div>
+
+---
+hideInToc: true
+---
+
+# CERN's Impact Beyond Physics
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-info pad-tight">
+
+## 🌐 **The World Wide Web**
+
+Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists -- now used by **5+ billion** people worldwide
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## 🖥️ **Computing Grid (WLCG)**
+
+The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** -- processes **200 PB** of data per year
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+## 🏥 **Medical Applications**
+
+Particle accelerator technology enables **hadron therapy** for cancer treatment -- more precise than conventional radiotherapy
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📂 **Open Science**
+
+CERN **Open Data Portal** makes real collision data publicly available -- enabling education and independent research worldwide
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="CERN_Overview_Short.mp4" autoplay   />
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" autoplay   />
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Cloud_Chamber_Audio.mp4" autoplay   />
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Webb_Reel.mp4" autoplay   />
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" autoplay   />
+
+---
+layout: section
+hideInToc: true
+---
+
+# Data in **Your Life**
+
+---
+hideInToc: true
+---
+
+# Thought Exercise — Data in Your Field
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🤔 **Think** (2 min)
+
+Pick a project, hobby, or job you know well.
+
+- What data gets generated?
+- Who collects it, and how?
+- What decisions does it inform?
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💬 **Discuss** (3 min)
+
+Share with a neighbour:
+
+- What is one decision that could be improved if the data were better collected, stored, or analysed?
+- What would "good enough" data analysis look like in your context?
+
+</div>
+
+</div>
+
+<div class="card card-accent pad-tight mt-md">
+
+## 🎯 **Takeaway**
+
+Every field generates data. The tools and mindset you'll build in this course apply far beyond particle physics.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Course **Structure**
 
 ---
 hideInToc: true
@@ -43,7 +293,7 @@ hideInToc: true
 - **Discussion** — building intuition, interactivity is important
 
 Some of the elements require deeper understading in statistics, programming,
-mathematics. The idea is to strike a balance of what to keep as a “black box”
+mathematics. The idea is to strike a balance of what to keep as a "black box"
 and what needs to be understood in detail.
 
 </div>
@@ -67,7 +317,6 @@ concepts on your own projects is the best way to learn.
 ⏱️ **48 hours** contact &nbsp;·&nbsp; **212 hours** self study
 
 </div>
-
 
 ---
 hideInToc: true
@@ -108,7 +357,6 @@ hideInToc: true
 </div>
 
 </div>
-
 
 ---
 hideInToc: true
@@ -370,6 +618,91 @@ hideInToc: true
 <div class="card card-secondary pad-compact">
 
 🚀 Be able to **adapt** to new tools and technologies quicker
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Getting **Started**
+
+---
+hideInToc: true
+---
+
+# Environment Setup
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🖥️ **What You Need**
+
+- A **laptop** with internet access
+- A **web browser** (Chrome, Firefox, Edge)
+- A **text editor** (VS Code recommended — free, cross-platform)
+- **Python 3.10+** installed ([python.org](https://python.org))
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ⚡ **Quick Check**
+
+Open a terminal and run:
+
+```bash
+python --version
+```
+
+You should see `Python 3.x.x`. If not, we'll fix it now.
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+## 🔧 **Today's Task**
+
+1. Install Python if needed
+2. Install VS Code
+3. Open a terminal and verify `python --version`
+4. Create a folder: `mkdir my_data_project`
+5. You're ready for the rest of the course!
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Useful Links
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📚 **Course Materials**
+
+- Course repository on eMokymai
+- These slides: available online
+- Student workbook: companion reference
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔗 **Resources We'll Use**
+
+- [Python.org](https://python.org) — official Python
+- [VS Code](https://code.visualstudio.com) — recommended editor
+- [GitHub](https://github.com) — version control platform
+- [CERN Open Data](http://opendata.cern.ch) — real physics data
 
 </div>
 
