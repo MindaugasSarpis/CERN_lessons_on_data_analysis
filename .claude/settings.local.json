@@ -64,7 +64,8 @@
       "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis show remotes/origin/ff2025:lectures/content/components/VideoPlayer.vue)",
       "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis show remotes/origin/ff2025:lectures/content/slides/L02_Introduction_to_CERN.md)",
       "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis show remotes/origin/ff2025:lectures/content/slides/L2_Introduction_to_CERN.md)",
-      "Bash(du:*)"
+      "Bash(du:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []
