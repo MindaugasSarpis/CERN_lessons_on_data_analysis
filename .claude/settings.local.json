@@ -70,7 +70,11 @@
       "Bash(bash /tmp/compress_videos.sh)",
       "Bash(git diff-tree:*)",
       "Bash(xargs:*)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(git stash:*)",
+      "Bash(git update-ref:*)"
     ],
     "deny": [],
     "ask": []

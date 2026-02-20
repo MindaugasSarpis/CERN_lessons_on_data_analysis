@@ -9,6 +9,7 @@ __pycache__/
 
 # Directories
 .snakemake
+dist/
 lectures/content/public/videos/
 
 ## Core latex/pdflatex auxiliary files:
