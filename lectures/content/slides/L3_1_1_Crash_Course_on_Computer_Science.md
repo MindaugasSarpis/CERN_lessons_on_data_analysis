@@ -52,7 +52,46 @@ graph LR
 hideInToc: true
 ---
 
-# A bit of foresight
+# What is an Algorithm?
+
+<div class="card card-info pad-compact mt-sm">
+
+An **algorithm** is a **finite sequence of well-defined instructions** to solve a problem — the recipe inside the "box."
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-compact">
+
+## 🍳 **Everyday Example**
+
+1. Boil water → add pasta → wait 10 min
+2. Drain → serve
+
+**Input:** raw pasta → **Output:** cooked pasta
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+## 📖 **Finding a Word in a Dictionary**
+
+1. Open to the middle
+2. Is your word before or after?
+3. Go to the correct half, repeat
+
+**Input:** "Python" → **Output:** page 742
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Bit of Foresight
 
 <div class="card card-info pad-tight mt-sm">
 
@@ -81,18 +120,6 @@ graph LR
     linkStyle 0 stroke-width:3px;
     linkStyle 1 stroke-width:3px;
 ```
-
-</div>
-
----
-hideInToc: true
----
-
-<div class="card card-accent pad-tight mt-sm">
-
-## 🧭 **What's Next**
-
-Before building pipelines, we need to understand how computers **represent data** — numbers, text, images — at the most fundamental level.
 
 </div>
 
@@ -189,6 +216,17 @@ hideInToc: true
 ---
 
 # Bit
+
+---
+hideInToc: true
+layout: image
+image: /figures/first_transisor.jpg
+backgroundSize: contain
+---
+
+---
+
+<VideoPlayer src="Technology_Size_Comparison.mp4" autoplay   />
 
 ---
 hideInToc: true
@@ -608,6 +646,30 @@ hideInToc: true
 ## <span>2<sup>8</sup></span> = 256
 
 ---
+hideInToc: true
+---
+
+# File Sizes: From Bits to Terabytes
+
+<div class="card card-info pad-tight mt-sm">
+
+| **Unit** | **Size** | **Everyday Reference** |
+|----------|----------|------------------------|
+| 1 Byte   | 8 bits   | A single character     |
+| 1 KB     | ~1,000 bytes | A short email      |
+| 1 MB     | ~1,000 KB | A photograph          |
+| 1 GB     | ~1,000 MB | ~250 songs (MP3)      |
+| 1 TB     | ~1,000 GB | ~500 hours of video   |
+
+</div>
+
+<div class="card card-warning pad-compact mt-md">
+
+⚠️ Computers use powers of 2: 1 KB = 1,024 bytes (not 1,000). This is why a "1 TB" hard drive shows ~931 GB in your OS.
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -775,7 +837,7 @@ Stores code points in 1–4 bytes, backward-compatible with ASCII
 hideInToc: true
 ---
 
-# Can use Python for conversions
+# Python for Encoding Conversions
 
 <div class="card card-accent pad-tight mt-sm">
 
@@ -794,57 +856,63 @@ b.decode("utf-8")      # back to str
 hideInToc: true
 ---
 
+# From Characters to Multi-Byte Values
+
+<div class="card card-accent pad-tight mt-sm">
+
+## 🧩 **So Far**
+
+We've seen how individual characters are encoded — one byte for ASCII, up to four bytes for UTF-8.
+
+But what happens when we need to store **numbers** that span multiple bytes — like a 32-bit integer or a floating-point value? The next question becomes: **in what order** do those bytes go?
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Endianness
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info pad-compact mt-sm">
 
 ## 🔄 **What is Endianness?**
 
-The **order** in which bytes of a multibyte value are stored in memory. When a number needs more than one byte (e.g., a 32-bit integer uses 4 bytes), the system must decide which byte goes first.
+The **order** in which bytes of a multibyte value are stored in memory.
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary pad-compact">
 
 ## 📦 **Big-Endian**
 
-Most significant byte stored **first** (at lowest address)
+Most significant byte stored **first** (lowest address)
 
 `0x12345678` → `12 34 56 78`
 
-Used by: **network protocols** (TCP/IP), some file formats
+Used by: **network protocols** (TCP/IP)
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary pad-compact">
 
 ## 📦 **Little-Endian**
 
-Least significant byte stored **first** (at lowest address)
+Least significant byte stored **first** (lowest address)
 
 `0x12345678` → `78 56 34 12`
 
-Used by: **x86/x64**, **ARM** (most laptops and phones)
+Used by: **x86/x64**, **ARM** (most PCs & phones)
 
 </div>
 
 </div>
 
-</div>
+<div class="card card-warning pad-compact mt-sm">
 
----
-hideInToc: true
----
-
-# ⚠️ Why Endianness Matters
-
-<div class="card card-warning pad-tight mt-sm">
-
-## ⚠️ **Why It Matters for Data Analysis**
-
-When sharing binary data files across systems, the byte order must match. Tools like NumPy let you specify endianness (e.g., `dtype='>f4'` for big-endian float32). Mismatched endianness produces garbage values.
+⚠️ Mismatched endianness → garbage values. NumPy: `dtype='>f4'` (big) or `dtype='<f4'` (little).
 
 </div>
 
@@ -852,7 +920,7 @@ When sharing binary data files across systems, the byte order must match. Tools 
 hideInToc: true
 ---
 
-# File formats (extensions)
+# File Formats (Extensions)
 
 <div class="card card-info pad-tight mt-sm">
 
@@ -902,6 +970,20 @@ Below are five versions of the same image, saved with **different bit depths**. 
     <img src="/figures/elf_1bit.png" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">1 bit</figcaption>
   </figure>
+</div>
+
+---
+hideInToc: true
+---
+
+# From Pixels to Precision
+
+<div class="card card-accent pad-tight mt-sm">
+
+## 🔢 **The Same Trade-Off, Different Domain**
+
+We just saw how **bit depth** affects image quality — more bits per pixel means more colours and finer gradients. The exact same principle applies to **numbers**: more bits per value means greater range and precision. Let's see how computers represent numbers and what happens when those bits run out.
+
 </div>
 
 ---
@@ -1127,6 +1209,32 @@ math.isclose(0.1 + 0.2, 0.3)  # True
 hideInToc: true
 ---
 
+# Try It in Your Terminal!
+
+<div class="card card-success pad-tight mt-md">
+
+## 🧪 **Live Demo**
+
+Open a terminal and type `python3` (or `python`), then try:
+
+```python
+>>> 0.1 + 0.2
+>>> 0.1 + 0.2 == 0.3
+>>> f"{0.1:.20f}"
+```
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 These aren't bugs — it's how **all** computers store decimals. This will matter when we compare measurements in later lectures.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Integers, Overflow, and Arrays
 
 <div class="grid-2 mt-md gap-md">
@@ -1167,9 +1275,49 @@ b = np.int8(-128)  # min value
 print(b - 1)       # 127 (wraps around!)
 ```
 
-This matters when choosing dtypes in NumPy (L11) — always use a wide enough type for your data range.
+This matters when choosing dtypes in NumPy — always use a wide enough type for your data range.
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data Types in Practice
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-compact">
+
+🔢 **Integers** (`int`) — `42`, `-7`, `0` — fixed-width binary (arbitrary precision in Python)
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+📐 **Floats** (`float`) — `3.14`, `6.022e23` — IEEE-754, watch for rounding!
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+🔤 **Strings** (`str`) — `"Hello"`, `"α"` — Unicode characters, encoded as UTF-8
+
+</div>
+
+<div class="card card-success pad-compact">
+
+✅ **Booleans** (`bool`) — `True` / `False` — a single bit, the basis of all decisions
+
+</div>
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 Every piece of data in your programs is one of these types. Choosing the right one matters for correctness, memory, and performance.
 
 </div>
 
@@ -1245,30 +1393,5 @@ Cryptographic hashes (SHA-256) verify file integrity
 </div>
 
 ---
-hideInToc: true
+disabled: true
 ---
-
-# How These Concepts Connect
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary pad-tight">
-
-## 🔗 **In This Course**
-
-- **File formats** → L3.2 (file handling), L5 (Python I/O)
-- **Floating-point** → L9 (numerical precision in statistics), L10 (fitting)
-- **Binary/hex** → L4 (memory hierarchy), L8 (git hashes)
-- **Compression** → L11 (data formats like Parquet, HDF5)
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 📚 **Going Deeper**
-
-If you are interested in learning more basics of computer science, a great resource is an open course by Harvard University called **CS50**
-
-</div>
-
-</div>

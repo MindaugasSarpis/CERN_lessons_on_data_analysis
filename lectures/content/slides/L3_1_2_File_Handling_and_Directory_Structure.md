@@ -98,13 +98,62 @@ hideInToc: true
 
 ## ✅ **How to Avoid**
 
-- Use automatic cloud backup services (Dropbox, Google Drive, OneDrive)
-
-- Keep external backups on physical drives, ensuring they're in a separate location
+- Follow the **here-near-far** strategy (see next slide)
 
 - Consider version control for text-based files (Git), so you can revert to an older version if needed
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Backup Strategy: Here — Near — Far
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 💻 **Here**
+
+Your **local device** — the working copy you use every day
+
+- Laptop or desktop hard drive
+- Fast access, but vulnerable to hardware failure, theft, or accidents
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔌 **Near**
+
+A **local backup** in the same physical space
+
+- External hard drive, USB stick, or NAS
+- Protects against device failure
+- Still at risk from fire, flood, or theft
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## ☁️ **Far**
+
+A **remote backup** in a different location
+
+- Cloud storage (Google Drive, OneDrive, Dropbox)
+- University-hosted storage or remote server
+- Protects against site-level disasters
+
+</div>
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 A solid backup plan keeps copies at **all three distances**. If any one fails, the others still have you covered.
 
 </div>
 
@@ -136,21 +185,26 @@ hideInToc: true
 
 ## ✅ **How to Avoid**
 
-- Use open-source software and file formats whenever possible
+- Prefer **open-source** software and file formats
 
-- Use cloud-based tools that work across different platforms
+- Choose **cross-platform** tools (cloud-based or multi-OS)
 
-- Use virtual machines or containers to ensure compatibility
+- Pin versions with **virtual environments** or containers
 
-- Use version control to track changes and revert to a working version
+- Track changes with **version control** (Git)
 
-- Use actively maintained software with a large user base
-
-- Agree on software and file formats with collaborators
+- Agree on software and formats with **collaborators** upfront
 
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# File **Naming**
 
 ---
 hideInToc: true
@@ -306,45 +360,43 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Two Different File Types
+# File Naming Cheatsheet
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-warning pad-compact">
 
-## 📄 **Text File**
+## ❌ **Bad**
 
-- Human readable
-
-- Can be opened with any text editor
-
-- Generally larger
-
-- Usually config files, logs, or scripts
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 💾 **Binary File**
-
-- Not human readable
-
-- Requires specific software to open
-
-- Generally smaller
-
-- Usually images, videos, or executables
+```
+final_FINAL_v2 (1).docx
+data.csv
+Copy of analysis.py
+Figure 1 (final).png
+```
 
 </div>
 
+<div class="card card-success pad-compact">
+
+## ✅ **Good**
+
+```
+thesis_draft_v03_2026-02-20.docx
+experiment_alpha_raw_001.csv
+analysis_v02.py
+fig01_mass_spectrum.png
+```
+
 </div>
 
----
-layout: iframe
-hideInToc: true
-url: https://datacarpentry.github.io/rr-organization1/01-file-naming/index.html
----
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 **Recipe:** `project_description_version_date.ext` — descriptive, sortable, no spaces or special characters.
+
+</div>
 
 ---
 hideInToc: true
@@ -378,7 +430,7 @@ hideInToc: true
 ```bash
 |- Figure1/
 |  |- Data/
-|  |- Results
+|  |- Results/
 |  |  |- Figure1.tif
 |- Figure2/
 |  |- Data/
@@ -392,7 +444,145 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-Choose the structure that best fits your workflow — either is valid as long as it is consistent. We'll navigate these structures from the command line in the next lecture.
+Choose the structure that best fits your workflow — either is valid as long as it is consistent. Use the CLI commands you learned (`mkdir`, `ls`, `cd`) to create and navigate these structures.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Try It: Build a Project Skeleton
+
+<div class="card card-success pad-tight mt-md">
+
+## 🧪 **CLI Exercise**
+
+Create this structure from the command line — no file manager allowed!
+
+```bash
+mkdir -p my_project/data/raw my_project/data/processed my_project/results
+touch my_project/README.md
+ls -R my_project
+```
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 The `-p` flag creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Absolute vs Relative Paths
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 📍 **Absolute Path**
+
+Starts from the **root** of the filesystem — always points to the same location regardless of your current directory.
+
+```bash
+# macOS / Linux
+/home/alice/projects/data/results.csv
+
+# Windows
+C:\Users\Alice\projects\data\results.csv
+```
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 📎 **Relative Path**
+
+Starts from your **current directory** — shorter, but meaning changes as you move around.
+
+```bash
+# If you are in /home/alice/projects
+cd data
+cat results.csv
+
+# Go up one level, then into another folder
+cd ../notes
+ls
+```
+
+</div>
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 Use `pwd` to check where you are, then decide: **absolute** for scripts and configs, **relative** for interactive navigation.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Exercise: Fix This Mess (1/2)
+
+<div class="card card-warning pad-tight mt-md">
+
+## 😵 **The Problem**
+
+A colleague shared their project with you. Here's what you received:
+
+```
+Desktop/
+├── final_FINAL_v2.docx
+├── data (1).csv
+├── Copy of data.csv
+├── analysis.py
+├── analysis_old.py
+├── analysis_NEW_USE_THIS.py
+├── plot.png
+├── plot2.png
+├── Figure 1 (final).png
+└── notes.txt
+```
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 **Spot the issues:** spaces in filenames, duplicate data files, no versioning, no folder structure, unclear which script is current, vague figure names.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Exercise: Fix This Mess (2/2)
+
+<div class="card card-success pad-tight mt-md">
+
+## ✅ **Your Task** (10 min, with a partner)
+
+1. Design a proper **directory structure** using `mkdir -p`
+2. **Rename** every file following the conventions we just covered
+3. Draft a **README.md** describing the project and its contents
+4. Decide which files belong in **version control** and which don't
+
+</div>
+
+<div class="card card-primary pad-tight mt-md">
+
+## 💡 **Hints**
+
+- Separate `data/`, `scripts/`, `results/`, and `docs/` folders
+- Use ISO dates or version numbers: `analysis_v01.py`, `analysis_v02.py`
+- Raw data files should never be modified — keep originals in `data/raw/`
+- Figures need descriptive names: what does "plot2" actually show?
 
 </div>
 
@@ -401,14 +591,29 @@ layout: center
 hideInToc: true
 ---
 
-<div class="card card-info pad-compact">
+<div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; align-items: center;">
 
-## 🔄 **Research Data Management Lifecycle**
+[<img src="/figures/RDM_Lifecycle.png" class="inline w-80"/>](https://datamanagement.hms.harvard.edu/)
 
-The RDM lifecycle shows how data flows through planning, collection, processing, analysis, preservation, and sharing — good file handling supports every stage.
+<div>
+
+<div class="card card-primary pad-compact">
+
+- **Plan** → naming conventions & directory structure
+- **Collect & Process** → consistent names, separate raw from processed
+- **Analyse** → version-controlled project folders
+- **Preserve & Share** → open formats, README, metadata
 
 </div>
 
-[<img src="/figures/RDM_Lifecycle.png" class="inline w-120"/>](https://datamanagement.hms.harvard.edu/)
+<div class="card card-info pad-compact mt-sm">
+
+💡 Good file handling supports **every stage** of the research data lifecycle.
+
+</div>
+
+</div>
+
+</div>
 
 ---

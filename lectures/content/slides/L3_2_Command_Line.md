@@ -62,37 +62,29 @@ hideInToc: true
 
 # Why Learn the CLI?
 
-<div class="stack-tight mt-md">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary pad-compact">
 
-## ⚡ **Speed**
-
-Execute complex workflows faster than with a mouse
+⚡ **Speed** — complex workflows faster than with a mouse
 
 </div>
 
 <div class="card card-secondary pad-compact">
 
-## 🔄 **Automation**
-
-Script repetitive steps and share them openly
+🔄 **Automation** — script repetitive steps and share them
 
 </div>
 
 <div class="card card-accent pad-compact">
 
-## 🌐 **Remote Work**
-
-Manage servers and clusters without a GUI
+🌐 **Remote Work** — manage servers and clusters without a GUI
 
 </div>
 
 <div class="card card-info pad-compact">
 
-## 📝 **Transparency & Composability**
-
-Commands document exactly what happened — and small tools can be chained into powerful pipelines
+📝 **Transparency** — commands document exactly what happened
 
 </div>
 
@@ -110,7 +102,7 @@ hideInToc: true
 
 ## 🐚 **Shells**
 
-```bash
+```text
 PowerShell
 bash / zsh
 fish
@@ -125,8 +117,11 @@ fish
 
 ## 📍 **Prompt Structure**
 
-```bash
+```sh
 user@machine:path $
+```
+
+```powershell
 PS C:\Users\You>
 ```
 
@@ -188,7 +183,7 @@ hideInToc: true
 
 ## 🪟 **PowerShell**
 
-```bash
+```powershell
 Get-Location
 Set-Location Documents
 Get-ChildItem
@@ -233,7 +228,7 @@ hideInToc: true
 
 ## 🪟 **PowerShell**
 
-```bash
+```powershell
 Get-Content README.md
 Select-String "analysis" *.txt
 ```
@@ -275,7 +270,7 @@ hideInToc: true
 
 ## 🪟 **PowerShell**
 
-```bash
+```powershell
 New-Item project -ItemType Directory
 New-Item notes.txt -ItemType File
 Add-Content notes.txt "Result: 42"
@@ -304,6 +299,7 @@ echo "Result: 42" >> notes.txt
 - Pair the CLI with `git` to track work precisely
 - Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
 - Script file creation to keep project structure consistent
+- Later: **file naming conventions**, **Markdown** for documentation, and **VS Code** as your IDE
 
 </div>
 
@@ -366,10 +362,10 @@ hideInToc: true
 
 ## 🪟 **PowerShell**
 
-```bash
-Get-Process python
-Stop-Process -Name python
-Start-Job -ScriptBlock { python script.py }
+```powershell
+Get-Process firefox
+Stop-Process -Name firefox
+Start-Job -ScriptBlock { ./long_task.sh }
 ```
 
 </div>
@@ -379,9 +375,9 @@ Start-Job -ScriptBlock { python script.py }
 ## 🐧 **macOS & Linux**
 
 ```bash
-ps aux | grep python
-killall python
-nohup python script.py &
+ps aux | grep firefox
+killall firefox
+nohup ./long_task.sh &
 ```
 
 </div>
@@ -406,51 +402,35 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary pad-compact">
 
 ## 🪟 **PowerShell Pipeline**
 
-```bash
+```powershell
 Get-ChildItem *.csv |
   Where-Object { $_.Length -gt 1MB } |
-  Sort-Object Length -Descending
-```
-
-**Save Results:**
-
-```bash
-... | Out-File large_files.txt
+  Sort-Object Length -Descending |
+  Out-File large_files.txt
 ```
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary pad-compact">
 
 ## 🐧 **UNIX Pipeline**
 
 ```bash
-ls -lh *.csv \
-  | awk '$5+0 > 1 {print $9, $5}' \
-  | sort -k2hr
-```
-
-**Save Results:**
-
-```bash
-... > large_files.txt
+ls -lh *.csv | awk '$5+0 > 1 {print $9, $5}' \
+  | sort -k2hr > large_files.txt
 ```
 
 </div>
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info pad-compact mt-md">
 
-<div class="note-text">
-
-**Key insight:** Pipelines let each tool focus on one job. Reuse the same pattern across projects with minimal edits.
-
-</div>
+💡 Pipelines let each tool focus on one job. Reuse the same pattern across projects with minimal edits.
 
 </div>
 
@@ -466,7 +446,7 @@ hideInToc: true
 
 ## 🪟 **PowerShell**
 
-```bash
+```powershell
 Get-Command *csv*
 Get-Help Get-Content -Examples
 ```
@@ -490,9 +470,47 @@ man cat
 
 ## 📚 **Learning Faster**
 
-- Use `--help` or `/?` flags for quick summaries
+- Use `--help`, `--version`, or `/?` flags for quick summaries
 - Explore interactive help (`Get-Help -Online`, `tldr command`)
 - Build a personal cheatsheet for frequent tasks
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Common CLI Mistakes
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning pad-tight">
+
+## ⚠️ **Dangerous**
+
+- `rm -rf /` — deletes your entire system
+- Running commands in the **wrong directory**
+- Overwriting files with `>` instead of appending with `>>`
+- Copy-pasting commands from the internet without reading them
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **Safe Habits**
+
+- Always `pwd` before destructive operations
+- Use `ls` to verify targets before `rm`
+- Try `--dry-run` flags when available
+- Read `man` pages for unfamiliar commands
+
+</div>
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+💡 **Rule of thumb:** if a command can't be undone, double-check before pressing Enter.
 
 </div>
 
@@ -504,33 +522,33 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary pad-compact">
 
-## 🧩 **Keep commands small and composable**
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 📖 **Use aliases sparingly—prefer readable scripts**
+🧩 Keep commands small and composable
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-secondary pad-compact">
 
-## 📁 **Store reusable commands in scripts under version control**
-
-</div>
-
-<div class="card card-success pad-tight">
-
-## 📋 **Document workflows in README files with copy-paste commands**
+📖 Use aliases sparingly — prefer readable scripts
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-info pad-compact">
 
-## 💪 **Practice regularly to build muscle memory**
+📁 Store reusable commands in scripts under version control
+
+</div>
+
+<div class="card card-success pad-compact">
+
+📋 Document workflows in README files with copy-paste commands
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+💪 Practice regularly to build muscle memory
 
 </div>
 
@@ -565,8 +583,12 @@ hideInToc: true
 </div>
 
 ---
-layout: statement
+layout: quote
 hideInToc: true
 ---
 
 # The CLI is your multiplier—start small, automate often, and watch productivity compound.
+
+---
+disabled: true
+---

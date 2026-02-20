@@ -60,7 +60,7 @@ hideInToc: true
 
 GitHub READMEs • Jupyter Notebooks • Slidev • Jekyll • Hugo • Obsidian • Notion
 
-<div class="note-text mt-sm">Remember creating <code>README.md</code> from the CLI in our earlier lectures? That was Markdown!</div>
+<div class="note-text mt-sm">Remember using <code>touch README.md</code> from the CLI? That file was Markdown!</div>
 
 </div>
 
@@ -353,7 +353,7 @@ Use `inline code` within a sentence.
 
 ## 📦 **Code Block**
 
-- Use triple backticks to create "```" a code block
+- Wrap code in triple backticks to create a code block
 
 ```
   function hello() {
@@ -475,8 +475,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Summary & Practice
-
 <div class="card card-info pad-tight">
 
 ## 📋 **Key Takeaways**
@@ -488,11 +486,15 @@ hideInToc: true
 
 </div>
 
+---
+hideInToc: true
+---
+
 <div class="card card-success pad-tight mt-md">
 
 ## 🚀 **Practice Exercise**
 
-Create a file called `about_me.md` and include the following:
+From the CLI, run `touch about_me.md` and open it in VS Code. Include:
 
 1. A **level-1 header** with your name
 2. A short **paragraph** about yourself (use bold and italic)
@@ -500,4 +502,10 @@ Create a file called `about_me.md` and include the following:
 4. A **link** to your favourite website
 5. A **code block** with a "Hello, World!" snippet in any language
 
+Then preview it: open VS Code's Markdown preview with `Ctrl+Shift+V` (or `Cmd+Shift+V` on Mac)
+
 </div>
+
+---
+disabled: true
+---

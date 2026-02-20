@@ -198,6 +198,13 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# A Journey Through **Scale**
+
+---
 
 <VideoPlayer src="Skylapse.mp4" autoplay loop   />
 
@@ -207,7 +214,7 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 
 ---
 
-<VideoPlayer src="VU_VM_Zoom.mov" autoplay   />
+<VideoPlayer src="VU_VM_Zoom.mp4" autoplay   />
 
 ---
 
@@ -258,6 +265,13 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 ---
 
 <VideoPlayer src="Cloud_Chamber_Audio.mp4" autoplay   />
+
+---
+layout: section
+hideInToc: true
+---
+
+# Inside **CERN**
 
 ---
 
