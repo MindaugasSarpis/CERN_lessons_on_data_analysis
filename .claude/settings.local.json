@@ -67,7 +67,10 @@
       "Bash(du:*)",
       "Bash(echo:*)",
       "Bash(ffmpeg:*)",
-      "Bash(bash /tmp/compress_videos.sh)"
+      "Bash(bash /tmp/compress_videos.sh)",
+      "Bash(git diff-tree:*)",
+      "Bash(xargs:*)",
+      "Bash(git ls-tree:*)"
     ],
     "deny": [],
     "ask": []
