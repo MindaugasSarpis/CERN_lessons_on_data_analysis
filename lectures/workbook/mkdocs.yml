@@ -3,13 +3,16 @@ site_name: Lessons on Data Analysis from CERN
 nav:
   - Home: index.md
   - Lectures:
-      - Pyhon Fundamentals: lectures/python_fundamentals.md
-      - Lecture 1: lectures/lecture_1.md
-      - Lecture 2: lectures/lecture_2.md
-      - Lecture 3: lectures/lecture_3.md
-      - Lecture 4: lectures/lecture_4.md
-      - Data Visualization: lectures/data_visualisation.md
-      - Lecture 10: Practical Data Fitting: lectures/lecture_10.md
-      - Lecture 11: NumPy & Pandas: lectures/lecture_11.md
-      - Lecture 12: Reproducible Workflows: lectures/lecture_12.md
+      - L1 Induction: lectures/lecture_1.md
+      - L2 Intro to CERN: lectures/lecture_2.md
+      - L3 Computer Science: lectures/lecture_3.md
+      - L4 Computing Infrastructure: lectures/lecture_4.md
+      - L5 Python Programming: lectures/lecture_5.md
+      - L6 Concepts of Data Analysis: lectures/lecture_6.md
+      - L7 Data Visualisation: lectures/lecture_7.md
+      - L8 Version Control: lectures/lecture_8.md
+      - L9 Probability & Statistics: lectures/lecture_9.md
+      - L10 Practical Data Fitting: lectures/lecture_10.md
+      - L11 NumPy & Pandas: lectures/lecture_11.md
+      - L12 Reproducible Workflows: lectures/lecture_12.md
       - Miscellaneous: lectures/misc.md

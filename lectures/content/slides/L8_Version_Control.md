@@ -43,6 +43,7 @@ hideInToc: true
 - Some overwritten changes might be needed later
 - A "versioned" file might be needed when implementing comments from supervisor / reviewers
 - This holds true for written work, code and other files
+- Remember `about_me.md` from the Markdown exercise? Let's track it properly!
 
 </div>
 
@@ -127,6 +128,59 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Installing `git`
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🍎 **macOS**
+
+```bash
+# Check if already installed
+git --version
+
+# Install via Homebrew
+brew install git
+
+# Or install Xcode Command Line Tools (includes git)
+xcode-select --install
+```
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🪟 **Windows**
+
+Download from [git-scm.com](https://git-scm.com/download/win) and run the installer.
+
+Use **Git Bash** (included) or the VS Code terminal.
+
+```bash
+# Verify installation
+git --version
+```
+
+</div>
+
+</div>
+
+<div class="card card-info pad-tight mt-md">
+
+## 🐧 **Linux**
+
+```bash
+sudo apt install git    # Debian/Ubuntu
+sudo dnf install git    # Fedora
+```
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Using `git` for the first time
 
 <div class="grid-2 gap-md mt-md">
@@ -185,29 +239,26 @@ pull.rebase=false
 hideInToc: true
 ---
 
-# Creating a new repository
+# Creating a New Repository
 
 <div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary pad-tight">
 
-## 📂 **Initializing a Repository**
-
-- A repository is initialized with the following command:
+## 📂 **Initializing**
 
 ```bash
 git init
 ```
 
-- This command creates a new repository in the current directory.
-
-- The repository is a hidden directory called `.git` that contains all the information changes tracked by `git`.
-
-- You can check the status of the repository with:
+- Creates a hidden `.git` directory that tracks all changes
+- Run this once in your project folder
 
 ```bash
 git status
 ```
+
+- Shows the current state of your repository
 
 </div>
 
@@ -215,9 +266,21 @@ git status
 
 ![](/figures/git-staging-area.svg)
 
-<div class="card card-secondary pad-compact mt-sm">
+</div>
 
-The repository is empty at this point and the output will be:
+</div>
+
+---
+hideInToc: true
+---
+
+# Repository Status
+
+<div class="card card-secondary pad-tight mt-md">
+
+## 🔍 **Initial Status Output**
+
+The repository is empty — git tells you what to do next:
 
 ```bash
 On branch main
@@ -229,7 +292,9 @@ nothing to commit (create/copy files and use "git add" to track)
 
 </div>
 
-</div>
+<div class="card card-info pad-compact mt-md">
+
+You will see `git status` a lot — it is the most useful command for understanding where you are.
 
 </div>
 
@@ -514,10 +579,10 @@ git reset --hard < hash >
 </div>
 
 ---
+hideInToc: true
 layout: image
 image: /figures/git_staging.svg
 backgroundSize: contain
-hideInToc: true
 ---
 
 ---
@@ -548,85 +613,46 @@ hideInToc: true
 
 <div>
 
-```bash {*}{maxHeight:'350px'}
-# Byte-compiled / optimized / DLL files
+```bash {*}{maxHeight:'340px'}
+# Byte-compiled / optimized files
 __pycache__/
 *.py[cod]
-*$py.class
-
-# C extensions
 *.so
 
 # Distribution / packaging
-.Python
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
 *.egg
-MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# IPython
-profile_default/
-ipython_config.py
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Environments
+# Virtual environments
 .env
 .venv
 env/
 venv/
-ENV/
-env.bak/
-venv.bak/
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+
+# Data / output files
+*.csv
+*.hdf5
+*.root
+output/
 ```
 
 </div>
@@ -870,46 +896,25 @@ git commit -m "Resolve merge conflict"
 hideInToc: true
 ---
 
-# Typical Daily Workflow
-
-<div class="stack-tight mt-md">
-
+<div class="stack-tight">
 <div class="card card-primary pad-compact">
-
-1️⃣ `git pull` — get latest changes from remote
-
+1️⃣ <code>git pull</code> — get latest changes from remote
 </div>
-
 <div class="card card-secondary pad-compact">
-
-2️⃣ `git switch -c my-feature` — create a branch for your work
-
+2️⃣ <code>git switch -c my-feature</code> — create a branch for your work
 </div>
-
 <div class="card card-accent pad-compact">
-
-3️⃣ *Make changes to files*
-
+3️⃣ <em>Make changes to files</em>
 </div>
-
 <div class="card card-info pad-compact">
-
-4️⃣ `git add` + `git commit -m "descriptive message"` — save your work
-
+4️⃣ <code>git add</code> + <code>git commit -m "descriptive message"</code> — save your work
 </div>
-
 <div class="card card-success pad-compact">
-
-5️⃣ `git push origin my-feature` — share with remote
-
+5️⃣ <code>git push origin my-feature</code> — share with remote
 </div>
-
 <div class="card card-warning pad-compact">
-
-6️⃣ *Create a Pull Request on GitHub for code review*
-
+6️⃣ <em>Create a Pull Request on GitHub for code review</em>
 </div>
-
 </div>
 
 ---

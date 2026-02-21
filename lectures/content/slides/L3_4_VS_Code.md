@@ -187,8 +187,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-# The Command Palette
-
 <div class="card card-accent pad-tight mt-md">
 
 ## 🎯 **Your Most Powerful Tool**

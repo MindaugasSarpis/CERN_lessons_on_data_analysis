@@ -48,7 +48,11 @@ src: slides/L3_3_Markdown.md
 ---
 
 ---
-src: slides/L4_Computing_Infrastructure.md
+src: slides/L3_4_VS_Code.md
+---
+
+---
+src: slides/L8_Version_Control.md
 ---
 
 ---
@@ -64,7 +68,7 @@ src: slides/L7_Data_Visualisation.md
 ---
 
 ---
-src: slides/L8_Version_Control.md
+src: slides/L4_Computing_Infrastructure.md
 ---
 
 ---

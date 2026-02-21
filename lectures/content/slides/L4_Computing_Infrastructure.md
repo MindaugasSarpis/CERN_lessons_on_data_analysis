@@ -7,6 +7,7 @@ colorSchema: dark
 theme: ./theme
 drawings:
   persist: false
+mermaid: true
 
 transition: fade
 
@@ -26,6 +27,48 @@ layout: quote
 ---
 
 # Every data analysis depends on the hardware beneath it. Understanding **CPUs**, **memory**, **storage**, and **accelerators** helps you write faster code, choose the right tools, and make the most of the machines you work with.
+
+---
+hideInToc: true
+---
+
+# Why Hardware Matters for Data Analysis
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🚀 **Performance**
+
+The difference between a 10-second and a 10-hour analysis often comes down to hardware choices — memory size, storage speed, and whether you use a GPU
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🧠 **Informed Decisions**
+
+Understanding what's under the hood helps you choose the right cloud instance, optimize your code, and debug performance bottlenecks
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 💡 **Vocabulary**
+
+You will encounter terms like CPU cores, RAM, NVMe, and GPU acceleration constantly — in job descriptions, documentation, and team discussions
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🔬 **CERN Scale**
+
+CERN processes petabytes of data using massive computing grids — the same principles apply at every scale, from your laptop to a data centre
+
+</div>
+
+</div>
 
 ---
 layout: fact
@@ -90,6 +133,13 @@ hideInToc: true
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# The **CPU**
+
+---
 hideInToc: true
 ---
 
@@ -139,7 +189,7 @@ hideInToc: true
 
 ## ⏱️ **Clock Speed**
 
-How many cycles per second the CPU can execute (measured in GHz)
+How many cycles per second the CPU can execute — modern CPUs run at **3–5 GHz** (billions of cycles per second)
 
 </div>
 
@@ -147,7 +197,7 @@ How many cycles per second the CPU can execute (measured in GHz)
 
 ## 🔢 **Number of Cores**
 
-More cores enable parallel execution of independent tasks
+More cores enable parallel execution — laptops typically have **4–16 cores**, servers up to **128+**
 
 </div>
 
@@ -155,7 +205,7 @@ More cores enable parallel execution of independent tasks
 
 ## 💨 **Cache Size**
 
-Larger caches reduce memory access latency for frequently used data
+Larger caches reduce memory access latency — typically **32 KB** (L1) to **32 MB** (L3) per chip
 
 </div>
 
@@ -163,7 +213,7 @@ Larger caches reduce memory access latency for frequently used data
 
 ## 🔋 **Power Efficiency**
 
-Performance per watt matters for sustained workloads and cooling
+Performance per watt matters — a laptop CPU uses **15–45W**, a server chip **200–350W**
 
 </div>
 
@@ -210,6 +260,13 @@ Apple M4 system-on-chip (SoC) — integrates CPU, GPU, Neural Engine, and unifie
 
 </div>
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Memory & **Storage**
 
 ---
 hideInToc: true
@@ -484,6 +541,13 @@ Reading a large dataset from disk or over a network often dominates total runtim
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Specialized **Processors**
+
+---
 hideInToc: true
 ---
 
@@ -609,6 +673,13 @@ A visual demonstration of serial vs. parallel processing. The CPU paints one pix
 
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Infrastructure & **Software**
+
+---
 hideInToc: true
 ---
 
@@ -710,6 +781,13 @@ hideInToc: true
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# The Memory **Hierarchy**
 
 ---
 hideInToc: true
@@ -836,3 +914,102 @@ An animated explanation of the memory hierarchy — from CPU registers to hard d
     allowfullscreen>
   </iframe>
 </div>
+
+---
+hideInToc: true
+---
+
+# Exercise — Know Your Machine
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🖥️ **macOS / Linux**
+
+```bash
+# CPU info
+sysctl -n machdep.cpu.brand_string  # macOS
+lscpu                                # Linux
+
+# RAM
+sysctl -n hw.memsize      # macOS (bytes)
+free -h                    # Linux
+
+# Disk
+df -h
+```
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🪟 **Windows (PowerShell)**
+
+```powershell
+# CPU info
+Get-WmiObject Win32_Processor | Select Name
+
+# RAM
+(Get-CimInstance Win32_PhysicalMemory |
+  Measure -Property Capacity -Sum).Sum / 1GB
+
+# Disk
+Get-PSDrive C
+```
+
+</div>
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+## 🎯 **Try it now**
+
+Open a terminal and find out: How many CPU cores do you have? How much RAM? What type of storage (HDD or SSD)?
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Key Takeaways
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 🧠 **CPU**
+
+The brain of computation — clock speed, cores, and cache determine how fast you can crunch numbers
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 💾 **Memory Hierarchy**
+
+Speed and cost trade off — registers are fastest, disk is cheapest. Keeping data close to the CPU is key
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🎮 **Specialized Hardware**
+
+GPUs and other accelerators enable massive parallelism for data-intensive and ML workloads
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 📊 **Why It Matters**
+
+Understanding hardware helps you choose the right tools, write faster code, and avoid bottlenecks in your data analysis pipelines
+
+</div>
+
+</div>
+
+---

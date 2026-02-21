@@ -33,13 +33,62 @@ layout: quote
 hideInToc: true
 ---
 
+# Why Data Visualization Matters
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary pad-tight">
+
+## 👁️ **Visual Perception**
+
+The human brain processes images 60,000x faster than text. A well-designed chart can communicate in seconds what a table of numbers takes minutes to parse.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔍 **Pattern Discovery**
+
+Visualizations reveal structure — clusters, trends, outliers, and gaps — that summary statistics alone can hide. Anscombe's quartet is the classic proof.
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 📢 **Communication**
+
+A plot is often the first (and sometimes only) thing a reader looks at. It carries your argument. Bad figures undermine credible analysis.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## ⚠️ **Deception Prevention**
+
+Understanding visualization principles protects you from being misled — and from accidentally misleading others.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # **Aesthetics** of Data Visualization
 
-<img src="/figures/data_vis_aesthetics.png" style="display:block;margin:0 auto;width:75%;">
+<div class="card card-info pad-compact mt-sm">
+
+Every data point is mapped to visual properties — **position**, **color**, **shape**, **size**, **line style**. These mappings are called **aesthetic mappings**, and choosing them well is the core skill of visualization.
+
+</div>
+
+<img src="/figures/data_vis_aesthetics.png" style="display:block;margin:0 auto;width:70%;">
 
 ---
 layout: iframe
 hideInToc: true
+disabled: true
 url: https://datavizcatalogue.com/
 ---
 
@@ -49,6 +98,13 @@ layout: image
 backgroundSize: cover
 image: /figures/data_vis_anatomy_of_a_figure.svg
 ---
+
+---
+layout: section
+hideInToc: true
+---
+
+# Plot **Components**
 
 ---
 hideInToc: true
@@ -100,6 +156,7 @@ A legend is a key component of a plot that explains the meaning of the data. It 
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # What's **Wrong?**
@@ -114,6 +171,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # What's **Wrong?**
@@ -128,6 +186,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # **Corrected**
@@ -142,6 +201,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # **Corrected**
@@ -209,6 +269,13 @@ layout: image
 backgroundSize: contain
 image: /figures/data_vis_axes_2.png
 ---
+
+---
+layout: section
+hideInToc: true
+---
+
+# Visualizing **Data**
 
 ---
 hideInToc: true
@@ -290,6 +357,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # What's **Wrong?**
@@ -304,6 +372,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # **Corrected**
@@ -318,6 +387,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # What's **Wrong?**
@@ -332,6 +402,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # Stacked Bar Charts
@@ -388,6 +459,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # What's **Wrong?**
@@ -458,6 +530,7 @@ image: /figures/data_vis_hist.png
 
 ---
 hideInToc: true
+disabled: true
 layout: image
 backgroundSize: contain
 image: /figures/data_vis_hist_comp.png
@@ -465,6 +538,7 @@ image: /figures/data_vis_hist_comp.png
 
 ---
 hideInToc: true
+disabled: true
 ---
 
 # What's **Wrong?**
@@ -479,6 +553,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+disabled: true
 layout: image
 backgroundSize: contain
 image: /figures/data_vis_hist_scientific_1.png
@@ -486,10 +561,119 @@ image: /figures/data_vis_hist_scientific_1.png
 
 ---
 hideInToc: true
+disabled: true
 layout: image
 backgroundSize: contain
 image: /figures/data_vis_hist_scientific_2.png
 ---
+
+---
+hideInToc: true
+---
+
+# The **Data-to-Ink Ratio**
+
+<div class="card card-info pad-tight mt-sm">
+
+## 📐 **Edward Tufte's Principle**
+
+> "Above all else, show the data." Every drop of ink on a chart should serve a purpose. The **data-to-ink ratio** = (ink used to display data) / (total ink used in the graphic).
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning pad-tight">
+
+## 🚫 **Chart Junk**
+
+- Unnecessary 3D effects
+- Decorative backgrounds and gradients
+- Redundant gridlines and borders
+- Excessive labels and annotations
+
+</div>
+
+<div class="card card-success pad-tight">
+
+## ✅ **Clean Design**
+
+- Remove non-data ink (borders, fills, redundant axes)
+- Let the data be the visual focus
+- Use whitespace intentionally
+- Every element earns its place
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Choosing the **Right Chart**
+
+<div class="card card-info pad-compact mt-sm">
+
+Match the chart type to the relationship you want to show:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="stack-tight">
+
+<div class="card card-primary pad-compact">
+
+📊 **Comparison** across categories → Bar chart
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+📈 **Trend** over time → Line plot
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+🔵 **Relationship** between two variables → Scatter plot
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-info pad-compact">
+
+📦 **Distribution** of values → Histogram or box plot
+
+</div>
+
+<div class="card card-success pad-compact">
+
+🧩 **Part-to-whole** → Stacked bar (NOT pie chart)
+
+</div>
+
+<div class="card card-warning pad-compact">
+
+🌡️ **Two-variable density** → Heat map
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-warning pad-compact mt-md">
+
+## 🥧 **A Note on Pie Charts**
+
+Humans are poor at comparing angles and areas. Pie charts are almost always worse than a simple bar chart. Avoid them — use bar charts or stacked bars instead.
+
+</div>
 
 ---
 hideInToc: true
@@ -534,6 +718,13 @@ There are many more plot types used in data analysis. Here are a few you will en
 We will create scatter plots, line plots, box plots, and more **interactively** using Pandas and Matplotlib. You will learn to write Python code that generates publication-quality figures.
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Design **Principles**
 
 ---
 hideInToc: true
@@ -601,9 +792,9 @@ hideInToc: true
 
 ## 🔗 **What Comes Next**
 
-- **L11**: Create scatter, line, and box plots with `matplotlib` and Pandas
-- **L10**: Visualize fit results with residual plots
-- **L12**: Automate plot generation in reproducible workflows
+- **L9–L10**: Statistics and data fitting — you will visualize distributions, fits, and residuals
+- **L11**: Create plots interactively with `matplotlib` and Pandas
+- Use **git** (already covered!) to version-control your figures and analysis
 
 Good visualization is not decoration — it is **analysis**. A well-chosen plot reveals structure that statistics alone cannot.
 

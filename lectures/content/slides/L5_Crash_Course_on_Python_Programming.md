@@ -34,6 +34,36 @@ layout: quote
 hideInToc: true
 ---
 
+# Why Python
+
+<div class="card card-primary pad-tight mt-md">
+
+## 🌍 **Most Popular & Easy to Learn**
+
+Python is one of the most popular and easy to learn programming languages in the world
+
+</div>
+
+<div class="card card-secondary pad-tight mt-sm">
+
+## 👥 **Large Community & Ecosystem**
+
+A large community of developers and users as well as a large number of libraries and frameworks make it a very versatile language
+
+</div>
+
+<div class="card card-success pad-tight mt-sm">
+
+## 🆓 **Open-Source & Powerful**
+
+Python itself and many of its libraries and tools are open-source and free to use and at the same time much more powerful than many commercial tools
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Useful Resources for Starting with Python
 
 <div class="grid-2 gap-md mt-md">
@@ -82,31 +112,55 @@ All platforms offer free tiers with comprehensive Python content.
 hideInToc: true
 ---
 
-# Why Python
+<div class="card card-info pad-compact mt-md">
 
-<div class="card card-primary pad-tight mt-md">
+## 🔍 **Do You Have Python?**
 
-## 🌍 **Most Popular & Easy to Learn**
+Open your terminal (VS Code: `` Ctrl+` ``) and run:
 
-Python is one of the most popular and easy to learn programming languages in the world
+```bash
+python --version      # or python3 --version
+```
 
-</div>
-
-<div class="card card-secondary pad-tight mt-sm">
-
-## 👥 **Large Community & Ecosystem**
-
-A large community of developers and users as well as a large number of libraries and frameworks make it a very versatile language
+You should see `Python 3.x.x`.
 
 </div>
 
-<div class="card card-success pad-tight mt-sm">
+<div class="grid-2 gap-md mt-sm">
 
-## 🆓 **Open-Source & Powerful**
+<div class="card card-primary pad-compact">
 
-Python itself and many of its libraries and tools are open-source and free to use and at the same time much more powerful than many commercial tools
+## 🍎 **macOS / Linux**
+
+```bash
+brew install python        # macOS (Homebrew)
+sudo apt install python3   # Ubuntu/Debian
+```
 
 </div>
+
+<div class="card card-secondary pad-compact">
+
+## 🪟 **Windows**
+
+Download from [python.org](https://www.python.org/downloads/) — check **"Add Python to PATH"** during install.
+
+</div>
+
+</div>
+
+<div class="card card-warning pad-compact mt-sm">
+
+We will use the **in-browser editor** on these slides for learning, but you will need a local Python install for your projects.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Python **Basics**
 
 ---
 hideInToc: true
@@ -220,18 +274,21 @@ hideInToc: true
 
 ```python
 # Arithmetic
-2 + 3 # Addition
-5 - 2 # Subtraction
-3 * 4 # Multiplication
-6 / 2 # Division
-5 % 2 # Modulus
+2 + 3   # Addition       → 5
+5 - 2   # Subtraction    → 3
+3 * 4   # Multiplication → 12
+6 / 2   # Division       → 3.0 (always float!)
+7 // 2  # Floor division → 3
+5 % 2   # Modulus        → 1
+2 ** 10 # Exponentiation → 1024
 ```
 
 ```python
-# Comparison
-3  > 2 # True
-4 == 4 # True
-5 != 3 # True
+# Comparison & Logic
+3 > 2 and 4 == 4  # True
+5 != 3 or 1 > 10  # True
+not False          # True
+"a" in "abc"       # True
 ```
 
 </div>
@@ -267,6 +324,13 @@ is_valid = True    # Boolean
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Data **Structures**
 
 ---
 hideInToc: true
@@ -494,6 +558,13 @@ print(f"\nUpdated: {experiment['name']} has {experiment['num_detectors']} detect
 ```
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Control **Flow**
+
+---
 hideInToc: true
 ---
 
@@ -579,6 +650,13 @@ for e in energies:
 high_count = sum(1 for e in energies if e > 10)
 print(f"\nHigh energy events (>10 GeV): {high_count}/{len(energies)}")
 ```
+
+---
+layout: section
+hideInToc: true
+---
+
+# Functions & **Patterns**
 
 ---
 hideInToc: true
@@ -700,6 +778,85 @@ evens = [x for x in range(10) if x % 2 == 0]
 - Complex logic with side effects → traditional loop
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Useful Built-in Patterns
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+#### 🔢 **`enumerate()` — Loop with Index**
+
+```python
+detectors = ["ATLAS", "CMS", "ALICE", "LHCb"]
+
+for i, name in enumerate(detectors):
+    print(f"{i}: {name}")
+# 0: ATLAS
+# 1: CMS
+# 2: ALICE
+# 3: LHCb
+```
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+#### 🔗 **`zip()` — Loop over Multiple Lists**
+
+```python
+names    = ["electron", "muon",  "tau"]
+masses   = [0.511,      105.66,  1776.9]
+
+for name, mass in zip(names, masses):
+    print(f"{name}: {mass} MeV")
+# electron: 0.511 MeV
+# muon: 105.66 MeV
+# tau: 1776.9 MeV
+```
+
+</div>
+
+</div>
+
+<div class="card card-info pad-compact mt-md">
+
+#### 💡 **Tip**
+
+- `enumerate()` replaces the `for i in range(len(...)): ` anti-pattern
+- `zip()` stops at the shortest list
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Try It — enumerate & zip
+
+```py {monaco-run}
+# Particle data from the Standard Model
+particles = ["electron", "muon", "tau", "proton", "neutron"]
+masses_MeV = [0.511, 105.66, 1776.9, 938.3, 939.6]
+charges = [-1, -1, -1, +1, 0]
+
+print("Particle Catalog:")
+print("-" * 45)
+for i, (name, mass, charge) in enumerate(zip(particles, masses_MeV, charges)):
+    sign = "+" if charge > 0 else "" if charge < 0 else " "
+    print(f"  {i+1}. {name:10s}  mass={mass:8.2f} MeV  charge={sign}{charge}")
+```
+
+---
+layout: section
+hideInToc: true
+---
+
+# Files & **Modules**
 
 ---
 hideInToc: true
@@ -887,6 +1044,13 @@ rows = df.to_dict(orient="records")             # list[dict]
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Mini **Projects**
+
+---
 hideInToc: true
 ---
 
@@ -947,6 +1111,85 @@ print("\nNext up: NumPy and matplotlib will make this MUCH easier!")
 hideInToc: true
 ---
 
+# From Browser to Real Files
+
+<div class="card card-info pad-tight mt-md">
+
+## 🖥️ **Time to Write Real Python**
+
+The in-browser exercises were great for learning — now let's create an actual Python script you can run, share, and version-control.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-compact">
+
+**1.** In VS Code, create a new file: `File → New File` → save as `sensor_analysis.py`
+
+</div>
+
+<div class="card card-secondary pad-compact">
+
+**2.** Copy your mini project code into the file (or write it fresh from memory!)
+
+</div>
+
+<div class="card card-accent pad-compact">
+
+**3.** Open the VS Code terminal (`Ctrl+`` `) and run:
+
+```bash
+python sensor_analysis.py
+```
+
+</div>
+
+<div class="card card-success pad-compact">
+
+**4.** See the same output — but now it lives as a file on your machine, not just in a browser tab
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Version-Control Your Work
+
+<div class="card card-success pad-tight mt-md">
+
+## 🔄 **Save Your Progress with Git**
+
+You learned `git` earlier today — now put it to use! After completing the mini projects:
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary pad-compact">
+
+```bash
+git add sensor_analysis.py
+git commit -m "Add sensor temperature analysis script"
+```
+
+</div>
+
+<div class="card card-info pad-compact">
+
+**Good habit**: commit after each working milestone. Your future self will thank you.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # What Comes Next
 
 <div class="grid-2 mt-md gap-md">
@@ -957,9 +1200,9 @@ hideInToc: true
 
 These basics unlock a powerful ecosystem:
 
-- **Next**: NumPy arrays, Pandas DataFrames & `matplotlib` visualization
-- **Later**: Probability & statistics, data fitting with `scipy`
-- **L12**: Reproducible workflows to automate everything
+- **Next**: Concepts of data analysis — the framework for thinking about data
+- Data visualization principles — how to communicate with plots
+- **Later**: NumPy, Pandas, matplotlib, probability, statistics, and data fitting
 
 </div>
 

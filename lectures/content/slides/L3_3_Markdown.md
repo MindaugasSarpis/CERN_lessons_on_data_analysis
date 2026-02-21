@@ -504,6 +504,8 @@ From the CLI, run `touch about_me.md` and open it in VS Code. Include:
 
 Then preview it: open VS Code's Markdown preview with `Ctrl+Shift+V` (or `Cmd+Shift+V` on Mac)
 
+<div class="note-text mt-sm">We will version-control this file with **git** very soon!</div>
+
 </div>
 
 ---

@@ -11,8 +11,8 @@ drawings:
 transition: fade
 hideInToc: true
 
-# addons:
-#   - slidev-addon-python-runner
+addons:
+  - slidev-addon-python-runner
 mermaid: true
 
 ---
@@ -56,4 +56,12 @@ src: slides/L3_4_VS_Code.md
 
 ---
 src: slides/L3_3_Markdown.md
+---
+
+---
+src: slides/L8_Version_Control.md
+---
+
+---
+src: slides/L5_Crash_Course_on_Python_Programming.md
 ---
