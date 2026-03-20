@@ -75,7 +75,10 @@
       "Bash(git filter-branch:*)",
       "Bash(git stash:*)",
       "Bash(git update-ref:*)",
-      "mcp__plugin_playwright_playwright__browser_take_screenshot"
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Bash(git merge:*)",
+      "Bash(git rm:*)",
+      "Bash(head:*)"
     ],
     "deny": [],
     "ask": []

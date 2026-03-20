@@ -951,7 +951,7 @@ Below are five versions of the same image, saved with **different bit depths**. 
 
 <div class="grid grid-cols-5 gap-4 mt-md">
   <figure>
-    <img src="/figures/elf_24bit.png" class="rounded shadow-md h-48 object-contain" />
+    <img src="/figures/elf_24bit.jpg" class="rounded shadow-md h-48 object-contain" />
     <figcaption class="text-center mt-2">24 bit</figcaption>
   </figure>
   <figure>

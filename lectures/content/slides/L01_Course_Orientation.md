@@ -203,9 +203,17 @@ Final Project
 
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 3fr; gap: 0.75rem; margin-top: 0.75rem;">
+---
+hideInToc: true
+---
 
-<div class="card card-warning pad-compact" style="font-size: 0.8em;">
+# **Grading Details**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-warning pad-compact">
+
+## 📝 **Quiz 1 (20%)**
 
 - Multiple choice, closed book
 - On eMokymai platform
@@ -214,7 +222,9 @@ Final Project
 
 </div>
 
-<div class="card card-warning pad-compact" style="font-size: 0.8em;">
+<div class="card card-warning pad-compact">
+
+## 📝 **Quiz 2 (20%)**
 
 - \* TBD by AI lecturer
 - Multiple choice, closed book
@@ -223,13 +233,16 @@ Final Project
 
 </div>
 
-<div class="card card-success pad-compact" style="font-size: 0.8em;">
+<div class="card card-success pad-compact">
 
-- Course-long project related to your field of study
+## 🎯 **Final Project (60%)**
+
+- Course-long project
+- Related to your field of study/work
 - Must include data analysis and/or automation
-- Use Python and open-source tools only
-- Final presentation graded on the spot
-- Everyone must attend other students' presentations
+- Use Python and good practices
+- Final presentation (graded on the spot)
+- Attend all project presentations
 
 </div>
 

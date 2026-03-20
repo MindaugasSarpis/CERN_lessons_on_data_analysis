@@ -331,7 +331,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/laptop_ram.png" class="w-auto">
+<img src="/figures/laptop_ram.webp" class="w-auto">
 
 <div class="card card-secondary pad-compact mt-md">
 
@@ -394,7 +394,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/hdd.png" class="w-auto">
+<img src="/figures/hdd.webp" class="w-auto">
 
 <div class="card card-accent pad-compact mt-md">
 
@@ -450,7 +450,7 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/nvme.png" class="w-auto">
+<img src="/figures/nvme.webp" class="w-auto">
 
 <div class="card card-accent pad-compact mt-md">
 

@@ -1,18 +1,13 @@
 ---
 background: /figures/background_intro.jpg
-
 class: text-left
 colorSchema: dark
-
 theme: ./theme
 drawings:
   persist: false
-
 transition: fade
-
 title: "Crash Course on Python Programming"
 layout: cover
-
 addons:
   - slidev-addon-python-runner
 ---
@@ -161,6 +156,13 @@ hideInToc: true
 ---
 
 # Python **Basics**
+
+---
+layout: section
+hideInToc: true
+---
+
+# Python **Fundamentals**
 
 ---
 hideInToc: true
@@ -733,6 +735,13 @@ for key, value in stats.items():
 ```
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Advanced **Patterns**
+
+---
 hideInToc: true
 ---
 
@@ -1048,7 +1057,7 @@ layout: section
 hideInToc: true
 ---
 
-# Mini **Projects**
+# Hands-On **Practice**
 
 ---
 hideInToc: true

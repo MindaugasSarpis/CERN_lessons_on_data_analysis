@@ -19,9 +19,10 @@ const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`
 const videoRef = ref(null)
 const sourceRef = ref(null)
 const currentSrc = ref(localSrc.value)
-const status = ref('loading')
+const status = ref('idle')
 const isActive = useIsSlideActive()
 const isLocal = computed(() => currentSrc.value === localSrc.value)
+const hasBeenActive = ref(false)
 
 const mimeType = computed(() => {
   const ext = props.src.split('.').pop()?.toLowerCase()
@@ -49,6 +50,12 @@ function syncPlayback() {
   const video = videoRef.value
   if (!video) return
   if (isActive.value) {
+    // First activation: attach source and start loading
+    if (!hasBeenActive.value) {
+      hasBeenActive.value = true
+      status.value = 'loading'
+      nextTick(() => videoRef.value?.load())
+    }
     video.currentTime = 0
     video.muted = true
     video.play().then(() => {
@@ -61,7 +68,7 @@ function syncPlayback() {
   }
 }
 
-watch(isActive, syncPlayback)
+watch(isActive, syncPlayback, { immediate: true })
 
 function onLoaded() {
   status.value = 'ready'
@@ -77,7 +84,7 @@ onMounted(() => {
 
 <template>
   <div class="video-player">
-    <div v-if="status === 'loading'" class="video-status">Loading video&hellip;</div>
+    <div v-if="status === 'loading' || status === 'idle'" class="video-status">Loading video&hellip;</div>
     <div v-if="status === 'error'" class="video-status video-error">
       Video not available: <code>{{ src }}</code>
     </div>
@@ -88,12 +95,12 @@ onMounted(() => {
       muted
       playsinline
       webkit-playsinline
-      preload="auto"
+      preload="none"
       @loadeddata="onLoaded"
       @error="onError"
       :class="{ 'video-ready': status === 'ready' }"
     >
-      <source ref="sourceRef" :src="currentSrc" :type="mimeType" />
+      <source ref="sourceRef" :src="hasBeenActive ? currentSrc : ''" :type="mimeType" />
     </video>
   </div>
 </template>

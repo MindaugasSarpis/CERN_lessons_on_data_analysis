@@ -431,3 +431,28 @@
   gap: 0.7rem;
   margin-top: 1.5rem;
 }
+
+/* === Mobile performance: reduce GPU-heavy effects === */
+@media (max-width: 768px), (pointer: coarse) {
+  .card {
+    backdrop-filter: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .card:hover,
+  .card:focus-within {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .card::before { opacity: 0.1; }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .card:hover,
+  .card:focus-within {
+    transform: none;
+  }
+}
