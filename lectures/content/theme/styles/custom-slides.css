@@ -202,6 +202,46 @@
   --card-shadow-hover: var(--shadow-lg), 0 32px 80px rgba(56, 189, 248, 0.45);
 }
 
+/* Glass fade card — background fades to transparent on right, text stays solid */
+.card-glass {
+  border: none !important;
+  border-left: 5px solid var(--card-border-color, rgba(148, 163, 184, 0.35)) !important;
+  box-shadow: none !important;
+  background: none !important;
+  overflow: visible !important;
+}
+.card-glass::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  background: rgba(2, 6, 23, 0.85) !important;
+  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%) !important;
+  mask-image: linear-gradient(to right, black 60%, transparent 100%) !important;
+  opacity: 1 !important;
+  pointer-events: none;
+  z-index: 0;
+}
+.card-glass::after {
+  display: none !important;
+}
+/* Fly-in animation for glass cards */
+.card-glass {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.card-glass.slidev-vclick-hidden {
+  transform: translateX(-40px);
+  opacity: 0 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+.card-glass:hover,
+.card-glass:focus-within {
+  transform: none;
+  box-shadow: none !important;
+}
+
 /* Grid Layouts */
 .grid-2 {
   display: grid;

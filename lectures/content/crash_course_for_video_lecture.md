@@ -9,7 +9,6 @@ drawings:
   persist: false
 
 transition: fade
-hideInToc: true
 
 addons:
   - slidev-addon-python-runner
@@ -20,51 +19,31 @@ mermaid: true
 # Dr. Mindaugas Šarpis
 # Data Analysis and Artificial Intelligence
 
-## From CERN to Your Data
+## From breakthroughs in fundamental science to applied business and industry knowledge
 
 ---
-hideInToc: true
 layout: quote
 ---
 
-# Not only is the Universe stranger than we think, it is stranger than we **can** think.
-Werner Heisenberg
+# In God we trust, all others must bring data.
+Edwards Deming
 
 ---
-layout: section
-hideInToc: true
----
-
-# Our place in the Universe
-
----
-hideInToc: true
 ---
 
 <VideoPlayer src="VU_VM_Zoom.mp4" autoplay />
 
 ---
-hideInToc: true
 ---
 
 <VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" autoplay />
 
 ---
-layout: section
-hideInToc: true
 ---
-
-# Exploring the **Fundamental**
-
----
-hideInToc: true
----
-
-# What is CERN?
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight" v-click>
 
 ## 🏛️ **The Organisation**
 
@@ -75,7 +54,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight" v-click>
 
 ## 🎯 **The Mission**
 
@@ -88,7 +67,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md" v-click>
 
 ## 🌍 **By the Numbers**
 
@@ -96,28 +75,27 @@ hideInToc: true
 
 </div>
 
+
 ---
-hideInToc: true
 ---
 
-# The Large Hadron Collider (LHC)
+<VideoPlayer src="CERN_Overview_Short.mp4" autoplay />
 
-<div class="card card-info pad-tight">
+---
+---
+
+<div class="card card-info card-glass pad-tight" v-click>
 
 ## ⚙️ **The Machine**
-
-<v-clicks>
 
 - A **27 km** circumference ring situated **100 m** underground
 - Accelerates protons to **99.9999991%** the speed of light
 - Collides particles **~1 billion times per second**
 - Operating temperature: **1.9 K** (~ -271.1°C) — colder than outer space
 
-</v-clicks>
-
 </div>
 
-<div class="card card-warning pad-compact mt-md" v-click>
+<div class="card card-warning card-glass pad-compact mt-md" v-click>
 
 ## 🏆 **Key Achievement**
 
@@ -126,78 +104,21 @@ Discovery of the **Higgs boson** in **2012** — confirmed the mechanism that gi
 </div>
 
 ---
-layout: section
-hideInToc: true
----
-
-# Inside the **Machine**
-
----
-hideInToc: true
----
-
-<VideoPlayer src="CERN_Overview_Short.mp4" autoplay />
-
----
-hideInToc: true
 ---
 
 <VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" autoplay />
 
 ---
-hideInToc: true
 ---
 
 <VideoPlayer src="QGP_Formation.mp4" autoplay />
 
 ---
-hideInToc: true
 ---
-
-# From Collisions to Discovery
-
-```mermaid {scale: 1.0}
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0f1f3d',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 45}}}%%
-flowchart LR
-  C["🔬 Collisions<br/>1 billion/sec"] --> T["⚡ Trigger<br/>Filter 99.999%"]
-  T --> R["🔧 Reconstruct<br/>Build events"]
-  R --> A["📊 Analyse<br/>Statistical tests"]
-  A --> D{"🎯 5σ?"}
-  D -->|Yes| P["📢 Publish"]
-  D -->|No| M["🔄 More data"]
-  M --> C
-
-  classDef stage fill:#0b2236,stroke:#60a5fa,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-  classDef decision fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:14px,ry:14px;
-  classDef output fill:#063c34,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-  classDef loop fill:#3b1f09,stroke:#f59e0b,stroke-width:2px,color:#ffe7c7,rx:12px,ry:12px;
-  class C,T,R,A stage;
-  class D decision;
-  class P output;
-  class M loop;
-```
-
-<div class="card card-info pad-compact mt-md" v-click>
-
-💡 No neural networks were needed to discover the Higgs. **Careful experimental design, statistics, and reproducible analysis** — the same skills you can learn.
-
-</div>
-
----
-hideInToc: true
----
-
-# Why Data Analysis Matters at CERN
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight" v-click>
 
 ## 📊 **The Data Challenge**
 
@@ -207,7 +128,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight" v-click>
 
 ## 🔍 **Needle in a Haystack**
 
@@ -219,216 +140,437 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-compact mt-md" v-click>
+<div class="card card-accent card-glass pad-compact mt-md" v-click>
 
-💡 Finding the Higgs required sifting through **trillions** of events. Not with AI. With **rigorous data analysis.**
+💡 Finding the Higgs required sifting through **trillions** of events. Not with AI — with **rigorous data analysis.** The same rigour applies far beyond physics.
 
 </div>
 
 ---
-layout: section
-hideInToc: true
 ---
 
-# What is **Data Analysis?**
+<div style="display: flex; flex-direction: column; gap: 0.4rem; height: 100%; justify-content: center;">
 
----
-hideInToc: true
----
-
-# Data → Information → Knowledge → Wisdom
-
-<div class="stack-tight mt-sm">
-
-<div
-  class="card card-primary pad-tight"
-  v-motion
-  :initial="{ opacity: 0, x: -60 }"
-  :enter="{ opacity: 1, x: 0, transition: { delay: 200 } }"
->
+<div class="card card-primary card-glass anim-card" v-click="1">
 
 ## 📋 **Data**
-Capture observations — numbers, text, images, signals
 
-</div>
+<span class="anim-sub">Capture observations — numbers, text, images, signals</span>
 
-<div
-  class="card card-secondary pad-tight"
-  v-motion
-  :initial="{ opacity: 0, x: -60 }"
-  :enter="{ opacity: 1, x: 0, transition: { delay: 500 } }"
->
+<div v-click="[1, 2]" class="anim-ex">
 
-## 💡 **Information**
-Emerges when data gain context, structure, and purpose
-
-</div>
-
-<div
-  class="card card-accent pad-tight"
-  v-motion
-  :initial="{ opacity: 0, x: -60 }"
-  :enter="{ opacity: 1, x: 0, transition: { delay: 800 } }"
->
-
-## 🧠 **Knowledge**
-Blends information with experience and domain expertise
-
-</div>
-
-<div
-  class="card card-success pad-tight"
-  v-motion
-  :initial="{ opacity: 0, x: -60 }"
-  :enter="{ opacity: 1, x: 0, transition: { delay: 1100 } }"
->
-
-## 🎯 **Wisdom**
-The responsibility to act on knowledge with judgement
+- `[72, 68, 75, 80, 71]` — heart-rate readings
+- `"sunny, 12 °C, wind NW"` — weather log entry
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
-
-# A Concrete Example
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-info pad-tight" v-click>
-
-## 📋 **Raw Data**
-
-### `2025-10-24, 22.3°C`
-
-</div>
-
-<div class="card card-primary pad-tight" v-click>
+<div class="card card-secondary card-glass anim-card" v-click="2">
 
 ## 💡 **Information**
 
-### `Lab A was 22.3°C at 10:24 on Oct 24, 2025.`
+<span class="anim-sub">Emerges when data gain context, structure, and purpose</span>
+
+<div v-click="[2, 3]" class="anim-ex">
+
+- Resting heart rate **averaged 73 bpm** last week
+- Store B weekend revenue is **2.3× higher** than weekdays
 
 </div>
 
-<div class="card card-accent pad-tight" v-click>
+</div>
+
+<div class="card card-accent card-glass anim-card" v-click="3">
 
 ## 🧠 **Knowledge**
 
-### `Lab A runs 1.5°C hotter on Fridays due to load.`
+<span class="anim-sub">Blends information with experience and domain expertise</span>
+
+<div v-click="[3, 4]" class="anim-ex">
+
+- Rising heart rate **predicts flu onset** 48 h early
+- Weekend spike driven by **nearby Saturday market**
 
 </div>
 
-<div class="card card-success pad-tight" v-click>
+</div>
+
+<div class="card card-success card-glass anim-card" v-click="4">
 
 ## 🎯 **Wisdom**
 
-### `Shift calibration earlier on Fridays to reduce drift.`
+<span class="anim-sub">Guides decisions with judgement and responsibility</span>
+
+<div v-click="[4, 5]" class="anim-ex">
+
+- Send a **rest advisory** when heart rate trends up
+- **Extend Saturday hours** and stock accordingly
 
 </div>
 
 </div>
 
+</div>
+
+<style>
+/* Base card: compact padding, smooth transitions on everything */
+.anim-card.card {
+  padding: 0.4rem 0.8rem !important;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Expanded state: more padding when examples are visible */
+.anim-card.card:has(.anim-ex:not(.slidev-vclick-hidden)) {
+  padding: 0.5rem 1rem 0.6rem !important;
+}
+
+/* Hidden card: slide in from left */
+.anim-card.slidev-vclick-hidden {
+  transform: translateX(-40px);
+  opacity: 0 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+
+/* Heading: large when collapsed, smaller when expanded */
+.anim-card h2 {
+  font-size: 1.3em;
+  line-height: 1.2;
+  margin: 0;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) h2 {
+  font-size: 1em;
+}
+
+/* Subtitle text */
+.anim-sub {
+  display: block;
+  font-size: 0.75em;
+  opacity: 0.85;
+  margin-top: 0.15em;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) .anim-sub {
+  font-size: 0.7em;
+}
+
+/* Example rows: animated collapse */
+.anim-ex {
+  max-height: 200px;
+  opacity: 0.7;
+  overflow: hidden;
+  font-size: 0.7em;
+  margin-top: 0.2rem;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-ex.slidev-vclick-hidden {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  visibility: visible !important;
+  margin-top: 0 !important;
+  pointer-events: none;
+}
+.anim-ex ul {
+  margin: 0;
+  padding-left: 1.4em;
+}
+.anim-ex li {
+  margin: 0.15em 0;
+}
+</style>
+
 ---
-hideInToc: true
 ---
 
-# The Same Process, Everywhere
+<div class="flow-container">
+
+<div class="card card-primary card-glass flow-row" v-click="1">
+  <div class="flow-label">📋 Data</div>
+  <div class="flow-text"><code>2025-10-24, 22.3°C</code></div>
+</div>
+
+<div class="flow-arrow" v-click="2">↓</div>
+
+<div class="card card-secondary card-glass flow-row" v-click="2">
+  <div class="flow-label">💡 Information</div>
+  <div class="flow-text">Lab A was <strong>22.3 °C</strong> at 10:24 on Oct 24, 2025</div>
+</div>
+
+<div class="flow-arrow" v-click="3">↓</div>
+
+<div class="card card-accent card-glass flow-row" v-click="3">
+  <div class="flow-label">🧠 Knowledge</div>
+  <div class="flow-text">Lab A runs <strong>1.5 °C hotter</strong> on Fridays due to compute load</div>
+</div>
+
+<div class="flow-arrow" v-click="4">↓</div>
+
+<div class="card card-success card-glass flow-row" v-click="4">
+  <div class="flow-label">🎯 Wisdom</div>
+  <div class="flow-text">Shift Friday calibration <strong>earlier</strong> to reduce thermal drift</div>
+</div>
+
+</div>
+
+<style>
+.flow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0;
+}
+
+.flow-row {
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  width: 90%;
+  padding: 1rem 1.5rem !important;
+}
+.flow-row.slidev-vclick-hidden {
+  transform: translateX(-30px);
+  opacity: 0 !important;
+  visibility: visible !important;
+}
+
+.flow-label {
+  font-weight: 700;
+  font-size: 1.15em;
+  white-space: nowrap;
+  min-width: 9rem;
+}
+
+.flow-text {
+  font-size: 1.05em;
+  opacity: 0.9;
+}
+.flow-text code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+.flow-arrow {
+  font-size: 1.4em;
+  opacity: 0.4;
+  margin: 0.3rem 0;
+  transition: opacity 0.5s ease;
+}
+.flow-arrow.slidev-vclick-hidden {
+  opacity: 0 !important;
+  visibility: visible !important;
+}
+</style>
+
+---
+---
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-compact" v-click>
+<div class="card card-primary card-glass pad-tight" v-click>
 
 ## ⚛️ **Particle Physics**
 
-Detector signals → event reconstruction → statistical tests → discovery
+- Detector signals
+- Event reconstruction
+- Statistical tests
+- **Discovery**
 
 </div>
 
-<div class="card card-secondary pad-compact" v-click>
+<div class="card card-secondary card-glass pad-tight" v-click>
 
 ## 💼 **Business**
 
-Customer clicks → behaviour patterns → predictive models → decisions
+- Customer clicks
+- Behaviour patterns
+- Predictive models
+- **Decisions**
 
 </div>
 
-<div class="card card-accent pad-compact" v-click>
+<div class="card card-accent card-glass pad-tight" v-click>
 
 ## 🏥 **Medicine**
 
-Patient records → clinical patterns → diagnostic models → treatment plans
+- Patient records
+- Clinical patterns
+- Diagnostic models
+- **Treatment plans**
 
 </div>
 
 </div>
 
-<div class="card card-info pad-tight mt-md" v-click>
+<div class="card card-info card-glass pad-tight mt-md" v-click>
 
 ## 🔑 **Key Insight**
 
 The **methods** are universal. The **domain** changes, the **thinking** doesn't.
-Collect → Clean → Explore → Model → Decide → Communicate
+
+**Collect → Clean → Explore → Model → Decide → Communicate**
 
 </div>
 
 ---
-hideInToc: true
 ---
 
-# Four Flavours of Analytics
+<div style="display: flex; flex-direction: column; gap: 0.4rem; height: 100%; justify-content: center;">
 
-<div class="stack-tight mt-md">
+<div class="card card-primary card-glass pad-compact anim-card" v-click="1">
 
-<div class="card card-primary pad-tight" v-click>
+## 📋 **Descriptive Analysis**
 
-## 📋 **Descriptive** — What happened?
+<span class="anim-sub">What happened?</span>
 
-<div class="note-text">Event rate rose 12% last run · Sales dropped 8% in Q3</div>
+<div v-click="[1, 2]" class="anim-ex">
 
-</div>
-
-<div class="card card-secondary pad-tight" v-click>
-
-## 🔍 **Diagnostic** — Why did it happen?
-
-<div class="note-text">Rate rose due to trigger threshold change · Drop correlates with pricing change</div>
-
-</div>
-
-<div class="card card-accent pad-tight" v-click>
-
-## 🔮 **Predictive** — What is likely next?
-
-<div class="note-text">Projected 8% rate increase next fill · Model forecasts recovery in Q1</div>
-
-</div>
-
-<div class="card card-success pad-tight" v-click>
-
-## 🎯 **Prescriptive** — What should we do?
-
-<div class="note-text">Raise threshold by 0.3 to maintain buffer · Revert price, A/B test alternatives</div>
+- Event rate rose **12 %** last run
+- Sales dropped **8 %** in Q3
+- Average delivery time was **3.2 days**
 
 </div>
 
 </div>
 
----
-layout: section
-hideInToc: true
----
+<div class="card card-secondary card-glass pad-compact anim-card" v-click="2">
 
-# Navigating the **Buzzword** Landscape
+## 🔍 **Diagnostic Analysis**
+
+<span class="anim-sub">Why did it happen?</span>
+
+<div v-click="[2, 3]" class="anim-ex">
+
+- Rate rose due to **trigger threshold** change
+- Drop correlates with **pricing** change
+- Delivery slowed because of **warehouse relocation**
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact anim-card" v-click="3">
+
+## 🔮 **Predictive Analysis**
+
+<span class="anim-sub">What is likely next?</span>
+
+<div v-click="[3, 4]" class="anim-ex">
+
+- Projected **8 % rate increase** next fill
+- Model forecasts **recovery in Q1**
+- Delivery times will **normalise by March**
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact anim-card" v-click="4">
+
+## 🎯 **Prescriptive Analysis**
+
+<span class="anim-sub">What should we do?</span>
+
+<div v-click="[4, 5]" class="anim-ex">
+
+- Raise threshold by **0.3** to maintain buffer
+- Revert price, **A/B test** alternatives
+- Add a **temporary depot** until the move completes
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+/* Card entrance: slide in from left + fade */
+.anim-card {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card.slidev-vclick-hidden {
+  transform: translateX(-40px);
+  opacity: 0 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+
+/* Heading: large when collapsed, smaller when expanded */
+.anim-card h2 {
+  font-size: 1.3em;
+  line-height: 1.2;
+  margin: 0;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) h2 {
+  font-size: 1em;
+}
+
+/* Subtitle */
+.anim-sub {
+  display: block;
+  font-size: 0.75em;
+  opacity: 0.6;
+  font-style: italic;
+  margin-top: 0.1em;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) .anim-sub {
+  font-size: 0.7em;
+}
+
+/* Example rows: animated collapse */
+.anim-ex {
+  max-height: 200px;
+  opacity: 0.7;
+  overflow: hidden;
+  font-size: 0.7em;
+  margin-top: 0.2rem;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-ex.slidev-vclick-hidden {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  visibility: visible !important;
+  margin-top: 0 !important;
+  pointer-events: none;
+}
+.anim-ex ul {
+  margin: 0;
+  padding-left: 1.4em;
+}
+.anim-ex li {
+  margin: 0.15em 0;
+}
+
+/* Card padding */
+.anim-card.card {
+  padding: 0.4rem 0.8rem !important;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card.card:has(.anim-ex:not(.slidev-vclick-hidden)) {
+  padding: 0.5rem 1rem 0.6rem !important;
+}
+</style>
 
 ---
-hideInToc: true
 ---
-
-# What People Call "AI"
 
 <div class="mt-md">
 
@@ -467,7 +609,7 @@ hideInToc: true
 </div>
 
 <!-- The punchline -->
-<div v-click class="card card-warning pad-tight" style="position: absolute; bottom: 0; left: 0; right: 0;">
+<div v-click class="card card-warning card-glass pad-tight" style="position: absolute; bottom: 0; left: 0; right: 0;">
 
 ## ⚠️ **The Marketing Label**
 
@@ -480,19 +622,11 @@ Most of what companies call "AI" lives in the first three boxes. Understanding *
 </div>
 
 ---
-hideInToc: true
 ---
-
-# The Real Skill Stack
 
 <div class="grid-2 mt-md gap-md">
 
-<div
-  class="card card-primary pad-tight"
-  v-motion
-  :initial="{ opacity: 0, y: 40 }"
-  :enter="{ opacity: 1, y: 0, transition: { delay: 200 } }"
->
+<div class="card card-primary card-glass pad-tight" v-click>
 
 ## 🧠 **Think**
 
@@ -500,12 +634,7 @@ Ask the right question. Understand the domain. Know what "good enough" looks lik
 
 </div>
 
-<div
-  class="card card-secondary pad-tight"
-  v-motion
-  :initial="{ opacity: 0, y: 40 }"
-  :enter="{ opacity: 1, y: 0, transition: { delay: 500 } }"
->
+<div class="card card-secondary card-glass pad-tight" v-click>
 
 ## 🔍 **Explore**
 
@@ -513,12 +642,7 @@ Look at the data before modelling it. Distributions, outliers, missing values �
 
 </div>
 
-<div
-  class="card card-accent pad-tight"
-  v-motion
-  :initial="{ opacity: 0, y: 40 }"
-  :enter="{ opacity: 1, y: 0, transition: { delay: 800 } }"
->
+<div class="card card-accent card-glass pad-tight" v-click>
 
 ## 🛠️ **Choose**
 
@@ -526,12 +650,7 @@ Pick the simplest method that solves the problem. A good scatter plot beats a ba
 
 </div>
 
-<div
-  class="card card-success pad-tight"
-  v-motion
-  :initial="{ opacity: 0, y: 40 }"
-  :enter="{ opacity: 1, y: 0, transition: { delay: 1100 } }"
->
+<div class="card card-success card-glass pad-tight" v-click>
 
 ## 📢 **Communicate**
 
@@ -542,10 +661,7 @@ Results that nobody understands have zero impact. Visualisation and storytelling
 </div>
 
 ---
-hideInToc: true
 ---
-
-# Quiz: Which of These is "AI"?
 
 <MCQ
   question="A company uses a dashboard that flags when monthly sales drop below the 12-month rolling average. Is this AI?"
@@ -559,14 +675,40 @@ hideInToc: true
 />
 
 ---
-hideInToc: true
 ---
 
-# When "AI" is Just Good Data Analysis
+<MCQ
+  question="A hospital model predicts patient readmission risk using age, diagnosis, and length of stay. What type of analytics is this?"
+  :options="[
+    'Descriptive — it summarises past admissions',
+    'Diagnostic — it explains why patients were readmitted',
+    'Predictive — it forecasts a future outcome',
+    'Prescriptive — it recommends a treatment plan'
+  ]"
+  :correct="2"
+  explanation="The model uses historical features to estimate a future probability (readmission risk). That is predictive analytics. It does not yet recommend what to do about it — that would be prescriptive."
+/>
+
+---
+---
+
+<MCQ
+  question="You fit a model with 50 parameters to 60 data points and get 99.9 % accuracy on your training set. Should you celebrate?"
+  :options="[
+    'Yes — high accuracy means the model works',
+    'No — the model is likely overfitting',
+    'It depends on the test set performance'
+  ]"
+  :correct="1"
+  explanation="With almost as many parameters as data points, the model is memorising the training data rather than learning patterns. This is classic overfitting — it will likely perform poorly on new data. Always evaluate on a held-out test set."
+/>
+
+---
+---
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-compact" v-click>
+<div class="card card-info card-glass pad-compact" v-click>
 
 ## 📊 **"AI-Powered" Dashboard**
 
@@ -574,7 +716,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary pad-compact" v-click>
+<div class="card card-primary card-glass pad-compact" v-click>
 
 ## 🔔 **"Smart" Anomaly Detection**
 
@@ -582,7 +724,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-compact" v-click>
+<div class="card card-secondary card-glass pad-compact" v-click>
 
 ## 🎯 **"Predictive" Analytics**
 
@@ -590,7 +732,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-compact" v-click>
+<div class="card card-accent card-glass pad-compact" v-click>
 
 ## 🤖 **Actual ML Use Case**
 
@@ -600,23 +742,20 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact mt-md" v-click>
+<div class="card card-warning card-glass pad-compact mt-md" v-click>
 
 💡 **3 out of 4** need data analysis skills, not AI expertise. Know the difference.
 
 </div>
 
 ---
-hideInToc: true
 ---
-
-# How the Disciplines Overlap
 
 <div class="grid-2 gap-md mt-md">
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight" v-click>
 
 ## 📊 **Statistics**
 
@@ -624,7 +763,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight" v-click>
 
 ## 🔧 **Data Engineering**
 
@@ -632,7 +771,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight" v-click>
 
 ## 🔍 **Data Analysis**
 
@@ -644,7 +783,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight" v-click>
 
 ## 🧪 **Data Science**
 
@@ -652,7 +791,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight" v-click>
 
 ## 🤖 **AI / ML**
 
@@ -664,45 +803,42 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact mt-md" v-click>
+<div class="card card-warning card-glass pad-compact mt-md" v-click>
 
 🎯 **AI is a tool in the toolbox, not the toolbox itself.** Data analysis is the foundation everything else builds on.
 
 </div>
 
 ---
-hideInToc: true
 ---
-
-# Common Pitfalls
 
 <div class="stack-tight mt-md">
 
-<div class="card card-warning pad-tight" v-click>
+<div class="card card-warning card-glass pad-tight" v-click>
 
 ## ⚠️ Jumping to complex models before understanding the data
 
 </div>
 
-<div class="card card-warning pad-tight" v-click>
+<div class="card card-warning card-glass pad-tight" v-click>
 
 ## ⚠️ Confusing correlation with causation
 
 </div>
 
-<div class="card card-warning pad-tight" v-click>
+<div class="card card-warning card-glass pad-tight" v-click>
 
 ## ⚠️ Overfitting pretty charts to noisy data
 
 </div>
 
-<div class="card card-warning pad-tight" v-click>
+<div class="card card-warning card-glass pad-tight" v-click>
 
 ## ⚠️ Calling everything "AI" to sound impressive
 
 </div>
 
-<div class="card card-warning pad-tight" v-click>
+<div class="card card-warning card-glass pad-tight" v-click>
 
 ## ⚠️ Shipping insights without reproducibility
 
@@ -711,26 +847,11 @@ hideInToc: true
 </div>
 
 ---
-layout: section
-hideInToc: true
 ---
-
-# **Takeaways**
-
----
-hideInToc: true
----
-
-# What To Take Away
 
 <div class="grid-2 gap-md mt-md">
 
-<div
-  class="card card-primary pad-tight"
-  v-motion
-  :initial="{ opacity: 0, scale: 0.9 }"
-  :enter="{ opacity: 1, scale: 1, transition: { delay: 200 } }"
->
+<div class="card card-primary card-glass pad-tight" v-click>
 
 ## 🧠 **Data literacy > tool literacy**
 
@@ -738,12 +859,7 @@ Understanding your data matters more than knowing the latest framework
 
 </div>
 
-<div
-  class="card card-secondary pad-tight"
-  v-motion
-  :initial="{ opacity: 0, scale: 0.9 }"
-  :enter="{ opacity: 1, scale: 1, transition: { delay: 500 } }"
->
+<div class="card card-secondary card-glass pad-tight" v-click>
 
 ## 🎯 **The thinking matters more than the label**
 
@@ -751,12 +867,7 @@ Good analysis is good analysis — whether you call it statistics, data science,
 
 </div>
 
-<div
-  class="card card-accent pad-tight"
-  v-motion
-  :initial="{ opacity: 0, scale: 0.9 }"
-  :enter="{ opacity: 1, scale: 1, transition: { delay: 800 } }"
->
+<div class="card card-accent card-glass pad-tight" v-click>
 
 ## 🔬 **CERN-grade rigour is learnable**
 
@@ -764,12 +875,7 @@ The same methods that found the Higgs apply to your business, your research, you
 
 </div>
 
-<div
-  class="card card-success pad-tight"
-  v-motion
-  :initial="{ opacity: 0, scale: 0.9 }"
-  :enter="{ opacity: 1, scale: 1, transition: { delay: 1100 } }"
->
+<div class="card card-success card-glass pad-tight" v-click>
 
 ## 🚀 **These skills transfer everywhere**
 
@@ -780,14 +886,11 @@ From particle physics to finance, from genomics to marketing — data is the com
 </div>
 
 ---
-hideInToc: true
 ---
-
-# What This Course Teaches
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact" v-click>
 
 ## 🖥️ **Computing Foundations**
 
@@ -795,7 +898,7 @@ How computers actually work, command line, file management
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact" v-click>
 
 ## 🐍 **Python Programming**
 
@@ -803,7 +906,7 @@ From zero to data analysis — the most in-demand language in science and indust
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact" v-click>
 
 ## 📊 **Data Analysis**
 
@@ -811,7 +914,7 @@ Statistics, probability, visualisation, fitting, and real-world case studies
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact" v-click>
 
 ## 🔄 **Reproducibility**
 
@@ -819,7 +922,7 @@ Version control, workflows, and practices used at CERN and in industry
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact" v-click>
 
 ## 🤖 **AI & Machine Learning**
 
@@ -827,7 +930,7 @@ Understand what it is, when to use it, and when not to
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact" v-click>
 
 ## 🎯 **Your Own Project**
 
@@ -838,14 +941,12 @@ Apply everything to a real project in your field
 </div>
 
 ---
-hideInToc: true
 layout: quote
 ---
 
 # The best thing about being a scientist is that you never stop being a **student**.
 
 ---
-hideInToc: true
 layout: fact
 ---
 
