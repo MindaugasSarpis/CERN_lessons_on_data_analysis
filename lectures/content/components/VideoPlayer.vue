@@ -32,7 +32,7 @@ const mimeType = computed(() => {
 
 let switching = false
 function onError() {
-  if (switching) return
+  if (switching || !hasBeenActive.value) return
   if (currentSrc.value === localSrc.value) {
     switching = true
     status.value = 'loading'

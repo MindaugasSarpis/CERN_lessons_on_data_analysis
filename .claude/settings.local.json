@@ -79,7 +79,15 @@
       "Bash(git merge:*)",
       "Bash(git rm:*)",
       "Bash(head:*)",
-      "mcp__plugin_playwright_playwright__browser_press_key"
+      "mcp__plugin_playwright_playwright__browser_press_key",
+      "Bash(mv VU_VM_ZOOM_New.mp4 VU_VM_ZOOM_New_original.mp4)",
+      "Bash(mv VU_VM_ZOOM_New_h264.mp4 VU_VM_ZOOM_New.mp4)",
+      "Bash(mv VU_VM_ZOOM_New.mp4 VU_VM_ZOOM_New_bad.mp4)",
+      "Bash(mv VU_VM_ZOOM_New_fixed.mp4 VU_VM_ZOOM_New.mp4)",
+      "Bash(mv VU_VM_ZOOM_New.mp4 VU_VM_ZOOM_New_bad2.mp4)",
+      "Bash(mv VU_VM_ZOOM_New_final.mp4 VU_VM_ZOOM_New.mp4)",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_network_requests"
     ],
     "deny": [],
     "ask": []
