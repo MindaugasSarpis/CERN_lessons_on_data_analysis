@@ -31,7 +31,7 @@ hideInToc: true
 
 # Why Python
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 🌍 **Most Popular & Easy to Learn**
 
@@ -39,7 +39,7 @@ Python is one of the most popular and easy to learn programming languages in the
 
 </div>
 
-<div class="card card-secondary pad-tight mt-sm">
+<div class="card card-secondary card-glass pad-tight mt-sm">
 
 ## 👥 **Large Community & Ecosystem**
 
@@ -47,7 +47,7 @@ A large community of developers and users as well as a large number of libraries
 
 </div>
 
-<div class="card card-success pad-tight mt-sm">
+<div class="card card-success card-glass pad-tight mt-sm">
 
 ## 🆓 **Open-Source & Powerful**
 
@@ -65,7 +65,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📖 **Official Documentation**
 
@@ -74,7 +74,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight mt-sm">
+<div class="card card-secondary card-glass pad-tight mt-sm">
 
 ## 📊 **Data Science**
 
@@ -84,7 +84,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🎓 **Free Introductory Courses**
 
@@ -107,7 +107,7 @@ All platforms offer free tiers with comprehensive Python content.
 hideInToc: true
 ---
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 ## 🔍 **Do You Have Python?**
 
@@ -123,7 +123,7 @@ You should see `Python 3.x.x`.
 
 <div class="grid-2 gap-md mt-sm">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ## 🍎 **macOS / Linux**
 
@@ -134,7 +134,7 @@ sudo apt install python3   # Ubuntu/Debian
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ## 🪟 **Windows**
 
@@ -144,25 +144,11 @@ Download from [python.org](https://www.python.org/downloads/) — check **"Add P
 
 </div>
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 We will use the **in-browser editor** on these slides for learning, but you will need a local Python install for your projects.
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Python **Basics**
-
----
-layout: section
-hideInToc: true
----
-
-# Python **Fundamentals**
 
 ---
 hideInToc: true
@@ -174,7 +160,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 🚀 **Running Python**
 
@@ -183,7 +169,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ### 🔑 **Main Points**
 
@@ -198,7 +184,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 💬 **Comments**
 
@@ -216,7 +202,7 @@ comment
 
 </div>
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-tight mt-sm">
 
 ### ⌨️ **Shortcuts & Tips**
 
@@ -270,14 +256,12 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
 #### 🔢 **Basic Operators**
 
 ```python
-# Arithmetic
 2 + 3   # Addition       → 5
-5 - 2   # Subtraction    → 3
 3 * 4   # Multiplication → 12
 6 / 2   # Division       → 3.0 (always float!)
 7 // 2  # Floor division → 3
@@ -286,9 +270,7 @@ hideInToc: true
 ```
 
 ```python
-# Comparison & Logic
 3 > 2 and 4 == 4  # True
-5 != 3 or 1 > 10  # True
 not False          # True
 "a" in "abc"       # True
 ```
@@ -299,7 +281,7 @@ not False          # True
 
 <div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
 #### 📝 **Variables and Data Types**
 
@@ -312,14 +294,14 @@ is_valid = True    # Boolean
 
 </div>
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 #### 📦 **More Built-in Types**
 
-- **Tuples** — immutable sequences: `point = (3, 4)`
-- **Sets** — unique elements: `unique = {1, 2, 3}`
-- **`range()`** — generates number sequences: `range(0, 10, 2)`
-- **f-strings** — formatted text: `f"Hello, {name}!"`
+- **Tuples** — immutable: `point = (3, 4)`
+- **Sets** — unique elements: `{1, 2, 3}`
+- **`range()`** — number sequences: `range(0, 10, 2)`
+- **f-strings** — formatted: `f"Hello, {name}!"`
 
 </div>
 
@@ -344,7 +326,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 #### 🔤 **Strings**
 
@@ -365,7 +347,7 @@ print(s.replace("World", "Python")) # Replace
 
 <div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 #### 📋 **Lists**
 
@@ -424,7 +406,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 📖 **Overview**
 
@@ -434,7 +416,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight mt-sm">
+<div class="card card-secondary card-glass pad-tight mt-sm">
 
 ### 💡 **Tips**
 
@@ -447,7 +429,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ##### 🛠️ **Everyday Operations**
 
@@ -482,7 +464,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ##### 🔄 **Dictionary Comprehension**
 
@@ -493,7 +475,7 @@ squares = {n: n**2 for n in range(5)}
 
 </div>
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ##### 🔑 **Merging Dictionaries**
 
@@ -510,7 +492,7 @@ merged   = {**defaults, **custom}
 
 <div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ##### 📊 **Counting Word Frequencies**
 
@@ -576,7 +558,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 #### 🔀 **Conditional Statements**
 
@@ -596,7 +578,7 @@ else:
 
 <div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 #### 🔁 **Loops**
 
@@ -618,7 +600,7 @@ while x < 5:
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 #### 💡 **Remember**
 
@@ -670,7 +652,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 #### ⚙️ **Functions**
 
@@ -689,7 +671,7 @@ print(greet("Alice"))
 
 <div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 #### 🛡️ **Exception Handling**
 
@@ -749,7 +731,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 #### 🔄 **Traditional Loop**
 
@@ -762,7 +744,7 @@ for x in range(5):
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 #### ⚡ **Comprehension (Pythonic)**
 
@@ -779,7 +761,7 @@ evens = [x for x in range(10) if x % 2 == 0]
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 #### 💡 **When to use**
 
@@ -796,7 +778,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 #### 🔢 **`enumerate()` — Loop with Index**
 
@@ -813,7 +795,7 @@ for i, name in enumerate(detectors):
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 #### 🔗 **`zip()` — Loop over Multiple Lists**
 
@@ -832,7 +814,7 @@ for name, mass in zip(names, masses):
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 #### 💡 **Tip**
 
@@ -877,7 +859,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 #### 📦 **Modules and Imports**
 
@@ -898,7 +880,7 @@ print(randint(1, 10))  # Random number between 1 and 10
 
 <div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 #### 📂 **File Handling**
 
@@ -930,7 +912,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🐛 **Syntax & Indentation**
 
@@ -948,7 +930,7 @@ print("hello"  # missing closing )
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🐛 **Name & Type Errors**
 
@@ -968,7 +950,7 @@ result = "hello" + 42  # can't add str + int
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 💡 **Debugging Tip**
 
@@ -986,31 +968,26 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
 #### 📄 JSON
 
 ```python
-# JSON -> dict
 import json
-
-with open("data.json", "r") as f:
-        data = json.load(f)  # dict (or nested dict/list)
+with open("data.json") as f:
+    data = json.load(f)
 ```
 
 </div>
 
-<div class="card card-secondary pad-tight mt-sm">
+<div class="card card-secondary card-glass pad-compact mt-sm">
 
 #### 📝 YAML
 
 ```python
-# YAML -> dict
-# pip install pyyaml
-import yaml
-
-with open("data.yaml", "r") as f:
-        data = yaml.safe_load(f)  # dict (or nested dict/list)
+import yaml  # pip install pyyaml
+with open("data.yaml") as f:
+    data = yaml.safe_load(f)
 ```
 
 </div>
@@ -1019,31 +996,26 @@ with open("data.yaml", "r") as f:
 
 <div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-compact">
 
 #### 📊 CSV
 
 ```python
-# CSV -> list[dict] (one dict per row)
 import csv
-
 with open("data.csv", newline="") as f:
-        rows = list(csv.DictReader(f))  # [{'col1': '...', 'col2': '...'}, ...]
+    rows = list(csv.DictReader(f))
 ```
 
 </div>
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
 #### 📈 Excel
 
 ```python
-# Excel -> list[dict] via pandas
-# pip install pandas openpyxl
-import pandas as pd
-
-df   = pd.read_excel("data.xlsx", sheet_name=0)  # DataFrame
-rows = df.to_dict(orient="records")             # list[dict]
+import pandas as pd  # pip install pandas openpyxl
+df   = pd.read_excel("data.xlsx", sheet_name=0)
+rows = df.to_dict(orient="records")
 ```
 
 </div>
@@ -1066,9 +1038,6 @@ hideInToc: true
 # Mini Project: Analyse Experiment Data
 
 ```py {monaco-run}
-# A complete mini data analysis in pure Python
-# (no external libraries needed!)
-
 # Simulated temperature readings from 3 sensors
 data = {
     "sensor_A": [22.1, 22.4, 22.3, 22.8, 22.5],
@@ -1076,18 +1045,14 @@ data = {
     "sensor_C": [21.9, 22.0, 21.7, 22.1, 21.8],
 }
 
-print("=== Sensor Temperature Report ===\n")
 for sensor, readings in data.items():
     avg = sum(readings) / len(readings)
-    min_val = min(readings)
-    max_val = max(readings)
-    spread = max_val - min_val
-    print(f"{sensor}: avg={avg:.2f}°C  range=[{min_val}, {max_val}]  spread={spread:.1f}°C")
+    spread = max(readings) - min(readings)
+    print(f"{sensor}: avg={avg:.2f}°C  spread={spread:.1f}°C")
 
-# Find the hottest sensor
 averages = {s: sum(r)/len(r) for s, r in data.items()}
 hottest = max(averages, key=averages.get)
-print(f"\nHottest sensor: {hottest} ({averages[hottest]:.2f}°C)")
+print(f"\nHottest: {hottest} ({averages[hottest]:.2f}°C)")
 ```
 
 ---
@@ -1122,7 +1087,7 @@ hideInToc: true
 
 # From Browser to Real Files
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🖥️ **Time to Write Real Python**
 
@@ -1132,19 +1097,19 @@ The in-browser exercises were great for learning — now let's create an actual 
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **1.** In VS Code, create a new file: `File → New File` → save as `sensor_analysis.py`
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 **2.** Copy your mini project code into the file (or write it fresh from memory!)
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 **3.** Open the VS Code terminal (`Ctrl+`` `) and run:
 
@@ -1154,7 +1119,7 @@ python sensor_analysis.py
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 **4.** See the same output — but now it lives as a file on your machine, not just in a browser tab
 
@@ -1168,7 +1133,7 @@ hideInToc: true
 
 # Version-Control Your Work
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## 🔄 **Save Your Progress with Git**
 
@@ -1178,7 +1143,7 @@ You learned `git` earlier today — now put it to use! After completing the mini
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ```bash
 git add sensor_analysis.py
@@ -1187,42 +1152,10 @@ git commit -m "Add sensor temperature analysis script"
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 **Good habit**: commit after each working milestone. Your future self will thank you.
 
 </div>
 
 </div>
-
----
-hideInToc: true
----
-
-# What Comes Next
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary pad-tight">
-
-## 🔮 **Building on Python**
-
-These basics unlock a powerful ecosystem:
-
-- **Next**: Concepts of data analysis — the framework for thinking about data
-- Data visualization principles — how to communicate with plots
-- **Later**: NumPy, Pandas, matplotlib, probability, statistics, and data fitting
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 💡 **Key Takeaway**
-
-Python's simplicity is deceptive — the language you just learned is the same one used at CERN to process petabytes of collision data, train machine learning models, and automate entire analysis pipelines.
-
-</div>
-
-</div>
-
----

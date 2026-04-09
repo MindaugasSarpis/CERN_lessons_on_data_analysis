@@ -38,7 +38,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📖 **Lectures**
 
@@ -51,7 +51,7 @@ and what needs to be understood in detail.
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔬 **Seminars**
 
@@ -65,7 +65,7 @@ concepts on your own projects is the best way to learn.
 
 </div>
 
-<div class="card card-info pad-compact mt-md" style="text-align: center;">
+<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
 
 ⏱️ **48 hours** contact &nbsp;·&nbsp; **212 hours** self study
 
@@ -79,31 +79,31 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🧠 Build intuition for **good practices**
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🧰 Be aware of a **plethora of available free tools**
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 💪 Build **competences** in relevant areas
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🚀 Use what you learned for your **own projects**
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 🤝 Work together and practice **problem solving**
 
@@ -119,49 +119,49 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🖥️ Common pitfalls in working with computers
 
 </div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📁 File handling and directory structure
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📊 Concepts of Data Analysis
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ⚙️ Main principles of computing
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🏗️ Computing infrastructure
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🐍 Crash course on Python programming
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 🌐 Different Computing Environments
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 🔄 Creating robust workflows
 
@@ -177,7 +177,7 @@ hideInToc: true
 
 <div style="display: grid; grid-template-columns: 1fr 1fr 3fr; gap: 0.75rem;" class="mt-md">
 
-<div class="card card-warning pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+<div class="card card-warning card-glass pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
 
 ## 📝 **20%**
 
@@ -185,7 +185,7 @@ Quiz 1 (Data Analysis)
 
 </div>
 
-<div class="card card-warning pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+<div class="card card-warning card-glass pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
 
 ## 📝 **20%**
 
@@ -193,7 +193,7 @@ Quiz 2 (AI)
 
 </div>
 
-<div class="card card-success pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+<div class="card card-success card-glass pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
 
 ## 🎯 **60%**
 
@@ -211,7 +211,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## 📝 **Quiz 1 (20%)**
 
@@ -222,7 +222,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## 📝 **Quiz 2 (20%)**
 
@@ -233,7 +233,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 ## 🎯 **Final Project (60%)**
 
@@ -256,7 +256,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📋 **Requirements**
 
@@ -268,7 +268,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📦 **Deliverables**
 
@@ -322,25 +322,25 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🧠 Understand main concepts of **computing**
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🎯 Know which **tools** to choose for a specific task
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 ⚡ Be able to implement simple **data analysis workflows** on the fly
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🛡️ Be safe from **common pitfalls** in working with computers
 
@@ -356,25 +356,25 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 📐 Gain knowledge on **mathematics and statistics** for data analysis
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🤖 Understand the basics of **machine learning and AI**
 
 </div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🔀 Become **platform and tool agnostic** in your work
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🚀 Be able to **adapt** to new tools and technologies quicker
 
@@ -397,7 +397,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🤔 **Think** (2 min)
 
@@ -409,7 +409,7 @@ Pick a project, hobby, or job you know well.
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 💬 **Discuss** (3 min)
 
@@ -422,7 +422,7 @@ Share with a neighbour:
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🎯 **Takeaway**
 
@@ -443,7 +443,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🖥️ **What You Need**
 
@@ -454,7 +454,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ⚡ **Quick Check**
 
@@ -470,7 +470,7 @@ You should see `Python 3.x.x`. If not, we'll fix it now.
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔧 **Today's Task**
 

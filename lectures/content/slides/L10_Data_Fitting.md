@@ -48,7 +48,7 @@ hideInToc: true
 
 # Why Data Fitting?
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Motivation**
 
@@ -58,7 +58,7 @@ Every quantitative science depends on extracting numbers from noisy measurements
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **In the Lab**
 
@@ -68,7 +68,7 @@ Every quantitative science depends on extracting numbers from noisy measurements
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **In Research**
 
@@ -93,7 +93,7 @@ hideInToc: true
 
 # The Fundamental Problem
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Definition**
 
@@ -105,7 +105,7 @@ $$\text{Data} \xrightarrow{\text{fitting}} \text{Parameter estimates } \hat{\the
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **What we have**
 
@@ -115,7 +115,7 @@ $$\text{Data} \xrightarrow{\text{fitting}} \text{Parameter estimates } \hat{\the
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **What we want**
 
@@ -150,7 +150,7 @@ flowchart LR
     classDef check fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:12px,ry:12px
 ```
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **Key insight**: Fitting is iterative. If diagnostics reveal problems, refine the model and repeat.
 
@@ -167,7 +167,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Definition**
 
@@ -181,7 +181,7 @@ where $\varepsilon$ represents random measurement errors.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Components**
 
@@ -191,7 +191,7 @@ where $\varepsilon$ represents random measurement errors.
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Examples**
 
@@ -210,7 +210,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 📐 **Mechanistic**
 
@@ -224,7 +224,7 @@ Based on physical principles
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 📈 **Empirical**
 
@@ -238,7 +238,7 @@ Based on observed patterns
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 🔀 **Hybrid**
 
@@ -254,7 +254,7 @@ Combines both approaches
 
 </div>
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 **Important**: The choice of model should be guided by knowledge of the subject, not just by what fits best. A good fit with a wrong model gives wrong answers!
 
@@ -268,7 +268,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Types of Parameters**
 
@@ -280,7 +280,7 @@ Parameters $\theta$ are the unknowns we want to determine:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Each parameter has**
 
@@ -298,7 +298,7 @@ hideInToc: true
 
 # Parameter Example: Gaussian + Exponential
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## **Model**
 
@@ -306,7 +306,7 @@ $$f(x) = A \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}} + N \cdot e^{-x/\lambda}$$
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 | Parameter | Meaning |
 |-----------|---------|
@@ -331,7 +331,7 @@ hideInToc: true
 
 # The Estimation Problem
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Goal**
 
@@ -343,7 +343,7 @@ Given data and a model, find the parameter values $\hat{\theta}$ that make the m
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **The Challenge**
 
@@ -354,7 +354,7 @@ Given data and a model, find the parameter values $\hat{\theta}$ that make the m
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Solution: Optimization**
 
@@ -374,7 +374,7 @@ $$\hat{\theta} = \arg\min_\theta \text{Cost}(\theta)$$
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Sum of Squared Residuals**
 
@@ -386,7 +386,7 @@ $$S(\theta) = \sum_{i=1}^{n} \left[ y_i - f(x_i; \theta) \right]^2$$
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Intuition**
 
@@ -397,7 +397,7 @@ $$S(\theta) = \sum_{i=1}^{n} \left[ y_i - f(x_i; \theta) \right]^2$$
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## **Connection to MLE**
 
@@ -416,7 +416,7 @@ This is why least squares is so widely used.
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Weighted Least Squares**
 
@@ -430,7 +430,7 @@ Points with smaller uncertainties contribute more to the fit.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Physical interpretation**
 
@@ -441,7 +441,7 @@ Points with smaller uncertainties contribute more to the fit.
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## **Common case: Poisson data**
 
@@ -457,7 +457,7 @@ $$\sigma_i = \sqrt{n_i}$$
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **The Covariance Matrix**
 
@@ -469,7 +469,7 @@ $$C_{ij} = \text{Cov}(\hat{\theta}_i, \hat{\theta}_j)$$
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Diagonal elements**
 
@@ -483,7 +483,7 @@ Report results as: $\hat{\theta}_i \pm \sigma_i$
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Off-diagonal elements**
 
@@ -521,7 +521,7 @@ Visualizing correlations: ellipses show joint confidence regions for pairs of pa
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 
 `scipy.optimize.curve_fit` performs nonlinear least squares fitting:
@@ -534,7 +534,7 @@ popt, pcov = curve_fit(model, x_data, y_data, p0=initial_guess)
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Inputs**
 
@@ -546,7 +546,7 @@ popt, pcov = curve_fit(model, x_data, y_data, p0=initial_guess)
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Outputs**
 
@@ -562,7 +562,7 @@ errors = np.sqrt(np.diag(pcov))
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 Under the hood: uses Levenberg-Marquardt algorithm---a hybrid of gradient descent and Gauss-Newton methods.
 
@@ -574,7 +574,7 @@ hideInToc: true
 
 # Interactive: Linear Fit
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 Fit a straight line $y = mx + b$ to noisy data and extract the slope and intercept with uncertainties.
 
@@ -615,7 +615,7 @@ hideInToc: true
 
 # Interactive: Gaussian Fit
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 Fit a Gaussian peak $A \cdot e^{-(x-\mu)^2/2\sigma^2}$ to simulated histogram data --- a common task in particle physics.
 
@@ -657,7 +657,7 @@ hideInToc: true
 
 # Interactive: Exponential Decay Fit
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 Fit an exponential decay $N_0 \cdot e^{-t/\tau}$ to extract the lifetime $\tau$ --- a key measurement in nuclear and particle physics.
 
@@ -698,7 +698,7 @@ plt.tight_layout(); plt.show()
 hideInToc: true
 ---
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## **The Local Minimum Problem**
 
@@ -712,7 +712,7 @@ Nonlinear fitting is an optimization problem. Poor initial guesses can lead to:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Good practice**
 
@@ -723,7 +723,7 @@ Nonlinear fitting is an optimization problem. Poor initial guesses can lead to:
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 For a Gaussian peak:
 - `mean` ≈ position of maximum
@@ -740,7 +740,7 @@ hideInToc: true
 
 # Constraining Parameters
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Physical Constraints**
 
@@ -758,7 +758,7 @@ popt, pcov = curve_fit(model, x, y, p0=p0, bounds=bounds)
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Benefits**
 
@@ -768,7 +768,7 @@ popt, pcov = curve_fit(model, x, y, p0=p0, bounds=bounds)
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## **Caution**
 
@@ -786,7 +786,7 @@ hideInToc: true
 
 # Residual Analysis
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Definition**
 
@@ -798,7 +798,7 @@ Residuals reveal how well the model captures the data structure.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **Good Fit**
 
@@ -809,7 +809,7 @@ Residuals reveal how well the model captures the data structure.
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Problems Indicated**
 
@@ -828,7 +828,7 @@ hideInToc: true
 
 # Standardized Residuals
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Pull Distribution**
 
@@ -842,7 +842,7 @@ If model is correct and uncertainties accurate: pulls ~ $N(0, 1)$
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### **Mean**
 Should be ≈ 0
@@ -851,7 +851,7 @@ Non-zero → systematic bias
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **Width**
 Should be ≈ 1
@@ -861,7 +861,7 @@ Should be ≈ 1
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ### **Shape**
 Should be Gaussian
@@ -878,7 +878,7 @@ hideInToc: true
 
 # Visualizing Fit Quality
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Standard Plot Structure**
 
@@ -891,7 +891,7 @@ A complete fit visualization includes:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **What to include**
 
@@ -903,7 +903,7 @@ A complete fit visualization includes:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Residual panel**
 
@@ -931,7 +931,7 @@ hideInToc: true
 
 # The Chi-Squared Statistic
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Definition**
 
@@ -943,7 +943,7 @@ Sum of squared standardized residuals---measures total disagreement weighted by 
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Properties**
 
@@ -954,7 +954,7 @@ Sum of squared standardized residuals---measures total disagreement weighted by 
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Degrees of Freedom**
 
@@ -975,7 +975,7 @@ hideInToc: true
 
 # Reduced Chi-Squared
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **The Key Diagnostic**
 
@@ -987,7 +987,7 @@ The reduced chi-squared should be **approximately 1** for a good fit.
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ### ✅ **chi2/dof ≈ 1**
 
@@ -997,7 +997,7 @@ Model describes data well, uncertainties are correct
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ### ⚠️ **chi2/dof >> 1**
 
@@ -1007,7 +1007,7 @@ Model missing structure, or uncertainties underestimated
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ### 🔍 **chi2/dof << 1**
 
@@ -1025,7 +1025,7 @@ hideInToc: true
 
 # Interpreting chi-squared: Large Values
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## **When chi2/dof is large**
 
@@ -1045,7 +1045,7 @@ hideInToc: true
 
 # Interpreting chi-squared: Small Values
 
-<div class="card card-secondary pad-tight mt-md">
+<div class="card card-secondary card-glass pad-tight mt-md">
 
 ## **When chi2/dof is small**
 
@@ -1058,7 +1058,7 @@ Possible causes:
 
 </div>
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 **Important**: chi-squared alone doesn't tell you the model is correct---only that residuals are consistent with assumed uncertainties. Always combine with visual inspection!
 
@@ -1070,7 +1070,7 @@ hideInToc: true
 
 # p-value from chi-squared
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Statistical Test**
 
@@ -1082,7 +1082,7 @@ $$p = P(\chi^2 > \chi^2_{\text{obs}} \mid H_0)$$
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Interpretation**
 
@@ -1094,7 +1094,7 @@ $$p = P(\chi^2 > \chi^2_{\text{obs}} \mid H_0)$$
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## **Calculation**
 
@@ -1123,7 +1123,7 @@ hideInToc: true
 
 # When Fits Go Wrong: Convergence Failure
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## **Convergence Failure**
 
@@ -1147,7 +1147,7 @@ hideInToc: true
 
 # When Fits Go Wrong: Unreasonable Results
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## **Unreasonable Results**
 
@@ -1175,7 +1175,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Empty Bins**
 
@@ -1185,7 +1185,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Overfitting**
 
@@ -1199,7 +1199,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Ignoring Correlations**
 
@@ -1209,7 +1209,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Extrapolation**
 
@@ -1229,7 +1229,7 @@ hideInToc: true
 
 # Model Comparison
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Which Model is Better?**
 
@@ -1239,7 +1239,7 @@ When comparing nested models (e.g., with/without a component), use:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Likelihood Ratio Test**
 
@@ -1251,7 +1251,7 @@ Large $\Delta \chi^2$ → complex model significantly better
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Information Criteria**
 
@@ -1265,7 +1265,7 @@ Lower is better. Automatically penalize complexity.
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **Occam's razor**: Prefer simpler models unless data strongly favor complexity.
 
@@ -1286,7 +1286,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Before Fitting**
 
@@ -1297,7 +1297,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **After Fitting**
 
@@ -1319,7 +1319,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **Do**
 
@@ -1331,7 +1331,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ❌ **Don't**
 
@@ -1353,7 +1353,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **Also Do**
 
@@ -1363,7 +1363,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ❌ **Also Don't**
 
@@ -1388,7 +1388,7 @@ hideInToc: true
 
 # Example: Higgs Boson Discovery
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## **CERN 2012: Same Techniques!**
 
@@ -1398,7 +1398,7 @@ The Higgs boson was discovered using exactly these fitting methods.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **The Analysis**
 
@@ -1409,7 +1409,7 @@ The Higgs boson was discovered using exactly these fitting methods.
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **What They Did**
 
@@ -1430,7 +1430,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 🧬 **Biology**
 
@@ -1440,7 +1440,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 💊 **Medicine**
 
@@ -1450,7 +1450,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 🌍 **Climate**
 
@@ -1460,7 +1460,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ### 💰 **Economics**
 
@@ -1470,7 +1470,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ### 🏭 **Engineering**
 
@@ -1480,7 +1480,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ### 🤖 **Machine Learning**
 
@@ -1501,7 +1501,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Traditional Fitting**
 
@@ -1513,7 +1513,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Machine Learning**
 
@@ -1527,7 +1527,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **Both are parameter estimation problems.** ML is fitting with very complex, flexible models. Understanding fitting makes you better at ML.
 
@@ -1541,7 +1541,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 📐 **Models**
 
@@ -1551,7 +1551,7 @@ Choose based on physics, not just fit quality
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 🎯 **Fitting**
 
@@ -1561,7 +1561,7 @@ Get uncertainties from covariance matrix
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### ✓ **Validation**
 
@@ -1573,7 +1573,7 @@ A good fit isn't enough---must make physical sense
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## **The Big Picture**
 

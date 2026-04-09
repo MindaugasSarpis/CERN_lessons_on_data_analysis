@@ -77,7 +77,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🧭 **Framework Before Tools**
 
@@ -85,7 +85,7 @@ You have learned Python. Before diving into libraries and datasets, you need a c
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔬 **From CERN to Industry**
 
@@ -95,7 +95,7 @@ These concepts — lifecycle, quality, ethics, FAIR principles — apply identic
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🎯 **This Lecture**
 
@@ -111,28 +111,28 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📋 **Data**
 Capture observations (numbers, text, images, signals)
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 💡 **Information**
 Emerges when data gain context, structure, and purpose
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🧠 **Knowledge**
 Blends information with experience and domain expertise
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🎯 **Wisdom**
 The responsibility to act on knowledge with judgement
@@ -149,7 +149,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📋 **Raw Data**
 
@@ -157,7 +157,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 💡 **Information**
 
@@ -165,7 +165,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🧠 **Knowledge**
 
@@ -173,7 +173,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🎯 **Wisdom**
 
@@ -193,7 +193,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 **Statistics**
 
@@ -201,7 +201,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔧 **Data Engineering**
 
@@ -209,7 +209,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔍 **Data Analysis**
 
@@ -221,7 +221,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🧪 **Data Science**
 
@@ -229,7 +229,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🎯 **Decision Science**
 
@@ -249,13 +249,13 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📈 **Exploding volume, velocity, and variety** of data in every industry
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🏆 **Competitive edge** comes from **evidence-based** decisions
 
@@ -265,19 +265,19 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📜 Regulations demand **traceability**, **privacy**, and **explainability**
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🗣️ Teams need a **shared language** across disciplines
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 📖 Audiences expect stories backed by **data narratives**
 
@@ -285,7 +285,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ### ⚛️ **CERN angle** — High-throughput pipelines, reproducible workflows, and rigorous uncertainty quantification are non-negotiable.
 
@@ -297,7 +297,7 @@ hideInToc: true
 
 # Four flavours of analytics
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 <div style="font-size: 1.25em;">
 
@@ -320,25 +320,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📋 **Descriptive** — establishes baseline facts
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔍 **Diagnostic** — uncovers root causes
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔮 **Predictive** — forecasts future states
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🎯 **Prescriptive** — recommends optimal actions
 
@@ -354,42 +354,42 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🧪 **Universal Scope**
 Any experiment (study or analysis) in any field of science will have a data analysis component
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📄 **Publications**
 Normally, the **results of data analysis** appear in scientific **publications**
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 💼 **Business Impact**
 In business data analysis is imperative for **decision making**
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🔄 **Multi-step & Multi-disciplinary**
 Data analysis is a **multi-step** process spanning **multiple disciplines**
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🔁 **Iterative**
 Expect to **iterate** — insight rarely appears in a single pass
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🤝 **Trust**
 Trust is earned through **transparency**, **reproducibility**, and **storytelling**
@@ -406,7 +406,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🤔 **Think** (1 min)
 
@@ -414,7 +414,7 @@ Pick a project, hobby, or job you know well. What data gets generated there? Who
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 💬 **Discuss** (3 min)
 
@@ -424,7 +424,7 @@ Share with a neighbour: What is one decision that could be improved if the data 
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🎯 **Goal**
 
@@ -446,35 +446,35 @@ Here is the detailed nine-stage view of the analysis lifecycle. A simplified six
 
 <div class="grid-3 gap-md mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ### 🎯 **Problem Framing**
 Hypotheses & success metrics
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ### 🔍 **Data Discovery**
 Access & quality assessment
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 ### 🧹 **Preparation**
 Cleaning, joining, feature selection
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 ### 📊 **Exploration**
 Profiling, visualization, sanity checks
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 ### 🧪 **Modeling/Inference**
 Statistical tests & machine learning
@@ -491,28 +491,28 @@ hideInToc: true
 
 <div class="grid-3 gap-md mt-md">
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ### ✅ **Evaluation**
 Validation, uncertainty, sensitivity
 
 </div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ### 📢 **Communication**
 Narrative, visuals, decisions
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ### ⚙️ **Operationalization**
 Notebooks, scripts, pipelines
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 ### 📡 **Monitoring**
 Drift, quality, impact
@@ -566,25 +566,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🗺️ Map stakeholders → decisions → supporting data
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📏 Ask how outcomes are measured today
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔎 Identify gaps between available data and needed insight
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## ✅ Check feasibility: access, quality, ethics, skills, time
 
@@ -602,7 +602,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✅ **Completeness**
 
@@ -610,7 +610,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔗 **Consistency**
 
@@ -618,7 +618,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📐 **Validity**
 
@@ -630,7 +630,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## ⏱️ **Timeliness**
 
@@ -638,7 +638,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🔄 **Lineage**
 
@@ -646,7 +646,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ⚖️ **Ethics**
 
@@ -666,31 +666,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 Always report uncertainty: CIs, credible intervals, SEs
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ Beware p-hacking (selectively analyzing data to get significant results); pre-register (publicly declare your analysis plan before seeing results) when possible
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔢 Power matters: effect size, N, variance
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔗 Distinguish correlation from causation
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🧪 Sensitivity analyses: robustness to assumptions
 
@@ -706,31 +706,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🎨 Choose encodings that match the variable type
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📏 Show context: baselines, denominators, time windows
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ Avoid deceit: truncated axes, cherry-picked ranges
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📊 Use small multiples for comparisons
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 📖 Tell the story: title as takeaway, caption as why
 
@@ -752,31 +752,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📓 Keep code with results (notebook discipline)
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📦 Parameterize and record environment (env.yaml)
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🗂️ Version data/queries or capture snapshots
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🎲 Seed randomness; log configs and hashes
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ⚙️ Automate critical paths (Makefile/CI)
 
@@ -794,7 +794,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🧑‍🔬 **Domain expert**
 
@@ -802,7 +802,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📊 **Analyst/Scientist**
 
@@ -810,7 +810,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔧 **Engineer**
 
@@ -822,7 +822,7 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📋 **PM/Lead**
 
@@ -830,7 +830,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🤝 **Shared artifacts**
 
@@ -848,14 +848,14 @@ hideInToc: true
 
 # Mini case study
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 📡 **Scenario**
 Detector shows intermittent spike counts on night shifts.
 
 </div>
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 📋 **Plan**
 
@@ -875,31 +875,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ Overfitting pretty charts to noisy data
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ Confusing proxy metrics with outcomes
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ Ignoring units/timezones and data joins
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ Confirmation bias; not seeking disconfirming evidence
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ Shipping insights without reproducibility
 
@@ -915,31 +915,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ Start with a checklist (quality, ethics, uncertainty)
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ Write the "results" slide first; work backward
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ Keep a decisions log with assumptions
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ Pair-review visuals and statistical claims
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ Maintain a lightweight data dictionary
 
@@ -955,25 +955,25 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🎯 Define decisions and metrics early
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📊 Treat data quality and uncertainty as first-class
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📢 Communicate with clarity and integrity
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🔄 Make it reproducible; make it useful
 
@@ -981,7 +981,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 📚 **Deep-dive topics** — data fundamentals, FAIR principles, tools & collaboration, data hygiene, and field-by-field examples are covered in a dedicated extended session
 

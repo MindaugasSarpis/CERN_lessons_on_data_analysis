@@ -33,7 +33,7 @@ hideInToc: true
 
 # Markdown
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📝 **What is Markdown?**
 
@@ -46,7 +46,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🎯 **Purpose**
 
@@ -54,7 +54,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔧 **Used In**
 
@@ -74,7 +74,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✏️ **Syntax**
 
@@ -91,7 +91,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ## 👁️ **Rendered Output**
 
@@ -114,7 +114,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✏️ **Syntax**
 
@@ -128,7 +128,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 👁️ **Rendered Output**
 
@@ -154,7 +154,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✏️ **Paragraphs**
 
@@ -167,7 +167,7 @@ This is the second paragraph.
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ↩️ **Line Breaks**
 
@@ -182,7 +182,7 @@ Second line appears below.
 
 </div>
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ⚠️ **Common Beginner Mistake**
 
@@ -198,7 +198,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✏️ **Unordered List**
 
@@ -219,7 +219,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 👁️ **Rendered Output**
 
@@ -250,7 +250,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✏️ **Task List Syntax**
 
@@ -264,7 +264,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 👁️ **Rendered Output**
 
@@ -280,7 +280,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 💡 **Where Task Lists Shine**
 
@@ -296,7 +296,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔗 **Links**
 
@@ -312,7 +312,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🖼️ **Images**
 
@@ -337,7 +337,7 @@ hideInToc: true
 
 # Code Blocks
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 💻 **Inline Code**
 
@@ -349,7 +349,7 @@ Use `inline code` within a sentence.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📦 **Code Block**
 
@@ -363,7 +363,7 @@ Use `inline code` within a sentence.
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🎨 **Syntax Highlighting**
 
@@ -387,7 +387,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✏️ **Blockquotes**
 
@@ -404,7 +404,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 👁️ **Rendered Output**
 
@@ -431,7 +431,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✏️ **Table Syntax**
 
@@ -446,7 +446,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 👁️ **Rendered Output**
 
@@ -475,7 +475,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📋 **Key Takeaways**
 
@@ -490,7 +490,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## 🚀 **Practice Exercise**
 

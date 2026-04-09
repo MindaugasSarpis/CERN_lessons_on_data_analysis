@@ -54,7 +54,7 @@ hideInToc: true
 
 # What is an Algorithm?
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 An **algorithm** is a **finite sequence of well-defined instructions** to solve a problem — the recipe inside the "box."
 
@@ -62,7 +62,7 @@ An **algorithm** is a **finite sequence of well-defined instructions** to solve 
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ## 🍳 **Everyday Example**
 
@@ -73,7 +73,7 @@ An **algorithm** is a **finite sequence of well-defined instructions** to solve 
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ## 📖 **Finding a Word in a Dictionary**
 
@@ -93,7 +93,7 @@ hideInToc: true
 
 # A Bit of Foresight
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 - Applicable to data analysis routines of **arbitrary complexity**
 - You don't have to "see" your data (Excel, Origin, ...)
@@ -431,25 +431,25 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🔢 **Compact** — 1 hex digit = 4 binary digits
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 💾 **Memory addresses** — 0x1A2B3C4D
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🎨 **Colors** — #FF5733 (red-green-blue)
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 🐛 **Debugging** — Easier to read than long binary strings
 
@@ -651,7 +651,7 @@ hideInToc: true
 
 # File Sizes: From Bits to Terabytes
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 | **Unit** | **Size** | **Everyday Reference** |
 |----------|----------|------------------------|
@@ -663,7 +663,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact mt-md">
+<div class="card card-warning card-glass pad-compact mt-md">
 
 ⚠️ Computers use powers of 2: 1 KB = 1,024 bytes (not 1,000). This is why a "1 TB" hard drive shows ~931 GB in your OS.
 
@@ -752,7 +752,7 @@ hideInToc: true
 
 # Bitwise Operations Example
 
-<div class="card card-primary pad-tight mt-sm">
+<div class="card card-primary card-glass pad-tight mt-sm">
 
 **Used in:** data compression, cryptography, bit manipulation
 
@@ -809,7 +809,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🌐 **Unicode**
 
@@ -821,7 +821,7 @@ Universally encodes characters as code points
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📦 **UTF-8**
 
@@ -839,7 +839,7 @@ hideInToc: true
 
 # Python for Encoding Conversions
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-tight mt-sm">
 
 ```python
 # Python: bytes vs str and UTF-8
@@ -858,7 +858,7 @@ hideInToc: true
 
 # From Characters to Multi-Byte Values
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-tight mt-sm">
 
 ## 🧩 **So Far**
 
@@ -874,7 +874,7 @@ hideInToc: true
 
 # Endianness
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 ## 🔄 **What is Endianness?**
 
@@ -884,7 +884,7 @@ The **order** in which bytes of a multibyte value are stored in memory.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ## 📦 **Big-Endian**
 
@@ -896,7 +896,7 @@ Used by: **network protocols** (TCP/IP)
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ## 📦 **Little-Endian**
 
@@ -910,7 +910,7 @@ Used by: **x86/x64**, **ARM** (most PCs & phones)
 
 </div>
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Mismatched endianness → garbage values. NumPy: `dtype='>f4'` (big) or `dtype='<f4'` (little).
 
@@ -922,7 +922,7 @@ hideInToc: true
 
 # File Formats (Extensions)
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 **Computer needs to know what a sequence of bits is supposed to mean**
 
@@ -943,7 +943,7 @@ hideInToc: true
 
 # Image Quality vs Bit Depth
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 Below are five versions of the same image, saved with **different bit depths**. Notice how fewer bits reduce both **image quality** and **file size**.
 
@@ -978,7 +978,7 @@ hideInToc: true
 
 # From Pixels to Precision
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-tight mt-sm">
 
 ## 🔢 **The Same Trade-Off, Different Domain**
 
@@ -999,7 +999,7 @@ hideInToc: true
 
 # Floating-Point Basics (IEEE-754)
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 **Float** = sign + exponent + mantissa (binary scientific notation)
 
@@ -1009,19 +1009,19 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **Sign bit** (1 bit) — positive / negative
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 **Exponent** (8 bits in float32) — scale (power of 2)
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 **Mantissa** (23 bits in float32) — precision bits (significant figures)
 
@@ -1043,19 +1043,19 @@ $N = s \times m \times 10^e$
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **s** = sign (+1 or -1)
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 **m** = mantissa (significant digits, 1 $\leq$ m $<$ 10)
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 **e** = exponent (integer power of 10)
 
@@ -1077,19 +1077,19 @@ $-6.022 \times 10^{23}$
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 **Sign** = negative
 
 </div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **Mantissa** = 6.022
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 **Exponent** = 23
 
@@ -1111,25 +1111,25 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **s** = sign (+1 or -1)
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 **m** = mantissa (significant digits, 1 $\leq$ m $<$ 2 in binary)
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 **e** = exponent (integer power of 2)
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 **b** = exponent bias (127 for float32)
 
@@ -1149,7 +1149,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary pad-tight mt-sm">
+<div class="card card-primary card-glass pad-tight mt-sm">
 
 - 5.75 → 101.11₂
 - In scientific notation: $1.0111_2 \times 2^2$
@@ -1172,7 +1172,7 @@ hideInToc: true
 
 # Floating-Point Gotchas
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ⚠️ **Not all decimals are exact in binary**
 
@@ -1191,13 +1191,13 @@ math.isclose(0.1 + 0.2, 0.3)  # True
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🔢 **float32** — ~7 significant digits
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🔢 **float64** — ~15 significant digits (Python default)
 
@@ -1211,7 +1211,7 @@ hideInToc: true
 
 # Try It in Your Terminal!
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## 🧪 **Live Demo**
 
@@ -1225,7 +1225,7 @@ Open a terminal and type `python3` (or `python`), then try:
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 These aren't bugs — it's how **all** computers store decimals. This will matter when we compare measurements in later lectures.
 
@@ -1241,19 +1241,19 @@ hideInToc: true
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🐍 Python ints are **arbitrary precision** — no overflow possible
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📊 NumPy/C arrays use **fixed-width** ints (int8, int16, int32, int64)
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ⚠️ **Overflow** wraps silently in fixed-width types
 
@@ -1261,7 +1261,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔢 **Overflow Example**
 
@@ -1289,25 +1289,25 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🔢 **Integers** (`int`) — `42`, `-7`, `0` — fixed-width binary (arbitrary precision in Python)
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📐 **Floats** (`float`) — `3.14`, `6.022e23` — IEEE-754, watch for rounding!
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🔤 **Strings** (`str`) — `"Hello"`, `"α"` — Unicode characters, encoded as UTF-8
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 ✅ **Booleans** (`bool`) — `True` / `False` — a single bit, the basis of all decisions
 
@@ -1315,7 +1315,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 Every piece of data in your programs is one of these types. Choosing the right one matters for correctness, memory, and performance.
 
@@ -1336,7 +1336,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🔒 **Lossless**
 
@@ -1344,7 +1344,7 @@ CSV, JSON, Parquet, PNG — exact recovery
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 📉 **Lossy**
 
@@ -1354,13 +1354,13 @@ JPEG, MP3 — small size, info loss acceptable for media
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 💡 **Intuition:** remove redundancy (RLE, Huffman, dictionary coding)
 
 </div>
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
 🔤 **RLE example:** `AAABBBCC` → `3A3B2C` (8 chars → 6 chars)
 
@@ -1374,7 +1374,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔍 **Error Detection**
 
@@ -1382,7 +1382,7 @@ Parity, checksums, CRC detect transfer/storage errors
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔐 **Hashing**
 

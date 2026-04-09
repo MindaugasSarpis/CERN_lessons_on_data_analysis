@@ -43,7 +43,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🏛️ **The Organisation**
 
@@ -54,7 +54,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🎯 **The Mission**
 
@@ -67,7 +67,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🌍 **By the Numbers**
 
@@ -81,7 +81,7 @@ hideInToc: true
 
 # The Large Hadron Collider (LHC)
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## ⚙️ **The Machine**
 
@@ -94,7 +94,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ## 🔭 **Main Experiments**
 
@@ -105,7 +105,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## 🏆 **Key Achievement**
 
@@ -125,7 +125,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 **The Data Challenge**
 
@@ -136,7 +136,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔍 **Needle in a Haystack**
 
@@ -149,7 +149,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
 💾 **Data Pipeline:** Raw detector signals &#8594; Event reconstruction &#8594; Data filtering (triggers) &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
 
@@ -163,7 +163,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🌐 **The World Wide Web**
 
@@ -171,7 +171,7 @@ Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scient
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🖥️ **Computing Grid (WLCG)**
 
@@ -179,7 +179,7 @@ The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countrie
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🏥 **Medical Applications**
 
@@ -187,7 +187,7 @@ Particle accelerator technology enables **hadron therapy** for cancer treatment 
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📂 **Open Science**
 

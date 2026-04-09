@@ -42,7 +42,7 @@ hideInToc: true
 
 # Motivation
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🛠️ **From Python to Data Tools**
 
@@ -57,7 +57,7 @@ NumPy, Pandas, and matplotlib solve all three.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 🔢 **NumPy**
 - Efficient numerical arrays
@@ -67,7 +67,7 @@ NumPy, Pandas, and matplotlib solve all three.
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 🐼 **Pandas**
 - DataFrames (like Excel tables)
@@ -92,7 +92,7 @@ hideInToc: true
 
 # What is NumPy?
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 🔢 **NumPy = Numerical Python**
 
@@ -106,7 +106,7 @@ The fundamental package for scientific computing in Python:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 🚀 **Why NumPy?**
 
@@ -118,7 +118,7 @@ The fundamental package for scientific computing in Python:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 💡 **Key Concept**
 
@@ -210,7 +210,7 @@ t = time.time(); np_arr**2 + 2*np_arr + 1; t2 = time.time() - t
 print(f"Poly — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/t2:.0f}x faster")
 ```
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-tight mt-sm">
 
 **Key**: NumPy operations are implemented in C — extremely fast even for millions of elements!
 
@@ -248,7 +248,7 @@ hideInToc: true
 
 # Broadcasting: Concept
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 📐 **Broadcasting Rules**
 
@@ -309,7 +309,7 @@ hideInToc: true
 
 # NumPy: When It's Not Enough
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## ⚠️ **Limitations of NumPy**
 
@@ -319,7 +319,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ### 🚫 **NumPy limitations**
 - All elements must be same type
@@ -329,7 +329,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ### 🐼 **Enter Pandas**
 - Mixed data types per column
@@ -341,7 +341,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **Pandas is built on top of NumPy** — it adds labels, mixed types, and data manipulation tools while keeping NumPy's speed for numerical operations.
 
@@ -360,7 +360,7 @@ hideInToc: true
 
 # What is Pandas?
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 🐼 **Pandas = Panel Data (Python Data Analysis Library)**
 
@@ -375,7 +375,7 @@ Built on top of NumPy, adds:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 🗂️ **Think of DataFrame as:**
 - Excel spreadsheet
@@ -385,7 +385,7 @@ Built on top of NumPy, adds:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### ✨ **Key Features:**
 - Column/row labels (not just indices)
@@ -426,7 +426,7 @@ hideInToc: true
 
 # Reading Data from Files
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 📄 **Most Common: CSV Files**
 
@@ -542,7 +542,7 @@ hideInToc: true
 
 # Handling Missing Data
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ❓ **Real Data Has Missing Values!**
 
@@ -601,7 +601,7 @@ hideInToc: true
 
 # Group By: Split-Apply-Combine
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 📊 **Group By Pattern**
 
@@ -684,7 +684,7 @@ hideInToc: true
 
 # **Legend**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 🏷️ **What is a Legend?**
 
@@ -694,31 +694,31 @@ A legend is a key component of a plot that explains the meaning of the data. It 
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📌 Legend might **not be necessary** if the data is self-explanatory (e.g. bar chart, single-line plot, direct annotations)
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📍 Legend should be **placed** so it does not obscure the data
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 👁️ Legend should be **easy to read** and understand
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🎨 Legend should be **consistent** with the overall design of the plot
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🔑 Legend should explain **colors, shapes, sizes**, and other visual encodings used in the plot
 
@@ -732,7 +732,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Legend placement obscures the data — it overlaps with the plotted points
 
@@ -746,7 +746,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Too many legend entries make the chart unreadable — consider direct labeling or grouping
 
@@ -760,7 +760,7 @@ hideInToc: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Legend placed outside the plot area — data is fully visible and the legend is easy to read
 
@@ -774,7 +774,7 @@ hideInToc: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Clean legend with well-chosen colors and clear labels — each group is easily distinguishable
 
@@ -788,7 +788,7 @@ hideInToc: true
 
 # **Axes**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📐 **What are Axes?**
 
@@ -798,25 +798,25 @@ Axes are the reference lines that define the coordinate system of the plot. They
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🏷️ Axes should be **clearly labeled** with units and titles
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📏 Axes should have appropriate **tick marks and grid lines** to help interpret the data
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🔍 Axes should be **scaled appropriately** to show the data clearly
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🔗 Axes should show the **relationship** between different variables in the data
 
@@ -844,7 +844,7 @@ hideInToc: true
 
 # Visualizing **Amounts**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📊 **Common Chart Types for Amounts**
 
@@ -856,13 +856,13 @@ When your data represents quantities associated with categories, these are the g
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📊 **Bar Charts** — Compare values across categories
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📊 **Grouped Bar Charts** — Compare sub-groups side by side
 
@@ -872,13 +872,13 @@ When your data represents quantities associated with categories, these are the g
 
 <div class="stack-tight">
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 📊 **Stacked Bar Charts** — Show part-to-whole relationships
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🌡️ **Heat Maps** — Encode values as color intensity in a grid
 
@@ -894,7 +894,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Bars do not start at zero — this exaggerates differences and misleads the viewer
 
@@ -908,7 +908,7 @@ hideInToc: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Y-axis starts at zero — bar lengths accurately represent the data values
 
@@ -922,7 +922,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Categories are unsorted — makes it hard to compare values or spot patterns
 
@@ -936,7 +936,7 @@ hideInToc: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Bars sorted by value — trends and rankings are immediately visible
 
@@ -950,7 +950,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Stacking makes individual group comparisons difficult — consider grouped bars instead
 
@@ -964,7 +964,7 @@ hideInToc: true
 
 # Stacked Bar Charts
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 📊 Stacked bars work well for **part-to-whole** comparisons — each segment shows a proportion of the total
 
@@ -978,7 +978,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Too many categories with similar colors — the chart becomes hard to decode
 
@@ -992,7 +992,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ 3D effects distort perception — bar heights become ambiguous and comparisons unreliable
 
@@ -1006,7 +1006,7 @@ hideInToc: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Clean 2D bars with distinct colors and clear labels — easy to read and compare
 
@@ -1020,7 +1020,7 @@ hideInToc: true
 
 # Histograms
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📈 **What are Histograms?**
 
@@ -1030,25 +1030,25 @@ Histograms visualize the **distribution** of a single continuous variable by div
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📏 Histograms should have appropriate **bin widths** to show the shape of the distribution
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🏷️ Histograms should have **clear labels and titles**
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🎨 Histograms should be **consistent** with the overall design of the plot
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🔍 Histograms should be used to identify **patterns, trends, and outliers** in the data
 
@@ -1076,7 +1076,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Bin width too large or too small — the distribution shape is distorted or obscured by noise
 
@@ -1104,7 +1104,7 @@ hideInToc: true
 
 # **Accessibility** in Visualization
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 🎨 **Colorblind-Safe Palettes**
 
@@ -1114,25 +1114,25 @@ Approximately 8% of men and 0.5% of women have some form of color vision deficie
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ✅ Use **colorblind-safe palettes** such as `viridis`, `cividis`, or `plasma` — they are perceptually uniform and distinguishable by colorblind viewers
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🚫 Avoid **red-green** combinations — the most common form of color blindness confuses these two colors
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🔲 Use **redundant encodings** — combine color with shape, pattern, or line style so information is not conveyed by color alone
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🧪 **Test your plots** — tools like Color Oracle or Coblis can simulate how your figures look to colorblind viewers
 
@@ -1146,7 +1146,7 @@ hideInToc: true
 
 # Visualization with Pandas: Histograms
 
-<div class="card card-accent pad-compact mt-sm">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
 Pandas has built-in plotting (uses Matplotlib under the hood)
 
@@ -1272,7 +1272,7 @@ hideInToc: true
 
 # Exercise: Critique These Plots
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ⚠️ **What's Wrong Here?**
 
@@ -1282,7 +1282,7 @@ For each issue below, identify the visualization principle being violated:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔍 **Checklist**
 
@@ -1295,7 +1295,7 @@ When reviewing ANY plot, ask:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🏋️ **Your Turn**
 
@@ -1324,7 +1324,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Missing Values**
 - Empty cells, NaN, None
@@ -1333,7 +1333,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Outliers**
 - Measurement errors or rare events
@@ -1342,7 +1342,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Duplicates**
 - Repeated measurements
@@ -1351,7 +1351,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Inconsistent Formats**
 - Mixed units (GeV vs MeV)
@@ -1425,7 +1425,7 @@ hideInToc: true
 
 # Data Normalization: Why and How
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 📏 **Why Normalize?**
 
@@ -1466,7 +1466,7 @@ hideInToc: true
 
 # File I/O with Pandas
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 📁 **Pandas Supports Many Formats**
 
@@ -1476,7 +1476,7 @@ Reading and writing data follows a consistent pattern: `pd.read_*()` and `df.to_
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 📥 **Reading Data**
 
@@ -1489,7 +1489,7 @@ df = pd.read_sql(query, connection)
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 📤 **Writing Data**
 
@@ -1504,7 +1504,7 @@ df.to_sql('table', connection)
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **Best practice**: Use CSV for human-readable data, HDF5 or Parquet for large datasets (faster, smaller)
 
@@ -1516,7 +1516,7 @@ hideInToc: true
 
 # Data Analysis: Do's
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## ✅ **Best Practices**
 
@@ -1528,7 +1528,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 **Rule of thumb**: If you can't explain where every number came from, go back and document your pipeline.
 
@@ -1540,7 +1540,7 @@ hideInToc: true
 
 # Data Analysis: Don'ts
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ❌ **Common Mistakes**
 
@@ -1552,9 +1552,9 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
-**Remember**: Version control your analysis scripts and save intermediate results for reproducibility (more in L12!)
+**Remember**: Version control your analysis scripts and save intermediate results for reproducibility.
 
 </div>
 
@@ -1566,7 +1566,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 🔢 **NumPy**
 
@@ -1580,7 +1580,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 🐼 **Pandas**
 
@@ -1594,7 +1594,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### ⚡ **General**
 
@@ -1634,7 +1634,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔢 **NumPy**
 
@@ -1650,7 +1650,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🐼 **Pandas**
 
@@ -1666,7 +1666,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📊 **Visualization**
 
@@ -1692,7 +1692,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 🎯 **Skills Acquired**
 
@@ -1704,7 +1704,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ### ✅ **Best Practices**
 
@@ -1718,7 +1718,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ### 🔮 **Next Steps**
 

@@ -36,7 +36,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🚀 **Performance**
 
@@ -44,7 +44,7 @@ The difference between a 10-second and a 10-hour analysis often comes down to ha
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🧠 **Informed Decisions**
 
@@ -52,7 +52,7 @@ Understanding what's under the hood helps you choose the right cloud instance, o
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 💡 **Vocabulary**
 
@@ -60,7 +60,7 @@ You will encounter terms like CPU cores, RAM, NVMe, and GPU acceleration constan
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🔬 **CERN Scale**
 
@@ -85,7 +85,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🖥️ **Core Processing**
 
@@ -94,7 +94,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 💾 **Memory & Storage**
 
@@ -103,7 +103,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔌 **I/O & Connectivity**
 
@@ -112,7 +112,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## ⚡ **Infrastructure**
 
@@ -121,7 +121,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🔒 **Security**
 
@@ -147,7 +147,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🧠 **What It Does**
 
@@ -155,21 +155,21 @@ Basic arithmetic, logic, control, and input/output operations
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔧 **CPU Sub-Components**
 
 <div class="stack-tight">
 
-<div class="card card-info pad-compact">⚙️ **Control Unit (CU)** — directs operations</div>
+<div class="card card-info card-glass pad-compact">⚙️ **Control Unit (CU)** — directs operations</div>
 
-<div class="card card-accent pad-compact">➕ **Arithmetic Logic Unit (ALU)** — math & logic</div>
+<div class="card card-accent card-glass pad-compact">➕ **Arithmetic Logic Unit (ALU)** — math & logic</div>
 
-<div class="card card-success pad-compact">📋 **Registers** — fastest storage</div>
+<div class="card card-success card-glass pad-compact">📋 **Registers** — fastest storage</div>
 
-<div class="card card-warning pad-compact">💨 **Cache** — near-CPU memory</div>
+<div class="card card-warning card-glass pad-compact">💨 **Cache** — near-CPU memory</div>
 
-<div class="card card-primary pad-compact">🔀 **Buses** — data pathways</div>
+<div class="card card-primary card-glass pad-compact">🔀 **Buses** — data pathways</div>
 
 </div>
 
@@ -185,7 +185,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ⏱️ **Clock Speed**
 
@@ -193,7 +193,7 @@ How many cycles per second the CPU can execute — modern CPUs run at **3–5 GH
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔢 **Number of Cores**
 
@@ -201,7 +201,7 @@ More cores enable parallel execution — laptops typically have **4–16 cores**
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 💨 **Cache Size**
 
@@ -209,7 +209,7 @@ Larger caches reduce memory access latency — typically **32 KB** (L1) to **32 
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔋 **Power Efficiency**
 
@@ -226,7 +226,7 @@ image: /figures/cpu1.avif
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-primary card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 A modern multi-core CPU die — the complex circuitry visible on the silicon wafer integrates billions of transistors for processing, cache, and I/O.
 
@@ -240,7 +240,7 @@ image: /figures/cpu2.jpg
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-primary card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 Close-up of a CPU package mounted on a motherboard. The metal heat spreader covers the silicon die and conducts heat to the cooler above.
 
@@ -254,7 +254,7 @@ image: /figures/cpu_apple_M4.webp
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-primary card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 Apple M4 system-on-chip (SoC) — integrates CPU, GPU, Neural Engine, and unified memory on a single die for maximum efficiency.
 
@@ -276,7 +276,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📝 **Characteristics**
 
@@ -286,7 +286,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📊 **Specifications**
 
@@ -305,7 +305,7 @@ image: https://miro.medium.com/v2/resize:fit:1400/format:webp/0*6k9X6LPiM4XKyssm
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-secondary pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-secondary card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 Desktop RAM modules (DIMMs) — each stick contains multiple memory chips that provide fast, volatile storage for active programs and data.
 
@@ -319,7 +319,7 @@ image: https://www.pcworld.com/wp-content/uploads/2023/04/corsair-dominator-memo
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-secondary pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-secondary card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 High-performance DDR memory with heat spreaders. Overclocking-grade RAM uses custom PCB designs and binned chips for higher clock speeds.
 
@@ -331,11 +331,11 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/laptop_ram.webp" class="w-auto">
+<img src="/figures/laptop_ram.webp" class="w-auto max-h-80 mx-auto">
 
-<div class="card card-secondary pad-compact mt-md">
+<div class="card card-secondary card-glass pad-compact mt-sm">
 
-Laptop SO-DIMM RAM modules — smaller form factor than desktop DIMMs, but same underlying technology. Often soldered directly onto the motherboard in modern ultrabooks.
+Laptop SO-DIMM RAM modules — smaller than desktop DIMMs, often soldered onto the motherboard in modern ultrabooks.
 
 </div>
 
@@ -347,7 +347,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 💿 **Mechanical**
 
@@ -355,7 +355,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ⚡ **Solid State**
 
@@ -364,7 +364,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight" style="grid-column: 1 / -1;">
+<div class="card card-accent card-glass pad-tight" style="grid-column: 1 / -1;">
 
 ## 🚀 **NVMe** (Non-Volatile Memory Express)
 
@@ -394,11 +394,11 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/hdd.webp" class="w-auto">
+<img src="/figures/hdd.webp" class="w-auto max-h-80 mx-auto">
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
-Inside a hard disk drive (HDD) — spinning magnetic platters with a read/write head on an actuator arm. Typical speeds are 5400-7200 RPM.
+Inside a hard disk drive (HDD) — spinning magnetic platters with a read/write head. Typical speeds: 5400–7200 RPM.
 
 </div>
 
@@ -410,7 +410,7 @@ backgroundSize: contain
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-accent card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 HDD schematic — data is stored in concentric tracks on the platter surface. The actuator arm positions the head over the correct track to read or write data.
 
@@ -425,7 +425,7 @@ backgroundSize: contain
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-accent card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 Magnetic domains on an HDD platter — each bit is stored as the orientation of a tiny magnetic region. Smaller domains allow higher storage density.
 
@@ -437,11 +437,11 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/ssd.png" class="w-auto">
+<img src="/figures/ssd.png" class="w-auto max-h-80 mx-auto">
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
-A solid-state drive (SSD) in the standard 2.5-inch form factor. No moving parts means faster access, lower latency, and better shock resistance than HDDs.
+A solid-state drive (SSD) — no moving parts means faster access, lower latency, and better shock resistance than HDDs.
 
 </div>
 
@@ -450,11 +450,11 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/nvme.webp" class="w-auto">
+<img src="/figures/nvme.webp" class="w-auto max-h-80 mx-auto">
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
-An NVMe M.2 drive — connects directly to the PCIe bus, bypassing the slower SATA interface. Sequential read speeds can exceed 7 GB/s on modern drives.
+NVMe M.2 drive — connects directly to the PCIe bus, bypassing SATA. Sequential reads can exceed 7 GB/s.
 
 </div>
 
@@ -466,7 +466,7 @@ backgroundSize: contain
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-accent card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 3D NAND flash architecture — memory cells are stacked vertically in layers, dramatically increasing storage density without shrinking individual cell sizes.
 
@@ -481,7 +481,7 @@ backgroundSize: contain
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-accent pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-accent card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 Floating gate transistor — the core storage mechanism of flash memory. Electrons trapped on the floating gate change the transistor's threshold voltage to represent 0 or 1.
 
@@ -503,7 +503,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔌 **What Is I/O?**
 
@@ -511,7 +511,7 @@ Any transfer of data **into** or **out of** the CPU — reading files from disk,
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🚌 **Common I/O Interfaces**
 
@@ -522,7 +522,7 @@ Any transfer of data **into** or **out of** the CPU — reading files from disk,
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🚧 **The I/O Bottleneck**
 
@@ -530,7 +530,7 @@ I/O is typically the **slowest link** in the data pipeline. A fast CPU waiting o
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📊 **Why It Matters for Analysis**
 
@@ -555,7 +555,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🎮 **GPU** (Graphics Processing Unit)
 
@@ -563,7 +563,7 @@ Massively parallel — thousands of small cores for throughput
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🤖 **TPU** (Tensor Processing Unit)
 
@@ -571,7 +571,7 @@ Google-designed accelerator optimized for ML tensor operations
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔧 **FPGA** (Field-Programmable Gate Array)
 
@@ -579,7 +579,7 @@ Reconfigurable hardware — customizable logic for specific tasks
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🏭 **ASIC** (Application-Specific Integrated Circuit)
 
@@ -597,7 +597,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🎯 **Primary Uses**
 
@@ -607,7 +607,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔬 **Scientific Applications**
 
@@ -624,11 +624,11 @@ hideInToc: true
 layout: center
 ---
 
-<img src="/figures/gpu1.webp" class="w-auto">
+<img src="/figures/gpu1.webp" class="w-auto max-h-80 mx-auto">
 
-<div class="card card-primary pad-compact mt-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-A modern GPU board — the large die under the cooler contains thousands of parallel cores designed for high-throughput computation.
+A modern GPU — thousands of parallel cores under the cooler, designed for high-throughput computation.
 
 </div>
 
@@ -639,7 +639,7 @@ image: https://cdn.mos.cms.futurecdn.net/xd2Hw9Cki3qhzbC2WxNBcA.jpg
 ---
 
 <div class="absolute bottom-4 left-4 right-4">
-<div class="card card-primary pad-compact" style="background: rgba(0,0,0,0.7);">
+<div class="card card-primary card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
 GPU die shot — the highly regular grid pattern reflects the SIMD architecture: thousands of identical cores executing the same instruction on different data in parallel.
 
@@ -651,14 +651,6 @@ hideInToc: true
 ---
 
 # CPU vs GPU — Visualized
-
-<div class="card card-info pad-compact mt-md">
-
-## 🎬 **Video: Mythbusters Demo — CPU vs GPU**
-
-A visual demonstration of serial vs. parallel processing. The CPU paints one pixel at a time, while the GPU paints thousands simultaneously — illustrating why GPUs excel at data-parallel workloads.
-
-</div>
 
 <div class="mt-md" style="text-align: center;">
   <iframe
@@ -687,7 +679,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ⚡ **Power and Cooling**
 
@@ -695,7 +687,7 @@ Reliable power supply, UPS systems, and thermal management for sustained operati
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🌐 **Networking**
 
@@ -703,7 +695,7 @@ Interconnects, bandwidth, latency — moving data between components and systems
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📈 **Monitoring & Management**
 
@@ -721,7 +713,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🔒 **Security**
 
@@ -729,7 +721,7 @@ Access control, encryption, firewalls, intrusion detection — protecting data a
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 💻 **Software**
 
@@ -737,7 +729,7 @@ Operating systems, drivers, middleware, and application software that runs on th
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ☁️ **Virtualization & Cloud**
 
@@ -755,23 +747,17 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🖥️ **Operating Systems**
 
-<div class="stack-tight">
-
-<div class="card card-info pad-compact">🪟 **Windows** — desktop, enterprise</div>
-
-<div class="card card-accent pad-compact">🍎 **macOS** — Apple ecosystem</div>
-
-<div class="card card-success pad-compact">🐧 **Linux** — servers, HPC, science</div>
+- 🪟 **Windows** — desktop, enterprise
+- 🍎 **macOS** — Apple ecosystem
+- 🐧 **Linux** — servers, HPC, science
 
 </div>
 
-</div>
-
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔗 **Middleware & Applications**
 
@@ -834,7 +820,7 @@ hideInToc: true
 
 # Memory Access Times
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## ⏱️ **Latency Comparison**
 
@@ -857,7 +843,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📍 **Locality Matters**
 
@@ -865,7 +851,7 @@ Keep related data close together in memory — sequential access patterns are dr
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ⚡ **Vectorization**
 
@@ -873,7 +859,7 @@ Process arrays in chunks that fit in cache — SIMD instructions can operate on 
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📂 **File Formats**
 
@@ -881,7 +867,7 @@ Columnar formats (Parquet) are cache-friendly — read only the columns you need
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🧮 **Algorithm Choice**
 
@@ -897,13 +883,6 @@ hideInToc: true
 
 # How Computer Memory Works
 
-<div class="card card-info pad-compact mt-md">
-
-## 🎬 **Video: How Computer Memory Works — TED-Ed**
-
-An animated explanation of the memory hierarchy — from CPU registers to hard drives — and why balancing speed, size, and cost shapes every computer system.
-
-</div>
 
 <div class="mt-md" style="text-align: center;">
   <iframe
@@ -923,7 +902,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🖥️ **macOS / Linux**
 
@@ -942,7 +921,7 @@ df -h
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🪟 **Windows (PowerShell)**
 
@@ -962,7 +941,7 @@ Get-PSDrive C
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 ## 🎯 **Try it now**
 
@@ -978,7 +957,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🧠 **CPU**
 
@@ -986,7 +965,7 @@ The brain of computation — clock speed, cores, and cache determine how fast yo
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 💾 **Memory Hierarchy**
 
@@ -994,7 +973,7 @@ Speed and cost trade off — registers are fastest, disk is cheapest. Keeping da
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🎮 **Specialized Hardware**
 
@@ -1002,7 +981,7 @@ GPUs and other accelerators enable massive parallelism for data-intensive and ML
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📊 **Why It Matters**
 
@@ -1011,5 +990,3 @@ Understanding hardware helps you choose the right tools, write faster code, and 
 </div>
 
 </div>
-
----

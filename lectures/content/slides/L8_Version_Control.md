@@ -35,7 +35,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **The Problem**
 
@@ -61,7 +61,7 @@ hideInToc: true
 
 # Tracking Changes (differences)
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔍 **Why Track Changes?**
 
@@ -81,7 +81,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔀 **Diverging Histories**
 
@@ -106,7 +106,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🔗 **Combining Changes**
 
@@ -132,7 +132,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🍎 **macOS**
 
@@ -149,7 +149,7 @@ xcode-select --install
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🪟 **Windows**
 
@@ -166,7 +166,7 @@ git --version
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🐧 **Linux**
 
@@ -185,7 +185,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ⚙️ **Configuration**
 
@@ -210,7 +210,7 @@ git config --h
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🔍 **Checking Your Config**
 
@@ -243,7 +243,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📂 **Initializing**
 
@@ -276,7 +276,7 @@ hideInToc: true
 
 # Repository Status
 
-<div class="card card-secondary pad-tight mt-md">
+<div class="card card-secondary card-glass pad-tight mt-md">
 
 ## 🔍 **Initial Status Output**
 
@@ -292,7 +292,7 @@ nothing to commit (create/copy files and use "git add" to track)
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 You will see `git status` a lot — it is the most useful command for understanding where you are.
 
@@ -306,7 +306,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📋 **Adding Files to the Stage**
 
@@ -330,7 +330,7 @@ git add --all
 
 ![](/figures/git-staging-area.svg)
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 When staged files are present, the output of `git status` will be:
 
@@ -355,7 +355,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔄 **Unstaging Files**
 
@@ -369,7 +369,7 @@ git restore --staged <file>
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔍 **Viewing Differences**
 
@@ -403,7 +403,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📸 **Creating Snapshots**
 
@@ -441,7 +441,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📜 **Git Log**
 
@@ -458,13 +458,13 @@ git log --oneline --graph --all
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ✍️ **Commit Message Best Practices**
 
 <div class="grid-2 mt-sm gap-md">
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ❌ "fixed stuff"
 
@@ -474,7 +474,7 @@ git log --oneline --graph --all
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 ✅ "Add data validation for input CSV"
 
@@ -498,7 +498,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ↩️ **Undo Working Directory Changes**
 
@@ -520,7 +520,7 @@ git restore --staged < file >
 
 ![](/figures/git-restore.svg)
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 ## 💡 **When to Use**
 
@@ -541,7 +541,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔙 **Restore from History**
 
@@ -561,7 +561,7 @@ git revert < hash >
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Dangerous: Hard Reset**
 
@@ -593,7 +593,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🚫 **What to Ignore**
 
@@ -703,7 +703,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔑 **Why SSH?**
 
@@ -713,7 +713,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ⚙️ **Quick Setup**
 
@@ -779,7 +779,7 @@ hideInToc: true
 
 # Branches
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🌿 **Parallel Development**
 
@@ -790,7 +790,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ➕ **Create & Switch**
 
@@ -805,7 +805,7 @@ git switch feature-name
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔀 **Merge & Clean Up**
 
@@ -830,7 +830,7 @@ hideInToc: true
 
 # Merge Conflicts — What They Look Like
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ⚠️ **When two branches change the same lines**
 
@@ -839,7 +839,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight mt-md">
+<div class="card card-secondary card-glass pad-tight mt-md">
 
 ## 🔍 **Conflict Markers**
 
@@ -864,7 +864,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔧 **How to resolve**
 
@@ -879,7 +879,7 @@ git commit -m "Resolve merge conflict"
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 ## 💡 **Tips**
 
@@ -897,22 +897,22 @@ hideInToc: true
 ---
 
 <div class="stack-tight">
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 1️⃣ <code>git pull</code> — get latest changes from remote
 </div>
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 2️⃣ <code>git switch -c my-feature</code> — create a branch for your work
 </div>
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 3️⃣ <em>Make changes to files</em>
 </div>
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 4️⃣ <code>git add</code> + <code>git commit -m "descriptive message"</code> — save your work
 </div>
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 5️⃣ <code>git push origin my-feature</code> — share with remote
 </div>
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 6️⃣ <em>Create a Pull Request on GitHub for code review</em>
 </div>
 </div>
@@ -930,11 +930,11 @@ hideInToc: true
 
 # Looking Ahead
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔗 **Git in the Bigger Picture**
 
-Version control is one pillar of **reproducible research**. In **L12**, we combine git with:
+Version control is one pillar of **reproducible research**. It works together with:
 
 - **Virtual environments** — isolate dependencies
 - **Automated scripts** — one command runs the full analysis

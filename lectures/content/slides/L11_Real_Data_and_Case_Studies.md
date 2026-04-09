@@ -42,7 +42,7 @@ hideInToc: true
 
 # Motivation
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🌍 **From Textbook to Reality**
 
@@ -56,7 +56,7 @@ So far we've worked with clean, synthetic data. Real-world data is different:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 🎯 **This Lecture**
 - Apply NumPy, Pandas, stats, and fitting to realistic scenarios
@@ -65,7 +65,7 @@ So far we've worked with clean, synthetic data. Real-world data is different:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 🔧 **Skills You'll Use**
 - Everything from L5 (Python), L6 (NumPy/Pandas/matplotlib)
@@ -89,7 +89,7 @@ hideInToc: true
 
 # Example: Higgs to Two Photons Analysis
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 📋 **Realistic Scenario**
 
@@ -240,7 +240,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📋 **Analysis Steps**
 1. Generated realistic signal + background data
@@ -251,7 +251,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 💡 **Key Lessons**
 - Always **visualize before cutting**
@@ -276,7 +276,7 @@ hideInToc: true
 
 # CERN Open Data Portal
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🌐 **Explore Real Particle Physics Data**
 
@@ -288,7 +288,7 @@ CERN provides open access to real experimental data from LHC experiments!
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 📚 **Available Datasets**
 
@@ -301,7 +301,7 @@ Formats: CSV, ROOT, HDF5
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 📈 **Example Analyses**
 
@@ -317,7 +317,7 @@ Full tutorials and documentation provided!
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 **Your next step**: Download a real dataset and apply NumPy/Pandas skills! Example: Dimuon spectrum showing J/ψ, Υ resonances
 
@@ -433,7 +433,7 @@ hideInToc: true
 
 # Building a Complete Analysis
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔄 **The Full Pipeline**
 
@@ -443,37 +443,37 @@ Every real analysis follows the same pattern — regardless of field:
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📥 **1. Load** — Read data from files, APIs, or databases
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🧹 **2. Clean** — Handle missing values, fix types, remove duplicates
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🔍 **3. Explore** — Summary statistics, distributions, correlations
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 📊 **4. Visualize** — Histograms, scatter plots, time series
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🧪 **5. Analyze** — Fit models, test hypotheses, quantify uncertainty
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 📢 **6. Communicate** — Clear plots, reproducible code, written summary
 
@@ -541,7 +541,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Textbook Data**
 - Clean, no missing values
@@ -552,7 +552,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🌍 **Real Data**
 - Missing values, outliers
@@ -565,7 +565,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 💡 **The Bridge**
 
@@ -581,7 +581,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🎯 **Analysis Workflow**
 
@@ -595,7 +595,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔗 **Connecting the Course**
 

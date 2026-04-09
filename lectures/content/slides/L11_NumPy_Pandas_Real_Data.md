@@ -48,7 +48,7 @@ hideInToc: true
 
 # Motivation
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **From Toy Examples to Real Data**
 
@@ -62,7 +62,7 @@ In L10, we worked with synthetic data (Gaussian + exponential). But real-world d
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 🔢 **NumPy**
 - Efficient numerical arrays
@@ -72,7 +72,7 @@ In L10, we worked with synthetic data (Gaussian + exponential). But real-world d
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 🐼 **Pandas**
 - DataFrames (like Excel tables)
@@ -97,7 +97,7 @@ hideInToc: true
 
 # What is NumPy?
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## **NumPy = Numerical Python**
 
@@ -111,7 +111,7 @@ The fundamental package for scientific computing in Python:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### **Why NumPy?**
 
@@ -123,7 +123,7 @@ The fundamental package for scientific computing in Python:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **Key Concept**
 
@@ -215,7 +215,7 @@ t = time.time(); np_arr**2 + 2*np_arr + 1; t2 = time.time() - t
 print(f"Poly — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/t2:.0f}x faster")
 ```
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-tight mt-sm">
 
 **Key**: NumPy operations are implemented in C — extremely fast even for millions of elements!
 
@@ -253,7 +253,7 @@ hideInToc: true
 
 # Broadcasting: Concept
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Broadcasting Rules**
 
@@ -314,7 +314,7 @@ hideInToc: true
 
 # NumPy: When It's Not Enough
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Limitations of NumPy**
 
@@ -324,7 +324,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ### **NumPy limitations**
 - All elements must be same type
@@ -334,7 +334,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ### **Enter Pandas**
 - Mixed data types per column
@@ -346,7 +346,7 @@ NumPy is great for numerical computation, but real-world data often needs more:
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **Pandas is built on top of NumPy** — it adds labels, mixed types, and data manipulation tools while keeping NumPy's speed for numerical operations.
 
@@ -365,7 +365,7 @@ hideInToc: true
 
 # What is Pandas?
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## **Pandas = Panel Data (Python Data Analysis Library)**
 
@@ -380,7 +380,7 @@ Built on top of NumPy, adds:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### **Think of DataFrame as:**
 - Excel spreadsheet
@@ -390,7 +390,7 @@ Built on top of NumPy, adds:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **Key Features:**
 - Column/row labels (not just indices)
@@ -431,7 +431,7 @@ hideInToc: true
 
 # Reading Data from Files
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## **Most Common: CSV Files**
 
@@ -547,7 +547,7 @@ hideInToc: true
 
 # Handling Missing Data
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## **Real Data Has Missing Values!**
 
@@ -606,7 +606,7 @@ hideInToc: true
 
 # Group By: Split-Apply-Combine
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Group By Pattern**
 
@@ -693,7 +693,7 @@ hideInToc: true
 
 # Visualization with Pandas: Histograms
 
-<div class="card card-accent pad-compact mt-sm">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
 Pandas has built-in plotting (uses Matplotlib under the hood)
 
@@ -763,7 +763,7 @@ hideInToc: true
 
 # Example: Higgs to Two Photons Analysis
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Realistic Scenario**
 
@@ -921,7 +921,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Missing Values**
 - Empty cells, NaN, None
@@ -930,7 +930,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Outliers**
 - Measurement errors or rare events
@@ -939,7 +939,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Duplicates**
 - Repeated measurements
@@ -948,7 +948,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ⚠️ **Inconsistent Formats**
 - Mixed units (GeV vs MeV)
@@ -1022,7 +1022,7 @@ hideInToc: true
 
 # Data Normalization: Why and How
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Why Normalize?**
 
@@ -1091,7 +1091,7 @@ hideInToc: true
 
 # File I/O with Pandas
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## **Pandas Supports Many Formats**
 
@@ -1101,7 +1101,7 @@ Reading and writing data is easy and consistent across formats
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### **Reading Data**
 
@@ -1124,7 +1124,7 @@ df = pd.read_hdf('data.h5', 'key')
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **Writing Data**
 
@@ -1149,7 +1149,7 @@ df.to_hdf('output.h5', 'key')
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **Best practice**: Use CSV for human-readable data, HDF5 or Parquet for large datasets (faster, smaller)
 
@@ -1195,7 +1195,7 @@ for chunk in pd.read_csv('particle_data.csv', chunksize=chunk_size):
     break  # Just show first chunk
 ```
 
-<div class="card card-warning pad-tight mt-sm">
+<div class="card card-warning card-glass pad-tight mt-sm">
 
 **For very large files (GB+)**, use chunking or consider Dask/Polars for out-of-memory processing
 
@@ -1214,7 +1214,7 @@ hideInToc: true
 
 # Data Analysis: Do's
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## ✅ **Best Practices**
 
@@ -1226,7 +1226,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 **Rule of thumb**: If you can't explain where every number came from, go back and document your pipeline.
 
@@ -1238,7 +1238,7 @@ hideInToc: true
 
 # Data Analysis: Don'ts
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ❌ **Common Mistakes**
 
@@ -1250,7 +1250,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 **Remember**: Version control your analysis scripts and save intermediate results for reproducibility (more in L12!)
 
@@ -1264,7 +1264,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### **NumPy**
 
@@ -1278,7 +1278,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **Pandas**
 
@@ -1292,7 +1292,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### **General**
 
@@ -1330,7 +1330,7 @@ hideInToc: true
 
 # CERN Open Data Portal
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## **Explore Real Particle Physics Data**
 
@@ -1342,7 +1342,7 @@ CERN provides open access to real experimental data from LHC experiments!
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### **Available Datasets**
 
@@ -1355,7 +1355,7 @@ Formats: CSV, ROOT, HDF5
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **Example Analyses**
 
@@ -1371,7 +1371,7 @@ Full tutorials and documentation provided!
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 **Your next step**: Download a real dataset and apply NumPy/Pandas skills! Example: Dimuon spectrum showing J/ψ, Υ resonances
 
@@ -1445,7 +1445,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **NumPy**
 
@@ -1461,7 +1461,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Pandas**
 
@@ -1487,7 +1487,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### **Skills Acquired**
 
@@ -1499,7 +1499,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ### **Best Practices**
 
@@ -1513,7 +1513,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ### **Next Steps**
 
@@ -1529,8 +1529,7 @@ hideInToc: true
 layout: quote
 ---
 
-# You now have the tools to work with real, messy data. In L12, we'll learn to automate your entire workflow—from data loading to final plots—with reproducible scripts and version control.
-
+# You now have the tools to work with real, messy data. 
 ---
 hideInToc: true
 layout: end

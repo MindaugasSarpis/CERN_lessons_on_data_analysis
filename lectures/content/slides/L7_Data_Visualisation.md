@@ -37,7 +37,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 👁️ **Visual Perception**
 
@@ -45,7 +45,7 @@ The human brain processes images 60,000x faster than text. A well-designed chart
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔍 **Pattern Discovery**
 
@@ -53,7 +53,7 @@ Visualizations reveal structure — clusters, trends, outliers, and gaps — tha
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📢 **Communication**
 
@@ -61,7 +61,7 @@ A plot is often the first (and sometimes only) thing a reader looks at. It carri
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## ⚠️ **Deception Prevention**
 
@@ -77,7 +77,7 @@ hideInToc: true
 
 # **Aesthetics** of Data Visualization
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 Every data point is mapped to visual properties — **position**, **color**, **shape**, **size**, **line style**. These mappings are called **aesthetic mappings**, and choosing them well is the core skill of visualization.
 
@@ -112,7 +112,7 @@ hideInToc: true
 
 # **Legend**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 🏷️ **What is a Legend?**
 
@@ -122,31 +122,31 @@ A legend is a key component of a plot that explains the meaning of the data. It 
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📌 Legend might **not be necessary** if the data is self-explanatory (e.g. bar chart, single-line plot, direct annotations)
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📍 Legend should be **placed** so it does not obscure the data
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 👁️ Legend should be **easy to read** and understand
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🎨 Legend should be **consistent** with the overall design of the plot
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🔑 Legend should explain **colors, shapes, sizes**, and other visual encodings used in the plot
 
@@ -161,7 +161,7 @@ disabled: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Legend placement obscures the data — it overlaps with the plotted points
 
@@ -176,7 +176,7 @@ disabled: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Too many legend entries make the chart unreadable — consider direct labeling or grouping
 
@@ -191,7 +191,7 @@ disabled: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Legend placed outside the plot area — data is fully visible and the legend is easy to read
 
@@ -206,7 +206,7 @@ disabled: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Clean legend with well-chosen colors and clear labels — each group is easily distinguishable
 
@@ -220,7 +220,7 @@ hideInToc: true
 
 # **Axes**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📐 **What are Axes?**
 
@@ -230,25 +230,25 @@ Axes are the reference lines that define the coordinate system of the plot. They
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🏷️ Axes should be **clearly labeled** with units and titles
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📏 Axes should have appropriate **tick marks and grid lines** to help interpret the data
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🔍 Axes should be **scaled appropriately** to show the data clearly
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🔗 Axes should show the **relationship** between different variables in the data
 
@@ -283,7 +283,7 @@ hideInToc: true
 
 # Visualizing **Amounts**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📊 **Common Chart Types for Amounts**
 
@@ -295,13 +295,13 @@ When your data represents quantities associated with categories, these are the g
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📊 **Bar Charts** — Compare values across categories
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📊 **Grouped Bar Charts** — Compare sub-groups side by side
 
@@ -311,13 +311,13 @@ When your data represents quantities associated with categories, these are the g
 
 <div class="stack-tight">
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 📊 **Stacked Bar Charts** — Show part-to-whole relationships
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🌡️ **Heat Maps** — Encode values as color intensity in a grid
 
@@ -333,7 +333,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Bars do not start at zero — this exaggerates differences and misleads the viewer
 
@@ -347,7 +347,7 @@ hideInToc: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Y-axis starts at zero — bar lengths accurately represent the data values
 
@@ -362,7 +362,7 @@ disabled: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Categories are unsorted — makes it hard to compare values or spot patterns
 
@@ -377,7 +377,7 @@ disabled: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Bars sorted by value — trends and rankings are immediately visible
 
@@ -392,7 +392,7 @@ disabled: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Stacking makes individual group comparisons difficult — consider grouped bars instead
 
@@ -407,7 +407,7 @@ disabled: true
 
 # Stacked Bar Charts
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 📊 Stacked bars work well for **part-to-whole** comparisons — each segment shows a proportion of the total
 
@@ -421,7 +421,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Too many categories with similar colors — the chart becomes hard to decode
 
@@ -435,7 +435,7 @@ hideInToc: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ 3D effects distort perception — bar heights become ambiguous and comparisons unreliable
 
@@ -449,7 +449,7 @@ hideInToc: true
 
 # **Corrected**
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 ✅ Clean 2D bars with distinct colors and clear labels — easy to read and compare
 
@@ -464,7 +464,7 @@ disabled: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Poor color choices — rainbow palettes can confuse meaning and are not accessible to colorblind viewers
 
@@ -485,7 +485,7 @@ hideInToc: true
 
 # Histograms
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📈 **What are Histograms?**
 
@@ -495,25 +495,25 @@ Histograms visualize the **distribution** of a single continuous variable by div
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📏 Histograms should have appropriate **bin widths** to show the shape of the distribution
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🏷️ Histograms should have **clear labels and titles**
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🎨 Histograms should be **consistent** with the overall design of the plot
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🔍 Histograms should be used to identify **patterns, trends, and outliers** in the data
 
@@ -543,7 +543,7 @@ disabled: true
 
 # What's **Wrong?**
 
-<div class="card card-warning pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Bin width too large or too small — the distribution shape is distorted or obscured by noise
 
@@ -573,7 +573,7 @@ hideInToc: true
 
 # The **Data-to-Ink Ratio**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📐 **Edward Tufte's Principle**
 
@@ -583,7 +583,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🚫 **Chart Junk**
 
@@ -594,7 +594,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **Clean Design**
 
@@ -613,7 +613,7 @@ hideInToc: true
 
 # Choosing the **Right Chart**
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 Match the chart type to the relationship you want to show:
 
@@ -623,19 +623,19 @@ Match the chart type to the relationship you want to show:
 
 <div class="stack-tight">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📊 **Comparison** across categories → Bar chart
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📈 **Trend** over time → Line plot
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🔵 **Relationship** between two variables → Scatter plot
 
@@ -645,19 +645,19 @@ Match the chart type to the relationship you want to show:
 
 <div class="stack-tight">
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 📦 **Distribution** of values → Histogram or box plot
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🧩 **Part-to-whole** → Stacked bar (NOT pie chart)
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🌡️ **Two-variable density** → Heat map
 
@@ -667,7 +667,7 @@ Match the chart type to the relationship you want to show:
 
 </div>
 
-<div class="card card-warning pad-compact mt-md">
+<div class="card card-warning card-glass pad-compact mt-md">
 
 ## 🥧 **A Note on Pie Charts**
 
@@ -681,7 +681,7 @@ hideInToc: true
 
 # More **Plot Types**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 📈 **Beyond Bar Charts and Histograms**
 
@@ -691,19 +691,19 @@ There are many more plot types used in data analysis. Here are a few you will en
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 📈 **Line Plots** — Show trends over time or continuous variables
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🔵 **Scatter Plots** — Reveal relationships between two variables
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 📦 **Box Plots** — Summarize distributions with median, quartiles, and outliers
 
@@ -711,7 +711,7 @@ There are many more plot types used in data analysis. Here are a few you will en
 
 </div>
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## 🔗 **Coming in Lecture 11**
 
@@ -732,7 +732,7 @@ hideInToc: true
 
 # **Accessibility** in Visualization
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 🎨 **Colorblind-Safe Palettes**
 
@@ -742,25 +742,25 @@ Approximately 8% of men and 0.5% of women have some form of color vision deficie
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ✅ Use **colorblind-safe palettes** such as `viridis`, `cividis`, or `plasma` — they are perceptually uniform and distinguishable by colorblind viewers
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🚫 Avoid **red-green** combinations — the most common form of color blindness confuses these two colors
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🔲 Use **redundant encodings** — combine color with shape, pattern, or line style so information is not conveyed by color alone
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 🧪 **Test your plots** — tools like Color Oracle or Coblis can simulate how your figures look to colorblind viewers
 
@@ -776,7 +776,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 **Design Principles**
 
@@ -788,7 +788,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔗 **What Comes Next**
 
@@ -808,7 +808,7 @@ hideInToc: true
 
 # Practice **Exercise**
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 🏋️ **Try It Yourself**
 
@@ -818,25 +818,25 @@ Pick any dataset you find interesting (or use one from a previous lecture) and c
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **1.** Create a **histogram** of a continuous variable — experiment with different bin widths and observe how the shape changes
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 **2.** Create a **bar chart** comparing categories — sort the bars, label the axes, and include units
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 **3.** Add a **title, axis labels, and a legend** to your plot — make sure someone unfamiliar with your data can understand the figure
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 **4.** **Critique** your own plot: Does the y-axis start at zero? Is the color palette accessible? Is the legend clear?
 

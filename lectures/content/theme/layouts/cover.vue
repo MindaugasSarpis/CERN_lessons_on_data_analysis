@@ -52,18 +52,19 @@ onMounted(() => {
 /* === Animated background — Ken Burns slow drift === */
 .cover-bg {
   position: absolute;
-  top: -5%;
-  left: -5%;
-  width: 110%;
-  height: 110%;
+  top: -8%;
+  left: -8%;
+  width: 116%;
+  height: 116%;
   z-index: 0;
-  animation: ken-burns 25s ease-in-out infinite alternate;
+  animation: ken-burns 30s ease-in-out infinite alternate;
   will-change: transform;
 }
 
 @keyframes ken-burns {
   0%   { transform: scale(1) translate(0, 0); }
-  100% { transform: scale(1.06) translate(-1.5%, 1%); }
+  50%  { transform: scale(1.08) translate(-2.5%, 1.5%); }
+  100% { transform: scale(1.12) translate(1%, -2%); }
 }
 
 /* === Volumetric light glows — above background, visible === */

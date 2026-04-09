@@ -35,7 +35,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 💻 **What is the CLI?**
 
@@ -45,7 +45,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🌍 **Where does it run?**
 
@@ -64,25 +64,25 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ⚡ **Speed** — complex workflows faster than with a mouse
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🔄 **Automation** — script repetitive steps and share them
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 🌐 **Remote Work** — manage servers and clusters without a GUI
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 📝 **Transparency** — commands document exactly what happened
 
@@ -98,7 +98,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🐚 **Shells**
 
@@ -113,7 +113,7 @@ fish
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📍 **Prompt Structure**
 
@@ -137,7 +137,7 @@ hideInToc: true
 
 # Basic Command Anatomy
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔧 **Structure**
 
@@ -153,7 +153,7 @@ command -options arguments
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🏗️ **Built-ins**
 
@@ -161,7 +161,7 @@ Shell provides built-in commands (`cd`, `Set-Location`)
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📦 **Executables**
 
@@ -179,7 +179,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🪟 **PowerShell**
 
@@ -191,7 +191,7 @@ Get-ChildItem
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🐧 **macOS & Linux**
 
@@ -205,7 +205,7 @@ ls
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🔑 **Key Concepts**
 
@@ -224,7 +224,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🪟 **PowerShell**
 
@@ -235,7 +235,7 @@ Select-String "analysis" *.txt
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🐧 **macOS & Linux**
 
@@ -248,7 +248,7 @@ grep "analysis" *.txt
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔍 **Practical Uses**
 
@@ -266,7 +266,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🪟 **PowerShell**
 
@@ -278,7 +278,7 @@ Add-Content notes.txt "Result: 42"
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🐧 **macOS & Linux**
 
@@ -292,7 +292,7 @@ echo "Result: 42" >> notes.txt
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🔀 **Versioning & Collaboration**
 
@@ -309,7 +309,7 @@ hideInToc: true
 
 # Pipes and Redirection
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 🔗 **The Pipe Operator `|`**
 
@@ -324,7 +324,7 @@ ls -l | sort -k5 -n               # list files sorted by size
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📤 **Overwrite with `>`**
 
@@ -336,7 +336,7 @@ echo "Hello" > notes.txt
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 📎 **Append with `>>`**
 
@@ -358,7 +358,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🪟 **PowerShell**
 
@@ -370,7 +370,7 @@ Start-Job -ScriptBlock { ./long_task.sh }
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🐧 **macOS & Linux**
 
@@ -384,7 +384,7 @@ nohup ./long_task.sh &
 
 </div>
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## ⚙️ **Why It Matters**
 
@@ -402,7 +402,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 ## 🪟 **PowerShell Pipeline**
 
@@ -415,7 +415,7 @@ Get-ChildItem *.csv |
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 ## 🐧 **UNIX Pipeline**
 
@@ -428,7 +428,7 @@ ls -lh *.csv | awk '$5+0 > 1 {print $9, $5}' \
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 Pipelines let each tool focus on one job. Reuse the same pattern across projects with minimal edits.
 
@@ -442,7 +442,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🪟 **PowerShell**
 
@@ -453,7 +453,7 @@ Get-Help Get-Content -Examples
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🐧 **macOS & Linux**
 
@@ -466,7 +466,7 @@ man cat
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 📚 **Learning Faster**
 
@@ -484,7 +484,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Dangerous**
 
@@ -495,7 +495,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **Safe Habits**
 
@@ -508,7 +508,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 **Rule of thumb:** if a command can't be undone, double-check before pressing Enter.
 
@@ -522,31 +522,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🧩 Keep commands small and composable
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📖 Use aliases sparingly — prefer readable scripts
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 📁 Store reusable commands in scripts under version control
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 📋 Document workflows in README files with copy-paste commands
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 💪 Practice regularly to build muscle memory
 
@@ -562,19 +562,19 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📁 **Create a new project folder from the CLI**
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📝 **Create a `README.md` with your plan**
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔗 **Share the exact commands you used**
 

@@ -59,7 +59,7 @@ hideInToc: true
 
 # What is Probability?
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🎲 **Definition**
 
@@ -71,7 +71,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 🎯 **Purpose**
 
@@ -87,7 +87,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 **Frequentist**
 
@@ -103,7 +103,7 @@ where $n_A$ = occurrences of $A$ in $n$ trials
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🧠 **Bayesian**
 
@@ -119,7 +119,7 @@ Subjective confidence updated with evidence
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ⚖️ **Both valid!** • ⚛️ Physics: mostly frequentist • 🤖 ML: increasingly Bayesian
 
@@ -133,7 +133,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### 🔬 **Experiment**
 
@@ -141,7 +141,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 🌐 **Sample Space (Ω)**
 
@@ -149,7 +149,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ### 🎯 **Event**
 
@@ -157,7 +157,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 📊 **Probability P(A)**
 
@@ -189,7 +189,7 @@ flowchart TD
     classDef union fill:#1e3a5f,stroke:#fbbf24,stroke-width:2px,color:#fef3c7,rx:12px,ry:12px
 ```
 
-<div class="card card-info pad-tight mermaid-note">
+<div class="card card-info card-glass pad-tight mermaid-note">
 
 <div class="note-text">
 
@@ -235,28 +235,28 @@ All outcomes are equally likely: P(each) = 1/6
 
 <div class="stack-tight">
 
-<div class="card card-success pad-snug">
+<div class="card card-success card-glass pad-snug">
 <div class="flex-between">
 <strong class="text-subhead">Event A (even):</strong>
 <span class="mono-strong">{2, 4, 6}</span>
 </div>
 </div>
 
-<div class="card card-warning pad-snug">
+<div class="card card-warning card-glass pad-snug">
 <div class="flex-between">
 <strong class="text-subhead">Event B (&gt; 4):</strong>
 <span class="mono-strong">{5, 6}</span>
 </div>
 </div>
 
-<div class="card card-info pad-snug">
+<div class="card card-info card-glass pad-snug">
 <div class="flex-between">
 <strong class="text-subhead">Event C (exact):</strong>
 <span class="mono-strong">{3}</span>
 </div>
 </div>
 
-<div class="card card-accent pad-snug">
+<div class="card card-accent card-glass pad-snug">
 <div class="flex-between">
 <strong class="text-subhead">A ∩ B (even &amp; &gt; 4):</strong>
 <span class="mono-strong">{6}</span>
@@ -275,7 +275,7 @@ hideInToc: true
 
 # Axioms of Probability (Kolmogorov)
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Axiomatic Foundation**
 
@@ -285,7 +285,7 @@ Given a sample space $\Omega$ and a collection of events, a probability function
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### ✅ **Axiom 1 — Non-negativity**
 
@@ -299,7 +299,7 @@ Probabilities cannot be negative
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### 🌍 **Axiom 2 — Normalization**
 
@@ -319,7 +319,7 @@ hideInToc: true
 
 # Axiom 3 — Countable Additivity
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ### ➕ **Axiom 3**
 
@@ -337,7 +337,7 @@ Disjoint events add — this is the foundation for all probability calculations
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 💡 **Why these axioms matter**
 
@@ -351,7 +351,7 @@ hideInToc: true
 
 # Useful Rules from the Axioms
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 ## **Derived Properties**
 
@@ -361,7 +361,7 @@ From the three axioms, we can derive important rules that make probability calcu
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ### 🔄 **Complement Rule**
 
@@ -375,7 +375,7 @@ Follows from $A \cup A^c = \Omega$ and $A \cap A^c = \emptyset$
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### ➕ **General Addition Rule**
 
@@ -391,7 +391,7 @@ Avoids double-counting the intersection
 
 </div>
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ### ✖️ **Multiplication Rule** — For independent events: $P(A \cap B) = P(A) \times P(B)$
 
@@ -403,7 +403,7 @@ hideInToc: true
 
 # Conditional Probability
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🎯 **Definition**
 
@@ -415,7 +415,7 @@ Probability of $A$ given that $B$ has occurred • Restricts sample space to $B$
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📐 **Properties**
 
@@ -423,7 +423,7 @@ $0 \leq P(A \mid B) \leq 1$ • $P(\Omega \mid B) = 1$ • Additive for mutually
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🎲 **Example: Two dice**
 
@@ -456,7 +456,7 @@ flowchart LR
     classDef result fill:#155e75,stroke:#5eead4,stroke-width:2.5px,color:#e0f2fe,rx:14px,ry:14px
 ```
 
-<div class="card card-info pad-tight mermaid-note">
+<div class="card card-info card-glass pad-tight mermaid-note">
 
 <div class="note-text">
 
@@ -472,7 +472,7 @@ hideInToc: true
 
 # Independence
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🔀 **Definition**
 
@@ -486,7 +486,7 @@ Knowing $B$ occurred provides **no information** about $A$
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ✅ **Independent**
 
@@ -496,7 +496,7 @@ Knowing $B$ occurred provides **no information** about $A$
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ❌ **Not Independent**
 
@@ -516,7 +516,7 @@ hideInToc: true
 
 <div style="display: flex; align-items: center; gap: 1.2rem; margin-top: 2rem; justify-content: center;">
 
-<div class="card card-primary pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
+<div class="card card-primary card-glass pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
 
 ### 📊 **Prior**
 ### $P(A)$
@@ -527,7 +527,7 @@ hideInToc: true
 
 <div style="font-size: 2.5em; color: #5eead4; font-weight: 700;">×</div>
 
-<div class="card card-secondary pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
+<div class="card card-secondary card-glass pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
 
 ### 📈 **Likelihood**
 ### $P(B|A)$
@@ -538,7 +538,7 @@ hideInToc: true
 
 <div style="font-size: 2.5em; color: #5eead4; font-weight: 700;">÷</div>
 
-<div class="card card-info pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
+<div class="card card-info card-glass pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
 
 ### 📐 **Evidence**
 ### $P(B)$
@@ -549,7 +549,7 @@ hideInToc: true
 
 <div style="font-size: 2.5em; color: #5eead4; font-weight: 700;">=</div>
 
-<div class="card card-accent pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
+<div class="card card-accent card-glass pad-tight" style="flex: 0 0 auto; min-width: 140px; text-align: center;">
 
 ### 🎯 **Posterior**
 ### $P(A|B)$
@@ -560,7 +560,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight" style="margin-top: 1.5rem; text-align: center;">
+<div class="card card-success card-glass pad-tight" style="margin-top: 1.5rem; text-align: center;">
 
 **The Bayesian Update:** Multiply prior by likelihood, then normalize by evidence to get updated belief
 
@@ -572,7 +572,7 @@ hideInToc: true
 
 # Bayes' Theorem
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🔄 **Formula**
 
@@ -584,7 +584,7 @@ $$P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}$$
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 💡 **Key Idea**
 
@@ -594,7 +594,7 @@ Update beliefs with new data
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🎯 **Applications**
 
@@ -610,7 +610,7 @@ hideInToc: true
 
 # Example: Medical Test
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🏥 **Scenario**
 
@@ -622,7 +622,7 @@ Disease: 1% prevalence • Test: 95% sensitivity, 90% specificity
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 **Calculation**
 
@@ -634,7 +634,7 @@ $$P(D \mid +) = \frac{0.0095}{0.1085} \approx \textbf{8.8%}$$
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 💡 **Insight**
 
@@ -685,7 +685,7 @@ flowchart TB
     classDef summary fill:#10223f,stroke:#fbbf24,stroke-width:2px,color:#fde68a,rx:16px,ry:16px;
 ```
 
-<div class="card card-info pad-tight mermaid-note">
+<div class="card card-info card-glass pad-tight mermaid-note">
 
 <div class="note-text">
 
@@ -708,7 +708,7 @@ hideInToc: true
 
 # Random Variables
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Formal Definition**
 
@@ -720,7 +720,7 @@ $$X: \Omega \rightarrow \mathbb{R}$$
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Purpose**
 
@@ -732,7 +732,7 @@ Random variables allow us to:
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Notation**
 
@@ -790,7 +790,7 @@ hideInToc: true
 
 # Discrete Random Variables
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔢 **Definition**
 
@@ -798,7 +798,7 @@ A random variable $X$ is **discrete** if it can only take countable values (e.g.
 
 </div>
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 📊 **Probability Mass Function (PMF)**
 
@@ -816,7 +816,7 @@ hideInToc: true
 
 # PMF Example: Coin Flips
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🎯 **Example PMF**
 
@@ -838,7 +838,7 @@ Each probability is $\binom{3}{x}(0.5)^3$ — and they sum to 1: $\frac{1+3+3+1}
 
 </div>
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 💡 **Reading the PMF**
 
@@ -854,7 +854,7 @@ hideInToc: true
 
 # Continuous Random Variables
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Definition**
 
@@ -872,7 +872,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Definition**
 
@@ -887,7 +887,7 @@ $$P(a \leq X \leq b) = \int_a^b f(x)\,dx$$
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## **Example: Uniform on [0,1]**
 
@@ -911,7 +911,7 @@ hideInToc: true
 
 # Cumulative Distribution Function (CDF)
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Definition**
 
@@ -931,7 +931,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Properties**
 
@@ -942,7 +942,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## **Why CDFs are useful**
 
@@ -974,7 +974,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Mean (Average)**
 
@@ -985,7 +985,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Median**
 
@@ -995,7 +995,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **Mode**
 
@@ -1007,7 +1007,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## **Example**
 
@@ -1031,7 +1031,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ### 📏 **Range**
 
@@ -1041,7 +1041,7 @@ $$\text{Range} = \max - \min$$
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ### 📊 **Variance**
 
@@ -1051,7 +1051,7 @@ $$\sigma^2 = \frac{\sum(x_i - \mu)^2}{n}$$
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ### 📈 **Standard Deviation**
 
@@ -1071,7 +1071,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Why square deviations?**
 
@@ -1081,7 +1081,7 @@ Squaring removes sign, magnifies large misses, and yields smooth functions that 
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **Population vs Sample**
 
@@ -1108,7 +1108,7 @@ hideInToc: true
 
 # Sample Statistics and Population Parameters
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔗 **The Bridge**
 
@@ -1118,7 +1118,7 @@ Every descriptive statistic we compute from data is a **sample estimate** of a t
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 **Key Correspondences**
 
@@ -1128,7 +1128,7 @@ Every descriptive statistic we compute from data is a **sample estimate** of a t
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 💡 **Why it matters**
 
@@ -1147,7 +1147,7 @@ hideInToc: true
 
 # Expectation and Variance
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Expected Value (Mean)**
 
@@ -1169,7 +1169,7 @@ hideInToc: true
 
 # Variance
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 📐 **Definition**
 
@@ -1193,7 +1193,7 @@ hideInToc: true
 
 # Properties of Expectation and Variance
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 📏 **Linearity of Expectation**
 
@@ -1202,7 +1202,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## 📊 **Variance Properties**
 
@@ -1262,7 +1262,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Bernoulli (1 trial)**
 
@@ -1273,7 +1273,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Binomial (n trials)**
 
@@ -1294,7 +1294,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **When to use**
 
@@ -1309,7 +1309,7 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **Properties & Examples**
 
@@ -1334,7 +1334,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Uniform Distribution**
 
@@ -1345,7 +1345,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Exponential Distribution**
 
@@ -1366,32 +1366,32 @@ hideInToc: true
 
 <div class="grid-3" style="gap: 0.8rem; margin-top: 1.5rem;">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 <div class="emoji-xl">🏆</div>
 <div class="meta-strong">Most Important</div>
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 <div class="emoji-xl">🌿</div>
 <div class="meta-strong">Arises Naturally</div>
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <div class="emoji-xl">🎯</div>
 <div class="meta-strong">CLT Foundation</div>
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 <div class="emoji-xl">🔬</div>
 <div class="meta-strong">Measurement Errors</div>
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 <div class="emoji-xl">🧪</div>
 <div class="meta-strong">Statistical Tests</div>
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 <div class="emoji-xl">⚙️</div>
 <div class="meta-strong">Two Parameters: μ, σ²</div>
 </div>
@@ -1410,7 +1410,7 @@ hideInToc: true
 
 # Normal Distribution
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Probability Density Function**
 
@@ -1428,7 +1428,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Key Properties**
 
@@ -1441,7 +1441,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## **Standard Normal**
 
@@ -1475,24 +1475,24 @@ For $X \sim N(\mu, \sigma^2)$:
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-success pad-balanced text-center">
+<div class="card card-success card-glass pad-balanced text-center">
 <div class="text-xl-strong">📊 68%</div>
 <div class="note-text mt-xs">$\mu \pm \sigma$</div>
 </div>
 
-<div class="card card-info pad-balanced text-center">
+<div class="card card-info card-glass pad-balanced text-center">
 <div class="text-xl-strong">📈 95%</div>
 <div class="note-text mt-xs">$\mu \pm 2\sigma$</div>
 </div>
 
-<div class="card card-primary pad-balanced text-center">
+<div class="card card-primary card-glass pad-balanced text-center">
 <div class="text-xl-strong">🎯 99.7%</div>
 <div class="note-text mt-xs">$\mu \pm 3\sigma$</div>
 </div>
 
 </div>
 
-<div class="card card-warning pad-balanced" style="margin-top: 1.2rem;">
+<div class="card card-warning card-glass pad-balanced" style="margin-top: 1.2rem;">
 
 ### 💡 **Practical Implication**
 
@@ -1521,7 +1521,7 @@ hideInToc: true
 
 # CLT Statement
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Theorem Statement**
 
@@ -1545,7 +1545,7 @@ hideInToc: true
 
 # CLT — Equivalent Form
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 Or equivalently, the standardized sum converges in distribution to $N(0,1)$:
 
@@ -1554,7 +1554,7 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}}
 </div>
 
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## **Key Insights**
 
@@ -1565,7 +1565,7 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}}
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🔗 **Connection to Fitting**
 
@@ -1581,7 +1581,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Why we rely on it**
 
@@ -1591,7 +1591,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Die-rolling intuition**
 
@@ -1616,7 +1616,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-balanced">
+<div class="card card-primary card-glass pad-balanced">
 
 ### 📐 **Definition**
 
@@ -1626,7 +1626,7 @@ $$SE = \frac{\sigma}{\sqrt{n}}$$
 
 </div>
 
-<div class="card card-warning pad-balanced">
+<div class="card card-warning card-glass pad-balanced">
 
 ### 🔍 **Interpretation**
 
@@ -1642,7 +1642,7 @@ $$SE = \frac{\sigma}{\sqrt{n}}$$
 
 </div>
 
-<div class="card card-success pad-balanced">
+<div class="card card-success card-glass pad-balanced">
 
 ### 📝 **Usage**
 
@@ -1668,7 +1668,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Point Estimation**
 
@@ -1679,7 +1679,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Interval Estimation**
 
@@ -1689,7 +1689,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **Desirable Properties**
 
@@ -1710,7 +1710,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Idea**
 
@@ -1718,7 +1718,7 @@ Pick parameter values $\theta$ that make the observed data most probable.
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Likelihood Function**
 
@@ -1729,7 +1729,7 @@ $L(\theta \mid \text{data}) = P(\text{data} \mid \theta)$
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **Maximum Likelihood Estimator**
 
@@ -1749,7 +1749,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Setup**
 
@@ -1763,7 +1763,7 @@ $\hat{\mu} = \bar{x}$ (sample mean) maximizes $L(\mu)$.
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **Why this matters**
 
@@ -1831,7 +1831,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Data fitting problem**
 
@@ -1841,7 +1841,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Statistical foundation**
 
@@ -1862,7 +1862,7 @@ hideInToc: true
 
 # Least Squares = MLE (for normal errors)
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 <div class="text-tight">
 If errors are independent and normally distributed:
@@ -1888,7 +1888,7 @@ hideInToc: true
 
 # Chi-Squared (χ²) Statistic
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Definition**
 
@@ -1915,7 +1915,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Probability vs Statistics**
 
@@ -1925,7 +1925,7 @@ Probability starts with a model and reasons forward to the data, while statistic
 
 </div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## **p-hacking**
 
@@ -1945,7 +1945,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Misreading Confidence Intervals**
 
@@ -1955,7 +1955,7 @@ A 95% confidence interval does not mean "95% chance the parameter lies here." It
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## **Extrapolation**
 
@@ -1975,7 +1975,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📊 **Visualize First**
 
@@ -1985,7 +1985,7 @@ Always plot your data before running any analysis. Patterns, outliers, and unexp
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ✓ **Check Assumptions**
 
@@ -1995,7 +1995,7 @@ Verify that the assumptions behind your statistical method actually hold for you
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 📏 **Report Uncertainties**
 
@@ -2005,7 +2005,7 @@ A result without an uncertainty is incomplete. Always include error bars, confid
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## 🎯 **Understand p-values**
 
@@ -2025,7 +2025,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## ⚠️ **Respect Small Samples**
 
@@ -2035,7 +2035,7 @@ Small samples give noisy estimates. Be cautious about drawing strong conclusions
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔬 **Simulate When Unclear**
 
@@ -2047,7 +2047,7 @@ When analytical solutions are hard, Monte Carlo simulation can reveal the expect
 
 </div>
 
-<div class="card card-primary pad-tight mt-md" style="grid-column: 1 / -1;">
+<div class="card card-primary card-glass pad-tight mt-md" style="grid-column: 1 / -1;">
 
 ## 📝 **Document for Reproducibility**
 

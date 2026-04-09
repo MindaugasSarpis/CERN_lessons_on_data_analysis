@@ -8,7 +8,7 @@
     "export": "slidev export lectures/content/lessons_on_data_analysis_from_CERN.md"
   },
   "dependencies": {
-    "@slidev/cli": "^52.7.0",
+    "@slidev/cli": "^52.14.2",
     "slidev-addon-python-runner": "^0.1.3"
   },
   "devDependencies": {

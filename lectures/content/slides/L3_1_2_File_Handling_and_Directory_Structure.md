@@ -42,7 +42,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 😵 **Common Issues**
 
@@ -58,7 +58,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **How to Avoid**
 
@@ -80,7 +80,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 💥 **Common Issues**
 
@@ -94,7 +94,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **How to Avoid**
 
@@ -114,7 +114,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 💻 **Here**
 
@@ -125,7 +125,7 @@ Your **local device** — the working copy you use every day
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔌 **Near**
 
@@ -137,7 +137,7 @@ A **local backup** in the same physical space
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## ☁️ **Far**
 
@@ -151,7 +151,7 @@ A **remote backup** in a different location
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 A solid backup plan keeps copies at **all three distances**. If any one fails, the others still have you covered.
 
@@ -165,7 +165,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## 🔌 **Common Issues**
 
@@ -181,7 +181,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## ✅ **How to Avoid**
 
@@ -214,7 +214,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🧠 **Think About Your Files Beforehand**
 
@@ -242,7 +242,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## 🏷️ **Identify Metadata**
 
@@ -260,7 +260,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔤 **Abbreviate & Encode Metadata**
 
@@ -280,7 +280,7 @@ hideInToc: true
 
 # File Naming: Versioning
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🔢 **Use Versioning**
 
@@ -300,7 +300,7 @@ hideInToc: true
 
 # File Naming: Searchability
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔍 **Ensure Files are Searchable**
 
@@ -320,7 +320,7 @@ hideInToc: true
 
 # File Naming: Separators
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## ✂️ **Separate Metadata Elements**
 
@@ -344,7 +344,7 @@ hideInToc: true
 
 # File Naming: Documentation
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📝 **Write Down Your Naming Conventions**
 
@@ -364,7 +364,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 ## ❌ **Bad**
 
@@ -377,7 +377,7 @@ Figure 1 (final).png
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 ## ✅ **Good**
 
@@ -392,7 +392,7 @@ fig01_mass_spectrum.png
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 **Recipe:** `project_description_version_date.ext` — descriptive, sortable, no spaces or special characters.
 
@@ -406,7 +406,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📁 **Organized by File Type**
 
@@ -423,7 +423,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📊 **Organized by Analysis**
 
@@ -454,23 +454,25 @@ hideInToc: true
 
 # Try It: Build a Project Skeleton
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-compact mt-md">
 
 ## 🧪 **CLI Exercise**
 
 Create this structure from the command line — no file manager allowed!
 
 ```bash
-mkdir -p my_project/data/raw my_project/data/processed my_project/results
+mkdir -p my_project/data/raw \
+         my_project/data/processed \
+         my_project/results
 touch my_project/README.md
 ls -R my_project
 ```
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-💡 The `-p` flag creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
+💡 `-p` creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
 
 </div>
 
@@ -482,7 +484,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📍 **Absolute Path**
 
@@ -498,7 +500,7 @@ C:\Users\Alice\projects\data\results.csv
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📎 **Relative Path**
 
@@ -518,7 +520,7 @@ ls
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 Use `pwd` to check where you are, then decide: **absolute** for scripts and configs, **relative** for interactive navigation.
 
@@ -530,7 +532,7 @@ hideInToc: true
 
 # Exercise: Fix This Mess (1/2)
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## 😵 **The Problem**
 
@@ -552,7 +554,7 @@ Desktop/
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 **Spot the issues:** spaces in filenames, duplicate data files, no versioning, no folder structure, unclear which script is current, vague figure names.
 
@@ -564,7 +566,7 @@ hideInToc: true
 
 # Exercise: Fix This Mess (2/2)
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## ✅ **Your Task** (10 min, with a partner)
 
@@ -575,7 +577,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 💡 **Hints**
 
@@ -597,7 +599,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 - **Plan** → naming conventions & directory structure
 - **Collect & Process** → consistent names, separate raw from processed
@@ -606,7 +608,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 💡 Good file handling supports **every stage** of the research data lifecycle.
 

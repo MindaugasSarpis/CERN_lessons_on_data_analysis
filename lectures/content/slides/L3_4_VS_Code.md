@@ -33,7 +33,7 @@ hideInToc: true
 
 # What is VS Code?
 
-<div class="card card-info pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
 ## 💡 **Text Editor vs IDE**
 
@@ -45,13 +45,13 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🆓 **Free & open-source** — works on Windows, macOS, Linux
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🧩 **Extensible** — thousands of extensions for any language or workflow
 
@@ -67,7 +67,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 💻 **Download & Install**
 
@@ -77,7 +77,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ⚡ **Verify from the CLI**
 
@@ -91,7 +91,7 @@ If this works, VS Code is ready and available from your terminal.
 
 </div>
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
 🐧 **Linux tip:** install via your package manager (`apt`, `dnf`, `snap`) for automatic updates.
 
@@ -112,7 +112,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 📂 **Sidebar** (left)
 
@@ -126,7 +126,7 @@ Toggle with `Ctrl+B` / `Cmd+B`
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## ✏️ **Editor** (center)
 
@@ -139,7 +139,7 @@ Toggle with `Ctrl+B` / `Cmd+B`
 
 </div>
 
-<div class="card card-info pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
 💡 **Open a folder, not a file.** `File → Open Folder` (or `code my_project/` from the CLI) gives VS Code full project context — search, Git, and extensions all work better.
 
@@ -151,7 +151,7 @@ hideInToc: true
 
 # The Integrated Terminal
 
-<div class="card card-primary pad-compact mt-md">
+<div class="card card-primary card-glass pad-compact mt-md">
 
 🖥️ Open with `` Ctrl+` `` (backtick) or `View → Terminal` — runs your system shell **inside** VS Code
 
@@ -159,13 +159,13 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 📂 Automatically opens in your **project folder**
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 ➕ Click `+` for multiple terminals, drag to **split** side-by-side
 
@@ -173,7 +173,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## 🧪 **Try It**
 
@@ -187,7 +187,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🎯 **Your Most Powerful Tool**
 
@@ -197,25 +197,25 @@ Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the **Command Palette** �
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 🔍 Type `>theme` to change the colour theme
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 🔍 Type `>terminal` to open/close the terminal
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 🔍 Type `>markdown` to preview a `.md` file
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 🔍 Type `>settings` to customise VS Code
 
@@ -223,7 +223,7 @@ Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the **Command Palette** �
 
 </div>
 
-<div class="card card-warning pad-compact mt-md">
+<div class="card card-warning card-glass pad-compact mt-md">
 
 ⚠️ Don't memorise menus — learn the Command Palette. If you can describe what you want, you can find it.
 
@@ -235,7 +235,7 @@ hideInToc: true
 
 # Settings Worth Changing
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 
@@ -243,7 +243,7 @@ Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ⚙️ **Editor Settings**
 
@@ -254,7 +254,7 @@ Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🎨 **Appearance**
 
@@ -266,7 +266,7 @@ Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 
 </div>
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
 💡 Settings are stored as JSON — you can copy them between machines or share them with collaborators.
 
@@ -287,7 +287,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## ⌨️ **Multi-Cursor Editing**
 
@@ -299,7 +299,7 @@ Edit multiple lines simultaneously!
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 🔎 **Find & Replace**
 
@@ -313,7 +313,7 @@ Supports regex for powerful pattern matching.
 
 </div>
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
 💡 **Auto-save:** enable `File → Auto Save` so you never lose changes. Or use `Ctrl+S` to save manually.
 
@@ -323,7 +323,7 @@ Supports regex for powerful pattern matching.
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 | **Action** | **Windows/Linux** | **macOS** |
 |------------|-------------------|-----------|
@@ -338,7 +338,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact mt-md">
+<div class="card card-warning card-glass pad-compact mt-md">
 
 ⚠️ You don't need to memorise all of these. Start with **Command Palette**, **terminal toggle**, and **save**. The rest will come with practice.
 
@@ -355,7 +355,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 Open the Extensions panel with `Ctrl+Shift+X` and search by name. Click **Install**.
 
@@ -363,7 +363,7 @@ Open the Extensions panel with `Ctrl+Shift+X` and search by name. Click **Instal
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## 🐍 **Python**
 
@@ -375,7 +375,7 @@ Search: `ms-python.python`
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## 📝 **Markdown**
 
@@ -389,7 +389,7 @@ We'll use this in the **next lecture**.
 
 </div>
 
-<div class="card card-accent pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
 🧩 Other useful extensions: **GitLens** (Git blame/history), **Live Share** (real-time collaboration), **Remote - SSH** (edit files on a server)
 
@@ -401,7 +401,7 @@ hideInToc: true
 
 # Practice: Your First VS Code Project
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## 🧪 **Hands-On** (5 min)
 

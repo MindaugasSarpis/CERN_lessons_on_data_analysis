@@ -36,7 +36,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## **The Reproducibility Crisis**
 
@@ -48,7 +48,7 @@ Results cannot be reproduced because:
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## **Benefits of Good Practices**
 
@@ -111,7 +111,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary pad-tight" style="font-family: monospace; font-size: 0.7em; line-height: 1.5;">
+<div class="card card-primary card-glass pad-tight" style="font-family: monospace; font-size: 0.7em; line-height: 1.5;">
 
 ```text
 my_analysis/
@@ -141,17 +141,17 @@ my_analysis/
 
 <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85em;">
 
-<div class="card card-info pad-compact">📄 <strong>Root</strong> — README, requirements, config</div>
+<div class="card card-info card-glass pad-compact">📄 <strong>Root</strong> — README, requirements, config</div>
 
-<div class="card card-secondary pad-compact">📁 <strong>data/</strong> — raw (immutable) → processed</div>
+<div class="card card-secondary card-glass pad-compact">📁 <strong>data/</strong> — raw (immutable) → processed</div>
 
-<div class="card card-success pad-compact">📁 <strong>src/</strong> — Reusable modules & functions</div>
+<div class="card card-success card-glass pad-compact">📁 <strong>src/</strong> — Reusable modules & functions</div>
 
-<div class="card card-warning pad-compact">📁 <strong>scripts/</strong> — Numbered execution steps</div>
+<div class="card card-warning card-glass pad-compact">📁 <strong>scripts/</strong> — Numbered execution steps</div>
 
-<div class="card card-accent pad-compact">📁 <strong>notebooks/</strong> — Exploration only</div>
+<div class="card card-accent card-glass pad-compact">📁 <strong>notebooks/</strong> — Exploration only</div>
 
-<div class="card card-info pad-compact">📁 <strong>tests/</strong> + <strong>results/</strong> — Tests & outputs</div>
+<div class="card card-info card-glass pad-compact">📁 <strong>tests/</strong> + <strong>results/</strong> — Tests & outputs</div>
 
 </div>
 
@@ -165,7 +165,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **1. Separation of Concerns**
 
@@ -175,7 +175,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **2. Clear Dependencies**
 
@@ -185,7 +185,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 ## **3. Self-Documentation**
 
@@ -195,7 +195,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
 ## **4. Automation**
 
@@ -220,7 +220,7 @@ hideInToc: true
 
 # Why Command-Line Arguments?
 
-<div class="card card-warning pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## **Problem: Hardcoded Values**
 
@@ -234,7 +234,7 @@ model_fit(df, n_bins=50, range_min=0, range_max=15)
 
 </div>
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## **Solution: Command-Line Arguments**
 
@@ -255,7 +255,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Key Features**
 
@@ -268,7 +268,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Common Argument Types**
 
@@ -290,7 +290,7 @@ hideInToc: true
 
 # Script Structure with argparse
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **Typical Script Pattern**
 
@@ -309,7 +309,7 @@ data = load_data(args.input)
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### **Benefits**
 
@@ -320,7 +320,7 @@ data = load_data(args.input)
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **Tips**
 
@@ -344,7 +344,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **When Command-Line Args Get Unwieldy**
 
@@ -354,7 +354,7 @@ Dozens of parameters → use configuration files instead!
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ### ❌ **Too Many Arguments**
 
@@ -370,7 +370,7 @@ Unreadable, error-prone!
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ### ✅ **Config File**
 
@@ -399,7 +399,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-sm">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **YAML: Human-Readable Config**
 
@@ -419,7 +419,7 @@ items: [1, 2, 3]    # list
 
 </div>
 
-<div class="card card-secondary pad-tight" style="font-size: 0.7em;">
+<div class="card card-secondary card-glass pad-tight" style="font-size: 0.7em;">
 
 ```yaml
 # config.yaml
@@ -452,7 +452,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Basic Loading**
 
@@ -468,7 +468,7 @@ n_bins = config['histogram']['bins']
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Best Practices**
 
@@ -482,7 +482,7 @@ n_bins = config['histogram']['bins']
 
 </div>
 
-<div class="card card-warning pad-tight mt-md" style="display: flex; gap: 2rem; align-items: center;">
+<div class="card card-warning card-glass pad-tight mt-md" style="display: flex; gap: 2rem; align-items: center;">
 
 <div>
 
@@ -504,7 +504,7 @@ hideInToc: true
 
 # Combining argparse + Config Files
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## **The Pattern**
 
@@ -522,7 +522,7 @@ python analyze.py --config analysis.yaml --input new_data.csv
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ### **Config File For**
 
@@ -533,7 +533,7 @@ python analyze.py --config analysis.yaml --input new_data.csv
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ### **CLI Args For**
 
@@ -546,7 +546,7 @@ python analyze.py --config analysis.yaml --input new_data.csv
 
 </div>
 
-<div class="card card-accent pad-tight mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
 **See demo** for complete implementation with validation
 
@@ -567,7 +567,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 ## **"It Works on My Machine!"**
 
@@ -580,7 +580,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 ## **Solution: Virtual Environments**
 
@@ -600,7 +600,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 ## **Option 1: venv (built-in)**
 
@@ -627,7 +627,7 @@ deactivate
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **Option 2: conda**
 
@@ -666,13 +666,13 @@ hideInToc: true
 
 <div style="display: flex; flex-direction: column; gap: 0.8rem;">
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 **The Package List** — Simple text file listing required packages with version constraints
 
 </div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **Version syntax:**
 - `==2.0.3` — exact version
@@ -681,7 +681,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 **Tip**: `pip freeze` includes transitive deps. Better to manually list direct dependencies only.
 
@@ -722,11 +722,11 @@ hideInToc: true
 
 <div style="display: flex; flex-direction: column; gap: 0.8rem;">
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <strong>Conda Alternative</strong> — Env name, channels, Python version, mix conda + pip
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 <strong>Commands:</strong> <br>
 <code>conda env create -f</code> <br>
  <code>conda env update -f</code> <br>
@@ -762,7 +762,7 @@ hideInToc: true
 
 <div class="grid-2 mt-sm gap-md">
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 <strong>Do</strong>
 
 - Use virtual environments for every project
@@ -771,7 +771,7 @@ hideInToc: true
 - Add <code>venv/</code>, <code>.conda/</code> to .gitignore
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 <strong>Don't</strong>
 
 - Install packages globally
@@ -799,19 +799,19 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 <strong>Automate Your Workflow</strong>
 
 Instead of running multiple commands manually, run: <code>make all</code>
 </div>
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 <strong>Benefits:</strong> One-command execution, tracks dependencies, only reruns what changed, documents workflow
 </div>
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 <strong>Common Uses</strong>
 
 - Run analysis pipeline
@@ -861,7 +861,7 @@ test:
 
 <div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <strong>Key Concepts</strong>
 
 - <strong>Target</strong>: File to create
@@ -870,7 +870,7 @@ test:
 - <strong>Phony</strong>: Non-file targets
 </div>
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 <strong>Usage</strong>
 
 <code>make all</code> — run pipeline<br>
@@ -915,7 +915,7 @@ vim scripts/3_make_plots.py
 make all
 ```
 
-<div class="card card-accent pad-tight mt-sm">
+<div class="card card-accent card-glass pad-tight mt-sm">
 
 Make checks file timestamps. If dependencies are newer than target, it rebuilds. Otherwise, it skips!
 
@@ -938,13 +938,13 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 <strong>Python-based Workflow Manager</strong>
 
 Like Make, but designed for data science pipelines with Python syntax and extra features.
 </div>
 
-<div class="card card-info pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 <strong>Key Advantages over Make</strong>
 
 - Python syntax (no TAB issues!)
@@ -958,7 +958,7 @@ Like Make, but designed for data science pipelines with Python syntax and extra 
 
 <div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 <strong>Installation</strong>
 
 <code>pip install snakemake</code><br>
@@ -971,7 +971,7 @@ Like Make, but designed for data science pipelines with Python syntax and extra 
 <code>snakemake -n</code> (dry run)
 </div>
 
-<div class="card card-accent pad-compact mt-sm">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
 **Recommendation**: Start with **Make** for simple pipelines. Graduate to **Snakemake** when you need wildcards, cluster support, or conda integration.
 
@@ -1014,7 +1014,7 @@ rule make_plot:
 
 <div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <strong>Key Concepts</strong>
 
 - <strong>rule</strong>: Named step in pipeline
@@ -1023,7 +1023,7 @@ rule make_plot:
 - <strong>shell</strong>: Command to run
 </div>
 
-<div class="card card-accent pad-compact mt-sm">
+<div class="card card-accent card-glass pad-compact mt-sm">
 <strong>Extra Features</strong>
 
 - <code>params:</code> for parameters
@@ -1049,7 +1049,7 @@ hideInToc: true
 
 # What is CI/CD?
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <strong>Continuous Integration / Deployment</strong> — Automatically run tasks when you push code: tests, style checks, build docs, run pipeline. <strong>Benefits:</strong> Catch errors early, ensure reproducibility.
 </div>
 
@@ -1103,7 +1103,7 @@ jobs:
 
 <div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <strong>Key Parts</strong>
 
 - <strong>on:</strong> When to trigger (push, PR)
@@ -1113,7 +1113,7 @@ jobs:
 - <strong>run:</strong> Shell commands
 </div>
 
-<div class="card card-success pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 Every push/PR now automatically runs your tests!
 </div>
 
@@ -1157,7 +1157,7 @@ jobs:
 
 <div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <strong>Pipeline Steps</strong>
 
 1. Checkout code
@@ -1167,7 +1167,7 @@ jobs:
 5. Upload results as artifact
 </div>
 
-<div class="card card-accent pad-compact mt-sm">
+<div class="card card-accent card-glass pad-compact mt-sm">
 <strong>Optional:</strong> Auto-commit results back to repo, send notifications, deploy to web
 </div>
 
@@ -1188,7 +1188,7 @@ hideInToc: true
 
 # Reproducible Analysis Checklist (1/2)
 
-<div class="card card-success pad-tight mt-md">
+<div class="card card-success card-glass pad-tight mt-md">
 
 ## ✅ **Essential Practices**
 
@@ -1223,7 +1223,7 @@ hideInToc: true
 
 # Reproducible Analysis Checklist (2/2)
 
-<div class="card card-info pad-tight mt-md">
+<div class="card card-info card-glass pad-tight mt-md">
 
 ## 🚀 **Advanced Practices**
 
@@ -1260,7 +1260,7 @@ hideInToc: true
 
 <div class="grid-2 mt-sm gap-md">
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 <strong>README Essentials</strong>
 
 - Title & description
@@ -1307,7 +1307,7 @@ hideInToc: true
 <div class="grid grid-cols-2 gap-4">
 <div>
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 **Never commit**:
 - Large data files (use Git LFS or external storage)
@@ -1388,7 +1388,7 @@ hideInToc: true
 <div class="grid grid-cols-2 gap-4">
 <div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 **Ultimate Reproducibility**
 
@@ -1405,7 +1405,7 @@ hideInToc: true
 </div>
 <div>
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 **Use Cases**
 - Share analysis with exact environment
@@ -1415,7 +1415,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight mt-2">
+<div class="card card-secondary card-glass pad-tight mt-2">
 
 **When to Use**
 - Complex dependencies (ROOT, GEANT4)
@@ -1470,7 +1470,7 @@ docker run -it my-analysis /bin/bash
 docker run -v $(pwd)/data:/app/data my-analysis
 ```
 
-<div class="card card-accent pad-tight mt-2">
+<div class="card card-accent card-glass pad-tight mt-2">
 
 **Note**: Start with virtual environments, add Docker when needed.
 
@@ -1494,7 +1494,7 @@ hideInToc: true
 
 <div class="grid grid-cols-2 gap-4">
 
-<div class="card card-warning pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
 **Before**
 
@@ -1512,7 +1512,7 @@ untitled.py
 
 </div>
 
-<div class="card card-success pad-tight">
+<div class="card card-success card-glass pad-tight">
 
 **After**
 
@@ -1580,7 +1580,7 @@ git commit -m "Update fit results"
 git push
 ```
 
-<div class="card card-accent pad-tight mt-2">
+<div class="card card-accent card-glass pad-tight mt-2">
 
 **One command** runs everything. **Anyone** can reproduce your results!
 
@@ -1597,7 +1597,7 @@ hideInToc: true
 
 <div class="grid grid-cols-3 gap-4">
 
-<div class="card card-primary pad-tight">
+<div class="card card-primary card-glass pad-tight">
 
 **For You**
 
@@ -1609,7 +1609,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-tight">
+<div class="card card-secondary card-glass pad-tight">
 
 **For Collaborators**
 
@@ -1621,7 +1621,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-tight">
+<div class="card card-info card-glass pad-tight">
 
 **For Science**
 
@@ -1643,7 +1643,7 @@ hideInToc: true
 
 <div class="grid-3 mt-sm gap-md" style="font-size: 0.72em;">
 
-<div class="card card-primary pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
 **Orientation & CERN** (L1)
 - Course goals and structure
@@ -1652,7 +1652,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
 **Computing Foundations** (L2--L4)
 - Binary, memory, floating-point
@@ -1661,7 +1661,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 **Python & Data Tools** (L5--L6)
 - Variables, loops, functions
@@ -1670,7 +1670,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
 **Data Analysis Concepts** (L7)
 - Data lifecycle & workflow
@@ -1679,7 +1679,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success pad-compact">
+<div class="card card-success card-glass pad-compact">
 
 **Version Control** (L8)
 - Git: commits, branches, merges
@@ -1688,7 +1688,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
 **Stats, Fitting & Real Data** (L9--L11)
 - Probability, distributions, CLT
@@ -1699,7 +1699,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary pad-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 **Reproducible Workflows** (L12) -- Everything today: config files, environments, Make/Snakemake, CI/CD
 
