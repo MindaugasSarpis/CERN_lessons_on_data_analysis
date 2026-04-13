@@ -76,7 +76,8 @@
       "mcp__plugin_playwright_playwright__browser_evaluate",
       "mcp__plugin_playwright_playwright__browser_hover",
       "mcp__plugin_playwright_playwright__browser_snapshot",
-      "mcp__plugin_playwright_playwright__browser_close"
+      "mcp__plugin_playwright_playwright__browser_close",
+      "Bash(grep -l \"yaml\" /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/misc/exams/*.py)"
     ],
     "deny": [],
     "ask": []

@@ -10,10 +10,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>modularization_principle</text>
+      <text>what_is_a_file</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Which of the following best describes the principle of modularization in data analysis?</p>]]></text>
+      <text><![CDATA[<p>What is a file, at the simplest level?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -47,25 +47,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Breaking down a program into smaller, reusable parts.</p>]]></text>
+      <text><![CDATA[<p>A named sequence of bytes stored by the operating system.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Combining multiple data sources into a single dataset.</p>]]></text>
+      <text><![CDATA[<p>A window shown on the screen.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Visualizing data using modules.</p>]]></text>
+      <text><![CDATA[<p>A running program in memory.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Encrypting data for security purposes.</p>]]></text>
+      <text><![CDATA[<p>A network connection to another computer.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -73,10 +73,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>storage_question</text>
+      <text>file_extensions</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Where would you store a lot of experimental data which you need to access once every 5 years?</p>]]></text>
+      <text><![CDATA[<p>What does a file extension like `.csv` or `.png` actually tell you?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -109,26 +109,26 @@
       <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>USB Stick</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>SSD</p>]]></text>
+      <text><![CDATA[<p>A convention for how the contents should be interpreted — it does not by itself guarantee the format.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>RAM</p>]]></text>
+      <text><![CDATA[<p>The exact number of bytes in the file.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>CPU Cache</p>]]></text>
+      <text><![CDATA[<p>Which user created the file.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Whether the file is encrypted.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -136,10 +136,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>cpu_function</text>
+      <text>scriptable_workflow</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Which component of a computer is responsible for performing arithmetic and logical operations?</p>]]></text>
+      <text><![CDATA[<p>What makes a data-analysis workflow 'scriptable' rather than 'non-scriptable'?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -173,25 +173,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Central Processing Unit (CPU)</p>]]></text>
+      <text><![CDATA[<p>Every step can be expressed as code or commands and re-run from scratch to reproduce the same results.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Random Access Memory (RAM)</p>]]></text>
+      <text><![CDATA[<p>It is written by hand in a lab notebook.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Hard Disk Drive (HDD)</p>]]></text>
+      <text><![CDATA[<p>It relies on clicking through menus in a graphical application.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Power Supply Unit (PSU)</p>]]></text>
+      <text><![CDATA[<p>It can only be run once, then discarded.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -199,10 +199,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>cern_acronym</text>
+      <text>gui_limits</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What does the acronym CERN stand for?</p>]]></text>
+      <text><![CDATA[<p>Why are purely click-based (non-scriptable) workflows risky for research data analysis?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -236,25 +236,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Conseil Européen pour la Recherche Nucléaire (European Council for Nuclear Research)</p>]]></text>
+      <text><![CDATA[<p>There is no reliable record of what was done, so the result is hard to reproduce or audit later.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Central European Nuclear Reactor Network</p>]]></text>
+      <text><![CDATA[<p>Graphical applications cannot open data files.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Center for Energy Research and Nuclearization</p>]]></text>
+      <text><![CDATA[<p>Results from a GUI are always numerically wrong.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Cosmic Energy Research Network</p>]]></text>
+      <text><![CDATA[<p>A GUI workflow cannot be shared with a collaborator in any form.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -262,10 +262,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>readme_purpose</text>
+      <text>relative_vs_absolute_paths</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What is the primary purpose of a README file in a data analysis project?</p>]]></text>
+      <text><![CDATA[<p>Why do shared projects usually prefer relative paths (`data/raw/run42.csv`) over absolute paths (`/Users/alice/proj/data/raw/run42.csv`)?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -299,25 +299,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>To provide an overview and instructions on how to use or reproduce the project</p>]]></text>
+      <text><![CDATA[<p>Relative paths make the project portable — it still works when someone clones it elsewhere.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>To store raw experimental data</p>]]></text>
+      <text><![CDATA[<p>Relative paths are faster for the OS to resolve.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>To encrypt sensitive information</p>]]></text>
+      <text><![CDATA[<p>Absolute paths are not supported on Linux.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>To compile the code automatically</p>]]></text>
+      <text><![CDATA[<p>Relative paths automatically encrypt the file location.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -325,10 +325,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>modularity_benefits</text>
+      <text>text_vs_binary</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Modularity in programming helps in:</p>]]></text>
+      <text><![CDATA[<p>What is the main practical difference between a text file and a binary file?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -361,26 +361,26 @@
       <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Achieving higher complexity of the codebase.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Making code less readable.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Reusing code and simplifying debugging.</p>]]></text>
+      <text><![CDATA[<p>Text files are human-readable in any editor; binary files need the right program to interpret them.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Slowing down program execution.</p>]]></text>
+      <text><![CDATA[<p>Binary files are always larger than text files.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Text files cannot be edited after they are saved.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Only binary files can be stored on SSDs.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -388,10 +388,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>data_interoperability</text>
+      <text>here_near_far_backups</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Data interoperability refers to:</p>]]></text>
+      <text><![CDATA[<p>The 'here, near, far' backup idea says to keep copies in three different places. Why three?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -425,25 +425,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>The ability to use data across different systems.</p>]]></text>
+      <text><![CDATA[<p>Different copies defend against different failure modes — from a deleted file to a destroyed building.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>The speed at which data is processed.</p>]]></text>
+      <text><![CDATA[<p>Three is the maximum number of copies most drives support.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>The size of the dataset.</p>]]></text>
+      <text><![CDATA[<p>More copies make files load faster.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>The security level of data storage.</p>]]></text>
+      <text><![CDATA[<p>It is a legal requirement for storing any data.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -451,10 +451,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>data_formats</text>
+      <text>what_is_a_dmp</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Which of the following is NOT a common data format used in data analysis?</p>]]></text>
+      <text><![CDATA[<p>What is a data management plan (DMP)?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -487,26 +487,26 @@
       <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>CSV</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>JSON</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>XML</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>MP3</p>]]></text>
+      <text><![CDATA[<p>A document describing how data will be collected, organised, stored, shared, and preserved during and after a project.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>A script that automatically backs up your files every night.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>A type of database used only at CERN.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>A legal contract between two computers.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -514,10 +514,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>python_list_creation</text>
+      <text>dmp_raw_vs_derived</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What is the correct way to create a list in Python?</p>]]></text>
+      <text><![CDATA[<p>A good data management plan typically separates raw data from derived data. Why?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -550,26 +550,26 @@
       <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>my_list = (1, 2, 3)</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>my_list = [1, 2, 3]</p>]]></text>
+      <text><![CDATA[<p>Raw data is the unique, irreplaceable record; derived data can always be regenerated from it if the analysis is reproducible.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>my_list = {1, 2, 3}</p>]]></text>
+      <text><![CDATA[<p>Derived data takes up less disk space than raw data.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>my_list = <1, 2, 3></p>]]></text>
+      <text><![CDATA[<p>Raw data cannot be opened by standard software.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>It is a requirement of the Python language.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -577,10 +577,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>python_exponentiation</text>
+      <text>what_is_git</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What is the output of the following code? print(2 ** 3)</p>]]></text>
+      <text><![CDATA[<p>What is Git, at its core?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -613,26 +613,26 @@
       <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>6</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>8</p>]]></text>
+      <text><![CDATA[<p>A system for tracking changes to files over time, with the ability to branch, merge, and collaborate.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>9</p>]]></text>
+      <text><![CDATA[<p>A cloud storage service owned by GitHub.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>23</p>]]></text>
+      <text><![CDATA[<p>A programming language for data analysis.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>A backup service that runs automatically on all computers.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -640,10 +640,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>python_function_definition</text>
+      <text>git_vs_copies_intuition</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>How do you start a function definition in Python?</p>]]></text>
+      <text><![CDATA[<p>A student keeps `analysis.py`, `analysis_v2.py`, `analysis_final.py`, `analysis_final_REAL.py` side by side. What does Git give that this scheme does not?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -676,26 +676,26 @@
       <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>function my_func():</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>def my_func():</p>]]></text>
+      <text><![CDATA[<p>One canonical file with a full, navigable history, plus branches for alternatives.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>define my_func():</p>]]></text>
+      <text><![CDATA[<p>Smaller file sizes on disk.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>func my_func():</p>]]></text>
+      <text><![CDATA[<p>A faster Python interpreter.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>Automatic conversion of Python to Markdown.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -703,10 +703,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>python_string_concatenation</text>
+      <text>what_is_a_commit</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What is the output of the following code?\n\nprint('Hello' + 'World')</p>]]></text>
+      <text><![CDATA[<p>What does a Git commit represent?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -739,26 +739,26 @@
       <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Hello World</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>HelloWorld</p>]]></text>
+      <text><![CDATA[<p>A labelled snapshot of the project at a specific point in time.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Hello+World</p>]]></text>
+      <text><![CDATA[<p>A running copy of the program.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Error</p>]]></text>
+      <text><![CDATA[<p>A request to upload files to the internet.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0.0" format="html">
+      <text><![CDATA[<p>A scheduled backup that happens every hour.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -766,10 +766,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>ide_definition</text>
+      <text>why_commit_messages</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What does IDE stand for?</p>]]></text>
+      <text><![CDATA[<p>Why bother writing a meaningful commit message?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -803,25 +803,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Integrated Development Environment</p>]]></text>
+      <text><![CDATA[<p>Future readers (including you) need to understand why a change was made, not just what changed.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Interactive Data Exploration</p>]]></text>
+      <text><![CDATA[<p>The message is what actually stores the file contents.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Intelligent Data Extraction</p>]]></text>
+      <text><![CDATA[<p>Messages make the repository faster.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Integrated Data Encryption</p>]]></text>
+      <text><![CDATA[<p>They are shown as advertisements on GitHub.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -829,10 +829,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>file_naming_conventions</text>
+      <text>branches_intuition</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Which of the following best describes good file naming conventions?</p>]]></text>
+      <text><![CDATA[<p>What is a Git branch most usefully thought of as?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -866,25 +866,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Using clear, descriptive, and consistent names to facilitate organization and retrieval.</p>]]></text>
+      <text><![CDATA[<p>A separate line of development where you can try changes without disturbing the main project.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Using very short names with random characters to ensure uniqueness.</p>]]></text>
+      <text><![CDATA[<p>A backup copy stored on another machine.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Including spaces and special characters to enhance readability.</p>]]></text>
+      <text><![CDATA[<p>A folder inside the project.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Changing file names frequently to reflect every minor update.</p>]]></text>
+      <text><![CDATA[<p>A way to encrypt your files.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -892,10 +892,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>machine_readable_data</text>
+      <text>version_control_collaboration</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What does it mean when data is machine readable?</p>]]></text>
+      <text><![CDATA[<p>Why is version control especially valuable when several people work on the same project?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -929,25 +929,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Data that can be easily processed and understood by computers.</p>]]></text>
+      <text><![CDATA[<p>It records who changed what and when, and provides tools to merge contributions safely.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Data that is formatted for human readability.</p>]]></text>
+      <text><![CDATA[<p>It prevents anyone except the project owner from editing files.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Data that is stored in encrypted files.</p>]]></text>
+      <text><![CDATA[<p>It automatically translates code between programming languages.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Data that is accessible only via specialized software.</p>]]></text>
+      <text><![CDATA[<p>It stops two people from ever opening the same file.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
@@ -955,10 +955,10 @@
   </question>
   <question type="multichoice">
     <name format="txt">
-      <text>binary_vs_text_files</text>
+      <text>version_control_collaboration</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>What is the primary difference between binary files and text‑based files?</p>]]></text>
+      <text><![CDATA[<p>Why is version control especially valuable when several people work on the same project?</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -992,340 +992,25 @@
     </incorrectfeedback>
     <shownumcorrect></shownumcorrect>
     <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Binary files store data in a machine‑readable binary format, whereas text‑based files store data in a human‑readable text format.</p>]]></text>
+      <text><![CDATA[<p>It records who changed what and when, and provides tools to merge contributions safely.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Binary files can be opened and edited easily in any text editor, while text‑based files require special software.</p>]]></text>
+      <text><![CDATA[<p>It prevents anyone except the project owner from editing files.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Binary files are always larger in size compared to text‑based files.</p>]]></text>
+      <text><![CDATA[<p>It automatically translates code between programming languages.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
     </answer>
     <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Text‑based files are exclusively used for programming, while binary files are used for data storage.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-  </question>
-  <question type="multichoice">
-    <name format="txt">
-      <text>project_file_structure</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Which file structure is most appropriate for a well‑organized data analysis project?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>1.0</defaultgrade>
-    <penalty>0.0</penalty>
-    <hidden>0</hidden>
-    <idnumber></idnumber>
-    <responseformat>editorfilepicker</responseformat>
-    <responserequired>0</responserequired>
-    <responsefieldlines>10</responsefieldlines>
-    <attachments>-1</attachments>
-    <attachmentsrequired>0</attachmentsrequired>
-    <graderinfo format="html">
-      <text></text>
-    </graderinfo>
-    <responsetemplate format="html">
-      <text></text>
-    </responsetemplate>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>none</answernumbering>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect></shownumcorrect>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Placing all files in a single directory for easy access.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Using separate directories for raw data, processed data, scripts, and results.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Naming files randomly to avoid conflicts.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Storing only processed data in folders.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-  </question>
-  <question type="multichoice">
-    <name format="txt">
-      <text>code_commenting_best_practices</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Which of the following is considered best practice for writing comments in code?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>1.0</defaultgrade>
-    <penalty>0.0</penalty>
-    <hidden>0</hidden>
-    <idnumber></idnumber>
-    <responseformat>editorfilepicker</responseformat>
-    <responserequired>0</responserequired>
-    <responsefieldlines>10</responsefieldlines>
-    <attachments>-1</attachments>
-    <attachmentsrequired>0</attachmentsrequired>
-    <graderinfo format="html">
-      <text></text>
-    </graderinfo>
-    <responsetemplate format="html">
-      <text></text>
-    </responsetemplate>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>none</answernumbering>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect></shownumcorrect>
-    <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Writing clear and concise explanations that clarify complex logic.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Commenting every single line, regardless of necessity.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Using comments to store code backups.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Avoiding comments to keep the code clean.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-  </question>
-  <question type="multichoice">
-    <name format="txt">
-      <text>python_for_loop</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>What does a for loop do in Python?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>1.0</defaultgrade>
-    <penalty>0.0</penalty>
-    <hidden>0</hidden>
-    <idnumber></idnumber>
-    <responseformat>editorfilepicker</responseformat>
-    <responserequired>0</responserequired>
-    <responsefieldlines>10</responsefieldlines>
-    <attachments>-1</attachments>
-    <attachmentsrequired>0</attachmentsrequired>
-    <graderinfo format="html">
-      <text></text>
-    </graderinfo>
-    <responsetemplate format="html">
-      <text></text>
-    </responsetemplate>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>none</answernumbering>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect></shownumcorrect>
-    <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Iterates over each item of a sequence (such as a list, string or tuple) in order.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Executes code exactly once.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Repeats code until a condition becomes false.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Declares a function.</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-  </question>
-  <question type="multichoice">
-    <name format="txt">
-      <text>python_dictionary</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Which Python data structure stores data values in key–value pairs?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>1.0</defaultgrade>
-    <penalty>0.0</penalty>
-    <hidden>0</hidden>
-    <idnumber></idnumber>
-    <responseformat>editorfilepicker</responseformat>
-    <responserequired>0</responserequired>
-    <responsefieldlines>10</responsefieldlines>
-    <attachments>-1</attachments>
-    <attachmentsrequired>0</attachmentsrequired>
-    <graderinfo format="html">
-      <text></text>
-    </graderinfo>
-    <responsetemplate format="html">
-      <text></text>
-    </responsetemplate>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>none</answernumbering>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect></shownumcorrect>
-    <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Dictionary</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>List</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Tuple</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Set</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-  </question>
-  <question type="multichoice">
-    <name format="txt">
-      <text>python_dictionary</text>
-    </name>
-    <questiontext format="html">
-      <text><![CDATA[<p>Which Python data structure stores data values in key–value pairs?</p>]]></text>
-    </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
-    <defaultgrade>1.0</defaultgrade>
-    <penalty>0.0</penalty>
-    <hidden>0</hidden>
-    <idnumber></idnumber>
-    <responseformat>editorfilepicker</responseformat>
-    <responserequired>0</responserequired>
-    <responsefieldlines>10</responsefieldlines>
-    <attachments>-1</attachments>
-    <attachmentsrequired>0</attachmentsrequired>
-    <graderinfo format="html">
-      <text></text>
-    </graderinfo>
-    <responsetemplate format="html">
-      <text></text>
-    </responsetemplate>
-    <single>true</single>
-    <shuffleanswers>true</shuffleanswers>
-    <answernumbering>none</answernumbering>
-    <correctfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est correcte.</p>]]></text>
-    </correctfeedback>
-    <partiallycorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est partiellement correcte.</p>]]></text>
-    </partiallycorrectfeedback>
-    <incorrectfeedback format="html">
-      <text><![CDATA[<p>Votre réponse est incorrecte.</p>]]></text>
-    </incorrectfeedback>
-    <shownumcorrect></shownumcorrect>
-    <answer fraction="100.0" format="html">
-      <text><![CDATA[<p>Dictionary</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>List</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Tuple</p>]]></text>
-      <feedback format="html">
-        <text></text>
-      </feedback>
-    </answer>
-    <answer fraction="0.0" format="html">
-      <text><![CDATA[<p>Set</p>]]></text>
+      <text><![CDATA[<p>It stops two people from ever opening the same file.</p>]]></text>
       <feedback format="html">
         <text></text>
       </feedback>
