@@ -22,52 +22,119 @@ layout: cover
 ## Concepts of Data Analysis
 
 ---
-layout: section
 hideInToc: true
 ---
 
-# What is **Data Analysis**?
+<div class="def-stack">
 
----
-hideInToc: true
-layout: quote
----
+<div class="card card-primary card-glass def-card">
 
-## **Data analysis** is a process of inspecting, cleaning, transforming, and modeling **data** with the goal of discovering useful **information**, informing conclusions, and supporting decision-making
+## 📋 **Data**
 
-###### Wikipedia
+<div v-click="[1, 2]" class="def-ex">
 
----
-hideInToc: true
-layout: fact
----
+<span class="def-sub">Units of meaning — values that describe or measure</span>
 
-# What is **Data Science**?
+Discrete or continuous values that convey information — quantities, qualities, facts, or symbols to be interpreted. *A datum is one such value.* <span class="def-src">— Wikipedia</span>
 
----
-hideInToc: true
-layout: quote
----
+</div>
 
-## **Data science** is an interdisciplinary academic field that uses statistics, scientific computing, scientific methods, processing, scientific visualization, algorithms and systems to extract or extrapolate **knowledge and insights** from potentially noisy, structured, or unstructured data
+</div>
 
-###### Wikipedia
+<div class="card card-secondary card-glass def-card">
 
----
-hideInToc: true
-layout: fact
----
+## 🔍 **Data Analysis**
 
-# What is **Data**?
+<div v-click="[2, 3]" class="def-ex">
 
----
-hideInToc: true
-layout: quote
----
+<span class="def-sub">Turning data into conclusions and decisions</span>
 
-## **Data** are a collection of discrete or continuous values that convey information, describing the quantity, quality, fact, statistics, other basic **units of meaning**, or simply sequences of symbols that may be further interpreted formally. **A datum** is an individual value in a collection of data.
+The process of **inspecting, cleaning, transforming, and modelling** data to discover useful information, inform conclusions, and support decision-making. <span class="def-src">— Wikipedia</span>
 
-###### Wikipedia
+</div>
+
+</div>
+
+<div class="card card-accent card-glass def-card">
+
+## 🧪 **Data Science**
+
+<div v-click="[3, 4]" class="def-ex">
+
+<span class="def-sub">Analysis + computing + algorithms at scale</span>
+
+An interdisciplinary field combining statistics, scientific computing, visualisation, and algorithms to extract **knowledge and insights** from noisy, structured, or unstructured data. <span class="def-src">— Wikipedia</span>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+.def-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.def-card.card {
+  padding: 0.7rem 1.2rem !important;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.def-card.card:has(.def-ex:not(.slidev-vclick-hidden)) {
+  padding: 0.45rem 1.1rem 0.55rem !important;
+}
+.def-card.slidev-vclick-hidden {
+  transform: translateX(-40px);
+  opacity: 0 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+.def-card h2 {
+  font-size: 1.4em;
+  line-height: 1.15;
+  margin: 0;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.def-card:has(.def-ex:not(.slidev-vclick-hidden)) h2 {
+  font-size: 1em;
+}
+.def-sub {
+  display: block;
+  font-size: 0.92em;
+  opacity: 0.85;
+  margin-top: 0.05em;
+  font-style: italic;
+}
+.def-ex {
+  max-height: 300px;
+  opacity: 0.9;
+  overflow: hidden;
+  font-size: 0.7em;
+  margin-top: 0.2rem;
+  line-height: 1.3;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.def-ex.slidev-vclick-hidden {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  visibility: visible !important;
+  margin-top: 0 !important;
+  pointer-events: none;
+}
+.def-src {
+  opacity: 0.6;
+  font-style: italic;
+  font-size: 0.9em;
+  margin-left: 0.3em;
+}
+</style>
 
 ---
 hideInToc: true
@@ -102,13 +169,6 @@ These concepts — lifecycle, quality, ethics, FAIR principles — apply identic
 We build the mental model: data types, quality, the analysis lifecycle, FAIR principles, tools, hygiene, ethics, and key pitfalls to avoid.
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# From Data to **Wisdom**
 
 ---
 hideInToc: true
@@ -413,7 +473,7 @@ Audiences expect evidence-backed stories
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 ## ⚛️ **CERN angle**
 
@@ -496,20 +556,16 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight mt-md">
 
-<div class="stack-tight">
-
-- ## 🧬 Genome sequencing → identifying variants & gene expression patterns
-- ## 💊 Clinical trials → monitoring safety, efficacy, adaptive designs
-- ## 📊 Population health dashboards & personalised medicine
-- ## 🎯 Decisions: targeted therapies, drug discovery, diagnostics
-
-</div>
+- 🧬 Genome sequencing → identifying variants & gene expression patterns
+- 💊 Clinical trials → monitoring safety, efficacy, adaptive designs
+- 📊 Population health dashboards & personalised medicine
+- 🎯 Decisions: targeted therapies, drug discovery, diagnostics
 
 </div>
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-### 🧪 **23andMe** or **Ancestry.com**? Comparing against *reference populations*
+#### 🧪 **23andMe** or **Ancestry.com**? Comparing against *reference populations*
 
 </div>
 
@@ -521,14 +577,10 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
-<div class="stack-tight">
-
-- ## 🌍 Climate models integrating satellite, sensor, and historical data
-- ## 🏭 Pollution monitoring at city/block resolution
-- ## 🌿 Biodiversity studies combining field notes + remote sensing
-- ## 📜 Supports policy making, disaster response, conservation funding
-
-</div>
+- 🌍 Climate models integrating satellite, sensor, and historical data
+- 🏭 Pollution monitoring at city/block resolution
+- 🌿 Biodiversity studies combining field notes + remote sensing
+- 📜 Supports policy making, disaster response, conservation funding
 
 </div>
 
@@ -550,14 +602,10 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight mt-md">
 
-<div class="stack-tight">
-
-- ## 📈 Economic forecasting blending macro indicators & behavioural data
-- ## 🧑‍🤝‍🧑 Social behaviour studies using surveys, logs, ethnography
-- ## 💬 Text analysis for sentiment, misinformation, community wellbeing
-- ## 🏛️ Informs policy, marketing, product design, civic planning
-
-</div>
+- 📈 Economic forecasting blending macro indicators & behavioural data
+- 🧑‍🤝‍🧑 Social behaviour studies using surveys, logs, ethnography
+- 💬 Text analysis for sentiment, misinformation, community wellbeing
+- 🏛️ Informs policy, marketing, product design, civic planning
 
 </div>
 
@@ -579,14 +627,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight mt-md">
 
-<div class="stack-tight">
-
-- ## 🔭 Observational data from telescopes, satellites, detectors
-- ## 🌊 Gravitational wave detection via signal processing & ML
-- ## 🌟 Cataloguing millions of celestial objects, anomaly detection
-- ## 💻 Requires high-throughput computing, reproducible pipelines
-
-</div>
+- 🔭 Observational data from telescopes, satellites, detectors
+- 🌊 Gravitational wave detection via signal processing & ML
+- 🌟 Cataloguing millions of celestial objects, anomaly detection
+- 💻 Requires high-throughput computing, reproducible pipelines
 
 </div>
 
@@ -608,14 +652,10 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
-<div class="stack-tight">
-
-- ## ⚛️ Petabytes of collision data → reconstruct events, filter noise
-- ## 📊 Multivariate analysis to isolate rare signals (e.g. Higgs boson)
-- ## 🤝 Collaboration across detectors, theory, computing teams
-- ## 🌐 Drives advances in distributed computing & open data practices
-
-</div>
+- ⚛️ Petabytes of collision data → reconstruct events, filter noise
+- 📊 Multivariate analysis to isolate rare signals (e.g. Higgs boson)
+- 🤝 Collaboration across detectors, theory, computing teams
+- 🌐 Drives advances in distributed computing & open data practices
 
 </div>
 
@@ -723,12 +763,66 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight mt-md">
 
-<div class="stack-tight">
+- 📚 Learning management system logs reveal engagement patterns
+- 🚨 Early warning systems for student support
+- 📝 Curriculum design using assessment data & qualitative feedback
+- ⚖️ Balances personalisation with fairness and privacy
 
-- ## 📚 Learning management system logs reveal engagement patterns
-- ## 🚨 Early warning systems for student support
-- ## 📝 Curriculum design using assessment data & qualitative feedback
-- ## ⚖️ Balances personalisation with fairness and privacy
+</div>
+
+---
+hideInToc: true
+---
+
+# Common threads across every domain
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎯 **Decisions drive design**
+
+Genomics, finance, or particle physics — analysis starts from a decision someone must make.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **Uncertainty is first-class**
+
+Every field reports ranges, intervals, or risks — not single numbers.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔄 **Pipelines over one-offs**
+
+Reproducible workflows beat ad-hoc analyses once data keeps arriving.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🤝 **Teams, not heroes**
+
+Domain + analyst + engineer + stakeholder — no single role sees the whole.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ⚖️ **Ethics follows impact**
+
+The higher the stakes (health, policy, money), the stronger the governance.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📖 **Stories ship insight**
+
+Numbers change nothing until they land as a narrative a decision-maker can act on.
 
 </div>
 
@@ -1287,6 +1381,16 @@ hideInToc: true
 
 # Uncertainty and inference
 
+<div class="card card-info card-glass pad-compact mt-sm">
+
+<div class="note-text">
+
+🌡️ Recall the lab thermometer — `22.3 °C` is meaningless without `± 0.2 °C` and a calibration date. Every reported number deserves the same treatment.
+
+</div>
+
+</div>
+
 <div class="stack-tight mt-md">
 
 <div class="card card-primary card-glass pad-tight">
@@ -1465,11 +1569,11 @@ A concise six-phase view — easy to remember day-to-day. Detailed sub-stages ne
 hideInToc: true
 ---
 
-# End-to-end lifecycle (1/2)
+# Zooming in — nine stages inside the six phases
 
 <div class="note-text mt-sm">
 
-The detailed nine-stage view of the analysis lifecycle.
+Each phase decomposes into concrete stages you'll recognise from real projects.
 
 </div>
 
@@ -1477,73 +1581,63 @@ The detailed nine-stage view of the analysis lifecycle.
 
 <div class="card card-primary card-glass pad-compact">
 
-### 🎯 **Problem Framing**
+### 🎯 **Plan → Problem Framing**
 Hypotheses & success metrics
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-### 🔍 **Data Discovery**
+### 🔍 **Acquire → Data Discovery**
 Access & quality assessment
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-### 🧹 **Preparation**
+### 🧹 **Process → Preparation**
 Cleaning, joining, feature selection
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-### 📊 **Exploration**
+### 📊 **Analyse → Exploration**
 Profiling, visualization, sanity checks
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-### 🧪 **Modeling/Inference**
+### 🧪 **Analyse → Modeling**
 Statistical tests & machine learning
 
 </div>
 
-</div>
-
----
-hideInToc: true
----
-
-# End-to-end lifecycle (2/2)
-
-<div class="grid-3 gap-md mt-md">
-
 <div class="card card-warning card-glass pad-compact">
 
-### ✅ **Evaluation**
+### ✅ **Analyse → Evaluation**
 Validation, uncertainty, sensitivity
 
 </div>
 
 <div class="card card-primary card-glass pad-compact">
 
-### 📢 **Communication**
+### 📢 **Share → Communication**
 Narrative, visuals, decisions
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-### ⚙️ **Operationalization**
+### ⚙️ **Share → Operationalisation**
 Notebooks, scripts, pipelines
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-### 📡 **Monitoring**
+### 📡 **Share → Monitoring**
 Drift, quality, impact
 
 </div>
@@ -1619,40 +1713,6 @@ hideInToc: true
 </div>
 
 ---
-hideInToc: true
----
-
-# Spotting opportunities
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🗺️ Map stakeholders → decisions → supporting data
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📏 Ask how outcomes are measured today
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔎 Identify gaps between available data and needed insight
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## ✅ Check feasibility: access, quality, ethics, skills, time
-
-</div>
-
-</div>
-
----
 layout: section
 hideInToc: true
 ---
@@ -1711,59 +1771,55 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 2. **Collect Data** — key questions
+# 2. **Collect Data**
 
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 📊 How much data do you need?
+## 📊 How much? What sort?
+
+<div class="note-text">Volume, variety, formats — matched to the question</div>
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🏷️ What sort of data do you need?
+## 🔍 Can you trust the source?
+
+<div class="note-text">Provenance, reliability, known biases</div>
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
-## 📁 What data formats should you choose?
+## ⚙️ Can you actually get it?
+
+<div class="note-text">Access, cost, feasibility before committing</div>
 
 </div>
+
+</div>
+
+<div class="stack-tight">
 
 <div class="card card-info card-glass pad-tight">
 
-## 🔍 Can you trust the data?
+## 📝 Permissions & consent
 
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# 2. **Collect Data** — best practices
-
-<div class="stack-tight mt-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚙️ Can you collect the data? Assess feasibility early
+<div class="note-text">Document licences, ethics approvals, provenance</div>
 
 </div>
 
 <div class="card card-success card-glass pad-tight">
 
-## 📝 Document permissions, consent, and provenance
+## ✅ Validate at ingestion
+
+<div class="note-text">Automated schema / range / freshness checks</div>
 
 </div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## ✅ Automate validation checks at ingestion
 
 </div>
 
@@ -1975,71 +2031,55 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 6. **Interpret and Report the Results**
+# 6. **Interpret and Report**
 
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🎯 Draw conclusions from data
+## 🎯 **Conclude honestly**
+
+Draw conclusions the data support — no more, no less
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 📄 Report findings
+## 🔗 **Tie to decisions**
 
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔗 Connect to decisions, risks, next steps
+Connect findings to actions, risks, and next steps
 
 </div>
 
 <div class="card card-info card-glass pad-tight">
 
-## ❓ Capture limitations and open questions
+## ❓ **Name limitations**
+
+Capture caveats and open questions prominently
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📏 **Plan measurement**
+
+How will outcomes be tracked after the decision?
 
 </div>
 
 <div class="card card-success card-glass pad-tight">
 
-## 📦 Package reproducible assets (code, dashboards, docs)
+## 📦 **Package for reuse**
+
+Code, dashboards, docs others can run tomorrow
 
 </div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Validation & monitoring
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 Split data wisely, guard against leakage
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📐 Assess error bars, confidence intervals, effect sizes
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🧪 Stress test with scenario analysis & sensitivity checks
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📡 Plan post-deployment monitoring for drift and quality
 
 </div>
 
@@ -2049,105 +2089,65 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Team checkpoints per phase
+# Communication artefacts — pick the right one
 
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🚀 **Kickoff** → align on question, scope, success metrics
+## 📄 **Executive summary**
+
+One-pager for busy stakeholders
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 📊 **Midpoint** → share exploratory findings, data quality flags
+## 📋 **Decision memo**
+
+Options, trade-offs, recommendation
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
-## 🎤 **Pre-delivery** → rehearse narrative, anticipate objections
+## 📊 **Dashboard**
+
+Ongoing monitoring & self-service
 
 </div>
+
+</div>
+
+<div class="stack-tight">
 
 <div class="card card-info card-glass pad-tight">
 
-## 📝 **Retrospective** → document lessons, update playbooks
+## 📓 **Reproducible notebook**
 
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Communication toolkit
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📄 Executive summary (one-pager)
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📓 Notebook or reproducible analysis package
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📊 Dashboard / data app for continued monitoring
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📋 Decision memo outlining options & trade-offs
+End-to-end analysis for peers
 
 </div>
 
 <div class="card card-success card-glass pad-tight">
 
-## 🔬 Technical appendix for peers to audit
+## 🔬 **Technical appendix**
+
+Methods, assumptions, audit trail
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
-
-# From data to decisions
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 💡 Translate insights into recommendations & actions
-
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact mt-md">
 
-## 🎯 Align with organisational objectives and constraints
+<div class="note-text">
 
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📏 Plan how outcomes will be measured post-decision
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📝 Capture learnings to refine future analyses
+#### 💡 Match the artefact to the **audience** and the **decision horizon** — not to what's easiest to produce
 
 </div>
 
@@ -2625,37 +2625,73 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Hygiene habits to cultivate
+# Hygiene & reproducibility habits
 
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🔄 Source control for data definitions and transformations
+## 🔄 **Source control everything**
+
+Code, SQL, data definitions, transformations
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## ✅ Automated linting & formatting for notebooks / scripts
+## 📁 **Clear structure & naming**
+
+Conventions beat creativity for future-you
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
-## 📁 Clear folder structures & naming conventions
+## 🧹 **Housekeeping**
+
+Archive, deprecate, document as you go
 
 </div>
 
+</div>
+
+<div class="stack-tight">
+
 <div class="card card-info card-glass pad-tight">
 
-## 🗂️ Versioned datasets or snapshotting
+## 📦 **Record the environment**
+
+`env.yaml`, containers, lockfiles
 
 </div>
 
 <div class="card card-success card-glass pad-tight">
 
-## 🧹 Regular housekeeping: archive, deprecate, document
+## 🎲 **Seeds, hashes, snapshots**
+
+Same inputs + same code → same results
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## ⚙️ **Automate critical paths**
+
+Makefile / CI so rebuilds are one command
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+<div class="note-text">
+
+#### 🎯 Rule of thumb — if you cannot re-run an analysis six months later in under an hour, it isn't finished
 
 </div>
 
@@ -2665,117 +2701,79 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Reproducibility practices
+# Ethics, governance & accountability
 
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 📓 Keep code with results (notebook discipline)
+## 🛡️ **Minimise harm**
+
+Privacy, consent, security by design
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 📦 Parameterise and record environment (env.yaml)
+## ⚖️ **Fairness**
+
+Monitor for disparate impact across groups
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
-## 🗂️ Version data / queries or capture snapshots
+## 🔍 **Transparency**
 
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🎲 Seed randomness; log configs and hashes
+Methods, assumptions, limitations — visible
 
 </div>
 
 <div class="card card-success card-glass pad-tight">
 
-## ⚙️ Automate critical paths (Makefile / CI)
+## 🌍 **Sustainability**
+
+Account for compute & environmental cost
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
+<div class="stack-tight">
 
-# Ethics & responsible analytics
+<div class="card card-info card-glass pad-tight">
 
-<div class="stack-tight mt-md">
+## 👤 **Accountability**
+
+Named owners, escalation paths, stewardship
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 📜 **Compliance frameworks**
+
+GDPR, HIPAA, CERN policies — know which apply
+
+</div>
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🛡️ **Minimise harm** — privacy, consent, security
+## 🚨 **Incident response**
+
+Plans for breaches and quality failures
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## ⚖️ **Fairness** — monitor for disparate impact across groups
+## 📚 **Training & audits**
+
+Keep teams and practices aligned over time
 
 </div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔍 **Transparency** — explain methods, assumptions, limitations
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 👤 **Accountability** — define owners and escalation paths
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🌍 **Sustainability** — consider computational & environmental cost
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Data governance essentials
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔐 Policies for access control and approvals
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📋 Data catalogues & stewardship roles
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📜 Compliance frameworks (GDPR, HIPAA, CERN policies)
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🚨 Incident response plans for data breaches or quality issues
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📚 Training & audits to keep teams aligned
 
 </div>
 
@@ -2794,28 +2792,6 @@ hideInToc: true
 ---
 
 ## The first step in **(re)using data** is to find them. **Metadata** and data should be easy to find for both humans and computers. Machine-readable metadata are essential for automatic discovery of datasets and services — a core component of the FAIRification process.
-
----
-hideInToc: true
----
-
-# What is **Metadata**?
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## 📋 **Metadata** = data about data
-
-Metadata describes the who, what, when, where, how, and why of a dataset. Examples: column names and types, units, collection date, author, license, provenance, and schema version.
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔍 **Why it matters for FAIR**
-
-Without rich metadata, datasets cannot be found, understood, or reused. Machine-readable metadata enables automated discovery and integration across systems.
-
-</div>
 
 ---
 hideInToc: true
@@ -2988,6 +2964,76 @@ hideInToc: true
 </div>
 
 ---
+hideInToc: true
+---
+
+# FAIR worked example — a CERN Open Data record
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+<div class="note-text">
+
+A 2011 CMS dissertation-grade dataset on opendata.cern.ch — annotated against each FAIR pillar.
+
+</div>
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔍 **Findable**
+
+DOI `10.7483/OPENDATA.CMS.…`, title, keywords, indexed on Google Dataset Search
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌐 **Accessible**
+
+HTTPS download + XRootD streaming, free, no login required; metadata stays online if files are retired
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🔗 **Interoperable**
+
+ROOT / AOD format with published schema, HEP-specific vocabularies, links to detector & simulation records
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ♻️ **Reusable**
+
+CC0 licence, full provenance (run conditions, software version), validated example analyses in containers
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+<div class="note-text">
+
+#### 🎯 Every FAIR principle is concretely visible — that's why CERN data can be reanalysed a decade later
+
+</div>
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -3002,10 +3048,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight mt-md">
 
-- ## 🌐 CERN releases proton-proton collision datasets via the Open Data portal
-- ## 🎯 Goal: enable students & researchers to reproduce landmark analyses
-- ## 📁 Data formats: ROOT files, CSV summaries, metadata packages
-- ## 🔧 Tooling: ROOT, Python, R, Jupyter, cloud notebooks
+- 🌐 CERN releases proton-proton collision datasets via the Open Data portal
+- 🎯 Goal: enable students & researchers to reproduce landmark analyses
+- 📁 Data formats: ROOT files, CSV summaries, metadata packages
+- 🔧 Tooling: ROOT, Python, R, Jupyter, cloud notebooks
 
 </div>
 
@@ -3017,10 +3063,10 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight mt-md">
 
-- ## 👥 Physicists, statisticians, software engineers, detector experts
-- ## 🔄 Shared code repositories with rigorous review (ROOT macros, Python)
-- ## 🧪 Simulation teams provide synthetic data for validation
-- ## 📄 Publication committees ensure rigour & messaging
+- 👥 Physicists, statisticians, software engineers, detector experts
+- 🔄 Shared code repositories with rigorous review (ROOT macros, Python)
+- 🧪 Simulation teams provide synthetic data for validation
+- 📄 Publication committees ensure rigour & messaging
 
 </div>
 
@@ -3292,7 +3338,7 @@ Look at the data before modelling it. Distributions, outliers, missing values �
 
 ## 🛠️ **Choose**
 
-Pick the simplest method that solves the problem. A good scatter plot beats a bad neural network.
+Pick the simplest method that solves the problem. Reach for complexity only when the simple thing has clearly failed.
 
 </div>
 
@@ -3312,13 +3358,23 @@ hideInToc: true
 
 # Takeaways
 
+<div class="card card-info card-glass pad-compact mt-sm">
+
+<div class="note-text">
+
+Remember the lab thermometer — a single reading (`22.3 °C`) travelled all the way to an operational decision (shift Friday calibration). That journey is what this lecture is really about.
+
+</div>
+
+</div>
+
 <div class="grid-3 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-compact">
 
 ## 🎯 **Decisions first**
 
-Define metrics and success criteria early
+The reading mattered because someone had to act on it — define metrics and success criteria early
 
 </div>
 
@@ -3326,39 +3382,39 @@ Define metrics and success criteria early
 
 ## 📊 **Quality & uncertainty**
 
-Treat as first-class, not footnotes
+No value is trustworthy without its error bar — treat both as first-class, not footnotes
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📢 **Communicate clearly**
+## 🔄 **Lifecycle, not event**
 
-With integrity and empathy for the audience
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🔄 **Reproducible & useful**
-
-Easy to re-run, easy to act on
+Plan → Acquire → Store → Process → Analyse → Share, with governance on every step
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## 🧹 **Hygiene & governance**
+## ♻️ **FAIR & reproducible**
 
-Underpin every trustworthy insight
+Findable, Accessible, Interoperable, Reusable — so the next analyst can pick up where you stopped
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📢 **Story over numbers**
+
+Inspect → clean → transform → model → communicate: Wikipedia's definition, lived end-to-end
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🔧 **Tools intentionally**
+## ⚖️ **Responsible by default**
 
-Balance speed, scale, and rigour
+Hygiene, ethics, accountability — the price of being trusted with data
 
 </div>
 
