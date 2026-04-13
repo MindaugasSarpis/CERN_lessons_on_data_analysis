@@ -1085,33 +1085,27 @@ print("\nNext up: NumPy and matplotlib will make this MUCH easier!")
 hideInToc: true
 ---
 
-# From Browser to Real Files
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🖥️ **Time to Write Real Python**
+# 🖥️ **Time to Write Real Python**
 
 The in-browser exercises were great for learning — now let's create an actual Python script you can run, share, and version-control.
 
-</div>
-
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-**1.** In VS Code, create a new file: `File → New File` → save as `sensor_analysis.py`
+**1.** In VS Code: `File → New File` → save as `sensor_analysis.py`
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**2.** Copy your mini project code into the file (or write it fresh from memory!)
+**2.** Copy your mini-project code in (or rewrite it from memory!)
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-**3.** Open the VS Code terminal (`Ctrl+`` `) and run:
+**3.** Open the terminal (`` Ctrl+` ``) and run:
 
 ```bash
 python sensor_analysis.py
@@ -1121,7 +1115,7 @@ python sensor_analysis.py
 
 <div class="card card-success card-glass pad-compact">
 
-**4.** See the same output — but now it lives as a file on your machine, not just in a browser tab
+**4.** Same output — but now it lives as a file on your machine, not just in a browser tab
 
 </div>
 
@@ -1137,7 +1131,6 @@ hideInToc: true
 
 ## 🔄 **Save Your Progress with Git**
 
-You learned `git` earlier today — now put it to use! After completing the mini projects:
 
 </div>
 

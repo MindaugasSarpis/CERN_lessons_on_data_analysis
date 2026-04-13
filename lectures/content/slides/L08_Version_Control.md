@@ -462,9 +462,9 @@ git log --oneline --graph --all
 
 ## ✍️ **Commit Message Best Practices**
 
-<div class="grid-2 mt-sm gap-md">
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 2fr 3fr;">
 
-<div class="card card-warning card-glass pad-compact">
+<div>
 
 ❌ "fixed stuff"
 
@@ -474,7 +474,7 @@ git log --oneline --graph --all
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div>
 
 ✅ "Add data validation for input CSV"
 
@@ -581,7 +581,7 @@ git reset --hard < hash >
 ---
 hideInToc: true
 layout: image
-image: /figures/git_staging.svg
+image: /figures/git_flow.svg
 backgroundSize: contain
 ---
 
@@ -896,25 +896,38 @@ git commit -m "Resolve merge conflict"
 hideInToc: true
 ---
 
-<div class="stack-tight">
-<div class="card card-primary card-glass pad-compact">
-1️⃣ <code>git pull</code> — get latest changes from remote
-</div>
-<div class="card card-secondary card-glass pad-compact">
-2️⃣ <code>git switch -c my-feature</code> — create a branch for your work
-</div>
-<div class="card card-accent card-glass pad-compact">
-3️⃣ <em>Make changes to files</em>
-</div>
+# 🔁 **A typical day with Git**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 1fr 1fr;">
+
 <div class="card card-info card-glass pad-compact">
-4️⃣ <code>git add</code> + <code>git commit -m "descriptive message"</code> — save your work
+
+## 🖥️ **Local work**
+
+- **1.** `git pull` — sync with remote
+- **2.** `git switch -c my-feature` — branch off for your task
+- **3.** *edit files*
+- **4.** `git add` · `git commit -m "..."` — save progress
+
 </div>
+
 <div class="card card-success card-glass pad-compact">
-5️⃣ <code>git push origin my-feature</code> — share with remote
+
+## ☁️ **Share & review**
+
+- **5.** `git push origin my-feature` — publish the branch
+- **6.** Open a **Pull Request** on GitHub
+- **7.** Address review comments, push again
+- **8.** Merge once approved ✅
+
 </div>
-<div class="card card-warning card-glass pad-compact">
-6️⃣ <em>Create a Pull Request on GitHub for code review</em>
+
 </div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+💡 Small, focused commits + frequent pulls = fewer conflicts and easier reviews.
+
 </div>
 
 ---

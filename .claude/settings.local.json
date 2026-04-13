@@ -80,7 +80,10 @@
       "Bash(grep -l \"yaml\" /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/misc/exams/*.py)",
       "Bash(cat /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/vite.config.*)",
       "Bash(awk '{print $2}')",
-      "Bash(sort grep:*)"
+      "Bash(sort grep:*)",
+      "Bash(/usr/bin/xmllint --noout git_flow.svg)",
+      "Bash(grep -c '^---$' /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/lectures/content/slides/L06_Concepts_of_Data_Analysis.md)",
+      "Bash(/usr/bin/xmllint --noout /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/lectures/content/public/figures/data_types.svg)"
     ],
     "deny": [],
     "ask": []

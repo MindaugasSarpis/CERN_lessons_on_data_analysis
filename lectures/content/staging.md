@@ -75,19 +75,3 @@ src: slides/L05_Crash_Course_on_Python_Programming.md
 ---
 src: slides/L06_Concepts_of_Data_Analysis.md
 ---
-
----
-src: slides/L07_Data_Visualisation.md
----
-
----
-src: slides/L11_NumPy_Pandas_Real_Data.md
----
-
----
-src: slides/L09_Probability_and_Statistics.md
----
-
----
-src: slides/L12_Reproducible_Workflows.md
----
