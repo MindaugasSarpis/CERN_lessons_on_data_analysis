@@ -65,6 +65,14 @@ PROFILES: dict[str, list[str]] = {
         "-an",
         "-movflags", "+faststart",
     ],
+    "standard-tight": [
+        "-c:v", "libx265", "-tag:v", "hvc1",
+        "-preset", "slow", "-crf", "27",
+        "-pix_fmt", "yuv420p",
+        "-vf", "scale='min(1920,iw)':-2",
+        "-c:a", "aac", "-b:a", "128k", "-ac", "2",
+        "-movflags", "+faststart",
+    ],
     "high-motion": [
         "-c:v", "libx265", "-tag:v", "hvc1",
         "-preset", "slow", "-crf", "22",
@@ -149,7 +157,7 @@ def _encode_one(entry: VideoEntry, force: bool) -> tuple[VideoEntry, str, int, i
 
     tmp = web.with_name(f"{web.stem}.partial{web.suffix}")
     cmd = [
-        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
         "-i", str(raw),
         *PROFILES[entry.profile],
         str(tmp),
@@ -251,6 +259,13 @@ def cmd_publish(args: argparse.Namespace) -> int:
         print("error: gh CLI not installed. brew install gh", file=sys.stderr)
         return 2
 
+    if args.only:
+        wanted = set(args.only)
+        videos = [v for v in videos if v.name in wanted]
+        if not videos:
+            print(f"error: no manifest entries match {args.only}", file=sys.stderr)
+            return 2
+
     # Ensure release exists.
     existing = subprocess.run(
         ["gh", "release", "view", tag], capture_output=True, text=True
@@ -264,11 +279,30 @@ def cmd_publish(args: argparse.Namespace) -> int:
             check=True,
         )
 
+    # Map remote asset -> size (bytes), so we can skip unchanged files.
+    remote_sizes: dict[str, int] = {}
+    if not args.force:
+        listing = subprocess.run(
+            ["gh", "release", "view", tag, "--json", "assets"],
+            capture_output=True, text=True,
+        )
+        if listing.returncode == 0:
+            import json
+            try:
+                for a in json.loads(listing.stdout).get("assets", []):
+                    remote_sizes[a["name"]] = a.get("size", -1)
+            except (ValueError, KeyError):
+                pass
+
     files = []
     for v in videos:
         web = WEB_DIR / v.name
         if not web.exists():
             print(f"  ! skip {v.name}: not encoded yet")
+            continue
+        local_size = web.stat().st_size
+        if not args.force and remote_sizes.get(v.name) == local_size:
+            print(f"  = {v.name}: unchanged ({human_size(local_size)}), skipping")
             continue
         files.append(str(web))
 
@@ -366,6 +400,8 @@ def main() -> int:
 
     p_pub = sub.add_parser("publish", help="upload web files to GH Release")
     p_pub.add_argument("--dry-run", action="store_true")
+    p_pub.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
+    p_pub.add_argument("--force", action="store_true", help="re-upload even if remote size matches local")
     p_pub.set_defaults(func=cmd_publish)
 
     p_chk = sub.add_parser("check", help="sanity-check manifest vs raw/web/slides")

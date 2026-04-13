@@ -31,7 +31,7 @@ Edwards Deming
 ---
 ---
 
-<VideoPlayer src="VU_VM_Zoom_New.mp4" autoplay />
+<VideoPlayer src="VU_VM.mp4" autoplay />
 
 ---
 ---

@@ -14,6 +14,7 @@
 #   remux       - lossless stream copy + faststart. Use when source is already
 #                 a well-encoded web-friendly codec (HEVC/H.264 <= ~5 Mbps).
 #   standard    - HEVC CRF 24, 1080p cap, AAC 128k. General-purpose re-encode.
+#   standard-tight - HEVC CRF 27, 1080p cap, AAC 128k. Same res as standard, more aggressive quantization for long clips that blow the 200 MB budget.
 #   silent-loop - HEVC CRF 26, 1080p cap, audio stripped. Background loops.
 #   high-motion - HEVC CRF 22, 1080p cap, AAC 192k. Sims, fast action, CGI.
 
@@ -185,7 +186,7 @@ notes   = "Tech scale comparison, HEVC 1.7 Mbps, 3:51"
 # ---------------------------------------------------------------------------
 
 [[videos]]
-name    = "VU_VM_Zoom_New.mp4"
-profile = "standard"
-used_in = ["crash_course_for_video_lecture"]
+name    = "VU_VM.mp4"
+profile = "standard-tight"
+used_in = ["crash_course_for_video_lecture", "L02_Introduction_to_CERN"]
 notes   = "Re-encoded from 20 Mbps H.264 master — wasteful bitrate for slide use"
