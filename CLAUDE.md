@@ -8,23 +8,26 @@ University-level lecture course "Lessons on Data Analysis from CERN" — 12 lect
 
 ## Commands
 
-All commands run from the repository root. There are no npm scripts defined; use Slidev CLI directly via pnpm/npx.
+All commands run from the repository root.
 
 ```bash
 # Install dependencies
 pnpm install
 
-# Dev server (serves the main deck at localhost:3030)
-npx slidev lectures/content/lessons_on_data_analysis_from_CERN.md
+# Dev server for the published deck (current-term subset)
+pnpm dev
 
-# Dev server for a single lecture
-npx slidev lectures/content/slides/L9_Probability_and_Statistics.md
+# Dev server for the full WIP deck (all lectures, incl. drafts)
+pnpm dev:staging
 
-# Production build
-npx slidev build lectures/content/lessons_on_data_analysis_from_CERN.md
+# Dev server for a single lecture file
+pnpm dev:lecture lectures/content/slides/L09_Probability_and_Statistics.md
+
+# Production build (published deck only)
+pnpm build
 
 # Export to PDF
-npx slidev export lectures/content/slides/L9_Probability_and_Statistics.md
+pnpm export
 
 # Student workbook (MkDocs) — requires conda env from env.yaml
 cd lectures/workbook && mkdocs serve
@@ -36,8 +39,9 @@ There are no tests or linting configured.
 
 ### Slide Deck (Slidev)
 
-- **Entry point**: `lectures/content/lessons_on_data_analysis_from_CERN.md` — master deck that imports all lectures via `src:` frontmatter directives
-- **Individual lectures**: `lectures/content/slides/L{N}_*.md` — each is a standalone Slidev markdown file (L1–L12, plus LX template)
+- **Published entry point**: `lectures/content/lessons_on_data_analysis_from_CERN.md` — the deck that `pnpm build` ships to GitHub Pages. It imports only the subset of lectures currently delivered in-term.
+- **Staging entry point**: `lectures/content/staging.md` — full WIP deck importing every lecture file (including parallel drafts of L6 and L11). Use `pnpm dev:staging` to preview everything.
+- **Individual lectures**: `lectures/content/slides/L{NN}_*.md` — each is a standalone Slidev markdown file. Numbering is zero-padded to two digits (`L01_`…`L12_`). Lecture 3 is split into sub-lectures (`L03_1_1_`, `L03_1_2_`, `L03_2_`, `L03_3_`, `L03_4_`). The `LX_Python_Interactive.md` file is a template, not part of the course. Lecture ordering occasionally shifts between terms — the numeric prefix is the authoritative sort key, independent of delivery order.
 - **Custom theme**: `lectures/content/theme/` — local Slidev theme (`@slidev/theme-scienced`)
   - `styles/custom-slides.css` — card system, grid layouts, spacing utilities, typography
   - `styles/mermaid-styles.css` — Mermaid diagram styling
@@ -60,9 +64,9 @@ There are no tests or linting configured.
 
 ## Slide Authoring Conventions
 
-Each lecture markdown file follows a consistent structure (see `PLAN.md` for the full reference):
+Each lecture markdown file follows a consistent structure:
 
-1. **Frontmatter**: `colorSchema: dark`, `background: /background_intro.jpg`, `theme: ./theme`, `transition: fade`
+1. **Frontmatter**: `colorSchema: dark`, `background: /figures/background_intro.jpg`, `theme: ./theme`, `transition: fade`
 2. **Cover slide** → **Quote slide** (motivational) → **Motivation slide** (bullet list)
 3. **Section breaks**: `layout: section` + `hideInToc: true` + `# Section **KeyWord**`
 4. **Content slides** use the card system:
@@ -78,6 +82,14 @@ Each lecture markdown file follows a consistent structure (see `PLAN.md` for the
 8. **Emoji format**: Always `## 📊 **Title**` — emoji outside bold
 9. **Slide separators**: `---` with optional YAML frontmatter between them
 
+## Slidev Gotchas
+
+- **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. If you must show a merge conflict in a code block, wrap the markers in a Vue template expression, e.g. `{{'<<<<<<< HEAD'}}`, inside a ```` ```text {*}{lines:false} ```` block.
+
+## Available Tooling
+
+- **Slidev reference skill**: a full Slidev documentation skill is installed at `.agents/skills/slidev/` (SKILL.md + `references/`). Consult it when authoring advanced slide features (Monaco, magic-move, layouts, etc.).
+
 ## Deployment
 
-GitHub Actions workflow (`.github/workflows/deploy.yml`) builds and deploys to GitHub Pages from the `ff2025` branch.
+GitHub Actions workflow (`.github/workflows/deploy.yml`) builds and deploys to GitHub Pages on pushes to the `bs2026` branch.

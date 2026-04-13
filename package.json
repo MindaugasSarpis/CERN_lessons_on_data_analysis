@@ -4,8 +4,14 @@
   "description": "Lecture slides for Lessons on Data Analysis from CERN",
   "scripts": {
     "dev": "slidev lectures/content/lessons_on_data_analysis_from_CERN.md",
+    "dev:staging": "slidev lectures/content/staging.md",
+    "dev:lecture": "slidev",
     "build": "slidev build lectures/content/lessons_on_data_analysis_from_CERN.md",
-    "export": "slidev export lectures/content/lessons_on_data_analysis_from_CERN.md"
+    "export": "slidev export lectures/content/lessons_on_data_analysis_from_CERN.md",
+    "videos:sync": "python3 scripts/videos.py sync",
+    "videos:encode": "python3 scripts/videos.py encode",
+    "videos:publish": "python3 scripts/videos.py publish",
+    "videos:check": "python3 scripts/videos.py check"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2",

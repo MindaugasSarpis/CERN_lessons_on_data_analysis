@@ -15,6 +15,11 @@ addons:
   - slidev-addon-python-runner
 mermaid: true
 
+# Lazy-mount imported slides — matters even more here since staging.md pulls
+# in every lecture. Big initial-load win; tiny mount cost on first visit.
+defaults:
+  preload: false
+
 ---
 
 # Dr. Mindaugas Šarpis
@@ -40,55 +45,51 @@ src: slides/L02_Introduction_to_CERN.md
 ---
 
 ---
-src: slides/L3_1_1_Crash_Course_on_Computer_Science.md
+src: slides/L03_1_1_Crash_Course_on_Computer_Science.md
 ---
 
 ---
-src: slides/L3_1_2_File_Handling_and_Directory_Structure.md
+src: slides/L03_1_2_File_Handling_and_Directory_Structure.md
 ---
 
 ---
-src: slides/L3_2_Command_Line.md
+src: slides/L03_2_Command_Line.md
 ---
 
 ---
-src: slides/L3_3_Markdown.md
+src: slides/L03_3_Markdown.md
 ---
 
 ---
-src: slides/L3_4_VS_Code.md
+src: slides/L03_4_VS_Code.md
 ---
 
 ---
-src: slides/L8_Version_Control.md
+src: slides/L08_Version_Control.md
 ---
 
 ---
-src: slides/L5_Crash_Course_on_Python_Programming.md
+src: slides/L05_Crash_Course_on_Python_Programming.md
 ---
 
 ---
-src: slides/L4_Computing_Infrastructure.md
+src: slides/L04_Computing_Infrastructure.md
 ---
 
 ---
-src: slides/L6_Concepts_of_Data_Analysis.md
+src: slides/L06_Concepts_of_Data_Analysis.md
 ---
 
 ---
-src: slides/L6_Concepts_of_Data_Analysis_Extended.md
+src: slides/L06_Concepts_of_Data_Analysis_Extended.md
 ---
 
 ---
-src: slides/L7_Data_Visualisation.md
+src: slides/L07_Data_Visualisation.md
 ---
 
 ---
-src: slides/L06_NumPy_Pandas_and_Visualization.md
----
-
----
-src: slides/L9_Probability_and_Statistics.md
+src: slides/L09_Probability_and_Statistics.md
 ---
 
 ---

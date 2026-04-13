@@ -114,7 +114,7 @@
   overflow: hidden;
   isolation: isolate;
   backdrop-filter: blur(8px);
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   transition:
     transform 220ms ease,
     box-shadow 220ms ease,
@@ -130,6 +130,7 @@
   opacity: 0.2;
   pointer-events: none;
   z-index: 0;
+  transition: opacity 360ms ease;
 }
 
 .card::after {
@@ -147,11 +148,25 @@
   z-index: 1;
 }
 
+/* Hover = brighter border + stronger inner sheen + shadow. No scale: scaling
+   a wide card with backdrop-filter stutters because the blur re-samples every
+   frame. Non-transform properties animate smoothly on the compositor. */
 .card:hover,
 .card:focus-within {
-  transform: translateY(-4px);
-  border-color: rgba(148, 163, 184, 0.55);
+  transform: translate3d(0, -3px, 0);
+  border-color: rgba(255, 255, 255, 0.85);
   box-shadow: var(--card-shadow-hover);
+}
+.card:hover::before,
+.card:focus-within::before {
+  opacity: 0.45;
+}
+/* Glass cards have box-shadow: none !important on their base rule, so re-enable
+   a soft glow on hover specifically for them. */
+.card-glass:hover,
+.card-glass:focus-within {
+  box-shadow: 0 10px 40px rgba(148, 163, 184, 0.25) !important;
+  border-left-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 .card-primary {
@@ -225,21 +240,14 @@
 .card-glass::after {
   display: none !important;
 }
-/* Fly-in animation for glass cards */
-.card-glass {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
+/* Fly-in animation for glass cards. Use the base .card transition (220ms)
+   so fly-in and hover share the same timing — glass cards now zoom on hover
+   like solid cards, via the .card:hover rule above. */
 .card-glass.slidev-vclick-hidden {
   transform: translateX(-80px) translateY(12px) scale(0.97);
   opacity: 0 !important;
   visibility: visible !important;
   pointer-events: none;
-}
-.card-glass:hover,
-.card-glass:focus-within {
-  transform: none;
-  box-shadow: none !important;
 }
 
 /* Inline code inside cards — ensure readable on dark backgrounds */
@@ -481,27 +489,3 @@
   margin-top: 1.5rem;
 }
 
-/* === Mobile performance: reduce GPU-heavy effects === */
-@media (max-width: 768px), (pointer: coarse) {
-  .card {
-    backdrop-filter: none;
-    box-shadow: var(--shadow-sm);
-  }
-  .card:hover,
-  .card:focus-within {
-    transform: none;
-    box-shadow: var(--shadow-sm);
-  }
-  .card::before { opacity: 0.1; }
-}
-
-/* Respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-  .card:hover,
-  .card:focus-within {
-    transform: none;
-  }
-}

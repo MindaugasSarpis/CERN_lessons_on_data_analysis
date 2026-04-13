@@ -15,6 +15,12 @@ addons:
   - slidev-addon-python-runner
 mermaid: true
 
+# Lazy-mount imported slides: don't eagerly build all 248 Vue components
+# up front. First visit to a given slide has a small mount cost; initial
+# load and steady-state navigation are much faster.
+defaults:
+  preload: false
+
 ---
 
 # Dr. Mindaugas Šarpis
@@ -39,29 +45,29 @@ src: slides/L02_Introduction_to_CERN.md
 ---
 
 ---
-src: slides/L3_2_Command_Line.md
+src: slides/L03_2_Command_Line.md
 ---
 
 ---
-src: slides/L3_1_1_Crash_Course_on_Computer_Science.md
+src: slides/L03_1_1_Crash_Course_on_Computer_Science.md
 ---
 
 ---
-src: slides/L3_1_2_File_Handling_and_Directory_Structure.md
+src: slides/L03_1_2_File_Handling_and_Directory_Structure.md
 ---
 
 ---
-src: slides/L3_4_VS_Code.md
+src: slides/L03_4_VS_Code.md
 ---
 
 ---
-src: slides/L3_3_Markdown.md
+src: slides/L03_3_Markdown.md
 ---
 
 ---
-src: slides/L8_Version_Control.md
+src: slides/L08_Version_Control.md
 ---
 
 ---
-src: slides/L5_Crash_Course_on_Python_Programming.md
+src: slides/L05_Crash_Course_on_Python_Programming.md
 ---

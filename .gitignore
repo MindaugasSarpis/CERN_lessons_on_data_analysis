@@ -11,6 +11,10 @@ __pycache__/
 .snakemake
 dist/
 lectures/content/public/videos/
+videos/raw/
+videos/web/
+lectures/workbook/site/
+.playwright-mcp/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
