@@ -40,12 +40,6 @@ used_in = ["L02"]
 notes   = "HEVC 5.2 Mbps, short cinematic clip"
 
 [[videos]]
-name    = "VU_VM_Zoom.mp4"
-profile = "remux"
-used_in = ["L02"]
-notes   = "VU / Vilnius zoom-in sequence, HEVC 3 Mbps"
-
-[[videos]]
 name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"
 profile = "remux"
 used_in = ["L02"]
