@@ -13,7 +13,7 @@ const props = defineProps({
   controls: { type: Boolean, default: true },
 })
 
-const localSrc = computed(() => `/videos/${props.src}`)
+const localSrc = computed(() => `${import.meta.env.BASE_URL || '/'}videos/${props.src}`)
 const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
 
 const videoRef = ref(null)
@@ -79,6 +79,9 @@ onMounted(() => {
   // Source error events don't bubble to <video> on iOS Safari.
   // Attach error listener directly on the <source> DOM element.
   sourceRef.value?.addEventListener('error', onError)
+  // The immediate watcher above may fire before refs are populated —
+  // re-run once refs exist so the initially-active slide actually loads.
+  syncPlayback()
 })
 </script>
 

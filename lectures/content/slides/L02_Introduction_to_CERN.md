@@ -35,6 +35,8 @@ hideInToc: true
 
 # What is **CERN**?
 
+<img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-12 h-64" />
+
 ---
 hideInToc: true
 ---
@@ -196,13 +198,6 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 </div>
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# A Journey Through **Scale**
 
 ---
 

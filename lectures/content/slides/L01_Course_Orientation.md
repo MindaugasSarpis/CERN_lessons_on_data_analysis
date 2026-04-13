@@ -24,13 +24,6 @@ layout: quote
 # The goal of this course is to build **intuition**, **competence**, and **confidence** in working with data — using the tools and practices of modern science
 
 ---
-layout: section
-hideInToc: true
----
-
-# Course **Structure**
-
----
 hideInToc: true
 ---
 
@@ -175,45 +168,13 @@ hideInToc: true
 
 # **Grading Structure**
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 3fr; gap: 0.75rem;" class="mt-md">
-
-<div class="card card-warning card-glass pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
-
-## 📝 **20%**
-
-Quiz 1 (Data Analysis)
-
-</div>
-
-<div class="card card-warning card-glass pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
-
-## 📝 **20%**
-
-Quiz 2 (AI)
-
-</div>
-
-<div class="card card-success card-glass pad-tight" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
-
-## 🎯 **60%**
-
-Final Project
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Grading Details**
-
 <div class="grid-3 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact">
 
-## 📝 **Quiz 1 (20%)**
+## 📝 **Quiz 1 — 20%**
+
+*Data Analysis*
 
 - Multiple choice, closed book
 - On eMokymai platform
@@ -224,18 +185,20 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact">
 
-## 📝 **Quiz 2 (20%)**
+## 📝 **Quiz 2 — 20%**
 
-- \* TBD by AI lecturer
+*AI*
+
 - Multiple choice, closed book
 - On eMokymai platform
 - Blitz Quiz format
+- Apr 16th, start of the day
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## 🎯 **Final Project (60%)**
+## 🎯 **Project — 60%**
 
 - Course-long project
 - Related to your field of study/work
@@ -292,7 +255,7 @@ hideInToc: true
 | Feb 21 | Data analysis and computing |
 | Feb 27 | Artificial Intelligence |
 | Feb 28 | Artificial Intelligence |
-| Apr 16 | Data analysis and computing |
+| **Apr 16** | **Quiz** and Data analysis and computing |
 | Apr 17 | Data analysis and computing |
 | **Apr 18** | **Final Project Presentations** |
 
@@ -429,13 +392,6 @@ Share with a neighbour:
 Every field generates data. The tools and mindset you'll build in this course apply far beyond particle physics.
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Getting **Started**
 
 ---
 hideInToc: true

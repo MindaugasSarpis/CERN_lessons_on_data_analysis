@@ -77,7 +77,10 @@
       "mcp__plugin_playwright_playwright__browser_hover",
       "mcp__plugin_playwright_playwright__browser_snapshot",
       "mcp__plugin_playwright_playwright__browser_close",
-      "Bash(grep -l \"yaml\" /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/misc/exams/*.py)"
+      "Bash(grep -l \"yaml\" /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/misc/exams/*.py)",
+      "Bash(cat /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/vite.config.*)",
+      "Bash(awk '{print $2}')",
+      "Bash(sort grep:*)"
     ],
     "deny": [],
     "ask": []
