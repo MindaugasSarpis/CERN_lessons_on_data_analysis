@@ -114,7 +114,7 @@ An interdisciplinary field combining statistics, scientific computing, visualisa
   max-height: 300px;
   opacity: 0.9;
   overflow: hidden;
-  font-size: 0.7em;
+  font-size: 0.82em;
   margin-top: 0.2rem;
   line-height: 1.3;
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -139,8 +139,6 @@ An interdisciplinary field combining statistics, scientific computing, visualisa
 ---
 hideInToc: true
 ---
-
-# Why Learn This Now?
 
 <div class="grid-2 mt-md gap-md">
 
@@ -429,55 +427,40 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Why data analysis matters **now**
+# Analysis bridges **data → decisions**
 
 <div class="grid-3 gap-md mt-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-tight">
 
-## 📈 **Data explosion**
+## 📈 **Raw data**
 
-Volume, velocity, variety rising everywhere
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🏆 **Evidence wins**
-
-Edge comes from data-driven decisions
+- Sensors, logs, experiments, surveys, the web
+- Volume, velocity, variety keep rising
+- Too much to read, too messy to trust
+- Value is locked inside noise
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-accent card-glass pad-tight">
 
-## 📜 **Regulation**
+## 🌉 **Analysis**
 
-Traceability, privacy, explainability
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🗣️ **Shared language**
-
-Aligns science, engineering, business
+- **Inspect** — what's really in the data?
+- **Clean** — fix errors, gaps, units
+- **Model** — find structure and patterns
+- **Explain** — communicate with uncertainty
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-secondary card-glass pad-tight">
 
-## 📖 **Data narratives**
+## 🎯 **Decisions**
 
-Audiences expect evidence-backed stories
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## ⚛️ **CERN angle**
-
-High-throughput, rigorous, reproducible
+- Publish a result, approve a treatment
+- Ship a product, set a policy
+- Every stakeholder now asks: *what does the data say?*
+- Without analysis, decisions are just opinion
 
 </div>
 
@@ -721,6 +704,25 @@ hideInToc: true
 
 </div>
 
+</div>
+
+---
+hideInToc: true
+---
+
+<div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 2.5rem; padding: 0 3rem 0 2rem;">
+  <div style="flex: 0 1 auto; max-width: 38%; font-size: 1.8em; line-height: 1.3; font-weight: 500; text-align: right;">
+    There are some things <br/><em style="opacity: 0.85;">no data model</em> <br/>can predict.
+  </div>
+  <div style="height: 88%; aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.45); border: 2px solid rgba(255,255,255,0.15); flex-shrink: 0;">
+    <iframe
+      src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1963960414998958&show_text=false"
+      style="width: 100%; height: 100%; border: 0; display: block;"
+      scrolling="no"
+      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
 </div>
 
 ---
@@ -1045,6 +1047,86 @@ hideInToc: true
   ]"
   :correct="2"
   explanation="The model uses historical features to estimate a future probability (readmission risk). That is predictive analytics. It does not yet recommend what to do about it — that would be prescriptive."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A dashboard shows last month's average energy consumption per building. What type of analytics is this?"
+  :options="[
+    'Descriptive — it summarises what happened',
+    'Diagnostic — it explains why consumption changed',
+    'Predictive — it forecasts next month',
+    'Prescriptive — it recommends how to save energy'
+  ]"
+  :correct="0"
+  explanation="Reporting past averages is the textbook example of descriptive analytics: what happened, without explanation, forecast, or recommendation."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="After sales dropped, an analyst segments customers and finds the decline is concentrated in one region tied to a price change. What type of analytics is this?"
+  :options="[
+    'Descriptive — it reports the drop',
+    'Diagnostic — it identifies the cause',
+    'Predictive — it forecasts further decline',
+    'Prescriptive — it fixes the pricing'
+  ]"
+  :correct="1"
+  explanation="The analyst is drilling into the data to explain *why* the drop occurred. That is diagnostic analytics — one step beyond descriptive, but short of forecasting or recommending action."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A logistics system suggests the optimal truck-routing plan each morning under current traffic and fuel prices. What type of analytics is this?"
+  :options="[
+    'Descriptive — it reports yesterday\'s routes',
+    'Diagnostic — it explains past delays',
+    'Predictive — it forecasts traffic',
+    'Prescriptive — it recommends the best action'
+  ]"
+  :correct="3"
+  explanation="The system goes past forecasting and actually recommends the action to take (the route). That is prescriptive analytics — it may use predictive models internally, but its output is a decision."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A team trains a model that forecasts equipment failure AND outputs the maintenance schedule that minimises downtime cost. Best classification?"
+  :options="[
+    'Purely predictive — it only estimates failure probability',
+    'Purely diagnostic — it explains failures',
+    'Prescriptive — the end product is an optimal action plan',
+    'Descriptive — it summarises failure history'
+  ]"
+  :correct="2"
+  explanation="Predictive analytics is a *component* here, but the deliverable is a recommended schedule optimising a cost objective. Whenever the output is an action or decision, the pipeline as a whole is prescriptive."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A researcher fits a causal model to estimate how a new teaching method would change exam scores if rolled out. Which label fits best, and why is it subtle?"
+  :options="[
+    'Descriptive — it uses historical exam data',
+    'Diagnostic — it explains past score variation',
+    'Predictive — it forecasts future scores',
+    'Prescriptive / causal — it estimates the effect of an intervention'
+  ]"
+  :correct="3"
+  explanation="A pure predictive model answers 'what score will I see?' under the status quo. A causal / interventional model answers 'what would happen if we changed something?' — the basis for prescriptive recommendations. The subtlety: both use historical data and both output numbers, but only the causal one supports decisions about actions."
 />
 
 ---
@@ -1379,47 +1461,169 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Missing-data mechanisms — **why** values are missing
+
+<span class="def-sub">The mechanism dictates which imputation and analysis methods are valid. **Test** MCAR · **assume** MAR · **reason about** MNAR.</span>
+
+<div class="miss-row mt-md">
+
+<div class="card card-success card-glass miss-card">
+
+## 🎲 **MCAR**
+
+<span class="def-sub">Missing Completely At Random</span>
+
+<div v-click="[1, 2]" class="miss-ex">
+
+Independent of everything — observed or not.
+
+- *Ex.:* flaky cable drops sensor readings
+- Dropping rows is **unbiased** (just weaker)
+- Testable (Little's test)
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass miss-card">
+
+## 📊 **MAR**
+
+<span class="def-sub">Missing At Random</span>
+
+<div v-click="[2, 3]" class="miss-ex">
+
+Depends on *observed* vars, not the missing value.
+
+- *Ex.:* men skip "weight" more; random given gender
+- Dropping rows is **biased**
+- Fix: multiple imputation on covariates
+- Assumed — justify it
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass miss-card">
+
+## 🚨 **MNAR**
+
+<span class="def-sub">Missing Not At Random</span>
+
+<div v-click="[3, 4]" class="miss-ex">
+
+Depends on the *unobserved* value itself.
+
+- *Ex.:* high earners hide income
+- **No fix from data alone**
+- Needs a missingness model or sensitivity analysis
+- Reason from domain knowledge
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+.miss-row {
+  display: flex;
+  gap: 0.9rem;
+  align-items: stretch;
+}
+.miss-card.card {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0.7rem 1rem !important;
+  overflow: hidden;
+  transition: flex-grow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.miss-card.card:has(.miss-ex:not(.slidev-vclick-hidden)) {
+  flex: 3 1 0;
+}
+.miss-card h2 {
+  font-size: 1.2em;
+  line-height: 1.15;
+  margin: 0;
+  white-space: nowrap;
+}
+.miss-ex {
+  max-height: 500px;
+  opacity: 0.95;
+  overflow: hidden;
+  font-size: 0.8em;
+  margin-top: 0.4rem;
+  line-height: 1.35;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              margin-top 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.miss-ex.slidev-vclick-hidden {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+.miss-ex ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
+.miss-ex li { margin: 0.1rem 0; }
+</style>
+
+---
+hideInToc: true
+---
+
 # Uncertainty and inference
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<span class="def-sub">🌡️ `22.3 °C` means nothing without `± 0.2 °C`. Every reported number deserves the same treatment.</span>
 
-<div class="note-text">
+<div class="grid-3 gap-sm mt-sm">
 
-🌡️ Recall the lab thermometer — `22.3 °C` is meaningless without `± 0.2 °C` and a calibration date. Every reported number deserves the same treatment.
+<div class="card card-primary card-glass pad-compact">
 
-</div>
+## 📊 **Report uncertainty**
 
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 Always report uncertainty: CIs, credible intervals, SEs
+CIs, credible intervals, SEs — never a bare point estimate.
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact">
 
-## ⚠️ Beware p-hacking (selectively analyzing data for significant results); **pre-register** your analysis plan when possible
+## ⚠️ **Guard against p-hacking**
 
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔢 Power matters: effect size, N, variance
+Pre-register the plan. Don't fish for significance.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🔗 Distinguish correlation from causation
+## 🔢 **Power matters**
+
+Effect size, N, variance — know what you can detect *before* testing.
 
 </div>
 
-<div class="card card-info card-glass pad-tight">
+<div class="card card-accent card-glass pad-compact">
 
-## 🧪 Sensitivity analyses: robustness to assumptions
+## 🔗 **Correlation ≠ causation**
+
+Association alone doesn't justify a causal claim.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🧪 **Sensitivity analyses**
+
+Perturb assumptions — does the conclusion survive?
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🎯 **Replicate**
+
+One result is a hint; many are evidence.
 
 </div>
 
@@ -1569,80 +1773,181 @@ A concise six-phase view — easy to remember day-to-day. Detailed sub-stages ne
 hideInToc: true
 ---
 
-# Zooming in — nine stages inside the six phases
+<div class="grid-3 gap-sm mt-sm stage-grid">
 
-<div class="note-text mt-sm">
+<details name="stage" class="card card-primary card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>🎯 Plan</strong> · Problem Framing</span>
+<span class="stage-sub">hypotheses & success metrics</span>
+</summary>
+<div class="stage-ex">
 
-Each phase decomposes into concrete stages you'll recognise from real projects.
+Translate a vague question into a precise one. Define the decision the analysis must support, the success metric, and what would falsify your hypothesis **before** touching data.
+
+</div>
+</details>
+
+<details name="stage" class="card card-secondary card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>🔍 Acquire</strong> · Data Discovery</span>
+<span class="stage-sub">access & quality assessment</span>
+</summary>
+<div class="stage-ex">
+
+Find sources, negotiate access, document provenance, and check coverage, freshness, and completeness against the question you framed.
+
+</div>
+</details>
+
+<details name="stage" class="card card-accent card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>🧹 Process</strong> · Preparation</span>
+<span class="stage-sub">cleaning, joining, features</span>
+</summary>
+<div class="stage-ex">
+
+Fix types, units, duplicates, missing values; join tables on stable keys; engineer features that encode domain knowledge. Usually the biggest chunk of work.
+
+</div>
+</details>
+
+<details name="stage" class="card card-info card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>📊 Analyse</strong> · Exploration</span>
+<span class="stage-sub">profiling, viz, sanity checks</span>
+</summary>
+<div class="stage-ex">
+
+Plot distributions, scan outliers, check expected relationships. Build intuition and catch data problems *before* modelling, not after.
+
+</div>
+</details>
+
+<details name="stage" class="card card-success card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>🧪 Analyse</strong> · Modeling</span>
+<span class="stage-sub">statistical tests & ML</span>
+</summary>
+<div class="stage-ex">
+
+Match the model to the question (descriptive / predictive / causal). Start simple; add complexity only when it earns its keep. Cross-validate honestly.
+
+</div>
+</details>
+
+<details name="stage" class="card card-warning card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>✅ Analyse</strong> · Evaluation</span>
+<span class="stage-sub">validation, uncertainty</span>
+</summary>
+<div class="stage-ex">
+
+Quantify uncertainty (CIs, bootstraps), run sensitivity analyses, compare against a baseline. A model that can't beat a trivial baseline isn't a finding.
+
+</div>
+</details>
+
+<details name="stage" class="card card-primary card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>📢 Share</strong> · Communication</span>
+<span class="stage-sub">narrative, visuals, decisions</span>
+</summary>
+<div class="stage-ex">
+
+Lead with the decision, not the method. Visuals carry the argument; technical detail goes in the appendix. Audience first, rigour always.
+
+</div>
+</details>
+
+<details name="stage" class="card card-secondary card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>⚙️ Share</strong> · Operationalisation</span>
+<span class="stage-sub">notebooks, scripts, pipelines</span>
+</summary>
+<div class="stage-ex">
+
+Turn a one-off into something reproducible: versioned code, pinned environments, scheduled pipelines. Future you must be able to re-run it.
+
+</div>
+</details>
+
+<details name="stage" class="card card-accent card-glass stage-card">
+<summary>
+<span class="stage-title"><strong>📡 Share</strong> · Monitoring</span>
+<span class="stage-sub">drift, quality, impact</span>
+</summary>
+<div class="stage-ex">
+
+Data and the world change. Watch for input drift, model decay, and whether the decisions the analysis informs actually produce the expected impact.
+
+</div>
+</details>
 
 </div>
 
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-### 🎯 **Plan → Problem Framing**
-Hypotheses & success metrics
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-### 🔍 **Acquire → Data Discovery**
-Access & quality assessment
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-### 🧹 **Process → Preparation**
-Cleaning, joining, feature selection
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-### 📊 **Analyse → Exploration**
-Profiling, visualization, sanity checks
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-### 🧪 **Analyse → Modeling**
-Statistical tests & machine learning
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-### ✅ **Analyse → Evaluation**
-Validation, uncertainty, sensitivity
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-### 📢 **Share → Communication**
-Narrative, visuals, decisions
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-### ⚙️ **Share → Operationalisation**
-Notebooks, scripts, pipelines
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-### 📡 **Share → Monitoring**
-Drift, quality, impact
-
-</div>
-
-</div>
+<style scoped>
+.stage-grid {
+  align-items: start;
+  grid-auto-rows: min-content;
+}
+.stage-grid .stage-card.card {
+  padding: 0.45rem 0.8rem !important;
+  font-size: 0.85em;
+  line-height: 1.3;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+}
+.stage-grid .stage-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  filter: brightness(1.08);
+}
+.stage-grid .stage-card > summary {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.stage-grid .stage-card > summary::-webkit-details-marker { display: none; }
+.stage-grid .stage-card > summary::after {
+  content: "▸";
+  font-size: 0.85em;
+  opacity: 0.7;
+  flex: 0 0 auto;
+  transition: transform 0.25s ease;
+  align-self: center;
+}
+.stage-grid .stage-card[open] > summary::after {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+.stage-grid .stage-card[open] {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.55), 0 8px 24px rgba(0,0,0,0.35);
+  transform: translateY(-2px);
+  z-index: 2;
+}
+.stage-grid .stage-title {
+  display: inline;
+  flex: 1 1 auto;
+}
+.stage-grid .stage-sub {
+  display: block;
+  flex: 1 0 100%;
+  font-size: 0.88em;
+  opacity: 0.7;
+  margin-top: 0.1rem;
+}
+.stage-grid .stage-ex {
+  font-size: 0.92em;
+  line-height: 1.35;
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+</style>
 
 ---
 hideInToc: true
@@ -1719,109 +2024,49 @@ hideInToc: true
 
 # Steps of Data **Analysis**
 
-The lifecycle phases zoomed into the practical "how"
-
 ---
 hideInToc: true
 ---
 
-# 1. **Define the Problem or Research Question**
+# 1. **Define** — turn a goal into an answerable question
 
-<div class="stack-tight mt-md">
+<div class="stack-tight dd-stack mt-md">
 
-<div class="card card-primary card-glass pad-tight">
+<details name="s1" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🎯 Name the <strong>decision</strong> the analysis must support</span></summary>
+<div class="dd-body">
 
-## 🎯 Formulate the question with stakeholders and context
-
-<div class="note-text">This steers the choices in every subsequent step</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📐 Translate goals into measurable metrics & hypotheses
+Who will act on the result, on what timeline, and what changes if the answer flips? An analysis with no downstream decision is a hobby, not work.
 
 </div>
+</details>
 
-<div class="card card-accent card-glass pad-tight">
+<details name="s1" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">📐 Make it <strong>SMART</strong> — specific, measurable, actionable, relevant, time-bound</span></summary>
+<div class="dd-body">
 
-## 🗺️ Map constraints: data access, time, ethics, skills
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🧪 Plan the experimental or observational design
+"Is it getting better?" → "Did mean API latency drop by ≥ 10% in Q1 vs Q4, for EU users?" A good question names the metric, the population, and the comparison.
 
 </div>
+</details>
+
+<details name="s1" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">🧪 Pre-commit to a success threshold, null hypothesis, stopping rule</span></summary>
+<div class="dd-body">
+
+Decide what "success" means *before* you see the data. Otherwise the threshold quietly slides to wherever the result happens to land — and you've written fiction.
 
 </div>
+</details>
 
-<div class="card card-success card-glass pad-tight mt-md">
+<details name="s1" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">⚠️ Feasibility check — can data that exists (or could exist) actually answer this?</span></summary>
+<div class="dd-body">
 
-<div class="note-text">
-
-#### 💡 Interactive exercise · Draft a SMART question for your project
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# 2. **Collect Data**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 How much? What sort?
-
-<div class="note-text">Volume, variety, formats — matched to the question</div>
+The most expensive mistake is solving the wrong problem faster. If the data to answer the question doesn't exist and can't be collected, reframe the question before writing a line of code.
 
 </div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔍 Can you trust the source?
-
-<div class="note-text">Provenance, reliability, known biases</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## ⚙️ Can you actually get it?
-
-<div class="note-text">Access, cost, feasibility before committing</div>
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-tight">
-
-## 📝 Permissions & consent
-
-<div class="note-text">Document licences, ethics approvals, provenance</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ Validate at ingestion
-
-<div class="note-text">Automated schema / range / freshness checks</div>
-
-</div>
-
-</div>
+</details>
 
 </div>
 
@@ -1829,53 +2074,54 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 3. **Clean Data**
+# 2. **Collect** — sourcing, not just downloading
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 gap-md dd-stack mt-md">
 
-<div class="stack-tight">
+<details name="s2" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🧭 Primary vs secondary · observational vs experimental</span></summary>
+<div class="dd-body">
 
-<div class="card card-primary card-glass pad-tight">
-
-## 🔍 **Data Selection**
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ✂️ **Data Stripping**
+Experimental data (you control the treatment) lets you claim *causation*. Observational data can usually only support *association*. Know which you have before you write the conclusion.
 
 </div>
+</details>
 
-<div class="card card-accent card-glass pad-tight">
+<details name="s2" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">🎲 Sampling strategy defines what you can generalise to</span></summary>
+<div class="dd-body">
 
-## 📊 **Data Skimming**
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-tight">
-
-## 🔧 **Data Wrangling**
+Random, stratified, cluster, convenience — each yields a different inference scope. A convenience sample of engineers doesn't tell you about all users, no matter how large.
 
 </div>
+</details>
 
-<div class="card card-warning card-glass pad-tight">
+<details name="s2" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">📜 Provenance — who produced it, when, how, under what licence</span></summary>
+<div class="dd-body">
 
-## ❓ Handle missing values, outliers, inconsistent categories
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📝 Record transformations for reproducibility
+A dataset without lineage is a liability, not an asset. Record source, retrieval date, version, licence, and any pre-processing done upstream before it reaches you.
 
 </div>
+</details>
+
+<details name="s2" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">✅ Validate at ingestion — schema, ranges, freshness, row counts</span></summary>
+<div class="dd-body">
+
+Catch breakage at the door, not three notebooks deep. A short contract (expected columns, dtypes, min/max, row-count bounds) that fails loudly saves hours of detective work later.
 
 </div>
+</details>
+
+<details name="s2" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">⚠️ Selection & survivorship bias enter <strong>here</strong></span></summary>
+<div class="dd-body">
+
+No cleaning step downstream can undo a biased sample. If the data-generating process systematically omits cases, your model inherits that blind spot — often invisibly.
+
+</div>
+</details>
 
 </div>
 
@@ -1883,53 +2129,109 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 4. **Analyse Data**
+# 3. **Clean** — usually 60–80% of the work
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 gap-md dd-stack mt-md">
 
-<div class="stack-tight">
+<details name="s3" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🔧 Structural fixes — types, units, encodings, duplicates, timezones</span></summary>
+<div class="dd-body">
 
-<div class="card card-primary card-glass pad-tight">
+Silent coercions are the enemy: `"NA"` parsed as a string, floats truncated to ints, timestamps silently shifted by a timezone. Assert your assumptions; don't trust the reader.
 
-## 🔍 **Data Exploration**
+</div>
+</details>
+
+<details name="s3" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">❓ Missing values — MCAR / MAR / MNAR → drop, impute, or flag</span></summary>
+<div class="dd-body">
+
+The *mechanism* dictates the treatment. Missing at random → imputation is usually fine. Missing because of the value itself (MNAR) → imputation can bias results; often better to flag and model explicitly.
+
+</div>
+</details>
+
+<details name="s3" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">🎯 Outliers — error or signal?</span></summary>
+<div class="dd-body">
+
+Never auto-delete. An outlier might be the most informative row in the table (a fraud case, a rare event, a sensor miscalibration). Investigate, then decide — and document the decision.
+
+</div>
+</details>
+
+<details name="s3" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">🔗 Joins — check key quality, cardinality, and orphan rows</span></summary>
+<div class="dd-body">
+
+A silent many-to-many join can inflate counts by 10×. Always verify expected cardinality (1:1, 1:N, N:1) and count orphans on both sides before and after joining.
+
+</div>
+</details>
+
+<details name="s3" class="dd-card card card-success card-glass">
+<summary><span class="dd-title">📝 Record every transformation — script it, don't click it</span></summary>
+<div class="dd-body">
+
+If a cleaning step only lives in your head (or in Excel history), it isn't reproducible. A versioned script is the only artefact that lets future-you — or anyone else — rerun the analysis.
+
+</div>
+</details>
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+---
+hideInToc: true
+---
 
-## 📊 **Statistical Analysis**
+# 4. **Analyse** — start simple, earn complexity
 
-</div>
+<div class="grid-2 gap-md dd-stack mt-md">
 
-<div class="card card-accent card-glass pad-tight">
+<details name="s4" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🔍 Exploratory Data Analysis (EDA) first — distributions, pairwise relationships, drift over time</span></summary>
+<div class="dd-body">
 
-## 🧪 **Model Building**
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-tight">
-
-## 🤖 **Machine Learning**
+Before any model: look. **Exploratory Data Analysis (EDA)** means profiling the data with summary stats and plots to build intuition and spot problems. Most "surprising" model results are data problems in disguise — a leaking feature, a timezone bug, a duplicated cohort. EDA catches these before they embarrass you.
 
 </div>
+</details>
 
-<div class="card card-warning card-glass pad-tight">
+<details name="s4" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">🎯 Match the method to the question</span></summary>
+<div class="dd-body">
 
-## 🧠 **Classification (...AI...)**
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📐 Evaluate assumptions, uncertainty, and sensitivity
+Descriptive, inferential, predictive, and causal questions each need different tools. A hypothesis test is not a forecast; a random-forest accuracy is not a causal effect. Pick the right family first.
 
 </div>
+</details>
+
+<details name="s4" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">📊 Always fit a <strong>baseline</strong> before anything clever</span></summary>
+<div class="dd-body">
+
+Mean, last-value, logistic regression. If a deep model can't beat a trivial baseline by a meaningful margin, it's not ready to ship — and the gap itself tells you where the signal actually lives.
 
 </div>
+</details>
+
+<details name="s4" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">📐 Quantify uncertainty — CIs, bootstraps, sensitivity runs</span></summary>
+<div class="dd-body">
+
+A point estimate without a range is half an answer. Report intervals, re-run under plausible perturbations of assumptions, and tell the reader how stable the conclusion is.
+
+</div>
+</details>
+
+<details name="s4" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">⚠️ Watch for leakage, p-hacking, overfitting</span></summary>
+<div class="dd-body">
+
+Leakage: future information sneaking into training. P-hacking: testing until something is "significant". Overfitting: memorising the training set. Hold-out sets, cross-validation, and pre-registered analyses are your defence.
+
+</div>
+</details>
 
 </div>
 
@@ -1937,7 +2239,7 @@ hideInToc: true
 
 <div class="note-text">
 
-#### Compare baseline vs advanced methods — a good scatter plot beats a bad neural network
+#### Rule of thumb · a good scatter plot beats a bad neural network
 
 </div>
 
@@ -1947,33 +2249,45 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 5. **Visualise the Data**
+# 5. **Visualise** — design for the decision, not the data
 
-<div class="stack-tight mt-md">
+<div class="stack-tight dd-stack mt-md">
 
-<div class="card card-primary card-glass pad-tight">
+<details name="s5" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">👥 Audience → 💬 Message → 🎨 Encoding (in that order)</span></summary>
+<div class="dd-body">
 
-## 👥 What's your target audience?
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 💬 What is the message you want to convey?
+Pick the chart last; it's a consequence of the first two choices. A chart built around "what does pandas plot by default?" is almost never the right one.
 
 </div>
+</details>
 
-<div class="card card-accent card-glass pad-tight">
+<details name="s5" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">1️⃣ One chart, one idea — annotate the takeaway on the figure</span></summary>
+<div class="dd-body">
 
-## 🎨 Choose encodings that emphasise the core insight
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## ✏️ Iterate quickly with sketches before polishing
+If the reader needs the caption to understand the point, redesign. Title as takeaway ("Latency dropped 14% after the rollout"), caption as why and how.
 
 </div>
+</details>
+
+<details name="s5" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">✂️ Remove everything that doesn't support the message</span></summary>
+<div class="dd-body">
+
+Truncated axes, rainbow palettes, 3D effects, excess gridlines, redundant legends — default to less. Honest design is usually minimal design.
+
+</div>
+</details>
+
+<details name="s5" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">♿ Accessibility — colour-safe, readable at projector resolution</span></summary>
+<div class="dd-body">
+
+Test in greyscale; test from the back row. Use colour-blind-safe palettes (viridis, Okabe-Ito), 14pt+ axis labels, and never rely on colour alone to encode meaning.
+
+</div>
+</details>
 
 </div>
 
@@ -1981,7 +2295,7 @@ hideInToc: true
 
 <div class="note-text">
 
-#### 📌 Visualisation principles are covered in the **Data Visualisation** lecture (L7); practical matplotlib skills come later
+#### 📌 Full treatment in **L7 Data Visualisation**; matplotlib practice comes in the workbook
 
 </div>
 
@@ -1991,97 +2305,54 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Visualisation principles (preview)
+# 6. **Interpret & Report** — land the decision
 
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md dd-stack mt-md">
 
-<div class="card card-primary card-glass pad-tight">
+<details name="s6" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🎯 Conclude honestly — no more than the data supports</span></summary>
+<div class="dd-body">
 
-## 🎨 Choose encodings that match the variable type
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📏 Show context: baselines, denominators, time windows
+State the finding, the effect size, and the uncertainty. Resist the temptation to round a nuanced result into a bold headline; overclaiming is how trust dies.
 
 </div>
+</details>
 
-<div class="card card-warning card-glass pad-tight">
+<details name="s6" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">🔗 Tie to decisions — findings → actions → risks</span></summary>
+<div class="dd-body">
 
-## ⚠️ Avoid deceit: truncated axes, cherry-picked ranges
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📊 Use small multiples for comparisons
+Every finding should end with "…therefore we should". Name the action, who owns it, and what could go wrong if the analysis is partially right or fully wrong.
 
 </div>
+</details>
 
-<div class="card card-success card-glass pad-tight">
+<details name="s6" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">❓ Name the limitations — prominently, not buried</span></summary>
+<div class="dd-body">
 
-## 📖 Tell the story: title as takeaway, caption as why
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# 6. **Interpret and Report**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🎯 **Conclude honestly**
-
-Draw conclusions the data support — no more, no less
+Sample scope, missing confounders, assumptions that could fail. Put them where the reader will see them; a caveat in the appendix doesn't count.
 
 </div>
+</details>
 
-<div class="card card-secondary card-glass pad-tight">
+<details name="s6" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">📏 Plan measurement — how will we know we were right?</span></summary>
+<div class="dd-body">
 
-## 🔗 **Tie to decisions**
-
-Connect findings to actions, risks, and next steps
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## ❓ **Name limitations**
-
-Capture caveats and open questions prominently
+Define the follow-up metric and cadence *before* the decision is made. "We'll review the launch impact on DAU at T+30 days against this baseline" — not "we'll see how it goes".
 
 </div>
+</details>
+
+<details name="s6" class="dd-card card card-success card-glass">
+<summary><span class="dd-title">📦 Package for reuse — others must be able to rerun tomorrow</span></summary>
+<div class="dd-body">
+
+Versioned code, pinned environment, seeded randomness, a README naming inputs and outputs. Reproducibility is the minimum bar; reuse is the bonus.
 
 </div>
-
-<div class="stack-tight">
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📏 **Plan measurement**
-
-How will outcomes be tracked after the decision?
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📦 **Package for reuse**
-
-Code, dashboards, docs others can run tomorrow
-
-</div>
-
-</div>
+</details>
 
 </div>
 
@@ -2091,55 +2362,52 @@ hideInToc: true
 
 # Communication artefacts — pick the right one
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 gap-md dd-stack mt-md">
 
-<div class="stack-tight">
+<details name="artefact" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">📄 Executive summary</span></summary>
+<div class="dd-body">
 
-<div class="card card-primary card-glass pad-tight">
-
-## 📄 **Executive summary**
-
-One-pager for busy stakeholders
+One page for busy stakeholders: the question, the answer, the confidence, the recommended action. No methods, no caveats-by-weight — just the decision they need to make.
 
 </div>
+</details>
 
-<div class="card card-secondary card-glass pad-tight">
+<details name="artefact" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">📋 Decision memo</span></summary>
+<div class="dd-body">
 
-## 📋 **Decision memo**
-
-Options, trade-offs, recommendation
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📊 **Dashboard**
-
-Ongoing monitoring & self-service
+Options considered, trade-offs, recommendation. Written for a reader who must *choose*, not just be informed. Structure: context → options → recommendation → risks.
 
 </div>
+</details>
+
+<details name="artefact" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">📊 Dashboard</span></summary>
+<div class="dd-body">
+
+For ongoing monitoring and self-service. Works when the question repeats and the metric is stable. Bad fit for one-off decisions — a dashboard built for a single question becomes stale on day two.
 
 </div>
+</details>
 
-<div class="stack-tight">
+<details name="artefact" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">📓 Reproducible notebook</span></summary>
+<div class="dd-body">
 
-<div class="card card-info card-glass pad-tight">
-
-## 📓 **Reproducible notebook**
-
-End-to-end analysis for peers
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🔬 **Technical appendix**
-
-Methods, assumptions, audit trail
+End-to-end analysis for peers who will read, re-run, and critique the work. Narrative + code + output interleaved. The right artefact when the *how* matters as much as the *what*.
 
 </div>
+</details>
+
+<details name="artefact" class="dd-card card card-success card-glass">
+<summary><span class="dd-title">🔬 Technical appendix</span></summary>
+<div class="dd-body">
+
+Methods, assumptions, derivations, audit trail. Attached to a summary or memo, read by the few who need to verify. It's where nuance lives without cluttering the headline.
 
 </div>
+</details>
 
 </div>
 
@@ -2166,39 +2434,111 @@ hideInToc: true
 
 # Modern analytics stack
 
-<div class="stack-tight mt-md">
+<div class="stack-loop mt-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="pipe-step card card-primary card-glass">
+<div class="pipe-head">📡 <strong>1. Sources</strong></div>
+<div class="pipe-sub">where the raw data originates</div>
+<ul class="pipe-list">
+<li>sensors & instruments</li>
+<li>web / app APIs</li>
+<li>operational databases</li>
+<li>files & uploads</li>
+<li>experiments, surveys</li>
+</ul>
+</div>
 
-## 📡 **Data sources** — sensors, APIs, files, databases, experiments
+<div class="pipe-step card card-secondary card-glass">
+<div class="pipe-head">📥 <strong>2. Ingestion</strong></div>
+<div class="pipe-sub">move, schedule, validate</div>
+<ul class="pipe-list">
+<li>ETL / ELT pipelines</li>
+<li>streaming (Kafka, Kinesis)</li>
+<li>batch schedulers (Airflow)</li>
+<li>schema & freshness checks</li>
+</ul>
+</div>
+
+<div class="pipe-step card card-accent card-glass">
+<div class="pipe-head">💾 <strong>3. Storage</strong></div>
+<div class="pipe-sub">durable, queryable, governed</div>
+<ul class="pipe-list">
+<li>data lakes (S3, GCS)</li>
+<li>warehouses (BigQuery, Snowflake)</li>
+<li>feature stores</li>
+<li>lineage & access control</li>
+</ul>
+</div>
+
+<div class="pipe-step card card-info card-glass">
+<div class="pipe-head">💻 <strong>4. Compute</strong></div>
+<div class="pipe-sub">where analysis actually runs</div>
+<ul class="pipe-list">
+<li>notebooks & scripts</li>
+<li>SQL engines</li>
+<li>distributed clusters (Spark)</li>
+<li>cloud / HPC jobs</li>
+</ul>
+</div>
+
+<div class="pipe-step card card-success card-glass">
+<div class="pipe-head">📢 <strong>5. Delivery</strong></div>
+<div class="pipe-sub">results in decision-makers' hands</div>
+<ul class="pipe-list">
+<li>dashboards (Grafana, Superset)</li>
+<li>reports & memos</li>
+<li>APIs & embedded models</li>
+<li>alerts & notifications</li>
+</ul>
+</div>
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
-
-## 📥 **Ingestion** — ETL/ELT tools, streaming pipelines, notebooks
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💾 **Storage** — data lakes, warehouses, object stores, feature stores
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 💻 **Compute** — notebooks, scripts, distributed clusters, cloud services
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📢 **Delivery** — dashboards, apps, reports, APIs, alerts
-
-</div>
-
-</div>
+<style scoped>
+.stack-loop {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.stack-loop .pipe-step {
+  padding: 0.7rem 0.9rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-height: 8rem;
+}
+.stack-loop .pipe-head {
+  font-size: 1.05em;
+  line-height: 1.2;
+  text-align: center;
+}
+.stack-loop .pipe-sub {
+  font-size: 0.78em;
+  opacity: 0.75;
+  line-height: 1.3;
+  text-align: center;
+  font-style: italic;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 0.4rem;
+}
+.stack-loop .pipe-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.82em;
+  line-height: 1.45;
+  opacity: 0.92;
+}
+.stack-loop .pipe-list li { margin: 0.12rem 0; }
+.loop-back {
+  text-align: center;
+  margin-top: 0.9rem;
+  font-size: 0.88em;
+  opacity: 0.75;
+  letter-spacing: 0.02em;
+}
+.loop-back em { font-style: italic; }
+</style>
 
 ---
 hideInToc: true
@@ -2627,63 +2967,61 @@ hideInToc: true
 
 # Hygiene & reproducibility habits
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 gap-md dd-stack mt-md">
 
-<div class="stack-tight">
+<details name="hygiene" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🔄 Source-control everything</span></summary>
+<div class="dd-body">
 
-<div class="card card-primary card-glass pad-tight">
-
-## 🔄 **Source control everything**
-
-Code, SQL, data definitions, transformations
+Code, SQL, data definitions, transformations, configs — all in git. If it drives a result, it lives under version control; otherwise silent edits quietly invalidate past analyses.
 
 </div>
+</details>
 
-<div class="card card-secondary card-glass pad-tight">
+<details name="hygiene" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">📁 Clear structure & naming conventions</span></summary>
+<div class="dd-body">
 
-## 📁 **Clear structure & naming**
-
-Conventions beat creativity for future-you
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🧹 **Housekeeping**
-
-Archive, deprecate, document as you go
+`raw/`, `interim/`, `processed/`, `reports/`; dated, snake_case filenames; one project per repo. Conventions beat creativity — future-you wants predictability, not cleverness.
 
 </div>
+</details>
+
+<details name="hygiene" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">🧹 Housekeeping as you go</span></summary>
+<div class="dd-body">
+
+Archive dead branches, deprecate unused scripts, update READMEs in the same PR as the change. Debt compounds; a five-minute cleanup today saves an hour of confusion next quarter.
 
 </div>
+</details>
 
-<div class="stack-tight">
+<details name="hygiene" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">📦 Record the environment</span></summary>
+<div class="dd-body">
 
-<div class="card card-info card-glass pad-tight">
-
-## 📦 **Record the environment**
-
-`env.yaml`, containers, lockfiles
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🎲 **Seeds, hashes, snapshots**
-
-Same inputs + same code → same results
+`env.yaml`, `requirements.txt` with pinned versions, lockfiles, or a container. "Works on my machine" is not reproducible — the exact library versions are part of the result.
 
 </div>
+</details>
 
-<div class="card card-warning card-glass pad-tight">
+<details name="hygiene" class="dd-card card card-success card-glass">
+<summary><span class="dd-title">🎲 Seeds, hashes, snapshots</span></summary>
+<div class="dd-body">
 
-## ⚙️ **Automate critical paths**
-
-Makefile / CI so rebuilds are one command
+Fix the random seed, hash input files, snapshot the dataset version. Same inputs + same code → same results — not "almost the same results with a different train/test split".
 
 </div>
+</details>
+
+<details name="hygiene" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">⚙️ Automate the critical path</span></summary>
+<div class="dd-body">
+
+A `Makefile`, `make.py`, or CI job that rebuilds the whole analysis with one command. If the steps live only in your memory and terminal history, they'll break silently the first time anyone else tries.
 
 </div>
+</details>
 
 </div>
 
@@ -2703,79 +3041,79 @@ hideInToc: true
 
 # Ethics, governance & accountability
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 gap-md dd-stack mt-md">
 
-<div class="stack-tight">
+<details name="ethics" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🛡️ Minimise harm — privacy, consent, security by design</span></summary>
+<div class="dd-body">
 
-<div class="card card-primary card-glass pad-tight">
-
-## 🛡️ **Minimise harm**
-
-Privacy, consent, security by design
+Collect the minimum you need, anonymise where possible, encrypt at rest and in transit. Ask "could this dataset hurt someone if it leaked?" — if yes, treat it accordingly from day one.
 
 </div>
+</details>
 
-<div class="card card-secondary card-glass pad-tight">
+<details name="ethics" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">⚖️ Fairness — monitor for disparate impact across groups</span></summary>
+<div class="dd-body">
 
-## ⚖️ **Fairness**
-
-Monitor for disparate impact across groups
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔍 **Transparency**
-
-Methods, assumptions, limitations — visible
+A model can be accurate overall and still systematically wrong for a subgroup. Slice key metrics by demographic, geography, or cohort and watch the gaps, not just the averages.
 
 </div>
+</details>
 
-<div class="card card-success card-glass pad-tight">
+<details name="ethics" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">🔍 Transparency — methods, assumptions, limitations visible</span></summary>
+<div class="dd-body">
 
-## 🌍 **Sustainability**
-
-Account for compute & environmental cost
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-tight">
-
-## 👤 **Accountability**
-
-Named owners, escalation paths, stewardship
+Publish what you did, what you assumed, and what you don't know. A result that can't be inspected can't be trusted — and won't be, once it matters.
 
 </div>
+</details>
 
-<div class="card card-warning card-glass pad-tight">
+<details name="ethics" class="dd-card card card-success card-glass">
+<summary><span class="dd-title">🌍 Sustainability — compute and environmental cost</span></summary>
+<div class="dd-body">
 
-## 📜 **Compliance frameworks**
-
-GDPR, HIPAA, CERN policies — know which apply
-
-</div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🚨 **Incident response**
-
-Plans for breaches and quality failures
+Large models and always-on pipelines carry real energy and carbon costs. Scale effort to the question: a 10-hour GPU run to answer something a SQL query could solve is a design failure, not a feature.
 
 </div>
+</details>
 
-<div class="card card-secondary card-glass pad-tight">
+<details name="ethics" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">👤 Accountability — named owners, escalation paths</span></summary>
+<div class="dd-body">
 
-## 📚 **Training & audits**
-
-Keep teams and practices aligned over time
+Every dataset, model, and dashboard should have a human owner. Anonymous artefacts rot: no one notices when they break, and no one is responsible when they mislead.
 
 </div>
+</details>
+
+<details name="ethics" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">📜 Compliance frameworks — know which apply</span></summary>
+<div class="dd-body">
+
+GDPR (EU personal data), HIPAA (US health), CERN data-classification policies, institutional ethics approvals. Don't discover the rule after you've broken it — check at project kickoff.
 
 </div>
+</details>
+
+<details name="ethics" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🚨 Incident response — breaches and quality failures</span></summary>
+<div class="dd-body">
+
+Have a written plan: who is notified, how results are withdrawn or corrected, how affected users are informed. Designing this in calm is vastly easier than improvising in crisis.
+
+</div>
+</details>
+
+<details name="ethics" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">📚 Training & audits — keep practices aligned over time</span></summary>
+<div class="dd-body">
+
+Periodic reviews of access, models in production, and privacy controls. Good practices decay silently; regular audits surface drift before it becomes a headline.
+
+</div>
+</details>
 
 </div>
 

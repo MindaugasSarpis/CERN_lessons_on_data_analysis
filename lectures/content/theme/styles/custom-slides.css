@@ -489,3 +489,61 @@
   margin-top: 1.5rem;
 }
 
+/* Reusable dropdown-card pattern:
+   wrap <details class="dd-card card card-X card-glass"> inside a
+   container with .dd-stack (plus optional grid-2 / grid-3 / stack-tight).
+   Only the opened card grows; row-mates stay collapsed. */
+.dd-stack {
+  align-items: start;
+  grid-auto-rows: min-content;
+}
+.dd-stack .dd-card.card {
+  padding: 0.5rem 0.9rem !important;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+}
+.dd-stack .dd-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.08);
+}
+.dd-stack .dd-card > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.dd-stack .dd-card > summary::-webkit-details-marker { display: none; }
+.dd-stack .dd-card > summary::after {
+  content: "▸";
+  font-size: 0.9em;
+  opacity: 0.7;
+  flex: 0 0 auto;
+  transition: transform 0.25s ease;
+}
+.dd-stack .dd-card[open] > summary::after {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+.dd-stack .dd-card[open] {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55), 0 8px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+  z-index: 2;
+}
+.dd-stack .dd-title {
+  flex: 1 1 auto;
+  font-weight: 600;
+  font-size: 1.05em;
+  line-height: 1.25;
+}
+.dd-stack .dd-body {
+  font-size: 0.92em;
+  line-height: 1.4;
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  opacity: 0.9;
+}
+
