@@ -514,6 +514,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  min-height: 2.8rem;
 }
 .dd-stack .dd-card > summary::-webkit-details-marker { display: none; }
 .dd-stack .dd-card > summary::after {
@@ -546,4 +547,71 @@
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   opacity: 0.9;
 }
+
+/* ============================================
+   CARD TYPOGRAPHY - default, consistent across deck
+   Cards shouldn't render headings at the global
+   slide h2 scale — it crowds grids. Keep headings
+   readable but compact; body text slightly smaller.
+   Opt-out by restyling within a local <style>.
+   ============================================ */
+.card h2 {
+  font-size: 1rem;
+  line-height: 1.25;
+  margin: 0;
+}
+.card p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0.3rem 0 0;
+}
+.card h2 + p,
+.card h2 + ul,
+.card h2 + ol {
+  margin-top: 0.35rem;
+}
+
+/* Legacy `tidy-cards` class kept as an extra-compact
+   variant for dense grids (uses slightly smaller sizes
+   than the default). */
+.tidy-cards .card {
+  padding: 0.55rem 0.9rem !important;
+}
+.tidy-cards .card h2 {
+  font-size: 0.92rem;
+}
+.tidy-cards .card p {
+  font-size: 0.78rem;
+}
+
+/* ============================================
+   MISSING-DATA MECHANISMS - expanding card row
+   Used on the MCAR / MAR / MNAR slide. The active
+   card (with visible .miss-ex body) grows wider;
+   inactive cards collapse to the heading only.
+   ============================================ */
+.miss-row {
+  display: flex;
+  gap: 0.9rem;
+  align-items: stretch;
+}
+.miss-card.card {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0.7rem 1rem !important;
+}
+.miss-card h2 {
+  font-size: 1.2em;
+  line-height: 1.15;
+  margin: 0;
+}
+.miss-card p { font-size: 0.8em; margin: 0.2rem 0 0; }
+.miss-ex {
+  font-size: 0.8em;
+  margin-top: 0.4rem;
+  line-height: 1.35;
+}
+.miss-ex p { margin: 0; font-size: inherit; }
+.miss-ex ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
+.miss-ex li { margin: 0.1rem 0; }
 

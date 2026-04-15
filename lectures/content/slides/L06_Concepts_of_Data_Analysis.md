@@ -172,6 +172,50 @@ We build the mental model: data types, quality, the analysis lifecycle, FAIR pri
 hideInToc: true
 ---
 
+# One principle above all · **Decisions first**
+
+<span class="def-sub">Every technique in this lecture is in service of this single idea. Keep it in mind as each concept lands.</span>
+
+<div class="grid-2 gap-md mt-md tidy-cards">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎯 **Start from the decision, not the data**
+
+Who will act on the result? On what timeline? What changes if the answer flips? If no one acts, it is not analysis — it is decoration.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **Define success before you touch a row**
+
+Pick the metric, the threshold, and the acceptance criterion up front. Otherwise every plot looks interesting and none is conclusive.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Without a decision, rigour is theatre**
+
+Quality checks, FAIR, reproducibility — they matter *because* a decision depends on the output. Strip the decision and the discipline collapses.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🔁 **Re-ask at every step**
+
+"What decision am I supporting?" is the single best prompt against scope creep, p-hacking, and lost weekends of modelling for its own sake.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 <div style="display: flex; flex-direction: column; gap: 0.4rem; height: 100%; justify-content: center;">
 
 <div class="card card-primary card-glass anim-card" v-click="1">
@@ -1130,6 +1174,66 @@ hideInToc: true
 />
 
 ---
+hideInToc: true
+---
+
+# Miniature end-to-end · **Do students prefer coffee A or B?**
+
+<span class="def-sub">Before we dive into concepts, here is the entire arc in one toy example — so every slide that follows has a concrete thing to hang on.</span>
+
+<div class="grid-3 gap-md mt-md tidy-cards">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **Define**
+
+*"Should the café stock A or B?"* — decision: which beans to order next month. Metric: preference rate. Threshold: call a winner if the gap > 10 pp.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **Collect**
+
+Blind taste test, 100 volunteers, randomised cup order. Log preference + year-of-study as covariate.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 3️⃣ **Explore**
+
+Tabulate counts: 65 prefer A, 35 prefer B. Sanity check: no year-of-study bias; no dropouts.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 4️⃣ **Model**
+
+Binomial test on 65/100 vs 50/50 null. *p* ≈ 0.003. 95 % CI for A's preference: 55–74 %.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 5️⃣ **Communicate**
+
+*"A wins 65 % vs 35 %, CI 55–74 %. Gap exceeds threshold — order A."* One sentence, one number, one decision.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 6️⃣ **What could still go wrong?**
+
+Sample of 100 ≠ all students. Taste may vary by time of day. Next iteration: repeat across shifts before locking in.
+
+</div>
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -1142,39 +1246,142 @@ hideInToc: true
 
 # Data comes in many shapes
 
-<div class="stack-tight mt-md">
+<span class="def-sub">The *shape* of your data decides which tools, file formats, and mental models apply. Pick the wrong shape and every later step fights you. Click a card to expand.</span>
 
-<div class="card card-primary card-glass pad-tight">
+<div class="grid-2 gap-sm dd-stack shapes-stack mt-md">
 
-## 📊 **Tabular** — rows × columns (experiments, business metrics)
+<details name="shapes" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">📊 <strong>Tabular</strong> — rows × columns</span></summary>
+<div class="dd-body">
+
+**Each row is an observation, each column a variable.** The workhorse shape: experimental results, business metrics, surveys, most CSVs you will ever meet.
+
+- *Typical formats:* CSV, TSV, Parquet, Feather, SQL tables, Excel sheets, pandas / Polars / R dataframes
+- *Ecosystem:* SQL, pandas, Polars, DuckDB, Arrow; dashboards (Tableau, Looker, Metabase); almost every ML library ingests a 2-D array
+- *Strengths:* joins, group-by aggregations, vectorised maths, columnar compression, decades of battle-tested tooling
+- *Variable types:* numeric (int, float), categorical, ordinal, boolean, datetime, text — each needs its own cleaning strategy
+- *Gotchas:* mixed units across rows; columns silently changing type on import; `NaN` vs empty string vs `"NA"`; wide-vs-long confusion; silent integer overflow in aggregations
+- *Wide vs long:* wide = one row per subject, many measurement columns; long = one row per measurement. Plotting and modelling usually want long; reporting usually wants wide
+- *CERN example:* per-event summary tables with columns like `event_id`, `energy_gev`, `pt`, `eta`, `phi`, `trigger_flag` — one file per run, millions of rows
+
+</div>
+</details>
+
+<details name="shapes" class="dd-card card card-secondary card-glass">
+<summary><span class="dd-title">🌳 <strong>Hierarchical</strong> — nested trees</span></summary>
+<div class="dd-body">
+
+**Records contain sub-records, sometimes recursively.** One event has many tracks; one patient has many visits, each with many measurements, each with many lab values.
+
+- *Typical formats:* JSON, XML, YAML, HDF5 groups, ROOT TTrees / RNTuples, Protobuf messages, Avro
+- *Ecosystem:* jq and XPath for querying; uproot / awkward-array for ROOT in Python; HDF5 for scientific blobs; document databases (MongoDB, Couchbase)
+- *Strengths:* faithful to real-world structure; schema can evolve per branch; variable-length arrays are first-class; self-describing (schema lives with data)
+- *Variable-length vs fixed:* a key distinction — an event with *N* tracks (where *N* varies) cannot be flattened to a rectangular table without either repetition or loss
+- *Gotchas:* hard to flatten without data loss; joins become awkward; deep nesting kills readability; schema evolution is a minefield when older consumers read newer data
+- *Access patterns:* selective branch reads (ROOT, Parquet nested columns) let you touch only the fields you need — critical at petabyte scale
+- *CERN example:* a ROOT event record holding variable-length arrays of tracks, each track carrying `pt`, `eta`, `phi`, `hits[]`, plus event-level metadata (run, lumi, vertices)
+
+</div>
+</details>
+
+<details name="shapes" class="dd-card card card-accent card-glass">
+<summary><span class="dd-title">🕸️ <strong>Graph</strong> — nodes and edges</span></summary>
+<div class="dd-body">
+
+**The relationships *are* the data.** A table of "who follows whom" loses the structure the moment you query it; a graph keeps paths, cycles, and neighbourhoods first-class.
+
+- *Typical formats:* edge lists (CSV), GraphML, Neo4j, RDF/SPARQL
+- *Strengths:* shortest-path, centrality, community detection, provenance chains
+- *Gotchas:* no single canonical layout; visualisations mislead at scale
+- *CERN example:* detector-geometry dependency graphs; collaboration/author networks
+
+</div>
+</details>
+
+<details name="shapes" class="dd-card card card-info card-glass">
+<summary><span class="dd-title">🗺️ <strong>Spatial & temporal</strong> — coordinates and time</span></summary>
+<div class="dd-body">
+
+**Order and proximity matter.** Shuffling rows in a tabular dataset is fine; shuffling time stamps destroys the signal.
+
+- *Typical formats:* GeoJSON, Shapefile, NetCDF, Parquet partitioned by date, event streams (Kafka)
+- *Strengths:* windowing, rolling stats, spatial joins, trajectory analysis
+- *Gotchas:* timezones, daylight saving, coordinate reference systems, irregular sampling
+- *CERN example:* beam-intensity time series; detector-hit spatial coordinates
+
+</div>
+</details>
+
+<details name="shapes" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">🖼️ <strong>Multimedia</strong> — images, audio, waveforms</span></summary>
+<div class="dd-body">
+
+**Dense, high-dimensional signals.** A 4 K image is three million numbers; a 1 s waveform can be hundreds of thousands. Analysis usually means *feature extraction* first.
+
+- *Typical formats:* PNG/JPEG, WAV/FLAC, MP4, raw tensors, HDF5
+- *Strengths:* convolutional models, signal processing, transfer learning from pretrained nets
+- *Gotchas:* storage costs, labelling effort, leakage through metadata (EXIF, filename patterns)
+- *CERN example:* calorimeter "images" for jet classification; detector scan videos
+
+</div>
+</details>
+
+<details name="shapes" class="dd-card card card-success card-glass">
+<summary><span class="dd-title">📝 <strong>Text</strong> — free-form language</span></summary>
+<div class="dd-body">
+
+**Unstructured on the surface, richly structured inside** (tokens, syntax, semantics). Often mixed with tabular metadata (author, timestamp).
+
+- *Typical formats:* plain text, Markdown, PDF, HTML, log files
+- *Strengths:* embeddings, topic models, entity extraction, RAG pipelines
+- *Gotchas:* encoding issues, boilerplate, deduplication, PII leakage
+- *CERN example:* elog entries; beam operator run comments; detector alarm logs
+
+</div>
+</details>
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-## 🌳 **Hierarchical** — JSON/XML, nested logs, documents
+## 💡 **Choose the shape, then the tool**
 
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🕸️ **Graph** — networks, relationships, supply chains
+Many datasets *can* be coerced into a table, but not always *should* be. Forcing a graph into rows loses the relationships; flattening a ROOT TTree into a DataFrame loses the per-event structure. **Match the shape to the question.**
 
 </div>
 
-<div class="card card-info card-glass pad-tight">
-
-## 🗺️ **Spatial & temporal** — GIS layers, time series, event streams
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🖼️ **Multimedia** — images, audio, video, sensor waveforms
-
-</div>
-
-</div>
+<style scoped>
+.shapes-stack { position: relative; }
+.shapes-stack .dd-card { position: relative; }
+.shapes-stack .dd-card[open] { z-index: 20; }
+.shapes-stack .dd-card[open] > .dd-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 0.35rem;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(140deg, rgba(2,6,23,0.97), rgba(15,23,42,0.95));
+  border: 1px solid rgba(148,163,184,0.45);
+  border-radius: 0.6rem;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+  font-size: 0.82em;
+  line-height: 1.35;
+  backdrop-filter: blur(8px);
+}
+.shapes-stack .dd-card:nth-last-child(-n+2)[open] > .dd-body {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+  max-height: 200px;
+}
+.shapes-stack .dd-body ul { margin: 0.3rem 0 0; padding-left: 1.1rem; }
+.shapes-stack .dd-body li { margin: 0.15rem 0; }
+.shapes-stack .dd-title { font-size: 0.95em; }
+</style>
 
 ---
 hideInToc: true
@@ -1341,7 +1548,9 @@ hideInToc: true
 
 # Data quality checklist
 
-<div class="grid-2 gap-md mt-md">
+<span class="def-sub">You know *what* data looks like. Now: can you trust it? Every downstream decision rests on that answer — start by auditing these eight dimensions.</span>
+
+<div class="grid-2 gap-md mt-md tidy-cards">
 
 <div class="stack-tight">
 
@@ -1421,9 +1630,61 @@ hideInToc: true
 hideInToc: true
 ---
 
+# What the checklist catches · **a cautionary tale**
+
+<span class="def-sub">A published clinical trial reported a new drug as **safe and effective**. Three years later, a re-audit found it wasn't. Each gap below maps back to a checklist dimension.</span>
+
+<div class="grid-2 gap-md mt-md tidy-cards">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❓ **Completeness missed**
+
+~20 % of adverse-event reports were filed in a secondary system that was never joined to the primary table. The visible dataset looked clean.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔗 **Consistency missed**
+
+Two sites logged dosage in mg, one in mg/kg. The unit column was dropped during an "obvious" cleanup step upstream.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📐 **Validity missed**
+
+A handful of implausible lab values (negative blood pressure) were silently clipped to zero rather than flagged for review.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔄 **Lineage missed**
+
+The cleaning steps lived in a one-off notebook. When a reviewer asked "why were these rows excluded?", no one could answer.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+## 💡 **The lesson**
+
+No single failure was exotic. Each one is on the checklist we just reviewed. **Data quality is not a vibe — it is a list you run.**
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Common data issues & biases
 
-<div class="stack-tight mt-md">
+<div class="stack-tight mt-md tidy-cards">
 
 <div class="card card-warning card-glass pad-tight">
 
@@ -1473,7 +1734,7 @@ hideInToc: true
 
 <span class="def-sub">Missing Completely At Random</span>
 
-<div v-click="[1, 2]" class="miss-ex">
+<div class="miss-ex">
 
 Independent of everything — observed or not.
 
@@ -1491,7 +1752,7 @@ Independent of everything — observed or not.
 
 <span class="def-sub">Missing At Random</span>
 
-<div v-click="[2, 3]" class="miss-ex">
+<div class="miss-ex">
 
 Depends on *observed* vars, not the missing value.
 
@@ -1510,7 +1771,7 @@ Depends on *observed* vars, not the missing value.
 
 <span class="def-sub">Missing Not At Random</span>
 
-<div v-click="[3, 4]" class="miss-ex">
+<div class="miss-ex">
 
 Depends on the *unobserved* value itself.
 
@@ -1525,50 +1786,6 @@ Depends on the *unobserved* value itself.
 
 </div>
 
-<style>
-.miss-row {
-  display: flex;
-  gap: 0.9rem;
-  align-items: stretch;
-}
-.miss-card.card {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 0.7rem 1rem !important;
-  overflow: hidden;
-  transition: flex-grow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.miss-card.card:has(.miss-ex:not(.slidev-vclick-hidden)) {
-  flex: 3 1 0;
-}
-.miss-card h2 {
-  font-size: 1.2em;
-  line-height: 1.15;
-  margin: 0;
-  white-space: nowrap;
-}
-.miss-ex {
-  max-height: 500px;
-  opacity: 0.95;
-  overflow: hidden;
-  font-size: 0.8em;
-  margin-top: 0.4rem;
-  line-height: 1.35;
-  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              margin-top 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.miss-ex.slidev-vclick-hidden {
-  max-height: 0 !important;
-  opacity: 0 !important;
-  margin-top: 0 !important;
-  visibility: visible !important;
-  pointer-events: none;
-}
-.miss-ex ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
-.miss-ex li { margin: 0.1rem 0; }
-</style>
-
 ---
 hideInToc: true
 ---
@@ -1577,7 +1794,7 @@ hideInToc: true
 
 <span class="def-sub">🌡️ `22.3 °C` means nothing without `± 0.2 °C`. Every reported number deserves the same treatment.</span>
 
-<div class="grid-3 gap-sm mt-sm">
+<div class="grid-3 gap-sm mt-sm tidy-cards">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -1650,7 +1867,7 @@ hideInToc: true
 
 # Exercise · Audit your data sources
 
-<div class="stack-tight mt-md">
+<div class="stack-tight mt-md tidy-cards">
 
 <div class="card card-primary card-glass pad-tight">
 
@@ -2018,6 +2235,66 @@ hideInToc: true
 </div>
 
 ---
+hideInToc: true
+---
+
+# Where each phase tends to **break**
+
+<span class="def-sub">Every phase has a signature failure mode. Name them now, before we zoom into the analytical steps — that way, each later concept slots into the phase it protects.</span>
+
+<div class="grid-3 gap-md mt-md tidy-cards">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📋 **Plan**
+
+**Risk:** wrong question. Fluent answer to a question no one asked. *Symptom:* no clear decision downstream.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📥 **Acquire**
+
+**Risk:** sampling & selection bias. *Symptom:* the sample silently excludes the people your conclusion is about.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🗄️ **Store**
+
+**Risk:** silent schema drift. *Symptom:* a column changes meaning mid-pipeline and no one notices for months.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🛠️ **Process**
+
+**Risk:** data leakage. *Symptom:* information from the test set sneaks into training via scaling, joins, or time-travel bugs.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📊 **Analyse**
+
+**Risks:** overfitting & p-hacking. *Symptoms:* perfect training accuracy; the "significant" finding vanishes on replication.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📢 **Share**
+
+**Risk:** misinterpretation. *Symptom:* a confidence interval becomes a headline number; caveats disappear downstream.
+
+</div>
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -2029,6 +2306,8 @@ hideInToc: true
 ---
 
 # 1. **Define** — turn a goal into an answerable question
+
+<span class="def-sub">The lifecycle named six phases. Now we zoom into the analytical core — the loop that turns a raw dataset into an answered question — in six actionable steps.</span>
 
 <div class="stack-tight dd-stack mt-md">
 
@@ -2235,16 +2514,6 @@ Leakage: future information sneaking into training. P-hacking: testing until som
 
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
-
-<div class="note-text">
-
-#### Rule of thumb · a good scatter plot beats a bad neural network
-
-</div>
-
-</div>
-
 ---
 hideInToc: true
 ---
@@ -2418,6 +2687,58 @@ Methods, assumptions, derivations, audit trail. Attached to a summary or memo, r
 #### 💡 Match the artefact to the **audience** and the **decision horizon** — not to what's easiest to produce
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Flavours × Steps · **which step produces which insight**
+
+<span class="def-sub">The four analytics flavours aren't independent paths — they are what the same six-step loop *yields* when the Define step points at a different kind of decision.</span>
+
+<div class="grid-2 gap-md mt-md tidy-cards">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📊 **Descriptive** — "what happened?"
+
+The work lives in **Explore** (summary stats, plots) and **Communicate** (dashboards). Modelling is minimal. *Output:* a faithful rear-view mirror.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **Diagnostic** — "why did it happen?"
+
+Most of the effort goes into **Explore** (segmentation, cohort comparison) and **Model** (regression on drivers). *Output:* named contributors to the outcome.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔮 **Predictive** — "what happens next?"
+
+Quality hinges on **Collect** (the right features, honest splits) and **Model** (out-of-sample validation). *Output:* a forecast with an uncertainty band — never a single number.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🎛️ **Prescriptive / causal** — "what should we do?"
+
+The decisive steps are **Define** (intervention + counterfactual) and **Model** (causal identification). *Output:* an action with an expected effect size.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+## 💡 **The takeaway**
+
+Same six steps, four different centres of gravity. "What kind of analysis is this?" is really asking "**which step is doing the work?**"
 
 </div>
 
@@ -3231,6 +3552,66 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Interoperability · **what breaks it vs. what fixes it**
+
+<span class="def-sub">"I just shared the CSV" is not interoperability. The machine — and the next analyst — still needs to know what every column means and in what units.</span>
+
+<div class="grid-2 gap-md mt-md tidy-cards">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Proprietary format**
+
+`.xlsx` with merged cells, macros, embedded plots. Only opens cleanly in one tool, parses poorly everywhere else.
+
+**Fix:** CSV / Parquet / HDF5 — open, typed, streamable.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Missing units**
+
+A column `mass` with values `[72, 68, 75]`. Kilograms? Pounds? Per event? No one can tell.
+
+**Fix:** units in the column name (`mass_kg`) or a sidecar schema file.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Undocumented codes**
+
+`status` column with values `{1, 2, 3, 9}` and no legend. The meaning lives in someone's head.
+
+**Fix:** a README mapping each code + a controlled vocabulary (ICD, MeSH, PDG, …).
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Opaque timestamps**
+
+`ts = 1712937600` — seconds? milliseconds? Which timezone? From when?
+
+**Fix:** ISO 8601 strings with explicit offset (`2024-04-12T14:00:00+02:00`).
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+## 💡 **Rule of thumb**
+
+A dataset is interoperable when a stranger, with no access to you, can correctly merge it with their own data **without guessing.**
+
+</div>
+
+---
+hideInToc: true
+---
+
 # **Reusable** data
 
 <div class="stack-tight mt-md">
@@ -3383,6 +3764,8 @@ hideInToc: true
 ---
 
 # Context
+
+<span class="def-sub">FAIR is a principle until someone actually ships a dataset under it. CERN's Open Data portal is that proof: a petabyte-scale demonstration that every concept in this lecture works at real-world scale.</span>
 
 <div class="card card-primary card-glass pad-tight mt-md">
 
@@ -3706,7 +4089,7 @@ Remember the lab thermometer — a single reading (`22.3 °C`) travelled all the
 
 </div>
 
-<div class="grid-3 gap-md mt-md">
+<div class="grid-3 gap-md mt-md tidy-cards">
 
 <div class="card card-primary card-glass pad-compact">
 
