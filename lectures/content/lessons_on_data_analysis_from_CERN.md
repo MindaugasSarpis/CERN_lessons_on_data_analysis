@@ -71,3 +71,7 @@ src: slides/L08_Version_Control.md
 ---
 src: slides/L05_Crash_Course_on_Python_Programming.md
 ---
+
+---
+src: slides/L06_Concepts_of_Data_Analysis.md
+---
