@@ -26,7 +26,7 @@ hideInToc: true
 layout: quote
 ---
 
-# In science, we never measure the *true* value—we collect **samples**, estimate **parameters**, and quantify **uncertainty**. Probability gives us the language; statistics gives us the tools.
+# In science, we never measure the *true* value — we collect **samples**, estimate **parameters**, and quantify **uncertainty**. Probability gives us the language; statistics gives us the tools.
 
 ---
 hideInToc: true
@@ -171,29 +171,55 @@ hideInToc: true
 hideInToc: true
 ---
 
-```mermaid {scale: 0.9}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 45}}}%%
-flowchart TD
-    Exp["🎲 Experiment<br/><b>Roll a die</b>"]:::hub
-    Exp --> SS["🌐 Sample Space Ω<br/><i>{1, 2, 3, 4, 5, 6}</i>"]:::category
+# Sample Space & Events · **Roll a die**
 
-    SS --> E1["📊 Event A: Even<br/>{2, 4, 6}<br/>P(A) = 1/2"]:::event
-    SS --> E2["📈 Event B: > 4<br/>{5, 6}<br/>P(B) = 1/3"]:::event
-    SS --> E3["🎯 Intersection A∩B<br/>{6}<br/>P(A∩B) = 1/6"]:::intersection
-    SS --> E4["➕ Union A∪B<br/>{2, 4, 5, 6}<br/>P(A∪B) = 2/3"]:::union
+<div class="card card-info card-glass pad-tight mt-sm">
 
-    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:3px,color:#f8fafc,rx:16px,ry:16px
-    classDef category fill:#133661,stroke:#5eead4,stroke-width:2.5px,color:#e2e8f0,rx:14px,ry:14px
-    classDef event fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px
-    classDef intersection fill:#155e75,stroke:#34d399,stroke-width:2px,color:#d1fae5,rx:12px,ry:12px
-    classDef union fill:#1e3a5f,stroke:#fbbf24,stroke-width:2px,color:#fef3c7,rx:12px,ry:12px
-```
+## 🎲 **Experiment** → Sample space $\Omega = \{1, 2, 3, 4, 5, 6\}$
 
-<div class="card card-info card-glass pad-tight mermaid-note">
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📊 **Event A — Even**
+
+$A = \{2, 4, 6\}$ • $P(A) = \tfrac{1}{2}$
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📈 **Event B — Greater than 4**
+
+$B = \{5, 6\}$ • $P(B) = \tfrac{1}{3}$
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🎯 **Intersection $A \cap B$**
+
+$\{6\}$ • $P(A \cap B) = \tfrac{1}{6}$
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ➕ **Union $A \cup B$**
+
+$\{2, 4, 5, 6\}$ • $P(A \cup B) = \tfrac{2}{3}$
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
 
 <div class="note-text">
 
-**Key:** Sample space Ω contains all outcomes • Events are subsets • Intersection (∩) = both occur • Union (∪) = at least one occurs
+**Key:** Sample space Ω contains all outcomes • events are subsets • ∩ = both occur • ∪ = at least one occurs
 
 </div>
 
@@ -441,26 +467,45 @@ hideInToc: true
 
 # Conditional Probability Visualization
 
-```mermaid {scale: 0.9}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 45, 'rankSpacing': 50}}}%%
-flowchart LR
-    Start["🌐 Sample Space Ω"]:::hub
-    Start --> Condition["🔍 Given: B occurs"]:::process
-    Condition --> NewSpace["📦 Reduced space: B"]:::category
-    NewSpace --> Question["❓ Check A ∩ B"]:::process
-    Question --> Answer["🎯 P(A|B) = P(A∩B)/P(B)"]:::result
+<div class="stack-tight mt-md">
 
-    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2.5px,color:#f8fafc,rx:14px,ry:14px
-    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
-    classDef category fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
-    classDef result fill:#155e75,stroke:#5eead4,stroke-width:2.5px,color:#e0f2fe,rx:14px,ry:14px
-```
+<div class="card card-primary card-glass pad-tight">
 
-<div class="card card-info card-glass pad-tight mermaid-note">
+## 🌐 **1. Start** — sample space $\Omega$
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔍 **2. Given** — event $B$ occurs
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📦 **3. Restrict** — reduced sample space is $B$
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## ❓ **4. Check** — find $A \cap B$ inside the restricted space
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 🎯 **5. Compute** — $P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
 
 <div class="note-text">
 
-**Flow:** Start with Ω → Given B occurs → Restrict to B → Find A∩B → Calculate ratio P(A∩B)/P(B)
+**Flow:** Start with Ω → given $B$ → restrict to $B$ → find $A \cap B$ → divide by $P(B)$
 
 </div>
 
@@ -653,45 +698,41 @@ hideInToc: true
 
 # Visualizing the Medical Test
 
-```mermaid {scale: .725}
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0f1f3d',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'secondaryColor': '#102b4c',
-  'tertiaryColor': '#0ea5e9',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 45, 'rankSpacing': 60}}%%
-flowchart TB
-    Pop["👥 Population<br/><span class='text-sm'>10,000 people</span>"]:::hub
-    Pop --> Disease["🦠 Disease<br/><span class='mono-strong'>1% → 100</span>"]:::branch
-    Pop --> Healthy["💪 No disease<br/><span class='mono-strong'>99% → 9,900</span>"]:::branch
+<div class="card card-info card-glass pad-compact mt-sm">
 
-    Disease --> TP["Test +<br/>TP: 95"]:::positive
-    Disease --> FN["Test -<br/>FN: 5"]:::negative
-
-    Healthy --> FP["Test +<br/>FP: 990"]:::alert
-    Healthy --> TN["Test -<br/>TN: 8,910"]:::positive
-
-    TP --> TotalPos["Total positives<br/><span class='mono-strong'>95 + 990 = 1,085</span>"]:::summary
-    FP --> TotalPos
-
-    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
-    classDef branch fill:#132f5d,stroke:#38bdf8,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-    classDef positive fill:#0f4c81,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
-    classDef alert fill:#b45309,stroke:#ffb74d,stroke-width:2px,color:#fff7ed,rx:12px,ry:12px;
-    classDef negative fill:#8b2f39,stroke:#f87171,stroke-width:2px,color:#fee2e2,rx:12px,ry:12px;
-    classDef summary fill:#10223f,stroke:#fbbf24,stroke-width:2px,color:#fde68a,rx:16px,ry:16px;
-```
-
-<div class="card card-info card-glass pad-tight mermaid-note">
-
-<div class="note-text">
-
-Total positive: 95 + 990 = **1,085** • **P(Disease | +) = 95/1,085 = 8.8%** • False positives dominate when disease is rare
+## 👥 **Population: 10,000** — Disease prevalence **1%** → 100 diseased, 9,900 healthy
 
 </div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🦠 **Diseased** — 100 people
+
+- ✅ **True positive (TP):** 95
+- ❌ **False negative (FN):** 5
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 💪 **Healthy** — 9,900 people
+
+- ⚠️ **False positive (FP):** 990
+- ✅ **True negative (TN):** 8,910
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-tight mt-md">
+
+## 📊 **Total positives: $95 + 990 = 1{,}085$**
+
+$$P(\text{Disease} \mid +) = \frac{95}{1{,}085} \approx \textbf{8.8\%}$$
+
+False positives dominate when disease is rare.
 
 </div>
 
@@ -753,35 +794,35 @@ hideInToc: true
 
 # Types of Random Variables
 
-```mermaid {scale: 0.9}
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0f1f3d',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'secondaryColor': '#102b4c',
-  'tertiaryColor': '#143860',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 45, 'rankSpacing': 55}}}%%
-flowchart TB
-    RV["🎲 Random variable X<br/><span class='text-sm'>Maps outcomes → numbers</span>"]:::hub
-    RV --> Disc["🔢 Discrete<br/><i>countable outcomes</i>"]:::category
-    RV --> Cont["📈 Continuous<br/><i>real-valued range</i>"]:::category
+<div class="card card-info card-glass pad-tight mt-sm">
 
-    Disc --> PMF["PMF<br/>P(X = x)"]:::detail
-    Disc --> DiscSupport["Support<br/><span class='text-sm'>0, 1, 2, ...</span>"]:::support
-    PMF --> DiscEx["Examples<br/><span class='text-sm'>dice · Bernoulli · counts</span>"]:::example
+## 🎲 **Random variable $X$** — maps outcomes $\omega \in \Omega$ to real numbers
 
-    Cont --> PDF["PDF<br/>f(x)"]:::detail
-    Cont --> ContSupport["Support<br/><span class='text-sm'>intervals</span>"]:::support
-    PDF --> ContEx["Examples<br/><span class='text-sm'>time · energy · lengths</span>"]:::example
+</div>
 
-    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:14px,ry:14px;
-    classDef category fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-    classDef detail fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-    classDef support fill:#0f2b4c,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
-    classDef example fill:#1d3a64,stroke:#38bdf8,stroke-width:1.5px,color:#e2e8f0,rx:12px,ry:12px;
-```
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔢 **Discrete** — countable outcomes
+
+- **PMF:** $P(X = x)$
+- **Support:** $\{0, 1, 2, \ldots\}$
+- **Examples:** dice · Bernoulli · counts
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📈 **Continuous** — real-valued range
+
+- **PDF:** $f(x)$
+- **Support:** intervals of $\mathbb{R}$
+- **Examples:** time · energy · lengths
+
+</div>
+
+</div>
 
 
 ---
@@ -1225,34 +1266,35 @@ hideInToc: true
 
 # Distribution Overview
 
-```mermaid {scale: 0.9}
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0f1f3d',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'secondaryColor': '#102b4c',
-  'tertiaryColor': '#143860',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
-flowchart TB
-    Root["Probability distributions"]:::hub
-    Root --> Disc["Discrete<br/>countable"]:::category
-    Root --> Cont["Continuous<br/>real-valued"]:::category
+<div class="card card-info card-glass pad-tight mt-sm">
 
-    Disc --> Bern["Bernoulli<br/>P(X=1)=p"]:::discrete
-    Disc --> Binom["Binomial<br/>n trials"]:::discrete
-    Disc --> Pois["Poisson<br/>rare events"]:::discrete
+## 🎲 **Probability distributions** — how values of a random variable are distributed
 
-    Cont --> Unif["Uniform<br/>[a,b]"]:::continuous
-    Cont --> Exp["Exponential<br/>wait time"]:::continuous
-    Cont --> Norm["Normal<br/>μ, σ"]:::continuous
+</div>
 
-    classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:14px,ry:14px;
-    classDef category fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-    classDef discrete fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
-    classDef continuous fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
-```
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔢 **Discrete** — countable outcomes
+
+- **Bernoulli** — $P(X=1) = p$
+- **Binomial** — $n$ independent trials
+- **Poisson** — rare events per interval
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📈 **Continuous** — real-valued range
+
+- **Uniform** — flat on $[a, b]$
+- **Exponential** — wait times
+- **Normal** — $\mu, \sigma$
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1789,39 +1831,51 @@ hideInToc: true
 
 # Data Fitting Workflow
 
-```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0f1f3d',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'secondaryColor': '#102b4c',
-  'tertiaryColor': '#143860',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 28, 'rankSpacing': 32}}%%
-flowchart LR
-    Data["Data<br/>(xᵢ, yᵢ)"]:::input --> Model["Model<br/>y = f(x; θ) + ε"]:::process
-    Model --> Method{"Method?"}:::decision
-    Method --> LS["Least sq"]:::option
-    Method --> MLE["MLE"]:::option
-    Method --> Chi["χ²"]:::option
+<div class="stack-tight mt-md">
 
-    LS --> Fit
-    MLE --> Fit
-    Chi --> Fit
-    Fit["Fit<br/>θ̂"]:::process --> Uncertainty["Uncertainty<br/>SEs, CIs"]:::process
-    Uncertainty --> Diagnostics["Diagnostics<br/>χ², residuals"]:::process
-    Diagnostics --> Decision{"Good?"}:::decision
-    Decision -->|Yes| Report["Report<br/>θ̂ ± error"]:::output
-    Decision -->|No| Model
-    Report --> Predict["Predict<br/>f(x_new; θ̂)"]:::output
+<div class="card card-primary card-glass pad-tight">
 
-    classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-    classDef decision fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:14px,ry:14px;
-    classDef option fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:10px,ry:10px;
-    classDef output fill:#1c3d5a,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
-```
+## 📥 **1. Data** — observations $(x_i, y_i)$
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📐 **2. Model** — $y = f(x; \theta) + \varepsilon$
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🎯 **3. Method** — least squares · MLE · $\chi^2$
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## ✨ **4. Fit** — estimate parameters $\hat{\theta}$
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 📏 **5. Uncertainty** — standard errors, confidence intervals
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🔍 **6. Diagnose** — $\chi^2$, residuals, goodness-of-fit
+
+</div>
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔁 **7. Report or revisit** — bad fit → return to step 2 • good fit → report $\hat{\theta} \pm \text{error}$ and predict $f(x_{\text{new}}; \hat{\theta})$
+
+</div>
+
+</div>
 
 ---
 hideInToc: true

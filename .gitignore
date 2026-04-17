@@ -16,6 +16,11 @@ videos/web/
 lectures/workbook/site/
 .playwright-mcp/
 
+# cwilke figure outputs — regeneratable from the scripts in cwilke/chapters/.
+# The .py scripts are the source of truth; only SVGs actually referenced by
+# slides are committed under lectures/content/public/figures/.
+misc/python/cwilke/figs/
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

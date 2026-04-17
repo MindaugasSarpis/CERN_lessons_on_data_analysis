@@ -569,13 +569,6 @@ Earned via transparency, reproducibility, storytelling
 </div>
 
 ---
-layout: section
-hideInToc: true
----
-
-# Data Analysis in the **Wild** — examples across fields
-
----
 hideInToc: true
 ---
 
@@ -592,7 +585,11 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-md">
 
+<div class="note-text">
+
 #### 🧪 **23andMe** or **Ancestry.com**? Comparing against *reference populations*
+
+</div>
 
 </div>
 
@@ -901,13 +898,6 @@ hideInToc: true
 </div>
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Four **Flavours** of Analytics
 
 ---
 hideInToc: true
@@ -1234,13 +1224,6 @@ Sample of 100 ≠ all students. Taste may vary by time of day. Next iteration: r
 </div>
 
 ---
-layout: section
-hideInToc: true
----
-
-# Data **Fundamentals**
-
----
 hideInToc: true
 ---
 
@@ -1534,13 +1517,6 @@ hideInToc: true
 </div>
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Data **Quality** & Uncertainty
 
 ---
 hideInToc: true
@@ -1860,75 +1836,6 @@ hideInToc: true
   :correct="1"
   explanation="With almost as many parameters as data points, the model is memorising the training data rather than learning patterns. This is classic overfitting — it will likely perform poorly on new data. Always evaluate on a held-out test set."
 />
-
----
-hideInToc: true
----
-
-# Exercise · Audit your data sources
-
-<div class="stack-tight mt-md tidy-cards">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📋 Pick one dataset you rely on
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔬 Classify type, granularity, measurement levels, quality risks
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📝 Note missing metadata you would need before analysis
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Data **Lifecycle** & Workflow
-
----
-hideInToc: true
----
-
-# Thought Exercise — Your Data World
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🤔 **Think** (1 min)
-
-Pick a project, hobby, or job you know well. What data gets generated there? Who uses it, and for what decisions?
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 💬 **Discuss** (3 min)
-
-Share with a neighbour: What is one decision that could be improved if the data were better collected, stored, or analysed?
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🎯 **Goal**
-
-Connect the abstract lifecycle ideas to your own experience before we see the full framework.
-
-</div>
 
 ---
 hideInToc: true
@@ -2560,15 +2467,6 @@ Test in greyscale; test from the back row. Use colour-blind-safe palettes (virid
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md">
-
-<div class="note-text">
-
-#### 📌 Full treatment in **L7 Data Visualisation**; matplotlib practice comes in the workbook
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -3083,7 +2981,11 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-### 💡 **Tip** — mix surface-level ease with depth and reproducibility
+<div class="note-text">
+
+#### 💡 **Tip** — mix surface-level ease with depth and reproducibility
+
+</div>
 
 </div>
 
@@ -3502,13 +3404,13 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight">
 
-### 📖 **A1.1** The protocol is **open**, free, and universally implementable
+## 📖 **A1.1** The protocol is **open**, free, and universally implementable
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
-### 🔐 **A1.2** The protocol allows for **authentication** and **authorisation** where necessary
+## 🔐 **A1.2** The protocol allows for **authentication** and **authorisation** where necessary
 
 </div>
 
@@ -3624,19 +3526,19 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight">
 
-### 📜 **R1.1.** (Meta)data are released with a clear and **accessible** data usage **license**
+## 📜 **R1.1.** (Meta)data are released with a clear and **accessible** data usage **license**
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
-### 🔗 **R1.2.** (Meta)data are associated with detailed **provenance**
+## 🔗 **R1.2.** (Meta)data are associated with detailed **provenance**
 
 </div>
 
 <div class="card card-info card-glass pad-tight">
 
-### 🏛️ **R1.3.** (Meta)data meet **domain-relevant community standards**
+## 🏛️ **R1.3.** (Meta)data meet **domain-relevant community standards**
 
 </div>
 

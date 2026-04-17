@@ -83,7 +83,21 @@
       "Bash(sort grep:*)",
       "Bash(/usr/bin/xmllint --noout git_flow.svg)",
       "Bash(grep -c '^---$' /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/lectures/content/slides/L06_Concepts_of_Data_Analysis.md)",
-      "Bash(/usr/bin/xmllint --noout /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/lectures/content/public/figures/data_types.svg)"
+      "Bash(/usr/bin/xmllint --noout /Users/mindaugas/Work/teaching/CERN_lessons_on_data_analysis/lectures/content/public/figures/data_types.svg)",
+      "Bash(grep *)",
+      "Bash(pnpm dev:staging *)",
+      "Bash(awk *)",
+      "Bash(conda env *)",
+      "Read(//Users/mindaugas/miniconda3/envs/**)",
+      "Bash(/Users/mindaugas/miniconda3/envs/lecture/bin/python -c \"import matplotlib, numpy, pandas, scipy, seaborn; print\\('mpl:', matplotlib.__version__, 'sns:', seaborn.__version__\\)\")",
+      "Bash(/Users/mindaugas/miniconda3/envs/lecture/bin/python *)",
+      "Bash(/Users/mindaugas/miniconda3/envs/analysis/bin/python -c \"import matplotlib, numpy, pandas, scipy, seaborn; print\\('mpl:', matplotlib.__version__, 'np:', numpy.__version__, 'pd:', pandas.__version__, 'sp:', scipy.__version__, 'sns:', seaborn.__version__\\)\")",
+      "Bash(/Users/mindaugas/miniconda3/envs/analysis/bin/python *)",
+      "Bash(touch __init__.py chapters/__init__.py)",
+      "Bash(touch __TRACKED_VAR__/__init__.py)",
+      "Bash(set -e)",
+      "Bash(cp lectures/content/slides/L07_Data_Visualisation.md /tmp/L07_backup.md)",
+      "Read(//tmp/**)"
     ],
     "deny": [],
     "ask": []
