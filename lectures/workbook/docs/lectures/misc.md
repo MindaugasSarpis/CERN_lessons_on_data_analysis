@@ -20,3 +20,5 @@ for f in *viz*; do
   mv -- "$f" "${f//viz/vis}"
 done
 ```
+
+https://platform.leolabs.space/visualizations/leo
