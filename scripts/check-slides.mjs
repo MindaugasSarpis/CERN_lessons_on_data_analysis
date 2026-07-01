@@ -134,7 +134,10 @@ async function runShard(shard) {
       // specify a stylesheet override, so set inline styles — inline !important
       // beats any stylesheet !important regardless of specificity.
       await page.evaluate(() => {
-        for (const el of document.querySelectorAll('.slidev-vclick-hidden, .reveal-left, .reveal-up, .reveal-scale, .reveal-blur')) {
+        // Also reveal mount-gated content wrappers (section/cover fade in on a
+        // setTimeout after mount; a fast screenshot would otherwise catch them
+        // at opacity 0 → blank slide).
+        for (const el of document.querySelectorAll('.slidev-vclick-hidden, .reveal-left, .reveal-up, .reveal-scale, .reveal-blur, .section-body, .cover-content')) {
           el.style.setProperty('opacity', '1', 'important');
           el.style.setProperty('visibility', 'visible', 'important');
           el.style.setProperty('transform', 'none', 'important');
