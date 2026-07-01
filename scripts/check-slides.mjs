@@ -72,9 +72,15 @@ const base = `http://127.0.0.1:${port}`;
 const NEUTRALIZE = `
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .aurora, .vol-light, .cover-bg, .cover-accent, .section-accent { display: none !important; }
+  /* Force the fully-revealed end-state: v-click/reveal content is otherwise
+     hidden at click-index 0, so screenshots would miss it and overflow would
+     be measured pre-reveal. Showing all of it makes screenshots faithful and
+     overflow worst-case (fits in every click state → fits, period). */
   .slidev-vclick-hidden, .reveal-left, .reveal-up, .reveal-scale, .reveal-blur {
-    transform: none !important; filter: none !important; visibility: visible !important;
-  }`;
+    transform: none !important; filter: none !important;
+    visibility: visible !important; opacity: 1 !important;
+  }
+  .anim-ex.slidev-vclick-hidden { max-height: none !important; }`;
 
 if (SHOTS) await mkdir(SHOTS, { recursive: true });
 const browser = await chromium.launch();
@@ -122,7 +128,21 @@ async function runShard(shard) {
       return { oy: el.scrollHeight - el.clientHeight, ox: el.scrollWidth - el.clientWidth,
                title: (h ? h.textContent : '').trim().slice(0, 60) };
     }, n);
-    if (SHOTS) await page.screenshot({ path: join(SHOTS, `slide-${String(n).padStart(3, '0')}.png`) });
+    if (SHOTS) {
+      // Force the revealed end-state for the screenshot. Some theme rules
+      // (e.g. `.card-glass.slidev-vclick-hidden{opacity:0!important}`) out-
+      // specify a stylesheet override, so set inline styles — inline !important
+      // beats any stylesheet !important regardless of specificity.
+      await page.evaluate(() => {
+        for (const el of document.querySelectorAll('.slidev-vclick-hidden, .reveal-left, .reveal-up, .reveal-scale, .reveal-blur')) {
+          el.style.setProperty('opacity', '1', 'important');
+          el.style.setProperty('visibility', 'visible', 'important');
+          el.style.setProperty('transform', 'none', 'important');
+          el.style.setProperty('filter', 'none', 'important');
+        }
+      });
+      await page.screenshot({ path: join(SHOTS, `slide-${String(n).padStart(3, '0')}.png`) });
+    }
     if (m && (m.oy > TOL || m.ox > TOL)) {
       offenders.push({ n, ...m });
       console.log(`  ✗ slide ${n}: overflow y=${m.oy}px x=${m.ox}px  — "${m.title}"`);

@@ -36,5 +36,7 @@ misc/python/cwilke/figs/
 .*.lb
 
 # Visual QA workflow artifacts (see scripts/check-slides.mjs)
+# slidev build --out resolves relative to the entry file's dir (lectures/content/)
 .qa-dist/
+lectures/content/.qa-dist/
 .qa-shots/
