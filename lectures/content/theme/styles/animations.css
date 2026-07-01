@@ -1,0 +1,131 @@
+/* ============================================================
+   ANIMATIONS & KINETIC EFFECTS  (2026-07 visual upgrade)
+   Opt-in classes. Every animation degrades to a static end-state
+   under prefers-reduced-motion and disables heavy effects on
+   coarse-pointer / small screens. v-click states rely on Slidev's
+   `.slidev-vclick-hidden`. Generalizes patterns previously inlined
+   in crash_course_for_video_lecture.md and L06.
+   ============================================================ */
+
+/* ---------- Gradient / kinetic text ---------- */
+.gradient-text {
+  background: var(--grad-kinetic);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.gradient-text.energy {
+  background: var(--grad-energy);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.kinetic {
+  background: linear-gradient(100deg, var(--accent-cyan), var(--accent-violet), var(--accent-cyan));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: kinetic-pan 6s linear infinite;
+}
+@keyframes kinetic-pan { to { background-position: 200% center; } }
+
+/* ---------- Glow ---------- */
+.glow { box-shadow: var(--glow-cyan) !important; }
+.glow-violet { box-shadow: var(--glow-violet) !important; }
+
+/* ---------- Aurora backdrop ----------
+   Add <div class="aurora"></div> as the first child of a
+   position:relative, overflow:hidden, full-height container. */
+.aurora {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 50% at 20% 30%, rgba(34, 211, 238, 0.18), transparent 60%),
+    radial-gradient(40% 50% at 80% 60%, rgba(139, 92, 246, 0.16), transparent 60%),
+    radial-gradient(35% 45% at 55% 85%, rgba(251, 191, 36, 0.10), transparent 60%);
+  filter: blur(40px);
+  animation: aurora-drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(2%, -1.5%) scale(1.08); }
+  100% { transform: translate(-1.5%, 1%) scale(1.04); }
+}
+
+/* ---------- Reveal helpers (pair with v-click) ---------- */
+.reveal-left, .reveal-up, .reveal-scale, .reveal-blur {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.5s ease, filter 0.5s ease;
+}
+.reveal-left.slidev-vclick-hidden  { transform: translateX(-40px); opacity: 0 !important; visibility: visible !important; }
+.reveal-up.slidev-vclick-hidden    { transform: translateY(28px);  opacity: 0 !important; visibility: visible !important; }
+.reveal-scale.slidev-vclick-hidden { transform: scale(0.9);        opacity: 0 !important; visibility: visible !important; }
+.reveal-blur.slidev-vclick-hidden  { filter: blur(10px);           opacity: 0 !important; visibility: visible !important; }
+
+/* ---------- Big stat / metric (utility, not a layout) ---------- */
+.stat { text-align: center; line-height: 1; }
+.stat-num  { font-family: var(--font-display); font-weight: 700; font-size: 5.5rem; letter-spacing: -0.02em; }
+.stat-unit { font-family: var(--font-display); font-weight: 600; font-size: 2rem; opacity: 0.8; margin-left: 0.15em; }
+.stat-label { margin-top: 0.6rem; font-size: 1rem; opacity: 0.7; letter-spacing: 0.02em; }
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: end; }
+
+/* ---------- Generalized card animation (was inline: video deck / L06) ---------- */
+.anim-card {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card.slidev-vclick-hidden {
+  transform: translateX(-40px); opacity: 0 !important;
+  visibility: visible !important; pointer-events: none;
+}
+.anim-card h2 {
+  font-size: 1.3em; line-height: 1.2; margin: 0;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) h2 { font-size: 1em; }
+.anim-sub {
+  display: block; font-size: 0.75em; opacity: 0.6; font-style: italic;
+  margin-top: 0.1em; transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) .anim-sub { font-size: 0.7em; }
+.anim-ex {
+  max-height: 200px; opacity: 0.7; overflow: hidden; font-size: 0.7em; margin-top: 0.2rem;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease, margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-ex.slidev-vclick-hidden {
+  max-height: 0 !important; opacity: 0 !important; visibility: visible !important;
+  margin-top: 0 !important; pointer-events: none;
+}
+.anim-ex ul { margin: 0; padding-left: 1.4em; }
+.anim-ex li { margin: 0.15em 0; }
+
+/* ---------- Flow pyramid (was inline: video deck) ---------- */
+.flow-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 0; }
+.flow-row { display: flex !important; align-items: center; gap: 1rem; width: 90%; padding: 1rem 1.5rem !important; }
+.flow-row.slidev-vclick-hidden { transform: translateX(-30px); opacity: 0 !important; visibility: visible !important; }
+.flow-label { font-weight: 700; font-size: 1.15em; white-space: nowrap; min-width: 9rem; }
+.flow-text { font-size: 1.05em; opacity: 0.9; }
+.flow-arrow { font-size: 1.4em; opacity: 0.4; margin: 0.3rem 0; transition: opacity 0.5s ease; }
+.flow-arrow.slidev-vclick-hidden { opacity: 0 !important; visibility: visible !important; }
+
+/* ---------- Motion & mobile guards ---------- */
+@media (max-width: 768px), (pointer: coarse) {
+  .aurora { animation: none; }
+  .kinetic { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora { animation: none; }
+  .kinetic { animation: none; background-position: 0 center; }
+  .reveal-left, .reveal-up, .reveal-scale, .reveal-blur { transition: opacity 0.3s ease; }
+  .reveal-left.slidev-vclick-hidden, .reveal-up.slidev-vclick-hidden,
+  .reveal-scale.slidev-vclick-hidden, .reveal-blur.slidev-vclick-hidden { transform: none; filter: none; }
+  .anim-card, .anim-ex, .flow-row { transition: opacity 0.3s ease; }
+  .anim-card.slidev-vclick-hidden, .flow-row.slidev-vclick-hidden { transform: none; }
+}
