@@ -23,6 +23,7 @@ onMounted(() => { setTimeout(() => { mounted.value = true }, 50) })
 .section-kinetic {
   position: relative;
   overflow: hidden;
+  display: grid;
 }
 .section-inner {
   position: relative;
