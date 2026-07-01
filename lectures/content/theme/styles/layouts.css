@@ -134,3 +134,13 @@
 .slidev-layout h1 {
   color: #ffffff !important;
 }
+
+/* Modern display font for headings (2026-07 visual upgrade).
+   Body prose keeps PT Serif (theme fonts default) for readability. */
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.card h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+}
