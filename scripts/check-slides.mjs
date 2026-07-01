@@ -110,6 +110,8 @@ const shards = [];
 for (let i = 0; i < slides.length; i += shardSize) shards.push(slides.slice(i, i + shardSize));
 
 const offenders = [];
+const skipped = [];
+let measured = 0;
 const t0 = Date.now();
 
 async function runShard(shard) {
@@ -146,7 +148,13 @@ async function runShard(shard) {
       });
       await page.screenshot({ path: join(SHOTS, `slide-${String(n).padStart(3, '0')}.png`) });
     }
-    if (m && (m.oy > TOL || m.ox > TOL)) {
+    // Note: for .anim-card slides (L06 / video deck) the neutralized state
+    // shows a large heading AND fully-expanded examples at once — taller than
+    // ever renders live — so those may be *over*-reported. That can only inflate
+    // the offender list, never hide real overflow.
+    if (!m) { skipped.push(n); continue; } // slide never settled — do NOT count as "fits"
+    measured++;
+    if (m.oy > TOL || m.ox > TOL) {
       offenders.push({ n, ...m });
       console.log(`  ✗ slide ${n}: overflow y=${m.oy}px x=${m.ox}px  — "${m.title}"`);
     }
@@ -159,12 +167,19 @@ await browser.close();
 server.close();
 
 offenders.sort((a, b) => a.n - b.n);
+skipped.sort((a, b) => a - b);
 const secs = ((Date.now() - t0) / 1000).toFixed(1);
-if (offenders.length === 0) {
-  console.log(`\n✅ No overflow: all ${slides.length} slides fit the frame. (${secs}s)`);
-  process.exit(0);
-} else {
-  console.log(`\n❌ ${offenders.length}/${slides.length} slide(s) overflow the frame (tolerance ${TOL}px). (${secs}s)`);
-  console.log('   Offending slides: ' + offenders.map((o) => o.n).join(', '));
-  process.exit(1);
+console.log(`\nMeasured ${measured}/${slides.length} slides in ${secs}s.`);
+if (skipped.length) {
+  // A slide that never rendered was NOT verified — never report it as "fits".
+  console.log(`⚠️  ${skipped.length} slide(s) failed to render and were NOT checked: ${skipped.join(', ')}`);
 }
+if (offenders.length) {
+  console.log(`❌ ${offenders.length} slide(s) overflow the frame (tolerance ${TOL}px).`);
+  console.log('   Offending slides: ' + offenders.map((o) => o.n).join(', '));
+}
+if (offenders.length === 0 && skipped.length === 0) {
+  console.log(`✅ No overflow: all ${slides.length} slides fit the frame.`);
+  process.exit(0);
+}
+process.exit(1);
