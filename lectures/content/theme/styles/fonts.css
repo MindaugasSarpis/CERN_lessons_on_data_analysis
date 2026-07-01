@@ -1,0 +1,5 @@
+/* Display font for headings (2026-07 visual upgrade).
+   Loaded from Google Fonts — the same provider Slidev already uses for
+   PT Serif, so this adds no new offline dependency. @import MUST stay at
+   the very top of this file (CSS requires @import before other rules). */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');

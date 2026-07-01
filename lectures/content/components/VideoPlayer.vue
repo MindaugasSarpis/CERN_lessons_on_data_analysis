@@ -118,9 +118,13 @@ onMounted(() => {
   background: black;
 }
 .video-player video {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  /* Fill the slide edge-to-edge with no letterbox strip. `contain` left thin
+     black bars on clips that weren't exactly 16:9; `cover` fills the frame
+     (minimal crop) so video slides are truly full-screen. */
+  object-fit: cover;
   /* keep in layout so iOS Safari loads it, but hide visually until ready */
   opacity: 0;
   pointer-events: none;
