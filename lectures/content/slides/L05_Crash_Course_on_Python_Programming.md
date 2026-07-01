@@ -174,7 +174,7 @@ hideInToc: true
 ### 🔑 **Main Points**
 
 - Indentation is crucial in Python
-- Python uses dynamic typing
+- Python uses dynamic typing *(you don't declare types — Python infers them from the value)*
 - Python has a rich standard library and many third-party libraries (many built-in functions)
 - eg. `print()`, `len()`, `type()`, `int()`, `str()`, `list()`, `dict()`, etc.
 
@@ -298,7 +298,7 @@ is_valid = True    # Boolean
 
 #### 📦 **More Built-in Types**
 
-- **Tuples** — immutable: `point = (3, 4)`
+- **Tuples** — immutable *(can't be changed after creation)*: `point = (3, 4)`
 - **Sets** — unique elements: `{1, 2, 3}`
 - **`range()`** — number sequences: `range(0, 10, 2)`
 - **f-strings** — formatted: `f"Hello, {name}!"`
@@ -392,6 +392,8 @@ measurements.append(24.2)
 print(f"After append: {measurements}")
 
 # Filter: only values above 24
+# This is a list comprehension: [expr for item in list if condition]
+# — a compact for-loop that builds a list.
 above_24 = [m for m in measurements if m > 24]
 print(f"Above 24: {above_24}")
 ```
@@ -716,6 +718,8 @@ for key, value in stats.items():
     print(f"  {key}: {value:.2f}" if isinstance(value, float) else f"  {key}: {value}")
 ```
 
+*The `"""..."""` line is a **docstring** — it documents what the function does and shows up in `help()`.*
+
 ---
 layout: section
 hideInToc: true
@@ -838,7 +842,12 @@ charges = [-1, -1, -1, +1, 0]
 print("Particle Catalog:")
 print("-" * 45)
 for i, (name, mass, charge) in enumerate(zip(particles, masses_MeV, charges)):
-    sign = "+" if charge > 0 else "" if charge < 0 else " "
+    if charge > 0:
+        sign = "+"
+    elif charge < 0:
+        sign = ""
+    else:
+        sign = " "
     print(f"  {i+1}. {name:10s}  mass={mass:8.2f} MeV  charge={sign}{charge}")
 ```
 
@@ -1018,6 +1027,8 @@ df   = pd.read_excel("data.xlsx", sheet_name=0)
 rows = df.to_dict(orient="records")
 ```
 
+*A **DataFrame** is pandas' table type (like a spreadsheet); `.to_dict(orient="records")` turns each row into a dict so we can loop over it.*
+
 </div>
 
 </div>
@@ -1050,7 +1061,10 @@ for sensor, readings in data.items():
     spread = max(readings) - min(readings)
     print(f"{sensor}: avg={avg:.2f}°C  spread={spread:.1f}°C")
 
+# A dict comprehension — same idea as a list comprehension, but it
+# produces key: value pairs instead of a plain list.
 averages = {s: sum(r)/len(r) for s, r in data.items()}
+# key= tells max/min/sorted which value to compare by.
 hottest = max(averages, key=averages.get)
 print(f"\nHottest: {hottest} ({averages[hottest]:.2f}°C)")
 ```
@@ -1150,5 +1164,47 @@ git commit -m "Add sensor temperature analysis script"
 **Good habit**: commit after each working milestone. Your future self will thank you.
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **What's Next?**
+
+You can now write Python. The upcoming data-analysis lectures build on it with three workhorse libraries:
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔢 **NumPy**
+
+Fast arrays and math on whole datasets at once.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🐼 **pandas**
+
+DataFrames — labelled tables for real, messy data.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📈 **Matplotlib**
+
+Turning numbers into plots you can reason about.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
+
+Together these handle the bulk of everyday data-analysis work.
 
 </div>

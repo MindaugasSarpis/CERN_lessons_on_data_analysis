@@ -108,13 +108,13 @@ hideInToc: true
 hideInToc: true
 ---
 
-# **Course Content** (prone to change)
+# **Course Content** *(roughly in this order)*
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-🖥️ Common pitfalls in working with computers
+🖥️ Working with computers — command line & common pitfalls
 
 </div>
 
@@ -126,19 +126,13 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-📊 Concepts of Data Analysis
+⚙️ Main principles of computing
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-⚙️ Main principles of computing
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🏗️ Computing infrastructure
+🔀 Version control with Git
 
 </div>
 
@@ -148,17 +142,41 @@ hideInToc: true
 
 </div>
 
+<div class="card card-accent card-glass pad-compact">
+
+📊 Concepts of Data Analysis
+
+</div>
+
 <div class="card card-info card-glass pad-compact">
 
-🌐 Different Computing Environments
+📈 Data visualisation
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-🔄 Creating robust workflows
+🎲 Probability and statistics
 
 </div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🏗️ Computing infrastructure & environments
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🔄 Robust, reproducible workflows
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-sm" style="text-align: center;">
+
+The exact order and depth adapt to how the group progresses — but this is the arc we'll follow.
 
 </div>
 
@@ -435,6 +453,8 @@ You should see `Python 3.x.x`. If not, we'll fix it now.
 3. Open a terminal and verify `python --version`
 4. Create a folder: `mkdir my_data_project`
 5. You're ready for the rest of the course!
+
+*Stuck on installation? Don't worry — we'll walk through VS Code and Python setup together in their own lectures. Today the goal is simply to have your laptop ready.*
 
 </div>
 

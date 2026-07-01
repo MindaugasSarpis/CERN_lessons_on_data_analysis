@@ -130,6 +130,8 @@ hideInToc: true
 
 # Data **Representation**
 
+To write correct algorithms, we first need to understand how data is actually stored inside the computer — from individual bits up to whole files.
+
 ---
 layout: fact
 hideInToc: true
@@ -151,6 +153,12 @@ class: text-size-78
   <span v-click="3">|</span>
   <span v-click="4">|</span>
   <span v-click="5">|</span>
+</div>
+
+<div class="mt-md" style="text-align: center;">
+
+Humans have always counted with tally marks — one mark per unit. It's the simplest possible number system, and a useful contrast before we meet the base computers actually use: binary.
+
 </div>
 
 
@@ -827,7 +835,7 @@ Universally encodes characters as code points
 
 Stores code points in 1–4 bytes, backward-compatible with ASCII
 
-**Pitfalls in data:** smart quotes, emojis, mixed encodings, BOM
+**Pitfalls in data:** smart quotes, emojis, mixed encodings, BOM (a hidden byte-order marker at the start of a file that can break parsing)
 
 </div>
 
@@ -1340,7 +1348,9 @@ hideInToc: true
 
 ## 🔒 **Lossless**
 
-CSV, JSON, Parquet, PNG — exact recovery
+Algorithms (RLE, Huffman, DEFLATE — used inside PNG, ZIP) shrink data with exact recovery
+
+Formats (CSV, JSON, Parquet, PNG) preserve the data exactly
 
 </div>
 

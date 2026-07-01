@@ -112,7 +112,7 @@ hideInToc: true
 
 - `git` has great functionality for merging different versions of the same file
 - If the previous content is not overwritten, or deleted, merge just combines the changes into one file
-- If changes over-write each other a so-called **merge conflict** arises
+- If both branches change the same lines, a **merge conflict** arises
 
 </div>
 
@@ -338,7 +338,7 @@ When staged files are present, the output of `git status` will be:
 On branch main
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-        modified:   < file >
+        modified:   <file>
 ```
 
 </div>
@@ -505,13 +505,13 @@ hideInToc: true
 - Restore a file to the last committed version (discard uncommitted edits):
 
 ```bash
-git restore < file >
+git restore <file>
 ```
 
 - Unstage a file while keeping your edits:
 
 ```bash
-git restore --staged < file >
+git restore --staged <file>
 ```
 
 </div>
@@ -548,13 +548,13 @@ hideInToc: true
 - Restore a file from a previous commit using its *hash*:
 
 ```bash
-git restore --source=<hash> < file >
+git restore --source=<hash> <file>
 ```
 
 - Create a **new commit** that undoes a previous one:
 
 ```bash
-git revert < hash >
+git revert <hash>
 ```
 
 `git revert` is safe because it adds history rather than deleting it.
@@ -568,7 +568,7 @@ git revert < hash >
 `reset --hard` permanently deletes **all uncommitted changes**. Cannot be undone.
 
 ```bash
-git reset --hard < hash >
+git reset --hard <hash>
 ```
 
 - Use only when you truly want to throw away work
@@ -612,6 +612,12 @@ hideInToc: true
 </div>
 
 <div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+**Note:** the example below is for a Python project. The specific patterns (`__pycache__`, `.venv/`) will make sense once you start Python soon — for now, focus on the general idea: ignore temporary, build, and machine-specific files.
+
+</div>
 
 ```bash {*}{maxHeight:'340px'}
 # Byte-compiled / optimized files

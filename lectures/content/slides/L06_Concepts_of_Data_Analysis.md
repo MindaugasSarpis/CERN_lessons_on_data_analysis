@@ -1071,6 +1071,8 @@ hideInToc: true
 hideInToc: true
 ---
 
+*Some of these questions touch on statistical and ML ideas — predictive modelling, causal inference, prescriptive optimisation — that you'll formalise later; for now, focus on the reasoning behind each answer.*
+
 <MCQ
   question="A hospital model predicts patient readmission risk using age, diagnosis, and length of stay. What type of analytics is this?"
   :options="[
@@ -1222,6 +1224,8 @@ Sample of 100 ≠ all students. Taste may vary by time of day. Next iteration: r
 </div>
 
 </div>
+
+*The formal statistical test behind step 4 — and what a p-value and confidence interval actually mean — is covered in the Probability & Statistics lecture. Focus here on the logic: is the difference big enough to trust?*
 
 ---
 hideInToc: true
@@ -1700,7 +1704,7 @@ hideInToc: true
 
 # Missing-data mechanisms — **why** values are missing
 
-<span class="def-sub">The mechanism dictates which imputation and analysis methods are valid. **Test** MCAR · **assume** MAR · **reason about** MNAR.</span>
+<span class="def-sub">The *reason* data are missing dictates which imputation and analysis methods are valid: **test** whether they're missing completely at random (MCAR), **assume** missing-at-random (MAR) when justified, and **reason carefully** about missing-not-at-random (MNAR) using domain knowledge.</span>
 
 <div class="miss-row mt-md">
 
@@ -1800,7 +1804,7 @@ Effect size, N, variance — know what you can detect *before* testing.
 
 ## 🔗 **Correlation ≠ causation**
 
-Association alone doesn't justify a causal claim.
+An association alone doesn't prove A causes B; establishing causation needs careful experimental design or dedicated statistical methods (see the Probability & Statistics lecture).
 
 </div>
 
@@ -2214,7 +2218,7 @@ hideInToc: true
 
 # 1. **Define** — turn a goal into an answerable question
 
-<span class="def-sub">The lifecycle named six phases. Now we zoom into the analytical core — the loop that turns a raw dataset into an answered question — in six actionable steps.</span>
+<span class="def-sub">Now we zoom into the **Analyse** phase from the lifecycle above and break the analytical work itself — the loop that turns a raw dataset into an answered question — into six concrete steps. (Note: *Analyse* names both a lifecycle phase above and one of these six steps.)</span>
 
 <div class="stack-tight dd-stack mt-md">
 
@@ -2378,7 +2382,7 @@ hideInToc: true
 <summary><span class="dd-title">🔍 Exploratory Data Analysis (EDA) first — distributions, pairwise relationships, drift over time</span></summary>
 <div class="dd-body">
 
-Before any model: look. **Exploratory Data Analysis (EDA)** means profiling the data with summary stats and plots to build intuition and spot problems. Most "surprising" model results are data problems in disguise — a leaking feature, a timezone bug, a duplicated cohort. EDA catches these before they embarrass you.
+Before any model: look. **Exploratory Data Analysis (EDA)** means profiling the data with summary stats and plots to build intuition and spot problems. Most "surprising" model results are data problems in disguise — a leaking feature, a timezone bug, a duplicated cohort. EDA catches these before they embarrass you. (Choosing and reading those plots is the focus of the Data Visualisation lecture; here the point is simply to look before you model.)
 
 </div>
 </details>
@@ -2426,6 +2430,8 @@ hideInToc: true
 ---
 
 # 5. **Visualise** — design for the decision, not the data
+
+<span class="def-sub">Chart design is the focus of the Data Visualisation lecture; the principle here is to choose the chart *after* you know your audience and message.</span>
 
 <div class="stack-tight dd-stack mt-md">
 
@@ -2498,7 +2504,7 @@ Every finding should end with "…therefore we should". Name the action, who own
 <summary><span class="dd-title">❓ Name the limitations — prominently, not buried</span></summary>
 <div class="dd-body">
 
-Sample scope, missing confounders, assumptions that could fail. Put them where the reader will see them; a caveat in the appendix doesn't count.
+Sample scope, missing confounders (unmeasured variables that influence both the predictor and the outcome), assumptions that could fail. Put them where the reader will see them; a caveat in the appendix doesn't count.
 
 </div>
 </details>
@@ -3713,7 +3719,7 @@ hideInToc: true
 
 ## ⚠️ **Bias in selection cuts**
 
-<div class="note-text">Blind analyses & control regions</div>
+<div class="note-text">Blind analyses (analysing without looking at the signal region, to avoid biasing the result) & control regions</div>
 
 </div>
 

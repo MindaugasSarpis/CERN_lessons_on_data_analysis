@@ -254,7 +254,7 @@ grep "analysis" *.txt
 
 - Preview configuration or log files quickly
 - Search large codebases without opening an editor
-- Combine with redirection (`>`) to save filtered output
+- Combine with redirection (`>`, introduced in *Pipes and Redirection* below) to save filtered output
 
 </div>
 
@@ -296,7 +296,7 @@ echo "Result: 42" >> notes.txt
 
 ## 🔀 **Versioning & Collaboration**
 
-- Pair the CLI with `git` to track work precisely
+- Later, you'll pair the CLI with `git` (version control, covered in its own lecture) to track work precisely
 - Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
 - Script file creation to keep project structure consistent
 - Later: **file naming conventions**, **Markdown** for documentation, and **VS Code** as your IDE
@@ -420,6 +420,7 @@ Get-ChildItem *.csv |
 ## 🐧 **UNIX Pipeline**
 
 ```bash
+# $5 = file size, $9 = filename; "$5+0" forces numeric comparison
 ls -lh *.csv | awk '$5+0 > 1 {print $9, $5}' \
   | sort -k2hr > large_files.txt
 ```
@@ -431,6 +432,8 @@ ls -lh *.csv | awk '$5+0 > 1 {print $9, $5}' \
 <div class="card card-info card-glass pad-compact mt-md">
 
 💡 Pipelines let each tool focus on one job. Reuse the same pattern across projects with minimal edits.
+
+*These examples show the power of pipelines — don't worry if the syntax looks unfamiliar; you'll pick up these tools as the course goes on.*
 
 </div>
 

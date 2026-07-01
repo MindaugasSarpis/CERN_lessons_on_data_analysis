@@ -155,6 +155,12 @@ hideInToc: true
 
 💾 **Data Pipeline:** Raw detector signals &#8594; Event reconstruction &#8594; Data filtering (triggers) &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
 
+<div class="mt-sm" style="font-size: 0.85em; opacity: 0.85;">
+
+Don't worry about the details yet — every stage here is a skill you'll build over this course, from handling files to statistical inference.
+
+</div>
+
 </div>
 
 ---
@@ -198,6 +204,17 @@ CERN **Open Data Portal** makes real collision data publicly available -- enabli
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# From the **Cosmos** to the **Quantum**
+
+The next short films sweep across the scales of nature — from mountains and deep space down to individual atoms and particle tracks.
+
+Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
 
 ---
 
@@ -268,6 +285,8 @@ hideInToc: true
 
 # Inside **CERN**
 
+Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
+
 ---
 
 <VideoPlayer src="CERN_Overview_Short.mp4" autoplay   />
@@ -309,3 +328,53 @@ hideInToc: true
 ---
 
 <VideoPlayer src="GTC_2020_1080p.mp4" autoplay   />
+
+---
+hideInToc: true
+---
+
+# Why **You** Need These Skills
+
+CERN turns raw collisions into discoveries with exactly the toolkit this course builds:
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📁 **Handling Massive Data**
+
+Petabytes of detector output demand disciplined file handling, data formats, and organisation.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔀 **Working Together**
+
+Thousands of scientists share one codebase — impossible without version control.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🐍 **Turning Signal into Insight**
+
+Python and data-analysis tools transform readings into physics.
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🎲 **Real or a Fluke?**
+
+Statistics decide whether a bump in the data is a discovery — or noise.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
+
+You don't need a particle accelerator to use any of this. **Next, we start building these skills ourselves — beginning at the command line.**
+
+</div>

@@ -233,6 +233,8 @@ backgroundSize: cover
 image: /figures/data_vis_anatomy_of_a_figure.svg
 ---
 
+*Every figure shares the same anatomy: **axes** (with labelled ticks), **title**, **legend**, the **data** itself, and **annotations** that point to the key insight.*
+
 ---
 hideInToc: true
 ---
@@ -792,7 +794,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/cwilke_distributions_ii_mpg_boxplot.svg" style="display:block;margin:0 auto;max-height:170px;">
 
-📦 **Boxplot** — box = IQR (Q1→Q3), line = median, whiskers = 1.5 × IQR, dots = outliers
+📦 **Boxplot** — box = IQR (Q1→Q3), line = median, whiskers = 1.5 × IQR, dots = outliers. The box spans the middle 50% of the data (the **interquartile range**); the line inside is the **median**. We define these terms formally in the Probability & Statistics lecture.
 
 </div>
 
@@ -800,7 +802,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/cwilke_distributions_ii_mpg_violin.svg" style="display:block;margin:0 auto;max-height:170px;">
 
-🎻 **Violin** — mirrored kernel density; width ∝ point density, so bimodality is visible
+🎻 **Violin** — a smooth, mirrored outline that is wide where data is dense and narrow where it's sparse — it can reveal two-humped (bimodal) shapes a boxplot would hide
 
 </div>
 
@@ -828,7 +830,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📈 Plot each value's rank / *n* against the value: for every *x*, the curve's *y* is **the fraction of observations ≤ x**. No bin-width choices, no density estimation, and every data point contributes one step. The median is where the curve crosses 0.5; quartiles are at 0.25 / 0.75; outliers show as flat tails.
+📈 An **empirical cumulative distribution function (ECDF)** — for any value *x*, it shows the fraction of observations ≤ *x*. Plot each value's rank / *n* against the value: for every *x*, the curve's *y* is **the fraction of observations ≤ x**. No bin-width choices, no density estimation, and every data point contributes one step. The median is where the curve crosses 0.5; quartiles are at 0.25 / 0.75; outliers show as flat tails.
 
 </div>
 
@@ -845,6 +847,8 @@ hideInToc: true
 ## 📐 **How to read one**
 
 Plot the **data's quantiles** against the **theoretical quantiles** of a reference (usually Normal). If the data matches the reference, the points fall on the diagonal.
+
+Q–Q plots compare your data's quantiles against a reference (usually the Normal distribution, defined in the Probability & Statistics lecture). Read it simply: **points on the line = good match; an S-shape = heavier tails.**
 
 </div>
 
@@ -921,7 +925,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🌡️ Day-of-year (x) × location (y), colour = mean temperature. A well-chosen sequential palette turns a matrix of numbers into a single image where seasonality and climate differences pop at once.
+🌡️ *When data has two categorical axes (e.g. day and location), a **heatmap** encodes a third value as colour — clearer than stacking many density curves.* Day-of-year (x) × location (y), colour = mean temperature. A well-chosen sequential palette turns a matrix of numbers into a single image where seasonality and climate differences pop at once.
 
 </div>
 
@@ -1212,6 +1216,8 @@ hideInToc: true
 <img class="fig" src="/figures/cwilke_uncertainty_error_bars.svg" style="display:block;margin:0 auto;max-height:155px;">
 
 📏 **Error bars** — discrete ticks spanning ± 1 or 2 standard errors; good for a few points
+
+*(Standard errors and confidence intervals are defined in the Probability & Statistics lecture; here, read them as **how uncertain the estimate is** — smaller is more certain.)*
 
 </div>
 
@@ -1525,7 +1531,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-√ When the y-axis is a **count** and the variance grows with the mean (Poisson data), a square-root transform stabilises variance. Cleaner than log when values include zero.
+√ When the y-axis is a **count** of rare events (radioactive decays, defects), whose spread grows with the mean — a square-root scale stabilises it. Cleaner than log when values include zero.
 
 </div>
 
@@ -1841,11 +1847,11 @@ from scipy.stats import gaussian_kde
 rng = np.random.default_rng(1)
 data = rng.normal(loc=5, scale=1.5, size=500)
 
-kde = gaussian_kde(data)
+kde = gaussian_kde(data)  # fit a smooth density curve to the data
 xs = np.linspace(data.min(), data.max(), 300)
 
 fig, ax = plt.subplots(figsize=(5.6, 3.4))
-ax.hist(data, bins=25, density=True, color="#56B4E9",
+ax.hist(data, bins=25, density=True, color="#56B4E9",  # density=True: normalise counts to a probability density
         alpha=0.75, edgecolor="white")
 ax.plot(xs, kde(xs), color="#D55E00", linewidth=2, label="kde")
 ax.set(xlabel="value", ylabel="density")
@@ -1874,7 +1880,7 @@ OKABE_ITO = ["#000000", "#E69F00", "#56B4E9", "#009E73",
 
 mpl.rcParams.update({
     "font.family": ["Helvetica", "Arial", "DejaVu Sans"],
-    "axes.prop_cycle": mpl.cycler(color=OKABE_ITO),
+    "axes.prop_cycle": mpl.cycler(color=OKABE_ITO),  # cycle through a colour-blind-safe palette
     "axes.spines.top":   False,
     "axes.spines.right": False,
     "axes.axisbelow":    True,

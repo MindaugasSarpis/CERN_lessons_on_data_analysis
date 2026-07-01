@@ -44,7 +44,7 @@ hideInToc: true
 
 - ## Predictions come with **confidence intervals**
 
-#### This lecture builds the foundation for data fitting, hypothesis testing, and inference
+#### This lecture builds the foundation for data fitting, estimation, and quantifying uncertainty
 
 ---
 layout: section
@@ -162,6 +162,14 @@ hideInToc: true
 ### 📊 **Probability P(A)**
 
 <div class="note-text mt-xs">Number in [0,1] quantifying likelihood</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+### 🚫 **Mutually exclusive (disjoint)**
+
+<div class="note-text mt-xs">Two events that can't both happen: $A \cap B = \emptyset$. E.g. a single die roll being both even and odd.</div>
 
 </div>
 
@@ -419,7 +427,7 @@ Avoids double-counting the intersection
 
 <div class="card card-success card-glass pad-tight mt-md">
 
-### ✖️ **Multiplication Rule** — For independent events: $P(A \cap B) = P(A) \times P(B)$
+### ✖️ **Multiplication Rule** — For **independent** events (where knowing one tells you nothing about the other): $P(A \cap B) = P(A) \times P(B)$
 
 </div>
 
@@ -455,7 +463,7 @@ $0 \leq P(A \mid B) \leq 1$ • $P(\Omega \mid B) = 1$ • Additive for mutually
 
 $A$: sum is 8, $P(A) = 5/36$ • $B$: first die shows 3, $P(B) = 1/6$
 
-$A \cap B = \{(3,5)\}$ → $P(A \mid B) = \frac{1/36}{1/6} = \frac{1}{6}$
+$A \cap B = \{(3,5)\}$: of the 36 equally likely outcomes, only $(3,5)$ has the first die = 3 **and** the sum = 8, so $P(A \cap B) = 1/36$ → $P(A \mid B) = \frac{1/36}{1/6} = \frac{1}{6}$
 
 </div>
 
@@ -661,6 +669,8 @@ hideInToc: true
 
 Disease: 1% prevalence • Test: 95% sensitivity, 90% specificity
 
+**sensitivity** = P(test + | has disease); **specificity** = P(test − | no disease)
+
 **Question:** Probability of disease if test is positive?
 
 </div>
@@ -753,7 +763,7 @@ hideInToc: true
 
 ## **Formal Definition**
 
-A **random variable** $X$ is a function that maps each outcome $\omega$ in the sample space $\Omega$ to a real number:
+A **random variable** $X:\Omega\to\mathbb{R}$ assigns a number to each possible outcome $\omega$ (an element of the sample space $\Omega$). E.g. for a die, $X$ could be "the number shown".
 
 $$X: \Omega \rightarrow \mathbb{R}$$
 
@@ -902,6 +912,8 @@ hideInToc: true
 A random variable $X$ is **continuous** if it can take any value in an interval or union of intervals (uncountably many values).
 
 **Key Insight:** For continuous $X$, $P(X = x) = 0$ for any specific $x$. Only intervals have non-zero probability.
+
+With infinitely many possible values packed into any interval, no single exact value carries probability weight — so for continuous variables probability lives in *intervals*, $P(a \le X \le b)$, which is why we use a probability **density** (PDF) rather than a mass function.
 
 </div>
 
@@ -1154,6 +1166,8 @@ hideInToc: true
 ## 🔗 **The Bridge**
 
 Every descriptive statistic we compute from data is a **sample estimate** of a true **population parameter**. The sample is what we observe; the population is what we want to learn about.
+
+A **parameter** is a fixed but unknown number describing the whole population (e.g. the true mean $\mu$); a **statistic** is something we compute from our sample (e.g. $\bar{x}$). We use statistics to estimate parameters.
 
 </div>
 
@@ -1411,31 +1425,37 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 <div class="emoji-xl">🏆</div>
 <div class="meta-strong">Most Important</div>
+<div class="note-text mt-xs">The distribution you meet most often across science and statistics</div>
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 <div class="emoji-xl">🌿</div>
 <div class="meta-strong">Arises Naturally</div>
+<div class="note-text mt-xs">Sums and averages of many small random effects tend toward it</div>
 </div>
 
 <div class="card card-info card-glass pad-compact">
 <div class="emoji-xl">🎯</div>
 <div class="meta-strong">CLT Foundation</div>
+<div class="note-text mt-xs">The Central Limit Theorem explains why it appears so widely</div>
 </div>
 
 <div class="card card-success card-glass pad-compact">
 <div class="emoji-xl">🔬</div>
 <div class="meta-strong">Measurement Errors</div>
+<div class="note-text mt-xs">Random errors are usually symmetric around the true value</div>
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 <div class="emoji-xl">🧪</div>
 <div class="meta-strong">Statistical Tests</div>
+<div class="note-text mt-xs">Many standard tests assume approximately normal data</div>
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 <div class="emoji-xl">⚙️</div>
 <div class="meta-strong">Two Parameters: μ, σ²</div>
+<div class="note-text mt-xs">Mean μ and variance σ² pin it down completely</div>
 </div>
 
 </div>
@@ -2061,10 +2081,10 @@ A result without an uncertainty is incomplete. Always include error bars, confid
 
 <div class="card card-success card-glass pad-tight">
 
-## 🎯 **Understand p-values**
+## 🎯 **Hypothesis testing & p-values**
 
 <div class="card-content text-base">
-A p-value is the probability of data this extreme under the null hypothesis — not the probability the null is true.
+The natural next step beyond this course: a p-value measures how surprising your data would be if nothing interesting were going on. Learn it before drawing "significant/not significant" conclusions.
 </div>
 
 </div>
@@ -2106,5 +2126,46 @@ When analytical solutions are hard, Monte Carlo simulation can reveal the expect
 ## 📝 **Document for Reproducibility**
 
 Record every step of your analysis — data source, cleaning, model choices, software versions — so others (and future you) can reproduce the results.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Bringing It **Together**
+
+---
+hideInToc: true
+---
+
+# **The Journey So Far**
+
+From a blank terminal to statistical inference:
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧰 **The Craft**
+
+Command line, files, version control, and Python — the tools to *do* the work reliably.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📊 **The Analysis**
+
+Concepts of data analysis, visualisation, and now probability & statistics — the tools to *make sense* of data.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
+
+You now have an end-to-end toolkit: **load data → explore & visualise → model it → quantify uncertainty → report honestly.** Keep practising it on your own projects — that's where it becomes yours.
 
 </div>

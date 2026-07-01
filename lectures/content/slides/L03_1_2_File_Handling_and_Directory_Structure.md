@@ -52,7 +52,7 @@ hideInToc: true
 
 - "I have 10 files with the same name, which one is the right one?"
 
-  - `final_final_v2.docx`,  `asdfasdf.docx`, `asdfasdf.docx`
+  - `final_final_v2.docx`,  `asdfasdf.docx`, `final.docx`
 
 - "I have overwritten my file with the wrong version"
 
@@ -98,7 +98,7 @@ hideInToc: true
 
 ## ✅ **How to Avoid**
 
-- Follow the **here-near-far** strategy (see next slide)
+- Follow the **here-near-far** strategy (covered below)
 
 - Consider version control for text-based files (Git), so you can revert to an older version if needed
 
@@ -399,10 +399,17 @@ fig01_mass_spectrum.png
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Directory Structure
+# Directory **Structure**
+
+---
+hideInToc: true
+---
+
+# Organising Your Directories
 
 <div class="grid-2 mt-md gap-md">
 
@@ -444,7 +451,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-Choose the structure that best fits your workflow — either is valid as long as it is consistent. Use the CLI commands you learned (`mkdir`, `ls`, `cd`) to create and navigate these structures.
+Choose the structure that best fits your workflow — either is valid as long as it is consistent. Use the CLI commands from the Command Line lesson (`mkdir`, `ls`, `cd`) to create and navigate these structures.
 
 </div>
 

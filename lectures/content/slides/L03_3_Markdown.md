@@ -270,9 +270,9 @@ hideInToc: true
 
 <div class="mt-md">
 
-- [x]  Task 1 (completed)
-- [ ]  Task 2 (pending)
-- [ ]  Task 3 (pending)
+- [x] Task 1 (completed)
+- [ ] Task 2 (pending)
+- [ ] Task 3 (pending)
 
 </div>
 
@@ -409,7 +409,7 @@ hideInToc: true
 ## 👁️ **Rendered Output**
 
 > This is a blockquote.
-> It can span multiple lines
+> It can span multiple lines.
 
 <div class="mt-md">
 
