@@ -183,10 +183,13 @@ Field meanings:
 | L14 | Reproducible Workflows, Automation & Modularization  | `L12_Reproducible_Workflows`                             | draft  | import (add Snakemake later) |
 | L15 | Project Review & Presentations                       | — (brand-new module)                                     | draft  | placeholder  |
 
-The disabled source decks (`L03_2`, `L03_3`, `L03_4`, `L07`) are enabled by being
-imported into a fresh entry (the `disabled: true` in their headmatter is a
-per-deck flag; imported via `src:` their slides render — to be confirmed in §9,
-and the frontmatter flag removed if it suppresses import).
+The source decks the roadmap annotated as "disabled" (`L03_2`, `L03_3`, `L03_4`,
+`L07`) are in fact **not** deck-level disabled — their headmatter carries no
+`disabled` key, and the current BS deck already `src:`-imports and renders them.
+They are included in FF simply by being imported into their fresh FF entries; **no
+headmatter edit is needed**. (Interior per-slide `disabled: true` blocks in those
+files are intentional author hides shared with the BS deck and must not be
+stripped — that would corrupt the BS deck too.)
 
 ---
 
