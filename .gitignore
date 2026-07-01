@@ -34,3 +34,7 @@ misc/python/cwilke/figs/
 *.cb
 *.cb2
 .*.lb
+
+# Visual QA workflow artifacts (see scripts/check-slides.mjs)
+.qa-dist/
+.qa-shots/

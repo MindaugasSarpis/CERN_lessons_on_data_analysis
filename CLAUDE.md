@@ -35,6 +35,21 @@ cd lectures/workbook && mkdocs serve
 
 There are no tests or linting configured.
 
+### Visual QA workflow (whole-deck overflow + content/style review)
+
+When iterating on styling, verify the **rendered** deck — a `slidev build` only catches compile errors, not slides whose content overflows the 16:9 frame (silently clipped in the build and PDF export).
+
+```bash
+pnpm qa            # build the published deck + render every slide: overflow report + a screenshot per slide in .qa-shots/
+pnpm qa:overflow   # overflow report only (needs a prior `pnpm qa:build`), ~8s for the full deck
+```
+
+`scripts/check-slides.mjs` renders all slides with parallel workers + client-side navigation (fast — full 482-slide deck in ~8s), measures each slide root's overflow (neutralizing decorative backdrops and pre-click transforms), and optionally writes `.qa-shots/slide-NNN.png` for visual review. Options: `--workers N`, `--tolerance PX`, `--only 8,76,...`, `--shots <dir>`. Exit code is non-zero if any slide overflows, so it works as a gate.
+
+**Hard requirements enforced by this workflow (see project memory):** (1) **zero slide overflow**; (2) **videos full-screen** — `VideoPlayer.vue` uses `object-fit: cover`, no letterbox line; (3) **consistent type scale** — sizes follow the markdown level, no arbitrary one-off `font-size`. Must build through an entry point co-located with `theme/` (e.g. the published deck) — a single `slides/L0X.md` build silently drops the custom theme.
+
+To review content/style across the deck, read the `.qa-shots/*.png` in batches (or fan out subagents over batches), not all at once.
+
 ## Architecture
 
 ### Slide Deck (Slidev)

@@ -13,7 +13,10 @@
 - **Visual only — no content edits.** Do NOT change any lecture wording, numbers, or slide meaning. In particular, L01's grading slide (Quiz 20% / 20% / Project 60%) and the "48 hours / 212 hours" figures stay exactly as written — those are Workstream-A content concerns.
 - **Backward compatible.** Never rename or remove an existing class or layout (`card`, `card-*`, `card-glass`, `grid-*`, `pad-*`, `stack-tight`, `anim-*`, `flow-*`, `dice-*`, `dd-*`, `fig`, etc.). New effects are additive opt-in classes.
 - **Motion-safe & mobile-safe.** Every animation MUST have a `@media (prefers-reduced-motion: reduce)` fallback to a static end-state, and heavy effects (blur/aurora/hue-pan) MUST be disabled under `@media (max-width: 768px), (pointer: coarse)` — mirroring the existing `theme/layouts/cover.vue`.
-- **No new build tooling / dependencies.** Fonts load via a CSS `@import` from Google Fonts (same provider PT Serif already uses through Slidev). No package installs.
+- **No slide overflow (STRICT, blocking gate).** Every rendered slide MUST fit its 16:9 frame with zero content overflow — nothing clipped or spilling past the edges. A `slidev build` does NOT catch this; it must be verified by rendering. The deck-wide font change (Space Grotesk) and any new layout are high-risk for reflow. Gate: `pnpm qa:overflow` (after `pnpm qa:build`) — i.e. `node scripts/check-slides.mjs .qa-dist` — must exit 0 (no offenders). Any slide the scan flags is fixed (shorten/split content, denser `pad-*`, smaller local font-size) before the task is done. Pre-existing offenders unrelated to this work are logged for the owner, not silently ignored. NOTE (attribution done 2026-07-01): the deck has 16 pre-existing overflow slides (8, 76, 91, 166, 187, 188, 199, 202, 219, 222, 226, 254, 272, 370, 390, 451) — identical before and after the font change, so the restyle introduced none.
+- **Videos full-screen (STRICT).** Video slides MUST fill the frame edge-to-edge with no letterbox line. `VideoPlayer.vue` uses `object-fit: cover` (not `contain`) over a black full-bleed container. Verify a video slide's `<video>` box equals the slide box.
+- **Consistent type scale (STRICT).** Text/element sizes follow the markdown level via one documented type scale — no arbitrary inline `font-size` or one-off size classes on new/edited slides. Authoring `##` always yields the same size. Deck-wide cleanup of pre-existing random sizes is rollout work; the rule binds all new/edited slides and the theme now.
+- **No new build tooling / dependencies.** Fonts load via a CSS `@import` from Google Fonts (same provider PT Serif already uses through Slidev). No package installs. (`playwright-chromium` and the overflow-check script are already present.)
 - **`bs2026` deploy branch untouched.** Work stays on the `visual-style-work` worktree branch (based on `ff2026`). GitHub Pages deploys from `bs2026`; no risk this cycle.
 - **Commit trailer.** End every commit message body with:
   `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`
@@ -680,6 +683,15 @@ Click through ALL slides start to finish. Expected:
 - "Data in Your Life" is the kinetic section divider (Task 3); "Breaks..." / "Who am I talking to?" are gradient facts (Task 4).
 - No text overflow, no clipped cards, no console errors.
 - Toggle DevTools reduced-motion: everything still reaches its final state and is readable.
+
+- [ ] **Step 7b: Run the strict no-overflow gate**
+
+Build the published entry point and scan every slide for overflow (this is a blocking Global Constraint):
+```bash
+pnpm qa:build
+node scripts/check-slides.mjs .qa-dist --shots .qa-shots   # or: pnpm qa
+```
+Expected: the L01 slides (in the published deck, L01 is roughly slides 1–18) show no overflow. Known pre-existing offender in L01: **slide 8 "Grading Structure"** (the "Project — 60%" card's last bullet clips off the bottom) — fix it here (shorten/split content or denser `pad-*` — NOT by changing wording/figures) and re-scan until L01 is clean. Flagged slides in *other* lectures (pre-existing, not caused by this pilot) are recorded in the ledger for the owner, not fixed here. Review the `.qa-shots/slide-0NN.png` for L01 to confirm content and styling look right.
 
 - [ ] **Step 8: Capture before/after screenshots for review**
 
