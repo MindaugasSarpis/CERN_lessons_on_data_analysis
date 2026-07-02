@@ -5,7 +5,15 @@ because they are factual/semantic/owner-level calls. Safe fixes and flow
 improvements from the same review were applied directly (see commits of
 2026-07-02). Line numbers are pre-edit approximations.
 
-## Course-wide
+> **Closeout (2026-07-03):** a textbook-grounded content-enrichment pass
+> (spec: `specs/2026-07-03-deck-content-enrichment-design.md`) resolved every
+> **per-lecture** flag below — each is now marked ✅ RESOLVED or ⏸ DEFERRED
+> with a reason. New slides were added where the canonical treatment had gaps;
+> cross-lecture forward references were verified against delivery order. The
+> full deck passes the zero-overflow QA gate (530 slides). The **Course-wide**
+> items remain open owner decisions.
+
+## Course-wide  *(still open — owner decisions)*
 
 - Every lecture cover subtitles the course "Data Analysis and Artificial
   Intelligence" while the repo calls it "Lessons on Data Analysis from CERN" —
