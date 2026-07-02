@@ -379,7 +379,7 @@ hideInToc: true
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: calc(100% - 4rem); /* leave room for the slide title */
   gap: 0;
 }
 .flow-row {
@@ -387,7 +387,7 @@ hideInToc: true
   align-items: center;
   gap: 1rem;
   width: 90%;
-  padding: 1rem 1.5rem !important;
+  padding: 0.85rem 1.5rem !important;
 }
 .flow-row.slidev-vclick-hidden {
   transform: translateX(-30px);
@@ -1071,7 +1071,11 @@ hideInToc: true
 hideInToc: true
 ---
 
-*Some of these questions touch on statistical and ML ideas — predictive modelling, causal inference, prescriptive optimisation — that you'll formalise later; for now, focus on the reasoning behind each answer.*
+<div class="note-text">
+
+*Some of these questions touch on ideas — predictive modelling, causal inference, prescriptive optimisation — that you'll formalise later; for now, focus on the reasoning behind each answer.*
+
+</div>
 
 <MCQ
   question="A hospital model predicts patient readmission risk using age, diagnosis, and length of stay. What type of analytics is this?"
@@ -1084,6 +1088,12 @@ hideInToc: true
   :correct="2"
   explanation="The model uses historical features to estimate a future probability (readmission risk). That is predictive analytics. It does not yet recommend what to do about it — that would be prescriptive."
 />
+
+<style>
+/* The MCQ fills 100% height for standalone use; with the preamble above it
+   this slide would overflow by exactly the preamble's height. */
+.mcq-container { height: calc(100% - 5rem) !important; }
+</style>
 
 ---
 hideInToc: true
