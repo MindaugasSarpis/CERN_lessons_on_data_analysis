@@ -153,7 +153,7 @@ hideInToc: true
 
 ## 👁️ **Not all visual channels are equal**
 
-Cleveland & McGill's experiments ranked how accurately humans decode different visual encodings of quantity. Put the signal on the most accurate channel available.
+Cleveland & McGill's classic experiments (1984), extended by later crowdsourced replications (Heer & Bostock 2010), ranked how accurately humans decode different visual encodings of quantity. Put the signal on the most accurate channel available.
 
 </div>
 
@@ -220,13 +220,6 @@ hideInToc: true
 <img class="fig" src="/figures/cwilke_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
-layout: iframe
-hideInToc: true
-disabled: true
-url: https://datavizcatalogue.com/
----
-
----
 hideInToc: true
 layout: image
 backgroundSize: cover
@@ -285,7 +278,6 @@ A legend is a key component of a plot that explains the meaning of the data. It 
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # What's **Wrong?**
@@ -300,7 +292,6 @@ disabled: true
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # What's **Wrong?**
@@ -315,7 +306,6 @@ disabled: true
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # **Corrected**
@@ -330,7 +320,6 @@ disabled: true
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # **Corrected**
@@ -525,7 +514,6 @@ hideInToc: true
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # What's **Wrong?**
@@ -540,7 +528,6 @@ disabled: true
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # **Corrected**
@@ -555,7 +542,6 @@ disabled: true
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # What's **Wrong?**
@@ -570,7 +556,6 @@ disabled: true
 
 ---
 hideInToc: true
-disabled: true
 ---
 
 # Stacked **Bar Charts**
@@ -669,21 +654,6 @@ hideInToc: true
 
 ---
 hideInToc: true
-disabled: true
----
-
-# What's **Wrong?**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Poor color choices — rainbow palettes can confuse meaning and are not accessible to colorblind viewers
-
-</div>
-
-<img class="fig" src="/figures/cwilke_color_colorblind_simulation.svg" style="display:block;margin:0 auto;max-height:370px;">
-
----
-hideInToc: true
 layout: image
 backgroundSize: contain
 image: /figures/cwilke_amounts_health_heatmap.svg
@@ -740,14 +710,6 @@ image: /figures/cwilke_distributions_i_titanic_density.svg
 
 ---
 hideInToc: true
-disabled: true
-layout: image
-backgroundSize: contain
-image: /figures/data_vis_hist_comp.png
----
-
----
-hideInToc: true
 ---
 
 # Bin **Width Matters**
@@ -759,22 +721,6 @@ hideInToc: true
 </div>
 
 <img class="fig" src="/figures/cwilke_distributions_i_titanic_hist_binwidth.svg" style="display:block;margin:0 auto;max-height:340px;">
-
----
-hideInToc: true
-disabled: true
-layout: image
-backgroundSize: contain
-image: /figures/data_vis_hist_scientific_1.png
----
-
----
-hideInToc: true
-disabled: true
-layout: image
-backgroundSize: contain
-image: /figures/data_vis_hist_scientific_2.png
----
 
 ---
 hideInToc: true
@@ -981,7 +927,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🥧 Pies work when the "whole" is unambiguous and the parts sum to an obviously complete 100%. The 1976 German Bundestag: four parties, one legislature, a simple supermajority story.
+🥧 Pies work when the "whole" is unambiguous and the parts sum to an obviously complete 100%. The 1976 German Bundestag: three groups (CDU/CSU, SPD, FDP), one legislature — the SPD–FDP coalition's **slim majority** is the whole story.
 
 </div>
 

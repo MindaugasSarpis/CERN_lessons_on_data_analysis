@@ -134,15 +134,18 @@ improvements from the same review were applied directly (see commits of
 
 ## L07 Data Visualisation
 
-- 12 `disabled: true` draft slides remain in the file (legend what's-wrong
-  series, bar-chart series, colorblind, histogram images) — delete or
-  re-enable deliberately. One (colorblind) has a caption/image mismatch.
-- 1976 Bundestag pie example: verify "four parties…supermajority" against
-  Wilke's figure (likely three groups, slim majority).
-- Okabe-Ito caption on the rainbow-fix figure: verify the figure isn't a
-  continuous (viridis-like) fix.
-- Perceptual-hierarchy attribution to Cleveland & McGill folds in later
-  extensions.
+- ✅ RESOLVED (2026-07-03): 13 disabled slides triaged — 8 re-enabled as
+  active-recall "what's wrong / corrected" pairs (legend series + bar-chart
+  series, figures verified on disk); 5 deleted (3 superseded histogram raster
+  drafts, the datavizcatalogue iframe, and the redundant colorblind slide
+  already covered by the rainbow→Okabe-Ito section).
+- ✅ RESOLVED (2026-07-03): Bundestag caption corrected to three groups
+  (CDU/CSU 243, SPD 214, FDP 39), SPD–FDP slim majority (per Wilke ch. 10).
+- ✅ RESOLVED (2026-07-03): rainbow-fix figure verified — it uses the exact
+  Okabe-Ito hexes (#e69f00/#56b4e9/#009e73), a categorical recolour, so the
+  caption is correct; no change.
+- ✅ RESOLVED (2026-07-03): perceptual-hierarchy slide now credits Cleveland
+  & McGill (1984) *and* the Heer & Bostock (2010) replication.
 
 ## L08 Version Control
 
