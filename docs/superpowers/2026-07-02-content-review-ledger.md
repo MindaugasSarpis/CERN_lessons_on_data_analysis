@@ -114,20 +114,23 @@ improvements from the same review were applied directly (see commits of
 
 ## L06 Concepts of Data Analysis
 
-- Clinical-trial "cautionary tale" reads as a real event but is unsourced —
-  cite or label as hypothetical.
-- FAIR quote slide is verbatim GO FAIR text without attribution.
-- 23andMe example — company went bankrupt in 2025, database sold; could become
-  a teaching point.
-- Facebook iframe embed: network + third-party dependency, bypasses the
-  VideoPlayer convention.
-- SMART expanded with "actionable" (standard is "Achievable").
-- "Invenio" listed as a metadata schema (it's a repository platform).
-- "dissertation-grade dataset" — CERN Open Data terminology is
-  "research-grade"/"derived".
-- Overfitting MCQ distractor "depends on the test set performance" is arguably
-  also correct.
-- "Cleaning is 60–80 % of the work" — folklore figure stated as fact.
+- ✅ RESOLVED (2026-07-03): cautionary tale replaced with the documented
+  Reinhart–Rogoff (2010) spreadsheet-error case (Herndon et al. 2013); the
+  four checklist gaps re-mapped to what actually went wrong.
+- ✅ RESOLVED (2026-07-03): FAIR quote attributed to GO FAIR / Wilkinson
+  et al. (2016).
+- ✅ RESOLVED (2026-07-03): 23andMe turned into a teaching point — 2025
+  bankruptcy + database sale, "data can outlive the company".
+- ✅ RESOLVED (2026-07-03): Facebook iframe replaced with a local link card
+  (no third-party embed, works offline).
+- ✅ RESOLVED (2026-07-03): SMART "actionable" → "achievable".
+- ✅ RESOLVED (2026-07-03): Invenio (a platform) replaced with real schemas
+  (Dublin Core, DataCite, schema.org).
+- ✅ RESOLVED (2026-07-03): "dissertation-grade" → "research-grade".
+- ✅ RESOLVED (2026-07-03): overfitting MCQ reworded so exactly one option is
+  defensible (question now asks about training accuracy alone).
+- ✅ RESOLVED (2026-07-03): "60–80 % of the work" → "often the biggest time
+  sink" (folklore no longer stated as a fact).
 
 ## L07 Data Visualisation
 

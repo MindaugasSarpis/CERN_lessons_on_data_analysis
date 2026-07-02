@@ -587,7 +587,7 @@ hideInToc: true
 
 <div class="note-text">
 
-#### 🧪 **23andMe** or **Ancestry.com**? Comparing against *reference populations*
+#### 🧪 **23andMe** / **Ancestry.com** — comparing against *reference populations*. *(23andMe filed for bankruptcy in 2025 and its genetic database was sold — a reminder that your data can outlive the company that collected it.)*
 
 </div>
 
@@ -752,17 +752,12 @@ hideInToc: true
 ---
 
 <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 2.5rem; padding: 0 3rem 0 2rem;">
-  <div style="flex: 0 1 auto; max-width: 38%; font-size: 1.8em; line-height: 1.3; font-weight: 500; text-align: right;">
+  <div style="flex: 0 1 auto; max-width: 45%; font-size: 1.8em; line-height: 1.3; font-weight: 500; text-align: right;">
     There are some things <br/><em style="opacity: 0.85;">no data model</em> <br/>can predict.
   </div>
-  <div style="height: 88%; aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.45); border: 2px solid rgba(255,255,255,0.15); flex-shrink: 0;">
-    <iframe
-      src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1963960414998958&show_text=false"
-      style="width: 100%; height: 100%; border: 0; display: block;"
-      scrolling="no"
-      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-      allowfullscreen>
-    </iframe>
+  <div class="card card-accent card-glass pad-tight" style="height: 82%; aspect-ratio: 9 / 16; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0;">
+    <div style="font-size: 3.5em;">🎬</div>
+    <div class="note-text mt-sm">Play the reel live:<br/><a href="https://www.facebook.com/reel/1963960414998958">facebook.com/reel/…</a></div>
   </div>
 </div>
 
@@ -1620,9 +1615,9 @@ hideInToc: true
 hideInToc: true
 ---
 
-# What the checklist catches · **a cautionary tale**
+# What the checklist catches · **a documented case**
 
-<span class="def-sub">A published clinical trial reported a new drug as **safe and effective**. Three years later, a re-audit found it wasn't. Each gap below maps back to a checklist dimension.</span>
+<span class="def-sub">In 2010 an influential economics paper (Reinhart & Rogoff) linked high public debt to negative growth. A 2013 re-analysis found the result rested on a **spreadsheet error and selective data** — each gap below maps back to a checklist dimension. *(Details simplified; see Herndon, Ash & Pollin 2013.)*</span>
 
 <div class="grid-2 gap-md mt-md tidy-cards">
 
@@ -1630,7 +1625,7 @@ hideInToc: true
 
 ## ❓ **Completeness missed**
 
-~20 % of adverse-event reports were filed in a secondary system that was never joined to the primary table. The visible dataset looked clean.
+Several countries' high-debt, high-growth years were **left out of the average** — the visible spreadsheet looked complete, but rows were silently excluded.
 
 </div>
 
@@ -1638,7 +1633,7 @@ hideInToc: true
 
 ## 🔗 **Consistency missed**
 
-Two sites logged dosage in mg, one in mg/kg. The unit column was dropped during an "obvious" cleanup step upstream.
+Countries were weighted inconsistently, so one country's single bad year counted as much as another's two decades of data.
 
 </div>
 
@@ -1646,7 +1641,7 @@ Two sites logged dosage in mg, one in mg/kg. The unit column was dropped during 
 
 ## 📐 **Validity missed**
 
-A handful of implausible lab values (negative blood pressure) were silently clipped to zero rather than flagged for review.
+A formula that was supposed to average a column of countries only spanned **part of the range** — the classic off-by-a-few spreadsheet slip.
 
 </div>
 
@@ -1841,14 +1836,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="You fit a model with 50 parameters to 60 data points and get 99.9 % accuracy on your training set. Should you celebrate?"
+  question="You fit a model with 50 parameters to 60 data points and get 99.9 % accuracy on your TRAINING set. What should you conclude from that number alone?"
   :options="[
-    'Yes — high accuracy means the model works',
-    'No — the model is likely overfitting',
-    'It depends on the test set performance'
+    'The model works — high training accuracy proves it',
+    'Almost nothing — with so many parameters, memorising the training data is expected; only held-out data can tell you if it generalises',
+    'The model must be underfitting',
+    'Training accuracy is the only metric that matters'
   ]"
   :correct="1"
-  explanation="With almost as many parameters as data points, the model is memorising the training data rather than learning patterns. This is classic overfitting — it will likely perform poorly on new data. Always evaluate on a held-out test set."
+  explanation="With nearly as many parameters as data points, a model can memorise the training set and score ~100 % without learning anything generalisable — classic overfitting. Training accuracy alone is uninformative; you must evaluate on a held-out test set (or via cross-validation)."
 />
 
 ---
@@ -2242,7 +2238,7 @@ Who will act on the result, on what timeline, and what changes if the answer fli
 </details>
 
 <details name="s1" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">📐 Make it <strong>SMART</strong> — specific, measurable, actionable, relevant, time-bound</span></summary>
+<summary><span class="dd-title">📐 Make it <strong>SMART</strong> — specific, measurable, achievable, relevant, time-bound</span></summary>
 <div class="dd-body">
 
 "Is it getting better?" → "Did mean API latency drop by ≥ 10% in Q1 vs Q4, for EU users?" A good question names the metric, the population, and the comparison.
@@ -2329,7 +2325,7 @@ No cleaning step downstream can undo a biased sample. If the data-generating pro
 hideInToc: true
 ---
 
-# 3. **Clean** — usually 60–80% of the work
+# 3. **Clean** — often the biggest time sink
 
 <div class="grid-2 gap-md dd-stack mt-md">
 
@@ -3370,6 +3366,8 @@ hideInToc: true
 
 ## The first step in **(re)using data** is to find them. **Metadata** and data should be easy to find for both humans and computers. Machine-readable metadata are essential for automatic discovery of datasets and services — a core component of the FAIRification process.
 
+<div class="note-text" style="text-align: right; margin-top: 1.5rem;">— GO FAIR, after Wilkinson et al. (2016), <em>Scientific Data</em></div>
+
 ---
 hideInToc: true
 ---
@@ -3576,7 +3574,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 📝 Publish rich metadata schemas (DCAT, schema.org, Invenio)
+## 📝 Publish rich metadata schemas (Dublin Core, DataCite, schema.org)
 
 </div>
 
@@ -3610,7 +3608,7 @@ hideInToc: true
 
 <div class="note-text">
 
-A 2011 CMS dissertation-grade dataset on opendata.cern.ch — annotated against each FAIR pillar.
+A 2011 CMS research-grade dataset on opendata.cern.ch — annotated against each FAIR pillar.
 
 </div>
 
