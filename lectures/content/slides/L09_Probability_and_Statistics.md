@@ -1,5 +1,4 @@
 ---
-mermaid: true
 background: /figures/background_intro.jpg
 
 class: text-left
@@ -40,7 +39,7 @@ hideInToc: true
 
 - ## Models require **parameter estimation**
 
-- ## Results must be **statistically significant**
+- ## Results must be **statistically significant** *(a term we'll make precise later in this lecture)*
 
 - ## Predictions come with **confidence intervals**
 
@@ -1116,6 +1115,12 @@ $$\sigma = \sqrt{\text{variance}}$$
 
 </div>
 
+<div class="card card-primary card-glass pad-compact mt-md">
+
+📦 **Quartiles & the IQR** — sort the data and split it into quarters: **Q1** (25th percentile), the **median** (Q2, 50th), and **Q3** (75th). The **interquartile range** $\text{IQR} = Q_3 - Q_1$ spans the middle 50% — the robust spread measure a **boxplot** draws.
+
+</div>
+
 ---
 hideInToc: true
 ---
@@ -1462,7 +1467,7 @@ hideInToc: true
 
 <div style="text-align: center; font-size: 1.1em; font-weight: bold; margin-top: 1.5rem;">
 
-🌟 **"The normal distribution is the pattern of patterns"**
+🌟 The normal distribution is, in a sense, the **pattern of patterns** — average enough independent things and normality emerges.
 
 </div>
 
@@ -1565,6 +1570,52 @@ $3\sigma$ measurement = extremely rare (0.3%)
 ⚛️ **Physics**: $5\sigma$ = gold standard (1 in 3.5M)
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Two Different Promises: LLN vs CLT
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎲 As $n$ grows, two distinct things happen to the sample mean $\bar{x}$ — students often blur them, but they answer different questions.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🎯 **Law of Large Numbers**
+
+*Where does $\bar{x}$ go?*
+
+- The sample mean **converges to the true mean** $\mu$
+- Justifies "collect more data → estimate gets closer to the truth"
+- Says nothing about the *shape* of the uncertainty
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔔 **Central Limit Theorem**
+
+*What shape is $\bar{x}$'s uncertainty?*
+
+- The distribution of $\bar{x}$ becomes **normal**, with spread $\sigma/\sqrt{n}$
+- Holds **whatever** the original distribution's shape
+- Justifies error bars, confidence intervals, and $\pm 2\,\text{SE}$
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 LLN says the estimate **lands on the truth**; CLT says **how it wobbles** on the way there.
 
 </div>
 
@@ -1726,6 +1777,48 @@ for ~95% confidence
 hideInToc: true
 ---
 
+# Standard Deviation **vs** Standard Error
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⚠️ The most-confused pair in statistics. They answer **different questions** — and only one shrinks as you collect more data.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📊 **Standard deviation (σ)**
+
+- Spread of the **individual data points**
+- "How variable is one measurement?"
+- **Does not** shrink with more data — it converges to the true spread of the population
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🎯 **Standard error (SE = σ/√n)**
+
+- Spread of the **estimate of the mean**
+- "How well do I know the average?"
+- **Shrinks as √n** — more data pins the mean down tighter
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Rule: describe your **data** with σ; state the uncertainty of a **result** with SE. Error bars on a mean should almost always be SE (or a CI), not σ.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Estimation
 
 <div class="grid-3 mt-md gap-md">
@@ -1839,6 +1932,50 @@ $\hat{\mu} = \bar{x}$ (sample mean) maximizes $L(\mu)$.
 </div>
 
 ---
+hideInToc: true
+---
+
+# Correlation **≠** Causation
+
+<div class="card card-warning card-glass pad-compact mt-sm glow">
+
+⚠️ A statistical association between two variables does **not** mean one causes the other. This is the single most abused idea in data analysis.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🍦 **The classic example**
+
+Ice-cream sales and drowning deaths are strongly correlated across the year.
+
+Neither causes the other — **summer heat** drives both. A hidden **confounder** creates the association.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧭 **What can produce a correlation?**
+
+- **Causation** (X → Y) — what we usually hope for
+- **Reverse causation** (Y → X)
+- A **confounder** driving both
+- **Selection bias** in how data was collected
+- Pure **coincidence** (especially with many variables)
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 To claim causation you need more than correlation — a **controlled experiment** (A/B test) or careful causal-inference methods. Observational correlation only flags *where to look*.
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -1924,7 +2061,7 @@ hideInToc: true
 - Quantify uncertainty (SEs, CIs, $\chi^2$)
 - Diagnose fit quality before trusting results
 
-<div class="meta-caption mt-sm">Next: apply these ideas to concrete fitting workflows.</div>
+<div class="meta-caption mt-sm">The rest of this section applies these ideas to concrete fitting workflows.</div>
 
 </div>
 

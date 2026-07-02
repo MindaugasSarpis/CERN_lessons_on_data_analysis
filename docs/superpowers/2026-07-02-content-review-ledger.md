@@ -161,10 +161,14 @@ improvements from the same review were applied directly (see commits of
 
 ## L09 Probability & Statistics
 
-- "Connecting to Data Fitting" teases L10, which is not in the published deck
-  — forward reference dangles for students this term.
-- Motivation slide mentions statistical significance; hypothesis testing is
-  explicitly deferred.
-- "The normal distribution is the pattern of patterns" quote has no
-  attribution.
-- Frontmatter `mermaid: true` with no Mermaid content (harmless).
+- ✅ RESOLVED (2026-07-03): "Connecting to Data Fitting" is the published
+  deck's finale and actually delivers the fitting content (least squares =
+  MLE, χ²); the one forward-looking caption reworded to reference "the rest
+  of this section" rather than a future lecture.
+- ✅ RESOLVED (2026-07-03): motivation's "statistically significant" bullet
+  now flags that the term is made precise later in the lecture.
+- ✅ RESOLVED (2026-07-03): "pattern of patterns" reworded as the lecture's
+  own aphorism (no false attribution).
+- ✅ RESOLVED (2026-07-03): unused `mermaid: true` frontmatter removed.
+- Added slides: LLN vs CLT (distinct promises), Standard Deviation vs
+  Standard Error (closes L07's forward reference), Correlation ≠ Causation.
