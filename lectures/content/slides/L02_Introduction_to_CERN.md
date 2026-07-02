@@ -29,6 +29,40 @@ layout: quote
 Werner Heisenberg
 
 ---
+hideInToc: true
+---
+
+# Today's Journey
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+🏛️ **What CERN is** — the laboratory, the LHC, and its impact beyond physics
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+📊 **Why data analysis is central there** — petabytes of collisions, and needles in haystacks
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+🎬 **A film tour across scales** — from the cosmos down to the quantum
+
+</div>
+
+<div class="card card-info card-glass pad-compact reveal-left" v-click>
+
+🎯 **Why these skills matter to you** — the same toolkit this course builds
+
+</div>
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -41,7 +75,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# What is CERN?
+# CERN at a Glance
 
 <div class="grid-2 mt-md gap-md">
 
@@ -90,7 +124,7 @@ hideInToc: true
 - A **27 km** circumference ring situated **100 m** underground
 - Accelerates protons to **99.9999991%** the speed of light
 - Collides particles **~1 billion times per second**
-- Operating temperature: **1.9 K** (~ -271.1°C) (colder than outer space)
+- Operating temperature: **1.9 K** (~ -271.3°C — colder than outer space)
 
 </div>
 
@@ -100,10 +134,10 @@ hideInToc: true
 
 ## 🔭 **Main Experiments**
 
-- **ATLAS** -- general-purpose detector
-- **CMS** -- general-purpose detector
-- **ALICE** -- heavy-ion collisions
-- **LHCb** -- matter-antimatter asymmetry
+- **ATLAS** — general-purpose detector
+- **CMS** — general-purpose detector
+- **ALICE** — heavy-ion collisions
+- **LHCb** — matter-antimatter asymmetry
 
 </div>
 
@@ -111,7 +145,7 @@ hideInToc: true
 
 ## 🏆 **Key Achievement**
 
-Discovery of the **Higgs boson** in **2012** -- confirmed the mechanism that gives particles their mass
+Discovery of the **Higgs boson** in **2012** — confirmed the mechanism that gives particles their mass
 
 Nobel Prize in Physics 2013
 
@@ -120,25 +154,32 @@ Nobel Prize in Physics 2013
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Why Data Analysis Matters at CERN
+# Why **Data**?
+
+---
+hideInToc: true
+---
+
+# Why <span class="gradient-text">Data Analysis</span> Matters at CERN
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-tight reveal-scale" v-click>
 
 ## 📊 **The Data Challenge**
 
-- LHC produces **~1 PB of data per second** of raw detector output
+- The LHC produces **~1 PB per second** of raw detector output
 - Only **~1 in a billion** collisions contains interesting physics
 - Must filter, reconstruct, and analyse in near real-time
 - Finding the Higgs required sifting through **trillions** of events
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-tight reveal-scale" v-click>
 
 ## 🔍 **Needle in a Haystack**
 
@@ -151,7 +192,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent card-glass pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md glow">
 
 💾 **Data Pipeline:** Raw detector signals &#8594; Event reconstruction &#8594; Data filtering (triggers) &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
 
@@ -175,7 +216,7 @@ hideInToc: true
 
 ## 🌐 **The World Wide Web**
 
-Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists -- now used by **5+ billion** people worldwide
+Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists — now used by **5+ billion** people worldwide
 
 </div>
 
@@ -183,7 +224,7 @@ Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scient
 
 ## 🖥️ **Computing Grid (WLCG)**
 
-The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** -- processes **200 PB** of data per year
+The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** — processes **200 PB** of data per year
 
 </div>
 
@@ -191,7 +232,7 @@ The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countrie
 
 ## 🏥 **Medical Applications**
 
-Particle accelerator technology enables **hadron therapy** for cancer treatment -- more precise than conventional radiotherapy
+Particle accelerator technology enables **hadron therapy** for cancer treatment — more precise than conventional radiotherapy
 
 </div>
 
@@ -199,7 +240,7 @@ Particle accelerator technology enables **hadron therapy** for cancer treatment 
 
 ## 📂 **Open Science**
 
-CERN **Open Data Portal** makes real collision data publicly available -- enabling education and independent research worldwide
+CERN **Open Data Portal** makes real collision data publicly available — enabling education and independent research worldwide
 
 </div>
 
@@ -330,16 +371,25 @@ Now we descend from the universe at large into the laboratory itself — the acc
 <VideoPlayer src="GTC_2020_1080p.mp4" autoplay   />
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Why **You** Need These Skills
+# From Films to **Skills**
+
+Every scene you just watched ends the same way — as data that someone has to turn into understanding.
+
+---
+hideInToc: true
+---
+
+# Why <span class="gradient-text">You</span> Need These Skills
 
 CERN turns raw collisions into discoveries with exactly the toolkit this course builds:
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-tight reveal-up" v-click>
 
 ## 📁 **Handling Massive Data**
 
@@ -347,7 +397,7 @@ Petabytes of detector output demand disciplined file handling, data formats, and
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-tight reveal-up" v-click>
 
 ## 🔀 **Working Together**
 
@@ -355,7 +405,7 @@ Thousands of scientists share one codebase — impossible without version contro
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-accent card-glass pad-tight reveal-up" v-click>
 
 ## 🐍 **Turning Signal into Insight**
 
@@ -363,7 +413,7 @@ Python and data-analysis tools transform readings into physics.
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-warning card-glass pad-tight reveal-up" v-click>
 
 ## 🎲 **Real or a Fluke?**
 
