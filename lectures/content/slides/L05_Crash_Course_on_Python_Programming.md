@@ -29,29 +29,29 @@ layout: quote
 hideInToc: true
 ---
 
-# Why Python
+# Why <span class="gradient-text">Python</span>
 
-<div class="card card-primary card-glass pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md reveal-left glow" v-click>
 
 ## 🌍 **Most Popular & Easy to Learn**
 
-Python is one of the most popular and easy to learn programming languages in the world
+Python is one of the most popular and easiest-to-learn programming languages in the world
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight mt-sm">
+<div class="card card-secondary card-glass pad-tight mt-sm reveal-left" v-click>
 
 ## 👥 **Large Community & Ecosystem**
 
-A large community of developers and users as well as a large number of libraries and frameworks make it a very versatile language
+A large community of developers and users, as well as a large number of libraries and frameworks, makes it a very versatile language
 
 </div>
 
-<div class="card card-success card-glass pad-tight mt-sm">
+<div class="card card-success card-glass pad-tight mt-sm reveal-left" v-click>
 
 ## 🆓 **Open-Source & Powerful**
 
-Python itself and many of its libraries and tools are open-source and free to use and at the same time much more powerful than many commercial tools
+Python itself and many of its libraries and tools are open-source and free to use — and at the same time much more powerful than many commercial tools
 
 </div>
 
@@ -107,9 +107,11 @@ All platforms offer free tiers with comprehensive Python content.
 hideInToc: true
 ---
 
+# Do You Have Python?
+
 <div class="card card-info card-glass pad-compact mt-md">
 
-## 🔍 **Do You Have Python?**
+## 🔍 **Check Your Installation**
 
 Open your terminal (VS Code: `` Ctrl+` ``) and run:
 
@@ -175,8 +177,8 @@ hideInToc: true
 
 - Indentation is crucial in Python
 - Python uses dynamic typing *(you don't declare types — Python infers them from the value)*
-- Python has a rich standard library and many third-party libraries (many built-in functions)
-- eg. `print()`, `len()`, `type()`, `int()`, `str()`, `list()`, `dict()`, etc.
+- Python has a rich standard library and many third-party libraries
+- Many built-in functions, e.g. `print()`, `len()`, `type()`, `int()`, `str()`, `list()`, `dict()`
 
 </div>
 
@@ -392,11 +394,57 @@ measurements.append(24.2)
 print(f"After append: {measurements}")
 
 # Filter: only values above 24
-# This is a list comprehension: [expr for item in list if condition]
-# — a compact for-loop that builds a list.
+# List comprehension — explained on the next slide
 above_24 = [m for m in measurements if m > 24]
 print(f"Above 24: {above_24}")
 ```
+
+---
+hideInToc: true
+---
+
+# List Comprehensions
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### 🔄 **Traditional Loop**
+
+```python
+squares = []
+for x in range(5):
+    squares.append(x**2)
+# [0, 1, 4, 9, 16]
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+#### ⚡ **Comprehension (Pythonic)**
+
+```python
+squares = [x**2 for x in range(5)]
+# [0, 1, 4, 9, 16]
+
+# With condition
+evens = [x for x in range(10) if x % 2 == 0]
+# [0, 2, 4, 6, 8]
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+#### 💡 **When to use**
+
+- Simple transformations and filters → comprehension
+- Complex logic with side effects → traditional loop
+
+</div>
 
 ---
 hideInToc: true
@@ -422,7 +470,7 @@ hideInToc: true
 
 ### 💡 **Tips**
 
-- Use `.get()`/`setdefault()` for optional keys; avoid `KeyError`s from direct indexing
+- Use `.get()`/`.setdefault()` for optional keys; avoid `KeyError`s from direct indexing
 - Nest dictionaries (e.g., parsed JSON) to represent hierarchical structures
 
 </div>
@@ -619,7 +667,7 @@ hideInToc: true
 
 ```py {monaco-run}
 # Classify particle energies
-energies = [0.5, 2.3, 8.1, 15.4, 3.2, 50.0, 1.1, 125.0]
+energies = [0.5, 8.1, 15.4, 50.0, 125.0]
 
 for e in energies:
     if e > 100:
@@ -642,7 +690,7 @@ layout: section
 hideInToc: true
 ---
 
-# Functions & **Patterns**
+# Functions & **Exceptions**
 
 ---
 hideInToc: true
@@ -721,45 +769,46 @@ for key, value in stats.items():
 *The `"""..."""` line is a **docstring** — it documents what the function does and shows up in `help()`.*
 
 ---
-layout: section
 hideInToc: true
 ---
 
-# Advanced **Patterns**
-
----
-hideInToc: true
----
-
-# List Comprehensions
+# Common Python Errors
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
-#### 🔄 **Traditional Loop**
+## 🐛 **Syntax & Indentation**
 
 ```python
-squares = []
-for x in range(5):
-    squares.append(x**2)
-# [0, 1, 4, 9, 16]
+# IndentationError
+if True:
+print("oops")  # missing indent!
+
+# SyntaxError
+print("hello"  # missing closing )
 ```
+
+- Python uses **whitespace** for structure
+- Every `if`, `for`, `def` needs an **indented** block
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
-#### ⚡ **Comprehension (Pythonic)**
+## 🐛 **Name & Type Errors**
 
 ```python
-squares = [x**2 for x in range(5)]
-# [0, 1, 4, 9, 16]
+# NameError
+print(undefined_variable)
 
-# With condition
-evens = [x for x in range(10) if x % 2 == 0]
-# [0, 2, 4, 6, 8]
+# TypeError
+result = "hello" + 42  # can't add str + int
+# Fix: "hello" + str(42)
 ```
+
+- Check **spelling** of variable names
+- Check **types** match the operation
 
 </div>
 
@@ -767,12 +816,18 @@ evens = [x for x in range(10) if x % 2 == 0]
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-#### 💡 **When to use**
+## 💡 **Debugging Tip**
 
-- Simple transformations and filters → comprehension
-- Complex logic with side effects → traditional loop
+Read the error message **bottom to top** — the last line tells you what went wrong, the lines above show where.
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Advanced **Patterns**
 
 ---
 hideInToc: true
@@ -822,7 +877,7 @@ for name, mass in zip(names, masses):
 
 #### 💡 **Tip**
 
-- `enumerate()` replaces the `for i in range(len(...)): ` anti-pattern
+- `enumerate()` replaces the `for i in range(len(...)):` anti-pattern
 - `zip()` stops at the shortest list
 
 </div>
@@ -910,60 +965,6 @@ with open("test.txt", "r") as file:
 </div>
 
 </div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Common Python Errors
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🐛 **Syntax & Indentation**
-
-```python
-# IndentationError
-if True:
-print("oops")  # missing indent!
-
-# SyntaxError
-print("hello"  # missing closing )
-```
-
-- Python uses **whitespace** for structure
-- Every `if`, `for`, `def` needs an **indented** block
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🐛 **Name & Type Errors**
-
-```python
-# NameError
-print(undefined_variable)
-
-# TypeError
-result = "hello" + 42  # can't add str + int
-# Fix: "hello" + str(42)
-```
-
-- Check **spelling** of variable names
-- Check **types** match the operation
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 💡 **Debugging Tip**
-
-Read the error message **bottom to top** — the last line tells you what went wrong, the lines above show where.
 
 </div>
 
@@ -1099,7 +1100,7 @@ print("\nNext up: NumPy and matplotlib will make this MUCH easier!")
 hideInToc: true
 ---
 
-# 🖥️ **Time to Write Real Python**
+# Time to Write Real Python
 
 The in-browser exercises were great for learning — now let's create an actual Python script you can run, share, and version-control.
 
@@ -1145,6 +1146,7 @@ hideInToc: true
 
 ## 🔄 **Save Your Progress with Git**
 
+**Good habit**: commit after each working milestone. Your future self will thank you.
 
 </div>
 
@@ -1159,19 +1161,13 @@ git commit -m "Add sensor temperature analysis script"
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
-
-**Good habit**: commit after each working milestone. Your future self will thank you.
-
-</div>
-
 </div>
 
 ---
 hideInToc: true
 ---
 
-# **What's Next?**
+# What's Next?
 
 You can now write Python. The upcoming data-analysis lectures build on it with three workhorse libraries:
 
