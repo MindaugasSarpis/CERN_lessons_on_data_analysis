@@ -569,7 +569,7 @@
    Opt-out by restyling within a local <style>.
    ============================================ */
 .card h2 {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.25;
   margin: 0;
 }
@@ -577,6 +577,16 @@
   font-size: 0.85rem;
   line-height: 1.4;
   margin: 0.3rem 0 0;
+}
+/* Lists follow the same scale as paragraphs — without this, list items
+   inherit the card's 1.1em base and render LARGER than the card heading. */
+.card ul,
+.card ol {
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.card li {
+  margin: 0.12em 0;
 }
 .card h2 + p,
 .card h2 + ul,

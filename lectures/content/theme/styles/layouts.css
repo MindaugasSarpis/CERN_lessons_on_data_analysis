@@ -144,3 +144,21 @@
   font-family: var(--font-display);
   letter-spacing: -0.015em;
 }
+
+/* Kinetic title signature: gradient accent bar under every content-slide h1.
+   Absolutely positioned so it adds zero layout height (no overflow risk).
+   Scoped to the default layout — centered/hero layouts have their own accents. */
+.slidev-layout.default h1 {
+  position: relative;
+}
+.slidev-layout.default h1::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  bottom: -0.14em;
+  width: 2.4em;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--grad-kinetic);
+  opacity: 0.9;
+}
