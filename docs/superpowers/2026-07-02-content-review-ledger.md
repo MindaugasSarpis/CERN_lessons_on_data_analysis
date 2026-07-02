@@ -68,10 +68,13 @@ improvements from the same review were applied directly (see commits of
 
 ## L03_2 Command Line
 
-- "`rm -rf /` deletes your entire system" — modern GNU rm refuses without
-  `--no-preserve-root`.
-- README/Markdown/version-control forward references precede those lectures.
-- "Working with Processes" (nohup, Start-Job) may exceed first-contact scope.
+- ✅ RESOLVED (2026-07-03): reworded to "`rm -rf` on the wrong directory" with
+  a note that modern rm refuses `/` but `rm -rf ~` has no guard.
+- ✅ RESOLVED (2026-07-03): the "Beyond the Basics" card already labels git/
+  Markdown/VS Code as upcoming lectures — verified sufficient; no unlabelled
+  forward references remain.
+- ✅ RESOLVED (2026-07-03): processes slide now carries an "optional
+  power-user detour" note.
 
 ## L03_3 Markdown
 

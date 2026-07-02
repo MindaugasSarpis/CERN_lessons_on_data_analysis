@@ -273,6 +273,98 @@ grep "analysis" *.txt
 </div>
 
 ---
+hideInToc: true
+---
+
+# Wildcards — Many Files at Once
+
+<div class="card card-info card-glass pad-compact mt-sm glow">
+
+## ✳️ **Patterns instead of names**
+
+The shell expands a **pattern** into every matching filename *before* the command runs — the command just sees a list of files.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🃏 **The patterns**
+
+- `*` — any number of characters: `*.csv`
+- `?` — exactly one character: `run_?.log`
+- `[ab]` — one character from a set: `fig[12].png`
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧪 **In action**
+
+```bash
+ls *.csv            # all CSV files here
+cp data_2026_*.csv backup/
+rm run_?.log        # run_1.log, run_A.log …
+```
+
+Works the same in PowerShell for file arguments.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ Wildcards + `rm` is the classic foot-gun: run `ls <pattern>` first to **see** what will match.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Finding Files
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🪟 **PowerShell**
+
+```powershell
+Get-ChildItem -Recurse -Filter *.csv
+Get-ChildItem -Recurse |
+  Where-Object Length -gt 100MB
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🐧 **macOS & Linux**
+
+```bash
+find . -name "*.csv"
+find . -size +100M
+find . -mtime -7     # changed last 7 days
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## 🔍 **`grep` finds text, `find` finds files**
+
+- "Which file mentions `calibration`?" → `grep -r "calibration" .`
+- "Where did that huge download go?" → `find ~ -size +1G`
+- Both search **recursively** — the whole directory tree below you
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -330,6 +422,56 @@ echo "Another line" >> notes.txt
 hideInToc: true
 ---
 
+# A Pipeline, Step by Step
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧪 **Question:** which detector reports the most errors? `log.txt` has one line per event: `sensor_A OK`, `sensor_B ERROR`, …
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+1️⃣ `grep "ERROR" log.txt` — keep only the error lines
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+2️⃣ `… | sort` — identical sensor names become neighbours
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+3️⃣ `… | uniq -c` — collapse repeats into `count name`
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left" v-click>
+
+4️⃣ `… | sort -nr | head -3` — numerically, biggest first, top three
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+
+```bash
+grep "ERROR" log.txt | sort | uniq -c | sort -nr | head -3
+```
+
+💡 Four small tools, one question answered — **no programming required.**
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Creating and Editing
 
 <div class="grid-2 mt-md gap-md">
@@ -376,7 +518,13 @@ hideInToc: true
 
 # Working with Processes
 
-<div class="grid-2 mt-md gap-md">
+<div class="note-text">
+
+*Optional power-user detour — skim it on first contact and return when you have a long-running analysis to babysit.*
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
@@ -461,6 +609,54 @@ ls -l *.csv | awk '$5 > 1048576 {print $9, $5}' \
 hideInToc: true
 ---
 
+# Did It Work? Exit Codes & Chaining
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🚦 Every command finishes with an invisible **exit code**: `0` = success, anything else = failure. The shell lets you build logic on top of it.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔗 **Chaining operators**
+
+```bash
+cmd1 && cmd2   # cmd2 only if cmd1 succeeded
+cmd1 || cmd2   # cmd2 only if cmd1 FAILED
+cmd1 ;  cmd2   # cmd2 regardless
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧪 **In practice**
+
+```bash
+mkdir results && cd results
+python analyse.py || echo "analysis failed!"
+echo $?          # print last exit code
+```
+
+`$LASTEXITCODE` in PowerShell.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 `&&` is your safety belt: "only continue **if that worked**" — you'll see it in install instructions everywhere.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Getting Help
 
 <div class="grid-2 mt-md gap-md">
@@ -518,7 +714,7 @@ hideInToc: true
 
 ## ⚠️ **Dangerous**
 
-- `rm -rf /` — deletes your entire system
+- `rm -rf` on the wrong directory — deleted **permanently**, no trash can *(modern `rm` refuses `/` itself, but `rm -rf ~` has no such guard)*
 - Running commands in the **wrong directory**
 - Overwriting files with `>` instead of appending with `>>`
 - Copy-pasting commands from the internet without reading them
@@ -583,6 +779,22 @@ hideInToc: true
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A folder contains: run_1.log, run_12.log, run_A.log, notes.txt. What does `rm run_?.log` delete?"
+  :options="[
+    'All four files',
+    'run_1.log, run_12.log and run_A.log',
+    'run_1.log and run_A.log',
+    'Nothing — ? is not a valid wildcard'
+  ]"
+  :correct="2"
+  explanation="? matches exactly one character, so run_1.log and run_A.log match but run_12.log (two characters) and notes.txt do not. This is why you run `ls run_?.log` first — see the match list before deleting it."
+/>
 
 ---
 hideInToc: true
