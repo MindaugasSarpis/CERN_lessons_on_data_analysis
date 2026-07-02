@@ -49,22 +49,27 @@ improvements from the same review were applied directly (see commits of
 
 ## L03_1_1 Crash Course on Computer Science
 
-- `first_transisor.jpg` misspelled asset name on disk.
-- "1 KB = 1,024 bytes" vs the table's "~1,000 bytes" — KB/KiB convention mix.
-- Python/NumPy examples appear before Python is taught (delivery order) —
-  possibly intentional teasers.
-- CSV/JSON listed under "Lossless compression" conflates uncompressed formats
-  with lossless compression.
-- ARM listed as little-endian (technically bi-endian; fine as simplification).
+- ✅ RESOLVED (2026-07-03): asset renamed to `first_transistor.jpg`
+  (reference updated).
+- ✅ RESOLVED (2026-07-03): warning card now explains the decimal kB vs
+  binary KiB conventions explicitly; table stays decimal and says so.
+- ✅ RESOLVED (2026-07-03): Python/NumPy examples labelled as previews
+  pointing at the Python crash course.
+- ✅ RESOLVED (2026-07-03): CSV/JSON reframed as uncompressed plain-text
+  formats inside the Lossless card ("that's why they zip so well").
+- ✅ RESOLVED (2026-07-03): "x86/x64 and (typically) ARM" — bi-endian
+  simplification acknowledged.
 
 ## L03_1_2 File Handling
 
-- `FileName.xxx` labelled "Camel case" is strictly PascalCase.
-- "Use **absolute** paths for scripts and configs" is contested advice —
-  relative-from-project-root is the usual reproducibility recommendation.
-- File-naming section closely tracks Harvard HMS RDM guidance — consider an
-  attribution line; verify the "40–50 characters" figure against the workbook.
-- ISO-8601 date bullet appears verbatim on two consecutive slides.
+- ✅ RESOLVED (2026-07-02): camel-case example corrected in the restyle batch.
+- ✅ RESOLVED (2026-07-03): advice inverted — scripts use project-root-relative
+  paths; absolute paths only for machine-specific config, never shared code.
+- ✅ RESOLVED (2026-07-03): attribution note linking HMS RDM added to the
+  File Naming Conventions slide; "at most 40–50 characters" phrasing kept
+  (upper bound, consistent with HMS guidance).
+- ✅ RESOLVED (2026-07-03): second ISO-8601 bullet replaced with the
+  *why* (dates sort correctly when placed first).
 
 ## L03_2 Command Line
 

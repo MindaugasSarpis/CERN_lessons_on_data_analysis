@@ -212,7 +212,13 @@ hideInToc: true
 
 # File Naming Conventions
 
-<div class="grid-2 mt-md gap-md">
+<div class="note-text">
+
+*The guidance in this section is adapted from [Harvard Medical School's Research Data Management](https://datamanagement.hms.harvard.edu/) best practices.*
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
@@ -310,7 +316,7 @@ hideInToc: true
 
 - Use default ordering: alphabetically, numerically, or chronologically
 
-- Use ISO 8601-formatted dates (YYYYMMDD or YYYY-MM-DD)
+- Put the date **first** when chronology matters — ISO 8601 dates sort correctly even in a plain alphabetical file listing
 
 </div>
 
@@ -353,6 +359,54 @@ hideInToc: true
 - File names should be at most 40-50 characters, and conventions should only use alphanumeric characters, dashes, and underscores
 
 - If you find that you are encoding a large amount of metadata in the file names, you should consider storing this metadata in a master spreadsheet with your data for future reference
+
+</div>
+
+---
+hideInToc: true
+---
+
+# When Names Aren't Enough: Sidecar Metadata
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🏷️ A filename holds three or four facts at most. The rest — instrument settings, units, operator, conditions — belongs in a **metadata file that travels with the data**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📑 **The sidecar pattern**
+
+```text
+data/
+|- 2026-03-14_run042.csv
+|- 2026-03-14_run042_README.txt
+|- samples_master.csv
+```
+
+One description file per dataset — or one master table describing every file.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ✍️ **What goes in it**
+
+- **Units** for every column *(the classic silent killer)*
+- Instrument + settings used
+- Date, operator, location
+- Known issues ("sensor 3 drifted after 14:00")
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Rule of thumb: if a fact is needed to **interpret** the numbers, it must be stored **next to** the numbers — not in your memory or an old email.
 
 </div>
 
@@ -459,6 +513,98 @@ Choose the structure that best fits your workflow — either is valid as long as
 hideInToc: true
 ---
 
+# Raw Data Is <span class="gradient-text">Read-Only</span>
+
+<div class="card card-warning card-glass pad-tight mt-md glow">
+
+## 🔒 **The one rule that saves projects**
+
+**Never edit a raw data file.** Not to fix a typo, not to delete an obvious outlier, not "just this once."
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-scale" v-click>
+
+## 📥 **`data/raw/`**
+
+- Exactly as collected or downloaded
+- Treat as **untouchable** — your only link back to reality
+- If it changes, every result becomes unverifiable
+
+</div>
+
+<div class="card card-success card-glass pad-tight reveal-scale" v-click>
+
+## ⚙️ **`data/processed/`**
+
+- Everything derived from raw — **by a script**
+- Safe to delete at any time: rerun the script and it comes back
+- Corrections live in **code**, where they are visible and repeatable
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md reveal-up" v-click>
+
+💡 Test yourself: could you delete everything *except* `data/raw/` and the scripts, and rebuild the project? If yes, your structure is right.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The README: Your Project's Front Page
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📄 A `README` is a plain-text file at the project root that tells a stranger — including **you, six months from now** — what this project is and how to use it.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📋 **A minimal README records**
+
+- What the project is (one paragraph)
+- Where the data **came from** (provenance, dates, units)
+- How to **regenerate** the results, step by step
+- Who to contact
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧪 **Example skeleton**
+
+```text
+my_project/
+|- README.md   <- you are here
+|- data/raw/
+|- data/processed/
+|- scripts/
+|- results/
+```
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Writing READMEs gets much nicer with **Markdown** — covered in its own lecture shortly.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Absolute vs Relative Paths
 
 <div class="grid-2 mt-md gap-md">
@@ -501,7 +647,7 @@ ls
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 Use `pwd` to check where you are, then decide: **absolute** for scripts and configs, **relative** for interactive navigation.
+💡 In scripts, prefer paths **relative to the project root** — the project then works on any machine and for any collaborator. Absolute paths belong only in machine-specific configuration (and never in shared code).
 
 </div>
 
@@ -597,6 +743,46 @@ hideInToc: true
 
 ---
 layout: center
+hideInToc: true
+---
+
+# Archiving: Freeze What You Publish
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📦 When a thesis chapter, paper, or report goes out, **freeze the exact state** of the data and code that produced it.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+🗜️ **Bundle** — one archive: data + scripts + README (`thesis_ch3_2026-07-03.zip`)
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+🔐 **Fingerprint** — store a checksum next to it, so corruption or tampering is detectable *(how checksums work: the Computer Science lecture)*
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+🏛️ **Deposit** — university repository or a service like Zenodo, which gives your archive a permanent citable identifier (a **DOI**)
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+
+💡 "Which exact version of the data made Figure 3?" — with an archive, that question has an answer years later.
+
+</div>
+
+---
 hideInToc: true
 ---
 
