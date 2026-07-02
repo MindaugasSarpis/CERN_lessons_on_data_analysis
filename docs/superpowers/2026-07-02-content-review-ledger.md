@@ -33,16 +33,19 @@ improvements from the same review were applied directly (see commits of
 
 ## L02 Introduction to CERN
 
-- "5-sigma: less than 1 in 3.5 million chance of being wrong" misstates
-  p-value semantics (it's the probability of a background fluctuation, not of
-  the discovery being wrong) — will clash with L09.
-- Pipeline order "Event reconstruction → Data filtering (triggers)" — triggers
-  actually run before full offline reconstruction.
-- Aging figures to re-verify each term: 24 member states; 17,000+ scientists /
-  110+ nations; ~1 PB/s; 200 PB/year (Run 3 now exceeds this); 5+ billion
-  web users.
-- `Perseverence_Rover_Landing_NASA.mp4` misspells Perseverance (matches the
-  on-disk asset; renaming touches the asset too).
+- ✅ RESOLVED (2026-07-03): 5-sigma restated as background-fluctuation
+  frequency ("if there were no new particle…"), teasered to L09, and turned
+  into an MCQ whose first distractor is the old misreading.
+- ✅ RESOLVED (2026-07-03): pipeline reordered — trigger selection now
+  precedes event reconstruction; a dedicated "From Collision to Dataset"
+  slide walks the 40 MHz → L1 → HLT cascade.
+- ✅ RESOLVED (2026-07-03): figures re-verified — 25 member states (Slovenia
+  2025), "(as of 2026)" suffixes added; WLCG card now says "hundreds of
+  petabytes per year". Still aging by design; re-verify each term.
+- ✅ RESOLVED (2026-07-03): local file + slide reference renamed to
+  Perseverance; the `fallback` prop pins the old misspelled release-asset
+  URL. Owner action still open: re-upload the release asset under the
+  correct name, then drop the fallback.
 
 ## L03_1_1 Crash Course on Computer Science
 

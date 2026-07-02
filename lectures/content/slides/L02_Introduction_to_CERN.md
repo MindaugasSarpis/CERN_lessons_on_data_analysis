@@ -85,7 +85,7 @@ hideInToc: true
 
 - **European Organization for Nuclear Research**
 - Founded in **1954** by 12 European states
-- Today: **24 member states**, thousands of visiting scientists
+- Today: **25 member states** *(as of 2026)*, thousands of visiting scientists
 - Located at the **French-Swiss border** near Geneva
 
 </div>
@@ -154,6 +154,106 @@ Nobel Prize in Physics 2013
 </div>
 
 ---
+hideInToc: true
+---
+
+# The Accelerator <span class="gradient-text">Chain</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔗 No single machine takes protons from a hydrogen bottle to near light speed — the LHC is only the **last link in a chain**, each accelerator handing faster particles to the next.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+1️⃣ **LINAC4** — a linear accelerator kicks things off: **160 MeV**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+2️⃣ **PS Booster → Proton Synchrotron** — first rings: **2 GeV → 26 GeV**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+3️⃣ **Super Proton Synchrotron (SPS)** — 7 km ring: **450 GeV**
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left" v-click>
+
+4️⃣ **LHC** — 27 km ring: **6.8 TeV per beam** *(Run 3)* — then the beams are made to cross inside the detectors
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+
+💡 Each machine was once CERN's frontier — today's record-holder is tomorrow's injector.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# How a Detector <span class="gradient-text">Sees</span> a Collision
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧅 Detectors like ATLAS are built as **layers of an onion** around the collision point — each layer measures a different property of the particles flying out.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+
+## 🌀 **Tracker** *(innermost)*
+
+Charged particles bend in a magnetic field — the curvature of each track gives its **momentum**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+
+## ⚡ **EM Calorimeter**
+
+Stops **electrons and photons**, measuring the **energy** they deposit
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
+
+## 🔨 **Hadronic Calorimeter**
+
+Stops heavier particles made of quarks (protons, neutrons, pions) — again measuring **energy**
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-scale" v-click>
+
+## 🧲 **Muon System** *(outermost)*
+
+**Muons** punch through everything else — dedicated outer chambers catch them
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+
+💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -186,7 +286,7 @@ hideInToc: true
 - Collision events produce **detector readings** (energy, momentum, position)
 - Signal events look almost identical to background noise
 - Statistical methods decide if a discovery is **real or a fluctuation**
-- The 5-sigma standard: less than **1 in 3.5 million** chance of being wrong
+- The 5-sigma standard: if there were **no new particle**, a background fluctuation this strong would appear in fewer than **1 in 3.5 million** experiments *(made precise in the Probability & Statistics lecture)*
 
 </div>
 
@@ -194,7 +294,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md glow">
 
-💾 **Data Pipeline:** Raw detector signals &#8594; Event reconstruction &#8594; Data filtering (triggers) &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
+💾 **Data Pipeline:** Raw detector signals &#8594; Trigger selection (real-time filtering) &#8594; Event reconstruction &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
 
 <div class="mt-sm" style="font-size: 0.85em; opacity: 0.85;">
 
@@ -203,6 +303,78 @@ Don't worry about the details yet — every stage here is a skill you'll build o
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# From Collision to <span class="gradient-text">Dataset</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🚦 Storing 1 PB **every second** is impossible — the experiments decide **in real time** which collisions are worth keeping. This selection is called the **trigger**.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+💥 **~40 million** bunch crossings per second inside each detector
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+⚡ **Level-1 trigger** — custom electronics decide in **microseconds** → ~**100,000** events/s survive
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+🖥️ **High-Level Trigger** — a computing farm inspects the full event → a few **thousand** events/s written to storage
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left" v-click>
+
+💾 Only these survivors become the **datasets** physicists analyse
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+
+⚠️ A trigger decision is **final** — discarded collisions are gone forever. Deciding what to keep is itself a data-analysis problem.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<div class="note-text mb-sm">
+
+*Check your reading of the previous slides — this one trips up professionals too.*
+
+</div>
+
+<MCQ
+  question="The Higgs discovery met the '5-sigma' standard. What does that actually mean?"
+  :options="[
+    'There is less than a 1-in-3.5-million chance the discovery is wrong',
+    'If there were no new particle, a background fluctuation this strong would occur in fewer than 1 in 3.5 million experiments',
+    'The Higgs mass was measured to 5 decimal places',
+    'Five independent experiments confirmed the signal'
+  ]"
+  :correct="1"
+  explanation="5 sigma bounds how often pure background would fake a signal this strong — it says nothing directly about the probability that the discovery itself is right or wrong. The first option is the classic misreading. You will make this precise with p-values in the Probability & Statistics lecture."
+/>
+
+<style>
+.mcq-container { height: calc(100% - 3.5rem) !important; }
+</style>
 
 ---
 hideInToc: true
@@ -224,7 +396,7 @@ Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scient
 
 ## 🖥️ **Computing Grid (WLCG)**
 
-The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** — processes **200 PB** of data per year
+The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** — storing **hundreds of petabytes** of new data every year
 
 </div>
 
@@ -243,6 +415,46 @@ Particle accelerator technology enables **hadron therapy** for cancer treatment 
 CERN **Open Data Portal** makes real collision data publicly available — enabling education and independent research worldwide
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Planet-Sized <span class="gradient-text">Computer</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🌍 No single data centre can process the LHC's output — the work is spread across a **tiered global grid** *(as of 2026: 170+ sites, 42 countries, ~1.4 million CPU cores)*.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+🏛️ **Tier 0 — CERN** · the custodial copy of all raw data on tape, first-pass reconstruction
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+🏢 **Tier 1 — ~15 national labs** · second copies, large-scale reprocessing, round-the-clock links to CERN
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+🏫 **Tier 2 — ~150 universities** · simulation and the everyday analyses of individual physicists
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+
+💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable.
 
 </div>
 
@@ -275,7 +487,7 @@ Watch for the **change in scale**: the same urge to observe, measure, and unders
 
 ---
 
-<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" autoplay   />
+<VideoPlayer src="Perseverance_Rover_Landing_NASA.mp4" fallback="https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis/releases/download/videos/Perseverence_Rover_Landing_NASA.mp4" autoplay   />
 
 ---
 
