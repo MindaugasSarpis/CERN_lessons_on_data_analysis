@@ -317,6 +317,8 @@ hideInToc: true
 
 </div>
 
+<div class="note-text mt-sm">For a document with many links, <strong>reference style</strong> keeps prose readable: <code>[CERN][1]</code> in the text, <code>[1]: https://home.cern</code> at the bottom.</div>
+
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
@@ -324,12 +326,12 @@ hideInToc: true
 ## 🖼️ **Images**
 
 ```
-![Markdown Logo](figures/markdown-logo.svg)
+![Markdown Logo](figures/markdown_mark.svg)
 ```
 
 <div class="mt-sm">
 
-![Markdown Logo](https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg)
+<img src="/figures/markdown_mark_light.svg" alt="Markdown Logo" class="h-24">
 
 </div>
 
@@ -474,6 +476,46 @@ hideInToc: true
 ```
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Where You'll Meet Markdown Again
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+📄 **Project READMEs** — the front page of every repository *(you'll version-control one in the Git lecture)*
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+📓 **Jupyter notebooks** — every text cell between your Python code is Markdown
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+🖥️ **These very slides** — the deck you're looking at is written in Markdown (Slidev)
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left" v-click>
+
+🌐 **Issues, wikis, chat** — GitHub/GitLab discussions, MkDocs sites, even Discord messages
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md reveal-up" v-click>
+
+💡 One hour of Markdown pays off for the rest of your career — it's the *lingua franca* of technical writing.
 
 </div>
 

@@ -83,9 +83,10 @@ improvements from the same review were applied directly (see commits of
 
 ## L03_3 Markdown
 
-- Rendered Markdown-logo image pulls from Wikimedia at lecture time (network
-  dependency) and is nearly invisible black-on-dark; consider a local light
-  asset.
+- ✅ RESOLVED (2026-07-03): local light-recoloured mark created at
+  `public/figures/markdown_mark_light.svg` and referenced instead of the
+  black-on-dark Wikimedia URL. Also added: reference-style-links note and a
+  "Where You'll Meet Markdown Again" closing-loop slide.
 
 ## L03_4 VS Code
 
