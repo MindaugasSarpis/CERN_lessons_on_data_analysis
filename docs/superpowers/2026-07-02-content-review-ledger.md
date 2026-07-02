@@ -103,11 +103,14 @@ improvements from the same review were applied directly (see commits of
 
 ## L05 Python
 
-- Triple-quoted strings taught as "multi-line comments" (they're string
-  literals/docstrings) — common simplification.
-- "All platforms offer free tiers" — dubious for Udemy/Codecademy.
-- 13.6 TeV attributed to ATLAS as a dict key (it's the collider's Run-3
-  energy; will also age).
+- ✅ RESOLVED (2026-07-03): comment card now says it's a string literal that
+  *works* like a comment; `#` named as the only true comment; docstring
+  cross-reference added.
+- ✅ RESOLVED (2026-07-03): platform list rebalanced toward fully-free
+  resources (official tutorial, freeCodeCamp, Kaggle Learn); paid platforms
+  labelled honestly.
+- ✅ RESOLVED (2026-07-03): dict key renamed `collision_energy_TeV` with
+  "the LHC's Run-3 energy" comment — ages visibly.
 
 ## L06 Concepts of Data Analysis
 

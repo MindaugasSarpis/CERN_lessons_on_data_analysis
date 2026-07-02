@@ -88,14 +88,14 @@ hideInToc: true
 
 ## 🎓 **Free Introductory Courses**
 
-- **Codecademy** — Interactive Python lessons
-- **Coursera** — University-level courses
-- **edX** — Harvard/MIT offerings
-- **Udemy** — Beginner-friendly tutorials
+- **The official Python tutorial** — docs.python.org, fully free
+- **Coursera / edX** — university courses, free to audit
+- **freeCodeCamp & Kaggle Learn** — fully free, hands-on
+- **Codecademy / Udemy** — polished, but the good parts are usually paid
 
 <div class="note-text mt-sm">
 
-All platforms offer free tiers with comprehensive Python content.
+Free coverage varies by platform — the fully-free options above are more than enough for this course.
 
 </div>
 
@@ -195,12 +195,13 @@ hideInToc: true
 ```
 
 ```python
-"""
-This is a
-multi-line
-comment
-"""
+"""Strictly speaking this is a
+string literal, not a comment —
+but an unassigned one works
+like a multi-line comment."""
 ```
+
+<div class="note-text mt-sm">`#` is Python's only true comment. Triple-quoted strings become <strong>docstrings</strong> when placed first in a function — you'll meet those soon.</div>
 
 </div>
 
@@ -378,6 +379,99 @@ customer_info = ["Alice", 25, "New York", "Premium", True]
 hideInToc: true
 ---
 
+# Strings for Data Wrangling
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧵 Three string methods do most of the work when reading real data files:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### ✂️ **`.strip()` and `.split()`**
+
+```python
+line = "  23.4, 25.1, 22.8 \n"
+clean = line.strip()        # no whitespace
+parts = clean.split(",")    # list of pieces
+# ['23.4', ' 25.1', ' 22.8']
+values = [float(p) for p in parts]
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+#### 🔗 **`.join()` — the reverse**
+
+```python
+names = ["run1", "run2", "run3"]
+print(", ".join(names))
+# run1, run2, run3
+```
+
+Build output lines and filenames from lists.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 `strip → split → convert` is the classic recipe for parsing a line of a data file — you'll use it in the file-handling section shortly.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Tuples, Sets & Unpacking
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### 📌 **Tuples — frozen lists**
+
+```python
+point = (3, 4)          # can't be modified
+x, y = point            # unpacking!
+a, b = b, a             # the classic swap
+```
+
+Ideal for things that belong together: coordinates, (name, value) pairs.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+#### 🎯 **Sets — no duplicates**
+
+```python
+hits = [3, 7, 3, 2, 7, 7]
+set(hits)         # {2, 3, 7}
+len(set(hits))    # 3 distinct sensors
+7 in set(hits)    # fast membership test
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 You've already used tuple unpacking without noticing: `for key, value in data.items()` unpacks a tuple on every loop turn.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Try It — Lists in Action
 
 ```py {monaco-run}
@@ -445,6 +539,22 @@ evens = [x for x in range(10) if x % 2 == 0]
 - Complex logic with side effects → traditional loop
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="After running:  a = [1, 2, 3]   then   b = a   then   b.append(4) — what is `a`?"
+  :options="[
+    '[1, 2, 3] — b is a copy, so a is unchanged',
+    '[1, 2, 3, 4] — a and b are the same list',
+    'An error — lists cannot be assigned to two names',
+    '[4] — b replaces the contents of a'
+  ]"
+  :correct="1"
+  explanation="Assignment never copies in Python — b = a just gives the same list a second name, so changes through either name are visible through both. To get an independent copy, use b = a.copy() or b = list(a). This aliasing surprise is one of the most common beginner bugs."
+/>
 
 ---
 hideInToc: true
@@ -576,7 +686,7 @@ hideInToc: true
 experiment = {
     "name": "ATLAS",
     "location": "Geneva",
-    "energy_TeV": 13.6,
+    "collision_energy_TeV": 13.6,  # the LHC's Run-3 energy
     "active": True,
     "detectors": ["inner tracker", "calorimeter", "muon spectrometer"]
 }
