@@ -31,9 +31,9 @@ layout: quote
 hideInToc: true
 ---
 
-# Markdown
+# <span class="gradient-text">Markdown</span>
 
-<div class="card card-info card-glass pad-tight">
+<div class="card card-info card-glass pad-tight reveal-left" v-click>
 
 ## 📝 **What is Markdown?**
 
@@ -46,7 +46,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-tight reveal-up" v-click>
 
 ## 🎯 **Purpose**
 
@@ -54,7 +54,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-tight reveal-up" v-click>
 
 ## 🔧 **Used In**
 
@@ -65,6 +65,13 @@ GitHub READMEs • Jupyter Notebooks • Slidev • Jekyll • Hugo • Obsidian
 </div>
 
 </div>
+
+---
+hideInToc: true
+layout: section
+---
+
+# Markdown **Syntax**
 
 ---
 hideInToc: true
@@ -87,7 +94,7 @@ hideInToc: true
 ###### Header 6
 ```
 
-<div class="note-text mt-sm">Use `#` for different header levels — more `#` symbols mean smaller headers</div>
+<div class="note-text mt-sm">Use <code>#</code> for different header levels — more <code>#</code> symbols mean smaller headers</div>
 
 </div>
 
@@ -124,7 +131,7 @@ hideInToc: true
 ~~Strikethrough~~
 ```
 
-<div class="note-text mt-sm">Combine them: `***bold italic***` or `**~~bold strikethrough~~**`</div>
+<div class="note-text mt-sm">Combine them: <code>***bold italic***</code> or <code>**~~bold strikethrough~~**</code></div>
 
 </div>
 
@@ -176,7 +183,7 @@ First line with two spaces at the end.··
 Second line appears below.
 ```
 
-<div class="note-text mt-sm">Add **two spaces** at the end of a line, or use `<br>`, to force a line break <em>within</em> the same paragraph. Without them, adjacent lines merge into one.</div>
+<div class="note-text mt-sm">Add <strong>two spaces</strong> at the end of a line (shown as <code>··</code> in the example), or use <code>&lt;br&gt;</code>, to force a line break <em>within</em> the same paragraph. Without them, adjacent lines merge into one.</div>
 
 </div>
 
@@ -236,7 +243,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-sm">You can use `-`, `*`, or `+` for unordered lists. Indent with 2 or 4 spaces for nesting.</div>
+<div class="note-text mt-sm">You can use <code>-</code>, <code>*</code>, or <code>+</code> for unordered lists. Indent with 2 or 4 spaces for nesting.</div>
 
 </div>
 
@@ -260,7 +267,7 @@ hideInToc: true
 - [ ] Task 3 (pending)
 ```
 
-<div class="note-text mt-sm">`[x]` marks a task as done, `[ ]` leaves it unchecked. Supported on GitHub, GitLab, and many editors.</div>
+<div class="note-text mt-sm"><code>[x]</code> marks a task as done, <code>[ ]</code> leaves it unchecked. Supported on GitHub, GitLab, and many editors.</div>
 
 </div>
 
@@ -301,12 +308,12 @@ hideInToc: true
 ## 🔗 **Links**
 
 ```
-[OpenAI](https://openai.com)
+[CERN](https://home.cern)
 ```
 
 <div class="mt-sm">
 
-## [OpenAI](https://openai.com)
+## [CERN](https://home.cern)
 
 </div>
 
@@ -317,8 +324,7 @@ hideInToc: true
 ## 🖼️ **Images**
 
 ```
-![Markdown Logo](https://upload.wikimedia.org/
-wikipedia/commons/4/48/Markdown-mark.svg)
+![Markdown Logo](figures/markdown-logo.svg)
 ```
 
 <div class="mt-sm">
@@ -356,9 +362,9 @@ Use `inline code` within a sentence.
 - Wrap code in triple backticks to create a code block
 
 ```
-  function hello() {
+function hello() {
   console.log("Hello, world!");
-  }
+}
 ```
 
 </div>
@@ -417,7 +423,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-sm">Blockquotes are great for highlighting quotations or important notes. Horizontal rules (`---`, `***`, or `___`) create visual separators between sections.</div>
+<div class="note-text mt-sm">Blockquotes are great for highlighting quotations or important notes. Horizontal rules (<code>---</code>, <code>***</code>, or <code>___</code>) create visual separators between sections.</div>
 
 </div>
 
@@ -442,7 +448,7 @@ hideInToc: true
 | Cell      | Data        |
 ```
 
-<div class="note-text mt-sm">Use `|` to separate columns and `---` for the header row separator. Colons control alignment: `:---` left, `:---:` center, `---:` right.</div>
+<div class="note-text mt-sm">Use <code>|</code> to separate columns and <code>---</code> for the header row separator. Colons control alignment: <code>:---</code> left, <code>:---:</code> center, <code>---:</code> right.</div>
 
 </div>
 
@@ -475,7 +481,9 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-info card-glass pad-tight">
+# Key Takeaways
+
+<div class="card card-info card-glass pad-tight glow reveal-up" v-click>
 
 ## 📋 **Key Takeaways**
 
@@ -490,7 +498,9 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-success card-glass pad-tight mt-md">
+# Practice Exercise
+
+<div class="card card-success card-glass pad-compact mt-md">
 
 ## 🚀 **Practice Exercise**
 
@@ -502,9 +512,9 @@ From the CLI, run `touch about_me.md` and open it in VS Code. Include:
 4. A **link** to your favourite website
 5. A **code block** with a "Hello, World!" snippet in any language
 
-Then preview it: open VS Code's Markdown preview with `Ctrl+Shift+V` (or `Cmd+Shift+V` on Mac)
+Then preview it: open VS Code's Markdown preview with `Ctrl+Shift+V` (or `Cmd+Shift+V` on Mac).
 
-<div class="note-text mt-sm">We will version-control this file with **git** very soon!</div>
+<div class="note-text mt-sm">We will version-control this file with <strong>git</strong> very soon!</div>
 
 </div>
 
