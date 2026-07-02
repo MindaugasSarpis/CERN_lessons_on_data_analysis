@@ -66,7 +66,7 @@ hideInToc: true
 ## 🔍 **Why Track Changes?**
 
 - Rather than saving multiple copies of the same file, we can track changes
-- Word processors and other software have some change-tracking functionality, but it is limited (no synchronous editing, no change history, etc.)
+- Word processors do track changes and even co-edit — what they lack is **line-level diffs**, **branching and merging**, and a **complete offline history** of every version
 - `git` is an open-source version control system that is used to track changes in files
 
 </div>
@@ -565,7 +565,7 @@ git revert <hash>
 
 ## ⚠️ **Dangerous: Hard Reset**
 
-`reset --hard` permanently deletes **all uncommitted changes**. Cannot be undone.
+`reset --hard` permanently deletes **all uncommitted changes** — those are gone for good.
 
 ```bash
 git reset --hard <hash>
@@ -573,10 +573,71 @@ git reset --hard <hash>
 
 - Use only when you truly want to throw away work
 - Prefer `git revert` for undoing commits already shared with others
+- *Escape hatch:* **committed** states stay recoverable for a while — `git reflog` lists them
 
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Fixing the Last Commit
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ✏️ **`--amend`: a do-over**
+
+Typo in the message, or forgot to stage a file? **Replace** the last commit:
+
+```bash
+# Fix just the message
+git commit --amend -m "Better message"
+
+# Include a forgotten file
+git add forgotten_file.md
+git commit --amend --no-edit
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🚫 **One rule**
+
+Amending **rewrites history** — the old commit is replaced by a new one.
+
+- ✅ Fine while the commit is only on **your machine**
+- ❌ Never amend a commit you have already **pushed/shared** — use `git revert` instead
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Your undo toolbox: `restore` (working files) · `restore --staged` (unstage) · `--amend` (last local commit) · `revert` (anything shared).
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You notice a typo in the message of your last commit — you haven't pushed it anywhere yet. What is the cleanest fix?"
+  :options="[
+    'git commit --amend -m with the corrected message',
+    'git revert the commit, then commit again',
+    'git reset --hard and redo all the work',
+    'Nothing can change a commit message'
+  ]"
+  :correct="0"
+  explanation="For a local-only commit, --amend simply replaces it — clean history, nothing lost. revert would leave two extra commits for a typo, and reset --hard would discard your work entirely. Once a commit is pushed and shared, however, amend is no longer safe: then revert is the right tool."
+/>
 
 ---
 hideInToc: true
@@ -834,6 +895,46 @@ git branch -d feature-name
 hideInToc: true
 ---
 
+# Branching, Pictured
+
+<div class="mt-md" style="display: flex; justify-content: center;">
+
+```mermaid {scale: 0.9}
+gitGraph
+    commit id: "start"
+    commit id: "add data"
+    branch feature-name
+    checkout feature-name
+    commit id: "try new fit"
+    commit id: "fix units"
+    checkout main
+    commit id: "update README"
+    merge feature-name id: "merge!"
+    commit id: "continue"
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+🌿 Work on `feature-name` never disturbs `main` — experiment freely
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🔀 The **merge** brings both histories together — nothing is lost
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Merge Conflicts — What They Look Like
 
 <div class="card card-warning card-glass pad-tight mt-md">
@@ -851,11 +952,13 @@ hideInToc: true
 
 ```text {*}{lines:false}
 {{'<<<<<<< HEAD'}}
-result = calculate_mean(data)
+My favourite tool so far is the command line.
 {{'======='}}
-result = calculate_median(data)
+My favourite tool so far is VS Code.
 {{'>>>>>>> feature-branch'}}
 ```
+
+*(two edits to the same line of `about_me.md` — the file you created in the Markdown lecture)*
 
 - Everything between `<<<<<<< HEAD` and `=======` is **your** version
 - Everything between `=======` and `>>>>>>> feature-branch` is the **incoming** version
@@ -879,7 +982,7 @@ hideInToc: true
 3. Stage and commit the resolved file
 
 ```bash
-git add resolved_file.py
+git add about_me.md
 git commit -m "Resolve merge conflict"
 ```
 

@@ -140,11 +140,15 @@ improvements from the same review were applied directly (see commits of
 
 ## L08 Version Control
 
-- Word-processor "no synchronous editing, no change history" claim is stale
-  (Google Docs/Word Online have both).
-- "`reset --hard` cannot be undone" — committed states recoverable via reflog.
-- Merge-conflict examples use Python-flavoured code one lecture before Python.
-- Verify L03_3's exercise file is named `about_me.md` (referenced here).
+- ✅ RESOLVED (2026-07-03): claim reworded — word processors do track changes
+  and co-edit; git's difference is line-level diffs, branching/merging, and
+  complete offline history.
+- ✅ RESOLVED (2026-07-03): "gone for good" scoped to uncommitted changes;
+  reflog escape hatch noted.
+- ✅ RESOLVED (2026-07-03): conflict example now uses `about_me.md` prose
+  (the Markdown-lecture file) instead of Python.
+- ✅ RESOLVED (2026-07-03): verified — L03_3's practice slide creates
+  `about_me.md`; references align.
 
 ## L09 Probability & Statistics
 
