@@ -52,9 +52,9 @@ graph LR
 hideInToc: true
 ---
 
-# What is an Algorithm?
+# What is an <span class="gradient-text">Algorithm</span>?
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm glow">
 
 An **algorithm** is a **finite sequence of well-defined instructions** to solve a problem — the recipe inside the "box."
 
@@ -62,7 +62,7 @@ An **algorithm** is a **finite sequence of well-defined instructions** to solve 
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
 
 ## 🍳 **Everyday Example**
 
@@ -73,7 +73,7 @@ An **algorithm** is a **finite sequence of well-defined instructions** to solve 
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
 
 ## 📖 **Finding a Word in a Dictionary**
 
@@ -130,7 +130,7 @@ hideInToc: true
 
 # Data **Representation**
 
-To write correct algorithms, we first need to understand how data is actually stored inside the computer — from individual bits up to whole files.
+Before we can write algorithms, we need to know what their inputs and outputs are made of — how data is actually stored inside the computer, from individual bits up to whole files.
 
 ---
 layout: fact
@@ -144,10 +144,10 @@ hideInToc: true
 ---
 layout: center
 hideInToc: true
-class: text-size-78
+class: text-center
 ---
 
-<div class="center-content">
+<div style="font-size: 5rem; letter-spacing: 0.15em;">
   <span v-click="1">|</span>
   <span v-click="2">|</span>
   <span v-click="3">|</span>
@@ -155,7 +155,7 @@ class: text-size-78
   <span v-click="5">|</span>
 </div>
 
-<div class="mt-md" style="text-align: center;">
+<div class="note-text mt-md">
 
 Humans have always counted with tally marks — one mark per unit. It's the simplest possible number system, and a useful contrast before we meet the base computers actually use: binary.
 
@@ -232,6 +232,12 @@ image: /figures/first_transisor.jpg
 backgroundSize: contain
 ---
 
+<div class="note-text" style="position: absolute; left: 0; right: 0; bottom: 1rem; text-align: center; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);">
+The first transistor (Bell Labs, 1947) — the physical switch behind every bit
+</div>
+
+---
+hideInToc: true
 ---
 
 <VideoPlayer src="Technology_Size_Comparison.mp4" autoplay   />
@@ -373,106 +379,6 @@ class: text-center
         font-size: 50px;
     }
 </style>
-
----
-hideInToc: true
-layout: fact
----
-
-# Hexadecimal
-
-## <v-click> **Base-16** </v-click>
-
----
-layout: full
-hideInToc: true
-class: text-size-5.5
----
-
-| **Decimal** | **Binary** | **Hex** | **Decimal** | **Binary** | **Hex** |
-|-------------|------------|---------|-------------|------------|---------|
-| 0           | 0000       | 0       | 8           | 1000       | 8       |
-| 1           | 0001       | 1       | 9           | 1001       | 9       |
-| 2           | 0010       | 2       | 10          | 1010       | A       |
-| 3           | 0011       | 3       | 11          | 1011       | B       |
-| 4           | 0100       | 4       | 12          | 1100       | C       |
-| 5           | 0101       | 5       | 13          | 1101       | D       |
-| 6           | 0110       | 6       | 14          | 1110       | E       |
-| 7           | 0111       | 7       | 15          | 1111       | F       |
-
----
-layout: center
-hideInToc: true
-class: text-center
----
-
-# Hex Example: 0x2A
-
-<div class="powers">
-    <span>16<sup>1</sup></span> &nbsp;&nbsp;&nbsp;
-    <span>16<sup>0</sup></span>
-</div>
-
-<div class="number"> 2A</div>
-
-<div class="expansion">
-    16 × 2 &nbsp; + &nbsp; 1 × 10 = 42
-</div>
-
-<style>
-    .powers {
-        font-size: 50px;
-    }
-    .number {
-        font-size: 200px;
-    }
-    .expansion {
-        font-size: 50px;
-    }
-</style>
-
----
-hideInToc: true
----
-
-# Why Hex in Computing?
-
-<div class="stack-tight mt-sm">
-
-<div class="card card-primary card-glass pad-compact">
-
-🔢 **Compact** — 1 hex digit = 4 binary digits
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-💾 **Memory addresses** — 0x1A2B3C4D
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🎨 **Colors** — #FF5733 (red-green-blue)
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-🐛 **Debugging** — Easier to read than long binary strings
-
-</div>
-
-</div>
-
----
-hideInToc: true
-layout: fact
----
-
-# Binary
-
-## <v-click> **Base-2** </v-click>
 
 ---
 layout: center
@@ -651,7 +557,108 @@ hideInToc: true
 
 # 10011001
 
-## <span>2<sup>8</sup></span> = 256
+## <span>2<sup>8</sup></span> = 256 possible values
+
+---
+hideInToc: true
+layout: fact
+---
+
+# Hexadecimal
+
+## <v-click> **Base-16** </v-click>
+
+---
+layout: full
+hideInToc: true
+class: text-size-5.5
+---
+
+| **Decimal** | **Binary** | **Hex** | **Decimal** | **Binary** | **Hex** |
+|-------------|------------|---------|-------------|------------|---------|
+| 0           | 0000       | 0       | 8           | 1000       | 8       |
+| 1           | 0001       | 1       | 9           | 1001       | 9       |
+| 2           | 0010       | 2       | 10          | 1010       | A       |
+| 3           | 0011       | 3       | 11          | 1011       | B       |
+| 4           | 0100       | 4       | 12          | 1100       | C       |
+| 5           | 0101       | 5       | 13          | 1101       | D       |
+| 6           | 0110       | 6       | 14          | 1110       | E       |
+| 7           | 0111       | 7       | 15          | 1111       | F       |
+
+<style>
+table {
+  font-size: 0.9em;
+}
+td, th {
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
+</style>
+
+---
+layout: center
+hideInToc: true
+class: text-center
+---
+
+# Hex Example: 0x2A
+
+<div class="powers">
+    <span>16<sup>1</sup></span> &nbsp;&nbsp;&nbsp;
+    <span>16<sup>0</sup></span>
+</div>
+
+<div class="number"> 2A</div>
+
+<div class="expansion">
+    16 × 2 &nbsp; + &nbsp; 1 × 10 = 42
+</div>
+
+<style>
+    .powers {
+        font-size: 50px;
+    }
+    .number {
+        font-size: 200px;
+    }
+    .expansion {
+        font-size: 50px;
+    }
+</style>
+
+---
+hideInToc: true
+---
+
+# Why Hex in Computing?
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🔢 **Compact** — 1 hex digit = 4 binary digits
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+💾 **Memory addresses** — 0x1A2B3C4D
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🎨 **Colors** — #FF5733 (red-green-blue)
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+🐛 **Debugging** — Easier to read than long binary strings
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -683,6 +690,8 @@ hideInToc: true
 ---
 
 # Binary **Operations**
+
+Once numbers are bits, arithmetic and logic become operations on 0s and 1s — the building blocks of every computation.
 
 ---
 layout: center
@@ -784,7 +793,7 @@ hideInToc: true
 
 ## American Standard Code for Information Interchange
 
-### 7 bit
+### 7-bit
 
 ---
 hideInToc: true
@@ -801,6 +810,8 @@ class: text-size-5
 |   5     | **ENQ**  |   21    | **NAK**  |   37    | **%**    |   53    | **5**    |   69    | **E**    |   85    | **U**    |  101    | **e**    |  117    | **u**    |
 |   6     | **ACK**  |   22    | **SYN**  |   38    | **&**    |   54    | **6**    |   70    | **F**    |   86    | **V**    |  102    | **f**    |  118    | **v**    |
 |   7     | **BEL**  |   23    | **ETB**  |   39    | **'**    |   55    | **7**    |   71    | **G**    |   87    | **W**    |  103    | **g**    |  119    | **w**    |
+
+*(excerpt — first 8 rows of each block)*
 
 ---
 hideInToc: true
@@ -932,9 +943,9 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
-**Computer needs to know what a sequence of bits is supposed to mean**
+**The computer needs to know what a sequence of bits is supposed to mean**
 
-| **Text/Data** | **Documents** | **Media/Exec** |
+| **Text/Data** | **Documents** | **Media/Archives/Exec** |
 |--------------|---------------|----------------|
 | .txt        | .pdf          | .mp3           |
 | .csv        | .docx         | .mp4           |
@@ -990,7 +1001,7 @@ hideInToc: true
 
 ## 🔢 **The Same Trade-Off, Different Domain**
 
-We just saw how **bit depth** affects image quality — more bits per pixel means more colours and finer gradients. The exact same principle applies to **numbers**: more bits per value means greater range and precision. Let's see how computers represent numbers and what happens when those bits run out.
+We just saw how **bit depth** affects image quality — more bits per pixel means more colors and finer gradients. The exact same principle applies to **numbers**: more bits per value means greater range and precision. Let's see how computers represent numbers and what happens when those bits run out.
 
 </div>
 
@@ -1109,7 +1120,7 @@ $-6.022 \times 10^{23}$
 hideInToc: true
 ---
 
-## Binary scientific notation (float32)
+# Binary Scientific Notation (float32)
 
 <div class="text-center text-3xl my-8">
 
@@ -1121,13 +1132,13 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-**s** = sign (+1 or -1)
+**s** = sign bit (0 = positive, 1 = negative)
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**m** = mantissa (significant digits, 1 $\leq$ m $<$ 2 in binary)
+**m** = mantissa (fraction bits; the significand 1.m satisfies 1 $\leq$ 1.m $<$ 2)
 
 </div>
 
@@ -1149,7 +1160,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-## Binary scientific notation (float32)
+# Binary Scientific Notation (float32)
 
 <div class="text-center text-3xl my-4">
 
@@ -1297,27 +1308,27 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
 
 🔢 **Integers** (`int`) — `42`, `-7`, `0` — fixed-width binary (arbitrary precision in Python)
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
 
 📐 **Floats** (`float`) — `3.14`, `6.022e23` — IEEE-754, watch for rounding!
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
 
 🔤 **Strings** (`str`) — `"Hello"`, `"α"` — Unicode characters, encoded as UTF-8
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-success card-glass pad-compact reveal-scale" v-click>
 
-✅ **Booleans** (`bool`) — `True` / `False` — a single bit, the basis of all decisions
+✅ **Booleans** (`bool`) — `True` / `False` — conceptually a single bit, the basis of all decisions
 
 </div>
 
@@ -1335,6 +1346,8 @@ hideInToc: true
 ---
 
 # Compression & **Integrity**
+
+The same bits can be reorganized to take up less space — and checked to make sure none of them were corrupted along the way.
 
 ---
 hideInToc: true
@@ -1403,5 +1416,47 @@ Cryptographic hashes (SHA-256) verify file integrity
 </div>
 
 ---
-disabled: true
+hideInToc: true
 ---
+
+# Key <span class="gradient-text">Takeaways</span>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact reveal-up" v-click>
+
+💡 **Bits** — everything in a computer is 0s and 1s; a bit is the smallest unit of information
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-up" v-click>
+
+🔢 **Numbers** — place value (binary, hex) plus finite precision (fixed-width ints, IEEE-754 floats)
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-up" v-click>
+
+🔤 **Text** — encodings (ASCII, Unicode/UTF-8) map characters to bytes
+
+</div>
+
+<div class="card card-info card-glass pad-compact reveal-up" v-click>
+
+📁 **Files** — formats, byte order, and bit depth tell the computer what a sequence of bits means
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-up" v-click>
+
+🗜️ **Compression & integrity** — remove redundancy to shrink data; checksums and hashes catch corruption
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+
+🧭 Back to the "box": before writing algorithms, you need to know what their **inputs** and **outputs** are made of.
+
+</div>
