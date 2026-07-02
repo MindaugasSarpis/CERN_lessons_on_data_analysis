@@ -60,35 +60,42 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Why Learn the CLI?
+# Why Learn the <span class="gradient-text">CLI</span>?
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
 
 ⚡ **Speed** — complex workflows faster than with a mouse
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
 
 🔄 **Automation** — script repetitive steps and share them
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
 
 🌐 **Remote Work** — manage servers and clusters without a GUI
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-info card-glass pad-compact reveal-scale" v-click>
 
 📝 **Transparency** — commands document exactly what happened
 
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# CLI **Foundations**
 
 ---
 hideInToc: true
@@ -157,7 +164,7 @@ command -options arguments
 
 ## 🏗️ **Built-ins**
 
-Shell provides built-in commands (`cd`, `Set-Location`)
+The shell provides built-in commands (`cd`, `Set-Location`)
 
 </div>
 
@@ -170,6 +177,13 @@ External executables live in directories listed in `$PATH` / `$Env:Path`
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Everyday **Commands**
 
 ---
 hideInToc: true
@@ -254,54 +268,16 @@ grep "analysis" *.txt
 
 - Preview configuration or log files quickly
 - Search large codebases without opening an editor
-- Combine with redirection (`>`, introduced in *Pipes and Redirection* below) to save filtered output
+- Combine with redirection (`>`, next slide) to save filtered output
 
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Creating and Editing
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-New-Item project -ItemType Directory
-New-Item notes.txt -ItemType File
-Add-Content notes.txt "Result: 42"
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-mkdir project
-touch notes.txt
-echo "Result: 42" >> notes.txt
-```
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔀 **Versioning & Collaboration**
-
-- Later, you'll pair the CLI with `git` (version control, covered in its own lecture) to track work precisely
-- Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
-- Script file creation to keep project structure consistent
-- Later: **file naming conventions**, **Markdown** for documentation, and **VS Code** as your IDE
-
-</div>
+# Power **Tools**
 
 ---
 hideInToc: true
@@ -309,7 +285,7 @@ hideInToc: true
 
 # Pipes and Redirection
 
-<div class="card card-primary card-glass pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-md glow">
 
 ## 🔗 **The Pipe Operator `|`**
 
@@ -354,6 +330,50 @@ echo "Another line" >> notes.txt
 hideInToc: true
 ---
 
+# Creating and Editing
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🪟 **PowerShell**
+
+```powershell
+New-Item project -ItemType Directory
+New-Item notes.txt -ItemType File
+Add-Content notes.txt "Result: 42"
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🐧 **macOS & Linux**
+
+```bash
+mkdir project
+touch notes.txt
+echo "Result: 42" >> notes.txt
+```
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🧭 **Beyond the Basics**
+
+- Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
+- Script file creation to keep project structure consistent
+- Coming up later in the course: pairing the CLI with `git` (version control, covered in its own lecture), **file naming conventions**, **Markdown** for documentation, and **VS Code** as your IDE
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Working with Processes
 
 <div class="grid-2 mt-md gap-md">
@@ -365,7 +385,7 @@ hideInToc: true
 ```powershell
 Get-Process firefox
 Stop-Process -Name firefox
-Start-Job -ScriptBlock { ./long_task.sh }
+Start-Job -ScriptBlock { ./long_task.ps1 }
 ```
 
 </div>
@@ -420,9 +440,9 @@ Get-ChildItem *.csv |
 ## 🐧 **UNIX Pipeline**
 
 ```bash
-# $5 = file size, $9 = filename; "$5+0" forces numeric comparison
-ls -lh *.csv | awk '$5+0 > 1 {print $9, $5}' \
-  | sort -k2hr > large_files.txt
+# $5 = size in bytes, $9 = filename; 1 MB = 1048576 bytes
+ls -l *.csv | awk '$5 > 1048576 {print $9, $5}' \
+  | sort -k2,2nr > large_files.txt
 ```
 
 </div>
@@ -480,6 +500,13 @@ man cat
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Working **Safely**
+
+---
 hideInToc: true
 ---
 
@@ -525,33 +552,67 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
 
 🧩 Keep commands small and composable
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
 
 📖 Use aliases sparingly — prefer readable scripts
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-info card-glass pad-compact reveal-left" v-click>
 
 📁 Store reusable commands in scripts under version control
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-success card-glass pad-compact reveal-left" v-click>
 
 📋 Document workflows in README files with copy-paste commands
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
 
 💪 Practice regularly to build muscle memory
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Key <span class="gradient-text">Takeaways</span>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-up" v-click>
+
+🧭 **Navigate** — `pwd` / `cd` / `ls` ↔ `Get-Location` / `Set-Location` / `Get-ChildItem`
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-up" v-click>
+
+🔍 **Inspect** — `cat` / `grep` ↔ `Get-Content` / `Select-String`
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-up" v-click>
+
+📝 **Create** — `mkdir` / `touch` / `echo` ↔ `New-Item` / `Add-Content`
+
+</div>
+
+<div class="card card-info card-glass pad-compact reveal-up" v-click>
+
+🔗 **Combine** — pipe with `|`, overwrite with `>`, append with `>>` — the same symbols work in both shells
 
 </div>
 
