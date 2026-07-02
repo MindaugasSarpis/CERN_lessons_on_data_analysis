@@ -89,13 +89,16 @@ improvements from the same review were applied directly (see commits of
 
 ## L03_4 VS Code
 
-- "(Dark+ is the default)" — stale; default is "Dark Modern" since v1.78.
-- "Jupyter notebook support built-in" for the Python extension — verify.
-- "We'll use this in the next lecture" (Markdown) breaks if term order shifts.
-- Practice slide assumes bash (`mkdir -p`, `touch`) — fails in PowerShell.
-- `python` vs `python3` command consistency with L05.
-- "install via apt/dnf" needs Microsoft's repo first; "100+ languages" holds
-  only with extensions.
+- ✅ RESOLVED (2026-07-03): "Dark Modern is the default".
+- ✅ RESOLVED (2026-07-03): verified against the marketplace — Jupyter is a
+  separate companion extension; card reworded.
+- ✅ RESOLVED (2026-07-03): "next lecture" → "the Markdown lecture".
+- ✅ RESOLVED (2026-07-03): PowerShell equivalents added to the practice
+  slide (`mkdir`, `ni`).
+- ✅ RESOLVED (2026-07-03): run command now shows `python` with a
+  `python3` note, matching L01/L05.
+- ✅ RESOLVED (2026-07-03): snap-or-repo wording for Linux install;
+  "dozens out of the box — 100+ with extensions".
 
 ## L05 Python
 

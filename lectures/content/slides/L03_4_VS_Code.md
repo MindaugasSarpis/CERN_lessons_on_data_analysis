@@ -93,7 +93,7 @@ If this works, VS Code is ready and available from your terminal.
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-🐧 **Linux tip:** install via your package manager (`apt`, `dnf`, `snap`) for automatic updates.
+🐧 **Linux tip:** install via `snap`, or via `apt`/`dnf` after adding Microsoft's package repository — both give automatic updates.
 
 </div>
 
@@ -131,7 +131,7 @@ Toggle with `Ctrl+B` / `Cmd+B`
 ## ✏️ **Editor** (center)
 
 - Tabs for open files
-- Syntax highlighting for 100+ languages
+- Syntax highlighting for dozens of languages out of the box — 100+ with extensions
 - Split view: drag a tab to the side
 - Minimap on the right for quick navigation
 
@@ -260,7 +260,7 @@ Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 
 ## 🎨 **Appearance**
 
-- **Color Theme** → pick one you like (Dark+ is the default)
+- **Color Theme** → pick one you like (Dark Modern is the default)
 - **Icon Theme** → Material Icon Theme (clearer file icons)
 - **Minimap** → turn off if it distracts you
 
@@ -385,7 +385,7 @@ Open the Extensions panel with `Ctrl+Shift+X` and search by name. Click **Instal
 
 - Syntax highlighting, IntelliSense, linting
 - Run scripts with a click or `Ctrl+F5`
-- Jupyter notebook support built-in
+- Notebooks via the companion **Jupyter** extension (one extra install)
 
 Search: `ms-python.python`
 
@@ -399,7 +399,7 @@ Search: `ms-python.python`
 - Side-by-side editing + preview: `Ctrl+K V`
 - Extensions: Markdown All in One, markdownlint
 
-We'll use this in the **next lecture**.
+We'll use this in the **Markdown lecture**.
 
 </div>
 
@@ -435,6 +435,8 @@ mkdir -p vs_code_demo/src
 touch vs_code_demo/README.md vs_code_demo/src/hello.py
 ```
 
+*(PowerShell: `mkdir vs_code_demo\src`, then `ni vs_code_demo/README.md, vs_code_demo/src/hello.py`)*
+
 2. Open it in VS Code:
 
 ```bash
@@ -450,7 +452,7 @@ print("Hello from VS Code!")
 4. Open the integrated terminal (`` Ctrl+` ``) and run:
 
 ```bash
-python src/hello.py
+python src/hello.py      # macOS/Linux: python3
 ```
 
 </div>
