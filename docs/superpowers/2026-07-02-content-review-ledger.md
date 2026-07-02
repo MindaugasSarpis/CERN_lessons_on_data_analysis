@@ -20,12 +20,16 @@ improvements from the same review were applied directly (see commits of
 
 ## L01 Course Orientation
 
-- Grading slide is stale BS-era content (Quiz 20% + Quiz 20% + Project 60%,
-  both quizzes dated "Apr 16th") — the FF-2026 roadmap (Workstream A) replaces
-  this with 100 % project grading. Left as-is per the roadmap.
-- Contact-hours stat (48 h contact / 212 h self-study) contradicts the FF
-  `.docx` (64 contact / 76 self-study) — Workstream A reconciles.
-- Schedule table dates (Feb 19 – Apr 18) are BS-era.
+- ⏸ DEFERRED to FF-2026 Workstream A (2026-07-03): Grading slide is stale
+  BS-era content (Quiz 20% + Quiz 20% + Project 60%, both quizzes dated
+  "Apr 16th") — the roadmap replaces this with 100 % project grading.
+- ⏸ DEFERRED to FF-2026 Workstream A (2026-07-03): Contact-hours stat
+  (48 h contact / 212 h self-study) contradicts the FF `.docx`
+  (64 contact / 76 self-study).
+- ⏸ DEFERRED to FF-2026 Workstream A (2026-07-03): Schedule table dates
+  (Feb 19 – Apr 18) are BS-era.
+- ✅ RESOLVED (2026-07-03): audit found no dangling forward references;
+  added `python`/`python3` platform note to match L05's install check.
 
 ## L02 Introduction to CERN
 

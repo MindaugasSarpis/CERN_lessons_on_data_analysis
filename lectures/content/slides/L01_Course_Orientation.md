@@ -466,6 +466,8 @@ python --version
 
 You should see `Python 3.x.x`. If not, we'll fix it now.
 
+*(On macOS/Linux the command may be `python3` — both are fine.)*
+
 </div>
 
 </div>
