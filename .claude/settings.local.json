@@ -117,7 +117,11 @@
       "Bash(tmutil listlocalsnapshots *)",
       "Bash(tmutil destinationinfo *)",
       "Bash(sudo ls -la /.DocumentRevisions-V100/)",
-      "Bash(mdfind -name 'CERN_methods_of_data_analysis_FF')"
+      "Bash(mdfind -name 'CERN_methods_of_data_analysis_FF')",
+      "Read(//Users/mindaugas/Work/writing/talks/outreach/**)",
+      "Bash(ls -la scripts)",
+      "Bash(ls -la videos)",
+      "Bash(cat package.json)"
     ],
     "deny": [],
     "ask": []
