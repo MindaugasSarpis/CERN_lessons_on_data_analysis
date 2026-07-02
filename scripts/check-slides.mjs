@@ -85,9 +85,23 @@ const NEUTRALIZE = `
 if (SHOTS) await mkdir(SHOTS, { recursive: true });
 const browser = await chromium.launch();
 
+// Video slides never reach networkidle (streaming / remote-release fallback
+// fetches), and their downloads starve the per-slide JS chunk loads — one
+// video slide can time out an entire worker's shard. Videos contribute
+// nothing to overflow measurement, so abort all media requests up front.
+async function newQAPage() {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+  await page.route('**/*', (route) =>
+    route.request().resourceType() === 'media' || /\.(mp4|webm|mov)(\?|$)/i.test(route.request().url())
+      ? route.abort()
+      : route.continue());
+  return page;
+}
+
 // Read total slide count once from the "N / M" nav counter.
-const probe = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-await probe.goto(`${base}/1`, { waitUntil: 'networkidle' });
+const probe = await newQAPage();
+await probe.goto(`${base}/1`, { waitUntil: 'domcontentloaded' });
+await probe.waitForSelector('.slidev-layout', { timeout: 30000 }).catch(() => {});
 await probe.waitForTimeout(1000);
 const total = await probe.evaluate(() => {
   for (const el of document.querySelectorAll('*')) {
@@ -115,8 +129,9 @@ let measured = 0;
 const t0 = Date.now();
 
 async function runShard(shard) {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-  await page.goto(`${base}/${shard[0]}`, { waitUntil: 'networkidle' });
+  const page = await newQAPage();
+  await page.goto(`${base}/${shard[0]}`, { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('.slidev-layout', { timeout: 30000 }).catch(() => {});
   await page.addStyleTag({ content: NEUTRALIZE });
   for (const n of shard) {
     await page.evaluate((n) => { history.pushState({}, '', '/' + n); window.dispatchEvent(new PopStateEvent('popstate')); }, n);
