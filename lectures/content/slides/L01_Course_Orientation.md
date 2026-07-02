@@ -259,7 +259,7 @@ hideInToc: true
 
 ## 📋 **Requirements**
 
-- Should be well developed project
+- Should be a well-developed project
 - Students will be graded with respect to their previous experience
 - Can be functional (app, dashboard, website)
 - Can be more educational (application of specific DNN, explaining the concepts)
@@ -273,7 +273,7 @@ hideInToc: true
 
 - Codebase available on course repository (info in eMokymai)
 - Project written up in a **one-page report** (added to the repository)
-- 10 - 30 second video showcasing the project (linked to the repository)
+- 10–30 second video showcasing the project (linked to the repository)
 - Final **presentation** at the end of the course (graded on the spot)
 
 </div>
@@ -283,6 +283,8 @@ hideInToc: true
 ---
 hideInToc: true
 ---
+
+# **Schedule**
 
 | **Date** | **Topic** |
 | --- | --- |
@@ -297,7 +299,11 @@ hideInToc: true
 
 <style scoped>
 table {
-  font-size: 1.1em;
+  font-size: 0.95em;
+}
+table td, table th {
+  padding-top: 0.45em;
+  padding-bottom: 0.45em;
 }
 table thead th {
   border-bottom: 3px solid rgba(255, 255, 255, 0.5);
@@ -433,11 +439,13 @@ Every field generates data. The tools and mindset you'll build in this course ap
 hideInToc: true
 ---
 
+# **What You Need**
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🖥️ **What You Need**
+## 🖥️ **Your Toolkit**
 
 - A **laptop** with internet access
 - A **web browser** (Chrome, Firefox, Edge)

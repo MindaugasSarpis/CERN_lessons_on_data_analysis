@@ -121,7 +121,9 @@
       "Read(//Users/mindaugas/Work/writing/talks/outreach/**)",
       "Bash(ls -la scripts)",
       "Bash(ls -la videos)",
-      "Bash(cat package.json)"
+      "Bash(cat package.json)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis log --oneline -25)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis branch -a)"
     ],
     "deny": [],
     "ask": []
