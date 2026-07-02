@@ -228,7 +228,7 @@ hideInToc: true
 ---
 hideInToc: true
 layout: image
-image: /figures/first_transisor.jpg
+image: /figures/first_transistor.jpg
 backgroundSize: contain
 ---
 
@@ -680,7 +680,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ Computers use powers of 2: 1 KB = 1,024 bytes (not 1,000). This is why a "1 TB" hard drive shows ~931 GB in your OS.
+⚠️ Two conventions coexist: **decimal** kB/MB/GB (powers of 1,000 — SI, drive makers, this table) and **binary** KiB/MiB/GiB (powers of 1,024 — used internally by operating systems). A "1 TB" drive holds 10¹² bytes ≈ 931 GiB, which Windows then displays as "931 GB" — same bytes, different unit.
 
 </div>
 
@@ -769,6 +769,12 @@ hideInToc: true
 
 # Bitwise Operations Example
 
+<div class="note-text">
+
+*A preview in Python — the language itself is introduced later in the course.*
+
+</div>
+
 <div class="card card-primary card-glass pad-tight mt-sm">
 
 **Used in:** data compression, cryptography, bit manipulation
@@ -781,6 +787,92 @@ print(f"a & b = {a & b:04b}")  # 1000 (8)
 print(f"a | b = {a | b:04b}")  # 1110 (14)
 print(f"~a = {~a & 0b1111:04b}")  # 0011 (3)
 ```
+
+</div>
+
+---
+hideInToc: true
+---
+
+# How the CPU Runs an Algorithm
+
+<div class="card card-info card-glass pad-compact mt-sm glow">
+
+🔄 A processor does one astonishingly simple thing, billions of times per second — the **fetch–decode–execute** cycle.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+📥 **Fetch** — read the next instruction (itself just a binary number) from memory
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+🔎 **Decode** — work out what it says: "add these", "compare those", "jump there"
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+⚡ **Execute** — run it through circuits built from exactly the logic gates you just saw
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+
+💡 That's the whole trick: an **algorithm** becomes a list of instructions, instructions become **numbers**, and AND/OR/NOT circuits grind through them. Software is just data the CPU knows how to obey.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Memory Hierarchy
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⏱️ Not all storage is equal — each step away from the CPU is **bigger but dramatically slower**.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+
+🏎️ **Registers** — inside the CPU · a few hundred bytes · < 1 ns
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+
+⚡ **Cache** — on the CPU chip · megabytes · a few ns
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+
+🧠 **RAM** — main memory · gigabytes · ~100 ns · gone at power-off
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-left" v-click>
+
+💽 **Disk (SSD/HDD)** — terabytes · ~0.1–10 ms · **a million times slower than registers**
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+
+💡 This is why "my dataset doesn't fit in memory" changes everything — and why the *format* and *size* of your files (this lecture!) directly set how fast your analysis can possibly run.
 
 </div>
 
@@ -858,6 +950,12 @@ hideInToc: true
 
 # Python for Encoding Conversions
 
+<div class="note-text">
+
+*A preview — Python itself is introduced in the Crash Course on Python later in the course.*
+
+</div>
+
 <div class="card card-accent card-glass pad-tight mt-sm">
 
 ```python
@@ -923,7 +1021,7 @@ Least significant byte stored **first** (lowest address)
 
 `0x12345678` → `78 56 34 12`
 
-Used by: **x86/x64**, **ARM** (most PCs & phones)
+Used by: **x86/x64** and (typically) **ARM** — most PCs & phones
 
 </div>
 
@@ -931,7 +1029,7 @@ Used by: **x86/x64**, **ARM** (most PCs & phones)
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Mismatched endianness → garbage values. NumPy: `dtype='>f4'` (big) or `dtype='<f4'` (little).
+⚠️ Mismatched endianness → garbage values. NumPy *(a Python library you'll meet later in the course)* lets you say which you mean: `dtype='>f4'` (big) or `dtype='<f4'` (little).
 
 </div>
 
@@ -1011,6 +1109,127 @@ hideInToc: true
 ---
 
 # Numbers in **Computers**
+
+---
+hideInToc: true
+---
+
+# Integers: Fixed Width
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔢 Hardware stores whole numbers in a **fixed number of bits** — the width decides the range, and stepping past it **wraps around** (overflow).
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📏 **Common widths**
+
+| bits | unsigned range |
+|------|----------------|
+| 8    | 0 … 255 |
+| 16   | 0 … 65,535 |
+| 32   | 0 … ~4.3 × 10⁹ |
+| 64   | 0 … ~1.8 × 10¹⁹ |
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 💥 **Overflow**
+
+At 8 bits: `255 + 1 = 0`
+
+The famous **Y2K38 problem**: 32-bit Unix time runs out on 19 Jan 2038.
+
+*(Python's own `int` grows as needed — but NumPy arrays and files use fixed widths.)*
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Choosing a width is a **trade-off**: smaller = less memory per value, larger = more headroom. Data formats make you choose.
+
+</div>
+
+<style>
+table { font-size: 0.85em; }
+td, th { padding-top: 0.25em; padding-bottom: 0.25em; }
+</style>
+
+---
+hideInToc: true
+---
+
+# Negative Numbers: Two's Complement
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+➖ There is no minus sign in hardware — negative integers are encoded by convention. The winner: **two's complement**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧮 **The recipe** *(4-bit example)*
+
+To get −5 from 5:
+
+1. Start: `0101` (= 5)
+2. Flip every bit: `1010`
+3. Add one: `1011` (= −5)
+
+Top bit set ⇒ negative.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## ✨ **Why it's clever**
+
+Addition just works — no special subtraction circuit:
+
+```text
+  0101   (+5)
++ 1011   (−5)
+------
+ 10000 → 0000 = 0 ✓
+```
+
+*(the carry falls off the fixed width)*
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+📏 Signed ranges are asymmetric: 8 bits → **−128 … +127** — one more negative than positive.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A detector writes each reading as a 2-byte (16-bit) unsigned integer. How many distinct values can one reading take?"
+  :options="[
+    '256',
+    '65,536',
+    '32,768',
+    '16'
+  ]"
+  :correct="1"
+  explanation="16 bits give 2^16 = 65,536 distinct values (0 … 65,535). Each extra bit doubles the count — 2 bytes is 256 × 256. If your sensor can exceed that, you need a wider type or values silently wrap."
+/>
 
 ---
 hideInToc: true
@@ -1361,9 +1580,9 @@ hideInToc: true
 
 ## 🔒 **Lossless**
 
-Algorithms (RLE, Huffman, DEFLATE — used inside PNG, ZIP) shrink data with exact recovery
+Algorithms (RLE, Huffman, DEFLATE — used inside PNG, ZIP, FLAC) shrink data with **exact** recovery
 
-Formats (CSV, JSON, Parquet, PNG) preserve the data exactly
+*(Plain-text formats like CSV and JSON aren't compressed at all — every byte stored as-is. That's exactly why they zip so well.)*
 
 </div>
 
