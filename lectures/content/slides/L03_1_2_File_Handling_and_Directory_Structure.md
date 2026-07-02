@@ -42,7 +42,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-warning card-glass pad-tight reveal-scale" v-click>
 
 ## 😵 **Common Issues**
 
@@ -52,13 +52,13 @@ hideInToc: true
 
 - "I have 10 files with the same name, which one is the right one?"
 
-  - `final_final_v2.docx`,  `asdfasdf.docx`, `final.docx`
+  - `final_final_v2.docx`, `asdfasdf.docx`, `final.docx`
 
 - "I have overwritten my file with the wrong version"
 
 </div>
 
-<div class="card card-success card-glass pad-tight">
+<div class="card card-success card-glass pad-tight reveal-scale" v-click>
 
 ## ✅ **How to Avoid**
 
@@ -90,7 +90,7 @@ hideInToc: true
 
 - "My computer crashed and I lost everything"
 
-- "I spilled tea on my laptop now my thesis is gone"
+- "I spilled tea on my laptop — now my thesis is gone"
 
 </div>
 
@@ -98,7 +98,7 @@ hideInToc: true
 
 ## ✅ **How to Avoid**
 
-- Follow the **here-near-far** strategy (covered below)
+- Follow the **here-near-far** strategy (next slide)
 
 - Consider version control for text-based files (Git), so you can revert to an older version if needed
 
@@ -110,11 +110,11 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Backup Strategy: Here — Near — Far
+# Backup Strategy: <span class="gradient-text">Here — Near — Far</span>
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-tight reveal-scale" v-click>
 
 ## 💻 **Here**
 
@@ -125,7 +125,7 @@ Your **local device** — the working copy you use every day
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-tight reveal-scale" v-click>
 
 ## 🔌 **Near**
 
@@ -137,7 +137,7 @@ A **local backup** in the same physical space
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-accent card-glass pad-tight reveal-scale" v-click>
 
 ## ☁️ **Far**
 
@@ -151,7 +151,7 @@ A **remote backup** in a different location
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md reveal-up" v-click>
 
 💡 A solid backup plan keeps copies at **all three distances**. If any one fails, the others still have you covered.
 
@@ -173,9 +173,9 @@ hideInToc: true
 
 - "This only works on my old laptop"
 
-- "I have a mac so this probably won't work"
+- "I have a Mac, so this probably won't work"
 
-- "I opened this word file but it's all broken"
+- "I opened this Word file but it's all broken"
 
 - "The script was running ok but now I get errors"
 
@@ -286,7 +286,7 @@ hideInToc: true
 
 - Use versioning to indicate the most current version of a file
 
-- Track versions of a file by adding version information to end of the file name, e.g. filename_v2.xxx
+- Track versions of a file by adding version information to the end of the file name, e.g. `filename_v2.xxx`
 
 - Use a version number (e.g. "v01" or "v02")
 
@@ -330,9 +330,9 @@ hideInToc: true
 
   - Underscores: `file_name.xxx`
 
-  - No separation: `filename.xxx`
+  - Camel case (the first letter of each section of text is capitalized): `FileName.xxx`
 
-- Camel case (the first letter of each section of text is capitalized): `FileName.xxx`
+- 🚫 No separation: `filename.xxx` — avoid
 
 - Avoid special characters, such as: ~ ! @ # $ % ^ & * ( ) ` ; : < > ? . , [ ] { } ' " |
 
@@ -348,9 +348,9 @@ hideInToc: true
 
 ## 📝 **Write Down Your Naming Conventions**
 
-- If the file is moved or shared, users will be able to identify the file from its file name
+- With documented conventions, anyone receiving a moved or shared file can identify it from its name
 
-- File names should be 40-50 characters and conventions should only use alphanumeric characters, dashes, underscores
+- File names should be at most 40-50 characters, and conventions should only use alphanumeric characters, dashes, and underscores
 
 - If you find that you are encoding a large amount of metadata in the file names, you should consider storing this metadata in a master spreadsheet with your data for future reference
 
@@ -392,7 +392,7 @@ fig01_mass_spectrum.png
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md glow">
 
 💡 **Recipe:** `project_description_version_date.ext` — descriptive, sortable, no spaces or special characters.
 
@@ -415,7 +415,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-## 📁 **Organized by File Type**
+## 📁 **Organised by File Type**
 
 ```bash
 |- Data/
@@ -432,7 +432,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 📊 **Organized by Analysis**
+## 📊 **Organised by Analysis**
 
 ```bash
 |- Figure1/
@@ -459,34 +459,6 @@ Choose the structure that best fits your workflow — either is valid as long as
 hideInToc: true
 ---
 
-# Try It: Build a Project Skeleton
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-## 🧪 **CLI Exercise**
-
-Create this structure from the command line — no file manager allowed!
-
-```bash
-mkdir -p my_project/data/raw \
-         my_project/data/processed \
-         my_project/results
-touch my_project/README.md
-ls -R my_project
-```
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-💡 `-p` creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
-
-</div>
-
----
-hideInToc: true
----
-
 # Absolute vs Relative Paths
 
 <div class="grid-2 mt-md gap-md">
@@ -498,7 +470,7 @@ hideInToc: true
 Starts from the **root** of the filesystem — always points to the same location regardless of your current directory.
 
 ```bash
-# macOS / Linux
+# Linux (macOS: /Users/alice/...)
 /home/alice/projects/data/results.csv
 
 # Windows
@@ -537,6 +509,34 @@ ls
 hideInToc: true
 ---
 
+# Try It: Build a Project Skeleton
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+## 🧪 **CLI Exercise**
+
+Create this structure from the command line — no file manager allowed!
+
+```bash
+mkdir -p my_project/data/raw \
+         my_project/data/processed \
+         my_project/results
+touch my_project/README.md
+ls -R my_project
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+💡 `-p` creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Exercise: Fix This Mess (1/2)
 
 <div class="card card-warning card-glass pad-tight mt-md">
@@ -561,7 +561,7 @@ Desktop/
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md" v-click>
 
 💡 **Spot the issues:** spaces in filenames, duplicate data files, no versioning, no folder structure, unclear which script is current, vague figure names.
 
@@ -600,13 +600,15 @@ layout: center
 hideInToc: true
 ---
 
+# Putting It All Together: The Research Data <span class="gradient-text">Lifecycle</span>
+
 <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; align-items: center;">
 
-[<img src="/figures/RDM_Lifecycle.png" class="inline w-80"/>](https://datamanagement.hms.harvard.edu/)
+[<img src="/figures/RDM_Lifecycle.png" class="inline w-70"/>](https://datamanagement.hms.harvard.edu/)
 
 <div>
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact reveal-left" v-click>
 
 - **Plan** → naming conventions & directory structure
 - **Collect & Process** → consistent names, separate raw from processed
@@ -615,7 +617,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm reveal-left" v-click>
 
 💡 Good file handling supports **every stage** of the research data lifecycle.
 
