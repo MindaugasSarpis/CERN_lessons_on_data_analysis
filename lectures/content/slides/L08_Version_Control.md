@@ -41,7 +41,7 @@ hideInToc: true
 
 - Even if working alone, many different versions of the same file will exist
 - Some overwritten changes might be needed later
-- A "versioned" file might be needed when implementing comments from supervisor / reviewers
+- A "versioned" file might be needed when implementing comments from your supervisor or reviewers
 - This holds true for written work, code and other files
 - Remember `about_me.md` from the Markdown exercise? Let's track it properly!
 
@@ -59,14 +59,14 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Tracking Changes (differences)
+# Tracking Changes (Differences)
 
 <div class="card card-info card-glass pad-tight mt-md">
 
 ## 🔍 **Why Track Changes?**
 
 - Rather than saving multiple copies of the same file, we can track changes
-- Word processors and other software have some change-tracking functionality but it is limited (no synchronous editing, no change history, etc.)
+- Word processors and other software have some change-tracking functionality, but it is limited (no synchronous editing, no change history, etc.)
 - `git` is an open-source version control system that is used to track changes in files
 
 </div>
@@ -111,7 +111,7 @@ hideInToc: true
 ## 🔗 **Combining Changes**
 
 - `git` has great functionality for merging different versions of the same file
-- If the previous content is not overwritten, or deleted, merge just combines the changes into one file
+- If the previous content is not overwritten or deleted, a merge just combines the changes into one file
 - If both branches change the same lines, a **merge conflict** arises
 
 </div>
@@ -205,7 +205,7 @@ git config --global --edit
 - Open short help for any command:
 
 ```bash
-git config --h
+git config -h
 ```
 
 </div>
@@ -338,7 +338,7 @@ When staged files are present, the output of `git status` will be:
 On branch main
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-        modified:   <file>
+        new file:   <file>
 ```
 
 </div>
@@ -421,7 +421,7 @@ git commit -m "A message describing the changes"
 
 - The commit message should be descriptive and concise
 
-- The commit message should be in the present tense
+- The commit message should be written in the imperative mood ("Add…", not "Added…")
 
 </div>
 
@@ -615,11 +615,11 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-**Note:** the example below is for a Python project. The specific patterns (`__pycache__`, `.venv/`) will make sense once you start Python soon — for now, focus on the general idea: ignore temporary, build, and machine-specific files.
+**Note:** the example below is for a Python project. The specific patterns (`__pycache__`, `.venv/`) will make sense once you start Python in the next lecture — for now, focus on the general idea: ignore temporary, build, and machine-specific files.
 
 </div>
 
-```bash {*}{maxHeight:'340px'}
+```bash {*}{maxHeight:'300px'}
 # Byte-compiled / optimized files
 __pycache__/
 *.py[cod]
@@ -698,7 +698,7 @@ git remote add origin git@github.com:mygithub/myremote.git
 - ### To check which remotes are added:
 
 ```bash
-  git remote -v
+git remote -v
 ```
 
 ---
@@ -776,7 +776,7 @@ hideInToc: true
 - ### A repository can be cloned from a remote repository with:
 
 ```bash
-git clone < URL >
+git clone <URL>
 ```
 
 ---
@@ -840,7 +840,7 @@ hideInToc: true
 
 ## ⚠️ **When two branches change the same lines**
 
-- If changes over-write each other a so-called **merge conflict** arises
+- If changes overwrite each other, a **merge conflict** arises
 - `git` marks the conflict in the file so you can decide which version to keep
 
 </div>
@@ -902,7 +902,7 @@ git commit -m "Resolve merge conflict"
 hideInToc: true
 ---
 
-# 🔁 **A typical day with Git**
+# A Typical Day with Git
 
 <div class="grid-2 gap-md mt-md" style="grid-template-columns: 1fr 1fr;">
 
