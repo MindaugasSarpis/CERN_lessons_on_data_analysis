@@ -45,13 +45,13 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
 
 🆓 **Free & open-source** — works on Windows, macOS, Linux
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
 
 🧩 **Extensible** — thousands of extensions for any language or workflow
 
@@ -187,7 +187,9 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-accent card-glass pad-tight mt-md">
+# The <span class="gradient-text">Command Palette</span>
+
+<div class="card card-accent card-glass pad-tight mt-sm glow">
 
 ## 🎯 **Your Most Powerful Tool**
 
@@ -197,27 +199,27 @@ Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the **Command Palette** �
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
 
-🔍 Type `>theme` to change the colour theme
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-🔍 Type `>terminal` to open/close the terminal
+🔍 Type `theme` to change the colour theme
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
 
-🔍 Type `>markdown` to preview a `.md` file
+🔍 Type `terminal` to open/close the terminal
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-info card-glass pad-compact reveal-scale" v-click>
 
-🔍 Type `>settings` to customise VS Code
+🔍 Type `markdown` to preview a `.md` file
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-scale" v-click>
+
+🔍 Type `settings` to customise VS Code
 
 </div>
 
@@ -313,28 +315,35 @@ Supports regex for powerful pattern matching.
 
 </div>
 
-<div class="card card-accent card-glass pad-compact mt-md">
-
-💡 **Auto-save:** enable `File → Auto Save` so you never lose changes. Or use `Ctrl+S` to save manually.
-
-</div>
-
 ---
 hideInToc: true
 ---
 
-<div class="card card-info card-glass pad-tight mt-md">
+# Keyboard Shortcuts Cheat Sheet
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-info card-glass pad-compact">
 
 | **Action** | **Windows/Linux** | **macOS** |
 |------------|-------------------|-----------|
 | Command Palette | `Ctrl+Shift+P` | `Cmd+Shift+P` |
-| Open terminal | `` Ctrl+` `` | `` Cmd+` `` |
+| Open terminal | `` Ctrl+` `` | `` Ctrl+` `` |
 | Toggle sidebar | `Ctrl+B` | `Cmd+B` |
 | Quick file open | `Ctrl+P` | `Cmd+P` |
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+| **Action** | **Windows/Linux** | **macOS** |
+|------------|-------------------|-----------|
 | Find in file | `Ctrl+F` | `Cmd+F` |
 | Find in project | `Ctrl+Shift+F` | `Cmd+Shift+F` |
 | Save file | `Ctrl+S` | `Cmd+S` |
 | Comment line | `Ctrl+/` | `Cmd+/` |
+
+</div>
 
 </div>
 
@@ -343,6 +352,11 @@ hideInToc: true
 ⚠️ You don't need to memorise all of these. Start with **Command Palette**, **terminal toggle**, and **save**. The rest will come with practice.
 
 </div>
+
+<style>
+table { font-size: 0.82em; }
+td, th { padding-top: 0.28em; padding-bottom: 0.28em; }
+</style>
 
 ---
 layout: section
@@ -354,6 +368,8 @@ hideInToc: true
 ---
 hideInToc: true
 ---
+
+# Recommended Extensions
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
@@ -396,6 +412,13 @@ We'll use this in the **next lecture**.
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Hands-On **Practice**
+
+---
 hideInToc: true
 ---
 
@@ -429,6 +452,36 @@ print("Hello from VS Code!")
 ```bash
 python src/hello.py
 ```
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Key Takeaways
+
+<div class="card card-primary card-glass pad-compact mt-md reveal-up" v-click>
+
+📂 **Open a folder, not a file** — VS Code gets full project context: search, Git, and extensions all work better
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md reveal-up" v-click>
+
+🎯 **The Command Palette finds everything** — press `Ctrl+Shift+P` and describe what you want
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md reveal-up" v-click>
+
+🖥️ **The integrated terminal** (`` Ctrl+` ``) opens directly in your project folder
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md reveal-up" v-click>
+
+🧩 **Extensions add language support** — Python, Markdown, and more
 
 </div>
 
