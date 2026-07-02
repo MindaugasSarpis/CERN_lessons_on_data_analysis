@@ -10,7 +10,7 @@ drawings:
 
 transition: fade
 
-title: "Data Visualization"
+title: "Data Visualisation"
 layout: cover
 ---
 
@@ -18,22 +18,22 @@ layout: cover
 
 # Data Analysis and Artificial Intelligence
 
-## Data Visualization
+## Data Visualisation
 
-##### Inspired by: C. O. Wilke Fundamentals of Data Visualization
+##### Inspired by: C. O. Wilke, *Fundamentals of Data Visualization*
 
 ---
 hideInToc: true
 layout: quote
 ---
 
-# Great data visualization is not about making things look pretty — it is about making the **data speak clearly**. A well-designed figure tells a story that numbers alone cannot.
+# Great data visualisation is not about making things look pretty — it is about making the **data speak clearly**. A well-designed figure tells a story that numbers alone cannot.
 
 ---
 hideInToc: true
 ---
 
-# Why Data Visualization **Matters**
+# Why Data Visualisation <span class="gradient-text">**Matters**</span>
 
 <div class="grid-2 mt-md gap-md">
 
@@ -41,7 +41,7 @@ hideInToc: true
 
 ## 👁️ **Visual Perception**
 
-The human brain processes images 60,000x faster than text. A well-designed chart can communicate in seconds what a table of numbers takes minutes to parse.
+The human brain processes images far faster than text. A well-designed chart can communicate in seconds what a table of numbers takes minutes to parse.
 
 </div>
 
@@ -49,7 +49,7 @@ The human brain processes images 60,000x faster than text. A well-designed chart
 
 ## 🔍 **Pattern Discovery**
 
-Visualizations reveal structure — clusters, trends, outliers, and gaps — that summary statistics alone can hide. Anscombe's quartet is the classic proof.
+Visualisations reveal structure — clusters, trends, outliers, and gaps — that summary statistics alone can hide. Anscombe's quartet is the classic proof.
 
 </div>
 
@@ -65,7 +65,7 @@ A plot is often the first (and sometimes only) thing a reader looks at. It carri
 
 ## ⚠️ **Deception Prevention**
 
-Understanding visualization principles protects you from being misled — and from accidentally misleading others.
+Understanding visualisation principles protects you from being misled — and from accidentally misleading others.
 
 </div>
 
@@ -794,7 +794,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/cwilke_distributions_ii_mpg_boxplot.svg" style="display:block;margin:0 auto;max-height:170px;">
 
-📦 **Boxplot** — box = IQR (Q1→Q3), line = median, whiskers = 1.5 × IQR, dots = outliers. The box spans the middle 50% of the data (the **interquartile range**); the line inside is the **median**. We define these terms formally in the Probability & Statistics lecture.
+📦 **Boxplot** — the box spans the middle 50% of the data (the **interquartile range**), the line inside is the **median**, whiskers reach 1.5 × IQR, dots are outliers. Defined formally in the Probability & Statistics lecture.
 
 </div>
 
@@ -1213,17 +1213,17 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_uncertainty_error_bars.svg" style="display:block;margin:0 auto;max-height:155px;">
+<img class="fig" src="/figures/cwilke_uncertainty_error_bars.svg" style="display:block;margin:0 auto;max-height:140px;">
 
 📏 **Error bars** — discrete ticks spanning ± 1 or 2 standard errors; good for a few points
 
-*(Standard errors and confidence intervals are defined in the Probability & Statistics lecture; here, read them as **how uncertain the estimate is** — smaller is more certain.)*
+*(Defined in the Probability & Statistics lecture — for now: **smaller bar = more certain**.)*
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_uncertainty_ci_band.svg" style="display:block;margin:0 auto;max-height:155px;">
+<img class="fig" src="/figures/cwilke_uncertainty_ci_band.svg" style="display:block;margin:0 auto;max-height:140px;">
 
 🎗️ **CI band** — shaded envelope around a fitted curve; width = 95 % uncertainty
 
@@ -1231,7 +1231,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_uncertainty_hop_demo.svg" style="display:block;margin:0 auto;max-height:155px;">
+<img class="fig" src="/figures/cwilke_uncertainty_hop_demo.svg" style="display:block;margin:0 auto;max-height:140px;">
 
 🎰 **HOP** — overlay many plausible fits; the spread *is* the uncertainty
 
