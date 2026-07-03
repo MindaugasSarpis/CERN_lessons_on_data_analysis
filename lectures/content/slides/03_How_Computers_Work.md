@@ -61,7 +61,7 @@ An **algorithm** is a **finite sequence of well-defined instructions** to solve 
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 ## 🍳 **Everyday Example**
 
@@ -72,7 +72,7 @@ An **algorithm** is a **finite sequence of well-defined instructions** to solve 
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 ## 📖 **Finding a Word in a Dictionary**
 
@@ -803,19 +803,19 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 📥 **Fetch** — read the next instruction (itself just a binary number) from memory
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 🔎 **Decode** — work out what it says: "add these", "compare those", "jump there"
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 ⚡ **Execute** — run it through circuits built from exactly the logic gates you just saw
 
@@ -823,7 +823,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
 
 💡 That's the whole trick: an **algorithm** becomes a list of instructions, instructions become **numbers**, and AND/OR/NOT circuits grind through them. Software is just data the CPU knows how to obey.
 
@@ -843,25 +843,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 🏎️ **Registers** — inside the CPU · a few hundred bytes · < 1 ns
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 ⚡ **Cache** — on the CPU chip · megabytes · a few ns
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 🧠 **RAM** — main memory · gigabytes · ~100 ns · gone at power-off
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-left" v-click>
+<div class="card card-warning card-glass pad-compact reveal-left">
 
 💽 **Disk (SSD/HDD)** — terabytes · ~0.1–10 ms · **a million times slower than registers**
 
@@ -869,7 +869,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
 
 💡 This is why "my dataset doesn't fit in memory" changes everything — and why the *format* and *size* of your files (this lecture!) directly set how fast your analysis can possibly run.
 
@@ -1526,25 +1526,25 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 🔢 **Integers** (`int`) — `42`, `-7`, `0` — fixed-width binary (arbitrary precision in Python)
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 📐 **Floats** (`float`) — `3.14`, `6.022e23` — IEEE-754, watch for rounding!
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
+<div class="card card-accent card-glass pad-compact reveal-scale">
 
 🔤 **Strings** (`str`) — `"Hello"`, `"α"` — Unicode characters, encoded as UTF-8
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-scale" v-click>
+<div class="card card-success card-glass pad-compact reveal-scale">
 
 ✅ **Booleans** (`bool`) — `True` / `False` — conceptually a single bit, the basis of all decisions
 
@@ -1657,31 +1657,31 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-primary card-glass pad-compact reveal-up" v-click>
+<div class="card card-primary card-glass pad-compact reveal-up">
 
 💡 **Bits** — everything in a computer is 0s and 1s; a bit is the smallest unit of information
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-up" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-up">
 
 🔢 **Numbers** — place value (binary, hex) plus finite precision (fixed-width ints, IEEE-754 floats)
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-up" v-click>
+<div class="card card-accent card-glass pad-compact reveal-up">
 
 🔤 **Text** — encodings (ASCII, Unicode/UTF-8) map characters to bytes
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-up" v-click>
+<div class="card card-info card-glass pad-compact reveal-up">
 
 📁 **Files** — formats, byte order, and bit depth tell the computer what a sequence of bits means
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-up" v-click>
+<div class="card card-success card-glass pad-compact reveal-up">
 
 🗜️ **Compression & integrity** — remove redundancy to shrink data; checksums and hashes catch corruption
 
@@ -1689,7 +1689,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
 🧭 Back to the "box": before writing algorithms, you need to know what their **inputs** and **outputs** are made of.
 

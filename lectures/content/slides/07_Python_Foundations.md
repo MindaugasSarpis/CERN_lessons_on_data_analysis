@@ -30,7 +30,7 @@ hideInToc: true
 
 # Why <span class="gradient-text">Python</span>
 
-<div class="card card-primary card-glass pad-tight mt-md reveal-left glow" v-click>
+<div class="card card-primary card-glass pad-tight mt-md reveal-left glow">
 
 ## 🌍 **Most Popular & Easy to Learn**
 
@@ -38,7 +38,7 @@ Python is one of the most popular and easiest-to-learn programming languages in 
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight mt-sm reveal-left" v-click>
+<div class="card card-secondary card-glass pad-tight mt-sm reveal-left">
 
 ## 👥 **Large Community & Ecosystem**
 
@@ -46,7 +46,7 @@ A large community of developers and users, as well as a large number of librarie
 
 </div>
 
-<div class="card card-success card-glass pad-tight mt-sm reveal-left" v-click>
+<div class="card card-success card-glass pad-tight mt-sm reveal-left">
 
 ## 🆓 **Open-Source & Powerful**
 

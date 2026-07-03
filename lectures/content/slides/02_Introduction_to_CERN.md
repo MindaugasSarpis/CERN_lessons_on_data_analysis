@@ -35,25 +35,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 🏛️ **What CERN is** — the laboratory, the LHC, and its impact beyond physics
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 📊 **Why data analysis is central there** — petabytes of collisions, and needles in haystacks
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 🎬 **A film tour across scales** — from the cosmos down to the quantum
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-left" v-click>
+<div class="card card-info card-glass pad-compact reveal-left">
 
 🎯 **Why these skills matter to you** — the same toolkit this course builds
 
@@ -166,25 +166,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 1️⃣ **LINAC4** — a linear accelerator kicks things off: **160 MeV**
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 2️⃣ **PS Booster → Proton Synchrotron** — first rings: **2 GeV → 26 GeV**
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 3️⃣ **Super Proton Synchrotron (SPS)** — 7 km ring: **450 GeV**
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-left" v-click>
+<div class="card card-success card-glass pad-compact reveal-left">
 
 4️⃣ **LHC** — 27 km ring: **6.8 TeV per beam** *(Run 3)* — then the beams are made to cross inside the detectors
 
@@ -192,7 +192,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
 💡 Each machine was once CERN's frontier — today's record-holder is tomorrow's injector.
 
@@ -212,7 +212,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 ## 🌀 **Tracker** *(innermost)*
 
@@ -220,7 +220,7 @@ Charged particles bend in a magnetic field — the curvature of each track gives
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 ## ⚡ **EM Calorimeter**
 
@@ -228,7 +228,7 @@ Stops **electrons and photons**, measuring the **energy** they deposit
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
+<div class="card card-accent card-glass pad-compact reveal-scale">
 
 ## 🔨 **Hadronic Calorimeter**
 
@@ -236,7 +236,7 @@ Stops heavier particles made of quarks (protons, neutrons, pions) — again meas
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-scale" v-click>
+<div class="card card-success card-glass pad-compact reveal-scale">
 
 ## 🧲 **Muon System** *(outermost)*
 
@@ -246,7 +246,7 @@ Stops heavier particles made of quarks (protons, neutrons, pions) — again meas
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
 💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
 
@@ -267,7 +267,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight reveal-scale" v-click>
+<div class="card card-primary card-glass pad-tight reveal-scale">
 
 ## 📊 **The Data Challenge**
 
@@ -278,7 +278,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-tight reveal-scale">
 
 ## 🔍 **Needle in a Haystack**
 
@@ -317,25 +317,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 💥 **~40 million** bunch crossings per second inside each detector
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 ⚡ **Level-1 trigger** — custom electronics decide in **microseconds** → ~**100,000** events/s survive
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 🖥️ **High-Level Trigger** — a computing farm inspects the full event → a few **thousand** events/s written to storage
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-left" v-click>
+<div class="card card-success card-glass pad-compact reveal-left">
 
 💾 Only these survivors become the **datasets** physicists analyse
 
@@ -343,7 +343,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
 ⚠️ A trigger decision is **final** — discarded collisions are gone forever. Deciding what to keep is itself a data-analysis problem.
 
@@ -431,19 +431,19 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 🏛️ **Tier 0 — CERN** · the custodial copy of all raw data on tape, first-pass reconstruction
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 🏢 **Tier 1 — ~15 national labs** · second copies, large-scale reprocessing, round-the-clock links to CERN
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 🏫 **Tier 2 — ~150 universities** · simulation and the everyday analyses of individual physicists
 
@@ -451,7 +451,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
 
 💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable.
 
@@ -600,7 +600,7 @@ CERN turns raw collisions into discoveries with exactly the toolkit this course 
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight reveal-up" v-click>
+<div class="card card-primary card-glass pad-tight reveal-up">
 
 ## 📁 **Handling Massive Data**
 
@@ -608,7 +608,7 @@ Petabytes of detector output demand disciplined file handling, data formats, and
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight reveal-up" v-click>
+<div class="card card-secondary card-glass pad-tight reveal-up">
 
 ## 🔀 **Working Together**
 
@@ -616,7 +616,7 @@ Thousands of scientists share one codebase — impossible without version contro
 
 </div>
 
-<div class="card card-accent card-glass pad-tight reveal-up" v-click>
+<div class="card card-accent card-glass pad-tight reveal-up">
 
 ## 🐍 **Turning Signal into Insight**
 
@@ -624,7 +624,7 @@ Python and data-analysis tools transform readings into physics.
 
 </div>
 
-<div class="card card-warning card-glass pad-tight reveal-up" v-click>
+<div class="card card-warning card-glass pad-tight reveal-up">
 
 ## 🎲 **Real or a Fluke?**
 

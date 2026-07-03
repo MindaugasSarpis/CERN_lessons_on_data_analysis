@@ -84,31 +84,31 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 🧠 Build intuition for **good practices**
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 🧰 Be aware of a **plethora of available free tools**
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 💪 Build **competences** in relevant areas
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-left glow" v-click>
+<div class="card card-success card-glass pad-compact reveal-left glow">
 
 🚀 Use what you learned for your **own projects**
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-left" v-click>
+<div class="card card-info card-glass pad-compact reveal-left">
 
 🤝 Work together and practice **problem solving**
 
@@ -124,61 +124,61 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 🖥️ Working with computers — command line & common pitfalls
 
 </div>
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 📁 File handling and directory structure
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 ⚙️ Main principles of computing
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 🔀 Version control with Git
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
+<div class="card card-accent card-glass pad-compact reveal-scale">
 
 🐍 Crash course on Python programming
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
+<div class="card card-accent card-glass pad-compact reveal-scale">
 
 📊 Concepts of Data Analysis
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-scale" v-click>
+<div class="card card-info card-glass pad-compact reveal-scale">
 
 📈 Data visualisation
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-scale" v-click>
+<div class="card card-info card-glass pad-compact reveal-scale">
 
 🎲 Probability and statistics
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-scale" v-click>
+<div class="card card-warning card-glass pad-compact reveal-scale">
 
 🏗️ Computing infrastructure & environments
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-scale" v-click>
+<div class="card card-warning card-glass pad-compact reveal-scale">
 
 🔄 Robust, reproducible workflows
 
@@ -208,7 +208,7 @@ The whole grade is a project you carry through the course — the natural place 
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight reveal-left" v-click>
+<div class="card card-primary card-glass pad-tight reveal-left">
 
 ## 📋 **What it is**
 
@@ -218,7 +218,7 @@ The whole grade is a project you carry through the course — the natural place 
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight reveal-left" v-click>
+<div class="card card-secondary card-glass pad-tight reveal-left">
 
 ## ✅ **Graded on the four aims**
 
@@ -313,25 +313,25 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-primary card-glass pad-compact reveal-up" v-click>
+<div class="card card-primary card-glass pad-compact reveal-up">
 
 🧠 Understand main concepts of **computing**
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-up" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-up">
 
 🎯 Know which **tools** to choose for a specific task
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-up" v-click>
+<div class="card card-accent card-glass pad-compact reveal-up">
 
 ⚡ Be able to implement simple **data analysis workflows** on the fly
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact reveal-up">
 
 🛡️ Be safe from **common pitfalls** in working with computers
 
@@ -347,25 +347,25 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-info card-glass pad-compact reveal-up" v-click>
+<div class="card card-info card-glass pad-compact reveal-up">
 
 📐 Gain knowledge on **mathematics and statistics** for data analysis
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-up" v-click>
+<div class="card card-success card-glass pad-compact reveal-up">
 
 🤖 Understand the basics of **machine learning and AI**
 
 </div>
 
-<div class="card card-primary card-glass pad-compact reveal-up" v-click>
+<div class="card card-primary card-glass pad-compact reveal-up">
 
 🔀 Become **platform and tool agnostic** in your work
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-up" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-up">
 
 🚀 Be able to **adapt** to new tools and technologies quicker
 

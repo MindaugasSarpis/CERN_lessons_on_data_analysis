@@ -40,25 +40,25 @@ Every earlier lecture built a practice. Machine learning is where they **pay off
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 🔧 **Tool-agnostic** — the ideas (features, loss, generalisation) outlive any framework
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 ♻️ **Reproducible** — a model no one can retrain is not a result
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
+<div class="card card-accent card-glass pad-compact reveal-scale">
 
 ⚙️ **Automated** — training and evaluation belong in your pipeline, not your memory
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-scale" v-click>
+<div class="card card-success card-glass pad-compact reveal-scale">
 
 📁 **Data first** — a model is only as good as the data you feed it
 
@@ -95,7 +95,7 @@ Instead of writing the rules by hand, you give a model **examples** and it learn
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-tight reveal-left" v-click>
+<div class="card card-warning card-glass pad-tight reveal-left">
 
 ## ✍️ **Traditional programming**
 
@@ -105,7 +105,7 @@ Instead of writing the rules by hand, you give a model **examples** and it learn
 
 </div>
 
-<div class="card card-success card-glass pad-tight reveal-left" v-click>
+<div class="card card-success card-glass pad-tight reveal-left">
 
 ## 🤖 **Machine learning**
 
@@ -131,7 +131,7 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 ## 🎯 **Supervised** — labelled examples
 
@@ -139,7 +139,7 @@ Predict a label (classification) or number (regression). *"Is this collision sig
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 ## 🔍 **Unsupervised** — no labels
 
@@ -147,7 +147,7 @@ Find structure: clusters, anomalies, lower-dimensional views. *"Which events loo
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 ## 🕹️ **Reinforcement** — learn by reward
 
@@ -296,31 +296,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 1️⃣ **Features** — turn raw data into numeric inputs `X` (📁 the data work pays off here)
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 2️⃣ **Model** — choose a family (linear, tree, network) with parameters to learn
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 3️⃣ **Train** — fit parameters by minimising a **loss** on training data
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-left" v-click>
+<div class="card card-success card-glass pad-compact reveal-left">
 
 4️⃣ **Evaluate** — measure performance on **held-out** data, honestly
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-left" v-click>
+<div class="card card-warning card-glass pad-compact reveal-left">
 
 5️⃣ **Iterate or ship** — good enough → deploy; not → back to features/model
 
@@ -344,7 +344,7 @@ A model that has *seen* the answers can memorise them. The only honest question 
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 ## 🏋️ **Train** (~60%)
 
@@ -352,7 +352,7 @@ Fit the model's parameters.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 ## 🎚️ **Validation** (~20%)
 
@@ -360,7 +360,7 @@ Tune choices (which model, how complex).
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-scale" v-click>
+<div class="card card-success card-glass pad-compact reveal-scale">
 
 ## 🎓 **Test** (~20%)
 
@@ -390,7 +390,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-tight reveal-left" v-click>
+<div class="card card-warning card-glass pad-tight reveal-left">
 
 ## 🐛 **Overfitting**
 
@@ -398,7 +398,7 @@ Model memorises noise → **great** on train, **poor** on test. Too complex for 
 
 </div>
 
-<div class="card card-primary card-glass pad-tight reveal-left" v-click>
+<div class="card card-primary card-glass pad-tight reveal-left">
 
 ## 🥱 **Underfitting**
 
@@ -408,7 +408,7 @@ Model too simple → poor on **both**. Missing real structure.
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
 
 🎯 The sweet spot is **generalisation**: the model captures the signal, ignores the noise. You find it by watching the **train-vs-test gap**, not the training score.
 
@@ -545,7 +545,7 @@ If 1 event in 10,000 is signal, a model that predicts **"background, always"** i
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 ## 📏 **Use the right metric**
 
@@ -553,7 +553,7 @@ Precision, recall, F1, ROC-AUC — chosen for what the mistake *costs*.
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 ## ⚖️ **Know your baseline**
 
@@ -592,7 +592,7 @@ Models trained to predict the next token over vast text. That simple objective y
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-success card-glass pad-tight reveal-left" v-click>
+<div class="card card-success card-glass pad-tight reveal-left">
 
 ## ✅ **Great for**
 
@@ -602,7 +602,7 @@ Models trained to predict the next token over vast text. That simple objective y
 
 </div>
 
-<div class="card card-warning card-glass pad-tight reveal-left" v-click>
+<div class="card card-warning card-glass pad-tight reveal-left">
 
 ## ⚠️ **Watch out for**
 
@@ -622,25 +622,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 🧠 **You own the output** — this course's project lets you use AI, but you must **understand and explain every line**.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 ♻️ **Reproducibility still applies** — pin versions, script the steps, don't rely on a chat you can't rerun.
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 🔍 **Verify, don't trust** — run it, test it, check it against what you know. AI is a fast junior, not an oracle.
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-left" v-click>
+<div class="card card-success card-glass pad-compact reveal-left">
 
 🔧 **Tool, not crutch** — it accelerates people who understand the problem; it hides the gap for those who don't.
 
@@ -663,7 +663,7 @@ hideInToc: true
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary card-glass pad-tight reveal-scale" v-click>
+<div class="card card-primary card-glass pad-tight reveal-scale">
 
 ## 🧠 **Understanding beats frameworks**
 
@@ -671,7 +671,7 @@ Knowing *your data* and *your question* matters more than the latest library. To
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-tight reveal-scale">
 
 ## 🎯 **The thinking, not the label**
 
@@ -679,7 +679,7 @@ Statistics, data science, AI — good analysis is good analysis, whatever the na
 
 </div>
 
-<div class="card card-accent card-glass pad-tight reveal-scale" v-click>
+<div class="card card-accent card-glass pad-tight reveal-scale">
 
 ## 🔬 **CERN-grade rigour is learnable**
 
@@ -687,7 +687,7 @@ The methods that found the Higgs are the ones you've practised — applied hones
 
 </div>
 
-<div class="card card-success card-glass pad-tight reveal-scale" v-click>
+<div class="card card-success card-glass pad-tight reveal-scale">
 
 ## 🚀 **These skills transfer everywhere**
 
@@ -705,31 +705,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-warning card-glass pad-compact reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact reveal-up">
 
 🏃 **Jumping to complex models** before understanding the data — a linear baseline first, always.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact reveal-up">
 
 🔀 **Confusing correlation with causation** — a predictor is not a cause (Lecture 11).
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact reveal-up">
 
 💧 **Data leakage** — test information sneaking into training → fake-great scores.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact reveal-up">
 
 🏷️ **Calling everything "AI"** to sound impressive — name the actual method.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact reveal-up">
 
 ♻️ **Shipping a model no one can retrain** — an unreproducible result is not a result.
 
@@ -745,31 +745,31 @@ hideInToc: true
 
 <div class="stack-tight mt-sm">
 
-<div class="card card-primary card-glass pad-compact reveal-up" v-click>
+<div class="card card-primary card-glass pad-compact reveal-up">
 
 🤖 **ML learns rules from examples** — the same modelling loop as fitting, at scale.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-up" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-up">
 
 🔒 **Split your data** — train / validation / test; the test set is touched once.
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-up" v-click>
+<div class="card card-accent card-glass pad-compact reveal-up">
 
 📉 **Watch overfitting** — trust the train-vs-test gap, never the training score.
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-up" v-click>
+<div class="card card-info card-glass pad-compact reveal-up">
 
 📏 **Pick the right metric** — accuracy lies on imbalanced data; know what a mistake costs.
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-up" v-click>
+<div class="card card-success card-glass pad-compact reveal-up">
 
 🧭 **Data literacy > tool literacy** — the four aims are what make ML trustworthy.
 

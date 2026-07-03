@@ -63,25 +63,25 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
 ⚡ **Speed** — complex workflows faster than with a mouse
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
 🔄 **Automation** — script repetitive steps and share them
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale" v-click>
+<div class="card card-accent card-glass pad-compact reveal-scale">
 
 🌐 **Remote Work** — manage servers and clusters without a GUI
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-scale" v-click>
+<div class="card card-info card-glass pad-compact reveal-scale">
 
 📝 **Transparency** — commands document exactly what happened
 
@@ -431,25 +431,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 1️⃣ `grep "ERROR" log.txt` — keep only the error lines
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 2️⃣ `… | sort` — identical sensor names become neighbours
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 3️⃣ `… | uniq -c` — collapse repeats into `count name`
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-left" v-click>
+<div class="card card-success card-glass pad-compact reveal-left">
 
 4️⃣ `… | sort -nr | head -3` — numerically, biggest first, top three
 
@@ -457,7 +457,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
 ```bash
 grep "ERROR" log.txt | sort | uniq -c | sort -nr | head -3
@@ -747,31 +747,31 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 🧩 Keep commands small and composable
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 📖 Use aliases sparingly — prefer readable scripts
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-left" v-click>
+<div class="card card-info card-glass pad-compact reveal-left">
 
 📁 Store reusable commands in scripts under version control
 
 </div>
 
-<div class="card card-success card-glass pad-compact reveal-left" v-click>
+<div class="card card-success card-glass pad-compact reveal-left">
 
 📋 Document workflows in README files with copy-paste commands
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 💪 Practice regularly to build muscle memory
 
@@ -803,25 +803,25 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-up" v-click>
+<div class="card card-primary card-glass pad-compact reveal-up">
 
 🧭 **Navigate** — `pwd` / `cd` / `ls` ↔ `Get-Location` / `Set-Location` / `Get-ChildItem`
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-up" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-up">
 
 🔍 **Inspect** — `cat` / `grep` ↔ `Get-Content` / `Select-String`
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-up" v-click>
+<div class="card card-accent card-glass pad-compact reveal-up">
 
 📝 **Create** — `mkdir` / `touch` / `echo` ↔ `New-Item` / `Add-Content`
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-up" v-click>
+<div class="card card-info card-glass pad-compact reveal-up">
 
 🔗 **Combine** — pipe with `|`, overwrite with `>`, append with `>>` — the same symbols work in both shells
 
@@ -883,7 +883,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-tight reveal-scale" v-click>
+<div class="card card-warning card-glass pad-tight reveal-scale">
 
 ## 😵 **Common Issues**
 
@@ -899,7 +899,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-tight reveal-scale" v-click>
+<div class="card card-success card-glass pad-tight reveal-scale">
 
 ## ✅ **How to Avoid**
 
@@ -955,7 +955,7 @@ hideInToc: true
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight reveal-scale" v-click>
+<div class="card card-primary card-glass pad-tight reveal-scale">
 
 ## 💻 **Here**
 
@@ -966,7 +966,7 @@ Your **local device** — the working copy you use every day
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight reveal-scale" v-click>
+<div class="card card-secondary card-glass pad-tight reveal-scale">
 
 ## 🔌 **Near**
 
@@ -978,7 +978,7 @@ A **local backup** in the same physical space
 
 </div>
 
-<div class="card card-accent card-glass pad-tight reveal-scale" v-click>
+<div class="card card-accent card-glass pad-tight reveal-scale">
 
 ## ☁️ **Far**
 
@@ -992,7 +992,7 @@ A **remote backup** in a different location
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-info card-glass pad-compact mt-md reveal-up">
 
 💡 A solid backup plan keeps copies at **all three distances**. If any one fails, the others still have you covered.
 
@@ -1366,7 +1366,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight reveal-scale" v-click>
+<div class="card card-primary card-glass pad-tight reveal-scale">
 
 ## 📥 **`data/raw/`**
 
@@ -1376,7 +1376,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-tight reveal-scale" v-click>
+<div class="card card-success card-glass pad-tight reveal-scale">
 
 ## ⚙️ **`data/processed/`**
 
@@ -1388,7 +1388,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-info card-glass pad-compact mt-md reveal-up">
 
 💡 Test yourself: could you delete everything *except* `data/raw/` and the scripts, and rebuild the project? If yes, your structure is right.
 
@@ -1613,19 +1613,19 @@ hideInToc: true
 
 <div class="stack-tight mt-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 🗜️ **Bundle** — one archive: data + scripts + README (`thesis_ch3_2026-07-03.zip`)
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-left" v-click>
+<div class="card card-secondary card-glass pad-compact reveal-left">
 
 🔐 **Fingerprint** — store a checksum next to it, so corruption or tampering is detectable *(how checksums work: the Computer Science lecture)*
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left" v-click>
+<div class="card card-accent card-glass pad-compact reveal-left">
 
 🏛️ **Deposit** — university repository or a service like Zenodo, which gives your archive a permanent citable identifier (a **DOI**)
 
@@ -1633,7 +1633,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md reveal-up" v-click>
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
 
 💡 "Which exact version of the data made Figure 3?" — with an archive, that question has an answer years later.
 
@@ -1651,7 +1651,7 @@ hideInToc: true
 
 <div>
 
-<div class="card card-primary card-glass pad-compact reveal-left" v-click>
+<div class="card card-primary card-glass pad-compact reveal-left">
 
 - **Plan** → naming conventions & directory structure
 - **Collect & Process** → consistent names, separate raw from processed
@@ -1660,7 +1660,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-sm reveal-left" v-click>
+<div class="card card-info card-glass pad-compact mt-sm reveal-left">
 
 💡 Good file handling supports **every stage** of the research data lifecycle.
 
