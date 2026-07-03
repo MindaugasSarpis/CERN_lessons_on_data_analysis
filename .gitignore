@@ -40,3 +40,4 @@ misc/python/cwilke/figs/
 .qa-dist/
 lectures/content/.qa-dist/
 .qa-shots/
+.buildtest/
