@@ -25,5 +25,11 @@
   "devDependencies": {
     "mermaid": "^11.12.0",
     "playwright-chromium": "^1.56.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "playwright-chromium"
+    ]
   }
 }
