@@ -4,59 +4,56 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-University-level lecture course "Lessons on Data Analysis from CERN" — 12 lectures delivered as interactive slide decks using **Slidev**, with a companion student workbook built with **MkDocs**.
+University-level lecture course "Best Research and Data Analysis Practices from CERN" — a 16-lecture + 16-seminar course delivered as interactive slide decks using **Slidev**, with a companion student workbook built with **MkDocs**. The course's spine is four aims: 🔧 tool-agnosticism, ♻️ reproducibility, ⚙️ automation, 📁 efficient work with data & files.
+
+**Delivery architecture (blocked per-lecture decks):** the site is a static **landing page** (`dist/index.html`) plus **one independently-built Slidev deck per lecture** at `dist/<slug>/`. This fixes mobile load — a visitor downloads only one lecture (~4–28M) instead of a single 500+-slide monolith. The set of decks is defined by the manifest **`lectures/content/decks.json`**; lectures are grouped into blocks A–E on the landing page (advanced blocks last / optional).
 
 ## Commands
 
 All commands run from the repository root.
 
 ```bash
-# Install dependencies
-pnpm install
+pnpm install                 # install dependencies
 
-# Dev server for the published deck (current-term subset)
-pnpm dev
+pnpm build                   # build ALL decks + landing → dist/ (scripts/build-all.mjs)
+pnpm qa                      # build every deck at base '/' + gate each for overflow (scripts/qa-all.mjs)
+pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for visual review
 
-# Dev server for the full WIP deck (all lectures, incl. drafts)
-pnpm dev:staging
+pnpm dev --config-slug 01-orientation   # dev-serve one deck (regenerates entries first); or:
+pnpm dev:lecture lectures/content/deck.06-version-control.md
 
-# Dev server for a single lecture file
-pnpm dev:lecture lectures/content/slides/L09_Probability_and_Statistics.md
-
-# Production build (published deck only)
-pnpm build
-
-# Export to PDF
-pnpm export
-
-# Student workbook (MkDocs) — requires conda env from env.yaml
-cd lectures/workbook && mkdocs serve
+pnpm build:combined          # optional: single "everything" authoring build (not deployed)
+pnpm export                  # export the combined deck to PDF
+cd lectures/workbook && mkdocs serve     # student workbook (needs conda env from env.yaml)
 ```
 
-There are no tests or linting configured.
+There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test.**
 
-### Visual QA workflow (whole-deck overflow + content/style review)
+### Build pipeline (manifest-driven)
 
-When iterating on styling, verify the **rendered** deck — a `slidev build` only catches compile errors, not slides whose content overflows the 16:9 frame (silently clipped in the build and PDF export).
+- **`lectures/content/decks.json`** — the manifest: `decks[]` (each `{slug, title, block, srcs[], optional, draft?}`) + `upcoming[]` (roadmap items shown greyed on the landing) + `blocks{}`.
+- **`scripts/gen-entries.mjs`** — writes one Slidev entry `lectures/content/deck.<slug>.md` per deck (co-located with `theme/` + `public/` so both resolve at build; a bare `slides/NN_*.md` build drops the theme AND can't resolve `/figures/*`). Entries are **generated + gitignored**, never hand-edited. Merged lectures list multiple `srcs`.
+- **`scripts/build-all.mjs`** — regenerates entries, builds each deck to `<out>/<slug>/` at base `<prefix>/<slug>/` (absolute `--out`; Slidev resolves a relative `--out` against the entry dir), strips per-deck video copies (served from the remote fallback), then emits the landing via **`scripts/gen-landing.mjs`**. Flags: `--out`, `--base <prefix>`, `--only a,b`, `--flat-base` (base `/` for QA, no landing), `--keep-videos`.
+- **`scripts/qa-all.mjs`** — builds all decks `--flat-base` to `.qa-dist/<slug>`, runs `check-slides.mjs` on each; non-zero exit if any deck overflows.
 
-```bash
-pnpm qa            # build the published deck + render every slide: overflow report + a screenshot per slide in .qa-shots/
-pnpm qa:overflow   # overflow report only (needs a prior `pnpm qa:build`), ~8s for the full deck
-```
+### Visual QA workflow (per-deck overflow + content/style review)
 
-`scripts/check-slides.mjs` renders all slides with parallel workers + client-side navigation (fast — full 482-slide deck in ~8s), measures each slide root's overflow (neutralizing decorative backdrops and pre-click transforms), and optionally writes `.qa-shots/slide-NNN.png` for visual review. Options: `--workers N`, `--tolerance PX`, `--only 8,76,...`, `--shots <dir>`. Exit code is non-zero if any slide overflows, so it works as a gate.
+Verify the **rendered** decks — a `slidev build` only catches compile errors, not slides whose content overflows the 16:9 frame (silently clipped in build and PDF export).
 
-**Hard requirements enforced by this workflow (see project memory):** (1) **zero slide overflow**; (2) **videos full-screen** — `VideoPlayer.vue` uses `object-fit: cover`, no letterbox line; (3) **consistent type scale** — sizes follow the markdown level, no arbitrary one-off `font-size`. Must build through an entry point co-located with `theme/` (e.g. the published deck) — a single `slides/L0X.md` build silently drops the custom theme.
+`scripts/check-slides.mjs <distDir>` renders every slide of one built deck with parallel workers + client-side navigation, measures overflow (neutralizing decorative backdrops and pre-click transforms), and optionally writes `.qa-shots/slide-NNN.png`. Options: `--workers N`, `--tolerance PX`, `--only 8,76,...`, `--shots <dir>`. `pnpm qa` runs it across all decks. Media requests are aborted during QA so video slides don't stall the check.
 
-To review content/style across the deck, read the `.qa-shots/*.png` in batches (or fan out subagents over batches), not all at once.
+**Hard requirements (see project memory):** (1) **zero slide overflow**; (2) **videos full-screen** — `VideoPlayer.vue` uses `object-fit: cover`, no letterbox line; (3) **consistent type scale** — sizes follow the markdown level, no arbitrary one-off `font-size`; (4) build every deck through its generated `deck.<slug>.md` entry (co-located with `theme/`), never a bare `slides/NN_*.md`.
+
+To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan out subagents over batches), not all at once.
 
 ## Architecture
 
 ### Slide Deck (Slidev)
 
-- **Published entry point**: `lectures/content/lessons_on_data_analysis_from_CERN.md` — the deck that `pnpm build` ships to GitHub Pages. It imports only the subset of lectures currently delivered in-term.
-- **Staging entry point**: `lectures/content/staging.md` — full WIP deck importing every lecture file (including parallel drafts of L6 and L11). Use `pnpm dev:staging` to preview everything.
-- **Individual lectures**: `lectures/content/slides/L{NN}_*.md` — each is a standalone Slidev markdown file. Numbering is zero-padded to two digits (`L01_`…`L12_`). Lecture 3 is split into sub-lectures (`L03_1_1_`, `L03_1_2_`, `L03_2_`, `L03_3_`, `L03_4_`). The `LX_Python_Interactive.md` file is a template, not part of the course. Lecture ordering occasionally shifts between terms — the numeric prefix is the authoritative sort key, independent of delivery order.
+- **Deck manifest**: `lectures/content/decks.json` (see Build pipeline above) — the source of truth for which decks exist and their order/blocks.
+- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key). `12`–`16` are drafts being finished (`12_Data_Fitting`, `13_NumPy_and_Pandas`, `14_Reproducible_Workflows`, `15_Computing_Infrastructure`; `16_Machine_Learning` still to be authored). `L11_Real_Data_and_Case_Studies.md` (case-study material folded into 13/14/16) and `LX_Python_Interactive.md` (template) are not lectures.
+- **Combined authoring entry** (optional, not deployed): `lectures/content/lessons_on_data_analysis_from_CERN.md` and `staging.md` — single-file "everything" builds for authoring convenience (`pnpm build:combined`).
+- **Design/plan docs**: `docs/superpowers/specs/` and `docs/superpowers/plans/` — the curriculum spec and the P1–P6 implementation plan; `docs/superpowers/salvage-notes.md` maps retired quiz/crash-course material into target lectures.
 - **Custom theme**: `lectures/content/theme/` — local Slidev theme (`@slidev/theme-scienced`)
   - `styles/custom-slides.css` — card system, grid layouts, spacing utilities, typography
   - `styles/mermaid-styles.css` — Mermaid diagram styling
