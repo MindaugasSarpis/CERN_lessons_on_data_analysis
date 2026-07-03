@@ -63,6 +63,8 @@ export async function genLanding(manifest, outDir, prefix = '') {
            padding: .9rem 1rem; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
   a.deck:hover { transform: translateY(-2px); border-color: rgba(125,211,252,.55); background: rgba(24, 34, 52, .9); }
   a.deck.opt { opacity: .82; }
+  .deck.soon { opacity: .5; cursor: default; }
+  .deck.soon .num { color: #6b7c92; margin-right: .55rem; }
   .num { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 1.15rem;
          min-width: 2ch; color: #7dd3fc; }
   .dt { font-weight: 600; flex: 1; }
@@ -80,6 +82,12 @@ export async function genLanding(manifest, outDir, prefix = '') {
       <p class="sub">A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files. Pick a lecture below — each opens on its own so it loads fast, even on a phone.</p>
     </header>
     ${blockSections}
+    ${(manifest.upcoming && manifest.upcoming.length) ? `
+      <section class="block">
+        <h2>Coming soon <span class="tag">in preparation</span></h2>
+        <div class="grid">${manifest.upcoming.map((u) => `
+          <span class="deck opt soon"><span class="num">${String(u.n).padStart(2, '0')}</span><span class="dt">${esc(u.title)}</span></span>`).join('')}</div>
+      </section>` : ''}
     <footer>
       <p class="seminars">Each lecture has a paired hands-on seminar in the workbook. Blocks D–E are the optional tail if the term runs short.</p>
     </footer>

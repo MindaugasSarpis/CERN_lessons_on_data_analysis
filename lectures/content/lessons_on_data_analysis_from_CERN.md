@@ -37,49 +37,51 @@ hideInToc: true
 <Toc text-xl minDepth="1" maxDepth="1" columns="2" />
 
 ---
-src: slides/L01_Course_Orientation.md
+src: slides/01_Orientation.md
 ---
 
 ---
-src: slides/L02_Introduction_to_CERN.md
+src: slides/02_Introduction_to_CERN.md
 ---
 
 ---
-src: slides/L03_2_Command_Line.md
+src: slides/04_Command_Line_and_Files.md
 ---
 
 ---
-src: slides/L03_1_1_Crash_Course_on_Computer_Science.md
+src: slides/03_How_Computers_Work.md
 ---
 
 ---
-src: slides/L03_1_2_File_Handling_and_Directory_Structure.md
 ---
 
 ---
-src: slides/L03_4_VS_Code.md
 ---
 
 ---
-src: slides/L03_3_Markdown.md
+src: slides/05_Markdown_and_VS_Code.md
 ---
 
 ---
-src: slides/L08_Version_Control.md
+src: slides/06_Version_Control.md
 ---
 
 ---
-src: slides/L05_Crash_Course_on_Python_Programming.md
+src: slides/07_Python_Foundations.md
 ---
 
 ---
-src: slides/L06_Concepts_of_Data_Analysis.md
+src: slides/08_Python_for_Data.md
 ---
 
 ---
-src: slides/L07_Data_Visualisation.md
+src: slides/09_Concepts_of_Data_Analysis.md
 ---
 
 ---
-src: slides/L09_Probability_and_Statistics.md
+src: slides/10_Data_Visualisation.md
+---
+
+---
+src: slides/11_Probability_and_Statistics.md
 ---
