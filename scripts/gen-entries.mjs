@@ -59,4 +59,21 @@ for (const deck of manifest.decks) {
   await writeFile(join(CONTENT, `deck.${deck.slug}.md`), entryContent(deck), 'utf8');
 }
 
-console.log(`Generated ${manifest.decks.length} entry files (lectures/content/deck.*.md)`);
+// Emit a lightweight lecture index consumed by the in-deck nav overlay
+// (global-top.vue fetches `<base>/lectures.json`). Copied into every
+// deck's build via public/, so each deck can link back home and to its siblings.
+// Generated + gitignored.
+const lectureIndex = manifest.decks.map((d, i) => ({
+  n: i + 1,
+  slug: d.slug,
+  title: d.title,
+  block: d.block,
+  optional: !!d.optional,
+}));
+await writeFile(
+  join(CONTENT, 'public', 'lectures.json'),
+  JSON.stringify({ blocks: manifest.blocks, decks: lectureIndex }),
+  'utf8',
+);
+
+console.log(`Generated ${manifest.decks.length} entry files (lectures/content/deck.*.md) + public/lectures.json`);
