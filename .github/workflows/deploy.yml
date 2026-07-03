@@ -32,12 +32,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build
+      - name: Build all decks + landing page
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-        run: |
-          npx -y @slidev/cli@latest build --out ../../dist lectures/content/lessons_on_data_analysis_from_CERN.md \
-            --base "/${{ github.event.repository.name }}/" \
+        run: node scripts/build-all.mjs --out dist --base "/${{ github.event.repository.name }}"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
