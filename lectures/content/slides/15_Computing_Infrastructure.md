@@ -20,6 +20,8 @@ layout: cover
 
 ## Computing Infrastructure
 
+##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation</span>
+
 ---
 hideInToc: true
 layout: quote

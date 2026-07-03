@@ -20,6 +20,8 @@ layout: cover
 
 ## Concepts of Data Analysis
 
+##### <span class="aims-badge">♻️ reproducibility · 📁 data & files</span>
+
 ---
 hideInToc: true
 ---
@@ -3607,7 +3609,7 @@ hideInToc: true
 
 <div class="note-text">
 
-A 2011 CMS research-grade dataset on opendata.cern.ch — annotated against each FAIR pillar.
+An LHCb research-grade dataset on opendata.cern.ch — annotated against each FAIR pillar.
 
 </div>
 
@@ -3621,7 +3623,7 @@ A 2011 CMS research-grade dataset on opendata.cern.ch — annotated against each
 
 ## 🔍 **Findable**
 
-DOI `10.7483/OPENDATA.CMS.…`, title, keywords, indexed on Google Dataset Search
+DOI `10.7483/OPENDATA.LHCB.…`, title, keywords, indexed on Google Dataset Search
 
 </div>
 
@@ -3985,6 +3987,30 @@ Pick the simplest method that solves the problem. Reach for complexity only when
 Results that nobody understands have zero impact. Visualisation and storytelling are part of analysis.
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Further **Reading**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📚 This lecture draws on these — several are free online:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">📗 **Wilson et al.** — *Good Enough Practices in Scientific Computing* (2017) · free</div>
+
+<div class="card card-secondary card-glass pad-compact">🔗 **Wilkinson et al.** — *The FAIR Guiding Principles* (2016), *Scientific Data* · GO FAIR</div>
+
+<div class="card card-accent card-glass pad-compact">🔄 **CRISP-DM** — the cross-industry standard process for data mining</div>
+
+<div class="card card-info card-glass pad-compact">📘 **Kelleher & Tierney** — *Data Science* (MIT Press, Essential Knowledge)</div>
 
 </div>
 

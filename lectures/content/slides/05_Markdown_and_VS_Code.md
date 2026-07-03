@@ -19,6 +19,8 @@ layout: cover
 
 ## Markdown & VS Code
 
+##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducibility</span>
+
 ---
 hideInToc: true
 layout: quote

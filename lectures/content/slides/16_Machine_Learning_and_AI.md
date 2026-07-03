@@ -17,6 +17,8 @@ mermaid: true
 
 ## Machine Learning & AI
 
+##### <span class="aims-badge">🔧 ♻️ ⚙️ 📁 — applies all four aims</span>
+
 ---
 hideInToc: true
 layout: quote
@@ -734,6 +736,30 @@ hideInToc: true
 ♻️ **Shipping a model no one can retrain** — an unreproducible result is not a result.
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Further **Reading**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📚 Where to learn ML properly — the first is free and the best starting point:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">📗 **James, Witten, Hastie & Tibshirani** — *An Introduction to Statistical Learning* · free at statlearning.com</div>
+
+<div class="card card-secondary card-glass pad-compact">🛠️ **Géron** — *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow*</div>
+
+<div class="card card-accent card-glass pad-compact">🐍 **scikit-learn user guide** — excellent, example-driven documentation</div>
+
+<div class="card card-info card-glass pad-compact">🧠 **Google** — *Machine Learning Crash Course* · free, hands-on</div>
 
 </div>
 

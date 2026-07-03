@@ -19,6 +19,8 @@ layout: cover
 
 ## Crash Course on Computer Science
 
+##### <span class="aims-badge">🔧 tool-agnostic · 📁 data & files</span>
+
 ---
 layout: quote
 hideInToc: true

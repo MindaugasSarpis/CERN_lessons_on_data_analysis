@@ -19,6 +19,8 @@ layout: cover
 
 ## Data Visualisation
 
+##### <span class="aims-badge">🔧 tool-agnostic · 📁 data & files</span>
+
 ##### Inspired by: C. O. Wilke, *Fundamentals of Data Visualization*
 
 ---
@@ -1911,6 +1913,46 @@ Before exporting any figure, run through the next-slide exercise on your own plo
 ✅ Is it **reproducible** — source code committed, input data versioned, output regenerable with one command?
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Running Project — a Real Spectrum
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎯 The **seminar running project** turns a table of numbers into this figure — the **LHCb dimuon mass spectrum**. Every principle from this lecture is in it.
+
+</div>
+
+<img class="fig" src="/figures/lhcb_dimuon_spectrum.png" style="display:block;margin:0 auto;max-height:330px;background:#fff;border-radius:8px;">
+
+<div class="note-text mt-sm">📏 Units on both axes · 📉 **log scale** so small peaks (Υ) show next to the huge J/ψ · 🏷️ resonances annotated. *Your field's data will look different — the same choices apply. You build this in Seminar 10.*</div>
+
+---
+hideInToc: true
+---
+
+# Further **Reading**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📚 This lecture is built on these — Wilke is free online:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">📈 **C. O. Wilke** — *Fundamentals of Data Visualization* · free at clauswilke.com/dataviz</div>
+
+<div class="card card-secondary card-glass pad-compact">📊 **Cleveland** — *The Elements of Graphing Data* (the perceptual-hierarchy source)</div>
+
+<div class="card card-accent card-glass pad-compact">🎨 **Cairo** — *The Truthful Art* — honest, clear data storytelling</div>
+
+<div class="card card-info card-glass pad-compact">📐 **Tufte** — *The Visual Display of Quantitative Information* — the classic</div>
 
 </div>
 

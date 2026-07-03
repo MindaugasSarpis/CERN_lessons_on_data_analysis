@@ -4,28 +4,52 @@ Every seminar adds one layer to **the same** analysis project. By the end you ow
 one clean, versioned, automated, documented repository that embodies the course's
 four aims — 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data.
 
-## The dataset — CMS dimuon events
+## Pick your dataset — two tracks
 
-We use a real **CERN Open Data** teaching set: dimuon events recorded by the CMS
-experiment. Each row is one event in which two muons were detected; the columns
-give each muon's energy and momentum and (optionally) the reconstructed
+The skills are identical whichever you choose. **Pick the one that fits your
+background:**
+
+### 🅰 The physics track — LHCb dimuon events *(the default)*
+
+A real **CERN Open Data** teaching set: dimuon (μ⁺μ⁻) events recorded by the
+**LHCb** experiment. Each row is one event in which two muons were detected; the
+columns give each muon's momentum components and the reconstructed
 **invariant mass `M`** of the pair.
 
-- Source: CERN Open Data Portal (CMS education sample, e.g. `Dimuon_DoubleMu.csv`,
-  ~100k rows). Download link and exact citation are recorded in Seminar 2.
-- Key columns: `Run, Event, E1, px1, py1, pz1, pt1, eta1, phi1, Q1, E2, px2, py2, pz2, pt2, eta2, phi2, Q2, M`.
-- Why it's great: it's a plain CSV (works with every tool), it's real physics, and
-  its invariant-mass spectrum contains famous **resonance peaks** — the
-  J/ψ (~3.1 GeV), Υ (~9.5 GeV) and Z boson (~91 GeV) — so there is a genuine
+- Source: CERN Open Data Portal — the LHCb dimuon education sample (a plain CSV,
+  tens of thousands of rows). The exact record, DOI and download link are found
+  and recorded in **Seminar 2**.
+- Typical columns: `E1, px1, py1, pz1, Q1, E2, px2, py2, pz2, Q2, M` (energies /
+  momenta in GeV).
+- Why it's great: a plain CSV (works with every tool), real physics, and its
+  invariant-mass spectrum contains famous **resonance peaks** —
+  J/ψ (~3.10 GeV), ψ(2S) (~3.69 GeV), Υ (~9.46 GeV) — so there is a genuine
   signal to find, fit, and classify.
 
-> If offline or the portal is unavailable, any tabular CSV with a numeric column
-> of interest works; the instructor may provide a local copy.
+### 🅱 The bring-your-own track — a dataset from *your* field
+
+Students come from many faculties, so you may instead use a **tabular dataset
+from your own discipline** — the four aims and every step below apply unchanged.
+Good candidates have a few thousand+ rows and at least one numeric column with
+interesting structure:
+
+- 🌦️ **environment** — daily weather (temperature, rainfall) over years
+- 💶 **economics / business** — prices, sales, energy consumption
+- 🧬 **life sciences** — measurements per sample/patient (anonymised)
+- 🗳️ **social science** — public survey / census microdata
+- 🏃 **your own** — anything you have measured or can download openly
+
+Wherever the physics track says "invariant mass / resonance peak", read it as
+"your numeric variable / the pattern you're looking for". Clear this choice with
+the instructor in Seminar 2.
+
+> Offline or the portal is down? Any tabular CSV works; the instructor can
+> provide a local copy of the LHCb sample.
 
 ## The repository you will build
 
 ```text
-dimuon-analysis/
+analysis-project/       # name it after your data (e.g. dimuon-analysis)
 |- README.md            # what this is, data provenance, how to rebuild (S5)
 |- data/
 |  |- raw/              # the CSV exactly as downloaded — READ ONLY (S2, S4)
@@ -52,10 +76,10 @@ and rebuild the whole project with one command. If that's true, you've succeeded
 | 7 | First parsing: one event line → numbers |
 | 8 | Ingest script: whole CSV read into Python (no Pandas) |
 | 9 | Data-quality audit applied (missing, duplicate, impossible values) |
-| 10 | First committed figure: the dimuon mass spectrum |
-| 11 | A measurement with an uncertainty (mass near a peak, ± SE) |
-| 12 | A fit: Gaussian + background on a resonance, mass ± error, χ² |
+| 10 | First committed figure (physics: the dimuon mass spectrum) |
+| 11 | A measurement with an uncertainty (a value ± SE) |
+| 12 | A fit: a peak/curve model → parameter ± error, χ² |
 | 13 | Clean, tidy `processed/` table produced with Pandas |
 | 14 | One-command reproducible rebuild (environment + Makefile) |
 | 15 | The pipeline run as a batch/remote-style job, at scale *(optional)* |
-| 16 | A trained + honestly-evaluated signal-vs-background classifier *(optional)* |
+| 16 | A trained + honestly-evaluated classifier *(optional)* |

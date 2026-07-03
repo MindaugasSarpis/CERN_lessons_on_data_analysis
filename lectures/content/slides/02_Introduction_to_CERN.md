@@ -19,6 +19,8 @@ layout: cover
 
 ## Introduction to CERN
 
+##### <span class="aims-badge">📁 data & files · ♻️ reproducibility</span>
+
 ---
 hideInToc: true
 layout: quote

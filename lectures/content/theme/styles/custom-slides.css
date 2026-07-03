@@ -612,6 +612,13 @@
   margin: 0;
 }
 
+/* Per-lecture aims badge under the cover title. */
+.aims-badge {
+  opacity: 0.72;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
 /* Small italic subtitle under a slide title (promoted from L06's
    slide-scoped styles — used across many slides deck-wide). */
 .def-sub {

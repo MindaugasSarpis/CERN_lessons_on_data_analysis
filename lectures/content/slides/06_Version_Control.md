@@ -19,6 +19,8 @@ layout: cover
 
 ## Version Control
 
+##### <span class="aims-badge">♻️ reproducibility · 🔧 tool-agnostic</span>
+
 ---
 hideInToc: true
 layout: quote

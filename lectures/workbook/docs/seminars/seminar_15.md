@@ -24,7 +24,7 @@ Seminar 14 (a working `make all` pipeline).
 
 ## Stretch goals
 - Parallelise the per-file step (GNU `parallel`, or Python `multiprocessing`).
-- Estimate the resources to process the full CMS dataset (billions of events).
+- Estimate the resources to process the full LHCb dataset (billions of events).
 
 ## Solution notes (instructor)
 The transferable idea: a reproducible, automated pipeline is exactly what scales to

@@ -19,6 +19,8 @@ layout: cover
 
 ## Probability and Statistics
 
+##### <span class="aims-badge">🔧 tool-agnostic</span>
+
 ---
 hideInToc: true
 layout: quote
@@ -2271,6 +2273,30 @@ hideInToc: true
 ---
 
 # Bringing It **Together**
+
+---
+hideInToc: true
+---
+
+# Further **Reading**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📚 To go deeper — the first two are free and superb:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">📗 **Diez, Çetinkaya-Rundel & Barr** — *OpenIntro Statistics* · free at openintro.org</div>
+
+<div class="card card-secondary card-glass pad-compact">🎲 **Blitzstein & Hwang** — *Introduction to Probability* · free (Harvard Stat 110)</div>
+
+<div class="card card-accent card-glass pad-compact">📘 **Wasserman** — *All of Statistics* — a fast, rigorous reference</div>
+
+<div class="card card-info card-glass pad-compact">🔬 **Barlow** — *Statistics: A Guide to the Use of Statistical Methods in the Physical Sciences*</div>
+
+</div>
 
 ---
 hideInToc: true

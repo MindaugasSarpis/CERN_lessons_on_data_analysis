@@ -19,6 +19,8 @@ layout: cover
 
 ## Python for Data Work
 
+##### <span class="aims-badge">📁 data & files · 🔧 tool-agnostic</span>
+
 ---
 hideInToc: true
 layout: quote

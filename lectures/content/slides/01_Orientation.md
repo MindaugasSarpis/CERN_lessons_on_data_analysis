@@ -15,6 +15,8 @@ layout: cover
 
 ## Course Orientation
 
+##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducible · ⚙️ automation · 📁 data & files — the four aims</span>
+
 ---
 hideInToc: true
 layout: quote

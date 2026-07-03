@@ -17,6 +17,8 @@ addons:
 
 ## Python Foundations
 
+##### <span class="aims-badge">🔧 tool-agnostic</span>
+
 ---
 hideInToc: true
 layout: quote

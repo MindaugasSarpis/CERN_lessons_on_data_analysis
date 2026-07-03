@@ -34,6 +34,8 @@ python:
 
 ## Data Fitting
 
+##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
+
 ---
 hideInToc: true
 layout: quote
@@ -1352,6 +1354,16 @@ layout: section
 hideInToc: true
 ---
 
+# The Running Project — Fitting a Real Peak
+
+<div class="note-text mt-sm">🎯 **Seminar running project:** fit the **J/ψ** peak of the LHCb dimuon spectrum (Gaussian + background) → **m ≈ 3.097 GeV** with error and χ²/dof. *Same recipe for any peak in any field.*</div>
+
+<img class="fig" src="/figures/lhcb_jpsi_fit.png" style="display:block;margin:0.4rem auto 0;max-height:235px;background:#fff;border-radius:8px;">
+
+---
+hideInToc: true
+---
+
 # Real-World **Applications**
 
 ---
@@ -1502,6 +1514,30 @@ hideInToc: true
 <div class="card card-accent card-glass pad-tight mt-md">
 
 **Both are parameter estimation problems.** ML is fitting with very complex, flexible models. Understanding fitting makes you better at ML.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Further **Reading**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📚 The go-to references for fitting and uncertainties:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">📗 **Hughes & Hase** — *Measurements and their Uncertainties* — practical and clear</div>
+
+<div class="card card-secondary card-glass pad-compact">📘 **Bevington & Robinson** — *Data Reduction and Error Analysis for the Physical Sciences*</div>
+
+<div class="card card-accent card-glass pad-compact">🔬 **James** — *Statistical Methods in Experimental Physics*</div>
+
+<div class="card card-info card-glass pad-compact">🐍 **SciPy docs** — `scipy.optimize.curve_fit` and `lmfit` for real-world fitting</div>
 
 </div>
 

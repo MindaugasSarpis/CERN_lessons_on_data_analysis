@@ -20,6 +20,8 @@ layout: cover
 
 ## Reproducible Workflows & Automation
 
+##### <span class="aims-badge">♻️ reproducibility · ⚙️ automation</span>
+
 ---
 hideInToc: true
 layout: quote

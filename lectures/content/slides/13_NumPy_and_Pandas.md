@@ -34,6 +34,8 @@ python:
 
 ## NumPy, Pandas & Real Data
 
+##### <span class="aims-badge">📁 data & files · ⚙️ automation · 🔧 tool-agnostic</span>
+
 ---
 hideInToc: true
 layout: quote
@@ -1339,10 +1341,10 @@ CERN provides open access to real experimental data from LHC experiments!
 
 ### **Available Datasets**
 
-- **CMS**: Proton-proton collisions (7, 8, 13 TeV)
-- **ATLAS**: Limited open data releases
-- **ALICE**: Heavy-ion collisions
-- **LHCb**: B-physics data
+- **LHCb**: beauty/charm decays, dimuon events
+- **CMS**: proton-proton collisions (7, 8, 13 TeV)
+- **ATLAS**: selected open-data releases
+- **ALICE**: heavy-ion collisions
 
 Formats: CSV, ROOT, HDF5
 
@@ -1374,13 +1376,13 @@ Full tutorials and documentation provided!
 hideInToc: true
 ---
 
-# Example: CMS Dimuon Spectrum — Data
+# Example: LHCb Dimuon Spectrum — Data
 
 ```py {monaco-run}
 import pandas as pd
 import numpy as np
 
-# Simulated CMS dimuon data (real data: http://opendata.cern.ch/record/5200)
+# Simulated LHCb dimuon data (real LHCb dimuon data: opendata.cern.ch)
 np.random.seed(42)
 jpsi = np.random.normal(3.1, 0.1, 500)       # J/ψ peak (~3.1 GeV)
 upsilon = np.random.normal(9.5, 0.2, 200)     # Υ peak (~9.5 GeV)
@@ -1398,7 +1400,7 @@ print(f"Υ region (9.0-10.5 GeV):     {len(df[(df['dimuon_mass']>9) & (df['dimuo
 hideInToc: true
 ---
 
-# Example: CMS Dimuon Spectrum — Plot
+# Example: LHCb Dimuon Spectrum — Plot
 
 ```py {monaco-run}
 import pandas as pd
@@ -1416,7 +1418,7 @@ plt.figure(figsize=(10, 5))
 plt.hist(df['dimuon_mass'], bins=100, range=(0, 15), edgecolor='white', linewidth=0.3)
 plt.xlabel('Dimuon Mass (GeV/c²)', fontsize=12)
 plt.ylabel('Events', fontsize=12)
-plt.title('Dimuon Mass Spectrum (simulated CMS data)', fontsize=14)
+plt.title('Dimuon Mass Spectrum (simulated LHCb data)', fontsize=14)
 plt.axvline(3.1, color='red', ls='--', label='J/ψ (3.1 GeV)', lw=1.5)
 plt.axvline(9.5, color='green', ls='--', label='Υ (9.5 GeV)', lw=1.5)
 plt.legend(); plt.grid(alpha=0.3); plt.yscale('log')

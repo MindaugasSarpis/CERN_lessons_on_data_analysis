@@ -2,7 +2,7 @@
 
 **Paired lecture:** 02 Introduction to CERN · **Format:** hands-on · **~90 min**
 
-> **Running project — this session adds:** the CMS dimuon CSV in `data/raw/`, with
+> **Running project — this session adds:** your chosen dataset (LHCb dimuon, or your own) in `data/raw/`, with
 > its provenance recorded.
 
 ## Goal
@@ -13,8 +13,11 @@ act of reproducibility.
 Seminar 1 (project skeleton).
 
 ## Tasks
-1. Find the CMS dimuon education dataset on the **CERN Open Data Portal**
-   (search "dimuon CSV"). Note the record's title, DOI/URL, and licence.
+1. Choose your track (see the [running-project overview](running-project.md)):
+   - **Physics** — find the LHCb dimuon education dataset on the **CERN Open Data
+     Portal** (search "dimuon CSV"). Note the record's title, DOI/URL, and licence.
+   - **Bring-your-own** — pick a tabular dataset from your own field (weather,
+     survey, prices, lab measurements…). Note where it came from and its licence.
 2. Download the CSV into `data/raw/` **without renaming it**.
 3. In `README.md`, start a **Data** section: source URL, DOI, licence, download
    date, file name, and a one-line description of what a row represents.

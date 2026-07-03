@@ -17,9 +17,9 @@ A laptop with internet access. Nothing installed yet — that's what today is fo
    `python --version` (or `python3`), `git --version`, `code --version`.
 2. Create the project folder and skeleton:
    ```bash
-   mkdir -p dimuon-analysis/{data/raw,data/processed,scripts,results}
-   cd dimuon-analysis
-   printf "# Dimuon Analysis\n\nCourse running project.\n" > README.md
+   mkdir -p analysis-project/{data/raw,data/processed,scripts,results}
+   cd analysis-project
+   printf "# Analysis Project\n\nCourse running project.\n" > README.md
    ```
 3. Open the folder in VS Code (`code .`) and look around the Explorer.
 4. Verify Python works: create `scripts/hello.py` with `print("ready")` and run it.

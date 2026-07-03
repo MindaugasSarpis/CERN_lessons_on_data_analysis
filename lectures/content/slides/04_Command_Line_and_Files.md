@@ -19,6 +19,8 @@ layout: cover
 
 ## Command Line & File Handling
 
+##### <span class="aims-badge">⚙️ automation · 📁 data & files · 🔧 tool-agnostic</span>
+
 ---
 hideInToc: true
 layout: quote
