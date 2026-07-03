@@ -28,6 +28,59 @@ layout: quote
 
 # Every file has a history. **Version control** lets you navigate that history, collaborate without conflict, and never lose work again.
 
+<!--
+Speaker: open on the pain everyone has felt — `report_final_FINAL_v3.docx`. VC is
+the cure. Keep this to ~1 min, then move to what they'll be able to do. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🕰️ Track a file's full **history** and recover any past version
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+✍️ Record changes as small, meaningful **commits**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🌿 Work in **branches** and **merge** them — resolving conflicts
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🤝 Collaborate through **remotes** and **pull requests**
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+♻️ See version control as a pillar of **reproducibility**
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Tell them the paired Seminar 6
+is where they put THEIR project under Git — today is the "why" and the mental
+model. Set the expectation. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1067,6 +1120,54 @@ hideInToc: true
 ---
 
 # [An interactive git playground](https://learngitbranching.js.org/)
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Initialise a repo and build a clean commit **history**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ **Branch**, **merge**, and resolve a conflict
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Push to a **remote** and open a **pull request**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Use Git as a pillar of **reproducible research**
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 6 tie-in**
+
+Put your analysis project **under Git** — create a feature branch, commit your work in small steps, and merge it back with a pull request.
+
+</div>
+
+<!--
+Speaker: this is the "you can now" beat — have them physically nod along to each.
+The seminar tie-in makes the payoff concrete: they leave the lecture, and in the
+seminar their own project goes under version control. (~1 min)
+-->
 
 ---
 hideInToc: true
