@@ -31,6 +31,9 @@ const OUT = resolve(ROOT, opt('--out', 'dist'));
 const PREFIX = opt('--base', '').replace(/\/$/, ''); // no trailing slash
 const ONLY = argv.includes('--only') ? new Set(opt('--only').split(',')) : null;
 const KEEP_VIDEOS = argv.includes('--keep-videos');
+// --flat-base: build every deck at base '/' (each served standalone at root),
+// which is what the headless overflow checker needs. No landing page in this mode.
+const FLAT = argv.includes('--flat-base');
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
 
@@ -44,7 +47,7 @@ await mkdir(OUT, { recursive: true });
 const targets = manifest.decks.filter((d) => !ONLY || ONLY.has(d.slug));
 let failed = 0;
 for (const deck of targets) {
-  const base = `${PREFIX}/${deck.slug}/`;
+  const base = FLAT ? '/' : `${PREFIX}/${deck.slug}/`;
   const outDir = join(OUT, deck.slug);
   process.stdout.write(`\n▶ building ${deck.slug} (base ${base}) …\n`);
   const r = spawnSync(
@@ -63,9 +66,11 @@ for (const deck of targets) {
   }
 }
 
-// Landing page (lists ALL decks regardless of --only).
-await genLanding(manifest, OUT, PREFIX);
-console.log(`\nLanding page → ${join(OUT, 'index.html')}`);
+// Landing page (lists ALL decks regardless of --only). Skipped in flat-base/QA mode.
+if (!FLAT) {
+  await genLanding(manifest, OUT, PREFIX);
+  console.log(`\nLanding page → ${join(OUT, 'index.html')}`);
+}
 
 if (failed) { console.error(`\n❌ ${failed}/${targets.length} deck(s) failed to build.`); process.exit(1); }
 console.log(`\n✅ Built ${targets.length} deck(s) → ${OUT}`);
