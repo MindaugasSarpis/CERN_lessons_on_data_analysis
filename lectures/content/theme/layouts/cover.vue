@@ -11,14 +11,36 @@ const props = defineProps({
 // Use handleBackground for the animated bg layer (dim=true adds dark overlay)
 const bgStyle = computed(() => handleBackground(props.background, true))
 const mounted = ref(false)
+const coverRoot = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   setTimeout(() => { mounted.value = true }, 50)
+
+  // Make the course-title heading on the cover a link back to the landing page
+  // (one path segment up from the deck base). Done here so all 16 decks get it
+  // without editing each cover's markdown.
+  const home = (import.meta.env.BASE_URL || '/').replace(/[^/]+\/$/, '') || '/'
+  const el = coverRoot.value
+  if (!el) return
+  const h1s = Array.from(el.querySelectorAll<HTMLElement>('.cover-content h1'))
+  const title = h1s.find((h) => /Best Research and Data Analysis/i.test(h.textContent || ''))
+  if (title && !title.dataset.homeLink) {
+    title.dataset.homeLink = '1'
+    title.classList.add('cover-home-link')
+    title.setAttribute('role', 'link')
+    title.setAttribute('tabindex', '0')
+    title.setAttribute('title', 'Course home')
+    const go = () => { window.location.href = home }
+    title.addEventListener('click', go)
+    title.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go() }
+    })
+  }
 })
 </script>
 
 <template>
-  <div class="slidev-layout cover cover-root">
+  <div class="slidev-layout cover cover-root" ref="coverRoot">
     <!-- Animated background layer -->
     <div class="cover-bg" :style="bgStyle"></div>
 
@@ -161,6 +183,19 @@ onMounted(() => {
   font-size: 1.35rem;
   letter-spacing: 0.03em;
   margin-top: 0.5rem;
+}
+
+/* The course title doubles as a link back to the course landing page */
+.cover-root :deep(.cover-home-link) {
+  cursor: pointer;
+  width: fit-content;
+  transition: color 0.18s ease;
+}
+.cover-root :deep(.cover-home-link:hover) {
+  color: #7dd3fc !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
 }
 
 .cover-root :deep(p) {

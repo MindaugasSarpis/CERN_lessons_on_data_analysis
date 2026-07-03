@@ -16,12 +16,19 @@ const props = defineProps({
 const localSrc = computed(() => `${import.meta.env.BASE_URL || '/'}videos/${props.src}`)
 const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
 
+// In the deployed build the local videos/ dir is stripped (served from the
+// GitHub release instead), so play straight from the release CDN — requesting
+// the absent local file first only 404s and delays playback. `pnpm dev` keeps
+// the local copies, so prefer them there (fast, offline).
+const preferRemote = import.meta.env.PROD
+const primarySrc = computed(() => (preferRemote ? remoteSrc.value : localSrc.value))
+const secondarySrc = computed(() => (preferRemote ? localSrc.value : remoteSrc.value))
+
 const videoRef = ref(null)
 const sourceRef = ref(null)
-const currentSrc = ref(localSrc.value)
+const currentSrc = ref(primarySrc.value)
 const status = ref('idle')
 const isActive = useIsSlideActive()
-const isLocal = computed(() => currentSrc.value === localSrc.value)
 const hasBeenActive = ref(false)
 
 const mimeType = computed(() => {
@@ -33,10 +40,11 @@ const mimeType = computed(() => {
 let switching = false
 function onError() {
   if (switching || !hasBeenActive.value) return
-  if (currentSrc.value === localSrc.value) {
+  // Fall back to the other source once (local <-> release), then give up.
+  if (currentSrc.value === primarySrc.value && secondarySrc.value !== primarySrc.value) {
     switching = true
     status.value = 'loading'
-    currentSrc.value = remoteSrc.value
+    currentSrc.value = secondarySrc.value
     nextTick(() => {
       videoRef.value?.load()
       switching = false

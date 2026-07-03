@@ -560,7 +560,7 @@ That thread carries into the next section. (~1 min setup)
 
 ---
 
-<VideoPlayer src="Perseverance_Rover_Landing_NASA.mp4" fallback="https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis/releases/download/videos/Perseverence_Rover_Landing_NASA.mp4" autoplay   />
+<VideoPlayer src="Perseverance_Rover_Landing_NASA.mp4" autoplay   />
 
 ---
 
