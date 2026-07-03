@@ -199,53 +199,40 @@ hideInToc: true
 
 # **Grading Structure**
 
-<div class="grid-3 mt-sm gap-md tidy-cards">
+<div class="card card-success card-glass pad-tight mt-md glow">
 
-<div class="card card-warning card-glass pad-compact">
+## 🎯 **One course-long project — 100%**
 
-## 📝 **Quiz 1 — 20%**
-
-*Data Analysis*
-
-- Multiple choice, closed book
-- On eMokymai platform
-- Blitz Quiz format
-- Apr 16th, start of the day
+The whole grade is a project you carry through the course — the natural place to *practise* everything we cover.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="grid-2 mt-md gap-md">
 
-## 📝 **Quiz 2 — 20%**
+<div class="card card-primary card-glass pad-tight reveal-left" v-click>
 
-*AI*
+## 📋 **What it is**
 
-- Multiple choice, closed book
-- On eMokymai platform
-- Blitz Quiz format
-- Apr 16th, start of the day
+- Related to **your** field of study or work
+- Includes real **data analysis and/or automation**
+- Built with Python and the good practices from this course
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-secondary card-glass pad-tight reveal-left" v-click>
 
-## 🎯 **Project — 60%**
+## ✅ **Graded on the four aims**
 
-- Course-long project
-- Related to your field of study/work
-- Must include data analysis and/or automation
-- Use Python and good practices
-- Final presentation (graded on the spot)
-- Attend all project presentations
+- 🔧 **Tool-agnostic**, reasoned choices
+- ♻️ **Reproducible** — someone else can rebuild your results
+- ⚙️ **Automated** where it counts
+- 📁 **Well-organised** data & files, clearly documented
 
 </div>
 
 </div>
 
-<style scoped>
-.card ul { margin: 0.25rem 0 0; }
-.card li { margin: 0.05em 0; line-height: 1.3; }
-</style>
+<div class="note-text mt-md">Assessed on a final presentation (graded on the spot) plus the project repository.</div>
 
 ---
 hideInToc: true
@@ -293,7 +280,7 @@ hideInToc: true
 | Feb 21 | Data analysis and computing |
 | Feb 27 | Artificial Intelligence |
 | Feb 28 | Artificial Intelligence |
-| **Apr 16** | **Quiz** and Data analysis and computing |
+| Apr 16 | Data analysis and computing |
 | Apr 17 | Data analysis and computing |
 | **Apr 18** | **Final Project Presentations** |
 

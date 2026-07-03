@@ -4,7 +4,7 @@
    under prefers-reduced-motion and disables heavy effects on
    coarse-pointer / small screens. v-click states rely on Slidev's
    `.slidev-vclick-hidden`. Generalizes patterns previously inlined
-   in crash_course_for_video_lecture.md and L06.
+   in individual lecture files (e.g. L06).
    ============================================================ */
 
 /* ---------- Gradient / kinetic text ---------- */

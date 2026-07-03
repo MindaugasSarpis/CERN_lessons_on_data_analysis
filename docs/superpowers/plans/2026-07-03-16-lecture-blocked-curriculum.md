@@ -124,6 +124,15 @@ Adjust the manifest and source files to the 16-lecture structure. Merges use mul
 
 **P2 exit:** manifest = the final 16 decks; all build + QA green; landing shows 16 lectures in 5 blocks.
 
+### Task P2.4: Fold in salvaged quiz + crash-course material (per `docs/superpowers/salvage-notes.md`)
+Quizzes and the video crash-course were retired (2026-07-03) and their reusable
+content mapped in `salvage-notes.md`. During P3–P5, fold the mapped items into
+their target decks: quiz questions → ≤1–2 `<MCQ>` slides per lecture; the
+crash-course "what is NOT AI" grid, field taxonomy, and "data literacy > tool
+literacy" thesis → L16 + the P5 spine pass. Delete `salvage-notes.md` at
+closeout once everything is folded in. (Grading already updated to 100% project
+in L01 as part of the retirement commit.)
+
 ---
 
 ## Phase P3 — Finish the 4 drafts to publishable standard
