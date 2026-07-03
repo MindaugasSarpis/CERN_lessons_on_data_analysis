@@ -23,9 +23,8 @@
     { "slug": "12-data-fitting", "title": "Practical Data Fitting", "block": "C", "srcs": ["12_Data_Fitting.md"], "optional": false },
     { "slug": "13-numpy-and-pandas", "title": "NumPy & Pandas", "block": "D", "srcs": ["13_NumPy_and_Pandas.md"], "optional": false },
     { "slug": "14-reproducible-workflows", "title": "Reproducible Workflows & Automation", "block": "D", "srcs": ["14_Reproducible_Workflows.md"], "optional": false },
-    { "slug": "15-computing-infrastructure", "title": "Computing Infrastructure & HPC", "block": "E", "srcs": ["15_Computing_Infrastructure.md"], "optional": true }
+    { "slug": "15-computing-infrastructure", "title": "Computing Infrastructure & HPC", "block": "E", "srcs": ["15_Computing_Infrastructure.md"], "optional": true },
+    { "slug": "16-machine-learning", "title": "Machine Learning & AI", "block": "E", "srcs": ["16_Machine_Learning_and_AI.md"], "optional": true }
   ],
-  "upcoming": [
-    { "n": 16, "title": "Machine Learning & AI", "block": "E" }
-  ]
+  "upcoming": []
 }
