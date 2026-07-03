@@ -1,27 +1,33 @@
 # Teachers Workbook
 
-1. [Induction](lectures/lecture_1.md)
+Companion notes for **Best Research and Data Analysis Practices from CERN** — a
+16-lecture + 16-seminar course. The lectures are delivered as Slidev decks; this
+workbook holds teaching notes and the hands-on **seminar** briefs.
 
-2. [Intro to CERN](lectures/lecture_2.md)
+## Hands-on seminars
 
-3. [Crash Course on Computer Science](lectures/lecture_3.md)
+Every lecture has a paired seminar. All 16 build up **one running project** — a
+reproducible analysis of a real CMS dimuon dataset. Start here:
 
-4. [Computing Infrastructure](lectures/lecture_4.md)
+- **[Overview & the running project](seminars/running-project.md)** — the dataset,
+  the repository you'll build, and what each seminar adds.
 
-5. [Crash Course on Python Programming](lectures/lecture_5.md)
+The 16 seminar briefs are in the **Seminars** section of the navigation.
 
-6. [Concepts of Data Analysis](lectures/lecture_6.md)
+## Lecture notes
 
-7. [Data Visualisation](lectures/lecture_7.md)
-
-8. [Version Control](lectures/lecture_8.md)
-
-9. [Probability & Statistics](lectures/lecture_9.md)
-
-10. [Practical Data Fitting in Python](lectures/lecture_10.md)
-
-11. [NumPy, Pandas & Real Data](lectures/lecture_11.md)
-
-12. [Reproducible Workflows & Automation](lectures/lecture_12.md)
+1. [Orientation & Data in Your Life](lectures/lecture_1.md)
+2. [Introduction to CERN](lectures/lecture_2.md)
+3. – 5. [Computing, Files & Tooling](lectures/lecture_3.md) *(computer science, command line, file handling, Markdown, VS Code)*
+6. [Version Control with Git](lectures/lecture_8.md)
+7. – 8. [Python Programming](lectures/lecture_5.md)
+9. [Concepts of Data Analysis](lectures/lecture_6.md)
+10. [Data Visualisation](lectures/lecture_7.md)
+11. [Probability & Statistics](lectures/lecture_9.md)
+12. [Practical Data Fitting](lectures/lecture_10.md)
+13. [NumPy & Pandas](lectures/lecture_11.md)
+14. [Reproducible Workflows & Automation](lectures/lecture_12.md)
+15. [Computing Infrastructure](lectures/lecture_4.md) *(optional / advanced)*
+16. Machine Learning & AI *(optional / advanced — see the lecture deck)*
 
 [Miscellaneous](lectures/misc.md)

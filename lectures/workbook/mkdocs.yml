@@ -2,17 +2,35 @@ site_name: Best Research and Data Analysis Practices from CERN
 
 nav:
   - Home: index.md
-  - Lectures:
-      - L1 Induction: lectures/lecture_1.md
-      - L2 Intro to CERN: lectures/lecture_2.md
-      - L3 Computer Science: lectures/lecture_3.md
-      - L4 Computing Infrastructure: lectures/lecture_4.md
-      - L5 Python Programming: lectures/lecture_5.md
-      - L6 Concepts of Data Analysis: lectures/lecture_6.md
-      - L7 Data Visualisation: lectures/lecture_7.md
-      - L8 Version Control: lectures/lecture_8.md
-      - L9 Probability & Statistics: lectures/lecture_9.md
-      - L10 Practical Data Fitting: lectures/lecture_10.md
-      - L11 NumPy & Pandas: lectures/lecture_11.md
-      - L12 Reproducible Workflows: lectures/lecture_12.md
+  - Lecture notes:
+      - 01 Orientation & Data in Your Life: lectures/lecture_1.md
+      - 02 Introduction to CERN: lectures/lecture_2.md
+      - 03–05 Computing, Files & Tooling: lectures/lecture_3.md
+      - 06 Version Control with Git: lectures/lecture_8.md
+      - 07–08 Python Programming: lectures/lecture_5.md
+      - 09 Concepts of Data Analysis: lectures/lecture_6.md
+      - 10 Data Visualisation: lectures/lecture_7.md
+      - 11 Probability & Statistics: lectures/lecture_9.md
+      - 12 Practical Data Fitting: lectures/lecture_10.md
+      - 13 NumPy & Pandas: lectures/lecture_11.md
+      - 14 Reproducible Workflows: lectures/lecture_12.md
+      - 15 Computing Infrastructure: lectures/lecture_4.md
       - Miscellaneous: lectures/misc.md
+  - Seminars:
+      - Overview & running project: seminars/running-project.md
+      - S1 Toolkit & first repo: seminars/seminar_01.md
+      - S2 Find & document a dataset: seminars/seminar_02.md
+      - S3 Bit/number/format explorer: seminars/seminar_03.md
+      - S4 Tame a messy project (CLI): seminars/seminar_04.md
+      - S5 Write the README: seminars/seminar_05.md
+      - S6 Branch, break, merge (Git): seminars/seminar_06.md
+      - S7 Parse one event (Python): seminars/seminar_07.md
+      - S8 Read the whole file: seminars/seminar_08.md
+      - S9 Data-quality audit: seminars/seminar_09.md
+      - S10 Reproduce a figure: seminars/seminar_10.md
+      - S11 Quantify uncertainty: seminars/seminar_11.md
+      - S12 Fit a model: seminars/seminar_12.md
+      - S13 Clean with Pandas: seminars/seminar_13.md
+      - S14 Make it reproducible: seminars/seminar_14.md
+      - S15 Run at scale (optional): seminars/seminar_15.md
+      - S16 Train & evaluate a model (optional): seminars/seminar_16.md
