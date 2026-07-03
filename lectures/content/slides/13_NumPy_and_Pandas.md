@@ -9,7 +9,6 @@ theme: ./theme
 drawings:
   persist: false
 
-transition: fade
 
 title: "NumPy, Pandas & Real Data"
 layout: cover

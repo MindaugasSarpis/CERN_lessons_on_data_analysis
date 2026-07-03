@@ -42,27 +42,25 @@ onMounted(() => { setTimeout(() => { mounted.value = true }, 50) })
 .section-accent {
   margin: 1.2rem auto 0;
   width: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-violet), transparent);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
   transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 .section-accent.is-mounted {
   width: min(48%, 520px);
 }
 
-/* Gradient-tinted heading */
+/* Crisp white heading; the **bold** keyword picks up a clean blue accent. */
 .section-kinetic :deep(h1) {
   font-family: var(--font-display);
   font-weight: 600;
-  background: linear-gradient(100deg, #f2f2f2 20%, var(--accent-cyan-soft));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #eef4ff;
+  -webkit-text-fill-color: currentColor;
+  background: none;
 }
-/* keep **bold** words legible within the gradient heading */
 .section-kinetic :deep(h1 strong) {
-  -webkit-text-fill-color: transparent;
+  color: #7dd3fc;
+  -webkit-text-fill-color: currentColor;
   font-weight: 800;
 }
 

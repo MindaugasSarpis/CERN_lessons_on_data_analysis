@@ -5,7 +5,6 @@ colorSchema: dark
 theme: ./theme
 drawings:
   persist: false
-transition: fade
 title: "Course Orientation"
 layout: cover
 ---

@@ -102,7 +102,7 @@
   --accent-violet: #8b5cf6;
   --accent-violet-soft: #a78bfa;
   --accent-amber: #fbbf24;
-  --grad-kinetic: linear-gradient(100deg, var(--accent-cyan), var(--accent-violet));
+  --grad-kinetic: linear-gradient(100deg, var(--accent-cyan), #3b82f6);
   --grad-energy: linear-gradient(100deg, var(--accent-amber), var(--accent-cyan));
   --glow-cyan: 0 0 22px rgba(34, 211, 238, 0.45), 0 0 60px rgba(34, 211, 238, 0.18);
   --glow-violet: 0 0 22px rgba(139, 92, 246, 0.45), 0 0 60px rgba(139, 92, 246, 0.18);
@@ -584,6 +584,10 @@
 .card ol {
   font-size: 0.85rem;
   line-height: 1.45;
+  /* Keep list markers inside the card: the UnoCSS reset zeroes list padding,
+     so an `outside` marker would render over the card's left edge. */
+  padding-left: 1.25em;
+  margin-left: 0;
 }
 .card li {
   margin: 0.12em 0;

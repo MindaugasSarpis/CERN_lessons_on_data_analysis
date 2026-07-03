@@ -8,7 +8,6 @@ theme: ./theme
 drawings:
   persist: false
 
-transition: fade
 
 title: "Probability and Statistics"
 layout: cover

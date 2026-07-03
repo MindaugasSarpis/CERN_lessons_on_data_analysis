@@ -5,7 +5,6 @@ colorSchema: dark
 theme: ./theme
 drawings:
   persist: false
-transition: fade
 title: "Crash Course on Python Programming"
 layout: cover
 addons:

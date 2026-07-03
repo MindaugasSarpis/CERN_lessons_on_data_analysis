@@ -9,7 +9,6 @@ drawings:
   persist: false
 mermaid: true
 
-transition: fade
 
 title: "Concepts of Data Analysis"
 layout: cover

@@ -8,7 +8,6 @@ theme: ./theme
 drawings:
   persist: false
 
-transition: fade
 
 title: "Crash Course on Computer Science"
 layout: cover

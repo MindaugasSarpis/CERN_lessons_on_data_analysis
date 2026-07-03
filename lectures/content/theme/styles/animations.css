@@ -45,9 +45,9 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(40% 50% at 20% 30%, rgba(34, 211, 238, 0.18), transparent 60%),
-    radial-gradient(40% 50% at 80% 60%, rgba(139, 92, 246, 0.16), transparent 60%),
-    radial-gradient(35% 45% at 55% 85%, rgba(251, 191, 36, 0.10), transparent 60%);
+    radial-gradient(40% 50% at 20% 30%, rgba(56, 189, 248, 0.16), transparent 60%),
+    radial-gradient(40% 50% at 80% 60%, rgba(37, 99, 235, 0.15), transparent 60%),
+    radial-gradient(35% 45% at 55% 85%, rgba(30, 58, 138, 0.14), transparent 60%);
   filter: blur(40px);
   animation: aurora-drift 24s ease-in-out infinite alternate;
   will-change: transform;

@@ -9,7 +9,6 @@ theme: ./theme
 drawings:
   persist: false
 
-transition: fade
 
 title: "Data Fitting"
 layout: cover

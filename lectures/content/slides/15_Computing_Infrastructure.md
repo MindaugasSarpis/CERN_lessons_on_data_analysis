@@ -9,7 +9,6 @@ drawings:
   persist: false
 mermaid: true
 
-transition: fade
 
 title: "Computing Infrastructure"
 layout: cover

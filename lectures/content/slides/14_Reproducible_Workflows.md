@@ -9,7 +9,6 @@ theme: ./theme
 drawings:
   persist: false
 
-transition: fade
 
 title: "Reproducible Workflows & Automation"
 layout: cover
