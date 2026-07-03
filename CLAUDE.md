@@ -51,9 +51,10 @@ To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan 
 ### Slide Deck (Slidev)
 
 - **Deck manifest**: `lectures/content/decks.json` (see Build pipeline above) — the source of truth for which decks exist and their order/blocks.
-- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key). `12`–`16` are drafts being finished (`12_Data_Fitting`, `13_NumPy_and_Pandas`, `14_Reproducible_Workflows`, `15_Computing_Infrastructure`; `16_Machine_Learning` still to be authored). `L11_Real_Data_and_Case_Studies.md` (case-study material folded into 13/14/16) and `LX_Python_Interactive.md` (template) are not lectures.
-- **Combined authoring entry** (optional, not deployed): `lectures/content/lessons_on_data_analysis_from_CERN.md` and `staging.md` — single-file "everything" builds for authoring convenience (`pnpm build:combined`).
-- **Design/plan docs**: `docs/superpowers/specs/` and `docs/superpowers/plans/` — the curriculum spec and the P1–P6 implementation plan; `docs/superpowers/salvage-notes.md` maps retired quiz/crash-course material into target lectures.
+- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key). All 16 are live in `decks.json`; 15–16 are marked `optional` (advanced/droppable). `L11_Real_Data_and_Case_Studies.md` (case-study material folded into 13/14/16) and `LX_Python_Interactive.md` (template) are not lectures.
+- **Combined authoring entry** (optional, not deployed): `lectures/content/best_research_and_data_analysis_practices_from_CERN.md` (imports all 16) and `staging.md` — single-file "everything" builds for authoring/PDF export (`pnpm build:combined`).
+- **Seminars**: `lectures/workbook/docs/seminars/` — 16 hands-on briefs + a running-project overview, all building one reproducible analysis of the CMS dimuon dataset.
+- **Design/plan docs**: `docs/superpowers/specs/` and `docs/superpowers/plans/` — the curriculum spec and the P1–P6 implementation plan.
 - **Custom theme**: `lectures/content/theme/` — local Slidev theme (`@slidev/theme-scienced`)
   - `styles/custom-slides.css` — card system, grid layouts, spacing utilities, typography
   - `styles/mermaid-styles.css` — Mermaid diagram styling

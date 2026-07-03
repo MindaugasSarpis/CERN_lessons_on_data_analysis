@@ -52,7 +52,8 @@ pnpm export
 .
 ├── lectures/
 │   ├── content/
-│   │   ├── lessons_on_data_analysis_from_CERN.md  # Master deck entry point
+│   │   ├── best_research_and_data_analysis_practices_from_CERN.md  # Combined all-16 authoring entry
+│   │   ├── decks.json                            # Manifest: one deck per lecture (deployed)
 │   │   ├── slides/           # Individual lecture files (L1–L12)
 │   │   └── theme/            # Custom Slidev theme
 │   └── workbook/             # Student workbook (MkDocs)

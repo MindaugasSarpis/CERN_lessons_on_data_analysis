@@ -20,7 +20,7 @@ const CONTENT = join(ROOT, 'lectures', 'content');
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
 
-// Shared global headmatter (mirrors lessons_on_data_analysis_from_CERN.md).
+// Shared global headmatter (mirrors the combined entry).
 function headmatter(title) {
   return [
     '---',

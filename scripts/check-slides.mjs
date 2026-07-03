@@ -15,7 +15,7 @@
  * Usage:
  *   1. Build through an entry point that loads the theme (NOT a single
  *      slides/L0X.md — that drops the custom theme):
- *        pnpm exec slidev build lectures/content/lessons_on_data_analysis_from_CERN.md --out .qa-dist
+ *        pnpm exec slidev build lectures/content/best_research_and_data_analysis_practices_from_CERN.md --out .qa-dist
  *   2. node scripts/check-slides.mjs .qa-dist [options]
  *        --shots <dir>      also write <dir>/slide-<NNN>.png for every slide
  *        --workers <n>      parallel browser pages (default 6)

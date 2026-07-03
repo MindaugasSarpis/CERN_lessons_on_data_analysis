@@ -15,9 +15,10 @@ addons:
   - slidev-addon-python-runner
 mermaid: true
 
-# Lazy-mount imported slides: don't eagerly build all 248 Vue components
-# up front. First visit to a given slide has a small mount cost; initial
-# load and steady-state navigation are much faster.
+# Combined "everything" deck: imports all 16 lectures for authoring/preview and
+# PDF export. NOT the deployed artifact — GitHub Pages ships one deck per lecture
+# (see decks.json + scripts/build-all.mjs). Lazy-mount imported slides so the
+# initial load and navigation stay fast despite the size.
 defaults:
   preload: false
 
@@ -26,7 +27,7 @@ defaults:
 # Dr. Mindaugas Šarpis
 # Best Research and Data Analysis Practices from CERN
 
-## Index of Lectures
+## All Sixteen Lectures
 
 ---
 hideInToc: true
@@ -45,17 +46,11 @@ src: slides/02_Introduction_to_CERN.md
 ---
 
 ---
-src: slides/04_Command_Line_and_Files.md
----
-
----
 src: slides/03_How_Computers_Work.md
 ---
 
 ---
----
-
----
+src: slides/04_Command_Line_and_Files.md
 ---
 
 ---
@@ -84,4 +79,24 @@ src: slides/10_Data_Visualisation.md
 
 ---
 src: slides/11_Probability_and_Statistics.md
+---
+
+---
+src: slides/12_Data_Fitting.md
+---
+
+---
+src: slides/13_NumPy_and_Pandas.md
+---
+
+---
+src: slides/14_Reproducible_Workflows.md
+---
+
+---
+src: slides/15_Computing_Infrastructure.md
+---
+
+---
+src: slides/16_Machine_Learning_and_AI.md
 ---
