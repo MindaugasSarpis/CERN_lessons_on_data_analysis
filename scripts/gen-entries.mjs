@@ -20,8 +20,11 @@ const CONTENT = join(ROOT, 'lectures', 'content');
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
 
-// Shared global headmatter (mirrors the combined entry).
-function headmatter(title) {
+// Shared global headmatter (mirrors the combined entry). The FIRST lecture is
+// imported via `src:` inside the headmatter block itself, so the lecture's own
+// cover becomes slide 1 — otherwise the headmatter block renders as an empty
+// slide 1 and the cover slips to slide 2.
+function headmatter(title, firstSrc) {
   return [
     '---',
     'theme: ./theme',
@@ -34,15 +37,17 @@ function headmatter(title) {
     'defaults:',
     '  preload: false',
     `title: ${JSON.stringify(title)}`,
+    `src: ./slides/${firstSrc}`,
     '---',
   ].join('\n');
 }
 
 function entryContent(deck) {
-  const imports = deck.srcs
+  const [first, ...rest] = deck.srcs;
+  const more = rest
     .map((s) => `\n---\nsrc: ./slides/${s}\n---\n`)
     .join('');
-  return `${headmatter(deck.title)}\n${imports}`;
+  return `${headmatter(deck.title, first)}\n${more}`;
 }
 
 // Clean out stale generated entries (only deck.*.md — never the hand-authored ones).
