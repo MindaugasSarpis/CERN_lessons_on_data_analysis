@@ -120,75 +120,107 @@ hideInToc: true
 hideInToc: true
 ---
 
-# **Course Content** *(roughly in this order)*
+# The Four <span class="gradient-text">Aims</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Everything in this course serves four durable practices. They outlast any tool or language — and your project is graded on them.
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale">
+<div class="card card-primary card-glass pad-tight reveal-scale">
 
-🖥️ Working with computers — command line & common pitfalls
+## 🔧 **Tool agnosticism**
+
+Learn the *idea* first, then a tool. Concepts transfer; frameworks come and go.
 
 </div>
 
+<div class="card card-secondary card-glass pad-tight reveal-scale">
+
+## ♻️ **Reproducibility**
+
+If someone else — or future you — can't rebuild your result, it isn't a result.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight reveal-scale">
+
+## ⚙️ **Automation**
+
+Do it once by hand, twice by script. Let the machine repeat the boring parts.
+
+</div>
+
+<div class="card card-success card-glass pad-tight reveal-scale">
+
+## 📁 **Efficient work with data & files**
+
+Organise, name, and format your data so it stays trustworthy and usable.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Watch for the 🔧 ♻️ ⚙️ 📁 icons throughout — every lecture advances at least one.</div>
+
+---
+hideInToc: true
+---
+
+# **Course Content** — 16 lectures, 5 blocks
+
+<div class="grid-3 mt-md gap-md">
+
 <div class="card card-primary card-glass pad-compact reveal-scale">
 
-📁 File handling and directory structure
+**A · Foundations & Tooling** *(01–06)*
+Computers, files, command line, Markdown, VS Code, Git
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact reveal-scale">
 
-⚙️ Main principles of computing
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-scale">
-
-🔀 Version control with Git
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-scale">
-
-🐍 Crash course on Python programming
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-scale">
-
-📊 Concepts of Data Analysis
+**B · Programming** *(07–08)*
+Python foundations, then Python for data & files
 
 </div>
 
 <div class="card card-info card-glass pad-compact reveal-scale">
 
-📈 Data visualisation
+**C · Data Analysis Core** *(09–12)*
+Concepts, visualisation, probability & statistics, fitting
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-scale">
+<div class="card card-success card-glass pad-compact reveal-scale">
 
-🎲 Probability and statistics
-
-</div>
-
-<div class="card card-warning card-glass pad-compact reveal-scale">
-
-🏗️ Computing infrastructure & environments
+**D · Practical Data Work** *(13–14)*
+NumPy & Pandas, reproducible workflows & automation
 
 </div>
 
 <div class="card card-warning card-glass pad-compact reveal-scale">
 
-🔄 Robust, reproducible workflows
+**E · Advanced** *(optional, 15–16)*
+Computing infrastructure & HPC, machine learning & AI
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-scale">
+
+**🧪 Paired seminars**
+Each lecture has a hands-on seminar — together they build one reproducible project
 
 </div>
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-sm" style="text-align: center;">
+<div class="note-text mt-sm" style="text-align: center;">
 
-The exact order and depth adapt to how the group progresses — but this is the arc we'll follow.
+Order and depth adapt to the group; blocks D–E are the optional tail if time runs short.
 
 </div>
 
