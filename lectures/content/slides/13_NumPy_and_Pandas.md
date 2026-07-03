@@ -52,7 +52,7 @@ hideInToc: true
 
 ## **From Toy Examples to Real Data**
 
-In L10, we worked with synthetic data (Gaussian + exponential). But real-world data:
+In the Data Fitting lecture, we worked with synthetic data (Gaussian + exponential). But real-world data:
 - Comes in various formats (CSV, Excel, JSON, HDF5)
 - Has missing values, outliers, and inconsistencies
 - Requires cleaning and preprocessing
@@ -1115,11 +1115,8 @@ df = pd.read_excel('data.xlsx')
 # JSON
 df = pd.read_json('data.json')
 
-# SQL
-df = pd.read_sql(query, connection)
-
-# HDF5 (large datasets)
-df = pd.read_hdf('data.h5', 'key')
+# SQL / Parquet (large data)
+df = pd.read_parquet('data.parquet')
 ```
 
 </div>
@@ -1138,20 +1135,17 @@ df.to_excel('output.xlsx')
 # JSON
 df.to_json('output.json')
 
-# SQL
-df.to_sql('table', connection)
-
-# HDF5
-df.to_hdf('output.h5', 'key')
+# SQL / Parquet
+df.to_parquet('output.parquet')
 ```
 
 </div>
 
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="note-text mt-sm">
 
-**Best practice**: Use CSV for human-readable data, HDF5 or Parquet for large datasets (faster, smaller)
+💡 **Best practice**: CSV for human-readable data; HDF5 or Parquet for large datasets (faster, smaller). 📁 *Same idea across formats — pick by need, not habit.*
 
 </div>
 
@@ -1161,7 +1155,7 @@ hideInToc: true
 
 # CSV Read/Write Example
 
-```python
+```python {*}{maxHeight:'380px'}
 import pandas as pd
 import numpy as np
 
@@ -1252,7 +1246,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-**Remember**: Version control your analysis scripts and save intermediate results for reproducibility (more in L12!)
+**Remember**: Version control your analysis scripts and save intermediate results for reproducibility (more in the Reproducible Workflows lecture!)
 
 </div>
 
@@ -1518,9 +1512,9 @@ hideInToc: true
 ### **Next Steps**
 
 - Apply skills to real CERN open data
-- Combine with L10 fitting techniques
+- Combine with the Data Fitting techniques
 - Build complete analysis pipelines
-- **L12: Automate your entire workflow!**
+- **Reproducible Workflows — automate your entire workflow!**
 
 </div>
 
