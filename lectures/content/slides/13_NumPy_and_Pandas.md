@@ -1368,7 +1368,7 @@ Full tutorials and documentation provided!
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-**Your next step**: Download a real dataset and apply NumPy/Pandas skills! Example: Dimuon spectrum showing J/ψ, Υ resonances
+**Your next step**: Apply these NumPy/Pandas skills to real data — the seminar running project uses the **LHCb D⁰ → K⁻π⁺** open dataset. The dimuon spectrum below (J/ψ, Υ) is a second LHCb example.
 
 </div>
 
@@ -1382,7 +1382,7 @@ hideInToc: true
 import pandas as pd
 import numpy as np
 
-# Simulated LHCb dimuon data (real LHCb dimuon data: opendata.cern.ch)
+# Simulated LHCb dimuon spectrum (illustrative — LHCb studies J/ψ, ψ(2S), Υ → μμ)
 np.random.seed(42)
 jpsi = np.random.normal(3.1, 0.1, 500)       # J/ψ peak (~3.1 GeV)
 upsilon = np.random.normal(9.5, 0.2, 200)     # Υ peak (~9.5 GeV)

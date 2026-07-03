@@ -23,8 +23,8 @@ Seminars 2–4 (data + structure + provenance notes).
 3. Add a short **Notes** section for known data quirks you've spotted.
 
 ## Stretch goals
-- Add a Markdown table of the resonance peaks you expect to find later
-  (J/ψ ≈ 3.1, Υ ≈ 9.5, Z ≈ 91 GeV).
+- Add a Markdown note of the signal you expect to find later
+  (the D⁰ peak at ≈ 1865 MeV, over combinatorial background).
 - Add a task list (`- [ ]`) of the remaining pipeline steps.
 
 ## Solution notes (instructor)

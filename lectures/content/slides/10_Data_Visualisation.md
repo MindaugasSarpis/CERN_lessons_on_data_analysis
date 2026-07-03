@@ -1924,13 +1924,13 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎯 The **seminar running project** turns a table of numbers into this figure — the **LHCb dimuon mass spectrum**. Every principle from this lecture is in it.
+🎯 The **seminar running project** turns a table of numbers into this figure — the **LHCb D⁰ → K⁻π⁺ mass spectrum**. Every principle from this lecture is in it.
 
 </div>
 
-<img class="fig" src="/figures/lhcb_dimuon_spectrum.png" style="display:block;margin:0 auto;max-height:330px;background:#fff;border-radius:8px;">
+<img class="fig" src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0 auto;max-height:330px;background:#fff;border-radius:8px;">
 
-<div class="note-text mt-sm">📏 Units on both axes · 📉 **log scale** so small peaks (Υ) show next to the huge J/ψ · 🏷️ resonances annotated. *Your field's data will look different — the same choices apply. You build this in Seminar 10.*</div>
+<div class="note-text mt-sm">📏 Units on both axes · 📊 the **D⁰ peak** stands clear of the combinatorial background · 🏷️ signal annotated. *Your field's data will look different — the same choices apply. You build this in Seminar 10.*</div>
 
 ---
 hideInToc: true

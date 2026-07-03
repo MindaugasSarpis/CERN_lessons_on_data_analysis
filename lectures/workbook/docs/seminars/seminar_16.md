@@ -13,9 +13,9 @@ Apply the whole course to a machine-learning task — and, more importantly,
 Seminar 13 (`events_clean`). scikit-learn available.
 
 ## Tasks
-1. Define the label: `signal` = events inside a resonance window (e.g. near the Z or
-   J/ψ), `background` = events well outside. Choose feature columns (energies,
-   momenta, `pt`, `eta`, …) — **do not** feed it `M` directly (that's cheating).
+1. Define the label: `signal` = events inside the D⁰ peak window (~1.84–1.89 GeV),
+   `background` = events in the sidebands. Choose feature columns (momenta,
+   `pt`, kinematics, …) — **do not** feed it `M` directly (that's cheating).
 2. `train_test_split` with `stratify=` on the label. Fit a
    `RandomForestClassifier` (or logistic regression) on the **train** set.
 3. Evaluate on the **held-out test** set: confusion matrix, precision, recall, F1.

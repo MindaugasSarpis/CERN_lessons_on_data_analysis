@@ -9,22 +9,23 @@ four aims — 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 we
 The skills are identical whichever you choose. **Pick the one that fits your
 background:**
 
-### 🅰 The physics track — LHCb dimuon events *(the default)*
+### 🅰 The physics track — LHCb D⁰ → K⁻π⁺ events *(the default)*
 
-A real **CERN Open Data** teaching set: dimuon (μ⁺μ⁻) events recorded by the
-**LHCb** experiment. Each row is one event in which two muons were detected; the
-columns give each muon's momentum components and the reconstructed
-**invariant mass `M`** of the pair.
+The real **LHCb open-data masterclass** set on the CERN Open Data Portal:
+~60,000 events pre-selected to contain **D⁰ → K⁻π⁺** decay candidates. Each event
+gives the kaon and pion momenta, from which you reconstruct the **K–π invariant
+mass** — and see the D⁰ appear as a peak.
 
-- Source: CERN Open Data Portal — the LHCb dimuon education sample (a plain CSV,
-  tens of thousands of rows). The exact record, DOI and download link are found
-  and recorded in **Seminar 2**.
-- Typical columns: `E1, px1, py1, pz1, Q1, E2, px2, py2, pz2, Q2, M` (energies /
-  momenta in GeV).
-- Why it's great: a plain CSV (works with every tool), real physics, and its
-  invariant-mass spectrum contains famous **resonance peaks** —
-  J/ψ (~3.10 GeV), ψ(2S) (~3.69 GeV), Υ (~9.46 GeV) — so there is a genuine
-  signal to find, fit, and classify.
+- Source: CERN Open Data Portal — *LHCb event file for real measurement*,
+  [record 401](https://opendata.cern.ch/record/401),
+  DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR` (event-display files:
+  [record 400](https://opendata.cern.ch/record/400)). You find and record this
+  in **Seminar 2**.
+- What you compute: the **K–π invariant mass** per event → a spectrum with a clear
+  **D⁰ peak at ~1865 MeV** over combinatorial background.
+- Why it's great: real LHCb data, a genuine signal to find, **fit** (extract the
+  D⁰ mass), and classify — the same masterclass analysis school students do, and
+  the same lifetime/CP measurements LHCb physicists run.
 
 ### 🅱 The bring-your-own track — a dataset from *your* field
 
@@ -39,7 +40,7 @@ interesting structure:
 - 🗳️ **social science** — public survey / census microdata
 - 🏃 **your own** — anything you have measured or can download openly
 
-Wherever the physics track says "invariant mass / resonance peak", read it as
+Wherever the physics track says "invariant mass / D⁰ peak", read it as
 "your numeric variable / the pattern you're looking for". Clear this choice with
 the instructor in Seminar 2.
 
@@ -49,7 +50,7 @@ the instructor in Seminar 2.
 ## The repository you will build
 
 ```text
-analysis-project/       # name it after your data (e.g. dimuon-analysis)
+analysis-project/       # name it after your data (e.g. d0-analysis)
 |- README.md            # what this is, data provenance, how to rebuild (S5)
 |- data/
 |  |- raw/              # the CSV exactly as downloaded — READ ONLY (S2, S4)
@@ -76,9 +77,9 @@ and rebuild the whole project with one command. If that's true, you've succeeded
 | 7 | First parsing: one event line → numbers |
 | 8 | Ingest script: whole CSV read into Python (no Pandas) |
 | 9 | Data-quality audit applied (missing, duplicate, impossible values) |
-| 10 | First committed figure (physics: the dimuon mass spectrum) |
+| 10 | First committed figure (physics: the K–π mass spectrum) |
 | 11 | A measurement with an uncertainty (a value ± SE) |
-| 12 | A fit: a peak/curve model → parameter ± error, χ² |
+| 12 | A fit: the D⁰ peak (Gaussian + background) → mass ± error, χ² |
 | 13 | Clean, tidy `processed/` table produced with Pandas |
 | 14 | One-command reproducible rebuild (environment + Makefile) |
 | 15 | The pipeline run as a batch/remote-style job, at scale *(optional)* |

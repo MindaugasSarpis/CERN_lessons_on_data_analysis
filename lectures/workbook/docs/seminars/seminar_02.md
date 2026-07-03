@@ -2,7 +2,7 @@
 
 **Paired lecture:** 02 Introduction to CERN · **Format:** hands-on · **~90 min**
 
-> **Running project — this session adds:** your chosen dataset (LHCb dimuon, or your own) in `data/raw/`, with
+> **Running project — this session adds:** your chosen dataset (LHCb D⁰ → K⁻π⁺, or your own) in `data/raw/`, with
 > its provenance recorded.
 
 ## Goal
@@ -14,8 +14,10 @@ Seminar 1 (project skeleton).
 
 ## Tasks
 1. Choose your track (see the [running-project overview](running-project.md)):
-   - **Physics** — find the LHCb dimuon education dataset on the **CERN Open Data
-     Portal** (search "dimuon CSV"). Note the record's title, DOI/URL, and licence.
+   - **Physics** — find the **LHCb masterclass** dataset on the **CERN Open Data
+     Portal** ([record 401](https://opendata.cern.ch/record/401), D⁰ → K⁻π⁺;
+     event-display files at [record 400](https://opendata.cern.ch/record/400)).
+     Note the record's title, DOI (`10.7483/OPENDATA.LHCb.E7EJ.JUWR`), and licence.
    - **Bring-your-own** — pick a tabular dataset from your own field (weather,
      survey, prices, lab measurements…). Note where it came from and its licence.
 2. Download the CSV into `data/raw/` **without renaming it**.
