@@ -1,0 +1,23 @@
+{
+  "course": "Best Research and Data Analysis Practices from CERN",
+  "presenter": "Dr. Mindaugas Šarpis",
+  "blocks": {
+    "A": "Foundations & Tooling",
+    "B": "Programming",
+    "C": "Data Analysis Core",
+    "D": "Practical Data Work",
+    "E": "Advanced / Optional"
+  },
+  "decks": [
+    { "slug": "01-orientation", "title": "Orientation & Data in Your Life", "block": "A", "srcs": ["L01_Course_Orientation.md"], "optional": false },
+    { "slug": "02-cern", "title": "Introduction to CERN", "block": "A", "srcs": ["L02_Introduction_to_CERN.md"], "optional": false },
+    { "slug": "03-how-computers-work", "title": "How Computers Work", "block": "A", "srcs": ["L03_1_1_Crash_Course_on_Computer_Science.md"], "optional": false },
+    { "slug": "04-command-line-and-files", "title": "Command Line & File Handling", "block": "A", "srcs": ["L03_2_Command_Line.md", "L03_1_2_File_Handling_and_Directory_Structure.md"], "optional": false },
+    { "slug": "05-markdown-and-vscode", "title": "Markdown & VS Code", "block": "A", "srcs": ["L03_3_Markdown.md", "L03_4_VS_Code.md"], "optional": false },
+    { "slug": "06-version-control", "title": "Version Control with Git", "block": "A", "srcs": ["L08_Version_Control.md"], "optional": false },
+    { "slug": "07-python", "title": "Python Programming", "block": "B", "srcs": ["L05_Crash_Course_on_Python_Programming.md"], "optional": false },
+    { "slug": "08-concepts-of-data-analysis", "title": "Concepts of Data Analysis", "block": "C", "srcs": ["L06_Concepts_of_Data_Analysis.md"], "optional": false },
+    { "slug": "09-data-visualisation", "title": "Data Visualisation", "block": "C", "srcs": ["L07_Data_Visualisation.md"], "optional": false },
+    { "slug": "10-probability-and-statistics", "title": "Probability & Statistics", "block": "C", "srcs": ["L09_Probability_and_Statistics.md"], "optional": false }
+  ]
+}
