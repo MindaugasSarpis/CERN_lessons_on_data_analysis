@@ -12,7 +12,7 @@ layout: cover
 
 # Dr. Mindaugas Šarpis
 
-# Data Analysis and Artificial Intelligence
+# Best Research and Data Analysis Practices from CERN
 
 ## Course Orientation
 

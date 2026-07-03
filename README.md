@@ -1,4 +1,4 @@
-# CERN Lessons on Data Analysis
+# Best Research and Data Analysis Practices from CERN
 
 This repository contains lectures and materials for data analysis courses at CERN.
 

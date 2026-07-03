@@ -31,7 +31,7 @@ python:
 
 # Dr. Mindaugas Sarpis
 
-# Data Analysis and Artificial Intelligence
+# Best Research and Data Analysis Practices from CERN
 
 ## Data Fitting
 

@@ -15,9 +15,11 @@ improvements from the same review were applied directly (see commits of
 
 ## Course-wide  *(still open — owner decisions)*
 
-- Every lecture cover subtitles the course "Data Analysis and Artificial
-  Intelligence" while the repo calls it "Lessons on Data Analysis from CERN" —
-  consistent across covers, so presumably intentional; unify only if desired.
+- ✅ RESOLVED (2026-07-03): course renamed to "Best Research and Data
+  Analysis Practices from CERN" — applied to every deck cover, the
+  crash-course thank-you slide, the MkDocs `site_name`, and the README title.
+  (The npm package id `cern-lessons-on-data-analysis` and the entry-point
+  filename are left as internal identifiers.)
 - Almost every slide is `hideInToc: true`, so the deck-level TOC is nearly
   empty. Decide whether content slides should appear in the TOC.
 - British vs American English is inconsistent *between* files (L03_1_2/L07

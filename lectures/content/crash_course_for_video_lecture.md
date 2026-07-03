@@ -17,7 +17,7 @@ mermaid: true
 ---
 
 # Dr. Mindaugas Šarpis
-# Data Analysis and Artificial Intelligence
+# Best Research and Data Analysis Practices from CERN
 
 ## From breakthroughs in fundamental science to applied business and industry knowledge
 
@@ -954,4 +954,4 @@ layout: fact
 
 Dr. Mindaugas Šarpis
 
-Data Analysis and Artificial Intelligence
+Best Research and Data Analysis Practices from CERN
