@@ -1638,6 +1638,22 @@ Cryptographic hashes (SHA-256) verify file integrity
 hideInToc: true
 ---
 
+<MCQ
+  question="What is a file, at the simplest level?"
+  :options="[
+    'A window shown on the screen',
+    'A named sequence of bytes stored by the operating system',
+    'A running program in memory',
+    'A network connection to another computer'
+  ]"
+  :correct="1"
+  explanation="Everything on disk — text, images, programs — is ultimately a named blob of bytes the OS keeps track of. A file extension is only a convention for how to interpret those bytes."
+/>
+
+---
+hideInToc: true
+---
+
 # Key <span class="gradient-text">Takeaways</span>
 
 <div class="stack-tight mt-sm">

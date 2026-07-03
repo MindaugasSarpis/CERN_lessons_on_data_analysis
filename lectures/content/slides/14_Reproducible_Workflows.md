@@ -1630,6 +1630,22 @@ hideInToc: true
 hideInToc: true
 ---
 
+<MCQ
+  question="What makes a data-analysis workflow 'scriptable' rather than 'non-scriptable'?"
+  :options="[
+    'It is written by hand in a lab notebook',
+    'Every step can be expressed as code or commands and re-run from scratch to reproduce the same results',
+    'It relies on clicking through menus in a graphical application',
+    'It can only be run once, then discarded'
+  ]"
+  :correct="1"
+  explanation="Scriptable workflows are reproducible and shareable; GUI point-and-click ones leave no reliable record and are hard to replay or verify — the ♻️ and ⚙️ aims in one idea."
+/>
+
+---
+hideInToc: true
+---
+
 # The Course So Far
 
 <div class="grid-3 mt-sm gap-md" style="font-size: 0.74em;">

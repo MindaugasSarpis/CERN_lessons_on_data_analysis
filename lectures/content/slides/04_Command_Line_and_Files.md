@@ -1525,6 +1525,22 @@ ls -R my_project
 hideInToc: true
 ---
 
+<MCQ
+  question="Why do shared projects usually prefer relative paths (data/raw/run42.csv) over absolute paths (/Users/alice/proj/data/raw/run42.csv)?"
+  :options="[
+    'Relative paths are faster for the OS to resolve',
+    'Absolute paths are not supported on Linux',
+    'Relative paths make the project portable — it still works when someone clones it elsewhere',
+    'Relative paths automatically encrypt the file location'
+  ]"
+  :correct="2"
+  explanation="Absolute paths tie a project to one machine and user; relative-to-project-root paths keep it self-contained and portable — a ♻️ reproducibility win."
+/>
+
+---
+hideInToc: true
+---
+
 # Exercise: Fix This Mess (1/2)
 
 <div class="card card-warning card-glass pad-tight mt-md">

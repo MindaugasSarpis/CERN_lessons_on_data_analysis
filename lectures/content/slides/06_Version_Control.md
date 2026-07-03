@@ -844,6 +844,22 @@ git clone <URL>
 hideInToc: true
 ---
 
+<MCQ
+  question="A student keeps analysis.py, analysis_v2.py, analysis_final.py, analysis_final_REAL.py side by side. What does Git give that this scheme does not?"
+  :options="[
+    'Smaller file sizes on disk',
+    'A faster Python interpreter',
+    'Automatic conversion of Python to Markdown',
+    'One canonical file with a full, navigable history, plus branches for alternatives'
+  ]"
+  :correct="3"
+  explanation="Git separates the current file from the history of the file — a pile of manually-renamed copies conflates the two and loses the why behind each change."
+/>
+
+---
+hideInToc: true
+---
+
 # Branches
 
 <div class="card card-info card-glass pad-tight mt-md">
