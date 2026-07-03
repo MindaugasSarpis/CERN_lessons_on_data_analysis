@@ -22,7 +22,9 @@ jobs:
 
       - uses: pnpm/action-setup@v4
         with:
-          version: latest
+          # Pin to 9: matches the v9.0 lockfile and runs package build scripts
+          # (esbuild, etc.) without pnpm 10's fatal ERR_PNPM_IGNORED_BUILDS gate.
+          version: 9
 
       - uses: actions/setup-node@v4
         with:
