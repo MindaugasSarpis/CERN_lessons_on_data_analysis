@@ -17,6 +17,12 @@ layout: cover
 
 ##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducible · ⚙️ automation · 📁 data & files — the four aims</span>
 
+<!--
+Speaker: welcome them, introduce yourself briefly, and set the tone — this is a
+practical course, not a lecture course. Everything is graded on one project that
+grows through the seminars. Ask what fields are in the room. (~2 min)
+-->
+
 ---
 hideInToc: true
 layout: quote

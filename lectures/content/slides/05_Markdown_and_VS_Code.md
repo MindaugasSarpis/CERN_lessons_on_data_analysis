@@ -21,12 +21,66 @@ layout: cover
 
 ##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducibility</span>
 
+<!--
+Speaker: two tools in one lecture — Markdown (what you write) and VS Code (the
+workshop you write it in). Both are portable, tool-agnostic skills they'll use
+for the rest of the course. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Markdown turns **plain text** into beautifully formatted documents. Learn the syntax once, and you can write READMEs, documentation, notebooks, presentations, and scientific reports — all from a simple text editor.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+📝 Write formatted documents in **Markdown** — headers, emphasis, lists
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+📊 Add **tables**, **code blocks**, and **task lists** to your writing
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🖥️ Navigate **VS Code** — the sidebar, editor, and integrated terminal
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🎯 Drive the editor from the **Command Palette**, not menus
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🧩 Extend VS Code with **extensions** for Python, Markdown, and Git
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Markdown first, then the VS Code
+workshop where they write it. Point at Seminar 5, where they document their own
+project's README. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -73,6 +127,11 @@ layout: section
 ---
 
 # Markdown **Syntax**
+
+<!--
+Speaker: the whole language is a handful of symbols — #, *, -, [], `, |. By the
+end of this section they will know ~90% of the Markdown they'll ever use. (~30 sec)
+-->
 
 ---
 hideInToc: true
@@ -642,6 +701,11 @@ hideInToc: true
 
 # The VS Code **Interface**
 
+<!--
+Speaker: switch from writing to the workshop. Orient them on the three regions
+they'll live in daily — sidebar, editor, terminal. (~30 sec)
+-->
+
 ---
 hideInToc: true
 ---
@@ -819,6 +883,11 @@ hideInToc: true
 
 # Essential **Features**
 
+<!--
+Speaker: these are the "why VS Code feels fast" tricks — multi-cursor, find &
+replace, shortcuts. Demo multi-cursor live if you can; it always gets a reaction. (~30 sec)
+-->
+
 ---
 hideInToc: true
 ---
@@ -956,6 +1025,11 @@ hideInToc: true
 
 # Hands-On **Practice**
 
+<!--
+Speaker: hands on keyboards now. Walk the room while they scaffold the demo
+project and run it from the integrated terminal — this is where it clicks. (~30 sec)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1024,6 +1098,70 @@ hideInToc: true
 🧩 **Extensions add language support** — Python, Markdown, and more
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="In Markdown, how do you force a line break within the same paragraph?"
+  :options="[
+    'Press Enter once at the end of the line',
+    'End the line with two trailing spaces',
+    'Leave a blank line between the two lines',
+    'Start the second line with a backslash'
+  ]"
+  :correct="1"
+  explanation="A single Enter merges adjacent lines into one paragraph; two trailing spaces force a break within a paragraph, while a blank line starts a whole new paragraph."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Write and preview **Markdown** — headers, lists, links, code
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Format data with **tables** and **task lists**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Work in **VS Code** — sidebar, editor, and integrated terminal
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Move faster with the **Command Palette** and **extensions**
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 5 tie-in**
+
+Write a real `README.md` for your project — documenting the data's **provenance**, its **columns and units**, and the **steps to rebuild** your results.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod at each card. The Seminar 5 tie-in
+makes it concrete: their own project gets a real README, written in Markdown, this
+week. (~1 min)
+-->
 
 ---
 layout: quote

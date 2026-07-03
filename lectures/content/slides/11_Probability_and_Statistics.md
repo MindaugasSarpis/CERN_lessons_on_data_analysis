@@ -21,12 +21,62 @@ layout: cover
 
 ##### <span class="aims-badge">🔧 tool-agnostic</span>
 
+<!--
+Speaker: this is the one "theory" lecture of the course. Frame it as the language for everything that follows — fitting, uncertainty, honest reporting. Reassure them: intuition over proofs. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # In science, we never measure the *true* value — we collect **samples**, estimate **parameters**, and quantify **uncertainty**. Probability gives us the language; statistics gives us the tools.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🎲 Reason with **probability** — axioms, conditional probability, and Bayes' theorem
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+📈 Describe data with **distributions** and summaries — mean, variance, SD
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🔔 Apply the **Central Limit Theorem** and the standard error of the mean
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🎯 Distinguish a **standard deviation** from a **standard error**
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🔗 Connect statistics to **data fitting** — least squares, MLE, and χ²
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Stress the SD-vs-SE and CLT items — those change how they report results. Seminar 11 is where they apply this to their own data. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -52,6 +102,10 @@ hideInToc: true
 ---
 
 # Foundations of **Probability**
+
+<!--
+Speaker: this first block is the grammar — axioms, conditional probability, Bayes. Keep it brisk; the die and medical-test examples do the real teaching. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -753,6 +807,10 @@ hideInToc: true
 
 # Random Variables and Distributions
 
+<!--
+Speaker: the shift from events to numbers. PMF for discrete, PDF for continuous, CDF for both — that trio is the mental model to leave with. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1019,6 +1077,10 @@ hideInToc: true
 
 # Descriptive Statistics
 
+<!--
+Speaker: how we summarise a sample — centre and spread. Flag the sample-vs-population bridge here; it sets up the standard error later. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1279,6 +1341,10 @@ hideInToc: true
 ---
 
 # Common Probability Distributions
+
+<!--
+Speaker: a quick zoo — Bernoulli/Binomial/Poisson (discrete), Uniform/Exponential/Normal (continuous). The Normal and the CLT matter most for measurement. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -2273,6 +2339,68 @@ hideInToc: true
 ---
 
 # Bringing It **Together**
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You measure a quantity 100 times and want to report how precisely you know its average. What should the error bar on the mean show?"
+  :options="[
+    'The standard deviation σ of the individual measurements',
+    'The standard error σ/√n of the mean',
+    'The full range (max − min) of the data',
+    'The variance σ² of the measurements'
+  ]"
+  :correct="1"
+  explanation="The standard error σ/√n measures the uncertainty in the estimated mean and shrinks as you collect more data; the standard deviation describes the spread of individual points and does not."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Reason about **uncertainty** with probability axioms and Bayes' theorem
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Work with **random variables** — PMF, PDF, CDF, and key distributions
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Apply the **CLT** and report a **standard error** on a mean
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Tell a **standard deviation** from a **standard error** apart
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 11 tie-in**
+
+report a measurement from your data with an honest uncertainty — a value ± standard error — distinguishing SD from SE.
+
+</div>
+
+<!--
+Speaker: have them nod along to each ✅. The seminar tie-in makes it concrete — they compute a mean on their own data and report it with an honest ± SE. (~1 min)
+-->
 
 ---
 hideInToc: true

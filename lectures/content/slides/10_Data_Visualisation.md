@@ -23,12 +23,65 @@ layout: cover
 
 ##### Inspired by: C. O. Wilke, *Fundamentals of Data Visualization*
 
+<!--
+Speaker: open by asking who has ever squinted at a figure they couldn't read.
+Frame the lecture as a craft — the figure is the argument, not decoration. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Great data visualisation is not about making things look pretty — it is about making the **data speak clearly**. A well-designed figure tells a story that numbers alone cannot.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+📊 Match the **chart type** to the relationship — amounts, distributions, proportions, trends
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+👁️ Encode data on the most accurate **visual channel** — position beats angle and area
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🏷️ Label **axes** with units and pick an honest scale — zero base, log, or square-root
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🎨 Maximise the **data-to-ink ratio** and choose colour-blind-safe palettes
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+✍️ Tell a **story** — title as the finding, direct labels, a reproducible figure
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. The paired Seminar 10 is where
+they build their first real figure from particle-physics data — today is the
+"why" and the vocabulary. Set the expectation. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -71,6 +124,11 @@ Understanding visualisation principles protects you from being misled — and fr
 </div>
 
 </div>
+
+<!--
+Speaker: hammer the last card — the same skills that make an honest figure let
+you spot a dishonest one. Anscombe's quartet (next) is the proof. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -129,6 +187,12 @@ A checklist and an exercise to take away — build one of these yourself.
 </div>
 
 </div>
+
+<!--
+Speaker: this is the map for the hour — mechanics, chart families, design,
+storytelling, then hands-on matplotlib. Tell them we finish with a real figure
+they will build in the seminar. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1314,6 +1378,12 @@ hideInToc: true
 
 </div>
 
+<!--
+Speaker: Tufte's one rule — above all else, show the data. Ask them to name the
+non-data ink on the next few figures; the library defaults are the worst
+offender. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1732,6 +1802,12 @@ Every matplotlib plot has three nested layers. The **Figure** is the whole canva
 
 </div>
 
+<!--
+Speaker: this is the pivot from theory to code. Get the Figure / Axes / Artists
+mental model to stick — every matplotlib snippet that follows is just these
+three layers. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1931,6 +2007,70 @@ hideInToc: true
 <img class="fig" src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0 auto;max-height:330px;background:#fff;border-radius:8px;">
 
 <div class="note-text mt-sm">📏 Units on both axes · 📊 the **D⁰ peak** stands clear of the combinatorial background · 🏷️ signal annotated. *Your field's data will look different — the same choices apply. You build this in Seminar 10.*</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Your counts span from 10 to 10,000,000 events across categories. Which axis choice best reveals the structure at every magnitude?"
+  :options="[
+    'A linear y-axis starting at zero',
+    'A logarithmic y-axis',
+    'A linear y-axis truncated to start at 10',
+    'Drop the axis labels to reduce clutter'
+  ]"
+  :correct="1"
+  explanation="When values span several orders of magnitude, a log scale spreads them out so structure stays visible at every scale; a linear axis crushes the small values against the baseline."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Choose the **right chart** for amounts, distributions, proportions, and trends
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Label **axes** with units and pick an honest scale — zero base, log, or square-root
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Cut **chart junk** and use colour-blind-safe palettes
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Title a figure with its **finding** and make it **reproducible**
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 10 tie-in**
+
+produce your first committed figure — the LHCb D⁰ → K⁻π⁺ mass spectrum, with axis units and a finding-as-title.
+
+</div>
+
+<!--
+Speaker: this is the "you can now" beat — have them nod along to each card. The
+seminar tie-in makes the payoff concrete: they leave the lecture and produce
+their first committed figure from real LHCb data. (~1 min)
+-->
 
 ---
 hideInToc: true

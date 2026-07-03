@@ -19,12 +19,72 @@ addons:
 
 ##### <span class="aims-badge">🔧 tool-agnostic</span>
 
+<!--
+Speaker: gauge the room — who has written Python before? Reassure absolute
+beginners: the live editor on these slides means no setup needed to follow
+along. Everything runs in the browser. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Python is the **Swiss Army knife** of programming — simple enough for beginners, powerful enough for CERN. Learn the basics, and an entire ecosystem of scientific tools opens up.
+
+<!--
+Speaker: this is the tool-agnostic aim in action — the ideas transfer, Python is
+just today's vehicle. Frame the next ~40 min as the vocabulary they'll reuse in
+every seminar. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🐍 Run Python and read its core **syntax** — indentation, dynamic typing, comments
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🔢 Work with built-in **types** and operators — numbers, strings, booleans
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+📋 Pick the right **data structure** — lists, tuples, sets, dictionaries
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+⚡ Transform data with **comprehensions** and string methods
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🔀 Steer a program with **conditionals** and **loops**
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Point out that the paired
+Seminar 7 is where they write their first parser — today gives them the building
+blocks. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -320,6 +380,12 @@ hideInToc: true
 
 # Data **Structures**
 
+<!--
+Speaker: this is the heart of the lecture. Frame the choice — list vs. tuple vs.
+set vs. dict is about matching the container to the data. Real analysis code is
+mostly moving data between these four. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -425,6 +491,12 @@ Build output lines and filenames from lists.
 💡 `strip → split → convert` is the classic recipe for parsing a line of a data file — you'll use it in the file-handling section shortly.
 
 </div>
+
+<!--
+Speaker: slow down here — this is exactly what Seminar 7 asks for. Walk the
+recipe on the raw line live: strip the newline, split on the comma, float() each
+piece. Everything else is variation on this. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -709,6 +781,12 @@ hideInToc: true
 
 # Control **Flow**
 
+<!--
+Speaker: last building block — deciding and repeating. Stress that indentation,
+not braces, defines a block; a stray space is a real bug in Python. Loops over
+lists and dicts are where the data structures pay off. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -795,3 +873,51 @@ for e in energies:
 high_count = sum(1 for e in energies if e > 10)
 print(f"\nHigh energy events (>10 GeV): {high_count}/{len(energies)}")
 ```
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Run Python and use its core **syntax** and built-in types
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Build and manipulate **lists, dicts, tuples, and sets**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Write **comprehensions** and parse text with string methods
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Direct program flow with **conditionals** and **loops**
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 7 tie-in**
+
+Write your first parser — turn one raw event line from the dataset into usable numbers.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them mentally tick each box. The seminar
+tie-in makes it concrete: they leave with the strip → split → convert recipe and
+apply it to a real line of the dimuon dataset. (~1 min)
+-->

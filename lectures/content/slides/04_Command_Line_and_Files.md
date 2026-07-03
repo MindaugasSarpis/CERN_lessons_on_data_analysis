@@ -21,12 +21,66 @@ layout: cover
 
 ##### <span class="aims-badge">⚙️ automation · 📁 data & files · 🔧 tool-agnostic</span>
 
+<!--
+Speaker: this is the workhorse lecture — the CLI and file handling. Two aims meet
+here: automation and efficient work with data. By the end they can drive a
+machine with no GUI and keep a project tidy. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # The command line is the universal interface to computing. Master it once, and you gain **speed**, **automation**, and the ability to work on any machine—from a laptop to a supercomputer cluster.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🧭 **Navigate** and inspect files entirely from the command line
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🔗 Chain small tools with **pipes** and **redirection** to answer questions
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+✳️ Match many files at once with **wildcards** — safely
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🏷️ Name files with consistent, sortable **conventions**
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+📁 Organise a project — raw vs **processed** data, plus a README
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. The paired Seminar 4 is where
+they organise THEIR project folders and inspect the dataset from the shell —
+today builds the toolkit and the habits. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -97,6 +151,12 @@ hideInToc: true
 ---
 
 # CLI **Foundations**
+
+<!--
+Speaker: ground them before commands — a shell interprets text, the prompt shows
+where you are, and every command is verb-options-arguments. Everything that
+follows is a variation on this pattern. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -185,6 +245,12 @@ hideInToc: true
 ---
 
 # Everyday **Commands**
+
+<!--
+Speaker: the verbs they'll use hourly — navigate, inspect, match, find. Show the
+PowerShell/UNIX pairing so no one feels shut out by their OS; the concepts are
+identical across shells. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -371,6 +437,12 @@ hideInToc: true
 ---
 
 # Power **Tools**
+
+<!--
+Speaker: the payoff — pipes compose small tools into real answers. Linger on the
+error-count pipeline; watching four tiny commands answer a real question is what
+converts sceptics. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1050,6 +1122,12 @@ hideInToc: true
 
 # File **Naming**
 
+<!--
+Speaker: pivot from commands to discipline. A good filename is sortable and
+self-describing; bad ones cost hours later. Tie this back to the file-chaos
+slide they just laughed at. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1672,5 +1750,53 @@ hideInToc: true
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ **Navigate** and inspect files from the command line
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Chain tools with **pipes** and **redirection**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Name files with sortable, consistent **conventions**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Structure a project — raw vs **processed**, plus a README
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 4 tie-in**
+
+organise your project into raw/ vs processed/ folders with clean filenames, and inspect the dataset entirely from the command line.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod along to each card. The seminar
+tie-in makes the payoff concrete: they leave here and immediately give their own
+project a clean structure and drive it from the shell. (~1 min)
+-->
 
 ---

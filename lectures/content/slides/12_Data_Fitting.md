@@ -36,12 +36,65 @@ python:
 
 ##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
 
+<!--
+Speaker: open on the promise — turning noisy points into a number ± an error.
+Every field in the room does this; today we make it principled. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Data fitting is how we extract quantitative knowledge from measurements---turning noisy observations into precise parameter estimates with well-understood uncertainties.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🎯 Frame fitting as choosing parameters that best describe your **data**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+⚖️ Weight points by their errors with the **chi-squared** statistic
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🐍 Run nonlinear fits with **`scipy.optimize.curve_fit`**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🔍 Judge fit quality with **residuals** and reduced **χ²** (χ²/dof ≈ 1)
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+♻️ Report every result as **value ± uncertainty**
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Point out Seminar 12 is where
+they fit a real LHCb peak and report a mass with error — today builds the
+mental model. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -87,6 +140,11 @@ hideInToc: true
 ---
 
 # What is **Data Fitting?**
+
+<!--
+Speaker: section shift — from "why" to "what". Define it cleanly:
+data + model → parameters ± uncertainties, checked and iterated. (~30 sec)
+-->
 
 ---
 hideInToc: true
@@ -325,6 +383,11 @@ hideInToc: true
 ---
 
 # Parameter **Estimation**
+
+<!--
+Speaker: the mathematical heart — least squares, its link to maximum likelihood,
+and where the covariance matrix (the errors) comes from. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -899,6 +962,11 @@ hideInToc: true
 
 # Goodness-of-Fit: **chi-squared**
 
+<!--
+Speaker: the single most useful diagnostic. Anchor χ²/dof ≈ 1 = good, but stress
+it never replaces looking at the residuals. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1252,6 +1320,11 @@ hideInToc: true
 
 # Best **Practices**
 
+<!--
+Speaker: distil the workflow — visualize before fitting, report uncertainties,
+always check χ²/dof and residuals. These habits are the reproducibility payoff. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1359,6 +1432,41 @@ hideInToc: true
 <div class="note-text mt-sm">🎯 **Seminar running project:** fit the **D⁰** peak of the LHCb K⁻π⁺ spectrum (Gaussian + background) → **m ≈ 1865 MeV** with error and χ²/dof. *Same recipe for any peak in any field.*</div>
 
 <img class="fig" src="/figures/lhcb_d0_fit.png" style="display:block;margin:0.4rem auto 0;max-height:235px;background:#fff;border-radius:8px;">
+
+---
+hideInToc: true
+---
+
+# Try It Yourself — Fit the **D⁰ Peak** 🔬
+
+<div class="note-text">Click ▶ to fit the D⁰ peak live — then shrink the sample or drop the background term and re-run.</div>
+
+```python {monaco-run}
+import numpy as np
+from scipy.optimize import curve_fit
+
+rng = np.random.default_rng(0)
+MD0 = 1.865                                      # D0 mass (GeV) to recover
+mass = np.concatenate([rng.normal(MD0, 0.009, 4000),    # D0 peak
+                       rng.uniform(1.80, 1.94, 8000)])  # flat background
+y, edges = np.histogram(mass, bins=60, range=(1.80, 1.94))
+x, err = 0.5 * (edges[:-1] + edges[1:]), np.sqrt(np.maximum(y, 1))
+
+def model(x, A, mu, sig, b):                     # Gaussian peak + flat background
+    return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b
+
+popt, pcov = curve_fit(model, x, y, p0=[y.max(), MD0, 0.01, np.median(y)],
+                       sigma=err, absolute_sigma=True)
+perr = np.sqrt(np.diag(pcov)); chi2 = np.sum(((y - model(x, *popt)) / err) ** 2)
+print(f"D0 mass  = {popt[1]*1000:.1f} +/- {perr[1]*1000:.1f} MeV   (PDG 1864.84)")
+print(f"chi2/dof = {chi2:.0f}/{len(x)-4} = {chi2/(len(x)-4):.2f}")
+```
+
+<!--
+Speaker: run it live — the fit recovers ~1865 MeV. Then break it on purpose:
+shrink N and watch the error grow, or drop the background term and watch chi2/dof
+blow up. This is the running project in 20 lines. (~3 min)
+-->
 
 ---
 hideInToc: true
@@ -1516,6 +1624,69 @@ hideInToc: true
 **Both are parameter estimation problems.** ML is fitting with very complex, flexible models. Understanding fitting makes you better at ML.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="After a fit you get χ²/dof ≈ 5. What does this most likely indicate?"
+  :options="[
+    'The fit is excellent — the model perfectly captures the data',
+    'The model is missing structure, or the uncertainties are underestimated',
+    'The uncertainties were overestimated',
+    'There are simply too many free parameters'
+  ]"
+  :correct="1"
+  explanation="χ²/dof well above 1 means the residuals are larger than the assumed errors — the model misfits or the σᵢ are too small; χ²/dof well below 1 is the overestimated-error / overfitting case."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Fit a model by **least squares** and estimate its parameters
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read errors and correlations from the **covariance matrix**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Judge a fit with **residuals** and **χ²/dof**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Run real fits in **`curve_fit`** and report **value ± error**
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 12 tie-in**
+
+fit the LHCb D⁰ peak (Gaussian + background) and report the mass ± error with a χ²/dof goodness-of-fit.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod along to each. The seminar makes
+it concrete: they fit a real D⁰ peak and report m ≈ 1865 MeV with χ²/dof. (~1 min)
+-->
 
 ---
 hideInToc: true

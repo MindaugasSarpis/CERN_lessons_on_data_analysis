@@ -19,12 +19,66 @@ mermaid: true
 
 ##### <span class="aims-badge">🔧 ♻️ ⚙️ 📁 — applies all four aims</span>
 
+<!--
+Speaker: this is the capstone lecture — everything the course built now pays off
+together. Set the tone: ML is not magic, it is the four aims applied at scale. It is
+optional and advanced, so keep it conceptual over code. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Machine learning is not magic — it is **the four aims applied at scale**. The thinking you have built all course long matters more than the label on the model.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🤖 Frame ML as **learning rules from data** — the fitting loop at scale
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🔒 **Split** data into train / validation / test and evaluate only on unseen data
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+📉 Diagnose **overfitting** by watching the train-vs-test gap
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+📊 Read a **confusion matrix** and prefer precision / recall to raw accuracy
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🧠 Use **LLMs and AI tools** responsibly — verify, reproduce, own the output
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Remind them this is the optional
+capstone — the payoff is watching the four aims converge. Seminar 16 is where they
+train and honestly evaluate a classifier on their own data. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -80,6 +134,11 @@ hideInToc: true
 ---
 
 # What ML **Is** (and Isn't)
+
+<!--
+Speaker: the job of this block is to demystify ML and inoculate against hype — half of
+what's sold as "AI" is decades-old statistics. Name the actual method. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -284,6 +343,11 @@ hideInToc: true
 
 # The ML **Workflow**
 
+<!--
+Speaker: anchor everything to the fitting loop from Lecture 12 — same shape, more
+parameters. The golden rule, splitting your data, is the beat that matters most. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -422,6 +486,11 @@ hideInToc: true
 ---
 
 # A First **Classifier**
+
+<!--
+Speaker: make it concrete with signal-vs-background in scikit-learn. Emphasise the same
+four steps fit any model, and read the confusion matrix — not just accuracy. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -577,6 +646,11 @@ hideInToc: true
 ---
 
 # Modern **AI** & LLMs
+
+<!--
+Speaker: LLMs are the tool of the moment — great for drafts, dangerous when trusted.
+Land the responsible-use rules: you own the output, verify it, keep it reproducible. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -738,6 +812,70 @@ hideInToc: true
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A classifier scores 99.99% accuracy on a dataset where only 1 event in 10,000 is signal. Why is this not yet evidence that the model works?"
+  :options="[
+    'A model that always predicts background scores the same — accuracy hides that it never catches any signal',
+    '99.99% accuracy is impossible, so there must be a bug in the code',
+    'The model simply needs more training epochs to reach 100%',
+    'Accuracy is always the correct metric for physics classification'
+  ]"
+  :correct="0"
+  explanation="On heavily imbalanced data a trivial majority-class predictor looks near-perfect; precision and recall reveal whether any signal is actually caught."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Frame a task as **supervised learning** — features `X`, labels `y`
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ **Split** the data and train a classifier in scikit-learn
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read a **confusion matrix** — precision, recall, F1
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Spot **overfitting**, data leakage, and the accuracy trap
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 16 tie-in**
+
+train and honestly evaluate a classifier on your data — a proper train/test split, confusion matrix, precision/recall/F1.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod along to each card. The seminar makes
+it concrete: their own project data goes through a real train/test evaluation with the
+same metrics. (~1 min)
+-->
 
 ---
 hideInToc: true

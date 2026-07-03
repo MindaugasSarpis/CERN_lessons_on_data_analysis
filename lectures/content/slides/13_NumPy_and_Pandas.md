@@ -36,12 +36,66 @@ python:
 
 ##### <span class="aims-badge">📁 data & files · ⚙️ automation · 🔧 tool-agnostic</span>
 
+<!--
+Speaker: this is the workhorse lecture — the tools they will use in almost every
+seminar from here on. Frame NumPy + Pandas as the bridge from toy data to real,
+messy data. Lots of live code today, so keep the pace up. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Real data is messy, incomplete, and comes in various formats. NumPy and Pandas are the foundational tools for handling, cleaning, and analyzing data efficiently in Python.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🔢 Write fast, loop-free array code with NumPy **vectorization**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🎯 Index, slice, and **broadcast** arrays using boolean masks
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🐼 Build, filter, sort, and **group** a Pandas DataFrame
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🧹 Handle missing values, detect **outliers**, and normalize data
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+📁 Read and write data across formats — CSV, Excel, **Parquet**
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a checklist. Stress that Seminar 13 is where
+they turn their own raw dataset into a clean, tidy table — today builds the toolkit
+for that. Set the expectation. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -91,6 +145,12 @@ hideInToc: true
 ---
 
 # NumPy: Numerical **Computing**
+
+<!--
+Speaker: the one idea to land in this block is vectorization — operate on whole
+arrays, never element by element. The speed benchmark a few slides on makes it
+visceral. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -359,6 +419,12 @@ hideInToc: true
 ---
 
 # Pandas: **DataFrames** & Real Data
+
+<!--
+Speaker: Pandas is NumPy plus labels, mixed types, and file I/O. Anchor it as
+"Excel/SQL table you can script." Everything from here uses the DataFrame as the
+central object. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -758,6 +824,12 @@ hideInToc: true
 
 # Real-World Example: **CERN Data**
 
+<!--
+Speaker: now put the tools to work on a physics-shaped problem — Higgs to two
+photons. Walk through the signal-plus-background mindset; the same filter/cut
+pattern reappears in their seminar project. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -913,6 +985,12 @@ hideInToc: true
 ---
 
 # Data Cleaning & **Preprocessing**
+
+<!--
+Speaker: this is where real data bites — missing values, outliers, mixed formats.
+Emphasize that cleaning is a documented, reproducible step, never ad-hoc deletion.
+This is the heart of the seminar deliverable. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1518,6 +1596,70 @@ hideInToc: true
 - **Reproducible Workflows — automate your entire workflow!**
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You need the square of every value in a large NumPy array. Which is the fast, idiomatic NumPy approach?"
+  :options="[
+    'arr ** 2 — one vectorised operation over the whole array',
+    'A Python for-loop that appends x*x to a list',
+    'A list comprehension [x**2 for x in arr]',
+    'arr.apply(lambda x: x**2)'
+  ]"
+  :correct="0"
+  explanation="Vectorised operations run in C across the entire array at once — far faster than any Python-level loop or comprehension, and NumPy arrays have no apply method."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Write vectorized NumPy code with **no explicit loops**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Build, filter, sort, and **group** a Pandas DataFrame
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Clean data — missing values, **outliers**, normalization
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read and write data across **file formats**
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 13 tie-in**
+
+produce a clean, tidy processed table with Pandas — the analysis-ready version of your raw data.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod along to each card. The seminar
+tie-in makes it concrete: they leave here and turn their own raw data into a
+tidy, analysis-ready table. (~1 min)
+-->
 
 ---
 hideInToc: true

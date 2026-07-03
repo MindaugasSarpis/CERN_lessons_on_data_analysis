@@ -21,6 +21,12 @@ layout: cover
 
 ##### <span class="aims-badge">📁 data & files · ♻️ reproducibility</span>
 
+<!--
+Speaker: welcome them to the course proper. Frame the hour — this is the "why":
+what CERN is, why it drowns in data, and why that makes it the perfect backdrop
+for the skills we build. Set an exploratory, big-picture tone. (~2 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
@@ -28,6 +34,54 @@ layout: quote
 
 # Not only is the Universe stranger than we think, it is stranger than we **can** think. 
 Werner Heisenberg
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🏛️ Describe **what CERN is** — the laboratory, the **LHC**, and its four main experiments
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🔬 Trace how a collision becomes **data** — the accelerator chain, detector layers, and the **trigger**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+📊 Explain why **data analysis** is central — petabytes per second and the needle-in-a-haystack problem
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🌐 Recognise CERN's impact beyond physics — the **Web**, the computing **grid**, and **open data**
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🎯 Connect these challenges to the **skills** this course builds
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Stress that today is context and
+motivation — the hands-on skills start next lecture at the command line. The paired
+Seminar 2 is where they go find the running-project dataset. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -71,6 +125,12 @@ hideInToc: true
 # What is **CERN**?
 
 <img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-12 h-64" />
+
+<!--
+Speaker: section break. Ask who has heard of CERN and what for — most will say
+"the Higgs" or "the Web". Use that to preview the next few slides: the org, the
+machine, and how a detector actually sees a collision. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -260,6 +320,12 @@ hideInToc: true
 ---
 
 # Why **Data**?
+
+<!--
+Speaker: pivot from hardware to the real subject of the course. The LHC is only
+interesting because of what pours out of it — 1 PB/s, of which almost nothing is
+signal. This is where the course's toolkit earns its keep. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -470,6 +536,12 @@ The next short films sweep across the scales of nature — from mountains and de
 
 Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
 
+<!--
+Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
+to plant beforehand: every scene ends as data someone must turn into understanding.
+That thread carries into the next section. (~1 min setup)
+-->
+
 ---
 
 <VideoPlayer src="Skylapse.mp4" autoplay loop   />
@@ -540,6 +612,12 @@ hideInToc: true
 # Inside **CERN**
 
 Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
+
+<!--
+Speaker: shift from cosmos to lab. These clips show the real machines behind the
+diagrams — ATLAS, LHCb, the tunnels. Point out the human scale next to the
+detectors before rolling. (~1 min setup)
+-->
 
 ---
 
@@ -641,3 +719,52 @@ Statistics decide whether a bump in the data is a discovery — or noise.
 You don't need a particle accelerator to use any of this. **Next, we start building these skills ourselves — beginning at the command line.**
 
 </div>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Describe **CERN**, the **LHC**, and its four main experiments
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Trace a collision from **beam** to stored **dataset** via the **trigger**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Explain why **data analysis** is central — and what **5-sigma** means
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Connect CERN's challenges to the **skills** this course builds
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 2 tie-in**
+
+find and document the running-project dataset — LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal — recording its provenance (title, DOI, licence).
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod along to each. The tie-in makes the
+payoff concrete: in the seminar they hunt down the actual dataset the whole course
+will analyse, and practise recording its provenance. (~1 min)
+-->
+

@@ -21,12 +21,66 @@ layout: cover
 
 ##### <span class="aims-badge">🔧 tool-agnostic · 📁 data & files</span>
 
+<!--
+Speaker: this lecture is the foundation layer — how a computer actually stores
+the data you'll analyse. No coding today; it's the mental model everything else
+rests on. Tool-agnostic and file-literate is the goal. (~1 min)
+-->
+
 ---
 layout: quote
 hideInToc: true
 ---
 
 # The main goal of this lecture is to promote **algorithmic thinking** and to provide a basic understanding of **computer science** concepts
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🧠 Break a problem into a finite sequence of steps — think **algorithmically**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🔢 Convert numbers between **binary**, **decimal**, and **hexadecimal**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🔤 Explain how text becomes bytes through **ASCII** and **UTF-8**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+📐 Predict **overflow** and **rounding** in fixed-width ints and floats
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+📁 See a file as a named sequence of **bytes** — format, size, encoding
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Today is the mental model —
+bits up to files — that everything later in the course sits on. The paired
+Seminar 3 is where they inspect their own raw data as bytes. (~1 min)
+-->
 
 ---
 layout: center
@@ -132,6 +186,12 @@ hideInToc: true
 # Data **Representation**
 
 Before we can write algorithms, we need to know what their inputs and outputs are made of — how data is actually stored inside the computer, from individual bits up to whole files.
+
+<!--
+Speaker: we build up from the smallest unit — bit → byte → number bases →
+file sizes. Keep the pace brisk; the tally-marks and light-bulb slides land the
+core idea that everything is just on/off switches. (~1 min)
+-->
 
 ---
 layout: fact
@@ -694,6 +754,12 @@ hideInToc: true
 
 Once numbers are bits, arithmetic and logic become operations on 0s and 1s — the building blocks of every computation.
 
+<!--
+Speaker: the payoff slide is fetch–decode–execute — an algorithm becomes numbers
+that AND/OR/NOT circuits grind through. Tie the logic gates back to "software is
+just data the CPU obeys." (~1 min)
+-->
+
 ---
 layout: center
 hideInToc: true
@@ -1110,6 +1176,12 @@ hideInToc: true
 ---
 
 # Numbers in **Computers**
+
+<!--
+Speaker: the two big gotchas live here — fixed-width integer overflow (values
+wrap silently) and floating-point rounding (0.1 + 0.2 ≠ 0.3). Both bite real
+analyses; the MCQ checks the 16-bit case. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1569,6 +1641,12 @@ hideInToc: true
 
 The same bits can be reorganized to take up less space — and checked to make sure none of them were corrupted along the way.
 
+<!--
+Speaker: short section. Lossless vs lossy, then checksums and hashes for
+integrity. Land the point that a SHA-256 hash is how you prove a file arrived
+intact — directly relevant to trusting a downloaded dataset. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1696,3 +1774,51 @@ hideInToc: true
 🧭 Back to the "box": before writing algorithms, you need to know what their **inputs** and **outputs** are made of.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Convert between **binary**, **decimal**, and **hexadecimal**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Reason about **bits**, **bytes**, and real file sizes
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Explain how text and numbers are encoded as **bytes**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Spot **overflow** and **rounding** limits in ints and floats
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 3 tie-in**
+
+inspect your raw data file as bytes — its character encoding, exact size, and format — before trusting a single number in it.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod along to each. The tie-in makes
+it concrete: in Seminar 3 they open their own dataset at the byte level and
+verify its encoding, size, and format before trusting any number. (~1 min)
+-->

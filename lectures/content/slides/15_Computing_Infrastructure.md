@@ -22,12 +22,66 @@ layout: cover
 
 ##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation</span>
 
+<!--
+Speaker: set the frame — this is an advanced, optional lecture on the machines
+under every analysis. Promise it demystifies the vocabulary they meet in job ads
+and cloud consoles. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Every data analysis depends on the hardware beneath it. Understanding **CPUs**, **memory**, **storage**, and **accelerators** helps you write faster code, choose the right tools, and make the most of the machines you work with.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🧠 Read a **CPU** spec — cores, clock, and cache — and know what each buys you
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+💾 Navigate the **memory hierarchy** and why data locality drives speed
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🚀 Compare **storage** — HDD, SSD, NVMe — by speed and latency
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🎮 Recognize when a **GPU** or accelerator wins — parallel workloads
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🔍 Inspect **your own machine** and match hardware to the task
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Frame the lecture as the "why"
+behind the machines they use daily — the paired Seminar 15 scales their pipeline
+up onto a bigger machine. Set the expectation. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -77,6 +131,11 @@ hideInToc: true
 ---
 
 #  What constitutes **computing infrastructure**?
+
+<!--
+Speaker: ask the room to shout out components before revealing the next slide —
+they name CPU and RAM, rarely I/O, networking, or cooling. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -139,6 +198,11 @@ hideInToc: true
 ---
 
 # The **CPU**
+
+<!--
+Speaker: the processor everyone knows by name but few can describe. Preview the
+three levers that actually matter — clock, cores, cache. (~30 sec)
+-->
 
 ---
 hideInToc: true
@@ -268,6 +332,12 @@ hideInToc: true
 ---
 
 # Memory & **Storage**
+
+<!--
+Speaker: the theme here is a speed/capacity trade-off — fast and small at the
+top, slow and huge at the bottom. This sets up the memory hierarchy later.
+(~30 sec)
+-->
 
 ---
 hideInToc: true
@@ -547,6 +617,11 @@ hideInToc: true
 ---
 
 # Specialized **Processors**
+
+<!--
+Speaker: pivot from "one fast core" to "thousands of small cores" — motivate why
+GPUs and accelerators exist for parallel, data-heavy workloads. (~30 sec)
+-->
 
 ---
 hideInToc: true
@@ -991,3 +1066,67 @@ Understanding hardware helps you choose the right tools, write faster code, and 
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Your analysis applies the same simple operation to millions of independent data points. Which hardware is best suited to accelerate it?"
+  :options="[
+    'A GPU — thousands of parallel cores apply the same instruction to many data points at once',
+    'A single higher-clocked CPU core, since clock speed is the only thing that matters',
+    'A larger HDD, because more storage capacity means faster computation',
+    'More L1 cache alone, regardless of which processor runs the work'
+  ]"
+  :correct="0"
+  explanation="A GPU's SIMD architecture runs the same instruction across thousands of small cores on different data — ideal for large, uniform, independent workloads."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read a CPU spec — **cores**, **clock**, **cache** — and know the trade-offs
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Place data across the **memory hierarchy** for speed
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Match **storage** — HDD / SSD / NVMe — to your I/O needs
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Decide when a **GPU** or accelerator is worth it
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 15 tie-in**
+
+run your pipeline as a batch / remote-style job at scale — the same reproducible pipeline, a bigger machine.
+
+</div>
+
+<!--
+Speaker: this is the "you can now" beat — have them nod along to each. The
+seminar tie-in makes it concrete: the same reproducible pipeline, now run at
+scale on a bigger machine. (~1 min)
+-->

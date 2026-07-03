@@ -21,6 +21,11 @@ layout: cover
 
 ##### <span class="aims-badge">📁 data & files · 🔧 tool-agnostic</span>
 
+<!--
+Speaker: they can already write Python from Lecture 7 — today turns that into real
+data work: functions, files, and the right library. Frame it as the bridge. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
@@ -29,11 +34,63 @@ layout: quote
 # You can write Python — now put it to work on data: organise code into functions, read and write files, and reach for the right library. The language stays the same; the leverage grows.
 
 ---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+⚙️ Organise code into reusable **functions** with docstrings
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🛡️ Handle errors safely with **try / except / finally**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🔁 Loop cleanly using **enumerate()** and **zip()**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+📂 Read and write **files** — loading CSV / JSON / YAML into dicts
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+📦 Import **modules** and reach for the right library
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Seminar 8 is where they build the
+ingest script every later analysis step depends on. Set the expectation. (~1 min)
+-->
+
+---
 layout: section
 hideInToc: true
 ---
 
 # Functions & **Exceptions**
+
+<!--
+Speaker: this block is the "reusable and robust" beat — functions to organise code,
+exceptions to survive bad input. Both bite the moment the data is real. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -172,6 +229,11 @@ hideInToc: true
 
 # Advanced **Patterns**
 
+<!--
+Speaker: enumerate and zip are the idioms that separate clean Python from index-
+juggling loops — worth pausing on the before/after. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -255,6 +317,11 @@ hideInToc: true
 ---
 
 # Files & **Modules**
+
+<!--
+Speaker: the payoff section — getting data off disk and into Python. with open()
+and the CSV/JSON/YAML loaders are exactly what Seminar 8 needs. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -385,6 +452,11 @@ hideInToc: true
 ---
 
 # Hands-On **Practice**
+
+<!--
+Speaker: live-run the Monaco cells here — dict comprehensions and a text bar chart
+tie the whole lecture together before they write a real script. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -547,3 +619,67 @@ Turning numbers into plots you can reason about.
 Together these handle the bulk of everyday data-analysis work.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Why is a `with open(...) as f:` block preferred over calling `open()` and assigning the result on its own?"
+  :options="[
+    'It closes the file automatically, even if an error is raised',
+    'It reads the file faster than open() alone',
+    'It converts the file into a dictionary for you',
+    'It is the only way to import the csv module'
+  ]"
+  :correct="0"
+  explanation="with is a context manager: it guarantees the file is closed when the block ends, even if an exception occurs — so you never leak an open file handle."
+/>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Write reusable **functions** and guard code with **try / except**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Loop cleanly with **enumerate()** and **zip()**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read and write **files** with `with open()`
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Load **CSV / JSON / YAML** into Python dicts
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 8 tie-in**
+
+build an ingest script that reads the whole CSV into Python (no Pandas yet) — the foundation every later step builds on.
+
+</div>
+
+<!--
+Speaker: this is the "you can now" beat — have them nod along to each card. The
+seminar tie-in makes it concrete: their ingest script is the base every later
+analysis step builds on. (~1 min)
+-->

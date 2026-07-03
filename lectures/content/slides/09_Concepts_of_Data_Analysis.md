@@ -22,6 +22,60 @@ layout: cover
 
 ##### <span class="aims-badge">♻️ reproducibility · 📁 data & files</span>
 
+<!--
+Speaker: open by naming the two aims this lecture serves — reproducibility and
+efficient work with data. Frame today as the mental model that must come BEFORE
+tools: what data is, how to judge it, and what goes wrong. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🎯 Frame every analysis around the **decision** it must support
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🔍 Tell apart **descriptive, diagnostic, predictive, and prescriptive** analysis
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+✅ Audit data against a **quality checklist** and read missing-data mechanisms
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🔄 Walk data through the full **analysis lifecycle** — plan to share
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+♻️ Make results **FAIR** and reproducible for the next analyst
+
+</div>
+
+</div>
+
+<!--
+Speaker: read these as promises, not a syllabus. Stress the through-line —
+"start from the decision" — and tell them Seminar 9 is where they audit their
+own dataset's quality. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -2219,6 +2273,12 @@ hideInToc: true
 
 # Steps of Data **Analysis**
 
+<!--
+Speaker: transition — we've built the mental model; now zoom into the analytical
+loop itself. Six concrete steps: Define, Collect, Clean, Analyse, Visualise,
+Interpret. "Define" is where most analyses are won or lost. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -2659,6 +2719,12 @@ hideInToc: true
 ---
 
 # Tools & **Collaboration**
+
+<!--
+Speaker: pivot from the how-to to the ecosystem — the stack, the roles, the
+rituals. Emphasise tool-agnosticism: the concepts outlive any single tool, and
+no single role sees the whole pipeline. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -3157,6 +3223,12 @@ hideInToc: true
 
 # Data **Hygiene** & Ethics
 
+<!--
+Speaker: this is where reproducibility becomes a habit, not a slogan. Hygiene =
+future-you can re-run it; ethics = you can be trusted with the data. Land the
+rule of thumb: re-runnable in under an hour, six months later. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -3359,6 +3431,12 @@ hideInToc: true
 ---
 
 # **FAIR** Principles
+
+<!--
+Speaker: FAIR = Findable, Accessible, Interoperable, Reusable. Frame it as the
+standard that lets a stranger reuse your data a decade later — then show CERN
+Open Data as living proof it works at petabyte scale. (~1 min)
+-->
 
 ---
 layout: quote
@@ -3989,6 +4067,54 @@ Results that nobody understands have zero impact. Visualisation and storytelling
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Frame an analysis around the **decision** it serves
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Classify work as **descriptive, diagnostic, predictive, or prescriptive**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Run a **data-quality checklist** and read missing-data mechanisms
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Make results **FAIR** and reproducible for the next analyst
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 9 tie-in**
+
+run a data-quality audit on your dataset — find missing, duplicate, and physically impossible values before analysing.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod to each capability. The seminar
+tie-in makes it concrete: next session they audit their own dataset for missing,
+duplicate, and impossible values before touching analysis. (~1 min)
+-->
 
 ---
 hideInToc: true

@@ -22,12 +22,66 @@ layout: cover
 
 ##### <span class="aims-badge">♻️ reproducibility · ⚙️ automation</span>
 
+<!--
+Speaker: open on the pain — an analysis you cannot rerun six months later. Today
+turns ad-hoc scripts into a pipeline anyone can rebuild. Serves the ♻️ + ⚙️
+aims. (~1 min)
+-->
+
 ---
 hideInToc: true
 layout: quote
 ---
 
 # Science requires **reproducibility**. Good computing practices transform ad-hoc analysis scripts into professional, automated workflows that others (and future you) can understand, verify, and extend.
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+📁 Structure an analysis project — separate **data, code, and config**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+⌨️ Parameterise scripts with **command-line arguments** (`argparse`)
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+📄 Externalise settings into readable **YAML config files**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+📦 Isolate dependencies in **virtual environments** with pinned versions
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+⚙️ Automate the pipeline with a **Makefile** so `make all` rebuilds everything
+
+</div>
+
+</div>
+
+<!--
+Speaker: frame these as promises, not a syllabus. Today is the "why + how" of
+reproducible workflows; Seminar 14 is where their own project gets a pinned
+environment and a Makefile. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -70,6 +124,12 @@ hideInToc: true
 ---
 
 # From **Scripts** to **Workflows**
+
+<!--
+Speaker: the arc of the whole lecture — notebook to script to modular code to an
+automated pipeline. Everything that follows moves one step along this path.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -560,6 +620,11 @@ hideInToc: true
 
 # Virtual Environments & **Dependencies**
 
+<!--
+Speaker: "it works on my machine" is a reproducibility bug. Isolated, pinned
+environments are the fix — this is the ♻️ aim in practice. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -789,6 +854,11 @@ hideInToc: true
 ---
 
 # Automation with **Makefiles**
+
+<!--
+Speaker: this is the payoff — one command runs the whole pipeline and only
+rebuilds what changed. Make is the ⚙️ aim made concrete. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1034,6 +1104,11 @@ hideInToc: true
 ---
 
 # Continuous Integration with **GitHub Actions**
+
+<!--
+Speaker: CI runs your tests and pipeline automatically on every push — the
+machine enforces reproducibility so you do not have to remember. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1706,6 +1781,54 @@ hideInToc: true
 Everything today — config files, environments, Make, CI — is the **♻️ + ⚙️ aims made concrete**: an analysis anyone can rebuild with one command.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Structure a project and separate **raw data, code, and config**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Parameterise runs with **argparse** and **YAML config files**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Pin dependencies in a reproducible **virtual environment**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Automate the pipeline so **`make all`** rebuilds every result
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 14 tie-in**
+
+make your whole pipeline rebuild with one command — a pinned environment plus a Makefile so `make all` reproduces every result.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod along to each card. The tie-in
+makes it concrete: in Seminar 14 their own analysis becomes one-command
+reproducible. (~1 min)
+-->
 
 ---
 hideInToc: true
