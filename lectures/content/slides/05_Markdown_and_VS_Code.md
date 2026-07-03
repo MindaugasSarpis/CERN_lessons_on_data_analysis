@@ -937,7 +937,7 @@ Search: `ms-python.python`
 - Side-by-side editing + preview: `Ctrl+K V`
 - Extensions: Markdown All in One, markdownlint
 
-We'll use this in the **Markdown lecture**.
+We used this earlier in the **Markdown** part of this lecture.
 
 </div>
 

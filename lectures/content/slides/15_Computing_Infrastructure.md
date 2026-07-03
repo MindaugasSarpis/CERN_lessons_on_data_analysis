@@ -257,7 +257,7 @@ image: /figures/cpu_apple_M4.webp
 <div class="absolute bottom-4 left-4 right-4">
 <div class="card card-primary card-glass pad-compact" style="background: rgba(0,0,0,0.7);">
 
-Apple M4 system-on-chip (SoC) — integrates CPU, GPU, Neural Engine, and unified memory on a single die for maximum efficiency.
+Apple M4 system-on-chip (SoC) — integrates CPU, GPU, and Neural Engine on a single die, with unified LPDDR memory co-packaged alongside it for maximum efficiency.
 
 </div>
 </div>
@@ -336,7 +336,7 @@ layout: center
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
-Laptop SO-DIMM RAM modules — smaller than desktop DIMMs, often soldered onto the motherboard in modern ultrabooks.
+Laptop SO-DIMM modules — smaller, removable modules. Many modern ultrabooks instead solder DRAM chips directly to the board (not SO-DIMMs) to save space.
 
 </div>
 
@@ -825,7 +825,7 @@ hideInToc: true
 
 ## ⏱️ **Latency Comparison**
 
-| **Storage Type** | **Access Time** | **Relative Cost** |
+| **Storage Type** | **Access Time** | **Relative Latency** |
 |------------------|-----------------|-------------------|
 | CPU Register     | 1 ns            | 1x                |
 | L1 Cache         | 2-4 ns          | 2-4x              |

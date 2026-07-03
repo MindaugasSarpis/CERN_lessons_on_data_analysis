@@ -333,14 +333,19 @@ git add --all
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-When staged files are present, the output of `git status` will be:
+When staged files are present, `git status` shows them under **"Changes to be committed"**:
 
 ```bash
 On branch main
+
+No commits yet
+
 Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
+  (use "git rm --cached <file>..." to unstage)
         new file:   <file>
 ```
+
+*(Before your first commit git suggests `git rm --cached`; after a commit exists it becomes `git restore --staged` — both unstage.)*
 
 </div>
 

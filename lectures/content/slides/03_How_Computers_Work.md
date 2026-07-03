@@ -1581,7 +1581,7 @@ hideInToc: true
 
 ## 🔒 **Lossless**
 
-Algorithms (RLE, Huffman, DEFLATE — used inside PNG, ZIP, FLAC) shrink data with **exact** recovery
+Algorithms (RLE, Huffman, DEFLATE — used inside PNG, ZIP, gzip) shrink data with **exact** recovery
 
 *(Plain-text formats like CSV and JSON aren't compressed at all — every byte stored as-is. That's exactly why they zip so well.)*
 

@@ -179,7 +179,7 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact reveal-scale">
 
 **A · Foundations & Tooling** *(01–06)*
-Computers, files, command line, Markdown, VS Code, Git
+Orientation, CERN, computers, command line & files, Markdown & VS Code, Git
 
 </div>
 
@@ -222,7 +222,7 @@ Each lecture has a hands-on seminar — together they build one reproducible pro
 
 <div class="note-text mt-sm" style="text-align: center;">
 
-Order and depth adapt to the group; blocks D–E are the optional tail if time runs short.
+Order and depth adapt to the group; blocks D–E may be trimmed if time runs short.
 
 </div>
 

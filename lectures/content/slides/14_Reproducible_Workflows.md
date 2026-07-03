@@ -438,7 +438,7 @@ model:
 
 fitting:
   method: "mle"
-  tolerance: 1e-6
+  tolerance: 1.0e-6   # decimal point → parsed as a float, not a string
 ```
 
 </div>

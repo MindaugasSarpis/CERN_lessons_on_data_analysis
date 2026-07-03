@@ -348,7 +348,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass flow-row" v-click="1">
   <div class="flow-label">📋 Data</div>
-  <div class="flow-text"><code>2025-10-24, 22.3°C</code></div>
+  <div class="flow-text"><code>2025-10-24 10:24, 22.3°C</code></div>
 </div>
 
 <div class="flow-arrow" v-click="2">↓</div>
@@ -1309,7 +1309,7 @@ hideInToc: true
 <summary><span class="dd-title">🖼️ <strong>Multimedia</strong> — images, audio, waveforms</span></summary>
 <div class="dd-body">
 
-**Dense, high-dimensional signals.** A 4 K image is three million numbers; a 1 s waveform can be hundreds of thousands. Analysis usually means *feature extraction* first.
+**Dense, high-dimensional signals.** A 4 K image is ~8 million pixels — about 25 million numbers in RGB; a 1 s audio waveform is tens of thousands of samples. Analysis usually means *feature extraction* first.
 
 - *Typical formats:* PNG/JPEG, WAV/FLAC, MP4, raw tensors, HDF5
 - *Strengths:* convolutional models, signal processing, transfer learning from pretrained nets

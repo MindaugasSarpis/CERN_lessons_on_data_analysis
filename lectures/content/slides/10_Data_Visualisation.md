@@ -741,7 +741,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/cwilke_distributions_ii_mpg_boxplot.svg" style="display:block;margin:0 auto;max-height:170px;">
 
-📦 **Boxplot** — the box spans the middle 50% of the data (the **interquartile range**), the line inside is the **median**, whiskers reach 1.5 × IQR, dots are outliers. Defined formally in the Probability & Statistics lecture.
+📦 **Boxplot** — box = middle 50% (the **interquartile range**), line = **median**; whiskers reach the furthest point within 1.5 × IQR, points beyond are outliers. Defined formally in the Probability & Statistics lecture.
 
 </div>
 
@@ -1464,7 +1464,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 When values span orders of magnitude, a log axis turns power-law relationships into straight lines and reveals structure a linear axis hides.
+📐 When values span orders of magnitude, a **log–log** plot (both axes logarithmic) turns power-law relationships into straight lines, while a single log axis linearises exponential growth — both reveal structure a linear axis hides.
 
 </div>
 

@@ -206,14 +206,14 @@ py_list = list(range(n))
 np_arr = np.arange(n)
 
 # Sum benchmark
-t = time.time(); sum(py_list); t1 = time.time() - t
-t = time.time(); np_arr.sum(); t2 = time.time() - t
-print(f"Sum — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/t2:.0f}x faster")
+t = time.perf_counter(); sum(py_list); t1 = time.perf_counter() - t
+t = time.perf_counter(); np_arr.sum(); t2 = time.perf_counter() - t
+print(f"Sum — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/max(t2,1e-9):.0f}x faster")
 
 # Polynomial x² + 2x + 1
-t = time.time(); [x**2+2*x+1 for x in py_list]; t1 = time.time() - t
-t = time.time(); np_arr**2 + 2*np_arr + 1; t2 = time.time() - t
-print(f"Poly — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/t2:.0f}x faster")
+t = time.perf_counter(); [x**2+2*x+1 for x in py_list]; t1 = time.perf_counter() - t
+t = time.perf_counter(); np_arr**2 + 2*np_arr + 1; t2 = time.perf_counter() - t
+print(f"Poly — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/max(t2,1e-9):.0f}x faster")
 ```
 
 <div class="card card-accent card-glass pad-tight mt-sm">
@@ -790,8 +790,8 @@ background_df = pd.DataFrame({'mass': np.random.exponential(30, n_bkg) + 105, 't
 
 df = pd.concat([signal_df, background_df], ignore_index=True)
 df = df[df['mass'] < 150]
-print(f"Total events: {len(df)} (Signal: {n_sig}, Background: {n_bkg})")
-print(df.head())
+counts = df['type'].value_counts()
+print(f"Total events: {len(df)} (Signal: {counts['signal']}, Background: {counts['background']})")
 ```
 
 ---

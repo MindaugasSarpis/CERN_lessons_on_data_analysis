@@ -638,8 +638,9 @@ cmd1 ;  cmd2   # cmd2 regardless
 
 ```bash
 mkdir results && cd results
-python analyse.py || echo "analysis failed!"
-echo $?          # print last exit code
+python analyse.py       # run it
+echo $?                 # its exit code: 0 = ok, else failed
+python analyse.py || echo "failed!"   # || = fallback on failure
 ```
 
 `$LASTEXITCODE` in PowerShell.

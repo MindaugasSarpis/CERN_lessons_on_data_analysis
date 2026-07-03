@@ -40,7 +40,7 @@ hideInToc: true
 
 - ## Models require **parameter estimation**
 
-- ## Results must be **statistically significant** *(a term we'll make precise later in this lecture)*
+- ## Results must be **statistically significant** *(formal hypothesis testing and p-values are beyond this course — see the closing advice)*
 
 - ## Predictions come with **confidence intervals**
 
@@ -1840,7 +1840,7 @@ hideInToc: true
 ## **Interval Estimation**
 
 - Range of plausible parameter values
-- Confidence interval (CI) contains true value with chosen probability (e.g., 95%)
+- Confidence interval (CI): over many repeats, the chosen fraction (e.g. 95%) of such intervals bracket the true value
 - Communicates both estimate and uncertainty
 
 </div>

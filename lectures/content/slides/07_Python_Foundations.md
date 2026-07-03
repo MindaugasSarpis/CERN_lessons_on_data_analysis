@@ -441,7 +441,7 @@ hideInToc: true
 ```python
 point = (3, 4)          # can't be modified
 x, y = point            # unpacking!
-a, b = b, a             # the classic swap
+x, y = y, x             # the classic swap
 ```
 
 Ideal for things that belong together: coordinates, (name, value) pairs.
@@ -465,7 +465,7 @@ len(set(hits))    # 3 distinct sensors
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 You've already used tuple unpacking without noticing: `for key, value in data.items()` unpacks a tuple on every loop turn.
+💡 You'll soon use tuple unpacking without noticing: `for key, value in data.items()` unpacks a tuple on every loop turn.
 
 </div>
 

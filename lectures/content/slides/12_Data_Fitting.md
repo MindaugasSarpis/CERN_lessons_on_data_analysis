@@ -565,7 +565,7 @@ errors = np.sqrt(np.diag(pcov))
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
-Under the hood: uses Levenberg-Marquardt algorithm---a hybrid of gradient descent and Gauss-Newton methods.
+Under the hood: with no bounds, `curve_fit` uses the Levenberg-Marquardt algorithm (a hybrid of gradient descent and Gauss-Newton); when you supply parameter bounds it switches to a trust-region method.
 
 </div>
 
@@ -1397,7 +1397,7 @@ The Higgs boson was discovered using exactly these fitting methods.
 
 ## **What They Did**
 
-- chi-squared minimization (weighted)
+- Maximum-likelihood fits (profile-likelihood ratio for significance)
 - Background-only hypothesis tests
 - Signal significance calculation
 - Systematic uncertainty estimation
