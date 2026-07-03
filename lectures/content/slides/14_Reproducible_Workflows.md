@@ -889,18 +889,9 @@ hideInToc: true
 # Using the Makefile
 
 ```bash
-# Run entire pipeline
-make all
-
-# Clean up and rerun
-make clean
-make all
-
-# Run tests
-make test
-
-# See available commands
-make help
+make all          # run the entire pipeline
+make clean; make all   # wipe and rebuild
+make test         # run tests   ·   make help
 ```
 
 **Smart rebuilding**:
@@ -1639,69 +1630,63 @@ hideInToc: true
 hideInToc: true
 ---
 
-# What You've Learned: Course Overview
+# The Course So Far
 
-<div class="grid-3 mt-sm gap-md" style="font-size: 0.72em;">
+<div class="grid-3 mt-sm gap-md" style="font-size: 0.74em;">
 
 <div class="card card-primary card-glass pad-compact">
 
-**Orientation & CERN** (L1)
-- Course goals and structure
-- Why data analysis matters
-- The CERN data challenge
+**A · Foundations & Tooling** (01–06)
+- Computers, files, the command line
+- Markdown, VS Code, Git
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**Computing Foundations** (L2--L4)
-- Binary, memory, floating-point
-- Files, CLI, Markdown
-- Infrastructure & hardware
+**B · Programming** (07–08)
+- Python foundations
+- Python for data & files
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-**Python & Data Tools** (L5--L6)
-- Variables, loops, functions
-- NumPy, Pandas, matplotlib
-- Visualization principles
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-**Data Analysis Concepts** (L7)
-- Data lifecycle & workflow
-- Quality, ethics, FAIR principles
-- Tools & collaboration
+**C · Data Analysis Core** (09–12)
+- Concepts, visualisation
+- Probability, statistics, fitting
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-**Version Control** (L8)
-- Git: commits, branches, merges
-- GitHub: PRs, collaboration
-- Resolving merge conflicts
+**D · Practical Data Work** (13–14)
+- NumPy & Pandas
+- ⭐ Reproducible workflows *(here)*
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-**Stats, Fitting & Real Data** (L9--L11)
-- Probability, distributions, CLT
-- Chi-squared, curve fitting
-- Real CERN data case studies
+**E · Advanced** *(optional)* (15–16)
+- Computing infrastructure & HPC
+- Machine learning & AI
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+**The four aims, all along**
+- 🔧 agnostic · ♻️ reproducible
+- ⚙️ automated · 📁 organised data
 
 </div>
 
 </div>
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="note-text mt-sm" style="text-align:center;">
 
-**Reproducible Workflows** (L12) -- Everything today: config files, environments, Make/Snakemake, CI/CD
+Everything today — config files, environments, Make, CI — is the **♻️ + ⚙️ aims made concrete**: an analysis anyone can rebuild with one command.
 
 </div>
 
