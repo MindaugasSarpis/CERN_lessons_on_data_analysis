@@ -29,7 +29,7 @@ python:
   suppressDeprecationWarnings: true
 ---
 
-# Dr. Mindaugas Sarpis
+# Dr. Mindaugas Šarpis
 
 # Best Research and Data Analysis Practices from CERN
 
@@ -298,7 +298,7 @@ hideInToc: true
 
 # Parameter Example: Gaussian + Exponential
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
 ## **Model**
 
@@ -306,7 +306,7 @@ $$f(x) = A \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}} + N \cdot e^{-x/\lambda}$$
 
 </div>
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 | Parameter | Meaning |
 |-----------|---------|
@@ -574,39 +574,31 @@ hideInToc: true
 
 # Interactive: Linear Fit
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="note-text mt-sm">
 
-Fit a straight line $y = mx + b$ to noisy data and extract the slope and intercept with uncertainties.
+Fit a straight line $y = mx + b$ to noisy data and extract the slope and intercept with uncertainties. ⚙️ *Do it once by hand, then let the fitter do it every time.*
 
 </div>
 
 ```python {monaco-run}
-# Generate noisy linear data
 np.random.seed(42)
 x = np.linspace(0, 10, 20)
-y_true = 2.5 * x + 1.0
-y = y_true + np.random.normal(0, 2.0, len(x))
+y = 2.5 * x + 1.0 + np.random.normal(0, 2.0, 20)
 sigma = np.full_like(x, 2.0)
 
-# Define model and fit
 def linear(x, m, b):
     return m * x + b
 
 popt, pcov = curve_fit(linear, x, y, sigma=sigma)
-errors = np.sqrt(np.diag(pcov))
+m, b = popt; dm, db = np.sqrt(np.diag(pcov))
+chi2 = np.sum(((y - linear(x, *popt)) / sigma) ** 2)
 
-# Plot
-fig, (ax1, ax2) = plt.subplots(2, 1, height_ratios=[3, 1], figsize=(7, 4), sharex=True)
-ax1.errorbar(x, y, yerr=sigma, fmt='o', ms=4, label='Data')
-x_fit = np.linspace(0, 10, 100)
-ax1.plot(x_fit, linear(x_fit, *popt), 'r-', label=f'm={popt[0]:.2f}+-{errors[0]:.2f}, b={popt[1]:.2f}+-{errors[1]:.2f}')
-ax1.legend(fontsize=9); ax1.set_ylabel('y')
-residuals = y - linear(x, *popt)
-ax2.errorbar(x, residuals, yerr=sigma, fmt='o', ms=4)
-ax2.axhline(0, color='r', ls='--'); ax2.set_xlabel('x'); ax2.set_ylabel('Residuals')
-chi2 = np.sum((residuals / sigma)**2); dof = len(x) - 2
-fig.suptitle(f'Linear Fit | chi2/dof = {chi2:.1f}/{dof} = {chi2/dof:.2f}', fontsize=11)
-plt.tight_layout(); plt.show()
+plt.figure(figsize=(7, 3.1))
+plt.errorbar(x, y, yerr=sigma, fmt='o', ms=4, label='Data')
+plt.plot(x, linear(x, *popt), 'r-',
+         label=f'm={m:.2f}±{dm:.2f}, b={b:.2f}±{db:.2f}')
+plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-2} = {chi2/(len(x)-2):.2f}')
+plt.legend(); plt.xlabel('x'); plt.ylabel('y'); plt.tight_layout(); plt.show()
 ```
 
 ---
@@ -615,40 +607,32 @@ hideInToc: true
 
 # Interactive: Gaussian Fit
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="note-text mt-sm">
 
 Fit a Gaussian peak $A \cdot e^{-(x-\mu)^2/2\sigma^2}$ to simulated histogram data --- a common task in particle physics.
 
 </div>
 
 ```python {monaco-run}
-# Generate Gaussian-distributed data as a histogram
 np.random.seed(7)
-data = np.concatenate([np.random.normal(5.0, 0.8, 500), np.random.uniform(0, 10, 200)])
+data = np.concatenate([np.random.normal(5, 0.8, 500),
+                       np.random.uniform(0, 10, 200)])
 counts, edges = np.histogram(data, bins=40, range=(0, 10))
-centers = 0.5 * (edges[:-1] + edges[1:])
-mask = counts > 0
-x, y, yerr = centers[mask], counts[mask].astype(float), np.sqrt(counts[mask])
+x = 0.5 * (edges[:-1] + edges[1:])
+y = counts.astype(float); yerr = np.sqrt(np.maximum(counts, 1))
 
-# Signal + flat background model
-def gauss_bg(x, A, mu, sigma, bg):
-    return A * np.exp(-(x - mu)**2 / (2 * sigma**2)) + bg
+def gauss_bg(x, A, mu, sig, bg):
+    return A * np.exp(-(x - mu) ** 2 / (2 * sig ** 2)) + bg
 
 popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=yerr)
-errs = np.sqrt(np.diag(pcov))
+err = np.sqrt(np.diag(pcov))
 
-# Plot
-fig, (ax1, ax2) = plt.subplots(2, 1, height_ratios=[3, 1], figsize=(7, 4), sharex=True)
-ax1.errorbar(x, y, yerr=yerr, fmt='o', ms=3, label='Data')
+plt.figure(figsize=(7, 3.1))
+plt.errorbar(x, y, yerr=yerr, fmt='o', ms=3, label='Data')
 xf = np.linspace(0, 10, 200)
-ax1.plot(xf, gauss_bg(xf, *popt), 'r-', label=f'mu={popt[1]:.2f}+-{errs[1]:.2f}, sig={popt[2]:.2f}+-{errs[2]:.2f}')
-ax1.legend(fontsize=9); ax1.set_ylabel('Counts')
-res = y - gauss_bg(x, *popt)
-ax2.errorbar(x, res / yerr, yerr=1, fmt='o', ms=3)
-ax2.axhline(0, color='r', ls='--'); ax2.set_xlabel('x'); ax2.set_ylabel('Pull')
-chi2 = np.sum((res / yerr)**2); dof = len(x) - 4
-fig.suptitle(f'Gaussian + Background Fit | chi2/dof = {chi2:.1f}/{dof} = {chi2/dof:.2f}', fontsize=11)
-plt.tight_layout(); plt.show()
+plt.plot(xf, gauss_bg(xf, *popt), 'r-',
+         label=f'mu={popt[1]:.2f}±{err[1]:.2f}, sig={popt[2]:.2f}±{err[2]:.2f}')
+plt.legend(); plt.xlabel('x'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
 ```
 
 ---
@@ -657,41 +641,30 @@ hideInToc: true
 
 # Interactive: Exponential Decay Fit
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="note-text mt-sm">
 
 Fit an exponential decay $N_0 \cdot e^{-t/\tau}$ to extract the lifetime $\tau$ --- a key measurement in nuclear and particle physics.
 
 </div>
 
 ```python {monaco-run}
-# Simulate radioactive decay counts
 np.random.seed(13)
 t = np.linspace(0.5, 8, 25)
-N_true = 200 * np.exp(-t / 2.5)
-N = np.random.poisson(N_true).astype(float)
-mask = N > 0
-t, N = t[mask], N[mask]
-sigma_N = np.sqrt(N)
+N = np.random.poisson(200 * np.exp(-t / 2.5)).astype(float)
+sigma_N = np.sqrt(np.maximum(N, 1))
 
-# Model and fit
 def decay(t, N0, tau):
     return N0 * np.exp(-t / tau)
 
 popt, pcov = curve_fit(decay, t, N, p0=[150, 2], sigma=sigma_N)
-errs = np.sqrt(np.diag(pcov))
+N0, tau = popt; err = np.sqrt(np.diag(pcov))
 
-# Plot
-fig, (ax1, ax2) = plt.subplots(2, 1, height_ratios=[3, 1], figsize=(7, 4), sharex=True)
-ax1.errorbar(t, N, yerr=sigma_N, fmt='o', ms=4, label='Data')
+plt.figure(figsize=(7, 3.1))
+plt.errorbar(t, N, yerr=sigma_N, fmt='o', ms=4, label='Data')
 tf = np.linspace(0.5, 8, 200)
-ax1.plot(tf, decay(tf, *popt), 'r-', label=f'N0={popt[0]:.1f}+-{errs[0]:.1f}, tau={popt[1]:.2f}+-{errs[1]:.2f}')
-ax1.legend(fontsize=9); ax1.set_ylabel('Counts')
-res = N - decay(t, *popt)
-ax2.errorbar(t, res / sigma_N, yerr=1, fmt='o', ms=4)
-ax2.axhline(0, color='r', ls='--'); ax2.set_xlabel('Time'); ax2.set_ylabel('Pull')
-chi2 = np.sum((res / sigma_N)**2); dof = len(t) - 2
-fig.suptitle(f'Exponential Decay Fit | chi2/dof = {chi2:.1f}/{dof} = {chi2/dof:.2f}', fontsize=11)
-plt.tight_layout(); plt.show()
+plt.plot(tf, decay(tf, *popt), 'r-',
+         label=f'N0={N0:.0f}±{err[0]:.0f}, tau={tau:.2f}±{err[1]:.2f}')
+plt.legend(); plt.xlabel('Time'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
 ```
 
 ---
