@@ -44,6 +44,11 @@ if (gen.status !== 0) process.exit(gen.status ?? 1);
 await rm(OUT, { recursive: true, force: true });
 await mkdir(OUT, { recursive: true });
 
+// Write the landing page FIRST (it only needs the manifest) so a static server
+// pointed at OUT always has a valid index.html during a rebuild — otherwise a
+// mid-build refresh shows a bare directory listing. Skipped in flat-base/QA mode.
+if (!FLAT) await genLanding(manifest, OUT, PREFIX);
+
 const targets = manifest.decks.filter((d) => !ONLY || ONLY.has(d.slug));
 let failed = 0;
 for (const deck of targets) {
@@ -66,11 +71,7 @@ for (const deck of targets) {
   }
 }
 
-// Landing page (lists ALL decks regardless of --only). Skipped in flat-base/QA mode.
-if (!FLAT) {
-  await genLanding(manifest, OUT, PREFIX);
-  console.log(`\nLanding page → ${join(OUT, 'index.html')}`);
-}
+if (!FLAT) console.log(`\nLanding page → ${join(OUT, 'index.html')}`);
 
 if (failed) { console.error(`\n❌ ${failed}/${targets.length} deck(s) failed to build.`); process.exit(1); }
 console.log(`\n✅ Built ${targets.length} deck(s) → ${OUT}`);
