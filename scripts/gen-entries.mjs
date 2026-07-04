@@ -43,8 +43,12 @@ function headmatter(title, firstSrc) {
     'addons:',
     '  - slidev-addon-python-runner',
     'mermaid: true',
-    'defaults:',
-    '  preload: false',
+    // No `defaults: preload: false` here (the combined 500-slide authoring
+    // deck needs it; these per-deck builds don't): it stops Slidev from
+    // pre-rendering prev/next (and, after 3s, all) slides, so every FIRST
+    // visit to a slide fetched its JS+CSS chunk at click time — a visible
+    // flicker on each first slide switch. Videos stay lazy either way
+    // (VideoPlayer sets preload="none" and only sets src once active).
     `title: ${JSON.stringify(title)}`,
     `src: ./slides/${firstSrc}`,
     '---',
