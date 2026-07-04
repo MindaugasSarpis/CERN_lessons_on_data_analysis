@@ -33,7 +33,12 @@ function headmatter(title, firstSrc) {
     // the deck's real index.html.
     'routerMode: hash',
     'background: /figures/background_intro.jpg',
-    'class: text-left',
+    // NO per-slide keys (class, transition, …) here: because `src:` sits in
+    // this same headmatter block, the parser applies EVERY key of this block
+    // as a frontmatter override to EVERY slide of the first imported lecture
+    // (main entry wins over the slide's own frontmatter). `class: text-left`
+    // here silently killed each slide's own `class: text-center/text-size-*`.
+    // (`background` stays: harmless — every cover sets the identical value.)
     'colorSchema: dark',
     'addons:',
     '  - slidev-addon-python-runner',
