@@ -28,6 +28,10 @@ function headmatter(title, firstSrc) {
   return [
     '---',
     'theme: ./theme',
+    // Hash router: GitHub Pages has no SPA rewrites, so history-mode slide
+    // URLs (/<slug>/5) 404 on reload. Hash routes (/<slug>/#/5) always hit
+    // the deck's real index.html.
+    'routerMode: hash',
     'background: /figures/background_intro.jpg',
     'class: text-left',
     'colorSchema: dark',

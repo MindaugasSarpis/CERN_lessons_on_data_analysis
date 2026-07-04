@@ -1123,7 +1123,7 @@ hideInToc: true
 
 <div class="note-text">
 
-*Some of these questions touch on ideas — predictive modelling, causal inference, prescriptive optimisation — that you'll formalise later; for now, focus on the reasoning behind each answer.*
+*Some questions preview ideas you'll formalise later — focus on the reasoning behind each answer.*
 
 </div>
 

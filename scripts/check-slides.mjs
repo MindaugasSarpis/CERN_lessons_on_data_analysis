@@ -133,8 +133,15 @@ async function runShard(shard) {
   await page.goto(`${base}/${shard[0]}`, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.slidev-layout', { timeout: 30000 }).catch(() => {});
   await page.addStyleTag({ content: NEUTRALIZE });
+  // Decks build with `routerMode: hash` (GitHub Pages has no SPA rewrites); a
+  // hash build normalizes its URL to `#/1` on load, which is how we detect it.
+  // History-mode fallback kept for legacy builds (e.g. the combined entry).
+  const hashNav = await page.evaluate(() => location.hash.startsWith('#/'));
   for (const n of shard) {
-    await page.evaluate((n) => { history.pushState({}, '', '/' + n); window.dispatchEvent(new PopStateEvent('popstate')); }, n);
+    await page.evaluate(({ n, hashNav }) => {
+      if (hashNav) location.hash = '#/' + n;
+      else { history.pushState({}, '', '/' + n); window.dispatchEvent(new PopStateEvent('popstate')); }
+    }, { n, hashNav });
     await page.waitForSelector(`.slidev-page[data-slidev-no="${n}"] .slidev-layout`, { timeout: 8000 }).catch(() => {});
     await page.addStyleTag({ content: NEUTRALIZE }); // re-assert after slide swap
     const m = await page.evaluate((n) => {

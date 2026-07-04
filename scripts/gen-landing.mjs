@@ -96,7 +96,44 @@ export async function genLanding(manifest, outDir, prefix = '') {
 
   await mkdir(outDir, { recursive: true });
   await writeFile(join(outDir, 'index.html'), html, 'utf8');
+  await writeFile(join(outDir, '404.html'), gen404(manifest, base), 'utf8');
   return join(outDir, 'index.html');
+}
+
+// Root-level 404.html — the only 404 page GitHub Pages honors (per-deck copies
+// in subdirectories are ignored). Decks use hash routing, but links shared
+// before the switch look like `<base>/<slug>/5`; rewrite those to
+// `<base>/<slug>/#/5` so they keep working. Anything else gets a link home.
+function gen404(manifest, base) {
+  const slugs = manifest.decks.map((d) => d.slug);
+  return `<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — ${esc(manifest.course)}</title>
+<script>
+(function () {
+  var base = ${JSON.stringify(base)};
+  var slugs = ${JSON.stringify(slugs)};
+  var path = location.pathname;
+  if (base && path.indexOf(base) === 0) path = path.slice(base.length);
+  var m = path.match(/^\\/([^/]+)\\/?(.*)$/);
+  if (m && slugs.indexOf(m[1]) !== -1) {
+    var rest = m[2] ? '#/' + m[2] : '';
+    location.replace(base + '/' + m[1] + '/' + location.search + rest);
+  }
+})();
+</script>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center;
+         font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+         background: #060911; color: #e6edf6; }
+  a { color: #7dd3fc; }
+</style>
+</head><body>
+  <p>Page not found — <a href="${esc(base)}/">go to the course home</a>.</p>
+</body></html>`;
 }
 
 // Standalone runner

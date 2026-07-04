@@ -36,13 +36,16 @@ const isCorrect = computed(() => picked.value === props.correct)
       </li>
     </ul>
 
-    <div v-if="picked !== null" class="mcq-result">
-      <p v-if="isCorrect" class="mcq-correct-text">Correct! 🎉</p>
-      <p v-else class="mcq-wrong-text">Try again.</p>
-    </div>
-
-    <div v-if="explanation && picked !== null" class="mcq-explanation">
-      {{ explanation }}
+    <!-- Feedback always occupies layout space (invisible until answered):
+         revealing it must never grow the slide, so the static overflow gate
+         measures the true worst-case height of every MCQ slide. -->
+    <div class="mcq-feedback" :class="{ 'mcq-pending': picked === null }">
+      <p class="mcq-result" :class="isCorrect ? 'mcq-correct-text' : 'mcq-wrong-text'">
+        {{ picked === null || isCorrect ? 'Correct! 🎉' : 'Try again.' }}
+      </p>
+      <div v-if="explanation" class="mcq-explanation">
+        {{ explanation }}
+      </div>
     </div>
   </div>
 </template>
@@ -52,8 +55,9 @@ const isCorrect = computed(() => picked.value === props.correct)
   display: flex;
   flex-direction: column;
   justify-content: center;
+  justify-content: safe center; /* if content ever exceeds the frame, clip bottom only — never the question */
   height: 100%;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .mcq-question {
@@ -85,8 +89,9 @@ const isCorrect = computed(() => picked.value === props.correct)
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease, border-color 0.3s ease;
-  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
-  mask-image: linear-gradient(to right, black 60%, transparent 100%);
+  /* fade floors at 45% so long option text stays legible to the line end */
+  -webkit-mask-image: linear-gradient(to right, black 70%, rgba(0, 0, 0, 0.45) 100%);
+  mask-image: linear-gradient(to right, black 70%, rgba(0, 0, 0, 0.45) 100%);
 }
 
 .mcq-btn::before {
@@ -118,9 +123,22 @@ const isCorrect = computed(() => picked.value === props.correct)
   margin-right: 0.5rem;
 }
 
+.mcq-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: opacity 0.3s ease;
+}
+
+.mcq-pending {
+  visibility: hidden; /* keeps layout height, unlike v-if */
+  opacity: 0;
+}
+
 .mcq-result {
   font-weight: 600;
   font-size: 1.1em;
+  margin: 0;
 }
 
 .mcq-correct-text { color: var(--color-success-light); }
@@ -133,7 +151,7 @@ const isCorrect = computed(() => picked.value === props.correct)
   border-left: 5px solid var(--color-info-light, rgba(125, 211, 252, 0.45));
   font-size: 0.85em;
   opacity: 0.9;
-  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
-  mask-image: linear-gradient(to right, black 60%, transparent 100%);
+  /* no right-fade mask here: unlike the short option labels, explanation
+     text wraps — a fade would render line ends unreadable */
 }
 </style>

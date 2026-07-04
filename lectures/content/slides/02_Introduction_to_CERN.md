@@ -421,7 +421,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="note-text mb-sm">
+<div class="note-text">
 
 *Check your reading of the previous slides — this one trips up professionals too.*
 
@@ -436,7 +436,7 @@ hideInToc: true
     'Five independent experiments confirmed the signal'
   ]"
   :correct="1"
-  explanation="5 sigma bounds how often pure background would fake a signal this strong — it says nothing directly about the probability that the discovery itself is right or wrong. The first option is the classic misreading. You will make this precise with p-values in the Probability & Statistics lecture."
+  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading). Lecture 11 makes this precise."
 />
 
 <style>
