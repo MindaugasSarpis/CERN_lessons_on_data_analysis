@@ -81,8 +81,12 @@ try {
         const href = `${PREFIX}/${d.slug}/`;
         ok(await page.locator(`a.row[href="${href}"]`).count() === 1, `deck link ${href}`);
       }
-      ok(await page.locator('.hero .kicker').innerText() === manifest.presenter, 'presenter in hero');
-      ok((await page.locator('footer.foot').innerText()).includes('seminar'), 'seminar footer note');
+      // textContent, not innerText: Task 4's CSS puts text-transform: uppercase
+      // on .kicker/.foot, and Playwright's innerText() is render-aware (it
+      // reflects the transformed case) while these assertions care about the
+      // authored content, not the presentational casing.
+      ok(await page.locator('.hero .kicker').textContent() === manifest.presenter, 'presenter in hero');
+      ok((await page.locator('footer.foot').textContent()).includes('seminar'), 'seminar footer note');
       const gated = await page.waitForFunction(() => {
         const c = document.documentElement.classList;
         return (c.contains('field-on') || c.contains('static-bg')) ? (c.contains('field-on') ? 'field-on' : 'static-bg') : false;
