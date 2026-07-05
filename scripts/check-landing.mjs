@@ -64,54 +64,76 @@ async function loadPage({ reducedMotion }) {
   return { ctx, page, errors };
 }
 
-console.log('— pass 1: default (scene expected where WebGL2 available) —');
-{
-  const { ctx, page, errors } = await loadPage({ reducedMotion: 'no-preference' });
-  ok(await page.title() === manifest.course, 'title matches manifest.course');
-  for (const d of manifest.decks) {
-    const href = `${PREFIX}/${d.slug}/`;
-    ok(await page.locator(`a.row[href="${href}"]`).count() === 1, `deck link ${href}`);
+// Each pass is wrapped so a thrown assertion (e.g. locator timeout) records a
+// failure instead of aborting the run; the context, browser, and server are
+// always closed so a failing run exits 1 with the tidy summary — never via an
+// uncaught exception or a leaked Chromium process.
+try {
+  console.log('— pass 1: default (scene expected where WebGL2 available) —');
+  {
+    let ctx;
+    try {
+      const loaded = await loadPage({ reducedMotion: 'no-preference' });
+      ctx = loaded.ctx;
+      const { page, errors } = loaded;
+      ok(await page.title() === manifest.course, 'title matches manifest.course');
+      for (const d of manifest.decks) {
+        const href = `${PREFIX}/${d.slug}/`;
+        ok(await page.locator(`a.row[href="${href}"]`).count() === 1, `deck link ${href}`);
+      }
+      ok(await page.locator('.hero .kicker').innerText() === manifest.presenter, 'presenter in hero');
+      ok((await page.locator('footer.foot').innerText()).includes('seminar'), 'seminar footer note');
+      const gated = await page.waitForFunction(() => {
+        const c = document.documentElement.classList;
+        return (c.contains('field-on') || c.contains('static-bg')) ? (c.contains('field-on') ? 'field-on' : 'static-bg') : false;
+      }, null, { timeout: 20000 }).then((h) => h.jsonValue()).catch(() => null);
+      ok(gated === 'field-on' || gated === 'static-bg', `boot gate resolved (${gated})`);
+      if (gated === 'field-on') {
+        ok(await page.evaluate(() => {
+          const c = document.getElementById('field');
+          return c && c.width >= innerWidth && c.height >= innerHeight;
+        }), 'canvas backing size covers viewport');
+      }
+      // Reveal-on-scroll: last row must become visible after scrolling to bottom.
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      const revealed = await page.waitForFunction(() => {
+        const rows = document.querySelectorAll('li.reveal');
+        const last = rows[rows.length - 1];
+        return last && getComputedStyle(last).opacity === '1';
+      }, null, { timeout: 10000 }).then(() => true).catch(() => false);
+      ok(revealed, 'last row revealed after scroll');
+      ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
+    } catch (e) {
+      ok(false, `pass aborted: ${e.message}`);
+    } finally {
+      if (ctx) await ctx.close().catch(() => {});
+    }
   }
-  ok(await page.locator('.hero .kicker').innerText() === manifest.presenter, 'presenter in hero');
-  ok((await page.locator('footer.foot').innerText()).includes('seminar'), 'seminar footer note');
-  const gated = await page.waitForFunction(() => {
-    const c = document.documentElement.classList;
-    return (c.contains('field-on') || c.contains('static-bg')) ? (c.contains('field-on') ? 'field-on' : 'static-bg') : false;
-  }, null, { timeout: 20000 }).then((h) => h.jsonValue()).catch(() => null);
-  ok(gated === 'field-on' || gated === 'static-bg', `boot gate resolved (${gated})`);
-  if (gated === 'field-on') {
-    ok(await page.evaluate(() => {
-      const c = document.getElementById('field');
-      return c && c.width >= innerWidth && c.height >= innerHeight;
-    }), 'canvas backing size covers viewport');
+
+  console.log('— pass 2: prefers-reduced-motion (static fallback expected) —');
+  {
+    let ctx;
+    try {
+      const loaded = await loadPage({ reducedMotion: 'reduce' });
+      ctx = loaded.ctx;
+      const { page, errors } = loaded;
+      const cls = await page.evaluate(() => [...document.documentElement.classList]);
+      ok(cls.includes('static-bg'), `static-bg present (got: ${cls.join(' ')})`);
+      ok(!cls.includes('field-on'), 'field-on absent');
+      ok(await page.evaluate(() => {
+        const rows = document.querySelectorAll('li.reveal');
+        return [...rows].every((r) => getComputedStyle(r).opacity === '1');
+      }), 'all rows immediately visible under reduced motion');
+      ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
+    } catch (e) {
+      ok(false, `pass aborted: ${e.message}`);
+    } finally {
+      if (ctx) await ctx.close().catch(() => {});
+    }
   }
-  // Reveal-on-scroll: last row must become visible after scrolling to bottom.
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  const revealed = await page.waitForFunction(() => {
-    const rows = document.querySelectorAll('li.reveal');
-    const last = rows[rows.length - 1];
-    return last && getComputedStyle(last).opacity === '1';
-  }, null, { timeout: 10000 }).then(() => true).catch(() => false);
-  ok(revealed, 'last row revealed after scroll');
-  ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
-  await ctx.close();
+} finally {
+  await browser.close().catch(() => {});
+  server.close();
 }
-
-console.log('— pass 2: prefers-reduced-motion (static fallback expected) —');
-{
-  const { ctx, page, errors } = await loadPage({ reducedMotion: 'reduce' });
-  const cls = await page.evaluate(() => [...document.documentElement.classList]);
-  ok(cls.includes('static-bg'), `static-bg present (got: ${cls.join(' ')})`);
-  ok(!cls.includes('field-on'), 'field-on absent');
-  ok(await page.evaluate(() => {
-    const rows = document.querySelectorAll('li.reveal');
-    return [...rows].every((r) => getComputedStyle(r).opacity === '1');
-  }), 'all rows immediately visible under reduced motion');
-  ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
-  await ctx.close();
-}
-
-await browser.close();
-server.close();
 if (fails.length) { console.error(`\n❌ landing check: ${fails.length} failure(s).`); process.exit(1); }
 console.log('\n✅ landing check passed.');
