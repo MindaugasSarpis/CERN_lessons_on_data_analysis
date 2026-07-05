@@ -2,6 +2,7 @@ import '@fontsource/space-grotesk/400.css';
 import '@fontsource/space-grotesk/500.css';
 import '@fontsource/space-grotesk/700.css';
 import './style.css';
+import { createField } from './sim.js';
 
 const html = document.documentElement;
 html.classList.add('js');
@@ -16,11 +17,12 @@ function webgl2Ok() {
   } catch { return false; }
 }
 
+let field = null;
 if (reduced || !webgl2Ok()) {
   html.classList.add('static-bg');
 } else {
-  // Task 5 replaces this stub with the particle scene boot.
-  html.classList.add('field-on');
+  field = createField(document.getElementById('field'));
+  html.classList.add(field ? 'field-on' : 'static-bg');
 }
 
 // Scroll reveal — .reveal elements are hidden by CSS only under .js; observer
