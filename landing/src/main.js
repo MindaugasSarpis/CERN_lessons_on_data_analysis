@@ -25,6 +25,14 @@ if (reduced || !webgl2Ok()) {
   html.classList.add(field ? 'field-on' : 'static-bg');
 }
 
+if (field) {
+  addEventListener('pointermove', (e) => field.onPointer(e.clientX, e.clientY), { passive: true });
+  addEventListener('scroll', () => field.onScroll(window.scrollY), { passive: true });
+  document.querySelectorAll('a.row').forEach((a) =>
+    a.addEventListener('pointerenter', (e) => field.onImpulse(e.clientX, e.clientY)));
+  document.addEventListener('visibilitychange', () => field.setPaused(document.hidden));
+}
+
 // Scroll reveal — .reveal elements are hidden by CSS only under .js; observer
 // flips them to .in as they enter. Under reduced motion CSS forces visibility,
 // but add .in anyway so state stays consistent.

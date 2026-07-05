@@ -108,7 +108,7 @@ export function createField(canvas) {
   const ptrWorld = new Vector2(999, 999);
   const ptrPrev = new Vector2(999, 999);
   const ptrVel = new Vector2(0, 0);
-  let hasPointer = false, lastPointerAt = 0;
+  let hasPointer = false, lastPointerAt = 0, ptrFresh = true;
   let scrollY = window.scrollY || 0;
   const impulse = velMat.uniforms.uImpulse.value;
 
@@ -144,9 +144,22 @@ export function createField(canvas) {
     const dt = Math.min(clock.getDelta(), MAX_DT);
     elapsed += dt;
 
-    // pointer velocity in world units/s (smoothed); idle if no pointer yet
+    // Touch devices idle >2.5s (or before any pointer event): roam a lissajous
+    // attractor so the field feels alive without a cursor. Any real pointer /
+    // touch-drag event takes over immediately via onPointer().
+    if (coarse && (!hasPointer || elapsed - lastPointerAt > 2.5)) {
+      ptrClient.set(
+        (0.5 + 0.38 * Math.sin(elapsed * 0.31)) * innerWidth,
+        (0.5 + 0.34 * Math.cos(elapsed * 0.21)) * innerHeight,
+      );
+      hasPointer = true;
+    }
     if (hasPointer) {
       toWorld(ptrClient.x, ptrClient.y, ptrWorld);
+      // First frame after hasPointer flips true: seed ptrPrev from ptrWorld so
+      // this frame contributes zero velocity, instead of a spurious kick from
+      // the (999,999) sentinel default.
+      if (ptrFresh) { ptrPrev.copy(ptrWorld); ptrFresh = false; }
       if (dt > 0) {
         ptrVel.set((ptrWorld.x - ptrPrev.x) / dt, (ptrWorld.y - ptrPrev.y) / dt).clampLength(0, 30);
         velMat.uniforms.uPointerVel.value.lerp(ptrVel, 0.15);

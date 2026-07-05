@@ -32,7 +32,7 @@ void main() {
   v += curl(vec3(pos.xy * 0.16, pos.z * 0.2 + uTime * 0.05)) * 0.55 * uDt;
   // cursor wake: drag particles along the pointer's velocity, gaussian falloff
   vec2 toP = pos.xy - uPointer;
-  v += uPointerVel * exp(-dot(toP, toP) / 2.2) * 0.9 * uDt;
+  v += uPointerVel * exp(-dot(toP, toP) / 2.2) * 2.6 * uDt;
   // hover impulse: radial push, decays JS-side via uImpulse.z
   vec2 toI = pos.xy - uImpulse.xy;
   float di = length(toI) + 1e-4;
