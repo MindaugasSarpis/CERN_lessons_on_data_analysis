@@ -123,7 +123,14 @@
       "Bash(ls -la videos)",
       "Bash(cat package.json)",
       "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis log --oneline -25)",
-      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis branch -a)"
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis branch -a)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis remote -v)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis branch -a --contains 51b31f7)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis log --oneline -3)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis ls-remote --heads origin)",
+      "Bash(gh run *)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis status)",
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis log --oneline -10)"
     ],
     "deny": [],
     "ask": []
