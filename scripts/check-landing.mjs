@@ -82,8 +82,8 @@ console.log('— pass 1: default (scene expected where WebGL2 available) —');
   if (gated === 'field-on') {
     ok(await page.evaluate(() => {
       const c = document.getElementById('field');
-      return c && c.width > 0 && c.height > 0;
-    }), 'canvas has non-zero backing size');
+      return c && c.width >= innerWidth && c.height >= innerHeight;
+    }), 'canvas backing size covers viewport');
   }
   // Reveal-on-scroll: last row must become visible after scrolling to bottom.
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
