@@ -8,6 +8,7 @@
     "dev:lecture": "slidev",
     "dev:deck": "node scripts/gen-entries.mjs && slidev lectures/content/deck.$npm_config_slug.md",
     "build": "node scripts/build-all.mjs",
+    "build:landing:assets": "vite build --config landing/vite.config.mjs",
     "build:combined": "slidev build lectures/content/best_research_and_data_analysis_practices_from_CERN.md",
     "export": "slidev export lectures/content/best_research_and_data_analysis_practices_from_CERN.md",
     "qa": "node scripts/qa-all.mjs",
@@ -23,8 +24,11 @@
     "slidev-addon-python-runner": "^0.1.3"
   },
   "devDependencies": {
+    "@fontsource/space-grotesk": "^5.2.10",
     "mermaid": "^11.12.0",
-    "playwright-chromium": "^1.56.1"
+    "playwright-chromium": "^1.56.1",
+    "three": "^0.185.1",
+    "vite": "^8.1.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

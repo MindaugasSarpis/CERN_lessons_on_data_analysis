@@ -47,3 +47,6 @@ lectures/content/deck.*.md
 
 # Generated lecture index for the in-deck nav overlay (scripts/gen-entries.mjs)
 lectures/content/public/lectures.json
+
+# Vite landing bundle scratch output
+landing/dist-assets/
