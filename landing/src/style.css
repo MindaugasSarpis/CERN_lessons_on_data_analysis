@@ -1,3 +1,142 @@
-:root { color-scheme: dark; }
-html { background: #050507; color: #f2f5f9; }
-body { margin: 0; font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+:root {
+  color-scheme: dark;
+  --bg: #050507;
+  --fg: #f2f5f9;
+  --dim: #8b97a6;
+  --accent: #7dd3fc;
+  --hair: rgba(139, 151, 166, 0.18);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--fg); scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  /* Ambient gradient is ALWAYS present: it is the no-JS/static backdrop, and
+     the additive particle canvas draws over it. */
+  background:
+    radial-gradient(1100px 700px at 78% -8%, rgba(125, 211, 252, 0.07), transparent 62%),
+    radial-gradient(900px 600px at -12% 108%, rgba(125, 211, 252, 0.05), transparent 60%),
+    var(--bg);
+}
+.static-bg body { background-attachment: fixed; }
+
+/* Layers: canvas 0 → content 1 → grain 10. */
+#field {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+  opacity: 0; transition: opacity 1.2s ease;
+}
+.field-on #field { opacity: 1; }
+.static-bg #field { display: none; }
+.grain {
+  position: fixed; inset: 0; z-index: 10; pointer-events: none; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem) 6rem;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(2rem, 6vh, 5rem) 0 3rem;
+  position: relative;
+}
+.kicker, .sub, .shlabel, .block-head, .tag, .foot {
+  text-transform: uppercase; letter-spacing: 0.12em;
+}
+.kicker { font-size: 0.78rem; color: var(--accent); margin: 0 0 1.6rem; font-weight: 500; }
+.title {
+  margin: 0; font-weight: 700; text-transform: uppercase;
+  font-size: clamp(2.6rem, 7.5vw, 6.6rem);
+  line-height: 0.98; letter-spacing: -0.02em;
+}
+.line-wrap { display: block; overflow: hidden; }
+.line { display: block; }
+.js .line {
+  transform: translateY(112%);
+  animation: line-in 0.9s var(--ease) forwards;
+  animation-delay: calc(0.15s + var(--i) * 0.11s);
+}
+@keyframes line-in { to { transform: translateY(0); } }
+.sub {
+  color: var(--dim); font-size: 0.82rem; letter-spacing: 0.1em;
+  max-width: 56ch; margin: 2rem 0 0; line-height: 1.9;
+}
+.scroll-hint {
+  position: absolute; bottom: 2.2rem; left: 0;
+  display: flex; align-items: center; gap: 0.8rem; color: var(--dim);
+}
+.shline { display: block; width: 1px; height: 56px; background: var(--dim); transform-origin: top; }
+.js .shline { animation: sh 2.4s var(--ease) infinite; }
+@keyframes sh { 0% { transform: scaleY(0); } 45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+.shlabel { font-size: 0.65rem; }
+
+/* ---------- blocks & rows ---------- */
+.block { margin: clamp(3.5rem, 9vh, 6.5rem) 0 0; }
+.block-head {
+  display: flex; align-items: baseline; gap: 1.1rem; flex-wrap: wrap;
+  font-size: 0.78rem; font-weight: 500; color: var(--dim);
+  margin: 0 0 0.4rem; padding-bottom: 0.9rem;
+}
+.block-key { color: var(--accent); }
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows li { border-top: 1px solid var(--hair); }
+.rows li:last-child { border-bottom: 1px solid var(--hair); }
+.row {
+  display: grid; grid-template-columns: 3.2ch 1fr auto auto;
+  align-items: baseline; gap: clamp(0.8rem, 2.5vw, 1.6rem);
+  padding: clamp(0.95rem, 2.2vh, 1.35rem) 0.2rem;
+  text-decoration: none; color: inherit;
+}
+.num { font-variant-numeric: tabular-nums; color: var(--dim); font-size: 0.95rem; transition: color 0.35s var(--ease); }
+.rt {
+  font-size: clamp(1.35rem, 2.6vw, 2.15rem); font-weight: 500; line-height: 1.15;
+  color: var(--fg); opacity: 0.86;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), color 0.35s var(--ease);
+}
+.arrow {
+  font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--accent);
+  opacity: 0; transform: translateX(-14px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+a.row:hover .rt, a.row:focus-visible .rt { opacity: 1; transform: translateX(6px); }
+a.row:hover .num, a.row:focus-visible .num { color: var(--accent); }
+a.row:hover .arrow, a.row:focus-visible .arrow { opacity: 1; transform: translateX(0); }
+a.row.opt .rt { opacity: 0.62; }
+.row.soon { cursor: default; }
+.row.soon .rt, .row.soon .num { opacity: 0.35; }
+.tag {
+  font-size: 0.6rem; font-weight: 700; color: var(--dim);
+  border: 1px solid var(--hair); border-radius: 999px; padding: 0.18rem 0.6rem;
+  align-self: center; white-space: nowrap;
+}
+
+/* ---------- scroll reveal ---------- */
+/* Visible by default (no-JS). JS opts elements into the hidden pre-state. */
+.js .reveal { opacity: 0; transform: translateY(26px); }
+.js .reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transition-delay: calc(var(--i) * 60ms);
+}
+
+/* ---------- footer ---------- */
+.foot { margin-top: 5rem; border-top: 1px solid var(--hair); padding-top: 1.4rem; }
+.foot p { color: var(--dim); font-size: 0.68rem; letter-spacing: 0.1em; line-height: 1.9; max-width: 72ch; }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .line { transform: none; animation: none; }
+  .js .shline { animation: none; }
+  .js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .row, .rt, .num, .arrow { transition: none !important; }
+}
