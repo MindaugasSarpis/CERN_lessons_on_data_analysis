@@ -135,6 +135,35 @@ try {
       if (ctx) await ctx.close().catch(() => {});
     }
   }
+
+  console.log('— pass 3: JavaScript disabled (server-rendered contract) —');
+  {
+    let ctx;
+    try {
+      // javaScriptEnabled: false disables page <script>s (the `js` class never
+      // gets added, reveal rows must be visible from CSS alone) — but
+      // Playwright's own page.evaluate()/locator() still work, since they run
+      // via CDP Runtime.evaluate rather than in-page script execution.
+      ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, javaScriptEnabled: false });
+      const page = await ctx.newPage();
+      await page.goto(home, { waitUntil: 'load' });
+      const cls = await page.evaluate(() => [...document.documentElement.classList]);
+      ok(!cls.includes('js'), `no js class with JavaScript disabled (got: ${cls.join(' ')})`);
+      for (const d of manifest.decks) {
+        const href = `${PREFIX}/${d.slug}/`;
+        ok(await page.locator(`a.row[href="${href}"]`).count() === 1, `deck link ${href}`);
+      }
+      ok(await page.evaluate(() => {
+        const rows = document.querySelectorAll('li.reveal');
+        return [...rows].every((r) => getComputedStyle(r).opacity === '1');
+      }), 'all rows immediately visible with JavaScript disabled');
+      ok(await page.title() === manifest.course, 'title matches manifest.course');
+    } catch (e) {
+      ok(false, `pass aborted: ${e.message}`);
+    } finally {
+      if (ctx) await ctx.close().catch(() => {});
+    }
+  }
 } finally {
   await browser.close().catch(() => {});
   server.close();

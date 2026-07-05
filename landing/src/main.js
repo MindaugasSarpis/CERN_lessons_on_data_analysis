@@ -9,6 +9,21 @@ html.classList.add('js');
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Scroll reveal — .reveal elements are hidden by CSS only under .js; observer
+// flips them to .in as they enter. Under reduced motion CSS forces visibility,
+// but add .in anyway so state stays consistent. This runs before the WebGL
+// boot below so content reveal never depends on — and can't be blocked by —
+// the scene boot throwing.
+const revealEls = document.querySelectorAll('.reveal');
+if (reduced || !('IntersectionObserver' in window)) {
+  revealEls.forEach((el) => el.classList.add('in'));
+} else {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  revealEls.forEach((el) => io.observe(el));
+}
+
 function webgl2Ok() {
   try {
     const gl = document.createElement('canvas').getContext('webgl2');
@@ -21,7 +36,11 @@ let field = null;
 if (reduced || !webgl2Ok()) {
   html.classList.add('static-bg');
 } else {
-  field = createField(document.getElementById('field'));
+  try {
+    field = createField(document.getElementById('field'));
+  } catch {
+    field = null;
+  }
   html.classList.add(field ? 'field-on' : 'static-bg');
 }
 
@@ -31,17 +50,4 @@ if (field) {
   document.querySelectorAll('a.row').forEach((a) =>
     a.addEventListener('pointerenter', (e) => field.onImpulse(e.clientX, e.clientY)));
   document.addEventListener('visibilitychange', () => field.setPaused(document.hidden));
-}
-
-// Scroll reveal — .reveal elements are hidden by CSS only under .js; observer
-// flips them to .in as they enter. Under reduced motion CSS forces visibility,
-// but add .in anyway so state stays consistent.
-const revealEls = document.querySelectorAll('.reveal');
-if (reduced || !('IntersectionObserver' in window)) {
-  revealEls.forEach((el) => el.classList.add('in'));
-} else {
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-  revealEls.forEach((el) => io.observe(el));
 }
