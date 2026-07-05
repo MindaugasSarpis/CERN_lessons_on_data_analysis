@@ -44,6 +44,15 @@ for (const d of decks) {
   else summary.push(`✓ ${d.slug}`);
 }
 
+// 3) Landing smoke test (decks build --flat-base with no landing, so build one).
+const LAND = join(QA_DIST, '__landing__');
+process.stdout.write('\n▶ landing smoke test …\n');
+const lb = spawnSync('node', [join(ROOT, 'scripts', 'build-landing.mjs'), '--out', LAND], { cwd: ROOT, stdio: 'inherit' });
+const lc = lb.status === 0
+  ? spawnSync('node', [join(ROOT, 'scripts', 'check-landing.mjs'), LAND], { cwd: ROOT, stdio: 'inherit' })
+  : lb;
+if (lc.status !== 0) { bad++; summary.push('✗ landing'); } else summary.push('✓ landing');
+
 console.log(`\n=== QA summary ===\n${summary.join('\n')}`);
-if (bad) { console.error(`\n❌ ${bad}/${decks.length} deck(s) failed QA.`); process.exit(1); }
-console.log(`\n✅ All ${decks.length} deck(s) pass overflow QA.`);
+if (bad) { console.error(`\n❌ ${bad} QA target(s) failed.`); process.exit(1); }
+console.log(`\n✅ All ${decks.length} deck(s) + landing pass QA.`);
