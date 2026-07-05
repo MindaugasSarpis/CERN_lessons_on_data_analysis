@@ -27,8 +27,10 @@ if (reduced || !('IntersectionObserver' in window)) {
 function webgl2Ok() {
   try {
     const gl = document.createElement('canvas').getContext('webgl2');
-    return !!gl && (gl.getExtension('EXT_color_buffer_float') !== null
+    const result = !!gl && (gl.getExtension('EXT_color_buffer_float') !== null
       || gl.getExtension('EXT_color_buffer_half_float') !== null);
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    return result;
   } catch { return false; }
 }
 

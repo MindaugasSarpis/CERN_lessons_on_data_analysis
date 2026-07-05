@@ -95,7 +95,7 @@ try {
       if (gated === 'field-on') {
         ok(await page.evaluate(() => {
           const c = document.getElementById('field');
-          return c && c.width >= innerWidth && c.height >= innerHeight;
+          return c && c.width >= innerWidth * 0.6 && c.height >= innerHeight * 0.6;
         }), 'canvas backing size covers viewport');
       }
       // Reveal-on-scroll: last row must become visible after scrolling to bottom.

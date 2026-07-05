@@ -51,7 +51,7 @@ export function createField(canvas) {
   // --- initial positions: random in bounds-ish box, z in [-4,4], w = seed ---
   const init = new Float32Array(count * 4);
   for (let i = 0; i < count; i++) {
-    init[i * 4 + 0] = (Math.random() * 2 - 1) * halfH * 2.4; // x (re-wrapped by sim)
+    init[i * 4 + 0] = (Math.random() * 2 - 1) * halfH * 3.2; // x (re-wrapped by sim)
     init[i * 4 + 1] = (Math.random() * 2 - 1) * halfH * 1.9; // y
     init[i * 4 + 2] = (Math.random() * 2 - 1) * 4;           // z (static parallax depth)
     init[i * 4 + 3] = Math.random();                         // seed
@@ -192,9 +192,10 @@ export function createField(canvas) {
       winFrames++; winTime += dt;
       if (winTime >= 2) {
         if (winFrames / winTime < 40) {
-          if (guardStage === 0) renderMat.uniforms.uPixelRatio.value = baseDpr * 0.7,
+          if (guardStage === 0) {
+            renderMat.uniforms.uPixelRatio.value = baseDpr * 0.7;
             renderer.setPixelRatio(baseDpr * 0.7);
-          else geo.setDrawRange(0, Math.floor(count / 2));
+          } else geo.setDrawRange(0, Math.floor(count / 2));
           guardStage++;
         }
         winFrames = 0; winTime = 0;

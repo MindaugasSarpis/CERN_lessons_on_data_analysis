@@ -19,7 +19,8 @@ export async function buildLanding(outDir, prefix = '') {
     { cwd: ROOT, stdio: 'inherit' });
   if (r.status !== 0) throw new Error('vite build (landing) failed');
   await mkdir(join(outDir, 'assets'), { recursive: true });
-  await cp(join(ROOT, 'landing', 'dist-assets', 'assets'), join(outDir, 'assets'), { recursive: true });
+  await cp(join(ROOT, 'landing', 'dist-assets', 'assets'), join(outDir, 'assets'),
+    { recursive: true, filter: (src) => !src.endsWith('.woff') });
   return genLanding(JSON.parse(await readFile(join(ROOT, 'lectures', 'content', 'decks.json'), 'utf8')), outDir, prefix);
 }
 
