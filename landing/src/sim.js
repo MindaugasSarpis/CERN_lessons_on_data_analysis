@@ -5,6 +5,7 @@ import {
   AdditiveBlending, Vector2, Vector4, Clock,
 } from 'three';
 import { SIM_VERT, COPY_FRAG, VEL_FRAG, POS_FRAG, RENDER_VERT, RENDER_FRAG } from './shaders/passes.glsl.js';
+import { addFibers } from './fiber.js';
 
 const FOV = 55, CAM_Z = 14, PARALLAX = 0.0012, MAX_DT = 1 / 30;
 
@@ -102,6 +103,7 @@ export function createField(canvas) {
   points.frustumCulled = false;
   const scene = new Scene();
   scene.add(points);
+  const fibers = addFibers(scene);
 
   // --- pointer state (world-space); Task 6 feeds client coords ---
   const ptrClient = new Vector2(-1e4, -1e4);
@@ -123,6 +125,7 @@ export function createField(canvas) {
     camera.updateProjectionMatrix();
     halfW = halfH * camera.aspect;
     bounds.set(halfW * 1.3, halfH * 1.9);
+    fibers.resize(halfW, halfH);
   }
   addEventListener('resize', resize, { passive: true });
   resize();
@@ -184,6 +187,7 @@ export function createField(canvas) {
     impulse.z *= 0.86; // hover impulse decay
 
     camera.position.y = -scrollY * PARALLAX * halfH;
+    fibers.update(elapsed, velMat.uniforms.uPointer.value, camera.position.y);
     renderMat.uniforms.uPos.value = posA.texture;
     renderMat.uniforms.uVel.value = velA.texture;
     renderer.render(scene, camera);

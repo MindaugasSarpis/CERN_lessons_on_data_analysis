@@ -99,7 +99,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
       <h1 class="title">
         ${titleHtml}
       </h1>
-      <p class="sub">A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files. Each lecture opens on its own so it loads fast, even on a phone.</p>
+      <p class="sub">A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files. Each lecture opens on its own so it loads fast.</p>
       <div class="scroll-hint" aria-hidden="true"><span class="shline"></span><span class="shlabel">Scroll</span></div>
     </header>
     ${blockSections}
