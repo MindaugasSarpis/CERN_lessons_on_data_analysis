@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 /**
- * gen-landing.mjs — emit a self-contained course-home landing page at
- * <out>/index.html from decks.json. No external assets (GitHub-Pages / CSP
- * safe): all CSS is inlined. Decks are grouped by block; each links to its
- * own deck at `<prefix>/<slug>/`. Block E is marked Optional.
+ * gen-landing.mjs — emit the course-home landing page (<out>/index.html +
+ * <out>/404.html) from decks.json. References the landing enhancement bundle
+ * at `./assets/landing.css` + `./assets/landing.js` (built by
+ * build-landing.mjs / build:landing:assets) — it does not build that bundle
+ * itself. Decks are grouped by block; each links to its own deck at
+ * `<prefix>/<slug>/`. Block E is marked Optional.
  *
- * Exported as genLanding() for build-all.mjs; also runnable standalone:
+ * Exported as genLanding() for build-landing.mjs; also runnable standalone
+ * (assumes ./assets/* already exist next to the output):
  *   node scripts/gen-landing.mjs [--out dist] [--base <prefix>]
  */
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -19,79 +22,93 @@ export async function genLanding(manifest, outDir, prefix = '') {
   const byBlock = new Map(Object.keys(manifest.blocks).map((k) => [k, []]));
   for (const d of manifest.decks) (byBlock.get(d.block) || byBlock.set(d.block, []).get(d.block)).push(d);
 
+  // Split the course title into ~equal lines for the staggered hero reveal.
+  const words = manifest.course.split(' ');
+  const per = Math.ceil(words.length / 3);
+  const lines = [];
+  for (let i = 0; i < words.length; i += per) lines.push(words.slice(i, i + per).join(' '));
+
+  const titleHtml = lines.map((l, i) =>
+    `<span class="line-wrap"><span class="line" style="--i:${i}">${esc(l)}</span></span>`).join('\n        ');
+
+  let rowIdx = 0;
+  const row = (d) => `
+          <li class="reveal" style="--i:${rowIdx++ % 8}">
+            <a class="row${d.optional ? ' opt' : ''}" href="${base}/${d.slug}/">
+              <span class="num">${esc(d.slug.split('-')[0])}</span>
+              <span class="rt">${esc(d.title)}</span>
+              ${d.optional ? '<span class="tag">optional</span>' : ''}
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </a>
+          </li>`;
+
   const blockSections = [...byBlock.entries()]
     .filter(([, decks]) => decks.length)
     .map(([key, decks]) => {
-      const optional = key === 'E';
-      const cards = decks.map((d) => `
-        <a class="deck${d.optional ? ' opt' : ''}" href="${base}/${d.slug}/">
-          <span class="num">${esc(d.slug.split('-')[0])}</span>
-          <span class="dt">${esc(d.title)}</span>
-          ${d.optional ? '<span class="tag">optional</span>' : ''}
-        </a>`).join('');
+      rowIdx = 0;
       return `
       <section class="block">
-        <h2>Block ${esc(key)} — ${esc(manifest.blocks[key])}${optional ? ' <span class="tag">drop if short on time</span>' : ''}</h2>
-        <div class="grid">${cards}</div>
+        <h2 class="block-head reveal" style="--i:0">
+          <span class="block-key">Block ${esc(key)}</span>
+          <span class="block-name">${esc(manifest.blocks[key])}</span>
+          ${key === 'E' ? '<span class="tag">drop if short on time</span>' : ''}
+        </h2>
+        <ol class="rows">${decks.map(row).join('')}
+        </ol>
       </section>`;
     }).join('');
+
+  const upcoming = (manifest.upcoming && manifest.upcoming.length) ? (() => {
+    rowIdx = 0;
+    return `
+      <section class="block">
+        <h2 class="block-head reveal" style="--i:0">
+          <span class="block-key">Coming soon</span>
+          <span class="tag">in preparation</span>
+        </h2>
+        <ol class="rows">${manifest.upcoming.map((u) => `
+          <li class="reveal" style="--i:${rowIdx++ % 8}">
+            <span class="row soon">
+              <span class="num">${String(u.n).padStart(2, '0')}</span>
+              <span class="rt">${esc(u.title)}</span>
+            </span>
+          </li>`).join('')}
+        </ol>
+      </section>`;
+  })() : '';
 
   const html = `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(manifest.course)}</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%237dd3fc'/%3E%3C/svg%3E">
 <style>
+  /* Critical: correct first paint before landing.css arrives. */
   :root { color-scheme: dark; }
-  * { box-sizing: border-box; }
-  body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-         background: #060911; color: #e6edf6; line-height: 1.5;
-         background-image: radial-gradient(1200px 600px at 80% -10%, rgba(56,189,248,.10), transparent 60%),
-                           radial-gradient(900px 500px at -10% 110%, rgba(129,140,248,.10), transparent 60%); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 4vw, 2rem) 5rem; }
-  header .who { color: #93a4b8; font-size: .95rem; letter-spacing: .02em; }
-  h1 { font-size: clamp(1.7rem, 5vw, 2.8rem); line-height: 1.1; margin: .3rem 0 .2rem;
-       background: linear-gradient(100deg, #7dd3fc, #a5b4fc 60%, #e6edf6);
-       -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800; }
-  .sub { color: #93a4b8; margin: 0 0 2.2rem; max-width: 55ch; }
-  .block { margin: 2.2rem 0; }
-  .block h2 { font-size: 1.05rem; font-weight: 700; color: #cdd9e8; margin: 0 0 .9rem;
-              border-left: 3px solid; border-image: linear-gradient(#38bdf8, #818cf8) 1; padding-left: .7rem; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .8rem; }
-  a.deck { display: flex; align-items: center; gap: .75rem; text-decoration: none; color: inherit;
-           background: rgba(18, 26, 40, .72); border: 1px solid rgba(148,163,184,.16); border-radius: 14px;
-           padding: .9rem 1rem; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
-  a.deck:hover { transform: translateY(-2px); border-color: rgba(125,211,252,.55); background: rgba(24, 34, 52, .9); }
-  a.deck.opt { opacity: .82; }
-  .deck.soon { opacity: .5; cursor: default; }
-  .deck.soon .num { color: #6b7c92; margin-right: .55rem; }
-  .num { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 1.15rem;
-         min-width: 2ch; color: #7dd3fc; }
-  .dt { font-weight: 600; flex: 1; }
-  .tag { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
-         color: #fcd34d; background: rgba(252,211,77,.12); border-radius: 999px; padding: .12rem .5rem; }
-  .block h2 .tag { color: #93a4b8; background: rgba(148,163,184,.12); font-size: .6rem; vertical-align: middle; }
-  footer { margin-top: 3rem; color: #6b7c92; font-size: .85rem; border-top: 1px solid rgba(148,163,184,.12); padding-top: 1.2rem; }
-  .seminars { color: #93a4b8; }
+  html { background: #050507; color: #f2f5f9; }
+  body { margin: 0; font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
 </style>
+<link rel="stylesheet" href="./assets/landing.css">
 </head><body>
-  <div class="wrap">
-    <header>
-      <div class="who">${esc(manifest.presenter)}</div>
-      <h1>${esc(manifest.course)}</h1>
-      <p class="sub">A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files. Pick a lecture below — each opens on its own so it loads fast, even on a phone.</p>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <main class="wrap">
+    <header class="hero">
+      <p class="kicker">${esc(manifest.presenter)}</p>
+      <h1 class="title">
+        ${titleHtml}
+      </h1>
+      <p class="sub">A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files. Each lecture opens on its own so it loads fast, even on a phone.</p>
+      <div class="scroll-hint" aria-hidden="true"><span class="shline"></span><span class="shlabel">Scroll</span></div>
     </header>
     ${blockSections}
-    ${(manifest.upcoming && manifest.upcoming.length) ? `
-      <section class="block">
-        <h2>Coming soon <span class="tag">in preparation</span></h2>
-        <div class="grid">${manifest.upcoming.map((u) => `
-          <span class="deck opt soon"><span class="num">${String(u.n).padStart(2, '0')}</span><span class="dt">${esc(u.title)}</span></span>`).join('')}</div>
-      </section>` : ''}
-    <footer>
-      <p class="seminars">Each lecture has a paired hands-on seminar in the workbook. Blocks D–E are the optional tail if the term runs short.</p>
+    ${upcoming}
+    <footer class="foot">
+      <p>Each lecture has a paired hands-on seminar in the workbook. Blocks D&ndash;E are the optional tail if the term runs short.</p>
     </footer>
-  </div>
+  </main>
+  <script type="module" src="./assets/landing.js"></script>
 </body></html>`;
 
   await mkdir(outDir, { recursive: true });
@@ -128,7 +145,7 @@ function gen404(manifest, base) {
   :root { color-scheme: dark; }
   body { margin: 0; min-height: 100vh; display: grid; place-items: center;
          font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-         background: #060911; color: #e6edf6; }
+         background: #050507; color: #f2f5f9; }
   a { color: #7dd3fc; }
 </style>
 </head><body>

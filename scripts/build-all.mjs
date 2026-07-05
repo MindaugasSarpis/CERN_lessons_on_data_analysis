@@ -20,7 +20,7 @@ import { readFile, rm, mkdir, readdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join, dirname, resolve, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { genLanding } from './gen-landing.mjs';
+import { buildLanding } from './build-landing.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = join(ROOT, 'lectures', 'content');
@@ -44,10 +44,10 @@ if (gen.status !== 0) process.exit(gen.status ?? 1);
 await rm(OUT, { recursive: true, force: true });
 await mkdir(OUT, { recursive: true });
 
-// Write the landing page FIRST (it only needs the manifest) so a static server
-// pointed at OUT always has a valid index.html during a rebuild — otherwise a
-// mid-build refresh shows a bare directory listing. Skipped in flat-base/QA mode.
-if (!FLAT) await genLanding(manifest, OUT, PREFIX);
+// Build the landing (Vite assets + index.html) FIRST so a static server
+// pointed at OUT stays valid during rebuilds — otherwise a mid-build refresh
+// shows a bare directory listing. Skipped in flat-base/QA mode.
+if (!FLAT) await buildLanding(OUT, PREFIX);
 
 const targets = manifest.decks.filter((d) => !ONLY || ONLY.has(d.slug));
 let failed = 0;
