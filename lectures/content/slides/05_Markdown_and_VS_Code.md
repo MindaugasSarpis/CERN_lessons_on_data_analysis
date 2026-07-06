@@ -543,6 +543,49 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Markdown Syntax: Math (LaTeX)
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ✏️ **Syntax**
+
+```
+Inline: $E = mc^2$
+
+Block:
+$$
+\chi^2 = \sum_i \frac{(O_i - E_i)^2}{E_i}
+$$
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 👁️ **Rendered Output**
+
+Inline: $E = mc^2$
+
+$$
+\chi^2 = \sum_i \frac{(O_i - E_i)^2}{E_i}
+$$
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Rendered by **KaTeX** in Jupyter, MkDocs, GitHub, and these very slides — essential for writing physics reports and analysis notes.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Where You'll Meet Markdown Again
 
 <div class="stack-tight mt-md">
@@ -561,7 +604,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact reveal-left">
 
-🖥️ **These very slides** — the deck you're looking at is written in Markdown (Slidev)
+🖥️ **These very slides** — written in Markdown (Slidev); their diagrams are **Mermaid**, plain-text diagrams-as-code *(the Git lecture renders a `gitGraph` this way)*
 
 </div>
 
@@ -855,6 +898,7 @@ Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 - **Word Wrap** → `on` (no horizontal scrolling)
 - **Font Size** → `14`–`16` for comfort
 - **Tab Size** → `4` (Python standard)
+- **Settings Sync** → sign in once; settings & extensions then follow you to any machine (♻️ reproducibility)
 
 </div>
 
@@ -863,7 +907,7 @@ Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 ## 🎨 **Appearance**
 
 - **Color Theme** → pick one you like (Dark Modern is the default)
-- **Icon Theme** → Material Icon Theme (clearer file icons)
+- **Icon Theme** → Material Icon Theme *(marketplace extension — install from Extensions first)*
 - **Minimap** → turn off if it distracts you
 
 </div>

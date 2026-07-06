@@ -581,7 +581,7 @@ echo "Result: 42" >> notes.txt
 
 - Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
 - Script file creation to keep project structure consistent
-- Coming up later in the course: pairing the CLI with `git` (version control, covered in its own lecture), **file naming conventions**, **Markdown** for documentation, and **VS Code** as your IDE
+- **File naming conventions** and directory structure are coming up later **in this lecture**; pairing the CLI with `git` (version control), **Markdown**, and **VS Code** each get their own lecture soon after
 
 </div>
 
@@ -661,9 +661,10 @@ Get-ChildItem *.csv |
 ## 🐧 **UNIX Pipeline**
 
 ```bash
-# $5 = size in bytes, $9 = filename; 1 MB = 1048576 bytes
-ls -l *.csv | awk '$5 > 1048576 {print $9, $5}' \
-  | sort -k2,2nr > large_files.txt
+# ls -l columns aren't a stable format to parse — filenames with
+# spaces, or locale settings, silently break naive awk/cut scripts
+find . -name "*.csv" -size +1M -exec du -h {} + \
+  | sort -rh > large_files.txt
 ```
 
 </div>
@@ -933,11 +934,16 @@ hideInToc: true
 </div>
 
 ---
-layout: quote
 hideInToc: true
 ---
 
-# The CLI is your multiplier—start small, automate often, and watch productivity compound.
+# Part **2**: From Commands to Files
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Now that you can drive the CLI, let's use it to keep files **organised**.
+
+</div>
 
 ---
 disabled: true
@@ -1599,6 +1605,8 @@ ls -R my_project
 
 💡 `-p` creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
 
+💡 **Bonus:** drop a few `sensor_A OK` / `sensor_B ERROR` lines into `my_project/data/raw/run042.log`, then reuse the earlier pipeline: `grep ERROR run042.log | sort | uniq -c | sort -nr`
+
 </div>
 
 ---
@@ -1800,3 +1808,8 @@ project a clean structure and drive it from the shell. (~1 min)
 -->
 
 ---
+layout: quote
+hideInToc: true
+---
+
+# The CLI is your multiplier—start small, automate often, and watch productivity compound.

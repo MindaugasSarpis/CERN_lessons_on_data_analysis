@@ -243,22 +243,20 @@ hideInToc: true
 
 ## ⚙️ **Configuration**
 
-- The user name and email address need to be configured.
+- Set your identity, and the default branch name, once per machine:
 
 ```bash
 git config --global user.name "Mindaugas Sarpis"
 git config --global user.email "mindaugas.sarpis@cern.ch"
+git config --global init.defaultBranch main
 ```
 
-- Edit the configuration with:
+*(vanilla Git still names a fresh repo's branch `master` — this line is why yours will say `main`)*
+
+- Edit the config file, or get help for any command:
 
 ```bash
 git config --global --edit
-```
-
-- Open short help for any command:
-
-```bash
 git config -h
 ```
 
@@ -549,6 +547,12 @@ git log --oneline --graph --all
 
 </div>
 
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Need to mark **exactly which commit** produced a result — "this is the commit behind Figure 3"? `git tag fig3-final` pins it permanently; see Lecture 04's archiving section for the full story.
+
+</div>
+
 ---
 hideInToc: true
 ---
@@ -786,6 +790,40 @@ output/
 </div>
 
 ---
+hideInToc: true
+---
+
+# Git and Large Files Don't Mix
+
+<div class="card card-warning card-glass pad-tight mt-md">
+
+## 📦 **Git Is Not a Data Store**
+
+Git keeps every version of every tracked file **forever** — great for text, painful for multi-GB ROOT files: the repo balloons and every clone gets slower. The `.gitignore` on the previous slide already keeps `*.root` out entirely.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🗄️ **Keep raw data outside the repo**
+
+Store big files in `data/raw/` on shared storage or a data catalogue; the repo holds only **code** and a **README** pointing to where the data lives (📁 aim)
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧩 **Or: Git LFS**
+
+**Git Large File Storage** swaps big files for lightweight pointers in the repo, storing the real bytes on a separate server
+
+</div>
+
+</div>
+
+---
 layout: image-right
 image: /figures/git-freshly-made-github-repo.svg
 backgroundSize: contain
@@ -926,7 +964,7 @@ hideInToc: true
 ## 🌿 **Parallel Development**
 
 - `git` has a powerful branching system that allows for multiple versions of the repository to be worked on simultaneously.
-- The default branch is called `main`.
+- Vanilla Git names the first branch `master`; the `init.defaultBranch main` setting from earlier is why yours is called `main` instead.
 
 </div>
 
@@ -965,6 +1003,22 @@ git branch -d feature-name
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Fresh install, `git init`, and `git status` says 'On branch master' — why?"
+  :options="[
+    'Git detected an old-style project and downgraded it automatically',
+    'This machine has not set init.defaultBranch, so vanilla Git falls back to its historical default',
+    'master is required whenever a repository has more than one branch',
+    'git status always shows master until the first commit exists'
+  ]"
+  :correct="1"
+  explanation="Git only creates main by default when init.defaultBranch is configured (see the Configuration slide) — an unconfigured install still names the first branch master. Set it once with git config --global init.defaultBranch main and every future git init will say main instead."
+/>
 
 ---
 hideInToc: true
