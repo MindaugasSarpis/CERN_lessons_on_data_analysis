@@ -10,6 +10,7 @@
     "build": "node scripts/build-all.mjs",
     "build:landing": "node scripts/build-landing.mjs",
     "build:landing:assets": "vite build --config landing/vite.config.mjs",
+    "figures": "python3 figures/src/build.py",
     "build:combined": "slidev build lectures/content/best_research_and_data_analysis_practices_from_CERN.md",
     "export": "slidev export lectures/content/best_research_and_data_analysis_practices_from_CERN.md",
     "qa": "node scripts/qa-all.mjs",
