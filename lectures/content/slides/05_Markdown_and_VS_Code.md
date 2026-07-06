@@ -626,6 +626,46 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Documentation & knowledge sharing
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📖 Analyst runbooks and playbooks
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📋 Data dictionaries & catalogs
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📝 Decision logs capturing context and rationale
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🎤 Internal demos & show-and-tell sessions
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 🤝 Mentoring to spread tooling fluency
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Key Takeaways
 
 <div class="card card-info card-glass pad-tight glow reveal-up">

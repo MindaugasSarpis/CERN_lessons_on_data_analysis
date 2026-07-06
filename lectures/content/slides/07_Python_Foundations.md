@@ -120,6 +120,86 @@ Python itself and many of its libraries and tools are open-source and free to us
 hideInToc: true
 ---
 
+# Languages of data
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🗄️ **SQL** remains foundational for structured data
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🐍 **Python** ecosystem (pandas, Polars, PySpark, SciPy, scikit-learn)
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📊 **R** for statistics, visualisation, reproducible reports
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🚀 **Julia, Scala, Rust** for performance-critical workloads
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🔬 **Domain-specific** tools (ROOT at CERN, SAS, MATLAB, SPSS)
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Proprietary tools vs programming languages
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🏢 **Proprietary** (Tableau, Origin, Excel)
+
+**⚠️ Drawbacks:** expensive, limited in scope, compatibility & flexibility gaps
+
+**✅ Benefits:** easy to learn via GUI, great for rapid stakeholder demos & quick wins
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 💻 **Languages** (Python, R, Julia)
+
+**✅ Benefits:** open source, free, powerful, scale from exploration to production
+
+**⚠️ Drawbacks:** steeper learning curve (CLI, programming literacy)
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+<div class="note-text">
+
+#### 💡 **Tip** — mix surface-level ease with depth and reproducibility
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Useful Resources for Starting with Python
 
 <div class="grid-2 gap-md mt-md">

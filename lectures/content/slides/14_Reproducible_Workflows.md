@@ -1045,6 +1045,80 @@ machine enforces reproducibility so you do not have to remember. (~1 min)
 hideInToc: true
 ---
 
+# DataOps & automation
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ⏱️ Schedule data pipelines with orchestration tools
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔄 Leverage CI/CD for tests, linting, deployment
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📐 Parameterise workflows for reproducibility
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 📡 Monitor pipelines for latency, failures, data drift
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Testing your analysis
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧪 Unit tests for data transforms & calculations
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ✅ Data validation (great expectations, pydantic, pandera)
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📊 Statistical tests to confirm assumptions
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 📂 Golden datasets & regression tests for dashboards
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 👁️ Peer review before results leave the team
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # What is CI/CD?
 
 <div class="card card-info card-glass pad-compact">
@@ -1168,6 +1242,328 @@ jobs:
 <div class="card card-accent card-glass pad-compact mt-sm">
 <strong>Optional:</strong> Auto-commit results back to repo, send notifications, deploy to web
 </div>
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# **FAIR** Principles
+
+<!--
+Speaker: FAIR = Findable, Accessible, Interoperable, Reusable. Frame it as the
+standard that lets a stranger reuse your data a decade later — then show CERN
+Open Data as living proof it works at petabyte scale. (~1 min)
+-->
+
+---
+layout: quote
+hideInToc: true
+---
+
+## The first step in **(re)using data** is to find them. **Metadata** and data should be easy to find for both humans and computers. Machine-readable metadata are essential for automatic discovery of datasets and services — a core component of the FAIRification process.
+
+<div class="note-text" style="text-align: right; margin-top: 1.5rem;">— GO FAIR, after Wilkinson et al. (2016), <em>Scientific Data</em></div>
+
+---
+hideInToc: true
+---
+
+# **Findable** data
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏷️ **F1.** (Meta)data are assigned a globally **unique** and persistent **identifier**
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📝 **F2.** Data are described with **rich metadata**
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🔗 **F3.** Metadata explicitly **include the identifier** of the data they describe
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🔍 **F4.** (Meta)data are registered or indexed in a **searchable resource**
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Accessible** data
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🌐 **A1.** (Meta)data are retrievable by their identifier using a standardised communications protocol
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📖 **A1.1** The protocol is **open**, free, and universally implementable
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🔐 **A1.2** The protocol allows for **authentication** and **authorisation** where necessary
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 📂 **A2.** Metadata are accessible even when the data are no longer available
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Interoperable** data
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🗣️ **I1.** (Meta)data use a formal, accessible, shared, and broadly applicable **language for knowledge representation**
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔗 **I2.** (Meta)data use vocabularies that follow **FAIR principles**
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📎 **I3.** (Meta)data include **qualified references** to other (meta)data
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Interoperability · **what breaks it vs. what fixes it**
+
+<span class="def-sub">"I just shared the CSV" is not interoperability. The machine — and the next analyst — still needs to know what every column means and in what units.</span>
+
+<div class="grid-2 gap-md mt-md tidy-cards">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Proprietary format**
+
+`.xlsx` with merged cells, macros, embedded plots. Only opens cleanly in one tool, parses poorly everywhere else.
+
+**Fix:** CSV / Parquet / HDF5 — open, typed, streamable.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Missing units**
+
+A column `mass` with values `[72, 68, 75]`. Kilograms? Pounds? Per event? No one can tell.
+
+**Fix:** units in the column name (`mass_kg`) or a sidecar schema file.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Undocumented codes**
+
+`status` column with values `{1, 2, 3, 9}` and no legend. The meaning lives in someone's head.
+
+**Fix:** a README mapping each code + a controlled vocabulary (ICD, MeSH, PDG, …).
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Opaque timestamps**
+
+`ts = 1712937600` — seconds? milliseconds? Which timezone? From when?
+
+**Fix:** ISO 8601 strings with explicit offset (`2024-04-12T14:00:00+02:00`).
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+## 💡 **Rule of thumb**
+
+A dataset is interoperable when a stranger, with no access to you, can correctly merge it with their own data **without guessing.**
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Reusable** data
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📋 **R1.** (Meta)data are **richly described** with a plurality of accurate and relevant attributes
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📜 **R1.1.** (Meta)data are released with a clear and **accessible** data usage **license**
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🔗 **R1.2.** (Meta)data are associated with detailed **provenance**
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🏛️ **R1.3.** (Meta)data meet **domain-relevant community standards**
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# FAIR in practice
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏷️ Assign DOIs or persistent IDs through catalogues
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📝 Publish rich metadata schemas (Dublin Core, DataCite, schema.org)
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🌐 Provide API/documentation for programmatic access
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 📖 Reuse domain ontologies and controlled vocabularies
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 🔄 Capture provenance with tools like REANA, DVC, Quilt
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# FAIR worked example — a CERN Open Data record
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+<div class="note-text">
+
+An LHCb research-grade dataset on opendata.cern.ch — annotated against each FAIR pillar.
+
+</div>
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔍 **Findable**
+
+DOI `10.7483/OPENDATA.LHCB.…`, title, keywords, indexed on Google Dataset Search
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌐 **Accessible**
+
+HTTPS download + XRootD streaming, free, no login required; metadata stays online if files are retired
+
+</div>
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🔗 **Interoperable**
+
+ROOT / AOD format with published schema, HEP-specific vocabularies, links to detector & simulation records
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ♻️ **Reusable**
+
+CC0 licence, full provenance (run conditions, software version), validated example analyses in containers
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+<div class="note-text">
+
+#### 🎯 Every FAIR principle is concretely visible — that's why CERN data can be reanalysed a decade later
 
 </div>
 

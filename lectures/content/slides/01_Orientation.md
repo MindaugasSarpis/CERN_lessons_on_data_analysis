@@ -69,11 +69,11 @@ concepts on your own projects is the best way to learn.
 
 <div class="stat-grid">
   <div class="stat">
-    <span class="stat-num gradient-text">48</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text">64</span><span class="stat-unit">h</span>
     <div class="stat-label">Contact hours</div>
   </div>
   <div class="stat">
-    <span class="stat-num gradient-text energy">212</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text energy">196</span><span class="stat-unit">h</span>
     <div class="stat-label">Self study</div>
   </div>
   <div class="stat">
@@ -312,16 +312,16 @@ hideInToc: true
 
 # **Schedule**
 
-| **Date** | **Topic** |
+Every week: **2 h lecture** + **2 h seminar** — 16 weeks, one lecture per week.
+
+| **Weeks** | **Block** |
 | --- | --- |
-| Feb 19 | **A** · Foundations & Tooling |
-| Feb 20 | **A** · Foundations & Tooling |
-| Feb 21 | **B** · Programming |
-| Feb 27 | **C** · Data Analysis Core |
-| Feb 28 | **C** · Data Analysis Core |
-| Apr 16 | **D** · Practical Data Work |
-| Apr 17 | **E** · Advanced *(optional)* |
-| **Apr 18** | **Final Project Presentations** |
+| 1 – 6 | **A** · Foundations & Tooling |
+| 7 – 8 | **B** · Programming |
+| 9 – 12 | **C** · Data Analysis Core |
+| 13 – 14 | **D** · Practical Data Work |
+| 15 – 16 | **E** · Advanced *(optional)* |
+| **Exam session** | **Final Project Presentations** |
 
 <style scoped>
 table {
@@ -337,11 +337,6 @@ table thead th {
 table td:nth-child(2),
 table th:nth-child(2) {
   text-align: right;
-}
-table tbody tr:nth-child(3) td,
-table tbody tr:nth-child(5) td,
-table tbody tr:nth-child(7) td {
-  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
 }
 </style>
 
@@ -476,6 +471,211 @@ hideInToc: true
   :correct="2"
   explanation="Do it once by hand, twice by script — letting the machine repeat the boring parts is exactly what ⚙️ automation means. It often boosts ♻️ reproducibility too, but the direct target here is automation."
 />
+
+---
+hideInToc: true
+---
+
+# **Biomedicine and Genomics**
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+- 🧬 Genome sequencing → identifying variants & gene expression patterns
+- 💊 Clinical trials → monitoring safety, efficacy, adaptive designs
+- 📊 Population health dashboards & personalised medicine
+- 🎯 Decisions: targeted therapies, drug discovery, diagnostics
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+<div class="note-text">
+
+#### 🧪 **23andMe** / **Ancestry.com** — comparing against *reference populations*. *(23andMe filed for bankruptcy in 2025; its genetic database changed hands through the bankruptcy proceedings — a live lesson in consent outliving a company.)*
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Environmental Sciences**
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+- 🌍 Climate models integrating satellite, sensor, and historical data
+- 🏭 Pollution monitoring at city/block resolution
+- 🌿 Biodiversity studies combining field notes + remote sensing
+- 📜 Supports policy making, disaster response, conservation funding
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+<div class="note-text">
+
+#### 🔄 Living analysis → data feeds update models continuously
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Astronomy**
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+- 🔭 Observational data from telescopes, satellites, detectors
+- 🌊 Gravitational wave detection via signal processing & ML
+- 🌟 Cataloguing millions of celestial objects, anomaly detection
+- 💻 Requires high-throughput computing, reproducible pipelines
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+<div class="note-text">
+
+#### 🤖 **Galaxy Zoo** crowdsourced 1M+ galaxy classifications from SDSS images — the labelled set that seeded today's CNN galaxy-morphology classifiers
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Particle Physics (CERN)**
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+- ⚛️ Petabytes of collision data → reconstruct events, filter noise
+- 📊 Multivariate analysis to isolate rare signals (e.g. Higgs boson)
+- 🤝 Collaboration across detectors, theory, computing teams
+- 🌐 Drives advances in distributed computing & open data practices
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Finance**
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+- 💰 Stock market analysis + algorithmic trading with latency constraints
+- 🛡️ Risk management using stress tests, scenario analysis, VaR
+- 🚨 Fraud detection & compliance monitoring with streaming data
+- ⚖️ Balances profitability with regulation and transparency
+
+</div>
+
+---
+hideInToc: true
+---
+
+<div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 2.5rem; padding: 0 3rem 0 2rem;">
+  <div style="flex: 0 1 auto; max-width: 45%; font-size: 1.8em; line-height: 1.3; font-weight: 500; text-align: right;">
+    There are some things <br/><em style="opacity: 0.85;">no data model</em> <br/>can predict.
+  </div>
+  <div class="card card-accent card-glass pad-tight" style="height: 82%; aspect-ratio: 9 / 16; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0;">
+    <div style="font-size: 3.5em;">🎬</div>
+    <div class="note-text mt-sm">Play the reel live:<br/><a href="https://www.facebook.com/reel/1963960414998958">facebook.com/reel/…</a></div>
+  </div>
+</div>
+
+---
+hideInToc: true
+---
+
+# Common threads across every domain
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎯 **Decisions drive design**
+
+Genomics, finance, or particle physics — analysis starts from a decision someone must make.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **Uncertainty is first-class**
+
+Every field reports ranges, intervals, or risks — not single numbers.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔄 **Pipelines over one-offs**
+
+Reproducible workflows beat ad-hoc analyses once data keeps arriving.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🤝 **Teams, not heroes**
+
+Domain + analyst + engineer + stakeholder — no single role sees the whole.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ⚖️ **Ethics follows impact**
+
+The higher the stakes (health, policy, money), the stronger the governance.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📖 **Stories ship insight**
+
+Numbers change nothing until they land as a narrative a decision-maker can act on.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Reflection — which example resonates?
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔍 Where could similar data exist in your context?
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🎯 What decisions would better data unlock?
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🚧 What obstacles — technical, ethical, organisational — stand in the way?
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
