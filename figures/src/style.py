@@ -38,6 +38,7 @@ def use() -> None:
         "legend.frameon": False, "legend.fontsize": 10,
         "lines.linewidth": 2.0, "patch.linewidth": 0.8,
         "svg.fonttype": "none",  # keep text as text — crisp at any zoom
+        "svg.hashsalt": "cern-course",  # deterministic element ids across runs
         "figure.constrained_layout.use": True,
     })
 
@@ -47,6 +48,9 @@ def new_fig(w: float = 7, h: float = 4.2):
 
 def save(fig, name: str) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT / f"{name}.svg", format="svg", bbox_inches="tight")
+    # metadata Date=None: drop the embedded timestamp so repeated builds are
+    # byte-identical (otherwise every run dirties all 80+ committed SVGs).
+    fig.savefig(OUT / f"{name}.svg", format="svg", bbox_inches="tight",
+                metadata={"Date": None})
     plt.close(fig)
     print(f"  + {name}.svg")
