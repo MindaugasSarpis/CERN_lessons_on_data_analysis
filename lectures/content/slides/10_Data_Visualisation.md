@@ -19,7 +19,7 @@ layout: cover
 
 ## Data Visualisation
 
-##### <span class="aims-badge">🔧 tool-agnostic · 📁 data & files</span>
+##### <span class="aims-badge">🔧 tool-agnostic · 📁 data & files · ♻️ reproducibility</span>
 
 ##### Inspired by: C. O. Wilke, *Fundamentals of Data Visualization*
 
@@ -207,6 +207,22 @@ hideInToc: true
 </div>
 
 <img class="fig" src="/figures/cwilke_distributions_i_anscombes_quartet.svg" style="display:block;margin:0 auto;max-height:380px;">
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Four datasets share the same mean, variance, correlation, and regression line — identical summary statistics. What's the first thing you should do before trusting any of them?"
+  :options="[
+    'Report the summary statistics directly — they already describe the data',
+    'Plot the data — visualisation reveals structure the statistics can hide',
+    'Compute a higher-order statistic (e.g. skewness) instead',
+    'Assume the datasets are equivalent, since their statistics match'
+  ]"
+  :correct="1"
+  explanation="Anscombe's quartet makes exactly this point: identical summary statistics can hide a straight line, a curve, a single outlier, or a vertical cluster. Plotting is the only way to catch the difference."
+/>
 
 ---
 hideInToc: true
@@ -1544,6 +1560,29 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Log Scale — **In Code**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🐍 One extra call turns a crushed, steeply-falling histogram into readable structure across every order of magnitude.
+
+</div>
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+counts, edges = np.histogram(data, bins=50)  # steeply-falling distribution
+fig, ax = plt.subplots(figsize=(5.5, 3.2))
+ax.stairs(counts, edges, fill=True, color="#56B4E9")
+ax.set_yscale('log')                         # <- the fix
+ax.set(xlabel="value", ylabel="count (log scale)")
+```
+
+---
+hideInToc: true
+---
+
 # **Square-Root** Scale — for counts
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -2004,9 +2043,9 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0 auto;max-height:330px;background:#fff;border-radius:8px;">
+<img class="fig" src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0 auto;max-height:310px;background:#fff;border-radius:8px;">
 
-<div class="note-text mt-sm">📏 Units on both axes · 📊 the **D⁰ peak** stands clear of the combinatorial background · 🏷️ signal annotated. *Your field's data will look different — the same choices apply. You build this in Seminar 10.*</div>
+<div class="note-text mt-sm">📏 Units on both axes · 📊 the **D⁰ peak** stands clear of the background · ⚠️ **raw-histogram stage** — you add the **√N** error bars yourself in Seminar 10 (deliberate, not an oversight).</div>
 
 ---
 hideInToc: true

@@ -11,6 +11,20 @@ drawings:
 
 title: "Probability and Statistics"
 layout: cover
+
+addons:
+  - slidev-addon-python-runner
+
+python:
+  installs: ["numpy", "matplotlib", "scipy"]
+  prelude: |
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.stats import binom, norm
+    import warnings
+    warnings.filterwarnings('ignore')
+  loadPackagesFromImports: true
+  suppressDeprecationWarnings: true
 ---
 
 # Dr. Mindaugas Šarpis
@@ -90,7 +104,7 @@ hideInToc: true
 
 - ## Models require **parameter estimation**
 
-- ## Results must be **statistically significant** *(formal hypothesis testing and p-values are beyond this course — see the closing advice)*
+- ## Results must be **statistically significant** *(formal hypothesis testing is beyond this course — but you'll meet one specific p-value in Lecture 12, as a fit-quality diagnostic)*
 
 - ## Predictions come with **confidence intervals**
 
@@ -755,6 +769,21 @@ Only **8.8%** chance despite positive test!
 
 </div>
 
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A disease has 1% prevalence; the test is 95% sensitive and 90% specific. A patient tests positive. Why is P(disease | positive) only 8.8%, not 95%?"
+  :options="[
+    'The test is unreliable and should not be used',
+    'The disease is rare, so false positives from the large healthy population outnumber the true positives from the small diseased population',
+    'Sensitivity and specificity were entered into the formula backwards',
+    'P(disease | positive) always equals the test sensitivity'
+  ]"
+  :correct="1"
+  explanation="With only 1% prevalence, healthy people vastly outnumber diseased people — so even a 10% false-positive rate among the healthy produces more false positives (990) than true positives (95). Sensitivity and specificity describe P(test | disease); confusing that with P(disease | test) is the classic base-rate fallacy."
+/>
 
 ---
 hideInToc: true
@@ -1687,6 +1716,22 @@ hideInToc: true
 </div>
 
 ---
+hideInToc: true
+---
+
+<MCQ
+  question="As n grows, the LLN and the CLT both describe what happens to the sample mean x̄ — but they answer different questions. Which pairing is correct?"
+  :options="[
+    'LLN describes the shape of the uncertainty; CLT describes where the mean converges',
+    'LLN describes where the mean converges; CLT describes the shape of its uncertainty',
+    'They are two names for the same statement',
+    'CLT only applies if the original data is already Normally distributed'
+  ]"
+  :correct="1"
+  explanation="LLN says the sample mean converges to the true mean μ as n grows — it answers where does it land. CLT says the distribution of that mean becomes Normal with spread σ/√n, whatever the shape of the original data — it answers how it wobbles on the way there."
+/>
+
+---
 layout: fact
 hideInToc: true
 ---
@@ -1792,6 +1837,31 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Interactive: **Binomial → Normal**
+
+<div class="note-text mt-sm">
+
+Watch the Binomial PMF for growing $n$ collapse onto the Normal curve the CLT predicts — $\mu = np$, $\sigma = \sqrt{np(1-p)}$.
+
+</div>
+
+```python {monaco-run}
+p = 0.5
+fig, axes = plt.subplots(1, 3, figsize=(9, 2.7), sharey=True)
+for ax, n in zip(axes, [5, 20, 80]):
+    k = np.arange(0, n + 1)
+    ax.bar(k, binom.pmf(k, n, p), color="#56B4E9", width=0.8)
+    mu, sig = n * p, np.sqrt(n * p * (1 - p))
+    xs = np.linspace(0, n, 300)
+    ax.plot(xs, norm.pdf(xs, mu, sig), color="#D55E00", linewidth=2)
+    ax.set(title=f"n={n}", xlabel="k")
+plt.tight_layout(); plt.show()
+```
+
+---
+hideInToc: true
+---
+
 # Standard Error
 
 <div class="grid-3 mt-md gap-md">
@@ -1881,6 +1951,27 @@ hideInToc: true
 💡 Rule: describe your **data** with σ; state the uncertainty of a **result** with SE. Error bars on a mean should almost always be SE (or a CI), not σ.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Interactive: **Bootstrap** — Resampling for Free
+
+<div class="note-text mt-sm">
+
+No formula needed: resample your own data **with replacement** many times and look at how much the statistic wobbles. *(Seminar 11 stretch goal.)*
+
+</div>
+
+```python {monaco-run}
+data = np.random.default_rng(0).normal(10, 2, 50)              # 50 "measurements"
+boot_means = [np.mean(np.random.choice(data, len(data), replace=True))
+              for _ in range(1000)]
+
+print(f"SE (bootstrap) = {np.std(boot_means):.3f}")
+print(f"SE (formula)   = {np.std(data, ddof=1) / np.sqrt(len(data)):.3f}")
+```
 
 ---
 hideInToc: true
@@ -2288,7 +2379,7 @@ A result without an uncertainty is incomplete. Always include error bars, confid
 ## 🎯 **Hypothesis testing & p-values**
 
 <div class="card-content text-base">
-The natural next step beyond this course: a p-value measures how surprising your data would be if nothing interesting were going on. Learn it before drawing "significant/not significant" conclusions.
+Formal hypothesis testing is beyond this course — but you'll meet one specific p-value in Lecture 12: the χ² goodness-of-fit p-value, used purely as a fit-quality diagnostic, not as a "significant/not significant" verdict.
 </div>
 
 </div>

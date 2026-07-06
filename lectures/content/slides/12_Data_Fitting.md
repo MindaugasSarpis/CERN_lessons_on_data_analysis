@@ -690,12 +690,14 @@ def gauss_bg(x, A, mu, sig, bg):
 
 popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=yerr)
 err = np.sqrt(np.diag(pcov))
+chi2 = np.sum(((y - gauss_bg(x, *popt)) / yerr) ** 2)
 
 plt.figure(figsize=(7, 3.1))
 plt.errorbar(x, y, yerr=yerr, fmt='o', ms=3, label='Data')
 xf = np.linspace(0, 10, 200)
 plt.plot(xf, gauss_bg(xf, *popt), 'r-',
          label=f'mu={popt[1]:.2f}±{err[1]:.2f}, sig={popt[2]:.2f}±{err[2]:.2f}')
+plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-4} = {chi2/(len(x)-4):.2f}')
 plt.legend(); plt.xlabel('x'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
 ```
 
@@ -722,12 +724,14 @@ def decay(t, N0, tau):
 
 popt, pcov = curve_fit(decay, t, N, p0=[150, 2], sigma=sigma_N)
 N0, tau = popt; err = np.sqrt(np.diag(pcov))
+chi2 = np.sum(((N - decay(t, *popt)) / sigma_N) ** 2)
 
 plt.figure(figsize=(7, 3.1))
 plt.errorbar(t, N, yerr=sigma_N, fmt='o', ms=4, label='Data')
 tf = np.linspace(0.5, 8, 200)
 plt.plot(tf, decay(tf, *popt), 'r-',
          label=f'N0={N0:.0f}±{err[0]:.0f}, tau={tau:.2f}±{err[1]:.2f}')
+plt.title(f'chi2/dof = {chi2:.1f}/{len(t)-2} = {chi2/(len(t)-2):.2f}')
 plt.legend(); plt.xlabel('Time'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
 ```
 
@@ -1128,11 +1132,9 @@ $$p = P(\chi^2 > \chi^2_{\text{obs}} \mid H_0)$$
 
 ## **Interpretation**
 
-- $p > 0.05$: no evidence against model
-- $p < 0.05$: model may be inadequate
-- $p \ll 0.001$: strong evidence of misfit
+Use it as a **fit-quality diagnostic**, not a significance verdict: a very small p means the model likely doesn't describe the data — the same message as a large chi2/dof, expressed as a probability.
 
-**But**: p-values are often misinterpreted. Focus on chi2/dof and residuals.
+**Careful**: formal "significant / not significant" claims from p-values are a topic of their own — beyond this course. Here, always read the p-value alongside chi2/dof and the residuals.
 
 </div>
 
@@ -1439,33 +1441,33 @@ hideInToc: true
 
 # Try It Yourself — Fit the **D⁰ Peak** 🔬
 
-<div class="note-text">Click ▶ to fit the D⁰ peak live — then shrink the sample or drop the background term and re-run.</div>
+<div class="note-text">Click ▶ to fit the D⁰ peak live and see its pull panel — then shrink the sample or drop the background term and re-run. *The exact mass ± error and χ²/dof are yours to compute in Seminar 12.*</div>
 
 ```python {monaco-run}
-import numpy as np
-from scipy.optimize import curve_fit
-
 rng = np.random.default_rng(0)
-MD0 = 1.865                                      # D0 mass (GeV) to recover
-mass = np.concatenate([rng.normal(MD0, 0.009, 4000),    # D0 peak
-                       rng.uniform(1.80, 1.94, 8000)])  # flat background
-y, edges = np.histogram(mass, bins=60, range=(1.80, 1.94))
+mass = np.concatenate([rng.normal(1.865, 0.009, 4000),    # D0 peak
+                       rng.uniform(1.78, 1.96, 8000)])    # flat background
+y, edges = np.histogram(mass, bins=60, range=(1.78, 1.96))
 x, err = 0.5 * (edges[:-1] + edges[1:]), np.sqrt(np.maximum(y, 1))
 
-def model(x, A, mu, sig, b):                     # Gaussian peak + flat background
+def model(x, A, mu, sig, b):                      # Gaussian peak + flat background
     return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b
 
-popt, pcov = curve_fit(model, x, y, p0=[y.max(), MD0, 0.01, np.median(y)],
-                       sigma=err, absolute_sigma=True)
-perr = np.sqrt(np.diag(pcov)); chi2 = np.sum(((y - model(x, *popt)) / err) ** 2)
-print(f"D0 mass  = {popt[1]*1000:.1f} +/- {perr[1]*1000:.1f} MeV   (PDG 1864.84)")
-print(f"chi2/dof = {chi2:.0f}/{len(x)-4} = {chi2/(len(x)-4):.2f}")
+popt, pcov = curve_fit(model, x, y, p0=[y.max(), 1.86, 0.01, np.median(y)], sigma=err)
+pull = (y - model(x, *popt)) / err                # standardized residuals
+
+fig, (a1, a2) = plt.subplots(2, 1, figsize=(7, 3.2), sharex=True,
+                              gridspec_kw={'height_ratios': [3, 1]})
+a1.errorbar(x, y, yerr=err, fmt='o', ms=3); a1.plot(edges, model(edges, *popt), 'r-')
+a2.axhline(0, color='gray', lw=1); a2.scatter(x, pull, s=8, color='#D55E00')
+a1.set_ylabel('Events'); a2.set(xlabel='M (GeV)', ylabel='pull')
+plt.tight_layout(); plt.show()
 ```
 
 <!--
-Speaker: run it live — the fit recovers ~1865 MeV. Then break it on purpose:
-shrink N and watch the error grow, or drop the background term and watch chi2/dof
-blow up. This is the running project in 20 lines. (~3 min)
+Speaker: run it live — point at the pull panel settling around zero. Then break it
+on purpose: shrink N and watch the fit destabilize, or drop the background term and
+watch the pulls drift away from zero. The real numbers are computed in Seminar 12. (~3 min)
 -->
 
 ---
