@@ -18,6 +18,8 @@ pnpm install                 # install dependencies
 pnpm build                   # build ALL decks + landing → dist/ (scripts/build-all.mjs)
 pnpm qa                      # build every deck at base '/' + gate each for overflow (scripts/qa-all.mjs) (includes the landing smoke test)
 pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for visual review
+pnpm timing                  # estimate delivery minutes per deck + seminar vs the 2h slot (scripts/timing-report.mjs)
+pnpm timing:check            # same, exit 1 if any week is UNDER the band
 pnpm build:landing          # rebuild only the landing page + its WebGL bundle → dist/
 pnpm videos:fetch <url> --name <Name> --used-in LNN   # yt-dlp → videos/raw/ + manifest entry; then videos:encode + videos:publish (needs yt-dlp + ffmpeg)
 pnpm figures                 # regenerate all scripted lecture figures (figures/src/ → public/figures/viz_*.svg; --only <family> to scope)
@@ -30,7 +32,7 @@ pnpm export                  # export the combined deck to PDF
 cd lectures/workbook && mkdocs serve     # student workbook (needs conda env from env.yaml)
 ```
 
-There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test.**
+There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test.** A second gate, **`pnpm timing:check`**, keeps every week's content sized to the 2h lecture + 2h seminar slots (model + band: `docs/superpowers/specs/2026-07-06-course-timing-rebalance-design.md`) — a deck must estimate 105–145 min, a seminar brief must declare ~120 min; slightly over is preferred to under.
 
 ### Build pipeline (manifest-driven)
 

@@ -15,6 +15,8 @@
     "export": "slidev export lectures/content/best_research_and_data_analysis_practices_from_CERN.md",
     "qa": "node scripts/qa-all.mjs",
     "qa:shots": "node scripts/qa-all.mjs --shots",
+    "timing": "node scripts/timing-report.mjs",
+    "timing:check": "node scripts/timing-report.mjs --check",
     "qa:combined": "slidev build lectures/content/best_research_and_data_analysis_practices_from_CERN.md --out .qa-dist && node scripts/check-slides.mjs lectures/content/.qa-dist",
     "videos:sync": "python3 scripts/videos.py sync",
     "videos:fetch": "python3 scripts/videos.py fetch",
