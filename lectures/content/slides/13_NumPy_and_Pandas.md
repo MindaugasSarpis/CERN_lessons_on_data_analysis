@@ -208,7 +208,7 @@ hideInToc: true
 
 # Creating NumPy Arrays
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np
 
 # From Python lists
@@ -232,7 +232,7 @@ hideInToc: true
 
 # Array Operations: Vectorization
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np
 
 x = np.array([1, 2, 3, 4, 5])
@@ -258,7 +258,7 @@ hideInToc: true
 
 # Speed Comparison: Lists vs NumPy
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np, time
 
 n = 100000
@@ -288,7 +288,7 @@ hideInToc: true
 
 # Array Indexing and Slicing
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np
 
 arr = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90])
@@ -330,7 +330,7 @@ matrix + row_vector
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np
 
 # Scalar broadcasting
@@ -350,7 +350,7 @@ hideInToc: true
 
 # Broadcasting: Normalization Example
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np
 
 # Useful for normalization: subtract column means
@@ -475,7 +475,7 @@ hideInToc: true
 
 # Creating a DataFrame
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 
 data = {
@@ -510,7 +510,7 @@ df = pd.read_csv('data.csv')
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -532,7 +532,7 @@ hideInToc: true
 
 # Exploring a DataFrame
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -557,7 +557,7 @@ hideInToc: true
 
 # Data Exploration: Selection & Filtering
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -585,7 +585,7 @@ hideInToc: true
 
 # Data Exploration: New Columns & Sorting
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -622,7 +622,7 @@ Pandas represents missing data with `NaN` (Not a Number) or `None`
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -644,7 +644,7 @@ hideInToc: true
 
 # Handling Missing Data: Strategies
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -683,7 +683,7 @@ hideInToc: true
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -709,7 +709,7 @@ hideInToc: true
 
 # Group By: Advanced Aggregations
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -735,7 +735,7 @@ hideInToc: true
 
 # Filtering and Querying Data
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -772,7 +772,7 @@ Pandas has built-in plotting (uses Matplotlib under the hood)
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -799,7 +799,7 @@ hideInToc: true
 
 # Visualization: Signal vs Background
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -842,21 +842,15 @@ hideInToc: true
 
 # Example: Higgs to Two Photons Analysis
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 ## **Realistic Scenario**
 
-You have data from a particle physics experiment looking for Higgs → γγ (two photons). Each event has:
-- Two photon energies and directions
-- Invariant mass (m<sub>γγ</sub>)
-- Detector information
-- Event quality flags
-
-**Goal**: Identify Higgs signal around 125 GeV
+Higgs → γγ search: each event carries two photon energies/directions, the invariant mass m<sub>γγ</sub>, and quality flags. **Goal**: identify the Higgs signal around 125 GeV.
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -878,7 +872,7 @@ hideInToc: true
 
 # Exploratory Data Analysis: Statistics
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -900,7 +894,7 @@ hideInToc: true
 
 # Exploratory Data Analysis: Visualization
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -929,7 +923,7 @@ hideInToc: true
 
 # Data Filtering: Quality Cuts
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -959,7 +953,7 @@ hideInToc: true
 
 # Data Filtering: Signal Region
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -1050,7 +1044,7 @@ hideInToc: true
 
 # Detecting Outliers: Z-Score Method
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -1076,7 +1070,7 @@ hideInToc: true
 
 # Detecting Outliers: IQR Method
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -1117,7 +1111,7 @@ hideInToc: true
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -1141,7 +1135,7 @@ hideInToc: true
 
 # Data Normalization: Min-Max Scaling
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -1468,7 +1462,7 @@ hideInToc: true
 
 # Example: LHCb D⁰ → K⁻π⁺ Spectrum — Data
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -1491,7 +1485,7 @@ hideInToc: true
 
 # Example: LHCb D⁰ → K⁻π⁺ Spectrum — Plot
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

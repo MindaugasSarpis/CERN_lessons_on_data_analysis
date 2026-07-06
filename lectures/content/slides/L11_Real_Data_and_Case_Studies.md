@@ -103,7 +103,7 @@ You have data from a particle physics experiment looking for Higgs → γγ (two
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -125,7 +125,7 @@ hideInToc: true
 
 # Exploratory Data Analysis: Statistics
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -147,7 +147,7 @@ hideInToc: true
 
 # Exploratory Data Analysis: Visualization
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -176,7 +176,7 @@ hideInToc: true
 
 # Data Filtering: Quality Cuts
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -206,7 +206,7 @@ hideInToc: true
 
 # Data Filtering: Signal Region
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -329,7 +329,7 @@ hideInToc: true
 
 # Example: CMS Dimuon Spectrum — Data
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 
@@ -353,7 +353,7 @@ hideInToc: true
 
 # Example: CMS Dimuon Spectrum — Plot
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -382,7 +382,7 @@ hideInToc: true
 
 # Dimuon Analysis: Fitting a Peak
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -487,7 +487,7 @@ hideInToc: true
 
 # Try It: Complete Pipeline
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt

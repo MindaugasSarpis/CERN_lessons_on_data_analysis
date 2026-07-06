@@ -285,7 +285,7 @@ hideInToc: true
 
 # Try It — Live Python
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 print("Hello from Python! 🐍", 2 + 2)
 ```
 
@@ -295,7 +295,7 @@ hideInToc: true
 
 # Try It — Variables & Types
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 # Experiment with variables and types
 name = "CERN"
 energy = 13.6  # TeV
@@ -510,7 +510,7 @@ hideInToc: true
 
 </div>
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 lines = ["1049,-1204.5,873.2", "# comment row, not data", "1050,988.1,-650.4"]
 
 for line in lines:
@@ -582,7 +582,7 @@ hideInToc: true
 
 # Try It — Lists in Action
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 # Working with lists
 measurements = [23.1, 25.4, 22.8, 24.5, 26.1, 23.9]
 
@@ -805,7 +805,7 @@ hideInToc: true
 
 # Try It — Dictionaries for Data
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 # Storing one D0 -> K- pi+ candidate
 event = {
     "event_id": 1049,
@@ -905,7 +905,7 @@ hideInToc: true
 
 # Try It — Loops and Logic
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 # Classify K-pi invariant masses against the D0 peak (~1865 MeV)
 masses_MeV = [1810.2, 1863.5, 1866.9, 1870.1, 1920.4]
 

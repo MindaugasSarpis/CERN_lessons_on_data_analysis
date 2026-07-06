@@ -1845,7 +1845,7 @@ Watch the Binomial PMF for growing $n$ collapse onto the Normal curve the CLT pr
 
 </div>
 
-```python {monaco-run}
+```python {monaco-run} {autorun:false}
 p = 0.5
 fig, axes = plt.subplots(1, 3, figsize=(9, 2.7), sharey=True)
 for ax, n in zip(axes, [5, 20, 80]):
@@ -1964,7 +1964,7 @@ No formula needed: resample your own data **with replacement** many times and lo
 
 </div>
 
-```python {monaco-run}
+```python {monaco-run} {autorun:false}
 data = np.random.default_rng(0).normal(10, 2, 50)              # 50 "measurements"
 boot_means = [np.mean(np.random.choice(data, len(data), replace=True))
               for _ in range(1000)]

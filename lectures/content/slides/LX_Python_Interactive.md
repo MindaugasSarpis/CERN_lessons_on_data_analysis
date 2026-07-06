@@ -49,7 +49,7 @@ python:
 
 ---
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 from termcolor import colored
 
 print(colored("Hello, Slidev!", "blue"))

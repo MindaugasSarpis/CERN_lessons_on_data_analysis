@@ -644,7 +644,7 @@ Fit a straight line $y = mx + b$ to noisy data and extract the slope and interce
 
 </div>
 
-```python {monaco-run}
+```python {monaco-run} {autorun:false}
 np.random.seed(42)
 x = np.linspace(0, 10, 20)
 y = 2.5 * x + 1.0 + np.random.normal(0, 2.0, 20)
@@ -677,7 +677,7 @@ Fit a Gaussian peak $A \cdot e^{-(x-\mu)^2/2\sigma^2}$ to simulated histogram da
 
 </div>
 
-```python {monaco-run}
+```python {monaco-run} {autorun:false}
 np.random.seed(7)
 data = np.concatenate([np.random.normal(5, 0.8, 500),
                        np.random.uniform(0, 10, 200)])
@@ -713,7 +713,7 @@ Fit an exponential decay $N_0 \cdot e^{-t/\tau}$ to extract the lifetime $\tau$ 
 
 </div>
 
-```python {monaco-run}
+```python {monaco-run} {autorun:false}
 np.random.seed(13)
 t = np.linspace(0.5, 8, 25)
 N = np.random.poisson(200 * np.exp(-t / 2.5)).astype(float)
@@ -1443,7 +1443,7 @@ hideInToc: true
 
 <div class="note-text">Click ▶ to fit the D⁰ peak live and see its pull panel — then shrink the sample or drop the background term and re-run. *The exact mass ± error and χ²/dof are yours to compute in Seminar 12.*</div>
 
-```python {monaco-run}
+```python {monaco-run} {autorun:false}
 rng = np.random.default_rng(0)
 mass = np.concatenate([rng.normal(1.865, 0.009, 4000),    # D0 peak
                        rng.uniform(1.78, 1.96, 8000)])    # flat background

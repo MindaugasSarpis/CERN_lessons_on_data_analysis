@@ -1,0 +1,52 @@
+/* Monaco / python-runner blocks — course chrome.
+   Scoped to Slidev's monaco containers so ordinary code fences are untouched.
+   Class names verified against a built deck (slidev-monaco-container,
+   slidev-monaco-container-inner, slidev-runner-output). */
+
+.slidev-monaco-container {
+  border: 1px solid rgba(139, 151, 166, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  background: #0b0e14;
+  padding: 0.35rem 0;
+}
+
+.slidev-monaco-container .monaco-editor,
+.slidev-monaco-container .monaco-editor .margin,
+.slidev-monaco-container .monaco-editor-background {
+  background: #0b0e14 !important;
+}
+
+/* header strip above the editor */
+.slidev-monaco-container::before {
+  content: "";
+  display: block;
+  height: 0.7rem;
+  margin: -0.35rem 0 0.35rem;
+  background: linear-gradient(90deg, rgba(125, 211, 252, 0.16), rgba(125, 211, 252, 0.03));
+  border-bottom: 1px solid rgba(139, 151, 166, 0.18);
+}
+
+/* runner output: bounded and scrollable — long prints must never
+   overflow the slide (they previously ran past the frame, unscrollable) */
+.slidev-runner-output {
+  max-height: 11rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgba(139, 151, 166, 0.18);
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  background: rgba(11, 14, 20, 0.8);
+  font-size: 0.8em;
+  line-height: 1.45;
+}
+
+.slidev-runner-output::-webkit-scrollbar {
+  width: 8px;
+}
+.slidev-runner-output::-webkit-scrollbar-thumb {
+  background: rgba(139, 151, 166, 0.35);
+  border-radius: 4px;
+}

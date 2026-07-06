@@ -149,7 +149,7 @@ hideInToc: true
 
 # Try It — Writing Functions
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 def describe_data(values):
     """Calculate basic statistics for a list of numbers."""
     n = len(values)
@@ -312,7 +312,7 @@ hideInToc: true
 
 # Try It — enumerate & zip
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 # Particle data from the Standard Model
 particles = ["electron", "muon", "tau", "proton", "neutron"]
 masses_MeV = [0.511, 105.66, 1776.9, 938.3, 939.6]
@@ -484,7 +484,7 @@ hideInToc: true
 
 # Mini Project: Analyse Experiment Data
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 # Simulated hit rates from 3 muon-detector chambers
 data = {
     "chamber_A": [22.1, 22.4, 22.3, 22.8, 22.5],
@@ -511,7 +511,7 @@ hideInToc: true
 
 # Mini Project: Visualise the Results
 
-```py {monaco-run}
+```py {monaco-run} {autorun:false}
 # Simple text-based "bar chart" — no matplotlib needed!
 data = {
     "chamber_A": [22.1, 22.4, 22.3, 22.8, 22.5],

@@ -100,6 +100,7 @@ Each lecture markdown file follows a consistent structure:
 
 ## Slidev Gotchas
 
+- **Monaco runner blocks (`{monaco-run}`)** — three defaults to know: (1) they **autorun on slide load** unless the fence says `{monaco-run} {autorun:false}` (course convention: always opt out); (2) Monaco highlights at **runtime** via a shiki bundle that only ships Slidev's default languages — `lectures/content/setup/shiki.ts` must list every language used in monaco fences, INCLUDING the exact fence alias (` ```py ` needs `'py'` in the list, not just `'python'`); (3) runner output styling (bounded height + scroll) lives in `theme/styles/monaco.css`.
 - **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. If you must show a merge conflict in a code block, wrap the markers in a Vue template expression, e.g. `{{'<<<<<<< HEAD'}}`, inside a ```` ```text {*}{lines:false} ```` block.
 
 ## Available Tooling
