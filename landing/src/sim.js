@@ -7,9 +7,10 @@ import {
 import { SIM_VERT, COPY_FRAG, VEL_FRAG, POS_FRAG, RENDER_VERT, RENDER_FRAG } from './shaders/passes.glsl.js';
 import { addFibers } from './fiber.js';
 import { addCore } from './core.js';
+import { createRig } from './rig.js';
 import { CORE_CENTER, BOUNDS } from './world.js';
 
-const FOV = 55, CAM_Z = 14, PARALLAX = 0.0012, MAX_DT = 1 / 30;
+const FOV = 55, CAM_Z = 14, MAX_DT = 1 / 30;
 
 function pickTexSize(coarse) {
   const cores = navigator.hardwareConcurrency || 4;
@@ -45,7 +46,7 @@ export function createField(canvas) {
   // --- camera ---
   const camera = new PerspectiveCamera(FOV, 1, 0.1, 120);
   camera.position.z = CAM_Z;
-  const halfH = Math.tan((FOV / 2) * (Math.PI / 180)) * CAM_Z;
+  const rig = createRig(camera);
 
   // --- sim targets (ping-pong pos + vel) ---
   const rt = () => new WebGLRenderTarget(size, size, {
@@ -130,6 +131,7 @@ export function createField(canvas) {
   const ndc = new Vector3(), rayDir = new Vector3(), camFwd = new Vector3(), tmpV = new Vector3();
   let hasPointer = false, lastPointerAt = 0, ptrFresh = true;
   let scrollY = window.scrollY || 0;
+  rig.setScroll(scrollY);
   const impulse = velMat.uniforms.uImpulse.value;
 
   const toWorld = (cx, cy, out) => {
@@ -166,8 +168,7 @@ export function createField(canvas) {
     const dt = Math.min(clock.getDelta(), MAX_DT);
     elapsed += dt;
 
-    camera.position.y = -scrollY * PARALLAX * halfH;
-    camera.updateMatrixWorld();
+    rig.update(dt);
 
     // Touch devices idle >2.5s (or before any pointer event): roam a lissajous
     // attractor so the field feels alive without a cursor.
@@ -243,7 +244,7 @@ export function createField(canvas) {
       const b = fibers.burst();
       arrivals.push({ at: elapsed + b.arriveIn, node: anchorIdx.get(b.fiberIdx) ?? core.anchorNode(b.anchorDir) });
     },
-    onScroll(y) { scrollY = y; },
+    onScroll(y) { scrollY = y; rig.setScroll(y); },
     setPaused(p) {
       if (p === paused) return;
       paused = p;
