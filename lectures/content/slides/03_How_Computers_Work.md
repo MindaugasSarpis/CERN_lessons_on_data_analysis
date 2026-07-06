@@ -46,7 +46,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🧠 Break a problem into a finite sequence of steps — think **algorithmically**
+🧠 Trace how data is represented — **bits → bytes → numbers → text → files** — with a nod to how the CPU executes an **algorithm**
 
 </div>
 
@@ -201,6 +201,12 @@ hideInToc: true
 # Unary
 
 ## <v-click> **Base-1** </v-click>
+
+<div class="note-text mt-md" style="opacity: 0.7;">
+
+Already fluent in binary? Skim ahead to the hex slide — the payoff is how files decode.
+
+</div>
 
 ---
 layout: center
@@ -718,6 +724,32 @@ hideInToc: true
 🐛 **Debugging** — Easier to read than long binary strings
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Try It** — Think Like a CPU
+
+<div class="card card-success card-glass pad-tight mt-sm">
+
+## 🧮 **Find the Maximum, Step by Step**
+
+Given a list, e.g. `[7, 2, 9, 4]` — work through it **one instruction at a time**, the way a processor would:
+
+1. Set `max` = the first number
+2. Look at the next number
+3. Is it bigger than `max`? If yes, replace `max`
+4. Repeat steps 2–3 until the list is exhausted
+5. `max` now holds the answer
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 No shortcuts, no "just looking at it" — every step is explicit and repeatable. That's exactly what the CPU does later in this lecture, just with **fetch–decode–execute** instead of pen and paper.
 
 </div>
 
@@ -1287,6 +1319,22 @@ Addition just works — no special subtraction circuit:
 📏 Signed ranges are asymmetric: 8 bits → **−128 … +127** — one more negative than positive.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Using the two's-complement recipe just shown, what decimal value does the 4-bit pattern 1011 represent?"
+  :options="[
+    '11',
+    '−5',
+    '5',
+    '−3'
+  ]"
+  :correct="1"
+  explanation="Flip 1011 → 0100, add one → 0101 = 5, so 1011 is −5 — exactly the worked example on the previous slide. The top bit signals negative; you still recover the magnitude by inverting and adding one."
+/>
 
 ---
 hideInToc: true

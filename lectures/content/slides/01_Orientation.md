@@ -314,13 +314,13 @@ hideInToc: true
 
 | **Date** | **Topic** |
 | --- | --- |
-| Feb 19 | Data analysis and computing |
-| Feb 20 | Data analysis and computing |
-| Feb 21 | Data analysis and computing |
-| Feb 27 | Artificial Intelligence |
-| Feb 28 | Artificial Intelligence |
-| Apr 16 | Data analysis and computing |
-| Apr 17 | Data analysis and computing |
+| Feb 19 | **A** · Foundations & Tooling |
+| Feb 20 | **A** · Foundations & Tooling |
+| Feb 21 | **B** · Programming |
+| Feb 27 | **C** · Data Analysis Core |
+| Feb 28 | **C** · Data Analysis Core |
+| Apr 16 | **D** · Practical Data Work |
+| Apr 17 | **E** · Advanced *(optional)* |
 | **Apr 18** | **Final Project Presentations** |
 
 <style scoped>
@@ -465,6 +465,22 @@ Every field generates data. The tools and mindset you'll build in this course ap
 hideInToc: true
 ---
 
+<MCQ
+  question="You catch yourself repeating the same manual steps on your data every week. Writing a script to do it instead chiefly serves which of the Four Aims?"
+  :options="[
+    '🔧 Tool agnosticism',
+    '♻️ Reproducibility',
+    '⚙️ Automation',
+    '📁 Efficient work with data & files'
+  ]"
+  :correct="2"
+  explanation="Do it once by hand, twice by script — letting the machine repeat the boring parts is exactly what ⚙️ automation means. It often boosts ♻️ reproducibility too, but the direct target here is automation."
+/>
+
+---
+hideInToc: true
+---
+
 # **What You Need**
 
 <div class="grid-2 mt-md gap-md">
@@ -477,6 +493,8 @@ hideInToc: true
 - A **web browser** (Chrome, Firefox, Edge)
 - An **IDE** (VS Code)
 - **Python 3.10+** installed ([python.org](https://python.org))
+
+*🔧 Tool-agnostic: conda, PyCharm, or any equivalent works — the aim is the skill, not the tool.*
 
 </div>
 
@@ -498,7 +516,7 @@ You should see `Python 3.x.x`. If not, we'll fix it now.
 
 </div>
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 ## 🔧 **Today's Task**
 
@@ -519,9 +537,13 @@ layout: fact
 
 # Breaks...
 
+<!-- Speaker: signal a short break here before moving into introductions. -->
+
 ---
 hideInToc: true
 layout: fact
 ---
 
 # Who am I talking to?
+
+<!-- Speaker: quick show of hands — ask what fields/backgrounds are in the room, to calibrate later examples. -->

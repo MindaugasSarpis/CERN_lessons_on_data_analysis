@@ -210,6 +210,8 @@ Discovery of the **Higgs boson** in **2012** — confirmed the mechanism that gi
 
 Nobel Prize in Physics 2013
 
+*Precisely: this gives mass to fundamental particles (**fermions**, **W/Z** bosons) — most of the mass around you (e.g. the proton's) is **QCD binding energy**, not the Higgs.*
+
 </div>
 
 </div>
@@ -523,6 +525,8 @@ hideInToc: true
 
 💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable.
 
+🔭 The pattern repeats at the frontier: in **2025** the CERN Council backed the **Future Circular Collider (FCC)** feasibility study — today's frontier is tomorrow's injector.
+
 </div>
 
 ---
@@ -591,6 +595,15 @@ That thread carries into the next section. (~1 min setup)
 
 <VideoPlayer src="Expansion_Funnel_H264_1080p.webm" autoplay   />
 
+
+---
+hideInToc: true
+layout: fact
+---
+
+# Half-time
+
+## Every scene so far ends as data someone must turn into understanding — which one would *you* analyse first?
 
 ---
 
