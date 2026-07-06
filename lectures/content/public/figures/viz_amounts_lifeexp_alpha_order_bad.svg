@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="512.39952pt" height="483.59952pt" viewBox="0 0 512.39952 483.59952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-06T05:00:08.335814</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 483.59952 
+L 512.39952 483.59952 
+L 512.39952 0 
+L 0 0 
+L 0 483.59952 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 61.551563 444.75952 
+L 499.04952 444.75952 
+L 499.04952 23.910937 
+L 61.551563 23.910937 
+L 61.551563 444.75952 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 93.958819 444.75952 
+L 93.958819 23.910937 
+" clip-path="url(#p4edeec223b)" style="fill: none; stroke: #2a3140; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m77db543c5c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #8b97a6; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m77db543c5c" x="93.958819" y="444.75952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="93.958819" y="458.75952" transform="rotate(-0 93.958819 458.75952)">60</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 174.976959 444.75952 
+L 174.976959 23.910937 
+" clip-path="url(#p4edeec223b)" style="fill: none; stroke: #2a3140; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m77db543c5c" x="174.976959" y="444.75952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="174.976959" y="458.75952" transform="rotate(-0 174.976959 458.75952)">65</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 255.995099 444.75952 
+L 255.995099 23.910937 
+" clip-path="url(#p4edeec223b)" style="fill: none; stroke: #2a3140; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m77db543c5c" x="255.995099" y="444.75952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="255.995099" y="458.75952" transform="rotate(-0 255.995099 458.75952)">70</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 337.013239 444.75952 
+L 337.013239 23.910937 
+" clip-path="url(#p4edeec223b)" style="fill: none; stroke: #2a3140; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m77db543c5c" x="337.013239" y="444.75952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="337.013239" y="458.75952" transform="rotate(-0 337.013239 458.75952)">75</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 418.03138 444.75952 
+L 418.03138 23.910937 
+" clip-path="url(#p4edeec223b)" style="fill: none; stroke: #2a3140; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m77db543c5c" x="418.03138" y="444.75952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="418.03138" y="458.75952" transform="rotate(-0 418.03138 458.75952)">80</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 499.04952 444.75952 
+L 499.04952 23.910937 
+" clip-path="url(#p4edeec223b)" style="fill: none; stroke: #2a3140; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m77db543c5c" x="499.04952" y="444.75952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="499.04952" y="458.75952" transform="rotate(-0 499.04952 458.75952)">85</text>
+     </g>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 12px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="280.300541" y="473.63952" transform="rotate(-0 280.300541 473.63952)">Life expectancy (years)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_13">
+      <defs>
+       <path id="mfaad93071a" d="M 0 0 
+L -3.5 0 
+" style="stroke: #8b97a6; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="43.040419" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="46.540419" transform="rotate(-0 54.551563 46.540419)">Argentina</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="63.176714" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="66.676714" transform="rotate(-0 54.551563 66.676714)">Brazil</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="83.31301" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="86.81301" transform="rotate(-0 54.551563 86.81301)">Canada</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="103.449306" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="106.949306" transform="rotate(-0 54.551563 106.949306)">Chad</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="123.585602" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="127.085602" transform="rotate(-0 54.551563 127.085602)">Denmark</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="143.721898" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="147.221898" transform="rotate(-0 54.551563 147.221898)">Egypt</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_19">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="163.858193" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="167.358193" transform="rotate(-0 54.551563 167.358193)">France</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="183.994489" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="187.564802" transform="rotate(-0 54.551563 187.564802)">Germany</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_21">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="204.130785" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="207.630785" transform="rotate(-0 54.551563 207.630785)">Haiti</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="224.267081" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="227.767081" transform="rotate(-0 54.551563 227.767081)">India</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="244.403377" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="247.903377" transform="rotate(-0 54.551563 247.903377)">Japan</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="264.539672" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_19">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="268.039672" transform="rotate(-0 54.551563 268.039672)">Kenya</text>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_25">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="284.675968" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_20">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="288.175968" transform="rotate(-0 54.551563 288.175968)">Mexico</text>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="304.812264" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_21">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="308.312264" transform="rotate(-0 54.551563 308.312264)">Nigeria</text>
+     </g>
+    </g>
+    <g id="ytick_15">
+     <g id="line2d_27">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="324.94856" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_22">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="328.44856" transform="rotate(-0 54.551563 328.44856)">Norway</text>
+     </g>
+    </g>
+    <g id="ytick_16">
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="345.084856" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_23">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="348.584856" transform="rotate(-0 54.551563 348.584856)">Peru</text>
+     </g>
+    </g>
+    <g id="ytick_17">
+     <g id="line2d_29">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="365.221152" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="368.721152" transform="rotate(-0 54.551563 368.721152)">Russia</text>
+     </g>
+    </g>
+    <g id="ytick_18">
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="385.357447" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_25">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="388.92776" transform="rotate(-0 54.551563 388.92776)">Spain</text>
+     </g>
+    </g>
+    <g id="ytick_19">
+     <g id="line2d_31">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="405.493743" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_26">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="408.993743" transform="rotate(-0 54.551563 408.993743)">Thailand</text>
+     </g>
+    </g>
+    <g id="ytick_20">
+     <g id="line2d_32">
+      <g>
+       <use xlink:href="#mfaad93071a" x="61.551563" y="425.630039" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_27">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="54.551563" y="429.130039" transform="rotate(-0 54.551563 429.130039)">Vietnam</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 61.551563 444.75952 
+L 61.551563 23.910937 
+" style="fill: none; stroke: #8b97a6; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 61.551563 444.75952 
+L 499.04952 444.75952 
+" style="fill: none; stroke: #8b97a6; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_33">
+    <defs>
+     <path id="m722627646f" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #f47069"/>
+    </defs>
+    <g clip-path="url(#p4edeec223b)">
+     <use xlink:href="#m722627646f" x="354.83723" y="43.040419" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="299.744895" y="63.176714" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="330.531788" y="83.31301" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="93.958819" y="103.449306" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="126.366075" y="123.585602" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="251.134011" y="143.721898" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="358.077956" y="163.858193" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="349.976142" y="183.994489" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="93.958819" y="204.130785" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="196.041675" y="224.267081" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="450.438636" y="244.403377" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="199.282401" y="264.539672" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="345.115053" y="284.675968" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="132.847526" y="304.812264" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="450.438636" y="324.94856" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="228.448931" y="345.084856" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="200.902764" y="365.221152" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="429.373919" y="385.357447" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="327.291063" y="405.493743" style="fill: #f47069; stroke: #f47069"/>
+     <use xlink:href="#m722627646f" x="280.300541" y="425.630039" style="fill: #f47069; stroke: #f47069"/>
+    </g>
+   </g>
+   <g id="text_28">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="280.300541" y="17.910937" transform="rotate(-0 280.300541 17.910937)">Life Expectancy — Alphabetical Order</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p4edeec223b">
+   <rect x="61.551563" y="23.910937" width="437.497958" height="420.848583"/>
+  </clipPath>
+ </defs>
+</svg>
