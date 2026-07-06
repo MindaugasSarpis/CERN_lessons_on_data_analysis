@@ -91,13 +91,14 @@ def _title_as_finding():
 # ---------------------------------------------------------------------------
 
 def _gene_expression_data():
+    rng = np.random.default_rng(2104)  # local: paired figures must share identical data
     n = 220
-    wt = RNG.lognormal(mean=3.0, sigma=0.9, size=n)
-    mut = wt * RNG.lognormal(mean=0.0, sigma=0.18, size=n)
+    wt = rng.lognormal(mean=3.0, sigma=0.9, size=n)
+    mut = wt * rng.lognormal(mean=0.0, sigma=0.18, size=n)
     # a handful of genuinely differentially-expressed genes
-    idx = RNG.choice(n, 10, replace=False)
-    mut[idx[:5]] *= RNG.uniform(2.5, 5, 5)
-    mut[idx[5:]] /= RNG.uniform(2.5, 5, 5)
+    idx = rng.choice(n, 10, replace=False)
+    mut[idx[:5]] *= rng.uniform(2.5, 5, 5)
+    mut[idx[5:]] /= rng.uniform(2.5, 5, 5)
     return wt, mut, idx
 
 
@@ -155,8 +156,9 @@ def _grid_vs_no_grid():
 
 
 def _price_series():
+    rng = np.random.default_rng(2105)  # local: paired figures must share identical data
     days = np.arange(180)
-    steps = RNG.normal(0.15, 2.0, days.size)
+    steps = rng.normal(0.15, 2.0, days.size)
     price = 100 + np.cumsum(steps)
     return days, price
 

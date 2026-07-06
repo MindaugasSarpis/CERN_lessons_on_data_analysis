@@ -37,7 +37,10 @@ def use() -> None:
         "axes.prop_cycle": mpl.cycler(color=CYCLE),
         "legend.frameon": False, "legend.fontsize": 10,
         "lines.linewidth": 2.0, "patch.linewidth": 0.8,
-        "svg.fonttype": "none",  # keep text as text — crisp at any zoom
+        # "path": embed text as vector outlines. SVGs load via <img>, which
+        # cannot see the page's webfonts — fonttype "none" silently fell back
+        # to the browser default sans. Outlines carry true Space Grotesk.
+        "svg.fonttype": "path",
         "svg.hashsalt": "cern-course",  # deterministic element ids across runs
         "figure.constrained_layout.use": True,
     })

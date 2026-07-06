@@ -7,12 +7,14 @@ import numpy as np
 
 import style
 
-RNG = np.random.default_rng(1865)
 LO, HI, NBINS = 1780, 1950, 60
 
 def _data():
-    bkg = RNG.uniform(LO, HI, 6000)
-    sig = RNG.normal(1865, 8.5, 2200)
+    # Fresh generator per call: every stage MUST draw the identical dataset,
+    # or points and y-limits jump between v-click reveals.
+    rng = np.random.default_rng(1865)
+    bkg = rng.uniform(LO, HI, 6000)
+    sig = rng.normal(1865, 8.5, 2200)
     counts, edges = np.histogram(np.concatenate([bkg, sig]), bins=NBINS, range=(LO, HI))
     centers = 0.5 * (edges[:-1] + edges[1:])
     return centers, counts

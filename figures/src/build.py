@@ -25,13 +25,22 @@ def main() -> int:
         return 2
     style.use()
     total = 0
+    failed = []
     for fam in wanted:
-        mod = importlib.import_module(fam)
+        try:
+            mod = importlib.import_module(fam)
+        except ImportError as e:
+            print(f"[{fam}] SKIPPED — import failed: {e}", file=sys.stderr)
+            failed.append(fam)
+            continue
         print(f"[{fam}] {len(mod.FIGURES)} figure(s)")
         for name, fn in mod.FIGURES.items():
             fn()
             total += 1
     print(f"Done: {total} figure(s) → {style.OUT}")
+    if failed:
+        print(f"FAILED families: {', '.join(failed)}", file=sys.stderr)
+        return 1
     return 0
 
 if __name__ == "__main__":

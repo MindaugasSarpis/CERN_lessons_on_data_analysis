@@ -49,8 +49,9 @@ def _flight_delays(n: int = 20_000):
     departure drags the arrival late with it. This is exactly the shape that
     turns a 20k-point scatter into a solid blob near the origin.
     """
-    dep = RNG.gamma(shape=1.6, scale=11.0, size=n) - 12.0
-    arr = 0.92 * dep + RNG.normal(0, 14, n)
+    rng = np.random.default_rng(2101)  # local: paired figures must share identical data
+    dep = rng.gamma(shape=1.6, scale=11.0, size=n) - 12.0
+    arr = 0.92 * dep + rng.normal(0, 14, n)
     return dep, arr
 
 
@@ -202,12 +203,13 @@ def _bar_2d_fixed():
 # ---------------------------------------------------------------------------
 
 def _tech_stocks(n_months: int = 30):
+    rng = np.random.default_rng(2102)  # local: paired figures must share identical data
     names = ["Nimbus", "Vertex", "Halcyon", "Quanta"]
     drifts = [0.9, 0.5, -0.2, 1.4]
     t = np.arange(n_months)
     series = {}
     for name, drift in zip(names, drifts):
-        cum = np.cumsum(RNG.normal(drift, 2.6, n_months))
+        cum = np.cumsum(rng.normal(drift, 2.6, n_months))
         series[name] = 100 + cum - cum[0]
     return t, series
 
@@ -245,11 +247,12 @@ def _stocks_good_no_legend():
 # ---------------------------------------------------------------------------
 
 def _athletes():
+    rng = np.random.default_rng(2103)  # local: paired figures must share identical data
     n = 90
-    male_h = RNG.normal(183, 7, n)
-    male_w = 0.90 * male_h - 85 + RNG.normal(0, 6, n)
-    female_h = RNG.normal(169, 6, n)
-    female_w = 0.75 * female_h - 52 + RNG.normal(0, 5, n)
+    male_h = rng.normal(183, 7, n)
+    male_w = 0.90 * male_h - 85 + rng.normal(0, 6, n)
+    female_h = rng.normal(169, 6, n)
+    female_w = 0.75 * female_h - 52 + rng.normal(0, 5, n)
     return male_h, male_w, female_h, female_w
 
 

@@ -15909,7 +15909,86 @@ z
 " clip-path="url(#p23a99999c2)" style="fill: #a80000"/>
    </g>
    <g id="text_1">
-    <text style="font-weight: 700; font-size: 15px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #f47069" x="173.712428" y="17.7" transform="rotate(-0 173.712428 17.7)">jet</text>
+    <!-- jet -->
+    <g style="fill: #f47069" transform="translate(163.977663 17.7) scale(0.15 -0.15)">
+     <defs>
+      <path id="SpaceGrotesk-Light-6a" d="M -64 -1280 
+L -64 -934 
+L 384 -934 
+Q 576 -934 576 -742 
+L 576 3110 
+L 960 3110 
+L 960 -794 
+Q 960 -1024 835 -1152 
+Q 710 -1280 461 -1280 
+L -64 -1280 
+z
+M 765 3648 
+Q 624 3648 528 3744 
+Q 432 3840 432 3981 
+Q 432 4128 528 4221 
+Q 624 4314 765 4314 
+Q 912 4314 1005 4221 
+Q 1098 4128 1098 3981 
+Q 1098 3840 1005 3744 
+Q 912 3648 765 3648 
+z
+" transform="scale(0.015625)"/>
+      <path id="SpaceGrotesk-Light-65" d="M 1997 -90 
+Q 1517 -90 1161 112 
+Q 806 314 608 678 
+Q 410 1043 410 1517 
+L 410 1594 
+Q 410 2074 608 2435 
+Q 806 2797 1155 2998 
+Q 1504 3200 1952 3200 
+Q 2387 3200 2723 3017 
+Q 3059 2835 3251 2492 
+Q 3443 2150 3443 1677 
+L 3443 1472 
+L 794 1472 
+Q 813 890 1149 573 
+Q 1485 256 1997 256 
+Q 2432 256 2672 454 
+Q 2912 653 3040 941 
+L 3386 787 
+Q 3290 576 3120 374 
+Q 2950 173 2681 41 
+Q 2413 -90 1997 -90 
+z
+M 800 1805 
+L 3053 1805 
+Q 3027 2310 2726 2582 
+Q 2426 2854 1952 2854 
+Q 1485 2854 1177 2582 
+Q 870 2310 800 1805 
+z
+" transform="scale(0.015625)"/>
+      <path id="SpaceGrotesk-Light-74" d="M 1690 0 
+Q 1440 0 1315 128 
+Q 1190 256 1190 486 
+L 1190 2765 
+L 192 2765 
+L 192 3110 
+L 1190 3110 
+L 1190 4275 
+L 1574 4275 
+L 1574 3110 
+L 2662 3110 
+L 2662 2765 
+L 1574 2765 
+L 1574 538 
+Q 1574 346 1766 346 
+L 2496 346 
+L 2496 0 
+L 1690 0 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#SpaceGrotesk-Light-6a"/>
+     <use xlink:href="#SpaceGrotesk-Light-65" transform="translate(23.799988 0)"/>
+     <use xlink:href="#SpaceGrotesk-Light-74" transform="translate(83.599976 0)"/>
+    </g>
    </g>
   </g>
   <g id="axes_2">
@@ -15936,7 +16015,51 @@ L 3.5 0
       </g>
      </g>
      <g id="text_2">
-      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="372.430579" y="330.79952" transform="rotate(-0 372.430579 330.79952)">0.00</text>
+      <!-- 0.00 -->
+      <g style="fill: #8b97a6" transform="translate(372.430579 330.79952) scale(0.08 -0.08)">
+       <defs>
+        <path id="SpaceGrotesk-Light-30" d="M 2042 -90 
+Q 1286 -90 848 368 
+Q 410 826 410 1728 
+L 410 2752 
+Q 410 3654 848 4112 
+Q 1286 4570 2042 4570 
+Q 2797 4570 3235 4112 
+Q 3674 3654 3674 2752 
+L 3674 1728 
+Q 3674 826 3235 368 
+Q 2797 -90 2042 -90 
+z
+M 2042 269 
+Q 2656 269 2966 649 
+Q 3277 1030 3277 1702 
+L 3277 2778 
+Q 3277 3450 2966 3830 
+Q 2656 4211 2042 4211 
+Q 1427 4211 1116 3830 
+Q 806 3450 806 2778 
+L 806 1702 
+Q 806 1030 1116 649 
+Q 1427 269 2042 269 
+z
+" transform="scale(0.015625)"/>
+        <path id="SpaceGrotesk-Light-2e" d="M 749 -90 
+Q 589 -90 486 12 
+Q 384 115 384 275 
+Q 384 435 486 537 
+Q 589 640 749 640 
+Q 909 640 1011 537 
+Q 1114 435 1114 275 
+Q 1114 115 1011 12 
+Q 909 -90 749 -90 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#SpaceGrotesk-Light-30"/>
+       <use xlink:href="#SpaceGrotesk-Light-2e" transform="translate(63.799988 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-30" transform="translate(87.199982 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-30" transform="translate(150.999969 0)"/>
+      </g>
      </g>
     </g>
     <g id="ytick_2">
@@ -15946,7 +16069,69 @@ L 3.5 0
       </g>
      </g>
      <g id="text_3">
-      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="372.430579" y="283.984209" transform="rotate(-0 372.430579 283.984209)">0.16</text>
+      <!-- 0.16 -->
+      <g style="fill: #8b97a6" transform="translate(372.430579 283.984209) scale(0.08 -0.08)">
+       <defs>
+        <path id="SpaceGrotesk-Light-31" d="M 1638 0 
+L 1638 4237 
+L 1555 4237 
+L 576 2573 
+L 128 2573 
+L 1261 4480 
+L 2035 4480 
+L 2035 0 
+L 1638 0 
+z
+" transform="scale(0.015625)"/>
+        <path id="SpaceGrotesk-Light-36" d="M 1978 -90 
+Q 1536 -90 1181 89 
+Q 826 269 618 608 
+Q 410 947 410 1421 
+L 410 3002 
+Q 410 3488 598 3837 
+Q 787 4186 1139 4378 
+Q 1491 4570 1990 4570 
+Q 2483 4570 2822 4390 
+Q 3162 4211 3334 3910 
+Q 3507 3610 3507 3232 
+L 3110 3232 
+Q 3110 3674 2825 3942 
+Q 2541 4211 1990 4211 
+Q 1427 4211 1116 3900 
+Q 806 3590 806 3046 
+L 806 2362 
+L 883 2362 
+Q 1005 2579 1289 2761 
+Q 1574 2944 2074 2944 
+Q 2490 2944 2822 2761 
+Q 3155 2579 3350 2249 
+Q 3546 1920 3546 1466 
+L 3546 1389 
+Q 3546 934 3338 601 
+Q 3130 269 2774 89 
+Q 2419 -90 1978 -90 
+z
+M 1978 269 
+Q 2496 269 2822 569 
+Q 3149 870 3149 1395 
+L 3149 1446 
+Q 3149 1798 2998 2054 
+Q 2848 2310 2585 2454 
+Q 2323 2598 1978 2598 
+Q 1632 2598 1369 2454 
+Q 1107 2310 956 2054 
+Q 806 1798 806 1446 
+L 806 1395 
+Q 806 870 1132 569 
+Q 1459 269 1978 269 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#SpaceGrotesk-Light-30"/>
+       <use xlink:href="#SpaceGrotesk-Light-2e" transform="translate(63.799988 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-31" transform="translate(87.199982 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-36" transform="translate(127.599976 0)"/>
+      </g>
      </g>
     </g>
     <g id="ytick_3">
@@ -15956,7 +16141,87 @@ L 3.5 0
       </g>
      </g>
      <g id="text_4">
-      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="372.430579" y="237.168898" transform="rotate(-0 372.430579 237.168898)">0.32</text>
+      <!-- 0.32 -->
+      <g style="fill: #8b97a6" transform="translate(372.430579 237.168898) scale(0.08 -0.08)">
+       <defs>
+        <path id="SpaceGrotesk-Light-33" d="M 1939 -90 
+Q 1472 -90 1104 89 
+Q 736 269 528 611 
+Q 320 954 320 1440 
+L 320 1562 
+L 717 1562 
+L 717 1434 
+Q 717 890 1056 579 
+Q 1395 269 1939 269 
+Q 2490 269 2797 563 
+Q 3104 858 3104 1306 
+L 3104 1344 
+Q 3104 1677 2947 1881 
+Q 2790 2086 2524 2185 
+Q 2259 2285 1939 2285 
+L 1280 2285 
+L 1280 2822 
+L 3098 4058 
+L 3098 4122 
+L 422 4122 
+L 422 4480 
+L 3494 4480 
+L 3494 3904 
+L 1696 2682 
+L 1696 2618 
+L 2048 2618 
+Q 2464 2618 2790 2474 
+Q 3117 2330 3309 2051 
+Q 3501 1773 3501 1357 
+L 3501 1293 
+Q 3501 877 3309 566 
+Q 3117 256 2765 83 
+Q 2413 -90 1939 -90 
+z
+" transform="scale(0.015625)"/>
+        <path id="SpaceGrotesk-Light-32" d="M 371 0 
+L 371 442 
+Q 371 922 544 1200 
+Q 717 1478 1027 1644 
+Q 1338 1811 1760 1939 
+L 2080 2042 
+Q 2394 2138 2634 2275 
+Q 2874 2413 3008 2630 
+Q 3142 2848 3142 3181 
+L 3142 3206 
+Q 3142 3674 2819 3942 
+Q 2496 4211 1997 4211 
+Q 1466 4211 1126 3926 
+Q 787 3642 787 3059 
+L 787 2976 
+L 403 2976 
+L 403 3059 
+Q 403 3546 608 3882 
+Q 813 4218 1174 4394 
+Q 1536 4570 1997 4570 
+Q 2458 4570 2806 4400 
+Q 3155 4230 3347 3926 
+Q 3539 3622 3539 3219 
+L 3539 3162 
+Q 3539 2726 3369 2448 
+Q 3200 2170 2893 1994 
+Q 2586 1818 2170 1683 
+L 1850 1587 
+Q 1504 1478 1264 1360 
+Q 1024 1242 896 1046 
+Q 768 851 768 506 
+L 768 358 
+L 3501 358 
+L 3501 0 
+L 371 0 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#SpaceGrotesk-Light-30"/>
+       <use xlink:href="#SpaceGrotesk-Light-2e" transform="translate(63.799988 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-33" transform="translate(87.199982 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-32" transform="translate(147.499969 0)"/>
+      </g>
      </g>
     </g>
     <g id="ytick_4">
@@ -15966,7 +16231,93 @@ L 3.5 0
       </g>
      </g>
      <g id="text_5">
-      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="372.430579" y="190.353588" transform="rotate(-0 372.430579 190.353588)">0.48</text>
+      <!-- 0.48 -->
+      <g style="fill: #8b97a6" transform="translate(372.430579 190.353588) scale(0.08 -0.08)">
+       <defs>
+        <path id="SpaceGrotesk-Light-34" d="M 2611 0 
+L 2611 922 
+L 218 922 
+L 218 1395 
+L 2240 4480 
+L 3008 4480 
+L 3008 1280 
+L 3789 1280 
+L 3789 922 
+L 3008 922 
+L 3008 0 
+L 2611 0 
+z
+M 634 1280 
+L 2611 1280 
+L 2611 4250 
+L 2534 4250 
+L 634 1344 
+L 634 1280 
+z
+" transform="scale(0.015625)"/>
+        <path id="SpaceGrotesk-Light-38" d="M 2022 -90 
+Q 1498 -90 1123 67 
+Q 749 224 547 509 
+Q 346 794 346 1171 
+L 346 1235 
+Q 346 1581 496 1805 
+Q 646 2029 864 2147 
+Q 1082 2266 1267 2291 
+L 1267 2368 
+Q 1082 2413 886 2531 
+Q 691 2650 563 2851 
+Q 435 3053 435 3347 
+L 435 3411 
+Q 435 3782 643 4038 
+Q 851 4294 1209 4432 
+Q 1568 4570 2022 4570 
+Q 2477 4570 2835 4432 
+Q 3194 4294 3402 4038 
+Q 3610 3782 3610 3411 
+L 3610 3347 
+Q 3610 3053 3482 2851 
+Q 3354 2650 3162 2531 
+Q 2970 2413 2778 2368 
+L 2778 2291 
+Q 2970 2266 3184 2147 
+Q 3398 2029 3548 1805 
+Q 3699 1581 3699 1235 
+L 3699 1171 
+Q 3699 794 3497 509 
+Q 3296 224 2921 67 
+Q 2547 -90 2022 -90 
+z
+M 2022 269 
+Q 2605 269 2953 499 
+Q 3302 730 3302 1178 
+L 3302 1229 
+Q 3302 1683 2953 1910 
+Q 2605 2138 2022 2138 
+Q 1440 2138 1091 1910 
+Q 742 1683 742 1229 
+L 742 1178 
+Q 742 730 1091 499 
+Q 1440 269 2022 269 
+z
+M 2022 2496 
+Q 2573 2496 2893 2713 
+Q 3213 2931 3213 3328 
+L 3213 3379 
+Q 3213 3776 2893 3993 
+Q 2573 4211 2022 4211 
+Q 1472 4211 1152 3993 
+Q 832 3776 832 3379 
+L 832 3328 
+Q 832 2931 1152 2713 
+Q 1472 2496 2022 2496 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#SpaceGrotesk-Light-30"/>
+       <use xlink:href="#SpaceGrotesk-Light-2e" transform="translate(63.799988 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-34" transform="translate(87.199982 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-38" transform="translate(149.199966 0)"/>
+      </g>
      </g>
     </g>
     <g id="ytick_5">
@@ -15976,7 +16327,13 @@ L 3.5 0
       </g>
      </g>
      <g id="text_6">
-      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="372.430579" y="143.538277" transform="rotate(-0 372.430579 143.538277)">0.64</text>
+      <!-- 0.64 -->
+      <g style="fill: #8b97a6" transform="translate(372.430579 143.538277) scale(0.08 -0.08)">
+       <use xlink:href="#SpaceGrotesk-Light-30"/>
+       <use xlink:href="#SpaceGrotesk-Light-2e" transform="translate(63.799988 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-36" transform="translate(87.199982 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-34" transform="translate(148.199966 0)"/>
+      </g>
      </g>
     </g>
     <g id="ytick_6">
@@ -15986,7 +16343,13 @@ L 3.5 0
       </g>
      </g>
      <g id="text_7">
-      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="372.430579" y="96.722966" transform="rotate(-0 372.430579 96.722966)">0.80</text>
+      <!-- 0.80 -->
+      <g style="fill: #8b97a6" transform="translate(372.430579 96.722966) scale(0.08 -0.08)">
+       <use xlink:href="#SpaceGrotesk-Light-30"/>
+       <use xlink:href="#SpaceGrotesk-Light-2e" transform="translate(63.799988 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-38" transform="translate(87.199982 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-30" transform="translate(150.399979 0)"/>
+      </g>
      </g>
     </g>
     <g id="ytick_7">
@@ -15996,7 +16359,58 @@ L 3.5 0
       </g>
      </g>
      <g id="text_8">
-      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="372.430579" y="49.907655" transform="rotate(-0 372.430579 49.907655)">0.96</text>
+      <!-- 0.96 -->
+      <g style="fill: #8b97a6" transform="translate(372.430579 49.907655) scale(0.08 -0.08)">
+       <defs>
+        <path id="SpaceGrotesk-Light-39" d="M 1914 -90 
+Q 1421 -90 1081 89 
+Q 742 269 569 573 
+Q 397 877 397 1248 
+L 794 1248 
+Q 794 806 1082 537 
+Q 1370 269 1914 269 
+Q 2483 269 2790 579 
+Q 3098 890 3098 1434 
+L 3098 2118 
+L 3021 2118 
+Q 2899 1901 2614 1718 
+Q 2330 1536 1830 1536 
+Q 1421 1536 1085 1718 
+Q 749 1901 553 2233 
+Q 358 2566 358 3014 
+L 358 3091 
+Q 358 3552 566 3881 
+Q 774 4211 1129 4390 
+Q 1485 4570 1926 4570 
+Q 2374 4570 2726 4390 
+Q 3078 4211 3286 3875 
+Q 3494 3539 3494 3059 
+L 3494 1478 
+Q 3494 998 3308 646 
+Q 3123 294 2768 102 
+Q 2413 -90 1914 -90 
+z
+M 1926 1882 
+Q 2272 1882 2534 2026 
+Q 2797 2170 2947 2429 
+Q 3098 2688 3098 3034 
+L 3098 3085 
+Q 3098 3610 2771 3910 
+Q 2445 4211 1926 4211 
+Q 1408 4211 1081 3910 
+Q 755 3610 755 3085 
+L 755 3034 
+Q 755 2688 905 2429 
+Q 1056 2170 1318 2026 
+Q 1581 1882 1926 1882 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#SpaceGrotesk-Light-30"/>
+       <use xlink:href="#SpaceGrotesk-Light-2e" transform="translate(63.799988 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-39" transform="translate(87.199982 0)"/>
+       <use xlink:href="#SpaceGrotesk-Light-36" transform="translate(148.199966 0)"/>
+      </g>
      </g>
     </g>
    </g>
