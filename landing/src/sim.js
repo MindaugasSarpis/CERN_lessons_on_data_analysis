@@ -112,6 +112,13 @@ export function createField(canvas) {
   const core = addCore(scene, { coarse });
   core.setPixelRatio(baseDpr);
 
+  const anchorIdx = new Map(); // fiberIdx -> core node idx (resolved lazily)
+  const getAnchor = (fiberIdx, anchorDir, out) => {
+    if (!anchorIdx.has(fiberIdx)) anchorIdx.set(fiberIdx, core.anchorNode(anchorDir));
+    core.nodeWorld(anchorIdx.get(fiberIdx), out);
+  };
+  const arrivals = []; // { at, node } — burst pulses in flight toward the core
+
   // --- pointer state ---
   // Client coords map to world by intersecting the pointer ray with the plane
   // through CORE_CENTER perpendicular to the view direction — stays meaningful
@@ -200,7 +207,13 @@ export function createField(canvas) {
     impulse.w *= 0.86; // hover impulse decay
 
     core.update(elapsed);
-    fibers.update(elapsed, velMat.uniforms.uPointer.value, camera.position.y);
+    fibers.update(elapsed, velMat.uniforms.uPointer.value, getAnchor);
+    for (let i = arrivals.length - 1; i >= 0; i--) {
+      if (elapsed >= arrivals[i].at) {
+        core.flashAt(arrivals[i].node);
+        arrivals.splice(i, 1);
+      }
+    }
     renderMat.uniforms.uPos.value = posA.texture;
     renderMat.uniforms.uVel.value = velA.texture;
     renderer.render(scene, camera);
@@ -227,7 +240,8 @@ export function createField(canvas) {
     onImpulse(cx, cy) {
       const w = toWorld(cx, cy, new Vector3());
       impulse.set(w.x, w.y, w.z, 26);
-      fibers.burst(); // hover "transmits" a pulse down a fiber
+      const b = fibers.burst();
+      arrivals.push({ at: elapsed + b.arriveIn, node: anchorIdx.get(b.fiberIdx) ?? core.anchorNode(b.anchorDir) });
     },
     onScroll(y) { scrollY = y; },
     setPaused(p) {
