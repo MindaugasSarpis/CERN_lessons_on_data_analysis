@@ -70,18 +70,27 @@ All 16 seminars: declared 90 min (UNDER).
 
 ## Design
 
-### 1. Rebalance L09 (186 → ~135)
+### 1. Rebalance L09 (186 → ~155)
 
 L09 "Concepts of Data Analysis" carries material that belongs to other weeks.
 Move (adapt transitions, keep slide content):
 
 - **Domain examples block** (Biomedicine, Environmental, Astronomy, Particle
-  Physics, Finance, common threads, reflection MCQ) → **L01** ("Data in Your
+  Physics, Finance, common threads, reflection) → **L01** ("Data in Your
   Life" is exactly this theme).
 - **Documentation & knowledge sharing** → **L05** (Markdown/VS Code is the
   documentation lecture).
+- **Languages of data + Proprietary tools vs programming languages** →
+  **L07** (they complete the "why Python" landscape argument).
 - **DataOps & automation + Testing your analysis** → **L14** (Reproducible
-  Workflows & Automation).
+  Workflows & Automation), and the **FAIR principles section including the
+  CERN Open Data worked example** → **L14** (FAIR is the reproducibility
+  lecture's natural capstone; L09 keeps forward pointers).
+
+Executed 2026-07-07: L09 lands at ~155 — still above the 145 advisory line,
+which is accepted: the `timing:check` gate fails only UNDER weeks, L09 is the
+conceptual heart of the course, and its 7 MCQs give the instructor ~20 min of
+pacing slack. Everything else lands inside the band.
 
 ### 2. Expand thin decks (order = biggest gap first)
 
@@ -95,10 +104,10 @@ section dividers) and serves the four aims. Indicative content plans:
 | L08 (43) | ~120 | add pathlib & file organisation, JSON + data formats, building a small CLI script, organising code into modules, docstrings & type hints, more Try It runners, 1 MCQ |
 | L16 (48) | ~120 | add regression section, clustering/unsupervised, ROC/AUC & cross-validation, feature engineering & leakage, ML-in-HEP case studies (trigger, flavour tagging), responsible-AI depth, second hands-on classifier demo |
 | L05 (57) | ~120 | absorb L09 documentation section; add Mermaid diagrams section (course uses them), advanced editing (multi-cursor, regex search/replace, snippets, diff view), data-friendly extensions, README anatomy exercise |
-| L07 (57) | ~120 | add control-flow depth (already has loops — add practice), f-strings & formatting, reading tracebacks, naming/PEP 8 style, more Try It runners, small kata set |
+| L07 (57) | ~120 | absorb L09 languages-of-data slides; add f-strings & formatting, reading tracebacks, naming/PEP 8 style, scripts-vs-notebooks, more Try It runners/katas |
 | L06 (67) | ~120 | add GitHub collaboration section (PRs, issues, forks, review flow), git in VS Code, stash/tags, GitLab-at-CERN note, second hands-on sequence |
 | L15 (74) | ~120 | add parallelism (vectorisation/threads/processes), storage formats for analysis (ROOT/Parquet/HDF5), WLCG/grid + cloud vs HPC, benchmarking your machine |
-| L14 (75) | ~120 | absorb L09 DataOps/testing; add data versioning teaser, pre-commit hooks, workflow tools comparison |
+| L14 (75) | ~120 | absorb L09 DataOps/testing + FAIR section; expand testing hands-on (pytest), add data versioning teaser, pre-commit hooks, workflow tools comparison |
 | L02 (81) | ~115 | expand detector/data-flow numbers, open science & WLCG teaser, careers/impact slides (videos undercounted by model — ambient clips run long; modest top-up only) |
 | L04 (90) | ~115 | add pipes-and-filters practice, find/grep patterns on real data files, shell scripting mini-section |
 | L12 (92) | ~115 | add goodness-of-fit/residuals depth, fit-pitfalls gallery, one more guided fit exercise |
