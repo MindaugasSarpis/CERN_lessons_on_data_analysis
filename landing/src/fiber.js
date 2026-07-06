@@ -1,6 +1,6 @@
 import {
   Group, Mesh, BufferGeometry, BufferAttribute, ShaderMaterial,
-  AdditiveBlending, Vector2, Vector3,
+  AdditiveBlending, Vector3,
 } from 'three';
 import { NOISE } from './shaders/noise.glsl.js';
 

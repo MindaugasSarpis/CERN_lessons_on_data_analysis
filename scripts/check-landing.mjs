@@ -4,8 +4,8 @@
  * assets/). Asserts: title, every manifest deck link, JS boot (js class),
  * scene-or-fallback gating (field-on | static-bg), reveal-on-scroll, the
  * reduced-motion fallback, zero console/page errors, and (with ?qa +
- * preserveDrawingBuffer) that the WebGL scene renders non-blank pixels that
- * change with scroll.
+ * preserveDrawingBuffer) that the WebGL scene renders non-blank pixels and
+ * that scroll moves the camera (via the ?qa-gated window.__qaCam hook).
  *
  * Usage: node scripts/check-landing.mjs <distDir> [--base <prefix>]
  * Exit 0 = pass; 1 = failures; 2 = usage.
@@ -189,31 +189,51 @@ try {
         // Works because ?qa builds the renderer with preserveDrawingBuffer.
         const sample = () => page.evaluate(() => new Promise((resolveP) => {
           requestAnimationFrame(() => requestAnimationFrame(() => {
-            const src = document.getElementById('field');
-            const w = 64, h = 40;
-            const c = document.createElement('canvas');
-            c.width = w; c.height = h;
-            const g = c.getContext('2d', { willReadFrequently: true });
-            g.drawImage(src, 0, 0, w, h);
-            const d = g.getImageData(0, 0, w, h).data;
-            const px = []; let lit = 0;
-            for (let i = 0; i < d.length; i += 4) {
-              const l = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
-              px.push(l);
-              if (l > 8) lit++;
+            try {
+              const src = document.getElementById('field');
+              const w = 64, h = 40;
+              const c = document.createElement('canvas');
+              c.width = w; c.height = h;
+              const g = c.getContext('2d', { willReadFrequently: true });
+              g.drawImage(src, 0, 0, w, h);
+              const d = g.getImageData(0, 0, w, h).data;
+              const px = []; let lit = 0;
+              for (let i = 0; i < d.length; i += 4) {
+                const l = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+                px.push(l);
+                if (l > 8) lit++;
+              }
+              resolveP({ lit, total: w * h, px });
+            } catch (e) {
+              resolveP({ error: String(e) });
             }
-            resolveP({ lit, total: w * h, px });
           }));
         }));
+        // Scroll→camera wiring is asserted on the camera transform itself via
+        // the ?qa-gated hook (window.__qaCam, a live camera.position ref set
+        // in sim.js) — deterministic, unlike pixel diffs, which the ambient
+        // particle shimmer drowns out.
+        const readCam = () => page.evaluate(() =>
+          window.__qaCam ? { x: window.__qaCam.x, y: window.__qaCam.y, z: window.__qaCam.z } : null);
         await page.waitForTimeout(1200); // first frames + reveal settle
         const s0 = await sample();
+        const cam0 = await readCam();
         await page.evaluate(() => window.scrollTo(0, innerHeight * 2));
         await page.waitForTimeout(1600); // camera damping settle
         const s1 = await sample();
-        ok(s0.lit / s0.total > 0.005, `hero frame lit (${s0.lit}/${s0.total} px)`);
-        ok(s1.lit / s1.total > 0.005, `scrolled frame lit (${s1.lit}/${s1.total} px)`);
-        const diff = s0.px.reduce((a, v, i) => a + Math.abs(v - s1.px[i]), 0) / s0.px.length;
-        ok(diff > 1.5, `scroll changes the scene (mean |Δ| = ${diff.toFixed(2)})`);
+        const cam1 = await readCam();
+        const sampleErr = Object.entries({ s0, s1 }).find(([, s]) => s.error);
+        if (sampleErr) {
+          ok(false, `canvas sampling failed: ${sampleErr[0]} — ${sampleErr[1].error}`);
+        } else {
+          ok(s0.lit / s0.total > 0.005, `hero frame lit (${s0.lit}/${s0.total} px)`);
+          ok(s1.lit / s1.total > 0.005, `scrolled frame lit (${s1.lit}/${s1.total} px)`);
+        }
+        ok(cam0 && cam1, 'qa camera hook present');
+        if (cam0 && cam1) {
+          const camMove = Math.hypot(cam1.x - cam0.x, cam1.y - cam0.y, cam1.z - cam0.z);
+          ok(camMove > 5, `scroll moves the camera (Δ ${camMove.toFixed(1)} world units)`);
+        }
         ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
       }
     } catch (e) {

@@ -10,7 +10,7 @@ import { addCore } from './core.js';
 import { createRig } from './rig.js';
 import { CORE_CENTER, BOUNDS } from './world.js';
 
-const FOV = 55, CAM_Z = 14, MAX_DT = 1 / 30;
+const FOV = 55, MAX_DT = 1 / 30;
 
 function pickTexSize(coarse) {
   const cores = navigator.hardwareConcurrency || 4;
@@ -45,8 +45,8 @@ export function createField(canvas) {
 
   // --- camera ---
   const camera = new PerspectiveCamera(FOV, 1, 0.1, 120);
-  camera.position.z = CAM_Z;
   const rig = createRig(camera);
+  if (qa) window.__qaCam = camera.position; // live ref; QA reads it after scrolling
 
   // --- sim targets (ping-pong pos + vel) ---
   const rt = () => new WebGLRenderTarget(size, size, {
@@ -131,7 +131,6 @@ export function createField(canvas) {
   const ndc = new Vector3(), rayDir = new Vector3(), camFwd = new Vector3(), tmpV = new Vector3();
   let hasPointer = false, lastPointerAt = 0, ptrFresh = true;
   let scrollY = window.scrollY || 0;
-  rig.setScroll(scrollY);
   const impulse = velMat.uniforms.uImpulse.value;
 
   const toWorld = (cx, cy, out) => {
@@ -147,6 +146,7 @@ export function createField(canvas) {
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
+    rig.setScroll(window.scrollY || 0);
   }
   addEventListener('resize', resize, { passive: true });
   resize();
