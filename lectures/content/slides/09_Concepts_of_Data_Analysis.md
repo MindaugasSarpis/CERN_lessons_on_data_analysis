@@ -642,7 +642,7 @@ hideInToc: true
 
 <div class="note-text">
 
-#### 🧪 **23andMe** / **Ancestry.com** — comparing against *reference populations*. *(23andMe filed for bankruptcy in 2025 and its genetic database was sold — a reminder that your data can outlive the company that collected it.)*
+#### 🧪 **23andMe** / **Ancestry.com** — comparing against *reference populations*. *(23andMe filed for bankruptcy in 2025; its genetic database changed hands through the bankruptcy proceedings — a live lesson in consent outliving a company.)*
 
 </div>
 
@@ -677,31 +677,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-# **Social Sciences**
-
-<div class="card card-secondary card-glass pad-tight mt-md">
-
-- 📈 Economic forecasting blending macro indicators & behavioural data
-- 🧑‍🤝‍🧑 Social behaviour studies using surveys, logs, ethnography
-- 💬 Text analysis for sentiment, misinformation, community wellbeing
-- 🏛️ Informs policy, marketing, product design, civic planning
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-<div class="note-text">
-
-#### 🔗 Qualitative + quantitative insights reinforce each other
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
 # **Astronomy**
 
 <div class="card card-primary card-glass pad-tight mt-md">
@@ -717,7 +692,7 @@ hideInToc: true
 
 <div class="note-text">
 
-#### 🤖 Fun fact: many ML innovations came from sky surveys
+#### 🤖 **Galaxy Zoo** crowdsourced 1M+ galaxy classifications from SDSS images — the labelled set that seeded today's CNN galaxy-morphology classifiers
 
 </div>
 
@@ -742,63 +717,14 @@ hideInToc: true
 hideInToc: true
 ---
 
-# **Engineering** & **Healthcare Operations**
+# **Finance**
 
-<div class="grid-2 gap-md mt-md">
+<div class="card card-primary card-glass pad-tight mt-md">
 
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔧 **Engineering**
-
-- Predictive maintenance on turbines, trains, manufacturing lines
-- Quality control with computer vision & statistical process control
-- Structural health monitoring via sensors + physics-informed models
-- Outcomes: less downtime, safer infrastructure, cost optimisation
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🏥 **Healthcare Operations**
-
-- Epidemiology tracking outbreaks & transmission dynamics
-- Health policy simulation for capacity & funding
-- Hospital operations: patient flow, staffing, supply chain
-- Ethical considerations: privacy, bias, explainability
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Finance** & **Sports Analytics**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 💰 **Finance**
-
-- Stock market analysis + algorithmic trading with latency constraints
-- Risk management using stress tests, scenario analysis, VaR
-- Fraud detection & compliance monitoring with streaming data
-- Balances profitability with regulation and transparency
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🏃 **Sports Analytics**
-
-- Performance analysis combining tracking sensors & video
-- Strategy optimisation: playbooks, opponent scouting
-- Fan engagement via personalised content & ticket pricing
-- Data informs coaching, recruitment, business growth
-
-</div>
+- 💰 Stock market analysis + algorithmic trading with latency constraints
+- 🛡️ Risk management using stress tests, scenario analysis, VaR
+- 🚨 Fraud detection & compliance monitoring with streaming data
+- ⚖️ Balances profitability with regulation and transparency
 
 </div>
 
@@ -814,53 +740,6 @@ hideInToc: true
     <div style="font-size: 3.5em;">🎬</div>
     <div class="note-text mt-sm">Play the reel live:<br/><a href="https://www.facebook.com/reel/1963960414998958">facebook.com/reel/…</a></div>
   </div>
-</div>
-
----
-hideInToc: true
----
-
-# **Product / Business** & **Public Policy**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📊 **Product & Business**
-
-- Growth funnels: acquisition, activation, retention, revenue, referral
-- Experimentation: A/B tests, feature flagging, causal inference
-- Customer segmentation & lifetime value in subscription models
-- Guides product roadmaps, marketing spend, customer success
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🏙️ **Public Policy & Urban Planning**
-
-- Smart city sensors for transport, energy, waste
-- Open data portals enabling transparency & civic innovation
-- Geospatial analysis for zoning, emergency response, sustainability
-- Stakeholder engagement & ethical data sharing are crucial
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Education & Learning Analytics**
-
-<div class="card card-secondary card-glass pad-tight mt-md">
-
-- 📚 Learning management system logs reveal engagement patterns
-- 🚨 Early warning systems for student support
-- 📝 Curriculum design using assessment data & qualitative feedback
-- ⚖️ Balances personalisation with fairness and privacy
-
 </div>
 
 ---
@@ -1150,15 +1029,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A dashboard shows last month's average energy consumption per building. What type of analytics is this?"
+  question="A plot shows a histogram of the K-pi invariant mass for 60,000 LHCb events. What type of analytics is this?"
   :options="[
-    'Descriptive — it summarises what happened',
-    'Diagnostic — it explains why consumption changed',
-    'Predictive — it forecasts next month',
-    'Prescriptive — it recommends how to save energy'
+    'Descriptive — it summarises what the data look like',
+    'Diagnostic — it explains why the mass takes these values',
+    'Predictive — it forecasts the mass of the next event',
+    'Prescriptive — it recommends a selection cut'
   ]"
   :correct="0"
-  explanation="Reporting past averages is the textbook example of descriptive analytics: what happened, without explanation, forecast, or recommendation."
+  explanation="Plotting the distribution of a measured quantity — no explanation, forecast, or recommendation attached — is the textbook example of descriptive analytics: what the data look like, nothing more."
 />
 
 ---
@@ -1166,15 +1045,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="After sales dropped, an analyst segments customers and finds the decline is concentrated in one region tied to a price change. What type of analytics is this?"
+  question="The K-pi mass histogram shows a clear peak near 1865 MeV. An analyst investigates and attributes it to real D0 -> K- pi+ decays rather than combinatorial background. What type of analytics is this?"
   :options="[
-    'Descriptive — it reports the drop',
-    'Diagnostic — it identifies the cause',
-    'Predictive — it forecasts further decline',
-    'Prescriptive — it fixes the pricing'
+    'Descriptive — it reports where the peak sits',
+    'Diagnostic — it explains why the peak is there',
+    'Predictive — it forecasts future peaks',
+    'Prescriptive — it recommends a physics decision'
   ]"
   :correct="1"
-  explanation="The analyst is drilling into the data to explain *why* the drop occurred. That is diagnostic analytics — one step beyond descriptive, but short of forecasting or recommending action."
+  explanation="Going beyond 'there is a peak' to 'here is the physical reason the peak appears' is diagnostic analytics — explaining the cause of an observed pattern, one step past description but short of forecasting or recommending action."
 />
 
 ---
@@ -2278,6 +2157,33 @@ Speaker: transition — we've built the mental model; now zoom into the analytic
 loop itself. Six concrete steps: Define, Collect, Clean, Analyse, Visualise,
 Interpret. "Define" is where most analyses are won or lost. (~1 min)
 -->
+
+---
+hideInToc: true
+---
+
+# The Six-Step Loop at a Glance
+
+```mermaid {scale: 0.9}
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}}%%
+flowchart LR
+    Def["1 Define"]:::input --> Col["2 Collect"]:::process
+    Col --> Cln["3 Clean"]:::process
+    Cln --> Ana["4 Analyse"]:::process
+    Ana --> Vis["5 Visualise"]:::output
+    Vis --> Int["6 Interpret"]:::output
+    Int -.dead end?.-> Def
+
+    classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
+    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
+    classDef output fill:#155e75,stroke:#5eead4,stroke-width:2.5px,color:#e0f2fe,rx:14px,ry:14px
+```
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+**Not a line — a loop.** A dead end at any step sends you back to **Define**, not forward. The six steps in detail follow.
+
+</div>
 
 ---
 hideInToc: true

@@ -209,7 +209,7 @@ Download from [python.org](https://www.python.org/downloads/) — check **"Add P
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-We will use the **in-browser editor** on these slides for learning, but you will need a local Python install for your projects.
+We will use the **in-browser editor** on these slides for learning, but you will need a local Python install for your projects. *Isolated environments (`venv`, `conda`) that keep each project's packages separate exist too — properly covered in Lecture 14.*
 
 </div>
 
@@ -461,11 +461,11 @@ hideInToc: true
 #### ✂️ **`.strip()` and `.split()`**
 
 ```python
-line = "  23.4, 25.1, 22.8 \n"
-clean = line.strip()        # no whitespace
+line = "1049,-1204.5,873.2,15320.7,980.1,-650.4,9210.3\n"
+clean = line.strip()        # no newline
 parts = clean.split(",")    # list of pieces
-# ['23.4', ' 25.1', ' 22.8']
-values = [float(p) for p in parts]
+# event ID, then kaon (H1) & pion (H2) momentum components
+values = [float(p) for p in parts[1:]]
 ```
 
 </div>
@@ -496,6 +496,41 @@ Build output lines and filenames from lists.
 Speaker: slow down here — this is exactly what Seminar 7 asks for. Walk the
 recipe on the raw line live: strip the newline, split on the comma, float() each
 piece. Everything else is variation on this. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Peek Ahead — Skipping Junk Lines Safely
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ Real data files have junk lines too — a header, a blank line, a corrupted row. `float()` on non-numeric text raises a `ValueError` and crashes your script.
+
+</div>
+
+```py {monaco-run}
+lines = ["1049,-1204.5,873.2", "# comment row, not data", "1050,988.1,-650.4"]
+
+for line in lines:
+    try:
+        event_id, k_px, pi_px = line.split(",")
+        print(f"event {event_id}: K px={float(k_px)}, pi px={float(pi_px)}")
+    except ValueError:
+        print(f"skipped junk line: {line!r}")
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+💡 The full `try` / `except` / `finally` toolkit — with multiple exception types — comes in Lecture 08. For now: wrap the risky conversion, catch `ValueError`, move on.
+
+</div>
+
+<!--
+Speaker: this is a preview only — Seminar 7 needs it before L08 formally teaches
+exceptions. Don't dwell on syntax; the message is "some lines are junk, skip
+them safely." (~1 min)
 -->
 
 ---
@@ -633,6 +668,22 @@ hideInToc: true
 hideInToc: true
 ---
 
+<MCQ
+  question="masses = [1866, 1810, 1871]   then   result = masses.sort() — what is `result`, and what is `masses` now?"
+  :options="[
+    'result is None; masses is now [1810, 1866, 1871] — sort() mutates in place and returns nothing',
+    'result is [1810, 1866, 1871]; masses is unchanged — sort() returns a new sorted list',
+    'result is None; masses is unchanged — sort() only previews the order',
+    'Both result and masses are [1810, 1866, 1871] — they always match'
+  ]"
+  :correct="0"
+  explanation="list.sort() sorts in place and returns None — printing result would show 'None', a classic beginner trap. sorted(masses) is the alternative: it leaves the original list untouched and returns a new sorted list. Use .sort() when mutating is fine; use sorted() when you need the original preserved too."
+/>
+
+---
+hideInToc: true
+---
+
 # Dictionary Basics
 
 <div class="grid-2 gap-md mt-md">
@@ -755,23 +806,23 @@ hideInToc: true
 # Try It — Dictionaries for Data
 
 ```py {monaco-run}
-# Storing experiment metadata
-experiment = {
-    "name": "ATLAS",
-    "location": "Geneva",
-    "collision_energy_TeV": 13.6,  # the LHC's Run-3 energy
-    "active": True,
-    "detectors": ["inner tracker", "calorimeter", "muon spectrometer"]
+# Storing one D0 -> K- pi+ candidate
+event = {
+    "event_id": 1049,
+    "run": 98213,
+    "decay": "D0 -> K- pi+",
+    "H1_charge": -1,  # the kaon
+    "H2_charge": 1,   # the pion
 }
 
 # Access and display
-for key, value in experiment.items():
+for key, value in event.items():
     print(f"  {key}: {value}")
 
 # Add new data
-experiment["start_year"] = 2008
-experiment["num_detectors"] = len(experiment["detectors"])
-print(f"\nUpdated: {experiment['name']} has {experiment['num_detectors']} detector systems")
+event["dataset"] = "LHCb Open Data record 401"
+event["momentum_cols"] = ["H1_PX", "H1_PY", "H1_PZ", "H2_PX", "H2_PY", "H2_PZ"]
+print(f"\nUpdated: event {event['event_id']} tracks {len(event['momentum_cols'])} momentum components")
 ```
 
 ---
@@ -855,23 +906,21 @@ hideInToc: true
 # Try It — Loops and Logic
 
 ```py {monaco-run}
-# Classify particle energies
-energies = [0.5, 8.1, 15.4, 50.0, 125.0]
+# Classify K-pi invariant masses against the D0 peak (~1865 MeV)
+masses_MeV = [1810.2, 1863.5, 1866.9, 1870.1, 1920.4]
 
-for e in energies:
-    if e > 100:
-        label = "very high"
-    elif e > 10:
-        label = "high"
-    elif e > 5:
-        label = "medium"
+for m in masses_MeV:
+    if 1855 <= m <= 1875:
+        label = "near D0 peak"
+    elif m < 1855:
+        label = "below peak"
     else:
-        label = "low"
-    print(f"  {e:6.1f} GeV → {label}")
+        label = "above peak"
+    print(f"  {m:7.1f} MeV → {label}")
 
 # Count per category
-high_count = sum(1 for e in energies if e > 10)
-print(f"\nHigh energy events (>10 GeV): {high_count}/{len(energies)}")
+near_peak = sum(1 for m in masses_MeV if 1855 <= m <= 1875)
+print(f"\nEvents near the D0 peak: {near_peak}/{len(masses_MeV)}")
 ```
 
 ---
@@ -919,5 +968,5 @@ Write your first parser — turn one raw event line from the dataset into usable
 <!--
 Speaker: the "you can now" beat — have them mentally tick each box. The seminar
 tie-in makes it concrete: they leave with the strip → split → convert recipe and
-apply it to a real line of the dimuon dataset. (~1 min)
+apply it to a real line of the D0 -> K-pi+ dataset. (~1 min)
 -->

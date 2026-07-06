@@ -149,6 +149,35 @@
 
 ---
 
+## Further domain examples
+
+The lecture slides walk through five domains in depth (Biomedicine & Genomics,
+Environmental Sciences, Astronomy, Particle Physics, Finance). The same
+decision-first analysis mindset applies across many more fields:
+
+- **Social sciences** — economic forecasting from macro indicators and behavioural
+  data; survey and text analysis for sentiment, misinformation, and community
+  wellbeing; informs policy, marketing, and civic planning
+- **Engineering** — predictive maintenance on turbines, trains, and manufacturing
+  lines; quality control with computer vision and statistical process control;
+  structural health monitoring with sensors plus physics-informed models
+- **Healthcare operations** — epidemiology tracking outbreaks and transmission
+  dynamics; hospital patient flow, staffing, and supply-chain optimisation; strong
+  ethical constraints (privacy, bias, explainability)
+- **Sports analytics** — performance analysis from tracking sensors and video;
+  strategy optimisation and opponent scouting; data-driven coaching, recruitment,
+  and ticket pricing
+- **Product & business** — growth funnels (acquisition → retention → revenue);
+  A/B testing and causal inference; customer segmentation and lifetime value
+- **Public policy & urban planning** — smart-city sensors for transport, energy,
+  and waste; open data portals for transparency; geospatial analysis for zoning
+  and emergency response
+- **Education & learning analytics** — LMS logs revealing engagement patterns;
+  early-warning systems for student support; balancing personalisation with
+  fairness and privacy
+
+---
+
 ## Time Estimates
 
 - Lecture (Parts 1-5): 80 min

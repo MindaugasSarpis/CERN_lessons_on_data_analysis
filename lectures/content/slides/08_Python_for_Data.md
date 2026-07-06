@@ -174,23 +174,19 @@ hideInToc: true
 
 # Common Python Errors
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-3 gap-md mt-md">
 
 <div class="card card-warning card-glass pad-tight">
 
 ## 🐛 **Syntax & Indentation**
 
 ```python
-# IndentationError
 if True:
 print("oops")  # missing indent!
-
-# SyntaxError
-print("hello"  # missing closing )
 ```
 
-- Python uses **whitespace** for structure
-- Every `if`, `for`, `def` needs an **indented** block
+- Whitespace defines structure
+- Every block needs **indentation**
 
 </div>
 
@@ -199,16 +195,23 @@ print("hello"  # missing closing )
 ## 🐛 **Name & Type Errors**
 
 ```python
-# NameError
-print(undefined_variable)
-
-# TypeError
-result = "hello" + 42  # can't add str + int
-# Fix: "hello" + str(42)
+print(undefined_variable)  # NameError
+"hello" + 42                # TypeError
 ```
 
-- Check **spelling** of variable names
-- Check **types** match the operation
+- Check **spelling** and **types**
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🐛 **Value Errors**
+
+```python
+float("N/A")  # ValueError!
+```
+
+- A malformed CSV field — exactly what Seminar 8's ingest script must catch with `try` / `except ValueError`
 
 </div>
 
@@ -221,6 +224,22 @@ result = "hello" + 42  # can't add str + int
 Read the error message **bottom to top** — the last line tells you what went wrong, the lines above show where.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Why is a bare `except:` (no exception type) considered bad practice compared to `except ValueError:`?"
+  :options="[
+    'It catches everything — typos, Ctrl+C, exit calls — silently hiding real bugs',
+    'It runs noticeably slower than a typed except clause',
+    'Modern Python no longer allows a bare except',
+    'It only works inside a function, never at module level'
+  ]"
+  :correct="0"
+  explanation="A bare except: swallows every exception — a NameError from a typo, KeyboardInterrupt, SystemExit — not just the one you anticipated. That hides real bugs behind a silent pass. Always catch the specific exception(s) you expect, e.g. except ValueError:, so anything unexpected still surfaces and gets fixed."
+/>
 
 ---
 layout: section
@@ -394,8 +413,8 @@ hideInToc: true
 
 ```python
 import json
-with open("data.json") as f:
-    data = json.load(f)
+with open("data/raw/lhcb_d0_kpi.meta.json") as f:
+    meta = json.load(f)  # column units, DOI, licence
 ```
 
 </div>
@@ -406,8 +425,8 @@ with open("data.json") as f:
 
 ```python
 import yaml  # pip install pyyaml
-with open("data.yaml") as f:
-    data = yaml.safe_load(f)
+with open("environment.yml") as f:
+    env = yaml.safe_load(f)  # pinned deps (Lecture 14)
 ```
 
 </div>
@@ -422,8 +441,9 @@ with open("data.yaml") as f:
 
 ```python
 import csv
-with open("data.csv", newline="") as f:
+with open("data/raw/lhcb_d0_kpi.csv", newline="") as f:
     rows = list(csv.DictReader(f))
+# each row: {'Event': ..., 'H1_PX': ..., 'H2_PX': ..., ...}
 ```
 
 </div>
@@ -465,24 +485,24 @@ hideInToc: true
 # Mini Project: Analyse Experiment Data
 
 ```py {monaco-run}
-# Simulated temperature readings from 3 sensors
+# Simulated hit rates from 3 muon-detector chambers
 data = {
-    "sensor_A": [22.1, 22.4, 22.3, 22.8, 22.5],
-    "sensor_B": [23.5, 23.1, 23.8, 23.2, 23.6],
-    "sensor_C": [21.9, 22.0, 21.7, 22.1, 21.8],
+    "chamber_A": [22.1, 22.4, 22.3, 22.8, 22.5],
+    "chamber_B": [23.5, 23.1, 23.8, 23.2, 23.6],
+    "chamber_C": [21.9, 22.0, 21.7, 22.1, 21.8],
 }
 
-for sensor, readings in data.items():
+for chamber, readings in data.items():
     avg = sum(readings) / len(readings)
     spread = max(readings) - min(readings)
-    print(f"{sensor}: avg={avg:.2f}°C  spread={spread:.1f}°C")
+    print(f"{chamber}: avg={avg:.2f} Hz  spread={spread:.1f} Hz")
 
 # A dict comprehension — same idea as a list comprehension, but it
 # produces key: value pairs instead of a plain list.
-averages = {s: sum(r)/len(r) for s, r in data.items()}
+averages = {c: sum(r)/len(r) for c, r in data.items()}
 # key= tells max/min/sorted which value to compare by.
-hottest = max(averages, key=averages.get)
-print(f"\nHottest: {hottest} ({averages[hottest]:.2f}°C)")
+busiest = max(averages, key=averages.get)
+print(f"\nBusiest: {busiest} ({averages[busiest]:.2f} Hz)")
 ```
 
 ---
@@ -494,20 +514,20 @@ hideInToc: true
 ```py {monaco-run}
 # Simple text-based "bar chart" — no matplotlib needed!
 data = {
-    "sensor_A": [22.1, 22.4, 22.3, 22.8, 22.5],
-    "sensor_B": [23.5, 23.1, 23.8, 23.2, 23.6],
-    "sensor_C": [21.9, 22.0, 21.7, 22.1, 21.8],
+    "chamber_A": [22.1, 22.4, 22.3, 22.8, 22.5],
+    "chamber_B": [23.5, 23.1, 23.8, 23.2, 23.6],
+    "chamber_C": [21.9, 22.0, 21.7, 22.1, 21.8],
 }
 
-averages = {s: sum(r)/len(r) for s, r in data.items()}
+averages = {c: sum(r)/len(r) for c, r in data.items()}
 min_avg = min(averages.values())
 
-print("Average Temperature by Sensor")
+print("Average Hit Rate by Chamber")
 print("=" * 40)
-for sensor, avg in averages.items():
+for chamber, avg in averages.items():
     bar_length = int((avg - 20) * 10)  # scale for display
     bar = "█" * bar_length
-    print(f"{sensor}: {bar} {avg:.2f}°C")
+    print(f"{chamber}: {bar} {avg:.2f} Hz")
 print("\nNext up: NumPy and matplotlib will make this MUCH easier!")
 ```
 
@@ -523,7 +543,7 @@ The in-browser exercises were great for learning — now let's create an actual 
 
 <div class="card card-primary card-glass pad-compact">
 
-**1.** In VS Code: `File → New File` → save as `sensor_analysis.py`
+**1.** In VS Code: `File → New File` → save as `muon_analysis.py`
 
 </div>
 
@@ -538,7 +558,7 @@ The in-browser exercises were great for learning — now let's create an actual 
 **3.** Open the terminal (`` Ctrl+` ``) and run:
 
 ```bash
-python sensor_analysis.py
+python muon_analysis.py
 ```
 
 </div>
@@ -561,7 +581,7 @@ hideInToc: true
 
 ## 🔄 **Save Your Progress with Git**
 
-**Good habit**: commit after each working milestone. Your future self will thank you.
+**Recall from Lecture 6:** commit after each working milestone — your future self will thank you.
 
 </div>
 
@@ -570,8 +590,8 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```bash
-git add sensor_analysis.py
-git commit -m "Add sensor temperature analysis script"
+git add muon_analysis.py
+git commit -m "Add muon detector hit-rate analysis script"
 ```
 
 </div>
