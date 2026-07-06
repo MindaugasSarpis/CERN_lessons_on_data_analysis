@@ -2,10 +2,11 @@ import {
   WebGLRenderer, Scene, PerspectiveCamera, OrthographicCamera, Mesh, Points,
   PlaneGeometry, BufferGeometry, BufferAttribute, ShaderMaterial, DataTexture,
   WebGLRenderTarget, RGBAFormat, FloatType, HalfFloatType, NearestFilter,
-  AdditiveBlending, Vector2, Vector4, Clock,
+  AdditiveBlending, Vector2, Vector3, Vector4, Clock,
 } from 'three';
 import { SIM_VERT, COPY_FRAG, VEL_FRAG, POS_FRAG, RENDER_VERT, RENDER_FRAG } from './shaders/passes.glsl.js';
 import { addFibers } from './fiber.js';
+import { CORE_CENTER, BOUNDS } from './world.js';
 
 const FOV = 55, CAM_Z = 14, PARALLAX = 0.0012, MAX_DT = 1 / 30;
 
@@ -19,9 +20,14 @@ function pickTexSize(coarse) {
 
 export function createField(canvas) {
   const coarse = matchMedia('(pointer: coarse)').matches;
+  // ?qa: QA pixel sampling needs to read the canvas after compositing.
+  const qa = new URLSearchParams(location.search).has('qa');
   let renderer;
   try {
-    renderer = new WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'high-performance' });
+    renderer = new WebGLRenderer({
+      canvas, alpha: true, antialias: false,
+      powerPreference: 'high-performance', preserveDrawingBuffer: qa,
+    });
   } catch { return null; }
   if (!renderer.capabilities.isWebGL2) { renderer.dispose(); return null; }
   const type = renderer.extensions.has('EXT_color_buffer_float') ? FloatType
@@ -35,12 +41,10 @@ export function createField(canvas) {
   const size = pickTexSize(coarse);
   const count = size * size;
 
-  // --- camera / world extents ---
-  const camera = new PerspectiveCamera(FOV, 1, 0.1, 100);
+  // --- camera ---
+  const camera = new PerspectiveCamera(FOV, 1, 0.1, 120);
   camera.position.z = CAM_Z;
   const halfH = Math.tan((FOV / 2) * (Math.PI / 180)) * CAM_Z;
-  let halfW = halfH; // set in resize()
-  const bounds = new Vector2(1, 1);
 
   // --- sim targets (ping-pong pos + vel) ---
   const rt = () => new WebGLRenderTarget(size, size, {
@@ -49,13 +53,13 @@ export function createField(canvas) {
   });
   let posA = rt(), posB = rt(), velA = rt(), velB = rt();
 
-  // --- initial positions: random in bounds-ish box, z in [-4,4], w = seed ---
+  // --- initial positions: uniform in the 3D wrap box, w = seed ---
   const init = new Float32Array(count * 4);
   for (let i = 0; i < count; i++) {
-    init[i * 4 + 0] = (Math.random() * 2 - 1) * halfH * 3.2; // x (re-wrapped by sim)
-    init[i * 4 + 1] = (Math.random() * 2 - 1) * halfH * 1.9; // y
-    init[i * 4 + 2] = (Math.random() * 2 - 1) * 4;           // z (static parallax depth)
-    init[i * 4 + 3] = Math.random();                         // seed
+    init[i * 4 + 0] = (Math.random() * 2 - 1) * BOUNDS.x;
+    init[i * 4 + 1] = (Math.random() * 2 - 1) * BOUNDS.y;
+    init[i * 4 + 2] = (Math.random() * 2 - 1) * BOUNDS.z;
+    init[i * 4 + 3] = Math.random();
   }
   const initTex = new DataTexture(init, size, size, RGBAFormat, FloatType);
   initTex.needsUpdate = true;
@@ -70,13 +74,13 @@ export function createField(canvas) {
     vertexShader: SIM_VERT, fragmentShader: VEL_FRAG,
     uniforms: {
       uPos: { value: null }, uVel: { value: null }, uDt: { value: 0 }, uTime: { value: 0 },
-      uPointer: { value: new Vector2(999, 999) }, uPointerVel: { value: new Vector2(0, 0) },
-      uImpulse: { value: new Vector4(999, 999, 0, 1.4) },
+      uPointer: { value: new Vector3(999, 999, 999) }, uPointerVel: { value: new Vector3(0, 0, 0) },
+      uImpulse: { value: new Vector4(999, 999, 999, 0) },
     },
   });
   const posMat = new ShaderMaterial({
     vertexShader: SIM_VERT, fragmentShader: POS_FRAG,
-    uniforms: { uPos: { value: null }, uVel: { value: null }, uDt: { value: 0 }, uBounds: { value: bounds } },
+    uniforms: { uPos: { value: null }, uVel: { value: null }, uDt: { value: 0 }, uBounds: { value: BOUNDS } },
   });
   const pass = (mat, target) => {
     quad.material = mat;
@@ -97,7 +101,7 @@ export function createField(canvas) {
   const renderMat = new ShaderMaterial({
     vertexShader: RENDER_VERT, fragmentShader: RENDER_FRAG,
     transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 1.5 }, uPixelRatio: { value: baseDpr } },
+    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 2.4 }, uPixelRatio: { value: baseDpr } },
   });
   const points = new Points(geo, renderMat);
   points.frustumCulled = false;
@@ -105,27 +109,32 @@ export function createField(canvas) {
   scene.add(points);
   const fibers = addFibers(scene);
 
-  // --- pointer state (world-space); Task 6 feeds client coords ---
+  // --- pointer state ---
+  // Client coords map to world by intersecting the pointer ray with the plane
+  // through CORE_CENTER perpendicular to the view direction — stays meaningful
+  // from every camera angle the rig reaches.
   const ptrClient = new Vector2(-1e4, -1e4);
-  const ptrWorld = new Vector2(999, 999);
-  const ptrPrev = new Vector2(999, 999);
-  const ptrVel = new Vector2(0, 0);
+  const ptrWorld = new Vector3(999, 999, 999);
+  const ptrPrev = new Vector3(999, 999, 999);
+  const ptrVel = new Vector3(0, 0, 0);
+  const ndc = new Vector3(), rayDir = new Vector3(), camFwd = new Vector3(), tmpV = new Vector3();
   let hasPointer = false, lastPointerAt = 0, ptrFresh = true;
   let scrollY = window.scrollY || 0;
   const impulse = velMat.uniforms.uImpulse.value;
 
-  const toWorld = (cx, cy, out) => out.set(
-    ((cx / innerWidth) * 2 - 1) * halfW,
-    -((cy / innerHeight) * 2 - 1) * halfH + camera.position.y,
-  );
+  const toWorld = (cx, cy, out) => {
+    ndc.set((cx / innerWidth) * 2 - 1, -(cy / innerHeight) * 2 + 1, 0.5);
+    rayDir.copy(ndc).unproject(camera).sub(camera.position).normalize();
+    camera.getWorldDirection(camFwd);
+    const t = tmpV.copy(CORE_CENTER).sub(camera.position).dot(camFwd)
+      / Math.max(rayDir.dot(camFwd), 1e-4);
+    return out.copy(camera.position).addScaledVector(rayDir, t);
+  };
 
   function resize() {
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
-    halfW = halfH * camera.aspect;
-    bounds.set(halfW * 1.3, halfH * 1.9);
-    fibers.resize(halfW, halfH);
   }
   addEventListener('resize', resize, { passive: true });
   resize();
@@ -136,7 +145,7 @@ export function createField(canvas) {
   renderer.clear(true, false, false);
   renderer.setRenderTarget(null);
 
-  // --- loop (visibility pause + fps guard hooks used by Task 6) ---
+  // --- loop (visibility pause + fps guard) ---
   const clock = new Clock();
   let raf = 0, paused = false, elapsed = 0;
   // fps guard: after 4s warmup, avg over ~2s windows; degrade at <40fps, twice max
@@ -147,9 +156,11 @@ export function createField(canvas) {
     const dt = Math.min(clock.getDelta(), MAX_DT);
     elapsed += dt;
 
+    camera.position.y = -scrollY * PARALLAX * halfH;
+    camera.updateMatrixWorld();
+
     // Touch devices idle >2.5s (or before any pointer event): roam a lissajous
-    // attractor so the field feels alive without a cursor. Any real pointer /
-    // touch-drag event takes over immediately via onPointer().
+    // attractor so the field feels alive without a cursor.
     if (coarse && (!hasPointer || elapsed - lastPointerAt > 2.5)) {
       ptrClient.set(
         (0.5 + 0.38 * Math.sin(elapsed * 0.31)) * innerWidth,
@@ -160,11 +171,10 @@ export function createField(canvas) {
     if (hasPointer) {
       toWorld(ptrClient.x, ptrClient.y, ptrWorld);
       // First frame after hasPointer flips true: seed ptrPrev from ptrWorld so
-      // this frame contributes zero velocity, instead of a spurious kick from
-      // the (999,999) sentinel default.
+      // this frame contributes zero velocity, not a kick from the sentinel.
       if (ptrFresh) { ptrPrev.copy(ptrWorld); ptrFresh = false; }
       if (dt > 0) {
-        ptrVel.set((ptrWorld.x - ptrPrev.x) / dt, (ptrWorld.y - ptrPrev.y) / dt).clampLength(0, 30);
+        ptrVel.copy(ptrWorld).sub(ptrPrev).divideScalar(dt).clampLength(0, 30);
         velMat.uniforms.uPointerVel.value.lerp(ptrVel, 0.15);
       }
       ptrPrev.copy(ptrWorld);
@@ -184,9 +194,8 @@ export function createField(canvas) {
     [posA, posB] = [posB, posA];
     [velA, velB] = [velB, velA];
 
-    impulse.z *= 0.86; // hover impulse decay
+    impulse.w *= 0.86; // hover impulse decay
 
-    camera.position.y = -scrollY * PARALLAX * halfH;
     fibers.update(elapsed, velMat.uniforms.uPointer.value, camera.position.y);
     renderMat.uniforms.uPos.value = posA.texture;
     renderMat.uniforms.uVel.value = velA.texture;
@@ -211,8 +220,8 @@ export function createField(canvas) {
   return {
     onPointer(cx, cy) { ptrClient.set(cx, cy); hasPointer = true; lastPointerAt = elapsed; },
     onImpulse(cx, cy) {
-      const w = toWorld(cx, cy, new Vector2());
-      impulse.set(w.x, w.y, 26, 1.4);
+      const w = toWorld(cx, cy, new Vector3());
+      impulse.set(w.x, w.y, w.z, 26);
       fibers.burst(); // hover "transmits" a pulse down a fiber
     },
     onScroll(y) { scrollY = y; },

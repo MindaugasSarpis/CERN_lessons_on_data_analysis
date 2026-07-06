@@ -11,54 +11,64 @@ uniform sampler2D uSrc;
 varying vec2 vUv;
 void main() { gl_FragColor = texture2D(uSrc, vUv); }`;
 
-// Velocity update: ambient curl drift + cursor wake + hover impulse + damping.
+// Velocity update: 3D curl drift + cursor wake + hover impulse + damping.
 export const VEL_FRAG = /* glsl */ `
 uniform sampler2D uPos, uVel;
 uniform float uDt, uTime;
-uniform vec2 uPointer, uPointerVel;
-uniform vec4 uImpulse;   // x,y = world pos; z = strength; w = radius^2
+uniform vec3 uPointer, uPointerVel;
+uniform vec4 uImpulse;   // xyz = world pos; w = strength
 varying vec2 vUv;
 ${NOISE}
-vec2 curl(vec3 p) {
+// Divergence-free 3D field: curl of a vector potential whose components are
+// three domain-offset simplex samples. 12 snoise taps per texel — the texel
+// budget (160^2 mobile … 448^2 big desktops) keeps this affordable.
+vec3 curl3(vec3 p) {
   const float e = 0.35;
-  float dy = snoise(p + vec3(0.0, e, 0.0)) - snoise(p - vec3(0.0, e, 0.0));
-  float dx = snoise(p + vec3(e, 0.0, 0.0)) - snoise(p - vec3(e, 0.0, 0.0));
-  return vec2(dy, -dx) / (2.0 * e);
+  vec3 ex = vec3(e, 0.0, 0.0), ey = vec3(0.0, e, 0.0), ez = vec3(0.0, 0.0, e);
+  vec3 o1 = vec3(31.4, 17.7, 5.3), o2 = vec3(-12.1, 70.8, 43.9);
+  float dcdy = snoise(p + o2 + ey) - snoise(p + o2 - ey);
+  float dbdz = snoise(p + o1 + ez) - snoise(p + o1 - ez);
+  float dadz = snoise(p + ez) - snoise(p - ez);
+  float dcdx = snoise(p + o2 + ex) - snoise(p + o2 - ex);
+  float dbdx = snoise(p + o1 + ex) - snoise(p + o1 - ex);
+  float dady = snoise(p + ey) - snoise(p - ey);
+  return vec3(dcdy - dbdz, dadz - dcdx, dbdx - dady) / (2.0 * e);
 }
 void main() {
   vec4 pos = texture2D(uPos, vUv);
-  vec2 v = texture2D(uVel, vUv).xy;
+  vec3 v = texture2D(uVel, vUv).xyz;
   // ambient drift
-  v += curl(vec3(pos.xy * 0.16, pos.z * 0.2 + uTime * 0.05)) * 0.55 * uDt;
-  // cursor wake: drag particles along the pointer's velocity, gaussian falloff
-  vec2 toP = pos.xy - uPointer;
-  v += uPointerVel * exp(-dot(toP, toP) / 2.2) * 2.6 * uDt;
-  // hover impulse: radial push, decays JS-side via uImpulse.z
-  vec2 toI = pos.xy - uImpulse.xy;
+  v += curl3(pos.xyz * 0.11 + vec3(0.0, 0.0, uTime * 0.04)) * 0.7 * uDt;
+  // cursor wake: drag particles along the pointer's world velocity
+  vec3 toP = pos.xyz - uPointer;
+  v += uPointerVel * exp(-dot(toP, toP) / 2.6) * 2.6 * uDt;
+  // hover impulse: radial push from the impulse point, decays JS-side (w)
+  vec3 toI = pos.xyz - uImpulse.xyz;
   float di = length(toI) + 1e-4;
-  v += (toI / di) * uImpulse.z * exp(-di * di / uImpulse.w) * uDt;
+  v += (toI / di) * uImpulse.w * exp(-di * di / 1.4) * uDt;
   // frame-rate-independent damping + speed clamp
   v *= exp(-1.6 * uDt);
   float sp = length(v);
   if (sp > 3.0) v *= 3.0 / sp;
-  gl_FragColor = vec4(v, 0.0, 1.0);
+  gl_FragColor = vec4(v, 1.0);
 }`;
 
-// Position update: integrate + toroidal wrap inside uBounds.
+// Position update: integrate + toroidal wrap inside the 3D box uBounds.
 export const POS_FRAG = /* glsl */ `
 uniform sampler2D uPos, uVel;
 uniform float uDt;
-uniform vec2 uBounds;
+uniform vec3 uBounds;
 varying vec2 vUv;
 void main() {
   vec4 pos = texture2D(uPos, vUv);
-  vec2 v = texture2D(uVel, vUv).xy;
-  vec2 p = pos.xy + v * uDt;
+  vec3 v = texture2D(uVel, vUv).xyz;
+  vec3 p = pos.xyz + v * uDt;
   p = mod(p + uBounds, 2.0 * uBounds) - uBounds;
-  gl_FragColor = vec4(p, pos.zw);
+  gl_FragColor = vec4(p, pos.w);
 }`;
 
-// Points: position.xy carries the sim-texture ref UV.
+// Points: position.xy carries the sim-texture ref UV. Depth fog dims far
+// particles — the main volumetric cue once the camera moves in 3D.
 export const RENDER_VERT = /* glsl */ `
 uniform sampler2D uPos, uVel;
 uniform float uSize, uPixelRatio;
@@ -67,14 +77,15 @@ varying vec3 vColor;
 void main() {
   vec2 ref = position.xy;
   vec4 pos = texture2D(uPos, ref);
-  vec2 vel = texture2D(uVel, ref).xy;
+  vec3 vel = texture2D(uVel, ref).xyz;
   float seed = pos.w;
   vec4 mv = modelViewMatrix * vec4(pos.xyz, 1.0);
   gl_Position = projectionMatrix * mv;
-  gl_PointSize = uSize * uPixelRatio * mix(0.5, 1.6, fract(seed * 7.31)) * (12.0 / -mv.z);
+  gl_PointSize = uSize * uPixelRatio * mix(0.5, 1.6, fract(seed * 7.31)) * (12.0 / max(-mv.z, 0.1));
   float sp = clamp(length(vel) * 0.9, 0.0, 1.0);
   vColor = mix(vec3(0.30, 0.55, 0.72), vec3(0.98, 0.99, 1.0), sp);  // dim cyan -> white by speed
-  vAlpha = mix(0.25, 0.9, sp) * mix(0.4, 1.0, fract(seed * 3.17));
+  float fog = exp(-0.04 * max(length(mv.xyz) - 6.0, 0.0));
+  vAlpha = mix(0.25, 0.9, sp) * mix(0.4, 1.0, fract(seed * 3.17)) * fog;
 }`;
 
 export const RENDER_FRAG = /* glsl */ `
