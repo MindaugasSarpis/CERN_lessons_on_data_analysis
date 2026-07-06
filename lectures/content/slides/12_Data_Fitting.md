@@ -1433,7 +1433,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">🎯 **Seminar running project:** fit the **D⁰** peak of the LHCb K⁻π⁺ spectrum (Gaussian + background) → **m ≈ 1865 MeV** with error and χ²/dof. *Same recipe for any peak in any field.*</div>
 
-<img class="fig" src="/figures/lhcb_d0_fit.png" style="display:block;margin:0.4rem auto 0;max-height:235px;background:#fff;border-radius:8px;">
+<img class="fig fig-light" src="/figures/lhcb_d0_fit.png" style="display:block;margin:0.4rem auto 0;max-height:235px;background:#fff;border-radius:8px;">
 
 ---
 hideInToc: true

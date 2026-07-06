@@ -387,7 +387,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-light" src="/figures/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -401,7 +401,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/data_vis_legend_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-light" src="/figures/data_vis_legend_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -415,7 +415,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/data_vis_legend_1.png" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-light" src="/figures/data_vis_legend_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -429,7 +429,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/data_vis_legend_2.png" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-light" src="/figures/data_vis_legend_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -623,7 +623,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/data_vis_bar_chart_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-light" src="/figures/data_vis_bar_chart_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -651,7 +651,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-light" src="/figures/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -2075,7 +2075,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0 auto;max-height:310px;background:#fff;border-radius:8px;">
 
-<div class="note-text mt-sm">📏 Units on both axes · 📊 the **D⁰ peak** stands clear of the background · ⚠️ **raw-histogram stage** — you add the **√N** error bars yourself in Seminar 10 (deliberate, not an oversight).</div>
+<div class="note-text mt-sm">📏 Units on both axes · 📊 the <strong>D⁰ peak</strong> stands clear of the background · ⚠️ <strong>raw-histogram stage</strong> — you add the <strong>√N</strong> error bars yourself in Seminar 10 (deliberate, not an oversight).</div>
 
 ---
 hideInToc: true

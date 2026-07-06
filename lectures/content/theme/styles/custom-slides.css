@@ -673,15 +673,23 @@
 .miss-ex ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
 .miss-ex li { margin: 0.1rem 0; }
 
-/* Figure frame — lift white-background plots off the dark deck background
-   so they don't look like bare MS-Paint rectangles. Apply as `class="fig"`
-   on any img that lives on a dark slide without a surrounding card. */
+/* Figure frame — dark glass backing for the scripted dark-native SVGs
+   (public/figures/viz_*.svg render light text on transparency; a white
+   backing makes them illegible). Apply as `class="fig"` on any img that
+   lives on a dark slide without a surrounding card. */
 .fig {
-  background: #ffffff;
+  background: rgba(11, 14, 20, 0.6);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   padding: 0.5rem 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+/* Legacy light-background images (screenshots, white-canvas PNGs) keep the
+   white backing: add `fig-light` alongside `fig`. */
+.fig-light {
+  background: #ffffff;
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 /* Same frame, but sized for figures that sit inside a card grid cell

@@ -46,11 +46,20 @@ def new_fig(w: float = 7, h: float = 4.2):
     fig, ax = plt.subplots(figsize=(w, h))
     return fig, ax
 
-def save(fig, name: str) -> None:
+def save(fig, name: str, *, opaque: bool = False, tight: bool = True) -> None:
+    """opaque: solid dark background (for v-click layer stacks that must
+    cover the layer below). tight=False: keep the full fixed canvas (for
+    stage sets that must align pixel-perfectly when stacked)."""
     OUT.mkdir(parents=True, exist_ok=True)
+    kw = {"format": "svg", "metadata": {"Date": None}}
+    if tight:
+        kw["bbox_inches"] = "tight"
+    if opaque:
+        kw["transparent"] = False
+        kw["facecolor"] = "#0b0e14"
+        fig.patch.set_facecolor("#0b0e14")
     # metadata Date=None: drop the embedded timestamp so repeated builds are
     # byte-identical (otherwise every run dirties all 80+ committed SVGs).
-    fig.savefig(OUT / f"{name}.svg", format="svg", bbox_inches="tight",
-                metadata={"Date": None})
+    fig.savefig(OUT / f"{name}.svg", **kw)
     plt.close(fig)
     print(f"  + {name}.svg")

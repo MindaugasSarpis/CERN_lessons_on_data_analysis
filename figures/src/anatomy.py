@@ -18,9 +18,17 @@ def _data():
     return centers, counts
 
 def _stage(n: int):
-    """Build the figure up to stage n (1..6) and save viz_anatomy_stage{n}."""
+    """Build the figure up to stage n (1..6) and save viz_anatomy_stage{n}.
+
+    Stages are stacked as v-click layers in the slide, so each must be an
+    OPAQUE dark canvas of identical geometry: fixed margins (no constrained
+    layout, no tight bbox) so every element sits at the same pixel in every
+    stage, and a solid background so stage n fully covers stage n-1.
+    """
+    import matplotlib.pyplot as plt
     centers, counts = _data()
-    fig, ax = style.new_fig(7.6, 4.4)
+    fig, ax = plt.subplots(figsize=(7.6, 4.4), layout="none")
+    fig.subplots_adjust(left=0.1, right=0.97, top=0.88, bottom=0.14)
     ax.set_xlim(LO, HI)
     ax.set_ylim(0, counts.max() * 1.25)
     if n < 2:
@@ -41,6 +49,6 @@ def _stage(n: int):
                     arrowprops=dict(arrowstyle="->", color=style.CYCLE[1]))
     if n >= 6:
         ax.set_title(r"$D^0 \rightarrow K^-\pi^+$ invariant-mass spectrum")
-    style.save(fig, f"viz_anatomy_stage{n}")
+    style.save(fig, f"viz_anatomy_stage{n}", opaque=True, tight=False)
 
 FIGURES = {f"viz_anatomy_stage{n}": (lambda n=n: _stage(n)) for n in range(1, 7)}

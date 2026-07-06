@@ -225,7 +225,7 @@ def _error_bars():
     se = np.array([0.35, 0.5, 0.25, 0.6, 0.4])
     order = np.argsort(means)
 
-    fig, ax = plt.subplots(figsize=(5.4, 4.0))
+    fig, ax = plt.subplots(figsize=(4.2, 3.3))
     y = np.arange(len(groups))
     ax.errorbar(means[order], y, xerr=se[order], fmt="o", ms=7,
                 color=style.ACCENT, ecolor=style.DIM, elinewidth=1.6, capsize=4)
@@ -251,7 +251,7 @@ def _ci_band():
     b, a = np.polyfit(x, y, 1)
     fit = a + b * xs
 
-    fig, ax = plt.subplots(figsize=(5.4, 4.0))
+    fig, ax = plt.subplots(figsize=(4.2, 3.3))
     ax.scatter(x, y, s=18, color=style.DIM, alpha=0.6, edgecolor="none", zorder=2)
     ax.fill_between(xs, lo, hi, color=style.ACCENT, alpha=0.22, lw=0, zorder=1)
     ax.plot(xs, fit, color=style.ACCENT, lw=2.2, zorder=3)
@@ -292,7 +292,7 @@ def _hop_demo():
     y = 3 + 1.6 * x + RNG.normal(0, 2.6, n)
     xs = np.linspace(0, 10, 200)
 
-    fig, ax = plt.subplots(figsize=(5.6, 4.2), layout="none")  # manual bottom margin for caption
+    fig, ax = plt.subplots(figsize=(4.4, 3.4), layout="none")  # manual bottom margin for caption
     fig.subplots_adjust(bottom=0.24, left=0.14, right=0.96, top=0.95)
     for _ in range(28):
         idx = RNG.integers(0, n, n)

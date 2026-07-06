@@ -45,7 +45,7 @@ def _aspect_ratios():
         ax.set_title(label, fontsize=10, color=style.DIM)
         ax.set_xticks([0, 180, 365])
         ax.set_xlabel("day", fontsize=9)
-    ax_wide.set_ylabel("T [°C]", fontsize=9)
+    ax_wide.set_ylabel("temperature", fontsize=9)
     style.save(fig, "viz_coordinates_axes_houston_temps_aspect_ratios")
 
 

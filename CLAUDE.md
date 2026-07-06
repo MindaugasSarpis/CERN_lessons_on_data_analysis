@@ -20,6 +20,7 @@ pnpm qa                      # build every deck at base '/' + gate each for over
 pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for visual review
 pnpm build:landing          # rebuild only the landing page + its WebGL bundle → dist/
 pnpm videos:fetch <url> --name <Name> --used-in LNN   # yt-dlp → videos/raw/ + manifest entry; then videos:encode + videos:publish (needs yt-dlp + ffmpeg)
+pnpm figures                 # regenerate all scripted lecture figures (figures/src/ → public/figures/viz_*.svg; --only <family> to scope)
 
 pnpm dev --config-slug 01-orientation   # dev-serve one deck (regenerates entries first); or:
 pnpm dev:lecture lectures/content/deck.06-version-control.md
@@ -37,6 +38,7 @@ There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test
 - **`scripts/gen-entries.mjs`** — writes one Slidev entry `lectures/content/deck.<slug>.md` per deck (co-located with `theme/` + `public/` so both resolve at build; a bare `slides/NN_*.md` build drops the theme AND can't resolve `/figures/*`). Entries are **generated + gitignored**, never hand-edited. Merged lectures list multiple `srcs`. Entries set **`routerMode: hash`** — GitHub Pages has no SPA rewrites, so history-mode slide URLs (`/<slug>/5`) 404 on reload; the landing build also emits a root `404.html` that rewrites old-style `/<slug>/5` links to `/<slug>/#/5` (Pages ignores the per-deck `404.html` copies Slidev emits in subdirectories).
 - **`scripts/build-all.mjs`** — regenerates entries, builds each deck to `<out>/<slug>/` at base `<prefix>/<slug>/` (absolute `--out`; Slidev resolves a relative `--out` against the entry dir), strips per-deck video copies (served from the remote fallback), then emits the landing via **`scripts/gen-landing.mjs`**. Flags: `--out`, `--base <prefix>`, `--only a,b`, `--flat-base` (base `/` for QA, no landing), `--keep-videos`.
 - **`landing/` + `scripts/build-landing.mjs`** — the landing page is an Active Theory-style WebGL page: `landing/` (Three.js particle sim + CSS + fonts) is built by Vite to fixed-name assets; `build-landing.mjs` copies them to `<out>/assets/` and calls `gen-landing.mjs`, which still renders all content (hero, lecture rows) from `decks.json` — the page works fully without JS. `qa-all.mjs` smoke-tests it via `scripts/check-landing.mjs` (links, WebGL boot/fallback gating, reveals, zero console errors).
+- **`figures/src/`** — scripted matplotlib pipeline for lecture figures (dark course style via `style.py`; one module per family with a `FIGURES` dict; deterministic output — seeded data, `svg.hashsalt`, no embedded date). Outputs are **committed** as `public/figures/viz_*.svg`; decks never invoke Python at build time.
 - **`scripts/qa-all.mjs`** — builds all decks `--flat-base` to `.qa-dist/<slug>`, runs `check-slides.mjs` on each; non-zero exit if any deck overflows.
 
 ### Visual QA workflow (per-deck overflow + content/style review)

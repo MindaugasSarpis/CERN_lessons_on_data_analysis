@@ -193,6 +193,7 @@ def _bar_2d_fixed():
     ax.set_ylabel("Units sold (thousands)")
     ax.set_title("Quarterly Sales by Product — Flat 2D Bars")
     ax.tick_params(axis="x", rotation=0)
+    ax.xaxis.grid(False)  # category gridlines read as stray lines rising off the bars
     style.save(fig, "viz_no_3d_jitter_bar_2d_fixed")
 
 
