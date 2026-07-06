@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="541.198045pt" height="91.19952pt" viewBox="0 0 541.198045 91.19952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-06T05:00:07.732551</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 91.19952 
+L 541.198045 91.19952 
+L 541.198045 0 
+L 0 0 
+L 0 91.19952 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 14.523535 71.49952 
+L 524.473729 71.49952 
+L 524.473729 24.482813 
+L 14.523535 24.482813 
+L 14.523535 71.49952 
+z
+" style="fill: none"/>
+   </g>
+   <g clip-path="url(#pbbb57cd606)">
+    <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAsUAAABCCAYAAAC/4atRAAACvUlEQVR4nO3WS3bjIBQFQPBSej+9/+XQk0QG8bGdzuxWDRJJ8PjJx761/PnbSimllFpKreW6LmVzv2rbtR/qp/nqV9NpjFvNtn61h06db2st5bG6vj0rpZRHbdcQj26Ka7Vd3zq1t+dSl+1lan/et+H+2sZhvFV76dY/9b0/u9fen3WF22fDHG3ZfhrvN9t365vb63vj3Wvv+z2c77ZPLaV2FUP/D9fz3/vpGvZrHQ+gW/mbex0n257VMFZ9Yy11P1b3Z/ja2L2HH72jOvQ/n8HvvO/jeb84r+O8t9rP52nT2D9d03Lcj+u+tZf7frWP8xxtu7Zx/4t9TN9rbVE3r227n9qtfTqHW/uwxtO882/JtZ/bPlfnsRp/NXZfP7+jdb9X89x/T9fv6nXN9oxv/a/rq74N/cZz78+vbeZrx/6r2nmccQ3PvX1/Hvv32w7ztuuM57Numznbc4yrX9vM1Y/fFmvs657XfZ/xgDf/yzO7AQBALKEYAIB4QjEAAPGEYgAA4gnFAADEE4oBAIgnFAMAEE8oBgAgnlAMAEA8oRgAgHhCMQAA8YRiAADiCcUAAMQTigEAiCcUAwAQTygGACCeUAwAQDyhGACAeEIxAADxhGIAAOIJxQAAxBOKAQCIJxQDABBPKAYAIJ5QDABAPKEYAIB4QjEAAPGEYgAA4gnFAADEE4oBAIgnFAMAEE8oBgAgnlAMAEA8oRgAgHhCMQAA8YRiAADiCcUAAMQTigEAiCcUAwAQTygGACCeUAwAQDyhGACAeEIxAADxhGIAAOIJxQAAxBOKAQCIJxQDABBPKAYAIJ5QDABAPKEYAIB4QjEAAPGEYgAA4gnFAADEE4oBAIgnFAMAEE8oBgAgnlAMAEA8oRgAgHhCMQAA8YRiAADiCcUAAMQTigEAiCcUAwAQTygGACCeUAwAQLx/0bZNngxxvJYAAAAASUVORK5CYII=" id="image6320ab1eba" transform="scale(1 -1) translate(0 -47.52)" x="14.523535" y="-23.97952" width="510.48" height="47.52"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="15.519531" y="81.99952" transform="rotate(-0 15.519531 81.99952)">low</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="523.477733" y="81.99952" transform="rotate(-0 523.477733 81.99952)">high</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2"/>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="269.498632" y="16.482813" transform="rotate(-0 269.498632 16.482813)">Sequential — cividis</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pbbb57cd606">
+   <rect x="14.523535" y="24.482813" width="509.950194" height="47.016707"/>
+  </clipPath>
+ </defs>
+</svg>

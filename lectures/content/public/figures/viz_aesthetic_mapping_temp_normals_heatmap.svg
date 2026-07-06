@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="569.787324pt" height="310.79952pt" viewBox="0 0 569.787324 310.79952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-06T05:00:08.403566</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 310.79952 
+L 569.787324 310.79952 
+L 569.787324 0 
+L 0 0 
+L 0 310.79952 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 71.109375 291.09952 
+L 504.611064 291.09952 
+L 504.611064 23.7 
+L 71.109375 23.7 
+L 71.109375 291.09952 
+z
+" style="fill: none"/>
+   </g>
+   <g clip-path="url(#pcc8634c211)">
+    <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAlsAAAF0CAYAAAAU1/wPAAAIf0lEQVR4nO3WS24dRQCG0XZ8/c5NYkgGJgwgA1bABiIkZiyCFTNiyAQFFEFCIHIejq9jNlGfymqds4K/1d1V397y7KfbZQ02p7MXDHG2vZg9YZjvHu1mTxjiq/PZC8b48sG92ROGODlax3Msy7J82q3j+P3rzc3sCUO8+Gf2gjF+/Xcze8Iwu8s/Zk8YYj2nFgDAHSS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAICS2AABCYgsAILT5+YdnszcMcbjZmz1hiMOD9fTv/bOz2ROG2J6u5duavWCM48Pb2ROGufk8e8EY7z6s4x9593Ed39bz97vZE4b5dP317AlDrOdmBwC4g8QWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhMQWAEBIbAEAhDa//HYze8MQxwezF4xxcT57wTjfPl1Hy3/xYDN7whCPH67jX9+e7WZPGOby/f7sCUNc79bxj7x8vY5v6/eXV7MnDPPi1ewFY6zjNgQAuKPEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAITEFgBASGwBAIQ291aSWwf7t7MnDHGwWckLWZbl3t7e7AlD3D/5PHvCEKfHN7MnDHH/ZDd7wjC36zi2lrfv9mdPGGKzv44z6+hgHc+xLMtyerSO83c9NzsAwB0ktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACC0+fH709kbhjg7Xkc3Ptrezp4wzDcXH2dPGOLiyeXsCUM8Of9v9oQhNvu72ROGud4dzJ4wxN9vHs6eMMTTJ9vZE4b489U67vVlWZY3b/dmTxhiHYUCAHBHiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIiS0AgJDYAgAIbban6+itk6PZC8Y4397MnjDMo+3V7AlDXDx+PXvCEOcP1vEcR6efZk8Y5ur94ewJQ+zt3c6eMMTHq83sCUNcftifPWGYq+t1vJN1lBYAwB0ltgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACAktgAAQmILACD0P/VuVi1fruYmAAAAAElFTkSuQmCC" id="imagec2a46af002" transform="scale(1 -1) translate(0 -267.84)" x="71.109375" y="-23.25952" width="434.16" height="267.84"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="89.171945" y="301.59952" transform="rotate(-0 89.171945 301.59952)">J</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="125.297086" y="301.59952" transform="rotate(-0 125.297086 301.59952)">F</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="161.422227" y="301.59952" transform="rotate(-0 161.422227 301.59952)">M</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="197.547368" y="301.59952" transform="rotate(-0 197.547368 301.59952)">A</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="233.672508" y="301.59952" transform="rotate(-0 233.672508 301.59952)">M</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6"/>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="269.797649" y="301.59952" transform="rotate(-0 269.797649 301.59952)">J</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7"/>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="305.92279" y="301.59952" transform="rotate(-0 305.92279 301.59952)">J</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8"/>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="342.047931" y="301.59952" transform="rotate(-0 342.047931 301.59952)">A</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_9"/>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="378.173071" y="301.59952" transform="rotate(-0 378.173071 301.59952)">S</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_10"/>
+     <g id="text_10">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="414.298212" y="301.59952" transform="rotate(-0 414.298212 301.59952)">O</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_11"/>
+     <g id="text_11">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="450.423353" y="301.59952" transform="rotate(-0 450.423353 301.59952)">N</text>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_12"/>
+     <g id="text_12">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="486.548494" y="301.59952" transform="rotate(-0 486.548494 301.59952)">D</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_13"/>
+     <g id="text_13">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="67.609375" y="49.483293" transform="rotate(-0 67.609375 49.483293)">Death Valley</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_14"/>
+     <g id="text_14">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="67.609375" y="94.04988" transform="rotate(-0 67.609375 94.04988)">Phoenix</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_15"/>
+     <g id="text_15">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="67.609375" y="138.686779" transform="rotate(-0 67.609375 138.686779)">Chicago</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_16"/>
+     <g id="text_16">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="67.609375" y="183.183053" transform="rotate(-0 67.609375 183.183053)">Denver</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_17"/>
+     <g id="text_17">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="67.609375" y="227.74964" transform="rotate(-0 67.609375 227.74964)">Seattle</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_18"/>
+     <g id="text_18">
+      <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: end; fill: #8b97a6" x="67.609375" y="272.316227" transform="rotate(-0 67.609375 272.316227)">Anchorage</text>
+     </g>
+    </g>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="287.86022" y="17.7" transform="rotate(-0 287.86022 17.7)">Monthly Temperature Normals</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_3">
+    <path d="M 513.281098 291.09952 
+L 526.651074 291.09952 
+L 526.651074 23.7 
+L 513.281098 23.7 
+L 513.281098 291.09952 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_3"/>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_7">
+     <g id="line2d_19">
+      <defs>
+       <path id="m600532574e" d="M 0 0 
+L 3.5 0 
+" style="stroke: #8b97a6; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m600532574e" x="526.651074" y="255.655144" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_20">
+      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="533.651074" y="258.455144" transform="rotate(-0 533.651074 258.455144)">−10</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m600532574e" x="526.651074" y="210.723344" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_21">
+      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="533.651074" y="213.523344" transform="rotate(-0 533.651074 213.523344)">0</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_21">
+      <g>
+       <use xlink:href="#m600532574e" x="526.651074" y="165.791545" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_22">
+      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="533.651074" y="168.591545" transform="rotate(-0 533.651074 168.591545)">10</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m600532574e" x="526.651074" y="120.859745" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_23">
+      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="533.651074" y="123.659745" transform="rotate(-0 533.651074 123.659745)">20</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#m600532574e" x="526.651074" y="75.927945" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="533.651074" y="78.727945" transform="rotate(-0 533.651074 78.727945)">30</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#m600532574e" x="526.651074" y="30.996146" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_25">
+      <text style="font-size: 8px; font-family: 'Space Grotesk'; text-anchor: start; fill: #8b97a6" x="533.651074" y="33.796146" transform="rotate(-0 533.651074 33.796146)">40</text>
+     </g>
+    </g>
+    <g id="text_26">
+     <text style="font-size: 12px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="559.827324" y="157.39976" transform="rotate(-90 559.827324 157.39976)">Mean temperature (°C)</text>
+    </g>
+   </g>
+   <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAABIAAAF0CAYAAAAuFGmkAAAB50lEQVR4nO2d0a3DMAwDFdeTdKDuP03bEeSPg3EQqAEOoSgxfq9p+tT78yugFgGpqtr1PBSIuShSGsPaVUyPjNKErlEDCV2UskfYZPukzc2jDGQP4no0N7OFtyMKpJMGjVHtDYE4aa9CzqJKaZRrL4ZTe+l6RF3RXtAcGaVNdo0pMmqhPMJ6BHGM9lP3NaM0XR5hhwhfHlErMnsgKZCuR1hm+6J28tLaJtsozecaBkqPepBPWpb2GsgojeGkRwdllOZzDQP5pE0eSOjztUz2AUgnDfukxjjZMhA5kFnapmZnNgTyfSg+OGpHD2Ty6BbIJw20H8EYmx3XDkDUYdRo/9wHmTLZbRn/XsvR7wCk61EerLwGSh71Ndo1CgRmNgMy2s9wlEsb17oySsMeZPLZj4F80gZHLQbySYtrPYj7nz8DMto/90Fv4WQPloaBBh8icoY8ACWPmhq8tINdUy5tovYWiFzauNaD0qMWpDv5g1/MtUlLHh2AfNJsMTK6RwjGKW2wa4OlIRintNxpD0A+adTLXRCMUprRNQwk2/7Y31eOxxdBQmnGF5fIXDPan6W9Boq0vvaySRP2KNIOQPVFQEJp1IoIpRkHkpmj9OgAZJxsmf1KabaoXTZpwh4Nfk8E97MgS/bbGX8VuEkBwaiexgAAAABJRU5ErkJggg==" id="imagee6f0153661" transform="scale(1 -1) translate(0 -267.84)" x="513.36" y="-23.04" width="12.96" height="267.84"/>
+   <g id="LineCollection_1"/>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pcc8634c211">
+   <rect x="71.109375" y="23.7" width="433.501689" height="267.39952"/>
+  </clipPath>
+ </defs>
+</svg>
