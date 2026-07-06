@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="545.348619pt" height="352.062175pt" viewBox="0 0 545.348619 352.062175" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-06T05:03:43.429585</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 352.062175 
+L 545.348619 352.062175 
+L 545.348619 0 
+L 0 0 
+L 0 352.062175 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 316.321741 
+L 259.400594 316.321741 
+L 259.400594 174.92174 
+L 7.2 174.92174 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 7.2 174.92174 
+L 130.726822 174.92174 
+L 130.726822 24.3 
+L 7.2 24.3 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #7dd3fc; opacity: 0.833333; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 130.726822 174.92174 
+L 259.400594 174.92174 
+L 259.400594 84.548696 
+L 130.726822 84.548696 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #7dd3fc; opacity: 0.666667; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 130.726822 84.548696 
+L 259.400594 84.548696 
+L 259.400594 24.3 
+L 130.726822 24.3 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #7dd3fc; opacity: 0.5; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 7.2 316.321741 
+L 259.400594 316.321741 
+L 259.400594 24.3 
+L 7.2 24.3 
+L 7.2 316.321741 
+z
+" clip-path="url(#pb79a62322e)" style="fill: none; stroke: #e6edf6; stroke-width: 2.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 259.400594 316.321741 
+L 398.774607 316.321741 
+L 398.774607 149.452175 
+L 259.400594 149.452175 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 398.774607 316.321741 
+L 538.148619 316.321741 
+L 538.148619 193.950725 
+L 398.774607 193.950725 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #f5b95f; opacity: 0.75; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 398.774607 193.950725 
+L 538.148619 193.950725 
+L 538.148619 149.452175 
+L 398.774607 149.452175 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #f5b95f; opacity: 0.5; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 259.400594 316.321741 
+L 538.148619 316.321741 
+L 538.148619 149.452175 
+L 259.400594 149.452175 
+L 259.400594 316.321741 
+z
+" clip-path="url(#pb79a62322e)" style="fill: none; stroke: #e6edf6; stroke-width: 2.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 259.400594 149.452175 
+L 339.927801 149.452175 
+L 339.927801 24.3 
+L 259.400594 24.3 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 339.927801 149.452175 
+L 432.84381 149.452175 
+L 432.84381 66.017392 
+L 339.927801 66.017392 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #66d9ab; opacity: 0.75; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 339.927801 66.017392 
+L 432.84381 66.017392 
+L 432.84381 24.3 
+L 339.927801 24.3 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #66d9ab; opacity: 0.5; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 259.400594 149.452175 
+L 432.84381 149.452175 
+L 432.84381 24.3 
+L 259.400594 24.3 
+L 259.400594 149.452175 
+z
+" clip-path="url(#pb79a62322e)" style="fill: none; stroke: #e6edf6; stroke-width: 2.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 432.84381 149.452175 
+L 538.148619 149.452175 
+L 538.148619 75.833248 
+L 432.84381 75.833248 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #e88bc4; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 432.84381 75.833248 
+L 538.148619 75.833248 
+L 538.148619 24.3 
+L 432.84381 24.3 
+z
+" clip-path="url(#pb79a62322e)" style="fill: #e88bc4; opacity: 0.5; stroke: #050507; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 432.84381 149.452175 
+L 538.148619 149.452175 
+L 538.148619 24.3 
+L 432.84381 24.3 
+L 432.84381 149.452175 
+z
+" clip-path="url(#pb79a62322e)" style="fill: none; stroke: #e6edf6; stroke-width: 2.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="133.300297" y="243.027968" transform="rotate(-0 133.300297 243.027968)">Coding</text>
+    </g>
+   </g>
+   <g id="text_2">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="133.300297" y="254.930021" transform="rotate(-0 133.300297 254.930021)">46 h</text>
+    </g>
+   </g>
+   <g id="text_3">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="68.963411" y="96.957332" transform="rotate(-0 68.963411 96.957332)">Debugging</text>
+    </g>
+   </g>
+   <g id="text_4">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="68.963411" y="108.919151" transform="rotate(-0 68.963411 108.919151)">24 h</text>
+    </g>
+   </g>
+   <g id="text_5">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="195.063708" y="127.08168" transform="rotate(-0 195.063708 127.08168)">Plotting</text>
+    </g>
+   </g>
+   <g id="text_6">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="195.063708" y="139.043499" transform="rotate(-0 195.063708 139.043499)">15 h</text>
+    </g>
+   </g>
+   <g id="text_7">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="195.063708" y="51.830576" transform="rotate(-0 195.063708 51.830576)">Cleaning</text>
+    </g>
+   </g>
+   <g id="text_8">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="195.063708" y="63.732629" transform="rotate(-0 195.063708 63.732629)">10 h</text>
+    </g>
+   </g>
+   <g id="text_9">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="329.0876" y="230.23342" transform="rotate(-0 329.0876 230.23342)">Thesis</text>
+    </g>
+   </g>
+   <g id="text_10">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="329.0876" y="242.195238" transform="rotate(-0 329.0876 242.195238)">30 h</text>
+    </g>
+   </g>
+   <g id="text_11">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="468.461613" y="252.482695" transform="rotate(-0 468.461613 252.482695)">Paper</text>
+    </g>
+   </g>
+   <g id="text_12">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="468.461613" y="264.444514" transform="rotate(-0 468.461613 264.444514)">22 h</text>
+    </g>
+   </g>
+   <g id="text_13">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="468.461613" y="169.047912" transform="rotate(-0 468.461613 169.047912)">Docs</text>
+    </g>
+   </g>
+   <g id="text_14">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="468.461613" y="181.009731" transform="rotate(-0 468.461613 181.009731)">8 h</text>
+    </g>
+   </g>
+   <g id="text_15">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="299.664198" y="84.282315" transform="rotate(-0 299.664198 84.282315)">Group meeting</text>
+    </g>
+   </g>
+   <g id="text_16">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="299.664198" y="96.184368" transform="rotate(-0 299.664198 96.184368)">13 h</text>
+    </g>
+   </g>
+   <g id="text_17">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="386.385806" y="105.081245" transform="rotate(-0 386.385806 105.081245)">Seminar</text>
+    </g>
+   </g>
+   <g id="text_18">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="386.385806" y="117.043064" transform="rotate(-0 386.385806 117.043064)">10 h</text>
+    </g>
+   </g>
+   <g id="text_19">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="386.385806" y="42.564924" transform="rotate(-0 386.385806 42.564924)">Standup</text>
+    </g>
+   </g>
+   <g id="text_20">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="386.385806" y="54.466976" transform="rotate(-0 386.385806 54.466976)">5 h</text>
+    </g>
+   </g>
+   <g id="text_21">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="485.496214" y="109.989174" transform="rotate(-0 485.496214 109.989174)">Email</text>
+    </g>
+   </g>
+   <g id="text_22">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="485.496214" y="121.950992" transform="rotate(-0 485.496214 121.950992)">10 h</text>
+    </g>
+   </g>
+   <g id="text_23">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-weight: 700; font-size: 8.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="485.496214" y="47.413087" transform="rotate(-0 485.496214 47.413087)">Travel</text>
+    </g>
+   </g>
+   <g id="text_24">
+    <g clip-path="url(#pb79a62322e)">
+     <text style="font-size: 7.5px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="485.496214" y="59.374905" transform="rotate(-0 485.496214 59.374905)">7 h</text>
+    </g>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="272.67431" y="18.3" transform="rotate(-0 272.67431 18.3)">How a Research Month Is Spent (hours)</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_18">
+     <path d="M 38.808685 338.562175 
+L 58.808685 338.562175 
+L 58.808685 331.562175 
+L 38.808685 331.562175 
+z
+" style="fill: #7dd3fc"/>
+    </g>
+    <g id="text_26">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="66.808685" y="338.562175" transform="rotate(-0 66.808685 338.562175)">Data Analysis (95 h)</text>
+    </g>
+    <g id="patch_19">
+     <path d="M 182.416497 338.562175 
+L 202.416497 338.562175 
+L 202.416497 331.562175 
+L 182.416497 331.562175 
+z
+" style="fill: #f5b95f"/>
+    </g>
+    <g id="text_27">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="210.416497" y="338.562175" transform="rotate(-0 210.416497 338.562175)">Writing (60 h)</text>
+    </g>
+    <g id="patch_20">
+     <path d="M 295.844622 338.562175 
+L 315.844622 338.562175 
+L 315.844622 331.562175 
+L 295.844622 331.562175 
+z
+" style="fill: #66d9ab"/>
+    </g>
+    <g id="text_28">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="323.844622" y="338.562175" transform="rotate(-0 323.844622 338.562175)">Meetings (28 h)</text>
+    </g>
+    <g id="patch_21">
+     <path d="M 420.282122 338.562175 
+L 440.282122 338.562175 
+L 440.282122 331.562175 
+L 420.282122 331.562175 
+z
+" style="fill: #e88bc4"/>
+    </g>
+    <g id="text_29">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="448.282122" y="338.562175" transform="rotate(-0 448.282122 338.562175)">Admin (17 h)</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb79a62322e">
+   <rect x="7.2" y="24.3" width="530.948619" height="292.021741"/>
+  </clipPath>
+ </defs>
+</svg>

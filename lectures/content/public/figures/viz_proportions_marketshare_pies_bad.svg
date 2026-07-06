@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="699.59952pt" height="298.43176pt" viewBox="0 0 699.59952 298.43176" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-06T05:03:43.381092</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 298.43176 
+L 699.59952 298.43176 
+L 699.59952 0 
+L 0 0 
+L 0 298.43176 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 204.766407 181.278718 
+C 209.143432 167.807628 210.27027 153.489839 208.054478 139.499883 
+C 205.838685 125.509927 200.342563 112.241111 192.016971 100.781916 
+C 183.691378 89.322721 172.770387 79.995311 160.149864 73.564831 
+C 147.529342 67.134352 133.564099 63.781598 119.399756 63.781598 
+L 119.39976 153.541406 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 97.077393 240.48124 
+C 119.183093 246.157024 142.642168 243.193458 162.64187 232.198529 
+C 182.641571 221.203599 197.713796 202.984412 204.766407 181.278718 
+L 119.39976 153.541406 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 31.229852 136.72206 
+C 26.953292 159.140524 31.38401 182.367234 43.613031 201.637096 
+C 55.842053 220.906957 74.971693 234.805456 97.077393 240.48124 
+L 119.39976 153.541406 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 119.399761 63.781598 
+C 98.517081 63.781598 78.275106 71.069159 62.184721 84.380275 
+C 46.094339 97.691392 35.142884 116.20927 31.229852 136.72206 
+L 119.39976 153.541406 
+z
+" style="fill: #e88bc4; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="119.39976" y="35.341646" transform="rotate(-0 119.39976 35.341646)">2021</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_6">
+    <path d="M 438.851782 164.791299 
+C 440.448134 152.154879 439.336704 139.322205 435.591558 127.148409 
+C 431.846412 114.974611 425.552622 103.736236 417.129589 94.18218 
+C 408.706555 84.628124 398.345623 76.975425 386.737211 71.734027 
+C 375.128799 66.492628 362.53661 63.781598 349.799756 63.781598 
+L 349.79976 153.541406 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 327.477393 240.48124 
+C 339.814094 243.648768 352.68488 244.15447 365.232074 241.964631 
+C 377.779269 239.774797 389.717843 234.939182 400.252249 227.780008 
+C 410.786658 220.620834 419.67758 211.300738 426.332571 200.440786 
+C 432.987562 189.580835 437.255429 177.427718 438.851782 164.791299 
+L 349.79976 153.541406 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 261.629852 136.72206 
+C 257.353292 159.140524 261.78401 182.367234 274.013031 201.637096 
+C 286.242053 220.906957 305.371693 234.805456 327.477393 240.48124 
+L 349.79976 153.541406 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 349.799761 63.781598 
+C 328.917081 63.781598 308.675106 71.069159 292.584721 84.380275 
+C 276.494339 97.691392 265.542884 116.20927 261.629852 136.72206 
+L 349.79976 153.541406 
+z
+" style="fill: #e88bc4; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="349.79976" y="35.341646" transform="rotate(-0 349.79976 35.341646)">2022</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_10">
+    <path d="M 669.782448 147.905339 
+C 668.349396 125.127662 658.281613 103.732539 641.644573 88.109318 
+C 625.007531 72.486096 603.022469 63.781598 580.199756 63.781598 
+L 580.19976 153.541406 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 557.877393 240.48124 
+C 571.596737 244.003768 585.957027 244.229371 599.780249 241.139511 
+C 613.603472 238.049656 626.500993 231.731224 637.41481 222.702532 
+C 648.328626 213.67384 656.951898 202.188718 662.577236 189.189328 
+C 668.202573 176.189937 670.671838 162.041732 669.782448 147.905339 
+L 580.19976 153.541406 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 492.029852 136.72206 
+C 487.753292 159.140524 492.18401 182.367234 504.413031 201.637096 
+C 516.642053 220.906957 535.771693 234.805456 557.877393 240.48124 
+L 580.19976 153.541406 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 580.199761 63.781598 
+C 559.317081 63.781598 539.075106 71.069159 522.984721 84.380275 
+C 506.894339 97.691392 495.942884 116.20927 492.029852 136.72206 
+L 580.19976 153.541406 
+z
+" style="fill: #e88bc4; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="580.19976" y="35.341646" transform="rotate(-0 580.19976 35.341646)">2023</text>
+   </g>
+  </g>
+  <g id="text_4">
+   <text style="font-weight: 700; font-size: 13px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="349.79976" y="16.482812" transform="rotate(-0 349.79976 16.482812)">Market Share, 2021–2023 — Spot the Trend?</text>
+  </g>
+  <g id="legend_1">
+   <g id="patch_14">
+    <path d="M 197.466166 285.23176 
+L 217.466166 285.23176 
+L 217.466166 278.23176 
+L 197.466166 278.23176 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="225.466166" y="285.23176" transform="rotate(-0 225.466166 285.23176)">Nimbus</text>
+   </g>
+   <g id="patch_15">
+    <path d="M 280.903666 285.23176 
+L 300.903666 285.23176 
+L 300.903666 278.23176 
+L 280.903666 278.23176 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="308.903666" y="285.23176" transform="rotate(-0 308.903666 285.23176)">Solace</text>
+   </g>
+   <g id="patch_16">
+    <path d="M 361.372416 285.23176 
+L 381.372416 285.23176 
+L 381.372416 278.23176 
+L 361.372416 278.23176 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="389.372416" y="285.23176" transform="rotate(-0 389.372416 285.23176)">Vertex</text>
+   </g>
+   <g id="patch_17">
+    <path d="M 441.783354 285.23176 
+L 461.783354 285.23176 
+L 461.783354 278.23176 
+L 441.783354 278.23176 
+z
+" style="fill: #e88bc4; stroke: #050507; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="469.783354" y="285.23176" transform="rotate(-0 469.783354 285.23176)">Others</text>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="459.442185pt" height="332.371545pt" viewBox="0 0 459.442185 332.371545" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-06T05:03:43.324049</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 332.371545 
+L 459.442185 332.371545 
+L 459.442185 0 
+L 0 0 
+L 0 332.371545 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 181.761765 279.43008 
+C 211.214889 277.562068 238.812832 264.294658 258.666685 242.4589 
+C 278.520537 220.623138 289.110033 191.891047 288.175552 162.393545 
+C 287.241079 132.896043 274.854193 104.891849 253.658034 84.356541 
+C 232.461875 63.821234 204.079487 52.327278 174.567183 52.327278 
+L 174.567187 165.992641 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 120.668538 65.918918 
+C 97.847104 78.210303 79.902713 97.945973 69.831707 121.830507 
+C 59.760701 145.715039 58.156656 172.34068 65.2874 197.261524 
+C 72.418152 222.18237 87.863421 243.929593 109.04418 258.871866 
+C 130.22494 273.81414 155.892785 281.070778 181.761765 279.43008 
+L 174.567187 165.992641 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 174.567189 52.327278 
+C 165.196093 52.327278 155.860858 53.486173 146.774218 55.777554 
+C 137.687578 58.068935 128.919076 61.475268 120.668538 65.918918 
+L 174.567187 165.992641 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="256.365212" y="165.901292" transform="rotate(-0 256.365212 165.901292)">49%</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="95.885742" y="191.006238" transform="rotate(-0 95.885742 191.006238)">43%</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #12161c" x="154.55625" y="89.137778" transform="rotate(-0 154.55625 89.137778)">8%</text>
+   </g>
+   <g id="text_4">
+    <text style="font-style: italic; font-size: 10px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #8b97a6" x="174.567187" y="323.171545" transform="rotate(-0 174.567187 323.171545)">SPD + FDP = 51% → governing majority</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="174.567187" y="17.910937" transform="rotate(-0 174.567187 17.910937)">1976 Bundestag — One Legislature, One Whole</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_5">
+     <path d="M 319.965623 153.842641 
+L 339.965623 153.842641 
+L 339.965623 146.842641 
+L 319.965623 146.842641 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="347.965623" y="153.842641" transform="rotate(-0 347.965623 153.842641)">CDU/CSU (243 seats)</text>
+    </g>
+    <g id="patch_6">
+     <path d="M 319.965623 168.542641 
+L 339.965623 168.542641 
+L 339.965623 161.542641 
+L 319.965623 161.542641 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="347.965623" y="168.542641" transform="rotate(-0 347.965623 168.542641)">SPD (214 seats)</text>
+    </g>
+    <g id="patch_7">
+     <path d="M 319.965623 183.242641 
+L 339.965623 183.242641 
+L 339.965623 176.242641 
+L 319.965623 176.242641 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="347.965623" y="183.242641" transform="rotate(-0 347.965623 183.242641)">FDP (39 seats)</text>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

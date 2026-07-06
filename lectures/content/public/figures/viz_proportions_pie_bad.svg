@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="421.129447pt" height="325.19952pt" viewBox="0 0 421.129447 325.19952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-06T05:03:43.197438</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 325.19952 
+L 421.129447 325.19952 
+L 421.129447 0 
+L 0 0 
+L 0 325.19952 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 260.120219 114.553434 
+C 249.985253 96.117997 235.081951 80.73899 216.973964 70.029958 
+C 198.865977 59.320926 178.209519 53.669952 157.17187 53.669952 
+L 157.171875 171.14976 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 242.810969 251.570225 
+C 259.791466 233.487832 270.616373 210.48373 273.725322 185.873883 
+C 276.834271 161.264034 272.070333 136.290616 260.120219 114.553434 
+L 157.171875 171.14976 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 107.151421 277.448676 
+C 129.596056 288.010316 154.819331 291.196753 179.185399 286.548675 
+C 203.551469 281.900597 225.830478 269.652611 242.810969 251.570225 
+L 157.171875 171.14976 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 43.382918 200.365829 
+C 47.683406 217.115099 55.629454 232.710095 66.652142 246.034229 
+C 77.67483 259.358363 91.504652 270.085867 107.151421 277.448676 
+L 157.171875 171.14976 
+z
+" style="fill: #e88bc4; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 66.652135 96.265305 
+C 54.835157 110.549572 46.565433 127.430171 42.521356 145.522341 
+C 38.477273 163.614512 38.772547 182.409616 43.382918 200.365829 
+L 157.171875 171.14976 
+z
+" style="fill: #8f9dfb; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 157.171876 53.669952 
+C 139.879328 53.669952 122.798151 57.488049 107.151386 64.850858 
+C 91.504624 72.213667 77.674823 82.941171 66.652135 96.265305 
+L 157.171875 171.14976 
+z
+" style="fill: #f0e07a; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'Space Grotesk'; text-anchor: middle; fill: #e6edf6" x="157.171875" y="18.3" transform="rotate(-0 157.171875 18.3)">Preferred Analysis Tool — Survey (n=240)</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_8">
+     <path d="M 313.021635 138.579447 
+L 333.021635 138.579447 
+L 333.021635 131.579447 
+L 313.021635 131.579447 
+z
+" style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_2">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="341.021635" y="138.579447" transform="rotate(-0 341.021635 138.579447)">Python</text>
+    </g>
+    <g id="patch_9">
+     <path d="M 313.021635 152.579447 
+L 333.021635 152.579447 
+L 333.021635 145.579447 
+L 313.021635 145.579447 
+z
+" style="fill: #f5b95f; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_3">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="341.021635" y="152.579447" transform="rotate(-0 341.021635 152.579447)">R</text>
+    </g>
+    <g id="patch_10">
+     <path d="M 313.021635 166.720072 
+L 333.021635 166.720072 
+L 333.021635 159.720072 
+L 313.021635 159.720072 
+z
+" style="fill: #66d9ab; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_4">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="341.021635" y="166.720072" transform="rotate(-0 341.021635 166.720072)">Excel / Sheets</text>
+    </g>
+    <g id="patch_11">
+     <path d="M 313.021635 180.720072 
+L 333.021635 180.720072 
+L 333.021635 173.720072 
+L 313.021635 173.720072 
+z
+" style="fill: #e88bc4; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_5">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="341.021635" y="180.720072" transform="rotate(-0 341.021635 180.720072)">MATLAB</text>
+    </g>
+    <g id="patch_12">
+     <path d="M 313.021635 194.720072 
+L 333.021635 194.720072 
+L 333.021635 187.720072 
+L 313.021635 187.720072 
+z
+" style="fill: #8f9dfb; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="341.021635" y="194.720072" transform="rotate(-0 341.021635 194.720072)">Julia</text>
+    </g>
+    <g id="patch_13">
+     <path d="M 313.021635 208.720072 
+L 333.021635 208.720072 
+L 333.021635 201.720072 
+L 313.021635 201.720072 
+z
+" style="fill: #f0e07a; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 10px; font-family: 'Space Grotesk'; text-anchor: start; fill: #e6edf6" x="341.021635" y="208.720072" transform="rotate(-0 341.021635 208.720072)">Other</text>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>
