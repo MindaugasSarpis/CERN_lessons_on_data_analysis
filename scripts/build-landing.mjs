@@ -7,6 +7,7 @@
  * Standalone: node scripts/build-landing.mjs [--out dist] [--base <prefix>]
  */
 import { readFile, mkdir, cp } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +22,9 @@ export async function buildLanding(outDir, prefix = '') {
   await mkdir(join(outDir, 'assets'), { recursive: true });
   await cp(join(ROOT, 'landing', 'dist-assets', 'assets'), join(outDir, 'assets'),
     { recursive: true, filter: (src) => !src.endsWith('.woff') });
+  // Social-preview image (committed, generated from a hero screenshot).
+  const og = join(ROOT, 'landing', 'og.png');
+  if (existsSync(og)) await cp(og, join(outDir, 'assets', 'og.png'));
   return genLanding(JSON.parse(await readFile(join(ROOT, 'lectures', 'content', 'decks.json'), 'utf8')), outDir, prefix);
 }
 

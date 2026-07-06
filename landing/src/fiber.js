@@ -37,7 +37,7 @@ void main() {
 }`;
 
 const FRAG = /* glsl */ `
-uniform float uTime, uPulseSpeed, uPhase, uBaseAlpha;
+uniform float uTime, uPulseSpeed, uPhase, uBaseAlpha, uBurstStart;
 uniform vec2 uPointer;
 varying float vT, vSide;
 varying vec2 vWorld;
@@ -48,6 +48,12 @@ void main() {
   float d = abs(vT - p);
   d = min(d, 1.0 - d);
   float pulse = exp(-(d * d) / 0.0009);
+  // hover burst: an extra one-shot pulse launched from the fiber start
+  float bp = (uTime - uBurstStart) * 0.55;
+  if (bp >= 0.0 && bp <= 1.15) {
+    float bd = vT - bp;
+    pulse += exp(-(bd * bd) / 0.0011) * 1.3;
+  }
   vec2 toP = vWorld - uPointer;
   float near = exp(-dot(toP, toP) / 6.0) * 0.6;
   float ends = smoothstep(0.0, 0.06, vT) * smoothstep(1.0, 0.94, vT);
@@ -83,7 +89,7 @@ export function addFibers(scene) {
         uTime: { value: 0 }, uAmp: { value: cfg.amp }, uFreq: { value: cfg.freq },
         uSeed: { value: cfg.seed }, uWidth: { value: cfg.width },
         uPulseSpeed: { value: cfg.pulseSpeed }, uPhase: { value: cfg.phase },
-        uBaseAlpha: { value: cfg.baseAlpha },
+        uBaseAlpha: { value: cfg.baseAlpha }, uBurstStart: { value: -1e3 },
         uPointer: { value: new Vector2(999, 999) },
       },
     });
@@ -102,6 +108,8 @@ export function addFibers(scene) {
   ];
   scene.add(group);
 
+  let lastElapsed = 0;
+  let burstIdx = 0;
   return {
     resize(halfW, halfH) {
       for (const { mat, cfg } of fibers) {
@@ -110,11 +118,17 @@ export function addFibers(scene) {
       }
     },
     update(elapsed, pointerWorld, camY) {
+      lastElapsed = elapsed;
       group.position.y = camY * 0.9;
       for (const { mat } of fibers) {
         mat.uniforms.uTime.value = elapsed;
         mat.uniforms.uPointer.value.copy(pointerWorld);
       }
+    },
+    // one-shot pulse from the fiber start, alternating fibers per call
+    burst() {
+      fibers[burstIdx].mat.uniforms.uBurstStart.value = lastElapsed;
+      burstIdx = (burstIdx + 1) % fibers.length;
     },
   };
 }

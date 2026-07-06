@@ -22,11 +22,15 @@ export async function genLanding(manifest, outDir, prefix = '') {
   const byBlock = new Map(Object.keys(manifest.blocks).map((k) => [k, []]));
   for (const d of manifest.decks) (byBlock.get(d.block) || byBlock.set(d.block, []).get(d.block)).push(d);
 
-  // Split the course title into ~equal lines for the staggered hero reveal.
-  const words = manifest.course.split(' ');
-  const per = Math.ceil(words.length / 3);
-  const lines = [];
-  for (let i = 0; i < words.length; i += per) lines.push(words.slice(i, i + per).join(' '));
+  // Hero title lines: art-directed via manifest.titleLines when present,
+  // else split the course title into ~equal lines.
+  let lines = manifest.titleLines;
+  if (!Array.isArray(lines) || !lines.length) {
+    const words = manifest.course.split(' ');
+    const per = Math.ceil(words.length / 3);
+    lines = [];
+    for (let i = 0; i < words.length; i += per) lines.push(words.slice(i, i + per).join(' '));
+  }
 
   const titleHtml = lines.map((l, i) =>
     `<span class="line-wrap"><span class="line" style="--i:${i}">${esc(l)}</span></span>`).join('\n        ');
@@ -77,11 +81,23 @@ export async function genLanding(manifest, outDir, prefix = '') {
       </section>`;
   })() : '';
 
+  // Social/SEO metadata — emitted only when the canonical site URL is known.
+  const descr = 'A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files.';
+  const siteUrl = manifest.site && manifest.site.url ? manifest.site.url.replace(/\/$/, '') : '';
+  const metaTags = siteUrl ? `
+<meta name="description" content="${esc(descr)}">
+<meta property="og:title" content="${esc(manifest.course)}">
+<meta property="og:description" content="${esc(descr)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="${esc(siteUrl)}/">
+<meta property="og:image" content="${esc(siteUrl)}/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">` : '';
+
   const html = `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(manifest.course)}</title>
+<title>${esc(manifest.course)}</title>${metaTags}
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%237dd3fc'/%3E%3C/svg%3E">
 <style>
   /* Critical: correct first paint before landing.css arrives. */
@@ -95,6 +111,8 @@ export async function genLanding(manifest, outDir, prefix = '') {
   <div class="grain" aria-hidden="true"></div>
   <main class="wrap">
     <header class="hero">
+      <div class="corner corner-tr" aria-hidden="true">Autumn 2026</div>
+      <div class="corner corner-br" aria-hidden="true">${manifest.decks.length} lectures &middot; ${manifest.decks.length} seminars</div>
       <p class="kicker">${esc(manifest.presenter)}</p>
       <h1 class="title">
         ${titleHtml}

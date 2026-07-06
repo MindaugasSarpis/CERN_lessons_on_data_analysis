@@ -53,3 +53,24 @@ if (field) {
     a.addEventListener('pointerenter', (e) => field.onImpulse(e.clientX, e.clientY)));
   document.addEventListener('visibilitychange', () => field.setPaused(document.hidden));
 }
+
+// Row navigation polish — independent of the WebGL field:
+// hover prefetches the deck's entry HTML; a plain left-click fades the page
+// out before navigating (modified clicks keep browser defaults).
+const prefetched = new Set();
+document.querySelectorAll('a.row').forEach((a) => {
+  a.addEventListener('pointerenter', () => {
+    if (prefetched.has(a.href)) return;
+    prefetched.add(a.href);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = a.href;
+    document.head.appendChild(link);
+  });
+  a.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    html.classList.add('leaving');
+    setTimeout(() => { location.href = a.href; }, reduced ? 0 : 320);
+  });
+});

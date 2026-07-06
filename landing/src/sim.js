@@ -213,6 +213,7 @@ export function createField(canvas) {
     onImpulse(cx, cy) {
       const w = toWorld(cx, cy, new Vector2());
       impulse.set(w.x, w.y, 26, 1.4);
+      fibers.burst(); // hover "transmits" a pulse down a fiber
     },
     onScroll(y) { scrollY = y; },
     setPaused(p) {

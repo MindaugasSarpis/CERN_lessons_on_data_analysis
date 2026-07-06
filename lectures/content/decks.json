@@ -1,5 +1,7 @@
 {
   "course": "Best Research and Data Analysis Practices from CERN",
+  "titleLines": ["Best Research", "and Data Analysis", "Practices", "from CERN"],
+  "site": { "url": "https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis" },
   "presenter": "Dr. Mindaugas Šarpis",
   "blocks": {
     "A": "Foundations & Tooling",

@@ -54,8 +54,9 @@ body {
 .kicker { font-size: 0.78rem; color: var(--accent); margin: 0 0 1.6rem; font-weight: 500; }
 .title {
   margin: 0; font-weight: 700; text-transform: uppercase;
-  font-size: clamp(2.6rem, 7.5vw, 6.6rem);
+  font-size: clamp(2.4rem, 7.5vw, 6.6rem);
   line-height: 0.98; letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 .line-wrap { display: block; overflow: hidden; }
 .line { display: block; }
@@ -73,6 +74,13 @@ body {
   position: absolute; bottom: 2.2rem; left: 0;
   display: flex; align-items: center; gap: 0.8rem; color: var(--dim);
 }
+.corner {
+  position: absolute; right: 0; color: var(--dim);
+  font-size: 0.65rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.14em;
+}
+.corner-tr { top: 2.2rem; }
+.corner-br { bottom: 2.2rem; }
 .shline { display: block; width: 1px; height: 56px; background: var(--dim); transform-origin: top; }
 .js .shline { animation: sh 2.4s var(--ease) infinite; }
 @keyframes sh { 0% { transform: scaleY(0); } 45% { transform: scaleY(1); transform-origin: top; }
@@ -127,6 +135,11 @@ a.row.opt .rt { opacity: 0.62; }
   transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
   transition-delay: calc(var(--i) * 60ms);
 }
+
+/* ---------- exit transition (row click → fade out → navigate) ---------- */
+.wrap { transition: opacity 0.3s ease; }
+.leaving .wrap { opacity: 0; }
+.leaving #field { opacity: 0; transition: opacity 0.3s ease; } /* after .field-on in cascade, so it wins */
 
 /* ---------- footer ---------- */
 .foot { margin-top: 5rem; border-top: 1px solid var(--hair); padding-top: 1.4rem; }
