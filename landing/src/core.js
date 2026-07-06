@@ -24,8 +24,8 @@ void main() {
   gl_Position = projectionMatrix * mv;
   float tw = 0.75 + 0.25 * sin(uTime * (0.6 + aSeed * 1.7) + aSeed * 40.0);
   float flash = step(aFlash, uTime) * exp(-(uTime - aFlash) * 2.2);
-  gl_PointSize = uPixelRatio * (26.0 + flash * 30.0) / max(-mv.z, 0.1);
-  vAlpha = (0.5 + 0.5 * tw) * (0.55 + flash * 2.0);
+  gl_PointSize = uPixelRatio * (46.0 + flash * 40.0) / max(-mv.z, 0.1);
+  vAlpha = (0.5 + 0.5 * tw) * (0.8 + flash * 2.2);
 }`;
 
 const NODE_FRAG = /* glsl */ `
@@ -53,7 +53,7 @@ const EDGE_FRAG = /* glsl */ `
 uniform float uTime;
 varying float vT, vPhase, vFlash;
 void main() {
-  float base = 0.10;
+  float base = 0.2;
   float pp = fract(uTime * 0.11 + vPhase);
   float d = abs(vT - pp);
   float pulse = exp(-(d * d) / 0.006);
@@ -62,9 +62,9 @@ void main() {
   float fp = clamp((uTime - vFlash) * 2.2, 0.0, 1.0);
   float fd = abs(vT - fp);
   float relay = on * exp(-(fd * fd) / 0.01) * exp(-(uTime - vFlash) * 1.2) * 2.0;
-  float b = base + pulse * 0.5 + relay;
+  float b = base + pulse * 0.75 + relay;
   vec3 col = mix(vec3(0.35, 0.62, 0.78), vec3(1.0), clamp(pulse + relay, 0.0, 1.0));
-  gl_FragColor = vec4(col * b, b * 0.9);
+  gl_FragColor = vec4(col * b, b);
 }`;
 
 const mulberry32 = (a) => () => {
