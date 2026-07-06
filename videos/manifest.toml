@@ -46,10 +46,10 @@ used_in = ["L02"]
 notes   = "Mariner 4 archival pan, HEVC 1.2 Mbps"
 
 [[videos]]
-name    = "Perseverence_Rover_Landing_NASA.mp4"
+name    = "Perseverance_Rover_Landing_NASA.mp4"
 profile = "remux"
 used_in = ["L02"]
-notes   = "NASA Perseverance landing, HEVC 1.3 Mbps 60fps"
+notes   = "NASA Perseverance landing, HEVC 1.3 Mbps 60fps. Raw on Drive may still use the old 'Perseverence' spelling — rename there on next sync."
 
 [[videos]]
 name    = "Cassini_Grand_Finale_NO_VO.mp4"
