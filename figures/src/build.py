@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import style
 
 FAMILIES = ["anatomy", "amounts", "distributions", "associations",
-            "emphasis", "color", "proportions", "story"]
+            "coordinates", "emphasis", "color", "proportions", "story"]
 
 def main() -> int:
     ap = argparse.ArgumentParser()

@@ -443,7 +443,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_coordinates_axes_axes_labels_bad_good.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_coordinates_axes_axes_labels_bad_good.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -489,7 +489,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_coordinates_axes_polar_vs_cartesian.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_coordinates_axes_polar_vs_cartesian.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -503,7 +503,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_coordinates_axes_houston_temps_aspect_ratios.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_coordinates_axes_houston_temps_aspect_ratios.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
@@ -1621,7 +1621,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_coordinates_axes_sqrt_scale.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_coordinates_axes_sqrt_scale.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
