@@ -565,7 +565,7 @@ hideInToc: true
 
 # Combining argparse + Config Files
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
 ## **The Pattern**
 
@@ -607,9 +607,9 @@ python analyze.py --config analysis.yaml --input new_data.csv
 
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="note-text mt-sm">
 
-**See demo** for complete implementation with validation
+💡 **Groundwork**: build this CLI/config habit now — the running project leans on it later (Seminar 14 itself jumps straight to a pinned environment + Makefile). *See the demo for a complete implementation with validation.*
 
 </div>
 
@@ -782,6 +782,52 @@ pip freeze > requirements.txt
 hideInToc: true
 ---
 
+# Modern Tooling: uv & pyproject.toml
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⚡ **uv — fast, lockfile-based**
+
+One Rust-based tool for **environments *and* dependencies**, resolving in milliseconds — the emerging 2026 standard for scientific Python.
+
+```bash
+uv init my_analysis        # project + pyproject.toml
+uv add numpy pandas        # resolve, install, lock
+uv run python analysis.py  # run inside the env
+```
+
+`uv.lock` pins exact versions for a byte-identical rebuild. **pixi** plays the same role in the conda world.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **pyproject.toml (PEP 621)**
+
+One declarative file for project metadata *and* dependencies — the modern replacement for a scattered `requirements.txt` + `setup.py`.
+
+```toml
+[project]
+name = "my_analysis"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+]
+```
+
+Read by `uv`, `pip`, and build tools alike. ♻️
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # environment.yml
 
 <div class="grid-2 mt-sm gap-md">
@@ -919,13 +965,10 @@ data/clean.csv: data/raw.csv scripts/clean.py
 	python scripts/clean.py
 
 # Utility targets (don't create files)
-.PHONY: all clean test
+.PHONY: all clean
 
 clean:
 	rm -rf results/* data/clean.csv
-
-test:
-	pytest tests/
 ```
 
 </div>
@@ -945,8 +988,11 @@ test:
 <strong>Usage</strong>
 
 <code>make all</code> — run pipeline<br>
-<code>make clean</code> — remove outputs<br>
-<code>make test</code> — run tests
+<code>make clean</code> — remove outputs
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+📚 <strong>When pipelines outgrow Make</strong> — reach for a data-science DAG runner: <strong>Snakemake</strong> (Python rules, wildcards, cluster/conda support) or <strong>targets</strong> (R). Same idea, more power — but start with Make.
 </div>
 
 </div>
@@ -980,121 +1026,6 @@ make all
 <div class="card card-accent card-glass pad-tight mt-sm">
 
 Make checks file timestamps. If dependencies are newer than target, it rebuilds. Otherwise, it skips!
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Workflow Automation with **Snakemake**
-
----
-hideInToc: true
----
-
-# What is Snakemake?
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-<strong>Python-based Workflow Manager</strong>
-
-Like Make, but designed for data science pipelines with Python syntax and extra features.
-</div>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-<strong>Key Advantages over Make</strong>
-
-- Python syntax (no TAB issues!)
-- Built-in cluster/cloud support
-- Conda environment integration
-- Automatic parallelization
-- Better for complex pipelines
-</div>
-
-</div>
-
-<div>
-
-<div class="card card-success card-glass pad-compact">
-<strong>Installation</strong>
-
-<code>pip install snakemake</code><br>
-<code>conda install -c bioconda snakemake</code>
-
-<br><br>
-<strong>Run workflow</strong>
-
-<code>snakemake --cores 4</code><br>
-<code>snakemake -n</code> (dry run)
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-sm">
-
-**Recommendation**: Start with **Make** for simple pipelines. Graduate to **Snakemake** when you need wildcards, cluster support, or conda integration.
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Basic Snakemake Syntax
-
-<div class="grid-2 mt-sm gap-md">
-
-<div style="font-size: 0.82em;">
-
-```python
-# Snakefile
-
-rule all:
-    input: "results/plot.png"
-
-rule clean_data:
-    input: "data/raw.csv"
-    output: "data/clean.csv"
-    shell: "python scripts/clean.py"
-
-rule make_plot:
-    input:
-        data="data/clean.csv",
-        script="scripts/plot.py"
-    output: "results/plot.png"
-    shell: "python {input.script}"
-```
-
-</div>
-
-<div>
-
-<div class="card card-info card-glass pad-compact">
-<strong>Key Concepts</strong>
-
-- <strong>rule</strong>: Named step in pipeline
-- <strong>input</strong>: Dependencies
-- <strong>output</strong>: What it creates
-- <strong>shell</strong>: Command to run
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-sm">
-<strong>Extra Features</strong>
-
-- <code>params:</code> for parameters
-- <code>conda:</code> for environments
-- <code>threads:</code> for parallelization
-- Wildcards: <code>{sample}</code>
-</div>
-
-</div>
 
 </div>
 

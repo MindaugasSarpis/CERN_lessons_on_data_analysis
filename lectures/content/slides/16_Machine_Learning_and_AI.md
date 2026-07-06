@@ -557,7 +557,7 @@ print(classification_report(y_test, y_pred))
 
 <div class="note-text mt-sm">
 
-Same four steps every time — swap `RandomForestClassifier` for any other model and nothing else changes. 🔧
+Same four steps every time — swap `RandomForestClassifier` for any other model and nothing else changes. 🔧 The Random Forest is **classical ML** — great on tabular data; **deep learning** swaps in a many-layer neural network that learns its own features from raw data (images, text, audio).
 
 </div>
 
@@ -662,7 +662,7 @@ hideInToc: true
 
 ## 🧠 **What they are**
 
-Models trained to predict the next token over vast text. That simple objective yields tools that draft, summarise, translate, and **write code** — including analysis code.
+Models trained to predict the next token over vast text. That simple objective yields tools that draft, summarise, translate, and **write code** — including analysis code. Under the hood: **neural networks** trained with the same five-step loop you just learned — features, model, train, evaluate — at vastly larger scale.
 
 </div>
 
@@ -687,6 +687,12 @@ Models trained to predict the next token over vast text. That simple objective y
 - Data privacy — what you paste, you share
 
 </div>
+
+</div>
+
+<div class="note-text mt-md">
+
+⚙️ The frontier: LLMs increasingly act as **agents** — calling tools, editing files, and running code in a loop — the fastest-emerging category of automation.
 
 </div>
 
@@ -891,7 +897,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">📗 **James, Witten, Hastie & Tibshirani** — *An Introduction to Statistical Learning* · free at statlearning.com</div>
+<div class="card card-primary card-glass pad-compact">📗 **James, Witten, Hastie, Tibshirani & Taylor** — *An Introduction to Statistical Learning with Applications in Python* (ISLP, 2023) · free at statlearning.com</div>
 
 <div class="card card-secondary card-glass pad-compact">🛠️ **Géron** — *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow*</div>
 

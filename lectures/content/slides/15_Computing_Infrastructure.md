@@ -278,7 +278,7 @@ Larger caches reduce memory access latency — typically **32 KB** (L1) to **32 
 
 ## 🔋 **Power Efficiency**
 
-Performance per watt matters — a laptop CPU uses **15–45W**, a server chip **200–350W**
+Performance per watt matters — a laptop CPU uses **15–45W**, top server chips now exceed **400W** TDP
 
 </div>
 
@@ -525,7 +525,7 @@ layout: center
 
 <div class="card card-accent card-glass pad-compact mt-sm">
 
-NVMe M.2 drive — connects directly to the PCIe bus, bypassing SATA. Sequential reads can exceed 7 GB/s.
+NVMe M.2 drive — connects directly to the PCIe bus, bypassing SATA. PCIe 5.0 drives reach 12–14 GB/s sequential reads.
 
 </div>
 
@@ -945,6 +945,11 @@ Memory access patterns affect performance more than computation — an algorithm
 
 </div>
 
+<div class="note-text mt-sm">
+
+💡 You've already used both: NumPy **vectorization** and **Parquet** from Lecture 13 are this hierarchy exploited in practice.
+</div>
+
 ---
 hideInToc: true
 ---
@@ -1006,6 +1011,234 @@ Get-PSDrive C
 
 Open a terminal and find out: How many CPU cores do you have? How much RAM? What type of storage (HDD or SSD)?
 
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Beyond **One Machine**
+
+<!--
+Speaker: everything so far described a single box. Real analysis often outgrows
+it — and this is exactly what Seminar 15 asks: run the pipeline unattended, then
+at scale. Keep it practical. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# Running Unattended
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+## ⏳ **Keep the job running after you log out**
+
+A long analysis shouldn't die when you close the laptop — send it to the background and log everything to a file.
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+### 🚀 **nohup — fire and forget**
+
+```bash
+nohup python analysis.py > run.log 2>&1 &
+tail -f run.log   # watch progress live
+```
+
+Survives logout; all output lands in `run.log`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+### 🖥️ **screen / tmux — resumable session**
+
+```bash
+tmux new -s run     # start; launch your job
+# detach: Ctrl-b d — reconnect later:
+tmux attach -t run
+```
+
+Reconnect from anywhere; the job stays alive.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+💡 Seminar 15's core task: `nohup make all > run.log 2>&1 &`, then inspect `run.log`. ⚙️
+</div>
+
+---
+hideInToc: true
+---
+
+# Batch Schedulers
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎟️ **What they do**
+
+On a shared cluster you don't run jobs directly — you **submit** them:
+
+**queue → allocate → run → collect**
+
+You describe the resources you need; the scheduler finds a free node, runs the job, and saves the output. **Slurm** and **HTCondor** are the common ones.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📝 **A minimal Slurm job**
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=d0
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+#SBATCH --time=01:00:00
+make all
+```
+
+Submit with `sbatch job.sh`, watch with `squeue`.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+HTCondor — which powers CERN's grid batch farm — is the same idea with a `submit` file.
+</div>
+
+---
+hideInToc: true
+---
+
+# The Worldwide LHC Computing Grid
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-info card-glass pad-compact">
+
+## 🌍 **The "Planet-Sized Computer" (Lecture 02)**
+
+No single centre can process the LHC's data, so CERN federates hundreds of sites into one grid:
+
+- **170+ sites** across **42 countries**
+- **~1.4 million CPU cores**, hundreds of petabytes/year
+- Tiered: **Tier-0** (CERN) → **Tier-1** → **Tier-2**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔀 **Move the work to the data**
+
+The grid ships **jobs** to the sites that already hold the **data** — shifting petabytes around is the real cost.
+
+A physicist rarely knows *which country* their jobs run in. Your `sbatch` / HTCondor script is the same idea at small scale: describe the job, let the system place it.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Cloud vs On-Prem / Cluster
+
+<div class="grid-3 mt-sm gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ☁️ **Cloud** (AWS, GCP, Azure)
+
+- ✅ **Elastic** — 1000 cores for an hour, then gone
+- ✅ No hardware to own or maintain
+- ⚠️ Pay per second — and per GB moved **out**
+- ⚠️ Data must first travel to the cloud
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏛️ **On-prem cluster / HPC**
+
+- ✅ **Cheap per core** once it's bought
+- ✅ **Data is local** — no egress fees
+- ⚠️ Fixed capacity — you queue for it
+- ⚠️ Someone has to maintain it
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⚖️ **The trade-off**
+
+**Elasticity vs cost vs data locality.**
+
+Bursty, occasional work → cloud. Steady, data-heavy work next to a big dataset → cluster.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# When to Scale Up
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+## 🧭 **Three questions pick the machine**
+
+**Data size** · **wall-time** · **repetition** — how big, how long, how many times?
+
+</div>
+
+<div class="grid-3 mt-sm gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+### 💻 **Laptop**
+
+Fits in RAM, runs in minutes, a handful of times. Most of this course lives here.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+### 🖥️ **Lab box / workstation**
+
+Data too big, or runs take hours. More RAM and cores — leave it overnight with `nohup`.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+### 🏛️ **Cluster / grid**
+
+Many files or parameter sets — embarrassingly parallel. Submit once, collect hundreds of results.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+💡 Scale up only when a smaller machine actually blocks you — a tidy pipeline (Lecture 14) makes moving up trivial.
 </div>
 
 ---

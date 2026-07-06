@@ -697,6 +697,12 @@ print("Statistics per detector:")
 print(df.groupby('detector')['energy'].agg(['count', 'mean', 'std']))
 ```
 
+<div class="note-text mt-sm">
+
+💡 The same split-apply-combine powers **sideband / signal-region** counts: tag each event with a `region` label, then `df.groupby('region').size()` returns every yield at once — the Seminar 13 stretch goal.
+
+</div>
+
 ---
 hideInToc: true
 ---
@@ -1224,7 +1230,7 @@ df.to_parquet('output.parquet')
 
 <div class="note-text mt-sm">
 
-💡 **Best practice**: CSV for human-readable data; HDF5 or Parquet for large datasets (faster, smaller). 📁 *Same idea across formats — pick by need, not habit.*
+💡 **Best practice**: CSV for human-readable data; HDF5 or Parquet for large datasets (faster, smaller). Modern route for large/mixed tables — the Arrow backend: `pd.read_csv(..., dtype_backend="pyarrow")` or `df.convert_dtypes()`. 📁 *Same idea across formats — pick by need, not habit.*
 
 </div>
 
@@ -1390,6 +1396,12 @@ for i in range(len(df)):
 df['new_col'] = df['A'] * 2
 ```
 
+<div class="note-text mt-sm">
+
+💡 Modern idiom: draw randomness from a local `rng = np.random.default_rng(42)` rather than the global `np.random.seed()` — this deck keeps the global seed for teaching simplicity.
+
+</div>
+
 ---
 layout: section
 hideInToc: true
@@ -1446,7 +1458,7 @@ Full tutorials and documentation provided!
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-**Your next step**: Apply these NumPy/Pandas skills to real data — the seminar running project uses the **LHCb D⁰ → K⁻π⁺** open dataset. The dimuon spectrum below (J/ψ, Υ) is a second LHCb example.
+**Your next step**: Apply these NumPy/Pandas skills to real data — the seminar running project uses the **LHCb D⁰ → K⁻π⁺** open dataset, whose K⁻π⁺ invariant-mass spectrum (D⁰ peak near **1865 MeV**) you build below.
 
 </div>
 
@@ -1454,31 +1466,30 @@ Full tutorials and documentation provided!
 hideInToc: true
 ---
 
-# Example: LHCb Dimuon Spectrum — Data
+# Example: LHCb D⁰ → K⁻π⁺ Spectrum — Data
 
 ```py {monaco-run}
 import pandas as pd
 import numpy as np
 
-# Simulated LHCb dimuon spectrum (illustrative — LHCb studies J/ψ, ψ(2S), Υ → μμ)
+# Simulated LHCb K⁻π⁺ spectrum — the running-project sample (D⁰ → K⁻π⁺)
 np.random.seed(42)
-jpsi = np.random.normal(3.1, 0.1, 500)       # J/ψ peak (~3.1 GeV)
-upsilon = np.random.normal(9.5, 0.2, 200)     # Υ peak (~9.5 GeV)
-background = np.random.exponential(2.0, 2000)  # Continuum background
+d0 = np.random.normal(1865, 9, 800)               # D⁰ peak (~1865 MeV)
+background = np.random.uniform(1800, 2000, 4000)   # Combinatorial background
 
-mass = np.concatenate([jpsi, upsilon, background])
-df = pd.DataFrame({'dimuon_mass': mass[mass < 15]})
+mass = np.concatenate([d0, background])
+df = pd.DataFrame({'Kpi_mass': mass})
 
 print(f"Total events: {len(df)}")
-print(f"J/ψ region (2.8-3.4 GeV):    {len(df[(df['dimuon_mass']>2.8) & (df['dimuon_mass']<3.4)])}")
-print(f"Υ region (9.0-10.5 GeV):     {len(df[(df['dimuon_mass']>9) & (df['dimuon_mass']<10.5)])}")
+print(f"Signal region (1845-1885 MeV): {len(df[(df['Kpi_mass']>1845) & (df['Kpi_mass']<1885)])}")
+print(f"Sidebands (outside window):    {len(df[(df['Kpi_mass']<1845) | (df['Kpi_mass']>1885)])}")
 ```
 
 ---
 hideInToc: true
 ---
 
-# Example: LHCb Dimuon Spectrum — Plot
+# Example: LHCb D⁰ → K⁻π⁺ Spectrum — Plot
 
 ```py {monaco-run}
 import pandas as pd
@@ -1486,20 +1497,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 np.random.seed(42)
-jpsi = np.random.normal(3.1, 0.1, 500)
-upsilon = np.random.normal(9.5, 0.2, 200)
-background = np.random.exponential(2.0, 2000)
-mass = np.concatenate([jpsi, upsilon, background])
-df = pd.DataFrame({'dimuon_mass': mass[mass < 15]})
+d0 = np.random.normal(1865, 9, 800)
+background = np.random.uniform(1800, 2000, 4000)
+mass = np.concatenate([d0, background])
+df = pd.DataFrame({'Kpi_mass': mass})
 
 plt.figure(figsize=(10, 5))
-plt.hist(df['dimuon_mass'], bins=100, range=(0, 15), edgecolor='white', linewidth=0.3)
-plt.xlabel('Dimuon Mass (GeV/c²)', fontsize=12)
+plt.hist(df['Kpi_mass'], bins=100, range=(1800, 2000), edgecolor='white', linewidth=0.3)
+plt.xlabel('K⁻π⁺ Invariant Mass (MeV/c²)', fontsize=12)
 plt.ylabel('Events', fontsize=12)
-plt.title('Dimuon Mass Spectrum (simulated LHCb data)', fontsize=14)
-plt.axvline(3.1, color='red', ls='--', label='J/ψ (3.1 GeV)', lw=1.5)
-plt.axvline(9.5, color='green', ls='--', label='Υ (9.5 GeV)', lw=1.5)
-plt.legend(); plt.grid(alpha=0.3); plt.yscale('log')
+plt.title('K⁻π⁺ Invariant-Mass Spectrum (simulated LHCb data)', fontsize=14)
+plt.axvline(1865, color='red', ls='--', label='D⁰ (1865 MeV)', lw=1.5)
+plt.legend(); plt.grid(alpha=0.3)
 plt.tight_layout(); plt.show()
 ```
 
