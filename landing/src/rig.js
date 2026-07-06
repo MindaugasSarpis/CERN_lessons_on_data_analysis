@@ -25,7 +25,7 @@ const DAMP = 6;             // 1/s → k ≈ 0.1/frame at 60fps
 const smooth = (t) => t * t * (3 - 2 * t);
 
 export function createRig(camera) {
-  let p = 0, over = 0;
+  let p = 0, over = 0, fresh = true;
   let azi = AZI0, r = R0, el = EL0, aside = LOOK_ASIDE, drop = 0, sink = 0;
   const pos = new Vector3(), look = new Vector3();
 
@@ -33,10 +33,15 @@ export function createRig(camera) {
     setScroll(y) {
       const span = Math.max(innerHeight * SCROLL_VH, 1);
       p = smooth(Math.min(Math.max(y / span, 0), 1));
-      over = Math.max(y - span, 0);
+      // cap: the calm-state drift must stay bounded no matter how long the
+      // page grows (sink ≤ 12 world units, creep ≤ ~7°)
+      over = Math.min(Math.max(y - span, 0), 4000);
     },
     update(dt) {
-      const k = 1 - Math.exp(-DAMP * dt);
+      // first update snaps to the scroll target (mid-page reloads must not
+      // replay the orbit); damping applies from the second frame on
+      const k = fresh ? 1 : 1 - Math.exp(-DAMP * dt);
+      fresh = false;
       azi += (AZI0 + (AZI1 - AZI0) * p + over * CREEP - azi) * k;
       r += (R0 + (R1 - R0) * p - r) * k;
       el += (EL0 + (EL1 - EL0) * p - el) * k;
