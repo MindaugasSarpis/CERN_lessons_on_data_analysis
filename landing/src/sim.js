@@ -6,6 +6,7 @@ import {
 } from 'three';
 import { SIM_VERT, COPY_FRAG, VEL_FRAG, POS_FRAG, RENDER_VERT, RENDER_FRAG } from './shaders/passes.glsl.js';
 import { addFibers } from './fiber.js';
+import { addCore } from './core.js';
 import { CORE_CENTER, BOUNDS } from './world.js';
 
 const FOV = 55, CAM_Z = 14, PARALLAX = 0.0012, MAX_DT = 1 / 30;
@@ -108,6 +109,8 @@ export function createField(canvas) {
   const scene = new Scene();
   scene.add(points);
   const fibers = addFibers(scene);
+  const core = addCore(scene, { coarse });
+  core.setPixelRatio(baseDpr);
 
   // --- pointer state ---
   // Client coords map to world by intersecting the pointer ray with the plane
@@ -196,6 +199,7 @@ export function createField(canvas) {
 
     impulse.w *= 0.86; // hover impulse decay
 
+    core.update(elapsed);
     fibers.update(elapsed, velMat.uniforms.uPointer.value, camera.position.y);
     renderMat.uniforms.uPos.value = posA.texture;
     renderMat.uniforms.uVel.value = velA.texture;
@@ -208,6 +212,7 @@ export function createField(canvas) {
           if (guardStage === 0) {
             renderMat.uniforms.uPixelRatio.value = baseDpr * 0.7;
             renderer.setPixelRatio(baseDpr * 0.7);
+            core.setPixelRatio(baseDpr * 0.7);
           } else geo.setDrawRange(0, Math.floor(count / 2));
           guardStage++;
         }
