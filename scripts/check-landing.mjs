@@ -3,7 +3,9 @@
  * check-landing.mjs — smoke-test a BUILT landing directory (index.html +
  * assets/). Asserts: title, every manifest deck link, JS boot (js class),
  * scene-or-fallback gating (field-on | static-bg), reveal-on-scroll, the
- * reduced-motion fallback, and zero console/page errors.
+ * reduced-motion fallback, zero console/page errors, and (with ?qa +
+ * preserveDrawingBuffer) that the WebGL scene renders non-blank pixels that
+ * change with scroll.
  *
  * Usage: node scripts/check-landing.mjs <distDir> [--base <prefix>]
  * Exit 0 = pass; 1 = failures; 2 = usage.
@@ -158,6 +160,62 @@ try {
         return [...rows].every((r) => getComputedStyle(r).opacity === '1');
       }), 'all rows immediately visible with JavaScript disabled');
       ok(await page.title() === manifest.course, 'title matches manifest.course');
+    } catch (e) {
+      ok(false, `pass aborted: ${e.message}`);
+    } finally {
+      if (ctx) await ctx.close().catch(() => {});
+    }
+  }
+
+  console.log('— pass 4: scene pixels at scroll offsets (?qa) —');
+  {
+    let ctx;
+    try {
+      const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'no-preference' });
+      ctx = ctx2;
+      const page = await ctx2.newPage();
+      const errors = [];
+      page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+      page.on('pageerror', (e) => errors.push(String(e)));
+      await page.goto(home + '?qa', { waitUntil: 'load' });
+      const gated = await page.waitForFunction(() => {
+        const c = document.documentElement.classList;
+        return (c.contains('field-on') || c.contains('static-bg')) ? (c.contains('field-on') ? 'field-on' : 'static-bg') : false;
+      }, null, { timeout: 20000 }).then((h) => h.jsonValue()).catch(() => null);
+      if (gated !== 'field-on') {
+        console.log(`  - skipped (no WebGL scene: ${gated})`);
+      } else {
+        // Downsample the field canvas to 64×40 and return luminance samples.
+        // Works because ?qa builds the renderer with preserveDrawingBuffer.
+        const sample = () => page.evaluate(() => new Promise((resolveP) => {
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            const src = document.getElementById('field');
+            const w = 64, h = 40;
+            const c = document.createElement('canvas');
+            c.width = w; c.height = h;
+            const g = c.getContext('2d', { willReadFrequently: true });
+            g.drawImage(src, 0, 0, w, h);
+            const d = g.getImageData(0, 0, w, h).data;
+            const px = []; let lit = 0;
+            for (let i = 0; i < d.length; i += 4) {
+              const l = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+              px.push(l);
+              if (l > 8) lit++;
+            }
+            resolveP({ lit, total: w * h, px });
+          }));
+        }));
+        await page.waitForTimeout(1200); // first frames + reveal settle
+        const s0 = await sample();
+        await page.evaluate(() => window.scrollTo(0, innerHeight * 2));
+        await page.waitForTimeout(1600); // camera damping settle
+        const s1 = await sample();
+        ok(s0.lit / s0.total > 0.005, `hero frame lit (${s0.lit}/${s0.total} px)`);
+        ok(s1.lit / s1.total > 0.005, `scrolled frame lit (${s1.lit}/${s1.total} px)`);
+        const diff = s0.px.reduce((a, v, i) => a + Math.abs(v - s1.px[i]), 0) / s0.px.length;
+        ok(diff > 1.5, `scroll changes the scene (mean |Δ| = ${diff.toFixed(2)})`);
+        ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
+      }
     } catch (e) {
       ok(false, `pass aborted: ${e.message}`);
     } finally {
