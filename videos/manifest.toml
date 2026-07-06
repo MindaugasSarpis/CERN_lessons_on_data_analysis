@@ -184,3 +184,14 @@ name    = "VU_VM.mp4"
 profile = "standard-tight"
 used_in = ["crash_course_for_video_lecture", "L02_Introduction_to_CERN"]
 notes   = "Re-encoded from 20 Mbps H.264 master — wasteful bitrate for slide use"
+[[videos]]
+name    = "CPU_vs_GPU_Demo.mp4"
+profile = "remux"
+used_in = ["L15"]
+notes   = "fetched from https://www.youtube.com/watch?v=1vXFxEzozcE"
+
+[[videos]]
+name    = "How_Computer_Memory_Works.mp4"
+profile = "remux"
+used_in = ["L15"]
+notes   = "fetched from https://www.youtube.com/watch?v=h9Z4oGN89MU"

@@ -726,17 +726,9 @@ GPU die shot — the highly regular grid pattern reflects the SIMD architecture:
 hideInToc: true
 ---
 
-# CPU vs GPU — Visualized
+<VideoPlayer src="CPU_vs_GPU_Demo.mp4" autoplay />
 
-<div class="mt-md" style="text-align: center;">
-  <iframe
-    src="https://www.youtube.com/embed/1vXFxEzozcE?si=E6BKmW_vWHg0F0Pi&rel=0"
-    width="720" height="340"
-    style="border:0; border-radius: 8px;"
-    allow="fullscreen"
-    allowfullscreen>
-  </iframe>
-</div>
+<!-- CPU vs GPU visualized (fetched via videos.py fetch; was a YouTube embed) -->
 
 
 
@@ -957,18 +949,9 @@ Memory access patterns affect performance more than computation — an algorithm
 hideInToc: true
 ---
 
-# How Computer Memory Works
+<VideoPlayer src="How_Computer_Memory_Works.mp4" autoplay />
 
-
-<div class="mt-md" style="text-align: center;">
-  <iframe
-    src="https://www.youtube.com/embed/h9Z4oGN89MU?si=238qvmSpbhkseW2I"
-    width="720" height="340"
-    style="border:0; border-radius: 8px;"
-    allow="fullscreen"
-    allowfullscreen>
-  </iframe>
-</div>
+<!-- How computer memory works (fetched via videos.py fetch; was a YouTube embed) -->
 
 ---
 hideInToc: true

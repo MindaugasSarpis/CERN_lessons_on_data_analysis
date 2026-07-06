@@ -19,6 +19,7 @@ pnpm build                   # build ALL decks + landing → dist/ (scripts/buil
 pnpm qa                      # build every deck at base '/' + gate each for overflow (scripts/qa-all.mjs) (includes the landing smoke test)
 pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for visual review
 pnpm build:landing          # rebuild only the landing page + its WebGL bundle → dist/
+pnpm videos:fetch <url> --name <Name> --used-in LNN   # yt-dlp → videos/raw/ + manifest entry; then videos:encode + videos:publish (needs yt-dlp + ffmpeg)
 
 pnpm dev --config-slug 01-orientation   # dev-serve one deck (regenerates entries first); or:
 pnpm dev:lecture lectures/content/deck.06-version-control.md

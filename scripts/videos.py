@@ -7,6 +7,7 @@ published to a long-lived GitHub Release (default tag: videos).
 
 Subcommands:
     sync     rclone mirror raw files from the configured remote
+    fetch    yt-dlp a video from a URL into raw/ + append a manifest entry
     encode   ffmpeg raw -> web, per the profile in manifest.toml (idempotent)
     publish  gh release upload web files, clobbering existing assets
     check    sanity check: orphans, missing, over-budget, slide-ref mismatches
@@ -114,6 +115,49 @@ def human_size(n: int) -> str:
             return f"{n:.1f} {unit}" if unit != "B" else f"{n} B"
         n /= 1024  # type: ignore[assignment]
     return f"{n:.1f} GB"
+
+
+# ---------------------------------------------------------------------------
+# fetch — download a video from a URL (yt-dlp) into raw/ + manifest entry
+# ---------------------------------------------------------------------------
+
+def cmd_fetch(args: argparse.Namespace) -> int:
+    if not shutil.which("yt-dlp"):
+        print("error: yt-dlp not installed. https://github.com/yt-dlp/yt-dlp", file=sys.stderr)
+        return 2
+    name = args.name if args.name.endswith(".mp4") else f"{args.name}.mp4"
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+    raw = RAW_DIR / name
+    if raw.exists() and not args.force:
+        print(f"  = {name}: already in raw/ (use --force to re-download)")
+    else:
+        # Prefer H.264 MP4 <=1080p so the default `remux` profile is a lossless
+        # container rewrite (the platform's own encode is already web-friendly).
+        fmt = ("bv*[ext=mp4][vcodec^=avc1][height<=1080]+ba[ext=m4a]"
+               "/b[ext=mp4][height<=1080]/bv*[height<=1080]+ba/b")
+        cmd = ["yt-dlp", "-f", fmt, "--merge-output-format", "mp4",
+               "--no-playlist", "-o", str(raw), args.url]
+        print(" ".join(cmd))
+        if subprocess.call(cmd) != 0:
+            return 1
+
+    _, videos = load_manifest()
+    if any(v.name == name for v in videos):
+        print(f"  = {name}: already in manifest.toml")
+        return 0
+    import json
+    used = ", ".join(json.dumps(u) for u in args.used_in)
+    with MANIFEST.open("a", encoding="utf-8") as f:
+        f.write(
+            f"\n[[videos]]\n"
+            f'name    = "{name}"\n'
+            f'profile = "{args.profile}"\n'
+            f"used_in = [{used}]\n"
+            f'notes   = "fetched from {args.url}"\n'
+        )
+    print(f"  + manifest entry appended for {name} (profile {args.profile})")
+    print(f"  next: pnpm videos:encode --only {name} && pnpm videos:publish --only {name}")
+    return 0
 
 
 # ---------------------------------------------------------------------------
@@ -392,6 +436,14 @@ def main() -> int:
     p_sync = sub.add_parser("sync", help="rclone raw files from Drive")
     p_sync.add_argument("--dry-run", action="store_true")
     p_sync.set_defaults(func=cmd_sync)
+
+    p_fetch = sub.add_parser("fetch", help="yt-dlp a video from a URL into raw/ + manifest")
+    p_fetch.add_argument("url")
+    p_fetch.add_argument("--name", required=True, help="output file name (.mp4 appended if missing)")
+    p_fetch.add_argument("--profile", default="remux", choices=sorted(PROFILES))
+    p_fetch.add_argument("--used-in", action="append", default=[], metavar="LNN", help='slide ref, e.g. "L15" (repeatable)')
+    p_fetch.add_argument("--force", action="store_true", help="re-download even if raw exists")
+    p_fetch.set_defaults(func=cmd_fetch)
 
     p_enc = sub.add_parser("encode", help="ffmpeg raw -> web")
     p_enc.add_argument("--force", action="store_true", help="re-encode even if up to date")
