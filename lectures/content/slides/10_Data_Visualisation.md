@@ -206,7 +206,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_distributions_i_anscombes_quartet.svg" style="display:block;margin:0 auto;max-height:380px;">
+<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg" style="display:block;margin:0 auto;max-height:380px;">
 
 ---
 hideInToc: true
@@ -284,7 +284,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_aesthetic_mapping_iris_aesthetics.svg" style="display:block;margin:0 auto;max-height:310px;">
+<img class="fig" src="/figures/viz_aesthetic_mapping_iris_aesthetics.svg" style="display:block;margin:0 auto;max-height:310px;">
 
 ---
 hideInToc: true
@@ -298,16 +298,34 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
-layout: image
-backgroundSize: cover
-image: /figures/data_vis_anatomy_of_a_figure.svg
 ---
 
-*Every figure shares the same anatomy: **axes** (with labelled ticks), **title**, **legend**, the **data** itself, and **annotations** that point to the key insight.*
+# Anatomy of a **Figure** — every element earns its place
+
+<div class="anatomy-stack mt-md">
+  <img src="/figures/viz_anatomy_stage1.svg" alt="">
+  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage2.svg" alt="">
+  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage3.svg" alt="">
+  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage4.svg" alt="">
+  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage5.svg" alt="">
+  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage6.svg" alt="">
+</div>
+
+<!--
+Click through: frame → axes with units → the data → its uncertainty →
+the annotation that makes the point → the title that states the finding.
+If an element doesn't earn its place, it goes.
+-->
+
+<style>
+.anatomy-stack { position: relative; max-width: 82%; margin-inline: auto; }
+.anatomy-stack img { width: 100%; display: block; }
+.anatomy-layer { position: absolute; inset: 0; }
+</style>
 
 ---
 hideInToc: true
@@ -443,7 +461,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_small_axis_labels_aus_athletes_too_small.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_small_axis_labels_aus_athletes_too_small.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 🚫 **Too small** — unreadable at 5 m
 
@@ -451,7 +469,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_small_axis_labels_aus_athletes_balanced.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_small_axis_labels_aus_athletes_balanced.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 ✅ **Balanced** — labels in proportion to data
 
@@ -549,7 +567,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_boxoffice_rotated_bad.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_amounts_boxoffice_rotated_bad.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -563,7 +581,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_boxoffice_horizontal.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_amounts_boxoffice_horizontal.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -577,7 +595,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_proportional_ink_truncated_bar_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_proportional_ink_truncated_bar_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -591,7 +609,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_proportional_ink_truncated_bar_fixed.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_proportional_ink_truncated_bar_fixed.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -619,7 +637,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_boxoffice_horizontal.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_amounts_boxoffice_horizontal.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -647,7 +665,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_students_stacked_bars.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_amounts_students_stacked_bars.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -661,7 +679,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_no_3d_jitter_bar_3d_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_no_3d_jitter_bar_3d_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -675,7 +693,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_no_3d_jitter_bar_2d_fixed.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_no_3d_jitter_bar_2d_fixed.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -689,7 +707,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_cleveland_dot_plot.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_amounts_cleveland_dot_plot.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
@@ -703,7 +721,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_lifeexp_alpha_order_bad.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_amounts_lifeexp_alpha_order_bad.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
@@ -717,7 +735,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_lifeexp_bars_bad.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_amounts_lifeexp_bars_bad.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
@@ -731,13 +749,13 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_amounts_lifeexp_dot_plot.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_amounts_lifeexp_dot_plot.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /figures/cwilke_amounts_health_heatmap.svg
+image: /figures/viz_amounts_health_heatmap.svg
 ---
 
 ---
@@ -786,7 +804,7 @@ Histograms visualize the **distribution** of a single continuous variable by div
 hideInToc: true
 layout: image
 backgroundSize: contain
-image: /figures/cwilke_distributions_i_titanic_density.svg
+image: /figures/viz_distributions_i_titanic_density.svg
 ---
 
 ---
@@ -801,7 +819,24 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_distributions_i_titanic_hist_binwidth.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_distributions_i_titanic_hist_binwidth.svg" style="display:block;margin:0 auto;max-height:340px;">
+
+---
+hideInToc: true
+---
+
+# Try It — **Bin Width**
+
+```python {monaco-run} {autorun:false}
+import numpy as np, matplotlib.pyplot as plt
+rng = np.random.default_rng(7)
+data = np.concatenate([rng.normal(0, 1, 800), rng.normal(4, 0.5, 300)])
+
+BINS = 30          # <-- try 5, 30, 200
+plt.hist(data, bins=BINS)
+plt.title(f"bins = {BINS}")
+plt.show()
+```
 
 ---
 hideInToc: true
@@ -819,7 +854,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_distributions_ii_mpg_boxplot.svg" style="display:block;margin:0 auto;max-height:170px;">
+<img class="fig" src="/figures/viz_distributions_ii_mpg_boxplot.svg" style="display:block;margin:0 auto;max-height:170px;">
 
 📦 **Boxplot** — box = middle 50% (the **interquartile range**), line = **median**; whiskers reach the furthest point within 1.5 × IQR, points beyond are outliers. Defined formally in the Probability & Statistics lecture.
 
@@ -827,7 +862,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_distributions_ii_mpg_violin.svg" style="display:block;margin:0 auto;max-height:170px;">
+<img class="fig" src="/figures/viz_distributions_ii_mpg_violin.svg" style="display:block;margin:0 auto;max-height:170px;">
 
 🎻 **Violin** — a smooth, mirrored outline that is wide where data is dense and narrow where it's sparse — it can reveal two-humped (bimodal) shapes a boxplot would hide
 
@@ -835,7 +870,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_distributions_ii_mpg_strip_jitter.svg" style="display:block;margin:0 auto;max-height:170px;">
+<img class="fig" src="/figures/viz_distributions_ii_mpg_strip_jitter.svg" style="display:block;margin:0 auto;max-height:170px;">
 
 〰️ **Strip + jitter** — every point plotted; small horizontal jitter avoids stacking
 
@@ -861,7 +896,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_distributions_i_titanic_ecdf.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_distributions_i_titanic_ecdf.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -892,7 +927,7 @@ Q–Q plots compare your data's quantiles against a reference (usually the Norma
 
 <div>
 
-<img class="fig" src="/figures/cwilke_distributions_i_qq_plot.svg" style="display:block;margin:0 auto;max-height:290px;">
+<img class="fig" src="/figures/viz_distributions_i_qq_plot.svg" style="display:block;margin:0 auto;max-height:290px;">
 
 </div>
 
@@ -910,7 +945,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_distributions_ii_ridgeline.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_distributions_ii_ridgeline.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
@@ -928,7 +963,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_avoid_line_drawings_iris_densities_lines.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_avoid_line_drawings_iris_densities_lines.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 🚫 **Lines only** — slower to read, species swap harder
 
@@ -936,7 +971,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_avoid_line_drawings_iris_densities_filled.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_avoid_line_drawings_iris_densities_filled.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 ✅ **Filled** — species instantly separable
 
@@ -956,7 +991,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_aesthetic_mapping_temp_normals_heatmap.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_aesthetic_mapping_temp_normals_heatmap.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -976,7 +1011,7 @@ Same three-category breakdown shown as pie, stacked bar, and side-by-side bars. 
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_proportions_pie_bad.svg" style="display:block;margin:0 auto;max-height:200px;">
+<img class="fig" src="/figures/viz_proportions_pie_bad.svg" style="display:block;margin:0 auto;max-height:200px;">
 
 🥧 **Pie** — angles are hard
 
@@ -984,7 +1019,7 @@ Same three-category breakdown shown as pie, stacked bar, and side-by-side bars. 
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_proportions_proportions_stacked_bar.svg" style="display:block;margin:0 auto;max-height:200px;">
+<img class="fig" src="/figures/viz_proportions_proportions_stacked_bar.svg" style="display:block;margin:0 auto;max-height:200px;">
 
 📚 **Stacked** — part-to-whole
 
@@ -992,7 +1027,7 @@ Same three-category breakdown shown as pie, stacked bar, and side-by-side bars. 
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_proportions_proportions_side_by_side_bars.svg" style="display:block;margin:0 auto;max-height:200px;">
+<img class="fig" src="/figures/viz_proportions_proportions_side_by_side_bars.svg" style="display:block;margin:0 auto;max-height:200px;">
 
 📊 **Side-by-side** — easy to compare
 
@@ -1016,7 +1051,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_proportions_marketshare_pies_bad.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_proportions_marketshare_pies_bad.svg" style="display:block;margin:0 auto;max-height:240px;">
 
 ❌ **Fails** — comparing many pies with similar wedge sizes
 
@@ -1024,7 +1059,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_proportions_bundestag_pie_good.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_proportions_bundestag_pie_good.svg" style="display:block;margin:0 auto;max-height:240px;">
 
 ✅ **Works** — one whole, ≤5 parts, clear majority claim
 
@@ -1044,7 +1079,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_proportions_treemap.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_proportions_treemap.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1060,7 +1095,7 @@ Each point is one observation. Look for **trend** (does y rise with x?), **sprea
 
 </div>
 
-<img class="fig" src="/figures/cwilke_associations_blue_jays_scatter.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_associations_blue_jays_scatter.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
@@ -1074,7 +1109,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_associations_blue_jays_bubble.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_associations_blue_jays_bubble.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
 hideInToc: true
@@ -1090,7 +1125,7 @@ Raw scatter · jitter + transparency · 2-D density. As point count grows, the s
 
 </div>
 
-<img class="fig" src="/figures/cwilke_no_3d_jitter_overplot_jitter_alpha.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_no_3d_jitter_overplot_jitter_alpha.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1108,7 +1143,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_overlapping_points_nycflights_points.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_overlapping_points_nycflights_points.svg" style="display:block;margin:0 auto;max-height:240px;">
 
 🚫 **Raw scatter** — 300 k NYC flight delays collapse into a blob
 
@@ -1116,7 +1151,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_overlapping_points_nycflights_hex_bins.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_overlapping_points_nycflights_hex_bins.svg" style="display:block;margin:0 auto;max-height:240px;">
 
 ✅ **Hex bins** — density becomes the story
 
@@ -1136,7 +1171,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_associations_mtcars_corr_heatmap.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_associations_mtcars_corr_heatmap.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -1150,7 +1185,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_multi_panel_correlogram.svg" style="display:block;margin:0 auto;max-height:360px;">
+<img class="fig" src="/figures/viz_multi_panel_correlogram.svg" style="display:block;margin:0 auto;max-height:360px;">
 
 ---
 hideInToc: true
@@ -1164,7 +1199,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_associations_co2_slopegraph.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_associations_co2_slopegraph.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -1180,7 +1215,7 @@ Raw observations + a smoothed curve is usually more honest than either alone. Ma
 
 </div>
 
-<img class="fig" src="/figures/cwilke_trends_lincoln_temps_raw_smooth.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_trends_lincoln_temps_raw_smooth.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1194,7 +1229,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_trends_detrended_price.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_trends_detrended_price.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1208,7 +1243,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_trends_keeling_curve.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_trends_keeling_curve.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -1222,7 +1257,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_trends_keeling_decomposition.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_trends_keeling_decomposition.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -1240,7 +1275,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_uncertainty_error_bars.svg" style="display:block;margin:0 auto;max-height:140px;">
+<img class="fig" src="/figures/viz_uncertainty_error_bars.svg" style="display:block;margin:0 auto;max-height:140px;">
 
 📏 **Error bars** — discrete ticks spanning ± 1 or 2 standard errors; good for a few points
 
@@ -1250,7 +1285,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_uncertainty_ci_band.svg" style="display:block;margin:0 auto;max-height:140px;">
+<img class="fig" src="/figures/viz_uncertainty_ci_band.svg" style="display:block;margin:0 auto;max-height:140px;">
 
 🎗️ **CI band** — shaded envelope around a fitted curve; width = 95 % uncertainty
 
@@ -1258,7 +1293,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_uncertainty_hop_demo.svg" style="display:block;margin:0 auto;max-height:140px;">
+<img class="fig" src="/figures/viz_uncertainty_hop_demo.svg" style="display:block;margin:0 auto;max-height:140px;">
 
 🎰 **HOP** — overlay many plausible fits; the spread *is* the uncertainty
 
@@ -1284,7 +1319,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_uncertainty_election_quantile_dot.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_uncertainty_election_quantile_dot.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -1416,7 +1451,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_balance_data_context_price_plot_ggplot_default.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_balance_data_context_price_plot_ggplot_default.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 🚫 **Out-of-the-box default** — grey panel, heavy grid
 
@@ -1424,7 +1459,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_balance_data_context_price_plot_no_grid.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_balance_data_context_price_plot_no_grid.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 ✅ **Clean** — no grid, white background, lines do the work
 
@@ -1494,7 +1529,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_color_palette_qualitative.svg" style="width:100%;max-height:70px;">
+<img class="fig" src="/figures/viz_color_palette_qualitative.svg" style="width:100%;max-height:70px;">
 
 <div>
 
@@ -1502,7 +1537,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_color_palette_sequential.svg" style="width:100%;max-height:70px;">
+<img class="fig" src="/figures/viz_color_palette_sequential.svg" style="width:100%;max-height:70px;">
 
 <div>
 
@@ -1510,7 +1545,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_color_palette_diverging.svg" style="width:100%;max-height:55px;">
+<img class="fig" src="/figures/viz_color_palette_diverging.svg" style="width:100%;max-height:55px;">
 
 </div>
 
@@ -1526,7 +1561,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_color_popgrowth_us_highlight.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_color_popgrowth_us_highlight.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1540,7 +1575,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_pitfalls_of_color_use_red_green_cvd_sim.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_red_green_cvd_sim.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -1554,29 +1589,24 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_proportional_ink_log_scale.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_proportional_ink_log_scale.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
 ---
 
-# Log Scale — **In Code**
+# Try It — **Which Scale?**
 
-<div class="card card-info card-glass pad-compact mt-sm">
+```python {monaco-run} {autorun:false}
+import numpy as np, matplotlib.pyplot as plt
+x = np.arange(1, 60)
+y = 5 * np.exp(0.18 * x)       # exponential growth
 
-🐍 One extra call turns a crushed, steeply-falling histogram into readable structure across every order of magnitude.
-
-</div>
-
-```python
-import matplotlib.pyplot as plt
-import numpy as np
-
-counts, edges = np.histogram(data, bins=50)  # steeply-falling distribution
-fig, ax = plt.subplots(figsize=(5.5, 3.2))
-ax.stairs(counts, edges, fill=True, color="#56B4E9")
-ax.set_yscale('log')                         # <- the fix
-ax.set(xlabel="value", ylabel="count (log scale)")
+SCALE = "linear"               # <-- try "log"
+plt.plot(x, y, "o-", ms=3)
+plt.yscale(SCALE)
+plt.title(f"y-scale: {SCALE}")
+plt.show()
 ```
 
 ---
@@ -1605,7 +1635,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_multi_panel_small_multiples_gapminder.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig" src="/figures/viz_multi_panel_small_multiples_gapminder.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -1623,7 +1653,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_balance_data_context_titanic_survival_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
 
 🚫 **Per-panel scales** — the story disappears
 
@@ -1631,7 +1661,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_balance_data_context_titanic_survival_good.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_good.svg" style="display:block;margin:0 auto;max-height:230px;">
 
 ✅ **Shared y-axis** — the class × sex pattern jumps out
 
@@ -1653,7 +1683,7 @@ A good title states the finding. The subtitle adds scope. The caption cites the 
 
 </div>
 
-<img class="fig" src="/figures/cwilke_telling_a_story_story_titles_captions.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_telling_a_story_story_titles_captions.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1667,7 +1697,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_telling_a_story_title_as_finding.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_telling_a_story_title_as_finding.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1685,7 +1715,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_redundant_coding_tech_stocks_bad_legend.svg" style="display:block;margin:0 auto;max-height:220px;">
+<img class="fig" src="/figures/viz_redundant_coding_tech_stocks_bad_legend.svg" style="display:block;margin:0 auto;max-height:220px;">
 
 🚫 **Legend off to the side** — reader has to look twice
 
@@ -1693,7 +1723,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_redundant_coding_tech_stocks_good_no_legend.svg" style="display:block;margin:0 auto;max-height:220px;">
+<img class="fig" src="/figures/viz_redundant_coding_tech_stocks_good_no_legend.svg" style="display:block;margin:0 auto;max-height:220px;">
 
 ✅ **Direct labels at the line ends** — one glance
 
@@ -1713,7 +1743,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_telling_a_story_annotated_vs_plain.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_telling_a_story_annotated_vs_plain.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -1731,7 +1761,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_balance_data_context_gene_expression_bad.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_balance_data_context_gene_expression_bad.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 🚫 **No reference** — deviations are invisible
 
@@ -1739,7 +1769,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_balance_data_context_gene_expression_good.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_balance_data_context_gene_expression_good.svg" style="display:block;margin:0 auto;max-height:210px;">
 
 ✅ **y = x diagonal** — off-diagonal points are the finding
 
@@ -1763,7 +1793,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_pitfalls_of_color_use_rainbow_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
 
 🚫 **Rainbow** — unreadable magnitudes
 
@@ -1771,9 +1801,9 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/cwilke_pitfalls_of_color_use_rainbow_fix.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_fix.svg" style="display:block;margin:0 auto;max-height:230px;">
 
-✅ **Okabe-Ito** — clear, colour-blind safe
+✅ **A perceptually uniform colormap (viridis)** — clear, colour-blind safe
 
 </div>
 
@@ -1791,7 +1821,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/cwilke_balance_data_context_grid_vs_no_grid.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig" src="/figures/viz_balance_data_context_grid_vs_no_grid.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
