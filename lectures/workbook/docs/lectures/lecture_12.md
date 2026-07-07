@@ -4,7 +4,7 @@
 
 ## Overview
 
-**Duration**: 90-120 minutes
+**Duration**: ~120 minutes (2 h slot)
 
 **Prerequisites**: L1-L11 (especially L8 on Git)
 

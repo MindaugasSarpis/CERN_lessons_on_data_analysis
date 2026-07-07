@@ -4,7 +4,7 @@
 
 ## Overview
 
-**Duration**: 90-120 minutes (lecture + hands-on)
+**Duration**: ~120 minutes (2 h slot)
 
 **Prerequisites**: L3 (command line basics), L5 (Python — for understanding what files to track)
 

@@ -4,7 +4,7 @@
 
 ## Overview
 
-**Duration**: 90-120 minutes
+**Duration**: ~120 minutes (2 h slot)
 
 **Prerequisites**: L5 (Python basics), L10 (Data fitting)
 
