@@ -1025,6 +1025,744 @@ print(f"\nEvents near the D0 peak: {near_peak}/{len(masses_MeV)}")
 ```
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Readable **Output**
+
+<!--
+Speaker: everything so far computed values; now we make them legible. Formatted
+output is not cosmetic — a run's printout is a log 📁 you and others read, grep,
+and paste into reports. f-strings are the tool. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# From `print()` to **f-strings**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+#### 😐 **Plain `print()`**
+
+```python
+mass = 1865.84
+print("mass is", mass, "MeV")
+# mass is 1865.84 MeV
+```
+
+Values glued with spaces — no control over how they look.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+#### ✨ **f-string** (formatted)
+
+```python
+mass = 1865.84
+print(f"mass = {mass:.1f} MeV")
+# mass = 1865.8 MeV
+```
+
+Put an `f` before the quote; drop variables inside `{ }`.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 The `:` inside the braces starts a **format spec** — `{mass:.1f}` means "this float, one decimal place." That colon is where readable analysis logs begin.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Try It — Your First **f-string**
+
+```py {monaco-run} {autorun:false}
+name = "D0"
+mass_mev = 1865.84
+n_events = 40129
+
+# {var} drops the value in; {var:spec} formats it
+print(f"{name} candidate mass = {mass_mev:.2f} MeV")
+print(f"collected {n_events:,} events")   # ',' → thousands separators
+
+# Try: add a line printing the mass in GeV (divide by 1000)
+```
+
+---
+hideInToc: true
+---
+
+# The Format **Spec** Mini-Language
+
+<div class="note-text mt-sm">Inside `{value:spec}`, the part after the colon controls how the value is rendered:</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### 🔢 **Numbers**
+
+```python
+f"{3.14159:.2f}"   # '3.14'  fixed decimals
+f"{1865:,}"        # '1,865' thousands
+f"{0.0473:.1%}"    # '4.7%'  percent
+f"{42:04d}"        # '0042'  zero-pad
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+#### 📐 **Width & alignment**
+
+```python
+f"{'K':>6}"   # '     K'  right
+f"{'K':<6}"   # 'K     '  left
+f"{'K':^6}"   # '  K   '  centre
+```
+
+Fixed widths line numbers up into readable columns.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Try It — A Formatted Results **Table**
+
+```py {monaco-run} {autorun:false}
+results = [("K-", 493.7), ("pi+", 139.6), ("D0", 1865.8)]
+
+print(f"{'particle':<10}{'mass / MeV':>12}")
+print("-" * 22)
+for particle, mass in results:
+    print(f"{particle:<10}{mass:>12.2f}")
+
+# Aligned columns make a log you can actually scan
+```
+
+---
+hideInToc: true
+---
+
+# Try It — Debug with **`{x=}`**
+
+```py {monaco-run} {autorun:false}
+k_px, k_py, k_pz = 1204.5, 873.2, 15320.7
+
+# '=' inside the braces prints the NAME and the VALUE — great for tracing
+momentum = (k_px**2 + k_py**2 + k_pz**2) ** 0.5
+print(f"{k_px=}")
+print(f"{momentum=:.1f}")   # you can still add a format spec after '='
+
+# Try printing k_py and k_pz the same way
+```
+
+---
+hideInToc: true
+---
+
+# Why Formatting **Matters**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📁 **Logs are data too**
+
+A run that prints `mass = 1865.8 MeV` and `events = 40,129` is a log you can read at a glance — then grep, diff, and paste into a report.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ♻️ **Reproducible reporting**
+
+Rounding to a fixed number of decimals means the same analysis prints the same numbers every run — no 15-digit float noise cluttering the output.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Write for the reader of the log — the person deciding whether to trust the result is often the one squinting at your printout.
+
+</div>
+
+<!--
+Speaker: tie back to the four aims — formatted, rounded output is reproducibility
+♻️ and file-friendliness 📁 in miniature. A log you can diff between two runs is
+a log that catches a regression. (~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Reading **Tracebacks**
+
+<!--
+Speaker: reframe errors from failure to feedback. Everyone crashes code; the
+skill that separates beginners from the fluent is reading the traceback instead
+of panicking. The error message is data 📁 — read it. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Anatomy of a **Traceback**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧭 Python prints a traceback when code crashes. Read it **bottom-up** — the last line is what actually went wrong.
+
+</div>
+
+```text {*}{lines:false}
+Traceback (most recent call last):
+  File "parse.py", line 12, in <module>
+    mass = momentum / energy
+TypeError: unsupported operand type(s) for /: 'str' and 'float'
+```
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+#### 👇 **Last line = the diagnosis**
+
+`TypeError: ...` — the exception type plus a plain-English reason.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+#### 📍 **Above it = the scene**
+
+The `File`, the `line 12`, and the exact code that raised it.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Error Message Is **Data** 📁
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔎 **Read the type first**
+
+`NameError`, `TypeError`, `IndexError` — each names a distinct kind of mistake. Learn the common three and you diagnose most beginner crashes on sight.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📍 **Then jump to the line number**
+
+The traceback names the file and line. Open it there — don't guess where the bug is.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 🗣️ **The message is a hint, not a scold**
+
+Paste the exact text into a search engine or the docs. A traceback is the single most useful debugging clue Python hands you.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Fix It — **NameError**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ `NameError: name 'X' is not defined` — you used a name Python has never seen. Usually a typo, or a variable used before it is created.
+
+</div>
+
+```py {monaco-run} {autorun:false}
+# BROKEN: run it, read the traceback, then fix the typo
+energy_gev = 13.6
+print(f"beam energy: {enrgy_gev} GeV")
+
+# Fix: correct the misspelled name on the last line
+```
+
+<!--
+Speaker: have them run it first and read the NameError aloud before fixing.
+The point is the loop: run → read → fix, not memorising the answer. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Fix It — **TypeError**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ `TypeError` — an operation met the wrong type. Classic case: a number read from a file is still a **string**, so `+` concatenates instead of adding.
+
+</div>
+
+```py {monaco-run} {autorun:false}
+# BROKEN: these came from a text file, so they are strings
+px = "1204.5"
+py = "873.2"
+print("total =", px + py)   # glues them: '1204.5873.2'
+
+# Fix: wrap each value in float() before adding
+```
+
+---
+hideInToc: true
+---
+
+# Fix It — **IndexError**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ `IndexError: list index out of range` — you asked for a position that isn't there. A 3-item list has indices `0`, `1`, `2` — not `3`.
+
+</div>
+
+```py {monaco-run} {autorun:false}
+# BROKEN: off-by-one — the last valid index is len(parts) - 1
+parts = "1049,-1204.5,873.2".split(",")
+print("first :", parts[0])
+print("last  :", parts[3])
+
+# Fix: use parts[-1] (or parts[2]) for the last element
+```
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A script crashes with: 'Traceback (most recent call last)' / 'File run.py, line 3' / 'File run.py, line 8' / 'IndexError: list index out of range'. Which line should you inspect first?"
+  :options="[
+    'Line 3 — it appears first, so it must have failed first',
+    'Line 8 — the last frame before the exception is where it actually raised',
+    'The Traceback header line — it holds the real error',
+    'None — an IndexError never points to a real code line'
+  ]"
+  :correct="1"
+  explanation="Read tracebacks bottom-up. Frames are listed outermost-first (line 3 called into line 8); the deepest frame — line 8, just above the exception — is where the bad index was used. The header even says so: 'most recent call last' means the last frame listed is the most recent, and it is the one that raised."
+/>
+
+---
+hideInToc: true
+---
+
+# A Calm Traceback **Checklist**
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+### 1️⃣ **Don't panic — read the last line**
+
+The exception type and message name the problem in plain words.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+### 2️⃣ **Go to the line number**
+
+Open the named file at that line; the bug is there, or just above it.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+### 3️⃣ **Print the suspect values**
+
+Add `print(f"{x=}")` before the crash to see what the data actually is.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+### 4️⃣ **Search the exact message**
+
+Paste the error text verbatim — someone has hit it before you.
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Naming & **Style**
+
+<!--
+Speaker: pivot from "does it run" to "can a human read it". Style is a
+reproducibility ♻️ courtesy to future-you, not bureaucracy. Frame the next few
+slides as cheap habits that pay off every time you reopen a file. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Names That State **Meaning**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+#### 🚫 **Cryptic**
+
+```python
+m2 = 1865.8
+x = m2 / 1000
+d = [a for a in q if a > x]
+```
+
+What is `m2`? What units? Future-you has no idea.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+#### ✅ **Self-describing**
+
+```python
+mass_mev = 1865.8
+mass_gev = mass_mev / 1000
+peak = [m for m in masses if m > mass_gev]
+```
+
+The name carries the **quantity and its unit**.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Put the unit in the name — `mass_mev`, `time_ns`, `energy_gev`. It is the cheapest bug-prevention there is in physics code.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# PEP 8 — The Shared **Style**
+
+<div class="note-text mt-sm">PEP 8 is Python's community style guide. A handful of conventions cover most of it:</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### 📏 **Names**
+
+- `snake_case` for variables & functions
+- `UPPER_CASE` for constants
+- `CapWords` for class names
+- short, but never cryptic
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+#### 🧱 **Layout**
+
+- 4 spaces per indent, never tabs
+- spaces around `=` and operators
+- one statement per line
+- a blank line between logical blocks
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 You don't memorise PEP 8 — a **formatter** (`black`, `ruff`) applies it for you on save. That automation ⚙️ arrives in Lecture 14.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# No **Magic** Numbers
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+#### 🎩 **Magic number**
+
+```python
+if 1855 <= m <= 1875:
+    keep.append(m)
+```
+
+Why 1855? Why 1875? A reader has to guess the intent.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+#### 🏷️ **Named constant**
+
+```python
+D0_MASS_MEV = 1865.0
+WINDOW_MEV = 10.0
+
+if abs(m - D0_MASS_MEV) <= WINDOW_MEV:
+    keep.append(m)
+```
+
+The window is now documented **and** tweakable in one place.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Constants named once, near the top of the file, are a reproducibility ♻️ win: change the cut in one line, re-run, done.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Try It — **Rename** for Clarity
+
+```py {monaco-run} {autorun:false}
+# This runs, but it is write-only code. Rename the variables
+# (and the magic number) so a stranger could read it at a glance.
+a = [1810.2, 1863.5, 1866.9, 1870.1, 1920.4]
+b = [x for x in a if abs(x - 1865) <= 10]
+print(f"{len(b)} of {len(a)} in window")
+
+# Suggested names: masses_mev, D0_MASS_MEV, WINDOW_MEV, in_window
+```
+
+---
+hideInToc: true
+---
+
+# Style Is a **Courtesy** ♻️
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔮 **Future-you is a stranger**
+
+In three months you won't remember what `q` and `m2` meant. Readable names are a message to whoever maintains this code — usually a forgetful version of you.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🤝 **Consistency over cleverness**
+
+A shared style lets any teammate read any file without decoding a personal dialect. Style is how code scales past a single author.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Rule of thumb — write for the reader, not the interpreter. The computer accepts anything that parses; humans do not.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Scripts vs **Notebooks**
+
+<!--
+Speaker: the last habit — where code lives. Notebooks are wonderful for
+exploration and treacherous for reproducibility. Set up the course's stance:
+scripts for the pipeline, notebooks for play. Forward pointer to L14. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Ways to **Run** Python
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📓 **Notebook** (Jupyter)
+
+Cells you run in any order, with output and plots inline.
+
+- ✅ exploration, plotting, teaching
+- ✅ instant visual feedback
+- ⚠️ run out of order → confusion
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 📜 **Script** (`.py`)
+
+A plain file run top to bottom: `python analysis.py`.
+
+- ✅ reproducible — same order every run
+- ✅ version-controllable, automatable
+- ✅ the backbone of a pipeline
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Not rivals — a workflow: explore in a notebook, then **harden the keeper steps into a script**.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Notebook **Hidden-State** Hazard
+
+<div class="note-text mt-sm">A notebook remembers every variable from every cell you ran — in whatever order you ran them:</div>
+
+```mermaid {scale: 0.6}
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true}}}%%
+flowchart LR
+    A["Run cell 3"]:::step --> B["Edit cell 1"]:::step
+    B --> C["Run cell 5"]:::step
+    C --> D{"Restart &<br/>Run All?"}:::check
+    D -->|reproduces| E["OK"]:::good
+    D -->|crashes| F["Hidden state"]:::bad
+    classDef step fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:10px,ry:10px
+    classDef check fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:10px,ry:10px
+    classDef good fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:10px,ry:10px
+    classDef bad fill:#3b1f2b,stroke:#fca5a5,stroke-width:2px,color:#fee2e2,rx:10px,ry:10px
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+💡 The honest test — **Restart & Run All**. If it doesn't reproduce top-to-bottom, the result only lived in your session, not in the notebook.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Course's **Stance**
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔬 **Explore in notebooks**
+
+Prototype a fit, eyeball a histogram, try a cut. Fast, visual, disposable.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 📜 **Ship the pipeline as scripts**
+
+Anything another person — or future-you — must re-run belongs in a `.py` file under version control.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## ⚙️ **Automate the scripts**
+
+Scripts chain into a reproducible workflow — the whole story of **Lecture 14**.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Which Should I **Reach For**?
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📓 **Notebook when…**
+
+- you're still figuring out what to do
+- the output is a chart to eyeball
+- the work is one-off and disposable
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 📜 **Script when…**
+
+- someone will run it again
+- it feeds another step
+- correctness must survive a restart
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 In doubt, script it. A script can always be opened in a notebook; a notebook's tangled state rarely becomes a clean script for free.
+
+</div>
+
+---
 hideInToc: true
 ---
 
