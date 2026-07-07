@@ -589,6 +589,126 @@ hideInToc: true
 hideInToc: true
 ---
 
+# From Events to <span class="gradient-text">Petabytes</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧮 Put real units on the cascade you just saw — from a single **event** to a **year** of recorded data.
+
+</div>
+
+<div class="mt-md" style="text-align: center;">
+
+```mermaid {scale: 0.85}
+graph LR
+    A[Collision 40 MHz] --> B[L1 Trigger 100 kHz]
+    B --> C[HLT few kHz]
+    C --> D[Storage 10 GB/s]
+
+    classDef stage fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    class A,B,C,D stage;
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+📦 Each surviving event weighs **~1–2 MB** raw. A few thousand of them every second is already **~10 GB/s** written to disk and tape — hundreds of petabytes of brand-new data, every year.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# What Doesn't Make the **Cut**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🗑️ The trigger's real job isn't finding physics — it's **throwing almost everything away**, correctly, in microseconds.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+🔥 Roughly **999,999,999 of every billion** collisions are discarded before any human ever looks at them
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+💽 What survives is still **hundreds of petabytes a year** — dwarfing most of the world's other data-generating projects
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+🧮 Even that ruthless cut is generous: any one physicist's actual analysis sample is a sliver of a sliver
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+
+🎯 So why not just build bigger disks and keep it all?
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Why It Has to Be <span class="gradient-text">Real-Time</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⏱️ Bigger disks wouldn't even be the bottleneck — the real constraint is **time itself**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔁 **No Do-Overs**
+
+Bunches cross every **25 nanoseconds** — the next collision arrives long before software finishes judging the last one
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ⏳ **No Buffering, Later**
+
+Unlike a slow video stream, there's no "buffering" option — the trigger commits **in microseconds**, or the data is gone
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Given ~1 PB/s of raw collision data, why can't the LHC experiments simply record every collision?"
+  :options="[
+    'There is no scientific reason to — only a handful of processes matter',
+    'No real-time system can write ~1 PB/s to disk, even before counting the cost',
+    'Data-protection rules cap how much CERN is legally allowed to store',
+    'Only high-luminosity runs need a trigger — earlier runs recorded everything'
+  ]"
+  :correct="1"
+  explanation="No I/O system can sustain ~1 PB/s to permanent storage. The trigger compresses that firehose down to the few thousand events/s (~10 GB/s) that computing can actually absorb — before anyone judges what's interesting."
+/>
+
+---
+hideInToc: true
+---
+
 <div class="note-text">
 
 *Check your reading of the previous slides — this one trips up professionals too.*
@@ -692,6 +812,66 @@ hideInToc: true
 💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable.
 
 🔭 The pattern repeats at the frontier: in **2025** the CERN Council backed the **Future Circular Collider (FCC)** feasibility study — today's frontier is tomorrow's injector.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# CERN's Data, <span class="gradient-text">Openly</span>
+
+<div class="card card-primary card-glass pad-tight mt-sm">
+
+## 📂 **The Open Data Portal**
+
+CERN releases real collision data publicly — including the **LHCb D⁰ → K⁻π⁺** sample this course's seminars use. Anyone, anywhere can download it and analyse it themselves, no CERN credentials required.
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🎓 That's not hypothetical for you: **Seminar 2** has you locate this exact dataset and record its provenance before you ever open it in Python.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Why the <span class="gradient-text">DOI</span> Matters
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+🔖 "Open" only helps the next person if they can find the **exact version** you used — that's what a dataset's **DOI** and **licence** are for.
+
+</div>
+
+<div class="card card-success card-glass pad-tight mt-md">
+
+## 📌 **Provenance, Not Just Access**
+
+Every CERN Open Data release carries a **DOI**, a **licence**, and full provenance — the same FAIR-data habits **Lecture 14** builds out in full, applied here to the dataset you'll use all course.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Open Access, and the <span class="gradient-text">Grid</span> Behind It
+
+<div class="card card-secondary card-glass pad-tight mt-sm">
+
+## 📖 **Publishing, Openly Too**
+
+CERN co-founded **SCOAP3**, making almost all particle-physics journal articles free to read worldwide — and preprints on **arXiv** circulate long before any journal sees them.
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔭 The tiered grid that stores and moves all this data — jobs, storage trade-offs, ~170 sites — is **Lecture 15**'s subject in full; today was just its shape.
 
 </div>
 
@@ -848,6 +1028,94 @@ hideInToc: true
 # From Films to **Skills**
 
 Every scene you just watched ends the same way — as data that someone has to turn into understanding.
+
+---
+hideInToc: true
+---
+
+# Careers at <span class="gradient-text">CERN</span>
+
+CERN employs far more than physicists — a glimpse of who turns 40 million collisions a second into discoveries.
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔬 **Physicists**
+
+Design analyses, hunt signals in noise — statistics and Python, at full scale.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🛠️ **Engineers**
+
+Build and maintain accelerators, magnets, cryogenics, and detectors under extreme conditions.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 💻 **Computing Specialists**
+
+Keep 170+ grid sites, trigger farms, and petabyte storage running around the clock.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Your Skills, <span class="gradient-text">Their</span> Jobs
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🌐 The **Web** and **hadron therapy** — from the impact slide earlier — didn't appear from nowhere: they're this course's toolkit solving problems outside physics.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-tight">
+
+## 🐍 **In an Analysis Group**
+
+Reproducible Python, version control, and statistics are the daily tools of every physicist reading out the detector.
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🖥️ **In a Computing Team**
+
+Disciplined file handling and automation scale the same habits from a laptop to 170+ sites and a million cores.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Day in the <span class="gradient-text">Data</span>
+
+<div class="card card-accent card-glass pad-tight mt-sm">
+
+## 🔎 **One Analyst's Morning**
+
+Pull last night's triggered events, check the D⁰ peak hasn't drifted, flag anything strange for the shift crew, push a fix to the shared analysis code — before lunch, on a laptop, anywhere in the world.
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🌍 None of that requires standing next to the detector — it requires exactly the skills this course builds.
+
+</div>
 
 ---
 hideInToc: true
