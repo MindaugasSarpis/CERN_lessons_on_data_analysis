@@ -1048,6 +1048,58 @@ Make checks file timestamps. If dependencies are newer than target, it rebuilds.
 </div>
 
 ---
+hideInToc: true
+---
+
+# Make vs Snakemake vs a Plain Script
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📜 **Plain script**
+
+One `run_all.sh` calling every step in order.
+
+**Good for**: a linear 2–3 step pipeline, one contributor.
+
+**Weak on**: always reruns everything — no dependency tracking.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔧 **Make**
+
+Tracks file timestamps; reruns only stale targets.
+
+**Good for**: most single-analysis pipelines — portable, `make` is everywhere.
+
+**Weak on**: branching workflows, parameter sweeps.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🐍 **Snakemake**
+
+Python-native rules, wildcards, cluster & conda support.
+
+**Good for**: many samples/parameters, HPC submission.
+
+**Weak on**: overkill for one small analysis.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+💡 What matters: **dependency tracking**, **partial re-runs**, and **portability** 🔧. Start with a script; add Make when reruns waste time; add Snakemake when parameters multiply.
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -1132,6 +1184,212 @@ hideInToc: true
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# From "It Looked Fine" to a Test
+
+<div class="card card-warning card-glass pad-tight mt-md">
+
+## 😬 **"I ran it and the plot looked fine"**
+
+That is not evidence — a silent off-by-one in a selection cut can shift a peak by 10 MeV and still "look fine" on a busy histogram. A **test** checks a known number, every time, automatically.
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🎯 **What we test**
+
+A small, pure analysis function — not a plot, not a whole script. Something with one clear right answer for a known input.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Your First pytest Test
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## **The function**
+
+```python
+# src/selection.py
+def is_signal_region(mass):
+    """True if mass sits in the D0 window."""
+    return 1.80 < mass < 1.93
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## **The test**
+
+```python
+# tests/test_selection.py
+from src.selection import is_signal_region
+
+def test_accepts_known_peak():
+    assert is_signal_region(1.865)
+
+def test_rejects_sideband():
+    assert not is_signal_region(2.5)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+One `assert` per fact you know must hold. Name the test after the behaviour it checks, not the function.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Testing Edge Cases
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## 🧪 **Beyond the happy path**
+
+Real data is messy — a good test suite checks the cases that break code silently.
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+### **Empty input**
+
+```python
+def test_empty_returns_empty():
+    result = select(np.array([]))
+    assert len(result) == 0
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+### **NaN values**
+
+```python
+def test_nan_is_rejected():
+    assert not is_signal_region(np.nan)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+If a function silently returns `True` for `NaN` or crashes on an empty array, you want to know **before** it corrupts a fit — not after.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Running pytest & Reading the Output
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+```bash
+$ pytest tests/ -v
+
+tests/test_selection.py::test_accepts_known_peak PASSED
+tests/test_selection.py::test_rejects_sideband    PASSED
+tests/test_selection.py::test_nan_is_rejected     FAILED
+
+======================= FAILURES =======================
+tests/test_selection.py:8: assert not True
+=================== 1 failed, 2 passed ===================
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-info card-glass pad-compact">
+
+**Reading it**: each line is one test; `PASSED`/`FAILED` plus a traceback pointing at the failing `assert`.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+**One red line, one fix**: the traceback names the exact assertion that broke — no guessing which part of the analysis is wrong.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# What (Not) to Test in an Analysis
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **Worth testing**
+
+- Selection cuts (mass windows, quality flags)
+- Unit conversions & physical constants
+- Data-loading edge cases (empty file, missing column)
+- Fit-result sanity (parameter in a physical range)
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **Not worth testing**
+
+- Exact pixel colours or figure DPI
+- Wording of axis labels or titles
+- Anything that changes every run by design (timestamps)
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Rule of thumb: test **logic with a right answer**, not **appearance with a taste**.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Which of these is most worth writing a unit test for?"
+  :options="[
+    'The exact shade of blue used in a histogram',
+    'A signal-region selection cut that must accept 1.865 GeV and reject 2.5 GeV',
+    'The DPI setting used when saving a PNG',
+    'The wording of an axis label'
+  ]"
+  :correct="1"
+  explanation="Tests are for logic with a right answer — selection cuts, unit conversions, edge cases. Plot styling is a visual choice, not a correctness question."
+/>
 
 ---
 hideInToc: true
@@ -1262,6 +1520,215 @@ jobs:
 </div>
 
 </div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Pre-commit **Hooks**
+
+<!--
+Speaker: the seatbelt you stop noticing — checks run locally, before a commit
+lands, so bad formatting or an accidental notebook output never even reaches
+CI. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What Runs Before You Even Push
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🎨 **Formatter** (black, ruff format) — rewrites code to one house style, no debate
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔍 **Linter** (ruff, flake8) — flags unused imports, undefined names, obvious bugs
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 📓 **Notebook-output stripper** (nbstripout) — clears cell outputs so diffs stay readable
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🚫 **Big-file / secret guards** — block an accidental `data.root` or `.env` commit
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Minimal `.pre-commit-config.yaml`
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+```yaml
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    hooks:
+      - id: ruff
+      - id: ruff-format
+  - repo: https://github.com/kynan/nbstripout
+    hooks:
+      - id: nbstripout
+```
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-info card-glass pad-compact">
+
+**Install once**: `pre-commit install`
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+**Every commit**: hooks run automatically — a failing hook blocks the commit until you fix it
+
+</div>
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Same tools the course already uses (formatting, notebook cleanliness) — now enforced automatically, so conventions hold even under deadline pressure. ⚙️
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Versioning **Data**
+
+<!--
+Speaker: git is for code. Data needs a different trick — the on-ramp to the
+FAIR + provenance discussion that follows. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why Git Chokes on Data
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ⚠️ **The problem**
+
+Git stores every version of every file, forever. A 2 GB ROOT file changed 10 times means **20 GB** in `.git/` — clones become huge and slow.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 💡 **The idea**
+
+Store the data **once**, content-addressed by its hash. Git tracks a tiny **pointer file** instead — the data itself lives outside the repo.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Pointer File, Not the Data
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+**What git actually stores** — `sample.csv.dvc`:
+
+```yaml
+outs:
+  - md5: 8f14e45fceea167a5a36
+    path: sample.csv
+    size: 2147483648
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+**What happens**
+
+`dvc pull` fetches the real file from remote storage using that hash — the repo stays small, the data stays exact.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Same principle behind Git LFS and content-addressed storage generally: **the hash *is* the identity** — change one byte and everyone notices. 📁
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data Versioning: The Toolbox
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🗃️ **DVC**
+
+Git-native; pairs a pointer file with any remote (S3, GDrive, SSH).
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **Git LFS**
+
+Simpler, GitHub-integrated; swaps large files for pointers transparently.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🏛️ **Zenodo DOIs**
+
+For a **finished** dataset: upload once, get a permanent, citable identifier.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Teaser only — pick one when a project's data actually outgrows git. The DOI idea reappears next: it's the **F** in FAIR.
 
 </div>
 
