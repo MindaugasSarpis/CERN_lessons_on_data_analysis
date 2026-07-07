@@ -1,4 +1,4 @@
-# L12: Reproducible Workflows & Automation
+# L14: Reproducible Workflows & Automation
 
 ---
 
@@ -6,7 +6,7 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L1-L11 (especially L8 on Git)
+**Prerequisites**: L1-L13 (especially L6 on Git)
 
 **Learning Objectives**:
 - Structure analysis projects professionally
@@ -107,7 +107,7 @@
 
 **Exercise 1** (Warm-up): Add argparse to existing script
 ```python
-# Take hardcoded script from L10
+# Take hardcoded script from L12
 # Add --input, --output, --bins arguments
 # Test with different values
 ```
@@ -335,7 +335,7 @@ For advanced students:
 ## Homework / Project Integration
 
 **Suggested assignment**:
-"Take your L10 fitting code and L11 data processing code. Restructure into proper project with:
+"Take your L12 fitting code and L13 data processing code. Restructure into proper project with:
 - Clear directory structure
 - Command-line arguments
 - Config file

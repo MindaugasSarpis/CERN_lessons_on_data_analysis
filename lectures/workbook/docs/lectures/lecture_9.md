@@ -1,4 +1,4 @@
-# L9: Probability & Statistics
+# L11: Probability & Statistics
 
 ---
 
@@ -6,7 +6,7 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L5 (Python basics), L6 (Concepts of Data Analysis), basic algebra
+**Prerequisites**: L7-L8 (Python basics), L9 (Concepts of Data Analysis), basic algebra
 
 **Learning Objectives**:
 - State and apply the axioms of probability
@@ -59,13 +59,13 @@
 - Point estimation: what makes a good estimator?
 - Maximum Likelihood Estimation (MLE) — concept and normal mean example
 - Interval estimation: confidence intervals (interpret carefully!)
-- Connection to L10: least squares = MLE for normally distributed errors
+- Connection to L12: least squares = MLE for normally distributed errors
 - Chi-squared statistic preview
 
 ### Part 7: Pitfalls & Practical Advice (10 min)
 - Common mistakes: confusing probability and statistics, p-hacking, misinterpreting CIs
 - Practical advice: always visualise first, check assumptions, report uncertainties
-- Preview: L10 applies these concepts to real fitting problems
+- Preview: L12 applies these concepts to real fitting problems
 
 ---
 

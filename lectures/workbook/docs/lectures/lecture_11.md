@@ -1,4 +1,4 @@
-# L11: NumPy, Pandas & Real Data
+# L13: NumPy, Pandas & Real Data
 
 ---
 
@@ -6,7 +6,7 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L5 (Python basics), L10 (Data fitting)
+**Prerequisites**: L7-L8 (Python basics), L12 (Data fitting)
 
 **Learning Objectives**:
 - Master NumPy arrays and vectorized operations
@@ -114,7 +114,7 @@
 - Download actual CMS or ATLAS open data
 - Clean and explore dataset
 - Identify interesting features (resonance peaks, etc.)
-- Prepare data for fitting (connect to L10!)
+- Prepare data for fitting (connect to L12!)
 
 ---
 

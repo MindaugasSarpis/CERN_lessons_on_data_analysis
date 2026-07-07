@@ -1,4 +1,4 @@
-# L6: Concepts of Data Analysis
+# L9: Concepts of Data Analysis
 
 ---
 
@@ -6,7 +6,7 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L5 (Python basics), general scientific literacy
+**Prerequisites**: L7-L8 (Python basics), general scientific literacy
 
 **Learning Objectives**:
 - Define data analysis, data science, and distinguish them from related fields
@@ -44,7 +44,7 @@
 - Missing data types: MCAR, MAR, MNAR
 - Outliers: when to keep, when to investigate
 - Biases: sampling bias, survivorship bias, confirmation bias
-- The p-hacking problem (preview for L9)
+- The p-hacking problem (preview for L11)
 
 ### Part 5: FAIR Principles & Ethics (15 min)
 - Findable (persistent identifiers, metadata)
@@ -67,7 +67,7 @@
 1. **"This is too abstract — when do we code?"**
    - Frame this lecture as building vocabulary: "You need to know what to ask for before you can code it"
    - Use CERN examples to ground every concept
-   - Promise: "L7 (visualisation) and L10 (fitting) are where theory meets code"
+   - Promise: "L10 (visualisation) and L12 (fitting) are where theory meets code"
 
 2. **"What's the difference between nominal and ordinal?"**
    - Nominal = labels with no order (particle type: electron, muon, tau)
@@ -77,7 +77,7 @@
 3. **"Why do FAIR principles matter to me?"**
    - "Can you reproduce your lab partner's analysis from last month?"
    - Show a real example of irreproducible research
-   - Connect to L12 (Reproducible Workflows)
+   - Connect to L14 (Reproducible Workflows)
 
 4. **"What's the difference between data analysis and data science?"**
    - Data analysis: answering specific questions with data

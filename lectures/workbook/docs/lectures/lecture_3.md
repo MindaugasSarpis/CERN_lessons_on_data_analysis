@@ -1,4 +1,4 @@
-# 3: Crash Course on Computer Science
+# Crash Course on Computer Science
 
 Representation: tribes in africa can't comprehend a cube on the whiteboard
 

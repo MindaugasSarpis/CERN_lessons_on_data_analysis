@@ -1,4 +1,4 @@
-# L10: Practical Data Fitting in Python
+# L12: Practical Data Fitting in Python
 
 ---
 
@@ -6,24 +6,24 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L9 (Probability & Statistics), L5 (Python basics)
+**Prerequisites**: L11 (Probability & Statistics), L7-L8 (Python basics)
 
 **Learning Objectives**:
-- Apply MLE and χ² concepts from L9 to real fitting problems
+- Apply MLE and χ² concepts from L11 to real fitting problems
 - Use `scipy.optimize.curve_fit` for parameter estimation
 - Compute and interpret uncertainties from covariance matrices
 - Perform residual analysis and goodness-of-fit tests
-- Bridge theory (L9) to practice (real code)
+- Bridge theory (L11) to practice (real code)
 
 ---
 
 ## Lecture Structure
 
 ### Part 1: Workflow Overview (15 min)
-- Recap L9: MLE, least squares, χ² statistic
+- Recap L11: MLE, least squares, χ² statistic
 - Show complete workflow diagram (data → fit → evaluate)
-- Emphasize: "L9 was theory, L10 is implementation"
-- Interactive: Ask students where they struggled with L9 concepts
+- Emphasize: "L11 was theory, L12 is implementation"
+- Interactive: Ask students where they struggled with L11 concepts
 
 ### Part 2: Data Generation (15 min)
 - Why synthetic data first (known truth, reproducibility)

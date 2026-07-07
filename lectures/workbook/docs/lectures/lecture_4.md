@@ -1,6 +1,6 @@
-# 4: Computer infrastructure
+# 15: Computer infrastructure
 
-## Lecture 4: Computer infrastructure (hardware)
+## Lecture 15: Computer infrastructure (hardware)
 
 ---
 

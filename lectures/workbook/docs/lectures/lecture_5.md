@@ -1,4 +1,4 @@
-# L5: Crash Course on Python Programming
+# Crash Course on Python Programming
 
 ---
 
@@ -6,7 +6,7 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L3 (Computer Science basics), L4 (Computing Infrastructure)
+**Prerequisites**: L3 (Computer Science basics), L15 (Computing Infrastructure)
 
 **Learning Objectives**:
 - Write and run Python scripts from the command line and in an IDE

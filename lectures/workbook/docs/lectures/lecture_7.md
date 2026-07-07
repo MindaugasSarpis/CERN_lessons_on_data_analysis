@@ -1,4 +1,4 @@
-# L7: Data Visualisation
+# L10: Data Visualisation
 
 ---
 
@@ -6,7 +6,7 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L5 (Python basics), L6 (Concepts of Data Analysis)
+**Prerequisites**: L7-L8 (Python basics), L9 (Concepts of Data Analysis)
 
 **Learning Objectives**:
 - Explain why visualisation is essential for data analysis
