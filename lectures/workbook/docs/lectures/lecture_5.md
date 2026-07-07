@@ -4,7 +4,7 @@
 
 ## Overview
 
-**Duration**: 150-180 minutes (lecture + hands-on)
+**Duration**: ~120 minutes (2 h slot)
 
 **Prerequisites**: L3 (Computer Science basics), L4 (Computing Infrastructure)
 

@@ -4,7 +4,7 @@
 
 ## Overview
 
-**Duration**: 120-150 minutes (lecture, theory-heavy with worked examples)
+**Duration**: ~120 minutes (2 h slot)
 
 **Prerequisites**: L5 (Python basics), L6 (Concepts of Data Analysis), basic algebra
 
