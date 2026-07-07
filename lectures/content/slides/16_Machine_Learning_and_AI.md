@@ -506,7 +506,7 @@ Fitting a straight line by **least squares** (Lecture 12) *is* machine learning'
 
 </div>
 
-<div class="card card-primary card-glass pad-tight mt-md">
+<div class="card card-primary card-glass pad-tight mt-sm">
 
 | Fitting (Lecture 12) | Machine learning (today) |
 |---|---|
@@ -515,12 +515,6 @@ Fitting a straight line by **least squares** (Lecture 12) *is* machine learning'
 | minimise χ² | minimise the **loss** |
 | residuals | prediction **errors** |
 | goodness of fit | **evaluation metrics** |
-
-</div>
-
-<div class="note-text mt-md">
-
-💡 If you can read a `curve_fit` result, you can already read a regression model.
 
 </div>
 
@@ -1733,7 +1727,7 @@ The model latches onto whatever predicts `y` in *your* sample — a detector art
 
 ## 🔍 **The defence**
 
-Know your dataset (Lecture 11), check performance **per subgroup**, and be suspicious of any feature that works "too well".
+Know your dataset (Lecture 13), check performance **per subgroup**, and be suspicious of any feature that works "too well".
 
 </div>
 
