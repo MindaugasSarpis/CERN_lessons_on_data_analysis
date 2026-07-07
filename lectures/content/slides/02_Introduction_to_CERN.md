@@ -601,7 +601,7 @@ hideInToc: true
 
 ```mermaid {scale: 0.85}
 graph LR
-    A[Collision 40 MHz] --> B[L1 Trigger 100 kHz]
+    A[Crossings 40 MHz] --> B[L1 Trigger 100 kHz]
     B --> C[HLT few kHz]
     C --> D[Storage 10 GB/s]
 
@@ -633,19 +633,25 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact reveal-left">
 
-🔥 Roughly **999,999,999 of every billion** collisions are discarded before any human ever looks at them
+🔗 A crossing is not a collision: each of the 40 million bunch crossings packs **dozens of overlapping proton–proton collisions** — that's the **~1 billion collisions per second** from the LHC slide
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact reveal-left">
 
-💽 What survives is still **hundreds of petabytes a year** — dwarfing most of the world's other data-generating projects
+🔥 Of those, only a few thousand events per second reach disk — about **one collision in a million** is ever stored
 
 </div>
 
 <div class="card card-accent card-glass pad-compact reveal-left">
 
-🧮 Even that ruthless cut is generous: any one physicist's actual analysis sample is a sliver of a sliver
+💽 What survives is still **hundreds of petabytes a year** — dwarfing most of the world's other data-generating projects
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left">
+
+🧮 Even that ruthless cut is generous: any one physicist's analysis sample is a sliver of a sliver
 
 </div>
 
@@ -694,7 +700,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Given ~1 PB/s of raw collision data, why can't the LHC experiments simply record every collision?"
+  question="The detector electronics put out ~1 PB of raw signal per second, before any selection. Why can't the experiments simply record it all?"
   :options="[
     'There is no scientific reason to — only a handful of processes matter',
     'No real-time system can write ~1 PB/s to disk, even before counting the cost',
@@ -702,7 +708,7 @@ hideInToc: true
     'Only high-luminosity runs need a trigger — earlier runs recorded everything'
   ]"
   :correct="1"
-  explanation="No I/O system can sustain ~1 PB/s to permanent storage. The trigger compresses that firehose down to the few thousand events/s (~10 GB/s) that computing can actually absorb — before anyone judges what's interesting."
+  explanation="No storage system can sustain ~1 PB/s of writes. The trigger compresses that raw electronics firehose down to the few thousand events/s (~10 GB/s) that computing can actually absorb — before anyone judges what's interesting."
 />
 
 ---
@@ -819,19 +825,19 @@ hideInToc: true
 hideInToc: true
 ---
 
-# CERN's Data, <span class="gradient-text">Openly</span>
+# Where Your <span class="gradient-text">Dataset</span> Lives
 
 <div class="card card-primary card-glass pad-tight mt-sm">
 
-## 📂 **The Open Data Portal**
+## 🎯 **The Portal, Up Close**
 
-CERN releases real collision data publicly — including the **LHCb D⁰ → K⁻π⁺** sample this course's seminars use. Anyone, anywhere can download it and analyse it themselves, no CERN credentials required.
+The **Open Data Portal** from the impact slide isn't an abstraction for this course: the **LHCb D⁰ → K⁻π⁺** sample every seminar builds on lives there — downloadable by anyone, no CERN credentials required.
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-🎓 That's not hypothetical for you: **Seminar 2** has you locate this exact dataset and record its provenance before you ever open it in Python.
+🎓 **Seminar 2** sends you to fetch it: locate the exact record and note its provenance before you ever open it in Python.
 
 </div>
 
@@ -1035,7 +1041,7 @@ hideInToc: true
 
 # Careers at <span class="gradient-text">CERN</span>
 
-CERN employs far more than physicists — a glimpse of who turns 40 million collisions a second into discoveries.
+CERN employs far more than physicists — a glimpse of who turns 40 million bunch crossings a second into discoveries.
 
 <div class="grid-3 mt-md gap-md">
 
