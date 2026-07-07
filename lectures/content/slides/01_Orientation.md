@@ -1006,9 +1006,9 @@ hideInToc: true
   question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
   :options="[
     'Each one runs the same loop: collect, store, clean, analyse, then decide',
-    'They all use the same phone app',
-    'They are all done by hand by a person watching you',
-    'None of them actually store anything'
+    'Collecting and storing the readings is itself the analysis — once data is saved, the work is done',
+    'Behind each service, analysts review your raw activity streams and decide case by case',
+    'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
   ]"
   :correct="0"
   explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide. Recognising that shared shape is the whole point of week 1: the skills transfer because the loop is always the same."
