@@ -638,7 +638,565 @@ layout: section
 hideInToc: true
 ---
 
+# How This Course **Works**
+
+---
+hideInToc: true
+---
+
+# The Weekly **Rhythm**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Sixteen weeks, each the same shape: a **2-hour lecture** that builds the ideas, then a **2-hour seminar** where you use them on your own project. Concepts first, muscle memory second.
+
+</div>
+
+```mermaid {scale: 0.72}
+graph LR
+    L[📖 2h Lecture<br/>ideas & intuition] --> S[🔬 2h Seminar<br/>hands-on practice]
+    S --> P[📦 One more layer<br/>on your project]
+    P --> N[➡️ Next week]
+```
+
+<div class="note-text mt-sm">Miss the seminar and the lecture stays abstract; skip the lecture and the seminar feels like magic. They are one unit.</div>
+
+---
+hideInToc: true
+---
+
+# Two Halves of **One Week**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📖 **The lecture**
+
+- Explains *why* a practice matters and *how* to think about it
+- Shows the idea on real examples — including from CERN
+- Interactive: questions, votes, and short reflections
+- Goal is **exposure and intuition**, not memorising commands
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔬 **The seminar**
+
+- You do it yourself, on your own dataset and repository
+- Inverted classroom: you type, break things, and fix them
+- The instructor circulates — help is closest when you are stuck
+- Goal is a **working result** you commit before you leave
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Each seminar adds exactly one layer to the same project — by week 16 you own a complete analysis.</div>
+
+---
+hideInToc: true
+---
+
+# What **"Done"** Looks Like Each Week
+
+<div class="card card-success card-glass pad-tight mt-md">
+
+## ✅ **A small, finished thing — committed**
+
+Every seminar ends the same way: something new works, and you **commit it to your repository**. Not a perfect thing, not a whole project — one honest step, saved and dated.
+
+</div>
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📦 **Saved**
+
+The new work is in your repo, not in a stray file on the desktop.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **Runs again**
+
+You can re-run it in a fresh terminal and get the same result.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📝 **Explainable**
+
+You can say, in one sentence, what it does and why.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# How to **Succeed** Here
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-tight">
+
+## 🌱 **Do this**
+
+- **Show up to the seminar** — the doing is where it sticks
+- **Type it yourself**, even when copy-paste would be faster
+- Keep one project and grow it; don't restart every week
+- Ask early — a five-minute question saves a lost evening
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🚧 **Avoid this**
+
+- Bingeing every lecture the night before the presentation
+- Collecting tools you never actually use on your data
+- Hiding a broken step instead of asking about it
+- Treating "it ran once" as the same as "it's reproducible"
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">You do not need to already be a programmer to do well. You need to be persistent and organised.</div>
+
+---
+hideInToc: true
+---
+
+# Honest **Expectations**
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+This course is practical, and practical means friction. Everyone in the room hits the same three walls — knowing they are normal is half the battle.
+
+</div>
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⌨️ **You will type a lot**
+
+Commands feel slow and error-prone at first. Two weeks in, they are faster than clicking.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 💥 **You will break things**
+
+Errors are the normal state of programming, not a sign of failing. Read them — they usually name the fix.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🙋 **You will ask for help**
+
+Stuck for fifteen minutes? Ask. Getting unstuck fast is a skill, not a defeat.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# What This Course **Is Not**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🚫 **Not this**
+
+- Not a deep programming course — we write *enough* code to get work done
+- Not tied to one tool you must adopt forever
+- Not a race to the fanciest machine-learning model
+- Not graded on exams full of syntax to memorise
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## 🎯 **But this**
+
+- A course in *practices* that survive any language or tool
+- Enough hands-on fluency to be dangerous — and to keep learning
+- One honest, reproducible project you understand end to end
+- Judgement about **which** tool, and **why**
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Already code well? The challenge just shifts from syntax to doing it *reproducibly*. There's a level here for everyone.</div>
+
+---
+hideInToc: true
+---
+
+# Where to Get **Help**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧑‍🏫 **In the room**
+
+- The instructor, during every seminar — that is what the two hours are for
+- Your neighbour: explaining a problem out loud often solves it
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌐 **On your own**
+
+- The error message itself — paste it into a search engine
+- Official docs, the workbook, and yes, AI assistants — as long as you understand what they hand you
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">🔧 One aim in disguise: learning *how to find out* is more durable than memorising any single answer.</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="It's week 5. You attend every lecture but skip the seminars because you 'get the ideas already'. Why is this the riskiest habit in this course?"
+  :options="[
+    'Lectures are worth more marks than seminars',
+    'The seminars are where you actually build the one project your whole grade depends on',
+    'You will miss the attendance sign-in sheet',
+    'The ideas in the lectures are not important'
+  ]"
+  :correct="1"
+  explanation="The entire grade is one project, and it grows one layer per seminar. Understanding an idea in the lecture is not the same as having it working in your repository — the seminar is where 'done' happens."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
 # Data in **Your Life**
+
+---
+hideInToc: true
+---
+
+# A Day in Data — **Before Breakfast**
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+- ⏰ Your phone logs the exact second the alarm went off
+- ⌚ A wearable scores how you slept — from heart rate and motion all night
+- 🌡️ A weather app pushes a forecast computed from millions of sensor readings
+- 🔋 The battery graph already knows your charging habits better than you do
+
+</div>
+
+<div class="note-text mt-md">You have been awake for ten minutes and already generated — and consumed — several datasets. None of it felt like "data".</div>
+
+---
+hideInToc: true
+---
+
+# A Day in Data — **The Commute**
+
+<div class="card card-secondary card-glass pad-tight mt-md">
+
+- 🚌 A transit card taps in — a timestamp and a location, stored for years
+- 🗺️ Maps reroutes you around traffic it inferred from other phones moving slowly
+- 📷 Dozens of cameras log the same walk from different angles
+- 🎧 A playlist auto-queues songs a model predicts you'll keep
+
+</div>
+
+<div class="note-text mt-md">Each tap, ping, and skip is a row in someone's table — and the routing that helped you was itself built from yesterday's data.</div>
+
+---
+hideInToc: true
+---
+
+# A Day in Data — **Work & Screens**
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+- ⌨️ Every click, scroll, and pause feeds product-analytics dashboards
+- 🛒 A shop's "customers also bought" is a live recommendation model
+- 💳 Each card payment is scored for fraud in under a second
+- 📧 Spam filters quietly classify every message before you see it
+
+</div>
+
+<div class="note-text mt-md">Most of this analysis runs automatically — ⚙️ automation and ♻️ reproducibility at planetary scale, invisible until it breaks.</div>
+
+---
+hideInToc: true
+---
+
+# A Day in Data — **Evening**
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+- 📺 A streaming service picks your thumbnail from thousands of quiet experiments
+- 🏃 A run is logged as a GPS track, then compared to last month's pace
+- 💡 A smart meter reports the day's electricity in fine-grained slices
+- 🛌 The cycle closes as the wearable starts scoring tonight's sleep
+
+</div>
+
+<div class="note-text mt-md">From alarm to lights-out you moved through hundreds of small analyses — almost all of them made by someone else, about you.</div>
+
+---
+hideInToc: true
+---
+
+# Every One of These Is a **Dataset**
+
+<div class="card card-success card-glass pad-tight mt-sm">
+
+Behind each convenience is the same loop you'll learn to run in this course: **collect → store → clean → analyse → decide**. The recommendation, the forecast, the fraud alert — all of it is somebody's pipeline running on somebody's table.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔎 **The shift this course asks of you**
+
+Stop seeing finished apps. Start seeing the **data and the decisions** underneath — because soon you'll be the one building that loop.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎓 **The good news**
+
+The same handful of skills — files, code, statistics, reproducibility — powers *all* of it. Learn them once; apply them anywhere.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
+  :options="[
+    'Each one runs the same loop: collect, store, clean, analyse, then decide',
+    'They all use the same phone app',
+    'They are all done by hand by a person watching you',
+    'None of them actually store anything'
+  ]"
+  :correct="0"
+  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide. Recognising that shared shape is the whole point of week 1: the skills transfer because the loop is always the same."
+/>
+
+---
+hideInToc: true
+---
+
+# So — What Even **Is** Data?
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+A working definition for this course: **data is recorded observation** — facts captured in a form a machine can store and re-read. The moment something is written down consistently enough to count, sort, or compare, it becomes data.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **It starts as a measurement**
+
+A temperature, a timestamp, a momentum, a yes/no. On its own, one value says little.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📚 **It becomes useful in bulk**
+
+Thousands of those values, organised, reveal patterns no single reading ever could — the whole game of analysis.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data Has a **Lifecycle**
+
+```mermaid {scale: 0.72}
+graph LR
+    C[📥 Collect] --> S[💾 Store]
+    S --> K[🧹 Clean]
+    K --> A[📊 Analyse]
+    A --> D[✅ Decide]
+```
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Every project — yours, a bank's, a physics collaboration's — walks this same loop, and each answer raises fresh questions that restart it. This course spends a lecture or two on **each stage**; your seminars carry one dataset all the way around.
+
+</div>
+
+<div class="note-text mt-sm">Most real-world pain comes from skipping a stage — analysing before cleaning, or deciding before storing where the data came from.</div>
+
+---
+hideInToc: true
+---
+
+# Structured vs **Unstructured**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📊 **Structured**
+
+Lives in neat rows and columns — a table, a spreadsheet, a database. Each column has a meaning and a type.
+
+- Sensor logs, transaction records, survey answers
+- Easy to sort, filter, and compute on directly
+- **Most of this course lives here** — the tidy table
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌀 **Unstructured**
+
+Free-form — text, images, audio, video. Rich, but a computer can't average it until you extract structure first.
+
+- Emails, photos, recordings, PDFs
+- Needs a step to turn it into numbers or labels
+- Where most modern machine learning earns its keep
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The first real job of many projects is turning the second kind into the first.</div>
+
+---
+hideInToc: true
+---
+
+# Four Flavours You'll **Meet**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **Numbers**
+
+Measurements you can add, average, and plot. The core of statistics and fitting.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔤 **Text**
+
+Labels, categories, free comments. Countable once you decide what to count.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🖼️ **Images**
+
+Grids of pixels — secretly just numbers. The natural home of modern ML.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ⚡ **Events**
+
+Timestamped things that happened — a click, a tap, a particle collision.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Our running project is built from **events** (collisions) that we turn into **numbers** (a mass) — two flavours in one pipeline.</div>
+
+---
+hideInToc: true
+---
+
+# Measurement vs **Metadata**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📐 **The measurement**
+
+The number you care about — the temperature, the price, the particle's momentum. The reason the record exists at all.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🏷️ **The metadata**
+
+Data *about* the measurement — when, where, by which instrument, in what units, under what settings.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+## ⚠️ **Metadata is not optional**
+
+A momentum with no units, a reading with no timestamp, a file with no source — that's a number you can neither trust nor reproduce. 📁 ♻️ Half of good data work is keeping the metadata attached.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Where Each Kind Shows Up **Later**
+
+| **Kind of data** | **What you learn to do with it** | **Where** |
+| --- | --- | --- |
+| Files & raw bytes | Read, name, and organise safely | L03–L05 · S3–S5 |
+| Structured tables | Load, clean, and reshape | L08, L13 · S8, S13 |
+| Numbers | Summarise, visualise, fit | L10–L12 · S10–S12 |
+| Uncertainty | Report a value ± an error | L11–L12 · S11–S12 |
+| Events → numbers | Reconstruct the invariant mass | L09, L12 · S7, S12 |
+
+<div class="note-text mt-md">Nothing here needs to make sense yet — it's a map. Each row is a week where this abstract taxonomy becomes something your own hands do.</div>
 
 ---
 hideInToc: true
@@ -901,6 +1459,235 @@ hideInToc: true
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# The Running **Project**
+
+---
+hideInToc: true
+---
+
+# One Project, **All Semester**
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+Instead of sixteen throwaway exercises, this course threads **one real analysis** through every seminar. Each week adds a layer to the *same* repository — so by the exam you present a project, not a pile of homework.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **Sixteen toy exercises**
+
+Each forgotten the week after. Nothing connects, nothing compounds, nothing survives to show anyone.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **One growing project**
+
+Skills stack on a single artefact. You watch it get real — and you leave with something you can actually show.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Your Dataset — **LHCb D⁰ → K⁻π⁺**
+
+<div class="card card-primary card-glass pad-tight mt-sm">
+
+The default track uses **real LHCb open data** from the CERN Open Data Portal: about **60,000 events**, each a candidate **D⁰ → K⁻π⁺** decay. From the kaon and pion momenta you reconstruct one number per event — the **K–π invariant mass**.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🎯 **The payoff**
+
+Histogram that mass and a **peak rises near 1865 MeV** — the D⁰ meson, appearing out of the noise. Real physicists run this same analysis to measure the particle's mass and lifetime.
+
+</div>
+
+<div class="note-text mt-sm">Not a textbook toy: genuine collision data, with a genuine signal you'll find, fit, and defend.</div>
+
+---
+hideInToc: true
+---
+
+# Why **Real, Open** Data
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🌍 **Open by principle**
+
+CERN publishes its data so anyone can check the science. You'll download the *same* events physicists used — no toy stand-in, no paywall.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔬 **Real means messy**
+
+Real data carries noise, background, and quirks a clean textbook set never shows. Learning to handle that *is* the skill worth having.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+## ♻️ **It models the whole point**
+
+Open data, recorded provenance, a rebuildable analysis — the running project is the four aims in miniature, on data the whole world can inspect.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Two Tracks — **Pick What Fits You**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🅰 **The physics track**
+
+The LHCb D⁰ sample above — the default. A clear signal, a real fit, and the thrill of rediscovering a particle from raw events.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🅱 **Bring your own data**
+
+A tabular dataset from *your* field — weather, prices, patients, surveys. Wherever we say "invariant mass", read "your numeric variable and the pattern you seek".
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The skills are identical either way. Clear your choice with the instructor in Seminar 2 — the rest of the course adapts to it.</div>
+
+---
+hideInToc: true
+---
+
+# What You'll Build, **Week by Week**
+
+| **Seminars** | **Layer added to your project** |
+| --- | --- |
+| S1–S2 | Toolkit installed; repo skeleton; dataset downloaded |
+| S3–S5 | The raw file understood; clean structure; a real README |
+| S6–S8 | Under Git; first parsing; whole file read into Python |
+| S9–S11 | Data-quality audit; first figure; a value ± its error |
+| S12 | **The fit** — the D⁰ peak → mass ± error, with a χ² |
+| S13–S14 | Tidy tables; one-command reproducible rebuild |
+
+<div class="note-text mt-md">Everything is cumulative. Week 12's fit only works because week 2 recorded where the data came from.</div>
+
+---
+hideInToc: true
+---
+
+# From Raw Data to a **Result**
+
+```mermaid {scale: 0.72}
+graph LR
+    R[📥 Raw events] --> C[🧹 Clean]
+    C --> M[🔢 Compute mass]
+    M --> H[📊 Histogram]
+    H --> F[📈 Fit the peak]
+    F --> V[✅ Mass ± error]
+```
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+This is the whole arc in one line — and every box is a seminar. The same shape fits any dataset: swap "compute mass" for "compute your variable" and the pipeline is yours.
+
+</div>
+
+<div class="note-text mt-sm">By the end, one command walks the entire chain, raw to result, untouched by hand.</div>
+
+---
+hideInToc: true
+---
+
+# The Finished **Product**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📦 **What you hand in**
+
+A single versioned repository: raw data, scripts, results, a pinned environment, and a `README` — plus a one-page report and a short video.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+```text
+d0-analysis/
+├─ data/raw/        # untouched
+├─ scripts/         # one per step
+├─ results/         # all regenerable
+├─ environment.yml  # pinned
+├─ Makefile         # make all
+└─ README.md        # how to rebuild
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Clean, automated, documented — the four aims made concrete, in a form you can show a supervisor or an employer.</div>
+
+---
+hideInToc: true
+---
+
+# The Golden **Rule**
+
+<div class="card card-success card-glass pad-tight mt-md glow">
+
+## 🏆 **Delete everything but `data/raw/` and `scripts/` — then rebuild it all with one command.**
+
+If that is true of your project, you've succeeded. Every practice in this course exists to make that one sentence true of your work.
+
+</div>
+
+<div class="note-text mt-md">Reproducibility isn't a chore you bolt on at the end — it's the property that makes everything else trustworthy.</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="The 'golden rule' of your running project says you could delete everything except two folders and rebuild the whole analysis with one command. Which two folders?"
+  :options="[
+    'results/ and data/processed/',
+    'data/raw/ and scripts/',
+    'data/processed/ and Makefile',
+    'README.md and results/'
+  ]"
+  :correct="1"
+  explanation="Raw data can't be regenerated, and scripts encode every step that turns it into results. Keep those two and everything else — cleaned tables, figures, numbers — can be rebuilt automatically. That's reproducibility and automation working together."
+/>
 
 ---
 hideInToc: true
