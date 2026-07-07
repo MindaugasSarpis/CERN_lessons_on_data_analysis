@@ -43,7 +43,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
-<div class="stack-tight mt-sm">
+<div class="grid-2 gap-md mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -53,13 +53,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-⌨️ Parameterise scripts with **command-line arguments** (`argparse`)
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-📄 Externalise settings into readable **YAML config files**
+⌨️ Parameterise scripts with **argparse** and readable **YAML config files**
 
 </div>
 
@@ -72,6 +66,30 @@ hideInToc: true
 <div class="card card-warning card-glass pad-compact">
 
 ⚙️ Automate the pipeline with a **Makefile** so `make all` rebuilds everything
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🧪 Test analysis code with **pytest** — pure functions, fixtures, regression tests
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+🔄 Let **CI and pre-commit hooks** run those checks on every push, automatically
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+🗃️ Version **data**, not just code — checksums, manifests, immutable raw files
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🌍 Publish data that is **FAIR** — findable, accessible, interoperable, reusable
 
 </div>
 

@@ -1018,6 +1018,512 @@ layout: section
 hideInToc: true
 ---
 
+# Parallelism for **Data Analysis**
+
+<!--
+Speaker: their laptop has 8+ cores; a plain Python script uses one. This section
+closes that gap — in the right order: vectorise, then processes, then many
+machines. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# The Free Lunch Is Over
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧱 **The clock ceiling**
+
+Around **2005**, CPU clocks hit a **power and heat wall** near 4 GHz — frequencies have barely moved since
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔢 **Transistors became cores**
+
+Moore's law kept shrinking transistors, so vendors spent them on **more cores**, wider **SIMD** units, and bigger caches
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🐌 **Serial code stopped speeding up**
+
+For decades, old programs got faster with every new CPU — that free lunch is over: one core today is barely faster than one core ten years ago
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🎯 **Your move**
+
+Extra speed now comes from **using all the cores** — vectorise, parallelise, and distribute your analysis
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Vectorisation: the First Parallelism
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🐍 **The interpreter tax**
+
+A Python `for` loop pays **per-element overhead** — type checks, boxing, dispatch — often ~100× the cost of the arithmetic itself
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ⚡ **One call, one C loop**
+
+`np.sqrt(px**2 + py**2)` runs a **compiled loop** over contiguous memory and uses **SIMD** — the memory hierarchy exploited for you
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+💡 Order of operations: **vectorise first**, parallelise second — a 50× vectorisation win beats an 8-core speedup, and the two multiply.
+</div>
+
+---
+hideInToc: true
+---
+
+# Vectorisation, Measured
+
+```py {monaco-run} {autorun:false}
+import numpy as np, time, math
+
+n = 100_000
+px, py = np.random.rand(n), np.random.rand(n)
+
+t = time.perf_counter()
+pt_loop = [math.sqrt(px[i]**2 + py[i]**2) for i in range(n)]
+t_loop = time.perf_counter() - t
+
+t = time.perf_counter()
+pt_vec = np.sqrt(px**2 + py**2)
+t_vec = time.perf_counter() - t
+
+print(f"Python loop: {t_loop*1000:8.1f} ms")
+print(f"NumPy:       {t_vec*1000:8.1f} ms   ({t_loop/t_vec:.0f}x faster)")
+```
+
+<div class="note-text mt-sm">
+
+Same arithmetic, same machine — only the **loop's location** changed: interpreter vs compiled C. This is *why* the Lecture 13 speed gap exists.
+</div>
+
+---
+hideInToc: true
+---
+
+# Processes vs Threads
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧵 **Threads**
+
+- Live **inside one process** and share its memory
+- Cheap to start, easy to pass data around
+- Danger: **race conditions** on shared state
+- Great for **waiting** — I/O, downloads, disk
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧩 **Processes**
+
+- Own **separate memory** — isolated by the OS
+- Heavier: startup cost, data is **copied** between them
+- No shared-state bugs by construction
+- Great for **computing** — true multi-core work
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+🔧 Every language offers both; the trade-off is universal. Python adds one famous twist → next slide.
+</div>
+
+---
+hideInToc: true
+---
+
+# The Python GIL, Honestly
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🔒 **One interpreter at a time**
+
+The **Global Interpreter Lock** lets only one thread execute Python bytecode at once — threads give **no speedup** for CPU-bound pure Python
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **When threads still win**
+
+The GIL is **released while waiting** on I/O — and inside NumPy/C extensions, so vectorised code can still use many cores under the hood
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🧩 **CPU-bound? Use processes**
+
+`multiprocessing` and `ProcessPoolExecutor` sidestep the GIL with one interpreter per core
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🔮 **The future**
+
+Python 3.13+ ships an experimental **free-threaded** build without a GIL — the ecosystem is still catching up
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Embarrassingly Parallel Analysis
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 😎 **The best kind of parallel**
+
+Chunks are **fully independent** — no communication needed. Analysis work is full of them: **files, runs, parameter sets, toy experiments**.
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+### 🐍 **In Python**
+
+```py
+from concurrent.futures import ProcessPoolExecutor
+
+with ProcessPoolExecutor() as ex:
+    results = list(ex.map(process_file, files))
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+### 🖥️ **In the shell**
+
+```bash
+parallel python fit.py {} ::: data/*.csv
+```
+
+One process per file, all cores busy.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+💡 The pattern: **map** each file to a partial result, then **merge** — this is exactly how grid jobs split work, too.
+</div>
+
+---
+hideInToc: true
+---
+
+# Amdahl's Law — the Speedup Ceiling
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📉 **The serial part rules**
+
+If a fraction **s** of the runtime is serial, no number of cores can beat **1/s**:
+
+speedup = 1 / (s + (1 − s) / N)
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🧮 **Ceiling by parallel share**
+
+| **Parallel share** | **Max speedup (∞ cores)** |
+|--------------------|---------------------------|
+| 50%                | 2×                        |
+| 90%                | 10×                       |
+| 99%                | 100×                      |
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+💡 Loading and merging are the usual serial parts — which is why I/O and file formats (next section) matter as much as cores.
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Storage **Formats** for Analysis Data
+
+<!--
+Speaker: hardware set the speed limits; the file format decides how close you
+get to them. Same data, 10–100× different read times. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# Row vs Columnar Layout
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📋 **Row layout**
+
+- Records stored **one after another** — all fields together
+- Natural for **transactions** and appending events
+- Reading one column drags **every other field** off disk too
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📊 **Columnar layout**
+
+- Each **column stored contiguously** on disk
+- Analysis touches **few columns of many rows** — read only those
+- Similar values sit together → **compresses better**, cache-friendly
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+🎯 Analysis queries are columnar by nature: "the mass of *every* candidate", not "everything about candidate 42".
+</div>
+
+---
+hideInToc: true
+---
+
+# Four Formats You Will Meet
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## 🗃️ **Same table, four containers**
+
+| **Format** | **Layout** | **Types/schema** | **Compression** | **Best at** |
+|------------|------------|------------------|-----------------|-------------|
+| CSV        | row, plain text | ❌ guessed on read | ❌ (external gzip) | small tables, interchange |
+| Parquet    | columnar, binary | ✅ stored | ✅ built-in | big-table analysis |
+| HDF5       | chunked n-dim arrays | ✅ stored | ✅ optional | numeric arrays, images |
+| ROOT       | columnar event trees | ✅ stored | ✅ built-in | HEP events at petabyte scale |
+
+</div>
+
+---
+hideInToc: true
+---
+
+# CSV — Simple, Honest, Slow
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **Why it survives**
+
+- Human-readable, diff-able, **every tool** on Earth opens it
+- Perfect for **small tables**, examples, and hand-offs
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## ⚠️ **What it costs**
+
+- **No types** — "42" might be an int, a string, a date (the guessing bugs from Lecture 13)
+- Every read **parses every byte** of every column
+- Typically **5–10× larger** than the same data in Parquet
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+📏 Rule of thumb: CSV is fine below ~100 MB; for repeated analysis, convert once and read the binary format after that.
+</div>
+
+---
+hideInToc: true
+---
+
+# Parquet — the Columnar Workhorse
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ✂️ **Column pruning**
+
+`pd.read_parquet(f, columns=["mass"])` touches only that column's bytes — reading 3 of 50 columns skips ~94% of the file
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📦 **Row groups + statistics**
+
+Data is stored in row groups with **min/max stats** — engines skip whole chunks that cannot match your filter
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🔤 **Typed schema**
+
+dtypes are **stored, not guessed** — a table round-trips exactly, no parsing surprises
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🤝 **Ecosystem standard**
+
+pandas, Polars, Spark, DuckDB, and Arrow all speak it natively — the default for tabular analysis data
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# HDF5 & ROOT — Scientific Heavyweights
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🗄️ **HDF5**
+
+- A **"filesystem in a file"** — hierarchical groups of n-dimensional arrays
+- **Chunking + compression** per dataset; read any slice without loading the rest
+- Standard across astronomy, climate science, and imaging
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ⚛️ **ROOT**
+
+- CERN's native format — **columnar event trees** (TTree, now RNTuple)
+- Stores **objects too**: histograms, fits, calibrations
+- Holds **exabytes** of physics data worldwide; readable from Python via `uproot`
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Compression: CPU vs Disk vs Network
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ⚖️ **The trade**
+
+Compression spends **CPU cycles** to save **bytes** — worth it whenever disk or network is the bottleneck (it usually is)
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🐇 **Fast codecs**
+
+**lz4, zstd, snappy** decompress at GB/s — reading compressed data is often *faster* than reading uncompressed
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🐢 **Strong codecs**
+
+**gzip, xz** squeeze harder but run slower — good for cold archives, not for hot analysis data
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+💡 Safe default in 2026: **zstd** — near-gzip ratios at many times the speed.
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You repeatedly scan 3 columns of a 100 GB, 50-column table. Which storage choice serves this workload best?"
+  :options="[
+    'Plain CSV, because any tool can read it and simplicity always wins',
+    'Parquet with compression — read only the 3 columns and skip row groups via their statistics',
+    'Gzipped CSV — the file is smaller, so scans must be faster',
+    'Keep CSV but buy more RAM so the whole table fits in memory'
+  ]"
+  :correct="1"
+  explanation="A columnar format reads only the bytes of the columns you ask for, and row-group statistics let engines skip data that cannot match. Gzipped CSV still decompresses and parses every byte of every column; RAM does not fix the first slow read."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
 # Beyond **One Machine**
 
 <!--

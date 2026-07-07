@@ -775,6 +775,699 @@ layout: section
 hideInToc: true
 ---
 
+# The Shell as a **Data Tool**
+
+<!--
+Speaker: the pitch of this section is one sentence — long before Python, the
+shell already answers real questions about a dataset. Same small tools as
+before, now pointed at a CSV of detector events. This is the bridge to the
+seminar dataset. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Meet the Dataset: `events.csv`
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔬 One line per recorded event from a detector — a **CSV**: comma-separated columns, first line names them.
+
+</div>
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+## 👀 **First peek**
+
+```bash
+head -4 events.csv
+```
+
+```text
+time,detector,energy,status
+09:00:01,ECAL,148.9,OK
+09:00:02,MUON,3.1,ERROR
+09:00:02,VELO,12.4,OK
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Plain text is the shell's home turf — every tool from the last section works on this file **unchanged**.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# How Big Is It? `wc`, `head`, `tail`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📏 **Count with `wc`**
+
+```bash
+wc -l events.csv   # lines = events + header
+wc -l *.csv        # every CSV at once
+```
+
+- `-l` lines, `-w` words, `-c` bytes
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔭 **Peek with `head` / `tail`**
+
+```bash
+head -20 events.csv   # first 20 lines
+tail -5 events.csv    # last 5 lines
+tail -f run.log       # follow a growing log
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 None of these load the whole file — inspecting a 10 GB file is instant, where a spreadsheet program would freeze.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Columns with `cut`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ✂️ **Pick columns**
+
+```bash
+cut -d, -f2 events.csv     # detector column
+cut -d, -f2,4 events.csv   # detector + status
+```
+
+- `-d,` — the delimiter between columns
+- `-f` — which field number(s) to keep
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧪 **Which detectors exist?**
+
+```bash
+cut -d, -f2 events.csv | sort | uniq
+```
+
+```text
+ECAL
+HCAL
+MUON
+VELO
+```
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ `uniq` only collapses **adjacent** duplicates — that is why `sort` always comes before it.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# `sort` Does Numbers Too — If You Ask
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ⚠️ **Lexical by default**
+
+```bash
+sort energies.txt
+```
+
+```text
+104.2
+11.8
+9.3
+```
+
+Character by character, `104…` sorts before `11…` — wrong for numbers.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **Numeric, by column**
+
+```bash
+sort -n energies.txt         # numeric
+sort -t, -k3 -n events.csv   # by CSV column 3
+```
+
+- `-t,` delimiter · `-k3` sort key · `-n` numeric · `-r` reverse
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 `sort -t, -k3 -nr events.csv | head -5` is already data analysis: **the five highest-energy events**, one line.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Worked Pipeline (1/2): Build It Up
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧪 **Question:** how many events did each detector record? Same pattern as the ERROR pipeline — the new ingredient is `cut`.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+1️⃣ `cut -d, -f2 events.csv` — keep only the detector column
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+2️⃣ `… | sort` — identical detectors become neighbours
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+3️⃣ `… | uniq -c` — collapse each run into `count detector`
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left">
+
+4️⃣ `… | sort -nr` — biggest counts first
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+
+```text
+  512 ECAL      356 VELO      214 HCAL       88 MUON
+```
+
+💡 Run the pipeline **after every stage** — watch the data change shape.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Worked Pipeline (2/2): Keep the Answer
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 💾 **Save the result**
+
+```bash
+cut -d, -f2 events.csv | sort \
+  | uniq -c | sort -nr > detector_counts.txt
+```
+
+- `>` captures the answer into a file
+- rerunnable — the command *is* the documentation
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔀 **Vary the question**
+
+```bash
+grep ",ERROR" events.csv | cut -d, -f2 \
+  | sort | uniq -c | sort -nr
+```
+
+- swap the first stage, keep the rest: now it counts **error** events per detector
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md glow">
+
+🏆 **The shell is your first data-analysis tool** — you filtered, grouped, and ranked a dataset with zero programming.
+
+</div>
+
+<!--
+Speaker: pause here. Filtering, grouping, ranking — that is groupby before they
+have ever heard the word. When pandas arrives in a later lecture, point back to
+this slide. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="runs.txt contains six lines: alpha, beta, alpha, gamma, alpha, beta. What does `sort runs.txt | uniq -c | sort -nr | head -1` print?"
+  :options="[
+    '3 alpha',
+    'alpha 3',
+    '1 gamma',
+    '6 runs.txt'
+  ]"
+  :correct="0"
+  explanation="sort groups the identical lines together, uniq -c rewrites each group as count-then-value (count first!), sort -nr puts the largest count on top, and head -1 keeps only that line. alpha appears three times, so the output is `3 alpha`."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Searching the Data **Tree**
+
+<!--
+Speaker: they met find and grep as single commands. This section upgrades both
+into questions you ask a whole directory tree — the daily bread of anyone
+managing run data. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `grep` Beyond the First Match
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+You know `grep pattern file`. Four flags turn it from *show me matches* into *answer my question*.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🚩 **The flags**
+
+```bash
+grep -i "error" run.log   # ignore case
+grep -n "ERROR" run.log   # show line numbers
+grep -c "ERROR" run.log   # just COUNT matches
+grep -l "ERROR" *.log     # just LIST matching files
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧪 **In practice**
+
+```bash
+grep -c "ERROR" *.log
+```
+
+```text
+run_041.log:0
+run_042.log:17
+run_043.log:2
+```
+
+An error count **per file** — one command.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Context: What Happened Around the Match?
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔎 An error line rarely explains itself — the cause is usually a few lines **earlier** in the log.
+
+</div>
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+## 🩺 **`-B` before, `-A` after, `-C` both**
+
+```bash
+grep -B2 -A1 "ERROR" run_042.log
+```
+
+```text
+09:14:55 sensor_3 temp 71C
+09:14:56 sensor_3 temp 84C
+09:14:57 sensor_3 ERROR overheat
+09:14:58 sensor_3 shutdown
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Two lines of context turn *there was an error* into *sensor 3 overheated over two seconds* — diagnosis without opening an editor.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# `find` Acts, Not Just Lists: `-exec`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ⚙️ **The pattern**
+
+```bash
+find data/ -name "*.log" -exec wc -l {} +
+```
+
+- `{}` — placeholder for the found files
+- `+` — pass many files per call
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧪 **Select, then act**
+
+```bash
+# line counts for CSVs changed this week
+find data/ -name "*.csv" -mtime -7 \
+  -exec wc -l {} +
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 The selection tests stack — `-name`, `-size`, `-mtime` combine into a **query language for your filesystem**, and `-exec` is its verb.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Case Study: Audit a Season of Runs
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📦 `data/raw/` holds hundreds of run logs. Your supervisor asks: **which of last week's runs had errors — and how many is that?**
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+1️⃣ `find data/raw -name "run_*.log" -mtime -7` — last week's runs
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+2️⃣ `… -exec grep -l "ERROR" {} +` — keep only those containing errors
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+3️⃣ `… | wc -l` — count the survivors
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
+
+```bash
+find data/raw -name "run_*.log" -mtime -7 -exec grep -l "ERROR" {} + | wc -l
+```
+
+💡 A tree-wide audit in one line — 📁 this is what *efficient work with files* means.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Your First Shell **Script**
+
+<!--
+Speaker: the automation payoff, and the rule of the whole course in miniature.
+If you typed it twice, script it. Ten minutes here saves them hours every month
+for the rest of their careers. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# If You Typed It Twice, Script It
+
+<div class="card card-accent card-glass pad-compact mt-sm glow">
+
+⚙️ A **script** is just your commands saved in a file — typed once, run forever. This is the automation aim in its smallest form.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📝 **Anatomy**
+
+```bash
+#!/usr/bin/env bash
+# count_events.sh — events per detector
+cut -d, -f2 events.csv | sort | uniq -c
+```
+
+- line 1 is the **shebang** — which interpreter runs this file
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ▶️ **Make it runnable**
+
+```bash
+chmod +x count_events.sh   # once: mark executable
+./count_events.sh          # run it
+```
+
+- `./` means *the one right here*, not something on `$PATH`
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Script Building Block 1: Variables
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏷️ **Define and use**
+
+```bash
+DATA_DIR="data/raw"
+PATTERN="ERROR"
+grep -c "$PATTERN" "$DATA_DIR"/run_042.log
+```
+
+- no spaces around `=`
+- `$NAME` inserts the value
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🛡️ **Quote your variables**
+
+```bash
+rm "$OLD_FILE"   # safe with spaces
+rm $OLD_FILE     # "my data.csv" becomes TWO arguments!
+```
+
+Unquoted variables split on spaces — the classic script bug.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Variables gather everything you might change — paths, patterns, thresholds — at the **top** of the script, in one visible place.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Script Building Block 2: The `for` Loop
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔁 Wildcards give you the file list; `for` runs the same body **once per file**.
+
+</div>
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+## 🔂 **The shape**
+
+```bash
+for f in data/raw/run_*.log; do
+  echo "== $f"
+  grep -c "ERROR" "$f"
+done
+```
+
+- `$f` holds the current filename on each pass
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Ten files or ten thousand — the loop doesn't care. This is the moment the CLI stops being *typing fast* and becomes **automation**.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Putting It Together: `error_report.sh`
+
+<div class="card card-primary card-glass pad-tight mt-sm">
+
+## 📜 **The whole script**
+
+```bash
+#!/usr/bin/env bash
+# error_report.sh — ERROR count per run log
+DATA_DIR="data/raw"
+
+for f in "$DATA_DIR"/run_*.log; do
+  n=$(grep -c "ERROR" "$f")
+  echo "$f,$n"
+done > results/error_report.csv
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🆕 **One new trick**
+
+`$( … )` — **command substitution**: run the command, keep its output in a variable
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ♻️ **Why it matters**
+
+Delete the report, rerun the script, get it back — ready for version control in Lecture 6
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Teaser: `xargs` — the Loop You Don't Write
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🚀 **One-liner power**
+
+```bash
+find data/raw -name "*.csv" | xargs wc -l
+```
+
+`xargs` reads names from the pipe and hands them to the command as **arguments** — a for-loop compressed into a word.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🗺️ **Where this road leads**
+
+- today — a script and a loop
+- Lecture 6 — scripts under **version control**
+- Lecture 14 — whole **pipelines** rerun with one command
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+⚙️ You don't need `xargs` yet — recognise it in the wild, and remember the shell can always go one step further.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
 # Working **Safely**
 
 ---

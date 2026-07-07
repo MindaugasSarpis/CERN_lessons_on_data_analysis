@@ -178,6 +178,231 @@ Organise, name, and format your data so it stays trustworthy and usable.
 hideInToc: true
 ---
 
+# The Aims in **Practice**
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+Four abstract words become concrete the moment you compare two versions of the same project — one built casually, one built with the practices from this course.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **Before**
+
+The way most of us start: files everywhere, steps done by hand, results that live in one person's head and one machine's setup.
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **After**
+
+The same work, restructured: organised, scripted, documented — and rebuildable by anyone, on any machine, years later.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The next four slides show one before/after pair per aim. All four are drawn from real projects — including mine.</div>
+
+<!--
+Speaker: don't rush these four — they are the emotional core of week 1. Ask for a
+show of hands at each "before": almost everyone recognises themselves. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 📁 Before / After — **Data & Files**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **The Downloads folder**
+
+- `data.csv`, `data(1).csv`, `data_final_v2_REAL.csv`
+- Raw data, figures, and drafts all in one directory
+- Which file fed the plot in the report? Nobody knows
+- Deleting anything feels dangerous — so nothing is ever deleted
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **A structured project**
+
+- `data/raw/` is read-only; `data/processed/` is regenerable
+- One folder per purpose: `scripts/`, `results/`, `docs/`
+- Names carry meaning: `2026-03_temperature_vilnius.csv`
+- "Where does this number come from?" answered in seconds
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Lecture 4 (command line & files) and Seminar 4 build exactly this structure — for your own project.</div>
+
+---
+hideInToc: true
+---
+
+# ♻️ Before / After — **Reproducibility**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **"It worked on my laptop"**
+
+- The result exists — as a screenshot in an old email
+- Rebuilding it needs a specific person, machine, and mood
+- Six months later even the author can't remake the plot
+- Reviewer asks "what changed since draft one?" — silence
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **Anyone can rerun it**
+
+- Data, code, and environment are recorded together
+- One documented command rebuilds every figure and number
+- A new team member reproduces the result on day one
+- "What changed?" has an exact, versioned answer
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">This is the single strongest predictor of a good project grade — and of trust in your science.</div>
+
+---
+hideInToc: true
+---
+
+# ⚙️ Before / After — **Automation**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **40 manual steps in a spreadsheet**
+
+- Open file → copy column → paste → sort → delete rows → …
+- Every rerun costs an afternoon and invites a fresh typo
+- New data arrives → the whole ritual starts again
+- The process lives only in one person's muscle memory
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **One script**
+
+- The same 40 steps written down once, executed in seconds
+- New data arrives → rerun → done
+- The script *is* the documentation of the method
+- Boring parts are delegated; your attention goes to thinking
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Rule of thumb from the aims slide: once by hand, twice by script.</div>
+
+---
+hideInToc: true
+---
+
+# 🔧 Before / After — **Tool Agnosticism**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **Locked in**
+
+- Data lives inside one proprietary tool's project file
+- Analysis steps exist only as clicks nobody recorded
+- Licence expires, company folds, format changes → work stranded
+- Collaborators must buy the same tool just to *look*
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **Open by default**
+
+- Data in open formats: CSV, JSON, plain text
+- Logic captured in code — portable across tools and decades
+- Concepts learned once transfer to whatever comes next
+- Anyone can inspect, verify, and build on your work
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">We still *use* specific tools (Python, VS Code, Git) — but every skill is chosen to transfer beyond them.</div>
+
+---
+hideInToc: true
+---
+
+# The Aims **Reinforce** Each Other
+
+```mermaid {scale: 0.8}
+graph LR
+    A[⚙️ Automation] --> R[♻️ Reproducibility]
+    F[📁 Data & files] --> R
+    T[🔧 Tool agnosticism] --> F
+    R --> S[🏆 Trustworthy results]
+```
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔗 **Not four separate boxes**
+
+A scripted pipeline (⚙️) is automatically re-runnable (♻️). A clean file structure (📁) keeps scripts simple. Open formats (🔧) keep everything rebuildable anywhere.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **Use them as a compass**
+
+Unsure how to do something? Ask: *which choice serves more of the aims?* That one question resolves most practical dilemmas in this course — and in research.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A colleague sends you a beautiful result: a PDF of the final plot. What is the *minimum* you would need for the result to count as reproducible?"
+  :options="[
+    'The plot again, in higher resolution',
+    'The raw data, the code, and a description of the environment they ran in',
+    'A video recording of them running the analysis',
+    'Their word that it worked on their laptop'
+  ]"
+  :correct="1"
+  explanation="♻️ Reproducibility means someone else can rebuild the result. That requires the inputs (data), the exact transformation (code), and the context it ran in (environment and versions). A prettier picture or a promise changes nothing."
+/>
+
+---
+hideInToc: true
+---
+
 # **Course Content** — 16 lectures, 5 blocks
 
 <div class="grid-3 mt-md gap-md">

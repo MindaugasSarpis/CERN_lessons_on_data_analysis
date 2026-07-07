@@ -822,6 +822,166 @@ popt, pcov = curve_fit(model, x, y, p0=p0, bounds=bounds)
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Parameter **Uncertainties**
+
+<!--
+Speaker: we already read errors off the covariance matrix — now the intuition:
+where they come from, when they shrink, and how to cross-check them without
+trusting any formula. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# Where Parameter Errors Come From
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## **The Δχ² = 1 Rule**
+
+Near its minimum, $\chi^2(\theta)$ is approximately a parabola. The **1σ uncertainty** on a parameter is the shift that raises $\chi^2$ by exactly **1**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📉 **Sharp minimum**
+
+- $\chi^2$ rises steeply as $\theta$ moves
+- Data strongly constrain the parameter
+- **Small** uncertainty
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🥣 **Shallow minimum**
+
+- $\chi^2$ barely changes near $\hat{\theta}$
+- Many values describe the data almost equally well
+- **Large** uncertainty
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# More Data, Smaller Errors
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## **The 1/√N Law**
+
+Statistical uncertainties on fitted parameters shrink as $1/\sqrt{N}$ — to **halve** an error you need **four times** the data.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📊 **Planning a measurement**
+
+- Estimate the precision you need **before** collecting data
+- Doubling the run time buys only a √2 improvement
+- Diminishing returns are built in
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🧱 **The systematic floor**
+
+- At some $N$, systematic uncertainties dominate
+- More data then stops helping
+- Effort shifts to calibration and model choice
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Correlated Parameters: Mass and Width
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## **Parameters Move Together**
+
+With a background under a peak, the fitted mass, width, and yield are **not independent** — the tilted confidence ellipses from the covariance matrix are exactly this.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔍 **How it shows up**
+
+- Shifting $\mu$ is partly compensated by changing $\sigma$
+- Single-parameter errors understate the joint uncertainty
+- Check $\rho_{ij}$ from the covariance matrix
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## ⚠️ **Why you must care**
+
+- Error propagation without $C_{ij}$ is simply wrong
+- $|\rho| \approx 1$ → consider reparameterizing the model
+- Report strong correlations alongside the result
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Bootstrap: Errors Without Formulas
+
+<div class="note-text mt-sm">
+
+Don't want to trust the covariance matrix blindly? **Refluctuate the data, refit, repeat** — the spread of the refitted values *is* the uncertainty. ♻️ *A cross-check you can run anywhere.*
+
+</div>
+
+```python {monaco-run} {autorun:false}
+rng = np.random.default_rng(1)
+x = np.linspace(0, 10, 40)
+def gauss_bg(x, A, mu, sig, b):
+    return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b
+y = rng.poisson(gauss_bg(x, 40, 5, 0.8, 5)).astype(float)
+popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=np.sqrt(np.maximum(y, 1)))
+mus = []
+for _ in range(200):                          # bootstrap: refluctuate + refit
+    yb = rng.poisson(np.maximum(y, 1)).astype(float)
+    p, _ = curve_fit(gauss_bg, x, yb, p0=popt, sigma=np.sqrt(np.maximum(yb, 1)))
+    mus.append(p[1])
+print(f"covariance error on mu: {np.sqrt(pcov[1, 1]):.4f}")
+print(f"bootstrap spread of mu: {np.std(mus):.4f}")
+```
+
+<!--
+Speaker: run it — the two numbers agree to within a few percent. Point out this
+works for ANY estimator, however complicated, as long as you can refit. (~2 min)
+-->
+
+---
 hideInToc: true
 ---
 

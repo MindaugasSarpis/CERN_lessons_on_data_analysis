@@ -1072,6 +1072,90 @@ b.decode("utf-8")      # back to str
 hideInToc: true
 ---
 
+# Mojibake: When Encodings Collide
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+👾 **Mojibake** — garbled text from reading bytes with the **wrong encoding**. The bytes are fine; the interpretation isn't.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔍 **How it happens**
+
+`é` in UTF-8 is **two bytes**: `C3 A9`
+
+Read them as Latin-1 (one character per byte):
+
+`C3` → `Ã`, `A9` → `©` — hello `Ã©`
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 📄 **In real CSV files**
+
+`München` → `MÃ¼nchen`
+
+A sprinkle of `Ã` through a file is the classic symptom: UTF-8 bytes decoded as Latin-1.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 The cure is never "fix the characters by hand" — declare the encoding when reading: `open(f, encoding="utf-8")`.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Excel Trap (and the BOM)
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🧨 **"Just open it in Excel"**
+
+Opening and re-saving a CSV can silently:
+
+- re-encode text in your **locale's** encoding, not UTF-8
+- turn identifiers into **dates** — gene `SEPT2` → `2-Sep`, an error found in ~20% of genomics papers with gene lists
+- strip **leading zeros** from IDs (`007` → `7`)
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🫥 **The BOM gotcha**
+
+Some tools prepend a **byte-order mark** — `EF BB BF` — to UTF-8 files.
+
+Symptom: a ghost `ï»¿` glued to your first column name.
+
+Python's `encoding="utf-8-sig"` reads (and strips) it.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Treat data files as **bytes with a declared encoding** — inspect first, and edit with tools that don't "help".
+
+</div>
+
+---
+hideInToc: true
+---
+
 # From Characters to Multi-Byte Values
 
 <div class="card card-accent card-glass pad-tight mt-sm">

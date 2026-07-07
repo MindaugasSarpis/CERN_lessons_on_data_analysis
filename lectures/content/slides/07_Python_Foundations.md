@@ -34,7 +34,7 @@ layout: quote
 
 <!--
 Speaker: this is the tool-agnostic aim in action — the ideas transfer, Python is
-just today's vehicle. Frame the next ~40 min as the vocabulary they'll reuse in
+just today's vehicle. Frame the next ~2 hours as the vocabulary they'll reuse in
 every seminar. (~1 min)
 -->
 
@@ -68,13 +68,19 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-⚡ Transform data with **comprehensions** and string methods
+⚡ Transform data with **comprehensions**, string methods, and **f-string** formatting
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
 🔀 Steer a program with **conditionals** and **loops**
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+🧭 Read a **traceback** calmly and fix the classic beginner errors
 
 </div>
 
@@ -122,6 +128,8 @@ hideInToc: true
 
 # Languages of data
 
+<div class="note-text mt-sm">Python is this course's vehicle — but it lives in a wider landscape of data tools:</div>
+
 <div class="stack-tight mt-md">
 
 <div class="card card-primary card-glass pad-tight">
@@ -155,6 +163,12 @@ hideInToc: true
 </div>
 
 </div>
+
+<!--
+Speaker: a quick landscape tour so "why Python" reads as an informed choice,
+not a default. Each of these is the right tool somewhere; the practices in
+this course transfer to all of them. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -190,11 +204,18 @@ hideInToc: true
 
 <div class="note-text">
 
-#### 💡 **Tip** — mix surface-level ease with depth and reproducibility
+#### 💡 **Tip** — mix surface-level ease with depth and reproducibility; this is why the course teaches a **language**, not a product
 
 </div>
 
 </div>
+
+<!--
+Speaker: land the transition — the landscape and the trade-offs point the same
+way: a free, open language scales with you. That is the "why Python" case made
+concrete; now we start learning it. (~1 min)
+-->
+
 
 ---
 hideInToc: true

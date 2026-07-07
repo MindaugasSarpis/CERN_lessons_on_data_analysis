@@ -485,6 +485,210 @@ layout: section
 hideInToc: true
 ---
 
+# Regression — Fitting, **Rebranded**
+
+<!--
+Speaker: the friendliest on-ramp to ML — it is literally Lecture 12 with new
+vocabulary. Land the translation table hard; everything else follows. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Linear Regression = Lecture 12, Rebranded
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🔁 **You have already done this**
+
+Fitting a straight line by **least squares** (Lecture 12) *is* machine learning's simplest model. Only the vocabulary changes — the mathematics is identical.
+
+</div>
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+| Fitting (Lecture 12) | Machine learning (today) |
+|---|---|
+| fit the model | **train** the model |
+| parameters | **weights** |
+| minimise χ² | minimise the **loss** |
+| residuals | prediction **errors** |
+| goodness of fit | **evaluation metrics** |
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 If you can read a `curve_fit` result, you can already read a regression model.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Least Squares, One More Time
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📐 The model is a line, `y = w·x + b`. Training chooses `w` and `b` to minimise the **sum of squared residuals** — exactly the quantity behind χ² in Lecture 12, with all uncertainties set equal.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-left">
+
+## 🔬 **Lecture 12 said**
+
+`scipy.optimize.curve_fit(f, x, y)` — you write the model function, scipy finds the parameters.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight reveal-left">
+
+## 🤖 **scikit-learn says**
+
+`LinearRegression().fit(X, y)` — the model family is fixed, and the API is uniform across models.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
+
+🎯 Same optimisation, different packaging — and that uniform `fit` / `predict` API is what lets you swap models without rewriting your analysis. 🔧
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A First Regressor in scikit-learn
+
+```python {*}{maxHeight:'320px'}
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# Toy physics data: pT is (roughly) inversely proportional to curvature
+rng = np.random.default_rng(42)
+curvature = rng.uniform(0.5, 5.0, 500)
+pt = 3.0 / curvature + rng.normal(0.0, 0.1, 500)
+
+X = (1.0 / curvature).reshape(-1, 1)          # feature engineering!
+X_train, X_test, y_train, y_test = train_test_split(
+    X, pt, test_size=0.2, random_state=42)
+
+model = LinearRegression().fit(X_train, y_train)
+print(model.coef_[0], model.intercept_)       # ~3.0  ~0.0
+```
+
+<div class="note-text mt-sm">
+
+🎯 The physics knowledge — `pt ∝ 1/curvature` — went into the **feature**, not the model. And the golden rule is unchanged: judge it on `X_test` only, data the fit never saw.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Judging a Regression: MAE and RMSE
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-left">
+
+## 📏 **MAE — mean absolute error**
+
+The average of `|prediction − truth|`. Robust to outliers, and reads directly as *"typically off by 0.1 GeV"*.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight reveal-left">
+
+## 📐 **RMSE — root mean squared error**
+
+The square root of the mean squared error. Punishes **large** misses hard — it is the least-squares loss itself.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+
+⚠️ **Report both.** RMSE ≫ MAE means a few events are badly wrong — a tail the average hides. Both carry the **units of `y`**, so they mean something physical.
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 No "accuracy" here: regression quality is *how far off*, not *right or wrong*.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Residual Plots — Your Old Friend
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔍 Lecture 12's habit transfers unchanged: plot **prediction − truth** against the prediction. Structure in the residuals = structure your model missed. A single score never shows this.
+
+</div>
+
+<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg" style="display:block;margin:0.6rem auto 0;max-height:290px;">
+
+<div class="note-text mt-sm">
+
+📊 **Anscombe's quartet**: four datasets, one identical fitted line and R² — only the *plots* reveal which fit is honest.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# From One Feature to Many
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📊 Real problems have many features: `y = w₁x₁ + w₂x₂ + … + b`. Still least squares, still one line of scikit-learn — but three new habits matter.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+⚖️ **Scale your features** — a weight on "energy in MeV" is not comparable to one on "angle in radians" until you standardise them.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+🔍 **Weights are interpretable** — sign and size tell you *what the model believes*; nonsense weights are an early bug alarm.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+📉 **More features = more ways to overfit** — regularisation (ridge, lasso) adds a penalty for complexity: the cure you know from fitting, automated.
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
 # A First **Classifier**
 
 <!--

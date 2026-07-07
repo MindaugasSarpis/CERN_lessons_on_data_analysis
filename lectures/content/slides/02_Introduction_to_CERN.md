@@ -321,6 +321,172 @@ layout: section
 hideInToc: true
 ---
 
+# Four **Eyes** on the Ring
+
+The LHC is one machine — but four giant detectors watch its collisions, each built to ask a different question of the same beams.
+
+<!--
+Speaker: quick tour of the four experiments. The framing to plant: one accelerator,
+four different questions — the machine is shared, the science is not. LHCb gets the
+longest stop because the course's running dataset comes from it. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Generalists: <span class="gradient-text">ATLAS</span> & <span class="gradient-text">CMS</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔭 Two **general-purpose** detectors ask the broadest question — *what is matter made of, and what holds it together?* — with deliberately **different designs**, so neither can fool the other.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏟️ **ATLAS**
+
+- The **largest** collider detector ever built
+- **46 m** long, **25 m** tall — half a cathedral, 100 m underground
+- ~**7,000 tonnes**, ~100 million readout channels
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧲 **CMS**
+
+- Built around one colossal superconducting **solenoid** magnet
+- **14,000 tonnes** — heavier than the Eiffel Tower
+- Same physics goals as ATLAS, opposite design philosophy
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🤝 On **4 July 2012** both announced the Higgs **independently, on the same day** — replication was designed into the LHC from the start. Cross-checking isn't a courtesy; it's architecture.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">ALICE</span> — Rewinding the Big Bang
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 💥 **The Question**
+
+What was matter like in the first **millionths of a second** after the Big Bang — before protons and neutrons even existed?
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌡️ **The Method**
+
+Collide **lead nuclei** instead of protons → a fleeting droplet of **quark–gluon plasma**, over **100,000×** hotter than the core of the Sun
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+📈 A single lead–lead collision can spray out **tens of thousands** of particle tracks — untangling them is a **data problem** before it is a physics problem.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">LHCb</span> — Where Did the Antimatter Go?
+
+<div class="card card-primary card-glass pad-tight mt-sm">
+
+## ⚖️ **The Question**
+
+The Big Bang should have created matter and antimatter in **equal amounts** — yet everything you see is matter. LHCb hunts the tiny **asymmetries** (*CP violation*) that let matter win.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔬 **The Method**
+
+Precision-measure decays of **beauty** and **charm** quarks in a forward detector whose sensors sit **millimetres** from the beam
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🏆 **A 2019 First**
+
+LHCb discovered **CP violation in charm** — in decays of the **D⁰ meson**. Remember that name.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧭 The asymmetries found so far are **far too small** to explain the surviving universe — one of the great open problems in physics.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Meet the Particle You'll <span class="gradient-text">Analyse</span>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ⚛️ **The D⁰ meson**
+
+- A **charm quark** bound to an up antiquark
+- Lives **~0.4 trillionths of a second**, then decays — e.g. **D⁰ → K⁻π⁺**
+- Compute the **invariant mass** of each K⁻π⁺ pair, and a peak rises near **1865 MeV**
+- That peak is the particle's **fingerprint** in the data
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🎯 **Your running project**
+
+<img src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0.4rem auto 0.6rem;max-height:185px;background:#fff;border-radius:8px;">
+
+Real **LHCb open data** — you'll locate it in Seminar 2 and, by the fitting lecture, produce and fit this exact peak yourself.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the seed slide — this exact peak returns in the Python, visualisation, and
+fitting lectures. Students should leave knowing one particle by name: the D0, mass
+about 1865 MeV, seen as a bump in the K-pi invariant-mass spectrum. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
 # Why **Data**?
 
 <!--

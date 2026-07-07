@@ -42,7 +42,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
-<div class="stack-tight mt-sm">
+<div class="grid-2 gap-md mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -56,21 +56,39 @@ hideInToc: true
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+🧭 Describe workflows as **Mermaid diagrams** — pictures written as plain text
+
+</div>
+
 <div class="card card-accent card-glass pad-compact">
 
-🖥️ Navigate **VS Code** — the sidebar, editor, and integrated terminal
+📄 Structure a project **README** and publish Markdown via **pandoc** & **MkDocs**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-🎯 Drive the editor from the **Command Palette**, not menus
+🖥️ Navigate **VS Code** — the sidebar, editor, and integrated terminal
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-🧩 Extend VS Code with **extensions** for Python, Markdown, and Git
+🎯 Drive the editor from the **Command Palette**, not menus
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+⚡ Edit at speed — **multi-cursor**, **regex find & replace**, snippets, diff view
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🧩 Extend VS Code with **extensions** for Python, Markdown, data files, and remote work
 
 </div>
 
