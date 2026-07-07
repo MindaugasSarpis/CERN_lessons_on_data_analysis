@@ -1,0 +1,48 @@
+name: QA gates
+
+# The course's two blocking gates, run in CI on every push to the working
+# branch (ff2026) so a deploy push (ff2026:bs2026) is only made from a state
+# that passes:
+#   - pnpm qa           zero-overflow check of every rendered deck + landing smoke test
+#   - pnpm timing:check every week's content sized to the 2h lecture + 2h seminar slots
+on:
+  workflow_dispatch:
+  push:
+    branches: [ff2026]
+  pull_request:
+
+concurrency:
+  group: qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          # Pin to 9: matches the v9.0 lockfile and runs package build scripts
+          # (esbuild, playwright-chromium) without pnpm 10's ERR_PNPM_IGNORED_BUILDS gate.
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium system libraries
+        run: pnpm exec playwright install-deps chromium
+
+      - name: Timing gate (fast)
+        run: pnpm timing:check
+
+      - name: Build + overflow-check every deck (pnpm qa)
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: pnpm qa

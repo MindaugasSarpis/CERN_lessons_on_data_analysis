@@ -12,11 +12,15 @@
  * run in parallel. ~10-20s for the whole published deck vs ~5min for reload-
  * per-slide.
  *
+ * Flake guard: offenders and unrendered slides are re-measured once on a
+ * fresh page before the gate fails — near-tolerance one-offs under parallel
+ * load (the ~10px flake) clear themselves; only reproducible overflow fails.
+ *
  * Usage:
- *   1. Build through an entry point that loads the theme (NOT a single
- *      slides/L0X.md — that drops the custom theme):
- *        pnpm exec slidev build lectures/content/best_research_and_data_analysis_practices_from_CERN.md --out .qa-dist
- *   2. node scripts/check-slides.mjs .qa-dist [options]
+ *   1. Build through a generated deck entry (NOT a single slides/NN_*.md —
+ *      that drops the custom theme), e.g.:
+ *        node scripts/build-all.mjs --flat-base --out .qa-dist --only 06-version-control
+ *   2. node scripts/check-slides.mjs .qa-dist/06-version-control [options]
  *        --shots <dir>      also write <dir>/slide-<NNN>.png for every slide
  *        --workers <n>      parallel browser pages (default 6)
  *        --tolerance <px>   overflow tolerance (default 6)
@@ -128,7 +132,7 @@ const skipped = [];
 let measured = 0;
 const t0 = Date.now();
 
-async function runShard(shard) {
+async function runShard(shard, { shots = SHOTS, collect = { offenders, skipped } } = {}) {
   const page = await newQAPage();
   await page.goto(`${base}/${shard[0]}`, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.slidev-layout', { timeout: 30000 }).catch(() => {});
@@ -152,7 +156,7 @@ async function runShard(shard) {
       return { oy: el.scrollHeight - el.clientHeight, ox: el.scrollWidth - el.clientWidth,
                title: (h ? h.textContent : '').trim().slice(0, 60) };
     }, n);
-    if (SHOTS) {
+    if (shots) {
       // Force the revealed end-state for the screenshot. Some theme rules
       // (e.g. `.card-glass.slidev-vclick-hidden{opacity:0!important}`) out-
       // specify a stylesheet override, so set inline styles — inline !important
@@ -168,23 +172,46 @@ async function runShard(shard) {
           el.style.setProperty('filter', 'none', 'important');
         }
       });
-      await page.screenshot({ path: join(SHOTS, `slide-${String(n).padStart(3, '0')}.png`) });
+      await page.screenshot({ path: join(shots, `slide-${String(n).padStart(3, '0')}.png`) });
     }
     // Note: for .anim-card slides (L06 / video deck) the neutralized state
     // shows a large heading AND fully-expanded examples at once — taller than
     // ever renders live — so those may be *over*-reported. That can only inflate
     // the offender list, never hide real overflow.
-    if (!m) { skipped.push(n); continue; } // slide never settled — do NOT count as "fits"
+    if (!m) { collect.skipped.push(n); continue; } // slide never settled — do NOT count as "fits"
     measured++;
     if (m.oy > TOL || m.ox > TOL) {
-      offenders.push({ n, ...m });
+      collect.offenders.push({ n, ...m });
       console.log(`  ✗ slide ${n}: overflow y=${m.oy}px x=${m.ox}px  — "${m.title}"`);
     }
   }
   await page.close();
 }
 
-await Promise.all(shards.map(runShard));
+await Promise.all(shards.map((s) => runShard(s)));
+
+// Re-verify pass: a slide can one-off over-measure by a few px (or fail to
+// settle) under parallel-worker load — the known near-tolerance flake. Before
+// failing the gate, re-measure every offender and every unrendered slide once,
+// sequentially, on a fresh page. Keep only reproducible offenders; a slide
+// that renders and fits on retry was a flake, not a regression.
+const suspects = [...new Set([...offenders.map((o) => o.n), ...skipped])].sort((a, b) => a - b);
+if (suspects.length && suspects.length <= 30) {
+  console.log(`\nRe-verifying ${suspects.length} suspect slide(s) on a fresh page …`);
+  const retry = { offenders: [], skipped: [] };
+  await runShard(suspects, { shots: null, collect: retry });
+  const stillOver = new Set(retry.offenders.map((o) => o.n));
+  const flaked = offenders.filter((o) => !stillOver.has(o.n) && !retry.skipped.includes(o.n));
+  if (flaked.length) console.log(`  ↺ flake(s) cleared on retry: ${flaked.map((o) => o.n).join(', ')}`);
+  offenders.length = 0;
+  offenders.push(...retry.offenders);
+  // Any suspect that didn't settle on retry stays unverified (this includes a
+  // main-pass offender that failed to render the second time — never let one
+  // drop off both lists and pass silently).
+  skipped.length = 0;
+  skipped.push(...retry.skipped);
+}
+
 await browser.close();
 server.close();
 

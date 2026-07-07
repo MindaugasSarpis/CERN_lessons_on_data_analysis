@@ -33,7 +33,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const SLIDES_DIR = join(ROOT, 'lectures', 'content', 'slides');
+const CONTENT = join(ROOT, 'lectures', 'content');
+const SLIDES_DIR = join(CONTENT, 'slides');
 const SEMINARS_DIR = join(ROOT, 'lectures', 'workbook', 'docs', 'seminars');
 
 const BAND = { min: 105, max: 145 };
@@ -138,7 +139,15 @@ function bandFlag(minutes) {
 }
 
 async function reportLectures() {
-  const files = (await readdir(SLIDES_DIR)).filter((f) => /^\d\d_.*\.md$/.test(f)).sort();
+  // Drive from the deck manifest, not the directory: a slide file that was
+  // removed from decks.json (topic dropped) must not keep gating the course.
+  const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
+  const files = manifest.decks.flatMap((d) => d.srcs);
+  const onDisk = (await readdir(SLIDES_DIR)).filter((f) => /^\d\d_.*\.md$/.test(f));
+  const stray = onDisk.filter((f) => !files.includes(f));
+  if (stray.length) {
+    console.error(`note: slide file(s) not in decks.json, ignored: ${stray.join(', ')}`);
+  }
   const rows = [];
   for (const f of files) {
     const src = await readFile(join(SLIDES_DIR, f), 'utf8');

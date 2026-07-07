@@ -17,16 +17,19 @@ pnpm install                 # install dependencies
 
 pnpm build                   # build ALL decks + landing → dist/ (scripts/build-all.mjs)
 pnpm qa                      # build every deck at base '/' + gate each for overflow (scripts/qa-all.mjs) (includes the landing smoke test)
+pnpm qa --only 06-version-control       # QA just one deck (much faster edit loop)
 pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for visual review
-pnpm timing                  # estimate delivery minutes per deck + seminar vs the 2h slot (scripts/timing-report.mjs)
+pnpm timing                  # estimate delivery minutes per deck + seminar vs the 2h slot (scripts/timing-report.mjs; decks come from decks.json)
 pnpm timing:check            # same, exit 1 if any week is UNDER the band
 pnpm build:landing          # rebuild only the landing page + its WebGL bundle → dist/
 pnpm videos:fetch <url> --name <Name> --used-in LNN   # yt-dlp → videos/raw/ + manifest entry; then videos:encode + videos:publish (needs yt-dlp + ffmpeg)
 pnpm figures                 # regenerate all scripted lecture figures (figures/src/ → public/figures/viz_*.svg; --only <family> to scope)
+pnpm figures:lhcb            # regenerate the synthetic LHCb D0→K-π+ figures (lhcb_d0_spectrum/fit.png)
 
-pnpm dev --config-slug 01-orientation   # dev-serve one deck (regenerates entries first); or:
-pnpm dev:lecture lectures/content/deck.06-version-control.md
+pnpm dev 6                   # dev-serve ONE lecture (scripts/dev.mjs; number, slug, or substring — regenerates entries first)
+pnpm dev                     # list all decks
 
+pnpm dev:combined            # dev-serve the combined all-16 authoring deck
 pnpm build:combined          # optional: single "everything" authoring build (not deployed)
 pnpm export                  # export the combined deck to PDF
 cd lectures/workbook && mkdocs serve     # student workbook (needs conda env from env.yaml)
@@ -58,7 +61,7 @@ To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan 
 ### Slide Deck (Slidev)
 
 - **Deck manifest**: `lectures/content/decks.json` (see Build pipeline above) — the source of truth for which decks exist and their order/blocks.
-- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key). All 16 are live in `decks.json`; 15–16 are marked `optional` (advanced/droppable). `L11_Real_Data_and_Case_Studies.md` (case-study material folded into 13/14/16) and `LX_Python_Interactive.md` (template) are not lectures.
+- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key). All 16 are live in `decks.json`; 15–16 are marked `optional` (advanced/droppable). `LX_Python_Interactive.md` is a template (not a lecture) for python-runner slides.
 - **Combined authoring entry** (optional, not deployed): `lectures/content/best_research_and_data_analysis_practices_from_CERN.md` (imports all 16) and `staging.md` — single-file "everything" builds for authoring/PDF export (`pnpm build:combined`).
 - **Seminars**: `lectures/workbook/docs/seminars/` — 16 hands-on briefs + a running-project overview, all building one reproducible analysis of the LHCb D⁰ → K⁻π⁺ open-data sample (invariant-mass peak near 1865 MeV).
 - **Design/plan docs**: `docs/superpowers/specs/` and `docs/superpowers/plans/` — the curriculum spec and the P1–P6 implementation plan.
@@ -79,8 +82,9 @@ To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan 
 
 ### Miscellaneous
 
-- `misc/exams/` — quiz YAML definitions and grading scripts
-- `misc/python/` — standalone Python examples for students
+- `misc/exams/` — grading/plotting scripts; the grade CSVs they read are **gitignored (student personal data — never commit them)**
+- `misc/python/stable/analysis_example/` — the generator→plot→fit demo chain referenced by the workbook
+- `docs/svg-figure-recipe.md` — conventions for hand-built SVG figures in `public/figures/`
 
 ## Slide Authoring Conventions
 
@@ -113,4 +117,14 @@ Each lecture markdown file follows a consistent structure:
 
 ## Deployment
 
-GitHub Actions workflow (`.github/workflows/deploy.yml`) builds and deploys to GitHub Pages on pushes to the `bs2026` branch.
+Two GitHub Actions workflows:
+
+- **`.github/workflows/qa.yml`** — runs both gates (`pnpm qa` + `pnpm timing:check`) on every push to the working branch `ff2026` (and on PRs / manual dispatch).
+- **`.github/workflows/deploy.yml`** — builds and deploys to GitHub Pages on pushes to the `bs2026` branch. Day-to-day work happens on `ff2026`; a fix is only live after `git push origin ff2026:bs2026` — check the qa.yml result first.
+
+## Adding / removing a lecture
+
+The manifest drives everything, so the checklist is short (full walkthrough in README.md):
+
+1. **Add**: create `lectures/content/slides/NN_Title.md` (copy an existing lecture's frontmatter/cover/quote/motivation skeleton), add a `{slug, title, block, srcs}` entry to `decks.json` (delivery order = array order), write the seminar brief `lectures/workbook/docs/seminars/seminar_NN.md` (declare **~120 min**), and add the workbook page + `mkdocs.yml` nav line. Then `pnpm dev <NN>` to author, `pnpm qa --only <slug>` + `pnpm timing:check` to gate.
+2. **Remove**: delete the deck's entry from `decks.json`, delete (or park outside `slides/`) the source file, delete its seminar brief and workbook nav line. `timing-report.mjs` only gates files listed in `decks.json`, so nothing ghost-gates after removal.
