@@ -25,7 +25,7 @@ Seminar 6. Python basics from lecture 07.
 ## Stretch goals
 - Read the header row and build the column-name list automatically instead of
   hard-coding it.
-- Add a `list comprehension` that extracts just the muon energies.
+- Add a `list comprehension` that extracts just the kaon and pion momenta.
 - Write a second function `validate_line(fields) -> bool` that rejects a row
   whose momentum components fail to convert or come out `NaN` — a preview of
   Seminar 9's audit.

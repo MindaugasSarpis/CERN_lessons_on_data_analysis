@@ -19,7 +19,7 @@ Seminar 8 (ingest).
    - **Completeness** — any missing/empty fields? How many rows?
    - **Validity** — any impossible values? (negative mass, `pt` < 0, `|Q|` ≠ 1)
    - **Consistency** — do derived and stored quantities agree? (spot-check that
-     `M` is consistent with the two muons' energy/momentum for a few rows)
+     `M` is consistent with the kaon and pion energy/momentum for a few rows)
    - **Duplicates** — any repeated `(Run, Event)` pairs?
 2. Write `scripts/audit.py` that prints each check's result as a count.
 3. Decide (and document) a policy: which rows do you drop, and why?
