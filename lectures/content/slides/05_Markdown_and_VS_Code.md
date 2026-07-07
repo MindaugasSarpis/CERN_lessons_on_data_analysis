@@ -1748,7 +1748,7 @@ Match a digit, a comma, a digit — the comma *between two numbers*, not the one
 $1.$2
 ```
 
-`$1` and `$2` put the captured digits back with a dot between. `3,14` → `3.14`, columns untouched.
+`$1` and `$2` put the captured digits back with a dot between. `3,14` → `3.14`, columns untouched *on this file* — always check the match count first.
 
 </div>
 
@@ -1800,7 +1800,7 @@ Collapses runs of spaces — tidies a pasted table in one pass.
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ Preview before you commit: check the match count, and keep the file under **version control** so a bad replace is one `git restore` away.
+⚠️ Preview before you commit: check the match count, and keep the file under **version control** so a bad replace is one `git restore` away *(you'll meet that command properly next week)*.
 
 </div>
 
