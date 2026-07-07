@@ -1131,6 +1131,105 @@ git commit -m "Resolve merge conflict"
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Git in **VS Code**
+
+<!--
+Speaker: same git, a friendlier window. Everything they just typed by hand
+has a button here — but the commands underneath are identical. Show, don't
+just tell. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# The Source Control Panel
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔧 **Same git, different interface**
+
+- The **Source Control** panel (the branch icon in the sidebar) is a visual front-end to the exact commands you just learned
+- Changed files appear in a list; the **+** beside a file runs `git add`, and the message box plus **Commit** runs `git commit`
+- The status bar shows your current **branch** and a sync arrow for push/pull
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 💡 **Why bother?**
+
+- You *see* every changed file at a glance instead of parsing `git status`
+- Clicking beats memorising flags while you are still learning
+- The terminal is one panel away — mix and match freely 🔧
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Staging Hunks & the Diff View
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔍 **The inline diff**
+
+- Click any changed file to open the **diff view**: old version left, new version right, additions and deletions highlighted line by line
+- This is `git diff` rendered visually — scan it before every commit to catch stray edits
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ✂️ **Stage part of a file**
+
+- Select a few lines, right-click, and **Stage Selected Ranges** — commit one logical change even when a file holds several
+- This is *staging hunks*: it keeps commits small and focused without interrupting your editing 📁
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Resolving a Conflict in the Editor
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🖱️ **Clickable choices**
+
+- On a conflict, VS Code highlights the block and shows buttons above it: **Accept Current**, **Accept Incoming**, **Accept Both**, **Compare**
+- One click writes the chosen lines and removes the `<<<<`, `====`, `>>>>` markers for you
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## ✅ **Then finish as usual**
+
+- The three-way **Merge Editor** shows *yours*, *theirs*, and the *result* side by side for the tricky cases
+- Buttons are convenience only — you still `git add` and `git commit` to record the resolution
+
+</div>
+
+</div>
+
+---
 hideInToc: true
 ---
 
@@ -1165,6 +1264,623 @@ hideInToc: true
 <div class="card card-warning card-glass pad-compact mt-md">
 
 💡 Small, focused commits + frequent pulls = fewer conflicts and easier reviews.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Collaborating on **GitHub**
+
+<!--
+Speaker: push and pull moved bytes; now the *social* layer — how a team turns
+those bytes into reviewed, trusted changes. This is where Git stops being a
+backup and becomes a collaboration tool. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# From Remotes to a Shared Workflow
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## 🤝 **The remote is a meeting point**
+
+A remote on GitHub is more than a backup — it is where a team *coordinates*. On top of plain push and pull, GitHub adds three social tools that turn a shared repository into a reviewed, auditable workflow:
+
+</div>
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🐛 **Issues**
+
+Track problems and ideas
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔀 **Pull Requests**
+
+Propose and review changes
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 👀 **Review**
+
+Catch errors before merge
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Issues — the Lab Notebook of Problems
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🐛 **What an issue is**
+
+- A numbered, discussable entry for a **bug**, a **task**, or an **idea** — the project's shared to-do list
+- Anyone can open one; comments, labels, and assignees keep it organised
+- Closing one leaves a record of *what* went wrong and *how* it was fixed
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🔗 **Linked to the code**
+
+- Write `Fixes #42` in a commit or pull request and GitHub **closes issue 42** automatically when it merges
+- The thread becomes a searchable history — future-you will thank present-you ♻️
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Pull Requests — Reviewable Units of Change
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+## 🔀 **A PR is a proposal, not a push**
+
+Instead of pushing straight to `main`, you push a **branch** and open a **pull request**: "please review these commits and merge them." The PR bundles a diff, a description, and a conversation into one reviewable unit.
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✅ **What a PR shows**
+
+- The full **diff** of every change
+- Commit-by-commit history
+- Automated **checks** (tests, linters)
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🎯 **Keep it small**
+
+- One PR = one focused change
+- Easy to review = fast to merge
+- Huge PRs hide bugs in the noise
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Draft PRs & Automated Checks
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📝 **Draft pull requests**
+
+- Open a PR as a **draft** to share work early and gather feedback before it is finished
+- Reviewers know not to merge yet; mark it **Ready for review** when it is
+- Great for "am I on the right track?" long before the work is done
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ⚙️ **Checks run automatically**
+
+- Every push to a PR can trigger **automated checks** — tests, linters, formatting
+- A green tick means it is safe to review; a red cross flags a problem first
+- The host runs them on every commit — automation guarding the merge ⚙️
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Review Flow
+
+<div class="mt-md" style="display: flex; justify-content: center;">
+
+```mermaid {scale: 0.8}
+flowchart LR
+    A[Open PR] --> B[Reviewer comments]
+    B --> C[Author amends & pushes]
+    C --> D{Approved?}
+    D -- no --> B
+    D -- yes --> E[Merge to main]
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The loop is the point: a pull request is a **conversation**, not a gate. Comments become commits, commits get re-reviewed, and only an approved change reaches `main` ♻️.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Giving & Receiving Review
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧑‍🏫 **As a reviewer**
+
+- Review the **change**, not the person
+- Ask questions before demanding edits; suggest, don't dictate
+- Approve small things quickly — a fast review keeps work flowing
+- Praise good ideas; review teaches both ways
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ✍️ **As an author**
+
+- Write a description: *what* changed and *why*
+- Respond to every comment, even just "done"
+- Push fixes as new commits so reviewers see what moved
+- Disagree with reasons, not silence
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Why Review Catches What Tests Miss
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## 👀 **A second pair of eyes ♻️**
+
+Tests check that code does what you *told* it to. Review checks that you told it the *right* thing — the gap where most real bugs live.
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✅ **Tests catch**
+
+- Broken logic you thought of
+- Regressions in old features
+- Wrong numbers vs known cases
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 👤 **Only a human catches**
+
+- A flawed *assumption* in the method
+- An unclear name or missing comment
+- "Is this even the right approach?"
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Forks vs Branches
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🌿 **Branch**
+
+- A parallel line **inside one repository**
+- Everyone with write access shares it
+- The default for a **team** on the same project
+- Your seminar group works this way
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🍴 **Fork**
+
+- Your **own full copy** of someone else's repo
+- Needs no write access to the original
+- The default for contributing to **open source** — like LHCb software you don't own
+- Send changes back with a PR from your fork
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 Same review flow either way — a fork just means the PR crosses from your copy to theirs 🔧.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Your feature branch fixes a plotting bug, renames three functions, and adds a new fitter — all unrelated. How should you open the pull request(s)?"
+  :options="[
+    'One giant PR — fewer clicks for everyone',
+    'Three focused PRs, each one self-contained change',
+    'Push straight to main and skip review to save time',
+    'One PR, but hide the diff so reviewers are not overwhelmed'
+  ]"
+  :correct="1"
+  explanation="A pull request should be one reviewable idea. Splitting unrelated work into focused PRs makes each diff easy to understand, quick to approve, and safe to revert on its own. Bundling everything hides bugs in the noise, and pushing to main skips the review that catches them."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You want to contribute a fix to a large open-source physics package you have no write access to. What is the right model?"
+  :options="[
+    'Fork the repo, commit on a branch in your fork, open a PR back to the original',
+    'Ask an admin for write access before you can do anything',
+    'Email your changed files to the maintainers as attachments',
+    'Clone it and push directly to their main branch'
+  ]"
+  :correct="0"
+  explanation="Without write access you cannot push to their repo — so you fork it (your own full copy), do the work on a branch there, and open a pull request from your fork back to theirs. That is exactly how outside contributions to projects like the LHCb software flow. You cannot push to their main, and email attachments throw away all of Git's history and review."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Stash & **Tags**
+
+<!--
+Speaker: two everyday power tools. Stash rescues a messy tree when you must
+switch context; tags pin the exact version behind a result. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# `git stash` — a Clean Tree, Now
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧰 **The problem it solves**
+
+- You are mid-edit when an urgent fix lands elsewhere — but `git switch` refuses while you have uncommitted changes
+- `git stash` tucks your work-in-progress away and hands you a **clean working tree**, without a half-baked commit
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ⌨️ **The commands**
+
+```bash
+git stash          # shelve current changes
+git switch hotfix  # go fix the urgent thing
+git switch -       # back to your branch
+git stash pop      # bring your work back
+git stash list     # see all stashes
+```
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# `git tag` — Name a Version
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏷️ **Annotated tags**
+
+- A **tag** is a permanent, readable name for one exact commit — `v1.0`, `paper-submission`, `thesis-final`
+- Prefer **annotated** tags: they store who, when, and a message, like a mini-commit
+
+```bash
+git tag -a v1.0 -m "Results in the paper"
+git push origin v1.0
+```
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🔍 **Working with tags**
+
+```bash
+git tag                 # list tags
+git show v1.0           # what it points to
+git switch --detach v1.0
+```
+
+- Checking out a tag drops you at that exact snapshot — the code as it was when you tagged it
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Tags as a Reproducibility Anchor
+
+<div class="card card-success card-glass pad-tight mt-md">
+
+## ♻️ **"Which code made Figure 3?"**
+
+The single most valuable thing a tag does: it lets anyone — a reviewer, a collaborator, future-you — check out the **exact** code that produced a published result.
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📌 **Tag every milestone**
+
+- The commit behind each paper figure
+- Every submission and revision
+- Any result you might have to defend
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔗 **Cite the tag**
+
+- Put the tag name in your methods
+- A reader reruns the *tagged* code, not today's
+- Reproducibility becomes one command
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You are halfway through an experiment when a collaborator asks you to urgently fix a bug on main. Your changes are not ready to commit. What is the clean move?"
+  :options="[
+    'git stash, switch to main, fix the bug, then return and git stash pop',
+    'Commit the half-finished work so you can switch branches',
+    'Copy the whole folder somewhere as a backup, then edit',
+    'Discard your changes with git reset --hard and start over later'
+  ]"
+  :correct="0"
+  explanation="git stash shelves work-in-progress and gives you a clean tree to switch branches, then pop restores it exactly. A throwaway commit pollutes history, a manual folder copy is the very habit Git replaces, and reset --hard would destroy the work you were not finished with."
+/>
+
+---
+hideInToc: true
+---
+
+# GitLab at CERN — Same Concepts, Different Host
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔧 **The skills transfer 1:1**
+
+- CERN runs its own **GitLab** server at `gitlab.cern.ch`, not GitHub
+- Everything today still applies: clone, branch, commit, push, pull
+- GitLab calls a pull request a **Merge Request** (MR) — same idea, different name
+- Issues, review, and CI all work the same way
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🌐 **Why it does not matter**
+
+- Git itself is identical everywhere — the *host* is just a remote
+- GitHub, GitLab, Bitbucket: learn one, use them all 🔧
+- Many labs self-host GitLab for privacy and access control
+- Your `git@...` remote URL is the only thing that changes
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Hands-On — **Branch to Merge**
+
+<!--
+Speaker: a replayable walkthrough — the whole collaborative loop in the
+terminal. They will run exactly this on their own project in Seminar 6.
+(~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# Walkthrough — Branch, Edit, Commit
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+## 1️⃣ **Start a feature branch and record work**
+
+```bash
+git switch -c add-intro      # new branch off main
+# ... edit about_me.md in your editor ...
+git status                   # see what changed
+git add about_me.md
+git commit -m "Add a short intro paragraph"
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+You are now one commit ahead of `main`, safely on your own branch — `main` is untouched.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Walkthrough — Push & Open a PR
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+## 2️⃣ **Publish the branch and propose the change**
+
+```bash
+git push -u origin add-intro   # publish the branch
+# GitHub prints a link — open it, or go to the repo:
+#   "Compare & pull request" -> title + description -> Create
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The `-u` sets the *upstream*, so later a bare `git push` knows where to go. The branch is now on GitHub and your PR is open for review.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Walkthrough — Review, Merge, Tag
+
+<div class="card card-primary card-glass pad-tight mt-md">
+
+## 3️⃣ **Approve, merge, and pin the result**
+
+```bash
+# On GitHub: reviewer comments -> you push fixes -> Approve -> Merge
+git switch main
+git pull                       # bring the merged change home
+git tag -a v0.1 -m "First intro merged"
+git push origin v0.1
+git branch -d add-intro        # tidy up the merged branch
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+That is the full collaborative loop — branch -> PR -> review -> merge -> tag — the same one you will run on your project in Seminar 6 ♻️.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Collaboration Cheat-Sheet
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🌿 **Branch & share**
+
+```bash
+git switch -c my-feature
+git add -A && git commit -m "..."
+git push -u origin my-feature
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔀 **Review & finish**
+
+```bash
+# open PR on the host, review, merge
+git switch main && git pull
+git tag -a v1.0 -m "..."
+git branch -d my-feature
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Pin it above your desk for Seminar 6 — the whole loop is these eight commands plus a conversation on the web 📁.
 
 </div>
 
