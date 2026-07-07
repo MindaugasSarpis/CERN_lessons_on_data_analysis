@@ -1238,7 +1238,9 @@ hideInToc: true
 ```text {*}{lines:false}
 Traceback (most recent call last):
   File "parse.py", line 12, in <module>
-    mass = momentum / energy
+    mass = mass_of(parts)
+  File "parse.py", line 5, in mass_of
+    return momentum / energy
 TypeError: unsupported operand type(s) for /: 'str' and 'float'
 ```
 
@@ -1254,9 +1256,9 @@ TypeError: unsupported operand type(s) for /: 'str' and 'float'
 
 <div class="card card-accent card-glass pad-compact">
 
-#### 📍 **Above it = the scene**
+#### 📍 **Above it = the call chain**
 
-The `File`, the `line 12`, and the exact code that raised it.
+Each `File ... line ...` is a **frame**: line 12 called the function `mass_of`, line 5 inside it raised. Frames stack outermost → innermost — the deepest one is the crash site.
 
 </div>
 
@@ -1329,17 +1331,17 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ `TypeError` — an operation met the wrong type. Classic case: a number read from a file is still a **string**, so `+` concatenates instead of adding.
+⚠️ `TypeError` — an operation met the wrong type. Classic case: a number read from a file is still a **string**, and Python refuses to add a string to a float.
 
 </div>
 
 ```py {monaco-run} {autorun:false}
-# BROKEN: these came from a text file, so they are strings
+# BROKEN: px came from a text file, so it is still a string
 px = "1204.5"
-py = "873.2"
-print("total =", px + py)   # glues them: '1204.5873.2'
+py = 873.2
+print("total =", px + py)   # str + float → TypeError
 
-# Fix: wrap each value in float() before adding
+# Fix: wrap px in float() before adding
 ```
 
 ---
@@ -1791,6 +1793,18 @@ hideInToc: true
 <div class="card card-success card-glass pad-compact">
 
 ✅ Direct program flow with **conditionals** and **loops**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Format output with **f-strings** and read a **traceback** calmly
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Name things clearly per **PEP 8** and pick **script vs notebook** wisely
 
 </div>
 
