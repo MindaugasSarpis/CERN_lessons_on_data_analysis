@@ -28,7 +28,7 @@ Seminars 2–4 (data + structure + provenance notes).
    **blockquote** flagging one open question about the data (e.g. "is the
    momentum really in GeV, or GeV/c?").
 5. Add a short **math aside** using Markdown's LaTeX syntax: write out the
-   invariant-mass formula you'll compute in Seminar 8, e.g.
+   invariant-mass formula behind the `M` column you'll meet in Seminar 8, e.g.
    `$M^2 = (E_1 + E_2)^2 - |\vec{p}_1 + \vec{p}_2|^2$` — a first preview of the
    physics behind the pipeline.
 

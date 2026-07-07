@@ -31,8 +31,8 @@ Seminar 6. Python basics from lecture 07.
   Seminar 9's audit.
 
 ## Wrap-up (last 10 min)
-- Run `parse.py` once more from a clean terminal and confirm the exact same
-  dict prints, byte for byte.
+- Run `python scripts/parse.py` once more from a clean terminal and confirm
+  the exact same dict prints, byte for byte.
 - Commit it: `git add -A && git commit -m "First parser for one event"`.
 - Note one lesson in the README: which field was trickiest to convert, and why
   (the classic `str` vs `float` trap?).

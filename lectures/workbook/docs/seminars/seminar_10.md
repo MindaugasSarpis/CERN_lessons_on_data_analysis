@@ -21,11 +21,10 @@ Seminar 8 (`masses.csv`). Matplotlib available.
    near-flat combinatorial background. Try a **log y-scale** to judge how far the
    signal stands above the background.
 4. Save the figure to `results/mass_spectrum.png` and commit it.
-5. Set a small reusable style once (e.g. a `plt.rcParams.update({...})` block
-   or a tiny `style.py` you import) so every later figure in this project
-   shares fonts and colours, then save the same figure twice: as
-   `results/mass_spectrum.png` (raster, for slides) and
-   `results/mass_spectrum.svg` (vector, for print/publication).
+5. Add a vector export alongside the PNG — `results/mass_spectrum.svg`
+   (vector, for print/publication) — and set a small reusable style once
+   (e.g. a `plt.rcParams.update({...})` block or a tiny `style.py` you
+   import) so every later figure in this project shares fonts and colours.
 
 ## Stretch goals
 - Annotate the D⁰ peak and its mass directly on the plot.

@@ -40,8 +40,9 @@ Seminar 8 (ingest).
   what counts as "impossible", and why might policies legitimately differ?
 
 ## Wrap-up (last 10 min)
-- Re-run `scripts/audit.py` on a fresh copy of the raw file and confirm every
-  count reproduces exactly — an audit that isn't re-runnable isn't trustworthy.
+- Re-run `python scripts/audit.py` on a fresh copy of the raw file and confirm
+  every count reproduces exactly — an audit that isn't re-runnable isn't
+  trustworthy.
 - Commit it: `git add -A && git commit -m "Data-quality audit + documented drop policy"`.
 - Note one lesson in the README: the single check that caught the most rows,
   and whether that surprised you.
