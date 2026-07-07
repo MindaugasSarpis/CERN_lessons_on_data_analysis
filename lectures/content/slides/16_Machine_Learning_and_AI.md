@@ -566,6 +566,46 @@ hideInToc: true
 hideInToc: true
 ---
 
+# What a Loss Function Really Is
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🎯 **The number training drives down**
+
+A **loss** scores how wrong a prediction is; training simply searches for the weights that make it smallest. Choosing the loss chooses *what "wrong" means* — a modelling decision, not a detail.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 📐 **Squared error**
+
+Punishes big misses hard — the least-squares loss you minimised in Lecture 12. Sensitive to outliers.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## 📏 **Absolute error**
+
+Treats every miss in proportion — robust when a few points go wild.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 Classifiers minimise a *different* loss (cross-entropy), but the idea is identical: name the mistake, then minimise it. ⚙️
+
+</div>
+
+---
+hideInToc: true
+---
+
 # A First Regressor in scikit-learn
 
 ```python {*}{maxHeight:'320px'}
@@ -685,6 +725,52 @@ hideInToc: true
 </div>
 
 ---
+hideInToc: true
+---
+
+# Model Complexity — the Polynomial Dial
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📉 The clearest way to *see* overfitting: fit the same points with polynomials of rising degree and watch train error and test error part ways.
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact reveal-scale">
+
+## 1️⃣ **Degree 1**
+
+Too stiff — misses the curve. **Underfit**: poor on train *and* test.
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-scale">
+
+## 3️⃣ **Degree 3**
+
+Captures the shape, ignores the wiggles. **Just right**.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact reveal-scale">
+
+## 🔟 **Degree 10**
+
+Threads every point — train error near zero, test error explodes. **Overfit**.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+🎯 Degree is a **complexity dial**. The honest setting minimises error on **held-out** data, never on the training points.
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -769,6 +855,33 @@ Same four steps every time — swap `RandomForestClassifier` for any other model
 hideInToc: true
 ---
 
+# Try It: a Classifier in Pure NumPy
+
+```py {monaco-run} {autorun:false}
+import numpy as np
+rng = np.random.default_rng(7)
+# one feature; label 1 = signal, 0 = background (overlapping distributions)
+X = np.r_[rng.normal(1.0, 1.0, 400), rng.normal(-1.0, 1.0, 400)]
+y = np.r_[np.ones(400), np.zeros(400)]
+i = rng.permutation(800); X, y = X[i], y[i]              # shuffle
+Xtr, ytr, Xte, yte = X[:600], y[:600], X[600:], y[600:]  # split
+
+# "train": one centroid per class.  "predict": nearest centroid
+m1, m0 = Xtr[ytr == 1].mean(), Xtr[ytr == 0].mean()
+pred = (np.abs(Xte - m1) < np.abs(Xte - m0)).astype(int)
+print(f"test accuracy on unseen data: {(pred == yte).mean():.2f}")
+```
+
+<div class="note-text mt-sm">
+
+🎯 No sklearn — just the **four steps**: build a feature, train (find the centroids), predict on **held-out** data, evaluate. The library only automates this. ▶️ **Run it**, then shrink the gap between the two means and watch accuracy fall toward 0.5.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Reading the Result: the Confusion Matrix
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -841,6 +954,651 @@ Always compare against "predict the majority" and a simple model.
 <div class="note-text mt-md">
 
 📊 This is just the **data-analysis judgement** from earlier lectures, pointed at a model's output.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Trusting the **Score**
+
+<!--
+Speaker: a classifier hands you a probability, not a verdict. This block turns that
+into an honest number you can defend — sweep the threshold, then rotate the split so
+the estimate itself is reproducible. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Classifier Outputs a **Probability**
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🎚️ **`predict` hides a decision**
+
+`model.predict` looks binary, but underneath sits `predict_proba` — a score from 0 to 1. The **cut** that turns 0.83 into "signal" is *your* choice, not the model's.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 🔽 **Low threshold**
+
+Catch almost all signal — but let background through. High recall, low precision.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## 🔼 **High threshold**
+
+Only the surest events pass — purer, but you miss real signal. High precision, low recall.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 There is no single "accuracy" — there is a **whole curve** of trade-offs behind one model.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Precision or Recall? Ask What It Costs
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⚖️ You rarely maximise both — moving the threshold trades one for the other. Which you favour depends entirely on the **cost of each mistake**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 🔬 **Favour precision**
+
+When a false alarm is expensive — a claimed "discovery" that isn't. Physics leans here: the 5-sigma standard (Lecture 2).
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## 🕸️ **Favour recall**
+
+When a miss is expensive — a rare signal you can't discard, or a first-pass filter feeding a later cut.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 **F1** blends the two into one number when you genuinely need a single score to compare models.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The ROC Curve — Sweep Every Threshold
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📈 Slide the cut from 1 down to 0 and plot **true-positive rate** against **false-positive rate**. Each point is one threshold; the curve is the model's entire behaviour.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 📐 **AUC — area under the curve**
+
+One number, 0.5 to 1.0: the chance the model ranks a random signal event above a random background one.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## 🎯 **Reading it**
+
+`0.5` = coin flip (the diagonal). `1.0` = perfect separation. Above `0.8` is usually a genuinely useful classifier.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+⚖️ AUC is **threshold-free** and barely moved by class imbalance — exactly why it beats accuracy for signal-vs-background.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Try It: a Threshold Sweep in NumPy
+
+```py {monaco-run} {autorun:false}
+import numpy as np
+rng = np.random.default_rng(0)
+# model scores: background peaks low, signal peaks high — but they overlap
+bkg = rng.normal(0.35, 0.15, 2000).clip(0, 1)
+sig = rng.normal(0.65, 0.15, 200).clip(0, 1)      # rare signal: ~1 in 11
+
+for cut in (0.3, 0.5, 0.7):
+    tpr = (sig >= cut).mean()          # recall: signal we keep
+    fpr = (bkg >= cut).mean()          # background leaking through
+    print(f"cut={cut}:  TPR={tpr:.2f}  FPR={fpr:.3f}")
+
+# AUC ≈ P(random signal scored above random background)
+auc = (sig[:, None] > bkg[None, :]).mean()
+print(f"\nAUC = {auc:.3f}")
+```
+
+<div class="note-text mt-sm">
+
+🎯 Raise the cut and both rates fall together — that trade-off *is* the ROC curve. The AUC never asked you to pick a threshold. ▶️ **Run it**, then widen the signal spread and watch AUC drop.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Cross-Validation — Every Point Tested Once
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+♻️ One train/test split is a single random draw — get lucky and the score flatters you. **k-fold cross-validation** removes the luck: split into `k` parts, train on `k−1`, test on the held-out one, rotate.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 🔁 **How it works**
+
+Every point lands in the test set exactly once. Average the `k` scores → a **mean and a spread**, not one fragile number.
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left">
+
+## ♻️ **Why it matters**
+
+The spread tells you whether a gain is real or noise — and a scripted CV run is a **reproducible** estimate, not a lucky screenshot.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 `cross_val_score(model, X, y, cv=5)` — five honest numbers for one line of code.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Two classifiers are compared on the same imbalanced signal-vs-background sample. Model A has higher accuracy; Model B has higher ROC-AUC. Which is the safer basis for choosing, and why?"
+  :options="[
+    'ROC-AUC — it is threshold-free and barely affected by class imbalance, so it reflects real ranking ability rather than the majority class',
+    'Accuracy — it is always the most honest single number',
+    'Neither can be compared unless both models use exactly the same threshold',
+    'Whichever model is more complex, since more complexity means better performance'
+  ]"
+  :correct="0"
+  explanation="On imbalanced data accuracy is dominated by the majority class, so a lazy model can look strong. AUC summarises performance across every threshold and is largely insensitive to the imbalance, making it the fairer comparison."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Features — Where the **Physics** Lives
+
+<!--
+Speaker: the honest secret of applied ML — the model matters less than the features.
+This is where the course's domain and data skills cash in, and where the most
+dangerous, invisible bug lives: leakage. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Good Features Beat Fancy Models
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🛠️ **The 80% nobody photographs**
+
+Real analyses are won on **features**, not exotic models. A linear model on well-chosen inputs routinely beats a deep net on raw ones — and this is exactly where your physics and 📁 data skills pay off.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## ➗ **Encode what you know**
+
+`pT ∝ 1/curvature`, an angle's `cos`, a ratio, a log — put the physics into `X` so the model needn't rediscover it.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## ⚖️ **Standardise & clean**
+
+One scale, missing values handled, outliers understood — the Lecture 13 data work, pointed at a model.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Building Features from the D⁰ Sample
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎯 Your running project — D⁰ → K⁻π⁺ — is a signal-vs-background problem. What tells a real D⁰ from a random pairing of tracks?
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏃 **Kinematics**
+
+Track `pT`, momentum, opening angle — real decays sit in characteristic regions.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📍 **Vertex quality**
+
+Fit χ², flight distance — a genuine D⁰ flies, then decays at a clean displaced vertex.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎯 **Impact parameter**
+
+Daughter tracks miss the primary vertex; combinatorial background often points back to it.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 Notice what is **not** on this list: the invariant **mass**. Hold that thought — the next slide is why.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data Leakage — the Silent Killer
+
+<div class="card card-warning card-glass pad-tight mt-sm glow">
+
+## 💧 **When the answer hides in the features**
+
+Leakage is any information in `X` that won't exist at prediction time — or that secretly encodes `y`. The model scores brilliantly in testing and **collapses** in the real world.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 🎯 **The physics trap**
+
+Feed the **mass** in to classify the mass peak, and the model "learns" to read the answer. 100% — and worthless.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## 🔧 **How to avoid it**
+
+Fit every transform (scaling, imputing) on **train only**, then apply to test. Ask of each feature: *would I know this before the label?*
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+⚠️ Leakage is why a "too-good-to-be-true" score usually is. Suspect it first.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You classify D⁰ signal vs background, and one input feature is the reconstructed invariant mass. Cross-validated accuracy is 99.99%. What has most likely happened?"
+  :options="[
+    'Data leakage — the mass window you are separating on has leaked into the inputs, so the model reads the answer instead of learning physics',
+    'The model is genuinely excellent and is ready to deploy',
+    'The dataset is simply too small for any score to be trusted',
+    'Random Forests always overfit and should never be used'
+  ]"
+  :correct="0"
+  explanation="The very quantity you are trying to separate (a mass window) has leaked into the features. Drop it, keep only variables known independently of the mass, and the honest score falls to something believable."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Learning **Without Labels**
+
+<!--
+Speaker: everything so far needed a y. Unsupervised learning gives that up and asks a
+different question — what structure is already here? Keep k-means concrete: assign,
+update, repeat. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# When You Have No Labels
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🔍 **A different question**
+
+Supervised learning asks *"predict `y`"*. Unsupervised learning has **no `y`** at all — it asks *"what structure is already in `X`?"* You explore instead of predict.
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧩 **Clustering**
+
+Group similar points — event types, particle categories.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📉 **Dimensionality reduction**
+
+Compress many features to a few (PCA) for plotting and speed.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🚨 **Anomaly detection**
+
+Flag points that fit no pattern — a new-physics search in spirit.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# k-means — Assign, Update, Repeat
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎯 Pick `k`, the number of groups. Then loop two steps until nothing moves:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-left">
+
+## 1️⃣ **Assign**
+
+Attach every point to its **nearest centre**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight reveal-left">
+
+## 2️⃣ **Update**
+
+Move each centre to the **mean** of its points.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+
+⚠️ You must **choose `k`**, and it assumes round, similar-sized blobs. It always returns clusters — whether or not real ones exist. Scale your features first, or the largest-numbered column hijacks the distance.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Try It: k-means from Scratch
+
+```py {monaco-run} {autorun:false}
+import numpy as np
+rng = np.random.default_rng(1)
+# two true blobs of "events" in a 2-D feature space
+A = rng.normal([0, 0], 0.5, (150, 2))
+B = rng.normal([3, 3], 0.5, (150, 2))
+X = np.vstack([A, B])
+
+c = X[rng.choice(len(X), 2, replace=False)]        # random initial centres
+for _ in range(10):
+    d = ((X[:, None] - c) ** 2).sum(2)             # distance to each centre
+    lab = d.argmin(1)                              # assign
+    c = np.array([X[lab == k].mean(0) for k in range(2)])   # update
+
+print("recovered centres:\n", c.round(2))
+```
+
+<div class="note-text mt-sm">
+
+🎯 Ten lines, no library — the same *assign/update* loop scikit-learn runs. ▶️ **Run it**: the centres land near `(0,0)` and `(3,3)`, the blobs it was never told about.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Clustering in Physics — Honest Expectations
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact reveal-left">
+
+## ✅ **Where it helps**
+
+Grouping detector hits into track candidates, sorting events by topology, a first pass over an unlabelled sample.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-left">
+
+## ⚠️ **Where it misleads**
+
+Clusters are not physics categories. They shift with `k`, scaling, and the distance metric — always validate against something you understand.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 Unsupervised methods **generate hypotheses**; they do not confirm them. That remains the analyst's job.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# ML at the **Experiment**
+
+<!--
+Speaker: make it real — this is not a toy. The trigger is a classifier running at 40 MHz,
+and flavour tagging decides what CP-violation measurements even mean. Two vivid stories. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Trigger — Classification at 40 MHz
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## ⚡ **The hardest deadline in computing**
+
+The LHC collides bunches **40 million times a second**. Storing it all is impossible — physics you will never analyse must be dropped in **microseconds**. That keep-or-drop decision is a **classifier** (Lecture 2, now named).
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 🎯 **The task**
+
+Signal (interesting) vs background (routine) — the exact problem from this lecture, under a real-time budget.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-left">
+
+## 💸 **The stakes**
+
+A wrong "drop" is data gone **forever**. Recall over raw accuracy — you cannot re-run the collision.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+♻️ LHCb now runs ML inside a fully software trigger — versioned, monitored, reproducible, at 40 MHz.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Flavour Tagging — Classification with Stakes
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🏷️ To measure matter–antimatter differences, LHCb must know whether a `B` meson was **born** as matter or antimatter. Nothing labels it — the answer is *inferred* from the rest of the event.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 🤖 **A classifier's job**
+
+Read the other tracks — their charges, their kinematics — and predict the initial flavour with a calibrated **probability**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## 📏 **Why calibration matters**
+
+A mis-stated confidence biases the physics result. The **probability**, not just the label, is the deliverable.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 This is why we cared about `predict_proba` and thresholds — real measurements ride on the number, not the verdict.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# ML Across the Experiment
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔬 **Particle ID**
+
+Combine detector responses into one "is this a kaon?" probability.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📈 **Calibration**
+
+Regression to correct measured energies back towards the truth.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🚨 **Anomaly searches**
+
+Unsupervised hunts for events no model predicted — new physics.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">
+
+🔧 Every one of these is a tool you have now met — classification, regression, clustering — wearing an experiment's badge.
 
 </div>
 
@@ -929,6 +1687,127 @@ hideInToc: true
 <div class="card card-success card-glass pad-compact reveal-left">
 
 🔧 **Tool, not crutch** — it accelerates people who understand the problem; it hides the gap for those who don't.
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Responsible **AI**
+
+<!--
+Speaker: the ethics beat, made concrete and technical rather than preachy. Bias is a
+data property; a model card is reproducibility for models; and the mark of maturity is
+knowing when NOT to reach for ML at all. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Bias In, Bias Out
+
+<div class="card card-warning card-glass pad-tight mt-sm">
+
+## ⚖️ **A model inherits its data**
+
+ML learns the world you show it — **including its skews**. Under-represent a case in training and the model is worst exactly where you looked least. This is a **data** property before it is an algorithm one.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 🔀 **Spurious correlation**
+
+The model latches onto whatever predicts `y` in *your* sample — a detector artefact, a run period — not the physics you meant.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+## 🔍 **The defence**
+
+Know your dataset (Lecture 11), check performance **per subgroup**, and be suspicious of any feature that works "too well".
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Model Cards — Reproducibility for Models
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## ♻️ **Document the model like a dataset**
+
+A trained model is a **research artefact**. A *model card* is its README: what it does, on what data, how well, and where it breaks — so a future reader (often you) can trust or retire it.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+## 📇 **What to record**
+
+Training data & date, the features, the metric **with its test set**, known limits, model + library versions.
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left">
+
+## ⚙️ **Make it automatic**
+
+Emit the card from the training script (Lecture 14) — a model no one can retrain or explain is not a result.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# When *Not* to Use ML
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧠 The most senior move in the room is often *"we don't need ML for this."* Reach for it only when simpler tools genuinely fall short.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-warning card-glass pad-compact reveal-up">
+
+📏 **A formula or a cut already works** — don't trade a clear rule for an opaque model.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-up">
+
+🔍 **You must explain every decision** — a simple, inspectable model can beat an accurate black box.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-up">
+
+📉 **Data is scarce or unrepresentative** — ML amplifies the gaps, it does not fill them.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-up">
+
+⚖️ **A confident error is expensive** — and you cannot audit why it was made.
 
 </div>
 
