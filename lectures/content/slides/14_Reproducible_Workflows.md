@@ -1285,6 +1285,8 @@ def test_empty_returns_empty():
 
 ### **NaN values**
 
+Append to `tests/test_selection.py` (add `import numpy as np` at the top):
+
 ```python
 def test_nan_is_rejected():
     assert not is_signal_region(np.nan)
@@ -1306,35 +1308,30 @@ hideInToc: true
 
 # Running pytest & Reading the Output
 
-<div class="card card-primary card-glass pad-tight mt-md">
+<span class="def-sub">A collaborator "tidies up" the cut to `return not (mass < 1.80 or mass > 1.93)` — identical to the original for every real number. Run the tests:</span>
+
+<div class="card card-primary card-glass pad-tight mt-sm">
 
 ```bash
 $ pytest tests/ -v
-
 tests/test_selection.py::test_accepts_known_peak PASSED
-tests/test_selection.py::test_rejects_sideband    PASSED
-tests/test_selection.py::test_nan_is_rejected     FAILED
+tests/test_selection.py::test_rejects_sideband PASSED
+tests/test_selection.py::test_nan_is_rejected FAILED
 
-======================= FAILURES =======================
-tests/test_selection.py:8: assert not True
-=================== 1 failed, 2 passed ===================
+=============== FAILURES ===============
+    def test_nan_is_rejected():
+>       assert not is_signal_region(np.nan)
+E       assert not True
+E        +  where True = is_signal_region(nan)
+tests/test_selection.py:12: AssertionError
+====== 1 failed, 2 passed in 0.05s ======
 ```
 
 </div>
 
-<div class="grid-2 mt-sm gap-md">
+<div class="note-text mt-sm">
 
-<div class="card card-info card-glass pad-compact">
-
-**Reading it**: each line is one test; `PASSED`/`FAILED` plus a traceback pointing at the failing `assert`.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-**One red line, one fix**: the traceback names the exact assertion that broke — no guessing which part of the analysis is wrong.
-
-</div>
+For `NaN`, **both** comparisons are `False`, so the rewrite returns `True` — two forms identical for every normal number diverge on `NaN`. Each line is one test; the traceback names the exact failing `assert`. *(Output trimmed to the interesting lines.)*
 
 </div>
 
@@ -1583,10 +1580,12 @@ hideInToc: true
 ```yaml
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
     hooks:
       - id: ruff
       - id: ruff-format
   - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
     hooks:
       - id: nbstripout
 ```
@@ -1613,7 +1612,7 @@ repos:
 
 <div class="note-text mt-sm">
 
-Same tools the course already uses (formatting, notebook cleanliness) — now enforced automatically, so conventions hold even under deadline pressure. ⚙️
+Same tools the course already uses (formatting, notebook cleanliness) — now enforced automatically, so conventions hold even under deadline pressure. ⚙️ The `rev:` pin (required!) is the reproducibility guarantee: every collaborator runs exactly the same hook version. ♻️
 
 </div>
 
@@ -1669,7 +1668,7 @@ hideInToc: true
 
 ```yaml
 outs:
-  - md5: 8f14e45fceea167a5a36
+  - md5: 8f14e45fceea167a5a36dedd4bea2543
     path: sample.csv
     size: 2147483648
 ```
