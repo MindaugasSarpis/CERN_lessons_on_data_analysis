@@ -130,7 +130,9 @@
       "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis ls-remote --heads origin)",
       "Bash(gh run *)",
       "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis status)",
-      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis log --oneline -10)"
+      "Bash(git -C /home/mindaugas_wsl/CERN_lessons_on_data_analysis log --oneline -10)",
+      "Bash(git *)",
+      "Bash(pnpm timing *)"
     ],
     "deny": [],
     "ask": []
