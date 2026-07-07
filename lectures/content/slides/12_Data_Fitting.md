@@ -1229,6 +1229,36 @@ Uncertainties overestimated, or too many parameters
 hideInToc: true
 ---
 
+# What Does the Number Feel Like?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🔴 **chi2/dof = 5.0**
+
+40 data points, and the fitted curve visibly misses a shoulder in the histogram --- a bump the model doesn't have a term for.
+
+**Read**: model missing structure, or $\sigma_i$ underestimated. Look at the residual plot before touching the fit again.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🟡 **chi2/dof = 0.2**
+
+Same 40 points, but the curve runs almost exactly through every error bar --- suspiciously perfect, not just "good".
+
+**Read**: uncertainties likely overestimated, or too many free parameters are soaking up the noise.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Interpreting chi-squared: Large Values
 
 <div class="card card-primary card-glass pad-tight mt-md">
@@ -1426,6 +1456,90 @@ hideInToc: true
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Fit Pitfalls Gallery: What Went Wrong Here?
+
+<div class="note-text mt-sm">
+
+Four short scenarios, each a fit that broke quietly, in its own way. Diagnose the symptom before reading the fix, then try the MCQ. 🔍 *Same detective work you'll do on the D⁰ peak in Seminar 12.*
+
+</div>
+
+---
+hideInToc: true
+---
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🎯 **Bad Starting Values**
+
+**Symptom**: the fit "succeeds" with no error, but the curve barely moves off `p0` --- it never gets near the data.
+
+**Fix**: plot the model at `p0` before fitting. A starting curve visibly close to the data beats any clever algorithm.
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🧩 **Fitting Noise**
+
+**Symptom**: adding a 6th free parameter to a 7-point dataset drops chi2/dof near zero --- the model now "explains" every wiggle.
+
+**Fix**: with $p$ close to $n$, nothing is left to test. Prefer the simplest model that survives the residuals.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ⚖️ **Ignoring Uncertainties**
+
+**Symptom**: fit without `sigma` and three noisy, large-$y$ points dominate the result, while ten precise points near zero are outvoted.
+
+**Fix**: always pass real per-point $\sigma_i$. Unweighted least squares silently assumes every point is equally trustworthy.
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🕳️ **Silently Converged to Garbage**
+
+**Symptom**: `curve_fit` raises nothing, but a parameter sits exactly on its bound and `pcov` has a huge or ill-defined diagonal entry.
+
+**Fix**: check `pcov` and the bounds every time --- "no exception" is not the same as "correct answer."
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A fit reports success. The width parameter sits exactly on the lower bound you supplied, and its reported uncertainty is enormous. Which pitfall is this?"
+  :options="[
+    'Bad starting values',
+    'Fitting noise with too many parameters',
+    'Ignoring uncertainties',
+    'Silently converged to garbage'
+  ]"
+  :correct="3"
+  explanation="A parameter pinned at its bound with a huge or ill-defined uncertainty is the signature of a fit that 'succeeded' numerically while landing somewhere unphysical --- always inspect pcov and the bounds, not just the fit's return status."
+/>
 
 ---
 hideInToc: true
