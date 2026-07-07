@@ -45,31 +45,37 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-⚙️ Organise code into reusable **functions** with docstrings
+⚙️ Organise code into reusable **functions** with docstrings and light **type hints**
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🛡️ Handle errors safely with **try / except / finally**
+🛡️ Handle errors with **try / except** and loop cleanly with **enumerate() / zip()**
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-🔁 Loop cleanly using **enumerate()** and **zip()**
+📁 Work with paths portably using **pathlib** — glob data folders, no hard-coded paths
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-📂 Read and write **files** — loading CSV / JSON / YAML into dicts
+📂 Read and write **data formats** — CSV / JSON / YAML round-trips into dicts
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-📦 Import **modules** and reach for the right library
+📦 Split a project into **modules** — `src/`, `scripts/`, and the `__main__` guard
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+⌨️ Turn a script into a re-runnable **CLI tool** with argparse and exit codes
 
 </div>
 
@@ -566,8 +572,8 @@ hideInToc: true
 from pathlib import Path
 
 raw = Path("data/raw")
-for csv in sorted(raw.glob("*.csv")):
-    print(csv.name)
+for path in sorted(raw.glob("*.csv")):
+    print(path.name)
 ```
 
 </div>
@@ -606,8 +612,8 @@ for name in ["chamber_A.csv", "chamber_B.csv", "notes.txt"]:
     (raw / name).write_text("...")
 
 # Ask the folder for just its CSV files — sorted, so the order is repeatable
-for csv in sorted(raw.glob("*.csv")):
-    print(csv.name, "-> stem:", csv.stem)
+for path in sorted(raw.glob("*.csv")):
+    print(path.name, "-> stem:", path.stem)
 
 print("total CSVs:", len(list(raw.glob("*.csv"))))
 ```
@@ -1673,6 +1679,18 @@ hideInToc: true
 <div class="card card-success card-glass pad-compact">
 
 ✅ Load **CSV / JSON / YAML** into Python dicts
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Handle paths portably with **pathlib** and organise a small analysis repo
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Document with **docstrings & type hints** and ship an **argparse** CLI tool
 
 </div>
 
