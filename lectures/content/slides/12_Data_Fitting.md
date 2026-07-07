@@ -1239,7 +1239,7 @@ hideInToc: true
 
 40 data points, and the fitted curve visibly misses a shoulder in the histogram --- a bump the model doesn't have a term for.
 
-**Read**: model missing structure, or $\sigma_i$ underestimated. Look at the residual plot before touching the fit again.
+**Read**: something real is being missed. Go straight to the residual plot --- the shape of the misfit tells you what term to add.
 
 </div>
 
@@ -1465,7 +1465,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-Four short scenarios, each a fit that broke quietly, in its own way. Diagnose the symptom before reading the fix, then try the MCQ. 🔍 *Same detective work you'll do on the D⁰ peak in Seminar 12.*
+Three short scenarios, each a fit that broke quietly, in its own way. Diagnose the symptom before reading the fix, then try the MCQ. 🔍 *Same detective work you'll do on the D⁰ peak in Seminar 12.*
 
 </div>
 
@@ -1487,11 +1487,11 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-tight">
 
-## 🧩 **Fitting Noise**
+## ⚖️ **Ignoring Uncertainties**
 
-**Symptom**: adding a 6th free parameter to a 7-point dataset drops chi2/dof near zero --- the model now "explains" every wiggle.
+**Symptom**: fit without `sigma` and three noisy, large-$y$ points dominate the result, while ten precise points near zero are outvoted.
 
-**Fix**: with $p$ close to $n$, nothing is left to test. Prefer the simplest model that survives the residuals.
+**Fix**: always pass real per-point $\sigma_i$. Unweighted least squares silently assumes every point is equally trustworthy.
 
 </div>
 
@@ -1501,27 +1501,13 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚖️ **Ignoring Uncertainties**
-
-**Symptom**: fit without `sigma` and three noisy, large-$y$ points dominate the result, while ten precise points near zero are outvoted.
-
-**Fix**: always pass real per-point $\sigma_i$. Unweighted least squares silently assumes every point is equally trustworthy.
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-warning card-glass pad-tight mt-md">
 
 ## 🕳️ **Silently Converged to Garbage**
 
 **Symptom**: `curve_fit` raises nothing, but a parameter sits exactly on its bound and `pcov` has a huge or ill-defined diagonal entry.
 
 **Fix**: check `pcov` and the bounds every time --- "no exception" is not the same as "correct answer."
-
-</div>
 
 </div>
 
