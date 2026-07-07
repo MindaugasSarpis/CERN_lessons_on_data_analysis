@@ -1514,7 +1514,7 @@ A wrong "drop" is data gone **forever**. Recall over raw accuracy — you cannot
 
 <div class="note-text mt-md">
 
-♻️ LHCb now runs ML inside a fully software trigger — versioned, monitored, reproducible, at 40 MHz.
+♻️ LHCb now runs ML inside a fully software trigger — versioned, monitored, reproducible, at ~30 MHz.
 
 </div>
 

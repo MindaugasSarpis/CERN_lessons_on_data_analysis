@@ -4,21 +4,27 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** the whole project under version control,
-> with a feature branch made and merged.
+> **Running project — this session adds:** a demystified Git history and your
+> first branch + merge (including a resolved conflict) — on top of the repo
+> you've kept since Seminar 1.
 
 ## Goal
-Put the project under Git, experience branching and a merge (including a conflict),
-and adopt a daily workflow.
+Cash the Git IOU from Seminar 1: understand the five weeks of ritual commits
+already in your history, then branch, break, and merge for real.
 
 ## Prerequisites
 Seminars 1–5. Git installed and configured.
 
 ## Tasks
-1. `git init` in the project. Write a `.gitignore` (ignore large derived files in
-   `processed/`, `results/`, `__pycache__/`, virtual envs — **keep `raw/` if the
-   file is small enough, else document how to fetch it**).
-2. Commit the skeleton, README, and scripts with clear messages.
+1. Your repo has existed since Seminar 1's recipe — run `git log --oneline`
+   and look back over five weeks of ritual commits. Today each of those
+   commands stops being magic.
+2. Demystify what `init`/`add`/`commit` actually did: peek inside `.git/`
+   (`ls .git`, `git cat-file -p HEAD`), run `git status` on a clean tree, and
+   `git show HEAD` to see the last commit's diff. Then flesh out `.gitignore`
+   properly (ignore large derived files in `processed/`, `results/`,
+   `__pycache__/`, virtual envs — **keep `raw/` if the file is small enough,
+   else document how to fetch it**) and commit it.
 3. Create a branch (`git switch -c add-explore`), add or improve `scripts/explore.sh`,
    commit, switch back to `main`, and `git merge` it.
 4. **Provoke a merge conflict** on purpose (edit the same README line on two

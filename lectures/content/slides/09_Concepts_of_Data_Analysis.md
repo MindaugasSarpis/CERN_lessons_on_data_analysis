@@ -2699,7 +2699,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🤔 When to use proprietary tools?
+## 🤔 When to use proprietary tools? (recall Lecture 7)
 
 </div>
 
@@ -2711,7 +2711,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-tight">
 
-## 📈 Saturation of achieved proficiency
+## 📈 Saturation of achieved proficiency (recall Lecture 7)
 
 </div>
 

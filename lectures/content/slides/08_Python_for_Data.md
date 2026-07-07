@@ -1377,7 +1377,7 @@ print(summarise(rows))
 <div class="card card-info card-glass pad-compact mt-md">
 
 - To analyse a different file you must **edit the source** — error-prone, not repeatable
-- You can't loop over many files from the shell
+- A shell loop (Lecture 4) can't help here — the script ignores its arguments while the filename is hard-coded
 - The fix: read the filename as an **argument** when the script runs
 
 </div>

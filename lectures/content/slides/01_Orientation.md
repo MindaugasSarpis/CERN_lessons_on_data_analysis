@@ -1591,12 +1591,13 @@ hideInToc: true
 
 | **Seminars** | **Layer added to your project** |
 | --- | --- |
-| S1–S2 | Toolkit installed; repo skeleton; dataset downloaded |
+| S1–S2 | Toolkit installed; repo skeleton + first commit; dataset downloaded |
 | S3–S5 | The raw file understood; clean structure; a real README |
-| S6–S8 | Under Git; first parsing; whole file read into Python |
+| S6–S8 | Git demystified — branch & merge; first parsing; whole file read into Python |
 | S9–S11 | Data-quality audit; first figure; a value ± its error |
 | S12 | **The fit** — the D⁰ peak → mass ± error, with a χ² |
 | S13–S14 | Tidy tables; one-command reproducible rebuild |
+| S15–S16 *(optional)* | batch-run the pipeline; an honestly-evaluated classifier |
 
 <div class="note-text mt-md">Everything is cumulative. Week 12's fit only works because week 2 recorded where the data came from.</div>
 

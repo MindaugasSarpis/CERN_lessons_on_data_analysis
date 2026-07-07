@@ -1,7 +1,7 @@
 # Course Timing Rebalance — Design
 
 **Date:** 2026-07-06
-**Status:** approved for implementation (autonomous session; user asked to "work on timing — 16 weeks, 2h lectures, 2h seminars, content about even, better more than less")
+**Status:** approved for implementation (autonomous session; user asked to "work on timing — 16 weeks, 2h lectures, 2h seminars, content about even, better more than less") — Implemented 2026-07-07; gates green (`pnpm timing:check`, `pnpm qa`: 16 decks + landing, zero overflow).
 
 ## Problem
 
@@ -36,7 +36,7 @@ per deck from the markdown source:
 minus a ~10-min break and admin gives ~110 teaching minutes; the band centres
 slightly above that because over-full is preferred, and the model is ±10%.
 `UNDER` (< 105) must be fixed; `HEAVY` (> 145) is trimmed or rebalanced.
-Seminar briefs must declare **~120 min**. `pnpm timing --check` exits non-zero
+Seminar briefs must declare **~120 min**. `pnpm timing:check` exits non-zero
 if any week is UNDER — same spirit as the `pnpm qa` overflow gate.
 
 The model is a heuristic. Its job is not to be exact but to be a *consistent
@@ -56,6 +56,21 @@ yardstick* so "about even" is measurable and stays measurable.
 ```
 
 All 16 seminars: declared 90 min (UNDER).
+
+## Final (2026-07-07)
+
+```
+01_Orientation                 119  ok        09_Concepts_of_Data_Analysis  155  HEAVY (accepted)
+02_Introduction_to_CERN        111  ok        10_Data_Visualisation         145  ok
+03_How_Computers_Work          105  ok        11_Probability_and_Statistics 134  ok
+04_Command_Line_and_Files      124  ok        12_Data_Fitting                114  ok
+05_Markdown_and_VS_Code        117  ok        13_NumPy_and_Pandas           142  ok
+06_Version_Control             118  ok        14_Reproducible_Workflows      117  ok
+07_Python_Foundations          118  ok        15_Computing_Infrastructure    105  ok
+08_Python_for_Data             117  ok        16_Machine_Learning_and_AI     118  ok
+```
+
+All 16 seminars: 120 declared, ≥5 tasks, ≥3 stretch. Total ≈1959/1920 (deck) min.
 
 ## Approaches considered
 
@@ -135,7 +150,7 @@ Format change per brief (keep the concise-brief style):
 
 ### 5. Verification
 
-- `pnpm timing --check` → no UNDER weeks (new gate, documented in CLAUDE.md).
+- `pnpm timing:check` → no UNDER weeks (new gate, documented in CLAUDE.md).
 - `pnpm qa` on all touched decks → zero overflow (existing hard gate).
 
 ## Non-goals
