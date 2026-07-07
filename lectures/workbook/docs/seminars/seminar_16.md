@@ -1,6 +1,8 @@
 # Seminar 16 — Train & Honestly Evaluate a Classifier *(optional)*
 
-**Paired lecture:** 16 Machine Learning & AI · **Format:** hackathon · **~90 min**
+**Paired lecture:** 16 Machine Learning & AI · **Format:** hackathon · **~120 min**
+
+**Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
 > **Running project — this session adds:** a trained signal-vs-background classifier
 > with an honest evaluation. *Optional / advanced — the capstone.*
@@ -22,16 +24,34 @@ Seminar 13 (`events_clean`). scikit-learn available.
    Compare against the "predict majority" baseline.
 4. Report the train-vs-test gap. Are you overfitting? Write a one-paragraph honest
    verdict in the README.
+5. Save the whole pipeline (label definition → split → fit → evaluate) as
+   `scripts/train_classifier.py`, accepting a `--seed` argument (default 42) so the
+   entire result — including the train/test split — is exactly reproducible on request.
+6. Plot the **ROC curve** and report the **AUC** alongside your F1 score — how much
+   better than the 0.5 (random-guess) baseline is it?
 
 ## Stretch goals
 - Which features matter most? (`feature_importances_`.)
 - Deliberately leak `M` into the features and watch accuracy jump to ~100% — then
   explain why that result is worthless (data leakage).
+- Try a second classifier (logistic regression or `GradientBoostingClassifier`) and
+  compare its honestly-evaluated F1 to the Random Forest's — is the ranking stable
+  across a couple of random seeds?
+
+## Wrap-up (last 10 min)
+- Re-run `scripts/train_classifier.py --seed 42` and confirm you get bit-for-bit the
+  same confusion matrix and F1 — the whole training run is reproducible, not just the data.
+- Commit: `git add -A && git commit -m "Add honestly-evaluated classifier — course capstone"`.
+- Note one lesson in the README — and, since this is the last seminar, one line on how
+  this project embodies the course's four aims end-to-end.
 
 ## Solution notes (instructor)
 The lesson is **evaluation**, not accuracy. The leakage stretch goal is the single
 best teaching moment — a "perfect" model that has secretly seen the answer. Tie
-back to the course thesis: data literacy > tool literacy.
+back to the course thesis: data literacy > tool literacy. As the capstone, protect
+that leakage stretch goal even if the 120 minutes run short elsewhere — cut task 6's
+ROC/AUC first, since watching accuracy jump to ~100% and understanding why is the
+single most memorable lesson of the term.
 
 ## Aims practised
 📊 honest evaluation · ♻️ reproducible training (seeded, scripted) · 🔧 model-agnostic workflow
