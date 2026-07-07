@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(wc:*)",
+      "Bash(head:*)",
+      "Bash(du:*)",
+      "Bash(git status)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote:*)",
+      "Bash(pnpm install)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm qa:*)",
+      "Bash(pnpm timing:*)",
+      "Bash(pnpm figures:*)",
+      "Bash(pnpm export:*)",
+      "Bash(pnpm videos:*)",
+      "Bash(node scripts/:*)",
+      "Bash(python3 figures/src/build.py:*)",
+      "Bash(python3 scripts/gen-lhcb-figures.py:*)",
+      "Bash(ffprobe:*)",
+      "WebFetch(domain:videos.cern.ch)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

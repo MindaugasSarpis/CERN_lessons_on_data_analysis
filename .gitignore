@@ -16,10 +16,14 @@ videos/web/
 lectures/workbook/site/
 .playwright-mcp/
 
-# cwilke figure outputs — regeneratable from the scripts in cwilke/chapters/.
-# The .py scripts are the source of truth; only SVGs actually referenced by
-# slides are committed under lectures/content/public/figures/.
-misc/python/cwilke/figs/
+# Personal Claude Code permissions (the shared allowlist lives in .claude/settings.json)
+.claude/settings.local.json
+
+# Student grade exports — personal data, must never be committed
+misc/exams/*.csv
+
+# pnpm is the package manager; block a stray `npm install` lockfile
+package-lock.json
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
