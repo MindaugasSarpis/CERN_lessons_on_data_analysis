@@ -36,8 +36,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Chromium system libraries
-        run: pnpm exec playwright install-deps chromium
+      # Explicitly install the browser binaries (not just system libraries):
+      # relying on playwright-chromium's postinstall is flaky — pnpm's
+      # side-effects cache can skip it on a warm store, leaving
+      # ~/.cache/ms-playwright empty and every browser launch failing.
+      - name: Install Chromium (browser + system libraries)
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Timing gate (fast)
         run: pnpm timing:check
