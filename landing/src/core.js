@@ -11,37 +11,40 @@ import { NOISE } from './shaders/noise.glsl.js';
 // blending makes the silhouette naturally brighter, so it reads as a sphere
 // without any connecting geometry.
 //
-// Assembly intro: each particle starts as a dim speck at aStart (a loose
-// shell around the core), flies to its seat after aDelay, and pops white on
-// landing. Delay spread + FLIGHT put the last landing at ~FORM_END (world.js).
+// Assembly intro: each particle starts as a dim speck at aStart (scattered
+// through the surrounding volume), launches after aDelay, arcs to its seat
+// over aDur (perpendicular aSwirl bends the path), and pops white on
+// landing. Delay + duration spreads put the last landing at ~FORM_END
+// (world.js).
 //
 // flashAt(node) starts a ripple: particles near the hit point flare with a
 // distance-proportional delay, so fiber-burst arrivals visibly splash across
 // the sphere surface (aFlash holds each particle's flash time; step() gates
 // scheduled-in-the-future flashes).
 
-const FLIGHT = 1.5; // seconds a particle spends flying in
-
 const NODE_VERT = /* glsl */ `
 uniform float uTime, uPixelRatio;
-attribute float aSeed, aFlash, aDelay;
-attribute vec3 aStart;
+attribute float aSeed, aFlash, aDelay, aDur;
+attribute vec3 aStart, aSwirl;
 varying float vAlpha;
 ${NOISE}
 void main() {
-  float f = clamp((uTime - aDelay) / ${FLIGHT.toFixed(2)}, 0.0, 1.0);
+  // gather: launch after aDelay, fly for aDur along an arc — the straight
+  // start→seat path plus a perpendicular swirl strongest mid-flight, so the
+  // sphere condenses out of the surrounding dust instead of beaming in
+  float f = clamp((uTime - aDelay) / aDur, 0.0, 1.0);
   float e = f * f * (3.0 - 2.0 * f);
-  vec3 p = mix(aStart, position, e);
+  vec3 p = mix(aStart, position, e) + aSwirl * sin(e * 3.14159265);
   p *= 1.0 + snoise(normalize(position) * 1.6 + vec3(0.0, uTime * 0.13, 0.0)) * 0.05 * e;
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.75 + 0.25 * sin(uTime * (0.6 + aSeed * 1.7) + aSeed * 40.0);
   float flash = step(aFlash, uTime) * exp(-(uTime - aFlash) * 2.2);
-  float sinceLand = uTime - (aDelay + ${FLIGHT.toFixed(2)});
+  float sinceLand = uTime - (aDelay + aDur);
   float land = step(0.0, sinceLand) * exp(-sinceLand * 3.0);
-  float size = mix(48.0, 72.0, fract(aSeed * 5.71));
-  gl_PointSize = uPixelRatio * (size * mix(0.5, 1.0, e) + flash * 30.0 + land * 24.0) / max(-mv.z, 0.1);
-  vAlpha = (0.7 + 0.3 * tw) * (0.9 + flash * 2.4 + land * 1.6) * mix(0.45, 1.0, e);
+  float size = mix(34.0, 54.0, fract(aSeed * 5.71));
+  gl_PointSize = uPixelRatio * (size * mix(0.5, 1.0, e) + flash * 30.0 + land * 22.0) / max(-mv.z, 0.1);
+  vAlpha = (0.65 + 0.35 * tw) * (0.85 + flash * 2.4 + land * 1.6) * mix(0.4, 1.0, e);
 }`;
 
 const NODE_FRAG = /* glsl */ `
@@ -61,7 +64,7 @@ const mulberry32 = (a) => () => {
 };
 
 export function addCore(scene, { coarse } = {}) {
-  const N = coarse ? 500 : 1100;
+  const N = coarse ? 900 : 2200;
   const rand = mulberry32(20260706);
 
   // Shell: fibonacci sphere + mild radial noise so it reads organic, not
@@ -77,28 +80,50 @@ export function addCore(scene, { coarse } = {}) {
     nodes.push(new Vector3(Math.cos(phi) * rxy * r, y * r, Math.sin(phi) * rxy * r));
   }
 
-  // Assembly: per-particle scattered start (loose shell, 3.5–8× the core
-  // radius) and staggered launch delay.
+  // Assembly: starts scattered uniformly through the surrounding VOLUME
+  // (cbrt → volume-uniform, radius 1.5–9× the core), so the sphere condenses
+  // out of ambient dust rather than a neat incoming shell. Each particle has
+  // its own launch delay and flight duration, plus a perpendicular swirl
+  // vector that arcs its path (applied as sin(πe) in the shader — zero at
+  // both ends). Last landing ≈ max delay + max dur ≈ FORM_END (world.js).
   const starts = [];
   const delays = new Float32Array(N);
+  const durs = new Float32Array(N);
+  const swirls = [];
+  const tmpDir = new Vector3();
   for (let i = 0; i < N; i++) {
     const u = rand() * 2 - 1;
     const ph = rand() * Math.PI * 2;
     const rxy = Math.sqrt(Math.max(1 - u * u, 0));
-    const sr = CORE_RADIUS * (3.5 + rand() * 4.5);
+    const sr = CORE_RADIUS * (1.5 + 7.5 * Math.cbrt(rand()));
     starts.push(new Vector3(Math.cos(ph) * rxy * sr, u * sr, Math.sin(ph) * rxy * sr));
-    delays[i] = 0.25 + rand() * 1.9;
+    delays[i] = 0.2 + rand() * 1.7;
+    durs[i] = 1.3 + rand() * 1.1;
+    // swirl ⟂ to the flight direction, scaled to the flight length
+    tmpDir.copy(nodes[i]).sub(starts[i]);
+    const s = new Vector3(rand() * 2 - 1, rand() * 2 - 1, rand() * 2 - 1).cross(tmpDir);
+    if (s.lengthSq() < 1e-6) s.set(0, 1, 0);
+    s.normalize().multiplyScalar(tmpDir.length() * (0.12 + rand() * 0.3) * (rand() < 0.5 ? -1 : 1));
+    swirls.push(s);
   }
 
   const nPos = new Float32Array(N * 3);
   const nStart = new Float32Array(N * 3);
+  const nSwirl = new Float32Array(N * 3);
   const nSeed = new Float32Array(N);
   const nFlash = new Float32Array(N).fill(-1e3);
-  nodes.forEach((p, i) => { p.toArray(nPos, i * 3); starts[i].toArray(nStart, i * 3); nSeed[i] = rand(); });
+  nodes.forEach((p, i) => {
+    p.toArray(nPos, i * 3);
+    starts[i].toArray(nStart, i * 3);
+    swirls[i].toArray(nSwirl, i * 3);
+    nSeed[i] = rand();
+  });
   const nGeo = new BufferGeometry();
   nGeo.setAttribute('position', new BufferAttribute(nPos, 3));
   nGeo.setAttribute('aStart', new BufferAttribute(nStart, 3));
+  nGeo.setAttribute('aSwirl', new BufferAttribute(nSwirl, 3));
   nGeo.setAttribute('aDelay', new BufferAttribute(delays, 1));
+  nGeo.setAttribute('aDur', new BufferAttribute(durs, 1));
   nGeo.setAttribute('aSeed', new BufferAttribute(nSeed, 1));
   const nFlashAttr = new BufferAttribute(nFlash, 1);
   nGeo.setAttribute('aFlash', nFlashAttr);
