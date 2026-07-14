@@ -3,12 +3,15 @@ import {
   AdditiveBlending, Vector3,
 } from 'three';
 import { NOISE } from './shaders/noise.glsl.js';
+import { FORM_END } from './world.js';
 
 // Three glowing "data-link fiber" ribbons in 3D. Each spans a fixed far-world
 // point uA to a core node uB (updated per frame as the core rotates), so the
 // fibers visibly feed the core. The ribbon offsets perpendicular to both the
 // curve tangent and the view ray (view-space billboard), so it never turns
 // edge-on while the camera orbits. Pulses travel t:0→1, i.e. toward the core.
+// uIntro fades the fibers in around FORM_END — before that the core nodes are
+// still flying to their seats, so a fiber would visibly anchor to empty space.
 
 const VERT = /* glsl */ `
 uniform vec3 uA, uB;
@@ -43,7 +46,7 @@ void main() {
 }`;
 
 const FRAG = /* glsl */ `
-uniform float uTime, uPulseSpeed, uPhase, uBaseAlpha, uBurstStart;
+uniform float uTime, uPulseSpeed, uPhase, uBaseAlpha, uBurstStart, uIntro;
 uniform vec3 uPointer;
 varying float vT, vSide;
 varying vec3 vWorld;
@@ -63,7 +66,7 @@ void main() {
   vec3 toP = vWorld - uPointer;
   float near = exp(-dot(toP, toP) / 6.0) * 0.6;
   float ends = smoothstep(0.0, 0.06, vT) * smoothstep(1.0, 0.985, vT);
-  float b = (uBaseAlpha + near) * (core + glow) * ends * (1.0 + pulse * 2.6);
+  float b = (uBaseAlpha + near) * (core + glow) * ends * (1.0 + pulse * 2.6) * uIntro;
   vec3 col = mix(vec3(0.35, 0.62, 0.78), vec3(1.0), clamp(pulse * 0.8 + near * 0.3, 0.0, 1.0));
   gl_FragColor = vec4(col * b, b);
 }`;
@@ -96,6 +99,7 @@ export function addFibers(scene) {
         uSeed: { value: cfg.seed }, uWidth: { value: cfg.width },
         uPulseSpeed: { value: cfg.pulseSpeed }, uPhase: { value: cfg.phase },
         uBaseAlpha: { value: cfg.baseAlpha }, uBurstStart: { value: -1e3 },
+        uIntro: { value: 0 },
         uPointer: { value: new Vector3(999, 999, 999) },
       },
     });
@@ -125,9 +129,12 @@ export function addFibers(scene) {
     // the fiber's core node — supplied by sim.js (closure over core).
     update(elapsed, pointerWorld, getAnchor) {
       lastElapsed = elapsed;
+      const x = Math.min(Math.max((elapsed - (FORM_END - 1.0)) / 2.2, 0), 1);
+      const intro = x * x * (3 - 2 * x); // smoothstep: fade in as the core settles
       fibers.forEach(({ mat, cfg }, i) => {
         getAnchor(i, cfg.anchorDir, mat.uniforms.uB.value);
         mat.uniforms.uTime.value = elapsed;
+        mat.uniforms.uIntro.value = intro;
         mat.uniforms.uPointer.value.copy(pointerWorld);
       });
     },

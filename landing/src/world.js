@@ -7,3 +7,7 @@ import { Vector3 } from 'three';
 export const CORE_CENTER = new Vector3(3.2, 1.2, 0);
 export const CORE_RADIUS = 2.5;
 export const BOUNDS = new Vector3(24, 14, 24);
+// When the core finishes assembling (last particle lands — see core.js
+// FLIGHT/delay spread). Fibers fade in and collision events start relative
+// to this moment so the intro reads as one sequence.
+export const FORM_END = 3.7;

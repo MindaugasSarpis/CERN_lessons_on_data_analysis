@@ -7,6 +7,7 @@ import {
 import { SIM_VERT, COPY_FRAG, VEL_FRAG, POS_FRAG, RENDER_VERT, RENDER_FRAG } from './shaders/passes.glsl.js';
 import { addFibers } from './fiber.js';
 import { addCore } from './core.js';
+import { addCollisions } from './collisions.js';
 import { createRig } from './rig.js';
 import { CORE_CENTER, BOUNDS } from './world.js';
 
@@ -78,6 +79,7 @@ export function createField(canvas) {
       uPos: { value: null }, uVel: { value: null }, uDt: { value: 0 }, uTime: { value: 0 },
       uPointer: { value: new Vector3(999, 999, 999) }, uPointerVel: { value: new Vector3(0, 0, 0) },
       uImpulse: { value: new Vector4(999, 999, 999, 0) },
+      uBurst: { value: new Vector4(999, 999, 999, 0) },
     },
   });
   const posMat = new ShaderMaterial({
@@ -112,6 +114,13 @@ export function createField(canvas) {
   const fibers = addFibers(scene);
   const core = addCore(scene, { coarse });
   core.setPixelRatio(baseDpr);
+  const collisions = addCollisions(scene, { coarse });
+  collisions.setPixelRatio(baseDpr);
+  if (qa) window.__qaCollide = () => {
+    const p = collisions.spawnNow(camera);
+    velMat.uniforms.uBurst.value.set(p.x, p.y, p.z, 22);
+  };
+  if (qa) window.__qaElapsed = () => elapsed;
 
   const anchorIdx = new Map(); // fiberIdx -> core node idx (resolved lazily)
   const getAnchor = (fiberIdx, anchorDir, out) => {
@@ -132,6 +141,7 @@ export function createField(canvas) {
   let hasPointer = false, lastPointerAt = 0, ptrFresh = true;
   let scrollY = window.scrollY || 0;
   const impulse = velMat.uniforms.uImpulse.value;
+  const burst = velMat.uniforms.uBurst.value;
 
   const toWorld = (cx, cy, out) => {
     ndc.set((cx / innerWidth) * 2 - 1, -(cy / innerHeight) * 2 + 1, 0.5);
@@ -209,6 +219,9 @@ export function createField(canvas) {
 
     core.update(elapsed);
     fibers.update(elapsed, velMat.uniforms.uPointer.value, getAnchor);
+    const ev = collisions.update(elapsed, camera);
+    if (ev) burst.set(ev.x, ev.y, ev.z, 22); // kick the field at the vertex
+    burst.w *= 0.9;
     for (let i = arrivals.length - 1; i >= 0; i--) {
       if (elapsed >= arrivals[i].at) {
         core.flashAt(arrivals[i].node);
@@ -227,6 +240,7 @@ export function createField(canvas) {
             renderMat.uniforms.uPixelRatio.value = baseDpr * 0.7;
             renderer.setPixelRatio(baseDpr * 0.7);
             core.setPixelRatio(baseDpr * 0.7);
+            collisions.setPixelRatio(baseDpr * 0.7);
           } else geo.setDrawRange(0, Math.floor(count / 2));
           guardStage++;
         }

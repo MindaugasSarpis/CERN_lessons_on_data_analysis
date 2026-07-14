@@ -16,7 +16,8 @@ export const VEL_FRAG = /* glsl */ `
 uniform sampler2D uPos, uVel;
 uniform float uDt, uTime;
 uniform vec3 uPointer, uPointerVel;
-uniform vec4 uImpulse;   // xyz = world pos; w = strength
+uniform vec4 uImpulse;   // xyz = world pos; w = strength (hover)
+uniform vec4 uBurst;     // xyz = world pos; w = strength (collision event)
 varying vec2 vUv;
 ${NOISE}
 // Divergence-free 3D field: curl of a vector potential whose components are
@@ -46,6 +47,10 @@ void main() {
   vec3 toI = pos.xyz - uImpulse.xyz;
   float di = length(toI) + 1e-4;
   v += (toI / di) * uImpulse.w * exp(-di * di / 1.4) * uDt;
+  // collision-event burst: wider, softer radial shove from the event vertex
+  vec3 toB = pos.xyz - uBurst.xyz;
+  float db = length(toB) + 1e-4;
+  v += (toB / db) * uBurst.w * exp(-db * db / 9.0) * uDt;
   // frame-rate-independent damping + speed clamp
   v *= exp(-1.6 * uDt);
   float sp = length(v);
