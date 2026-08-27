@@ -144,6 +144,8 @@ a.row.opt .rt { opacity: 0.62; }
 /* ---------- footer ---------- */
 .foot { margin-top: 5rem; border-top: 1px solid var(--hair); padding-top: 1.4rem; }
 .foot p { color: var(--dim); font-size: 0.68rem; letter-spacing: 0.1em; line-height: 1.9; max-width: 72ch; }
+.foot a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--hair); }
+.foot a:hover, .foot a:focus-visible { border-bottom-color: var(--accent); }
 
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

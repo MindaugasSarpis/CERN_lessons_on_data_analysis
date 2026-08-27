@@ -113,7 +113,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
     </header>
     ${blockSections}
     <footer class="foot">
-      <p>Each lecture has a paired hands-on seminar in the workbook. Block E is the optional tail if the term runs short.</p>
+      <p>Each lecture has a paired hands-on seminar — briefs, overview and lecture notes are in the <a href="${base}/workbook/">workbook &#8594;</a>. Block E is the optional tail if the term runs short.</p>
     </footer>
   </main>
   <script type="module" src="./assets/landing.js"></script>

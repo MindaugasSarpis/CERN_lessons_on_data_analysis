@@ -32,7 +32,7 @@ pnpm dev                     # list all decks
 pnpm dev:combined            # dev-serve the combined all-16 authoring deck
 pnpm build:combined          # optional: single "everything" authoring build (not deployed)
 pnpm export                  # export the combined deck to PDF
-cd lectures/workbook && mkdocs serve     # student workbook (needs conda env from env.yaml)
+cd lectures/workbook && mkdocs serve     # student workbook (needs mkdocs + mkdocs-material, e.g. conda env from env.yaml); deployed at <site>/workbook/ by build-all when mkdocs is on PATH (CI installs it)
 ```
 
 There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test.** A second gate, **`pnpm timing:check`**, keeps every week's content sized to the 2h lecture + 2h seminar slots (model + band: `docs/superpowers/specs/2026-07-06-course-timing-rebalance-design.md`) — a deck must estimate 105–145 min, a seminar brief must declare ~120 min; slightly over is preferred to under.
@@ -76,7 +76,7 @@ To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan 
 
 ### Student Workbook (MkDocs)
 
-- `lectures/workbook/` — MkDocs site with lecture companion materials
+- `lectures/workbook/` — MkDocs (Material, dark) site with the seminar briefs + lecture companion notes; built to `dist/workbook/` by `build-all.mjs` when `mkdocs` is on PATH (or `$MKDOCS`), gated by `mkdocs build --strict` in qa.yml, linked from the landing footer
 - `lectures/workbook/mkdocs.yml` — site config and nav
 - `lectures/workbook/docs/lectures/` — per-lecture markdown pages
 

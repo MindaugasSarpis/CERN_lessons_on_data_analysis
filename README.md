@@ -43,7 +43,7 @@ There are no unit tests — **`pnpm qa` (zero overflow) and `pnpm timing:check` 
 pnpm figures            # regenerate scripted matplotlib figures (figures/src/ → public/figures/viz_*.svg)
 pnpm figures:lhcb       # regenerate the synthetic LHCb D⁰→K⁻π⁺ spectrum/fit figures
 pnpm videos:fetch <url> --name <Name> --used-in LNN    # then videos:encode + videos:publish
-cd lectures/workbook && mkdocs serve                   # student workbook (conda env "lecture")
+cd lectures/workbook && mkdocs serve     # student workbook (mkdocs + mkdocs-material; deployed at <site>/workbook/)
 ```
 
 Scripted figure outputs are committed; decks never run Python at build time.

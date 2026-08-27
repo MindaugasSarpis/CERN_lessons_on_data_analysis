@@ -81,6 +81,16 @@ for (const deck of targets) {
   }
 }
 
+// Workbook (MkDocs) → <out>/workbook/. Built when `mkdocs` is on PATH (or
+// $MKDOCS points at one); CI installs it. Skipped in flat-base/QA mode.
+if (!FLAT) {
+  const mk = process.env.MKDOCS || 'mkdocs';
+  const wb = spawnSync(mk, ['build', '--strict', '-q', '-f', join(ROOT, 'lectures', 'workbook', 'mkdocs.yml'), '-d', join(OUT, 'workbook')], { stdio: 'inherit' });
+  if (wb.error) console.log('— workbook skipped (mkdocs not found; set $MKDOCS or install mkdocs + mkdocs-material)');
+  else if (wb.status !== 0) { console.error('✗ workbook (mkdocs --strict) FAILED'); failed++; }
+  else console.log(`✓ workbook → ${join(OUT, 'workbook')}`);
+}
+
 if (!FLAT) console.log(`\nLanding page → ${join(OUT, 'index.html')}`);
 
 if (failed) { console.error(`\n❌ ${failed}/${targets.length} deck(s) failed to build.`); process.exit(1); }

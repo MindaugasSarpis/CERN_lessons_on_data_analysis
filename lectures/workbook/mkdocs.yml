@@ -1,4 +1,42 @@
 site_name: Best Research and Data Analysis Practices from CERN
+site_description: Seminar briefs, overview and lecture notes for the course.
+# Deployed under the course site at <site>/workbook/ (scripts/build-all.mjs + deploy.yml).
+site_url: https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: black
+    accent: cyan
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - content.code.copy
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - stylesheets/course.css
+
 
 nav:
   - Home: index.md

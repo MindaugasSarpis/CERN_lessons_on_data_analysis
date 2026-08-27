@@ -43,6 +43,15 @@ jobs:
       - name: Install Chromium (browser + system libraries)
         run: pnpm exec playwright install --with-deps chromium
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Workbook builds strictly (MkDocs)
+        run: |
+          pip install mkdocs mkdocs-material
+          mkdocs build --strict -f lectures/workbook/mkdocs.yml -d /tmp/workbook-qa
+
       - name: Timing gate (fast)
         run: pnpm timing:check
 

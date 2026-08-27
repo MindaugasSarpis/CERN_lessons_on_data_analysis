@@ -34,7 +34,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build all decks + landing page
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install MkDocs (student workbook)
+        run: pip install mkdocs mkdocs-material
+
+      - name: Build all decks + landing page + workbook
         env:
           NODE_OPTIONS: --max-old-space-size=4096
         run: node scripts/build-all.mjs --out dist --base "/${{ github.event.repository.name }}"
