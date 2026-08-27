@@ -87,7 +87,12 @@ if (!FLAT) {
   const mk = process.env.MKDOCS || 'mkdocs';
   const wb = spawnSync(mk, ['build', '--strict', '-q', '-f', join(ROOT, 'lectures', 'workbook', 'mkdocs.yml'), '-d', join(OUT, 'workbook')], { stdio: 'inherit' });
   if (wb.error) console.log('— workbook skipped (mkdocs not found; set $MKDOCS or install mkdocs + mkdocs-material)');
-  else if (wb.status !== 0) { console.error('✗ workbook (mkdocs --strict) FAILED'); failed++; }
+  else if (wb.status !== 0) {
+    // Fatal in CI (which installs mkdocs + mkdocs-material); a warning locally, so a
+    // machine with a bare `mkdocs` (no Material theme) can still build the decks.
+    if (process.env.CI) { console.error('✗ workbook (mkdocs --strict) FAILED'); failed++; }
+    else console.log('— workbook skipped (mkdocs failed — needs mkdocs-material; set $MKDOCS to a suitable mkdocs, or ignore locally)');
+  }
   else console.log(`✓ workbook → ${join(OUT, 'workbook')}`);
 }
 

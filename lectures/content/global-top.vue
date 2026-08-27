@@ -14,6 +14,9 @@ const base = import.meta.env.BASE_URL || '/'
 // The landing lives one path segment above the deck base: /repo/<slug>/ -> /repo/
 const home = base.replace(/[^/]+\/$/, '') || '/'
 const current = (base.match(/([^/]+)\/$/) || [, ''])[1]
+// Paired seminar brief in the published workbook (slug prefix NN → seminar_NN).
+const seminarNo = (current.match(/^(\d{2})-/) || [, ''])[1]
+const seminarHref = seminarNo ? `${home}workbook/seminars/seminar_${seminarNo}/` : ''
 
 const open = ref(false)
 const data = ref({ blocks: {}, decks: [] })
@@ -55,7 +58,10 @@ const grouped = computed(() => {
 
     <transition name="dn-fade">
       <div v-if="open" class="deck-nav-panel">
-        <a :href="home" class="dn-home">← Course home</a>
+        <div class="dn-links">
+          <a :href="home" class="dn-home">← Course home</a>
+          <a v-if="seminarHref" :href="seminarHref" class="dn-home dn-sem">Seminar {{ seminarNo }} brief →</a>
+        </div>
         <template v-for="g in grouped" :key="g.block">
           <div class="dn-block">{{ g.block }} · {{ g.label }}</div>
           <component
@@ -129,14 +135,23 @@ const grouped = computed(() => {
   backdrop-filter: blur(10px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
 }
+.dn-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.25rem;
+}
 .dn-home {
   display: block;
   color: #7dd3fc;
   text-decoration: none;
   font-size: 0.8rem;
   padding: 0.3rem 0.5rem 0.45rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 0.25rem;
+}
+.dn-sem {
+  color: #cfe3ff;
+  opacity: 0.85;
 }
 .dn-home:hover {
   color: #eef4ff;
