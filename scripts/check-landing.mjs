@@ -42,6 +42,10 @@ async function checkRows(page) {
       ok(links === 1, `deck link ${href}`);
     }
   }
+  // Every row (live or draft) carries a link to its seminar brief in the workbook,
+  // and the footer links to the workbook itself.
+  ok(await page.locator('li > a.sem').count() === manifest.decks.length, `one seminar-brief link per lecture (${manifest.decks.length})`);
+  ok(await page.locator(`footer.foot a[href="${PREFIX}/workbook/"]`).count() === 1, 'workbook link in footer');
 }
 
 const MIME = {
