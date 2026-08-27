@@ -8,6 +8,7 @@
     "dev:staging": "slidev lectures/content/staging.md",
     "build": "node scripts/build-all.mjs",
     "build:landing": "node scripts/build-landing.mjs",
+    "release": "node scripts/release.mjs",
     "build:landing:assets": "vite build --config landing/vite.config.mjs",
     "figures": "python3 figures/src/build.py",
     "figures:lhcb": "python3 scripts/gen-lhcb-figures.py",

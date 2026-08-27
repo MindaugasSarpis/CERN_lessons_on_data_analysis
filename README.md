@@ -99,7 +99,7 @@ A change is **not live** until it reaches `bs2026`.
 
 ### Releasing lectures one at a time
 
-Staged release is one boolean per deck in `decks.json`:
+Staged release is one boolean per deck in `decks.json` — flip it by hand or with `pnpm release <NN>` (lectures 01–NN live, the rest draft; `pnpm release all` = everything live; no argument = show state):
 
 ```jsonc
 { "slug": "09-concepts-of-data-analysis", "…": "…", "draft": true }   // listed "coming soon", not deployed

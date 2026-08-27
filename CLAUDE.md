@@ -22,6 +22,7 @@ pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for v
 pnpm timing                  # estimate delivery minutes per deck + seminar vs the 2h slot (scripts/timing-report.mjs; decks come from decks.json)
 pnpm timing:check            # same, exit 1 if any week is UNDER the band
 pnpm build:landing          # rebuild only the landing page + its WebGL bundle → dist/
+pnpm release 5               # staged release: lectures 01–05 live, rest draft (scripts/release.mjs; `all` = all live; no arg = show)
 pnpm videos:fetch <url> --name <Name> --used-in LNN   # yt-dlp → videos/raw/ + manifest entry; then videos:encode + videos:publish (needs yt-dlp + ffmpeg)
 pnpm figures                 # regenerate all scripted lecture figures (figures/src/ → public/figures/viz_*.svg; --only <family> to scope)
 pnpm figures:lhcb            # regenerate the synthetic LHCb D0→K-π+ figures (lhcb_d0_spectrum/fit.png)
@@ -126,7 +127,7 @@ Two GitHub Actions workflows:
 
 ## Releasing lectures during the semester
 
-Set `"draft": true` on every deck not yet delivered; on lecture day flip that one to `false`, commit on `ff2026`, wait for `qa.yml`, then `git push origin ff2026:bs2026`. Drafts stay fully gated in CI, so keep editing them freely. `pnpm dev <NN>` works on drafts; `pnpm build --include-drafts` builds a full local preview.
+`pnpm release <NN>` marks lectures 01–NN live and the rest draft (`pnpm release all` = all live; no arg = show state) — or edit `"draft"` by hand. On lecture day: `pnpm release NN`, commit on `ff2026`, wait for `qa.yml`, then `git push origin ff2026:bs2026`. Drafts stay fully gated in CI, so keep editing them freely. `pnpm dev <NN>` works on drafts; `pnpm build --include-drafts` builds a full local preview.
 
 ## Adding / removing a lecture
 
