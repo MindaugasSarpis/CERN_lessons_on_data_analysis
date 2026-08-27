@@ -4,9 +4,9 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** a demystified Git history and your
-> first branch + merge (including a resolved conflict) — on top of the repo
-> you've kept since Seminar 1.
+> **This session builds:** a demystified Git history and your
+> first branch + merge (including a resolved conflict) — on top of your
+> seminar repo.
 
 ## Goal
 Cash the Git IOU from Seminar 1: understand the five weeks of ritual commits

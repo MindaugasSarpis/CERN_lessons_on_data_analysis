@@ -4,7 +4,7 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** your first parsing code — one CSV line
+> **This session builds:** your first parsing code — one CSV line
 > turned into numbers.
 
 ## Goal

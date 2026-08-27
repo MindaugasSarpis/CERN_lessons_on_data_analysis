@@ -9,7 +9,7 @@ drawings:
   persist: false
 
 
-title: "Crash Course on Computer Science"
+title: "How Computers Work"
 layout: cover
 ---
 
@@ -17,7 +17,7 @@ layout: cover
 
 # Best Research and Data Analysis Practices from CERN
 
-## Crash Course on Computer Science
+## How Computers Work
 
 ##### <span class="aims-badge">🔧 tool-agnostic · 📁 data & files</span>
 
@@ -32,7 +32,7 @@ layout: quote
 hideInToc: true
 ---
 
-# The main goal of this lecture is to promote **algorithmic thinking** and to provide a basic understanding of **computer science** concepts
+# The main goal of this lecture is to understand what data is **made of** — bits, bytes, numbers, text, files — and how a computer turns an **algorithm** into operations on them
 
 ---
 hideInToc: true
@@ -146,9 +146,48 @@ An **algorithm** is a **finite sequence of well-defined instructions** to solve 
 hideInToc: true
 ---
 
-# A Bit of Foresight
+# **Try It** — Think Like a CPU
 
-<div class="card card-info card-glass pad-tight mt-sm">
+<div class="card card-success card-glass pad-tight mt-sm">
+
+## 🧮 **Find the Maximum, Step by Step**
+
+Given a list, e.g. `[7, 2, 9, 4]` — work through it **one instruction at a time**, the way a processor would:
+
+1. Set `max` = the first number
+2. Look at the next number
+3. Is it bigger than `max`? If yes, replace `max`
+4. Repeat steps 2–3 until the list is exhausted
+5. `max` now holds the answer
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 No shortcuts, no "just looking at it" — every step is explicit and repeatable. That is an algorithm. A CPU does exactly this — we'll meet its **fetch–decode–execute** cycle in the *How Computers Compute* section — just with circuits instead of pen and paper.
+
+</div>
+
+<!--
+Speaker: give them 60 seconds with the list on paper; ask one student to read
+out the value of `max` after each step. The point is that "repeat until the
+list is exhausted" is a loop and step 3 is a comparison — the two things a CPU
+actually knows how to do. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Bit of **Foresight**
+
+<div class="card card-warning card-glass pad-compact mt-sm glow">
+
+🧭 **Why care?** Once data and code are just **bytes in files**, a whole analysis becomes **raw file → box → plots** — and the box can be re-run by a *script* instead of by hand.
+
+</div>
+
+<div class="card card-info card-glass pad-tight mt-md">
 
 - Applicable to data analysis routines of **arbitrary complexity**
 - You don't have to "see" your data (Excel, Origin, ...)
@@ -158,25 +197,11 @@ hideInToc: true
 
 </div>
 
-<div class="mt-md" style="text-align: center;">
-
-```mermaid {scale: 2}
-graph LR
-    A[input] --> B[ ] --> C[output]
-
-    classDef invisible fill:none,stroke:none,font-size:24px;
-    classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;
-    classDef textStyle font-size:24px;
-
-    class A invisible;
-    class B transparentBox;
-    class C invisible;
-
-    linkStyle 0 stroke-width:3px;
-    linkStyle 1 stroke-width:3px;
-```
-
-</div>
+<!--
+Speaker: this is the course in one slide — reproducibility and automation both
+follow from treating data and code as files a script can act on. Don't dwell;
+the rest of the lecture builds the "bytes in files" half of the claim. (~1 min)
+-->
 
 ---
 layout: section
@@ -189,7 +214,7 @@ Before we can write algorithms, we need to know what their inputs and outputs ar
 
 <!--
 Speaker: we build up from the smallest unit — bit → byte → number bases →
-file sizes. Keep the pace brisk; the tally-marks and light-bulb slides land the
+hexadecimal. Keep the pace brisk; the tally-marks and light-bulb slides land the
 core idea that everything is just on/off switches. (~1 min)
 -->
 
@@ -628,6 +653,22 @@ hideInToc: true
 
 ---
 hideInToc: true
+---
+
+<MCQ
+  question="A detector writes each reading as a 2-byte (16-bit) unsigned integer. How many distinct values can one reading take?"
+  :options="[
+    '256',
+    '65,536',
+    '32,768',
+    '16'
+  ]"
+  :correct="1"
+  explanation="16 bits give 2^16 = 65,536 distinct values (0 … 65,535). Each extra bit doubles the count — 2 bytes is 256 × 256. If your sensor can exceed that, you need a wider type or values silently wrap."
+/>
+
+---
+hideInToc: true
 layout: fact
 ---
 
@@ -728,63 +769,13 @@ hideInToc: true
 </div>
 
 ---
-hideInToc: true
----
-
-# **Try It** — Think Like a CPU
-
-<div class="card card-success card-glass pad-tight mt-sm">
-
-## 🧮 **Find the Maximum, Step by Step**
-
-Given a list, e.g. `[7, 2, 9, 4]` — work through it **one instruction at a time**, the way a processor would:
-
-1. Set `max` = the first number
-2. Look at the next number
-3. Is it bigger than `max`? If yes, replace `max`
-4. Repeat steps 2–3 until the list is exhausted
-5. `max` now holds the answer
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-💡 No shortcuts, no "just looking at it" — every step is explicit and repeatable. That's exactly what the CPU does later in this lecture, just with **fetch–decode–execute** instead of pen and paper.
-
-</div>
-
----
-hideInToc: true
----
-
-# File Sizes: From Bits to Terabytes
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-| **Unit** | **Size** | **Everyday Reference** |
-|----------|----------|------------------------|
-| 1 Byte   | 8 bits   | A single character     |
-| 1 KB     | ~1,000 bytes | A short email      |
-| 1 MB     | ~1,000 KB | A photograph          |
-| 1 GB     | ~1,000 MB | ~250 songs (MP3)      |
-| 1 TB     | ~1,000 GB | ~500 hours of video   |
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ Two conventions coexist: **decimal** kB/MB/GB (powers of 1,000 — SI, drive makers, this table) and **binary** KiB/MiB/GiB (powers of 1,024 — used internally by operating systems). A "1 TB" drive holds 10¹² bytes ≈ 931 GiB, which Windows then displays as "931 GB" — same bytes, different unit.
-
-</div>
-
----
 layout: section
 hideInToc: true
 ---
 
-# Binary **Operations**
+# How Computers **Compute**
 
-Once numbers are bits, arithmetic and logic become operations on 0s and 1s — the building blocks of every computation.
+Once numbers are bits, arithmetic and logic become operations on 0s and 1s — and a processor is a machine that grinds through them, billions of times a second.
 
 <!--
 Speaker: the payoff slide is fetch–decode–execute — an algorithm becomes numbers
@@ -795,17 +786,31 @@ just data the CPU obeys." (~1 min)
 ---
 layout: center
 hideInToc: true
-class: text-size-10
+class: text-size-8
 ---
 
 $$
-\phantom{111}  1011 \;\;(11 \text{ in decimal}) \\
-+ \phantom{0.}  0110 \;\;(\phantom{0}6  \text{ in decimal}) \\
+\begin{array}{rccccc l}
+{\scriptstyle\text{carries}} & {\scriptstyle 1} & {\scriptstyle 1} & {\scriptstyle 1} & & & \\
+& & 1 & 0 & 1 & 1 & (11 \text{ in decimal}) \\
++ & & 0 & 1 & 1 & 0 & (\phantom{0}6 \text{ in decimal}) \\
+\hline
+& 1 & 0 & 0 & 0 & 1 & (17 \text{ in decimal})
+\end{array}
 $$
 
-$$
- \phantom{11} 10001 \;\;(17 \text{ in decimal})
-$$
+<div class="note-text mt-md text-center">
+
+The only rule: <strong>1 + 1 = 10</strong> — write 0, carry 1 — exactly like 7 + 5 in decimal: write 2, carry 1.
+
+</div>
+
+<!--
+Speaker: work it column by column from the right: 1+0 = 1; 1+1 = 0 carry 1;
+0+1+carry = 0 carry 1; 1+0+carry = 0 carry 1; the last carry lands as the
+fifth bit. Same algorithm as primary-school addition, two symbols instead of
+ten. (~2 min)
+-->
 
 ---
 layout: center
@@ -925,7 +930,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md reveal-up">
 
-💡 That's the whole trick: an **algorithm** becomes a list of instructions, instructions become **numbers**, and AND/OR/NOT circuits grind through them. Software is just data the CPU knows how to obey.
+💡 That's the whole trick: an **algorithm** becomes a list of instructions, instructions become **numbers**, and AND/OR/NOT circuits grind through them. Software is just data the CPU knows how to obey — the "find the maximum" recipe you traced by hand is a compare and a jump, repeated.
 
 </div>
 
@@ -976,327 +981,18 @@ hideInToc: true
 </div>
 
 ---
-layout: fact
-hideInToc: true
----
-
-# ASCII
-
-## American Standard Code for Information Interchange
-
-### 7-bit
-
----
-hideInToc: true
-class: text-size-5
----
-
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|
-|   0     | **NUL**  |   16    | **DLE**  |   32    | **SP**   |   48    | **0**    |   64    | **@**    |   80    | **P**    |   96    | **`**    |  112    | **p**    |
-|   1     | **SOH**  |   17    | **DC1**  |   33    | **!**    |   49    | **1**    |   65    | **A**    |   81    | **Q**    |   97    | **a**    |  113    | **q**    |
-|   2     | **STX**  |   18    | **DC2**  |   34    | **"**    |   50    | **2**    |   66    | **B**    |   82    | **R**    |   98    | **b**    |  114    | **r**    |
-|   3     | **ETX**  |   19    | **DC3**  |   35    | **#**    |   51    | **3**    |   67    | **C**    |   83    | **S**    |   99    | **c**    |  115    | **s**    |
-|   4     | **EOT**  |   20    | **DC4**  |   36    | **$**    |   52    | **4**    |   68    | **D**    |   84    | **T**    |  100    | **d**    |  116    | **t**    |
-|   5     | **ENQ**  |   21    | **NAK**  |   37    | **%**    |   53    | **5**    |   69    | **E**    |   85    | **U**    |  101    | **e**    |  117    | **u**    |
-|   6     | **ACK**  |   22    | **SYN**  |   38    | **&**    |   54    | **6**    |   70    | **F**    |   86    | **V**    |  102    | **f**    |  118    | **v**    |
-|   7     | **BEL**  |   23    | **ETB**  |   39    | **'**    |   55    | **7**    |   71    | **G**    |   87    | **W**    |  103    | **g**    |  119    | **w**    |
-
-*(excerpt — first 8 rows of each block)*
-
----
-hideInToc: true
-layout: section
----
-
-# Text Beyond **ASCII**
-
----
-hideInToc: true
----
-
-# Unicode and UTF-8
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🌐 **Unicode**
-
-Universally encodes characters as code points
-
-- U+0041 = 'A'
-- U+03B1 = 'α'
-- U+1F600 = '😀'
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📦 **UTF-8**
-
-Stores code points in 1–4 bytes, backward-compatible with ASCII
-
-**Pitfalls in data:** smart quotes, emojis, mixed encodings, BOM (a hidden byte-order marker at the start of a file that can break parsing)
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Python for Encoding Conversions
-
-<div class="note-text">
-
-*A preview — Python itself is introduced in the Crash Course on Python later in the course.*
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-sm">
-
-```python
-# Python: bytes vs str and UTF-8
-s = "Å and 😊"         # str = Unicode
-b = s.encode("utf-8")  # bytes
-len(s), len(b)         # chars vs bytes
-
-b.decode("utf-8")      # back to str
-```
-
-</div>
-
----
-hideInToc: true
----
-
-# Mojibake: When Encodings Collide
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-👾 **Mojibake** — garbled text from reading bytes with the **wrong encoding**. The bytes are fine; the interpretation isn't.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔍 **How it happens**
-
-`é` in UTF-8 is **two bytes**: `C3 A9`
-
-Read them as Latin-1 (one character per byte):
-
-`C3` → `Ã`, `A9` → `©` — hello `Ã©`
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 📄 **In real CSV files**
-
-`München` → `MÃ¼nchen`
-
-A sprinkle of `Ã` through a file is the classic symptom: UTF-8 bytes decoded as Latin-1.
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 The cure is never "fix the characters by hand" — declare the encoding when reading: `open(f, encoding="utf-8")`.
-
-</div>
-
----
-hideInToc: true
----
-
-# The Excel Trap (and the BOM)
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🧨 **"Just open it in Excel"**
-
-Opening and re-saving a CSV can silently:
-
-- re-encode text in your **locale's** encoding, not UTF-8
-- turn identifiers into **dates** — gene `SEPT2` → `2-Sep`, an error found in ~20% of genomics papers with gene lists
-- strip **leading zeros** from IDs (`007` → `7`)
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🫥 **The BOM gotcha**
-
-Some tools prepend a **byte-order mark** — `EF BB BF` — to UTF-8 files.
-
-Symptom: a ghost `ï»¿` glued to your first column name.
-
-Python's `encoding="utf-8-sig"` reads (and strips) it.
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 Treat data files as **bytes with a declared encoding** — inspect first, and edit with tools that don't "help".
-
-</div>
-
----
-hideInToc: true
----
-
-# From Characters to Multi-Byte Values
-
-<div class="card card-accent card-glass pad-tight mt-sm">
-
-## 🧩 **So Far**
-
-We've seen how individual characters are encoded — one byte for ASCII, up to four bytes for UTF-8.
-
-But what happens when we need to store **numbers** that span multiple bytes — like a 32-bit integer or a floating-point value? The next question becomes: **in what order** do those bytes go?
-
-</div>
-
----
-hideInToc: true
----
-
-# Endianness
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 🔄 **What is Endianness?**
-
-The **order** in which bytes of a multibyte value are stored in memory.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📦 **Big-Endian**
-
-Most significant byte stored **first** (lowest address)
-
-`0x12345678` → `12 34 56 78`
-
-Used by: **network protocols** (TCP/IP)
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📦 **Little-Endian**
-
-Least significant byte stored **first** (lowest address)
-
-`0x12345678` → `78 56 34 12`
-
-Used by: **x86/x64** and (typically) **ARM** — most PCs & phones
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Mismatched endianness → garbage values. NumPy *(a Python library you'll meet later in the course)* lets you say which you mean: `dtype='>f4'` (big) or `dtype='<f4'` (little).
-
-</div>
-
----
-hideInToc: true
----
-
-# File Formats (Extensions)
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-**The computer needs to know what a sequence of bits is supposed to mean**
-
-| **Text/Data** | **Documents** | **Media/Archives/Exec** |
-|--------------|---------------|----------------|
-| .txt        | .pdf          | .mp3           |
-| .csv        | .docx         | .mp4           |
-| .json       | .pptx         | .zip           |
-| .xml        | .xlsx         | .rar           |
-| .yaml       | .rtf          | .exe           |
-| .md         | .odt          | .apk           |
-
-</div>
-
----
-hideInToc: true
----
-
-# Image Quality vs Bit Depth
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-Below are five versions of the same image, saved with **different bit depths**. Notice how fewer bits reduce both **image quality** and **file size**.
-
-</div>
-
-<div class="grid grid-cols-5 gap-4 mt-md">
-  <figure>
-    <img src="/figures/elf_24bit.jpg" class="rounded shadow-md h-48 object-contain" />
-    <figcaption class="text-center mt-2">24 bit</figcaption>
-  </figure>
-  <figure>
-    <img src="/figures/elf_4bit.png" class="rounded shadow-md h-48 object-contain" />
-    <figcaption class="text-center mt-2">4 bit</figcaption>
-  </figure>
-  <figure>
-    <img src="/figures/elf_3bit.png" class="rounded shadow-md h-48 object-contain" />
-    <figcaption class="text-center mt-2">3 bit</figcaption>
-  </figure>
-  <figure>
-    <img src="/figures/elf_2bit.png" class="rounded shadow-md h-48 object-contain" />
-    <figcaption class="text-center mt-2">2 bit</figcaption>
-  </figure>
-  <figure>
-    <img src="/figures/elf_1bit.png" class="rounded shadow-md h-48 object-contain" />
-    <figcaption class="text-center mt-2">1 bit</figcaption>
-  </figure>
-</div>
-
----
-hideInToc: true
----
-
-# From Pixels to Precision
-
-<div class="card card-accent card-glass pad-tight mt-sm">
-
-## 🔢 **The Same Trade-Off, Different Domain**
-
-We just saw how **bit depth** affects image quality — more bits per pixel means more colors and finer gradients. The exact same principle applies to **numbers**: more bits per value means greater range and precision. Let's see how computers represent numbers and what happens when those bits run out.
-
-</div>
-
----
 layout: section
 hideInToc: true
 ---
 
 # Numbers in **Computers**
 
+A byte holds 256 values — more bits buy more range and precision, and when the bits run out, values wrap or round.
+
 <!--
 Speaker: the two big gotchas live here — fixed-width integer overflow (values
 wrap silently) and floating-point rounding (0.1 + 0.2 ≠ 0.3). Both bite real
-analyses; the MCQ checks the 16-bit case. (~1 min)
+analyses; the MCQ checks two's complement on a fresh pattern. (~1 min)
 -->
 
 ---
@@ -1307,7 +1003,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔢 Hardware stores whole numbers in a **fixed number of bits** — the width decides the range, and stepping past it **wraps around** (overflow).
+🔢 Hardware stores whole numbers in a **fixed number of bits** — the width decides the range (smaller = less memory per value, larger = more headroom), and stepping past it **wraps around** (overflow).
 
 </div>
 
@@ -1324,25 +1020,25 @@ hideInToc: true
 | 32   | 0 … ~4.3 × 10⁹ |
 | 64   | 0 … ~1.8 × 10¹⁹ |
 
+The famous **Y2K38 problem**: 32-bit Unix time runs out on 19 Jan 2038.
+
 </div>
 
 <div class="card card-warning card-glass pad-tight">
 
 ## 💥 **Overflow**
 
-At 8 bits: `255 + 1 = 0`
+At 8 bits, `255 + 1 = 0` — silently:
 
-The famous **Y2K38 problem**: 32-bit Unix time runs out on 19 Jan 2038.
+```python
+import numpy as np
+a = np.array([127], dtype=np.int8)  # max for signed 8-bit
+print(a + 1)                        # [-128]  wraps, no warning
+```
 
-*(Python's own `int` grows as needed — but NumPy arrays and files use fixed widths.)*
+*Python's own `int` grows as needed — but NumPy arrays and files use fixed widths, so pick a type wide enough for your data range.*
 
 </div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 Choosing a width is a **trade-off**: smaller = less memory per value, larger = more headroom. Data formats make you choose.
 
 </div>
 
@@ -1350,6 +1046,12 @@ The famous **Y2K38 problem**: 32-bit Unix time runs out on 19 Jan 2038.
 table { font-size: 0.85em; }
 td, th { padding-top: 0.25em; padding-bottom: 0.25em; }
 </style>
+
+<!--
+Speaker: the NumPy example is a preview (Python comes in Lecture 7) — the point
+is only that a fixed-width value wraps with no error. Ask: what happens to a
+16-bit event counter on the 65,536th event? (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1409,112 +1111,32 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Using the two's-complement recipe just shown, what decimal value does the 4-bit pattern 1011 represent?"
+  question="Using the two's-complement recipe just shown, what decimal value does the 4-bit pattern 1101 represent?"
   :options="[
-    '11',
-    '−5',
-    '5',
-    '−3'
+    '13',
+    '−3',
+    '3',
+    '−5'
   ]"
   :correct="1"
-  explanation="Flip 1011 → 0100, add one → 0101 = 5, so 1011 is −5 — exactly the worked example on the previous slide. The top bit signals negative; you still recover the magnitude by inverting and adding one."
+  explanation="Flip 1101 → 0010, add one → 0011 = 3, so 1101 is −3. The top bit set means negative; invert-and-add-one recovers the magnitude — a fresh pattern, not the worked example."
 />
 
 ---
 hideInToc: true
 ---
 
-<MCQ
-  question="A detector writes each reading as a 2-byte (16-bit) unsigned integer. How many distinct values can one reading take?"
-  :options="[
-    '256',
-    '65,536',
-    '32,768',
-    '16'
-  ]"
-  :correct="1"
-  explanation="16 bits give 2^16 = 65,536 distinct values (0 … 65,535). Each extra bit doubles the count — 2 bytes is 256 × 256. If your sensor can exceed that, you need a wider type or values silently wrap."
-/>
+# Floating-Point: Scientific **Notation**
 
----
-hideInToc: true
----
+<div class="card card-info card-glass pad-compact mt-sm">
 
-# Floating-Point Basics (IEEE-754)
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-**Float** = sign + exponent + mantissa (binary scientific notation)
-
-**Finite precision** — rounding error; some decimals not exact in binary
+📐 A **float** is a number written in *scientific notation* — a sign, some significant digits, and a power that sets the scale:
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<div class="text-center text-4xl my-6">
 
-<div class="card card-primary card-glass pad-compact">
-
-**Sign bit** (1 bit) — positive / negative
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-**Exponent** (8 bits in float32) — scale (power of 2)
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-**Mantissa** (23 bits in float32) — precision bits (significant figures)
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Scientific Notation in Decimal
-
-<div class="text-center text-5xl my-8">
-
-$N = s \times m \times 10^e$
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-**s** = sign (+1 or -1)
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-**m** = mantissa (significant digits, 1 $\leq$ m $<$ 10)
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-**e** = exponent (integer power of 10)
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Scientific Notation in Decimal
-
-<div class="text-center text-5xl my-8">
-
-$-6.022 \times 10^{23}$
+$N = s \times m \times 10^{e} \qquad\qquad {-6.022} \times 10^{23}$
 
 </div>
 
@@ -1522,21 +1144,27 @@ $-6.022 \times 10^{23}$
 
 <div class="card card-warning card-glass pad-compact">
 
-**Sign** = negative
+**s** = sign → **negative** (−1)
 
 </div>
 
 <div class="card card-primary card-glass pad-compact">
 
-**Mantissa** = 6.022
+**m** = mantissa → **6.022** (significant digits, 1 ≤ m < 10)
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**Exponent** = 23
+**e** = exponent → **23** (integer power of 10)
 
 </div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 IEEE-754 is the same idea in **base 2**, squeezed into a fixed number of bits — so the mantissa has finite digits, and some decimals get **rounded**.
 
 </div>
 
@@ -1544,39 +1172,45 @@ $-6.022 \times 10^{23}$
 hideInToc: true
 ---
 
-# Binary Scientific Notation (float32)
+# Float32 Anatomy: **Sign, Exponent, Mantissa**
 
-<div class="text-center text-3xl my-8">
+<div class="text-center text-3xl my-4">
 
-  $(-1)^{s} \times 1.m \times 2^{e - b}$
+$(-1)^{s} \times 1.m \times 2^{e - b}$
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-**s** = sign bit (0 = positive, 1 = negative)
+**s** — sign bit · **1 bit**
+
+0 = positive, 1 = negative
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**m** = mantissa (fraction bits; the significand 1.m satisfies 1 $\leq$ 1.m $<$ 2)
+**e** — exponent · **8 bits**
+
+power of 2, stored as **e + b** with bias **b = 127** — so negative powers need no sign of their own
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-**e** = exponent (integer power of 2)
+**m** — mantissa · **23 bits**
+
+fraction bits of the significand **1.m** (1 ≤ 1.m < 2); the leading 1 is implied, so it costs nothing
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
-
-**b** = exponent bias (127 for float32)
-
 </div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧩 `[ s: 1 ][ e: 8 ][ m: 23 ]` = 32 bits ≈ **7 significant digits**. **float64** (Python's default) spends 1 + 11 + 52 bits ≈ **15 significant digits**.
 
 </div>
 
@@ -1584,7 +1218,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Binary Scientific Notation (float32)
+# Worked Example: 5.75 as float32
 
 <div class="text-center text-3xl my-4">
 
@@ -1678,63 +1312,13 @@ Open a terminal and type `python3` (or `python`), then try:
 hideInToc: true
 ---
 
-# Integers, Overflow, and Arrays
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-compact">
-
-🐍 Python ints are **arbitrary precision** — no overflow possible
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-📊 NumPy/C arrays use **fixed-width** ints (int8, int16, int32, int64)
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-⚠️ **Overflow** wraps silently in fixed-width types
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔢 **Overflow Example**
-
-```python
-import numpy as np
-
-a = np.int8(127)   # max value for 8-bit signed
-print(a + 1)       # -128 (wraps around!)
-
-b = np.int8(-128)  # min value
-print(b - 1)       # 127 (wraps around!)
-```
-
-This matters when choosing dtypes in NumPy — always use a wide enough type for your data range.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
 # Data Types in Practice
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact reveal-scale">
 
-🔢 **Integers** (`int`) — `42`, `-7`, `0` — fixed-width binary (arbitrary precision in Python)
+🔢 **Integers** (`int`) — `42`, `-7`, `0` — fixed-width binary, overflow wraps silently (arbitrary precision in Python)
 
 </div>
 
@@ -1746,7 +1330,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact reveal-scale">
 
-🔤 **Strings** (`str`) — `"Hello"`, `"α"` — Unicode characters, encoded as UTF-8
+🔤 **Strings** (`str`) — `"Hello"`, `"α"` — Unicode characters, encoded as UTF-8 (next section)
 
 </div>
 
@@ -1769,9 +1353,410 @@ layout: section
 hideInToc: true
 ---
 
+# Text & **Encodings**
+
+Numbers were the easy part — text needs a convention that maps characters to numbers, and then numbers to bytes: ASCII, Unicode, UTF-8.
+
+<!--
+Speaker: ASCII is the 7-bit table everyone agrees on; Unicode extends it to
+every script; UTF-8 is the byte encoding that keeps ASCII files unchanged.
+The pay-off is mojibake and the Excel trap — real ways data gets mangled. (~1 min)
+-->
+
+---
+layout: fact
+hideInToc: true
+---
+
+# ASCII
+
+## American Standard Code for Information Interchange
+
+### 7-bit
+
+---
+hideInToc: true
+class: text-size-5
+---
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|---------|----------|
+|   0     | **NUL**  |   16    | **DLE**  |   32    | **SP**   |   48    | **0**    |   64    | **@**    |   80    | **P**    |   96    | **`**    |  112    | **p**    |
+|   1     | **SOH**  |   17    | **DC1**  |   33    | **!**    |   49    | **1**    |   65    | **A**    |   81    | **Q**    |   97    | **a**    |  113    | **q**    |
+|   2     | **STX**  |   18    | **DC2**  |   34    | **"**    |   50    | **2**    |   66    | **B**    |   82    | **R**    |   98    | **b**    |  114    | **r**    |
+|   3     | **ETX**  |   19    | **DC3**  |   35    | **#**    |   51    | **3**    |   67    | **C**    |   83    | **S**    |   99    | **c**    |  115    | **s**    |
+|   4     | **EOT**  |   20    | **DC4**  |   36    | **$**    |   52    | **4**    |   68    | **D**    |   84    | **T**    |  100    | **d**    |  116    | **t**    |
+|   5     | **ENQ**  |   21    | **NAK**  |   37    | **%**    |   53    | **5**    |   69    | **E**    |   85    | **U**    |  101    | **e**    |  117    | **u**    |
+|   6     | **ACK**  |   22    | **SYN**  |   38    | **&**    |   54    | **6**    |   70    | **F**    |   86    | **V**    |  102    | **f**    |  118    | **v**    |
+|   7     | **BEL**  |   23    | **ETB**  |   39    | **'**    |   55    | **7**    |   71    | **G**    |   87    | **W**    |  103    | **g**    |  119    | **w**    |
+
+*(excerpt — first 8 rows of each block)*
+
+---
+hideInToc: true
+---
+
+# Unicode and UTF-8
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🌍 ASCII covers 128 characters — the rest of the world's alphabets, symbols and emoji need **Unicode**, and Unicode needs a byte **encoding**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🌐 **Unicode**
+
+Universally encodes characters as code points
+
+- U+0041 = 'A'
+- U+03B1 = 'α'
+- U+1F600 = '😀'
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📦 **UTF-8**
+
+Stores code points in 1–4 bytes, backward-compatible with ASCII
+
+**Pitfalls in data:** smart quotes, emojis, mixed encodings, BOM (a hidden byte-order marker at the start of a file that can break parsing)
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Python for Encoding Conversions
+
+<div class="note-text">
+
+*A preview — Python itself is introduced in **Python Foundations** (Lecture 7).*
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-sm">
+
+```python
+# Python: bytes vs str and UTF-8
+s = "Å and 😊"         # str = Unicode
+b = s.encode("utf-8")  # bytes
+len(s), len(b)         # (7, 11) — 7 characters, 11 bytes: Å = 2, 😊 = 4
+
+b.decode("utf-8")      # back to str
+```
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Mojibake: When Encodings Collide
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+👾 **Mojibake** — garbled text from reading bytes with the **wrong encoding**. The bytes are fine; the interpretation isn't.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔍 **How it happens**
+
+`é` in UTF-8 is **two bytes**: `C3 A9`
+
+Read them as Latin-1 (one character per byte):
+
+`C3` → `Ã`, `A9` → `©` — hello `Ã©`
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## 📄 **In real CSV files**
+
+`München` → `MÃ¼nchen`
+
+A sprinkle of `Ã` through a file is the classic symptom: UTF-8 bytes decoded as Latin-1.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 The cure is never "fix the characters by hand" — declare the encoding when reading: `open(f, encoding="utf-8")`.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Excel Trap (and the BOM)
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## 🧨 **"Just open it in Excel"**
+
+Opening and re-saving a CSV can silently:
+
+- re-encode text in your **locale's** encoding, not UTF-8
+- turn identifiers into **dates** — gene `SEPT2` → `2-Sep`, an error found in ~20% of genomics papers with gene lists
+- strip **leading zeros** from IDs (`007` → `7`)
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🫥 **The BOM gotcha**
+
+Some tools prepend a **byte-order mark** — `EF BB BF` — to UTF-8 files.
+
+Symptom: a ghost `ï»¿` glued to your first column name.
+
+Python's `encoding="utf-8-sig"` reads (and strips) it.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 Treat data files as **bytes with a declared encoding** — inspect first, and edit with tools that don't "help".
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Files & **Formats**
+
+A character takes one to four bytes, a 32-bit number takes four — in what order? A file is just a named sequence of such bytes: its size, its byte order, and the first bytes that say how to read the rest.
+
+<!--
+Speaker: this section is the bridge to Seminar 3 — sizes, byte order, magic
+numbers, a real hexdump. Land "a file is a named sequence of bytes" here; the
+MCQ checks it. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# File Sizes: From Bits to Terabytes
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+| **Unit** | **Size** | **Everyday Reference** |
+|----------|----------|------------------------|
+| 1 byte   | 8 bits   | A single ASCII character |
+| 1 kB     | ~1,000 bytes | A short email      |
+| 1 MB     | ~1,000 kB | A photograph          |
+| 1 GB     | ~1,000 MB | ~250 songs (MP3)      |
+| 1 TB     | ~1,000 GB | ~500 hours of video   |
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ Two conventions coexist: **decimal** kB/MB/GB (powers of 1,000 — SI, drive makers, this table) and **binary** KiB/MiB/GiB (powers of 1,024 — what Windows and many CLI tools report). A "1 TB" drive holds 10¹² bytes ≈ 931 GiB, which Windows then displays as "931 GB" — same bytes, different unit.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Endianness
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+## 🔄 **What is Endianness?**
+
+The **order** in which bytes of a multibyte value are stored in memory.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📦 **Big-Endian**
+
+Most significant byte stored **first** (lowest address)
+
+`0x12345678` → `12 34 56 78`
+
+Used by: **network protocols** (TCP/IP)
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **Little-Endian**
+
+Least significant byte stored **first** (lowest address)
+
+`0x12345678` → `78 56 34 12`
+
+Used by: **x86/x64** and (typically) **ARM** — most PCs & phones
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ Mismatched endianness → garbage values. NumPy *(a Python library you'll meet later in the course)* lets you say which you mean: `dtype='>f4'` (big) or `dtype='<f4'` (little).
+
+</div>
+
+---
+hideInToc: true
+---
+
+# File Formats (Extensions)
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+**A file is a named sequence of bytes.** The extension is a *hint* for humans and the OS; the real signature is the first bytes (the *magic number*): PNG `89 50 4E 47`, PDF `%PDF`, ZIP/docx/xlsx `PK`. Check with `file data.csv` or `hexdump -C data.csv | head`.
+
+| **Text/Data** | **Documents** | **Media/Archives/Exec** |
+|--------------|---------------|----------------|
+| .txt        | .pdf          | .mp3           |
+| .csv        | .docx         | .mp4           |
+| .json       | .pptx         | .zip           |
+| .xml        | .xlsx         | .rar           |
+| .yaml       | .rtf          | .exe           |
+| .md         | .odt          | .apk           |
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Reading a **Hexdump**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔬 `hexdump -C` shows the raw bytes of *any* file: the offset, 16 bytes as hex pairs, and the same bytes as ASCII (a `.` for anything unprintable).
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+```text
+$ hexdump -C data.csv | head -n 2
+00000000  6d 61 73 73 2c 63 68 61  72 67 65 0a 31 38 36 35  |mass,charge.1865|
+00000010  2e 32 2c 2b 31 0a 31 38  36 33 2e 39 2c 2d 31 0a  |.2,+1.1863.9,-1.|
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 👀 **What you can read off**
+
+- `6d` = `m`, `61` = `a` — one byte per character: pure ASCII, so UTF-8-safe
+- `0a` ends each line (LF); `0d 0a` would mean Windows line endings
+- no `EF BB BF` at offset 0 → no BOM
+- offsets count bytes: the last one is the file size
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎯 **Why bother**
+
+This is the one view where *nothing* is interpreted for you. Seminar 3 starts here: encoding, line endings, size and format of your raw file — checked at the byte level before you trust a single number in it.
+
+</div>
+
+</div>
+
+<!--
+Speaker: walk the first line byte by byte with the ASCII table still in their
+heads — 6d is m, 61 is a. Then point at 0a: that is the newline, invisible in
+any editor but plainly a byte here. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="What is a file, at the simplest level?"
+  :options="[
+    'A window shown on the screen',
+    'A named sequence of bytes stored by the operating system',
+    'A running program in memory',
+    'A network connection to another computer'
+  ]"
+  :correct="1"
+  explanation="Everything on disk — text, images, programs — is ultimately a named blob of bytes the OS keeps track of. A file extension is only a convention for how to interpret those bytes; the hexdump you just saw is that blob with nothing interpreted."
+/>
+
+---
+hideInToc: true
+---
+
+# Image Quality vs Bit Depth
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+Below are five versions of the same image, saved with **different bit depths**. Notice how fewer bits per pixel mean fewer colours — the **raw** size scales with bit depth, while the on-disk size depends on compression (next section). Fewer bits reduce **image quality** and **file size**.
+
+</div>
+
+<div class="grid grid-cols-5 gap-4 mt-md">
+  <figure>
+    <img src="/figures/elf_24bit.jpg" class="rounded shadow-md h-48 object-contain" />
+    <figcaption class="text-center mt-2">24 bit</figcaption>
+  </figure>
+  <figure>
+    <img src="/figures/elf_4bit.png" class="rounded shadow-md h-48 object-contain" />
+    <figcaption class="text-center mt-2">4 bit</figcaption>
+  </figure>
+  <figure>
+    <img src="/figures/elf_3bit.png" class="rounded shadow-md h-48 object-contain" />
+    <figcaption class="text-center mt-2">3 bit</figcaption>
+  </figure>
+  <figure>
+    <img src="/figures/elf_2bit.png" class="rounded shadow-md h-48 object-contain" />
+    <figcaption class="text-center mt-2">2 bit</figcaption>
+  </figure>
+  <figure>
+    <img src="/figures/elf_1bit.png" class="rounded shadow-md h-48 object-contain" />
+    <figcaption class="text-center mt-2">1 bit</figcaption>
+  </figure>
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
 # Compression & **Integrity**
 
-The same bits can be reorganized to take up less space — and checked to make sure none of them were corrupted along the way.
+Throwing away bits per pixel is the crude way to shrink a file. The clever way reorganizes the same bits to take less space — and checks that none of them were corrupted along the way.
 
 <!--
 Speaker: short section. Lossless vs lossy, then checksums and hashes for
@@ -1791,9 +1776,9 @@ hideInToc: true
 
 ## 🔒 **Lossless**
 
-Algorithms (RLE, Huffman, DEFLATE — used inside PNG, ZIP, gzip) shrink data with **exact** recovery
+Remove **redundancy**, recover the data **exactly** — RLE, Huffman, DEFLATE (inside PNG, ZIP, gzip)
 
-*(Plain-text formats like CSV and JSON aren't compressed at all — every byte stored as-is. That's exactly why they zip so well.)*
+🔤 **RLE example:** `AAABBBCC` → `3A3B2C` (8 chars → 6 chars)
 
 </div>
 
@@ -1801,7 +1786,9 @@ Algorithms (RLE, Huffman, DEFLATE — used inside PNG, ZIP, gzip) shrink data wi
 
 ## 📉 **Lossy**
 
-JPEG, MP3 — small size, info loss acceptable for media
+JPEG, MP3 — small size, information loss acceptable for media
+
+JPEG throws away detail your eye can't see — fine for photos, **never for data**
 
 </div>
 
@@ -1809,13 +1796,27 @@ JPEG, MP3 — small size, info loss acceptable for media
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-💡 **Intuition:** remove redundancy (RLE, Huffman, dictionary coding)
+💡 Plain-text formats like CSV and JSON aren't compressed at all — every byte stored as-is. That's exactly why they zip so well: **gzip a CSV → typically 5–10× smaller** (Seminar 3 stretch goal).
 
 </div>
 
-<div class="card card-accent card-glass pad-compact mt-md">
+<div class="grid-2 mt-md gap-md">
 
-🔤 **RLE example:** `AAABBBCC` → `3A3B2C` (8 chars → 6 chars)
+<div class="card card-primary card-glass pad-compact">
+
+## ⚙️ **How DEFLATE finds the redundancy**
+
+A CSV repeats separators, column values and digit patterns thousands of times. DEFLATE replaces each repeat with a short back-reference ("copy 12 bytes from 340 bytes ago") and gives frequent bytes shorter codes (Huffman).
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔁 **In your workflow**
+
+`gunzip` returns the **byte-identical** file — same size, same hash. Many tools read `.csv.gz` directly (`zcat`, pandas), so you can keep raw data compressed and never unpack it by hand.
+
+</div>
 
 </div>
 
@@ -1825,40 +1826,60 @@ hideInToc: true
 
 # Error Detection & Hashing
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
 ## 🔍 **Error Detection**
 
-Parity, checksums, CRC detect transfer/storage errors
+Parity, checksums, CRC detect transfer/storage errors — e.g. a **parity bit** keeps the count of 1s even, so any single flipped bit is caught
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
 ## 🔐 **Hashing**
 
-Cryptographic hashes (SHA-256) verify file integrity
+A cryptographic hash (**SHA-256**) boils any file down to a 256-bit fingerprint — same bytes in, same fingerprint out, on every machine
 
 </div>
 
 </div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🧾 **In practice**
+
+```text
+$ sha256sum data.csv
+3b1f0c7a…9d2e9  data.csv        # 64 hex digits = 256 bits
+```
+
+- Flip **one bit** anywhere in the file → a **completely different** hash (it never says "how close")
+- **Publish the hash next to the download** — the reader recomputes it. Seminar 3's "confirm the raw file is byte-identical" step is exactly this.
+
+</div>
+
+<!--
+Speaker: the lecture's most practical minute. Every dataset you publish should
+ship with its hash; every dataset you download should be checked against one.
+"Different in every digit" is the expected symptom of *any* change. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
 <MCQ
-  question="What is a file, at the simplest level?"
+  question="You download data.csv; its published SHA-256 is 3b1f…e9, but sha256sum on your copy prints a hash that differs in every digit. What can you conclude?"
   :options="[
-    'A window shown on the screen',
-    'A named sequence of bytes stored by the operating system',
-    'A running program in memory',
-    'A network connection to another computer'
+    'The file is almost identical — only a few bytes must differ',
+    'Your copy differs from the published file somewhere — even a single flipped bit would do this',
+    'The hash tool is broken: a small change should change only a few digits',
+    'Nothing — SHA-256 gives a different result every time you run it'
   ]"
   :correct="1"
-  explanation="Everything on disk — text, images, programs — is ultimately a named blob of bytes the OS keeps track of. A file extension is only a convention for how to interpret those bytes."
+  explanation="A cryptographic hash is deliberately avalanche-like: any change, however small, scrambles the whole digest. So the hash tells you that something differs, never how much. The same bytes always give the same 64 hex digits — on every machine — which is what makes it a fingerprint."
 />
 
 ---
@@ -1901,9 +1922,32 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+<div class="grid-2 mt-md gap-md items-center">
 
-🧭 Back to the "box": before writing algorithms, you need to know what their **inputs** and **outputs** are made of.
+<div class="card card-warning card-glass pad-compact reveal-up">
+
+🧭 Back to the "box": before writing algorithms, you need to know what their **inputs** and **outputs** are made of — and now you do.
+
+</div>
+
+<div class="text-center">
+
+```mermaid {scale: 1.2}
+graph LR
+    A[input] --> B[ ] --> C[output]
+
+    classDef invisible fill:none,stroke:none,font-size:24px;
+    classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;
+
+    class A invisible;
+    class B transparentBox;
+    class C invisible;
+
+    linkStyle 0 stroke-width:3px;
+    linkStyle 1 stroke-width:3px;
+```
+
+</div>
 
 </div>
 
@@ -1945,12 +1989,12 @@ hideInToc: true
 
 ## 🔬 **Seminar 3 tie-in**
 
-inspect your raw data file as bytes — its character encoding, exact size, and format — before trusting a single number in it.
+Inspect the seminar's raw CSV as bytes — its character encoding, exact size, and format — before trusting a single number in it.
 
 </div>
 
 <!--
 Speaker: the "you can now" beat — have them nod along to each. The tie-in makes
-it concrete: in Seminar 3 they open their own dataset at the byte level and
+it concrete: in Seminar 3 they open the seminar dataset at the byte level and
 verify its encoding, size, and format before trusting any number. (~1 min)
 -->

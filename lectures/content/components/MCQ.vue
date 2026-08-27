@@ -10,11 +10,15 @@ const props = defineProps({
 
 const picked = ref(null)
 const isCorrect = computed(() => picked.value === props.correct)
+// Question text is plain text with optional `code` spans: escape HTML, then
+// turn backtick spans into <code> so authors can write `git init` naturally.
+const esc = (t) => t.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))
+const questionHtml = computed(() => esc(props.question).replace(/`([^`]+)`/g, '<code>$1</code>'))
 </script>
 
 <template>
   <div class="mcq-container">
-    <h2 class="mcq-question">{{ question }}</h2>
+    <h2 class="mcq-question" v-html="questionHtml"></h2>
 
     <ul class="mcq-options">
       <li v-for="(opt, i) in options" :key="i">

@@ -66,6 +66,12 @@ hideInToc: true
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+📈 Read a **ROC curve** and use cross-validation to get a mean *and* a spread
+
+</div>
+
 <div class="card card-warning card-glass pad-compact">
 
 🧠 Use **LLMs and AI tools** responsibly — verify, reproduce, own the output
@@ -77,7 +83,7 @@ hideInToc: true
 <!--
 Speaker: read these as promises, not a syllabus. Remind them this is the optional
 capstone — the payoff is watching the four aims converge. Seminar 16 is where they
-train and honestly evaluate a classifier on their own data. (~1 min)
+train and honestly evaluate a classifier on the D⁰ sample (or their own-field dataset). (~1 min)
 -->
 
 ---
@@ -450,7 +456,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📉 You met this in **Concepts of Data Analysis** (the 99.9%-accuracy trap) and in **fitting** (too many parameters). It is the defining failure mode of ML.
+📉 You met this in **Lecture 9** (50 parameters for 60 points) and in **fitting** (too many parameters). It is the defining failure mode of ML.
 
 </div>
 
@@ -481,6 +487,48 @@ Model too simple → poor on **both**. Missing real structure.
 </div>
 
 ---
+hideInToc: true
+---
+
+# Model Complexity — the Polynomial **Dial**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📉 The clearest way to *see* overfitting: fit the same 15 noisy points with polynomials of rising degree and watch train error and test error part ways. Degree is a **complexity dial** — the honest setting minimises error on **held-out** data, never on the training points.
+
+</div>
+
+<img class="fig" src="/figures/viz_ml_polynomial_dial.svg" style="display:block;margin:0.6rem auto 0;max-height:215px;">
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact reveal-scale">
+
+## 1️⃣ **Degree 1**
+
+Too stiff — misses the curve. **Underfit**: poor on train *and* test.
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-scale">
+
+## 3️⃣ **Degree 3**
+
+Captures the shape, ignores the wiggles. **Just right**.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact reveal-scale">
+
+## 🔟 **Degree 10**
+
+Threads every point — train error near zero, test error explodes. **Overfit**.
+
+</div>
+
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
@@ -506,7 +554,7 @@ Fitting a straight line by **least squares** (Lecture 12) *is* machine learning'
 
 </div>
 
-<div class="card card-primary card-glass pad-tight mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 | Fitting (Lecture 12) | Machine learning (today) |
 |---|---|
@@ -514,7 +562,12 @@ Fitting a straight line by **least squares** (Lecture 12) *is* machine learning'
 | parameters | **weights** |
 | minimise χ² | minimise the **loss** |
 | residuals | prediction **errors** |
-| goodness of fit | **evaluation metrics** |
+
+</div>
+
+<div class="note-text mt-md">
+
+💡 And *goodness of fit* becomes **evaluation metrics** — where the next slides go.
 
 </div>
 
@@ -522,51 +575,13 @@ Fitting a straight line by **least squares** (Lecture 12) *is* machine learning'
 hideInToc: true
 ---
 
-# Least Squares, One More Time
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📐 The model is a line, `y = w·x + b`. Training chooses `w` and `b` to minimise the **sum of squared residuals** — exactly the quantity behind χ² in Lecture 12, with all uncertainties set equal.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-left">
-
-## 🔬 **Lecture 12 said**
-
-`scipy.optimize.curve_fit(f, x, y)` — you write the model function, scipy finds the parameters.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-left">
-
-## 🤖 **scikit-learn says**
-
-`LinearRegression().fit(X, y)` — the model family is fixed, and the API is uniform across models.
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md reveal-up">
-
-🎯 Same optimisation, different packaging — and that uniform `fit` / `predict` API is what lets you swap models without rewriting your analysis. 🔧
-
-</div>
-
----
-hideInToc: true
----
-
-# What a Loss Function Really Is
+# Least Squares Is a **Loss Function**
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
 ## 🎯 **The number training drives down**
 
-A **loss** scores how wrong a prediction is; training simply searches for the weights that make it smallest. Choosing the loss chooses *what "wrong" means* — a modelling decision, not a detail.
+The model is a line, `y = w·x + b`. A **loss** scores how wrong a prediction is; training searches for the `w`, `b` that make it smallest. Least squares — the **sum of squared residuals**, χ² from Lecture 12 with equal uncertainties — is one choice of loss. Choosing the loss chooses *what "wrong" means*: a modelling decision, not a detail.
 
 </div>
 
@@ -587,6 +602,12 @@ Punishes big misses hard — the least-squares loss you minimised in Lecture 12.
 Treats every miss in proportion — robust when a few points go wild.
 
 </div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
+
+🔧 `curve_fit(f, x, y)` in Lecture 12, `LinearRegression().fit(X, y)` today — same optimisation, different packaging. That uniform `fit` / `predict` API is what lets you swap models without rewriting your analysis.
 
 </div>
 
@@ -646,7 +667,7 @@ The average of `|prediction − truth|`. Robust to outliers, and reads directly 
 
 ## 📐 **RMSE — root mean squared error**
 
-The square root of the mean squared error. Punishes **large** misses hard — it is the least-squares loss itself.
+The square root of the mean squared error. Punishes **large** misses hard — the square root of the least-squares loss you minimised.
 
 </div>
 
@@ -680,7 +701,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-📊 **Anscombe's quartet**: four datasets, one identical fitted line and R² — only the *plots* reveal which fit is honest.
+📊 **Anscombe's quartet**: four datasets, one identical fitted line and R² — only *plotting the data and residuals* reveals which fit is honest.
 
 </div>
 
@@ -712,55 +733,9 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact reveal-left">
 
-📉 **More features = more ways to overfit** — regularisation (ridge, lasso) adds a penalty for complexity: the cure you know from fitting, automated.
+📉 **More features = more ways to overfit** — regularisation (ridge, lasso) is the "fewer parameters" discipline from fitting, turned into an automatic penalty.
 
 </div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Model Complexity — the Polynomial Dial
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📉 The clearest way to *see* overfitting: fit the same points with polynomials of rising degree and watch train error and test error part ways.
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact reveal-scale">
-
-## 1️⃣ **Degree 1**
-
-Too stiff — misses the curve. **Underfit**: poor on train *and* test.
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-scale">
-
-## 3️⃣ **Degree 3**
-
-Captures the shape, ignores the wiggles. **Just right**.
-
-</div>
-
-<div class="card card-primary card-glass pad-compact reveal-scale">
-
-## 🔟 **Degree 10**
-
-Threads every point — train error near zero, test error explodes. **Overfit**.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">
-
-🎯 Degree is a **complexity dial**. The honest setting minimises error on **held-out** data, never on the training points.
 
 </div>
 
@@ -784,7 +759,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎯 A classic physics task and the course's running example: given event features (energy, momentum, …), decide **signal** or **background** — the trigger problem from Lecture 2, now learned from data.
+🎯 A classic physics task — and Seminar 16's exercise on the D⁰ sample: given event features (momenta, pT, …), decide **signal** or **background** — the trigger problem from Lecture 2, now learned from data.
 
 </div>
 
@@ -825,7 +800,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 
-# X: features (n_events × n_features), y: 1=signal, 0=background
+# X, y = the D⁰ feature table and its peak/sideband label
+# (X: n_events × n_features, y: 1 = signal, 0 = background)
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y)
 
@@ -1054,29 +1030,25 @@ hideInToc: true
 
 </div>
 
+<img class="fig" src="/figures/viz_ml_roc_curve.svg" style="display:block;margin:0.6rem auto 0;max-height:235px;">
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact reveal-left">
 
 ## 📐 **AUC — area under the curve**
 
-One number, 0.5 to 1.0: the chance the model ranks a random signal event above a random background one.
+`0.5` = coin flip (the diagonal), `1.0` = perfect: the chance a random signal event outranks a random background one. Above `0.8` is usually genuinely useful.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact reveal-left">
 
-## 🎯 **Reading it**
+## ⚖️ **Why it beats accuracy**
 
-`0.5` = coin flip (the diagonal). `1.0` = perfect separation. Above `0.8` is usually a genuinely useful classifier.
-
-</div>
+**Threshold-free** and barely moved by class imbalance. For very rare signal, pair it with a **precision–recall curve**.
 
 </div>
-
-<div class="note-text mt-md">
-
-⚖️ AUC is **threshold-free** and barely moved by class imbalance — exactly why it beats accuracy for signal-vs-background.
 
 </div>
 
@@ -1113,6 +1085,22 @@ print(f"\nAUC = {auc:.3f}")
 hideInToc: true
 ---
 
+<MCQ
+  question="Two classifiers are compared on the same imbalanced signal-vs-background sample. Model A has higher accuracy; Model B has higher ROC-AUC. Which is the safer basis for choosing?"
+  :options="[
+    'Accuracy — it is always the most honest single number',
+    'Neither, unless both models use exactly the same threshold',
+    'ROC-AUC — it is threshold-free and barely affected by class imbalance',
+    'Whichever model is more complex — more complexity means better performance'
+  ]"
+  :correct="2"
+  explanation="On imbalanced data accuracy is dominated by the majority class, so a lazy model can look strong. AUC summarises ranking ability across every threshold and is largely insensitive to the imbalance, so it reflects real separation power rather than the majority class."
+/>
+
+---
+hideInToc: true
+---
+
 # Cross-Validation — Every Point Tested Once
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -1143,7 +1131,7 @@ The spread tells you whether a gain is real or noise — and a scripted CV run i
 
 <div class="note-text mt-md">
 
-💡 `cross_val_score(model, X, y, cv=5)` — five honest numbers for one line of code.
+💡 `cross_val_score(model, X, y, cv=5)` — five honest numbers for one line of code. CV replaces the validation split for tuning — the final **test set** still stays untouched.
 
 </div>
 
@@ -1152,15 +1140,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Two classifiers are compared on the same imbalanced signal-vs-background sample. Model A has higher accuracy; Model B has higher ROC-AUC. Which is the safer basis for choosing, and why?"
+  question="Your Random Forest scores 100% on the training set and 71% on the test set. What is the most likely diagnosis — and the first fix?"
   :options="[
-    'ROC-AUC — it is threshold-free and barely affected by class imbalance, so it reflects real ranking ability rather than the majority class',
-    'Accuracy — it is always the most honest single number',
-    'Neither can be compared unless both models use exactly the same threshold',
-    'Whichever model is more complex, since more complexity means better performance'
+    'Data leakage — drop the feature that encodes the label',
+    'Under-training — train longer or add more trees',
+    'The test set is too small — the 71% is just noise',
+    'Overfitting — simplify or regularise, then compare on held-out data'
   ]"
-  :correct="0"
-  explanation="On imbalanced data accuracy is dominated by the majority class, so a lazy model can look strong. AUC summarises performance across every threshold and is largely insensitive to the imbalance, making it the fairer comparison."
+  :correct="3"
+  explanation="A large train-vs-test gap is the signature of overfitting: the model memorised the training noise. Reduce its complexity (shallower trees, fewer features, regularisation) and judge every change on held-out data or with cross-validation. Leakage would inflate the test score too; more training would only widen the gap."
 />
 
 ---
@@ -1218,7 +1206,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎯 Your running project — D⁰ → K⁻π⁺ — is a signal-vs-background problem. What tells a real D⁰ from a random pairing of tracks?
+🎯 At LHCb, three families of features separate a real D⁰ from a random track pairing — and the seminar sample lets you build the first from the daughter momenta alone.
 
 </div>
 
@@ -1226,9 +1214,9 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🏃 **Kinematics**
+## 🏃 **Kinematics** — yours
 
-Track `pT`, momentum, opening angle — real decays sit in characteristic regions.
+Daughter `p`, `pT`, opening angle, momentum asymmetry — all computable from the two momentum vectors you already have.
 
 </div>
 
@@ -1252,7 +1240,7 @@ Daughter tracks miss the primary vertex; combinatorial background often points b
 
 <div class="note-text mt-md">
 
-💡 Notice what is **not** on this list: the invariant **mass**. Hold that thought — the next slide is why.
+💡 Vertex and impact-parameter features are what **full LHCb reconstruction** adds — use them if your file has those columns. And notice what is **not** on this list: the invariant **mass**. Hold that thought — the next slide is why.
 
 </div>
 
@@ -1303,13 +1291,13 @@ hideInToc: true
 <MCQ
   question="You classify D⁰ signal vs background, and one input feature is the reconstructed invariant mass. Cross-validated accuracy is 99.99%. What has most likely happened?"
   :options="[
-    'Data leakage — the mass window you are separating on has leaked into the inputs, so the model reads the answer instead of learning physics',
-    'The model is genuinely excellent and is ready to deploy',
-    'The dataset is simply too small for any score to be trusted',
+    'The model is genuinely excellent and ready to deploy',
+    'Data leakage — the mass you label on is also an input',
+    'The dataset is too small for any score to be trusted',
     'Random Forests always overfit and should never be used'
   ]"
-  :correct="0"
-  explanation="The very quantity you are trying to separate (a mass window) has leaked into the features. Drop it, keep only variables known independently of the mass, and the honest score falls to something believable."
+  :correct="1"
+  explanation="The label was defined from a mass window, so the mass feature lets the model read the answer instead of learning physics. Drop it, keep only variables known independently of the mass, and the honest score falls to something believable."
 />
 
 ---
@@ -1440,6 +1428,8 @@ hideInToc: true
 
 # Clustering in Physics — Honest Expectations
 
+<img class="fig" src="/figures/viz_ml_kmeans.svg" style="display:block;margin:0.6rem auto 0;max-height:235px;">
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-success card-glass pad-compact reveal-left">
@@ -1514,7 +1504,7 @@ A wrong "drop" is data gone **forever**. Recall over raw accuracy — you cannot
 
 <div class="note-text mt-md">
 
-♻️ LHCb now runs ML inside a fully software trigger — versioned, monitored, reproducible, at ~30 MHz.
+♻️ LHCb now runs ML inside a fully software trigger — versioned, monitored, reproducible — at the ~30 MHz of crossings that actually produce a visible collision in LHCb.
 
 </div>
 
@@ -1601,11 +1591,14 @@ layout: section
 hideInToc: true
 ---
 
-# Modern **AI** & LLMs
+# Modern AI, **Responsibly**
 
 <!--
 Speaker: LLMs are the tool of the moment — great for drafts, dangerous when trusted.
-Land the responsible-use rules: you own the output, verify it, keep it reproducible. (~2 min)
+Land the responsible-use rules: you own the output, verify it, keep it reproducible.
+Then the ethics beat, made concrete and technical rather than preachy: bias is a data
+property; a model card is reproducibility for models; and the mark of maturity is
+knowing when NOT to reach for ML at all. (~2 min)
 -->
 
 ---
@@ -1618,7 +1611,7 @@ hideInToc: true
 
 ## 🧠 **What they are**
 
-Models trained to predict the next token over vast text. That simple objective yields tools that draft, summarise, translate, and **write code** — including analysis code. Under the hood: **neural networks** trained with the same five-step loop you just learned — features, model, train, evaluate — at vastly larger scale.
+Models trained to predict the next token over vast text. That simple objective yields tools that draft, summarise, translate, and **write code** — including analysis code. Under the hood: **neural networks** trained with the same loop you just learned — data, model, loss, train, evaluate — with the "features" learned from raw tokens, at vastly larger scale.
 
 </div>
 
@@ -1685,19 +1678,6 @@ hideInToc: true
 </div>
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Responsible **AI**
-
-<!--
-Speaker: the ethics beat, made concrete and technical rather than preachy. Bias is a
-data property; a model card is reproducibility for models; and the mark of maturity is
-knowing when NOT to reach for ML at all. (~1 min)
--->
 
 ---
 hideInToc: true
@@ -1878,7 +1858,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact reveal-up">
 
-💧 **Data leakage** — test information sneaking into training → fake-great scores.
+💧 **Data leakage** — the answer (or test data) sneaking into the inputs → fake-great scores.
 
 </div>
 
@@ -1900,29 +1880,13 @@ hideInToc: true
 hideInToc: true
 ---
 
-<MCQ
-  question="A classifier scores 99.99% accuracy on a dataset where only 1 event in 10,000 is signal. Why is this not yet evidence that the model works?"
-  :options="[
-    'A model that always predicts background scores the same — accuracy hides that it never catches any signal',
-    '99.99% accuracy is impossible, so there must be a bug in the code',
-    'The model simply needs more training epochs to reach 100%',
-    'Accuracy is always the correct metric for physics classification'
-  ]"
-  :correct="0"
-  explanation="On heavily imbalanced data a trivial majority-class predictor looks near-perfect; precision and recall reveal whether any signal is actually caught."
-/>
-
----
-hideInToc: true
----
-
 # **Recap** — You Can Now…
 
 <div class="grid-2 gap-md mt-sm">
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Frame a task as **supervised learning** — features `X`, labels `y`
+✅ Frame a task as **supervised learning** — features and labels
 
 </div>
 
@@ -1948,16 +1912,18 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
-## 🔬 **Seminar 16 tie-in**
+## 🔬 **Seminar 16 tie-in — the four aims converge**
 
-train and honestly evaluate a classifier on your data — a proper train/test split, confusion matrix, precision/recall/F1.
+Train and honestly evaluate a signal-vs-background classifier on the D⁰ sample: label peak vs sidebands, stratified split, Random Forest or logistic regression, confusion matrix + precision/recall/F1 against the majority baseline, ROC/AUC, the train-vs-test gap — all in one seeded script. *Stretch: leak the mass in and watch 100% appear.*
+
+🔧 swap the model, nothing else changes · ♻️ ⚙️ one seeded script reproduces the whole run · 📁 clean features, no leaked mass
 
 </div>
 
 <!--
 Speaker: the "you can now" beat — have them nod along to each card. The seminar makes
-it concrete: their own project data goes through a real train/test evaluation with the
-same metrics. (~1 min)
+it concrete: the D⁰ sample (or their own-field dataset) goes through a real train/test
+evaluation with the same metrics. (~1 min)
 -->
 
 ---
@@ -1974,13 +1940,29 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">📗 **James, Witten, Hastie, Tibshirani & Taylor** — *An Introduction to Statistical Learning with Applications in Python* (ISLP, 2023) · free at statlearning.com</div>
+<div class="card card-primary card-glass pad-compact">
 
-<div class="card card-secondary card-glass pad-compact">🛠️ **Géron** — *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow*</div>
+📗 **James, Witten, Hastie, Tibshirani & Taylor** — *An Introduction to Statistical Learning with Applications in Python* (ISLP, 2023) · free at statlearning.com
 
-<div class="card card-accent card-glass pad-compact">🐍 **scikit-learn user guide** — excellent, example-driven documentation</div>
+</div>
 
-<div class="card card-info card-glass pad-compact">🧠 **Google** — *Machine Learning Crash Course* · free, hands-on</div>
+<div class="card card-secondary card-glass pad-compact">
+
+🛠️ **Géron** — *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow*
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🐍 **scikit-learn user guide** — excellent, example-driven documentation
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+🧠 **Google** — *Machine Learning Crash Course* · free, hands-on
+
+</div>
 
 </div>
 

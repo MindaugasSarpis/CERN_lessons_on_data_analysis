@@ -100,7 +100,7 @@ mental model. (~1 min)
 hideInToc: true
 ---
 
-# Why Data Fitting?
+# Why Data **Fitting**?
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -150,7 +150,7 @@ data + model → parameters ± uncertainties, checked and iterated. (~30 sec)
 hideInToc: true
 ---
 
-# The Fundamental Problem
+# The Fundamental **Problem**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -191,15 +191,15 @@ $$\text{Data} \xrightarrow{\text{fitting}} \text{Parameter estimates } \hat{\the
 hideInToc: true
 ---
 
-# The Data Fitting Workflow
+# The Data Fitting **Workflow**
 
-```mermaid {scale: 0.9}
+```mermaid {scale: 1.0}
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 45}}}%%
 flowchart LR
-    Data["Data<br/>(xi, yi)"]:::input --> Model["Model<br/>f(x; theta)"]:::process
-    Model --> Fit["Fit<br/>minimize chi2"]:::process
-    Fit --> Params["Parameters<br/>theta +/- sigma"]:::output
-    Params --> Validate["Validate<br/>residuals, chi2/dof"]:::check
+    Data["Data<br/>(xᵢ, yᵢ)"]:::input --> Model["Model<br/>f(x; θ)"]:::process
+    Model --> Fit["Fit<br/>minimize χ²"]:::process
+    Fit --> Params["Parameters<br/>θ̂ ± σ"]:::output
+    Params --> Validate["Validate<br/>residuals, χ²/dof"]:::check
     Validate -->|Good| Report["Report"]:::output
     Validate -->|Bad| Model
 
@@ -209,11 +209,16 @@ flowchart LR
     classDef check fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:12px,ry:12px
 ```
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
-**Key insight**: Fitting is iterative. If diagnostics reveal problems, refine the model and repeat.
+🔁 **Key insight**: Fitting is iterative. If diagnostics reveal problems, refine the model and repeat.
 
 </div>
+
+<!--
+Speaker: walk the loop once: data + model → minimize χ² → θ̂ ± σ → validate.
+The "Bad" arrow back to Model is the whole lecture in one edge. (~1 min)
+-->
 
 ---
 layout: section
@@ -222,9 +227,16 @@ hideInToc: true
 
 # Mathematical **Models**
 
+<!--
+Speaker: a model is a function with knobs. Three flavours, then what the knobs
+(parameters) actually mean in a signal-plus-background fit. (~30 sec)
+-->
+
 ---
 hideInToc: true
 ---
+
+# What Is a **Model**?
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -266,6 +278,8 @@ where $\varepsilon$ represents random measurement errors.
 ---
 hideInToc: true
 ---
+
+# Three Kinds of **Model**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -323,9 +337,11 @@ Combines both approaches
 hideInToc: true
 ---
 
-# What Parameters Represent
+# Parameters **Example**: Gaussian + Exponential
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-md gap-md" style="margin-top: 0;">
+
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-tight">
 
@@ -351,13 +367,9 @@ Parameters $\theta$ are the unknowns we want to determine:
 
 </div>
 
----
-hideInToc: true
----
+<div class="stack-tight">
 
-# Parameter Example: Gaussian + Exponential
-
-<div class="card card-accent card-glass pad-compact mt-sm">
+<div class="card card-accent card-glass pad-compact">
 
 ## **Model**
 
@@ -365,17 +377,27 @@ $$f(x) = A \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}} + N \cdot e^{-x/\lambda}$$
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact">
 
-| Parameter | Meaning |
-|-----------|---------|
-| $A$ | Signal amplitude |
-| $\mu$ | Signal position (mass) |
-| $\sigma$ | Signal width (resolution) |
-| $N$ | Background normalization |
-| $\lambda$ | Background decay scale |
+## **Parameters**
+
+- $A$ — signal amplitude
+- $\mu$ — signal position (mass)
+- $\sigma$ — signal width (resolution)
+- $N$ — background normalization
+- $\lambda$ — background decay scale
 
 </div>
+
+</div>
+
+</div>
+
+<!--
+Speaker: point at the table — A, μ, σ are the physics; N, λ are nuisance
+parameters we must fit but don't care about. The seminar's D⁰ fit has exactly
+this shape (Gaussian + linear or exponential background). (~1.5 min)
+-->
 
 ---
 layout: section
@@ -393,7 +415,7 @@ and where the covariance matrix (the errors) comes from. (~1 min)
 hideInToc: true
 ---
 
-# The Estimation Problem
+# The Estimation **Problem**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -438,6 +460,8 @@ $$\hat{\theta} = \arg\min_\theta \text{Cost}(\theta)$$
 hideInToc: true
 ---
 
+# Least **Squares**
+
 <div class="card card-info card-glass pad-tight mt-md">
 
 ## **Sum of Squared Residuals**
@@ -480,6 +504,8 @@ This is why least squares is so widely used.
 hideInToc: true
 ---
 
+# Weighted Least Squares = **χ²**
+
 <div class="card card-info card-glass pad-tight mt-md">
 
 ## **Weighted Least Squares**
@@ -509,17 +535,25 @@ Points with smaller uncertainties contribute more to the fit.
 
 ## **Common case: Poisson data**
 
-For histogram bin counts $n_i$:
+For histogram bin counts $n_i$: $\sigma_i = \sqrt{n_i}$
 
-$$\sigma_i = \sqrt{n_i}$$
+Fine for $n_i \gtrsim 10$. **Sparse bins**: $\sqrt{n_i}$ under-weights fluctuations and biases yields low → use $\sigma_i = \sqrt{f(x_i)}$ from the model, or a Poisson likelihood fit.
+
+</div>
 
 </div>
 
-</div>
+<!--
+Speaker: the √n trick is what everyone does and it is fine for well-populated
+bins. In the tails a bin with 1 count gets σ = 1 and a bin with 0 counts gets
+σ = 0 — that is where fits go wrong; the model-σ or a likelihood fit fixes it. (~1.5 min)
+-->
 
 ---
 hideInToc: true
 ---
+
+# The **Covariance** Matrix
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -537,13 +571,13 @@ $$C_{ij} = \text{Cov}(\hat{\theta}_i, \hat{\theta}_j)$$
 
 ## **Diagonal elements**
 
-$$C_{ii} = \text{Var}(\hat{\theta}_i) = \sigma_i^2$$
+$$C_{ii} = \text{Var}(\hat{\theta}_i) = \sigma_{\hat\theta_i}^2$$
 
 **Parameter uncertainties:**
 
-$$\sigma_i = \sqrt{C_{ii}}$$
+$$\sigma_{\hat\theta_i} = \sqrt{C_{ii}}$$
 
-Report results as: $\hat{\theta}_i \pm \sigma_i$
+Report results as: $\hat{\theta}_i \pm \sigma_{\hat\theta_i}$
 
 </div>
 
@@ -555,7 +589,7 @@ $$C_{ij} = \text{Cov}(\hat{\theta}_i, \hat{\theta}_j)$$
 
 **Correlations between parameters:**
 
-$$\rho_{ij} = \frac{C_{ij}}{\sigma_i \sigma_j}$$
+$$\rho_{ij} = \frac{C_{ij}}{\sigma_{\hat\theta_i}\, \sigma_{\hat\theta_j}}$$
 
 Important for error propagation!
 
@@ -563,181 +597,56 @@ Important for error propagation!
 
 </div>
 
----
-hideInToc: true
-layout: image
-image: /figures/covariance_matrix_1.png
-backgroundSize: contain
----
-
-Covariance matrix: diagonal elements give parameter variances, off-diagonal elements reveal correlations between parameters.
-
----
-hideInToc: true
-layout: image
-image: /figures/covariance_matrix_2.png
-backgroundSize: contain
----
-
-Visualizing correlations: ellipses show joint confidence regions for pairs of parameters.
+<!--
+Speaker: distinguish the two sigmas explicitly — σᵢ is the error on a DATA
+point, σ_θ̂ is the error on a fitted PARAMETER. Students mix them up all the
+time. (~1 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-<div class="card card-info card-glass pad-tight mt-md">
-
-
-`scipy.optimize.curve_fit` performs nonlinear least squares fitting:
-
-```python
-popt, pcov = curve_fit(model, x_data, y_data, p0=initial_guess)
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Inputs**
-
-- `model`: function $f(x, \theta_1, \theta_2, ...)$
-- `x_data`, `y_data`: your measurements
-- `p0`: initial parameter guess
-- `sigma`: uncertainties (optional)
-- `bounds`: parameter limits (optional)
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Outputs**
-
-- `popt`: optimal parameters $\hat{\theta}$
-- `pcov`: covariance matrix
-
-**Uncertainties:**
-```python
-errors = np.sqrt(np.diag(pcov))
-```
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-Under the hood: with no bounds, `curve_fit` uses the Levenberg-Marquardt algorithm (a hybrid of gradient descent and Gauss-Newton); when you supply parameter bounds it switches to a trust-region method.
-
-</div>
-
----
-hideInToc: true
----
-
-# Interactive: Linear Fit
+# The **Covariance** Matrix, Pictured
 
 <div class="note-text mt-sm">
 
-Fit a straight line $y = mx + b$ to noisy data and extract the slope and intercept with uncertainties. ⚙️ *Do it once by hand, then let the fitter do it every time.*
+Same fit as the Gaussian runner you are about to run --- four parameters $(A, \mu, \sigma, b)$, one 4×4 matrix. The **tilted ellipse** on the right *is* the off-diagonal entry $\rho(A, \sigma) = -0.57$ on the left.
 
 </div>
 
-```python {monaco-run} {autorun:false}
-np.random.seed(42)
-x = np.linspace(0, 10, 20)
-y = 2.5 * x + 1.0 + np.random.normal(0, 2.0, 20)
-sigma = np.full_like(x, 2.0)
+<img class="fig" src="/figures/viz_fitting_covariance.svg" style="display:block;margin:0.5rem auto 0;width:100%;max-height:360px;">
 
-def linear(x, m, b):
-    return m * x + b
-
-popt, pcov = curve_fit(linear, x, y, sigma=sigma)
-m, b = popt; dm, db = np.sqrt(np.diag(pcov))
-chi2 = np.sum(((y - linear(x, *popt)) / sigma) ** 2)
-
-plt.figure(figsize=(7, 3.1))
-plt.errorbar(x, y, yerr=sigma, fmt='o', ms=4, label='Data')
-plt.plot(x, linear(x, *popt), 'r-',
-         label=f'm={m:.2f}±{dm:.2f}, b={b:.2f}±{db:.2f}')
-plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-2} = {chi2/(len(x)-2):.2f}')
-plt.legend(); plt.xlabel('x'); plt.ylabel('y'); plt.tight_layout(); plt.show()
-```
+<!--
+Speaker: left — read the matrix like a table: A and σ anti-correlated (wider
+peak, lower amplitude, same area); μ decouples because the peak is symmetric on
+a flat background. Right — the Δχ² = 1 ellipse projects to exactly ±1σ on each
+axis (dashed lines); the Δχ² = 2.3 ellipse is the 68 % JOINT region, which is
+bigger. The tilt is the correlation. Come back here when we talk about
+correlated parameters. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Interactive: Gaussian Fit
-
-<div class="note-text mt-sm">
-
-Fit a Gaussian peak $A \cdot e^{-(x-\mu)^2/2\sigma^2}$ to simulated histogram data --- a common task in particle physics.
-
-</div>
-
-```python {monaco-run} {autorun:false}
-np.random.seed(7)
-data = np.concatenate([np.random.normal(5, 0.8, 500),
-                       np.random.uniform(0, 10, 200)])
-counts, edges = np.histogram(data, bins=40, range=(0, 10))
-x = 0.5 * (edges[:-1] + edges[1:])
-y = counts.astype(float); yerr = np.sqrt(np.maximum(counts, 1))
-
-def gauss_bg(x, A, mu, sig, bg):
-    return A * np.exp(-(x - mu) ** 2 / (2 * sig ** 2)) + bg
-
-popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=yerr)
-err = np.sqrt(np.diag(pcov))
-chi2 = np.sum(((y - gauss_bg(x, *popt)) / yerr) ** 2)
-
-plt.figure(figsize=(7, 3.1))
-plt.errorbar(x, y, yerr=yerr, fmt='o', ms=3, label='Data')
-xf = np.linspace(0, 10, 200)
-plt.plot(xf, gauss_bg(xf, *popt), 'r-',
-         label=f'mu={popt[1]:.2f}±{err[1]:.2f}, sig={popt[2]:.2f}±{err[2]:.2f}')
-plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-4} = {chi2/(len(x)-4):.2f}')
-plt.legend(); plt.xlabel('x'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
-```
+<MCQ
+  question="In the pictured fit, ρ(A, σ) = −0.57. Which reading is correct?"
+  :options="[
+    'The width σ is poorly measured because of the correlation',
+    'A wider fitted peak comes with a lower amplitude — the data pin down the area, not A and σ separately',
+    'μ and σ must also be strongly correlated',
+    'The single-parameter errors on A and σ already include the joint uncertainty'
+  ]"
+  :correct="1"
+  explanation="A negative ρ(A, σ) means the χ² valley runs diagonally: making the peak wider and lower leaves the area (yield) almost unchanged, so the data constrain A·σ better than either alone. μ decouples for a symmetric peak on a flat background, and single-parameter errors (Δχ² = 1 projections) understate the joint region."
+/>
 
 ---
 hideInToc: true
 ---
 
-# Interactive: Exponential Decay Fit
-
-<div class="note-text mt-sm">
-
-Fit an exponential decay $N_0 \cdot e^{-t/\tau}$ to extract the lifetime $\tau$ --- a key measurement in nuclear and particle physics.
-
-</div>
-
-```python {monaco-run} {autorun:false}
-np.random.seed(13)
-t = np.linspace(0.5, 8, 25)
-N = np.random.poisson(200 * np.exp(-t / 2.5)).astype(float)
-sigma_N = np.sqrt(np.maximum(N, 1))
-
-def decay(t, N0, tau):
-    return N0 * np.exp(-t / tau)
-
-popt, pcov = curve_fit(decay, t, N, p0=[150, 2], sigma=sigma_N)
-N0, tau = popt; err = np.sqrt(np.diag(pcov))
-chi2 = np.sum(((N - decay(t, *popt)) / sigma_N) ** 2)
-
-plt.figure(figsize=(7, 3.1))
-plt.errorbar(t, N, yerr=sigma_N, fmt='o', ms=4, label='Data')
-tf = np.linspace(0.5, 8, 200)
-plt.plot(tf, decay(tf, *popt), 'r-',
-         label=f'N0={N0:.0f}±{err[0]:.0f}, tau={tau:.2f}±{err[1]:.2f}')
-plt.title(f'chi2/dof = {chi2:.1f}/{len(t)-2} = {chi2/(len(t)-2):.2f}')
-plt.legend(); plt.xlabel('Time'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
-```
-
----
-hideInToc: true
----
+# Initial **Guesses** Matter
 
 <div class="card card-warning card-glass pad-tight mt-md">
 
@@ -766,20 +675,207 @@ Nonlinear fitting is an optimization problem. Poor initial guesses can lead to:
 
 <div class="card card-info card-glass pad-tight">
 
-For a Gaussian peak:
+## **For a Gaussian peak**
+
 - `mean` ≈ position of maximum
-- `sigma` ≈ half-width at half-max
+- `sigma` ≈ FWHM / 2.35 (or HWHM / 1.18)
 - `amplitude` ≈ peak height
 
 </div>
 
 </div>
 
+<!--
+Speaker: this comes BEFORE the runners on purpose — every p0 in the next three
+slides was read off a plot exactly this way. FWHM/2.35 is the one number to
+memorise. (~1.5 min)
+-->
+
 ---
 hideInToc: true
 ---
 
-# Constraining Parameters
+# `curve_fit` in **One Line**
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+`scipy.optimize.curve_fit` performs nonlinear least squares fitting:
+
+```python
+popt, pcov = curve_fit(model, x_data, y_data, p0=initial_guess, sigma=errors, absolute_sigma=True)
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## **Inputs**
+
+- `model`: function $f(x, \theta_1, \theta_2, ...)$
+- `x_data`, `y_data`: your measurements
+- `p0`: initial parameter guess
+- `sigma`: per-point uncertainties $\sigma_i$
+- `absolute_sigma=True`: treat σ as real errors — the default `False` rescales `pcov` by χ²/dof, hiding a bad χ²
+- `bounds`: parameter limits (optional)
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## **Outputs**
+
+- `popt`: optimal parameters $\hat{\theta}$
+- `pcov`: covariance matrix
+
+**Uncertainties:**
+```python
+errors = np.sqrt(np.diag(pcov))
+```
+
+Under the hood: no bounds → Levenberg-Marquardt (gradient descent + Gauss-Newton hybrid); with bounds → a trust-region method.
+
+</div>
+
+</div>
+
+<!--
+Speaker: absolute_sigma is the gotcha of the day. With the default, curve_fit
+silently multiplies pcov by χ²/dof — a terrible fit then gets inflated errors
+that look "honest", and a suspiciously good fit gets shrunk ones. Always pass
+True when your σᵢ are real. (~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Interactive: **Linear** Fit
+
+<div class="note-text mt-sm">
+
+Fit a straight line $y = mx + b$ to noisy data and extract the slope and intercept with uncertainties. ⚙️ *Do it once by hand, then let the fitter do it every time.*
+
+</div>
+
+```python {monaco-run} {autorun:false}
+np.random.seed(42)
+x = np.linspace(0, 10, 20)
+y = 2.5 * x + 1.0 + np.random.normal(0, 2.0, 20)
+sigma = np.full_like(x, 2.0)
+
+def linear(x, m, b):
+    return m * x + b
+
+popt, pcov = curve_fit(linear, x, y, sigma=sigma, absolute_sigma=True)
+m, b = popt; dm, db = np.sqrt(np.diag(pcov))
+chi2 = np.sum(((y - linear(x, *popt)) / sigma) ** 2)
+
+plt.figure(figsize=(7, 3.1))
+plt.errorbar(x, y, yerr=sigma, fmt='o', ms=4, label='Data')
+plt.plot(x, linear(x, *popt), 'r-',
+         label=f'm={m:.2f}±{dm:.2f}, b={b:.2f}±{db:.2f}')
+plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-2} = {chi2/(len(x)-2):.2f}')
+plt.legend(); plt.xlabel('x'); plt.ylabel('y'); plt.tight_layout(); plt.show()
+```
+
+<!--
+Speaker: output — m = 2.12 ± 0.15, b = 2.55 ± 0.86, χ²/dof = 10.9/18 = 0.61
+(p ≈ 0.90). Truth was m = 2.5, b = 1.0: the slope reads 2.5σ low and the
+intercept 1.8σ high — but ρ(m, b) ≈ −0.85 for a line over x ∈ [0, 10], so this
+is ONE joint ~2σ wobble (Δχ² ≈ 7 for 2 dof), not two independent ones. χ²/dof
+of 0.61 just says this sample scattered less than σ = 2 — nothing to fix.
+Change the seed and watch both move together. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Interactive: **Gaussian** Fit
+
+<div class="note-text mt-sm">
+
+Fit a Gaussian peak $A \cdot e^{-(x-\mu)^2/2\sigma^2}$ to simulated histogram data --- a common task in particle physics.
+
+</div>
+
+```python {monaco-run} {autorun:false}
+np.random.seed(7); data = np.concatenate([np.random.normal(5, 0.8, 500),
+                                          np.random.uniform(0, 10, 200)])
+counts, edges = np.histogram(data, bins=40, range=(0, 10))
+x = 0.5 * (edges[:-1] + edges[1:])
+y = counts.astype(float); yerr = np.sqrt(np.maximum(counts, 1))
+
+def gauss_bg(x, A, mu, sig, bg):
+    return A * np.exp(-(x - mu) ** 2 / (2 * sig ** 2)) + bg
+
+popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=yerr, absolute_sigma=True)
+err = np.sqrt(np.diag(pcov))
+chi2 = np.sum(((y - gauss_bg(x, *popt)) / yerr) ** 2)
+
+plt.figure(figsize=(7, 3.1)); xf = np.linspace(0, 10, 200)
+plt.errorbar(x, y, yerr=yerr, fmt='o', ms=3, label='Data')
+plt.plot(xf, gauss_bg(xf, *popt), 'r-',
+         label=f'mu={popt[1]:.2f}±{err[1]:.2f}, sig={popt[2]:.2f}±{err[2]:.2f}')
+plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-4} = {chi2/(len(x)-4):.2f}')
+plt.legend(); plt.xlabel('x'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
+```
+
+<!--
+Speaker: output — μ = 4.95 ± 0.04, σ = 0.81 ± 0.04 (truth 5, 0.8),
+χ²/dof = 40.2/36 = 1.12 (p ≈ 0.29) — textbook. This is the very fit whose
+covariance matrix we just pictured: A = 63.7 ± 3.7 with ρ(A, σ) = −0.57.
+Print `pcov / np.outer(err, err)` live to show the matrix. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Interactive: **Exponential** Decay Fit
+
+<div class="note-text mt-sm">
+
+Fit an exponential decay $N_0 \cdot e^{-t/\tau}$ to extract the lifetime $\tau$ --- a key measurement in nuclear and particle physics.
+
+</div>
+
+```python {monaco-run} {autorun:false}
+np.random.seed(13)
+t = np.linspace(0.5, 8, 25)
+N = np.random.poisson(200 * np.exp(-t / 2.5)).astype(float)
+sigma_N = np.sqrt(np.maximum(N, 1))
+
+def decay(t, N0, tau):
+    return N0 * np.exp(-t / tau)
+
+popt, pcov = curve_fit(decay, t, N, p0=[150, 2], sigma=sigma_N, absolute_sigma=True)
+N0, tau = popt; err = np.sqrt(np.diag(pcov))
+chi2 = np.sum(((N - decay(t, *popt)) / sigma_N) ** 2)
+
+plt.figure(figsize=(7, 3.1))
+plt.errorbar(t, N, yerr=sigma_N, fmt='o', ms=4, label='Data')
+tf = np.linspace(0.5, 8, 200)
+plt.plot(tf, decay(tf, *popt), 'r-',
+         label=f'N0={N0:.0f}±{err[0]:.0f}, tau={tau:.2f}±{err[1]:.2f}')
+plt.title(f'chi2/dof = {chi2:.1f}/{len(t)-2} = {chi2/(len(t)-2):.2f}')
+plt.legend(); plt.xlabel('Time'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
+```
+
+<!--
+Speaker: output — N₀ = 206 ± 10, τ = 2.41 ± 0.09 (truth 200, 2.5),
+χ²/dof = 31.0/23 = 1.35. Talking point: 1.35 with 23 dof is p ≈ 0.12 — not
+alarming; χ²/dof has its own spread (≈ √(2/dof) ≈ 0.3 here). Also note the
+last bins have ~8 counts — √n is getting marginal there. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Constraining **Parameters**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -826,19 +922,19 @@ layout: section
 hideInToc: true
 ---
 
-# Parameter **Uncertainties**
+# Uncertainties & **Diagnostics**
 
 <!--
 Speaker: we already read errors off the covariance matrix — now the intuition:
-where they come from, when they shrink, and how to cross-check them without
-trusting any formula. (~30 sec)
+where they come from, when they shrink, how to cross-check them without
+trusting any formula, and how residuals tell you the model is wrong. (~30 sec)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Where Parameter Errors Come From
+# Where Parameter **Errors** Come From
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -876,7 +972,7 @@ Near its minimum, $\chi^2(\theta)$ is approximately a parabola. The **1σ uncert
 hideInToc: true
 ---
 
-# More Data, Smaller Errors
+# More Data, **Smaller** Errors
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -914,13 +1010,13 @@ Statistical uncertainties on fitted parameters shrink as $1/\sqrt{N}$ — to **h
 hideInToc: true
 ---
 
-# Correlated Parameters: Mass and Width
+# Correlated **Parameters**: Width and Yield
 
 <div class="card card-info card-glass pad-tight mt-md">
 
 ## **Parameters Move Together**
 
-With a background under a peak, the fitted mass, width, and yield are **not independent** — the tilted confidence ellipses from the covariance matrix are exactly this.
+With a background under a peak, the fitted amplitude, width, and yield are **not independent** — the tilted confidence ellipse we pictured ($\rho(A, \sigma) = -0.57$) is exactly this.
 
 </div>
 
@@ -930,9 +1026,9 @@ With a background under a peak, the fitted mass, width, and yield are **not inde
 
 ## 🔍 **How it shows up**
 
-- Shifting $\mu$ is partly compensated by changing $\sigma$
+- Widening $\sigma$ is compensated by lowering $A$ — the data pin down the **area**
 - Single-parameter errors understate the joint uncertainty
-- Check $\rho_{ij}$ from the covariance matrix
+- $\mu$ decouples for a symmetric peak on a flat background; a sloped background couples it too
 
 </div>
 
@@ -948,15 +1044,21 @@ With a background under a peak, the fitted mass, width, and yield are **not inde
 
 </div>
 
+<!--
+Speaker: flip back to the ellipse figure if needed. Concrete reparameterisation:
+fit the yield N = A·σ·√(2π) instead of A — the correlation with σ mostly
+disappears. (~1.5 min)
+-->
+
 ---
 hideInToc: true
 ---
 
-# Bootstrap: Errors Without Formulas
+# Bootstrap: Errors **Without** Formulas
 
 <div class="note-text mt-sm">
 
-Don't want to trust the covariance matrix blindly? **Refluctuate the data, refit, repeat** — the spread of the refitted values *is* the uncertainty. ♻️ *A cross-check you can run anywhere.*
+Don't want to trust the covariance matrix blindly? **Refluctuate the data around the fitted model, refit, repeat** — the spread of the refitted values *is* the uncertainty. ♻️ *A cross-check you can run anywhere.*
 
 </div>
 
@@ -966,26 +1068,28 @@ x = np.linspace(0, 10, 40)
 def gauss_bg(x, A, mu, sig, b):
     return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b
 y = rng.poisson(gauss_bg(x, 40, 5, 0.8, 5)).astype(float)
-popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=np.sqrt(np.maximum(y, 1)))
+popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=np.sqrt(np.maximum(y, 1)), absolute_sigma=True)
 mus = []
-for _ in range(200):                          # bootstrap: refluctuate + refit
-    yb = rng.poisson(np.maximum(y, 1)).astype(float)
-    p, _ = curve_fit(gauss_bg, x, yb, p0=popt, sigma=np.sqrt(np.maximum(yb, 1)))
+for _ in range(500):                          # parametric bootstrap ("toy MC"): refluctuate + refit
+    yb = rng.poisson(gauss_bg(x, *popt)).astype(float)
+    p, _ = curve_fit(gauss_bg, x, yb, p0=popt, sigma=np.sqrt(np.maximum(yb, 1)), absolute_sigma=True)
     mus.append(p[1])
 print(f"covariance error on mu: {np.sqrt(pcov[1, 1]):.4f}")
 print(f"bootstrap spread of mu: {np.std(mus):.4f}")
 ```
 
 <!--
-Speaker: run it — the two numbers agree to within a few percent. Point out this
-works for ANY estimator, however complicated, as long as you can refit. (~2 min)
+Speaker: run it — covariance 0.052 vs bootstrap 0.052 (0.0524 vs 0.0523).
+This is a PARAMETRIC bootstrap, a.k.a. toy Monte Carlo: each toy is a fresh
+Poisson draw around the fitted model, refit with the same recipe. It works for
+ANY estimator, however complicated, as long as you can refit. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Residual Analysis
+# Residual **Analysis**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -1027,7 +1131,7 @@ Residuals reveal how well the model captures the data structure.
 hideInToc: true
 ---
 
-# Standardized Residuals
+# Standardized **Residuals**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -1046,6 +1150,7 @@ If model is correct and uncertainties accurate: pulls ~ $N(0, 1)$
 <div class="card card-primary card-glass pad-tight">
 
 ### **Mean**
+
 Should be ≈ 0
 
 Non-zero → systematic bias
@@ -1055,16 +1160,18 @@ Non-zero → systematic bias
 <div class="card card-secondary card-glass pad-tight">
 
 ### **Width**
+
 Should be ≈ 1
 
-> 1 → underestimated errors
-< 1 → overestimated errors
+- $\sigma_{\text{pull}} > 1$ → errors underestimated
+- $\sigma_{\text{pull}} < 1$ → errors overestimated
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
 ### **Shape**
+
 Should be Gaussian
 
 Non-Gaussian → model problems
@@ -1077,7 +1184,7 @@ Non-Gaussian → model problems
 hideInToc: true
 ---
 
-# Visualizing Fit Quality
+# Visualizing Fit **Quality**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -1135,7 +1242,7 @@ it never replaces looking at the residuals. (~1 min)
 hideInToc: true
 ---
 
-# The Chi-Squared Statistic
+# The Chi-Squared **Statistic**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -1179,7 +1286,7 @@ Accounts for "freedom used up" by fitting.
 hideInToc: true
 ---
 
-# Reduced Chi-Squared
+# Reduced **Chi-Squared**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -1229,7 +1336,7 @@ Uncertainties overestimated, or too many parameters
 hideInToc: true
 ---
 
-# What Does the Number Feel Like?
+# What Does the Number **Feel** Like?
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1259,9 +1366,11 @@ Same 40 points, but the curve runs almost exactly through every error bar --- su
 hideInToc: true
 ---
 
-# Interpreting chi-squared: Large Values
+# Reading **χ²/dof**
 
-<div class="card card-primary card-glass pad-tight mt-md">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
 
 ## **When chi2/dof is large**
 
@@ -1275,13 +1384,7 @@ Possible causes:
 
 </div>
 
----
-hideInToc: true
----
-
-# Interpreting chi-squared: Small Values
-
-<div class="card card-secondary card-glass pad-tight mt-md">
+<div class="card card-secondary card-glass pad-tight">
 
 ## **When chi2/dof is small**
 
@@ -1291,6 +1394,8 @@ Possible causes:
 3. Fitting noise (overfitting)
 
 **Action**: Review uncertainty estimation, simplify model
+
+</div>
 
 </div>
 
@@ -1304,7 +1409,7 @@ Possible causes:
 hideInToc: true
 ---
 
-# p-value from chi-squared
+# p-value from **chi-squared**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
@@ -1333,14 +1438,68 @@ Use it as a **fit-quality diagnostic**, not a significance verdict: a very small
 ## **Calculation**
 
 ```python
-from scipy.stats import chi2
+from scipy.stats import chi2 as chi2_dist
 
-p_value = 1 - chi2.cdf(chi_squared, dof)
+p_value = 1 - chi2_dist.cdf(chi_squared, dof)
 # or equivalently:
-p_value = chi2.sf(chi_squared, dof)
+p_value = chi2_dist.sf(chi_squared, dof)
 ```
 
 </div>
+
+</div>
+
+<!--
+Speaker: the alias matters — `chi2` is already the NAME of the number in every
+runner today; importing scipy's distribution as `chi2` would shadow it. The
+decay fit: chi2_dist.sf(31.0, 23) ≈ 0.12. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Model **Comparison**
+
+<div class="card card-info card-glass pad-tight mt-md">
+
+## **Which Model is Better?**
+
+When comparing nested models (e.g., with/without a component), use:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## **Likelihood Ratio Test**
+
+$$\Delta \chi^2 = \chi^2_{\text{simple}} - \chi^2_{\text{complex}}$$
+
+Compare to chi-squared distribution with delta-dof degrees of freedom.
+
+Large $\Delta \chi^2$ → complex model significantly better
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## **Information Criteria**
+
+**AIC**: $2p - 2\ln(L)$ · **BIC**: $p\ln(n) - 2\ln(L)$
+
+For Gaussian errors $-2\ln L = \chi^2 + \text{const}$, so **AIC = χ² + 2p**
+
+Lower is better. Automatically penalize complexity.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+**Occam's razor**: Prefer simpler models unless data strongly favor complexity.
 
 </div>
 
@@ -1351,37 +1510,37 @@ hideInToc: true
 
 # Common **Issues**
 
+<!--
+Speaker: the failure modes, then a gallery of quiet failures to diagnose. (~30 sec)
+-->
+
 ---
 hideInToc: true
 ---
 
-# When Fits Go Wrong: Convergence Failure
+# When Fits Go **Wrong**
 
-<div class="card card-warning card-glass pad-tight mt-md">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
 
 ## **Convergence Failure**
 
 Fit doesn't converge or gives errors
 
 **Causes:**
-- Poor initial guess
-- Model incompatible with data
+- Model incompatible with data (or with `p0`)
 - Numerical issues (overflow, divide by zero)
+- Empty bins with $\sigma_i = 0$
 
 **Solutions:**
-- Better starting point
-- Check model at p0 visually
+- Plot the model at `p0` before fitting
 - Add parameter bounds
+- Rescale variables (GeV not eV, $t/\tau$ not $t$)
 
 </div>
 
----
-hideInToc: true
----
-
-# When Fits Go Wrong: Unreasonable Results
-
-<div class="card card-warning card-glass pad-tight mt-md">
+<div class="card card-warning card-glass pad-tight">
 
 ## **Unreasonable Results**
 
@@ -1393,9 +1552,11 @@ Parameters have wrong sign or magnitude
 - Wrong model functional form
 
 **Solutions:**
-- Multiple starting points
 - Reparameterize model
 - Simplify or change model
+- Check `pcov` and the bounds, not just the return status
+
+</div>
 
 </div>
 
@@ -1403,7 +1564,7 @@ Parameters have wrong sign or magnitude
 hideInToc: true
 ---
 
-# Common Pitfalls
+# Common **Pitfalls**
 
 <div class="grid-2 mt-md gap-md" style="margin-top: 0;">
 
@@ -1415,7 +1576,7 @@ hideInToc: true
 
 **Problem**: $\sigma_i = \sqrt{0}$ → division by zero
 
-**Solution**: Exclude empty bins or use $\sigma_i = 1$
+**Solution**: Exclude, or use the model's $\sigma_i = \sqrt{f(x_i)}$ (not $\sigma_i = 1$)
 
 </div>
 
@@ -1461,19 +1622,15 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Fit Pitfalls Gallery: What Went Wrong Here?
+# Pitfalls **Gallery**: What Went Wrong Here?
 
 <div class="note-text mt-sm">
 
-Three short scenarios, each a fit that broke quietly, in its own way. Diagnose the symptom before reading the fix, then try the MCQ. 🔍 *Same detective work you'll do on the D⁰ peak in Seminar 12.*
+Three fits that broke quietly, each in its own way. Diagnose the symptom before reading the fix, then try the MCQ. 🔍 *Same detective work you'll do on the D⁰ peak in Seminar 12.*
 
 </div>
 
----
-hideInToc: true
----
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-tight">
 
@@ -1495,19 +1652,15 @@ hideInToc: true
 
 </div>
 
-</div>
+<div class="card card-warning card-glass pad-tight">
 
----
-hideInToc: true
----
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## 🕳️ **Silently Converged to Garbage**
+## 🕳️ **Converged to Garbage**
 
 **Symptom**: `curve_fit` raises nothing, but a parameter sits exactly on its bound and `pcov` has a huge or ill-defined diagonal entry.
 
 **Fix**: check `pcov` and the bounds every time --- "no exception" is not the same as "correct answer."
+
+</div>
 
 </div>
 
@@ -1528,54 +1681,6 @@ hideInToc: true
 />
 
 ---
-hideInToc: true
----
-
-# Model Comparison
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Which Model is Better?**
-
-When comparing nested models (e.g., with/without a component), use:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Likelihood Ratio Test**
-
-$$\Delta \chi^2 = \chi^2_{\text{simple}} - \chi^2_{\text{complex}}$$
-
-Compare to chi-squared distribution with delta-dof degrees of freedom.
-
-Large $\Delta \chi^2$ → complex model significantly better
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Information Criteria**
-
-**AIC**: $2p - 2\ln(L)$
-
-**BIC**: $p\ln(n) - 2\ln(L)$
-
-Lower is better. Automatically penalize complexity.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-**Occam's razor**: Prefer simpler models unless data strongly favor complexity.
-
-</div>
-
----
 layout: section
 hideInToc: true
 ---
@@ -1591,7 +1696,7 @@ always check χ²/dof and residuals. These habits are the reproducibility payoff
 hideInToc: true
 ---
 
-# The Complete Workflow
+# The Complete **Workflow**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1624,7 +1729,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Do's and Don'ts
+# Do's and **Don'ts**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1637,6 +1742,8 @@ hideInToc: true
 - Report uncertainties with results
 - Check residuals for patterns
 - Calculate and report chi2/dof
+- Document your analysis fully
+- Consider systematic uncertainties
 
 </div>
 
@@ -1649,33 +1756,6 @@ hideInToc: true
 - Report parameters without uncertainties
 - Skip residual analysis
 - Cherry-pick "good" fits
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# More Do's and Don'ts
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Also Do**
-
-- Document your analysis fully
-- Use multiple starting points
-- Consider systematic uncertainties
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **Also Don't**
-
 - Overfit with too many parameters
 - Extrapolate far beyond data range
 - Ignore the covariance matrix
@@ -1689,58 +1769,18 @@ layout: section
 hideInToc: true
 ---
 
-# The Running Project — Fitting a Real Peak
-
-<div class="note-text mt-sm">🎯 **Seminar running project:** fit the **D⁰** peak of the LHCb K⁻π⁺ spectrum (Gaussian + background) → **m ≈ 1865 MeV** with error and χ²/dof. *Same recipe for any peak in any field.*</div>
-
-<img class="fig fig-light" src="/figures/lhcb_d0_fit.png" style="display:block;margin:0.4rem auto 0;max-height:235px;background:#fff;border-radius:8px;">
-
----
-hideInToc: true
----
-
-# Try It Yourself — Fit the **D⁰ Peak** 🔬
-
-<div class="note-text">Click ▶ to fit the D⁰ peak live and see its pull panel — then shrink the sample or drop the background term and re-run. *The exact mass ± error and χ²/dof are yours to compute in Seminar 12.*</div>
-
-```python {monaco-run} {autorun:false}
-rng = np.random.default_rng(0)
-mass = np.concatenate([rng.normal(1.865, 0.009, 4000),    # D0 peak
-                       rng.uniform(1.78, 1.96, 8000)])    # flat background
-y, edges = np.histogram(mass, bins=60, range=(1.78, 1.96))
-x, err = 0.5 * (edges[:-1] + edges[1:]), np.sqrt(np.maximum(y, 1))
-
-def model(x, A, mu, sig, b):                      # Gaussian peak + flat background
-    return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b
-
-popt, pcov = curve_fit(model, x, y, p0=[y.max(), 1.86, 0.01, np.median(y)], sigma=err)
-pull = (y - model(x, *popt)) / err                # standardized residuals
-
-fig, (a1, a2) = plt.subplots(2, 1, figsize=(7, 3.2), sharex=True,
-                              gridspec_kw={'height_ratios': [3, 1]})
-a1.errorbar(x, y, yerr=err, fmt='o', ms=3); a1.plot(edges, model(edges, *popt), 'r-')
-a2.axhline(0, color='gray', lw=1); a2.scatter(x, pull, s=8, color='#D55E00')
-a1.set_ylabel('Events'); a2.set(xlabel='M (GeV)', ylabel='pull')
-plt.tight_layout(); plt.show()
-```
+# Real-World **Applications**
 
 <!--
-Speaker: run it live — point at the pull panel settling around zero. Then break it
-on purpose: shrink N and watch the fit destabilize, or drop the background term and
-watch the pulls drift away from zero. The real numbers are computed in Seminar 12. (~3 min)
+Speaker: quick tour — the same recipe found the Higgs, and the same recipe is
+what a neural network does with a million knobs. (~30 sec)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Real-World **Applications**
-
----
-hideInToc: true
----
-
-# Example: Higgs Boson Discovery
+# Example: Higgs Boson **Discovery**
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
@@ -1767,9 +1807,10 @@ The Higgs boson was discovered using exactly these fitting methods.
 
 ## **What They Did**
 
+The same ideas, done as a **likelihood fit** rather than χ²:
+
 - Maximum-likelihood fits (profile-likelihood ratio for significance)
 - Background-only hypothesis tests
-- Signal significance calculation
 - Systematic uncertainty estimation
 
 </div>
@@ -1780,7 +1821,7 @@ The Higgs boson was discovered using exactly these fitting methods.
 hideInToc: true
 ---
 
-# Beyond Physics
+# Beyond **Physics**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -1851,7 +1892,7 @@ Same principles!
 hideInToc: true
 ---
 
-# Fitting vs Machine Learning
+# Fitting vs **Machine Learning**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1891,6 +1932,65 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Seminar 12 — Fit a **Real Peak**
+
+<div class="note-text mt-sm">
+
+🎯 **Seminar 12:** fit the **D⁰** peak of the LHCb K⁻π⁺ spectrum (Gaussian + linear or exponential background) → **m ≈ 1865 MeV** with error, width ± error, χ²/dof, and a pull check. *Same recipe for any peak in any field.*
+
+</div>
+
+<img class="fig fig-light" src="/figures/lhcb_d0_fit.png" style="display:block;margin:0.5rem auto 0;max-height:300px;background:#fff;border-radius:8px;">
+
+<!--
+Speaker: this is the real thing they will fit — the sample is shared across all
+seminars, and a starter script plus an initial mass estimate are provided. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Try It — Fit a **Simulated** D⁰ Peak 🔬
+
+<div class="note-text">
+
+Click ▶ to fit a simulated D⁰-like peak live and see its pull panel — then shrink the sample or drop the background term and re-run. *In Seminar 12 you do this on the real LHCb spectrum.*
+
+</div>
+
+```python {monaco-run} {autorun:false}
+rng = np.random.default_rng(0)
+mass = np.concatenate([rng.normal(1.865, 0.009, 4000),    # D0-like peak
+                       rng.uniform(1.78, 1.96, 8000)])    # flat background
+y, edges = np.histogram(mass, bins=60, range=(1.78, 1.96))
+x, err = 0.5 * (edges[:-1] + edges[1:]), np.sqrt(np.maximum(y, 1))
+
+def model(x, A, mu, sig, b):                      # Gaussian peak + flat background
+    return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b   # try b + c*x for the seminar's linear background
+
+popt, pcov = curve_fit(model, x, y, p0=[y.max(), 1.86, 0.01, np.median(y)], sigma=err, absolute_sigma=True)
+pull = (y - model(x, *popt)) / err; perr = np.sqrt(np.diag(pcov)); chi2 = np.sum(pull ** 2)   # pulls
+
+fig, (a1, a2) = plt.subplots(2, 1, figsize=(7, 3.2), sharex=True, gridspec_kw={'height_ratios': [3, 1]})
+a1.errorbar(x, y, yerr=err, fmt='o', ms=3); a1.plot(edges, model(edges, *popt), 'r-')
+a1.set_title(f'mu = {popt[1]*1e3:.2f} ± {perr[1]*1e3:.2f} MeV, chi2/dof = {chi2:.1f}/{len(x)-4}')
+a2.axhline(0, color='gray', lw=1); a2.scatter(x, pull, s=8, color='#D55E00')
+a1.set_ylabel('Events'); a2.set(xlabel='M (GeV)', ylabel='pull')
+plt.tight_layout(); plt.show()
+```
+
+<!--
+Speaker: output — μ = 1864.82 ± 0.20 MeV, σ = 9.04 ± 0.19 MeV (truth 1865, 9),
+χ²/dof = 64.3/56 = 1.15; the pulls have mean 0.04 and spread 1.03. Then break
+it on purpose: shrink N and watch the errors grow as 1/√N, or drop the
+background term and watch the pulls drift away from zero. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
 <MCQ
   question="After a fit you get χ²/dof ≈ 5. What does this most likely indicate?"
   :options="[
@@ -1913,19 +2013,19 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Fit a model by **least squares** and estimate its parameters
+✅ Fit a model by **least squares** — chosen from physics, not from what fits best
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Read errors and correlations from the **covariance matrix**
+✅ Read errors and correlations from the **covariance matrix** (with `absolute_sigma=True`)
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Judge a fit with **residuals** and **χ²/dof**
+✅ Judge a fit with **residuals**, **pulls** and **χ²/dof** — a good χ² still has to make physical sense
 
 </div>
 
@@ -1937,11 +2037,23 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-accent card-glass pad-tight">
 
 ## 🔬 **Seminar 12 tie-in**
 
-fit the LHCb D⁰ peak (Gaussian + background) and report the mass ± error with a χ²/dof goodness-of-fit.
+Fit the LHCb D⁰ peak (Gaussian + linear/exponential background) with `curve_fit`, report mass **and width** ± error, χ²/dof, and check the **pull** distribution — all wrapped in one re-runnable script.
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🌌 **The Big Picture**
+
+Fitting connects theory to data. It's how we extract quantitative knowledge from measurements---used everywhere from particle physics to machine learning.
+
+</div>
 
 </div>
 
@@ -1964,60 +2076,28 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">📗 **Hughes & Hase** — *Measurements and their Uncertainties* — practical and clear</div>
+<div class="card card-primary card-glass pad-compact">
 
-<div class="card card-secondary card-glass pad-compact">📘 **Bevington & Robinson** — *Data Reduction and Error Analysis for the Physical Sciences*</div>
-
-<div class="card card-accent card-glass pad-compact">🔬 **James** — *Statistical Methods in Experimental Physics*</div>
-
-<div class="card card-info card-glass pad-compact">🐍 **SciPy docs** — `scipy.optimize.curve_fit` and `lmfit` for real-world fitting</div>
+📗 **Hughes & Hase** — *Measurements and their Uncertainties* — practical and clear
 
 </div>
 
----
-hideInToc: true
----
+<div class="card card-secondary card-glass pad-compact">
 
-# Key Takeaways
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-### 📐 **Models**
-
-Mathematical functions with parameters that describe data
-
-Choose based on physics, not just fit quality
+📘 **Bevington & Robinson** — *Data Reduction and Error Analysis for the Physical Sciences*
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-accent card-glass pad-compact">
 
-### 🎯 **Fitting**
-
-Find parameters that minimize disagreement (chi2)
-
-Get uncertainties from covariance matrix
+🔬 **James** — *Statistical Methods in Experimental Physics*
 
 </div>
 
-<div class="card card-info card-glass pad-tight">
+<div class="card card-info card-glass pad-compact">
 
-### ✓ **Validation**
-
-Always check residuals and chi2/dof
-
-A good fit isn't enough---must make physical sense
+🐍 **SciPy docs** — `scipy.optimize.curve_fit` and `lmfit` for real-world fitting
 
 </div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## **The Big Picture**
-
-Fitting connects theory to data. It's how we extract quantitative knowledge from measurements---used everywhere from particle physics to machine learning.
 
 </div>

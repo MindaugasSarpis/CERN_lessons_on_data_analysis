@@ -6,11 +6,12 @@ workbook holds teaching notes and the hands-on **seminar** briefs.
 
 ## Hands-on seminars
 
-Every lecture has a paired seminar. All 16 build up **one running project** — a
-reproducible analysis of a real CMS dimuon dataset. Start here:
+Every lecture has a paired, self-contained seminar practised on a shared real
+dataset (LHCb open data, or one from your own field). Students' semester projects
+are separate and entirely their own choice. Start here:
 
-- **[Overview & the running project](seminars/running-project.md)** — the dataset,
-  the repository you'll build, and what each seminar adds.
+- **[Overview](seminars/overview.md)** — how the seminars relate to the project,
+  the shared dataset, the seminar repository, and what each session covers.
 
 The 16 seminar briefs are in the **Seminars** section of the navigation.
 

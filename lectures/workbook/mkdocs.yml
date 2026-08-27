@@ -17,7 +17,7 @@ nav:
       - 15 Computing Infrastructure: lectures/lecture_4.md
       - Miscellaneous: lectures/misc.md
   - Seminars:
-      - Overview & running project: seminars/running-project.md
+      - Overview: seminars/overview.md
       - S1 Toolkit & first repo: seminars/seminar_01.md
       - S2 Find & document a dataset: seminars/seminar_02.md
       - S3 Bit/number/format explorer: seminars/seminar_03.md

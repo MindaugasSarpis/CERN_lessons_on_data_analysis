@@ -184,8 +184,8 @@ def _bar_3d_bad():
 def _bar_2d_fixed():
     products, values = _product_sales()
     fig, ax = style.new_fig(7, 4.4)
-    colors = [style.CYCLE[i % len(style.CYCLE)] for i in range(len(products))]
-    bars = ax.bar(products, values, color=colors, width=0.6)
+    # One colour: the categories are already named on the axis.
+    bars = ax.bar(products, values, color=style.ACCENT, width=0.6)
     for rect, v in zip(bars, values):
         ax.annotate(f"{v}", xy=(rect.get_x() + rect.get_width() / 2, v),
                     xytext=(0, 4), textcoords="offset points",

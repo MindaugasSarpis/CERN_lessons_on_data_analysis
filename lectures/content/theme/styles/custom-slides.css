@@ -573,6 +573,13 @@
   line-height: 1.25;
   margin: 0;
 }
+/* A muted footer/aside line inside a card sits on the card's body scale, not the slide's. */
+.card .note-text {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
 .card p {
   font-size: 0.85rem;
   line-height: 1.4;
@@ -702,3 +709,71 @@
   box-shadow: 0 4px 12px rgba(2, 6, 23, 0.35);
 }
 
+
+/* Task lists (- [ ] / - [x]): drop the theme's square bullet so the checkbox
+   stands alone, matching how GitHub renders them. */
+.slidev-layout ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: 0; }
+.slidev-layout ul:has(> li > input[type="checkbox"]) > li::before { content: none; }
+
+/* ============================================
+   ANIM-CARD - click-revealed stacked cards
+   (L09: DIKW ladder, four analytics flavours).
+   Each card slides in from the left on its
+   click; while its .anim-ex body is visible the
+   heading shrinks and the example list expands.
+   Promoted from per-slide styles — deck-wide.
+   ============================================ */
+.anim-card.card {
+  padding: 0.4rem 0.8rem !important;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card.card:has(.anim-ex:not(.slidev-vclick-hidden)) {
+  padding: 0.5rem 1rem 0.6rem !important;
+}
+.anim-card.slidev-vclick-hidden {
+  transform: translateX(-40px);
+  opacity: 0 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+.anim-card h2 {
+  font-size: 1.3em;
+  line-height: 1.2;
+  margin: 0;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) h2 {
+  font-size: 1em;
+}
+.anim-sub {
+  display: block;
+  font-size: 0.75em;
+  opacity: 0.8;
+  margin-top: 0.15em;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) .anim-sub {
+  font-size: 0.7em;
+}
+.anim-ex {
+  max-height: 200px;
+  opacity: 0.7;
+  overflow: hidden;
+  font-size: 0.7em;
+  margin-top: 0.2rem;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.anim-ex.slidev-vclick-hidden {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  visibility: visible !important;
+  margin-top: 0 !important;
+  pointer-events: none;
+}
+.anim-ex ul { margin: 0; padding-left: 1.4em; }
+.anim-ex li { margin: 0.15em 0; }

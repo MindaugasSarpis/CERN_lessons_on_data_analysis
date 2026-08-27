@@ -4,7 +4,7 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** a documented quality audit of your
+> **This session builds:** a documented quality audit of your
 > dataset.
 
 ## Goal

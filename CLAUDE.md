@@ -39,11 +39,11 @@ There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test
 
 ### Build pipeline (manifest-driven)
 
-- **`lectures/content/decks.json`** — the manifest: `decks[]` (each `{slug, title, block, srcs[], optional, draft?}`) + `upcoming[]` (roadmap items shown greyed on the landing) + `blocks{}`.
+- **`lectures/content/decks.json`** — the manifest: `decks[]` (each `{slug, title, block, srcs[], optional, draft}`) + `blocks{}`. **`draft: true` = staged release**: the deck is still built + gated by `pnpm qa` / `pnpm timing:check` (so it can't rot while being edited), but a deploy build skips it (no `dist/<slug>/`, no 404 rewrite), and the landing + in-deck ☰ menu list it greyed/unlinked as "coming soon". Flip to `false` on delivery day and redeploy. `pnpm build --include-drafts` previews the full site locally.
 - **`scripts/gen-entries.mjs`** — writes one Slidev entry `lectures/content/deck.<slug>.md` per deck (co-located with `theme/` + `public/` so both resolve at build; a bare `slides/NN_*.md` build drops the theme AND can't resolve `/figures/*`). Entries are **generated + gitignored**, never hand-edited. Merged lectures list multiple `srcs`. Entries set **`routerMode: hash`** — GitHub Pages has no SPA rewrites, so history-mode slide URLs (`/<slug>/5`) 404 on reload; the landing build also emits a root `404.html` that rewrites old-style `/<slug>/5` links to `/<slug>/#/5` (Pages ignores the per-deck `404.html` copies Slidev emits in subdirectories).
-- **`scripts/build-all.mjs`** — regenerates entries, builds each deck to `<out>/<slug>/` at base `<prefix>/<slug>/` (absolute `--out`; Slidev resolves a relative `--out` against the entry dir), strips per-deck video copies (served from the remote fallback), then emits the landing via **`scripts/gen-landing.mjs`**. Flags: `--out`, `--base <prefix>`, `--only a,b`, `--flat-base` (base `/` for QA, no landing), `--keep-videos`.
+- **`scripts/build-all.mjs`** — regenerates entries, builds each deck to `<out>/<slug>/` at base `<prefix>/<slug>/` (absolute `--out`; Slidev resolves a relative `--out` against the entry dir), strips per-deck video copies (served from the remote fallback), then emits the landing via **`scripts/gen-landing.mjs`**. Flags: `--out`, `--base <prefix>`, `--only a,b`, `--flat-base` (base `/` for QA, no landing; always includes drafts), `--include-drafts`, `--keep-videos`.
 - **`landing/` + `scripts/build-landing.mjs`** — the landing page is an Active Theory-style WebGL page: `landing/` (Three.js particle sim + CSS + fonts) is built by Vite to fixed-name assets; `build-landing.mjs` copies them to `<out>/assets/` and calls `gen-landing.mjs`, which still renders all content (hero, lecture rows) from `decks.json` — the page works fully without JS. `qa-all.mjs` smoke-tests it via `scripts/check-landing.mjs` (links, WebGL boot/fallback gating, reveals, zero console errors).
-- **`figures/src/`** — scripted matplotlib pipeline for lecture figures (dark course style via `style.py`; one module per family with a `FIGURES` dict; deterministic output — seeded data, `svg.hashsalt`, no embedded date). Outputs are **committed** as `public/figures/viz_*.svg`; decks never invoke Python at build time.
+- **`figures/src/`** — scripted matplotlib pipeline for lecture figures (dark course style via `style.py`; one module per family with a `FIGURES` dict; deterministic output — seeded data, `svg.hashsalt`, no embedded date). Outputs are **committed** as `public/figures/viz_*.svg`; decks never invoke Python at build time. `pnpm figures` runs bare `python3`; the `fitting` family needs scipy and `associations` needs seaborn — regenerate those with an env that has them (e.g. `<env>/bin/python figures/src/build.py --only fitting`).
 - **`scripts/qa-all.mjs`** — builds all decks `--flat-base` to `.qa-dist/<slug>`, runs `check-slides.mjs` on each; non-zero exit if any deck overflows.
 
 ### Visual QA workflow (per-deck overflow + content/style review)
@@ -63,7 +63,7 @@ To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan 
 - **Deck manifest**: `lectures/content/decks.json` (see Build pipeline above) — the source of truth for which decks exist and their order/blocks.
 - **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key). All 16 are live in `decks.json`; 15–16 are marked `optional` (advanced/droppable). `LX_Python_Interactive.md` is a template (not a lecture) for python-runner slides.
 - **Combined authoring entry** (optional, not deployed): `lectures/content/best_research_and_data_analysis_practices_from_CERN.md` (imports all 16) and `staging.md` — single-file "everything" builds for authoring/PDF export (`pnpm build:combined`).
-- **Seminars**: `lectures/workbook/docs/seminars/` — 16 hands-on briefs + a running-project overview, all building one reproducible analysis of the LHCb D⁰ → K⁻π⁺ open-data sample (invariant-mass peak near 1865 MeV).
+- **Seminars**: `lectures/workbook/docs/seminars/` — 16 self-contained hands-on briefs + `overview.md`. Exercises use a shared teaching dataset (LHCb D⁰ → K⁻π⁺ open data, invariant-mass peak near 1865 MeV); consecutive briefs may build on each other but nothing is "the running project". Each student's semester project is separate and entirely their own choice (topic, data, form) — never frame the D⁰ analysis as the course project.
 - **Design/plan docs**: `docs/superpowers/specs/` and `docs/superpowers/plans/` — the curriculum spec and the P1–P6 implementation plan.
 - **Custom theme**: `lectures/content/theme/` — local Slidev theme (`@slidev/theme-scienced`)
   - `styles/custom-slides.css` — card system, grid layouts, spacing utilities, typography
@@ -109,7 +109,9 @@ Each lecture markdown file follows a consistent structure:
 ## Slidev Gotchas
 
 - **Monaco runner blocks (`{monaco-run}`)** — three defaults to know: (1) they **autorun on slide load** unless the fence says `{monaco-run} {autorun:false}` (course convention: always opt out); (2) Monaco highlights at **runtime** via a shiki bundle that only ships Slidev's default languages — `lectures/content/setup/shiki.ts` must list every language used in monaco fences, INCLUDING the exact fence alias (` ```py ` needs `'py'` in the list, not just `'python'`); (3) runner output styling (bounded height + scroll) lives in `theme/styles/monaco.css`.
-- **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. If you must show a merge conflict in a code block, wrap the markers in a Vue template expression, e.g. `{{'<<<<<<< HEAD'}}`, inside a ```` ```text {*}{lines:false} ```` block.
+- **Markdown inside one-line HTML** — a single-line `<div class="note-text">text with *em* or `code`</div>` is an HTML block: markdown is NOT parsed and prints literal asterisks/backticks. Either use `<em>/<strong>/<code>` inside the div, or put blank lines between the tags and the text (multi-line form) so markdown-it parses it. Same for the `question=` prop of `<MCQ>` — it accepts `code` spans only (the component converts them); no other markdown.
+- **`$$` math blocks inside HTML** — Slidev ≥ 52.19 wraps `$$ … $$` in a KaTeX wrapper component; a `$$` line directly after an opening tag (no blank line), or an empty line inside the math, makes the build fail with `Element is missing end tag`. Always leave a blank line between a tag and `$$`, and keep the math contiguous.
+- **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. Fenced code is `v-pre`, so the old `{{'<<<<<<< HEAD'}}` trick renders literally — do NOT use it. Show a conflict as a raw HTML block instead: `<pre class="slidev-code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD … &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch</code></pre>` (see L06 "Merge Conflicts — What They Look Like").
 
 ## Available Tooling
 
@@ -121,6 +123,10 @@ Two GitHub Actions workflows:
 
 - **`.github/workflows/qa.yml`** — runs both gates (`pnpm qa` + `pnpm timing:check`) on every push to the working branch `ff2026` (and on PRs / manual dispatch).
 - **`.github/workflows/deploy.yml`** — builds and deploys to GitHub Pages on pushes to the `bs2026` branch. Day-to-day work happens on `ff2026`; a fix is only live after `git push origin ff2026:bs2026` — check the qa.yml result first.
+
+## Releasing lectures during the semester
+
+Set `"draft": true` on every deck not yet delivered; on lecture day flip that one to `false`, commit on `ff2026`, wait for `qa.yml`, then `git push origin ff2026:bs2026`. Drafts stay fully gated in CI, so keep editing them freely. `pnpm dev <NN>` works on drafts; `pnpm build --include-drafts` builds a full local preview.
 
 ## Adding / removing a lecture
 

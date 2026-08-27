@@ -86,7 +86,7 @@ def _popgrowth_highlight():
     ax.barh(y, values, color=colors, height=0.72, zorder=3)
     ax.axvline(0, color=style.DIM, lw=0.8)
     ax.set_yticks(y)
-    ax.set_yticklabels(states, fontsize=8.5)
+    ax.set_yticklabels(states, fontsize=11)  # must survive the slide's downscale
     for label in ax.get_yticklabels():
         if label.get_text() in _HIGHLIGHT:
             label.set_color(style.ACCENT)
@@ -96,7 +96,7 @@ def _popgrowth_highlight():
     for i, s in enumerate(states):
         if s in _HIGHLIGHT:
             ax.text(values[i] + 0.35, i, f"+{values[i]:.1f}%", color=style.ACCENT,
-                     va="center", fontsize=9, fontweight="bold")
+                     va="center", fontsize=11, fontweight="bold")
     ax.set_xlabel("Growth rate (%)")
     ax.set_title("Population Growth by State")
     ax.yaxis.grid(False)

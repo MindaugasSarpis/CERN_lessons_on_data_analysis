@@ -5,7 +5,9 @@
  * at `./assets/landing.css` + `./assets/landing.js` (built by
  * build-landing.mjs / build:landing:assets) — it does not build that bundle
  * itself. Decks are grouped by block; each links to its own deck at
- * `<prefix>/<slug>/`. Block E is marked Optional.
+ * `<prefix>/<slug>/`. Block E is marked Optional. Decks with `draft: true`
+ * render in place as a greyed, unlinked "coming soon" row (staged release
+ * during the semester: flip the flag on delivery day and redeploy).
  *
  * Exported as genLanding() for build-landing.mjs; also runnable standalone
  * (assumes ./assets/* already exist next to the output):
@@ -36,7 +38,14 @@ export async function genLanding(manifest, outDir, prefix = '') {
     `<span class="line-wrap"><span class="line" style="--i:${i}">${esc(l)}</span></span>`).join('\n        ');
 
   let rowIdx = 0;
-  const row = (d) => `
+  const row = (d) => d.draft ? `
+          <li class="reveal" style="--i:${rowIdx++ % 8}">
+            <span class="row soon" data-slug="${esc(d.slug)}">
+              <span class="num">${esc(d.slug.split('-')[0])}</span>
+              <span class="rt">${esc(d.title)}</span>
+              <span class="tag">coming soon</span>
+            </span>
+          </li>` : `
           <li class="reveal" style="--i:${rowIdx++ % 8}">
             <a class="row${d.optional ? ' opt' : ''}" href="${base}/${d.slug}/">
               <span class="num">${esc(d.slug.split('-')[0])}</span>
@@ -62,24 +71,6 @@ export async function genLanding(manifest, outDir, prefix = '') {
       </section>`;
     }).join('');
 
-  const upcoming = (manifest.upcoming && manifest.upcoming.length) ? (() => {
-    rowIdx = 0;
-    return `
-      <section class="block">
-        <h2 class="block-head reveal" style="--i:0">
-          <span class="block-key">Coming soon</span>
-          <span class="tag">in preparation</span>
-        </h2>
-        <ol class="rows">${manifest.upcoming.map((u) => `
-          <li class="reveal" style="--i:${rowIdx++ % 8}">
-            <span class="row soon">
-              <span class="num">${String(u.n).padStart(2, '0')}</span>
-              <span class="rt">${esc(u.title)}</span>
-            </span>
-          </li>`).join('')}
-        </ol>
-      </section>`;
-  })() : '';
 
   // Social/SEO metadata — emitted only when the canonical site URL is known.
   const descr = 'A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files.';
@@ -121,9 +112,8 @@ export async function genLanding(manifest, outDir, prefix = '') {
       <div class="scroll-hint" aria-hidden="true"><span class="shline"></span><span class="shlabel">Scroll</span></div>
     </header>
     ${blockSections}
-    ${upcoming}
     <footer class="foot">
-      <p>Each lecture has a paired hands-on seminar in the workbook. Blocks D&ndash;E are the optional tail if the term runs short.</p>
+      <p>Each lecture has a paired hands-on seminar in the workbook. Block E is the optional tail if the term runs short.</p>
     </footer>
   </main>
   <script type="module" src="./assets/landing.js"></script>
@@ -138,9 +128,10 @@ export async function genLanding(manifest, outDir, prefix = '') {
 // Root-level 404.html — the only 404 page GitHub Pages honors (per-deck copies
 // in subdirectories are ignored). Decks use hash routing, but links shared
 // before the switch look like `<base>/<slug>/5`; rewrite those to
-// `<base>/<slug>/#/5` so they keep working. Anything else gets a link home.
+// `<base>/<slug>/#/5` so they keep working. Anything else (including a not-
+// yet-released draft deck) gets a link home.
 function gen404(manifest, base) {
-  const slugs = manifest.decks.map((d) => d.slug);
+  const slugs = manifest.decks.filter((d) => !d.draft).map((d) => d.slug);
   return `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">

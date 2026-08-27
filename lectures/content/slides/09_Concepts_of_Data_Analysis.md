@@ -72,13 +72,19 @@ hideInToc: true
 
 <!--
 Speaker: read these as promises, not a syllabus. Stress the through-line —
-"start from the decision" — and tell them Seminar 9 is where they audit their
-own dataset's quality. (~1 min)
+"start from the decision" — and tell them Seminar 9 is where they run today's
+checklist on the D⁰ → K⁻π⁺ teaching sample, then on their own project's data. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
+
+<div class="text-center">
+
+# What is **Data Analysis**?
+
+</div>
 
 <div class="def-stack">
 
@@ -127,11 +133,17 @@ An interdisciplinary field combining statistics, scientific computing, visualisa
 </div>
 
 <style>
+/* Centred title: move the theme's kinetic accent bar under the middle of the h1. */
+.text-center h1::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
 .def-stack {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.4rem;
-  margin-top: 0.5rem;
+  height: calc(100% - 4rem); /* leave room for the slide title */
 }
 .def-card.card {
   padding: 0.7rem 1.2rem !important;
@@ -195,11 +207,13 @@ An interdisciplinary field combining statistics, scientific computing, visualisa
 hideInToc: true
 ---
 
+# Framework before **tools**
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🧭 **Framework Before Tools**
+## 🧭 **Concepts before libraries**
 
 You have learned Python. Before diving into libraries and datasets, you need a conceptual framework for *thinking* about data — what it is, how to handle it, and what can go wrong.
 
@@ -335,68 +349,12 @@ hideInToc: true
 
 </div>
 
-<style>
-.anim-card.card {
-  padding: 0.4rem 0.8rem !important;
-  overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-card.card:has(.anim-ex:not(.slidev-vclick-hidden)) {
-  padding: 0.5rem 1rem 0.6rem !important;
-}
-.anim-card.slidev-vclick-hidden {
-  transform: translateX(-40px);
-  opacity: 0 !important;
-  visibility: visible !important;
-  pointer-events: none;
-}
-.anim-card h2 {
-  font-size: 1.3em;
-  line-height: 1.2;
-  margin: 0;
-  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) h2 {
-  font-size: 1em;
-}
-.anim-sub {
-  display: block;
-  font-size: 0.75em;
-  opacity: 0.85;
-  margin-top: 0.15em;
-  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) .anim-sub {
-  font-size: 0.7em;
-}
-.anim-ex {
-  max-height: 200px;
-  opacity: 0.7;
-  overflow: hidden;
-  font-size: 0.7em;
-  margin-top: 0.2rem;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-ex.slidev-vclick-hidden {
-  max-height: 0 !important;
-  opacity: 0 !important;
-  visibility: visible !important;
-  margin-top: 0 !important;
-  pointer-events: none;
-}
-.anim-ex ul { margin: 0; padding-left: 1.4em; }
-.anim-ex li { margin: 0.15em 0; }
-</style>
 
 ---
 hideInToc: true
 ---
 
-# Example — a lab thermometer
+# Example — a lab **thermometer**
 
 <div class="flow-container">
 
@@ -460,7 +418,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# How disciplines overlap
+# How disciplines **overlap**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -569,7 +527,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Key Ideas
+# Key **ideas**
 
 <div class="grid-3 gap-md mt-md">
 
@@ -633,13 +591,12 @@ hideInToc: true
 
 ## 📋 **Descriptive Analysis**
 
-<span class="anim-sub">What happened?</span>
+<span class="anim-sub">What happened? — establishes the baseline facts</span>
 
 <div v-click="[1, 2]" class="anim-ex">
 
 - Event rate rose **12 %** last run
 - Sales dropped **8 %** in Q3
-- Average delivery time was **3.2 days**
 
 </div>
 
@@ -649,13 +606,12 @@ hideInToc: true
 
 ## 🔍 **Diagnostic Analysis**
 
-<span class="anim-sub">Why did it happen?</span>
+<span class="anim-sub">Why did it happen? — builds on the baseline to find root causes</span>
 
 <div v-click="[2, 3]" class="anim-ex">
 
 - Rate rose due to **trigger threshold** change
 - Drop correlates with **pricing** change
-- Delivery slowed because of **warehouse relocation**
 
 </div>
 
@@ -665,13 +621,12 @@ hideInToc: true
 
 ## 🔮 **Predictive Analysis**
 
-<span class="anim-sub">What is likely next?</span>
+<span class="anim-sub">What is likely next? — extrapolates the causes forward</span>
 
 <div v-click="[3, 4]" class="anim-ex">
 
 - Projected **8 % rate increase** next fill
 - Model forecasts **recovery in Q1**
-- Delivery times will **normalise by March**
 
 </div>
 
@@ -681,13 +636,12 @@ hideInToc: true
 
 ## 🎯 **Prescriptive Analysis**
 
-<span class="anim-sub">What should we do?</span>
+<span class="anim-sub">What should we do? — turns the forecast into a recommended action</span>
 
 <div v-click="[4, 5]" class="anim-ex">
 
 - Raise threshold by **0.3** to maintain buffer
 - Revert price, **A/B test** alternatives
-- Add a **temporary depot** until the move completes
 
 </div>
 
@@ -695,101 +649,6 @@ hideInToc: true
 
 </div>
 
-<style>
-.anim-card {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-card.slidev-vclick-hidden {
-  transform: translateX(-40px);
-  opacity: 0 !important;
-  visibility: visible !important;
-  pointer-events: none;
-}
-.anim-card h2 {
-  font-size: 1.3em;
-  line-height: 1.2;
-  margin: 0;
-  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) h2 {
-  font-size: 1em;
-}
-.anim-sub {
-  display: block;
-  font-size: 0.75em;
-  opacity: 0.6;
-  font-style: italic;
-  margin-top: 0.1em;
-  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-card:has(.anim-ex:not(.slidev-vclick-hidden)) .anim-sub {
-  font-size: 0.7em;
-}
-.anim-ex {
-  max-height: 200px;
-  opacity: 0.7;
-  overflow: hidden;
-  font-size: 0.7em;
-  margin-top: 0.2rem;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-ex.slidev-vclick-hidden {
-  max-height: 0 !important;
-  opacity: 0 !important;
-  visibility: visible !important;
-  margin-top: 0 !important;
-  pointer-events: none;
-}
-.anim-ex ul { margin: 0; padding-left: 1.4em; }
-.anim-ex li { margin: 0.15em 0; }
-.anim-card.card {
-  padding: 0.4rem 0.8rem !important;
-  overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.anim-card.card:has(.anim-ex:not(.slidev-vclick-hidden)) {
-  padding: 0.5rem 1rem 0.6rem !important;
-}
-</style>
-
----
-hideInToc: true
----
-
-# Each layer builds on the previous
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📋 **Descriptive** — establishes baseline facts
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔍 **Diagnostic** — uncovers root causes
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔮 **Predictive** — forecasts future states
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🎯 **Prescriptive** — recommends optimal actions
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -802,15 +661,15 @@ hideInToc: true
 </div>
 
 <MCQ
-  question="A hospital model predicts patient readmission risk using age, diagnosis, and length of stay. What type of analytics is this?"
+  question="A plot shows a histogram of the K⁻π⁺ invariant mass for 60,000 LHCb events. What type of analytics is this?"
   :options="[
-    'Descriptive — it summarises past admissions',
-    'Diagnostic — it explains why patients were readmitted',
-    'Predictive — it forecasts a future outcome',
-    'Prescriptive — it recommends a treatment plan'
+    'Descriptive — it summarises what the data look like',
+    'Diagnostic — it explains why the mass takes these values',
+    'Predictive — it forecasts the mass of the next event',
+    'Prescriptive — it recommends a selection cut'
   ]"
-  :correct="2"
-  explanation="The model uses historical features to estimate a future probability (readmission risk). That is predictive analytics. It does not yet recommend what to do about it — that would be prescriptive."
+  :correct="0"
+  explanation="Plotting the distribution of a measured quantity — no explanation, forecast, or recommendation attached — is the textbook example of descriptive analytics: what the data look like, nothing more."
 />
 
 <style>
@@ -824,23 +683,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A plot shows a histogram of the K-pi invariant mass for 60,000 LHCb events. What type of analytics is this?"
-  :options="[
-    'Descriptive — it summarises what the data look like',
-    'Diagnostic — it explains why the mass takes these values',
-    'Predictive — it forecasts the mass of the next event',
-    'Prescriptive — it recommends a selection cut'
-  ]"
-  :correct="0"
-  explanation="Plotting the distribution of a measured quantity — no explanation, forecast, or recommendation attached — is the textbook example of descriptive analytics: what the data look like, nothing more."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="The K-pi mass histogram shows a clear peak near 1865 MeV. An analyst investigates and attributes it to real D0 -> K- pi+ decays rather than combinatorial background. What type of analytics is this?"
+  question="The K⁻π⁺ mass histogram shows a clear peak near 1865 MeV. An analyst investigates and attributes it to real D⁰ → K⁻π⁺ decays rather than combinatorial background. What type of analytics is this?"
   :options="[
     'Descriptive — it reports where the peak sits',
     'Diagnostic — it explains why the peak is there',
@@ -849,22 +692,6 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="Going beyond 'there is a peak' to 'here is the physical reason the peak appears' is diagnostic analytics — explaining the cause of an observed pattern, one step past description but short of forecasting or recommending action."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A logistics system suggests the optimal truck-routing plan each morning under current traffic and fuel prices. What type of analytics is this?"
-  :options="[
-    'Descriptive — it reports yesterday\'s routes',
-    'Diagnostic — it explains past delays',
-    'Predictive — it forecasts traffic',
-    'Prescriptive — it recommends the best action'
-  ]"
-  :correct="3"
-  explanation="The system goes past forecasting and actually recommends the action to take (the route). That is prescriptive analytics — it may use predictive models internally, but its output is a decision."
 />
 
 ---
@@ -900,72 +727,23 @@ hideInToc: true
 />
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Miniature end-to-end · **Do students prefer coffee A or B?**
+# What is **Data**?
 
-<span class="def-sub">Before we dive into concepts, here is the entire arc in one toy example — so every slide that follows has a concrete thing to hang on.</span>
-
-<div class="grid-3 gap-md mt-md tidy-cards">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 1️⃣ **Define**
-
-*"Should the café stock A or B?"* — decision: which beans to order next month. Metric: preference rate. Threshold: call a winner if the gap > 10 pp.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 2️⃣ **Collect**
-
-Blind taste test, 100 volunteers, randomised cup order. Log preference + year-of-study as covariate.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 3️⃣ **Explore**
-
-Tabulate counts: 65 prefer A, 35 prefer B. Sanity check: no year-of-study bias; no dropouts.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 4️⃣ **Model**
-
-Binomial test on 65/100 vs 50/50 null. *p* ≈ 0.003. 95 % CI for A's preference: 55–74 %.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 5️⃣ **Communicate**
-
-*"A wins 65 % vs 35 %, CI 55–74 %. Gap exceeds threshold — order A."* One sentence, one number, one decision.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 6️⃣ **What could still go wrong?**
-
-Sample of 100 ≠ all students. Taste may vary by time of day. Next iteration: repeat across shifts before locking in.
-
-</div>
-
-</div>
-
-*The formal statistical test behind step 4 — and what a p-value and confidence interval actually mean — is covered in the Probability & Statistics lecture. Focus here on the logic: is the difference big enough to trust?*
+<!--
+Speaker: from the "why" to the raw material. Before quality and lifecycle,
+name the shapes data come in — the shape decides the tools, and granularity
+and time decide what you can conclude. (~1 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Data comes in many shapes
+# Data comes in many **shapes**
 
 <span class="def-sub">The *shape* of your data decides which tools, file formats, and mental models apply. Pick the wrong shape and every later step fights you. Click a card to expand.</span>
 
@@ -1067,7 +845,7 @@ hideInToc: true
 
 ## 💡 **Choose the shape, then the tool**
 
-Many datasets *can* be coerced into a table, but not always *should* be. Forcing a graph into rows loses the relationships; flattening a ROOT TTree into a DataFrame loses the per-event structure. **Match the shape to the question.**
+Many datasets *can* be coerced into a table, but not always *should* be. Forcing a graph into rows loses the relationships; flattening a ROOT TTree into a DataFrame loses the per-event structure. **Match the shape to the question.** A second axis cuts across all six — structured (tables) · semi-structured (JSON, ROOT) · unstructured (text, images) — and decides how much schema you get for free.
 
 </div>
 
@@ -1108,161 +886,62 @@ Many datasets *can* be coerced into a table, but not always *should* be. Forcing
 hideInToc: true
 ---
 
-# Structured vs semi- vs unstructured
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📐 **Structured**
-
-Predefined schema, SQL-friendly (lab results)
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔖 **Semi-structured**
-
-Consistent markers, flexible fields (JSON, HL7)
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📝 **Unstructured**
-
-Natural language, images, free-form signals
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-<div class="note-text">
-
-#### Choose storage, tooling, and cleaning strategies accordingly
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
 <img src="/figures/data_types.svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;" />
 
 ---
 hideInToc: true
 ---
 
-# Granularity & unit of analysis
+# Granularity & **time**
 
-<div class="stack-tight mt-md">
+<span class="def-sub">Two choices made before any analysis — and both silently decide what you will be able to conclude.</span>
+
+<div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🔬 Define the entity: person, transaction, collision event, sensor ping
+## 🔬 **Granularity & unit of analysis**
+
+- Define the entity: person, transaction, collision event, sensor ping
+- Aggregation level shifts the balance of signal vs noise
+- Misaligned granularity breeds bias and misleading conclusions
+- Document every transformation between granularities
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 📊 Aggregation level affects signal vs noise
+## 🕐 **The time dimension**
 
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Misaligned granularity introduces bias & misleading conclusions
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📝 Document transformations between granularities
+- Cross-sectional vs time series vs panel data
+- Sampling frequency and latency bound what you can see
+- Seasonality, trends, and lag effects need tailored methods
+- Align timestamps, time zones, and calendars early
 
 </div>
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Data **Quality**
+
+<!--
+Speaker: you know what data look like — now, can you trust them? Eight
+checklist dimensions, one documented failure, and the missing-data mechanisms.
+This is the block the seminar audit is built on. (~1 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Mind the **time** dimension
+# Data quality **checklist**
 
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 Cross-sectional vs time series vs panel data
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ⏱️ Sampling frequency and latency influence what you can see
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📈 Seasonality, trends, and lag effects require tailored methods
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🕐 Align timestamps, time zones, and calendars early
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Metadata** keeps data alive
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 👤 Who collected it, when, where, how, and why?
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📐 Variable definitions, units, encoding schemes
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔗 Data lineage: transformations, assumptions, scripts, owners
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Without metadata the data become a liability, not an asset
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Data quality checklist
-
-<span class="def-sub">You know *what* data looks like. Now: can you trust it? Every downstream decision rests on that answer — start by auditing these eight dimensions.</span>
+<span class="def-sub">You know *what* data looks like. Now: can you trust it? Every downstream decision rests on that answer — start by auditing these eight dimensions. Metadata — who collected it, when, how, in which units, through which scripts — is what makes the audit possible at all; without it the data are a liability, not an asset.</span>
 
 <div class="grid-2 gap-md mt-md tidy-cards">
 
@@ -1316,7 +995,7 @@ hideInToc: true
 
 ## 🔄 **Lineage**
 
-<div class="note-text">Provenance, versioning, reproducibility</div>
+<div class="note-text">Provenance, versioning, transformations — the metadata trail</div>
 
 </div>
 
@@ -1378,7 +1057,7 @@ A formula that was supposed to average a column of countries only spanned **part
 
 ## 🔄 **Lineage missed**
 
-The cleaning steps lived in a one-off notebook. When a reviewer asked "why were these rows excluded?", no one could answer.
+The spreadsheet was never published with the paper. It took three years — and a graduate student asking for the file — before anyone could see which rows were excluded and why.
 
 </div>
 
@@ -1389,46 +1068,6 @@ The cleaning steps lived in a one-off notebook. When a reviewer asked "why were 
 ## 💡 **The lesson**
 
 No single failure was exotic. Each one is on the checklist we just reviewed. **Data quality is not a vibe — it is a list you run.**
-
-</div>
-
----
-hideInToc: true
----
-
-# Common data issues & biases
-
-<div class="stack-tight mt-md tidy-cards">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❓ Missing data mechanisms (MCAR, MAR, MNAR)
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 📊 Outliers: true phenomena or collection errors?
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🎯 Sampling bias & survivorship bias
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🧠 Confirmation bias, p-hacking, and multiple testing
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚖️ Ethical blind spots: representation, consent, accessibility
-
-</div>
 
 </div>
 
@@ -1504,7 +1143,7 @@ Depends on the *unobserved* value itself.
 hideInToc: true
 ---
 
-# Uncertainty and inference
+# Uncertainty and **inference**
 
 <span class="def-sub">🌡️ `22.3 °C` means nothing without `± 0.2 °C`. Every reported number deserves the same treatment.</span>
 
@@ -1538,7 +1177,7 @@ Effect size, N, variance — know what you can detect *before* testing.
 
 ## 🔗 **Correlation ≠ causation**
 
-An association alone doesn't prove A causes B; establishing causation needs careful experimental design or dedicated statistical methods (see the Probability & Statistics lecture).
+An association alone doesn't prove A causes B; establishing causation needs careful experimental design or dedicated statistical methods (see Lecture 11).
 
 </div>
 
@@ -1561,32 +1200,29 @@ One result is a hint; many are evidence.
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
-<MCQ
-  question="You fit a model with 50 parameters to 60 data points and get 99.9 % accuracy on your TRAINING set. What should you conclude from that number alone?"
-  :options="[
-    'The model works — high training accuracy proves it',
-    'Almost nothing — with so many parameters, memorising the training data is expected; only held-out data can tell you if it generalises',
-    'The model must be underfitting',
-    'Training accuracy is the only metric that matters'
-  ]"
-  :correct="1"
-  explanation="With nearly as many parameters as data points, a model can memorise the training set and score ~100 % without learning anything generalisable — classic overfitting. Training accuracy alone is uninformative; you must evaluate on a held-out test set (or via cross-validation)."
-/>
+# The **Lifecycle**
+
+<!--
+Speaker: zoom out from a single dataset to the organisation's view — six
+phases from Plan to Share, what nests inside each, and where each one tends
+to break. Then we zoom back in to the analyst's six-step loop. (~1 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Lifecycle recap — six key phases
+# The data **lifecycle** — six phases
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
 <div class="note-text">
 
-A concise six-phase view — easy to remember day-to-day. Detailed sub-stages nest inside each phase.
+A concise six-phase view — easy to remember day-to-day. Most phases expand into sub-stages (next slide); Store is the one that does not.
 
 </div>
 
@@ -1596,37 +1232,49 @@ A concise six-phase view — easy to remember day-to-day. Detailed sub-stages ne
 
 <div class="card card-primary card-glass pad-compact">
 
-🎯 **Plan**
+## 🎯 **Plan**
+
+question, hypotheses, success metric
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-📥 **Acquire**
+## 📥 **Acquire**
+
+sources, access, provenance
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-💾 **Store**
+## 💾 **Store**
+
+formats, versioning, access control
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-🔧 **Process**
+## 🔧 **Process**
+
+cleaning, joining, features
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-📊 **Analyse**
+## 📊 **Analyse**
+
+explore, model, evaluate
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-📢 **Share**
+## 📢 **Share**
+
+communicate, operationalise, monitor
 
 </div>
 
@@ -1635,6 +1283,8 @@ A concise six-phase view — easy to remember day-to-day. Detailed sub-stages ne
 ---
 hideInToc: true
 ---
+
+# Nine **sub-stages** — click ▸ to expand
 
 <div class="grid-3 gap-sm mt-sm stage-grid">
 
@@ -1688,7 +1338,7 @@ Plot distributions, scan outliers, check expected relationships. Build intuition
 
 <details name="stage" class="card card-success card-glass stage-card">
 <summary>
-<span class="stage-title"><strong>🧪 Analyse</strong> · Modeling</span>
+<span class="stage-title"><strong>🧪 Analyse</strong> · Modelling</span>
 <span class="stage-sub">statistical tests & ML</span>
 </summary>
 <div class="stage-ex">
@@ -1781,7 +1431,7 @@ Data and the world change. Watch for input drift, model decay, and whether the d
   opacity: 0.7;
   flex: 0 0 auto;
   transition: transform 0.25s ease;
-  align-self: center;
+  align-self: flex-start;
 }
 .stage-grid .stage-card[open] > summary::after {
   transform: rotate(90deg);
@@ -1798,6 +1448,7 @@ Data and the world change. Watch for input drift, model decay, and whether the d
 }
 .stage-grid .stage-sub {
   display: block;
+  order: 3;
   flex: 1 0 100%;
   font-size: 0.88em;
   opacity: 0.7;
@@ -1816,7 +1467,7 @@ Data and the world change. Watch for input drift, model decay, and whether the d
 hideInToc: true
 ---
 
-# Governance overlays every stage
+# Governance overlays **every stage**
 
 <div class="stack-tight mt-md">
 
@@ -1841,40 +1492,6 @@ hideInToc: true
 <div class="card card-info card-glass pad-tight">
 
 ## 🔄 Feedback loops from stakeholders and end users
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Analysis is **iterative**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔄 Expect to loop between question ↔ data ↔ analysis ↔ insight
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🚧 Dead ends reveal where data, methods, or framing must change
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🗂️ Maintain versioned checkpoints to compare approaches
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📢 Communicate progress, uncertainty, and trade-offs early
 
 </div>
 
@@ -1957,7 +1574,7 @@ Interpret. "Define" is where most analyses are won or lost. (~1 min)
 hideInToc: true
 ---
 
-# The Six-Step Loop at a Glance
+# The six-step **loop** at a glance
 
 ```mermaid {scale: 0.9}
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}}%%
@@ -1976,7 +1593,7 @@ flowchart LR
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
-**Not a line — a loop.** A dead end at any step sends you back to **Define**, not forward. The six steps in detail follow.
+**Not a line — a loop.** A dead end at any step sends you back to **Define**, not forward. First a toy example, then the six steps in detail.
 
 </div>
 
@@ -1984,9 +1601,71 @@ flowchart LR
 hideInToc: true
 ---
 
+# Miniature end-to-end · **Do students prefer coffee A or B?**
+
+<span class="def-sub">Here is the whole loop in one toy example — the six detailed steps follow.</span>
+
+<div class="grid-3 gap-md mt-md tidy-cards">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **Define**
+
+*"Should the café stock A or B?"* — decision: which beans to order next month. Metric: preference rate. Threshold: call a winner if the gap > 10 pp.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **Collect**
+
+Blind taste test, 100 volunteers, randomised cup order. Log preference + year-of-study as covariate.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 3️⃣ **Clean**
+
+Check the log before counting: no dropouts, no year-of-study bias, every row has a preference and a cup order.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 4️⃣ **Analyse**
+
+Tabulate: 65 prefer A, 35 prefer B. Binomial test vs a 50/50 null: *p* ≈ 0.003; 95 % CI for A: 55–74 %.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 5️⃣ **Visualise & Interpret**
+
+*"A wins 65 % vs 35 %, CI 55–74 %. Gap exceeds threshold — order A."* One sentence, one number, one decision.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 6️⃣ **What could still go wrong?**
+
+Sample of 100 ≠ all students. Taste may vary by time of day. Next iteration: repeat across shifts before locking in.
+
+</div>
+
+</div>
+
+*The formal statistical test behind step 4 — and what a p-value and confidence interval actually mean — is covered in Lecture 11. Focus here on the logic: is the difference big enough to trust?*
+
+---
+hideInToc: true
+---
+
 # 1. **Define** — turn a goal into an answerable question
 
-<span class="def-sub">Now we zoom into the **Analyse** phase from the lifecycle above and break the analytical work itself — the loop that turns a raw dataset into an answered question — into six concrete steps. (Note: *Analyse* names both a lifecycle phase above and one of these six steps.)</span>
+<span class="def-sub">The lifecycle (Plan → Share) is the *organisation's* view. The six-step loop is the *analyst's* view of one pass through it — the loop that turns a raw dataset into an answered question.</span>
 
 <div class="stack-tight dd-stack mt-md">
 
@@ -2150,7 +1829,7 @@ hideInToc: true
 <summary><span class="dd-title">🔍 Exploratory Data Analysis (EDA) first — distributions, pairwise relationships, drift over time</span></summary>
 <div class="dd-body">
 
-Before any model: look. **Exploratory Data Analysis (EDA)** means profiling the data with summary stats and plots to build intuition and spot problems. Most "surprising" model results are data problems in disguise — a leaking feature, a timezone bug, a duplicated cohort. EDA catches these before they embarrass you. (Choosing and reading those plots is the focus of the Data Visualisation lecture; here the point is simply to look before you model.)
+Before any model: look. **Exploratory Data Analysis (EDA)** means profiling the data with summary stats and plots to build intuition and spot problems. Most "surprising" model results are data problems in disguise — a leaking feature, a timezone bug, a duplicated cohort. EDA catches these before they embarrass you. (Choosing and reading those plots is the focus of Lecture 10; here the point is simply to look before you model.)
 
 </div>
 </details>
@@ -2197,9 +1876,25 @@ Leakage: future information sneaking into training. P-hacking: testing until som
 hideInToc: true
 ---
 
+<MCQ
+  question="You fit a model with 50 parameters to 60 data points and get 99.9 % accuracy on your TRAINING set. What should you conclude from that number alone?"
+  :options="[
+    'The model works — high training accuracy proves it',
+    'Almost nothing — with so many parameters, memorising the training data is expected; only held-out data can tell you if it generalises',
+    'The model must be underfitting',
+    'Training accuracy is the only metric that matters'
+  ]"
+  :correct="1"
+  explanation="With nearly as many parameters as data points, a model can memorise the training set and score ~100 % without learning anything generalisable — classic overfitting. Training accuracy alone is uninformative; you must evaluate on a held-out test set (or via cross-validation)."
+/>
+
+---
+hideInToc: true
+---
+
 # 5. **Visualise** — design for the decision, not the data
 
-<span class="def-sub">Chart design is the focus of the Data Visualisation lecture; the principle here is to choose the chart *after* you know your audience and message.</span>
+<span class="def-sub">Chart design is the focus of Lecture 10; the principle here is to choose the chart *after* you know your audience and message.</span>
 
 <div class="stack-tight dd-stack mt-md">
 
@@ -2301,7 +1996,7 @@ Versioned code, pinned environment, seeded randomness, a README naming inputs an
 hideInToc: true
 ---
 
-# Communication artefacts — pick the right one
+# Communication **artefacts** — pick the right one
 
 <div class="grid-2 gap-md dd-stack mt-md">
 
@@ -2350,6 +2045,24 @@ Methods, assumptions, derivations, audit trail. Attached to a summary or memo, r
 </div>
 </details>
 
+<details name="artefact" class="dd-card card card-warning card-glass">
+<summary><span class="dd-title">📜 Scripts & packages</span></summary>
+<div class="dd-body">
+
+For automation and reuse: the analysis as a versioned, importable unit that a pipeline or a colleague can call. The right artefact when the same question will be asked again next month.
+
+</div>
+</details>
+
+<details name="artefact" class="dd-card card card-primary card-glass">
+<summary><span class="dd-title">🧪 Experiments</span></summary>
+<div class="dd-body">
+
+A/B tests, controlled trials, blind analyses. The only artefact that supports a *causal* claim — the deliverable is the design and its pre-registered decision rule, not a chart.
+
+</div>
+</details>
+
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
@@ -2376,7 +2089,7 @@ hideInToc: true
 
 ## 📊 **Descriptive** — "what happened?"
 
-The work lives in **Explore** (summary stats, plots) and **Communicate** (dashboards). Modelling is minimal. *Output:* a faithful rear-view mirror.
+The work lives in **Analyse (EDA)** (summary stats, plots) and **Visualise & Interpret** (dashboards). Modelling is minimal. *Output:* a faithful rear-view mirror.
 
 </div>
 
@@ -2384,7 +2097,7 @@ The work lives in **Explore** (summary stats, plots) and **Communicate** (dashbo
 
 ## 🔍 **Diagnostic** — "why did it happen?"
 
-Most of the effort goes into **Explore** (segmentation, cohort comparison) and **Model** (regression on drivers). *Output:* named contributors to the outcome.
+Most of the effort goes into **Analyse (EDA)** (segmentation, cohort comparison) and **Analyse (modelling)** (regression on drivers). *Output:* named contributors to the outcome.
 
 </div>
 
@@ -2392,7 +2105,7 @@ Most of the effort goes into **Explore** (segmentation, cohort comparison) and *
 
 ## 🔮 **Predictive** — "what happens next?"
 
-Quality hinges on **Collect** (the right features, honest splits) and **Model** (out-of-sample validation). *Output:* a forecast with an uncertainty band — never a single number.
+Quality hinges on **Collect** (the right features, honest splits) and **Analyse (modelling)** (out-of-sample validation). *Output:* a forecast with an uncertainty band — never a single number.
 
 </div>
 
@@ -2400,7 +2113,7 @@ Quality hinges on **Collect** (the right features, honest splits) and **Model** 
 
 ## 🎛️ **Prescriptive / causal** — "what should we do?"
 
-The decisive steps are **Define** (intervention + counterfactual) and **Model** (causal identification). *Output:* an action with an expected effect size.
+The decisive steps are **Define** (intervention + counterfactual) and **Analyse (modelling)** (causal identification). *Output:* an action with an expected effect size.
 
 </div>
 
@@ -2431,7 +2144,7 @@ no single role sees the whole pipeline. (~1 min)
 hideInToc: true
 ---
 
-# Modern analytics stack
+# Modern analytics **stack**
 
 <div class="stack-loop mt-md">
 
@@ -2442,7 +2155,6 @@ hideInToc: true
 <li>sensors & instruments</li>
 <li>web / app APIs</li>
 <li>operational databases</li>
-<li>files & uploads</li>
 <li>experiments, surveys</li>
 </ul>
 </div>
@@ -2453,7 +2165,6 @@ hideInToc: true
 <ul class="pipe-list">
 <li>ETL / ELT pipelines</li>
 <li>streaming (Kafka, Kinesis)</li>
-<li>batch schedulers (Airflow)</li>
 <li>schema & freshness checks</li>
 </ul>
 </div>
@@ -2464,7 +2175,6 @@ hideInToc: true
 <ul class="pipe-list">
 <li>data lakes (S3, GCS)</li>
 <li>warehouses (BigQuery, Snowflake)</li>
-<li>feature stores</li>
 <li>lineage & access control</li>
 </ul>
 </div>
@@ -2474,7 +2184,6 @@ hideInToc: true
 <div class="pipe-sub">where analysis actually runs</div>
 <ul class="pipe-list">
 <li>notebooks & scripts</li>
-<li>SQL engines</li>
 <li>distributed clusters (Spark)</li>
 <li>cloud / HPC jobs</li>
 </ul>
@@ -2487,7 +2196,6 @@ hideInToc: true
 <li>dashboards (Grafana, Superset)</li>
 <li>reports & memos</li>
 <li>APIs & embedded models</li>
-<li>alerts & notifications</li>
 </ul>
 </div>
 
@@ -2505,7 +2213,6 @@ hideInToc: true
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  min-height: 8rem;
 }
 .stack-loop .pipe-head {
   font-size: 1.05em;
@@ -2529,21 +2236,13 @@ hideInToc: true
   opacity: 0.92;
 }
 .stack-loop .pipe-list li { margin: 0.12rem 0; }
-.loop-back {
-  text-align: center;
-  margin-top: 0.9rem;
-  font-size: 0.88em;
-  opacity: 0.75;
-  letter-spacing: 0.02em;
-}
-.loop-back em { font-style: italic; }
 </style>
 
 ---
 hideInToc: true
 ---
 
-# Roles and collaboration
+# Roles and **collaboration**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -2609,7 +2308,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Collaboration rituals
+# Collaboration **rituals**
 
 <div class="stack-tight mt-md">
 
@@ -2649,57 +2348,13 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Choosing the right artefact
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📓 **Notebooks** for exploration, teaching, storytelling
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📜 **Scripts & packages** for automation and reuse
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📊 **Dashboards & apps** for ongoing monitoring
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🧪 **Experiments** for causal claims and product decisions
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-<div class="note-text">
-
-#### Mix intentionally; document the purpose of each asset
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
 # **Discussion**
 
 <div class="stack-tight mt-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🤔 When to use proprietary tools? (recall Lecture 7)
+## 🤔 When are proprietary tools justified — against the tool-agnosticism aim from Lecture 1?
 
 </div>
 
@@ -2711,7 +2366,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-tight">
 
-## 📈 Saturation of achieved proficiency (recall Lecture 7)
+## ⚙️ Which of today's checks would you automate first (Lecture 14)?
 
 </div>
 
@@ -2740,7 +2395,7 @@ rule of thumb: re-runnable in under an hour, six months later. (~1 min)
 hideInToc: true
 ---
 
-# Why data hygiene matters
+# Why data **hygiene** matters
 
 <div class="stack-tight mt-md">
 
@@ -2780,7 +2435,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Hygiene & reproducibility habits
+# Hygiene & **reproducibility** habits
 
 <div class="grid-2 gap-md dd-stack mt-md">
 
@@ -2854,7 +2509,7 @@ A `Makefile`, `make.py`, or CI job that rebuilds the whole analysis with one com
 hideInToc: true
 ---
 
-# Ethics, governance & accountability
+# Ethics, **governance** & accountability
 
 <div class="grid-2 gap-md dd-stack mt-md">
 
@@ -2943,16 +2598,33 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Context
+# Context & **collaboration model**
 
 <span class="def-sub">Open, reusable data is a principle until someone actually ships a dataset under it. CERN's Open Data portal is that proof: a petabyte-scale demonstration that every concept in this lecture works at real-world scale.</span>
 
-<div class="card card-primary card-glass pad-tight mt-md">
+<div class="grid-2 gap-md mt-md">
 
-- 🌐 CERN releases proton-proton collision datasets via the Open Data portal
-- 🎯 Goal: enable students & researchers to reproduce landmark analyses
-- 📁 Data formats: ROOT files, CSV summaries, metadata packages
-- 🔧 Tooling: ROOT, Python, R, Jupyter, cloud notebooks
+<div class="card card-primary card-glass pad-tight">
+
+## 🌐 **Context**
+
+- CERN releases proton-proton collision datasets via the Open Data portal
+- Goal: enable students & researchers to reproduce landmark analyses
+- Data formats: ROOT files, CSV summaries, metadata packages
+- Tooling: ROOT, Python, R, Jupyter, cloud notebooks
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 👥 **Collaboration model**
+
+- Physicists, statisticians, software engineers, detector experts
+- Shared code repositories with rigorous review (ROOT macros, Python)
+- Simulation teams provide synthetic data for validation
+- Publication committees ensure rigour & messaging
+
+</div>
 
 </div>
 
@@ -2960,22 +2632,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Collaboration model
-
-<div class="card card-secondary card-glass pad-tight mt-md">
-
-- 👥 Physicists, statisticians, software engineers, detector experts
-- 🔄 Shared code repositories with rigorous review (ROOT macros, Python)
-- 🧪 Simulation teams provide synthetic data for validation
-- 📄 Publication committees ensure rigour & messaging
-
-</div>
-
----
-hideInToc: true
----
-
-# Risks & mitigations
+# Risks & **mitigations**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -3017,24 +2674,26 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Mini case study · detector night-shift spikes
+# Mini case study · **night-shift spikes**
 
 <div class="card card-info card-glass pad-tight mt-md">
 
 ## 📡 **Scenario**
+
 Detector shows intermittent spike counts on night shifts.
 
 </div>
 
 <div class="card card-primary card-glass pad-tight mt-md">
 
-## 📋 **Plan**
+## 📋 **Plan — the six steps**
 
-- Define metric (spike rate/hour), segment by shift.
-- Pull two weeks of logs; check missingness.
-- Visualize rates; annotate configuration changes.
-- Test difference-in-means with bootstrap CI (resampling-based confidence intervals).
-- Prescribe mitigation if the effect is robust.
+- **Define** the metric (spike rate per hour) and the decision: change the night-shift configuration or not.
+- **Collect** two weeks of logs, segmented by shift.
+- **Clean** — check missingness and duplicate entries; align timestamps across shifts.
+- **Analyse** — test the difference in means with a bootstrap CI (resampling-based confidence intervals).
+- **Visualise** rates by shift; annotate configuration changes.
+- **Interpret** — prescribe a mitigation only if the effect is robust.
 
 </div>
 
@@ -3042,13 +2701,13 @@ Detector shows intermittent spike counts on night shifts.
 hideInToc: true
 ---
 
-# Exercise · Plan your own analysis
+# Exercise · **Plan your own analysis**
 
 <div class="stack-tight mt-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 📋 Pick a dataset (CERN or your organisation)
+## 📋 Pick a dataset — ideally the one you plan to use for your semester project
 
 </div>
 
@@ -3073,46 +2732,6 @@ hideInToc: true
 </div>
 
 ---
-hideInToc: true
----
-
-# Lessons from CERN for everyone else
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📝 Document everything — you never know who will re-run it
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔧 Invest in shared tooling and platforms early
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🌐 Open data accelerates innovation beyond your organisation
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 👁️ Rigorous peer review can coexist with fast iteration
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🎉 Celebrate small wins: incremental insights build trust
-
-</div>
-
-</div>
-
----
 layout: section
 hideInToc: true
 ---
@@ -3123,7 +2742,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Common pitfalls
+# Common **pitfalls**
 
 <div class="stack-tight mt-md">
 
@@ -3141,7 +2760,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-tight">
 
-## ⚠️ Overfitting pretty charts to noisy data
+## ⚠️ Reading patterns into noise — in models *and* in charts
 
 </div>
 
@@ -3175,7 +2794,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Useful patterns
+# Useful **patterns**
 
 <div class="stack-tight mt-md">
 
@@ -3215,121 +2834,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Practitioner habits
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧠 **Think**
-
-Ask the right question. Understand the domain. Know what "good enough" looks like.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔍 **Explore**
-
-Look at the data before modelling it. Distributions, outliers, missing values — they tell a story.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🛠️ **Choose**
-
-Pick the simplest method that solves the problem. Reach for complexity only when the simple thing has clearly failed.
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📢 **Communicate**
-
-Results that nobody understands have zero impact. Visualisation and storytelling are part of analysis.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Recap** — You Can Now…
-
-<div class="grid-2 gap-md mt-sm">
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Frame an analysis around the **decision** it serves
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Classify work as **descriptive, diagnostic, predictive, or prescriptive**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Run a **data-quality checklist** and read missing-data mechanisms
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Hand results to the next analyst — documented and reproducible
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔬 **Seminar 9 tie-in**
-
-run a data-quality audit on your dataset — find missing, duplicate, and physically impossible values before analysing.
-
-</div>
-
-<!--
-Speaker: the "you can now" beat — have them nod to each capability. The seminar
-tie-in makes it concrete: next session they audit their own dataset for missing,
-duplicate, and impossible values before touching analysis. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Further **Reading**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📚 This lecture draws on these — several are free online:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">📗 **Wilson et al.** — *Good Enough Practices in Scientific Computing* (2017) · free</div>
-
-<div class="card card-secondary card-glass pad-compact">🔗 **Wilkinson et al.** — *The FAIR Guiding Principles* (2016), *Scientific Data* · GO FAIR</div>
-
-<div class="card card-accent card-glass pad-compact">🔄 **CRISP-DM** — the cross-industry standard process for data mining</div>
-
-<div class="card card-info card-glass pad-compact">📘 **Kelleher & Tierney** — *Data Science* (MIT Press, Essential Knowledge)</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Takeaways
+# **Takeaways**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
@@ -3379,7 +2884,7 @@ Documented and versioned so the next analyst can pick up where you stopped — f
 
 ## 📢 **Story over numbers**
 
-Inspect → clean → transform → model → communicate: Wikipedia's definition, lived end-to-end
+Define → Collect → Clean → Analyse → Visualise → Interpret: one honest pass through the loop, told as a decision
 
 </div>
 
@@ -3388,6 +2893,95 @@ Inspect → clean → transform → model → communicate: Wikipedia's definitio
 ## ⚖️ **Responsible by default**
 
 Hygiene, ethics, accountability — the price of being trusted with data
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Frame an analysis around the **decision** it serves
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Classify work as **descriptive, diagnostic, predictive, or prescriptive**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Run a **data-quality checklist** and read missing-data mechanisms
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Hand results to the next analyst — documented and reproducible
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **Seminar 9 tie-in**
+
+Run the checklist on the D⁰ → K⁻π⁺ teaching sample — count missing, duplicate `(Run, Event)` and physically impossible values, write a drop policy, and make the audit re-runnable. Then apply the same checklist to your own project's data.
+
+</div>
+
+<!--
+Speaker: the "you can now" beat — have them nod to each capability. The seminar
+tie-in makes it concrete: next session they run the checklist on the D⁰ → K⁻π⁺
+teaching sample — missing values, duplicate (Run, Event) pairs, impossible values,
+a written drop policy, a re-runnable audit — and then on their own project's data. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Further **Reading**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📚 This lecture draws on these — several are free online:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+📗 **Wilson et al.** — *Good Enough Practices in Scientific Computing* (2017) · free
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🔗 **Wilkinson et al.** — *The FAIR Guiding Principles* (2016), *Scientific Data* · GO FAIR
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🔄 **CRISP-DM** — the cross-industry standard process for data mining
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+📘 **Kelleher & Tierney** — *Data Science* (MIT Press, Essential Knowledge)
 
 </div>
 

@@ -30,7 +30,8 @@ const passthrough = sel ? argv.slice(1) : argv;
 function listDecks() {
   console.log('Decks (pnpm dev <number|slug|substring>):\n');
   for (const d of manifest.decks) {
-    console.log(`  ${d.slug.padEnd(30)} ${d.title}${d.optional ? '  (optional)' : ''}`);
+    const tags = [d.optional && 'optional', d.draft && 'draft — not deployed'].filter(Boolean);
+    console.log(`  ${d.slug.padEnd(30)} ${d.title}${tags.length ? `  (${tags.join(', ')})` : ''}`);
   }
 }
 

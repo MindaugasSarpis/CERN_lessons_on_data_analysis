@@ -4,7 +4,7 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** a clean `raw/`–`processed/` structure,
+> **This session builds:** a clean `raw/`–`processed/` structure,
 > tidy filenames, and CLI-only inspection of the data.
 
 ## Goal

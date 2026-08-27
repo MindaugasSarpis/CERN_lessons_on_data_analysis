@@ -64,7 +64,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact">
 
-📄 Structure a project **README** and publish Markdown via **pandoc** & **MkDocs**
+📄 Structure a project **README** — title, setup, run, data provenance, licence
 
 </div>
 
@@ -155,53 +155,31 @@ end of this section they will know ~90% of the Markdown they'll ever use. (~30 s
 hideInToc: true
 ---
 
-# Markdown Syntax: Headers
+# Headers & **Emphasis**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## ✏️ **Syntax**
+## ✏️ **Headers**
 
 ```
 # Header 1
 ## Header 2
 ### Header 3
-#### Header 4
-##### Header 5
-###### Header 6
 ```
-
-<div class="note-text mt-sm">Use <code>#</code> for different header levels — more <code>#</code> symbols mean smaller headers</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 👁️ **Rendered Output**
 
 <p style="font-size: 1.6em; font-weight: bold; margin: 0.15em 0;"><code>#</code> Header 1 — largest</p>
 <p style="font-size: 1.35em; font-weight: bold; margin: 0.15em 0;"><code>##</code> Header 2</p>
 <p style="font-size: 1.15em; font-weight: bold; margin: 0.15em 0;"><code>###</code> Header 3</p>
-<p style="font-size: 1.0em; font-weight: bold; margin: 0.15em 0;"><code>####</code> Header 4</p>
-<p style="font-size: 0.9em; font-weight: bold; margin: 0.15em 0;"><code>#####</code> Header 5 — getting small</p>
-<p style="font-size: 0.8em; font-weight: bold; margin: 0.15em 0;"><code>######</code> Header 6 — smallest</p>
+
+<div class="note-text mt-sm">Six levels exist (<code>######</code> is the smallest) — more <code>#</code> symbols mean a smaller header.</div>
 
 </div>
 
-</div>
+<div class="card card-secondary card-glass pad-tight">
 
----
-hideInToc: true
----
-
-# Markdown Syntax: Emphasis
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ✏️ **Syntax**
+## ✏️ **Emphasis**
 
 ```
 *Italic* or _Italic_
@@ -209,23 +187,13 @@ hideInToc: true
 ~~Strikethrough~~
 ```
 
+<div class="mt-sm">
+
+## *Italic* · **Bold** · ~~Strikethrough~~
+
+</div>
+
 <div class="note-text mt-sm">Combine them: <code>***bold italic***</code> or <code>**~~bold strikethrough~~**</code></div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 👁️ **Rendered Output**
-
-<div class="mt-md">
-
-## *Italic*
-
-## **Bold**
-
-## ~~Strikethrough~~
-
-</div>
 
 </div>
 
@@ -274,6 +242,22 @@ Second line appears below.
 Pressing Enter once does **not** create a new line in the output — Markdown joins adjacent lines into a single paragraph. Use a **blank line** for a new paragraph, or **two trailing spaces** for a line break.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="In Markdown, how do you force a line break within the same paragraph?"
+  :options="[
+    'Press Enter once at the end of the line',
+    'End the line with two trailing spaces',
+    'Leave a blank line between the two lines',
+    'Indent the second line with four spaces'
+  ]"
+  :correct="1"
+  explanation="A single Enter merges adjacent lines into one paragraph; two trailing spaces force a break within a paragraph, while a blank line starts a whole new paragraph."
+/>
 
 ---
 hideInToc: true
@@ -612,10 +596,7 @@ hideInToc: true
 ```
 Inline: $E = mc^2$
 
-Block:
-$$
-\chi^2 = \sum_i \frac{(O_i - E_i)^2}{E_i}
-$$
+Block:  $$ \chi^2 = \sum_i \frac{(O_i - E_i)^2}{E_i} $$
 ```
 
 </div>
@@ -680,7 +661,7 @@ Science-focused; powers Jupyter Book with citations, cross-refs, and figures.
 
 </div>
 
-<div class="note-text mt-md">🔧 Tool-agnostic takeaway: write the **portable core**, and reach for a dialect's extras only when the target renderer supports them.</div>
+<div class="note-text mt-md">🔧 Tool-agnostic takeaway: write the <strong>portable core</strong>, and reach for a dialect's extras only when the target renderer supports them.</div>
 
 ---
 layout: section
@@ -705,7 +686,7 @@ hideInToc: true
 
 ## 🧭 **Diagrams written as plain text**
 
-You describe the **nodes and arrows**; Mermaid draws the picture. No mouse, no export step — the diagram lives right inside your Markdown file.
+You describe the **nodes and arrows**; Mermaid draws the picture. No mouse, no export step — the diagram lives inside your Markdown file, and **GitHub READMEs**, **MkDocs**, **Jupyter**, and **these very slides** render `mermaid` blocks automatically.
 
 </div>
 
@@ -715,21 +696,24 @@ You describe the **nodes and arrows**; Mermaid draws the picture. No mouse, no e
 
 ## ♻️ **Why text beats drawing**
 
-- Edit in any editor — no special app
-- A one-line change is a **one-line diff**
-- Renders inside GitHub, MkDocs, Jupyter
+- Edit in any editor — no special app, no export step
+- Change one arrow → **git shows one changed line**, not a whole new binary image *(you'll see this in the Git lecture)*
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight reveal-up">
 
-## 🎯 **Where you'll meet it**
+## 🤝 **Reviewable**
 
-- **GitHub READMEs** render `mermaid` code blocks automatically
-- **These very slides** — every diagram is Mermaid
-- Docs sites, issues, design notes
+Teammates read and edit the diagram in a pull request — no "please re-export the PNG" round-trips.
 
 </div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md reveal-up">
+
+🧩 Beyond flowcharts, Mermaid draws **sequence**, **state**, **class**, **entity-relationship**, and **Git** graphs — all from plain text.
 
 </div>
 
@@ -880,6 +864,7 @@ gitGraph
 ## 👁️ **Rendered**
 
 ```mermaid {scale: 0.7}
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4'}, 'gitGraph': {'showCommitLabel': false}}}%%
 gitGraph
   commit
   branch fit
@@ -902,38 +887,6 @@ gitGraph
 hideInToc: true
 ---
 
-# Why **Diagrams-as-Text** Win
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-left">
-
-## ♻️ **Versionable**
-
-A diagram is just lines in your `.md` file. Change one arrow → **git shows one changed line**, not a whole new binary image *(you'll see this in the Git lecture)*.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-left">
-
-## 🤝 **Reviewable**
-
-Teammates read and edit the diagram in a pull request — no "please re-export the PNG" round-trips.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md reveal-up">
-
-🧩 Beyond flowcharts, Mermaid draws **sequence**, **state**, **class**, **entity-relationship**, and **Git** graphs — all from plain text.
-
-</div>
-
----
-hideInToc: true
----
-
 <MCQ
   question="Your teammate changes one box in a workflow diagram. Why does a Mermaid diagram beat an exported PNG here?"
   :options="[
@@ -945,86 +898,6 @@ hideInToc: true
   :correct="1"
   explanation="Because a Mermaid diagram is plain text, editing it produces a small, readable diff a reviewer can check line by line — a binary PNG changes wholesale and cannot be reviewed or merged sensibly."
 />
-
----
-hideInToc: true
----
-
-# Where You'll Meet Markdown Again
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-📄 **Project READMEs** — the front page of every repository *(you'll version-control one in the Git lecture)*
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-📓 **Jupyter notebooks** — every text cell between your Python code is Markdown
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-🖥️ **These very slides** — written in Markdown (Slidev); their diagrams are **Mermaid**, plain-text diagrams-as-code *(the Git lecture renders a `gitGraph` this way)*
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-left">
-
-🌐 **Issues, wikis, chat** — GitHub/GitLab discussions, MkDocs sites, even Discord messages
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md reveal-up">
-
-💡 One hour of Markdown pays off for the rest of your career — it's the *lingua franca* of technical writing.
-
-</div>
-
----
-hideInToc: true
----
-
-# Documentation & knowledge sharing
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📖 Analyst runbooks and playbooks
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📋 Data dictionaries & catalogs
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📝 Decision logs capturing context and rationale
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🎤 Internal demos & show-and-tell sessions
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🤝 Mentoring to spread tooling fluency
-
-</div>
-
-</div>
 
 ---
 layout: section
@@ -1133,7 +1006,7 @@ How others may use your work.
 
 </div>
 
-<div class="note-text mt-md">Not every project needs all six — but an analysis repo almost always does.</div>
+<div class="note-text mt-md">Not every project needs all six — but an analysis repo almost always does. As it grows, a <code>docs/</code> folder of <strong>analysis notes and decision logs</strong> (why this cut, why that model) keeps the rationale next to the code — same Markdown.</div>
 
 ---
 hideInToc: true
@@ -1234,11 +1107,10 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-tight mt-sm">
 
-## 📝 **Dissect, then draft** (5 min)
+## 📝 **Dissect a README** (5 min)
 
 1. Open any popular analysis repo on GitHub and find its `README.md`.
-2. Label each part — **title**, **setup**, **run**, **data**, **licence** — which are present?
-3. Now open **your own project's** `README.md` and add any section it's missing.
+2. Label each part — **title**, **setup**, **run**, **data**, **licence** — which are present, which are missing?
 
 </div>
 
@@ -1246,7 +1118,7 @@ hideInToc: true
 
 ## 🔬 **Seminar 5 tie-in**
 
-This is exactly the README you'll grow every week — documenting the data's **provenance**, its **columns & units**, and the **steps to rebuild** your D⁰ mass-peak result.
+A README answers four questions — what is this, how do I run it, where did the data come from, and under what licence — for any project, including yours.
 
 </div>
 
@@ -1254,52 +1126,66 @@ This is exactly the README you'll grow every week — documenting the data's **p
 hideInToc: true
 ---
 
-# Key Takeaways
+# Markdown: **Key Takeaways**
 
-<div class="card card-info card-glass pad-tight glow reveal-up">
+<div class="grid-2 gap-md mt-sm">
 
-## 📋 **Key Takeaways**
+<div class="card card-primary card-glass pad-tight reveal-up">
 
-- Markdown is a **simple, readable** syntax that converts plain text to formatted HTML
-- Master the basics: **headers**, **emphasis**, **lists**, **links**, **images**, **code blocks**, and **tables**
-- Line breaks need **two trailing spaces** or a **blank line** — a common gotcha
-- Markdown is used everywhere: GitHub, Jupyter, Slidev, documentation sites
+## 📝 **The syntax**
+
+A handful of symbols — **headers**, **emphasis**, **lists**, **links**, **code**, **tables**. Line breaks need **two trailing spaces** or a **blank line**.
 
 </div>
+
+<div class="card card-secondary card-glass pad-tight reveal-up">
+
+## 🧭 **Diagrams as text**
+
+**Mermaid** turns nodes and arrows into a picture — one-line diffs, reviewable in a pull request, rendered on GitHub, MkDocs, and these slides.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight reveal-up">
+
+## 📄 **The README**
+
+Four answers: **what** is this, **how** do I run it, **where** did the data come from, and under what **licence**.
+
+</div>
+
+<div class="card card-info card-glass pad-tight reveal-up">
+
+## 🌐 **Where you'll meet it again**
+
+Project READMEs, every text cell in a **Jupyter notebook**, these very slides, GitHub issues, wikis, MkDocs sites — even chat.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
+
+💡 One hour of Markdown pays off for the rest of your career — it's the *lingua franca* of technical writing.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# VS Code: **The Workshop**
+
+<!--
+Speaker: the pivot of the lecture. Markdown is what you write; VS Code is where you write it. (~0.5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Practice Exercise
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-## 🚀 **Practice Exercise**
-
-From the CLI, run `touch about_me.md` and open it in VS Code. Include:
-
-1. A **level-1 header** with your name
-2. A short **paragraph** about yourself (use bold and italic)
-3. An **unordered list** of your hobbies
-4. A **link** to your favourite website
-5. A **code block** with a "Hello, World!" snippet in any language
-
-Then preview it: open VS Code's Markdown preview with `Ctrl+Shift+V` (or `Cmd+Shift+V` on Mac).
-
-<div class="note-text mt-sm">We will version-control this file with <strong>git</strong> very soon!</div>
-
-</div>
-
----
-disabled: true
----
-
----
-hideInToc: true
----
-
-# What is VS Code?
+# What is **VS Code**?
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
@@ -1307,31 +1193,9 @@ hideInToc: true
 
 - A **text editor** edits plain text files (Notepad, nano, vim)
 - An **IDE** (Integrated Development Environment) adds tools: debugging, build automation, version control
-- **VS Code** sits in between — a lightweight editor with IDE-level features through extensions
+- **VS Code** sits in between — a lightweight editor, **free and built on open source**, with IDE-level features through thousands of extensions
 
 </div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact reveal-scale">
-
-🆓 **Free & open-source** — works on Windows, macOS, Linux
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-scale">
-
-🧩 **Extensible** — thousands of extensions for any language or workflow
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Installing VS Code
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1340,7 +1204,7 @@ hideInToc: true
 ## 💻 **Download & Install**
 
 1. Go to [code.visualstudio.com](https://code.visualstudio.com)
-2. Download for your OS
+2. Download for Windows, macOS, or Linux
 3. Run the installer
 
 </div>
@@ -1353,15 +1217,11 @@ hideInToc: true
 code --version
 ```
 
-If this works, VS Code is ready and available from your terminal.
+If this works, VS Code is ready and available from your terminal — `code my_project/` opens a folder.
+
+🐧 **Linux:** `snap`, or `apt`/`dnf` after adding Microsoft's package repository — both give automatic updates.
 
 </div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-🐧 **Linux tip:** install via `snap`, or via `apt`/`dnf` after adding Microsoft's package repository — both give automatic updates.
 
 </div>
 
@@ -1526,7 +1386,6 @@ Open settings: `Ctrl+,` (or `Cmd+,` on Mac), then search by name.
 - **Word Wrap** → `on` (no horizontal scrolling)
 - **Font Size** → `14`–`16` for comfort
 - **Tab Size** → `4` (Python standard)
-- **Settings Sync** → sign in once; settings & extensions then follow you to any machine (♻️ reproducibility)
 
 </div>
 
@@ -1564,63 +1423,33 @@ replace, shortcuts. Demo multi-cursor live if you can; it always gets a reaction
 hideInToc: true
 ---
 
-# Editing Superpowers
+# Keyboard Shortcuts Cheat Sheet
+
+<div class="note-text mt-sm">Windows/Linux keys shown — on macOS swap <code>Ctrl</code> for <code>Cmd</code> unless noted.</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-info card-glass pad-tight">
 
-## ⌨️ **Multi-Cursor Editing**
+## 🧭 **Navigate**
 
-- `Alt+Click` — add cursors anywhere
-- `Ctrl+D` — select next occurrence of word
-- `Ctrl+Shift+L` — select all occurrences
-
-Edit multiple lines simultaneously!
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔎 **Find & Replace**
-
-- `Ctrl+F` — find in current file
-- `Ctrl+H` — find and replace
-- `Ctrl+Shift+F` — search across all files
-
-Supports regex for powerful pattern matching.
+- **Command Palette** — `Ctrl+Shift+P`
+- **Open terminal** — `` Ctrl+` `` *(same on macOS)*
+- **Toggle sidebar** — `Ctrl+B`
+- **Quick file open** — `Ctrl+P`
+- **Markdown preview** — `Ctrl+Shift+V`
 
 </div>
 
-</div>
+<div class="card card-info card-glass pad-tight">
 
----
-hideInToc: true
----
+## ✏️ **Edit & find**
 
-# Keyboard Shortcuts Cheat Sheet
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-info card-glass pad-compact">
-
-| **Action** | **Windows/Linux** | **macOS** |
-|------------|-------------------|-----------|
-| Command Palette | `Ctrl+Shift+P` | `Cmd+Shift+P` |
-| Open terminal | `` Ctrl+` `` | `` Ctrl+` `` |
-| Toggle sidebar | `Ctrl+B` | `Cmd+B` |
-| Quick file open | `Ctrl+P` | `Cmd+P` |
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-| **Action** | **Windows/Linux** | **macOS** |
-|------------|-------------------|-----------|
-| Find in file | `Ctrl+F` | `Cmd+F` |
-| Find in project | `Ctrl+Shift+F` | `Cmd+Shift+F` |
-| Save file | `Ctrl+S` | `Cmd+S` |
-| Comment line | `Ctrl+/` | `Cmd+/` |
+- **Find in file** — `Ctrl+F`
+- **Find in project** — `Ctrl+Shift+F`
+- **Find & replace** — `Ctrl+H` *(macOS: `⌥⌘F`)*
+- **Save file** — `Ctrl+S`
+- **Comment line** — `Ctrl+/`
 
 </div>
 
@@ -1631,11 +1460,6 @@ hideInToc: true
 ⚠️ You don't need to memorise all of these. Start with **Command Palette**, **terminal toggle**, and **save**. The rest will come with practice.
 
 </div>
-
-<style>
-table { font-size: 0.82em; }
-td, th { padding-top: 0.28em; padding-bottom: 0.28em; }
-</style>
 
 ---
 hideInToc: true
@@ -1651,7 +1475,7 @@ hideInToc: true
 
 - `Ctrl+P` — open any file by name
 - `Ctrl+Shift+O` — jump to a symbol in the file
-- `Ctrl+G` — go to a line number
+- `Ctrl+G` — go to a line number *(also `Ctrl+G` on macOS)*
 
 </div>
 
@@ -1660,7 +1484,7 @@ hideInToc: true
 ## 🔗 **Follow the code**
 
 - `F12` — go to a function's definition
-- `Alt+←` / `Alt+→` — jump back and forward
+- `Alt+←` / `Alt+→` — jump back and forward *(macOS: `Ctrl+-` / `Ctrl+Shift+-`)*
 - **Breadcrumbs** (top bar) show where you are
 
 </div>
@@ -1669,7 +1493,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-📁 In a real project of dozens of files, **finding** code fast matters as much as writing it — these moves keep you oriented without touching the mouse.
+📁 In a real project of dozens of files, **finding** code fast matters as much as writing it — these moves keep you oriented without touching the mouse. *(macOS: `Ctrl` → `Cmd` unless shown otherwise.)*
 
 </div>
 
@@ -1701,7 +1525,8 @@ Carol     "Carol",
 
 - `Ctrl+D` repeatedly — grab each next match
 - or `Ctrl+Shift+L` — select **all** matches at once
-- `Home` / `End` — send every cursor to line start/end
+- `Alt+Click` *(macOS: `⌥+Click`)* — drop a cursor anywhere
+- `Home` / `End` *(macOS: `⌘←` / `⌘→`)* — send every cursor to line start/end
 - Type once → every line changes
 
 </div>
@@ -1748,13 +1573,19 @@ Match a digit, a comma, a digit — the comma *between two numbers*, not the one
 $1.$2
 ```
 
-`$1` and `$2` put the captured digits back with a dot between. `3,14` → `3.14`, columns untouched *on this file* — always check the match count first.
+`$1` and `$2` put the captured digits back with a dot between. `3,14` → `3.14`, columns untouched.
 
 </div>
 
 </div>
 
-<div class="note-text mt-md">Turn on regex with the <code>.*</code> toggle (<code>Alt+R</code>) in the Find box before you start.</div>
+<div class="card card-info card-glass pad-compact mt-md">
+
+⚠️ This assumes the column separator is `;` or `, ` (comma + space) — if columns are separated by a bare `,`, the pattern will hit them too. **Check the match count** before you replace all.
+
+</div>
+
+<div class="note-text mt-sm">Open Find &amp; Replace with <code>Ctrl+H</code> (macOS: <code>⌥⌘F</code>), then turn on regex with the <code>.*</code> toggle — <code>Alt+R</code> (macOS: <code>⌥⌘R</code>).</div>
 
 ---
 hideInToc: true
@@ -1779,7 +1610,7 @@ Find:    (\d{4})-(\d{2})-(\d{2})
 Replace: $3/$2/$1
 ```
 
-`2026-07-07` → `07/07/2026`.
+`2026-07-21` → `21/07/2026`.
 
 </div>
 
@@ -1936,7 +1767,7 @@ layout: section
 hideInToc: true
 ---
 
-# **Extensions**
+# VS Code **Extensions**
 
 ---
 hideInToc: true
@@ -1968,11 +1799,11 @@ Search: `ms-python.python`
 
 ## 📝 **Markdown**
 
-- Built-in preview: `Ctrl+Shift+V`
-- Side-by-side editing + preview: `Ctrl+K V`
+- Built-in preview: `Ctrl+Shift+V` *(macOS: `Cmd+Shift+V`)*
+- Side-by-side editing + preview: `Ctrl+K V` *(macOS: `Cmd+K V`)*
 - Extensions: Markdown All in One, markdownlint
 
-We used this earlier in the **Markdown** part of this lecture.
+You'll use this in **Seminar 5**.
 
 </div>
 
@@ -1988,15 +1819,15 @@ We used this earlier in the **Markdown** part of this lecture.
 hideInToc: true
 ---
 
-# Extensions for **Working with Data**
+# Data Extensions — and How to **Choose**
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
 ## 🌈 **Rainbow CSV**
 
-Colours each CSV column a different hue so rows line up by eye — and lets you run SQL-like queries over the file. The single best quality-of-life add-on for data files.
+Colours each CSV column a different hue so rows line up by eye, and lets you run SQL-like queries over the file — the best quality-of-life add-on for data files.
 
 </div>
 
@@ -2012,45 +1843,23 @@ Colours each CSV column a different hue so rows line up by eye — and lets you 
 
 </div>
 
-<div class="card card-accent card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
-🐍 Pair these with the **Python** and **Jupyter** extensions and VS Code becomes a full data workbench — edit, run, and inspect a DataFrame without leaving the editor.
-
-</div>
-
----
-hideInToc: true
----
-
-# How to **Choose** an Extension
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 🔧 **The capability matters, not the brand**
-
-Ask "what do I need it to *do*?" — then pick whatever provides that capability. Tools are replaceable; the skill of choosing well is not.
+🔧 **The capability matters, not the brand.** Ask "what do I need it to *do*?" — then pick whatever provides it. Tools are replaceable; the skill of choosing well is not.
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight reveal-up">
+<div class="card card-success card-glass pad-compact reveal-up">
 
-## ✅ **Signs of a good one**
-
-- Millions of installs, recent updates
-- Clear docs and an open issue tracker
-- Does **one** thing well
+✅ **Signs of a good one** — millions of installs, recent updates, clear docs, an open issue tracker, does **one** thing well
 
 </div>
 
-<div class="card card-warning card-glass pad-tight reveal-up">
+<div class="card card-warning card-glass pad-compact reveal-up">
 
-## 🚩 **Think twice if**
-
-- It's unmaintained (last update years ago)
-- It asks for broad permissions it doesn't need
-- A built-in feature already covers it
+🚩 **Think twice if** — unmaintained for years, asks for broad permissions it doesn't need, or a built-in feature already covers it
 
 </div>
 
@@ -2104,38 +1913,44 @@ project and run it from the integrated terminal — this is where it clicks. (~3
 hideInToc: true
 ---
 
-# Practice: Your First VS Code Project
+# Practice: Your First **VS Code Project**
 
-<div class="card card-success card-glass pad-tight mt-md">
+<div class="grid-2 gap-md mt-sm">
 
-## 🧪 **Hands-On** (5 min)
+<div class="card card-success card-glass pad-tight">
 
-1. Open your terminal and create a project:
+## 🧪 **Scaffold & run** (5 min)
+
+1. In your terminal, create the project and open it in VS Code:
 
 ```bash
 mkdir -p vs_code_demo/src
 touch vs_code_demo/README.md vs_code_demo/src/hello.py
-```
-
-*(PowerShell: `mkdir vs_code_demo\src`, then `ni vs_code_demo/README.md, vs_code_demo/src/hello.py`)*
-
-2. Open it in VS Code:
-
-```bash
 code vs_code_demo/
 ```
 
-3. In the Explorer sidebar, click `hello.py` and type:
+*(PowerShell: `mkdir vs_code_demo\src`, then `ni` the two files)*
 
-```python
-print("Hello from VS Code!")
-```
+2. In the Explorer sidebar, click `hello.py` and type `print("Hello from VS Code!")`
+3. Open the integrated terminal (`` Ctrl+` ``) and run `python src/hello.py` *(macOS/Linux: `python3`)*
 
-4. Open the integrated terminal (`` Ctrl+` ``) and run:
+</div>
 
-```bash
-python src/hello.py      # macOS/Linux: python3
-```
+<div class="card card-accent card-glass pad-tight">
+
+## 📝 **Now document it in Markdown** (5 min)
+
+4. Create `about_me.md` in `vs_code_demo/` with:
+   - a **level-1 header** with your name
+   - a short **paragraph** about yourself (bold *and* italic)
+   - an **unordered list** of your hobbies
+   - a **link** to your favourite website
+   - a **code block** with a "Hello, World!" snippet
+5. Preview it: `Ctrl+Shift+V` *(macOS: `Cmd+Shift+V`)* — edit, and watch it re-render
+
+Next week we put this whole folder under **git** version control.
+
+</div>
 
 </div>
 
@@ -2143,7 +1958,7 @@ python src/hello.py      # macOS/Linux: python3
 hideInToc: true
 ---
 
-# Key Takeaways
+# VS Code: **Key Takeaways**
 
 <div class="card card-primary card-glass pad-compact mt-md reveal-up">
 
@@ -2168,22 +1983,6 @@ hideInToc: true
 🧩 **Extensions add language support** — Python, Markdown, and more
 
 </div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="In Markdown, how do you force a line break within the same paragraph?"
-  :options="[
-    'Press Enter once at the end of the line',
-    'End the line with two trailing spaces',
-    'Leave a blank line between the two lines',
-    'Start the second line with a backslash'
-  ]"
-  :correct="1"
-  explanation="A single Enter merges adjacent lines into one paragraph; two trailing spaces force a break within a paragraph, while a blank line starts a whole new paragraph."
-/>
 
 ---
 hideInToc: true
@@ -2223,7 +2022,7 @@ hideInToc: true
 
 ## 🔬 **Seminar 5 tie-in**
 
-Write a real `README.md` for your project — documenting the data's **provenance**, its **columns and units**, and the **steps to rebuild** your results.
+Write a full `README.md` for the seminar dataset — **provenance**, **columns and units**, and the **steps to rebuild** a result. The same template is what your own semester project needs.
 
 </div>
 

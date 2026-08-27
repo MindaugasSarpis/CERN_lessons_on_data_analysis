@@ -4,7 +4,7 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** a fit of a resonance peak — mass ± error
+> **This session builds:** a fit of a resonance peak — mass ± error
 > with a goodness-of-fit.
 
 ## Goal
@@ -12,18 +12,20 @@ Fit a signal-plus-background model to a resonance and extract a parameter with a
 principled uncertainty and a χ² check.
 
 ## Prerequisites
-Seminar 11. `scipy.optimize.curve_fit` available.
+`scipy.optimize.curve_fit` available. The shared LHCb D⁰ → K⁻π⁺ sample, a starter
+script, and a rough initial estimate of the peak position (~1865 MeV) are provided.
 
 ## Tasks
 1. Histogram `M` in a window around a peak; take bin centres, counts, and
    `√count` as the per-bin uncertainty.
 2. Define a model: **Gaussian (signal) + smooth background** (linear or exponential).
-3. Fit with `curve_fit`, passing `sigma=` and good initial guesses (use your
-   Seminar 11 estimate for the mean).
+3. Fit with `curve_fit`, passing `sigma=` **and `absolute_sigma=True`** (so the
+   covariance is not silently rescaled by χ²/dof) and good initial guesses (use the
+   provided estimate for the mean; `sigma` ≈ FWHM / 2.35 read off the histogram).
 4. Report the peak mass and width as `value ± error` (from the covariance), and
    compute **χ²/dof**. Overlay the fit on the histogram and save to `results/`.
 5. Wrap the whole procedure (histogram → fit → report) in `scripts/fit_peak.py`,
-   parameterised by the window bounds — Seminar 14's `Makefile` will call this directly.
+   parameterised by the window bounds, so one command reproduces the whole result.
 6. Inspect the **pull** distribution: `(data - fit) / error` per bin. It should scatter
    around 0 with roughly unit spread — a large outlier pull flags where the model fails
    to describe the data, a more rigorous check than χ²/dof alone.

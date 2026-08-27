@@ -82,6 +82,7 @@ const lectureIndex = manifest.decks.map((d, i) => ({
   title: d.title,
   block: d.block,
   optional: !!d.optional,
+  draft: !!d.draft,
 }));
 await writeFile(
   join(CONTENT, 'public', 'lectures.json'),

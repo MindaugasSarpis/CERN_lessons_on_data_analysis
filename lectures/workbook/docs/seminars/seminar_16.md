@@ -4,15 +4,17 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** a trained signal-vs-background classifier
+> **This session builds:** a trained signal-vs-background classifier
 > with an honest evaluation. *Optional / advanced — the capstone.*
 
 ## Goal
 Apply the whole course to a machine-learning task — and, more importantly,
-**evaluate it honestly** — using the clean dataset you built.
+**evaluate it honestly** — on the shared D⁰ → K⁻π⁺ sample (or a dataset from your
+own field).
 
 ## Prerequisites
-Seminar 13 (`events_clean`). scikit-learn available.
+The D⁰ sample loaded as a table (invariant mass `M` plus the daughter momenta).
+scikit-learn available.
 
 ## Tasks
 1. Define the label: `signal` = events inside the D⁰ peak window (~1.84–1.89 GeV),
@@ -42,8 +44,8 @@ Seminar 13 (`events_clean`). scikit-learn available.
 - Re-run `scripts/train_classifier.py --seed 42` and confirm you get bit-for-bit the
   same confusion matrix and F1 — the whole training run is reproducible, not just the data.
 - Commit: `git add -A && git commit -m "Add honestly-evaluated classifier — course capstone"`.
-- Note one lesson in the README — and, since this is the last seminar, one line on how
-  this project embodies the course's four aims end-to-end.
+- Note one lesson in the README — and, since this is the last seminar, one line on which
+  of the course's four aims this exercise leaned on most.
 
 ## Solution notes (instructor)
 The lesson is **evaluation**, not accuracy. The leakage stretch goal is the single

@@ -23,7 +23,7 @@ layout: cover
 
 <!--
 Speaker: they can already write Python from Lecture 7 — today turns that into real
-data work: functions, files, and the right library. Frame it as the bridge. (~1 min)
+data work: functions, files, and a script that becomes a tool. Frame it as the bridge. (~1 min)
 -->
 
 ---
@@ -31,7 +31,7 @@ hideInToc: true
 layout: quote
 ---
 
-# You can write Python — now put it to work on data: organise code into functions, read and write files, and reach for the right library. The language stays the same; the leverage grows.
+# You can write Python — now put it to work on data: organise code into functions, read and write files, and turn a script into a tool. The language stays the same; the leverage grows.
 
 ---
 hideInToc: true
@@ -63,7 +63,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-📂 Read and write **data formats** — CSV / JSON / YAML round-trips into dicts
+📂 Read and write **data formats** — CSV and JSON round-trips into dicts
 
 </div>
 
@@ -83,7 +83,7 @@ hideInToc: true
 
 <!--
 Speaker: read these as promises, not a syllabus. Seminar 8 is where they build the
-ingest script every later analysis step depends on. Set the expectation. (~1 min)
+ingest script that puts all six of these to work. Set the expectation. (~1 min)
 -->
 
 ---
@@ -178,58 +178,54 @@ for key, value in stats.items():
 hideInToc: true
 ---
 
-# Common Python Errors
+# Errors You'll Meet in Data Files
 
-<div class="grid-3 gap-md mt-md">
+<div class="card card-warning card-glass pad-tight mt-md">
 
-<div class="card card-warning card-glass pad-tight">
-
-## 🐛 **Syntax & Indentation**
+## 🐛 **Three exceptions, three causes**
 
 ```python
-if True:
-print("oops")  # missing indent!
+float("N/A")                 # ValueError  — a malformed field
+row["mass_MeV"]              # KeyError    — a column that isn't there
+"1,1864.8".split(",")[2]     # IndexError  — a row that is too short
 ```
 
-- Whitespace defines structure
-- Every block needs **indentation**
+- Each is a **normal event** in a real data file, not a bug in your code — so catch the ones you expect and keep going
+- Anything else should still crash loudly: read the traceback bottom-up (Lecture 07) and fix the cause
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
+<!--
+Speaker: three lines, three error names — these are the ones Seminar 8's ingest script
+will actually hit. Tracebacks themselves were Lecture 07; don't re-teach them. (~2 min)
+-->
 
-## 🐛 **Name & Type Errors**
+---
+hideInToc: true
+---
 
-```python
-print(undefined_variable)  # NameError
-"hello" + 42                # TypeError
+# Try It — Skip a Bad Row, Count It
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The one exception pattern every ingest script needs: a bad field must **not** crash the run — skip the row, count it, report it. This is exactly what Seminar 8 asks for.
+
+</div>
+
+```python {monaco-run} {autorun:false}
+rows = ["1,1864.8", "2,N/A", "3,1865.9", "4,"]
+masses, skipped = [], 0
+for line in rows:
+    try:
+        masses.append(float(line.split(",")[1]))
+    except (ValueError, IndexError):
+        skipped += 1
+print(masses, "skipped:", skipped)
 ```
 
-- Check **spelling** and **types**
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🐛 **Value Errors**
-
-```python
-float("N/A")  # ValueError!
-```
-
-- A malformed CSV field — exactly what Seminar 8's ingest script must catch with `try` / `except ValueError`
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 💡 **Debugging Tip**
-
-Read the error message **bottom to top** — the last line tells you what went wrong, the lines above show where.
-
-</div>
+<!--
+Speaker: run it, then ask what each of the two bad rows raises (ValueError for "N/A", IndexError for the empty field). Tuple of exception types = "any of these". (~3 min)
+-->
 
 ---
 hideInToc: true
@@ -252,7 +248,7 @@ layout: section
 hideInToc: true
 ---
 
-# Advanced **Patterns**
+# Cleaner **Loops**
 
 <!--
 Speaker: enumerate and zip are the idioms that separate clean Python from index-
@@ -263,7 +259,7 @@ juggling loops — worth pausing on the before/after. (~1 min)
 hideInToc: true
 ---
 
-# Useful Built-in Patterns
+# Cleaner Loops with `enumerate()` and `zip()`
 
 <div class="grid-2 gap-md mt-md">
 
@@ -305,7 +301,7 @@ for name, mass in zip(names, masses):
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-#### 💡 **Tip**
+## 💡 **Tip**
 
 - `enumerate()` replaces the `for i in range(len(...)):` anti-pattern
 - `zip()` stops at the shortest list
@@ -335,142 +331,6 @@ for i, (name, mass, charge) in enumerate(zip(particles, masses_MeV, charges)):
         sign = " "
     print(f"  {i+1}. {name:10s}  mass={mass:8.2f} MeV  charge={sign}{charge}")
 ```
-
----
-layout: section
-hideInToc: true
----
-
-# Files & **Modules**
-
-<!--
-Speaker: the payoff section — getting data off disk and into Python. with open()
-and the CSV/JSON/YAML loaders are exactly what Seminar 8 needs. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Modules, Imports & File Handling
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-tight">
-
-#### 📦 **Modules and Imports**
-
-```python
-import math
-print(math.sqrt(16))  # 4.0
-
-from random import randint
-print(randint(1, 10))  # Random number between 1 and 10
-```
-
-- Use `import` to bring in external modules
-- `from module import function` imports specific functions
-
-</div>
-
-</div>
-
-<div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-#### 📂 **File Handling**
-
-```python
-# Writing to a file
-with open("test.txt", "w") as file:
-    file.write("Hello, Python!")
-
-# Reading from a file
-with open("test.txt", "r") as file:
-    content = file.read()
-    print(content)
-```
-
-- Use `with open()` to handle file operations safely
-- `"r"` for reading, `"w"` for writing, `"a"` for appending
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Loading Structured Files into Dicts
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-#### 📄 JSON
-
-```python
-import json
-with open("data/raw/lhcb_d0_kpi.meta.json") as f:
-    meta = json.load(f)  # column units, DOI, licence
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-#### 📝 YAML
-
-```python
-import yaml  # pip install pyyaml
-with open("environment.yml") as f:
-    env = yaml.safe_load(f)  # pinned deps (Lecture 14)
-```
-
-</div>
-
-</div>
-
-<div>
-
-<div class="card card-info card-glass pad-compact">
-
-#### 📊 CSV
-
-```python
-import csv
-with open("data/raw/lhcb_d0_kpi.csv", newline="") as f:
-    rows = list(csv.DictReader(f))
-# each row: {'Event': ..., 'H1_PX': ..., 'H2_PX': ..., ...}
-```
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-sm">
-
-#### 📈 Excel
-
-```python
-import pandas as pd  # pip install pandas openpyxl
-df   = pd.read_excel("data.xlsx", sheet_name=0)
-rows = df.to_dict(orient="records")
-```
-
-*A **DataFrame** is pandas' table type (like a spreadsheet); `.to_dict(orient="records")` turns each row into a dict so we can loop over it.*
-
-</div>
-
-</div>
-
-</div>
 
 ---
 layout: section
@@ -527,7 +387,7 @@ print(f.suffix)   # .csv
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-#### 💡 **One import, everywhere**
+## 💡 **One import, everywhere**
 
 `from pathlib import Path` is the modern default — reach for it instead of raw strings whenever you touch the filesystem.
 
@@ -647,6 +507,7 @@ path = "/home/maria/thesis/data/d0.csv"
 #### ✅ **Relative to the project**
 
 ```python
+# this file lives in scripts/, so two .parent hops = repo root
 ROOT = Path(__file__).resolve().parent.parent
 path = ROOT / "data" / "raw" / "d0.csv"
 ```
@@ -660,7 +521,7 @@ path = ROOT / "data" / "raw" / "d0.csv"
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-#### 💡 **Rule**
+## 💡 **Rule**
 
 No absolute paths in code. Anchor to the repo root and build everything from there.
 
@@ -706,7 +567,7 @@ idea: pick the format that matches the shape of the data, don't fight it. (~1 mi
 hideInToc: true
 ---
 
-# Text, Bytes & the Right Format
+# The Right Format, the Right Mode
 
 <div class="grid-3 gap-md mt-md">
 
@@ -714,7 +575,7 @@ hideInToc: true
 
 #### 📄 **Plain text**
 
-Logs, notes, a README. Human-readable, but no structure to parse back out.
+Logs, notes, a README. Human-readable, no structure to parse back out.
 
 </div>
 
@@ -722,7 +583,7 @@ Logs, notes, a README. Human-readable, but no structure to parse back out.
 
 #### 🔢 **CSV**
 
-Rows and columns — one flat table. Opens in Excel. The lab default for measurements.
+Rows and columns — one flat table. The lab default for measurements.
 
 </div>
 
@@ -730,62 +591,44 @@ Rows and columns — one flat table. Opens in Excel. The lab default for measure
 
 #### 🌳 **JSON**
 
-Nested keys, lists, numbers. Perfect for metadata, configs, and API replies. Not tabular.
+Nested keys, lists, numbers. Metadata, configs, API replies. Not tabular.
 
 </div>
 
 </div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-#### 💡 **Rule of thumb**
-
-A **table** → CSV. **Settings or metadata** → JSON. A **paragraph** → plain text. Match the format to the shape of the data.
-
-</div>
-
----
-hideInToc: true
----
-
-# Text or Bytes? Open Modes
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-success card-glass pad-tight">
 
-#### 📄 **Text mode (the default)**
+#### 📄 **Text mode — the default**
 
 ```python
-open("d0.csv", "r", encoding="utf-8")
-# str in, str out — decoded for you
+with open("notes.txt", "w", encoding="utf-8") as f:
+    f.write("run 42: beam stable\n")
+with open("notes.txt", encoding="utf-8") as f:
+    content = f.read()
 ```
 
-- For anything human-readable: CSV, JSON, notes
-- Set `encoding="utf-8"` so accents and symbols survive
+- `"r"` read (default), `"w"` write, `"a"` append — `with` closes the file even if an error is raised
+- `encoding="utf-8"` so accents and symbols survive
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
-#### 🔟 **Binary mode (`"rb"` / `"wb"`)**
+#### 💾 **Binary mode — `"rb"` / `"wb"`**
 
 ```python
-open("d0.root", "rb")   # raw bytes, no decoding
+with open("d0.root", "rb") as f:
+    header = f.read(4)   # raw bytes, no decoding
 ```
 
-- For images, ROOT / Parquet, any non-text blob
+- Images, ROOT / Parquet, any non-text blob
 - Decoding bytes as the wrong text is where garbled characters come from
+- A table or a document is **text**; when in doubt, it's text
 
 </div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-#### 💡 **Which one?**
-
-A table or a document is **text**; a compiled or compressed blob is **bytes**. When in doubt, it's text.
 
 </div>
 
@@ -795,6 +638,8 @@ hideInToc: true
 
 # Reading & Writing CSV
 
+<div class="note-text mt-sm">This is the <em>strip → split → float</em> recipe from Lecture 07, done for you by the standard library.</div>
+
 <div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-tight">
@@ -803,7 +648,7 @@ hideInToc: true
 
 ```python
 import csv
-with open("d0.csv", newline="") as f:
+with open("d0.csv", newline="", encoding="utf-8") as f:
     rows = list(csv.DictReader(f))
 # rows[0] == {'event': '1', 'mass_MeV': '1864.8', ...}
 ```
@@ -815,7 +660,8 @@ with open("d0.csv", newline="") as f:
 #### 📤 **Write ← dicts**
 
 ```python
-with open("out.csv", "w", newline="") as f:
+with open("out.csv", "w", newline="",
+          encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=rows[0].keys())
     w.writeheader()
     w.writerows(rows)
@@ -827,9 +673,9 @@ with open("out.csv", "w", newline="") as f:
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-#### ⚠️ **Two gotchas**
+## ⚠️ **Gotchas**
 
-Always pass `newline=""` (stops blank lines on Windows), and remember every value arrives as a **string** — `float(row["mass_MeV"])` before you do maths.
+Always pass `newline=""` (stops blank lines on Windows) and `encoding="utf-8"`, and remember every value arrives as a **string** — `float(row["mass_MeV"])` before you do maths. In the seminar sample the mass column is `M` and the momenta are `H1_PX`, `H1_PY`, … — so there it is `float(row["M"])`.
 
 </div>
 
@@ -890,6 +736,49 @@ print("events + 1 =", back["events"] + 1)   # a real int, not a string
 hideInToc: true
 ---
 
+# Structured Files → Dicts: JSON & YAML
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### 📄 **JSON — in the standard library**
+
+```python
+import json
+with open("meta.json", encoding="utf-8") as f:
+    meta = json.load(f)    # units, DOI, licence
+
+with open("out.json", "w", encoding="utf-8") as f:
+    json.dump(summary, f, indent=2)
+```
+
+- `load` / `dump` work on file objects; `loads` / `dumps` on strings
+- Numbers come back as `int` / `float`, lists as lists — no `float()` needed
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+#### 📝 **YAML — the same idea, for humans**
+
+```python
+import yaml                    # pip install pyyaml
+with open("environment.yml", encoding="utf-8") as f:
+    env = yaml.safe_load(f)   # a dict, like json.load
+```
+
+- Same shapes as JSON (keys, lists, numbers) with less punctuation — configs and `environment.yml` (Lecture 14) use it
+- Not in the standard library, so it's a pointer today — JSON is what Seminar 8 uses
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Try It — Mini Pipeline: CSV → JSON
 
 ```py {monaco-run} {autorun:false}
@@ -918,6 +807,22 @@ print(json.dumps(summary, indent=2))
 hideInToc: true
 ---
 
+<MCQ
+  question="You need to save a dataset's run parameters — sample name, number of events, and the list of column names — beside the data. Which format fits best?"
+  :options="[
+    'JSON — it stores nested keys, a list, and a number directly as data',
+    'CSV — one row can hold all of it',
+    'A .txt file with the values separated by commas',
+    'An Excel sheet with one value per cell'
+  ]"
+  :correct="0"
+  explanation="The parameters are nested and mixed-type — a string, an int, and a list — which is exactly what JSON represents. CSV is for flat tables of rows and columns; forcing nested metadata into CSV (or ad-hoc text) means writing a fragile parser later. json.dump / json.load round-trips the whole structure in one line."
+/>
+
+---
+hideInToc: true
+---
+
 # Why Binary & Columnar Formats Exist
 
 <div class="card card-info card-glass pad-tight mt-md">
@@ -934,7 +839,7 @@ hideInToc: true
 
 ## ⚡ **Binary / columnar formats fix this**
 
-Parquet, HDF5, and ROOT store **real numbers**, compress well, and let you read just the columns you need. We meet them properly in **Lecture 15** — for now, know they exist and why.
+Parquet, HDF5, and ROOT store **real numbers**, compress well, and let you read just the columns you need. You'll use Parquet in **Lecture 13** (pandas) and see why columnar layout wins in **Lecture 15** — for now, know they exist and why.
 
 </div>
 
@@ -943,121 +848,16 @@ hideInToc: true
 ---
 
 <MCQ
-  question="You need to save a dataset's run parameters — sample name, number of events, and the list of column names — beside the data. Which format fits best?"
+  question="Why is a `with open(...) as f:` block preferred over calling `open()` and assigning the result on its own?"
   :options="[
-    'JSON — it stores nested keys, a list, and a number directly as data',
-    'CSV — one row can hold all of it',
-    'A .txt file with the values separated by commas',
-    'An Excel sheet with one value per cell'
+    'It closes the file automatically, even if an error is raised',
+    'It reads the file faster than open() alone',
+    'It converts the file into a dictionary for you',
+    'It is the only way to import the csv module'
   ]"
   :correct="0"
-  explanation="The parameters are nested and mixed-type — a string, an int, and a list — which is exactly what JSON represents. CSV is for flat tables of rows and columns; forcing nested metadata into CSV (or ad-hoc text) means writing a fragile parser later. json.dump / json.load round-trips the whole structure in one line."
+  explanation="with is a context manager: it guarantees the file is closed when the block ends, even if an exception occurs — so you never leak an open file handle."
 />
-
----
-layout: section
-hideInToc: true
----
-
-# Hands-On **Practice**
-
-<!--
-Speaker: live-run the Monaco cells here — dict comprehensions and a text bar chart
-tie the whole lecture together before they write a real script. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Mini Project: Analyse Experiment Data
-
-```py {monaco-run} {autorun:false}
-# Simulated hit rates from 3 muon-detector chambers
-data = {
-    "chamber_A": [22.1, 22.4, 22.3, 22.8, 22.5],
-    "chamber_B": [23.5, 23.1, 23.8, 23.2, 23.6],
-    "chamber_C": [21.9, 22.0, 21.7, 22.1, 21.8],
-}
-
-for chamber, readings in data.items():
-    avg = sum(readings) / len(readings)
-    spread = max(readings) - min(readings)
-    print(f"{chamber}: avg={avg:.2f} Hz  spread={spread:.1f} Hz")
-
-# A dict comprehension — same idea as a list comprehension, but it
-# produces key: value pairs instead of a plain list.
-averages = {c: sum(r)/len(r) for c, r in data.items()}
-# key= tells max/min/sorted which value to compare by.
-busiest = max(averages, key=averages.get)
-print(f"\nBusiest: {busiest} ({averages[busiest]:.2f} Hz)")
-```
-
----
-hideInToc: true
----
-
-# Mini Project: Visualise the Results
-
-```py {monaco-run} {autorun:false}
-# Simple text-based "bar chart" — no matplotlib needed!
-data = {
-    "chamber_A": [22.1, 22.4, 22.3, 22.8, 22.5],
-    "chamber_B": [23.5, 23.1, 23.8, 23.2, 23.6],
-    "chamber_C": [21.9, 22.0, 21.7, 22.1, 21.8],
-}
-
-averages = {c: sum(r)/len(r) for c, r in data.items()}
-min_avg = min(averages.values())
-
-print("Average Hit Rate by Chamber")
-print("=" * 40)
-for chamber, avg in averages.items():
-    bar_length = int((avg - 20) * 10)  # scale for display
-    bar = "█" * bar_length
-    print(f"{chamber}: {bar} {avg:.2f} Hz")
-print("\nNext up: NumPy and matplotlib will make this MUCH easier!")
-```
-
----
-hideInToc: true
----
-
-# Time to Write Real Python
-
-The in-browser exercises were great for learning — now let's create an actual Python script you can run, share, and version-control.
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-**1.** In VS Code: `File → New File` → save as `muon_analysis.py`
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-**2.** Copy your mini-project code in (or rewrite it from memory!)
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-**3.** Open the terminal (`` Ctrl+` ``) and run:
-
-```bash
-python muon_analysis.py
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-**4.** Same output — but now it lives as a file on your machine, not just in a browser tab
-
-</div>
-
-</div>
 
 ---
 layout: section
@@ -1070,45 +870,6 @@ hideInToc: true
 Speaker: the difference between code that works once and code a teammate (or future-
 you) can pick up. Documentation you write while writing, not after. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# Reading the Docs with `help()`
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-#### 📖 **`help()` reads the docstring**
-
-```python
-help(len)
-# len(obj) -> integer
-# Return the number of items in a container.
-```
-
-Every docstring you write shows up here — and as a tooltip in your editor.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-#### 💬 **A docstring is just a string**
-
-```python
-def load(path):
-    """Read a CSV into a list of dicts."""
-    ...
-print(load.__doc__)
-```
-
-Python stores that first `"""..."""` as the function's `__doc__`.
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -1146,13 +907,29 @@ def mass_window(rows, low, high):
 hideInToc: true
 ---
 
-# Type Hints — Docs the Tools Can Read
+# `help()` & Type Hints — Docs the Tools Can Read
 
 <div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-#### 🏷️ **What they look like**
+#### 📖 **`help()` reads the docstring**
+
+```python
+help(len)
+# len(obj) -> integer
+# Return the number of items in a container.
+
+print(mass_window.__doc__)  # yours, same place
+```
+
+- Every docstring you write shows up in `help()` — and as a tooltip in your editor
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+#### 🏷️ **Type hints say what goes in and out**
 
 ```python
 def mass_window(
@@ -1163,17 +940,16 @@ def mass_window(
     ...
 ```
 
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-#### 🎯 **What they're for**
-
-- **Not** enforced at run time — Python still runs either way
+- **Not** enforced at run time — Python runs either way
 - They document intent, so editors autocomplete and flag mistakes
-- Start light: annotate your key functions' inputs and return
 
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Start light: a one-line docstring plus hints on the inputs and return of your key functions — that is all a teammate (or `help()`) needs.
 
 </div>
 
@@ -1233,13 +1009,17 @@ def mean(values):
 
 def spread(values):
     return max(values) - min(values)
+
+if __name__ == "__main__":
+    # runs only with python stats.py, not on import
+    print(mean([1, 2, 3]))
 ```
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-#### 📄 **`analysis.py` — uses it**
+#### 📄 **`analysis.py` — imports it**
 
 ```python
 from stats import mean, spread
@@ -1248,44 +1028,18 @@ rates = [22.1, 22.4, 22.3]
 print(mean(rates), spread(rates))
 ```
 
-</div>
+- Same mechanism as the standard library: `import math` → `math.sqrt(16)`, `from random import randint`
+- Any `.py` file is importable by its name (minus the `.py`) from a sibling file
 
 </div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-#### 💡 **The rule**
-
-Any `.py` file is importable by its name (minus the `.py`) from a sibling file. Group related functions into one module; import what you need.
-
-</div>
-
----
-hideInToc: true
----
-
-# The `__main__` Guard
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🚪 **A file that is both module and script**
-
-```python
-# stats.py
-def mean(values):
-    return sum(values) / len(values)
-
-if __name__ == "__main__":
-    # runs ONLY with `python stats.py`, not on import
-    print(mean([1, 2, 3]))
-```
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-- Importing a module runs its top level — so bare code runs on import (surprise!)
-- The guard keeps "do the work" code from firing when someone just imports your functions
+## 🚪 **The `__main__` guard**
+
+Importing a module runs its top level — so bare code fires on import (surprise!). The guard keeps "do the work" code for `python stats.py` only, so `analysis.py` gets the functions and nothing else.
 
 </div>
 
@@ -1302,7 +1056,7 @@ hideInToc: true
 ```
 myanalysis/
 ├── data/raw/        # inputs, never edited by hand
-├── src/             # importable functions (stats.py, io.py)
+├── src/             # importable functions (stats.py, loaders.py)
 ├── scripts/         # runnable steps (ingest.py, fit.py)
 ├── results/         # generated outputs (gitignored)
 └── environment.yml  # pinned dependencies (Lecture 14)
@@ -1313,8 +1067,8 @@ myanalysis/
 <div class="card card-info card-glass pad-compact mt-md">
 
 - Code that **computes** lives in `src/`; code you **run** lives in `scripts/`
-- Data flows one way: `data/raw` → `scripts/` → `results/`
-- This is the layout the running project uses across every seminar
+- Data flows one way: `data/raw` → `scripts/` → `data/processed` / `results/`
+- This is the layout every seminar brief assumes — and a sound default for your own project
 
 </div>
 
@@ -1342,6 +1096,90 @@ if __name__ == "__main__":
     print("spread:", round(spread(rates), 2))
     print("__name__ is:", __name__)
 ```
+
+---
+layout: section
+hideInToc: true
+---
+
+# Hands-On **Practice**
+
+<!--
+Speaker: live-run the Monaco cell, then get them to save it as a real file —
+analyse.py. The next section turns that very file into a command-line tool. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Mini Project: Analyse & Chart Chamber Data
+
+```py {monaco-run} {autorun:false}
+# Simulated hit rates (Hz) from 3 muon-detector chambers
+data = {
+    "chamber_A": [22.1, 22.4, 22.3, 22.8, 22.5],
+    "chamber_B": [23.5, 23.1, 23.8, 23.2, 23.6],
+    "chamber_C": [21.9, 22.0, 21.7, 22.1, 21.8],
+}
+
+# A dict comprehension: like a list comprehension, but it builds key: value pairs
+averages = {c: sum(r) / len(r) for c, r in data.items()}
+
+for chamber, readings in data.items():
+    spread = max(readings) - min(readings)
+    bar = "█" * int((averages[chamber] - 20) * 10)   # text bar chart — no matplotlib needed
+    print(f"{chamber}: {bar} {averages[chamber]:.2f} Hz  spread={spread:.1f} Hz")
+
+busiest = max(averages, key=averages.get)   # key= tells max() which value to compare by
+print(f"\nBusiest: {busiest} ({averages[busiest]:.2f} Hz)")
+```
+
+---
+hideInToc: true
+---
+
+# Time to Write Real Python
+
+The in-browser cell was great for learning — now make it an actual Python script you can run, share, and version-control.
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+**1.** In VS Code: `File → New File` → save as `analyse.py`
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+**2.** Copy the mini-project code in (or rewrite it from memory!)
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+**3.** Open the terminal (`` Ctrl+` ``) and run:
+
+```bash
+python analyse.py
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+**4.** Same output — but now it lives as a file on your machine, not just in a browser tab
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+**5.** Run it again — same output? That's reproducibility ♻️ — and the reason the next section makes it run on *any* file, not just the numbers typed into it
+
+</div>
 
 ---
 layout: section
@@ -1376,7 +1214,7 @@ print(summarise(rows))
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-- To analyse a different file you must **edit the source** — error-prone, not repeatable
+- The `analyse.py` you just saved has the same flaw — its data is typed into the source; to analyse another file you must **edit the code**, which is error-prone and not repeatable
 - A shell loop (Lecture 4) can't help here — the script ignores its arguments while the filename is hard-coded
 - The fix: read the filename as an **argument** when the script runs
 
@@ -1386,63 +1224,46 @@ print(summarise(rows))
 hideInToc: true
 ---
 
-# `sys.argv` — the Raw Arguments
+# From `sys.argv` to `argparse`
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-warning card-glass pad-tight">
 
-#### 📥 **The simplest way**
+#### 📥 **Before: `sys.argv`, the raw words**
 
 ```python
 import sys
 
 # python analyse.py data/raw/chamber_B.csv
-infile = sys.argv[1]
+infile = sys.argv[1]   # argv[0] = the script itself
 print("analysing", infile)
 ```
 
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-#### 📝 **What it gives you**
-
-- `sys.argv` is the list of words after `python`
-- `sys.argv[0]` is the script's own name
-- Simple — but no `--help`, no defaults, no type checks
+- Just the list of words after `python` — simple
+- No `--help`, no defaults, no type checks; forget the argument and it crashes on `argv[1]`
 
 </div>
 
-</div>
+<div class="card card-success card-glass pad-tight">
 
----
-hideInToc: true
----
-
-# `argparse` — a Real Interface
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🧰 **Named arguments, defaults, and free help**
+#### 🧰 **After: `argparse`, a real interface**
 
 ```python
 import argparse
 
-p = argparse.ArgumentParser(description="Summarise a detector CSV.")
+p = argparse.ArgumentParser(
+    description="Summarise a detector CSV.")
 p.add_argument("input", help="path to the CSV file")
-p.add_argument("--window", type=float, default=5.0,
-               help="mass-window half-width in MeV")
+p.add_argument("--limit", type=int,
+               help="read only the first N rows")
 args = p.parse_args()
-
-print(args.input, args.window)
+print(args.input, args.limit)  # None if no --limit
 ```
 
+- Free `--help` text, type conversion, defaults, and clear error messages — the standard way to make a script re-runnable on any input
+
 </div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-Free `--help` text, type conversion, defaults, and clear error messages — the standard way to make a script re-runnable on any input.
 
 </div>
 
@@ -1457,17 +1278,19 @@ import argparse
 
 parser = argparse.ArgumentParser(description="Summarise a detector CSV.")
 parser.add_argument("input", help="path to the CSV file")
-parser.add_argument("--window", type=float, default=5.0,
-                    help="mass-window half-width in MeV")
+parser.add_argument("--limit", type=int, default=None,
+                    help="read only the first N rows (quick test runs)")
 
 # Normally argparse reads the real command line. Here we pass a list
 # so it runs inside the slide — try editing these values:
-args = parser.parse_args(["data/raw/d0.csv", "--window", "8"])
+args = parser.parse_args(["data/raw/d0.csv", "--limit", "500"])
 
 print("input :", args.input)
-print("window:", args.window, "MeV")
-print("window is a", type(args.window).__name__)   # float — converted for us
+print("limit :", args.limit, "rows")
+print("limit is an", type(args.limit).__name__)   # int — converted for us
 ```
+
+*Seminar 8's stretch goal is exactly this `--limit N` flag on your ingest script.*
 
 ---
 hideInToc: true
@@ -1525,7 +1348,8 @@ args = p.parse_args()
 path = Path(args.input)
 if not path.exists():
     sys.exit(f"no such file: {path}")   # stderr + non-zero exit
-rows = list(csv.DictReader(path.open(newline="")))
+with path.open(newline="", encoding="utf-8") as f:
+    rows = list(csv.DictReader(f))
 print(f"{path.name}: {len(rows)} events")
 ```
 
@@ -1541,114 +1365,47 @@ Robust paths, a real interface, safe reading, an honest exit code — drop it in
 hideInToc: true
 ---
 
-# Now It's a Reusable Tool
+# Run It Anywhere — Then Commit It
 
-<div class="card card-success card-glass pad-tight mt-md">
+<div class="grid-2 gap-md mt-md">
 
-## ⚙️ **One script, any input, no edits**
+<div class="card card-success card-glass pad-tight">
+
+#### ⚙️ **One script, any input, no edits**
 
 ```bash
 # analyse a single file
-python analyse.py data/raw/chamber_A.csv --window 8
+python analyse.py data/raw/chamber_A.csv
 
 # or loop over every file from the shell
 for f in data/raw/*.csv; do
-    python analyse.py "$f" --window 8
+    python analyse.py "$f"
 done
 ```
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-Fully repeatable, scriptable, and shareable — the automation aim ⚙️ in one small change. Your analysis step now runs the same way every time, on any file.
-
-</div>
-
----
-hideInToc: true
----
-
-# Version-Control Your Work
-
-<div class="card card-success card-glass pad-tight mt-md">
-
-## 🔄 **Save Your Progress with Git**
-
-**Recall from Lecture 6:** commit after each working milestone — your future self will thank you.
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-```bash
-git add muon_analysis.py
-git commit -m "Add muon detector hit-rate analysis script"
-```
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# What's Next?
-
-You can now write Python. The upcoming data-analysis lectures build on it with three workhorse libraries:
-
-<div class="grid-3 gap-md mt-md">
-
 <div class="card card-primary card-glass pad-tight">
 
-## 🔢 **NumPy**
+#### 🔄 **Save the milestone with Git**
 
-Fast arrays and math on whole datasets at once.
+```bash
+git add analyse.py
+git commit -m "Turn analyse.py into a CLI tool"
+```
 
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐼 **pandas**
-
-DataFrames — labelled tables for real, messy data.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📈 **Matplotlib**
-
-Turning numbers into plots you can reason about.
+- Recall Lecture 6: commit after each working milestone — a tool that runs is one
+- Your `git log` now tells the story: script → module → tool
 
 </div>
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
+<div class="card card-info card-glass pad-compact mt-md">
 
-Together these handle the bulk of everyday data-analysis work.
+Repeatable, scriptable, shareable — the automation aim ⚙️ in one small change. Your analysis step now runs the same way every time, on any file.
 
 </div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Why is a `with open(...) as f:` block preferred over calling `open()` and assigning the result on its own?"
-  :options="[
-    'It closes the file automatically, even if an error is raised',
-    'It reads the file faster than open() alone',
-    'It converts the file into a dictionary for you',
-    'It is the only way to import the csv module'
-  ]"
-  :correct="0"
-  explanation="with is a context manager: it guarantees the file is closed when the block ends, even if an exception occurs — so you never leak an open file handle."
-/>
 
 ---
 hideInToc: true
@@ -1678,7 +1435,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Load **CSV / JSON / YAML** into Python dicts
+✅ Load **CSV / JSON** into Python dicts
 
 </div>
 
@@ -1696,11 +1453,23 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-accent card-glass pad-compact">
 
 ## 🔬 **Seminar 8 tie-in**
 
-build an ingest script that reads the whole CSV into Python (no Pandas yet) — the foundation every later step builds on.
+Write a stdlib-only ingest script — `csv.DictReader`, skip-and-count bad rows, summary stats, an `argparse --limit` flag — on the shared D⁰ sample. No pandas yet; that's Lecture 13.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🧭 **Where this goes next**
+
+The same Python, with three workhorse libraries: **Matplotlib** turns numbers into plots (Lecture 10); **NumPy** does maths on whole arrays and **pandas** gives you labelled tables (Lecture 13).
+
+</div>
 
 </div>
 

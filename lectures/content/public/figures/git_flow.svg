@@ -122,10 +122,10 @@
   <rect x="350" y="740" width="120" height="32" rx="7" fill="#0b1220" stroke="#94a3b8" stroke-width="1"/>
   <text x="410" y="762" text-anchor="middle" font-size="14" fill="#cbd5e1" class="cmd">git diff</text>
 
-  <!-- git diff cached: index to HEAD -->
+  <!-- git diff staged: index to HEAD -->
   <path d="M 625 770 L 955 770" stroke="#94a3b8" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-start="url(#arrGrayS)" marker-end="url(#arrGray)"/>
   <rect x="720" y="740" width="160" height="32" rx="7" fill="#0b1220" stroke="#94a3b8" stroke-width="1"/>
-  <text x="800" y="762" text-anchor="middle" font-size="14" fill="#cbd5e1" class="cmd">git diff --cached</text>
+  <text x="800" y="762" text-anchor="middle" font-size="14" fill="#cbd5e1" class="cmd">git diff --staged</text>
 
   <!-- ========== Row 5: commit -a (working -> HEAD, bypassing index) ========== -->
   <path d="M 245 860 C 400 900, 800 900, 955 860" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrGreen)"/>

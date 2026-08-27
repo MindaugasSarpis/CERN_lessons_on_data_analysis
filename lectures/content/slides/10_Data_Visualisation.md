@@ -225,6 +225,19 @@ hideInToc: true
 />
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Mechanics of a **Figure**
+
+<!--
+Speaker: the parts of a plot before the families of plots — which visual
+channel carries the number, what a legend is for, how axes and coordinate
+systems shape the read. Everything later builds on these. (~0.5 min)
+-->
+
+---
 hideInToc: true
 ---
 
@@ -276,29 +289,15 @@ Cleveland & McGill's classic experiments (1984), extended by later crowdsourced 
 hideInToc: true
 ---
 
-# **Aesthetics** of Data Visualization
+# **Aesthetics** — the visual channels
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎨 Data points are mapped to visual properties — **position**, **colour**, **shape**, **size**, **line style**. Choosing these mappings well is the core skill.
+🎨 Every plot maps data variables to **visual channels** — position on x, position on y, colour, shape, size, line style. Choosing these mappings well is the core skill: the mapping is the contract between your data and what the reader sees.
 
 </div>
 
-<img class="fig" src="/figures/viz_aesthetic_mapping_iris_aesthetics.svg" style="display:block;margin:0 auto;max-height:310px;">
-
----
-hideInToc: true
----
-
-# The **Visual Channels**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📐 Every plot maps one or more data variables to a **visual channel**: position on x, position on y, colour, shape, size, line style. The aesthetic mapping is the contract between your data and what the reader sees.
-
-</div>
-
-<img class="fig" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -393,20 +392,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-# What's **Wrong?**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Too many legend entries make the chart unreadable — consider direct labeling or grouping
-
-</div>
-
-<img class="fig fig-light" src="/figures/data_vis_legend_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
-
----
-hideInToc: true
----
-
 # **Corrected**
 
 <div class="card card-success card-glass pad-compact mt-sm">
@@ -416,20 +401,6 @@ hideInToc: true
 </div>
 
 <img class="fig fig-light" src="/figures/data_vis_legend_1.png" style="display:block;margin:0 auto;max-height:370px;">
-
----
-hideInToc: true
----
-
-# **Corrected**
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Clean legend with well-chosen colors and clear labels — each group is easily distinguishable
-
-</div>
-
-<img class="fig fig-light" src="/figures/data_vis_legend_2.png" style="display:block;margin:0 auto;max-height:370px;">
 
 ---
 hideInToc: true
@@ -499,61 +470,24 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 The *same* temperature series, drawn at three different aspect ratios. Tall-and-thin exaggerates swings; short-and-wide flattens them. Banking to ≈ 45° (Cleveland's rule) makes slope comparisons most accurate.
+📐 The *same* temperature series, drawn at three aspect ratios. Tall-and-thin exaggerates the slopes; wide keeps the day-to-day change readable. Banking to ≈ 45° (Cleveland's rule) makes slope comparisons most accurate.
 
 </div>
 
 <img class="fig" src="/figures/viz_coordinates_axes_houston_temps_aspect_ratios.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Visualizing **Amounts**
+# Chart **Families**
 
-<div class="card card-info card-glass pad-tight mt-sm">
-
-## 📊 **Common Chart Types for Amounts**
-
-When your data represents quantities associated with categories, these are the go-to visualizations:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-compact">
-
-📊 **Bar Charts** — Compare values across categories
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-📊 **Grouped Bar Charts** — Compare sub-groups side by side
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-accent card-glass pad-compact">
-
-📊 **Stacked Bar Charts** — Show part-to-whole relationships
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-🌡️ **Heat Maps** — Encode values as color intensity in a grid
-
-</div>
-
-</div>
-
-</div>
+<!--
+Speaker: now the families — amounts, distributions, proportions,
+associations, trends, uncertainty. For each: the default chart, the classic
+mistake, and the fix. (~0.5 min)
+-->
 
 ---
 hideInToc: true
@@ -619,35 +553,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Categories are unsorted — makes it hard to compare values or spot patterns
-
-</div>
-
-<img class="fig fig-light" src="/figures/data_vis_bar_chart_error_2.png" style="display:block;margin:0 auto;max-height:370px;">
-
----
-hideInToc: true
----
-
-# **Corrected**
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Bars sorted by value — trends and rankings are immediately visible
-
-</div>
-
-<img class="fig" src="/figures/viz_amounts_boxoffice_horizontal.svg" style="display:block;margin:0 auto;max-height:370px;">
-
----
-hideInToc: true
----
-
-# What's **Wrong?**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Stacking makes individual group comparisons difficult — consider grouped bars instead
+⚠️ Age groups are **ordinal** — sorting them by value scrambles the natural order. Sort by value only for nominal categories.
 
 </div>
 
@@ -657,11 +563,11 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Stacked **Bar Charts**
+# Stacked **Bars** — part-to-whole
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📊 Stacked bars work well for **part-to-whole** comparisons — each segment shows a proportion of the total
+📊 Stacked bars show **part-to-whole** — each segment is a share of the total. Totals read off the bar tops; only the bottom segment has a common baseline, so compare the others with care.
 
 </div>
 
@@ -689,7 +595,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-✅ Clean 2D bars with distinct colors and clear labels — easy to read and compare
+✅ Clean 2D bars, one colour, value labels — easy to read, easy to compare
 
 </div>
 
@@ -721,7 +627,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_lifeexp_alpha_order_bad.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_amounts_lifeexp_alpha_order_bad.svg" style="display:block;margin:0 auto;max-height:360px;">
 
 ---
 hideInToc: true
@@ -735,7 +641,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_lifeexp_bars_bad.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig" src="/figures/viz_amounts_lifeexp_bars_bad.svg" style="display:block;margin:0 auto;max-height:360px;">
 
 ---
 hideInToc: true
@@ -749,63 +655,21 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_lifeexp_dot_plot.svg" style="display:block;margin:0 auto;max-height:320px;">
-
----
-hideInToc: true
-layout: image
-backgroundSize: contain
-image: /figures/viz_amounts_health_heatmap.svg
----
+<img class="fig" src="/figures/viz_amounts_lifeexp_dot_plot.svg" style="display:block;margin:0 auto;max-height:360px;">
 
 ---
 hideInToc: true
 ---
 
-# **Histograms**
+# **Density** — a smoothed histogram
 
-<div class="card card-info card-glass pad-tight mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-## 📈 **What are Histograms?**
-
-Histograms visualize the **distribution** of a single continuous variable by dividing the data range into bins and counting observations in each bin.
+📈 A kernel density estimate smooths the histogram of a single continuous variable into a curve — here Titanic passenger ages. Easier to read than bars, but the smoothing bandwidth is a choice, exactly like bin width.
 
 </div>
 
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-📏 Histograms should have appropriate **bin widths** to show the shape of the distribution
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-🏷️ Histograms should have **clear labels and titles**
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🎨 Histograms should be **consistent** with the overall design of the plot
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-🔍 Histograms should be used to identify **patterns, trends, and outliers** in the data
-
-</div>
-
-</div>
-
----
-hideInToc: true
-layout: image
-backgroundSize: contain
-image: /figures/viz_distributions_i_titanic_density.svg
----
+<img class="fig" src="/figures/viz_distributions_i_titanic_density.svg" style="display:block;margin:0 auto;max-height:340px;">
 
 ---
 hideInToc: true
@@ -815,7 +679,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📏 Same data (Titanic passenger ages), four bin widths. Too narrow and the histogram looks like noise; too wide and the shape disappears. There is no universally "right" bin width — always try a few.
+📏 Same data (Titanic passenger ages), three bin widths. Too narrow and the histogram looks like noise; too wide and the shape disappears. There is no universally "right" bin width — always try a few.
 
 </div>
 
@@ -833,8 +697,9 @@ rng = np.random.default_rng(7)
 data = np.concatenate([rng.normal(0, 1, 800), rng.normal(4, 0.5, 300)])
 
 BINS = 30          # <-- try 5, 30, 200
-plt.hist(data, bins=BINS)
-plt.title(f"bins = {BINS}")
+fig, ax = plt.subplots()
+ax.hist(data, bins=BINS)
+ax.set(xlabel="value", ylabel="count", title=f"bins = {BINS}")
 plt.show()
 ```
 
@@ -856,7 +721,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_distributions_ii_mpg_boxplot.svg" style="display:block;margin:0 auto;max-height:170px;">
 
-📦 **Boxplot** — box = middle 50% (the **interquartile range**), line = **median**; whiskers reach the furthest point within 1.5 × IQR, points beyond are outliers. Defined formally in the Probability & Statistics lecture.
+📦 **Boxplot** — box = middle 50 % (the IQR), line = median; whiskers reach the furthest point within 1.5 × IQR, beyond = outliers. Formalised in the next lecture (Lecture 11).
 
 </div>
 
@@ -864,7 +729,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_distributions_ii_mpg_violin.svg" style="display:block;margin:0 auto;max-height:170px;">
 
-🎻 **Violin** — a smooth, mirrored outline that is wide where data is dense and narrow where it's sparse — it can reveal two-humped (bimodal) shapes a boxplot would hide
+🎻 **Violin** — a mirrored density outline, wide where data is dense — reveals two-humped (bimodal) shapes a boxplot hides
 
 </div>
 
@@ -878,9 +743,9 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md">
+<div class="card card-success card-glass pad-compact mt-sm">
 
-💡 **Rule of thumb:** boxplot for quick summaries, violin when shape matters (skew, multiple modes), strip when *n* is small enough to show every observation.
+💡 **Rule of thumb:** boxplot for quick summaries, violin when shape matters, strip when *n* is small enough to show every point.
 
 </div>
 
@@ -892,7 +757,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📈 An **empirical cumulative distribution function (ECDF)** — for any value *x*, it shows the fraction of observations ≤ *x*. Plot each value's rank / *n* against the value: for every *x*, the curve's *y* is **the fraction of observations ≤ x**. No bin-width choices, no density estimation, and every data point contributes one step. The median is where the curve crosses 0.5; quartiles are at 0.25 / 0.75; outliers show as flat tails.
+📈 An **empirical cumulative distribution function (ECDF)**: for any value *x*, the curve's *y* is **the fraction of observations ≤ x**. No bin-width choice, no density estimation — every data point contributes one step. The median is where the curve crosses 0.5; quartiles are at 0.25 / 0.75; outliers show as flat tails.
 
 </div>
 
@@ -904,30 +769,24 @@ hideInToc: true
 
 # **Q–Q** Plots — does it look Normal?
 
-<div class="card card-info card-glass pad-tight mt-sm">
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-info card-glass pad-tight">
 
 ## 📐 **How to read one**
 
-Plot the **data's quantiles** against the **theoretical quantiles** of a reference (usually Normal). If the data matches the reference, the points fall on the diagonal.
-
-Q–Q plots compare your data's quantiles against a reference (usually the Normal distribution, defined in the Probability & Statistics lecture). Read it simply: **points on the line = good match; an S-shape = heavier tails.**
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
+Plot the data's quantiles against a reference distribution's (usually Normal, formalised in the next lecture, Lecture 11). Points on the line = good match.
 
 - **On the line** → data is Normal
-- **S-curve** → heavy tails (more extreme values than Normal)
-- **Inverted-S** → light tails (compressed)
+- **S-curve** → heavy tails (more extreme values)
+- **Inverted S** → light tails (compressed)
 - **Upward bend** → right-skew; **downward** → left-skew
 
 </div>
 
 <div>
 
-<img class="fig" src="/figures/viz_distributions_i_qq_plot.svg" style="display:block;margin:0 auto;max-height:290px;">
+<img class="fig" src="/figures/viz_distributions_i_qq_plot.svg" style="display:block;margin:0 auto;max-height:400px;">
 
 </div>
 
@@ -965,7 +824,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_avoid_line_drawings_iris_densities_lines.svg" style="display:block;margin:0 auto;max-height:210px;">
 
-🚫 **Lines only** — slower to read, species swap harder
+🚫 **Lines only** — slower to read, species harder to tell apart
 
 </div>
 
@@ -987,7 +846,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🌡️ *When data has two categorical axes (e.g. day and location), a **heatmap** encodes a third value as colour — clearer than stacking many density curves.* Day-of-year (x) × location (y), colour = mean temperature. A well-chosen sequential palette turns a matrix of numbers into a single image where seasonality and climate differences pop at once.
+🌡️ Month (x) × location (y), colour = mean temperature. A well-chosen sequential palette turns a matrix of numbers into a single image where seasonality and climate differences pop at once.
 
 </div>
 
@@ -1003,7 +862,7 @@ hideInToc: true
 
 ## 🧩 **Three ways, one story**
 
-Same three-category breakdown shown as pie, stacked bar, and side-by-side bars. Pie charts force angle comparison (hard); bars let the reader read values directly.
+Same six-category breakdown shown as pie, stacked bar, and side-by-side bars. Pie charts force angle comparison (hard); bars let the reader read values directly.
 
 </div>
 
@@ -1011,7 +870,7 @@ Same three-category breakdown shown as pie, stacked bar, and side-by-side bars. 
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_pie_bad.svg" style="display:block;margin:0 auto;max-height:200px;">
+<img class="fig" src="/figures/viz_proportions_pie_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
 
 🥧 **Pie** — angles are hard
 
@@ -1019,7 +878,7 @@ Same three-category breakdown shown as pie, stacked bar, and side-by-side bars. 
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_proportions_stacked_bar.svg" style="display:block;margin:0 auto;max-height:200px;">
+<img class="fig" src="/figures/viz_proportions_proportions_stacked_bar.svg" style="display:block;margin:0 auto;max-height:230px;">
 
 📚 **Stacked** — part-to-whole
 
@@ -1027,7 +886,7 @@ Same three-category breakdown shown as pie, stacked bar, and side-by-side bars. 
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_proportions_side_by_side_bars.svg" style="display:block;margin:0 auto;max-height:200px;">
+<img class="fig" src="/figures/viz_proportions_proportions_side_by_side_bars.svg" style="display:block;margin:0 auto;max-height:230px;">
 
 📊 **Side-by-side** — easy to compare
 
@@ -1091,7 +950,7 @@ hideInToc: true
 
 ## 🔵 **Scatter plot — the default for two continuous variables**
 
-Each point is one observation. Look for **trend** (does y rise with x?), **spread** (how tight is the cloud?), **clusters** (natural groupings?), and **outliers** (points far from the rest). Colour or shape can add a third, categorical dimension — here, sex of the blue jay.
+Each point is one observation. Look for **trend** (does y rise with x?), **spread** (how tight is the cloud?), **clusters** (natural groupings?), and **outliers** (points far from the rest). Colour or shape can add a third, categorical dimension — here, penguin species.
 
 </div>
 
@@ -1145,7 +1004,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_overlapping_points_nycflights_points.svg" style="display:block;margin:0 auto;max-height:240px;">
 
-🚫 **Raw scatter** — 300 k NYC flight delays collapse into a blob
+🚫 **Raw scatter** — 20 000 NYC flight delays collapse into a blob
 
 </div>
 
@@ -1181,11 +1040,11 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔲 A grid of pairwise scatters (with densities on the diagonal) lets you eyeball every bivariate relationship in one screen. Essential first look at a new multi-variable dataset.
+🔲 A grid of pairwise scatters (with histograms on the diagonal) lets you eyeball every bivariate relationship in one screen. Essential first look at a new multi-variable dataset.
 
 </div>
 
-<img class="fig" src="/figures/viz_multi_panel_correlogram.svg" style="display:block;margin:0 auto;max-height:360px;">
+<img class="fig" src="/figures/viz_multi_panel_correlogram.svg" style="display:block;margin:0 auto;max-height:390px;">
 
 ---
 hideInToc: true
@@ -1195,7 +1054,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📈 Show the *change* of a variable between two time points by connecting each category's before and after with a straight line. Slope = direction and magnitude of change; crossings highlight reversals.
+📈 Show the *change* of a variable between two time points by connecting each category's before and after with a straight line — here tonnes of CO₂ per person. Slope = direction and magnitude of change; crossings highlight reversals.
 
 </div>
 
@@ -1211,39 +1070,11 @@ hideInToc: true
 
 ## 📉 **Show the data and the trend together**
 
-Raw observations + a smoothed curve is usually more honest than either alone. Make the smoothing visible, not hidden.
+Raw observations + a smoothed curve is usually more honest than either alone — make the smoothing visible, not hidden. By convention **time runs left-to-right on the x-axis**; keep it continuous and never sort by y.
 
 </div>
 
 <img class="fig" src="/figures/viz_trends_lincoln_temps_raw_smooth.svg" style="display:block;margin:0 auto;max-height:340px;">
-
----
-hideInToc: true
----
-
-# Separating **Seasonality from Trend**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🔁 Detrending — subtracting a slow-moving component — exposes the repeating seasonal structure the raw series can hide.
-
-</div>
-
-<img class="fig" src="/figures/viz_trends_detrended_price.svg" style="display:block;margin:0 auto;max-height:340px;">
-
----
-hideInToc: true
----
-
-# Time on the **x-axis**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📈 By convention, **time runs left-to-right on the x-axis** — readers parse this instinctively. Keep the x-axis continuous; do not sort by y.
-
-</div>
-
-<img class="fig" src="/figures/viz_trends_keeling_curve.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -1277,9 +1108,7 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_uncertainty_error_bars.svg" style="display:block;margin:0 auto;max-height:140px;">
 
-📏 **Error bars** — discrete ticks spanning ± 1 or 2 standard errors; good for a few points
-
-*(Defined in the Probability & Statistics lecture — for now: **smaller bar = more certain**.)*
+📏 **Error bars** — ticks spanning ± 1 or 2 standard errors (defined in the next lecture, Lecture 11); smaller bar = more certain
 
 </div>
 
@@ -1295,15 +1124,15 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_uncertainty_hop_demo.svg" style="display:block;margin:0 auto;max-height:140px;">
 
-🎰 **HOP** — overlay many plausible fits; the spread *is* the uncertainty
+🎰 **HOP (hypothetical outcome plot)** — overlay many plausible fits; the spread *is* the uncertainty
 
 </div>
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md">
+<div class="card card-success card-glass pad-compact mt-sm">
 
-💡 **Pick the one that matches the audience.** Error bars are the scientific norm. Bands work for trends. Hypothetical outcomes are surprisingly intuitive for non-expert readers.
+💡 **Match the audience.** Error bars are the scientific norm; bands work for trends; HOPs are surprisingly intuitive for non-expert readers.
 
 </div>
 
@@ -1367,7 +1196,7 @@ Match the chart type to the relationship you want to show:
 
 <div class="card card-success card-glass pad-compact">
 
-🧩 **Part-to-whole** → Stacked bar (NOT pie chart)
+🧩 **Part-to-whole** → Stacked bar (pie only for one whole with ≤5 parts)
 
 </div>
 
@@ -1385,9 +1214,21 @@ Match the chart type to the relationship you want to show:
 
 ## 🥧 **A Note on Pie Charts**
 
-Humans are poor at comparing angles and areas. Pie charts are almost always worse than a simple bar chart. Avoid them — use bar charts or stacked bars instead.
+Humans are poor at comparing angles and areas, so a pie is almost always worse than a simple bar chart — unless the whole is unambiguous and the parts are few (see "When Pies Actually Work").
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Design **Principles**
+
+<!--
+Speaker: from "which chart" to "how it looks" — ink, colour, accessibility,
+scales, panels. Tufte's one rule opens the section. (~0.5 min)
+-->
 
 ---
 hideInToc: true
@@ -1434,38 +1275,6 @@ Speaker: Tufte's one rule — above all else, show the data. Ask them to name th
 non-data ink on the next few figures; the library defaults are the worst
 offender. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# **Defaults** Are Not Design
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🎛️ Plotting libraries ship with safe-but-noisy defaults: heavy grid, grey background, boxed axes. Those are engineered for *universal legibility*, not for communicating a finding. Strip the non-data ink; the figure gets quieter and louder at the same time.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_balance_data_context_price_plot_ggplot_default.svg" style="display:block;margin:0 auto;max-height:210px;">
-
-🚫 **Out-of-the-box default** — grey panel, heavy grid
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_balance_data_context_price_plot_no_grid.svg" style="display:block;margin:0 auto;max-height:210px;">
-
-✅ **Clean** — no grid, white background, lines do the work
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -1557,7 +1366,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔦 Colour draws the eye. Reserve saturated colour for the category you want the reader to see first; leave the rest grey. The same dataset, told differently — one signal up front instead of twelve competing for attention.
+🔦 Colour draws the eye. Reserve saturated colour for the category you want the reader to see first; leave the rest grey. The same dataset, told differently — three signals up front instead of thirty competing for attention.
 
 </div>
 
@@ -1571,11 +1380,11 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Red-green is the most common form of colour-vision deficiency. A plot that relies on red/green contrast is unreadable for ~8 % of men. Simulation (right) shows what a deuteranopic viewer sees.
+👓 Left: the plot as designed. Right: the same plot as a deuteranopic viewer sees it.
 
 </div>
 
-<img class="fig" src="/figures/viz_pitfalls_of_color_use_red_green_cvd_sim.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_red_green_cvd_sim.svg" style="display:block;margin:0 auto;max-height:350px;">
 
 ---
 hideInToc: true
@@ -1585,7 +1394,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 When values span orders of magnitude, a **log–log** plot (both axes logarithmic) turns power-law relationships into straight lines, while a single log axis linearises exponential growth — both reveal structure a linear axis hides.
+📐 When values span orders of magnitude, a log axis spreads them out — here five papers' citations from 5 to 46 000. Use dots, not bars: on a log axis a bar has no meaningful base.
 
 </div>
 
@@ -1603,9 +1412,10 @@ x = np.arange(1, 60)
 y = 5 * np.exp(0.18 * x)       # exponential growth
 
 SCALE = "linear"               # <-- try "log"
-plt.plot(x, y, "o-", ms=3)
-plt.yscale(SCALE)
-plt.title(f"y-scale: {SCALE}")
+fig, ax = plt.subplots()
+ax.plot(x, y, "o-", ms=3)
+ax.set_yscale(SCALE)
+ax.set(xlabel="x", ylabel="y", title=f"y-scale: {SCALE}")
 plt.show()
 ```
 
@@ -1617,7 +1427,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-√ When the y-axis is a **count** of rare events (radioactive decays, defects), whose spread grows with the mean — a square-root scale stabilises it. Cleaner than log when values include zero.
+√ When the y-axis is a **count** of rare events (radioactive decays, defects), whose spread grows with the mean — a square-root scale stabilises it. Cleaner than log when values include zero. Dots again, not bars: a non-linear axis has no honest bar base.
 
 </div>
 
@@ -1653,7 +1463,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_bad.svg" style="display:block;margin:0 auto;max-height:300px;">
 
 🚫 **Per-panel scales** — the story disappears
 
@@ -1661,7 +1471,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_good.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_good.svg" style="display:block;margin:0 auto;max-height:300px;">
 
 ✅ **Shared y-axis** — the class × sex pattern jumps out
 
@@ -1670,20 +1480,17 @@ hideInToc: true
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
 # Telling a **Story**
 
-<div class="card card-info card-glass pad-tight mt-sm">
-
-## 📖 **Title, subtitle, caption — the plot's voice**
-
-A good title states the finding. The subtitle adds scope. The caption cites the source. Together they make the figure stand alone.
-
-</div>
-
-<img class="fig" src="/figures/viz_telling_a_story_story_titles_captions.svg" style="display:block;margin:0 auto;max-height:340px;">
+<!--
+Speaker: a correct figure is not yet a persuasive one. Title as the finding,
+direct labels, annotations, reference lines — and two colour pitfalls to
+close. (~0.5 min)
+-->
 
 ---
 hideInToc: true
@@ -1693,11 +1500,29 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-✍️ A title like "*CPI vs HDI*" says what the figure **is**. A title like "*Cleaner government correlates with higher human development*" says what the figure **means**. Prefer the finding.
+✍️ The title states the finding, the subtitle adds scope, the caption cites the source — together the figure stands alone. "*Sales 2019–2025*" says what the figure **is**; "*Sales doubled after 2022*" says what it **means**. Prefer the finding.
 
 </div>
 
-<img class="fig" src="/figures/viz_telling_a_story_title_as_finding.svg" style="display:block;margin:0 auto;max-height:340px;">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_telling_a_story_story_titles_captions.svg" style="display:block;margin:0 auto;max-height:230px;">
+
+📖 **Title · subtitle · caption** — the plot's voice
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_telling_a_story_title_as_finding.svg" style="display:block;margin:0 auto;max-height:230px;">
+
+✅ **Description vs finding** — same plot, different title
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1739,7 +1564,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎯 The same scatter can be plain or annotated. Call out the outlier, the trend, or the decision threshold — don't make the reader hunt for it.
+🎯 The same line chart can be plain or annotated. Call out the outlier, the trend, or the decision threshold — don't make the reader hunt for it.
 
 </div>
 
@@ -1785,7 +1610,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ `jet`, `rainbow`, `hsv` — perceptually non-uniform, misleading about magnitude, and terrible for colour-vision deficiency. Use `viridis`, `cividis`, `plasma`, or a categorical palette like **Okabe-Ito** instead.
+🌈 Same field, same data — `jet` on the left, `viridis` on the right.
 
 </div>
 
@@ -1793,17 +1618,17 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_bad.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-🚫 **Rainbow** — unreadable magnitudes
+🚫 **Rainbow** — false boundaries, unreadable magnitudes
 
 </div>
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_fix.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_fix.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **A perceptually uniform colormap (viridis)** — clear, colour-blind safe
+✅ **Perceptually uniform** — clear, colour-blind safe
 
 </div>
 
@@ -1822,6 +1647,18 @@ hideInToc: true
 </div>
 
 <img class="fig" src="/figures/viz_balance_data_context_grid_vs_no_grid.svg" style="display:block;margin:0 auto;max-height:340px;">
+
+---
+layout: section
+hideInToc: true
+---
+
+# Hands-on **Matplotlib**
+
+<!--
+Speaker: the pivot from principles to code. Three small scripts, each with its
+output beside it, then a reusable style and how to save. (~0.5 min)
+-->
 
 ---
 hideInToc: true
@@ -1883,22 +1720,39 @@ hideInToc: true
 
 # A Minimal **Bar Chart**
 
-```python {all|1-2|4-5|7-9|11-14|all}
+<div class="grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1|3-4|6-9|11-15|all}
 import matplotlib.pyplot as plt
-import numpy as np
 
 days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
 sales = [22, 25, 31, 28, 36]
 
 fig, ax = plt.subplots(figsize=(6, 3.2))
 ax.bar(days, sales, color="#56B4E9", width=0.7)
-ax.set(xlabel="weekday", ylabel="sales (M USD)", ylim=(0, 40))
+ax.set(xlabel="weekday", ylabel="sales (M USD)",
+       ylim=(0, 40))
 
 ax.yaxis.grid(True, color="#b0bec5", linewidth=0.6)
 ax.set_axisbelow(True)
-for side in ("top", "right", "left"): ax.spines[side].set_visible(False)
+for side in ("top", "right", "left"):
+    ax.spines[side].set_visible(False)
 fig.savefig("sales.svg", bbox_inches="tight")
 ```
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_bar_minimal.svg" style="display:block;margin:0 auto;max-height:250px;">
+
+✅ **The output** — one colour, zero base, y-grid only, no box
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1906,7 +1760,11 @@ hideInToc: true
 
 # Scatter **with a Fit**
 
-```python {all|1-3|5-6|8-10|12-14|all}
+<div class="grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1-3|5-6|8-10|12-17|all}
 import matplotlib.pyplot as plt
 import numpy as np
 rng = np.random.default_rng(0)
@@ -1919,11 +1777,25 @@ xs = np.linspace(0, 10, 100)
 ys = slope * xs + intercept
 
 fig, ax = plt.subplots(figsize=(5.2, 3.6))
-ax.scatter(x, y, s=30, color="#0072B2", alpha=0.85, edgecolor="white", linewidth=0.5)
-ax.plot(xs, ys, color="#D55E00", linewidth=2, label=f"y = {slope:.2f} x + {intercept:.2f}")
+ax.scatter(x, y, s=30, color="#56B4E9", alpha=0.85,
+           edgecolor="white", linewidth=0.5)
+ax.plot(xs, ys, color="#D55E00", linewidth=2,
+        label=f"y = {slope:.2f} x + {intercept:.2f}")
 ax.set(xlabel="x", ylabel="y")
 ax.legend(frameon=False)
 ```
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_scatter_fit.svg" style="display:block;margin:0 auto;max-height:250px;">
+
+✅ **The output** — points, fitted line, the fit equation as its label
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -1931,7 +1803,11 @@ hideInToc: true
 
 # Histogram + **Density Overlay**
 
-```python {all|1-3|5-6|8-9|11-15|all}
+<div class="grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1-3|5-6|8-9|11-16|all}
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import gaussian_kde
@@ -1939,16 +1815,29 @@ from scipy.stats import gaussian_kde
 rng = np.random.default_rng(1)
 data = rng.normal(loc=5, scale=1.5, size=500)
 
-kde = gaussian_kde(data)  # fit a smooth density curve to the data
+kde = gaussian_kde(data)   # smooth density curve
 xs = np.linspace(data.min(), data.max(), 300)
 
 fig, ax = plt.subplots(figsize=(5.6, 3.4))
-ax.hist(data, bins=25, density=True, color="#56B4E9",  # density=True: normalise counts to a probability density
-        alpha=0.75, edgecolor="white")
-ax.plot(xs, kde(xs), color="#D55E00", linewidth=2, label="kde")
+ax.hist(data, bins=25, density=True,   # counts -> density
+        color="#56B4E9", alpha=0.75, edgecolor="white")
+ax.plot(xs, kde(xs), color="#D55E00", linewidth=2,
+        label="kde")
 ax.set(xlabel="value", ylabel="density")
 ax.legend(frameon=False)
 ```
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_hist_kde.svg" style="display:block;margin:0 auto;max-height:250px;">
+
+✅ **The output** — normalised histogram with the KDE on top
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -2007,23 +1896,78 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
-💡 **Commit both**: figure out vector for long-term editability, and PNG for reliable rendering. Keep source `.py` alongside — then the figure is **reproducible**, not just a static file.
+## 🔁 **One script → two files**
+
+```python
+for ext in ("svg", "png"):
+    fig.savefig(f"results/mass_spectrum.{ext}", dpi=150, bbox_inches="tight")
+```
 
 </div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 **Commit both**: SVG for long-term editability, PNG for reliable rendering. Keep the source `.py` alongside — then the figure is **reproducible**, not just a static file.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# **Wrap-up**
+
+<!--
+Speaker: land the plane — the seminar dataset they will plot, one last
+question, the checklist, the recap, and what to read next. (~0.5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Your Turn — **Pre-Exercise**
+# The Seminar Dataset — the D⁰ **spectrum**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎯 **Seminar 10** turns a table of numbers into this figure — the **LHCb D⁰ → K⁻π⁺ mass spectrum**. Every principle from this lecture is in it.
+
+</div>
+
+<img class="fig" src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0 auto;max-height:310px;background:#fff;border-radius:8px;">
+
+<div class="note-text mt-sm">⚠️ <strong>Raw stage</strong> — in Seminar 10 you build it yourself: axis units, a finding-as-title (this one only describes), a sensible bin width, a 1.80–1.94 GeV zoom with a log y-axis, and PNG + SVG exported from one script.</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Your measurements span 10 to 10 000 000 across categories. Which axis choice best reveals the structure at every magnitude?"
+  :options="[
+    'A linear y-axis starting at zero',
+    'A logarithmic y-axis',
+    'A linear y-axis truncated to start at 10',
+    'Drop the axis labels to reduce clutter'
+  ]"
+  :correct="1"
+  explanation="When values span several orders of magnitude, a log scale spreads them out so structure stays visible at every scale; a linear axis crushes the small values against the baseline."
+/>
+
+---
+hideInToc: true
+---
+
+# Your Turn — the **Checklist**
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
-## 🧪 **A checklist before you hit save**
+## 🧪 **Before you hit save**
 
-Before exporting any figure, run through the next-slide exercise on your own plot. If any answer is "no", the figure isn't finished.
+Run through this checklist on your own plot. If any answer is "no", the figure isn't finished.
 
 </div>
 
@@ -2065,38 +2009,6 @@ Before exporting any figure, run through the next-slide exercise on your own plo
 hideInToc: true
 ---
 
-# The Running Project — a Real Spectrum
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🎯 The **seminar running project** turns a table of numbers into this figure — the **LHCb D⁰ → K⁻π⁺ mass spectrum**. Every principle from this lecture is in it.
-
-</div>
-
-<img class="fig" src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0 auto;max-height:310px;background:#fff;border-radius:8px;">
-
-<div class="note-text mt-sm">📏 Units on both axes · 📊 the <strong>D⁰ peak</strong> stands clear of the background · ⚠️ <strong>raw-histogram stage</strong> — you add the <strong>√N</strong> error bars yourself in Seminar 10 (deliberate, not an oversight).</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Your counts span from 10 to 10,000,000 events across categories. Which axis choice best reveals the structure at every magnitude?"
-  :options="[
-    'A linear y-axis starting at zero',
-    'A logarithmic y-axis',
-    'A linear y-axis truncated to start at 10',
-    'Drop the axis labels to reduce clutter'
-  ]"
-  :correct="1"
-  explanation="When values span several orders of magnitude, a log scale spreads them out so structure stays visible at every scale; a linear axis crushes the small values against the baseline."
-/>
-
----
-hideInToc: true
----
-
 # **Recap** — You Can Now…
 
 <div class="grid-2 gap-md mt-sm">
@@ -2131,7 +2043,7 @@ hideInToc: true
 
 ## 🔬 **Seminar 10 tie-in**
 
-produce your first committed figure — the LHCb D⁰ → K⁻π⁺ mass spectrum, with axis units and a finding-as-title.
+Produce your first committed figure — the LHCb D⁰ → K⁻π⁺ mass spectrum with axis units and a finding-as-title, a zoom on the 1865 MeV peak with a log y-axis, exported PNG + SVG from one script.
 
 </div>
 
@@ -2140,64 +2052,6 @@ Speaker: this is the "you can now" beat — have them nod along to each card. Th
 seminar tie-in makes the payoff concrete: they leave the lecture and produce
 their first committed figure from real LHCb data. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# Further **Reading**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📚 This lecture is built on these — Wilke is free online:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">📈 **C. O. Wilke** — *Fundamentals of Data Visualization* · free at clauswilke.com/dataviz</div>
-
-<div class="card card-secondary card-glass pad-compact">📊 **Cleveland** — *The Elements of Graphing Data* (the perceptual-hierarchy source)</div>
-
-<div class="card card-accent card-glass pad-compact">🎨 **Cairo** — *The Truthful Art* — honest, clear data storytelling</div>
-
-<div class="card card-info card-glass pad-compact">📐 **Tufte** — *The Visual Display of Quantitative Information* — the classic</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Key **Takeaways**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 **Design Principles**
-
-- Every visual encoding (color, shape, size) must be **meaningful**
-- Axes must be clearly labeled with **units**
-- Legends should be **placed carefully** to not obscure data
-- Avoid chart junk — maximize the **data-to-ink ratio**
-- Use **colorblind-safe palettes** for accessibility
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📖 **The figure is your argument**
-
-- A figure is the first — and often the only — thing a reader looks at
-- Choose the chart type to match the **question**, not the dataset
-- Title states the **finding**; axes show the units; caption cites the source
-- Prefer **open** formats: SVG for vector, PNG for raster, both version-controlled
-- Good visualization is not decoration — it is **analysis made visible**
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -2229,13 +2083,53 @@ Pick any dataset you find interesting (or use one from a previous lecture) and c
 
 <div class="card card-accent card-glass pad-compact">
 
-**3.** Add a **title, axis labels, and a legend** to your plot — make sure someone unfamiliar with your data can understand the figure
+**3.** Add a **title, axis labels, and direct labels** (or a legend if you must) — make sure someone unfamiliar with your data can understand the figure
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-**4.** **Critique** your own plot: Does the y-axis start at zero? Is the color palette accessible? Is the legend clear?
+**4.** **Critique** your own plot: Does the y-axis start at zero? Is the color palette accessible? Are the labels clear?
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Further **Reading**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📚 This lecture is built on these — Wilke is free online:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+📈 **C. O. Wilke** — *Fundamentals of Data Visualization* · free at clauswilke.com/dataviz
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+📊 **Cleveland** — *The Elements of Graphing Data* (the perceptual-hierarchy source)
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🎨 **Cairo** — *The Truthful Art* — honest, clear data storytelling
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+📐 **Tufte** — *The Visual Display of Quantitative Information* — the classic
 
 </div>
 

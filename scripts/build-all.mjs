@@ -14,11 +14,15 @@
  *     --base <prefix> URL prefix; per-deck base is `<prefix>/<slug>/`
  *                     (default '' → '/<slug>/'; Pages uses '/<repo>')
  *     --only a,b      build only these slugs (landing still lists all)
+ *     --include-drafts also build decks marked `draft: true` in decks.json
+ *   Decks marked `draft: true` are skipped by default (not deployed, not linked;
+ *   the landing lists them greyed as "coming soon"). `--flat-base` (QA) always
+ *   builds them so parked lectures keep passing the overflow gate.
  *   Exit non-zero if any deck build fails.
  */
-import { readFile, rm, mkdir, readdir } from 'node:fs/promises';
+import { readFile, rm, mkdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
-import { join, dirname, resolve, isAbsolute } from 'node:path';
+import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildLanding } from './build-landing.mjs';
 
@@ -31,6 +35,7 @@ const OUT = resolve(ROOT, opt('--out', 'dist'));
 const PREFIX = opt('--base', '').replace(/\/$/, ''); // no trailing slash
 const ONLY = argv.includes('--only') ? new Set(opt('--only').split(',')) : null;
 const KEEP_VIDEOS = argv.includes('--keep-videos');
+const INCLUDE_DRAFTS = argv.includes('--include-drafts');
 // --flat-base: build every deck at base '/' (each served standalone at root),
 // which is what the headless overflow checker needs. No landing page in this mode.
 const FLAT = argv.includes('--flat-base');
@@ -49,7 +54,12 @@ await mkdir(OUT, { recursive: true });
 // shows a bare directory listing. Skipped in flat-base/QA mode.
 if (!FLAT) await buildLanding(OUT, PREFIX);
 
-const targets = manifest.decks.filter((d) => !ONLY || ONLY.has(d.slug));
+// Drafts: skipped in a deploy build, always built for QA (--flat-base), and
+// built when named explicitly via --only (explicit intent wins).
+const buildDrafts = FLAT || INCLUDE_DRAFTS;
+const targets = manifest.decks.filter((d) => ONLY ? ONLY.has(d.slug) : (buildDrafts || !d.draft));
+const skipped = ONLY ? [] : manifest.decks.filter((d) => d.draft && !buildDrafts);
+if (skipped.length) console.log(`— skipping ${skipped.length} draft deck(s) (not deployed): ${skipped.map((d) => d.slug).join(', ')}`);
 let failed = 0;
 for (const deck of targets) {
   const base = FLAT ? '/' : `${PREFIX}/${deck.slug}/`;

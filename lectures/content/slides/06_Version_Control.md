@@ -67,6 +67,12 @@ hideInToc: true
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+🏷️ Pin the exact code behind a result with **tags**
+
+</div>
+
 <div class="card card-warning card-glass pad-compact">
 
 ♻️ See version control as a pillar of **reproducibility**
@@ -77,7 +83,7 @@ hideInToc: true
 
 <!--
 Speaker: read these as promises, not a syllabus. Tell them the paired Seminar 6
-is where they put THEIR project under Git — today is the "why" and the mental
+is where they branch, break and merge for real, including a conflict — today is the "why" and the mental
 model. Set the expectation. (~1 min)
 -->
 
@@ -288,6 +294,19 @@ pull.rebase=false
 </div>
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Local **Git**
+
+<!--
+Speaker: git is installed and knows who you are. Now the core loop, entirely on
+your own machine — no server, no internet: init, stage, commit, look back, undo.
+Everything else in the lecture is built on these five moves. (~30 sec)
+-->
+
+---
 hideInToc: true
 ---
 
@@ -303,36 +322,9 @@ hideInToc: true
 git init
 ```
 
-- Creates a hidden `.git` directory that tracks all changes
-- Run this once in your project folder
+- Creates a hidden `.git` directory that tracks all changes — run it **once** in your project folder
 
-```bash
-git status
-```
-
-- Shows the current state of your repository
-
-</div>
-
-<div>
-
-![](/figures/git-staging-area.svg)
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Repository Status
-
-<div class="card card-secondary card-glass pad-tight mt-md">
-
-## 🔍 **Initial Status Output**
-
-The repository is empty — git tells you what to do next:
+## 🔍 **The first `git status`**
 
 ```bash
 On branch main
@@ -344,9 +336,17 @@ nothing to commit (create/copy files and use "git add" to track)
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div>
 
-You will see `git status` a lot — it is the most useful command for understanding where you are.
+![](/figures/git-staging-area.svg)
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The repository is empty — git tells you what to do next. You will see `git status` a lot: it is the most useful command for understanding **where you are**.
+
+</div>
+
+</div>
 
 </div>
 
@@ -373,7 +373,7 @@ git add <file>
 - To move all files to the staging area use:
 
 ```bash
-git add --all
+git add -A
 ```
 
 </div>
@@ -494,6 +494,22 @@ git commit -m "A message describing the changes"
 hideInToc: true
 ---
 
+<MCQ
+  question="A student keeps analysis.py, analysis_v2.py, analysis_final.py, analysis_final_REAL.py side by side. What does Git give that this scheme does not?"
+  :options="[
+    'Smaller file sizes on disk',
+    'A faster Python interpreter',
+    'Automatic conversion of Python to Markdown',
+    'One canonical file with a full, navigable history, plus branches for alternatives'
+  ]"
+  :correct="3"
+  explanation="Git separates the current file from the history of the file — a pile of manually-renamed copies conflates the two and loses the why behind each change."
+/>
+
+---
+hideInToc: true
+---
+
 # Viewing History
 
 <div class="grid-2 gap-md mt-md">
@@ -549,7 +565,7 @@ git log --oneline --graph --all
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 Need to mark **exactly which commit** produced a result — "this is the commit behind Figure 3"? `git tag fig3-final` pins it permanently; see Lecture 04's archiving section for the full story.
+💡 Need to mark **exactly which commit** produced a result — "this is the commit behind Figure 3"? `git tag fig3-final` pins it permanently — the Tags section later in this lecture shows how.
 
 </div>
 
@@ -577,6 +593,12 @@ git restore <file>
 git restore --staged <file>
 ```
 
+- Bring back one file as it was in an **older commit**:
+
+```bash
+git restore --source=<hash> <file>
+```
+
 </div>
 
 <div>
@@ -585,10 +607,7 @@ git restore --staged <file>
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-## 💡 **When to Use**
-
-- `git restore <file>` — discard local edits
-- `git restore --staged <file>` — unstage without losing changes
+💡 Check `git diff` first — `restore` is **irreversible** for uncommitted edits.
 
 </div>
 
@@ -606,21 +625,16 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🔙 **Restore from History**
+## 🔙 **Undo a Whole Commit**
 
-- Restore a file from a previous commit using its *hash*:
-
-```bash
-git restore --source=<hash> <file>
-```
-
-- Create a **new commit** that undoes a previous one:
+- `restore --source` brings back one file; to undo an entire commit, create a **new commit** that reverses it:
 
 ```bash
+git log --oneline    # find the hash
 git revert <hash>
 ```
 
-`git revert` is safe because it adds history rather than deleting it.
+- `git revert` is safe because it adds history rather than deleting it
 
 </div>
 
@@ -704,13 +718,6 @@ hideInToc: true
 
 ---
 hideInToc: true
-layout: image
-image: /figures/git_flow.svg
-backgroundSize: contain
----
-
----
-hideInToc: true
 ---
 
 # Ignoring Files and Directories
@@ -743,44 +750,19 @@ hideInToc: true
 
 </div>
 
-```bash {*}{maxHeight:'300px'}
-# Byte-compiled / optimized files
+```bash
+# Python
 __pycache__/
 *.py[cod]
-*.so
-
-# Distribution / packaging
-build/
-dist/
-*.egg-info/
-*.egg
-
-# Jupyter Notebook
+.venv/
 .ipynb_checkpoints
 
-# Virtual environments
-.env
-.venv
-env/
-venv/
-
-# Unit test / coverage reports
-.pytest_cache/
-.coverage
-htmlcov/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE / editor files
+# Editors & OS
 .vscode/
-.idea/
-*.swp
+.DS_Store
 
-# Data / output files
+# Data & results (regenerable or too large)
 *.csv
-*.hdf5
 *.root
 output/
 ```
@@ -824,40 +806,50 @@ Store big files in `data/raw/` on shared storage or a data catalogue; the repo h
 </div>
 
 ---
-layout: image-right
-image: /figures/git-freshly-made-github-repo.svg
-backgroundSize: contain
+layout: section
 hideInToc: true
 ---
 
-# Git Remotes
+# **Remotes**
 
-- ### One of the most powerful features of `git` is the ability to work with remote repositories.
-- ### Remote repositories are copies of the repository that are stored on a server.
-- ### Using one of the remote providers (GitHub, GitLab, Bitbucket, etc.) you can store your repository in the cloud.
-- ### This enables collaboration with other people and provides a backup of your work.
+<!--
+Speaker: everything so far lived in one `.git` folder on one laptop. A remote is
+the same history on a server — a backup first, a meeting point for collaborators
+second. Same commands, one extra hop. (~30 sec)
+-->
 
 ---
-layout: image-right
-image: /figures/git-freshly-made-github-repo.svg
-backgroundSize: contain
 hideInToc: true
 ---
 
-# Git Remotes
+# Remotes
 
-- ### The remote is created via the remote provider (GitHub, GitLab, Bitbucket, etc.).
-- ### A remote URL needs to be added to the local repository with:
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ☁️ **A copy on a server**
+
+- A **remote** is a copy of your repository stored on a server — GitHub, GitLab, Bitbucket…
+- It gives you a **backup** of your work and a place where **others** can collaborate
+- Create the empty repository on the provider's website, then connect your local one to it:
 
 ```bash
-git remote add origin git@github.com:mygithub/myremote.git
+git remote add origin git@github.com:you/repo.git
+git remote -v        # list remotes and their URLs
 ```
 
-- ### To check which remotes are added:
+- `origin` is just the conventional name for your main remote
 
-```bash
-git remote -v
-```
+</div>
+
+<div>
+
+<img src="/figures/git-freshly-made-github-repo.svg" style="max-height: 430px;">
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
@@ -902,56 +894,94 @@ Then add the public key to **GitHub > Settings > SSH and GPG keys**.
 </div>
 
 ---
-layout: image-right
-image: /figures/github-repo-after-first-push.svg
-backgroundSize: contain
 hideInToc: true
 ---
 
-# Push / Pull Operations
+# Push, Pull, Clone
 
-- ### Changes to the local repository can be pushed to the remote repository with:
+<div class="grid-2 gap-md mt-md">
+
+<div class="stack-tight">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⬆️ **Push**
+
+Send your local commits to the remote:
 
 ```bash
 git push origin main
 ```
 
-- ### Changes to the remote repository can be pulled to the local repository with:
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⬇️ **Pull**
+
+Fetch and merge what others pushed (`pull` = `fetch` + `merge`):
 
 ```bash
 git pull
 ```
 
----
-layout: image-right
-image: /figures/github-collaboration.svg
-backgroundSize: contain
-hideInToc: true
----
+</div>
 
-# Cloning Repositories
+<div class="card card-accent card-glass pad-compact">
 
-- ### A repository can be cloned from a remote repository with:
+## 📥 **Clone**
+
+Copy a whole remote repository, history included — same `git@…` URL:
 
 ```bash
-git clone <URL>
+git clone git@github.com:you/repo.git
 ```
+
+</div>
+
+</div>
+
+<div>
+
+<img src="/figures/github-repo-after-first-push.svg" style="max-height: 430px;">
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
 ---
 
-<MCQ
-  question="A student keeps analysis.py, analysis_v2.py, analysis_final.py, analysis_final_REAL.py side by side. What does Git give that this scheme does not?"
-  :options="[
-    'Smaller file sizes on disk',
-    'A faster Python interpreter',
-    'Automatic conversion of Python to Markdown',
-    'One canonical file with a full, navigable history, plus branches for alternatives'
-  ]"
-  :correct="3"
-  explanation="Git separates the current file from the history of the file — a pile of manually-renamed copies conflates the two and loses the why behind each change."
-/>
+# The **Whole** Picture
+
+<div class="mt-sm" style="display: flex; justify-content: center;">
+
+<img src="/figures/git_flow.svg" style="max-height: 450px; max-width: 100%;">
+
+</div>
+
+<!--
+Speaker: one map of everything so far. Three local zones — working directory,
+staging area (index), HEAD — and the remote on the right. Walk the arrows:
+add and commit go right, restore and merge come back left, push/fetch/pull cross
+to the remote. `git diff --staged` (older docs say `--cached`, same thing)
+compares index to HEAD. If they can place each command on this picture they
+own the mental model. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Branches & **Merging**
+
+<!--
+Speaker: the feature that makes git more than a backup — parallel lines of work
+that meet again. This is where the seminar spends most of its time, conflict
+included. (~30 sec)
+-->
 
 ---
 hideInToc: true
@@ -964,7 +994,6 @@ hideInToc: true
 ## 🌿 **Parallel Development**
 
 - `git` has a powerful branching system that allows for multiple versions of the repository to be worked on simultaneously.
-- Vanilla Git names the first branch `master`; the `init.defaultBranch main` setting from earlier is why yours is called `main` instead.
 
 </div>
 
@@ -1028,18 +1057,18 @@ hideInToc: true
 
 <div class="mt-md" style="display: flex; justify-content: center;">
 
-```mermaid {scale: 0.9}
+```mermaid {scale: 1.3}
 gitGraph
-    commit id: "start"
-    commit id: "add data"
+    commit id: "init"
+    commit id: "data"
     branch feature-name
     checkout feature-name
-    commit id: "try new fit"
-    commit id: "fix units"
+    commit id: "fit"
+    commit id: "units"
     checkout main
-    commit id: "update README"
-    merge feature-name id: "merge!"
-    commit id: "continue"
+    commit id: "README"
+    merge feature-name id: "merge"
+    commit id: "next"
 ```
 
 </div>
@@ -1079,13 +1108,11 @@ hideInToc: true
 
 ## 🔍 **Conflict Markers**
 
-```text {*}{lines:false}
-{{'<<<<<<< HEAD'}}
+<pre class="slidev-code conflict-block"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 My favourite tool so far is the command line.
-{{'======='}}
+=======
 My favourite tool so far is VS Code.
-{{'>>>>>>> feature-branch'}}
-```
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-branch</code></pre>
 
 *(two edits to the same line of `about_me.md` — the file you created in the Markdown lecture)*
 
@@ -1155,47 +1182,23 @@ hideInToc: true
 
 ## 🔧 **Same git, different interface**
 
-- The **Source Control** panel (the branch icon in the sidebar) is a visual front-end to the exact commands you just learned
-- Changed files appear in a list; the **+** beside a file runs `git add`, and the message box plus **Commit** runs `git commit`
+- The **Source Control** panel (the branch icon in the sidebar) is a visual front-end to the exact commands you just typed — you *see* every changed file instead of parsing `git status`
+- Click a changed file to open the **diff view** — `git diff` rendered side by side; scan it before every commit to catch stray edits
+- Select a few lines → right-click → **Stage Selected Ranges** to commit one logical change out of a busy file (*staging hunks*) 📁
 - The status bar shows your current **branch** and a sync arrow for push/pull
 
 </div>
 
 <div class="card card-info card-glass pad-tight">
 
-## 💡 **Why bother?**
+## 🖱️ **A commit in four clicks**
 
-- You *see* every changed file at a glance instead of parsing `git status`
-- Clicking beats memorising flags while you are still learning
-- The terminal is one panel away — mix and match freely 🔧
+1. Open **Source Control** (icon in the sidebar, or `Ctrl/⌘ + Shift + G`)
+2. **＋** beside a file → stages it (`git add`)
+3. Type a message → **✓ Commit** (`git commit -m`)
+4. **Sync Changes** → `git pull` then `git push`
 
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Staging Hunks & the Diff View
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔍 **The inline diff**
-
-- Click any changed file to open the **diff view**: old version left, new version right, additions and deletions highlighted line by line
-- This is `git diff` rendered visually — scan it before every commit to catch stray edits
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ✂️ **Stage part of a file**
-
-- Select a few lines, right-click, and **Stage Selected Ranges** — commit one logical change even when a file holds several
-- This is *staging hunks*: it keeps commits small and focused without interrupting your editing 📁
+💡 The terminal is one panel away — mix and match freely 🔧
 
 </div>
 
@@ -1226,44 +1229,6 @@ hideInToc: true
 - Buttons are convenience only — you still `git add` and `git commit` to record the resolution
 
 </div>
-
-</div>
-
----
-hideInToc: true
----
-
-# A Typical Day with Git
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 1fr 1fr;">
-
-<div class="card card-info card-glass pad-compact">
-
-## 🖥️ **Local work**
-
-- **1.** `git pull` — sync with remote
-- **2.** `git switch -c my-feature` — branch off for your task
-- **3.** *edit files*
-- **4.** `git add` · `git commit -m "..."` — save progress
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ☁️ **Share & review**
-
-- **5.** `git push origin my-feature` — publish the branch
-- **6.** Open a **Pull Request** on GitHub
-- **7.** Address review comments, push again
-- **8.** Merge once approved ✅
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-💡 Small, focused commits + frequent pulls = fewer conflicts and easier reviews.
 
 </div>
 
@@ -1365,7 +1330,7 @@ Instead of pushing straight to `main`, you push a **branch** and open a **pull r
 
 </div>
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-3 gap-md mt-md">
 
 <div class="card card-secondary card-glass pad-compact">
 
@@ -1373,7 +1338,16 @@ Instead of pushing straight to `main`, you push a **branch** and open a **pull r
 
 - The full **diff** of every change
 - Commit-by-commit history
-- Automated **checks** (tests, linters)
+- Automated **checks** — tests, linters — rerun on every push; green tick = safe to review ⚙️
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📝 **Draft PRs**
+
+- Open as a **draft** to share work early — "am I on the right track?"
+- Reviewers know not to merge yet; mark it **Ready for review** when it is
 
 </div>
 
@@ -1393,36 +1367,6 @@ Instead of pushing straight to `main`, you push a **branch** and open a **pull r
 hideInToc: true
 ---
 
-# Draft PRs & Automated Checks
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📝 **Draft pull requests**
-
-- Open a PR as a **draft** to share work early and gather feedback before it is finished
-- Reviewers know not to merge yet; mark it **Ready for review** when it is
-- Great for "am I on the right track?" long before the work is done
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ⚙️ **Checks run automatically**
-
-- Every push to a PR can trigger **automated checks** — tests, linters, formatting
-- A green tick means it is safe to review; a red cross flags a problem first
-- The host runs them on every commit — automation guarding the merge ⚙️
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
 # The Review Flow
 
 <div class="mt-md" style="display: flex; justify-content: center;">
@@ -1433,7 +1377,7 @@ flowchart LR
     B --> C[Author amends & pushes]
     C --> D{Approved?}
     D -- no --> B
-    D -- yes --> E[Merge to main]
+    D -- yes ---> E[Merge to main]
 ```
 
 </div>
@@ -1529,7 +1473,7 @@ hideInToc: true
 - A parallel line **inside one repository**
 - Everyone with write access shares it
 - The default for a **team** on the same project
-- Your seminar group works this way
+- When you pair up in a seminar, this is how you'll work
 
 </div>
 
@@ -1583,6 +1527,38 @@ hideInToc: true
   :correct="0"
   explanation="Without write access you cannot push to their repo — so you fork it (your own full copy), do the work on a branch there, and open a pull request from your fork back to theirs. That is exactly how outside contributions to projects like the LHCb software flow. You cannot push to their main, and email attachments throw away all of Git's history and review."
 />
+
+---
+hideInToc: true
+---
+
+# GitLab at CERN — Same Concepts, Different Host
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔧 **The skills transfer 1:1**
+
+- CERN runs its own **GitLab** server at `gitlab.cern.ch`, not GitHub
+- Everything today still applies: clone, branch, commit, push, pull
+- GitLab calls a pull request a **Merge Request** (MR) — same idea, different name
+- Issues, review, and CI all work the same way
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🌐 **Why it does not matter**
+
+- Git itself is identical everywhere — the *host* is just a remote
+- GitHub, GitLab, Bitbucket: learn one, use them all 🔧
+- Many labs self-host GitLab for privacy and access control
+- Your `git@...` remote URL is the only thing that changes
+
+</div>
+
+</div>
 
 ---
 layout: section
@@ -1647,59 +1623,20 @@ hideInToc: true
 ```bash
 git tag -a v1.0 -m "Results in the paper"
 git push origin v1.0
+git tag                     # list tags
+git show v1.0               # what it points to
+git switch --detach v1.0    # the code exactly as tagged
 ```
 
 </div>
 
-<div class="card card-info card-glass pad-tight">
-
-## 🔍 **Working with tags**
-
-```bash
-git tag                 # list tags
-git show v1.0           # what it points to
-git switch --detach v1.0
-```
-
-- Checking out a tag drops you at that exact snapshot — the code as it was when you tagged it
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Tags as a Reproducibility Anchor
-
-<div class="card card-success card-glass pad-tight mt-md">
+<div class="card card-success card-glass pad-tight">
 
 ## ♻️ **"Which code made Figure 3?"**
 
-The single most valuable thing a tag does: it lets anyone — a reviewer, a collaborator, future-you — check out the **exact** code that produced a published result.
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📌 **Tag every milestone**
-
-- The commit behind each paper figure
-- Every submission and revision
-- Any result you might have to defend
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔗 **Cite the tag**
-
-- Put the tag name in your methods
-- A reader reruns the *tagged* code, not today's
-- Reproducibility becomes one command
+- The single most valuable thing a tag does: anyone — a reviewer, a collaborator, future-you — can check out the **exact** code behind a published result
+- **Tag every milestone**: the commit behind each figure, every submission and revision, any result you might have to defend
+- **Cite the tag** in your methods — a reader reruns the *tagged* code, not today's; reproducibility becomes one command
 
 </div>
 
@@ -1722,38 +1659,6 @@ hideInToc: true
 />
 
 ---
-hideInToc: true
----
-
-# GitLab at CERN — Same Concepts, Different Host
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔧 **The skills transfer 1:1**
-
-- CERN runs its own **GitLab** server at `gitlab.cern.ch`, not GitHub
-- Everything today still applies: clone, branch, commit, push, pull
-- GitLab calls a pull request a **Merge Request** (MR) — same idea, different name
-- Issues, review, and CI all work the same way
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🌐 **Why it does not matter**
-
-- Git itself is identical everywhere — the *host* is just a remote
-- GitHub, GitLab, Bitbucket: learn one, use them all 🔧
-- Many labs self-host GitLab for privacy and access control
-- Your `git@...` remote URL is the only thing that changes
-
-</div>
-
-</div>
-
----
 layout: section
 hideInToc: true
 ---
@@ -1770,7 +1675,7 @@ terminal. They will run exactly this on their own project in Seminar 6.
 hideInToc: true
 ---
 
-# Walkthrough — Branch, Edit, Commit
+# Walkthrough — Branch, Commit, Push, Open a PR
 
 <div class="card card-primary card-glass pad-tight mt-md">
 
@@ -1786,33 +1691,20 @@ git commit -m "Add a short intro paragraph"
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-You are now one commit ahead of `main`, safely on your own branch — `main` is untouched.
-
-</div>
-
----
-hideInToc: true
----
-
-# Walkthrough — Push & Open a PR
-
-<div class="card card-primary card-glass pad-tight mt-md">
+<div class="card card-secondary card-glass pad-tight mt-md">
 
 ## 2️⃣ **Publish the branch and propose the change**
 
 ```bash
-git push -u origin add-intro   # publish the branch
-# GitHub prints a link — open it, or go to the repo:
-#   "Compare & pull request" -> title + description -> Create
+git push -u origin add-intro   # publish the branch; -u sets the upstream
+# GitHub prints a link — open it: "Compare & pull request" -> title -> Create
 ```
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The `-u` sets the *upstream*, so later a bare `git push` knows where to go. The branch is now on GitHub and your PR is open for review.
+After step 1 you are one commit ahead of `main`, safely on your own branch. After step 2 the branch is on GitHub, your PR is open for review, and a bare `git push` knows where to go.
 
 </div>
 
@@ -1839,7 +1731,7 @@ git branch -d add-intro        # tidy up the merged branch
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-That is the full collaborative loop — branch -> PR -> review -> merge -> tag — the same one you will run on your project in Seminar 6 ♻️.
+That is the full collaborative loop — branch -> PR -> review -> merge -> tag — the loop you'll run whenever you collaborate — and the stretch goal of Seminar 6 ♻️.
 
 </div>
 
@@ -1891,6 +1783,8 @@ hideInToc: true
 
 # [An interactive git playground](https://learngitbranching.js.org/)
 
+<div class="note-text mt-md">Try the first four levels of <em>Main → Introduction Sequence</em> before the seminar.</div>
+
 ---
 hideInToc: true
 ---
@@ -1919,9 +1813,15 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Use Git as a pillar of **reproducible research**
+✅ Use Git as a pillar of **reproducible research** — and **tag** the code behind every result
 
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔗 Version control is one pillar of reproducibility; **virtual environments**, **automated scripts** and **CI/CD** are the others — all three in **Lecture 14, Reproducible Workflows & Automation**.
 
 </div>
 
@@ -1929,32 +1829,13 @@ hideInToc: true
 
 ## 🔬 **Seminar 6 tie-in**
 
-Put your analysis project **under Git** — create a feature branch, commit your work in small steps, and merge it back with a pull request.
+Branch, break, and merge — provoke a real **merge conflict** and resolve it, then practise `restore` / `--amend` / `revert` on deliberate mistakes. Stretch: pair up, push to GitHub, and review each other's pull request.
 
 </div>
 
 <!--
 Speaker: this is the "you can now" beat — have them physically nod along to each.
+The bigger-picture line is a one-sentence pointer to Lecture 14, not a new topic.
 The seminar tie-in makes the payoff concrete: they leave the lecture, and in the
 seminar their own project goes under version control. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# Looking Ahead
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔗 **Git in the Bigger Picture**
-
-Version control is one pillar of **reproducible research**. It works together with:
-
-- **Virtual environments** — isolate dependencies
-- **Automated scripts** — one command runs the full analysis
-- **CI/CD** — run tests and checks on every push
-
-Together, these practices ensure that anyone can reproduce your results — from raw data to final figures.
-
-</div>

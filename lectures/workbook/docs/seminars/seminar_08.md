@@ -4,16 +4,16 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** an ingest script that reads the entire
+> **This session builds:** an ingest script that reads the entire
 > CSV into Python — no Pandas yet.
 
 ## Goal
-Scale yesterday's one-line parser to the whole file using files, loops, the
+Scale a one-line parser (Seminar 7's `parse_line`, or the one supplied) to the whole file using files, loops, the
 `csv` module, and a dictionary of columns — and appreciate what Pandas will later
 do for you.
 
 ## Prerequisites
-Seminar 7 (`parse_line`).
+A one-line parser — your own from Seminar 7, or the reference `parse_line` the instructor provides.
 
 ## Tasks
 1. In `scripts/ingest.py`, open the CSV with a `with open(...)` block.
@@ -36,10 +36,10 @@ Seminar 7 (`parse_line`).
   not order-dependent.
 - Commit it: `git add -A && git commit -m "Ingest script for the whole file"`.
 - Note one lesson in the README: how many rows you skipped and why, so
-  future-you isn't surprised by the row count next week.
+  future-you isn't surprised by the row count later.
 
 ## Solution notes (instructor)
-Doing it "by hand" first makes the later Pandas version (Seminar 13) feel like the
+Doing it "by hand" first makes the Pandas version in Seminar 13 feel like the
 gift it is. Reinforce: raw stays untouched; `masses.csv` is a **derived** file in
 `processed/`, safe to delete and regenerate. In the 120-minute slot, task 3's
 skip-and-count logic is worth walking through at the board (~15 minutes) before

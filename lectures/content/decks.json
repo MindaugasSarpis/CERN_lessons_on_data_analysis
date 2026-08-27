@@ -11,22 +11,21 @@
     "E": "Advanced / Optional"
   },
   "decks": [
-    { "slug": "01-orientation", "title": "Orientation & Data in Your Life", "block": "A", "srcs": ["01_Orientation.md"], "optional": false },
-    { "slug": "02-cern", "title": "Introduction to CERN", "block": "A", "srcs": ["02_Introduction_to_CERN.md"], "optional": false },
-    { "slug": "03-how-computers-work", "title": "How Computers Work", "block": "A", "srcs": ["03_How_Computers_Work.md"], "optional": false },
-    { "slug": "04-command-line-and-files", "title": "Command Line & File Handling", "block": "A", "srcs": ["04_Command_Line_and_Files.md"], "optional": false },
-    { "slug": "05-markdown-and-vscode", "title": "Markdown & VS Code", "block": "A", "srcs": ["05_Markdown_and_VS_Code.md"], "optional": false },
-    { "slug": "06-version-control", "title": "Version Control with Git", "block": "A", "srcs": ["06_Version_Control.md"], "optional": false },
-    { "slug": "07-python-foundations", "title": "Python Foundations", "block": "B", "srcs": ["07_Python_Foundations.md"], "optional": false },
-    { "slug": "08-python-for-data", "title": "Python for Data Work", "block": "B", "srcs": ["08_Python_for_Data.md"], "optional": false },
-    { "slug": "09-concepts-of-data-analysis", "title": "Concepts of Data Analysis", "block": "C", "srcs": ["09_Concepts_of_Data_Analysis.md"], "optional": false },
-    { "slug": "10-data-visualisation", "title": "Data Visualisation", "block": "C", "srcs": ["10_Data_Visualisation.md"], "optional": false },
-    { "slug": "11-probability-and-statistics", "title": "Probability & Statistics", "block": "C", "srcs": ["11_Probability_and_Statistics.md"], "optional": false },
-    { "slug": "12-data-fitting", "title": "Practical Data Fitting", "block": "C", "srcs": ["12_Data_Fitting.md"], "optional": false },
-    { "slug": "13-numpy-and-pandas", "title": "NumPy & Pandas", "block": "D", "srcs": ["13_NumPy_and_Pandas.md"], "optional": false },
-    { "slug": "14-reproducible-workflows", "title": "Reproducible Workflows & Automation", "block": "D", "srcs": ["14_Reproducible_Workflows.md"], "optional": false },
-    { "slug": "15-computing-infrastructure", "title": "Computing Infrastructure & HPC", "block": "E", "srcs": ["15_Computing_Infrastructure.md"], "optional": true },
-    { "slug": "16-machine-learning", "title": "Machine Learning & AI", "block": "E", "srcs": ["16_Machine_Learning_and_AI.md"], "optional": true }
-  ],
-  "upcoming": []
+    { "slug": "01-orientation", "title": "Orientation & Data in Your Life", "block": "A", "srcs": ["01_Orientation.md"], "optional": false, "draft": false },
+    { "slug": "02-cern", "title": "Introduction to CERN", "block": "A", "srcs": ["02_Introduction_to_CERN.md"], "optional": false, "draft": false },
+    { "slug": "03-how-computers-work", "title": "How Computers Work", "block": "A", "srcs": ["03_How_Computers_Work.md"], "optional": false, "draft": false },
+    { "slug": "04-command-line-and-files", "title": "Command Line & File Handling", "block": "A", "srcs": ["04_Command_Line_and_Files.md"], "optional": false, "draft": false },
+    { "slug": "05-markdown-and-vscode", "title": "Markdown & VS Code", "block": "A", "srcs": ["05_Markdown_and_VS_Code.md"], "optional": false, "draft": false },
+    { "slug": "06-version-control", "title": "Version Control with Git", "block": "A", "srcs": ["06_Version_Control.md"], "optional": false, "draft": false },
+    { "slug": "07-python-foundations", "title": "Python Foundations", "block": "B", "srcs": ["07_Python_Foundations.md"], "optional": false, "draft": false },
+    { "slug": "08-python-for-data", "title": "Python for Data Work", "block": "B", "srcs": ["08_Python_for_Data.md"], "optional": false, "draft": false },
+    { "slug": "09-concepts-of-data-analysis", "title": "Concepts of Data Analysis", "block": "C", "srcs": ["09_Concepts_of_Data_Analysis.md"], "optional": false, "draft": false },
+    { "slug": "10-data-visualisation", "title": "Data Visualisation", "block": "C", "srcs": ["10_Data_Visualisation.md"], "optional": false, "draft": false },
+    { "slug": "11-probability-and-statistics", "title": "Probability & Statistics", "block": "C", "srcs": ["11_Probability_and_Statistics.md"], "optional": false, "draft": false },
+    { "slug": "12-data-fitting", "title": "Practical Data Fitting", "block": "C", "srcs": ["12_Data_Fitting.md"], "optional": false, "draft": false },
+    { "slug": "13-numpy-and-pandas", "title": "NumPy & Pandas", "block": "D", "srcs": ["13_NumPy_and_Pandas.md"], "optional": false, "draft": false },
+    { "slug": "14-reproducible-workflows", "title": "Reproducible Workflows & Automation", "block": "D", "srcs": ["14_Reproducible_Workflows.md"], "optional": false, "draft": false },
+    { "slug": "15-computing-infrastructure", "title": "Computing Infrastructure & HPC", "block": "E", "srcs": ["15_Computing_Infrastructure.md"], "optional": true, "draft": false },
+    { "slug": "16-machine-learning", "title": "Machine Learning & AI", "block": "E", "srcs": ["16_Machine_Learning_and_AI.md"], "optional": true, "draft": false }
+  ]
 }

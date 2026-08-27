@@ -46,7 +46,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
-<div class="stack-tight mt-sm">
+<div class="grid-2 gap-md mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -66,21 +66,33 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
-
-⚡ Transform data with **comprehensions**, string methods, and **f-string** formatting
-
-</div>
-
 <div class="card card-warning card-glass pad-compact">
 
 🔀 Steer a program with **conditionals** and **loops**
 
 </div>
 
+<div class="card card-success card-glass pad-compact">
+
+⚡ Transform data with **comprehensions** and string methods
+
+</div>
+
 <div class="card card-info card-glass pad-compact">
 
+🖨️ Format output with **f-strings** — logs you can read, grep and diff
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
 🧭 Read a **traceback** calmly and fix the classic beginner errors
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+🧹 Name things clearly per **PEP 8** and choose **script vs notebook** deliberately
 
 </div>
 
@@ -96,174 +108,61 @@ blocks. (~1 min)
 hideInToc: true
 ---
 
-# Why <span class="gradient-text">Python</span>
+# Why **Python** — the CERN case
 
-<div class="card card-primary card-glass pad-tight mt-md reveal-left glow">
-
-## 🌍 **Most Popular & Easy to Learn**
-
-Python is one of the most popular and easiest-to-learn programming languages in the world
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight mt-sm reveal-left">
-
-## 👥 **Large Community & Ecosystem**
-
-A large community of developers and users, as well as a large number of libraries and frameworks, makes it a very versatile language
-
-</div>
-
-<div class="card card-success card-glass pad-tight mt-sm reveal-left">
-
-## 🆓 **Open-Source & Powerful**
-
-Python itself and many of its libraries and tools are open-source and free to use — and at the same time much more powerful than many commercial tools
-
-</div>
-
----
-hideInToc: true
----
-
-# Languages of data
-
-<div class="note-text mt-sm">Python is this course's vehicle — but it lives in a wider landscape of data tools:</div>
-
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🗄️ **SQL** remains foundational for structured data
+## 🔬 **Python runs the analysis layer**
+
+At all four big LHC experiments, physicists select, fit and plot in Python — **PyROOT**, **uproot** and **awkward** sit on top of the C++ ROOT core. LHCb's analysis productions are configured in Python, too.
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🐍 **Python** ecosystem (pandas, Polars, PySpark, SciPy, scikit-learn)
+## 🗺️ **…inside a wider landscape**
+
+- **SQL** for structured data · **R** for statistics and reports
+- **C++, Julia, Rust** where raw speed decides
+- **ROOT, MATLAB, Excel, Origin** — domain and GUI tools
+
+Each is the right tool somewhere; the practices in this course transfer to all of them.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+</div>
 
-## 📊 **R** for statistics, visualisation, reproducible reports
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+🏢 **GUI tools** (Excel, Origin, Tableau) — quick to start and great for a first look, but the click history is lost, the scope is fixed, and the licence is not free.
 
 </div>
 
-<div class="card card-info card-glass pad-tight">
+<div class="card card-success card-glass pad-compact">
 
-## 🚀 **Julia, Scala, Rust** for performance-critical workloads
+💻 **A language** (Python, R, Julia) — free, open source, scales from a five-line check to a full pipeline, and the script *is* the record: re-run, version, share ♻️.
+
+</div>
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-info card-glass pad-compact mt-md">
 
-## 🔬 **Domain-specific** tools (ROOT at CERN, SAS, MATLAB, SPSS)
-
-</div>
+💡 That is why this course teaches a **language**, not a product — the steeper start pays back the first time you have to redo an analysis.
 
 </div>
 
 <!--
-Speaker: a quick landscape tour so "why Python" reads as an informed choice,
-not a default. Each of these is the right tool somewhere; the practices in
-this course transfer to all of them. (~1 min)
+Speaker: one slide, two messages. First the hook — Python is not "the teaching
+language", it is what the analysis layer at ATLAS, CMS, ALICE and LHCb is
+actually written in. Then the landscape, so "why Python" reads as an informed
+choice: each of these is the right tool somewhere, and a free open language
+scales with you where a GUI product stops. Now we start learning it. (~2 min)
 -->
-
----
-hideInToc: true
----
-
-# Proprietary tools vs programming languages
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🏢 **Proprietary** (Tableau, Origin, Excel)
-
-**⚠️ Drawbacks:** expensive, limited in scope, compatibility & flexibility gaps
-
-**✅ Benefits:** easy to learn via GUI, great for rapid stakeholder demos & quick wins
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 💻 **Languages** (Python, R, Julia)
-
-**✅ Benefits:** open source, free, powerful, scale from exploration to production
-
-**⚠️ Drawbacks:** steeper learning curve (CLI, programming literacy)
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-<div class="note-text">
-
-#### 💡 **Tip** — mix surface-level ease with depth and reproducibility; this is why the course teaches a **language**, not a product
-
-</div>
-
-</div>
-
-<!--
-Speaker: land the transition — the landscape and the trade-offs point the same
-way: a free, open language scales with you. That is the "why Python" case made
-concrete; now we start learning it. (~1 min)
--->
-
-
----
-hideInToc: true
----
-
-# Useful Resources for Starting with Python
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📖 **Official Documentation**
-
-- [Python Official Documentation](https://docs.python.org/)
-- [Python Tutorial](https://docs.python.org/3/tutorial/index.html)
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight mt-sm">
-
-## 📊 **Data Science**
-
-- [Python for Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🎓 **Free Introductory Courses**
-
-- **The official Python tutorial** — docs.python.org, fully free
-- **Coursera / edX** — university courses, free to audit
-- **freeCodeCamp & Kaggle Learn** — fully free, hands-on
-- **Codecademy / Udemy** — polished, but the good parts are usually paid
-
-<div class="note-text mt-sm">
-
-Free coverage varies by platform — the fully-free options above are more than enough for this course.
-
-</div>
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -315,10 +214,23 @@ We will use the **in-browser editor** on these slides for learning, but you will
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Python Basics
+# The **Basics**
+
+<!--
+Speaker: the vocabulary block — how to run Python, what a value is, how strings
+and lists behave. Keep it brisk; the live runners do the teaching, so get to the
+first print() fast. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Running **Python**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -326,7 +238,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-### 🚀 **Running Python**
+#### 🚀 **Running Python**
 
 - Interactive mode: `python` or `ipython` in the terminal
 - Script mode: `python my_script.py`
@@ -335,7 +247,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
-### 🔑 **Main Points**
+#### 🔑 **Main Points**
 
 - Indentation is crucial in Python
 - Python uses dynamic typing *(you don't declare types — Python infers them from the value)*
@@ -350,7 +262,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight">
 
-### 💬 **Comments**
+#### 💬 **Comments**
 
 ```python
 # This function does ...
@@ -363,13 +275,13 @@ but an unassigned one works
 like a multi-line comment."""
 ```
 
-<div class="note-text mt-sm">`#` is Python's only true comment. Triple-quoted strings become <strong>docstrings</strong> when placed first in a function — you'll meet those soon.</div>
+`#` is Python's only true comment. Triple-quoted strings become **docstrings** when placed first in a function — you'll meet those in Lecture 08.
 
 </div>
 
 <div class="card card-accent card-glass pad-tight mt-sm">
 
-### ⌨️ **Shortcuts & Tips**
+#### ⌨️ **Shortcuts & Tips**
 
 - **Ctrl + /** to comment/uncomment selected lines in many editors
 - Use comments for quick debugging / prototyping
@@ -403,6 +315,7 @@ energy = 13.6  # TeV
 num_detectors = 4
 is_running = True
 
+# f"..." is a formatted string: {name} drops the value in — more later
 print(f"Name: {name} (type: {type(name).__name__})")
 print(f"Energy: {energy} TeV (type: {type(energy).__name__})")
 print(f"Detectors: {num_detectors} (type: {type(num_detectors).__name__})")
@@ -451,41 +364,28 @@ not False          # True
 #### 📝 **Variables and Data Types**
 
 ```python
-x        = 10      # Integer
-y        = 3.14    # Float
-name     = "Alice" # String
-is_valid = True    # Boolean
+n_events = 10        # Integer
+mass_mev = 1865.8    # Float
+particle = "K-"      # String
+is_valid = True      # Boolean
 ```
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-#### 📦 **More Built-in Types**
+#### 🔁 **Type Conversion**
 
-- **Tuples** — immutable *(can't be changed after creation)*: `point = (3, 4)`
-- **Sets** — unique elements: `{1, 2, 3}`
-- **`range()`** — number sequences: `range(0, 10, 2)`
-- **f-strings** — formatted: `f"Hello, {name}!"`
-
-</div>
+- Text from a file is always `str` until you convert it
+- `int("42")` → `42` · `float("-1204.5")` → `-1204.5`
+- `str(3.0)` → `"3.0"` · `int(3.9)` → `3` *(truncates)*
+- `float("N/A")` → **ValueError** — the trap Seminar 7 sets for you
 
 </div>
 
 </div>
 
----
-layout: section
-hideInToc: true
----
-
-# Data **Structures**
-
-<!--
-Speaker: this is the heart of the lecture. Frame the choice — list vs. tuple vs.
-set vs. dict is about matching the container to the data. Real analysis code is
-mostly moving data between these four. (~1 min)
--->
+</div>
 
 ---
 hideInToc: true
@@ -534,7 +434,8 @@ numbers.sort()      # Sort list
 - Lists are mutable and can hold mixed data types
 
 ```python
-customer_info = ["Alice", 25, "New York", "Premium", True]
+# name, charge, px / MeV, passed the cuts?
+track = ["K-", -1, -1204.5, True]
 ```
 
 </div>
@@ -544,128 +445,66 @@ customer_info = ["Alice", 25, "New York", "Premium", True]
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# Strings for Data Wrangling
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🧵 Three string methods do most of the work when reading real data files:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-#### ✂️ **`.strip()` and `.split()`**
-
-```python
-line = "1049,-1204.5,873.2,15320.7,980.1,-650.4,9210.3\n"
-clean = line.strip()        # no newline
-parts = clean.split(",")    # list of pieces
-# event ID, then kaon (H1) & pion (H2) momentum components
-values = [float(p) for p in parts[1:]]
-```
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-#### 🔗 **`.join()` — the reverse**
-
-```python
-names = ["run1", "run2", "run3"]
-print(", ".join(names))
-# run1, run2, run3
-```
-
-Build output lines and filenames from lists.
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 `strip → split → convert` is the classic recipe for parsing a line of a data file — you'll use it in the file-handling section shortly.
-
-</div>
+# Control **Flow**
 
 <!--
-Speaker: slow down here — this is exactly what Seminar 7 asks for. Walk the
-recipe on the raw line live: strip the newline, split on the comma, float() each
-piece. Everything else is variation on this. (~2 min)
+Speaker: deciding and repeating. Stress that indentation, not braces, defines a
+block; a stray space is a real bug in Python. Loops over lists are where the
+basics pay off — and a comprehension is just a loop that builds a list in one
+line. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# A Peek Ahead — Skipping Junk Lines Safely
+# Conditionals & Loops
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div class="grid-2 gap-md mt-md">
 
-⚠️ Real data files have junk lines too — a header, a blank line, a corrupted row. `float()` on non-numeric text raises a `ValueError` and crashes your script.
-
-</div>
-
-```py {monaco-run} {autorun:false}
-lines = ["1049,-1204.5,873.2", "# comment row, not data", "1050,988.1,-650.4"]
-
-for line in lines:
-    try:
-        event_id, k_px, pi_px = line.split(",")
-        print(f"event {event_id}: K px={float(k_px)}, pi px={float(pi_px)}")
-    except ValueError:
-        print(f"skipped junk line: {line!r}")
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-💡 The full `try` / `except` / `finally` toolkit — with multiple exception types — comes in Lecture 08. For now: wrap the risky conversion, catch `ValueError`, move on.
-
-</div>
-
-<!--
-Speaker: this is a preview only — Seminar 7 needs it before L08 formally teaches
-exceptions. Don't dwell on syntax; the message is "some lines are junk, skip
-them safely." (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Tuples, Sets & Unpacking
-
-<div class="grid-2 mt-md gap-md">
+<div>
 
 <div class="card card-primary card-glass pad-tight">
 
-#### 📌 **Tuples — frozen lists**
+#### 🔀 **Conditional Statements**
 
 ```python
-point = (3, 4)          # can't be modified
-x, y = point            # unpacking!
-x, y = y, x             # the classic swap
+x = 10
+if x > 5:
+    print("x is greater than 5")
+elif x == 5:
+    print("x is 5")
+else:
+    print("x is less than 5")
 ```
 
-Ideal for things that belong together: coordinates, (name, value) pairs.
+</div>
 
 </div>
+
+<div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-#### 🎯 **Sets — no duplicates**
+#### 🔁 **Loops**
 
 ```python
-hits = [3, 7, 3, 2, 7, 7]
-set(hits)         # {2, 3, 7}
-len(set(hits))    # 3 distinct sensors
-7 in set(hits)    # fast membership test
+# For loop
+for i in range(5):
+    print(i)  # Prints 0 to 4
+
+# While loop
+x = 0
+while x < 5:
+    print(x)
+    x += 1
 ```
+
+</div>
 
 </div>
 
@@ -673,9 +512,36 @@ len(set(hits))    # 3 distinct sensors
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 You'll soon use tuple unpacking without noticing: `for key, value in data.items()` unpacks a tuple on every loop turn.
+#### 💡 **Remember**
+
+- Indentation defines blocks — no curly braces needed
+- `range(start, stop, step)` generates sequences of integers
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Try It — Loops and Logic
+
+```py {monaco-run} {autorun:false}
+# Classify K-pi invariant masses against the D0 peak (~1865 MeV)
+masses_MeV = [1810.2, 1863.5, 1866.9, 1870.1, 1920.4]
+
+for m in masses_MeV:
+    if 1855 <= m <= 1875:
+        label = "near D0 peak"
+    elif m < 1855:
+        label = "below peak"
+    else:
+        label = "above peak"
+    print(f"  {m:7.1f} MeV → {label}")
+
+# Count per category
+near_peak = sum(1 for m in masses_MeV if 1855 <= m <= 1875)
+print(f"\nEvents near the D0 peak: {near_peak}/{len(masses_MeV)}")
+```
 
 ---
 hideInToc: true
@@ -772,14 +638,164 @@ hideInToc: true
 <MCQ
   question="masses = [1866, 1810, 1871]   then   result = masses.sort() — what is `result`, and what is `masses` now?"
   :options="[
-    'result is None; masses is now [1810, 1866, 1871] — sort() mutates in place and returns nothing',
-    'result is [1810, 1866, 1871]; masses is unchanged — sort() returns a new sorted list',
+    'result is [1810, 1866, 1871]; masses is unchanged — sort() returns a new sorted list and leaves the original alone',
     'result is None; masses is unchanged — sort() only previews the order',
+    'result is None; masses is now [1810, 1866, 1871] — sort() works in place',
     'Both result and masses are [1810, 1866, 1871] — they always match'
   ]"
-  :correct="0"
+  :correct="2"
   explanation="list.sort() sorts in place and returns None — printing result would show 'None', a classic beginner trap. sorted(masses) is the alternative: it leaves the original list untouched and returns a new sorted list. Use .sort() when mutating is fine; use sorted() when you need the original preserved too."
 />
+
+---
+layout: section
+hideInToc: true
+---
+
+# From Text to **Numbers**
+
+<!--
+Speaker: the seminar's spine — one raw line of a data file becomes a list of
+floats. Two slides: the recipe, then the recipe with a name. Everything in
+Seminar 7 is a variation on these. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Strings for Data Wrangling
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧵 Three string methods do most of the work when reading real data files:
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### ✂️ **`.strip()` and `.split()`**
+
+```python
+line = "1049,-1204.5,873.2,15320.7,980.1,-650.4,9210.3\n"
+clean = line.strip()        # no newline
+parts = clean.split(",")    # list of pieces
+# event ID, then kaon (H1) & pion (H2) momentum components
+values = [float(p) for p in parts[1:]]
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+#### 🔗 **`.join()` — the reverse**
+
+```python
+names = ["run1", "run2", "run3"]
+print(", ".join(names))
+# run1, run2, run3
+```
+
+Build output lines and filenames from lists.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+💡 `strip → split → convert` is the classic recipe for parsing a line of a data file — it is exactly what Seminar 7 asks of you, and Lecture 08 applies it to whole files.
+
+</div>
+
+<!--
+Speaker: slow down here — this is exactly what Seminar 7 asks for. Walk the
+recipe on the raw line live: strip the newline, split on the comma, float() each
+piece. Everything else is variation on this. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Peek Ahead — Wrapping the Recipe in a **Function**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Seminar 7 asks you to keep the recipe in a **function** so it can be reused. Lecture 08 covers functions properly — for now: `def name(inputs):`, indent the body, `return` the result.
+
+</div>
+
+```python {monaco-run} {autorun:false}
+def parse_line(line):
+    parts = line.strip().split(",")
+    return [float(p) for p in parts[1:]]
+
+print(parse_line("1049,-1204.5,873.2,15320.7,980.1,-650.4,9210.3\n"))
+```
+
+<!--
+Speaker: don't teach functions here — just show that the recipe from the previous slide can be given a name and called. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Data **Structures**
+
+<!--
+Speaker: lists you have already used; now the other three containers. Frame the
+choice — a tuple for things that belong together, a set for distinctness, a dict
+for lookup by name. Real analysis code is mostly moving data between these
+four. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Tuples, Sets & Unpacking
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+#### 📌 **Tuples — frozen lists**
+
+```python
+point = (3, 4)          # can't be modified
+x, y = point            # unpacking!
+x, y = y, x             # the classic swap
+```
+
+Ideal for things that belong together: coordinates, (name, value) pairs.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+#### 🎯 **Sets — no duplicates**
+
+```python
+hits = [3, 7, 3, 2, 7, 7]
+set(hits)         # {2, 3, 7}
+len(set(hits))    # 3 distinct sensors
+7 in set(hits)    # fast membership test
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💡 You'll soon use tuple unpacking without noticing: `for key, value in data.items()` unpacks a tuple on every loop turn.
+
+</div>
 
 ---
 hideInToc: true
@@ -793,19 +809,19 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-### 📖 **Overview**
+#### 📖 **Overview**
 
 - Dictionaries map immutable keys (strings, numbers) to values
-- Membership checks are fast: `"age" in person`
-- View objects `.keys()`, `.values()`, `.items()` reflect live data
+- Membership checks are fast: `"year" in detector`
+- Loop over pairs with `.items()`, keys with `.keys()`, values with `.values()`
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight mt-sm">
 
-### 💡 **Tips**
+#### 💡 **Tips**
 
-- Use `.get()`/`.setdefault()` for optional keys; avoid `KeyError`s from direct indexing
+- Use `.get()` for optional keys; avoid `KeyError`s from direct indexing
 - Nest dictionaries (e.g., parsed JSON) to represent hierarchical structures
 
 </div>
@@ -816,20 +832,20 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight">
 
-##### 🛠️ **Everyday Operations**
+#### 🛠️ **Everyday Operations**
 
 ```python
-person = {"name": "Alice", "age": 25}
-person["city"] = "New York"      # Add key-value pair
-person["age"] += 1               # Update in place
+detector = {"name": "LHCb", "year": 2008, "n_runs": 3}
+detector["site"] = "Point 8"      # Add key-value pair
+detector["n_runs"] += 1           # Update in place
 
 # Safe lookup with default (returns "N/A" if missing)
-print(person.get("role", "N/A"))
+print(detector.get("magnet", "N/A"))
 
 # Direct lookup (raises KeyError if missing!)
-# print(person["role"])  # KeyError: 'role'
+# print(detector["magnet"])  # KeyError: 'magnet'
 
-for key, value in person.items():
+for key, value in detector.items():
     print(f"{key}: {value}")
 ```
 
@@ -838,6 +854,13 @@ for key, value in person.items():
 </div>
 
 </div>
+
+<!--
+Speaker: two details for the curious, not the slide — `.setdefault(key, default)`
+both reads and inserts the default if the key is missing (handy for building
+dict-of-lists); and `.keys()`/`.values()`/`.items()` are *view* objects that
+reflect the live dictionary — add a key and an existing view sees it. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -851,7 +874,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-##### 🔄 **Dictionary Comprehension**
+#### 🔄 **Dictionary Comprehension**
 
 ```python
 squares = {n: n**2 for n in range(5)}
@@ -862,13 +885,13 @@ squares = {n: n**2 for n in range(5)}
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
-##### 🔑 **Merging Dictionaries**
+#### 🔑 **Merging Dictionaries**
 
 ```python
-defaults = {"color": "blue", "size": 10}
-custom   = {"size": 20, "style": "bold"}
-merged   = {**defaults, **custom}
-# {"color": "blue", "size": 20, "style": "bold"}
+defaults = {"window_mev": 10, "bins": 50}
+custom = {"bins": 100, "log_y": True}
+merged = {**defaults, **custom}
+# {"window_mev": 10, "bins": 100, "log_y": True}
 ```
 
 </div>
@@ -879,19 +902,18 @@ merged   = {**defaults, **custom}
 
 <div class="card card-accent card-glass pad-tight">
 
-##### 📊 **Counting Word Frequencies**
+#### 📊 **Counting Occurrences**
 
 ```python
-text  = "the cat chased the dog and the dog chased the cat"
-words = text.split()
+labels = "K- pi+ K- pi+ K- mu-".split()
 
 counts = {}  # empty dictionary
 
-for word in words:
-    counts[word] = counts.get(word, 0) + 1
+for label in labels:
+    counts[label] = counts.get(label, 0) + 1
 
 print(counts)
-# {'the': 4, 'cat': 2, 'chased': 2, 'dog': 2, 'and': 1}
+# {'K-': 3, 'pi+': 2, 'mu-': 1}
 ```
 
 </div>
@@ -931,104 +953,6 @@ layout: section
 hideInToc: true
 ---
 
-# Control **Flow**
-
-<!--
-Speaker: last building block — deciding and repeating. Stress that indentation,
-not braces, defines a block; a stray space is a real bug in Python. Loops over
-lists and dicts are where the data structures pay off. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Conditionals & Loops
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-tight">
-
-#### 🔀 **Conditional Statements**
-
-```python
-x = 10
-if x > 5:
-    print("x is greater than 5")
-elif x == 5:
-    print("x is 5")
-else:
-    print("x is less than 5")
-```
-
-</div>
-
-</div>
-
-<div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-#### 🔁 **Loops**
-
-```python
-# For loop
-for i in range(5):
-    print(i)  # Prints 0 to 4
-
-# While loop
-x = 0
-while x < 5:
-    print(x)
-    x += 1
-```
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-#### 💡 **Remember**
-
-- Indentation defines blocks — no curly braces needed
-- `range(start, stop, step)` generates sequences of integers
-
-</div>
-
----
-hideInToc: true
----
-
-# Try It — Loops and Logic
-
-```py {monaco-run} {autorun:false}
-# Classify K-pi invariant masses against the D0 peak (~1865 MeV)
-masses_MeV = [1810.2, 1863.5, 1866.9, 1870.1, 1920.4]
-
-for m in masses_MeV:
-    if 1855 <= m <= 1875:
-        label = "near D0 peak"
-    elif m < 1855:
-        label = "below peak"
-    else:
-        label = "above peak"
-    print(f"  {m:7.1f} MeV → {label}")
-
-# Count per category
-near_peak = sum(1 for m in masses_MeV if 1855 <= m <= 1875)
-print(f"\nEvents near the D0 peak: {near_peak}/{len(masses_MeV)}")
-```
-
----
-layout: section
-hideInToc: true
----
-
 # Readable **Output**
 
 <!--
@@ -1042,6 +966,8 @@ hideInToc: true
 ---
 
 # From `print()` to **f-strings**
+
+<div class="note-text mt-sm">You've been writing f-strings all lecture — here is what the colon does:</div>
 
 <div class="grid-2 gap-md mt-md">
 
@@ -1085,7 +1011,7 @@ Put an `f` before the quote; drop variables inside `{ }`.
 hideInToc: true
 ---
 
-# Try It — Your First **f-string**
+# Try It — f-strings, **Properly**
 
 ```py {monaco-run} {autorun:false}
 name = "D0"
@@ -1105,11 +1031,11 @@ hideInToc: true
 
 # The Format **Spec** Mini-Language
 
-<div class="note-text mt-sm">Inside `{value:spec}`, the part after the colon controls how the value is rendered:</div>
+<div class="note-text mt-sm">Inside <code>{value:spec}</code>, the part after the colon controls how the value is rendered — then try it on a table:</div>
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 gap-md mt-sm">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
 #### 🔢 **Numbers**
 
@@ -1122,7 +1048,7 @@ f"{42:04d}"        # '0042'  zero-pad
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-accent card-glass pad-compact">
 
 #### 📐 **Width & alignment**
 
@@ -1138,38 +1064,13 @@ Fixed widths line numbers up into readable columns.
 
 </div>
 
----
-hideInToc: true
----
-
-# Try It — A Formatted Results **Table**
-
 ```py {monaco-run} {autorun:false}
 results = [("K-", 493.7), ("pi+", 139.6), ("D0", 1865.8)]
 
 print(f"{'particle':<10}{'mass / MeV':>12}")
 print("-" * 22)
 for particle, mass in results:
-    print(f"{particle:<10}{mass:>12.2f}")
-
-# Aligned columns make a log you can actually scan
-```
-
----
-hideInToc: true
----
-
-# Try It — Debug with **`{x=}`**
-
-```py {monaco-run} {autorun:false}
-k_px, k_py, k_pz = 1204.5, 873.2, 15320.7
-
-# '=' inside the braces prints the NAME and the VALUE — great for tracing
-momentum = (k_px**2 + k_py**2 + k_pz**2) ** 0.5
-print(f"{k_px=}")
-print(f"{momentum=:.1f}")   # you can still add a format spec after '='
-
-# Try printing k_py and k_pz the same way
+    print(f"{particle:<10}{mass:>12.2f}")   # aligned columns → a log you can scan
 ```
 
 ---
@@ -1268,7 +1169,7 @@ Each `File ... line ...` is a **frame**: line 12 called the function `mass_of`, 
 hideInToc: true
 ---
 
-# The Error Message Is **Data** 📁
+# The Error Message Is **Data**
 
 <div class="stack-tight mt-md">
 
@@ -1292,7 +1193,7 @@ The traceback names the file and line. Open it there — don't guess where the b
 
 ## 🗣️ **The message is a hint, not a scold**
 
-Paste the exact text into a search engine or the docs. A traceback is the single most useful debugging clue Python hands you.
+Treat it as data 📁: paste the exact text into a search engine or the docs. A traceback is the single most useful debugging clue Python hands you.
 
 </div>
 
@@ -1336,13 +1237,49 @@ hideInToc: true
 </div>
 
 ```py {monaco-run} {autorun:false}
-# BROKEN: px came from a text file, so it is still a string
-px = "1204.5"
-py = 873.2
-print("total =", px + py)   # str + float → TypeError
+# BROKEN: k_px came from a text file, so it is still a string
+k_px = "-1204.5"
+k_py = 873.2
+print("total =", k_px + k_py)   # str + float → TypeError
 
-# Fix: wrap px in float() before adding
+# Fix: wrap k_px in float() before adding
 ```
+
+---
+hideInToc: true
+---
+
+# A Peek Ahead — Skipping Junk Lines **Safely**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ `float()` has the same complaint as `+` — on non-numeric text it raises a `ValueError`. Real data files have junk lines too — a header, a blank line, a corrupted row — and one of them crashes your script.
+
+</div>
+
+```py {monaco-run} {autorun:false}
+lines = ["1049,-1204.5,980.1", "event,K_px,pi_px", "1050,988.1,-650.4"]
+
+for line in lines:
+    try:
+        event_id, k_px, pi_px = line.split(",")
+        print(f"event {event_id}: K px={float(k_px)}, pi px={float(pi_px)}")
+    except ValueError:
+        # !r shows the quotes so you can see stray spaces
+        print(f"skipped junk line: {line!r}")
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+💡 The full `try` / `except` / `finally` toolkit — with multiple exception types — comes in Lecture 08. For now: wrap the risky conversion, catch `ValueError`, move on.
+
+</div>
+
+<!--
+Speaker: this is a preview only — Seminar 7 needs it before L08 formally teaches
+exceptions. Don't dwell on syntax; the message is "some lines are junk, skip
+them safely." (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1387,11 +1324,11 @@ hideInToc: true
 
 # A Calm Traceback **Checklist**
 
-<div class="stack-tight mt-md">
+<div class="grid-2 gap-md mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
 
-### 1️⃣ **Don't panic — read the last line**
+## 1️⃣ **Don't panic — read the last line**
 
 The exception type and message name the problem in plain words.
 
@@ -1399,7 +1336,7 @@ The exception type and message name the problem in plain words.
 
 <div class="card card-secondary card-glass pad-compact">
 
-### 2️⃣ **Go to the line number**
+## 2️⃣ **Go to the line number**
 
 Open the named file at that line; the bug is there, or just above it.
 
@@ -1407,21 +1344,28 @@ Open the named file at that line; the bug is there, or just above it.
 
 <div class="card card-accent card-glass pad-compact">
 
-### 3️⃣ **Print the suspect values**
+## 3️⃣ **Print the suspect values**
 
-Add `print(f"{x=}")` before the crash to see what the data actually is.
+Add `print(f"{x=}")` before the crash to see what the data actually is — try it below.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-### 4️⃣ **Search the exact message**
+## 4️⃣ **Search the exact message**
 
 Paste the error text verbatim — someone has hit it before you.
 
 </div>
 
 </div>
+
+```py {monaco-run} {autorun:false}
+k_px, k_py, k_pz = -1204.5, 873.2, 15320.7
+momentum = (k_px**2 + k_py**2 + k_pz**2) ** 0.5
+print(f"{k_px=}")            # '=' inside the braces prints the NAME and the VALUE
+print(f"{momentum=:.1f}")    # a format spec still works after '='
+```
 
 ---
 layout: section
@@ -1465,7 +1409,7 @@ What is `m2`? What units? Future-you has no idea.
 ```python
 mass_mev = 1865.8
 mass_gev = mass_mev / 1000
-peak = [m for m in masses if m > mass_gev]
+peak = [m for m in masses_mev if m > mass_mev]
 ```
 
 The name carries the **quantity and its unit**.
@@ -1474,11 +1418,27 @@ The name carries the **quantity and its unit**.
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="grid-2 gap-md mt-md">
 
-💡 Put the unit in the name — `mass_mev`, `time_ns`, `energy_gev`. It is the cheapest bug-prevention there is in physics code.
+<div class="card card-info card-glass pad-compact">
+
+🏷️ **Put the unit in the name** — `mass_mev`, `time_ns`, `energy_gev`. It is the cheapest bug-prevention there is in physics code.
 
 </div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🔮 **Future-you is a stranger** ♻️ — in three months you won't remember what `q` or `m2` meant. Write for the reader, not the interpreter.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the second row is the "why". The computer accepts anything that parses;
+humans do not — and the human most often reading this file is a forgetful
+version of the author. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1486,7 +1446,7 @@ hideInToc: true
 
 # PEP 8 — The Shared **Style**
 
-<div class="note-text mt-sm">PEP 8 is Python's community style guide. A handful of conventions cover most of it:</div>
+<div class="note-text mt-sm">PEP 8 is Python's community style guide — consistency over cleverness, so any teammate can read any file. A handful of conventions cover most of it:</div>
 
 <div class="grid-2 gap-md mt-md">
 
@@ -1506,7 +1466,7 @@ hideInToc: true
 #### 🧱 **Layout**
 
 - 4 spaces per indent, never tabs
-- spaces around `=` and operators
+- spaces around `=` and operators (but don't pad to align)
 - one statement per line
 - a blank line between logical blocks
 
@@ -1582,38 +1542,6 @@ print(f"{len(b)} of {len(a)} in window")
 ```
 
 ---
-hideInToc: true
----
-
-# Style Is a **Courtesy** ♻️
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔮 **Future-you is a stranger**
-
-In three months you won't remember what `q` and `m2` meant. Readable names are a message to whoever maintains this code — usually a forgetful version of you.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🤝 **Consistency over cleverness**
-
-A shared style lets any teammate read any file without decoding a personal dialect. Style is how code scales past a single author.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-💡 Rule of thumb — write for the reader, not the interpreter. The computer accepts anything that parses; humans do not.
-
-</div>
-
----
 layout: section
 hideInToc: true
 ---
@@ -1630,7 +1558,7 @@ scripts for the pipeline, notebooks for play. Forward pointer to L14. (~1 min)
 hideInToc: true
 ---
 
-# Two Ways to **Run** Python
+# Notebook or **Script**?
 
 <div class="grid-2 gap-md mt-md">
 
@@ -1638,11 +1566,12 @@ hideInToc: true
 
 ## 📓 **Notebook** (Jupyter)
 
-Cells you run in any order, with output and plots inline.
+Cells you run in any order, with output and plots inline. Reach for it when…
 
-- ✅ exploration, plotting, teaching
-- ✅ instant visual feedback
-- ⚠️ run out of order → confusion
+- you're still figuring out what to do
+- the output is a chart to eyeball
+- the work is one-off and disposable
+- ⚠️ but: cells run out of order → confusion
 
 </div>
 
@@ -1650,11 +1579,12 @@ Cells you run in any order, with output and plots inline.
 
 ## 📜 **Script** (`.py`)
 
-A plain file run top to bottom: `python analysis.py`.
+A plain file run top to bottom: `python analysis.py`. Reach for it when…
 
-- ✅ reproducible — same order every run
-- ✅ version-controllable, automatable
-- ✅ the backbone of a pipeline
+- someone will run it again
+- it feeds another step
+- correctness must survive a restart
+- ✅ same order every run; version-controllable, automatable
 
 </div>
 
@@ -1662,7 +1592,7 @@ A plain file run top to bottom: `python analysis.py`.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 Not rivals — a workflow: explore in a notebook, then **harden the keeper steps into a script**.
+💡 Not rivals — a workflow: explore in a notebook, then **harden the keeper steps into a script**. In doubt, script it: a script opens in a notebook for free; a tangled notebook rarely becomes a clean script.
 
 </div>
 
@@ -1675,7 +1605,7 @@ hideInToc: true
 <div class="note-text mt-sm">A notebook remembers every variable from every cell you ran — in whatever order you ran them:</div>
 
 ```mermaid {scale: 0.6}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true}}}%%
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4', 'edgeLabelBackground': '#0b1220', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true}}}%%
 flowchart LR
     A["Run cell 3"]:::step --> B["Edit cell 1"]:::step
     B --> C["Run cell 5"]:::step
@@ -1732,37 +1662,17 @@ Scripts chain into a reproducible workflow — the whole story of **Lecture 14**
 hideInToc: true
 ---
 
-# Which Should I **Reach For**?
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📓 **Notebook when…**
-
-- you're still figuring out what to do
-- the output is a chart to eyeball
-- the work is one-off and disposable
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📜 **Script when…**
-
-- someone will run it again
-- it feeds another step
-- correctness must survive a restart
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-💡 In doubt, script it. A script can always be opened in a notebook; a notebook's tangled state rarely becomes a clean script for free.
-
-</div>
+<MCQ
+  question="When is a notebook the wrong tool?"
+  :options="[
+    'Eyeballing a histogram while you decide where to put the mass window — the plot is the point',
+    'A one-off sanity check of a single file that you will throw away afterwards',
+    'A selection step a teammate must re-run next month',
+    'Trying three fit models to see which one converges before committing to one'
+  ]"
+  :correct="2"
+  explanation="Three of these are exploration — disposable, visual, still-deciding work — and that is exactly what notebooks are for. The selection step is different: someone else will re-run it, it feeds the next step, and it must give the same answer without your session's hidden state. That is a script under version control. Rule of thumb: if it must be re-run by anyone (including future-you), script it."
+/>
 
 ---
 hideInToc: true
@@ -1821,5 +1731,59 @@ Write your first parser — turn one raw event line from the dataset into usable
 <!--
 Speaker: the "you can now" beat — have them mentally tick each box. The seminar
 tie-in makes it concrete: they leave with the strip → split → convert recipe and
-apply it to a real line of the D0 -> K-pi+ dataset. (~1 min)
+apply it to a real line of the seminar dataset (LHCb D0 -> K-pi+). (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Where to Go **Next**
+
+<div class="grid-2 gap-md mt-md">
+
+<div>
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📖 **Official Documentation**
+
+- [Python Official Documentation](https://docs.python.org/)
+- [Python Tutorial](https://docs.python.org/3/tutorial/index.html)
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight mt-sm">
+
+## 📊 **Data Science**
+
+- [Python for Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-tight">
+
+## 🎓 **Free Introductory Courses**
+
+- **The official Python tutorial** — docs.python.org, fully free
+- **Coursera / edX** — university courses, free to audit
+- **freeCodeCamp & Kaggle Learn** — fully free, hands-on
+- **Codecademy / Udemy** — polished, but the good parts are usually paid
+
+<div class="note-text mt-sm">
+
+Free coverage varies by platform — the fully-free options above are more than enough for this course.
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+Speaker: a closer, not a homework list — the official tutorial alone covers
+everything this lecture touched. Point at it for anyone who wants a second pass
+before Seminar 7. (~1 min)
 -->

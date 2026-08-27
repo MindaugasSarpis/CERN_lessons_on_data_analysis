@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * check-landing.mjs — smoke-test a BUILT landing directory (index.html +
- * assets/). Asserts: title, every manifest deck link, JS boot (js class),
+ * assets/). Asserts: title, every released deck link (and that drafts are
+ * listed unlinked as "coming soon"), JS boot (js class),
  * scene-or-fallback gating (field-on | static-bg), reveal-on-scroll, the
  * reduced-motion fallback, zero console/page errors, and (with ?qa +
  * preserveDrawingBuffer) that the WebGL scene renders non-blank pixels and
@@ -27,6 +28,21 @@ const opt = (n, d) => { const i = argv.indexOf(n); return i > -1 ? argv[i + 1] :
 const PREFIX = opt('--base', '').replace(/\/$/, '');
 
 const manifest = JSON.parse(await readFile(join(ROOT, 'lectures', 'content', 'decks.json'), 'utf8'));
+
+// Every released deck must have exactly one linked row; every draft must be
+// listed (title visible) but NOT linked — a draft's deck dir is absent in dist.
+async function checkRows(page) {
+  for (const d of manifest.decks) {
+    const href = `${PREFIX}/${d.slug}/`;
+    const links = await page.locator(`a.row[href="${href}"]`).count();
+    if (d.draft) {
+      ok(links === 0, `draft ${d.slug} not linked`);
+      ok(await page.locator(`.row.soon[data-slug="${d.slug}"]`).count() === 1, `draft ${d.slug} listed as coming soon`);
+    } else {
+      ok(links === 1, `deck link ${href}`);
+    }
+  }
+}
 
 const MIME = {
   '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript',
@@ -79,10 +95,7 @@ try {
       ctx = loaded.ctx;
       const { page, errors } = loaded;
       ok(await page.title() === manifest.course, 'title matches manifest.course');
-      for (const d of manifest.decks) {
-        const href = `${PREFIX}/${d.slug}/`;
-        ok(await page.locator(`a.row[href="${href}"]`).count() === 1, `deck link ${href}`);
-      }
+      await checkRows(page);
       // textContent, not innerText: Task 4's CSS puts text-transform: uppercase
       // on .kicker/.foot, and Playwright's innerText() is render-aware (it
       // reflects the transformed case) while these assertions care about the
@@ -151,10 +164,7 @@ try {
       await page.goto(home, { waitUntil: 'load' });
       const cls = await page.evaluate(() => [...document.documentElement.classList]);
       ok(!cls.includes('js'), `no js class with JavaScript disabled (got: ${cls.join(' ')})`);
-      for (const d of manifest.decks) {
-        const href = `${PREFIX}/${d.slug}/`;
-        ok(await page.locator(`a.row[href="${href}"]`).count() === 1, `deck link ${href}`);
-      }
+      await checkRows(page);
       ok(await page.evaluate(() => {
         const rows = document.querySelectorAll('li.reveal');
         return [...rows].every((r) => getComputedStyle(r).opacity === '1');

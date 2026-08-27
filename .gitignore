@@ -54,3 +54,7 @@ lectures/content/public/lectures.json
 
 # Vite landing bundle scratch output
 landing/dist-assets/
+
+# Per-agent isolated QA output dirs (parallel editing sessions)
+.qa-dist-*/
+.qa-shots-*/

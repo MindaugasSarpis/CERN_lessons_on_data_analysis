@@ -50,7 +50,8 @@ def _stage(n: int):
                     xytext=(1890, counts.max() * 1.12), color=style.CYCLE[1],
                     arrowprops=dict(arrowstyle="->", color=style.CYCLE[1]))
     if n >= 6:
-        ax.set_title(r"$D^0 \rightarrow K^-\pi^+$ invariant-mass spectrum")
+        # Stage 6 = the title as the FINDING, not a description of the axes.
+        ax.set_title(r"A clear $D^0$ peak at 1865 MeV above a flat background")
     style.save(fig, f"viz_anatomy_stage{n}", opaque=True, tight=False)
 
 FIGURES = {f"viz_anatomy_stage{n}": (lambda n=n: _stage(n)) for n in range(1, 7)}

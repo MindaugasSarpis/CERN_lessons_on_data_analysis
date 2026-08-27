@@ -68,6 +68,12 @@ hideInToc: true
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+⚙️ Turn repeated commands into a **shell script** — variables and a `for` loop
+
+</div>
+
 <div class="card card-warning card-glass pad-compact">
 
 📁 Organise a project — raw vs **processed** data, plus a README
@@ -78,7 +84,7 @@ hideInToc: true
 
 <!--
 Speaker: read these as promises, not a syllabus. The paired Seminar 4 is where
-they organise THEIR project folders and inspect the dataset from the shell —
+they organise the seminar project folder and inspect the dataset from the shell —
 today builds the toolkit and the habits. (~1 min)
 -->
 
@@ -86,62 +92,36 @@ today builds the toolkit and the habits. (~1 min)
 hideInToc: true
 ---
 
-# Command Line Interfaces (CLI)
+# The Command Line: What and **Why**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info card-glass pad-tight">
+<div class="card card-info card-glass pad-tight reveal-scale">
 
 ## 💻 **What is the CLI?**
 
 - **Text-based** communication with the computer
-- **Efficient** for repeatable tasks and automation
-  - Can easily chain commands, redirect input/output, and script workflows
+- Chain commands, redirect input/output, script whole workflows
+- Runs on **Windows**, **macOS**, and **Linux** — the backbone of scientific computing
 
 </div>
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-tight reveal-scale">
 
-## 🌍 **Where does it run?**
+## 🎯 **Why learn it?**
 
-- Accessible across **Windows**, **macOS**, and **Linux**
-- Forms the backbone of **data engineering** and **scientific computing**
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Why Learn the <span class="gradient-text">CLI</span>?
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact reveal-scale">
-
-⚡ **Speed** — complex workflows faster than with a mouse
+- ⚡ **Speed** — complex workflows faster than with a mouse
+- 🔄 **Automation** — script repetitive steps and share them
+- 🌐 **Remote work** — servers and clusters have no GUI
+- 📝 **Transparency** — commands document exactly what happened
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact reveal-scale">
-
-🔄 **Automation** — script repetitive steps and share them
-
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale">
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
 
-🌐 **Remote Work** — manage servers and clusters without a GUI
-
-</div>
-
-<div class="card card-info card-glass pad-compact reveal-scale">
-
-📝 **Transparency** — commands document exactly what happened
-
-</div>
+💡 Every tool in this lecture exists on every machine you will ever be given an account on — a laptop, a lab PC, or a computing-cluster node.
 
 </div>
 
@@ -335,7 +315,51 @@ grep "analysis" *.txt
 
 - Preview configuration or log files quickly
 - Search large codebases without opening an editor
-- Combine with redirection (`>`, next slide) to save filtered output
+- Combine with redirection (`>`, coming up in Power Tools) to save filtered output
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Creating and Editing
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🪟 **PowerShell**
+
+```powershell
+New-Item project -ItemType Directory
+New-Item notes.txt -ItemType File
+Add-Content notes.txt "Result: 42"
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🐧 **macOS & Linux**
+
+```bash
+mkdir project
+touch notes.txt
+echo "Result: 42" >> notes.txt   # >> appends — see Power Tools
+```
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🧭 **Beyond the Basics**
+
+- Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
+- Script file creation to keep project structure consistent
+- **File naming conventions** and directory structure are coming up later **in this lecture**; pairing the CLI with `git` (version control), **Markdown**, and **VS Code** each get their own lecture soon after
 
 </div>
 
@@ -457,7 +481,7 @@ hideInToc: true
 The pipe sends the **output** of one command as **input** to another, letting you chain tools together.
 
 ```bash
-cat data.csv | grep "error"       # filter lines containing "error"
+grep "error" data.csv | wc -l     # how many lines mention "error"?
 ls -l | sort -k5 -n               # list files sorted by size
 ```
 
@@ -545,100 +569,6 @@ grep "ERROR" log.txt | sort | uniq -c | sort -nr | head -3
 hideInToc: true
 ---
 
-# Creating and Editing
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-New-Item project -ItemType Directory
-New-Item notes.txt -ItemType File
-Add-Content notes.txt "Result: 42"
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-mkdir project
-touch notes.txt
-echo "Result: 42" >> notes.txt
-```
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🧭 **Beyond the Basics**
-
-- Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
-- Script file creation to keep project structure consistent
-- **File naming conventions** and directory structure are coming up later **in this lecture**; pairing the CLI with `git` (version control), **Markdown**, and **VS Code** each get their own lecture soon after
-
-</div>
-
----
-hideInToc: true
----
-
-# Working with Processes
-
-<div class="note-text">
-
-*Optional power-user detour — skim it on first contact and return when you have a long-running analysis to babysit.*
-
-</div>
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-Get-Process firefox
-Stop-Process -Name firefox
-Start-Job -ScriptBlock { ./long_task.ps1 }
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-ps aux | grep firefox
-killall firefox
-nohup ./long_task.sh &
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## ⚙️ **Why It Matters**
-
-- Monitor long-running analyses
-- Run jobs in the background while continuing to work
-- Integrate into schedulers or workflow engines
-
-</div>
-
----
-hideInToc: true
----
-
 # Combining Commands
 
 <div class="grid-2 mt-md gap-md">
@@ -661,8 +591,6 @@ Get-ChildItem *.csv |
 ## 🐧 **UNIX Pipeline**
 
 ```bash
-# ls -l columns aren't a stable format to parse — filenames with
-# spaces, or locale settings, silently break naive awk/cut scripts
 find . -name "*.csv" -size +1M -exec du -h {} + \
   | sort -rh > large_files.txt
 ```
@@ -678,6 +606,12 @@ find . -name "*.csv" -size +1M -exec du -h {} + \
 *These examples show the power of pipelines — don't worry if the syntax looks unfamiliar; you'll pick up these tools as the course goes on.*
 
 </div>
+
+<!--
+Speaker: if someone asks "why not just ls -l | awk?" — ls -l columns are not a
+stable format to parse; filenames with spaces or locale settings silently break
+naive awk/cut scripts. find … -exec du asks the filesystem directly. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -767,6 +701,56 @@ man cat
 - Use `--help`, `--version`, or `/?` flags for quick summaries
 - Explore interactive help (`Get-Help -Online`, `tldr command`)
 - Build a personal cheatsheet for frequent tasks
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Working with Processes
+
+<div class="note-text">
+
+*Optional power-user detour — skim it on first contact and return when you have a long-running analysis to babysit.*
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🪟 **PowerShell**
+
+```powershell
+Get-Process firefox
+Stop-Process -Name firefox
+Start-Job -ScriptBlock { ./long_task.ps1 }
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🐧 **macOS & Linux**
+
+```bash
+ps aux | grep firefox
+killall firefox
+nohup ./long_task.sh &
+```
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-tight mt-md">
+
+## ⚙️ **Why It Matters**
+
+- Monitor long-running analyses
+- Run jobs in the background while continuing to work
+- Integrate into schedulers or workflow engines
 
 </div>
 
@@ -895,7 +879,10 @@ ECAL
 HCAL
 MUON
 VELO
+detector
 ```
+
+<div class="note-text mt-sm">⚠️ The header line is just data to the shell — skip it with <code>tail -n +2 events.csv | cut …</code></div>
 
 </div>
 
@@ -997,7 +984,10 @@ hideInToc: true
 <div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
 ```text
-  512 ECAL      356 VELO      214 HCAL       88 MUON
+    512 ECAL
+    356 VELO
+    214 HCAL
+     88 MUON
 ```
 
 💡 Run the pipeline **after every stage** — watch the data change shape.
@@ -1396,6 +1386,7 @@ hideInToc: true
 #!/usr/bin/env bash
 # error_report.sh — ERROR count per run log
 DATA_DIR="data/raw"
+mkdir -p results
 
 for f in "$DATA_DIR"/run_*.log; do
   n=$(grep -c "ERROR" "$f")
@@ -1419,7 +1410,7 @@ done > results/error_report.csv
 
 ## ♻️ **Why it matters**
 
-Delete the report, rerun the script, get it back — ready for version control in Lecture 6
+Delete the report, rerun the script, get it back — ready for version control later in the course
 
 </div>
 
@@ -1439,6 +1430,7 @@ hideInToc: true
 
 ```bash
 find data/raw -name "*.csv" | xargs wc -l
+# names with spaces: find -print0 | xargs -0
 ```
 
 `xargs` reads names from the pipe and hands them to the command as **arguments** — a for-loop compressed into a word.
@@ -1450,8 +1442,8 @@ find data/raw -name "*.csv" | xargs wc -l
 ## 🗺️ **Where this road leads**
 
 - today — a script and a loop
-- Lecture 6 — scripts under **version control**
-- Lecture 14 — whole **pipelines** rerun with one command
+- soon — your scripts under **version control**
+- later in the course — whole **pipelines** rerun with one command
 
 </div>
 
@@ -1568,7 +1560,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Key <span class="gradient-text">Takeaways</span>
+# Part 1 in One **Slide**
 
 <div class="stack-tight mt-md">
 
@@ -1580,7 +1572,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact reveal-up">
 
-🔍 **Inspect** — `cat` / `grep` ↔ `Get-Content` / `Select-String`
+🔍 **Inspect** — `cat` / `grep` ↔ `Get-Content` / `Select-String` · match many files with `*.csv`, `run_?.log`
 
 </div>
 
@@ -1592,132 +1584,79 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact reveal-up">
 
-🔗 **Combine** — pipe with `|`, overwrite with `>`, append with `>>` — the same symbols work in both shells
+🔗 **Combine** — pipe with `|`, overwrite with `>`, append with `>>`, continue only on success with `&&`
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-up">
+
+📊 **Analyse** — `cut` / `sort` / `uniq -c` / `wc` — filter, group, and rank a CSV with zero programming
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-up">
+
+⚙️ **Automate** — `find -exec`, `for f in …; do … done`, `#!/usr/bin/env bash` — if you typed it twice, script it
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
-
-# Demo Challenge
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📁 **Create a new project folder from the CLI**
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📝 **Create a `README.md` with your plan**
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔗 **Share the exact commands you used**
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Part **2**: From Commands to Files
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Now that you can drive the CLI, let's use it to keep files **organised**.
-
-</div>
-
----
-disabled: true
----
+<!--
+Speaker: one beat per row — this is the whole first half. If a row does not ring
+a bell, that is the section to revisit before the seminar. (~2 min)
+-->
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Common Pitfalls in Working with **Computers**
+# Part 2 — From Commands to **Files**
+
+<!--
+Speaker: now that they can drive the CLI, the second half is about what the CLI
+drives — files and folders that stay organised, backed up, and readable by
+someone else. Start with the pain: everyone has lived the chaos slide. (~1 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# File Management Chaos
+# Two Ways to Lose Your **Work**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-tight reveal-scale">
 
-## 😵 **Common Issues**
+## 😵 **File chaos**
 
 - "I have no idea where I saved that file"
-
-- "My file is gone!"
-
-- "I have 10 files with the same name, which one is the right one?"
-
-  - `final_final_v2.docx`, `asdfasdf.docx`, `final.docx`
-
-- "I have overwritten my file with the wrong version"
+- "Which one is the right one?" — `final_final_v2.docx`, `asdfasdf.docx`, `final.docx`
+- "I overwrote my file with the wrong version"
 
 </div>
 
-<div class="card card-success card-glass pad-tight reveal-scale">
+<div class="card card-warning card-glass pad-tight reveal-scale">
 
-## ✅ **How to Avoid**
-
-- Create a consistent folder structure
-
-- Use descriptive filenames and version numbers
-
-- Employ file tagging, search filters, or integrated version control systems like Git to help keep track of changes
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# No Backups
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 💥 **Common Issues**
-
-- "I lost all my data"
+## 💥 **No backups**
 
 - "I accidentally deleted my file"
-
 - "My computer crashed and I lost everything"
-
 - "I spilled tea on my laptop — now my thesis is gone"
 
 </div>
 
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **How to Avoid**
-
-- Follow the **here-near-far** strategy (next slide)
-
-- Consider version control for text-based files (Git), so you can revert to an older version if needed
-
 </div>
+
+<div class="card card-success card-glass pad-tight mt-md reveal-up">
+
+## ✅ **How to avoid both**
+
+- A consistent **folder structure** and descriptive, versioned **filenames** *(this lecture)*
+- **Version control** (Git) for text files — revert to any older version *(later in the course)*
+- Copies at three distances — **here, near, far** *(next slide)*
 
 </div>
 
@@ -1804,7 +1743,7 @@ hideInToc: true
 
 - Choose **cross-platform** tools (cloud-based or multi-OS)
 
-- Pin versions with **virtual environments** or containers
+- Later in the course you'll **pin versions** so it works everywhere
 
 - Track changes with **version control** (Git)
 
@@ -1831,33 +1770,52 @@ slide they just laughed at. (~1 min)
 hideInToc: true
 ---
 
-# File Naming Conventions
+# File Naming: Plan the **Metadata**
 
-<div class="note-text">
+<div class="note-text">Comic: <a href="https://xkcd.com/1459/">xkcd 1459</a> · guidance in this section adapted from <a href="https://datamanagement.hms.harvard.edu/">Harvard Medical School's Research Data Management</a>.</div>
 
-*The guidance in this section is adapted from [Harvard Medical School's Research Data Management](https://datamanagement.hms.harvard.edu/) best practices.*
+<div class="flex gap-md mt-sm items-start">
 
-</div>
+<div class="flex-1">
 
-<div class="grid-2 mt-sm gap-md">
+<div class="grid-2 gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 🧠 **Think About Your Files Beforehand**
+## 🧠 **Think Ahead**
 
-- Identify what group of files your naming convention will cover
-
-- You can use different conventions for different file sets
-
-- Check for established file naming conventions in your discipline or group
+- Which group of files does this convention cover?
+- Different file sets may use different conventions
+- Check for established conventions in your discipline or group
 
 </div>
 
-<div>
+<div class="card card-info card-glass pad-compact">
 
-<img src="/figures/file_naming_comic.png" class="inline w-40" />
+## 🏷️ **Identify the Metadata**
+
+- Experiment conditions, type of data
+- Researcher initials, lab or location
+- Project or experiment acronym
+- Date or date range
+- Run number or sample ID
 
 </div>
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔤 **Abbreviate & Encode**
+
+- Keep only what you sort or search by; encode categories as short codes (`raw`, `cal`)
+- **Document the codes** — a code nobody can decode is noise
+
+</div>
+
+</div>
+
+<img src="/figures/file_naming_comic.png" class="w-40 shrink-0" />
 
 </div>
 
@@ -1865,79 +1823,41 @@ hideInToc: true
 hideInToc: true
 ---
 
-# File Naming: Metadata
+# File Naming: Versioning & **Ordering**
 
 <div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-tight">
-
-## 🏷️ **Identify Metadata**
-
-- Experiment conditions
-
-- Type of data
-
-- Researcher name/initials, lab name/location
-
-- Project or experiment name or acronym
-
-- Date or date range of experiment
-
-- Experiment number or sample ID
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔤 **Abbreviate & Encode Metadata**
-
-- Decide what shortened information to keep
-
-- Standardize the categories and/or replace them with 2- or 3-letter codes
-
-- Be sure to document these codes
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# File Naming: Versioning
 
 <div class="card card-primary card-glass pad-tight">
 
 ## 🔢 **Use Versioning**
 
-- Use versioning to indicate the most current version of a file
-
-- Track versions of a file by adding version information to the end of the file name, e.g. `filename_v2.xxx`
-
-- Use a version number (e.g. "v01" or "v02")
-
-- Use the version date (use ISO 8601 format: YYYYMMDD or YYYY-MM-DD)
+- Mark the current version at the **end** of the name: `report_v02.docx`
+- Zero-pad numbers (`v01` … `v10`) so they sort correctly
+- Or use the version date in ISO 8601: `YYYY-MM-DD`
 
 </div>
-
----
-hideInToc: true
----
-
-# File Naming: Searchability
 
 <div class="card card-accent card-glass pad-tight">
 
-## 🔍 **Ensure Files are Searchable**
+## 🔍 **Make Files Sortable & Searchable**
 
-- Think about how you want to sort and search for your files in order to determine the order for the metadata in the file name
+- Decide how you will sort and search — that metadata goes **first** in the name
+- Default ordering is alphabetical, numerical, or chronological
+- Put the date **first** when chronology matters — ISO dates sort correctly in a plain listing
 
-- Decide what metadata should appear at the beginning
+</div>
 
-- Use default ordering: alphabetically, numerically, or chronologically
+</div>
 
-- Put the date **first** when chronology matters — ISO 8601 dates sort correctly even in a plain alphabetical file listing
+<div class="card card-success card-glass pad-tight mt-md">
+
+## 🧪 **`ls` already shows them in order**
+
+```text
+2026-03-14_run042_calib_v01.csv
+2026-03-14_run042_calib_v02.csv
+2026-03-15_run043_calib_v01.csv
+```
 
 </div>
 
@@ -1945,41 +1865,35 @@ hideInToc: true
 hideInToc: true
 ---
 
-# File Naming: Separators
+# File Naming: Separators & **Documentation**
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-info card-glass pad-tight">
 
-## ✂️ **Separate Metadata Elements**
+## ✂️ **Separate the Elements**
 
-- Use dashes (-), underscores (_), or capitalize the first letter of each word
-
-  - Dashes: `file-name.xxx`
-
-  - Underscores: `file_name.xxx`
-
-  - Camel case (the first letter of each section of text is capitalized): `FileName.xxx`
-
+- Dashes `file-name.xxx`, underscores `file_name.xxx`, or CamelCase `FileName.xxx`
 - 🚫 No separation: `filename.xxx` — avoid
-
-- Avoid special characters, such as: ~ ! @ # $ % ^ & * ( ) ` ; : < > ? . , [ ] { } ' " |
+- No spaces, and no special characters: `~ ! @ # $ % ^ & * ( ) ; : < > ? , [ ] { } ' " |`
 
 </div>
 
----
-hideInToc: true
----
-
-# File Naming: Documentation
-
 <div class="card card-secondary card-glass pad-tight">
 
-## 📝 **Write Down Your Naming Conventions**
+## 📝 **Write the Convention Down**
 
-- With documented conventions, anyone receiving a moved or shared file can identify it from its name
+- Documented conventions let anyone identify a moved or shared file from its name alone
+- At most 40–50 characters; only alphanumerics, dashes, and underscores
+- Encoding a lot of metadata? Move it to a master spreadsheet next to the data — **next slide**
 
-- File names should be at most 40-50 characters, and conventions should only use alphanumeric characters, dashes, and underscores
+</div>
 
-- If you find that you are encoding a large amount of metadata in the file names, you should consider storing this metadata in a master spreadsheet with your data for future reference
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ A space in a filename is a bug waiting to happen: `rm my data.csv` deletes `my` and `data.csv`, not `my data.csv`.
 
 </div>
 
@@ -2003,9 +1917,9 @@ hideInToc: true
 
 ```text
 data/
-|- 2026-03-14_run042.csv
-|- 2026-03-14_run042_README.txt
-|- samples_master.csv
+├── 2026-03-14_run042.csv
+├── 2026-03-14_run042_README.txt
+└── samples_master.csv
 ```
 
 One description file per dataset — or one master table describing every file.
@@ -2069,7 +1983,7 @@ fig01_mass_spectrum.png
 
 <div class="card card-info card-glass pad-compact mt-md glow">
 
-💡 **Recipe:** `project_description_version_date.ext` — descriptive, sortable, no spaces or special characters.
+💡 **Recipe:** `project_description_version.ext` — descriptive, no spaces or special characters — and put an ISO date **first** (`2026-02-20_thesis_draft_v03.docx`) when files must sort by time.
 
 </div>
 
@@ -2092,15 +2006,15 @@ hideInToc: true
 
 ## 📁 **Organised by File Type**
 
-```bash
-|- Data/
-|  |- Processed/
-|  |- Raw/
-|- Results/
-|  |- Figure1.tif
-|  |- Figure2.tif
-|  |- Models/
-|  |  |- Model1/
+```text
+├── Data/
+│   ├── Processed/
+│   └── Raw/
+└── Results/
+    ├── Figure1.tif
+    ├── Figure2.tif
+    └── Models/
+        └── Model1/
 ```
 
 </div>
@@ -2109,15 +2023,15 @@ hideInToc: true
 
 ## 📊 **Organised by Analysis**
 
-```bash
-|- Figure1/
-|  |- Data/
-|  |- Results/
-|  |  |- Figure1.tif
-|- Figure2/
-|  |- Data/
-|  |- Results/
-|  |  |- Figure2.tif
+```text
+├── Figure1/
+│   ├── Data/
+│   └── Results/
+│       └── Figure1.tif
+└── Figure2/
+    ├── Data/
+    └── Results/
+        └── Figure2.tif
 ```
 
 </div>
@@ -2126,7 +2040,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-Choose the structure that best fits your workflow — either is valid as long as it is consistent. Use the CLI commands from the Command Line lesson (`mkdir`, `ls`, `cd`) to create and navigate these structures.
+Choose the structure that best fits your workflow — either is valid as long as it is consistent. Build either one with the commands from Part 1 (`mkdir`, `ls`, `cd`) to create and navigate these structures.
 
 </div>
 
@@ -2205,11 +2119,12 @@ hideInToc: true
 
 ```text
 my_project/
-|- README.md   <- you are here
-|- data/raw/
-|- data/processed/
-|- scripts/
-|- results/
+├── README.md   <- you are here
+├── data/
+│   ├── raw/
+│   └── processed/
+├── scripts/
+└── results/
 ```
 
 </div>
@@ -2276,13 +2191,13 @@ ls
 hideInToc: true
 ---
 
-# Try It: Build a Project Skeleton
+# Try at Home: Build a Project **Skeleton**
 
-<div class="card card-success card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
-## 🧪 **CLI Exercise**
+## 🏠 **Ten minutes, no file manager allowed**
 
-Create this structure from the command line — no file manager allowed!
+Create this structure from the command line, then write your plan for a project of your choice into the README:
 
 ```bash
 mkdir -p my_project/data/raw \
@@ -2294,11 +2209,13 @@ ls -R my_project
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 💡 `-p` creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
 
-💡 **Bonus:** drop a few `sensor_A OK` / `sensor_B ERROR` lines into `my_project/data/raw/run042.log`, then reuse the earlier pipeline: `grep ERROR run042.log | sort | uniq -c | sort -nr`
+💡 **Bonus:** drop a few `sensor_A OK` / `sensor_B ERROR` lines into `my_project/data/raw/run042.log`, then reuse the earlier pipeline: `grep ERROR my_project/data/raw/run042.log | sort | uniq -c | sort -nr`
+
+🔗 **Keep the exact commands you used** — paste them into the README as its first "how to rebuild this" section.
 
 </div>
 
@@ -2381,7 +2298,6 @@ hideInToc: true
 </div>
 
 ---
-layout: center
 hideInToc: true
 ---
 
@@ -2403,7 +2319,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact reveal-left">
 
-🔐 **Fingerprint** — store a checksum next to it, so corruption or tampering is detectable *(how checksums work: the Computer Science lecture)*
+🔐 **Fingerprint** — store a checksum next to it, so corruption or tampering is detectable *(you met checksums and SHA-256 in Lecture 3)*
 
 </div>
 
@@ -2484,20 +2400,26 @@ hideInToc: true
 
 </div>
 
+<div class="card card-success card-glass pad-compact">
+
+✅ Match many files safely with **wildcards** — and turn a pipeline into a rerunnable **script**
+
+</div>
+
 </div>
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
 ## 🔬 **Seminar 4 tie-in**
 
-organise your project into raw/ vs processed/ folders with clean filenames, and inspect the dataset entirely from the command line.
+Organise the seminar dataset into raw/ vs processed/ folders with clean filenames, and inspect it entirely from the command line.
 
 </div>
 
 <!--
 Speaker: the "you can now" beat — have them nod along to each card. The seminar
-tie-in makes the payoff concrete: they leave here and immediately give their own
-project a clean structure and drive it from the shell. (~1 min)
+tie-in makes the payoff concrete: they leave here and immediately give the seminar
+folder a clean structure and drive it from the shell — then their own project. (~1 min)
 -->
 
 ---

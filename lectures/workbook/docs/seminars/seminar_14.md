@@ -4,7 +4,7 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** a one-command rebuild of the entire
+> **This session builds:** a one-command rebuild of the entire
 > analysis from raw data.
 
 ## Goal
@@ -12,11 +12,15 @@ Turn your pile of scripts into a **pipeline** anyone can reproduce with a single
 command, in a pinned environment.
 
 ## Prerequisites
-Seminars 8–13 (ingest → clean → plot → fit scripts exist).
+The D⁰ seminar pipeline — ingest → clean → plot → fit scripts on the shared LHCb
+D⁰ sample. If you don't have them, the instructor provides a starter kit with these
+four scripts.
 
 ## Tasks
-1. Capture the environment: `pip freeze > requirements.txt` (or an
-   `environment.yml`). Pin versions.
+1. Capture the environment: freeze into a lockfile (`pip freeze > requirements.lock`
+   or `conda env export > environment.lock.yml`) **and** keep the hand-written
+   direct-dependency list (`requirements.txt` / `pyproject.toml`, loose bounds).
+   Ship both.
 2. Write a `Makefile` with targets that encode the dependencies:
    `clean.py → events_clean.parquet`, `plot_spectrum.py → mass_spectrum.png`,
    `fit_peak.py → fit results`. Add an `all` target and a `clean` target.
@@ -24,7 +28,7 @@ Seminars 8–13 (ingest → clean → plot → fit scripts exist).
    from `data/raw/` alone.
 4. Update the README's **How to rebuild** section to: "create the env, then `make all`".
 5. Audit your project against the lecture's **FAIR** principles: is it Findable (a
-   README on top, provenance from Seminar 2), Accessible (open CSV/parquet), Interoperable
+   README on top, data source and provenance noted), Accessible (open CSV/parquet), Interoperable
    (standard units, plain-text formats), Reusable (licence noted, environment pinned)?
    Note one gap in the README and fix it if time allows.
 6. Tag this reproducible milestone in Git: `git tag -a v1.0-pipeline -m "One-command

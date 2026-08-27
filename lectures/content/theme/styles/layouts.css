@@ -162,3 +162,6 @@
   background: var(--grad-kinetic);
   opacity: 0.9;
 }
+
+/* Centred titles (inside a .text-center wrapper) keep the accent bar centred too. */
+.slidev-layout.default .text-center h1::after { left: 50%; transform: translateX(-50%); }

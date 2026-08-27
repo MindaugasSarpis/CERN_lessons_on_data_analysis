@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate LHCb running-project demo figures (synthetic but realistic), matching
+"""Generate LHCb seminar-dataset demo figures (synthetic but realistic), matching
 the real LHCb open-data masterclass channel D0 -> K- pi+.
 
 Outputs to lectures/content/public/figures/:

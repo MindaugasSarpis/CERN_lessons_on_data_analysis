@@ -148,6 +148,16 @@ async function runShard(shard, { shots = SHOTS, collect = { offenders, skipped }
     }, { n, hashNav });
     await page.waitForSelector(`.slidev-page[data-slidev-no="${n}"] .slidev-layout`, { timeout: 8000 }).catch(() => {});
     await page.addStyleTag({ content: NEUTRALIZE }); // re-assert after slide swap
+    // Wait for the slide's images (SVG figures, photos) to finish loading and
+    // decoding before measuring or capturing — otherwise a fast worker measures
+    // a layout with zero-height <img>s and screenshots a blank figure area.
+    await page.evaluate(async (n) => {
+      const pg = document.querySelector(`.slidev-page[data-slidev-no="${n}"]`) || document;
+      const imgs = [...pg.querySelectorAll('img')];
+      const settle = imgs.map((img) => (img.complete ? Promise.resolve() : new Promise((r) => { img.onload = img.onerror = r; }))
+        .then(() => (img.decode ? img.decode().catch(() => {}) : undefined)));
+      await Promise.race([Promise.all(settle), new Promise((r) => setTimeout(r, 4000))]);
+    }, n).catch(() => {});
     const m = await page.evaluate((n) => {
       const pg = document.querySelector(`.slidev-page[data-slidev-no="${n}"]`);
       const el = pg ? pg.querySelector('.slidev-layout') : document.querySelector('.slidev-layout');

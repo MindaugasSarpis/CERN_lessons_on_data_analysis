@@ -4,14 +4,15 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** your first committed figure — the
+> **This session builds:** your first committed figure — the
 > D⁰ → K⁻π⁺ mass spectrum.
 
 ## Goal
 Turn the mass data into a clear, honest figure and **find the physics** hiding in it.
 
 ## Prerequisites
-Seminar 8 (`masses.csv`). Matplotlib available.
+A `masses.csv` starter (one D⁰ → K⁻π⁺ candidate mass `M` per row, in GeV) is
+provided. Matplotlib available.
 
 ## Tasks
 1. In `scripts/plot_spectrum.py`, load the masses and draw a **histogram** of `M`.
@@ -24,7 +25,7 @@ Seminar 8 (`masses.csv`). Matplotlib available.
 5. Add a vector export alongside the PNG — `results/mass_spectrum.svg`
    (vector, for print/publication) — and set a small reusable style once
    (e.g. a `plt.rcParams.update({...})` block or a tiny `style.py` you
-   import) so every later figure in this project shares fonts and colours.
+   import) so every later figure you make shares fonts and colours.
 
 ## Stretch goals
 - Annotate the D⁰ peak and its mass directly on the plot.

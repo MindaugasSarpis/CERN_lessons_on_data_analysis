@@ -4,12 +4,12 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** an empty project repository with the
+> **This session builds:** an empty project repository with the
 > standard skeleton and your first commit.
 
 ## Goal
 Leave the room with a working environment (terminal, Python, VS Code, Git) and an
-initialised project you'll grow all course long.
+initialised seminar repository you'll reuse in later sessions.
 
 ## Prerequisites
 A laptop with internet access. Nothing installed yet — that's what today is for.
@@ -21,7 +21,7 @@ A laptop with internet access. Nothing installed yet — that's what today is fo
    ```bash
    mkdir -p analysis-project/{data/raw,data/processed,scripts,results}
    cd analysis-project
-   printf "# Analysis Project\n\nCourse running project.\n" > README.md
+   printf "# Analysis Project\n\nSeminar exercises.\n" > README.md
    ```
 3. Open the folder in VS Code (`code .`) and look around the Explorer.
 4. Verify Python works: create `scripts/hello.py` with `print("ready")` and run it.
@@ -50,7 +50,7 @@ A laptop with internet access. Nothing installed yet — that's what today is fo
 
 ## Wrap-up (last 10 min)
 - Compare your tree against the skeleton in the
-  [running-project overview](running-project.md) — it should match exactly.
+  [seminar overview](overview.md) — it should match exactly.
 - Re-run `python scripts/hello.py` in a *fresh* terminal to prove the setup
   survives a restart, then check `git log` shows your first commit.
 - Add one line to `README.md`: the setup step that surprised you most.

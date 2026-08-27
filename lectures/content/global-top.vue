@@ -2,7 +2,8 @@
   Persistent in-deck navigation overlay, rendered on every slide of every deck.
   - ⌂ links back to the course landing page (one level up from the deck's base).
   - ☰ opens a menu of all lectures (fetched from <base>/lectures.json, which is
-    generated from decks.json by scripts/gen-entries.mjs).
+    generated from decks.json by scripts/gen-entries.mjs). Decks flagged
+    `draft` are listed greyed and unlinked — they are not deployed yet.
   The outer container is pointer-events:none so it never blocks slide content
   (MCQ buttons, live-code editors); only the controls themselves are clickable.
 -->
@@ -57,17 +58,19 @@ const grouped = computed(() => {
         <a :href="home" class="dn-home">← Course home</a>
         <template v-for="g in grouped" :key="g.block">
           <div class="dn-block">{{ g.block }} · {{ g.label }}</div>
-          <a
+          <component
+            :is="d.draft ? 'span' : 'a'"
             v-for="d in g.items"
             :key="d.slug"
-            :href="home + d.slug + '/'"
+            :href="d.draft ? undefined : home + d.slug + '/'"
             class="dn-item"
-            :class="{ current: d.slug === current }"
+            :class="{ current: d.slug === current, soon: d.draft }"
           >
             <span class="dn-n">{{ String(d.n).padStart(2, '0') }}</span>
             <span class="dn-t">{{ d.title }}</span>
-            <span v-if="d.optional" class="dn-opt">optional</span>
-          </a>
+            <span v-if="d.draft" class="dn-soon">coming soon</span>
+            <span v-else-if="d.optional" class="dn-opt">optional</span>
+          </component>
         </template>
       </div>
     </transition>
@@ -163,6 +166,22 @@ const grouped = computed(() => {
 .dn-item.current {
   background: rgba(56, 189, 248, 0.2);
   color: #eef4ff;
+}
+.dn-item.soon {
+  cursor: default;
+}
+.dn-item.soon:hover {
+  background: none;
+  color: #dbe7f5;
+}
+.dn-item.soon .dn-n,
+.dn-item.soon .dn-t {
+  opacity: 0.4;
+}
+.dn-soon {
+  font-size: 0.6rem;
+  color: #93b7dd;
+  opacity: 0.7;
 }
 .dn-n {
   font-variant-numeric: tabular-nums;

@@ -18,13 +18,27 @@ import style
 # --------------------------------------------------------------------------
 
 def _blue_jays_scatter():
+    """Scatter with a third, categorical dimension on colour (penguin species),
+    labelled directly at each cluster's centre — no legend needed."""
     df = sns.load_dataset("penguins").dropna(subset=["bill_length_mm", "bill_depth_mm"])
+    species = ["Adelie", "Chinstrap", "Gentoo"]
+    colors = dict(zip(species, style.CYCLE[:3]))
     fig, ax = style.new_fig(6.8, 4.6)
-    ax.scatter(df["bill_length_mm"], df["bill_depth_mm"], s=30,
-               color=style.ACCENT, alpha=0.7, edgecolor="none")
+    for sp in species:
+        sub = df[df["species"] == sp]
+        ax.scatter(sub["bill_length_mm"], sub["bill_depth_mm"], s=30,
+                   color=colors[sp], alpha=0.75, edgecolor="none")
+    # Direct labels beside each cluster (offsets keep them off the points).
+    offsets = {"Adelie": (-6.5, 1.6), "Chinstrap": (3.2, 1.7), "Gentoo": (2.6, -1.7)}
+    for sp in species:
+        sub = df[df["species"] == sp]
+        cx, cy = sub["bill_length_mm"].mean(), sub["bill_depth_mm"].mean()
+        dx, dy = offsets[sp]
+        ax.text(cx + dx, cy + dy, sp, color=colors[sp], fontsize=12,
+                fontweight="bold", ha="center", va="center")
     ax.set_xlabel("Bill length (mm)")
     ax.set_ylabel("Bill depth (mm)")
-    ax.set_title("Bill Length vs. Bill Depth")
+    ax.set_title("Bill Length vs. Bill Depth — colour = species")
     style.save(fig, "viz_associations_blue_jays_scatter")
 
 
@@ -64,12 +78,11 @@ def _declutter(values: np.ndarray, min_gap: float) -> np.ndarray:
 
 
 def _co2_slopegraph():
-    rng = np.random.default_rng(2020)
+    # Per-capita CO2 emissions, tonnes per person, 2000 vs 2020 — rounded from
+    # the Global Carbon Project / Our World in Data series (approximate).
     entities = ["China", "USA", "India", "Russia", "Germany", "Japan", "Brazil", "Nigeria"]
-    trend = np.array([+1, -1, +1, 0, -1, -1, 0, +1])  # net direction 2000 -> 2020
-    v2000 = rng.uniform(2, 18, size=len(entities))
-    v2020 = v2000 + trend * rng.uniform(2, 6, size=len(entities)) + rng.normal(0, 0.4, size=len(entities))
-    v2020 = np.clip(v2020, 0.3, None)
+    v2000 = np.array([2.7, 20.5, 0.9, 10.6, 10.1, 9.6, 1.9, 0.6])
+    v2020 = np.array([7.4, 14.2, 1.7, 11.2, 7.7, 8.0, 2.0, 0.6])
     highlight_color = {"China": style.CYCLE[0], "USA": style.CYCLE[1], "Germany": style.CYCLE[2]}
 
     min_gap = 0.045 * (max(v2000.max(), v2020.max()) - min(v2000.min(), v2020.min()))
@@ -98,7 +111,7 @@ def _co2_slopegraph():
     for side in ("left", "right", "top"):
         ax.spines[side].set_visible(False)
     ax.grid(False)
-    ax.set_title("Per-capita CO$_2$ Emissions — 2000 vs. 2020 (synthetic)")
+    ax.set_title("Per-capita CO$_2$ emissions [t / person] — 2000 vs. 2020 (approx.)")
     style.save(fig, "viz_associations_co2_slopegraph")
 
 

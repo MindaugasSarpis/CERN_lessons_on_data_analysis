@@ -77,7 +77,9 @@ def _sqrt_scale():
     ax1, ax2 = fig.subplots(1, 2)
     for ax, scale, label in ((ax1, "linear", "linear — small counts vanish"),
                              (ax2, "sqrt", "square-root — every count visible")):
-        ax.bar(cats, counts, color=style.ACCENT)
+        # Dots, not bars: a non-linear axis has no honest bar base.
+        ax.plot(cats, counts, "o", ms=8, color=style.ACCENT, zorder=3)
+        ax.set_ylim(0, counts.max() * 1.12)
         if scale == "sqrt":
             ax.set_yscale("function", functions=(np.sqrt, np.square))
             ax.set_yticks([10, 100, 500, 1000, 2000])

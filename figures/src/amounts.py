@@ -94,10 +94,11 @@ def _lifeexp_alpha_order_bad():
     y = np.arange(len(countries))
     ax.plot(values, y, "o", ms=7, color=style.BAD, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries)
+    ax.set_yticklabels(countries, fontsize=12)  # tall figure is downscaled on the slide
     ax.invert_yaxis()
     ax.set_xlim(58, 85)
-    ax.set_xlabel("Life expectancy (years)")
+    ax.set_xlabel("Life expectancy (years)", fontsize=13)
+    ax.tick_params(axis="x", labelsize=12)
     ax.set_title("Life Expectancy — Alphabetical Order")
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_alpha_order_bad")
@@ -112,10 +113,11 @@ def _lifeexp_bars_bad():
     y = np.arange(len(countries))
     ax.barh(y, values, color=style.BAD, height=0.6, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries)
+    ax.set_yticklabels(countries, fontsize=12)  # tall figure is downscaled on the slide
     ax.invert_yaxis()
     ax.set_xlim(0, 85)
-    ax.set_xlabel("Life expectancy (years)")
+    ax.set_xlabel("Life expectancy (years)", fontsize=13)
+    ax.tick_params(axis="x", labelsize=12)
     ax.set_title("Life Expectancy — Bars (Sorted, Still Bad)")
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_bars_bad")
@@ -130,10 +132,11 @@ def _lifeexp_dot_plot():
     y = np.arange(len(countries))
     ax.plot(values, y, "o", ms=7, color=style.ACCENT, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries)
+    ax.set_yticklabels(countries, fontsize=12)  # tall figure is downscaled on the slide
     ax.invert_yaxis()
     ax.set_xlim(58, 85)  # honest truncation is fine for dots, not bars
-    ax.set_xlabel("Life expectancy (years)")
+    ax.set_xlabel("Life expectancy (years)", fontsize=13)
+    ax.tick_params(axis="x", labelsize=12)
     ax.set_title("Life Expectancy — Sorted by Value")
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_dot_plot")
@@ -256,22 +259,26 @@ CITATIONS = [5, 60, 540, 4900, 46000]
 
 
 def _log_scale():
+    # Dots, not bars: on a log axis a bar has no meaningful base (there is
+    # no zero), so length would encode nothing. Position does the work.
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.4, 4.2))
     x = np.arange(len(PAPERS))
-    ax1.bar(x, CITATIONS, color=style.ACCENT, width=0.6, zorder=3)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(PAPERS)
+    for ax, scale, label in ((ax1, "linear", "Linear scale — small counts vanish"),
+                             (ax2, "log", "Log scale — every magnitude visible")):
+        ax.plot(x, CITATIONS, "o", ms=10, color=style.ACCENT, zorder=3)
+        ax.set_yscale(scale)
+        ax.set_xticks(x)
+        ax.set_xticklabels(PAPERS)
+        ax.set_xlim(-0.6, len(PAPERS) - 0.4)
+        ax.set_title(label, fontsize=12)
+        ax.grid(axis="x", visible=False)
+        for xi, c in zip(x, CITATIONS):
+            ax.annotate(f"{c:,}", xy=(xi, c), xytext=(0, 9), textcoords="offset points",
+                        ha="center", color=style.FG, fontsize=9)
+    ax1.set_ylim(0, 52000)
     ax1.set_ylabel("Citations")
-    ax1.set_title("Linear Scale")
-    ax1.grid(axis="x", visible=False)
-
-    ax2.bar(x, CITATIONS, color=style.ACCENT, width=0.6, zorder=3)
-    ax2.set_yscale("log")
-    ax2.set_xticks(x)
-    ax2.set_xticklabels(PAPERS)
+    ax2.set_ylim(2, 120000)
     ax2.set_ylabel("Citations (log scale)")
-    ax2.set_title("Log Scale")
-    ax2.grid(axis="x", visible=False)
 
     fig.suptitle("Same Data, Two Y-Axes", color=style.FG, fontweight="bold")
     style.save(fig, "viz_proportional_ink_log_scale")

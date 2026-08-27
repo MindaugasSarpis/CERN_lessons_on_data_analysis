@@ -3,7 +3,7 @@
 A 16-lecture + 16-seminar university course delivered as interactive [Slidev](https://sli.dev) decks with a companion [MkDocs](https://www.mkdocs.org) student workbook. The published site is a landing page plus **one independently built deck per lecture**, so students (especially on mobile) download only the lecture they open.
 
 - **Live site**: https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis
-- **Deck manifest**: `lectures/content/decks.json` — the single source of truth for which lectures exist, their order, blocks A–E, and which are optional.
+- **Deck manifest**: `lectures/content/decks.json` — the single source of truth for which lectures exist, their order, blocks A–E, which are optional, and which are still `draft` (listed but not yet deployed).
 - **Course spine**: 🔧 tool-agnosticism · ♻️ reproducibility · ⚙️ automation · 📁 efficient work with data & files.
 
 ## Setup
@@ -74,14 +74,14 @@ Everything is driven by `lectures/content/decks.json`, so the checklist is short
 ## Repository map
 
 ```
-lectures/content/decks.json      # THE manifest: decks, order, blocks, optional flags
+lectures/content/decks.json      # THE manifest: decks, order, blocks, optional + draft flags
 lectures/content/slides/         # one markdown file per lecture (01–16)
 lectures/content/theme/          # custom Slidev theme (cards, layouts, type scale)
 lectures/content/public/figures/ # committed figure assets (viz_*.svg are scripted)
 figures/src/                     # matplotlib pipeline behind `pnpm figures`
 landing/                         # WebGL landing page source (Three.js + Vite)
 scripts/                         # build-all / gen-entries / qa-all / check-slides / timing-report / dev / videos
-lectures/workbook/               # MkDocs student workbook (16 seminar briefs, running project)
+lectures/workbook/               # MkDocs student workbook (16 seminar briefs + overview)
 videos/manifest.toml             # video pipeline manifest (raw/web files are gitignored)
 docs/superpowers/                # curriculum specs and implementation plans
 misc/                            # course admin (grading scripts; grade CSVs are gitignored)
@@ -96,3 +96,17 @@ git push origin ff2026:bs2026   # only after qa.yml is green on ff2026
 ```
 
 A change is **not live** until it reaches `bs2026`.
+
+### Releasing lectures one at a time
+
+Staged release is one boolean per deck in `decks.json`:
+
+```jsonc
+{ "slug": "09-concepts-of-data-analysis", "…": "…", "draft": true }   // listed "coming soon", not deployed
+{ "slug": "09-concepts-of-data-analysis", "…": "…", "draft": false }  // live
+```
+
+- A **draft** deck is still built and gated by `pnpm qa` and `pnpm timing:check` (CI too), so you can keep editing it without it silently breaking.
+- A deploy build (`pnpm build`, the Pages workflow) **skips** drafts — no `dist/<slug>/` exists, the landing page and the in-deck ☰ menu list the title greyed and unlinked, and old `/<slug>/5` links fall through to the home page instead of being rewritten.
+- On lecture day: set `"draft": false`, commit on `ff2026`, wait for `qa.yml` to pass, `git push origin ff2026:bs2026`.
+- `pnpm dev <NN>` serves drafts as usual; `pnpm build --include-drafts` builds the whole site locally for a preview.

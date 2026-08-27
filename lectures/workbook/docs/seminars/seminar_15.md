@@ -4,15 +4,17 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** your pipeline run as a batch/remote-style
-> job. *Optional / advanced — skip if short on time.*
+> **This session builds:** the seminar's `make all` pipeline run as a
+> batch/remote-style job. *Optional / advanced — skip if short on time.*
 
 ## Goal
 Move from "runs on my laptop, in my terminal" to "runs unattended, somewhere else,
 and I collect the results" — the mindset behind HPC and the WLCG.
 
 ## Prerequisites
-Seminar 14 (a working `make all` pipeline).
+A working `make all` pipeline over the shared LHCb D⁰ → K⁻π⁺ sample. Use your own
+if you have one from Seminar 14; otherwise a starter pipeline (`Makefile` +
+scripts, taking an output directory via `OUT=`) is provided by the instructor.
 
 ## Tasks
 1. Make the pipeline **non-interactive**: no prompts, all inputs from config/args,
@@ -46,7 +48,7 @@ Seminar 14 (a working `make all` pipeline).
 
 ## Solution notes (instructor)
 The transferable idea: a reproducible, automated pipeline is exactly what scales to
-a cluster — you built the hard part in Seminar 14. Keep it lightweight if no HPC is
+a cluster — the starter pipeline exists so nobody needs Seminar 14 to take part. Keep it lightweight if no HPC is
 on hand; `nohup` + `run.log` is enough to make the point. This seminar is optional —
 in a short 120-minute slot, protect task 3's scaling/timing as the highest-value 20
 minutes and treat the scheduler submission (task 4) and tasks 5–6 as stretch before

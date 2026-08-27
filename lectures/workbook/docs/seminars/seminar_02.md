@@ -4,23 +4,23 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **Running project — this session adds:** your chosen dataset (LHCb D⁰ → K⁻π⁺, or your own) in `data/raw/`, with
+> **This session builds:** your chosen dataset (LHCb D⁰ → K⁻π⁺, or your own) in `data/raw/`, with
 > its provenance recorded.
 
 ## Goal
-Acquire the running-project dataset and record **where it came from** — the first
+Acquire the seminar dataset and record **where it came from** — the first
 act of reproducibility.
 
 ## Prerequisites
 Seminar 1 (project skeleton).
 
 ## Tasks
-1. Choose your track (see the [running-project overview](running-project.md)):
+1. Choose your dataset (see the [seminar overview](overview.md)):
    - **Physics** — find the **LHCb masterclass** dataset on the **CERN Open Data
      Portal** ([record 401](https://opendata.cern.ch/record/401), D⁰ → K⁻π⁺;
      event-display files at [record 400](https://opendata.cern.ch/record/400)).
      Note the record's title, DOI (`10.7483/OPENDATA.LHCb.E7EJ.JUWR`), and licence.
-   - **Bring-your-own** — pick a tabular dataset from your own field (weather,
+   - **Your own field** — pick a tabular dataset from your own field (weather,
      survey, prices, lab measurements…). Note where it came from and its licence.
 2. Download the CSV into `data/raw/` **without renaming it**.
 3. In `README.md`, start a **Data** section: source URL, DOI, licence, download
