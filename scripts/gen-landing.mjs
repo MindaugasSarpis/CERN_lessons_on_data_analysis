@@ -45,6 +45,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
               <span class="rt">${esc(d.title)}</span>
               <span class="tag">coming soon</span>
             </span>
+            <a class="sem" href="${base}/workbook/seminars/seminar_${esc(d.slug.split('-')[0])}/" title="Seminar ${esc(d.slug.split('-')[0])} brief">seminar</a>
           </li>` : `
           <li class="reveal" style="--i:${rowIdx++ % 8}">
             <a class="row${d.optional ? ' opt' : ''}" href="${base}/${d.slug}/">
@@ -53,6 +54,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
               ${d.optional ? '<span class="tag">optional</span>' : ''}
               <span class="arrow" aria-hidden="true">&#8594;</span>
             </a>
+            <a class="sem" href="${base}/workbook/seminars/seminar_${esc(d.slug.split('-')[0])}/" title="Seminar ${esc(d.slug.split('-')[0])} brief">seminar</a>
           </li>`;
 
   const blockSections = [...byBlock.entries()]

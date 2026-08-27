@@ -96,7 +96,15 @@ body {
 }
 .block-key { color: var(--accent); }
 .rows { list-style: none; margin: 0; padding: 0; }
-.rows li { border-top: 1px solid var(--hair); }
+.rows li { border-top: 1px solid var(--hair); display: flex; align-items: baseline; }
+.rows li > .row { flex: 1 1 auto; min-width: 0; }
+.rows li > .sem {
+  flex: 0 0 auto; margin-left: clamp(0.6rem, 2vw, 1.4rem);
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--dim); text-decoration: none; border-bottom: 1px solid transparent;
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+.rows li > .sem:hover, .rows li > .sem:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
 .rows li:last-child { border-bottom: 1px solid var(--hair); }
 .row {
   display: grid; grid-template-columns: 3.2ch 1fr auto auto;
