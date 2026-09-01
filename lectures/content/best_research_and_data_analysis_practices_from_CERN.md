@@ -41,7 +41,7 @@ src: slides/01_Orientation.md
 ---
 
 ---
-src: slides/02_Introduction_to_CERN.md
+src: slides/02_Introduction_to_Data.md
 ---
 
 ---

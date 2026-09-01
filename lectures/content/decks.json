@@ -11,8 +11,8 @@
     "E": "Advanced / Optional"
   },
   "decks": [
-    { "slug": "01-orientation", "title": "Orientation & Data in Your Life", "block": "A", "srcs": ["01_Orientation.md"], "optional": false, "draft": false },
-    { "slug": "02-cern", "title": "Introduction to CERN", "block": "A", "srcs": ["02_Introduction_to_CERN.md"], "optional": false, "draft": false },
+    { "slug": "01-orientation", "title": "Orientation & Motivation", "block": "A", "srcs": ["01_Orientation.md"], "optional": false, "draft": false },
+    { "slug": "02-intro-to-data", "title": "Introduction to Data", "block": "A", "srcs": ["02_Introduction_to_Data.md"], "optional": false, "draft": false },
     { "slug": "03-how-computers-work", "title": "How Computers Work", "block": "A", "srcs": ["03_How_Computers_Work.md"], "optional": false, "draft": false },
     { "slug": "04-command-line-and-files", "title": "Command Line & File Handling", "block": "A", "srcs": ["04_Command_Line_and_Files.md"], "optional": false, "draft": false },
     { "slug": "05-markdown-and-vscode", "title": "Markdown & VS Code", "block": "A", "srcs": ["05_Markdown_and_VS_Code.md"], "optional": false, "draft": false },
