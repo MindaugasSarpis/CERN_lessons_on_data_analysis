@@ -9,7 +9,7 @@ drawings:
   persist: false
 
 
-title: "Introduction to CERN"
+title: "Introduction to Data"
 layout: cover
 ---
 
@@ -17,14 +17,14 @@ layout: cover
 
 # Best Research and Data Analysis Practices from CERN
 
-## Introduction to CERN
+## Introduction to Data
 
 ##### <span class="aims-badge">📁 data & files · ♻️ reproducibility</span>
 
 <!--
-Speaker: welcome them to the course proper. Frame the hour — this is the "why":
-what CERN is, why it drowns in data, and why that makes it the perfect backdrop
-for the skills we build. Set an exploratory, big-picture tone. (~2 min)
+Speaker: last time was the why — the films and CERN. Today is the what: data
+itself. Start from their own day, then the lab's data, then how to find and
+document a dataset — the skill Seminar 2 practises. (~2 min)
 -->
 
 ---
@@ -88,53 +88,41 @@ layout: section
 hideInToc: true
 ---
 
-# What is **CERN**?
-
-<img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-12 h-64" />
-
-<!--
-Speaker: section break. Ask who has heard of CERN and what for — most will say
-"the Higgs" or "the Web". Use that to preview the next few slides: the org, the
-machine, and how a detector actually sees a collision. (~1 min)
--->
+# Data in **Your Life**
 
 ---
 hideInToc: true
 ---
 
-# CERN at a Glance
+# A Day in Data — **Morning**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🏛️ **The Organisation**
+## ⏰ **Before breakfast**
 
-- **European Organization for Nuclear Research**
-- Founded in **1954** by 12 European states
-- Today: **24 member states**, thousands of visiting scientists
-- Located at the **French-Swiss border** near Geneva
+- Your phone logs the exact second the alarm went off
+- A wearable scores how you slept — from heart rate and motion all night
+- A weather app pushes a forecast computed from millions of sensor readings
+- The battery graph already knows your charging habits better than you do
+
+Ten minutes awake and you have already generated — and consumed — several datasets. None of it felt like "data".
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🎯 **The Mission**
+## 🚌 **The commute**
 
-- Probe the **fundamental structure** of matter
-- Build and operate the world's most powerful **particle accelerators**
-- Push the boundaries of **technology and engineering**
-- Train the **next generation** of scientists
+- A transit card taps in — a timestamp and a location, stored for years
+- Maps reroutes you around traffic it inferred from other phones moving slowly
+- Dozens of cameras log the same walk from different angles
+- A playlist auto-queues songs a model predicts you'll keep
+
+Each tap, ping, and skip is a row in someone's table — and the routing that helped you was itself built from yesterday's data.
 
 </div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🌍 **By the Numbers**
-
-🔬 World's **largest** particle physics laboratory · 👩‍🔬 **17,000+** scientists from **110+ nations** · 🏗️ Operating since **1954** · 🧪 Home to the **Large Hadron Collider**
 
 </div>
 
@@ -142,16 +130,47 @@ hideInToc: true
 hideInToc: true
 ---
 
-# The Large Hadron Collider (LHC)
+# A Day in Data — **Afternoon to Lights-Out**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-tight">
+
+## 💻 **Work & screens**
+
+- Every click, scroll, and pause feeds product-analytics dashboards
+- A shop's "customers also bought" is a live recommendation model
+- Each card payment is scored for fraud in under a second
+- Spam filters quietly classify every message before you see it
+
+Most of this analysis runs automatically — ⚙️ automation and ♻️ reproducibility at planetary scale, invisible until it breaks.
+
+</div>
 
 <div class="card card-info card-glass pad-tight">
 
-## ⚙️ **The Machine**
+## 🌙 **Evening**
 
-- A **27 km** circumference ring situated **100 m** underground
-- Accelerates protons to **99.9999991%** the speed of light
-- Collides particles **~1 billion times per second**
-- Operating temperature: **1.9 K** (~ -271.3°C — colder than outer space)
+- A streaming service picks your thumbnail from thousands of quiet experiments
+- A run is logged as a GPS track, then compared to last month's pace
+- A smart meter reports the day's electricity in fine-grained slices
+- The cycle closes as the wearable starts scoring tonight's sleep
+
+From alarm to lights-out you moved through hundreds of small analyses — almost all of them made by someone else, about you.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Every One of These Is a **Dataset**
+
+<div class="card card-success card-glass pad-tight mt-sm">
+
+Behind each convenience is the same loop you'll learn to run in this course: **collect → store → clean → analyse → decide**. The recommendation, the forecast, the fraud alert — all of it is somebody's pipeline running on somebody's table.
 
 </div>
 
@@ -159,24 +178,17 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔭 **Main Experiments**
+## 🔎 **The shift this course asks of you**
 
-- **ATLAS** — general-purpose detector
-- **CMS** — general-purpose detector
-- **ALICE** — heavy-ion collisions
-- **LHCb** — matter-antimatter asymmetry
+Stop seeing finished apps. Start seeing the **data and the decisions** underneath — because soon you'll be the one building that loop.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🏆 **Key Achievement**
+## 🎓 **The good news**
 
-Discovery of the **Higgs boson** in **2012** — confirmed the mechanism that gives particles their mass
-
-Nobel Prize in Physics 2013
-
-*Precisely: this gives mass to fundamental particles (**fermions**, **W/Z** bosons) — most of the mass around you (e.g. the proton's) is **QCD binding energy**, not the Higgs.*
+The same handful of skills — files, code, statistics, reproducibility — powers *all* of it. Learn them once; apply them anywhere.
 
 </div>
 
@@ -186,101 +198,407 @@ Nobel Prize in Physics 2013
 hideInToc: true
 ---
 
-# The Accelerator <span class="gradient-text">Chain</span>
+# So — What Even **Is** Data?
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm">
 
-🔗 No single machine takes protons from a hydrogen bottle to near light speed — the LHC is only the **last link in a chain**, each accelerator handing faster particles to the next.
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-1️⃣ **LINAC4** — a linear accelerator kicks things off: **160 MeV**
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-2️⃣ **PS Booster → Proton Synchrotron** — first rings: **2 GeV → 26 GeV**
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-3️⃣ **Super Proton Synchrotron (SPS)** — 7 km ring: **450 GeV**
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-left">
-
-4️⃣ **LHC** — 27 km ring: **6.8 TeV per beam** *(Run 3)* — then the beams are made to cross inside the detectors
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
-
-💡 Each machine was once CERN's frontier — today's record-holder is tomorrow's injector.
-
-</div>
-
----
-hideInToc: true
----
-
-# How a Detector <span class="gradient-text">Sees</span> a Collision
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🧅 Detectors like ATLAS are built as **layers of an onion** around the collision point — each layer measures a different property of the particles flying out.
+A working definition for this course: **data is recorded observation** — facts captured in a form a machine can store and re-read. The moment something is written down consistently enough to count, sort, or compare, it becomes data.
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-scale">
+<div class="card card-primary card-glass pad-compact">
 
-## 🌀 **Tracker** *(innermost)*
+## 📏 **It starts as a measurement**
 
-Charged particles bend in a magnetic field — the curvature of each track gives its **momentum**
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-scale">
-
-## ⚡ **EM Calorimeter**
-
-Stops **electrons and photons**, measuring the **energy** they deposit
+A temperature, a timestamp, a momentum, a yes/no. On its own, one value says little.
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-scale">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🔨 **Hadronic Calorimeter**
+## 📚 **It becomes useful in bulk**
 
-Stops **hadrons** — particles made of quarks (protons, neutrons, pions) — again measuring **energy**
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-scale">
-
-## 🧲 **Muon System** *(outermost)*
-
-**Muons** punch through everything else — dedicated outer chambers catch them
+Thousands of those values, organised, reveal patterns no single reading ever could — the whole game of analysis.
 
 </div>
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+---
+hideInToc: true
+---
 
-💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
+# Data Has a **Lifecycle**
+
+```mermaid {scale: 0.72}
+graph LR
+    C[📥 Collect] --> S[💾 Store]
+    S --> K[🧹 Clean]
+    K --> A[📊 Analyse]
+    A --> D[✅ Decide]
+```
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The loop from two slides ago, drawn out. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it. This course spends a lecture or two on **each stage**; the seminars walk a shared dataset through every stage of it.
 
 </div>
+
+<div class="note-text mt-sm">Most real-world pain comes from skipping a stage — analysing before cleaning, or deciding before storing where the data came from.</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
+  :options="[
+    'Each one runs the same loop: collect, store, clean, analyse, then decide',
+    'Collecting and storing the readings is itself the analysis — once data is saved, the work is done',
+    'Behind each service, analysts review your raw activity streams and decide case by case',
+    'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
+  ]"
+  :correct="0"
+  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide. Recognising that shared shape is the whole point of week 1: the skills transfer because the loop is always the same."
+/>
+
+---
+hideInToc: true
+---
+
+# Structured vs **Unstructured**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📊 **Structured**
+
+Lives in neat rows and columns — a table, a spreadsheet, a database. Each column has a meaning and a type.
+
+- Sensor logs, transaction records, survey answers
+- Easy to sort, filter, and compute on directly
+- **Most of this course lives here** — the tidy table
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌀 **Unstructured**
+
+Free-form — text, images, audio, video. Rich, but a computer can't average it until you extract structure first.
+
+- Emails, photos, recordings, PDFs
+- Needs a step to turn it into numbers or labels
+- Where most modern machine learning earns its keep
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The first real job of many projects is turning the second kind into the first.</div>
+
+---
+hideInToc: true
+---
+
+# Four Flavours You'll **Meet**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **Numbers**
+
+Measurements you can add, average, and plot. The core of statistics and fitting.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔤 **Text**
+
+Labels, categories, free comments. Countable once you decide what to count.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🖼️ **Images**
+
+Grids of pixels — secretly just numbers. The natural home of modern ML.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ⚡ **Events**
+
+Timestamped things that happened — a click, a tap, a particle collision.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">A particle-physics analysis is built from <strong>events</strong> (collisions) that we turn into <strong>numbers</strong> (a mass) — two flavours in one pipeline.</div>
+
+---
+hideInToc: true
+---
+
+# Measurement vs **Metadata**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📐 **The measurement**
+
+The number you care about — the temperature, the price, the particle's momentum. The reason the record exists at all.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🏷️ **The metadata**
+
+Data *about* the measurement — when, where, by which instrument, in what units, under what settings.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+## ⚠️ **Metadata is not optional** 📁 ♻️
+
+A momentum with no units, a reading with no timestamp, a file with no source — that's a number you can neither trust nor reproduce. Half of good data work is keeping the metadata attached.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Where Each Kind Shows Up **Later**
+
+| **Kind of data** | **What you learn to do with it** | **Where** |
+| --- | --- | --- |
+| Files & raw bytes | Read, name, and organise safely | L03–L05 · S3–S5 |
+| Structured tables | Load, clean, and reshape | L08, L13 · S8, S13 |
+| Numbers | Summarise, visualise, fit | L10–L12 · S10–S12 |
+| Uncertainty | Report a value ± an error | L11–L12 · S11–S12 |
+| Events → numbers | Turn one collision into a number (a mass) | L02, L09 · S7–S8, S12 |
+
+<div class="note-text mt-md">Nothing here needs to make sense yet — it's a map. Each row is a week where this abstract taxonomy becomes something your own hands do.</div>
+
+---
+hideInToc: true
+---
+
+# Thought Exercise — Data in **Your Field**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🤔 **Think** (2 min)
+
+Pick a project, hobby, or job you know well.
+
+- What data gets generated?
+- Who collects it, and how?
+- What decisions does it inform?
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 💬 **Discuss** (3 min)
+
+Share with a neighbour:
+
+- What is one decision that could be improved if the data were better collected, stored, or analysed?
+- What would "good enough" data analysis look like in your context?
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🎯 **Takeaway**
+
+Every field generates data. The tools and mindset you'll build in this course apply far beyond particle physics.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data at Work — **Life & Planet**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧬 **Biomedicine & genomics**
+
+- Genome sequencing → identifying variants & gene expression patterns
+- Clinical trials → monitoring safety, efficacy, adaptive designs
+- Population health dashboards & personalised medicine
+- Decisions: targeted therapies, drug discovery, diagnostics
+
+🧪 <strong>23andMe</strong> / <strong>Ancestry</strong> compare you against <em>reference populations</em>. 23andMe went bankrupt in 2025 and its genetic database changed hands in the proceedings — consent outlives a company.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🌍 **Environmental sciences**
+
+- Climate models integrating satellite, sensor, and historical data
+- Pollution monitoring at city/block resolution
+- Biodiversity studies combining field notes + remote sensing
+- Supports policy making, disaster response, conservation funding
+
+🔄 <strong>Living analysis</strong> — data feeds update the models continuously; the "result" is a pipeline that never stops running.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data at Work — **Sky & Subatomic**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🔭 **Astronomy**
+
+- Observational data from telescopes, satellites, detectors
+- Gravitational wave detection via signal processing & ML
+- Cataloguing millions of celestial objects, anomaly detection
+- Requires high-throughput computing, reproducible pipelines
+
+🤖 <strong>Galaxy Zoo</strong> crowdsourced classifications of ~1M galaxies from SDSS images — the labelled set that seeded today's CNN galaxy-morphology classifiers.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## ⚛️ **Particle physics (CERN)**
+
+- Petabytes of collision data → reconstruct events, filter noise
+- Multivariate analysis to isolate rare signals (e.g. Higgs boson)
+- Collaboration across detectors, theory, computing teams
+- Drives advances in distributed computing & open data practices
+
+🔬 <strong>Your seminars live here</strong> — the same open LHCb collision data physicists publish, walked from raw events to a measured mass.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data at Work — **Money**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 💰 **Finance**
+
+- Stock market analysis + algorithmic trading with latency constraints
+- Risk management using stress tests, scenario analysis, VaR
+- Fraud detection & compliance monitoring with streaming data
+- Balances profitability with regulation and transparency
+
+📉 The one field where every actor is <em>also</em> trying to out-predict every other actor's model — a reminder that data describes the past far better than it dictates the future.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+
+## 🎬 **…and the limits of prediction**
+
+There are some things <em>no data model</em> can predict.
+
+Play the reel live: <a href="https://www.facebook.com/reel/1963960414998958">facebook.com/reel/…</a>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Common **Threads** Across Every Domain
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎯 **Decisions drive design**
+
+Genomics, finance, or particle physics — analysis starts from a decision someone must make.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **Uncertainty is first-class**
+
+Every field reports ranges, intervals, or risks — not single numbers.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔄 **Pipelines over one-offs**
+
+Reproducible workflows beat ad-hoc analyses once data keeps arriving.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🤝 **Teams, not heroes**
+
+Domain + analyst + engineer + stakeholder — no single role sees the whole.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ⚖️ **Ethics follows impact**
+
+The higher the stakes (health, policy, money), the stronger the governance.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📖 **Stories ship insight**
+
+Numbers change nothing until they land as a narrative a decision-maker can act on.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">🔍 Which example resonates with you — and where could similar data, similar decisions, and similar obstacles exist in your own context?</div>
 
 ---
 layout: section
@@ -827,155 +1145,9 @@ layout: section
 hideInToc: true
 ---
 
-# From the **Cosmos** to the **Quantum**
+# From Data to **Skills**
 
-The next short films sweep across the scales of nature — from mountains and deep space down to individual atoms and particle tracks.
-
-Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
-
-<!--
-Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
-to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
-chamber — and ask what its output looks like once it is stored. The Half-time slide
-turns that into a question; the closing section picks it up. (~1 min setup)
--->
-
----
-
-<VideoPlayer src="Skylapse.mp4" autoplay loop   />
-
----
-
-<VideoPlayer src="Drone_Climbing_Mountain.mp4" autoplay   />
-
----
-
-<VideoPlayer src="VU_VM.mp4" autoplay   />
-
----
-
-<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Perseverance_Rover_Landing_NASA.mp4" autoplay   />
-
----
-
-
-<VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Stars_Pan_Audio.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Telescope.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Hubble.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Webb_Reel.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Milky_Way_Sim_Audio.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" autoplay   />
-
-
----
-hideInToc: true
-layout: fact
----
-
-# Half-time
-
-## Every scene so far ends as data someone must turn into understanding — which one would *you* analyse first?
-
----
-
-<VideoPlayer src="QGP_Formation.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" autoplay   />
-
----
-
-<VideoPlayer src="Cloud_Chamber_Audio.mp4" autoplay   />
-
----
-layout: section
-hideInToc: true
----
-
-# Inside **CERN**
-
-Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
-
-<!--
-Speaker: shift from cosmos to lab. These clips show the real machines behind the
-diagrams — ATLAS, LHCb, the tunnels. Point out the human scale next to the
-detectors before rolling. (~1 min setup)
--->
-
----
-
-<VideoPlayer src="CERN_Overview_Short.mp4" autoplay   />
-
----
-
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" autoplay   />
-
----
-
-
-<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" autoplay   />
-
-
----
-
-<VideoPlayer src="LHCb.mp4" autoplay   />
-
----
-
-
-
-<VideoPlayer src="CERN-FOOTAGE-2023-019-001-2160p.mp4" autoplay   />
-
----
-
-<VideoPlayer src="CERN-VIDEO-2020-064-001-2160p.mp4" autoplay   />
-
-
----
-
-<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" autoplay   />
-
----
-
-<VideoPlayer src="CERN-FOOTAGE-2024-010-002.mp4" autoplay   />
-
-
----
-
-<VideoPlayer src="GTC_2020_1080p.mp4" autoplay   />
-
----
-layout: section
-hideInToc: true
----
-
-# From Films to **Skills**
-
-Telescopes, rovers, cloud chambers, detectors — different instruments, one job: measure, record, and hand the numbers to someone who can read them. This course trains that someone.
+Portals, records, files, columns — every dataset you met today ends up in front of someone who has to read it, check it and turn it into a result. This course trains that someone.
 
 ---
 hideInToc: true
@@ -985,7 +1157,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-👥 CERN employs far more than physicists: of its few thousand **staff**, most are engineers and technicians, while the 17,000 scientists you saw earlier are mostly visiting **users** from institutes worldwide. A glimpse of who turns 40 million bunch crossings a second into discoveries:
+👥 CERN employs far more than physicists: of its few thousand **staff**, most are engineers and technicians, while the 17,000 scientists it hosts are mostly visiting **users** from institutes worldwide. A glimpse of who turns 40 million bunch crossings a second into discoveries:
 
 </div>
 
@@ -1046,56 +1218,6 @@ In the control room the same peak sits on a live monitoring plot: if a sub-detec
 <div class="card card-info card-glass pad-compact mt-md">
 
 🌍 Neither job requires standing next to the detector — both require exactly the skills this course builds: files, code, version control, statistics.
-
-</div>
-
----
-hideInToc: true
----
-
-# Why <span class="gradient-text">You</span> Need These Skills
-
-CERN turns raw collisions into discoveries with exactly the toolkit this course builds:
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-up">
-
-## 📁 **Handling Massive Data**
-
-Petabytes of detector output demand disciplined file handling, data formats, and organisation.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-up">
-
-## 🔀 **Working Together**
-
-Thousands of scientists share one codebase — impossible without version control.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight reveal-up">
-
-## 🐍 **Turning Signal into Insight**
-
-Python and data-analysis tools transform readings into physics.
-
-</div>
-
-<div class="card card-warning card-glass pad-tight reveal-up">
-
-## 🎲 **Real or a Fluke?**
-
-Statistics decide whether a bump in the data is a discovery — or noise.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
-
-You don't need a particle accelerator to use any of this. **Next, we start building these skills ourselves — first how a computer actually works, then the command line.**
 
 </div>
 
