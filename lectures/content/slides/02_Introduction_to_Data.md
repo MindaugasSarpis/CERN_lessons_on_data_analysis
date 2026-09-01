@@ -1164,14 +1164,14 @@ hideInToc: true
 
 ## 📄 **As it looks in a README**
 
-\`\`\`text
+```text
 Source:   CERN Open Data Portal, record 401
 DOI:      10.7483/OPENDATA.LHCb.E7EJ.JUWR
 Licence:  CC0
 Fetched:  2026-09-15
 Files:    D0_KPi.csv  sha256 3f9a…c1e2
 Changes:  none
-\`\`\`
+```
 
 </div>
 
