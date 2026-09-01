@@ -1266,6 +1266,174 @@ layout: section
 hideInToc: true
 ---
 
+# A Dataset **Up Close**
+
+<!--
+Speaker: now open the actual file, conceptually — no code yet. The point: a data
+file has a meaning before it has a format. (Pass 2 of the reel adds a 2:28 LHCb
+decay animation as the opener of this section.) (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# From File to **Table**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The LHCb sample as a file**
+
+- One **header line** naming the columns
+- ~60 000 lines after it
+- Each **row** = one **event**: a K⁻π⁺ pair that might be a D⁰
+- Each **column** = one quantity measured or computed for that pair
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🧮 **What a row says**
+
+"In this collision we found a kaon and a pion; here are their momenta, charges and identification scores; their combined mass is *M*."
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+💾 The file is just text. Lecture 3 opens the bytes and Seminar 3 counts them — today we read the **meaning**.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Columns, Units and **Meaning**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **Measured**
+
+Three momentum components per particle, its charge, its particle-ID probabilities — what the detector recorded.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Derived**
+
+The K⁻π⁺ **invariant mass** — computed from the momenta; the column the seminars call `M`.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🗂️ **Bookkeeping**
+
+Event and run numbers — which collision, which data-taking period.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ **Units are metadata.** A column named `M` means nothing until you know it is in MeV/c². If the file does not say, the record must — write it into your README.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Read Before You **Compute**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## ❓ **Five questions for any data file**
+
+1. How many **rows** and **columns** — and does the size make sense for that?
+2. What is **one row** — an event, a person, an hour, a pixel?
+3. Which columns are **measured**, which **derived**, which **bookkeeping**?
+4. What are the **units** — and where is that written down?
+5. How are **missing** or invalid values marked — blank, `NaN`, `-999`?
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Answer these on paper before the first line of code; Seminar 2's stretch goals ask you to do exactly this for your dataset.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Same Questions, **Your** Dataset
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🌦️ **Weather station CSV**
+
+Row = one hour · columns = temperature °C, pressure hPa, humidity % · derived: daily mean.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **Survey microdata**
+
+Row = one respondent · columns = coded answers · the codebook *is* the units.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🖼️ **Image collection**
+
+Row = one file · columns = size, timestamp, label · the pixels live elsewhere.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔁 Wherever a seminar says "invariant mass" or "D⁰ peak", read *your numeric variable* and *the pattern you are looking for*.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="In the LHCb seminar sample, what does one row of the CSV file represent?"
+  :options="[
+    'One sub-detector of LHCb',
+    'One K⁻π⁺ candidate from one collision event',
+    'One column of momentum values',
+    'One day of data-taking'
+  ]"
+  :correct="1"
+  explanation="Each row is one candidate pair found in one event: its momenta, charges, identification scores and the derived invariant mass. Columns are the quantities; rows are the things measured. Knowing what one row *is* comes before any statistics."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
 # Beyond the **Ring**
 
 Coping with its own data forced CERN to invent things the rest of the world now runs on — the Web, a planet-sized grid, open data and open publishing.
@@ -1401,6 +1569,22 @@ Every CERN Open Data record carries a **DOI**, a **licence** (CC0), file checksu
 📝 Whatever data your own project ends up using, the same four lines — title, DOI (or URL and access date), licence, and who produced it — are the first entries of its README.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="CERN publishes its collision data on the Open Data Portal years after recording it. Which stage of the data lifecycle is that, and what makes it possible?"
+  :options="[
+    'Capture — the detector writes straight to the portal',
+    'Sharing and archiving — possible only because provenance, formats and software were preserved along the way',
+    'Processing — the trigger selects which events to publish',
+    'Analysis — physicists publish their plots'
+  ]"
+  :correct="1"
+  explanation="Publication is the sharing/archive end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
+/>
 
 ---
 layout: section
