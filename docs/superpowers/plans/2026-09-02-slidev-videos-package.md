@@ -1295,7 +1295,7 @@ import { readFile } from 'node:fs/promises'
 import { extname, join } from 'node:path'
 import { chromium } from 'playwright-chromium'
 
-const ROOT = new URL('../dist', import.meta.url).pathname
+const ROOT = new URL('../example/dist', import.meta.url).pathname  // slidev resolves --out against the entry dir
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2', '.ico': 'image/x-icon' }
 const server = createServer(async (req, res) => {
   let p = decodeURIComponent(new URL(req.url, 'http://x').pathname)
