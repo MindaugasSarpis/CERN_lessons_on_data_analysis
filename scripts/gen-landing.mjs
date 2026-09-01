@@ -75,7 +75,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
 
 
   // Social/SEO metadata — emitted only when the canonical site URL is known.
-  const descr = 'A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files.';
+  const descr = 'Lecture slides and seminar briefs — 16 lectures in five blocks, each paired with a hands-on seminar.';
   const siteUrl = manifest.site && manifest.site.url ? manifest.site.url.replace(/\/$/, '') : '';
   const metaTags = siteUrl ? `
 <meta name="description" content="${esc(descr)}">
@@ -110,7 +110,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
       <h1 class="title">
         ${titleHtml}
       </h1>
-      <p class="sub">A practice-first course: tool-agnostic thinking, reproducible analysis, automation, and efficient work with data and files. Each lecture opens on its own so it loads fast.</p>
+      <p class="sub">16 lectures in five blocks, each paired with a hands-on seminar.</p>
       <div class="scroll-hint" aria-hidden="true"><span class="shline"></span><span class="shlabel">Scroll</span></div>
     </header>
     ${blockSections}
