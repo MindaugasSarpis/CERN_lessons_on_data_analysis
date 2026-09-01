@@ -16,7 +16,7 @@ Sequencing (each stage independently shippable): **§8 re-split first** (uses to
 
 ### Goals
 - One pipeline and one player, versioned, installable into any Slidev course/talk repo in two lines.
-- Browser-safe playback everywhere: **1080p H.264 web tier only** (outreach's 2026-07-18 policy after HEVC/4K freezes at the Yaga venue). Nothing in this course's release was ever truly 4K (the two `…-2160p` files carry 1080p streams); the lag was HEVC decode, so the fix is a re-encode, not a downscale.
+- Browser-safe playback everywhere: **1080p H.264 web tier only** (outreach's 2026-07-18 policy after HEVC/4K freezes at the Yaga venue). Two causes of the lag the maintainer observed in L02's reel: `Perseverance_Rover_Landing_NASA.mp4` on the release is a genuine 3840×2160 H.264 60 fps file (230 MB, 3:10) — the only true-4K asset (the two `…-2160p`-named files carry 1080p streams) — and 23 of the other 26 clips are HEVC, which many lecture-hall browsers decode in software or not at all. The 1920 cap and H.264 fix both.
 - Shared CERN/space clips encoded **once**, served from **one** release, reused by every deck.
 - Keep the course's two hard-won player behaviours: `object-fit: cover` (full-bleed, no letterbox) and "prefer the remote in production" (deploy strips local `videos/`, so probing it first only buys a 404).
 - L01 opens the semester with the reel; L02 becomes a proper introduction to data; both decks stay inside the 105–145 min timing band.
@@ -129,7 +129,7 @@ One convention: **lowercase snake_case, no resolution or codec suffixes** (`cern
 | skylapse.mp4 | Skylapse.mp4 | silent-loop |
 | drone_climbing_mountain.mp4 | Drone_Climbing_Mountain.mp4 | high-motion |
 | nasa_mars_mariner_4_pan_audio.mp4 | NASA_Mars_Mariner_4_Pan_Audio.mp4 | standard |
-| perseverance_rover_landing_nasa.mp4 | Perseverance_Rover_Landing_NASA.mp4 (spelling fixed; outreach's `perseverence_…` maps here) | high-motion |
+| perseverance_rover_landing_nasa.mp4 | Perseverance_Rover_Landing_NASA.mp4 (true 4K H.264 60 fps source — downscaled to 1080p; spelling fixed; outreach's `perseverence_…` maps here) | high-motion |
 | cassini_grand_finale.mp4 | Cassini_Grand_Finale_NO_VO.mp4 | standard |
 | stars_pan_audio.mp4 | Stars_Pan_Audio.mp4 | standard |
 | telescope.mp4 | Telescope.mp4 | standard |
