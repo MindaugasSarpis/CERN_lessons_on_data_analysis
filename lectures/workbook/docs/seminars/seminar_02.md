@@ -37,8 +37,8 @@ Seminar 1 (project skeleton).
    licence and file size with what you wrote. Add any field you had missed.
 
 ## Stretch goals
-- Find and skim the dataset's documentation: what do the columns mean? What are
-  the units (GeV)?
+- What are the units of the mass column — MeV or GeV? The file won't tell you;
+  the record will. Write the answer into your README.
 - Identify one other open dataset in your own field of interest and note its licence.
 - Fetch an event-display file from record 400 too and note how it differs from
   the CSV (format, size, intended use).

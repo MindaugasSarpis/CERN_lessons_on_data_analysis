@@ -401,7 +401,7 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact reveal-scale">
 
 **A · Foundations & Tooling** *(01–06)*
-Orientation, CERN, computers, command line & files, Markdown & VS Code, Git
+Orientation, data, computers, command line & files, Markdown & VS Code, Git
 
 </div>
 
@@ -1074,7 +1074,7 @@ layout: fact
 
 # Breaks...
 
-<!-- Speaker: signal a short break here before moving into introductions. -->
+<!-- Speaker: signal a short break here — then lights down for CERN and the reel. -->
 
 ---
 layout: section
@@ -1291,6 +1291,8 @@ Speaker: dim the lights. Let the films run — don't narrate over them. The one 
 to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
 chamber — and ask what its output looks like once it is stored. The Half-time slide
 turns that into a question; the closing section picks it up. (~1 min setup)
+
+NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser decodes HEVC (Firefox and Linux Chrome do not: they show 'Video not available' or black video with sound). Pass 2 re-encodes to H.264.
 -->
 
 ---

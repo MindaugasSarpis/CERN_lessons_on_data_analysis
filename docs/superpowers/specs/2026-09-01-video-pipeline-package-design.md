@@ -325,3 +325,4 @@ Order: cover (retitled) · quote · Learning Objectives (rewritten for data) · 
 - Migrate `outreach_talks` to the package (delete its `scripts/videos.py` + `components/`, add `videos.toml` files, map `perseverence_…` and the `h265` name, decide which of its remaining shared clips join `shared.toml`).
 - World of Particles: `pnpm add` + `pip install` + a `videos:` headmatter block; no own release needed until it has course-specific clips.
 - Optional CI `preflight` step in `qa.yml` once the chain is stable.
+- Before any week-1 delivery on reel pass 1: verify the venue browser decodes HEVC — 17 of the 18 pass-1 clips are HEVC-only or HEVC+AAC; only `Expansion_Funnel_H264_1080p.webm` plays on every browser. Pass 2 removes this constraint.

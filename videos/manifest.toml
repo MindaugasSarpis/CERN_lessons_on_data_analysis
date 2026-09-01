@@ -172,7 +172,7 @@ used_in = []  # not in any deck since the 2026-09 L01/L02 re-split; stays on the
 notes   = "NVIDIA GTC 2020 excerpt, HEVC 1.4 Mbps, 3:20"
 
 # ---------------------------------------------------------------------------
-# L03_1_1 — Crash Course on Computer Science
+# L03 — Crash Course on Computer Science
 # ---------------------------------------------------------------------------
 
 [[videos]]
@@ -188,7 +188,7 @@ notes   = "Tech scale comparison, HEVC 1.7 Mbps, 3:51"
 [[videos]]
 name    = "VU_VM.mp4"
 profile = "standard-tight"
-used_in = []  # not in any deck since the 2026-09 L01/L02 re-split; stays on the release
+used_in = []  # retired with the crash-course deck; a faculty clip replaces it in reel pass 2; stays on the release
 notes   = "Re-encoded from 20 Mbps H.264 master — wasteful bitrate for slide use"
 [[videos]]
 name    = "CPU_vs_GPU_Demo.mp4"

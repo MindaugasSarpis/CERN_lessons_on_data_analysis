@@ -53,7 +53,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-🔄 Walk a dataset through its **lifecycle** — capture, storage, processing, analysis, sharing — and say where it silently goes wrong
+🔄 Walk a dataset through its **lifecycle** — collect, store, clean, analyse, decide, share — and say where it silently goes wrong
 
 </div>
 
@@ -72,6 +72,12 @@ hideInToc: true
 <div class="card card-warning card-glass pad-compact">
 
 📄 Read a real data file — **rows, columns, units, metadata** — before writing a line of code
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+🏔️ Name the **four LHC experiments** — and CERN's data legacy: the **Web**, the **grid**, **open data**
 
 </div>
 
@@ -239,6 +245,7 @@ graph LR
     S --> K[🧹 Clean]
     K --> A[📊 Analyse]
     A --> D[✅ Decide]
+    D --> H[🌐 Share / archive]
 ```
 
 <div class="card card-info card-glass pad-compact mt-md">
@@ -262,7 +269,7 @@ hideInToc: true
     'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
   ]"
   :correct="0"
-  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide. Recognising that shared shape is the whole point of week 1: the skills transfer because the loop is always the same."
+  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide. Recognising that shared shape is the whole point of these opening lectures: the skills transfer because the loop is always the same."
 />
 
 ---
@@ -391,7 +398,7 @@ hideInToc: true
 | Structured tables | Load, clean, and reshape | L08, L13 · S8, S13 |
 | Numbers | Summarise, visualise, fit | L10–L12 · S10–S12 |
 | Uncertainty | Report a value ± an error | L11–L12 · S11–S12 |
-| Events → numbers | Turn one collision into a number (a mass) | L02, L09 · S7–S8, S12 |
+| Events → numbers | Turn one collision into a number (a mass) | here, L09 · S7–S8, S12 |
 
 <div class="note-text mt-md">Nothing here needs to make sense yet — it's a map. Each row is a week where this abstract taxonomy becomes something your own hands do.</div>
 
@@ -1112,7 +1119,7 @@ hideInToc: true
 
 ## 🆓 **CC0**
 
-No conditions at all. Reuse, remix, republish. *CERN Open Data.*
+No conditions at all — reuse, remix, republish. *CERN Open Data.*
 
 </div>
 
@@ -1252,12 +1259,12 @@ hideInToc: true
 <MCQ
   question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
   :options="[
-    'The file name and its size',
     'The record\'s DOI (or stable URL), the version or date you fetched it, and the file checksum',
-    'A screenshot of the download page',
+    'The file name and its size',
+    'The portal\'s homepage URL and the dataset\'s title',
     'The name of the person who told you about the dataset'
   ]"
-  :correct="1"
+  :correct="0"
   explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a screenshot and a person cannot be resolved by a reader."
 />
 
@@ -1288,7 +1295,7 @@ hideInToc: true
 
 - One **header line** naming the columns
 - ~60 000 lines after it
-- Each **row** = one **event**: a K⁻π⁺ pair that might be a D⁰
+- Each **row** = one **candidate**: a K⁻π⁺ pair from one collision that might be a D⁰
 - Each **column** = one quantity measured or computed for that pair
 
 </div>
@@ -1421,11 +1428,11 @@ hideInToc: true
   question="In the LHCb seminar sample, what does one row of the CSV file represent?"
   :options="[
     'One sub-detector of LHCb',
-    'One K⁻π⁺ candidate from one collision event',
     'One column of momentum values',
-    'One day of data-taking'
+    'One reconstructed particle track',
+    'One K⁻π⁺ candidate from one collision event'
   ]"
-  :correct="1"
+  :correct="3"
   explanation="Each row is one candidate pair found in one event: its momenta, charges, identification scores and the derived invariant mass. Columns are the quantities; rows are the things measured. Knowing what one row *is* comes before any statistics."
 />
 
@@ -1540,33 +1547,13 @@ hideInToc: true
 
 # Open Data, Up <span class="gradient-text">Close</span>
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-tight mt-md">
 
 ## 🎯 **The Portal**
 
 The **Open Data Portal** from the impact slide isn't an abstraction for this course: the **LHCb D⁰ → K⁻π⁺** sample the seminars practise on lives there as **record 401** — downloadable by anyone, no CERN credentials required.
 
 🔬 **Seminar 2** sends you to fetch it — or a dataset from your own field: locate the exact record and note its provenance before you ever open it in Python.
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📌 **Provenance, Not Just Access**
-
-"Open" only helps the next person if they can find the **exact version** you used — that's what a dataset's **DOI** and **licence** are for.
-
-Every CERN Open Data record carries a **DOI**, a **licence** (CC0), file checksums and the software that produced it — the FAIR-data habits **Lecture 14 (Reproducible Workflows & Automation)** builds out in full.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-📝 Whatever data your own project ends up using, the same four lines — title, DOI (or URL and access date), licence, and who produced it — are the first entries of its README.
 
 </div>
 
@@ -1577,13 +1564,13 @@ hideInToc: true
 <MCQ
   question="CERN publishes its collision data on the Open Data Portal years after recording it. Which stage of the data lifecycle is that, and what makes it possible?"
   :options="[
-    'Capture — the detector writes straight to the portal',
-    'Sharing and archiving — possible only because provenance, formats and software were preserved along the way',
-    'Processing — the trigger selects which events to publish',
-    'Analysis — physicists publish their plots'
+    'Collecting — the detector writes straight to the portal',
+    'Cleaning — the trigger selects which events to publish',
+    'Sharing — the last stage of the lifecycle, possible only because provenance, formats and software were preserved along the way',
+    'Analysing — physicists publish their plots'
   ]"
-  :correct="1"
-  explanation="Publication is the sharing/archive end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
+  :correct="2"
+  explanation="Publication is the share stage at the end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
 />
 
 ---
@@ -1683,7 +1670,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Walk a dataset through its **lifecycle** and name the step where reproducibility is won or lost
+✅ Walk a dataset through its **lifecycle** — collect to share — and name the step where it silently goes wrong
 
 </div>
 
@@ -1702,6 +1689,12 @@ hideInToc: true
 <div class="card card-success card-glass pad-compact">
 
 ✅ Open a data file and read **rows, columns, units and metadata** before touching code
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Name the **four LHC experiments** — and say why the **Web**, the **grid** and **open data** came out of CERN
 
 </div>
 
