@@ -47,40 +47,41 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🏛️ Describe **what CERN is** — the laboratory, the **LHC**, and its four main experiments
+🗂️ Spot the **datasets** hiding in an ordinary day — and sort them into the **four flavours** you'll keep meeting
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🔬 Trace how a collision becomes **data** — the accelerator chain, detector layers, and the **trigger**
+🔄 Walk a dataset through its **lifecycle** — capture, storage, processing, analysis, sharing — and say where it silently goes wrong
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-📊 Explain why **data analysis** is central — petabytes per second and the needle-in-a-haystack problem
+⚛️ Trace how a **collision becomes a dataset** — detector, trigger, storage — and meet the **D⁰** you'll analyse
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-🌐 Recognise CERN's impact beyond physics — the **Web**, the computing **grid**, and **open data**
+🌐 Find an **open dataset** and document it — portal, record, **DOI**, licence, provenance (the job of Seminar 2)
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-🎯 Connect these challenges to the **skills** this course builds
+📄 Read a real data file — **rows, columns, units, metadata** — before writing a line of code
 
 </div>
 
 </div>
 
 <!--
-Speaker: read these as promises, not a syllabus. Stress that today is context and
-motivation — the hands-on skills start next lecture with how computers work, then the command line in Lecture 4. The paired
-Seminar 2 is where they go find the seminar dataset. (~1 min)
+Speaker: read these as promises. Today is still context, but of a practical kind:
+by the end they should know what a dataset *is*, where to get one and how to
+write down where it came from. The hands-on skills start next lecture with how
+computers work, then the command line in Lecture 4. (~1 min)
 -->
 
 ---
@@ -1231,31 +1232,31 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Describe **CERN**, the **LHC**, and its four main experiments
+✅ Spot the **datasets** in an ordinary day and sort them into the **four flavours**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Trace a collision from **beam** to stored **dataset** via the **trigger**
+✅ Walk a dataset through its **lifecycle** and name the step where reproducibility is won or lost
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Explain why **data analysis** is central — and what **5-sigma** means
+✅ Trace a **collision** from detector to stored dataset — and recognise the **D⁰ peak** near 1865 MeV
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Recognise CERN's impact beyond physics — the **Web**, the **grid**, and **open data**
+✅ Find an **open dataset**, read its **record** (title, DOI, licence) and write down its **provenance**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Connect CERN's challenges to the **skills** this course builds
+✅ Open a data file and read **rows, columns, units and metadata** before touching code
 
 </div>
 
@@ -1263,7 +1264,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-🔬 **Seminar 2 tie-in** — find and document a dataset: LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal, or one from your own field — recording its provenance (title, DOI, licence).
+🔬 **Seminar 2 tie-in** — find and document a dataset: LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal, or one from your own field — recording its provenance (title, DOI, licence, date, checksum).
 
 </div>
 
@@ -1272,4 +1273,3 @@ Speaker: the "you can now" beat — have them nod along to each. The tie-in make
 payoff concrete: in the seminar they hunt down the actual dataset the seminars
 analyse, and practise recording its provenance. (~1 min)
 -->
-
