@@ -5,7 +5,7 @@
  * at `./assets/landing.css` + `./assets/landing.js` (built by
  * build-landing.mjs / build:landing:assets) — it does not build that bundle
  * itself. Decks are grouped by block; each links to its own deck at
- * `<prefix>/<slug>/`. Block E is marked Optional. Decks with `draft: true`
+ * `<prefix>/<slug>/`. Decks with `draft: true`
  * render in place as a greyed, unlinked "coming soon" row (staged release
  * during the semester: flip the flag on delivery day and redeploy).
  *
@@ -45,16 +45,13 @@ export async function genLanding(manifest, outDir, prefix = '') {
               <span class="rt">${esc(d.title)}</span>
               <span class="tag">coming soon</span>
             </span>
-            <a class="sem" href="${base}/workbook/seminars/seminar_${esc(d.slug.split('-')[0])}/" title="Seminar ${esc(d.slug.split('-')[0])} brief">seminar</a>
           </li>` : `
           <li class="reveal" style="--i:${rowIdx++ % 8}">
-            <a class="row${d.optional ? ' opt' : ''}" href="${base}/${d.slug}/">
+            <a class="row" href="${base}/${d.slug}/">
               <span class="num">${esc(d.slug.split('-')[0])}</span>
               <span class="rt">${esc(d.title)}</span>
-              ${d.optional ? '<span class="tag">optional</span>' : ''}
               <span class="arrow" aria-hidden="true">&#8594;</span>
             </a>
-            <a class="sem" href="${base}/workbook/seminars/seminar_${esc(d.slug.split('-')[0])}/" title="Seminar ${esc(d.slug.split('-')[0])} brief">seminar</a>
           </li>`;
 
   const blockSections = [...byBlock.entries()]
@@ -75,7 +72,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
 
 
   // Social/SEO metadata — emitted only when the canonical site URL is known.
-  const descr = 'Lecture slides and seminar briefs — 16 lectures in five blocks, each paired with a hands-on seminar.';
+  const descr = 'Lecture slides — 16 lectures in five blocks.';
   const siteUrl = manifest.site && manifest.site.url ? manifest.site.url.replace(/\/$/, '') : '';
   const metaTags = siteUrl ? `
 <meta name="description" content="${esc(descr)}">
@@ -105,17 +102,17 @@ export async function genLanding(manifest, outDir, prefix = '') {
   <main class="wrap">
     <header class="hero">
       <div class="corner corner-tr" aria-hidden="true">Autumn 2026</div>
-      <div class="corner corner-br" aria-hidden="true">${manifest.decks.length} lectures &middot; ${manifest.decks.length} seminars</div>
+      <div class="corner corner-br" aria-hidden="true">${manifest.decks.length} lectures</div>
       <p class="kicker">${esc(manifest.presenter)}</p>
       <h1 class="title">
         ${titleHtml}
       </h1>
-      <p class="sub">16 lectures in five blocks, each paired with a hands-on seminar.</p>
+      <p class="sub">16 lectures in five blocks.</p>
       <div class="scroll-hint" aria-hidden="true"><span class="shline"></span><span class="shlabel">Scroll</span></div>
     </header>
     ${blockSections}
     <footer class="foot">
-      <p>Each lecture has a paired hands-on seminar — briefs, overview and lecture notes are in the <a href="${base}/workbook/">workbook &#8594;</a>. Block E is the optional tail if the term runs short.</p>
+      <p>Lecture notes are in the <a href="${base}/workbook/">workbook &#8594;</a>.</p>
     </footer>
   </main>
   <script type="module" src="./assets/landing.js"></script>

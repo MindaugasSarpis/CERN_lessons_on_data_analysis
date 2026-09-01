@@ -444,7 +444,7 @@ Each lecture has a hands-on seminar — self-contained exercises on a shared ope
 
 <div class="note-text mt-sm" style="text-align: center;">
 
-Order and depth adapt to the group; block E may be dropped if time runs short.
+Order and depth adapt to the group.
 
 </div>
 

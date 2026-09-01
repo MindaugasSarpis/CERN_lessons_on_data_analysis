@@ -8,7 +8,7 @@
     "B": "Programming",
     "C": "Data Analysis Core",
     "D": "Practical Data Work",
-    "E": "Advanced / Optional"
+    "E": "Advanced"
   },
   "decks": [
     { "slug": "01-orientation", "title": "Orientation & Motivation", "block": "A", "srcs": ["01_Orientation.md"], "optional": false, "draft": false },

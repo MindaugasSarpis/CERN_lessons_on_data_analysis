@@ -42,9 +42,8 @@ async function checkRows(page) {
       ok(links === 1, `deck link ${href}`);
     }
   }
-  // Every row (live or draft) carries a link to its seminar brief in the workbook,
-  // and the footer links to the workbook itself.
-  ok(await page.locator('li > a.sem').count() === manifest.decks.length, `one seminar-brief link per lecture (${manifest.decks.length})`);
+  // Seminar briefs are internal — the landing must not link them.
+  ok(await page.locator('li > a.sem').count() === 0, 'no seminar links on the landing');
   ok(await page.locator(`footer.foot a[href="${PREFIX}/workbook/"]`).count() === 1, 'workbook link in footer');
 }
 
@@ -105,7 +104,7 @@ try {
       // reflects the transformed case) while these assertions care about the
       // authored content, not the presentational casing.
       ok(await page.locator('.hero .kicker').textContent() === manifest.presenter, 'presenter in hero');
-      ok((await page.locator('footer.foot').textContent()).includes('seminar'), 'seminar footer note');
+      ok((await page.locator('footer.foot').textContent()).includes('workbook'), 'workbook footer note');
       const gated = await page.waitForFunction(() => {
         const c = document.documentElement.classList;
         return (c.contains('field-on') || c.contains('static-bg')) ? (c.contains('field-on') ? 'field-on' : 'static-bg') : false;
