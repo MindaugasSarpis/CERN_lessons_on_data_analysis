@@ -177,7 +177,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-tight mt-sm">
 
-Behind each convenience is the same loop you'll learn to run in this course: **collect → store → clean → analyse → decide**. The recommendation, the forecast, the fraud alert — all of it is somebody's pipeline running on somebody's table.
+Behind each convenience is the same loop you'll learn to run in this course: **collect → store → clean → analyse → decide → share**. The recommendation, the forecast, the fraud alert — all of it is somebody's pipeline running on somebody's table.
 
 </div>
 
@@ -263,13 +263,13 @@ hideInToc: true
 <MCQ
   question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
   :options="[
-    'Each one runs the same loop: collect, store, clean, analyse, then decide',
+    'Each one runs the same loop: collect, store, clean, analyse, decide — then share or archive',
     'Collecting and storing the readings is itself the analysis — once data is saved, the work is done',
     'Behind each service, analysts review your raw activity streams and decide case by case',
     'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
   ]"
   :correct="0"
-  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide. Recognising that shared shape is the whole point of these opening lectures: the skills transfer because the loop is always the same."
+  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide, share. Recognising that shared shape is the whole point of these opening lectures: the skills transfer because the loop is always the same."
 />
 
 ---
