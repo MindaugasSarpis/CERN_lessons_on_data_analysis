@@ -1005,6 +1005,267 @@ layout: section
 hideInToc: true
 ---
 
+# Open Data & **Provenance**
+
+<!--
+Speaker: shift gears — from *what data is* to *where you get it and how you prove
+where it came from*. This is the skill Seminar 2 practises on the LHCb sample or
+on their own dataset. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Where Data Lives — **Open-Data Portals**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔬 **Physics & space**
+
+- **CERN Open Data Portal** — LHC collision data, masterclass samples
+- **NASA** open data & the Planetary Data System
+- **ESA** archives — Gaia, Euclid, Webb
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🌍 **Society & environment**
+
+- **Eurostat** and national statistics offices
+- **Copernicus / ECMWF** — weather and climate
+- **World Bank, OECD, WHO** indicators
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📚 **Any field**
+
+- **Zenodo** — upload anything, get a DOI
+- **Kaggle**, **Hugging Face** datasets
+- Your university's research repository
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔗 A portal is a **catalogue**: every dataset on it is a **record** with a stable address. You cite the record, not the file you happened to download.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Anatomy of a **Record**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧾 **What every record carries**
+
+- **Title** and authors / collaboration
+- A **persistent identifier** — the DOI resolves forever, even if the portal moves
+- **Licence** — what you may do with it
+- **Files** with sizes and **checksums**
+- **Description** — how the data was produced and selected
+- **Version** and date
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⚛️ **Record 401 — the seminar dataset**
+
+- *LHCb event file for real measurement*
+- DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
+- Licence **CC0** — no conditions
+- ~60 000 pre-selected D⁰ → K⁻π⁺ candidates
+- Companion event-display files: record 400
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Reading the record *before* the data answers the questions you would otherwise ask the file: what is one row, which selection was applied, what am I allowed to publish.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Licences — What "Open" **Actually Permits**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🆓 **CC0**
+
+No conditions at all. Reuse, remix, republish. *CERN Open Data.*
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏷️ **CC BY**
+
+Do anything, but **credit the source**. *Most ESA / ESO / NOIRLab material.*
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔁 **Share-alike (ODbL, CC BY-SA)**
+
+Derived datasets must stay **equally open**. *OpenStreetMap.*
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+⚠️ **Open to read ≠ open to redistribute.** Some portals let you download but not re-host. Check the licence *before* the dataset lands in a public GitHub repository — and before you publish a table derived from it.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Provenance — **Write Down Where It Came From**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📝 **The minimal provenance note**
+
+- Portal + **record ID** and **DOI**
+- **Licence**
+- **Date** you fetched it (and record version)
+- File names and their **checksums**
+- What you did to it so far — *nothing* is a valid answer
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **As it looks in a README**
+
+\`\`\`text
+Source:   CERN Open Data Portal, record 401
+DOI:      10.7483/OPENDATA.LHCb.E7EJ.JUWR
+Licence:  CC0
+Fetched:  2026-09-15
+Files:    D0_KPi.csv  sha256 3f9a…c1e2
+Changes:  none
+\`\`\`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+♻️ Reproducibility starts **before** the analysis: someone else — or you in six months — must be able to fetch the **same bytes**. The checksum is how you prove it.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data You **Bring Yourself**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎒 **Same discipline, your dataset**
+
+- Where it came from — URL, instrument, survey, colleague
+- Under what terms you may use and publish it
+- A **snapshot**: the file exactly as received, plus its checksum
+- The date — web data changes under you
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔒 **Personal or sensitive data**
+
+- Anonymise before it enters a repository
+- Never commit raw personal data to git — public or private
+- If in doubt: describe the data in the project, keep the file out of it
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🎯 Your semester project is on data of **your** choice — this checklist is what makes that choice safe to build on.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# From Record to **Your Repo**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🧭 **The path Seminar 2 walks**
+
+1. **Find** the record on the portal (or the source of your own data)
+2. **Read** the record — title, DOI, licence, description
+3. **Download** into `data/raw/` of the project skeleton from Seminar 1
+4. **Checksum** the file — `sha256sum data/raw/*`
+5. **Write** the provenance note into the README
+6. **Commit the note** — and the data only if it is small *and* the licence allows it
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📁 Large or restricted data stays out of git; the README says exactly how to fetch it again. That is the difference between "I have the data" and "the analysis is reproducible".
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
+  :options="[
+    'The file name and its size',
+    'The record\'s DOI (or stable URL), the version or date you fetched it, and the file checksum',
+    'A screenshot of the download page',
+    'The name of the person who told you about the dataset'
+  ]"
+  :correct="1"
+  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a screenshot and a person cannot be resolved by a reader."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
 # Beyond the **Ring**
 
 Coping with its own data forced CERN to invent things the rest of the world now runs on — the Web, a planet-sized grid, open data and open publishing.
