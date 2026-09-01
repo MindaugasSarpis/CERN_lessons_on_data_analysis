@@ -58,3 +58,6 @@ landing/dist-assets/
 # Per-agent isolated QA output dirs (parallel editing sessions)
 .qa-dist-*/
 .qa-shots-*/
+
+# Superpowers SDD scratch (ledgers, briefs, review packages)
+.superpowers/
