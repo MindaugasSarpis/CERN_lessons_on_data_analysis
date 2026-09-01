@@ -1265,7 +1265,7 @@ hideInToc: true
     'The name of the person who told you about the dataset'
   ]"
   :correct="0"
-  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a screenshot and a person cannot be resolved by a reader."
+  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
 />
 
 ---
