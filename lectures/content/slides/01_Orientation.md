@@ -1294,7 +1294,6 @@ turns that into a question; the closing section picks it up. (~1 min setup)
 -->
 
 ---
----
 hideInToc: true
 ---
 
@@ -1422,7 +1421,6 @@ diagrams — ATLAS, LHCb, the tunnels. Point out the human scale next to the
 detectors before rolling. (~1 min setup)
 -->
 
----
 ---
 hideInToc: true
 ---
