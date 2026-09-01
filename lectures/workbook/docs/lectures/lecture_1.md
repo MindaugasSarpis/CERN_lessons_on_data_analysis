@@ -1,4 +1,4 @@
-# 1: Motivation and Introduction to CERN Engineering Infrastructure
+# 1: Orientation & Motivation
 
 ---
 

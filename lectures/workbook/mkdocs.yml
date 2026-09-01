@@ -41,8 +41,8 @@ extra_css:
 nav:
   - Home: index.md
   - Lecture notes:
-      - 01 Orientation & Data in Your Life: lectures/lecture_1.md
-      - 02 Introduction to CERN: lectures/lecture_2.md
+      - 01 Orientation & Motivation: lectures/lecture_1.md
+      - 02 Introduction to Data: lectures/lecture_2.md
       - 03–05 Computing, Files & Tooling: lectures/lecture_3.md
       - 06 Version Control with Git: lectures/lecture_8.md
       - 07–08 Python Programming: lectures/lecture_5.md

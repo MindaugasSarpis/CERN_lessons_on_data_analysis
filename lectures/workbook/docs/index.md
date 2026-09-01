@@ -17,8 +17,8 @@ The 16 seminar briefs are in the **Seminars** section of the navigation.
 
 ## Lecture notes
 
-1. [Orientation & Data in Your Life](lectures/lecture_1.md)
-2. [Introduction to CERN](lectures/lecture_2.md)
+1. [Orientation & Motivation](lectures/lecture_1.md)
+2. [Introduction to Data](lectures/lecture_2.md)
 3. – 5. [Computing, Files & Tooling](lectures/lecture_3.md) *(computer science, command line, file handling, Markdown, VS Code)*
 6. [Version Control with Git](lectures/lecture_8.md)
 7. – 8. [Python Programming](lectures/lecture_5.md)

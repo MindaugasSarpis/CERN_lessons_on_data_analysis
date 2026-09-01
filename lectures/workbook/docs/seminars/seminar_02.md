@@ -1,6 +1,6 @@
 # Seminar 2 — Find & Document a Dataset
 
-**Paired lecture:** 02 Introduction to CERN · **Format:** hands-on · **~120 min**
+**Paired lecture:** 02 Introduction to Data · **Format:** hands-on · **~120 min**
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 

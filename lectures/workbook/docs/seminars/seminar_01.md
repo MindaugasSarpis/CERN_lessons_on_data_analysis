@@ -1,6 +1,6 @@
 # Seminar 1 — Set Up Your Toolkit & First Repo
 
-**Paired lecture:** 01 Orientation & Data in Your Life · **Format:** hands-on · **~120 min**
+**Paired lecture:** 01 Orientation & Motivation · **Format:** hands-on · **~120 min**
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
