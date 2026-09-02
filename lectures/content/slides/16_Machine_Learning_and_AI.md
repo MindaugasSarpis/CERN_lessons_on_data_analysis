@@ -296,7 +296,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ "AI-powered" is often a label on decades-old, perfectly good statistics. Knowing the difference is a superpower.
+⚠️ "AI-powered" is often a label on decades-old, perfectly good statistics.
 
 </div>
 
@@ -1121,7 +1121,7 @@ Every point lands in the test set exactly once. Average the `k` scores → a **m
 
 <div class="card card-success card-glass pad-compact reveal-left">
 
-## ♻️ **Why it matters**
+## ♻️ **The spread tells gain from noise**
 
 The spread tells you whether a gain is real or noise — and a scripted CV run is a **reproducible** estimate, not a lucky screenshot.
 

@@ -1317,7 +1317,7 @@ sys.exit(0)       # zero = success
 
 <div class="card card-secondary card-glass pad-tight">
 
-#### 🔗 **Why it matters**
+#### 🔗 **The shell reads the exit code**
 
 - The shell reads the code: `0` = success, anything else = failure
 - Chain steps: `ingest.py && fit.py` stops if ingest fails

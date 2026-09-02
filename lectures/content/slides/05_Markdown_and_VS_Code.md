@@ -1324,7 +1324,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-tight mt-sm glow">
 
-## 🎯 **Your Most Powerful Tool**
+## 🎯 **One searchable menu for every action**
 
 Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the **Command Palette** — a searchable menu for every VS Code action.
 
@@ -1735,7 +1735,7 @@ A **diff** shows two versions of a file side by side, with additions and deletio
 
 <div class="card card-secondary card-glass pad-tight reveal-up">
 
-## 👀 **Why it matters**
+## 👀 **Review before you commit**
 
 - Review your **own** changes before committing — catch a stray edit
 - See *exactly* what a change did — the heart of the next lecture, **version control**

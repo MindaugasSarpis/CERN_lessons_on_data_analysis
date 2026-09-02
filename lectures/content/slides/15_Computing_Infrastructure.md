@@ -725,7 +725,7 @@ is ~1000× slower than RAM. Every performance trick is about staying high up.
 hideInToc: true
 ---
 
-# Why This **Matters** for Data Analysis
+# The Memory Hierarchy in **Data Analysis**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -891,7 +891,7 @@ I/O is typically the **slowest link** in the data pipeline. A fast CPU waiting o
 
 <div class="card card-info card-glass pad-tight">
 
-## 📊 **Why It Matters for Analysis**
+## 📊 **I/O often dominates runtime**
 
 Reading a large dataset from disk or over a network often dominates total runtime. Choosing the right storage, format, and access pattern can cut I/O time by orders of magnitude.
 
@@ -1226,7 +1226,7 @@ which one a "download 200 files" script needs. (~2 min)
 hideInToc: true
 ---
 
-# The Python **GIL**, Honestly
+# The Python **GIL**: one thread at a time
 
 <div class="grid-2 mt-md gap-md">
 

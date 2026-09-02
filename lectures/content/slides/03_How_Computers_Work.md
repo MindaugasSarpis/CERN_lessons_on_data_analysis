@@ -976,7 +976,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md reveal-up">
 
-💡 This is why "my dataset doesn't fit in memory" changes everything — and why the *format* and *size* of your files (this lecture!) directly set how fast your analysis can possibly run.
+💡 This is why "my dataset doesn't fit in memory" means reading from disk instead of RAM — and why the *format* and *size* of your files (this lecture!) directly set how fast your analysis can possibly run.
 
 </div>
 

@@ -1049,7 +1049,7 @@ If that is true of your project, you've succeeded. Every practice in this course
 
 </div>
 
-<div class="note-text mt-md">Reproducibility isn't a chore you bolt on at the end — it's the property that makes everything else trustworthy.</div>
+<div class="note-text mt-md">Reproducibility is the property that makes everything else trustworthy, not a chore you bolt on at the end.</div>
 
 ---
 hideInToc: true

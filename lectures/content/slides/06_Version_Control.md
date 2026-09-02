@@ -1549,7 +1549,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight">
 
-## 🌐 **Why it does not matter**
+## 🌐 **The host is just a remote**
 
 - Git itself is identical everywhere — the *host* is just a remote
 - GitHub, GitLab, Bitbucket: learn one, use them all 🔧

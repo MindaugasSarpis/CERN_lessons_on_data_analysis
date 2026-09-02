@@ -33,7 +33,7 @@ hideInToc: true
 layout: quote
 ---
 
-# Great data visualisation is not about making things look pretty — it is about making the **data speak clearly**. A well-designed figure tells a story that numbers alone cannot.
+# Great data visualisation is not about making things look pretty — it is about making the **data speak clearly**. A well-designed figure shows what numbers alone cannot.
 
 ---
 hideInToc: true

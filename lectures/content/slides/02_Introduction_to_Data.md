@@ -193,7 +193,7 @@ Stop seeing finished apps. Start seeing the **data and the decisions** underneat
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🎓 **The good news**
+## 🎓 **The same skills power all of it**
 
 The same handful of skills — files, code, statistics, reproducibility — powers *all* of it. Learn them once; apply them anywhere.
 

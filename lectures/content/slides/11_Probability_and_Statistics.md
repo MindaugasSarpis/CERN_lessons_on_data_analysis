@@ -1252,7 +1252,7 @@ A **parameter** is a fixed but unknown number describing the whole population (e
 
 <div class="card card-accent card-glass pad-tight">
 
-## 💡 **Why it matters**
+## 💡 **More data → estimates converge**
 
 - More data → estimates converge to true values (consistency)
 - Unbiased estimators are correct "on average" over repeated samples
@@ -2007,7 +2007,7 @@ $\hat{\mu} = \bar{x}$ (sample mean) maximizes $L(\mu)$.
 
 <div class="card card-info card-glass pad-tight">
 
-## 💡 **Why this matters**
+## 💡 **One estimator, any distribution**
 
 - MLE gives a principled estimator derived from probability
 - Extends to any distribution by swapping in the appropriate pdf/pmf

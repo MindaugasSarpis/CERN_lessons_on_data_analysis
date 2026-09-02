@@ -746,7 +746,7 @@ nohup ./long_task.sh &
 
 <div class="card card-warning card-glass pad-tight mt-md">
 
-## ⚙️ **Why It Matters**
+## ⚙️ **Long jobs run while you keep working**
 
 - Monitor long-running analyses
 - Run jobs in the background while continuing to work
@@ -1408,7 +1408,7 @@ done > results/error_report.csv
 
 <div class="card card-success card-glass pad-compact">
 
-## ♻️ **Why it matters**
+## ♻️ **Delete, rerun, get it back**
 
 Delete the report, rerun the script, get it back — ready for version control later in the course
 
