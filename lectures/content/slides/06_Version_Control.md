@@ -1,16 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Version Control"
 layout: cover
+title: "Version Control with Git"
 ---
 
 # Dr. Mindaugas Šarpis

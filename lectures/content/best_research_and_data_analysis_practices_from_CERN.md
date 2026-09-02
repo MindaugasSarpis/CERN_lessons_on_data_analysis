@@ -1,18 +1,10 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
 theme: ./theme
-drawings:
-  persist: false
-
+colorSchema: dark
+class: text-left
 hideInToc: true
-
 addons:
   - slidev-addon-python-runner
-mermaid: true
 
 # Combined "everything" deck: imports all 16 lectures for authoring/preview and
 # PDF export. NOT the deployed artifact — GitHub Pages ships one deck per lecture
@@ -20,7 +12,6 @@ mermaid: true
 # initial load and navigation stay fast despite the size.
 defaults:
   preload: false
-
 ---
 
 # Dr. Mindaugas Šarpis

@@ -1,17 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-mermaid: true
-
-
-title: "Concepts of Data Analysis"
 layout: cover
+title: "Concepts of Data Analysis"
 ---
 
 # Dr. Mindaugas Šarpis

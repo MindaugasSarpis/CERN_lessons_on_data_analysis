@@ -1,21 +1,7 @@
 ---
-mermaid: true
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "NumPy, Pandas & Real Data"
 layout: cover
-
-addons:
-  - slidev-addon-python-runner
-
+title: "NumPy & Pandas"
+# slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
   installs: ["numpy", "pandas", "matplotlib"]
   prelude: |

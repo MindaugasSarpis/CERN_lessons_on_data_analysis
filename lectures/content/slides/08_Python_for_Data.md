@@ -1,16 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Python for Data Work"
 layout: cover
+title: "Python for Data Work"
 ---
 
 # Dr. Mindaugas Šarpis

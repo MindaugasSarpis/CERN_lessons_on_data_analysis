@@ -1,17 +1,6 @@
 ---
-mermaid: true
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Reproducible Workflows & Automation"
 layout: cover
+title: "Reproducible Workflows & Automation"
 ---
 
 # Dr. Mindaugas Šarpis

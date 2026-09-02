@@ -1,16 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Introduction to Data"
 layout: cover
+title: "Introduction to Data"
 ---
 
 # Dr. Mindaugas Šarpis

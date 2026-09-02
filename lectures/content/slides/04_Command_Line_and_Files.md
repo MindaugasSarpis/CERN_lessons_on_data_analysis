@@ -1,16 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Command Line Interfaces"
 layout: cover
+title: "Command Line & File Handling"
 ---
 
 # Dr. Mindaugas Šarpis

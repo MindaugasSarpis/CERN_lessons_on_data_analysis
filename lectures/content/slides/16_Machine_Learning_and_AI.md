@@ -1,14 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-mermaid: true
+layout: cover
+title: "Machine Learning & AI"
 ---
 
 # Dr. Mindaugas Šarpis

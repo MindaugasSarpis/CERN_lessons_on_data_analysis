@@ -1,22 +1,11 @@
 ---
-background: /figures/background_intro.jpg
-
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-transition: fade
-title: "Lecture 1: Course Orientation and Motivation"
 layout: cover
+title: "Lecture X: Python Interactive (template)"
 
-class: text-left
-
-addons:
-  - slidev-addon-python-runner
-
-# Optional configuration for this runner
+# Deck-level config (theme, colorSchema, addons, routerMode) lives ONLY in the
+# generated entry (scripts/gen-entries.mjs). A lecture's cover frontmatter is
+# just `layout` + `title` — plus this `python:` block on runner decks, which
+# slidev-addon-python-runner reads from slide 1 (= this cover).
 python:
   # Install packages from PyPI. Default: []
   installs: ["cowsay"]

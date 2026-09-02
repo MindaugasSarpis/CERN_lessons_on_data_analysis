@@ -1,20 +1,7 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Probability and Statistics"
 layout: cover
-
-addons:
-  - slidev-addon-python-runner
-
+title: "Probability & Statistics"
+# slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
   installs: ["numpy", "matplotlib", "scipy"]
   prelude: |

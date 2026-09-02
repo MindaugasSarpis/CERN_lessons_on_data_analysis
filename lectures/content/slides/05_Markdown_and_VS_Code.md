@@ -1,16 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Markdown"
 layout: cover
+title: "Markdown & VS Code"
 ---
 
 # Dr. Mindaugas Šarpis

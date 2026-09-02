@@ -1,16 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "How Computers Work"
 layout: cover
+title: "How Computers Work"
 ---
 
 # Dr. Mindaugas Šarpis

@@ -1,14 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-class: text-left
-colorSchema: dark
-theme: ./theme
-drawings:
-  persist: false
-title: "Crash Course on Python Programming"
 layout: cover
-addons:
-  - slidev-addon-python-runner
+title: "Python Foundations"
 ---
 
 # Dr. Mindaugas Šarpis

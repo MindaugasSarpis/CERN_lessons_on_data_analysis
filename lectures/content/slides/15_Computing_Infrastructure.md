@@ -1,17 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-mermaid: true
-
-
-title: "Computing Infrastructure"
 layout: cover
+title: "Computing Infrastructure & HPC"
 ---
 
 # Dr. Mindaugas Šarpis

@@ -1,24 +1,15 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
 theme: ./theme
-drawings:
-  persist: false
-
+colorSchema: dark
+class: text-left
 hideInToc: true
-
 addons:
   - slidev-addon-python-runner
-mermaid: true
 
 # Lazy-mount imported slides — matters even more here since staging.md pulls
 # in every lecture. Big initial-load win; tiny mount cost on first visit.
 defaults:
   preload: false
-
 ---
 
 # Dr. Mindaugas Šarpis

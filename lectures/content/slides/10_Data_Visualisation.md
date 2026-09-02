@@ -1,16 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-
-class: text-left
-colorSchema: dark
-
-theme: ./theme
-drawings:
-  persist: false
-
-
-title: "Data Visualisation"
 layout: cover
+title: "Data Visualisation"
 ---
 
 # Dr. Mindaugas Šarpis

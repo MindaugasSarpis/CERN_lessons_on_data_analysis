@@ -1,12 +1,6 @@
 ---
-background: /figures/background_intro.jpg
-class: text-left
-colorSchema: dark
-theme: ./theme
-drawings:
-  persist: false
-title: "Orientation & Motivation"
 layout: cover
+title: "Orientation & Motivation"
 ---
 
 # Dr. Mindaugas Šarpis
