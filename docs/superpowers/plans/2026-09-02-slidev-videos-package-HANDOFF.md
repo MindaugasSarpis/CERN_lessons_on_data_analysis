@@ -56,3 +56,55 @@ migration + reel pass 2) per spec §7/§8.1.1.
 
 Course-side status is unchanged from the deployed state: L01/L02 re-split live,
 `pnpm release 2` before sharing the Moodle link.
+
+---
+
+# Update 2026-09-03 (Mac) — D2 closed, D3 done
+
+## State
+
+- **D2 closed**: Tasks 4–6 landed on `main` (`41d6333` smoke, `c07d08f` CI + README +
+  LICENSE) and `v0.1.0` is tagged. The Task 3 review that died on WSL was not re-run;
+  the smoke test exercises the built example instead.
+- **D3 done** (spec §5): `src/slidev_videos/shared.toml` holds the **34-clip** library
+  (the spec's "33" was a miscount — one table row lists three clips). All 34 raws are in
+  `~/slidev-videos/videos/raw/` (32 rclone'd from Drive, `hubble.mp4` + `stars_pan_audio.mp4`
+  from the course's HEVC release — no Drive original), encoded to `public/videos/` and
+  uploaded to release **`videos-shared`** on `MindaugasSarpis/slidev-videos` (34 assets,
+  `shared-check` clean). The package repo is now itself a slidev-videos project
+  (`videos.toml` with `shared = false`, `encoder = "cpu"`).
+- Commits on `~/slidev-videos` `main`, **not yet pushed** (maintainer pushes):
+  `919579e` D3 registry + manifest + test, `c398719` loudness-trim fix (below).
+- Gate results: ffprobe sweep — every asset H.264 (VP8 for the one `remux` webm), long
+  edge ≤ 1920, bitrate ≤ 8.3 Mbps; R128 sweep — every clip with real audio within
+  −16.2…−15.5 LUFS after the fix. `preflight` is slide-driven, so in the package repo
+  it only sees the README/example placeholders — the sweep was done by hand (see
+  `_measure_loudness` for the equivalent ffmpeg call).
+
+## Rulings made on the Mac (undo any you disagree with)
+
+6. **Loudness of trimmed clips**: the two-pass loudnorm measured the whole raw while the
+   encode trimmed it. `perseverance_rover_landing_nasa.mp4` (1:40–3:10 cut) came out at
+   −18.7 LUFS because the whole clip's LRA (19.7) made loudnorm silently fall back to
+   dynamic mode, although the 90 s segment (LRA 8.6) qualifies for linear.
+   `_measure_loudness` now takes the encode's `_trim_args`; the six trimmed clips were
+   re-encoded (all −16.2…−15.9 LUFS) and re-published. Tests pin the seek placement.
+7. **Not changed, worth knowing**: (a) outreach's recipe passes `offset=target_offset`
+   into pass 2; in linear mode loudnorm overrides it, in dynamic mode (clip's own TP/LRA
+   forbids linear) it acts as extra gain — the three clips that still go dynamic
+   (`cassini`, `cern_footage_2022_013_001/006`) land within 0.2 LU anyway, so left alone.
+   (b) Seven encodes carry a `tmcd` timecode data track inherited from the `.mov` masters
+   (ffmpeg's default mapping copies it into mp4). Browsers ignore it; `preflight` does
+   not flag it. Add `-dn` to the profile args if it ever matters.
+8. The package is **not pip-installed** in any conda env on the Mac; the CLI ran as
+   `PYTHONPATH=src python -c 'from slidev_videos.cli import main; main()' <cmd>` with
+   `~/miniconda3/envs/outreach_talks/bin` (gh, ffmpeg, rclone) on PATH. `python -m
+   slidev_videos` does not work (no `__main__.py`). pytest was installed into the session
+   scratchpad only, not into an env.
+
+## Next: D4 (course migration + reel pass 2, spec §7 / §8.1.1) — after the 7 Sept lecture
+
+Not started. When starting: write the D4 plan from spec §7 first (per the roadmap's
+spec→plan→build rule), keep the course's HEVC release `videos` under
+`archive_release_tags` until the migrated decks are verified live, and re-check the
+`addons:` npm resolution deferred in ruling 3.
