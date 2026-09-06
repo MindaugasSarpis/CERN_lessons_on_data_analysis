@@ -1,6 +1,7 @@
 # The Seminars — How They Work
 
-Every lecture is paired with a 2-hour **hands-on seminar**. Each brief is
+Every lecture is paired with a 2-hour **hands-on seminar** — from week 2; in
+week 1 Seminar 1 is self-paced and checked at the start of Seminar 2. Each brief is
 **self-contained**: it states its goal, prerequisites, tasks, stretch goals and a
 wrap-up, and sizes to ~120 min. The seminars practise the course's four aims —
 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data & files.
@@ -67,7 +68,7 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 
 | Seminar | Hands-on focus |
 |--|--|
-| 1 | Toolkit installed; repo skeleton + first commit |
+| 1 | Toolkit installed; repo skeleton + first commit *(self-paced; checked on 15 Sep)* |
 | 2 | A dataset downloaded into `data/raw/`; provenance recorded |
 | 3 | The raw file understood as bytes (encoding, size, format) |
 | 4 | `raw/`–`processed/` structure; clean filenames; CLI inspection |

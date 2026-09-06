@@ -1,6 +1,10 @@
 # Seminar 1 — Set Up Your Toolkit & First Repo
 
-**Paired lecture:** 01 Orientation & Motivation · **Format:** hands-on · **~120 min**
+**Paired lecture:** 01 Orientation & Motivation · **Format:** self-paced before 15 Sep, checked at the start of Seminar 2 · **~120 min**
+
+> **Week 1 has no seminar.** Work through this brief at home before 15 September.
+> Seminar 2 opens with a 40-minute checkpoint of tasks 1–6 — bring any error
+> message you hit, and the tree in `analysis-project/` as it stands.
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
@@ -56,12 +60,13 @@ A laptop with internet access. Nothing installed yet — that's what today is fo
 - Add one line to `README.md`: the setup step that surprised you most.
 
 ## Solution notes (instructor)
-The point is a *clean start*, not content. Circulate to fix install issues
-(PATH, `python` vs `python3`, VS Code `code` command). Everyone should end with an
-identical folder structure — this consistency pays off in every later seminar.
-In the 120-minute slot, timebox installs (task 1) to ~30 minutes and help
-stragglers individually while the room moves on — everyone must reach the first
-commit in task 6.
+The point is a *clean start*, not content. In 2026 this brief is self-paced
+(no seminar in week 1) and checked in the first 40 minutes of Seminar 2: run
+through tasks 1–6 as a checklist, fix install issues (PATH, `python` vs
+`python3`, VS Code `code` command) individually while the room moves on to
+Seminar 2, and make sure everyone reaches the first commit in task 6 before
+they download a dataset. Everyone should end with an identical folder
+structure — this consistency pays off in every later seminar.
 
 ## Aims practised
 📁 organised from line one · 🔧 the same tools on every OS

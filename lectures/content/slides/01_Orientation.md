@@ -12,10 +12,20 @@ title: "Orientation & Motivation"
 ##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducible · ⚙️ automation · 📁 data & files — the four aims</span>
 
 <!--
-Speaker: welcome them, introduce yourself briefly, and set the tone — this is a
-practical course, not a lecture course. Everything is graded on one project that
-of the student's own choosing; the seminars are where the skills get practised. Ask what fields are in the room. (~2 min)
+Speaker: let the cold open on the next slide run first, then welcome them, introduce
+yourself, and set the tone — this is a practical course, not a lecture course.
+Everything is graded on one project of the student's own choosing; the seminars are
+where the skills get practised. No seminar today: the setup is homework and Seminar 1's
+brief is self-paced — the last slide says so. (~2 min)
 -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+
+<!-- Cold open (0:49): ATLAS — model, cavern, control room. Let it run before a word of admin; the same clip returns in the reel's Act III as a callback. Pass 2: swap for cern_video_2015_024_001.mp4, the 2:51 closer that ends on the Higgs bump. -->
 
 ---
 hideInToc: true
@@ -24,7 +34,14 @@ layout: fact
 
 # Who am I talking to?
 
-<!-- Speaker: quick show of hands — ask what fields/backgrounds are in the room, to calibrate later examples. -->
+## Show of hands: **your field** · **your operating system** · **have you written code before?**
+
+<!--
+Speaker: three quick shows of hands. Fields calibrate the later examples; the OS split
+(Windows / macOS / Linux) tells you what Seminar 2's install checkpoint will hit; "coded
+before" lets you seat an experienced student next to a beginner from week 2.
+-->
+
 ---
 hideInToc: true
 layout: quote
@@ -58,7 +75,7 @@ and what needs to be understood in detail.
 ## 🔬 **Seminars**
 
 - **Demos** — live demonstrations
-- **Hands-on Sessions** — *Inverted Classroom*
+- **Hands-on sessions** — you type, the instructor circulates
 - **Case Studies** — real-world examples
 
 It is very important to practice throughout the course. Using the tools and
@@ -90,41 +107,119 @@ concepts on your own projects is the best way to learn.
 hideInToc: true
 ---
 
-# <span class="gradient-text">Main Goals</span>
+# **Course Content** — 16 lectures, 5 blocks
 
-<div class="stack-tight mt-sm">
+<div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact reveal-left">
+<div class="card card-primary card-glass pad-compact reveal-scale">
 
-🧠 Build intuition for **good practices**
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-🧰 Be aware of a **plethora of available free tools**
+**A · Foundations & Tooling** *(01–06)*
+Orientation, data, computers, command line & files, Markdown & VS Code, Git
 
 </div>
 
-<div class="card card-accent card-glass pad-compact reveal-left">
+<div class="card card-secondary card-glass pad-compact reveal-scale">
 
-💪 Build **competences** in relevant areas
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-left glow">
-
-🚀 Use what you learned for your **own projects**
+**B · Programming** *(07–08)*
+Python foundations, then Python for data & files
 
 </div>
 
-<div class="card card-info card-glass pad-compact reveal-left">
+<div class="card card-info card-glass pad-compact reveal-scale">
 
-🤝 Work together and practice **problem solving**
+**C · Data Analysis Core** *(09–12)*
+Concepts, visualisation, probability & statistics, fitting
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-scale">
+
+**D · Practical Data Work** *(13–14)*
+NumPy & Pandas, reproducible workflows & automation
+
+</div>
+
+<div class="card card-warning card-glass pad-compact reveal-scale">
+
+**E · Advanced** *(optional, 15–16)*
+Computing infrastructure & HPC, machine learning & AI
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-scale">
+
+**🧪 Paired seminars**
+Each lecture has a hands-on seminar — self-contained exercises on a shared open dataset; your own project is separate and graded
 
 </div>
 
 </div>
+
+<div class="note-text mt-sm" style="text-align: center;">
+
+Order and depth adapt to the group.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Schedule**
+
+Every **Tuesday**: **2 h lecture** + **2 h seminar** — 16 weeks, **8 Sep – 22 Dec 2026**. Week 1 is lecture only; seminars start in week 2.
+
+<div class="grid-2 gap-sm mt-sm">
+
+| **Wk** | **Tue** | **Lecture** |
+| --- | --- | --- |
+| 1 | 8 Sep | **A** · Orientation & Motivation *(lecture only)* |
+| 2 | 15 Sep | **A** · Introduction to Data |
+| 3 | 22 Sep | **A** · How Computers Work |
+| 4 | 29 Sep | **A** · Command Line & File Handling |
+| 5 | 6 Oct | **A** · Markdown & VS Code |
+| 6 | 13 Oct | **A** · Version Control with Git |
+| 7 | 20 Oct | **B** · Python Foundations |
+| 8 | 27 Oct | **B** · Python for Data Work |
+
+| **Wk** | **Tue** | **Lecture** |
+| --- | --- | --- |
+| 9 | 3 Nov | **C** · Concepts of Data Analysis |
+| 10 | 10 Nov | **C** · Data Visualisation |
+| 11 | 17 Nov | **C** · Probability & Statistics |
+| 12 | 24 Nov | **C** · Practical Data Fitting |
+| 13 | 1 Dec | **D** · NumPy & Pandas |
+| 14 | 8 Dec | **D** · Reproducible Workflows & Automation |
+| 15 | 15 Dec | **E** · Computing Infrastructure & HPC |
+| 16 | 22 Dec | **E** · Machine Learning & AI |
+
+</div>
+
+<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work · <strong>E</strong> Advanced (optional) — <strong>Final Project Presentations</strong> in the exam session.</div>
+
+<style scoped>
+table {
+  font-size: 0.95em;
+  width: 100%;
+}
+table td, table th {
+  padding: 0.3em 0.5em;
+}
+table thead th {
+  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+}
+table td:nth-child(1),
+table th:nth-child(1) {
+  text-align: right;
+  white-space: nowrap;
+}
+table td:nth-child(2),
+table th:nth-child(2),
+table td:nth-child(3),
+table th:nth-child(3) {
+  white-space: nowrap;
+}
+</style>
 
 ---
 hideInToc: true
@@ -375,72 +470,14 @@ hideInToc: true
 <MCQ
   question="A colleague sends you a beautiful result: a PDF of the final plot. What is the minimum you would need for the result to count as reproducible?"
   :options="[
-    'The plot again, in higher resolution',
-    'The raw data, the code, and a description of the environment they ran in',
-    'A video recording of them running the analysis',
-    'Their word that it worked on their laptop'
+    'The same plot exported again at a much higher resolution',
+    'The raw data, the code, and a note of the environment it ran in',
+    'A screen recording of them running the whole analysis end to end',
+    'Their written assurance that it ran fine on their own laptop'
   ]"
   :correct="1"
   explanation="♻️ Reproducibility means someone else can rebuild the result. That requires the inputs (data), the exact transformation (code), and the context it ran in (environment and versions). A prettier picture or a promise changes nothing."
 />
-
----
-hideInToc: true
----
-
-# **Course Content** — 16 lectures, 5 blocks
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact reveal-scale">
-
-**A · Foundations & Tooling** *(01–06)*
-Orientation, data, computers, command line & files, Markdown & VS Code, Git
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-scale">
-
-**B · Programming** *(07–08)*
-Python foundations, then Python for data & files
-
-</div>
-
-<div class="card card-info card-glass pad-compact reveal-scale">
-
-**C · Data Analysis Core** *(09–12)*
-Concepts, visualisation, probability & statistics, fitting
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-scale">
-
-**D · Practical Data Work** *(13–14)*
-NumPy & Pandas, reproducible workflows & automation
-
-</div>
-
-<div class="card card-warning card-glass pad-compact reveal-scale">
-
-**E · Advanced** *(optional, 15–16)*
-Computing infrastructure & HPC, machine learning & AI
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-scale">
-
-**🧪 Paired seminars**
-Each lecture has a hands-on seminar — self-contained exercises on a shared open dataset; your own project is separate and graded
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm" style="text-align: center;">
-
-Order and depth adapt to the group.
-
-</div>
 
 ---
 hideInToc: true
@@ -520,34 +557,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Two Things You'll **Build**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔬 **The seminars**
-
-One hands-on brief per week, on a **real, open dataset** — LHCb collision data, or a dataset from your own field. Each brief stands on its own; where it helps, consecutive sessions build on each other.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🎯 **Your project**
-
-**One project of your own** — topic, data, and form are entirely your call. It grows across the semester, and it is what you are graded on.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">The seminars teach the moves; the project is where you make them yours. How much the two overlap is up to you — we shape that together as the term goes.</div>
-
----
-hideInToc: true
----
-
 # Your Project — **Your Call**
 
 <div class="grid-2 mt-md gap-md">
@@ -556,81 +565,21 @@ hideInToc: true
 
 ## 🧭 **Any field, any form**
 
-A data analysis, a working app or dashboard, an educational piece that explains a method — from physics, biology, economics, or a hobby. Pick something you actually want to exist.
+**One project of your own** — topic, data, and form are entirely your call: a data analysis, a working app or dashboard, an educational piece that explains a method — from physics, biology, economics, or a hobby. Pick something you actually want to exist.
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-accent card-glass pad-tight">
 
-## 🏆 **Graded on the four aims**
+## 🔬 **The seminars feed it**
 
-Not on the topic: reasoned tool choices, a rebuildable result, automation where it counts, clean data & files — handed in as the four deliverables listed on *Project Details*.
-
-</div>
+One hands-on brief per week on a **real, open dataset** — LHCb collision data, or a dataset from your own field. The seminars teach the moves; the project is where you make them yours. How much the two overlap is up to you.
 
 </div>
 
-<div class="note-text mt-md">Bring a first idea to an early seminar and talk it through — the sooner a project exists, the more of the course it can absorb.</div>
-
----
-hideInToc: true
----
-
-# **Schedule**
-
-Every **Tuesday**: **2 h lecture** + **2 h seminar** — 16 weeks, **8 Sep – 22 Dec 2026**.
-
-<div class="grid-2 gap-sm mt-sm">
-
-| **Wk** | **Tue** | **Lecture** |
-| --- | --- | --- |
-| 1 | 8 Sep | **A** · Orientation & Motivation |
-| 2 | 15 Sep | **A** · Introduction to Data |
-| 3 | 22 Sep | **A** · How Computers Work |
-| 4 | 29 Sep | **A** · Command Line & File Handling |
-| 5 | 6 Oct | **A** · Markdown & VS Code |
-| 6 | 13 Oct | **A** · Version Control with Git |
-| 7 | 20 Oct | **B** · Python Foundations |
-| 8 | 27 Oct | **B** · Python for Data Work |
-
-| **Wk** | **Tue** | **Lecture** |
-| --- | --- | --- |
-| 9 | 3 Nov | **C** · Concepts of Data Analysis |
-| 10 | 10 Nov | **C** · Data Visualisation |
-| 11 | 17 Nov | **C** · Probability & Statistics |
-| 12 | 24 Nov | **C** · Practical Data Fitting |
-| 13 | 1 Dec | **D** · NumPy & Pandas |
-| 14 | 8 Dec | **D** · Reproducible Workflows & Automation |
-| 15 | 15 Dec | **E** · Computing Infrastructure & HPC |
-| 16 | 22 Dec | **E** · Machine Learning & AI |
-
 </div>
 
-<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work · <strong>E</strong> Advanced (optional) — <strong>Final Project Presentations</strong> in the exam session.</div>
-
-<style scoped>
-table {
-  font-size: 0.95em;
-  width: 100%;
-}
-table td, table th {
-  padding: 0.3em 0.5em;
-}
-table thead th {
-  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
-}
-table td:nth-child(1),
-table th:nth-child(1) {
-  text-align: right;
-  white-space: nowrap;
-}
-table td:nth-child(2),
-table th:nth-child(2),
-table td:nth-child(3),
-table th:nth-child(3) {
-  white-space: nowrap;
-}
-</style>
+<div class="note-text mt-md">Graded on the four aims, not on the topic. Bring a first idea to an early seminar and talk it through — the sooner a project exists, the more of the course it can absorb.</div>
 
 ---
 hideInToc: true
@@ -738,7 +687,7 @@ graph LR
 
 </div>
 
-<div class="note-text mt-sm">Sixteen weeks, each the same shape — concepts first, muscle memory second. Miss the seminar and the lecture stays abstract; skip the lecture and the seminar feels like magic. <strong>They are one unit.</strong> Each seminar is a self-contained exercise on a shared, real dataset; every skill it teaches is meant to be carried straight into your own project.</div>
+<div class="note-text mt-sm">From week 2, every week has this shape — concepts first, muscle memory second. Miss the seminar and the lecture stays abstract; skip the lecture and the seminar feels like magic. <strong>They are one unit.</strong> Each seminar is a self-contained exercise on a shared, real dataset; every skill it teaches is meant to be carried straight into your own project.</div>
 
 ---
 hideInToc: true
@@ -790,7 +739,7 @@ hideInToc: true
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-success card-glass pad-tight">
+<div class="card card-success card-glass pad-compact">
 
 ## 🌱 **Do this**
 
@@ -801,7 +750,7 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact">
 
 ## 🚧 **Avoid this**
 
@@ -814,43 +763,29 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">You do not need to already be a programmer to do well. You need to be persistent and organised.</div>
-
----
-hideInToc: true
----
-
-# Honest **Expectations**
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-This course is practical, and practical means friction. Everyone in the room hits the same three walls — knowing they are normal is half the battle.
-
-</div>
-
 <div class="grid-3 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-compact">
 
 ## ⌨️ **You will type a lot**
 
-Commands feel slow and error-prone at first. Two weeks in, they are faster than clicking.
+Commands feel slow at first. Two weeks in, they are faster than clicking.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-info card-glass pad-compact">
 
 ## 💥 **You will break things**
 
-Errors are the normal state of programming, not a sign of failing. Read them — they usually name the fix.
+Errors are the normal state of programming. Read them — they usually name the fix.
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🙋 **You will ask for help**
+## 🙋 **Stuck for 15 minutes? Ask**
 
-Stuck for fifteen minutes? Ask. Getting unstuck fast is a skill, not a defeat.
+The instructor, your neighbour, the error message in a search engine, the docs — and AI assistants, as long as you understand what they hand you.
 
 </div>
 
@@ -894,43 +829,13 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Where to Get **Help**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧑‍🏫 **In the room**
-
-- The instructor, during every seminar — that is what the two hours are for
-- Your neighbour: explaining a problem out loud often solves it
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🌐 **On your own**
-
-- The error message itself — paste it into a search engine
-- Official docs, the workbook, and yes, AI assistants — as long as you understand what they hand you
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">🔧 One aim in disguise: learning <em>how to find out</em> is more durable than memorising any single answer.</div>
-
----
-hideInToc: true
----
-
 <MCQ
   question="It's week 5. You attend every lecture but skip the seminars because you 'get the ideas already'. Why is this the riskiest habit in this course?"
   :options="[
-    'Lectures are worth more marks than seminars',
-    'The seminars are where an idea becomes a working skill — and your project is graded on skills, not on understanding',
-    'You will miss the attendance sign-in sheet',
-    'The ideas in the lectures are not important'
+    'Lectures carry the marks, so the seminars are the part you can afford to miss',
+    'The seminars are where an idea becomes a working skill, and the project is graded on skills',
+    'Seminar attendance is recorded, and every missed session costs you marks directly',
+    'The lectures only summarise the seminars, so skipping either half is the same'
   ]"
   :correct="1"
   explanation="The seminars aren't graded, but the project is — on the four aims, which are practices you only acquire by doing. Understanding an idea in the lecture is not the same as having it run in a repository: the seminar is where 'done' happens, and your project is where you repeat it on your own data."
@@ -985,7 +890,7 @@ hideInToc: true
 
 | **Seminars** | **Hands-on focus** |
 | --- | --- |
-| S1–S2 | Toolkit; repo skeleton + first commit; a dataset with provenance |
+| S1–S2 *(both on 15 Sep)* | Toolkit; repo skeleton + first commit; a dataset with provenance |
 | S3–S5 | The raw file as bytes; clean structure; a real README |
 | S6–S8 | Git — branch & merge; parse one line; read a whole file |
 | S9–S11 | Data-quality audit; a first figure; a value ± its error |
@@ -1092,9 +997,144 @@ hideInToc: true
 layout: fact
 ---
 
-# Breaks...
+# 10-minute break
 
-<!-- Speaker: signal a short break here — then lights down for CERN and the reel. -->
+## While you wait: open a terminal and run `python --version`, `git --version`, `code --version`. Three version numbers = done. Anything missing is homework for next Tuesday.
+
+<!-- Speaker: call the break — then lights down for the reel. Circulate for install questions; the last slide repeats the homework. -->
+
+---
+layout: section
+hideInToc: true
+---
+
+# From the **Cosmos** to the **Quantum**
+
+The next short films sweep across the scales of nature — from mountains and deep space down to individual atoms and particle tracks.
+
+Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
+
+<!--
+Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
+to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
+chamber — and ask what its output looks like once it is stored. The Half-time slide
+turns that into a question; the closing section picks it up. (~1 min setup)
+
+NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser decodes HEVC (Firefox and Linux Chrome do not: they show 'Video not available' or black video with sound). Pass 2 re-encodes to H.264.
+-->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Drone_Climbing_Mountain.mp4" />
+
+<!-- Reel · Act I · drone ascent — Earth at human scale (0:27). Slot 1 before this = vu_physics_faculty.mp4, maintainer-supplied, added in pass 2. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
+
+<!-- Reel · Act I · Mariner 4, 1965 — the first data from another planet (0:20) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" />
+
+<!-- Reel · Act I · Perseverance landing on Mars (3:10; this is the 1080p asset under its misspelt release name — pass 2 replaces it with perseverance_rover_landing_nasa.mp4 trimmed to 1:30) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" />
+
+<!-- Reel · Act I · Cassini at Saturn (3:41; trimmed to 1:30 in pass 2) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Stars_Pan_Audio.mp4" />
+
+<!-- Reel · Act I · star field pan (0:20) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Telescope.mp4" />
+
+<!-- Reel · Act I · observatory (0:40) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Hubble.mp4" />
+
+<!-- Reel · Act I · Hubble imagery (0:33) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Webb_Reel.mp4" />
+
+<!-- Reel · Act I · JWST reel (2:58; trimmed to 1:30 in pass 2) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
+
+<!-- Reel · Act I · Milky Way simulation (1:01). Pass 2 adds sdss_universe_zoom.mp4 after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" />
+
+<!-- Reel · Act I · cosmic expansion funnel (0:30) -->
+
+---
+hideInToc: true
+layout: fact
+---
+
+# Half-time
+
+## Every scene so far ends as data someone must turn into understanding — which one would *you* analyse first?
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="QGP_Formation.mp4" />
+
+<!-- Reel · Act II · quark-gluon plasma forms (0:33). Pass 2 adds the Standard Model animation after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" />
+
+<!-- Reel · Act II · hair → cells → atom → nucleus → quarks (2:01) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Cloud_Chamber_Audio.mp4" />
+
+<!-- Reel · Act II · cloud chamber — particles made visible (2:29; trimmed to 1:30 in pass 2) -->
 
 ---
 layout: section
@@ -1106,9 +1146,10 @@ hideInToc: true
 <img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-12 h-64" />
 
 <!--
-Speaker: section break. Ask who has heard of CERN and what for — most will say
-"the Higgs" or "the Web". Use that to preview the next few slides: the org, the
-machine, and how a detector actually sees a collision. (~1 min)
+Speaker: lights up between the acts. Ask who has heard of CERN and what for — most
+will say "the Higgs" or "the Web". Four slides explain what Act III is about to
+show: the org, the machine, the chain that feeds it, and how a detector actually
+sees a collision. (~1 min)
 -->
 
 ---
@@ -1300,147 +1341,14 @@ layout: section
 hideInToc: true
 ---
 
-# From the **Cosmos** to the **Quantum**
-
-The next short films sweep across the scales of nature — from mountains and deep space down to individual atoms and particle tracks.
-
-Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
-
-<!--
-Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
-to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
-chamber — and ask what its output looks like once it is stored. The Half-time slide
-turns that into a question; the closing section picks it up. (~1 min setup)
-
-NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser decodes HEVC (Firefox and Linux Chrome do not: they show 'Video not available' or black video with sound). Pass 2 re-encodes to H.264.
--->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Drone_Climbing_Mountain.mp4" />
-
-<!-- Reel · Act I · drone ascent — Earth at human scale (0:27). Slot 1 before this = vu_physics_faculty.mp4, maintainer-supplied, added in pass 2. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
-
-<!-- Reel · Act I · Mariner 4, 1965 — the first data from another planet (0:20) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" />
-
-<!-- Reel · Act I · Perseverance landing on Mars (3:10; this is the 1080p asset under its misspelt release name — pass 2 replaces it with perseverance_rover_landing_nasa.mp4 trimmed to 1:30) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" />
-
-<!-- Reel · Act I · Cassini at Saturn (3:41; trimmed to 1:30 in pass 2) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Stars_Pan_Audio.mp4" />
-
-<!-- Reel · Act I · star field pan (0:20) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Telescope.mp4" />
-
-<!-- Reel · Act I · observatory (0:40) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Hubble.mp4" />
-
-<!-- Reel · Act I · Hubble imagery (0:33) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Webb_Reel.mp4" />
-
-<!-- Reel · Act I · JWST reel (2:58; trimmed to 1:30 in pass 2) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
-
-<!-- Reel · Act I · Milky Way simulation (1:01). Pass 2 adds sdss_universe_zoom.mp4 after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" />
-
-<!-- Reel · Act I · cosmic expansion funnel (0:30) -->
-
----
-hideInToc: true
-layout: fact
----
-
-# Half-time
-
-## Every scene so far ends as data someone must turn into understanding — which one would *you* analyse first?
-
----
-hideInToc: true
----
-
-<VideoPlayer src="QGP_Formation.mp4" />
-
-<!-- Reel · Act II · quark-gluon plasma forms (0:33). Pass 2 adds the Standard Model animation after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" />
-
-<!-- Reel · Act II · hair → cells → atom → nucleus → quarks (2:01) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Cloud_Chamber_Audio.mp4" />
-
-<!-- Reel · Act II · cloud chamber — particles made visible (2:29; trimmed to 1:30 in pass 2) -->
-
----
-layout: section
-hideInToc: true
----
-
 # Inside **CERN**
 
 Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
 
 <!--
-Speaker: shift from cosmos to lab. These clips show the real machines behind the
-diagrams — ATLAS, LHCb, the tunnels. Point out the human scale next to the
-detectors before rolling. (~1 min setup)
+Speaker: lights down again. These clips show the real machines behind the four
+slides you just saw — ATLAS, LHCb, the tunnels. Point out the human scale next to
+the detectors before rolling. (~1 min setup)
 -->
 
 ---
@@ -1537,36 +1445,35 @@ You don't need a particle accelerator to use any of this. **Next lecture: what d
 hideInToc: true
 ---
 
-# **What You Need**
+# Before **Next Tuesday**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🖥️ **Your Toolkit**
+## 🖥️ **Install three tools**
 
-- A **laptop** with internet access
-- A **web browser** (Chrome, Firefox, Edge)
-- An **IDE** (VS Code)
-- **Python 3.10+** installed ([python.org](https://python.org))
+- **Python 3.10+** — [python.org](https://python.org)
+- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com)
+- **Git** — [git-scm.com](https://git-scm.com)
 
-*🔧 Tool-agnostic: conda, PyCharm, or any equivalent works — the aim is the skill, not the tool.*
+*🔧 Tool-agnostic: conda, PyCharm, or another editor is fine — the aim is the skill, not the tool.*
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## ⚡ **Quick Check**
+## ⚡ **Prove they work**
 
 Open a terminal and run:
 
 ```bash
-python --version
+python --version   # or python3
+git --version
+code --version
 ```
 
-You should see `Python 3.x.x`. If not, we'll fix it now.
-
-*(On macOS/Linux the command may be `python3` — both are fine.)*
+Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills it.
 
 </div>
 
@@ -1574,13 +1481,8 @@ You should see `Python 3.x.x`. If not, we'll fix it now.
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-## 🔧 **Today's Task**
+## 🔬 **No seminar today — Seminar 1 is self-paced**
 
-1. Install Python if needed
-2. Install VS Code
-3. Open a terminal and verify `python --version`
-4. Create a folder: `mkdir analysis-project` (Seminar 1 fills it)
-
-*Stuck on installation? Don't worry — Seminar 1, this week, walks through the whole setup together. Today the goal is simply to have your laptop ready.*
+Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 15 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
 
 </div>

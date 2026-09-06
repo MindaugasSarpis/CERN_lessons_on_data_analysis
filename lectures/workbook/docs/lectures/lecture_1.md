@@ -1,174 +1,63 @@
 # 1: Orientation & Motivation
 
----
-
-## Seminar
-
-### Use KeyViz
-
-- Explain that we are starting very slowly, but working toward the endgame
-
-- Split them into tutors and students (well versed and just starting )
-
-- Ask about different OS people are using
-
-- Talk about windows / applications
-
-- Talk about people typing on phones / ipads
-
-- Talk about touchtyping https://typer.io/lobby
-
-- Talk about one-time vs repeatable tasks
-
-- Show Incompatibility, versions (SaveAs...)
-
-- Show MS Word -> XML Catalogue
-
-- Sketch a diagram of computing / research project
-
-- Talk about Scriptable vs Non-Scriptable Applications (Slides)
-
-- Show tesseract example on ChatGPT
-
-- Introduce concepts of modularity and reusability
-
-- Install [Python](https://www.python.org/)
-
-- Explain about multiple python installations
-
-- Explain about differences in OSs
-
-- Go to python interpreter
-
-  - Explain about CLI
-
-  - Explain what prompt is
-
-  - Show how to exit (quit(), exit(), Ctrl-D, Ctrl-Z)
-
-  - Show how to get help (help(), help('keywords'))
-
-  - [tutorial](https://docs.python.org/3/tutorial/introduction.html)
-
-    ```python
-    2 + 2
-
-    50 - 5*6
-
-    (50 - 5*6) / 4
-
-    8 / 5  # division always returns a floating-point number
-    ```
-
-    - Types (**int, float**)
-
-    ```python
-    17 / 3  # classic division returns a float
-    
-    
-    17 // 3  # floor division discards the fractional part
-    
-    17 % 3  # the % operator returns the remainder of the division
-    
-    5 * 3 + 2  # floored quotient * divisor + remainder
-    ```
-
-    - Powers
-
-    ```python
-    5 ** 2  # 5 squared
-    2 ** 7  # 2 to the power of 7
-    ```
-
-    - Variable asignments
-
-    ```python
-    width = 20  # variable names can be a single letter or more descriptive names
-    height = 30
-    area = width * height
-    ```
-
-    Naming **Conventions** for **Variables**
-
-    - **Single lowercase** letter
-
-      - a
-
-      - b
-
-      - c
-
-    - never use l (Lima)
-
-    - **Single Uppercase** letter
-
-      - A
-
-      - B
-
-      - C
-
-    - never use O (Oscar) or I (India)
-
-    - **lowercase**
-
-      - velocity
-
-      - temperature
-
-      - total
-
-    - **lower_case_with_underscores**
-
-      - user_age
-
-      - file_name
-
-      - calculate_total
-
-    - **UPPERCASE**
-
-      - PI = 3.14159
-  
-      - MAX_SIZE = 100
-  
-      - DEFAULT_TIMEOUT = 30
-  
-      - DEBUG_MODE = True
-
-    - **UPPER_CASE_WITH_UNDERSCORES**
-
-      - DEFAULT_USER_ROLE = "guest"
-
-      - CONNECTION_TIMEOUT_LIMIT = 60
-
-      - MAX_BUFFER_SIZE = 1024
-
-    - **CamelCase**
-
-      - DataProcessor
-
-      - HTTPRequestHandler
-
-      - XMLParser
-
-    - Acronyms are capitalized
-
-    - **mixedCase**
-
-      - fileReader
-
-      - isEnabled
-
-      - getValue
-
-- Install VS Code [Tutorial](https://code.visualstudio.com/docs/setup/setup-overview)
-
-- Talk about buttons and how not to use them
-
-- Use textfiles files .txt
-
-- Talk about intellisense
-
-- Introduce extensions - show thesis, slides
-
+Lecture 1 is the *why*: who is in the room, how the course works, what you are
+graded on, and a first look at CERN — four context slides and a motivation reel
+that runs from the cosmos down to a particle track and into the LHC tunnels.
+Lecture 2 is the *what*: data itself.
+
+## What the lecture covers
+
+1. **Introductions** — a short ATLAS clip as the cold open, then a show of hands:
+   your field, your operating system, whether you have written code before.
+2. **The course** — lectures and seminars, the 16-lecture map in five blocks, and
+   the weekly schedule (lecture only in week 1; lecture + seminar every Tuesday
+   from week 2).
+3. **The four aims** — 🔧 tool-agnosticism, ♻️ reproducibility, ⚙️ automation,
+   📁 efficient work with data & files — each as a before/after pair drawn from
+   real projects, and how they reinforce each other.
+4. **Grading and your project** — one course-long project of your own choice,
+   graded on the four aims; deliverables: repository, one-page report, short
+   video, final presentation.
+5. **How this course works** — the lecture/seminar week, what "done" looks like
+   each week, how to succeed, what the course is not.
+6. **Seminars & your project** — why real, open data; what the sixteen seminars
+   cover; the project tree and the golden rule.
+7. **The reel** — from the cosmos to the quantum, then four slides on CERN (the
+   organisation, the LHC, the accelerator chain, how a detector sees a
+   collision), then inside CERN.
+8. **Why you need these skills**, and the homework before next Tuesday.
+
+## Before next Tuesday (there is no seminar in week 1)
+
+Install three tools and prove they work:
+
+- **Python 3.10+** — [python.org](https://python.org) (conda or any equivalent works)
+- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com)
+- **Git** — [git-scm.com](https://git-scm.com)
+
+```bash
+python --version   # or python3
+git --version
+code --version
+```
+
+Three version numbers means you are done; then create an empty `analysis-project`
+folder. Seminar 1's brief is **self-paced**: work through it at home. We check it
+together during the first 40 minutes of Seminar 2 on 15 September, then go
+straight on to the first dataset. Stuck on an install? Bring the error message.
+
+## Paired seminar
+
+[Seminar 1 — Set Up Your Toolkit & First Repo](../seminars/seminar_01.md):
+self-paced before 15 September, checked at the start of
+[Seminar 2](../seminars/seminar_02.md).
+
+## Take-aways
+
+- The whole grade is one project of your own; the seminars teach the moves, the
+  project is where you make them yours.
+- Reproducible means data, code and environment recorded together — a plot on
+  its own is not a result.
+- Once by hand, twice by script.
+- The golden rule: delete everything but `data/raw/` and `scripts/`, and rebuild
+  it all with one command.

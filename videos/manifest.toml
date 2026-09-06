@@ -102,7 +102,7 @@ notes   = "Cosmic expansion funnel, VP8 WebM 1 Mbps"
 [[videos]]
 name    = "QGP_Formation.mp4"
 profile = "remux"
-used_in = ["L01"]
+used_in = ["L01", "L02"]
 notes   = "Quark-gluon plasma formation sim, HEVC 1.9 Mbps"
 
 [[videos]]
@@ -126,7 +126,7 @@ notes   = "Short CERN overview, HEVC 2.6 Mbps"
 [[videos]]
 name    = "ATLAS-VIDEO-2021-001-001-1080p.mp4"
 profile = "remux"
-used_in = ["L01"]
+used_in = ["L01", "L02"]
 notes   = "ATLAS experiment reel, HEVC 5.3 Mbps"
 
 [[videos]]
@@ -138,7 +138,7 @@ notes   = "ATLAS shaft construction, HEVC 2.2 Mbps (1920x1280 crop)"
 [[videos]]
 name    = "LHCb.mp4"
 profile = "remux"
-used_in = ["L01"]
+used_in = ["L01", "L02"]
 notes   = "LHCb detector reel, HEVC 878 kbps"
 
 [[videos]]

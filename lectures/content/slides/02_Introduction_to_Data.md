@@ -22,8 +22,8 @@ hideInToc: true
 layout: quote
 ---
 
-# Not only is the Universe stranger than we think, it is stranger than we **can** think. 
-Werner Heisenberg
+# It is a capital mistake to theorize before one has **data**. Insensibly one begins to twist facts to suit theories, instead of theories to suit facts.
+Sherlock Holmes — Arthur Conan Doyle, *A Scandal in Bohemia*
 
 ---
 hideInToc: true
@@ -380,17 +380,17 @@ A momentum with no units, a reading with no timestamp, a file with no source —
 hideInToc: true
 ---
 
-# Where Each Kind Shows Up **Later**
+# Where Each Flavour Shows Up **Later**
 
-| **Kind of data** | **What you learn to do with it** | **Where** |
+| **Flavour** | **What you learn to do with it** | **Where** |
 | --- | --- | --- |
-| Files & raw bytes | Read, name, and organise safely | L03–L05 · S3–S5 |
-| Structured tables | Load, clean, and reshape | L08, L13 · S8, S13 |
-| Numbers | Summarise, visualise, fit | L10–L12 · S10–S12 |
-| Uncertainty | Report a value ± an error | L11–L12 · S11–S12 |
-| Events → numbers | Turn one collision into a number (a mass) | here, L09 · S7–S8, S12 |
+| 🔢 Numbers | Summarise, visualise, fit, report ± an error | L10–L12 · S10–S12 |
+| 🔤 Text | Parse a line; code and count categories | L07–L08 · S7–S8 |
+| 🖼️ Images | Pixels as arrays, then a classifier | L13 · L16 |
+| ⚡ Events | Turn one collision into a number (a mass) | here, L09 · S7–S8, S12 |
+| 📁 …and their files | Read, name, and organise safely | L03–L05 · S3–S5 |
 
-<div class="note-text mt-md">Nothing here needs to make sense yet — it's a map. Each row is a week where this abstract taxonomy becomes something your own hands do.</div>
+<div class="note-text mt-md">A map, not a test — each row is a week where this taxonomy becomes something your own hands do.</div>
 
 ---
 hideInToc: true
@@ -437,33 +437,43 @@ Every field generates data. The tools and mindset you'll build in this course ap
 hideInToc: true
 ---
 
-# Data at Work — **Life & Planet**
+# Data at Work — **Life, Planet & Money**
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 🧬 **Biomedicine & genomics**
+## 🧬 **Biomedicine**
 
-- Genome sequencing → identifying variants & gene expression patterns
-- Clinical trials → monitoring safety, efficacy, adaptive designs
-- Population health dashboards & personalised medicine
-- Decisions: targeted therapies, drug discovery, diagnostics
+- Genome sequencing → variants, gene expression
+- Clinical trials → safety, efficacy, adaptive designs
+- Decisions: diagnostics, targeted therapies
 
-🧪 <strong>23andMe</strong> / <strong>Ancestry</strong> compare you against <em>reference populations</em>. 23andMe went bankrupt in 2025 and its genetic database changed hands in the proceedings — consent outlives a company.
+🧪 <strong>23andMe</strong> went bankrupt in 2025 and its genetic database changed hands in the proceedings — consent outlives a company.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-accent card-glass pad-compact">
 
-## 🌍 **Environmental sciences**
+## 🌍 **Environment**
 
-- Climate models integrating satellite, sensor, and historical data
-- Pollution monitoring at city/block resolution
-- Biodiversity studies combining field notes + remote sensing
-- Supports policy making, disaster response, conservation funding
+- Climate models fed by satellites, sensors, archives
+- Pollution monitored at city-block resolution
+- Decisions: policy, disaster response, conservation
 
 🔄 <strong>Living analysis</strong> — data feeds update the models continuously; the "result" is a pipeline that never stops running.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💰 **Finance**
+
+- Algorithmic trading under latency constraints
+- Risk: stress tests, scenario analysis, VaR
+- Fraud detection on streaming transactions
+
+📉 Every actor is also trying to out-predict every other actor's model — data describes the past far better than it dictates the future.
 
 </div>
 
@@ -500,39 +510,6 @@ hideInToc: true
 - Drives advances in distributed computing & open data practices
 
 🔬 <strong>Your seminars live here</strong> — the same open LHCb collision data physicists publish, walked from raw events to a measured mass.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Data at Work — **Money**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 💰 **Finance**
-
-- Stock market analysis + algorithmic trading with latency constraints
-- Risk management using stress tests, scenario analysis, VaR
-- Fraud detection & compliance monitoring with streaming data
-- Balances profitability with regulation and transparency
-
-📉 The one field where every actor is <em>also</em> trying to out-predict every other actor's model — a reminder that data describes the past far better than it dictates the future.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
-
-## 🎬 **…and the limits of prediction**
-
-There are some things <em>no data model</em> can predict.
-
-Play the reel live: <a href="https://www.facebook.com/reel/1963960414998958">facebook.com/reel/…</a>
 
 </div>
 
@@ -659,6 +636,14 @@ hideInToc: true
 hideInToc: true
 ---
 
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+
+<!-- ATLAS — model, cavern, control room (0:49): reprise of L01's cold open, now that they know what they are looking at. Pass 2 adds cms.mp4 after it. -->
+
+---
+hideInToc: true
+---
+
 # <span class="gradient-text">ALICE</span> — Rewinding the Big Bang
 
 <div class="grid-2 mt-md gap-md">
@@ -686,6 +671,14 @@ Collide **lead nuclei** instead of protons → a fleeting droplet of **quark–g
 📈 A single lead–lead collision can spray out **tens of thousands** of particle tracks — untangling them is a **data problem** before it is a physics problem.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="QGP_Formation.mp4" />
+
+<!-- Quark–gluon plasma forming (0:33) — ALICE's physics, and the only place ALICE appears on film. -->
 
 ---
 hideInToc: true
@@ -726,6 +719,14 @@ LHCb discovered **CP violation in charm** — in decays of the **D⁰ meson**. R
 🧭 The asymmetries found so far are **far too small** to explain the surviving universe — one of the great open problems in physics.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="LHCb.mp4" />
+
+<!-- LHCb reel (0:47) — home of the seminar dataset. Pass 2: the cern_footage_2022_042_001.mp4 fly-in before it. -->
 
 ---
 hideInToc: true
@@ -829,6 +830,32 @@ Don't worry about the details yet — every stage here is a skill you'll build o
 hideInToc: true
 ---
 
+<div class="note-text">
+
+*Check your reading of the previous slides — this one trips up professionals too.*
+
+</div>
+
+<MCQ
+  question="The Higgs discovery met the '5-sigma' standard. What does that actually mean?"
+  :options="[
+    'There is less than a one-in-3.5-million chance that the discovery itself is wrong',
+    'With no new particle, a background fluke this strong shows up in fewer than 1 in 3.5 million experiments',
+    'The Higgs mass was pinned down to five decimal places by combining ATLAS and CMS',
+    'Five independent detectors each confirmed the signal at the same mass on the same day'
+  ]"
+  :correct="1"
+  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading). Lecture 11 (Probability & Statistics) makes this precise."
+/>
+
+<style>
+.mcq-container { height: calc(100% - 3.5rem) !important; }
+</style>
+
+---
+hideInToc: true
+---
+
 # From Collision to <span class="gradient-text">Dataset</span>
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -859,7 +886,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact reveal-left">
 
-💾 Only these survivors become the **datasets** physicists analyse — about **one collision in a million** is ever stored
+💾 Only these survivors become the **datasets** physicists analyse — fewer than **one collision in a hundred thousand** is ever stored
 
 </div>
 
@@ -975,27 +1002,194 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="note-text">
+# Careers at <span class="gradient-text">CERN</span>
 
-*Check your reading of the previous slides — this one trips up professionals too.*
+<div class="card card-info card-glass pad-compact mt-sm">
+
+👥 CERN employs far more than physicists: of its few thousand **staff**, most are engineers and technicians, while the 17,000 scientists it hosts are mostly visiting **users** from institutes worldwide. A glimpse of who turns 40 million bunch crossings a second into discoveries:
 
 </div>
 
-<MCQ
-  question="The Higgs discovery met the '5-sigma' standard. What does that actually mean?"
-  :options="[
-    'There is less than a 1-in-3.5-million chance the discovery is wrong',
-    'If there were no new particle, a background fluctuation this strong would occur in fewer than 1 in 3.5 million experiments',
-    'The Higgs mass was measured to 5 decimal places',
-    'Five independent experiments confirmed the signal'
-  ]"
-  :correct="1"
-  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading). Lecture 11 (Probability & Statistics) makes this precise."
-/>
+<div class="grid-3 mt-md gap-md">
 
-<style>
-.mcq-container { height: calc(100% - 3.5rem) !important; }
-</style>
+<div class="card card-primary card-glass pad-tight">
+
+## 🧑‍🔬 **Physicists**
+
+Design analyses, hunt signals in noise — statistics and Python, at full scale.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🛠️ **Engineers**
+
+Build and maintain accelerators, magnets, cryogenics, and detectors under extreme conditions.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight">
+
+## 💻 **Computing Specialists**
+
+Keep 170+ grid sites, trigger farms, and petabyte storage running around the clock.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Day in the <span class="gradient-text">Data</span>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-tight">
+
+## 🔎 **One Analyst's Morning**
+
+Pull last night's triggered events, check the D⁰ peak hasn't drifted, flag anything strange for the shift crew, push a fix to the shared analysis code — before lunch, on a laptop, anywhere in the world.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌙 **One Shift Crew's Night**
+
+In the control room the same peak sits on a live monitoring plot: if a sub-detector or the trigger farm misbehaves, the histogram shows it before any alarm does — and the night's data is flagged good or bad for everyone downstream.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🌍 Neither job requires standing next to the detector — both require exactly the skills this course builds: files, code, version control, statistics.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Beyond the **Ring**
+
+Coping with its own data forced CERN to invent things the rest of the world now runs on — the Web, a planet-sized grid, open data and open publishing.
+
+<!--
+Speaker: section break. The pivot: everything so far was about the machine; this
+section is about what the machine forced CERN to build for everyone else. Ask which
+CERN invention they used today — the answer is the Web, every one of them. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# CERN's Impact Beyond Physics
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-info card-glass pad-compact">
+
+## 🌐 **The World Wide Web**
+
+Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists — now used by **5+ billion** people worldwide
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🖥️ **Computing Grid (WLCG)**
+
+The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** — storing **hundreds of petabytes** of new data every year
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🏥 **Medical Applications**
+
+Particle accelerator technology enables **hadron therapy** for cancer treatment — more precise than conventional radiotherapy
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📂 **Open Science**
+
+CERN **Open Data Portal** makes real collision data publicly available — enabling education and independent research worldwide
+
+</div>
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+📖 **Publishing, openly too:** CERN co-founded **SCOAP3**, making almost all particle-physics journal articles free to read worldwide — and preprints on **arXiv** circulate long before any journal sees them.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Planet-Sized <span class="gradient-text">Computer</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🌍 No single data centre can process the LHC's output — the work is spread across a **tiered global grid** *(as of 2026: 170+ sites, 42 countries, ~1.4 million CPU cores)*.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+🏛️ **Tier 0 — CERN** · the custodial copy of all raw data on tape, first-pass reconstruction
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+🏢 **Tier 1 — ~15 national labs** · second copies, large-scale reprocessing, round-the-clock links to CERN
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+🏫 **Tier 2 — ~150 universities** · simulation and the everyday analyses of individual physicists
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
+
+💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable. The grid itself — jobs, storage trade-offs, ~170 sites — is **Lecture 15 (Computing Infrastructure & HPC)** in full; today was just its shape.
+
+🔭 The pattern repeats at the frontier: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring for which the LHC itself would be the injector.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="CERN publishes its collision data on the Open Data Portal years after recording it. Which stage of the data lifecycle is that, and what makes it possible?"
+  :options="[
+    'Collecting — the detector writes each stored event straight to the public portal',
+    'Cleaning — the trigger decides at run time which events are fit for publication',
+    'Sharing — the last stage, possible only because provenance, formats and software were kept',
+    'Analysing — physicists publish their plots, and the plots are the open data'
+  ]"
+  :correct="2"
+  explanation="Publication is the share stage at the end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
+/>
 
 ---
 layout: section
@@ -1085,6 +1279,7 @@ hideInToc: true
 - DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
 - Licence **CC0** — no conditions
 - ~60 000 pre-selected D⁰ → K⁻π⁺ candidates
+- Downloadable by anyone — no CERN account needed
 - Companion event-display files: record 400
 
 </div>
@@ -1109,7 +1304,7 @@ hideInToc: true
 
 ## 🆓 **CC0**
 
-No conditions at all — reuse, remix, republish. *CERN Open Data.*
+No conditions at all — reuse, remix, republish. *CERN Open Data; NASA imagery is public domain, which amounts to the same.*
 
 </div>
 
@@ -1117,7 +1312,7 @@ No conditions at all — reuse, remix, republish. *CERN Open Data.*
 
 ## 🏷️ **CC BY**
 
-Do anything, but **credit the source**. *Most ESA / ESO / NOIRLab material.*
+Do anything, but **credit the source**. *ESO and NOIRLab material.*
 
 </div>
 
@@ -1125,7 +1320,7 @@ Do anything, but **credit the source**. *Most ESA / ESO / NOIRLab material.*
 
 ## 🔁 **Share-alike (ODbL, CC BY-SA)**
 
-Derived datasets must stay **equally open**. *OpenStreetMap.*
+Derived datasets must stay **equally open**. *OpenStreetMap; most ESA imagery (CC BY-SA IGO).*
 
 </div>
 
@@ -1249,10 +1444,10 @@ hideInToc: true
 <MCQ
   question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
   :options="[
-    'The record\'s DOI (or stable URL), the version or date you fetched it, and the file checksum',
-    'The file name and its size',
-    'The portal\'s homepage URL and the dataset\'s title',
-    'The name of the person who told you about the dataset'
+    'The record\'s DOI or stable URL, the version or fetch date, and the file\'s checksum',
+    'The file name, its size in bytes, and the folder you saved it into on your laptop',
+    'The portal\'s homepage URL, the dataset\'s title, and the name of the collaboration',
+    'The name and e-mail of the colleague who first told you about the dataset'
   ]"
   :correct="0"
   explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
@@ -1417,232 +1612,14 @@ hideInToc: true
 <MCQ
   question="In the LHCb seminar sample, what does one row of the CSV file represent?"
   :options="[
-    'One sub-detector of LHCb',
-    'One column of momentum values',
-    'One reconstructed particle track',
+    'One sub-detector of LHCb, with its readings for the run',
+    'One column of momentum values, one per particle',
+    'One reconstructed particle track through the detector',
     'One K⁻π⁺ candidate from one collision event'
   ]"
   :correct="3"
   explanation="Each row is one candidate pair found in one event: its momenta, charges, identification scores and the derived invariant mass. Columns are the quantities; rows are the things measured. Knowing what one row *is* comes before any statistics."
 />
-
----
-layout: section
-hideInToc: true
----
-
-# Beyond the **Ring**
-
-Coping with its own data forced CERN to invent things the rest of the world now runs on — the Web, a planet-sized grid, open data and open publishing.
-
-<!--
-Speaker: section break. The pivot: everything so far was about the machine; this
-section is about what the machine forced CERN to build for everyone else. Ask which
-CERN invention they used today — the answer is the Web, every one of them. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# CERN's Impact Beyond Physics
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-compact">
-
-## 🌐 **The World Wide Web**
-
-Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists — now used by **5+ billion** people worldwide
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🖥️ **Computing Grid (WLCG)**
-
-The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** — storing **hundreds of petabytes** of new data every year
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🏥 **Medical Applications**
-
-Particle accelerator technology enables **hadron therapy** for cancer treatment — more precise than conventional radiotherapy
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📂 **Open Science**
-
-CERN **Open Data Portal** makes real collision data publicly available — enabling education and independent research worldwide
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-📖 **Publishing, openly too:** CERN co-founded **SCOAP3**, making almost all particle-physics journal articles free to read worldwide — and preprints on **arXiv** circulate long before any journal sees them.
-
-</div>
-
----
-hideInToc: true
----
-
-# A Planet-Sized <span class="gradient-text">Computer</span>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🌍 No single data centre can process the LHC's output — the work is spread across a **tiered global grid** *(as of 2026: 170+ sites, 42 countries, ~1.4 million CPU cores)*.
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-🏛️ **Tier 0 — CERN** · the custodial copy of all raw data on tape, first-pass reconstruction
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-🏢 **Tier 1 — ~15 national labs** · second copies, large-scale reprocessing, round-the-clock links to CERN
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-🏫 **Tier 2 — ~150 universities** · simulation and the everyday analyses of individual physicists
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md reveal-up">
-
-💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable. The grid itself — jobs, storage trade-offs, ~170 sites — is **Lecture 15 (Computing Infrastructure & HPC)** in full; today was just its shape.
-
-🔭 The pattern repeats at the frontier: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring for which the LHC itself would be the injector.
-
-</div>
-
----
-hideInToc: true
----
-
-# Open Data, Up <span class="gradient-text">Close</span>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🎯 **The Portal**
-
-The **Open Data Portal** from the impact slide isn't an abstraction for this course: the **LHCb D⁰ → K⁻π⁺** sample the seminars practise on lives there as **record 401** — downloadable by anyone, no CERN credentials required.
-
-🔬 **Seminar 2** sends you to fetch it — or a dataset from your own field: locate the exact record and note its provenance before you ever open it in Python.
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="CERN publishes its collision data on the Open Data Portal years after recording it. Which stage of the data lifecycle is that, and what makes it possible?"
-  :options="[
-    'Collecting — the detector writes straight to the portal',
-    'Cleaning — the trigger selects which events to publish',
-    'Sharing — the last stage of the lifecycle, possible only because provenance, formats and software were preserved along the way',
-    'Analysing — physicists publish their plots'
-  ]"
-  :correct="2"
-  explanation="Publication is the share stage at the end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
-/>
-
----
-layout: section
-hideInToc: true
----
-
-# From Data to **Skills**
-
-Portals, records, files, columns — every dataset you met today ends up in front of someone who has to read it, check it and turn it into a result. This course trains that someone.
-
----
-hideInToc: true
----
-
-# Careers at <span class="gradient-text">CERN</span>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-👥 CERN employs far more than physicists: of its few thousand **staff**, most are engineers and technicians, while the 17,000 scientists it hosts are mostly visiting **users** from institutes worldwide. A glimpse of who turns 40 million bunch crossings a second into discoveries:
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧑‍🔬 **Physicists**
-
-Design analyses, hunt signals in noise — statistics and Python, at full scale.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🛠️ **Engineers**
-
-Build and maintain accelerators, magnets, cryogenics, and detectors under extreme conditions.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💻 **Computing Specialists**
-
-Keep 170+ grid sites, trigger farms, and petabyte storage running around the clock.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# A Day in the <span class="gradient-text">Data</span>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔎 **One Analyst's Morning**
-
-Pull last night's triggered events, check the D⁰ peak hasn't drifted, flag anything strange for the shift crew, push a fix to the shared analysis code — before lunch, on a laptop, anywhere in the world.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🌙 **One Shift Crew's Night**
-
-In the control room the same peak sits on a live monitoring plot: if a sub-detector or the trigger farm misbehaves, the histogram shows it before any alarm does — and the night's data is flagged good or bad for everyone downstream.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-🌍 Neither job requires standing next to the detector — both require exactly the skills this course builds: files, code, version control, statistics.
-
-</div>
 
 ---
 hideInToc: true
@@ -1692,7 +1669,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-🔬 **Seminar 2 tie-in** — find and document a dataset: LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal, or one from your own field — recording its provenance (title, DOI, licence, date, checksum).
+🔬 **Seminar 2 tie-in** (15 Sep, after a 40-minute checkpoint of the self-paced Seminar 1 setup) — find and document a dataset: LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal, or one from your own field — recording its provenance (title, DOI, licence, date, checksum).
 
 </div>
 

@@ -4,6 +4,11 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
+> **15 September runs Seminars 1 and 2 back to back.** The first ~40 minutes
+> check the self-paced [Seminar 1](seminar_01.md) — tools installed, project
+> skeleton, first commit — then this brief's core tasks follow. Stretch goals
+> are skipped that day; the timing above is for the brief on its own.
+
 > **This session builds:** your chosen dataset (LHCb D⁰ → K⁻π⁺, or your own) in `data/raw/`, with
 > its provenance recorded.
 

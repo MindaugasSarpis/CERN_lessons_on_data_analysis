@@ -7,23 +7,29 @@ one comes from, and how you write down where it came from.
 ## What the lecture covers
 
 1. **Data in your life** — a day's worth of datasets; what data even is; its
-   lifecycle; structured vs unstructured; the four flavours (tables, text,
-   images, time series); measurement vs metadata; data at work in science,
-   society and money.
-2. **Four eyes on the ring** — ATLAS, CMS, ALICE, LHCb, and the particle you will
-   analyse: the D⁰ meson and its K⁻π⁺ invariant-mass peak near 1865 MeV.
-3. **Why data?** — from collision to dataset, from events to petabytes, why the
-   trigger has to work in real time.
-4. **Open data & provenance** — portals, the anatomy of a record, licences
+   lifecycle; structured vs unstructured; the four flavours (numbers, text,
+   images, events); measurement vs metadata; data at work in life, planet,
+   money, sky and the subatomic.
+2. **Four eyes on the ring** — ATLAS, CMS, ALICE, LHCb, each with a short clip,
+   and the particle you will analyse: the D⁰ meson and its K⁻π⁺ invariant-mass
+   peak near 1865 MeV.
+3. **Why data?** — the 5-sigma standard, from collision to dataset, from events
+   to petabytes, why the trigger has to work in real time; the people who run
+   it (careers at CERN, a day in the data).
+4. **Beyond the ring** — the Web, the computing grid, and why CERN can publish
+   its data years later.
+5. **Open data & provenance** — portals, the anatomy of a record, licences
    (CC0 / CC BY / share-alike), the minimal provenance note, data you bring
    yourself, from record to your repo.
-5. **A dataset up close** — the LHCb sample as a file: rows are events, columns
-   are measured / derived / bookkeeping quantities, units are metadata, five
-   questions to ask any file before writing code.
-6. **Beyond the ring** — the Web, the computing grid, open data up close.
+6. **A dataset up close** — the LHCb sample as a file: rows are candidates,
+   columns are measured / derived / bookkeeping quantities, units are metadata,
+   five questions to ask any file before writing code.
 
 ## Paired seminar
 
+On 15 September the session opens with a 40-minute checkpoint of the self-paced
+[Seminar 1](../seminars/seminar_01.md) setup (tools, project skeleton, first
+commit), then runs
 [Seminar 2 — Find & Document a Dataset](../seminars/seminar_02.md): locate the
 LHCb masterclass sample on the CERN Open Data Portal
 ([record 401](https://opendata.cern.ch/record/401),
