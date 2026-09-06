@@ -2,8 +2,8 @@
 // under the 320 ms fade-out in main.js. Synthesised with Web Audio (no asset,
 // no licence, deterministic): a burst of white noise through a resonant
 // low-pass whose cutoff sweeps up then down, shaped by a fast-attack /
-// exponential-release gain envelope. The whole gesture lands in ~0.32 s so
-// the navigation that follows never cuts an audible tail.
+// exponential-release gain envelope. The gesture is ~40 dB down by 0.34 s,
+// so the navigation at 320 ms never cuts an audible tail.
 //
 // Autoplay policy: the AudioContext is created lazily INSIDE the click
 // handler (a user gesture), which is what unlocks audio on iOS/Safari and
@@ -13,9 +13,14 @@
 // one. There is no prefers-reduced-sound media query, so the caller decides
 // whether to invoke this at all (main.js skips it under reduced motion).
 
-const PEAK = 0.18;        // linear gain; low, a cushion rather than an effect
+// PEAK is the pre-filter gain: the low-pass keeps only a few % of white
+// noise's power, so 0.7 here lands the OUTPUT peak near -14 dBFS (~0.2
+// linear) — a cushion, not an effect. Rendered offline via
+// OfflineAudioContext to check; re-measure if you retune the filter.
+const PEAK = 0.7;
 const ATTACK = 0.06;      // s to peak
-const LENGTH = 0.32;      // s total; matches the fade-out window
+const LENGTH = 0.34;      // s to -40 dB; the nav at 320 ms cuts nothing audible
+const FLOOR = 0.01;       // release target, relative to PEAK (-40 dB)
 const F_START = 160;      // Hz, cutoff at t=0 (dark)
 const F_TOP = 900;        // Hz, cutoff at the crest of the sweep
 const F_END = 120;        // Hz, cutoff at the tail (drops "low")
@@ -34,7 +39,7 @@ function getContext() {
 
 function getNoise(ac) {
   if (noise) return noise;
-  const n = Math.ceil(ac.sampleRate * LENGTH);
+  const n = Math.ceil(ac.sampleRate * (LENGTH + 0.05));
   const buf = ac.createBuffer(1, n, ac.sampleRate);
   const d = buf.getChannelData(0);
   for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
@@ -62,11 +67,12 @@ export function playSwoosh() {
     const gain = ac.createGain();
     gain.gain.setValueAtTime(0.0001, t0);
     gain.gain.exponentialRampToValueAtTime(PEAK, t0 + ATTACK);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + LENGTH);
+    gain.gain.exponentialRampToValueAtTime(PEAK * FLOOR, t0 + LENGTH);
+    gain.gain.linearRampToValueAtTime(0, t0 + LENGTH + 0.02); // no click at stop
 
     src.connect(filter).connect(gain).connect(ac.destination);
     src.start(t0);
-    src.stop(t0 + LENGTH + 0.02);
+    src.stop(t0 + LENGTH + 0.03);
     src.onended = () => { try { src.disconnect(); filter.disconnect(); gain.disconnect(); } catch { /* noop */ } };
     return { played: true, state: ac.state };
   } catch (e) {
