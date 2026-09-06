@@ -44,7 +44,25 @@ for (const d of decks) {
   else summary.push(`✓ ${d.slug}`);
 }
 
-// 3) Landing smoke test (decks build --flat-base with no landing, so build one).
+// 3) Overview gate (scripts/check-overview.mjs) — once per run, on the first
+//    deck under QA that embeds videos (else the first deck): proves the theme +
+//    VideoPlayer keep Slidev's all-slides overview cheap on phones.
+const hasVideo = async (d) => {
+  for (const src of d.srcs) {
+    if ((await readFile(join(CONTENT, 'slides', src), 'utf8')).includes('<VideoPlayer')) return true;
+  }
+  return false;
+};
+let ovDeck = null;
+for (const d of decks) if (await hasVideo(d)) { ovDeck = d; break; }
+ovDeck ??= decks[0];
+if (ovDeck) {
+  process.stdout.write(`\n▶ overview check (${ovDeck.slug}) …\n`);
+  const ov = spawnSync('node', [join(ROOT, 'scripts', 'check-overview.mjs'), join(QA_DIST, ovDeck.slug)], { cwd: ROOT, stdio: 'inherit' });
+  if (ov.status !== 0) { bad++; summary.push(`✗ overview (${ovDeck.slug})`); } else summary.push(`✓ overview (${ovDeck.slug})`);
+}
+
+// 4) Landing smoke test (decks build --flat-base with no landing, so build one).
 const LAND = join(QA_DIST, '__landing__');
 process.stdout.write('\n▶ landing smoke test …\n');
 const lb = spawnSync('node', [join(ROOT, 'scripts', 'build-landing.mjs'), '--out', LAND], { cwd: ROOT, stdio: 'inherit' });

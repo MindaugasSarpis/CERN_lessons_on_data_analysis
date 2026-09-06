@@ -777,3 +777,19 @@
 }
 .anim-ex ul { margin: 0; padding-left: 1.4em; }
 .anim-ex li { margin: 0.15em 0; }
+
+/* ---------- Slide overview (grid button / `o` key) ----------
+   Slidev mounts EVERY slide live in the overview; on a phone that froze the
+   video-heavy decks for seconds (measured on L01, 64 slides, 4x CPU throttle:
+   ~1.3 s on the main thread, 0.9 s of it layout). Two guards, scoped to the
+   overlay through Slidev's own utility classes — scripts/check-overview.mjs
+   fails if a Slidev upgrade renames them, so this can't silently regress:
+   - content-visibility:auto on every thumbnail container: only the rows on
+     screen are laid out and painted (the containers carry an explicit
+     width/height, so nothing shifts). Screen-only so PDF export is untouched.
+   - no backdrop blur / forced GPU layer on cards inside the overview: the 95
+     cards of L01 were 48 extra compositor layers at 3x DPR. */
+@media screen {
+  .z-modal.overflow-y-auto .slidev-slide-container { content-visibility: auto; }
+  .z-modal.overflow-y-auto .card { backdrop-filter: none; transform: none; }
+}

@@ -53,6 +53,8 @@ Verify the **rendered** decks — a `slidev build` only catches compile errors, 
 
 `scripts/check-slides.mjs <distDir>` renders every slide of one built deck with parallel workers + client-side navigation, measures overflow (neutralizing decorative backdrops and pre-click transforms), and optionally writes `.qa-shots/slide-NNN.png`. Options: `--workers N`, `--tolerance PX`, `--only 8,76,...`, `--shots <dir>`. `pnpm qa` runs it across all decks. Media requests are aborted during QA so video slides don't stall the check.
 
+`scripts/check-overview.mjs <distDir>` gates the cost of Slidev's all-slides **overview** on a phone (no `<video>` or media request inside the overview, no card blur there, thumbnails `content-visibility: auto`); `pnpm qa` runs it once per run on the first video deck under QA. The guards live in `custom-slides.css` (overview block) and `VideoPlayer.vue` (placeholder outside the `slide`/`presenter` render context).
+
 **Hard requirements (see project memory):** (1) **zero slide overflow**; (2) **videos full-screen** — `VideoPlayer.vue` uses `object-fit: cover`, no letterbox line; (3) **consistent type scale** — sizes follow the markdown level, no arbitrary one-off `font-size`; (4) build every deck through its generated `deck.<slug>.md` entry (co-located with `theme/`), never a bare `slides/NN_*.md`.
 
 To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan out subagents over batches), not all at once.

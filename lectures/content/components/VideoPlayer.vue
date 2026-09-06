@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch, nextTick, onMounted } from 'vue'
-import { useIsSlideActive } from '@slidev/client'
+import { useIsSlideActive, useSlideContext } from '@slidev/client'
 
 const REMOTE_BASE = 'https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis/releases/download/videos'
 
@@ -30,6 +30,14 @@ const currentSrc = ref(primarySrc.value)
 const status = ref('idle')
 const isActive = useIsSlideActive()
 const hasBeenActive = ref(false)
+
+// Only the real slide (and the presenter's main view) gets a <video>. The
+// overview / next-slide preview render a static placeholder instead: the
+// overview mounts every slide at once, so a video-heavy deck would put ~20
+// media elements on a phone, and its copy of the CURRENT slide is "active"
+// too, so it re-downloaded the clip being watched.
+const { $renderContext } = useSlideContext()
+const isLive = computed(() => $renderContext.value === 'slide' || $renderContext.value === 'presenter')
 
 const mimeType = computed(() => {
   const ext = props.src.split('.').pop()?.toLowerCase()
@@ -95,24 +103,30 @@ onMounted(() => {
 
 <template>
   <div class="video-player">
-    <div v-if="status === 'loading' || status === 'idle'" class="video-status">Loading video&hellip;</div>
-    <div v-if="status === 'error'" class="video-status video-error">
-      Video not available: <code>{{ src }}</code>
+    <div v-if="!isLive" class="video-placeholder">
+      <svg class="video-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor" /></svg>
+      <span class="video-status">{{ src }}</span>
     </div>
-    <video
-      ref="videoRef"
-      :loop="loop"
-      :controls="controls"
-      muted
-      playsinline
-      webkit-playsinline
-      preload="none"
-      @loadeddata="onLoaded"
-      @error="onError"
-      :class="{ 'video-ready': status === 'ready' }"
-    >
-      <source ref="sourceRef" :src="hasBeenActive ? currentSrc : ''" :type="mimeType" />
-    </video>
+    <template v-else>
+      <div v-if="status === 'loading' || status === 'idle'" class="video-status">Loading video&hellip;</div>
+      <div v-if="status === 'error'" class="video-status video-error">
+        Video not available: <code>{{ src }}</code>
+      </div>
+      <video
+        ref="videoRef"
+        :loop="loop"
+        :controls="controls"
+        muted
+        playsinline
+        webkit-playsinline
+        preload="none"
+        @loadeddata="onLoaded"
+        @error="onError"
+        :class="{ 'video-ready': status === 'ready' }"
+      >
+        <source ref="sourceRef" :src="hasBeenActive ? currentSrc : ''" :type="mimeType" />
+      </video>
+    </template>
   </div>
 </template>
 
@@ -151,5 +165,21 @@ onMounted(() => {
 .video-error {
   color: #ef4444;
   opacity: 1;
+}
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+.video-placeholder .video-status {
+  position: static;
+  padding: 0;
+}
+.video-placeholder-icon {
+  width: 4rem;
+  height: 4rem;
+  opacity: 0.6;
 }
 </style>
