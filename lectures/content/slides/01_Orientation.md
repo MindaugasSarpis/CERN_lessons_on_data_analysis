@@ -578,31 +578,57 @@ hideInToc: true
 
 # **Schedule**
 
-Every week: **2 h lecture** + **2 h seminar** — 16 weeks, one lecture per week.
+Every **Tuesday**: **2 h lecture** + **2 h seminar** — 16 weeks, **8 Sep – 22 Dec 2026**.
 
-| **Weeks** | **Block** |
-| --- | --- |
-| 1 – 6 | **A** · Foundations & Tooling |
-| 7 – 8 | **B** · Programming |
-| 9 – 12 | **C** · Data Analysis Core |
-| 13 – 14 | **D** · Practical Data Work |
-| 15 – 16 | **E** · Advanced *(optional)* |
-| **Exam session** | **Final Project Presentations** |
+<div class="grid-2 gap-sm mt-sm">
+
+| **Wk** | **Tue** | **Lecture** |
+| --- | --- | --- |
+| 1 | 8 Sep | **A** · Orientation & Motivation |
+| 2 | 15 Sep | **A** · Introduction to Data |
+| 3 | 22 Sep | **A** · How Computers Work |
+| 4 | 29 Sep | **A** · Command Line & File Handling |
+| 5 | 6 Oct | **A** · Markdown & VS Code |
+| 6 | 13 Oct | **A** · Version Control with Git |
+| 7 | 20 Oct | **B** · Python Foundations |
+| 8 | 27 Oct | **B** · Python for Data Work |
+
+| **Wk** | **Tue** | **Lecture** |
+| --- | --- | --- |
+| 9 | 3 Nov | **C** · Concepts of Data Analysis |
+| 10 | 10 Nov | **C** · Data Visualisation |
+| 11 | 17 Nov | **C** · Probability & Statistics |
+| 12 | 24 Nov | **C** · Practical Data Fitting |
+| 13 | 1 Dec | **D** · NumPy & Pandas |
+| 14 | 8 Dec | **D** · Reproducible Workflows & Automation |
+| 15 | 15 Dec | **E** · Computing Infrastructure & HPC |
+| 16 | 22 Dec | **E** · Machine Learning & AI |
+
+</div>
+
+<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work · <strong>E</strong> Advanced (optional) — <strong>Final Project Presentations</strong> in the exam session.</div>
 
 <style scoped>
 table {
   font-size: 0.95em;
+  width: 100%;
 }
 table td, table th {
-  padding-top: 0.45em;
-  padding-bottom: 0.45em;
+  padding: 0.3em 0.5em;
 }
 table thead th {
   border-bottom: 3px solid rgba(255, 255, 255, 0.5);
 }
-table td:nth-child(2),
-table th:nth-child(2) {
+table td:nth-child(1),
+table th:nth-child(1) {
   text-align: right;
+  white-space: nowrap;
+}
+table td:nth-child(2),
+table th:nth-child(2),
+table td:nth-child(3),
+table th:nth-child(3) {
+  white-space: nowrap;
 }
 </style>
 
