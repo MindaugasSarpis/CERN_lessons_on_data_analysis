@@ -1,19 +1,28 @@
-name: QA gates
+name: QA gates + deploy
 
-# The course's two blocking gates, run in CI on every push to the working
-# branch (ff2026) so a deploy push (ff2026:bs2026) is only made from a state
-# that passes:
+# One branch, one pipeline. Every push to `main` runs the course's two blocking
+# gates, and only a green run goes on to build + deploy the site to GitHub Pages:
 #   - pnpm qa           zero-overflow check of every rendered deck + landing smoke test
 #   - pnpm timing:check every week's content sized to the 2h lecture + 2h seminar slots
+# Pull requests run the gates only (no deploy). A red run deploys nothing — the
+# previous site stays up. `workflow_dispatch` (gh workflow run qa.yml --ref main)
+# re-runs the whole pipeline on the chosen ref: the manual redeploy escape hatch.
 on:
   workflow_dispatch:
   push:
-    branches: [ff2026]
+    branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Cancel superseded runs on PR branches; let `main` runs finish so a deploy is
+# never cut off half-way (the newest queued push still runs afterwards).
 concurrency:
   group: qa-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   qa:
@@ -59,3 +68,60 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=4096
         run: pnpm qa
+
+  build:
+    # Only a green `qa` job reaches here, and never from a pull request.
+    needs: qa
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          # Pin to 9: matches the v9.0 lockfile and runs package build scripts
+          # (esbuild, etc.) without pnpm 10's fatal ERR_PNPM_IGNORED_BUILDS gate.
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install MkDocs (student workbook)
+        run: pip install mkdocs mkdocs-material
+
+      - name: Build all decks + landing page + workbook
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: node scripts/build-all.mjs --out dist --base "/${{ github.event.repository.name }}"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

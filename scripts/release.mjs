@@ -6,8 +6,8 @@
  *   pnpm release all    # everything live
  *   pnpm release        # show the current state
  *
- * Edits decks.json line by line (keeps formatting). Then: commit on ff2026, wait
- * for qa.yml, and `git push origin ff2026:bs2026` to deploy.
+ * Edits decks.json line by line (keeps formatting). Then: commit on main and
+ * `git push origin main` — qa.yml runs the gates, then builds + deploys (~8 min).
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { join, dirname, resolve } from 'node:path';
@@ -41,4 +41,4 @@ if (arg !== undefined) {
 const now = JSON.parse(text);
 for (const d of now.decks) console.log(`  ${d.draft ? '○ draft' : '● live '}  ${d.slug}`);
 const live = now.decks.filter((d) => !d.draft).length;
-console.log(`\n${live}/${now.decks.length} live. Next: commit on ff2026 → wait for qa.yml → git push origin ff2026:bs2026`);
+console.log(`\n${live}/${now.decks.length} live. Next: commit on main → git push origin main (qa.yml gates, then deploys, ~8 min)`);

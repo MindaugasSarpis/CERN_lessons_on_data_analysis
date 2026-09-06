@@ -35,7 +35,7 @@ pnpm qa:shots                      # also write .qa-shots/<slug>/slide-NNN.png f
 pnpm timing:check                  # every week must fill its 2h lecture + 2h seminar slot
 ```
 
-There are no unit tests — **`pnpm qa` (zero overflow) and `pnpm timing:check` (content sized to the slots) are the tests.** Both also run in CI on every push to `ff2026` (`.github/workflows/qa.yml`). The overflow checker re-verifies borderline slides on a fresh page before failing, so a red result is a real regression.
+There are no unit tests — **`pnpm qa` (zero overflow) and `pnpm timing:check` (content sized to the slots) are the tests.** Both also run in CI on every push to `main` and on pull requests (`.github/workflows/qa.yml`); a green run on `main` goes on to deploy the site. The overflow checker re-verifies borderline slides on a fresh page before failing, so a red result is a real regression.
 
 ### Figures, videos, workbook
 
@@ -89,13 +89,13 @@ misc/                            # course admin (grading scripts; grade CSVs are
 
 ## Deployment
 
-Work happens on **`ff2026`**; GitHub Pages deploys from **`bs2026`** (`.github/workflows/deploy.yml`). To publish:
+One branch: **`main`**. Every push to `main` runs `.github/workflows/qa.yml`, which chains the two gates → build → deploy to GitHub Pages, so a push is live about 8 minutes later **only if the gates pass** — a red run deploys nothing and the previous site stays up. Pull requests run the gates only. To publish:
 
 ```bash
-git push origin ff2026:bs2026   # only after qa.yml is green on ff2026
+git push origin main            # QA gates → build → deploy, ~8 min
 ```
 
-A change is **not live** until it reaches `bs2026`.
+Keep unfinished edits to a **live** deck on a branch and open a PR (the gates run there too); drafts (`"draft": true`) are safe to push directly — gated, never deployed. To redeploy without a new commit: `gh workflow run qa.yml --ref main`. The old `ff2026` (work) and `bs2026` (deploy) branches are frozen at the 2026-09-06 cutover; nothing deploys from them.
 
 ### Releasing lectures one at a time
 
@@ -108,5 +108,5 @@ Staged release is one boolean per deck in `decks.json` — flip it by hand or wi
 
 - A **draft** deck is still built and gated by `pnpm qa` and `pnpm timing:check` (CI too), so you can keep editing it without it silently breaking.
 - A deploy build (`pnpm build`, the Pages workflow) **skips** drafts — no `dist/<slug>/` exists, the landing page and the in-deck ☰ menu list the title greyed and unlinked, and old `/<slug>/5` links fall through to the home page instead of being rewritten.
-- On lecture day: set `"draft": false`, commit on `ff2026`, wait for `qa.yml` to pass, `git push origin ff2026:bs2026`.
+- On lecture day: set `"draft": false` (or `pnpm release NN`), commit on `main`, `git push origin main` — the deck is live once `qa.yml` is green (~8 min).
 - `pnpm dev <NN>` serves drafts as usual; `pnpm build --include-drafts` builds the whole site locally for a preview.

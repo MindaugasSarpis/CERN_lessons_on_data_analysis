@@ -122,14 +122,14 @@ Each lecture markdown file follows a consistent structure:
 
 ## Deployment
 
-Two GitHub Actions workflows:
+One branch (`main`) and one GitHub Actions workflow:
 
-- **`.github/workflows/qa.yml`** — runs both gates (`pnpm qa` + `pnpm timing:check`) on every push to the working branch `ff2026` (and on PRs / manual dispatch).
-- **`.github/workflows/deploy.yml`** — builds and deploys to GitHub Pages on pushes to the `bs2026` branch. Day-to-day work happens on `ff2026`; a fix is only live after `git push origin ff2026:bs2026` — check the qa.yml result first.
+- **`.github/workflows/qa.yml`** — on every push to `main` (and on PRs / manual dispatch) runs both gates (`pnpm qa` + `pnpm timing:check`); then, on `main` only, a `build` job (`needs: qa`) builds all decks + landing + workbook and a `deploy` job publishes to GitHub Pages. A push is live ~8 min later **only if the gates are green**; a red run deploys nothing and the previous site stays up.
+- **No second branch.** `git push origin main` is the deploy. Keep unfinished edits to a live deck on a PR branch (gates run there, no deploy); drafts are safe to push. `gh workflow run qa.yml --ref main` redeploys without a commit. `ff2026` (old work branch) and `bs2026` (old deploy branch) are frozen at the 2026-09-06 cutover — nothing deploys from them.
 
 ## Releasing lectures during the semester
 
-`pnpm release <NN>` marks lectures 01–NN live and the rest draft (`pnpm release all` = all live; no arg = show state) — or edit `"draft"` by hand. On lecture day: `pnpm release NN`, commit on `ff2026`, wait for `qa.yml`, then `git push origin ff2026:bs2026`. Drafts stay fully gated in CI, so keep editing them freely. `pnpm dev <NN>` works on drafts; `pnpm build --include-drafts` builds a full local preview.
+`pnpm release <NN>` marks lectures 01–NN live and the rest draft (`pnpm release all` = all live; no arg = show state) — or edit `"draft"` by hand. On lecture day: `pnpm release NN`, commit on `main`, `git push origin main` — live once `qa.yml` is green (~8 min). Drafts stay fully gated in CI, so keep editing them freely. `pnpm dev <NN>` works on drafts; `pnpm build --include-drafts` builds a full local preview.
 
 ## Adding / removing a lecture
 
