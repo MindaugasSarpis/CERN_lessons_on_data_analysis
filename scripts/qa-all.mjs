@@ -5,14 +5,21 @@
  * has an unrendered slide. This is the per-deck replacement for the old
  * single-entry `pnpm qa`.
  *
- * Usage: node scripts/qa-all.mjs [--only a,b] [--shots]
- *   --only a,b   QA only these slugs
- *   --shots      also write .qa-shots/<slug>/slide-NNN.png for review
+ * Usage: node scripts/qa-all.mjs [--only a,b | --changed-since <ref>] [--shots]
+ *   --only a,b            QA only these slugs
+ *   --changed-since <ref> QA only the decks whose slide sources changed vs <ref>
+ *                         (working tree vs merge-base; see scripts/changed-decks.mjs).
+ *                         A change to anything shared — theme, components, scripts,
+ *                         public/, decks.json, deps, CI — or an unknown ref widens to
+ *                         every deck. Zero affected decks still smoke-tests the landing.
+ *                         CI passes the last green `main` commit (or the PR base).
+ *   --shots               also write .qa-shots/<slug>/slide-NNN.png for review
  */
 import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { decideFor } from './changed-decks.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = join(ROOT, 'lectures', 'content');
@@ -21,18 +28,30 @@ const QA_DIST = join(ROOT, '.qa-dist');
 const argv = process.argv.slice(2);
 const opt = (n, d) => { const i = argv.indexOf(n); return i > -1 ? argv[i + 1] : d; };
 const ONLY = argv.includes('--only') ? opt('--only') : null;
+const SINCE = argv.includes('--changed-since') ? opt('--changed-since') : null;
 const SHOTS = argv.includes('--shots');
+if (ONLY && SINCE) { console.error('error: pass either --only or --changed-since, not both'); process.exit(2); }
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
 
-// 1) Build all decks flat (base '/') into .qa-dist/<slug>.
-const buildArgs = ['scripts/build-all.mjs', '--flat-base', '--out', '.qa-dist'];
-if (ONLY) buildArgs.push('--only', ONLY);
-const build = spawnSync('node', buildArgs, { cwd: ROOT, stdio: 'inherit' });
-if (build.status !== 0) { console.error('❌ build phase failed'); process.exit(1); }
+// Which slugs to QA: all (default), --only's list, or the decks --changed-since touches.
+let only = ONLY ? ONLY.split(',') : null;
+if (SINCE) {
+  const pick = decideFor(SINCE, ROOT);
+  console.log(`▶ --changed-since ${SINCE}: ${pick.all ? 'every deck' : `${pick.slugs.length} deck(s)`} — ${pick.reason}`);
+  only = pick.all ? null : pick.slugs;
+}
+const decks = manifest.decks.filter((d) => !only || only.includes(d.slug));
+
+// 1) Build the selected decks flat (base '/') into .qa-dist/<slug>.
+if (decks.length) {
+  const buildArgs = ['scripts/build-all.mjs', '--flat-base', '--out', '.qa-dist'];
+  if (only) buildArgs.push('--only', only.join(','));
+  const build = spawnSync('node', buildArgs, { cwd: ROOT, stdio: 'inherit' });
+  if (build.status !== 0) { console.error('❌ build phase failed'); process.exit(1); }
+}
 
 // 2) Overflow-check each deck's output dir.
-const decks = manifest.decks.filter((d) => !ONLY || ONLY.split(',').includes(d.slug));
 let bad = 0;
 const summary = [];
 for (const d of decks) {

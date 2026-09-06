@@ -31,11 +31,12 @@ Lecture sources live in `lectures/content/slides/NN_Title.md`. Decks are always 
 ```bash
 pnpm qa                            # build every deck + fail on any slide overflowing its frame
 pnpm qa --only 06-version-control  # gate just the deck you touched (fast loop)
+pnpm qa --changed-since origin/main  # gate only the decks whose slides changed vs main (what CI does)
 pnpm qa:shots                      # also write .qa-shots/<slug>/slide-NNN.png for visual review
 pnpm timing:check                  # every week must fill its 2h lecture + 2h seminar slot
 ```
 
-There are no unit tests — **`pnpm qa` (zero overflow) and `pnpm timing:check` (content sized to the slots) are the tests.** Both also run in CI on every push to `main` and on pull requests (`.github/workflows/qa.yml`); a green run on `main` goes on to deploy the site. The overflow checker re-verifies borderline slides on a fresh page before failing, so a red result is a real regression.
+There are no unit tests — **`pnpm qa` (zero overflow) and `pnpm timing:check` (content sized to the slots) are the tests.** Both also run in CI on every push to `main` and on pull requests (`.github/workflows/qa.yml`), with `pnpm qa` scoped to the decks whose slides changed since the last green `main` run (a change to anything shared — theme, components, scripts, `public/`, `decks.json`, deps — re-checks every deck); a green run on `main` goes on to deploy the site. The overflow checker re-verifies borderline slides on a fresh page before failing, so a red result is a real regression.
 
 ### Figures, videos, workbook
 

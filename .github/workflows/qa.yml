@@ -2,11 +2,16 @@ name: QA gates + deploy
 
 # One branch, one pipeline. Every push to `main` runs the course's two blocking
 # gates, and only a green run goes on to build + deploy the site to GitHub Pages:
-#   - pnpm qa           zero-overflow check of every rendered deck + landing smoke test
+#   - pnpm qa           zero-overflow check of the rendered decks + landing smoke test
 #   - pnpm timing:check every week's content sized to the 2h lecture + 2h seminar slots
-# Pull requests run the gates only (no deploy). A red run deploys nothing — the
-# previous site stays up. `workflow_dispatch` (gh workflow run qa.yml --ref main)
-# re-runs the whole pipeline on the chosen ref: the manual redeploy escape hatch.
+# `pnpm qa` is scoped to what changed: a push to `main` diffs against the last
+# GREEN run's commit (so a deck broken by an earlier red push is re-checked, not
+# skipped), a pull request diffs against its base, and anything shared — theme,
+# components, scripts, public/, decks.json, deps, this file — widens to every
+# deck (scripts/changed-decks.mjs). Pull requests run the gates only (no deploy).
+# A red run deploys nothing — the previous site stays up. `workflow_dispatch`
+# (gh workflow run qa.yml --ref main) re-runs the whole pipeline on the chosen
+# ref with every deck under QA: the manual redeploy escape hatch.
 on:
   workflow_dispatch:
   push:
@@ -15,6 +20,7 @@ on:
 
 permissions:
   contents: read
+  actions: read    # "Pick the QA base" lists this workflow's runs
   pages: write
   id-token: write
 
@@ -30,6 +36,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # --changed-since needs the base commit's history (merge-base)
 
       - uses: pnpm/action-setup@v4
         with:
@@ -64,10 +72,31 @@ jobs:
       - name: Timing gate (fast)
         run: pnpm timing:check
 
-      - name: Build + overflow-check every deck (pnpm qa)
+      # Base for `pnpm qa --changed-since`: a PR diffs against its base; a push
+      # to main against the newest green run's commit. No base (workflow_dispatch,
+      # or no green run yet) = every deck.
+      - name: Pick the QA base
+        id: base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            ref="${{ github.event.pull_request.base.sha }}"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            # fail-open: any lookup error leaves ref empty → every deck
+            ref="$(gh run list --workflow qa.yml --branch main --status success --limit 1 --json headSha --jq '.[0].headSha // empty' || true)"
+          else
+            ref=""
+          fi
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+          echo "QA base: ${ref:-<none: every deck>}"
+
+      - name: Build + overflow-check the changed decks (pnpm qa)
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-        run: pnpm qa
+          QA_BASE: ${{ steps.base.outputs.ref }}
+        run: |
+          if [ -n "$QA_BASE" ]; then pnpm qa --changed-since "$QA_BASE"; else pnpm qa; fi
 
   build:
     # Only a green `qa` job reaches here, and never from a pull request.
