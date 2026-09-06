@@ -7,7 +7,8 @@ Lecture 2 is the *what*: data itself.
 
 ## What the lecture covers
 
-1. **Introductions** — a short ATLAS clip as the cold open, then a show of hands:
+1. **Introductions** — a Google Earth pull-back from the Physics Faculty to the
+   cosmos as the cold open, then a show of hands:
    your field, your operating system, whether you have written code before.
 2. **The course** — lectures and seminars, the 16-lecture map in five blocks, and
    the weekly schedule (lecture only in week 1; lecture + seminar every Tuesday

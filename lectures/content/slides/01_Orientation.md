@@ -23,9 +23,9 @@ brief is self-paced — the last slide says so. (~2 min)
 hideInToc: true
 ---
 
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+<VideoPlayer src="VU_VM_Zoom.mp4" />
 
-<!-- Cold open (0:49): ATLAS — model, cavern, control room. Let it run before a word of admin; the same clip returns in the reel's Act III as a callback. Pass 2: swap for cern_video_2015_024_001.mp4, the 2:51 closer that ends on the Higgs bump. -->
+<!-- Cold open (2:31): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth, the Milky Way, the Sun, a star-streak dash to black. Release asset VU_VM_Zoom.mp4 (the "lt_zoom" clip; HEVC, same browser caveat as the rest of pass 1). Let it run before a word of admin: the reel's Act I picks up where it leaves off. The ATLAS overview clip now plays only in Act III. Pass 2: same clip re-encoded H.264 under a snake_case name. -->
 
 ---
 hideInToc: true

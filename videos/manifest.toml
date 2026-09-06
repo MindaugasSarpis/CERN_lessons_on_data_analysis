@@ -190,6 +190,13 @@ name    = "VU_VM.mp4"
 profile = "standard-tight"
 used_in = []  # retired with the crash-course deck; a faculty clip replaces it in reel pass 2; stays on the release
 notes   = "Re-encoded from 20 Mbps H.264 master — wasteful bitrate for slide use"
+
+[[videos]]
+name    = "VU_VM_Zoom.mp4"
+profile = "remux"
+used_in = ["L01"]
+notes   = "Google Earth pull-back from the Physics Faculty (Saulėtekis) to the cosmos, 2:31, HEVC 3.1 Mbps 1080p60 + AAC. L01 cold open since 2026-09-06 (the maintainer's 'lt_zoom'). Formerly the orphan VU_VM_Zoom web copy; the release asset is .mp4. Pass 2: H.264 re-encode under a snake_case name."
+
 [[videos]]
 name    = "CPU_vs_GPU_Demo.mp4"
 profile = "remux"
