@@ -3,6 +3,7 @@ import '@fontsource/space-grotesk/500.css';
 import '@fontsource/space-grotesk/700.css';
 import './style.css';
 import { createField } from './sim.js';
+import { playSwoosh } from './sound.js';
 
 const html = document.documentElement;
 html.classList.add('js');
@@ -55,8 +56,13 @@ if (field) {
 }
 
 // Row navigation polish — independent of the WebGL field:
-// hover prefetches the deck's entry HTML; a plain left-click fades the page
-// out before navigating (modified clicks keep browser defaults).
+// hover prefetches the deck's entry HTML; a plain left-click plays a short
+// low swoosh (sound.js) and fades the page out before navigating (modified
+// clicks keep browser defaults). The swoosh rides the click — the only
+// trigger browsers allow without prior interaction — and is skipped under
+// reduced motion, where the exit is instant anyway. ?qa records the result
+// in sessionStorage (survives the navigation) for check-landing.mjs.
+const qa = new URLSearchParams(location.search).has('qa');
 const prefetched = new Set();
 document.querySelectorAll('a.row').forEach((a) => {
   a.addEventListener('pointerenter', () => {
@@ -70,6 +76,8 @@ document.querySelectorAll('a.row').forEach((a) => {
   a.addEventListener('click', (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
+    const swoosh = reduced ? { played: false, reason: 'reduced-motion' } : playSwoosh();
+    if (qa) { try { sessionStorage.setItem('qaSwoosh', JSON.stringify(swoosh)); } catch { /* noop */ } }
     html.classList.add('leaving');
     setTimeout(() => { location.href = a.href; }, reduced ? 0 : 320);
   });

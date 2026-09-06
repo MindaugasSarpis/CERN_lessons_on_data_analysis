@@ -6,7 +6,8 @@
  * scene-or-fallback gating (field-on | static-bg), reveal-on-scroll, the
  * reduced-motion fallback, zero console/page errors, and (with ?qa +
  * preserveDrawingBuffer) that the WebGL scene renders non-blank pixels and
- * that scroll moves the camera (via the ?qa-gated window.__qaCam hook).
+ * that scroll moves the camera (via the ?qa-gated window.__qaCam hook), and
+ * that a row click plays the exit swoosh (?qa-gated sessionStorage record).
  *
  * Usage: node scripts/check-landing.mjs <distDir> [--base <prefix>]
  * Exit 0 = pass; 1 = failures; 2 = usage.
@@ -52,9 +53,18 @@ const MIME = {
   '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.woff': 'font/woff', '.woff2': 'font/woff2',
 };
+// Paths served as a blank same-origin page instead of from distDir. Pass 5
+// clicks a deck row: the deck itself is not part of the landing build, and a
+// 404 would log a console error — from the hover prefetch too, which bypasses
+// Playwright's route interception, so the stub has to live in the server.
+const STUB_PATHS = new Set();
 const server = createServer(async (req, res) => {
   try {
     const url = decodeURIComponent(req.url.split('?')[0]);
+    if (STUB_PATHS.has(url)) {
+      res.setHeader('Content-Type', 'text/html');
+      return res.end('<!doctype html><title>stub</title>');
+    }
     let fp = normalize(join(distDir, url));
     if (!fp.startsWith(normalize(distDir))) { res.statusCode = 403; return res.end(); }
     let s = await stat(fp).catch(() => null);
@@ -249,6 +259,37 @@ try {
         }
         ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
       }
+    } catch (e) {
+      ok(false, `pass aborted: ${e.message}`);
+    } finally {
+      if (ctx) await ctx.close().catch(() => {});
+    }
+  }
+  console.log('— pass 5: row click → swoosh + fade-out + navigation (?qa) —');
+  {
+    let ctx;
+    try {
+      const ctx5 = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'no-preference' });
+      ctx = ctx5;
+      const page = await ctx5.newPage();
+      const errors = [];
+      page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+      page.on('pageerror', (e) => errors.push(String(e)));
+      await page.goto(home + '?qa', { waitUntil: 'load' });
+      await page.waitForFunction(() => document.documentElement.classList.contains('js'), null, { timeout: 15000 });
+      // The click lands on a blank same-origin stub (STUB_PATHS, served by
+      // our server) so sessionStorage survives the navigation and nothing 404s.
+      const row = page.locator('a.row').first();
+      const href = await row.getAttribute('href');
+      STUB_PATHS.add(new URL(href, home).pathname);
+      await row.click();
+      await page.waitForURL(new URL(href, home).href, { timeout: 5000 });
+      // ?qa: main.js records the swoosh result in sessionStorage (see sound.js).
+      const swoosh = await page.evaluate(() => {
+        try { return JSON.parse(sessionStorage.getItem('qaSwoosh')); } catch { return null; }
+      });
+      ok(swoosh && swoosh.played === true, `row click played the swoosh${swoosh ? ` (ctx ${swoosh.state})` : ' (no record)'}`);
+      ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
     } catch (e) {
       ok(false, `pass aborted: ${e.message}`);
     } finally {
