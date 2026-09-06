@@ -183,7 +183,7 @@ Stop seeing finished apps. Start seeing the **data and the decisions** underneat
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🎓 **The good news**
+## 🎓 **The same skills power all of it**
 
 The same handful of skills — files, code, statistics, reproducibility — powers *all* of it. Learn them once; apply them anywhere.
 
@@ -588,7 +588,7 @@ The higher the stakes (health, policy, money), the stronger the governance.
 
 <div class="card card-warning card-glass pad-compact">
 
-## 📖 **Stories ship insight**
+## 📖 **Numbers need a narrative**
 
 Numbers change nothing until they land as a narrative a decision-maker can act on.
 

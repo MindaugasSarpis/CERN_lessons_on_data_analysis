@@ -13,7 +13,7 @@ title: "Orientation & Motivation"
 
 <!--
 Speaker: welcome them, introduce yourself briefly, and set the tone — this is a
-practical course, not a lecture course. Everything is graded on one project that
+practical course, not a lecture course. Everything is graded on one project
 of the student's own choosing; the seminars are where the skills get practised. Ask what fields are in the room. (~2 min)
 -->
 
@@ -945,7 +945,7 @@ Real data carries noise, background, and quirks a clean textbook set never shows
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-## ♻️ **It models the whole point**
+## ♻️ **The four aims in miniature**
 
 Open data, recorded provenance, a rebuildable analysis — the seminar exercises are the four aims in miniature, on data the whole world can inspect.
 
@@ -1043,7 +1043,7 @@ If that is true of your project, you've succeeded. Every practice in this course
 
 </div>
 
-<div class="note-text mt-md">Reproducibility isn't a chore you bolt on at the end — it's the property that makes everything else trustworthy.</div>
+<div class="note-text mt-md">Reproducibility is the property that makes everything else trustworthy, not a chore you bolt on at the end.</div>
 
 ---
 hideInToc: true
@@ -1485,7 +1485,7 @@ Thousands of scientists share one codebase — impossible without version contro
 
 <div class="card card-accent card-glass pad-tight reveal-up">
 
-## 🐍 **Turning Signal into Insight**
+## 🐍 **Turning Readings into Physics**
 
 Python and data-analysis tools transform readings into physics.
 
