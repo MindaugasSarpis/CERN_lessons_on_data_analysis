@@ -23,9 +23,9 @@ brief is self-paced — the last slide says so. (~2 min)
 hideInToc: true
 ---
 
-<VideoPlayer src="VU_VM_Zoom.mp4" />
+<VideoPlayer src="ff_zoom_master.mp4" />
 
-<!-- Cold open (2:31): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth, the Milky Way, the Sun, a star-streak dash to black. Release asset VU_VM_Zoom.mp4 (the "lt_zoom" clip; HEVC, same browser caveat as the rest of pass 1). Let it run before a word of admin: the reel's Act I picks up where it leaves off. The ATLAS overview clip now plays only in Act III. Pass 2: same clip re-encoded H.264 under a snake_case name. -->
+<!-- Cold open (4:42): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth from orbit, the Sun, a star-streak run through the Milky Way, deep space, and it ends on the cosmic web. Release asset ff_zoom_master.mp4 (1080p60 H.264, plays on every browser; encoded from the maintainer's 2026-09-06 master). Let it run before a word of admin: the reel's Act I picks up where it leaves off. The ATLAS overview clip now plays only in Act III. -->
 
 ---
 hideInToc: true

@@ -82,6 +82,18 @@ PROFILES: dict[str, list[str]] = {
         "-c:a", "aac", "-b:a", "192k", "-ac", "2",
         "-movflags", "+faststart",
     ],
+    # H.264 for clips that must play on every browser: the HEVC profiles above
+    # show "Video not available" on Firefox, Linux Chrome and headless Chromium.
+    # CRF 22 capped at 8 Mbps (VBV) keeps a 1080p60 star-field under ~10 Mbps.
+    "web-h264": [
+        "-c:v", "libx264", "-profile:v", "high", "-level", "4.2",
+        "-preset", "slow", "-crf", "22", "-maxrate", "8M", "-bufsize", "16M",
+        "-pix_fmt", "yuv420p",
+        "-vf", "scale='min(1920,iw)':-2",
+        "-c:a", "aac", "-b:a", "160k", "-ac", "2",
+        "-dn", "-write_tmcd", "0",  # no editor timecode track (the muxer rebuilds tmcd from the timecode tag unless told not to)
+        "-movflags", "+faststart",
+    ],
 }
 
 
