@@ -7,7 +7,9 @@
  * reduced-motion fallback, zero console/page errors, and (with ?qa +
  * preserveDrawingBuffer) that the WebGL scene renders non-blank pixels and
  * that scroll moves the camera (via the ?qa-gated window.__qaCam hook), and
- * that a row click plays the exit swoosh (?qa-gated sessionStorage record).
+ * that a row click plays the exit swoosh, a first gesture off a row starts the
+ * low hum, and arriving from a deck link schedules it on open (?qa-gated
+ * sessionStorage records).
  *
  * Usage: node scripts/check-landing.mjs <distDir> [--base <prefix>]
  * Exit 0 = pass; 1 = failures; 2 = usage.
@@ -53,17 +55,19 @@ const MIME = {
   '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.woff': 'font/woff', '.woff2': 'font/woff2',
 };
-// Paths served as a blank same-origin page instead of from distDir. Pass 5
+// Paths served as a small same-origin page instead of from distDir. Pass 5
 // clicks a deck row: the deck itself is not part of the landing build, and a
 // 404 would log a console error — from the hover prefetch too, which bypasses
 // Playwright's route interception, so the stub has to live in the server.
-const STUB_PATHS = new Set();
+// Pass 7 uses the stub's "home" link to arrive at the landing from a deck.
+const STUB_PATHS = new Map(); // pathname → html body
+const STUB_HTML = '<!doctype html><title>stub</title><a id="home" href="/?qa">home</a>';
 const server = createServer(async (req, res) => {
   try {
     const url = decodeURIComponent(req.url.split('?')[0]);
     if (STUB_PATHS.has(url)) {
       res.setHeader('Content-Type', 'text/html');
-      return res.end('<!doctype html><title>stub</title>');
+      return res.end(STUB_PATHS.get(url));
     }
     let fp = normalize(join(distDir, url));
     if (!fp.startsWith(normalize(distDir))) { res.statusCode = 403; return res.end(); }
@@ -281,14 +285,74 @@ try {
       // our server) so sessionStorage survives the navigation and nothing 404s.
       const row = page.locator('a.row').first();
       const href = await row.getAttribute('href');
-      STUB_PATHS.add(new URL(href, home).pathname);
+      STUB_PATHS.set(new URL(href, home).pathname, STUB_HTML);
       await row.click();
       await page.waitForURL(new URL(href, home).href, { timeout: 5000 });
-      // ?qa: main.js records the swoosh result in sessionStorage (see sound.js).
-      const swoosh = await page.evaluate(() => {
-        try { return JSON.parse(sessionStorage.getItem('qaSwoosh')); } catch { return null; }
+      // ?qa: main.js records the sound results in sessionStorage (see sound.js).
+      const rec = await page.evaluate(() => {
+        const get = (k) => { try { return JSON.parse(sessionStorage.getItem(k)); } catch { return null; } };
+        return { swoosh: get('qaSwoosh'), hum: get('qaHum') };
       });
+      const { swoosh, hum } = rec;
       ok(swoosh && swoosh.played === true, `row click played the swoosh${swoosh ? ` (ctx ${swoosh.state})` : ' (no record)'}`);
+      ok(hum === null, `row click did not start the hum${hum ? ` (got ${JSON.stringify(hum)})` : ''}`);
+      ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
+    } catch (e) {
+      ok(false, `pass aborted: ${e.message}`);
+    } finally {
+      if (ctx) await ctx.close().catch(() => {});
+    }
+  }
+  console.log('— pass 6: first gesture off a row → hum (?qa) —');
+  {
+    let ctx;
+    try {
+      const ctx6 = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'no-preference' });
+      ctx = ctx6;
+      const page = await ctx6.newPage();
+      const errors = [];
+      page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+      page.on('pageerror', (e) => errors.push(String(e)));
+      await page.goto(home + '?qa', { waitUntil: 'load' });
+      await page.waitForFunction(() => document.documentElement.classList.contains('js'), null, { timeout: 15000 });
+      await page.waitForTimeout(600);
+      const getHum = () => page.evaluate(() => {
+        try { return JSON.parse(sessionStorage.getItem('qaHum')); } catch { return null; }
+      });
+      ok((await getHum()) === null, 'cold open is silent (no hum before a gesture)');
+      // A click on the hero copy — not a row, not a link.
+      await page.locator('.hero .kicker').click();
+      await page.waitForTimeout(200);
+      const hum = await getHum();
+      ok(hum && hum.played === true && hum.via === 'gesture', `first gesture started the hum${hum ? ` (ctx ${hum.state})` : ' (no record)'}`);
+      ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
+    } catch (e) {
+      ok(false, `pass aborted: ${e.message}`);
+    } finally {
+      if (ctx) await ctx.close().catch(() => {});
+    }
+  }
+
+  console.log('— pass 7: arriving from a deck link → hum on open (?qa) —');
+  {
+    let ctx;
+    try {
+      const ctx7 = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'no-preference' });
+      ctx = ctx7;
+      const page = await ctx7.newPage();
+      const errors = [];
+      page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+      page.on('pageerror', (e) => errors.push(String(e)));
+      STUB_PATHS.set('/from-deck/', STUB_HTML);
+      await page.goto(home + 'from-deck/', { waitUntil: 'load' });
+      await page.locator('#home').click();
+      await page.waitForURL(home + '?qa', { timeout: 5000 });
+      await page.waitForFunction(() => document.documentElement.classList.contains('js'), null, { timeout: 15000 });
+      await page.waitForTimeout(300);
+      const hum = await page.evaluate(() => {
+        try { return JSON.parse(sessionStorage.getItem('qaHum')); } catch { return null; }
+      });
+      ok(hum && hum.played === true && hum.via === 'load', `same-origin arrival scheduled the hum on open${hum ? ` (ctx ${hum.state})` : ' (no record)'}`);
       ok(errors.length === 0, `no console/page errors${errors.length ? ` — got: ${errors.join(' | ').slice(0, 300)}` : ''}`);
     } catch (e) {
       ok(false, `pass aborted: ${e.message}`);

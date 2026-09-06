@@ -1,30 +1,29 @@
-// Exit swoosh — a short, low "whoosh" played when a lecture row is clicked,
-// under the 320 ms fade-out in main.js. Synthesised with Web Audio (no asset,
-// no licence, deterministic): a burst of white noise through a resonant
-// low-pass whose cutoff sweeps up then down, shaped by a fast-attack /
-// exponential-release gain envelope. The gesture is ~40 dB down by 0.34 s,
-// so the navigation at 320 ms never cuts an audible tail.
+// Landing sounds, synthesised with Web Audio (no assets, no licences,
+// deterministic). Two voices:
 //
-// Autoplay policy: the AudioContext is created lazily INSIDE the click
-// handler (a user gesture), which is what unlocks audio on iOS/Safari and
-// keeps Chrome from logging "AudioContext was not allowed to start". Every
-// failure path returns { played: false } quietly — the landing smoke test
-// asserts zero console errors, and a rejected play/resume promise would log
-// one. There is no prefers-reduced-sound media query, so the caller decides
-// whether to invoke this at all (main.js skips it under reduced motion).
-
-// PEAK is the pre-filter gain: the low-pass keeps only a few % of white
-// noise's power, so 0.7 here lands the OUTPUT peak near -14 dBFS (~0.2
-// linear) — a cushion, not an effect. Rendered offline via
-// OfflineAudioContext to check; re-measure if you retune the filter.
-const PEAK = 0.7;
-const ATTACK = 0.06;      // s to peak
-const LENGTH = 0.34;      // s to -40 dB; the nav at 320 ms cuts nothing audible
-const FLOOR = 0.01;       // release target, relative to PEAK (-40 dB)
-const F_START = 160;      // Hz, cutoff at t=0 (dark)
-const F_TOP = 900;        // Hz, cutoff at the crest of the sweep
-const F_END = 120;        // Hz, cutoff at the tail (drops "low")
-const Q = 1.4;            // resonance: a hint of "voice" on the sweep
+//   playHum()    — a low drone that swells in, holds, and fades out over ~8 s:
+//                  the "machine waking up" moment under the particle intro.
+//                  Two detuned sawtooths on a 55 Hz fundamental (the beat
+//                  between them is the movement) plus a sine an octave up so
+//                  small laptop speakers, which reproduce little below ~150 Hz,
+//                  still hear it; all through a resonant low-pass whose cutoff
+//                  opens with the swell and breathes on a slow LFO.
+//   playSwoosh() — a ~0.32 s low whoosh under the exit fade when a lecture row
+//                  is clicked: white noise through a resonant low-pass that
+//                  sweeps up then down, fast attack / exponential release.
+//
+// Autoplay policy: browsers keep an AudioContext suspended until the page has
+// seen a click, tap, or key press (hover and scroll don't count). warmAudio()
+// is called from those gestures in main.js: it creates the context once and
+// resumes it, so a sound scheduled later starts without the audio device's
+// open latency (a cold device can take longer than the exit fade). Nodes are
+// scheduled against ctx.currentTime, which does not advance while suspended,
+// so a sound scheduled before the unlock plays intact from the unlock.
+//
+// Every failure path returns { played: false } quietly: the landing smoke
+// test asserts zero console errors, and a rejected resume() would log one.
+// There is no prefers-reduced-sound media query — main.js decides (it plays
+// nothing under reduced motion).
 
 let ctx = null;
 let noise = null;
@@ -37,6 +36,91 @@ function getContext() {
   return ctx;
 }
 
+// Create the context (if needed) and ask it to run. Idempotent; call from a
+// user gesture. Returns the context or null when Web Audio is unavailable.
+export function warmAudio() {
+  const ac = getContext();
+  if (ac && ac.state !== 'running') { try { ac.resume().catch(() => {}); } catch { /* noop */ } }
+  return ac;
+}
+
+// ---------------------------------------------------------------- hum ----
+const HUM_F0 = 55;          // Hz, fundamental (A1)
+const HUM_DETUNE = 7;       // cents between the two saws → slow beating
+const HUM_PEAK = 0.12;      // master gain; output peaks near -12 dBFS
+const HUM_ATTACK = 1.5;     // s, swell
+const HUM_HOLD = 4.5;       // s, end of the plateau
+const HUM_END = 8.0;        // s, -40 dB
+const HUM_CUT_LO = 90;      // Hz, cutoff closed (start / tail)
+const HUM_CUT_HI = 320;     // Hz, cutoff open (plateau)
+const HUM_LFO_HZ = 0.25;    // cutoff breathing rate
+const HUM_LFO_DEPTH = 40;   // Hz, ± on the cutoff
+const HUM_Q = 1.8;
+
+export function playHum() {
+  const ac = getContext();
+  if (!ac) return { played: false, reason: 'no-webaudio' };
+  try {
+    const t0 = ac.currentTime;
+    const sawA = ac.createOscillator();
+    sawA.type = 'sawtooth'; sawA.frequency.value = HUM_F0;
+    const sawB = ac.createOscillator();
+    sawB.type = 'sawtooth'; sawB.frequency.value = HUM_F0; sawB.detune.value = HUM_DETUNE;
+    const octave = ac.createOscillator();
+    octave.type = 'sine'; octave.frequency.value = HUM_F0 * 2;
+    const octaveGain = ac.createGain();
+    octaveGain.gain.value = 0.35;
+
+    const filter = ac.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.Q.value = HUM_Q;
+    filter.frequency.setValueAtTime(HUM_CUT_LO, t0);
+    filter.frequency.exponentialRampToValueAtTime(HUM_CUT_HI, t0 + HUM_ATTACK + 1.0);
+    filter.frequency.setValueAtTime(HUM_CUT_HI, t0 + HUM_HOLD);
+    filter.frequency.exponentialRampToValueAtTime(HUM_CUT_LO, t0 + HUM_END);
+
+    const lfo = ac.createOscillator();
+    lfo.type = 'sine'; lfo.frequency.value = HUM_LFO_HZ;
+    const lfoGain = ac.createGain();
+    lfoGain.gain.value = HUM_LFO_DEPTH;
+    lfo.connect(lfoGain).connect(filter.frequency);
+
+    const master = ac.createGain();
+    master.gain.setValueAtTime(0.0001, t0);
+    master.gain.linearRampToValueAtTime(HUM_PEAK, t0 + HUM_ATTACK);
+    master.gain.setValueAtTime(HUM_PEAK, t0 + HUM_HOLD);
+    master.gain.exponentialRampToValueAtTime(HUM_PEAK * 0.01, t0 + HUM_END);
+    master.gain.linearRampToValueAtTime(0, t0 + HUM_END + 0.05);
+
+    sawA.connect(filter); sawB.connect(filter);
+    octave.connect(octaveGain).connect(filter);
+    filter.connect(master).connect(ac.destination);
+
+    const stopAt = t0 + HUM_END + 0.1;
+    for (const o of [sawA, sawB, octave, lfo]) { o.start(t0); o.stop(stopAt); }
+    sawA.onended = () => {
+      try { for (const n of [sawA, sawB, octave, octaveGain, lfo, lfoGain, filter, master]) n.disconnect(); } catch { /* noop */ }
+    };
+    return { played: true, state: ac.state };
+  } catch (e) {
+    return { played: false, reason: String(e && e.message || e) };
+  }
+}
+
+// ------------------------------------------------------------- swoosh ----
+// PEAK is the pre-filter gain: the low-pass keeps only a few % of white
+// noise's power, so 0.7 here lands the OUTPUT peak near -13 dBFS (~0.23
+// linear) — a cushion, not an effect. Rendered offline via
+// OfflineAudioContext to check; re-measure if you retune the filter.
+const PEAK = 0.7;
+const ATTACK = 0.06;      // s to peak
+const LENGTH = 0.34;      // s to -40 dB; the nav at 320 ms cuts nothing audible
+const FLOOR = 0.01;       // release target, relative to PEAK (-40 dB)
+const F_START = 160;      // Hz, cutoff at t=0 (dark)
+const F_TOP = 900;        // Hz, cutoff at the crest of the sweep
+const F_END = 120;        // Hz, cutoff at the tail (drops "low")
+const Q = 1.4;            // resonance: a hint of "voice" on the sweep
+
 function getNoise(ac) {
   if (noise) return noise;
   const n = Math.ceil(ac.sampleRate * (LENGTH + 0.05));
@@ -47,7 +131,6 @@ function getNoise(ac) {
   return noise;
 }
 
-// Play the swoosh now. Returns a small record for the ?qa hook.
 export function playSwoosh() {
   const ac = getContext();
   if (!ac) return { played: false, reason: 'no-webaudio' };
