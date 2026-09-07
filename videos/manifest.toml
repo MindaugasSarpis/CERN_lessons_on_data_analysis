@@ -200,6 +200,12 @@ used_in = ["L01"]
 notes   = "L01 cold open. Maintainer's 2026-09-06 master FF_Zoom_Master.mp4 (4K60 H.264 254 Mbps, 8.97 GB, 4:42, -16.8 LUFS integrated): Google Earth pull-back from the Physics Faculty at Saulėtekis to Earth, the Sun, the Milky Way and out to the cosmic web. Raw on Drive under the master's name — link or copy it into videos/raw/ as ff_zoom_master.mp4 before `videos:encode`."
 
 [[videos]]
+name    = "lhcb_thanks.mp4"
+profile = "web-h264"
+used_in = ["L01"]
+notes   = "L01 closing slide: LHCb detector fly-through (VELO, RICH, magnet, trackers, calorimeters, muon stations) ending on 'Thanks for Your Attention', 2:28. Raw = the maintainer's Drive master videos/released/lhcb_thanks.mp4 (H.264 1080p30 16 Mbps, 303 MB); the April dist-portable LHCb_Thanks.mp4 copies are the same edit."
+
+[[videos]]
 name    = "VU_VM_Zoom.mp4"
 profile = "remux"
 used_in = []  # 2:31 HEVC cut of the same pull-back; superseded by ff_zoom_master.mp4 on 2026-09-06, stays on the release

@@ -1534,3 +1534,11 @@ Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills 
 Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 15 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="lhcb_thanks.mp4" />
+
+<!-- Closing (2:28): LHCb detector fly-through — VELO, RICH, magnet, trackers, calorimeters, muon stations — ending on "Thanks for Your Attention". The detector behind the seminar dataset; let it run while the room packs up. Release asset lhcb_thanks.mp4 (H.264 web-h264 encode of the maintainer's Drive master, plays on every browser). -->
