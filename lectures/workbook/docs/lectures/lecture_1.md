@@ -1,8 +1,8 @@
 # 1: Orientation & Motivation
 
-Lecture 1 is the *why*: who is in the room, how the course works, what you are
-graded on, and a first look at CERN — four context slides and a motivation reel
-that runs from the cosmos down to a particle track and into the LHC tunnels.
+Lecture 1 is the *why*: who is in the room, then a motivation reel that runs
+from the cosmos down to a particle track and into the LHC tunnels, and after
+the break how the course works and what you are graded on.
 Lecture 2 is the *what*: data itself.
 
 ## What the lecture covers
@@ -10,23 +10,28 @@ Lecture 2 is the *what*: data itself.
 1. **Introductions** — a Google Earth pull-back from the Physics Faculty to the
    cosmos as the cold open, then a show of hands:
    your field, your operating system, whether you have written code before.
-2. **The course** — lectures and seminars, the 16-lecture map in five blocks, and
+2. **Logistics** — lectures and seminars, the 16-lecture map in five blocks, and
    the weekly schedule (lecture only in week 1; lecture + seminar every Tuesday
    from week 2).
-3. **The four aims** — 🔧 tool-agnosticism, ♻️ reproducibility, ⚙️ automation,
+3. **The reel** — from the cosmos to the quantum: a drone ascent, Cassini at
+   Saturn, Mars, telescopes and the expanding universe, then down to plasma,
+   atoms and a cloud chamber.
+4. **What is CERN** — four slides (the organisation, the LHC, the accelerator
+   chain, how a detector sees a collision), then the CERN clips: the site,
+   the ATLAS shaft and cavern, LHCb, the FCC — with time to talk about them.
+5. **Why you need these skills** — CERN's toolkit is this course's toolkit.
+   *Break.*
+6. **The four aims** — 🔧 tool-agnosticism, ♻️ reproducibility, ⚙️ automation,
    📁 efficient work with data & files — each as a before/after pair drawn from
    real projects, and how they reinforce each other.
-4. **Grading and your project** — one course-long project of your own choice,
+7. **Grading and your project** — one course-long project of your own choice,
    graded on the four aims; deliverables: repository, one-page report, short
    video, final presentation.
-5. **How this course works** — the lecture/seminar week, what "done" looks like
+8. **How this course works** — the lecture/seminar week, what "done" looks like
    each week, how to succeed, what the course is not.
-6. **Seminars & your project** — why real, open data; what the sixteen seminars
+9. **Seminars & your project** — why real, open data; what the sixteen seminars
    cover; the project tree and the golden rule.
-7. **The reel** — from the cosmos to the quantum, then four slides on CERN (the
-   organisation, the LHC, the accelerator chain, how a detector sees a
-   collision), then inside CERN.
-8. **Why you need these skills**, and the homework before next Tuesday.
+10. **Homework** before next Tuesday.
 
 ## Before next Tuesday (there is no seminar in week 1)
 
