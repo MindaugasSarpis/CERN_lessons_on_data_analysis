@@ -321,7 +321,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-tight">
 
-## ❌ **"It worked on my laptop"**
+## ❌ **“It worked on my laptop”**
 
 - The result exists — as a screenshot in an old email
 - Rebuilding it needs a specific person, machine, and mood
@@ -335,7 +335,7 @@ hideInToc: true
 ## ✅ **Anyone can rerun it**
 
 - Data, code, and environment are recorded together
-- One documented command rebuilds every figure and number
+- One command rebuilds every figure and number
 - A new team member reproduces the result on day one
 - "What changed?" has an exact, versioned answer
 
@@ -693,7 +693,7 @@ graph LR
 hideInToc: true
 ---
 
-# What **"Done"** Looks Like Each Week
+# What **“Done”** Looks Like Each Week
 
 <div class="card card-success card-glass pad-tight mt-md">
 
@@ -830,7 +830,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="It's week 5. You attend every lecture but skip the seminars because you 'get the ideas already'. Why is this the riskiest habit in this course?"
+  question="It's week 5. You attend every lecture but skip the seminars because you ‘get the ideas already’. Why is this the riskiest habit in this course?"
   :options="[
     'Lectures carry the marks, so the seminars are the part you can afford to miss',
     'The seminars are where an idea becomes a working skill, and the project is graded on skills',
@@ -915,13 +915,41 @@ graph LR
     F --> V[✅ Mass ± error]
 ```
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-This is the whole arc in one line — and every box is a seminar. The same shape fits any dataset: swap "compute mass" for "compute your variable" and the pipeline is your project's.
+This is the whole arc in one line — and every box is built in the seminars. The same shape fits any dataset: swap "compute mass" for "compute your variable" and the pipeline is your project's.
 
 </div>
 
-<div class="note-text mt-sm">By the end, one command walks the entire chain, raw to result, untouched by hand.</div>
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📥 **Raw → Clean**
+
+S3–S9: the raw file as bytes, a clean project structure, a data-quality audit
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📊 **Compute → Histogram**
+
+S10–S11: first figure, then value ± error
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📈 **Fit → Result**
+
+S12–S14: the fit, tidy tables, a rebuild in one command
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">By the end, one command walks the entire chain, raw to result, untouched by hand.</div>
 
 ---
 hideInToc: true
@@ -974,6 +1002,26 @@ If that is true of your project, you've succeeded. Every practice in this course
 
 </div>
 
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🗑️ **Safe to delete — it regenerates**
+
+`data/processed/`, `results/`, every figure, table and number in the report: outputs of the scripts, never edited by hand.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔒 **The recipe — keep it**
+
+`data/raw/` (cannot be regenerated), `scripts/` (every step), plus `environment.yml`, `Makefile` and `README.md` — the instructions for the rebuild.
+
+</div>
+
+</div>
+
 <div class="note-text mt-md">Reproducibility isn't a chore you bolt on at the end — it's the property that makes everything else trustworthy.</div>
 
 ---
@@ -981,7 +1029,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="The 'golden rule' of a reproducible project says you could delete everything except two folders and rebuild the whole analysis with one command. Which two folders?"
+  question="The ‘golden rule’ of a reproducible project says you could delete everything except two folders and rebuild the whole analysis with one command. Which two folders?"
   :options="[
     'results/ and data/processed/',
     'data/raw/ and scripts/',
@@ -989,7 +1037,7 @@ hideInToc: true
     'README.md and results/'
   ]"
   :correct="1"
-  explanation="Raw data can't be regenerated, and scripts encode every step that turns it into results. Keep those two and everything else — cleaned tables, figures, numbers — can be rebuilt automatically. (The Makefile and environment.yml stay too: they are part of the recipe, not results.) That's reproducibility and automation working together."
+  explanation="Raw data can't be regenerated, and scripts encode every step that turns it into results. Keep those two and everything else — cleaned tables, figures, numbers — can be rebuilt automatically. (The Makefile, environment.yml and README stay too: they are part of the recipe, not results.) That's reproducibility and automation working together."
 />
 
 ---
@@ -1188,7 +1236,7 @@ hideInToc: true
 
 ## 🌍 **By the Numbers**
 
-🔬 World's **largest** particle physics laboratory · 👩‍🔬 **17,000+** scientists from **110+ nations** · 🏗️ Operating since **1954** · 🧪 Home to the **Large Hadron Collider**
+🔬 World's **largest** particle physics laboratory · 👥 **17,000+** scientists from **110+ nations** · 🏗️ Operating since **1954** · 🧪 Home to the **Large Hadron Collider**
 
 </div>
 
@@ -1252,25 +1300,25 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact reveal-left">
 
-1️⃣ **LINAC4** — a linear accelerator kicks things off: **160 MeV**
+**1. LINAC4** — a linear accelerator kicks things off: **160 MeV**
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact reveal-left">
 
-2️⃣ **PS Booster → Proton Synchrotron** — first rings: **2 GeV → 26 GeV**
+**2. PS Booster → Proton Synchrotron** — first rings: **2 GeV → 26 GeV**
 
 </div>
 
 <div class="card card-accent card-glass pad-compact reveal-left">
 
-3️⃣ **Super Proton Synchrotron (SPS)** — 7 km ring: **450 GeV**
+**3. Super Proton Synchrotron (SPS)** — 7 km ring: **450 GeV**
 
 </div>
 
 <div class="card card-success card-glass pad-compact reveal-left">
 
-4️⃣ **LHC** — 27 km ring: **6.8 TeV per beam** *(Run 3)* — then the beams are made to cross inside the detectors
+**4. LHC** — 27 km ring: **6.8 TeV per beam** *(Run 3)* — then the beams are made to cross inside the detectors
 
 </div>
 
