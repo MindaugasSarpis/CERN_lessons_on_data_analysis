@@ -9,6 +9,10 @@
 #   2. Add an entry below with the right profile
 #   3. `pnpm videos:encode`  - regenerates web copies (idempotent)
 #   4. `pnpm videos:publish` - uploads to GH Release for the deployed build
+#   5. (optional) `hq = true` on an entry + `pnpm videos:encode-hq` - writes a
+#      venue-quality HEVC copy to lectures/content/public/videos-hq/ (gitignored,
+#      never published). `pnpm dev` plays it first; a `--keep-videos` build
+#      falls back to it offline. Size/res via [defaults] hq_bitrate/hq_long_edge_px.
 #
 # Profiles:
 #   remux       - lossless stream copy + faststart. Use when source is already
@@ -24,6 +28,8 @@
 source_remote = "gdrive:CERN_videos/raw"
 release_tag   = "videos"
 max_size_mb   = 200  # fail encoding if output exceeds this
+hq_long_edge_px = 2560  # HQ tier: 1440p (the master is 4K60; 3840 keeps it, ~2x the size)
+hq_bitrate      = "24M" # HQ tier: HEVC target bitrate (24 Mbps ≈ 850 MB for the 4:42 cold open)
 
 # ---------------------------------------------------------------------------
 # L02 — Introduction to CERN (background loops, CERN footage, astronomy reels)
@@ -196,6 +202,7 @@ notes   = "Re-encoded from 20 Mbps H.264 master — wasteful bitrate for slide u
 [[videos]]
 name    = "ff_zoom_master.mp4"
 profile = "web-h264"
+hq      = true  # venue copy: `pnpm videos:encode-hq` once the master sits in videos/raw/
 used_in = ["L01"]
 notes   = "L01 cold open. Maintainer's 2026-09-06 master FF_Zoom_Master.mp4 (4K60 H.264 254 Mbps, 8.97 GB, 4:42, -16.8 LUFS integrated): Google Earth pull-back from the Physics Faculty at Saulėtekis to Earth, the Sun, the Milky Way and out to the cosmic web. Raw on Drive under the master's name — link or copy it into videos/raw/ as ff_zoom_master.mp4 before `videos:encode`."
 

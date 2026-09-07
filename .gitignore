@@ -11,6 +11,7 @@ __pycache__/
 .snakemake
 dist/
 lectures/content/public/videos/
+lectures/content/public/videos-hq/
 videos/raw/
 videos/web/
 lectures/workbook/site/

@@ -76,7 +76,10 @@ for (const deck of targets) {
     // Videos are served from the GitHub-release remote fallback (they are
     // gitignored and absent in CI). Slidev copies any LOCAL videos into every
     // deck's public/ — strip them so output stays small and matches production.
-    if (!KEEP_VIDEOS) await rm(join(outDir, 'videos'), { recursive: true, force: true });
+    if (!KEEP_VIDEOS) {
+      await rm(join(outDir, 'videos'), { recursive: true, force: true });
+      await rm(join(outDir, 'videos-hq'), { recursive: true, force: true });
+    }
     console.log(`✓ ${deck.slug}`);
   }
 }

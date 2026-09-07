@@ -11,22 +11,31 @@ const props = defineProps({
   loop:     { type: Boolean, default: false },
   muted:    { type: Boolean, default: false },
   controls: { type: Boolean, default: true },
+  hq:       { type: Boolean, default: true },
 })
 
-const localSrc = computed(() => `${import.meta.env.BASE_URL || '/'}videos/${props.src}`)
+const base = import.meta.env.BASE_URL || '/'
+const hqSrc = computed(() => `${base}videos-hq/${props.src}`)
+const localSrc = computed(() => `${base}videos/${props.src}`)
 const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
 
-// In the deployed build the local videos/ dir is stripped (served from the
-// GitHub release instead), so play straight from the release CDN — requesting
-// the absent local file first only 404s and delays playback. `pnpm dev` keeps
-// the local copies, so prefer them there (fast, offline).
-const preferRemote = import.meta.env.PROD
-const primarySrc = computed(() => (preferRemote ? remoteSrc.value : localSrc.value))
-const secondarySrc = computed(() => (preferRemote ? localSrc.value : remoteSrc.value))
+// Source chain, front to back. `pnpm dev` serves the gitignored local copies,
+// so prefer them there (fast, offline): the venue-quality HQ copy written by
+// `pnpm videos:encode-hq` first, then the web copy, then the release. In the
+// deployed build the local dirs are stripped (served from the GitHub release
+// instead), so play straight from the release CDN — requesting an absent local
+// file first only 404s and delays playback; the local entries stay at the back
+// as the offline tier of a `--keep-videos` build.
+const chain = computed(() => {
+  const local = props.hq ? [hqSrc.value, localSrc.value] : [localSrc.value]
+  const order = import.meta.env.PROD ? [remoteSrc.value, ...local] : [...local, remoteSrc.value]
+  return [...new Set(order)]
+})
 
 const videoRef = ref(null)
 const sourceRef = ref(null)
-const currentSrc = ref(primarySrc.value)
+const chainIndex = ref(0)
+const currentSrc = computed(() => chain.value[chainIndex.value])
 const status = ref('idle')
 const isActive = useIsSlideActive()
 const hasBeenActive = ref(false)
@@ -48,11 +57,11 @@ const mimeType = computed(() => {
 let switching = false
 function onError() {
   if (switching || !hasBeenActive.value) return
-  // Fall back to the other source once (local <-> release), then give up.
-  if (currentSrc.value === primarySrc.value && secondarySrc.value !== primarySrc.value) {
+  // Advance to the next source in the chain; give up when it is exhausted.
+  if (chainIndex.value < chain.value.length - 1) {
     switching = true
     status.value = 'loading'
-    currentSrc.value = secondarySrc.value
+    chainIndex.value += 1
     nextTick(() => {
       videoRef.value?.load()
       switching = false

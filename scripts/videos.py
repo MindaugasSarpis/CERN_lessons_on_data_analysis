@@ -9,6 +9,10 @@ Subcommands:
     sync     rclone mirror raw files from the configured remote
     fetch    yt-dlp a video from a URL into raw/ + append a manifest entry
     encode   ffmpeg raw -> web, per the profile in manifest.toml (idempotent)
+    encode-hq ffmpeg raw -> venue-quality local copy for entries with `hq = true`
+             (lectures/content/public/videos-hq/, gitignored, never published;
+             the player prefers it under `pnpm dev` and uses it as the offline
+             tier of a `--keep-videos` build)
     publish  gh release upload web files, clobbering existing assets
     check    sanity check: orphans, missing, over-budget, slide-ref mismatches
 """
@@ -28,6 +32,7 @@ REPO = Path(__file__).resolve().parent.parent
 MANIFEST = REPO / "videos" / "manifest.toml"
 RAW_DIR = REPO / "videos" / "raw"
 WEB_DIR = REPO / "lectures" / "content" / "public" / "videos"
+HQ_DIR = REPO / "lectures" / "content" / "public" / "videos-hq"
 SLIDES_DIR = REPO / "lectures" / "content"
 
 # ---------------------------------------------------------------------------
@@ -97,12 +102,41 @@ PROFILES: dict[str, list[str]] = {
 }
 
 
+# HQ tier (venue copy, local only). HEVC keeps the file ~half the size of H.264
+# at equal quality and every Mac browser decodes it in hardware; the web tier
+# stays the browser-universal H.264/remux copy on the release. Apple's
+# VideoToolbox encoder does 4K60 at many times realtime; libx265 is the
+# fallback elsewhere (slow — hours for a long 4K clip).
+HQ_DEFAULTS = {"hq_long_edge_px": 2560, "hq_bitrate": "24M"}
+
+
+def hq_profile(defaults: dict) -> list[str]:
+    long_edge = int(defaults.get("hq_long_edge_px", HQ_DEFAULTS["hq_long_edge_px"]))
+    bitrate = str(defaults.get("hq_bitrate", HQ_DEFAULTS["hq_bitrate"]))
+    maxrate = f"{int(float(bitrate.rstrip('Mm')) * 1.5)}M"
+    encoders = subprocess.run(["ffmpeg", "-hide_banner", "-encoders"], capture_output=True, text=True).stdout
+    if "hevc_videotoolbox" in encoders:
+        video = ["-c:v", "hevc_videotoolbox", "-b:v", bitrate, "-maxrate", maxrate, "-bufsize", f"{int(float(bitrate.rstrip('Mm')) * 2)}M",
+                 "-allow_sw", "1", "-profile:v", "main"]
+    else:
+        video = ["-c:v", "libx265", "-preset", "medium", "-crf", "20"]
+    return [
+        *video, "-tag:v", "hvc1",
+        "-pix_fmt", "yuv420p",
+        "-vf", f"scale='min({long_edge},iw)':-2",
+        "-c:a", "aac", "-b:a", "192k", "-ac", "2",
+        "-dn", "-write_tmcd", "0",
+        "-movflags", "+faststart",
+    ]
+
+
 @dataclass
 class VideoEntry:
     name: str
     profile: str
     used_in: list[str]
     notes: str = ""
+    hq: bool = False
 
 
 def load_manifest() -> tuple[dict, list[VideoEntry]]:
@@ -115,6 +149,7 @@ def load_manifest() -> tuple[dict, list[VideoEntry]]:
             profile=v.get("profile", "remux"),
             used_in=v.get("used_in", []),
             notes=v.get("notes", ""),
+            hq=bool(v.get("hq", False)),
         )
         for v in data.get("videos", [])
     ]
@@ -305,6 +340,56 @@ def cmd_encode(args: argparse.Namespace) -> int:
 
 
 # ---------------------------------------------------------------------------
+# encode-hq — ffmpeg raw -> local venue-quality copy (never published)
+# ---------------------------------------------------------------------------
+
+def cmd_encode_hq(args: argparse.Namespace) -> int:
+    defaults, videos = load_manifest()
+    videos = [v for v in videos if v.hq]
+    if args.only:
+        wanted = set(args.only)
+        videos = [v for v in videos if v.name in wanted]
+    if not videos:
+        print("nothing to do: no manifest entry has `hq = true`" + (f" among {args.only}" if args.only else ""), file=sys.stderr)
+        return 2
+    if not shutil.which("ffmpeg"):
+        print("error: ffmpeg not installed. brew install ffmpeg", file=sys.stderr)
+        return 2
+    HQ_DIR.mkdir(parents=True, exist_ok=True)
+    profile = hq_profile(defaults)
+    print(f"Encoding {len(videos)} HQ copy(ies) with {profile[1]}. raw -> {HQ_DIR.relative_to(REPO)}")
+
+    failed: list[str] = []
+    for entry in videos:
+        raw = RAW_DIR / entry.name
+        out = HQ_DIR / entry.name
+        if not raw.exists():
+            print(f"  - {entry.name}: MISSING in raw/ (copy the master there under this name)")
+            failed.append(entry.name)
+            continue
+        if out.exists() and not args.force and out.stat().st_mtime >= raw.stat().st_mtime:
+            print(f"  = {entry.name}: skipped (up to date, {human_size(out.stat().st_size)})")
+            continue
+        tmp = out.with_name(f"{out.stem}.partial{out.suffix}")
+        cmd = ["ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error", "-stats",
+               "-i", str(raw), *profile, str(tmp)]
+        try:
+            subprocess.run(cmd, check=True)
+        except subprocess.CalledProcessError as e:
+            tmp.unlink(missing_ok=True)
+            print(f"  ! ffmpeg failed for {entry.name}: {e}", file=sys.stderr)
+            failed.append(entry.name)
+            continue
+        tmp.replace(out)
+        print(f"  + {entry.name}: [{human_size(raw.stat().st_size)} -> {human_size(out.stat().st_size)}]")
+
+    if failed:
+        print(f"\nFAILED: {len(failed)} file(s): {', '.join(failed)}")
+        return 1
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # publish — upload encoded files to GitHub Release
 # ---------------------------------------------------------------------------
 
@@ -461,6 +546,11 @@ def main() -> int:
     p_enc.add_argument("--force", action="store_true", help="re-encode even if up to date")
     p_enc.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
     p_enc.set_defaults(func=cmd_encode)
+
+    p_hq = sub.add_parser("encode-hq", help="ffmpeg raw -> local venue-quality copy (entries with hq = true; never published)")
+    p_hq.add_argument("--force", action="store_true", help="re-encode even if up to date")
+    p_hq.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
+    p_hq.set_defaults(func=cmd_encode_hq)
 
     p_pub = sub.add_parser("publish", help="upload web files to GH Release")
     p_pub.add_argument("--dry-run", action="store_true")
