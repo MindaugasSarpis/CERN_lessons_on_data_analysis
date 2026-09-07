@@ -64,6 +64,14 @@ onMounted(() => { setTimeout(() => { mounted.value = true }, 50) })
   font-weight: 800;
 }
 
+/* Subtitle paragraph: the backdrop's bright particle band runs behind mid-frame text,
+   so lift the colour and add a soft dark halo instead of relying on grey-on-blue. */
+.section-kinetic .section-body :deep(p) {
+  color: #e2eaff;
+  opacity: 1;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.95), 0 0 3px rgba(0, 0, 0, 0.85);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .section-body { transition: none; opacity: 1; transform: none; }
   .section-accent { transition: none; width: min(48%, 520px); }

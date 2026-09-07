@@ -19,8 +19,10 @@ const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`
 // In the deployed build the local videos/ dir is stripped (served from the
 // GitHub release instead), so play straight from the release CDN — requesting
 // the absent local file first only 404s and delays playback. `pnpm dev` keeps
-// the local copies, so prefer them there (fast, offline).
-const preferRemote = import.meta.env.PROD
+// the local copies, so prefer them there (fast, offline). A build made with
+// `VITE_VIDEOS_LOCAL_FIRST=1 pnpm build --keep-videos` also prefers the local
+// copies — an offline backup of a deck that never waits on the venue network.
+const preferRemote = import.meta.env.PROD && import.meta.env.VITE_VIDEOS_LOCAL_FIRST !== '1'
 const primarySrc = computed(() => (preferRemote ? remoteSrc.value : localSrc.value))
 const secondarySrc = computed(() => (preferRemote ? localSrc.value : remoteSrc.value))
 
