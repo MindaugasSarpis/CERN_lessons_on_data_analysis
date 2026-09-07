@@ -25,7 +25,7 @@ hideInToc: true
 
 <VideoPlayer src="ff_zoom_master.mp4" />
 
-<!-- Cold open (4:42): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth from orbit, the Sun, a star-streak run through the Milky Way, deep space, and it ends on the cosmic web. Release asset ff_zoom_master.mp4 (1080p60 H.264, plays on every browser; encoded from the maintainer's 2026-09-06 master). Let it run before a word of admin: the reel's Act I picks up where it leaves off. The ATLAS overview clip now plays only in Act III. -->
+<!-- Cold open (4:42): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth from orbit, the Sun, a star-streak run through the Milky Way, deep space, and it ends on the cosmic web. Release asset ff_zoom_master.mp4 (1080p60 H.264, plays on every browser; encoded from the maintainer's 2026-09-06 master). Let it run before a word of admin. Then only the logistics (show of hands, structure, content, schedule) and the reel's Act I picks up where the cold open leaves off; the four aims, grading, project and seminars come after the break. The ATLAS overview clip plays only in Act III. -->
 
 ---
 hideInToc: true
@@ -41,13 +41,6 @@ Speaker: three quick shows of hands. Fields calibrate the later examples; the OS
 (Windows / macOS / Linux) tells you what Seminar 2's install checkpoint will hit; "coded
 before" lets you seat an experienced student next to a beginner from week 2.
 -->
-
----
-hideInToc: true
-layout: quote
----
-
-# The goal of this course is to build **intuition**, **competence**, and **confidence** in working with data — using the tools and practices of modern science
 
 ---
 hideInToc: true
@@ -220,6 +213,462 @@ table th:nth-child(3) {
   white-space: nowrap;
 }
 </style>
+
+---
+layout: section
+hideInToc: true
+---
+
+# From the **Cosmos** to the **Quantum**
+
+The next short films sweep across the scales of nature — from mountains and deep space down to individual atoms and particle tracks.
+
+Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
+
+<!--
+Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
+to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
+chamber — and ask what its output looks like once it is stored. The Half-time slide
+turns that into a question; Why You Need These Skills picks it up after Act III. (~1 min setup)
+
+NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser decodes HEVC (Firefox and Linux Chrome do not: they show 'Video not available' or black video with sound). Pass 2 re-encodes to H.264.
+-->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Drone_Climbing_Mountain.mp4" />
+
+<!-- Reel · Act I · drone ascent — Earth at human scale (0:27). Act I opens here, straight after the logistics slides; the cold open (ff_zoom_master.mp4) is the run-up to it. Cassini follows immediately, then the rest of space. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" />
+
+<!-- Reel · Act I · Cassini at Saturn (3:41; trimmed to 1:30 in pass 2) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
+
+<!-- Reel · Act I · Mariner 4, 1965 — the first data from another planet (0:20) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" />
+
+<!-- Reel · Act I · Perseverance landing on Mars (3:10; this is the 1080p asset under its misspelt release name — pass 2 replaces it with perseverance_rover_landing_nasa.mp4 trimmed to 1:30) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Stars_Pan_Audio.mp4" />
+
+<!-- Reel · Act I · star field pan (0:20) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Telescope.mp4" />
+
+<!-- Reel · Act I · observatory (0:40) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Hubble.mp4" />
+
+<!-- Reel · Act I · Hubble imagery (0:33) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Webb_Reel.mp4" />
+
+<!-- Reel · Act I · JWST reel (2:58; trimmed to 1:30 in pass 2) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
+
+<!-- Reel · Act I · Milky Way simulation (1:01). Pass 2 adds sdss_universe_zoom.mp4 after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" />
+
+<!-- Reel · Act I · cosmic expansion funnel (0:30) -->
+
+---
+hideInToc: true
+layout: fact
+---
+
+# Half-time
+
+## Every scene so far ends as data someone must turn into understanding — which one would *you* analyse first?
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="QGP_Formation.mp4" />
+
+<!-- Reel · Act II · quark-gluon plasma forms (0:33). Pass 2 adds the Standard Model animation after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" />
+
+<!-- Reel · Act II · hair → cells → atom → nucleus → quarks (2:01) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Cloud_Chamber_Audio.mp4" />
+
+<!-- Reel · Act II · cloud chamber — particles made visible (2:29; trimmed to 1:30 in pass 2) -->
+
+---
+layout: section
+hideInToc: true
+---
+
+# What is **CERN**?
+
+<img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-12 h-64" />
+
+<!--
+Speaker: lights up between the acts. Ask who has heard of CERN and what for — most
+will say "the Higgs" or "the Web". Four slides explain what Act III is about to
+show: the org, the machine, the chain that feeds it, and how a detector actually
+sees a collision. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# CERN at a Glance
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏛️ **The Organisation**
+
+- **European Organization for Nuclear Research**
+- Founded in **1954** by 12 European states
+- Today: **24 member states**, thousands of visiting scientists
+- Located at the **French-Swiss border** near Geneva
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🎯 **The Mission**
+
+- Probe the **fundamental structure** of matter
+- Build and operate the world's most powerful **particle accelerators**
+- Push the boundaries of **technology and engineering**
+- Train the **next generation** of scientists
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🌍 **By the Numbers**
+
+🔬 World's **largest** particle physics laboratory · 👥 **17,000+** scientists from **110+ nations** · 🏗️ Operating since **1954** · 🧪 Home to the **Large Hadron Collider**
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Large Hadron Collider (LHC)
+
+<div class="card card-info card-glass pad-tight">
+
+## ⚙️ **The Machine**
+
+- A **27 km** circumference ring situated **100 m** underground
+- Accelerates protons to **99.9999991%** the speed of light
+- Collides particles **~1 billion times per second**
+- Operating temperature: **1.9 K** (~ -271.3°C — colder than outer space)
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔭 **Main Experiments**
+
+- **ATLAS** — general-purpose detector
+- **CMS** — general-purpose detector
+- **ALICE** — heavy-ion collisions
+- **LHCb** — matter-antimatter asymmetry
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🏆 **Key Achievement**
+
+Discovery of the **Higgs boson** in **2012** — confirmed the mechanism that gives particles their mass
+
+Nobel Prize in Physics 2013
+
+*Precisely: this gives mass to fundamental particles (**fermions**, **W/Z** bosons) — most of the mass around you (e.g. the proton's) is **QCD binding energy**, not the Higgs.*
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Accelerator <span class="gradient-text">Chain</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔗 No single machine takes protons from a hydrogen bottle to near light speed — the LHC is only the **last link in a chain**, each accelerator handing faster particles to the next.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+**1. LINAC4** — a linear accelerator kicks things off: **160 MeV**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+**2. PS Booster → Proton Synchrotron** — first rings: **2 GeV → 26 GeV**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+**3. Super Proton Synchrotron (SPS)** — 7 km ring: **450 GeV**
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left">
+
+**4. LHC** — 27 km ring: **6.8 TeV per beam** *(Run 3)* — then the beams are made to cross inside the detectors
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+
+💡 Each machine was once CERN's frontier — today's record-holder is tomorrow's injector.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# How a Detector <span class="gradient-text">Sees</span> a Collision
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧅 Detectors like ATLAS are built as **layers of an onion** around the collision point — each layer measures a different property of the particles flying out.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact reveal-scale">
+
+## 🌀 **Tracker** *(innermost)*
+
+Charged particles bend in a magnetic field — the curvature of each track gives its **momentum**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-scale">
+
+## ⚡ **EM Calorimeter**
+
+Stops **electrons and photons**, measuring the **energy** they deposit
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-scale">
+
+## 🔨 **Hadronic Calorimeter**
+
+Stops **hadrons** — particles made of quarks (protons, neutrons, pions) — again measuring **energy**
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-scale">
+
+## 🧲 **Muon System** *(outermost)*
+
+**Muons** punch through everything else — dedicated outer chambers catch them
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+
+💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Inside **CERN**
+
+Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
+
+<!--
+Speaker: lights down again. These clips show the real machines behind the four
+slides you just saw — ATLAS, LHCb, the tunnels. Point out the human scale next to
+the detectors before rolling. (~1 min setup)
+-->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="CERN_Overview_Short.mp4" />
+
+<!-- Reel · Act III · CERN aerial (0:11). Pass 2 adds the LHC tunnel travelling shot after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" />
+
+<!-- Reel · Act III · descending the ATLAS shaft (0:29) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+
+<!-- Reel · Act III · ATLAS overview — model, cavern, control room (0:49). Pass 2 adds CMS and the LHCb fly-in after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="LHCb.mp4" />
+
+<!-- Reel · Act III · LHCb — home of the seminar dataset (0:47). Pass 2 adds collision, event display, data centre, WLCG, exabyte chart, accelerator-complex animation after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" />
+
+<!-- Reel · Act III · FCC map — the future (0:18) -->
+
+---
+hideInToc: true
+---
+
+# Why <span class="gradient-text">You</span> Need These Skills
+
+CERN turns raw collisions into discoveries with exactly the toolkit this course builds:
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-up">
+
+## 📁 **Handling Massive Data**
+
+Petabytes of detector output demand disciplined file handling, data formats, and organisation.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight reveal-up">
+
+## 🔀 **Working Together**
+
+Thousands of scientists share one codebase — impossible without version control.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight reveal-up">
+
+## 🐍 **Turning Signal into Insight**
+
+Python and data-analysis tools transform readings into physics.
+
+</div>
+
+<div class="card card-warning card-glass pad-tight reveal-up">
+
+## 🎲 **Real or a Fluke?**
+
+Statistics decide whether a bump in the data is a discovery — or noise.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
+
+You don't need a particle accelerator to use any of this. **After the break: the four aims this course is built on, how the semester works, and your project.**
+
+</div>
+
+---
+hideInToc: true
+layout: fact
+---
+
+# 10-minute break
+
+## While you wait: open a terminal and run `python --version`, `git --version`, `code --version`. Three version numbers = done. Anything missing is homework for next Tuesday.
+
+<!-- Speaker: call the break with the lights up — the reel is done; the second half is the course itself (aims, grading, project, seminars). Circulate for install questions; the last slide repeats the homework. -->
+
+---
+hideInToc: true
+layout: quote
+---
+
+# The goal of this course is to build **intuition**, **competence**, and **confidence** in working with data — using the tools and practices of modern science
 
 ---
 hideInToc: true
@@ -1039,455 +1488,6 @@ hideInToc: true
   :correct="1"
   explanation="Raw data can't be regenerated, and scripts encode every step that turns it into results. Keep those two and everything else — cleaned tables, figures, numbers — can be rebuilt automatically. (The Makefile, environment.yml and README stay too: they are part of the recipe, not results.) That's reproducibility and automation working together."
 />
-
----
-hideInToc: true
-layout: fact
----
-
-# 10-minute break
-
-## While you wait: open a terminal and run `python --version`, `git --version`, `code --version`. Three version numbers = done. Anything missing is homework for next Tuesday.
-
-<!-- Speaker: call the break — then lights down for the reel. Circulate for install questions; the last slide repeats the homework. -->
-
----
-layout: section
-hideInToc: true
----
-
-# From the **Cosmos** to the **Quantum**
-
-The next short films sweep across the scales of nature — from mountains and deep space down to individual atoms and particle tracks.
-
-Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
-
-<!--
-Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
-to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
-chamber — and ask what its output looks like once it is stored. The Half-time slide
-turns that into a question; the closing section picks it up. (~1 min setup)
-
-NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser decodes HEVC (Firefox and Linux Chrome do not: they show 'Video not available' or black video with sound). Pass 2 re-encodes to H.264.
--->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Drone_Climbing_Mountain.mp4" />
-
-<!-- Reel · Act I · drone ascent — Earth at human scale (0:27). Slot 1 before this = vu_physics_faculty.mp4, maintainer-supplied, added in pass 2. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
-
-<!-- Reel · Act I · Mariner 4, 1965 — the first data from another planet (0:20) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" />
-
-<!-- Reel · Act I · Perseverance landing on Mars (3:10; this is the 1080p asset under its misspelt release name — pass 2 replaces it with perseverance_rover_landing_nasa.mp4 trimmed to 1:30) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" />
-
-<!-- Reel · Act I · Cassini at Saturn (3:41; trimmed to 1:30 in pass 2) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Stars_Pan_Audio.mp4" />
-
-<!-- Reel · Act I · star field pan (0:20) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Telescope.mp4" />
-
-<!-- Reel · Act I · observatory (0:40) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Hubble.mp4" />
-
-<!-- Reel · Act I · Hubble imagery (0:33) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Webb_Reel.mp4" />
-
-<!-- Reel · Act I · JWST reel (2:58; trimmed to 1:30 in pass 2) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
-
-<!-- Reel · Act I · Milky Way simulation (1:01). Pass 2 adds sdss_universe_zoom.mp4 after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" />
-
-<!-- Reel · Act I · cosmic expansion funnel (0:30) -->
-
----
-hideInToc: true
-layout: fact
----
-
-# Half-time
-
-## Every scene so far ends as data someone must turn into understanding — which one would *you* analyse first?
-
----
-hideInToc: true
----
-
-<VideoPlayer src="QGP_Formation.mp4" />
-
-<!-- Reel · Act II · quark-gluon plasma forms (0:33). Pass 2 adds the Standard Model animation after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" />
-
-<!-- Reel · Act II · hair → cells → atom → nucleus → quarks (2:01) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Cloud_Chamber_Audio.mp4" />
-
-<!-- Reel · Act II · cloud chamber — particles made visible (2:29; trimmed to 1:30 in pass 2) -->
-
----
-layout: section
-hideInToc: true
----
-
-# What is **CERN**?
-
-<img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-12 h-64" />
-
-<!--
-Speaker: lights up between the acts. Ask who has heard of CERN and what for — most
-will say "the Higgs" or "the Web". Four slides explain what Act III is about to
-show: the org, the machine, the chain that feeds it, and how a detector actually
-sees a collision. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# CERN at a Glance
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🏛️ **The Organisation**
-
-- **European Organization for Nuclear Research**
-- Founded in **1954** by 12 European states
-- Today: **24 member states**, thousands of visiting scientists
-- Located at the **French-Swiss border** near Geneva
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🎯 **The Mission**
-
-- Probe the **fundamental structure** of matter
-- Build and operate the world's most powerful **particle accelerators**
-- Push the boundaries of **technology and engineering**
-- Train the **next generation** of scientists
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🌍 **By the Numbers**
-
-🔬 World's **largest** particle physics laboratory · 👥 **17,000+** scientists from **110+ nations** · 🏗️ Operating since **1954** · 🧪 Home to the **Large Hadron Collider**
-
-</div>
-
----
-hideInToc: true
----
-
-# The Large Hadron Collider (LHC)
-
-<div class="card card-info card-glass pad-tight">
-
-## ⚙️ **The Machine**
-
-- A **27 km** circumference ring situated **100 m** underground
-- Accelerates protons to **99.9999991%** the speed of light
-- Collides particles **~1 billion times per second**
-- Operating temperature: **1.9 K** (~ -271.3°C — colder than outer space)
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔭 **Main Experiments**
-
-- **ATLAS** — general-purpose detector
-- **CMS** — general-purpose detector
-- **ALICE** — heavy-ion collisions
-- **LHCb** — matter-antimatter asymmetry
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🏆 **Key Achievement**
-
-Discovery of the **Higgs boson** in **2012** — confirmed the mechanism that gives particles their mass
-
-Nobel Prize in Physics 2013
-
-*Precisely: this gives mass to fundamental particles (**fermions**, **W/Z** bosons) — most of the mass around you (e.g. the proton's) is **QCD binding energy**, not the Higgs.*
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# The Accelerator <span class="gradient-text">Chain</span>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🔗 No single machine takes protons from a hydrogen bottle to near light speed — the LHC is only the **last link in a chain**, each accelerator handing faster particles to the next.
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-**1. LINAC4** — a linear accelerator kicks things off: **160 MeV**
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-**2. PS Booster → Proton Synchrotron** — first rings: **2 GeV → 26 GeV**
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-**3. Super Proton Synchrotron (SPS)** — 7 km ring: **450 GeV**
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-left">
-
-**4. LHC** — 27 km ring: **6.8 TeV per beam** *(Run 3)* — then the beams are made to cross inside the detectors
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
-
-💡 Each machine was once CERN's frontier — today's record-holder is tomorrow's injector.
-
-</div>
-
----
-hideInToc: true
----
-
-# How a Detector <span class="gradient-text">Sees</span> a Collision
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🧅 Detectors like ATLAS are built as **layers of an onion** around the collision point — each layer measures a different property of the particles flying out.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact reveal-scale">
-
-## 🌀 **Tracker** *(innermost)*
-
-Charged particles bend in a magnetic field — the curvature of each track gives its **momentum**
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-scale">
-
-## ⚡ **EM Calorimeter**
-
-Stops **electrons and photons**, measuring the **energy** they deposit
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-scale">
-
-## 🔨 **Hadronic Calorimeter**
-
-Stops **hadrons** — particles made of quarks (protons, neutrons, pions) — again measuring **energy**
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-scale">
-
-## 🧲 **Muon System** *(outermost)*
-
-**Muons** punch through everything else — dedicated outer chambers catch them
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
-
-💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Inside **CERN**
-
-Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
-
-<!--
-Speaker: lights down again. These clips show the real machines behind the four
-slides you just saw — ATLAS, LHCb, the tunnels. Point out the human scale next to
-the detectors before rolling. (~1 min setup)
--->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="CERN_Overview_Short.mp4" />
-
-<!-- Reel · Act III · CERN aerial (0:11). Pass 2 adds the LHC tunnel travelling shot after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" />
-
-<!-- Reel · Act III · descending the ATLAS shaft (0:29) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
-
-<!-- Reel · Act III · ATLAS overview — model, cavern, control room (0:49). Pass 2 adds CMS and the LHCb fly-in after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="LHCb.mp4" />
-
-<!-- Reel · Act III · LHCb — home of the seminar dataset (0:47). Pass 2 adds collision, event display, data centre, WLCG, exabyte chart, accelerator-complex animation after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" />
-
-<!-- Reel · Act III · FCC map — the future (0:18) -->
-
----
-hideInToc: true
----
-
-# Why <span class="gradient-text">You</span> Need These Skills
-
-CERN turns raw collisions into discoveries with exactly the toolkit this course builds:
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-up">
-
-## 📁 **Handling Massive Data**
-
-Petabytes of detector output demand disciplined file handling, data formats, and organisation.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-up">
-
-## 🔀 **Working Together**
-
-Thousands of scientists share one codebase — impossible without version control.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight reveal-up">
-
-## 🐍 **Turning Signal into Insight**
-
-Python and data-analysis tools transform readings into physics.
-
-</div>
-
-<div class="card card-warning card-glass pad-tight reveal-up">
-
-## 🎲 **Real or a Fluke?**
-
-Statistics decide whether a bump in the data is a discovery — or noise.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
-
-You don't need a particle accelerator to use any of this. **Next lecture: what data actually is — then we build the skills, from how a computer works to the command line.**
-
-</div>
 
 ---
 hideInToc: true
