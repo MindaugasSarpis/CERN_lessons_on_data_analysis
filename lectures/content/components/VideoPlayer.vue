@@ -1,3 +1,27 @@
+<script>
+// Module scope (runs once): state shared by every VideoPlayer instance.
+import { ref } from 'vue'
+
+// ---- session volume ---------------------------------------------------------
+// `+` / `-` set a presenter-chosen level that sticks for every later clip in
+// this browser (this module-scope ref is shared by all players, mirrored to
+// localStorage), so one adjustment at the venue fixes the whole lecture. Until
+// a key is pressed each clip uses its `volume` prop.
+const VOLUME_KEY = 'video-player:volume'
+const VOLUME_STEP = 0.1
+const sessionVolume = ref(readStoredVolume())
+function readStoredVolume() {
+  try {
+    const v = parseFloat(localStorage.getItem(VOLUME_KEY))
+    return Number.isFinite(v) && v >= 0 && v <= 1 ? v : null
+  } catch { return null }
+}
+function setSessionVolume(v) {
+  sessionVolume.value = v
+  try { localStorage.setItem(VOLUME_KEY, String(v)) } catch {}
+}
+</script>
+
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
@@ -28,6 +52,7 @@ const props = defineProps({
 })
 
 const base = import.meta.env.BASE_URL || '/'
+
 const hqSrc = computed(() => `${base}videos-hq/${props.src}`)
 const localSrc = computed(() => `${base}videos/${props.src}`)
 const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
@@ -105,7 +130,7 @@ function syncPlayback() {
       nextTick(() => videoRef.value?.load())
     }
     video.currentTime = 0
-    video.volume = props.volume
+    video.volume = sessionVolume.value ?? props.volume
     if (!props.autoplay) {
       // Manual start: the presenter's click on the controls is the gesture,
       // so it may play with sound straight away.
@@ -178,17 +203,41 @@ function onVideoTouch() {
   if (props.autoHideControls) reveal(CLICK_SHOW_MS)
 }
 
-// ---- keyboard: `p` toggles play/pause on the active slide's player without
-// revealing the control bar (Slidev binds space/arrows/o/d/g/f — `p` is free).
+// ---- keyboard ---------------------------------------------------------------
+// `p` toggles play/pause, `+` / `-` step the volume — all on the active
+// slide's player and without revealing the control bar (Slidev binds
+// space/arrows/o/d/g/f; these keys are free). `=` counts as `+` so the
+// unshifted key works too; `_` likewise as `-`.
+const BADGE_MS = 1200
+const volumeBadge = ref(null)   // 0-100 while the badge is shown
+let badgeTimer = null
+function flashVolume(v) {
+  volumeBadge.value = Math.round(v * 100)
+  clearTimeout(badgeTimer)
+  badgeTimer = setTimeout(() => { volumeBadge.value = null }, BADGE_MS)
+}
+function stepVolume(video, dir) {
+  const next = Math.min(1, Math.max(0, Math.round((video.volume + dir * VOLUME_STEP) * 10) / 10))
+  video.volume = next
+  if (dir > 0 && video.muted && !props.muted) video.muted = false
+  setSessionVolume(next)
+  flashVolume(next)
+}
 function onKey(e) {
   if (!isActive.value || !isLive.value) return
-  if (e.key !== 'p' && e.key !== 'P') return
+  const key = e.key
+  const isPlay = key === 'p' || key === 'P'
+  const isUp = key === '+' || key === '='
+  const isDown = key === '-' || key === '_'
+  if (!isPlay && !isUp && !isDown) return
   if (e.metaKey || e.ctrlKey || e.altKey) return
   const t = e.target
   if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
   const video = videoRef.value
   if (!video) return
   e.preventDefault()
+  if (isUp) return stepVolume(video, +1)
+  if (isDown) return stepVolume(video, -1)
   if (video.paused) {
     video.muted = props.muted
     video.play().catch(() => {})
@@ -213,6 +262,7 @@ onUnmounted(() => {
   window.removeEventListener('mousemove', onWindowMove)
   document.documentElement.removeEventListener('mouseleave', onPointerGone)
   clearTimeout(hideTimer)
+  clearTimeout(badgeTimer)
 })
 </script>
 
@@ -243,6 +293,11 @@ onUnmounted(() => {
       >
         <source ref="sourceRef" :src="hasBeenActive ? currentSrc : ''" :type="mimeType" />
       </video>
+      <Transition name="volume-badge">
+        <div v-if="volumeBadge !== null" class="volume-badge" aria-live="polite">
+          {{ volumeBadge === 0 ? '🔇' : '🔊' }} {{ volumeBadge }}%
+        </div>
+      </Transition>
     </template>
   </div>
 </template>
@@ -278,6 +333,26 @@ onUnmounted(() => {
   opacity: 0.6;
   font-size: 0.9rem;
   color: white;
+}
+.volume-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.volume-badge-enter-active,
+.volume-badge-leave-active {
+  transition: opacity 0.25s ease;
+}
+.volume-badge-enter-from,
+.volume-badge-leave-to {
+  opacity: 0;
 }
 .video-error {
   color: #ef4444;
