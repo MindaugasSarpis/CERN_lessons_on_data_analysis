@@ -7,7 +7,10 @@ const REMOTE_BASE = 'https://github.com/MindaugasSarpis/CERN_lessons_on_data_ana
 const props = defineProps({
   src:      { type: String, required: true },
   fallback: { type: String, default: '' },
-  autoplay: { type: Boolean, default: false },
+  // Start playing when the slide becomes active. `false` = wait for the
+  // presenter to press play (the clip still preloads so its first frame and
+  // the controls are visible).
+  autoplay: { type: Boolean, default: true },
   loop:     { type: Boolean, default: false },
   muted:    { type: Boolean, default: false },
   controls: { type: Boolean, default: true },
@@ -85,6 +88,12 @@ function syncPlayback() {
       nextTick(() => videoRef.value?.load())
     }
     video.currentTime = 0
+    if (!props.autoplay) {
+      // Manual start: the presenter's click on the controls is the gesture,
+      // so it may play with sound straight away.
+      video.muted = props.muted
+      return
+    }
     video.muted = true
     video.play().then(() => {
       if (!props.muted) video.muted = false
@@ -131,7 +140,7 @@ onMounted(() => {
         muted
         playsinline
         webkit-playsinline
-        preload="none"
+        :preload="autoplay ? 'none' : 'auto'"
         @loadeddata="onLoaded"
         @error="onError"
         :class="{ 'video-ready': status === 'ready' }"

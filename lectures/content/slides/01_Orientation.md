@@ -23,9 +23,9 @@ brief is self-paced — the last slide says so. (~2 min)
 hideInToc: true
 ---
 
-<VideoPlayer src="ff_zoom_master.mp4" />
+<VideoPlayer src="ff_zoom_master.mp4" :autoplay="false" />
 
-<!-- Cold open (4:42): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth from orbit, the Sun, a star-streak run through the Milky Way, deep space, and it ends on the cosmic web. Release asset ff_zoom_master.mp4 (1080p60 H.264, plays on every browser; encoded from the maintainer's 2026-09-06 master). Let it run before a word of admin: the reel's Act I picks up where it leaves off. The ATLAS overview clip now plays only in Act III. -->
+<!-- Cold open (4:42): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth from orbit, the Sun, a star-streak run through the Milky Way, deep space, and it ends on the cosmic web. Release asset ff_zoom_master.mp4 (1080p60 H.264, plays on every browser; encoded from the maintainer's 2026-09-06 master). Does NOT auto-start — press play when the room is settled, then let it run before a word of admin. The ATLAS overview clip plays only in the CERN block after the course slides. -->
 
 ---
 hideInToc: true
@@ -1042,14 +1042,99 @@ hideInToc: true
 
 ---
 hideInToc: true
-layout: fact
 ---
 
-# 10-minute break
+# Why <span class="gradient-text">You</span> Need These Skills
 
-## While you wait: open a terminal and run `python --version`, `git --version`, `code --version`. Three version numbers = done. Anything missing is homework for next Tuesday.
+CERN turns raw collisions into discoveries with exactly the toolkit this course builds:
 
-<!-- Speaker: call the break — then lights down for the reel. Circulate for install questions; the last slide repeats the homework. -->
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-up">
+
+## 📁 **Handling Massive Data**
+
+Petabytes of detector output demand disciplined file handling, data formats, and organisation.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight reveal-up">
+
+## 🔀 **Working Together**
+
+Thousands of scientists share one codebase — impossible without version control.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight reveal-up">
+
+## 🐍 **Turning Signal into Insight**
+
+Python and data-analysis tools transform readings into physics.
+
+</div>
+
+<div class="card card-warning card-glass pad-tight reveal-up">
+
+## 🎲 **Real or a Fluke?**
+
+Statistics decide whether a bump in the data is a discovery — or noise.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
+
+You don't need a particle accelerator to use any of this. **Next lecture: what data actually is — then we build the skills, from how a computer works to the command line.**
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Before **Next Tuesday**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🖥️ **Install three tools**
+
+- **Python 3.10+** — [python.org](https://python.org)
+- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com)
+- **Git** — [git-scm.com](https://git-scm.com)
+
+*🔧 Tool-agnostic: conda, PyCharm, or another editor is fine — the aim is the skill, not the tool.*
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ⚡ **Prove they work**
+
+Open a terminal and run:
+
+```bash
+python --version   # or python3
+git --version
+code --version
+```
+
+Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills it.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+## 🔬 **No seminar today — Seminar 1 is self-paced**
+
+Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 15 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
+
+</div>
 
 ---
 layout: section
@@ -1065,8 +1150,8 @@ Watch for the **change in scale**: the same urge to observe, measure, and unders
 <!--
 Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
 to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
-chamber — and ask what its output looks like once it is stored. The Half-time slide
-turns that into a question; the closing section picks it up. (~1 min setup)
+chamber — and ask what its output looks like once it is stored. Pick it up between
+clips if the room is awake: which of these would *you* analyse first? (~1 min setup)
 
 NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser decodes HEVC (Firefox and Linux Chrome do not: they show 'Video not available' or black video with sound). Pass 2 re-encodes to H.264.
 -->
@@ -1153,15 +1238,6 @@ hideInToc: true
 
 ---
 hideInToc: true
-layout: fact
----
-
-# Half-time
-
-## Every scene so far ends as data someone must turn into understanding — which one would *you* analyse first?
-
----
-hideInToc: true
 ---
 
 <VideoPlayer src="QGP_Formation.mp4" />
@@ -1189,15 +1265,80 @@ layout: section
 hideInToc: true
 ---
 
-# What is **CERN**?
+# Inside **CERN**
 
-<img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-12 h-64" />
+Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
 
 <!--
-Speaker: lights up between the acts. Ask who has heard of CERN and what for — most
-will say "the Higgs" or "the Web". Four slides explain what Act III is about to
-show: the org, the machine, the chain that feeds it, and how a detector actually
-sees a collision. (~1 min)
+Speaker: keep the lights down. These clips show the real machines — ATLAS, LHCb,
+the tunnels. Point out the human scale next to the detectors before rolling. The
+four reference slides on CERN (org, machine, chain, detector) sit after the closing
+video as self-study material — mention they exist, don't present them. (~1 min setup)
+-->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="CERN_Overview_Short.mp4" />
+
+<!-- Reel · Act III · CERN aerial (0:11). Pass 2 adds the LHC tunnel travelling shot after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" />
+
+<!-- Reel · Act III · descending the ATLAS shaft (0:29) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+
+<!-- Reel · Act III · ATLAS overview — model, cavern, control room (0:49). Pass 2 adds CMS and the LHCb fly-in after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="LHCb.mp4" />
+
+<!-- Reel · Act III · LHCb — home of the seminar dataset (0:47). Pass 2 adds collision, event display, data centre, WLCG, exabyte chart, accelerator-complex animation after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" />
+
+<!-- Reel · Act III · FCC map — the future (0:18) -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="lhcb_thanks.mp4" />
+
+<!-- Closing (2:28): LHCb detector fly-through — VELO, RICH, magnet, trackers, calorimeters, muon stations — ending on "Thanks for Your Attention". The detector behind the seminar dataset; let it run while the room packs up. Release asset lhcb_thanks.mp4 (H.264 web-h264 encode of the maintainer's Drive master, plays on every browser). -->
+---
+layout: section
+hideInToc: true
+---
+
+# Extra Material — What is **CERN**?
+
+Reference slides for self-study — the organisation, the machine, the chain that feeds it, and how a detector sees a collision. Not presented in the lecture.
+
+<img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-8 h-48" />
+
+<!--
+Not delivered live: the lecture ends on the LHCb fly-through. These four slides
+stay in the deck for students who were not in the room (or want the background
+behind the CERN clips): the org, the machine, the chain that feeds it, and how a
+detector actually sees a collision.
 -->
 
 ---
@@ -1383,162 +1524,3 @@ Stops **hadrons** — particles made of quarks (protons, neutrons, pions) — ag
 💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Inside **CERN**
-
-Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
-
-<!--
-Speaker: lights down again. These clips show the real machines behind the four
-slides you just saw — ATLAS, LHCb, the tunnels. Point out the human scale next to
-the detectors before rolling. (~1 min setup)
--->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="CERN_Overview_Short.mp4" />
-
-<!-- Reel · Act III · CERN aerial (0:11). Pass 2 adds the LHC tunnel travelling shot after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" />
-
-<!-- Reel · Act III · descending the ATLAS shaft (0:29) -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
-
-<!-- Reel · Act III · ATLAS overview — model, cavern, control room (0:49). Pass 2 adds CMS and the LHCb fly-in after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="LHCb.mp4" />
-
-<!-- Reel · Act III · LHCb — home of the seminar dataset (0:47). Pass 2 adds collision, event display, data centre, WLCG, exabyte chart, accelerator-complex animation after this. -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" />
-
-<!-- Reel · Act III · FCC map — the future (0:18) -->
-
----
-hideInToc: true
----
-
-# Why <span class="gradient-text">You</span> Need These Skills
-
-CERN turns raw collisions into discoveries with exactly the toolkit this course builds:
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-up">
-
-## 📁 **Handling Massive Data**
-
-Petabytes of detector output demand disciplined file handling, data formats, and organisation.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-up">
-
-## 🔀 **Working Together**
-
-Thousands of scientists share one codebase — impossible without version control.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight reveal-up">
-
-## 🐍 **Turning Signal into Insight**
-
-Python and data-analysis tools transform readings into physics.
-
-</div>
-
-<div class="card card-warning card-glass pad-tight reveal-up">
-
-## 🎲 **Real or a Fluke?**
-
-Statistics decide whether a bump in the data is a discovery — or noise.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
-
-You don't need a particle accelerator to use any of this. **Next lecture: what data actually is — then we build the skills, from how a computer works to the command line.**
-
-</div>
-
----
-hideInToc: true
----
-
-# Before **Next Tuesday**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🖥️ **Install three tools**
-
-- **Python 3.10+** — [python.org](https://python.org)
-- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com)
-- **Git** — [git-scm.com](https://git-scm.com)
-
-*🔧 Tool-agnostic: conda, PyCharm, or another editor is fine — the aim is the skill, not the tool.*
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ⚡ **Prove they work**
-
-Open a terminal and run:
-
-```bash
-python --version   # or python3
-git --version
-code --version
-```
-
-Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills it.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 🔬 **No seminar today — Seminar 1 is self-paced**
-
-Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 15 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
-
-</div>
-
----
-hideInToc: true
----
-
-<VideoPlayer src="lhcb_thanks.mp4" />
-
-<!-- Closing (2:28): LHCb detector fly-through — VELO, RICH, magnet, trackers, calorimeters, muon stations — ending on "Thanks for Your Attention". The detector behind the seminar dataset; let it run while the room packs up. Release asset lhcb_thanks.mp4 (H.264 web-h264 encode of the maintainer's Drive master, plays on every browser). -->
