@@ -116,8 +116,8 @@ notes   = "Quark-gluon plasma formation sim, HEVC 1.9 Mbps"
 [[videos]]
 name    = "Voyage_in_to_the_world_of_atoms.mp4"
 profile = "remux"
-used_in = ["L01"]
-notes   = "Atomic-scale zoom animation, HEVC 1.4 Mbps"
+used_in = []  # same film as atoms.mp4 but silent; superseded in L01 on 2026-09-08, stays on the release
+notes   = "Atomic-scale zoom animation, HEVC 1.4 Mbps, no audio track"
 
 [[videos]]
 name    = "Cloud_Chamber_Audio.mp4"
@@ -205,6 +205,30 @@ profile = "web-h264"
 hq      = true  # venue copy: `pnpm videos:encode-hq` once the master sits in videos/raw/
 used_in = ["L01"]
 notes   = "L01 cold open. Maintainer's 2026-09-06 master FF_Zoom_Master.mp4 (4K60 H.264 254 Mbps, 8.97 GB, 4:42, -16.8 LUFS integrated): Google Earth pull-back from the Physics Faculty at Saulėtekis to Earth, the Sun, the Milky Way and out to the cosmic web. Raw on Drive under the master's name — link or copy it into videos/raw/ as ff_zoom_master.mp4 before `videos:encode`."
+
+[[videos]]
+name    = "atoms.mp4"
+profile = "web-h264"
+used_in = ["L01"]
+notes   = "L01 reel, Act I slot 1 (replaced the silent Drone_Climbing_Mountain.mp4 on 2026-09-08): journey into the world of atoms WITH sound, 2:06. Raw = the maintainer's Drive master videos/released/atoms.mov (HEVC 1080p25 9.8 Mbps + AAC stereo 320k, 160 MB); videos/raw/atoms.mp4 is a symlink to it (ffmpeg reads the .mov container fine)."
+
+[[videos]]
+name    = "blue_ghost_lunar_orbit.mp4"
+profile = "remux"
+used_in = ["L01"]
+notes   = "L01 reel, Act I, before Hubble (added 2026-09-08): Blue Ghost lander in lunar orbit, 1:36, with sound. Raw = Drive master videos/released/blue_ghost_lunar_orbit.mp4 (H.264 1080p30 5.7 Mbps + AAC stereo, 69 MB); videos/raw/ is a symlink to it."
+
+[[videos]]
+name    = "cern_footage_2022_013_001_1080p_lhc.mp4"
+profile = "remux"
+used_in = ["L01"]
+notes   = "L01 CERN block, right after CERN_Overview_Short (added 2026-09-08): CERN footage 2022-013-001, the LHC, 4:14, with sound. Raw = Drive master videos/released/cern_footage_2022_013_001_1080p_lhc.mp4 (H.264 1080p25 4.1 Mbps + AAC mono, 130 MB); videos/raw/ is a symlink to it."
+
+[[videos]]
+name    = "cern_video_2019_050_008_1080ph265.mp4"
+profile = "web-h264"
+used_in = ["L01"]
+notes   = "L01 CERN block, after the 2022 LHC footage (added 2026-09-08): CERN video 2019-050-008, 1:35, no audio track. Raw = Drive master videos/released/cern_video_2019_050_008_1080ph265.mp4 (HEVC 1080p25 6.1 Mbps, 72 MB) — re-encoded to H.264 so it plays on every browser; videos/raw/ is a symlink to it."
 
 [[videos]]
 name    = "lhcb_thanks.mp4"

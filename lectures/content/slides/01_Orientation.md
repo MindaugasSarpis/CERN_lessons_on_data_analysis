@@ -1140,11 +1140,9 @@ layout: section
 hideInToc: true
 ---
 
-# From the **Cosmos** to the **Quantum**
+# Why do we need CERN
 
-The next short films sweep across the scales of nature — from mountains and deep space down to individual atoms and particle tracks.
-
-Watch for the **change in scale**: the same urge to observe, measure, and understand connects a telescope pointed at distant galaxies with a detector watching protons collide.
+## and what can we learn from it
 
 <!--
 Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
@@ -1159,9 +1157,9 @@ NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser d
 hideInToc: true
 ---
 
-<VideoPlayer src="Drone_Climbing_Mountain.mp4" />
+<VideoPlayer src="atoms.mp4" />
 
-<!-- Reel · Act I · drone ascent — Earth at human scale (0:27). Slot 1 before this = vu_physics_faculty.mp4, maintainer-supplied, added in pass 2. -->
+<!-- Reel · Act I · journey into the world of atoms, with sound (2:06). Replaced the silent Drone_Climbing_Mountain.mp4 on 2026-09-08; release asset atoms.mp4 (H.264 web encode of the maintainer's Drive master atoms.mov). -->
 
 ---
 hideInToc: true
@@ -1207,6 +1205,14 @@ hideInToc: true
 hideInToc: true
 ---
 
+<VideoPlayer src="blue_ghost_lunar_orbit.mp4" />
+
+<!-- Reel · Act I · Blue Ghost lander in lunar orbit, with sound (1:36). Added 2026-09-08; release asset blue_ghost_lunar_orbit.mp4 (remux of the Drive master). -->
+
+---
+hideInToc: true
+---
+
 <VideoPlayer src="Hubble.mp4" />
 
 <!-- Reel · Act I · Hubble imagery (0:33) -->
@@ -1219,13 +1225,6 @@ hideInToc: true
 
 <!-- Reel · Act I · JWST reel (2:58; trimmed to 1:30 in pass 2) -->
 
----
-hideInToc: true
----
-
-<VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
-
-<!-- Reel · Act I · Milky Way simulation (1:01). Pass 2 adds sdss_universe_zoom.mp4 after this. -->
 
 ---
 hideInToc: true
@@ -1247,33 +1246,9 @@ hideInToc: true
 hideInToc: true
 ---
 
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" />
-
-<!-- Reel · Act II · hair → cells → atom → nucleus → quarks (2:01) -->
-
----
-hideInToc: true
----
-
 <VideoPlayer src="Cloud_Chamber_Audio.mp4" />
 
 <!-- Reel · Act II · cloud chamber — particles made visible (2:29; trimmed to 1:30 in pass 2) -->
-
----
-layout: section
-hideInToc: true
----
-
-# Inside **CERN**
-
-Now we descend from the universe at large into the laboratory itself — the accelerators, detectors, and people who turn these big questions into concrete measurements.
-
-<!--
-Speaker: keep the lights down. These clips show the real machines — ATLAS, LHCb,
-the tunnels. Point out the human scale next to the detectors before rolling. The
-four reference slides on CERN (org, machine, chain, detector) sit after the closing
-video as self-study material — mention they exist, don't present them. (~1 min setup)
--->
 
 ---
 hideInToc: true
@@ -1287,17 +1262,17 @@ hideInToc: true
 hideInToc: true
 ---
 
-<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" />
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" />
 
-<!-- Reel · Act III · descending the ATLAS shaft (0:29) -->
+<!-- CERN block · CERN footage 2022-013-001 — the LHC, with sound (4:14). Added 2026-09-08; release asset is a remux of the Drive master. -->
 
 ---
 hideInToc: true
 ---
 
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+<VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" />
 
-<!-- Reel · Act III · ATLAS overview — model, cavern, control room (0:49). Pass 2 adds CMS and the LHCb fly-in after this. -->
+<!-- CERN block · CERN video 2019-050-008 (1:35, silent). Added 2026-09-08; release asset is an H.264 web encode of the HEVC Drive master. -->
 
 ---
 hideInToc: true
@@ -1329,7 +1304,6 @@ hideInToc: true
 
 # Extra Material — What is **CERN**?
 
-Reference slides for self-study — the organisation, the machine, the chain that feeds it, and how a detector sees a collision. Not presented in the lecture.
 
 <img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-8 h-48" />
 
