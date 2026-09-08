@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, nextTick, onMounted } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
 
 const REMOTE_BASE = 'https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis/releases/download/videos'
@@ -14,6 +14,10 @@ const props = defineProps({
   loop:     { type: Boolean, default: false },
   muted:    { type: Boolean, default: false },
   controls: { type: Boolean, default: true },
+  // Native controls stay hidden and only appear while the pointer is over the
+  // bottom control strip, or for a few seconds after a click/tap on the video.
+  // `false` = controls always visible (when `controls` is on).
+  autoHideControls: { type: Boolean, default: true },
   hq:       { type: Boolean, default: true },
 })
 
@@ -112,7 +116,57 @@ function onLoaded() {
   syncPlayback()
 }
 
+// ---- auto-hiding controls -------------------------------------------------
+// The native control bar sits along the bottom edge. We toggle the `controls`
+// attribute itself (not CSS: the bar's DOM differs per browser), so it is
+// simply absent until wanted: pointer inside the bottom strip → shown; pointer
+// elsewhere or gone → hidden after a short grace; click/tap on the video →
+// shown for a few seconds. When shown, the bar handles its own hit-testing —
+// there is no overlay element to steal its clicks. Pointer tracking is done
+// on `window`, not the player: Slidev's own navigation bar floats over the
+// bottom of the slide and would otherwise swallow the hover.
+const CONTROL_STRIP_PX = 72      // the native bar is ~50-60px tall
+const HIDE_GRACE_MS = 700        // pointer left the strip
+const CLICK_SHOW_MS = 3500       // after a click/tap
+const wrapRef = ref(null)
+const controlsVisible = ref(false)
+const showControls = computed(() => props.controls && (!props.autoHideControls || controlsVisible.value))
+let hideTimer = null
+function scheduleHide(ms) {
+  clearTimeout(hideTimer)
+  hideTimer = setTimeout(() => { controlsVisible.value = false }, ms)
+}
+function reveal(ms) {
+  clearTimeout(hideTimer)
+  controlsVisible.value = true
+  if (ms != null) scheduleHide(ms)
+}
+function onWindowMove(e) {
+  if (!props.autoHideControls || !isActive.value || !wrapRef.value) return
+  const r = wrapRef.value.getBoundingClientRect()
+  const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
+  const inStrip = inside && e.clientY >= r.bottom - CONTROL_STRIP_PX
+  if (inStrip) reveal()
+  else if (controlsVisible.value) scheduleHide(HIDE_GRACE_MS)
+}
+function onPointerGone() {
+  // Pointer left the player (or the window): no further mousemove will come.
+  if (props.autoHideControls && controlsVisible.value) scheduleHide(HIDE_GRACE_MS)
+}
+function onVideoClick(e) {
+  if (!props.autoHideControls) return
+  const r = e.currentTarget.getBoundingClientRect()
+  // A click inside the strip lands on the (now visible) native bar — leave it
+  // to the browser. Elsewhere on the picture: reveal for a moment.
+  if (e.clientY < r.bottom - CONTROL_STRIP_PX) reveal(CLICK_SHOW_MS)
+}
+function onVideoTouch() {
+  if (props.autoHideControls) reveal(CLICK_SHOW_MS)
+}
+
 onMounted(() => {
+  window.addEventListener('mousemove', onWindowMove, { passive: true })
+  document.documentElement.addEventListener('mouseleave', onPointerGone)
   // Source error events don't bubble to <video> on iOS Safari.
   // Attach error listener directly on the <source> DOM element.
   sourceRef.value?.addEventListener('error', onError)
@@ -120,10 +174,15 @@ onMounted(() => {
   // re-run once refs exist so the initially-active slide actually loads.
   syncPlayback()
 })
+onUnmounted(() => {
+  window.removeEventListener('mousemove', onWindowMove)
+  document.documentElement.removeEventListener('mouseleave', onPointerGone)
+  clearTimeout(hideTimer)
+})
 </script>
 
 <template>
-  <div class="video-player">
+  <div ref="wrapRef" class="video-player" @mouseleave="onPointerGone">
     <div v-if="!isLive" class="video-placeholder">
       <svg class="video-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor" /></svg>
       <span class="video-status">{{ src }}</span>
@@ -136,13 +195,15 @@ onMounted(() => {
       <video
         ref="videoRef"
         :loop="loop"
-        :controls="controls"
+        :controls="showControls"
         muted
         playsinline
         webkit-playsinline
         :preload="autoplay ? 'none' : 'auto'"
         @loadeddata="onLoaded"
         @error="onError"
+        @click="onVideoClick"
+        @touchstart.passive="onVideoTouch"
         :class="{ 'video-ready': status === 'ready' }"
       >
         <source ref="sourceRef" :src="hasBeenActive ? currentSrc : ''" :type="mimeType" />

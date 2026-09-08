@@ -1157,9 +1157,33 @@ NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser d
 hideInToc: true
 ---
 
-<VideoPlayer src="atoms.mp4" />
+<VideoPlayer src="Drone_Climbing_Mountain.mp4" />
 
-<!-- Reel · Act I · journey into the world of atoms, with sound (2:06). Replaced the silent Drone_Climbing_Mountain.mp4 on 2026-09-08; release asset atoms.mp4 (H.264 web encode of the maintainer's Drive master atoms.mov). -->
+<!-- Reel · Act I · drone ascent — Earth at human scale (0:27, silent). Back in slot 1 on 2026-09-08. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="saturn_v_launch_nasa.mp4" />
+
+<!-- Reel · Act I · NASA Saturn V launch, with sound (2:55). Added 2026-09-08; release asset is a capped H.264 encode of the Drive master. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="blue_ghost_lunar_orbit.mp4" />
+
+<!-- Reel · Act I · the Moon — Blue Ghost lander in lunar orbit, with sound (1:36). Added 2026-09-08; release asset blue_ghost_lunar_orbit.mp4 (remux of the Drive master). -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Hubble.mp4" />
+
+<!-- Reel · Act I · Hubble imagery (0:33) -->
 
 ---
 hideInToc: true
@@ -1205,26 +1229,9 @@ hideInToc: true
 hideInToc: true
 ---
 
-<VideoPlayer src="blue_ghost_lunar_orbit.mp4" />
-
-<!-- Reel · Act I · Blue Ghost lander in lunar orbit, with sound (1:36). Added 2026-09-08; release asset blue_ghost_lunar_orbit.mp4 (remux of the Drive master). -->
-
----
-hideInToc: true
----
-
-<VideoPlayer src="Hubble.mp4" />
-
-<!-- Reel · Act I · Hubble imagery (0:33) -->
-
----
-hideInToc: true
----
-
 <VideoPlayer src="Webb_Reel.mp4" />
 
 <!-- Reel · Act I · JWST reel (2:58; trimmed to 1:30 in pass 2) -->
-
 
 ---
 hideInToc: true
@@ -1241,6 +1248,14 @@ hideInToc: true
 <VideoPlayer src="QGP_Formation.mp4" />
 
 <!-- Reel · Act II · quark-gluon plasma forms (0:33). Pass 2 adds the Standard Model animation after this. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="atoms.mp4" />
+
+<!-- Reel · Act II · journey into the world of atoms — hair → cells → atom → nucleus → quarks, with sound (2:06). The same film as the old silent Voyage_in_to_the_world_of_atoms.mp4; release asset atoms.mp4 (H.264 web encode of the Drive master atoms.mov). -->
 
 ---
 hideInToc: true

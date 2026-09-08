@@ -210,7 +210,7 @@ notes   = "L01 cold open. Maintainer's 2026-09-06 master FF_Zoom_Master.mp4 (4K6
 name    = "atoms.mp4"
 profile = "web-h264"
 used_in = ["L01"]
-notes   = "L01 reel, Act I slot 1 (replaced the silent Drone_Climbing_Mountain.mp4 on 2026-09-08): journey into the world of atoms WITH sound, 2:06. Raw = the maintainer's Drive master videos/released/atoms.mov (HEVC 1080p25 9.8 Mbps + AAC stereo 320k, 160 MB); videos/raw/atoms.mp4 is a symlink to it (ffmpeg reads the .mov container fine)."
+notes   = "L01 reel, Act II (the atomic-scale zoom; replaced the silent Voyage_in_to_the_world_of_atoms.mp4 on 2026-09-08): journey into the world of atoms WITH sound, 2:06. Raw = the maintainer's Drive master videos/released/atoms.mov (HEVC 1080p25 9.8 Mbps + AAC stereo 320k, 160 MB); videos/raw/atoms.mp4 is a symlink to it (ffmpeg reads the .mov container fine)."
 
 [[videos]]
 name    = "blue_ghost_lunar_orbit.mp4"
@@ -229,6 +229,12 @@ name    = "cern_video_2019_050_008_1080ph265.mp4"
 profile = "web-h264"
 used_in = ["L01"]
 notes   = "L01 CERN block, after the 2022 LHC footage (added 2026-09-08): CERN video 2019-050-008, 1:35, no audio track. Raw = Drive master videos/released/cern_video_2019_050_008_1080ph265.mp4 (HEVC 1080p25 6.1 Mbps, 72 MB) — re-encoded to H.264 so it plays on every browser; videos/raw/ is a symlink to it."
+
+[[videos]]
+name    = "saturn_v_launch_nasa.mp4"
+profile = "web-h264"
+used_in = ["L01"]
+notes   = "L01 reel, Act I, right after the drone ascent (added 2026-09-08): NASA Saturn V launch, 2:55, with sound. Raw = Drive master videos/released/saturn_v_launch_nasa.mp4 (H.264 1080p24 9.8 Mbps + AAC stereo, 214 MB — a remux would blow the 200 MB budget, hence the capped H.264 re-encode); videos/raw/ is a symlink to it."
 
 [[videos]]
 name    = "lhcb_thanks.mp4"
