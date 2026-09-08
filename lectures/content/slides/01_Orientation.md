@@ -1181,14 +1181,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-<VideoPlayer src="Hubble.mp4" />
-
-<!-- Reel · Act I · Hubble imagery (0:33) -->
-
----
-hideInToc: true
----
-
 <VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
 
 <!-- Reel · Act I · Mariner 4, 1965 — the first data from another planet (0:20) -->
@@ -1216,6 +1208,16 @@ hideInToc: true
 <VideoPlayer src="Stars_Pan_Audio.mp4" />
 
 <!-- Reel · Act I · star field pan (0:20) -->
+
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="Hubble.mp4" />
+
+<!-- Reel · Act I · Hubble imagery (0:33) -->
+
 
 ---
 hideInToc: true
