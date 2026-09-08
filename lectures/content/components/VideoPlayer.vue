@@ -25,10 +25,13 @@ const remoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`
 // deployed build the local dirs are stripped (served from the GitHub release
 // instead), so play straight from the release CDN — requesting an absent local
 // file first only 404s and delays playback; the local entries stay at the back
-// as the offline tier of a `--keep-videos` build.
+// as the offline tier of a `--keep-videos` build. A build made with
+// `VITE_VIDEOS_LOCAL_FIRST=1 pnpm build --keep-videos` prefers the kept local
+// copies even in PROD — an offline backup that never waits on the venue network.
+const preferRemote = import.meta.env.PROD && import.meta.env.VITE_VIDEOS_LOCAL_FIRST !== '1'
 const chain = computed(() => {
   const local = props.hq ? [hqSrc.value, localSrc.value] : [localSrc.value]
-  const order = import.meta.env.PROD ? [remoteSrc.value, ...local] : [...local, remoteSrc.value]
+  const order = preferRemote ? [remoteSrc.value, ...local] : [...local, remoteSrc.value]
   return [...new Set(order)]
 })
 
