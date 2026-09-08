@@ -22,6 +22,9 @@ const props = defineProps({
   // manifest `hq = true` entries have one; for any other clip the attempt
   // just 404s and races the fallback chain.
   hq:       { type: Boolean, default: false },
+  // Playback volume, 0-1. Applied on every activation (the native bar can
+  // still change it for the current clip).
+  volume:   { type: Number, default: 0.2 },
 })
 
 const base = import.meta.env.BASE_URL || '/'
@@ -102,6 +105,7 @@ function syncPlayback() {
       nextTick(() => videoRef.value?.load())
     }
     video.currentTime = 0
+    video.volume = props.volume
     if (!props.autoplay) {
       // Manual start: the presenter's click on the controls is the gesture,
       // so it may play with sound straight away.
