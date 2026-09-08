@@ -164,7 +164,27 @@ function onVideoTouch() {
   if (props.autoHideControls) reveal(CLICK_SHOW_MS)
 }
 
+// ---- keyboard: `p` toggles play/pause on the active slide's player without
+// revealing the control bar (Slidev binds space/arrows/o/d/g/f — `p` is free).
+function onKey(e) {
+  if (!isActive.value || !isLive.value) return
+  if (e.key !== 'p' && e.key !== 'P') return
+  if (e.metaKey || e.ctrlKey || e.altKey) return
+  const t = e.target
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
+  const video = videoRef.value
+  if (!video) return
+  e.preventDefault()
+  if (video.paused) {
+    video.muted = props.muted
+    video.play().catch(() => {})
+  } else {
+    video.pause()
+  }
+}
+
 onMounted(() => {
+  window.addEventListener('keydown', onKey)
   window.addEventListener('mousemove', onWindowMove, { passive: true })
   document.documentElement.addEventListener('mouseleave', onPointerGone)
   // Source error events don't bubble to <video> on iOS Safari.
@@ -175,6 +195,7 @@ onMounted(() => {
   syncPlayback()
 })
 onUnmounted(() => {
+  window.removeEventListener('keydown', onKey)
   window.removeEventListener('mousemove', onWindowMove)
   document.documentElement.removeEventListener('mouseleave', onPointerGone)
   clearTimeout(hideTimer)
