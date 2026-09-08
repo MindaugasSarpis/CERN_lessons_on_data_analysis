@@ -1597,17 +1597,16 @@ hideInToc: true
 <div class="note-text mt-sm">A notebook remembers every variable from every cell you ran — in whatever order you ran them:</div>
 
 ```mermaid {scale: 0.6}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4', 'edgeLabelBackground': '#0b1220', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true}}}%%
 flowchart LR
     A["Run cell 3"]:::step --> B["Edit cell 1"]:::step
     B --> C["Run cell 5"]:::step
     C --> D{"Restart &<br/>Run All?"}:::check
     D -->|reproduces| E["OK"]:::good
     D -->|crashes| F["Hidden state"]:::bad
-    classDef step fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:10px,ry:10px
-    classDef check fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:10px,ry:10px
-    classDef good fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:10px,ry:10px
-    classDef bad fill:#3b1f2b,stroke:#fca5a5,stroke-width:2px,color:#fee2e2,rx:10px,ry:10px
+    classDef step fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
+    classDef check fill:#2a2208,stroke:#fbbf24,color:#fef3c7
+    classDef good fill:#063c34,stroke:#34d399,color:#d1fae5
+    classDef bad fill:#3b1020,stroke:#f87171,color:#fee2e2
 ```
 
 <div class="card card-info card-glass pad-compact mt-sm">

@@ -735,7 +735,6 @@ flowchart LR
 ## 👁️ **Rendered**
 
 ```mermaid {scale: 0.7}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4'}, 'flowchart': {'curve': 'basis'}}}%%
 flowchart LR
   A[Raw data] --> B[Clean]
   B --> C[Fit]
@@ -774,7 +773,6 @@ flowchart TD
 ## 👁️ **Rendered**
 
 ```mermaid {scale: 0.7}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4'}, 'flowchart': {'curve': 'basis'}}}%%
 flowchart TD
   A[Event] --> B{Pass cut?}
   B -->|Yes| C[Keep]
@@ -813,7 +811,6 @@ sequenceDiagram
 ## 👁️ **Rendered**
 
 ```mermaid {scale: 0.62}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4'}}}%%
 sequenceDiagram
   You->>Cluster: submit job
   Cluster-->>You: job ID
@@ -854,7 +851,7 @@ gitGraph
 ## 👁️ **Rendered**
 
 ```mermaid {scale: 0.7}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4'}, 'gitGraph': {'showCommitLabel': false}}}%%
+%%{init: {'gitGraph': {'showCommitLabel': false}}}%%
 gitGraph
   commit
   branch fit

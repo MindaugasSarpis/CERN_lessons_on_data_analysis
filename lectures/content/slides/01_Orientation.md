@@ -34,7 +34,6 @@ layout: fact
 
 # Who am I talking to?
 
-## Show of hands: **your field** · **your operating system** · **have you written code before?**
 
 <!--
 Speaker: three quick shows of hands. Fields calibrate the later examples; the OS split
@@ -174,8 +173,8 @@ Every **Tuesday**: **2 h lecture** + **2 h seminar** — 16 weeks, **8 Sep – 2
 | **Wk** | **Tue** | **Lecture** |
 | --- | --- | --- |
 | 1 | 8 Sep | **A** · Orientation & Motivation *(lecture only)* |
-| 2 | 15 Sep | **A** · Introduction to Data |
-| 3 | 22 Sep | **A** · How Computers Work |
+| 2 | ~~15 Sep~~ | ~~**A** · Introduction to Data~~ |
+| 3 | ~~22 Sep~~ | ~~**A** · How Computers Work~~ |
 | 4 | 29 Sep | **A** · Command Line & File Handling |
 | 5 | 6 Oct | **A** · Markdown & VS Code |
 | 6 | 13 Oct | **A** · Version Control with Git |
@@ -187,7 +186,7 @@ Every **Tuesday**: **2 h lecture** + **2 h seminar** — 16 weeks, **8 Sep – 2
 | 9 | 3 Nov | **C** · Concepts of Data Analysis |
 | 10 | 10 Nov | **C** · Data Visualisation |
 | 11 | 17 Nov | **C** · Probability & Statistics |
-| 12 | 24 Nov | **C** · Practical Data Fitting |
+| ~~12~~ | ~~24 Nov~~ | ~~**C** · Practical Data Fitting~~ |
 | 13 | 1 Dec | **D** · NumPy & Pandas |
 | 14 | 8 Dec | **D** · Reproducible Workflows & Automation |
 | 15 | 15 Dec | **E** · Computing Infrastructure & HPC |

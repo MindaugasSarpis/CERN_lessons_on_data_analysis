@@ -180,7 +180,7 @@ hideInToc: true
 # The Data Fitting **Workflow**
 
 ```mermaid {scale: 1.0}
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'secondaryColor': '#102b4c', 'lineColor': '#5eead4', 'fontFamily': 'Inter, system-ui, sans-serif'}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 40, 'rankSpacing': 45}}}%%
+%%{init: {'flowchart': {'nodeSpacing': 40, 'rankSpacing': 45}}}%%
 flowchart LR
     Data["Data<br/>(xᵢ, yᵢ)"]:::input --> Model["Model<br/>f(x; θ)"]:::process
     Model --> Fit["Fit<br/>minimize χ²"]:::process
@@ -189,10 +189,10 @@ flowchart LR
     Validate -->|Good| Report["Report"]:::output
     Validate -->|Bad| Model
 
-    classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
-    classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px
-    classDef output fill:#155e75,stroke:#5eead4,stroke-width:2.5px,color:#e0f2fe,rx:14px,ry:14px
-    classDef check fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:12px,ry:12px
+    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
+    classDef process fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
+    classDef output fill:#063c34,stroke:#34d399,color:#d1fae5
+    classDef check fill:#2a2208,stroke:#fbbf24,color:#fef3c7
 ```
 
 <div class="card card-accent card-glass pad-compact mt-md">

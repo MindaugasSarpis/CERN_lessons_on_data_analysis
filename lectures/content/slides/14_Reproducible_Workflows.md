@@ -149,26 +149,18 @@ hideInToc: true
 <div style="display: flex; justify-content: center; align-items: center; margin-top: 0.5rem;">
 
 ```mermaid{scale: 1}
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0f1f3d',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'secondaryColor': '#102b4c',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif',
-  'fontSize': '18px'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': false, 'nodeSpacing': 10, 'rankSpacing': 80}}}%%
+%%{init: {'flowchart': {'useMaxWidth': false, 'nodeSpacing': 10, 'rankSpacing': 80}}}%%
 flowchart LR
     A["📓 Jupyter<br/>Notebook"]:::stage1 --> B["📜 Python<br/>Script"]:::stage2
     B --> C["📦 Modules"]:::stage3
     C --> D["⚙️ Automated<br/>Pipeline"]:::stage4
     D --> E["🚀 Production<br/>System"]:::stage5
 
-    classDef stage1 fill:#0f4c81,stroke:#93c5fd,stroke-width:3px,color:#e2e8f0,rx:14px,ry:14px
-    classDef stage2 fill:#155e75,stroke:#5eead4,stroke-width:3px,color:#e2e8f0,rx:14px,ry:14px
-    classDef stage3 fill:#1c3d5a,stroke:#34d399,stroke-width:3px,color:#d1fae5,rx:14px,ry:14px
-    classDef stage4 fill:#1e3a5f,stroke:#fbbf24,stroke-width:3px,color:#fef3c7,rx:14px,ry:14px
-    classDef stage5 fill:#0b2540,stroke:#f472b6,stroke-width:3px,color:#fce7f3,rx:14px,ry:14px
+    classDef stage1 fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
+    classDef stage2 fill:#0b2d4d,stroke:#5eead4,color:#e8f1ff
+    classDef stage3 fill:#063c34,stroke:#34d399,color:#d1fae5
+    classDef stage4 fill:#2a2208,stroke:#fbbf24,color:#fef3c7
+    classDef stage5 fill:#3b1030,stroke:#f472b6,color:#fce7f3
 ```
 
 </div>
@@ -1487,7 +1479,6 @@ Automatically run tasks when you push code: tests, style checks, build docs, run
 </div>
 
 ```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#0f1f3d', 'primaryBorderColor': '#60a5fa', 'primaryTextColor': '#e2e8f0', 'lineColor': '#5eead4', 'edgeLabelBackground': '#0b1220'}, 'flowchart': {'curve': 'basis'}}}%%
 flowchart LR
     A[Push Code]:::action --> B[GitHub Actions]:::process
     B --> C[Tests]:::step
@@ -1497,12 +1488,12 @@ flowchart LR
     E -->|Yes| F[Success]:::success
     E -->|No| G[Fail]:::fail
 
-    classDef action fill:#0f4c81,stroke:#93c5fd,color:#e2e8f0
-    classDef process fill:#155e75,stroke:#5eead4,color:#e2e8f0
-    classDef step fill:#1c3d5a,stroke:#34d399,color:#d1fae5
-    classDef decision fill:#0b2540,stroke:#fcd34d,color:#fef3c7
-    classDef success fill:#134e4a,stroke:#34d399,color:#d1fae5
-    classDef fail fill:#7f1d1d,stroke:#f87171,color:#fee2e2
+    classDef action fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
+    classDef process fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
+    classDef step fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
+    classDef decision fill:#2a2208,stroke:#fbbf24,color:#fef3c7
+    classDef success fill:#063c34,stroke:#34d399,color:#d1fae5
+    classDef fail fill:#3b1020,stroke:#f87171,color:#fee2e2
 ```
 
 ---

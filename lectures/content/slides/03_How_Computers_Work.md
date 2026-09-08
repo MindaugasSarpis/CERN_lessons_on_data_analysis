@@ -77,9 +77,9 @@ layout: center
 hideInToc: true
 ---
 
-```mermaid {scale: 2}
+```mermaid {scale: 1.8}
 graph LR
-    A[input] --> B[ ] --> C[output]
+    A[input] --> B["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>&nbsp;"] --> C[output]
 
     classDef invisible fill:none,stroke:none,font-size:24px;
     classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;
@@ -1922,9 +1922,9 @@ hideInToc: true
 
 <div class="text-center">
 
-```mermaid {scale: 1.2}
+```mermaid {scale: 1}
 graph LR
-    A[input] --> B[ ] --> C[output]
+    A[input] --> B["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>&nbsp;"] --> C[output]
 
     classDef invisible fill:none,stroke:none,font-size:24px;
     classDef transparentBox fill:none,stroke:white,stroke-width:3px,font-size:24px;

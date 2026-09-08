@@ -918,7 +918,7 @@ graph LR
     B --> C[HLT few kHz]
     C --> D[Storage 10 GB/s]
 
-    classDef stage fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
+    classDef stage fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff;
     class A,B,C,D stage;
 ```
 

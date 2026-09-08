@@ -1,67 +1,80 @@
-# Mermaid Configuration Reference
+# Mermaid Diagrams — Course Style
 
-This file contains reusable Mermaid diagram configurations for slides.
+All mermaid diagrams share one look ("kinetic glass", the same language as
+the card system): deep-navy translucent nodes with a luminous sky-blue edge
+and a soft glow, teal connectors with rounded caps, Space Grotesk semibold
+labels, edge labels as small chips. It is applied **globally** — a fence needs
+nothing but the diagram:
 
-## Standard Flowchart Config (Dark Theme)
+````md
+```mermaid {scale: 0.8}
+graph LR
+    A[📥 Raw events] --> B[🧹 Clean] --> C[📊 Histogram]
+```
+````
+
+## Where the style lives
+
+- **`lectures/content/setup/mermaid.ts`** — the single source of truth:
+  `themeVariables` (colours for flowchart / sequence / gitGraph / pie) and
+  `themeCSS` (stroke widths, radius, glow, fonts, edge-label chips), plus
+  layout defaults (`flowchart.curve: basis`, spacing).
+- **`theme/styles/mermaid-styles.css`** — only the host element and the
+  light-DOM measuring container (label font + measure-only slack). Slidev
+  renders each diagram into a **shadow root**, so page CSS cannot style the
+  SVG — do not add node/edge rules there.
+
+## Do not add `%%{init: …}%%` blocks
+
+They override the global theme piecemeal and drift. The only accepted use is
+a **layout-only** directive when a specific diagram needs different spacing
+or must not stretch:
 
 ```
-%%{init: {'theme': 'dark', 'themeVariables': {
-  'primaryColor': '#0f1f3d',
-  'primaryBorderColor': '#60a5fa',
-  'primaryTextColor': '#e2e8f0',
-  'secondaryColor': '#102b4c',
-  'tertiaryColor': '#143860',
-  'lineColor': '#5eead4',
-  'fontFamily': 'Inter, Segoe UI, sans-serif'
-}, 'flowchart': {'curve': 'basis', 'htmlLabels': true, 'useMaxWidth': true, 'nodeSpacing': 35, 'rankSpacing': 40}}%%
+%%{init: {'flowchart': {'nodeSpacing': 10, 'rankSpacing': 80, 'useMaxWidth': false}}}%%
+%%{init: {'gitGraph': {'showCommitLabel': false}}}%%
 ```
 
-## Common ClassDef Styles
+## Semantic node colours (classDef)
 
-### Standard Node Types
-
-```
-classDef hub fill:#0b2540,stroke:#60a5fa,stroke-width:2px,color:#f8fafc,rx:14px,ry:14px;
-classDef category fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-classDef detail fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-classDef process fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-classDef output fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-classDef input fill:#133661,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-classDef decision fill:#0b2540,stroke:#fcd34d,stroke-width:2px,color:#fef3c7,rx:14px,ry:14px;
-classDef branch fill:#132f5d,stroke:#38bdf8,stroke-width:2px,color:#e2e8f0,rx:12px,ry:12px;
-classDef event fill:#0f4c81,stroke:#93c5fd,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
-classDef example fill:#1d3a64,stroke:#38bdf8,stroke-width:1.5px,color:#e2e8f0,rx:12px,ry:12px;
-classDef positive fill:#0f4c81,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:12px,ry:12px;
-classDef alert fill:#b45309,stroke:#ffb74d,stroke-width:2px,color:#fff7ed,rx:12px,ry:12px;
-classDef negative fill:#8b2f39,stroke:#f87171,stroke-width:2px,color:#fee2e2,rx:12px,ry:12px;
-classDef support fill:#0f2b4c,stroke:#5eead4,stroke-width:2px,color:#e2e8f0,rx:14px,ry:14px;
-classDef option fill:#155e75,stroke:#5eead4,stroke-width:2px,color:#e0f2fe,rx:10px,ry:10px;
-```
-
-## Simplified Init (Minimal)
-
-For cleaner code, use this minimal version and add custom classDefs as needed:
+Default nodes are navy/sky. When a diagram needs meaning in colour, use these
+names with exactly these definitions (fill / stroke / text only — width,
+radius and glow come from the global style):
 
 ```
-%%{init: {'theme': 'dark', 'flowchart': {'htmlLabels': true, 'useMaxWidth': true}}}%%
+classDef input    fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
+classDef process  fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
+classDef output   fill:#063c34,stroke:#34d399,color:#d1fae5
+classDef check    fill:#2a2208,stroke:#fbbf24,color:#fef3c7
+classDef bad      fill:#3b1020,stroke:#f87171,color:#fee2e2
 ```
 
-## Usage Guidelines
+| name | meaning | accent |
+|---|---|---|
+| `input` (`action`) | a source / something you provide | teal |
+| `process` (`step`, `stage`) | a transformation — the default look | sky |
+| `output` (`good`, `success`) | a result, a passing state | emerald |
+| `check` (`decision`) | a decision point, a validation | amber |
+| `bad` (`fail`) | a failure, a dead end | red |
 
-1. **Copy the standard config** for consistent theming across diagrams
-2. **Adjust nodeSpacing and rankSpacing** based on diagram complexity:
-   - Tight: 30-35 (nodeSpacing), 35-40 (rankSpacing)
-   - Normal: 35-40 (nodeSpacing), 40-50 (rankSpacing)
-   - Loose: 40-50 (nodeSpacing), 50-60 (rankSpacing)
-3. **Choose appropriate classDefs** from the common styles above
-4. **Customize colors** by modifying the hex values in themeVariables
+Aliases in parentheses are already used in some decks with the same colours;
+prefer the first name in new diagrams. The L14 maturity ladder uses
+`stage1…stage5` as a five-step spectrum (sky → teal → emerald → amber → rose).
 
-## Color Palette Reference
+`box` / `transparentBox` / `invisible` (L03 black box, L15 memory hierarchy)
+are deliberate "outline only" diagrams and keep their own definitions.
 
-- **Primary Blue**: #0f1f3d (backgrounds), #60a5fa (borders)
-- **Teal/Cyan**: #5eead4 (accents, lines)
-- **Light Text**: #e2e8f0, #f8fafc
-- **Success Green**: #0f4c81 (with #5eead4 stroke)
-- **Warning Orange**: #b45309 (with #ffb74d stroke)
-- **Error Red**: #8b2f39 (with #f87171 stroke)
-- **Info Cyan**: #38bdf8
+## Palette reference
+
+Mirrors `--color-*` / `--accent-*` in `custom-slides.css`:
+
+- node fill `#0a1f3f` (navy, drawn at 82 % opacity) · deep `#08172f` · mid `#0b2d4d`
+- borders sky `#38bdf8` · connectors cyan `#22d3ee` · teal `#5eead4`
+- text `#e8f1ff` · chips `#a5f3fc` on `#020617`
+- accents: emerald `#34d399` · amber `#fbbf24` · red `#f87171` · violet `#a78bfa` · rose `#f472b6`
+
+## Sizing
+
+Use the fence's `{scale: …}` to fit the slide (0.6–0.9 typical; 1.0+ for
+one-liners). Labels are measured with a little extra width on purpose, so a
+multi-line label will not lose its last glyph when the SVG is scaled down.

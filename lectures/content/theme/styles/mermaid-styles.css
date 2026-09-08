@@ -2,11 +2,24 @@
    MERMAID DIAGRAM STYLES
    ============================================
 
-   Styles for Mermaid diagrams used in slides.
-   These styles complement the inline mermaid configs.
-
-   USAGE: Applied automatically to all mermaid diagrams
+   The diagram LOOK (node fills, strokes, glow, fonts) lives in
+   setup/mermaid.ts — Slidev renders each diagram into a shadow root, so
+   page CSS never reaches the SVG. This file only styles the host element
+   and the light-DOM rendering container mermaid measures labels in.
    ============================================ */
+
+/* Mermaid measures html labels inside #mermaid-rendering-container (light
+   DOM) BEFORE the SVG moves into the shadow root, so label metrics here must
+   match the label rules in setup/mermaid.ts (themeCSS) — otherwise the
+   boxes are sized for one font and rendered with another (clipped text). */
+#mermaid-rendering-container .nodeLabel,
+#mermaid-rendering-container .edgeLabel,
+#mermaid-rendering-container .label {
+  font-family: 'Space Grotesk', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+/* Measure-only slack: Slidev scales the SVG (`{scale: …}
 
 /* Mermaid container styling */
 .mermaid {
