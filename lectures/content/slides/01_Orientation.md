@@ -23,7 +23,7 @@ brief is self-paced — the last slide says so. (~2 min)
 hideInToc: true
 ---
 
-<VideoPlayer src="ff_zoom_master.mp4" :autoplay="false" />
+<VideoPlayer src="ff_zoom_master.mp4" :autoplay="false" hq />
 
 <!-- Cold open (4:42): Google Earth pull-back — the Physics Faculty roof at Saulėtekis, Vilnius, Lithuania, Earth from orbit, the Sun, a star-streak run through the Milky Way, deep space, and it ends on the cosmic web. Release asset ff_zoom_master.mp4 (1080p60 H.264, plays on every browser; encoded from the maintainer's 2026-09-06 master). Does NOT auto-start — press play when the room is settled, then let it run before a word of admin. The ATLAS overview clip plays only in the CERN block after the course slides. -->
 

@@ -18,7 +18,10 @@ const props = defineProps({
   // bottom control strip, or for a few seconds after a click/tap on the video.
   // `false` = controls always visible (when `controls` is on).
   autoHideControls: { type: Boolean, default: true },
-  hq:       { type: Boolean, default: true },
+  // Try the venue-quality `videos-hq/` copy first. Opt-in per clip: only
+  // manifest `hq = true` entries have one; for any other clip the attempt
+  // just 404s and races the fallback chain.
+  hq:       { type: Boolean, default: false },
 })
 
 const base = import.meta.env.BASE_URL || '/'
@@ -67,6 +70,13 @@ const mimeType = computed(() => {
 let switching = false
 function onError() {
   if (switching || !hasBeenActive.value) return
+  // A <source> error is only real once resource selection has given up
+  // (NETWORK_NO_SOURCE). Chrome also fires stale ones — from the empty src the
+  // element mounted with, or from a request it aborted itself to re-issue
+  // with a Range header — while a fresh load is already in flight; acting on
+  // those skips a working tier and can exhaust the chain.
+  const video = videoRef.value
+  if (video && video.networkState !== HTMLMediaElement.NETWORK_NO_SOURCE) return
   // Advance to the next source in the chain; give up when it is exhausted.
   if (chainIndex.value < chain.value.length - 1) {
     switching = true
