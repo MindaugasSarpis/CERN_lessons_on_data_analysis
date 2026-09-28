@@ -102,7 +102,7 @@ hideInToc: true
 - Your phone logs the exact second the alarm went off
 - A wearable scores how you slept — from heart rate and motion all night
 - A weather app pushes a forecast computed from millions of sensor readings
-- The battery graph already knows your charging habits better than you do
+- The battery graph has logged every charge and discharge of the past week
 
 Ten minutes awake and you have already generated — and consumed — several datasets. None of it felt like "data".
 
@@ -140,7 +140,7 @@ hideInToc: true
 - Each card payment is scored for fraud in under a second
 - Spam filters quietly classify every message before you see it
 
-Most of this analysis runs automatically — ⚙️ automation and ♻️ reproducibility at planetary scale, invisible until it breaks.
+Most of this analysis runs with no person in the loop: the ⚙️ automation and ♻️ reproducibility this course teaches. You notice it only when it fails.
 
 </div>
 
@@ -175,17 +175,17 @@ Behind each convenience is the same loop you'll learn to run in this course: **c
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔎 **The shift this course asks of you**
+## 🔎 **Three questions for any app**
 
-Stop seeing finished apps. Start seeing the **data and the decisions** underneath — because soon you'll be the one building that loop.
+What does it **record**? In what **table** does that end up? Which **decision** does the result feed? In ten minutes you ask the same of your own field.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🎓 **The good news**
+## 🎓 **What carries over**
 
-The same handful of skills — files, code, statistics, reproducibility — powers *all* of it. Learn them once; apply them anywhere.
+The forecast, the playlist and the fraud check need the same four skills: organising files, writing code, statistics, reproducibility. Those are this course.
 
 </div>
 
@@ -217,7 +217,7 @@ A temperature, a timestamp, a momentum, a yes/no. On its own, one value says lit
 
 ## 📚 **It becomes useful in bulk**
 
-Thousands of those values, organised, reveal patterns no single reading ever could — the whole game of analysis.
+Thousands of those values, organised, show what one reading cannot: a trend, a spread, a peak.
 
 </div>
 
@@ -326,7 +326,7 @@ Labels, categories, free comments. Countable once you decide what to count.
 
 ## 🖼️ **Images**
 
-Grids of pixels — secretly just numbers. The natural home of modern ML.
+Grids of pixels, each pixel a number. Most image analysis today is machine learning.
 
 </div>
 
@@ -372,7 +372,7 @@ Data *about* the measurement — when, where, by which instrument, in what units
 
 ## ⚠️ **Metadata is not optional** 📁 ♻️
 
-A momentum with no units, a reading with no timestamp, a file with no source — that's a number you can neither trust nor reproduce. Half of good data work is keeping the metadata attached.
+A momentum with no units, a reading with no timestamp, a file with no source — that's a number you can neither trust nor reproduce. Much of data work is keeping the metadata attached to the numbers.
 
 </div>
 
@@ -390,7 +390,7 @@ hideInToc: true
 | ⚡ Events | Turn one collision into a number (a mass) | here, L09–L12 |
 | 📁 …and their files | Read, name, and organise safely | L03–L05 · S3–S5 |
 
-<div class="note-text mt-md">A map, not a test — each row is a week where this taxonomy becomes something your own hands do.</div>
+<div class="note-text mt-md">Nothing to memorise: the last column says in which weeks you work with each flavour yourself.</div>
 
 ---
 hideInToc: true
@@ -429,7 +429,7 @@ Share with a neighbour:
 
 ## 🎯 **Takeaway**
 
-Every field generates data. The tools and mindset you'll build in this course apply far beyond particle physics.
+Keep your answer. The data you just described is a candidate for Seminar 2 today, and for your semester project.
 
 </div>
 
@@ -525,49 +525,49 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🎯 **Decisions drive design**
+## 🎯 **A decision comes first**
 
-Genomics, finance, or particle physics — analysis starts from a decision someone must make.
+Which therapy, which trade, which collision to keep: the analysis is built around a decision someone has to make.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📐 **Uncertainty is first-class**
+## 📐 **Uncertainty is stated**
 
-Every field reports ranges, intervals, or risks — not single numbers.
+A forecast gives a range, a risk model a probability, a mass measurement a ± error.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 🔄 **Pipelines over one-offs**
+## 🔄 **The analysis gets rerun**
 
-Reproducible workflows beat ad-hoc analyses once data keeps arriving.
+New data keeps arriving, so the work has to be a pipeline that runs again, not a calculation done once by hand.
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## 🤝 **Teams, not heroes**
+## 🤝 **The work is shared**
 
-Domain + analyst + engineer + stakeholder — no single role sees the whole.
+Domain expert, analyst, engineer, decision-maker: each sees one part of the problem.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## ⚖️ **Ethics follows impact**
+## ⚖️ **Rules grow with the stakes**
 
-The higher the stakes (health, policy, money), the stronger the governance.
+Data on health, policy and money comes with consent, audits and regulation.
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-## 📖 **Stories ship insight**
+## 📖 **It has to be explained**
 
-Numbers change nothing until they land as a narrative a decision-maker can act on.
+A number changes a decision only once the person deciding understands what it says.
 
 </div>
 
@@ -628,7 +628,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-🤝 On **4 July 2012** both announced the Higgs **independently, on the same day** — replication was designed into the LHC from the start. Cross-checking isn't a courtesy; it's architecture.
+🤝 On **4 July 2012** both announced the Higgs **independently, on the same day**. The LHC was built with two general-purpose detectors so that each result can be checked by the other.
 
 </div>
 
@@ -931,7 +931,7 @@ graph LR
 
 ## 📦 **The Arithmetic**
 
-**~1–2 MB** per event × a few **thousand** events/s ≈ **10 GB/s** to disk and tape; × ~**10⁷ s** of beam per year ≈ **100+ PB per year**. Any one physicist's analysis sample is a sliver of that sliver.
+**~1–2 MB** per event × a few **thousand** events/s ≈ **10 GB/s** to disk and tape; × ~**10⁷ s** of beam per year ≈ **100+ PB per year**. One analysis uses a tiny part of that: today's example file is 1.3 MB.
 
 </div>
 
@@ -961,17 +961,17 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔁 **No Do-Overs**
+## ⏱️ **25 ns Between Crossings**
 
-Bunches cross every **25 nanoseconds** — the next collision arrives long before software finishes judging the last one
+Bunches cross every **25 nanoseconds**. The next collisions arrive long before any software has finished judging the last ones.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## ⏳ **No Buffering, Later**
+## 📦 **A Few Microseconds of Memory**
 
-Unlike a slow video stream, there's no "buffering" option — the trigger commits **in microseconds**, or the data is gone
+The detector electronics can hold an event for only a few **microseconds**. If the first trigger level has not said "keep" by then, it is overwritten.
 
 </div>
 
@@ -1017,7 +1017,7 @@ hideInToc: true
 
 ## 🧑‍🔬 **Physicists**
 
-Design analyses, hunt signals in noise — statistics and Python, at full scale.
+Design analyses and separate signal from background. Day to day that is statistics and code, mostly Python and C++.
 
 </div>
 
@@ -1172,7 +1172,7 @@ hideInToc: true
 
 💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable. The grid itself — jobs, storage trade-offs, ~170 sites — is **Lecture 15 (Computing Infrastructure & HPC)** in full; today was just its shape.
 
-🔭 The pattern repeats at the frontier: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring for which the LHC itself would be the injector.
+🔭 What comes next: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring, more than three times the LHC's 27 km.
 
 </div>
 
