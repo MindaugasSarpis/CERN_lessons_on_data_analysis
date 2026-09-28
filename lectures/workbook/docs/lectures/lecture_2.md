@@ -30,11 +30,12 @@ one comes from, and how you write down where it came from.
 On 29 September the session opens with a 40-minute checkpoint of the self-paced
 [Seminar 1](../seminars/seminar_01.md) setup (tools, project skeleton, first
 commit), then runs
-[Seminar 2 — Find & Document a Dataset](../seminars/seminar_02.md): locate the
-LHCb masterclass sample on the CERN Open Data Portal
-([record 401](https://opendata.cern.ch/record/401),
-DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`) — or a dataset from your own field — put
-it in `data/raw/`, checksum it, and record its provenance in the README.
+[Seminar 2 — Find & Document a Dataset](../seminars/seminar_02.md): choose a
+dataset from your own field, put it in `data/raw/`, checksum it, and record its
+provenance in the README. The lecture's example — the LHCb masterclass sample,
+[record 401](https://opendata.cern.ch/record/401),
+DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR` — is there to practise on if you have no
+dataset yet.
 
 ## Take-aways
 

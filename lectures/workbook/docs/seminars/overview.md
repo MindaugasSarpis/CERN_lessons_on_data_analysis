@@ -19,30 +19,30 @@ How much the two overlap is up to you and will be shaped as the term goes: a
 seminar step can be repeated on your own data the same afternoon, or your project
 can go somewhere else entirely.
 
-## The seminar dataset
+## The example dataset
 
-The briefs are written against the **LHCb open-data masterclass** sample from the
-CERN Open Data Portal: events pre-selected to contain **D⁰ → K⁻π⁺** decay
-candidates. Each of its 91,583 rows is one candidate, with its **K–π invariant
-mass** `M`, transverse momentum `PT`, decay time `TAU` and impact-parameter score
-`IPCHI2` — histogram `M` and the D⁰ appears as a peak near **1865 MeV**.
+From **Seminar 2** on you work on **a dataset of your own choice** — any tabular
+dataset with a few thousand+ rows and at least one numeric column with
+interesting structure: daily weather, prices, anonymised measurements, survey
+microdata. You do **not** have to measure the D⁰ mass.
+
+The lectures, and the examples inside the briefs, use the **LHCb open-data
+masterclass** sample from the CERN Open Data Portal: events pre-selected to
+contain **D⁰ → K⁻π⁺** decay candidates. Each of its 91,583 rows is one candidate,
+with its **K–π invariant mass** `M`, transverse momentum `PT`, decay time `TAU`
+and impact-parameter score `IPCHI2` — histogram `M` and the D⁰ appears as a peak
+near **1865 MeV**. Wherever a brief says "invariant mass / D⁰ peak", read "your
+numeric variable / the pattern you're looking for".
 
 - Source: CERN Open Data Portal — *LHCb event file for real measurement*,
   [record 401](https://opendata.cern.ch/record/401),
   DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR` (event-display files:
-  [record 400](https://opendata.cern.ch/record/400)). You find and record this
-  in **Seminar 2**.
-- Files: the record holds one ROOT file, `MasterclassData.root`. The seminars
+  [record 400](https://opendata.cern.ch/record/400)).
+- Files: the record holds one ROOT file, `MasterclassData.root`. The examples
   read [`D0_KPi.csv`](../data/D0_KPi.csv), converted from it by
   [`root_to_csv.py`](../data/root_to_csv.py) — values unchanged.
 - Why this one: real collision data, a genuine signal to find, fit and classify,
   and small enough to work with on a laptop.
-
-**Prefer a dataset from your own field?** Any tabular dataset with a few
-thousand+ rows and at least one numeric column with interesting structure works —
-daily weather, prices, anonymised measurements, survey microdata. Wherever a brief
-says "invariant mass / D⁰ peak", read "your numeric variable / the pattern you're
-looking for". Mention your choice to the instructor in Seminar 2.
 
 > Offline or the portal is down? The workbook keeps a byte-identical copy of the
 > original, [`MasterclassData.root`](../data/MasterclassData.root); the instructor

@@ -49,7 +49,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact">
 
-⚛️ Trace how a **collision becomes a dataset** — detector, trigger, storage — and meet the **D⁰** you'll analyse
+⚛️ Trace how a **collision becomes a dataset** — detector, trigger, storage — and meet the **D⁰**, our example from real LHCb data
 
 </div>
 
@@ -240,7 +240,7 @@ graph LR
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The loop from two slides ago, drawn out. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it. This course spends a lecture or two on **each stage**; the seminars walk a shared dataset through every stage of it.
+The loop from two slides ago, drawn out. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it. This course spends a lecture or two on **each stage**; the seminars walk **your own dataset** through every stage of it.
 
 </div>
 
@@ -387,7 +387,7 @@ hideInToc: true
 | 🔢 Numbers | Summarise, visualise, fit, report ± an error | L10–L12 · S10–S12 |
 | 🔤 Text | Parse a line; code and count categories | L07–L08 · S7–S8 |
 | 🖼️ Images | Pixels as arrays, then a classifier | L13 · L16 |
-| ⚡ Events | Turn one collision into a number (a mass) | here, L09 · S7–S8, S12 |
+| ⚡ Events | Turn one collision into a number (a mass) | here, L09–L12 |
 | 📁 …and their files | Read, name, and organise safely | L03–L05 · S3–S5 |
 
 <div class="note-text mt-md">A map, not a test — each row is a week where this taxonomy becomes something your own hands do.</div>
@@ -509,7 +509,7 @@ hideInToc: true
 - Collaboration across detectors, theory, computing teams
 - Drives advances in distributed computing & open data practices
 
-🔬 <strong>Your seminars live here</strong> — the same open LHCb collision data physicists publish, walked from raw events to a measured mass.
+🔬 <strong>This course's example lives here</strong> — open LHCb collision data, the same files physicists publish, from raw events to a measured mass.
 
 </div>
 
@@ -732,7 +732,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Meet the Particle You'll <span class="gradient-text">Analyse</span>
+# Meet the <span class="gradient-text">D⁰</span> — a Particle in Open Data
 
 <div class="grid-2 mt-md gap-md">
 
@@ -759,14 +759,15 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-🔬 **Where you'll meet it:** real **LHCb open data** is the seminars' default dataset — you'll locate it in Seminar 2 (or bring a dataset from your own field) and, by Lecture 12 (Practical Data Fitting), produce and fit a peak like this yourself.
+🔬 **Where you'll meet it:** real **LHCb open data** is the lectures' worked example — today we read its record and its file, and Lecture 12 (Practical Data Fitting) fits this peak. In the seminars you do the same steps on **a dataset of your own**.
 
 </div>
 
 <!--
-Speaker: the seed slide — this exact peak returns in the Python, visualisation, and
-fitting lectures. Students should leave knowing one particle by name: the D0, mass
-about 1865 MeV, seen as a bump in the K-pi invariant-mass spectrum. (~2 min)
+Speaker: the seed slide — this peak returns as the lectures' example in the
+visualisation and fitting lectures. Students do NOT measure the D0 mass in the
+seminars; they work on their own data. They should leave knowing one particle by
+name: the D0, about 1865 MeV, a bump in the K-pi invariant-mass spectrum. (~2 min)
 -->
 
 ---
@@ -938,7 +939,7 @@ graph LR
 
 ## 💻 **LHCb, Since Run 3**
 
-No hardware trigger at all: every crossing — **30 million per second** — is read out in full and judged by a **software trigger** (its first stage on GPUs). That is the detector behind the seminar dataset.
+No hardware trigger at all: every crossing — **30 million per second** — is read out in full and judged by a **software trigger** (its first stage on GPUs). That is the detector behind today's example dataset.
 
 </div>
 
@@ -1200,8 +1201,8 @@ hideInToc: true
 
 <!--
 Speaker: shift gears — from *what data is* to *where you get it and how you prove
-where it came from*. This is the skill Seminar 2 practises on the LHCb sample or
-on their own dataset. (~1 min)
+where it came from*. This is the skill Seminar 2 practises on a dataset of their
+own choice; the LHCb record is the worked example. (~1 min)
 -->
 
 ---
@@ -1273,14 +1274,14 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact">
 
-## ⚛️ **Record 401 — the seminar dataset**
+## ⚛️ **Record 401 — today's example**
 
 - *LHCb event file for real measurement*
 - DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
 - Licence **CC0** — no conditions
 - One **ROOT** file, 1.3 MB — pre-selected D⁰ → K⁻π⁺ candidates
 - Downloadable by anyone — no CERN account needed
-- The seminars read a **CSV converted from it** — a derived file, and documented as one
+- The workbook keeps a **CSV converted from it** — a derived file, and documented as one
 
 </div>
 
@@ -1422,7 +1423,7 @@ hideInToc: true
 
 ## 🧭 **The path Seminar 2 walks**
 
-1. **Find** the record on the portal (or the source of your own data)
+1. **Find** your dataset's record on its portal (or the source, if there is no portal)
 2. **Read** the record — title, DOI, licence, description
 3. **Download** into `data/raw/` of the project skeleton from Seminar 1
 4. **Checksum** the file — SHA-256, one command on any system (the brief lists them)
@@ -1561,7 +1562,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Answer these on paper before the first line of code; Seminar 2's stretch goals ask you to do exactly this for your dataset.
+✅ Answer these on paper before the first line of code; Seminar 2 asks you to do exactly this for your dataset.
 
 </div>
 
@@ -1601,7 +1602,7 @@ Row = one file · columns = size, timestamp, label · the pixels live elsewhere.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🔁 Wherever a seminar says "invariant mass" or "D⁰ peak", read *your numeric variable* and *the pattern you are looking for*.
+🔁 Wherever a lecture shows the "invariant mass" or the "D⁰ peak", read *your numeric variable* and *the pattern you are looking for*.
 
 </div>
 
@@ -1610,7 +1611,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="In the LHCb seminar sample, what does one row of the CSV file represent?"
+  question="In the LHCb example sample, what does one row of the CSV file represent?"
   :options="[
     'One sub-detector of LHCb, with its readings for the run',
     'One column of momentum values, one per particle',
@@ -1669,12 +1670,12 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-🔬 **Seminar 2 tie-in** (today, after a 40-minute checkpoint of the self-paced Seminar 1 setup) — find and document a dataset: LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal, or one from your own field — recording its provenance (title, DOI, licence, date, checksum).
+🔬 **Seminar 2 tie-in** (today, after a 40-minute checkpoint of the self-paced Seminar 1 setup) — find and document a dataset **from your own field**, recording its provenance (title, DOI, licence, date, checksum). No idea yet? Practise on the LHCb record from today.
 
 </div>
 
 <!--
 Speaker: the "you can now" beat — have them nod along to each. The tie-in makes the
-payoff concrete: in the seminar they hunt down the actual dataset the seminars
-analyse, and practise recording its provenance. (~1 min)
+payoff concrete: in the seminar they hunt down a dataset of their own and practise
+recording its provenance. (~1 min)
 -->
