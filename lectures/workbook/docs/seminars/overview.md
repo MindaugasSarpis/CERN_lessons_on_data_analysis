@@ -1,7 +1,8 @@
 # The Seminars — How They Work
 
-Every lecture is paired with a 2-hour **hands-on seminar** — from week 2; in
-week 1 Seminar 1 is self-paced and checked at the start of Seminar 2. Each brief is
+Every lecture is paired with a **hands-on seminar**. The first session in class
+is Seminar 2, which starts from zero; Seminar 1 (installing Python and Git) is
+done at home after it. Each brief is
 **self-contained**: it states its goal, prerequisites, tasks, stretch goals and a
 wrap-up, and sizes to ~120 min. The seminars practise the course's four aims —
 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data & files.
@@ -50,7 +51,7 @@ numeric variable / the pattern you're looking for".
 
 ## The seminar repository
 
-Seminar 1 creates a small repository that later seminars reuse:
+Seminar 2 creates a small project folder that later seminars reuse:
 
 ```text
 analysis-project/
@@ -73,8 +74,8 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 
 | Seminar | Hands-on focus |
 |--|--|
-| 1 | Toolkit installed; repo skeleton + first commit *(self-paced; checked on 29 Sep)* |
-| 2 | A dataset downloaded into `data/raw/`; provenance recorded |
+| 1 | Python and Git installed *(at home, after the first session)* |
+| 2 | VS Code; the project folder; a data file in `data/raw/`; provenance recorded |
 | 3 | The raw file understood as bytes (encoding, size, format) |
 | 4 | `raw/`–`processed/` structure; clean filenames; CLI inspection |
 | 5 | A real `README.md` (provenance, columns, units, rebuild steps) |

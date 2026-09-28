@@ -42,16 +42,14 @@ git --version
 code --version
 ```
 
-Three version numbers means you are done; then create an empty `analysis-project`
-folder. Seminar 1's brief is **self-paced**: work through it at home. We check it
-together during the first 40 minutes of Seminar 2 on 29 September, then go
-straight on to the first dataset. Stuck on an install? Bring the error message.
+Three version numbers means you are done. Nothing has to be installed before
+the first session in class on 29 September: it starts from zero and needs only
+VS Code, which we install together. Python and Git follow at home.
 
 ## Paired seminar
 
-[Seminar 1 — Set Up Your Toolkit & First Repo](../seminars/seminar_01.md):
-self-paced before 29 September, checked at the start of
-[Seminar 2](../seminars/seminar_02.md).
+[Seminar 1 — Install Your Toolkit](../seminars/seminar_01.md): done at home
+after the first session in class, [Seminar 2](../seminars/seminar_02.md).
 
 ## Take-aways
 

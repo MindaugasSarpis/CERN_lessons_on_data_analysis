@@ -1201,8 +1201,8 @@ hideInToc: true
 
 <!--
 Speaker: shift gears — from *what data is* to *where you get it and how you prove
-where it came from*. This is the skill Seminar 2 practises on a dataset of their
-own choice; the LHCb record is the worked example. (~1 min)
+where it came from*. Seminar 2 practises this on the example file; at home they
+repeat it on a dataset of their own choice. (~1 min)
 -->
 
 ---
@@ -1421,14 +1421,14 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🧭 **The path Seminar 2 walks**
+## 🧭 **The path Seminar 2 starts**
 
 1. **Find** your dataset's record on its portal (or the source, if there is no portal)
 2. **Read** the record — title, DOI, licence, description
-3. **Download** into `data/raw/` of the project skeleton from Seminar 1
-4. **Checksum** the file — SHA-256, one command on any system (the brief lists them)
-5. **Write** the provenance note into the README
-6. **Commit the note** — and the data only if it is small *and* the licence allows it
+3. **Download** into `data/raw/` of your project folder, without renaming
+4. **Write** the provenance note into the README
+5. **Checksum** the file — a fingerprint of its bytes *(from week 4)*
+6. **Commit the note** — and the data only if it is small *and* the licence allows it *(from week 6)*
 
 </div>
 
@@ -1670,12 +1670,12 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-🔬 **Seminar 2 tie-in** (today, after a tour of VS Code and a check of the Seminar 1 setup) — find and document a dataset **from your own field**, recording its provenance (title, DOI, licence, date, checksum). No idea yet? Practise on the LHCb record from today.
+🔬 **Seminar 2 tie-in** (today, from scratch: nothing to install beforehand) — set up VS Code and a project folder, put today's example file into it, and write its provenance into a README. At home you do the same for a dataset **from your own field**.
 
 </div>
 
 <!--
 Speaker: the "you can now" beat — have them nod along to each. The tie-in makes the
-payoff concrete: in the seminar they hunt down a dataset of their own and practise
-recording its provenance. (~1 min)
+payoff concrete: in the seminar they document the example file, and at home a
+dataset of their own. (~1 min)
 -->

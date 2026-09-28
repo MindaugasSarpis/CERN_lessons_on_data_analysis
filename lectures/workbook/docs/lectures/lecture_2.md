@@ -27,15 +27,11 @@ one comes from, and how you write down where it came from.
 
 ## Paired seminar
 
-On 29 September the session opens with a 40-minute checkpoint of the self-paced
-[Seminar 1](../seminars/seminar_01.md) setup (tools, project skeleton, first
-commit), then runs
-[Seminar 2 — Find & Document a Dataset](../seminars/seminar_02.md): choose a
-dataset from your own field, put it in `data/raw/`, checksum it, and record its
-provenance in the README. The lecture's example — the LHCb masterclass sample,
-[record 401](https://opendata.cern.ch/record/401),
-DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR` — is there to practise on if you have no
-dataset yet.
+[Seminar 2 — First Hands-On](../seminars/seminar_02.md) is the first session in
+class and starts from zero: install VS Code, build a project folder, put the
+lecture's example file into `data/raw/`, and write into the README where it
+came from. At home you choose a dataset from your own field and install Python
+and Git ([Seminar 1](../seminars/seminar_01.md)).
 
 ## Take-aways
 

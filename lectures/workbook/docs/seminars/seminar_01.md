@@ -1,84 +1,95 @@
-# Seminar 1 — Set Up Your Toolkit & First Repo
+# Seminar 1 — Install Your Toolkit
 
-**Paired lecture:** 01 Orientation & Motivation · **Format:** self-paced before 29 Sep, checked at the start of Seminar 2 · **~120 min**
+**Paired lecture:** 01 Orientation & Motivation · **Format:** at home, after the first hands-on session · **~120 min**
 
-> **Week 1 has no seminar.** Work through this brief at home before 29 September.
-> Seminar 2 opens with a 40-minute checkpoint of tasks 1–6 — bring any error
-> message you hit, and the tree in `analysis-project/` as it stands.
+> **Week 1 had no seminar.** The first session in class is
+> [Seminar 2](seminar_02.md), which needs only VS Code. Do this brief at home
+> afterwards, before **6 October**. Bring any error message you could not
+> solve: a photo of the screen is enough.
 
-**Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
+**Suggested timing:** 0:00 Python · 0:40 Git · 1:10 check in VS Code · 1:40 notes in the README
 
-> **This session builds:** an empty project repository with the
-> standard skeleton and your first commit.
+> **This session builds:** a laptop with Python and Git installed, checked from
+> inside VS Code.
 
 ## Goal
-Leave the room with a working environment (terminal, Python, VS Code, Git) and an
-initialised seminar repository you'll reuse in later sessions.
+Have the three tools of the course working: VS Code (done in Seminar 2),
+Python and Git.
 
 ## Prerequisites
-A laptop with internet access. Nothing installed yet — that's what today is for.
+[Seminar 2](seminar_02.md): VS Code installed, the `analysis-project` folder.
 
 ## Tasks
-1. Open a terminal and confirm each tool, installing any that are missing:
-   `python --version` (or `python3`; on Windows also `py`), `git --version`,
-   `code --version`.
-2. Create the project folder and skeleton. In VS Code: **File → Open Folder…**,
-   make a new folder `analysis-project` and open it; then use the Explorer's
-   *New Folder* / *New File* buttons to build exactly this:
-   ```text
-   analysis-project/
-   |- README.md
-   |- data/
-   |  |- raw/
-   |  |- processed/
-   |- scripts/
-   |- results/
-   ```
-   Give `README.md` a title line (`# Analysis Project`) and one sentence.
-   *(On macOS, Linux or Git Bash the same in one line:
-   `mkdir -p analysis-project/{data/raw,data/processed,scripts,results}` — the
-   command line is Lecture 4.)*
-3. Open VS Code's built-in terminal (**Terminal → New Terminal**) — it starts
-   inside the project folder on every system — and look around the Explorer.
-4. Verify Python works: create `scripts/hello.py` with `print("ready")` and run it.
-5. Make the tools talk to each other: run `scripts/hello.py` from the VS Code
-   *integrated* terminal, then extend it to report your setup:
-   ```python
-   import sys, platform
-   print(platform.system(), sys.version.split()[0])
-   ```
-6. Make your **first commit** — a recipe for now, demystified in week 6:
-   ```bash
-   git init
-   git config user.name "Your Name"       # once per machine: add --global
-   git config user.email "you@example.com"
-   git add -A
-   git commit -m "Project skeleton"
-   ```
+1. **Install Python** from [python.org/downloads](https://www.python.org/downloads/).
+    - **Windows:** on the first screen of the installer tick
+      **Add python.exe to PATH**, then *Install Now*.
+    - **macOS:** run the downloaded installer and keep every default.
+2. **Install Git** from [git-scm.com](https://git-scm.com).
+    - **Windows:** run the installer and keep every default.
+    - **macOS:** open the *Terminal* app, type `git --version` and press Enter.
+      If Git is missing, macOS offers to install it; accept.
+3. Close VS Code completely and start it again, so that it notices the new
+   programs. Open your `analysis-project` folder.
+4. Open the terminal inside VS Code: **Terminal → New Terminal**. A panel
+   appears at the bottom. Type each line and press Enter:
+
+    ```text
+    python --version
+    git --version
+    ```
+
+    Each prints a version number. If `python` is not found, try `python3`
+    (macOS) or `py` (Windows).
+5. In the Side Bar, create the file `scripts/hello.py` with one line:
+
+    ```python
+    print("ready")
+    ```
+
+    Run it from the terminal with `python scripts/hello.py`. It prints `ready`.
+6. Tell Git who you are, once per computer. In the terminal:
+
+    ```text
+    git config --global user.name "Your Name"
+    git config --global user.email "you@example.com"
+    ```
+
+    Nothing is printed; that is correct. Git itself starts in week 6.
 
 ## Stretch goals
-- Add a `.gitignore` (even empty for now) and a `results/.gitkeep`.
-- Set your Git identity: `git config --global user.name` / `user.email`.
-- Install the VS Code Python and Markdown extensions and confirm `hello.py` gets
-  syntax highlighting and linting.
-- Add an **Environment** note to `README.md`: OS, Python version, and how you
-  installed each tool — future-you will thank you.
+- In VS Code open the Extensions view (`Ctrl+Shift+X` / `Cmd+Shift+X`) and
+  install **Python** (publisher Microsoft). Open `hello.py` again: the code is
+  now coloured, and a ▶ button at the top right runs it.
+- Extend `hello.py` to report your setup:
+
+    ```python
+    import sys, platform
+    print(platform.system(), sys.version.split()[0])
+    ```
+
+- Add an **Environment** note to `README.md`: your operating system, the
+  Python version, and how you installed each tool.
+- Install the **Rainbow CSV** extension and open your data file again.
 
 ## Wrap-up (last 10 min)
-- Compare your tree against the skeleton in the
-  [seminar overview](overview.md) — it should match exactly.
-- Re-run `python scripts/hello.py` in a *fresh* terminal to prove the setup
-  survives a restart, then check `git log` shows your first commit.
-- Add one line to `README.md`: the setup step that surprised you most.
+- Close VS Code, open it again, and re-run `python scripts/hello.py` to confirm
+  that the setup survives a restart.
+- Add one line to `README.md`: the installation step that surprised you most.
+
+## If something does not work
+
+| What you see | What to do |
+|--|--|
+| Windows: typing `python` opens the Microsoft Store | Python is not installed yet, or PATH was not ticked. Run the installer again, choose *Modify*, tick **Add python.exe to PATH**. Or use `py` |
+| `git` or `python` "is not recognized" right after installing | Close VS Code and open it again |
+| macOS: `python` not found | Use `python3` everywhere this course says `python` |
+| macOS: a dialog about "command line developer tools" | Click *Install*; it takes a few minutes |
 
 ## Solution notes (instructor)
-The point is a *clean start*, not content. In 2026 this brief is self-paced
-(no seminar in week 1) and checked in the first 40 minutes of Seminar 2: run
-through tasks 1–6 as a checklist, fix install issues (PATH, `python` vs
-`python3`, VS Code `code` command) individually while the room moves on to
-Seminar 2, and make sure everyone reaches the first commit in task 6 before
-they download a dataset. Everyone should end with an identical folder
-structure — this consistency pays off in every later seminar.
+In 2026 this brief is homework after the first hands-on session (29 September)
+and is checked by show of hands at the start of the next one. Nothing in
+Seminar 2 depends on it. The first commit that used to close this brief has
+moved to the Git week, where it is explained rather than recited.
 
 ## Aims practised
-📁 organised from line one · 🔧 the same tools on every OS
+🔧 the same tools on every OS

@@ -1,94 +1,205 @@
-# Seminar 2 — Find & Document a Dataset
+# Seminar 2 — First Hands-On: VS Code, a Project Folder, a Dataset
 
-**Paired lecture:** 02 Introduction to Data · **Format:** hands-on · **~120 min**
+**Paired lecture:** 02 Introduction to Data · **Format:** hands-on, from scratch · **~120 min**
 
-**Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
+**Suggested timing:** 90 min in class (parts A–E) · 30 min at home (part F)
 
-> **29 September is a 90-minute session.** It opens with a guided tour of VS
-> Code and a check of the self-paced [Seminar 1](seminar_01.md) — tools
-> installed, project skeleton, first commit — then runs tasks 1–5 of this
-> brief. Task 6 and the stretch goals are homework; the timing above is for the
-> brief on its own. Run-of-show: [lecturer's brief](lecturer_02.md).
+> **This is the first hands-on session and it starts from zero.** You need a
+> laptop and a web browser. You do not need programming experience, and you do
+> not need anything installed beforehand. If you have only ever used Excel,
+> this brief is written for you.
 
-> **This session builds:** a dataset of your own choice in `data/raw/`, with its
-> provenance recorded.
+> **This session builds:** a project folder with a data file in `data/raw/` and
+> a README that says where the file came from.
 
-> **Works the same on Windows, macOS and Linux.** Folders and files are handled
-> in VS Code's Explorer; the terminal is used for one command only (task 5),
-> given per system. The command line proper starts in Lecture 4.
+> **Windows and macOS.** Every step works on both. Where a key differs, it is
+> written as `Ctrl` / `Cmd`: Windows and Linux use the first, macOS the second.
 
 ## Goal
-Acquire a dataset and record **where it came from** — the first act of
-reproducibility.
+Get comfortable in the one program we use all semester, put a real data file
+into a tidy project folder, and write down **where it came from**.
 
 ## Prerequisites
-Seminar 1 (project skeleton).
+None.
 
 ## Tasks
-1. Choose a dataset **from your own field** on an open-data portal — weather,
-   survey, prices, lab measurements, sky catalogues… (Lecture 2 lists portals:
-   Eurostat, Copernicus, NASA, Zenodo, Kaggle). It should be tabular, with a few
-   thousand rows or more and at least one numeric column. Note the record's
-   title, DOI or stable URL, and licence.
-   *No idea yet?* Practise on the lecture's example and swap later: the LHCb
-   sample, [record 401](https://opendata.cern.ch/record/401) on the CERN Open
-   Data Portal, DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`.
-2. Download the file into `data/raw/` **without renaming it** — with the
-   browser, then drag it into the folder in VS Code's Explorer. Open it in VS
-   Code and look at the first lines. If it is not text (the LHCb record holds a
-   binary ROOT file, `MasterclassData.root`), keep the original and add a
-   readable copy next to it — for LHCb the workbook's
-   [`D0_KPi.csv`](../data/D0_KPi.csv), made by
-   [`root_to_csv.py`](../data/root_to_csv.py).
-3. In `README.md`, start a **Data** section: source URL, DOI, licence, download
-   date, file names, and a one-line description of what a row represents. If
-   you hold a converted copy, say which file is the **original** and which is
-   **derived** — and by what.
-4. Record the file's size and row count next to the provenance: the size from
-   your file manager, the row count from the last line number VS Code shows
-   (you'll verify both with command-line tools in Seminar 3).
-5. Fingerprint the original download so anyone can verify they hold the *exact*
-   same bytes, and record the hash in the **Data** section. In VS Code's
-   terminal (**Terminal → New Terminal**), with your file's name, one of:
-   ```text
-   Windows (PowerShell)   Get-FileHash data\raw\myfile.csv -Algorithm SHA256
-   macOS                  shasum -a 256 data/raw/myfile.csv
-   Linux, Git Bash        sha256sum data/raw/myfile.csv
-   ```
-   Send the file to a neighbour on a different system: same file, same 64
-   characters (upper or lower case does not matter).
-6. Answer Lecture 2's five questions for your file, in the README: how many
-   rows and columns, what one row is, which columns are measured / derived /
-   bookkeeping, their units, and how missing values are marked.
+
+Each part ends with a ✔ check. If your screen does not match the check, ask a
+neighbour or raise a hand before moving on.
+
+### Part A — Install and open VS Code (15 min)
+
+1. Go to [code.visualstudio.com](https://code.visualstudio.com) and download
+   VS Code for your system.
+2. Install it.
+    - **Windows:** run the downloaded installer and keep every default.
+    - **macOS:** open the downloaded file and drag *Visual Studio Code* into
+      the *Applications* folder.
+3. Start VS Code.
+
+✔ A window opens with a *Welcome* tab.
+
+### Part B — Find your way around (20 min)
+
+4. Create a folder named `analysis-project` somewhere you will find it again,
+   for example in *Documents*. Use your normal file manager (File Explorer on
+   Windows, Finder on macOS).
+5. In VS Code choose **File → Open Folder…** and pick `analysis-project`.
+   If asked whether you trust the authors, answer **Yes**.
+6. Find the five regions of the window:
+
+    | Region | Where | What it is for |
+    |--|--|--|
+    | Activity Bar | far left, a column of icons | switches what the Side Bar shows |
+    | Side Bar | left | the files of your project |
+    | Editor | centre | the file you are working on |
+    | Panel | bottom, hidden at first | the terminal, used in later weeks |
+    | Status Bar | bottom edge | facts about the open file |
+
+7. Press `Ctrl+Shift+P` / `Cmd+Shift+P`. This is the **Command Palette**: a
+   search box for everything VS Code can do. Type `theme`, choose
+   *Preferences: Color Theme*, and pick one you like.
+
+✔ The Side Bar shows the title `ANALYSIS-PROJECT` and nothing under it.
+
+### Part C — Build the project folder (15 min)
+
+8. Move the mouse over the Side Bar. Four small icons appear next to the
+   project name. Click **New Folder** and type `data`. Press Enter.
+9. Click on `data`, then **New Folder** again, and type `raw`.
+10. In the same way create `data/processed`, `scripts` and `results`.
+    Click on the empty area of the Side Bar first, so that the new folder is
+    created at the top level and not inside `data`.
+11. Click on the empty area again, then **New File**, and type `README.md`.
+12. The file opens in the Editor. Type:
+
+    ```text
+    # Analysis Project
+
+    Seminar exercises for the course.
+    ```
+
+13. Look at the tab of the file: a dot means *not saved*. Save with `Ctrl+S` /
+    `Cmd+S`. Then switch on **File → Auto Save**, so this cannot be forgotten.
+14. Press `Ctrl+Shift+V` / `Cmd+Shift+V` to see the README as a formatted page.
+
+✔ Your Side Bar shows exactly this:
+
+```text
+analysis-project/
+|- README.md
+|- data/
+|  |- processed/
+|  |- raw/
+|- results/
+|- scripts/
+```
+
+### Part D — Get a data file and look at it (25 min)
+
+Everyone starts with the same file, the example from today's lecture. You
+choose your own dataset in part F.
+
+15. Download [`D0_KPi.csv`](../data/D0_KPi.csv) with your browser. It lands in
+    your *Downloads* folder.
+16. Drag the file from *Downloads* onto the `raw` folder in the VS Code Side
+    Bar. Do **not** rename it.
+17. Click the file in the Side Bar to open it. Answer on paper:
+    - What is written in line 1?
+    - Which character separates the values in a line?
+    - How many lines does the file have? Press `Ctrl+End` / `Cmd+↓` to jump to
+      the end and read the line number.
+18. Press `Ctrl+G`, type `5000`, press Enter. You are at line 5000.
+19. Now open the same file in Excel (or LibreOffice, or Numbers) **without
+    saving anything**. Compare with VS Code:
+    - Does each value sit in its own column, or is the whole line in column A?
+    - Do the numbers look the same as in VS Code? Look at the decimal point.
+20. Close the spreadsheet. If it asks whether to save, answer **No**.
+
+✔ You know the number of data rows (lines minus the header line) and the four
+column names.
+
+> **Why two programs?** VS Code shows the file as it is: plain text. A
+> spreadsheet shows its *interpretation* of the file, and may change numbers,
+> dates and decimal separators when it saves. The file in `data/raw/` is never
+> edited and never saved from a spreadsheet.
+
+### Part E — Write down where it came from (15 min)
+
+21. Open `README.md` and add a **Data** section. Fill in the lines from the
+    record on the CERN Open Data Portal,
+    [record 401](https://opendata.cern.ch/record/401):
+
+    ```text
+    ## Data
+
+    Source:   CERN Open Data Portal, record 401
+    DOI:      (copy it from the record page)
+    Licence:  (copy it from the record page)
+    Fetched:  (today's date, as YEAR-MONTH-DAY)
+    File:     data/raw/D0_KPi.csv — converted from the record's
+              MasterclassData.root by the course's root_to_csv.py
+    One row:  (one sentence: what does one line of the file describe?)
+    ```
+
+22. Add the file's size (from your file manager) and the number of data rows
+    you counted in step 17.
+23. Swap laptops with a neighbour. Using only their README, could you find and
+    download the same file? Tell them what was missing.
+
+✔ Your README has a **Data** section that a stranger could follow.
+
+### Part F — At home, before next week (30 min)
+
+24. **Choose your own dataset.** Pick a table of data from a field you care
+    about: weather, sport, prices, health, astronomy, your lab. Good places to
+    look are the portals from the lecture (Eurostat, Copernicus, NASA, Zenodo,
+    Kaggle) and the [Lithuanian open data portal](https://data.gov.lt). It
+    should be a CSV file with at least a few hundred rows and at least one
+    column of numbers.
+25. Put it in `data/raw/` and add a second entry to the **Data** section of
+    your README, with the same lines as in step 21.
+26. Answer the five questions from the lecture for your file, in the README:
+    how many rows and columns; what one row is; which columns are measured,
+    derived or bookkeeping; the units; how missing values are marked.
+27. Install Python and Git by following [Seminar 1](seminar_01.md). Neither
+    was needed today; both are needed from week 4.
 
 ## Stretch goals
-- Cross-check your provenance against the portal's own metadata (many portals
-  offer a JSON or "cite" export of the record): compare title, DOI, licence and
-  file size with what you wrote. Add any field you had missed.
-- A column whose unit is written nowhere: work the unit out from the values and
-  note how you know.
-- Identify a second open dataset in your field and note how its licence differs.
 
-## Wrap-up (last 10 min)
-- Snapshot today's work: `git add -A && git commit -m "Add dataset + provenance"`
-  (a large raw file can stay out of Git — provided your **Data** section says
-  exactly how to fetch it).
-- The acid test: could a stranger re-download the byte-identical file from your
-  README alone, and confirm it with your checksum? Fix whatever they couldn't.
-- Note one lesson in the README — e.g. what "provenance" turned out to include
-  that you hadn't expected.
+For those who already program. Do them in class if you finish early.
+
+- Open the terminal with **Terminal → New Terminal** and compute the file's
+  checksum, a fingerprint that proves two copies are byte-identical:
+
+    ```text
+    Windows (PowerShell)   Get-FileHash data\raw\D0_KPi.csv -Algorithm SHA256
+    macOS                  shasum -a 256 data/raw/D0_KPi.csv
+    Linux, Git Bash        sha256sum data/raw/D0_KPi.csv
+    ```
+
+  Add it to the README and compare with a neighbour on the other system.
+- Write `scripts/count_rows.py` that prints the number of data rows and the
+  smallest and largest value of column `M`, without Pandas.
+- One column contains the value `-100` in a few dozen rows. Which column, and
+  what could it mean?
+- Download the record's original file `MasterclassData.root` and try to open it
+  in VS Code. What happens, and why?
+
+## Wrap-up (last 5 min)
+- Look at your project folder in the normal file manager: it is an ordinary
+  folder, and VS Code only showed it to you.
+- Say in one sentence what "provenance" means.
+- Note which step was hardest; tell the lecturer on the way out.
 
 ## Solution notes (instructor)
-Emphasise that "I downloaded it from somewhere" is not provenance. A good entry
-lets a stranger obtain the *exact* same file years later. Raw data goes in
-`raw/` and is never edited from here on. Datasets are the students' own; the
-LHCb record is only the fallback. Reference values for record 401:
-`MasterclassData.root` is 1 289 541 bytes, SHA-256 `8694a2ed…6b23b039b`;
-`D0_KPi.csv` has 91 583 rows + header, four columns (`M`, `PT`, `TAU`,
-`IPCHI2`), SHA-256 `25c3c972…c1505136`. The ROOT file declares 147 columns but
-fills only those four. In the 120-minute slot the portal hunt
-(task 1) is the time sink — if it passes ~25 minutes, point the student to the
-LHCb fallback and let them swap in their own dataset later.
+The run-of-show, the VS Code tour and the list of common problems are in the
+[lecturer's brief](lecturer_02.md). Reference values: `D0_KPi.csv` has
+91 583 data rows + 1 header line, four columns (`M`, `PT`, `TAU`, `IPCHI2`),
+3 926 142 bytes, SHA-256 `25c3c972…c1505136`. Record 401: DOI
+`10.7483/OPENDATA.LHCb.E7EJ.JUWR`, licence CC0. The `-100` values are in `TAU`
+(49 rows) and mark an invalid decay time. `MasterclassData.root` is binary, so
+VS Code declines to show it as text.
 
 ## Aims practised
-♻️ provenance = reproducibility · 📁 raw data captured, untouched
+♻️ provenance = reproducibility · 📁 raw data captured, untouched · 🔧 the same steps on every system
