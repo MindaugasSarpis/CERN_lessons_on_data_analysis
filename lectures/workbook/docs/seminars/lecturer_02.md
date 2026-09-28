@@ -12,35 +12,45 @@ Shortcuts are written **Windows / Linux** first, then **macOS**.
 
 ## A. The lecture in 90 minutes
 
-The deck is sized for a 2-hour slot (about 115 min as written). For 90 minutes,
-skip the slides below; type the slide number and press Enter to jump.
+The deck is sized for a 2-hour slot (about 125 min as written, 58 slides). It
+runs in this order: data in everyday life, kinds of data, open data and
+provenance, then CERN as the case study, then the example file up close.
+
+For 90 minutes, skip the slides below; type the slide number and press Enter to
+jump. Almost all cuts fall in the CERN case study, so the fundamentals stay
+whole.
 
 | Skip | Slides | Saves |
 |--|--|--|
-| Where Each Flavour Shows Up Later | 14 | 2 min |
-| Data at Work (two slides) + Common Threads | 16–18 | 7 min |
-| ATLAS clip, quark–gluon plasma clip | 21, 23 | 4 min |
-| Quiz: why not record it all? | 33 | 3 min |
-| Careers at CERN, A Day in the Data | 34–35 | 4 min |
-| Beyond the Ring (whole section, with its quiz) | 36–39 | 9 min |
+| Where Each Flavour Shows Up Later | 18 | 2 min |
+| Data at Work (two slides) + Common Threads | 20–22 | 7 min |
+| ATLAS clip, ALICE, quark–gluon plasma clip | 33–35 | 6 min |
+| LHCb clip | 37 | 2 min |
+| Quiz: what does 5 sigma mean? | 41 | 4 min |
+| Quiz: why not record it all? | 45 | 3 min |
+| Careers at CERN, A Day in the Data | 46–47 | 4 min |
+| Beyond the Ring (whole section, with its quiz) | 48–51 | 9 min |
 
-That leaves about 85 minutes, including the 5-minute thought exercise on slide 15.
+That leaves about 87 minutes, including the 5-minute thought exercise on
+slide 19. If you run late, drop the lifecycle quiz (slide 10) next.
 
-**Do not cut** slides 40–53 (Open Data & Provenance, A Dataset Up Close). The
-seminar uses every one of them. If you run late, drop the lifecycle quiz
-(slide 10) and the LHCb clip (slide 25) before touching that part.
+**Do not cut** slides 11–17 (kinds of data, tables, files), 23–30 (open data and
+provenance) or 52–57 (the example file). The seminar uses every one of them.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–15 | Data in your life, the four flavours, metadata, thought exercise |
-| 0:27 | 19–26 | The four experiments, the D⁰ |
-| 0:37 | 27–32 | Why data: the trigger, from events to petabytes |
-| 0:52 | 40–47 | Open data and provenance |
-| 1:09 | 48–54 | A dataset up close, recap |
-| 1:25 | | Questions, move to the seminar |
+| 0:00 | 1–10 | Data in your life, what data is, the lifecycle |
+| 0:19 | 11–19 | Kinds of data, variables, tables, files, thought exercise |
+| 0:36 | 23–30 | Open data and provenance |
+| 0:53 | 31–44 | CERN case study: the experiments, the D⁰, the trigger |
+| 1:11 | 52–58 | The example file up close, recap |
+| 1:27 | | Questions, move to the seminar |
 
-Ask students to keep their thought-exercise answer (slide 15): it is their
+Ask students to keep their thought-exercise answer (slide 19): it is their
 starting point for choosing a dataset at home this week.
+
+Slide 17 (One Table, Three Files) sets up the seminar's central comparison, the
+same CSV opened in VS Code and in a spreadsheet. Do not rush it.
 
 ---
 

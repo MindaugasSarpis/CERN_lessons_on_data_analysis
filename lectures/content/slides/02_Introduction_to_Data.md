@@ -13,8 +13,9 @@ title: "Introduction to Data"
 
 <!--
 Speaker: last time was the why — the films and CERN. Today is the what: data
-itself. Start from their own day, then the lab's data, then how to find and
-document a dataset — the skill Seminar 2 practises. (~2 min)
+itself. Start from their own day, then kinds of data, tables and files, then how
+to find and document a dataset. CERN comes after that, as the case study, and
+its example file closes the lecture and opens the seminar. (~2 min)
 -->
 
 ---
@@ -49,35 +50,34 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact">
 
-⚛️ Trace how a **collision becomes a dataset** — detector, trigger, storage — and meet the **D⁰**, our example from real LHCb data
+📋 Read a **table** — rows as observations, columns as variables — and say which **kind of variable** each column holds
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-🌐 Find an **open dataset** and document it — portal, record, **DOI**, licence, provenance (the job of Seminar 2)
+🌐 Find an **open dataset** and document it — portal, record, **DOI**, licence, provenance
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-📄 Read a real data file — **rows, columns, units, metadata** — before writing a line of code
+⚛️ Trace how a **collision becomes a dataset** at CERN — detector, trigger, storage — and meet the **D⁰**
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-🏔️ Name the **four LHC experiments** — and CERN's data legacy: the **Web**, the **grid**, **open data**
+📄 Read a real data file — **rows, columns, units, metadata** — before writing a line of code
 
 </div>
 
 </div>
 
 <!--
-Speaker: read these as promises. Today is still context, but of a practical kind:
-by the end they should know what a dataset *is*, where to get one and how to
-write down where it came from. The hands-on skills start next lecture with how
-computers work, then the command line in Lecture 4. (~1 min)
+Speaker: read these as promises. By the end they should know what a dataset
+*is*, how a table is built, where to get one and how to write down where it came
+from. The seminar right after this lecture puts the last two into practice. (~1 min)
 -->
 
 ---
@@ -177,7 +177,7 @@ Behind each convenience is the same loop you'll learn to run in this course: **c
 
 ## 🔎 **Three questions for any app**
 
-What does it **record**? In what **table** does that end up? Which **decision** does the result feed? In ten minutes you ask the same of your own field.
+What does it **record**? In what **table** does that end up? Which **decision** does the result feed? Later today you ask the same of your own field.
 
 </div>
 
@@ -263,6 +263,18 @@ hideInToc: true
 />
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Kinds of **Data**
+
+<!--
+Speaker: from "data is everywhere" to telling one kind from another. Three new
+ideas: the kind of variable, the shape of a table, the format of a file. (~1 min)
+-->
+
+---
 hideInToc: true
 ---
 
@@ -346,6 +358,56 @@ Timestamped things that happened — a click, a tap, a particle collision.
 hideInToc: true
 ---
 
+# Kinds of **Variables**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **Quantitative — continuous**
+
+Any value in a range: a temperature of 21.4 °C, a mass of 1864.8 MeV. You can average it.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Quantitative — discrete**
+
+Counts: goals scored, tracks in a collision. Whole numbers; you can still average them.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🏷️ **Categorical — nominal**
+
+Labels with no order: city, blood group, particle type. You can count them, not average them.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 📶 **Categorical — ordinal**
+
+Labels with an order: exam grades, low / medium / high. You can rank them; the size of a step is not defined.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Dates, postcodes and ID numbers look like numbers and are not: the average of two postcodes means nothing. The kind of variable decides which plot and which statistic make sense.</div>
+
+<!--
+Speaker: ask the Excel users which kind each column of a spreadsheet they know is.
+The kind of variable returns in Lecture 9 (which summary), Lecture 10 (which plot)
+and Lecture 11 (which distribution). (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Measurement vs **Metadata**
 
 <div class="grid-2 mt-md gap-md">
@@ -375,6 +437,105 @@ Data *about* the measurement — when, where, by which instrument, in what units
 A momentum with no units, a reading with no timestamp, a file with no source — that's a number you can neither trust nor reproduce. Much of data work is keeping the metadata attached to the numbers.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Anatomy of a **Table**
+
+| **station** | **time** | **temp_C** | **pressure_hPa** | **sky** |
+| --- | --- | --- | --- | --- |
+| Vilnius | 2026-09-29 08:00 | 11.2 | 1018.4 | cloudy |
+| Vilnius | 2026-09-29 09:00 | 12.0 | 1018.1 | cloudy |
+| Kaunas | 2026-09-29 08:00 | 11.9 | 1017.6 | rain |
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➡️ **A row**
+
+One observation: one station at one hour. Everything in the row belongs to that observation.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⬇️ **A column**
+
+One variable, of one kind, in one unit. `temp_C` is continuous; `sky` is nominal.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔲 **A cell**
+
+One value. Not "11.2 °C (approx.)", not two readings, not a colour that carries meaning.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Illustrative values. A table that keeps these three rules is called <strong>tidy</strong>, and every tool in this course expects it.</div>
+
+<!--
+Speaker: the table is made up for the slide. Point out that the unit sits in the
+column name because a CSV file has nowhere else to put it. Ask: what is one row
+in a spreadsheet you use? (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Table, Three **Files**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **CSV — plain text**
+
+- One line per row, values separated by commas
+- Opens in any program, on any system
+- Stores no types and no units: `11.2` is just four characters
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📗 **Spreadsheet — .xlsx**
+
+- The table plus formatting, formulas, several sheets
+- The program decides how a value is shown and stored
+- Excel turned gene names such as `SEPT2` into dates so often that geneticists renamed the genes in 2020
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📦 **Binary — ROOT, HDF5, Parquet**
+
+- Compact and fast, with a type for every column
+- Readable only by a program that knows the format
+- What large experiments and data services use
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ **Decimal comma or decimal point?** `1,5` and `1.5` are the same number written in two countries. A CSV file does not say which one it uses. You will see what that does to a spreadsheet in the seminar after this lecture.
+
+</div>
+
+<!--
+Speaker: this slide sets up the seminar's central comparison — the same CSV opened
+in VS Code and in a spreadsheet. Lecture 3 goes into bytes and encodings. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -580,14 +741,276 @@ layout: section
 hideInToc: true
 ---
 
-# Four **Eyes** on the Ring
-
-The LHC is one machine — but four giant detectors watch its collisions, each built to ask a different question of the same beams.
+# Open Data & **Provenance**
 
 <!--
-Speaker: quick tour of the four experiments. The framing to plant: one accelerator,
-four different questions — the machine is shared, the science is not. LHCb gets the
-longest stop because the seminar dataset comes from it. (~1 min)
+Speaker: shift gears — from *what data is* to *where you get it and how you prove
+where it came from*. Seminar 2 practises this on the example file; at home they
+repeat it on a dataset of their own choice. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Where Data Lives — **Open-Data Portals**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔬 **Physics & space**
+
+- **CERN Open Data Portal** — LHC collision data, masterclass samples
+- **NASA** open data & the Planetary Data System
+- **ESA** archives — Gaia, Euclid, Webb
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🌍 **Society & environment**
+
+- **Eurostat** and national statistics offices
+- **Copernicus / ECMWF** — weather and climate
+- **World Bank, OECD, WHO** indicators
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📚 **Any field**
+
+- **Zenodo** — upload anything, get a DOI
+- **Kaggle**, **Hugging Face** datasets
+- Your university's research repository
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔗 A portal is a **catalogue**: every dataset on it is a **record** with a stable address. You cite the record, not the file you happened to download.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Anatomy of a **Record**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧾 **What every record carries**
+
+- **Title** and authors / collaboration
+- A **persistent identifier** — the DOI resolves forever, even if the portal moves
+- **Licence** — what you may do with it
+- **Files** with sizes and **checksums**
+- **Description** — how the data was produced and selected
+- **Version** and date
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⚛️ **Record 401 — today's example**
+
+- *LHCb event file for real measurement*
+- DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
+- Licence **CC0** — no conditions
+- One **ROOT** file, 1.3 MB — particle decays recorded by LHCb at CERN
+- Downloadable by anyone — no CERN account needed
+- The workbook keeps a **CSV converted from it** — a derived file, and documented as one
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Reading the record *before* the data answers the questions you would otherwise ask the file: what is one row, which selection was applied, what am I allowed to publish.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Licences — What "Open" **Actually Permits**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🆓 **CC0**
+
+No conditions at all — reuse, remix, republish. *CERN Open Data; NASA imagery is public domain, which amounts to the same.*
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏷️ **CC BY**
+
+Do anything, but **credit the source**. *ESO and NOIRLab material.*
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔁 **Share-alike (ODbL, CC BY-SA)**
+
+Derived datasets must stay **equally open**. *OpenStreetMap; most ESA imagery (CC BY-SA IGO).*
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+⚠️ **Open to read ≠ open to redistribute.** Some portals let you download but not re-host. Check the licence *before* the dataset lands in a public GitHub repository — and before you publish a table derived from it.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Provenance — **Write Down Where It Came From**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📝 **The minimal provenance note**
+
+- Portal + **record ID** and **DOI**
+- **Licence**
+- **Date** you fetched it (and record version)
+- File names and their **checksums**
+- What you did to it so far — *nothing* is a valid answer
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **As it looks in a README**
+
+```text
+Source:   CERN Open Data Portal, record 401
+DOI:      10.7483/OPENDATA.LHCb.E7EJ.JUWR
+Licence:  CC0
+Fetched:  2026-09-29
+Files:    MasterclassData.root  sha256 8694…039b
+Changes:  none — D0_KPi.csv is a converted copy
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+♻️ Reproducibility starts **before** the analysis: someone else — or you in six months — must be able to fetch the **same bytes**. The checksum is how you prove it.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Data You **Bring Yourself**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎒 **Same discipline, your dataset**
+
+- Where it came from — URL, instrument, survey, colleague
+- Under what terms you may use and publish it
+- A **snapshot**: the file exactly as received, plus its checksum
+- The date — web data changes under you
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔒 **Personal or sensitive data**
+
+- Anonymise before it enters a repository
+- Never commit raw personal data to git — public or private
+- If in doubt: describe the data in the project, keep the file out of it
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🎯 Your semester project is on data of **your** choice — this checklist is what makes that choice safe to build on.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# From Record to **Your Repo**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🧭 **The path Seminar 2 starts**
+
+1. **Find** your dataset's record on its portal (or the source, if there is no portal)
+2. **Read** the record — title, DOI, licence, description
+3. **Download** into `data/raw/` of your project folder, without renaming
+4. **Write** the provenance note into the README
+5. **Checksum** the file — a fingerprint of its bytes *(from week 4)*
+6. **Commit the note** — and the data only if it is small *and* the licence allows it *(from week 6)*
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📁 Large or restricted data stays out of git; the README says exactly how to fetch it again. That is the difference between "I have the data" and "the analysis is reproducible".
+
+</div>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
+  :options="[
+    'The record\'s DOI or stable URL, the version or fetch date, and the file\'s checksum',
+    'The file name, its size in bytes, and the folder you saved it into on your laptop',
+    'The portal\'s homepage URL, the dataset\'s title, and the name of the collaboration',
+    'The name and e-mail of the colleague who first told you about the dataset'
+  ]"
+  :correct="0"
+  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
+/>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Four **Eyes** on the Ring
+
+A case study for everything so far. The LHC is one machine, and four giant detectors watch its collisions, each built to ask a different question of the same beams.
+
+<!--
+Speaker: the CERN case study starts here; everything before it was general. Quick
+tour of the four experiments: one accelerator, four different questions. LHCb gets
+the longest stop because today's example file comes from it. (~1 min)
 -->
 
 ---
@@ -726,7 +1149,7 @@ hideInToc: true
 
 <VideoPlayer src="LHCb.mp4" />
 
-<!-- LHCb reel (0:47) — home of the seminar dataset. Pass 2: the cern_footage_2022_042_001.mp4 fly-in before it. -->
+<!-- LHCb reel (0:47) — where the example file comes from. Pass 2: the cern_footage_2022_042_001.mp4 fly-in before it. -->
 
 ---
 hideInToc: true
@@ -1197,273 +1620,11 @@ layout: section
 hideInToc: true
 ---
 
-# Open Data & **Provenance**
-
-<!--
-Speaker: shift gears — from *what data is* to *where you get it and how you prove
-where it came from*. Seminar 2 practises this on the example file; at home they
-repeat it on a dataset of their own choice. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Where Data Lives — **Open-Data Portals**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔬 **Physics & space**
-
-- **CERN Open Data Portal** — LHC collision data, masterclass samples
-- **NASA** open data & the Planetary Data System
-- **ESA** archives — Gaia, Euclid, Webb
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🌍 **Society & environment**
-
-- **Eurostat** and national statistics offices
-- **Copernicus / ECMWF** — weather and climate
-- **World Bank, OECD, WHO** indicators
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📚 **Any field**
-
-- **Zenodo** — upload anything, get a DOI
-- **Kaggle**, **Hugging Face** datasets
-- Your university's research repository
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-🔗 A portal is a **catalogue**: every dataset on it is a **record** with a stable address. You cite the record, not the file you happened to download.
-
-</div>
-
----
-hideInToc: true
----
-
-# Anatomy of a **Record**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧾 **What every record carries**
-
-- **Title** and authors / collaboration
-- A **persistent identifier** — the DOI resolves forever, even if the portal moves
-- **Licence** — what you may do with it
-- **Files** with sizes and **checksums**
-- **Description** — how the data was produced and selected
-- **Version** and date
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## ⚛️ **Record 401 — today's example**
-
-- *LHCb event file for real measurement*
-- DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
-- Licence **CC0** — no conditions
-- One **ROOT** file, 1.3 MB — pre-selected D⁰ → K⁻π⁺ candidates
-- Downloadable by anyone — no CERN account needed
-- The workbook keeps a **CSV converted from it** — a derived file, and documented as one
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-✅ Reading the record *before* the data answers the questions you would otherwise ask the file: what is one row, which selection was applied, what am I allowed to publish.
-
-</div>
-
----
-hideInToc: true
----
-
-# Licences — What "Open" **Actually Permits**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-success card-glass pad-compact">
-
-## 🆓 **CC0**
-
-No conditions at all — reuse, remix, republish. *CERN Open Data; NASA imagery is public domain, which amounts to the same.*
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🏷️ **CC BY**
-
-Do anything, but **credit the source**. *ESO and NOIRLab material.*
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔁 **Share-alike (ODbL, CC BY-SA)**
-
-Derived datasets must stay **equally open**. *OpenStreetMap; most ESA imagery (CC BY-SA IGO).*
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-⚠️ **Open to read ≠ open to redistribute.** Some portals let you download but not re-host. Check the licence *before* the dataset lands in a public GitHub repository — and before you publish a table derived from it.
-
-</div>
-
----
-hideInToc: true
----
-
-# Provenance — **Write Down Where It Came From**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📝 **The minimal provenance note**
-
-- Portal + **record ID** and **DOI**
-- **Licence**
-- **Date** you fetched it (and record version)
-- File names and their **checksums**
-- What you did to it so far — *nothing* is a valid answer
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📄 **As it looks in a README**
-
-```text
-Source:   CERN Open Data Portal, record 401
-DOI:      10.7483/OPENDATA.LHCb.E7EJ.JUWR
-Licence:  CC0
-Fetched:  2026-09-29
-Files:    MasterclassData.root  sha256 8694…039b
-Changes:  none — D0_KPi.csv is a converted copy
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-♻️ Reproducibility starts **before** the analysis: someone else — or you in six months — must be able to fetch the **same bytes**. The checksum is how you prove it.
-
-</div>
-
----
-hideInToc: true
----
-
-# Data You **Bring Yourself**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🎒 **Same discipline, your dataset**
-
-- Where it came from — URL, instrument, survey, colleague
-- Under what terms you may use and publish it
-- A **snapshot**: the file exactly as received, plus its checksum
-- The date — web data changes under you
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔒 **Personal or sensitive data**
-
-- Anonymise before it enters a repository
-- Never commit raw personal data to git — public or private
-- If in doubt: describe the data in the project, keep the file out of it
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-🎯 Your semester project is on data of **your** choice — this checklist is what makes that choice safe to build on.
-
-</div>
-
----
-hideInToc: true
----
-
-# From Record to **Your Repo**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🧭 **The path Seminar 2 starts**
-
-1. **Find** your dataset's record on its portal (or the source, if there is no portal)
-2. **Read** the record — title, DOI, licence, description
-3. **Download** into `data/raw/` of your project folder, without renaming
-4. **Write** the provenance note into the README
-5. **Checksum** the file — a fingerprint of its bytes *(from week 4)*
-6. **Commit the note** — and the data only if it is small *and* the licence allows it *(from week 6)*
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-📁 Large or restricted data stays out of git; the README says exactly how to fetch it again. That is the difference between "I have the data" and "the analysis is reproducible".
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
-  :options="[
-    'The record\'s DOI or stable URL, the version or fetch date, and the file\'s checksum',
-    'The file name, its size in bytes, and the folder you saved it into on your laptop',
-    'The portal\'s homepage URL, the dataset\'s title, and the name of the collaboration',
-    'The name and e-mail of the colleague who first told you about the dataset'
-  ]"
-  :correct="0"
-  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
-/>
-
----
-layout: section
-hideInToc: true
----
-
 # A Dataset **Up Close**
 
 <!--
-Speaker: now open the actual file, conceptually — no code yet. The point: a data
-file has a meaning before it has a format. (Pass 2 of the reel adds a 2:28 LHCb
+Speaker: now open the example file, conceptually — no code yet. It is the file the
+seminar starts with. Apply the table and variable slides from earlier to it. (Pass 2 of the reel adds a 2:28 LHCb
 decay animation as the opener of this section.) (~1 min)
 -->
 
@@ -1644,7 +1805,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Trace a **collision** from detector to stored dataset — and recognise the **D⁰ peak** near 1865 MeV
+✅ Read a **table** — observations in rows, variables in columns — and name the **kind of variable** in each column
 
 </div>
 
@@ -1656,13 +1817,13 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Open a data file and read **rows, columns, units and metadata** before touching code
+✅ Trace a **collision** from detector to stored dataset — and recognise the **D⁰ peak** near 1865 MeV
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Name the **four LHC experiments** — and say why the **Web**, the **grid** and **open data** came out of CERN
+✅ Open a data file and read **rows, columns, units and metadata** before touching code
 
 </div>
 
