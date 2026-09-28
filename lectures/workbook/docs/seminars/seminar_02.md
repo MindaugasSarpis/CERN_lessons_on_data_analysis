@@ -4,10 +4,11 @@
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **29 September runs Seminars 1 and 2 back to back.** The first ~40 minutes
-> check the self-paced [Seminar 1](seminar_01.md) — tools installed, project
-> skeleton, first commit — then this brief's core tasks follow. Stretch goals
-> are skipped that day; the timing above is for the brief on its own.
+> **29 September is a 90-minute session.** It opens with a guided tour of VS
+> Code and a check of the self-paced [Seminar 1](seminar_01.md) — tools
+> installed, project skeleton, first commit — then runs tasks 1–5 of this
+> brief. Task 6 and the stretch goals are homework; the timing above is for the
+> brief on its own. Run-of-show: [lecturer's brief](lecturer_02.md).
 
 > **This session builds:** a dataset of your own choice in `data/raw/`, with its
 > provenance recorded.

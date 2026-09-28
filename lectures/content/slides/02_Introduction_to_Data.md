@@ -1670,7 +1670,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-🔬 **Seminar 2 tie-in** (today, after a 40-minute checkpoint of the self-paced Seminar 1 setup) — find and document a dataset **from your own field**, recording its provenance (title, DOI, licence, date, checksum). No idea yet? Practise on the LHCb record from today.
+🔬 **Seminar 2 tie-in** (today, after a tour of VS Code and a check of the Seminar 1 setup) — find and document a dataset **from your own field**, recording its provenance (title, DOI, licence, date, checksum). No idea yet? Practise on the LHCb record from today.
 
 </div>
 
