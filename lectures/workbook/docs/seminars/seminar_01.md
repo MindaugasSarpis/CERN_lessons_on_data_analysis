@@ -1,8 +1,8 @@
 # Seminar 1 — Set Up Your Toolkit & First Repo
 
-**Paired lecture:** 01 Orientation & Motivation · **Format:** self-paced before 15 Sep, checked at the start of Seminar 2 · **~120 min**
+**Paired lecture:** 01 Orientation & Motivation · **Format:** self-paced before 29 Sep, checked at the start of Seminar 2 · **~120 min**
 
-> **Week 1 has no seminar.** Work through this brief at home before 15 September.
+> **Week 1 has no seminar.** Work through this brief at home before 29 September.
 > Seminar 2 opens with a 40-minute checkpoint of tasks 1–6 — bring any error
 > message you hit, and the tree in `analysis-project/` as it stands.
 
@@ -20,14 +20,26 @@ A laptop with internet access. Nothing installed yet — that's what today is fo
 
 ## Tasks
 1. Open a terminal and confirm each tool, installing any that are missing:
-   `python --version` (or `python3`), `git --version`, `code --version`.
-2. Create the project folder and skeleton:
-   ```bash
-   mkdir -p analysis-project/{data/raw,data/processed,scripts,results}
-   cd analysis-project
-   printf "# Analysis Project\n\nSeminar exercises.\n" > README.md
+   `python --version` (or `python3`; on Windows also `py`), `git --version`,
+   `code --version`.
+2. Create the project folder and skeleton. In VS Code: **File → Open Folder…**,
+   make a new folder `analysis-project` and open it; then use the Explorer's
+   *New Folder* / *New File* buttons to build exactly this:
+   ```text
+   analysis-project/
+   |- README.md
+   |- data/
+   |  |- raw/
+   |  |- processed/
+   |- scripts/
+   |- results/
    ```
-3. Open the folder in VS Code (`code .`) and look around the Explorer.
+   Give `README.md` a title line (`# Analysis Project`) and one sentence.
+   *(On macOS, Linux or Git Bash the same in one line:
+   `mkdir -p analysis-project/{data/raw,data/processed,scripts,results}` — the
+   command line is Lecture 4.)*
+3. Open VS Code's built-in terminal (**Terminal → New Terminal**) — it starts
+   inside the project folder on every system — and look around the Explorer.
 4. Verify Python works: create `scripts/hello.py` with `print("ready")` and run it.
 5. Make the tools talk to each other: run `scripts/hello.py` from the VS Code
    *integrated* terminal, then extend it to report your setup:

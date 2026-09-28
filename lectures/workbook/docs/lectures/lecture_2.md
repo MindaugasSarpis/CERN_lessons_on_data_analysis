@@ -27,7 +27,7 @@ one comes from, and how you write down where it came from.
 
 ## Paired seminar
 
-On 15 September the session opens with a 40-minute checkpoint of the self-paced
+On 29 September the session opens with a 40-minute checkpoint of the self-paced
 [Seminar 1](../seminars/seminar_01.md) setup (tools, project skeleton, first
 commit), then runs
 [Seminar 2 — Find & Document a Dataset](../seminars/seminar_02.md): locate the

@@ -22,15 +22,19 @@ can go somewhere else entirely.
 ## The seminar dataset
 
 The briefs are written against the **LHCb open-data masterclass** sample from the
-CERN Open Data Portal: ~60,000 events pre-selected to contain **D⁰ → K⁻π⁺** decay
-candidates. Each event gives the kaon and pion momenta, from which you reconstruct
-the **K–π invariant mass** — and see the D⁰ appear as a peak near **1865 MeV**.
+CERN Open Data Portal: events pre-selected to contain **D⁰ → K⁻π⁺** decay
+candidates. Each of its 91,583 rows is one candidate, with its **K–π invariant
+mass** `M`, transverse momentum `PT`, decay time `TAU` and impact-parameter score
+`IPCHI2` — histogram `M` and the D⁰ appears as a peak near **1865 MeV**.
 
 - Source: CERN Open Data Portal — *LHCb event file for real measurement*,
   [record 401](https://opendata.cern.ch/record/401),
   DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR` (event-display files:
   [record 400](https://opendata.cern.ch/record/400)). You find and record this
   in **Seminar 2**.
+- Files: the record holds one ROOT file, `MasterclassData.root`. The seminars
+  read [`D0_KPi.csv`](../data/D0_KPi.csv), converted from it by
+  [`root_to_csv.py`](../data/root_to_csv.py) — values unchanged.
 - Why this one: real collision data, a genuine signal to find, fit and classify,
   and small enough to work with on a laptop.
 
@@ -40,8 +44,9 @@ daily weather, prices, anonymised measurements, survey microdata. Wherever a bri
 says "invariant mass / D⁰ peak", read "your numeric variable / the pattern you're
 looking for". Mention your choice to the instructor in Seminar 2.
 
-> Offline or the portal is down? The instructor can provide a local copy of the
-> LHCb sample, and starting files for any later seminar.
+> Offline or the portal is down? The workbook keeps a byte-identical copy of the
+> original, [`MasterclassData.root`](../data/MasterclassData.root); the instructor
+> can also provide starting files for any later seminar.
 
 ## The seminar repository
 
@@ -68,7 +73,7 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 
 | Seminar | Hands-on focus |
 |--|--|
-| 1 | Toolkit installed; repo skeleton + first commit *(self-paced; checked on 15 Sep)* |
+| 1 | Toolkit installed; repo skeleton + first commit *(self-paced; checked on 29 Sep)* |
 | 2 | A dataset downloaded into `data/raw/`; provenance recorded |
 | 3 | The raw file understood as bytes (encoding, size, format) |
 | 4 | `raw/`–`processed/` structure; clean filenames; CLI inspection |

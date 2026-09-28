@@ -889,7 +889,7 @@ hideInToc: true
 
 | **Seminars** | **Hands-on focus** |
 | --- | --- |
-| S1–S2 *(both on 15 Sep)* | Toolkit; repo skeleton + first commit; a dataset with provenance |
+| S1–S2 *(both on 29 Sep)* | Toolkit; repo skeleton + first commit; a dataset with provenance |
 | S3–S5 | The raw file as bytes; clean structure; a real README |
 | S6–S8 | Git — branch & merge; parse one line; read a whole file |
 | S9–S11 | Data-quality audit; a first figure; a value ± its error |
@@ -1131,7 +1131,7 @@ Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills 
 
 ## 🔬 **No seminar today — Seminar 1 is self-paced**
 
-Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 15 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
+Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 29 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
 
 </div>
 

@@ -44,13 +44,13 @@ code --version
 
 Three version numbers means you are done; then create an empty `analysis-project`
 folder. Seminar 1's brief is **self-paced**: work through it at home. We check it
-together during the first 40 minutes of Seminar 2 on 15 September, then go
+together during the first 40 minutes of Seminar 2 on 29 September, then go
 straight on to the first dataset. Stuck on an install? Bring the error message.
 
 ## Paired seminar
 
 [Seminar 1 — Set Up Your Toolkit & First Repo](../seminars/seminar_01.md):
-self-paced before 15 September, checked at the start of
+self-paced before 29 September, checked at the start of
 [Seminar 2](../seminars/seminar_02.md).
 
 ## Take-aways

@@ -638,7 +638,7 @@ hideInToc: true
 
 <VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
 
-<!-- ATLAS — model, cavern, control room (0:49): reprise of L01's cold open, now that they know what they are looking at. Pass 2 adds cms.mp4 after it. -->
+<!-- ATLAS — model, cavern, control room (0:49). Pass 2 adds cms.mp4 after it. -->
 
 ---
 hideInToc: true
@@ -868,7 +868,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact reveal-left">
 
-💥 **~40 million bunch crossings** per second inside each detector — and a crossing is not a collision: each packs **dozens of overlapping proton–proton collisions**, the **~1 billion collisions per second** from the LHC slide
+💥 **~40 million bunch crossings** per second inside each detector — and a crossing is not a collision: each packs **dozens of overlapping proton–proton collisions**, about **1 billion collisions per second** in all
 
 </div>
 
@@ -1278,9 +1278,9 @@ hideInToc: true
 - *LHCb event file for real measurement*
 - DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
 - Licence **CC0** — no conditions
-- ~60 000 pre-selected D⁰ → K⁻π⁺ candidates
+- One **ROOT** file, 1.3 MB — pre-selected D⁰ → K⁻π⁺ candidates
 - Downloadable by anyone — no CERN account needed
-- Companion event-display files: record 400
+- The seminars read a **CSV converted from it** — a derived file, and documented as one
 
 </div>
 
@@ -1360,9 +1360,9 @@ hideInToc: true
 Source:   CERN Open Data Portal, record 401
 DOI:      10.7483/OPENDATA.LHCb.E7EJ.JUWR
 Licence:  CC0
-Fetched:  2026-09-15
-Files:    D0_KPi.csv  sha256 3f9a…c1e2
-Changes:  none
+Fetched:  2026-09-29
+Files:    MasterclassData.root  sha256 8694…039b
+Changes:  none — D0_KPi.csv is a converted copy
 ```
 
 </div>
@@ -1425,7 +1425,7 @@ hideInToc: true
 1. **Find** the record on the portal (or the source of your own data)
 2. **Read** the record — title, DOI, licence, description
 3. **Download** into `data/raw/` of the project skeleton from Seminar 1
-4. **Checksum** the file — `sha256sum data/raw/*`
+4. **Checksum** the file — SHA-256, one command on any system (the brief lists them)
 5. **Write** the provenance note into the README
 6. **Commit the note** — and the data only if it is small *and* the licence allows it
 
@@ -1479,9 +1479,9 @@ hideInToc: true
 ## 📄 **The LHCb sample as a file**
 
 - One **header line** naming the columns
-- ~60 000 lines after it
+- **91 583** lines after it — the record says "about 60k events"; count for yourself
 - Each **row** = one **candidate**: a K⁻π⁺ pair from one collision that might be a D⁰
-- Each **column** = one quantity measured or computed for that pair
+- Each **column** = one quantity computed for that pair — four in all
 
 </div>
 
@@ -1489,7 +1489,7 @@ hideInToc: true
 
 ## 🧮 **What a row says**
 
-"In this collision we found a kaon and a pion; here are their momenta, charges and identification scores; their combined mass is *M*."
+"In this collision we found a kaon and a pion that may have come from one D⁰: their combined mass is *M*, the pair's transverse momentum *PT*, it flew for a time *TAU* before decaying, and *IPCHI2* says how well it points back to the collision."
 
 </div>
 
@@ -1513,7 +1513,7 @@ hideInToc: true
 
 ## 📏 **Measured**
 
-Three momentum components per particle, its charge, its particle-ID probabilities — what the detector recorded.
+Track momenta, charges, particle-ID scores — what the detector recorded. The ROOT file names these columns but ships them **empty**.
 
 </div>
 
@@ -1521,7 +1521,7 @@ Three momentum components per particle, its charge, its particle-ID probabilitie
 
 ## 🧮 **Derived**
 
-The K⁻π⁺ **invariant mass** — computed from the momenta; the column the seminars call `M`.
+Computed from the tracks: invariant mass `M`, transverse momentum `PT`, decay time `TAU`, `IPCHI2` — the **four columns that are filled**.
 
 </div>
 
@@ -1529,7 +1529,7 @@ The K⁻π⁺ **invariant mass** — computed from the momenta; the column the s
 
 ## 🗂️ **Bookkeeping**
 
-Event and run numbers — which collision, which data-taking period.
+Event and run numbers — which collision, which data-taking period. Emptied here too; keep them in your own data.
 
 </div>
 
@@ -1537,7 +1537,7 @@ Event and run numbers — which collision, which data-taking period.
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ **Units are metadata.** A column named `M` means nothing until you know it is in MeV/c². If the file does not say, the record must — write it into your README.
+⚠️ **Units are metadata.** A column named `M` means nothing until you know it is in MeV/c². Here neither the file nor the record says — you work it out (a D⁰ weighs 1865 MeV/c²) and write it into your README.
 
 </div>
 
@@ -1555,7 +1555,7 @@ hideInToc: true
 2. What is **one row** — an event, a person, an hour, a pixel?
 3. Which columns are **measured**, which **derived**, which **bookkeeping**?
 4. What are the **units** — and where is that written down?
-5. How are **missing** or invalid values marked — blank, `NaN`, `-999`?
+5. How are **missing** or invalid values marked — blank, `NaN`, `-999`? *(This file: `TAU = -100`.)*
 
 </div>
 
@@ -1618,7 +1618,7 @@ hideInToc: true
     'One K⁻π⁺ candidate from one collision event'
   ]"
   :correct="3"
-  explanation="Each row is one candidate pair found in one event: its momenta, charges, identification scores and the derived invariant mass. Columns are the quantities; rows are the things measured. Knowing what one row *is* comes before any statistics."
+  explanation="Each row is one candidate pair found in one event: its invariant mass, transverse momentum, decay time and impact-parameter score. Columns are the quantities; rows are the things measured. Knowing what one row is comes before any statistics."
 />
 
 ---
@@ -1669,7 +1669,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-🔬 **Seminar 2 tie-in** (15 Sep, after a 40-minute checkpoint of the self-paced Seminar 1 setup) — find and document a dataset: LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal, or one from your own field — recording its provenance (title, DOI, licence, date, checksum).
+🔬 **Seminar 2 tie-in** (today, after a 40-minute checkpoint of the self-paced Seminar 1 setup) — find and document a dataset: LHCb's D⁰ → K⁻π⁺ open data on the CERN Open Data Portal, or one from your own field — recording its provenance (title, DOI, licence, date, checksum).
 
 </div>
 
