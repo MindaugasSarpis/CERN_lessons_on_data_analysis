@@ -12,7 +12,7 @@ Shortcuts are written **Windows / Linux** first, then **macOS**.
 
 ## A. The lecture in 90 minutes
 
-The deck is sized for a 2-hour slot (about 131 min as written, 63 slides). It
+The deck is sized for a 2-hour slot (about 129 min as written, 62 slides). It
 runs in this order: data in everyday life, kinds of data, open data and
 provenance, then CERN as the case study, then the example file up close.
 
@@ -29,8 +29,8 @@ whole.
 | LHCb film clip | 41 | 2 min |
 | Quiz: what does 5 sigma mean? | 45 | 4 min |
 | Quiz: why not record it all? | 50 | 3 min |
-| Careers at CERN, Working with the Data | 51–52 | 4 min |
-| Beyond Physics (whole section, with its quiz) | 53–56 | 9 min |
+| Working with the Data | 51 | 2 min |
+| Beyond Physics (whole section, with its quiz) | 52–55 | 9 min |
 
 That leaves about 90 minutes, including the 5-minute thought exercise on
 slide 19. If you run late, skip From Events to Petabytes (slide 48) next: the
@@ -45,7 +45,7 @@ detectors, trigger, data centre, grid. It stands in for the skipped Beyond
 Physics section, which is where the grid is otherwise introduced.
 
 **Do not cut** slides 11–17 (kinds of data, tables, files), 23–30 (open data and
-provenance) or 57–62 (the example file). The seminar uses every one of them.
+provenance) or 56–61 (the example file). The seminar uses every one of them.
 
 | Clock | Slides | Part |
 |--|--|--|
@@ -53,7 +53,7 @@ provenance) or 57–62 (the example file). The seminar uses every one of them.
 | 0:16 | 11–19 | Kinds of data, variables, tables, files, thought exercise |
 | 0:33 | 23–30 | Open data and provenance |
 | 0:50 | 31–49 | CERN case study: the four detectors, the D⁰, the data flow, the trigger |
-| 1:14 | 57–63 | The example file up close, recap |
+| 1:14 | 56–62 | The example file up close, recap |
 | 1:30 | | Move to the seminar |
 
 Ask students to keep their thought-exercise answer (slide 19): it is their
