@@ -23,6 +23,8 @@
 #   high-motion - HEVC CRF 22, 1080p cap, AAC 192k. Sims, fast action, CGI.
 #   web-h264    - H.264 CRF 22 capped at 8 Mbps, 1080p cap, AAC 160k. Plays on
 #                 every browser (the HEVC profiles fail on Firefox / Linux Chrome).
+#   web-h264-silent - web-h264 with the audio track stripped, for sources whose
+#                 audio is digital silence.
 
 [defaults]
 source_remote = "gdrive:CERN_videos/raw"
@@ -259,3 +261,37 @@ name    = "How_Computer_Memory_Works.mp4"
 profile = "remux"
 used_in = ["L15"]
 notes   = "fetched from https://www.youtube.com/watch?v=h9Z4oGN89MU"
+
+# ---------------------------------------------------------------------------
+# L02 — the four LHC detectors, one 3D fly-in each (CERN-FOOTAGE-2022-042)
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "cern_footage_2022_042_001.mp4"
+profile = "web-h264-silent"
+used_in = ["L02"]
+notes   = "LHCb 3D fly-in from the LHC ring to the detector, 0:56 (added 2026-09-29). Raw = Drive master videos/cern/cern_footage_2022_042_001.mov (H.264 2160p50 40 Mbps + PCM, 278 MB; the audio is digital silence); videos/raw/ is a symlink to it."
+
+[[videos]]
+name    = "cern_footage_2022_042_002.mp4"
+profile = "web-h264-silent"
+used_in = ["L02"]
+notes   = "CMS 3D fly-in, 0:39 (added 2026-09-29). Raw = Drive master videos/released/CERN-FOOTAGE-2022-042-002-2160p.mp4 (H.264 2160p25 5.3 Mbps, 26 MB; the audio is digital silence); videos/raw/ is a symlink to it."
+
+[[videos]]
+name    = "cern_footage_2022_042_003.mp4"
+profile = "web-h264-silent"
+used_in = ["L02"]
+notes   = "ATLAS 3D fly-in, 0:38 (added 2026-09-29). Raw = Drive master videos/released/CERN-FOOTAGE-2022-042-003-2160p.mp4 (H.264 2160p25 5.8 Mbps, 28 MB; the audio is digital silence); videos/raw/ is a symlink to it."
+
+[[videos]]
+name    = "cern_footage_2022_042_004.mp4"
+profile = "web-h264-silent"
+used_in = ["L02"]
+notes   = "ALICE 3D fly-in, 1:10 (added 2026-09-29). Raw = Drive master videos/released/CERN-FOOTAGE-2022-042-004-2160p.mp4 (H.264 2160p25 7.7 Mbps, 67 MB; the audio is digital silence); videos/raw/ is a symlink to it."
+
+[[videos]]
+name    = "cern_video_2015_024_001.mp4"
+profile = "web-h264"
+used_in = ["L02"]
+notes   = "L02, Data at the LHC (added 2026-09-29): CERN-VIDEO-2015-024-001, the whole data flow in one clip — accelerator chain, the four detectors, trigger levels, data centre, WLCG tiers — 2:51, music, labels in English and French. Raw = Drive master videos/cern/cern_video_2015_024_001_1080p.mp4 (H.264 1080p25 6.2 Mbps + AAC stereo, 133 MB; the CDS 1080p export, not the 3.5 GB .mov); videos/raw/ is a symlink to it."

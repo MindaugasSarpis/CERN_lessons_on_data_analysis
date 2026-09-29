@@ -99,6 +99,16 @@ PROFILES: dict[str, list[str]] = {
         "-dn", "-write_tmcd", "0",  # no editor timecode track (the muxer rebuilds tmcd from the timecode tag unless told not to)
         "-movflags", "+faststart",
     ],
+    # web-h264 without the audio track, for sources whose audio is digital silence.
+    "web-h264-silent": [
+        "-c:v", "libx264", "-profile:v", "high", "-level", "4.2",
+        "-preset", "slow", "-crf", "22", "-maxrate", "8M", "-bufsize", "16M",
+        "-pix_fmt", "yuv420p",
+        "-vf", "scale='min(1920,iw)':-2",
+        "-an",
+        "-dn", "-write_tmcd", "0",
+        "-movflags", "+faststart",
+    ],
 }
 
 
