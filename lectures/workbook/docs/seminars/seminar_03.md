@@ -12,7 +12,7 @@ Demystify "it's just a CSV" by looking at the actual bytes, and connect file siz
 to the number/precision concepts from the lecture.
 
 ## Prerequisites
-Seminar 2 (dataset in `raw/`).
+Seminar 1 (dataset in `raw/`).
 
 ## Tasks
 1. How big is the file, in bytes and in human units? (`ls -l`, `du -h`.) How many

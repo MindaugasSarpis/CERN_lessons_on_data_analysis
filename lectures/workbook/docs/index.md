@@ -1,19 +1,28 @@
 # Teachers Workbook
 
 Companion notes for **Best Research and Data Analysis Practices from CERN** — a
-16-lecture + 16-seminar course. The lectures are delivered as Slidev decks; this
-workbook holds teaching notes and the hands-on **seminar** briefs.
+16-lecture course with a hands-on seminar every week from week 2. The lectures
+are delivered as Slidev decks; this workbook holds teaching notes and the
+hands-on **seminar** briefs.
+
+## This week: 29 September
+
+| | Page |
+|--|--|
+| Lecture, 90 min | [02 Introduction to Data](lectures/lecture_2.md#the-lecture-in-90-minutes): the route through the deck and the slides to skip |
+| Seminar, 90 min | [Seminar 1 — Get Started with VS Code and Markdown](seminars/seminar_01.md): a follow-along tutorial for the person at the front |
+| Homework | [Install Python and Git](seminars/install_python_git.md) |
 
 ## Hands-on seminars
 
-Every lecture has a paired, self-contained seminar practised on a shared real
-dataset (LHCb open data, or one from your own field). Students' semester projects
-are separate and entirely their own choice. Start here:
+Every lecture from week 2 on has a paired, self-contained seminar practised on
+a shared real dataset (LHCb open data, or one from your own field). Students'
+semester projects are separate and entirely their own choice. Start here:
 
 - **[Overview](seminars/overview.md)** — how the seminars relate to the project,
   the shared dataset, the seminar repository, and what each session covers.
 
-The 16 seminar briefs are in the **Seminars** section of the navigation.
+The seminar briefs are in the **Seminars** section of the navigation.
 
 ## Lecture notes
 

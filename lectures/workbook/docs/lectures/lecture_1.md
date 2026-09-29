@@ -48,8 +48,10 @@ VS Code, which we install together. Python and Git follow at home.
 
 ## Paired seminar
 
-[Seminar 1 — Install Your Toolkit](../seminars/seminar_01.md): done at home
-after the first session in class, [Seminar 2](../seminars/seminar_02.md).
+None: week 1 is lecture only. The first session in class is
+[Seminar 1](../seminars/seminar_01.md), in week 2. Python and Git are
+installed at home after it:
+[Install Python and Git](../seminars/install_python_git.md).
 
 ## Take-aways
 

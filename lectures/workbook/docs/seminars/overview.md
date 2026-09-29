@@ -1,11 +1,33 @@
 # The Seminars — How They Work
 
-Every lecture is paired with a **hands-on seminar**. The first session in class
-is Seminar 2, which starts from zero; Seminar 1 (installing Python and Git) is
-done at home after it. Each brief is
+Every lecture from week 2 on is paired with a **hands-on seminar**. Week 1 is
+lecture only. The first session in class is
+[Seminar 1](seminar_01.md), taught with Lecture 2: it starts from zero and
+needs only VS Code. Python and Git are
+[installed at home](install_python_git.md) after it. Each brief is
 **self-contained**: it states its goal, prerequisites, tasks, stretch goals and a
 wrap-up, and sizes to ~120 min. The seminars practise the course's four aims —
 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data & files.
+
+## The first sessions
+
+One new tool or idea per session, each arriving inside VS Code. Nothing is
+used before the session that introduces it.
+
+| Session | New | Still by clicking |
+|--|--|--|
+| 29 Sep, [Seminar 1](seminar_01.md) | VS Code, Markdown, the project folder, the README, provenance | Everything |
+| Next | The file as text: encoding, separators, size. First three terminal commands: `pwd`, `ls`, `cd` | Creating and moving files |
+| Then | Terminal: make, copy, move, delete. Running a Python script that is handed out | Editing |
+| Then | The README as a full document: columns, units, how to rebuild | |
+| Then | Git from the Source Control view first, then the same steps typed | |
+| Then | Python, from the first line: variables, a loop, reading the data file | |
+
+Seminar 1 is written as a follow-along tutorial for the person at the front.
+Briefs 3–16 were written for an earlier plan and still carry the number of
+their lecture. They assume bash commands that do not exist in PowerShell and
+a data file with columns the real one does not have. Each is rewritten in
+the style of Seminar 1 before its week.
 
 ## Two things run in parallel
 
@@ -22,7 +44,7 @@ can go somewhere else entirely.
 
 ## The example dataset
 
-From **Seminar 2** on you work on **a dataset of your own choice** — any tabular
+From **Seminar 1** on you work on **a dataset of your own choice** — any tabular
 dataset with a few thousand+ rows and at least one numeric column with
 interesting structure: daily weather, prices, anonymised measurements, survey
 microdata. You do **not** have to measure the D⁰ mass.
@@ -51,13 +73,13 @@ numeric variable / the pattern you're looking for".
 
 ## The seminar repository
 
-Seminar 2 creates a small project folder that later seminars reuse:
+Seminar 1 creates a small project folder that later seminars reuse:
 
 ```text
 analysis-project/
-|- README.md            # what this is, data provenance, how to rebuild (S5)
+|- README.md            # what this is, data provenance, how to rebuild (S1, S5)
 |- data/
-|  |- raw/              # the CSV exactly as downloaded — READ ONLY (S2, S4)
+|  |- raw/              # the CSV exactly as downloaded — READ ONLY (S1, S4)
 |  |- processed/        # cleaned tables, produced by scripts only (S13)
 |- scripts/            # one script per step (S7-S16)
 |- results/            # figures and numbers, all regenerable (S10-S12)
@@ -74,8 +96,8 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 
 | Seminar | Hands-on focus |
 |--|--|
-| 1 | Python and Git installed *(at home, after the first session)* |
-| 2 | VS Code; the project folder; a data file in `data/raw/`; provenance recorded |
+| 1 | VS Code; Markdown; the project folder and its README; a data file in `data/raw/`; provenance recorded |
+| At home | Python and Git installed *(after Seminar 1)* |
 | 3 | The raw file understood as bytes (encoding, size, format) |
 | 4 | `raw/`–`processed/` structure; clean filenames; CLI inspection |
 | 5 | A real `README.md` (provenance, columns, units, rebuild steps) |
