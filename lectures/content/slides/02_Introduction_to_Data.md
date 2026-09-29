@@ -871,7 +871,7 @@ Derived datasets must stay **equally open**. *OpenStreetMap; most ESA imagery (C
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-⚠️ **Open to read ≠ open to redistribute.** Some portals let you download but not re-host. Check the licence *before* the dataset lands in a public GitHub repository — and before you publish a table derived from it.
+⚠️ **Open to read ≠ open to redistribute.** Some portals let you download but not re-host. Check the licence *before* you put the dataset online or pass it on — and before you publish a table derived from it.
 
 </div>
 
@@ -941,8 +941,8 @@ hideInToc: true
 
 ## 🔒 **Personal or sensitive data**
 
-- Anonymise before it enters a repository
-- Never commit raw personal data to git — public or private
+- Anonymise before the file enters your project folder
+- Never upload or e-mail raw personal data
 - If in doubt: describe the data in the project, keep the file out of it
 
 </div>
