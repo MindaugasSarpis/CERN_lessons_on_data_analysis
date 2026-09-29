@@ -1172,14 +1172,6 @@ LHCb observed **CP violation in charm**, in decays of the **D⁰ meson**: the pa
 hideInToc: true
 ---
 
-<VideoPlayer src="cern_footage_2022_042_001.mp4" />
-
-<!-- LHCb — 3D fly-in from the LHC ring to the detector (0:56, silent). -->
-
----
-hideInToc: true
----
-
 <VideoPlayer src="LHCb.mp4" />
 
 <!-- LHCb reel (0:47) — where the example file comes from. -->

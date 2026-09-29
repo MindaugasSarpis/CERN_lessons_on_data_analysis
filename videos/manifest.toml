@@ -269,7 +269,7 @@ notes   = "fetched from https://www.youtube.com/watch?v=h9Z4oGN89MU"
 [[videos]]
 name    = "cern_footage_2022_042_001.mp4"
 profile = "web-h264-silent"
-used_in = ["L02"]
+used_in = []  # dropped from L02 on 2026-09-29 (LHCb.mp4 shows the same); stays on the release
 notes   = "LHCb 3D fly-in from the LHC ring to the detector, 0:56 (added 2026-09-29). Raw = Drive master videos/cern/cern_footage_2022_042_001.mov (H.264 2160p50 40 Mbps + PCM, 278 MB; the audio is digital silence); videos/raw/ is a symlink to it."
 
 [[videos]]
