@@ -13,7 +13,7 @@ Shortcuts are written **Windows / Linux** first, then **macOS**.
 
 ## A. The lecture in 90 minutes
 
-The deck is sized for a 2-hour slot (about 131 min as written, 63 slides). It
+The deck is sized for a 2-hour slot (about 130 min as written, 63 slides). It
 runs in this order: data in everyday life, kinds of data, open data and
 provenance, then CERN as the case study, then the example file up close.
 
@@ -24,7 +24,7 @@ whole.
 | Skip | Slides | Saves |
 |--|--|--|
 | Quiz: the lifecycle | 10 | 3 min |
-| Where Each Flavour Shows Up Later | 18 | 2 min |
+| What Each Flavour Is Used For | 18 | 2 min |
 | Data at Work (two slides) + Common Threads | 20–22 | 7 min |
 | ATLAS film clip, ALICE, quark–gluon plasma clip | 35–37 | 6 min |
 | LHCb film clip | 41 | 2 min |
@@ -146,8 +146,8 @@ someone who has not.
     Students download the version for their system.
 
     **Say,** while it downloads: today needs one program and a browser.
-    Everything done today by clicking can be done in any editor, and from
-    Lecture 4 on we also do it by typing.
+    Everything done today by clicking can be done in any editor, or by typing
+    commands.
 
 2. **Install it.** Walk round the room while it installs.
 
@@ -294,7 +294,7 @@ Steps 8 and 9 are done together on the projector. Step 10 students do alone.
     beside the text and the room sees both. Type a second `#` heading and
     watch the preview follow.
 
-    **Say,** one sentence only: `#` makes a heading. The rest is Lecture 5.
+    **Say,** one sentence only: `#` makes a heading.
 
 !!! success "Check ✔"
     The project contains exactly this. Walk the rows and check.
@@ -428,7 +428,7 @@ the room shows the same thing. It is the file from the lecture's section
 
     **Watch for:** two different sizes in the room. Windows shows about
     3 835 KB, macOS about 3.9 MB. Both are 3 926 142 bytes: Windows counts in
-    units of 1024, macOS in units of 1000. Lecture 3 covers the two units.
+    units of 1024, macOS in units of 1000.
 
 23. **Swap laptops with a neighbour.** Using only the neighbour's README,
     could you find and download the same file? Tell them what was missing.
@@ -483,15 +483,15 @@ terminal and Python.
 
 ### If students ask for more
 
-Four tour stops are kept for later weeks. If asked today, show it for ten
-seconds and name the week.
+Four tour stops are not part of today's tour. If asked, show it for ten
+seconds and move on.
 
-| Stop | Week |
+| Stop | Topic |
 |--|--|
-| 8. The Status Bar: encoding, line endings | 3 (How Computers Work) |
-| 9. The terminal panel, `` Ctrl+` `` | 4 (Command Line) |
-| 10. Extensions: Python, running a script with ▶ | 7 (Python Foundations) |
-| 11. Source Control: staging, committing, comparing versions | 6 (Git) |
+| 8. The Status Bar: encoding, line endings | How Computers Work |
+| 9. The terminal panel, `` Ctrl+` `` | Command Line |
+| 10. Extensions: Python, running a script with ▶ | Python Foundations |
+| 11. Source Control: staging, committing, comparing versions | Git |
 
 Leave out altogether, even if asked: debugging, multi-root workspaces, settings
 sync, remote development, AI assistants, Jupyter.
@@ -507,8 +507,7 @@ sync, remote development, AI assistants, Jupyter.
 
 The risk is that VS Code becomes "the tool" and the course's tool-agnostic aim
 gets lost. That is why step 1 says it out loud: everything done today by
-clicking can be done in any editor, and from Lecture 4 on we will also do it
-by typing.
+clicking can be done in any editor, or by typing commands.
 
 ### The weeks after this one
 
