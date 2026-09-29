@@ -136,7 +136,7 @@ notes   = "Short CERN overview, HEVC 2.6 Mbps"
 [[videos]]
 name    = "ATLAS-VIDEO-2021-001-001-1080p.mp4"
 profile = "remux"
-used_in = ["L01", "L02"]
+used_in = ["L01"]
 notes   = "ATLAS experiment reel, HEVC 5.3 Mbps"
 
 [[videos]]

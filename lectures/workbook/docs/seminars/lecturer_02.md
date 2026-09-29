@@ -26,7 +26,7 @@ whole.
 | Quiz: the lifecycle | 10 | 3 min |
 | What Each Flavour Is Used For | 18 | 2 min |
 | Data at Work (two slides) + Common Threads | 20–22 | 7 min |
-| ATLAS film clip, ALICE, quark–gluon plasma clip | 35–37 | 6 min |
+| ALICE, quark–gluon plasma clip | 35–36 | 4 min |
 | Quiz: what does 5 sigma mean? | 44 | 4 min |
 | Quiz: why not record it all? | 49 | 3 min |
 | Careers at CERN, Working with the Data | 50–51 | 4 min |
@@ -36,9 +36,9 @@ That leaves about 90 minutes, including the 5-minute thought exercise on
 slide 19. If you run late, skip From Events to Petabytes (slide 47) next: the
 data-flow clip before it shows the same chain.
 
-Three detector fly-ins stay in: ATLAS (33), CMS (34), ALICE (38), two and a
+Three detector fly-ins stay in: ATLAS (33), CMS (34), ALICE (37), two and a
 half minutes together. They are silent, so talk over them. The ALICE slide is
-skipped; say what ALICE studies while its fly-in plays. The LHCb clip (40,
+skipped; say what ALICE studies while its fly-in plays. The LHCb clip (39,
 0:47) stays in too: it is the detector the example file comes from.
 
 The data-flow clip (46, 2:51, music) stays in as well: accelerator chain,
