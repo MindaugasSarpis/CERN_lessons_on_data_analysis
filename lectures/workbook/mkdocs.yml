@@ -37,11 +37,6 @@ extra_javascript:
 extra_css:
   - stylesheets/course.css
 
-# Numbered steps keep the number they start with (a list that begins "4."
-# renders as 4), so "step 17" in a brief is the step shown as 17.
-hooks:
-  - hooks/keep_list_start.py
-
 
 nav:
   - Home: index.md
@@ -61,9 +56,8 @@ nav:
       - Miscellaneous: lectures/misc.md
   - Seminars:
       - Overview: seminars/overview.md
-      - S1 Toolkit & first repo: seminars/seminar_01.md
-      - S2 Find & document a dataset: seminars/seminar_02.md
-      - Week 2 lecturer's brief: seminars/lecturer_02.md
+      - S1 VS Code & Markdown: seminars/seminar_01.md
+      - At home · Install Python & Git: seminars/install_python_git.md
       - S3 Bit/number/format explorer: seminars/seminar_03.md
       - S4 Tame a messy project (CLI): seminars/seminar_04.md
       - S5 Write the README: seminars/seminar_05.md
