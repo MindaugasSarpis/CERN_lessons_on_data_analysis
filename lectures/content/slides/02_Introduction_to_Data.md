@@ -15,7 +15,7 @@ title: "Introduction to Data"
 Speaker: last time was the why — the films and CERN. Today is the what: data
 itself. Start from their own day, then kinds of data, tables and files, then how
 to find and document a dataset. CERN comes after that, as the case study, and
-its example file closes the lecture and opens the seminar. (~2 min)
+its example file closes the lecture. (~2 min)
 -->
 
 ---
@@ -77,7 +77,7 @@ hideInToc: true
 <!--
 Speaker: read these as promises. By the end they should know what a dataset
 *is*, how a table is built, where to get one and how to write down where it came
-from. The seminar right after this lecture puts the last two into practice. (~1 min)
+from. (~1 min)
 -->
 
 ---
@@ -240,7 +240,7 @@ graph LR
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The loop from two slides ago, drawn out. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it. This course spends a lecture or two on **each stage**; the seminars walk **your own dataset** through every stage of it.
+The loop from two slides ago, drawn out. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it.
 
 </div>
 
@@ -400,8 +400,7 @@ Labels with an order: exam grades, low / medium / high. You can rank them; the s
 
 <!--
 Speaker: ask the Excel users which kind each column of a spreadsheet they know is.
-The kind of variable returns in Lecture 9 (which summary), Lecture 10 (which plot)
-and Lecture 11 (which distribution). (~2 min)
+The kind of variable decides the summary, the plot and the distribution. (~2 min)
 -->
 
 ---
@@ -528,30 +527,30 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ **Decimal comma or decimal point?** `1,5` and `1.5` are the same number written in two countries. A CSV file does not say which one it uses. You will see what that does to a spreadsheet in the seminar after this lecture.
+⚠️ **Decimal comma or decimal point?** `1,5` and `1.5` are the same number written in two countries. A CSV file does not say which one it uses. A spreadsheet decides from the computer's regional settings, so the same file can open differently on two computers.
 
 </div>
 
 <!--
-Speaker: this slide sets up the seminar's central comparison — the same CSV opened
-in VS Code and in a spreadsheet. Lecture 3 goes into bytes and encodings. (~2 min)
+Speaker: the point is the comparison — the same table as plain text and as a
+spreadsheet. Do not rush it. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Where Each Flavour Shows Up **Later**
+# What Each Flavour Is **Used For**
 
-| **Flavour** | **What you learn to do with it** | **Where** |
+| **Flavour** | **What is done with it** | **Example** |
 | --- | --- | --- |
-| 🔢 Numbers | Summarise, visualise, fit, report ± an error | L10–L12 · S10–S12 |
-| 🔤 Text | Parse a line; code and count categories | L07–L08 · S7–S8 |
-| 🖼️ Images | Pixels as arrays, then a classifier | L13 · L16 |
-| ⚡ Events | Turn one collision into a number (a mass) | here, L09–L12 |
-| 📁 …and their files | Read, name, and organise safely | L03–L05 · S3–S5 |
+| 🔢 Numbers | Summarise, visualise, fit, report ± an error | Temperature, mass |
+| 🔤 Text | Parse a line; code and count categories | Survey answers |
+| 🖼️ Images | Pixels as arrays, then a classifier | Galaxy photographs |
+| ⚡ Events | Turn one collision into a number (a mass) | D⁰ candidates |
+| 📁 …and their files | Read, name, and organise safely | CSV, .xlsx, ROOT |
 
-<div class="note-text mt-md">Nothing to memorise: the last column says in which weeks you work with each flavour yourself.</div>
+<div class="note-text mt-md">Nothing to memorise. Most datasets mix flavours: the weather table two slides back holds numbers, text and timestamps.</div>
 
 ---
 hideInToc: true
@@ -590,7 +589,7 @@ Share with a neighbour:
 
 ## 🎯 **Takeaway**
 
-Keep your answer. The data you just described is a candidate for Seminar 2 today, and for your semester project.
+Keep your answer. The data you just described is a candidate for your semester project.
 
 </div>
 
@@ -745,8 +744,7 @@ hideInToc: true
 
 <!--
 Speaker: shift gears — from *what data is* to *where you get it and how you prove
-where it came from*. Seminar 2 practises this on the example file; at home they
-repeat it on a dataset of their own choice. (~1 min)
+where it came from*. (~1 min)
 -->
 
 ---
@@ -965,14 +963,14 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🧭 **The path Seminar 2 starts**
+## 🧭 **Six steps**
 
 1. **Find** your dataset's record on its portal (or the source, if there is no portal)
 2. **Read** the record — title, DOI, licence, description
 3. **Download** into `data/raw/` of your project folder, without renaming
 4. **Write** the provenance note into the README
-5. **Checksum** the file — a fingerprint of its bytes *(from week 4)*
-6. **Commit the note** — and the data only if it is small *and* the licence allows it *(from week 6)*
+5. **Checksum** the file — a fingerprint of its bytes
+6. **Commit the note** — and the data only if it is small *and* the licence allows it
 
 </div>
 
@@ -1215,15 +1213,14 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-🔬 **In this course:** real **LHCb open data** is the lectures' worked example. Today we read its record and its file; Lecture 12 (Practical Data Fitting) fits this peak. In the seminars you do the same steps on **a dataset of your own**.
+🔬 Real **LHCb open data** is the lectures' worked example. Today we read its record and its file. Your own project uses **a dataset of your choice**.
 
 </div>
 
 <!--
-Speaker: this peak returns as the lectures' example in the visualisation and
-fitting lectures. Students do NOT measure the D0 mass in the seminars; they work
-on their own data. They should leave knowing one particle by name: the D0, about
-1865 MeV, a peak in the K-pi invariant-mass spectrum. (~2 min)
+Speaker: do not announce a D0 mass measurement; students work on their own data.
+They should leave knowing one particle by name: the D0, about 1865 MeV, a peak in
+the K-pi invariant-mass spectrum. (~2 min)
 -->
 
 ---
@@ -1265,7 +1262,7 @@ hideInToc: true
 - Collision events produce **detector readings** (energy, momentum, position)
 - Signal events look almost identical to background noise
 - Statistical methods decide if a discovery is **real or a fluctuation**
-- The 5-sigma standard: if there were **no new particle**, a background fluctuation this strong would appear in fewer than **1 in 3.5 million** experiments — *Lecture 11 (Probability & Statistics) makes this precise*
+- The 5-sigma standard: if there were **no new particle**, a background fluctuation this strong would appear in fewer than **1 in 3.5 million** experiments
 
 </div>
 
@@ -1302,7 +1299,7 @@ hideInToc: true
     'Five independent detectors each confirmed the signal at the same mass on the same day'
   ]"
   :correct="1"
-  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading). Lecture 11 (Probability & Statistics) makes this precise."
+  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading)."
 />
 
 <style>
@@ -1634,7 +1631,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md reveal-up">
 
-💡 A physicist who starts an analysis usually does not know **in which country** the jobs run. The same idea at your scale: compute where convenient, keep the data organised and portable. **Lecture 15 (Computing Infrastructure & HPC)** covers the grid in full.
+💡 A physicist who starts an analysis usually does not know **in which country** the jobs run. The same idea at your scale: compute where convenient, keep the data organised and portable.
 
 🔭 What comes next: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring, more than three times the LHC's 27 km.
 
@@ -1664,8 +1661,8 @@ hideInToc: true
 # A Dataset **Up Close**
 
 <!--
-Speaker: now open the example file, conceptually — no code yet. It is the file the
-seminar starts with. Apply the table and variable slides from earlier to it. (Pass 2 of the reel adds a 2:28 LHCb
+Speaker: now open the example file, conceptually — no code yet. Apply the table
+and variable slides from earlier to it. (Pass 2 of the reel adds a 2:28 LHCb
 decay animation as the opener of this section.) (~1 min)
 -->
 
@@ -1700,7 +1697,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💾 The file is plain text. Lecture 3 looks at its bytes and Seminar 3 counts them. Today we read what it **means**.
+💾 The file is plain text. Today we read what it **means**.
 
 </div>
 
@@ -1764,7 +1761,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Answer these on paper before the first line of code; Seminar 2 asks you to do exactly this for your dataset.
+✅ Answer these on paper before the first line of code.
 
 </div>
 
@@ -1870,14 +1867,6 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent card-glass pad-compact mt-md">
-
-🔬 **Seminar 2 tie-in** (today, from scratch: nothing to install beforehand) — set up VS Code and a project folder, put today's example file into it, and write its provenance into a README. At home you do the same for a dataset **from your own field**.
-
-</div>
-
 <!--
-Speaker: the "you can now" beat — have them nod along to each. The tie-in makes the
-payoff concrete: in the seminar they document the example file, and at home a
-dataset of their own. (~1 min)
+Speaker: the "you can now" beat — have them nod along to each. (~1 min)
 -->

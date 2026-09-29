@@ -12,7 +12,7 @@ Shortcuts are written **Windows / Linux** first, then **macOS**.
 
 ## A. The lecture in 90 minutes
 
-The deck is sized for a 2-hour slot (about 131 min as written, 63 slides). It
+The deck is sized for a 2-hour slot (about 130 min as written, 63 slides). It
 runs in this order: data in everyday life, kinds of data, open data and
 provenance, then CERN as the case study, then the example file up close.
 
@@ -23,7 +23,7 @@ whole.
 | Skip | Slides | Saves |
 |--|--|--|
 | Quiz: the lifecycle | 10 | 3 min |
-| Where Each Flavour Shows Up Later | 18 | 2 min |
+| What Each Flavour Is Used For | 18 | 2 min |
 | Data at Work (two slides) + Common Threads | 20–22 | 7 min |
 | ATLAS film clip, ALICE, quark–gluon plasma clip | 35–37 | 6 min |
 | LHCb film clip | 41 | 2 min |
@@ -110,7 +110,7 @@ time in the coming weeks.
 
 The risk is that VS Code becomes "the tool" and the course's tool-agnostic aim
 gets lost. Say it once out loud: everything done today by clicking can be done
-in any editor, and from Lecture 4 on we will also do it by typing.
+in any editor, or by typing commands.
 
 ### Block 1 — install and open VS Code (15 min)
 
@@ -165,20 +165,20 @@ type; here a file is only ever its own text.
 
 **6. Markdown preview.** With `README.md` open: `Ctrl+Shift+V` /
 `Cmd+Shift+V`. Type a `#` heading and watch the preview follow. One sentence
-only: `#` makes a heading, the rest is Lecture 5.
+only: `#` makes a heading.
 
 **7. Moving in a long file.** `Ctrl+F` / `Cmd+F` finds text, `Ctrl+G` jumps to
 a line number, `Ctrl+End` / `Cmd+↓` jumps to the end. They need these three in
 block 4.
 
-Kept for later weeks; if asked today, show it for ten seconds and name the week:
+Not part of today's tour; if asked, show it for ten seconds and move on:
 
-| Stop | Week |
+| Stop | Topic |
 |--|--|
-| 8. The Status Bar: encoding, line endings | 3 (How Computers Work) |
-| 9. The terminal panel, `` Ctrl+` `` | 4 (Command Line) |
-| 10. Extensions: Python, running a script with ▶ | 7 (Python Foundations) |
-| 11. Source Control: staging, committing, comparing versions | 6 (Git) |
+| 8. The Status Bar: encoding, line endings | How Computers Work |
+| 9. The terminal panel, `` Ctrl+` `` | Command Line |
+| 10. Extensions: Python, running a script with ▶ | Python Foundations |
+| 11. Source Control: staging, committing, comparing versions | Git |
 
 Leave out altogether, even if asked: debugging, multi-root workspaces, settings
 sync, remote development, AI assistants, Jupyter.
