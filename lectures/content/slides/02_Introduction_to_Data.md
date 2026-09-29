@@ -62,7 +62,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact">
 
-⚛️ Trace how a **collision becomes a dataset** at CERN — detector, trigger, storage — and meet the **D⁰**
+⚛️ Trace how a **collision becomes a dataset** at CERN — detector, trigger, storage
 
 </div>
 
@@ -251,7 +251,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The loop from two slides ago, drawn out. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it.
+The loop from two slides ago. The figure names the stages differently; the cycle is the same. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it.
 
 </div>
 
@@ -379,7 +379,7 @@ Timestamped things that happened — a click, a tap, a particle collision.
 
 ## 🎛️ **Parametrisation**
 
-Describing a thing by a set of numbers. Everything in a dataset can be expressed as numbers: a colour is 3, a place on Earth is 2 (latitude, longitude), a collision ends as one mass, 1864.8 MeV. Written as a number is not the same as behaving like one — next slide.
+Describing a thing by a set of numbers. Everything in a dataset can be expressed as numbers: a colour is 3 numbers, a place on Earth is 2 (latitude, longitude), a collision ends as one mass, 1864.8 MeV. Written as a number is not the same as behaving like one — next slide.
 
 </div>
 
@@ -434,7 +434,7 @@ Labels with an order: exam grades, low / medium / high. You can rank them; the s
 
 </div>
 
-<div class="note-text mt-md">Dates, postcodes and ID numbers look like numbers and are not: the average of two postcodes means nothing. The kind of variable decides which plot and which statistic make sense.</div>
+<div class="note-text mt-md">Postcodes, phone numbers and ID numbers look like numbers and are not: the average of two postcodes means nothing. The kind of variable decides which plot and which statistic make sense.</div>
 
 <!--
 Speaker: ask the Excel users which kind each column of a spreadsheet they know is.
@@ -553,7 +553,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📦 **Binary — ROOT, HDF5, Parquet**
+## 📦 **Binary — ROOT, HDF5**
 
 - Compact and fast, with a type for every column
 - Readable only by a program that knows the format
@@ -585,7 +585,7 @@ hideInToc: true
 | 🔢 Numbers | Summarise, visualise, fit, report ± an error | Temperature, mass |
 | 🔤 Text | Parse a line; code and count categories | Survey answers |
 | 🖼️ Images | Pixels as arrays, then a classifier | Galaxy photographs |
-| ⚡ Events | Turn one collision into a number (a mass) | D⁰ candidates |
+| ⚡ Events | Turn one collision into a number (a mass) | Particle collisions |
 | 📁 …and their files | Read, name, and organise safely | CSV, .xlsx, ROOT |
 
 <div class="note-text mt-md">Nothing to memorise. Most datasets mix flavours: the weather table two slides back holds numbers, text and timestamps.</div>
@@ -668,7 +668,7 @@ hideInToc: true
 ## 💰 **Finance**
 
 - Algorithmic trading under latency constraints
-- Risk: stress tests, scenario analysis, VaR
+- Risk: stress tests, scenario analysis
 - Fraud detection on streaming transactions
 
 📉 Every participant models the other participants. A pattern found in past data stops working once people trade on it.
@@ -690,11 +690,11 @@ hideInToc: true
 ## 🔭 **Astronomy**
 
 - Observational data from telescopes, satellites, detectors
-- Gravitational wave detection via signal processing & ML
+- Gravitational wave detection via signal processing & machine learning
 - Cataloguing millions of celestial objects, anomaly detection
 - Requires high-throughput computing, reproducible pipelines
 
-🤖 <strong>Galaxy Zoo</strong> crowdsourced classifications of ~1M galaxies from SDSS images — the labelled set that seeded today's CNN galaxy-morphology classifiers.
+🤖 <strong>Galaxy Zoo</strong> crowdsourced classifications of ~1M galaxies from SDSS images — the labelled set used to train today's automatic galaxy classifiers.
 
 </div>
 
@@ -771,7 +771,7 @@ A number changes a decision only once the person deciding understands what it sa
 
 </div>
 
-<div class="note-text mt-md">🔍 Which of these examples is closest to your own field?</div>
+<div class="note-text mt-md">🔍 Which of the five domains is closest to your own field?</div>
 
 ---
 layout: section
@@ -877,7 +877,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Licences — What "Open" **Actually Permits**
+# Licences — What “Open” **Actually Permits**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -899,9 +899,9 @@ Do anything, but **credit the source**. *ESO and NOIRLab material.*
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🔁 **Share-alike (ODbL, CC BY-SA)**
+## 🔁 **ODbL, CC BY-SA**
 
-Derived datasets must stay **equally open**. *OpenStreetMap; most ESA imagery (CC BY-SA IGO).*
+Share-alike: derived datasets must stay **equally open**. *OpenStreetMap; most ESA imagery (CC BY-SA IGO).*
 
 </div>
 
@@ -1473,7 +1473,7 @@ hideInToc: true
 
 ## 🔎 **The Analyst**
 
-Takes last night's events, checks that the D⁰ peak has not moved, reports anything odd to the shift crew, pushes a fix to the shared analysis code. All on a laptop, anywhere in the world.
+Takes last night's events, plots the mass of the D⁰ candidates and checks that it has not shifted, reports anything odd to the shift crew, corrects the shared analysis code. All on a laptop, anywhere in the world.
 
 </div>
 
@@ -1481,7 +1481,7 @@ Takes last night's events, checks that the D⁰ peak has not moved, reports anyt
 
 ## 🌙 **The Shift Crew**
 
-Watches the same peak on a live monitoring plot in the control room. If a sub-detector or the trigger farm fails, the histogram shows it, and the night's data is marked good or bad for everyone who uses it later.
+Watches the same plot live in the control room. If a sub-detector or the trigger farm fails, the plot shows it, and the night's data is marked good or bad for everyone who uses it later.
 
 </div>
 
@@ -1512,7 +1512,7 @@ CERN invention they used today — the answer is the Web, every one of them. (~1
 hideInToc: true
 ---
 
-# CERN's Impact Beyond Physics
+# CERN's Impact Beyond **Physics**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1637,7 +1637,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **The LHCb sample as a file**
+## 📄 **The LHCb sample as a CSV file**
 
 - One **header line** naming the columns
 - **91 583** lines after it — the record says "about 60k events"; count for yourself
@@ -1658,7 +1658,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💾 The file is plain text. Today we read what it **means**.
+💾 The CSV file is plain text. Today we read what it **means**.
 
 </div>
 
@@ -1742,7 +1742,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🔁 Wherever a lecture shows the "invariant mass" or the "D⁰ peak", read *your numeric variable* and *the pattern you are looking for*.
+🔁 Where the example file has the mass `M`, read *your own numeric variable*. Where it has a D⁰ candidate, read *one row of your data*.
 
 </div>
 
@@ -1796,7 +1796,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Trace a **collision** from detector to stored dataset
+✅ Trace a **collision** from detector through trigger to stored dataset
 
 </div>
 
