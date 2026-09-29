@@ -1774,33 +1774,13 @@ hideInToc: true
 
 # Same Questions, **Your** Dataset
 
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🌦️ **Weather station CSV**
-
-Row = one hour · columns = temperature °C, pressure hPa, humidity % · derived: daily mean.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📋 **Survey microdata**
-
-Row = one respondent · columns = coded answers · the codebook *is* the units.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🖼️ **Image collection**
-
-Row = one file · columns = size, timestamp, label · the pixels live elsewhere.
-
-</div>
-
-</div>
+| | 🌦️ **Weather station** | 📋 **Survey** | 🖼️ **Image collection** |
+| --- | --- | --- | --- |
+| **One row** | One hour at one station | One respondent | One image file |
+| **Measured** | Temperature, pressure, humidity | Answers, stored as codes | Pixels, in the image files |
+| **Derived** | Daily mean | Total score | Label |
+| **Bookkeeping** | Station, time | Respondent number | File name, size, time taken |
+| **Units** | °C, hPa, % | Listed in the codebook | Bytes for the file size |
 
 <div class="card card-info card-glass pad-compact mt-md">
 
