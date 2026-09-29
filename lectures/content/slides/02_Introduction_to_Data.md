@@ -1076,14 +1076,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
-
-<!-- ATLAS on film — model, cavern, control room (0:49). -->
-
----
-hideInToc: true
----
-
 # <span class="gradient-text">ALICE</span> — Quark–Gluon Plasma
 
 <div class="grid-2 mt-md gap-md">
