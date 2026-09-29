@@ -12,7 +12,7 @@ Shortcuts are written **Windows / Linux** first, then **macOS**.
 
 ## A. The lecture in 90 minutes
 
-The deck is sized for a 2-hour slot (about 125 min as written, 58 slides). It
+The deck is sized for a 2-hour slot (about 131 min as written, 63 slides). It
 runs in this order: data in everyday life, kinds of data, open data and
 provenance, then CERN as the case study, then the example file up close.
 
@@ -22,29 +22,39 @@ whole.
 
 | Skip | Slides | Saves |
 |--|--|--|
+| Quiz: the lifecycle | 10 | 3 min |
 | Where Each Flavour Shows Up Later | 18 | 2 min |
 | Data at Work (two slides) + Common Threads | 20–22 | 7 min |
-| ATLAS clip, ALICE, quark–gluon plasma clip | 33–35 | 6 min |
-| LHCb clip | 37 | 2 min |
-| Quiz: what does 5 sigma mean? | 41 | 4 min |
-| Quiz: why not record it all? | 45 | 3 min |
-| Careers at CERN, A Day in the Data | 46–47 | 4 min |
-| Beyond the Ring (whole section, with its quiz) | 48–51 | 9 min |
+| ATLAS film clip, ALICE, quark–gluon plasma clip | 35–37 | 6 min |
+| LHCb film clip | 41 | 2 min |
+| Quiz: what does 5 sigma mean? | 45 | 4 min |
+| Quiz: why not record it all? | 50 | 3 min |
+| Careers at CERN, Working with the Data | 51–52 | 4 min |
+| Beyond Physics (whole section, with its quiz) | 53–56 | 9 min |
 
-That leaves about 87 minutes, including the 5-minute thought exercise on
-slide 19. If you run late, drop the lifecycle quiz (slide 10) next.
+That leaves about 90 minutes, including the 5-minute thought exercise on
+slide 19. If you run late, skip From Events to Petabytes (slide 48) next: the
+data-flow clip before it shows the same chain.
+
+The four detector fly-ins stay in: ATLAS (33), CMS (34), ALICE (38), LHCb (40),
+three and a half minutes together. They are silent, so talk over them. The
+ALICE slide is skipped; say what ALICE studies while its fly-in plays.
+
+The data-flow clip (47, 2:51, music) stays in as well: accelerator chain,
+detectors, trigger, data centre, grid. It stands in for the skipped Beyond
+Physics section, which is where the grid is otherwise introduced.
 
 **Do not cut** slides 11–17 (kinds of data, tables, files), 23–30 (open data and
-provenance) or 52–57 (the example file). The seminar uses every one of them.
+provenance) or 57–62 (the example file). The seminar uses every one of them.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–10 | Data in your life, what data is, the lifecycle |
-| 0:19 | 11–19 | Kinds of data, variables, tables, files, thought exercise |
-| 0:36 | 23–30 | Open data and provenance |
-| 0:53 | 31–44 | CERN case study: the experiments, the D⁰, the trigger |
-| 1:11 | 52–58 | The example file up close, recap |
-| 1:27 | | Questions, move to the seminar |
+| 0:00 | 1–9 | Data in your life, what data is, the lifecycle |
+| 0:16 | 11–19 | Kinds of data, variables, tables, files, thought exercise |
+| 0:33 | 23–30 | Open data and provenance |
+| 0:50 | 31–49 | CERN case study: the four detectors, the D⁰, the data flow, the trigger |
+| 1:14 | 57–63 | The example file up close, recap |
+| 1:30 | | Move to the seminar |
 
 Ask students to keep their thought-exercise answer (slide 19): it is their
 starting point for choosing a dataset at home this week.

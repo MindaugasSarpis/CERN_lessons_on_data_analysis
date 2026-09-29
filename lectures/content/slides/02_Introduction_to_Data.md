@@ -38,7 +38,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🗂️ Spot the **datasets** hiding in an ordinary day — and sort them into the **four flavours** you'll keep meeting
+🗂️ Spot the **datasets** in an ordinary day and sort them into the **four flavours**
 
 </div>
 
@@ -138,7 +138,7 @@ hideInToc: true
 - Every click, scroll, and pause feeds product-analytics dashboards
 - A shop's "customers also bought" is a live recommendation model
 - Each card payment is scored for fraud in under a second
-- Spam filters quietly classify every message before you see it
+- Spam filters classify every message before you see it
 
 Most of this analysis runs with no person in the loop: the ⚙️ automation and ♻️ reproducibility this course teaches. You notice it only when it fails.
 
@@ -148,7 +148,7 @@ Most of this analysis runs with no person in the loop: the ⚙️ automation and
 
 ## 🌙 **Evening**
 
-- A streaming service picks your thumbnail from thousands of quiet experiments
+- A streaming service picks your thumbnail from thousands of A/B tests
 - A run is logged as a GPS track, then compared to last month's pace
 - A smart meter reports the day's electricity in fine-grained slices
 - The cycle closes as the wearable starts scoring tonight's sleep
@@ -195,7 +195,7 @@ The forecast, the playlist and the fraud check need the same four skills: organi
 hideInToc: true
 ---
 
-# So — What Even **Is** Data?
+# What **Is** Data?
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
@@ -244,7 +244,7 @@ The loop from two slides ago, drawn out. Every project — yours, a bank's, a ph
 
 </div>
 
-<div class="note-text mt-sm">Most real-world pain comes from skipping a stage — analysing before cleaning, or deciding before storing where the data came from.</div>
+<div class="note-text mt-sm">Most problems in practice come from skipping a stage: analysing before cleaning, or deciding before storing where the data came from.</div>
 
 ---
 hideInToc: true
@@ -302,7 +302,7 @@ Free-form — text, images, audio, video. Rich, but a computer can't average it 
 
 - Emails, photos, recordings, PDFs
 - Needs a step to turn it into numbers or labels
-- Where most modern machine learning earns its keep
+- Most machine learning works on this kind of data
 
 </div>
 
@@ -314,7 +314,7 @@ Free-form — text, images, audio, video. Rich, but a computer can't average it 
 hideInToc: true
 ---
 
-# Four Flavours You'll **Meet**
+# Four **Flavours** of Data
 
 <div class="grid-2 mt-md gap-md">
 
@@ -598,7 +598,7 @@ Keep your answer. The data you just described is a candidate for Seminar 2 today
 hideInToc: true
 ---
 
-# Data at Work — **Life, Planet & Money**
+# Data at Work — **Biomedicine, Environment, Finance**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -610,7 +610,7 @@ hideInToc: true
 - Clinical trials → safety, efficacy, adaptive designs
 - Decisions: diagnostics, targeted therapies
 
-🧪 <strong>23andMe</strong> went bankrupt in 2025 and its genetic database changed hands in the proceedings — consent outlives a company.
+🧪 <strong>23andMe</strong> went bankrupt in 2025 and its genetic database changed hands in the proceedings. The customers' consent went with it.
 
 </div>
 
@@ -622,7 +622,7 @@ hideInToc: true
 - Pollution monitored at city-block resolution
 - Decisions: policy, disaster response, conservation
 
-🔄 <strong>Living analysis</strong> — data feeds update the models continuously; the "result" is a pipeline that never stops running.
+🔄 Data feeds update the models continuously. The result is a pipeline that keeps running, not one final number.
 
 </div>
 
@@ -634,7 +634,7 @@ hideInToc: true
 - Risk: stress tests, scenario analysis, VaR
 - Fraud detection on streaming transactions
 
-📉 Every actor is also trying to out-predict every other actor's model — data describes the past far better than it dictates the future.
+📉 Every participant models the other participants. A pattern found in past data stops working once people trade on it.
 
 </div>
 
@@ -644,7 +644,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Data at Work — **Sky & Subatomic**
+# Data at Work — **Astronomy & Particle Physics**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -670,7 +670,7 @@ hideInToc: true
 - Collaboration across detectors, theory, computing teams
 - Drives advances in distributed computing & open data practices
 
-🔬 <strong>This course's example lives here</strong> — open LHCb collision data, the same files physicists publish, from raw events to a measured mass.
+🔬 <strong>The lectures' example comes from here</strong>: open LHCb collision data, published by the collaboration itself.
 
 </div>
 
@@ -734,7 +734,7 @@ A number changes a decision only once the person deciding understands what it sa
 
 </div>
 
-<div class="note-text mt-md">🔍 Which example resonates with you — and where could similar data, similar decisions, and similar obstacles exist in your own context?</div>
+<div class="note-text mt-md">🔍 Which of these examples is closest to your own field?</div>
 
 ---
 layout: section
@@ -753,7 +753,7 @@ repeat it on a dataset of their own choice. (~1 min)
 hideInToc: true
 ---
 
-# Where Data Lives — **Open-Data Portals**
+# Open-Data **Portals**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -1003,25 +1003,26 @@ layout: section
 hideInToc: true
 ---
 
-# Four **Eyes** on the Ring
+# The LHC **Experiments**
 
-A case study for everything so far. The LHC is one machine, and four giant detectors watch its collisions, each built to ask a different question of the same beams.
+The case study. One accelerator, four detectors: ATLAS, CMS, ALICE, LHCb.
 
 <!--
-Speaker: the CERN case study starts here; everything before it was general. Quick
-tour of the four experiments: one accelerator, four different questions. LHCb gets
-the longest stop because today's example file comes from it. (~1 min)
+Speaker: the CERN case study starts here; everything before it was general. Each
+experiment gets one slide and a silent 3D fly-in from the ring to its detector —
+talk over the clips. LHCb gets the longest stop because today's example file
+comes from it. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Generalists: <span class="gradient-text">ATLAS</span> & <span class="gradient-text">CMS</span>
+# <span class="gradient-text">ATLAS</span> & <span class="gradient-text">CMS</span>
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔭 Two **general-purpose** detectors ask the broadest question — *what is matter made of, and what holds it together?* — with deliberately **different designs**, so neither can fool the other.
+🔭 Two **general-purpose** detectors. Same physics programme: the Higgs boson, searches for new particles. **Different designs**.
 
 </div>
 
@@ -1032,7 +1033,7 @@ hideInToc: true
 ## 🏟️ **ATLAS**
 
 - The **largest** collider detector ever built
-- **46 m** long, **25 m** tall — half a cathedral, 100 m underground
+- **46 m** long, **25 m** in diameter, 100 m underground
 - ~**7,000 tonnes**, ~100 million readout channels
 
 </div>
@@ -1041,9 +1042,9 @@ hideInToc: true
 
 ## 🧲 **CMS**
 
-- Built around one colossal superconducting **solenoid** magnet
-- **14,000 tonnes** — heavier than the Eiffel Tower
-- Same physics goals as ATLAS, opposite design philosophy
+- One superconducting **solenoid** magnet, **3.8 T**
+- **21 m** long, **15 m** in diameter
+- **14,000 tonnes**: half the size of ATLAS, twice the weight
 
 </div>
 
@@ -1059,15 +1060,31 @@ hideInToc: true
 hideInToc: true
 ---
 
-<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+<VideoPlayer src="cern_footage_2022_042_003.mp4" />
 
-<!-- ATLAS — model, cavern, control room (0:49). Pass 2 adds cms.mp4 after it. -->
+<!-- ATLAS — 3D fly-in from the LHC ring to the detector (0:38, silent). -->
 
 ---
 hideInToc: true
 ---
 
-# <span class="gradient-text">ALICE</span> — Rewinding the Big Bang
+<VideoPlayer src="cern_footage_2022_042_002.mp4" />
+
+<!-- CMS — 3D fly-in from the LHC ring to the detector (0:39, silent). -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="ATLAS-VIDEO-2021-001-001-1080p.mp4" />
+
+<!-- ATLAS on film — model, cavern, control room (0:49). -->
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">ALICE</span> — Quark–Gluon Plasma
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1075,7 +1092,7 @@ hideInToc: true
 
 ## 💥 **The Question**
 
-What was matter like in the first **millionths of a second** after the Big Bang — before protons and neutrons even existed?
+What was matter like in the first **millionths of a second** after the Big Bang, before protons and neutrons existed?
 
 </div>
 
@@ -1083,7 +1100,7 @@ What was matter like in the first **millionths of a second** after the Big Bang 
 
 ## 🌡️ **The Method**
 
-Collide **lead nuclei** instead of protons → a fleeting droplet of **quark–gluon plasma**, over **100,000×** hotter than the core of the Sun
+Collide **lead nuclei** instead of protons. For an instant the collision forms **quark–gluon plasma**, over **100,000×** hotter than the core of the Sun.
 
 </div>
 
@@ -1091,7 +1108,7 @@ Collide **lead nuclei** instead of protons → a fleeting droplet of **quark–g
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-📈 A single lead–lead collision can spray out **tens of thousands** of particle tracks — untangling them is a **data problem** before it is a physics problem.
+📈 One lead–lead collision can produce **tens of thousands** of particle tracks. Software has to reconstruct every one of them before any physics is done.
 
 </div>
 
@@ -1101,19 +1118,27 @@ hideInToc: true
 
 <VideoPlayer src="QGP_Formation.mp4" />
 
-<!-- Quark–gluon plasma forming (0:33) — ALICE's physics, and the only place ALICE appears on film. -->
+<!-- Quark–gluon plasma forming (0:33) — ALICE's physics. -->
 
 ---
 hideInToc: true
 ---
 
-# <span class="gradient-text">LHCb</span> — Where Did the Antimatter Go?
+<VideoPlayer src="cern_footage_2022_042_004.mp4" />
+
+<!-- ALICE — 3D fly-in from the LHC ring to the detector (1:10, silent). -->
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">LHCb</span> — Matter and Antimatter
 
 <div class="card card-primary card-glass pad-tight mt-sm">
 
 ## ⚖️ **The Question**
 
-The Big Bang should have created matter and antimatter in **equal amounts** — yet everything you see is matter. LHCb hunts the tiny **asymmetries** (*CP violation*) that let matter win.
+The Big Bang should have produced matter and antimatter in **equal amounts**, yet the universe is made of matter. LHCb measures the small **asymmetries** between the two (*CP violation*).
 
 </div>
 
@@ -1123,7 +1148,7 @@ The Big Bang should have created matter and antimatter in **equal amounts** — 
 
 ## 🔬 **The Method**
 
-Precision-measure decays of **beauty** and **charm** quarks in a forward detector whose sensors sit **millimetres** from the beam
+Precision measurements of **beauty** and **charm** quark decays, in a forward detector whose sensors sit **millimetres** from the beam
 
 </div>
 
@@ -1131,7 +1156,7 @@ Precision-measure decays of **beauty** and **charm** quarks in a forward detecto
 
 ## 🏆 **A 2019 First**
 
-LHCb discovered **CP violation in charm** — in decays of the **D⁰ meson**. Remember that name.
+LHCb observed **CP violation in charm**, in decays of the **D⁰ meson**: the particle in today's example file.
 
 </div>
 
@@ -1139,9 +1164,17 @@ LHCb discovered **CP violation in charm** — in decays of the **D⁰ meson**. R
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🧭 The asymmetries found so far are **far too small** to explain the surviving universe — one of the great open problems in physics.
+🧭 The asymmetries measured so far are **far too small** to account for the matter in the universe. The question is open.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_footage_2022_042_001.mp4" />
+
+<!-- LHCb — 3D fly-in from the LHC ring to the detector (0:56, silent). -->
 
 ---
 hideInToc: true
@@ -1149,30 +1182,30 @@ hideInToc: true
 
 <VideoPlayer src="LHCb.mp4" />
 
-<!-- LHCb reel (0:47) — where the example file comes from. Pass 2: the cern_footage_2022_042_001.mp4 fly-in before it. -->
+<!-- LHCb reel (0:47) — where the example file comes from. -->
 
 ---
 hideInToc: true
 ---
 
-# Meet the <span class="gradient-text">D⁰</span> — a Particle in Open Data
+# The <span class="gradient-text">D⁰</span> Meson
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## ⚛️ **The D⁰ meson**
+## ⚛️ **The particle**
 
 - A **charm quark** bound to an up antiquark
-- Lives **~0.4 trillionths of a second**, then decays — e.g. **D⁰ → K⁻π⁺**
-- Compute the **invariant mass** of each K⁻π⁺ pair, and a peak rises near **1865 MeV**
-- That peak is the particle's **fingerprint** in the data
+- Lives **~0.4 trillionths of a second**, then decays, e.g. **D⁰ → K⁻π⁺**
+- The **invariant mass** of the K⁻π⁺ pairs shows a peak near **1865 MeV**
+- The position of the peak is the D⁰ mass
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📈 **Its fingerprint**
+## 📈 **The mass peak**
 
 <img src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0.4rem auto 0.2rem;max-height:165px;background:#fff;border-radius:8px;">
 
@@ -1182,15 +1215,15 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-🔬 **Where you'll meet it:** real **LHCb open data** is the lectures' worked example — today we read its record and its file, and Lecture 12 (Practical Data Fitting) fits this peak. In the seminars you do the same steps on **a dataset of your own**.
+🔬 **In this course:** real **LHCb open data** is the lectures' worked example. Today we read its record and its file; Lecture 12 (Practical Data Fitting) fits this peak. In the seminars you do the same steps on **a dataset of your own**.
 
 </div>
 
 <!--
-Speaker: the seed slide — this peak returns as the lectures' example in the
-visualisation and fitting lectures. Students do NOT measure the D0 mass in the
-seminars; they work on their own data. They should leave knowing one particle by
-name: the D0, about 1865 MeV, a bump in the K-pi invariant-mass spectrum. (~2 min)
+Speaker: this peak returns as the lectures' example in the visualisation and
+fitting lectures. Students do NOT measure the D0 mass in the seminars; they work
+on their own data. They should leave knowing one particle by name: the D0, about
+1865 MeV, a peak in the K-pi invariant-mass spectrum. (~2 min)
 -->
 
 ---
@@ -1198,12 +1231,12 @@ layout: section
 hideInToc: true
 ---
 
-# Why **Data**?
+# Data at the **LHC**
 
 <!--
-Speaker: pivot from hardware to the real subject of the course. The LHC is only
-interesting because of what pours out of it — 1 PB/s, of which almost nothing is
-signal. This is where the course's toolkit earns its keep. (~1 min)
+Speaker: from the detectors to what they produce: 1 PB/s of raw output, of which
+almost nothing is signal. The rest of the section is how that becomes a dataset
+someone can analyse. (~1 min)
 -->
 
 ---
@@ -1216,7 +1249,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight reveal-scale">
 
-## 📊 **The Data Challenge**
+## 📊 **The Scale**
 
 - The LHC produces **~1 PB per second** of raw detector output
 - Only **~1 in a billion** collisions contains interesting physics
@@ -1227,7 +1260,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight reveal-scale">
 
-## 🔍 **Needle in a Haystack**
+## 🔍 **Signal vs Background**
 
 - Collision events produce **detector readings** (energy, momentum, position)
 - Signal events look almost identical to background noise
@@ -1244,7 +1277,7 @@ hideInToc: true
 
 <div class="mt-sm" style="font-size: 0.85em; opacity: 0.85;">
 
-Don't worry about the details yet — every stage here is a skill you'll build over this course, from handling files to statistical inference.
+Each stage is a skill from this course, from handling files to statistical inference.
 
 </div>
 
@@ -1256,7 +1289,7 @@ hideInToc: true
 
 <div class="note-text">
 
-*Check your reading of the previous slides — this one trips up professionals too.*
+*A check on the previous slide. Professionals get this one wrong too.*
 
 </div>
 
@@ -1284,7 +1317,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🚦 Storing 1 PB **every second** is impossible — the experiments decide **in real time** which collisions are worth keeping. This selection is the **trigger**, and its real job is **throwing almost everything away**, correctly, in microseconds.
+🚦 Nothing can store 1 PB **every second**, so the experiments decide **in real time** which collisions to keep. This selection is the **trigger**. It discards almost everything, within microseconds.
 
 </div>
 
@@ -1310,7 +1343,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact reveal-left">
 
-💾 Only these survivors become the **datasets** physicists analyse — fewer than **one collision in a hundred thousand** is ever stored
+💾 Only these events become the **datasets** physicists analyse: fewer than **one collision in a hundred thousand** is stored
 
 </div>
 
@@ -1318,9 +1351,17 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
-⚠️ A trigger decision is **final** — discarded collisions are gone forever. Deciding what to keep is itself a data-analysis problem.
+⚠️ A trigger decision is **final**: a discarded collision cannot be recovered. Deciding what to keep is itself data analysis.
 
 </div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_video_2015_024_001.mp4" />
+
+<!-- The whole data flow in one clip (2:51, music): accelerator chain, detectors, trigger levels, data centre, the grid. -->
 
 ---
 hideInToc: true
@@ -1330,7 +1371,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧮 Put real units on the cascade you just saw — from a single **event** to a **year** of recorded data.
+🧮 The same chain in numbers, from one **event** to one **year** of data.
 
 </div>
 
@@ -1376,7 +1417,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎯 **So why not just build bigger disks and keep it all?** Because disks alone wouldn't help — nothing can *write* 1 PB every second, and the keep/discard decision has to be made in **microseconds**.
+🎯 **Why not store everything?** Nothing can *write* 1 PB every second, and the detector cannot wait: the keep/discard decision has to be made in **microseconds**.
 
 </div>
 
@@ -1419,7 +1460,7 @@ hideInToc: true
     'Only high-luminosity runs need a trigger — earlier runs recorded everything'
   ]"
   :correct="1"
-  explanation="No storage system can sustain ~1 PB/s of writes. The trigger compresses that raw electronics firehose down to the few thousand events/s (~10 GB/s) that computing can actually absorb — before anyone judges what's interesting."
+  explanation="No storage system can sustain ~1 PB/s of writes. The trigger reduces the raw output to the few thousand events/s (~10 GB/s) that computing can absorb, before anyone judges what is interesting."
 />
 
 ---
@@ -1430,7 +1471,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-👥 CERN employs far more than physicists: of its few thousand **staff**, most are engineers and technicians, while the 17,000 scientists it hosts are mostly visiting **users** from institutes worldwide. A glimpse of who turns 40 million bunch crossings a second into discoveries:
+👥 Of CERN's few thousand **staff**, most are engineers and technicians. The 17,000 scientists it hosts are mostly visiting **users** from institutes worldwide.
 
 </div>
 
@@ -1448,7 +1489,7 @@ Design analyses and separate signal from background. Day to day that is statisti
 
 ## 🛠️ **Engineers**
 
-Build and maintain accelerators, magnets, cryogenics, and detectors under extreme conditions.
+Build and maintain the accelerators, magnets, cryogenics and detectors.
 
 </div>
 
@@ -1466,23 +1507,23 @@ Keep 170+ grid sites, trigger farms, and petabyte storage running around the clo
 hideInToc: true
 ---
 
-# A Day in the <span class="gradient-text">Data</span>
+# Working with the <span class="gradient-text">Data</span>
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-accent card-glass pad-tight">
 
-## 🔎 **One Analyst's Morning**
+## 🔎 **The Analyst**
 
-Pull last night's triggered events, check the D⁰ peak hasn't drifted, flag anything strange for the shift crew, push a fix to the shared analysis code — before lunch, on a laptop, anywhere in the world.
+Takes last night's events, checks that the D⁰ peak has not moved, reports anything odd to the shift crew, pushes a fix to the shared analysis code. All on a laptop, anywhere in the world.
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🌙 **One Shift Crew's Night**
+## 🌙 **The Shift Crew**
 
-In the control room the same peak sits on a live monitoring plot: if a sub-detector or the trigger farm misbehaves, the histogram shows it before any alarm does — and the night's data is flagged good or bad for everyone downstream.
+Watches the same peak on a live monitoring plot in the control room. If a sub-detector or the trigger farm fails, the histogram shows it, and the night's data is marked good or bad for everyone who uses it later.
 
 </div>
 
@@ -1490,7 +1531,7 @@ In the control room the same peak sits on a live monitoring plot: if a sub-detec
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🌍 Neither job requires standing next to the detector — both require exactly the skills this course builds: files, code, version control, statistics.
+🌍 Neither job is done next to the detector. Both need the skills of this course: files, code, version control, statistics.
 
 </div>
 
@@ -1499,13 +1540,13 @@ layout: section
 hideInToc: true
 ---
 
-# Beyond the **Ring**
+# Beyond **Physics**
 
-Coping with its own data forced CERN to invent things the rest of the world now runs on — the Web, a planet-sized grid, open data and open publishing.
+Built at CERN to handle its own data, now used everywhere: the Web, the computing grid, open data, open publishing.
 
 <!--
-Speaker: section break. The pivot: everything so far was about the machine; this
-section is about what the machine forced CERN to build for everyone else. Ask which
+Speaker: section break. Everything so far was about the experiments; this section
+is about what CERN had to build to run them and that others now use. Ask which
 CERN invention they used today — the answer is the Web, every one of them. (~1 min)
 -->
 
@@ -1521,7 +1562,7 @@ hideInToc: true
 
 ## 🌐 **The World Wide Web**
 
-Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists — now used by **5+ billion** people worldwide
+Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists. Now used by **5+ billion** people.
 
 </div>
 
@@ -1529,7 +1570,7 @@ Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scient
 
 ## 🖥️ **Computing Grid (WLCG)**
 
-The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** — storing **hundreds of petabytes** of new data every year
+The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** and stores **hundreds of petabytes** of new data every year
 
 </div>
 
@@ -1537,7 +1578,7 @@ The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countrie
 
 ## 🏥 **Medical Applications**
 
-Particle accelerator technology enables **hadron therapy** for cancer treatment — more precise than conventional radiotherapy
+Accelerator technology is used in **hadron therapy** for cancer, which is more precise than conventional radiotherapy
 
 </div>
 
@@ -1545,7 +1586,7 @@ Particle accelerator technology enables **hadron therapy** for cancer treatment 
 
 ## 📂 **Open Science**
 
-CERN **Open Data Portal** makes real collision data publicly available — enabling education and independent research worldwide
+The CERN **Open Data Portal** publishes real collision data for teaching and independent research
 
 </div>
 
@@ -1553,7 +1594,7 @@ CERN **Open Data Portal** makes real collision data publicly available — enabl
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 
-📖 **Publishing, openly too:** CERN co-founded **SCOAP3**, making almost all particle-physics journal articles free to read worldwide — and preprints on **arXiv** circulate long before any journal sees them.
+📖 **Open publishing:** CERN co-founded **SCOAP3**, which makes almost all particle-physics journal articles free to read. Preprints appear on **arXiv** before any journal sees them.
 
 </div>
 
@@ -1561,11 +1602,11 @@ CERN **Open Data Portal** makes real collision data publicly available — enabl
 hideInToc: true
 ---
 
-# A Planet-Sized <span class="gradient-text">Computer</span>
+# The LHC Computing <span class="gradient-text">Grid</span>
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🌍 No single data centre can process the LHC's output — the work is spread across a **tiered global grid** *(as of 2026: 170+ sites, 42 countries, ~1.4 million CPU cores)*.
+🌍 No single data centre can process the LHC's output. The work is spread over a **tiered global grid** *(as of 2026: 170+ sites, 42 countries, ~1.4 million CPU cores)*.
 
 </div>
 
@@ -1593,7 +1634,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md reveal-up">
 
-💡 A physicist launching an analysis rarely knows — or cares — **which country** their jobs run in. You'll meet the same idea at your own scale: compute where convenient, keep data organised and portable. The grid itself — jobs, storage trade-offs, ~170 sites — is **Lecture 15 (Computing Infrastructure & HPC)** in full; today was just its shape.
+💡 A physicist who starts an analysis usually does not know **in which country** the jobs run. The same idea at your scale: compute where convenient, keep the data organised and portable. **Lecture 15 (Computing Infrastructure & HPC)** covers the grid in full.
 
 🔭 What comes next: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring, more than three times the LHC's 27 km.
 
@@ -1659,7 +1700,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💾 The file is just text. Lecture 3 opens the bytes and Seminar 3 counts them — today we read the **meaning**.
+💾 The file is plain text. Lecture 3 looks at its bytes and Seminar 3 counts them. Today we read what it **means**.
 
 </div>
 
