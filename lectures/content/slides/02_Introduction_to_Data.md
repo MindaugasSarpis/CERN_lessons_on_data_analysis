@@ -959,24 +959,44 @@ hideInToc: true
 hideInToc: true
 ---
 
-# From Record to **Your Repo**
+# From Record to **Your Project Folder**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
 
 ## 🧭 **Six steps**
 
-1. **Find** your dataset's record on its portal (or the source, if there is no portal)
-2. **Read** the record — title, DOI, licence, description
-3. **Download** into `data/raw/` of your project folder, without renaming
-4. **Write** the provenance note into the README
-5. **Checksum** the file — a fingerprint of its bytes
-6. **Commit the note** — and the data only if it is small *and* the licence allows it
+1. **Find** the dataset's record on its portal
+2. **Read** the record — DOI, licence, description
+3. **Download** the file into `data/raw/`, without renaming
+4. **Look** at it in a text editor — never edit or re-save it
+5. **Write** the provenance note into `README.md`
+6. **Test** — a neighbour finds it from your README alone
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📁 **An ordinary folder on your laptop**
+
+```text
+analysis-project/
+├─ README.md        # where the data came from
+├─ data/
+│  ├─ raw/          # files exactly as downloaded
+│  └─ processed/    # cleaned copies
+├─ scripts/         # code
+└─ results/         # plots and tables
+```
+
+</div>
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-📁 Large or restricted data stays out of git; the README says exactly how to fetch it again. That is the difference between "I have the data" and "the analysis is reproducible".
+♻️ File too large, or not yours to share? Pass on the README: it says exactly how to fetch the data again. That is the difference between "I have the data" and "the analysis is reproducible".
 
 </div>
 

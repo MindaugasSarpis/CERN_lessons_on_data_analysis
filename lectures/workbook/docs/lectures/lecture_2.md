@@ -14,7 +14,7 @@ one comes from, and how you write down where it came from.
    as CSV, spreadsheet and binary file; data at work in other fields.
 3. **Open data & provenance** — portals, the anatomy of a record, licences
    (CC0 / CC BY / share-alike), the minimal provenance note, data you bring
-   yourself, from record to your repo.
+   yourself, from record to your project folder.
 4. **Case study: CERN** — the four LHC experiments; the D⁰ meson and its K⁻π⁺
    invariant-mass peak near 1865 MeV; the 5-sigma standard; from collision to
    dataset and why the trigger works in real time; the Web, the computing grid
