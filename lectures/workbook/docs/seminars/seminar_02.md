@@ -108,7 +108,8 @@ choose your own dataset in part F.
     - What is written in line 1?
     - Which character separates the values in a line?
     - How many lines does the file have? Press `Ctrl+End` / `Cmd+↓` to jump to
-      the end and read the line number.
+      the end. The very last line is empty; read the number of the last line
+      that has numbers in it.
 18. Press `Ctrl+G`, type `5000`, press Enter. You are at line 5000.
 19. Now open the same file in Excel (or LibreOffice, or Numbers) **without
     saving anything**. Compare with VS Code:
