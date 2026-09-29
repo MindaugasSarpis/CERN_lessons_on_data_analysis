@@ -1491,46 +1491,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Careers at <span class="gradient-text">CERN</span>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-👥 Of CERN's few thousand **staff**, most are engineers and technicians. The 17,000 scientists it hosts are mostly visiting **users** from institutes worldwide.
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧑‍🔬 **Physicists**
-
-Design analyses and separate signal from background. Day to day that is statistics and code, mostly Python and C++.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🛠️ **Engineers**
-
-Build and maintain the accelerators, magnets, cryogenics and detectors.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💻 **Computing Specialists**
-
-Keep 170+ grid sites, trigger farms, and petabyte storage running around the clock.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
 # Working with the <span class="gradient-text">Data</span>
 
 <div class="grid-2 mt-md gap-md">

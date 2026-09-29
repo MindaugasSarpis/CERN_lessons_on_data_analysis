@@ -29,7 +29,7 @@ whole.
 | ALICE, quark–gluon plasma clip | 35–36 | 4 min |
 | Quiz: what does 5 sigma mean? | 44 | 4 min |
 | Quiz: why not record it all? | 49 | 3 min |
-| Careers at CERN, Working with the Data | 50–51 | 4 min |
+| Working with the Data | 50 | 2 min |
 | Beyond Physics (whole section, with its quiz) | 52–55 | 9 min |
 
 That leaves about 90 minutes, including the 5-minute thought exercise on
