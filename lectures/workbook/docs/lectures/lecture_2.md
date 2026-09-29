@@ -9,9 +9,10 @@ one comes from, and how you write down where it came from.
 1. **Data in your life** — a day's worth of datasets; what data even is; its
    lifecycle from collecting to sharing.
 2. **Kinds of data** — structured vs unstructured; the four flavours (numbers,
-   text, images, events); kinds of variables (continuous, discrete, nominal,
-   ordinal); measurement vs metadata; the anatomy of a table; the same table
-   as CSV, spreadsheet and binary file; data at work in other fields.
+   text, images, events) and their parametrisation — how each one is written
+   as numbers; kinds of variables (continuous, discrete, nominal, ordinal);
+   measurement vs metadata; the anatomy of a table; the same table as CSV,
+   spreadsheet and binary file; data at work in other fields.
 3. **Open data & provenance** — portals, the anatomy of a record, licences
    (CC0 / CC BY / share-alike), the minimal provenance note, data you bring
    yourself, from record to your repo.
@@ -33,6 +34,10 @@ and Git ([Seminar 1](../seminars/seminar_01.md)).
 
 ## Take-aways
 
+- Parametrisation: every flavour of data is written as a set of numbers before
+  it is analysed — a character as a code, a pixel as three values 0–255, an
+  event as a time plus what was measured. Written as a number is not the same
+  as behaving like one: a postcode has no average.
 - Cite the **record**, not the file: DOI or stable URL, version or fetch date,
   checksum.
 - Read the record before the data: what is one row, how was it selected, what
