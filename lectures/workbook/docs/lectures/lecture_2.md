@@ -25,7 +25,7 @@ one comes from, and how you write down where it came from.
 
 ## The lecture in 90 minutes
 
-The deck has 59 slides and is sized for a 2-hour slot, about 123 min as
+The deck has 59 slides and is sized for a 2-hour slot, about 122 min as
 written. For a 90-minute slot, skip the slides in the second table. To jump,
 type the slide number and press Enter.
 

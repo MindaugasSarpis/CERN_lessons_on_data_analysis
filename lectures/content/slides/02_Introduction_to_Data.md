@@ -229,14 +229,25 @@ hideInToc: true
 
 # Data Has a **Lifecycle**
 
-```mermaid {scale: 0.72}
-graph LR
-    C[📥 Collect] --> S[💾 Store]
-    S --> K[🧹 Clean]
-    K --> A[📊 Analyse]
-    A --> D[✅ Decide]
-    D --> H[🌐 Share / archive]
-```
+<div class="grid-2 mt-sm gap-md">
+
+<div>
+
+<a href="https://datamanagement.hms.harvard.edu/" target="_blank"><img src="/figures/RDM_Lifecycle.png" style="display:block;margin:0 auto;width:350px;height:350px;"></a>
+
+<div class="note-text" style="text-align:center;">Figure: Harvard Medical School</div>
+
+</div>
+
+<div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔁 **Six stages**
+
+📥 Collect → 💾 Store → 🧹 Clean → 📊 Analyse → ✅ Decide → 🌐 Share / archive
+
+</div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
@@ -244,7 +255,11 @@ The loop from two slides ago, drawn out. Every project — yours, a bank's, a ph
 
 </div>
 
-<div class="note-text mt-sm">Most problems in practice come from skipping a stage: analysing before cleaning, or deciding before storing where the data came from.</div>
+<div class="note-text mt-md">Most problems in practice come from skipping a stage: analysing before cleaning, or deciding before storing where the data came from.</div>
+
+</div>
+
+</div>
 
 ---
 hideInToc: true
