@@ -37,6 +37,11 @@ extra_javascript:
 extra_css:
   - stylesheets/course.css
 
+# Numbered steps keep the number they start with (a list that begins "4."
+# renders as 4), so "step 17" in a brief is the step shown as 17.
+hooks:
+  - hooks/keep_list_start.py
+
 
 nav:
   - Home: index.md
