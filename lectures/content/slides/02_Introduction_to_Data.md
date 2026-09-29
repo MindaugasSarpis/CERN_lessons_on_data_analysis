@@ -1064,10 +1064,10 @@ hideInToc: true
 The case study. One accelerator, four detectors: ATLAS, CMS, ALICE, LHCb.
 
 <!--
-Speaker: the CERN case study starts here; everything before it was general. Each
-experiment gets one slide and a silent 3D fly-in from the ring to its detector —
-talk over the clips. LHCb gets the longest stop because today's example file
-comes from it. (~1 min)
+Speaker: the CERN case study starts here; everything before it was general.
+ATLAS and CMS share one slide; ALICE and LHCb get one each. ATLAS, CMS and ALICE
+have a silent 3D fly-in from the ring to the detector — talk over the clips.
+LHCb has a 0:47 clip instead; today's example file comes from LHCb. (~1 min)
 -->
 
 ---
@@ -1196,7 +1196,7 @@ The Big Bang should have produced matter and antimatter in **equal amounts**, ye
 
 ## 🔬 **The Method**
 
-Precision measurements of **beauty** and **charm** quark decays, in a forward detector whose sensors sit **millimetres** from the beam
+Precision measurements of **beauty** and **charm** quark decays, in a forward detector with sensors **millimetres** from the beam.
 
 </div>
 
@@ -1251,7 +1251,7 @@ hideInToc: true
 
 - The LHC produces **~1 PB per second** of raw detector output
 - Only **~1 in a billion** collisions contains interesting physics
-- Must filter, reconstruct, and analyse in near real-time
+- Must filter, reconstruct, and analyse in near real time
 - Finding the Higgs required sifting through **trillions** of events
 
 </div>
@@ -1273,7 +1273,7 @@ hideInToc: true
 
 💾 **Data Pipeline:** Raw detector signals &#8594; Trigger selection (real-time filtering) &#8594; Event reconstruction &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
 
-<div class="mt-sm" style="font-size: 0.85em; opacity: 0.85;">
+<div class="mt-sm">
 
 Each stage is a skill from this course, from handling files to statistical inference.
 
@@ -1329,7 +1329,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact reveal-left">
 
-⚡ **Level-1 trigger** — custom electronics decide in **microseconds** → ~**100,000** events/s survive
+⚡ **Level-1 Trigger** — custom electronics decide in **microseconds** → ~**100,000** events/s survive
 
 </div>
 
