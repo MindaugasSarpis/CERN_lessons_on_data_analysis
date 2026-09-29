@@ -13,7 +13,7 @@ Shortcuts are written **Windows / Linux** first, then **macOS**.
 
 ## A. The lecture in 90 minutes
 
-The deck is sized for a 2-hour slot (about 129 min as written, 62 slides). It
+The deck is sized for a 2-hour slot (about 123 min as written, 59 slides). It
 runs in this order: data in everyday life, kinds of data, open data and
 provenance, then CERN as the case study, then the example file up close.
 
@@ -27,13 +27,13 @@ whole.
 | What Each Flavour Is Used For | 18 | 2 min |
 | Data at Work (two slides) + Common Threads | 20–22 | 7 min |
 | ALICE, quark–gluon plasma clip | 35–36 | 4 min |
-| Quiz: what does 5 sigma mean? | 44 | 4 min |
-| Quiz: why not record it all? | 49 | 3 min |
-| Working with the Data | 50 | 2 min |
-| Beyond Physics (whole section, with its quiz) | 52–55 | 9 min |
+| Quiz: what does 5 sigma mean? | 42 | 4 min |
+| Quiz: why not record it all? | 47 | 3 min |
+| Working with the Data | 48 | 2 min |
+| Beyond Physics (whole section, with its quiz) | 49–52 | 9 min |
 
 That leaves about 90 minutes, including the 5-minute thought exercise on
-slide 19. If you run late, skip From Events to Petabytes (slide 47) next: the
+slide 19. If you run late, skip From Events to Petabytes (slide 45) next: the
 data-flow clip before it shows the same chain.
 
 Three detector fly-ins stay in: ATLAS (33), CMS (34), ALICE (37), two and a
@@ -41,20 +41,20 @@ half minutes together. They are silent, so talk over them. The ALICE slide is
 skipped; say what ALICE studies while its fly-in plays. The LHCb clip (39,
 0:47) stays in too: it is the detector the example file comes from.
 
-The data-flow clip (46, 2:51, music) stays in as well: accelerator chain,
+The data-flow clip (44, 2:51, music) stays in as well: accelerator chain,
 detectors, trigger, data centre, grid. It stands in for the skipped Beyond
 Physics section, which is where the grid is otherwise introduced.
 
 **Do not cut** slides 11–17 (kinds of data, tables, files), 23–30 (open data and
-provenance) or 56–61 (the example file). The seminar uses every one of them.
+provenance) or 53–58 (the example file). The seminar uses every one of them.
 
 | Clock | Slides | Part |
 |--|--|--|
 | 0:00 | 1–9 | Data in your life, what data is, the lifecycle |
 | 0:16 | 11–19 | Kinds of data, variables, tables, files, thought exercise |
 | 0:33 | 23–30 | Open data and provenance |
-| 0:50 | 31–48 | CERN case study: the four detectors, the data flow, the trigger |
-| 1:12 | 56–62 | The example file up close, recap |
+| 0:50 | 31–46 | CERN case study: the four detectors, the data flow, the trigger |
+| 1:12 | 53–59 | The example file up close, recap |
 | 1:30 | | Move to the seminar |
 
 Ask students to keep their thought-exercise answer (slide 19): it is their

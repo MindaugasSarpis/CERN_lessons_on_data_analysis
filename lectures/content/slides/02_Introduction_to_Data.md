@@ -373,8 +373,8 @@ Speaker: parametrisation = choosing the set of numbers that describes a thing. A
 computer stores and computes only numbers, so every flavour is written as numbers
 before it is analysed. Walk the four cards and ask how each one becomes numbers.
 More examples to say aloud: one second of CD sound is 44 100 samples; a particle
-track in LHCb is five numbers. Character codes come back in Lecture 3. Bridge to
-the next slide: a postcode is written in digits and still has no average. (~3 min)
+track in LHCb is five numbers. Bridge to the next slide: a postcode is written
+in digits and still has no average. (~3 min)
 -->
 
 ---
