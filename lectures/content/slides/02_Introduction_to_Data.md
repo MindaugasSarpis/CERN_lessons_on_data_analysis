@@ -1210,47 +1210,6 @@ hideInToc: true
 <!-- LHCb reel (0:47) — where the example file comes from. -->
 
 ---
-hideInToc: true
----
-
-# The <span class="gradient-text">D⁰</span> Meson
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⚛️ **The particle**
-
-- A **charm quark** bound to an up antiquark
-- Lives **~0.4 trillionths of a second**, then decays, e.g. **D⁰ → K⁻π⁺**
-- The **invariant mass** of the K⁻π⁺ pairs shows a peak near **1865 MeV**
-- The position of the peak is the D⁰ mass
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📈 **The mass peak**
-
-<img src="/figures/lhcb_d0_spectrum.png" style="display:block;margin:0.4rem auto 0.2rem;max-height:165px;background:#fff;border-radius:8px;">
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-🔬 Real **LHCb open data** is the lectures' worked example. Today we read its record and its file. Your own project uses **a dataset of your choice**.
-
-</div>
-
-<!--
-Speaker: do not announce a D0 mass measurement; students work on their own data.
-They should leave knowing one particle by name: the D0, about 1865 MeV, a peak in
-the K-pi invariant-mass spectrum. (~2 min)
--->
-
----
 layout: section
 hideInToc: true
 ---
@@ -1842,7 +1801,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Trace a **collision** from detector to stored dataset — and recognise the **D⁰ peak** near 1865 MeV
+✅ Trace a **collision** from detector to stored dataset
 
 </div>
 

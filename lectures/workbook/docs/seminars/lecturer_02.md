@@ -53,8 +53,8 @@ provenance) or 56–61 (the example file). The seminar uses every one of them.
 | 0:00 | 1–9 | Data in your life, what data is, the lifecycle |
 | 0:16 | 11–19 | Kinds of data, variables, tables, files, thought exercise |
 | 0:33 | 23–30 | Open data and provenance |
-| 0:50 | 31–48 | CERN case study: the four detectors, the D⁰, the data flow, the trigger |
-| 1:14 | 56–62 | The example file up close, recap |
+| 0:50 | 31–48 | CERN case study: the four detectors, the data flow, the trigger |
+| 1:12 | 56–62 | The example file up close, recap |
 | 1:30 | | Move to the seminar |
 
 Ask students to keep their thought-exercise answer (slide 19): it is their

@@ -16,10 +16,9 @@ one comes from, and how you write down where it came from.
 3. **Open data & provenance** — portals, the anatomy of a record, licences
    (CC0 / CC BY / share-alike), the minimal provenance note, data you bring
    yourself, from record to your project folder.
-4. **Case study: CERN** — the four LHC experiments; the D⁰ meson and its K⁻π⁺
-   invariant-mass peak near 1865 MeV; the 5-sigma standard; from collision to
-   dataset and why the trigger works in real time; the Web, the computing grid
-   and open data.
+4. **Case study: CERN** — the four LHC experiments; the 5-sigma standard; from
+   collision to dataset and why the trigger works in real time; the Web, the
+   computing grid and open data.
 5. **A dataset up close** — the LHCb example as a file: rows are candidates,
    four computed columns, units are metadata, five questions to ask any file
    before writing code.
