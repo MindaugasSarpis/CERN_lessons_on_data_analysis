@@ -324,6 +324,8 @@ hideInToc: true
 
 Measurements you can add, average, and plot. The core of statistics and fitting.
 
+**As numbers:** already there — 21.4 °C, 1864.8 MeV.
+
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
@@ -332,13 +334,17 @@ Measurements you can add, average, and plot. The core of statistics and fitting.
 
 Labels, categories, free comments. Countable once you decide what to count.
 
+**As numbers:** one code per character (`A` = 65), or one count per category.
+
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
 ## 🖼️ **Images**
 
-Grids of pixels, each pixel a number. Most image analysis today is machine learning.
+Grids of pixels. Most image analysis today is machine learning.
+
+**As numbers:** a 12-megapixel photo = 12 million pixels × 3 colours, each value 0–255.
 
 </div>
 
@@ -348,11 +354,28 @@ Grids of pixels, each pixel a number. Most image analysis today is machine learn
 
 Timestamped things that happened — a click, a tap, a particle collision.
 
-</div>
+**As numbers:** a time, plus what was measured at that moment.
 
 </div>
 
-<div class="note-text mt-md">A particle-physics analysis is built from <strong>events</strong> (collisions) that we turn into <strong>numbers</strong> (a mass) — two flavours in one pipeline.</div>
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+## 🎛️ **Parametrisation**
+
+Describing a thing by a set of numbers. Everything in a dataset can be expressed as numbers: a colour is 3, a place on Earth is 2 (latitude, longitude), a collision ends as one mass, 1864.8 MeV. Written as a number is not the same as behaving like one — next slide.
+
+</div>
+
+<!--
+Speaker: parametrisation = choosing the set of numbers that describes a thing. A
+computer stores and computes only numbers, so every flavour is written as numbers
+before it is analysed. Walk the four cards and ask how each one becomes numbers.
+More examples to say aloud: one second of CD sound is 44 100 samples; a particle
+track in LHCb is five numbers. Character codes come back in Lecture 3. Bridge to
+the next slide: a postcode is written in digits and still has no average. (~3 min)
+-->
 
 ---
 hideInToc: true
