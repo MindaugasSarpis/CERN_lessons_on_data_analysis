@@ -15,12 +15,14 @@
  * cover); any deck-level key written there is dead once the file is imported
  * (Slidev takes config from the entry's headmatter alone).
  */
+import { existsSync } from 'node:fs';
 import { readFile, writeFile, readdir, unlink } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = join(ROOT, 'lectures', 'content');
+const SEMINARS = join(ROOT, 'lectures', 'workbook', 'docs', 'seminars');
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
 
@@ -94,6 +96,23 @@ for (const deck of manifest.decks) {
 // (global-top.vue fetches `<base>/lectures.json`). Copied into every
 // deck's build via public/, so each deck can link back home and to its siblings.
 // Generated + gitignored.
+//
+// `seminar` is the number of the deck's paired workbook page
+// (seminars/seminar_NN.md): `seminar` in decks.json when set (a number, or
+// null for a lecture without one), else the deck's own number. It is emitted
+// only when that page exists, so the menu can never link a 404; a page named
+// explicitly in decks.json that is missing fails the build.
+function seminarOf(deck, n) {
+  const explicit = 'seminar' in deck;
+  const no = explicit ? deck.seminar : n;
+  if (no == null) return null;
+  const page = `seminar_${String(no).padStart(2, '0')}.md`;
+  if (existsSync(join(SEMINARS, page))) return no;
+  if (explicit)
+    throw new Error(`decks.json: ${deck.slug} is paired with seminars/${page}, which does not exist`);
+  return null;
+}
+
 const lectureIndex = manifest.decks.map((d, i) => ({
   n: i + 1,
   slug: d.slug,
@@ -101,6 +120,7 @@ const lectureIndex = manifest.decks.map((d, i) => ({
   block: d.block,
   optional: !!d.optional,
   draft: !!d.draft,
+  seminar: seminarOf(d, i + 1),
 }));
 await writeFile(
   join(CONTENT, 'public', 'lectures.json'),

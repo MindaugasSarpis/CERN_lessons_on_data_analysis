@@ -3,10 +3,13 @@
 **Paired lecture:** 02 Introduction to Data · **Format:** follow-along, from zero · **~120 min**
 (90 min in class, 30 min at home)
 
-In this seminar the room installs Visual Studio Code, learns the parts of its
-window, and writes a first document in Markdown: the README of a project
-folder. Then a real data file goes into the folder, and the README records
-where the file came from.
+The seminar has three parts, in this order.
+
+1. **VS Code.** The room installs Visual Studio Code, learns the parts of its
+   window and builds a project folder.
+2. **Markdown.** The room writes a first document: the README of that folder.
+3. **Both, on a data file.** A real data file is opened in VS Code, and the
+   README records where the file came from.
 
 It is the first hands-on session of the course and it starts from zero.
 Today needs VS Code and a web browser. No Python, no Git, no terminal.
@@ -28,14 +31,20 @@ Keys are written for Windows and Linux, with macOS in brackets:
 
 | Clock | Section | The room ends with |
 |--|--|--|
+| | **Part 1 · VS Code** · 40 min | |
 | 0:00 | [1. Install VS Code](#install) | VS Code running |
 | 0:15 | [2. Open a folder](#open-folder) | The project folder open |
 | 0:20 | [3. Explore the user interface](#interface) | Five regions named, the Command Palette used |
 | 0:30 | [4. Create folders and a file](#folders) | The project skeleton and an empty README |
+| | **Part 2 · Markdown** · 15 min | |
 | 0:40 | [5. Write Markdown](#markdown) | A README with headings, a list, a table, a link |
+| | **Part 3 · Both, on a data file** · 30 min | |
 | 0:55 | [6. Look at a data file](#data-file) | The file in `data/raw/`, rows counted, seen in a spreadsheet |
 | 1:15 | [7. Record where the data came from](#provenance) | A **Data** section in the README |
 | 1:25 | [8. Wrap up](#wrap-up) | The homework known |
+
+If time runs short, stop after Part 2. Part 3 then moves to the start of the
+next session.
 
 ## Prerequisites
 
@@ -55,6 +64,13 @@ For you, before the session:
 At the start, ask who has written code before. Seat each of them next to
 someone who has not. The rule for the experienced one: explain, never take
 the keyboard.
+
+## Part 1 · VS Code { #part-1 }
+
+**0:00 to 0:40 · sections 1 to 4**
+
+The room ends this part with VS Code installed and a project folder open in
+it. Nothing is typed into a file yet.
 
 ## 1. Install VS Code { #install }
 
@@ -211,6 +227,13 @@ analysis-project/
     the Side Bar to move it out. To rename, select it and press `F2` (macOS
     `Enter`).
 
+## Part 2 · Markdown { #part-2 }
+
+**0:40 to 0:55 · section 5**
+
+The room ends this part with a README that has a title, two sections, a
+list, a table and a link, and with the preview open beside the text.
+
 ## 5. Write Markdown { #markdown }
 
 **0:40 · 15 min**
@@ -292,6 +315,13 @@ Leave this table on the projector while the room types:
     | `#Title` stays plain text | The space after `#` is missing |
     | The list or the table runs into the paragraph above | The empty line before it is missing |
     | The table shows as text with `|` signs | The second line, `|--|--|`, is missing |
+
+## Part 3 · Both, on a data file { #part-3 }
+
+**0:55 to 1:25 · sections 6 and 7**
+
+Section 6 uses VS Code from Part 1 to read a data file. Section 7 uses
+Markdown from Part 2 to write down where the file came from.
 
 ## 6. Look at a data file { #data-file }
 

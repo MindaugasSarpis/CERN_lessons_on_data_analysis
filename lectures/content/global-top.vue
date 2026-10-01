@@ -14,12 +14,19 @@ const base = import.meta.env.BASE_URL || '/'
 // The landing lives one path segment above the deck base: /repo/<slug>/ -> /repo/
 const home = base.replace(/[^/]+\/$/, '') || '/'
 const current = (base.match(/([^/]+)\/$/) || [, ''])[1]
-// Paired seminar brief in the published workbook (slug prefix NN → seminar_NN).
-const seminarNo = (current.match(/^(\d{2})-/) || [, ''])[1]
-const seminarHref = seminarNo ? `${home}workbook/seminars/seminar_${seminarNo}/` : ''
 
 const open = ref(false)
 const data = ref({ blocks: {}, decks: [] })
+
+// Paired seminar page in the published workbook. The pairing comes from
+// decks.json (`seminar` in lectures.json), not from the slug number: Lecture 1
+// has no seminar and Lecture 2 is taught with Seminar 1.
+const seminarNo = computed(() => data.value.decks.find((d) => d.slug === current)?.seminar ?? null)
+const seminarHref = computed(() =>
+  seminarNo.value
+    ? `${home}workbook/seminars/seminar_${String(seminarNo.value).padStart(2, '0')}/`
+    : '',
+)
 
 onMounted(async () => {
   try {
