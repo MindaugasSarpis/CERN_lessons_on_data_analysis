@@ -3107,7 +3107,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="The four stages of the lecture. The files were last changed at: raw data 08:10, `clean.py` 08:20, `plot.py` 08:25, the table 08:30, the plot 08:31, `fit.json` 08:32, the report 08:33, `fit.py` 08:50. `config.json` and `report.py` are from 08:00. Which stages does `run_all.py` run?"
+  question="Last changed: raw data 08:10, `clean.py` 08:20, `plot.py` 08:25, the table 08:30, the plot 08:31, `fit.json` 08:32, the report 08:33, `fit.py` 08:50, all other files 08:00. Which stages does `run_all.py` run?"
   :options="[
     'All four, because a script was edited',
     'Only the fit, because only <code>fit.json</code> is older than its script',
@@ -3115,7 +3115,7 @@ hideInToc: true
     'None, because every output exists'
   ]"
   :correct="2"
-  explanation="The table (08:30) is newer than the raw data and clean.py. The plot (08:31) is newer than the table and plot.py. fit.json (08:32) is older than fit.py (08:50), so the fit runs. Its new output is then newer than the report, so the report runs as well."
+  explanation="The table and the plot are newer than everything they are made from. fit.json (08:32) is older than fit.py (08:50), so the fit runs. Its new output is then newer than the report, so the report runs as well."
 />
 
 ---

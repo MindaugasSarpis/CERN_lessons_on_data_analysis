@@ -2264,7 +2264,7 @@ hideInToc: true
 
 # How Sure Is an **Accuracy**?
 
-<img class="fig" src="/figures/viz_perceptron_split.svg" style="display:block;margin:0 auto;max-height:300px;">
+<img class="fig" src="/figures/viz_perceptron_split.svg" style="display:block;margin:0 auto;max-height:262px;">
 
 <div class="grid-2 mt-md gap-md">
 
