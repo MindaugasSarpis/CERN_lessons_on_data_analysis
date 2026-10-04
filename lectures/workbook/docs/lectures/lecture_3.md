@@ -10,61 +10,91 @@ number, a letter and a whole file are written as bits.
 1. **The box** — input, algorithm, output; an algorithm worked through by
    hand, one instruction at a time.
 2. **Data representation** — unary, binary and decimal counting; the bit and
-   the byte; hexadecimal as the short way to write bytes.
+   the byte; *n* bits give 2ⁿ values, and how many bits tell *k* things apart;
+   hexadecimal; converting decimal to binary by repeated division and binary
+   to hex in groups of four.
 3. **How computers compute** — logic gates and bitwise operations; how the CPU
    runs an algorithm; the memory hierarchy.
-4. **Numbers in computers** — integers of fixed width and overflow; negative
-   numbers in two's complement; floating point as scientific notation in
-   base 2, and why `0.1 + 0.2` is not `0.3`.
-5. **Text & encodings** — ASCII, Unicode and UTF-8; mojibake, with Lithuanian
-   letters; the encoding and the line ending in the Status Bar of VS Code; what
-   a spreadsheet does to a CSV file.
+4. **Numbers in computers** — integers of fixed width and overflow; two's
+   complement as a recipe and as a sum of weights; floating point as
+   scientific notation in base 2; why 0.1 has no exact float, derived by
+   multiplying by 2; the step from one float to the next, and what it means
+   for a stored measurement.
+5. **Text & encodings** — ASCII, Unicode and UTF-8; how UTF-8 packs a code
+   point, with `ą` encoded by hand; mojibake, with Lithuanian letters; the
+   encoding and the line ending in the Status Bar of VS Code; what a
+   spreadsheet does to a CSV file.
 6. **Files & formats** — file sizes; byte order; the first bytes of a file
-   say what it is; reading a hexdump of a small CSV file.
-7. **Compression & integrity** — why text compresses well; checksums and
-   SHA-256.
+   say what it is; the hexdump of a small CSV file; one number as text and as
+   a float32.
+7. **Compression & integrity** — why text compresses well; a checksum worked
+   by hand, what it catches and what it misses; CRC and SHA-256.
 
 ## The lecture in 90 minutes
 
-The deck has 75 slides and estimates about 111 min. For a 90-minute slot,
-skip the slides in the second table. To jump, type the slide number and press
-Enter.
+The lecture is slides 1–79 and estimates about 116 min. Slides 80–84 are the
+self-check quizzes and take no lecture time. For a 90-minute slot, skip the
+slides in the second table. To jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–7 | The box: input, algorithm, output |
-| 0:11 | 8–38 | Bits, binary counting, bytes, hexadecimal |
-| 0:36 | 39–44 | How the computer computes |
-| 0:44 | 45–54 | Integers and floating point |
-| 0:58 | 55–62 | Text and encodings |
-| 1:10 | 63–69 | Files and formats |
-| 1:20 | 70–75 | Compression, hashing, recap |
-| 1:30 | | Move to the seminar |
+| 0:00 | 1–6 | The box: input, algorithm, output |
+| 0:09 | 8–38 | Bits, binary counting, bytes, hexadecimal, converting between bases |
+| 0:39 | 40, 44 | How the CPU runs an algorithm |
+| 0:42 | 46–56 | Integers, two's complement, floating point |
+| 1:02 | 58–66 | Text and encodings |
+| 1:16 | 67–72 | Files and formats |
+| 1:26 | 74–79 | Compression, hashing, recap |
+| 1:33 | | Move to the seminar |
 
 | Skip | Slides | Saves |
 |--|--|--|
-| Quiz: the 16-bit detector reading | 34 | 3 min |
-| Bitwise Operations Example | 42 | 2 min |
-| Quiz: two's complement | 48 | 3 min |
-| Worked Example: 5.75 as float32 | 51 | 2 min |
-| Python for Encoding Conversions | 59 | 2 min |
-| Endianness | 65 | 2 min |
-| Quiz: what is a file | 68 | 3 min |
-| Quiz: the hash that differs | 73 | 3 min |
+| A Bit of Foresight | 7 | 2 min |
+| Why Hex in Computing? | 39 | 1 min |
+| Logic gates, Logical Operations, Bitwise Operations Example | 41–43 | 5 min |
+| The Memory Hierarchy | 45 | 2 min |
+| Worked Example: 5.75 as float32 | 52 | 2 min |
+| Data Types in Practice | 57 | 2 min |
+| Python for Encoding Conversions | 63 | 2 min |
+| Endianness | 69 | 2 min |
+| Image Quality vs Bit Depth | 73 | 2 min |
+| A Checksum by Hand | 76 | 2 min |
+| Key Takeaways, since the Recap follows | 78 | 2 min |
 
-- **Do not cut** slides 56–62 (text and encodings) or 64, 66 and 67 (file
-  sizes, formats, the hexdump). The seminar measures and opens files in
-  exactly these terms.
+- **Do not cut** slides 59–62 and 64–66 (text and encodings) or 68 and 70–72
+  (file sizes, formats, the hexdump, one number as text and as binary). The
+  seminar measures and opens files in exactly these terms.
 - **Slides 9–33 are fast.** Most are one word or one picture: counting in
   unary, binary and decimal. Together they take about ten minutes.
-- **Slide 53** (Try It in Your Terminal) is done live in the VS Code
+- **Slide 38** (From Decimal to Binary and Hex): do 37 on the board, then
+  give the room 100 to convert on paper. The answers are `1100100` and `0x64`.
+- **Slide 56** (Try It in Your Terminal) is done live in the VS Code
   terminal. Students who installed Python at home can follow on their own
   laptops.
-- **Slide 61** (Encoding & Line Endings in VS Code) is done live: open a file
+- **Slide 65** (Encoding & Line Endings in VS Code) is done live: open a file
   with Lithuanian letters, select `UTF-8` in the Status Bar, reopen it as
   **Baltic (Windows 1257)** and back.
-- **Slide 67** (Reading a Hexdump) shows the first bytes of the small table
+- **Slide 71** (Reading a Hexdump) shows the first bytes of the small table
   that was cleaned in Lecture 2.
+
+## Check yourself
+
+No quiz interrupts the lecture. The deck closes with a self-check section,
+slides 80–84: four quiz slides for students to try afterwards. The same
+questions, with their answers:
+
+1. A detector writes each reading as a 16-bit unsigned integer. How many
+   values can a reading take?
+   *2¹⁶ = 65 536, from 0 to 65 535.*
+2. In two's complement, what is the 4-bit pattern `1010`?
+   *−6. By weights: −8 + 2. As an unsigned integer the same bits are 10.*
+3. What is a file, at the simplest level?
+   *A named sequence of bytes kept by the operating system. The ending of the
+   name is only a hint at how to read them.*
+4. The published SHA-256 of a file differs from the hash of your copy in every
+   digit. What follows?
+   *Your copy differs somewhere, by at least one bit. The hash says that
+   something changed, never how much.*
 
 ## Demos to run live
 
@@ -110,3 +140,8 @@ in a hex view, and does the same for the two data files of the project.
 - A file is a named sequence of bytes. The ending of its name is a hint; the
   first bytes say what it is.
 - A hash is a fingerprint of the bytes. Any change gives a different one.
+- *n* bits hold 2ⁿ values. The same bits are different numbers under
+  different types, so the type belongs to the description of the data.
+- The step between neighbouring floats grows with the number. A float32 keeps
+  about 7 significant digits; digits beyond them are rounding, not
+  measurement.

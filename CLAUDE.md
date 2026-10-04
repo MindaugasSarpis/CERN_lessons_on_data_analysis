@@ -115,6 +115,8 @@ Each lecture markdown file follows a consistent structure:
 7. **Grid layouts**: `grid-2`, `grid-3` with `gap-md mt-md`
 8. **Emoji format**: Always `## 📊 **Title**` — emoji outside bold
 9. **Slide separators**: `---` with optional YAML frontmatter between them
+10. **Quizzes close the deck, never interrupt it**: `<MCQ>` slides go after the Recap, under a `layout: section` slide titled exactly `# Check **Yourself**`. `timing-report.mjs` counts that section and everything after it as 0 min (self-study, not delivered), so a quiz moved out of the lecture has to be replaced by content, not by nothing. The same questions with answers go on the lecture's workbook page under "Check yourself". Done for L01–L03; L04–L16 still carry inline quizzes until each is reworked.
+11. **Content standard**: derive, do not assert. A new slide carries a worked example with real numbers (computed, not guessed) and connects to the slide before it, so a section reads like a textbook chapter and not like a list of facts.
 
 ## Slidev Gotchas
 

@@ -2201,3 +2201,141 @@ hideInToc: true
 <!--
 Speaker: the "you can now" beat — have them nod along to each. (~1 min)
 -->
+
+
+---
+layout: section
+hideInToc: true
+---
+
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
+  :options="[
+    'Each one runs the same loop: collect, store, clean, analyse, decide — then share or archive',
+    'Collecting and storing the readings is itself the analysis — once data is saved, the work is done',
+    'Behind each service, analysts review your raw activity streams and decide case by case',
+    'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
+  ]"
+  :correct="0"
+  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide, share. Recognising that shared shape is the whole point of these opening lectures: the skills transfer because the loop is always the same."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
+  :options="[
+    'The record\'s DOI or stable URL, the version or fetch date, and the file\'s checksum',
+    'The file name, its size in bytes, and the folder you saved it into on your laptop',
+    'The portal\'s homepage URL, the dataset\'s title, and the name of the collaboration',
+    'The name and e-mail of the colleague who first told you about the dataset'
+  ]"
+  :correct="0"
+  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="The Higgs discovery met the '5-sigma' standard. What does that actually mean?"
+  :options="[
+    'There is less than a one-in-3.5-million chance that the discovery itself is wrong',
+    'With no new particle, a background fluke this strong shows up in fewer than 1 in 3.5 million experiments',
+    'The Higgs mass was pinned down to five decimal places by combining ATLAS and CMS',
+    'Five independent detectors each confirmed the signal at the same mass on the same day'
+  ]"
+  :correct="1"
+  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading)."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="The detector electronics put out ~1 PB of raw signal per second, before any selection. Why can't the experiments simply record it all?"
+  :options="[
+    'There is no scientific reason to — only a handful of processes matter',
+    'No real-time system can write ~1 PB/s to disk, even before counting the cost',
+    'Data-protection rules cap how much CERN is legally allowed to store',
+    'Only high-luminosity runs need a trigger — earlier runs recorded everything'
+  ]"
+  :correct="1"
+  explanation="No storage system can sustain ~1 PB/s of writes. The trigger reduces the raw output to the few thousand events/s (~10 GB/s) that computing can absorb, before anyone judges what is interesting."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="CERN publishes its collision data on the Open Data Portal years after recording it. Which stage of the data lifecycle is that, and what makes it possible?"
+  :options="[
+    'Collecting — the detector writes each stored event straight to the public portal',
+    'Cleaning — the trigger decides at run time which events are fit for publication',
+    'Sharing — the last stage, possible only because provenance, formats and software were kept',
+    'Analysing — physicists publish their plots, and the plots are the open data'
+  ]"
+  :correct="2"
+  explanation="Publication is the share stage at the end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="In the LHCb example sample, what does one row of the CSV file represent?"
+  :options="[
+    'One sub-detector of LHCb, with its readings for the run',
+    'One column of momentum values, one per particle',
+    'One reconstructed particle track through the detector',
+    'One K⁻π⁺ candidate from one collision event'
+  ]"
+  :correct="3"
+  explanation="Each row is one candidate pair found in one event: its invariant mass, transverse momentum, decay time and impact-parameter score. Columns are the quantities; rows are the things measured. Knowing what one row is comes before any statistics."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A file has lines like `1;20;9,02`. They must become `1,20,9.02`. Which two Replace All steps do that?"
+  :options="[
+    'First <code>;</code> to <code>,</code> and then <code>,</code> to <code>.</code>',
+    'First <code>,</code> to <code>.</code> and then <code>;</code> to <code>,</code>',
+    'Either order, because the result is the same',
+    'Neither: the decimal commas have to be retyped by hand'
+  ]"
+  :correct="1"
+  explanation="Replace the decimal comma while it is still the only comma in the file. In the other order the line first becomes 1,20,9,02: three commas, and nothing tells the decimal one from the others. The second step then gives 1.20.9.02."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="An editor sorts three lines as text: `100,20.01`, `20,9.02` and `30,11.05`. Which line comes first?"
+  :options="[
+    'The line with 20, because 20 is the smallest number',
+    'The line with 100, because the character 1 comes before 2 and 3',
+    'The line with 30, because it has the most digits',
+    'None: lines that hold numbers cannot be sorted'
+  ]"
+  :correct="1"
+  explanation="Sorting text compares characters from the left, and 1 comes before 2. To sort by value the column has to be read as numbers, which a text editor does not do."
+/>

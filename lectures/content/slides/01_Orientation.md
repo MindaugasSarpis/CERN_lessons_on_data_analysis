@@ -382,22 +382,6 @@ hideInToc: true
 hideInToc: true
 ---
 
-<MCQ
-  question="You catch yourself repeating the same manual steps on your data every week. Writing a script to do it instead chiefly serves which of the Four Aims?"
-  :options="[
-    '🔧 Tool agnosticism',
-    '♻️ Reproducibility',
-    '⚙️ Automation',
-    '📁 Efficient work with data & files'
-  ]"
-  :correct="2"
-  explanation="Do it once by hand, twice by script — letting the machine repeat the boring parts is exactly what ⚙️ automation means. It often boosts ♻️ reproducibility too, but the direct target here is automation."
-/>
-
----
-hideInToc: true
----
-
 # 🔧 Before / After — **Tool Agnosticism**
 
 <div class="grid-2 mt-md gap-md">
@@ -461,22 +445,6 @@ Unsure how to do something? Ask: *which choice serves more of the aims?* That on
 </div>
 
 </div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A colleague sends you a beautiful result: a PDF of the final plot. What is the minimum you would need for the result to count as reproducible?"
-  :options="[
-    'The same plot exported again at a much higher resolution',
-    'The raw data, the code, and a note of the environment it ran in',
-    'A screen recording of them running the whole analysis end to end',
-    'Their written assurance that it ran fine on their own laptop'
-  ]"
-  :correct="1"
-  explanation="♻️ Reproducibility means someone else can rebuild the result. That requires the inputs (data), the exact transformation (code), and the context it ran in (environment and versions). A prettier picture or a promise changes nothing."
-/>
 
 ---
 hideInToc: true
@@ -825,22 +793,6 @@ hideInToc: true
 <div class="note-text mt-md">Already code well? The challenge just shifts from syntax to doing it <em>reproducibly</em>. There's a level here for everyone.</div>
 
 ---
-hideInToc: true
----
-
-<MCQ
-  question="It's week 5. You attend every lecture but skip the seminars because you ‘get the ideas already’. Why is this the riskiest habit in this course?"
-  :options="[
-    'Lectures carry the marks, so the seminars are the part you can afford to miss',
-    'The seminars are where an idea becomes a working skill, and the project is graded on skills',
-    'Seminar attendance is recorded, and every missed session costs you marks directly',
-    'The lectures only summarise the seminars, so skipping either half is the same'
-  ]"
-  :correct="1"
-  explanation="The seminars aren't graded, but the project is — on the four aims, which are practices you only acquire by doing. Understanding an idea in the lecture is not the same as having it run in a repository: the seminar is where 'done' happens, and your project is where you repeat it on your own data."
-/>
-
----
 layout: section
 hideInToc: true
 ---
@@ -1022,22 +974,6 @@ If that is true of your project, you've succeeded. Every practice in this course
 </div>
 
 <div class="note-text mt-md">Reproducibility isn't a chore you bolt on at the end — it's the property that makes everything else trustworthy.</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="The ‘golden rule’ of a reproducible project says you could delete everything except two folders and rebuild the whole analysis with one command. Which two folders?"
-  :options="[
-    'results/ and data/processed/',
-    'data/raw/ and scripts/',
-    'data/processed/ and Makefile',
-    'README.md and results/'
-  ]"
-  :correct="1"
-  explanation="Raw data can't be regenerated, and scripts encode every step that turns it into results. Keep those two and everything else — cleaned tables, figures, numbers — can be rebuilt automatically. (The Makefile, environment.yml and README stay too: they are part of the recipe, not results.) That's reproducibility and automation working together."
-/>
 
 ---
 hideInToc: true
@@ -1514,3 +1450,77 @@ Stops **hadrons** — particles made of quarks (protons, neutrons, pions) — ag
 💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
 
 </div>
+
+
+---
+layout: section
+hideInToc: true
+---
+
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You catch yourself repeating the same manual steps on your data every week. Writing a script to do it instead chiefly serves which of the Four Aims?"
+  :options="[
+    '🔧 Tool agnosticism',
+    '♻️ Reproducibility',
+    '⚙️ Automation',
+    '📁 Efficient work with data & files'
+  ]"
+  :correct="2"
+  explanation="Do it once by hand, twice by script — letting the machine repeat the boring parts is exactly what ⚙️ automation means. It often boosts ♻️ reproducibility too, but the direct target here is automation."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A colleague sends you a beautiful result: a PDF of the final plot. What is the minimum you would need for the result to count as reproducible?"
+  :options="[
+    'The same plot exported again at a much higher resolution',
+    'The raw data, the code, and a note of the environment it ran in',
+    'A screen recording of them running the whole analysis end to end',
+    'Their written assurance that it ran fine on their own laptop'
+  ]"
+  :correct="1"
+  explanation="♻️ Reproducibility means someone else can rebuild the result. That requires the inputs (data), the exact transformation (code), and the context it ran in (environment and versions). A prettier picture or a promise changes nothing."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="It's week 5. You attend every lecture but skip the seminars because you ‘get the ideas already’. Why is this the riskiest habit in this course?"
+  :options="[
+    'Lectures carry the marks, so the seminars are the part you can afford to miss',
+    'The seminars are where an idea becomes a working skill, and the project is graded on skills',
+    'Seminar attendance is recorded, and every missed session costs you marks directly',
+    'The lectures only summarise the seminars, so skipping either half is the same'
+  ]"
+  :correct="1"
+  explanation="The seminars aren't graded, but the project is — on the four aims, which are practices you only acquire by doing. Understanding an idea in the lecture is not the same as having it run in a repository: the seminar is where 'done' happens, and your project is where you repeat it on your own data."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="The ‘golden rule’ of a reproducible project says you could delete everything except two folders and rebuild the whole analysis with one command. Which two folders?"
+  :options="[
+    'results/ and data/processed/',
+    'data/raw/ and scripts/',
+    'data/processed/ and Makefile',
+    'README.md and results/'
+  ]"
+  :correct="1"
+  explanation="Raw data can't be regenerated, and scripts encode every step that turns it into results. Keep those two and everything else — cleaned tables, figures, numbers — can be rebuilt automatically. (The Makefile, environment.yml and README stay too: they are part of the recipe, not results.) That's reproducibility and automation working together."
+/>

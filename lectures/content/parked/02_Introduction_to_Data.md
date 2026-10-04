@@ -3,13 +3,14 @@ Parked slides from slides/02_Introduction_to_Data.md, taken out on 2026-10-04.
 
 They left the deck when the section "Markdown & Text Editing" was added, so that
 the lecture stays inside the 105-145 min band. All of them were on the skip list
-of the 90-minute plan. This file is not in decks.json: it is not built, not
+of the 90-minute plan. The quiz slides are not here: they close the deck as its
+self-check section. This file is not in decks.json: it is not built, not
 gated and not deployed. To put a slide back, move it into the lecture file.
 
 Where they stood: "What Each Flavour Is Used For" after "One Table, Three
 Files"; the two "Data at Work" slides and "Common Threads" after the thought
-exercise; "Working with the Data", the section "Beyond Physics" (three slides) and the
-quiz on publishing open data, all after the quiz on the trigger.
+exercise; "Working with the Data" and the section "Beyond Physics" (three slides) after
+"Why It Has to Be Real-Time".
 -->
 
 ---
@@ -306,119 +307,3 @@ hideInToc: true
 🔭 What comes next: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring, more than three times the LHC's 27 km.
 
 </div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="CERN publishes its collision data on the Open Data Portal years after recording it. Which stage of the data lifecycle is that, and what makes it possible?"
-  :options="[
-    'Collecting — the detector writes each stored event straight to the public portal',
-    'Cleaning — the trigger decides at run time which events are fit for publication',
-    'Sharing — the last stage, possible only because provenance, formats and software were kept',
-    'Analysing — physicists publish their plots, and the plots are the open data'
-  ]"
-  :correct="2"
-  explanation="Publication is the share stage at the end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
-/>
-
-<!--
-The five quiz slides below also left the deck on 2026-10-04, after the lecturer's
-note that the multiple-choice slides were out of place in this lecture. The same
-questions are on the workbook page lectures/lecture_2.md under "Check yourself".
-In deck order they stood after: Data Has a Lifecycle; From Record to Your Project
-Folder; Why Data Analysis Matters at CERN; Why It Has to Be Real-Time; Same
-Questions, Your Dataset.
--->
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
-  :options="[
-    'Each one runs the same loop: collect, store, clean, analyse, decide — then share or archive',
-    'Collecting and storing the readings is itself the analysis — once data is saved, the work is done',
-    'Behind each service, analysts review your raw activity streams and decide case by case',
-    'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
-  ]"
-  :correct="0"
-  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide, share. Recognising that shared shape is the whole point of these opening lectures: the skills transfer because the loop is always the same."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
-  :options="[
-    'The record\'s DOI or stable URL, the version or fetch date, and the file\'s checksum',
-    'The file name, its size in bytes, and the folder you saved it into on your laptop',
-    'The portal\'s homepage URL, the dataset\'s title, and the name of the collaboration',
-    'The name and e-mail of the colleague who first told you about the dataset'
-  ]"
-  :correct="0"
-  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
-/>
-
----
-hideInToc: true
----
-
-<div class="note-text">
-
-*A check on the previous slide. Professionals get this one wrong too.*
-
-</div>
-
-<MCQ
-  question="The Higgs discovery met the '5-sigma' standard. What does that actually mean?"
-  :options="[
-    'There is less than a one-in-3.5-million chance that the discovery itself is wrong',
-    'With no new particle, a background fluke this strong shows up in fewer than 1 in 3.5 million experiments',
-    'The Higgs mass was pinned down to five decimal places by combining ATLAS and CMS',
-    'Five independent detectors each confirmed the signal at the same mass on the same day'
-  ]"
-  :correct="1"
-  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading)."
-/>
-
-<style>
-.mcq-container { height: calc(100% - 3.5rem) !important; }
-</style>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="The detector electronics put out ~1 PB of raw signal per second, before any selection. Why can't the experiments simply record it all?"
-  :options="[
-    'There is no scientific reason to — only a handful of processes matter',
-    'No real-time system can write ~1 PB/s to disk, even before counting the cost',
-    'Data-protection rules cap how much CERN is legally allowed to store',
-    'Only high-luminosity runs need a trigger — earlier runs recorded everything'
-  ]"
-  :correct="1"
-  explanation="No storage system can sustain ~1 PB/s of writes. The trigger reduces the raw output to the few thousand events/s (~10 GB/s) that computing can absorb, before anyone judges what is interesting."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="In the LHCb example sample, what does one row of the CSV file represent?"
-  :options="[
-    'One sub-detector of LHCb, with its readings for the run',
-    'One column of momentum values, one per particle',
-    'One reconstructed particle track through the detector',
-    'One K⁻π⁺ candidate from one collision event'
-  ]"
-  :correct="3"
-  explanation="Each row is one candidate pair found in one event: its invariant mass, transverse momentum, decay time and impact-parameter score. Columns are the quantities; rows are the things measured. Knowing what one row is comes before any statistics."
-/>
-

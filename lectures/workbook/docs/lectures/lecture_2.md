@@ -46,8 +46,9 @@ the lowest level of representation, the bit.
 
 ## The lecture in 90 minutes
 
-The deck has 62 slides and estimates about 120 min. In a 2-hour slot nothing
-is skipped. For a 90-minute slot, skip the slides in the second table. To
+The lecture is slides 1–62 and estimates about 120 min. Slides 63–71 are the
+self-check quizzes and take no lecture time. In a 2-hour slot nothing is
+skipped. For a 90-minute slot, skip the slides in the second table. To
 jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
@@ -91,8 +92,9 @@ Before the session, start the local copy of the slides:
 
 ## Check yourself
 
-The deck has no quiz slides. These questions can be asked aloud, or left for
-students to try after the lecture.
+No quiz interrupts the lecture. The deck closes with a self-check section,
+slides 63–71: eight quiz slides for students to try afterwards. The same
+questions, with their answers:
 
 1. Alarm, transit card, recommendations, fraud checks: what do they have in
    common as data analysis?
@@ -102,22 +104,26 @@ students to try after the lecture.
    the same data. What must you have recorded?
    *The record's DOI or stable URL, the version or the date you fetched it, and
    the checksum of the file.*
-3. The detector electronics put out about 1 PB of raw signal per second. Why is
-   it not all recorded?
-   *No system can write 1 PB/s to disk. The trigger reduces it to the few
-   thousand events per second that computing can absorb.*
-4. What does the 5-sigma standard of a discovery mean?
+3. What does the 5-sigma standard of a discovery mean?
    *With no new particle, background alone produces a signal this strong in
    fewer than 1 in 3.5 million experiments. It is not the chance that the
    discovery is wrong.*
-5. What is one row of the LHCb example file?
+4. The detector electronics put out about 1 PB of raw signal per second. Why is
+   it not all recorded?
+   *No system can write 1 PB/s to disk. The trigger reduces it to the few
+   thousand events per second that computing can absorb.*
+5. CERN publishes its collision data years after recording it. Which stage of
+   the lifecycle is that, and what makes it possible?
+   *Sharing, the last stage. It works only because provenance, formats and
+   software were kept at every stage before it.*
+6. What is one row of the LHCb example file?
    *One K⁻π⁺ candidate from one collision.*
-6. A file has lines like `1;20;9,02` and must become `1,20,9.02`. Which
+7. A file has lines like `1;20;9,02` and must become `1,20,9.02`. Which
    replacement comes first?
    *The decimal comma, `,` to `.`, while it is the only comma in the file. In
    the other order the line becomes `1,20,9,02` and the decimal comma cannot
    be told from the others.*
-7. A list of lines `100,…`, `20,…`, `30,…` is sorted by the editor. Why does
+8. A list of lines `100,…`, `20,…`, `30,…` is sorted by the editor. Why does
    `100` come first?
    *The editor sorts text. The character `1` comes before `2`.*
 
@@ -136,8 +142,8 @@ from their own field and
 
 Slides that left the deck are kept in
 `lectures/content/parked/02_Introduction_to_Data.md`: What Each Flavour Is Used
-For, Data at Work (two slides), Common Threads, Working with the Data, the
-section Beyond Physics, and six quiz slides. The file is not built. To put a
+For, Data at Work (two slides), Common Threads, Working with the Data, and the
+section Beyond Physics. The file is not built. To put a
 slide back, move it into the lecture file.
 
 ## Take-aways

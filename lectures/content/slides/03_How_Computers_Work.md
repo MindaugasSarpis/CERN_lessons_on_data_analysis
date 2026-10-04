@@ -646,17 +646,50 @@ hideInToc: true
 hideInToc: true
 ---
 
-<MCQ
-  question="A detector writes each reading as a 2-byte (16-bit) unsigned integer. How many distinct values can one reading take?"
-  :options="[
-    '256',
-    '65,536',
-    '32,768',
-    '16'
-  ]"
-  :correct="1"
-  explanation="16 bits give 2^16 = 65,536 distinct values (0 … 65,535). Each extra bit doubles the count — 2 bytes is 256 × 256. If your sensor can exceed that, you need a wider type or values silently wrap."
-/>
+# n Bits, 2ⁿ **Values**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🔢 **Each bit doubles the count**
+
+| Bits | Values | Enough for |
+| --- | --- | --- |
+| 1 | 2 | yes or no |
+| 3 | 8 | the days of the week |
+| 7 | 128 | the ASCII characters |
+| 8 | 256 | one byte |
+| 16 | 65 536 | a 16-bit reading, 0 to 65 535 |
+| 32 | about 4.3 × 10⁹ | |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ↩️ **The other way round**
+
+To tell *k* things apart, *n* bits are needed with 2ⁿ ≥ *k*.
+
+- 26 letters: 2⁴ = 16 is too few, 2⁵ = 32 is enough. Five bits
+- 10 digits: four bits, and six patterns stay unused
+- 1000 detector channels: ten bits, because 2¹⁰ = 1024
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A bit is the answer to one yes-or-no question. *n* bits are *n* such answers in a row, and every added answer splits each case in two. That is where 2ⁿ comes from.
+
+</div>
+
+<!--
+Speaker: let the room work out the 26 letters before showing the answer. The
+16-bit row is the detector reading: a counter that passes 65 535 starts again
+at 0. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -724,6 +757,59 @@ class: text-center
         font-size: 50px;
     }
 </style>
+
+---
+hideInToc: true
+---
+
+# From Decimal to **Binary and Hex**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➗ **Decimal to binary: divide by 2**
+
+```text
+37 ÷ 2 = 18   remainder 1
+18 ÷ 2 =  9   remainder 0
+ 9 ÷ 2 =  4   remainder 1
+ 4 ÷ 2 =  2   remainder 0
+ 2 ÷ 2 =  1   remainder 0
+ 1 ÷ 2 =  0   remainder 1
+```
+
+Read the remainders from the bottom up: `100101`. Check: 32 + 4 + 1 = 37.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧩 **Binary to hex: groups of four**
+
+```text
+37  =    10 0101
+    =  0010 0101     pad to full groups
+    =     2    5
+    =  0x25
+```
+
+One hex digit stands for exactly four bits, so a byte is always two hex digits. Check: 2 × 16 + 5 = 37.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Both are algorithms in the sense of the first slides: a fixed list of steps that ends, and gives the same result whoever carries it out.
+
+</div>
+
+<!--
+Speaker: do 37 on the board, then give the room 100 to convert on paper:
+1100100, 0x64. (~3 min)
+-->
 
 ---
 hideInToc: true
@@ -983,7 +1069,7 @@ A byte holds 256 values — more bits buy more range and precision, and when the
 <!--
 Speaker: the two big gotchas live here — fixed-width integer overflow (values
 wrap silently) and floating-point rounding (0.1 + 0.2 ≠ 0.3). Both bite real
-analyses; the MCQ checks two's complement on a fresh pattern. (~1 min)
+analyses; the slide after the recipe reads a fresh pattern by its weights. (~1 min)
 -->
 
 ---
@@ -1101,17 +1187,50 @@ Addition just works — no special subtraction circuit:
 hideInToc: true
 ---
 
-<MCQ
-  question="Using the two's-complement recipe just shown, what decimal value does the 4-bit pattern 1101 represent?"
-  :options="[
-    '13',
-    '−3',
-    '3',
-    '−5'
-  ]"
-  :correct="1"
-  explanation="Flip 1101 → 0010, add one → 0011 = 3, so 1101 is −3. The top bit set means negative; invert-and-add-one recovers the magnitude — a fresh pattern, not the worked example."
-/>
+# Two's Complement: **Reading a Pattern**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⚖️ **The top bit has a negative weight**
+
+```text
+weights   −8   4   2   1
+pattern    1   1   0   1
+value     −8 + 4 + 0 + 1  =  −3
+```
+
+The recipe agrees: flip `1101` to `0010`, add one to get `0011`, which is 3. The pattern is −3.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📏 **Ranges**
+
+| Bits | Smallest | Largest |
+| --- | --- | --- |
+| 4 | −8 | 7 |
+| 8 | −128 | 127 |
+| 16 | −32 768 | 32 767 |
+| *n* | −2ⁿ⁻¹ | 2ⁿ⁻¹ − 1 |
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The eight bits `11111111` are 255 as an unsigned integer and −1 as a signed one. The bits do not say which. The type of the column says it, and the type has to be written down with the data.
+
+</div>
+
+<!--
+Speaker: the weights are the reason the recipe works, and they make reading a
+pattern a sum. The warning card is the definition of data again: the same
+symbols under two rules. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1277,6 +1396,100 @@ math.isclose(0.1 + 0.2, 0.3)  # True
 hideInToc: true
 ---
 
+# Why 0.1 Is **Not Exact**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✖️ **A fraction to binary: multiply by 2**
+
+```text
+0.1 × 2 = 0.2   → 0
+0.2 × 2 = 0.4   → 0
+0.4 × 2 = 0.8   → 0
+0.8 × 2 = 1.6   → 1   keep 0.6
+0.6 × 2 = 1.2   → 1   keep 0.2
+0.2 × 2 = 0.4   → 0   and it repeats
+```
+
+0.1 = 0.000110011001100…₂, without end.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✂️ **The computer cuts it off**
+
+- A float keeps 24 or 53 binary digits and rounds the rest
+- The number stored for `0.1` is 0.1000000000000000055…
+- 0.5, 0.25 and 0.375 are exact: they are sums of powers of 2
+- 0.1, 0.2 and 0.3 are not, and their rounding errors do not cancel. `0.1 + 0.2` gives 0.30000000000000004
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Decimal has the same problem with 1/3 = 0.333…: no finite number of digits writes it. Which fractions are exact depends on the base, not on the computer.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Steps Between **Floats**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A float32 has 24 binary digits, wherever the point stands. So the step from one float to the next grows with the size of the number.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📏 **float32**
+
+| Near | Step to the next float |
+| --- | --- |
+| 1 | 0.000 000 12 |
+| 1880.649 | 0.000 12 |
+| 16 777 216 | 2 |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎯 **What this means for data**
+
+- The value `1880.649` is stored as 1880.6490478515625, the nearest float32
+- Digits after the seventh are not information. They come from the rounding
+- A float32 cannot count by one from 16&nbsp;777&nbsp;216 on: 16&nbsp;777&nbsp;216&nbsp;+&nbsp;1 gives 16&nbsp;777&nbsp;216
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The relative precision is constant: about 1 part in 10⁷ for float32 and 1 part in 10¹⁶ for float64. The absolute precision is not. Adding many small numbers to one large number loses the small ones.
+
+</div>
+
+<!--
+Speaker: 16 777 216 is 2 to the power 24. Above it the 24 digits no longer
+reach down to the ones place. The practical rule: sum in float64, store in
+float32 if 7 digits are enough. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Try It in Your Terminal!
 
 <div class="card card-success card-glass pad-tight mt-md">
@@ -1418,6 +1631,49 @@ Stores code points in 1–4 bytes, backward-compatible with ASCII
 **Pitfalls in data:** smart quotes, emojis, mixed encodings, BOM (a hidden byte-order marker at the start of a file that can break parsing)
 
 </div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# How UTF-8 Packs a **Code Point**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📦 **The four patterns**
+
+| Up to | Bit pattern |
+| --- | --- |
+| U+007F | `0xxxxxxx` |
+| U+07FF | `110xxxxx 10xxxxxx` |
+| U+FFFF | `1110xxxx 10xxxxxx 10xxxxxx` |
+| U+10FFFF | `11110xxx 10xxxxxx 10xxxxxx 10xxxxxx` |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✍️ **`ą` by hand**
+
+```text
+ą = U+0105 = 1 0000 0101    two bytes
+as 11 bits:  00100 000101
+pattern:     110xxxxx 10xxxxxx
+filled in:   11000100 10000101
+in hex:      C4       85
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The first bits of a byte say what it is: `0` is a whole ASCII character, `110`, `1110` or `11110` start a longer one, `10` continues it. A program can begin reading anywhere in a file and find the next character. Plain ASCII text is valid UTF-8 without any change.
 
 </div>
 
@@ -1583,7 +1839,7 @@ A character takes one to four bytes, a 32-bit number takes four — in what orde
 
 <!--
 Speaker: sizes, byte order, magic numbers, a real hexdump. Land "a file is a
-named sequence of bytes" here; the MCQ checks it. (~1 min)
+named sequence of bytes" here. (~1 min)
 -->
 
 ---
@@ -1735,17 +1991,49 @@ newline, invisible in any editor but plainly a byte here. (~2 min)
 hideInToc: true
 ---
 
-<MCQ
-  question="What is a file, at the simplest level?"
-  :options="[
-    'A window shown on the screen',
-    'A named sequence of bytes stored by the operating system',
-    'A running program in memory',
-    'A network connection to another computer'
-  ]"
-  :correct="1"
-  explanation="Everything on disk — text, images, programs — is ultimately a named blob of bytes the OS keeps track of. A file extension is only a convention for how to interpret those bytes; the hexdump you just saw is that blob with nothing interpreted."
-/>
+# One Number, **Two Files**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **As text**
+
+```text
+1880.649
+31 38 38 30 2E 36 34 39
+```
+
+Eight characters, eight bytes. Any program and any person can read them. Another number may need more bytes, or fewer.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **As a float32**
+
+```text
+1880.649
+C5 14 EB 44
+```
+
+Always four bytes. They mean nothing until the reader knows three things: the type, the byte order, and where the number starts.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A row of the example file has four numbers. As text it takes about 43 bytes, as four float32 values 16. For 91 583 rows that is 3.9 MB against 1.5 MB. Text costs space and is read by everything. Binary is compact and needs its description.
+
+</div>
+
+<!--
+Speaker: read the text bytes with the ASCII table: 31 is the character 1, 2E is
+the point. The four float bytes are the sign, exponent and mantissa of the
+float32 slides, lowest byte first. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1857,6 +2145,46 @@ A CSV repeats separators, column values and digit patterns thousands of times. D
 hideInToc: true
 ---
 
+# A Checksum **by Hand**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➕ **Add up the bytes**
+
+```text
+a    b    c
+97 + 98 + 99 = 294
+294 mod 256  =  38     the checksum, one byte
+```
+
+The sender stores 38 next to the file. The receiver adds up the bytes again and compares.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **What it catches**
+
+- `abd` gives 39: one changed byte is caught
+- `acb` gives 38: two bytes that changed places are not
+- One byte too high by 1 and another too low by 1 are not
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Every check of this kind is a short number computed from all the bytes. A better rule misses fewer changes. A parity bit catches one flipped bit. A CRC catches bursts of errors. A cryptographic hash such as SHA-256 is built so that nobody can construct a change that slips through.
+
+</div>
+
+---
+hideInToc: true
+---
+
 # Error Detection & Hashing
 
 <div class="grid-2 mt-sm gap-md">
@@ -1898,22 +2226,6 @@ Speaker: the lecture's most practical minute. Every dataset you publish should
 ship with its hash; every dataset you download should be checked against one.
 "Different in every digit" is the expected symptom of *any* change. (~2 min)
 -->
-
----
-hideInToc: true
----
-
-<MCQ
-  question="You download data.csv; its published SHA-256 is 3b1f…e9, but sha256sum on your copy prints a hash that differs in every digit. What can you conclude?"
-  :options="[
-    'The file is almost identical — only a few bytes must differ',
-    'Your copy differs from the published file somewhere — even a single flipped bit would do this',
-    'The hash tool is broken: a small change should change only a few digits',
-    'Nothing — SHA-256 gives a different result every time you run it'
-  ]"
-  :correct="1"
-  explanation="A cryptographic hash is deliberately avalanche-like: any change, however small, scrambles the whole digest. So the hash tells you that something differs, never how much. The same bytes always give the same 64 hex digits — on every machine — which is what makes it a fingerprint."
-/>
 
 ---
 hideInToc: true
@@ -2031,3 +2343,76 @@ Speaker: the "you can now" beat — have them nod along to each. The last card i
 the habit to take away: open a data file at the byte level and
 verify its encoding, size, and format before trusting any number. (~1 min)
 -->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A detector writes each reading as a 2-byte (16-bit) unsigned integer. How many distinct values can one reading take?"
+  :options="[
+    '256',
+    '65,536',
+    '32,768',
+    '16'
+  ]"
+  :correct="1"
+  explanation="16 bits give 2^16 = 65,536 distinct values (0 … 65,535). Each extra bit doubles the count — 2 bytes is 256 × 256. If your sensor can exceed that, you need a wider type or values silently wrap."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="In two's complement, what decimal value does the 4-bit pattern 1010 represent?"
+  :options="[
+    '10',
+    '−6',
+    '6',
+    '−2'
+  ]"
+  :correct="1"
+  explanation="By weights: −8 + 0 + 2 + 0 = −6. By the recipe: flip 1010 to 0101, add one to get 0110, which is 6, so the pattern is −6. Read as an unsigned integer the same four bits would be 10."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="What is a file, at the simplest level?"
+  :options="[
+    'A window shown on the screen',
+    'A named sequence of bytes stored by the operating system',
+    'A running program in memory',
+    'A network connection to another computer'
+  ]"
+  :correct="1"
+  explanation="Everything on disk — text, images, programs — is ultimately a named blob of bytes the OS keeps track of. A file extension is only a convention for how to interpret those bytes; a hexdump is that blob with nothing interpreted."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="You download data.csv; its published SHA-256 is 3b1f…e9, but sha256sum on your copy prints a hash that differs in every digit. What can you conclude?"
+  :options="[
+    'The file is almost identical — only a few bytes must differ',
+    'Your copy differs from the published file somewhere — even a single flipped bit would do this',
+    'The hash tool is broken: a small change should change only a few digits',
+    'Nothing — SHA-256 gives a different result every time you run it'
+  ]"
+  :correct="1"
+  explanation="A cryptographic hash is deliberately avalanche-like: any change, however small, scrambles the whole digest. So the hash tells you that something differs, never how much. The same bytes always give the same 64 hex digits — on every machine — which is what makes it a fingerprint."
+/>

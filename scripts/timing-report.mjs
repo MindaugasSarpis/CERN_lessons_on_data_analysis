@@ -22,6 +22,8 @@
 //   {monaco-run}     (+1.5 each: run, tweak, explain)       +1.5
 //   <VideoPlayer>    (+1.5 each: clip plays out)            +1.5
 //   ```mermaid       (+0.5 each: diagram walked through)    +0.5
+//   self-check       (the section slide `# Check **Yourself**` and every
+//   slide after it: quizzes for after the lecture)          0
 //
 // Target band: a 2h slot minus break/admin gives ~110 teaching minutes.
 // The course prefers slightly too much over too little, so a deck should
@@ -39,6 +41,9 @@ const SEMINARS_DIR = join(ROOT, 'lectures', 'workbook', 'docs', 'seminars');
 
 const BAND = { min: 105, max: 145 };
 const SEMINAR_MIN = 120;
+
+// Title of the section slide that opens a deck's self-check quizzes.
+const SELF_CHECK_TITLE = /^#\s+Check\s+\*\*Yourself\*\*\s*$/m;
 
 const STRUCTURAL_LAYOUTS = new Set([
   'cover', 'intro', 'quote', 'section', 'statement', 'fact', 'center-bkg', 'end',
@@ -106,9 +111,18 @@ function countWords(text) {
 function estimateDeck(src) {
   const slides = splitSlides(src);
   let minutes = 0;
-  const counts = { slides: slides.length, structural: 0, content: 0, words: 0, mcq: 0, monaco: 0, video: 0, mermaid: 0 };
+  const counts = { slides: slides.length, structural: 0, content: 0, words: 0, mcq: 0, monaco: 0, video: 0, mermaid: 0, selfCheck: 0 };
+  // A deck may end with a self-check section: quiz slides for after the
+  // lecture. It is not delivered, so it costs no lecture time.
+  let selfCheck = false;
   for (const s of slides) {
     const layout = (s.frontmatter.match(/^layout\s*:\s*(\S+)/m) || [])[1];
+    if (layout === 'section' && SELF_CHECK_TITLE.test(s.content)) selfCheck = true;
+    if (selfCheck) {
+      counts.selfCheck += 1;
+      counts.mcq += (s.content.match(/<MCQ/g) || []).length;
+      continue;
+    }
     const words = countWords(s.content);
     counts.words += words;
     const structural = STRUCTURAL_LAYOUTS.has(layout) || words < 8;
