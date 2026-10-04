@@ -1,4 +1,4 @@
-# L6: Version Control with Git
+# L10: Data Visualisation
 
 ---
 
@@ -6,70 +6,53 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L4 (command line basics), L7-L8 (Python — for understanding what files to track)
+**Prerequisites**: L7-L8 (Python basics), L9 (Concepts of Data Analysis)
 
 **Learning Objectives**:
-- Explain why version control is essential for scientific work
-- Initialise a git repository and make commits
-- Use the staging area to control what goes into each commit
-- Read diffs and logs to understand project history
-- Push to and pull from a remote repository (GitHub)
-- Create branches, merge them, and resolve conflicts
-- Write a `.gitignore` and follow a daily git workflow
+- Explain why visualisation is essential for data analysis
+- Identify and use visual aesthetics: position, colour, shape, size
+- Name and construct common plot types (bar, histogram, scatter, line, box)
+- Apply Tufte's data-to-ink ratio principle
+- Choose the right chart for a given data relationship
+- Design accessible visualisations (colourblind-safe palettes, redundant encodings)
 
 ---
 
 ## Lecture Structure
 
-### Part 1: Why Version Control? (10 min)
-- The problem: `report_v2_final_FINAL_v3.docx`
-- What version control gives you: history, collaboration, safety net
-- Git = the standard (used at CERN, in industry, everywhere)
-- Brief: Git vs GitHub (tool vs hosting platform)
+### Part 1: Why Visualise? (10 min)
+- Visual perception is our highest-bandwidth sense
+- Anscombe's quartet — same statistics, different stories
+- The power of pattern discovery
+- Dangers: visualisation can also deceive
 
-### Part 2: First Steps (20 min)
-- Configure git: `git config --global user.name` / `user.email`
-- `git init` — create a repository
-- `git status` — your most-used command
-- The three states: working directory → staging area → repository
-- `git add` → `git commit -m "message"`
-- **Live demo**: Create a repo, add a Python script, commit it
+### Part 2: Aesthetics & Components (20 min)
+- Aesthetic mappings: position, colour, shape, size, line style
+- Plot anatomy: axes, labels, tick marks, legends, title
+- Legend placement best practices
+- Common axis mistakes (truncated axes, non-zero baselines)
 
-### Part 3: Understanding History (15 min)
-- `git log` and `git log --oneline --graph`
-- `git diff` — reading changes (green = added, red = removed)
-- `git diff --staged` — what's about to be committed
-- Commit messages: imperative mood, short summary + optional body
-- **Interactive**: Students make 3 commits with meaningful messages
+### Part 3: Common Chart Types (25 min)
+- **Amounts**: bar charts (vertical, horizontal, grouped, stacked), heatmaps
+- **Distributions**: histograms (bin width matters!), box plots
+- **Relationships**: scatter plots, line plots
+- **Common errors gallery**: 3D effects, unsorted bars, poor colour choices, too many categories
+- Interactive: "What's wrong with this chart?" exercise
 
-### Part 4: Undoing Things (10 min)
-- `git restore <file>` — discard working directory changes
-- `git restore --staged <file>` — unstage a file
-- `git revert <hash>` — undo a commit safely (creates new commit)
-- `git reset --hard` — nuclear option (explain but discourage)
-- Key message: git almost never loses data — if it's committed, it's recoverable
+### Part 4: Design Principles (20 min)
+- Tufte's data-to-ink ratio: maximise data, minimise ink
+- Chart junk vs clean design (before/after examples)
+- Choosing the right chart (decision flowchart)
+- When NOT to use a pie chart
+- Accessibility: viridis/cividis palettes, redundant encodings
 
-### Part 5: Ignoring Files (10 min)
-- Why: data files, compiled code, secrets, OS files
-- `.gitignore` syntax: patterns, wildcards, negation
-- Show Python-specific `.gitignore` template
-- Rule: track code and config, not data or outputs
-
-### Part 6: Remotes & GitHub (15 min)
-- SSH key setup (or HTTPS with token)
-- `git remote add origin <url>`
-- `git push -u origin main`
-- `git pull` — always pull before starting work
-- `git clone` — starting from an existing repo
-- **Live demo**: Push to GitHub, show it in the browser
-
-### Part 7: Branches & Merging (20 min)
-- Why branch? Parallel development, experiments, features
-- `git switch -c feature-branch`
-- Work on branch, commit, `git switch main`, `git merge feature-branch`
-- Merge conflicts: what they look like, how to resolve them
-- `git branch -d feature-branch` — clean up
-- **Live demo**: Create a conflict intentionally, resolve it together
+### Part 5: Practice (25 min)
+- Students create 4 plots:
+  1. Histogram with appropriate bin width
+  2. Bar chart of categorical data
+  3. Add proper labels, legend, title
+  4. Critique and improve their own plot
+- Seminar alternative: Use Plotly for interactive plots
 
 ---
 
@@ -77,164 +60,115 @@
 
 ### Common Student Struggles
 
-1. **"I committed to the wrong branch"**
-   - Don't panic — git has solutions for everything
-   - Show `git log` to verify where you are
-   - For simple cases: cherry-pick or re-make the commit on the right branch
+1. **"My histogram looks weird"**
+   - Almost always a bin width issue
+   - Too few bins: lose structure. Too many bins: noise dominates
+   - Rule of thumb: start with √N bins, then adjust
+   - Show the same data with 5, 20, 50, 200 bins
 
-2. **"What's the staging area for?"**
-   - Analogy: packing a suitcase. Staging = putting items on the bed to review. Commit = closing the suitcase.
-   - It lets you commit part of your changes (e.g., fix A but not unfinished feature B)
+2. **"When do I use a bar chart vs a histogram?"**
+   - Bar chart = categorical data (particle types, countries)
+   - Histogram = continuous data binned into intervals (mass spectrum, energies)
+   - Bars have gaps (discrete categories), histograms don't (continuous bins)
 
-3. **"I get merge conflicts and don't know what to do"**
-   - Walk through conflict markers step-by-step: `<<<<<<<`, `=======`, `>>>>>>>`
-   - "YOUR changes are on top, THEIR changes are on bottom"
-   - Delete the markers, keep what you want, save, add, commit
-   - Practice resolving 2-3 conflicts in class
+3. **"My plot is unreadable"**
+   - Increase font size (default matplotlib is too small for presentations)
+   - Use `plt.tight_layout()` to prevent label clipping
+   - Limit to 5-7 colours maximum
+   - Remove gridlines unless they add information
 
-4. **"SSH keys are confusing"**
-   - Walk through step-by-step: `ssh-keygen`, copy public key, paste in GitHub settings
-   - Have a backup plan: HTTPS with personal access token
-   - Some students will need 1-on-1 help with this
-
-5. **"I'm afraid of breaking something"**
-   - If it's committed, it's safe — git doesn't lose committed data
-   - Use `git status` constantly — it tells you what state you're in
-   - Worst case: `git clone` a fresh copy
+4. **"I can't tell the lines apart"**
+   - Use different line styles (`-`, `--`, `-.`, `:`) AND colours
+   - This is redundant encoding — essential for accessibility
+   - Consider: if printed in black and white, can you still read it?
 
 ### Interactive Elements
 
-- **Live demos are essential**: Students follow along on their machines
-- **learngitbranching.js.org**: Send students here for visual practice
-- **Pair exercise**: One student creates a repo, the other clones and contributes
-- **Conflict resolution practice**: Give students a pre-made repo with conflicting branches
+- **"What's wrong?"**: Show bad visualisations, students identify problems
+- **Before/after**: Show the same data plotted badly and well
+- **Live matplotlib**: Build a plot step-by-step in a notebook
+- **Peer review**: Students swap plots and critique each other's work
 
 ---
 
 ## Common Questions & Answers
 
-**Q**: Git or GitHub?
-**A**: Git is the tool (runs on your computer). GitHub is a hosting platform (stores repos online). You can use git without GitHub. GitLab and Bitbucket are alternatives to GitHub.
+**Q**: Should I always start my y-axis at zero?
+**A**: For bar charts: yes, always (bar length encodes value). For line/scatter plots: it depends — sometimes zooming in reveals important variation. Always label clearly.
 
-**Q**: How often should I commit?
-**A**: Commit when you complete a logical unit of work. "Add data loading function" is good. "Did some stuff" is bad. Multiple small commits > one giant commit.
+**Q**: Is matplotlib the best plotting library?
+**A**: matplotlib is the foundation — everything else (seaborn, plotly, bokeh) builds on it. Learn matplotlib first, then explore higher-level libraries. For publication-quality plots, matplotlib is hard to beat.
 
-**Q**: Should I put data files in git?
-**A**: Generally no. Git is for code, config, and documentation. Large data files belong in data storage (cloud drives, databases, git-lfs for special cases). Add data paths to `.gitignore`.
+**Q**: How do I choose colours?
+**A**: Use established palettes: viridis (sequential), Set2 or tab10 (categorical). Avoid red-green combinations (8% of men are red-green colourblind). Use [ColorBrewer](https://colorbrewer2.org/) for guidance.
 
-**Q**: Can I undo a `git push`?
-**A**: Yes, with `git revert` (safe: creates a new commit that undoes the change). Never use `git push --force` on shared branches — it rewrites history others depend on.
-
-**Q**: Do I need the command line, or can I use a GUI?
-**A**: Learning the command line first gives you understanding. Once comfortable, GUIs (VS Code git panel, GitHub Desktop, GitKraken) are great for daily use. Most professionals use a mix.
+**Q**: When is a pie chart acceptable?
+**A**: Almost never. Humans are bad at comparing angles. Use a bar chart instead. The only exception: showing 2-3 parts of a whole where the message is "this dominates" (e.g., 90% vs 10%).
 
 ---
 
 ## Key Reference Tables
 
-### Git Command Cheat Sheet
+### Chart Selection Guide
 
-| Command | What It Does |
-|---------|-------------|
-| `git init` | Create a new repository |
-| `git status` | Show current state |
-| `git add <file>` | Stage a file for commit |
-| `git add .` | Stage all changes |
-| `git commit -m "msg"` | Save staged changes |
-| `git log --oneline` | Show commit history (compact) |
-| `git diff` | Show unstaged changes |
-| `git diff --staged` | Show staged changes |
-| `git restore <file>` | Discard changes in working directory |
-| `git restore --staged <file>` | Unstage a file |
-| `git revert <hash>` | Undo a commit (safely) |
-| `git remote add origin <url>` | Connect to remote |
-| `git push -u origin main` | Push to remote (first time) |
-| `git push` | Push to remote (subsequent) |
-| `git pull` | Fetch + merge from remote |
-| `git clone <url>` | Copy a remote repository |
-| `git switch -c <branch>` | Create and switch to new branch |
-| `git switch main` | Switch to main branch |
-| `git merge <branch>` | Merge branch into current branch |
-| `git branch -d <branch>` | Delete a branch |
+| Data Relationship | Recommended Chart | Avoid |
+|-------------------|------------------|-------|
+| **Comparison** (few categories) | Bar chart | Pie chart |
+| **Comparison** (many categories) | Horizontal bar chart | Vertical bar (labels overlap) |
+| **Trend over time** | Line plot | Bar chart (suggests discrete) |
+| **Distribution** (one variable) | Histogram, box plot | Bar chart |
+| **Relationship** (two variables) | Scatter plot | Line plot (implies continuity) |
+| **Part of whole** | Stacked bar, treemap | Pie chart |
 
-### Commit Message Best Practices
+### Colourblind-Safe Palettes
 
-```
-<type>: <short summary in imperative mood>
+| Palette | Type | Best For |
+|---------|------|----------|
+| **viridis** | Sequential | Heatmaps, continuous data |
+| **cividis** | Sequential | Perceptually uniform, colourblind-safe |
+| **plasma** | Sequential | High contrast sequential |
+| **Set2** | Qualitative | Categorical (up to 8 categories) |
+| **tab10** | Qualitative | Categorical (up to 10 categories) |
 
-Optional longer description explaining WHY, not WHAT.
-The diff shows WHAT changed — the message explains WHY.
-```
+### Data-to-Ink Ratio Checklist
 
-Good examples:
-- `Add data loading function for CSV files`
-- `Fix off-by-one error in histogram binning`
-- `Update README with installation instructions`
+- [ ] Remove background colour (use white)
+- [ ] Remove unnecessary gridlines
+- [ ] Remove chart borders/boxes
+- [ ] Remove redundant labels
+- [ ] Use direct labelling instead of legends where possible
+- [ ] Remove 3D effects
+- [ ] Simplify tick marks
 
-Bad examples:
-- `fixed stuff`
-- `WIP`
-- `asdfgh`
-- `final version`
-
-### Python `.gitignore` Template
-
-```gitignore
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-dist/
-build/
-.eggs/
-
-# Virtual environments
-venv/
-.venv/
-env/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Data (track code, not data)
-*.csv
-*.h5
-*.root
-data/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Secrets
-.env
-*.key
-```
-
-### Daily Workflow
+### Plot Anatomy Quick Reference
 
 ```
-1. git pull                    # Get latest changes
-2. git switch -c my-feature    # Create a branch
-3. (edit files)                # Do your work
-4. git add file1.py file2.py   # Stage changes
-5. git commit -m "Add feature" # Commit
-6. git push -u origin my-feature  # Push branch
-7. Open Pull Request on GitHub    # Request review
+Title (what the plot shows)
+│
+├── Y-axis label (with units!)
+│   ├── Tick marks (sensible intervals)
+│   └── Tick labels (readable font)
+│
+├── Data area
+│   ├── Data points / bars / lines
+│   ├── Error bars (if applicable)
+│   └── Annotations (sparingly)
+│
+├── X-axis label (with units!)
+│   ├── Tick marks
+│   └── Tick labels
+│
+└── Legend (if multiple series)
+    └── Place inside plot area or to the right
 ```
 
 ---
 
 ## Time Estimates
 
-- Lecture (Parts 1-5): 65 min
-- Live demos (throughout): 20 min
-- Student hands-on (Parts 6-7): 25 min
+- Lecture (Parts 1-4): 75 min
+- Practice exercises: 25 min
+- Peer review / critique: 10 min
 - Q&A: 10 min
 - **Total**: ~120 min
 
@@ -242,17 +176,17 @@ data/
 
 ## Resources for Students
 
-- [Learn Git Branching](https://learngitbranching.js.org/) — interactive visual tutorial
-- [Pro Git book](https://git-scm.com/book/en/v2) (free online)
-- [GitHub SSH key setup guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
-- [Oh My Git!](https://ohmygit.org/) — game-based git learning
-- [git - the simple guide](https://rogerdudler.github.io/git-guide/)
+- [Fundamentals of Data Visualization — Claus O. Wilke](https://clauswilke.com/dataviz/) (free online book)
+- [matplotlib tutorials](https://matplotlib.org/stable/tutorials/)
+- [ColorBrewer 2.0](https://colorbrewer2.org/) — colour palette tool
+- [Plotly Python docs](https://plotly.com/python/)
+- Edward Tufte, *The Visual Display of Quantitative Information*
 
 ---
 
 ## Assessment Ideas
 
-- **Quiz**: "What does `git add` do?" / "Draw the three states of git"
-- **Practical**: "Create a repository, make 3 commits, push to GitHub" — assessed on commit messages and history
-- **Collaboration**: Pair exercise — contribute to each other's repositories via pull requests
-- **Conflict resolution**: Resolve a pre-made merge conflict (provided as a repo with two branches)
+- **Quiz**: "What's wrong with this visualisation?" (show 3 bad plots)
+- **Practical**: "Create a publication-quality plot from this dataset" (must include labels, legend, appropriate chart type)
+- **Critique exercise**: Give students a data journalism article — identify 3 visualisation strengths and 3 weaknesses
+- **Redesign challenge**: Give students a bad plot and its data — redesign it following best practices

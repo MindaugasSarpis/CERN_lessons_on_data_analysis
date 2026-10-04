@@ -1,6 +1,6 @@
 ---
 layout: cover
-title: "Python for Data Work"
+title: "Python for Data & NumPy"
 ---
 
 # Dr. Mindaugas Šarpis

@@ -1,8 +1,3 @@
-# 15: Computer infrastructure
+# 4: Command Line & File Handling
 
-## Lecture 15: Computer infrastructure (hardware)
-
----
-
-## Seminar
-
+This page is being written.

@@ -1,48 +1,49 @@
-# Seminar 7 — Python Warm-Up: Parse One Event
+# Seminar 8 — Read the Whole File into Python
 
-**Paired lecture:** 07 Python Foundations · **Format:** hands-on · **~120 min**
+**Paired lecture:** 08 Python for Data Work · **Format:** hands-on · **~120 min**
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **This session builds:** your first parsing code — one CSV line
-> turned into numbers.
+> **This session builds:** an ingest script that reads the entire
+> CSV into Python — no Pandas yet.
 
 ## Goal
-Write clean Python that turns a raw text line into usable numeric values, using
-only the language basics (strings, lists, functions, control flow).
+Scale a one-line parser (Seminar 7's `parse_line`, or the one supplied) to the whole file using files, loops, the
+`csv` module, and a dictionary of columns — and appreciate what Pandas will later
+do for you.
 
 ## Prerequisites
-Seminar 6. Python basics from lecture 07.
+A one-line parser — your own from Seminar 7, or the reference `parse_line` the instructor provides.
 
 ## Tasks
-1. In `scripts/parse.py`, hard-code one data row from the CSV as a string.
-2. Use `str.strip()` and `str.split(",")` to break it into fields.
-3. Convert the numeric fields with `float()`; keep IDs as `int`/`str`.
-4. Write a function `parse_line(line) -> dict` mapping column names to values.
-   Guard against a bad line with `try/except` and return `None`.
-5. Print the parsed dict nicely with an f-string.
+1. In `scripts/ingest.py`, open the CSV with a `with open(...)` block.
+2. Read it with the standard-library `csv` module (`csv.DictReader`).
+3. Collect the invariant mass `M` of every event into a list of floats,
+   skipping any row that fails to parse (count how many you skip).
+4. Print summary numbers with your own code: count, min, max, mean of `M`.
+5. Save the mass list to `data/processed/masses.csv` (one value per line).
 
 ## Stretch goals
-- Read the header row and build the column-name list automatically instead of
-  hard-coding it.
-- Add a `list comprehension` that extracts just the kaon and pion momenta.
-- Write a second function `validate_line(fields) -> bool` that rejects a row
-  whose momentum components fail to convert or come out `NaN` — a preview of
-  Seminar 9's audit.
+- Time how long the read takes; estimate it for a 10× bigger file.
+- Add a `--limit N` command-line argument with `argparse` for quick test runs.
+- Write the same summary (count/min/max/mean) as a small
+  `data/processed/summary.json` too (using the `json` module) — a preview of
+  the structured file formats from the lecture.
 
 ## Wrap-up (last 10 min)
-- Run `python scripts/parse.py` once more from a clean terminal and confirm
-  the exact same dict prints, byte for byte.
-- Commit it: `git add -A && git commit -m "First parser for one event"`.
-- Note one lesson in the README: which field was trickiest to convert, and why
-  (the classic `str` vs `float` trap?).
+- Re-run `python scripts/ingest.py` from a clean terminal on the same file and
+  confirm identical count/min/max/mean — proof the ingest is deterministic,
+  not order-dependent.
+- Commit it: `git add -A && git commit -m "Ingest script for the whole file"`.
+- Note one lesson in the README: how many rows you skipped and why, so
+  future-you isn't surprised by the row count later.
 
 ## Solution notes (instructor)
-This is the `strip → split → convert` recipe from the lecture. Keep it in a
-**function** — Seminar 8 will call it over the whole file. Watch for off-by-one
-column errors and locale decimal issues. In the 120-minute slot, the
-`try/except` guard in task 4 is where groups stall — put the recipe on the
-board early so task 5 and the stretch goals still get their time.
+Doing it "by hand" first makes the Pandas version in Seminar 13 feel like the
+gift it is. Reinforce: raw stays untouched; `masses.csv` is a **derived** file in
+`processed/`, safe to delete and regenerate. In the 120-minute slot, task 3's
+skip-and-count logic is worth walking through at the board (~15 minutes) before
+groups race ahead to the summary stats and stretch goals.
 
 ## Aims practised
-🔧 language-agnostic parsing ideas · 📁 turning bytes into structured values
+📁 raw → derived, by script · ⚙️ a re-runnable ingest step · 🔧 stdlib first

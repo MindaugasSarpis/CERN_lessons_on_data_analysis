@@ -1,6 +1,6 @@
 ---
 layout: cover
-title: "NumPy & Pandas"
+title: "Pandas & Data Cleaning"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
   installs: ["numpy", "pandas", "matplotlib"]

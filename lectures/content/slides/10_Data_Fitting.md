@@ -1,6 +1,6 @@
 ---
 layout: cover
-title: "Practical Data Fitting"
+title: "Data Fitting from First Principles"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
   installs: ["numpy", "matplotlib", "scipy"]

@@ -112,36 +112,36 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact reveal-scale">
 
-**A · Foundations & Tooling** *(01–06)*
-Orientation, data, computers, command line & files, Markdown & VS Code, Git
+**A · Foundations & Tooling** *(01–05)*
+Orientation, data, computers, command line & files, Git
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact reveal-scale">
 
-**B · Programming** *(07–08)*
-Python foundations, then Python for data & files
+**B · Programming** *(06–07)*
+Python foundations, then Python for data and NumPy arrays
 
 </div>
 
 <div class="card card-info card-glass pad-compact reveal-scale">
 
-**C · Data Analysis Core** *(09–12)*
-Concepts, visualisation, probability & statistics, fitting
+**C · Data Analysis Core** *(08–11)*
+Visualisation, probability & statistics, fitting from first principles, the perceptron
 
 </div>
 
 <div class="card card-success card-glass pad-compact reveal-scale">
 
-**D · Practical Data Work** *(13–14)*
-NumPy & Pandas, reproducible workflows & automation
+**D · Practical Data Work** *(12–13)*
+Pandas & data cleaning, reproducible workflows & automation
 
 </div>
 
 <div class="card card-warning card-glass pad-compact reveal-scale">
 
-**E · Advanced** *(optional, 15–16)*
-Computing infrastructure & HPC, machine learning & AI
+**E · Further Topics** *(14–16, as time allows)*
+Concepts of data analysis, computing infrastructure & HPC, machine learning & AI
 
 </div>
 
@@ -166,35 +166,32 @@ hideInToc: true
 
 # **Schedule**
 
-Every **Tuesday**: **2 h lecture** + **2 h seminar** — 16 weeks, **8 Sep – 22 Dec 2026**. Week 1 is lecture only; seminars start in week 2.
+Every **Tuesday**: **2 h lecture** + **2 h seminar**, **8 Sep – 22 Dec 2026**. Week 1 is lecture only; seminars start with the second session. No session on 15 Sep, 22 Sep and 24 Nov.
 
 <div class="grid-2 gap-sm mt-sm">
 
-| **Wk** | **Tue** | **Lecture** |
+| | **Tue** | **Lecture** |
 | --- | --- | --- |
-| 1 | 8 Sep | **A** · Orientation & Motivation *(lecture only)* |
-| 2 | ~~15 Sep~~ | ~~**A** · Introduction to Data~~ |
-| 3 | ~~22 Sep~~ | ~~**A** · How Computers Work~~ |
-| 4 | 29 Sep | **A** · Command Line & File Handling |
-| 5 | 6 Oct | **A** · Markdown & VS Code |
-| 6 | 13 Oct | **A** · Version Control with Git |
-| 7 | 20 Oct | **B** · Python Foundations |
-| 8 | 27 Oct | **B** · Python for Data Work |
+| 1 | 8 Sep | **A** · Orientation & Motivation |
+| 2 | 29 Sep | **A** · Introduction to Data |
+| 3 | 6 Oct | **A** · How Computers Work |
+| 4 | 13 Oct | **A** · Command Line & File Handling |
+| 5 | 20 Oct | **A** · Version Control with Git |
+| 6 | 27 Oct | **B** · Python Foundations |
+| 7 | 3 Nov | **B** · Python for Data & NumPy |
 
-| **Wk** | **Tue** | **Lecture** |
+| | **Tue** | **Lecture** |
 | --- | --- | --- |
-| 9 | 3 Nov | **C** · Concepts of Data Analysis |
-| 10 | 10 Nov | **C** · Data Visualisation |
-| 11 | 17 Nov | **C** · Probability & Statistics |
-| ~~12~~ | ~~24 Nov~~ | ~~**C** · Practical Data Fitting~~ |
-| 13 | 1 Dec | **D** · NumPy & Pandas |
-| 14 | 8 Dec | **D** · Reproducible Workflows & Automation |
-| 15 | 15 Dec | **E** · Computing Infrastructure & HPC |
-| 16 | 22 Dec | **E** · Machine Learning & AI |
+| 8 | 10 Nov | **C** · Data Visualisation |
+| 9 | 17 Nov | **C** · Probability & Statistics |
+| 10 | 1 Dec | **C** · Data Fitting from First Principles |
+| 11 | 8 Dec | **C** · The Perceptron |
+| 12 | 15 Dec | **D** · Pandas & Data Cleaning |
+| 13 | 22 Dec | **D** · Reproducible Workflows & Automation |
 
 </div>
 
-<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work · <strong>E</strong> Advanced (optional) — <strong>Final Project Presentations</strong> in the exam session.</div>
+<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work. Block <strong>E</strong>, Further Topics, is extra material. <strong>Final project presentations</strong> are in the exam session.</div>
 
 <style scoped>
 table {
@@ -302,7 +299,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">Lecture 4 (command line &amp; files) and Seminar 4 build exactly this structure on the seminar dataset — repeat it on your own project the same afternoon.</div>
+<div class="note-text mt-md">The same structure works for any project: build it once and repeat it on your own.</div>
 
 <!--
 Speaker: the next four slides are one before/after pair per aim, all drawn from real

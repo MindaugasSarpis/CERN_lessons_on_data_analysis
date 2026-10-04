@@ -1,58 +1,52 @@
-# Seminar 9 — Data-Quality Audit
+# Seminar 11 — Quantify Uncertainty on a Measurement
 
-**Paired lecture:** 09 Concepts of Data Analysis · **Format:** hands-on · **~120 min**
+**Paired lecture:** 11 Probability & Statistics · **Format:** hands-on · **~120 min**
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **This session builds:** a documented quality audit of your
-> dataset.
+> **This session builds:** a real measurement reported **with an
+> uncertainty**.
 
 ## Goal
-Apply the data-quality checklist from the lecture to real data before trusting any
-result.
+Estimate a physical quantity from the data and attach an honest uncertainty,
+distinguishing standard deviation from standard error.
 
 ## Prerequisites
-Seminar 8 (ingest).
+Seminar 10 (you can see the peaks).
 
 ## Tasks
-1. Run the lecture's checklist over the dataset and record findings in the README:
-   - **Completeness** — any missing/empty fields? How many rows?
-   - **Validity** — any impossible values? (negative mass, `pt` < 0, `|Q|` ≠ 1)
-   - **Consistency** — do derived and stored quantities agree? (spot-check that
-     `M` is consistent with the kaon and pion energy/momentum for a few rows)
-   - **Duplicates** — any repeated `(Run, Event)` pairs?
-2. Write `scripts/audit.py` that prints each check's result as a count.
-3. Decide (and document) a policy: which rows do you drop, and why?
-4. Turn the policy into code: extend `scripts/audit.py` to actually apply it,
-   writing the surviving rows to `data/processed/audited.csv` and printing the
-   before/after row counts — the drop is now documented in output, not just
-   words. (Seminar 13 will redo this in a few lines of Pandas; for now, do it
-   by hand.)
-5. Beyond "impossible" values, scan for **statistical outliers** in `M`: flag
-   any value more than ~5 standard deviations from the mean (or outside a sane
-   physical window like [1700, 2050] MeV) and report the count — then decide
-   in the README whether they look like genuine rare events or data errors.
+1. Select events in a window around the D⁰ peak (e.g. `1.84 < M < 1.89` GeV).
+2. Compute the **mean** mass in that window, the **standard deviation** (spread of
+   events), and the **standard error** SE = σ/√n (uncertainty of the mean).
+3. Report the peak mass as `mean ± SE`. State clearly which number answers
+   "how spread are the events" vs "how well do I know the average".
+4. Halve the window and re-measure: does your estimate move within its uncertainty?
+5. Wrap the computation in `scripts/measure_peak.py`, taking the window bounds as
+   arguments and printing `mean ± SE` — task 4's re-measurement becomes a one-line rerun.
+6. Compute a 68% confidence interval on the mean and state in one sentence what it
+   means. Then compute the **Poisson counting uncertainty** √N on the number of events
+   in your window, and explain why it answers a different question than the SE on the mean.
 
 ## Stretch goals
-- Classify the "missingness": is it random, or tied to a particular Run?
-- Write the flagged rows to `data/processed/flagged.csv` for review.
-- Compare your audit's row-drop rate against a neighbour's — do you agree on
-  what counts as "impossible", and why might policies legitimately differ?
+- Bootstrap: resample the window with replacement 1000× and compare the spread of
+  means to your SE.
+- How many events would you need to halve the uncertainty? (Recall SE ∝ 1/√n.)
+- Compute the SE in a sideband (background-only) window of the same width and compare
+  its size to your peak-window SE — confirming SE depends on *n* and spread, not on
+  sitting on a peak.
 
 ## Wrap-up (last 10 min)
-- Re-run `python scripts/audit.py` on a fresh copy of the raw file and confirm
-  every count reproduces exactly — an audit that isn't re-runnable isn't
-  trustworthy.
-- Commit it: `git add -A && git commit -m "Data-quality audit + documented drop policy"`.
-- Note one lesson in the README: the single check that caught the most rows,
-  and whether that surprised you.
+- Run `scripts/measure_peak.py` again in a fresh terminal — it should print the
+  identical `mean ± SE`, proving the measurement is push-button reproducible.
+- Commit: `git add -A && git commit -m "Add peak mass measurement with uncertainty"`.
+- Note one lesson in the README, e.g. how the SD-vs-SE distinction changed the way you
+  read an error bar.
 
 ## Solution notes (instructor)
-The output is a **written policy**, not just numbers — "we drop rows where … because …".
-Connect to the lecture's documented-case study: silent bad rows produce confident
-wrong conclusions. In the 120-minute slot, task 3's policy discussion is where
-groups want to linger — cap it at ~15 minutes of debate before insisting they
-write it down and move to tasks 4–5.
+The SD-vs-SE distinction is the crux (revisit the lecture slide). Error bars on a
+*mean* should be SE, not SD. The published D⁰ mass is 1864.84 MeV — a nice check. In
+the 120-minute slot, timebox the SD-vs-SE derivation (task 2) to ~15 minutes on the
+board — that's where groups stall, not in task 5's scripting.
 
 ## Aims practised
-📁 trustworthy data · ♻️ a documented, re-runnable audit
+📊 honest uncertainty · ♻️ a reproducible measurement script

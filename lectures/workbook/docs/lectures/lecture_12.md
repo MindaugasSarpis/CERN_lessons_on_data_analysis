@@ -1,4 +1,4 @@
-# L14: Reproducible Workflows & Automation
+# L13: NumPy, Pandas & Real Data
 
 ---
 
@@ -6,67 +6,57 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L1-L13 (especially L6 on Git)
+**Prerequisites**: L7-L8 (Python basics), L12 (Data fitting)
 
 **Learning Objectives**:
-- Structure analysis projects professionally
-- Use command-line arguments (argparse)
-- Manage dependencies with virtual environments
-- Write configuration files (YAML)
-- Automate workflows with Makefiles
-- Set up CI/CD with GitHub Actions
-- Understand Docker basics (optional/advanced)
+- Master NumPy arrays and vectorized operations
+- Use Pandas DataFrames for tabular data
+- Load, clean, and preprocess real datasets
+- Handle missing data and outliers
+- Perform group-by and aggregation operations
+- Transition from toy examples to real-world data
 
 ---
 
 ## Lecture Structure
 
-### Part 1: Why Reproducibility Matters (10 min)
-- The reproducibility crisis in science
-- "Works on my machine" problem
-- Benefits: faster iteration, easier collaboration, career skills
-- Show before/after: chaotic notebook vs professional workflow
+### Part 1: NumPy Foundations (30 min)
+- Why NumPy? (Speed, memory, convenience)
+- Creating arrays (from lists, zeros, ones, arange, linspace)
+- **Speed comparison demo**: Lists vs NumPy (10-100x faster!)
+- Vectorization: element-wise operations without loops
+- Array indexing, slicing, boolean masking
+- Broadcasting rules
 
-### Part 2: Project Structure (15 min)
-- Anatomy of well-organized project
-- Separation of concerns: data, code, config, results
-- Never modify raw data!
-- Directory structure best practices
+### Part 2: Pandas DataFrames (30 min)
+- What is a DataFrame? (Excel table, SQL table analog)
+- Creating DataFrames from dictionaries
+- Reading CSV files (`pd.read_csv`)
+- Basic operations: head, describe, info
+- Selecting columns and rows (iloc, loc)
+- Filtering with boolean indexing
+- Adding new columns
 
-### Part 3: Command-Line Arguments (20 min)
-- Why hardcoded values are bad
-- Introduce argparse
-- **Live demo**: Convert hardcoded script to CLI tool
-- Show help messages, required vs optional args
+### Part 3: Data Cleaning (20 min)
+- Handling missing values (NaN)
+  - Detect: `df.isnull().sum()`
+  - Drop: `df.dropna()`
+  - Fill: `df.fillna(value)`, `df.fillna(df.mean())`
+- Detecting outliers (z-score, IQR method)
+- Data normalization and scaling
+  - Standardization: (x - mean) / std
+  - Min-max scaling: (x - min) / (max - min)
 
-### Part 4: Configuration Files (15 min)
-- When config files are better than args
-- YAML syntax and structure
-- Loading config in Python
-- Combining argparse + config files
+### Part 4: Group-By Operations (15 min)
+- Split-Apply-Combine paradigm
+- `df.groupby('column').agg(...)`
+- Multiple aggregations
+- Practical example: detector-wise statistics
 
-### Part 5: Virtual Environments (15 min)
-- The dependency problem
-- Creating venv and conda environments
-- requirements.txt best practices
-- Documenting Python version
-
-### Part 6: Automation with Make (15 min)
-- Why Makefiles?
-- Basic syntax (targets, dependencies, commands)
-- **Live demo**: Create Makefile for analysis pipeline
-- Running: `make all`, `make clean`, `make test`
-
-### Part 7: CI/CD with GitHub Actions (10 min)
-- What is CI/CD?
-- Basic GitHub Actions workflow
-- Automatically run tests on push
-- (Optional) Auto-run analysis pipeline
-
-### Part 8: Best Practices Summary (5 min)
-- Reproducibility checklist
-- README template
-- .gitignore essentials
+### Part 5: Real Example - CERN Data (15 min)
+- Simulated dimuon spectrum (realistic)
+- Load, explore, filter, visualize
+- Connect to real CERN Open Data Portal
 
 ---
 
@@ -74,274 +64,200 @@
 
 ### Common Student Struggles
 
-1. **"This seems like a lot of overhead for simple analysis!"**
-   - Start small, add one thing at a time
-   - Show long-term payoff (6 months later, can still run it!)
-   - Emphasize: "Future you" will thank present you
-   - Cost upfront, massive savings later
+1. **"NumPy arrays vs Python lists - when to use which?"**
+   - NumPy: numerical operations, large datasets, performance-critical
+   - Lists: mixed types, small data, general Python code
+   - Rule: Use NumPy for anything numerical!
 
-2. **"My Makefile isn't working!"**
-   - **Must use TAB, not spaces!** (Most common error)
-   - Check file paths (relative vs absolute)
-   - Use `make -n` to dry-run and see commands
+2. **"Why is my Pandas operation slow?"**
+   - Avoid `iterrows()` - use vectorized operations
+   - Use `apply()` for row-wise operations
+   - Don't repeatedly append to DataFrame (pre-allocate or use list)
 
-3. **"Virtual environments are confusing"**
-   - Analogize: separate toolboxes for different projects
-   - Show `pip list` before and after activation
-   - Emphasize: prevents "it worked yesterday" syndrome
+3. **"How do I handle missing data?"**
+   - **Understand why it's missing first!**
+   - Physics reason? (detector dead time → exclude)
+   - Random? (fill with mean, median, interpolate)
+   - Show students the impact of different strategies
 
-4. **"Do I really need all of this?"**
-   - For one-off script: maybe not
-   - For analysis you'll publish: absolutely!
-   - For collaboration: essential
-   - Show real-world example of paper retraction due to irreproducible analysis
+4. **"My DataFrame doesn't fit in memory!"**
+   - Read in chunks: `pd.read_csv(..., chunksize=10000)`
+   - Use appropriate dtypes (int32 vs int64)
+   - Consider Dask or Polars for very large data
 
 ### Interactive Elements
 
-- **Before/after challenge**: Show messy project, have students identify problems
-- **Pair programming**: One writes config file, other writes loading code
-- **Makefile race**: Who can create working Makefile first?
-- **Debug session**: Intentionally break things, troubleshoot together
+- **Speed race**: Time list comprehension vs NumPy operation live
+- **Data detective**: Give students messy dataset, ask them to identify issues
+- **Group challenge**: "Find the detector with highest mean energy" using groupby
+- **Plot competition**: Who can create the most informative exploratory plot?
 
 ### Hands-On Exercises
 
-**Exercise 1** (Warm-up): Add argparse to existing script
+**Exercise 1** (Warm-up): NumPy basics
 ```python
-# Take hardcoded script from L12
-# Add --input, --output, --bins arguments
-# Test with different values
+# Create array of 100 random numbers
+# Calculate mean, std, max, min
+# Find all values > mean + std
 ```
 
-**Exercise 2** (Core): Create project structure
-```bash
-# Start with messy directory
-# Reorganize into proper structure
-# Add README, requirements.txt, .gitignore
-# Create Makefile
+**Exercise 2** (Core): Pandas DataFrame manipulation
+```python
+# Load CSV file
+# Remove rows with missing energy values
+# Filter events with energy > 50 GeV
+# Group by detector, calculate mean energy
+# Create histogram of energy distribution
 ```
 
-**Exercise 3** (Advanced): Full workflow automation
-- Multi-step analysis (preprocess → fit → plot)
-- Config file for all parameters
-- Makefile that runs entire pipeline
-- GitHub Actions to test on push
+**Exercise 3** (Advanced): Real data analysis
+- Download actual CMS or ATLAS open data
+- Clean and explore dataset
+- Identify interesting features (resonance peaks, etc.)
+- Prepare data for fitting (connect to L12!)
 
 ---
 
 ## Common Questions & Answers
 
-**Q**: Isn't this just software engineering, not data analysis?
-**A**: Modern data analysis **is** software engineering! Computational reproducibility is as important as experimental reproducibility.
+**Q**: Should I use NumPy or Pandas?
+**A**: Both! NumPy for arrays and numerical operations, Pandas for labeled tabular data. Pandas is built on NumPy.
 
-**Q**: Can't I just use Jupyter notebooks?
-**A**: Notebooks are great for exploration, but scripts are better for reproducibility. Use both! Explore in notebooks, productionize as scripts.
+**Q**: How do I read Excel files?
+**A**: `pd.read_excel('file.xlsx')` - may need `pip install openpyxl`
 
-**Q**: My collaborator doesn't know Git/Make/etc. What do I do?
-**A**: Write clear README. Provide simple commands. Consider this a teaching opportunity!
+**Q**: What's the difference between loc and iloc?
+**A**: `iloc` uses integer position (0, 1, 2...), `loc` uses labels (column names, row indices)
 
-**Q**: Should I commit generated results to Git?
-**A**: Generally no (they should be reproducible!). Exception: small, important results for papers. Use Git LFS for large files.
+**Q**: Why are my NumPy operations giving weird results?
+**A**: Check data types! Integer division, overflow, broadcasting issues
 
-**Q**: What if my analysis takes 24 hours to run?
-**A**: Cache intermediate results. Makefiles help here! Only rerun what changed. Consider workflow managers (Snakemake, Nextflow) for very complex pipelines.
+**Q**: Should I drop or fill missing values?
+**A**: Depends on domain! Physics analysis: often drop (can't invent measurements). ML: often fill (but document it!)
 
 ---
 
 ## Key Code Snippets
 
-### argparse template
+### NumPy essentials
 ```python
-import argparse
+import numpy as np
 
-parser = argparse.ArgumentParser(description='Analysis script')
-parser.add_argument('--input', required=True, help='Input CSV file')
-parser.add_argument('--output', default='results.png', help='Output file')
-parser.add_argument('--bins', type=int, default=50, help='Number of bins')
-args = parser.parse_args()
+# Create and operate on arrays
+arr = np.array([1, 2, 3, 4, 5])
+result = arr ** 2 + 2 * arr  # Vectorized!
 
-# Use: python script.py --input data.csv --bins 100
+# Boolean masking
+high_values = arr[arr > 3]
+
+# Speed comparison
+%timeit [x**2 for x in range(10000)]
+%timeit np.arange(10000)**2
 ```
 
-### YAML config
-```yaml
-# config.yaml
-data:
-  input_file: "data/sample.csv"
-  output_dir: "results/"
-
-model:
-  bins: 50
-  range: [0, 15]
-```
-
+### Pandas essentials
 ```python
-import yaml
-with open('config.yaml') as f:
-    config = yaml.safe_load(f)
-n_bins = config['model']['bins']
+import pandas as pd
+
+# Load data
+df = pd.read_csv('data.csv')
+
+# Explore
+print(df.head())
+print(df.describe())
+
+# Filter
+signal = df[df['is_signal'] == True]
+high_energy = df[df['energy'] > 50]
+
+# Group and aggregate
+stats = df.groupby('detector')['energy'].agg(['mean', 'std', 'count'])
 ```
 
-### Basic Makefile
-```makefile
-.PHONY: all clean test
+### Handling missing data
+```python
+# Check for missing
+print(df.isnull().sum())
 
-all: results/plot.png
+# Drop rows with any NaN
+df_clean = df.dropna()
 
-results/plot.png: data/clean.csv scripts/plot.py
-	python scripts/plot.py --input data/clean.csv --output results/plot.png
-
-clean:
-	rm -rf results/*
-
-test:
-	pytest tests/
-```
-
-### GitHub Actions
-```yaml
-name: Tests
-on: [push]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    - run: pip install -r requirements.txt
-    - run: pytest tests/
+# Fill with mean
+df['energy'].fillna(df['energy'].mean(), inplace=True)
 ```
 
 ---
 
 ## Demonstrations
 
-### Demo 1: Argparse in Action (5 min)
-Start with hardcoded script:
+### Demo 1: Speed Comparison (5 min)
+Show dramatic speed difference between lists and NumPy:
 ```python
-# analyze.py (before)
-df = pd.read_csv('data.csv')
-plt.hist(df['energy'], bins=50)
+import time
+import numpy as np
+
+n = 1_000_000
+lst = list(range(n))
+arr = np.arange(n)
+
+# List (slow)
+start = time.time()
+result_list = [x**2 + 2*x + 1 for x in lst]
+print(f"List: {time.time() - start:.3f}s")
+
+# NumPy (fast)
+start = time.time()
+result_array = arr**2 + 2*arr + 1
+print(f"NumPy: {time.time() - start:.3f}s")
 ```
 
-Transform to CLI tool:
-```python
-# analyze.py (after)
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('--input', required=True)
-parser.add_argument('--bins', type=int, default=50)
-args = parser.parse_args()
-
-df = pd.read_csv(args.input)
-plt.hist(df['energy'], bins=args.bins)
-```
-
-Show usage:
-```bash
-python analyze.py --help
-python analyze.py --input data.csv
-python analyze.py --input data.csv --bins 100
-```
-
-### Demo 2: Makefile Workflow (10 min)
-Create analysis pipeline:
-1. Preprocess data
-2. Fit model
-3. Generate plot
-
-Write Makefile:
-```makefile
-all: results/final_plot.png
-
-data/clean.csv: data/raw.csv scripts/preprocess.py
-	python scripts/preprocess.py
-
-results/fit.json: data/clean.csv scripts/fit.py
-	python scripts/fit.py
-
-results/final_plot.png: results/fit.json scripts/plot.py
-	python scripts/plot.py
-
-clean:
-	rm -rf data/clean.csv results/*
-```
-
-Show:
-- `make all` (runs everything)
-- Modify one script
-- `make all` again (only reruns affected steps!)
-- `make clean && make all` (full rebuild)
+### Demo 2: Real Data Exploration (10 min)
+Walk through complete EDA workflow:
+1. Load CSV
+2. Check for missing values
+3. Summary statistics
+4. Visualize distributions
+5. Identify outliers
+6. Filter and clean
+7. Save processed data
 
 ---
 
 ## Time Estimates
 
-- Motivation: 10 min
-- Project structure: 15 min
-- argparse: 20 min
-- Config files: 15 min
-- Virtual envs: 15 min
-- Makefiles: 15 min
-- GitHub Actions: 10 min
-- Student exercises: 40 min
-- **Total**: 140 min
+- NumPy (lecture + demos): 30 min
+- Pandas (lecture + demos): 30 min
+- Data cleaning: 20 min
+- Group-by: 15 min
+- Real example: 15 min
+- Student exercises: 30 min
+- **Total**: 140 min (adjust as needed)
 
 ---
 
 ## Resources for Students
 
-- [argparse tutorial](https://docs.python.org/3/howto/argparse.html)
-- [YAML specification](https://yaml.org/)
-- [GNU Make tutorial](https://makefiletutorial.com/)
-- [GitHub Actions docs](https://docs.github.com/en/actions)
-- [The Turing Way](https://the-turing-way.netlify.app/) - handbook on reproducible research
-- [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/) - project template
+- [NumPy documentation](https://numpy.org/doc/)
+- [Pandas documentation](https://pandas.pydata.org/docs/)
+- [10 minutes to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
+- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/) by Jake VanderPlas (free online)
+- [CERN Open Data Portal](http://opendata.cern.ch)
 
 ---
 
 ## Assessment Ideas
 
-- **Project audit**: Students evaluate their own/peer's project structure
-- **Reproducibility test**: Try to run classmate's analysis on your machine
-- **Refactoring challenge**: Take messy code, make it reproducible
-- **Final project requirement**: Must have proper structure, README, requirements.txt, and run with one command
+- **Practical quiz**: "Load this CSV, find mean energy per detector, plot results"
+- **Data cleaning challenge**: Give messy dataset, students must clean and document steps
+- **Speed optimization**: "Rewrite this slow code using NumPy vectorization"
+- **Project milestone**: Students must load and clean real dataset for final project
 
 ---
 
 ## Extension Activities
 
 For advanced students:
-- Introduce Snakemake or Nextflow (workflow managers)
-- Docker containerization (full environment isolation)
-- Pre-commit hooks (automatic code formatting, linting)
-- Documentation generation with Sphinx
-- Code review practices on GitHub
-
----
-
-## Key Messages to Emphasize
-
-1. **Reproducibility is not optional** - it's fundamental to science
-2. **Start small** - don't implement everything at once
-3. **Future you is a collaborator** - write code for them
-4. **Good structure saves time** - upfront cost, long-term benefit
-5. **These are career skills** - industry values this highly
-6. **Document everything** - README is not optional
-
----
-
-## Homework / Project Integration
-
-**Suggested assignment**:
-"Take your L12 fitting code and L13 data processing code. Restructure into proper project with:
-- Clear directory structure
-- Command-line arguments
-- Config file
-- requirements.txt
-- README with setup instructions
-- Makefile
-- Working on classmate's computer
-
-Due: Next week. Will be evaluated on reproducibility!"
+- Introduce Dask for out-of-memory datasets
+- Show Polars as faster Pandas alternative
+- Demonstrate Jupyter notebooks for interactive EDA
+- Connect to databases with `pd.read_sql()`

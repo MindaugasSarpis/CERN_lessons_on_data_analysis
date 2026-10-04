@@ -1,4 +1,4 @@
-# Crash Course on Python Programming
+# L6: Version Control with Git
 
 ---
 
@@ -6,57 +6,70 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L3 (Computer Science basics), L15 (Computing Infrastructure)
+**Prerequisites**: L4 (command line basics), L7-L8 (Python — for understanding what files to track)
 
 **Learning Objectives**:
-- Write and run Python scripts from the command line and in an IDE
-- Use core data types: strings, lists, and dictionaries
-- Control program flow with conditionals, loops, and functions
-- Handle files (text, JSON, CSV) and use built-in modules
-- Debug common errors (SyntaxError, NameError, TypeError)
+- Explain why version control is essential for scientific work
+- Initialise a git repository and make commits
+- Use the staging area to control what goes into each commit
+- Read diffs and logs to understand project history
+- Push to and pull from a remote repository (GitHub)
+- Create branches, merge them, and resolve conflicts
+- Write a `.gitignore` and follow a daily git workflow
 
 ---
 
 ## Lecture Structure
 
-### Part 1: Python Basics (25 min)
-- Why Python? (popularity, readability, scientific ecosystem)
-- Running Python: REPL vs scripts vs notebooks
-- Variables, dynamic typing, `type()`
-- Operators: arithmetic (`+`, `-`, `*`, `/`, `//`, `**`, `%`), comparison, logical (`and`, `or`, `not`, `in`)
-- Built-in functions: `print()`, `len()`, `input()`, `range()`
-- Comments and indentation (Python's signature feature)
+### Part 1: Why Version Control? (10 min)
+- The problem: `report_v2_final_FINAL_v3.docx`
+- What version control gives you: history, collaboration, safety net
+- Git = the standard (used at CERN, in industry, everywhere)
+- Brief: Git vs GitHub (tool vs hosting platform)
 
-### Part 2: Data Structures (30 min)
-- **Strings**: indexing, slicing (`s[1:4]`), methods (`.upper()`, `.split()`, `.strip()`, `.replace()`), f-strings
-- **Lists**: creation, append/remove, sorting, list comprehensions
-- **Dictionaries**: key-value pairs, CRUD operations, `.keys()`, `.values()`, `.items()`, nested dicts
-- Live demo: Build a particle data dictionary
+### Part 2: First Steps (20 min)
+- Configure git: `git config --global user.name` / `user.email`
+- `git init` — create a repository
+- `git status` — your most-used command
+- The three states: working directory → staging area → repository
+- `git add` → `git commit -m "message"`
+- **Live demo**: Create a repo, add a Python script, commit it
 
-### Part 3: Control Flow (20 min)
-- `if` / `elif` / `else` with comparison operators
-- `for` loops (over lists, ranges, strings, dicts)
-- `while` loops and `break` / `continue`
-- `range()` patterns: `range(n)`, `range(a, b)`, `range(a, b, step)`
-- Interactive: Loop exercises in monaco-run
+### Part 3: Understanding History (15 min)
+- `git log` and `git log --oneline --graph`
+- `git diff` — reading changes (green = added, red = removed)
+- `git diff --staged` — what's about to be committed
+- Commit messages: imperative mood, short summary + optional body
+- **Interactive**: Students make 3 commits with meaningful messages
 
-### Part 4: Functions & Patterns (25 min)
-- Defining functions: `def`, parameters, `return`
-- Default arguments and keyword arguments
-- Exception handling: `try` / `except` / `finally`
-- Useful patterns: `enumerate()`, `zip()`, list comprehensions
-- Interactive: Write a function exercise
+### Part 4: Undoing Things (10 min)
+- `git restore <file>` — discard working directory changes
+- `git restore --staged <file>` — unstage a file
+- `git revert <hash>` — undo a commit safely (creates new commit)
+- `git reset --hard` — nuclear option (explain but discourage)
+- Key message: git almost never loses data — if it's committed, it's recoverable
 
-### Part 5: Files & Modules (20 min)
-- `import` and `from ... import`
-- File I/O: `open()`, `read()`, `write()`, context managers (`with`)
-- Loading structured data: JSON (`json.load`), CSV (`csv.reader`), YAML
-- Common errors gallery: SyntaxError, IndentationError, NameError, TypeError
+### Part 5: Ignoring Files (10 min)
+- Why: data files, compiled code, secrets, OS files
+- `.gitignore` syntax: patterns, wildcards, negation
+- Show Python-specific `.gitignore` template
+- Rule: track code and config, not data or outputs
 
-### Part 6: Mini Projects (30 min)
-- Sensor temperature analysis (read CSV, compute stats, flag outliers)
-- Text-based bar chart (word frequency → horizontal bar visualization)
-- Students work independently, instructor circulates
+### Part 6: Remotes & GitHub (15 min)
+- SSH key setup (or HTTPS with token)
+- `git remote add origin <url>`
+- `git push -u origin main`
+- `git pull` — always pull before starting work
+- `git clone` — starting from an existing repo
+- **Live demo**: Push to GitHub, show it in the browser
+
+### Part 7: Branches & Merging (20 min)
+- Why branch? Parallel development, experiments, features
+- `git switch -c feature-branch`
+- Work on branch, commit, `git switch main`, `git merge feature-branch`
+- Merge conflicts: what they look like, how to resolve them
+- `git branch -d feature-branch` — clean up
+- **Live demo**: Create a conflict intentionally, resolve it together
 
 ---
 
@@ -64,183 +77,182 @@
 
 ### Common Student Struggles
 
-1. **Indentation errors**
-   - Emphasise: Python uses indentation instead of braces — it's not optional
-   - Show how mixing tabs and spaces causes `IndentationError`
-   - Configure VS Code to insert 4 spaces on Tab
+1. **"I committed to the wrong branch"**
+   - Don't panic — git has solutions for everything
+   - Show `git log` to verify where you are
+   - For simple cases: cherry-pick or re-make the commit on the right branch
 
-2. **Mutable vs immutable confusion**
-   - Lists are mutable (`append` changes the list in place)
-   - Strings are immutable (`upper()` returns a NEW string)
-   - Demo: `a = [1,2]; b = a; b.append(3)` — both change!
+2. **"What's the staging area for?"**
+   - Analogy: packing a suitcase. Staging = putting items on the bed to review. Commit = closing the suitcase.
+   - It lets you commit part of your changes (e.g., fix A but not unfinished feature B)
 
-3. **Off-by-one errors with `range()`**
-   - `range(5)` gives `0,1,2,3,4` — NOT 5
-   - `range(1,5)` gives `1,2,3,4` — NOT including 5
-   - Draw the number line on the board
+3. **"I get merge conflicts and don't know what to do"**
+   - Walk through conflict markers step-by-step: `<<<<<<<`, `=======`, `>>>>>>>`
+   - "YOUR changes are on top, THEIR changes are on bottom"
+   - Delete the markers, keep what you want, save, add, commit
+   - Practice resolving 2-3 conflicts in class
 
-4. **Dictionary KeyError**
-   - Accessing a missing key crashes the program
-   - Show `.get(key, default)` as a safe alternative
-   - Show `if key in dict:` pattern
+4. **"SSH keys are confusing"**
+   - Walk through step-by-step: `ssh-keygen`, copy public key, paste in GitHub settings
+   - Have a backup plan: HTTPS with personal access token
+   - Some students will need 1-on-1 help with this
 
-5. **f-string syntax**
-   - Common mistake: forgetting the `f` prefix
-   - Show the difference: `"x = {x}"` vs `f"x = {x}"`
+5. **"I'm afraid of breaking something"**
+   - If it's committed, it's safe — git doesn't lose committed data
+   - Use `git status` constantly — it tells you what state you're in
+   - Worst case: `git clone` a fresh copy
 
 ### Interactive Elements
 
-- **Live coding**: Type along with students — don't just show finished code
-- **Predict the output**: Show code, ask students what it prints before running
-- **Error spotting**: Show broken code, have students find the bug
-- **monaco-run slides**: Let students experiment directly in the browser
-
-### Hands-On Exercises
-
-**Exercise 1** (Easy): Variables and types
-```python
-# Create variables for a particle: name, mass, charge
-# Print a formatted summary using f-strings
-name = "muon"
-mass = 105.7  # MeV
-charge = -1
-print(f"The {name} has mass {mass} MeV and charge {charge}")
-```
-
-**Exercise 2** (Medium): List and dictionary operations
-```python
-# Given a list of measurements, compute mean and find the max
-measurements = [23.1, 25.4, 22.8, 24.6, 23.9, 25.1, 22.5]
-mean = sum(measurements) / len(measurements)
-maximum = max(measurements)
-```
-
-**Exercise 3** (Advanced): Mini data analysis
-```python
-# Read a CSV of sensor data
-# Compute average temperature per sensor
-# Flag readings above a threshold
-```
+- **Live demos are essential**: Students follow along on their machines
+- **learngitbranching.js.org**: Send students here for visual practice
+- **Pair exercise**: One student creates a repo, the other clones and contributes
+- **Conflict resolution practice**: Give students a pre-made repo with conflicting branches
 
 ---
 
 ## Common Questions & Answers
 
-**Q**: Why Python and not C++ or Julia?
-**A**: Python has the gentlest learning curve, the largest ecosystem for data analysis (NumPy, Pandas, matplotlib, scikit-learn), and is used at CERN alongside C++ (ROOT). Julia is fast but has a smaller community. We teach concepts that transfer to any language.
+**Q**: Git or GitHub?
+**A**: Git is the tool (runs on your computer). GitHub is a hosting platform (stores repos online). You can use git without GitHub. GitLab and Bitbucket are alternatives to GitHub.
 
-**Q**: Do I need to memorise all these methods?
-**A**: No! Knowing they exist is enough. Use `help()`, documentation, and autocomplete in VS Code. Over time, the common ones become muscle memory.
+**Q**: How often should I commit?
+**A**: Commit when you complete a logical unit of work. "Add data loading function" is good. "Did some stuff" is bad. Multiple small commits > one giant commit.
 
-**Q**: What's the difference between `=` and `==`?
-**A**: `=` assigns a value (`x = 5`). `==` checks equality (`x == 5` returns `True` or `False`). This trips up almost every beginner.
+**Q**: Should I put data files in git?
+**A**: Generally no. Git is for code, config, and documentation. Large data files belong in data storage (cloud drives, databases, git-lfs for special cases). Add data paths to `.gitignore`.
 
-**Q**: Why do lists start at index 0?
-**A**: Historical convention from C. The index is an *offset* from the start. Most languages use 0-based indexing (Python, C, Java, JavaScript). Some use 1-based (R, MATLAB, Fortran).
+**Q**: Can I undo a `git push`?
+**A**: Yes, with `git revert` (safe: creates a new commit that undoes the change). Never use `git push --force` on shared branches — it rewrites history others depend on.
 
-**Q**: When should I use a list vs a dictionary?
-**A**: Use a **list** for ordered collections of similar items (measurements, filenames). Use a **dictionary** when items have meaningful labels/keys (particle properties, configuration settings).
+**Q**: Do I need the command line, or can I use a GUI?
+**A**: Learning the command line first gives you understanding. Once comfortable, GUIs (VS Code git panel, GitHub Desktop, GitKraken) are great for daily use. Most professionals use a mix.
 
 ---
 
-## Key Code Snippets
+## Key Reference Tables
 
-### Python cheat sheet — types and operators
-```python
-# Types
-x = 42          # int
-y = 3.14        # float
-s = "hello"     # str
-b = True        # bool
-n = None        # NoneType
+### Git Command Cheat Sheet
 
-# Arithmetic
-10 / 3    # 3.333...  (true division)
-10 // 3   # 3         (floor division)
-10 % 3    # 1         (modulo)
-2 ** 10   # 1024      (exponentiation)
+| Command | What It Does |
+|---------|-------------|
+| `git init` | Create a new repository |
+| `git status` | Show current state |
+| `git add <file>` | Stage a file for commit |
+| `git add .` | Stage all changes |
+| `git commit -m "msg"` | Save staged changes |
+| `git log --oneline` | Show commit history (compact) |
+| `git diff` | Show unstaged changes |
+| `git diff --staged` | Show staged changes |
+| `git restore <file>` | Discard changes in working directory |
+| `git restore --staged <file>` | Unstage a file |
+| `git revert <hash>` | Undo a commit (safely) |
+| `git remote add origin <url>` | Connect to remote |
+| `git push -u origin main` | Push to remote (first time) |
+| `git push` | Push to remote (subsequent) |
+| `git pull` | Fetch + merge from remote |
+| `git clone <url>` | Copy a remote repository |
+| `git switch -c <branch>` | Create and switch to new branch |
+| `git switch main` | Switch to main branch |
+| `git merge <branch>` | Merge branch into current branch |
+| `git branch -d <branch>` | Delete a branch |
 
-# Logical
-True and False   # False
-True or False    # True
-not True         # False
-3 in [1, 2, 3]   # True
+### Commit Message Best Practices
+
+```
+<type>: <short summary in imperative mood>
+
+Optional longer description explaining WHY, not WHAT.
+The diff shows WHAT changed — the message explains WHY.
 ```
 
-### String formatting
-```python
-name, mass = "Higgs", 125.1
-print(f"The {name} boson has mass {mass:.1f} GeV")
-# Output: The Higgs boson has mass 125.1 GeV
+Good examples:
+- `Add data loading function for CSV files`
+- `Fix off-by-one error in histogram binning`
+- `Update README with installation instructions`
+
+Bad examples:
+- `fixed stuff`
+- `WIP`
+- `asdfgh`
+- `final version`
+
+### Python `.gitignore` Template
+
+```gitignore
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (track code, not data)
+*.csv
+*.h5
+*.root
+data/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets
+.env
+*.key
 ```
 
-### List comprehension
-```python
-squares = [x**2 for x in range(10)]
-evens = [x for x in range(20) if x % 2 == 0]
+### Daily Workflow
+
 ```
-
-### Dictionary operations
-```python
-particle = {"name": "muon", "mass": 105.7, "charge": -1}
-particle["spin"] = 0.5              # add key
-mass = particle.get("mass", 0)      # safe access
-for key, val in particle.items():   # iterate
-    print(f"{key}: {val}")
-```
-
-### File I/O
-```python
-# Reading
-with open("data.txt") as f:
-    lines = f.readlines()
-
-# Writing
-with open("output.txt", "w") as f:
-    f.write("result: 42\n")
-
-# JSON
-import json
-with open("config.json") as f:
-    config = json.load(f)
-```
-
-### enumerate and zip
-```python
-particles = ["electron", "muon", "tau"]
-masses = [0.511, 105.7, 1777]
-
-for i, name in enumerate(particles):
-    print(f"{i}: {name}")
-
-for name, mass in zip(particles, masses):
-    print(f"{name}: {mass} MeV")
+1. git pull                    # Get latest changes
+2. git switch -c my-feature    # Create a branch
+3. (edit files)                # Do your work
+4. git add file1.py file2.py   # Stage changes
+5. git commit -m "Add feature" # Commit
+6. git push -u origin my-feature  # Push branch
+7. Open Pull Request on GitHub    # Request review
 ```
 
 ---
 
 ## Time Estimates
 
-- Lecture (Parts 1-5): 100 min
-- Live demos and interactive exercises: 30 min
-- Mini projects (Part 6): 30 min
-- Q&A throughout: 20 min
-- **Total**: ~180 min (full day session)
+- Lecture (Parts 1-5): 65 min
+- Live demos (throughout): 20 min
+- Student hands-on (Parts 6-7): 25 min
+- Q&A: 10 min
+- **Total**: ~120 min
 
 ---
 
 ## Resources for Students
 
-- [Python official tutorial](https://docs.python.org/3/tutorial/)
-- [CS50P — Introduction to Programming with Python](https://cs50.harvard.edu/python/)
-- [Real Python — beginner tutorials](https://realpython.com/)
-- [Python cheat sheet (comprehensive)](https://www.pythoncheatsheet.org/)
+- [Learn Git Branching](https://learngitbranching.js.org/) — interactive visual tutorial
+- [Pro Git book](https://git-scm.com/book/en/v2) (free online)
+- [GitHub SSH key setup guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+- [Oh My Git!](https://ohmygit.org/) — game-based git learning
+- [git - the simple guide](https://rogerdudler.github.io/git-guide/)
 
 ---
 
 ## Assessment Ideas
 
-- **Quiz**: "What does `range(2, 10, 3)` produce?" / "What's the output of this code?"
-- **Practical**: "Write a function that takes a list of numbers and returns only the positive ones"
-- **Mini project**: Extend the sensor analysis exercise to read real data and produce a summary report
-- **Code review**: Give students buggy code to fix (5 common errors embedded)
+- **Quiz**: "What does `git add` do?" / "Draw the three states of git"
+- **Practical**: "Create a repository, make 3 commits, push to GitHub" — assessed on commit messages and history
+- **Collaboration**: Pair exercise — contribute to each other's repositories via pull requests
+- **Conflict resolution**: Resolve a pre-made merge conflict (provided as a repo with two branches)

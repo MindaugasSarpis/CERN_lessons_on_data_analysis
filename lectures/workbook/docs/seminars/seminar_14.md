@@ -1,59 +1,58 @@
-# Seminar 14 — Make It Reproducible: Environment + Makefile ⚡
+# Seminar 9 — Data-Quality Audit
 
-**Paired lecture:** 14 Reproducible Workflows & Automation · **Format:** hackathon · **~120 min**
+**Paired lecture:** 09 Concepts of Data Analysis · **Format:** hands-on · **~120 min**
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **This session builds:** a one-command rebuild of the entire
-> analysis from raw data.
+> **This session builds:** a documented quality audit of your
+> dataset.
 
 ## Goal
-Turn your pile of scripts into a **pipeline** anyone can reproduce with a single
-command, in a pinned environment.
+Apply the data-quality checklist from the lecture to real data before trusting any
+result.
 
 ## Prerequisites
-The D⁰ seminar pipeline — ingest → clean → plot → fit scripts on the shared LHCb
-D⁰ sample. If you don't have them, the instructor provides a starter kit with these
-four scripts.
+Seminar 8 (ingest).
 
 ## Tasks
-1. Capture the environment: freeze into a lockfile (`pip freeze > requirements.lock`
-   or `conda env export > environment.lock.yml`) **and** keep the hand-written
-   direct-dependency list (`requirements.txt` / `pyproject.toml`, loose bounds).
-   Ship both.
-2. Write a `Makefile` with targets that encode the dependencies:
-   `clean.py → events_clean.parquet`, `plot_spectrum.py → mass_spectrum.png`,
-   `fit_peak.py → fit results`. Add an `all` target and a `clean` target.
-3. Wipe `processed/` and `results/`, then run `make all` — everything rebuilds
-   from `data/raw/` alone.
-4. Update the README's **How to rebuild** section to: "create the env, then `make all`".
-5. Audit your project against the lecture's **FAIR** principles: is it Findable (a
-   README on top, data source and provenance noted), Accessible (open CSV/parquet), Interoperable
-   (standard units, plain-text formats), Reusable (licence noted, environment pinned)?
-   Note one gap in the README and fix it if time allows.
-6. Tag this reproducible milestone in Git: `git tag -a v1.0-pipeline -m "One-command
-   rebuild from raw data"` — a durable reference point any collaborator can check out.
+1. Run the lecture's checklist over the dataset and record findings in the README:
+   - **Completeness** — any missing/empty fields? How many rows?
+   - **Validity** — any impossible values? (negative mass, `pt` < 0, `|Q|` ≠ 1)
+   - **Consistency** — do derived and stored quantities agree? (spot-check that
+     `M` is consistent with the kaon and pion energy/momentum for a few rows)
+   - **Duplicates** — any repeated `(Run, Event)` pairs?
+2. Write `scripts/audit.py` that prints each check's result as a count.
+3. Decide (and document) a policy: which rows do you drop, and why?
+4. Turn the policy into code: extend `scripts/audit.py` to actually apply it,
+   writing the surviving rows to `data/processed/audited.csv` and printing the
+   before/after row counts — the drop is now documented in output, not just
+   words. (Seminar 13 will redo this in a few lines of Pandas; for now, do it
+   by hand.)
+5. Beyond "impossible" values, scan for **statistical outliers** in `M`: flag
+   any value more than ~5 standard deviations from the mean (or outside a sane
+   physical window like [1700, 2050] MeV) and report the count — then decide
+   in the README whether they look like genuine rare events or data errors.
 
 ## Stretch goals
-- Add a `make test` that runs a quick sanity check (e.g. row count > 0).
-- Seed every random step so results are bit-for-bit reproducible.
-- Time the full `make all` rebuild and record it in the README — a future regression
-  here is an early warning sign.
+- Classify the "missingness": is it random, or tied to a particular Run?
+- Write the flagged rows to `data/processed/flagged.csv` for review.
+- Compare your audit's row-drop rate against a neighbour's — do you agree on
+  what counts as "impossible", and why might policies legitimately differ?
 
 ## Wrap-up (last 10 min)
-- Run `make clean && make all` once more, live, in front of your neighbour — the
-  ultimate proof this reproduces ♻️.
-- Commit everything (`git add -A && git commit -m "One-command reproducible
-  pipeline"`) and make sure your tag is in `git tag`.
-- Note one lesson in the README, e.g. the one dependency you forgot to pin until
-  `make all` failed on a clean checkout.
+- Re-run `python scripts/audit.py` on a fresh copy of the raw file and confirm
+  every count reproduces exactly — an audit that isn't re-runnable isn't
+  trustworthy.
+- Commit it: `git add -A && git commit -m "Data-quality audit + documented drop policy"`.
+- Note one lesson in the README: the single check that caught the most rows,
+  and whether that surprised you.
 
 ## Solution notes (instructor)
-The acceptance test: delete everything except `raw/` and `scripts/`, run one
-command, get all results back. This is the whole course's thesis in one seminar —
-♻️ + ⚙️ made concrete. In the 120-minute slot, protect task 3's clean rebuild as the
-anchor demo — if a group is behind, cut task 6's tagging before you'd ever cut the
-rebuild itself.
+The output is a **written policy**, not just numbers — "we drop rows where … because …".
+Connect to the lecture's documented-case study: silent bad rows produce confident
+wrong conclusions. In the 120-minute slot, task 3's policy discussion is where
+groups want to linger — cap it at ~15 minutes of debate before insisting they
+write it down and move to tasks 4–5.
 
 ## Aims practised
-♻️ reproducible from raw · ⚙️ automated pipeline · 📁 raw is the single source of truth
+📁 trustworthy data · ♻️ a documented, re-runnable audit

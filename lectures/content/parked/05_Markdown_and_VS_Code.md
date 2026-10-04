@@ -1,3 +1,15 @@
+<!--
+The former Lecture 05 "Markdown & VS Code", dissolved on 2026-10-04.
+
+Markdown, the project folder and text editing are taught in week 2 (Lecture 02,
+Seminar 1). The parts that were new in this deck went to other lectures: regular
+expressions and the README as a full document to 04 Command Line & File
+Handling, the diff view and the Git graph to 05 Version Control, the Python
+extension, snippets and formatting to 06 Python Foundations, diagrams as text to
+13 Reproducible Workflows. This file is not in decks.json: it is not built, not
+gated and not deployed.
+-->
+
 ---
 layout: cover
 title: "Markdown & VS Code"

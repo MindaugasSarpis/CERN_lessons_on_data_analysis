@@ -14,7 +14,8 @@ import style
 FAMILIES = ["anatomy", "amounts", "distributions", "associations",
             "coordinates", "emphasis", "color", "proportions", "story", "ml",
             "fitting",
-            "handson"]
+            "handson",
+            "arrays", "probability", "perceptron", "cleaning"]
 
 def main() -> int:
     ap = argparse.ArgumentParser()

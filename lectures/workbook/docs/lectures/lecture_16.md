@@ -1,3 +1,3 @@
-# 7: Python for Data & NumPy
+# 16: Machine Learning & AI
 
 This page is being written.

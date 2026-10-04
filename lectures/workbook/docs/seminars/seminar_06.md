@@ -1,62 +1,48 @@
-# Seminar 6 — Branch, Break, Merge: Collaborate in Git ⚡
+# Seminar 7 — Python Warm-Up: Parse One Event
 
-**Paired lecture:** 06 Version Control with Git · **Format:** hackathon · **~120 min**
+**Paired lecture:** 07 Python Foundations · **Format:** hands-on · **~120 min**
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
-> **This session builds:** a demystified Git history and your
-> first branch + merge (including a resolved conflict) — on top of your
-> seminar repo.
+> **This session builds:** your first parsing code — one CSV line
+> turned into numbers.
 
 ## Goal
-Cash the Git IOU from Seminar 1: understand the five weeks of ritual commits
-already in your history, then branch, break, and merge for real.
+Write clean Python that turns a raw text line into usable numeric values, using
+only the language basics (strings, lists, functions, control flow).
 
 ## Prerequisites
-Seminars 1–5. Git installed and configured.
+Seminar 6. Python basics from lecture 07.
 
 ## Tasks
-1. Your repo has existed since Seminar 1's recipe — run `git log --oneline`
-   and look back over five weeks of ritual commits. Today each of those
-   commands stops being magic.
-2. Demystify what `init`/`add`/`commit` actually did: peek inside `.git/`
-   (`ls .git`, `git cat-file -p HEAD`), run `git status` on a clean tree, and
-   `git show HEAD` to see the last commit's diff. Then flesh out `.gitignore`
-   properly (ignore large derived files in `processed/`, `results/`,
-   `__pycache__/`, virtual envs — **keep `raw/` if the file is small enough,
-   else document how to fetch it**) and commit it.
-3. Create a branch (`git switch -c add-explore`), add or improve `scripts/explore.sh`,
-   commit, switch back to `main`, and `git merge` it.
-4. **Provoke a merge conflict** on purpose (edit the same README line on two
-   branches) and resolve it. Note what the markers mean.
-5. Break something on purpose, then practice the three levels of "undo" from
-   the lecture on it: `git diff` to see the damage, `git restore <file>` to
-   discard an uncommitted change, and (after committing a typo'd message)
-   `git commit --amend` to fix it. Note which one you'd reach for in each case.
+1. In `scripts/parse.py`, hard-code one data row from the CSV as a string.
+2. Use `str.strip()` and `str.split(",")` to break it into fields.
+3. Convert the numeric fields with `float()`; keep IDs as `int`/`str`.
+4. Write a function `parse_line(line) -> dict` mapping column names to values.
+   Guard against a bad line with `try/except` and return `None`.
+5. Print the parsed dict nicely with an f-string.
 
 ## Stretch goals
-- Pair up: push to a shared GitHub repo, open a pull request, review each other's.
-- Use `git log --oneline --graph --all` to see your branch history.
-- Set up SSH key auth (`ssh-keygen`, add the public key to your GitHub
-  account) instead of HTTPS, and clone your own repo fresh over SSH to confirm
-  it works without typing a password.
+- Read the header row and build the column-name list automatically instead of
+  hard-coding it.
+- Add a `list comprehension` that extracts just the kaon and pion momenta.
+- Write a second function `validate_line(fields) -> bool` that rejects a row
+  whose momentum components fail to convert or come out `NaN` — a preview of
+  Seminar 9's audit.
 
 ## Wrap-up (last 10 min)
-- Confirm a clean tree: `git status` should read "nothing to commit, working
-  tree clean" and `git branch` should show only `main`, with the feature
-  branch merged and deleted.
-- Re-clone your own repo into a scratch folder (`git clone . /tmp/check`) and
-  re-run `explore.sh` there — proof the *history*, not just your working copy,
-  holds the whole project.
-- Note one lesson in the README: the Git command you now trust most, and the
-  one you're still wary of.
+- Run `python scripts/parse.py` once more from a clean terminal and confirm
+  the exact same dict prints, byte for byte.
+- Commit it: `git add -A && git commit -m "First parser for one event"`.
+- Note one lesson in the README: which field was trickiest to convert, and why
+  (the classic `str` vs `float` trap?).
 
 ## Solution notes (instructor)
-The conflict is the learning moment — everyone should resolve one. Reinforce the
-git-vs-manual-copies MCQ from the lecture: Git separates *the current file* from
-*its history*. In the 120-minute slot, protect time for task 4 — timebox tasks
-1–3 to ~40 minutes even if the `.gitignore` isn't perfect, so every group reaches
-and resolves a genuine conflict before the stretch goals.
+This is the `strip → split → convert` recipe from the lecture. Keep it in a
+**function** — Seminar 8 will call it over the whole file. Watch for off-by-one
+column errors and locale decimal issues. In the 120-minute slot, the
+`try/except` guard in task 4 is where groups stall — put the recipe on the
+board early so task 5 and the stretch goals still get their time.
 
 ## Aims practised
-♻️ full navigable history · 🔧 the standard tool everywhere · ⚙️ a repeatable workflow
+🔧 language-agnostic parsing ideas · 📁 turning bytes into structured values
