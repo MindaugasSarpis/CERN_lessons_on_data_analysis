@@ -5,13 +5,13 @@ Companion notes for **Best Research and Data Analysis Practices from CERN** — 
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
 
-## This week: 29 September
+## This week: 6 October
 
 | | Page |
 |--|--|
-| Lecture, 90 min | [02 Introduction to Data](lectures/lecture_2.md#the-lecture-in-90-minutes): the route through the deck and the slides to skip |
-| Seminar, 90 min | [Seminar 1 — Get Started with VS Code and Markdown](seminars/seminar_01.md): a follow-along tutorial for the person at the front |
-| Homework | [Install Python and Git](seminars/install_python_git.md) |
+| Lecture | [02 Introduction to Data](lectures/lecture_2.md#the-lecture-in-90-minutes), slides 45–61: the project folder, Markdown, editing many lines. Then [03 How Computers Work](lectures/lecture_3.md#the-lecture-in-90-minutes) |
+| Seminar | [Seminar 1](seminars/seminar_01.md#part-3), Part 3: edit many lines at once. Then [Seminar 3 — A File as Bytes](seminars/seminar_03.md) |
+| Homework | A **File anatomy** entry for your own dataset, the last section of Seminar 3 |
 
 ## Hands-on seminars
 
@@ -28,7 +28,7 @@ The seminar briefs are in the **Seminars** section of the navigation.
 
 1. [Orientation & Motivation](lectures/lecture_1.md)
 2. [Introduction to Data](lectures/lecture_2.md)
-3. – 5. [Computing, Files & Tooling](lectures/lecture_3.md) *(computer science, command line, file handling, Markdown, VS Code)*
+3. [How Computers Work](lectures/lecture_3.md)
 6. [Version Control with Git](lectures/lecture_8.md)
 7. – 8. [Python Programming](lectures/lecture_5.md)
 9. [Concepts of Data Analysis](lectures/lecture_6.md)

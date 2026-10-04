@@ -14,7 +14,9 @@ title: "How Computers Work"
 <!--
 Speaker: this lecture is the foundation layer — how a computer actually stores
 the data you'll analyse. No coding today; it's the mental model everything else
-rests on. Tool-agnostic and file-literate is the goal. (~1 min)
+rests on. Tool-agnostic and file-literate is the goal. The previous lecture
+ended on a text file in which 100 sorted before 20, because the editor saw
+characters. Today is what characters and numbers are underneath. (~1 min)
 -->
 
 ---
@@ -68,8 +70,7 @@ hideInToc: true
 
 <!--
 Speaker: read these as promises, not a syllabus. Today is the mental model —
-bits up to files — that everything later in the course sits on. The paired
-Seminar 3 is where they inspect their own raw data as bytes. (~1 min)
+bits up to files — that everything later in the course sits on. (~1 min)
 -->
 
 ---
@@ -1038,7 +1039,7 @@ td, th { padding-top: 0.25em; padding-bottom: 0.25em; }
 </style>
 
 <!--
-Speaker: the NumPy example is a preview (Python comes in Lecture 7) — the point
+Speaker: the NumPy example is a preview — the point
 is only that a fixed-width value wraps with no error. Ask: what happens to a
 16-bit event counter on the 65,536th event? (~2 min)
 -->
@@ -1282,7 +1283,7 @@ hideInToc: true
 
 ## 🧪 **Live Demo**
 
-Open a terminal and type `python3` (or `python`), then try:
+Open the terminal in VS Code (**Terminal** > **New Terminal**), type `python` and press Enter (macOS: `python3`). Then try:
 
 ```python
 >>> 0.1 + 0.2
@@ -1294,7 +1295,7 @@ Open a terminal and type `python3` (or `python`), then try:
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 These aren't bugs — it's how **all** computers store decimals. This will matter when we compare measurements in later lectures.
+💡 These are not bugs. Every computer stores decimals this way, and it matters whenever two measured numbers are compared. `exit()` leaves Python.
 
 </div>
 
@@ -1428,7 +1429,7 @@ hideInToc: true
 
 <div class="note-text">
 
-*A preview — Python itself is introduced in **Python Foundations** (Lecture 7).*
+*A preview. Reading it needs no Python.*
 
 </div>
 
@@ -1463,11 +1464,11 @@ hideInToc: true
 
 ## 🔍 **How it happens**
 
-`é` in UTF-8 is **two bytes**: `C3 A9`
+`ą` in UTF-8 is **two bytes**: `C4 85`
 
-Read them as Latin-1 (one character per byte):
+Read them by a one-byte table such as Windows-1252:
 
-`C3` → `Ã`, `A9` → `©` — hello `Ã©`
+`C4` → `Ä`, `85` → `…`, so `ą` shows as `Ä…`
 
 </div>
 
@@ -1475,9 +1476,9 @@ Read them as Latin-1 (one character per byte):
 
 ## 📄 **In real CSV files**
 
-`München` → `MÃ¼nchen`
+`Žagarė` → `Å½agarÄ—`
 
-A sprinkle of `Ã` through a file is the classic symptom: UTF-8 bytes decoded as Latin-1.
+`Å` and `Ä` scattered through Lithuanian text are the usual symptom: UTF-8 bytes read by a one-byte table.
 
 </div>
 
@@ -1485,9 +1486,51 @@ A sprinkle of `Ã` through a file is the classic symptom: UTF-8 bytes decoded as
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-💡 The cure is never "fix the characters by hand" — declare the encoding when reading: `open(f, encoding="utf-8")`.
+💡 The bytes are fine, so nothing is retyped. The file is read again with the right encoding: **Reopen with Encoding** in VS Code, `open(f, encoding="utf-8")` in Python.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Encoding & Line Endings in **VS Code**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔤 **`UTF-8` in the Status Bar**
+
+- The Status Bar names the encoding VS Code used to read the file
+- Click it. **Reopen with Encoding** reads the same bytes by another table
+- **Save with Encoding** writes different bytes. Use it only on purpose
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ↵ **`LF` or `CRLF`**
+
+- A line break is a byte as well: `0A`, called LF, on macOS and Linux
+- Windows writes two bytes: `0D 0A`, called CRLF
+- The same ten lines saved on Windows are ten bytes longer
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📁 `ą` is two bytes in UTF-8, `C4 85`, and one byte in the older Baltic table Windows-1257, `E0`. The letters `a` to `z` are the same single byte in every table. That is why names of files and folders keep to them.
+
+</div>
+
+<!--
+Speaker: open a file with Lithuanian letters, click UTF-8 in the Status Bar and
+reopen it as Baltic (Windows 1257): the letters turn to Ä and Å. Reopen as UTF-8
+and they are back. Nothing in the file changed. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1539,9 +1582,8 @@ hideInToc: true
 A character takes one to four bytes, a 32-bit number takes four — in what order? A file is just a named sequence of such bytes: its size, its byte order, and the first bytes that say how to read the rest.
 
 <!--
-Speaker: this section is the bridge to Seminar 3 — sizes, byte order, magic
-numbers, a real hexdump. Land "a file is a named sequence of bytes" here; the
-MCQ checks it. (~1 min)
+Speaker: sizes, byte order, magic numbers, a real hexdump. Land "a file is a
+named sequence of bytes" here; the MCQ checks it. (~1 min)
 -->
 
 ---
@@ -1624,7 +1666,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
-**A file is a named sequence of bytes.** The extension is a *hint* for humans and the OS; the real signature is the first bytes (the *magic number*): PNG `89 50 4E 47`, PDF `%PDF`, ZIP/docx/xlsx `PK`. Check with `file data.csv` or `hexdump -C data.csv | head`.
+**A file is a named sequence of bytes.** The extension is a *hint* for humans and the OS; the real signature is the first bytes (the *magic number*): PNG `89 50 4E 47`, PDF `%PDF`, ZIP/docx/xlsx `PK`. A hex viewer shows them.
 
 | **Text/Data** | **Documents** | **Media/Archives/Exec** |
 |--------------|---------------|----------------|
@@ -1645,16 +1687,16 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔬 `hexdump -C` shows the raw bytes of *any* file: the offset, 16 bytes as hex pairs, and the same bytes as ASCII (a `.` for anything unprintable).
+🔬 A hex viewer shows the raw bytes of *any* file: the offset, 16 bytes as hex pairs, and the same bytes as ASCII (a `.` for anything unprintable). In VS Code it is the **Hex Editor** extension, in a terminal `hexdump -C` (macOS, Linux) or `Format-Hex` (Windows).
 
 </div>
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
-$ hexdump -C data.csv | head -n 2
-00000000  6d 61 73 73 2c 63 68 61  72 67 65 0a 31 38 36 35  |mass,charge.1865|
-00000010  2e 32 2c 2b 31 0a 31 38  36 33 2e 39 2c 2d 31 0a  |.2,+1.1863.9,-1.|
+pendulum.csv, 97 bytes
+00000000  6c 65 6e 67 74 68 5f 63  6d 2c 74 31 30 5f 73 0a  |length_cm,t10_s.|
+00000010  32 30 2c 39 2e 30 32 0a  33 30 2c 31 31 2e 30 35  |20,9.02.30,11.05|
 ```
 
 </div>
@@ -1665,8 +1707,8 @@ $ hexdump -C data.csv | head -n 2
 
 ## 👀 **What you can read off**
 
-- `6d` = `m`, `61` = `a` — one byte per character: pure ASCII, so UTF-8-safe
-- `0a` ends each line (LF); `0d 0a` would mean Windows line endings
+- `6c` = `l`, `65` = `e` — one byte per character: pure ASCII, so UTF-8-safe
+- `2c` is the comma; `0a` ends each line (LF), `0d 0a` would mean Windows line endings
 - no `EF BB BF` at offset 0 → no BOM
 - offsets count bytes: the last one is the file size
 
@@ -1676,16 +1718,17 @@ $ hexdump -C data.csv | head -n 2
 
 ## 🎯 **Why bother**
 
-This is the one view where *nothing* is interpreted for you. Seminar 3 starts here: encoding, line endings, size and format of your raw file — checked at the byte level before you trust a single number in it.
+This is the one view where *nothing* is interpreted for you. Encoding, line endings, size and format of a raw file are checked here, at the byte level, before a single number in it is trusted.
 
 </div>
 
 </div>
 
 <!--
-Speaker: walk the first line byte by byte with the ASCII table still in their
-heads — 6d is m, 61 is a. Then point at 0a: that is the newline, invisible in
-any editor but plainly a byte here. (~2 min)
+Speaker: this is the two-column table from the previous lecture's editing
+example. Walk the first line byte by byte with the ASCII table still in their
+heads — 6c is l, 65 is e, 2c is the comma. Then point at 0a: that is the
+newline, invisible in any editor but plainly a byte here. (~2 min)
 -->
 
 ---
@@ -1786,7 +1829,7 @@ JPEG throws away detail your eye can't see — fine for photos, **never for data
 
 <div class="card card-info card-glass pad-tight mt-md">
 
-💡 Plain-text formats like CSV and JSON aren't compressed at all — every byte stored as-is. That's exactly why they zip so well: **gzip a CSV → typically 5–10× smaller** (Seminar 3 stretch goal).
+💡 Plain-text formats like CSV and JSON aren't compressed at all — every byte stored as-is. That's exactly why they zip so well: **gzip halves a CSV of measured numbers**, and shrinks one with many repeated values to a tenth.
 
 </div>
 
@@ -1846,7 +1889,7 @@ $ sha256sum data.csv
 ```
 
 - Flip **one bit** anywhere in the file → a **completely different** hash (it never says "how close")
-- **Publish the hash next to the download** — the reader recomputes it. Seminar 3's "confirm the raw file is byte-identical" step is exactly this.
+- **Publish the hash next to the download** — the reader recomputes it, and a matching hash proves the copy is byte-identical.
 
 </div>
 
@@ -1977,14 +2020,14 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
-## 🔬 **Seminar 3 tie-in**
+## 🔬 **Before trusting a number in a file**
 
-Inspect the seminar's raw CSV as bytes — its character encoding, exact size, and format — before trusting a single number in it.
+Look at the file as bytes: its character encoding, its line endings, its exact size and its format.
 
 </div>
 
 <!--
-Speaker: the "you can now" beat — have them nod along to each. The tie-in makes
-it concrete: in Seminar 3 they open the seminar dataset at the byte level and
+Speaker: the "you can now" beat — have them nod along to each. The last card is
+the habit to take away: open a data file at the byte level and
 verify its encoding, size, and format before trusting any number. (~1 min)
 -->

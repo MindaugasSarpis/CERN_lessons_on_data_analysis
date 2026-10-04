@@ -16,18 +16,19 @@ used before the session that introduces it.
 
 | Session | New | Still by clicking |
 |--|--|--|
-| 29 Sep, [Seminar 1](seminar_01.md) | VS Code, Markdown, the project folder, the README, provenance | Everything |
-| Next | The file as text: encoding, separators, size. First three terminal commands: `pwd`, `ls`, `cd` | Creating and moving files |
+| 29 Sep, [Seminar 1](seminar_01.md) | VS Code, Markdown, the project folder, the README, editing many lines at once, provenance | Everything |
+| 6 Oct, [Seminar 3](seminar_03.md) | The file as bytes: encoding, line endings, separators, size. First three terminal commands: `pwd`, `ls`, `cd` | Creating and moving files |
 | Then | Terminal: make, copy, move, delete. Running a Python script that is handed out | Editing |
 | Then | The README as a full document: columns, units, how to rebuild | |
 | Then | Git from the Source Control view first, then the same steps typed | |
 | Then | Python, from the first line: variables, a loop, reading the data file | |
 
-Seminar 1 is written as a follow-along tutorial for the person at the front.
-Briefs 3–16 were written for an earlier plan and still carry the number of
-their lecture. They assume bash commands that do not exist in PowerShell and
-a data file with columns the real one does not have. Each is rewritten in
-the style of Seminar 1 before its week.
+Seminars 1 and 3 are written as follow-along tutorials for the person at the
+front. Every brief carries the number of its lecture, so there is no
+Seminar 2. Briefs 4–16 were written for an earlier plan: they assume bash
+commands that do not exist in PowerShell and a data file with columns the
+real one does not have. Each is rewritten in the style of Seminar 1 before
+its week.
 
 ## Two things run in parallel
 
@@ -96,9 +97,9 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 
 | Seminar | Hands-on focus |
 |--|--|
-| 1 | VS Code; Markdown; the project folder and its README; a data file in `data/raw/`; provenance recorded |
+| 1 | VS Code; Markdown; the project folder and its README; a small table cleaned in the editor; a data file in `data/raw/`; provenance recorded |
 | At home | Python and Git installed *(after Seminar 1)* |
-| 3 | The raw file understood as bytes (encoding, size, format) |
+| 3 | First terminal commands; the raw file understood as bytes (encoding, line endings, size, format) |
 | 4 | `raw/`–`processed/` structure; clean filenames; CLI inspection |
 | 5 | A real `README.md` (provenance, columns, units, rebuild steps) |
 | 6 | The repo under Git; a feature branch made and merged |

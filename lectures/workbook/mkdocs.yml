@@ -43,7 +43,7 @@ nav:
   - Lecture notes:
       - 01 Orientation & Motivation: lectures/lecture_1.md
       - 02 Introduction to Data: lectures/lecture_2.md
-      - 03–05 Computing, Files & Tooling: lectures/lecture_3.md
+      - 03 How Computers Work: lectures/lecture_3.md
       - 06 Version Control with Git: lectures/lecture_8.md
       - 07–08 Python Programming: lectures/lecture_5.md
       - 09 Concepts of Data Analysis: lectures/lecture_6.md
@@ -56,9 +56,9 @@ nav:
       - Miscellaneous: lectures/misc.md
   - Seminars:
       - Overview: seminars/overview.md
-      - S1 VS Code & Markdown: seminars/seminar_01.md
+      - S1 VS Code, Markdown & text editing: seminars/seminar_01.md
       - At home · Install Python & Git: seminars/install_python_git.md
-      - S3 Bit/number/format explorer: seminars/seminar_03.md
+      - S3 A file as bytes: seminars/seminar_03.md
       - S4 Tame a messy project (CLI): seminars/seminar_04.md
       - S5 Write the README: seminars/seminar_05.md
       - S6 Branch, break, merge (Git): seminars/seminar_06.md

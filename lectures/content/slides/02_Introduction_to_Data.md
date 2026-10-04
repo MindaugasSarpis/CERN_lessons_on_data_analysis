@@ -14,8 +14,9 @@ title: "Introduction to Data"
 <!--
 Speaker: last time was the why — the films and CERN. Today is the what: data
 itself. Start from their own day, then kinds of data, tables and files, then how
-to find and document a dataset. CERN comes after that, as the case study, and
-its example file closes the lecture. (~2 min)
+to find and document a dataset. CERN comes after that, as the case study, with
+its example file. The lecture ends with the tools for text files: the project
+folder, Markdown, and changing many lines at once. (~2 min)
 -->
 
 ---
@@ -69,6 +70,12 @@ hideInToc: true
 <div class="card card-info card-glass pad-compact">
 
 📄 Read a real data file — **rows, columns, units, metadata** — before writing a line of code
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+✍️ Write a README in **Markdown** and change **many lines** of a text file with one edit
 
 </div>
 
@@ -197,31 +204,56 @@ hideInToc: true
 
 # What **Is** Data?
 
-<div class="card card-info card-glass pad-tight mt-sm">
+<div class="card card-info card-glass pad-tight mt-sm glow">
 
-A working definition for this course: **data is recorded observation** — facts captured in a form a machine can store and re-read. The moment something is written down consistently enough to count, sort, or compare, it becomes data.
+**Data** is a *reinterpretable representation of information in a formalized manner suitable for communication, interpretation, or processing.*
+
+<div class="note-text mt-sm">ISO/IEC 2382, <em>Information technology — Vocabulary</em></div>
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📏 **It starts as a measurement**
+## 🔣 **A representation**
 
-A temperature, a timestamp, a momentum, a yes/no. On its own, one value says little.
+Symbols that stand for something: digits, letters, pixels. `11.2` is not a temperature. It stands for one.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📚 **It becomes useful in bulk**
+## 📐 **Formalized**
 
-Thousands of those values, organised, show what one reading cannot: a trend, a spread, a peak.
+Written by a fixed rule: which symbols, in which order, in which unit. A file format and a column name carry that rule.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔁 **Reinterpretable**
+
+Another person, or a program, gets the information back from the symbols. Without the rule nobody can.
 
 </div>
 
 </div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+In this course: **data is recorded observation**, written down consistently enough to count, sort and compare. One value says little. Thousands of them, organised, show a trend, a spread, a peak.
+
+</div>
+
+<div class="note-text mt-sm"><code>11.2</code> is data. "Vilnius, 29 September, 08:00: 11.2 °C" is information: the data together with what it means.</div>
+
+<!--
+Speaker: read the definition once, then take its three words one at a time. A
+representation: the symbols are not the thing. Formalized: there is a rule.
+Reinterpretable: the rule lets someone else read it back. Ask what is missing
+when a colleague sends a file of numbers with no column names. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -260,22 +292,6 @@ The loop from two slides ago. The figure names the stages differently; the cycle
 </div>
 
 </div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
-  :options="[
-    'Each one runs the same loop: collect, store, clean, analyse, decide — then share or archive',
-    'Collecting and storing the readings is itself the analysis — once data is saved, the work is done',
-    'Behind each service, analysts review your raw activity streams and decide case by case',
-    'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
-  ]"
-  :correct="0"
-  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide, share. Recognising that shared shape is the whole point of these opening lectures: the skills transfer because the loop is always the same."
-/>
 
 ---
 layout: section
@@ -578,22 +594,6 @@ spreadsheet. Do not rush it. (~2 min)
 hideInToc: true
 ---
 
-# What Each Flavour Is **Used For**
-
-| **Flavour** | **What is done with it** | **Example** |
-| --- | --- | --- |
-| 🔢 Numbers | Summarise, visualise, fit, report ± an error | Temperature, mass |
-| 🔤 Text | Parse a line; code and count categories | Survey answers |
-| 🖼️ Images | Pixels as arrays, then a classifier | Galaxy photographs |
-| ⚡ Events | Turn one collision into a number (a mass) | Particle collisions |
-| 📁 …and their files | Read, name, and organise safely | CSV, .xlsx, ROOT |
-
-<div class="note-text mt-md">Nothing to memorise. Most datasets mix flavours: the weather table two slides back holds numbers, text and timestamps.</div>
-
----
-hideInToc: true
----
-
 # Thought Exercise — Data in **Your Field**
 
 <div class="grid-2 mt-md gap-md">
@@ -630,148 +630,6 @@ Share with a neighbour:
 Keep your answer. The data you just described is a candidate for your semester project.
 
 </div>
-
----
-hideInToc: true
----
-
-# Data at Work — **Biomedicine, Environment, Finance**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧬 **Biomedicine**
-
-- Genome sequencing → variants, gene expression
-- Clinical trials → safety, efficacy, adaptive designs
-- Decisions: diagnostics, targeted therapies
-
-🧪 <strong>23andMe</strong> went bankrupt in 2025 and its genetic database changed hands in the proceedings. The customers' consent went with it.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🌍 **Environment**
-
-- Climate models fed by satellites, sensors, archives
-- Pollution monitored at city-block resolution
-- Decisions: policy, disaster response, conservation
-
-🔄 Data feeds update the models continuously. The result is a pipeline that keeps running, not one final number.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 💰 **Finance**
-
-- Algorithmic trading under latency constraints
-- Risk: stress tests, scenario analysis
-- Fraud detection on streaming transactions
-
-📉 Every participant models the other participants. A pattern found in past data stops working once people trade on it.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Data at Work — **Astronomy & Particle Physics**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔭 **Astronomy**
-
-- Observational data from telescopes, satellites, detectors
-- Gravitational wave detection via signal processing & machine learning
-- Cataloguing millions of celestial objects, anomaly detection
-- Requires high-throughput computing, reproducible pipelines
-
-🤖 <strong>Galaxy Zoo</strong> crowdsourced classifications of ~1M galaxies from SDSS images — the labelled set used to train today's automatic galaxy classifiers.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## ⚛️ **Particle physics (CERN)**
-
-- Petabytes of collision data → reconstruct events, filter noise
-- Multivariate analysis to isolate rare signals (e.g. Higgs boson)
-- Collaboration across detectors, theory, computing teams
-- Drives advances in distributed computing & open data practices
-
-🔬 <strong>The lectures' example comes from here</strong>: open LHCb collision data, published by the collaboration itself.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Common **Threads** Across Every Domain
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🎯 **A decision comes first**
-
-Which therapy, which trade, which collision to keep: the analysis is built around a decision someone has to make.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📐 **Uncertainty is stated**
-
-A forecast gives a range, a risk model a probability, a mass measurement a ± error.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🔄 **The analysis gets rerun**
-
-New data keeps arriving, so the work has to be a pipeline that runs again, not a calculation done once by hand.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🤝 **The work is shared**
-
-Domain expert, analyst, engineer, decision-maker: each sees one part of the problem.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ⚖️ **Rules grow with the stakes**
-
-Data on health, policy and money comes with consent, audits and regulation.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 📖 **It has to be explained**
-
-A number changes a decision only once the person deciding understands what it says.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">🔍 Which of the five domains is closest to your own field?</div>
 
 ---
 layout: section
@@ -1039,22 +897,6 @@ analysis-project/
 </div>
 
 ---
-hideInToc: true
----
-
-<MCQ
-  question="You downloaded a CSV from a data portal six months ago and now want to cite it in your project so that a reader can get exactly the same data. What must you have recorded?"
-  :options="[
-    'The record\'s DOI or stable URL, the version or fetch date, and the file\'s checksum',
-    'The file name, its size in bytes, and the folder you saved it into on your laptop',
-    'The portal\'s homepage URL, the dataset\'s title, and the name of the collaboration',
-    'The name and e-mail of the colleague who first told you about the dataset'
-  ]"
-  :correct="0"
-  explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
-/>
-
----
 layout: section
 hideInToc: true
 ---
@@ -1285,32 +1127,6 @@ Each stage is a skill from this course, from handling files to statistical infer
 hideInToc: true
 ---
 
-<div class="note-text">
-
-*A check on the previous slide. Professionals get this one wrong too.*
-
-</div>
-
-<MCQ
-  question="The Higgs discovery met the '5-sigma' standard. What does that actually mean?"
-  :options="[
-    'There is less than a one-in-3.5-million chance that the discovery itself is wrong',
-    'With no new particle, a background fluke this strong shows up in fewer than 1 in 3.5 million experiments',
-    'The Higgs mass was pinned down to five decimal places by combining ATLAS and CMS',
-    'Five independent detectors each confirmed the signal at the same mass on the same day'
-  ]"
-  :correct="1"
-  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading)."
-/>
-
-<style>
-.mcq-container { height: calc(100% - 3.5rem) !important; }
-</style>
-
----
-hideInToc: true
----
-
 # From Collision to <span class="gradient-text">Dataset</span>
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -1446,175 +1262,6 @@ The detector electronics can hold an event for only a few **microseconds**. If t
 </div>
 
 ---
-hideInToc: true
----
-
-<MCQ
-  question="The detector electronics put out ~1 PB of raw signal per second, before any selection. Why can't the experiments simply record it all?"
-  :options="[
-    'There is no scientific reason to — only a handful of processes matter',
-    'No real-time system can write ~1 PB/s to disk, even before counting the cost',
-    'Data-protection rules cap how much CERN is legally allowed to store',
-    'Only high-luminosity runs need a trigger — earlier runs recorded everything'
-  ]"
-  :correct="1"
-  explanation="No storage system can sustain ~1 PB/s of writes. The trigger reduces the raw output to the few thousand events/s (~10 GB/s) that computing can absorb, before anyone judges what is interesting."
-/>
-
----
-hideInToc: true
----
-
-# Working with the <span class="gradient-text">Data</span>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔎 **The Analyst**
-
-Takes last night's events, plots the mass of the D⁰ candidates and checks that it has not shifted, reports anything odd to the shift crew, corrects the shared analysis code. All on a laptop, anywhere in the world.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🌙 **The Shift Crew**
-
-Watches the same plot live in the control room. If a sub-detector or the trigger farm fails, the plot shows it, and the night's data is marked good or bad for everyone who uses it later.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-🌍 Neither job is done next to the detector. Both need the skills of this course: files, code, version control, statistics.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Beyond **Physics**
-
-Built at CERN to handle its own data, now used everywhere: the Web, the computing grid, open data, open publishing.
-
-<!--
-Speaker: section break. Everything so far was about the experiments; this section
-is about what CERN had to build to run them and that others now use. Ask which
-CERN invention they used today — the answer is the Web, every one of them. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# CERN's Impact Beyond **Physics**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-compact">
-
-## 🌐 **The World Wide Web**
-
-Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists. Now used by **5+ billion** people.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🖥️ **Computing Grid (WLCG)**
-
-The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** and stores **hundreds of petabytes** of new data every year
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🏥 **Medical Applications**
-
-Accelerator technology is used in **hadron therapy** for cancer, which is more precise than conventional radiotherapy
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📂 **Open Science**
-
-The CERN **Open Data Portal** publishes real collision data for teaching and independent research
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-📖 **Open publishing:** CERN co-founded **SCOAP3**, which makes almost all particle-physics journal articles free to read. Preprints appear on **arXiv** before any journal sees them.
-
-</div>
-
----
-hideInToc: true
----
-
-# The LHC Computing <span class="gradient-text">Grid</span>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🌍 No single data centre can process the LHC's output. The work is spread over a **tiered global grid** *(as of 2026: 170+ sites, 42 countries, ~1.4 million CPU cores)*.
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-🏛️ **Tier 0 — CERN** · the custodial copy of all raw data on tape, first-pass reconstruction
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-🏢 **Tier 1 — ~15 national labs** · second copies, large-scale reprocessing, round-the-clock links to CERN
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-🏫 **Tier 2 — ~150 universities** · simulation and the everyday analyses of individual physicists
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md reveal-up">
-
-💡 A physicist who starts an analysis usually does not know **in which country** the jobs run. The same idea at your scale: compute where convenient, keep the data organised and portable.
-
-🔭 What comes next: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring, more than three times the LHC's 27 km.
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="CERN publishes its collision data on the Open Data Portal years after recording it. Which stage of the data lifecycle is that, and what makes it possible?"
-  :options="[
-    'Collecting — the detector writes each stored event straight to the public portal',
-    'Cleaning — the trigger decides at run time which events are fit for publication',
-    'Sharing — the last stage, possible only because provenance, formats and software were kept',
-    'Analysing — physicists publish their plots, and the plots are the open data'
-  ]"
-  :correct="2"
-  explanation="Publication is the share stage at the end of the lifecycle. It only works because every earlier stage kept the metadata: how events were selected, which software version processed them, what the columns mean. Skip that in your own project and the last stage becomes impossible."
-/>
-
----
 layout: section
 hideInToc: true
 ---
@@ -1747,20 +1394,757 @@ hideInToc: true
 </div>
 
 ---
+layout: section
 hideInToc: true
 ---
 
-<MCQ
-  question="In the LHCb example sample, what does one row of the CSV file represent?"
-  :options="[
-    'One sub-detector of LHCb, with its readings for the run',
-    'One column of momentum values, one per particle',
-    'One reconstructed particle track through the detector',
-    'One K⁻π⁺ candidate from one collision event'
-  ]"
-  :correct="3"
-  explanation="Each row is one candidate pair found in one event: its invariant mass, transverse momentum, decay time and impact-parameter score. Columns are the quantities; rows are the things measured. Knowing what one row is comes before any statistics."
-/>
+# Markdown & **Text Editing**
+
+<!--
+Speaker: the example file was plain text, and so is the README that describes
+it. This section is the tools for text files: where they go, how the notes are
+written, and how many lines are changed at once. Show each slide live in VS Code
+as you go. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The **Project Folder**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📁 **One project, one folder**
+
+- Everything that belongs to one piece of work sits in one folder
+- The subfolders are the same in every project: `data/raw`, `data/processed`, `scripts`, `results`
+- A file in `data/raw` is never edited. Changes are made on a copy in `data/processed`
+- `README.md` at the top says what is where
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🏷️ **Names**
+
+- Lowercase and without spaces: `pendulum_run2.csv`, not `Pendulum Run 2.csv`
+- Only `a` to `z`, digits, `-` and `_`. No `ą`, `č`, `š`, `ž`
+- Dates as `2026-09-29`, so that the names sort by date
+- The name says what is inside: `pendulum.csv`, not `data.csv`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📝 A data file and a README are both **plain text**. One program opens both: a **text editor**. This course uses **VS Code**. It is free and works the same on Windows, macOS and Linux. Every step shown here exists in other editors too.
+
+</div>
+
+<!--
+Speaker: the tree itself was on the slide "From Record to Your Project Folder".
+Here the rules: one folder, the same subfolders, raw is never edited, and names
+that survive every system. Open the folder in VS Code and show it. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Markdown**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **You type**, in `README.md`
+
+```md
+# Pendulum
+
+Time of 10 swings for **nine** lengths.
+
+- Data: `data/raw/pendulum.csv`
+- Measured: 2026-09-29
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👁️ **The preview shows**
+
+<div class="rendered-md">
+<p class="rendered-title">Pendulum</p>
+<p>Time of 10 swings for <strong>nine</strong> lengths.</p>
+<ul>
+<li>Data: <code>data/raw/pendulum.csv</code></li>
+<li>Measured: 2026-09-29</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📝 Markdown is plain text with a few signs for structure. The file name ends in `.md`. Any editor opens it, and it can be read without the preview. In VS Code the preview opens beside the text with `Ctrl+K`, then `V` (macOS `Cmd+K`, then `V`).
+
+</div>
+
+<div class="note-text mt-sm">The same file can become a web page, a PDF or a set of slides. These slides are written in Markdown.</div>
+
+<!--
+Speaker: type these six lines live and open the preview beside them. The point
+is that the left side is already readable. Nothing is hidden in the file. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Headings & **Emphasis**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **Source**
+
+```md
+# Title of the page
+## Section
+### Subsection
+
+*italic*, **bold**, ~~struck out~~
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👁️ **Preview**
+
+<div class="rendered-md">
+<p class="rendered-title">Title of the page</p>
+<p class="rendered-section">Section</p>
+<p class="rendered-sub">Subsection</p>
+<p><em>italic</em>, <strong>bold</strong>, <s>struck out</s></p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A space follows the `#`. A page has one title with a single `#`. More `#` signs make a smaller heading. The headings are the outline of the page: VS Code lists them under **Outline** in the Explorer.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Paragraphs & **Lists**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **Source**
+
+```md
+A paragraph is one or more lines.
+A single line break does not show.
+
+An empty line starts a new paragraph.
+
+- an item
+- another item
+  - indented by two spaces
+
+1. first step
+2. second step
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👁️ **Preview**
+
+<div class="rendered-md">
+<p>A paragraph is one or more lines. A single line break does not show.</p>
+<p>An empty line starts a new paragraph.</p>
+<ul>
+<li>an item</li>
+<li>another item
+<ul>
+<li>indented by two spaces</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>first step</li>
+<li>second step</li>
+</ol>
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ Leave an **empty line** between blocks: before a list, a table or a heading. The preview in VS Code forgives a missing one. Other programs that read Markdown do not.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Links, Images & **File Names**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **Source**, in `results/report.md`
+
+```md
+[CERN Open Data](https://opendata.cern.ch)
+
+![Time against length](pendulum_plot.png)
+
+The plot is made by `scripts/plot.py`.
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👁️ **Preview**
+
+<div class="rendered-md">
+<p><a href="https://opendata.cern.ch">CERN Open Data</a></p>
+<p><img src="/figures/pendulum_plot.png" alt="Time against length"></p>
+<p>The plot is made by <code>scripts/plot.py</code>.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`[text](address)` is a link. `![description](file)` shows a picture; the file is looked for starting from the folder of the `.md` file. Backticks mark a file name or a piece of code.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Tables**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **Source**
+
+```md
+| length_cm | t10_s |
+|--|--|
+| 20 | 9.02 |
+| 30 | 11.05 |
+| 40 | 12.61 |
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👁️ **Preview**
+
+<div class="rendered-md">
+<table>
+<thead>
+<tr><th>length_cm</th><th>t10_s</th></tr>
+</thead>
+<tbody>
+<tr><td>20</td><td>9.02</td></tr>
+<tr><td>30</td><td>11.05</td></tr>
+<tr><td>40</td><td>12.61</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`|` separates the cells. The second line, `|--|--|`, makes the first line the header: without it there is no table. The cells need not line up in the source. `|--:|` aligns a column to the right, which suits numbers.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Markdown — **Usual Mistakes**
+
+| **You type** | **The preview shows** | **Reason** |
+| --- | --- | --- |
+| `#Title` | `#Title` as plain text | The space after `#` is missing |
+| Two lines, one line break between | One line | Only an empty line ends a paragraph |
+| A table without `\|--\|--\|` | Text with `\|` signs | The second line makes the table |
+| `**bold **` | The asterisks, and no bold | A space stands before the closing `**` |
+| `![plot](plot.png)` | A broken picture | The file is in another folder |
+
+<div class="note-text mt-md">The preview is the test. Keep it open and read it after every block you type.</div>
+
+<!--
+Speaker: make each mistake live and let the room say what is wrong. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Edit, **Many Lines**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📥 **The file as received**
+
+```text
+nr;length_cm;t10_s
+1;20;9,02
+2;30;11,05
+3;40;12,61
+…
+9;100;20,01
+;mean;15,14
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🎯 **The file as needed**
+
+```text
+length_cm,t10_s
+20,9.02
+30,11.05
+40,12.61
+…
+100,20.01
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A lab partner saved this table from a spreadsheet on a computer set to Lithuanian: `;` between the values, `,` as the decimal sign, a row number, a line with the mean. Each fix is the same on every line. By hand that is about 40 edits. The editor makes each fix once.
+
+</div>
+
+<div class="note-text mt-sm">Example values: the time of 10 swings of a pendulum for nine lengths.</div>
+
+<!--
+Speaker: this is the decimal-comma card from "One Table, Three Files", now as a
+file someone sent. Ask the room to list what has to change before showing the
+right-hand side. The original stays in data/raw; the work is done on a copy in
+data/processed. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Find & **Replace**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔎 **The tool**
+
+- `Ctrl+H` opens Find and Replace (macOS `Cmd+Option+F`)
+- The counter shows how many places match. Read it before you replace: 9 commas for nine rows, 20 semicolons for ten lines
+- **Replace All** changes every match at once
+- `Ctrl+Z` takes it back
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **Two replacements, in this order**
+
+```text
+Find    Replace    Matches
+,       .          9
+;       ,          20
+```
+
+The decimal comma goes first, while it is the only comma in the file. In the other order `1;20;9,02` becomes `1,20,9,02`, and nothing tells the decimal comma from the others.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+⚙️ Find and Replace changes the same **text** wherever it stands. It cannot put something at the start of every line, and it cannot delete a column. For that the editor has more than one cursor.
+
+</div>
+
+<!--
+Speaker: delete the mean line first, then open Find and Replace and read the
+counter aloud. Before the second replacement ask the room which one has to come
+first, and try the wrong order once: Ctrl+Z takes it back. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Whole **Lines**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ↕️ **The line the cursor is in**
+
+- `Alt+↑` and `Alt+↓` move it
+- `Shift+Alt+↓` copies it below
+- `Ctrl+Shift+K` deletes it
+- `Ctrl+Enter` opens an empty line below it
+- `Ctrl+C` and `Ctrl+X` take the whole line when nothing is selected
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ↔️ **Along the line**
+
+- `Home` and `End` go to its start and its end
+- `Ctrl+←` and `Ctrl+→` go one word at a time
+- `Shift` with any of these selects on the way
+- `Ctrl+Z` undoes one step, `Ctrl+Y` redoes it
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Nothing has to be selected first. The line with the mean goes with one key, `Ctrl+Shift+K`: one row is one observation, and a mean is not an observation.
+
+</div>
+
+<div class="note-text mt-sm">macOS: <code>Option</code> for <code>Alt</code>, <code>Cmd</code> for <code>Ctrl</code>. Three exceptions: one word is <code>Option+←</code> and <code>Option+→</code>, the start and end of the line are <code>Cmd+←</code> and <code>Cmd+→</code>, redo is <code>Cmd+Shift+Z</code>.</div>
+
+---
+hideInToc: true
+---
+
+# A Cursor on **Every Line**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🖱️ **Three ways to place them**
+
+- Select the lines, then `Shift+Alt+I`: a cursor at the end of each line
+- `Ctrl+Alt+↓`: one more cursor on the line below
+- `Alt`+click: one more cursor where you click
+- `Esc` goes back to one cursor
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⌨️ **Type once**
+
+```text
+Alytus           - Alytus
+Kaunas      →    - Kaunas
+Vilnius          - Vilnius
+```
+
+Three cursors, `Home`, then `-` and a space. Whatever is typed, deleted or pasted happens at every cursor.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The Status Bar counts the cursors: `3 selections`. Read the number before you type.
+
+</div>
+
+<div class="note-text mt-sm">macOS: <code>Shift+Option+I</code>, <code>Cmd+Option+↓</code>, <code>Option</code>+click.</div>
+
+---
+hideInToc: true
+---
+
+# Lines of **Different Length**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧭 **Delete the first column**
+
+1. `Ctrl+A`, then `Shift+Alt+I`: a cursor at the end of every line
+2. `Home`: every cursor at the start of its line
+3. `Ctrl+Shift+→`: the first word is selected, `nr` or `1`
+4. `Shift+→`: the comma as well
+5. `Delete`
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **Before and after**
+
+```text
+nr,length_cm,t10_s        length_cm,t10_s
+1,20,9.02            →    20,9.02
+2,30,11.05                30,11.05
+```
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The cursors move together. `→` moves each one by a character, and `nr` is one character longer than `1`. `Home`, `End` and the word keys land in the right place on every line, whatever its length.
+
+</div>
+
+<div class="note-text mt-sm">macOS: <code>Cmd+A</code>, <code>Shift+Option+I</code>, <code>Cmd+←</code>, <code>Option+Shift+→</code>, <code>Shift+→</code>, <code>Delete</code>.</div>
+
+---
+hideInToc: true
+---
+
+# The Same Word, **Everywhere**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎯 **Select the matches**
+
+- Double-click a word to select it
+- `Ctrl+D` adds the next place with the same text
+- `Ctrl+Shift+L` adds all of them at once
+- Type the new word. It replaces every match
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✏️ **Rename a column**
+
+```md
+| length_cm | t10_s |
+
+The period is t10_s divided by 10.
+
+- `t10_s`: time of 10 swings, in s
+```
+
+`t10_s` stands in three places. Selected together and typed once, all three become `time10_s`.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`Ctrl+D` is for the next few matches, `Ctrl+Shift+L` for all of them. Unlike Replace All, every place that is about to change shows a cursor before anything is typed.
+
+</div>
+
+<div class="note-text mt-sm">macOS: <code>Cmd+D</code>, <code>Cmd+Shift+L</code>.</div>
+
+---
+hideInToc: true
+---
+
+# CSV to **Markdown Table**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **The commas**
+
+Select one comma. `Ctrl+Shift+L`. Type a space, `|` and a space.
+
+```text
+length_cm | t10_s
+20 | 9.02
+30 | 11.05
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **The line ends**
+
+`Ctrl+A`, `Shift+Alt+I`, a space and `|`. Then `Home`, `|` and a space.
+
+```text
+| length_cm | t10_s |
+| 20 | 9.02 |
+| 30 | 11.05 |
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 3️⃣ **The header**
+
+`Ctrl+Enter` in line 1.<br>Then type `|--|--|`.
+
+```text
+| length_cm | t10_s |
+|--|--|
+| 20 | 9.02 |
+| 30 | 11.05 |
+```
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+⚙️ The steps are the same for 10 lines and for 10 000. This is automation at its smallest: say the change once, and it is made on every line.
+
+</div>
+
+<div class="note-text mt-sm">macOS: <code>Cmd+Shift+L</code>, <code>Cmd+A</code>, <code>Shift+Option+I</code>, <code>Cmd+←</code>, <code>Cmd+Enter</code>.</div>
+
+<!--
+Speaker: do this live in an empty report.md with the preview open. The table
+appears in the preview at step 3. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Text Commands in the **Command Palette**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **`Ctrl+Shift+P`, then part of the name**
+
+- **Sort Lines Ascending**: the selected lines in alphabetical order
+- **Transform to Uppercase**, **to Lowercase**: the selected text
+- **Delete Duplicate Lines**
+- **Trim Trailing Whitespace**: spaces at the ends of lines
+- **Toggle Word Wrap**: long lines fold at the edge of the window
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Sorting sorts text**
+
+```text
+100,20.01
+20,9.02
+30,11.05
+```
+
+`100` comes before `20`, because the character `1` comes before `2`. The editor sees characters, not numbers.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔧 No key has to be remembered for these. The Command Palette finds every command from a few letters of its name. macOS: `Cmd+Shift+P`.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Keys — **Windows & macOS**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## ↕️ **Lines and cursors**
+
+| | Windows | macOS |
+| --- | --- | --- |
+| Move the line | `Alt+↑` `Alt+↓` | `Option+↑` `Option+↓` |
+| Copy the line down | `Shift+Alt+↓` | `Shift+Option+↓` |
+| Delete the line | `Ctrl+Shift+K` | `Cmd+Shift+K` |
+| Cursor at each line end | `Shift+Alt+I` | `Shift+Option+I` |
+| Cursor on the line below | `Ctrl+Alt+↓` | `Cmd+Option+↓` |
+| Cursor at a click | `Alt`+click | `Option`+click |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔎 **Find, select, move**
+
+| | Windows | macOS |
+| --- | --- | --- |
+| Find and Replace | `Ctrl+H` | `Cmd+Option+F` |
+| Add the next match | `Ctrl+D` | `Cmd+D` |
+| Add all matches | `Ctrl+Shift+L` | `Cmd+Shift+L` |
+| One word left, right | `Ctrl+←` `Ctrl+→` | `Option+←` `Option+→` |
+| Line start, line end | `Home` `End` | `Cmd+←` `Cmd+→` |
+| Command Palette | `Ctrl+Shift+P` | `Cmd+Shift+P` |
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Linux has the Windows keys, with two exceptions: a cursor on the line below is <code>Shift+Alt+↓</code>, and copying the line down is <code>Ctrl+Shift+Alt+↓</code>.</div>
+
+<!--
+Speaker: leave this slide up while the room works. Nobody needs all twelve:
+the three that pay off first are Shift+Alt+I, Ctrl+D and Alt+arrow. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1803,6 +2187,12 @@ hideInToc: true
 <div class="card card-success card-glass pad-compact">
 
 ✅ Open a data file and read **rows, columns, units and metadata** before touching code
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Write a README in **Markdown** and change **many lines** of a text file with one edit
 
 </div>
 

@@ -710,6 +710,92 @@
 }
 
 
+/* ============================================
+   RENDERED-MD - what a Markdown preview shows
+   The result half of a source/result pair (L02 Markdown slides). The
+   content is raw HTML with these classes, not Markdown: a real `# Title`
+   inside a card would take the slide's own heading styles. Sizes are
+   relative to the box, which sits on the card body scale.
+   ============================================ */
+.rendered-md {
+  margin-top: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(248, 250, 252, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+}
+.rendered-md .rendered-title,
+.rendered-md .rendered-section,
+.rendered-md .rendered-sub {
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0.45em 0 0.25em;
+}
+.rendered-md .rendered-title {
+  font-size: 1.6em;
+  padding-bottom: 0.15em;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+}
+.rendered-md .rendered-section { font-size: 1.3em; }
+.rendered-md .rendered-sub { font-size: 1.1em; }
+.rendered-md > :first-child { margin-top: 0; }
+.rendered-md > :last-child { margin-bottom: 0; }
+.rendered-md p {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0.4em 0;
+}
+.rendered-md ul,
+.rendered-md ol {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0.3em 0;
+  padding-left: 1.5em;
+}
+.rendered-md ul { list-style: disc; }
+.rendered-md ol { list-style: decimal; }
+.rendered-md li { margin: 0.1em 0; }
+.rendered-md a {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+.rendered-md table {
+  width: auto;
+  border-collapse: collapse;
+  margin: 0.3em 0;
+  font-size: inherit;
+}
+.rendered-md th,
+.rendered-md td {
+  padding: 0.12em 0.7em;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  text-align: left;
+}
+.rendered-md th { font-weight: 600; }
+.rendered-md img {
+  display: block;
+  max-height: 6.5rem;
+  border-radius: 3px;
+}
+
+/* Compact table: a reference table inside a card (L02 key sheet). A table
+   on the slide itself keeps the slide scale; this one follows the card body. */
+.table-compact table {
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+.table-compact th,
+.table-compact td {
+  padding: 0.24rem 0.4rem;
+  white-space: nowrap;
+}
+.table-compact td:first-child { white-space: normal; }
+
 /* Task lists (- [ ] / - [x]): drop the theme's square bullet so the checkbox
    stands alone, matching how GitHub renders them. */
 .slidev-layout ul:has(> li > input[type="checkbox"]) { list-style: none; padding-left: 0; }
