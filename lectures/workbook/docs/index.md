@@ -1,7 +1,8 @@
 # Teachers Workbook
 
 Companion notes for **Best Research and Data Analysis Practices from CERN** — a
-16-lecture course with a hands-on seminar every week from week 2. The lectures
+course of 13 scheduled lectures and 3 further topics, with a hands-on seminar
+in every session from the second on. The lectures
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
 
@@ -29,15 +30,16 @@ The seminar briefs are in the **Seminars** section of the navigation.
 1. [Orientation & Motivation](lectures/lecture_1.md)
 2. [Introduction to Data](lectures/lecture_2.md)
 3. [How Computers Work](lectures/lecture_3.md)
-6. [Version Control with Git](lectures/lecture_8.md)
-7. – 8. [Python Programming](lectures/lecture_5.md)
-9. [Concepts of Data Analysis](lectures/lecture_6.md)
-10. [Data Visualisation](lectures/lecture_7.md)
-11. [Probability & Statistics](lectures/lecture_9.md)
-12. [Practical Data Fitting](lectures/lecture_10.md)
-13. [NumPy & Pandas](lectures/lecture_11.md)
-14. [Reproducible Workflows & Automation](lectures/lecture_12.md)
-15. [Computing Infrastructure](lectures/lecture_4.md) *(optional / advanced)*
-16. Machine Learning & AI *(optional / advanced — see the lecture deck)*
-
-[Miscellaneous](lectures/misc.md)
+4. [Command Line & File Handling](lectures/lecture_4.md)
+5. [Version Control with Git](lectures/lecture_5.md)
+6. [Python Foundations](lectures/lecture_6.md)
+7. [Python for Data & NumPy](lectures/lecture_7.md)
+8. [Data Visualisation](lectures/lecture_8.md)
+9. [Probability & Statistics](lectures/lecture_9.md)
+10. [Data Fitting from First Principles](lectures/lecture_10.md)
+11. [The Perceptron](lectures/lecture_11.md)
+12. [Pandas & Data Cleaning](lectures/lecture_12.md)
+13. [Reproducible Workflows & Automation](lectures/lecture_13.md)
+14. [Concepts of Data Analysis](lectures/lecture_14.md) *(further topic)*
+15. [Computing Infrastructure & HPC](lectures/lecture_15.md) *(further topic)*
+16. [Machine Learning & AI](lectures/lecture_16.md) *(further topic)*

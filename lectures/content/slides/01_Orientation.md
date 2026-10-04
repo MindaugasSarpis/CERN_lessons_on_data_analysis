@@ -15,8 +15,8 @@ title: "Orientation & Motivation"
 Speaker: let the cold open on the next slide run first, then welcome them, introduce
 yourself, and set the tone — this is a practical course, not a lecture course.
 Everything is graded on one project of the student's own choosing; the seminars are
-where the skills get practised. No seminar today: the setup is homework and Seminar 1's
-brief is self-paced — the last slide says so. (~2 min)
+where the skills get practised. No seminar today: the first seminar is in the next
+session and starts from zero — the last slide says what to bring. (~2 min)
 -->
 
 ---
@@ -37,7 +37,7 @@ layout: fact
 
 <!--
 Speaker: three quick shows of hands. Fields calibrate the later examples; the OS split
-(Windows / macOS / Linux) tells you what Seminar 2's install checkpoint will hit; "coded
+(Windows / macOS / Linux) tells you what the first seminar's installation will meet; "coded
 before" lets you seat an experienced student next to a beginner from week 2.
 -->
 
@@ -642,10 +642,10 @@ graph LR
 
 ## 🔬 **The seminar**
 
-- You do it yourself, on a real dataset, in your own repository
+- You do it yourself, on a real dataset, in your own project folder
 - Inverted classroom: you type, break things, and fix them
 - The instructor circulates — help is closest when you are stuck
-- Goal is a **working result** you commit before you leave
+- Goal is a **working result**, saved in your project before you leave
 
 </div>
 
@@ -661,9 +661,9 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-tight mt-md">
 
-## ✅ **A small, finished thing — committed**
+## ✅ **A small, finished thing — saved**
 
-Every seminar ends the same way: something new works, and you **commit it to your repository**. Not a perfect thing, not a whole project — one honest step, saved and dated.
+Every seminar ends the same way: something new works, and it is **saved in your project folder**. Not a perfect thing, not a whole project — one honest step, saved and dated.
 
 </div>
 
@@ -673,7 +673,7 @@ Every seminar ends the same way: something new works, and you **commit it to you
 
 ## 📦 **Saved**
 
-The new work is in your repo, not in a stray file on the desktop.
+The new work is in your project folder, not in a stray file on the desktop.
 
 </div>
 
@@ -838,13 +838,12 @@ hideInToc: true
 
 | **Seminars** | **Hands-on focus** |
 | --- | --- |
-| S1–S2 *(both on 29 Sep)* | Toolkit; repo skeleton + first commit; a dataset with provenance |
-| S3–S5 | The raw file as bytes; clean structure; a real README |
-| S6–S8 | Git — branch & merge; parse one line; read a whole file |
-| S9–S11 | Data-quality audit; a first figure; a value ± its error |
-| S12 | **The fit** — a peak → value ± error, with a χ² |
-| S13–S14 | Tidy tables; one-command reproducible rebuild |
-| S15–S16 *(optional)* | Batch-run a pipeline; an honest classifier |
+| 1 | VS Code, Markdown, the project folder, editing many lines at once |
+| 3–5 | A file as bytes; the command line; Git |
+| 6–7 | Python from the first line; files and arrays |
+| 8–9 | A first figure; a value with its uncertainty |
+| 10–11 | **A fit from first principles**; a perceptron built by hand |
+| 12–13 | Cleaning by script; one command that rebuilds everything |
 
 <div class="note-text mt-sm">Every one of these transfers straight into your own project — that is the point.</div>
 
@@ -875,7 +874,7 @@ This is the whole arc in one line — and every box is built in the seminars. Th
 
 ## 📥 **Raw → Clean**
 
-S3–S9: the raw file as bytes, a clean project structure, a data-quality audit
+The raw file as bytes, a clean project structure, cleaning by script
 
 </div>
 
@@ -883,7 +882,7 @@ S3–S9: the raw file as bytes, a clean project structure, a data-quality audit
 
 ## 📊 **Compute → Histogram**
 
-S10–S11: first figure, then value ± error
+A first figure, then a value with its uncertainty
 
 </div>
 
@@ -891,7 +890,7 @@ S10–S11: first figure, then value ± error
 
 ## 📈 **Fit → Result**
 
-S12–S14: the fit, tidy tables, a rebuild in one command
+The fit, then a rebuild in one command
 
 </div>
 
@@ -1026,35 +1025,27 @@ You don't need a particle accelerator to use any of this. **Next lecture: what d
 hideInToc: true
 ---
 
-# Before **Next Tuesday**
+# Before the **Next Session**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🖥️ **Install three tools**
+## 💻 **Bring a laptop**
 
-- **Python 3.10+** — [python.org](https://python.org)
-- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com)
-- **Git** — [git-scm.com](https://git-scm.com)
-
-*🔧 Tool-agnostic: conda, PyCharm, or another editor is fine — the aim is the skill, not the tool.*
+- Windows, macOS or Linux, charged, with its charger
+- You must be able to install programs on it. On a university or work laptop, check that now
+- Nothing has to be installed beforehand
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## ⚡ **Prove they work**
+## 🗂️ **Think of a dataset**
 
-Open a terminal and run:
-
-```bash
-python --version   # or python3
-git --version
-code --version
-```
-
-Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills it.
+- A table from a field you care about: weather, sport, prices, health, astronomy, your lab
+- It becomes the data of your own project
+- No file is needed yet. One sentence about it is enough
 
 </div>
 
@@ -1062,9 +1053,9 @@ Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills 
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-## 🔬 **No seminar today — Seminar 1 is self-paced**
+## 🔬 **The first seminar starts from zero**
 
-Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 29 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
+It installs the editor, builds a project folder and writes its first file together, step by step. No programming experience is assumed.
 
 </div>
 

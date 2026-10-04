@@ -17,7 +17,7 @@ pnpm install                 # install dependencies
 
 pnpm build                   # build ALL decks + landing → dist/ (scripts/build-all.mjs)
 pnpm qa                      # build every deck at base '/' + gate each for overflow (scripts/qa-all.mjs) (includes the landing smoke test)
-pnpm qa --only 06-version-control       # QA just one deck (much faster edit loop)
+pnpm qa --only 05-version-control       # QA just one deck (much faster edit loop)
 pnpm qa --changed-since origin/main     # QA only the decks whose slides changed vs main (CI does this vs the last green main commit; shared-file changes widen to all)
 pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for visual review
 pnpm timing                  # estimate delivery minutes per deck + seminar vs the 2h slot (scripts/timing-report.mjs; decks come from decks.json)
@@ -29,7 +29,7 @@ pnpm videos:encode-hq        # venue-quality HEVC copy (manifest `hq = true` ent
 pnpm figures                 # regenerate all scripted lecture figures (figures/src/ → public/figures/viz_*.svg; --only <family> to scope)
 pnpm figures:lhcb            # regenerate the synthetic LHCb D0→K-π+ figures (lhcb_d0_spectrum/fit.png)
 
-pnpm dev 6                   # dev-serve ONE lecture (scripts/dev.mjs; number, slug, or substring — regenerates entries first)
+pnpm dev 5                   # dev-serve ONE lecture (scripts/dev.mjs; number, slug, or substring — regenerates entries first)
 pnpm dev                     # list all decks
 
 pnpm dev:combined            # dev-serve the combined all-16 authoring deck
@@ -68,10 +68,10 @@ To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan 
 ### Slide Deck (Slidev)
 
 - **Deck manifest**: `lectures/content/decks.json` (see Build pipeline above) — the source of truth for which decks exist and their order/blocks.
-- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key). All 16 are live in `decks.json`; 15–16 are marked `optional` (advanced/droppable). `LX_Python_Interactive.md` is a template (not a lecture) for python-runner slides.
+- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key): 01 Orientation, 02 Introduction to Data, 03 How Computers Work, 04 Command Line & Files, 05 Git, 06 Python Foundations, 07 Python for Data & NumPy, 08 Visualisation, 09 Probability & Statistics, 10 Fitting from First Principles, 11 The Perceptron, 12 Pandas & Data Cleaning, 13 Reproducible Workflows; 14–16 (Concepts of Data Analysis, Computing Infrastructure, Machine Learning & AI) are block E "Further Topics", marked `optional` and not scheduled. The order and what each week may assume are fixed in `docs/superpowers/specs/2026-10-04-course-rework-first-principles-design.md` — read it before reworking a deck. `LX_Python_Interactive.md` is a template (not a lecture) for python-runner slides.
 - **Parked slides**: `lectures/content/parked/NN_Title.md` — slides taken out of a deck (to keep it in the timing band, or after feedback). Not in `decks.json`, so not built, gated or deployed; a header comment says where each slide stood. To restore one, move it back into the lecture file.
 - **Combined authoring entry** (optional, not deployed): `lectures/content/best_research_and_data_analysis_practices_from_CERN.md` (imports all 16) and `staging.md` — single-file "everything" builds for authoring/PDF export (`pnpm build:combined`).
-- **Seminars**: `lectures/workbook/docs/seminars/` — 16 self-contained hands-on briefs + `overview.md`. Exercises use a shared teaching dataset (LHCb D⁰ → K⁻π⁺ open data, invariant-mass peak near 1865 MeV); consecutive briefs may build on each other but nothing is "the running project". Each student's semester project is separate and entirely their own choice (topic, data, form) — never frame the D⁰ analysis as the course project.
+- **Seminars**: `lectures/workbook/docs/seminars/seminar_NN.md` + `overview.md` — one follow-along page per seminar, written for the person at the front (lead paragraph, numbered steps, "You should now see", one "Watch for"). A page carries the number of its lecture, except Seminar 1, which pairs with Lecture 02; there is no Seminar 2. The follow-along uses two shared files, the pendulum table and the LHCb D⁰ → K⁻π⁺ file (`M, PT, TAU, IPCHI2` only); at home students repeat each step on a dataset of their own. Each student's semester project is separate and entirely their own choice (topic, data, form) — never frame the D⁰ analysis as the course project.
 - **Design/plan docs**: `docs/superpowers/specs/` and `docs/superpowers/plans/` — the curriculum spec and the P1–P6 implementation plan.
 - **Custom theme**: `lectures/content/theme/` — local Slidev theme (`@slidev/theme-scienced`)
   - `styles/custom-slides.css` — card system, grid layouts, spacing utilities, typography
@@ -86,7 +86,7 @@ To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan 
 
 - `lectures/workbook/` — MkDocs (Material, dark) site with the seminar briefs + lecture companion notes; built to `dist/workbook/` by `build-all.mjs` when `mkdocs` is on PATH (or `$MKDOCS`), gated by `mkdocs build --strict` in qa.yml, linked from the landing footer
 - `lectures/workbook/mkdocs.yml` — site config and nav
-- `lectures/workbook/docs/lectures/` — per-lecture markdown pages
+- `lectures/workbook/docs/lectures/lecture_N.md` — one page per lecture (N = its number, no leading zero): what it covers, the 90-minute plan with slide numbers and a skip list, "Check yourself", the paired seminar, take-aways. Slide numbers on a page must be recounted whenever its deck gains or loses a slide
 
 ### Miscellaneous
 
@@ -126,7 +126,7 @@ Each lecture markdown file follows a consistent structure:
 - **Markdown inside one-line HTML** — a single-line `<div class="note-text">text with *em* or `code`</div>` is an HTML block: markdown is NOT parsed and prints literal asterisks/backticks. Either use `<em>/<strong>/<code>` inside the div, or put blank lines between the tags and the text (multi-line form) so markdown-it parses it. Same for the `question=` prop of `<MCQ>` — it accepts `code` spans only (the component converts them); no other markdown.
 - **`$$` math blocks inside HTML** — Slidev ≥ 52.19 wraps `$$ … $$` in a KaTeX wrapper component; a `$$` line directly after an opening tag (no blank line), or an empty line inside the math, makes the build fail with `Element is missing end tag`. Always leave a blank line between a tag and `$$`, and keep the math contiguous.
 - **Mermaid styling is global** — the course look for every diagram lives in `lectures/content/setup/mermaid.ts` (`themeVariables` + `themeCSS`); the canonical semantic `classDef`s are in `theme/mermaid-config.md`. Slidev renders each diagram into a **shadow root**, so page CSS (`mermaid-styles.css`) cannot style nodes/edges — it only holds the light-DOM measuring container's label font + a measure-only padding (Chrome lays out scaled foreignObject text a few px wider than measured, which clips the last glyph without it). Don't add `%%{init: …}%%` colour blocks to fences; layout-only directives (spacing, `showCommitLabel`) are fine.
-- **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. Fenced code is `v-pre`, so the old `{{'<<<<<<< HEAD'}}` trick renders literally — do NOT use it. Show a conflict as a raw HTML block instead: `<pre class="slidev-code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD … &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch</code></pre>` (see L06 "Merge Conflicts — What They Look Like").
+- **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. Fenced code is `v-pre`, so the old `{{'<<<<<<< HEAD'}}` trick renders literally — do NOT use it. Show a conflict as a raw HTML block instead: `<pre class="slidev-code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD … &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch</code></pre>` (see L05 "Merge Conflicts — What They Look Like").
 
 ## Available Tooling
 

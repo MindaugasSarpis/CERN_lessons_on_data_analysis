@@ -20,7 +20,7 @@ conda env create -f env.yaml    # Python env "lecture" (figures pipeline + MkDoc
 ### Edit a lecture
 
 ```bash
-pnpm dev 6            # serve lecture 06 (also accepts a slug or substring: pnpm dev version)
+pnpm dev 5            # serve lecture 05 (also accepts a slug or substring: pnpm dev version)
 pnpm dev              # list all decks
 ```
 
@@ -30,7 +30,7 @@ Lecture sources live in `lectures/content/slides/NN_Title.md`. Decks are always 
 
 ```bash
 pnpm qa                            # build every deck + fail on any slide overflowing its frame
-pnpm qa --only 06-version-control  # gate just the deck you touched (fast loop)
+pnpm qa --only 05-version-control  # gate just the deck you touched (fast loop)
 pnpm qa --changed-since origin/main  # gate only the decks whose slides changed vs main (what CI does)
 pnpm qa:shots                      # also write .qa-shots/<slug>/slide-NNN.png for visual review
 pnpm timing:check                  # every week must fill its 2h lecture + 2h seminar slot
@@ -82,7 +82,7 @@ lectures/content/public/figures/ # committed figure assets (viz_*.svg are script
 figures/src/                     # matplotlib pipeline behind `pnpm figures`
 landing/                         # WebGL landing page source (Three.js + Vite)
 scripts/                         # build-all / gen-entries / qa-all / check-slides / timing-report / dev / videos
-lectures/workbook/               # MkDocs student workbook (16 seminar briefs + overview)
+lectures/workbook/               # MkDocs workbook (seminar pages, lecture pages, overview)
 videos/manifest.toml             # video pipeline manifest (raw/web files are gitignored)
 docs/superpowers/                # curriculum specs and implementation plans
 misc/                            # course admin (grading scripts; grade CSVs are gitignored)
@@ -103,8 +103,8 @@ Keep unfinished edits to a **live** deck on a branch and open a PR (the gates ru
 Staged release is one boolean per deck in `decks.json` — flip it by hand or with `pnpm release <NN>` (lectures 01–NN live, the rest draft; `pnpm release all` = everything live; no argument = show state):
 
 ```jsonc
-{ "slug": "09-concepts-of-data-analysis", "…": "…", "draft": true }   // listed "coming soon", not deployed
-{ "slug": "09-concepts-of-data-analysis", "…": "…", "draft": false }  // live
+{ "slug": "09-probability-and-statistics", "…": "…", "draft": true }   // listed "coming soon", not deployed
+{ "slug": "09-probability-and-statistics", "…": "…", "draft": false }  // live
 ```
 
 - A **draft** deck is still built and gated by `pnpm qa` and `pnpm timing:check` (CI too), so you can keep editing it without it silently breaking.

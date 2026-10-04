@@ -1,15 +1,19 @@
 ---
 layout: cover
 title: "Data Fitting from First Principles"
-# slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
+# slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md).
+# The prelude holds the pendulum arrays of the slide "The Same in NumPy", so
+# every later runner works without that slide having been run first.
 python:
-  installs: ["numpy", "matplotlib", "scipy"]
+  installs: ["numpy", "scipy"]
   prelude: |
     import numpy as np
-    import matplotlib.pyplot as plt
     from scipy.optimize import curve_fit
-    import warnings
-    warnings.filterwarnings('ignore')
+    t10 = np.array([9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01])
+    x = np.arange(20, 101, 10) / 100
+    T = t10 / 10
+    y = T**2
+    sy = 2 * T * 0.01
   loadPackagesFromImports: true
   suppressDeprecationWarnings: true
 ---
@@ -18,13 +22,13 @@ python:
 
 # Best Research and Data Analysis Practices from CERN
 
-## Data Fitting
+## Data Fitting from First Principles
 
 ##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
 
 <!--
-Speaker: open on the promise — turning noisy points into a number ± an error.
-Every field in the room does this; today we make it principled. (~1 min)
+Speaker: one table of nine rows carries most of the lecture. Every step is done
+on it three times: with a calculator, in NumPy, with SciPy. (~1 min)
 -->
 
 ---
@@ -32,7 +36,7 @@ hideInToc: true
 layout: quote
 ---
 
-# Data fitting is how we extract quantitative knowledge from measurements---turning noisy observations into precise parameter estimates with well-understood uncertainties.
+# The goal of this lecture is to derive the fit of a model to data from the **likelihood**, and to carry it out three times: by hand, in **NumPy** and with **SciPy**
 
 ---
 hideInToc: true
@@ -42,347 +46,85 @@ hideInToc: true
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
-<div class="stack-tight mt-sm">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-🎯 Frame fitting as choosing parameters that best describe your **data**
+📐 Derive **χ²** from the Gaussian likelihood
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-⚖️ Weight points by their errors with the **chi-squared** statistic
+🧮 Fit a **straight line** in closed form, from five sums
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-🐍 Run nonlinear fits with **`scipy.optimize.curve_fit`**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-🔍 Judge fit quality with **residuals** and reduced **χ²** (χ²/dof ≈ 1)
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-♻️ Report every result as **value ± uncertainty**
-
-</div>
-
-</div>
-
-<!--
-Speaker: read these as promises, not a syllabus. Point out Seminar 12 is where
-they fit a real LHCb peak and report a mass with error — today builds the
-mental model. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Why Data **Fitting**?
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Motivation**
-
-Every quantitative science depends on extracting numbers from noisy measurements. Data fitting provides a principled framework for doing this.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **In the Lab**
-
-- **Calibrating instruments** --- relating raw sensor readings to physical units
-- **Extracting physical constants** --- measuring particle masses, lifetimes, cross-sections
-- **Characterizing signals** --- finding peak positions, widths, amplitudes
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **In Research**
-
-- **Testing hypotheses** --- does the data support a new theory?
-- **Quantifying uncertainties** --- how precisely do we know a result?
-- **Separating signal from background** --- finding rare processes in noisy data
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# What is **Data Fitting?**
-
-<!--
-Speaker: section shift — from "why" to "what". Define it cleanly:
-data + model → parameters ± uncertainties, checked and iterated. (~30 sec)
--->
-
----
-hideInToc: true
----
-
-# The Fundamental **Problem**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Definition**
-
-**Data fitting** is the process of finding parameter values $\theta$ such that a model $f(x; \theta)$ best describes observed data $(x_i, y_i)$.
-
-$$\text{Data} \xrightarrow{\text{fitting}} \text{Parameter estimates } \hat{\theta} \pm \text{uncertainties}$$
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **What we have**
-
-- Measurements $(x_i, y_i)$ with uncertainties
-- A theoretical model $f(x; \theta)$
-- Prior knowledge about subject
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **What we want**
-
-- Best-fit parameter values $\hat{\theta}$
-- Uncertainties on parameters
-- Assessment of fit quality
-- Confidence in our model
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# The Data Fitting **Workflow**
-
-```mermaid {scale: 1.0}
-%%{init: {'flowchart': {'nodeSpacing': 40, 'rankSpacing': 45}}}%%
-flowchart LR
-    Data["Data<br/>(xᵢ, yᵢ)"]:::input --> Model["Model<br/>f(x; θ)"]:::process
-    Model --> Fit["Fit<br/>minimize χ²"]:::process
-    Fit --> Params["Parameters<br/>θ̂ ± σ"]:::output
-    Params --> Validate["Validate<br/>residuals, χ²/dof"]:::check
-    Validate -->|Good| Report["Report"]:::output
-    Validate -->|Bad| Model
-
-    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
-    classDef process fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
-    classDef output fill:#063c34,stroke:#34d399,color:#d1fae5
-    classDef check fill:#2a2208,stroke:#fbbf24,color:#fef3c7
-```
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-🔁 **Key insight**: Fitting is iterative. If diagnostics reveal problems, refine the model and repeat.
-
-</div>
-
-<!--
-Speaker: walk the loop once: data + model → minimize χ² → θ̂ ± σ → validate.
-The "Bad" arrow back to Model is the whole lecture in one edge. (~1 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Mathematical **Models**
-
-<!--
-Speaker: a model is a function with knobs. Three flavours, then what the knobs
-(parameters) actually mean in a signal-plus-background fit. (~30 sec)
--->
-
----
-hideInToc: true
----
-
-# What Is a **Model**?
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Definition**
-
-A **mathematical model** is a function $f(x; \theta)$ that describes the relationship between independent variable(s) $x$ and dependent variable $y$:
-
-$$y = f(x; \theta) + \varepsilon$$
-
-where $\varepsilon$ represents random measurement errors.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Components**
-
-- **Functional form**: theory-motivated shape
-- **Parameters $\theta$**: unknown quantities to estimate
-- **Error term $\varepsilon$**: accounts for noise/uncertainty
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Examples**
-
-- Linear: $y = mx + b$
-- Exponential decay: $y = A e^{-\lambda t}$
-- Gaussian peak: $y = A e^{-(x-\mu)^2/2\sigma^2}$
-- Polynomial: $y = \sum a_n x^n$
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Three Kinds of **Model**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-### 📐 **Mechanistic**
-
-Based on physical principles
-
-- First-principles derivation
-- Parameters have physical meaning
-- Preferred in physics
-
-**Example**: Decay rate from quantum mechanics
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 📈 **Empirical**
-
-Based on observed patterns
-
-- Data-driven functional form
-- May lack physical interpretation
-- Useful for interpolation
-
-**Example**: Polynomial fit to calibration data
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-### 🔀 **Hybrid**
-
-Combines both approaches
-
-- Physical model + corrections
-- Systematic effects modeled empirically
-- Common in practice
-
-**Example**: Signal (Gaussian) + background (empirical)
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-**Important**: The choice of model should be guided by knowledge of the subject, not just by what fits best. A good fit with a wrong model gives wrong answers!
-
-</div>
-
----
-hideInToc: true
----
-
-# Parameters **Example**: Gaussian + Exponential
-
-<div class="grid-2 mt-md gap-md" style="margin-top: 0;">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Types of Parameters**
-
-Parameters $\theta$ are the unknowns we want to determine:
-
-- **Physical quantities**: mass, lifetime, cross-section
-- **Shape descriptors**: width, amplitude, position
-- **Nuisance parameters**: background level, resolution
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Each parameter has**
-
-- A true (unknown) value
-- An estimated value $\hat{\theta}$
-- An uncertainty $\sigma_{\hat{\theta}}$
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-accent card-glass pad-compact">
-
-## **Model**
-
-$$f(x) = A \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}} + N \cdot e^{-x/\lambda}$$
+📏 Get parameter **uncertainties** and their covariance from the curvature of χ²
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## **Parameters**
+⛰️ Minimise χ² by **gradient descent**, and say what the learning rate does
 
-- $A$ — signal amplitude
-- $\mu$ — signal position (mass)
-- $\sigma$ — signal width (resolution)
-- $N$ — background normalization
-- $\lambda$ — background decay scale
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+🐍 Fit a nonlinear model with **`scipy.optimize.curve_fit`**
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🔍 Judge a fit by **χ² per degree of freedom**, residuals and pulls
 
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# What Lecture 09 **Established**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎲 **Likelihood**
+
+The likelihood $L(\theta)$ is the probability of the measured data, read as a function of the parameters $\theta$.
+
+The maximum-likelihood estimate $\hat\theta$ is the value of $\theta$ at which $L(\theta)$ is largest.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚖️ **The weighted mean**
+
+$N$ measurements $y_i \pm \sigma_i$ of one quantity $\mu$, with Gaussian scatter. The likelihood is largest at
+
+$$\hat\mu = \frac{\sum_i y_i/\sigma_i^2}{\sum_i 1/\sigma_i^2}, \qquad \sigma_{\hat\mu}^2 = \frac{1}{\sum_i 1/\sigma_i^2}$$
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Today the measured quantity changes with a second quantity $x$, and a model $f(x;\theta)$ says how. The steps stay the same: write the likelihood, find its maximum, find the uncertainty of the result.
 
 </div>
 
 <!--
-Speaker: point at the table — A, μ, σ are the physics; N, λ are nuisance
-parameters we must fit but don't care about. The seminar's D⁰ fit has exactly
-this shape (Gaussian + linear or exponential background). (~1.5 min)
+Speaker: write the two formulas of the weighted mean on the board and leave
+them there. They come back three times today. (~2 min)
 -->
 
 ---
@@ -390,565 +132,1976 @@ layout: section
 hideInToc: true
 ---
 
-# Parameter **Estimation**
-
-<!--
-Speaker: the mathematical heart — least squares, its link to maximum likelihood,
-and where the covariance matrix (the errors) comes from. (~1 min)
--->
+# What a **Fit** Is
 
 ---
 hideInToc: true
 ---
 
-# The Estimation **Problem**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Goal**
-
-Given data and a model, find the parameter values $\hat{\theta}$ that make the model best describe the data.
-
-"Best" means: **maximize agreement** between model predictions and observations.
-
-</div>
+# The Pendulum **Table**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## **The Challenge**
+## 📄 **`pendulum.csv`, with two columns added**
 
-- Data contains random noise
-- Multiple parameter combinations might seem plausible
-- Need principled way to choose "best"
-- Must quantify uncertainty in our estimates
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Solution: Optimization**
-
-Define a **cost function** measuring disagreement:
-
-$$\text{Cost}(\theta) = \text{how bad is this } \theta?$$
-
-Then minimize it:
-
-$$\hat{\theta} = \arg\min_\theta \text{Cost}(\theta)$$
+| ℓ (cm) | t₁₀ (s) | T (s) | T² (s²) |
+| --- | --- | --- | --- |
+| 20 | 9.02 | 0.902 | 0.8136 |
+| 30 | 11.05 | 1.105 | 1.2210 |
+| 40 | 12.61 | 1.261 | 1.5901 |
+| 50 | 14.23 | 1.423 | 2.0249 |
+| 60 | 15.49 | 1.549 | 2.3994 |
+| 70 | 16.84 | 1.684 | 2.8359 |
+| 80 | 17.90 | 1.790 | 3.2041 |
+| 90 | 19.10 | 1.910 | 3.6481 |
+| 100 | 20.01 | 2.001 | 4.0040 |
 
 </div>
 
-</div>
+<div class="stack-tight" style="margin-top:0;">
 
----
-hideInToc: true
----
+<div class="card card-secondary card-glass pad-compact">
 
-# Least **Squares**
+## ⏱️ **What was measured**
 
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Sum of Squared Residuals**
-
-The most common approach: minimize the sum of squared differences between data and model:
-
-$$S(\theta) = \sum_{i=1}^{n} \left[ y_i - f(x_i; \theta) \right]^2$$
+Nine lengths $\ell$ and the time $t_{10}$ of 10 swings. One period is $T = t_{10}/10$.
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-accent card-glass pad-compact">
 
-<div class="card card-primary card-glass pad-tight">
+## 📐 **What theory says**
 
-## **Intuition**
+$$T = 2\pi\sqrt{\frac{\ell}{g}} \quad\Longrightarrow\quad T^2 = \frac{4\pi^2}{g}\,\ell$$
 
-- Residual $r_i = y_i - f(x_i; \theta)$
-- Squaring removes sign (positive/negative equally bad)
-- Large errors penalized more heavily
-- Leads to smooth optimization landscape
+$T^2$ against $\ell$ is a straight line through the origin with slope $4\pi^2/g$. For $g = 9.81$ m/s² the slope is 4.024 s²/m.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-info card-glass pad-compact">
 
-## **Connection to MLE**
-
-If errors are Gaussian:
-$$\varepsilon_i \sim N(0, \sigma^2)$$
-
-Then **least squares = maximum likelihood**
-
-This is why least squares is so widely used.
+The length is written $\ell$ today. The letter $L$ is the likelihood.
 
 </div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Weighted Least Squares = **χ²**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Weighted Least Squares**
-
-If data points have different uncertainties $\sigma_i$, weight them accordingly:
-
-$$\chi^2(\theta) = \sum_{i=1}^{n} \frac{\left[ y_i - f(x_i; \theta) \right]^2}{\sigma_i^2}$$
-
-Points with smaller uncertainties contribute more to the fit.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Physical interpretation**
-
-- $\sigma_i$ = uncertainty on point $i$
-- Precise measurements ($\sigma_i$ small) → large weight
-- Imprecise measurements → small weight
-- This is the **chi-squared statistic**
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## **Common case: Poisson data**
-
-For histogram bin counts $n_i$: $\sigma_i = \sqrt{n_i}$
-
-Fine for $n_i \gtrsim 10$. **Sparse bins**: $\sqrt{n_i}$ under-weights fluctuations and biases yields low → use $\sigma_i = \sqrt{f(x_i)}$ from the model, or a Poisson likelihood fit.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the √n trick is what everyone does and it is fine for well-populated
-bins. In the tails a bin with 1 count gets σ = 1 and a bin with 0 counts gets
-σ = 0 — that is where fits go wrong; the model-σ or a likelihood fit fixes it. (~1.5 min)
+Speaker: the table is the one cleaned by hand in Lecture 02. Ask the room what
+they would plot to get g. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The **Covariance** Matrix
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **The Covariance Matrix**
-
-The fit produces not just $\hat{\theta}$ but also the **covariance matrix** $\mathbf{C}$:
-
-$$C_{ij} = \text{Cov}(\hat{\theta}_i, \hat{\theta}_j)$$
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Diagonal elements**
-
-$$C_{ii} = \text{Var}(\hat{\theta}_i) = \sigma_{\hat\theta_i}^2$$
-
-**Parameter uncertainties:**
-
-$$\sigma_{\hat\theta_i} = \sqrt{C_{ii}}$$
-
-Report results as: $\hat{\theta}_i \pm \sigma_{\hat\theta_i}$
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Off-diagonal elements**
-
-$$C_{ij} = \text{Cov}(\hat{\theta}_i, \hat{\theta}_j)$$
-
-**Correlations between parameters:**
-
-$$\rho_{ij} = \frac{C_{ij}}{\sigma_{\hat\theta_i}\, \sigma_{\hat\theta_j}}$$
-
-Important for error propagation!
-
-</div>
-
-</div>
-
-<!--
-Speaker: distinguish the two sigmas explicitly — σᵢ is the error on a DATA
-point, σ_θ̂ is the error on a fitted PARAMETER. Students mix them up all the
-time. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# The **Covariance** Matrix, Pictured
+# From a Curve to a **Straight Line**
 
 <div class="note-text mt-sm">
 
-Same fit as the Gaussian runner you are about to run --- four parameters $(A, \mu, \sigma, b)$, one 4×4 matrix. The **tilted ellipse** on the right *is* the off-diagonal entry $\rho(A, \sigma) = -0.57$ on the left.
+The same nine rows, plotted twice. A straight line has two parameters and can be fitted by hand. The dashed curves are the theory with $g = 9.81$ m/s².
 
 </div>
 
-<img class="fig" src="/figures/viz_fitting_covariance.svg" style="display:block;margin:0.5rem auto 0;width:100%;max-height:360px;">
+<img class="fig" src="/figures/viz_fitting_pendulum_data.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:345px;">
+
+---
+hideInToc: true
+---
+
+# The Uncertainties We **Assume**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✋ **One assumption**
+
+The stopwatch is worked by hand. Take $\sigma_{t_{10}} = 0.1$ s for every row. Then $\sigma_T = \sigma_{t_{10}}/10 = 0.01$ s.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➡️ **Propagated to T²**
+
+By error propagation (Lecture 09):
+
+$$\sigma_{T^2} = \left|\frac{d(T^2)}{dT}\right|\sigma_T = 2\,T\,\sigma_T$$
+
+First row: 2 × 0.902 × 0.01 = 0.0180 s².
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+The length is taken as exact. An error of 1 mm in $\ell$ moves $T^2$ by 0.004 s², less than a quarter of the smallest $\sigma_{T^2}$.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact table-compact">
+
+## 📏 **The data of the fit**
+
+| x = ℓ (m) | y = T² (s²) | σ (s²) |
+| --- | --- | --- |
+| 0.2 | 0.8136 | 0.0180 |
+| 0.3 | 1.2210 | 0.0221 |
+| 0.4 | 1.5901 | 0.0252 |
+| 0.5 | 2.0249 | 0.0285 |
+| 0.6 | 2.3994 | 0.0310 |
+| 0.7 | 2.8359 | 0.0337 |
+| 0.8 | 3.2041 | 0.0358 |
+| 0.9 | 3.6481 | 0.0382 |
+| 1.0 | 4.0040 | 0.0400 |
+
+</div>
+
+</div>
 
 <!--
-Speaker: left — read the matrix like a table: A and σ anti-correlated (wider
-peak, lower amplitude, same area); μ decouples because the peak is symmetric on
-a flat background. Right — the Δχ² = 1 ellipse projects to exactly ±1σ on each
-axis (dashed lines); the Δχ² = 2.3 ellipse is the 68 % JOINT region, which is
-bigger. The tilt is the correlation. Come back here when we talk about
-correlated parameters. (~2 min)
+Speaker: the 0.1 s is an assumption, and the lecture says so every time it is
+used. The goodness of fit later tests it. The uncertainties are not equal: the
+long pendulum has twice the uncertainty in T squared. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-<MCQ
-  question="In the pictured fit, ρ(A, σ) = −0.57. Which reading is correct?"
-  :options="[
-    'The width σ is poorly measured because of the correlation',
-    'A wider fitted peak comes with a lower amplitude — the data pin down the area, not A and σ separately',
-    'μ and σ must also be strongly correlated',
-    'The single-parameter errors on A and σ already include the joint uncertainty'
-  ]"
-  :correct="1"
-  explanation="A negative ρ(A, σ) means the χ² valley runs diagonally: making the peak wider and lower leaves the area (yield) almost unchanged, so the data constrain A·σ better than either alone. μ decouples for a symmetric peak on a flat background, and single-parameter errors (Δχ² = 1 projections) understate the joint region."
-/>
+# The Three Parts of a **Fit**
+
+<div class="grid-3 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **A model**
+
+A function $f(x;\theta)$ with parameters $\theta$. Here $f(x; a, b) = a\,x + b$, with $x = \ell$ and $y = T^2$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **Data with uncertainties**
+
+$N$ points $(x_i, y_i)$ with uncertainties $\sigma_i$, $i = 1 \dots N$. Here $N = 9$.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎯 **A measure of mismatch**
+
+One number that says how far the model with parameters $\theta$ is from the data. The fit is the $\theta$ that makes it smallest.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Three lines chosen by eye. At full scale they look alike. With $4\ell$ subtracted they differ by a few 0.01 s², the size of the error bars. The measure has to rank them, and it has to use the $\sigma_i$.
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_candidates.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:235px;">
+
+<!--
+Speaker: ask for a vote on A, B or C before going on. The slope a gives
+g = 4 pi squared over a. The intercept b tests the theory, which demands
+b = 0. The right panel is the data with one known line subtracted; the lecture
+uses this view again. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# From Likelihood to **χ²**
 
 ---
 hideInToc: true
 ---
 
-# Initial **Guesses** Matter
+# One Point, One **Gaussian**
 
-<div class="card card-warning card-glass pad-tight mt-md">
+<div class="grid-2 mt-md gap-md">
 
-## **The Local Minimum Problem**
+<div class="stack-tight" style="margin-top:0;">
 
-Nonlinear fitting is an optimization problem. Poor initial guesses can lead to:
+<div class="card card-primary card-glass pad-compact">
 
-- Convergence to **local** (not global) minimum
-- Fit failure or nonsensical results
-- Very slow convergence
+## 📍 **The assumption**
+
+If the model is right, the measured $y_i$ scatters around the model value $f(x_i;\theta)$ as a Gaussian of width $\sigma_i$:
+
+$$p(y_i \mid \theta) = \frac{1}{\sqrt{2\pi}\,\sigma_i}\,\exp\!\left[-\frac{\big(y_i - f(x_i;\theta)\big)^2}{2\sigma_i^2}\right]$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+The Gaussian of Lecture 09, with $f(x_i;\theta)$ in the place of the mean $\mu$. Three assumptions are in it: the scatter is Gaussian, the $\sigma_i$ are known, and the $x_i$ are exact.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_likelihood.svg" style="display:block;width:100%;">
+
+</div>
+
+---
+hideInToc: true
+---
+
+# All Points: the **Likelihood**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ✖️ **A fourth assumption: independent points, so the probabilities multiply**
+
+$$L(\theta) = \prod_{i=1}^{N} \frac{1}{\sqrt{2\pi}\,\sigma_i}\,\exp\!\left[-\frac{\big(y_i - f(x_i;\theta)\big)^2}{2\sigma_i^2}\right]$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🪵 **Take the logarithm**
+
+The logarithm turns the product into a sum, and it is largest at the same $\theta$ as $L$ itself:
+
+$$\ln L(\theta) = -\frac{1}{2}\sum_{i=1}^{N}\frac{\big(y_i - f(x_i;\theta)\big)^2}{\sigma_i^2} \;-\; \sum_{i=1}^{N}\ln\!\big(\sqrt{2\pi}\,\sigma_i\big)$$
+
+The second sum does not contain $\theta$. It is a constant.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Maximum Likelihood Is Minimum **χ²**
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+$$-2\ln L(\theta) = \chi^2(\theta) + \text{const}, \qquad \chi^2(\theta) = \sum_{i=1}^{N}\frac{\big(y_i - f(x_i;\theta)\big)^2}{\sigma_i^2}$$
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔁 **The same estimate**
+
+$L$ is largest where $\chi^2$ is smallest. With Gaussian uncertainties, maximum likelihood is the method of **least squares**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **One term**
+
+The residual $y_i - f(x_i;\theta)$, divided by $\sigma_i$, is the **pull**. $\chi^2$ is the sum of the squared pulls. A point 1σ from the model adds 1. A point 3σ away adds 9.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⚖️ **Equal uncertainties**
+
+If every $\sigma_i$ is the same $\sigma$, then $\chi^2 = \frac{1}{\sigma^2}\sum_i (y_i - f)^2$. The minimum is where the plain sum of squares is smallest.
+
+</div>
+
+</div>
+
+<!--
+Speaker: this is the central step of the lecture. The measure of mismatch was
+not chosen. It follows from the Gaussian and from independence. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# χ² in **Numbers**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🧮 **Line A:** $a = 4$, $b = 0$
+
+| ℓ | y | y − 4ℓ | σ | pull | pull² |
+| --- | --- | --- | --- | --- | --- |
+| 0.2 | 0.8136 | 0.0136 | 0.0180 | 0.75 | 0.57 |
+| 0.3 | 1.2210 | 0.0210 | 0.0221 | 0.95 | 0.91 |
+| 0.4 | 1.5901 | −0.0099 | 0.0252 | −0.39 | 0.15 |
+| 0.5 | 2.0249 | 0.0249 | 0.0285 | 0.88 | 0.77 |
+| 0.6 | 2.3994 | −0.0006 | 0.0310 | −0.02 | 0.00 |
+| 0.7 | 2.8359 | 0.0359 | 0.0337 | 1.06 | 1.13 |
+| 0.8 | 3.2041 | 0.0041 | 0.0358 | 0.11 | 0.01 |
+| 0.9 | 3.6481 | 0.0481 | 0.0382 | 1.26 | 1.59 |
+| 1.0 | 4.0040 | 0.0040 | 0.0400 | 0.10 | 0.01 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➕ **The sum**
+
+$\chi^2 = 0.57 + 0.91 + \dots + 0.01 = 5.14$
+
+</div>
+
+<div class="card card-accent card-glass pad-compact table-compact">
+
+## 🏁 **The three candidates**
+
+| Line | a | b | χ² |
+| --- | --- | --- | --- |
+| A | 4.0 | 0 | 5.14 |
+| B | 3.9 | 0.05 | 13.11 |
+| C | 4.1 | −0.05 | 12.28 |
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+A is the best of the three. The fit asks for the best of all lines: the $(a, b)$ at which $\chi^2$ is smallest.
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+Speaker: do the first row on the board. 0.8136 minus 0.8 is 0.0136; divided by
+0.0180 it is 0.75; squared, 0.57. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Weighted Mean Is a **Fit**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 1️⃣ **The simplest model: a constant,** $f(x;\mu) = \mu$
+
+$$\chi^2(\mu) = \sum_i \frac{(y_i-\mu)^2}{\sigma_i^2}, \qquad \frac{d\chi^2}{d\mu} = -2\sum_i \frac{y_i-\mu}{\sigma_i^2} = 0 \quad\Longrightarrow\quad \hat\mu = \frac{\sum_i y_i/\sigma_i^2}{\sum_i 1/\sigma_i^2}$$
+
+The weighted mean of Lecture 09 is the least-squares fit of a constant.
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## **Good practice**
+## 🕰️ **On the pendulum**
 
-1. **Visualize data first**
-2. Estimate parameters by eye
-3. Use physical constraints
-4. Try multiple starting points
+Each row gives its own $g_i = 4\pi^2\ell_i/T_i^2$, from $9.70 \pm 0.22$ at 0.2 m to $9.86 \pm 0.10$ at 1.0 m. The fit of a constant to the nine values:
+
+$$\hat g = 9.804 \pm 0.042\ \text{m/s}^2$$
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❓ **What this leaves open**
+
+- It takes $T^2 = (4\pi^2/g)\,\ell$ as exact. Nothing tests it
+- If every length is off by the same amount, the line misses the origin, and each $g_i$ is wrong by a different factor
+- A line with a free intercept has two parameters, and no value per row to average
 
 </div>
 
-<div class="card card-info card-glass pad-tight">
-
-## **For a Gaussian peak**
-
-- `mean` ≈ position of maximum
-- `sigma` ≈ FWHM / 2.35 (or HWHM / 1.18)
-- `amplitude` ≈ peak height
-
 </div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+🧭 The recipe for any model: write $\chi^2$, set its derivative with respect to each parameter to zero, solve for the parameters.
 
 </div>
 
 <!--
-Speaker: this comes BEFORE the runners on purpose — every p0 in the next three
-slides was read off a plot exactly this way. FWHM/2.35 is the one number to
-memorise. (~1.5 min)
+Speaker: the nine values are 9.70, 9.70, 9.93, 9.75, 9.87, 9.74, 9.86, 9.74,
+9.86 with uncertainties 0.22, 0.18, 0.16, 0.14, 0.13, 0.12, 0.11, 0.10, 0.10.
+Keep 9.804 plus or minus 0.042 in mind: the straight-line fit returns to it
+when the intercept is fixed at zero. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# The Straight Line in **Closed Form**
+
+---
+hideInToc: true
+---
+
+# Two Derivatives Set to **Zero**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 📐 **χ² of the straight line**
+
+$$\chi^2(a,b) = \sum_{i=1}^{N}\frac{(y_i - a\,x_i - b)^2}{\sigma_i^2}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 0️⃣ **At the minimum both partial derivatives vanish**
+
+$$\frac{\partial\chi^2}{\partial a} = -2\sum_i \frac{x_i\,(y_i - a\,x_i - b)}{\sigma_i^2} = 0, \qquad \frac{\partial\chi^2}{\partial b} = -2\sum_i \frac{y_i - a\,x_i - b}{\sigma_i^2} = 0$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A partial derivative is the derivative with respect to one parameter while the other is held fixed. $\chi^2$ is a quadratic function of $a$ and $b$, a bowl with one lowest point, so the point where both derivatives are zero is the minimum.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Normal **Equations**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ➕ **Five sums over the data**
+
+$$S = \sum_i \frac{1}{\sigma_i^2},\quad S_x = \sum_i \frac{x_i}{\sigma_i^2},\quad S_y = \sum_i \frac{y_i}{\sigma_i^2},\quad S_{xx} = \sum_i \frac{x_i^2}{\sigma_i^2},\quad S_{xy} = \sum_i \frac{x_i\,y_i}{\sigma_i^2}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🟰 **The two conditions, written with the sums**
+
+$$a\,S_{xx} + b\,S_x = S_{xy} \qquad\qquad a\,S_x + b\,S = S_y$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Two linear equations for two unknowns. They are called the **normal equations**. The data enter only through the five sums, whatever the number of points.
+
+</div>
+
+<!--
+Speaker: derive the first equation on the board: multiply out x times the
+bracket, split the sum into three, and name each sum. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# `curve_fit` in **One Line**
+# Slope and Intercept in **Closed Form**
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="card card-primary card-glass pad-compact mt-md">
 
-`scipy.optimize.curve_fit` performs nonlinear least squares fitting:
+## ✂️ **Eliminate b**
 
-```python
-popt, pcov = curve_fit(model, x_data, y_data, p0=initial_guess, sigma=errors, absolute_sigma=True)
+Multiply the first equation by $S$, the second by $S_x$, and subtract:
+
+$$a\,\big(S\,S_{xx} - S_x^2\big) = S\,S_{xy} - S_x S_y$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## ✅ **The solution**
+
+$$\Delta = S\,S_{xx} - S_x^2, \qquad \hat a = \frac{S\,S_{xy} - S_x S_y}{\Delta}, \qquad \hat b = \frac{S_{xx}\,S_y - S_x S_{xy}}{\Delta}$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-compact">
+
+The second equation, divided by $S$, reads $\bar y = \hat a\,\bar x + \hat b$ with $\bar x = S_x/S$, $\bar y = S_y/S$. The line passes through the weighted mean point.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+With equal $\sigma_i$ the formula for the slope becomes $\hat a = \dfrac{N\sum x_i y_i - \sum x_i \sum y_i}{N\sum x_i^2 - (\sum x_i)^2}$, the one built into every spreadsheet.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Pendulum: Five **Sums**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| x = ℓ | w = 1/σ² | w·x | w·y | w·x² | w·x·y |
+| --- | --- | --- | --- | --- | --- |
+| 0.2 | 3072.75 | 614.55 | 2500.00 | 122.91 | 500.00 |
+| 0.3 | 2047.46 | 614.24 | 2500.00 | 184.27 | 750.00 |
+| 0.4 | 1572.21 | 628.88 | 2500.00 | 251.55 | 1000.00 |
+| 0.5 | 1234.61 | 617.31 | 2500.00 | 308.65 | 1250.00 |
+| 0.6 | 1041.93 | 625.16 | 2500.00 | 375.09 | 1500.00 |
+| 0.7 | 881.57 | 617.10 | 2500.00 | 431.97 | 1750.00 |
+| 0.8 | 780.25 | 624.20 | 2500.00 | 499.36 | 2000.00 |
+| 0.9 | 685.29 | 616.76 | 2500.00 | 555.08 | 2250.00 |
+| 1.0 | 624.38 | 624.38 | 2500.00 | 624.38 | 2500.00 |
+| **Sum** | $S$ = 11 940.44 | $S_x$ = 5582.56 | $S_y$ = 22 500.00 | $S_{xx}$ = 3353.27 | $S_{xy}$ = 13 500.00 |
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Every $w\,y$ is 2500 because $\sigma_i = 2\,T_i\,\sigma_T$: then $y_i/\sigma_i^2 = T_i^2/(4\,T_i^2\,\sigma_T^2) = 1/(4 \times 0.01^2)$. The rows are rounded; the sums were taken before rounding.
+
+</div>
+
+<!--
+Speaker: let the room compute one row. Row 1: 1 over 0.01804 squared is
+3072.75; times 0.2 is 614.55; times 0.8136 is 2500. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Pendulum: Slope and **Intercept**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **The denominator**
+
+```text
+Δ = S·Sxx − Sx²
+  = 11 940.44 × 3353.27 − 5582.56²
+  = 40 039 519 − 31 164 976
+  = 8 874 543
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-secondary card-glass pad-compact">
 
-<div class="card card-primary card-glass pad-tight">
+## 📈 **Slope and intercept**
 
-## **Inputs**
+```text
+a = (S·Sxy − Sx·Sy) / Δ
+  = (161 195 940 − 125 607 600) / Δ
+  = 35 588 340 / 8 874 543 = 4.0102 s²/m
 
-- `model`: function $f(x, \theta_1, \theta_2, ...)$
-- `x_data`, `y_data`: your measurements
-- `p0`: initial parameter guess
-- `sigma`: per-point uncertainties $\sigma_i$
-- `absolute_sigma=True`: treat σ as real errors — the default `False` rescales `pcov` by χ²/dof, hiding a bad χ²
-- `bounds`: parameter limits (optional)
+b = (Sxx·Sy − Sx·Sxy) / Δ
+  = (75 448 575 − 75 364 560) / Δ
+  = 84 015 / 8 874 543     = 0.0095 s²
+```
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+</div>
 
-## **Outputs**
+<div class="grid-2 mt-md gap-md">
 
-- `popt`: optimal parameters $\hat{\theta}$
-- `pcov`: covariance matrix
+<div class="card card-success card-glass pad-compact">
 
-**Uncertainties:**
-```python
-errors = np.sqrt(np.diag(pcov))
-```
+$g = 4\pi^2/a = 39.478 / 4.0102 = 9.844$ m/s². What this number is worth depends on the uncertainty of $a$.
 
-Under the hood: no bounds → Levenberg-Marquardt (gradient descent + Gauss-Newton hybrid); with bounds → a trust-region method.
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+⚠️ $b$ is the difference of two numbers that agree in their first three digits. Sums rounded to four digits give a wrong $b$. Keep all digits until the end.
 
 </div>
 
 </div>
 
 <!--
-Speaker: absolute_sigma is the gotcha of the day. With the default, curve_fit
-silently multiplies pcov by χ²/dof — a terrible fit then gets inflated errors
-that look "honest", and a suspiciously good fit gets shrunk ones. Always pass
-True when your σᵢ are real. (~1.5 min)
+Speaker: with the sums to all digits, NumPy gives 8 874 453 for the denominator,
+a = 4.010181 and b = 0.009455. The calculator values on the slide agree with
+them to the four decimals shown. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Interactive: **Linear** Fit
+# The Fitted **Line**
 
 <div class="note-text mt-sm">
 
-Fit a straight line $y = mx + b$ to noisy data and extract the slope and intercept with uncertainties. ⚙️ *Do it once by hand, then let the fitter do it every time.*
+$T^2 = 4.010\,\ell + 0.009$. Left: the line through the nine points. Right: what is left of each point after the line is subtracted, the **residual**, with its error bar $\sigma_i$.
 
 </div>
+
+<img class="fig" src="/figures/viz_fitting_pendulum_fit.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:345px;">
+
+---
+hideInToc: true
+---
+
+# The Same in **NumPy**
 
 ```python {monaco-run} {autorun:false}
-np.random.seed(42)
-x = np.linspace(0, 10, 20)
-y = 2.5 * x + 1.0 + np.random.normal(0, 2.0, 20)
-sigma = np.full_like(x, 2.0)
+import numpy as np
+x   = np.arange(20, 101, 10) / 100                 # length in m
+t10 = np.array([9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01])
+T   = t10 / 10                                     # one period in s
+y   = T**2
+sy  = 2 * T * 0.01                                 # uncertainty of T squared
 
-def linear(x, m, b):
-    return m * x + b
-
-popt, pcov = curve_fit(linear, x, y, sigma=sigma, absolute_sigma=True)
-m, b = popt; dm, db = np.sqrt(np.diag(pcov))
-chi2 = np.sum(((y - linear(x, *popt)) / sigma) ** 2)
-
-plt.figure(figsize=(7, 3.1))
-plt.errorbar(x, y, yerr=sigma, fmt='o', ms=4, label='Data')
-plt.plot(x, linear(x, *popt), 'r-',
-         label=f'm={m:.2f}±{dm:.2f}, b={b:.2f}±{db:.2f}')
-plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-2} = {chi2/(len(x)-2):.2f}')
-plt.legend(); plt.xlabel('x'); plt.ylabel('y'); plt.tight_layout(); plt.show()
+w = 1 / sy**2
+S, Sx, Sy = w.sum(), (w * x).sum(), (w * y).sum()
+Sxx, Sxy  = (w * x * x).sum(), (w * x * y).sum()
+D = S * Sxx - Sx**2
+a = (S * Sxy - Sx * Sy) / D
+b = (Sxx * Sy - Sx * Sxy) / D
+print(f"a = {a:.6f}   b = {b:.6f}   g = {4 * np.pi**2 / a:.4f}")
 ```
 
 <!--
-Speaker: output — m = 2.12 ± 0.15, b = 2.55 ± 0.86, χ²/dof = 10.9/18 = 0.61
-(p ≈ 0.90). Truth was m = 2.5, b = 1.0: the slope reads 2.5σ low and the
-intercept 1.8σ high — but ρ(m, b) ≈ −0.85 for a line over x ∈ [0, 10], so this
-is ONE joint ~2σ wobble (Δχ² ≈ 7 for 2 dof), not two independent ones. χ²/dof
-of 0.61 just says this sample scattered less than σ = 2 — nothing to fix.
-Change the seed and watch both move together. (~2 min)
+Speaker: prints a = 4.010181, b = 0.009455, g = 9.8445. The nine numbers are
+typed in here because the browser has no file to read. In a script the two
+columns come from np.loadtxt on pendulum.csv. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Uncertainties of the **Parameters**
+
+---
+hideInToc: true
+---
+
+# The Slope Is a Sum over the **Data**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ➕ **â is linear in the yᵢ**
+
+$S_{xy}$ and $S_y$ are sums over the $y_i$. Nothing else in $\hat a$ contains them:
+
+$$\hat a = \frac{S\,S_{xy} - S_x S_y}{\Delta} = \sum_i c_i\,y_i, \qquad c_i = \frac{S\,x_i - S_x}{\sigma_i^2\,\Delta}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## ➡️ **Error propagation for a sum of independent terms (Lecture 09)**
+
+$$\sigma_a^2 = \sum_i c_i^2\,\sigma_i^2 = \frac{1}{\Delta^2}\sum_i \frac{(S\,x_i - S_x)^2}{\sigma_i^2} = \frac{S^2 S_{xx} - 2\,S\,S_x^2 + S_x^2\,S}{\Delta^2} = \frac{S\,\Delta}{\Delta^2} = \frac{S}{\Delta}$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+If the nine times were measured again, each $y_i$ would come out a little different, and so would $\hat a$. $\sigma_a$ is the width of that scatter.
+
+</div>
+
+<!--
+Speaker: the middle step: square the bracket, sum term by term, and recognise
+S squared times Sxx, S times Sx squared twice with a minus, and Sx squared
+times S. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Interactive: **Gaussian** Fit
+# Two Uncertainties and a **Covariance**
 
-<div class="note-text mt-sm">
+<div class="card card-primary card-glass pad-compact mt-md">
 
-Fit a Gaussian peak $A \cdot e^{-(x-\mu)^2/2\sigma^2}$ to simulated histogram data --- a common task in particle physics.
+The same steps for $\hat b$, and for the product of the two:
+
+$$\sigma_a^2 = \frac{S}{\Delta}, \qquad \sigma_b^2 = \frac{S_{xx}}{\Delta}, \qquad \operatorname{cov}(a,b) = -\frac{S_x}{\Delta}$$
 
 </div>
 
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **The pendulum**
+
+```text
+σa  = √(11 940.44 / 8 874 543) = 0.0367 s²/m
+σb  = √( 3353.27 / 8 874 543)  = 0.0194 s²
+cov = −5582.56 / 8 874 543     = −0.000629
+ρ   = cov / (σa σb)            = −0.88
+```
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-success card-glass pad-compact">
+
+$a = 4.010 \pm 0.037$ s²/m, $\quad b = 0.009 \pm 0.019$ s²
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+$\hat a$ and $\hat b$ come from the same nine $y_i$, so they are not independent. Covariance and $\rho$ are those of Lecture 09.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+The three formulas contain the $x_i$ and $\sigma_i$ and no $y_i$. The uncertainties are known before the measurement is made.
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# χ² Around Its **Minimum**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🥣 **A quadratic bowl**
+
+$\chi^2(a,b)$ is quadratic in $a$ and $b$. Around its minimum $(\hat a, \hat b)$ it is exactly
+
+$$\chi^2(a,b) = \chi^2_{\min} + S_{xx}\,(a-\hat a)^2 + 2\,S_x\,(a-\hat a)(b-\hat b) + S\,(b-\hat b)^2$$
+
+The coefficients are half the second derivatives of $\chi^2$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔻 **Move a, and let b follow**
+
+For a given $a$ the lowest $\chi^2$ is at $b = \hat b - (S_x/S)\,(a - \hat a)$. Along that path
+
+$$\chi^2(a) = \chi^2_{\min} + \Big(S_{xx} - \frac{S_x^2}{S}\Big)(a-\hat a)^2 = \chi^2_{\min} + \frac{(a-\hat a)^2}{\sigma_a^2}$$
+
+</div>
+
+<!--
+Speaker: Sxx minus Sx squared over S is Delta over S, and that is one over
+sigma a squared. The uncertainty found by error propagation is the width of
+the bowl. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Rule **Δχ² = 1**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **One σ raises χ² by 1**
+
+At $a = \hat a \pm \sigma_a$, with the other parameters re-minimised, $\chi^2 = \chi^2_{\min} + 1$. Pendulum: 2.647 at the minimum, 3.647 at $a = 3.974$ and at $a = 4.047$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔔 **Why 1**
+
+$L \propto e^{-\chi^2/2} = \text{const} \times e^{-(a-\hat a)^2/2\sigma_a^2}$. The likelihood is a Gaussian in $a$ of width $\sigma_a$. A sharp minimum of $\chi^2$ means a small uncertainty.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_chi2_curvature.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:300px;">
+
+<!--
+Speaker: dashed parabola: b held at its best value. chi2 then rises by 1 at
+plus or minus 0.017, the uncertainty a would have if b were known exactly.
+Right: the contour of chi2 min plus 1 touches the lines a hat plus or minus
+sigma a and b hat plus or minus sigma b. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Covariance **Matrix**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🥣 **Curvature of χ²**
+
+$$\frac{1}{2}\begin{pmatrix} \dfrac{\partial^2\chi^2}{\partial a^2} & \dfrac{\partial^2\chi^2}{\partial a\,\partial b}\\[2.5mm] \dfrac{\partial^2\chi^2}{\partial a\,\partial b} & \dfrac{\partial^2\chi^2}{\partial b^2}\end{pmatrix} = \begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔄 **Its inverse**
+
+$$V = \begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix}^{-1} = \frac{1}{\Delta}\begin{pmatrix} S & -S_x\\ -S_x & S_{xx}\end{pmatrix} = \begin{pmatrix}\sigma_a^2 & \operatorname{cov}(a,b)\\ \operatorname{cov}(a,b) & \sigma_b^2\end{pmatrix}$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The covariance matrix of the parameters is the inverse of the curvature matrix of $\chi^2$ at its minimum. This holds for any number of parameters, and it is how a fitting program computes uncertainties.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Why Slope and Intercept Are **Correlated**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ↔️ **ρ = −0.88**
+
+The line passes through $(\bar x, \bar y) = (0.468\ \text{m},\ 1.884\ \text{s}^2)$, and all points lie to the right of $x = 0$. A steeper line through that point meets the axis $x = 0$ lower: a larger $a$ goes with a smaller $b$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎯 **A result that uses both**
+
+The fitted $T^2$ at $\ell = 0.5$ m is $f = 0.5\,a + b = 2.0145$ s². By error propagation for two correlated quantities:
+
+$$\sigma_f^2 = x^2\sigma_a^2 + \sigma_b^2 + 2\,x\operatorname{cov}(a,b)$$
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+```text
+with the covariance:     0.000336 + 0.000378 − 0.000629 = 0.000085     σf = 0.0092 s²
+without the covariance:  0.000336 + 0.000378            = 0.000714     σf = 0.0267 s²
+```
+
+Without the covariance the uncertainty is three times too large. When two fitted parameters enter one result, their covariance enters too.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Uncertainty of **g**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➡️ **Propagate σₐ**
+
+$$g = \frac{4\pi^2}{a}, \qquad \sigma_g = \left|\frac{dg}{da}\right|\sigma_a = g\,\frac{\sigma_a}{a}$$
+
+```text
+g  = 39.478 / 4.0102          = 9.844
+σg = 9.844 × 0.0367 / 4.0102  = 0.090
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **The result**
+
+$$g = 9.84 \pm 0.09\ \text{m/s}^2$$
+
+A relative uncertainty of 0.9 %. The value 9.81 m/s² lies 0.4σ below. Only $a$ enters $g$: no covariance term.
+
+</div>
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧪 **The intercept tests the theory**
+
+$b = 0.009 \pm 0.019$ s² is 0.5σ from zero. The data agree with a line through the origin.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔒 **With b fixed at 0**
+
+One parameter: $a = S_{xy}/S_{xx} = 4.026 \pm 0.017$ and $g = 9.806 \pm 0.042$ m/s², the weighted mean of the nine $g_i$. The free intercept doubles $\sigma_g$. That is the price of the test.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the weighted mean of the nine values was 9.804; the fit through the
+origin gives 9.806. They are the same analysis up to the linear approximation
+in the error propagation. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# The Same in **Matrix Form**
+
+---
+hideInToc: true
+---
+
+# One Equation for All **Points**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🧱 **The design matrix**
+
+$$\underbrace{\begin{pmatrix} y_1\\ y_2\\ \vdots\\ y_N\end{pmatrix}}_{\mathbf y} \approx \underbrace{\begin{pmatrix} x_1 & 1\\ x_2 & 1\\ \vdots & \vdots\\ x_N & 1\end{pmatrix}}_{A}\, \underbrace{\begin{pmatrix} a\\ b\end{pmatrix}}_{\boldsymbol\theta}, \qquad W = \begin{pmatrix} 1/\sigma_1^2 & & \\ & \ddots & \\ & & 1/\sigma_N^2\end{pmatrix}, \qquad \chi^2 = (\mathbf y - A\boldsymbol\theta)^{\mathsf T}\,W\,(\mathbf y - A\boldsymbol\theta)$$
+
+$A$ has one row per point and one column per parameter.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🟰 **All derivatives set to zero at once**
+
+$$A^{\mathsf T} W A\;\hat{\boldsymbol\theta} = A^{\mathsf T} W\,\mathbf y, \qquad V = \big(A^{\mathsf T} W A\big)^{-1}$$
+
+The normal equations and the covariance matrix, for any number of parameters.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Pendulum as **Matrices**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ➕ **The products are the five sums**
+
+$$A^{\mathsf T} W A = \begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix} = \begin{pmatrix} 3353.27 & 5582.56\\ 5582.56 & 11\,940.44\end{pmatrix}, \qquad A^{\mathsf T} W\,\mathbf y = \begin{pmatrix} S_{xy}\\ S_y\end{pmatrix} = \begin{pmatrix} 13\,500\\ 22\,500\end{pmatrix}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔄 **Invert and multiply**
+
+$$V = \begin{pmatrix} 0.001345 & -0.000629\\ -0.000629 & 0.000378\end{pmatrix}, \qquad \hat{\boldsymbol\theta} = V\,A^{\mathsf T} W\,\mathbf y = \begin{pmatrix} 4.0102\\ 0.0095\end{pmatrix}$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The same numbers as before: $\sqrt{0.001345} = 0.0367 = \sigma_a$, $\sqrt{0.000378} = 0.0194 = \sigma_b$, and the off-diagonal element is $\operatorname{cov}(a,b)$.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Linear in the **Parameters**
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The matrix form used only that $f$ is a sum of known functions of $x$, each multiplied by one parameter:
+
+$$f(x;\theta) = \theta_1\,g_1(x) + \theta_2\,g_2(x) + \dots + \theta_k\,g_k(x)$$
+
+Column $j$ of the design matrix holds $g_j(x_i)$. Everything else stays as it is.
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **Linear**
+
+- $a\,x + b$
+- $c\,x^2 + a\,x + b$: a curve in $x$, linear in $a, b, c$
+- $A\sin\omega t + B\cos\omega t$ with $\omega$ known
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Not linear**
+
+- $N_0\,e^{-t/\tau}$: $\tau$ is in the exponent
+- A Gaussian peak: position and width
+- $A\sin\omega t$ with $\omega$ unknown
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🧪 **A third column**
+
+Pendulum with columns $x^2$, $x$, 1: $c = 0.03 \pm 0.16$ s²/m², and $\chi^2$ falls from 2.65 to 2.60. The data do not ask for a curve.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# `np.linalg.lstsq` and `np.polyfit`
+
+```python
+# x, y, sy: the pendulum arrays of the slide "The Same in NumPy"
+A = np.column_stack([x, np.ones_like(x)])     # design matrix: 9 rows, 2 columns
+Aw, yw = A / sy[:, None], y / sy              # every row divided by its sigma
+
+theta, *rest = np.linalg.lstsq(Aw, yw, rcond=None)
+V = np.linalg.inv(Aw.T @ Aw)                  # covariance matrix
+print("lstsq  ", theta, np.sqrt(np.diag(V)))
+
+p, C = np.polyfit(x, y, 1, w=1 / sy, cov="unscaled")
+print("polyfit", p, np.sqrt(np.diag(C)))
+```
+
+```text
+lstsq   [4.01018132 0.00945546] [0.03668084 0.01943853]
+polyfit [4.01018132 0.00945546] [0.03668084 0.01943853]
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`lstsq` minimises the plain sum of squares of `Aw @ theta - yw`. Every row divided by its $\sigma_i$ makes that sum $\chi^2$. `@` is the matrix product, `.T` the transpose. `polyfit` takes `w` as $1/\sigma$, not $1/\sigma^2$; `cov="unscaled"` keeps the $\sigma_i$ as given.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Models That Are **Not Linear**
+
+---
+hideInToc: true
+---
+
+# No Closed **Form**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ⛰️ **A peak:** $f(x;\,A,\mu,\sigma) = A\,e^{-(x-\mu)^2/2\sigma^2}$
+
+The derivative of $\chi^2$ with respect to the position $\mu$ of the peak:
+
+$$\frac{\partial\chi^2}{\partial\mu} = -2\sum_i \frac{y_i - A\,e^{-(x_i-\mu)^2/2\sigma^2}}{\sigma_i^2}\;\frac{x_i-\mu}{\sigma^2}\;A\,e^{-(x_i-\mu)^2/2\sigma^2} = 0$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🚫 **No normal equations**
+
+$\mu$ stands inside an exponential in every term. No rearrangement isolates it, and no five sums summarise the data.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 👣 **What is left**
+
+$\chi^2(\theta)$ and its derivatives can be computed for any $\theta$. Start from a guess and walk downhill, one step at a time.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Here $\sigma$ without an index is the width of the peak, a parameter. $\sigma_i$ is the uncertainty of point $i$.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The **Gradient**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🧭 **All partial derivatives in one vector**
+
+$$\nabla\chi^2 = \left(\frac{\partial\chi^2}{\partial\theta_1},\ \dots,\ \frac{\partial\chi^2}{\partial\theta_k}\right), \qquad \frac{\partial\chi^2}{\partial\theta_j} = -2\sum_{i=1}^{N}\frac{y_i - f(x_i;\theta)}{\sigma_i^2}\;\frac{\partial f(x_i;\theta)}{\partial\theta_j}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 📈 **A small step δ changes χ² by**
+
+$$\chi^2(\theta + \delta) \approx \chi^2(\theta) + \nabla\chi^2\cdot\delta$$
+
+This is the first-order expansion that gave the error-propagation formula in Lecture 09.
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Among all small steps of one length, the step along $\nabla\chi^2$ raises $\chi^2$ the most, and the opposite step lowers it the most. The gradient points uphill.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Update **Rule**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 👣 **Gradient descent**
+
+$$\theta \;\leftarrow\; \theta - \eta\,\nabla\chi^2$$
+
+$\eta$ is the **learning rate**: a small positive number, chosen by hand, that sets the length of the step.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⬇️ **Why χ² goes down**
+
+Put $\delta = -\eta\,\nabla\chi^2$ into the expansion:
+
+$$\chi^2(\theta - \eta\nabla\chi^2) \approx \chi^2(\theta) - \eta\,\big|\nabla\chi^2\big|^2$$
+
+The change is negative until the gradient is zero. The expansion holds for small steps only.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📐 **For the straight line**
+
+The gradient is known from the normal equations:
+
+$$\frac{\partial\chi^2}{\partial a} = -2\,(S_{xy} - a\,S_{xx} - b\,S_x)$$
+
+$$\frac{\partial\chi^2}{\partial b} = -2\,(S_y - a\,S_x - b\,S)$$
+
+</div>
+
+</div>
+
+<!--
+Speaker: the rule is three symbols long and is the whole algorithm. Repeat it
+until chi2 stops falling. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Gradient Descent by **Hand**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **The first step**
+
+Start at $a = 3$, $b = 0$ with $\eta = 3 \times 10^{-5}$.
+
+```text
+∂χ²/∂a = −2 (13 500 − 3 × 3353.27)
+       = −6880.4
+∂χ²/∂b = −2 (22 500 − 3 × 5582.56)
+       = −11 504.6
+
+a ← 3 + 0.00003 × 6880.4   = 3.2064
+b ← 0 + 0.00003 × 11 504.6 = 0.3451
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+After 500 steps the result is that of the closed formulas: $a = 4.0102$, $b = 0.0095$, $\chi^2 = 2.65$.
+
+</div>
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📋 **Step by step**
+
+| Step | a | b | χ² |
+| --- | --- | --- | --- |
+| 0 | 3.0000 | 0.0000 | 3532.26 |
+| 1 | 3.2064 | 0.3451 | 502.01 |
+| 2 | 3.2557 | 0.3739 | 427.36 |
+| 3 | 3.2854 | 0.3655 | 396.58 |
+| 4 | 3.3120 | 0.3532 | 368.53 |
+| 5 | 3.3373 | 0.3408 | 342.49 |
+| 50 | 3.8824 | 0.0724 | 14.90 |
+| 100 | 3.9900 | 0.0194 | 2.95 |
+| 200 | 4.0097 | 0.0097 | 2.65 |
+| 500 | 4.0102 | 0.0095 | 2.65 |
+
+</div>
+
+</div>
+
+<!--
+Speaker: have the room do step 1 on the calculator. The first step removes six
+sevenths of chi2. Then the progress is slow: the slide after next shows why.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Learning Rate That Is Too **Large**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact table-compact">
+
+## 💥 **The same start,** $\eta = 1 \times 10^{-4}$
+
+| Step | a | b | χ² |
+| --- | --- | --- | --- |
+| 0 | 3.0000 | 0.0000 | 3532 |
+| 1 | 3.6880 | 1.1505 | 11 792 |
+| 2 | 2.6301 | −1.2147 | 43 144 |
+| 3 | 4.9224 | 3.2495 | 161 144 |
+| 4 | 0.6931 | −5.5066 | 604 495 |
+| 5 | 9.0764 | 11.3698 | 2 269 656 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ↔️ **Each step overshoots**
+
+The step is in the right direction and too long. It crosses the valley and lands higher on the other side. $\chi^2$ grows nearly fourfold per step.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **The limit for this χ²**
+
+The descent converges only for $\eta$ below $6.8 \times 10^{-5}$, which is 2 divided by the largest curvature of $\chi^2$.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+A rate that is too small is safe and slow: $\eta = 3 \times 10^{-6}$ needs ten times as many steps.
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Two Learning Rates, **Drawn**
+
+<div class="note-text mt-sm">
+
+Contours of $\chi^2$ in the $(a, b)$ plane with the path of the descent. The star is the minimum. Right: $\chi^2$ against the step number, on a logarithmic scale.
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_descent.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:335px;">
+
+---
+hideInToc: true
+---
+
+# Gradient Descent in **NumPy**
+
 ```python {monaco-run} {autorun:false}
-np.random.seed(7); data = np.concatenate([np.random.normal(5, 0.8, 500),
-                                          np.random.uniform(0, 10, 200)])
-counts, edges = np.histogram(data, bins=40, range=(0, 10))
-x = 0.5 * (edges[:-1] + edges[1:])
-y = counts.astype(float); yerr = np.sqrt(np.maximum(counts, 1))
+# x, y, sy: the pendulum arrays of the slide "The Same in NumPy"
+def chi2_at(a, b):
+    return np.sum(((y - a * x - b) / sy) ** 2)
 
-def gauss_bg(x, A, mu, sig, bg):
-    return A * np.exp(-(x - mu) ** 2 / (2 * sig ** 2)) + bg
+a, b, eta = 3.0, 0.0, 3e-5                    # start and learning rate
+for step in range(501):
+    r = (y - a * x - b) / sy**2               # residuals divided by sigma squared
+    grad_a, grad_b = -2 * np.sum(r * x), -2 * np.sum(r)
+    if step in (0, 1, 2, 5, 50, 100, 200, 500):
+        print(f"{step:4d}  a = {a:.4f}  b = {b:.4f}  chi2 = {chi2_at(a, b):.2f}")
+    a, b = a - eta * grad_a, b - eta * grad_b
+```
 
-popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=yerr, absolute_sigma=True)
+<div class="note-text mt-sm">
+
+Run it, then set `eta` to `1e-4` and run it again.
+
+</div>
+
+<!--
+Speaker: the two gradient lines are the general formula with df/da = x and
+df/db = 1. Nothing in the loop knows that the model is a straight line except
+those two lines and chi2_at. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why the Descent Is Slow, and the **Remedy**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏞️ **A long, narrow valley**
+
+$\chi^2$ fell from 3532 to 502 in one step and needed 200 more for the rest. Across the valley $\chi^2$ is steep, along it nearly flat: the curvatures differ by a factor of 24. One $\eta$, small enough for the steep direction, creeps along the flat one. The valley is narrow because $a$ and $b$ are correlated.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎯 **Use the curvature too**
+
+Newton's step solves
+
+$$\begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix}\delta = -\tfrac{1}{2}\nabla\chi^2$$
+
+From $(3, 0)$ it lands on $(4.0102,\ 0.0095)$ in one step. For a model linear in its parameters, Newton's step is the normal equations.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+For a nonlinear model the curvature changes from place to place, and the step is repeated. The **Levenberg–Marquardt** method takes short gradient steps far from the minimum and Newton steps near it. `scipy.optimize.curve_fit` uses it.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **SciPy**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📦 **What it is**
+
+A library of numerical methods that work on NumPy arrays: minimisation and fitting (`scipy.optimize`), probability distributions (`scipy.stats`), integration, interpolation, linear algebra, signal processing.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⬇️ **Install it once**
+
+```text
+Windows         python -m pip install scipy
+macOS, Linux    python3 -m pip install scipy
+```
+
+The code on these slides was run with SciPy 1.16 and NumPy 2.3.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+## 🐍 **Import the one function**
+
+```python
+import numpy as np
+from scipy.optimize import curve_fit
+```
+
+SciPy is imported part by part. `curve_fit` minimises $\chi^2$ for a model given as a Python function, linear in its parameters or not.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# `curve_fit`: the **Call**
+
+```python
+popt, pcov = curve_fit(f, xdata, ydata, p0=[...], sigma=..., absolute_sigma=True)
+```
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Argument | Meaning |
+| --- | --- |
+| `f` | The model, a function `f(x, a, b, ...)`: `x` first, then one argument for each parameter |
+| `xdata`, `ydata` | The arrays of the $x_i$ and $y_i$ |
+| `p0` | Starting values, one for each parameter. Left out, every parameter starts at 1 |
+| `sigma` | The array of the $\sigma_i$. Left out, all points count equally |
+| `absolute_sigma=True` | The $\sigma_i$ are uncertainties in the units of $y$ |
+| `bounds=(lower, upper)` | Optional limits for the parameters |
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+`popt`: the estimates $\hat\theta$, in the order of the arguments of `f`.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+`pcov`: the covariance matrix $V$. The uncertainties are `np.sqrt(np.diag(pcov))`.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# `absolute_sigma`: the Default **Rescales**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Without `absolute_sigma=True`**
+
+`curve_fit` treats `sigma` as relative weights. It multiplies `pcov` by $\chi^2_{\min}/(N-k)$, with $k$ the number of parameters, as if the points scattered exactly as much as their $\sigma_i$ say.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🧮 **On the pendulum**
+
+| | $\sigma_a$ | $\sigma_b$ |
+| --- | --- | --- |
+| Closed formulas | 0.0367 | 0.0194 |
+| `absolute_sigma=True` | 0.0367 | 0.0194 |
+| Default | 0.0226 | 0.0120 |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Here $\chi^2_{\min}/(N-k) = 2.647/7 = 0.378$, and the default shrinks both uncertainties by $\sqrt{0.378} = 0.61$. The default is the right choice only when the $\sigma_i$ are unknown and the model is trusted. Then the scatter of the points sets the uncertainties, and $\chi^2$ can no longer test the model.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Three Ways, One **Result**
+
+```python {monaco-run} {autorun:false}
+from scipy.optimize import curve_fit
+def line(x, a, b):                            # x, y, sy: the pendulum arrays
+    return a * x + b
+
+popt, pcov = curve_fit(line, x, y, p0=[3.0, 0.0], sigma=sy, absolute_sigma=True)
+a, b = popt
+sa, sb = np.sqrt(np.diag(pcov))
+g, sg = 4 * np.pi**2 / a, 4 * np.pi**2 / a**2 * sa
+print(f"a = {a:.6f} +- {sa:.6f}   b = {b:.6f} +- {sb:.6f}")
+print(f"cov(a, b) = {pcov[0, 1]:.6f}   g = {g:.3f} +- {sg:.3f}")
+```
+
+<div class="card card-success card-glass pad-compact table-compact mt-sm">
+
+| Method | $a$ | $\sigma_a$ | $b$ | $\sigma_b$ | cov($a$, $b$) |
+| --- | --- | --- | --- | --- | --- |
+| Closed formulas | 4.010181 | 0.036681 | 0.009455 | 0.019439 | −0.000629 |
+| `np.polyfit` | 4.010181 | 0.036681 | 0.009455 | 0.019439 | −0.000629 |
+| `curve_fit` | 4.010181 | 0.036681 | 0.009455 | 0.019439 | −0.000629 |
+
+</div>
+
+<!--
+Speaker: the three agree in all six decimals, and g = 9.845 plus or minus 0.090
+from each. curve_fit got there by iteration from a = 3, b = 0, the start of
+the hand descent. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The D⁰ Mass Peak: the **Data**
+
+<div class="note-text mt-sm">
+
+Column `M` of `D0_KPi.csv`: 91 583 K⁻π⁺ masses, selected between about 1815 and 1915 MeV/c². The fit uses 1820 to 1910: 84 680 rows in 45 bins of 2 MeV.
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_d0_data.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:335px;">
+
+<!--
+Speaker: the model has to hold over the whole window. At the edges of the file
+the counts drop for a reason that has nothing to do with the D0, so the window
+stays away from them. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Counts and Their **Uncertainty**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎲 **A bin count is a Poisson variable**
+
+Its variance equals its mean (Lecture 09). With the observed count $n$ as the estimate of the mean:
+
+$$\sigma_n = \sqrt{n}$$
+
+For large $n$ the Poisson distribution is close to a Gaussian, so $\chi^2$ applies.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📊 **In this histogram**
+
+| Bin | n | √n | relative |
+| --- | --- | --- | --- |
+| smallest | 1310 | 36.2 | 2.8 % |
+| largest | 3746 | 61.2 | 1.6 % |
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+```python
+M = np.loadtxt("data/raw/D0_KPi.csv", delimiter=",", skiprows=1, usecols=0)
+n, edges = np.histogram(M, bins=45, range=(1820, 1910))
+m = (edges[:-1] + edges[1:]) / 2          # bin centres
+s = np.sqrt(n)                            # Poisson uncertainty of each count
+```
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Model: a Gaussian on a **Line**
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+$$f(m;\,A,\mu,\sigma,c_0,c_1) = A\,\exp\!\left[-\frac{(m-\mu)^2}{2\sigma^2}\right] + c_0 + c_1\,(m - 1865)$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🔤 **Five parameters**
+
+| | Meaning | Unit |
+| --- | --- | --- |
+| A | height of the peak above the background | entries per bin |
+| μ | position of the peak | MeV/c² |
+| σ | width of the peak | MeV/c² |
+| c₀ | background at m = 1865 | entries per bin |
+| c₁ | slope of the background | entries per bin per MeV/c² |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🤔 **Why this shape**
+
+The detector measures each mass with a random error, which smears a sharp mass into a bell. Under the peak lie random K⁻π⁺ pairs whose number changes slowly with $m$.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+Not linear in $\mu$ and $\sigma$: no closed form. The line is written around 1865, the middle of the window. Written as $c_0 + c_1 m$, its two parameters would be correlated with $\rho = -0.9998$.
+
+</div>
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Starting Values from the **Plot**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 👁️ **Read off the histogram**
+
+| | Start | Read from |
+| --- | --- | --- |
+| c₀ | 1400 | the level left and right of the peak |
+| c₁ | 0 | the two sides are nearly level |
+| A | 2300 | the top, 3700, minus 1400 |
+| μ | 1865 | where the peak is highest |
+| σ | 8 | the width at half height, 17 MeV |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **From the width at half height to σ**
+
+A Gaussian falls to half its height where
+
+$$e^{-d^2/2\sigma^2} = \tfrac{1}{2} \quad\Longrightarrow\quad d = \sigma\sqrt{2\ln 2} = 1.177\,\sigma$$
+
+The full width at half maximum is $2d = 2.355\,\sigma$.
+
+Half height above the background is at 1400 + 1150 = 2550 entries. The peak is 17 MeV wide there: $\sigma \approx 17/2.355 = 7.2$. A start of 8 is near enough.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The starting values need not be good. They have to put the model near the data, so that downhill leads to the right minimum.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Fit in **Code**
+
+<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 1.75fr 1fr;">
+
+<div>
+
+```python
+def model(m, A, mu, sigma, c0, c1):
+    peak = A * np.exp(-(m - mu)**2 / (2 * sigma**2))
+    return peak + c0 + c1 * (m - 1865)
+
+p0 = [2300, 1865, 8, 1400, 0]
+popt, pcov = curve_fit(model, m, n, p0=p0,
+                       sigma=s, absolute_sigma=True)
 err = np.sqrt(np.diag(pcov))
-chi2 = np.sum(((y - gauss_bg(x, *popt)) / yerr) ** 2)
-
-plt.figure(figsize=(7, 3.1)); xf = np.linspace(0, 10, 200)
-plt.errorbar(x, y, yerr=yerr, fmt='o', ms=3, label='Data')
-plt.plot(xf, gauss_bg(xf, *popt), 'r-',
-         label=f'mu={popt[1]:.2f}±{err[1]:.2f}, sig={popt[2]:.2f}±{err[2]:.2f}')
-plt.title(f'chi2/dof = {chi2:.1f}/{len(x)-4} = {chi2/(len(x)-4):.2f}')
-plt.legend(); plt.xlabel('x'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
+pull = (n - model(m, *popt)) / s
+chi2 = np.sum(pull**2)
+names = ["A", "mu", "sigma", "c0", "c1"]
+for name, v, e in zip(names, popt, err):
+    print(f"{name:5s} = {v:9.3f} +- {e:.3f}")
+print(f"chi2 = {chi2:.1f}, ndf = {len(m) - 5}")
 ```
-
-<!--
-Speaker: output — μ = 4.95 ± 0.04, σ = 0.81 ± 0.04 (truth 5, 0.8),
-χ²/dof = 40.2/36 = 1.12 (p ≈ 0.29) — textbook. This is the very fit whose
-covariance matrix we just pictured: A = 63.7 ± 3.7 with ρ(A, σ) = −0.57.
-Print `pcov / np.outer(err, err)` live to show the matrix. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Interactive: **Exponential** Decay Fit
-
-<div class="note-text mt-sm">
-
-Fit an exponential decay $N_0 \cdot e^{-t/\tau}$ to extract the lifetime $\tau$ --- a key measurement in nuclear and particle physics.
 
 </div>
 
-```python {monaco-run} {autorun:false}
-np.random.seed(13)
-t = np.linspace(0.5, 8, 25)
-N = np.random.poisson(200 * np.exp(-t / 2.5)).astype(float)
-sigma_N = np.sqrt(np.maximum(N, 1))
+<div class="card card-success card-glass pad-compact">
 
-def decay(t, N0, tau):
-    return N0 * np.exp(-t / tau)
+## 🖨️ **Output**
 
-popt, pcov = curve_fit(decay, t, N, p0=[150, 2], sigma=sigma_N, absolute_sigma=True)
-N0, tau = popt; err = np.sqrt(np.diag(pcov))
-chi2 = np.sum(((N - decay(t, *popt)) / sigma_N) ** 2)
-
-plt.figure(figsize=(7, 3.1))
-plt.errorbar(t, N, yerr=sigma_N, fmt='o', ms=4, label='Data')
-tf = np.linspace(0.5, 8, 200)
-plt.plot(tf, decay(tf, *popt), 'r-',
-         label=f'N0={N0:.0f}±{err[0]:.0f}, tau={tau:.2f}±{err[1]:.2f}')
-plt.title(f'chi2/dof = {chi2:.1f}/{len(t)-2} = {chi2/(len(t)-2):.2f}')
-plt.legend(); plt.xlabel('Time'); plt.ylabel('Counts'); plt.tight_layout(); plt.show()
+```text
+A     =  2190.942 +- 27.180
+mu    =  1864.472 +- 0.096
+sigma =     7.645 +- 0.099
+c0    =  1414.085 +- 7.654
+c1    =    -1.508 +- 0.222
+chi2 = 53.4, ndf = 40
 ```
 
+`*popt` passes the five values as five arguments.
+
+</div>
+
+</div>
+
 <!--
-Speaker: output — N₀ = 206 ± 10, τ = 2.41 ± 0.09 (truth 200, 2.5),
-χ²/dof = 31.0/23 = 1.35. Talking point: 1.35 with 23 dof is p ≈ 0.12 — not
-alarming; χ²/dof has its own spread (≈ √(2/dof) ≈ 0.3 here). Also note the
-last bins have ~8 counts — √n is getting marginal there. (~2 min)
+Speaker: m, n and s are the arrays of the slide "Counts and Their
+Uncertainty". curve_fit evaluated the model 31 times. Plain gradient descent
+with one learning rate for the five parameters is at chi2 = 57.6 after
+100 000 steps. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Constraining **Parameters**
+# The Fit and Its **Pulls**
 
-<div class="card card-info card-glass pad-tight mt-md">
+<img class="fig" src="/figures/viz_fitting_d0_fit.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:420px;">
 
-## **Physical Constraints**
+---
+hideInToc: true
+---
 
-Real parameters often have physical bounds (e.g., $\sigma > 0$, mass positive):
+# What the Result **Says**
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+$$\mu = 1864.47 \pm 0.10\ \text{MeV}/c^2, \qquad \sigma = 7.65 \pm 0.10\ \text{MeV}/c^2, \qquad \chi^2/\text{ndf} = 53.4/40$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✅ **What it means**
+
+- 0.10 MeV/c² is the statistical uncertainty: the scatter of $\mu$ over repetitions with as many new events
+- Bins of 1 MeV give 1864.48, bins of 3 MeV give 1864.50: less than the uncertainty
+- $\sigma$ is the mass resolution of the detector. The natural width of the D⁰ is a billion times smaller
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **What it does not mean**
+
+- It is not a measurement of the D⁰ mass. The Particle Data Group value is 1864.84 ± 0.05 MeV/c². The fit lies 0.37 below, nearly four times its statistical uncertainty
+- The fit knows nothing of the calibration of the detector or of the true shape of the peak. Those are systematic uncertainties. This teaching file comes without them
+
+</div>
+
+</div>
+
+<!--
+Speaker: the honest sentence for a report: the peak in this file is at
+1864.47 plus or minus 0.10 (statistical), with a Gaussian on a linear
+background fitted between 1820 and 1910. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Goodness of **Fit**
+
+---
+hideInToc: true
+---
+
+# What χ² Should **Be**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **One per point**
+
+If the model and the $\sigma_i$ are right, each pull is a Gaussian number of mean 0 and width 1. Its square is 1 on average. $N$ points give $\chi^2 \approx N$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➖ **Minus one per parameter**
+
+The fit moves the curve towards the points. Each of the $k$ fitted parameters lowers $\chi^2$ by 1 on average. A line through $N = 2$ points has $\chi^2 = 0$ every time.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+$$\langle\chi^2\rangle = N - k = \text{ndf}, \qquad \text{standard deviation of } \chi^2 = \sqrt{2\,\text{ndf}}$$
+
+ndf is the number of **degrees of freedom**.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact table-compact mt-md">
+
+| Fit | N | k | ndf | Expected χ² | Observed χ² |
+| --- | --- | --- | --- | --- | --- |
+| Pendulum, straight line | 9 | 2 | 7 | 7 ± 3.7 | 2.65 |
+| D⁰ peak, Gaussian on a line | 45 | 5 | 40 | 40 ± 8.9 | 53.4 |
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The χ² Distribution and the **p-value**
+
+<img class="fig" src="/figures/viz_fitting_chi2_dist.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:300px;">
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+The **p-value** is the probability of a $\chi^2$ as large as the observed one or larger, if the model and the $\sigma_i$ are right. 0.08 means: 1 correct fit in 13 looks this bad or worse.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
 
 ```python
-bounds = (
-    [0, 0, 0.01, 0, 0.1],      # Lower bounds
-    [np.inf, 15, 5, np.inf, 10]  # Upper bounds
-)
-popt, pcov = curve_fit(model, x, y, p0=p0, bounds=bounds)
+from scipy.stats import chi2
+chi2.sf(2.65, 7)     # 0.915
+chi2.sf(53.4, 40)    # 0.076
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Benefits**
-
-- Prevents unphysical solutions
-- Can speed up convergence
-- Incorporates prior knowledge
-
 </div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## **Caution**
-
-- If optimal is at boundary → may indicate model problems
-- Very tight bounds can bias results
-- Check if bounds are affecting your fit
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Uncertainties & **Diagnostics**
 
 <!--
-Speaker: we already read errors off the covariance matrix — now the intuition:
-where they come from, when they shrink, how to cross-check them without
-trusting any formula, and how residuals tell you the model is wrong. (~30 sec)
+Speaker: sf is the survival function, one minus the cumulative distribution.
+A p-value of 0.001 would say that the model or the uncertainties are wrong.
+A p-value near 1 says the points lie closer to the curve than their
+uncertainties allow for. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Where Parameter **Errors** Come From
+# Reading **χ²/ndf**
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="grid-3 mt-md gap-md">
 
-## **The Δχ² = 1 Rule**
+<div class="card card-success card-glass pad-compact">
 
-Near its minimum, $\chi^2(\theta)$ is approximately a parabola. The **1σ uncertainty** on a parameter is the shift that raises $\chi^2$ by exactly **1**.
+## ✅ **Near 1**
+
+The points scatter around the model as much as their $\sigma_i$ say.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⬆️ **Far above 1**
+
+The model misses structure in the data, or the $\sigma_i$ are too small.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⬇️ **Far below 1**
+
+The $\sigma_i$ are too large, or the model has parameters that follow the noise.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+How near is near? The standard deviation of $\chi^2/\text{ndf}$ is $\sqrt{2/\text{ndf}}$: 0.53 for 7 degrees of freedom, 0.22 for 40.
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📉 **Sharp minimum**
+## 🕰️ **Pendulum: 2.65/7 = 0.38**
 
-- $\chi^2$ rises steeply as $\theta$ moves
-- Data strongly constrain the parameter
-- **Small** uncertainty
+1.2 standard deviations below 1. With $\sigma_{t_{10}} = 0.06$ s instead of 0.1 s it would be about 1. Seven degrees of freedom cannot tell the two apart.
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🥣 **Shallow minimum**
+## ⛰️ **D⁰: 53.4/40 = 1.33**
 
-- $\chi^2$ barely changes near $\hat{\theta}$
-- Many values describe the data almost equally well
-- **Large** uncertainty
+1.5 standard deviations above 1. Acceptable, and a hint that one Gaussian is not the exact shape of the peak.
 
 </div>
 
@@ -958,37 +2111,55 @@ Near its minimum, $\chi^2(\theta)$ is approximately a parabola. The **1σ uncert
 hideInToc: true
 ---
 
-# More Data, **Smaller** Errors
+# Residuals and **Pulls**
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="grid-2 mt-md gap-md">
 
-## **The 1/√N Law**
+<div class="card card-primary card-glass pad-compact">
 
-Statistical uncertainties on fitted parameters shrink as $1/\sqrt{N}$ — to **halve** an error you need **four times** the data.
+## 📏 **Two definitions**
+
+$$r_i = y_i - f(x_i;\hat\theta), \qquad \text{pull}_i = \frac{r_i}{\sigma_i}$$
+
+The residual has the unit of $y$. The pull has none: pulls of points with different $\sigma_i$ can be compared.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✅ **In a good fit the pulls**
+
+- scatter around 0 with a standard deviation near 1
+- show no pattern along $x$
+- lie beyond ±2 in about 1 case in 20
+
+</div>
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-accent card-glass pad-compact">
 
-## 📊 **Planning a measurement**
+## ⛰️ **D⁰: 45 pulls**
 
-- Estimate the precision you need **before** collecting data
-- Doubling the run time buys only a √2 improvement
-- Diminishing returns are built in
+Mean 0.01, standard deviation 1.09. Three lie beyond ±2, where two are expected. The largest is 2.9.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-info card-glass pad-compact">
 
-## 🧱 **The systematic floor**
+## 🕰️ **Pendulum: 9 pulls**
 
-- At some $N$, systematic uncertainties dominate
-- More data then stops helping
-- Effort shifts to calibration and model choice
+0.12, 0.39, −0.93, 0.36, −0.52, 0.57, −0.38, 0.77, −0.39. All within ±1.
 
 </div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+$\chi^2$ is one number and does not say where the misfit is. The pull plot does. Draw it under every fit.
 
 </div>
 
@@ -996,325 +2167,237 @@ Statistical uncertainties on fitted parameters shrink as $1/\sqrt{N}$ — to **h
 hideInToc: true
 ---
 
-# Correlated **Parameters**: Width and Yield
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Parameters Move Together**
-
-With a background under a peak, the fitted amplitude, width, and yield are **not independent** — the tilted confidence ellipse we pictured ($\rho(A, \sigma) = -0.57$) is exactly this.
-
-</div>
+# A Model with Too Few **Terms**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## 🔍 **How it shows up**
+## ⛰️ **Four models for the D⁰ histogram**
 
-- Widening $\sigma$ is compensated by lowering $A$ — the data pin down the **area**
-- Single-parameter errors understate the joint uncertainty
-- $\mu$ decouples for a symmetric peak on a flat background; a sloped background couples it too
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Why you must care**
-
-- Error propagation without $C_{ij}$ is simply wrong
-- $|\rho| \approx 1$ → consider reparameterizing the model
-- Report strong correlations alongside the result
+| Model | k | χ² | ndf | χ²/ndf |
+| --- | --- | --- | --- | --- |
+| Straight line | 2 | 8337.0 | 43 | 193.9 |
+| Gaussian on a constant | 4 | 99.4 | 41 | 2.42 |
+| Gaussian on a line | 5 | 53.4 | 40 | 1.33 |
+| Two Gaussians on a line | 7 | 37.4 | 38 | 0.98 |
 
 </div>
 
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📉 **Is the added parameter needed?**
+
+A parameter the data do not need lowers $\chi^2$ by about 1. The slope $c_1$ lowers it by 46.0. It is needed.
+
 </div>
+
+<div class="card card-accent card-glass pad-compact">
+
+A second Gaussian with the same $\mu$ lowers $\chi^2$ by 16.0 for two parameters: the peak has wider tails than one Gaussian. $\mu$ moves to 1864.45.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A model with too few terms **underfits**: $\chi^2/\text{ndf}$ is far above 1 and the pulls show a pattern. The pattern says which term is missing.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Too Few Terms: the **Pulls**
+
+<img class="fig" src="/figures/viz_fitting_d0_models.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:425px;">
 
 <!--
-Speaker: flip back to the ellipse figure if needed. Concrete reparameterisation:
-fit the yield N = A·σ·√(2π) instead of A — the correlation with σ mostly
-disappears. (~1.5 min)
+Speaker: top: the pulls are the peak itself. Middle: positive on the left,
+negative on the right, a tilt that a constant background cannot follow.
+Bottom: no pattern. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Bootstrap: Errors **Without** Formulas
+# A Model with Too Many **Terms**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🕰️ **Polynomials through the pendulum points**
+
+| Degree | k | χ² | ndf | T² at 1.2 m |
+| --- | --- | --- | --- | --- |
+| 0 | 1 | 11 954.89 | 8 | 1.88 |
+| 1 | 2 | 2.65 | 7 | 4.82 |
+| 2 | 3 | 2.60 | 6 | 4.83 |
+| 4 | 5 | 2.16 | 4 | 4.62 |
+| 6 | 7 | 1.38 | 2 | 2.18 |
+| 8 | 9 | 0.00 | 0 | −63.37 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🎢 **Degree 8**
+
+Nine parameters for nine points: the curve passes through every point, $\chi^2 = 0$, and no degree of freedom is left to test anything. At 1.2 m it predicts $T^2 = -63$ s²; the line, 4.82.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+From degree 1 to 2, $\chi^2$ falls by 0.04, and each further term buys less than 1. The line is enough.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A model with too many terms **overfits**: it follows the scatter of these nine points and fails on the next one. The aim is a $\chi^2$ near ndf with the fewest parameters, not the smallest $\chi^2$.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Too Few, Enough, Too **Many**
 
 <div class="note-text mt-sm">
 
-Don't want to trust the covariance matrix blindly? **Refluctuate the data around the fitted model, refit, repeat** — the spread of the refitted values *is* the uncertainty. ♻️ *A cross-check you can run anywhere.*
+Left: a straight line through $T$ against $\ell$, the wrong model. The pulls form an arch. Middle: the line through $T^2$. Right: the polynomial of degree 8, with $4\ell$ subtracted.
 
 </div>
 
-```python {monaco-run} {autorun:false}
-rng = np.random.default_rng(1)
-x = np.linspace(0, 10, 40)
-def gauss_bg(x, A, mu, sig, b):
-    return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b
-y = rng.poisson(gauss_bg(x, 40, 5, 0.8, 5)).astype(float)
-popt, pcov = curve_fit(gauss_bg, x, y, p0=[40, 5, 1, 5], sigma=np.sqrt(np.maximum(y, 1)), absolute_sigma=True)
-mus = []
-for _ in range(500):                          # parametric bootstrap ("toy MC"): refluctuate + refit
-    yb = rng.poisson(gauss_bg(x, *popt)).astype(float)
-    p, _ = curve_fit(gauss_bg, x, yb, p0=popt, sigma=np.sqrt(np.maximum(yb, 1)), absolute_sigma=True)
-    mus.append(p[1])
-print(f"covariance error on mu: {np.sqrt(pcov[1, 1]):.4f}")
-print(f"bootstrap spread of mu: {np.std(mus):.4f}")
-```
-
-<!--
-Speaker: run it — covariance 0.052 vs bootstrap 0.052 (0.0524 vs 0.0523).
-This is a PARAMETRIC bootstrap, a.k.a. toy Monte Carlo: each toy is a fresh
-Poisson draw around the fitted model, refit with the same recipe. It works for
-ANY estimator, however complicated, as long as you can refit. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Residual **Analysis**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Definition**
-
-**Residual** = observed − predicted: $r_i = y_i - f(x_i; \hat{\theta})$
-
-Residuals reveal how well the model captures the data structure.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Good Fit**
-
-- Randomly scattered around zero
-- No visible patterns or trends
-- Approximately Gaussian distributed
-- Size consistent with uncertainties
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Problems Indicated**
-
-- **Trends**: model missing structure
-- **Outliers**: bad data or wrong model
-- **Heteroscedasticity**: uncertainty varies
-- **Periodicity**: missing periodic component
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Standardized **Residuals**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Pull Distribution**
-
-Standardize residuals by their uncertainties:
-
-$$\text{pull}_i = \frac{y_i - f(x_i; \hat{\theta})}{\sigma_i}$$
-
-If model is correct and uncertainties accurate: pulls ~ $N(0, 1)$
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-### **Mean**
-
-Should be ≈ 0
-
-Non-zero → systematic bias
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### **Width**
-
-Should be ≈ 1
-
-- $\sigma_{\text{pull}} > 1$ → errors underestimated
-- $\sigma_{\text{pull}} < 1$ → errors overestimated
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-### **Shape**
-
-Should be Gaussian
-
-Non-Gaussian → model problems
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Visualizing Fit **Quality**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Standard Plot Structure**
-
-A complete fit visualization includes:
-
-1. **Upper panel**: Data with error bars + fitted model + components
-2. **Lower panel**: Residuals or pulls
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **What to include**
-
-- Data points with error bars
-- Total fit (solid line)
-- Individual components (dashed)
-- Clear legend and labels
-- Axis labels with units
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Residual panel**
-
-- Same x-axis as main plot
-- Zero line clearly marked
-- Error bars on residuals
-- Smaller height (ratio ~3:1)
-
-**Alternative**: Show pulls instead
-
-</div>
-
-</div>
+<img class="fig" src="/figures/viz_fitting_overfit.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:335px;">
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Goodness-of-Fit: **chi-squared**
+# What Goes **Wrong**
+
+---
+hideInToc: true
+---
+
+# Starting **Values**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| `p0`: A, μ, σ, c₀, c₁ | Result | χ² | Message |
+| --- | --- | --- | --- |
+| 2300, 1865, 8, 1400, 0 | μ = 1864.47 ± 0.10 | 53.4 | none |
+| 2300, 1850, 3, 1400, 0 | μ = 1864.47 ± 0.10 | 53.4 | none |
+| 2300, 1840, 2, 1400, 0 | μ = 1827.57 ± 0.28, A = −2876 | 3285.3 | none |
+| not given: all 1 | nothing moved but the line | 8337.0 | covariance could not be estimated |
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_start_values.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:215px;">
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ The third fit ends in a local minimum, reports small uncertainties and raises no warning. Plot the model at `p0` over the data before fitting.
+
+</div>
 
 <!--
-Speaker: the single most useful diagnostic. Anchor χ²/dof ≈ 1 = good, but stress
-it never replaces looking at the residuals. (~1 min)
+Speaker: a Gaussian of width 2 at 1840 does not overlap the peak at 1865. The
+derivative of chi2 with respect to mu is nearly zero there, so the descent has
+no direction to the peak and fits a wide negative Gaussian instead. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Chi-Squared **Statistic**
+# Correlated **Parameters**
 
-<div class="card card-info card-glass pad-tight mt-md">
+<img class="fig" src="/figures/viz_fitting_covariance.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:285px;">
 
-## **Definition**
+<div class="grid-2 mt-sm gap-md">
 
-$$\chi^2 = \sum_{i=1}^{n} \frac{(y_i - f(x_i; \hat{\theta}))^2}{\sigma_i^2}$$
+<div class="card card-primary card-glass pad-compact">
 
-Sum of squared standardized residuals---measures total disagreement weighted by uncertainties.
+## ↔️ **ρ(A, σ) = −0.46**
+
+A higher, narrower peak and a lower, wider one describe the data almost equally well. The data fix the area of the peak better than its height or width.
 
 </div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **The number of D⁰ in the peak**
+
+$N_{\text{sig}} = A\,\sigma\sqrt{2\pi}\,/\,(2\ \text{MeV}) = 20\,990$. Its uncertainty is 280 with the covariance of $A$ and $\sigma$, and 380 without it.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Errors That Are Not Gaussian: Small **Counts**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## **Properties**
+## 🔢 **Four bins: 2, 4, 6, 8**
 
-- $\chi^2 \geq 0$ always
-- Smaller = better fit
-- Expectation: $E[\chi^2] \approx \text{dof}$
-- Distribution is known (for testing)
+Fit a constant with $\sigma_i^2 = n_i$. The weighted mean becomes
 
-</div>
+$$\hat\mu = \frac{\sum_i n_i/n_i}{\sum_i 1/n_i} = \frac{4}{\tfrac12 + \tfrac14 + \tfrac16 + \tfrac18} = 3.84$$
 
-<div class="card card-secondary card-glass pad-tight">
-
-## **Degrees of Freedom**
-
-$$\text{dof} = n - p$$
-
-- $n$ = number of data points
-- $p$ = number of fitted parameters
-
-Accounts for "freedom used up" by fitting.
+The mean of the counts is 5. A bin that came out low gets a small $\sigma$, a large weight, and pulls the fit down.
 
 </div>
 
-</div>
+<div class="stack-tight" style="margin-top:0;">
 
----
-hideInToc: true
----
+<div class="card card-secondary card-glass pad-compact">
 
-# Reduced **Chi-Squared**
+## ⛰️ **The D⁰ bins above 1886**
 
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **The Key Diagnostic**
-
-$$\chi^2_\nu = \frac{\chi^2}{\text{dof}} = \frac{\chi^2}{n - p}$$
-
-The reduced chi-squared should be **approximately 1** for a good fit.
+The same fit gives 1362.1; the mean of the 12 counts is 1363.8. At 1400 entries per bin the effect is 0.1 %.
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<div class="card card-warning card-glass pad-compact">
 
-<div class="card card-success card-glass pad-tight">
+## 0️⃣ **An empty bin**
 
-### ✅ **chi2/dof ≈ 1**
-
-Good fit
-
-Model describes data well, uncertainties are correct
+$\sigma = \sqrt{0} = 0$ divides by zero. With the window 1800 to 1930 and its 8 empty bins, `curve_fit` returns the starting values and infinite uncertainties.
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
-
-### ⚠️ **chi2/dof >> 1**
-
-Poor fit
-
-Model missing structure, or uncertainties underestimated
+</div>
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-info card-glass pad-compact mt-md">
 
-### 🔍 **chi2/dof << 1**
-
-Suspicious
-
-Uncertainties overestimated, or too many parameters
-
-</div>
+The remedy is the likelihood of the right distribution. For Poisson counts, $-2\ln L = 2\sum_i \big(f_i - n_i \ln f_i\big) + \text{const}$ with $f_i = f(x_i;\theta)$. Minimising $-2\ln L$ works for every distribution. It gives $\chi^2$ only for the Gaussian.
 
 </div>
 
@@ -1322,331 +2405,19 @@ Uncertainties overestimated, or too many parameters
 hideInToc: true
 ---
 
-# What Does the Number **Feel** Like?
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🔴 **chi2/dof = 5.0**
-
-40 data points, and the fitted curve visibly misses a shoulder in the histogram --- a bump the model doesn't have a term for.
-
-**Read**: something real is being missed. Go straight to the residual plot --- the shape of the misfit tells you what term to add.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🟡 **chi2/dof = 0.2**
-
-Same 40 points, but the curve runs almost exactly through every error bar --- suspiciously perfect, not just "good".
-
-**Read**: uncertainties likely overestimated, or too many free parameters are soaking up the noise.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Reading **χ²/dof**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **When chi2/dof is large**
-
-Possible causes:
-1. Wrong model (missing terms)
-2. Systematic effects not included
-3. Uncertainties too small
-4. Outliers in data
-
-**Action**: Check residuals for patterns, reconsider model
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **When chi2/dof is small**
-
-Possible causes:
-1. Uncertainties overestimated
-2. Too many free parameters
-3. Fitting noise (overfitting)
-
-**Action**: Review uncertainty estimation, simplify model
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-**Important**: chi-squared alone doesn't tell you the model is correct---only that residuals are consistent with assumed uncertainties. Always combine with visual inspection!
-
-</div>
-
----
-hideInToc: true
----
-
-# p-value from **chi-squared**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Statistical Test**
-
-The p-value answers: "If the model is correct, what's the probability of getting a chi-squared this large or larger?"
-
-$$p = P(\chi^2 > \chi^2_{\text{obs}} \mid H_0)$$
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Interpretation**
-
-Use it as a **fit-quality diagnostic**, not a significance verdict: a very small p means the model likely doesn't describe the data — the same message as a large chi2/dof, expressed as a probability.
-
-**Careful**: formal "significant / not significant" claims from p-values are a topic of their own — beyond this course. Here, always read the p-value alongside chi2/dof and the residuals.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## **Calculation**
-
-```python
-from scipy.stats import chi2 as chi2_dist
-
-p_value = 1 - chi2_dist.cdf(chi_squared, dof)
-# or equivalently:
-p_value = chi2_dist.sf(chi_squared, dof)
-```
-
-</div>
-
-</div>
-
-<!--
-Speaker: the alias matters — `chi2` is already the NAME of the number in every
-runner today; importing scipy's distribution as `chi2` would shadow it. The
-decay fit: chi2_dist.sf(31.0, 23) ≈ 0.12. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Model **Comparison**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## **Which Model is Better?**
-
-When comparing nested models (e.g., with/without a component), use:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Likelihood Ratio Test**
-
-$$\Delta \chi^2 = \chi^2_{\text{simple}} - \chi^2_{\text{complex}}$$
-
-Compare to chi-squared distribution with delta-dof degrees of freedom.
-
-Large $\Delta \chi^2$ → complex model significantly better
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Information Criteria**
-
-**AIC**: $2p - 2\ln(L)$ · **BIC**: $p\ln(n) - 2\ln(L)$
-
-For Gaussian errors $-2\ln L = \chi^2 + \text{const}$, so **AIC = χ² + 2p**
-
-Lower is better. Automatically penalize complexity.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-**Occam's razor**: Prefer simpler models unless data strongly favor complexity.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Common **Issues**
-
-<!--
-Speaker: the failure modes, then a gallery of quiet failures to diagnose. (~30 sec)
--->
-
----
-hideInToc: true
----
-
-# When Fits Go **Wrong**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## **Convergence Failure**
-
-Fit doesn't converge or gives errors
-
-**Causes:**
-- Model incompatible with data (or with `p0`)
-- Numerical issues (overflow, divide by zero)
-- Empty bins with $\sigma_i = 0$
-
-**Solutions:**
-- Plot the model at `p0` before fitting
-- Add parameter bounds
-- Rescale variables (GeV not eV, $t/\tau$ not $t$)
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## **Unreasonable Results**
-
-Parameters have wrong sign or magnitude
-
-**Causes:**
-- Local minimum
-- Correlated parameters
-- Wrong model functional form
-
-**Solutions:**
-- Reparameterize model
-- Simplify or change model
-- Check `pcov` and the bounds, not just the return status
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Common **Pitfalls**
-
-<div class="grid-2 mt-md gap-md" style="margin-top: 0;">
-
-<div class="stack-tight">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Empty Bins**
-
-**Problem**: $\sigma_i = \sqrt{0}$ → division by zero
-
-**Solution**: Exclude, or use the model's $\sigma_i = \sqrt{f(x_i)}$ (not $\sigma_i = 1$)
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Overfitting**
-
-**Problem**: Model fits noise, not signal
-
-**Solution**: Use simplest model that explains data
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Ignoring Correlations**
-
-**Problem**: Parameters often correlated
-
-**Solution**: Use full covariance for error propagation
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Extrapolation**
-
-**Problem**: Model unreliable outside data range
-
-**Solution**: Only predict within fitted domain
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Pitfalls **Gallery**: What Went Wrong Here?
+# Errors That Are Not Gaussian: an **Outlier**
 
 <div class="note-text mt-sm">
 
-Three fits that broke quietly, each in its own way. Diagnose the symptom before reading the fix, then try the MCQ. 🔍 *Same detective work you'll do on the D⁰ peak in Seminar 12.*
+One value of the pendulum table typed with two digits exchanged: 16.21 in place of 12.61. The fit gives $g = 10.09 \pm 0.09$ m/s² with $\chi^2 = 884.7$ for 7 degrees of freedom. The pull of that point is 28.
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<img class="fig" src="/figures/viz_fitting_outlier.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:300px;">
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
-## 🎯 **Bad Starting Values**
-
-**Symptom**: the fit "succeeds" with no error, but the curve barely moves off `p0` --- it never gets near the data.
-
-**Fix**: plot the model at `p0` before fitting. A starting curve visibly close to the data beats any clever algorithm.
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚖️ **Ignoring Uncertainties**
-
-**Symptom**: fit without `sigma` and three noisy, large-$y$ points dominate the result, while ten precise points near zero are outvoted.
-
-**Fix**: always pass real per-point $\sigma_i$. Unweighted least squares silently assumes every point is equally trustworthy.
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🕳️ **Converged to Garbage**
-
-**Symptom**: `curve_fit` raises nothing, but a parameter sits exactly on its bound and `pcov` has a huge or ill-defined diagonal entry.
-
-**Fix**: check `pcov` and the bounds every time --- "no exception" is not the same as "correct answer."
-
-</div>
+The square in $\chi^2$ gives a point 28σ away the weight of 800 ordinary points. Find it in the pull plot, go back to the source of the number, and correct it or remove it with the reason written down. A point is never removed only because it fits badly.
 
 </div>
 
@@ -1654,60 +2425,47 @@ Three fits that broke quietly, each in its own way. Diagnose the symptom before 
 hideInToc: true
 ---
 
-<MCQ
-  question="A fit reports success. The width parameter sits exactly on the lower bound you supplied, and its reported uncertainty is enormous. Which pitfall is this?"
-  :options="[
-    'Bad starting values',
-    'Fitting noise with too many parameters',
-    'Ignoring uncertainties',
-    'Silently converged to garbage'
-  ]"
-  :correct="3"
-  explanation="A parameter pinned at its bound with a huge or ill-defined uncertainty is the signature of a fit that 'succeeded' numerically while landing somewhere unphysical --- always inspect pcov and the bounds, not just the fit's return status."
-/>
-
----
-layout: section
-hideInToc: true
----
-
-# Best **Practices**
-
-<!--
-Speaker: distil the workflow — visualize before fitting, report uncertainties,
-always check χ²/dof and residuals. These habits are the reproducibility payoff. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# The Complete **Workflow**
+# What χ² Cannot **See**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## **Before Fitting**
+## 📏 **An error common to all points**
 
-1. **Visualize data** - look for patterns, outliers
-2. **Choose model** - based on physics, not convenience
-3. **Estimate parameters** - reasonable starting point
-4. **Define uncertainties** - how precise are measurements?
+| The table | g (m/s²) | χ² |
+| --- | --- | --- |
+| as measured | 9.845 ± 0.090 | 2.647 |
+| every length 1 % too long | 9.943 ± 0.091 | 2.647 |
+| every t₁₀ 0.2 s too long | 9.707 ± 0.089 | 2.581 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🙈 **The fit stays good**
+
+A stretched tape measure moves $g$ by 0.10, more than its uncertainty, and leaves $\chi^2$ unchanged in every digit.
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## **After Fitting**
+## 📣 **Statistical and systematic**
 
-1. **Check convergence** - did fit succeed?
-2. **Examine residuals** - patterns = problems
-3. **Calculate chi2/dof** - is fit quality acceptable?
-4. **Report results** - parameters with uncertainties
-5. **Document** - make it reproducible
+The uncertainty from a fit is **statistical**: it comes from the scatter of the points and shrinks with more points. An error shared by all points is **systematic**. It is estimated and reported separately.
 
 </div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+With every $t_{10}$ 0.2 s too long, the intercept becomes $0.036 \pm 0.020$ s², 1.8σ from zero. The free intercept is the one place where this error leaves a trace.
 
 </div>
 
@@ -1715,279 +2473,44 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Do's and **Don'ts**
+# Reporting a **Fit**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-success card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## ✅ **Do**
+## 📝 **What a reader needs**
 
-- Visualize data **before** fitting
-- Use physically motivated models
-- Report uncertainties with results
-- Check residuals for patterns
-- Calculate and report chi2/dof
-- Document your analysis fully
-- Consider systematic uncertainties
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **Don't**
-
-- Fit without looking at data
-- Use arbitrary functional forms
-- Report parameters without uncertainties
-- Skip residual analysis
-- Cherry-pick "good" fits
-- Overfit with too many parameters
-- Extrapolate far beyond data range
-- Ignore the covariance matrix
+1. The model, as a formula
+2. The data, and where the $\sigma_i$ come from
+3. The method and the starting values
+4. Each parameter as value ± uncertainty, with its unit
+5. The correlation, if a result uses two parameters
+6. $\chi^2$ and the number of degrees of freedom
+7. A figure of data and model, with the pulls below
+8. What the uncertainty does not include
 
 </div>
 
-</div>
+<div class="stack-tight" style="margin-top:0;">
 
----
-layout: section
-hideInToc: true
----
+<div class="card card-success card-glass pad-compact">
 
-# Real-World **Applications**
+## 🕰️ **The pendulum, in two sentences**
 
-<!--
-Speaker: quick tour — the same recipe found the Higgs, and the same recipe is
-what a neural network does with a million knobs. (~30 sec)
--->
-
----
-hideInToc: true
----
-
-# Example: Higgs Boson **Discovery**
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## **CERN 2012: Same Techniques!**
-
-The Higgs boson was discovered using exactly these fitting methods.
+"A weighted least-squares fit of $T^2 = a\,\ell + b$ to nine points, with 0.1 s assumed on the time of 10 swings, gives $a = 4.010 \pm 0.037$ s²/m and $b = 0.009 \pm 0.019$ s² ($\rho = -0.88$), with $\chi^2 = 2.65$ for 7 degrees of freedom. From the slope, $g = 9.84 \pm 0.09$ m/s² (statistical)."
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact">
 
-<div class="card card-primary card-glass pad-tight">
-
-## **The Analysis**
-
-- Signal model: Gaussian peak at ~125 GeV
-- Background: smooth polynomial
-- Fit extracts mass and signal yield
-- Result: 5 sigma significance
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## **What They Did**
-
-The same ideas, done as a **likelihood fit** rather than χ²:
-
-- Maximum-likelihood fits (profile-likelihood ratio for significance)
-- Background-only hypothesis tests
-- Systematic uncertainty estimation
+A number without an uncertainty cannot be compared with anything. An uncertainty without its assumptions cannot be checked.
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
-
-# Beyond **Physics**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-### 🧬 **Biology**
-
-- Growth curves
-- Enzyme kinetics
-- Population dynamics
-
 </div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 💊 **Medicine**
-
-- Dose-response
-- Pharmacokinetics
-- Survival analysis
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-### 🌍 **Climate**
-
-- Temperature trends
-- CO2 models
-- Sea level rise
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-### 💰 **Economics**
-
-- Regression models
-- Time series
-- Demand forecasting
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-### 🏭 **Engineering**
-
-- Calibration
-- Signal processing
-- Quality control
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-### 🤖 **Machine Learning**
-
-Same principles!
-- Cost function = chi2
-- Parameters = weights
-- Optimization = training
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Fitting vs **Machine Learning**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## **Traditional Fitting**
-
-- Explicit model: $y = f(x; \theta)$
-- Physics-based form
-- Few parameters (5-10)
-- Interpretable
-- Requires domain knowledge
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## **Machine Learning**
-
-- Flexible model (neural network)
-- Data-driven form
-- Many parameters (millions)
-- Less interpretable
-- Requires lots of data
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-**Both are parameter estimation problems.** ML is fitting with very complex, flexible models. Understanding fitting makes you better at ML.
-
-</div>
-
----
-hideInToc: true
----
-
-# Seminar 12 — Fit a **Real Peak**
-
-<div class="note-text mt-sm">
-
-🎯 **Seminar 12:** fit the **D⁰** peak of the LHCb K⁻π⁺ spectrum (Gaussian + linear or exponential background) → **m ≈ 1865 MeV** with error, width ± error, χ²/dof, and a pull check. *Same recipe for any peak in any field.*
-
-</div>
-
-<img class="fig fig-light" src="/figures/lhcb_d0_fit.png" style="display:block;margin:0.5rem auto 0;max-height:300px;background:#fff;border-radius:8px;">
-
-<!--
-Speaker: this is the real thing they will fit — the sample is shared across all
-seminars, and a starter script plus an initial mass estimate are provided. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Try It — Fit a **Simulated** D⁰ Peak 🔬
-
-<div class="note-text">
-
-Click ▶ to fit a simulated D⁰-like peak live and see its pull panel — then shrink the sample or drop the background term and re-run. *In Seminar 12 you do this on the real LHCb spectrum.*
-
-</div>
-
-```python {monaco-run} {autorun:false}
-rng = np.random.default_rng(0)
-mass = np.concatenate([rng.normal(1.865, 0.009, 4000),    # D0-like peak
-                       rng.uniform(1.78, 1.96, 8000)])    # flat background
-y, edges = np.histogram(mass, bins=60, range=(1.78, 1.96))
-x, err = 0.5 * (edges[:-1] + edges[1:]), np.sqrt(np.maximum(y, 1))
-
-def model(x, A, mu, sig, b):                      # Gaussian peak + flat background
-    return A * np.exp(-0.5 * ((x - mu) / sig) ** 2) + b   # try b + c*x for the seminar's linear background
-
-popt, pcov = curve_fit(model, x, y, p0=[y.max(), 1.86, 0.01, np.median(y)], sigma=err, absolute_sigma=True)
-pull = (y - model(x, *popt)) / err; perr = np.sqrt(np.diag(pcov)); chi2 = np.sum(pull ** 2)   # pulls
-
-fig, (a1, a2) = plt.subplots(2, 1, figsize=(7, 3.2), sharex=True, gridspec_kw={'height_ratios': [3, 1]})
-a1.errorbar(x, y, yerr=err, fmt='o', ms=3); a1.plot(edges, model(edges, *popt), 'r-')
-a1.set_title(f'mu = {popt[1]*1e3:.2f} ± {perr[1]*1e3:.2f} MeV, chi2/dof = {chi2:.1f}/{len(x)-4}')
-a2.axhline(0, color='gray', lw=1); a2.scatter(x, pull, s=8, color='#D55E00')
-a1.set_ylabel('Events'); a2.set(xlabel='M (GeV)', ylabel='pull')
-plt.tight_layout(); plt.show()
-```
-
-<!--
-Speaker: output — μ = 1864.82 ± 0.20 MeV, σ = 9.04 ± 0.19 MeV (truth 1865, 9),
-χ²/dof = 64.3/56 = 1.15; the pulls have mean 0.04 and spread 1.03. Then break
-it on purpose: shrink N and watch the errors grow as 1/√N, or drop the
-background term and watch the pulls drift away from zero. (~3 min)
--->
-
----
-hideInToc: true
----
-
-<MCQ
-  question="After a fit you get χ²/dof ≈ 5. What does this most likely indicate?"
-  :options="[
-    'The fit is excellent — the model perfectly captures the data',
-    'The model is missing structure, or the uncertainties are underestimated',
-    'The uncertainties were overestimated',
-    'There are simply too many free parameters'
-  ]"
-  :correct="1"
-  explanation="χ²/dof well above 1 means the residuals are larger than the assumed errors — the model misfits or the σᵢ are too small; χ²/dof well below 1 is the overestimated-error / overfitting case."
-/>
 
 ---
 hideInToc: true
@@ -1999,91 +2522,156 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Fit a model by **least squares** — chosen from physics, not from what fits best
+✅ Derive **χ²** from the Gaussian likelihood: $-2\ln L = \chi^2 + \text{const}$
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Read errors and correlations from the **covariance matrix** (with `absolute_sigma=True`)
+✅ Fit a **straight line** from five sums, by hand and in NumPy
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Judge a fit with **residuals**, **pulls** and **χ²/dof** — a good χ² still has to make physical sense
+✅ Get **uncertainties** and the covariance from the curvature of χ², with $\Delta\chi^2 = 1$
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Run real fits in **`curve_fit`** and report **value ± error**
+✅ Minimise χ² by **gradient descent**: $\theta \leftarrow \theta - \eta\,\nabla\chi^2$
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Fit a nonlinear model with **`curve_fit`**, with starting values and `absolute_sigma=True`
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Judge a fit by **χ²/ndf** and the pulls, and say what its uncertainty leaves out
 
 </div>
 
 </div>
 
-<div class="grid-2 gap-md mt-md">
+<div class="card card-accent card-glass pad-tight mt-md">
 
-<div class="card card-accent card-glass pad-tight">
+## 🔬 **The two results of today**
 
-## 🔬 **Seminar 12 tie-in**
-
-Fit the LHCb D⁰ peak (Gaussian + linear/exponential background) with `curve_fit`, report mass **and width** ± error, χ²/dof, and check the **pull** distribution — all wrapped in one re-runnable script.
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🌌 **The Big Picture**
-
-Fitting connects theory to data. It's how we extract quantitative knowledge from measurements---used everywhere from particle physics to machine learning.
-
-</div>
+Pendulum: $g = 9.84 \pm 0.09$ m/s², $\chi^2/\text{ndf} = 2.65/7$. D⁰ peak: $\mu = 1864.47 \pm 0.10$ MeV/c², $\sigma = 7.65 \pm 0.10$ MeV/c², $\chi^2/\text{ndf} = 53.4/40$. Both uncertainties are statistical.
 
 </div>
 
 <!--
-Speaker: the "you can now" beat — have them nod along to each. The seminar makes
-it concrete: they fit a real D⁰ peak and report m ≈ 1865 MeV with χ²/dof. (~1 min)
+Speaker: every line of this recap was derived or computed today on one of two
+files. (~1 min)
 -->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
 
 ---
 hideInToc: true
 ---
 
-# Further **Reading**
+<MCQ
+  question="Three points have residuals 0.2, −0.3 and 0.1 from a model. Each has σ = 0.1. What is χ²?"
+  :options="[
+    '6',
+    '14',
+    '0.14',
+    '1.4'
+  ]"
+  :correct="1"
+  explanation="The pulls are 2, −3 and 1. Their squares are 4, 9 and 1, and the sum is 14. The point 3σ away contributes 9 of the 14."
+/>
 
-<div class="card card-info card-glass pad-compact mt-sm">
+---
+hideInToc: true
+---
 
-📚 The go-to references for fitting and uncertainties:
+<MCQ
+  question="A histogram with 30 bins is fitted with a Gaussian on a parabola: six parameters. How many degrees of freedom does the fit have?"
+  :options="[
+    '30',
+    '36',
+    '24',
+    '6'
+  ]"
+  :correct="2"
+  explanation="ndf = N − k = 30 − 6 = 24. If the model and the uncertainties are right, χ² is expected at 24, with a standard deviation of √48 = 6.9."
+/>
 
-</div>
+---
+hideInToc: true
+---
 
-<div class="grid-2 mt-md gap-md">
+<MCQ
+  question="A fit with one parameter has χ² = 12.0 at its minimum, θ = 5.00. At θ = 5.20, χ² is 13.0. What is the uncertainty of θ?"
+  :options="[
+    '1.0',
+    '0.04',
+    '13.0',
+    '0.20'
+  ]"
+  :correct="3"
+  explanation="The uncertainty is the distance from the minimum at which χ² has risen by 1. Here that is 5.20 − 5.00 = 0.20. At θ = 5.40, two σ away, χ² would be 12 + 4 = 16."
+/>
 
-<div class="card card-primary card-glass pad-compact">
+---
+hideInToc: true
+---
 
-📗 **Hughes & Hase** — *Measurements and their Uncertainties* — practical and clear
+<MCQ
+  question="Gradient descent on χ²(θ) = (θ − 3)² starts at θ = 0 with the learning rate η = 0.25. Where is θ after one step?"
+  :options="[
+    '1.5',
+    '3',
+    '−1.5',
+    '0.75'
+  ]"
+  :correct="0"
+  explanation="The derivative at θ = 0 is 2 × (0 − 3) = −6. The step is θ − η × (−6) = 0 + 1.5 = 1.5. With η = 0.5 one step lands on the minimum. With η = 1 it lands on 6, as far from 3 as the start, and for any larger η the distance grows."
+/>
 
-</div>
+---
+hideInToc: true
+---
 
-<div class="card card-secondary card-glass pad-compact">
+<MCQ
+  question="A fit of 27 points with 2 parameters gives χ² = 100. The model is known to be right. By what factor were the σ of the points too small?"
+  :options="[
+    '4',
+    '2',
+    '16',
+    'They were too large, not too small'
+  ]"
+  :correct="1"
+  explanation="ndf = 27 − 2 = 25 and χ²/ndf = 4. Each term of χ² contains 1/σ², so doubling every σ divides χ² by 4 and brings it to 25. The estimates of the parameters stay the same; their uncertainties double."
+/>
 
-📘 **Bevington & Robinson** — *Data Reduction and Error Analysis for the Physical Sciences*
+---
+hideInToc: true
+---
 
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🔬 **James** — *Statistical Methods in Experimental Physics*
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-🐍 **SciPy docs** — `scipy.optimize.curve_fit` and `lmfit` for real-world fitting
-
-</div>
-
-</div>
+<MCQ
+  question="A straight-line fit of T² against the length of a pendulum gives the slope a = 3.95 ± 0.04 s²/m. What is g = 4π²/a?"
+  :options="[
+    '9.99 ± 0.04 m/s²',
+    '9.99 ± 0.01 m/s²',
+    '9.99 ± 0.10 m/s²',
+    '9.81 ± 0.10 m/s²'
+  ]"
+  :correct="2"
+  explanation="g = 39.478 / 3.95 = 9.99. The relative uncertainty of g equals that of a, 0.04 / 3.95 = 1.0 %, so σ = 9.99 × 0.0101 = 0.10 m/s²."
+/>

@@ -12,10 +12,19 @@ title: "Concepts of Data Analysis"
 ##### <span class="aims-badge">♻️ reproducibility · 📁 data & files</span>
 
 <!--
-Speaker: open by naming the two aims this lecture serves — reproducibility and
-efficient work with data. Frame today as the mental model that must come BEFORE
-tools: what data is, how to judge it, and what goes wrong. (~1 min)
+Speaker: the course so far taught tools. This lecture looks back at two results
+the room has produced, g from the pendulum and the mass peak in the LHCb file,
+and asks what they are worth. Then what stands around an analysis: other
+people, rules, plans, personal data, AI tools. (~1 min)
 -->
+
+---
+hideInToc: true
+layout: quote
+---
+
+# The first principle is that you must not fool yourself — and you are the **easiest person to fool**.
+Richard Feynman — *Cargo Cult Science*, Caltech commencement address, 1974
 
 ---
 hideInToc: true
@@ -29,883 +38,43 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🎯 Frame every analysis around the **decision** it must support
+🎯 State an analysis as a **question**, **evidence with its uncertainty** and a **decision**
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🔍 Tell apart **descriptive, diagnostic, predictive, and prescriptive** analysis
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-✅ Audit data against a **quality checklist** and read missing-data mechanisms
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-🔄 Walk data through the full **analysis lifecycle** — plan to share
+🔁 Walk the **loop** from question to decision, on the pendulum and on the D⁰ peak
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-♻️ Make results **reproducible** — ready for the FAIR practices of Lecture 14
-
-</div>
-
-</div>
-
-<!--
-Speaker: read these as promises, not a syllabus. Stress the through-line —
-"start from the decision" — and tell them Seminar 9 is where they run today's
-checklist on the D⁰ → K⁻π⁺ teaching sample, then on their own project's data. (~1 min)
--->
-
----
-hideInToc: true
----
-
-<div class="text-center">
-
-# What is **Data Analysis**?
-
-</div>
-
-<div class="def-stack">
-
-<div class="card card-primary card-glass def-card">
-
-## 📋 **Data**
-
-<div v-click="[1, 2]" class="def-ex">
-
-<span class="def-sub">Units of meaning — values that describe or measure</span>
-
-Discrete or continuous values that convey information — quantities, qualities, facts, or symbols to be interpreted. *A datum is one such value.* <span class="def-src">— Wikipedia</span>
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass def-card">
-
-## 🔍 **Data Analysis**
-
-<div v-click="[2, 3]" class="def-ex">
-
-<span class="def-sub">Turning data into conclusions and decisions</span>
-
-The process of **inspecting, cleaning, transforming, and modelling** data to discover useful information, inform conclusions, and support decision-making. <span class="def-src">— Wikipedia</span>
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass def-card">
-
-## 🧪 **Data Science**
-
-<div v-click="[3, 4]" class="def-ex">
-
-<span class="def-sub">Analysis + computing + algorithms at scale</span>
-
-An interdisciplinary field combining statistics, scientific computing, visualisation, and algorithms to extract **knowledge and insights** from noisy, structured, or unstructured data. <span class="def-src">— Wikipedia</span>
-
-</div>
-
-</div>
-
-</div>
-
-<style>
-/* Centred title: move the theme's kinetic accent bar under the middle of the h1. */
-.text-center h1::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-.def-stack {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.4rem;
-  height: calc(100% - 4rem); /* leave room for the slide title */
-}
-.def-card.card {
-  padding: 0.7rem 1.2rem !important;
-  overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.def-card.card:has(.def-ex:not(.slidev-vclick-hidden)) {
-  padding: 0.45rem 1.1rem 0.55rem !important;
-}
-.def-card.slidev-vclick-hidden {
-  transform: translateX(-40px);
-  opacity: 0 !important;
-  visibility: visible !important;
-  pointer-events: none;
-}
-.def-card h2 {
-  font-size: 1.4em;
-  line-height: 1.15;
-  margin: 0;
-  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.def-card:has(.def-ex:not(.slidev-vclick-hidden)) h2 {
-  font-size: 1em;
-}
-.def-sub {
-  display: block;
-  font-size: 0.92em;
-  opacity: 0.85;
-  margin-top: 0.05em;
-  font-style: italic;
-}
-.def-ex {
-  max-height: 300px;
-  opacity: 0.9;
-  overflow: hidden;
-  font-size: 0.82em;
-  margin-top: 0.2rem;
-  line-height: 1.3;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.def-ex.slidev-vclick-hidden {
-  max-height: 0 !important;
-  opacity: 0 !important;
-  visibility: visible !important;
-  margin-top: 0 !important;
-  pointer-events: none;
-}
-.def-src {
-  opacity: 0.6;
-  font-style: italic;
-  font-size: 0.9em;
-  margin-left: 0.3em;
-}
-</style>
-
----
-hideInToc: true
----
-
-# Framework before **tools**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧭 **Concepts before libraries**
-
-You have learned Python. Before diving into libraries and datasets, you need a conceptual framework for *thinking* about data — what it is, how to handle it, and what can go wrong.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔬 **From CERN to Industry**
-
-These concepts — lifecycle, quality, ethics, governance — apply identically whether you are analysing collision data at CERN or customer behaviour at a startup.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🎯 **This Lecture**
-
-We build the mental model: data types, quality, the analysis lifecycle, tools, hygiene, ethics, and key pitfalls to avoid.
-
-</div>
-
----
-hideInToc: true
----
-
-# One principle above all · **Decisions first**
-
-<span class="def-sub">Every technique in this lecture is in service of this single idea. Keep it in mind as each concept lands.</span>
-
-<div class="grid-2 gap-md mt-md tidy-cards">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🎯 **Start from the decision, not the data**
-
-Who will act on the result? On what timeline? What changes if the answer flips? If no one acts, it is not analysis — it is decoration.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📐 **Define success before you touch a row**
-
-Pick the metric, the threshold, and the acceptance criterion up front. Otherwise every plot looks interesting and none is conclusive.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **Without a decision, rigour is theatre**
-
-Quality checks, documentation, reproducibility — they matter *because* a decision depends on the output. Strip the decision and the discipline collapses.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🔁 **Re-ask at every step**
-
-"What decision am I supporting?" is the single best prompt against scope creep, p-hacking, and lost weekends of modelling for its own sake.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-<div style="display: flex; flex-direction: column; gap: 0.4rem; height: 100%; justify-content: center;">
-
-<div class="card card-primary card-glass anim-card" v-click="1">
-
-## 📋 **Data**
-
-<span class="anim-sub">Capture observations — numbers, text, images, signals</span>
-
-<div v-click="[1, 2]" class="anim-ex">
-
-- `[72, 68, 75, 80, 71]` — heart-rate readings
-- `"sunny, 12 °C, wind NW"` — weather log entry
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass anim-card" v-click="2">
-
-## 💡 **Information**
-
-<span class="anim-sub">Emerges when data gain context, structure, and purpose</span>
-
-<div v-click="[2, 3]" class="anim-ex">
-
-- Resting heart rate **averaged 73 bpm** last week
-- Store B weekend revenue is **2.3× higher** than weekdays
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass anim-card" v-click="3">
-
-## 🧠 **Knowledge**
-
-<span class="anim-sub">Blends information with experience and domain expertise</span>
-
-<div v-click="[3, 4]" class="anim-ex">
-
-- Rising heart rate **predicts flu onset** 48 h early
-- Weekend spike driven by **nearby Saturday market**
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass anim-card" v-click="4">
-
-## 🎯 **Wisdom**
-
-<span class="anim-sub">Guides decisions with judgement and responsibility</span>
-
-<div v-click="[4, 5]" class="anim-ex">
-
-- Send a **rest advisory** when heart rate trends up
-- **Extend Saturday hours** and stock accordingly
-
-</div>
-
-</div>
-
-</div>
-
-
----
-hideInToc: true
----
-
-# Example — a lab **thermometer**
-
-<div class="flow-container">
-
-<div class="card card-primary card-glass flow-row" v-click="1">
-  <div class="flow-label">📋 Data</div>
-  <div class="flow-text"><code>2025-10-24 10:24, 22.3°C</code></div>
-</div>
-
-<div class="flow-arrow" v-click="2">↓</div>
-
-<div class="card card-secondary card-glass flow-row" v-click="2">
-  <div class="flow-label">💡 Information</div>
-  <div class="flow-text">Lab A was <strong>22.3 °C</strong> at 10:24 on Oct 24, 2025</div>
-</div>
-
-<div class="flow-arrow" v-click="3">↓</div>
-
-<div class="card card-accent card-glass flow-row" v-click="3">
-  <div class="flow-label">🧠 Knowledge</div>
-  <div class="flow-text">Lab A runs <strong>1.5 °C hotter</strong> on Fridays due to compute load</div>
-</div>
-
-<div class="flow-arrow" v-click="4">↓</div>
-
-<div class="card card-success card-glass flow-row" v-click="4">
-  <div class="flow-label">🎯 Wisdom</div>
-  <div class="flow-text">Shift Friday calibration <strong>earlier</strong> to reduce thermal drift</div>
-</div>
-
-</div>
-
-<style>
-.flow-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: calc(100% - 4rem); /* leave room for the slide title */
-  gap: 0;
-}
-.flow-row {
-  display: flex !important;
-  align-items: center;
-  gap: 1rem;
-  width: 90%;
-  padding: 0.85rem 1.5rem !important;
-}
-.flow-row.slidev-vclick-hidden {
-  transform: translateX(-30px);
-  opacity: 0 !important;
-  visibility: visible !important;
-}
-.flow-label { font-weight: 700; font-size: 1.15em; white-space: nowrap; min-width: 9rem; }
-.flow-text { font-size: 1.05em; opacity: 0.9; }
-.flow-text code { background: rgba(255, 255, 255, 0.1); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.95em; }
-.flow-arrow { font-size: 1.4em; opacity: 0.4; margin: 0.3rem 0; transition: opacity 0.5s ease; }
-.flow-arrow.slidev-vclick-hidden { opacity: 0 !important; visibility: visible !important; }
-</style>
-
----
-hideInToc: true
----
-
-# How disciplines **overlap**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 **Statistics**
-
-<div class="note-text">Underpins inference, uncertainty, and experimental design</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔧 **Data Engineering**
-
-<div class="note-text">Ensures data are collected, stored, and discoverable</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔍 **Data Analysis**
-
-<div class="note-text">Explores, explains, and communicates what the data say</div>
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-tight">
-
-## 🧪 **Data Science**
-
-<div class="note-text">Fuses engineering, analysis, and machine learning</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🎯 **Decision Science**
-
-<div class="note-text">Closes the loop with impact tracking and action</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🤖 **AI / ML**
-
-<div class="note-text">Automates pattern recognition at scale — one tool among many</div>
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Analysis bridges **data → decisions**
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📈 **Raw data**
-
-- Sensors, logs, experiments, surveys, the web
-- Volume, velocity, variety keep rising
-- Too much to read, too messy to trust
-- Value is locked inside noise
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🌉 **Analysis**
-
-- **Inspect** — what's really in the data?
-- **Clean** — fix errors, gaps, units
-- **Model** — find structure and patterns
-- **Explain** — communicate with uncertainty
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🎯 **Decisions**
-
-- Publish a result, approve a treatment
-- Ship a product, set a policy
-- Every stakeholder now asks: *what does the data say?*
-- Without analysis, decisions are just opinion
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Key **ideas**
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧪 **Universal scope**
-
-Every scientific study has a data analysis component
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📄 **Publications**
-
-Results of analysis become **scientific publications**
+⚠️ Name three ways an analysis goes wrong **without a bug**, and the defence against each
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 💼 **Business impact**
-
-Imperative for real-world **decision making**
+👓 **Review** another person's analysis with a checklist, and say who is an **author**
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## 🔄 **Multi-disciplinary**
-
-A **multi-step** process spanning many fields
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔁 **Iterative**
-
-Insight rarely arrives in a single pass
+📋 Write a one-page **data management plan**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## 🤝 **Trust**
-
-Earned via transparency, reproducibility, storytelling
+🔒 Tell **personal data** from other data, and name the duties that come with it
 
 </div>
 
-</div>
+<div class="card card-primary card-glass pad-compact">
 
----
-hideInToc: true
----
-
-<div style="display: flex; flex-direction: column; gap: 0.4rem; height: 100%; justify-content: center;">
-
-<div class="card card-primary card-glass pad-compact anim-card" v-click="1">
-
-## 📋 **Descriptive Analysis**
-
-<span class="anim-sub">What happened? — establishes the baseline facts</span>
-
-<div v-click="[1, 2]" class="anim-ex">
-
-- Event rate rose **12 %** last run
-- Sales dropped **8 %** in Q3
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact anim-card" v-click="2">
-
-## 🔍 **Diagnostic Analysis**
-
-<span class="anim-sub">Why did it happen? — builds on the baseline to find root causes</span>
-
-<div v-click="[2, 3]" class="anim-ex">
-
-- Rate rose due to **trigger threshold** change
-- Drop correlates with **pricing** change
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact anim-card" v-click="3">
-
-## 🔮 **Predictive Analysis**
-
-<span class="anim-sub">What is likely next? — extrapolates the causes forward</span>
-
-<div v-click="[3, 4]" class="anim-ex">
-
-- Projected **8 % rate increase** next fill
-- Model forecasts **recovery in Q1**
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact anim-card" v-click="4">
-
-## 🎯 **Prescriptive Analysis**
-
-<span class="anim-sub">What should we do? — turns the forecast into a recommended action</span>
-
-<div v-click="[4, 5]" class="anim-ex">
-
-- Raise threshold by **0.3** to maintain buffer
-- Revert price, **A/B test** alternatives
-
-</div>
-
-</div>
-
-</div>
-
-
----
-hideInToc: true
----
-
-<div class="note-text">
-
-*Some questions preview ideas you'll formalise later — focus on the reasoning behind each answer.*
-
-</div>
-
-<MCQ
-  question="A plot shows a histogram of the K⁻π⁺ invariant mass for 60,000 LHCb events. What type of analytics is this?"
-  :options="[
-    'Descriptive — it summarises what the data look like',
-    'Diagnostic — it explains why the mass takes these values',
-    'Predictive — it forecasts the mass of the next event',
-    'Prescriptive — it recommends a selection cut'
-  ]"
-  :correct="0"
-  explanation="Plotting the distribution of a measured quantity — no explanation, forecast, or recommendation attached — is the textbook example of descriptive analytics: what the data look like, nothing more."
-/>
-
-<style>
-/* The MCQ fills 100% height for standalone use; with the preamble above it
-   this slide would overflow by exactly the preamble's height. */
-.mcq-container { height: calc(100% - 5rem) !important; }
-</style>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="The K⁻π⁺ mass histogram shows a clear peak near 1865 MeV. An analyst investigates and attributes it to real D⁰ → K⁻π⁺ decays rather than combinatorial background. What type of analytics is this?"
-  :options="[
-    'Descriptive — it reports where the peak sits',
-    'Diagnostic — it explains why the peak is there',
-    'Predictive — it forecasts future peaks',
-    'Prescriptive — it recommends a physics decision'
-  ]"
-  :correct="1"
-  explanation="Going beyond 'there is a peak' to 'here is the physical reason the peak appears' is diagnostic analytics — explaining the cause of an observed pattern, one step past description but short of forecasting or recommending action."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A team trains a model that forecasts equipment failure AND outputs the maintenance schedule that minimises downtime cost. Best classification?"
-  :options="[
-    'Purely predictive — it only estimates failure probability',
-    'Purely diagnostic — it explains failures',
-    'Prescriptive — the end product is an optimal action plan',
-    'Descriptive — it summarises failure history'
-  ]"
-  :correct="2"
-  explanation="Predictive analytics is a *component* here, but the deliverable is a recommended schedule optimising a cost objective. Whenever the output is an action or decision, the pipeline as a whole is prescriptive."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A researcher fits a causal model to estimate how a new teaching method would change exam scores if rolled out. Which label fits best, and why is it subtle?"
-  :options="[
-    'Descriptive — it uses historical exam data',
-    'Diagnostic — it explains past score variation',
-    'Predictive — it forecasts future scores',
-    'Prescriptive / causal — it estimates the effect of an intervention'
-  ]"
-  :correct="3"
-  explanation="A pure predictive model answers 'what score will I see?' under the status quo. A causal / interventional model answers 'what would happen if we changed something?' — the basis for prescriptive recommendations. The subtlety: both use historical data and both output numbers, but only the causal one supports decisions about actions."
-/>
-
----
-layout: section
-hideInToc: true
----
-
-# What is **Data**?
-
-<!--
-Speaker: from the "why" to the raw material. Before quality and lifecycle,
-name the shapes data come in — the shape decides the tools, and granularity
-and time decide what you can conclude. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Data comes in many **shapes**
-
-<span class="def-sub">The *shape* of your data decides which tools, file formats, and mental models apply. Pick the wrong shape and every later step fights you. Click a card to expand.</span>
-
-<div class="grid-2 gap-sm dd-stack shapes-stack mt-md">
-
-<details name="shapes" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">📊 <strong>Tabular</strong> — rows × columns</span></summary>
-<div class="dd-body">
-
-**Each row is an observation, each column a variable.** The workhorse shape: experimental results, business metrics, surveys, most CSVs you will ever meet.
-
-- *Typical formats:* CSV, TSV, Parquet, Feather, SQL tables, Excel sheets, pandas / Polars / R dataframes
-- *Ecosystem:* SQL, pandas, Polars, DuckDB, Arrow; dashboards (Tableau, Looker, Metabase); almost every ML library ingests a 2-D array
-- *Strengths:* joins, group-by aggregations, vectorised maths, columnar compression, decades of battle-tested tooling
-- *Variable types:* numeric (int, float), categorical, ordinal, boolean, datetime, text — each needs its own cleaning strategy
-- *Gotchas:* mixed units across rows; columns silently changing type on import; `NaN` vs empty string vs `"NA"`; wide-vs-long confusion; silent integer overflow in aggregations
-- *Wide vs long:* wide = one row per subject, many measurement columns; long = one row per measurement. Plotting and modelling usually want long; reporting usually wants wide
-- *CERN example:* per-event summary tables with columns like `event_id`, `energy_gev`, `pt`, `eta`, `phi`, `trigger_flag` — one file per run, millions of rows
-
-</div>
-</details>
-
-<details name="shapes" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">🌳 <strong>Hierarchical</strong> — nested trees</span></summary>
-<div class="dd-body">
-
-**Records contain sub-records, sometimes recursively.** One event has many tracks; one patient has many visits, each with many measurements, each with many lab values.
-
-- *Typical formats:* JSON, XML, YAML, HDF5 groups, ROOT TTrees / RNTuples, Protobuf messages, Avro
-- *Ecosystem:* jq and XPath for querying; uproot / awkward-array for ROOT in Python; HDF5 for scientific blobs; document databases (MongoDB, Couchbase)
-- *Strengths:* faithful to real-world structure; schema can evolve per branch; variable-length arrays are first-class; self-describing (schema lives with data)
-- *Variable-length vs fixed:* a key distinction — an event with *N* tracks (where *N* varies) cannot be flattened to a rectangular table without either repetition or loss
-- *Gotchas:* hard to flatten without data loss; joins become awkward; deep nesting kills readability; schema evolution is a minefield when older consumers read newer data
-- *Access patterns:* selective branch reads (ROOT, Parquet nested columns) let you touch only the fields you need — critical at petabyte scale
-- *CERN example:* a ROOT event record holding variable-length arrays of tracks, each track carrying `pt`, `eta`, `phi`, `hits[]`, plus event-level metadata (run, lumi, vertices)
-
-</div>
-</details>
-
-<details name="shapes" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">🕸️ <strong>Graph</strong> — nodes and edges</span></summary>
-<div class="dd-body">
-
-**The relationships *are* the data.** A table of "who follows whom" loses the structure the moment you query it; a graph keeps paths, cycles, and neighbourhoods first-class.
-
-- *Typical formats:* edge lists (CSV), GraphML, Neo4j, RDF/SPARQL
-- *Strengths:* shortest-path, centrality, community detection, provenance chains
-- *Gotchas:* no single canonical layout; visualisations mislead at scale
-- *CERN example:* detector-geometry dependency graphs; collaboration/author networks
-
-</div>
-</details>
-
-<details name="shapes" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">🗺️ <strong>Spatial & temporal</strong> — coordinates and time</span></summary>
-<div class="dd-body">
-
-**Order and proximity matter.** Shuffling rows in a tabular dataset is fine; shuffling time stamps destroys the signal.
-
-- *Typical formats:* GeoJSON, Shapefile, NetCDF, Parquet partitioned by date, event streams (Kafka)
-- *Strengths:* windowing, rolling stats, spatial joins, trajectory analysis
-- *Gotchas:* timezones, daylight saving, coordinate reference systems, irregular sampling
-- *CERN example:* beam-intensity time series; detector-hit spatial coordinates
-
-</div>
-</details>
-
-<details name="shapes" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">🖼️ <strong>Multimedia</strong> — images, audio, waveforms</span></summary>
-<div class="dd-body">
-
-**Dense, high-dimensional signals.** A 4 K image is ~8 million pixels — about 25 million numbers in RGB; a 1 s audio waveform is tens of thousands of samples. Analysis usually means *feature extraction* first.
-
-- *Typical formats:* PNG/JPEG, WAV/FLAC, MP4, raw tensors, HDF5
-- *Strengths:* convolutional models, signal processing, transfer learning from pretrained nets
-- *Gotchas:* storage costs, labelling effort, leakage through metadata (EXIF, filename patterns)
-- *CERN example:* calorimeter "images" for jet classification; detector scan videos
-
-</div>
-</details>
-
-<details name="shapes" class="dd-card card card-success card-glass">
-<summary><span class="dd-title">📝 <strong>Text</strong> — free-form language</span></summary>
-<div class="dd-body">
-
-**Unstructured on the surface, richly structured inside** (tokens, syntax, semantics). Often mixed with tabular metadata (author, timestamp).
-
-- *Typical formats:* plain text, Markdown, PDF, HTML, log files
-- *Strengths:* embeddings, topic models, entity extraction, RAG pipelines
-- *Gotchas:* encoding issues, boilerplate, deduplication, PII leakage
-- *CERN example:* elog entries; beam operator run comments; detector alarm logs
-
-</div>
-</details>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 💡 **Choose the shape, then the tool**
-
-Many datasets *can* be coerced into a table, but not always *should* be. Forcing a graph into rows loses the relationships; flattening a ROOT TTree into a DataFrame loses the per-event structure. **Match the shape to the question.** A second axis cuts across all six — structured (tables) · semi-structured (JSON, ROOT) · unstructured (text, images) — and decides how much schema you get for free.
-
-</div>
-
-<style scoped>
-.shapes-stack { position: relative; }
-.shapes-stack .dd-card { position: relative; }
-.shapes-stack .dd-card[open] { z-index: 20; }
-.shapes-stack .dd-card[open] > .dd-body {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  margin-top: 0.35rem;
-  max-height: 300px;
-  overflow-y: auto;
-  padding: 0.75rem 1rem;
-  background: linear-gradient(140deg, rgba(2,6,23,0.97), rgba(15,23,42,0.95));
-  border: 1px solid rgba(148,163,184,0.45);
-  border-radius: 0.6rem;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.55);
-  font-size: 0.82em;
-  line-height: 1.35;
-  backdrop-filter: blur(8px);
-}
-.shapes-stack .dd-card:nth-last-child(-n+2)[open] > .dd-body {
-  top: auto;
-  bottom: 100%;
-  margin-top: 0;
-  margin-bottom: 0.35rem;
-  max-height: 200px;
-}
-.shapes-stack .dd-body ul { margin: 0.3rem 0 0; padding-left: 1.1rem; }
-.shapes-stack .dd-body li { margin: 0.15rem 0; }
-.shapes-stack .dd-title { font-size: 0.95em; }
-</style>
-
----
-hideInToc: true
----
-
-<img src="/figures/data_types.svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;" />
-
----
-hideInToc: true
----
-
-# Granularity & **time**
-
-<span class="def-sub">Two choices made before any analysis — and both silently decide what you will be able to conclude.</span>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔬 **Granularity & unit of analysis**
-
-- Define the entity: person, transaction, collision event, sensor ping
-- Aggregation level shifts the balance of signal vs noise
-- Misaligned granularity breeds bias and misleading conclusions
-- Document every transformation between granularities
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🕐 **The time dimension**
-
-- Cross-sectional vs time series vs panel data
-- Sampling frequency and latency bound what you can see
-- Seasonality, trends, and lag effects need tailored methods
-- Align timestamps, time zones, and calendars early
+🤖 Use an **AI tool** in an analysis: what to verify, what to disclose, what never to paste
 
 </div>
 
@@ -916,93 +85,306 @@ layout: section
 hideInToc: true
 ---
 
-# Data **Quality**
+# What an Analysis **Is**
 
 <!--
-Speaker: you know what data look like — now, can you trust them? Eight
-checklist dimensions, one documented failure, and the missing-data mechanisms.
-This is the block the seminar audit is built on. (~1 min)
+Speaker: start from the two numbers the room already has. Nothing new is
+computed in this section. The question is what makes a number a result. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Data quality **checklist**
+# Two Results of **This Course**
 
-<span class="def-sub">You know *what* data looks like. Now: can you trust it? Every downstream decision rests on that answer — start by auditing these eight dimensions. Metadata — who collected it, when, how, in which units, through which scripts — is what makes the audit possible at all; without it the data are a liability, not an asset.</span>
+<img class="fig" src="/figures/viz_concepts_two_cases.svg" style="display:block;margin:0.4rem auto 0;max-height:300px;">
 
-<div class="grid-2 gap-md mt-md tidy-cards">
+<div class="card card-info card-glass pad-compact mt-md">
 
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ✅ **Completeness**
-
-<div class="note-text">Missingness patterns and mechanisms</div>
+Nine rows gave **g = 9.84 ± 0.09 m/s²**. 91&nbsp;583 rows gave a peak at **1864.47 ± 0.10 MeV/c²**. Both came from files in the project folder, by scripts that can be run again. This lecture asks what such a number is worth, and what stands around it: other people, rules, plans.
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<!--
+Speaker: both fits are the ones of Lecture 10. Left: T squared against the length,
+the slope is 4 pi squared over g. Right: the mass column in 2 MeV bins, a Gaussian
+on a straight line. Ask who still has both numbers in their own report. (~2 min)
+-->
 
-## 🔗 **Consistency**
+---
+hideInToc: true
+---
 
-<div class="note-text">Units, schemas, timezones</div>
+# An Analysis Has **Three Parts**
 
-</div>
+<div class="grid-3 mt-md gap-md">
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📐 **Validity**
+## ❓ **A question**
 
-<div class="note-text">Ranges, constraints, outliers (legit vs error)</div>
+Fixed before the data is looked at, and answerable with a number.
 
-</div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🎯 **Accuracy**
-
-<div class="note-text">Reflects reality — guards against sensor drift & transcription error</div>
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-tight">
-
-## ⏱️ **Timeliness**
-
-<div class="note-text">Latency, freshness</div>
+- *Is g in this room the textbook 9.81 m/s²?*
+- *At what mass does the K⁻π⁺ spectrum peak?*
 
 </div>
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🔄 **Lineage**
+## 📏 **Evidence**
 
-<div class="note-text">Provenance, versioning, transformations — the metadata trail</div>
+A number from data, with its uncertainty, by a method that someone else can repeat.
 
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🔢 **Uniqueness**
-
-<div class="note-text">Deduplication when merging feeds</div>
+- 9.84 ± 0.09 m/s²
+- 1864.47 ± 0.10 MeV/c²
 
 </div>
 
-<div class="card card-success card-glass pad-tight">
+<div class="card card-accent card-glass pad-compact">
 
-## ⚖️ **Ethics**
+## ✅ **A decision**
 
-<div class="note-text">Consent, privacy, bias, fairness</div>
+What follows from the answer, and for whom.
+
+- The setup measures g to 0.9 %
+- The peak is the D⁰. The file is fit for exercises in fitting
 
 </div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+A plot without a question is a picture. A number without an uncertainty cannot be compared with anything. A result that nobody can check or act on changes nothing.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Uncertainty **Decides**
+
+<img class="fig" src="/figures/viz_concepts_uncertainty.svg" style="display:block;margin:0.3rem auto 0;max-height:200px;">
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **The distance in units of σ**
+
+$$z = \frac{g - 9.81}{\sigma}$$
+
+One value, 9.845, with three different uncertainties.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎯 **Three verdicts**
+
+- ± 0.005: 6.9σ. A discrepancy that has to be explained
+- ± 0.09: 0.4σ. Agreement
+- ± 0.3: agreement with everything from 9.5 to 10.1. The measurement tests nothing
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The digits follow the uncertainty: 9.845 ± 0.005, 9.84 ± 0.09, 9.8 ± 0.3.</div>
+
+<!--
+Speaker: cover the right-hand side and ask for the verdict in each row. The
+value never changes. Only the middle row is what the nine rows give. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Comparing **Two Numbers**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📐 **Both uncertainties count**
+
+$$z = \frac{|a - b|}{\sqrt{\sigma_a^2 + \sigma_b^2}}$$
+
+| A distance beyond | happens by chance in |
+| --- | --- |
+| 1σ | 32 % of cases, 1 in 3 |
+| 2σ | 4.6 %, 1 in 22 |
+| 3σ | 0.27 %, 1 in 370 |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚛️ **The peak and the world average**
+
+- This course: 1864.47 ± 0.10 MeV/c²
+- Particle Data Group, D⁰ mass: 1864.84 ± 0.05 MeV/c²
+- Difference: 0.37
+- Combined uncertainty: √(0.096² + 0.05²) = 0.108
+- z = 3.4
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+A distance of 3.4σ happens by chance less than once in 1000 cases. Has this course found that the D⁰ mass is wrong?
+
+</div>
+
+<!--
+Speaker: the table is the Gaussian of Lecture 09. Let the question stand for a
+moment before the next slide. Most rooms split between "yes" and "we made a
+mistake". Both miss the third reading. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Kinds of **Uncertainty**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎲 **Statistical**
+
+Scatter from one reading to the next. It falls as 1/√N: four times the data, half the uncertainty. The ± 0.09 of g and the ± 0.10 of the peak are statistical.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧲 **Systematic**
+
+An error that moves all readings the same way. More data does not reduce it. A swing of amplitude θ₀ has the period T₀(1 + θ₀²/16). At 10° every period is 0.19 % too long, and g comes out 0.037 m/s² low.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_concepts_stat_syst.svg" style="display:block;margin:0.6rem auto 0;max-height:235px;">
+
+<div class="note-text mt-sm">With nine rows the statistical part is the larger one. From about 50 rows on the swing angle is, and no number of rows brings the total below 0.037.</div>
+
+<!--
+Speaker: the formula with theta squared over 16 is the first correction to the
+small-angle period. It is stated, not derived. The point is the shape of the
+figure: one line falls, the other does not. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 3.4σ and **No Discovery**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **What the ± 0.10 covers**
+
+How well 84&nbsp;680 candidates fix the centre of the peak. Nothing else.
+
+The mass is computed from measured momenta. If the detector reads every momentum 0.02 % too low, the peak moves down by 0.37 MeV/c²: the whole difference.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **What the file says about the scale**
+
+Nothing. Neither the file nor record 401 gives the uncertainty of the momentum scale.
+
+So the 3.4σ counts the statistical part only. The systematic part is unknown, and may be larger.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+The honest statement: *the peak lies 0.37 MeV/c² (0.02 %) below the world average; the systematic uncertainty of the mass scale is not known.* A result is value ± statistical ± systematic.
+
+</div>
+
+<!--
+Speaker: the 0.02 % is arithmetic, not a statement about LHCb: for fast decay
+products the mass shifts by the scale error times about 1724 MeV. Published
+mass measurements spend most of their pages on exactly this number. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Four Kinds of **Question**
+
+| | **Asks** | **Pendulum** | **LHCb file** |
+| --- | --- | --- | --- |
+| **Describe** | What is in the data? | T grows from 0.90 s to 2.00 s | A peak near 1865 on a flat background |
+| **Explain** | Why? | T² is proportional to ℓ | The peak is a particle, the D⁰ |
+| **Predict** | What will new data show? | ℓ = 1.5 m gives T = 2.45 s | Four times the rows: ± 0.05 |
+| **Decide** | What should be done? | Keep the swing under 5° | Which rows to keep |
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Each row needs more than the one above it: an honest summary, then the other explanations ruled out, then a test on data not used before, then the cost of being wrong. An analysis goes wrong when it answers one kind of question and claims another.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# From Question to **Decision**
+
+<!--
+Speaker: seven steps, each taken for the pendulum and for the LHCb file. Every
+number on these slides has been on the room's own screens before. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The **Loop**
+
+```mermaid {scale: 0.72}
+flowchart LR
+    Q["1 Question"] --> P["2 Plan"] --> D["3 Data"] --> M["4 Model"]
+    M --> R["5 Result"] --> C["6 Checks"] --> X["7 Decision"]
+    X -. next question .-> Q
+```
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔁 **It follows the question**
+
+Lecture 02 followed the data, from collecting to sharing. This loop follows the question. The data is one of its seven stations.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⏱️ **The order is the method**
+
+The plan is written before the data is looked at. The checks are done before the decision is taken.
 
 </div>
 
@@ -1012,41 +394,27 @@ hideInToc: true
 hideInToc: true
 ---
 
-# What the checklist catches · **a documented case**
+# 1 · The **Question**
 
-<span class="def-sub">In 2010 an influential economics paper (Reinhart & Rogoff) linked high public debt to negative growth. A 2013 re-analysis found the result rested on a **spreadsheet error and selective data** — each gap below maps back to a checklist dimension. *(Details simplified; see Herndon, Ash & Pollin 2013.)*</span>
+<div class="grid-2 mt-md gap-md">
 
-<div class="grid-2 gap-md mt-md tidy-cards">
+<div class="card card-primary card-glass pad-compact">
 
-<div class="card card-warning card-glass pad-compact">
+## 🧵 **Pendulum**
 
-## ❓ **Completeness missed**
+Vague: *Does the pendulum work?*
 
-Several countries' high-debt, high-growth years were **left out of the average** — the visible spreadsheet looked complete, but rows were silently excluded.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔗 **Consistency missed**
-
-Countries were weighted inconsistently, so one country's single bad year counted as much as another's two decades of data.
+Sharp: *What is g from the periods of nine lengths, and does it lie within 2σ of 9.81 m/s²?*
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 📐 **Validity missed**
+## ⚛️ **LHCb file**
 
-A formula that was supposed to average a column of countries only spanned **part of the range** — the classic off-by-a-few spreadsheet slip.
+Vague: *What is in the file?*
 
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔄 **Lineage missed**
-
-The spreadsheet was never published with the paper. It took three years — and a graduate student asking for the file — before anyone could see which rows were excluded and why.
+Sharp: *At what mass is the peak of the column M, how wide is it, and how many candidates does it hold?*
 
 </div>
 
@@ -1054,9 +422,7 @@ The spreadsheet was never published with the paper. It took three years — and 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-## 💡 **The lesson**
-
-No single failure was exotic. Each one is on the checklist we just reviewed. **Data quality is not a vibe — it is a list you run.**
+A question is ready when it names the quantity, the comparison, and what will count as an answer. It goes into `README.md` before the first plot. A commit records the date (Lecture 05).
 
 </div>
 
@@ -1064,156 +430,253 @@ No single failure was exotic. Each one is on the checklist we just reviewed. **D
 hideInToc: true
 ---
 
-# Missing-data mechanisms — **why** values are missing
+# 2 · The **Plan**
 
-<span class="def-sub">The *reason* data are missing dictates which imputation and analysis methods are valid: **test** whether they're missing completely at random (MCAR), **assume** missing-at-random (MAR) when justified, and **reason carefully** about missing-not-at-random (MNAR) using domain knowledge.</span>
-
-<div class="miss-row mt-md">
-
-<div class="card card-success card-glass miss-card">
-
-## 🎲 **MCAR**
-
-<span class="def-sub">Missing Completely At Random</span>
-
-<div class="miss-ex">
-
-Independent of everything — observed or not.
-
-- *Ex.:* flaky cable drops sensor readings
-- Dropping rows is **unbiased** (just weaker)
-- Testable (Little's test)
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass miss-card">
-
-## 📊 **MAR**
-
-<span class="def-sub">Missing At Random</span>
-
-<div class="miss-ex">
-
-Depends on *observed* vars, not the missing value.
-
-- *Ex.:* men skip "weight" more; random given gender
-- Dropping rows is **biased**
-- Fix: multiple imputation on covariates
-- Assumed — justify it
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass miss-card">
-
-## 🚨 **MNAR**
-
-<span class="def-sub">Missing Not At Random</span>
-
-<div class="miss-ex">
-
-Depends on the *unobserved* value itself.
-
-- *Ex.:* high earners hide income
-- **No fix from data alone**
-- Needs a missingness model or sensitivity analysis
-- Reason from domain knowledge
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Uncertainty and **inference**
-
-<span class="def-sub">🌡️ `22.3 °C` means nothing without `± 0.2 °C`. Every reported number deserves the same treatment.</span>
-
-<div class="grid-3 gap-sm mt-sm tidy-cards">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📊 **Report uncertainty**
+## 📐 **How precise can one row be?**
 
-CIs, credible intervals, SEs — never a bare point estimate.
+From g = 4π²ℓ/T² and the propagation rule of Lecture 09:
 
-</div>
+$$\frac{\sigma_g}{g} = \sqrt{\left(\frac{\sigma_\ell}{\ell}\right)^2 + \left(\frac{2\,\sigma_T}{T}\right)^2}$$
 
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **Guard against p-hacking**
-
-Pre-register the plan. Don't fish for significance.
+With 0.5 cm on the length and 0.1 s on the stopwatch.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact table-compact">
 
-## 🔢 **Power matters**
+## 🧮 **Three ways to take one row**
 
-Effect size, N, variance — know what you can detect *before* testing.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🔗 **Correlation ≠ causation**
-
-An association alone doesn't prove A causes B; establishing causation needs careful experimental design or dedicated statistical methods (see Lecture 11).
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🧪 **Sensitivity analyses**
-
-Perturb assumptions — does the conclusion survive?
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🎯 **Replicate**
-
-One result is a hint; many are evidence.
+| | Length | Timing | g |
+| --- | --- | --- | --- |
+| 20 cm, 10 swings | 2.5 % | 2.2 % | 3.3 % |
+| 100 cm, 10 swings | 0.5 % | 1.0 % | 1.1 % |
+| 100 cm, 1 swing | 0.5 % | 10 % | 10 % |
 
 </div>
 
 </div>
 
----
-layout: section
-hideInToc: true
----
+<div class="card card-info card-glass pad-compact mt-md">
 
-# The **Lifecycle**
+Decided before anything is measured: time ten swings and not one, prefer long strings, take several lengths. For the file the plan is the window (1820 to 1910 MeV/c²), the bin width (2 MeV/c²) and the model.
+
+</div>
 
 <!--
-Speaker: zoom out from a single dataset to the organisation's view — six
-phases from Plan to Share, what nests inside each, and where each one tends
-to break. Then we zoom back in to the analyst's six-step loop. (~1 min)
+Speaker: ten swings divide the stopwatch error by ten. That is the whole reason
+the table has a column t10 and not T. A plan is an analysis done on paper with
+the numbers one expects. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The data **lifecycle** — six phases
+# 3 · The **Data**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧵 **Pendulum**
+
+- `pendulum_raw.csv`, from a lab partner: semicolons, decimal commas, a row number, a line with the mean
+- Cleaned by hand in Lecture 02 and by script in Lecture 12
+- Nine rows. None was removed for its value
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚛️ **LHCb file**
+
+- Record 401 of the CERN Open Data Portal, licence CC0
+- 91&nbsp;583 rows. 49 carry `TAU = -100`, the mark for a missing value
+- 84&nbsp;680 rows fall into the fit window
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+What was done to the data is part of the result: Lecture 12 showed how a table is audited and cleaned. One thing no cleaning shows: the experiment chose these rows before the file was made.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# 4 · The **Model**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧵 **Pendulum**
+
+$$T^2 = \frac{4\pi^2}{g}\,\ell + b$$
+
+The intercept b allows for a length measured to the wrong point of the bob. The fit gives b = 0.009 ± 0.019 s², an offset of 0.2 ± 0.5 cm: none is seen. Without b the result would be 9.81 ± 0.04. The smaller uncertainty would rest on an assumption.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚛️ **LHCb file**
+
+A Gaussian on a straight line, five parameters.
+
+Gaussian, because the detector smears a sharp mass. The width of 7.65 MeV/c² belongs to the detector, not to the particle.
+
+χ² = 53.4 for 40 degrees of freedom: acceptable, not perfect.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A model is a choice. It is stated with its reason, and it is chosen before the result is known.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# 5 · The **Result**
+
+```md
+g = 9.84 ± 0.09 m/s² (statistical), from a straight-line fit of T² against ℓ
+for nine lengths, with 0.1 s on each time of ten swings.
+
+The K⁻π⁺ mass peak is at 1864.47 ± 0.10 MeV/c² (statistical), with a width
+of 7.65 ± 0.10 MeV/c² and 20 990 ± 280 candidates.
+```
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **A result carries**
+
+- value, uncertainty and unit
+- what kind of uncertainty it is
+- the method, in one line
+- digits that follow the uncertainty
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Not a result**
+
+- `g = 9.844546787796224`: digits without meaning
+- `g = 9.84`: no uncertainty
+- `g ≈ 9.8, as expected`: a verdict in place of a number
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# 6 · The **Checks**
+
+<img class="fig" src="/figures/viz_concepts_checks.svg" style="display:block;margin:0.3rem auto 0;max-height:240px;">
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧵 **The pendulum, five ways**
+
+With and without the intercept, row by row, the short strings alone, the long ones alone. All five agree within their uncertainties.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚛️ **The peak**
+
+First half of the file: 1864.51 ± 0.14. Second half: 1864.43 ± 0.14. Bins of 1 and 3 MeV/c², a wider and a narrower window: the peak moves by less than 0.03.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">A check is another way to the same number that could have failed. The list of checks is written before the result is known.</div>
+
+---
+hideInToc: true
+---
+
+# 7 · The **Decision**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧵 **Pendulum**
+
+9.84 ± 0.09 agrees with 9.81, at 0.4σ. The setup measures g to 0.9 %. It cannot tell the pole (9.83) from the equator (9.78).
+
+**Next question:** what would reach ± 0.01? The same setup needs 730 lengths, and a 10° swing leaves 0.037 whatever their number. So: swings under 5°, and an electronic timer.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚛️ **LHCb file**
+
+The peak sits 0.02 % below the world average of the D⁰ mass. It is the D⁰. The file is fit for exercises in fitting and selection. It is not fit for a measurement of the mass: the systematic uncertainty is unknown.
+
+**Next question:** how well is the momentum scale of the detector known?
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+Each decision raises the next question, and the loop starts again.
+
+</div>
+
+<!--
+Speaker: 730 is 9 times (0.09 / 0.01) squared. Under 5 degrees the swing
+contributes 0.009. Both numbers come from the two slides on uncertainty. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# How Analyses Go **Wrong**
+
+<!--
+Speaker: three ways, each shown on the room's own files. None of them needs a
+programming error or bad intent. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# No Bug **Needed**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="note-text">
-
-A concise six-phase view — easy to remember day-to-day. Most phases expand into sub-stages (next slide); Store is the one that does not.
-
-</div>
+In every case of this section the data is real, the code is correct and the analyst is honest. The result is wrong all the same. What went wrong is the order in which things were done.
 
 </div>
 
@@ -1221,49 +684,25 @@ A concise six-phase view — easy to remember day-to-day. Most phases expand int
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🎯 **Plan**
+## 👀 **Looking until something shows**
 
-question, hypotheses, success metric
+Many looks at noise, and a report on the one look that stood out.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📥 **Acquire**
+## ✂️ **Choosing the data after the result**
 
-sources, access, provenance
+Rows or thresholds picked once it is known what they do to the answer.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 💾 **Store**
+## 🔗 **Reading a correlation as a cause**
 
-formats, versioning, access control
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🔧 **Process**
-
-cleaning, joining, features
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 📊 **Analyse**
-
-explore, model, evaluate
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 📢 **Share**
-
-communicate, operationalise, monitor
+Two columns move together, and one is declared the reason for the other.
 
 </div>
 
@@ -1273,316 +712,466 @@ communicate, operationalise, monitor
 hideInToc: true
 ---
 
-# Nine **sub-stages** — click ▸ to expand
+# One Look, **Twenty Looks**
 
-<div class="grid-3 gap-sm mt-sm stage-grid">
+<div class="grid-2 mt-md gap-md">
 
-<details name="stage" class="card card-primary card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>🎯 Plan</strong> · Problem Framing</span>
-<span class="stage-sub">hypotheses & success metrics</span>
-</summary>
-<div class="stage-ex">
-
-Translate a vague question into a precise one. Define the decision the analysis must support, the success metric, and what would falsify your hypothesis **before** touching data.
-
-</div>
-</details>
-
-<details name="stage" class="card card-secondary card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>🔍 Acquire</strong> · Data Discovery</span>
-<span class="stage-sub">access & quality assessment</span>
-</summary>
-<div class="stage-ex">
-
-Find sources, negotiate access, document provenance, and check coverage, freshness, and completeness against the question you framed.
-
-</div>
-</details>
-
-<details name="stage" class="card card-accent card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>🧹 Process</strong> · Preparation</span>
-<span class="stage-sub">cleaning, joining, features</span>
-</summary>
-<div class="stage-ex">
-
-Fix types, units, duplicates, missing values; join tables on stable keys; engineer features that encode domain knowledge. Usually the biggest chunk of work.
-
-</div>
-</details>
-
-<details name="stage" class="card card-info card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>📊 Analyse</strong> · Exploration</span>
-<span class="stage-sub">profiling, viz, sanity checks</span>
-</summary>
-<div class="stage-ex">
-
-Plot distributions, scan outliers, check expected relationships. Build intuition and catch data problems *before* modelling, not after.
-
-</div>
-</details>
-
-<details name="stage" class="card card-success card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>🧪 Analyse</strong> · Modelling</span>
-<span class="stage-sub">statistical tests & ML</span>
-</summary>
-<div class="stage-ex">
-
-Match the model to the question (descriptive / predictive / causal). Start simple; add complexity only when it earns its keep. Cross-validate honestly.
-
-</div>
-</details>
-
-<details name="stage" class="card card-warning card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>✅ Analyse</strong> · Evaluation</span>
-<span class="stage-sub">validation, uncertainty</span>
-</summary>
-<div class="stage-ex">
-
-Quantify uncertainty (CIs, bootstraps), run sensitivity analyses, compare against a baseline. A model that can't beat a trivial baseline isn't a finding.
-
-</div>
-</details>
-
-<details name="stage" class="card card-primary card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>📢 Share</strong> · Communication</span>
-<span class="stage-sub">narrative, visuals, decisions</span>
-</summary>
-<div class="stage-ex">
-
-Lead with the decision, not the method. Visuals carry the argument; technical detail goes in the appendix. Audience first, rigour always.
-
-</div>
-</details>
-
-<details name="stage" class="card card-secondary card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>⚙️ Share</strong> · Operationalisation</span>
-<span class="stage-sub">notebooks, scripts, pipelines</span>
-</summary>
-<div class="stage-ex">
-
-Turn a one-off into something reproducible: versioned code, pinned environments, scheduled pipelines. Future you must be able to re-run it.
-
-</div>
-</details>
-
-<details name="stage" class="card card-accent card-glass stage-card">
-<summary>
-<span class="stage-title"><strong>📡 Share</strong> · Monitoring</span>
-<span class="stage-sub">drift, quality, impact</span>
-</summary>
-<div class="stage-ex">
-
-Data and the world change. Watch for input drift, model decay, and whether the decisions the analysis informs actually produce the expected impact.
-
-</div>
-</details>
-
-</div>
-
-<style scoped>
-.stage-grid {
-  align-items: start;
-  grid-auto-rows: min-content;
-}
-.stage-grid .stage-card.card {
-  padding: 0.45rem 0.8rem !important;
-  font-size: 0.85em;
-  line-height: 1.3;
-  cursor: pointer;
-  user-select: none;
-  transition: box-shadow 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
-}
-.stage-grid .stage-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-  filter: brightness(1.08);
-}
-.stage-grid .stage-card > summary {
-  list-style: none;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.stage-grid .stage-card > summary::-webkit-details-marker { display: none; }
-.stage-grid .stage-card > summary::after {
-  content: "▸";
-  font-size: 0.85em;
-  opacity: 0.7;
-  flex: 0 0 auto;
-  transition: transform 0.25s ease;
-  align-self: flex-start;
-}
-.stage-grid .stage-card[open] > summary::after {
-  transform: rotate(90deg);
-  opacity: 1;
-}
-.stage-grid .stage-card[open] {
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.55), 0 8px 24px rgba(0,0,0,0.35);
-  transform: translateY(-2px);
-  z-index: 2;
-}
-.stage-grid .stage-title {
-  display: inline;
-  flex: 1 1 auto;
-}
-.stage-grid .stage-sub {
-  display: block;
-  order: 3;
-  flex: 1 0 100%;
-  font-size: 0.88em;
-  opacity: 0.7;
-  margin-top: 0.1rem;
-}
-.stage-grid .stage-ex {
-  font-size: 0.92em;
-  line-height: 1.35;
-  margin-top: 0.35rem;
-  padding-top: 0.35rem;
-  border-top: 1px solid rgba(255,255,255,0.15);
-}
-</style>
-
----
-hideInToc: true
----
-
-# Governance overlays **every stage**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔒 Security, privacy, compliance, and ethics checks
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📝 Documentation and lineage updates
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## ✅ Quality gates and automated tests
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🔄 Feedback loops from stakeholders and end users
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Where each phase tends to **break**
-
-<span class="def-sub">Every phase has a signature failure mode. Name them now, before we zoom into the analytical steps — that way, each later concept slots into the phase it protects.</span>
-
-<div class="grid-3 gap-md mt-md tidy-cards">
+<div>
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📋 **Plan**
+## 🎲 **Suppose nothing is there**
 
-**Risk:** wrong question. Fluent answer to a question no one asked. *Symptom:* no clear decision downstream.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📥 **Acquire**
-
-**Risk:** sampling & selection bias. *Symptom:* the sample silently excludes the people your conclusion is about.
+- One look: a result beyond 2σ with probability 0.05
+- $k$ independent looks all stay quiet: $0.95^k$
+- At least one alarm: $1 - 0.95^k$
+- Twenty looks: $1 - 0.95^{20} = 0.64$
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact mt-md">
 
-## 🗄️ **Store**
+## 🖥️ **Checked by simulation**
 
-**Risk:** silent schema drift. *Symptom:* a column changes meaning mid-pipeline and no one notices for months.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🛠️ **Process**
-
-**Risk:** data leakage. *Symptom:* information from the test set sneaks into training via scaling, joins, or time-travel bugs.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 📊 **Analyse**
-
-**Risks:** overfitting & p-hacking. *Symptoms:* perfect training accuracy; the "significant" finding vanishes on replication.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 📢 **Share**
-
-**Risk:** misinterpretation. *Symptom:* a confidence interval becomes a headline number; caveats disappear downstream.
+10&nbsp;000 runs of 20 looks at pure noise: 64.5 % of the runs had an alarm.
 
 </div>
 
 </div>
 
----
-layout: section
-hideInToc: true
----
+<div>
 
-# Steps of Data **Analysis**
+<img class="fig" src="/figures/viz_concepts_looks.svg" style="display:block;margin:0 auto;width:100%;">
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">A look is anything that could have produced a finding: another column, another subgroup, another threshold, another bin width, another week of data.</div>
 
 <!--
-Speaker: transition — we've built the mental model; now zoom into the analytical
-loop itself. Six concrete steps: Define, Collect, Clean, Analyse, Visualise,
-Interpret. "Define" is where most analyses are won or lost. (~1 min)
+Speaker: derive it on the board. The room knows from Lecture 09 that 95 % of a
+Gaussian lies within 1.96 sigma, called 2 sigma here. The only new step is
+multiplying 0.95 by itself. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The six-step **loop** at a glance
+# Twenty Groups, **Drawn by Lot**
 
-```mermaid {scale: 0.9}
-%%{init: {'flowchart': {'nodeSpacing': 35, 'rankSpacing': 40}}}%%
+<img class="fig" src="/figures/viz_concepts_twenty_groups.svg" style="display:block;margin:0.3rem auto 0;max-height:255px;">
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⚛️ **The LHCb file, split at random**
+
+Every row gets a number from 1 to 20 from a random generator. The peak is fitted in each group. Group 8 lies 2.6σ below the rest, group 3 lies 2.0σ above. Nothing sets these rows apart. The lot did it.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💊 **The same in a hospital**
+
+ISIS-2 (1988): aspirin after a heart attack, 17&nbsp;187 patients. It worked. Split by star sign, it did not work for Gemini and Libra. The authors printed this as a warning against subgroup findings.
+
+</div>
+
+</div>
+
+<!--
+Speaker: seed 14, chosen before the figure was made. With twenty groups one
+expects one beyond 2 sigma. A report on "group 8" would be a report on the
+random generator. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Stopping When It **Looks Good**
+
+<img class="fig" src="/figures/viz_concepts_stopping.svg" style="display:block;margin:0.3rem auto 0;max-height:300px;">
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+The true g is 9.81. Each timing gives one value. An analyst tests after every timing, from the 5th to the 100th, and stops at the first result beyond 2σ. Of 10&nbsp;000 simulated analysts, **30.9 %** stop with a discrepancy. Of those who test once, at the 100th timing, **4.7 %** find one.
+
+</div>
+
+<div class="note-text mt-sm">The number of measurements is fixed before the first one. So is the moment of the test.</div>
+
+<!--
+Speaker: the red lines are three analysts who stopped. The faint continuation
+shows where each would have gone: two of the three come back inside. The grey
+ones never crossed. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Bump at **750 GeV**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📈 **December 2015**
+
+ATLAS and CMS show their first data at 13 TeV. Both see more pairs of photons than expected near a mass of 750 GeV.
+
+ATLAS: 3.9σ at that mass. Counting every mass and width at which a bump could have appeared: 2.1σ.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📉 **August 2016**
+
+Several hundred theory papers have explained the new particle.
+
+Both experiments show about four times more data. The excess is gone.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The 3.9σ is the **local** significance: one look. The 2.1σ is the **global** one: all the looks that were taken. Particle physics reports both, and asks for 5σ before it writes *observed*.
+
+</div>
+
+<!--
+Speaker: nobody did anything wrong here. Both collaborations reported the
+global number from the first day. The lesson is why the threshold is 5 sigma
+and why there are two experiments. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Dropping **Two Rows**
+
+<img class="fig" src="/figures/viz_concepts_drop_two.svg" style="display:block;margin:0.3rem auto 0;max-height:290px;">
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+All nine rows give 9.84 ± 0.09. Suppose two rows "look wrong" and are dropped. There are 36 ways to drop two of nine, and g then lies between 9.76 and 9.91. An analyst who expects 9.81 drops 20 and 80 cm and writes *in excellent agreement*. Their pulls were 0.1 and −0.4: nothing was wrong with them.
+
+</div>
+
+<div class="note-text mt-sm">A row is removed for a reason that was written down before the result was known.</div>
+
+---
+hideInToc: true
+---
+
+# 120 Ways to **Select Rows**
+
+<img class="fig" src="/figures/viz_concepts_selections.svg" style="display:block;margin:0.3rem auto 0;max-height:285px;">
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+Three thresholds on the LHCb file, each one reasonable: PT above a value, IPCHI2 below, TAU above. 6 × 5 × 4 = 120 selections. The peak moves from 1864.22 to 1864.65. Against the world average that is anything from 5.3σ, *a discrepancy*, to 1.2σ, *agreement*. Each of the 120 can be defended afterwards.
+
+</div>
+
+<div class="note-text mt-sm">The spread of 0.44 is four times the statistical uncertainty: a systematic effect to be understood, not a menu.</div>
+
+<!--
+Speaker: a threshold is a mask, as in Lecture 07. The trend is real: a higher
+PT threshold lowers the peak. That is physics of the detector, and exactly the
+kind of thing a selection chosen after the fact hides. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Decide Before You **Look**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📝 **Write it down first**
+
+Question, rows, model, number of measurements, checks: in the README, committed before the data is opened. The commit carries the date.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🙈 **Blind analysis**
+
+LHC experiments hide the region where the signal would be until the selection and the fit are fixed and reviewed. Only then is it opened.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔢 **Count the looks**
+
+Report how many selections, groups and columns were tried, not only the one that stood out. With many looks, 2σ is expected.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚖️ **Check both ways**
+
+A surprising result is checked until an error turns up. A welcome one is not checked. Both habits pull the result towards what was expected.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Medicine has the same rule: a clinical trial is registered, with what it will measure, before the first patient. Leading journals have required this since 2005.</div>
+
+<!--
+Speaker: Feynman's example for "check both ways", from the address quoted at
+the start: after Millikan, measured values of the electron charge crept towards
+the right one over years. Each group checked harder when its number was far
+from Millikan's. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Columns That **Move Together**
+
+<div class="grid-2 mt-md gap-md">
+
+<div>
+
+<img class="fig" src="/figures/viz_concepts_tau_ipchi2.svg" style="display:block;margin:0 auto;width:100%;">
+
+</div>
+
+<div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⚛️ **In the LHCb file**
+
+A longer decay time goes with a larger IPCHI2: the candidate points back to the collision less well. The rank correlation is 0.40 over 91&nbsp;534 rows.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🤔 **Two readings**
+
+1. A long flight spoils the pointing
+2. Something else produces both. Here something does: a D⁰ born in the decay of a heavier particle starts away from the collision. Its decay time, counted from the collision, comes out too long, and it does not point back
+
+</div>
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The two columns cannot tell the readings apart. Knowledge of how the data came to be can.</div>
+
+<!--
+Speaker: rank correlation is the correlation of Lecture 09 computed on the
+positions of the rows when sorted by each column. It is used here because both
+columns have long tails. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Table That **Reverses**
+
+| **Success** | **A** · open surgery | **B** · through the skin |
+| --- | --- | --- |
+| Small stones | 81 of 87 · **93 %** | 234 of 270 · 87 % |
+| Large stones | 192 of 263 · **73 %** | 55 of 80 · 69 % |
+| All patients | 273 of 350 · 78 % | 289 of 350 · **83 %** |
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+Two treatments for kidney stones (Charig and colleagues, *BMJ*, 1986). A is better for small stones and better for large stones. B is better overall. Doctors gave A to the hard cases: 263 of its 350 patients had large stones, against 80 of 350 for B. The size of the stone drives both the choice of treatment and the outcome.
+
+</div>
+
+<div class="note-text mt-sm">A third quantity that drives both columns is a <strong>common cause</strong>. The reversal is known as Simpson's paradox.</div>
+
+<!--
+Speaker: let the room check one row of percentages by hand. Then ask which
+treatment they would choose. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What Allows the Word **Cause**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🔧 **An experiment**
+
+With the pendulum the length was set by hand, and nothing else was changed. The period followed. *The length determines the period* is allowed.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 👁️ **An observation**
+
+In the LHCb file and in the hospital records nobody set anything. The rows are what happened, and what was kept.
+
+</div>
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+Before a correlation is read as a cause, three other readings are ruled out:
+
+- **Chance**: how many pairs of columns were tried?
+- **A common cause**: the size of the stone, the origin of the D⁰
+- **Selection**: the rows were kept in a way that depends on both columns
+
+</div>
+
+<div class="note-text mt-sm">Where an experiment is possible, a coin decides who gets which treatment. Then nothing can drive both the choice and the outcome.</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Working with **Others**
+
+<!--
+Speaker: everything in the last section is easier to see in someone else's
+work than in one's own. That is the reason for review. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What the Author **Cannot See**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **The author**
+
+- knows what the script was meant to do
+- has every file in the right place, on one laptop
+- has read the report ten times, and reads what was meant
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👓 **A second person finds**
+
+- a step that exists only in the author's head: the README does not rebuild the result
+- an assumption that was never written down
+- a sentence that claims more than the number supports
+- a choice made after the result was known
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A review is not an examination of the author. It tests whether the work stands without the author in the room.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# A Result at an **LHC Experiment**
+
+```mermaid {scale: 0.72}
 flowchart LR
-    Def["1 Define"]:::input --> Col["2 Collect"]:::process
-    Col --> Cln["3 Clean"]:::process
-    Cln --> Ana["4 Analyse"]:::process
-    Ana --> Vis["5 Visualise"]:::output
-    Vis --> Int["6 Interpret"]:::output
-    Int -.dead end?.-> Def
-
-    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
-    classDef process fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
-    classDef output fill:#063c34,stroke:#34d399,color:#d1fae5
+    N["Analysis note"] --> W["Working group"] --> R["Review committee"]
+    R --> C["Whole collaboration"] --> J["Journal referees"]
 ```
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="grid-3 mt-md gap-md">
 
-**Not a line — a loop.** A dead end at any step sends you back to **Define**, not forward. First a toy example, then the six steps in detail.
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The note**
+
+Every selection, fit, check and number, written down, with the code.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👥 **Three rounds inside**
+
+The working group. A few appointed members who did not do the analysis. Then every member of the collaboration may comment.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📰 **Then outside**
+
+The referees of the journal come last. From the first note to the paper: many months, often more than a year.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The names of the stages differ between ATLAS, CMS, LHCb and ALICE. The order does not. In a blind analysis the signal region is opened only after the method has passed review.</div>
+
+---
+hideInToc: true
+---
+
+# Review and **Repetition**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **Review**
+
+Someone reads the analysis and runs it again. It finds what is wrong in the work as it stands.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **Independent analysis**
+
+Someone does it again from the raw data, with other code. It finds what no reader can: an error that sits in the script itself. ATLAS and CMS exist as a pair for this reason (Lecture 02).
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+## 🧵 **OPERA, 2011**
+
+Neutrinos sent from CERN to Gran Sasso, 730 km away, arrived 60 ns earlier than light would. The collaboration published the number and asked others to check it. In 2012 a loose fibre-optic connector was found in the timing system.
 
 </div>
 
@@ -1590,519 +1179,89 @@ flowchart LR
 hideInToc: true
 ---
 
-# Miniature end-to-end · **Do students prefer coffee A or B?**
+# A Review **Checklist**
 
-<span class="def-sub">Here is the whole loop in one toy example — the six detailed steps follow.</span>
-
-<div class="grid-3 gap-md mt-md tidy-cards">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 1️⃣ **Define**
+## 🔨 **Rebuild**
 
-*"Should the café stock A or B?"* — decision: which beans to order next month. Metric: preference rate. Threshold: call a winner if the gap > 10 pp.
+1. Does the README say where the data came from?
+2. Does one command rebuild every number and figure on my laptop?
+3. Do the rebuilt numbers equal those in the report?
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 2️⃣ **Collect**
+## 🗂️ **Data**
 
-Blind taste test, 100 volunteers, randomised cup order. Log preference + year-of-study as covariate.
+4. Is `data/raw` untouched?
+5. Is every removed or changed row listed, with a reason?
+6. Are the columns and their units written down?
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 3️⃣ **Clean**
+## 📐 **Method**
 
-Check the log before counting: no dropouts, no year-of-study bias, every row has a preference and a cup order.
+7. Is the question stated, and was it fixed before the result?
+8. Does every result have an uncertainty, and is its kind named?
+9. Is there a check that could have failed?
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## 4️⃣ **Analyse**
+## 📄 **Report**
 
-Tabulate: 65 prefer A, 35 prefer B. Binomial test vs a 50/50 null: *p* ≈ 0.003; 95 % CI for A: 55–74 %.
+10. Do the figures have axis labels with units?
+11. Does the conclusion claim no more than the numbers support?
+12. Are sources, data and tools named?
+
+</div>
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<!--
+Speaker: twelve questions, each answered with yes, no or "could not tell".
+Questions 2 and 3 take the most time and find the most. (~2 min)
+-->
 
-## 5️⃣ **Visualise & Interpret**
+---
+hideInToc: true
+---
 
-*"A wins 65 % vs 35 %, CI 55–74 %. Gap exceeds threshold — order A."* One sentence, one number, one decision.
+# A Report, **Reviewed**
 
-</div>
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact">
 
-## 6️⃣ **What could still go wrong?**
+## 📄 **`results/report.md`**
 
-Sample of 100 ≠ all students. Taste may vary by time of day. Next iteration: repeat across shifts before locking in.
+```md
+## Result
 
-</div>
+The rows at 20 cm and 80 cm were
+outliers and were removed.
 
-</div>
-
-*The formal statistical test behind step 4 — and what a p-value and confidence interval actually mean — is covered in Lecture 11. Focus here on the logic: is the difference big enough to trust?*
-
----
-hideInToc: true
----
-
-# 1. **Define** — turn a goal into an answerable question
-
-<span class="def-sub">The lifecycle (Plan → Share) is the *organisation's* view. The six-step loop is the *analyst's* view of one pass through it — the loop that turns a raw dataset into an answered question.</span>
-
-<div class="stack-tight dd-stack mt-md">
-
-<details name="s1" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🎯 Name the <strong>decision</strong> the analysis must support</span></summary>
-<div class="dd-body">
-
-Who will act on the result, on what timeline, and what changes if the answer flips? An analysis with no downstream decision is a hobby, not work.
+g = 9.81 m/s², in excellent
+agreement with the expected value.
+```
 
 </div>
-</details>
-
-<details name="s1" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">📐 Make it <strong>SMART</strong> — specific, measurable, achievable, relevant, time-bound</span></summary>
-<div class="dd-body">
-
-"Is it getting better?" → "Did mean API latency drop by ≥ 10% in Q1 vs Q4, for EU users?" A good question names the metric, the population, and the comparison.
-
-</div>
-</details>
-
-<details name="s1" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">🧪 Pre-commit to a success threshold, null hypothesis, stopping rule</span></summary>
-<div class="dd-body">
-
-Decide what "success" means *before* you see the data. Otherwise the threshold quietly slides to wherever the result happens to land — and you've written fiction.
-
-</div>
-</details>
-
-<details name="s1" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">⚠️ Feasibility check — can data that exists (or could exist) actually answer this?</span></summary>
-<div class="dd-body">
-
-The most expensive mistake is solving the wrong problem faster. If the data to answer the question doesn't exist and can't be collected, reframe the question before writing a line of code.
-
-</div>
-</details>
-
-</div>
-
----
-hideInToc: true
----
-
-# 2. **Collect** — sourcing, not just downloading
-
-<div class="grid-2 gap-md dd-stack mt-md">
-
-<details name="s2" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🧭 Primary vs secondary · observational vs experimental</span></summary>
-<div class="dd-body">
-
-Experimental data (you control the treatment) lets you claim *causation*. Observational data can usually only support *association*. Know which you have before you write the conclusion.
-
-</div>
-</details>
-
-<details name="s2" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">🎲 Sampling strategy defines what you can generalise to</span></summary>
-<div class="dd-body">
-
-Random, stratified, cluster, convenience — each yields a different inference scope. A convenience sample of engineers doesn't tell you about all users, no matter how large.
-
-</div>
-</details>
-
-<details name="s2" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">📜 Provenance — who produced it, when, how, under what licence</span></summary>
-<div class="dd-body">
-
-A dataset without lineage is a liability, not an asset. Record source, retrieval date, version, licence, and any pre-processing done upstream before it reaches you.
-
-</div>
-</details>
-
-<details name="s2" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">✅ Validate at ingestion — schema, ranges, freshness, row counts</span></summary>
-<div class="dd-body">
-
-Catch breakage at the door, not three notebooks deep. A short contract (expected columns, dtypes, min/max, row-count bounds) that fails loudly saves hours of detective work later.
-
-</div>
-</details>
-
-<details name="s2" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">⚠️ Selection & survivorship bias enter <strong>here</strong></span></summary>
-<div class="dd-body">
-
-No cleaning step downstream can undo a biased sample. If the data-generating process systematically omits cases, your model inherits that blind spot — often invisibly.
-
-</div>
-</details>
-
-</div>
-
----
-hideInToc: true
----
-
-# 3. **Clean** — often the biggest time sink
-
-<div class="grid-2 gap-md dd-stack mt-md">
-
-<details name="s3" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🔧 Structural fixes — types, units, encodings, duplicates, timezones</span></summary>
-<div class="dd-body">
-
-Silent coercions are the enemy: `"NA"` parsed as a string, floats truncated to ints, timestamps silently shifted by a timezone. Assert your assumptions; don't trust the reader.
-
-</div>
-</details>
-
-<details name="s3" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">❓ Missing values — MCAR / MAR / MNAR → drop, impute, or flag</span></summary>
-<div class="dd-body">
-
-The *mechanism* dictates the treatment. Missing at random → imputation is usually fine. Missing because of the value itself (MNAR) → imputation can bias results; often better to flag and model explicitly.
-
-</div>
-</details>
-
-<details name="s3" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">🎯 Outliers — error or signal?</span></summary>
-<div class="dd-body">
-
-Never auto-delete. An outlier might be the most informative row in the table (a fraud case, a rare event, a sensor miscalibration). Investigate, then decide — and document the decision.
-
-</div>
-</details>
-
-<details name="s3" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">🔗 Joins — check key quality, cardinality, and orphan rows</span></summary>
-<div class="dd-body">
-
-A silent many-to-many join can inflate counts by 10×. Always verify expected cardinality (1:1, 1:N, N:1) and count orphans on both sides before and after joining.
-
-</div>
-</details>
-
-<details name="s3" class="dd-card card card-success card-glass">
-<summary><span class="dd-title">📝 Record every transformation — script it, don't click it</span></summary>
-<div class="dd-body">
-
-If a cleaning step only lives in your head (or in Excel history), it isn't reproducible. A versioned script is the only artefact that lets future-you — or anyone else — rerun the analysis.
-
-</div>
-</details>
-
-</div>
-
----
-hideInToc: true
----
-
-# 4. **Analyse** — start simple, earn complexity
-
-<div class="grid-2 gap-md dd-stack mt-md">
-
-<details name="s4" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🔍 Exploratory Data Analysis (EDA) first — distributions, pairwise relationships, drift over time</span></summary>
-<div class="dd-body">
-
-Before any model: look. **Exploratory Data Analysis (EDA)** means profiling the data with summary stats and plots to build intuition and spot problems. Most "surprising" model results are data problems in disguise — a leaking feature, a timezone bug, a duplicated cohort. EDA catches these before they embarrass you. (Choosing and reading those plots is the focus of Lecture 10; here the point is simply to look before you model.)
-
-</div>
-</details>
-
-<details name="s4" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">🎯 Match the method to the question</span></summary>
-<div class="dd-body">
-
-Descriptive, inferential, predictive, and causal questions each need different tools. A hypothesis test is not a forecast; a random-forest accuracy is not a causal effect. Pick the right family first.
-
-</div>
-</details>
-
-<details name="s4" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">📊 Always fit a <strong>baseline</strong> before anything clever</span></summary>
-<div class="dd-body">
-
-Mean, last-value, logistic regression. If a deep model can't beat a trivial baseline by a meaningful margin, it's not ready to ship — and the gap itself tells you where the signal actually lives.
-
-</div>
-</details>
-
-<details name="s4" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">📐 Quantify uncertainty — CIs, bootstraps, sensitivity runs</span></summary>
-<div class="dd-body">
-
-A point estimate without a range is half an answer. Report intervals, re-run under plausible perturbations of assumptions, and tell the reader how stable the conclusion is.
-
-</div>
-</details>
-
-<details name="s4" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">⚠️ Watch for leakage, p-hacking, overfitting</span></summary>
-<div class="dd-body">
-
-Leakage: future information sneaking into training. P-hacking: testing until something is "significant". Overfitting: memorising the training set. Hold-out sets, cross-validation, and pre-registered analyses are your defence.
-
-</div>
-</details>
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="You fit a model with 50 parameters to 60 data points and get 99.9 % accuracy on your TRAINING set. What should you conclude from that number alone?"
-  :options="[
-    'The model works — high training accuracy proves it',
-    'Almost nothing — with so many parameters, memorising the training data is expected; only held-out data can tell you if it generalises',
-    'The model must be underfitting',
-    'Training accuracy is the only metric that matters'
-  ]"
-  :correct="1"
-  explanation="With nearly as many parameters as data points, a model can memorise the training set and score ~100 % without learning anything generalisable — classic overfitting. Training accuracy alone is uninformative; you must evaluate on a held-out test set (or via cross-validation)."
-/>
-
----
-hideInToc: true
----
-
-# 5. **Visualise** — design for the decision, not the data
-
-<span class="def-sub">Chart design is the focus of Lecture 10; the principle here is to choose the chart *after* you know your audience and message.</span>
-
-<div class="stack-tight dd-stack mt-md">
-
-<details name="s5" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">👥 Audience → 💬 Message → 🎨 Encoding (in that order)</span></summary>
-<div class="dd-body">
-
-Pick the chart last; it's a consequence of the first two choices. A chart built around "what does pandas plot by default?" is almost never the right one.
-
-</div>
-</details>
-
-<details name="s5" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">1️⃣ One chart, one idea — annotate the takeaway on the figure</span></summary>
-<div class="dd-body">
-
-If the reader needs the caption to understand the point, redesign. Title as takeaway ("Latency dropped 14% after the rollout"), caption as why and how.
-
-</div>
-</details>
-
-<details name="s5" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">✂️ Remove everything that doesn't support the message</span></summary>
-<div class="dd-body">
-
-Truncated axes, rainbow palettes, 3D effects, excess gridlines, redundant legends — default to less. Honest design is usually minimal design.
-
-</div>
-</details>
-
-<details name="s5" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">♿ Accessibility — colour-safe, readable at projector resolution</span></summary>
-<div class="dd-body">
-
-Test in greyscale; test from the back row. Use colour-blind-safe palettes (viridis, Okabe-Ito), 14pt+ axis labels, and never rely on colour alone to encode meaning.
-
-</div>
-</details>
-
-</div>
-
-
----
-hideInToc: true
----
-
-# 6. **Interpret & Report** — land the decision
-
-<div class="grid-2 gap-md dd-stack mt-md">
-
-<details name="s6" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🎯 Conclude honestly — no more than the data supports</span></summary>
-<div class="dd-body">
-
-State the finding, the effect size, and the uncertainty. Resist the temptation to round a nuanced result into a bold headline; overclaiming is how trust dies.
-
-</div>
-</details>
-
-<details name="s6" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">🔗 Tie to decisions — findings → actions → risks</span></summary>
-<div class="dd-body">
-
-Every finding should end with "…therefore we should". Name the action, who owns it, and what could go wrong if the analysis is partially right or fully wrong.
-
-</div>
-</details>
-
-<details name="s6" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">❓ Name the limitations — prominently, not buried</span></summary>
-<div class="dd-body">
-
-Sample scope, missing confounders (unmeasured variables that influence both the predictor and the outcome), assumptions that could fail. Put them where the reader will see them; a caveat in the appendix doesn't count.
-
-</div>
-</details>
-
-<details name="s6" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">📏 Plan measurement — how will we know we were right?</span></summary>
-<div class="dd-body">
-
-Define the follow-up metric and cadence *before* the decision is made. "We'll review the launch impact on DAU at T+30 days against this baseline" — not "we'll see how it goes".
-
-</div>
-</details>
-
-<details name="s6" class="dd-card card card-success card-glass">
-<summary><span class="dd-title">📦 Package for reuse — others must be able to rerun tomorrow</span></summary>
-<div class="dd-body">
-
-Versioned code, pinned environment, seeded randomness, a README naming inputs and outputs. Reproducibility is the minimum bar; reuse is the bonus.
-
-</div>
-</details>
-
-</div>
-
----
-hideInToc: true
----
-
-# Communication **artefacts** — pick the right one
-
-<div class="grid-2 gap-md dd-stack mt-md">
-
-<details name="artefact" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">📄 Executive summary</span></summary>
-<div class="dd-body">
-
-One page for busy stakeholders: the question, the answer, the confidence, the recommended action. No methods, no caveats-by-weight — just the decision they need to make.
-
-</div>
-</details>
-
-<details name="artefact" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">📋 Decision memo</span></summary>
-<div class="dd-body">
-
-Options considered, trade-offs, recommendation. Written for a reader who must *choose*, not just be informed. Structure: context → options → recommendation → risks.
-
-</div>
-</details>
-
-<details name="artefact" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">📊 Dashboard</span></summary>
-<div class="dd-body">
-
-For ongoing monitoring and self-service. Works when the question repeats and the metric is stable. Bad fit for one-off decisions — a dashboard built for a single question becomes stale on day two.
-
-</div>
-</details>
-
-<details name="artefact" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">📓 Reproducible notebook</span></summary>
-<div class="dd-body">
-
-End-to-end analysis for peers who will read, re-run, and critique the work. Narrative + code + output interleaved. The right artefact when the *how* matters as much as the *what*.
-
-</div>
-</details>
-
-<details name="artefact" class="dd-card card card-success card-glass">
-<summary><span class="dd-title">🔬 Technical appendix</span></summary>
-<div class="dd-body">
-
-Methods, assumptions, derivations, audit trail. Attached to a summary or memo, read by the few who need to verify. It's where nuance lives without cluttering the headline.
-
-</div>
-</details>
-
-<details name="artefact" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">📜 Scripts & packages</span></summary>
-<div class="dd-body">
-
-For automation and reuse: the analysis as a versioned, importable unit that a pipeline or a colleague can call. The right artefact when the same question will be asked again next month.
-
-</div>
-</details>
-
-<details name="artefact" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🧪 Experiments</span></summary>
-<div class="dd-body">
-
-A/B tests, controlled trials, blind analyses. The only artefact that supports a *causal* claim — the deliverable is the design and its pre-registered decision rule, not a chart.
-
-</div>
-</details>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-<div class="note-text">
-
-#### 💡 Match the artefact to the **audience** and the **decision horizon** — not to what's easiest to produce
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Flavours × Steps · **which step produces which insight**
-
-<span class="def-sub">The four analytics flavours aren't independent paths — they are what the same six-step loop *yields* when the Define step points at a different kind of decision.</span>
-
-<div class="grid-2 gap-md mt-md tidy-cards">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📊 **Descriptive** — "what happened?"
+## 👓 **The review**
 
-The work lives in **Analyse (EDA)** (summary stats, plots) and **Visualise & Interpret** (dashboards). Modelling is minimal. *Output:* a faithful rear-view mirror.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔍 **Diagnostic** — "why did it happen?"
-
-Most of the effort goes into **Analyse (EDA)** (segmentation, cohort comparison) and **Analyse (modelling)** (regression on drivers). *Output:* named contributors to the outcome.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🔮 **Predictive** — "what happens next?"
-
-Quality hinges on **Collect** (the right features, honest splits) and **Analyse (modelling)** (out-of-sample validation). *Output:* a forecast with an uncertainty band — never a single number.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🎛️ **Prescriptive / causal** — "what should we do?"
-
-The decisive steps are **Define** (intervention + counterfactual) and **Analyse (modelling)** (causal identification). *Output:* an action with an expected effect size.
+1. **Must fix.** I ran `scripts/fit_g.py`: 9.84 ± 0.09, from all nine rows. The script removes no row. The 9.81 cannot be rebuilt
+2. **Must fix.** The pulls of the two rows are 0.1 and −0.4. The largest in the table is −0.9. Why are they outliers?
+3. **Must fix.** No uncertainty. With seven rows I get ± 0.12
+4. **Question.** *Excellent agreement*, at ± 0.12?
 
 </div>
 
@@ -2110,186 +1269,7 @@ The decisive steps are **Define** (intervention + counterfactual) and **Analyse 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-## 💡 **The takeaway**
-
-Same six steps, four different centres of gravity. "What kind of analysis is this?" is really asking "**which step is doing the work?**"
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Tools & **Collaboration**
-
-<!--
-Speaker: pivot from the how-to to the ecosystem — the stack, the roles, the
-rituals. Emphasise tool-agnosticism: the concepts outlive any single tool, and
-no single role sees the whole pipeline. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Modern analytics **stack**
-
-<div class="stack-loop mt-md">
-
-<div class="pipe-step card card-primary card-glass">
-<div class="pipe-head">📡 <strong>1. Sources</strong></div>
-<div class="pipe-sub">where the raw data originates</div>
-<ul class="pipe-list">
-<li>sensors & instruments</li>
-<li>web / app APIs</li>
-<li>operational databases</li>
-<li>experiments, surveys</li>
-</ul>
-</div>
-
-<div class="pipe-step card card-secondary card-glass">
-<div class="pipe-head">📥 <strong>2. Ingestion</strong></div>
-<div class="pipe-sub">move, schedule, validate</div>
-<ul class="pipe-list">
-<li>ETL / ELT pipelines</li>
-<li>streaming (Kafka, Kinesis)</li>
-<li>schema & freshness checks</li>
-</ul>
-</div>
-
-<div class="pipe-step card card-accent card-glass">
-<div class="pipe-head">💾 <strong>3. Storage</strong></div>
-<div class="pipe-sub">durable, queryable, governed</div>
-<ul class="pipe-list">
-<li>data lakes (S3, GCS)</li>
-<li>warehouses (BigQuery, Snowflake)</li>
-<li>lineage & access control</li>
-</ul>
-</div>
-
-<div class="pipe-step card card-info card-glass">
-<div class="pipe-head">💻 <strong>4. Compute</strong></div>
-<div class="pipe-sub">where analysis actually runs</div>
-<ul class="pipe-list">
-<li>notebooks & scripts</li>
-<li>distributed clusters (Spark)</li>
-<li>cloud / HPC jobs</li>
-</ul>
-</div>
-
-<div class="pipe-step card card-success card-glass">
-<div class="pipe-head">📢 <strong>5. Delivery</strong></div>
-<div class="pipe-sub">results in decision-makers' hands</div>
-<ul class="pipe-list">
-<li>dashboards (Grafana, Superset)</li>
-<li>reports & memos</li>
-<li>APIs & embedded models</li>
-</ul>
-</div>
-
-</div>
-
-<style scoped>
-.stack-loop {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.7rem;
-  margin-top: 1rem;
-}
-.stack-loop .pipe-step {
-  padding: 0.7rem 0.9rem !important;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-.stack-loop .pipe-head {
-  font-size: 1.05em;
-  line-height: 1.2;
-  text-align: center;
-}
-.stack-loop .pipe-sub {
-  font-size: 0.78em;
-  opacity: 0.75;
-  line-height: 1.3;
-  text-align: center;
-  font-style: italic;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  padding-bottom: 0.4rem;
-}
-.stack-loop .pipe-list {
-  margin: 0;
-  padding-left: 1.1rem;
-  font-size: 0.82em;
-  line-height: 1.45;
-  opacity: 0.92;
-}
-.stack-loop .pipe-list li { margin: 0.12rem 0; }
-</style>
-
----
-hideInToc: true
----
-
-# Roles and **collaboration**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧑‍🔬 **Domain expert**
-
-<div class="note-text">Frames problems, validates insights</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📊 **Analyst / Scientist**
-
-<div class="note-text">Explores, models, communicates</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔧 **Data Engineer**
-
-<div class="note-text">Access, reliability, pipelines</div>
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-tight">
-
-## 📋 **PM / Lead**
-
-<div class="note-text">Scope, impact, trade-offs</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🎨 **Visualisation designer**
-
-<div class="note-text">Crafts compelling stories</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🤝 **Shared artefacts**
-
-<div class="note-text">Glossary, metrics, dashboards</div>
-
-</div>
-
-</div>
+Four comments. Each says what was run and what came out, and the author can act on every one of them.
 
 </div>
 
@@ -2297,593 +1277,36 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Collaboration **rituals**
+# Writing a Review, **Answering One**
 
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📋 Shared backlog with clear owners & due dates
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔄 Version control (git) for notebooks, SQL, scripts
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 👁️ Code & analysis reviews to raise quality and share knowledge
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🤝 Pair sessions for tricky modelling or cleaning tasks
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📦 Reproducible environments (conda, containers, Poetry, Nix)
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Discussion**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🤔 When are proprietary tools justified — against the tool-agnosticism aim from Lecture 1?
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔧 What should you be using?
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## ⚙️ Which of today's checks would you automate first (Lecture 14)?
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🔄 How do we ensure reproducibility when collaborating?
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Data **Hygiene** & Ethics
-
-<!--
-Speaker: this is where reproducibility becomes a habit, not a slogan. Hygiene =
-future-you can re-run it; ethics = you can be trusted with the data. Land the
-rule of thumb: re-runnable in under an hour, six months later. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Why data **hygiene** matters
-
-<div class="stack-tight mt-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🚫 Prevent costly errors & embarrassing corrections
-
-</div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🤝 Build trust with stakeholders & regulators
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔄 Accelerate future analyses with reusable assets
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔒 Protect sensitive data and maintain compliance
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📦 Enable others to replicate or extend your work
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Hygiene & **reproducibility** habits
-
-<div class="grid-2 gap-md dd-stack mt-md">
-
-<details name="hygiene" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🔄 Source-control everything</span></summary>
-<div class="dd-body">
-
-Code, SQL, data definitions, transformations, configs — all in git. If it drives a result, it lives under version control; otherwise silent edits quietly invalidate past analyses.
-
-</div>
-</details>
-
-<details name="hygiene" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">📁 Clear structure & naming conventions</span></summary>
-<div class="dd-body">
-
-`raw/`, `interim/`, `processed/`, `reports/`; dated, snake_case filenames; one project per repo. Conventions beat creativity — future-you wants predictability, not cleverness.
-
-</div>
-</details>
-
-<details name="hygiene" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">🧹 Housekeeping as you go</span></summary>
-<div class="dd-body">
-
-Archive dead branches, deprecate unused scripts, update READMEs in the same PR as the change. Debt compounds; a five-minute cleanup today saves an hour of confusion next quarter.
-
-</div>
-</details>
-
-<details name="hygiene" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">📦 Record the environment</span></summary>
-<div class="dd-body">
-
-`env.yaml`, `requirements.txt` with pinned versions, lockfiles, or a container. "Works on my machine" is not reproducible — the exact library versions are part of the result.
-
-</div>
-</details>
-
-<details name="hygiene" class="dd-card card card-success card-glass">
-<summary><span class="dd-title">🎲 Seeds, hashes, snapshots</span></summary>
-<div class="dd-body">
-
-Fix the random seed, hash input files, snapshot the dataset version. Same inputs + same code → same results — not "almost the same results with a different train/test split".
-
-</div>
-</details>
-
-<details name="hygiene" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">⚙️ Automate the critical path</span></summary>
-<div class="dd-body">
-
-A `Makefile`, `make.py`, or CI job that rebuilds the whole analysis with one command. If the steps live only in your memory and terminal history, they'll break silently the first time anyone else tries.
-
-</div>
-</details>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-<div class="note-text">
-
-#### 🎯 Rule of thumb — if you cannot re-run an analysis six months later in under an hour, it isn't finished
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Ethics, **governance** & accountability
-
-<div class="grid-2 gap-md dd-stack mt-md">
-
-<details name="ethics" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🛡️ Minimise harm — privacy, consent, security by design</span></summary>
-<div class="dd-body">
-
-Collect the minimum you need, anonymise where possible, encrypt at rest and in transit. Ask "could this dataset hurt someone if it leaked?" — if yes, treat it accordingly from day one.
-
-</div>
-</details>
-
-<details name="ethics" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">⚖️ Fairness — monitor for disparate impact across groups</span></summary>
-<div class="dd-body">
-
-A model can be accurate overall and still systematically wrong for a subgroup. Slice key metrics by demographic, geography, or cohort and watch the gaps, not just the averages.
-
-</div>
-</details>
-
-<details name="ethics" class="dd-card card card-accent card-glass">
-<summary><span class="dd-title">🔍 Transparency — methods, assumptions, limitations visible</span></summary>
-<div class="dd-body">
-
-Publish what you did, what you assumed, and what you don't know. A result that can't be inspected can't be trusted — and won't be, once it matters.
-
-</div>
-</details>
-
-<details name="ethics" class="dd-card card card-success card-glass">
-<summary><span class="dd-title">🌍 Sustainability — compute and environmental cost</span></summary>
-<div class="dd-body">
-
-Large models and always-on pipelines carry real energy and carbon costs. Scale effort to the question: a 10-hour GPU run to answer something a SQL query could solve is a design failure, not a feature.
-
-</div>
-</details>
-
-<details name="ethics" class="dd-card card card-info card-glass">
-<summary><span class="dd-title">👤 Accountability — named owners, escalation paths</span></summary>
-<div class="dd-body">
-
-Every dataset, model, and dashboard should have a human owner. Anonymous artefacts rot: no one notices when they break, and no one is responsible when they mislead.
-
-</div>
-</details>
-
-<details name="ethics" class="dd-card card card-warning card-glass">
-<summary><span class="dd-title">📜 Compliance frameworks — know which apply</span></summary>
-<div class="dd-body">
-
-GDPR (EU personal data), HIPAA (US health), CERN data-classification policies, institutional ethics approvals. Don't discover the rule after you've broken it — check at project kickoff.
-
-</div>
-</details>
-
-<details name="ethics" class="dd-card card card-primary card-glass">
-<summary><span class="dd-title">🚨 Incident response — breaches and quality failures</span></summary>
-<div class="dd-body">
-
-Have a written plan: who is notified, how results are withdrawn or corrected, how affected users are informed. Designing this in calm is vastly easier than improvising in crisis.
-
-</div>
-</details>
-
-<details name="ethics" class="dd-card card card-secondary card-glass">
-<summary><span class="dd-title">📚 Training & audits — keep practices aligned over time</span></summary>
-<div class="dd-body">
-
-Periodic reviews of access, models in production, and privacy controls. Good practices decay silently; regular audits surface drift before it becomes a headline.
-
-</div>
-</details>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Case Study · CERN **Open Data**
-
----
-hideInToc: true
----
-
-# Context & **collaboration model**
-
-<span class="def-sub">Open, reusable data is a principle until someone actually ships a dataset under it. CERN's Open Data portal is that proof: a petabyte-scale demonstration that every concept in this lecture works at real-world scale.</span>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🌐 **Context**
-
-- CERN releases proton-proton collision datasets via the Open Data portal
-- Goal: enable students & researchers to reproduce landmark analyses
-- Data formats: ROOT files, CSV summaries, metadata packages
-- Tooling: ROOT, Python, R, Jupyter, cloud notebooks
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 👥 **Collaboration model**
-
-- Physicists, statisticians, software engineers, detector experts
-- Shared code repositories with rigorous review (ROOT macros, Python)
-- Simulation teams provide synthetic data for validation
-- Publication committees ensure rigour & messaging
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Risks & **mitigations**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Detector anomalies**
-
-<div class="note-text">Continuous monitoring & calibration</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Bias in selection cuts**
-
-<div class="note-text">Blind analyses (analysing without looking at the signal region, to avoid biasing the result) & control regions</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Reproducibility**
-
-<div class="note-text">Containerised environments, notebooks, docs</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Communication**
-
-<div class="note-text">Translate particle jargon for broader audiences</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Mini case study · **night-shift spikes**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 📡 **Scenario**
-
-Detector shows intermittent spike counts on night shifts.
-
-</div>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 📋 **Plan — the six steps**
-
-- **Define** the metric (spike rate per hour) and the decision: change the night-shift configuration or not.
-- **Collect** two weeks of logs, segmented by shift.
-- **Clean** — check missingness and duplicate entries; align timestamps across shifts.
-- **Analyse** — test the difference in means with a bootstrap CI (resampling-based confidence intervals).
-- **Visualise** rates by shift; annotate configuration changes.
-- **Interpret** — prescribe a mitigation only if the effect is robust.
-
-</div>
-
----
-hideInToc: true
----
-
-# Exercise · **Plan your own analysis**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📋 Pick a dataset — ideally the one you plan to use for your semester project
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔧 Draft a 6-step workflow referencing today's framework
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 👥 Identify stakeholders, success metrics, and key risks
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📦 Decide what artefact you would deliver
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Pitfalls, Patterns & **Takeaways**
-
----
-hideInToc: true
----
-
-# Common **pitfalls**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Jumping to complex models before understanding the data
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Confusing correlation with causation
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Reading patterns into noise — in models *and* in charts
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Confusing proxy metrics with outcomes
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Ignoring units / timezones and data joins
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Confirmation bias; not seeking disconfirming evidence
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ Shipping insights without reproducibility
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Useful **patterns**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ Start with a checklist (quality, ethics, uncertainty)
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ Write the "results" slide first; work backward
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ Keep a decisions log with assumptions
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ Pair-review visuals and statistical claims
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ Maintain a lightweight data dictionary
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Takeaways**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-<div class="note-text">
-
-Remember the lab thermometer — a single reading (`22.3 °C`) travelled all the way to an operational decision (shift Friday calibration). That journey is what this lecture is really about.
-
-</div>
-
-</div>
-
-<div class="grid-3 gap-md mt-md tidy-cards">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🎯 **Decisions first**
+## ✏️ **The reviewer**
 
-The reading mattered because someone had to act on it — define metrics and success criteria early
+- says what was run, on which system, and what came out
+- points to the place: file, line, figure
+- marks each comment: must fix, suggestion, question
+- writes about the work, never about the person
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📊 **Quality & uncertainty**
+## 💬 **The author**
 
-No value is trustworthy without its error bar — treat both as first-class, not footnotes
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🔄 **Lifecycle, not event**
-
-Plan → Acquire → Store → Process → Analyse → Share, with governance on every step
+- answers every comment: changed, with the commit, or not changed, with the reason
+- does not answer with rank or experience
+- thanks the reviewer. The time was a gift
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
-
-## ♻️ **Reproducible & reusable**
-
-Documented and versioned so the next analyst can pick up where you stopped — formalised as **FAIR** in Lecture 14
-
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-info card-glass pad-compact mt-md">
 
-## 📢 **Story over numbers**
-
-Define → Collect → Clean → Analyse → Visualise → Interpret: one honest pass through the loop, told as a decision
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚖️ **Responsible by default**
-
-Hygiene, ethics, accountability — the price of being trusted with data
-
-</div>
+Where: as comments on a pull request, or in a file `review.md` next to the report. Either way the review stays with the project.
 
 </div>
 
@@ -2891,60 +1314,67 @@ Hygiene, ethics, accountability — the price of being trusted with data
 hideInToc: true
 ---
 
-# **Recap** — You Can Now…
+# A **Decision Log**
 
-<div class="grid-2 gap-md mt-sm">
+<div class="grid-2 mt-md gap-md">
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
-✅ Frame an analysis around the **decision** it serves
+## 📓 **`DECISIONS.md`**
 
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Classify work as **descriptive, diagnostic, predictive, or prescriptive**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Run a **data-quality checklist** and read missing-data mechanisms
+```text
+2026-11-24  Line with intercept.
+  Why: length to the bob uncertain.
+  Through the origin: 9.81 ± 0.04.
+2026-11-24  All nine rows kept.
+2026-12-02  Mass fit: 1820 to 1910,
+  2 MeV bins. Bins of 1 and 3 MeV
+  move the peak by < 0.03.
+```
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-✅ Hand results to the next analyst — documented and reproducible
+## 🧭 **Why keep one**
+
+The code records what was done. Nothing records why, or what else was tried, unless someone writes it down.
+
+One line per decision: the date, the decision, the reason, what the alternative gave.
+
+With several people: one name for each dataset and each script.
+
+</div>
 
 </div>
 
-</div>
+<div class="card card-info card-glass pad-compact mt-md">
 
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔬 **Seminar 9 tie-in**
-
-Run the checklist on the D⁰ → K⁻π⁺ teaching sample — count missing, duplicate `(Run, Event)` and physically impossible values, write a drop policy, and make the audit re-runnable. Then apply the same checklist to your own project's data.
+The log makes *decide before you look* checkable: the entry is older than the result.
 
 </div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Research **Integrity**
 
 <!--
-Speaker: the "you can now" beat — have them nod to each capability. The seminar
-tie-in makes it concrete: next session they run the checklist on the D⁰ → K⁻π⁺
-teaching sample — missing values, duplicate (Run, Event) pairs, impossible values,
-a written drop policy, a re-runnable audit — and then on their own project's data. (~1 min)
+Speaker: from good practice to rules. The rules are short. Most of the section
+is about the wide space between a mistake and a lie. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Further **Reading**
+# Four **Principles**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📚 This lecture draws on these — several are free online:
+The *European Code of Conduct for Research Integrity* (ALLEA, revised 2023) rests on four principles. Horizon Europe grants bind their holders to it. Universities have codes of their own: read yours.
 
 </div>
 
@@ -2952,26 +1382,960 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-📗 **Wilson et al.** — *Good Enough Practices in Scientific Computing* (2017) · free
+## 🧱 **Reliability**
+
+Quality in design, method and analysis. *Someone else can rebuild the result.*
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🔗 **Wilkinson et al.** — *The FAIR Guiding Principles* (2016), *Scientific Data* · GO FAIR
+## 🪞 **Honesty**
+
+In doing, reviewing and reporting research. *All rows, all looks and all checks are reported.*
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-🔄 **CRISP-DM** — the cross-industry standard process for data mining
+## 🤝 **Respect**
+
+For colleagues, participants, society and the environment. *Credit is given. Personal data is protected.*
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-📘 **Kelleher & Tierney** — *Data Science* (MIT Press, Essential Knowledge)
+## 🖊️ **Accountability**
+
+From the idea to the publication. *Your name stands for every number.*
 
 </div>
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Three Kinds of **Misconduct**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🧪 **Fabrication**
+
+Making up data or results.
+
+*A tenth row typed into `pendulum.csv` that was never measured.*
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ✂️ **Falsification**
+
+Changing or leaving out data or results without saying so.
+
+*Two rows dropped, and a report that speaks of nine.*
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📋 **Plagiarism**
+
+Another person's work, words, code or data used without credit.
+
+*A neighbour's script handed in under your name.*
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+An honest mistake is not misconduct. Hiding one is. Between the two lie the practices of the last section: nobody lied, and the result is still wrong.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# When a Mistake Is **Found**
+
+<div class="card card-accent card-glass pad-compact mt-sm">
+
+## 🧬 **Five papers, one sign**
+
+In 2006 the group of Geoffrey Chang found that a home-written program had flipped a sign in their data. The protein structures built on it were wrong. Within months the group retracted five papers, three of them in *Science*. The error came to light when another group's structure disagreed.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📝 **Before publication**
+
+Fix it, note it in the decision log, and run everything again with one command (Lecture 13).
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📰 **After publication**
+
+Correct the record. An *erratum* when the conclusion stands. A *retraction* when it does not.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">An analysis that is used long enough turns out to contain a mistake. What is judged is what happens next.</div>
+
+---
+hideInToc: true
+---
+
+# Who Is an **Author**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✅ **Four conditions, all of them**
+
+1. A substantial contribution to the design of the work, or to obtaining, analysing or interpreting the data
+2. Writing the text, or revising it critically
+3. Approval of the final version
+4. Agreement to answer for all of it
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🙏 **Everyone else is thanked**
+
+Lending the stopwatch, paying for the string, reading the draft: these go into the acknowledgements.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+These are the conditions of the medical journal editors (ICMJE). Many other journals follow them. Fields differ: in particle physics every member of a collaboration signs, in alphabetical order. The 2015 paper of ATLAS and CMS on the Higgs mass has 5&nbsp;154 authors.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Authorship: **Roles and Problems**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧩 **Say who did what**
+
+Many journals print a contribution statement. The CRediT list names 14 roles, among them data curation, formal analysis, software, validation and writing.
+
+*A. B.: measurement, data curation. C. D.: software, formal analysis, figures. Both: writing.*
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Three problems**
+
+- **Gift authorship**: a name without a contribution
+- **Ghost authorship**: a contribution without a name
+- **Order**: in some fields the first author did the work and the last one led the group. In others the order is alphabetical
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Agree on the authors and their order when the work starts, not when the paper is written. An AI tool cannot be an author: it cannot answer for the work.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# The Data Management **Plan**
+
+<!--
+Speaker: a short section on a short document. The room already keeps most of
+what a plan asks for: a README, a raw folder, a backup. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What It Is and **Who Asks**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A **data management plan** is a short document, written at the start of a project and updated on the way. It says what data there will be and what happens to it, during the project and after.
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🇪🇺 **Funders**
+
+Horizon Europe: every project that produces or reuses data, normally within six months. The US National Institutes of Health: with every application since 2023. National funders: read the call.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎓 **Universities**
+
+Many ask doctoral students for one. The rule differs from place to place.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📰 **Journals**
+
+They ask for the outcome: a statement of where the data is.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+And when nobody asks? Vines and colleagues (2014) requested the data behind 516 papers. For every year since publication, the odds that the data still existed fell by 17 %.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Six **Headings**
+
+| | **Heading** | **It answers** |
+| --- | --- | --- |
+| 1 | Data description | Which data, in which format, how much? New or reused? |
+| 2 | Documentation and quality | What does a stranger need in order to understand it? |
+| 3 | Storage and backup | Where does it live during the project? Who can reach it? |
+| 4 | Legal and ethical questions | Whose data is it? Can a person be identified? Which licence? |
+| 5 | Sharing and preservation | What is published, where and when? How long is it kept? |
+| 6 | Responsibilities and resources | Who does all this, and what does it cost? |
+
+<div class="note-text mt-md">The core requirements of Science Europe, used by many European funders. A funder's own template may order them differently. The FAIR principles of Lecture 13 say what the data should be at the end. The plan says how it gets there.</div>
+
+---
+hideInToc: true
+---
+
+# A Plan on **One Page**
+
+```text
+1 Data       pendulum.csv: 9 rows, own measurement, 97 bytes
+             D0_KPi.csv: 91 583 rows, 3.9 MB, reused from CERN record 401
+2 Documents  README.md: source, DOI, columns, units, every change made
+3 Storage    laptop, private remote repository, external disk (weekly)
+4 Legal      no personal data. Record 401: CC0. Own measurement: CC BY 4.0
+5 Sharing    at the end: code and pendulum.csv to Zenodo, with a DOI
+             D0_KPi.csv is not uploaded again: the README says how to fetch it
+6 Who        the author. No cost
+```
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The plan for the project folder of this course: six headings, eight lines. A plan for a thesis has the same headings and is longer under 4 and 5.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# After the **Project**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 📦 **Deposit**
+
+A repository gives the dataset a DOI, a licence and a fixed version (Lecture 02). Zenodo, run by CERN, takes data from any field. The paper cites the dataset.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🚫 **"Available on request"**
+
+This is not a plan. People change jobs, addresses expire, laptops are replaced.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✂️ **Not everything**
+
+Data that can be fetched again is referenced, not copied. Personal data is not published as it is.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⏳ **How long**
+
+Funders and institutions set a period, often several years after the project ends. The number differs: look it up.
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Ethics & **Personal Data**
+
+<!--
+Speaker: the two course files contain no person. Most data in most fields
+does. One slide of definitions, one of cases, one of duties, one on what the
+law does not cover. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What Counts as **Personal Data**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+*Any information relating to an identified or identifiable natural person.* General Data Protection Regulation (GDPR), Article 4
+
+</div>
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| **Data** | **Personal?** | **Why** |
+| --- | --- | --- |
+| `pendulum.csv`, `D0_KPi.csv` | No | No person in it |
+| Exam grades with names | Yes | The person is identified |
+| Grades with student numbers | Yes | The university can link the number to a person |
+| A survey with age, postcode and sex | Usually | The combination can single out one person |
+| A photo with people, a voice recording, a GPS track | Yes | The person can be identified |
+| The mean grade of 200 students | No | Nobody can be singled out |
+
+</div>
+
+<div class="note-text mt-sm">Stronger protection for <strong>special categories</strong>: health, ethnic origin, political opinions, religion, trade-union membership, genetic and biometric data, sex life and sexual orientation.</div>
+
+---
+hideInToc: true
+---
+
+# Removing Names Is **Not Enough**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📮 **Three columns**
+
+Sweeney (2000): 87 % of the people in the United States are the only one with their postcode, date of birth and sex.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎬 **Film ratings**
+
+In 2006 Netflix published 100 million ratings by 480&nbsp;000 subscribers, names removed. Two researchers matched them against public reviews on another site and identified subscribers (2008).
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🏷️ **Pseudonymised**
+
+Names replaced by a code. A key exists, or the rows can be matched with other data. Still personal data.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🌫️ **Anonymous**
+
+No reasonable means links a row to a person. No longer personal data. With detailed rows this is hard to reach.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# GDPR for a **Researcher**
+
+<div class="note-text mt-sm">Regulation (EU) 2016/679, applied since 25 May 2018. It covers every use of personal data: collecting, storing, analysing, sharing.</div>
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+1. **A legal basis before collecting**: consent, or a task in the public interest. Which one applies to research differs between countries and institutions
+2. **Tell the people** what is collected, why, for how long, and who receives it
+3. **Collect only** what the question needs
+4. **Pseudonymise early**, and keep the key apart from the data
+5. **Store it safely**: an encrypted disk, access for named people. Not in a public repository, not by e-mail
+6. **Delete or anonymise** when it is no longer needed
+7. **Ask first**: the data protection officer of your institution, and the ethics committee where one is required
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+This slide is not legal advice. The officer's answer is. If you are unsure whether the rules apply, assume that they do.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Beyond the **Law**
+
+<div class="note-text mt-sm">Legal is not the same as right. Four questions before data about people is used:</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🙋 **Did they agree to this use?**
+
+Texts and photos on the web were published. They were not given to research.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚠️ **Can the result hurt someone?**
+
+A person in the table, or a group that it describes.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 👥 **Who is missing?**
+
+A model built on one group works worse for the others.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🗣️ **Could you explain it to them?**
+
+If the analysis cannot be explained to the people in the table, think again.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Research with human participants needs the approval of an ethics committee at most institutions. The procedure differs between them. The grade files of this course are kept out of its public repository.
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# AI Tools in an **Analysis**
+
+<!--
+Speaker: everything said so far applies to work done with an AI tool. This
+section adds what is specific: what to verify, what never to paste, what to
+disclose. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What the Tool **Is**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A language model (ChatGPT, Claude, Gemini, Copilot) continues a text with the words most likely to follow. It was built from a very large amount of text and code.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🗣️ **Fluent either way**
+
+A wrong answer reads as well as a right one.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📂 **It has not seen your data**
+
+Unless you gave it. What it says about your file is a guess.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎲 **Not repeatable**
+
+The same question gives different answers on different days.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🖊️ **Not accountable**
+
+It cannot answer for a result. You do.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Along the **Loop**
+
+| **Step** | **Reasonable use** | **Risk** |
+| --- | --- | --- |
+| Question, plan | A list of what could be measured | It does not know what you need to decide |
+| Code | Explaining a traceback. A first version of a function. A test | Code that runs and computes the wrong thing |
+| Checks | Checks you did not think of | Twenty variants in a minute: the section on looks, at higher speed |
+| Writing | Language and structure of your own text | Claims and references that are not in your results |
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The tool speeds up the steps. It does not change their order: the plan is still written first, and the checks still come before the decision.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Verify Code: A **Known Answer**
+
+<div class="grid-2 mt-md gap-md">
+
+<div>
+
+```python
+import numpy as np
+
+def g_from_table(length_m, period_s):
+    slope, intercept = np.polyfit(
+        length_m, period_s**2, 1)
+    return 4 * np.pi**2 / slope
+
+length = np.array([0.2, 0.4, 0.6, 0.8, 1.0])
+T = 2 * np.pi * np.sqrt(length / 9.81)
+
+print(g_from_table(length, T))
+print(g_from_table(100 * length, T))
+print(g_from_table(length, 10 * T))
+```
+
+</div>
+
+<div>
+
+```text
+9.81
+981.0
+0.09809999999999999
+```
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+Data with a known answer: exact periods for g = 9.81. A correct function returns 9.81. Lengths in cm give 981. The time of ten swings in place of the period gives 0.0981. Neither mistake raises an error.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The test does not ask who wrote the function: you, a colleague or a tool. It stays in the project and is run by `pytest` (Lecture 13).
+
+</div>
+
+<!--
+Speaker: np.polyfit with degree 1 is the straight-line fit of Lecture 10. The
+last digits of the third line are the float of Lecture 03. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Verify Text: **References and Numbers**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📚 **References**
+
+A language model writes references that look right: authors, journal, year, DOI. Some of them do not exist.
+
+*Mata v. Avianca*, New York, 2023: a court filing cited six decisions produced by ChatGPT. None existed. The lawyers were fined 5&nbsp;000 dollars.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **Numbers and claims**
+
+- Open every DOI, and read what you cite
+- Every number in the text comes from your script, not from the chat
+- A statement about your data is checked against your data
+- Units and orders of magnitude are checked by hand
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Nothing enters the report that you have not checked yourself. Then it does not matter where the first draft came from.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Never **Paste**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A tool that runs on someone else's computers receives everything you type. What is kept, and whether it is used to train later models, depends on the tool, the subscription and the contract of your institution.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔒 **Personal data**
+
+Names, grades, health, addresses. Passing them on needs a legal basis.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📄 **Work that is not yours alone**
+
+A paper you were asked to referee. A collaborator's unpublished results.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔑 **Secrets**
+
+Passwords, access tokens, private keys.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📜 **Restricted material**
+
+Data or text under a licence or agreement that forbids passing it on.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Fine to paste: your own code, an error message, public data. If you do not know what happens to the text, treat the tool as public.</div>
+
+<!--
+Speaker: one firm example for the second card: the US National Institutes of
+Health forbid their reviewers to put grant applications into generative AI
+tools (2023). (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Disclose**
+
+<div class="note-text mt-sm">The rules of journals, funders and universities agree on three points.</div>
+
+<div class="grid-3 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **Not an author**
+
+A tool cannot answer for the work.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **The authors answer**
+
+For every sentence, number and line of code, whoever drafted it.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 3️⃣ **Use is stated**
+
+Which tool, which version, when, for what, and what was checked.
+
+</div>
+
+</div>
+
+```text
+The fitting script was drafted with <tool, version, month and year> and tested
+on data with a known answer. The text was written by the authors. The same tool
+was used to check the English.
+```
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+They differ on the rest: where the statement goes, what is allowed in a thesis, what is allowed in graded work. Ask before you hand something in.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **Sources**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📚 **Cases**
+
+- Feynman, *Cargo Cult Science* (1974)
+- ISIS-2 Collaborative Group, *Lancet* (1988)
+- Charig et al., *BMJ* 292 (1986)
+- ATLAS Collaboration, *JHEP* 09 (2016) 001
+- OPERA Collaboration, *JHEP* (2012)
+- Miller, *Science* 314 (2006), on the five retractions
+- Sweeney (2000). Narayanan and Shmatikov (2008)
+- Vines et al., *Current Biology* 24 (2014)
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📜 **Rules**
+
+- ALLEA, *European Code of Conduct for Research Integrity* (2023)
+- ICMJE, *Recommendations*: authorship, AI tools
+- CRediT, the contributor roles taxonomy
+- Science Europe, *Practical Guide to Research Data Management* (2021)
+- Regulation (EU) 2016/679, the GDPR
+- European Commission, *Living guidelines on the responsible use of generative AI in research* (2024)
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The D⁰ mass is from the Particle Data Group, <em>Review of Particle Physics</em>. Every other number on these slides was computed from the two course files.</div>
+
+---
+hideInToc: true
+---
+
+# **Recap** — You Can Now…
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ State an analysis as a **question**, **evidence with its uncertainty** and a **decision**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Walk the **loop** from question to decision, and say why the plan comes before the data
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Recognise **many looks**, **selection after the result** and **correlation read as cause**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ **Review** an analysis with twelve questions, and say who is an **author**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Write a **data management plan** under six headings
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Tell **personal data** from other data, and name what a researcher must do with it
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ **Verify** and **disclose** what an AI tool contributed, and keep out of it what must not go in
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="An analyst tests 14 columns of pure noise and calls any result beyond 2σ a finding. How likely is at least one finding?"
+  :options="[
+    'About 5 %, the chance of each single test',
+    'About 70 %, which is 14 times 5 %',
+    'About 51 %, which is 1 − 0.95¹⁴',
+    'Close to 0 %, because noise holds no signal'
+  ]"
+  :correct="2"
+  explanation="All 14 tests stay quiet with probability 0.95¹⁴ = 0.49, so at least one alarm has probability 0.51. Adding 5 % fourteen times overcounts: at 20 tests the sum would reach 100 %."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A group reports g = 9.90 ± 0.04 m/s². The reference value is 9.81 m/s². Which reading is right?"
+  :options="[
+    'Agreement: the two numbers differ by less than 1 %',
+    '2.25σ: no claim yet. Look for a systematic effect and measure again',
+    'A discovery: the result lies more than 2σ away',
+    'Nothing can be said without the number of measurements'
+  ]"
+  :correct="1"
+  explanation="(9.90 − 9.81) / 0.04 = 2.25. A distance of 2.25σ or more happens by chance about once in 40 cases. A systematic effect, such as a length measured to the wrong point, is far more likely than a new value of g."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Method A succeeds in 60 of 150 hard cases and in 45 of 50 easy ones. Method B succeeds in 15 of 50 hard cases and in 120 of 150 easy ones. Which statement holds?"
+  :options="[
+    'B is better: 67.5 % overall against 52.5 %',
+    'The methods are equal: the groups and the totals contradict each other',
+    'Nothing follows, because the groups differ in size',
+    'A is better in hard cases and in easy ones. B leads overall because it got more easy cases'
+  ]"
+  :correct="3"
+  explanation="A: 40 % and 90 %. B: 30 % and 80 %. A wins in both kinds of case. The overall rates compare a mix of mostly hard cases with a mix of mostly easy ones: the kind of case drives both the choice of method and the outcome."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Who meets the conditions for authorship of a report on the pendulum measurement?"
+  :options="[
+    'The colleague who lent the stopwatch',
+    'The head of the department, who has not read the report',
+    'The student who took the data, revised the text, approved it and answers for it',
+    'The language model that drafted the fitting script'
+  ]"
+  :correct="2"
+  explanation="Authorship needs all four: a substantial contribution, work on the text, approval of the final version, and accountability. Lending equipment earns an acknowledgement. A name without a contribution is gift authorship. A tool cannot be accountable."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A table holds student number, year of birth and exam grade. The names were removed. Under the GDPR this table is"
+  :options="[
+    'anonymous, because it holds no names',
+    'personal data: the university can link a student number to a person',
+    'personal data only once it is published',
+    'outside the regulation, because grades are not a special category'
+  ]"
+  :correct="1"
+  explanation="Replacing names by a number is pseudonymisation. As long as someone can link the number to a person, the rows are personal data, wherever they are kept. Special categories get stronger protection. Ordinary personal data is protected too."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Which of these can go into a public AI chat tool without a second thought?"
+  :options="[
+    'A traceback from your own script that reads the public LHCb file',
+    'A table of exam grades with student numbers',
+    'The manuscript a journal sent you to referee',
+    'A script that contains your access token'
+  ]"
+  :correct="0"
+  explanation="Your own code, an error message and public data are fine. Grades with student numbers are personal data. A manuscript under review is confidential and not yours. A token is a key: once pasted, it has to be replaced."
+/>

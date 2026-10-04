@@ -12,9 +12,9 @@ title: "Command Line & File Handling"
 ##### <span class="aims-badge">⚙️ automation · 📁 data & files · 🔧 tool-agnostic</span>
 
 <!--
-Speaker: this is the workhorse lecture — the CLI and file handling. Two aims meet
-here: automation and efficient work with data. By the end they can drive a
-machine with no GUI and keep a project tidy. (~1 min)
+Speaker: the lecture is shown live. Keep VS Code open beside the slides, with
+the project folder and a terminal, and type each command as its slide comes
+up. (~1 min)
 -->
 
 ---
@@ -22,7 +22,7 @@ hideInToc: true
 layout: quote
 ---
 
-# The command line is the universal interface to computing. Master it once, and you gain **speed**, **automation**, and the ability to work on any machine—from a laptop to a supercomputer cluster.
+# The main goal of this lecture is to work on files with **typed commands**: a step that was typed can be written down, checked and run again
 
 ---
 hideInToc: true
@@ -36,554 +36,74 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🧭 **Navigate** and inspect files entirely from the command line
+🧭 Open a **terminal** with the same shell on Windows, macOS and Linux, and name a file by its **path**
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🔗 Chain small tools with **pipes** and **redirection** to answer questions
+📁 Make, copy, move and delete files with commands, and name many files with one **wildcard**
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-✳️ Match many files at once with **wildcards** — safely
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-🏷️ Name files with consistent, sortable **conventions**
+🔗 Join small programs with **pipes** to count, sort and filter a file of 91 583 rows
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-⚙️ Turn repeated commands into a **shell script** — variables and a `for` loop
+🔎 Describe text with a **regular expression**, in VS Code and with `grep -E`
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+⚙️ Save commands as a **script**, and run a script that someone else wrote
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-📁 Organise a project — raw vs **processed** data, plus a README
+🛡️ Compare files by **checksum**, keep **backups** by the 3-2-1 rule, and complete the **README**
 
 </div>
 
 </div>
-
-<!--
-Speaker: read these as promises, not a syllabus. The paired Seminar 4 is where
-they organise the seminar project folder and inspect the dataset from the shell —
-today builds the toolkit and the habits. (~1 min)
--->
 
 ---
 hideInToc: true
 ---
 
-# The Command Line: What and **Why**
+# A Step, **Written Down**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info card-glass pad-tight reveal-scale">
+<div class="card card-secondary card-glass pad-compact">
 
-## 💻 **What is the CLI?**
+## ✍️ **Lecture 2: four edits by hand**
 
-- **Text-based** communication with the computer
-- Chain commands, redirect input/output, script whole workflows
-- Runs on **Windows**, **macOS**, and **Linux** — the backbone of scientific computing
-
-</div>
-
-<div class="card card-primary card-glass pad-tight reveal-scale">
-
-## 🎯 **Why learn it?**
-
-- ⚡ **Speed** — complex workflows faster than with a mouse
-- 🔄 **Automation** — script repetitive steps and share them
-- 🌐 **Remote work** — servers and clusters have no GUI
-- 📝 **Transparency** — commands document exactly what happened
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md reveal-up">
-
-💡 Every tool in this lecture exists on every machine you will ever be given an account on — a laptop, a lab PC, or a computing-cluster node.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# CLI **Foundations**
-
-<!--
-Speaker: ground them before commands — a shell interprets text, the prompt shows
-where you are, and every command is verb-options-arguments. Everything that
-follows is a variation on this pattern. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Shell Fundamentals
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🐚 **Shells**
-
-```text
-PowerShell
-bash / zsh
-fish
+```md
+- **Cleaned copy:** `data/processed/pendulum.csv`.
+  Mean line deleted, `,` replaced by `.`,
+  `;` replaced by `,`, column `nr` deleted
 ```
 
-- Provide the environment that interprets your commands
-- Offer history, auto-completion, variables, and scripting features
+The README lists the edits in words. To clean the next file, someone reads the list and makes every edit again.
 
 </div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📍 **Prompt Structure**
-
-```sh
-user@machine:path $
-```
-
-```powershell
-PS C:\Users\You>
-```
-
-<div class="note-text mt-sm">The prompt tells you who you are, where you are, and that the shell is ready for input.</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Basic Command Anatomy
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔧 **Structure**
-
-```
-command -options arguments
-```
-
-- `command`: the program to run
-- `options`: tweak behavior, usually start with `-` or `--`
-- `arguments`: the objects being acted on
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🏗️ **Built-ins**
-
-The shell provides built-in commands (`cd`, `Set-Location`)
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📦 **Executables**
-
-External executables live in directories listed in `$PATH` / `$Env:Path`
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Everyday **Commands**
-
-<!--
-Speaker: the verbs they'll use hourly — navigate, inspect, match, find. Show the
-PowerShell/UNIX pairing so no one feels shut out by their OS; the concepts are
-identical across shells. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Navigating the Filesystem
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-Get-Location
-Set-Location Documents
-Get-ChildItem
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-pwd
-cd Documents
-ls
-```
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔑 **Key Concepts**
-
-- Directories are **hierarchical**
-- `..` means "go up one level"
-- Tab completion reduces typing
-- Use history (`↑`) to rerun previous commands
-
-</div>
-
----
-hideInToc: true
----
-
-# Inspecting Files
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-Get-Content README.md
-Select-String "analysis" *.txt
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-cat README.md
-grep "analysis" *.txt
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔍 **Practical Uses**
-
-- Preview configuration or log files quickly
-- Search large codebases without opening an editor
-- Combine with redirection (`>`, coming up in Power Tools) to save filtered output
-
-</div>
-
----
-hideInToc: true
----
-
-# Creating and Editing
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-New-Item project -ItemType Directory
-New-Item notes.txt -ItemType File
-Add-Content notes.txt "Result: 42"
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-mkdir project
-touch notes.txt
-echo "Result: 42" >> notes.txt   # >> appends — see Power Tools
-```
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🧭 **Beyond the Basics**
-
-- Editors like `nano`, `vim`, or IDE CLIs let you modify files without leaving the terminal
-- Script file creation to keep project structure consistent
-- **File naming conventions** and directory structure are coming up later **in this lecture**; pairing the CLI with `git` (version control), **Markdown**, and **VS Code** each get their own lecture soon after
-
-</div>
-
----
-hideInToc: true
----
-
-# Wildcards — Many Files at Once
-
-<div class="card card-info card-glass pad-compact mt-sm glow">
-
-## ✳️ **Patterns instead of names**
-
-The shell expands a **pattern** into every matching filename *before* the command runs — the command just sees a list of files.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🃏 **The patterns**
-
-- `*` — any number of characters: `*.csv`
-- `?` — exactly one character: `run_?.log`
-- `[ab]` — one character from a set: `fig[12].png`
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧪 **In action**
-
-```bash
-ls *.csv            # all CSV files here
-cp data_2026_*.csv backup/
-rm run_?.log        # run_1.log, run_A.log …
-```
-
-Works the same in PowerShell for file arguments.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ Wildcards + `rm` is the classic foot-gun: run `ls <pattern>` first to **see** what will match.
-
-</div>
-
----
-hideInToc: true
----
-
-# Finding Files
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-Get-ChildItem -Recurse -Filter *.csv
-Get-ChildItem -Recurse |
-  Where-Object Length -gt 100MB
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-find . -name "*.csv"
-find . -size +100M
-find . -mtime -7     # changed last 7 days
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔍 **`grep` finds text, `find` finds files**
-
-- "Which file mentions `calibration`?" → `grep -r "calibration" .`
-- "Where did that huge download go?" → `find ~ -size +1G`
-- Both search **recursively** — the whole directory tree below you
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Power **Tools**
-
-<!--
-Speaker: the payoff — pipes compose small tools into real answers. Linger on the
-error-count pipeline; watching four tiny commands answer a real question is what
-converts sceptics. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Pipes and Redirection
-
-<div class="card card-primary card-glass pad-tight mt-md glow">
-
-## 🔗 **The Pipe Operator `|`**
-
-The pipe sends the **output** of one command as **input** to another, letting you chain tools together.
-
-```bash
-grep "error" data.csv | wc -l     # how many lines mention "error"?
-ls -l | sort -k5 -n               # list files sorted by size
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📤 **Overwrite with `>`**
-
-Writes command output to a file, **replacing** any existing content.
-
-```bash
-echo "Hello" > notes.txt
-```
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📎 **Append with `>>`**
-
-Adds command output to the **end** of a file without erasing it.
-
-```bash
-echo "Another line" >> notes.txt
-```
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# A Pipeline, Step by Step
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🧪 **Question:** which detector reports the most errors? `log.txt` has one line per event: `sensor_A OK`, `sensor_B ERROR`, …
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-1️⃣ `grep "ERROR" log.txt` — keep only the error lines
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-2️⃣ `… | sort` — identical sensor names become neighbours
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-3️⃣ `… | uniq -c` — collapse repeats into `count name`
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-left">
-
-4️⃣ `… | sort -nr | head -3` — numerically, biggest first, top three
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
-
-```bash
-grep "ERROR" log.txt | sort | uniq -c | sort -nr | head -3
-```
-
-💡 Four small tools, one question answered — **no programming required.**
-
-</div>
-
----
-hideInToc: true
----
-
-# Combining Commands
-
-<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🪟 **PowerShell Pipeline**
+## ⌨️ **The same four edits, typed**
 
-```powershell
-Get-ChildItem *.csv |
-  Where-Object { $_.Length -gt 1MB } |
-  Sort-Object Length -Descending |
-  Out-File large_files.txt
+```text
+grep -v mean data/raw/pendulum.csv |
+  tr ',' '.' | tr ';' ',' | cut -d, -f2,3
 ```
 
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🐧 **UNIX Pipeline**
-
-```bash
-find . -name "*.csv" -size +1M -exec du -h {} + \
-  | sort -rh > large_files.txt
-```
+Each edit is one small program. The line is the record of what was done, and it runs again on the next file.
 
 </div>
 
@@ -591,798 +111,30 @@ find . -name "*.csv" -size +1M -exec du -h {} + \
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 Pipelines let each tool focus on one job. Reuse the same pattern across projects with minimal edits.
-
-*These examples show the power of pipelines — don't worry if the syntax looks unfamiliar; you'll pick up these tools as the course goes on.*
+This lecture builds that line part by part: the terminal, files and folders, pipes, patterns, scripts. The examples are the two files of the project folder: the pendulum table and `D0_KPi.csv` with its 91 583 rows.
 
 </div>
 
 <!--
-Speaker: if someone asks "why not just ls -l | awk?" — ls -l columns are not a
-stable format to parse; filenames with spaces or locale settings silently break
-naive awk/cut scripts. find … -exec du asks the filesystem directly. (~1 min)
+Speaker: open the README of the project folder and read the line "Cleaned
+copy" aloud. Then run the typed line once in the terminal, without explaining
+it: the cleaned table appears. Every part of it is explained in the next hour.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Did It Work? Exit Codes & Chaining
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🚦 Every command finishes with an invisible **exit code**: `0` = success, anything else = failure. The shell lets you build logic on top of it.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔗 **Chaining operators**
-
-```bash
-cmd1 && cmd2   # cmd2 only if cmd1 succeeded
-cmd1 || cmd2   # cmd2 only if cmd1 FAILED
-cmd1 ;  cmd2   # cmd2 regardless
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧪 **In practice**
-
-```bash
-mkdir results && cd results
-python analyse.py       # run it
-echo $?                 # its exit code: 0 = ok, else failed
-python analyse.py || echo "failed!"   # || = fallback on failure
-```
-
-`$LASTEXITCODE` in PowerShell.
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 `&&` is your safety belt: "only continue **if that worked**" — you'll see it in install instructions everywhere.
-
-</div>
-
----
-hideInToc: true
----
-
-# Getting Help
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-Get-Command *csv*
-Get-Help Get-Content -Examples
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-apropos csv
-man cat
-```
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 📚 **Learning Faster**
-
-- Use `--help`, `--version`, or `/?` flags for quick summaries
-- Explore interactive help (`Get-Help -Online`, `tldr command`)
-- Build a personal cheatsheet for frequent tasks
-
-</div>
-
----
-hideInToc: true
----
-
-# Working with Processes
-
-<div class="note-text">
-
-*Optional power-user detour — skim it on first contact and return when you have a long-running analysis to babysit.*
-
-</div>
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪟 **PowerShell**
-
-```powershell
-Get-Process firefox
-Stop-Process -Name firefox
-Start-Job -ScriptBlock { ./long_task.ps1 }
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🐧 **macOS & Linux**
-
-```bash
-ps aux | grep firefox
-killall firefox
-nohup ./long_task.sh &
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## ⚙️ **Why It Matters**
-
-- Monitor long-running analyses
-- Run jobs in the background while continuing to work
-- Integrate into schedulers or workflow engines
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# The Shell as a **Data Tool**
-
-<!--
-Speaker: the pitch of this section is one sentence — long before Python, the
-shell already answers real questions about a dataset. Same small tools as
-before, now pointed at a CSV of detector events. This is the bridge to the
-seminar dataset. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Meet the Dataset: `events.csv`
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🔬 One line per recorded event from a detector — a **CSV**: comma-separated columns, first line names them.
-
-</div>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 👀 **First peek**
-
-```bash
-head -4 events.csv
-```
-
-```text
-time,detector,energy,status
-09:00:01,ECAL,148.9,OK
-09:00:02,MUON,3.1,ERROR
-09:00:02,VELO,12.4,OK
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 Plain text is the shell's home turf — every tool from the last section works on this file **unchanged**.
-
-</div>
-
----
-hideInToc: true
----
-
-# How Big Is It? `wc`, `head`, `tail`
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📏 **Count with `wc`**
-
-```bash
-wc -l events.csv   # lines = events + header
-wc -l *.csv        # every CSV at once
-```
-
-- `-l` lines, `-w` words, `-c` bytes
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔭 **Peek with `head` / `tail`**
-
-```bash
-head -20 events.csv   # first 20 lines
-tail -5 events.csv    # last 5 lines
-tail -f run.log       # follow a growing log
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-💡 None of these load the whole file — inspecting a 10 GB file is instant, where a spreadsheet program would freeze.
-
-</div>
-
----
-hideInToc: true
----
-
-# Columns with `cut`
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ✂️ **Pick columns**
-
-```bash
-cut -d, -f2 events.csv     # detector column
-cut -d, -f2,4 events.csv   # detector + status
-```
-
-- `-d,` — the delimiter between columns
-- `-f` — which field number(s) to keep
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧪 **Which detectors exist?**
-
-```bash
-cut -d, -f2 events.csv | sort | uniq
-```
-
-```text
-ECAL
-HCAL
-MUON
-VELO
-detector
-```
-
-<div class="note-text mt-sm">⚠️ The header line is just data to the shell — skip it with <code>tail -n +2 events.csv | cut …</code></div>
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ `uniq` only collapses **adjacent** duplicates — that is why `sort` always comes before it.
-
-</div>
-
----
-hideInToc: true
----
-
-# `sort` Does Numbers Too — If You Ask
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Lexical by default**
-
-```bash
-sort energies.txt
-```
-
-```text
-104.2
-11.8
-9.3
-```
-
-Character by character, `104…` sorts before `11…` — wrong for numbers.
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Numeric, by column**
-
-```bash
-sort -n energies.txt         # numeric
-sort -t, -k3 -n events.csv   # by CSV column 3
-```
-
-- `-t,` delimiter · `-k3` sort key · `-n` numeric · `-r` reverse
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-💡 `sort -t, -k3 -nr events.csv | head -5` is already data analysis: **the five highest-energy events**, one line.
-
-</div>
-
----
-hideInToc: true
----
-
-# Worked Pipeline (1/2): Build It Up
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🧪 **Question:** how many events did each detector record? Same pattern as the ERROR pipeline — the new ingredient is `cut`.
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-1️⃣ `cut -d, -f2 events.csv` — keep only the detector column
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-2️⃣ `… | sort` — identical detectors become neighbours
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-3️⃣ `… | uniq -c` — collapse each run into `count detector`
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-left">
-
-4️⃣ `… | sort -nr` — biggest counts first
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
-
-```text
-    512 ECAL
-    356 VELO
-    214 HCAL
-     88 MUON
-```
-
-💡 Run the pipeline **after every stage** — watch the data change shape.
-
-</div>
-
----
-hideInToc: true
----
-
-# Worked Pipeline (2/2): Keep the Answer
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 💾 **Save the result**
-
-```bash
-cut -d, -f2 events.csv | sort \
-  | uniq -c | sort -nr > detector_counts.txt
-```
-
-- `>` captures the answer into a file
-- rerunnable — the command *is* the documentation
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔀 **Vary the question**
-
-```bash
-grep ",ERROR" events.csv | cut -d, -f2 \
-  | sort | uniq -c | sort -nr
-```
-
-- swap the first stage, keep the rest: now it counts **error** events per detector
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md glow">
-
-🏆 **The shell is your first data-analysis tool** — you filtered, grouped, and ranked a dataset with zero programming.
-
-</div>
-
-<!--
-Speaker: pause here. Filtering, grouping, ranking — that is groupby before they
-have ever heard the word. When pandas arrives in a later lecture, point back to
-this slide. (~2 min)
--->
-
----
-hideInToc: true
----
-
-<MCQ
-  question="runs.txt contains six lines: alpha, beta, alpha, gamma, alpha, beta. What does `sort runs.txt | uniq -c | sort -nr | head -1` print?"
-  :options="[
-    '3 alpha',
-    'alpha 3',
-    '1 gamma',
-    '6 runs.txt'
-  ]"
-  :correct="0"
-  explanation="sort groups the identical lines together, uniq -c rewrites each group as count-then-value (count first!), sort -nr puts the largest count on top, and head -1 keeps only that line. alpha appears three times, so the output is `3 alpha`."
-/>
-
----
-layout: section
-hideInToc: true
----
-
-# Searching the Data **Tree**
-
-<!--
-Speaker: they met find and grep as single commands. This section upgrades both
-into questions you ask a whole directory tree — the daily bread of anyone
-managing run data. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# `grep` Beyond the First Match
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-You know `grep pattern file`. Four flags turn it from *show me matches* into *answer my question*.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🚩 **The flags**
-
-```bash
-grep -i "error" run.log   # ignore case
-grep -n "ERROR" run.log   # show line numbers
-grep -c "ERROR" run.log   # just COUNT matches
-grep -l "ERROR" *.log     # just LIST matching files
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧪 **In practice**
-
-```bash
-grep -c "ERROR" *.log
-```
-
-```text
-run_041.log:0
-run_042.log:17
-run_043.log:2
-```
-
-An error count **per file** — one command.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Context: What Happened Around the Match?
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🔎 An error line rarely explains itself — the cause is usually a few lines **earlier** in the log.
-
-</div>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🩺 **`-B` before, `-A` after, `-C` both**
-
-```bash
-grep -B2 -A1 "ERROR" run_042.log
-```
-
-```text
-09:14:55 sensor_3 temp 71C
-09:14:56 sensor_3 temp 84C
-09:14:57 sensor_3 ERROR overheat
-09:14:58 sensor_3 shutdown
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 Two lines of context turn *there was an error* into *sensor 3 overheated over two seconds* — diagnosis without opening an editor.
-
-</div>
-
----
-hideInToc: true
----
-
-# `find` Acts, Not Just Lists: `-exec`
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ⚙️ **The pattern**
-
-```bash
-find data/ -name "*.log" -exec wc -l {} +
-```
-
-- `{}` — placeholder for the found files
-- `+` — pass many files per call
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧪 **Select, then act**
-
-```bash
-# line counts for CSVs changed this week
-find data/ -name "*.csv" -mtime -7 \
-  -exec wc -l {} +
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-💡 The selection tests stack — `-name`, `-size`, `-mtime` combine into a **query language for your filesystem**, and `-exec` is its verb.
-
-</div>
-
----
-hideInToc: true
----
-
-# Case Study: Audit a Season of Runs
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📦 `data/raw/` holds hundreds of run logs. Your supervisor asks: **which of last week's runs had errors — and how many is that?**
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-1️⃣ `find data/raw -name "run_*.log" -mtime -7` — last week's runs
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-2️⃣ `… -exec grep -l "ERROR" {} +` — keep only those containing errors
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-3️⃣ `… | wc -l` — count the survivors
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md reveal-up">
-
-```bash
-find data/raw -name "run_*.log" -mtime -7 -exec grep -l "ERROR" {} + | wc -l
-```
-
-💡 A tree-wide audit in one line — 📁 this is what *efficient work with files* means.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Your First Shell **Script**
-
-<!--
-Speaker: the automation payoff, and the rule of the whole course in miniature.
-If you typed it twice, script it. Ten minutes here saves them hours every month
-for the rest of their careers. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# If You Typed It Twice, Script It
-
-<div class="card card-accent card-glass pad-compact mt-sm glow">
-
-⚙️ A **script** is just your commands saved in a file — typed once, run forever. This is the automation aim in its smallest form.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📝 **Anatomy**
-
-```bash
-#!/usr/bin/env bash
-# count_events.sh — events per detector
-cut -d, -f2 events.csv | sort | uniq -c
-```
-
-- line 1 is the **shebang** — which interpreter runs this file
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ▶️ **Make it runnable**
-
-```bash
-chmod +x count_events.sh   # once: mark executable
-./count_events.sh          # run it
-```
-
-- `./` means *the one right here*, not something on `$PATH`
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Script Building Block 1: Variables
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🏷️ **Define and use**
-
-```bash
-DATA_DIR="data/raw"
-PATTERN="ERROR"
-grep -c "$PATTERN" "$DATA_DIR"/run_042.log
-```
-
-- no spaces around `=`
-- `$NAME` inserts the value
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🛡️ **Quote your variables**
-
-```bash
-rm "$OLD_FILE"   # safe with spaces
-rm $OLD_FILE     # "my data.csv" becomes TWO arguments!
-```
-
-Unquoted variables split on spaces — the classic script bug.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-💡 Variables gather everything you might change — paths, patterns, thresholds — at the **top** of the script, in one visible place.
-
-</div>
-
----
-hideInToc: true
----
-
-# Script Building Block 2: The `for` Loop
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🔁 Wildcards give you the file list; `for` runs the same body **once per file**.
-
-</div>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🔂 **The shape**
-
-```bash
-for f in data/raw/run_*.log; do
-  echo "== $f"
-  grep -c "ERROR" "$f"
-done
-```
-
-- `$f` holds the current filename on each pass
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 Ten files or ten thousand — the loop doesn't care. This is the moment the CLI stops being *typing fast* and becomes **automation**.
-
-</div>
-
----
-hideInToc: true
----
-
-# Putting It Together: `error_report.sh`
-
-<div class="card card-primary card-glass pad-tight mt-sm">
-
-## 📜 **The whole script**
-
-```bash
-#!/usr/bin/env bash
-# error_report.sh — ERROR count per run log
-DATA_DIR="data/raw"
-mkdir -p results
-
-for f in "$DATA_DIR"/run_*.log; do
-  n=$(grep -c "ERROR" "$f")
-  echo "$f,$n"
-done > results/error_report.csv
-```
+# Three Questions, **Clicked and Typed**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Question about `D0_KPi.csv` | In VS Code, Lecture 2 | As a command | Answer |
+| --- | --- | --- | --- |
+| How many lines? | `Ctrl+End`, read the line number | `wc -l data/raw/D0_KPi.csv` | 91 584 |
+| What is on line 5000? | `Ctrl+G`, then `5000` | `head -n 5000 data/raw/D0_KPi.csv \| tail -n 1` | `1868.8636,…` |
+| How many rows have no decay time? | `Ctrl+F`, then `-100` | `grep -c ',-100' data/raw/D0_KPi.csv` | 49 |
 
 </div>
 
@@ -1390,95 +142,67 @@ done > results/error_report.csv
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🆕 **One new trick**
+## 🖱️ **What a click leaves**
 
-`$( … )` — **command substitution**: run the command, keep its output in a variable
+The answer on the screen. The steps stay in the memory of whoever clicked, and they are done again by hand for the next file.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## ♻️ **Why it matters**
+## ⌨️ **What a typed line leaves**
 
-Delete the report, rerun the script, get it back — ready for version control later in the course
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Teaser: `xargs` — the Loop You Don't Write
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🚀 **One-liner power**
-
-```bash
-find data/raw -name "*.csv" | xargs wc -l
-# names with spaces: find -print0 | xargs -0
-```
-
-`xargs` reads names from the pipe and hands them to the command as **arguments** — a for-loop compressed into a word.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🗺️ **Where this road leads**
-
-- today — a script and a loop
-- soon — your scripts under **version control**
-- later in the course — whole **pipelines** rerun with one command
+The line itself. It goes into the README or into a script. It gives the same answer on Windows, macOS and Linux, and on a file of 10 GB that no editor opens.
 
 </div>
 
 </div>
 
-<div class="card card-accent card-glass pad-compact mt-md">
-
-⚙️ You don't need `xargs` yet — recognise it in the wild, and remember the shell can always go one step further.
-
-</div>
+<!--
+Speaker: the room has found the three answers by hand in VS Code: 91 584 lines,
+line 5000 begins with 1868.8636, and 49 rows carry -100. Nothing new is found here. The
+point is the third column: each answer now has a line that can be kept. (~2 min)
+-->
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Working **Safely**
+# The **Shell**
+
+<!--
+Speaker: where commands are typed, what reads them, and how a file is named in
+a command. pwd, ls and cd are known from Lecture 3. (~1 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Common CLI Mistakes
+# Open the **Terminal**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## ⚠️ **Dangerous**
+## 🖥️ **In VS Code**
 
-- `rm -rf` on the wrong directory — deleted **permanently**, no trash can *(modern `rm` refuses `/` itself, but `rm -rf ~` has no such guard)*
-- Running commands in the **wrong directory**
-- Overwriting files with `>` instead of appending with `>>`
-- Copy-pasting commands from the internet without reading them
+- **Terminal** > **New Terminal**. The Panel opens at the bottom, in the project folder
+- The line that ends in `$` or `%` is the **prompt**: the terminal waits for a command
+- Type a command and press `Enter`. It prints its answer, and the prompt comes back
+- The `+` at the top right of the Panel opens one more terminal. The bin icon closes one
 
 </div>
 
-<div class="card card-success card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## ✅ **Safe Habits**
+## 🪟 **Windows: Git Bash, set once**
 
-- Always `pwd` before destructive operations
-- Use `ls` to verify targets before `rm`
-- Try `--dry-run` flags when available
-- Read `man` pages for unfamiliar commands
+1. `Ctrl+Shift+P`, type `default profile`
+2. Select **Terminal: Select Default Profile**
+3. Select **Git Bash**
+4. Close the open terminal with the bin icon and open a new one. Its name at the top right reads `bash`
 
 </div>
 
@@ -1486,309 +210,2376 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 **Rule of thumb:** if a command can't be undone, double-check before pressing Enter.
-
-</div>
-
----
-hideInToc: true
----
-
-# Best Practices
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-🧩 Keep commands small and composable
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-📖 Use aliases sparingly — prefer readable scripts
-
-</div>
-
-<div class="card card-info card-glass pad-compact reveal-left">
-
-📁 Store reusable commands in scripts under version control
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-left">
-
-📋 Document workflows in README files with copy-paste commands
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-💪 Practice regularly to build muscle memory
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A folder contains: run_1.log, run_12.log, run_A.log, notes.txt. What does `rm run_?.log` delete?"
-  :options="[
-    'All four files',
-    'run_1.log, run_12.log and run_A.log',
-    'run_1.log and run_A.log',
-    'Nothing — ? is not a valid wildcard'
-  ]"
-  :correct="2"
-  explanation="? matches exactly one character, so run_1.log and run_A.log match but run_12.log (two characters) and notes.txt do not. This is why you run `ls run_?.log` first — see the match list before deleting it."
-/>
-
----
-hideInToc: true
----
-
-# Part 1 in One **Slide**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-up">
-
-🧭 **Navigate** — `pwd` / `cd` / `ls` ↔ `Get-Location` / `Set-Location` / `Get-ChildItem`
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-up">
-
-🔍 **Inspect** — `cat` / `grep` ↔ `Get-Content` / `Select-String` · match many files with `*.csv`, `run_?.log`
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-up">
-
-📝 **Create** — `mkdir` / `touch` / `echo` ↔ `New-Item` / `Add-Content`
-
-</div>
-
-<div class="card card-info card-glass pad-compact reveal-up">
-
-🔗 **Combine** — pipe with `|`, overwrite with `>`, append with `>>`, continue only on success with `&&`
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-up">
-
-📊 **Analyse** — `cut` / `sort` / `uniq -c` / `wc` — filter, group, and rank a CSV with zero programming
-
-</div>
-
-<div class="card card-warning card-glass pad-compact reveal-up">
-
-⚙️ **Automate** — `find -exec`, `for f in …; do … done`, `#!/usr/bin/env bash` — if you typed it twice, script it
-
-</div>
+🔧 Git Bash came with the installation of Git. It gives Windows the commands that macOS and Linux have, so one set of commands serves every laptop. macOS and Linux need no change: their terminal runs `zsh` or `bash`.
 
 </div>
 
 <!--
-Speaker: one beat per row — this is the whole first half. If a row does not ring
-a bell, that is the section to revisit before the seminar. (~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Part 2 — From Commands to **Files**
-
-<!--
-Speaker: now that they can drive the CLI, the second half is about what the CLI
-drives — files and folders that stay organised, backed up, and readable by
-someone else. Start with the pain: everyone has lived the chaos slide. (~1 min)
+Speaker: do the four steps on the projector even if your own laptop is a Mac:
+open the Command Palette and show the entry. Ask who sees bash, who sees zsh,
+and who still sees powershell. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Two Ways to Lose Your **Work**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight reveal-scale">
-
-## 😵 **File chaos**
-
-- "I have no idea where I saved that file"
-- "Which one is the right one?" — `final_final_v2.docx`, `asdfasdf.docx`, `final.docx`
-- "I overwrote my file with the wrong version"
-
-</div>
-
-<div class="card card-warning card-glass pad-tight reveal-scale">
-
-## 💥 **No backups**
-
-- "I accidentally deleted my file"
-- "My computer crashed and I lost everything"
-- "I spilled tea on my laptop — now my thesis is gone"
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight mt-md reveal-up">
-
-## ✅ **How to avoid both**
-
-- A consistent **folder structure** and descriptive, versioned **filenames** *(this lecture)*
-- **Version control** (Git) for text files — revert to any older version *(later in the course)*
-- Copies at three distances — **here, near, far** *(next slide)*
-
-</div>
-
----
-hideInToc: true
----
-
-# Backup Strategy: <span class="gradient-text">Here — Near — Far</span>
+# Terminal, Shell, **Program**
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight reveal-scale">
+<div class="card card-primary card-glass pad-compact">
 
-## 💻 **Here**
+## 🖥️ **Terminal**
 
-Your **local device** — the working copy you use every day
-
-- Laptop or desktop hard drive
-- Fast access, but vulnerable to hardware failure, theft, or accidents
+The window. It shows text and passes on what is typed. VS Code has one in the Panel.
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight reveal-scale">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🔌 **Near**
+## 🐚 **Shell**
 
-A **local backup** in the same physical space
-
-- External hard drive, USB stick, or NAS
-- Protects against device failure
-- Still at risk from fire, flood, or theft
+The program that reads the line. It finds the program named by the first word, starts it, waits until it ends, and shows the prompt again.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight reveal-scale">
+<div class="card card-accent card-glass pad-compact">
 
-## ☁️ **Far**
+## ⚙️ **Program**
 
-A **remote backup** in a different location
-
-- Cloud storage (Google Drive, OneDrive, Dropbox)
-- University-hosted storage or remote server
-- Protects against site-level disasters
+It does one job and prints text. `ls` lists, `wc` counts, `sort` sorts. Each is a file on the disk, like any other program.
 
 </div>
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md reveal-up">
+<div class="card card-info card-glass pad-compact mt-md">
 
-💡 A solid backup plan keeps copies at **all three distances**. If any one fails, the others still have you covered.
-
-</div>
-
----
-hideInToc: true
----
-
-# Compatibility Issues
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🔌 **Common Issues**
-
-- "I can't open this file"
-
-- "This only works on my old laptop"
-
-- "I have a Mac, so this probably won't work"
-
-- "I opened this Word file but it's all broken"
-
-- "The script was running ok but now I get errors"
+The shell of Git Bash and of Linux is `bash`. The shell of macOS is `zsh`. Both read every command of this lecture in the same way. PowerShell, used for `pwd`, `ls` and `cd` in Lecture 3, is a third shell. It has other names for most commands, `Get-Content` and `Select-String` among them, so its lines do not run on macOS or Linux.
 
 </div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **How to Avoid**
-
-- Prefer **open-source** software and file formats
-
-- Choose **cross-platform** tools (cloud-based or multi-OS)
-
-- Later in the course you'll **pin versions** so it works everywhere
-
-- Track changes with **version control** (Git)
-
-- Agree on software and formats with **collaborators** upfront
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# File **Naming**
 
 <!--
-Speaker: pivot from commands to discipline. A good filename is sortable and
-self-describing; bad ones cost hours later. Tie this back to the file-chaos
-slide they just laughed at. (~1 min)
+Speaker: three words that are used as one in everyday talk. The distinction
+matters once: when a command is "not found", it is the shell that could not
+find a program of that name. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# File Naming: Plan the **Metadata**
+# The Parts of a **Command**
 
-<div class="note-text">Comic: <a href="https://xkcd.com/1459/">xkcd 1459</a> · guidance in this section adapted from <a href="https://datamanagement.hms.harvard.edu/">Harvard Medical School's Research Data Management</a>.</div>
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="flex gap-md mt-sm items-start">
+```text
+$ ls -l data/raw/D0_KPi.csv
+-rw-r--r--  1 ada  staff  3926142 Sep 29 10:12 data/raw/D0_KPi.csv
+```
 
-<div class="flex-1">
+</div>
 
-<div class="grid-2 gap-md">
+<div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🧠 **Think Ahead**
+## ⚙️ **Program**
 
-- Which group of files does this convention cover?
-- Different file sets may use different conventions
-- Check for established conventions in your discipline or group
+`ls` is the first word. The shell looks for a program of that name and starts it.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎚️ **Option**
+
+`-l` changes how the program works: one line per file, with its size in bytes. An option starts with `-`.
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## 🏷️ **Identify the Metadata**
+## 📄 **Argument**
 
-- Experiment conditions, type of data
-- Researcher initials, lab or location
-- Project or experiment acronym
-- Date or date range
-- Run number or sample ID
+`data/raw/D0_KPi.csv` says what to work on. A program can take several.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ A space ends an argument. `wc -l Pendulum Run 2.csv` names three files: `Pendulum`, `Run` and `2.csv`. This is the reason for the rule of Lecture 2: no spaces in names. Quotes hold a name with spaces together: `"Pendulum Run 2.csv"`.
+
+</div>
+
+<div class="note-text mt-sm">The <code>$</code> stands for the prompt and is not typed. Upper and lower case are different letters: <code>-l</code> is not <code>-L</code>.</div>
+
+<!--
+Speaker: the size, 3 926 142 bytes, is the number the room read off last week.
+The user name and the date differ on every laptop. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Absolute **Paths**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🌳 **Folders form a tree**
+
+```text
+/
+└─ Users
+   └─ ada
+      └─ Documents
+         └─ analysis-project
+            ├─ README.md
+            └─ data
+               └─ raw
+                  └─ D0_KPi.csv
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📍 **From the top to the file**
+
+- An absolute path lists the folders from the top of the tree down to the file, with `/` between them
+- It starts with `/`
+- `pwd` prints the folder the terminal is in, as an absolute path
+- `~` stands for the home folder, here `/Users/ada`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+```text
+macOS      /Users/ada/Documents/analysis-project/data/raw/D0_KPi.csv
+Git Bash   /c/Users/ada/Documents/analysis-project/data/raw/D0_KPi.csv
+Windows    C:\Users\ada\Documents\analysis-project\data\raw\D0_KPi.csv
+```
+
+</div>
+
+<div class="note-text mt-sm">Git Bash writes the drive <code>C:</code> as <code>/c</code> and uses <code>/</code> where Windows uses <code>\</code>. On Linux the home folders are in <code>/home</code>.</div>
+
+<!--
+Speaker: run pwd and read the answer from left to right as a walk down the
+tree. Three laptops in the room give three different answers. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Relative **Paths**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🧭 **One file, seen from four places**
+
+| The terminal is in | Path to the file |
+| --- | --- |
+| the project folder | `data/raw/D0_KPi.csv` |
+| its folder `scripts` | `../data/raw/D0_KPi.csv` |
+| its folder `data/raw` | `D0_KPi.csv` |
+| any folder | `~/Documents/analysis-project/data/raw/D0_KPi.csv` |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✏️ **Three short names**
+
+- A relative path starts at the folder the terminal is in. It does not start with `/`
+- `.` is that folder itself
+- `..` is the folder above it. `cd ..` goes up one level, `cd ../..` two
+- `~` is the home folder. `cd` alone goes there
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+♻️ The rule: the terminal stays in the project folder, and every command, every script and the README use paths that start there. Then the project runs on any laptop and in any place on its disk. A path that begins with `/Users/ada` exists on one computer.
+
+</div>
+
+<!--
+Speaker: cd into scripts and run ls ../data/raw, then cd .. to come back. From
+here on the terminal does not leave the project folder. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Keys That **Save Typing**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## ⌨️ **In the command line**
+
+| Key | What it does |
+| --- | --- |
+| `Tab` | Completes a name: `cd da`, `Tab` gives `cd data/` |
+| `Tab` again | Lists the names that fit, if there are several |
+| `↑` `↓` | Earlier commands, one at a time |
+| `Ctrl+A` `Ctrl+E` | To the start and to the end of the line |
+| `Ctrl+C` | Stops the program that is running |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧹 **Around it**
+
+- `history` lists the commands typed so far, with numbers
+- `clear` empties the Panel. Nothing is deleted
+- `q` leaves a program that shows one page at a time
+- Paste with `Ctrl+V` (macOS `Cmd+V`)
+- The mouse does not move the cursor inside the line. The arrow keys do
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A name completed by `Tab` has no typing mistake in it. If `Tab` adds nothing, no name fits what was typed so far: the path is wrong before it is run.
+
+</div>
+
+<!--
+Speaker: type wc -l da, Tab, r, Tab, D, Tab, and let the room count the keys
+for the path: seven instead of nineteen. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Help**: `--help` and `man`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🪟 **Git Bash and Linux**
+
+```text
+$ wc --help
+Usage: wc [OPTION]... [FILE]...
+  or:  wc [OPTION]... --files0-from=F
+...
+```
+
+Every program answers `--help` with its options. Git Bash has no `man`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🍎 **macOS**
+
+```text
+$ man wc
+NAME
+     wc – word, line, character, and byte count
+```
+
+`man` opens the manual page. `Space` shows the next page, `/` and a word searches, `q` leaves.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+How to read the first line: `[OPTION]` in square brackets may be left out, `...` means that there may be several, and `FILE` in capitals is a place for your own value. `wc -l -c data/raw/D0_KPi.csv data/raw/pendulum.csv` fits the line: two options, two files.
+
+</div>
+
+<!--
+Speaker: the programs are the same by name on macOS and in Git Bash, but they
+come from two families, BSD and GNU. They differ in help and in a few options.
+Where they differ in this lecture, both forms are on the slide. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Command That **Fails**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❓ **No such program**
+
+```text
+$ pyhton scripts/hello.py
+zsh: command not found: pyhton
+```
+
+The first word is mistyped, or the program is not installed. The shell searched the folders listed in `PATH` and found none of that name.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📂 **No such file**
+
+```text
+$ wc -l data/raw/D0_KPi.cvs
+wc: data/raw/D0_KPi.cvs: open:
+No such file or directory
+```
+
+The path is wrong. Run `pwd`, then `ls`, and complete the name with `Tab`.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🧩 **Something is missing**
+
+```text
+$ cp data backup
+cp: data is a directory
+(not copied).
+```
+
+The program says what it could not do. Here it needs the option `-r`.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ The word before the first colon names who complains: the shell or a program. A command that works prints only what was asked for. `cp`, `mv`, `mkdir` and `rm` print nothing at all when they succeed.
+
+</div>
+
+<div class="note-text mt-sm">These are the messages of macOS. Git Bash words them differently: <code>bash: pyhton: command not found</code>.</div>
+
+<!--
+Speaker: make the three mistakes live and let the room read each message
+aloud before you explain it. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Files & **Folders**
+
+<!--
+Speaker: everything the Side Bar of VS Code does with files, as commands:
+look, count, make, copy, move, delete, find. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Read a File: `cat`, `head`, `tail`, `less`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 👀 **The first and the last lines**
+
+```text
+$ head -n 3 data/raw/D0_KPi.csv
+M,PT,TAU,IPCHI2
+1880.649,3000.9534,0.00041271152,1299.1675
+1860.6599,2803.4126,0.0001864154,0.34182164
+$ tail -n 2 data/raw/D0_KPi.csv
+1871.4323,2541.8845,0.0001756544,6.866581
+1911.2631,2543.4617,0.00017650973,8.169813
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📖 **Four programs**
+
+- `cat FILE` prints the whole file. Right for the ten lines of `pendulum.csv`
+- `head -n 3 FILE` prints the first 3 lines, `tail -n 2 FILE` the last 2
+- `tail -n +2 FILE` prints from line 2 on: the file without its header line
+- `less FILE` shows one screen at a time. `Space` goes on, `q` leaves
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`cat data/raw/D0_KPi.csv` prints 91 584 lines. `Ctrl+C` stops it. `head` reads only as far as it prints, so the first lines of a file of 10 GB appear at once.
+
+</div>
+
+<!--
+Speaker: run cat on the large file once and stop it with Ctrl+C. Then head.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Count: `wc`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **Lines, words, bytes**
+
+```text
+$ wc data/processed/pendulum.csv
+      10      10      97 data/processed/pendulum.csv
+$ wc -l data/raw/D0_KPi.csv
+   91584 data/raw/D0_KPi.csv
+$ wc -c data/raw/D0_KPi.csv
+ 3926142 data/raw/D0_KPi.csv
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **What the numbers are**
+
+- `wc` prints lines, words and bytes. `-l`, `-w` and `-c` print one of them
+- 97 bytes: the size counted by hand in Lecture 3
+- 91 584 lines: one header line and 91 583 rows
+- 3 926 142 / 91 584 = 42.9 bytes per line
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ `wc -l` counts line breaks, the byte `0A`. A file whose last line has no line break after it counts one line fewer than the editor shows.
+
+</div>
+
+<div class="note-text mt-sm">macOS puts spaces before the numbers. Git Bash does not.</div>
+
+<!--
+Speaker: wc stands for word count. The three numbers of the small file are
+10 lines, 10 words, because no line has a space in it, and 97 bytes. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Make and Copy: `mkdir`, `cp`, `mv`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📂 **A folder with two copies**
+
+```text
+$ mkdir backup
+$ cp data/raw/pendulum.csv backup
+$ cp -r data backup
+$ ls backup
+data            pendulum.csv
+$ mv backup/pendulum.csv backup/pendulum_raw.csv
+$ ls backup
+data                    pendulum_raw.csv
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **Three programs**
+
+- `mkdir NAME` makes a folder. `mkdir -p a/b/c` also makes the folders above it
+- `cp FROM TO` copies a file. If `TO` is a folder, the copy goes into it under the same name
+- `cp -r` copies a folder with all that is in it
+- `mv FROM TO` moves a file or a folder. A new name in the same folder renames it
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ `cp` and `mv` replace a file that already has the target name, and they do not ask. `cp -i` and `mv -i` ask first.
+
+</div>
+
+<!--
+Speaker: watch the folder appear in the Side Bar while you type. The terminal
+and the Side Bar show the same disk. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Delete: `rm`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🗑️ **A file, then a folder**
+
+```text
+$ rm backup/pendulum_raw.csv
+$ rmdir backup
+rmdir: backup: Directory not empty
+$ rm -r backup
+$ ls
+data        README.md   results     scripts
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✂️ **Three forms**
+
+- `rm FILE` deletes a file
+- `rmdir FOLDER` deletes a folder that is empty
+- `rm -r FOLDER` deletes a folder and all that is in it
+- `rm -i` asks before each file
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The shell has no Recycle Bin and no Trash, and `Ctrl+Z` takes nothing back. Before `rm`: run `pwd` to see where the terminal is, then `ls` with the same path to see what will go.
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+What `rm` can take away for good is a file in `data/raw`, a script or the README. A file in `data/processed` or `results` can be made again.
+
+</div>
+
+<!--
+Speaker: rmdir refuses a folder that still holds something. That refusal is a
+safety net, and rm -r is the way round it. Say the folder name aloud before
+pressing Enter. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Many Files at Once: **Wildcards**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ echo data/*/*.csv
+data/processed/pendulum.csv data/raw/D0_KPi.csv data/raw/pendulum.csv
+$ wc -l data/*/*.csv
+      10 data/processed/pendulum.csv
+   91584 data/raw/D0_KPi.csv
+      11 data/raw/pendulum.csv
+   91605 total
+```
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✳️ **`*`**
+
+Any number of characters, also none. `*.csv` fits every name that ends in `.csv`.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ❓ **`?`**
+
+Exactly one character. `D?_KPi.csv` fits `D0_KPi.csv`.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🔤 **`[pr]`**
+
+One of the characters listed. `data/[pr]*` fits `data/processed` and `data/raw`.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+The shell replaces the pattern by the list of names that fit, before the program starts. `wc` never sees the `*`: it gets three file names. `echo` prints its arguments, so `echo PATTERN` shows what a pattern stands for. Run it before `rm PATTERN`.
+
+</div>
+
+<!--
+Speaker: the pattern is the shell's work, not the program's. That is why the
+same three signs work with every program. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Search the Folders: `find`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **By name, by size**
+
+```text
+$ find . -name '*.csv'
+./data/processed/pendulum.csv
+./data/raw/D0_KPi.csv
+./data/raw/pendulum.csv
+$ find . -size +1M
+./data/raw/D0_KPi.csv
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **How to read it**
+
+- `find FOLDER` walks through the folder and every folder below it. `.` is the folder the terminal is in
+- `-name '*.csv'` keeps the names that fit the pattern
+- `-size +1M` keeps files larger than 1 MB
+- `-type d` keeps folders, `-type f` files
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The pattern stands in quotes here. Quotes stop the shell from replacing it, so `find` gets the pattern itself and tries it in every folder. A wildcard such as `data/*/*.csv` looks two folders down and no further. `find` looks at every depth.
+
+</div>
+
+<!--
+Speaker: find answers "where did I put it" for a whole disk: find ~ -name
+'pendulum*' searches the home folder. It takes a while. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Project Folder, **from the Shell**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📁 **The layout of Lecture 2**
+
+```text
+analysis-project/
+├─ README.md
+├─ data/
+│  ├─ raw/         D0_KPi.csv  pendulum.csv
+│  └─ processed/   pendulum.csv
+├─ scripts/
+└─ results/        report.md  pendulum_plot.png
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **Its rules, as habits at the prompt**
+
+- The terminal stays in `analysis-project`
+- Commands **read** from `data/raw`. No command writes there
+- What a command makes goes to `data/processed` or to `results`
+- Commands worth keeping go into `scripts`
+- A name without spaces is one argument. A date written `2026-10-13` sorts in `ls`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The layout answers one question for every file: can it be made again? Files in `data/processed` and `results` can, by a command. Files in `data/raw` and `scripts` cannot.
+
+</div>
+
+<!--
+Speaker: nothing new on this slide. It fixes where the commands of the next
+sections read and where they write. (~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Pipes & **Filters**
+
+<!--
+Speaker: the centre of the lecture. Small programs that each do one thing to
+lines of text, joined so that the output of one is the input of the next.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Output into a File: `>` and `>>`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📤 **Redirect**
+
+```text
+$ head -n 4 data/raw/D0_KPi.csv > results/sample.csv
+$ wc -l results/sample.csv
+       4 results/sample.csv
+$ echo "first lines of D0_KPi.csv" > results/note.txt
+$ echo "made on 2026-10-13" >> results/note.txt
+$ cat results/note.txt
+first lines of D0_KPi.csv
+made on 2026-10-13
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧾 **What happens**
+
+- A program prints to its **standard output**. Normally that is the terminal
+- `> FILE` sends the output into a file. Nothing appears on the screen
+- `>` makes the file, or **empties** it if it exists. `>>` adds at its end
+- `echo` prints its arguments. With `>` it writes one line into a file
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The shell empties the file named after `>` before the program starts. `sort results/sample.csv > results/sample.csv` therefore sorts an empty file, and `wc -l` then counts 0 lines. A command never writes into the file it reads.
+
+</div>
+
+<!--
+Speaker: run the sort line on results/sample.csv and count again: 0. Then
+delete both scratch files with rm. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Program to Program: the Pipe `|`
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`A | B` starts both programs. What `A` prints becomes the input of `B`. No file stands between them.
+
+</div>
+
+<div class="mt-sm" style="text-align: center;">
+
+```mermaid {scale: 0.8}
+graph LR
+    F["D0_KPi.csv"]:::input --> A["head -n 5000"]
+    A -->|"5000 lines"| B["tail -n 1"]
+    B -->|"1 line"| T["terminal"]:::output
+
+    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
+    classDef output fill:#063c34,stroke:#34d399,color:#d1fae5
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+```text
+$ head -n 5000 data/raw/D0_KPi.csv | tail -n 1
+1868.8636,5537.248,0.0007151779,10.399748
+$ ls data/raw | wc -l
+       2
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+A program that takes lines in and prints lines out is a **filter**: `head`, `tail`, `cut`, `sort`, `uniq`, `grep`, `tr`, `wc`. Given no file name, a filter reads what the pipe hands to it.
+
+</div>
+
+</div>
+
+<!--
+Speaker: line 5000 is the line that Ctrl+G found in VS Code. The second
+example counts the files in data/raw: ls prints two names,
+wc -l counts two lines. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Columns: `cut`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✂️ **Fields 1 and 3, then field 3 alone**
+
+```text
+$ cut -d, -f1,3 data/raw/D0_KPi.csv | head -n 3
+M,TAU
+1880.649,0.00041271152
+1860.6599,0.0001864154
+$ tail -n +2 data/raw/D0_KPi.csv |
+    cut -d, -f3 | head -n 3
+0.00041271152
+0.0001864154
+0.00018464602
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **The options**
+
+- `-d,` names the sign that separates the values. For the raw pendulum file it is `-d';'`
+- `-f1,3` names the fields to keep, counted from 1
+- `-c1-3` keeps characters 1 to 3 of each line instead
+- `cut` does not know what a header is. `tail -n +2` drops line 1 before it
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A line that ends in `|` goes on in the next line. `cut -d, -f2,3` is the deleted first column of Lecture 2, on any number of lines. It cuts at every separator: a CSV file with a comma inside quoted text needs a program that knows CSV.
+
+</div>
+
+<!--
+Speaker: ask which field number TAU has before running the second command.
+head -n 1 shows the names in order. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Order: `sort`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔤 **As text**
+
+```text
+$ tail -n +2 data/processed/pendulum.csv |
+    sort | head -n 3
+100,20.01
+20,9.02
+30,11.05
+```
+
+`sort` compares characters from the left. `1` comes before `2`, so `100` comes before `20`. The editor did the same in Lecture 2.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🔢 **As numbers**
+
+```text
+$ tail -n +2 data/processed/pendulum.csv |
+    sort -n | head -n 3
+20,9.02
+30,11.05
+40,12.61
+```
+
+`-n` reads the start of each line as a number and orders by its value.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`-r` reverses the order. `-t, -k2` orders by field 2 of lines whose fields are separated by `,`. `sort -t, -k2 -n -r` puts the row with the largest second value first.
+
+</div>
+
+<!--
+Speaker: this is the last slide of the editing section of Lecture 2, now with
+a way out: the option -n. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Ends of a **Column**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⬇️ **The two smallest masses**
+
+```text
+$ tail -n +2 data/raw/D0_KPi.csv |
+    cut -d, -f1 | sort -n | head -n 2
+1766.2096
+1808.1385
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⬆️ **The two largest masses**
+
+```text
+$ tail -n +2 data/raw/D0_KPi.csv |
+    cut -d, -f1 | sort -n | tail -n 2
+1920.3453
+2453.6584
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Three filters: drop the header, keep field 1, order by value. Then `head` or `tail` takes one end. The column `M` runs from 1766.2096 to 2453.6584 MeV/c². The second value from each end is 1808.1385 and 1920.3453: one row at each end lies far from all the others.
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+✅ A sorted column shows its ends first, and a wrong value is usually at an end. Looking at both ends of every column is the first check of a new data file.
+
+</div>
+
+<!--
+Speaker: 91 583 values are sorted in well under a second. Ask the room what
+the values 1766 and 2453 might be before going on: nobody knows yet, and that
+is the right answer. They get a line number later in the lecture. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `sort -n` and the **Decimal Sign**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+```text
+$ tail -n +2 data/raw/D0_KPi.csv | cut -d, -f3 > results/tau.txt
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🇱🇹 **A Mac set to Lithuanian**
+
+```text
+$ LC_ALL=lt_LT.UTF-8 sort -n results/tau.txt |
+    head -n 3
+-0.059467286
+-0.09811119
+-0.13715266
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🌐 **With no language rules**
+
+```text
+$ LC_ALL=C sort -n results/tau.txt |
+    head -n 3
+-100.0
+-100.0
+-100.0
+```
+
+</div>
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+`sort -n` takes the decimal sign from the language the computer is set to. In Lithuanian it is the comma, so the point in `-0.059467286` is not read as part of the number, and the smallest value, `-100.0`, is not first. `LC_ALL=C` before a program switches the language rules off: the decimal sign is the point on every computer. `echo $LANG` prints the setting, for example `lt_LT.UTF-8`.
+
+</div>
+
+<div class="note-text mt-sm">This is the decimal comma of Lecture 2 again. There it was in a file. Here it is in a setting of the computer.</div>
+
+<!--
+Speaker: the left side is what plain sort -n prints on a Mac whose language is
+Lithuanian. On a laptop set to English both commands give the right side.
+Whole numbers are not affected. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Count Repeats: `sort | uniq -c`
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ cut -d, -f3 data/raw/D0_KPi.csv | sort | uniq -c | sort -n | tail -n 3
+   2 0.0026546149
+   2 0.0035111452
+  49 -100.0
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Stage by stage**
+
+- `uniq` merges equal lines that stand next to each other. `-c` writes in front how many there were
+- Equal lines stand together only after `sort`. Without it `uniq` gives all 91 584 lines back
+- The second `sort -n` orders by the count, and `tail -n 3` keeps the three largest
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔎 **What it shows**
+
+A measured decay time almost never comes twice: the most frequent real values occur 2 times. One value occurs 49 times, `-100.0`. A value that repeats like this is not a measurement. It is the mark for "no value".
+
+</div>
+
+</div>
+
+<!--
+Speaker: nobody told the pipeline about -100. Counting repeats found it. This
+is how a missing-value mark is found in a file that comes without a
+description. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Keep Lines: `grep`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **Lines that contain a text**
+
+```text
+$ grep -c ',-100' data/raw/D0_KPi.csv
+49
+$ grep -n ',-100' data/raw/D0_KPi.csv |
+    head -n 2
+343:1818.1002,2978.644,-100.0,9901.186
+965:1902.8027,2740.8074,-100.0,45169.31
+$ grep -v ',-100' data/raw/D0_KPi.csv | wc -l
+   91535
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🚩 **The options**
+
+- `grep TEXT FILE` prints the lines that contain the text
+- `-c` counts them instead
+- `-n` puts the line number in front
+- `-v` prints the lines **without** it: 91 535 here
+- `-i` takes upper and lower case as equal
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The text is `',-100'`, with the comma and in single quotes. A first argument that starts with `-` is read as an option, and `grep -100 FILE` then waits for input that never comes. `Ctrl+C` ends the wait.
+
+</div>
+
+<!--
+Speaker: the count is the number found with Ctrl+F in VS Code. grep
+-c counts lines, the Find box counts matches. Here the two agree. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# From `data/raw` to `data/processed`
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ grep -v ',-100' data/raw/D0_KPi.csv > data/processed/D0_valid.csv
+$ wc -l data/raw/D0_KPi.csv data/processed/D0_valid.csv
+   91584 data/raw/D0_KPi.csv
+   91535 data/processed/D0_valid.csv
+  183119 total
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📥 **Read here, write there**
+
+- The command reads the raw file and changes nothing in it
+- Its output is a new file in `data/processed`: the header line and the 91 534 rows that have a decay time
+- Delete the new file, run the line again, and the file is back
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📝 **The line is the description**
+
+In Lecture 2 the README said in words what was done to a file by hand. Here the command says it, exactly: every line that contains `,-100` was left out. Whoever has the raw file and this line has the processed file.
+
+</div>
+
+</div>
+
+<!--
+Speaker: check the arithmetic with the room: 91 584 minus 49 is 91 535, and
+one of those lines is the header. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Pipeline, **Stage by Stage**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Question: at which mass does the file have the most rows?
+
+</div>
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+1️⃣ `tail -n +2 data/raw/D0_KPi.csv` prints the rows without the header line
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+2️⃣ `| cut -d, -f1` keeps the mass: `1880.649`
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+3️⃣ `| cut -c1-3` keeps its first three characters: `188`, which stands for 1880 to 1889.99
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+4️⃣ `| sort | uniq -c` counts the rows in each step of 10 MeV/c²
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+```text
+tail -n +2 data/raw/D0_KPi.csv | cut -d, -f1 | cut -c1-3 | sort | uniq -c
+```
+
+Run the line after every stage and read what comes out before the next stage is added.
+
+</div>
+
+<!--
+Speaker: build it live, one stage at a time, with | head -n 3 at the end until
+the last stage. Every mass in the file has four digits before the point, so
+the first three characters are the same as a step of 10. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Mass Column as a **Histogram**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧾 **The output**
+
+```text
+   1 176
+   1 180
+3716 181
+7245 182
+7384 183
+7946 184
+12207 185
+17496 186
+11388 187
+7540 188
+6790 189
+6684 190
+3183 191
+   1 192
+   1 245
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📊 **The same counts, drawn: █ = 600 rows**
+
+```text
+1760  ·
+1800  ·
+1810  ██████
+1820  ████████████
+1830  ████████████
+1840  █████████████
+1850  ████████████████████
+1860  █████████████████████████████
+1870  ███████████████████
+1880  █████████████
+1890  ███████████
+1900  ███████████
+1910  █████
+1920  ·
+2450  ·
+```
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+The counts rise to 17 496 between 1860 and 1870 MeV/c²: the D⁰, whose mass is 1865. Below and above the peak about 7000 rows fall into each step. Four rows lie outside 1810 to 1920.
+
+</div>
+
+<!--
+Speaker: five small programs and no plotting. The right-hand side is drawn by
+hand from the left-hand numbers. Add | sort -n -r | head -n 3 to get the three
+fullest steps: 186, 185, 187. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Change Characters: `tr`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔁 **One character for another**
+
+```text
+$ head -n 2 data/raw/pendulum.csv | tr ',' '.'
+nr;length_cm;t10_s
+1;20;9.02
+$ head -n 2 data/raw/pendulum.csv | tr ';' ','
+nr,length_cm,t10_s
+1,20,9,02
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **How it works**
+
+- `tr A B` replaces every character `A` by the character `B`
+- `tr -d A` deletes every `A`
+- `tr -d '\r'` deletes the byte `0D`. A file with CRLF line endings comes out with LF
+- `tr` takes no file name. It reads from a pipe
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`tr` is Replace All of Lecture 2 for single characters. The second command shows why the order mattered there: after `;` has become `,` the line `1,20,9,02` has three commas, and nothing tells the decimal one from the others.
+
+</div>
+
+<!--
+Speaker: tr stands for translate. \r is how the shell writes the byte 0D, the
+first half of the Windows line ending from Lecture 3. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Cleaning of Lecture 2, **in One Line**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## ✍️ **Edit by hand, and its filter**
+
+| In the editor | In the shell |
+| --- | --- |
+| Delete the line with the mean | `grep -v mean` |
+| Make every line ending LF | `tr -d '\r'` |
+| Replace `,` by `.` | `tr ',' '.'` |
+| Replace `;` by `,` | `tr ';' ','` |
+| Delete the column `nr` | `cut -d, -f2,3` |
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⌨️ **Joined by pipes**
+
+```text
+$ grep -v mean data/raw/pendulum.csv |
+    tr -d '\r' | tr ',' '.' | tr ';' ',' |
+    cut -d, -f2,3 | head -n 3
+length_cm,t10_s
+20,9.02
+30,11.05
+```
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+⚙️ Each filter does one edit to every line. The order is the order of Lecture 2: the decimal comma becomes a point while it is the only comma. The raw file is read and stays as it is. With `> data/processed/pendulum_script.csv` at the end, the output is a file.
+
+</div>
+
+<!--
+Speaker: build it stage by stage as on the mass column and watch the last line
+of the table change: 9;100;20,01 then 9;100;20.01 then 9,100,20.01 then
+100,20.01. The stage tr -d does nothing on a Mac: the file has no 0D bytes.
+On a Windows laptop it removes one per line. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Regular **Expressions**
+
+<!--
+Speaker: so far Find and grep looked for a fixed text. A regular expression
+describes a kind of text. The same patterns are used in the Find box of VS
+Code and in grep. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Pattern Instead of a **Text**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔎 **A fixed text finds too much**
+
+```text
+$ grep -c 1865 data/raw/D0_KPi.csv
+1986
+```
+
+1986 lines contain `1865` somewhere: at the start of the mass, but also inside `PT`, `TAU` or `IPCHI2`. Wanted are the lines whose mass **starts** with 1865.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ✳️ **A pattern says where**
+
+```text
+$ grep -c '^1865' data/raw/D0_KPi.csv
+1846
+```
+
+`^` stands for the start of the line. 1846 rows have a mass from 1865 up to 1866. The other 140 lines had `1865` in another place.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A **regular expression**, regex for short, is a text in which some signs do not stand for themselves. They stand for a kind of character, for a repetition or for a place in the line. The same signs work in `grep`, in the Find box of VS Code and in most programming languages.
+
+</div>
+
+<!--
+Speaker: 1986 minus 1846 is 140. Show one of the 140 with
+grep 1865 data/raw/D0_KPi.csv | grep -v '^1865' | head -n 1. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Signs for **One Character**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Sign | Fits | Pattern | Lines it fits in `data/processed/pendulum.csv` |
+| --- | --- | --- | --- |
+| a letter, a digit, `,` | itself | `20` | 2: `20,9.02` and `100,20.01` |
+| `.` | any one character | `1.0` | 2: `30,11.05` and `100,20.01` |
+| `\.` | a point | `1\.0` | 1: `30,11.05` |
+| `[0-9]` | one character from `0` to `9` | `[0-9]0,` | all 9 rows |
+| `[a-z]` | one lower-case letter | `[a-z]` | 1: the header line |
+| `[^0-9]` | one character that is **not** listed | `[^0-9,.]` | 1: the header line |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔡 **Square brackets**
+
+`[ ]` lists the characters that may stand in one place. `[0-9]` is short for `[0123456789]`. A `^` as the first sign inside turns the list round: every character except these.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **The point**
+
+`.` fits any character, so `1.0` also fits `100`. A backslash takes the special meaning away: `\.` is a point and nothing else.
+
+</div>
+
+</div>
+
+<!--
+Speaker: each row can be run as grep -E 'PATTERN' data/processed/pendulum.csv.
+Let the room predict the lines for 1.0 before you run it. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Signs for **How Many** and **Where**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Sign | Meaning | Pattern | Lines it fits in `data/raw/pendulum.csv` |
+| --- | --- | --- | --- |
+| `+` | one or more of what stands before it | `[0-9]+;` | 9: the rows, at `1;` and at `20;` |
+| `*` | none or more | `;.*;` | all 11 |
+| `{3}` | exactly three | `;[0-9]{3};` | 1: `9;100;20,01` |
+| `^` | the start of the line | `^;` | 1: `;mean;15,14` |
+| `$` | the end of the line | `0$` | 2: `7;80;17,90` and `8;90;19,10` |
+| `( )` and `\|` | a group, and "or" inside it | `(01\|02)$` | 2: `1;20;9,02` and `9;100;20,01` |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **Repetition**
+
+`+`, `*` and `{3}` act on the one thing before them: a character, a `[ ]` or a group in `( )`. `[0-9]+` is a whole number of any length.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📌 **Place**
+
+`^` and `$` fit no character. They pin the pattern to an end of the line. `^[0-9]+$` fits a line that is one whole number and nothing else.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the raw file has 11 lines: the header, nine rows and the mean line.
+The pattern ^; finds the mean line without the word mean. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Regex in the **Find Box** of VS Code
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔎 **Switch it on**
+
+- `Ctrl+F` opens Find (macOS `Cmd+F`)
+- The button `.*` at the right end of the box switches regular expressions on: `Alt+R` (macOS `Cmd+Option+R`)
+- The counter shows the number of matches while the pattern is typed
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧪 **A pattern, built in three steps**
+
+```text
+In data/raw/pendulum.csv
+
+Find          Matches
+[0-9]+        39     every number
+[0-9]+;       18     a number before a ;
+^[0-9]+;       9     the first one in a line
+```
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ The third pattern fits the row number with its semicolon, once in each of the nine rows. The counter is the check: nine rows, nine matches. Replaced by nothing, the column `nr` is gone from the rows. In Lecture 2 this took a cursor on every line.
+
+</div>
+
+<div class="note-text mt-sm">A file in <code>data/raw</code> is searched, never replaced in. Replace on a copy in <code>data/processed</code>.</div>
+
+<!--
+Speaker: open the raw pendulum file, switch the button on and type the three
+patterns. Read the counter aloud after each. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Capture **Groups**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Round brackets mark a part of the match. In the Replace box `$1` stands for what the first pair of brackets matched, and `$2` for the second.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔁 **The decimal comma**
+
+```text
+Find      ([0-9]),([0-9])
+Replace   $1.$2
+```
+
+`9,02` becomes `9.02`: both digits are put back, with a point between them. The raw file has 10 matches. A semicolon is never touched, so this replacement can come before or after the other one.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **A row of a Markdown table**
+
+```text
+Find      ^(.*),(.*)$
+Replace   | $1 | $2 |
+```
+
+`20,9.02` becomes `| 20 | 9.02 |`. One replacement on the 10 lines of the cleaned file does what three edits with many cursors did in Lecture 2.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ Replace All with a pattern changes every match at once, also the ones nobody looked at. Read the counter first. If the number is not the one expected, the pattern is wrong.
+
+</div>
+
+<!--
+Speaker: do the first replacement on a fresh copy of the raw file in
+data/processed, then Ctrl+Z. The 10 matches are the nine rows and the mean
+line. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `.*` Takes **All It Can**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+```text
+1880.649,3000.9534,0.00041271152,1299.1675
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🐘 **`^.*,`**
+
+```text
+$ grep -oE '^.*,' data/raw/D0_KPi.csv |
+    head -n 2
+M,PT,TAU,
+1880.649,3000.9534,0.00041271152,
+```
+
+`.*` runs to the **last** comma of the line: three fields, not one.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🎯 **`^[^,]*`**
+
+```text
+$ grep -oE '^[^,]*' data/raw/D0_KPi.csv |
+    head -n 2
+M
+1880.649
+```
+
+`[^,]*` cannot run past a comma: it stops at the **first** one.
+
+</div>
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+`*` and `+` take as many characters as they can while the rest of the pattern still fits. A pattern for one field says what the field may not contain: `[^,]*` is "any characters except the separator". The option `-o` makes `grep` print only the part that matched, not the whole line.
+
+</div>
+
+<!--
+Speaker: this is the usual first surprise with regular expressions. In the
+table-row pattern of the last slide it did no harm, because the cleaned file
+has one comma per line. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same Patterns in the Shell: `grep -E`
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ grep -cE '[0-9],[0-9]' data/raw/pendulum.csv
+10
+$ grep -cE '^18[5-7]' data/raw/D0_KPi.csv
+41091
+$ grep -nE '^(17|180|19[2-9]|2)' data/raw/D0_KPi.csv
+10048:2453.6584,755.2686,0.2276815,1.0500937
+43608:1808.1385,3632.4104,0.06656479,11200.344
+67877:1920.3453,4999.695,0.00015124853,1.0319226
+89861:1766.2096,12493.022,0.0037266747,214.38336
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🚩 **`-E` and the quotes**
+
+- `-E` switches on the full set of signs: `+`, `{ }`, `( )`, `|`
+- The pattern stands in single quotes. Without them the shell reads `*`, `[ ]`, `$` and `|` itself
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔎 **What the three lines found**
+
+- 10 lines of the raw table have a decimal comma
+- 41 091 rows, 45% of the file, have a mass from 1850 to 1880
+- The four rows outside 1810 to 1920, with their line numbers
+
+</div>
+
+</div>
+
+<!--
+Speaker: the last command gives the two ends of the sorted mass column a line
+number each. Ctrl+G in VS Code goes to line 10048. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Wildcards Are Not **Regular Expressions**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| | Wildcard | Regular expression |
+| --- | --- | --- |
+| Read by | the shell, for file names | `grep -E`, the Find box of VS Code |
+| Any one character | `?` | `.` |
+| Any number of characters | `*` | `.*` |
+| One of a list | `[pr]` | `[pr]` |
+| Must fit | the whole name | any part of the line, unless `^` and `$` pin it |
+| Every CSV file | `*.csv` | `.*\.csv$` |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **`\d` is not everywhere**
+
+VS Code and `grep` on macOS read `\d` as a digit. `grep` in Git Bash and on Linux does not: there `grep -cE '\d,\d' data/raw/pendulum.csv` gives 0 where 10 is right. `[0-9]` works in all of them.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **`$` and Windows line endings**
+
+In a file with CRLF line endings the byte `0D` stands before every line break. For `grep` it is the last character of the line, and `0$` fits nothing. `tr -d '\r'` in front of `grep` removes it.
+
+</div>
+
+</div>
+
+<!--
+Speaker: both warnings are the same lesson as the decimal sign: a pattern that
+works on one laptop is tested on the other system before it goes into a
+script. The Find box of VS Code handles both line endings. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# A First **Script**
+
+<!--
+Speaker: a line that is typed twice goes into a file. The file is run with one
+command, today and next month. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Script Is a **File of Commands**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📜 **`scripts/clean_pendulum.sh`**
+
+```bash
+#!/usr/bin/env bash
+# The hand edits of Lecture 2, as commands.
+# Run from the project folder:
+#   bash scripts/clean_pendulum.sh
+
+grep -v mean data/raw/pendulum.csv |
+  tr -d '\r' | tr ',' '.' | tr ';' ',' |
+  cut -d, -f2,3 > data/processed/pendulum_script.csv
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **What is in it**
+
+- Plain text, made with **New File** in `scripts`. The name ends in `.sh`
+- The commands stand as they were typed at the prompt
+- `#` starts a comment. The shell skips the rest of that line
+- Line 1 names the program that reads the file: `bash`
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+```text
+$ bash scripts/clean_pendulum.sh
+$ head -n 2 data/processed/pendulum_script.csv
+length_cm,t10_s
+20,9.02
+```
+
+</div>
+
+<div class="note-text mt-sm">The script prints nothing: its output went into the file. Save a script with <code>LF</code> in the Status Bar. With <code>CRLF</code> the byte <code>0D</code> at the end of each line becomes part of the command.</div>
+
+<!--
+Speaker: make the file live, paste the pipeline from the terminal history, add
+the comment lines. Point at LF in the Status Bar before saving. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Run a Program **Someone Else Wrote**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🐍 **A script in Python**
+
+```text
+$ python scripts/column_stats.py data/raw/D0_KPi.csv TAU
+file    data/raw/D0_KPi.csv
+column  TAU
+rows    91583
+min     -100.0
+max     0.5787994
+mean    -0.0525221
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **The same shape as `bash FILE`**
+
+- `python` is a program. Its first argument is the file to run
+- The words after the file name go to the script: a path and a column name
+- On macOS the program is called `python3`
+- `column_stats.py` is handed out with this lecture. It is used like `wc`: it is run, and nobody has to read it
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`bash FILE.sh` and `python FILE.py` are the two forms a README needs. `wc` and `sort` count and order. They do not compute a mean: that takes a program, and this one is about 50 lines that someone else wrote and tested.
+
+</div>
+
+<!--
+Speaker: the file is in scripts, put there before the lecture. Run it for M as
+well: 91 583 rows, mean 1864.1. Do not open the file. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What 49 Rows Do to a **Mean**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📥 **`data/raw/D0_KPi.csv`**
+
+```text
+rows    91583
+min     -100.0
+max     0.5787994
+mean    -0.0525221
+```
+
+The mean decay time is negative. No particle decays before it is made.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ⚙️ **`data/processed/D0_valid.csv`**
+
+```text
+rows    91534
+min     -0.13715266
+max     0.5787994
+mean    0.000981802
+```
+
+Without the 49 marked rows the mean is 0.00098 ns.
+
+</div>
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+49 rows are 0.05% of the file. Each puts −100 into the sum: 49 × (−100) / 91 583 = −0.0535. That moves the mean from +0.00098 to −0.0525, more than fifty times its own size and with the wrong sign. A mark for "no value" that is written as a number is counted as a number by every program.
+
+</div>
+
+<div class="note-text mt-sm">The smallest value left is −0.137 ns. Three rows have a small negative time. They are not marks, and whether to keep them is a question about the measurement.</div>
+
+<!--
+Speaker: run the script on both files. This is why the fifth question of
+Lecture 2, how missing values are marked, is asked before any number is
+computed. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Variables**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏷️ **A text under a name**
+
+```bash
+raw=data/raw/pendulum.csv
+out=data/processed/pendulum_script.csv
+
+grep -v mean "$raw" | tr -d '\r' |
+  tr ',' '.' | tr ';' ',' |
+  cut -d, -f2,3 > "$out"
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **The rules**
+
+- `name=value` stores a text. No spaces around the `=`
+- `$name` puts the text back in
+- Inside double quotes, `"$name"`, the text stays one argument, also when it holds a space
+- `$1` is the first word after the name of the script, `$2` the second
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+What may change stands once, at the top of the script: here the two paths. For the next table only two lines are edited, and the pipeline below them stays as it was tested.
+
+</div>
+
+<div class="note-text mt-sm">At the prompt: <code>name=pendulum</code>, then <code>echo "data/raw/$name.csv"</code> prints <code>data/raw/pendulum.csv</code>.</div>
+
+<!--
+Speaker: edit the script live to this form and run it again. The output file
+is the same. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `for`: the Same Step for **Each File**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔂 **The loop**
+
+```bash
+for f in data/raw/*.csv; do
+  echo "== $f"
+  head -n 2 "$f"
+done
+```
+
+- The wildcard gives the list of names
+- The lines between `do` and `done` run once for each name
+- `$f` holds the name of the turn
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧾 **What it prints**
+
+```text
+== data/raw/D0_KPi.csv
+M,PT,TAU,IPCHI2
+1880.649,3000.9534,0.00041271152,1299.1675
+== data/raw/pendulum.csv
+nr;length_cm;t10_s
+1;20;9,02
+```
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+⚙️ Two files or two thousand: the loop is the same four lines. Its output shows at a glance that the two raw files do not agree on the separator or on the decimal sign.
+
+</div>
+
+<!--
+Speaker: type the four lines at the prompt. After the first line the prompt
+changes: the shell waits for done. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Script with a Loop: `ranges.sh`
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📜 **`scripts/ranges.sh`**
+
+```bash
+#!/usr/bin/env bash
+# Name, smallest and largest value
+# of each of the four columns.
+export LC_ALL=C
+file=$1
+
+for c in 1 2 3 4; do
+  head -n 1 "$file" | cut -d, -f"$c"
+  tail -n +2 "$file" | cut -d, -f"$c" |
+    sort -g > results/column.txt
+  head -n 1 results/column.txt
+  tail -n 1 results/column.txt
+done
+rm results/column.txt
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧾 **What it prints**
+
+```text
+$ bash scripts/ranges.sh data/raw/D0_KPi.csv
+M
+1766.2096
+2453.6584
+PT
+755.2686
+64509.95
+TAU
+-100.0
+0.5787994
+IPCHI2
+1.3600341e-05
+891711.06
+```
+
+</div>
+
+</div>
+
+<!--
+Speaker: read the script from the top with the room. Everything in the loop
+body is a filter from the last section. The next slide takes the new parts one
+by one. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Reading `ranges.sh`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🆕 **The new parts**
+
+- `export LC_ALL=C` holds for every program the script starts: the decimal sign is the point
+- `file=$1` takes the path from the command line
+- `for c in 1 2 3 4` runs over four words. `-f"$c"` is the column of the turn
+- `sort -g` reads `1.3600341e-05` as 0.000013600341. `sort -n` stops at the `e` and takes it for 1.36
+- The sorted column goes into a file, because both its first and its last line are needed
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔎 **What the output says**
+
+- `M` from 1766 to 2454: the two far rows again
+- `PT` from 755 to 64 510
+- `TAU` starts at `-100.0`: the mark for "no value" is the smallest "value" of the column
+- `IPCHI2` from 0.0000136 to 891 711: over ten powers of ten, and a value written with an exponent
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Twelve lines of output are a description of the file: the names of the columns and the range of each. A mark for a missing value and a second way to write a number both show up at the ends.
+
+</div>
+
+<!--
+Speaker: the exponent form is in two rows of the file. grep -n 'e-'
+data/raw/D0_KPi.csv gives lines 40769 and 44745. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Checksums & **Backups**
+
+<!--
+Speaker: Lecture 3 worked a checksum by hand and named SHA-256. Here it is a
+command, used for three things: comparing two files, guarding the raw data,
+checking a backup. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Checksum of a **File**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ shasum -a 256 data/raw/D0_KPi.csv
+25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136  data/raw/D0_KPi.csv
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⌨️ **Two names for one program**
+
+```text
+macOS             shasum -a 256 FILE
+Git Bash, Linux   sha256sum FILE
+```
+
+Both print the SHA-256 of Lecture 3: 64 hex digits, which are 256 bits, computed from every byte of the file.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🧬 **One byte changes all of it**
+
+```text
+be05af03…aff0870b   20,9.02
+17dbc893…a1440bc9   20,9.03
+```
+
+The checksum of the cleaned pendulum table, and of a copy in which one digit was changed.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ The 3 926 142 bytes of `D0_KPi.csv` give these 64 digits on every laptop in the room. A laptop that prints other digits has another file.
+
+</div>
+
+<!--
+Speaker: ask the room to run the command and compare the first four and the
+last four digits with the slide: 25c3 and 5136. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Script **Against the Hand**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ shasum -a 256 data/processed/pendulum.csv data/processed/pendulum_script.csv
+be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum.csv
+be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum_script.csv
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🟰 **The same 97 bytes**
+
+The table cleaned by hand in Lecture 2 and the table written by `clean_pendulum.sh` have the same checksum. The script does exactly what the hands did.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **On every laptop**
+
+The files cleaned by hand in the room have 96, 97, 105 or 107 bytes: the line ending and the last line break differ (Lecture 3). The script writes LF and a final line break on every system, so its output is `be05af03…` everywhere.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A checksum says whether two files differ. `diff A B` says where: it prints the lines that differ, and nothing at all when the files are the same.
+
+</div>
+
+<!--
+Speaker: this is the result the lecture was built towards. A procedure that
+was done by hand and described in words is now a file, and a checksum shows
+that the file reproduces the hand work byte for byte. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A List of Checksums for `data/raw`
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📝 **Write the list, check the list**
+
+```text
+$ shasum -a 256 data/raw/*.csv > data/checksums.txt
+$ shasum -a 256 -c data/checksums.txt
+data/raw/D0_KPi.csv: OK
+data/raw/pendulum.csv: OK
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🚨 **After a change in a raw file**
+
+```text
+$ shasum -a 256 -c data/checksums.txt
+data/raw/D0_KPi.csv: OK
+data/raw/pendulum.csv: FAILED
+shasum: WARNING: 1 computed checksum
+did NOT match
+```
 
 </div>
 
@@ -1796,86 +2587,140 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 
-## 🔤 **Abbreviate & Encode**
-
-- Keep only what you sort or search by; encode categories as short codes (`raw`, `cal`)
-- **Document the codes** — a code nobody can decode is noise
-
-</div>
+- `-c` reads the list, computes each checksum again and compares
+- The list is written once, when the raw files arrive. It is checked after a copy to another disk, and before work that will be handed in
+- Git Bash and Linux: `sha256sum data/raw/*.csv > data/checksums.txt`, then `sha256sum -c data/checksums.txt`
 
 </div>
 
-<img src="/figures/file_naming_comic.png" class="w-40 shrink-0" />
+<div class="note-text mt-sm">The list is one line per file: the 64 digits, two spaces, the path. It stands in <code>data</code>, not in <code>data/raw</code>, so that <code>data/raw/*</code> never includes it.</div>
 
-</div>
+<!--
+Speaker: add a character to a copy of the raw pendulum file to show FAILED,
+not to the file itself. "Raw is never edited" now has a test. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# File Naming: Versioning & **Ordering**
+# How Files **Are Lost**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| What happens | What is lost | What brings it back |
+| --- | --- | --- |
+| `rm`, `>` or `mv` hits the wrong file. A spreadsheet is saved over a raw file | One file, at once | An older copy |
+| The disk fails. The laptop is lost or stolen | Everything on it | A copy on another device |
+| Laptop and USB stick are in one bag. Fire or theft in the room | Every copy in that place | A copy in another place |
+| A file changes without notice: a broken copy, a sync conflict | Unknown, and noticed late | A checksum to notice it, an older copy to go back to |
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🔢 **Use Versioning**
+## 🔁 **What can be made again**
 
-- Mark the current version at the **end** of the name: `report_v02.docx`
-- Zero-pad numbers (`v01` … `v10`) so they sort correctly
-- Or use the version date in ISO 8601: `YYYY-MM-DD`
+`data/processed` and `results`: the scripts write them again from `data/raw`.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact">
 
-## 🔍 **Make Files Sortable & Searchable**
+## 🧱 **What cannot**
 
-- Decide how you will sort and search — that metadata goes **first** in the name
-- Default ordering is alphabetical, numerical, or chronological
-- Put the date **first** when chronology matters — ISO dates sort correctly in a plain listing
+`data/raw`, `scripts`, the README and a written report. These are the files a backup is for.
 
 </div>
 
 </div>
 
-<div class="card card-success card-glass pad-tight mt-md">
+<!--
+Speaker: ask who has lost a file in one of these four ways. Usually every row
+of the table gets a hand. (~2 min)
+-->
 
-## 🧪 **`ls` already shows them in order**
+---
+hideInToc: true
+---
+
+# Backups: the **3-2-1 Rule**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 3️⃣ **Three copies**
+
+The working copy on the laptop, and two more. One copy is no backup: the first row of the table needs an older one.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **Two kinds of storage**
+
+The disk of the laptop, and an external drive or a server. A second folder on the same disk fails together with the first.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 1️⃣ **One in another place**
+
+University storage, a cloud service, or a drive kept at home. A drive in the laptop bag is stolen with the laptop.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧮 Suppose one copy is lost within a year with probability 1 in 20. Two copies that fail independently are both lost with probability (1/20)² = 1 in 400, three with (1/20)³ = 1 in 8000. The numbers hold only for independent copies. Two copies on one disk, or in one bag, are lost together: that is what the 2 and the 1 of the rule are for.
+
+</div>
+
+<!--
+Speaker: the 1 in 20 is an assumption for the arithmetic, not a measured rate.
+The point is the exponent, and the condition under which it applies. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Backup Is a **Routine**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📋 **Five answers, written down once**
+
+| | For the project folder |
+| --- | --- |
+| What | The whole folder. It is small: 4 MB |
+| When | At the end of every session of work |
+| How | One command, the same every time |
+| Check | The list of checksums, run on the copy |
+| Test | Open the copy on another computer |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💾 **To a USB drive**
 
 ```text
-2026-03-14_run042_calib_v01.csv
-2026-03-14_run042_calib_v02.csv
-2026-03-15_run043_calib_v01.csv
+$ cp -r . /Volumes/USB/analysis-project_2026-10-13
+$ cd /Volumes/USB/analysis-project_2026-10-13
+$ shasum -a 256 -c data/checksums.txt
+data/raw/D0_KPi.csv: OK
+data/raw/pendulum.csv: OK
+$ cd ~/Documents/analysis-project
 ```
-
-</div>
-
----
-hideInToc: true
----
-
-# File Naming: Separators & **Documentation**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-tight">
-
-## ✂️ **Separate the Elements**
-
-- Dashes `file-name.xxx`, underscores `file_name.xxx`, or CamelCase `FileName.xxx`
-- 🚫 No separation: `filename.xxx` — avoid
-- No spaces, and no special characters: `~ ! @ # $ % ^ & * ( ) ; : < > ? , [ ] { } ' " |`
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📝 **Write the Convention Down**
-
-- Documented conventions let anyone identify a moved or shared file from its name alone
-- At most 40–50 characters; only alphanumerics, dashes, and underscores
-- Encoding a lot of metadata? Move it to a master spreadsheet next to the data — **next slide**
 
 </div>
 
@@ -1883,239 +2728,235 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ A space in a filename is a bug waiting to happen: `rm my data.csv` deletes `my` and `data.csv`, not `my data.csv`.
+⚠️ A folder that syncs, such as OneDrive, Google Drive or Dropbox, is a copy in another place. It is not an older copy: a file deleted or overwritten on the laptop is deleted or overwritten there within seconds. The dated folder on the drive stays as it was on that day.
 
 </div>
 
----
-hideInToc: true
----
+<div class="note-text mt-sm">Git Bash names the drive <code>E:</code> as <code>/e</code>: <code>cp -r . /e/analysis-project_2026-10-13</code>.</div>
 
-# When Names Aren't Enough: Sidecar Metadata
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🏷️ A filename holds three or four facts at most. The rest — instrument settings, units, operator, conditions — belongs in a **metadata file that travels with the data**.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📑 **The sidecar pattern**
-
-```text
-data/
-├── 2026-03-14_run042.csv
-├── 2026-03-14_run042_README.txt
-└── samples_master.csv
-```
-
-One description file per dataset — or one master table describing every file.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ✍️ **What goes in it**
-
-- **Units** for every column *(the classic silent killer)*
-- Instrument + settings used
-- Date, operator, location
-- Known issues ("sensor 3 drifted after 14:00")
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 Rule of thumb: if a fact is needed to **interpret** the numbers, it must be stored **next to** the numbers — not in your memory or an old email.
-
-</div>
-
----
-hideInToc: true
----
-
-# File Naming Cheatsheet
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Bad**
-
-```
-final_FINAL_v2 (1).docx
-data.csv
-Copy of analysis.py
-Figure 1 (final).png
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **Good**
-
-```
-thesis_draft_v03_2026-02-20.docx
-experiment_alpha_raw_001.csv
-analysis_v02.py
-fig01_mass_spectrum.png
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md glow">
-
-💡 **Recipe:** `project_description_version.ext` — descriptive, no spaces or special characters — and put an ISO date **first** (`2026-02-20_thesis_draft_v03.docx`) when files must sort by time.
-
-</div>
+<!--
+Speaker: a backup that was never opened is a hope, not a backup. The check
+with the list of checksums takes a second and is the reason the list exists.
+(~2 min)
+-->
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Directory **Structure**
+# The **README**
+
+<!--
+Speaker: the README of the project folder has grown for three weeks. This
+section completes it, with what the commands of today have found. (~1 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Organising Your Directories
+# What the README **Still Lacks**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-success card-glass pad-compact">
 
-## 📁 **Organised by File Type**
+## ✅ **Written in Lectures 2 and 3**
 
-```text
-├── Data/
-│   ├── Processed/
-│   └── Raw/
-└── Results/
-    ├── Figure1.tif
-    ├── Figure2.tif
-    └── Models/
-        └── Model1/
-```
+- A title, one paragraph, the author
+- The folders and what goes into each
+- For each data file: source, DOI, licence, date, size, what one row is
+- The edits made by hand
+- File anatomy: encoding, line ending, separator
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact">
 
-## 📊 **Organised by Analysis**
+## ❓ **A stranger still cannot tell**
 
-```text
-├── Figure1/
-│   ├── Data/
-│   └── Results/
-│       └── Figure1.tif
-└── Figure2/
-    ├── Data/
-    └── Results/
-        └── Figure2.tif
-```
+- What each column means, and its unit
+- How a missing value is marked
+- Whether the raw files are the ones that were downloaded
+- Which commands make `data/processed` and `results`, and in which order
+- What may be done with the scripts and the text
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">
+<div class="card card-info card-glass pad-compact mt-md">
 
-Choose the structure that best fits your workflow — either is valid as long as it is consistent. Build either one with the commands from Part 1 (`mkdir`, `ls`, `cd`) to create and navigate these structures.
+The test for a README: someone with an empty laptop and the project folder gets the same results, and asks nobody. Each line of the right-hand card is a question that person would have to ask.
 
 </div>
+
+<!--
+Speaker: open the README of the project folder next to the slide and tick the
+left-hand card off against it. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Raw Data Is <span class="gradient-text">Read-Only</span>
+# Anatomy of a **README**
 
-<div class="card card-warning card-glass pad-tight mt-md glow">
+<div class="grid-3 gap-md mt-md">
 
-## 🔒 **The one rule that saves projects**
+<div class="card card-primary card-glass pad-compact">
 
-**Never edit a raw data file.** Not to fix a typo, not to delete an obvious outlier, not "just this once."
+## 🏷️ **Title, one paragraph**
 
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-scale">
-
-## 📥 **`data/raw/`**
-
-- Exactly as collected or downloaded
-- Treat as **untouchable** — your only link back to reality
-- If it changes, every result becomes unverifiable
+What the project is, in words that someone outside the field understands.
 
 </div>
 
-<div class="card card-success card-glass pad-tight reveal-scale">
+<div class="card card-secondary card-glass pad-compact">
 
-## ⚙️ **`data/processed/`**
+## 🗂️ **Data**
 
-- Everything derived from raw — **by a script**
-- Safe to delete at any time: rerun the script and it comes back
-- Corrections live in **code**, where they are visible and repeatable
+Source, DOI, licence, the date it was fetched, and the checksum of every raw file.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📏 **Columns and units**
+
+One line per column: name, meaning, unit, and the mark for a missing value.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 📁 **Folders**
+
+What is in `data/raw`, `data/processed`, `scripts` and `results`.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ▶️ **How to rebuild**
+
+The commands, in order, that make every file in `data/processed` and `results`.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚖️ **Licence, contact**
+
+What others may do with the work, and whom to ask.
 
 </div>
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md reveal-up">
-
-💡 Test yourself: could you delete everything *except* `data/raw/` and the scripts, and rebuild the project? If yes, your structure is right.
-
-</div>
+<div class="note-text mt-md">The first, second and fourth part exist since Lecture 2. The other three are written from what was run in this lecture.</div>
 
 ---
 hideInToc: true
 ---
 
-# The README: Your Project's Front Page
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📄 A `README` is a plain-text file at the project root that tells a stranger — including **you, six months from now** — what this project is and how to use it.
-
-</div>
+# Columns and **Units**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📋 **A minimal README records**
+## ✏️ **Source**
 
-- What the project is (one paragraph)
-- Where the data **came from** (provenance, dates, units)
-- How to **regenerate** the results, step by step
-- Who to contact
+```md
+## Columns of `D0_KPi.csv`
+
+| Column | Meaning | Unit |
+|--|--|--|
+| `M` | mass of the K⁻π⁺ pair | MeV/c² |
+| `PT` | transverse momentum | MeV/c |
+| `TAU` | decay time | ns |
+| `IPCHI2` | χ² of the impact parameter | none |
+
+Missing value: `TAU` is `-100.0` in 49 rows.
+```
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🧪 **Example skeleton**
+## 👁️ **Preview**
 
-```text
-my_project/
-├── README.md   <- you are here
-├── data/
-│   ├── raw/
-│   └── processed/
-├── scripts/
-└── results/
+<div class="rendered-md">
+<p class="rendered-section">Columns of <code>D0_KPi.csv</code></p>
+<table>
+<thead>
+<tr><th>Column</th><th>Meaning</th><th>Unit</th></tr>
+</thead>
+<tbody>
+<tr><td><code>M</code></td><td>mass of the K⁻π⁺ pair</td><td>MeV/c²</td></tr>
+<tr><td><code>PT</code></td><td>transverse momentum</td><td>MeV/c</td></tr>
+<tr><td><code>TAU</code></td><td>decay time</td><td>ns</td></tr>
+<tr><td><code>IPCHI2</code></td><td>χ² of the impact parameter</td><td>none</td></tr>
+</tbody>
+</table>
+<p>Missing value: <code>TAU</code> is <code>-100.0</code> in 49 rows.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Every line can be checked by a command: the names by `head -n 1`, the 49 rows by `grep -c ',-100'`, the ranges by `scripts/ranges.sh`. The units are the one thing no command finds. The file does not hold them, so the README has to.
+
+</div>
+
+<!--
+Speaker: the table is the Markdown of Lecture 2. What is new is where its
+content comes from: from commands that anyone can run again. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# How to **Rebuild**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **In the README**
+
+```md
+## How to rebuild
+
+Run in the project folder, in Git Bash
+(Windows) or the terminal (macOS, Linux).
+
+1. `bash scripts/clean_pendulum.sh`
+   writes `data/processed/pendulum_script.csv`
+2. `bash scripts/ranges.sh data/raw/D0_KPi.csv`
+   prints the range of each column
+3. `shasum -a 256 -c data/checksums.txt`
+   checks the raw files
+   (Git Bash: `sha256sum -c data/checksums.txt`)
 ```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧪 **Test the section**
+
+1. Delete `data/processed/pendulum_script.csv`
+2. Copy each command out of the README into the terminal, in order
+3. Compare the checksum of the new file with the old one: `be05af03…`
+
+A command that was copied out of the README and ran has been tested. A command typed into the README from memory has not.
 
 </div>
 
@@ -2123,49 +2964,40 @@ my_project/
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-💡 Writing READMEs gets much nicer with **Markdown** — covered in its own lecture shortly.
+♻️ The entry "Mean line deleted, `,` replaced by `.`" of Lecture 2 described the work. This section **is** the work: three lines that run.
 
 </div>
+
+<!--
+Speaker: run the test live. rm the file, copy command 1 from the preview of
+the README, paste, run, then shasum. (~3 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Absolute vs Relative Paths
+# The **Licence**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📍 **Absolute Path**
+## 📥 **The licence of the data**
 
-Starts from the **root** of the filesystem — always points to the same location regardless of your current directory.
-
-```bash
-# Linux (macOS: /Users/alice/...)
-/home/alice/projects/data/results.csv
-
-# Windows
-C:\Users\Alice\projects\data\results.csv
-```
+- Set by whoever published the data. Lecture 2 read it off the record: CC0 for record 401
+- It decides whether the raw file may be passed on with the project
+- If it may not, the folder is passed on without the file, and the README says where to fetch it
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 📎 **Relative Path**
+## 📤 **The licence of your own work**
 
-Starts from your **current directory** — shorter, but meaning changes as you move around.
-
-```bash
-# If you are in /home/alice/projects
-cd data
-cat results.csv
-
-# Go up one level, then into another folder
-cd ../notes
-ls
-```
+- Without a licence the law reserves every right: others may read the scripts and the text, and may not copy, change or pass them on
+- The text of the licence goes into a file named `LICENSE` in the project folder
+- Usual choices: MIT for scripts, CC BY 4.0 for text and figures, CC0 for data you measured yourself
 
 </div>
 
@@ -2173,190 +3005,20 @@ ls
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 In scripts, prefer paths **relative to the project root** — the project then works on any machine and for any collaborator. Absolute paths belong only in machine-specific configuration (and never in shared code).
+```md
+## Licence
 
-</div>
-
----
-hideInToc: true
----
-
-# Try at Home: Build a Project **Skeleton**
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-## 🏠 **Ten minutes, no file manager allowed**
-
-Create this structure from the command line, then write your plan for a project of your choice into the README:
-
-```bash
-mkdir -p my_project/data/raw \
-         my_project/data/processed \
-         my_project/results
-touch my_project/README.md
-ls -R my_project
+Data: CC0, CERN Open Data Portal, record 401.
+Scripts and text: MIT, see `LICENSE`.
 ```
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-sm">
-
-💡 `-p` creates parent directories automatically. Try `tree my_project` if you have `tree` installed.
-
-💡 **Bonus:** drop a few `sensor_A OK` / `sensor_B ERROR` lines into `my_project/data/raw/run042.log`, then reuse the earlier pipeline: `grep ERROR my_project/data/raw/run042.log | sort | uniq -c | sort -nr`
-
-🔗 **Keep the exact commands you used** — paste them into the README as its first "how to rebuild this" section.
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Why do shared projects usually prefer relative paths (data/raw/run42.csv) over absolute paths (/Users/alice/proj/data/raw/run42.csv)?"
-  :options="[
-    'Relative paths are faster for the OS to resolve',
-    'Absolute paths are not supported on Linux',
-    'Relative paths make the project portable — it still works when someone clones it elsewhere',
-    'Relative paths automatically encrypt the file location'
-  ]"
-  :correct="2"
-  explanation="Absolute paths tie a project to one machine and user; relative-to-project-root paths keep it self-contained and portable — a ♻️ reproducibility win."
-/>
-
----
-hideInToc: true
----
-
-# Exercise: Fix This Mess (1/2)
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## 😵 **The Problem**
-
-A colleague shared their project with you. Here's what you received:
-
-```
-Desktop/
-├── final_FINAL_v2.docx
-├── data (1).csv
-├── Copy of data.csv
-├── analysis.py
-├── analysis_old.py
-├── analysis_NEW_USE_THIS.py
-├── plot.png
-├── plot2.png
-├── Figure 1 (final).png
-└── notes.txt
-```
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md" v-click>
-
-💡 **Spot the issues:** spaces in filenames, duplicate data files, no versioning, no folder structure, unclear which script is current, vague figure names.
-
-</div>
-
----
-hideInToc: true
----
-
-# Exercise: Fix This Mess (2/2)
-
-<div class="card card-success card-glass pad-tight mt-md">
-
-## ✅ **Your Task** (10 min, with a partner)
-
-1. Design a proper **directory structure** using `mkdir -p`
-2. **Rename** every file following the conventions we just covered
-3. Draft a **README.md** describing the project and its contents
-4. Decide which files belong in **version control** and which don't
-
-</div>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 💡 **Hints**
-
-- Separate `data/`, `scripts/`, `results/`, and `docs/` folders
-- Use ISO dates or version numbers: `analysis_v01.py`, `analysis_v02.py`
-- Raw data files should never be modified — keep originals in `data/raw/`
-- Figures need descriptive names: what does "plot2" actually show?
-
-</div>
-
----
-hideInToc: true
----
-
-# Archiving: Freeze What You Publish
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📦 When a thesis chapter, paper, or report goes out, **freeze the exact state** of the data and code that produced it.
-
-</div>
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-🗜️ **Bundle** — one archive: data + scripts + README (`thesis_ch3_2026-07-03.zip`)
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-left">
-
-🔐 **Fingerprint** — store a checksum next to it, so corruption or tampering is detectable *(you met checksums and SHA-256 in Lecture 3)*
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-left">
-
-🏛️ **Deposit** — university repository or a service like Zenodo, which gives your archive a permanent citable identifier (a **DOI**)
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md reveal-up">
-
-💡 "Which exact version of the data made Figure 3?" — with an archive, that question has an answer years later.
-
-</div>
-
----
-hideInToc: true
----
-
-# Putting It All Together: The Research Data <span class="gradient-text">Lifecycle</span>
-
-<div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; align-items: center;">
-
-[<img src="/figures/RDM_Lifecycle.png" class="inline w-70"/>](https://datamanagement.hms.harvard.edu/)
-
-<div>
-
-<div class="card card-primary card-glass pad-compact reveal-left">
-
-- **Plan** → naming conventions & directory structure
-- **Collect & Process** → consistent names, separate raw from processed
-- **Analyse** → version-controlled project folders
-- **Preserve & Share** → open formats, README, metadata
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-sm reveal-left">
-
-💡 Good file handling supports **every stage** of the research data lifecycle.
-
-</div>
-
-</div>
-
-</div>
+<!--
+Speaker: choosealicense.com has the text of each licence, ready to copy into
+the file. MIT allows any use as long as the notice stays in the file. CC BY
+asks that the author is named. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -2364,57 +3026,174 @@ hideInToc: true
 
 # **Recap** — You Can Now…
 
-<div class="grid-2 gap-md mt-sm">
+<div class="stack-tight mt-sm">
 
 <div class="card card-success card-glass pad-compact">
 
-✅ **Navigate** and inspect files from the command line
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Chain tools with **pipes** and **redirection**
+✅ Open a terminal with `bash` or `zsh`, and name a file by an **absolute** or a **relative path**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Name files with sortable, consistent **conventions**
+✅ Read, count, make, copy, move, delete and find files with commands, and name many with a **wildcard**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Structure a project — raw vs **processed**, plus a README
+✅ Join `cut`, `sort`, `uniq -c`, `grep` and `tr` with **pipes**, and write the result into `data/processed`
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Match many files safely with **wildcards** — and turn a pipeline into a rerunnable **script**
+✅ Write a **regular expression** with `[ ]`, `+`, `^`, `$` and groups, in the Find box and with `grep -E`
 
 </div>
 
+<div class="card card-success card-glass pad-compact">
+
+✅ Put commands into a **script** with variables and a `for` loop, and run it with `bash`
+
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="card card-success card-glass pad-compact">
 
-## 🔬 **Seminar 4 tie-in**
+✅ Show with a **checksum** that two files are the same, and keep copies by the **3-2-1** rule
 
-Organise the seminar dataset into raw/ vs processed/ folders with clean filenames, and inspect it entirely from the command line.
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Complete a **README**: columns and units, how to rebuild, licence
+
+</div>
 
 </div>
 
 <!--
-Speaker: the "you can now" beat — have them nod along to each card. The seminar
-tie-in makes the payoff concrete: they leave here and immediately give the seminar
-folder a clean structure and drive it from the shell — then their own project. (~1 min)
+Speaker: one line per section of the lecture. The hand edits of Lecture 2
+became a script, and a checksum showed that the script does the same. (~1 min)
 -->
 
 ---
-layout: quote
+layout: section
 hideInToc: true
 ---
 
-# The CLI is your multiplier—start small, automate often, and watch productivity compound.
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A folder contains run_1.log, run_12.log, run_A.log and notes.txt. What does `ls run_?.log` list?"
+  :options="[
+    'All four files',
+    'run_1.log, run_12.log and run_A.log',
+    'run_1.log and run_A.log',
+    'Nothing, because ? is not a wildcard'
+  ]"
+  :correct="2"
+  explanation="? fits exactly one character. run_1.log and run_A.log have one character between the underscore and the point. run_12.log has two, and notes.txt does not begin with run_. The shell makes this list before ls starts."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="The terminal is in analysis-project/results. Which path names the raw pendulum file?"
+  :options="[
+    '<code>data/raw/pendulum.csv</code>',
+    '<code>../data/raw/pendulum.csv</code>',
+    '<code>/data/raw/pendulum.csv</code>',
+    '<code>~/data/raw/pendulum.csv</code>'
+  ]"
+  :correct="1"
+  explanation="A relative path starts at the folder the terminal is in. Two points go up one level, from results to analysis-project, and from there the path goes down into data and raw. The first answer is right only when the terminal is in the project folder. A path that starts with a slash starts at the top of the disk, and the tilde stands for the home folder."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="runs.txt has six lines: alpha, beta, alpha, gamma, alpha, beta. What does `sort runs.txt | uniq -c | sort -n -r | head -n 1` print?"
+  :options="[
+    '3 alpha',
+    'alpha 3',
+    '1 gamma',
+    '6 runs.txt'
+  ]"
+  :correct="0"
+  explanation="sort puts equal lines next to each other. uniq -c merges each group and writes the count in front. sort -n -r orders by the count, largest first, and head -n 1 keeps the first line. alpha occurs three times."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="notes.txt has five lines. Then two commands run: `echo done > notes.txt` and `echo checked >> notes.txt`. What does `wc -l notes.txt` count now?"
+  :options="[
+    '7 lines',
+    '6 lines',
+    '2 lines',
+    '1 line'
+  ]"
+  :correct="2"
+  explanation="A single > empties the file before the new line is written, so the five lines are gone and the file holds one line. The double >> adds a second line at the end. A single > on a file that is still needed is one of the ways files are lost."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A file has four lines: 20,9.02 and 100,20.01 and length_cm,t10_s and 7;80;17,90. Which lines does `grep -E '^[0-9]+,[0-9]+\.[0-9]+$'` print?"
+  :options="[
+    'All four lines',
+    'The lines 20,9.02 and 100,20.01',
+    'Only the line 20,9.02',
+    'The lines 20,9.02 and 100,20.01 and 7;80;17,90'
+  ]"
+  :correct="1"
+  explanation="The pattern fits a whole line that is a number, a comma, a number, a point and a number. The header line has letters. The line with semicolons has no point, and it does not start with a number followed by a comma. The plus sign lets the first number have two digits or three."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A column has 1000 rows. In 10 of them the value is the mark -999 for a missing value. The other 990 values have the mean 2.0. What is the mean of all 1000 values?"
+  :options="[
+    '2.0',
+    '1.98',
+    '-8.01',
+    '-999'
+  ]"
+  :correct="2"
+  explanation="The sum of the 990 real values is 1980. The ten marks add -9990. The mean of all rows is (1980 - 9990) / 1000 = -8.01. One row in a hundred is enough to give the mean the wrong sign. The marked rows are taken out first."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A project is kept in three copies: the working folder on a laptop, a second folder on the same laptop, and a USB stick in the laptop bag. Which part of the 3-2-1 rule is not met?"
+  :options="[
+    'The 3: there are fewer than three copies',
+    'The 2: all copies are on one kind of storage',
+    'The 1: no copy is in another place',
+    'None: the rule is met'
+  ]"
+  :correct="2"
+  explanation="There are three copies, and the stick is a second kind of storage. But all three travel in one bag, so one theft or one fire takes them all. A copy on university storage, in a cloud service or on a drive kept at home meets the 1."
+/>

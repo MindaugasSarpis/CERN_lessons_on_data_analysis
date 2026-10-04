@@ -3,13 +3,9 @@ layout: cover
 title: "Probability & Statistics"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
-  installs: ["numpy", "matplotlib", "scipy"]
+  installs: ["numpy"]
   prelude: |
     import numpy as np
-    import matplotlib.pyplot as plt
-    from scipy.stats import binom, norm
-    import warnings
-    warnings.filterwarnings('ignore')
   loadPackagesFromImports: true
   suppressDeprecationWarnings: true
 ---
@@ -20,10 +16,14 @@ python:
 
 ## Probability and Statistics
 
-##### <span class="aims-badge">🔧 tool-agnostic</span>
+##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducibility</span>
 
 <!--
-Speaker: this is the one "theory" lecture of the course. Frame it as the language for everything that follows — fitting, uncertainty, honest reporting. Reassure them: intuition over proofs. (~1 min)
+Speaker: the lecture is one chain of derivations. Each result is used by the
+next one: the rules of probability give the binomial, its limit gives the
+Poisson, sums give the Gaussian, the variance of a sum gives the standard
+error and error propagation, and the Gaussian gives the likelihood of a mean.
+Keep a pen and the board ready. (~1 min)
 -->
 
 ---
@@ -31,7 +31,7 @@ hideInToc: true
 layout: quote
 ---
 
-# In science, we never measure the *true* value — we collect **samples**, estimate **parameters**, and quantify **uncertainty**. Probability gives us the language; statistics gives us the tools.
+# The main goal of this lecture is to derive how a quantity that comes out differently every time is described: by **probability**, by a **distribution**, by the **uncertainty** of a mean and of a computed result, and by the **likelihood**
 
 ---
 hideInToc: true
@@ -45,254 +45,236 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🎲 Reason with **probability** — axioms, conditional probability, and Bayes' theorem
+🎲 Compute with **probabilities**: the addition rule, conditional probability, independence, Bayes' theorem
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-📈 Describe data with **distributions** and summaries — mean, variance, SD
+📊 Say where the **binomial**, the **Poisson** and the **Gaussian** distribution come from, and attach √N to a count
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-🔔 Apply the **Central Limit Theorem** and the standard error of the mean
+📏 Compute a **mean**, a **standard deviation** and the **standard error** σ/√N, and say which is which
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-🎯 Distinguish a **standard deviation** from a **standard error**
+🧮 **Propagate** uncertainties through a formula, and write a result with its uncertainty
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-🔗 Connect statistics to **data fitting** — least squares, MLE, and χ²
+🎯 Write down a **likelihood** and find its maximum: the mean, and the weighted mean
 
 </div>
 
 </div>
 
 <!--
-Speaker: read these as promises, not a syllabus. Stress the SD-vs-SE and CLT items — those change how they report results. Seminar 11 is where they apply this to the D⁰ sample. (~1 min)
+Speaker: five results, each derived today and each computed on the two files
+the room already has: the mass column of D0_KPi.csv and the pendulum table.
+(~1 min)
 -->
-
----
-hideInToc: true
----
-
-# Motivation
-
-- ## All measurements have **uncertainty**
-
-- ## We need to **distinguish signal from noise**
-
-- ## Models require **parameter estimation**
-
-- ## Claims need **quantified confidence** — how sure are we?
-
-- ## Predictions come with **confidence intervals**
-
-#### This lecture builds the foundation for data fitting, estimation, and quantifying uncertainty
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Foundations of **Probability**
+# Probability and Its **Rules**
 
 <!--
-Speaker: this first block is the grammar — axioms, conditional probability, Bayes. Keep it brisk; the die and medical-test examples do the real teaching. (~1 min)
+Speaker: the section starts from a real column of numbers, defines probability
+as a frequency, and derives the rules the rest of the lecture uses: complement,
+addition, conditional probability, independence, Bayes. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# What is **Probability**?
+# One Quantity, **91 583 Values**
 
-<div class="card card-info card-glass pad-tight">
+<img class="fig" src="/figures/viz_probability_mass.svg" style="display:block;margin:0 auto;max-height:265px;">
 
-## 🎲 **Definition**
+<div class="grid-2 mt-md gap-md">
 
-**Probability** is a numerical measure of the likelihood of an event occurring, constrained to the interval $[0, 1]$:
+<div class="card card-primary card-glass pad-compact">
 
-- 🚫 $P(A) = 0$ means event $A$ is **impossible**
-- ✅ $P(A) = 1$ means event $A$ is **certain**
-- 🤔 $0 < P(A) < 1$ means event $A$ is **uncertain**
+## 📄 **The data**
+
+Column `M` of `D0_KPi.csv`: the mass of one K⁻π⁺ candidate per row, in MeV/c². The first four rows give 1880.649, 1860.6599, 1913.8755 and 1888.7571.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ❓ **Three questions**
+
+- Which one number stands for all the values?
+- How far from it does a single value lie?
+- How well is that one number known?
 
 </div>
 
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🎯 **Purpose**
-
-📊 Quantify uncertainty • 🔮 Make predictions • 📈 Update beliefs with evidence • 🌍 Model random phenomena in nature
-
 </div>
+
+<!--
+Speaker: the same quantity, computed for 91 583 candidates, and the values
+differ from row to row. The three answers are the mean, the standard deviation
+and the standard error. All three are derived today, and the line and the band
+on the figure are the first two. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Two **Interpretations** of Probability
+# Probability as a Long-Run **Frequency**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 **Frequentist**
-
-**Probability = long-run relative frequency**
-
-$$P(A) = \lim_{n \to \infty} \frac{n_A}{n}$$
-
-where $n_A$ = occurrences of $A$ in $n$ trials
-
-💡 **Example:** Flip coin 10,000 times → ~50% heads
-
-**Used for:** Repeated experiments, physical processes
+An experiment is repeated $n$ times. The event $A$ occurs in $n_A$ of them. The probability of $A$ is the value at which the fraction settles: $P(A) = \lim\limits_{n \to \infty} n_A / n$. It lies between 0 (never) and 1 (always).
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<img class="fig mt-sm" src="/figures/viz_probability_frequency.svg" style="display:block;margin:0.6rem auto 0;max-height:235px;">
 
-## 🧠 **Bayesian**
+<div class="note-text mt-sm">
 
-**Probability = degree of belief**
-
-Subjective confidence updated with evidence
-
-💡 **Example:** "70% chance of rain tomorrow"
-
-**Used for:** One-time events, updating knowledge
+A die rolled a million times in NumPy. The fraction of sixes is 0.2 after 10 rolls, 0.162 after 1000 and 0.1665 after a million: it settles at 1/6 = 0.1667. For an event that cannot be repeated, such as rain tomorrow, a probability is read as a degree of belief. The rules are the same for both readings.
 
 </div>
 
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-⚖️ **Both valid!** • ⚛️ Physics: mostly frequentist • 🤖 ML: increasingly Bayesian
-
-</div>
+<!--
+Speaker: the frequency reading is the one a physicist uses for a measurement
+that can be repeated. The degree-of-belief reading is the Bayesian one. Nothing
+derived today depends on which reading is taken. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Basic **Concepts**
+# Random Numbers in **NumPy**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 🔬 **Experiment**
+## ⌨️ **A generator with a seed**
 
-<div class="note-text mt-xs">
+```python
+import numpy as np
 
-Repeatable process producing an outcome
+rng = np.random.default_rng(1)
+print(rng.random(3))            # in [0, 1)
+print(rng.integers(1, 7, 10))   # a die
+print(rng.normal(0, 1, 3))      # Gaussian
+```
+
+```text
+[0.51182162 0.9504637  0.14415961]
+[5 6 2 2 6 3 2 5 2 3]
+[0.3645724  0.2941325  0.02842224]
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎰 **What the seed does**
+
+- `default_rng(1)` makes a generator. The seed, here 1, fixes the whole sequence
+- The same seed gives the same numbers in every run and on every laptop
+- Another seed gives other numbers with the same properties
+- The numbers come from a formula. For a simulation they behave as random ones
 
 </div>
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-info card-glass pad-compact mt-md">
 
-## 🌐 **Sample Space (Ω)**
-
-<div class="note-text mt-xs">
-
-All possible outcomes
+A **simulation** replaces the die by `rng.integers(1, 7, n)`: the lower end 1 is included, the upper end 7 is not. A million rolls take a few milliseconds. Every simulation in this lecture starts from a seeded generator, so each of its numbers can be reproduced.
 
 </div>
 
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🎯 **Event**
-
-<div class="note-text mt-xs">
-
-Subset of Ω satisfying a condition
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📊 **Probability P(A)**
-
-<div class="note-text mt-xs">
-
-Number in [0,1] quantifying likelihood
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🚫 **Mutually exclusive (disjoint)**
-
-<div class="note-text mt-xs">
-
-Two events that can't both happen: $A \cap B = \emptyset$. E.g. a single die roll being both even and odd.
-
-</div>
-
-</div>
-
-</div>
+<!--
+Speaker: run the six lines live. Then run them again: the same numbers. Change
+the seed to 2: other numbers. A result that depends on random numbers is
+reproducible only if the seed is written down. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Sample Space & Events · **Roll a die**
+# The Frequency of a Six, **Simulated**
 
-<div class="card card-info card-glass pad-tight mt-sm">
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-## 🎲 **Experiment** → Sample space $\Omega = \{1, 2, 3, 4, 5, 6\}$
+| Rolls $n$ | 10 | 100 | 1000 | 10 000 | 100 000 | 1 000 000 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Fraction of sixes | 0.2 | 0.16 | 0.162 | 0.1658 | 0.16636 | 0.166538 |
+| Fraction − 1/6 | +0.033 | −0.007 | −0.005 | −0.0009 | −0.0003 | −0.0001 |
 
 </div>
+
+```python {monaco-run} {autorun:false}
+rng = np.random.default_rng(1)
+rolls = rng.integers(1, 7, 1_000_000)        # one million rolls
+for n in [10, 100, 1000, 10_000, 100_000, 1_000_000]:
+    print(n, (rolls[:n] == 6).mean())        # fraction of sixes in the first n
+```
+
+<div class="note-text mt-sm">
+
+`rolls == 6` is a mask of `True` and `False`. Its mean is the fraction of `True`. A hundred times more rolls bring the fraction about ten times closer to 1/6.
+
+</div>
+
+<!--
+Speaker: run it. The table above is the output. Ask for the pattern in the
+last row: two more zeros in n, one more zero in the difference. That is a
+square root, and the section on the standard error derives it. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Outcomes and **Events**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📊 **Event A — Even**
+## 🎲 **One roll of a die**
 
-$A = \{2, 4, 6\}$ • $P(A) = \tfrac{1}{2}$
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📈 **Event B — Greater than 4**
-
-$B = \{5, 6\}$ • $P(B) = \tfrac{1}{3}$
+- An **outcome** is what one repetition gives: a number from 1 to 6
+- The **sample space** Ω is the set of all outcomes: {1, 2, 3, 4, 5, 6}
+- An **event** is a set of outcomes. $A$ = "even" = {2, 4, 6}. $B$ = "more than 4" = {5, 6}
+- The six outcomes are equally likely, so $P(\text{event})$ = outcomes in it / 6
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact table-compact">
 
-## 🎯 **Intersection $A \cap B$**
+## 🔗 **Events combined**
 
-$\{6\}$ • $P(A \cap B) = \tfrac{1}{6}$
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ➕ **Union $A \cup B$**
-
-$\{2, 4, 5, 6\}$ • $P(A \cup B) = \tfrac{2}{3}$
+| Event | Outcomes | Probability |
+| --- | --- | --- |
+| $A$ | {2, 4, 6} | 3/6 = 1/2 |
+| $B$ | {5, 6} | 2/6 = 1/3 |
+| $A$ and $B$: $A \cap B$ | {6} | 1/6 |
+| $A$ or $B$: $A \cup B$ | {2, 4, 5, 6} | 4/6 = 2/3 |
+| not $A$: $A^c$ | {1, 3, 5} | 3/6 = 1/2 |
 
 </div>
 
@@ -300,135 +282,132 @@ $\{2, 4, 5, 6\}$ • $P(A \cup B) = \tfrac{2}{3}$
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-<div class="note-text">
-
-**Key:** Sample space Ω contains all outcomes • events are subsets • ∩ = both occur • ∪ = at least one occurs
+⚠️ $P(A \cup B)$ is not $P(A) + P(B)$: 1/2 + 1/3 = 5/6 counts the outcome 6 twice. The correct rule follows from three axioms.
 
 </div>
 
-</div>
+<!--
+Speaker: "or" in probability includes "both". Let the room list A ∪ B before
+showing it. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Axioms of Probability (**Kolmogorov**)
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 📜 **Axiomatic Foundation**
-
-Given a sample space $\Omega$ and a collection of events, a probability function $P$ assigns to each event $A$ a real number $P(A)$ satisfying three axioms:
-
-</div>
+# Three **Axioms**
 
 <div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## ✅ **1 — Non-negativity**
+## 1️⃣ **Not negative**
 
 $$P(A) \geq 0$$
 
-<div class="meta-caption mt-xs">
-
-for any event $A$ — probabilities cannot be negative
-
-</div>
+for every event $A$
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🌍 **2 — Normalization**
+## 2️⃣ **Something happens**
 
 $$P(\Omega) = 1$$
 
-<div class="meta-caption mt-xs">
-
-the entire sample space has probability 1
-
-</div>
+Ω holds every outcome
 
 </div>
 
 <div class="card card-accent card-glass pad-tight">
 
-## ➕ **3 — Additivity**
+## 3️⃣ **Exclusive events add**
 
 $$P(A \cup B) = P(A) + P(B)$$
 
-<div class="meta-caption mt-xs">
-
-for **mutually exclusive** $A, B$ — extends to countably many disjoint events
+if $A$ and $B$ share no outcome
 
 </div>
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-## 💡 **Why these axioms matter** — every rule of probability (complement, addition, conditional probability, Bayes' theorem…) can be derived from just these three
-
-</div>
-
----
-hideInToc: true
----
-
-# Useful **Rules** from the Axioms
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-## 🧰 **Derived Properties**
-
-From the three axioms, we can derive important rules that make probability calculations tractable.
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-info card-glass pad-compact">
 
-## 🔄 **Complement Rule**
+## 📏 **A frequency obeys them**
+
+A fraction $n_A/n$ is never negative. The fraction of "any outcome" is $n/n = 1$. The counts of two events that share no outcome add, and so do their fractions.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🧮 **Equally likely outcomes**
+
+$N$ outcomes with the same probability $q$ share no outcome and together make Ω. Axioms 3 and 2 give $Nq = 1$, so $q = 1/N$. An event of $m$ outcomes has the probability $m/N$: the counting used for the die.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+Kolmogorov wrote the three axioms down in 1933. Every other rule of probability is derived from them.
+
+</div>
+
+<!--
+Speaker: these are the only statements of the lecture that are not derived.
+Everything after this slide is. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Rules, **Derived**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔄 **The complement**
+
+$A$ and "not $A$" share no outcome, and together they are Ω. Axioms 3 and 2 give
+
+$$P(A) + P(A^c) = P(\Omega) = 1$$
 
 $$P(A^c) = 1 - P(A)$$
 
-where $A^c$ is the complement of $A$
-
-<div class="meta-caption mt-xs">
-
-Follows from $A \cup A^c = \Omega$ and $A \cap A^c = \emptyset$
+Not a six: 1 − 1/6 = 5/6.
 
 </div>
 
-</div>
+<div class="card card-secondary card-glass pad-compact">
 
-<div class="card card-info card-glass pad-tight">
+## ➕ **The addition rule**
 
-## ➕ **General Addition Rule**
-
-For any events $A$ and $B$:
+Cut $A \cup B$ into three parts that share no outcome: only $A$, only $B$, both. $P(A) + P(B)$ counts the part "both" twice, so it is taken off once:
 
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
-<div class="meta-caption mt-xs">
-
-Avoids double-counting the intersection
+The die: 1/2 + 1/3 − 1/6 = 2/3.
 
 </div>
 
 </div>
 
-</div>
+<div class="card card-info card-glass pad-compact mt-md">
 
-<div class="card card-success card-glass pad-tight mt-md">
-
-## ✖️ **Multiplication Rule** — For **independent** events (where knowing one tells you nothing about the other): $P(A \cap B) = P(A) \times P(B)$
+In the million simulated rolls the fractions are 0.5003 for "even", 0.3334 for "more than 4", 0.1665 for both and 0.6672 for either: 0.5003 + 0.3334 − 0.1665 = 0.6672. The complement is the rule used most. "At least one" is hard to count directly and easy as 1 − $P$(none).
 
 </div>
+
+<!--
+Speaker: draw the two overlapping circles on the board and shade the three
+parts. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -436,87 +415,45 @@ hideInToc: true
 
 # Conditional **Probability**
 
-<div class="card card-info card-glass pad-tight">
-
-## 🎯 **Definition**
-
-$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
-
-Probability of $A$ given that $B$ has occurred • Restricts sample space to $B$
-
-</div>
-
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📐 **Properties**
+## 🎯 **Given that B occurred**
 
-$0 \leq P(A \mid B) \leq 1$ • $P(\Omega \mid B) = 1$ • Additive for mutually exclusive events
+Only the outcomes in $B$ remain possible. Of these, the ones that are also in $A$ count:
 
-</div>
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
 
-<div class="card card-accent card-glass pad-tight">
+Read the other way, it is the **product rule**:
 
-## 🎲 **Example: Two dice**
-
-$A$: sum is 8, $P(A) = 5/36$ • $B$: first die shows 3, $P(B) = 1/6$
-
-$A \cap B = \{(3,5)\}$: of the 36 equally likely outcomes, only $(3,5)$ has the first die = 3 **and** the sum = 8, so $P(A \cap B) = 1/36$ → $P(A \mid B) = \frac{1/36}{1/6} = \frac{1}{6}$
+$$P(A \cap B) = P(A \mid B)\,P(B)$$
 
 </div>
 
-</div>
+<div class="card card-secondary card-glass pad-compact">
 
----
-hideInToc: true
----
+## 🎲 **Two dice, 36 equally likely pairs**
 
-# Conditional Probability — **Step by Step**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🌐 **1. Start** — sample space $\Omega$
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔍 **2. Given** — event $B$ occurs
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📦 **3. Restrict** — reduced sample space is $B$
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## ❓ **4. Check** — find $A \cap B$ inside the restricted space
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🎯 **5. Compute** — $P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$
+- $A$: the sum is 8. Five pairs: (2,6), (3,5), (4,4), (5,3), (6,2). $P(A)$ = 5/36 = 0.139
+- $B$: the first die shows 3. Six pairs. $P(B)$ = 6/36
+- $A \cap B$: only (3,5). $P(A \cap B)$ = 1/36
+- $P(A \mid B)$ = (1/36) / (6/36) = 1/6 = 0.167
 
 </div>
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
-<div class="note-text">
-
-**Flow:** Start with Ω → given $B$ → restrict to $B$ → find $A \cap B$ → divide by $P(B)$
+Knowing that the first die shows 3 raises the probability of a sum of 8 from 0.139 to 0.167. Had it shown 1, the probability would be 0.
 
 </div>
 
-</div>
+<!--
+Speaker: conditioning is a smaller sample space. Count inside B only: six
+pairs, one of them gives 8. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -524,41 +461,49 @@ hideInToc: true
 
 # **Independence**
 
-<div class="card card-info card-glass pad-tight">
-
-## 🔀 **Definition**
-
-Events $A$ and $B$ are **independent** if:
-
-$$P(A \cap B) = P(A) \cdot P(B) \quad \text{or equivalently} \quad P(A \mid B) = P(A)$$
-
-Knowing $B$ occurred provides **no information** about $A$
-
-</div>
-
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## ✅ **Independent**
+## 🔀 **B changes nothing**
 
-- Flipping two coins
-- Rolling two dice
-- Drawing cards **with** replacement
+$A$ and $B$ are independent if $P(A \mid B) = P(A)$. The product rule then becomes
 
-</div>
+$$P(A \cap B) = P(A)\,P(B)$$
 
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **Not Independent**
-
-- Drawing cards **without** replacement
-- Height and weight
-- Temperature and ice cream sales
+- Two dice: $P$(six and six) = 1/6 × 1/6 = 1/36
+- "Sum is 7" and "first die shows 3" are independent: 1/6 with and without the condition
+- "Sum is 8" and "first die shows 3" are not: 0.167 against 0.139
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **Repetitions multiply**
+
+For $n$ independent repetitions the probabilities multiply. No six in 4 rolls:
+
+$$\left(\tfrac{5}{6}\right)^4 = 0.482$$
+
+At least one six in 4 rolls, by the complement:
+
+$$1 - 0.482 = 0.518$$
+
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Independence is a statement about the experiment: one roll does not influence the next, one particle does not influence the next. Every distribution in this lecture is built on it.
+
+</div>
+
+<!--
+Speaker: "at least one six in four rolls" is the bet of the Chevalier de Méré,
+1654, the problem that started probability theory. It is a little better than
+even. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -566,1483 +511,1556 @@ hideInToc: true
 
 # Bayes' **Theorem**
 
-<div class="card card-info card-glass pad-tight">
-
-## 🔄 **Formula**
-
-$$P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}$$
-
-**Terminology:** Prior $P(A)$ • Likelihood $P(B \mid A)$ • Evidence $P(B)$ • Posterior $P(A \mid B)$
-
-</div>
-
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 💡 **Key Idea**
+## 🔄 **Two lines**
 
-Reverses conditionals: $P(B \mid A) \to P(A \mid B)$
+The product rule, written for $A$ given $B$ and for $B$ given $A$:
 
-Update beliefs with new data
+$$P(A \mid B)\,P(B) = P(A \cap B) = P(B \mid A)\,P(A)$$
 
-</div>
+Divide by $P(B)$:
 
-<div class="card card-accent card-glass pad-tight">
-
-## 🎯 **Applications**
-
-Medical diagnosis • Spam filters • Parameter estimation • Hypothesis testing • ML
+$$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎯 **What it is for**
+
+- $P(B \mid A)$ is often what is known: the probability of this result if the hypothesis holds
+- $P(A \mid B)$ is what is asked: the probability of the hypothesis, given the result
+- The two are different numbers
+
+$B$ occurs either with $A$ or without it:
+
+$$P(B) = P(B \mid A)\,P(A) + P(B \mid A^c)\,P(A^c)$$
+
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The names: $P(A)$ is the **prior** probability of the hypothesis, before the result is known, and $P(A \mid B)$ the **posterior** probability, after it. The theorem says how much a result changes what is known.
+
+</div>
+
+<!--
+Speaker: the theorem turns a conditional probability round. The next slide
+puts numbers in. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Bayes' Theorem **Components**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight text-center">
-
-## 📊 **Prior** — $P(A)$
-
-Initial belief, before seeing the data
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight text-center">
-
-## 📈 **Likelihood** — $P(B \mid A)$
-
-How probable the data is, if $A$ is true
-
-</div>
-
-<div class="card card-info card-glass pad-tight text-center">
-
-## 📐 **Evidence** — $P(B)$
-
-Normalization: how probable the data is overall
-
-</div>
-
-<div class="card card-accent card-glass pad-tight text-center">
-
-## 🎯 **Posterior** — $P(A \mid B)$
-
-Updated belief, after seeing the data
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight mt-md text-center">
-
-## 🔄 **The Bayesian update** — Posterior = Prior × Likelihood ÷ Evidence
-
-$$\underbrace{P(A \mid B)}_{\text{posterior}} = \frac{\overbrace{P(B \mid A)}^{\text{likelihood}} \cdot \overbrace{P(A)}^{\text{prior}}}{\underbrace{P(B)}_{\text{evidence}}}$$
-
-Multiply the prior by the likelihood, then normalize — that is all "learning from data" means here.
-
-</div>
-
----
-hideInToc: true
----
-
-# Example: **Medical Test**
+# Bayes' Theorem: a **Test**
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-## 🏥 **Scenario** — disease: 1% prevalence • test: 95% sensitivity, 90% specificity
-
-**sensitivity** = P(test + | has disease); **specificity** = P(test − | no disease). **Question:** probability of disease if the test is positive? Think in a population of **10,000** people → 100 diseased, 9,900 healthy
+1 % of a population has a disease. A test is positive for 95 % of the sick and for 10 % of the healthy. A person tests positive. How probable is the disease?
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## 🦠 **Diseased** — 100 people
+## 👥 **By counting: 10 000 people**
 
-- ✅ **True positive (TP):** 95
-- ❌ **False negative (FN):** 5
+| | Positive | Negative |
+| --- | --- | --- |
+| 100 sick | 95 | 5 |
+| 9900 healthy | 990 | 8910 |
+| all | 1085 | 8915 |
 
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💪 **Healthy** — 9,900 people
-
-- ⚠️ **False positive (FP):** 990
-- ✅ **True negative (TN):** 8,910
+Of 1085 positive tests, 95 are sick: 95 / 1085 = 0.088.
 
 </div>
 
-</div>
+<div class="card card-secondary card-glass pad-compact">
 
-<div class="card card-success card-glass pad-tight mt-md">
+## 📐 **By the theorem**
 
-## 📊 **Total positives: $95 + 990 = 1{,}085$** → $P(\text{Disease} \mid +) = \dfrac{95}{1{,}085} \approx 8.8\%$
+$$P(D \mid +) = \frac{0.95 \times 0.01}{0.95 \times 0.01 + 0.10 \times 0.99}$$
 
-False positives dominate when the disease is rare.
-
-</div>
-
----
-hideInToc: true
----
-
-# Medical Test — **Bayes' calculation**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 **Calculation**
-
-$$P(D \mid +) = \frac{P(+ \mid D) \cdot P(D)}{P(+)}$$
-
-$P(+) = P(+ \mid D)\,P(D) + P(+ \mid D^c)\,P(D^c)$
-
-$\phantom{P(+)} = 0.95(0.01) + 0.10(0.99) = 0.1085$
-
-$$P(D \mid +) = \frac{0.0095}{0.1085} \approx \textbf{8.8\%}$$
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💡 **Insight**
-
-Only **8.8%** chance despite a positive test — the same $95 / 1{,}085$ as the head-count.
-
-**Why?** Rare disease → false positives (990) ≫ true positives (95).
-
-Sensitivity is $P(+ \mid D)$; the patient wants $P(D \mid +)$ — Bayes' theorem reverses the conditional.
+$$= \frac{0.0095}{0.1085} = 0.088$$
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
+<div class="card card-info card-glass pad-compact mt-md">
 
-<MCQ
-  question="A disease has 1% prevalence; the test is 95% sensitive and 90% specific. A patient tests positive. Why is P(disease | positive) only 8.8%, not 95%?"
-  :options="[
-    'The test is unreliable and should not be used',
-    'The disease is rare, so false positives from the large healthy population outnumber the true positives from the small diseased population',
-    'Sensitivity and specificity were entered into the formula backwards',
-    'P(disease | positive) always equals the test sensitivity'
-  ]"
-  :correct="1"
-  explanation="With only 1% prevalence, healthy people vastly outnumber diseased people — so even a 10% false-positive rate among the healthy produces more false positives (990) than true positives (95). Sensitivity and specificity describe P(test | disease); confusing that with P(disease | test) is the classic base-rate fallacy."
-/>
+8.8 %, not 95 %. The healthy are 99 times as many as the sick, so their false positives outnumber the true positives: 990 against 95.
+
+</div>
 
 <!--
-Speaker: let them vote before revealing — most pick "95%" instinctively. The point is the base rate: 990 false positives vs 95 true. (~3 min)
+Speaker: ask for a guess before showing the table. Most say 95 %. 95 % is
+P(positive | sick). The patient asks for P(sick | positive). (~3 min)
 -->
 
 ---
 layout: section
-hideInToc: true
----
-
-# Random Variables and **Distributions**
-
-<!--
-Speaker: the shift from events to numbers. PMF for discrete, PDF for continuous, CDF for both — that trio is the mental model to leave with. Expectation and variance close the block. (~1 min)
--->
-
----
 hideInToc: true
 ---
 
 # Random **Variables**
 
-<div class="card card-info card-glass pad-tight mt-md">
+<!--
+Speaker: from events to numbers. A distribution, its mean and its variance,
+and the two rules for sums that carry the rest of the lecture. (~1 min)
+-->
 
-## 📐 **Formal Definition**
+---
+hideInToc: true
+---
 
-A **random variable** $X:\Omega\to\mathbb{R}$ assigns a number to each possible outcome $\omega$ (an element of the sample space $\Omega$). E.g. for a die, $X$ could be "the number shown".
-
-$$X: \Omega \rightarrow \mathbb{R}$$
-
-</div>
+# A Random Variable and Its **Distribution**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## 🎯 **Purpose**
+## 🔢 **A number for each outcome**
 
-Random variables allow us to:
-- Work with numbers instead of abstract outcomes
-- Use calculus and algebra
-- Define probability distributions
-- Calculate expected values and variances
+A random variable $X$ assigns a number to every outcome. $X$ = the sum of two dice: the pair (3,5) gives $X$ = 8.
 
-</div>
+Its **distribution** lists each value $x$ with its probability $P(x)$, here the number of pairs out of 36:
 
-<div class="card card-secondary card-glass pad-tight">
+| $x$ | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| pairs | 1 | 2 | 3 | 4 | 5 | 6 | 5 | 4 | 3 | 2 | 1 |
 
-## ✍️ **Notation**
+The probabilities add up to 36/36 = 1.
 
-- **Random Variable:** $X, Y, Z$ (uppercase)
-- **Specific Value:** $x, y, z$ (lowercase)
-- **Probability:** $P(X = x)$ or $P(X \leq x)$
-
-**Example:**
-- Coin flip: $X = \begin{cases} 1 & \text{if heads} \\ 0 & \text{if tails} \end{cases}$
+$X$ is the variable, $x$ one of its values. A variable with separate values, such as a count, is called **discrete**.
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_probability_two_dice.svg" style="display:block;margin:0 auto;max-height:285px;">
+
 </div>
+
+</div>
+
+<!--
+Speaker: the distribution is the full description of X. The next two slides
+compress it into two numbers. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Discrete Random **Variables**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔢 **Definition**
-
-A random variable $X$ is **discrete** if it can only take countable values (e.g., $0, 1, 2, \ldots$ or a finite set).
-
-</div>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 📊 **Probability Mass Function (PMF)**
-
-The PMF $p_X(x)$ or $P(X = x)$ gives the probability that $X$ takes the value $x$.
-
-**Properties:**
-1. $P(X = x) \geq 0$ for all $x$
-2. $\sum_{\text{all } x} P(X = x) = 1$
-
-</div>
-
----
-hideInToc: true
----
-
-# PMF Example: **Coin Flips**
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🎯 **Example PMF**
-
-$X$ = number of heads in 3 fair coin flips
-
-<div class="text-sm mono-strong mt-sm">
-
-| $x$ | 0 | 1 | 2 | 3 |
-|-----|---|---|---|---|
-| $P(X = x)$ | 1/8 | 3/8 | 3/8 | 1/8 |
-
-</div>
-
-<div class="meta-caption mt-sm">
-
-Each probability is $\binom{3}{x}(0.5)^3$ — and they sum to 1: $\frac{1+3+3+1}{8} = 1 \;\checkmark$
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 💡 **Reading the PMF**
-
-- The most likely outcomes are $x=1$ and $x=2$ (each with probability 3/8)
-- The extreme outcomes $x=0$ and $x=3$ are equally unlikely (each 1/8)
-- Every valid PMF must sum to exactly 1
-
-</div>
-
----
-hideInToc: true
----
-
-# Continuous Random **Variables**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 📈 **Definition**
-
-A random variable $X$ is **continuous** if it can take any value in an interval or union of intervals (uncountably many values).
-
-**Key Insight:** For continuous $X$, $P(X = x) = 0$ for any specific $x$. Only intervals have non-zero probability.
-
-With infinitely many possible values packed into any interval, no single exact value carries probability weight — so for continuous variables probability lives in *intervals*, $P(a \le X \le b)$, which is why we use a probability **density** (PDF) rather than a mass function.
-
-</div>
-
----
-hideInToc: true
----
-
-# Probability **Density** Function (PDF)
+# The Expected **Value**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📐 **Definition**
+## ➗ **The average of many repetitions**
 
-The PDF $f(x)$ is **not** a probability, but a density. Probabilities are computed as:
+In $n$ repetitions the value $x$ occurs $n_x$ times. The average of all $n$ results is
 
-$$P(a \leq X \leq b) = \int_a^b f(x)\,dx$$
+$$\frac{1}{n}\sum_x x\,n_x = \sum_x x\,\frac{n_x}{n} \;\longrightarrow\; \sum_x x\,P(x)$$
 
-**Properties:**
-1. $f(x) \geq 0$ for all $x$
-2. $\int_{-\infty}^{\infty} f(x)\,dx = 1$
-3. $P(X = c) = 0$ for any specific $c$
+The limit is the **expected value**, or mean, of $X$:
+
+$$\mu = E[X] = \sum_x x\,P(x)$$
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 📏 **Example: Uniform on [0,1]**
+## 🎲 **In numbers**
 
-$$f(x) = \begin{cases} 1 & \text{if } 0 \leq x \leq 1 \\ 0 & \text{otherwise} \end{cases}$$
-
-**Verification:**
-
-$$\int_0^1 1 \, dx = 1 \quad \checkmark$$
-
-**Probability calculation:**
-
-$$P(0.2 \leq X \leq 0.5) = \int_{0.2}^{0.5} 1 \, dx = 0.3$$
+- One die: (1 + 2 + 3 + 4 + 5 + 6) / 6 = 3.5
+- 3.5 is not a possible roll. It is the average of many rolls
+- The sum of two dice: (2×1 + 3×2 + … + 12×1) / 36 = 252 / 36 = 7
+- 100 000 simulated pairs of dice give an average of 7.007
 
 </div>
 
 </div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Each value is weighted by its probability. The expected value is the centre of mass of the distribution.
+
+</div>
+
+<!--
+Speaker: the step in the first formula is the definition of probability from
+the first section: n_x / n tends to P(x). (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Cumulative Distribution Function (**CDF**)
+# Variance and Standard **Deviation**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **The mean squared distance from μ**
+
+$$\sigma^2 = \mathrm{Var}(X) = E\big[(X-\mu)^2\big] = \sum_x (x-\mu)^2\,P(x)$$
+
+The **standard deviation** $\sigma$ is its square root. It has the unit of $X$.
+
+Expanding the square gives a shorter way to compute it:
+
+$$E\big[(X-\mu)^2\big] = E[X^2] - 2\mu\,E[X] + \mu^2 = E[X^2] - \mu^2$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🎲 **One die, μ = 3.5**
+
+| $x$ | 1 | 2 | 3 | 4 | 5 | 6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| $x - \mu$ | −2.5 | −1.5 | −0.5 | 0.5 | 1.5 | 2.5 |
+| $(x-\mu)^2$ | 6.25 | 2.25 | 0.25 | 0.25 | 2.25 | 6.25 |
+
+- $\sigma^2$ = 17.5 / 6 = 2.917
+- $\sigma$ = 1.708
+- The shorter way: $E[X^2]$ = 91/6 = 15.167, and 15.167 − 3.5² = 2.917
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The distances are squared so that those below and above the mean do not cancel. The price is the unit: the variance of a time is in s². The standard deviation brings the unit back.
+
+</div>
+
+<!--
+Speaker: do the die on the board. The average of the bottom row is the
+variance. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Sums of Random **Variables**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➕ **The mean of a sum**
+
+$$E[X + Y] = E[X] + E[Y]$$
+
+$$E[aX + b] = a\,E[X] + b$$
+
+Both hold always, also when $X$ and $Y$ depend on each other.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **The variance of a sum**
+
+Write $\Delta X = X - \mu_X$ and $\Delta Y = Y - \mu_Y$.
+
+$$\mathrm{Var}(X+Y) = E\big[(\Delta X + \Delta Y)^2\big]$$
+
+$$= \mathrm{Var}(X) + \mathrm{Var}(Y) + 2\,E[\Delta X\,\Delta Y]$$
+
+$E[\Delta X\,\Delta Y]$ is the **covariance** $\mathrm{Cov}(X, Y)$. It is 0 for independent variables.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+For independent variables the variances add, and a factor comes out squared:
+
+$$\mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y), \qquad \mathrm{Var}(aX + b) = a^2\,\mathrm{Var}(X)$$
+
+Two dice: mean 3.5 + 3.5 = 7, variance 2.917 + 2.917 = 5.833, $\sigma$ = 2.415. Standard deviations do not add: 1.708 + 1.708 = 3.416 is wrong.
+
+</div>
+
+<!--
+Speaker: the two rules in the bottom card are used three more times today: for
+the binomial, for the standard error and for error propagation. A simulation
+of 100 000 pairs of dice gives a variance of 5.804. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Continuous Variables: **Density**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📈 **Probability is an area**
+
+A mass or a time can take any value in an interval. One exact value has probability 0. A **density** $f(x)$ gives the probability of an interval:
+
+$$P(a \le X \le b) = \int_a^b f(x)\,dx, \qquad \int_{-\infty}^{\infty} f(x)\,dx = 1$$
+
+The sums become integrals:
+
+$$\mu = \int x\,f(x)\,dx, \qquad \sigma^2 = \int (x-\mu)^2 f(x)\,dx$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **The uniform density on [0, 1]**
+
+$f(x) = 1$ inside the interval and 0 outside. `rng.random()` draws from it.
+
+- $P(0.2 \le X \le 0.5)$ = 0.3
+
+$$\mu = \int_0^1 x\,dx = \tfrac{1}{2}$$
+
+$$\sigma^2 = \int_0^1 x^2\,dx - \mu^2 = \tfrac{1}{3} - \tfrac{1}{4} = \tfrac{1}{12}$$
+
+- $\sigma$ = 0.289
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A density is not a probability. Its unit is 1 over the unit of $x$, and it can exceed 1: the uniform density on [0, 0.5] is 2. A histogram of $N$ values with bin width $\Delta x$ shows about $N f(x)\,\Delta x$ values per bin.
+
+</div>
+
+<!--
+Speaker: the last sentence is how a density is drawn over a histogram: multiply
+it by the number of values and by the bin width. The mean 1/2 and the variance
+1/12 of the uniform density are used again in the simulation of sums. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Three **Distributions**
+
+<!--
+Speaker: the binomial from independent trials, the Poisson as its limit, the
+Gaussian as the limit of sums. Each is derived, then checked in numbers.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Independent Trials: **Counting**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-## 📈 **Definition** — for any random variable $X$, discrete or continuous
-
-$$F(x) = P(X \leq x)$$
-
-the probability that $X$ takes a value **at most** $x$.
+A trial has two results: success, with probability $p$, or failure, with $1 - p$. There are $n$ independent trials. How probable are exactly $k$ successes?
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## 📐 **Properties**
+## 3️⃣ **Three trials, written out**
 
-1. **Non-decreasing:** $x_1 < x_2 \Rightarrow F(x_1) \leq F(x_2)$
-2. **Limits:** $F(x) \to 0$ as $x \to -\infty$ and $F(x) \to 1$ as $x \to \infty$
-3. **For continuous $X$:** $F'(x) = f(x)$ — the PDF is the derivative of the CDF
+| $k$ | Sequences | Each has | Number |
+| --- | --- | --- | --- |
+| 3 | SSS | $p^3$ | 1 |
+| 2 | SSF, SFS, FSS | $p^2(1-p)$ | 3 |
+| 1 | SFF, FSF, FFS | $p\,(1-p)^2$ | 3 |
+| 0 | FFF | $(1-p)^3$ | 1 |
 
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💡 **Why CDFs are useful**
-
-- Works for **both** discrete and continuous RVs
-- Interval probabilities: $P(a < X \leq b) = F(b) - F(a)$
-- Quantiles: find $x$ such that $F(x) = p$
-- Foundation for statistical inference
+The eight sequences share no outcome, so their probabilities add. The total is $(p + 1 - p)^3 = 1$.
 
 </div>
 
-</div>
+<div class="card card-secondary card-glass pad-compact">
 
----
-hideInToc: true
----
+## ✌️ **Two steps**
 
-# Expectation and **Variance**
+1. **Independence.** One given sequence with $k$ successes has probability $p^k(1-p)^{n-k}$, in any order
+2. **Counting.** The $k$ successes can be placed in ${n(n-1)\cdots(n-k+1)}$ ordered ways. Each set of places is counted $k!$ times:
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-tight">
-
-## 🎯 **Expected Value (Mean)**
-
-The **expectation** $E[X]$ (also written $\mu$) is the average of $X$ weighted by probabilities:
-
-**Discrete:**
-
-$$E[X] = \sum_{\text{all } x} x \cdot P(X = x)$$
-
-**Continuous:**
-
-$$E[X] = \int_{-\infty}^{\infty} x \cdot f(x)\,dx$$
-
-</div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📐 **Variance**
-
-Measures spread around the mean:
-
-$$\text{Var}(X) = E[(X - \mu)^2]$$
-
-**Computational formula:**
-
-$$\text{Var}(X) = E[X^2] - (E[X])^2$$
-
-**Standard deviation:** $\sigma = \sqrt{\text{Var}(X)}$ — same units as $X$
+$$\binom{n}{k} = \frac{n!}{k!\,(n-k)!}$$
 
 </div>
 
 </div>
-
----
-hideInToc: true
----
-
-# **Properties** of Expectation and Variance
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 📏 **Linearity of Expectation**
-
-- $E[aX + b] = aE[X] + b$
-- $E[X + Y] = E[X] + E[Y]$ (always — even for dependent variables!)
-
-</div>
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## 📊 **Variance Properties**
-
-- $\text{Var}(aX + b) = a^2\text{Var}(X)$ — adding a constant does not change variance
-- $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$ — only if $X$ and $Y$ are **independent**
-- For dependent variables: $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X, Y)$
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Descriptive **Statistics**
 
 <!--
-Speaker: how we summarise a sample — centre and spread. Flag the sample-vs-population bridge here; it sets up the standard error later. (~1 min)
+Speaker: check the count on the table: 3! / (2! 1!) = 3 sequences with two
+successes. S is a success, F a failure. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Measures of **Central Tendency**
+# The **Binomial** Distribution
 
-<div class="grid-3 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-tight">
+The probability of one sequence times the number of sequences:
 
-## 📊 **Mean (Average)**
-
-- Formula: $\bar{x} = \frac{1}{n}\sum x_i$
-- Uses every value
-- Most familiar summary
-- **Sensitive** to outliers
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📍 **Median**
-
-- Middle value after sorting
-- Splits data into two halves
-- Robust to skew/outliers
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🔁 **Mode**
-
-- Most frequent value(s)
-- Good for categorical data
-- Can have multiple modes
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🧮 **Example**
-
-Data: [1, 2, 2, 3, 10]
-
-- Mean = **3.6**
-- Median = **2**
-- Mode = **2**
-
-<div class="meta-caption mt-sm">
-
-Outlier 10 pulls the mean upward, but median/mode stay near the bulk.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Measures of **Spread**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 📏 **Range**
-
-$$\text{Range} = \max - \min$$
-
-<div class="meta-caption">
-
-Simple but not robust
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📊 **Sample Variance**
-
-$$s^2 = \frac{\sum(x_i - \bar{x})^2}{n-1}$$
-
-<div class="meta-caption">
-
-Average squared deviation from $\bar{x}$
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📈 **Standard Deviation**
-
-$$s = \sqrt{s^2}$$
-
-<div class="meta-caption">
-
-Same units as the data
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-📦 **Quartiles & the IQR** — sort the data and split it into quarters: **Q1** (25th percentile), the **median** (Q2, 50th), and **Q3** (75th). The **interquartile range** $\text{IQR} = Q_3 - Q_1$ spans the middle 50% — the robust spread measure a **boxplot** draws.
-
-</div>
-
----
-hideInToc: true
----
-
-# Why **Variance**?
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ❓ **Why square deviations?**
-
-<div class="card-content text-base">
-
-Squaring removes sign, magnifies large misses, and yields smooth functions that work well with calculus/optimization.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🔬 **Population vs Sample**
-
-<div class="card-content text-base">
-
-$$
-\sigma^2 = \frac{1}{n}\sum (x_i-\mu)^2
-$$
-
-$$
-s^2 = \frac{1}{n-1}\sum (x_i-\bar{x})^2
-$$
-
-Bessel's correction ($n-1$) keeps $s^2$ unbiased.
-
-**NumPy:** `np.std(x, ddof=1)` — the default `ddof=0` is the population formula.
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Sample Statistics and Population **Parameters**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔗 **The Bridge**
-
-Every descriptive statistic we compute from data is a **sample estimate** of a true **population parameter**. The sample is what we observe; the population is what we want to learn about.
-
-A **parameter** is a fixed but unknown number describing the whole population (e.g. the true mean $\mu$); a **statistic** is something we compute from our sample (e.g. $\bar{x}$). We use statistics to estimate parameters.
+$$P(k) = \binom{n}{k}\,p^k\,(1-p)^{n-k}, \qquad k = 0, 1, \dots, n$$
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## 📊 **Key Correspondences**
+## 🔬 **A detector with p = 0.9, ten particles**
 
-- Sample mean $\bar{x}$ estimates population mean $\mu$
-- Sample variance $s^2$ estimates population variance $\sigma^2$
-- Sample proportion $\hat{p}$ estimates population proportion $p$
+| Registered $k$ | 10 | 9 | 8 | 7 or fewer |
+| --- | --- | --- | --- | --- |
+| $P(k)$ | 0.349 | 0.387 | 0.194 | 0.070 |
 
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💡 **Why it matters**
-
-- More data → estimates converge to true values (consistency)
-- Unbiased estimators are correct "on average" over repeated samples
-- The **standard error** quantifies how far the estimate might be from the truth
-- This is the foundation for confidence intervals and hypothesis tests
+- $P(10)$ = 0.9¹⁰ = 0.349
+- $P(9)$ = 10 × 0.9⁹ × 0.1 = 0.387
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **Where it applies**
+
+- A fixed number $n$ of trials
+- Two results per trial
+- The same $p$ in every trial
+- Trials that do not influence each other
+
+The rows of a file that pass a selection, the particles a detector registers, the heads in $n$ coin flips.
+
 </div>
 
----
-layout: section
-hideInToc: true
----
+</div>
 
-# Common Probability **Distributions**
+<div class="note-text mt-sm">
+
+A detector that registers nine particles in ten sees all ten of a group in only 35 % of the cases.
+
+</div>
 
 <!--
-Speaker: a quick zoo — Bernoulli/Binomial/Poisson (discrete), Uniform/Exponential/Normal (continuous). Poisson gives the √N counting error; the Normal is what measurement errors look like. (~1 min)
+Speaker: the probability p of a detector is called its efficiency. The four
+numbers of the table add up to 1.000. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Distribution **Overview**
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-## 🎲 **Probability distributions** — how values of a random variable are distributed
-
-</div>
+# The Binomial: **Mean and Variance**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 🔢 **Discrete** — countable outcomes
+## 1️⃣ **One trial**
 
-- **Bernoulli** — $P(X=1) = p$
-- **Binomial** — $n$ independent trials
-- **Poisson** — rare events per interval
+$X$ = 1 for a success, 0 for a failure.
 
-</div>
+$$E[X] = 1 \cdot p + 0 \cdot (1-p) = p$$
 
-<div class="card card-secondary card-glass pad-tight">
+$X^2 = X$, so $E[X^2] = p$ and
 
-## 📈 **Continuous** — real-valued range
-
-- **Uniform** — flat on $[a, b]$
-- **Exponential** — wait times
-- **Normal** — $\mu, \sigma$
+$$\mathrm{Var}(X) = E[X^2] - p^2 = p\,(1-p)$$
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **n trials**
+
+The count is a sum of independent trials, $k = X_1 + \dots + X_n$. Means add and variances add:
+
+$$E[k] = np$$
+
+$$\mathrm{Var}(k) = np\,(1-p), \qquad \sigma = \sqrt{np\,(1-p)}$$
+
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The detector with $p$ = 0.9: of 10 particles it registers 9 ± 0.95, of 1000 particles 900 ± 9.5. The mean grows like $n$ and the spread like $\sqrt{n}$, so the relative spread falls like $1/\sqrt{n}$: 10.5 % for 10 particles, 1.05 % for 1000.
+
+</div>
+
+<!--
+Speaker: no sum over binomial coefficients is needed. The rules for the mean
+and the variance of a sum do the work. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# **Discrete** Distributions
+# From Binomial to **Poisson**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-tight">
+Many trials, each with a small probability: $n \to \infty$ and $p \to 0$, with the mean $\lambda = np$ held fixed. Put $p = \lambda/n$ into the binomial:
 
-## 🪙 **Bernoulli (1 trial)**
-
-- Outcome: success (1) or failure (0)
-- Parameter: $p = P(X = 1)$
-- Mean $= p$, variance $= p(1-p)$
-- Building block for discrete models
+$$P(k) = \frac{n(n-1)\cdots(n-k+1)}{n^k}\;\frac{\lambda^k}{k!}\;\left(1-\frac{\lambda}{n}\right)^{n}\left(1-\frac{\lambda}{n}\right)^{-k}$$
 
 </div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🎯 **Binomial (n trials)**
-
-- $n$ independent Bernoulli trials
-- $X =$ number of successes
-- $P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$
-- Mean $= np$, variance $= np(1-p)$
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Poisson** Distribution
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ⏱️ **When to use**
-
-- Counting rare events in a fixed interval
-- Events occur independently
-- Constant average rate $\lambda$
-
-## 📐 **PMF**
-
-$$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
-
-<div class="meta-caption mt-sm">
-
-Parameter $\lambda$ = expected count.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📊 **Properties & Examples**
-
-- Mean = variance = $\lambda$
-- **SD = √λ** → a count of $N$ events carries uncertainty ≈ **√N** (the "counting error")
-- $P(X=0) = e^{-\lambda}$ (no events)
-- Additive: sum of independent Poissons → Poisson
-- Radioactive decays • photon arrivals • events in a mass window
-
-<div class="meta-caption mt-sm">
-
-Counting uncertainty √N ≠ SE on a mean — different questions.
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **Continuous** Distributions
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📏 **Uniform Distribution**
-
-- Support: $[a,b]$
-- $f(x) = \tfrac{1}{b-a}$ (flat)
-- $E[X] = \tfrac{a+b}{2}$
-- $\text{Var}(X) = \tfrac{(b-a)^2}{12}$
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ⏳ **Exponential Distribution**
-
-- Time to first event
-- $f(x) = \lambda e^{-\lambda x}$, $x \ge 0$
-- $E[X] = 1/\lambda$, $\text{Var}(X) = 1/\lambda^2$
-- **Memoryless:** $P(X > s+t \mid X > s) = P(X > t)$
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Why the Normal Distribution is **Special**
 
 <div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
-<div class="emoji-xl">🏆</div>
-<div class="meta-strong">Most Important</div>
-<div class="note-text mt-xs">The distribution you meet most often across science and statistics</div>
+
+## 1️⃣ **First factor → 1**
+
+$k$ factors, $\frac{n}{n}\cdot\frac{n-1}{n}\cdots$, each close to 1 when $n$ is much larger than $k$
+
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
-<div class="emoji-xl">🌿</div>
-<div class="meta-strong">Arises Naturally</div>
-<div class="note-text mt-xs">Sums and averages of many small random effects tend toward it</div>
-</div>
 
-<div class="card card-info card-glass pad-compact">
-<div class="emoji-xl">🎯</div>
-<div class="meta-strong">CLT Foundation</div>
-<div class="note-text mt-xs">The Central Limit Theorem explains why it appears so widely</div>
-</div>
+## 2️⃣ **Third factor → e<sup>−λ</sup>**
 
-<div class="card card-success card-glass pad-compact">
-<div class="emoji-xl">🔬</div>
-<div class="meta-strong">Measurement Errors</div>
-<div class="note-text mt-xs">Random errors are usually symmetric around the true value</div>
-</div>
+For $\lambda$ = 3: 0.0282 for $n$ = 10, 0.0476 for 100, 0.0496 for 1000. $e^{-3}$ = 0.0498
 
-<div class="card card-warning card-glass pad-compact">
-<div class="emoji-xl">🧪</div>
-<div class="meta-strong">Statistical Tests</div>
-<div class="note-text mt-xs">Many standard tests assume approximately normal data</div>
 </div>
 
 <div class="card card-accent card-glass pad-compact">
-<div class="emoji-xl">⚙️</div>
-<div class="meta-strong">Two Parameters: μ, σ²</div>
-<div class="note-text mt-xs">Mean μ and variance σ² pin it down completely</div>
-</div>
 
-</div>
+## 3️⃣ **Last factor → 1**
 
-<div class="card card-accent card-glass pad-compact mt-md text-center">
-
-🌟 The normal distribution is, in a sense, the **pattern of patterns** — average enough independent things and normality emerges.
-
-</div>
-
----
-hideInToc: true
----
-
-# **Normal** Distribution
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 🔔 **Probability Density Function** — $X \sim N(\mu, \sigma^2)$ with mean $\mu$ and variance $\sigma^2$
-
-$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad -\infty < x < \infty$$
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📐 **Key Properties**
-
-- **Symmetric**, **bell-shaped** about $\mu$: mean = median = mode = $\mu$
-- **Inflection points** at $x = \mu \pm \sigma$
-- Area under the curve = 1; tails approach (but never reach) zero
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🎯 **Standard Normal**
-
-$Z \sim N(0, 1)$ with density
-
-$$\phi(z) = \frac{1}{\sqrt{2\pi}}\, e^{-z^2/2}$$
-
-**Standardization:** $Z = \dfrac{X - \mu}{\sigma}$ — if $X \sim N(\mu, \sigma^2)$ then $Z \sim N(0,1)$, so one table (or software routine) serves every normal.
+$k$ is fixed and $\lambda/n \to 0$
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
+<div class="card card-success card-glass pad-compact mt-md">
 
-# The **68-95-99.7** Rule
+What remains is the **Poisson distribution**, with one parameter:
 
-For $X \sim N(\mu, \sigma^2)$:
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-success card-glass pad-balanced text-center">
-
-<div class="text-xl-strong">📊 68%</div>
-
-<div class="note-text mt-xs">
-
-$\mu \pm \sigma$
+$$P(k) = \frac{\lambda^k}{k!}\,e^{-\lambda}, \qquad k = 0, 1, 2, \dots$$
 
 </div>
-
-</div>
-
-<div class="card card-info card-glass pad-balanced text-center">
-
-<div class="text-xl-strong">📈 95%</div>
-
-<div class="note-text mt-xs">
-
-$\mu \pm 2\sigma$
-
-</div>
-
-</div>
-
-<div class="card card-primary card-glass pad-balanced text-center">
-
-<div class="text-xl-strong">🎯 99.7%</div>
-
-<div class="note-text mt-xs">
-
-$\mu \pm 3\sigma$
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-balanced mt-md">
-
-## 💡 **Practical Implication**
-
-<div class="note-text mt-xs">
-
-A $3\sigma$ measurement is extremely rare — 0.3% (both tails)
-
-⚛️ **Physics**: $5\sigma$ = gold standard for a discovery — 1 in 3.5 M (one tail — the HEP convention)
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Sampling & **Estimation**
 
 <!--
-Speaker: from describing a distribution to estimating its parameters from a sample. The CLT is the hinge — it turns any measurement into a normal error bar and gives us the standard error; MLE tells us how to pick the estimate. (~1 min)
+Speaker: the limit of (1 − λ/n)^n is the definition of the exponential
+function. n and p have disappeared: only their product is left. (~3 min)
 -->
 
 ---
-layout: fact
 hideInToc: true
 ---
 
-# **Central Limit Theorem (CLT)**
+# The Limit in **Numbers**
 
-### The cornerstone of statistical inference
+<img class="fig" src="/figures/viz_probability_binomial_poisson.svg" style="display:block;margin:0 auto;max-height:285px;">
 
----
-hideInToc: true
----
+<div class="card card-info card-glass pad-compact mt-md">
 
-# CLT **Statement**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 📜 **Theorem Statement**
-
-Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed (i.i.d.) random variables with:
-- Mean: $E[X_i] = \mu$
-- Variance: $\text{Var}(X_i) = \sigma^2 < \infty$
-
-Define the sample mean:
-
-$$\bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n} = \frac{1}{n}\sum_{i=1}^{n} X_i$$
-
-Then for large $n$, **approximately**:
-
-$$\bar{X} \;\overset{\text{approx.}}{\sim}\; N\!\left(\mu, \frac{\sigma^2}{n}\right)$$
+The bars are the binomial distribution, the points the Poisson distribution with $\lambda$ = 3. The mean $np$ is 3 in every panel. With $n$ = 10 the two differ by up to 0.04. With $n$ = 1000 the largest difference is 0.0003. A thousand trials with a probability of 0.003 each cannot be told from the limit.
 
 </div>
+
+<!--
+Speaker: n grows by a factor of ten from panel to panel and p falls by the
+same factor. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# CLT — **Equivalent** Form
+# The Limit, **Computed**
 
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-Or equivalently, the standardized sum converges in distribution to $N(0,1)$:
-
-$$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1)$$
-
-</div>
-
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🔑 **Key Insights**
-
-- Works for **any** underlying distribution (not just normal!)
-- Larger $n$ → better approximation
-- Standard error: $SE = \sigma/\sqrt{n}$ decreases with $\sqrt{n}$
-- Rule of thumb: $n \geq 30$ often sufficient for good approximation
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔗 **Connection to Fitting**
-
-This justifies the normal-error assumption used in fitting: measurement errors typically arise from many small independent effects, so by the CLT they are approximately normally distributed.
-
-</div>
-
----
-hideInToc: true
----
-
-# Why CLT **Matters**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧭 **Why we rely on it**
-
-- Measurement errors = many tiny effects → approximate normal
-- Sampling distributions of means trend toward normal even if raw data are skewed
-- Confidence intervals & hypothesis tests assume normality via CLT
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🎲 **Die-rolling intuition**
-
-- Roll a die $n$ times and average:
-  - $n=1$: uniform
-  - $n=2$: slightly peaked
-  - $n=10$: bell-shaped
-  - $n=100$: tightly normal
-- More samples $\Rightarrow$ distribution of $\bar{X}$ smooths out.
-
-<div class="meta-caption mt-sm">
-
-CLT magic: sum/average of many independent pieces → normal.
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Interactive: **Binomial → Normal**
-
-<div class="note-text mt-sm">
-
-Watch the Binomial PMF for growing $n$ collapse onto the Normal curve the CLT predicts — $\mu = np$, $\sigma = \sqrt{np(1-p)}$.
+| $k$ | 0 | 1 | 2 | 3 | 4 | 5 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Binomial, $n$ = 1000, $p$ = 0.003 | 0.0496 | 0.1491 | 0.2242 | 0.2244 | 0.1683 | 0.1009 |
+| Poisson, $\lambda$ = 3 | 0.0498 | 0.1494 | 0.2240 | 0.2240 | 0.1680 | 0.1008 |
 
 </div>
 
 ```python {monaco-run} {autorun:false}
-p = 0.5
-fig, axes = plt.subplots(1, 3, figsize=(9, 2.7), sharey=True)
-for ax, n in zip(axes, [5, 20, 80]):
-    k = np.arange(0, n + 1)
-    ax.bar(k, binom.pmf(k, n, p), color="#56B4E9", width=0.8)
-    mu, sig = n * p, np.sqrt(n * p * (1 - p))
-    xs = np.linspace(0, n, 300)
-    ax.plot(xs, norm.pdf(xs, mu, sig), color="#D55E00", linewidth=2)
-    ax.set(title=f"n={n}", xlabel="k")
-plt.tight_layout(); plt.show()
+from math import comb, exp, factorial
+n, p, lam = 1000, 0.003, 3
+for k in range(6):
+    binomial = comb(n, k) * p**k * (1 - p)**(n - k)
+    poisson = lam**k * exp(-lam) / factorial(k)
+    print(k, f"{binomial:.4f}", f"{poisson:.4f}")
 ```
 
----
-hideInToc: true
----
-
-# Two Different Promises: **LLN vs CLT**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🎲 As $n$ grows, two distinct things happen to the sample mean $\bar{x}$ — students often blur them, but they answer different questions.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🎯 **Law of Large Numbers**
-
-*Where does $\bar{x}$ go?*
-
-- The sample mean **converges to the true mean** $\mu$
-- Justifies "collect more data → estimate gets closer to the truth"
-- Says nothing about the *shape* of the uncertainty
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔔 **Central Limit Theorem**
-
-*What shape is $\bar{x}$'s uncertainty?*
-
-- The distribution of $\bar{x}$ becomes **normal**, with spread $\sigma/\sqrt{n}$
-- Holds **whatever** the original distribution's shape
-- Justifies error bars, confidence intervals, and $\pm 2\,\text{SE}$
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 LLN says the estimate **lands on the truth**; CLT says **how it wobbles** on the way there.
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="As n grows, the LLN and the CLT both describe what happens to the sample mean — but they answer different questions. Which pairing is correct?"
-  :options="[
-    'LLN describes the shape of the uncertainty; CLT describes where the mean converges',
-    'LLN describes where the mean converges; CLT describes the shape of its uncertainty',
-    'They are two names for the same statement',
-    'CLT only applies if the original data is already Normally distributed'
-  ]"
-  :correct="1"
-  explanation="LLN says the sample mean converges to the true mean μ as n grows — it answers where does it land. CLT says the distribution of that mean becomes Normal with spread σ/√n, whatever the shape of the original data — it answers how it wobbles on the way there."
-/>
-
 <!--
-Speaker: quick vote. The trap is the last option — the CLT needs no normality in the raw data; that is the whole point. (~3 min)
+Speaker: both formulas are typed as they stand, and comb(n, k) is the binomial
+coefficient. Run it, then set n, p = 10, 0.3 and run again: the first column
+changes, the second does not. Python computes comb(1000, 5) exactly, as an
+integer that does not overflow. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Standard **Error**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-balanced">
-
-## 📐 **Definition**
-
-$$SE = \frac{\sigma}{\sqrt{n}}$$
-
-<div class="meta-caption">
-
-Std dev of the sample mean
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-balanced">
-
-## 🔍 **Interpretation**
-
-<div class="text-tight">
-
-📊 Uncertainty of $\bar{x}$ as an estimate of $\mu$
-
-📉 Decreases as $\sqrt{n}$
-
-🔢 Halve error: $4\times$ data
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-balanced">
-
-## 📝 **Usage**
-
-<div class="text-tight">
-
-**mean $\pm$ SE** → ~68% confidence
-
-**mean $\pm 2 \times$ SE** → ~95% confidence
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Standard Deviation **vs** Standard Error
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-⚠️ The most-confused pair in statistics. They answer **different questions** — and only one shrinks as you collect more data.
-
-</div>
+# The **Poisson** Distribution
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 📊 **Standard deviation (σ)**
+## 📐 **Mean and variance**
 
-- Spread of the **individual data points**
-- "How variable is one measurement?"
-- **Does not** shrink with more data — it converges to the true spread of the population
+Take the binomial results to the limit $p \to 0$, $np = \lambda$:
 
-</div>
+$$E[k] = np = \lambda$$
 
-<div class="card card-secondary card-glass pad-tight">
+$$\mathrm{Var}(k) = np\,(1-p) \to \lambda$$
 
-## 🎯 **Standard error (SE = σ/√n)**
+The variance equals the mean, so
 
-- Spread of the **estimate of the mean**
-- "How well do I know the average?"
-- **Shrinks as √n** — more data pins the mean down tighter
+$$\sigma = \sqrt{\lambda}$$
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **Where it applies**
+
+Events that occur independently, at a constant mean rate, counted in a fixed interval:
+
+- decays of a source per minute
+- photons on a pixel per exposure
+- rows of a file in one bin of a histogram
+
+For $\lambda$ = 3: no event with probability 0.050, six or more with 0.084.
+
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md">
+</div>
 
-💡 Rule: describe your **data** with σ; state the uncertainty of a **result** with SE. Error bars on a mean should almost always be SE (or a CI), not σ.
+<div class="card card-accent card-glass pad-compact mt-md">
+
+**A count and its uncertainty.** A count $N$ is one draw from a Poisson distribution whose mean is not known. $N$ is the estimate of $\lambda$ and $\sqrt{N}$ the estimate of $\sigma$. The count is written $N \pm \sqrt{N}$.
 
 </div>
+
+<!--
+Speaker: this is the origin of the square root of N that is drawn as the error
+bar of a histogram bin. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Interactive: **Bootstrap** — Resampling for Free
+# √N, **Checked** on the Mass Column
 
-<div class="note-text mt-sm">
+<div class="grid-2 mt-md gap-md">
 
-No formula needed: resample your own data **with replacement** many times and look at how much the statistic wobbles. *(Seminar 11 stretch goal.)*
+<div class="card card-primary card-glass pad-compact">
+
+## 📊 **14 bins where the histogram is flat**
+
+```python
+counts, edges = np.histogram(
+    M, bins=np.arange(1816, 1846, 2))
+print(counts.min(), counts.max())
+print(counts.mean(), counts.std(ddof=1))
+```
+
+```text
+1419 1534
+1460.7857142857142 33.88482431238679
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📏 **The relative uncertainty is 1/√N**
+
+| Count $N$ | $\sqrt{N}$ | $\sqrt{N}/N$ |
+| --- | --- | --- |
+| 100 | 10 | 10 % |
+| 1461 | 38 | 2.6 % |
+| 3746, the highest bin | 61 | 1.6 % |
+| 10 000 | 100 | 1 % |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+From 1816 to 1844 MeV/c² the bins of 2 MeV/c² hold about the same number of rows. Their counts scatter with a standard deviation of 34. The Poisson prediction is √1461 = 38. Fourteen counts fix a standard deviation to about one part in five, so 34 and 38 agree.
+
+</div>
+
+<!--
+Speaker: nothing in the file says that the counts are Poisson. The scatter of
+neighbouring bins shows it. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The **Gaussian** Distribution
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🔔 **The density**
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\,\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+
+Two parameters: the mean $\mu$, where the peak is, and the standard deviation $\sigma$, its width. It is also called the normal distribution.
+
+| Interval | Probability |
+| --- | --- |
+| $\mu \pm \sigma$ | 68.27 % |
+| $\mu \pm 2\sigma$ | 95.45 % |
+| $\mu \pm 3\sigma$ | 99.73 % |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_probability_gaussian.svg" style="display:block;margin:0 auto;max-height:270px;">
+
+$z = (x - \mu)/\sigma$ is the distance from the mean in units of $\sigma$
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+This is what an uncertainty means. A result written $x \pm \sigma$ says: if the measurement is Gaussian, the interval covers the true value in 68 % of repetitions.
+
+</div>
+
+<!--
+Speaker: the three percentages are areas under the curve. They are worth
+knowing by heart: two in three, 19 in 20, 369 in 370. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Sums Tend to a **Gaussian**
+
+<img class="fig" src="/figures/viz_probability_clt.svg" style="display:block;margin:0 auto;max-height:215px;">
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎰 **The simulation**
+
+Each panel holds 100 000 sums of $N$ uniform random numbers. The curve is the Gaussian with the mean $N/2$ and the variance $N/12$ that the rules for sums give. One number is flat, two make a triangle, twelve follow the curve.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📜 **The central limit theorem**
+
+The sum of $N$ independent random variables with finite variances tends to a Gaussian as $N$ grows, whatever the distribution of each one. Its mean is the sum of the means and its variance the sum of the variances.
+
+</div>
+
+</div>
+
+<!--
+Speaker: nothing in a uniform number is bell-shaped. The shape comes from
+adding. The theorem is stated here and shown by simulation; its proof needs
+tools this course does not have. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Sums in **NumPy**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| $N$ | 1 | 2 | 3 | 12 | Gaussian |
+| --- | --- | --- | --- | --- | --- |
+| Mean, standard deviation of the sums | 0.500, 0.289 | 1.000, 0.409 | 1.501, 0.500 | 6.003, 1.002 | $N/2$, $\sqrt{N/12}$ |
+| Fraction within ±1σ of the mean | 57.6 % | 64.9 % | 66.7 % | 67.7 % | 68.3 % |
 
 </div>
 
 ```python {monaco-run} {autorun:false}
-rng = np.random.default_rng(0)                      # seeded → reproducible
-data = rng.normal(10, 2, 50)                        # 50 "measurements"
-boot_means = [np.mean(rng.choice(data, len(data), replace=True))
-              for _ in range(1000)]
-
-print(f"SE (bootstrap) = {np.std(boot_means):.3f}")
-print(f"SE (formula)   = {np.std(data, ddof=1) / np.sqrt(len(data)):.3f}")
+rng = np.random.default_rng(4)
+for N in [1, 2, 3, 12]:
+    s = rng.random((100_000, N)).sum(axis=1)     # 100 000 sums of N numbers
+    z = (s - N / 2) / np.sqrt(N / 12)            # distance from the mean in σ
+    print(N, s.mean().round(3), s.std().round(3), (abs(z) < 1).mean().round(3))
 ```
 
----
-hideInToc: true
----
+<div class="note-text mt-sm">
 
-# **Estimation**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🎯 **Point Estimation**
-
-- Single best guess for a parameter
-- $\bar{x}$ estimates $\mu$
-- $s^2$ estimates $\sigma^2$
-- Deterministic function of the data
+`rng.random((100_000, N))` is a table of 100 000 rows and $N$ columns. `.sum(axis=1)` adds along each row.
 
 </div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📏 **Interval Estimation**
-
-- Range of plausible parameter values
-- Confidence interval (CI): over many repeats, the chosen fraction (e.g. 95%) of such intervals bracket the true value
-- Communicates both estimate and uncertainty
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## ⭐ **Desirable Properties**
-
-- **Unbiased:** $E[\hat{\theta}] = \theta$
-- **Consistent:** converges to truth as $n$ grows
-- **Efficient:** minimal variance among unbiased estimators
-
-</div>
-
-</div>
-
-
----
-hideInToc: true
----
-
-# Maximum Likelihood **Estimation** (MLE)
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 💡 **Idea**
-
-Pick parameter values $\theta$ that make the observed data most probable.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📐 **Likelihood Function**
-
-$L(\theta \mid \text{data}) = P(\text{data} \mid \theta)$
-
-- Independent observations: $L(\theta) = \prod f(x_i; \theta)$
-- Often easier to work with $\log L(\theta)$ (turns products into sums)
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🎯 **Maximum Likelihood Estimator**
-
-- $\hat{\theta} = \arg\max_\theta L(\theta)$
-- Many estimators have closed forms (e.g., mean of normals)
-- Provides asymptotically efficient, normal estimators
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# MLE Example: **Normal Mean**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ⚙️ **Setup**
-
-- Observations $x_1, \ldots, x_n$
-- Model: $X_i \sim N(\mu, \sigma^2)$ with known $\sigma$
-- Likelihood: $L(\mu) = \prod \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x_i-\mu)^2}{2\sigma^2}\right)$
-
-## ✅ **Result**
-
-$\hat{\mu} = \bar{x}$ (sample mean) maximizes $L(\mu)$.
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 💡 **Why this matters**
-
-- MLE gives a principled estimator derived from probability
-- Extends to any distribution by swapping in the appropriate pdf/pmf
-- Asymptotically optimal (minimum variance, normal errors)
-- Foundation for many fitting algorithms
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Connecting to Data **Fitting**
 
 <!--
-Speaker: the payoff — everything above is the vocabulary Lecture 12 uses. Walk the 7-step workflow once, show why least squares is MLE in disguise, and introduce χ²; the hands-on fitting is next week. (~1 min)
+Speaker: run it, then put 50 into the list. The mean and the standard deviation
+follow N/2 and the square root of N/12 from the first line on. Only the shape
+needs N to grow. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# From Probability to **Fitting**
+# Where the Gaussian **Applies**
 
-<div class="grid-2 mt-md gap-md">
+<img class="fig" src="/figures/viz_probability_poisson_gaussian.svg" style="display:block;margin:0 auto;max-height:185px;">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="grid-3 mt-md gap-md">
 
-## 📥 **The data fitting problem**
+<div class="card card-primary card-glass pad-compact">
 
-- Observations $(x_i, y_i)$
-- Model relationship $y = f(x; \theta) + \varepsilon$
-- Goal: pick $\theta$ that best explains the data
+## 🔢 **Counts**
+
+A count is a sum of many trials. For large $\lambda$ the Poisson distribution is close to a Gaussian with $\mu = \lambda$ and $\sigma = \sqrt{\lambda}$. For $\lambda$ = 100, $P(90 \le k \le 110)$ is 0.7065, and 0.7063 from the Gaussian.
 
 </div>
 
-<div class="card card-accent card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## ➡️ **Where this goes**
+## 📏 **Measurements**
 
-**Lecture 12** turns these ideas into concrete fitting workflows:
+The error of a measurement is the sum of many small independent disturbances. This is why a Gaussian is the usual model of a measurement error.
 
-- least-squares and $\chi^2$ fits of a model to data
-- an MLE fit of the D⁰ peak
-- uncertainties and goodness-of-fit read off the fit
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Not here**
+
+Small counts: for $\lambda$ = 1 the distribution is skewed and has no negative side. A sum in which one term dominates. A sample that mixes two kinds of rows.
+
+</div>
+
+</div>
+
+<!--
+Speaker: bars are the Poisson distribution, the curve is the Gaussian with the
+same mean and variance. From about λ = 16 on the two agree by eye. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Samples and the Standard **Error**
+
+<!--
+Speaker: from distributions with known parameters to a sample with unknown
+ones. The mean of a sample, its standard deviation, and the uncertainty of the
+mean. All on the mass column. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Sample and Its **Summaries**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **N values from one distribution**
+
+The sample $x_1, \dots, x_N$ is known. The parameters $\mu$ and $\sigma$ of its distribution are not. They are estimated:
+
+$$\bar{x} = \frac{1}{N}\sum_{i=1}^{N} x_i$$
+
+$$s^2 = \frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})^2$$
+
+The sample mean $\bar{x}$ estimates $\mu$. The sample standard deviation $s$ estimates $\sigma$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🐍 **The mass column**
+
+```python
+M = np.loadtxt("data/raw/D0_KPi.csv",
+               delimiter=",", skiprows=1,
+               usecols=0)
+print(len(M), M.mean(), M.std(ddof=1))
+```
+
+```text
+91583 1864.1045817826453 25.565096122743306
+```
+
+- $\bar{x}$ = 1864.10 MeV/c², $s$ = 25.57 MeV/c²
+- `ddof=1` divides by $N - 1$. Without it NumPy divides by $N$
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The **median** is the middle value of the sorted sample, here 1864.08. One wrong value moves the mean and hardly moves the median. The file has a row with $M$ = 2453.66.
+
+</div>
+
+<!--
+Speaker: usecols=0 reads only the first column. A bar over a letter is a
+sample mean; s is computed from the sample, sigma belongs to the distribution.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Standard Error of the **Mean**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Another sample of the same size gives another $\bar{x}$. The sample mean is itself a random variable. How far from $\mu$ does it lie?
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **Its mean**
+
+$$E[\bar{x}] = \frac{1}{N}\big(E[x_1] + \dots + E[x_N]\big) = \frac{1}{N}\,N\mu = \mu$$
+
+On average $\bar{x}$ is right.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **Its variance**
+
+$$\mathrm{Var}(\bar{x}) = \frac{1}{N^2}\big(\mathrm{Var}(x_1) + \dots + \mathrm{Var}(x_N)\big) = \frac{1}{N^2}\,N\sigma^2 = \frac{\sigma^2}{N}$$
+
+The factor $1/N$ comes out squared. The variances of independent values add.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+$$\sigma_{\bar{x}} = \frac{\sigma}{\sqrt{N}}$$
+
+The **standard error of the mean**: the standard deviation of $\bar{x}$. In practice $\sigma$ is not known and $s$ takes its place: $s/\sqrt{N}$.
+
+</div>
+
+<!--
+Speaker: this is the central derivation of the lecture, and it is two lines.
+It needs independence: N copies of the same row would not reduce the
+uncertainty. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Standard Error, **Checked**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎰 **By simulation**
+
+10 000 means of 25 uniform numbers. Prediction: $\sqrt{1/12}\,/\sqrt{25}$.
+
+```python
+rng = np.random.default_rng(6)
+x = rng.random((10_000, 25))
+means = x.mean(axis=1)
+print(means.std(), np.sqrt(1/12) / 5)
+```
+
+```text
+0.05906023806000769 0.057735026918962574
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **On the mass column**
+
+The first 91 500 rows, cut into 915 groups of 100. Prediction: $s/\sqrt{100}$.
+
+```python
+groups = M[:91_500].reshape(915, 100)
+means = groups.mean(axis=1)
+print(means.std(ddof=1),
+      M.std(ddof=1) / 10)
+```
+
+```text
+2.5956512602849324 2.5565096122743305
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`reshape(915, 100)` arranges the values as 915 rows of 100, and `.mean(axis=1)` takes the mean of each row. The means of 100 mass values scatter with a standard deviation of 2.60 MeV/c². The single values scatter with 25.57.
+
+</div>
+
+<!--
+Speaker: the left check is on numbers whose sigma is known exactly. The right
+one is on real data, where nothing is known in advance. Both agree with sigma
+over root N to about 2 %. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Means of **100 Mass Values**
+
+<img class="fig" src="/figures/viz_probability_group_means.svg" style="display:block;margin:0 auto;max-height:245px;">
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ❌ **Single values**
+
+The curve is the Gaussian with the mean and the $s$ of the column. It does not describe the values: 62.7 % lie within ±$s$ and 99.9 % within ±2$s$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✅ **Means of 100**
+
+The curve has the same mean and the width $s/\sqrt{100}$ = 2.56. Of the 915 means, 68.2 % lie within ±1 standard error and 95.1 % within ±2.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+The central limit theorem on real data: the values are not Gaussian, and their mean is.
+
+</div>
+
+<!--
+Speaker: this is why a mean can be quoted with a Gaussian uncertainty even when
+the data are far from Gaussian. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Standard Deviation and Standard **Error**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Rows of the mass column | $N$ | $\bar{x}$ | $s$ | $s/\sqrt{N}$ |
+| --- | --- | --- | --- | --- |
+| the first 100 | 100 | 1865.68 | 26.14 | 2.61 |
+| the first 1000 | 1000 | 1863.58 | 25.38 | 0.80 |
+| the first 10 000 | 10 000 | 1863.87 | 24.98 | 0.25 |
+| all | 91 583 | 1864.10 | 25.57 | 0.084 |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📊 **Standard deviation s**
+
+- The spread of single values
+- A property of the distribution. More data make it better known, not smaller
+- Describes the data
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎯 **Standard error s/√N**
+
+- The uncertainty of the mean
+- Ten times the data divide it by $\sqrt{10}$ = 3.2. Half the uncertainty costs four times the data
+- Belongs to a result: $\bar{x}$ = 1864.10 ± 0.08 MeV/c²
+
+</div>
+
+</div>
+
+<!--
+Speaker: read the table down. The third column stays near 25. The last one
+falls by 3.2 per row. Each mean agrees with the final one within about one of
+its own standard errors. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why **N − 1**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **The derivation**
+
+Write $x_i - \mu = (x_i - \bar{x}) + (\bar{x} - \mu)$ and square. The mixed term vanishes, because $\sum_i (x_i - \bar{x}) = 0$:
+
+$$\sum_i (x_i-\bar{x})^2 = \sum_i (x_i-\mu)^2 - N(\bar{x}-\mu)^2$$
+
+Take the expected value. The first sum gives $N\sigma^2$, the last term $N \cdot \sigma^2/N$:
+
+$$E\Big[\sum_i (x_i-\bar{x})^2\Big] = (N-1)\,\sigma^2$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎰 **The check**
+
+100 000 samples of $N$ = 5 with $\sigma^2$ = 1:
+
+```python
+rng = np.random.default_rng(5)
+x = rng.normal(0, 1, (100_000, 5))
+print(x.var(axis=1, ddof=0).mean())
+print(x.var(axis=1, ddof=1).mean())
+```
+
+```text
+0.7989905825485553
+0.9987382281856941
+```
+
+Dividing by $N$ gives 4/5 of the variance. Dividing by $N - 1$ gives it all.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The distances are measured from $\bar{x}$, which was computed from the same values and lies closer to them than $\mu$ does. For large $N$ it does not matter: the mass column gives 25.5650 with $N$ and 25.5651 with $N - 1$.
+
+</div>
+
+<!--
+Speaker: the term that is subtracted is the variance of the mean from the
+slide before. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What the Standard Error Does **Not** Cover
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🔍 **The mean depends on the rows**
+
+| Rows with | $N$ | $\bar{x}$ | $s/\sqrt{N}$ |
+| --- | --- | --- | --- |
+| all | 91 583 | 1864.10 | 0.08 |
+| 1840 < $M$ < 1890 | 56 577 | 1864.71 | 0.05 |
+| 1850 < $M$ < 1880 | 41 090 | 1864.79 | 0.04 |
+| 1855 < $M$ < 1875 | 31 132 | 1864.81 | 0.03 |
+
+The mass of the D⁰ meson is 1864.84 ± 0.05 MeV/c² (Particle Data Group).
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚖️ **Two kinds of uncertainty**
+
+- **Statistical**: from the finite sample. It falls like $1/\sqrt{N}$. The standard error is of this kind
+- **Systematic**: from the method. Here the rows are a peak on a flat part that is not D⁰, and the flat part pulls the mean down. More rows do not reduce it
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The mean of all rows lies 0.74 MeV/c² below the D⁰ mass. That is 8.7 standard errors. The standard error answers "how well is the mean of these rows known". It does not answer "is the mean of these rows the mass of the particle".
+
+</div>
+
+<!--
+Speaker: the selection uses a mask: M[(M > 1850) & (M < 1880)]. The mean moves
+by 0.7 between the first and the last line of the table, far more than any of
+the standard errors. A small uncertainty is not the same as a correct result.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Covariance and **Correlation**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Two columns $x$ and $y$ of the same $N$ rows. The **covariance** $s_{xy}$ is positive when $x$ and $y$ lie on the same side of their means together. Divided by both standard deviations it is the **correlation coefficient** $r$, a number without unit between −1 and +1. For two random variables the same ratio is written $\rho$:
+
+$$s_{xy} = \frac{1}{N-1}\sum_{i=1}^{N} (x_i-\bar{x})(y_i-\bar{y}), \qquad r = \frac{s_{xy}}{s_x\,s_y}, \qquad \rho = \frac{\mathrm{Cov}(X, Y)}{\sigma_X\,\sigma_Y}$$
+
+</div>
+
+<img class="fig mt-sm" src="/figures/viz_probability_correlation.svg" style="display:block;margin:0.6rem auto 0;max-height:185px;">
+
+<div class="note-text mt-sm">
+
+$r = \pm 1$: the points lie on a straight line. $r$ = 0: no straight-line relation. In the last panel $y$ follows from $x$ up to a little noise and $r$ is still 0.00: the coefficient sees only the straight-line part of a relation.
+
+</div>
+
+<!--
+Speaker: the covariance is the sample version of E[ΔX ΔY] from the slide on
+sums. 150 seeded points per panel. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Correlation in **Numbers**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **The pendulum table, by hand**
+
+Length $x$ in cm, time of 10 swings $y$ in s, nine rows.
+
+- $\bar{x}$ = 60, $\bar{y}$ = 15.139
+- $\sum (x_i-\bar{x})(y_i-\bar{y})$ = 813.0
+- $s_{xy}$ = 813.0 / 8 = 101.6 cm·s
+- $s_x$ = 27.39 cm, $s_y$ = 3.732 s
+- $r$ = 101.6 / (27.39 × 3.732) = 0.994
+
+`np.corrcoef(length, t10)[0, 1]` gives 0.9942.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📄 **Four pairs of columns**
+
+| Columns | $r$ |
+| --- | --- |
+| length, time of 10 swings | 0.994 |
+| length, $T^2$ | 0.9999 |
+| `M`, `PT` | 0.002 |
+| `TAU`, `IPCHI2` | 0.62 |
+
+The time grows like the square root of the length, and $r$ is still 0.994. $T^2$ against the length is a straight line.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ A correlation does not say why. Two columns move together when one causes the other, when a third quantity drives both, or when the rows were selected in a way that ties them.
+
+</div>
+
+<!--
+Speaker: the last pair leaves out the 49 rows with TAU = -100, the marker of a
+missing value. With them in, the coefficient describes the marker and not the
+data. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Error **Propagation**
+
+<!--
+Speaker: a measured quantity has an uncertainty. A quantity computed from it
+has one too. The rule comes from the tangent to the function and from the
+variance of a sum. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Function of One **Measurement**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **The tangent**
+
+$x$ is measured as $x_0 \pm \sigma_x$, and $f(x)$ is computed from it. Near $x_0$ the function is close to its tangent, the first two terms of its Taylor series:
+
+$$f(x) \approx f(x_0) + f'(x_0)\,(x - x_0)$$
+
+This is a constant plus a constant times $x$. With $\mathrm{Var}(aX + b) = a^2\,\mathrm{Var}(X)$:
+
+$$\sigma_f = |f'(x_0)|\;\sigma_x$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_probability_propagation.svg" style="display:block;margin:0 auto;max-height:280px;">
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The period from the time of 10 swings: $T = t_{10}/10$, so $\sigma_T = \sigma_{t_{10}}/10$. A time known to 0.1 s gives a period known to 0.01 s. Timing ten swings instead of one divides the timing error by ten.
+
+</div>
+
+<!--
+Speaker: the figure is g against the period for a length of 1 m. The band in T
+is drawn ten times wider than in the example that follows, so that it can be
+seen. The slope turns a width in T into a width in g. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Function of **Several** Measurements
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+The tangent in two variables, with both derivatives taken at the measured values:
+
+$$f(x, y) \approx f(x_0, y_0) + \frac{\partial f}{\partial x}\,(x - x_0) + \frac{\partial f}{\partial y}\,(y - y_0)$$
+
+The variance of this sum, by the rule for $\mathrm{Var}(X + Y)$:
+
+$$\sigma_f^2 = \left(\frac{\partial f}{\partial x}\right)^{2}\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^{2}\sigma_y^2 + 2\,\frac{\partial f}{\partial x}\,\frac{\partial f}{\partial y}\,\mathrm{Cov}(x, y)$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔀 **Independent measurements**
+
+The covariance is 0. Each input contributes its derivative times its uncertainty, and the contributions add as squares: **in quadrature**.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ➕ **More inputs**
+
+One term per input:
+
+$$\sigma_f^2 = \sum_j \left(\frac{\partial f}{\partial x_j}\right)^{2}\sigma_j^2$$
+
+</div>
+
+</div>
+
+<!--
+Speaker: each term is how strongly f reacts to the input, times how uncertain
+the input is. The covariance term matters when two inputs come from the same
+measurement. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Rules That **Follow**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➕ **Sums and differences**
+
+For $f = x + y$ and for $f = x - y$ the derivatives are 1 and ±1:
+
+$$\sigma_f^2 = \sigma_x^2 + \sigma_y^2$$
+
+**Absolute** uncertainties add in quadrature.
+
+12.61 − 11.05 s, each ± 0.10 s: the difference is 1.56 ± 0.14 s.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✖️ **Products, quotients, powers**
+
+For $f = x^a y^b$ the derivatives are $a f/x$ and $b f/y$:
+
+$$\left(\frac{\sigma_f}{f}\right)^{2} = a^2\left(\frac{\sigma_x}{x}\right)^{2} + b^2\left(\frac{\sigma_y}{y}\right)^{2}$$
+
+**Relative** uncertainties add in quadrature, each times its power.
+
+$T$ = 2.001 s ± 0.5 %: $T^2$ = 4.004 s² ± 1.0 %.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+In quadrature the larger term decides. 3 % and 1 % give $\sqrt{9 + 1}$ = 3.2 %, not 4 %. Halving the 1 % term gives 3.04 %.
+
+</div>
+
+<!--
+Speaker: a difference of two nearly equal numbers keeps both absolute
+uncertainties: 1.56 ± 0.14 is known to 9 %, from two times known to 1 %.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# *g* from One Pendulum **Measurement**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The period of a pendulum of length $\ell$ is $T = 2\pi\sqrt{\ell/g}$. Solved for $g$:
+
+$$g = \frac{4\pi^2 \ell}{T^2}$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📄 **The last row of `pendulum.csv`**
+
+| Quantity | Value | Uncertainty | Relative |
+| --- | --- | --- | --- |
+| length $\ell$ | 1.000 m | 0.001 m | 0.10 % |
+| time of 10 swings $t_{10}$ | 20.01 s | 0.1 s | 0.50 % |
+| period $T = t_{10}/10$ | 2.001 s | 0.010 s | 0.50 % |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **The value**
+
+$$g = \frac{4\pi^2 \times 1.000}{2.001^2} = \frac{39.478}{4.004} = 9.860\ \text{m/s}^2$$
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+The uncertainties are stated for this example, not read from the file: 0.1 cm on the length, the smallest division of a ruler, and 0.1 s on the time, for a stopwatch started and stopped by hand. The length is written $\ell$: the letter $L$ is kept for the likelihood.
+
+</div>
+
+<!--
+Speaker: the file holds 100 cm and 20.01 s. An uncertainty is part of a
+measurement and has to be written down with it. Here it is chosen and stated.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Uncertainty of ***g***
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **By the derivatives**
+
+$$\frac{\partial g}{\partial \ell} = \frac{4\pi^2}{T^2} = \frac{g}{\ell}, \qquad \frac{\partial g}{\partial T} = -\frac{8\pi^2 \ell}{T^3} = -\frac{2g}{T}$$
+
+- From the length: 9.860 × 0.001 = 0.0099 m/s²
+- From the period: 9.855 × 0.010 = 0.0985 m/s²
+
+$$\sigma_g = \sqrt{0.0099^2 + 0.0985^2} = 0.0990\ \text{m/s}^2$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **By the rule for powers**
+
+$g = 4\pi^2 \ell^{1}\,T^{-2}$, so
+
+$$\frac{\sigma_g}{g} = \sqrt{(0.10\,\%)^2 + (2 \times 0.50\,\%)^2} = 1.00\,\%$$
+
+1.00 % of 9.860 is 0.099 m/s².
 
 </div>
 
@@ -2050,361 +2068,584 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-💡 Nothing new is needed: errors are random variables (normal, by the CLT), the estimate comes from MLE, and its uncertainty is a standard error.
+**$g$ = 9.86 ± 0.10 m/s².** The timing gives 99 % of the variance, the ruler 1 %. A better ruler changes nothing. Timing 50 swings instead of 10 gives $\sigma_g$ = 0.022 m/s².
 
 </div>
-
----
-hideInToc: true
----
-
-# Data Fitting **Workflow**
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📥 **1. Data** — observations $(x_i, y_i)$
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📐 **2. Model** — $y = f(x; \theta) + \varepsilon$
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🎯 **3. Method** — least squares · MLE · $\chi^2$
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## ✨ **4. Fit** — estimate parameters $\hat{\theta}$
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 📏 **5. Uncertainty** — standard errors, confidence intervals
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🔍 **6. Diagnose** — $\chi^2$, residuals, goodness-of-fit
-
-</div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔁 **7. Report or revisit** — bad fit → return to step 2 • good fit → report $\hat{\theta} \pm \text{error}$ and predict $f(x_{\text{new}}; \hat{\theta})$
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Least Squares **= MLE** (for normal errors)
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🎯 **The identity**
-
-If errors are independent and normally distributed:
-
-$$y_i = f(x_i; \theta) + \varepsilon_i, \quad \varepsilon_i \sim N(0, \sigma^2)$$
-
-then minimizing the sum of squared errors
-
-$$S(\theta) = \sum \left(y_i - f(x_i; \theta)\right)^2$$
-
-is mathematically identical to maximizing the likelihood.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧱 **Statistical foundation**
-
-- Errors modeled as random (often normal — the CLT again)
-- Estimate $\theta$ via least squares / MLE
-- Quantify uncertainty (SEs, CIs, $\chi^2$)
-- Diagnose fit quality before trusting results
-
-<div class="meta-caption mt-sm">
-
-Least squares = MLE under Gaussian noise → explains its ubiquity.
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Chi-Squared (**χ²**) Statistic
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 📐 **Definition**
-
-$$\chi^2 = \sum \frac{(\text{observed} - \text{expected})^2}{\text{variance}}$$
-
-For weighted fits with known uncertainties $\sigma_i$:
-
-$$\chi^2 = \sum \left[\frac{y_i - f(x_i; \theta)}{\sigma_i}\right]^2$$
-
-## 🔍 **Interpretation**
-
-- Measures "badness of fit"
-- Expectation: $\chi^2 \approx n - p$ (dof)
-- Good fit: $\chi^2/(n-p) \approx 1$
-- $\gg 1$: model misses structure; $\ll 1$: uncertainties inflated
-
-</div>
-
----
-hideInToc: true
----
-
-# Common Mistakes and **Pitfalls**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔀 **Probability vs Statistics**
-
-<div class="card-content text-base">
-
-Probability starts with a model and reasons forward to the data; statistics starts with data and works backward to infer or validate a model. Treating them as the same step leads to wrong intuition.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🎣 **p-hacking**
-
-<div class="card-content text-base">
-
-Running many tests until one looks "significant" inflates false positives (a p-value measures how surprising the data would be under a null model — Lecture 12 shows the one you'll use). Pre-register analyses and adjust for multiple comparisons.
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📏 **Misreading Confidence Intervals**
-
-<div class="card-content text-base">
-
-A 95% CI does not mean "95% chance the parameter lies here." It means: across repeated experiments, the method produces intervals that contain the true value about 95% of the time.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🚀 **Extrapolation**
-
-<div class="card-content text-base">
-
-Models are trustworthy only within the range where they were calibrated. Predictions far outside that range deserve caution (or new data).
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Correlation **≠** Causation
-
-<div class="card card-warning card-glass pad-compact mt-sm glow">
-
-⚠️ A statistical association between two variables does **not** mean one causes the other. This is the single most abused idea in data analysis.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🍦 **The classic example**
-
-Ice-cream sales and drowning deaths are strongly correlated across the year.
-
-Neither causes the other — **summer heat** drives both. A hidden **confounder** creates the association.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧭 **What can produce a correlation?**
-
-- **Causation** (X → Y) — what we usually hope for
-- **Reverse causation** (Y → X)
-- A **confounder** driving both
-- **Selection bias** in how data was collected
-- Pure **coincidence** (especially with many variables)
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-💡 To claim causation you need more than correlation — a **controlled experiment** (A/B test) or careful causal-inference methods. Observational correlation only flags *where to look*.
-
-</div>
-
----
-hideInToc: true
----
-
-# Practical **Advice** (1/2)
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 **Visualize First**
-
-<div class="card-content text-base">
-
-Always plot your data before running any analysis. Patterns, outliers, and unexpected structure are often obvious visually.
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ✓ **Check Assumptions**
-
-<div class="card-content text-base">
-
-Verify that the assumptions behind your statistical method actually hold for your data (normality, independence, constant variance).
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📏 **Report Uncertainties**
-
-<div class="card-content text-base">
-
-A result without an uncertainty is incomplete. Always include error bars, confidence intervals, or standard errors.
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🎯 **Hypothesis testing & p-values**
-
-<div class="card-content text-base">
-
-Formal hypothesis testing is beyond this course — but you'll meet one specific p-value in Lecture 12: the χ² goodness-of-fit p-value, used purely as a fit-quality diagnostic, not as a "significant/not significant" verdict.
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Practical **Advice** (2/2)
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **Respect Small Samples**
-
-<div class="card-content text-base">
-
-Small samples give noisy estimates. Be cautious about drawing strong conclusions with limited data.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔬 **Simulate When Unclear**
-
-<div class="card-content text-base">
-
-When analytical solutions are hard, Monte Carlo simulation can reveal the expected behavior of your estimator or test.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 📝 **Document for Reproducibility**
-
-Record every step of your analysis — data source, cleaning, model choices, software versions — so others (and future you) can reproduce the results.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Bringing It **Together**
 
 <!--
-Speaker: one MCQ to check that the SD-vs-SE message landed, then the recap and the seminar tie-in. (~1 min)
+Speaker: the two ways are the same computation. The second one shows at a
+glance which input matters: the period enters squared, so its relative
+uncertainty counts twice. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-<MCQ
-  question="You measure a quantity 100 times and want to report how precisely you know its average. What should the error bar on the mean show?"
-  :options="[
-    'The standard deviation σ of the individual measurements',
-    'The standard error σ/√n of the mean',
-    'The full range (max − min) of the data',
-    'The variance σ² of the measurements'
-  ]"
-  :correct="1"
-  explanation="The standard error σ/√n measures the uncertainty in the estimated mean and shrinks as you collect more data; the standard deviation describes the spread of individual points and does not."
-/>
+# The Same by **Simulation**
+
+<div class="note-text mt-sm">
+
+The measurement is repeated 100 000 times in the computer: the length and the time are drawn from Gaussians with the stated uncertainties, and $g$ is computed for each pair.
+
+</div>
+
+```python {monaco-run} {autorun:false}
+rng = np.random.default_rng(3)
+length = rng.normal(1.000, 0.001, 100_000)   # 100 000 lengths, m
+t10 = rng.normal(20.01, 0.1, 100_000)        # 100 000 times of 10 swings, s
+g = 4 * np.pi**2 * length / (t10 / 10)**2
+print(g.mean(), g.std())
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The output is `9.860474937008293 0.09899416541917416`: the spread is 0.0990 m/s², as from the formula. With 2.0 s in place of 0.1 s the formula gives 1.97 m/s² and the simulation 2.15, and the mean of $g$ moves to 10.17. Over so wide an interval the curve is not close to its tangent. The first-order rule needs small relative uncertainties.
+
+</div>
 
 <!--
-Speaker: this is the seminar's crux. If they pick σ, send them back to the SD-vs-SE slide — the seminar asks for exactly this distinction. (~3 min)
+Speaker: run it, then change 0.1 to 2.0 in the third line. A simulation needs
+no derivative and works for any formula. It is the check to make when the
+uncertainties are large. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Writing a **Result**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **Five rules**
+
+1. Value, uncertainty and unit, in this order
+2. The uncertainty with one or two significant digits
+3. The value rounded to the same decimal place
+4. A word on what the uncertainty is: a standard deviation, a standard error, a propagated uncertainty
+5. Compute with all digits. Round once, at the end
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔢 **Applied**
+
+| Computed | Written |
+| --- | --- |
+| 9.859742 ± 0.099040 m/s² | 9.86 ± 0.10 m/s² |
+| 1864.1046 ± 0.0845 MeV/c² | 1864.10 ± 0.08 MeV/c² |
+| 3746 ± 61.2 rows | 3746 ± 61 rows |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The digits of 9.859742 beyond the second decimal carry no information: the uncertainty is in the first decimal. A value without an uncertainty cannot be compared with another value.
+
+</div>
+
+<!--
+Speaker: the uncertainty decides how many digits of the value mean something.
+The same point was made for a float32 in the lecture on how computers work:
+digits beyond the precision are not information. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# **Likelihood**
+
+<!--
+Speaker: so far a parameter was given and the data were predicted. Now the
+data are given and the parameter is estimated. The section ends with the mean
+and the weighted mean as maximum-likelihood estimates. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Probability, Read the **Other Way**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🔬 **7 of 10 particles registered**
+
+The efficiency $p$ of the detector is not known.
+
+- **Probability**: $p$ is given, $k$ varies. Summed over $k$ it gives 1
+- **Likelihood**: $k$ = 7 is given, $p$ varies
+
+$$L(p) = \binom{10}{7}\,p^7\,(1-p)^3$$
+
+| $p$ | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 |
+| --- | --- | --- | --- | --- | --- |
+| $L(p)$ | 0.117 | 0.215 | 0.267 | 0.201 | 0.057 |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_probability_likelihood_binomial.svg" style="display:block;margin:0 auto;max-height:285px;">
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The likelihood is the probability of the observed data, as a function of the parameter. It is the binomial formula with the roles of $k$ and $p$ exchanged. It is not a probability of $p$: its area over $p$ is 1/11, not 1.
+
+</div>
+
+<!--
+Speaker: each registered particle contributes a factor p and each missed one a
+factor 1 − p. The trials are independent, so the factors multiply: p to the 7
+times (1 − p) to the 3. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Maximum **Likelihood**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The estimate $\hat{p}$ is the value of the parameter at which the likelihood is largest: the value under which the observed data are most probable.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **k successes in n trials**
+
+$$\ln L(p) = k\,\ln p + (n-k)\,\ln(1-p) + \text{const}$$
+
+$$\frac{d \ln L}{dp} = \frac{k}{p} - \frac{n-k}{1-p} = 0$$
+
+$$\hat{p} = \frac{k}{n}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💡 **Reading it**
+
+- 7 of 10: $\hat{p}$ = 0.7. The maximum-likelihood estimate of a probability is the observed fraction
+- The logarithm turns the product into a sum, which is easier to differentiate
+- $\ln L$ has its maximum where $L$ has it, because the logarithm is an increasing function
+- A hat marks an estimate: $\hat{p}$ estimates $p$
+
+</div>
+
+</div>
+
+<!--
+Speaker: solve the middle line on the board: k(1 − p) = (n − k)p, so k = np.
+The constant is the logarithm of the binomial coefficient. It does not depend
+on p. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Likelihood of Many **Measurements**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+$N$ independent measurements $x_1, \dots, x_N$, each with the density $f(x_i;\theta)$, where $\theta$ stands for the parameters. Independent probabilities multiply:
+
+$$L(\theta) = \prod_{i=1}^{N} f(x_i;\theta), \qquad \ln L(\theta) = \sum_{i=1}^{N} \ln f(x_i;\theta)$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+Gaussian measurements of one quantity $\mu$, each with the same known $\sigma$. The logarithm of the Gaussian density is $-(x_i-\mu)^2/(2\sigma^2)$ minus $\ln(\sigma\sqrt{2\pi})$:
+
+$$\ln L(\mu) = -\sum_{i=1}^{N}\frac{(x_i-\mu)^2}{2\sigma^2} + \text{const}$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Each measurement lowers $\ln L$ by half the square of its distance from $\mu$, counted in units of $\sigma$. The constant does not depend on $\mu$.
+
+</div>
+
+<!--
+Speaker: this formula is the end point of the first four sections: the
+Gaussian density, independence, and the product rule. Notation from here on:
+theta for parameters, L of theta for the likelihood. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Gaussian Mean Is the **Sample Mean**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **Set the derivative to zero**
+
+$$\frac{d \ln L}{d\mu} = \sum_{i=1}^{N} \frac{x_i-\mu}{\sigma^2} = 0$$
+
+$$\sum_{i=1}^{N} x_i = N\mu$$
+
+$$\hat{\mu} = \frac{1}{N}\sum_{i=1}^{N} x_i = \bar{x}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## ⏱️ **Five timings of 10 swings**
+
+20.01, 19.93, 20.12, 19.98, 20.06 s, each with $\sigma$ = 0.1 s. Example values for the 100 cm pendulum. $\bar{x}$ = 20.02 s.
+
+| $\mu$ | 19.95 | 20.00 | 20.02 | 20.05 | 20.10 |
+| --- | --- | --- | --- | --- | --- |
+| $\ln L(\mu) - \ln L(\bar{x})$ | −1.225 | −0.100 | 0 | −0.225 | −1.600 |
+
+- The five values add up to 100.10 s. Divided by 5: 20.02 s
+- $\ln L$ is highest at $\bar{x}$ and falls on both sides of it
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+The sample mean is not a convention. It is the maximum-likelihood estimate of the mean of Gaussian measurements with equal uncertainties.
+
+</div>
+
+<!--
+Speaker: sigma drops out of the estimate, because it is the same for every
+measurement. It comes back in the uncertainty of the estimate. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Width of the **Likelihood**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **A parabola in μ**
+
+With $\sum_i (x_i-\mu)^2 = \sum_i (x_i-\bar{x})^2 + N(\bar{x}-\mu)^2$:
+
+$$\ln L(\mu) = \ln L(\bar{x}) - \frac{(\mu-\bar{x})^2}{2\,(\sigma/\sqrt{N})^2}$$
+
+As a function of $\mu$ the likelihood is a Gaussian centred at $\bar{x}$ with the width $\sigma/\sqrt{N}$: the standard error.
+
+At $\mu = \bar{x} \pm \sigma/\sqrt{N}$ the logarithm is lower than its maximum by 1/2.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_probability_likelihood_mean.svg" style="display:block;margin:0 auto;max-height:270px;">
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The five timings: 0.1 / √5 = 0.045, so $\hat{\mu}$ = 20.02 ± 0.045 s. The uncertainty of a maximum-likelihood estimate is the distance over which $\ln L$ falls by 1/2 from its maximum.
+
+</div>
+
+<!--
+Speaker: the identity in the first line is the one from the slide on N − 1.
+The likelihood gives the estimate and its uncertainty in one curve: the place
+of the maximum and the width around it. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Unequal Uncertainties: the **Weighted Mean**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+$N$ measurements of the same quantity, each with its own uncertainty: $x_i \pm \sigma_i$. In the likelihood each term now has its own $\sigma_i$:
+
+$$\ln L(\mu) = -\sum_{i=1}^{N}\frac{(x_i-\mu)^2}{2\sigma_i^2} + \text{const}$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **Set the derivative to zero**
+
+$$\frac{d \ln L}{d\mu} = \sum_{i=1}^{N} \frac{x_i-\mu}{\sigma_i^2} = 0$$
+
+$$\sum_{i=1}^{N} \frac{x_i}{\sigma_i^2} = \mu \sum_{i=1}^{N} \frac{1}{\sigma_i^2}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚖️ **The weighted mean**
+
+$$\hat{\mu} = \frac{\displaystyle\sum_i w_i\,x_i}{\displaystyle\sum_i w_i}, \qquad w_i = \frac{1}{\sigma_i^2}$$
+
+- A measurement with half the uncertainty counts four times
+- Equal uncertainties: the weights cancel, and $\hat{\mu} = \bar{x}$
+
+</div>
+
+</div>
+
+<!--
+Speaker: the same three lines as for the plain mean, with sigma_i inside the
+sum. A precise measurement pulls harder. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Uncertainty of the Weighted **Mean**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **By error propagation**
+
+$\hat{\mu}$ is a sum of the $x_i$ with the factors $w_i / \sum_j w_j$. Each factor comes out squared, and $w_i^2\,\sigma_i^2 = w_i$:
+
+$$\sigma_{\hat{\mu}}^2 = \frac{\sum_i w_i^2\,\sigma_i^2}{\big(\sum_j w_j\big)^2} = \frac{1}{\sum_i w_i}$$
+
+$$\sigma_{\hat{\mu}} = \Big(\sum_{i=1}^{N} \frac{1}{\sigma_i^2}\Big)^{-1/2}$$
+
+Equal uncertainties: $(N/\sigma^2)^{-1/2} = \sigma/\sqrt{N}$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Two values of g**
+
+From the 20 cm row: 9.70 ± 0.22 m/s². From the 100 cm row: 9.86 ± 0.10 m/s².
+
+- $w$ = 1/0.22² = 20.7 and 1/0.10² = 100
+- $\hat{\mu}$ = (20.7 × 9.70 + 100 × 9.86) / 120.7 = 9.833
+- $\sigma_{\hat{\mu}}$ = 1/√120.7 = 0.091
+
+**9.83 ± 0.09 m/s²**
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The result lies closer to the more precise value, and it is more precise than either: 0.091 against 0.10. A measurement with a large uncertainty still adds information. The plain mean of the two, 9.78, would give it too much weight.
+
+</div>
+
+<!--
+Speaker: the weights add. Every further measurement increases the sum of the
+weights and so reduces the uncertainty, however little. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# *g* from **Nine** Measurements
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🐍 **Every row of the table**
+
+```python
+data = np.loadtxt("data/processed/pendulum.csv",
+                  delimiter=",", skiprows=1)
+length = data[:, 0]         # cm
+t10 = data[:, 1]            # s, 10 swings
+
+g = (4 * np.pi**2 * (length / 100)
+     / (t10 / 10)**2)
+sg = g * np.sqrt((0.1 / length)**2
+                 + (2 * 0.1 / t10)**2)
+w = 1 / sg**2
+print((w * g).sum() / w.sum(),
+      1 / np.sqrt(w.sum()))
+```
+
+```text
+9.804687035873261 0.04240703343795726
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_probability_weighted_mean.svg" style="display:block;margin:0 auto;max-height:265px;">
+
+**$g$ = 9.80 ± 0.04 m/s²**
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The uncertainties run from 0.22 m/s² for 20 cm to 0.10 for 100 cm: the same 0.1 s is a larger part of a shorter time. All nine error bars cross the result. For Gaussian errors about two in three are expected to, so the stated 0.1 s is larger than the scatter of these example values.
+
+</div>
+
+<!--
+Speaker: the relative uncertainties are divided by the same units as the
+values: 0.1 cm by the length in cm, 0.1 s by the time in s. One row gave
+9.86 ± 0.10. Nine rows
+give 9.80 ± 0.04. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Testing a **Hypothesis**
+
+<!--
+Speaker: a short closing section. A result and its uncertainty are compared
+with a value that is known from elsewhere. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Is a Result Compatible with a Known **Value**?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **The distance in units of σ**
+
+Measured: $g$ = 9.86 ± 0.10 m/s². The reference value is 9.81 m/s². Hypothesis: the measurement is a Gaussian draw around 9.81 with $\sigma$ = 0.10.
+
+$$z = \frac{x - \mu_0}{\sigma} = \frac{9.86 - 9.81}{0.10} = 0.5$$
+
+The **p-value** is the probability, if the hypothesis holds, of a distance at least as large as the observed one.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔔 **From the Gaussian, both sides**
+
+| $\lvert z \rvert$ | p-value |
+| --- | --- |
+| 0.5 | 0.62 |
+| 1 | 0.32 |
+| 2 | 0.046 |
+| 3 | 0.0027 |
+| 5 | 5.7 × 10⁻⁷ |
+
+In Python: `math.erfc(z / math.sqrt(2))`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+$p$ = 0.62: a distance of this size or more occurs in 62 % of repetitions. The result is compatible with 9.81. The mean of the mass column against the D⁰ mass: $z$ = (1864.10 − 1864.84) / 0.084 = −8.7 and $p$ = 3 × 10⁻¹⁸. That hypothesis is rejected, and the reason is known: the rows are not all D⁰.
+
+</div>
+
+<!--
+Speaker: the table is one minus the areas of the Gaussian slide: 1 − 0.6827 =
+0.32. Particle physics asks for 5 sigma before it speaks of a discovery. Many
+fields use p below 0.05, which is 2 sigma. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What a p-Value Is **Not**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔄 **Not the probability of the hypothesis**
+
+It is $P(\text{data this far off} \mid \text{hypothesis})$. The reverse, $P(\text{hypothesis} \mid \text{data})$, needs Bayes' theorem and a prior probability of the hypothesis.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🤷 **A large p proves nothing**
+
+$p$ = 0.62 says that the data do not contradict 9.81. With an uncertainty of 0.10 they would not contradict 9.75 or 9.90 either.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🎣 **Many tests**
+
+20 independent tests at the 5 % level, every hypothesis true. The probability that at least one gives $p$ < 0.05 is 1 − 0.95²⁰ = 0.64.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📐 **Significant is not large**
+
+With 91 583 rows a difference of 0.74 MeV/c² in 1864, which is 0.04 %, stands 8.7σ away. The p-value measures how sure a difference is, not how big.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+**Conventions.** Many fields call a result significant at $p$ < 0.05, about 2σ. Particle physics speaks of evidence at 3σ and of an observation at 5σ, counted on one side: a probability of 2.9 × 10⁻⁷, or 1 in 3.5 million. A threshold is a convention. The value, its uncertainty and the distance in σ are the result.
+
+</div>
+
+<!--
+Speaker: the third card uses the complement and the independence of the first
+section. The remedy is to decide what to test before looking at the data and
+to report every test that was made. (~3 min)
 -->
 
 ---
@@ -2417,84 +2658,172 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Reason about **uncertainty** with probability axioms and Bayes' theorem
+✅ Compute with **probabilities**: complement, addition rule, conditional probability, Bayes' theorem
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Work with **random variables** — PMF, PDF, CDF, and key distributions
+✅ Derive the **binomial** and the **Poisson** distribution, and write a count as N ± √N
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Apply the **CLT** and report a **standard error** on a mean
+✅ Report a **mean** with its **standard error** s/√N, and tell it from the standard deviation
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Tell a **standard deviation** from a **standard error** apart
+✅ **Propagate** uncertainties through a formula and check the result by simulation
 
 </div>
 
+<div class="card card-success card-glass pad-compact">
+
+✅ Write a **likelihood** and maximise it: the mean and the weighted mean
+
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md">
+<div class="card card-success card-glass pad-compact">
 
-✅ Connect statistics to **data fitting** — least squares, MLE, χ² — closing the loop: load → explore & visualise → model → quantify uncertainty → report honestly
+✅ Compare a result with a known value in units of σ
+
+</div>
 
 </div>
 
 <div class="card card-accent card-glass pad-tight mt-md">
 
-## 🔬 **Seminar 11 tie-in**
+## 🔢 **The numbers of this lecture**
 
-Measure the D⁰ peak mass from the shared LHCb sample and report it as mean ± SE — stating which number is the SD (spread of events) and which is the SE (how well you know the average), plus the √N counting uncertainty on the event count.
+The mass column: mean 1864.10 ± 0.08 MeV/c², standard deviation 25.57. One pendulum row: $g$ = 9.86 ± 0.10 m/s². Nine rows, weighted: $g$ = 9.80 ± 0.04 m/s².
 
 </div>
 
 <!--
-Speaker: have them nod along to each ✅. The seminar tie-in makes it concrete — they compute a mean on the D⁰ sample and report it with an honest ± SE, and separately the √N on the count. (~1 min)
+Speaker: every one of these numbers was computed on a slide from the two files
+of the project folder. (~1 min)
 -->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
 
 ---
 hideInToc: true
 ---
 
-# Further **Reading**
+<MCQ
+  question="2 % of a population has a condition. A test is positive for 90 % of those who have it and for 5 % of those who do not. A person tests positive. What is the probability that the person has the condition?"
+  :options="[
+    '90 %',
+    '27 %',
+    '2 %',
+    '95 %'
+  ]"
+  :correct="1"
+  explanation="Of 10 000 people, 200 have the condition and 180 of them test positive. Of the 9800 others, 490 test positive. 180 / (180 + 490) = 0.27. 90 % is the probability of a positive test given the condition, which is a different question."
+/>
 
-<div class="card card-info card-glass pad-compact mt-sm">
+---
+hideInToc: true
+---
 
-📚 To go deeper — the first two are free and superb:
+<MCQ
+  question="A detector registers each particle with probability 0.8, independently. Five particles pass. What is the probability that exactly four are registered?"
+  :options="[
+    '0.80',
+    '0.41',
+    '0.33',
+    '0.08'
+  ]"
+  :correct="1"
+  explanation="Binomial with n = 5, k = 4, p = 0.8: there are 5 sequences with one miss, each with probability 0.8⁴ × 0.2 = 0.082, so 5 × 0.082 = 0.41. 0.33 is the probability of all five, 0.8⁵."
+/>
 
-</div>
+---
+hideInToc: true
+---
 
-<div class="grid-2 mt-md gap-md">
+<MCQ
+  question="One bin of a histogram holds 400 rows. What is the uncertainty of this count, and what is it relative to the count?"
+  :options="[
+    '± 400, which is 100 %',
+    '± 20, which is 5 %',
+    '± 200, which is 50 %',
+    '± 4, which is 1 %'
+  ]"
+  :correct="1"
+  explanation="A count follows a Poisson distribution, whose standard deviation is the square root of its mean: √400 = 20. Relative to the count this is 1/√400 = 5 %. For 1 % the bin would need 10 000 rows."
+/>
 
-<div class="card card-primary card-glass pad-compact">
+---
+hideInToc: true
+---
 
-📗 **Diez, Çetinkaya-Rundel & Barr** — *OpenIntro Statistics* · free at openintro.org
+<MCQ
+  question="144 measurements have a sample standard deviation of 12 units. What is the standard error of their mean, and how many measurements would halve it?"
+  :options="[
+    '12 units; 288 measurements',
+    '1 unit; 576 measurements',
+    '1 unit; 288 measurements',
+    '0.083 units; 576 measurements'
+  ]"
+  :correct="1"
+  explanation="The standard error is s/√N = 12/√144 = 1 unit. It falls like 1/√N, so half the standard error needs four times the data: 4 × 144 = 576. The standard deviation of the single values stays near 12."
+/>
 
-</div>
+---
+hideInToc: true
+---
 
-<div class="card card-secondary card-glass pad-compact">
+<MCQ
+  question="The sides of a rectangle are a = 2.00 ± 0.02 m and b = 5.00 ± 0.10 m, measured independently. What is its area?"
+  :options="[
+    '10.00 ± 0.12 m²',
+    '10.00 ± 0.22 m²',
+    '10.00 ± 0.30 m²',
+    '10.00 ± 0.002 m²'
+  ]"
+  :correct="1"
+  explanation="For a product the relative uncertainties add in quadrature: 1 % for a and 2 % for b give √(1 + 4) = 2.2 %, which is 0.22 m². Adding the absolute uncertainties (0.12) or the relative ones without squares (3 %, 0.30) is wrong."
+/>
 
-🎲 **Blitzstein & Hwang** — *Introduction to Probability* · free (Harvard Stat 110)
+---
+hideInToc: true
+---
 
-</div>
+<MCQ
+  question="Two independent measurements of the same quantity give 10.0 ± 0.1 and 10.6 ± 0.3. What is their weighted mean?"
+  :options="[
+    '10.30 ± 0.16',
+    '10.06 ± 0.09',
+    '10.30 ± 0.32',
+    '10.06 ± 0.20'
+  ]"
+  :correct="1"
+  explanation="The weights are 1/0.1² = 100 and 1/0.3² = 11.1. The weighted mean is (100 × 10.0 + 11.1 × 10.6) / 111.1 = 10.06, and its uncertainty is 1/√111.1 = 0.09. The plain mean, 10.30, gives the less precise value as much say as the precise one."
+/>
 
-<div class="card card-accent card-glass pad-compact">
+---
+hideInToc: true
+---
 
-📘 **Wasserman** — *All of Statistics* — a fast, rigorous reference
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-🔬 **Barlow** — *Statistics: A Guide to the Use of Statistical Methods in the Physical Sciences*
-
-</div>
-
-</div>
+<MCQ
+  question="A measurement gives 5.3 ± 0.2 and the expected value is 4.7. How many standard deviations apart are they, and what is the two-sided p-value?"
+  :options="[
+    '0.6σ; p = 0.55',
+    '3σ; p = 0.0027',
+    '3σ; p = 0.32',
+    '6σ; p = 2 × 10⁻⁹'
+  ]"
+  :correct="1"
+  explanation="z = (5.3 − 4.7) / 0.2 = 3. For a Gaussian, 99.73 % of repetitions lie within 3σ, so a distance of 3σ or more has the probability 0.0027. This is the probability of such data if the expected value is right, not the probability that it is right."
+/>
