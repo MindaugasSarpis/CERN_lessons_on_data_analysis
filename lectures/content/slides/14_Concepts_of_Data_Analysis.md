@@ -825,7 +825,7 @@ hideInToc: true
 
 ATLAS and CMS show their first data at 13 TeV. Both see more pairs of photons than expected near a mass of 750 GeV.
 
-ATLAS: 3.9σ at that mass. Counting every mass and width at which a bump could have appeared: 2.1σ.
+ATLAS, in its published analysis of these data: 3.9σ at that mass. Counting every mass and width at which a bump could have appeared: 2.1σ.
 
 </div>
 

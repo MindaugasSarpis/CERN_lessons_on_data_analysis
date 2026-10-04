@@ -9,12 +9,12 @@ title: "Reproducible Workflows & Automation"
 
 ## Reproducible Workflows & Automation
 
-##### <span class="aims-badge">♻️ reproducibility · ⚙️ automation</span>
+##### <span class="aims-badge">♻️ reproducibility · ⚙️ automation · 🔧 tool-agnostic · 📁 data & files</span>
 
 <!--
-Speaker: open on the pain — an analysis you cannot rerun six months later. Today
-turns ad-hoc scripts into a pipeline anyone can rebuild. Serves the ♻️ + ⚙️
-aims. (~1 min)
+Speaker: the project folder holds scripts that clean, plot and fit the pendulum
+table. They were run by hand. Today they become one pipeline that anyone can
+rebuild with one command. (~1 min)
 -->
 
 ---
@@ -22,7 +22,9 @@ hideInToc: true
 layout: quote
 ---
 
-# Science requires **reproducibility**. Good computing practices transform ad-hoc analysis scripts into professional, automated workflows that others (and future you) can understand, verify, and extend.
+# An article about computational science in a scientific publication is not the scholarship itself, it is merely **advertising** of the scholarship. The actual scholarship is the complete software development environment and the complete set of instructions which generated the figures.
+
+<div class="note-text" style="text-align: right; margin-top: 1.5rem;">— J. Buckheit and D. Donoho (1995), after Jon Claerbout</div>
 
 ---
 hideInToc: true
@@ -36,1980 +38,681 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-📁 Structure an analysis project — separate **data, code, and config**
+⌨️ Give a script a **command line** with `argparse` and keep its parameters in a **config file**
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-⌨️ Parameterise scripts with **argparse** and readable **YAML config files**
+📦 Build an **environment** for a project and write its versions into `requirements.txt`
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-📦 Isolate dependencies in **virtual environments** with pinned versions
+⚙️ Rebuild every result with **one command** that reruns only what is out of date
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-⚙️ Automate the pipeline with a **Makefile** so `make all` rebuilds everything
+🧪 Write a **test** with `pytest` and read what a failed test says
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-🧪 Test analysis logic with **pytest** — selection cuts, edge cases
+🧭 Draw the pipeline as a **diagram written as text**
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-🔄 Let **CI and pre-commit hooks** run those checks on every push, automatically
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-🗃️ Version **data**, not just code — content hashes and pointer files
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-🌍 Publish data that is **FAIR** — findable, accessible, interoperable, reusable
+🌍 Say what continuous integration, containers and **FAIR** add when a project leaves your laptop
 
 </div>
 
 </div>
 
 <!--
-Speaker: frame these as promises, not a syllabus. Today is the "why + how" of
-reproducible workflows. Seminar 14 is where the D⁰ seminar pipeline gets a
-pinned environment and a Makefile — a pattern they carry into their own
-semester project. (~1 min)
+Speaker: six abilities, one example. Every command and every output on the
+slides comes from the pendulum table of the project folder. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# Motivation
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🚨 **The Reproducibility Crisis**
-
-Results cannot be reproduced because:
-- Code is lost or undocumented
-- Dependencies are unclear
-- Analysis steps are manual
-- Data processing is not tracked
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🌱 **Benefits of Good Practices**
-
-- Faster iteration & collaboration
-- Reliable, verifiable results
-- Publication-ready code
-- Career-ready skills
-
-**Goal**: Reproducible in 5 years (or 5 hours!)
-
-</div>
-
-</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# From **Scripts** to **Workflows**
+# From Steps by Hand to a **Pipeline**
 
 <!--
-Speaker: the arc of the whole lecture — notebook to script to modular code to an
-automated pipeline. Everything that follows moves one step along this path.
-Arc check: we start at 📓 Notebook — Notebook → Script → Modules → Pipeline →
-Production is the map for the next two hours. (~1 min)
+Speaker: first the state of the project as it is, then what goes wrong with it,
+then a picture of what it should become. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The **Evolution** of Your Analysis
+# The Analysis **So Far**
 
-<div style="display: flex; justify-content: center; align-items: center; margin-top: 0.5rem;">
-
-```mermaid{scale: 1}
-%%{init: {'flowchart': {'useMaxWidth': false, 'nodeSpacing': 10, 'rankSpacing': 80}}}%%
-flowchart LR
-    A["📓 Jupyter<br/>Notebook"]:::stage1 --> B["📜 Python<br/>Script"]:::stage2
-    B --> C["📦 Modules"]:::stage3
-    C --> D["⚙️ Automated<br/>Pipeline"]:::stage4
-    D --> E["🚀 Production<br/>System"]:::stage5
-
-    classDef stage1 fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
-    classDef stage2 fill:#0b2d4d,stroke:#5eead4,color:#e8f1ff
-    classDef stage3 fill:#063c34,stroke:#34d399,color:#d1fae5
-    classDef stage4 fill:#2a2208,stroke:#fbbf24,color:#fef3c7
-    classDef stage5 fill:#3b1030,stroke:#f472b6,color:#fce7f3
-```
-
-</div>
-
-<div class="mt-md" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.6rem;">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-📓 **Notebook** — explore freely; nothing is repeatable yet
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-📜 **Script** — runs top to bottom, paths still hardcoded
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-📦 **Modules** — functions in `src/`, parameters in config
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-⚙️ **Pipeline** — `make all` rebuilds only what changed
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🚀 **Production** — tests, CI, pinned env: anyone can rerun
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Anatomy of a **Well-Structured** Project
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight" style="font-family: monospace; font-size: 0.7em; line-height: 1.5;">
+## 📁 **The project folder**
 
 ```text
-my_analysis/
-├── README.md
-├── requirements.txt
-├── config/
-│   └── analysis_config.yaml
+analysis-project/
 ├── data/
-│   ├── raw/
-│   └── processed/
-├── src/
-│   ├── data_loader.py
-│   ├── preprocessing.py
-│   ├── fitting.py
-│   └── plotting.py
+│   ├── raw/pendulum.csv
+│   └── processed/pendulum.csv
 ├── scripts/
-│   ├── 1_preprocess.py
-│   ├── 2_fit_model.py
-│   └── 3_make_plots.py
-├── notebooks/
-├── tests/
+│   ├── clean.py
+│   ├── plot.py
+│   └── fit.py
 ├── results/
-└── .gitignore
+│   ├── pendulum_plot.png
+│   └── report.md
+└── README.md
 ```
-
-</div>
-
-<div style="display: flex; flex-direction: column; gap: 0.5rem;">
-
-<div class="card card-info card-glass pad-compact">
-
-📄 **Root** — README, requirements, config
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-📁 **data/** — raw (immutable) → processed
+## ⌨️ **How a result is made**
 
-</div>
+```text
+$ python scripts/clean.py
+$ python scripts/plot.py
+$ python scripts/fit.py
+g = 9.84 +- 0.06 m/s^2
+```
 
-<div class="card card-success card-glass pad-compact">
+Then `results/report.md` is opened in the editor and the number is typed in.
 
-📁 **src/** — reusable modules & functions
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-📁 **scripts/** — numbered execution steps
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-📁 **notebooks/** — exploration only
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-📁 **tests/** + **results/** — tests & outputs
+Each script names its files in the code. The order of the three commands is in nobody's files.
 
 </div>
 
 </div>
 
-</div>
+<div class="card card-info card-glass pad-compact mt-md">
 
----
-hideInToc: true
----
-
-# Key **Principles**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧩 **1. Separation of Concerns**
-
-- **Data**: raw vs processed (never modify raw!)
-- **Code**: reusable functions vs scripts
-- **Config**: parameters separate from code
+Every step works. What is missing is written nowhere: which commands, in which order, with which packages, and how anyone knows the number is right.
 
 </div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📦 **2. Clear Dependencies**
-
-- Document required packages with versions
-- Use virtual environments
-- Pin critical dependencies
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📝 **3. Self-Documentation**
-
-- README explains what & how
-- Code comments explain why
-- Docstrings for functions
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## ⚙️ **4. Automation**
-
-- Scripts run without intervention
-- Results are reproducible
-- Tests validate correctness
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Parameters: **CLI & Config**
 
 <!--
-Speaker: the first concrete move — get every number and path OUT of the code
-and into arguments or a config file. Two tools, one habit. Arc: 📜 Script →
-📦 Modules; parameters leave the code. (~1 min)
+Speaker: this is the folder of the first weeks with three scripts in it. Run the
+three commands live. Then ask the room: if this folder is sent to a colleague,
+what does the colleague have to be told? (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Why **Command-Line** Arguments?
+# What Breaks When It Is Done **by Hand**
 
-<div class="card card-warning card-glass pad-tight mt-md">
+| **What happens** | **Cause** | **Remedy** |
+| --- | --- | --- |
+| A second data file arrives: three scripts are edited | File names are typed into the code | A command line |
+| `No module named 'scipy'` on another laptop | The packages are written down nowhere | An environment file |
+| The report shows the *g* from before a change | A step was not rerun | One command that knows the order |
+| 9.84 is typed into the report as 9.48 | A number is copied by hand | A script writes the report |
+| The plot looks right and is wrong | Nothing checks the result | Tests |
 
-## ❌ **Problem: Hardcoded Values**
+<div class="note-text mt-sm">Each remedy is one section of this lecture. The scripts stay. What surrounds them is written down.</div>
 
-```python
-# Bad: hardcoded file paths and parameters
-df = pd.read_csv('data.csv')
-model_fit(df, n_bins=50, range_min=1800, range_max=1930)
-```
-
-**Issues**: can't easily change parameters, not reusable, manual editing required
-
-</div>
-
-<div class="card card-success card-glass pad-tight mt-md">
-
-## ✅ **Solution: Command-Line Arguments**
-
-```bash
-python fit_model.py --input data.csv --bins 50 --range 1800 1930
-python fit_model.py --input new_data.csv --bins 100 --range 1750 2000
-```
-
-**Benefits**: flexible, scriptable, no code changes needed
-
-</div>
+<!--
+Speaker: ask who has met each row. The third row is the dangerous one: nothing
+fails, and the report is wrong. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# **argparse**: Python's Standard Tool
+# What **Reproducible** Means
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A result is **reproducible** when another person, on another computer, at a later time, gets the same result from the same data with the same analysis.
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## 🔑 **Key Features**
+## 🧾 **What has to be the same**
 
-- `required=True` for mandatory args
-- `default=value` for optional args
-- `type=int/float/str` for type conversion
-- `nargs=2` for multiple values
-- `action='store_true'` for flags
-- `help='...'` for documentation
+| It must be the same | Written down in |
+| --- | --- |
+| The data | `data/raw/`, source and checksum in the README |
+| The code and its parameters | `scripts/`, `config.json`, under Git |
+| Python and the packages | `requirements.txt` |
+| The order of the steps | `run_all.py` |
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🧾 **Common Argument Types**
+## 🔎 **Two words, two claims**
 
-```python
---input file.csv      # required string
---output results.csv  # optional with default
---bins 50             # integer
---range 1800 1930     # two floats
---verbose             # boolean flag
-```
+- **Reproducible**: the same data and the same analysis give the same result
+- **Replicable**: new data, taken independently, lead to the same conclusion
+
+The first is a property of a project folder. It can be reached in an afternoon. The second is a property of the physics.
 
 </div>
 
 </div>
+
+<div class="note-text mt-sm">The first two rows of the table exist in the project. The last two are made today, and tests add the evidence that the result is right.</div>
+
+<!--
+Speaker: "another person, another computer, a later time" are the three tests.
+The later time is the hardest: the other person is you in a year, with a new
+laptop. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Script **Structure** with argparse
+# The Pipeline as a **Diagram**
 
-<div class="card card-info card-glass pad-tight mt-md">
+```mermaid {scale: 0.72}
+flowchart LR
+    raw[raw/pendulum.csv] --> clean([clean.py])
+    clean --> table[processed/pendulum.csv]
+    table --> plot([plot.py]) --> png[pendulum_plot.png]
+    table --> fit([fit.py]) --> json[fit.json]
+    table --> report([report.py])
+    png --> report
+    json --> report
+    report --> md[report.md]
+```
 
-## 🧱 **Typical Script Pattern**
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **Boxes and arrows**
+
+A box is a file. A rounded box is a script. An arrow into a script means *is read by*. An arrow out of a script means *writes*.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧱 **Four stages**
+
+Clean, plot, fit, report. A stage reads files and writes one file. If a file at the tail of an arrow changes, everything downstream of it is out of date.
+
+</div>
+
+</div>
+
+<!--
+Speaker: follow one path with the finger: raw file, clean.py, the table, fit.py,
+fit.json, report.py, the report. Then ask: plot.py is edited, which files are
+out of date? The picture and the report. Not the fit. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Diagrams as **Text**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **The source of that diagram**
+
+```text
+flowchart LR
+    raw[raw/pendulum.csv] --> clean([clean.py])
+    clean --> table[processed/pendulum.csv]
+    table --> plot([plot.py]) --> png[pendulum_plot.png]
+    table --> fit([fit.py]) --> json[fit.json]
+    table --> report([report.py])
+    png --> report
+    json --> report
+    report --> md[report.md]
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔤 **The signs**
+
+- `flowchart LR`: left to right. `TD` is top down
+- `name[text]` is a box, `name([text])` a rounded box, `name{text}` a diamond
+- `-->` is an arrow
+- A name is given once and used again: `table`, `report`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The language is **Mermaid**. In a Markdown file the lines go into a code block marked `mermaid`. GitHub draws the diagram in the README. The preview of VS Code draws it once the extension *Markdown Preview Mermaid Support* is installed. The diagrams of these slides are written this way.
+
+</div>
+
+<!--
+Speaker: nine lines of text against a drawing program. The text lives in the
+README, next to the sentence that explains it. Type the first three lines live
+in the README and open the preview. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Project Folder, **Extended**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📁 **The same folders, five new entries**
+
+```text
+analysis-project/
+├── data/raw/            as received, never edited
+├── data/processed/      written by clean.py
+├── scripts/             clean.py  plot.py  fit.py  report.py
+├── results/             the plot, fit.json, report.md
+├── tests/               new: checks of the scripts
+├── config.json          new: the parameters
+├── requirements.txt     new: the packages and versions
+├── run_all.py           new: the one command
+├── .gitignore           what Git leaves out
+└── README.md            gains a section: how to rebuild
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **What stays as it was**
+
+- `data/raw` is read and never written
+- Scripts write only into `data/processed` and `results`
+- The names say what is inside
+
+## ➕ **What is added**
+
+Everything new is plain text and small. Together the new entries hold what was in the head of the person who ran the scripts.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the layout is the one built in the first seminar. Nothing moves and
+nothing is renamed. Point at the five new lines: by the end of the lecture each
+of them exists. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# A Script with a **Command Line**
+
+<!--
+Speaker: first remedy. The file names leave the code and become arguments, the
+way cp takes the two names it works on. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# File Names Typed into the **Code**
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+## 📄 **`scripts/clean.py`, as it is**
 
 ```python
+import pandas as pd
+
+raw = pd.read_csv("data/raw/pendulum.csv", sep=";", decimal=",")
+rows = raw[raw["nr"].notna()]
+table = rows[["length_cm", "t10_s"]].astype({"length_cm": int})
+table.to_csv("data/processed/pendulum.csv", index=False)
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔁 **A second file arrives**
+
+To clean `pendulum_run2.csv`, two lines of the script are edited. To go back to the first file, they are edited again. Git records each edit as a change of the code, although the method did not change.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔌 **Nobody else can call it**
+
+A program that wants this cleaning for another file cannot ask for it. The script knows one input and one output.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The file names are not part of the method. They are <strong>arguments</strong>: given when the script is run, as in <code>cp old.csv new.csv</code>.</div>
+
+<!--
+Speaker: the script is correct and it is the one the room wrote. The only
+complaint is lines 3 and 6. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Words of a **Command**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`show_args.py`**
+
+```python
+import sys
+
+print(sys.argv)
+```
+
+## ▶️ **Run with four more words**
+
+```text
+$ python show_args.py raw.csv out.csv --dpi 300
+['show_args.py', 'raw.csv', 'out.csv', '--dpi', '300']
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **What Python receives**
+
+- The shell cuts the line at the spaces
+- Python gets the words as a list of strings, `sys.argv`
+- `sys.argv[0]` is the name of the script
+- `'300'` is a string, not a number
+- Nothing says which word is the input and which the output
+- A word that is missing shows up later, as an `IndexError`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A script could read `sys.argv[1]` and `sys.argv[2]` itself. The module `argparse`, which comes with Python, does that and adds what is missing: names, types, defaults, a help text and error messages.
+
+</div>
+
+<!--
+Speaker: run it live with other words. The room has typed commands with
+arguments since the shell lecture: cp, grep, git commit -m. This is the other
+side of it. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **argparse**: Arguments with Names
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`scripts/clean.py`, its `main()`**
+
+```python
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("raw", help="file as received")
+    parser.add_argument("out", help="cleaned CSV file to write")
+    args = parser.parse_args()
+
+    table = clean(args.raw)
+    table.to_csv(args.out, index=False, float_format="%.2f",
+                 lineterminator="\n")
+    print(f"{args.out}: {len(table)} rows")
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **Line by line**
+
+- `ArgumentParser` describes the command
+- `add_argument("raw")`: the first word after the script name
+- `parse_args()` reads `sys.argv` and returns `args.raw` and `args.out`
+- The cleaning itself is the function `clean()`
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+```text
+$ python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
+data/processed/pendulum.csv: 9 rows
+```
+
+</div>
+
+<div class="note-text mt-sm">macOS: <code>python3</code> in place of <code>python</code>. With <code>float_format</code> the file keeps <code>17.90</code>, and <code>lineterminator</code> sets the line ending to LF on every system. The result has 97 bytes: the same bytes as the copy cleaned by hand in the editor and saved with LF.</div>
+
+<!--
+Speaker: the two file names of the old script are now args.raw and args.out.
+Nothing else changed. Run the command, then run it with another output name.
+The 97 bytes are those measured in the seminar on files as bytes. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Script **Explains Itself**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## ❓ **`--help` is written by argparse**
+
+```text
+$ python scripts/clean.py --help
+usage: clean.py [-h] raw out
+
+Clean the raw pendulum file: write a plain CSV table.
+
+positional arguments:
+  raw         file as received
+  out         cleaned CSV file to write
+
+options:
+  -h, --help  show this help message and exit
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+## ⚠️ **A missing argument gets a message, not a traceback**
+
+```text
+$ python scripts/clean.py data/raw/pendulum.csv
+usage: clean.py [-h] raw out
+clean.py: error: the following arguments are required: out
+```
+
+</div>
+
+<!--
+Speaker: nobody wrote this help text. It is put together from the three help
+strings and from the first line of the file. In six months it is the first
+thing to type. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Options**: a Name, a Type, a Default
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 📄 **`scripts/plot.py`**
+
+```python
+    parser.add_argument("table", help="cleaned CSV file")
+    parser.add_argument("out", help="PNG file to write")
+    parser.add_argument("--dpi", type=int, default=150,
+                        help="dots per inch (default: 150)")
+```
+
+```text
+$ python scripts/plot.py data/processed/pendulum.csv poster.png --dpi 300
+poster.png: 9 points
+$ python scripts/plot.py data/processed/pendulum.csv poster.png --dpi high
+usage: plot.py [-h] [--dpi DPI] table out
+plot.py: error: argument --dpi: invalid int value: 'high'
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-sm table-compact">
+
+| Kind | Written as | Must be given | Used for |
+| --- | --- | --- | --- |
+| Positional argument | `raw`, `out` | yes | the files a stage reads and writes |
+| Option | `--dpi 300` | no, it has a default | a setting that is rarely changed |
+| Help | `-h`, `--help` | no | added by argparse |
+
+</div>
+
+<!--
+Speaker: type=int turns the string '300' into the number 300 and refuses
+'high'. Without --dpi the value is 150: the picture is 720 by 480 pixels, with
+300 it is 1440 by 960. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Function Does the **Cleaning**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`scripts/clean.py`, its top**
+
+```python
+"""Clean the raw pendulum file: write a plain CSV table."""
 import argparse
 
-parser = argparse.ArgumentParser(description='...')
-parser.add_argument('--input', required=True, help='...')
-# ... more arguments ...
-args = parser.parse_args()
+import pandas as pd
 
-data = load_data(args.input)
+
+def clean(path):
+    """Return the measurements in the raw file as a table."""
+    raw = pd.read_csv(path, sep=";", decimal=",")
+    rows = raw[raw["nr"].notna()]      # the mean line has no number
+    table = rows[["length_cm", "t10_s"]]
+    return table.astype({"length_cm": int})   # was text: "mean"
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-secondary card-glass pad-compact">
 
-<div class="card card-primary card-glass pad-tight">
+## 🧹 **The hand edits, as four lines**
 
-### 🌱 **Benefits**
-
-- Flexible parameters
-- Self-documenting (`--help`)
-- Scriptable (batch processing)
-- No code changes needed
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 💡 **Tips**
-
-- Use meaningful names
-- Provide defaults
-- Add help messages
-- Validate inputs
+- `sep=";"` and `decimal=","`: the two replacements
+- `notna()`: the line with the mean goes
+- Two columns kept: `nr` goes
+- `astype`: the word `mean` made pandas read `length_cm` as text
 
 </div>
 
 </div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The function takes a path and returns a table. It does not print and it does not write a file. `main()` does those. A function that only computes can be called from anywhere: from `main()`, from the Python prompt, from a test.
+
+</div>
+
+<!--
+Speaker: the four edits made with Find and Replace and many cursors are now
+four lines that can be run again on the next file. Show raw.dtypes live: nr is
+float64, length_cm is text, t10_s is float64. (~3 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# When CLI Args Get **Unwieldy**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 📚 **Dozens of parameters?**
-
-Move them into a configuration file — one versioned, commented file instead of a mile-long command.
-
-</div>
+# A Command **and a Module**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-### ❌ **Too Many Arguments**
-
-```bash
-python analyze.py \
-  --input data.csv --bins 50 \
-  --signal-mean 1865 --bg-scale 2.0 \
-  --fit-method mle --output results.png \
-  --verbose --save-params params.json
-```
-
-Unreadable, error-prone!
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-### ✅ **Config File**
-
-```bash
-python analyze.py --config analysis_config.yaml
-```
-
-```yaml
-input: data.csv
-bins: 50
-signal: { mean: 1865, sigma: 8 }
-background: { scale: 2.0 }
-fit_method: mle
-output: results.png
-```
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **YAML** Configuration Files
-
-<div class="grid-2 gap-md mt-sm">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📄 **YAML: Human-Readable Config**
-
-- Easy to read and write
-- Hierarchical structure
-- Comments with `#`
-- Standard for config files
-
-**Basic syntax:**
-
-```yaml
-key: value          # string
-count: 42           # number
-enabled: true       # boolean
-items: [1, 2, 3]    # list
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight" style="font-size: 0.7em;">
-
-```yaml
-# config.yaml
-data:
-  input_file: "data/raw/sample.csv"
-  output_dir: "results/"
-
-histogram:
-  bins: 50
-  range: [1800, 1930]   # MeV
-
-model:
-  signal: { mean: 1865, sigma: 8 }
-  background: { scale: 2.0 }
-
-fitting:
-  method: "mle"
-  tolerance: 1.0e-6   # decimal point → parsed as a float, not a string
-```
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Loading **Config** in Python
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📥 **Basic Loading**
+## 📄 **The last two lines of `clean.py`**
 
 ```python
-import yaml
-
-with open('config.yaml', 'r') as f:
-    config = yaml.safe_load(f)
-
-# Access nested values
-n_bins = config['histogram']['bins']
+if __name__ == "__main__":
+    main()
 ```
 
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ✅ **Best Practices**
-
-- Use `yaml.safe_load()` (not `load()`)
-- Validate required fields exist
-- Check value types and ranges
-- Provide sensible defaults
-- Handle missing files gracefully
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-tight mt-md" style="display: flex; gap: 2rem; align-items: center;">
-
-<div>
-
-**Why `safe_load()`?** — `yaml.load()` can execute arbitrary code (e.g., `!!python/object/apply:os.system`)
-
-</div>
-
-<div>
-
-`safe_load()` only parses: `str` | `int` | `float` | `bool` | `list` | `dict` | `None`
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Combining **argparse + Config** Files
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 🔀 **The Pattern**
-
-Config file provides defaults; command-line arguments can override specific values.
-
-```bash
-# Use config defaults
-python analyze.py --config analysis.yaml
-
-# Override specific values
-python analyze.py --config analysis.yaml --input new_data.csv
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-### 📄 **Config File For**
-
-- Default values
-- Complex nested settings
-- Documentation (comments)
-- Experiment configurations
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### ⌨️ **CLI Args For**
-
-- Required inputs/outputs
-- Quick overrides
-- Batch processing
-- Scripting workflows
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-💡 **Groundwork**: Seminar 14 practises the environment + Makefile half; Seminar 15 needs every input to come from config/args — so build the CLI/config habit now.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Virtual Environments & **Dependencies**
-
-<!--
-Speaker: "it works on my machine" is a reproducibility bug. Isolated, pinned
-environments are the fix — this is the ♻️ aim in practice. Arc: still at
-📦 Modules — now the environment AROUND the code. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# The **Dependency** Problem
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 😩 **"It Works on My Machine!"**
-
-- You develop with NumPy 1.24, Matplotlib 3.7
-- Collaborator has different versions
-- Code breaks with mysterious errors
-- 6 months later: can't reproduce your own results
-
-**Root cause**: unmanaged dependencies
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 💡 **Solution: Virtual Environments**
-
-Isolated Python environments with pinned versions
-
-- Each project has its own environment
-- Document exact versions
-- No conflicts between projects
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# venv vs **conda**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🐍 **Option 1: venv (built-in)**
-
-```bash
-# Create environment
-python -m venv myenv
-
-# Activate (Linux/Mac)
-source myenv/bin/activate
-
-# Activate (Windows)
-myenv\Scripts\activate
-
-# Install packages
-pip install numpy pandas matplotlib
-
-# Deactivate
-deactivate
-```
-
-**Pros**: built into Python, simple
-
-**Cons**: only Python packages
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📦 **Option 2: conda**
-
-```bash
-# Create environment
-conda create -n myenv python=3.11
-
-# Activate
-conda activate myenv
-
-# Install packages
-conda install numpy pandas matplotlib
-# or: pip install ...
-
-# Deactivate
-conda deactivate
-```
-
-**Pros**: handles non-Python deps (C libs, etc.), popular in science
-
-**Cons**: heavier, slower — use `mamba` if too slow
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **requirements.txt**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div style="display: flex; flex-direction: column; gap: 0.8rem;">
-
-<div class="card card-info card-glass pad-compact">
-
-## 📋 **The Package List**
-
-A plain text file listing required packages with version constraints
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔢 **Version syntax**
-
-- `==2.0.3` — exact version
-- `>=1.24.0` — minimum version
-- `>=1.24,<2.0` — version range
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🧾 **Two files, two jobs**
-
-`requirements.txt` / `pyproject.toml` lists *direct* deps with loose bounds (what you need); a lockfile (`uv.lock`, `pip freeze` output, `conda env export`) records *exact* versions (what you tested). Ship both.
-
-</div>
-
-</div>
-
-<div>
-
-```bash
-# requirements.txt — direct deps, loose bounds
-numpy>=1.24,<2.0
-pandas>=2.0
-matplotlib>=3.7
-scipy>=1.11
-pyyaml>=6.0
-```
-
-```bash
-# Install the direct list
-pip install -r requirements.txt
-
-# Freeze what you tested into a lockfile
-pip freeze > requirements.lock
-```
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Modern Tooling: **uv** & pyproject.toml
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⚡ **uv — fast, lockfile-based**
-
-One Rust-based tool for **environments *and* dependencies**, resolving in seconds, not minutes — the emerging 2026 standard for scientific Python.
-
-```bash
-uv init my_analysis        # project + pyproject.toml
-cd my_analysis
-uv add numpy pandas        # resolve, install, lock
-uv run python analysis.py  # run inside the env
-```
-
-`uv.lock` pins exact versions for a byte-identical rebuild. **pixi** plays the same role in the conda world.
+- Run as `python scripts/clean.py …`: Python sets `__name__` to `"__main__"`, and `main()` runs
+- Imported from another file: `__name__` is `"scripts.clean"`, and `main()` does not run
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📄 **pyproject.toml (PEP 621)**
+## 🐍 **Imported at the Python prompt**
 
-One declarative file for project metadata *and* dependencies — the modern replacement for a scattered `requirements.txt` + `setup.py`.
-
-```toml
-[project]
-name = "my_analysis"
-requires-python = ">=3.11"
-dependencies = [
-  "numpy>=1.24",
-  "pandas>=2.0",
-]
+```text
+>>> from scripts.clean import clean
+>>> clean("data/raw/pendulum.csv").head(3)
+   length_cm  t10_s
+0         20   9.02
+1         30  11.05
+2         40  12.61
 ```
 
-Read by `uv`, `pip`, and build tools alike. ♻️
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# **environment.yml**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div style="display: flex; flex-direction: column; gap: 0.8rem;">
-
-<div class="card card-info card-glass pad-compact">
-
-## 🐍 **Conda Alternative**
-
-Env name, channels, Python version, mix conda + pip
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ⌨️ **Commands**
-
-- `conda env create -f environment.yml`
-- `conda env update -f environment.yml --prune`
-- `conda env export --from-history > environment.yml`
-
-</div>
-
-</div>
-
-<div>
-
-```yaml
-name: my_analysis
-channels:
-  - conda-forge
-dependencies:
-  - python=3.11
-  - numpy>=1.24
-  - pandas>=2.0
-  - matplotlib>=3.7
-  - pip:
-      - some-pip-package
-```
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Best Practices: **Dependencies**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **Do**
-
-- Use virtual environments for every project
-- Document dependencies with version constraints
-- Test on a fresh environment before sharing
-- Add `venv/`, `.conda/` to `.gitignore`
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Don't**
-
-- Install packages globally
-- Use `pip freeze` output blindly
-- Hand-edit exact pins into `requirements.txt` — let a lockfile do that
-- Commit the virtual environment to git
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Automation with **Makefiles**
-
-<!--
-Speaker: this is the payoff — one command runs the whole pipeline and only
-rebuilds what changed. Make is the ⚙️ aim made concrete. Arc: 📦 Modules →
-⚙️ Pipeline. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Why **Makefiles**?
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⚙️ **Automate Your Workflow**
-
-Instead of running multiple commands manually, run: `make all`
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-## 🌱 **Benefits**
-
-One-command execution, tracks dependencies, only reruns what changed, documents the workflow
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧰 **Common Uses**
-
-- Run analysis pipeline
-- Run tests
-- Generate figures
-- Build documentation
-- Clean temporary files
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Basic **Makefile** Syntax
-
-<div class="grid-2 mt-sm gap-md">
-
-<div style="font-size: 0.82em;">
-
-```makefile
-# Makefile for the D0 analysis pipeline
-all: results/plot.png results/fit.json
-
-results/plot.png: data/clean.csv scripts/plot.py
-	python scripts/plot.py
-
-results/fit.json: data/clean.csv scripts/fit.py
-	python scripts/fit.py
-
-data/clean.csv: data/raw.csv scripts/clean.py
-	python scripts/clean.py
-
-# Utility targets (don't create files)
-.PHONY: all clean test
-
-test:
-	python -m pytest tests/
-
-clean:
-	rm -rf results/* data/clean.csv
-```
-
-</div>
-
-<div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🔑 **Key Concepts**
-
-- **Target**: file to create
-- **Dependencies**: files it needs
-- **Command**: how to build (TAB!)
-- **Phony**: non-file targets
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-## ⌨️ **Usage**
-
-- `make all` — run pipeline
-- `make test` — run the tests
-- `make clean` — remove outputs
-
-</div>
-
-</div>
-
-</div>
-
-<!--
-Speaker: walk one rule top-down: target, then its inputs, then the TAB-indented
-command. Point at the TAB — the number-one Makefile bug. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# **Using** the Makefile
-
-```bash
-make all               # run the entire pipeline
-make clean; make all   # wipe and rebuild
-make test              # run the unit tests
-```
-
-**Smart rebuilding**:
-```bash
-# First run: builds everything
-make all
-
-# Edit only the plotting script
-vim scripts/plot.py
-
-# Second run: only regenerates plot (skips cleaning and fitting!)
-make all
-```
-
-<div class="card card-accent card-glass pad-tight mt-sm">
-
-Make checks file timestamps. If dependencies are newer than the target, it rebuilds. Otherwise, it skips!
-
-</div>
-
----
-hideInToc: true
----
-
-# Make vs **Snakemake** vs a Plain Script
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📜 **Plain script**
-
-One `run_all.sh` calling every step in order.
-
-**Good for**: a linear 2–3 step pipeline, one contributor.
-
-**Weak on**: always reruns everything — no dependency tracking.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔧 **Make**
-
-Tracks file timestamps; reruns only stale targets.
-
-**Good for**: most single-analysis pipelines — portable, `make` is everywhere.
-
-**Weak on**: branching workflows, parameter sweeps.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🐍 **Snakemake**
-
-Python-native rules, wildcards, cluster & conda support.
-
-**Good for**: many samples/parameters, HPC submission.
-
-**Weak on**: overkill for one small analysis.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-💡 What matters: **dependency tracking**, **partial re-runs**, and **portability** 🔧. Start with a script; add Make when reruns waste time; add Snakemake when parameters multiply.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Testing your **Analysis**
-
-<!--
-Speaker: "the plot looked fine" is not evidence. A test is a known number
-checked automatically, every time. Arc: ⚙️ Pipeline → 🚀 Production — the
-first production habit is tests. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Five **layers** of testing
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧪 Unit tests for data transforms & calculations
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## ✅ Data validation (great expectations, pydantic, pandera)
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📊 Statistical tests to confirm assumptions
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 📂 Golden datasets & regression tests for dashboards
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 👁️ Peer review before results leave the team
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# From "It Looked Fine" to a **Test**
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## 😬 **"I ran it and the plot looked fine"**
-
-That is not evidence — a silent off-by-one in a selection cut can shift a peak by 10 MeV and still "look fine" on a busy histogram. A **test** checks a known number, every time, automatically.
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-## 🎯 **What we test**
-
-A small, pure analysis function — not a plot, not a whole script. Something with one clear right answer for a known input.
-
-</div>
-
----
-hideInToc: true
----
-
-# Your First **pytest** Test
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔧 **The function**
-
-```python
-# src/selection.py
-def is_signal_region(mass):
-    """True if mass (MeV) sits in the D0 window."""
-    return 1800 < mass < 1930
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🧪 **The test**
-
-```python
-# tests/test_selection.py
-from src.selection import is_signal_region
-
-def test_accepts_known_peak():
-    assert is_signal_region(1865)
-
-def test_rejects_sideband():
-    assert not is_signal_region(2500)
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-One `assert` per fact you know must hold. Name the test after the behaviour it checks, not the function.
-
-</div>
-
-<!--
-Speaker: the whole idea in one screen — a pure function, two facts about it.
-1865 is the D⁰ mass, 2500 is nowhere near it. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Testing **Edge Cases**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🧪 **Beyond the happy path**
-
-Real data is messy — a good test suite checks the cases that break code silently.
-
-</div>
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-### 📭 **Empty input**
-
-```python
-# src/selection.py
-def select(masses):
-    return masses[(masses > 1800) & (masses < 1930)]
-
-# tests/test_selection.py
-def test_empty_returns_empty():
-    assert len(select(np.array([]))) == 0
-```
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-### 🕳️ **NaN values**
-
-Append to `tests/test_selection.py` (add `import numpy as np` at the top):
-
-```python
-def test_nan_is_rejected():
-    assert not is_signal_region(np.nan)
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-If a function silently returns `True` for `NaN` or crashes on an empty array, you want to know **before** it corrupts a fit — not after.
-
-</div>
-
-<!--
-Speaker: the array version `select()` is what the seminar pipeline actually
-uses; empty and NaN are the two edge cases that bite real ntuples. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Running pytest & Reading the **Output**
-
-<span class="def-sub">A collaborator "tidies up" the cut to `return not (mass < 1800 or mass > 1930)` — identical to the original for every real number. Run the tests:</span>
-
-<div class="card card-primary card-glass pad-tight mt-sm">
-
-```bash
-$ python -m pytest tests/ -v
-tests/test_selection.py::test_accepts_known_peak PASSED
-tests/test_selection.py::test_rejects_sideband PASSED
-tests/test_selection.py::test_nan_is_rejected FAILED
-
-=============== FAILURES ===============
-    def test_nan_is_rejected():
->       assert not is_signal_region(np.nan)
-E       assert not True
-E        +  where True = is_signal_region(nan)
-tests/test_selection.py:12: AssertionError
-====== 1 failed, 2 passed in 0.05s ======
-```
-
-</div>
-
-<div class="note-text mt-sm">
-
-For `NaN`, **both** comparisons are `False`, so the rewrite returns `True`. Each line is one test; the traceback names the exact failing `assert`. `python -m pytest` puts the project root on the import path — or put `pythonpath = ["."]` under `[tool.pytest.ini_options]` in `pyproject.toml`.
-
-</div>
-
-<!--
-Speaker: let them predict the result BEFORE revealing the FAILED line — the
-NaN trap surprises most of the room. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# What (Not) to **Test** in an Analysis
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Worth testing**
-
-- Selection cuts (mass windows, quality flags)
-- Unit conversions & physical constants
-- Data-loading edge cases (empty file, missing column)
-- Fit-result sanity (parameter in a physical range)
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **Not worth testing**
-
-- Exact pixel colours or figure DPI
-- Wording of axis labels or titles
-- Anything that changes every run by design (timestamps)
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-Rule of thumb: test **logic with a right answer**, not **appearance with a taste**.
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Which of these is most worth writing a unit test for?"
-  :options="[
-    'The exact shade of blue used in a histogram',
-    'A signal-region selection cut that must accept 1865 MeV and reject 2500 MeV',
-    'The DPI setting used when saving a PNG',
-    'The wording of an axis label'
-  ]"
-  :correct="1"
-  explanation="Tests are for logic with a right answer — selection cuts, unit conversions, edge cases. Plot styling is a visual choice, not a correctness question."
-/>
-
----
-layout: section
-hideInToc: true
----
-
-# Continuous Integration with **GitHub Actions**
-
-<!--
-Speaker: CI runs your tests and pipeline automatically on every push — the
-machine enforces reproducibility so you do not have to remember. Arc:
-🚀 Production — the machine, not you, runs the tests. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# What is **CI/CD**?
-
-<div class="card card-info card-glass pad-compact">
-
-## 🔄 **Continuous Integration / Deployment**
-
-Automatically run tasks when you push code: tests, style checks, build docs, run the pipeline. **Benefits:** catch errors early, ensure reproducibility.
-
-</div>
-
-```mermaid
-flowchart LR
-    A[Push Code]:::action --> B[GitHub Actions]:::process
-    B --> C[Tests]:::step
-    B --> D[Style]:::step
-    C --> E{Pass?}:::decision
-    D --> E
-    E -->|Yes| F[Success]:::success
-    E -->|No| G[Fail]:::fail
-
-    classDef action fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
-    classDef process fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
-    classDef step fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff
-    classDef decision fill:#2a2208,stroke:#fbbf24,color:#fef3c7
-    classDef success fill:#063c34,stroke:#34d399,color:#d1fae5
-    classDef fail fill:#3b1020,stroke:#f87171,color:#fee2e2
-```
-
----
-hideInToc: true
----
-
-# GitHub Actions: **Basic** Workflow
-
-<div class="grid-2 mt-sm gap-md">
-
-<div style="font-size: 0.78em;">
-
-```yaml
-# .github/workflows/test.yml
-name: Run Tests
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - run: pip install -r requirements.txt
-    - run: python -m pytest tests/ -v
-```
-
-</div>
-
-<div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🔑 **Key Parts**
-
-- **on:** when to trigger (push, PR)
-- **runs-on:** VM type (ubuntu)
-- **steps:** sequential actions
-- **uses:** pre-built actions
-- **run:** shell commands
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-Every push/PR now automatically runs your tests!
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Advanced: **Analysis Pipeline**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div style="font-size: 0.75em;">
-
-```yaml
-name: Analysis Pipeline
-on:
-  push:
-    branches: [main]
-
-jobs:
-  analyze:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - run: pip install -r requirements.txt
-    - run: make all
-    - uses: actions/upload-artifact@v4
-      with:
-        name: results
-        path: results/
-```
-
-</div>
-
-<div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🧱 **Pipeline Steps**
-
-1. Checkout code
-2. Setup Python
-3. Install dependencies
-4. Run analysis (`make all`)
-5. Upload results as artifact
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-sm">
-
-**Optional:** auto-commit results back to repo, send notifications, deploy to web
-
-</div>
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Pre-commit **Hooks**
-
-<!--
-Speaker: the seatbelt you stop noticing — checks run locally, before a commit
-lands, so bad formatting or an accidental notebook output never even reaches
-CI. Arc: 🚀 Production, but on your own laptop — checks before the commit.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# What Runs **Before** You Even Push
-
-<div class="stack-tight mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🎨 **Formatter** (black, ruff format) — rewrites code to one house style, no debate
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔍 **Linter** (ruff, flake8) — flags unused imports, undefined names, obvious bugs
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📓 **Notebook-output stripper** (nbstripout) — clears cell outputs so diffs stay readable
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🚫 **Big-file / secret guards** — block an accidental `data.root` or `.env` commit
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# A Minimal **`.pre-commit-config.yaml`**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-```yaml
-repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
-    hooks:
-      - id: ruff
-      - id: ruff-format
-  - repo: https://github.com/kynan/nbstripout
-    rev: 0.7.1
-    hooks:
-      - id: nbstripout
-```
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-info card-glass pad-compact">
-
-**Install once**: `pre-commit install`
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-**Every commit**: hooks run automatically — a failing hook blocks the commit until you fix it
-
-</div>
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-The formatter Lecture 07 promised, plus a notebook-output stripper — now enforced automatically, so conventions hold even under deadline pressure. ⚙️ The `rev:` pin (required!) is the reproducibility guarantee: every collaborator runs exactly the same hook version. ♻️
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Versioning **Data**
-
-<!--
-Speaker: git is for code. Data needs a different trick — the on-ramp to the
-FAIR discussion that follows. Arc: the ⚙️ Pipeline's INPUTS — data is the one
-thing git cannot carry. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Why Git **Chokes** on Data
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ⚠️ **The problem**
-
-Git stores every version of every file, forever. A 2 GB ROOT file changed 10 times means **20 GB** in `.git/` — clones become huge and slow.
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 💡 **The idea**
-
-Store the data **once**, content-addressed by its hash. Git tracks a tiny **pointer file** instead — the data itself lives outside the repo.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# A **Pointer File**, Not the Data
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **What git actually stores** — `sample.csv.dvc`
-
-```yaml
-outs:
-  - md5: 8f14e45fceea167a5a36dedd4bea2543
-    path: sample.csv
-    size: 2147483648
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⬇️ **What happens**
-
-`dvc pull` fetches the real file from remote storage using that hash — the repo stays small, the data stays exact.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-Same principle behind Git LFS and content-addressed storage generally: **the hash *is* the identity** — change one byte and everyone notices. 📁
-
-</div>
-
----
-hideInToc: true
----
-
-# Data Versioning: The **Toolbox**
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🗃️ **DVC**
-
-Git-native; pairs a pointer file with any remote (S3, GDrive, SSH).
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📦 **Git LFS**
-
-Simpler, GitHub-integrated; swaps large files for pointers transparently.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🏛️ **Zenodo DOIs**
-
-For a **finished** dataset: upload once, get a permanent, citable identifier.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-Teaser only — pick one when a project's data actually outgrows git. The DOI idea reappears next: it's the **F** in FAIR.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# **FAIR** Principles
-
-<!--
-Speaker: FAIR = Findable, Accessible, Interoperable, Reusable. Frame it as the
-standard that lets a stranger reuse your data a decade later — then show CERN
-Open Data as living proof it works at petabyte scale. Arc: 🚀 Production for
-DATA — publishing outputs others can reuse. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# The four **FAIR** principles
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔍 **Findable**
-
-- A globally unique, persistent identifier (a DOI)
-- Rich metadata that includes that identifier
-- Registered in a searchable index or catalogue
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🌐 **Accessible**
-
-- Retrievable by its identifier over an open protocol (HTTPS)
-- Authentication where needed — the protocol stays open
-- Metadata stays online even when the data is retired
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🔗 **Interoperable**
-
-- Open, typed formats (CSV, Parquet, HDF5, ROOT)
-- Shared vocabularies & units (PDG names, ISO 8601 dates)
-- Qualified links to related records (detector, simulation)
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ♻️ **Reusable**
-
-- A clear, accessible licence (CC0, CC-BY)
-- Provenance: software version, run conditions, steps
-- Domain community standards for structure & description
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-After Wilkinson et al. (2016), *Scientific Data* — the standard that lets a stranger reuse your data a decade later.
-
-</div>
-
----
-hideInToc: true
----
-
-# Interoperability · **what breaks it vs. what fixes it**
-
-<span class="def-sub">"I just shared the CSV" is not interoperability. The machine — and the next analyst — still needs to know what every column means and in what units.</span>
-
-<div class="grid-2 gap-md mt-md tidy-cards">
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Proprietary format**
-
-`.xlsx` with merged cells, macros, embedded plots. Only opens cleanly in one tool, parses poorly everywhere else.
-
-**Fix:** CSV / Parquet / HDF5 — open, typed, streamable.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Missing units**
-
-A column `mass` with values `[1865, 1871, 1859]`. MeV? GeV? Per event? No one can tell.
-
-**Fix:** units in the column name (`mass_mev`) or a sidecar schema file.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Undocumented codes**
-
-`status` column with values `{1, 2, 3, 9}` and no legend. The meaning lives in someone's head.
-
-**Fix:** a README mapping each code + a controlled vocabulary (ICD, MeSH, PDG, …).
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Opaque timestamps**
-
-`ts = 1712937600` — seconds? milliseconds? Which timezone? From when?
-
-**Fix:** ISO 8601 strings with explicit offset (`2024-04-12T14:00:00+02:00`).
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-## 💡 **Rule of thumb**
-
-A dataset is interoperable when a stranger, with no access to you, can correctly merge it with their own data **without guessing.**
-
-</div>
-
-<!--
-Speaker: pick the "missing units" card and ask the room which unit — nobody can
-know, that's the point. One minute per card at most. (~4 min)
--->
-
----
-hideInToc: true
----
-
-# FAIR worked example — a **CERN Open Data** record
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-<div class="note-text">
-
-An LHCb research-grade dataset on opendata.cern.ch — annotated against each FAIR pillar.
-
-</div>
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🔍 **Findable**
-
-DOI `10.7483/OPENDATA.LHCB.…`, title, keywords, indexed on Google Dataset Search
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🌐 **Accessible**
-
-HTTPS download + XRootD streaming, free, no login required; metadata stays online if files are retired
-
-</div>
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔗 **Interoperable**
-
-ROOT (DST / ntuple) files with published schema, HEP-specific vocabularies, links to detector & simulation records
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ♻️ **Reusable**
-
-CC0 licence, full provenance (run conditions, software version), validated example analyses in containers
-
-</div>
+`scripts.clean` is the file `scripts/clean.py`. The dot stands for the folder.
 
 </div>
 
@@ -2017,511 +720,2327 @@ CC0 licence, full provenance (run conditions, software version), validated examp
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-<div class="note-text">
-
-#### 🎯 Every FAIR principle is concretely visible — that's why CERN data can be reanalysed a decade later
+⚠️ Without the two lines the import itself would run `main()`. It stops with `error: the following arguments are required: raw, out`, because the importing program was started with other words.
 
 </div>
 
-</div>
+<div class="note-text mt-sm">A file that can be imported is a <strong>module</strong>. <code>import math</code> and <code>import pandas</code> work the same way on files that others wrote.</div>
 
 <!--
-Speaker: this is the same portal the seminar D⁰ sample comes from — the
-students have already been on the receiving end of FAIR. (~3 min)
--->
-
----
-layout: quote
-hideInToc: true
----
-
-## The first step in **(re)using data** is to find them. **Metadata** and data should be easy to find for both humans and computers. Machine-readable metadata are essential for automatic discovery of datasets and services — a core component of the FAIRification process.
-
-<div class="note-text" style="text-align: right; margin-top: 1.5rem;">— GO FAIR, after Wilkinson et al. (2016), <em>Scientific Data</em></div>
-
----
-layout: section
-hideInToc: true
----
-
-# Docker: **Containerization** (Optional/Advanced)
-
-<!--
-Speaker: optional block — skip if short on time. Arc: beyond 🚀 Production —
-freezing the whole machine, not just the Python packages. (~1 min)
+Speaker: start python in the project folder and type the two lines. The prompt
+must be started in the project folder, because the import looks for scripts/
+there. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Why **Docker**?
+# **Docstrings**
 
-<div class="grid-2 gap-md mt-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="card card-info card-glass pad-tight">
+## 📄 **`scripts/fit.py`**
 
-## 🏁 **Ultimate Reproducibility**
-
-**Virtual environments** handle Python packages. **Docker containers** handle *everything*:
-- Operating system
-- System libraries
-- Python + packages
-- Your code
-
-**Result**: "It works on my machine" → "It works everywhere"
-
-</div>
-
-<div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧰 **Use Cases**
-
-- Share analysis with exact environment
-- Run on HPC clusters
-- Deploy to production
-- Archive for long-term reproducibility
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight mt-sm">
-
-## ⏱️ **When to Use**
-
-- Complex dependencies (ROOT, GEANT4)
-- Collaboration with diverse systems
-- Production deployment
-- Long-term preservation
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Basic **Dockerfile**
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-```dockerfile
-# Dockerfile - Analysis environment
-FROM python:3.11-slim
-WORKDIR /app
-
-# Copy requirements and install
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy project files
-COPY . .
-
-# Default command
-CMD ["make", "all"]
+```python
+def g_from_slope(slope):
+    """Return g in m/s^2 from the slope of T^2 against L in s^2/m."""
+    return 4 * math.pi**2 / slope
 ```
 
 </div>
 
-<div>
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
-```bash
-# Build container
-docker build -t my-analysis .
+<div class="card card-secondary card-glass pad-compact">
 
-# Run analysis in container
-docker run my-analysis
-
-# Interactive session
-docker run -it my-analysis /bin/bash
-
-# Mount local data
-docker run -v $(pwd)/data:/app/data my-analysis
-```
-
-<div class="card card-accent card-glass pad-tight mt-sm">
-
-**Note**: start with virtual environments, add Docker when needed.
-
-</div>
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Real-World **Example**
-
-<!--
-Speaker: everything from today applied to one small project — before and after.
-Arc: the full path 📓 → 🚀 in one project. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Putting It All Together: From **Chaos** to Order
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 😱 **Before**
+## 📖 **`help()` shows it**
 
 ```text
-analysis_final_FINAL_v3.ipynb
-data.csv
-fit_attempt2_working.py
-plot_results_old.py
-results_oct22_updated.png
-untitled.py
-```
+>>> from scripts.fit import g_from_slope
+>>> help(g_from_slope)
+Help on function g_from_slope in module scripts.fit:
 
-- Unclear what to run
-- Can't reproduce results
+g_from_slope(slope)
+    Return g in m/s^2 from the slope of T^2 against L in s^2/m.
 
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **After**
-
-```text
-d0_mass_peak/
-├── README.md
-├── requirements.txt
-├── Makefile
-├── config/analysis.yaml
-├── src/selection.py
-├── scripts/
-│   ├── 1_preprocess.py
-│   ├── 2_fit.py
-│   └── 3_plot.py
-└── tests/test_selection.py
-```
-
-- Clear workflow (`make all`)
-- Reproducible & tested
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Workflow **Execution**
-
-<div class="grid-2 gap-md mt-md">
-
-<div>
-
-```bash
-# First-time setup (once)
-git clone https://github.com/username/d0_mass_peak.git
-cd d0_mass_peak
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-# Run analysis (any time)
-make all
-
-# Run tests
-make test
-
-# Clean and rerun
-make clean && make all
+>>> g_from_slope(4.0)
+9.869604401089358
 ```
 
 </div>
-
-<div>
-
-```bash
-# Output:
-# Step 1/3: Preprocessing data...
-# Step 2/3: Fitting model...
-#   Fitted mean: 1865.2 ± 0.4 MeV
-#   Chi-squared/dof: 1.03
-# Step 3/3: Generating plots...
-# ✅ Analysis complete! Results in results/
-
-# Results are regenerated, not committed —
-# commit code + config only
-git tag -a v1.0-pipeline -m "One-command rebuild"
-```
-
-<div class="card card-accent card-glass pad-tight mt-sm">
-
-**One command** runs everything. **Anyone** can reproduce your results!
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Benefits in **Practice**
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🙋 **For You**
-
-- Faster iteration
-- Easier to modify
-- Less debugging
-- Confidence in results
-- Easy to revisit old work
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🤝 **For Collaborators**
-
-- Easy onboarding
-- Clear workflow
-- Reproducible results
-- Parallel work (no conflicts)
-- Review-friendly code
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🔬 **For Science**
-
-- Reproducible research
-- Transparent methods
-- Easier peer review
-- Reusable by others
-- Career-ready skills
-
-</div>
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Best Practices **Summary**
-
-<!--
-Speaker: checklists to take home. Arc: look back along the whole
-Notebook → Script → Modules → Pipeline → Production arc — ask them which step
-their own project is at right now. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Reproducible Analysis **Checklist** (1/2)
-
-<div class="card card-success card-glass pad-tight mt-md">
-
-## ✅ **Essential Practices**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-- [ ]  Use version control (Git)
-- [ ]  Document dependencies (requirements.txt)
-- [ ]  Use virtual environments
-- [ ]  Write README with setup instructions
-- [ ]  Separate raw and processed data
-
-</div>
-
-<div>
-
-- [ ]  Use config files for parameters
-- [ ]  Never commit generated files
-- [ ]  Add .gitignore
-- [ ]  Test on clean environment
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Reproducible Analysis **Checklist** (2/2)
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🚀 **Advanced Practices**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-- [ ]  Modular code (functions/classes)
-- [ ]  Command-line arguments (argparse)
-- [ ]  Automated pipeline (Make/Snakemake)
-- [ ]  Unit tests (pytest)
-- [ ]  CI/CD (GitHub Actions)
-
-</div>
-
-<div>
-
-- [ ]  Docker container (optional)
-- [ ]  Logging instead of print()
-- [ ]  Code style checking (black, ruff)
-- [ ]  Documentation (Sphinx)
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Example **README.md**
-
-<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-info card-glass pad-compact">
 
-## 📄 **README Essentials**
+## ✍️ **One sentence**
 
-- Title & description
-- Setup instructions
-- How to run analysis
-- Project structure
-- Input/output files
-- Dependencies
-- Citation & license
+- The first statement of a function or a file, in triple quotes
+- It says what is returned, from what, in which units
+- The docstring of the file is the text of `--help`: `description=__doc__`
 
 </div>
 
-<div style="font-size: 0.75em;">
+</div>
 
-```markdown
-# D0 Mass Peak Analysis
-LHCb Open Data: D0 → K-π+ decay.
+<div class="note-text mt-sm">T = 2π√(L/g) gives T² = (4π²/g)·L. The slope of T² against L is 4π²/g, so g = 4π²/slope. A slope of 4 s²/m gives g = π² = 9.8696 m/s².</div>
 
-## Setup
-    git clone ... && cd d0_mass_peak
-    python -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
+<!--
+Speaker: the units are the part that is forgotten. Is the length in cm or in m?
+The docstring says s^2/m, so metres. A wrong unit here is a factor of 100 in
+g. (~2 min)
+-->
 
-## Usage
-    make all    # Full analysis pipeline
-    make test   # Run unit tests
-    make clean  # Remove outputs
+---
+hideInToc: true
+---
 
-## Structure
-    data/       # Input ROOT files
-    src/        # Reusable functions
-    scripts/    # Pipeline steps
-    tests/      # pytest suite
-    results/    # Plots and fits
+# **Exit Codes**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🚦 **The number a program hands back**
+
+```text
+$ python scripts/clean.py data/raw/pendulum.csv out.csv
+out.csv: 9 rows
+$ echo $?
+0
+$ python scripts/clean.py data/raw/pendulum.csv
+usage: clean.py [-h] raw out
+clean.py: error: the following arguments are required: out
+$ echo $?
+2
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔢 **What the numbers mean**
+
+| What happened | Code |
+| --- | --- |
+| The script ran to its end | 0 |
+| An exception stopped it, for example `FileNotFoundError` | 1 |
+| argparse refused the command line | 2 |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Every program ends with an exit code. 0 means success, anything else means failure. In the shell `$?` holds the code of the last command. A program that starts other programs reads the code to decide whether to go on. In your own script, `sys.exit("no data")` prints the message and ends with code 1.
+
+</div>
+
+<!--
+Speaker: the exit code is how programs talk to each other without a person
+reading the screen. A script that prints "error" and ends with 0 has told the
+next program that all is well. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Parameters in a **Config File**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`config.json`**
+
+```json
+{
+  "swings": 10,
+  "through_origin": false
+}
+```
+
+JSON writes a dict as text: names in double quotes, numbers, strings, `true` and `false`, lists in `[ ]`. The module `json` comes with Python.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **`scripts/fit.py` reads it**
+
+```python
+    with open(args.config) as f:
+        config = json.load(f)
+
+    g, g_error = fit_g(table["length_cm"] / 100,
+                       table["t10_s"] / config["swings"],
+                       config["through_origin"])
+```
+
+`json.load` returns the dict `{'swings': 10, 'through_origin': False}`.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+```text
+$ python scripts/fit.py data/processed/pendulum.csv config.json results/fit.json
+results/fit.json: g = 9.84 +- 0.06 m/s^2
+```
+
+</div>
+
+<div class="note-text mt-sm">The 10 was a bare number inside the script. Now it has a name, and it stands in a file that Git tracks.</div>
+
+<!--
+Speaker: the config file is one more input of the stage, so it is one more
+positional argument. The period is the time of 10 swings divided by 10, and the
+length in metres is the length in cm divided by 100. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Parameter, **Two Results**
+
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+
+| `through_origin` | Model fitted | Slope in s²/m | *g* in m/s² |
+| --- | --- | --- | --- |
+| `false` | T² = slope · L + intercept | 4.014 ± 0.025 | **9.84 ± 0.06** |
+| `true` | T² = slope · L | 4.024 ± 0.009 | **9.81 ± 0.02** |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚖️ **Both can be defended**
+
+The theory has no intercept. A free intercept allows for a length measured to the wrong point. The fitted intercept is 0.008 ± 0.016 s², which agrees with zero. The reported number depends on the choice, so the choice is written into a file and not kept in memory.
+
+</div>
+
+<div class="card card-info card-glass pad-compact table-compact">
+
+## 🗂️ **What goes where**
+
+| A value that is | Goes into |
+| --- | --- |
+| a file to read or write | a positional argument |
+| a setting of one script | an option, `--dpi` |
+| a choice that changes the result | `config.json` |
+| a constant of the method, 4π² | the code |
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Both fits are unweighted: the uncertainty comes from the scatter of the nine points. With 0.1 s assumed on every timing, as in Lecture 10, the same data give 9.84 ± 0.09. YAML and TOML are other formats for such a file; JSON needs no installed package.</div>
+
+<!--
+Speaker: change false to true in config.json, run the fit again, and read the
+new number. Nothing in the code was touched, and git diff shows one changed
+line in config.json. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Diagram Git Can **Compare**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➕ **`config.json` joins the diagram in the README**
+
+```diff
+$ git diff
+--- a/README.md
++++ b/README.md
+@@ -10,6 +10,7 @@ flowchart LR
+     clean --> table[processed/pendulum.csv]
+     table --> plot([plot.py]) --> png[pendulum_plot.png]
+     table --> fit([fit.py]) --> json[fit.json]
++    config[config.json] --> fit
+     table --> report([report.py])
+     png --> report
+     json --> report
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **One arrow, one line**
+
+- The change can be read in the diff, reviewed and undone, like a change of code
+- A picture exported from a drawing program changes as a whole. Git can only say that the file differs
+- The diagram is changed in the same commit as the script it describes
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The output of <code>git diff</code> is shown without its first two lines.</div>
+
+<!--
+Speaker: this is the reason for writing diagrams as text. The picture has a
+history, and the history is readable. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Results as **Data**
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🤖 **For programs: `results/fit.json`**
+
+```json
+{
+  "g": 9.836,
+  "g_error": 0.062,
+  "points": 9,
+  "through_origin": false
+}
+```
+
+The fit writes its numbers into a file. Whoever needs them reads the file.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👤 **For people: the end of `results/report.md`**
+
+```md
+| 90 | 19.10 |
+| 100 | 20.01 |
+
+![Time of 10 swings against length](pendulum_plot.png)
+
+A straight-line fit of T² against L gives g = 9.84 ± 0.06 m/s².
 ```
 
 </div>
 
 </div>
 
+<div class="card card-info card-glass pad-compact mt-sm">
+
+## 📄 **`scripts/report.py` writes the table and the sentence**
+
+```python
+    g = f"{fit['g']:.2f} ± {fit['g_error']:.2f} m/s²"
+```
+
+```python
+    for row in table.itertuples():
+        lines.append(f"| {row.length_cm} | {row.t10_s:.2f} |")
+```
+
+</div>
+
+<div class="note-text mt-sm">No number is typed twice. The table that was built with a cursor on every line is now built by a loop of two lines.</div>
+
+<!--
+Speaker: open results/report.md with the preview. It is the report of the
+first seminar, with one more sentence. Nobody typed 9.84. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# **Environments**
+
+<!--
+Speaker: second remedy. The scripts are in the folder. The packages they need
+are somewhere on the laptop, in versions nobody wrote down. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
 
-# Version Control: **.gitignore**
+# One Program, **Two Answers**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **Five lines**
+
+```python
+import pandas as pd
+
+table = pd.DataFrame({"t10_s": [9.02, 11.05]})
+table["t10_s"][0] = 9.20
+print(pd.__version__, table["t10_s"][0])
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 💻 **Two laptops**
+
+```text
+2.3.3 9.2
+```
+
+```text
+3.0.6 9.02
+```
+
+Both print a warning as well. The number is what differs.
+
+</div>
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **What changed**
+
+In pandas 3 line 4 writes into a temporary copy, and the table keeps 9.02. In pandas 2 it wrote into the table. The code is the same.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 📅 **And code that stops working**
+
+`to_csv(..., line_terminator="\n")` runs in pandas 1.4. In pandas 2.3 and 3.0 it ends with `TypeError: … unexpected keyword argument 'line_terminator'`.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">A result depends on the data, the code and the versions of the packages. The first two are in the project folder.</div>
+
+<!--
+Speaker: both outputs were produced on one laptop, in two environments. "It
+works on my laptop" is a statement about three things, and only two of them are
+in the folder so far. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What Do the Scripts **Need**?
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔎 **Ask the scripts**
+
+```text
+$ grep -hE "^(import|from)" scripts/*.py | sort -u
+from pathlib import Path
+from scipy.optimize import curve_fit
+import argparse
+import json
+import math
+import matplotlib.pyplot as plt
+import pandas as pd
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **Two kinds**
+
+- **Come with Python**, the standard library: `argparse`, `json`, `math`, `pathlib`
+- **Installed with pip**: `pandas`, `matplotlib`, `scipy`
+- Each of those needs further packages: pandas needs NumPy
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`grep -h` leaves out the file names, `-E` reads the pattern as a regular expression: lines that start with `import` or `from`. `sort -u` sorts and drops repeated lines. A laptop has many more packages than these, installed over a semester. An empty environment shows which ones the project needs.
+
+</div>
+
+<!--
+Speaker: three installed packages for four scripts. On your laptop pip list
+shows dozens. The question is which of them this project uses, and in which
+version. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Virtual **Environment**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A **virtual environment** is a folder with its own `python` and its own packages. What is installed while it is active goes into that folder and nowhere else. Each project gets its own, named `.venv`, inside the project folder.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+
+| | Windows, in Git Bash | macOS, Linux |
+| --- | --- | --- |
+| Create it, once | `python -m venv .venv` | `python3 -m venv .venv` |
+| Activate it, in every new terminal | `source .venv/Scripts/activate` | `source .venv/bin/activate` |
+| Leave it | `deactivate` | `deactivate` |
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✅ **Is it active?**
+
+```text
+(.venv) $ which python
+…/analysis-project/.venv/bin/python
+```
+
+The prompt starts with `(.venv)`. On Windows the path ends in `.venv/Scripts/python`.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🖥️ **In VS Code**
+
+**Python: Select Interpreter** in the Command Palette, then the entry with `.venv`. New terminals then activate it as a rule. If the prompt does not show `(.venv)`, activate by hand. From here on the command is `python` on every system.
+
+</div>
+
+</div>
+
+<!--
+Speaker: venv comes with Python, nothing is installed for it. Create and
+activate live. which is the shell command that prints where a program is found.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# An Empty Environment Is a **Test**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+(.venv) $ pip list
+Package Version
+------- -------
+pip     25.2
+(.venv) $ python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
+Traceback (most recent call last):
+  File "…/analysis-project/scripts/clean.py", line 4, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'
+(.venv) $ pip install pandas matplotlib scipy pytest
+…
+Successfully installed contourpy-1.4.0 cycler-0.12.1 … scipy-1.18.1 six-1.17.0
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧪 **What the error shows**
+
+The script never said that it needs pandas. On the old laptop pandas was there, so nobody noticed. The empty environment is the other laptop, tried out at home.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🔢 **Four asked for, 17 installed**
+
+Each package names the packages it needs, and pip fetches those as well: NumPy for pandas, Pillow for Matplotlib. `pytest` is for the tests.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the traceback is the same one a colleague would send by e-mail. Here
+it appears before the folder is sent. The line of pip install is shortened: it
+lists all 17 packages. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **requirements.txt**: the Versions, Written Down
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`pip freeze > requirements.txt`**
+
+```text
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.66.1
+iniconfig==2.3.0
+kiwisolver==1.5.1
+matplotlib==3.11.2
+numpy==2.5.3
+packaging==26.3
+pandas==3.0.6
+pillow==12.3.0
+pluggy==1.6.0
+Pygments==2.21.0
+pyparsing==3.3.3
+pytest==9.1.1
+python-dateutil==2.9.0.post0
+scipy==1.18.1
+six==1.17.0
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📌 **Pinned versions**
+
+- `pip freeze` prints every installed package with `==` and its exact version
+- `>` writes that list into a file
+- The versions are those of the day of the installation
+
+## 🔁 **On another laptop**
+
+```text
+$ pip install -r requirements.txt
+```
+
+In a new, active environment this installs the same 17 versions. It took 12 s here.
+
+## 📁 **In Git, and not in Git**
+
+`requirements.txt`, 17 lines, goes into Git. `.venv/`, 300 MB, does not: it is rebuilt from the file.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the file is the environment written as text. The folder .venv can be
+deleted at any time. Show du -sh .venv and wc -l requirements.txt. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What the File Fixes, and What It **Does Not**
+
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+
+## 🧪 **The four scripts, run with two sets of versions**
+
+| | Older versions | The versions of `requirements.txt` |
+| --- | --- | --- |
+| pandas, NumPy, Matplotlib, SciPy | 2.3.3, 2.3.5, 3.10.7, 1.16.2 | 3.0.6, 2.5.3, 3.11.2, 1.18.1 |
+| `pendulum.csv`, `fit.json`, `report.md` | the same bytes | the same bytes |
+| `pendulum_plot.png` | 20 868 bytes | 21 965 bytes |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **Fixed by the file**
+
+The versions of all 17 packages. With them the picture is the same file as well: 21 965 bytes on every run. Without them the two pictures look alike, and 1.8 % of their pixel values differ.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Not fixed by the file**
+
+- Python itself: write the version into the README, here 3.13
+- The operating system: on Windows pandas and pytest ask for two packages more, `tzdata` and `colorama`
+- Libraries that are not Python packages
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The numbers of this analysis did not depend on the versions. The five lines at the start of this section did. Which case a project is in is not known until it is tried.</div>
+
+<!--
+Speaker: the honest result: here the numbers survived a change of every
+version, and the picture did not. Pinning is cheap, and finding out later which
+version made a difference is not. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **conda**, **uv** and the Same Idea
+
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+
+| Tool | The packages are installed by | The file in Git | It also fixes |
+| --- | --- | --- | --- |
+| venv&nbsp;+&nbsp;pip | `pip install -r requirements.txt` | `requirements.txt` | nothing more |
+| conda | `conda env create -f environment.yml` | `environment.yml` | Python, other libraries |
+| uv | `uv pip install -r requirements.txt` | `requirements.txt` | nothing more. It is faster |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **`environment.yml` for this project**
+
+```yaml
+name: pendulum
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - pip
+  - pip:
+      - -r requirements.txt
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ⏱️ **Tried on one laptop**
+
+- conda built this environment in 26 s, Python included
+- uv installed the 17 packages in 2 s, pip in 12 s
+- All three give the same versions of the packages
+
+One tool per project. venv and pip come with Python, so `requirements.txt` is the form every laptop can use. conda and uv are installed separately.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the idea is one: an empty place, a file with versions, a command that
+fills the place from the file. The tools differ in speed and in how much they
+fix. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Editor Has **Requirements Too**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`.vscode/extensions.json`**
+
+```json
+{
+  "recommendations": [
+    "ms-python.python",
+    "bierner.markdown-mermaid"
+  ]
+}
+```
+
+Each entry is the identifier of an extension. It is shown on the page of the extension in the Extensions view.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🖥️ **What VS Code does with it**
+
+- Whoever opens the folder is asked whether to install the recommended extensions
+- The command **Extensions: Show Recommended Extensions** lists them
+- Nothing is installed without a click
+
+## 📁 **Where it lives**
+
+In the folder `.vscode` of the project, under Git, next to the scripts it serves.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+♻️ It is `requirements.txt` for the editor: what the setup needs, written in a file inside the project. The two extensions here run Python files and draw the diagram of the README. The project works without them, in any editor.
+
+</div>
+
+<!--
+Speaker: the project does not depend on VS Code. This file only saves the next
+person the search for the two extensions. (~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# One **Command**
+
+<!--
+Speaker: third remedy. The four commands and their order go into a file, and
+the file decides what has to run. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Four Commands, in **Order**
+
+```mermaid {scale: 0.6}
+flowchart LR
+    raw[raw/pendulum.csv] --> clean([clean.py])
+    clean --> table[processed/pendulum.csv]
+    table --> plot([plot.py]) --> png[pendulum_plot.png]
+    table --> fit([fit.py]) --> json[fit.json]
+    config[config.json] --> fit
+    table --> report([report.py])
+    png --> report
+    json --> report
+    report --> md[report.md]
+```
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
+data/processed/pendulum.csv: 9 rows
+$ python scripts/plot.py data/processed/pendulum.csv results/pendulum_plot.png
+results/pendulum_plot.png: 9 points
+$ python scripts/fit.py data/processed/pendulum.csv config.json results/fit.json
+results/fit.json: g = 9.84 +- 0.06 m/s^2
+$ python scripts/report.py data/processed/pendulum.csv results/fit.json \
+      results/pendulum_plot.png results/report.md
+results/report.md: 19 lines
+```
+
+</div>
+
+<div class="note-text mt-sm">A shell script with these four commands reruns everything, every time. Here that takes 2 s. When one stage takes an hour, it should run only when its result is out of date.</div>
+
+<!--
+Speaker: the commands are long, and that is fine, because nobody will type them
+again. Ask: plot.py was edited, which of the four have to run? The room answers
+from the diagram. The computer needs a rule. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# When Is a File **Out of Date**?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **The rule**
+
+A file that is made from other files is **out of date** when
+
+1. it does not exist, or
+2. one of the files it is made from was changed after it was written.
+
+The files it is made from are its inputs **and the script** that writes it.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🕒 **The time is already stored**
+
+```text
+$ ls -l results
+… 10:03 fit.json
+… 10:02 pendulum_plot.png
+… 10:04 report.md
+```
+
+Every file carries the time of its last change. `ls -l` prints it. Nothing has to be recorded by hand.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The rule needs only what the diagram says: which files each stage reads and which file it writes. Applied to the stages in order, it reruns a stage exactly when something upstream of it has changed.
+
+</div>
+
+<div class="note-text mt-sm">The listing is shortened: <code>ls -l</code> also prints the permissions, the owner, the size and the date.</div>
+
+<!--
+Speaker: the script counts as an input. A changed script gives another result
+even when the data did not change. This is the point most hand-made procedures
+miss. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Rule, **Worked**
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🕒 **Last changed**
+
+| File | Time |
+| --- | --- |
+| `data/raw/pendulum.csv` | 09:40 |
+| `config.json` | 09:50 |
+| `scripts/clean.py` | 09:55 |
+| `scripts/fit.py` | 09:58 |
+| `scripts/report.py` | 10:00 |
+| `data/processed/pendulum.csv` | 10:01 |
+| `results/pendulum_plot.png` | 10:02 |
+| `results/fit.json` | 10:03 |
+| `results/report.md` | 10:04 |
+| `scripts/plot.py` | **10:15** |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🧮 **Stage by stage**
+
+| Output | Newest thing it is made from | Verdict |
+| --- | --- | --- |
+| the table, 10:01 | `clean.py`, 09:55 | up to date |
+| the plot, 10:02 | `plot.py`, 10:15 | **rerun** |
+| `fit.json`, 10:03 | the table, 10:01 | up to date |
+| `report.md`, 10:04 | the plot, just rewritten | **rerun** |
+
+The plot was not out of date when the report was written. It became newer than the report in step 2. The order of the stages carries a change downstream.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Two stages run and two are skipped. The fit is not repeated, because nothing it reads has changed.</div>
+
+<!--
+Speaker: do the four comparisons with the room before showing the right-hand
+card. The files were given exactly these times and the rule was run: it reran
+the plot and the report. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# run_all.py: the **Stages** as a Table
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```python
+"""Rebuild every result that is out of date: python run_all.py"""
+import os
+import subprocess
+import sys
+
+RAW = "data/raw/pendulum.csv"
+TABLE = "data/processed/pendulum.csv"
+PLOT = "results/pendulum_plot.png"
+FIT = "results/fit.json"
+REPORT = "results/report.md"
+
+# One line per stage: the script, what it reads, what it writes.
+STAGES = [
+    ("scripts/clean.py", [RAW], TABLE),
+    ("scripts/plot.py", [TABLE], PLOT),
+    ("scripts/fit.py", [TABLE, "config.json"], FIT),
+    ("scripts/report.py", [TABLE, FIT, PLOT], REPORT),
+]
+```
+
+</div>
+
+<div class="note-text mt-sm">The list is the diagram once more: four stages, each with its arrows in and its arrow out. Every stage script takes its inputs first and its output last, so one line of the table is enough to build its command.</div>
+
+<!--
+Speaker: this file sits at the top of the project folder, next to the README.
+Compare the four lines with the four commands two slides back: the same words,
+in a table. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# run_all.py: the **Rule** as a Function
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+```python
+def out_of_date(output, sources):
+    """True if output is missing or older than a source."""
+    if not os.path.exists(output):
+        return True
+    built = os.path.getmtime(output)
+    for source in sources:
+        if os.path.getmtime(source) > built:
+            return True
+    return False
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **The two cases of the rule**
+
+- Lines 3 and 4: the output does not exist
+- Lines 5 to 8: a source is newer than the output
+- Otherwise the output is up to date
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+## 🕒 **`os.path.getmtime` is the time of the last change**
+
+```text
+>>> os.path.getmtime("results/fit.json")
+1791126899.169393
+```
+
+The number is the seconds since 1 January 1970: here 4 October 2026, 18:14:59. Two such numbers are compared with `>`. A larger number is a later time.
+
+</div>
+
+<!--
+Speaker: nine lines, and every one of them is Python from the first weeks: a
+function, an if, a for loop, a comparison of two floats. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# run_all.py: the **Loop**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```python
+for script, inputs, output in STAGES:
+    if out_of_date(output, [script] + inputs):
+        os.makedirs(os.path.dirname(output), exist_ok=True)
+        command = [sys.executable, script] + inputs + [output]
+        done = subprocess.run(command)
+        if done.returncode != 0:
+            sys.exit(f"{script} failed, stopped")
+    else:
+        print(f"{output}: up to date", flush=True)
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **The new pieces**
+
+- `[script] + inputs`: the script is a source too
+- `os.makedirs` creates `results/` if it is missing
+- `sys.executable` is the Python that runs this file: the one of the active environment
+- `subprocess.run` starts a command, given as a list of words, and waits for it
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🚦 **The exit code decides**
+
+`done.returncode` is the exit code of the stage. If it is not 0, the loop stops: a stage that failed must not be followed by stages that read its output.
+
+`flush=True` prints the line at once, so the lines appear in the order of the stages.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the command list is exactly sys.argv of the stage. For the fit it is
+python, scripts/fit.py, the table, config.json, fit.json. The whole file has 40
+lines. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Command, **Four Cases**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **Nothing is built yet**
+
+```text
+$ python run_all.py
+data/processed/pendulum.csv: 9 rows
+results/pendulum_plot.png: 9 points
+results/fit.json: g = 9.84 +- 0.06 m/s^2
+results/report.md: 19 lines
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **Run again at once**
+
+```text
+$ python run_all.py
+data/processed/pendulum.csv: up to date
+results/pendulum_plot.png: up to date
+results/fit.json: up to date
+results/report.md: up to date
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 3️⃣ **After an edit of `plot.py`**
+
+```text
+$ python run_all.py
+data/processed/pendulum.csv: up to date
+results/pendulum_plot.png: 9 points
+results/fit.json: up to date
+results/report.md: 19 lines
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 4️⃣ **After `through_origin` is set to `true`**
+
+```text
+$ python run_all.py
+data/processed/pendulum.csv: up to date
+results/pendulum_plot.png: up to date
+results/fit.json: g = 9.81 +- 0.02 m/s^2
+results/report.md: 19 lines
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">In case 4 the report now reads g = 9.81 ± 0.02 m/s². One line of <code>config.json</code> was edited and one command was typed.</div>
+
+<!--
+Speaker: run all four live. In case 4 open the report afterwards: the sentence
+has the new number, and nobody typed it. Set the parameter back and run once
+more. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Proof: Delete and **Rebuild**
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🗑️ **Everything that was made, deleted**
+
+```text
+$ rm -r data/processed results
+$ git status --short
+ D results/fit.json
+ D results/pendulum_plot.png
+ D results/report.md
+$ python run_all.py
+data/processed/pendulum.csv: 9 rows
+results/pendulum_plot.png: 9 points
+results/fit.json: g = 9.84 +- 0.06 m/s^2
+results/report.md: 19 lines
+$ git status
+On branch main
+nothing to commit, working tree clean
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **What Git has just checked**
+
+- The three results were committed before
+- After the rebuild Git finds no difference: every file has the same bytes as before
+- The picture too, because the versions are pinned
+
+## 🔢 **The same check by checksum**
+
+`sha256sum results/report.md` gives `1bf0d728…fb3f` before and after.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Anything in `data/processed` and `results` can be deleted at any time. Nothing in `data/raw`, `scripts` or `config.json` can. That line between the two kinds of files is what the project folder was built for.
+
+</div>
+
+<!--
+Speaker: this is the acceptance test of the whole lecture. Do it live. On macOS
+the checksum command is shasum -a 256. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Make**: the Same Table Since 1976
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`Makefile`**
+
+```makefile
+TABLE  = data/processed/pendulum.csv
+PLOT   = results/pendulum_plot.png
+FIT    = results/fit.json
+REPORT = results/report.md
+
+$(REPORT): $(TABLE) $(FIT) $(PLOT) scripts/report.py
+	python scripts/report.py $(TABLE) $(FIT) $(PLOT) $(REPORT)
+
+$(TABLE): data/raw/pendulum.csv scripts/clean.py
+	python scripts/clean.py data/raw/pendulum.csv $(TABLE)
+
+$(PLOT): $(TABLE) scripts/plot.py
+	python scripts/plot.py $(TABLE) $(PLOT)
+
+$(FIT): $(TABLE) config.json scripts/fit.py
+	python scripts/fit.py $(TABLE) config.json $(FIT)
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **One rule per file**
+
+- Before the colon: the file to make
+- After it: the files it is made from
+- Below, after a **Tab**: the command
+- `make` builds the first rule and whatever it needs, by the rule of the file times
+
+```text
+$ touch scripts/plot.py
+$ make -n
+python scripts/plot.py …
+python scripts/report.py …
+```
+
+`make -n` prints the commands without running them.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Make was written at Bell Labs in 1976 to rebuild programs from their source files. A file with data is rebuilt by the same rule. Spaces in place of the Tab give <code>*** missing separator.  Stop.</code></div>
+
+<!--
+Speaker: the Makefile and run_all.py say the same thing. Run on the same
+project, make produced the same four files with the same checksums. touch sets
+the time of a file to now without changing it. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Make on **Windows**, and Larger Pipelines
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🪟 **Where `make` is**
+
+- Linux: installed, or one package away
+- macOS: comes with the developer tools that also bring Git
+- Windows: not there. Git Bash does not include it
+
+On Windows it has to be installed separately. `run_all.py` needs nothing but the Python the project uses anyway. That is why it is the form used here.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📈 **When the pipeline grows**
+
+- **Snakemake**: rules like those of Make, written in a Python dialect. One rule serves a hundred input files, and stages can be sent to a cluster
+- Some tools, DVC among them, compare the **content** of files, by a checksum, and not their times
+
+## ⚠️ **The limit of file times**
+
+A freshly cloned folder has new times on every file. They no longer say what was built from what. Here that does no harm: the cleaned table is not in Git, so a fresh copy runs all four stages.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔧 The idea is the same in all of them: write down what each file is made from, and let a program work out what to run. The tool is a detail that can be exchanged.
+
+</div>
+
+<!--
+Speaker: nobody in this room needs Snakemake for the project. The name is for
+the day a pipeline has fifty inputs. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# **Tests**
+
+<!--
+Speaker: fourth remedy. The pipeline now gives the same result every time. That
+says nothing about whether the result is right. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# It Ran, and the Plot Looked **Fine**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **`clean.py` as it is**
+
+<img src="/figures/workflows_pendulum_plot.png" alt="Time of 10 swings against length: nine points on a curve that flattens" style="max-height: 11.5rem; margin: 0 auto; display: block; border-radius: 4px;">
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **`decimal=","` left out**
+
+<img src="/figures/workflows_pendulum_plot_decimal_comma.png" alt="The same plot with the times read as text: nine points on a straight line" style="max-height: 11.5rem; margin: 0 auto; display: block; border-radius: 4px;">
+
+</div>
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **What happened**
+
+Without `decimal=","` pandas reads `9,02` as text. `clean.py` ends with exit code 0 and writes `20,"9,02"`. `plot.py` ends with exit code 0 too: Matplotlib places texts at equal steps, in the order they come.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💥 **Where it is noticed**
+
+Two stages later, in `fit.py`: `TypeError: unsupported operand type(s) for /: 'str' and 'int'`. The message names neither the comma nor `clean.py`. With a plot as the last stage, nothing would have been noticed.
+
+</div>
+
+</div>
+
+<!--
+Speaker: let the room look at the right-hand picture first and ask what is
+wrong. The points lie on a straight line, and T grows as the square root of L.
+The labels of the y axis give it away: 9,02 and 11,05 are texts. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Test States a Fact with **assert**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✔️ **`assert`**
+
+```text
+>>> assert 2 + 2 == 4
+>>> assert 2 + 2 == 5
+Traceback (most recent call last):
+  …
+AssertionError
+```
+
+`assert` is followed by an expression. If it is true, nothing happens. If it is false, the program stops with an `AssertionError`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📓 **Facts known without the script**
+
+From the lab notebook and from the raw file opened in the editor:
+
+- There are nine measurements. The line with the mean is not one
+- The cleaned table has the columns `length_cm` and `t10_s`
+- The first time is 9.02 s, a number
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A **test** is a small function that calls a piece of the analysis and asserts one such fact about what comes back. It is written once and run by the computer every time. The fact comes from outside the code: from the notebook, from the theory, or from a case worked by hand.
+
+</div>
+
+<!--
+Speaker: looking at the output is also a test, done once, by a person, on a
+good day. An assert is the same look, written down. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The First **Test File**
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`tests/test_clean.py`**
+
+```python
+from scripts.clean import clean
+
+RAW = "data/raw/pendulum.csv"
+
+
+def test_nine_measurements():
+    assert len(clean(RAW)) == 9
+
+
+def test_two_columns():
+    table = clean(RAW)
+    assert list(table.columns) == ["length_cm", "t10_s"]
+
+
+def test_decimal_comma_is_read():
+    table = clean(RAW)
+    assert table["t10_s"].iloc[0] == 9.02
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **How it is built**
+
+- Line 1 imports the function under test. This is why `clean.py` is a module
+- Each test is a function without arguments. It calls `clean` and asserts one fact
+- The name of the test says which fact
+- `.iloc[0]` is the first value of the column
+
+## 🏷️ **Two rules for names**
+
+The file is named `test_….py`, and each function `test_…`. That is how the tests are found.
+
+</div>
+
+</div>
+
+<!--
+Speaker: three facts from the previous slide, three functions. The folder tests
+sits at the top of the project, next to scripts. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Running **pytest**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+(.venv) $ python -m pytest
+============================= test session starts ==============================
+platform darwin -- Python 3.13.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: …/analysis-project
+collected 3 items
+
+tests/test_clean.py ...                                                  [100%]
+
+============================== 3 passed in 0.21s ===============================
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **What pytest does**
+
+- It looks through the project for files named `test_*.py`
+- It runs every function named `test_*`
+- One dot per test that passed
+- It ends with exit code 0 if all passed, and 1 if a test failed
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ⌨️ **`python -m pytest`, from the project folder**
+
+`pytest` was installed with pip into the environment. `python -m pytest` runs it with the project folder on the search path of `import`, so `from scripts.clean import …` is found. The bare command `pytest` ends here with `No module named 'scripts'`.
+
+</div>
+
+</div>
+
+<!--
+Speaker: run it. Three dots, 0.21 seconds. From now on this is typed after
+every change of clean.py. VS Code shows the same tests under the flask icon of
+the Activity Bar. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Reading a **Failure**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+## ❌ **`decimal=","` taken out of `clean.py`**
+
+```text
+tests/test_clean.py ..F                                                  [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_decimal_comma_is_read __________________________
+
+    def test_decimal_comma_is_read():
+        table = clean(RAW)
+>       assert table["t10_s"].iloc[0] == 9.02
+E       AssertionError: assert '9,02' == 9.02
+
+tests/test_clean.py:17: AssertionError
+========================= 1 failed, 2 passed in 0.24s ==========================
+```
+
+</div>
+
+<div class="grid-3 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1️⃣ **Which test**
+
+`..F`: the third. Its name is in the line of underscores: the decimal comma is not read.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **Which line**
+
+The line marked `>`, line 17 of the test file.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 3️⃣ **Which values**
+
+The line marked `E`: the text `'9,02'` on the left, the number 9.02 on the right.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Found in a quarter of a second, at the stage where the mistake was made.</div>
+
+<!--
+Speaker: break clean.py live, run pytest, read the three parts aloud, put the
+argument back, run again. The other two tests still pass: nine rows and two
+columns are right even with the comma unread. One test per fact. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Floats in a **Test**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Compared with `==`**
+
+```python
+    period = table["t10_s"].iloc[0] / 10
+    assert period == 0.902
+```
+
+```text
+E   assert np.float64(0.9019999999999999) == 0.902
+```
+
+9.02 has no exact float, and neither has 0.902. The division gives the float next to the one that `0.902` is stored as.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **Compared with a tolerance**
+
+```python
+    period = table["t10_s"].iloc[0] / 10
+    assert period == pytest.approx(0.902)
+```
+
+`pytest.approx(0.902)` stands for 0.902 ± 9.0 × 10⁻⁷: one part in a million. The test passes. The file needs `import pytest` at its top.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A number that was **computed** is compared with a tolerance. The 9.02 of the first test was only read from the file: for all nine times of the table the float that was read equals the float that is typed, and `==` holds. A wider tolerance is written as `pytest.approx(9.81, abs=0.06)`.
+
+</div>
+
+<!--
+Speaker: this is 0.1 + 0.2 from the lecture on how computers work, met in the
+room's own data. The first period of the table is the example. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Test with a **Known Answer**
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`tests/test_fit.py`**
+
+```python
+import math
+
+import numpy as np
+import pytest
+
+from scripts.fit import fit_g, g_from_slope
+
+
+def test_g_from_slope():
+    # T^2 = (4 pi^2 / g) L: the slope 4 s^2/m belongs to g = pi^2
+    assert g_from_slope(4.0) == pytest.approx(math.pi**2)
+
+
+def test_fit_recovers_known_g():
+    length = np.array([0.2, 0.4, 0.6, 0.8, 1.0])     # m
+    period = 2 * math.pi * np.sqrt(length / 9.81)     # s, no noise
+    g, g_error = fit_g(length, period)
+    assert g == pytest.approx(9.81)
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎯 **Data made from the answer**
+
+- The second test builds five periods from the formula, with g = 9.81 put in
+- The fit must give 9.81 back
+- It gives 9.809999983527122, and `approx` accepts it
+
+## 🔍 **What this shows**
+
+`fit_g` returns the g that was put into the data. A mistake in that function would show here. The division by 100 and by the number of swings is in `main()`, which this test does not call.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Both files together: <code>5 passed in 0.49s</code>.</div>
+
+<!--
+Speaker: this is how fits are checked in particle physics as well: simulated
+events with a known mass go through the same code as the data, and the code
+must return that mass. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What to **Test** in an Analysis
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **Worth a test**
+
+- The cleaning: the number of rows, the columns, that numbers are numbers
+- Values that cannot be: a time below zero, a length of 0
+- A formula, on an input with a known answer
+- A fit, on data made from a known answer
+- Every mistake that was found once: first the test that fails, then the repair
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Not worth a test**
+
+- The colours and the fonts of a plot
+- The wording of a label
+- That pandas reads a CSV file: pandas has its own tests
+- A number that changes on every run by design
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A test checks logic that has a right answer. It does not check taste. Five tests of this kind took one page of code, and they run in half a second. They are run before every commit and before every result that leaves the laptop.
+
+</div>
+
+<!--
+Speaker: the fifth line on the left is the habit that matters most. A mistake
+that was found by accident gets a test, so that it cannot come back unseen.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Tests Join the **One Command**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **Three lines more in `run_all.py`, before the loop**
+
+```python
+tests = subprocess.run([sys.executable, "-m", "pytest", "-q"])
+if tests.returncode != 0:
+    sys.exit("tests failed, nothing rebuilt")
+```
+
+```text
+$ python run_all.py
+.....                                              [100%]
+5 passed in 0.45s
+data/processed/pendulum.csv: up to date
+results/pendulum_plot.png: up to date
+results/fit.json: up to date
+results/report.md: up to date
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🚦 **Again the exit code**
+
+- pytest ends with 0 only if every test passed
+- With the comma mistake in `clean.py` the command ends with `1 failed, 4 passed` and `tests failed, nothing rebuilt`
+- No result is written by code that fails its tests
+
+`-q` is the short output: one line of dots.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+⚙️ One command now does what took a person a list: check the code, find what is out of date, run those stages in order, stop at the first failure.
+
+</div>
+
+<!--
+Speaker: run it with the broken clean.py once more. Nothing in results/ is
+touched. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Beyond **One Laptop**
+
+<!--
+Speaker: the project now rebuilds on this laptop. The last section is about the
+other computer and the other person: what goes into Git, what a server can do
+with it, and what makes data usable by strangers. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What Goes into **Git**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📁 **Each kind of file**
+
+| Files | In Git | Reason |
+| --- | --- | --- |
+| `scripts/`, `tests/`, `run_all.py`, `config.json` | yes | written by hand |
+| `requirements.txt`, `README.md`, `.vscode/extensions.json` | yes | by hand, or by `pip freeze` |
+| `data/raw/pendulum.csv` | yes | 130 bytes, and ours to share |
+| `results/` | yes, when small | `git status` checks a rebuild |
+| `data/processed/` | no | rebuilt by one command |
+| `.venv/`, `__pycache__/`, `.pytest_cache/` | no | 300 MB, tied to one folder |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **`.gitignore`**
+
+```text
+.venv/
+__pycache__/
+.pytest_cache/
+data/processed/
+```
+
+One pattern per line. Git does not list these files as untracked and does not add them.
+
+A raw file that is large, or not yours to pass on, stays out as well. The README then says where to fetch it and gives its checksum.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the rule is short: what a person wrote goes in, what a command can
+make again stays out. The small results are the exception, kept as the record
+to compare a rebuild with. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The README Gains **How to Rebuild**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The new section of `README.md`**
+
+````md
+## How to rebuild
+
+Needs Python 3.13. On Windows, use Git Bash.
+
+```text
+python -m venv .venv
+source .venv/Scripts/activate
+pip install -r requirements.txt
+python run_all.py
+```
+
+On macOS and Linux the first two lines are
+`python3 -m venv .venv` and `source .venv/bin/activate`.
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧪 **Tried on a fresh copy**
+
+A new folder made with `git clone`, then the four commands in their macOS form and nothing else:
+
+```text
+5 passed in 5.06s
+…
+results/report.md: 19 lines
+$ git status
+…
+nothing to commit, working tree clean
+```
+
+The tests took 5 s on this first run and 0.5 s on the next one.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The README already says what the project is, where the data came from and what was changed by hand. This section is the only new part. Its test is a person: someone else follows it on another laptop without asking a question.
+
+</div>
+
+<!--
+Speaker: four lines replace the paragraph that used to explain which script to
+run first. The fresh clone is the "other computer" of the definition, tried
+before anyone else has to. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Continuous Integration**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`.github/workflows/rebuild.yml`**
+
+```yaml
+name: rebuild
+on: [push]
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r requirements.txt
+      - run: python run_all.py
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🤖 **A server follows the README**
+
+- After every `git push`, GitHub starts a fresh Linux machine
+- It takes a copy of the project, installs Python 3.13, and runs the two commands of the last two lines
+- If a command ends with an exit code other than 0, the commit is marked with a red cross
+
+## 🎯 **What it is for**
+
+The fresh-copy test of the previous slide, done by a machine after every push, without anyone remembering to do it.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">This is <strong>GitHub Actions</strong>. It needs the project on GitHub. GitLab has the same service with a file named <code>.gitlab-ci.yml</code>. The slides of this course are checked and published this way after every push.</div>
+
+<!--
+Speaker: the name says it: every change is integrated and checked at once, not
+at the end. The file is YAML, a format like JSON with indentation in place of
+braces. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **pre-commit**: Checks Before a Commit
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🚫 **A commit that is refused**
+
+```text
+$ git add data/raw/D0_KPi.csv
+$ git commit -m "Add the LHCb file"
+check for added large files..............................................Failed
+- hook id: check-added-large-files
+- exit code: 1
+
+data/raw/D0_KPi.csv (3835 KB) exceeds 500 KB.
+
+fix end of files.........................................................Passed
+trim trailing whitespace.................................................Passed
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **What it is**
+
+A program, installed with `pip install pre-commit`, that runs small checks each time `git commit` is typed. The checks are listed in `.pre-commit-config.yaml`. If one fails, the commit does not happen.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🎯 **What it is for**
+
+Mistakes that are cheap to catch and tedious to undo: a data file of 3.9 MB in the history, spaces at line ends. It checks the form of what is committed. It does not run the analysis.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the three checks shown are from the standard set that comes with the
+tool. A file that got into the Git history stays there, in every copy, so the
+first check pays for itself on the first day. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Docker**: the Operating System Too
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`Dockerfile`**
+
+```dockerfile
+FROM python:3.13-slim
+WORKDIR /project
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["python", "run_all.py"]
+```
+
+A **container image** is a file with a small Linux system, Python, the packages and the project in it. `docker build` makes it from these five lines, and `docker run` starts it on any computer that has Docker.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🎯 **What it is for**
+
+- Software that pip cannot install: compiled libraries, the analysis frameworks of the experiments
+- The same system on a laptop, on a cluster and in continuous integration
+- An analysis that must still run in ten years
+
+## ⚖️ **What it costs**
+
+Docker has to be installed first. An image holds a whole system: the packages of this project alone are 300 MB. For four Python scripts, `requirements.txt` is enough.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The layers so far: the code in Git, the packages in `requirements.txt`, Python itself in the README or in `environment.yml`. A container fixes the layer below them, the operating system.
+
+</div>
+
+<!--
+Speaker: named so that the word is known when it comes up. Nobody needs it for
+a project of four scripts. This Dockerfile is shown as an example and was not
+built for the slides. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Large Data: a **Pointer** in Git
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Why not the file itself**
+
+Git keeps every version of every file, in every copy of the project. `D0_KPi.csv` has 3 926 142 bytes. Each changed version adds to the history, and every `git clone` downloads all of it. A detector dataset has gigabytes.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **What Git LFS commits in its place**
+
+```text
+version https://git-lfs.github.com/spec/v1
+oid sha256:25c3c97299ea844f27308fde…c1505136
+size 3926142
+```
+
+Three lines: the format, the SHA-256 of the file, its size. The file itself is kept on a separate server and fetched by its hash.
+
+</div>
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧰 **Two tools, one idea**
+
+**Git LFS** is an extension of Git, and GitHub supports it. **DVC** does the same with storage of your choice and can also record pipelines. Both replace the file by its checksum.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 📌 **For data that is already published**
+
+No tool is needed. The README gives the address and the DOI of the record and the checksum of the file. The hash is the identity of the file.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the three lines are what git lfs pointer prints for this file. The
+hash is its SHA-256: 25c3c972 at the start, c1505136 at the end. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **FAIR**: Data That Others Can Use
 
 <div class="grid-2 gap-md mt-md">
 
-<div>
+<div class="card card-primary card-glass pad-compact">
 
-<div class="card card-warning card-glass pad-tight">
+## 🔍 **Findable**
 
-## 🚫 **Never commit**
+- A persistent identifier: a DOI
+- A description that search engines can read
+- An entry in a catalogue
 
-- Large data files (use DVC / Git LFS or external storage)
-- Generated results (they should be reproducible!)
-- Virtual environments
-- Credentials / secrets
-- Caches and checkpoints
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🌐 **Accessible**
+
+- Fetched by its identifier over an open protocol such as HTTPS
+- The description stays online even when the data is withdrawn
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔗 **Interoperable**
+
+- Open formats: CSV, JSON, Markdown, PNG, ROOT
+- Columns with names and units
+- Common vocabularies: ISO 8601 dates, SI units
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ♻️ **Reusable**
+
+- A licence that says what is allowed
+- Provenance: where the data came from and what was done to it
+- The conventions of the field
 
 </div>
 
 </div>
 
-<div>
+<div class="note-text mt-sm">Wilkinson et al., <em>The FAIR Guiding Principles for scientific data management and stewardship</em>, Scientific Data 3, 160018 (2016). The principles were written for data. The same four questions can be asked of code.</div>
 
-```bash
-# .gitignore for a data-analysis project
-
-# Data (too large, or stored elsewhere)
-data/raw/*.root
-data/processed/
-
-# Generated results
-results/
-
-# Virtual environments
-venv/
-.conda/
-
-# Secrets
-.env
-*.key
-
-# Caches & notebook checkpoints
-__pycache__/
-.ipynb_checkpoints/
-```
-
-</div>
-
-</div>
+<!--
+Speaker: FAIR is the standard that funders and journals now ask for. It does
+not say "open": data can be FAIR and need a login. It says that a stranger, or
+a program, can find out what the data is and how to get it. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-<MCQ
-  question="What makes a data-analysis workflow 'scriptable' rather than 'non-scriptable'?"
-  :options="[
-    'It is written by hand in a lab notebook',
-    'Every step is code or a command and can be re-run from scratch',
-    'It relies on clicking through menus in a graphical application',
-    'It can only be run once, then discarded'
-  ]"
-  :correct="1"
-  explanation="Scriptable workflows are reproducible and shareable; GUI point-and-click ones leave no reliable record and are hard to replay or verify — the ♻️ and ⚙️ aims in one idea."
-/>
+# FAIR, Checked on **Two Cases**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏛️ **The LHCb file, record 401**
+
+- **F**: the DOI 10.7483/OPENDATA.LHCb.E7EJ.JUWR and a page on the CERN Open Data portal
+- **A**: one file of 1 289 541 bytes, over HTTPS, without a login
+- **I**: a ROOT file, read by free software
+- **R**: the licence CC0, a sentence on how the events were selected, a pointer to the analysis code
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📁 **The pendulum project, today**
+
+- **F**: a README. Missing: a DOI and a public address
+- **A**: nothing yet. Missing: a public repository
+- **I**: CSV, JSON and Markdown, with units in the column names
+- **R**: provenance, pinned versions, one command, tests. Missing: a licence file
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The project folder already serves I and R. The other two need a public place: a repository on GitHub or GitLab, and for a finished version an archive such as **Zenodo**, which stores a copy and gives it a DOI.
+
+</div>
+
+<!--
+Speaker: the room has been on the receiving end of FAIR since the first
+seminar: the DOI and the licence of record 401 are in every README. The right
+card is the same check on their own work. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Four **Aims**, in One Folder
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔧 **Tool-agnostic**
+
+Every file is plain text or an open format: CSV, Markdown, JSON, Python. The pipeline runs from any terminal, with or without VS Code. `run_all.py` and a Makefile say the same thing, and either can replace the other.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ♻️ **Reproducible**
+
+The raw data is untouched, with its source in the README. The code and its parameters are under Git. The versions are in `requirements.txt`. A fresh copy with those versions rebuilds to the same bytes.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ⚙️ **Automated**
+
+No step is done by hand: not the cleaning, not the table in the report, not the number in its last sentence. One command tests, decides what is out of date, and runs it.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📁 **Data and files in order**
+
+`data/raw`, `data/processed`, `scripts`, `results`, `README.md`. The folder built in the first seminar holds the whole analysis, and whatever can be deleted is known.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+These are the four aims the course started with. The pendulum table has nine rows. Nothing in the folder or in `run_all.py` depends on that number: a file of 91 583 rows goes through stages of the same form.
+
+</div>
+
+<!--
+Speaker: this is the last scheduled lecture, so this slide closes the course.
+Go through the four cards with the project open in VS Code and point at the
+file that stands for each sentence. (~3 min)
+-->
 
 ---
 hideInToc: true
@@ -2529,69 +3048,168 @@ hideInToc: true
 
 # **Recap** — You Can Now…
 
-<div class="grid-2 gap-md mt-sm">
+<div class="stack-tight mt-sm">
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Structure a project and separate **raw data, code, and config**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Parameterise runs with **argparse** and **YAML config files**
+✅ Turn a script with file names in its code into a command with **arguments, options and a help text**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Pin dependencies in a reproducible **virtual environment**
+✅ Keep the parameters of an analysis in a **config file** and its numbers in a result file
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Automate the pipeline so **`make all`** rebuilds every result
+✅ Build a **virtual environment**, pin its versions in `requirements.txt` and rebuild it elsewhere
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write a pytest for a selection cut and let **CI + pre-commit** run it
+✅ State when a file is **out of date** and rebuild a pipeline with **one command**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Keep big data **out of git** and describe it FAIR-ly
+✅ Write a **test** from a fact you know, run pytest and read a failure
 
 </div>
 
-</div>
+<div class="card card-success card-glass pad-compact">
 
-<div class="card card-accent card-glass pad-compact mt-sm">
-
-## 🔬 **Seminar 14 tie-in**
-
-Make the D⁰ seminar pipeline rebuild with one command — a pinned environment plus a Makefile. The acceptance test: delete everything but `raw/` and `scripts/`, run one command, get every result back.
+✅ Draw a pipeline in **Mermaid** and say what CI, Docker, Git LFS and **FAIR** are for
 
 </div>
-
-<div class="note-text mt-sm">
-
-Everything today — config files, environments, Make, CI — is the **♻️ + ⚙️ aims made concrete**: an analysis anyone can rebuild with one command.
 
 </div>
 
 <!--
-Speaker: the "you can now" beat — have them nod along to each card. Seminar 14
-is where the D⁰ seminar pipeline gets a pinned environment and a Makefile — a
-pattern they carry into their own semester project. (~1 min)
+Speaker: the "you can now" beat. Ask which of the six the room would add to its
+own project first. (~1 min)
 -->
 
 ---
+layout: section
 hideInToc: true
-layout: quote
 ---
 
-# Start small. Don't try to implement everything at once. Add one improvement per project: argparse this week, Makefile next week, tests the following. Incrementally build good habits.
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="The four stages of the lecture. The files were last changed at: raw data 08:10, `clean.py` 08:20, `plot.py` 08:25, the table 08:30, the plot 08:31, `fit.json` 08:32, the report 08:33, `fit.py` 08:50. `config.json` and `report.py` are from 08:00. Which stages does `run_all.py` run?"
+  :options="[
+    'All four, because a script was edited',
+    'Only the fit, because only <code>fit.json</code> is older than its script',
+    'The fit and the report',
+    'None, because every output exists'
+  ]"
+  :correct="2"
+  explanation="The table (08:30) is newer than the raw data and clean.py. The plot (08:31) is newer than the table and plot.py. fit.json (08:32) is older than fit.py (08:50), so the fit runs. Its new output is then newer than the report, so the report runs as well."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A script is started as `python scale.py data.csv --factor 2.5`. Inside, without argparse, what is `sys.argv[3]`?"
+  :options="[
+    'The number 2.5',
+    'The string <code>2.5</code>',
+    'The string <code>--factor</code>',
+    'Nothing: the list has only three entries'
+  ]"
+  :correct="1"
+  explanation="sys.argv is the list of words: scale.py, data.csv, --factor, 2.5. Counting starts at 0, so entry 3 is the last word, and every entry is a string. With argparse, type=float would turn it into the number 2.5."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A test contains `assert 0.1 * 3 == 0.3` and fails. Which line is the right repair?"
+  :options="[
+    '<code>assert 0.1 * 3 == pytest.approx(0.3)</code>',
+    '<code>assert round(0.1 * 3) == 0.3</code>',
+    '<code>assert 0.1 * 3 = 0.3</code>',
+    'Remove the test: floats cannot be tested'
+  ]"
+  :correct="0"
+  explanation="0.1 * 3 is 0.30000000000000004, because 0.1 has no exact float. pytest.approx(0.3) accepts values within one part in a million of 0.3. round(0.1 * 3) is 0, and a single = is not a comparison."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="`pip install requests` in an empty environment installs 5 packages. `pip freeze > requirements.txt` then writes how many lines, and why?"
+  :options="[
+    '1, the package that was asked for',
+    '5, each with <code>==</code> and its version',
+    '6, because pip itself is listed',
+    '0, until the file is added to Git'
+  ]"
+  :correct="1"
+  explanation="pip freeze lists every installed package with its exact version, whether it was asked for or came as a dependency. pip itself is left out. In the lecture four packages were asked for and the file had 17 lines."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="After `rm -r data/processed results` and `python run_all.py`, `git status` reports that `results/pendulum_plot.png` is modified, and nothing else. What is the most likely cause?"
+  :options="[
+    'The raw data file was changed',
+    'The fit gave another value of g',
+    'A package, for example Matplotlib, has another version than at the last commit',
+    'Git cannot compare pictures, so it always reports them as modified'
+  ]"
+  :correct="2"
+  explanation="The text results have the same bytes, so the data and the numbers are unchanged. A picture drawn by another version of Matplotlib differs in some pixels. Git compares bytes and reports any difference, for pictures as for text. Installing from requirements.txt gives the old picture back."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Which of these is most worth a test?"
+  :options="[
+    'The shade of blue of the points in the plot',
+    'That the cleaned table has as many rows as there are measurements in the lab notebook',
+    'The resolution of the saved picture',
+    'The wording of the axis label'
+  ]"
+  :correct="1"
+  explanation="A test is for logic with a right answer that comes from outside the code: a count, a formula on a known input, a value that cannot be. The look of a plot is a choice, not a correctness question."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="What makes an analysis scriptable?"
+  :options="[
+    'It is written down by hand in a lab notebook',
+    'Every step is code or a command, and all of it can be run again from the raw data',
+    'It is done through the menus of a program with a graphical interface',
+    'It is run once and its outputs are kept'
+  ]"
+  :correct="1"
+  explanation="Steps that are code can be repeated, compared by Git and run by another person or a server. Steps that are clicks leave no record that a computer can replay."
+/>

@@ -473,11 +473,11 @@ For students who finish a section early. Answers are given for the lecturer.
 
 ## If students ask for more
 
-| Topic | Week |
+| Topic | Lecture |
 |--|--|
 | More terminal commands: making, copying, moving and deleting files | 4 (Command Line) |
 | Checksums: proving two files are identical | 4 (Command Line) |
-| Reading a file in Python with a given encoding | 7 (Python Foundations) |
+| Reading a file in Python with a given encoding | 7 (Python for Data & NumPy) |
 
 ## Aims practised
 

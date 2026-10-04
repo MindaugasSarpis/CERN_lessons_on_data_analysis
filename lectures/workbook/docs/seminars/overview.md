@@ -9,26 +9,33 @@ needs only VS Code. Python and Git are
 wrap-up, and sizes to ~120 min. The seminars practise the course's four aims —
 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data & files.
 
-## The first sessions
+## The sessions
 
 One new tool or idea per session, each arriving inside VS Code. Nothing is
-used before the session that introduces it.
+used before the session that introduces it. A page carries the number of its
+lecture, so there is no Seminar 2.
 
-| Session | New | Still by clicking |
+| Date in 2026 | Seminar | New |
 |--|--|--|
-| 29 Sep, [Seminar 1](seminar_01.md) | VS Code, Markdown, the project folder, the README, editing many lines at once, provenance | Everything |
-| 6 Oct, [Seminar 3](seminar_03.md) | The file as bytes: encoding, line endings, separators, size. First three terminal commands: `pwd`, `ls`, `cd` | Creating and moving files |
-| Then | Terminal: make, copy, move, delete. Running a Python script that is handed out | Editing |
-| Then | The README as a full document: columns, units, how to rebuild | |
-| Then | Git from the Source Control view first, then the same steps typed | |
-| Then | Python, from the first line: variables, a loop, reading the data file | |
+| 29 Sep | [1](seminar_01.md) | VS Code, Markdown, the project folder, the README, editing many lines at once, provenance |
+| 6 Oct | [3](seminar_03.md) | The terminal with `pwd`, `ls`, `cd`; a file as bytes: encoding, line endings, size |
+| 13 Oct | [4](seminar_04.md) | The shell: files and folders, pipes, a regular expression, a first script, checksums; the README completed |
+| 20 Oct | [5](seminar_05.md) | Git: the project folder under version control, from the Source Control view and typed; a remote; a branch and a merge |
+| 27 Oct | [6](seminar_06.md) | Python from the first line: a line of the data file turned into numbers |
+| 3 Nov | [7](seminar_07.md) | Functions, reading the whole file, NumPy arrays and masks |
+| 10 Nov | [8](seminar_08.md) | Matplotlib: two figures, saved and placed in the report |
+| 17 Nov | [9](seminar_09.md) | A mean with its standard error; propagated uncertainty |
+| 1 Dec | [10](seminar_10.md) | A straight-line fit from the closed formulas; *g* with its uncertainty; `curve_fit` |
+| 8 Dec | [11](seminar_11.md) | A perceptron written from an empty file and trained |
+| 15 Dec | [12](seminar_12.md) | Pandas: an audit of the data file, then cleaning by script |
+| 22 Dec | [13](seminar_13.md) | An environment file, one command that rebuilds everything, a test |
 
-Seminars 1 and 3 are written as follow-along tutorials for the person at the
-front. Every brief carries the number of its lecture, so there is no
-Seminar 2. Briefs 4–16 were written for an earlier plan: they assume bash
-commands that do not exist in PowerShell and a data file with columns the
-real one does not have. Each is rewritten in the style of Seminar 1 before
-its week.
+Seminars 14 to 16 belong to the further topics and are not scheduled.
+
+Every page is a follow-along tutorial for the person at the front: a lead
+paragraph, numbered steps, "You should now see", one "Watch for". On Windows
+the terminal from Seminar 4 on is Git Bash inside VS Code, so one set of
+commands serves every laptop.
 
 ## Two things run in parallel
 
@@ -72,20 +79,21 @@ numeric variable / the pattern you're looking for".
 > original, [`MasterclassData.root`](../data/MasterclassData.root); the instructor
 > can also provide starting files for any later seminar.
 
-## The seminar repository
+## The project folder
 
-Seminar 1 creates a small project folder that later seminars reuse:
+Seminar 1 creates a small project folder that every later seminar works in:
 
 ```text
 analysis-project/
-|- README.md            # what this is, data provenance, how to rebuild (S1, S5)
+|- README.md            # what this is, where the data came from, how to rebuild
 |- data/
-|  |- raw/              # the CSV exactly as downloaded — READ ONLY (S1, S4)
-|  |- processed/        # cleaned tables, produced by scripts only (S13)
-|- scripts/            # one script per step (S7-S16)
-|- results/            # figures and numbers, all regenerable (S10-S12)
-|- environment.yml / requirements.txt   # pinned dependencies (S14)
-|- Makefile            # `make all` rebuilds everything (S14)
+|  |- raw/              # files exactly as received, never edited
+|  |- processed/        # cleaned tables: by hand in Seminar 1, by script later
+|- scripts/             # one script per step, from Seminar 6 on
+|- results/             # figures, numbers and the report
+|- tests/               # checks of the scripts (Seminar 13)
+|- requirements.txt     # pinned versions (Seminar 13)
+|- run_all.py           # one command rebuilds everything (Seminar 13)
 ```
 
 The same layout is a sound default for your own project.
@@ -100,16 +108,16 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 | 1 | VS Code; Markdown; the project folder and its README; a small table cleaned in the editor; a data file in `data/raw/`; provenance recorded |
 | At home | Python and Git installed *(after Seminar 1)* |
 | 3 | First terminal commands; the raw file understood as bytes (encoding, line endings, size, format) |
-| 4 | `raw/`–`processed/` structure; clean filenames; CLI inspection |
-| 5 | A real `README.md` (provenance, columns, units, rebuild steps) |
-| 6 | The repo under Git; a feature branch made and merged |
-| 7 | First parsing: one event line → numbers |
-| 8 | Ingest script: whole CSV read into Python (no Pandas) |
-| 9 | Data-quality audit (missing, duplicate, impossible values) |
-| 10 | A first committed figure (the K–π mass spectrum) |
-| 11 | A measurement with an uncertainty (a value ± SE) |
-| 12 | A fit: a peak (Gaussian + background) → value ± error, χ² |
-| 13 | A clean, tidy `processed/` table produced with Pandas |
-| 14 | One-command reproducible rebuild (environment + Makefile) |
-| 15 | The pipeline run as a batch/remote-style job, at scale *(optional)* |
-| 16 | A trained + honestly-evaluated classifier *(optional)* |
+| 4 | Work on Files from the Shell |
+| 5 | The Project Folder under Git |
+| 6 | A Line of Text into Numbers |
+| 7 | The Whole File in Python |
+| 8 | Two Figures with Matplotlib |
+| 9 | A Result with Its Uncertainty |
+| 10 | Fit a Straight Line and Measure g |
+| 11 | A Perceptron from an Empty File |
+| 12 | Clean a Table by Script |
+| 13 | One Command Rebuilds the Analysis |
+| 14 | Review an Analysis, Plan the Data |
+| 15 | Timing, Memory and a Background Job |
+| 16 | A Small Network, Measured |

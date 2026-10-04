@@ -808,15 +808,15 @@ Four more need only the editor.
 
 ## If students ask for more
 
-Four parts of VS Code are kept for later weeks. If asked today, show it for
-ten seconds and name the week.
+Four parts of VS Code are kept for later lectures. If asked today, show it
+for ten seconds and name the lecture.
 
-| Part of VS Code | Week |
+| Part of VS Code | Lecture |
 |--|--|
 | The Status Bar: encoding, line endings | 3 (How Computers Work) |
 | The terminal in the Panel | 4 (Command Line) |
-| Source Control: saving and comparing versions | 6 (Git) |
-| Extensions: Python, running a script | 7 (Python Foundations) |
+| Source Control: saving and comparing versions | 5 (Git) |
+| Extensions: Python, running a script | 6 (Python Foundations) |
 
 Leave out altogether, even if asked: the debugger, settings sync, remote
 development, AI assistants, Jupyter.

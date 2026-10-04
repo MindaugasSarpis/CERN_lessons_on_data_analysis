@@ -1,263 +1,184 @@
-# L13: NumPy, Pandas & Real Data
+# 12: Pandas & Data Cleaning
 
----
+Lectures 9 to 11 computed with tables that were already in order: a mean, a
+fit, a trained neuron. Lecture 12 is about how a table gets into that state.
+It goes back to the small pendulum table that was repaired by hand in the
+editor in Lecture 2, does the same repair as a script, and then applies the
+method to the file with 91 583 rows. The new tool is Pandas. NumPy arrays,
+masks and `np.loadtxt` are known from Lecture 7 and are used without
+introduction.
 
-## Overview
+## What the lecture covers
 
-**Duration**: ~120 minutes (2 h slot)
+1. **Cleaning by script** — the four hand edits of the pendulum table;
+   `np.loadtxt` fails on the raw file; `pd.read_csv` with `sep=";"` and
+   `decimal=","`; what the types of the columns say about the file; a mask
+   for the row that is not a measurement; `drop`, `astype`, `to_csv`; the
+   output compared with the hand-cleaned file as a table and as bytes; the
+   script, and what it gives that the editor did not.
+2. **The DataFrame** — columns, index and types; a DataFrame from a dict;
+   one column and several; rows by position and by label; masks; a new
+   column computed from others; sorting and summary numbers.
+3. **A real file** — `D0_KPi.csv` read, its types and its size in memory;
+   `describe()`; how 49 rows with the code −100 move the mean; the code
+   turned into NaN; how NaN behaves in a mean and in a comparison; which
+   rows have the gap, and three reasons a value can be missing.
+4. **Data quality** — a documented case of a spreadsheet error; impossible
+   values; outliers and the 1.5 × IQR rule; duplicates; consistency and
+   units; mixed units in one column; the five questions on one slide, each
+   with its line of Pandas and its result on both files.
+5. **The cleaned table** — one mask per rule; the script and its log; what
+   the script changed and what it left alone; a derived column and
+   `groupby`.
+6. **Reshape & join** — tidy tables; `melt`; `concat`; `merge`, and what a
+   join does to the number of rows.
+7. **CSV or Parquet** — the same table in both formats, with sizes and
+   read times.
 
-**Prerequisites**: L7-L8 (Python basics), L12 (Data fitting)
+## The numbers on the slides
 
-**Learning Objectives**:
-- Master NumPy arrays and vectorized operations
-- Use Pandas DataFrames for tabular data
-- Load, clean, and preprocess real datasets
-- Handle missing data and outliers
-- Perform group-by and aggregation operations
-- Transition from toy examples to real-world data
+Every number about the two files comes from `figures/src/cleaning.py`:
 
----
-
-## Lecture Structure
-
-### Part 1: NumPy Foundations (30 min)
-- Why NumPy? (Speed, memory, convenience)
-- Creating arrays (from lists, zeros, ones, arange, linspace)
-- **Speed comparison demo**: Lists vs NumPy (10-100x faster!)
-- Vectorization: element-wise operations without loops
-- Array indexing, slicing, boolean masking
-- Broadcasting rules
-
-### Part 2: Pandas DataFrames (30 min)
-- What is a DataFrame? (Excel table, SQL table analog)
-- Creating DataFrames from dictionaries
-- Reading CSV files (`pd.read_csv`)
-- Basic operations: head, describe, info
-- Selecting columns and rows (iloc, loc)
-- Filtering with boolean indexing
-- Adding new columns
-
-### Part 3: Data Cleaning (20 min)
-- Handling missing values (NaN)
-  - Detect: `df.isnull().sum()`
-  - Drop: `df.dropna()`
-  - Fill: `df.fillna(value)`, `df.fillna(df.mean())`
-- Detecting outliers (z-score, IQR method)
-- Data normalization and scaling
-  - Standardization: (x - mean) / std
-  - Min-max scaling: (x - min) / (max - min)
-
-### Part 4: Group-By Operations (15 min)
-- Split-Apply-Combine paradigm
-- `df.groupby('column').agg(...)`
-- Multiple aggregations
-- Practical example: detector-wise statistics
-
-### Part 5: Real Example - CERN Data (15 min)
-- Simulated dimuon spectrum (realistic)
-- Load, explore, filter, visualize
-- Connect to real CERN Open Data Portal
-
----
-
-## Teaching Tips
-
-### Common Student Struggles
-
-1. **"NumPy arrays vs Python lists - when to use which?"**
-   - NumPy: numerical operations, large datasets, performance-critical
-   - Lists: mixed types, small data, general Python code
-   - Rule: Use NumPy for anything numerical!
-
-2. **"Why is my Pandas operation slow?"**
-   - Avoid `iterrows()` - use vectorized operations
-   - Use `apply()` for row-wise operations
-   - Don't repeatedly append to DataFrame (pre-allocate or use list)
-
-3. **"How do I handle missing data?"**
-   - **Understand why it's missing first!**
-   - Physics reason? (detector dead time → exclude)
-   - Random? (fill with mean, median, interpolate)
-   - Show students the impact of different strategies
-
-4. **"My DataFrame doesn't fit in memory!"**
-   - Read in chunks: `pd.read_csv(..., chunksize=10000)`
-   - Use appropriate dtypes (int32 vs int64)
-   - Consider Dask or Polars for very large data
-
-### Interactive Elements
-
-- **Speed race**: Time list comprehension vs NumPy operation live
-- **Data detective**: Give students messy dataset, ask them to identify issues
-- **Group challenge**: "Find the detector with highest mean energy" using groupby
-- **Plot competition**: Who can create the most informative exploratory plot?
-
-### Hands-On Exercises
-
-**Exercise 1** (Warm-up): NumPy basics
-```python
-# Create array of 100 random numbers
-# Calculate mean, std, max, min
-# Find all values > mean + std
+```text
+python figures/src/cleaning.py                    the numbers
+python figures/src/build.py --only cleaning       the five figures
 ```
 
-**Exercise 2** (Core): Pandas DataFrame manipulation
-```python
-# Load CSV file
-# Remove rows with missing energy values
-# Filter events with energy > 50 GeV
-# Group by detector, calculate mean energy
-# Create histogram of energy distribution
-```
+The first command needs NumPy and Pandas, the second NumPy and Matplotlib.
 
-**Exercise 3** (Advanced): Real data analysis
-- Download actual CMS or ATLAS open data
-- Clean and explore dataset
-- Identify interesting features (resonance peaks, etc.)
-- Prepare data for fitting (connect to L12!)
+| Fact | Value |
+|--|--|
+| Hand-cleaned `pendulum.csv` | 97 bytes, SHA-256 `be05af03…fff0870b` |
+| The script's output with `to_csv` defaults | 95 bytes: `17.9` and `19.1` for `17.90` and `19.10` |
+| The script's output with `float_format="%.2f"` | identical to the hand-cleaned file |
+| `D0_KPi.csv` | 91 583 rows, 3 926 142 bytes, SHA-256 `25c3c972…c1505136` |
+| `TAU = -100` | 49 rows |
+| Mean of `TAU` with and without the code | −0.0525 and 0.000982 ns |
+| Negative `TAU` | 3 rows: labels 22854, 35318, 42860 |
+| `M` outside 1800 to 1930 | 2 rows: labels 10046 and 89859 |
+| Duplicate rows | 0 |
+| `d0_clean.csv` | 91 578 rows, 3 925 641 bytes, SHA-256 `7aa9470b…bb91b16` |
 
----
+The code and output on the slides for the two files were run with Pandas
+2.3.3 and checked with Pandas 3.0.6. The one visible difference: a column of
+text has the type `object` up to Pandas 2 and `str` from Pandas 3 on. The
+runnable fences use the Pandas of the browser, 2.2.0, and build their small
+tables in the code, because the browser has no project folder.
 
-## Common Questions & Answers
+## The lecture in 90 minutes
 
-**Q**: Should I use NumPy or Pandas?
-**A**: Both! NumPy for arrays and numerical operations, Pandas for labeled tabular data. Pandas is built on NumPy.
+The lecture is slides 1–60 and estimates about 139 min. Slides 61–67 are
+the self-check quizzes and take no lecture time. In a 2-hour slot, skip the
+section Reshape & Join or leave it for the room to read. For a 90-minute
+slot, skip the slides in the second table. To jump, type the slide number
+and press Enter.
 
-**Q**: How do I read Excel files?
-**A**: `pd.read_excel('file.xlsx')` - may need `pip install openpyxl`
+| Clock | Slides | Part |
+|--|--|--|
+| 0:00 | 1–3 | Opening and objectives |
+| 0:03 | 4–15 | The pendulum table by script, compared with the hand-cleaned file |
+| 0:29 | 17–20, 22–23 | The DataFrame: columns, masks, a new column |
+| 0:46 | 25–29, 31, 33–35 | The real file: types, `describe()`, the code −100, NaN |
+| 1:04 | 36–38, 41–42, 44 | Data quality and the five questions |
+| 1:18 | 46–50 | The cleaning script, its log, `groupby` |
+| 1:27 | 60 | Recap |
+| 1:29 | | Move to the seminar |
 
-**Q**: What's the difference between loc and iloc?
-**A**: `iloc` uses integer position (0, 1, 2...), `loc` uses labels (column names, row indices)
+| Skip | Slides | Saves |
+|--|--|--|
+| Try It: the Cleaning in the Browser | 16 | 4 min |
+| Rows: Position and Label; Sort and Summarise | 21, 24 | 8 min |
+| The Code in a Histogram; How NaN Behaves | 30, 32 | 5 min |
+| Outliers and the 1.5 × IQR rule | 39–40 | 4 min |
+| Mixed Units in One Column; The Checklist as a Function | 43, 45 | 7 min |
+| The Groups in a Picture | 51 | 2 min |
+| Reshape & Join | 52–57 | 18 min |
+| CSV or Parquet | 58–59 | 3 min |
 
-**Q**: Why are my NumPy operations giving weird results?
-**A**: Check data types! Integer division, overflow, broadcasting issues
+- **Do not cut** slides 7–14 (the file read three times, the row, the
+  column, the type, the comparison, the script), 28–33 without 30 and 32
+  (`describe()`, the code, NaN, the comparison with NaN), 44 (the five
+  questions) or 47–48 (the masks and the log). The seminar writes exactly
+  these three scripts.
+- **Slides 7–14 are shown live** in VS Code: type the script of slide 14
+  line by line, run it after each line, rename the hand-cleaned file and
+  compare the checksums in the terminal.
+- **Slide 12** has the point that is easy to rush: the two files are equal
+  as tables and differ as bytes, 95 against 97. Let the room find the two
+  lines before slide 13 repairs them.
+- **Slide 29** is board work: 49 × (−100) = −4900, the other 91 534 values
+  sum to 89.868, and −4810.132 / 91 583 = −0.0525.
+- **Slide 33**: ask for the number of rows of `df[df["TAU"] >= 0]` before
+  showing it. The answer, 91 531, is 52 fewer than the file and not 3.
+- **The runnable fences** (slides 16, 19–24, 32, 41, 43, 45, 54–57) load
+  Python into the browser at the first click. That takes a while and needs
+  the network. Click Run on slide 19 before the lecture starts. Each fence
+  fits its slide with the output open.
+- **Slide 37** (the documented case) can be told in one minute. Its place
+  is before the checklist, as the reason for having one.
 
-**Q**: Should I drop or fill missing values?
-**A**: Depends on domain! Physics analysis: often drop (can't invent measurements). ML: often fill (but document it!)
+## Check yourself
 
----
+No quiz interrupts the lecture. The deck closes with a self-check section,
+slides 61–67: six quiz slides for students to try afterwards. The same
+questions, with their answers:
 
-## Key Code Snippets
+1. A column holds 1000 temperatures. 990 have a mean of 20.0 and 10 cells
+   hold the code −999. What does `mean()` give before the code is replaced?
+   *9.81. The sum is 990 × 20 − 9990 = 9810. One cell in a hundred halves
+   the mean.*
+2. `s = pd.Series([4.0, np.nan, 8.0])`. What are `s.mean()`, `s.count()`
+   and `(s > 5).sum()`?
+   *6.0, 2 and 1. The mean and the count leave NaN out, and NaN > 5 is
+   False.*
+3. After `read_csv` a column `mass` has the type `object` (`str` in
+   Pandas 3), and every value on the screen is a number. Why?
+   *At least one cell is not a number: a word, a unit or a decimal comma. A
+   column has one type, and `head()` shows five rows only.*
+4. `describe()` gives 25 % = 10 and 75 % = 14. Which of 3, 5, 19 and 21
+   does the 1.5 × IQR rule flag?
+   *3 and 21. IQR = 4, the fences are 4 and 20.*
+5. Table `a` has the keys 1 to 5, table `b` the keys 2, 3, 3, 6. How many
+   rows has `a.merge(b, on="key", how="left")`?
+   *6. Keys 1, 4 and 5 give one row each with NaN, key 2 one row, key 3 two
+   rows.*
+6. A table is saved with `df.to_csv("clean.csv")` and read again. It has
+   one column more. Where from?
+   *`to_csv` wrote the index as a first column. `index=False` writes only
+   the columns of the table.*
 
-### NumPy essentials
-```python
-import numpy as np
+## Paired seminar
 
-# Create and operate on arrays
-arr = np.array([1, 2, 3, 4, 5])
-result = arr ** 2 + 2 * arr  # Vectorized!
+[Seminar 12 — Clean a Table by Script](../seminars/seminar_12.md) installs
+Pandas and writes three scripts. `clean_pendulum.py` repeats the hand
+cleaning of the pendulum table and gives a file with the same checksum as
+the hand-cleaned one. `audit.py` asks the five questions of `D0_KPi.csv`
+and prints a count for each. `clean_d0.py` writes
+`data/processed/d0_clean.csv` and a log of what it removed. The rules and
+the counts go into the README. At home students audit and clean their own
+dataset in the same way.
 
-# Boolean masking
-high_values = arr[arr > 3]
+## Take-aways
 
-# Speed comparison
-%timeit [x**2 for x in range(10000)]
-%timeit np.arange(10000)**2
-```
-
-### Pandas essentials
-```python
-import pandas as pd
-
-# Load data
-df = pd.read_csv('data.csv')
-
-# Explore
-print(df.head())
-print(df.describe())
-
-# Filter
-signal = df[df['is_signal'] == True]
-high_energy = df[df['energy'] > 50]
-
-# Group and aggregate
-stats = df.groupby('detector')['energy'].agg(['mean', 'std', 'count'])
-```
-
-### Handling missing data
-```python
-# Check for missing
-print(df.isnull().sum())
-
-# Drop rows with any NaN
-df_clean = df.dropna()
-
-# Fill with mean
-df['energy'].fillna(df['energy'].mean(), inplace=True)
-```
-
----
-
-## Demonstrations
-
-### Demo 1: Speed Comparison (5 min)
-Show dramatic speed difference between lists and NumPy:
-```python
-import time
-import numpy as np
-
-n = 1_000_000
-lst = list(range(n))
-arr = np.arange(n)
-
-# List (slow)
-start = time.time()
-result_list = [x**2 + 2*x + 1 for x in lst]
-print(f"List: {time.time() - start:.3f}s")
-
-# NumPy (fast)
-start = time.time()
-result_array = arr**2 + 2*arr + 1
-print(f"NumPy: {time.time() - start:.3f}s")
-```
-
-### Demo 2: Real Data Exploration (10 min)
-Walk through complete EDA workflow:
-1. Load CSV
-2. Check for missing values
-3. Summary statistics
-4. Visualize distributions
-5. Identify outliers
-6. Filter and clean
-7. Save processed data
-
----
-
-## Time Estimates
-
-- NumPy (lecture + demos): 30 min
-- Pandas (lecture + demos): 30 min
-- Data cleaning: 20 min
-- Group-by: 15 min
-- Real example: 15 min
-- Student exercises: 30 min
-- **Total**: 140 min (adjust as needed)
-
----
-
-## Resources for Students
-
-- [NumPy documentation](https://numpy.org/doc/)
-- [Pandas documentation](https://pandas.pydata.org/docs/)
-- [10 minutes to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
-- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/) by Jake VanderPlas (free online)
-- [CERN Open Data Portal](http://opendata.cern.ch)
-
----
-
-## Assessment Ideas
-
-- **Practical quiz**: "Load this CSV, find mean energy per detector, plot results"
-- **Data cleaning challenge**: Give messy dataset, students must clean and document steps
-- **Speed optimization**: "Rewrite this slow code using NumPy vectorization"
-- **Project milestone**: Students must load and clean real dataset for final project
-
----
-
-## Extension Activities
-
-For advanced students:
-- Introduce Dask for out-of-memory datasets
-- Show Polars as faster Pandas alternative
-- Demonstrate Jupyter notebooks for interactive EDA
-- Connect to databases with `pd.read_sql()`
+- A script is the written-down form of a cleaning. It can be read, run
+  again, and checked: the same input gives the same bytes.
+- Raw data is read and never written. Everything in `data/processed/` can
+  be deleted and made again.
+- `read_csv` has to be told the separator and the decimal sign. The types
+  it returns are the first check: a numeric column that came back as text
+  holds a cell that is not a number.
+- A code for a missing value, such as −100, is a number to every sum. 49
+  rows in 91 583 turned a mean of 0.000982 into −0.0525. Replace the code
+  by NaN before computing anything.
+- NaN is left out of a mean and makes every comparison False. A mask
+  written for the good rows also drops the rows with gaps. Write the mask
+  for the bad rows and turn it round.
+- Five questions for any table: is every cell filled, can every value be
+  true, is each row there once, do the parts agree, is a typical value the
+  right size.
+- A rule for outliers flags rows. Whether a flagged row is an error is a
+  decision, and the decision is written beside the line that applies it.
+- Every rule of a cleaning script has a reason and a count. The counts go
+  into the README.
+- A join can add gaps and can double rows. Count the rows before and
+  after.

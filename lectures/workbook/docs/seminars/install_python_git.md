@@ -52,7 +52,7 @@ Python and Git.
     git config --global user.email "you@example.com"
     ```
 
-    Nothing is printed; that is correct. Git itself starts in week 6.
+    Nothing is printed; that is correct. Git itself starts with Lecture 05.
 
 ## Stretch goals
 - In VS Code open the Extensions view (`Ctrl+Shift+X` / `Cmd+Shift+X`) and

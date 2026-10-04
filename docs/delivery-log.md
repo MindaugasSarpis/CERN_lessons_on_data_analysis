@@ -72,10 +72,48 @@ Each entry has the same four parts.
 - Lecture 02 is still mostly text cards. It shows no real data before its
   last third, and the CERN case study stands apart from the example file.
 - Lecture 03 has titles in the older style.
-- Lectures 04 to 16 still have quizzes inside the lecture.
-- Lecture 05 repeats most of what week 2 now teaches.
-- Ten sessions remain in 2026 for thirteen lectures.
-- Seminar briefs 4 to 16 are still in the older form.
+
+## 2026-10-04 · The rest of the course reworked
+
+Not a session: a rework asked for by the lecturer after the notes above.
+
+**What the lecturer asked for**
+
+- Start from the very basics, then build rigorously: data fitting from first
+  principles, a perceptron built step by step.
+- Some of the content came from a simple language model: expand, restructure,
+  add.
+- Too much material is better than too little.
+- Get each lecture right now, so that later weeks need fewer iterations.
+
+**Changed in response**
+
+- The decks are renumbered into the order they are given: 04 command line,
+  05 Git, 06 Python foundations, 07 Python for data and NumPy,
+  08 visualisation, 09 probability and statistics, 10 fitting from first
+  principles, 11 the perceptron (new), 12 Pandas and data cleaning,
+  13 reproducible workflows. 14 to 16 are further topics. The former
+  Lecture 05 on Markdown and VS Code is parked: week 2 teaches it.
+- Lectures 04 to 16, their seminar pages and their lecture pages were
+  reworked to one brief,
+  `docs/superpowers/specs/2026-10-04-course-rework-first-principles-design.md`.
+- Two examples run through the course: the pendulum table (cleaned by hand in
+  week 2, read as bytes in week 3, plotted, fitted for g, cleaned by script)
+  and the LHCb file.
+- On Windows the terminal from Lecture 04 on is Git Bash inside VS Code.
+
+**Open**
+
+- Nothing was run on a Windows laptop. Before each lecture from 04 on, try
+  its seminar page once in Git Bash: the terminal profile, `python` against
+  `py`, line endings in scripts, checksums, `sort -n` under a Lithuanian
+  locale.
+- Runnable code slides of Lectures 09, 10, 13 and 16 ran in ordinary Python,
+  not all of them in the browser runner.
+- Lecture 15's timings with 8 and 12 workers were taken on a loaded machine.
+- Every reworked deck sits at 126 to 144 min. Each needs the skip list on its
+  lecture page for a 90-minute slot.
+- Lecture 02's first two thirds are still mostly text cards.
 
 ## 2026-10-06 · Lecture 2 (closing section), Lecture 3 and Seminar 3
 

@@ -733,7 +733,7 @@ b = (Sxx·Sy − Sx·Sxy) / Δ
 
 <div class="card card-success card-glass pad-compact">
 
-$g = 4\pi^2/a = 39.478 / 4.0102 = 9.844$ m/s². What this number is worth depends on the uncertainty of $a$.
+$g = 4\pi^2/a = 39.4784 / 4.01018 = 9.845$ m/s². What this number is worth depends on the uncertainty of $a$.
 
 </div>
 
@@ -1041,8 +1041,8 @@ hideInToc: true
 $$g = \frac{4\pi^2}{a}, \qquad \sigma_g = \left|\frac{dg}{da}\right|\sigma_a = g\,\frac{\sigma_a}{a}$$
 
 ```text
-g  = 39.478 / 4.0102          = 9.844
-σg = 9.844 × 0.0367 / 4.0102  = 0.090
+g  = 39.4784 / 4.01018        = 9.845
+σg = 9.845 × 0.0367 / 4.0102  = 0.090
 ```
 
 </div>

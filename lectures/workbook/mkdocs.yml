@@ -63,16 +63,16 @@ nav:
       - S1 VS Code, Markdown & text editing: seminars/seminar_01.md
       - At home · Install Python & Git: seminars/install_python_git.md
       - S3 A file as bytes: seminars/seminar_03.md
-      - S4 The command line: seminars/seminar_04.md
-      - S5 Git: seminars/seminar_05.md
-      - S6 Python: first steps: seminars/seminar_06.md
-      - S7 Python: files and arrays: seminars/seminar_07.md
-      - S8 A first figure: seminars/seminar_08.md
-      - S9 Uncertainty: seminars/seminar_09.md
-      - S10 A fit by hand: seminars/seminar_10.md
-      - S11 The perceptron: seminars/seminar_11.md
-      - S12 Cleaning with Pandas: seminars/seminar_12.md
-      - S13 One command rebuilds it: seminars/seminar_13.md
-      - S14 Data-quality audit (extra): seminars/seminar_14.md
-      - S15 Run at scale (extra): seminars/seminar_15.md
-      - S16 Train and evaluate a model (extra): seminars/seminar_16.md
+      - S4 Work on Files from the Shell: seminars/seminar_04.md
+      - S5 The Project Folder under Git: seminars/seminar_05.md
+      - S6 A Line of Text into Numbers: seminars/seminar_06.md
+      - S7 The Whole File in Python: seminars/seminar_07.md
+      - S8 Two Figures with Matplotlib: seminars/seminar_08.md
+      - S9 A Result with Its Uncertainty: seminars/seminar_09.md
+      - S10 Fit a Straight Line and Measure g: seminars/seminar_10.md
+      - S11 A Perceptron from an Empty File: seminars/seminar_11.md
+      - S12 Clean a Table by Script: seminars/seminar_12.md
+      - S13 One Command Rebuilds the Analysis: seminars/seminar_13.md
+      - S14 Review an Analysis, Plan the Data: seminars/seminar_14.md
+      - S15 Timing, Memory and a Background Job: seminars/seminar_15.md
+      - S16 A Small Network, Measured: seminars/seminar_16.md

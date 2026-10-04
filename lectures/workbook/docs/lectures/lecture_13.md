@@ -1,347 +1,214 @@
-# L14: Reproducible Workflows & Automation
-
----
-
-## Overview
-
-**Duration**: ~120 minutes (2 h slot)
-
-**Prerequisites**: L1-L13 (especially L6 on Git)
-
-**Learning Objectives**:
-- Structure analysis projects professionally
-- Use command-line arguments (argparse)
-- Manage dependencies with virtual environments
-- Write configuration files (YAML)
-- Automate workflows with Makefiles
-- Set up CI/CD with GitHub Actions
-- Understand Docker basics (optional/advanced)
-
----
-
-## Lecture Structure
-
-### Part 1: Why Reproducibility Matters (10 min)
-- The reproducibility crisis in science
-- "Works on my machine" problem
-- Benefits: faster iteration, easier collaboration, career skills
-- Show before/after: chaotic notebook vs professional workflow
-
-### Part 2: Project Structure (15 min)
-- Anatomy of well-organized project
-- Separation of concerns: data, code, config, results
-- Never modify raw data!
-- Directory structure best practices
-
-### Part 3: Command-Line Arguments (20 min)
-- Why hardcoded values are bad
-- Introduce argparse
-- **Live demo**: Convert hardcoded script to CLI tool
-- Show help messages, required vs optional args
-
-### Part 4: Configuration Files (15 min)
-- When config files are better than args
-- YAML syntax and structure
-- Loading config in Python
-- Combining argparse + config files
-
-### Part 5: Virtual Environments (15 min)
-- The dependency problem
-- Creating venv and conda environments
-- requirements.txt best practices
-- Documenting Python version
-
-### Part 6: Automation with Make (15 min)
-- Why Makefiles?
-- Basic syntax (targets, dependencies, commands)
-- **Live demo**: Create Makefile for analysis pipeline
-- Running: `make all`, `make clean`, `make test`
-
-### Part 7: CI/CD with GitHub Actions (10 min)
-- What is CI/CD?
-- Basic GitHub Actions workflow
-- Automatically run tests on push
-- (Optional) Auto-run analysis pipeline
-
-### Part 8: Best Practices Summary (5 min)
-- Reproducibility checklist
-- README template
-- .gitignore essentials
-
----
-
-## Teaching Tips
-
-### Common Student Struggles
-
-1. **"This seems like a lot of overhead for simple analysis!"**
-   - Start small, add one thing at a time
-   - Show long-term payoff (6 months later, can still run it!)
-   - Emphasize: "Future you" will thank present you
-   - Cost upfront, massive savings later
-
-2. **"My Makefile isn't working!"**
-   - **Must use TAB, not spaces!** (Most common error)
-   - Check file paths (relative vs absolute)
-   - Use `make -n` to dry-run and see commands
-
-3. **"Virtual environments are confusing"**
-   - Analogize: separate toolboxes for different projects
-   - Show `pip list` before and after activation
-   - Emphasize: prevents "it worked yesterday" syndrome
-
-4. **"Do I really need all of this?"**
-   - For one-off script: maybe not
-   - For analysis you'll publish: absolutely!
-   - For collaboration: essential
-   - Show real-world example of paper retraction due to irreproducible analysis
-
-### Interactive Elements
-
-- **Before/after challenge**: Show messy project, have students identify problems
-- **Pair programming**: One writes config file, other writes loading code
-- **Makefile race**: Who can create working Makefile first?
-- **Debug session**: Intentionally break things, troubleshoot together
-
-### Hands-On Exercises
-
-**Exercise 1** (Warm-up): Add argparse to existing script
-```python
-# Take hardcoded script from L12
-# Add --input, --output, --bins arguments
-# Test with different values
-```
-
-**Exercise 2** (Core): Create project structure
-```bash
-# Start with messy directory
-# Reorganize into proper structure
-# Add README, requirements.txt, .gitignore
-# Create Makefile
-```
-
-**Exercise 3** (Advanced): Full workflow automation
-- Multi-step analysis (preprocess → fit → plot)
-- Config file for all parameters
-- Makefile that runs entire pipeline
-- GitHub Actions to test on push
-
----
-
-## Common Questions & Answers
-
-**Q**: Isn't this just software engineering, not data analysis?
-**A**: Modern data analysis **is** software engineering! Computational reproducibility is as important as experimental reproducibility.
-
-**Q**: Can't I just use Jupyter notebooks?
-**A**: Notebooks are great for exploration, but scripts are better for reproducibility. Use both! Explore in notebooks, productionize as scripts.
-
-**Q**: My collaborator doesn't know Git/Make/etc. What do I do?
-**A**: Write clear README. Provide simple commands. Consider this a teaching opportunity!
-
-**Q**: Should I commit generated results to Git?
-**A**: Generally no (they should be reproducible!). Exception: small, important results for papers. Use Git LFS for large files.
-
-**Q**: What if my analysis takes 24 hours to run?
-**A**: Cache intermediate results. Makefiles help here! Only rerun what changed. Consider workflow managers (Snakemake, Nextflow) for very complex pipelines.
-
----
-
-## Key Code Snippets
-
-### argparse template
-```python
-import argparse
-
-parser = argparse.ArgumentParser(description='Analysis script')
-parser.add_argument('--input', required=True, help='Input CSV file')
-parser.add_argument('--output', default='results.png', help='Output file')
-parser.add_argument('--bins', type=int, default=50, help='Number of bins')
-args = parser.parse_args()
-
-# Use: python script.py --input data.csv --bins 100
-```
-
-### YAML config
-```yaml
-# config.yaml
-data:
-  input_file: "data/sample.csv"
-  output_dir: "results/"
-
-model:
-  bins: 50
-  range: [0, 15]
-```
-
-```python
-import yaml
-with open('config.yaml') as f:
-    config = yaml.safe_load(f)
-n_bins = config['model']['bins']
-```
-
-### Basic Makefile
-```makefile
-.PHONY: all clean test
-
-all: results/plot.png
-
-results/plot.png: data/clean.csv scripts/plot.py
-	python scripts/plot.py --input data/clean.csv --output results/plot.png
-
-clean:
-	rm -rf results/*
-
-test:
-	pytest tests/
-```
-
-### GitHub Actions
-```yaml
-name: Tests
-on: [push]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    - run: pip install -r requirements.txt
-    - run: pytest tests/
-```
-
----
-
-## Demonstrations
-
-### Demo 1: Argparse in Action (5 min)
-Start with hardcoded script:
-```python
-# analyze.py (before)
-df = pd.read_csv('data.csv')
-plt.hist(df['energy'], bins=50)
-```
-
-Transform to CLI tool:
-```python
-# analyze.py (after)
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('--input', required=True)
-parser.add_argument('--bins', type=int, default=50)
-args = parser.parse_args()
-
-df = pd.read_csv(args.input)
-plt.hist(df['energy'], bins=args.bins)
-```
-
-Show usage:
-```bash
-python analyze.py --help
-python analyze.py --input data.csv
-python analyze.py --input data.csv --bins 100
-```
-
-### Demo 2: Makefile Workflow (10 min)
-Create analysis pipeline:
-1. Preprocess data
-2. Fit model
-3. Generate plot
-
-Write Makefile:
-```makefile
-all: results/final_plot.png
-
-data/clean.csv: data/raw.csv scripts/preprocess.py
-	python scripts/preprocess.py
-
-results/fit.json: data/clean.csv scripts/fit.py
-	python scripts/fit.py
-
-results/final_plot.png: results/fit.json scripts/plot.py
-	python scripts/plot.py
-
-clean:
-	rm -rf data/clean.csv results/*
-```
-
-Show:
-- `make all` (runs everything)
-- Modify one script
-- `make all` again (only reruns affected steps!)
-- `make clean && make all` (full rebuild)
-
----
-
-## Time Estimates
-
-- Motivation: 10 min
-- Project structure: 15 min
-- argparse: 20 min
-- Config files: 15 min
-- Virtual envs: 15 min
-- Makefiles: 15 min
-- GitHub Actions: 10 min
-- Student exercises: 40 min
-- **Total**: 140 min
-
----
-
-## Resources for Students
-
-- [argparse tutorial](https://docs.python.org/3/howto/argparse.html)
-- [YAML specification](https://yaml.org/)
-- [GNU Make tutorial](https://makefiletutorial.com/)
-- [GitHub Actions docs](https://docs.github.com/en/actions)
-- [The Turing Way](https://the-turing-way.netlify.app/) - handbook on reproducible research
-- [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/) - project template
-
----
-
-## Assessment Ideas
-
-- **Project audit**: Students evaluate their own/peer's project structure
-- **Reproducibility test**: Try to run classmate's analysis on your machine
-- **Refactoring challenge**: Take messy code, make it reproducible
-- **Final project requirement**: Must have proper structure, README, requirements.txt, and run with one command
-
----
-
-## Extension Activities
-
-For advanced students:
-- Introduce Snakemake or Nextflow (workflow managers)
-- Docker containerization (full environment isolation)
-- Pre-commit hooks (automatic code formatting, linting)
-- Documentation generation with Sphinx
-- Code review practices on GitHub
-
----
-
-## Key Messages to Emphasize
-
-1. **Reproducibility is not optional** - it's fundamental to science
-2. **Start small** - don't implement everything at once
-3. **Future you is a collaborator** - write code for them
-4. **Good structure saves time** - upfront cost, long-term benefit
-5. **These are career skills** - industry values this highly
-6. **Document everything** - README is not optional
-
----
-
-## Homework / Project Integration
-
-**Suggested assignment**:
-"Take your L12 fitting code and L13 data processing code. Restructure into proper project with:
-- Clear directory structure
-- Command-line arguments
-- Config file
-- requirements.txt
-- README with setup instructions
-- Makefile
-- Working on classmate's computer
-
-Due: Next week. Will be evaluated on reproducibility!"
+# 13: Reproducible Workflows & Automation
+
+Lecture 12 turned the hand cleaning of the first weeks into a script. The
+project folder now holds scripts that clean, plot and fit the pendulum
+table, and each of them was run by hand. Lecture 13 writes down what
+surrounds the scripts: which files they work on, which packages they need,
+in which order they run, and how anyone knows that the result is right. It
+is the last scheduled lecture, and it closes the four aims of the course on
+one project folder.
+
+## What the lecture covers
+
+One pipeline runs through the whole lecture: the raw pendulum file, the
+cleaned table, a plot, a fit of *g*, and a report with the number in it.
+Every command and every output on the slides was produced by running it.
+
+1. **From steps by hand to a pipeline** — the project as it is; five things
+   that go wrong when steps are done by hand, each with its remedy; what
+   *reproducible* means and how it differs from *replicable*; the pipeline
+   as a diagram, written as text in Mermaid; the project folder of week 2
+   with five new entries.
+2. **A script with a command line** — file names leave the code; `sys.argv`;
+   `argparse` with positional arguments, options, types, defaults and
+   `--help`; the cleaning as a function; a file that is a command and a
+   module (`if __name__ == "__main__":`); docstrings; exit codes; the
+   parameters of the fit in `config.json`, and one parameter that changes
+   *g* from 9.84 ± 0.06 to 9.81 ± 0.02 m/s²; results written as data
+   (`fit.json`) and a report written by a script.
+3. **Environments** — one program that prints two answers under two
+   versions of pandas; what the scripts import; `venv`; an empty
+   environment as a test; `pip freeze > requirements.txt`; what pinned
+   versions fix and what they do not; conda and uv; `.vscode/extensions.json`.
+4. **One command** — when a file is out of date, as a rule on file times,
+   worked on a table of ten files; `run_all.py` in three parts (the stages
+   as a table, the rule as a function, the loop); four cases run for real;
+   delete and rebuild, checked with `git status` and a checksum; Make as
+   the same table in another notation; Make on Windows; Snakemake.
+5. **Tests** — the decimal comma left out: two stages end without an error
+   and the plot is a straight line; `assert`; a first test file; running
+   pytest and reading a failure; floats and `pytest.approx`; a fit tested
+   on data with a known answer; what is worth a test; the tests inside the
+   one command.
+6. **Beyond one laptop** — what goes into Git; the README gains *How to
+   rebuild*; continuous integration; pre-commit; Docker; large data as a
+   pointer (Git LFS, DVC); FAIR, checked on the LHCb record and on the
+   pendulum project; the four aims of the course in one folder.
+
+## The pipeline of the lecture
+
+| Stage | Reads | Writes |
+|--|--|--|
+| `scripts/clean.py` | `data/raw/pendulum.csv` | `data/processed/pendulum.csv` |
+| `scripts/plot.py` | the cleaned table | `results/pendulum_plot.png` |
+| `scripts/fit.py` | the cleaned table, `config.json` | `results/fit.json` |
+| `scripts/report.py` | the cleaned table, `fit.json`, the plot | `results/report.md` |
+
+`run_all.py` at the top of the project runs the tests and then every stage
+whose output is out of date. The files are those of
+[Seminar 13](../seminars/seminar_13.md), where they can be downloaded.
+
+The numbers that the slides quote, all from one run on macOS with Python
+3.13.9, pandas 3.0.6, NumPy 2.5.3, Matplotlib 3.11.2, SciPy 1.18.1 and
+pytest 9.1.1:
+
+- The cleaned table has 97 bytes, the same bytes as the copy cleaned by
+  hand in Lecture 2.
+- The fit gives a slope of 4.014 ± 0.025 s²/m and *g* = 9.84 ± 0.06 m/s².
+  Forced through the origin it gives 4.024 ± 0.009 s²/m and
+  *g* = 9.81 ± 0.02 m/s².
+- `requirements.txt` has 17 lines. The environment folder has 300 MB.
+- With pandas 2.3.3, NumPy 2.3.5, Matplotlib 3.10.7 and SciPy 1.16.2 the
+  three text results have the same bytes, and the picture differs: 20 868
+  bytes against 21 965.
+
+## The lecture in 90 minutes
+
+The lecture is slides 1–65 and estimates about 140 min. Slides 66–73 are the
+self-check quizzes and take no lecture time. For a 90-minute slot, skip
+the slides in the second table. In a 2-hour slot, skipping slides 31–33
+and 59–61 alone brings the estimate to about 125 min. To jump, type the
+slide number and press Enter.
+
+| Clock | Slides | Part |
+|--|--|--|
+| 0:00 | 1–8, 10 | The project as it is, what breaks by hand, what reproducible means, the pipeline as a diagram, the extended folder |
+| 0:15 | 11–12, 14–15, 17–18, 20–21, 24 | The command line: argparse, the cleaning as a function, a command and a module, exit codes, the config file, results as data |
+| 0:34 | 25–26, 28–30 | Environments: two answers from one program, venv, the empty environment, `requirements.txt` |
+| 0:44 | 34–42 | One command: the rule, the worked example, `run_all.py`, four cases, delete and rebuild |
+| 1:04 | 45–50, 54 | Tests: the plot that looked fine, assert, the first test, pytest, a failure, tests in the one command |
+| 1:18 | 55, 57–58, 62, 64–65 | How to rebuild, continuous integration, FAIR, the four aims, recap |
+| 1:31 | | Move to the seminar |
+
+| Skip | Slides | Saves |
+|--|--|--|
+| Diagrams as Text, A Diagram Git Can Compare | 9, 23 | 5 min |
+| The Words of a Command, Options, Docstrings | 13, 16, 19 | 7 min |
+| One Parameter, Two Results | 22 | 3 min |
+| What Do the Scripts Need? | 27 | 2 min |
+| What the File Fixes and What It Does Not, conda and uv, The Editor Has Requirements Too | 31–33 | 7 min |
+| Make, Make on Windows and Larger Pipelines | 43–44 | 5 min |
+| Floats in a Test, A Test with a Known Answer, What to Test | 51–53 | 8 min |
+| What Goes into Git | 56 | 2 min |
+| pre-commit, Docker, Large Data | 59–61 | 8 min |
+| FAIR, Checked on Two Cases | 63 | 3 min |
+
+Together the rows save about 49 min and bring the estimate to about 91 min.
+
+- **Do not cut** slides 35–42. They are one argument: the four commands,
+  the rule, the rule worked on file times, the rule as code, the four
+  cases, the proof. The seminar writes this file.
+- **Do not cut** slides 46–50. Slide 46 is the reason for tests, and slide
+  50 finds the same mistake in a quarter of a second.
+- **Slide 37** (The Rule, Worked): cover the right-hand card and do the four
+  comparisons with the room.
+- **Slides 14–18 are shown live.** Keep the project open in VS Code beside
+  the slides. Run `clean.py` with no arguments, with `--help`, and on the
+  raw file.
+- **Slides 28–30 are shown live** if the network of the room is good:
+  create the environment, show the empty `pip list` and the
+  `ModuleNotFoundError`, install, freeze. The installation downloads
+  about 50 MB and took 13 s on a fast network. With a weak network, show
+  the slides and have the environment ready.
+- **Slides 41–42 are shown live.** Edit `plot.py`, run; edit
+  `config.json`, run; delete `data/processed` and `results`, run, and
+  show `git status`.
+- **Slide 50** is shown live: take `, decimal=","` out of `clean.py`, run
+  `python -m pytest`, read the failure, put it back.
+- **Slides 54 and 57** show `5 passed`. With slides 51–53 skipped, say
+  that two of the five are tests of the fit, in a second file.
+- **Slide 64** (The Four Aims, in One Folder) closes the course. Go through
+  it with the project open and point at the file behind each sentence.
+
+Before the session, follow the page of [Seminar 13](../seminars/seminar_13.md)
+once on a copy of your project folder. The result is the project that the
+slides show. Start the local copy of the slides with
+`node scripts/serve-local.mjs 8123`, then open
+`http://localhost:8123/13-reproducible-workflows/`.
+
+## Check yourself
+
+No quiz interrupts the lecture. The deck closes with a self-check section,
+slides 66–73: seven quiz slides for students to try afterwards. The same
+questions, with their answers:
+
+1. The four stages of the lecture. The files were last changed at: raw data
+   08:10, `clean.py` 08:20, `plot.py` 08:25, the table 08:30, the plot
+   08:31, `fit.json` 08:32, the report 08:33, `fit.py` 08:50; `config.json`
+   and `report.py` at 08:00. Which stages does `run_all.py` run?
+   *The fit and the report. `fit.json` is older than `fit.py`, so the fit
+   runs. Its new output is then newer than the report.*
+2. A script is started as `python scale.py data.csv --factor 2.5`. What is
+   `sys.argv[3]`?
+   *The string `2.5`. The list is `scale.py`, `data.csv`, `--factor`, `2.5`,
+   counted from 0, and every entry is a string.*
+3. A test contains `assert 0.1 * 3 == 0.3` and fails. Which line repairs it?
+   *`assert 0.1 * 3 == pytest.approx(0.3)`. The product is
+   0.30000000000000004.*
+4. `pip install requests` in an empty environment installs 5 packages. How
+   many lines does `pip freeze > requirements.txt` write?
+   *5, each with `==` and its version: every installed package, asked for
+   or not. pip itself is left out.*
+5. After deleting the results and rebuilding, `git status` reports only the
+   picture as modified. What is the most likely cause?
+   *A package, for example Matplotlib, has another version than at the last
+   commit. The text results have the same bytes, so the data and the
+   numbers are unchanged.*
+6. Which is most worth a test: the shade of blue of the points, the number
+   of rows of the cleaned table, the resolution of the picture, or the
+   wording of a label?
+   *The number of rows. It has a right answer that comes from outside the
+   code, the lab notebook.*
+7. What makes an analysis scriptable?
+   *Every step is code or a command, and all of it can be run again from
+   the raw data.*
+
+## Paired seminar
+
+[Seminar 13 — One Command Rebuilds the Analysis](../seminars/seminar_13.md)
+builds the pipeline of the lecture in the room's own project folder. It has
+four parts: an environment and `requirements.txt`; the cleaning script with
+a command line, and three handed-out stages; `run_all.py`, tried on two
+changes and on a rebuild from nothing; one test file, made to fail once.
+It uses `run_all.py` and not Make, because Git Bash on Windows does not
+include `make`. At home students do the same four steps on their own
+dataset.
+
+## Take-aways
+
+- A result is reproducible when another person, on another computer, at a
+  later time, gets the same result from the same data with the same
+  analysis. Four things have to be written down: the data, the code with
+  its parameters, the versions, and the order of the steps.
+- File names are arguments of a script, not part of its code. `argparse`
+  gives them names, checks them, and writes the help text.
+- A script whose work is in functions, and that ends with
+  `if __name__ == "__main__":`, can be run and can be imported. Tests need
+  the second.
+- A choice that changes the result goes into a config file under Git, not
+  into the memory of the analyst.
+- An environment is a folder that can be thrown away. `requirements.txt`
+  is the environment written as text, and it goes into Git.
+- A file is out of date when it is missing or older than something it is
+  made from, the script included. A program can apply this rule. A person
+  forgets.
+- Everything a script wrote can be deleted and rebuilt. `git status` or a
+  checksum shows that it came back the same.
+- A test asserts a fact that is known without the code. It is run by the
+  computer, every time.
+- A mistake that raises no error is found by a test at the stage where it
+  was made, or by luck two stages later.
+- A diagram written as text has a history that Git can show.
+- Continuous integration, containers and FAIR are the same ideas carried
+  past one laptop: a server follows the README, the operating system is
+  written down too, and strangers can find and reuse the data.

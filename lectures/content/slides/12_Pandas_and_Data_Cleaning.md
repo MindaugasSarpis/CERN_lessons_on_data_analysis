@@ -3,11 +3,10 @@ layout: cover
 title: "Pandas & Data Cleaning"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
-  installs: ["numpy", "pandas", "matplotlib"]
+  installs: ["numpy", "pandas"]
   prelude: |
     import numpy as np
     import pandas as pd
-    import matplotlib.pyplot as plt
   loadPackagesFromImports: true
   suppressDeprecationWarnings: true
 ---
@@ -16,14 +15,15 @@ python:
 
 # Best Research and Data Analysis Practices from CERN
 
-## NumPy, Pandas & Real Data
+## Pandas & Data Cleaning
 
-##### <span class="aims-badge">📁 data & files · ⚙️ automation · 🔧 tool-agnostic</span>
+##### <span class="aims-badge">📁 data & files · ⚙️ automation · ♻️ reproducibility</span>
 
 <!--
-Speaker: this is the workhorse lecture — the tools they will use in almost every
-seminar from here on. Frame NumPy + Pandas as the bridge from toy data to real,
-messy data. Lots of live code today, so keep the pace up. (~1 min)
+Speaker: the small table that was repaired in the editor comes back today. The
+same repair is written as a script, and then the method is used on the file
+with 91 583 rows. Two things are new: the library Pandas, and cleaning as a
+list of checks with a count for each. (~1 min)
 -->
 
 ---
@@ -31,7 +31,8 @@ hideInToc: true
 layout: quote
 ---
 
-# Real data is messy, incomplete, and comes in various formats. NumPy and Pandas are the foundational tools for handling, cleaning, and analyzing data efficiently in Python.
+# Like families, tidy datasets are all alike but every messy dataset is messy in **its own way**.
+Hadley Wickham — *Tidy Data*, Journal of Statistical Software, 2014
 
 ---
 hideInToc: true
@@ -45,1473 +46,2194 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🔢 Write fast, loop-free array code with NumPy **vectorization**
+📜 Write a cleaning as a **script**: raw file in, cleaned file out, the same bytes on every run
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🎯 Index and slice arrays with **boolean masks**; use broadcasting for row/column maths
+🐼 Read a text table into a **DataFrame** and say what the type of each column tells about the file
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-🐼 Build, filter, sort, and **group** a Pandas DataFrame
+🎯 Select rows and columns by **name, position and mask**, and compute a new column from others
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+🕳️ Turn a code for a missing value into **NaN**, and say what NaN does to a mean and to a comparison
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-🧹 Handle missing values, drop **duplicates & invalid rows**, detect outliers, normalize data
+✅ Run **five checks** on any table: completeness, validity, uniqueness, consistency, units
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-info card-glass pad-compact">
 
-📁 Read and write data — **CSV** and Parquet
+🔀 Reshape, **group** and **join** tables, and write the result to `data/processed/`
 
 </div>
 
 </div>
 
 <!--
-Speaker: read these as promises, not a checklist. Stress that Seminar 13 is where
-they turn the shared D⁰ sample into a clean, tidy table — today builds the toolkit
-for that. Set the expectation. (~1 min)
+Speaker: the first objective is the one that matters most. The other five are
+the tools it needs. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# Motivation: From **Toy** Data to Real Data
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🧪 **Real Data Is Not a Gaussian + Exponential**
-
-In the Data Fitting lecture the data was synthetic. Real-world data:
-- Comes in various formats (CSV, Excel, JSON, Parquet, HDF5)
-- Has missing values, outliers, duplicates and inconsistencies
-- Is often large and needs efficient, loop-free operations
-
-In **Lecture 8** you parsed the D⁰ CSV by hand with `csv.DictReader`. Today the same ingest is **one line** — and the cleaning is **five**.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-### 🔢 **NumPy**
-- Efficient numerical arrays
-- Vectorized operations (fast!)
-- Mathematical functions
-- Foundation for scientific Python
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 🐼 **Pandas**
-- DataFrames (like Excel tables)
-- Handle missing data
-- Read/write many formats
-- Group, filter, transform data
-
-</div>
-
-</div>
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# NumPy: Numerical **Computing**
+# Cleaning by **Script**
 
 <!--
-Speaker: the one idea to land in this block is vectorization — operate on whole
-arrays, never element by element. The speed benchmark a few slides on makes it
-visceral. (~1 min)
+Speaker: one small file, cleaned twice: once by hand, which is done, and once
+by a script, which is this section. At the end the two results are compared
+byte by byte. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# What is **NumPy**?
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🔢 **NumPy = Numerical Python**
-
-The fundamental package for scientific computing in Python:
-- Multi-dimensional arrays (`ndarray`)
-- Fast element-wise operations (vectorization)
-- Linear algebra, random numbers, Fourier transforms
-- Foundation for SciPy, Pandas, Matplotlib, scikit-learn, etc.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-tight">
-
-### ✅ **Why NumPy?**
-
-**Speed**: typically 10× or more faster than Python lists — depends on the operation
-
-**Memory**: compact, typed storage
-
-**Convenience**: write mathematical code naturally
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 💡 **Key Concept**
-
-**Vectorization**: operations on entire arrays without explicit loops
-
-```python
-# Python lists (slow)
-result = [x**2 for x in data]
-
-# NumPy (fast)
-result = data ** 2
-```
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Creating NumPy **Arrays**
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-
-# From Python lists
-arr = np.array([1, 2, 3, 4, 5])
-print(f"Array: {arr}, dtype: {arr.dtype}")
-
-# Built-in creation functions
-print(f"zeros:    {np.zeros(5)}")
-print(f"arange:   {np.arange(0, 10, 2)}")   # start, stop, step
-print(f"linspace: {np.linspace(0, 1, 5)}")   # start, stop, num_points
-
-# 2D arrays (matrices)
-matrix = np.array([[1, 2, 3], [4, 5, 6]])
-print(f"\n2D array:\n{matrix}")
-print(f"Shape: {matrix.shape}")  # (rows, columns)
-```
-
----
-hideInToc: true
----
-
-# Array Operations: **Vectorization**
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-
-x = np.array([1, 2, 3, 4, 5])
-
-# Element-wise operations (no loops needed!)
-print(f"x:          {x}")
-print(f"x + 10:     {x + 10}")
-print(f"x ** 2:     {x ** 2}")
-print(f"np.sqrt(x): {np.sqrt(x)}")
-
-# Operations between arrays
-y = np.array([10, 20, 30, 40, 50])
-print(f"\nx + y: {x + y}")
-print(f"x * y: {x * y}")
-
-# Aggregation functions
-print(f"\nSum: {x.sum()}, Mean: {x.mean():.2f}, Std: {x.std():.2f}")
-```
-
----
-hideInToc: true
----
-
-# Speed Comparison: Lists vs **NumPy**
-
-```py {monaco-run} {autorun:false}
-import numpy as np, time
-
-n = 100000
-py_list = list(range(n))
-np_arr = np.arange(n)
-
-# Sum benchmark
-t = time.perf_counter(); sum(py_list); t1 = time.perf_counter() - t
-t = time.perf_counter(); np_arr.sum(); t2 = time.perf_counter() - t
-print(f"Sum — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/max(t2,1e-9):.0f}x faster")
-
-# Polynomial x² + 2x + 1
-t = time.perf_counter(); [x**2+2*x+1 for x in py_list]; t1 = time.perf_counter() - t
-t = time.perf_counter(); np_arr**2 + 2*np_arr + 1; t2 = time.perf_counter() - t
-print(f"Poly — Python: {t1*1000:.2f} ms, NumPy: {t2*1000:.2f} ms → {t1/max(t2,1e-9):.0f}x faster")
-```
-
-<div class="card card-accent card-glass pad-tight mt-sm">
-
-**Key**: NumPy loops run in C, not Python. The speed-up depends on the operation — a plain `sum` gains more than a polynomial that builds temporaries — and grows with array size. Typically 10× or more.
-
-</div>
-
----
-hideInToc: true
----
-
-# Array **Indexing** and Slicing
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-
-arr = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90])
-print(f"arr:       {arr}")
-print(f"arr[0]:    {arr[0]},  arr[-1]: {arr[-1]}")
-print(f"arr[2:5]:  {arr[2:5]}")
-print(f"arr[::2]:  {arr[::2]}")
-
-# Boolean indexing (very powerful!)
-print(f"\narr > 50:      {arr > 50}")
-print(f"arr[arr > 50]: {arr[arr > 50]}")
-
-# 2D arrays
-matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-print(f"\nmatrix[1, 2]: {matrix[1, 2]}")
-print(f"Row 1:        {matrix[1, :]}")
-print(f"Col 2:        {matrix[:, 2]}")
-```
-
----
-hideInToc: true
----
-
-# Broadcasting: **Concept**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 📐 **Broadcasting Rules**
-
-NumPy "broadcasts" arrays of different shapes: shapes are compared **from the right**, and a dimension of size 1 (or a missing one) is stretched to match.
-
-```python
-arr + 10            # scalar → stretched to every element
-matrix + row        # (3, 3) + (3,)  → row added to each row
-matrix + col[:, None]   # (3, 3) + (3, 1) → column added to each column
-```
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-
-# Scalar broadcasting
-arr = np.array([1, 2, 3])
-print(f"arr + 100: {arr + 100}")  # 100 broadcast to [100, 100, 100]
-
-# Row broadcasting
-matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-row = np.array([10, 20, 30])
-print(f"\nMatrix + row:\n{matrix + row}")  # row added to each row
-```
-
----
-hideInToc: true
----
-
-# Broadcasting: **Normalization** Example
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-
-# Useful for normalization: subtract column means
-data = np.array([[1, 2],
-                 [3, 4],
-                 [5, 6]])
-mean = data.mean(axis=0)  # Mean of each column → shape (2,)
-
-print(f"Data:\n{data}")
-print(f"Column means: {mean}")
-print(f"Centered data:\n{data - mean}")  # (3, 2) - (2,) → mean subtracted from each column
-
-# Standardization: (x - mean) / std
-std = data.std(axis=0)
-standardized = (data - mean) / std
-print(f"\nStandardized:\n{standardized}")
-```
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Array `a` has shape `(3, 2)`, `b` has shape `(2,)` and `c` has shape `(3,)`. Which addition is valid NumPy broadcasting?"
-  :options="[
-    'a + b — shapes align from the right (2 vs 2), so b is repeated for each of the 3 rows',
-    'a + c — the leading 3 matches, so c is repeated for each of the 2 columns',
-    'Both — NumPy matches whichever dimension happens to agree',
-    'Neither — broadcasting only ever works with scalars'
-  ]"
-  :correct="0"
-  explanation="Broadcasting compares shapes from the RIGHT: (3,2) vs (2,) agrees on the last axis, so b is stretched over the rows. (3,2) vs (3,) compares 2 with 3 and fails with 'operands could not be broadcast together'. To add a per-row vector, give it shape (3,1) with c[:, None]."
-/>
-
----
-hideInToc: true
----
-
-# NumPy: When It's **Not Enough**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🧱 **Limitations of NumPy**
-
-NumPy is great for numerical computation, but real-world data often needs more:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-### ⚠️ **NumPy limitations**
-- All elements must be the same type
-- No column names or labels
-- No built-in handling of missing values
-- Only numeric text I/O (`np.loadtxt`) — no headers, mixed types or Excel
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-### ✅ **Enter Pandas**
-- Mixed data types per column
-- Named columns and row indices
-- `NaN` for missing data
-- Read/write CSV, Excel, JSON, Parquet, HDF5
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-**Pandas is built on top of NumPy** — it adds labels, mixed types, and data manipulation tools while keeping NumPy's speed for numerical operations.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Pandas: **DataFrames**
-
-<!--
-Speaker: Pandas is NumPy plus labels, mixed types, and file I/O. Anchor it as
-"a spreadsheet you can script." Everything from here uses the DataFrame as the
-central object: build it, read it, explore it, select from it. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# What is **Pandas**?
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 🐼 **Pandas = Panel Data (Python Data Analysis Library)**
-
-Built on top of NumPy, adds:
-- **DataFrame**: 2D labeled data structure (like a spreadsheet or a database table)
-- **Series**: 1D labeled array (single column)
-- Easy reading/writing of files (CSV, Excel, JSON, Parquet, etc.)
-- Handling missing data
-- Group-by operations, merging, reshaping
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-tight">
-
-### 🗂️ **Think of a DataFrame as:**
-- A spreadsheet sheet
-- A database table
-- A dictionary of NumPy arrays
-- A collection of labeled columns
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 🔑 **Key Features:**
-- Column/row labels (not just indices)
-- Mixed data types per column
-- Missing data handling (NaN)
-- Powerful data manipulation
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Creating a **DataFrame**
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-
-data = {
-    'name': ['Alice', 'Bob', 'Charlie', 'Diana'],
-    'age': [25, 30, 35, 28],
-    'city': ['Geneva', 'Zurich', 'Geneva', 'Bern'],
-    'salary': [75000, 85000, 95000, 80000]
-}
-df = pd.DataFrame(data)
-print("DataFrame:")
-print(df)
-print(f"\nShape: {df.shape}, Columns: {df.columns.tolist()}")
-print(f"Average age: {df['age'].mean():.1f}")
-print(f"\nFirst row:\n{df.iloc[0]}")
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-💡 A DataFrame is a **dict of equal-length columns**. Each column is a `Series` backed by a NumPy array — `df['age'].to_numpy()` hands the array back, so every NumPy trick from the first block still applies.
-
-</div>
-
----
-hideInToc: true
----
-
-# Reading Data from **Files**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-📥 **In the seminar**: `df = pd.read_csv('data/raw/d0.csv')` — one line replaces Lecture 8's `csv.DictReader` loop. Below, the same call on an in-memory string so it runs in the browser.
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import io, pandas as pd
-
-csv_text = """Run,Event,M,H1_Charge,H1_PX
-101,1,1864.8,-1,2130.5
-101,2,,1,-980.2
-101,3,-999,-1,NA
-102,4,1865.3,-999,3300.1
-"""
-df = pd.read_csv(io.StringIO(csv_text),            # a file path in real life
-                 dtype={'Run': 'int32'},             # force a type
-                 na_values=['', 'NA', '-999'],       # what counts as missing
-                 usecols=['Run', 'Event', 'M', 'H1_Charge'])  # skip the rest
-print(df)
-print("\ndtypes:\n" + df.dtypes.to_string())
-print("\nmissing per column:", df.isna().sum().to_dict())
-```
-
-<div class="note-text mt-sm">
-
-💡 Later slides fake data with `np.random.seed(42)`; the modern idiom is `rng = np.random.default_rng(42)`.
-
-</div>
-
----
-hideInToc: true
----
-
-# Exploring a **DataFrame**
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-df = pd.DataFrame({
-    'event_id': range(1, 101),
-    'energy': np.random.gamma(5, 2, 100),
-    'momentum': np.random.normal(10, 3, 100),
-    'detector': np.random.choice(['A', 'B', 'C'], 100),
-})
-
-print("Summary statistics:")
-print(df.describe().round(2))
-
-print("\nData types:")
-print(df.dtypes)
-```
-
-<!--
-Speaker: `describe()` is the first thing to run on any new table — the seminar
-asks for exactly this printout. Note the text column: pandas 3 prints its dtype as
-`str`; older versions (including the browser runner) print `object`. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Select, **Filter** & Query
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-df = pd.DataFrame({
-    'energy': np.random.gamma(5, 2, 100),
-    'momentum': np.random.normal(10, 3, 100),
-    'detector': np.random.choice(['A', 'B', 'C'], 100),
-    'is_signal': np.random.choice([True, False], 100, p=[0.3, 0.7])
-})
-print(f"rows: {len(df)}, signal: {df['is_signal'].sum()}, background: {(~df['is_signal']).sum()}")
-
-high_E = df[df['energy'] > 10]                       # one boolean mask
-print(f"E > 10:                 {len(high_E)}")
-sig_high = df[df['is_signal'] & (df['energy'] > 10)] # combine with & | ~ and parentheses
-print(f"signal and E > 10:      {len(sig_high)}")
-print(f"detector A and E > 10:  {len(df.query('energy > 10 and detector == \"A\"'))}")
-print(f"detector A or B:        {len(df[df['detector'].isin(['A', 'B'])])}")
-print(high_E.head(3))
-```
-
----
-hideInToc: true
----
-
-<MCQ
-  question="Which expression correctly selects the rows of `df` where column `a` is above 1 AND column `b` is below 2?"
-  :options="[
-    'df[(df.a > 1) & (df.b < 2)]',
-    'df[df.a > 1 and df.b < 2]',
-    'df[df.a > 1 & df.b < 2]',
-    'df[(df.a > 1) && (df.b < 2)]'
-  ]"
-  :correct="0"
-  explanation="Python's and tries to reduce each whole Series to a single True/False and raises 'The truth value of a Series is ambiguous'. Element-wise logic needs &, | and ~ — with parentheses, because & binds tighter than >, so the third option is parsed as df.a > (1 & df.b) < 2. There is no && in Python."
-/>
-
----
-hideInToc: true
----
-
-# New **Columns** & Sorting
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-df = pd.DataFrame({
-    'energy': np.random.gamma(5, 2, 100),
-    'momentum': np.random.normal(10, 3, 100),
-    'detector': np.random.choice(['A', 'B', 'C'], 100),
-    'is_signal': np.random.choice([True, False], 100, p=[0.3, 0.7])
-})
-
-# Adding new columns — one vectorised expression, no loop
-df['E_over_p'] = df['energy'] / df['momentum']
-print("New column 'E_over_p' created:")
-print(df[['energy', 'momentum', 'E_over_p']].head())
-
-# Sorting
-df_sorted = df.sort_values('energy', ascending=False)
-print(f"\nTop 3 highest energy events:")
-print(df_sorted[['energy', 'detector', 'is_signal']].head(3))
-```
-
----
-hideInToc: true
----
-
-# Filter, then **Add a Column** — the Right Way
-
-```py {monaco-run} {autorun:false}
-import numpy as np, pandas as pd
-
-np.random.seed(42)
-df = pd.DataFrame({'Event': range(1, 9),
-                   'M': np.random.uniform(1800, 2000, 8).round(1)})
-
-# 1. filter with a mask   2. .copy() so the result owns its data
-mask = df['M'].between(1800, 2000)
-clean = df[mask].copy()
-
-# 3. derive the column with a vectorised expression on the copy
-clean['region'] = np.where(clean['M'].between(1845, 1885), 'signal', 'sideband')
-print(clean)
-
-# To write into the ORIGINAL frame instead, address it with .loc[mask, col]
-df.loc[df['M'].between(1845, 1885), 'region'] = 'signal'
-print(df['region'].value_counts(dropna=False))
-```
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ `df2 = df[mask]` then `df2['x'] = 1` — in pandas 1–2 this is the **SettingWithCopyWarning**: is `df2` a view or a copy? Pandas 3 (**Copy-on-Write**) makes `df2` always behave as a copy, so the write never reaches `df`. Either way the intent is clear only with `.copy()` (new table) or `df.loc[mask, 'x'] = 1` (original).
-
-</div>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="After `df2 = df[df.M > 1900]` you run `df2['flag'] = True`. What is the safe, intended way to write this?"
-  :options="[
-    'Take df2 = df[df.M > 1900].copy() first — then the assignment is unambiguous in every pandas version',
-    'Nothing — df2 is always an independent copy, so the write is safe everywhere',
-    'Use df2.flag = True (attribute assignment) instead of the bracket form',
-    'Add warnings.filterwarnings(ignore) so the SettingWithCopyWarning goes away'
-  ]"
-  :correct="0"
-  explanation="In pandas 1–2, df[mask] may be a view or a copy, so writing into it raises SettingWithCopyWarning and may silently not land where you expect. Pandas 3 (Copy-on-Write) makes df2 behave as a copy, but the intent is still clearest with .copy(). To write into the original, use df.loc[mask, 'flag'] = True. Silencing the warning hides the bug, it does not fix it."
-/>
-
----
-layout: section
-hideInToc: true
----
-
-# Data Cleaning & **Preprocessing**
-
-<!--
-Speaker: this is where real data bites — missing values, duplicates, impossible
-values, outliers. Emphasize that cleaning is a documented, reproducible step,
-never ad-hoc deletion. This block is the heart of the Seminar 13 script. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Common Data **Quality** Issues
+# The Pendulum Table, Cleaned **by Hand**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact">
 
-## ⚠️ **Missing Values**
-- Empty cells, NaN, None, sentinels like `-999`
-- Measurement failures
-- **Fix**: Drop, fill (mean/median), or flag
+## 📥 **`data/raw/pendulum.csv`**
 
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **Outliers**
-- Measurement errors or rare events
-- Data entry mistakes
-- **Fix**: Statistical tests, domain knowledge
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **Duplicates & Invalid Rows**
-- The same `(Run, Event)` counted twice
-- Impossible values — negative mass, `|Q| ≠ 1`
-- **Fix**: `drop_duplicates`, one boolean mask per rule
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **Inconsistent Formats**
-- Mixed units (GeV vs MeV)
-- Date/time format variations
-- **Fix**: Standardize, convert, validate
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Handling **Missing** Data
-
-<div class="card card-warning card-glass pad-tight mt-md">
-
-## 🕳️ **Real Data Has Missing Values!**
-
-Pandas represents missing data with `NaN` (Not a Number) or `None` — `isna()` finds them
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-df = pd.DataFrame({
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [10, np.nan, 30, np.nan, 50],
-    'C': [100, 200, 300, 400, 500]
-})
-print("DataFrame with missing values:")
-print(df)
-
-# Check for missing values
-print(f"\nMissing per column:\n{df.isna().sum()}")
+```text
+nr;length_cm;t10_s
+1;20;9,02
+2;30;11,05
+…
+9;100;20,01
+;mean;15,14
 ```
 
----
-hideInToc: true
----
+</div>
 
-# Missing Data: **Strategies**
+<div class="card card-primary card-glass pad-compact">
 
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
+## ✍️ **Four edits in the editor**
 
-df = pd.DataFrame({
-    'A': [1, 2, np.nan, 4, 5],
-    'B': [10, np.nan, 30, np.nan, 50],
-    'C': [100, 200, 300, 400, 500]
-})
+1. The line with the mean deleted: 1 line
+2. `,` replaced by `.`: 9 places
+3. `;` replaced by `,`: 20 places
+4. The column `nr` deleted with a cursor on every line: 10 lines
 
-# Strategy 1: Drop rows with NaN
-print("Drop rows with NaN:")
-print(df.dropna())
+The result is `data/processed/pendulum.csv`: ten lines, 97 bytes.
 
-# Strategy 2: Fill with column mean
-print("\nFill NaN with column mean:")
-print(df.fillna(df.mean()))
+</div>
 
-# Strategy 3: Forward fill (use previous value)
-print("\nForward fill:")
-print(df.ffill())
-```
+</div>
 
----
-hideInToc: true
----
+<div class="card card-info card-glass pad-compact mt-md">
 
-# Duplicates & **Invalid** Rows
+The README lists the four edits. A list can be read. It cannot be run. When the lab partner sends the table for 200 lengths, every edit is made again, and nothing checks that it was made the same way.
 
-```py {monaco-run} {autorun:false}
-import pandas as pd
-
-df = pd.DataFrame({                      # shaped like the seminar sample
-    'Run':       [101, 101, 101, 101, 102, 102, 102],
-    'Event':     [1,   2,   2,   3,   1,   2,   3],
-    'M':         [1864.8, 1901.2, 1901.2, -1.0, 1866.1, 1879.9, 1850.4],
-    'H1_Charge': [-1, 1, 1, -1, 0, 1, -1],
-})
-print(f"raw rows: {len(df)}")
-
-# Duplicates: the same (Run, Event) pair is the same collision counted twice
-dup = df.duplicated(['Run', 'Event'])
-print(f"duplicate (Run, Event) pairs: {dup.sum()}")
-df = df.drop_duplicates(['Run', 'Event'])
-
-# Invalid: non-physical mass, bad charge — one boolean mask per rule
-valid = (df['M'] > 0) & df['H1_Charge'].abs().eq(1)
-print(f"invalid rows (M <= 0 or |Q| != 1): {(~valid).sum()}")
-df = df[valid]
-print(f"\nclean rows: {len(df)}")
-print(df)
-```
+</div>
 
 <!--
-Speaker: this is Seminar 9's audit policy in six lines, and exactly what Seminar
-13 task 2 and task 6 ask for — the counts printed here must match the hand-written
-audit numbers. Point out that each rule is one readable boolean mask. (~2 min)
+Speaker: ask the room what they would do if the same partner sent a second
+file tomorrow. The honest answer is: the same four edits, from memory. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Detecting Outliers: **Z-Score** Method
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-normal_data = np.random.normal(100, 10, 95)
-outliers = np.array([200, 210, -50, 250, 180])
-data = np.concatenate([normal_data, outliers])
-df = pd.DataFrame({'measurement': data})
-
-# Z-score: how many standard deviations from mean
-mean, std = df['measurement'].mean(), df['measurement'].std()
-df['z_score'] = np.abs((df['measurement'] - mean) / std)
-outliers_z = df[df['z_score'] > 3]
-
-print(f"Mean: {mean:.2f}, Std: {std:.2f}")
-print(f"Outliers (|z| > 3): {len(outliers_z)}")
-print(outliers_z[['measurement', 'z_score']])
-```
-
-<div class="note-text mt-sm">
-
-💡 NumPy's `.std()` divides by *n* (`ddof=0`); pandas' `.std()` divides by *n − 1* (`ddof=1`) — the sample estimate from Lecture 11. Same data, slightly different numbers.
-
-</div>
-
-<!--
-Speaker: five outliers were injected; z-score finds only 4 — the 180 is masked
-because the outliers themselves inflate the std to ~29 (vs 10 for the clean
-data). That is the weakness of a mean/std rule on contaminated data. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Detecting Outliers: **IQR** Method
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-
-np.random.seed(42)
-data = np.concatenate([np.random.normal(100, 10, 95), [200, 210, -50, 250, 180]])
-df = pd.DataFrame({'measurement': data})
-
-# IQR: Interquartile Range
-Q1, Q3 = df['measurement'].quantile(0.25), df['measurement'].quantile(0.75)
-IQR = Q3 - Q1
-lower, upper = Q1 - 1.5*IQR, Q3 + 1.5*IQR
-outliers = df[(df['measurement'] < lower) | (df['measurement'] > upper)]
-print(f"IQR bounds: [{lower:.1f}, {upper:.1f}] → {len(outliers)} outliers")
-
-fig, ax = plt.subplots(figsize=(10, 3.5))
-ax.scatter(range(len(df)), df['measurement'], alpha=0.6, label='Data')
-ax.scatter(outliers.index, outliers['measurement'], color='red', s=100, marker='x', label='Outliers')
-ax.axhline(upper, color='orange', ls=':', label=f'Bounds')
-ax.axhline(lower, color='orange', ls=':')
-ax.legend(); ax.grid(alpha=0.3)
-plt.tight_layout(); plt.show()
-```
-
-<!--
-Speaker: quartiles are robust, so IQR catches all 5 injected outliers — but it
-reports 6: the sixth (73.8) is a legitimate tail point of the Gaussian. Two methods,
-two answers — which is why you never delete outliers blindly; flag them, look, and
-document the decision (Seminar 9 task 5). (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Data Normalization: **Why** and How
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 📏 **Why Normalize?**
-
-- Different features have different scales (energy in GeV, angles in radians)
-- Many ML algorithms perform better with normalized data
-- Makes features comparable
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-df = pd.DataFrame({
-    'energy': np.random.uniform(50, 150, 100),
-    'angle': np.random.uniform(0, np.pi, 100)
-})
-print("Original scales:")
-print(df.describe().loc[['mean', 'std', 'min', 'max']].round(2))
-
-# Standardization: (x - mean) / std → mean=0, std=1
-df_std = (df - df.mean()) / df.std()
-print("\nStandardized (z-score):")
-print(df_std.describe().loc[['mean', 'std', 'min', 'max']].round(3))
-```
-
----
-hideInToc: true
----
-
-# Normalization: **Min-Max** Scaling
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-df = pd.DataFrame({
-    'energy': np.random.uniform(50, 150, 100),
-    'momentum': np.random.uniform(1, 5, 100),
-    'angle': np.random.uniform(0, np.pi, 100)
-})
-
-# Min-Max scaling: (x - min) / (max - min) → range [0, 1]
-df_minmax = (df - df.min()) / (df.max() - df.min())
-
-print("Min-Max scaled [0, 1]:")
-print(df_minmax.describe().loc[['mean', 'std', 'min', 'max']].round(3))
-
-# Compare original vs scaled
-print("\nOriginal std:", df.std().values.round(2))
-print("Scaled std:  ", df_minmax.std().values.round(2))
-```
-
----
-layout: section
-hideInToc: true
----
-
-# Group By & **Visualisation**
-
-<!--
-Speaker: with a clean table in hand, the questions become "per category": counts
-per region, mean per detector. Split-apply-combine answers all of them in one line,
-and pandas' built-in plotting shows the answer straight from the frame. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Group By: **Split-Apply-Combine**
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-## 🔀 **Group By Pattern**
-
-1. **Split** data into groups based on criteria
-2. **Apply** a function to each group
-3. **Combine** results into a data structure
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-df = pd.DataFrame({
-    'energy': np.random.gamma(5, 2, 200),
-    'detector': np.random.choice(['A', 'B', 'C'], 200),
-})
-
-print("Statistics per detector:")
-print(df.groupby('detector')['energy'].agg(['count', 'mean', 'std']).round(2))
-```
-
-<div class="note-text mt-sm">
-
-💡 The same split-apply-combine powers **sideband / signal-region** counts: tag each event with a `region` label, then `df.groupby('region').size()` returns every yield at once — the Seminar 13 stretch goal.
-
-</div>
-
----
-hideInToc: true
----
-
-# Group By: **Advanced** Aggregations
-
-```py {monaco-run} {autorun:false}
-import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-df = pd.DataFrame({
-    'energy': np.random.gamma(5, 2, 200),
-    'detector': np.random.choice(['A', 'B', 'C'], 200),
-    'run_number': np.random.choice([1, 2, 3], 200)
-})
-
-# Group by multiple columns
-print("Mean energy per detector per run:")
-print(df.groupby(['detector', 'run_number'])['energy'].mean().unstack().round(2))
-
-# Count occurrences
-print("\nEvents per detector:")
-print(df['detector'].value_counts())
-```
-
----
-hideInToc: true
----
-
-# Visualization with Pandas: **Histograms**
-
-<div class="card card-accent card-glass pad-compact mt-sm">
-
-Pandas has built-in plotting (Matplotlib under the hood) — `df['M'].plot.hist(...)` is the Seminar 13 stretch goal. Shared `bins` make two histograms comparable.
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import pandas as pd, numpy as np, matplotlib.pyplot as plt
-
-np.random.seed(42)
-n = 500
-is_signal = np.random.choice([True, False], n, p=[0.3, 0.7])
-# Signal peaks at 15 GeV; background is a broad gamma tail — different shapes
-energy = np.where(is_signal, np.random.normal(15, 2, n), np.random.gamma(5, 2, n))
-df = pd.DataFrame({'energy': energy, 'is_signal': is_signal})
-
-fig, ax = plt.subplots(figsize=(10, 4))
-bins = np.linspace(0, 30, 31)                  # shared bins → comparable histograms
-df.loc[df['is_signal'], 'energy'].hist(bins=bins, alpha=0.5, label='Signal', ax=ax)
-df.loc[~df['is_signal'], 'energy'].hist(bins=bins, alpha=0.5, label='Background', ax=ax)
-ax.set_xlabel('Energy (GeV)'); ax.set_ylabel('Counts')
-ax.legend(); ax.grid(alpha=0.3)
-plt.tight_layout(); plt.show()
-```
-
----
-layout: section
-hideInToc: true
----
-
-# Saving and **Loading** Data
-
-<!--
-Speaker: the output of the cleaning script is a file — which format? CSV for
-humans and small tables, Parquet for anything you will read back by machine:
-typed, compressed, columnar. The seminar writes events_clean.parquet. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# File I/O with **Pandas**
-
-<div class="card card-primary card-glass pad-tight mt-md">
-
-## 📁 **Pandas Supports Many Formats**
-
-Reading and writing data is easy and consistent across formats
-
-</div>
+# NumPy Does Not Read **This File**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-info card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact">
 
-### 📥 **Reading Data**
+## 🧪 **The attempt**
 
 ```python
-# CSV
-df = pd.read_csv('data.csv')
+import numpy as np
 
-# Excel
-df = pd.read_excel('data.xlsx')
+np.loadtxt("data/raw/pendulum.csv",
+           delimiter=";", skiprows=1)
+```
 
-# JSON
-df = pd.read_json('data.json')
-
-# Parquet (large data)
-df = pd.read_parquet('data.parquet')
+```text
+ValueError: could not convert string
+'9,02' to float64 at row 0, column 3.
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-### 📤 **Writing Data**
+## 🔢 **An array, and this file**
 
-```python
-# CSV
-df.to_csv('output.csv', index=False)
-
-# Excel
-df.to_excel('output.xlsx', index=False)
-
-# JSON
-df.to_json('output.json')
-
-# Parquet
-df.to_parquet('output.parquet')
-```
+- An array holds one type. This file holds numbers, the word `mean` and an empty cell
+- `loadtxt` knows one decimal sign, the point
+- An array has positions, `data[:, 2]`. The column names stay behind in line 1 of the file
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">
+<div class="card card-info card-glass pad-compact mt-md">
 
-💡 **Best practice**: CSV for human-readable data; HDF5 or Parquet for large datasets (faster, smaller). Modern route for large/mixed tables — the Arrow backend: `pd.read_csv(..., dtype_backend="pyarrow")` or `df.convert_dtypes()`. 📁 *Same idea across formats — pick by need, not habit.*
-
-</div>
-
----
-hideInToc: true
----
-
-# CSV → **Parquet** Round-Trip
-
-```python
-import pandas as pd
-
-df = pd.read_csv('data/raw/d0.csv')                          # text in ...
-df = df.drop_duplicates(['Run', 'Event'])
-df = df[(df['M'] > 0) & df['H1_Charge'].abs().eq(1)]
-
-df.to_parquet('data/processed/events_clean.parquet')         # ... typed, compressed, columnar out
-back = pd.read_parquet('data/processed/events_clean.parquet')
-assert back.equals(df)                                       # exact round-trip, dtypes included
-
-# Read only the columns you need (Parquet skips the rest on disk)
-df = pd.read_csv('data/raw/d0.csv', usecols=['Run', 'Event', 'M'])
-
-# Stream a CSV too big for memory, one chunk at a time
-with pd.read_csv('data/raw/d0.csv', chunksize=10_000) as reader:
-    n_peak = sum(chunk['M'].between(1845, 1885).sum() for chunk in reader)
-```
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-🧪 **Not runnable in the browser** — Parquet needs the `pyarrow` engine (`pip install pyarrow`), which the in-browser Python does not ship. Run it in the seminar; this is `scripts/clean.py` minus the `region` column. For GB+ files, chunking or Dask/Polars keep memory flat.
+🐼 **Pandas** is a library for tables: columns with names, one type per column, cells that may be empty, and readers for files as they arrive. Every numeric column is a NumPy array inside. Install it once with `python -m pip install pandas` (macOS `python3 -m pip install pandas`). The usual import is `import pandas as pd`.
 
 </div>
-
----
-layout: section
-hideInToc: true
----
-
-# Worked Example: **CERN** Data
 
 <!--
-Speaker: now put the tools to work on physics-shaped problems — a one-frame Higgs
-warm-up, then the full clean → label → count → plot chain on a sample shaped like
-the seminar's D⁰ file. The same filter/cut pattern reappears in Seminar 13. (~1 min)
+Speaker: NumPy is the right tool once the table is clean and numeric. Getting
+it there is what Pandas is for. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Warm-up: **Higgs** → γγ in One Frame
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Signal and background live in **one** DataFrame with a `type` label — so `groupby` describes both at once and a mask counts the window. **Goal**: see the Higgs near 125 GeV.
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import pandas as pd, numpy as np, matplotlib.pyplot as plt
-
-np.random.seed(42)
-signal = pd.DataFrame({'mass': np.random.normal(125, 1.5, 300), 'type': 'signal'})
-background = pd.DataFrame({'mass': np.random.exponential(30, 2000) + 105, 'type': 'background'})
-df = pd.concat([signal, background], ignore_index=True)
-df = df[df['mass'] < 150]
-print(df.groupby('type')['mass'].describe()[['count', 'mean', 'std', 'min', 'max']].round(2))
-window = df['mass'].between(122, 128)
-print(f"events in 122-128 GeV: {window.sum()} (signal: {(window & (df['type'] == 'signal')).sum()})")
-
-fig, ax = plt.subplots(figsize=(10, 3.2))
-ax.hist(df['mass'], bins=45, range=(105, 150), edgecolor='white', alpha=0.7)
-ax.axvline(125, color='red', ls='--', label='Higgs (125 GeV)')
-ax.set_xlabel('m$_{γγ}$ (GeV)'); ax.set_ylabel('Events'); ax.legend()
-plt.tight_layout(); plt.show()
-```
-
----
-hideInToc: true
----
-
-# CERN Open Data **Portal**
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🌐 **Explore Real Particle Physics Data**
-
-CERN provides open access to real experimental data from LHC experiments!
-
-**URL**: [http://opendata.cern.ch](http://opendata.cern.ch)
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-### 📚 **Available Datasets**
-
-- **LHCb**: beauty/charm decays, dimuon events
-- **CMS**: proton-proton collisions (7, 8, 13 TeV)
-- **ATLAS**: selected open-data releases
-- **ALICE**: heavy-ion collisions
-
-Formats: CSV, ROOT, HDF5
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 🔬 **Example Analyses**
-
-- Higgs → ZZ → 4 leptons
-- W/Z boson production
-- Top quark pair production
-- Dimuon mass spectrum
-- Jet physics
-
-Full tutorials and documentation provided!
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-**Your next step**: Apply these NumPy/Pandas skills to real data — the seminars use the **LHCb D⁰ → K⁻π⁺** open dataset (record 401), whose K⁻π⁺ invariant-mass column `M` (D⁰ peak near **1865 MeV**) you clean, label and plot on the next three slides.
-
-</div>
-
----
-hideInToc: true
----
-
-# D⁰ Sample: **Quality** Cuts
-
-```py {monaco-run} {autorun:false}
-import pandas as pd, numpy as np
-
-np.random.seed(42)
-n_sig, n_bkg = 800, 4000
-df = pd.DataFrame({                                   # shaped like the seminar sample
-    'Run':   np.random.choice([101, 102, 103], n_sig + n_bkg),
-    'Event': np.arange(n_sig + n_bkg),
-    'M':     np.concatenate([np.random.normal(1865, 9, n_sig),        # D⁰ peak (~1865 MeV)
-                             np.random.uniform(1800, 2000, n_bkg)]),  # combinatorial background
-    'H1_Charge': np.random.choice([-1, 1, 0], n_sig + n_bkg, p=[0.49, 0.49, 0.02]),
-})
-df.loc[np.random.choice(df.index, 30, replace=False), 'M'] = -999   # a few corrupt masses ...
-df = pd.concat([df, df.sample(50, random_state=1)])                 # ... and 50 duplicated events
-print(f"raw rows: {len(df)}")
-print(f"duplicates: {df.duplicated(['Run', 'Event']).sum()}, "
-      f"invalid: {((df['M'] <= 0) | df['H1_Charge'].abs().ne(1)).sum()}")
-
-# The Seminar 9 policy, vectorised: two lines
-df = df.drop_duplicates(['Run', 'Event'])
-df = df[(df['M'] > 0) & df['H1_Charge'].abs().eq(1)].copy()
-print(f"clean rows: {len(df)}")
-print(df.describe()[['M', 'H1_Charge']].round(1))
-```
-
----
-hideInToc: true
----
-
-# D⁰ Sample: **Signal** Region & Sidebands
-
-```py {monaco-run} {autorun:false}
-import pandas as pd, numpy as np
-
-np.random.seed(42)
-m = np.concatenate([np.random.normal(1865, 9, 800), np.random.uniform(1800, 2000, 4000)])
-df = pd.DataFrame({'Event': np.arange(len(m)), 'M': m})      # the cleaned sample
-
-# Label every event: signal window 1845-1885, sidebands 1800-1830 / 1900-2000
-in_signal = df['M'].between(1845, 1885)
-in_sideband = df['M'].between(1800, 1830) | df['M'].between(1900, 2000)
-df['region'] = np.select([in_signal, in_sideband], ['signal', 'sideband'], default='gap')
-
-print(df.groupby('region').size())                             # every yield at once
-print(df.groupby('region')['M'].describe()[['count', 'mean', 'std', 'min', 'max']].round(1))
-
-# Sideband subtraction: background under the peak ≈ sideband density × window width
-bkg_per_MeV = (df['region'] == 'sideband').sum() / (30 + 100)
-n_sig = (df['region'] == 'signal').sum() - bkg_per_MeV * 40
-print(f"\nestimated signal yield: {n_sig:.0f}  (800 injected)")
-```
-
-<!--
-Speaker: this is the `region` column of Seminar 13 task 3 and the groupby stretch
-goal. np.select is the multi-way np.where; pd.cut works too when the bins are
-contiguous. The sideband subtraction lands within a few events of the truth. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# D⁰ Sample: **Plot** the Spectrum
-
-```py {monaco-run} {autorun:false}
-import pandas as pd, numpy as np, matplotlib.pyplot as plt
-
-np.random.seed(42)
-m = np.concatenate([np.random.normal(1865, 9, 800), np.random.uniform(1800, 2000, 4000)])
-df = pd.DataFrame({'M': m})
-
-fig, ax = plt.subplots(figsize=(10, 4.2))
-ax.hist(df['M'], bins=100, range=(1800, 2000), edgecolor='white', linewidth=0.3)
-ax.axvspan(1845, 1885, color='red', alpha=0.15, label='signal window')
-ax.axvspan(1800, 1830, color='gray', alpha=0.25, label='sidebands')
-ax.axvspan(1900, 2000, color='gray', alpha=0.25)
-ax.axvline(1865, color='red', ls='--', lw=1.5, label='D⁰ (1865 MeV)')
-ax.set_xlabel('K⁻π⁺ invariant mass (MeV/c²)')
-ax.set_ylabel('Events')
-ax.set_title('K⁻π⁺ invariant-mass spectrum (simulated, shaped like the seminar sample)')
-ax.legend(); ax.grid(alpha=0.3)
-plt.tight_layout(); plt.show()
-```
-
-<div class="note-text mt-sm">
-
-💡 In the seminar this is one line from the cleaned frame: `df['M'].plot.hist(bins=100, range=(1800, 2000), ax=ax)`.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Bringing It **Together**
-
-<!--
-Speaker: close with habits, not syntax — the do's and don'ts are what separate a
-reproducible cleaning script from a notebook full of ad-hoc edits. Then one last
-check question and the recap. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Best Practices: **Do's** and Don'ts
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Do**
-
-1. **Visualize first** — distributions before analysis
-2. **Check for missing values** before any computation
-3. **Document data sources** and every preprocessing step
-4. **Validate data quality** — ranges, units, consistency
-5. **Keep raw data separate** — `processed/` is regenerable
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **Don't**
-
-1. **Assume data is clean** without checking
-2. **Delete outliers** without understanding why they exist
-3. **Mix loading and analysis** — separate the pipeline steps
-4. **Hardcode file paths** — use config or CLI arguments
-5. **Skip exploratory analysis** — jumping to conclusions costs time
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-tight mt-md">
-
-**Rule of thumb**: if you can't explain where every number came from, go back and document your pipeline. Version-control the scripts and save intermediate results — more in the Reproducible Workflows lecture.
-
-</div>
-
----
-hideInToc: true
----
-
-# Performance **Tips**
+# Read the File: **Three Attempts**
 
 <div class="grid-3 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact">
 
-### 🔢 **NumPy**
-
-✅ Use vectorized operations (no loops!)
-
-✅ Pre-allocate arrays if possible
-
-✅ Use appropriate data types (int32 vs int64)
-
-✅ Avoid unnecessary copies
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-### 🐼 **Pandas**
-
-✅ Prefer vectorised column operations
-
-⚠️ `apply()` is a Python loop in disguise — last resort
-
-❌ `iterrows()` — almost never
-
-✅ Use categorical dtype for repeated strings
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-### ⚙️ **General**
-
-✅ Profile code to find bottlenecks
-
-✅ Load only needed columns
-
-✅ Filter early (before heavy operations)
-
-✅ Consider Dask/Polars for out-of-memory datasets
-
-</div>
-
-</div>
+## 1️⃣ **No options**
 
 ```python
-# Slow (loop)
-for i in range(len(df)):
-    df.loc[i, 'new_col'] = df.loc[i, 'A'] * 2
-
-# Fast (vectorized)
-df['new_col'] = df['A'] * 2
+df = pd.read_csv(path)
+print(df.shape)
 ```
+
+```text
+(10, 1)
+```
+
+One column. Pandas expects a comma between values, and here the commas are decimal commas.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 2️⃣ **The separator**
+
+```python
+df = pd.read_csv(path, sep=";")
+print(df.dtypes)
+```
+
+```text
+nr           float64
+length_cm     object
+t10_s         object
+dtype: object
+```
+
+Three columns. `object` means text: `9,02` is not a number.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 3️⃣ **The decimal sign**
+
+```python
+df = pd.read_csv(path, sep=";",
+                 decimal=",")
+print(df.dtypes)
+```
+
+```text
+nr           float64
+length_cm     object
+t10_s        float64
+dtype: object
+```
+
+`t10_s` is a column of numbers.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+`path` is `"data/raw/pendulum.csv"`. `read_csv` returns the table, here named `df`. The last line of the output is the type of the list of types itself. Pandas 3 prints `str` where earlier versions print `object`.
+
+</div>
+
+<!--
+Speaker: these are the two facts the spreadsheet took from the regional
+settings of the computer: the separator and the decimal sign. Here they stand
+in the code, so the file is read the same way on every laptop. (~3 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-<MCQ
-  question="You need the square of every value in a large NumPy array. Which is the fast, idiomatic NumPy approach?"
-  :options="[
-    'arr ** 2 — one vectorised operation over the whole array',
-    'A Python for-loop that appends x*x to a list',
-    'A list comprehension [x**2 for x in arr]',
-    'arr.apply(lambda x: x**2)'
-  ]"
-  :correct="0"
-  explanation="Vectorised operations run in C across the entire array at once — far faster than any Python-level loop or comprehension, and NumPy arrays have no apply method."
-/>
+# What Came Back: a **DataFrame**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🖨️ **`print(df)`**
+
+```text
+    nr length_cm  t10_s
+0  1.0        20   9.02
+1  2.0        30  11.05
+2  3.0        40  12.61
+3  4.0        50  14.23
+4  5.0        60  15.49
+5  6.0        70  16.84
+6  7.0        80  17.90
+7  8.0        90  19.10
+8  9.0       100  20.01
+9  NaN      mean  15.14
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **Read it column by column**
+
+- The numbers 0 to 9 on the left are not from the file. They are the **index**: a label for each row
+- `nr` is `float64`, 1.0 and 2.0. One cell is empty. Pandas writes it as **NaN**, and NaN exists only as a float
+- `length_cm` is text. One cell says `mean`, and a column has one type
+- `t10_s` is `float64`: every cell is a number, the mean included
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Two columns have a type they should not have, and both point at row 9. The types are the first check of a table: a column of numbers that is not numeric holds a cell that is not a number.
+
+</div>
+
+<!--
+Speaker: let the room find row 9 from the two wrong types before pointing at
+it. Nothing has been cleaned yet. The file has only been read. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Drop the Row That Is **Not a Measurement**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎯 **A mask**
+
+```python
+keep = df["nr"].notna()
+print(keep.sum(), "of", len(keep))
+df = df[keep]
+```
+
+```text
+9 of 10
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📖 **Line by line**
+
+- `df["nr"]` is one column
+- `.notna()` gives True where the cell holds a value, as a mask of a NumPy array does
+- `df[keep]` is the table of the rows where the mask is True
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+The line states a rule: a measurement has a row number, and the line with the mean has none.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ `df = df.iloc[:-1]` also removes the last row. It states a position and no reason. On a file without a mean line it deletes a measurement, and no error is raised.
+
+</div>
+
+<!--
+Speaker: the difference between the two lines is the point of the slide. A
+rule keeps working on the next file. A position does not. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Drop the Column, Fix the **Type**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧹 **Three lines**
+
+```python
+print(df["length_cm"].sum())
+df = df.drop(columns="nr")
+df["length_cm"] = df["length_cm"].astype(int)
+print(df["length_cm"].sum())
+print(df.dtypes)
+```
+
+```text
+2030405060708090100
+540
+length_cm      int64
+t10_s        float64
+dtype: object
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔤 **Text that looks like numbers**
+
+- Before the conversion the column holds the texts `"20"`, `"30"`, … Their sum joins them: `"20" + "30"` is `"2030"`
+- `.astype(int)` converts every cell. With the word `mean` still in the column it stops: `invalid literal for int() with base 10: 'mean'`
+- `drop(columns="nr")` returns the table without that column. A row number is bookkeeping, not a measurement
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Printed, the text `20` and the number `20` look the same. `df.dtypes` tells them apart.
+
+</div>
+
+<!--
+Speaker: the sum 2030405060708090100 is worth a pause. Nothing failed and no
+warning was printed. A sum of text is a longer text. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Write the **File**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 1️⃣ **`df.to_csv(out)`**
+
+```text
+,length_cm,t10_s
+0,20,9.02
+1,30,11.05
+…
+```
+
+The index is written as a first column without a name. The row numbers are back.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 2️⃣ **`df.to_csv(out, index=False)`**
+
+```text
+length_cm,t10_s
+20,9.02
+30,11.05
+…
+```
+
+Only the columns of the table. This is the form of the hand-cleaned file.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📁 `out` is `"data/processed/pendulum.csv"`. A script reads from `data/raw/` and writes to `data/processed/`. It never writes into `data/raw/`. Everything in `data/processed/` can be deleted and made again by running the script.
+
+</div>
+
+<div class="note-text mt-sm">
+
+Before the first run the hand-cleaned file is renamed `pendulum_by_hand.csv`, so that the two can be compared.
+
+</div>
+
+<!--
+Speaker: index=False is forgotten once by everybody. The sign is a first
+column named "Unnamed: 0" when the file is read again. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same File? **Compare**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **As tables**
+
+```python
+by_hand = "data/processed/pendulum_by_hand.csv"
+hand = pd.read_csv(by_hand)
+script = pd.read_csv(out)
+print(hand.equals(script))
+```
+
+```text
+True
+```
+
+The same columns, the same types, the same values.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🧱 **As bytes**
+
+```text
+by hand     97 bytes
+by script   95 bytes
+
+by hand     80,17.90    90,19.10
+by script   80,17.9     90,19.1
+```
+
+Two lines differ, by one character each.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+17.90 and 17.9 are the same float64, and Pandas writes the shortest text that gives the number back. In the file the zero carried a meaning: the time was read to 0.01 s. Whether two files are *the same* has two answers, and a comparison says which one it gives.
+
+</div>
+
+<!--
+Speaker: ask which of the two answers a reader of a paper needs. For the numbers, the table. For "is
+this the file that was published", the bytes. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Identical, and **How to Know**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **Say how a number is written**
+
+```python
+df.to_csv(out, index=False,
+          float_format="%.2f",
+          lineterminator="\n")
+```
+
+- `"%.2f"`: two decimals in every row, `17.90`
+- `"\n"`: one byte at the end of each line on every system. Without it Windows writes two, CR and LF
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🔐 **Compare the checksums**
+
+```text
+$ cd data/processed
+$ sha256sum pendulum.csv pendulum_by_hand.csv
+be05af03…fff0870b  pendulum.csv
+be05af03…fff0870b  pendulum_by_hand.csv
+```
+
+Both files have 97 bytes and one SHA-256. They are identical.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The same check in Python: `Path(out).read_bytes() == Path(by_hand).read_bytes()` gives `True`. On macOS the command is `shasum -a 256`.
+
+</div>
+
+<!--
+Speaker: this is the proof that the script does what the hands did. From here
+on the hand-cleaned file is not needed: the script makes it. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The **Script**
+
+```python
+"""Clean the pendulum table: data/raw -> data/processed."""
+import pandas as pd
+
+RAW = "data/raw/pendulum.csv"
+OUT = "data/processed/pendulum.csv"
+
+df = pd.read_csv(RAW, sep=";", decimal=",")     # ; between values, decimal comma
+df = df[df["nr"].notna()]                       # the mean line has no row number
+df = df.drop(columns="nr")                      # bookkeeping, not a measurement
+df["length_cm"] = df["length_cm"].astype(int)
+df.to_csv(OUT, index=False, float_format="%.2f", lineterminator="\n")
+print(f"{len(df)} rows written to {OUT}")
+```
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ▶️ **Run it**
+
+```text
+$ python scripts/clean_pendulum.py
+9 rows written to data/processed/pendulum.csv
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ♻️ **Run it again**
+
+Delete `data/processed/pendulum.csv` and run the script. The file is back, with the same 97 bytes.
+
+</div>
+
+</div>
+
+<!--
+Speaker: run it live from the terminal of VS Code, delete the output in the
+Side Bar, run it again. Each of the four hand edits is one line here: the two
+replacements are the two options of read_csv. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# By Hand and **By Script**
+
+| | **By hand, in the editor** | **By script** |
+| --- | --- | --- |
+| The record of what was done | A list in the README, written afterwards | The script itself |
+| A new file with 200 rows | The four edits again | The same command |
+| A mistake found a month later | Start again from the raw file | Change one line, run again |
+| Proof that the result is the same | None | The same checksum on every run |
+| The raw file | One slip in the wrong tab changes it | Opened for reading only |
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+⚙️ A script is the written-down form of the cleaning. It can be read, it can be run again, and it is kept under Git next to the README.
+
+</div>
+
+<!--
+Speaker: the editor remains the right tool for looking at a file and for a
+single edit. The line is crossed when the result of an edit is used for a
+number that somebody else will read. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Try It: the Cleaning in the **Browser**
+
+```py {monaco-run} {autorun:false}
+import io
+import pandas as pd
+raw = """nr;length_cm;t10_s
+1;20;9,02
+2;30;11,05
+3;40;12,61
+;mean;10,89
+"""
+df = pd.read_csv(io.StringIO(raw), sep=";", decimal=",")
+df = df[df["nr"].notna()].drop(columns="nr")
+df["length_cm"] = df["length_cm"].astype(int)
+print(df.to_csv(index=False, float_format="%.2f"))
+```
+
+<div class="note-text mt-sm">
+
+The browser has no project folder, so the first three rows of the file stand in the code, with their own mean line. Take out `decimal=","` and run it again: the times are written as text in quotes, `"9,02"`.
+
+</div>
+
+<!--
+Speaker: io.StringIO lets read_csv read a text as if it were a file. With
+decimal="," removed nothing fails: t10_s stays text, float_format does not
+apply to text, and to_csv puts each value in quotes because it holds a comma.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# The **DataFrame**
+
+<!--
+Speaker: the script used a DataFrame without saying what it is. This section
+takes it apart on the cleaned pendulum table: columns, rows, masks, new
+columns. Every fence runs in the browser. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Table with **Names and Types**
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 1.15fr 1fr;">
+
+<div>
+
+<img class="fig" src="/figures/viz_cleaning_dataframe.svg" style="display:block;margin:0 auto;width:100%;">
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🐼 **The parts**
+
+- A **DataFrame** is a set of columns of equal length that share one set of row labels
+- One column is a **Series**: a NumPy array, a name and the row labels
+- Each column has its own type. The types are those of NumPy: `int64`, `float64`, `bool`. Text is `object`, or `str` from Pandas 3 on
+- The **index** starts as 0, 1, 2, … A row keeps its label when the table is filtered or sorted
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A NumPy array is addressed by position: `data[:, 1]`. A DataFrame is addressed by name: `df["t10_s"]`. The name comes from the file, so the code stays right when the file gets one more column.
+
+</div>
+
+<!--
+Speaker: a row is one observation and a column is one variable, as in the
+anatomy of a table. The DataFrame adds a type to each column and a label to
+each row. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Build One from a **Dict**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+df = pd.DataFrame({"length_cm": [20, 30, 40, 50, 60, 70, 80, 90, 100],
+                   "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01]})
+print(df.head(3))
+print("shape:  ", df.shape)
+print("columns:", list(df.columns))
+print("dtypes: ", df.dtypes.astype(str).to_dict())
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A dict with one key per column and a list of values for each: that is a DataFrame written out. `head(3)` is the first three rows. `shape` is rows and columns, as for an array.
+
+</div>
+
+<!--
+Speaker: the cleaned pendulum table, typed in. The following fences start
+from the same two lines. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Column, **Several Columns**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+
+df = pd.DataFrame({"length_cm": [20, 30, 40, 50, 60, 70, 80, 90, 100],
+                   "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01]})
+
+t = df["t10_s"]                          # one name: a Series
+print(type(t).__name__, t.dtype, len(t))
+print(t.sum(), t.mean())                 # 136.25 / 9
+print(t.to_numpy())                      # the NumPy array inside
+two = df[["length_cm", "t10_s"]]         # a list of names: a DataFrame
+print(type(two).__name__, two.shape)
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+One pair of brackets with a name gives a Series. A list of names inside the brackets gives a DataFrame. The mean 15.14 is the number that stood in the last line of the raw file.
+
+</div>
+
+<!--
+Speaker: sum, mean, std, min, max and median exist on a Series as on an
+array. to_numpy() is the way back to everything the room knows. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Rows: **Position and Label**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+df = pd.DataFrame({"length_cm": [20, 30, 40, 50, 60, 70, 80, 90, 100],
+                   "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01]})
+print(df.iloc[0].tolist())               # iloc: by position, row 0
+print(df.loc[0, "t10_s"])                # loc: by label, row 0, column t10_s
+long = df[df["length_cm"] > 70]          # the rows keep their labels
+print(long)
+print(long.iloc[0].tolist())             # its first row has the label 6
+```
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ After a filter, position and label differ. `long.iloc[0]` is the row of 80 cm. `long.loc[0]` raises `KeyError: 0`: no row has that label any more. `long.reset_index(drop=True)` numbers the rows again from 0.
+
+</div>
+
+<!--
+Speaker: the label is what lets a row be found again in the raw table after
+any amount of filtering. It is used that way later, to name the bad rows.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Masks**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+df = pd.DataFrame({"length_cm": [20, 30, 40, 50, 60, 70, 80, 90, 100],
+                   "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01]})
+
+mask = df["t10_s"] > 15                  # a Series of True and False
+print(mask.tolist(), mask.sum())
+both = (df["length_cm"] >= 40) & (df["t10_s"] < 16)
+print(df[both])
+print(df[~both].shape)                   # ~ turns the mask round
+```
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ As with NumPy: `&` for and, `|` for or, `~` for not, and each comparison in its own parentheses. Python's `and` stops with `ValueError: The truth value of a Series is ambiguous`.
+
+</div>
+
+<!--
+Speaker: replace & by and, run it and read the error with the room. Then take
+away one pair of parentheses. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A New Column from **Other Columns**
+
+```py {monaco-run} {autorun:false}
+import numpy as np
+import pandas as pd
+df = pd.DataFrame({"length_cm": [20, 30, 40, 50, 60, 70, 80, 90, 100],
+                   "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01]})
+df["length_m"] = df["length_cm"] / 100                    # cm to m
+df["T_s"] = df["t10_s"] / 10                              # one swing
+df["g"] = 4 * np.pi**2 * df["length_m"] / df["T_s"]**2    # from T = 2π √(L/g)
+print(df.round(3).head(6))
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+An assignment to a new name adds a column. The arithmetic is done on whole columns, as with arrays, and no loop is written. The unit stands in the name: with `length_cm` in the formula the last column reads 970 to 993, a hundred times g.
+
+</div>
+
+<!--
+Speaker: head(6) keeps the printout short. All nine values of g lie between
+9.70 and 9.93. Put df["length_cm"] into the formula to show the factor 100.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Sort and **Summarise**
+
+```py {monaco-run} {autorun:false}
+import numpy as np
+import pandas as pd
+df = pd.DataFrame({"length_cm": [20, 30, 40, 50, 60, 70, 80, 90, 100],
+                   "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01]})
+df["g"] = 4 * np.pi**2 * (df["length_cm"] / 100) / (df["t10_s"] / 10)**2
+print(df.sort_values("g", ascending=False).head(3).round(3))
+g = df["g"]
+print(f"std: Pandas {g.std():.3f}, NumPy {g.to_numpy().std():.3f}")
+print(f"g = {g.mean():.2f} ± {g.std() / len(g)**0.5:.2f} m/s²")
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`sort_values` returns the table in a new order, each row with its label. Pandas divides by n − 1 in `std`, NumPy by n: 0.085 against 0.080 for nine values. The standard error is 0.085 / √9 = 0.03.
+
+</div>
+
+<!--
+Speaker: g = 9.80 ± 0.03 m/s² from nine rows and three lines. The n − 1 is
+the estimate from a sample. Neither default is wrong. They are different
+defaults, and a report says which one it used. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# A Real **File**
+
+<!--
+Speaker: the same steps on D0_KPi.csv, 91 583 rows. Nobody can read this file
+by eye, so every statement about it is the output of a line of code. The code
+and its output on these slides were run on the file itself. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Read It and **Look**
+
+```python
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv("data/raw/D0_KPi.csv")
+print(df.shape)
+print(df.head())
+```
+
+```text
+(91583, 4)
+           M         PT       TAU       IPCHI2
+0  1880.6490  3000.9534  0.000413  1299.167500
+1  1860.6599  2803.4126  0.000186     0.341822
+2  1913.8755  2542.1690  0.000185    17.386473
+3  1888.7571  4453.1040  0.000568    56.797930
+4  1862.5100  2764.2280  0.000287     3.644997
+```
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+One row is one K⁻π⁺ candidate. `M` is its mass in MeV/c², `PT` its transverse momentum in MeV/c, `TAU` its decay time in ns. `IPCHI2` has no unit.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+No option is needed: comma between values, decimal point, names in line 1. The printout is rounded to six decimals. The table holds every digit of the file.
+
+</div>
+
+</div>
+
+<!--
+Speaker: IPCHI2 says how well the candidate points back to the collision
+point: small means it does. With np.loadtxt the same file became an array of
+shape (91583, 4), and line 1 was skipped with skiprows=1. Here line 1 becomes
+the names. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Types and **Memory**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧾 **`df.info()`**
+
+```text
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 91583 entries, 0 to 91582
+Data columns (total 4 columns):
+ #   Column  Non-Null Count  Dtype
+---  ------  --------------  -----
+ 0   M       91583 non-null  float64
+ 1   PT      91583 non-null  float64
+ 2   TAU     91583 non-null  float64
+ 3   IPCHI2  91583 non-null  float64
+dtypes: float64(4)
+memory usage: 2.8 MB
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **What it says**
+
+- Four columns of `float64`. No column is text, so every cell was read as a number
+- `91583 non-null` four times: no cell is empty
+- 91 583 rows × 4 columns × 8 bytes = 2 930 656 bytes. Pandas counts in units of 1024 and prints 2.8 MB
+- The same table is 3 926 142 bytes as text on disk
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ By the types this file is clean. The types say that every cell is a number. They do not say that every number is a measurement.
+
+</div>
+
+<!--
+Speaker: compare with the pendulum file, where the types found the bad row at
+once. Here they find nothing, and the file still has problems. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `describe()`: Eight Numbers per **Column**
+
+```text
+                  M            PT           TAU         IPCHI2
+count  91583.000000  91583.000000  91583.000000   91583.000000
+mean    1864.104582   3448.928182     -0.052522     457.513042
+std       25.565096   1301.067191      2.312500    6378.852807
+min     1766.209600    755.268600   -100.000000       0.000014
+25%     1845.991900   2723.341800      0.000185       2.124486
+50%     1864.078100   3048.925800      0.000272       6.298690
+75%     1881.531250   3676.466550      0.000605      27.436283
+max     2453.658400  64509.950000      0.578799  891711.060000
+```
+
+<div class="grid-3 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+`25%`, `50%`, `75%`: a quarter, a half and three quarters of the rows lie below this value. `50%` is the median.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+**M**: mean 1864.10, median 1864.08. They agree, and half of the rows lie between 1845.99 and 1881.53.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+**TAU**: median 0.000272, mean −0.0525, minimum −100. A mean decay time below zero.
+
+</div>
+
+</div>
+
+<!--
+Speaker: print(df.describe()) is the first thing to run on any table. Read it
+row by row with the room and ask which number cannot be right. A mean far from
+the median means a few values far from the rest. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 49 Rows Move the **Mean**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔎 **The value −100**
+
+```python
+print((df["TAU"] == -100).sum())
+```
+
+```text
+49
+```
+
+`TAU = -100` is this file's code for *no decay time was computed*. The mask `TAU != -100` kept 91 534 rows of the array. The other 49 are 0.054 % of the file.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➗ **The mean, by hand**
+
+```text
+49 rows × (−100)       −4900.000
+91 534 other rows         +89.868
+sum of TAU             −4810.132
+
+−4810.132 / 91 583  =  −0.0525
+    89.868 / 91 534  =   0.000982
+```
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ One row in about 1900 turns a mean of 0.000982 ns into −0.0525 ns and a standard deviation of 0.0044 into 2.31. The median barely moves: 0.0002723 against 0.0002725. A code for a missing value is a number, and every sum counts it.
+
+</div>
+
+<!--
+Speaker: nothing warned. describe() ran, a fit would run, a histogram would
+be drawn. With the array the code had to be masked out by hand in every
+calculation. The check is to look at min and max of every column and ask
+whether such a value can be measured. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Code in a **Histogram**
+
+<img class="fig" src="/figures/viz_cleaning_tau_code.svg" style="display:block;margin:0 auto;max-height:330px;">
+
+<div class="note-text mt-sm">
+
+Left: the column as stored. The code sets the scale of the axis, and all 91 534 measurements fall into two bars. Right: the same column in picoseconds with the code taken out.
+
+</div>
+
+<!--
+Speaker: the left panel is what df["TAU"].hist() draws on the raw file. A
+histogram with one bar far from all the others is the picture of a code.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# From a Code to **NaN**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🕳️ **Replace the code**
+
+```python
+df["TAU"] = df["TAU"].replace(-100, np.nan)
+print(df.isna().sum())
+print(df["TAU"].count(), df["TAU"].mean())
+```
+
+```text
+M          0
+PT         0
+TAU       49
+IPCHI2     0
+dtype: int64
+91534 0.000981802006321804
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📖 **What NaN is**
+
+- **NaN**, *not a number*, is a float64 pattern that means *no value here*. Pandas uses it for every empty cell
+- `isna()` gives True for NaN. Its sum counts the gaps per column
+- `count()` counts the cells that hold a value: 91 534
+- `mean`, `sum`, `std` and `describe` leave NaN out
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The same at reading: `pd.read_csv(path, na_values={"TAU": [-100]})`. The column is named, because −100 is a code in `TAU` only. In another column it could be a measurement.
+
+</div>
+
+<!--
+Speaker: the gap is now visible to every function of Pandas. The 49 rows are
+still in the table, with their mass, momentum and IPCHI2. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# How NaN **Behaves**
+
+```py {monaco-run} {autorun:false}
+import numpy as np
+import pandas as pd
+tau = pd.Series([0.41, 0.19, -100, 0.57, -100])
+print(tau.mean())                          # the code counts as a value
+tau = tau.replace(-100, np.nan)
+print(tau.tolist())
+print(tau.isna().sum(), tau.count(), len(tau))
+print(tau.mean())                          # Pandas leaves NaN out
+print(np.mean(tau.to_numpy()))             # NumPy does not
+print(np.nan == np.nan, (tau > 0).tolist())
+```
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ NaN equals nothing, not even itself: find a gap with `isna()`, never with `== np.nan`. A comparison with NaN is False.
+
+</div>
+
+<!--
+Speaker: the mean with the code is −39.766. np.mean on the array gives nan:
+NumPy has np.nanmean for this. Pandas made the other choice, and a mean of a
+column with gaps is the mean of the values that are there. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Comparison with NaN Is **False**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **Count three ways**
+
+```python
+print((df["TAU"] >= 0).sum())
+print((df["TAU"] < 0).sum())
+print(df["TAU"].isna().sum())
+```
+
+```text
+91531
+3
+49
+```
+
+91 531 + 3 = 91 534. The 49 rows with NaN are in neither group.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Two masks, two tables**
+
+- `df[df["TAU"] >= 0]` has 91 531 rows. It drops the 3 negative values and the 49 gaps, and prints nothing
+- `df[~(df["TAU"] < 0)]` has 91 580 rows. It drops the 3 negative values. The gaps stay
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Write the mask for the rows that break a rule, count it, and remove it with `~`. A mask for the good rows also removes every row that could not be compared.
+
+</div>
+
+<!--
+Speaker: 52 rows against 3. Both lines look right, and the difference appears
+only in the counts. Hence the habit: count before and after every filter.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which Rows Have the **Gap**?
+
+<img class="fig" src="/figures/viz_cleaning_missing_rows.svg" style="display:block;margin:0 auto;max-height:300px;">
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+```python
+gap = df["TAU"].isna()
+print(df.loc[gap, "IPCHI2"].median())
+print(df.loc[~gap, "IPCHI2"].median())
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+`31465.645` and `6.29089965`. Of the 49 rows without a decay time, 42 have `IPCHI2` above 1000. Among all rows, 4.6 % do.
+
+</div>
+
+</div>
+
+<!--
+Speaker: df.loc[mask, "name"] is rows by mask and a column by name. The gaps
+are not spread evenly: they sit in the candidates that do not point back to
+the collision point. Dropping them removes one kind of row. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why a Value Is Missing: **Three Cases**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🎲 **By chance**
+
+The gap has nothing to do with any value.
+
+*A cable drops one reading in a hundred.*
+
+Dropping the rows loses data. What stays is still a fair sample.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔗 **Tied to another column**
+
+The gap depends on a value that is in the table.
+
+*`TAU` is missing where `IPCHI2` is large.*
+
+Dropping the rows removes one kind of row. The other column shows which.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🚫 **Tied to the value itself**
+
+The gap depends on the value that is missing.
+
+*A sensor writes nothing above its range.*
+
+The table cannot show what it lost. Only knowing how the data were taken can.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Three things can be done with a gap: keep it as NaN, drop the row, or fill it in. A filled value is a number nobody measured. If a gap is filled, a column says in which rows.
+
+</div>
+
+<!--
+Speaker: statistics calls the three cases missing completely at random,
+missing at random and missing not at random. The names matter less than the
+question: are the rows with a gap like the rows without one? The line on the
+previous slide answers it. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Data **Quality**
+
+<!--
+Speaker: the missing values were one kind of problem. This section goes
+through the others in a fixed order, each with one line of Pandas and its
+result on the file, and ends with the list on one slide. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Documented **Case**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **2010 and 2013**
+
+- 2010: a paper in economics reports that countries with public debt above 90 % of GDP grew by −0.1 % a year on average. It is quoted in debates on budget cuts
+- 2013: a student asks the authors for their spreadsheet and repeats the calculation. The average is +2.2 %
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔍 **What the spreadsheet showed**
+
+- A formula averaged rows 30 to 44. The data ran to row 49: 5 of 20 countries were left out
+- The first post-war years of three countries were not in the calculation
+- Each country counted once, whether it had 1 year in the group or 19
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+None of the three is exotic: rows left out by a slip, rows left out without a written rule, a way of averaging that nobody could see. In a spreadsheet the calculation sits in the cells, next to the data. In a script every step is a line, and every excluded row has a rule and a count.
+
+</div>
+
+<div class="note-text mt-sm">Reinhart & Rogoff, <em>Growth in a Time of Debt</em>, 2010. Herndon, Ash & Pollin, 2013.</div>
+
+<!--
+Speaker: the pendulum file had the same disease in small: a line with a mean,
+computed by a formula, stored among the measurements. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Validity: **Impossible Values**
+
+```python
+bad_tau = df["TAU"] < 0
+print(bad_tau.sum())
+print(df[bad_tau])
+```
+
+```text
+3
+               M          PT       TAU      IPCHI2
+22854  1844.2952  10253.5440 -0.137153   64641.477
+35318  1822.4904   2943.2370 -0.059467  891711.060
+42860  1867.3162   2748.1152 -0.098111  120145.600
+```
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+| Column | Rule from its meaning | Rows that break it |
+| --- | --- | --- |
+| `M`, `PT` | a mass and a momentum are positive | 0 |
+| `TAU` | a decay time is not negative | 3 |
+| `IPCHI2` | a χ² is not negative | 0 |
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+A validity rule comes from what the column means, not from the values in the file. Each rule is one mask, and the sum of the mask is the count. The labels on the left name the rows in the raw file.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the three rows also have very large IPCHI2, like the rows with the
+code. One line more for each of the other rules: (df["M"] <= 0).sum() and so
+on, all zero. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Far from the Rest: **Outliers**
+
+```python
+print(df[~df["M"].between(1800, 1930)])
+```
+
+```text
+               M          PT       TAU      IPCHI2
+10046  2453.6584    755.2686  0.227682    1.050094
+89859  1766.2096  12493.0220  0.003727  214.383360
+```
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **What the file shows**
+
+- All other 91 581 masses lie between 1808.14 and 1920.35 MeV/c²
+- Row 10046 also has the smallest `PT` of the file, 755.27. The next smallest is 2495.66
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚖️ **Not impossible**
+
+A kaon and a pion can have a mass of 2454 MeV/c². The value breaks no rule of physics. It lies outside the window in which this sample was selected, and that is a statement about the file.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+An **outlier** is a value far from the others. It can be an error, or the most interesting row of the table. A script may drop it only with a reason written beside the line.
+
+</div>
+
+<!--
+Speaker: between(a, b) is True from a to b, both ends included. The two rows
+were found by looking at min and max in describe(). (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Rule for Outliers: **1.5 × IQR**
+
+<img class="fig" src="/figures/viz_cleaning_outlier_rule.svg" style="display:block;margin:0 auto;max-height:290px;">
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+Q1 and Q3 are the `25%` and `75%` rows of `describe()`. IQR = Q3 − Q1. The fences are Q1 − 1.5 IQR and Q3 + 1.5 IQR. For `M`: 1881.53 − 1845.99 = 35.54, fences 1792.68 and 1934.84, 2 rows outside.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+For `TAU` the fences are −0.00044 and 0.00124 ns: 11 435 rows outside, 12.5 % of the column. A decay time has a long tail by its nature. The rule was made for a symmetric column.
+
+</div>
+
+</div>
+
+<!--
+Speaker: a rule flags, a person decides. On M the rule finds the two rows a
+person would point at. On TAU it would throw away the long-lived candidates,
+which are the ones a lifetime measurement needs. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Uniqueness: **Duplicates**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+
+df = pd.DataFrame({"length_cm": [20, 30, 30, 40, 40],
+                   "t10_s": [9.02, 11.05, 11.05, 12.61, 12.58]})
+print(df.duplicated().tolist(), df.duplicated().sum())   # row 2 repeats row 1
+print(df.duplicated(subset="length_cm").sum())           # this column only
+print(df.drop_duplicates())                              # both rows of 40 cm stay
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A duplicate is a row that is there twice: a file appended twice, a form sent twice. On `D0_KPi.csv`, `df.duplicated().sum()` is 0. `df["M"].duplicated().sum()` is 5437: equal masses in rows that differ elsewhere. They are not duplicates.
+
+</div>
+
+<!--
+Speaker: which columns make a row "the same" is a decision. With an event
+number in the file, that column would be the subset. This file has none, so
+the whole row is compared. The 5437 equal masses are chance: the source stored
+M as float32, with steps of 0.00012 near 1865, and 91 583 values in a window
+of 100 MeV/c² must coincide now and then. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Consistency and **Units**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔗 **Consistency: do the parts agree?**
+
+- With the description: `df.shape` is `(91583, 4)` and `df.dtypes` is four times `float64`, as the README says
+- With each other: the raw pendulum file stores a mean, `15,14`. The mean of its nine rows is 15.1389. The two agree
+- Within a column: one type, one format, one spelling
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **Units: is the size right?**
+
+```python
+print(df["M"].median())
+print(df["TAU"].median() * 1000)
+```
+
+```text
+1864.0781
+0.27245521000000006
+```
+
+The D⁰ mass is 1864.84 MeV/c²: `M` is in MeV/c², not GeV/c². The D⁰ lifetime is 0.410 ps, and a typical `TAU` × 1000 is 0.27: the column is in ns.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A unit check compares one typical value of the column with a number known from elsewhere. A wrong unit shows as a factor of 10, 100 or 1000.
+
+</div>
+
+<!--
+Speaker: the unit of a column is metadata. It is in the README or in the name
+of the column, and nowhere in the numbers. The check is the only way to catch
+a README that is wrong. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Mixed Units in **One Column**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+
+df = pd.DataFrame({"length_cm": [20, 30, 0.4, 50, 0.6],
+                   "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49]})
+in_m = df["length_cm"] < 2                 # nobody built a pendulum of 0.4 cm
+print(in_m.sum(), "rows are in metres")
+df.loc[in_m, "length_cm"] = df.loc[in_m, "length_cm"] * 100
+print(df)
+```
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ `df.loc[mask, "name"] = …` writes into the rows of the mask. `df[mask]["name"] = …` writes into a temporary copy: the table stays as it was, and Pandas prints a warning.
+
+</div>
+
+<!--
+Speaker: two people typed into one column, one in centimetres and one in
+metres. The mask states the rule, its sum is the count, and loc repairs the
+rows in place. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Five Questions for **Any Table**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| Question | One line | `D0_KPi.csv` | `pendulum.csv`, raw |
+| --- | --- | --- | --- |
+| **Completeness**: is every cell filled? | `df.isna().sum()`, `(df == -100).sum()` | no empty cell, 49 codes in `TAU` | 1 empty cell in `nr` |
+| **Validity**: can every value be true? | `(df["TAU"] < 0).sum()` | 3 rows | 0 rows |
+| **Uniqueness**: is each row there once? | `df.duplicated().sum()` | 0 rows | 0 rows |
+| **Consistency**: do the parts agree? | `df.dtypes`, `df.shape` | 4 × `float64`, 91 583 × 4 | `length_cm` is text |
+| **Units**: is a typical value the right size? | `df["M"].median()` | 1864.08, known 1864.84 | g = 979.5 without cm to m |
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-info card-glass pad-compact">
+
+The five lines take a minute on any table. They are run before the first plot and before the first fit.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+The result is a list of counts. It goes into the README, next to where the data came from.
+
+</div>
+
+</div>
+
+<!--
+Speaker: this is the slide to keep. The questions stay the same for every
+table. The value in each line is taken from the description of the columns.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Checklist as a **Function**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+def audit(df, code=None):
+    print("rows, columns: ", df.shape)
+    print("types:         ", df.dtypes.astype(str).to_dict())
+    print("empty cells:   ", df.isna().sum().to_dict())
+    if code is not None:
+        print("cells == code: ", (df == code).sum().to_dict())
+    print("duplicate rows:", df.duplicated().sum())
+    print("smallest:      ", df.min().to_dict())
+    print("largest:       ", df.max().to_dict())
+df = pd.DataFrame({"length_cm": [20, 30, 30, 40, -999],
+                   "t10_s": [9.02, 11.05, 11.05, None, 12.61]})
+audit(df, code=-999)
+```
+
+<!--
+Speaker: five rows with one gap, one code and one duplicate. The function
+knows nothing about pendulums: it takes any DataFrame. Validity and units
+need the meaning of the columns, so the function prints the smallest and the
+largest value and leaves the judgement to the reader. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# The Cleaned **Table**
+
+<!--
+Speaker: the audit found 49 codes, 3 negative decay times and 2 masses far
+outside. Now the decisions are written as a script, as for the pendulum, and
+the script reports what it did. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Mask per **Rule**
+
+```python
+df = pd.read_csv("data/raw/D0_KPi.csv")
+
+n_code = (df["TAU"] == -100).sum()             # 1. -100 is the code for a missing decay time
+df["TAU"] = df["TAU"].replace(-100, np.nan)
+
+bad_tau = df["TAU"] < 0                        # 2. a decay time is not negative
+bad_m = ~df["M"].between(1800, 1930)           # 3. outside the mass window of the sample
+dup = df.duplicated()                          # 4. one candidate written twice
+
+clean = df[~bad_tau & ~bad_m & ~dup]
+```
+
+<div class="grid-3 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+**A gap stays a gap.** The 49 rows keep their mass and momentum. An analysis that needs `TAU` drops them itself.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+**A broken rule removes the row.** Each rule has a name, a reason in the comment and a count.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+**Nothing is filled in** and nothing is removed for being unusual: the long decay times stay.
+
+</div>
+
+</div>
+
+<!--
+Speaker: these are decisions, and another analyst may decide otherwise, for
+example set the three negative decay times to NaN and keep the rows. What
+cannot differ is that the decision is written down and counted. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Script and **Its Log**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💾 **Write and report**
+
+```python
+OUT = "data/processed/d0_clean.csv"
+clean.to_csv(OUT, index=False,
+             lineterminator="\n")
+
+print("rows read          ", len(df))
+print("TAU = -100 -> NaN  ", n_code)
+print("TAU < 0, dropped   ", bad_tau.sum())
+print("M outside, dropped ", bad_m.sum())
+print("duplicates, dropped", dup.sum())
+print("rows written       ", len(clean))
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🧾 **`python scripts/clean_d0.py`**
+
+```text
+rows read           91583
+TAU = -100 -> NaN   49
+TAU < 0, dropped    3
+M outside, dropped  2
+duplicates, dropped 0
+rows written        91578
+```
+
+91 583 − 3 − 2 = 91 578. Every row that left the table is in one line of the log.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The log is the cleaning written as numbers. It goes into the README. When the raw file changes, the script is run again and the numbers are compared.
+
+</div>
+
+<!--
+Speaker: no float_format here. The file has values from 0.000014 to 891 711,
+and Pandas writes each number with the digits it read. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What the Script **Changed**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📊 **`D0_KPi.csv` and `d0_clean.csv`**
+
+| | Raw | Clean |
+| --- | --- | --- |
+| Rows | 91 583 | 91 578 |
+| Bytes | 3 926 142 | 3 925 641 |
+| Gaps | 49, written `-100.0` | 49, written as nothing |
+| SHA-256 | `25c3c972…c1505136` | `7aa9470b…bb91b16` |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **Line by line**
+
+```text
+raw     1818.1002,2978.644,-100.0,9901.186
+clean   1818.1002,2978.644,,9901.186
+```
+
+- NaN is written as an empty cell, and `read_csv` reads an empty cell as NaN
+- 5 lines are gone and 49 have changed. All other lines are the same text in both files
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+📁 The raw file has the same checksum before and after the run. It is read and never written. The cleaned file can be deleted at any time: the script and the raw file make it again.
+
+</div>
+
+<!--
+Speaker: the checksum of the raw file is the one in the README since the
+first week with this file. Run sha256sum on it once more after the script.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Derived Column and **groupby**
+
+```python
+clean = pd.read_csv("data/processed/d0_clean.csv")
+clean["tau_ps"] = clean["TAU"] * 1000
+clean["region"] = np.where(clean["M"].between(1840, 1890), "peak", "side")
+print(clean.groupby("region")["tau_ps"].agg(["size", "count", "median"]))
+```
+
+```text
+         size  count    median
+region                        
+peak    56575  56546  0.308202
+side    35003  34983  0.232948
+```
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔀 **Split, apply, combine**
+
+`groupby("region")` splits the rows by the values of that column. `["tau_ps"]` takes one column of each group. `agg` applies the functions and combines the results into one small table.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔍 **The result**
+
+`size` counts rows and `count` counts values: 29 gaps in the peak, 20 beside it. The median decay time is 0.308 ps in the peak and 0.233 ps in the sidebands.
+
+</div>
+
+</div>
+
+<!--
+Speaker: np.where(mask, a, b) gives a where the mask is True and b elsewhere.
+The analysis starts from the processed file, not from the raw one. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Groups in a **Picture**
+
+<img class="fig" src="/figures/viz_cleaning_regions.svg" style="display:block;margin:0 auto;max-height:330px;">
+
+<div class="note-text mt-sm">
+
+Left: the derived column `region` splits the mass axis. Right: the decay times of the two groups, each with its median. The peak region holds the D⁰ mesons, on top of chance pairs of tracks. The sidebands hold chance pairs only. A D⁰ travels before it decays, and the median of the peak region is the larger one.
+
+</div>
+
+<!--
+Speaker: one line of groupby computed the two dashed lines. A third region
+would be one more value in the column and no new code. (~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Reshape & **Join**
+
+<!--
+Speaker: so far one table. Real work has several: two series of the same
+measurement, a table of values and a table of descriptions. Three operations
+put them together: melt, concat and merge. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Tidy **Tables**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ↔️ **Wide: one column per series**
+
+```text
+length_cm   run1    run2
+20          9.02    8.97
+40         12.61   12.74
+60         15.49   15.58
+```
+
+The number of the series is hidden in the column names. A third series adds a column, and every line of code that names the columns changes.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ↕️ **Tidy: one row per measurement**
+
+```text
+length_cm   run   t10_s
+20          1      9.02
+40          1     12.61
+60          1     15.49
+20          2      8.97
+…
+```
+
+A third series adds rows. The code stays.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A table is **tidy** when each row is one observation, each column one variable and each cell one value. The raw pendulum file broke the rule twice: a row that was not an observation, the mean, and a column that was not a variable, the row number.
+
+</div>
+
+<!--
+Speaker: run2 is a second series for three of the lengths, example values
+like the first. Wide tables are good for reading and tidy ones for computing.
+groupby, plotting and fitting all expect the tidy form. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# From Wide to **Tidy**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+
+wide = pd.DataFrame({"length_cm": [20, 40, 60],
+                     "run1": [9.02, 12.61, 15.49],
+                     "run2": [8.97, 12.74, 15.58]})
+tidy = wide.melt(id_vars="length_cm", var_name="run", value_name="t10_s")
+print(tidy)
+print(tidy.groupby("length_cm")["t10_s"].mean().round(3).to_dict())
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`melt` keeps `length_cm` and turns every other column into rows: the old column name goes into `run` and the value into `t10_s`. Three rows of two values become six rows of one. `groupby` then gives the mean of the two series for each length.
+
+</div>
+
+<!--
+Speaker: the way back is tidy.pivot(index="length_cm", columns="run",
+values="t10_s"). Type it under the fence. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Stack Tables: **concat**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+
+run1 = pd.DataFrame({"length_cm": [20, 40, 60], "t10_s": [9.02, 12.61, 15.49]})
+run2 = pd.DataFrame({"length_cm": [20, 40, 60], "t10_s": [8.97, 12.74, 15.58]})
+run1["run"] = 1                            # say where each row came from
+run2["run"] = 2
+both = pd.concat([run1, run2], ignore_index=True)
+print(both)
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`concat` puts tables with the same columns under one another: two files of the same form become one table. A column says which file a row came from, because after the stacking nothing else does. Without `ignore_index=True` the labels would run 0, 1, 2, 0, 1, 2.
+
+</div>
+
+<!--
+Speaker: this is how a folder of files with one day each, or one run each,
+becomes a single table: read each, add the column, concat the list. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Join Tables: **merge**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+
+run1 = pd.DataFrame({"length_cm": [20, 30, 40, 50, 60],
+                     "t10_s": [9.02, 11.05, 12.61, 14.23, 15.49]})
+run2 = pd.DataFrame({"length_cm": [20, 40, 60], "t10_s": [8.97, 12.74, 15.58]})
+left = run1.merge(run2, on="length_cm", how="left", suffixes=("_1", "_2"))
+print(left)
+inner = run1.merge(run2, on="length_cm", suffixes=("_1", "_2"))
+print(len(left), len(inner), left["t10_s_2"].isna().sum())
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`merge` puts tables side by side and matches the rows by a **key**, here `length_cm`. `how="left"` keeps every row of the left table: 5 rows, and NaN where the right table has no match. The default, `how="inner"`, keeps the 3 rows found in both.
+
+</div>
+
+<!--
+Speaker: a left join is a place where gaps are born. The two NaN in t10_s_2
+were in neither file. Count the rows before and after every merge. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Join Changes the **Row Count**
+
+```py {monaco-run} {autorun:false}
+import pandas as pd
+run1 = pd.DataFrame({"length_cm": [20, 30, 40], "t10_s": [9.02, 11.05, 12.61]})
+run2 = pd.DataFrame({"length_cm": [20, 40, 40], "t10_s": [8.97, 12.74, 12.74]})
+m = run1.merge(run2, on="length_cm", how="left", suffixes=("_1", "_2"))
+print(m)
+print(len(run1), "rows in,", len(m), "rows out")
+print(run2.duplicated().sum(), "duplicate in run2")
+```
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ A key that stands twice in one table matches twice: the row of 40 cm is in the result two times. Every sum over the joined table then counts it double. Check uniqueness before a join, or let Pandas check: `merge(…, validate="one_to_one")` stops with `MergeError: Merge keys are not unique in right dataset`.
+
+</div>
+
+<!--
+Speaker: three rows in, four rows out, and one of them is NaN. Both things a
+join can do to a table are on this slide: lose a match and double a row.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# CSV or **Parquet**
+
+<!--
+Speaker: one more file format, in two slides. CSV stays the format of this
+course. Parquet is what the same table looks like when programs, not people,
+are the readers. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same Table as **Parquet**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💾 **Write, read, compare**
+
+```python
+clean = pd.read_csv("data/processed/d0_clean.csv")
+out = "data/processed/d0_clean.parquet"
+clean.to_parquet(out)
+back = pd.read_parquet(out)
+print(back.equals(clean))
+```
+
+```text
+True
+```
+
+Pandas needs one more library for this format: `python -m pip install pyarrow`. Without it `to_parquet` stops with `ImportError: Unable to find a usable engine`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## ⚖️ **`d0_clean`, 91 578 rows**
+
+| | CSV | Parquet |
+| --- | --- | --- |
+| Form | text, row by row | binary, column by column |
+| Reader | any editor | programs only |
+| Types | found at each read | stored in the file |
+| Gap | an empty cell | stored as missing |
+| Size | 3.9 MB | 3.3 MB |
+| Read | 18 ms | 2 ms |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Parquet stores each column with its type, so nothing is guessed at reading and one column can be read without the others. The numbers of this file have many digits, and the file is only about 15 % smaller. CSV is the format a person can open and check. Parquet is for large tables that programs pass on.
+
+</div>
+
+<!--
+Speaker: the times are from one laptop and the size depends a little on the
+version of pyarrow. The order is what matters: a few times faster to read, and
+no separator, decimal sign or missing-value code to state. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1519,62 +2241,152 @@ hideInToc: true
 
 # **Recap** — You Can Now…
 
-<div class="grid-2 gap-md mt-sm">
+<div class="stack-tight mt-sm">
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write vectorized NumPy code with **no explicit loops**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Build, filter, sort, and **group** a Pandas DataFrame
+✅ Write a cleaning as a **script** that reads `data/raw/`, writes `data/processed/` and gives the same bytes on every run
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Clean data — missing values, **duplicates**, outliers, normalization
+✅ Read a file with `read_csv`, state its **separator and decimal sign**, and find a bad cell from the type of its column
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Read and write data — **CSV and Parquet**
+✅ Select by **name, position and mask**, add a column, sort, and summarise with `describe()`
 
 </div>
 
+<div class="card card-success card-glass pad-compact">
+
+✅ Turn a code into **NaN** and say why 49 rows moved a mean, and why a comparison with NaN is False
+
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="card card-success card-glass pad-compact">
 
-## 🔬 **Seminar 13 tie-in**
+✅ Run the **five questions** on a table: completeness, validity, uniqueness, consistency, units
 
-Produce a clean, tidy `processed/` table with one Pandas script — `read_csv` → drop invalid rows & `(Run, Event)` duplicates → add a `region` label → `to_parquet` → `describe()` — on the shared D⁰ sample (or your own dataset).
+</div>
 
-**Next steps**: that script becomes one rule of a `Makefile` — Reproducible Workflows, next lecture.
+<div class="card card-success card-glass pad-compact">
+
+✅ Make a table tidy, **group** it, **join** it, and count the rows before and after each step
+
+</div>
 
 </div>
 
 <!--
-Speaker: the "you can now" beat — have them nod along to each card. The seminar
-tie-in makes it concrete: they leave here and turn the shared D⁰ sample into a
-tidy, analysis-ready table with a single script. (~1 min)
+Speaker: the habit to take away is the count. Rows in, rows out, and one
+line for every rule in between. (~1 min)
 -->
 
 ---
+layout: section
 hideInToc: true
-layout: quote
 ---
 
-# You now have the tools to work with real, messy data.
+# Check **Yourself**
+
+Questions on this lecture, for after it. They are not part of the lecture time.
 
 ---
 hideInToc: true
-layout: end
 ---
 
-# Questions?
+<MCQ
+  question="A column holds 1000 temperatures. 990 of them have a mean of 20.0, and 10 cells hold the code `-999` for a missing value. What does `mean()` give before the code is replaced?"
+  :options="[
+    '20.0, because Pandas leaves missing values out',
+    '9.81',
+    'NaN',
+    '−999'
+  ]"
+  :correct="1"
+  explanation="Pandas leaves out NaN, and −999 is a number like any other. The sum is 990 × 20 + 10 × (−999) = 19 800 − 9990 = 9810, and 9810 / 1000 = 9.81. One cell in a hundred halves the mean. After replace(-999, np.nan) the mean is 20.0."
+/>
 
-## Next lecture: **Reproducible Workflows & Automation**
+---
+hideInToc: true
+---
+
+<MCQ
+  question="`s = pd.Series([4.0, np.nan, 8.0])`. What are `s.mean()`, `s.count()` and `(s > 5).sum()`?"
+  :options="[
+    '4.0, 3 and 1',
+    'NaN, 3 and 1',
+    '6.0, 2 and 1',
+    '6.0, 3 and 2'
+  ]"
+  :correct="2"
+  explanation="mean leaves NaN out: (4 + 8) / 2 = 6.0. count counts the cells that hold a value: 2. The comparison NaN > 5 is False, so only 8.0 is counted: 1. len(s) is still 3."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="After `pd.read_csv`, the column `mass` of a file with 5000 rows has the type `object` (`str` in Pandas 3). Every value you see on the screen is a number. What is the most likely reason?"
+  :options="[
+    'The file is too large for the type float64',
+    'At least one cell of the column is not a number: a word, a unit, or a decimal comma',
+    'Pandas reads every column as text until astype is called',
+    'The column has more than six significant digits'
+  ]"
+  :correct="1"
+  explanation="A column has one type. One cell such as n/a, 12,5 or 3.1 kg turns the whole column into text, and head() shows only the first five rows. pd.to_numeric(df.mass, errors='coerce') turns every cell that is not a number into NaN, and isna() then finds the rows."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="For a column, `describe()` gives 25% = 10 and 75% = 14. Which of the values 3, 5, 19 and 21 does the 1.5 × IQR rule flag?"
+  :options="[
+    'All four',
+    '3 and 21',
+    '21 only',
+    'None'
+  ]"
+  :correct="1"
+  explanation="IQR = 14 − 10 = 4, and 1.5 × 4 = 6. The fences are 10 − 6 = 4 and 14 + 6 = 20. The values 3 and 21 lie outside, 5 and 19 inside. The rule flags them. Whether they are errors is a second question."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Table `a` has 5 rows with the keys 1, 2, 3, 4, 5. Table `b` has 4 rows with the keys 2, 3, 3, 6. How many rows does `a.merge(b, on='key', how='left')` have?"
+  :options="[
+    '3',
+    '4',
+    '5',
+    '6'
+  ]"
+  :correct="3"
+  explanation="A left join keeps every row of a. Keys 1, 4 and 5 have no match and give one row each, with NaN in the columns of b. Key 2 matches once. Key 3 matches twice and gives two rows. 3 + 1 + 2 = 6. Key 6 is only in b and is left out. The inner join has 3 rows."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A cleaned table is saved with `df.to_csv('clean.csv')` and read again with `pd.read_csv('clean.csv')`. The table that comes back has one column more. Where does it come from?"
+  :options="[
+    'read_csv adds a column with the line numbers of the file',
+    'to_csv wrote the index as a first column, and read_csv reads it as data',
+    'NaN cells were written into a column of their own',
+    'The file was written with CRLF line endings'
+  ]"
+  :correct="1"
+  explanation="Without index=False the row labels are written as the first column, with no name in the header line. At the next read that column is named Unnamed: 0, and a new index is added. to_csv('clean.csv', index=False) writes only the columns of the table."
+/>
