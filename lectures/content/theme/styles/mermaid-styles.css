@@ -2,7 +2,7 @@
    MERMAID DIAGRAM STYLES
    ============================================
 
-   The diagram LOOK (node fills, strokes, glow, fonts) lives in
+   The diagram LOOK (node fills, hairline strokes, fonts) lives in
    setup/mermaid.ts — Slidev renders each diagram into a shadow root, so
    page CSS never reaches the SVG. This file only styles the host element
    and the light-DOM rendering container mermaid measures labels in.
@@ -15,11 +15,10 @@
 #mermaid-rendering-container .nodeLabel,
 #mermaid-rendering-container .edgeLabel,
 #mermaid-rendering-container .label {
-  font-family: 'Space Grotesk', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-weight: 600;
+  font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 500;
   letter-spacing: 0.01em;
 }
-/* Measure-only slack: Slidev scales the SVG (`{scale: …}
 
 /* Mermaid container styling */
 .mermaid {
@@ -27,20 +26,21 @@
   max-width: 100%;
 }
 
-/* Mermaid note callouts */
+/* Mermaid note callouts: a hairline aside, accent rule on the left */
 .mermaid-note {
   margin-top: 0.8rem;
   padding: 0.6rem 1rem;
-  background: rgba(15, 31, 61, 0.5);
-  border-radius: 8px;
-  border-left: 3px solid rgba(94, 234, 212, 0.6);
+  background: var(--panel);
+  border: 1px solid var(--hair);
+  border-left: 1px solid var(--accent);
+  border-radius: 4px;
 }
 
 .mermaid-note .note-text {
   margin: 0;
   font-size: 0.9em;
   line-height: 1.5;
-  color: #e2e8f0;
+  color: var(--fg-2);
 }
 
 /* Ensure mermaid diagrams are centered */

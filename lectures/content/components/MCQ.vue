@@ -21,7 +21,14 @@ const questionHtml = computed(() => esc(props.question).replace(/`([^`]+)`/g, '<
     <h2 class="mcq-question" v-html="questionHtml"></h2>
 
     <ul class="mcq-options">
-      <li v-for="(opt, i) in options" :key="i">
+      <li
+        v-for="(opt, i) in options"
+        :key="i"
+        :class="{
+          'mcq-li-correct': picked === i && i === correct,
+          'mcq-li-wrong': picked === i && i !== correct,
+        }"
+      >
         <button
           class="mcq-btn"
           :class="{
@@ -30,12 +37,13 @@ const questionHtml = computed(() => esc(props.question).replace(/`([^`]+)`/g, '<
           }"
           @click="picked = i"
         >
-          <span class="mcq-icon">
-            <span v-if="picked === i && i === correct">✅</span>
-            <span v-else-if="picked === i && i !== correct">❌</span>
-            <span v-else>⬜️</span>
-          </span>
-          <span v-html="opt"></span>
+          <span class="mcq-idx">{{ String.fromCharCode(65 + i) }}</span>
+          <span class="mcq-text" v-html="opt"></span>
+          <!-- '×' and '→' are in Space Grotesk; '✓'/'✗' fall back to a
+               system font that may have no glyph (blank on Linux Chromium). -->
+          <span class="mcq-arrow" aria-hidden="true">{{
+            picked === i && i !== correct ? '×' : '→'
+          }}</span>
         </button>
       </li>
     </ul>
@@ -45,7 +53,7 @@ const questionHtml = computed(() => esc(props.question).replace(/`([^`]+)`/g, '<
          measures the true worst-case height of every MCQ slide. -->
     <div class="mcq-feedback" :class="{ 'mcq-pending': picked === null }">
       <p class="mcq-result" :class="isCorrect ? 'mcq-correct-text' : 'mcq-wrong-text'">
-        {{ picked === null || isCorrect ? 'Correct! 🎉' : 'Try again.' }}
+        {{ picked === null || isCorrect ? 'Correct' : 'Try again' }}
       </p>
       <div v-if="explanation" class="mcq-explanation">
         {{ explanation }}
@@ -55,83 +63,133 @@ const questionHtml = computed(() => esc(props.question).replace(/`([^`]+)`/g, '<
 </template>
 
 <style scoped>
+/* Same idiom as the landing's lecture rows (landing/src/style.css .rows):
+   hairline rows, a dim tabular index that turns accent, the text nudging
+   6px right and an accent arrow fading in on hover. */
 .mcq-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  justify-content: safe center; /* if content ever exceeds the frame, clip bottom only — never the question */
+  /* Top-aligned at a fixed offset: centring made the question jump between
+     quiz slides (a long explanation, reserved before an answer is picked,
+     pushed it up). Same place on every quiz slide, like a content title. */
+  justify-content: flex-start;
+  padding-top: 2.2rem;
   height: 100%;
-  gap: 0.75rem;
+  gap: 0.9rem;
 }
 
 .mcq-question {
+  font-family: var(--font-sans);
   font-size: 1.3em;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.015em;
   line-height: 1.3;
+  color: var(--fg);
+  margin: 0;
 }
 
 .mcq-options {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+}
+
+.mcq-options li {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hair);
+  transition: border-color 0.35s var(--ease);
+}
+.mcq-options li::before { content: none; }
+.mcq-options li:last-child { border-bottom: 1px solid var(--hair); }
+
+/* A picked row gets a tinted hairline above and below (its own top line and
+   the next row's top line), never a fill. */
+.mcq-options li.mcq-li-correct,
+.mcq-options li.mcq-li-correct + li {
+  border-top-color: color-mix(in srgb, var(--ok) 55%, transparent);
+}
+.mcq-options li.mcq-li-correct:last-child {
+  border-bottom-color: color-mix(in srgb, var(--ok) 55%, transparent);
+}
+.mcq-options li.mcq-li-wrong,
+.mcq-options li.mcq-li-wrong + li {
+  border-top-color: color-mix(in srgb, var(--warn) 55%, transparent);
+}
+.mcq-options li.mcq-li-wrong:last-child {
+  border-bottom-color: color-mix(in srgb, var(--warn) 55%, transparent);
 }
 
 .mcq-btn {
   width: 100%;
+  display: grid;
+  grid-template-columns: 2ch 1fr auto;
+  align-items: baseline;
+  gap: 1.1rem;
   text-align: left;
-  padding: 0.8rem 1.2rem;
-  border-radius: 12px;
-  background: rgba(2, 6, 23, 0.85);
+  padding: 0.7rem 0.2rem;
+  margin: 0;
+  background: none;
   border: none;
-  border-left: 5px solid rgba(148, 163, 184, 0.35);
-  color: #e2e8f0;
+  border-radius: 0;
+  color: var(--fg);
+  font-family: var(--font-sans);
   font-size: 0.95em;
+  line-height: 1.35;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  /* fade floors at 45% so long option text stays legible to the line end */
-  -webkit-mask-image: linear-gradient(to right, black 70%, rgba(0, 0, 0, 0.45) 100%);
-  mask-image: linear-gradient(to right, black 70%, rgba(0, 0, 0, 0.45) 100%);
+}
+.mcq-btn:focus { outline: none; }
+.mcq-btn:focus-visible { outline: 1px solid var(--hair-strong); outline-offset: 2px; }
+
+.mcq-idx {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--dim);
+  transition: color 0.35s var(--ease);
 }
 
-.mcq-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.3), transparent 55%);
-  opacity: 0.15;
-  pointer-events: none;
+.mcq-text {
+  display: block;
+  min-width: 0;
+  opacity: 0.86;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), color 0.35s var(--ease);
 }
 
-.mcq-btn:hover {
-  transform: translateX(4px);
-  border-left-color: rgba(148, 163, 184, 0.6);
+.mcq-arrow {
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
 }
 
-.mcq-correct {
-  border-left-color: var(--color-success-light) !important;
-  background: rgba(16, 185, 129, 0.2);
-}
+.mcq-btn:hover .mcq-text,
+.mcq-btn:focus-visible .mcq-text { opacity: 1; transform: translateX(6px); }
+.mcq-btn:hover .mcq-idx,
+.mcq-btn:focus-visible .mcq-idx { color: var(--accent); }
+.mcq-btn:hover .mcq-arrow,
+.mcq-btn:focus-visible .mcq-arrow { opacity: 1; transform: translateX(0); }
 
-.mcq-wrong {
-  border-left-color: var(--color-warning-light) !important;
-  background: rgba(245, 158, 11, 0.2);
-}
-
-.mcq-icon {
-  margin-right: 0.5rem;
-}
+/* Picked: index, text and mark take the semantic colour (no fill). */
+.mcq-correct .mcq-idx,
+.mcq-correct .mcq-text,
+.mcq-correct .mcq-arrow,
+.mcq-correct:hover .mcq-idx,
+.mcq-correct:hover .mcq-arrow { color: var(--ok); }
+.mcq-wrong .mcq-idx,
+.mcq-wrong .mcq-text,
+.mcq-wrong .mcq-arrow,
+.mcq-wrong:hover .mcq-idx,
+.mcq-wrong:hover .mcq-arrow { color: var(--warn); }
+.mcq-correct .mcq-text,
+.mcq-wrong .mcq-text { opacity: 1; }
+.mcq-correct .mcq-arrow,
+.mcq-wrong .mcq-arrow { opacity: 1; transform: translateX(0); }
 
 .mcq-feedback {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: opacity 0.3s ease;
+  gap: 0.5rem;
+  transition: opacity 0.35s var(--ease);
 }
 
 .mcq-pending {
@@ -140,22 +198,29 @@ const questionHtml = computed(() => esc(props.question).replace(/`([^`]+)`/g, '<
 }
 
 .mcq-result {
-  font-weight: 600;
-  font-size: 1.1em;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   margin: 0;
 }
 
-.mcq-correct-text { color: var(--color-success-light); }
-.mcq-wrong-text { color: var(--color-warning-light); }
+.mcq-correct-text { color: var(--ok); }
+.mcq-wrong-text { color: var(--warn); }
 
 .mcq-explanation {
-  padding: 0.8rem 1.2rem;
-  border-radius: 12px;
-  background: rgba(2, 6, 23, 0.7);
-  border-left: 5px solid var(--color-info-light, rgba(125, 211, 252, 0.45));
+  color: var(--fg-2);
   font-size: 0.85em;
-  opacity: 0.9;
-  /* no right-fade mask here: unlike the short option labels, explanation
-     text wraps — a fade would render line ends unreadable */
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mcq-options li,
+  .mcq-idx,
+  .mcq-text,
+  .mcq-arrow,
+  .mcq-feedback { transition: none !important; }
+  .mcq-btn:hover .mcq-text,
+  .mcq-btn:focus-visible .mcq-text { transform: none; }
 }
 </style>

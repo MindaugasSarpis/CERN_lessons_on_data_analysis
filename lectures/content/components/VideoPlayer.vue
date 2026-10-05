@@ -269,13 +269,14 @@ onUnmounted(() => {
 <template>
   <div ref="wrapRef" class="video-player" @mouseleave="onPointerGone">
     <div v-if="!isLive" class="video-placeholder">
-      <svg class="video-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor" /></svg>
+      <svg class="video-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7-4.5z" /></svg>
       <span class="video-status">{{ src }}</span>
     </div>
     <template v-else>
       <div v-if="status === 'loading' || status === 'idle'" class="video-status">Loading video&hellip;</div>
       <div v-if="status === 'error'" class="video-status video-error">
-        Video not available: <code>{{ src }}</code>
+        <span class="video-status-label">Video not available</span>
+        <code>{{ src }}</code>
       </div>
       <video
         ref="videoRef"
@@ -295,7 +296,8 @@ onUnmounted(() => {
       </video>
       <Transition name="volume-badge">
         <div v-if="volumeBadge !== null" class="volume-badge" aria-live="polite">
-          {{ volumeBadge === 0 ? '🔇' : '🔊' }} {{ volumeBadge }}%
+          <span class="volume-badge-label">{{ volumeBadge === 0 ? 'Muted' : 'Volume' }}</span>
+          <span class="volume-badge-value">{{ volumeBadge }}%</span>
         </div>
       </Transition>
     </template>
@@ -309,7 +311,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: black;
+  background: var(--bg);
 }
 .video-player video {
   display: block;
@@ -327,51 +329,99 @@ onUnmounted(() => {
   opacity: 1;
   pointer-events: auto;
 }
+/* Chrome on the course tokens (theme/styles/tokens.css): uppercase tracked
+   labels in --dim, hairline borders, no shadow/blur. Sizing above is fixed. */
 .video-status {
   position: absolute;
   padding: 2rem;
-  opacity: 0.6;
-  font-size: 0.9rem;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.video-status code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg-2);
+  background: transparent;
+  padding: 0;
 }
 .volume-badge {
+  /* Top-left: the top-right corner holds the deck's home / lecture-menu buttons. */
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
   padding: 0.35rem 0.7rem;
-  border-radius: 0.4rem;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
+  border-radius: 4px;
+  border: 1px solid var(--hair-strong);
+  background: rgba(5, 5, 7, 0.78);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  pointer-events: none;
+}
+.volume-badge-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.volume-badge-value {
   font-size: 1rem;
   font-variant-numeric: tabular-nums;
-  pointer-events: none;
+  color: var(--accent);
 }
 .volume-badge-enter-active,
 .volume-badge-leave-active {
-  transition: opacity 0.25s ease;
+  transition: opacity 0.35s var(--ease);
 }
 .volume-badge-enter-from,
 .volume-badge-leave-to {
   opacity: 0;
 }
-.video-error {
-  color: #ef4444;
-  opacity: 1;
+.video-error .video-status-label {
+  color: var(--warn);
 }
 .video-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  color: white;
+  gap: 0.9rem;
+  color: var(--dim);
 }
 .video-placeholder .video-status {
   position: static;
   padding: 0;
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+  text-transform: none;
 }
 .video-placeholder-icon {
   width: 4rem;
   height: 4rem;
-  opacity: 0.6;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  border: 1px solid var(--hair-strong);
+  border-radius: 50%;
+  padding: 0.6rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .volume-badge-enter-active,
+  .volume-badge-leave-active {
+    transition: none;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 /* ============================================
-   CUSTOM SLIDE STYLES - PROBABILITY & STATISTICS
+   CUSTOM SLIDE STYLES — the course card system (one design system with the landing; colours in tokens.css)
    ============================================
 
    NOTE: For Mermaid diagram configurations and styles,
@@ -54,20 +54,22 @@
    TO CHANGE COLORS: Edit CSS variables in :root below
    ============================================ */
 
-/* Color Variables - Deep Blue Theme */
+/* Theme variables. Colours come from tokens.css (shared with the landing);
+   the old deep-blue palette names are kept as aliases so any slide-local
+   style that still reads them lands on the new system. */
 :root {
-  --color-primary: #031633;
-  --color-primary-light: #0f4c81;
-  --color-secondary: #051a3d;
-  --color-secondary-light: #102b5c;
-  --color-accent: #042f4e;
-  --color-accent-light: #0ea5e9;
-  --color-success: #063c34;
-  --color-success-light: #14b8a6;
-  --color-warning: #3b1f09;
-  --color-warning-light: #f59e0b;
-  --color-info: #051933;
-  --color-info-light: #38bdf8;
+  --color-primary: var(--accent);
+  --color-primary-light: var(--accent);
+  --color-secondary: var(--accent);
+  --color-secondary-light: var(--accent);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent);
+  --color-info: var(--accent);
+  --color-info-light: var(--accent);
+  --color-success: var(--ok);
+  --color-success-light: var(--ok);
+  --color-warning: var(--warn);
+  --color-warning-light: var(--warn);
 
   /* Spacing */
   --card-padding: 1.1rem;
@@ -85,191 +87,82 @@
   --font-size-lg: 1.18em;
   --font-size-xl: 1.25em;
 
-  /* Border Radius */
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 20px;
+  /* Border radius: just enough to read a grid as panels; the landing is square. */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 6px;
 
-  /* Shadows */
-  --shadow-sm: 0 10px 20px rgba(2, 6, 23, 0.25);
-  --shadow-md: 0 18px 35px rgba(2, 6, 23, 0.45);
-  --shadow-lg: 0 25px 65px rgba(2, 6, 23, 0.6);
+  /* No shadows in this system; names kept for slide-local styles. */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
 
-  /* === Kinetic accent layer (2026-07 visual upgrade) === */
-  --font-display: 'Space Grotesk', 'PT Serif', ui-sans-serif, system-ui, sans-serif;
-  --accent-cyan: #22d3ee;
-  --accent-cyan-soft: #5ec4c4;
-  --accent-violet: #8b5cf6;
-  --accent-violet-soft: #a78bfa;
-  --accent-amber: #fbbf24;
-  --grad-kinetic: linear-gradient(100deg, var(--accent-cyan), #3b82f6);
-  --grad-energy: linear-gradient(100deg, var(--accent-amber), var(--accent-cyan));
-  --glow-cyan: 0 0 22px rgba(34, 211, 238, 0.45), 0 0 60px rgba(34, 211, 238, 0.18);
-  --glow-violet: 0 0 22px rgba(139, 92, 246, 0.45), 0 0 60px rgba(139, 92, 246, 0.18);
+  /* Legacy "kinetic" names → the one accent. */
+  --font-display: var(--font-sans);
+  --accent-cyan: var(--accent);
+  --accent-cyan-soft: var(--accent);
+  --accent-violet: var(--accent);
+  --accent-violet-soft: var(--accent);
+  --accent-amber: var(--warn);
+  --grad-kinetic: linear-gradient(90deg, var(--accent), var(--accent));
+  --grad-energy: linear-gradient(90deg, var(--accent), var(--accent));
+  --glow-cyan: none;
+  --glow-violet: none;
 }
 
-/* Card Styles */
+/* ============================================
+   CARDS — hairline panels
+   Near-transparent fill, 1px hairline, no glow, shadow or blur. The variant
+   colour shows in ONE place: the card title (an uppercase kicker) and the
+   short rule above it. primary/secondary/accent/info = the accent;
+   warning = amber, success = teal (they carry meaning).
+   ============================================ */
 .card {
-  --card-shadow-default: var(--shadow-md);
-  --card-shadow-hover: var(--shadow-lg);
-  font-size: 1.1em;
+  --card-tone: var(--accent);
   position: relative;
+  font-size: 1.1em;
   padding: var(--card-padding-lg);
   border-radius: var(--radius-lg);
-  background: linear-gradient(
-    140deg,
-    var(--card-bg-start, rgba(2, 6, 23, 0.92)),
-    var(--card-bg-end, rgba(15, 23, 42, 0.88))
-  );
-  border: 1px solid var(--card-border-color, rgba(148, 163, 184, 0.35));
-  box-shadow: var(--card-shadow-default);
-  color: #e2e8f0;
-  overflow: hidden;
-  isolation: isolate;
-  backdrop-filter: blur(8px);
-  transform: translate3d(0, 0, 0);
-  transition:
-    transform 220ms ease,
-    box-shadow 220ms ease,
-    border-color 220ms ease;
+  background: var(--panel);
+  border: 1px solid var(--hair);
+  color: var(--fg);
+  transition: border-color 0.35s var(--ease), background-color 0.35s var(--ease);
 }
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.3), transparent 55%);
-  opacity: 0.2;
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 360ms ease;
-}
-
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: calc(var(--radius-lg) - 1px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.card > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hover = brighter border + stronger inner sheen + shadow. No scale: scaling
-   a wide card with backdrop-filter stutters because the blur re-samples every
-   frame. Non-transform properties animate smoothly on the compositor. */
 .card:hover,
 .card:focus-within {
-  transform: translate3d(0, -3px, 0);
-  border-color: rgba(255, 255, 255, 0.85);
-  box-shadow: var(--card-shadow-hover);
-}
-.card:hover::before,
-.card:focus-within::before {
-  opacity: 0.45;
-}
-/* Glass cards have box-shadow: none !important on their base rule, so re-enable
-   a soft glow on hover specifically for them. */
-.card-glass:hover,
-.card-glass:focus-within {
-  box-shadow: 0 10px 40px rgba(148, 163, 184, 0.25) !important;
-  border-left-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: var(--hair-strong);
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
-.card-primary {
-  --card-bg-start: var(--color-primary);
-  --card-bg-end: var(--color-primary-light);
-  --card-border-color: rgba(96, 165, 250, 0.45);
-  --card-shadow-default: var(--shadow-md), 0 20px 55px rgba(59, 130, 246, 0.35);
-  --card-shadow-hover: var(--shadow-lg), 0 35px 80px rgba(59, 130, 246, 0.45);
+.card-primary,
+.card-secondary,
+.card-accent,
+.card-info { --card-tone: var(--accent); }
+.card-warning { --card-tone: var(--warn); }
+.card-success { --card-tone: var(--ok); }
+/* A warning/success card without a title still has to read as one: its tone
+   as a 2px rule on the left edge (inset → no layout change). */
+.card-warning:not(:has(> h2)),
+.card-success:not(:has(> h2)) {
+  box-shadow: inset 2px 0 0 var(--card-tone);
 }
 
-.card-secondary {
-  --card-bg-start: var(--color-secondary);
-  --card-bg-end: var(--color-secondary-light);
-  --card-border-color: rgba(147, 197, 253, 0.35);
-  --card-shadow-default: var(--shadow-md), 0 18px 45px rgba(37, 99, 235, 0.35);
-  --card-shadow-hover: var(--shadow-lg), 0 30px 70px rgba(37, 99, 235, 0.45);
-}
-
-.card-accent {
-  --card-bg-start: var(--color-accent);
-  --card-bg-end: var(--color-accent-light);
-  --card-border-color: rgba(103, 232, 249, 0.55);
-  --card-shadow-default: var(--shadow-md), 0 20px 50px rgba(14, 165, 233, 0.4);
-  --card-shadow-hover: var(--shadow-lg), 0 32px 75px rgba(14, 165, 233, 0.45);
-}
-
-.card-success {
-  --card-bg-start: var(--color-success);
-  --card-bg-end: var(--color-success-light);
-  --card-border-color: rgba(52, 211, 153, 0.5);
-  --card-shadow-default: var(--shadow-md), 0 20px 50px rgba(16, 185, 129, 0.35);
-  --card-shadow-hover: var(--shadow-lg), 0 32px 70px rgba(16, 185, 129, 0.45);
-}
-
-.card-warning {
-  --card-bg-start: var(--color-warning);
-  --card-bg-end: var(--color-warning-light);
-  --card-border-color: rgba(251, 191, 36, 0.45);
-  --card-shadow-default: var(--shadow-md), 0 18px 45px rgba(245, 158, 11, 0.35);
-  --card-shadow-hover: var(--shadow-lg), 0 30px 65px rgba(245, 158, 11, 0.45);
-}
-
-.card-info {
-  --card-bg-start: var(--color-info);
-  --card-bg-end: var(--color-info-light);
-  --card-border-color: rgba(125, 211, 252, 0.45);
-  --card-shadow-default: var(--shadow-md), 0 20px 55px rgba(56, 189, 248, 0.35);
-  --card-shadow-hover: var(--shadow-lg), 0 32px 80px rgba(56, 189, 248, 0.45);
-}
-
-/* Glass fade card — background fades to transparent on right, text stays solid */
-.card-glass {
-  border: none !important;
-  border-left: 5px solid var(--card-border-color, rgba(148, 163, 184, 0.35)) !important;
-  box-shadow: none !important;
-  background: none !important;
-  overflow: visible !important;
-}
-.card-glass::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  border-radius: inherit !important;
-  background: rgba(2, 6, 23, 0.85) !important;
-  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%) !important;
-  mask-image: linear-gradient(to right, black 60%, transparent 100%) !important;
-  opacity: 1 !important;
-  pointer-events: none;
-  z-index: -1;
-}
-.card-glass::after {
-  display: none !important;
-}
-/* Fly-in animation for glass cards. Use the base .card transition (220ms)
-   so fly-in and hover share the same timing — glass cards now zoom on hover
-   like solid cards, via the .card:hover rule above. */
+/* `card-glass` was the gradient-fade variant on every card; it is now the
+   plain panel. The fly-in on v-click stays. */
 .card-glass.slidev-vclick-hidden {
-  transform: translateX(-80px) translateY(12px) scale(0.97);
+  transform: translateX(-40px);
   opacity: 0 !important;
   visibility: visible !important;
   pointer-events: none;
 }
+.card-glass {
+  transition: transform 0.6s var(--ease), opacity 0.6s var(--ease),
+              border-color 0.35s var(--ease), background-color 0.35s var(--ease);
+}
 
-/* Inline code inside cards — ensure readable on dark backgrounds */
+/* Inline code inside cards */
 .card :not(pre) > code {
-  color: #e2e8f0 !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9em;
+  font-size: 0.88em;
 }
 
 /* Grid Layouts */
@@ -376,6 +269,7 @@
 .note-text {
   font-size: 0.9em;
   line-height: 1.5;
+  color: var(--fg-2);
 }
 
 .note-text-lg {
@@ -395,7 +289,7 @@
 }
 
 .mono-strong {
-  font-family: monospace;
+  font-family: var(--font-mono);
   font-size: 1.1em;
   font-weight: 600;
 }
@@ -449,40 +343,26 @@
 
 .dice-box {
   padding: 1.2rem;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   text-align: center;
   font-size: 2em;
   font-weight: 700;
-  color: #f8fafc;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--hair);
+  border-top: 2px solid var(--dice-tone, var(--accent));
+  font-variant-numeric: tabular-nums;
 }
-
-.dice-box-primary {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-}
-
-.dice-box-success {
-  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%);
-}
-
-.dice-box-info {
-  background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-light) 100%);
-}
-
-.dice-box-warning {
-  background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-light) 100%);
-}
-
-.dice-box-accent {
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
-}
+.dice-box-primary, .dice-box-info, .dice-box-accent { --dice-tone: var(--accent); }
+.dice-box-success { --dice-tone: var(--ok); }
+.dice-box-warning { --dice-tone: var(--warn); }
 
 /* Caption text for explanations */
 .caption-text {
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9em;
-  opacity: 0.8;
+  color: var(--dim);
 }
 
 /* Two-column layout with large gap */
@@ -514,12 +394,10 @@
   padding: 0.5rem 0.9rem !important;
   cursor: pointer;
   user-select: none;
-  transition: box-shadow 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+  transition: border-color 0.35s var(--ease);
 }
 .dd-stack .dd-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  filter: brightness(1.08);
+  border-color: var(--hair-strong);
 }
 .dd-stack .dd-card > summary {
   list-style: none;
@@ -531,9 +409,9 @@
 }
 .dd-stack .dd-card > summary::-webkit-details-marker { display: none; }
 .dd-stack .dd-card > summary::after {
-  content: "▸";
+  content: "→";
   font-size: 0.9em;
-  opacity: 0.7;
+  color: var(--card-tone);
   flex: 0 0 auto;
   transition: transform 0.25s ease;
 }
@@ -542,8 +420,7 @@
   opacity: 1;
 }
 .dd-stack .dd-card[open] {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55), 0 8px 24px rgba(0, 0, 0, 0.35);
-  transform: translateY(-2px);
+  border-color: var(--card-tone);
   z-index: 2;
 }
 .dd-stack .dd-title {
@@ -557,73 +434,102 @@
   line-height: 1.4;
   margin-top: 0.45rem;
   padding-top: 0.45rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  opacity: 0.9;
+  border-top: 1px solid var(--hair);
 }
 
 /* ============================================
-   CARD TYPOGRAPHY - default, consistent across deck
-   Cards shouldn't render headings at the global
-   slide h2 scale — it crowds grids. Keep headings
-   readable but compact; body text slightly smaller.
-   Opt-out by restyling within a local <style>.
+   CARD TYPOGRAPHY — one scale for every deck
+   The card title is a kicker in the card's tone with a short rule above it.
+   NOT uppercased: card titles carry symbols — σ is not Σ, $h_j$ is not H_J,
+   `clean.py` is not CLEAN.PY — and a science course cannot let the type
+   change their meaning. Uppercase stays for chrome labels only.
+   Body sits on the card scale, not the slide scale.
    ============================================ */
 .card h2 {
-  font-size: 1.05rem;
-  line-height: 1.25;
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.005em;
+  color: var(--card-tone);
   margin: 0;
+  padding-top: 0.45rem;
 }
-/* A muted footer/aside line inside a card sits on the card's body scale, not the slide's. */
+/* Code in a card title reads as part of the title: mono, in the tone, no chip. */
+.card h2 code {
+  color: inherit !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 0.92em;
+}
+.card h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.6em;
+  height: 2px;
+  background: var(--card-tone);
+}
+.card h2 strong { font-weight: 700; color: inherit; }
+/* A muted footer/aside line inside a card sits on the card's body scale. */
 .card .note-text {
   font-size: 0.85rem;
-  line-height: 1.4;
-  opacity: 0.85;
+  line-height: 1.45;
+  color: var(--fg-2);
 }
 
 .card p {
   font-size: 0.85rem;
-  line-height: 1.4;
+  line-height: 1.45;
   margin: 0.3rem 0 0;
 }
-/* Lists follow the same scale as paragraphs — without this, list items
-   inherit the card's 1.1em base and render LARGER than the card heading. */
+/* Lists follow the same scale as paragraphs. Room on the left for the
+   rule-bullet (layouts.css), inside the card edge. */
 .card ul,
 .card ol {
   font-size: 0.85rem;
   line-height: 1.45;
-  /* Keep list markers inside the card: the UnoCSS reset zeroes list padding,
-     so an `outside` marker would render over the card's left edge. */
-  padding-left: 1.25em;
+  padding-left: 1.1em;
   margin-left: 0;
 }
 .card li {
-  margin: 0.12em 0;
+  margin: 0.14em 0;
+  line-height: 1.45;
 }
 .card h2 + p,
 .card h2 + ul,
 .card h2 + ol {
-  margin-top: 0.35rem;
+  margin-top: 0.4rem;
 }
-/* Deeper heading levels inside cards stay on the card scale too —
-   otherwise a ### in a card renders at the global slide h3 size and
-   dwarfs the card's own h2. Deeper level = slightly smaller. */
+/* Deeper heading levels inside cards stay on the card scale too. */
 .card h3 {
   font-size: 0.95rem;
+  font-weight: 600;
   line-height: 1.3;
   margin: 0;
 }
 .card h4,
 .card h5 {
   font-size: 0.88rem;
+  font-weight: 600;
   line-height: 1.3;
   margin: 0;
 }
 
 /* Per-lecture aims badge under the cover title. */
 .aims-badge {
-  opacity: 0.72;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  padding: 0.22rem 0.75rem;
 }
 
 /* Small italic subtitle under a slide title (promoted from L06's
@@ -631,9 +537,8 @@
 .def-sub {
   display: block;
   font-size: 0.92em;
-  opacity: 0.85;
+  color: var(--dim);
   margin-top: 0.05em;
-  font-style: italic;
 }
 
 /* Legacy `tidy-cards` class kept as an extra-compact
@@ -685,11 +590,10 @@
    backing makes them illegible). Apply as `class="fig"` on any img that
    lives on a dark slide without a surrounding card. */
 .fig {
-  background: rgba(11, 14, 20, 0.6);
+  background: rgba(255, 255, 255, 0.015);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
   padding: 0.5rem 0.6rem;
-  border: 1px solid rgba(148, 163, 184, 0.14);
+  border: 1px solid var(--hair);
 }
 
 /* Legacy light-background images (screenshots, white-canvas PNGs) keep the
@@ -706,7 +610,6 @@
 .fig-inline {
   padding: 0.25rem 0.3rem;
   border-radius: var(--radius-sm);
-  box-shadow: 0 4px 12px rgba(2, 6, 23, 0.35);
 }
 
 
@@ -721,12 +624,12 @@
   margin-top: 0.4rem;
   padding: 0.5rem 0.8rem;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(148, 163, 184, 0.28);
-  background: rgba(248, 250, 252, 0.06);
+  border: 1px solid var(--hair-strong);
+  background: rgba(248, 250, 252, 0.04);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 0.8rem;
   line-height: 1.45;
-  color: #e2e8f0;
+  color: var(--fg);
 }
 .rendered-md .rendered-title,
 .rendered-md .rendered-section,
@@ -877,5 +780,38 @@
      cards of L01 were 48 extra compositor layers at 3x DPR. */
 @media screen {
   .z-modal.overflow-y-auto .slidev-slide-container { content-visibility: auto; }
-  .z-modal.overflow-y-auto .card { backdrop-filter: none; transform: none; }
+  .z-modal.overflow-y-auto .card { backdrop-filter: none; transform: none; }  /* cards no longer blur; kept as a guard (check-overview.mjs) */
+}
+
+/* ---------- Tables: the landing's row rules ----------
+   Hairline rules between rows, no cell fills, a quiet header. Header text is
+   NOT uppercased: headers are often column names (`temp_C`), which must
+   read exactly as in the data. */
+.slidev-layout table {
+  border-collapse: collapse;
+}
+.slidev-layout th {
+  font-weight: 600;
+  color: var(--dim);
+  text-align: left;
+  border-bottom: 1px solid var(--hair-strong);
+  background: none;
+}
+.slidev-layout td {
+  border-bottom: 1px solid var(--hair);
+  background: none;
+}
+.slidev-layout tr:last-child td { border-bottom-color: var(--hair-strong); }
+.slidev-layout td, .slidev-layout th {
+  font-variant-numeric: tabular-nums;
+  /* Grotesk sets wider than the old serif, so cells wrap more; tighter rows
+     keep slide-scale tables in the frame (Slidev's base is py-3). */
+  padding: 0.45rem 0.6rem;
+  line-height: 1.4;
+}
+/* table-compact keeps its own, denser cells (must out-rank the rule above). */
+.slidev-layout .table-compact th,
+.slidev-layout .table-compact td {
+  padding: 0.24rem 0.4rem;
+  line-height: 1.3;
 }

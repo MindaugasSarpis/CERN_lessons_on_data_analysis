@@ -1621,7 +1621,7 @@ hideInToc: true
 
 # Two Dimensions: `data[row, column]`
 
-<img class="fig" src="/figures/viz_arrays_indexing.svg" style="display:block;margin:0.4rem auto 0;max-height:215px;">
+<img class="fig" src="/figures/viz_arrays_indexing.svg" style="display:block;margin:0.4rem auto 0;max-height:195px;">
 
 <div class="card card-primary card-glass pad-compact mt-md">
 

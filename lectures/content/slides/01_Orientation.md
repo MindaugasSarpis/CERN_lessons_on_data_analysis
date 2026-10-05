@@ -52,7 +52,7 @@ layout: quote
 hideInToc: true
 ---
 
-# **Course Structure**
+# Course **Structure**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -106,7 +106,7 @@ concepts on your own projects is the best way to learn.
 hideInToc: true
 ---
 
-# **Course Content** — 16 lectures, 5 blocks
+# Course **Content** — 16 lectures, 5 blocks
 
 <div class="grid-3 mt-md gap-md">
 
@@ -200,9 +200,6 @@ table {
 }
 table td, table th {
   padding: 0.3em 0.5em;
-}
-table thead th {
-  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
 }
 table td:nth-child(1),
 table th:nth-child(1) {
@@ -447,7 +444,7 @@ Unsure how to do something? Ask: *which choice serves more of the aims?* That on
 hideInToc: true
 ---
 
-# **Grading Structure**
+# Grading **Structure**
 
 <div class="card card-success card-glass pad-tight mt-md glow">
 
@@ -488,7 +485,7 @@ The whole grade is a project you carry through the course — the natural place 
 hideInToc: true
 ---
 
-# **Project Details**
+# Project **Details**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -549,7 +546,7 @@ One hands-on brief per week on a **real, open dataset** — LHCb collision data,
 hideInToc: true
 ---
 
-# **Learning Outcomes**
+# Learning **Outcomes**
 
 <div class="grid-2 mt-md gap-md">
 

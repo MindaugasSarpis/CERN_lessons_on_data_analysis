@@ -218,7 +218,7 @@ hideInToc: true
 
 ## <v-click> **Base-1** </v-click>
 
-<div class="note-text mt-md" style="opacity: 0.7;">
+<div class="note-text mt-md">
 
 Already fluent in binary? Skim ahead to the hex slide — the payoff is how files decode.
 

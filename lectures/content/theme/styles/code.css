@@ -1,0 +1,80 @@
+/* Code blocks (shiki <pre>) — the landing's hairline panel.
+   Inline code lives in layouts.css. Size stays on Slidev's code scale
+   (12px / 18px): Space Mono advances 0.61em vs PT Mono's 0.60em, so line
+   widths match the old blocks within ~2% and dense decks keep their fit.
+   Token colours: the course theme in setup/shiki.ts.
+   html.dark:root outranks Slidev's own `html.dark` code variables. */
+
+:root,
+html.dark:root {
+  --slidev-code-background: rgba(255, 255, 255, 0.025);
+  --slidev-code-foreground: var(--fg);
+  --slidev-code-font-family: var(--font-mono);
+  --slidev-code-radius: 6px;
+  --slidev-code-tab-divider: var(--hair);
+  --slidev-code-tab-text-color: var(--dim);
+  --slidev-code-tab-active-text-color: var(--fg);
+}
+
+.slidev-layout pre.slidev-code,
+.slidev-layout pre.shiki {
+  font-family: var(--font-mono) !important;
+  background: var(--slidev-code-background) !important;
+  border: 1px solid var(--hair);
+  border-radius: var(--slidev-code-radius) !important;
+  box-shadow: none;
+  font-variant-ligatures: none;
+}
+
+/* the wrapper carries no chrome of its own */
+.slidev-layout .slidev-code-wrapper {
+  background: none;
+  box-shadow: none;
+}
+
+/* code inside a card: the panel stays a panel, not a second fill */
+.card pre.slidev-code,
+.card pre.shiki {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* titled blocks and code groups: one hairline frame around title + body */
+.slidev-layout .slidev-code-block-title,
+.slidev-layout .slidev-code-group-tabs {
+  border: 1px solid var(--hair);
+  border-bottom: none;
+  box-shadow: inset 0 -1px var(--hair);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.slidev-layout .slidev-code-block-title + .slidev-code,
+.slidev-layout .slidev-code-group-tabs + .slidev-code,
+.slidev-layout .slidev-code-group-blocks .slidev-code {
+  border-top-color: transparent;
+}
+.slidev-layout .slidev-code-tab.active,
+.slidev-layout .slidev-code-tab:hover {
+  color: var(--accent) !important;
+}
+.slidev-layout .slidev-code-tab.active {
+  border-bottom-color: var(--accent);
+}
+
+/* line numbers: labels, not content */
+.slidev-code-line-numbers .slidev-code code .line::before {
+  color: var(--dim);
+  opacity: 0.6;
+}
+
+/* a quiet scrollbar for long blocks */
+.slidev-code::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.slidev-code::-webkit-scrollbar-thumb {
+  background: var(--hair-strong);
+  border-radius: 3px;
+}
+.slidev-code::-webkit-scrollbar-track {
+  background: transparent;
+}

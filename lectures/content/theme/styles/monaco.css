@@ -1,31 +1,47 @@
 /* Monaco / python-runner blocks — course chrome.
    Scoped to Slidev's monaco containers so ordinary code fences are untouched.
    Class names verified against a built deck (slidev-monaco-container,
-   slidev-monaco-container-inner, slidev-runner-output). */
+   slidev-monaco-container-inner, slidev-runner-output).
+   Same hairline panel as the static fences in code.css. The near-black
+   editor fill is opaque because Monaco paints its own background layers. */
 
-.slidev-monaco-container {
-  border: 1px solid rgba(139, 151, 166, 0.25);
-  border-radius: 12px;
+.slidev-layout .slidev-monaco-container {
+  border: 1px solid var(--hair);
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
-  background: #0b0e14;
+  box-shadow: none;
+  background: #0a0a0d;
   padding: 0.35rem 0;
 }
 
 .slidev-monaco-container .monaco-editor,
 .slidev-monaco-container .monaco-editor .margin,
 .slidev-monaco-container .monaco-editor-background {
-  background: #0b0e14 !important;
+  background: #0a0a0d !important;
 }
 
-/* header strip above the editor */
+/* header strip above the editor: a flat hairline-ruled band
+   (same height as before — the layout is unchanged) */
 .slidev-monaco-container::before {
   content: "";
   display: block;
   height: 0.7rem;
   margin: -0.35rem 0 0.35rem;
-  background: linear-gradient(90deg, rgba(125, 211, 252, 0.16), rgba(125, 211, 252, 0.03));
-  border-bottom: 1px solid rgba(139, 151, 166, 0.18);
+  background: var(--panel);
+  border-bottom: 1px solid var(--hair);
+}
+
+/* the runner's status row ("Click the play button…"): a dim tracked label
+   under a hairline, same line box as before */
+.slidev-monaco-container > .border-t {
+  border-top-color: var(--hair);
+}
+.slidev-monaco-container > .border-t > .text-sm.text-center {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  opacity: 1;
 }
 
 /* runner output: bounded and scrollable — long prints must never
@@ -34,21 +50,26 @@
   max-height: 11rem;
   overflow-y: auto;
   overscroll-behavior: contain;
-  border: 1px solid rgba(139, 151, 166, 0.18);
-  border-radius: 10px;
+  border: 1px solid var(--hair);
+  border-radius: 6px;
   margin-top: 0.5rem;
   padding: 0.4rem 0.7rem;
-  background: rgba(11, 14, 20, 0.8);
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--fg-2);
+  font-family: var(--font-mono);
   font-size: 0.8em;
   line-height: 1.45;
 }
 
 .slidev-runner-output::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 .slidev-runner-output::-webkit-scrollbar-thumb {
-  background: rgba(139, 151, 166, 0.35);
-  border-radius: 4px;
+  background: var(--hair-strong);
+  border-radius: 3px;
+}
+.slidev-runner-output::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* matplotlib figures (setup/code-runners.ts makes the runner output the
@@ -79,5 +100,5 @@
   max-width: 100%;
   max-height: 8.75rem;
   margin: 0 auto;
-  border-radius: 6px;
+  border-radius: 4px;
 }

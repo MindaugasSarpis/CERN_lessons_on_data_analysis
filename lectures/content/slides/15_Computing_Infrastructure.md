@@ -1080,7 +1080,7 @@ A graphics card is a computer inside the computer. It has its own cores and its 
 
 <div>
 
-<img src="/figures/gpu1.webp" class="rounded shadow-md" style="display:block;margin:0 auto;max-height:215px;">
+<img src="/figures/gpu1.webp" class="rounded" style="display:block;margin:0 auto;max-height:215px;">
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 

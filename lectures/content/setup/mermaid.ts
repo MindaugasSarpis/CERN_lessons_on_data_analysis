@@ -1,121 +1,164 @@
 /**
- * Course-wide Mermaid look — "kinetic glass", the same language as the card
- * system in theme/styles/custom-slides.css: deep-navy translucent nodes with a
- * luminous cyan edge and a soft glow, teal connectors, Space Grotesk labels,
- * amber for decisions, emerald for outputs, red for failures.
+ * Course-wide Mermaid look: the landing page's design language (tokens in
+ * theme/styles/tokens.css, spec docs/superpowers/specs/2026-10-05-decks-match-
+ * landing-design.md). Near-transparent nodes with a 1px hairline edge on the
+ * near-black backdrop, Space Grotesk labels in --fg, --dim connectors, edge
+ * labels on a --bg chip, subgraph frames dashed hairlines. The one
+ * accent (#7dd3fc) marks inputs / highlighted nodes; --warn and --ok carry
+ * meaning only (checks, results). No gradients, glows or drop shadows.
  *
  * WHY HERE and not in CSS: Slidev renders every mermaid fence into a shadow
  * root, so page CSS never reaches the SVG. The only levers are the mermaid
  * config — `themeVariables` for colours and `themeCSS`, which mermaid injects
- * into the SVG's own <style>. Slidev passes `theme: 'dark'` per fence (the
- * deck is colorSchema dark) and merges it over this object, so the base theme
- * is always `dark`; everything below overrides its variables.
+ * into the SVG's own <style> (scoped under the diagram's #id). Slidev passes
+ * `theme: 'dark'` per fence (the deck is colorSchema dark) and merges it over
+ * this object, so the base theme is always `dark`; everything below overrides
+ * its variables.
  *
- * Per-diagram `%%{init: …}%%` blocks are therefore unnecessary — leave them
- * out. Semantic node colours come from a small set of classDefs documented in
- * theme/mermaid-config.md (input / process / output / check / bad …).
+ * Label METRICS (font, weight, letter-spacing) must match the measuring rules
+ * in theme/styles/mermaid-styles.css: mermaid sizes the boxes in the light DOM
+ * before the SVG moves into the shadow root (clipped text otherwise).
+ *
+ * Semantic classDefs written in the slides (input / process / output / check /
+ * bad and their aliases, see theme/mermaid-config.md) still spell out the old
+ * navy fills. Mermaid writes a classDef as an INLINE `style="… !important"`
+ * on the shape, which no stylesheet can outrank, so setup/transformers.ts strips
+ * fill / stroke / color from those classDefs in the markdown at build time,
+ * and the `.node.<class>` rules in themeCSS colour them instead. Slide sources
+ * need no edits; classDefs with other names (L03's outline-only black box) are
+ * left alone.
+ *
+ * Per-diagram `%%{init: …}%%` colour blocks are unnecessary — leave them out.
  */
 // No @slidev/types import (not hoisted under pnpm — see shiki.ts);
 // defineMermaidSetup is an identity helper, a plain default export works.
 type MermaidConfig = Record<string, any>
 
-// Palette (mirrors --color-* / --accent-* in custom-slides.css)
-const ink = '#020617'          // page black
-const navy = '#0a1f3f'         // node fill (glass, see fill-opacity below)
-const navyDeep = '#08172f'
-const navyMid = '#0b2d4d'
-const text = '#e8f1ff'
-const textSoft = '#cbd5e1'
-const cyan = '#22d3ee'         // connectors, glow
-const sky = '#38bdf8'          // node borders
-const teal = '#5eead4'
-const violet = '#a78bfa'
-const amber = '#fbbf24'
-const emerald = '#34d399'
-const rose = '#f472b6'
-const red = '#f87171'
-const blue = '#60a5fa'
+// Tokens (mirror theme/styles/tokens.css — the shadow root cannot read var()s
+// reliably across mermaid's colour maths, so they are spelled out here).
+const bg = '#050507'
+const fg = '#f2f5f9'
+const fg2 = '#c3ccd8'
+const dim = '#8b97a6'
+const accent = '#7dd3fc'
+const warn = '#fbbf24'
+const ok = '#2dd4bf'
+const bad = '#f87171'          // failures only (no token: a dead end must read)
+// A hairline that stays visible on #050507 (--hair at .18 vanishes on a projector).
+const hair = 'rgba(139, 151, 166, 0.45)'
+const hairSolid = '#3a4350'    // solid twin for mermaid's colour maths
+const panel = 'rgba(255, 255, 255, 0.02)'
+const panelSolid = '#0a0a0c'   // #050507 + 2 % white, for colour maths
 
-const font = "'Space Grotesk', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif"
+// Git branches: the accent first, then muted hues that still tell lanes apart.
+// Course colours first (no violet/pink: one accent + the two semantic hues + neutrals).
+const branch = ['#7dd3fc', '#e5e7eb', '#2dd4bf', '#fbbf24', '#94a3b8', '#bae6fd', '#99f6e4', '#fde68a']
+
+const font = "'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif"
+const mono = "'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+
+const semantic = (classes: string[], stroke: string, text = fg) => {
+  const sel = (tail: string) => classes.map(c => `.node.${c} ${tail}`).join(', ')
+  return `
+  ${sel('> rect')}, ${sel('> polygon')}, ${sel('> circle')}, ${sel('> ellipse')}, ${sel('> path')},
+  ${sel('> g > rect')}, ${sel('> g > path')} {
+    fill: ${panel} !important;
+    stroke: ${stroke} !important;
+  }
+  ${sel('span')}, ${sel('.nodeLabel')}, ${sel('p')} { color: ${text} !important; }`
+}
+
+const branchCSS = branch.map((c, i) => `
+  .branchLabelBkg.label${i} { fill: ${bg}; stroke: ${c}; stroke-width: 1px; }
+  .branch-label${i}, .branch-label${i} text { fill: ${c}; }`).join('')
 
 const themeCSS = `
-  /* ---- flowchart nodes: glass slabs with a luminous edge ---- */
+  /* ---- flowchart nodes: hairline panels, no glow ---- */
   .node rect, .node polygon, .node circle, .node ellipse, .node path {
-    stroke-width: 1.5px;
-    fill-opacity: 0.82;
-    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.35)) drop-shadow(0 8px 18px rgba(2, 6, 23, 0.6));
+    fill: ${panel};
+    stroke: ${hair};
+    stroke-width: 1px;
+    filter: none;
   }
-  .node rect { rx: 14px; ry: 14px; }
+  .node rect { rx: 5px; ry: 5px; }
   .node .label, .nodeLabel {
     font-family: ${font};
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.01em;
+    color: ${fg};
   }
   .node .label p, .nodeLabel p { margin: 0; }
+  ${semantic(['input', 'action', 'highlight', 'accent'], accent)}
+  ${semantic(['output', 'good', 'success'], ok)}
+  ${semantic(['check', 'decision', 'warning', 'warn'], warn)}
+  ${semantic(['bad', 'fail', 'error'], bad)}
+  ${semantic(['process', 'step', 'stage'], hair)}
 
-  /* ---- connectors: thin, teal, rounded, glowing ---- */
+  /* ---- connectors: thin, dim ---- */
   .edgePath .path, .flowchart-link, path.path {
-    stroke-width: 2px;
+    stroke: ${dim};
+    stroke-width: 1.25px;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.55));
+    filter: none;
   }
-  .marker, .marker path { fill: ${cyan}; stroke: ${cyan}; }
-  /* Edge labels as small chips. Label-less edges still emit an empty
+  .marker, .marker path { fill: ${dim}; stroke: ${dim}; }
+  /* Edge labels as small --bg chips. Label-less edges still emit an empty
      <span class="edgeLabel"> inside a .labelBkg div — keep those invisible. */
   .edgeLabel, .labelBkg, .edgeLabel p { background: transparent !important; }
   .edgeLabel span.edgeLabel:not(:empty) {
     display: inline-block;
-    padding: 0.1em 0.7em;
-    border-radius: 999px;
-    border: 1px solid rgba(34, 211, 238, 0.4);
-    background: ${ink} !important;
-    color: #a5f3fc;
+    padding: 0.1em 0.6em;
+    border-radius: 4px;
+    border: 1px solid ${hair};
+    background: ${bg} !important;
+    color: ${fg2};
     font-family: ${font};
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.85em;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
   .edgeLabel span.edgeLabel:not(:empty) p { margin: 0; background: transparent !important; }
 
-  /* ---- subgraph clusters: faint dashed glass panels ---- */
+  /* ---- subgraph clusters: open hairline frames, label as a kicker ---- */
   .cluster rect {
-    fill: rgba(56, 189, 248, 0.06) !important;
-    stroke: rgba(56, 189, 248, 0.35) !important;
+    fill: transparent !important;
+    stroke: ${hair} !important;
     stroke-width: 1px !important;
-    stroke-dasharray: 6 5;
-    rx: 18px; ry: 18px;
+    stroke-dasharray: 4 4;
+    rx: 6px; ry: 6px;
   }
   .cluster-label .nodeLabel, .cluster text {
     font-family: ${font};
-    font-weight: 700;
-    font-size: 0.8em;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    fill: #7dd3fc; color: #7dd3fc;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    fill: ${dim}; color: ${dim};
   }
 
   /* ---- sequence diagrams ---- */
-  .actor {
-    stroke-width: 1.5px;
-    fill-opacity: 0.85;
-    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.35));
-  }
-  text.actor > tspan { font-family: ${font}; font-weight: 600; }
-  .messageLine0, .messageLine1 { stroke-width: 2px; stroke-linecap: round; }
+  .actor { stroke-width: 1px; filter: none; }
+  text.actor > tspan { font-family: ${font}; font-weight: 500; fill: ${fg}; }
+  .messageLine0, .messageLine1 { stroke-width: 1.25px; stroke-linecap: round; }
   .messageText { font-family: ${font}; font-weight: 500; }
-  .note { stroke-width: 1px; fill-opacity: 0.9; }
+  .note { stroke-width: 1px; }
   .noteText, .noteText > tspan { font-family: ${font}; }
-  .labelBox { stroke-width: 1.5px; }
-  .labelText, .labelText > tspan, .loopText, .loopText > tspan { font-family: ${font}; font-weight: 600; }
+  .labelBox { stroke-width: 1px; }
+  .labelText, .labelText > tspan, .loopText, .loopText > tspan { font-family: ${font}; font-weight: 500; }
   .loopLine { stroke-dasharray: 4 4; }
 
-  /* ---- gitGraph ---- */
-  .commit { stroke-width: 2px; filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.45)); }
-  .commit-label, .branchLabel text, .label text { font-family: ${font}; font-weight: 600; }
-  .arrow { stroke-width: 2px; stroke-linecap: round; }
+  /* ---- gitGraph: thin lanes, outlined branch chips, mono hashes ---- */
+  .commit { filter: none; }
+  .arrow { stroke-width: 3px; stroke-linecap: round; }
+  .branch { stroke: ${hairSolid}; stroke-width: 1px; stroke-dasharray: 3 4; }
+  .branch-label, .branchLabel text { font-family: ${font}; font-weight: 500; }
+  .commit-label { font-family: ${mono}; fill: ${fg2}; }
+  .commit-label-bkg { fill: ${bg}; opacity: 1; }
+  .tag-label { font-family: ${mono}; }
+  ${branchCSS}
+
 `
 
+// Slidev calls this once (a singleton promise) before the first render.
 export default (): MermaidConfig => ({
   theme: 'dark',
   themeVariables: {
@@ -124,66 +167,69 @@ export default (): MermaidConfig => ({
     darkMode: true,
 
     // flowchart
-    primaryColor: navy,
-    primaryTextColor: text,
-    primaryBorderColor: sky,
-    secondaryColor: navyMid,
-    secondaryTextColor: text,
-    secondaryBorderColor: teal,
-    tertiaryColor: navyDeep,
-    tertiaryTextColor: text,
-    tertiaryBorderColor: violet,
-    lineColor: cyan,
-    defaultLinkColor: cyan,
-    textColor: text,
-    mainBkg: navy,
-    nodeBkg: navy,
-    nodeBorder: sky,
-    nodeTextColor: text,
-    clusterBkg: navyDeep,
-    clusterBorder: '#1e3a5f',
-    titleColor: text,
-    edgeLabelBackground: ink,
-    background: ink,
+    primaryColor: panelSolid,
+    primaryTextColor: fg,
+    primaryBorderColor: hairSolid,
+    secondaryColor: panelSolid,
+    secondaryTextColor: fg,
+    secondaryBorderColor: hairSolid,
+    tertiaryColor: panelSolid,
+    tertiaryTextColor: fg,
+    tertiaryBorderColor: hairSolid,
+    lineColor: dim,
+    defaultLinkColor: dim,
+    textColor: fg,
+    mainBkg: panelSolid,
+    nodeBkg: panelSolid,
+    nodeBorder: hairSolid,
+    nodeTextColor: fg,
+    clusterBkg: bg,
+    clusterBorder: hairSolid,
+    titleColor: fg,
+    edgeLabelBackground: bg,
+    background: bg,
 
     // sequence
-    actorBkg: navy,
-    actorBorder: sky,
-    actorTextColor: text,
-    actorLineColor: '#334155',
-    signalColor: cyan,
-    signalTextColor: text,
-    labelBoxBkgColor: navyMid,
-    labelBoxBorderColor: teal,
-    labelTextColor: text,
-    loopTextColor: textSoft,
-    noteBkgColor: '#2a2208',
-    noteBorderColor: amber,
-    noteTextColor: '#fef3c7',
-    activationBkgColor: navyMid,
-    activationBorderColor: teal,
-    sequenceNumberColor: ink,
+    actorBkg: panelSolid,
+    actorBorder: hairSolid,
+    actorTextColor: fg,
+    actorLineColor: hairSolid,
+    signalColor: dim,
+    signalTextColor: fg,
+    labelBoxBkgColor: bg,
+    labelBoxBorderColor: hairSolid,
+    labelTextColor: fg,
+    loopTextColor: dim,
+    noteBkgColor: bg,
+    noteBorderColor: warn,
+    noteTextColor: fg,
+    activationBkgColor: panelSolid,
+    activationBorderColor: accent,
+    sequenceNumberColor: bg,
 
-    // gitGraph — branch colours cycle through the accent set
-    git0: cyan, git1: violet, git2: emerald, git3: amber,
-    git4: rose, git5: blue, git6: red, git7: teal,
-    gitBranchLabel0: ink, gitBranchLabel1: ink, gitBranchLabel2: ink, gitBranchLabel3: ink,
-    gitBranchLabel4: ink, gitBranchLabel5: ink, gitBranchLabel6: ink, gitBranchLabel7: ink,
-    commitLabelColor: text,
-    commitLabelBackground: navy,
+    // gitGraph — lanes cycle through `branch`; chips are restyled in themeCSS
+    git0: branch[0], git1: branch[1], git2: branch[2], git3: branch[3],
+    git4: branch[4], git5: branch[5], git6: branch[6], git7: branch[7],
+    gitInv0: bg, gitInv1: bg, gitInv2: bg, gitInv3: bg,
+    gitInv4: bg, gitInv5: bg, gitInv6: bg, gitInv7: bg,
+    gitBranchLabel0: bg, gitBranchLabel1: bg, gitBranchLabel2: bg, gitBranchLabel3: bg,
+    gitBranchLabel4: bg, gitBranchLabel5: bg, gitBranchLabel6: bg, gitBranchLabel7: bg,
+    commitLabelColor: fg2,
+    commitLabelBackground: bg,
     commitLabelFontSize: '13px',
-    tagLabelColor: ink,
-    tagLabelBackground: amber,
-    tagLabelBorder: amber,
+    tagLabelColor: bg,
+    tagLabelBackground: warn,
+    tagLabelBorder: warn,
     tagLabelFontSize: '13px',
 
-    // pie
-    pie1: cyan, pie2: violet, pie3: emerald, pie4: amber, pie5: rose, pie6: blue, pie7: red, pie8: teal,
-    pieTitleTextColor: text,
-    pieSectionTextColor: ink,
-    pieLegendTextColor: text,
-    pieStrokeColor: ink,
-    pieOuterStrokeColor: ink,
+    // pie — accent first, then the muted branch hues
+    pie1: branch[0], pie2: branch[1], pie3: branch[2], pie4: branch[3],
+    pie5: branch[4], pie6: branch[5], pie7: branch[6], pie8: branch[7],
+    pieTitleTextColor: fg,
+    pieSectionTextColor: bg,
+    pieLegendTextColor: fg,
+    pieStrokeColor: bg,
+    pieOuterStrokeColor: bg,
   },
   themeCSS,
   flowchart: {

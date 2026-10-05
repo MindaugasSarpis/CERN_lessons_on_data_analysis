@@ -313,7 +313,7 @@ Three lines chosen by eye. At full scale they look alike. With $4\ell$ subtracte
 
 </div>
 
-<img class="fig" src="/figures/viz_fitting_candidates.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:235px;">
+<img class="fig" src="/figures/viz_fitting_candidates.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:215px;">
 
 <!--
 Speaker: ask for a vote on A, B or C before going on. The slope a gives
@@ -2311,7 +2311,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_fitting_start_values.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:215px;">
+<img class="fig" src="/figures/viz_fitting_start_values.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:190px;">
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 

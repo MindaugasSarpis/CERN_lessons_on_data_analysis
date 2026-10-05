@@ -1,5 +1,5 @@
 <template>
-  <div class="slidev-layout fact fact-kinetic">
+  <div class="slidev-layout fact fact-hero">
     <div class="my-auto">
       <slot />
     </div>
@@ -7,14 +7,15 @@
 </template>
 
 <style scoped>
-.fact-kinetic :deep(h1) {
-  font-family: var(--font-display);
-  background: linear-gradient(100deg, var(--accent-cyan), var(--accent-violet));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.25));
+/* A giant white figure, the keyword in the accent, a tracked caption below. */
+.fact-hero :deep(h1) { color: var(--fg); }
+.fact-hero :deep(h1 strong),
+.fact-hero :deep(h2 strong) { color: var(--accent); }
+.fact-hero :deep(h1 + p) { color: var(--fg-2); }
+.fact-hero :deep(p + p) {
+  color: var(--dim);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
-.fact-kinetic :deep(h1 strong) { -webkit-text-fill-color: transparent; }
 </style>

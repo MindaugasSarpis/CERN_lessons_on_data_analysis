@@ -14,11 +14,12 @@
   "slidev": {
     "defaults": {
       "fonts": {
-        "mono": "PT Mono",
-        "sans": "PT Serif",
-        "serif": "PT Serif",
-        "italic": true,
-        "weights": "400, 700"
+        "sans": "Space Grotesk",
+        "serif": "Space Grotesk",
+        "mono": "Space Mono",
+        "provider": "none",
+        "italic": false,
+        "weights": "400,500,600,700"
       }
     }
   },

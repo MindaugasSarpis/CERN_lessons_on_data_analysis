@@ -1,79 +1,97 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { useSlideContext } from '@slidev/client'
 
+// "Section 03": this section's place among the deck's section slides.
+const { $slidev, $page } = useSlideContext()
+const label = computed(() => {
+  try {
+    const slides = $slidev.nav.slides as any[]
+    const n = slides.filter((r) =>
+      r.no <= $page.value && r.meta?.slide?.frontmatter?.layout === 'section').length
+    return n > 0 ? `Section ${String(n).padStart(2, '0')}` : 'Section'
+  } catch { return 'Section' }
+})
 const mounted = ref(false)
-onMounted(() => { setTimeout(() => { mounted.value = true }, 50) })
+onMounted(() => {
+  requestAnimationFrame(() => requestAnimationFrame(() => { mounted.value = true }))
+})
 </script>
 
 <template>
-  <div class="slidev-layout section section-kinetic">
-    <!-- animated colour-shifting backdrop (class from animations.css) -->
-    <div class="aurora"></div>
-
-    <div class="section-inner my-auto text-center">
-      <div class="section-body" :class="{ 'is-mounted': mounted }">
+  <!-- The landing's block head, at slide scale: a small accent kicker, a large
+       title, and a hairline that draws in from the left. Left-aligned. -->
+  <div class="slidev-layout section section-hero" :class="{ 'is-mounted': mounted }">
+    <div class="section-inner">
+      <div class="section-kicker" aria-hidden="true">{{ label }}</div>
+      <div class="section-body">
         <slot />
       </div>
-      <div class="section-accent" :class="{ 'is-mounted': mounted }"></div>
+      <div class="section-rule"></div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.section-kinetic {
+.section-hero {
   position: relative;
   overflow: hidden;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
-.section-inner {
-  position: relative;
-  z-index: 2;
+/* Slide sources sometimes put `text-center` on a section; the system is
+   left-aligned like the landing. */
+.section-inner { text-align: left; }
+
+.section-kicker {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease) 0.05s;
 }
 .section-body {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s ease-out 0.1s,
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  transform: translateY(26px);
+  transition: opacity 0.8s var(--ease) 0.1s, transform 0.8s var(--ease) 0.1s;
 }
-.section-body.is-mounted {
-  opacity: 1;
-  transform: none;
+.section-rule {
+  margin-top: 1.4rem;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--hair-strong), var(--hair) 70%, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s var(--ease) 0.25s;
 }
-.section-accent {
-  margin: 1.2rem auto 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
-  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-}
-.section-accent.is-mounted {
-  width: min(48%, 520px);
-}
+.is-mounted .section-kicker { opacity: 1; }
+.is-mounted .section-body { opacity: 1; transform: none; }
+.is-mounted .section-rule { transform: scaleX(1); }
 
-/* Crisp white heading; the **bold** keyword picks up a clean blue accent. */
-.section-kinetic :deep(h1) {
-  font-family: var(--font-display);
-  font-weight: 600;
-  color: #eef4ff;
-  -webkit-text-fill-color: currentColor;
-  background: none;
+.section-hero :deep(h1) {
+  margin: 0;
+  color: var(--fg);
+  text-wrap: balance;
 }
-.section-kinetic :deep(h1 strong) {
-  color: #7dd3fc;
-  -webkit-text-fill-color: currentColor;
-  font-weight: 800;
+.section-hero :deep(h1 strong) {
+  color: var(--accent);
+  font-weight: 700;
 }
-
-/* Subtitle paragraph: the backdrop's bright particle band runs behind mid-frame text,
-   so lift the colour and add a soft dark halo instead of relying on grey-on-blue. */
-.section-kinetic .section-body :deep(p) {
-  color: #e2eaff;
+.section-hero .section-body :deep(p) {
+  margin-top: 1rem;
+  color: var(--fg-2);
   opacity: 1;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.95), 0 0 3px rgba(0, 0, 0, 0.85);
+  font-size: 1.1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section-body { transition: none; opacity: 1; transform: none; }
-  .section-accent { transition: none; width: min(48%, 520px); }
+  .section-kicker, .section-body, .section-rule { transition: none; }
 }
 </style>

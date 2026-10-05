@@ -121,7 +121,7 @@ hideInToc: true
 
 </div>
 
-![](/figures/play-changes.svg)
+<img src="/figures/play-changes.svg" style="display:block;margin:0.8rem auto 0;max-height:210px;">
 
 <!--
 Speaker: Git was written in 2005 for the development of the Linux kernel. The

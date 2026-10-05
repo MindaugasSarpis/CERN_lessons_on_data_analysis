@@ -1,27 +1,62 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
-import { handleBackground } from '../layoutHelper'
+import { useSlideContext } from '@slidev/client'
+import manifest from '../../decks.json'
 
-const props = defineProps({
-  background: {
-    default: '/figures/background_intro.jpg',
-  },
-})
+// The cover is the landing hero carried into the deck: same black, same type,
+// same staggered line-in, same corner labels. Every lecture cover has the same
+// markdown (author #, course #, lecture ##, aims badge #####), and this layout
+// re-casts it — the lecture title becomes the hero, the course title a small
+// link home. Spec: docs/superpowers/specs/2026-10-05-decks-match-landing-design.md
 
-// Use handleBackground for the animated bg layer (dim=true adds dark overlay)
-const bgStyle = computed(() => handleBackground(props.background, true))
-const mounted = ref(false)
+const { $slidev } = useSlideContext()
 const coverRoot = ref<HTMLElement | null>(null)
+const mounted = ref(false)
+
+// "LECTURE 02 · BLOCK A" from the manifest, matched on the deck title (set by
+// gen-entries.mjs from decks.json, so it works in dev and build). The combined
+// authoring deck has its own title → no match → no label.
+const deckLabel = computed(() => {
+  const title = $slidev?.configs?.title
+  const i = manifest.decks.findIndex((d: { title: string }) => d.title === title)
+  if (i < 0) return ''
+  const d = manifest.decks[i]
+  const n = String(i + 1).padStart(2, '0')
+  return `Lecture ${n} · Block ${d.block}`
+})
+// Same text as the landing's top-right corner (scripts/gen-landing.mjs).
+const term = 'Autumn 2026'
 
 onMounted(() => {
-  setTimeout(() => { mounted.value = true }, 50)
-
-  // Make the course-title heading on the cover a link back to the landing page
-  // (one path segment up from the deck base). Done here so all 16 decks get it
-  // without editing each cover's markdown.
-  const home = (import.meta.env.BASE_URL || '/').replace(/[^/]+\/$/, '') || '/'
   const el = coverRoot.value
   if (!el) return
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+  // Split the hero title into words, each in a clipping wrapper, so they rise
+  // in one after another like the landing title's lines.
+  const hero = el.querySelector<HTMLElement>('.cover-content h2')
+  if (hero && !hero.dataset.split) {
+    hero.dataset.split = '1'
+    const words = (hero.textContent || '').trim().split(/\s+/)
+    hero.textContent = ''
+    words.forEach((w, i) => {
+      const wrap = document.createElement('span')
+      wrap.className = 'w-wrap'
+      const inner = document.createElement('span')
+      inner.className = 'w'
+      inner.style.setProperty('--i', String(i))
+      inner.textContent = w
+      wrap.appendChild(inner)
+      hero.appendChild(wrap)
+      if (i < words.length - 1) hero.appendChild(document.createTextNode(' '))
+    })
+  }
+  if (reduce) mounted.value = true
+  else requestAnimationFrame(() => requestAnimationFrame(() => { mounted.value = true }))
+
+  // The course title links back to the landing page (one path segment up from
+  // the deck base), for every deck without editing each cover's markdown.
+  const home = (import.meta.env.BASE_URL || '/').replace(/[^/]+\/$/, '') || '/'
   const h1s = Array.from(el.querySelectorAll<HTMLElement>('.cover-content h1'))
   const title = h1s.find((h) => /Best Research and Data Analysis/i.test(h.textContent || ''))
   if (title && !title.dataset.homeLink) {
@@ -40,19 +75,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="slidev-layout cover cover-root" ref="coverRoot">
-    <!-- Animated background layer -->
-    <div class="cover-bg" :style="bgStyle"></div>
+  <div class="slidev-layout cover cover-root" :class="{ 'is-mounted': mounted }" ref="coverRoot">
+    <div class="corner corner-tr" aria-hidden="true">{{ term }}</div>
+    <div v-if="deckLabel" class="corner corner-br" aria-hidden="true">{{ deckLabel }}</div>
 
-    <!-- Volumetric light glows -->
-    <div class="vol-light vol-1"></div>
-    <div class="vol-light vol-2"></div>
-
-    <!-- Accent line -->
-    <div class="cover-accent" :class="{ 'is-mounted': mounted }"></div>
-
-    <!-- Content -->
-    <div class="cover-content" :class="{ 'is-mounted': mounted }">
+    <div class="cover-content">
       <slot />
     </div>
   </div>
@@ -60,160 +87,128 @@ onMounted(() => {
 
 <style scoped>
 .cover-root {
-  position: relative !important;
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  background: #0a0a0f !important;
-  background-image: none !important;
+  justify-content: center;
+  padding: 2.4rem 4rem;
 }
 
-/* === Animated background — Ken Burns slow drift === */
-.cover-bg {
+/* Corner labels — the landing's .corner */
+.corner {
   position: absolute;
-  top: -8%;
-  left: -8%;
-  width: 116%;
-  height: 116%;
-  z-index: 0;
-  animation: ken-burns 30s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-@keyframes ken-burns {
-  0%   { transform: scale(1) translate(0, 0); }
-  50%  { transform: scale(1.08) translate(-2.5%, 1.5%); }
-  100% { transform: scale(1.12) translate(1%, -2%); }
-}
-
-/* === Volumetric light glows — above background, visible === */
-.vol-light {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  filter: blur(70px);
-}
-
-.vol-1 {
-  width: 450px;
-  height: 280px;
-  top: 25%;
-  left: 10%;
-  background: rgba(50, 190, 200, 0.15);
-  opacity: 0.7;
-  animation: drift-1 18s ease-in-out infinite alternate;
-}
-
-.vol-2 {
-  width: 380px;
-  height: 220px;
-  top: 35%;
-  right: 5%;
-  background: rgba(70, 210, 220, 0.12);
-  opacity: 0.6;
-  animation: drift-2 22s ease-in-out infinite alternate;
-}
-
-@keyframes drift-1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(30px, -20px) scale(1.1); opacity: 1; }
-  100% { transform: translate(-20px, 15px) scale(0.95); }
-}
-
-@keyframes drift-2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-25px, 20px) scale(1.12); opacity: 0.9; }
-  100% { transform: translate(15px, -10px) scale(0.9); }
-}
-
-/* === Accent line === */
-.cover-accent {
-  position: relative;
-  z-index: 2;
-  margin-left: 4.5rem;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #5ec4c4, rgba(94, 196, 196, 0.15));
-  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-}
-
-.cover-accent.is-mounted {
-  width: min(35%, 280px);
-}
-
-/* === Content === */
-.cover-content {
-  position: relative;
-  z-index: 2;
-  padding: 1.75rem 4.5rem 3.5rem;
-  max-width: 80%;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.7s ease-out 0.15s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-}
-
-.cover-content.is-mounted {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* === Typography === */
-.cover-root :deep(h1) {
-  color: #f0f0f0 !important;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  margin: 0.35rem 0;
-}
-
-.cover-root :deep(h1:first-child) {
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: rgba(220, 220, 220, 0.7) !important;
-  letter-spacing: 0.02em;
-}
-
-.cover-root :deep(h2) {
-  color: #5ec4c4 !important;
+  right: 4rem;
+  color: var(--dim);
+  font-size: 0.62rem;
   font-weight: 500;
-  font-size: 1.35rem;
-  letter-spacing: 0.03em;
-  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0;
+  transition: opacity 1s var(--ease) 0.9s;
+}
+.corner-tr { top: 2.2rem; }
+.corner-br { bottom: 2.2rem; }
+.is-mounted .corner { opacity: 1; }
+
+/* Re-cast the cover markdown into the hero order with flex `order`:
+   author kicker → course link → hero lecture title → aims badge → rest. */
+.cover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 88%;
 }
 
-/* The course title doubles as a link back to the course landing page */
+/* # Dr. … — the landing's kicker */
+.cover-root :deep(.cover-content h1:first-child) {
+  order: 1;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  margin: 0 0 0.35rem;
+}
+
+/* # Best Research … — small, dim, links home */
+.cover-root :deep(.cover-content h1:not(:first-child)) {
+  order: 2;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  margin: 0 0 1.6rem;
+}
 .cover-root :deep(.cover-home-link) {
   cursor: pointer;
   width: fit-content;
-  transition: color 0.18s ease;
+  border-bottom: 1px solid transparent;
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
 }
-.cover-root :deep(.cover-home-link:hover) {
-  color: #7dd3fc !important;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 5px;
-}
-
-.cover-root :deep(p) {
-  color: rgba(240, 240, 240, 0.5);
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
+.cover-root :deep(.cover-home-link:hover),
+.cover-root :deep(.cover-home-link:focus-visible) {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  outline: none;
 }
 
-/* Mobile: disable heavy animations to save GPU/battery */
-@media (max-width: 768px), (pointer: coarse) {
-  .cover-bg { animation: none; }
-  .vol-light { display: none; }
+/* ## Lecture title — the hero */
+.cover-root :deep(.cover-content h2) {
+  order: 3;
+  margin: 0;
+  font-size: 3.7rem;
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-wrap: balance;
 }
+.cover-root :deep(.w-wrap) {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for descender-free caps; the clip must not cut accents (Š). */
+  padding-top: 0.06em;
+  margin-top: -0.06em;
+}
+.cover-root :deep(.w) {
+  display: inline-block;
+  transform: translateY(112%);
+  transition: transform 0.9s var(--ease);
+  transition-delay: calc(0.15s + var(--i) * 0.09s);
+}
+.cover-root.is-mounted :deep(.w) { transform: translateY(0); }
+
+/* ##### aims badge (and any extra line such as L08's "Inspired by") */
+.cover-root :deep(.cover-content h3),
+.cover-root :deep(.cover-content h5),
+.cover-root :deep(.cover-content p) {
+  order: 4;
+  margin: 1.8rem 0 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 1s var(--ease) 0.7s;
+}
+.cover-root :deep(.cover-content h5 + h5) { margin-top: 0.6rem; }
+.cover-root.is-mounted :deep(.cover-content h3),
+.cover-root.is-mounted :deep(.cover-content h5),
+.cover-root.is-mounted :deep(.cover-content p) { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
-  .cover-bg { animation: none; }
-  .vol-light { animation: none; }
-  .cover-accent { transition: none; width: min(35%, 280px); }
-  .cover-content { transition: none; opacity: 1; transform: none; }
+  .corner,
+  .cover-root :deep(.w),
+  .cover-root :deep(.cover-content h3),
+  .cover-root :deep(.cover-content h5),
+  .cover-root :deep(.cover-content p) { transition: none; }
 }
 </style>

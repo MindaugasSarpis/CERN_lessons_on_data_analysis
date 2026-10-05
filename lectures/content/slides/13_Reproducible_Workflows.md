@@ -2282,13 +2282,12 @@ hideInToc: true
 
 # Reading a **Failure**
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact">
 
 ## ❌ **`decimal=","` taken out of `clean.py`**
 
 ```text
 tests/test_clean.py ..F                                                  [100%]
-
 =================================== FAILURES ===================================
 __________________________ test_decimal_comma_is_read __________________________
 
@@ -2331,7 +2330,7 @@ The line marked `E`: the text `'9,02'` on the left, the number 9.02 on the right
 
 </div>
 
-<div class="note-text mt-sm">Found in a quarter of a second, at the stage where the mistake was made.</div>
+<div class="note-text mt-xs">Found in a quarter of a second, at the stage where the mistake was made.</div>
 
 <!--
 Speaker: break clean.py live, run pytest, read the three parts aloud, put the
