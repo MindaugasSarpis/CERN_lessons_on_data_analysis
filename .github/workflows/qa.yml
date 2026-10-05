@@ -64,7 +64,7 @@ jobs:
 
       - name: Workbook builds strictly (MkDocs)
         run: |
-          pip install mkdocs mkdocs-material
+          pip install 'mkdocs<2' mkdocs-material   # MkDocs 2.0 drops plugins + themes
           mkdocs build --strict -f lectures/workbook/mkdocs.yml -d /tmp/workbook-qa
 
       - name: Timing gate (fast)
@@ -120,7 +120,7 @@ jobs:
           python-version: '3.14'
 
       - name: Install MkDocs (student workbook)
-        run: pip install mkdocs mkdocs-material
+        run: pip install 'mkdocs<2' mkdocs-material   # MkDocs 2.0 drops plugins + themes
 
       - name: Build all decks + landing page + workbook
         env:
