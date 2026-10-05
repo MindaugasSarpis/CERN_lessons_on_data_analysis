@@ -11,7 +11,7 @@
  *     file no deck lists — the LX template, the combined entry — touches nothing)
  *   - paths that never reach a rendered deck are ignored: docs/, the workbook,
  *     videos/, misc/, figures/src/ (outputs live in public/figures and DO count),
- *     the non-build scripts (videos.py, timing-report, release), editor/agent
+ *     the non-build scripts (videos.py, timing-report, release, check-runners), editor/agent
  *     config, root-level markdown
  *   - anything else — theme, components, setup, public/, layouts, the build/QA
  *     scripts, landing/, decks.json, package.json, the lockfile, workflows —
@@ -28,7 +28,7 @@ import { fileURLToPath } from 'node:url';
 
 const IGNORE = [
   /^docs\//, /^lectures\/workbook\//, /^videos\//, /^misc\//, /^figures\/src\//,
-  /^scripts\/(videos\.py|timing-report\.mjs|release\.mjs)$/,
+  /^scripts\/(videos\.py|timing-report\.mjs|release\.mjs|check-runners\.mjs)$/,
   /^\.agents\//, /^\.claude\//, /^\.vscode\//, /^\.gitignore$/, /^LICENSE/,
   /^[^/]+\.md$/,
 ];

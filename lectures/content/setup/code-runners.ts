@@ -1,4 +1,5 @@
-// Slidev code-runners setup: route matplotlib figures into the runner output.
+// Slidev code-runners setup: route matplotlib figures into the runner output,
+// and show tracebacks the way plain Python prints them.
 //
 // The `python`/`py` runners come from slidev-addon-python-runner (Pyodide).
 // That runner relays only stdout/stderr. `plt.show()` under Pyodide's
@@ -19,6 +20,41 @@ import { toValue } from 'vue'
 
 type Runner = (code: string, ctx: unknown) => Promise<unknown>
 
+// An error arrives as one red line per traceback line, and Pyodide's
+// traceback holds frames of its own machinery (`File "/lib/python3…/_pyodide/
+// …"`) next to the student's code (`File "<exec>"`). Show what plain Python
+// would: drop every frame in Pyodide's `_pyodide` package (the `File` line
+// and the indented source / `^^^` lines under it), in each traceback of a
+// chained error, and the `PythonError: ` prefix of the first line. Frames in
+// library code (numpy, pandas) stay, as in plain Python.
+function trimTraceback(items: any[]) {
+  const red = (it: any) => it && it.class === 'text-red' && typeof it.text === 'string'
+  const out: any[] = []
+  let skipping = false
+  let first = true
+  for (const it of items) {
+    if (!red(it)) {
+      out.push(it)
+      continue
+    }
+    const text: string = it.text
+    if (/^\s+File "[^"]*\/_pyodide\//.test(text)) {
+      skipping = true
+      continue
+    }
+    // a skipped frame's own lines are indented deeper than `  File`
+    if (skipping && /^\s{4,}/.test(text))
+      continue
+    skipping = false
+    out.push(first ? { ...it, text: text.replace(/^PythonError:\s*/, '') } : it)
+    first = false
+  }
+  // the message ends in a newline: no empty red rows under it
+  while (out.length && red(out[out.length - 1]) && !out[out.length - 1].text.trim())
+    out.pop()
+  return out
+}
+
 export default function setup(runners: Record<string, Runner>) {
   const base = runners.python ?? runners.py
   if (!base)
@@ -36,7 +72,7 @@ export default function setup(runners: Record<string, Runner>) {
     // empty container is hidden by CSS.
     return () => {
       const items = toValue(outputs as any)
-      return [...(Array.isArray(items) ? items : [items]), { element: figures }]
+      return [...trimTraceback(Array.isArray(items) ? items : [items]), { element: figures }]
     }
   }
 

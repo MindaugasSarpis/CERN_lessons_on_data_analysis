@@ -38,10 +38,38 @@ python:
 
 ---
 
-```py {monaco-run} {autorun:false}
-from termcolor import colored
+<!-- Runner block style: docs/python-runner-recipe.md. Print every result,
+put its value in a trailing comment, keep lines inside the editor, ≲10 lines,
+self-contained, room under the block for the output. Check with
+`pnpm qa:runners --only <slug>`. -->
 
-print(colored("Hello, Slidev!", "blue"))
+```py {monaco-run} {autorun:false}
+print(0.1 + 0.2)          # 0.30000000000000004
+print(0.1 + 0.2 == 0.3)   # False
 ```
+
+---
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🧮 **Half-width runner**
+
+In a `grid-2` card a line holds about 50 characters.
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+```py {monaco-run} {autorun:false}
+import numpy as np
+a = np.array([127], dtype=np.int8)
+print(a + 1)  # [-128]: int8 wraps
+```
+
+</div>
+
+</div>
 
 ---

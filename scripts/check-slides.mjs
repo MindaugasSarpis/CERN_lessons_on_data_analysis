@@ -12,6 +12,10 @@
  * run in parallel. ~10-20s for the whole published deck vs ~5min for reload-
  * per-slide.
  *
+ * Runner editors ({monaco-run}): the check waits for Monaco and the runner
+ * row to mount before measuring, and fails a slide whose code has a line
+ * wider than its editor (cut off at the right edge on the projector).
+ *
  * Flake guard: offenders and unrendered slides are re-measured once on a
  * fresh page before the gate fails — near-tolerance one-offs under parallel
  * load (the ~10px flake) clear themselves; only reproducible overflow fails.
@@ -157,13 +161,33 @@ async function runShard(shard, { shots = SHOTS, collect = { offenders, skipped }
       const settle = imgs.map((img) => (img.complete ? Promise.resolve() : new Promise((r) => { img.onload = img.onerror = r; }))
         .then(() => (img.decode ? img.decode().catch(() => {}) : undefined)));
       await Promise.race([Promise.all(settle), new Promise((r) => setTimeout(r, 4000))]);
+      // Python runner blocks mount late: Monaco is a lazy chunk (the editor
+      // has no height until it lays out) and the runner's status row is an
+      // async component. Measured before both are in, a runner slide reads
+      // ~1.5rem shorter than it shows live.
+      const ready = () => [...pg.querySelectorAll('.slidev-monaco-container')].every((c) =>
+        c.querySelector('.monaco-editor .view-line') && c.querySelector(':scope > .border-t')
+        && c.querySelector('.slidev-monaco-container-inner').getBoundingClientRect().height > 20);
+      for (let t = 0; t < 80 && !ready(); t++) await new Promise((r) => setTimeout(r, 100));
     }, n).catch(() => {});
     const m = await page.evaluate((n) => {
       const pg = document.querySelector(`.slidev-page[data-slidev-no="${n}"]`);
       const el = pg ? pg.querySelector('.slidev-layout') : document.querySelector('.slidev-layout');
       if (!el) return null;
       const h = el.querySelector('h1, h2');
-      return { oy: el.scrollHeight - el.clientHeight, ox: el.scrollWidth - el.clientWidth,
+      // Runner editors: a code line wider than its editor is cut off at the
+      // right edge (Monaco scrolls sideways instead of wrapping) — on a
+      // projector that is clipped code, as bad as overflow. Report the worst
+      // line's excess in slide px.
+      let cx = 0;
+      for (const ed of el.querySelectorAll('.slidev-monaco-container .monaco-scrollable-element')) {
+        const right = ed.getBoundingClientRect().right;
+        const scale = ed.getBoundingClientRect().width / ed.offsetWidth || 1;
+        for (const s of ed.querySelectorAll('.view-line > span')) {
+          cx = Math.max(cx, Math.round((s.getBoundingClientRect().right - right) / scale));
+        }
+      }
+      return { oy: el.scrollHeight - el.clientHeight, ox: el.scrollWidth - el.clientWidth, cx,
                title: (h ? h.textContent : '').trim().slice(0, 60) };
     }, n);
     if (shots) {
@@ -190,9 +214,10 @@ async function runShard(shard, { shots = SHOTS, collect = { offenders, skipped }
     // the offender list, never hide real overflow.
     if (!m) { collect.skipped.push(n); continue; } // slide never settled — do NOT count as "fits"
     measured++;
-    if (m.oy > TOL || m.ox > TOL) {
+    if (m.oy > TOL || m.ox > TOL || m.cx > 0) {
       collect.offenders.push({ n, ...m });
-      console.log(`  ✗ slide ${n}: overflow y=${m.oy}px x=${m.ox}px  — "${m.title}"`);
+      const code = m.cx > 0 ? `, runner code ${m.cx}px wider than its editor` : '';
+      console.log(`  ✗ slide ${n}: overflow y=${m.oy}px x=${m.ox}px${code}  — "${m.title}"`);
     }
   }
   await page.close();
@@ -234,7 +259,7 @@ if (skipped.length) {
   console.log(`⚠️  ${skipped.length} slide(s) failed to render and were NOT checked: ${skipped.join(', ')}`);
 }
 if (offenders.length) {
-  console.log(`❌ ${offenders.length} slide(s) overflow the frame (tolerance ${TOL}px).`);
+  console.log(`❌ ${offenders.length} slide(s) overflow the frame (tolerance ${TOL}px) or clip runner code.`);
   console.log('   Offending slides: ' + offenders.map((o) => o.n).join(', '));
 }
 if (offenders.length === 0 && skipped.length === 0) {

@@ -22,9 +22,25 @@ const num = '#fde68a'
 const courseDark = {
   name: 'course-dark',
   type: 'dark',
+  // Monaco reads these too (shikiToMonaco passes `colors` through): no boxed
+  // current line, a cyan cursor, thin translucent scrollbars.
   colors: {
     'editor.background': '#00000000',
     'editor.foreground': fg,
+    'editor.lineHighlightBackground': '#ffffff08',
+    'editor.lineHighlightBorder': '#00000000',
+    'editor.selectionBackground': '#7dd3fc33',
+    'editor.inactiveSelectionBackground': '#7dd3fc1a',
+    'editorCursor.foreground': accent,
+    'editorLineNumber.foreground': '#5b6573',
+    'editorLineNumber.activeForeground': dim,
+    'editorIndentGuide.background1': '#ffffff0f',
+    'editorBracketMatch.border': '#00000000',
+    'editorBracketMatch.background': '#7dd3fc1f',
+    'scrollbar.shadow': '#00000000',
+    'scrollbarSlider.background': '#ffffff1f',
+    'scrollbarSlider.hoverBackground': '#ffffff33',
+    'scrollbarSlider.activeBackground': '#7dd3fc55',
   },
   tokenColors: [
     { settings: { foreground: fg } },

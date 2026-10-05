@@ -956,11 +956,15 @@ hideInToc: true
 
 </div>
 
-<div class="card card-primary card-glass pad-tight mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 **Used in:** data compression, cryptography, bit manipulation
 
-```python
+</div>
+
+<div class="mt-md">
+
+```py {monaco-run} {autorun:false}
 a = 0b1100  # 12 in decimal
 b = 0b1010  # 10 in decimal
 
@@ -1107,10 +1111,10 @@ The famous **Y2K38 problem**: 32-bit Unix time runs out on 19 Jan 2038.
 
 At 8 bits, `255 + 1 = 0` — silently:
 
-```python
+```py {monaco-run} {autorun:false}
 import numpy as np
-a = np.array([127], dtype=np.int8)  # max for signed 8-bit
-print(a + 1)                        # [-128]  wraps, no warning
+a = np.array([127], dtype=np.int8)  # int8 max
+print(a + 1)  # [-128]: wraps, no warning
 ```
 
 *Python's own `int` grows as needed — but NumPy arrays and files use fixed widths, so pick a type wide enough for your data range.*
@@ -1363,13 +1367,13 @@ hideInToc: true
 
 ## ⚠️ **Not all decimals are exact in binary**
 
-```python
+```py {monaco-run} {autorun:false}
 print(0.1 + 0.2)            # 0.30000000000000004 (!)
 print(0.1 + 0.2 == 0.3)     # False
 
 # Use tolerance for comparisons
 import math
-math.isclose(0.1 + 0.2, 0.3)  # True
+print(math.isclose(0.1 + 0.2, 0.3))  # True
 ```
 
 **Why?** 0.1 is a repeating fraction in binary (like 1/3 in decimal). Finite bits mean rounding.
@@ -1496,12 +1500,12 @@ hideInToc: true
 
 ## 🧪 **Live Demo**
 
-Open the terminal in VS Code (**Terminal** > **New Terminal**), type `python` and press Enter (macOS: `python3`). Then try:
+Press ▶ to run it here. Then open the terminal in VS Code (**Terminal** > **New Terminal**), type `python` and press Enter (macOS: `python3`), and type the same three lines:
 
-```python
->>> 0.1 + 0.2
->>> 0.1 + 0.2 == 0.3
->>> f"{0.1:.20f}"
+```py {monaco-run} {autorun:false}
+print(0.1 + 0.2)
+print(0.1 + 0.2 == 0.3)
+print(f"{0.1:.20f}")
 ```
 
 </div>
@@ -1689,15 +1693,15 @@ hideInToc: true
 
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-sm">
+<div class="mt-sm">
 
-```python
+```py {monaco-run} {autorun:false}
 # Python: bytes vs str and UTF-8
-s = "Å and 😊"         # str = Unicode
-b = s.encode("utf-8")  # bytes
-len(s), len(b)         # (7, 11) — 7 characters, 11 bytes: Å = 2, 😊 = 4
-
-b.decode("utf-8")      # back to str
+s = "Å and 😊"            # str = Unicode
+b = s.encode("utf-8")     # bytes
+print(len(s), len(b))     # 7 11 — 7 characters, 11 bytes: Å = 2, 😊 = 4
+print(b)                  # b'\xc3\x85 and \xf0\x9f\x98\x8a'
+print(b.decode("utf-8"))  # back to str
 ```
 
 </div>

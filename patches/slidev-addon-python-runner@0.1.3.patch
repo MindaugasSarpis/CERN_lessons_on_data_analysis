@@ -1,0 +1,42 @@
+diff --git a/setup/code-runners.ts b/setup/code-runners.ts
+index f64f7a77c6c616ad137c821f2728397cf9d605cc..da6438b8a1a1ab5c6a8339e9249cfcf695308203 100644
+--- a/setup/code-runners.ts
++++ b/setup/code-runners.ts
+@@ -67,11 +67,12 @@ export default defineCodeRunnersSetup(() => {
+     const extras = ref<CodeRunnerOutput[]>([])
+     const decoder = new TextDecoder('utf-8');
+     function write(buffer: Uint8Array) {
+-      const text = decoder.decode(buffer)
+-      for (const line of text.split('\n')) {
+-        texts.value[texts.value.length - 1] += line
+-        texts.value.push('')
+-      }
++      // The first piece continues the open line; every '\n' starts a new one.
++      // (Upstream pushed a line after EVERY piece, so each print() left an
++      // extra blank line and output read double-spaced.)
++      const [first, ...rest] = decoder.decode(buffer, { stream: true }).split('\n')
++      texts.value[texts.value.length - 1] += first
++      for (const line of rest) texts.value.push(line)
+       return buffer.length
+     }
+     pyodide.setStdout({
+@@ -103,9 +104,18 @@ export default defineCodeRunnersSetup(() => {
+           })
+         }
+       }
++    }).finally(() => {
++      // stdout is line-buffered (isatty): text after the last newline
++      // (`print(x, end="")`, output before an exception) would otherwise
++      // stay in the buffer and open the NEXT block's output
++      try {
++        pyodide.runPython('import sys\nsys.stdout.flush()\nsys.stderr.flush()')
++      } catch {}
+     });
++    // the last entry is the still-open line: drop it while it is empty
+     return () => [
+-      ...texts.value.map(text => ({ text, highlightLang: 'ansi' })),
++      ...texts.value.filter((text, i, all) => text || i < all.length - 1)
++        .map(text => ({ text, highlightLang: 'ansi' })),
+       ...extras.value,
+     ]
+   }

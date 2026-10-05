@@ -16,6 +16,7 @@
     "export": "slidev export lectures/content/best_research_and_data_analysis_practices_from_CERN.md",
     "qa": "node scripts/qa-all.mjs",
     "qa:shots": "node scripts/qa-all.mjs --shots",
+    "qa:runners": "node scripts/check-runners.mjs",
     "timing": "node scripts/timing-report.mjs",
     "timing:check": "node scripts/timing-report.mjs --check",
     "videos:sync": "python3 scripts/videos.py sync",
@@ -41,6 +42,9 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "playwright-chromium"
-    ]
+    ],
+    "patchedDependencies": {
+      "slidev-addon-python-runner@0.1.3": "patches/slidev-addon-python-runner@0.1.3.patch"
+    }
   }
 }

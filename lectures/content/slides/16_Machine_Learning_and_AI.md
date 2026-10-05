@@ -777,7 +777,7 @@ hideInToc: true
 
 # The Training Loop in **NumPy**
 
-```py {monaco-run} {autorun:false}
+```py {monaco-run} {autorun:false, outputHeight:'4.8rem'}
 import numpy as np
 X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 y = np.array([0, 1, 1, 0])
@@ -2218,7 +2218,7 @@ hideInToc: true
 
 # Generating **Text**
 
-```py {monaco-run} {autorun:false}
+```py {monaco-run} {autorun:false, outputHeight:'4.8rem'}
 import numpy as np
 text = """the kaon has a mass of 494 MeV .
 the pion has a mass of 140 MeV .
