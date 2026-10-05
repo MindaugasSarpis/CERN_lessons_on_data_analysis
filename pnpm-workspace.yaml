@@ -1,0 +1,11 @@
+# pnpm settings (since pnpm 11 they live here, not in package.json or .npmrc).
+# The pnpm version itself is pinned by `packageManager` in package.json.
+
+# Dependencies allowed to run install scripts; any other dependency with a
+# script fails the install (pnpm 11+ `strictDepBuilds`).
+allowBuilds:
+  esbuild: true
+  playwright-chromium: true
+
+patchedDependencies:
+  slidev-addon-python-runner@0.1.3: patches/slidev-addon-python-runner@0.1.3.patch
