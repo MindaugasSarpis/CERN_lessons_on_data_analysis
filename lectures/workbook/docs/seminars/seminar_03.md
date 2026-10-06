@@ -67,6 +67,29 @@ For you, before the session:
 - The **Hex Editor** extension installed, and the installer of VS Code on a
   USB stick for a laptop that lost it.
 
+A student who missed Seminar 1 downloads
+[`project_after_s1.zip`](../data/project_after_s1.zip), unpacks it, and
+opens `analysis-project` with **File** > **Open Folder...**.
+
+## Files for this seminar { #files }
+
+Each file shows what a step should produce, so a student can compare their
+own file with it in the terminal or in the hex view. A browser saves it under
+the name in the second column.
+
+| File | Saved as | What it is |
+|--|--|--|
+| [`bytes_utf8.txt`](../data/bytes_utf8.txt){ download="bytes.txt" } | `bytes.txt` | Sections 3 and 5: `abcą` and LF in UTF-8, 6 bytes, `61 62 63 C4 85 0A` |
+| [`bytes_1257.txt`](../data/bytes_1257.txt){ download="bytes_1257.txt" } | `bytes_1257.txt` | Section 4, step 4: the same text saved as Windows 1257, 5 bytes, `61 62 63 E0 0A` |
+| [`pendulum.csv`](../data/pendulum.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 6: the cleaned table with LF, 97 bytes |
+| [`pendulum_crlf.csv`](../data/pendulum_crlf.csv){ download="pendulum_crlf.csv" } | `pendulum_crlf.csv` | Section 6: the same table with CRLF, 107 bytes |
+| [`project_README_s3.txt`](../data/project_README_s3.txt){ download="README.md" } | `README.md` | Section 9: the README with the **File anatomy** section, for LF |
+| [`project_after_s3.zip`](../data/project_after_s3.zip) | `project_after_s3.zip` | The whole `analysis-project` folder at the end of this seminar |
+
+Open `bytes_1257.txt` in VS Code. It shows `abc` and a sign for an unknown
+character, because VS Code reads it as UTF-8. **Reopen with Encoding** and
+**Baltic (Windows 1257)** show `abcą`.
+
 ## Part 1 · Three terminal commands { #part-1 }
 
 **0:00 to 0:20 · sections 1 and 2**

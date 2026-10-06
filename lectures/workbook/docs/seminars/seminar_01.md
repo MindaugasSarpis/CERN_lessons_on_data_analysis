@@ -77,6 +77,27 @@ At the start, ask who has written code before. Seat each of them next to
 someone who has not. The rule for the experienced one: explain, never take
 the keyboard.
 
+## Files for this seminar { #files }
+
+Each file is the state that a step ends in. A student who lost a step
+downloads it and goes on from there. A browser saves it under the name in
+the second column.
+
+| File | Saved as | The state at the end of |
+|--|--|--|
+| [`pendulum_raw.csv`](../data/pendulum_raw.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 7, step 1: the table as received, for `data/raw/` |
+| [`pendulum_replaced.csv`](../data/pendulum_replaced.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 7: `,` and `;` replaced, for `data/processed/` |
+| [`pendulum.csv`](../data/pendulum.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 8: column `nr` deleted, for `data/processed/` |
+| [`pendulum_report.txt`](../data/pendulum_report.txt){ download="report.md" } | `report.md` | Section 9, for `results/` |
+| [`pendulum_plot.png`](../data/pendulum_plot.png){ download="pendulum_plot.png" } | `pendulum_plot.png` | Section 9, step 9, for `results/` |
+| [`D0_KPi.csv`](../data/D0_KPi.csv) | `D0_KPi.csv` | Section 10, for `data/raw/` |
+| [`project_README_s1.txt`](../data/project_README_s1.txt){ download="README.md" } | `README.md` | Section 11: the README of the whole seminar |
+| [`project_after_s1.zip`](../data/project_after_s1.zip) | `project_after_s1.zip` | The seminar: the whole `analysis-project` folder |
+
+The zip is for a student who missed the session. Unpack it, then
+**File** > **Open Folder...** and pick `analysis-project`. Its README
+still says *your name* and *one sentence*, so fill those in.
+
 ## Part 1 · VS Code { #part-1 }
 
 **0:00 to 0:40 · sections 1 to 4**
