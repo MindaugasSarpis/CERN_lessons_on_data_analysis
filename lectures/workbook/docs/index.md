@@ -6,13 +6,12 @@ in every session from the second on. The lectures
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
 
-## This week: 6 October
+## This week: 13 October
 
 | | Page |
 |--|--|
-| Lecture | [02 Introduction to Data](lectures/lecture_2.md#the-lecture-in-90-minutes), slides 45–61: the project folder, Markdown, editing many lines. Then [03 How Computers Work](lectures/lecture_3.md#the-lecture-in-90-minutes) |
-| Seminar | [Seminar 1](seminars/seminar_01.md#part-3), Part 3: edit many lines at once. Then [Seminar 3 — A File as Bytes](seminars/seminar_03.md) |
-| Homework | A **File anatomy** entry for your own dataset, the last section of Seminar 3 |
+| Lecture | [04 Command Line & File Handling](lectures/lecture_4.md#the-lecture-in-90-minutes): the terminal, the shell and the prompt named; macOS and Windows PowerShell side by side |
+| Seminar | [Seminar 4 — Work on Files from the Shell](seminars/seminar_04.md): Python, Git and PowerShell 7 installed in class first |
 
 ## Hands-on seminars
 

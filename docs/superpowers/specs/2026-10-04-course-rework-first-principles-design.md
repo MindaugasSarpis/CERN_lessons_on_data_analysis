@@ -97,10 +97,15 @@ program. Laptops are Windows and macOS, a few Linux.
 | 12 + S12 | Pandas, cleaning by script | |
 | 13 + S13 | environments, a one-command rebuild, tests | |
 
-On Windows the terminal from week 4 on is **Git Bash** inside VS Code (it is
-installed with Git), so one set of shell commands serves every laptop. Week 3
-used PowerShell for `pwd`, `ls`, `cd` only. Where macOS and Git Bash differ
-(`shasum -a 256` against `sha256sum`), give both.
+The terminal is `zsh` on macOS and **PowerShell 7** on Windows, both inside
+VS Code, shown side by side wherever the two differ (amended 6 Oct 2026: Git
+Bash is dropped). PowerShell 7, Python and Git are installed in class in
+Seminar 4; before that, Windows laptops run the built-in Windows PowerShell
+5.1, whose `>` writes UTF-16. Commands that both shells share (git, python,
+cd) are shown once. Where they differ, give both (`shasum -a 256` against
+`Get-FileHash`, `wc -l` against `(Get-Content f).Count`). Output that must
+have the same bytes on every system is written by a Python script with
+`newline="\n"`, not by a shell redirect. No session depends on homework.
 
 ## 4. The running examples
 
@@ -319,7 +324,7 @@ file, then a cleaning script whose output goes to `data/processed/`.
 week 2. The command-line interface (argparse) and a config file; environments
 and pinned versions; one command that rebuilds everything, in a form that
 works on Windows too (`make` is not on Windows by default: give a `run_all.py`
-or say how to get `make` in Git Bash); tests with pytest; continuous
+since `make` is not on Windows by default); tests with pytest; continuous
 integration; FAIR. Add from the parked L05: diagrams as text (Mermaid) for
 drawing the pipeline, and `.vscode/extensions.json`. Seminar 13: environment
 file, one-command rebuild, one test.

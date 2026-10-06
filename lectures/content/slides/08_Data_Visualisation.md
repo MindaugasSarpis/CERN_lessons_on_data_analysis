@@ -31,6 +31,55 @@ John W. Tukey, *Exploratory Data Analysis* (1977)
 hideInToc: true
 ---
 
+# Nine Points and **Twenty Counts**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact text-center">
+
+## 📄 **Lecture 2: a picture in `report.md`**
+
+<img class="fig fig-light" src="/figures/pendulum_plot.png" style="display:block;margin:0 auto;max-height:180px;">
+
+The nine rows of the pendulum table as nine points
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **Lecture 7: the mass column in 20 bins**
+
+```text
+[3500 3622 3623 3643 3741 3722 4224 5083
+ 7124 8931 8565 6512 4876 3938 3602 3378
+ 3412 3397 3287 3064]
+```
+
+`np.histogram(M, bins=20, range=(1815, 1915))`. The fullest bin, 1860 to 1865 MeV/c², holds 8931 rows, and the figure is these 20 numbers drawn as bars.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+❓ Both pictures come from a data file. Which lines of Python draw them, and which choices in them did a person make: points or a line, where the axes start, the range, the width of a bin?
+
+</div>
+
+<!--
+Speaker: two things the room has already seen. Left, the picture on the
+report.md slide of Lecture 2. Right, the counts Lecture 7 printed for the mass
+column. Ask the room to name one choice in the left picture (points, not a
+line; both axes from zero). The first section answers both: the pendulum on
+"Points, Labels, Units", the mass column on "The Mass Column as a Histogram".
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Learning **Objectives**
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
@@ -92,7 +141,7 @@ hideInToc: true
 
 ## 👁️ **Reading**
 
-A column of 91 583 masses cannot be read. Its histogram is read in a few seconds: one peak on a flat background.
+A column of 91 583 masses cannot be read, and its mean and standard deviation did not show the peak. The 20 counts as bars are read in a few seconds: one peak on a flat background.
 
 </div>
 
@@ -135,16 +184,24 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Four tables of 11 points (Anscombe, 1973). In each one the mean of x is 9.0, the mean of y is 7.5, and the closest straight line is y = 3.00 + 0.50x. Each has r = 0.82, where r measures how near the points lie to a straight line: 1 on a rising line, 0 with no trend. Only the plot tells the four apart.
+⚠️ Four tables of 11 points (Anscombe, 1973). In each one the mean of x is 9.0, the mean of y is 7.5, and the closest straight line is y = 3.00 + 0.50x. Each has r = 0.82, where r measures how near the points lie to a straight line: 1 on a rising line, 0 with no trend. What do the four tables look like?
 
 </div>
 
-<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg" style="display:block;margin:0 auto;max-height:350px;">
+<div v-click>
+
+<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg" style="display:block;margin:0 auto;max-height:290px;">
+
+<div class="note-text mt-sm text-center">Only the plot tells the four apart, as only the 20 counts showed the peak of the mass column.</div>
+
+</div>
 
 <!--
-Speaker: read the four numbers first and ask what the data look like. Then the
-panels: a line with scatter, a curve, a line with one point off it, and ten
-points at one x with a single point that makes the whole slope. (~2 min)
+Speaker: read the four numbers first and ask what the data look like. Then
+click: a line with scatter, a curve, a line with one point off it, and ten
+points at one x with a single point that makes the whole slope. The mass
+column did the same: mean 1864.10 and standard deviation 25.56 MeV/c², and no
+sign of the peak until it was counted in bins. (~2 min)
 -->
 
 ---
@@ -153,6 +210,8 @@ hideInToc: true
 ---
 
 # A First **Plot**
+
+Four tables with the same numbers were told apart only by a plot. Matplotlib makes that plot from the arrays NumPy already holds, one call for each part.
 
 <!--
 Speaker: Matplotlib from its first line, on the two files the room already has:
@@ -189,7 +248,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Matplotlib is a Python library, installed with `python -m pip install matplotlib`. Shorter calls such as `plt.plot(x, y)` exist and draw into the figure that was made last. A call on `ax` names the axes it draws into, which stays clear when a script makes several figures.
+Matplotlib is a Python library, installed with `python -m pip install matplotlib` (`python3` on macOS). Shorter calls such as `plt.plot(x, y)` exist and draw into the figure that was made last. A call on `ax` names the axes it draws into, which stays clear when a script makes several figures.
 
 </div>
 
@@ -242,10 +301,10 @@ Lines 2, 9, 10 and 11 are Matplotlib. `ax.plot(x, y)` takes two arrays of equal 
 </div>
 
 <!--
-Speaker: the table is the one cleaned by hand in Lecture 2: nine lengths in cm
-and the time of 10 swings in s. np.loadtxt is from Lecture 7. Run the script and
-open results/pendulum_plot.png in VS Code. Ask what is missing before the next
-slide. (~2 min)
+Speaker: the table is the pendulum table of Lecture 2: nine lengths in cm and
+the time of 10 swings in s. np.loadtxt is from Lecture 7. Save the script as
+scripts/plot_pendulum.py, run it and open results/pendulum_plot.png in VS
+Code. Ask what is missing, next to the picture of the opening slide. (~2 min)
 -->
 
 ---
@@ -283,7 +342,7 @@ fig.savefig("results/pendulum_plot.png", dpi=150)
 
 <img class="fig" src="/figures/viz_handson_pendulum_points.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **The output.** Nine points, two axes with a name and a unit, both from zero.
+✅ **The output.** Nine points, two axes with a name and a unit, both from zero: the picture of Lecture 2, now made by a script.
 
 </div>
 
@@ -332,7 +391,7 @@ fig.savefig("results/mass_hist.png")
 
 <img class="fig" src="/figures/viz_handson_mass_default.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-⚠️ **The output.** The values run from 1766.2 to 2453.7, so a bin is 68.7 MeV/c² wide. Three bars hold all rows but one, and the peak is inside the second bar.
+⚠️ **The output.** The values run from 1766.2 to 2453.7, the minimum and maximum of Lecture 7, so a bin is 68.7 MeV/c² wide. Three bars hold all rows but one, and the peak is inside the second bar.
 
 </div>
 
@@ -342,7 +401,10 @@ fig.savefig("results/mass_hist.png")
 Speaker: the second running example, the file from Lecture 2. One row is one
 candidate, so there is nothing to plot against: the question is how often each
 value occurs. np.histogram is from Lecture 7; ax.hist counts in the same way and
-draws. Ask why the x-axis runs to 2450. (~2 min)
+draws. Lecture 7 chose 20 bins from 1815 to 1915; given only the column,
+ax.hist chooses 10 bins over the full range. Ask why the x-axis runs to 2450:
+Lecture 7 printed M.max() = 2453.66, 23 standard deviations above the mean of
+1864.10. (~2 min)
 -->
 
 ---
@@ -367,11 +429,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_handson_mass_binwidths.svg" style="display:block;margin:0.6rem auto 0;max-height:240px;">
+<img class="fig" src="/figures/viz_handson_mass_binwidths.svg" style="display:block;margin:0.6rem auto 0;max-height:220px;">
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-✅ **2 MeV/c² per bin.** Eight bins lie across the peak. A bin of the flat part holds about 1460 values, and neighbouring bins differ by 4 %. With 0.2 per bin it holds 146, and neighbours differ by 10 %: more noise, and nothing new to see.
+✅ **2 MeV/c² per bin.** Eight bins across the peak. A count *N* scatters by about √*N*: a flat bin holds about 1460 ± 38, and two neighbours differ by about √2 × 38 = 54, or 4 %. At 0.2 per bin: 146 ± 12, and 17, or 12 %. More noise, nothing new.
 
 </div>
 
@@ -379,7 +441,9 @@ hideInToc: true
 Speaker: two decisions, each with a number. The range comes from a mask and a
 count. The width comes from the feature to be shown: with 10 per bin the peak is
 one bar with a step on each side, with 0.2 per bin it is 80 bars that jump.
-(~3 min)
+Lecture 7's 5 MeV/c² put three bins across the peak. The √N rule is stated
+here and used as given; the arithmetic is √1460 = 38.2, √2 × 38.2 = 54,
+54 / 1460 = 3.7 %, and √146 = 12.1, √2 × 12.1 = 17, 17 / 146 = 11.7 %. (~3 min)
 -->
 
 ---
@@ -405,6 +469,7 @@ fig.savefig("results/mass_hist.png", dpi=150)
 - 55 bins from 1810 to 1920: 110 / 55 = 2 MeV/c² per bin
 - The y-label states the bin width. A count per bin has no meaning without it
 - Text between `$` signs is set as a formula: `^` raises the next character and `\pi` is π. The `r` before the quote keeps the backslash as typed
+- Both choices came from a number, and both are written on the figure and kept in the script
 
 </div>
 
@@ -424,7 +489,9 @@ fig.savefig("results/mass_hist.png", dpi=150)
 Speaker: the same call with two more arguments, and two labels. The peak is the
 D0 meson: pairs that come from its decay have its mass, 1865 MeV/c², and the
 others have any mass in the window. The window itself, about 1815 to 1915, was
-set when the file was made. (~2 min)
+set when the file was made. This answers the opening slide: the pendulum
+picture is the script of "Points, Labels, Units", the 20 counts are one
+ax.hist call, and the choices in both were made from numbers. (~2 min)
 -->
 
 ---
@@ -434,10 +501,26 @@ hideInToc: true
 
 # Mechanics of a **Figure**
 
+Both plots put every number on a position along an axis. Position is one channel among several, and the channels are not read equally well.
+
 <!--
 Speaker: the parts of a plot before the kinds of plot: which channel carries
 the number, what a legend is for, how the axes change what is read. (~0.5 min)
 -->
+
+---
+hideInToc: true
+---
+
+# The Visual **Channels**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎨 A plot assigns each variable to one channel: position on x or y, colour, shape, size, line width, line type. In the pendulum plot the length is the position on x, the time the position on y.
+
+</div>
+
+<img class="fig" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -491,20 +574,6 @@ Cleveland and McGill (1984) asked people to judge quantities shown in different 
 Speaker: the two plots of the last section used the first channel only: a
 position on x and a position on y. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# The Visual **Channels**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🎨 A plot assigns each variable to one channel: position on x or y, colour, shape, size, line width, line type. In the pendulum plot the length is the position on x, the time the position on y.
-
-</div>
-
-<img class="fig" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:330px;">
 
 ---
 hideInToc: true
@@ -581,15 +650,20 @@ A legend lists the colours, shapes and sizes used in a plot and says which group
 hideInToc: true
 ---
 
-# What's **Wrong?**
+# Two Countries, **One Legend**
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div v-click class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ The legend names two countries and shows no sample of either line: nothing says which colour is which. The y-axis has no unit.
 
 </div>
 
 <img class="fig fig-light" src="/figures/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
+
+<!--
+Speaker: show the plot alone and ask which line is which country, and in which
+unit. Then click for the card. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -613,7 +687,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C.
+🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The pendulum plot took the same step, from A Plot in Four Lines to Points, Labels, Units.
 
 </div>
 
@@ -686,6 +760,8 @@ hideInToc: true
 
 # Chart **Families**
 
+Position is read most accurately. Which chart puts a comparison on position follows from what is compared: amounts, a distribution, parts of a whole, two variables, a change over time.
+
 <!--
 Speaker: the families of charts: amounts, distributions, proportions,
 associations, trends, uncertainty. For each one the usual chart, the usual
@@ -726,13 +802,19 @@ hideInToc: true
 
 # Bars That Do Not **Start at Zero**
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div v-click class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Pass rates from 58.2 % down to 49.1 %. The axis starts at 48, so the first bar is 10.2 units long and the last 1.1: nine times as long, for a value 1.19 times as large.
 
 </div>
 
 <img class="fig" src="/figures/viz_proportional_ink_truncated_bar_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
+
+<!--
+Speaker: show the bars alone and ask how many times better the first school
+is than the last. Then click for the working: 10.2 / 1.1 is about 9, and
+58.2 / 49.1 is 1.19. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -752,15 +834,20 @@ hideInToc: true
 hideInToc: true
 ---
 
-# What's **Wrong?**
+# Median Income by **Age Group**
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div v-click class="card card-warning card-glass pad-compact mt-sm">
 
 ⚠️ Median income by age group, sorted by income. Age groups are **ordinal**: they have an order of their own, and sorting by value breaks it. Sort by value only when the categories have no order.
 
 </div>
 
 <img class="fig fig-light" src="/figures/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:350px;">
+
+<!--
+Speaker: the previous slides sorted the films by value. Show this plot alone
+and ask whether the same rule fits here. Then click for the card. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -822,7 +909,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Life Expectancy — **Alphabetical Order**
+# Life Expectancy in **Alphabetical Order**
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
@@ -836,7 +923,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Life Expectancy — **Sorted Bars**
+# Life Expectancy as **Sorted Bars**
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
@@ -850,7 +937,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Life Expectancy — **Sorted Dots**
+# Life Expectancy as **Sorted Dots**
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
@@ -882,7 +969,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📏 The same ages with bins of 0.5, 5 and 20 years. With 0.5 years the bars jump between a few people and thirty. With 20 years the shape is four bars.
+📏 The same ages with bins of 0.5, 5 and 20 years: the choice made for the mass column with 0.2, 2 and 10 MeV/c². With 0.5 years the bars jump between a few people and thirty. With 20 years the shape is four bars.
 
 </div>
 
@@ -892,26 +979,30 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Try It — **Bin Width**
+# A Peak on a Flat Background, **Live**
 
 ```python {monaco-run} {autorun:false}
 import numpy as np, matplotlib.pyplot as plt
-rng = np.random.default_rng(7)   # random numbers, the same on every run
-a = rng.normal(0, 1, 800)        # 800 values scattered around 0
-b = rng.normal(4, 0.5, 300)      # 300 values scattered around 4
-data = np.concatenate([a, b])
-BINS = 30                        # <-- try 5, 30, 200
+rng = np.random.default_rng(7)          # random numbers, the same on every run
+flat = rng.uniform(1810, 1920, 3000)    # 3000 values spread evenly over the window
+peak = rng.normal(1865, 7, 1000)        # 1000 values around 1865, 16 wide at half height
+m = np.concatenate([flat, peak])
+BINS = 55                               # <-- try 5, 55, 550
 fig, ax = plt.subplots()
-ax.hist(data, bins=BINS)
-ax.set(xlabel="value", ylabel="count", title=f"bins = {BINS}")
+ax.hist(m, bins=BINS, range=(1810, 1920))
+ax.set(xlabel="mass (MeV/c²)", ylabel="count", title=f"bins = {BINS}")
 plt.show()
 ```
 
 <!--
-Speaker: rng.normal(4, 0.5, 300) draws 300 random numbers that scatter around
-4, most of them within 0.5 of it. With 5 bins the two groups merge, with 200
-the bars jump. plt.show() draws the figure under the code. In a script on a
-laptop it opens a window instead. (~2 min)
+Speaker: a made-up mass column shaped like the real one, because the browser
+cannot read the file on the laptop. rng.uniform spreads 3000 values evenly
+between 1810 and 1920; rng.normal(1865, 7, 1000) scatters 1000 values around
+1865, and a spread of 7 is 2.355 × 7 = 16.5 wide at half height. With 5 bins
+(22 per bin) the peak is one bar; with 55 (2 per bin) it has its shape; with
+550 (0.2 per bin) a flat bin holds about 5 values and the bars jump.
+plt.show() draws the figure under the code. In a script on a laptop it opens
+a window instead. (~2 min)
 -->
 
 ---
@@ -959,6 +1050,14 @@ hideInToc: true
 📐 The **median** has half of the values below it. A quarter lie below the first **quartile** and three quarters below the third. The box runs from the first to the third quartile, and its length is the interquartile range (**IQR**). The line in the box is the median. A whisker ends at the last value within 1.5 × IQR of the box, and values beyond it are drawn one by one.
 
 </div>
+
+<!--
+Speaker: on the mass column the quartiles are 1845.99, 1864.08 and 1881.53
+MeV/c², so the box is 35.5 long, twice the width of the peak, and nothing in
+it says peak or background; the value 2453.66 of "A Histogram Counts Values
+in Bins" would be a single point far above the upper whisker. Ask the room
+which of the three charts would show the peak. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1400,6 +1499,8 @@ hideInToc: true
 
 # Design **Principles**
 
+The chart follows from what is compared. How it is drawn, its ink, its colours and its scale, decides whether the comparison can still be read.
+
 <!--
 Speaker: from which chart to how it is drawn: ink, colour, scales, panels.
 (~0.5 min)
@@ -1621,11 +1722,19 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_proportional_ink_log_scale.svg" style="display:block;margin:0 auto;max-height:350px;">
 
+<!--
+Speaker: the course file has a column like this. IPCHI2 in the rows with a
+valid TAU runs from 0.0000136 to 891 711 with a median of 6.29, the numbers
+Lecture 7 printed. Cut into 100 bins of equal width on a linear axis, the
+first bin holds 99.1 % of the rows. Ask the room what that histogram would
+look like. (~1 min)
+-->
+
 ---
 hideInToc: true
 ---
 
-# Try It — **Which Scale?**
+# Linear or Logarithmic, **Live**
 
 ```python {monaco-run} {autorun:false}
 import numpy as np, matplotlib.pyplot as plt
@@ -1717,6 +1826,8 @@ hideInToc: true
 ---
 
 # Stating the **Finding**
+
+A figure with little ink, a palette that fits and the right scale is correct, and the reader can still miss what it shows. Four means put the result on the figure.
 
 <!--
 Speaker: a correct figure can still leave the reader to work out what it
@@ -1841,6 +1952,8 @@ hideInToc: true
 
 # Hands-on **Matplotlib**
 
+Each rule of the last four sections is one call on `ax`. The pendulum and the mass column of the first section come back with a reference curve, error bars, an annotation and a title that states the finding.
+
 <!--
 Speaker: back to code. Three scripts with their output, then one style for
 all figures, then file formats. (~0.5 min)
@@ -1927,7 +2040,7 @@ fig.savefig("results/pendulum_curve.png", dpi=150)
 
 <img class="fig" src="/figures/viz_handson_pendulum_curve.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **The output.** The curve is T = 2π√(L/g), times 10, at 200 lengths. The points are the nine measurements. No fit is made: g is put in as 9.81 m/s²
+✅ **The output.** The curve is T = 2π√(L/g), times 10, at 200 lengths. The points are the nine measurements. No fit is made: g is put in as 9.81 m/s². The curve is the reference line of the pendulum
 
 </div>
 
@@ -1936,7 +2049,10 @@ fig.savefig("results/pendulum_curve.png", dpi=150)
 <!--
 Speaker: two calls of ax.plot on the same axes give two layers. Each gets a
 label, and ax.legend collects the labels. np.linspace and the arithmetic on a
-whole array are from Lecture 7. L / 100 turns cm into m. (~2 min)
+whole array are from Lecture 7. L / 100 turns cm into m. The curve does for
+the pendulum what y = x did for the genes on "A Reference Line": a point off it
+would be the result. At 100 cm the formula gives 20.06 s, the measurement
+20.01 s. (~2 min)
 -->
 
 ---
@@ -1979,7 +2095,7 @@ fig.savefig("results/mass_peak.png", dpi=150)
 
 <img class="fig" src="/figures/viz_handson_mass_errorbars.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **The output.** A count *N* scatters by about √*N* when the measurement is repeated. The bar on each point is ± √*N*: 1916 ± 44 at the top, about 700 ± 26 in the flat part
+✅ **The output.** The parts of a figure from the Mechanics section, on the mass column. A count *N* scatters by about √*N*, so the bar on each point is ± √*N*: 1916 ± 44 at the top, about 700 ± 26 in the flat part
 
 </div>
 
@@ -2073,8 +2189,11 @@ hideInToc: true
 
 # **Wrap-up**
 
+The two figures of the first section now carry a reference curve, error bars and a title that states the finding, and each is made again by its script.
+
 <!--
-Speaker: a checklist, an exercise, the sources, the recap. (~0.5 min)
+Speaker: a checklist, the two figures with every choice in them, the recap.
+(~0.5 min)
 -->
 
 ---
@@ -2129,47 +2248,52 @@ Five questions. A "no" means the figure is not finished.
 hideInToc: true
 ---
 
-# Further **Reading**
+# Every Choice in the Two **Figures**
 
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📚 The sources of this lecture. Wilke's book is free online. Every Matplotlib call is documented at matplotlib.org, with a gallery of examples and their code.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-📈 **C. O. Wilke**, *Fundamentals of Data Visualization*: clauswilke.com/dataviz
+## 📄 **The pendulum figure**
+
+- `"o"`: nine measurements are nine points, with no line between them
+- Both axes from zero, so the bend shows: 5 times the length takes 2.22 times the time, and √5 = 2.24
+- Each axis names its quantity and unit: length (cm), time of 10 swings (s)
+- The curve of T = 2π√(L/g) with g = 9.81 m/s² as the reference
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-📊 **W. S. Cleveland**, *The Elements of Graphing Data*: the ranking of visual channels
+## 📊 **The mass histogram**
 
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🎨 **A. Cairo**, *The Truthful Art*: charts and maps for a general reader
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-📐 **E. R. Tufte**, *The Visual Display of Quantitative Information*: the data-ink ratio
+- The range 1810 to 1920 MeV/c² holds 91&nbsp;579 of the 91&nbsp;583 values. The default stretched to 2453.7
+- 2 MeV/c² per bin puts eight bins across a peak 16 wide, and neighbours differ by 4 %
+- The y-label states the bin width: candidates per 2 MeV/c²
+- The title states the finding: a peak at 1865 MeV/c²
 
 </div>
 
 </div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Given only the column, `ax.hist` chose 10 bins of 68.7 MeV/c² and hid the peak inside one bar. The 20 bins of Lecture 7 were chosen by a person too. Every choice that shows the peak comes from a number, is written on the figure and is kept in the script.
+
+</div>
+
+<!--
+Speaker: the answer to the opening slide, in the room's own numbers. Point at
+each line and ask which slide it came from. The first histogram also showed
+the one value nobody expected, at 2453.7: Tukey's quote at the start.
+Do not cut this slide. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# **Recap** — You Can Now…
+# **Recap**
 
 <div class="grid-2 gap-md mt-sm">
 

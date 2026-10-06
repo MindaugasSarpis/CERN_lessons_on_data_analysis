@@ -32,7 +32,7 @@ number, a letter and a whole file are written as bits.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–79 and estimates about 116 min. Slides 80–84 are the
+The lecture is slides 1–79 and estimates about 125 min. Slides 80–84 are the
 self-check quizzes and take no lecture time. For a 90-minute slot, skip the
 slides in the second table. To jump, type the slide number and press Enter.
 
@@ -42,9 +42,9 @@ slides in the second table. To jump, type the slide number and press Enter.
 | 0:09 | 8–38 | Bits, binary counting, bytes, hexadecimal, converting between bases |
 | 0:39 | 40, 44 | How the CPU runs an algorithm |
 | 0:42 | 46–56 | Integers, two's complement, floating point |
-| 1:02 | 58–66 | Text and encodings |
-| 1:16 | 67–72 | Files and formats |
-| 1:26 | 74–79 | Compression, hashing, recap |
+| 1:00 | 58–66 | Text and encodings; `100` before `20` answered in bytes at 60 |
+| 1:14 | 67–72 | Files and formats |
+| 1:24 | 74–79 | Compression, hashing, back to the box, recap |
 | 1:33 | | Move to the seminar |
 
 | Skip | Slides | Saves |
@@ -59,18 +59,24 @@ slides in the second table. To jump, type the slide number and press Enter.
 | Endianness | 69 | 2 min |
 | Image Quality vs Bit Depth | 73 | 2 min |
 | A Checksum by Hand | 76 | 2 min |
-| Key Takeaways, since the Recap follows | 78 | 2 min |
 
 - **Do not cut** slides 59–62 and 64–66 (text and encodings) or 68 and 70–72
   (file sizes, formats, the hexdump, one number as text and as binary). The
   seminar measures and opens files in exactly these terms.
+- **Do not cut** slide 77 (Error Detection & Hashing, the SHA-256 of the
+  97-byte `pendulum.csv`), slide 78 (Key Takeaways, which returns to the box
+  of slide 4) or slide 79 (the Recap, the closing slide). If time runs short,
+  cut from the skip list above, not from the end.
+- **Slide 60** (the ASCII table) takes Lecture 2's answer one level down.
+  Sort Lines put `100` before `20` because `1` comes before `2`; in bytes,
+  `1` is 49 = 0x31 and `2` is 50 = 0x32, and the sort compares those
+  numbers. Reach it by about minute 60.
 - **Slides 9–33 are fast.** Most are one word or one picture: counting in
   unary, binary and decimal. Together they take about ten minutes.
 - **Slide 38** (From Decimal to Binary and Hex): do 37 on the board, then
   give the room 100 to convert on paper. The answers are `1100100` and `0x64`.
-- **Slide 56** (Try It in Your Terminal) is done live in the VS Code
-  terminal. Students who installed Python at home can follow on their own
-  laptops.
+- **Slide 56** (Try It Here) runs in the browser, inside the slide. Ask the
+  room to predict the three lines before pressing ▶. No terminal is needed.
 - **Slide 65** (Encoding & Line Endings in VS Code) is done live: open a file
   with Lithuanian letters, select `UTF-8` in the Status Bar, reopen it as
   **Baltic (Windows 1257)** and back.
@@ -120,10 +126,13 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 3 — A File as Bytes](../seminars/seminar_03.md) introduces the
-terminal with three commands, `pwd`, `ls` and `cd`. The room then measures a
-file of four characters in bytes, reads it with the wrong encoding, opens it
-in a hex view, and does the same for the two data files of the project.
+[Seminar 3 — A File as Bytes](../seminars/seminar_03.md) works in VS Code
+alone. The room opens a file of four characters in the Hex Editor, counts its
+bytes, reads it with the wrong encoding, and does the same for the two data
+files of the project. The terminal waits for Lecture 04.
+
+In 2026 the seminar ran as a terminal session, and its byte part moved to
+Part 3 of [Seminar 4](../seminars/seminar_04.md#part-3).
 
 ## Take-aways
 

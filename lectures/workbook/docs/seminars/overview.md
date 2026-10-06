@@ -3,10 +3,11 @@
 Every lecture from week 2 on is paired with a **hands-on seminar**. Week 1 is
 lecture only. The first session in class is
 [Seminar 1](seminar_01.md), taught with Lecture 2: it starts from zero and
-needs only VS Code. Python and Git are
-[installed at home](install_python_git.md) after it. Each brief is
-**self-contained**: it states its goal, prerequisites, tasks, stretch goals and a
-wrap-up, and sizes to ~120 min. The seminars practise the course's four aims —
+needs only VS Code. Python and Git are installed in class at the start of
+[Seminar 4](seminar_04.md), with the steps of
+[Install Python, Git and PowerShell 7](install_python_git.md). Each brief is
+**self-contained** and sized to ~120 min, all of it in class: there is no
+homework, and no session depends on work done at home. The seminars practise the course's four aims —
 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data & files.
 
 ## The sessions
@@ -18,8 +19,8 @@ lecture, so there is no Seminar 2.
 | Date in 2026 | Seminar | New |
 |--|--|--|
 | 29 Sep | [1](seminar_01.md) | VS Code, Markdown, the project folder, the README, editing many lines at once, provenance |
-| 6 Oct | [3](seminar_03.md) | The terminal with `pwd`, `ls`, `cd`; a file as bytes: encoding, line endings, size |
-| 13 Oct | [4](seminar_04.md) | The shell: files and folders, pipes, a regular expression, a first script, checksums; the README completed |
+| 6 Oct | [3](seminar_03.md) | A file as bytes in the Hex Editor: encoding, line endings, size. *In 2026 it ran as a terminal session with `pwd`, `ls`, `cd`, `clear`* |
+| 13 Oct | [4](seminar_04.md) | Python and Git installed; the shell and the prompt named; a file as bytes, by command; files and folders, pipes, a first script, checksums |
 | 20 Oct | [5](seminar_05.md) | Git: the project folder under version control, from the Source Control view and typed; a remote; a branch and a merge |
 | 27 Oct | [6](seminar_06.md) | Python from the first line: a line of the data file turned into numbers |
 | 3 Nov | [7](seminar_07.md) | Functions, reading the whole file, NumPy arrays and masks |
@@ -32,10 +33,13 @@ lecture, so there is no Seminar 2.
 
 Seminars 14 to 16 belong to the further topics and are not scheduled.
 
-Every page is a follow-along tutorial for the person at the front: a lead
-paragraph, numbered steps, "You should now see", one "Watch for". On Windows
-the terminal from Seminar 4 on is Git Bash inside VS Code, so one set of
-commands serves every laptop.
+Every page is a follow-along tutorial for the person at the front. Its
+first screen is a **run sheet**: the goal, each section with the one thing
+shown on the projector and what the room ends with. Below it, each section
+has what to tell the room, numbered steps with every typed line in its own
+block, "You should now see" and "Watch for". The terminal is
+`zsh` on macOS and PowerShell 7 on Windows, both inside VS Code. Where the two
+shells differ, a page gives each form in its own tab.
 
 ## Two things run in parallel
 
@@ -46,24 +50,20 @@ commands serves every laptop.
 | Continuity | Consecutive briefs build on each other where it helps, but any seminar can be started fresh from instructor-provided files | Grows all term; the seminar skills are meant to be carried into it |
 | Assessed | No | Yes — repository, one-page report, short video, final presentation (see Lecture 1) |
 
-How much the two overlap is up to you and will be shaped as the term goes: a
-seminar step can be repeated on your own data the same afternoon, or your project
-can go somewhere else entirely.
+How much the two overlap is up to you: a seminar step can be repeated on
+your own data, or your project can go somewhere else entirely. No seminar
+needs your own data, and none depends on work done outside class.
 
 ## The example dataset
 
-From **Seminar 1** on you work on **a dataset of your own choice** — any tabular
-dataset with a few thousand+ rows and at least one numeric column with
-interesting structure: daily weather, prices, anonymised measurements, survey
-microdata. You do **not** have to measure the D⁰ mass.
-
-The lectures, and the examples inside the briefs, use the **LHCb open-data
+Every seminar runs on two shared files: the pendulum table cleaned by hand in
+Seminar 1, and the **LHCb open-data
 masterclass** sample from the CERN Open Data Portal: events pre-selected to
 contain **D⁰ → K⁻π⁺** decay candidates. Each of its 91,583 rows is one candidate,
 with its **K–π invariant mass** `M`, transverse momentum `PT`, decay time `TAU`
 and impact-parameter score `IPCHI2` — histogram `M` and the D⁰ appears as a peak
-near **1865 MeV**. Wherever a brief says "invariant mass / D⁰ peak", read "your
-numeric variable / the pattern you're looking for".
+near **1865 MeV**. Your own project can use any dataset you like: you do
+**not** have to measure the D⁰ mass.
 
 - Source: CERN Open Data Portal — *LHCb event file for real measurement*,
   [record 401](https://opendata.cern.ch/record/401),
@@ -106,8 +106,7 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 | Seminar | Hands-on focus |
 |--|--|
 | 1 | VS Code; Markdown; the project folder and its README; a small table cleaned in the editor; a data file in `data/raw/`; provenance recorded |
-| At home | Python and Git installed *(after Seminar 1)* |
-| 3 | First terminal commands; the raw file understood as bytes (encoding, line endings, size, format) |
+| 3 | The raw file understood as bytes in the Hex Editor (encoding, line endings, size, format) |
 | 4 | Work on Files from the Shell |
 | 5 | The Project Folder under Git |
 | 6 | A Line of Text into Numbers |

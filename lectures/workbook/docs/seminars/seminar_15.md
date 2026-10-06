@@ -3,148 +3,212 @@
 **Paired lecture:** 15 Computing Infrastructure & HPC · **Format:** follow-along · **~120 min**
 in class
 
-The seminar has three parts, in this order.
+**Today's goal:** every student times one sum three ways, works out the
+memory of a table before loading it, and runs a job in the background with
+a log.
 
-1. **One sum, three ways.** The sum of the mass column is timed as a Python
-   loop, as a NumPy call and on four processes. Then a longer job is split
-   over 1, 2 and 4 workers, and the time for 4 is predicted before it is
-   measured.
-2. **Memory before loading.** The size of the table in memory is worked out
-   on paper, checked against the loaded table, and compared with the peak
-   while reading.
-3. **A job in the background.** A script of half a minute is started in the
-   background, its log is followed, the job is stopped, and an error is found
-   in the log.
+Everything runs on a laptop, in the terminal of VS Code, with Python, NumPy
+and Pandas. No cluster and no account anywhere is needed. New today:
+`multiprocessing`, `tracemalloc`, and a job in the background of the shell:
+`&` in both shells, then `jobs`, `kill` and `tail -f` in `zsh`, `Get-Job`,
+`Stop-Job` and `Get-Content -Wait` in PowerShell 7.
 
-Everything runs on a laptop. No cluster and no account anywhere is needed.
-The session uses the shell, Python, NumPy and Pandas as known.
+## Run sheet
 
-## How to use this page
+One screen for the front of the room. Each line links to its section.
 
-This page is written for the person at the front. Students can follow the
-same page.
+| Clock | Section | On the projector | The room ends with |
+|--|--|--|--|
+| | **Part 1 · One sum, three ways** · 55 min | | |
+| 0:00 | [1. Know the machine](#machine) | `os.cpu_count()`, then the memory | Cores and memory of the laptops on the board |
+| 0:08 | [2. A stopwatch around a loop](#loop) | `scripts/time_sum.py`, the loop | The loop timed five times |
+| 0:22 | [3. The same sum in NumPy](#numpy) | `M.sum()` added to the script | The factor between the loop and NumPy |
+| 0:30 | [4. The same sum on four processes](#pool) | `Pool(4)` added to the script | A time longer than that of the loop |
+| 0:43 | [5. A job worth splitting](#split) | `sum_parallel.py --workers 1`, `2`, then `4` | Times for 1, 2 and 4 workers, and a prediction |
+| | **Part 2 · Memory before loading** · 28 min | | |
+| 0:55 | [6. Estimate, then check](#bytes) | `91583 * 4 * 8`, then `scripts/table_size.py` | 2 930 656 bytes, on paper and in Python |
+| 1:05 | [7. The peak while reading](#peak) | `scripts/peak_memory.py` | Two peaks, both larger than the table |
+| 1:15 | [8. Will a larger file fit?](#fit) | The bytes and lines of `D0_KPi.csv`, then `4e9 / 42.87` | The largest file each laptop can take |
+| | **Part 3 · A job in the background** · 37 min | | |
+| 1:23 | [9. A job that reports its progress](#job) | `long_job.py --steps 5`, then `echo $?` or `$LASTEXITCODE` | The job run once in the foreground, and a `0` |
+| 1:31 | [10. Into the background](#background) | `python -u ... &`, then `tail -f` or `Get-Content -Wait` | A log followed while the job runs |
+| 1:45 | [11. An error in the log](#error) | `--path data/raw/none.csv`, with and without `2>&1` | A traceback found in the log |
+| 1:50 | [12. Write down what was measured](#readme) | `README.md`, then the preview | A **Timing** section in the README |
+| 1:57 | [13. Wrap up](#wrap-up) | The list of what was learned | |
 
-- The **paragraph at the top of a section** is what to tell the room.
-- The **numbered steps** are what to do on the projector. The room repeats
-  each step on their own laptops.
-- **You should now see** closes a section. Ask for hands: "who sees this?"
-  Go on when about four in five have it. The rest get help from a neighbour.
-- **Watch for** is the usual slip in that section.
+**If time runs short:** leave out sections 5, 7 and 11, and give the rule of
+section 7 (keep three times the table free) in one sentence before section 8.
+Each part starts from the project folder as it is, so the session can also
+stop after Part 2.
 
-Commands are typed in the terminal of VS Code: Git Bash on Windows, the
-default terminal on macOS and Linux. They are the same on all three. On a
-laptop where `python` is not found, the command is `python3`.
+??? info "How to use this page"
+    This page is written for the person at the front. Students follow the
+    same page.
 
-Every time on this page was measured on the lecturer's laptop: a MacBook Pro
-with an Apple M2 Pro (2023), 12 cores, 16 GB of memory, Python 3.13 and NumPy
-2.3. The times in the room will differ. The sums and the byte counts will not.
+    - **Tell the room** is the paragraph to say before the steps.
+    - The **numbered steps** are what to do on the projector. The room
+      repeats each step on their own laptops.
+    - **You should now see** closes a section. Ask for hands: "who sees
+      this?" Go on when about four in five have it. The rest get help from a
+      neighbour.
+    - **Watch for** is the usual slip in that section.
 
-| Clock | Section | The room ends with |
-|--|--|--|
-| | **Part 1 · One sum, three ways** · 55 min | |
-| 0:00 | [1. Know the machine](#machine) | Cores and memory of the laptops on the board |
-| 0:08 | [2. A stopwatch around a loop](#loop) | The loop timed five times |
-| 0:22 | [3. The same sum in NumPy](#numpy) | The factor between the loop and NumPy |
-| 0:30 | [4. The same sum on four processes](#pool) | A time longer than that of the loop |
-| 0:43 | [5. A job worth splitting](#split) | Times for 1, 2 and 4 workers, and a prediction |
-| | **Part 2 · Memory before loading** · 28 min | |
-| 0:55 | [6. Estimate, then check](#bytes) | 2 930 656 bytes, on paper and in Python |
-| 1:05 | [7. The peak while reading](#peak) | Two peaks, both larger than the table |
-| 1:15 | [8. Will a larger file fit?](#fit) | The largest file each laptop can take |
-| | **Part 3 · A job in the background** · 37 min | |
-| 1:23 | [9. A job that reports its progress](#job) | The job run once in the foreground |
-| 1:31 | [10. Into the background](#background) | A log followed while the job runs |
-| 1:45 | [11. An error in the log](#error) | A traceback found in the log |
-| 1:50 | [12. Write down what was measured](#readme) | A **Timing** section in the README |
-| 1:57 | [13. Wrap up](#wrap-up) | The homework known |
+    Commands are typed in the terminal of VS Code: `zsh` on macOS,
+    PowerShell 7 on Windows, as since [Seminar 4](seminar_04.md#shell).
+    Where the two differ, the step has a tab for each: `python3` on macOS,
+    `python` on Windows, and in Part 3 the commands that look after a job.
+    The Windows outputs were printed by PowerShell 7.6. Keys are written for
+    Windows, with macOS in brackets.
 
-In a 90-minute slot, leave out sections 5, 7 and 11. Each part starts from
-the project folder as it is, so the session can also stop after Part 2.
+    Every time on this page was measured on the lecturer's laptop: a MacBook
+    Pro with an Apple M2 Pro (2023), 12 cores, 16 GB of memory, Python 3.13
+    and NumPy 2.3. The times in the room will differ. The sums and the byte
+    counts will not.
 
-## Prerequisites
+??? info "Before the session"
+    For the room: the project folder with `data/raw/D0_KPi.csv`, a `scripts`
+    folder and a `results` folder, and a Python that has NumPy and Pandas. A
+    student who does not have [`D0_KPi.csv`](../data/D0_KPi.csv) downloads it
+    now into `data/raw`. A laptop without NumPy or Pandas installs them now,
+    in the terminal of VS Code:
 
-For the room: the project folder with `data/raw/D0_KPi.csv`, a `scripts`
-folder and a `results` folder, and a Python that has NumPy and Pandas. A
-student who does not have [`D0_KPi.csv`](../data/D0_KPi.csv) downloads it now
-into `data/raw`.
+    === "macOS"
 
-For you, before the session:
+        ```text
+        python3 -m pip install numpy pandas
+        ```
 
-- Sections 2 to 5 and 10 done once on your own laptop, with your own times
-  written down. They replace the times printed on this page.
-- The number of cores and the memory of your laptop, to write on the board.
-- The three finished scripts on a USB stick, for a student who falls behind:
-  [`hpc_time_sum.py`](../data/hpc_time_sum.py),
-  [`hpc_sum_parallel.py`](../data/hpc_sum_parallel.py) and
-  [`hpc_long_job.py`](../data/hpc_long_job.py). In the project they are
-  saved without the `hpc_` at the front.
+    === "Windows"
+
+        ```text
+        python -m pip install numpy pandas
+        ```
+
+    For you:
+
+    - Sections 2 to 5 and 10 done once on your own laptop, with your own
+      times written down. They replace the times printed on this page.
+    - Part 3 done once in `zsh` and once in PowerShell 7: its commands
+      differ between the two.
+    - The number of cores and the memory of your laptop, to write on the
+      board.
+    - The first three scripts of the next box on a USB stick, for a student
+      who falls behind.
+
+??? info "Files for this seminar"
+    A browser saves each file under the name in the second column, the name
+    it has in the project. The scripts go into `scripts`.
+
+    | File | Saved as | What it is |
+    |--|--|--|
+    | [`hpc_time_sum.py`](../data/hpc_time_sum.py){ download="time_sum.py" } | `time_sum.py` | Sections 2 to 4: the finished timing script |
+    | [`hpc_sum_parallel.py`](../data/hpc_sum_parallel.py){ download="sum_parallel.py" } | `sum_parallel.py` | Section 5: the long sum on 1, 2 or 4 workers |
+    | [`hpc_long_job.py`](../data/hpc_long_job.py){ download="long_job.py" } | `long_job.py` | Sections 9 to 11: the job that reports its progress |
+    | [`hpc_job.sh`](../data/hpc_job.sh){ download="job.sh" } | `job.sh` | Stretch goals, macOS: the job script of the lecture |
+
+---
 
 ## Part 1 · One sum, three ways { #part-1 }
 
 **0:00 to 0:55 · sections 1 to 5**
 
-One computation, the sum of 91 583 numbers, is done three ways and timed.
-The room writes one script, `scripts/time_sum.py`, and adds to it in three
-steps.
+One computation, the sum of 91 583 numbers, is done three ways and timed:
+as a Python loop, as a NumPy call and on four processes. The room writes
+one script, `scripts/time_sum.py`, and adds to it in three steps. Then a
+longer job is split over 1, 2 and 4 workers, and the time for 4 is
+predicted before it is measured.
 
-## 1. Know the machine { #machine }
+---
+
+### 1. Know the machine { #machine }
 
 **0:00 · 8 min**
 
-A time means something only together with the machine it was measured on.
-Two numbers describe the machine well enough for today: the number of cores
-and the amount of memory.
+**Tell the room.** A time means something only together with the machine it
+was measured on. Two numbers describe the machine well enough for today:
+the number of cores and the amount of memory.
 
 1. Open the project folder in VS Code and a terminal with **Terminal** >
-   **New Terminal**. Check with `pwd` that the terminal is in the project
-   folder.
+   **New Terminal**. Check that the terminal is in the project folder:
+
+    ```text
+    pwd
+    ```
 
 2. Ask Python for the number of cores.
 
-    ```text
-    python -c "import os; print(os.cpu_count())"
-    ```
+    === "macOS"
+
+        ```text
+        python3 -c "import os; print(os.cpu_count())"
+        ```
+
+    === "Windows"
+
+        ```text
+        python -c "import os; print(os.cpu_count())"
+        ```
 
     The lecturer's laptop prints `12`.
 
 3. Find the memory.
 
-    ```text
-    Windows   Task Manager (Ctrl+Shift+Esc), tab Performance, Memory
-    macOS     Apple menu, About This Mac
-    ```
+    === "macOS"
+
+        Apple menu, **About This Mac**.
+
+    === "Windows"
+
+        Open Task Manager with `Ctrl+Shift+Esc`, tab **Performance**, then
+        **Memory**.
 
 4. Check that NumPy is there. Any version from 2.0 on will do.
 
-    ```text
-    python -c "import numpy; print(numpy.__version__)"
-    ```
+    === "macOS"
+
+        ```text
+        python3 -c "import numpy; print(numpy.__version__)"
+        ```
+
+    === "Windows"
+
+        ```text
+        python -c "import numpy; print(numpy.__version__)"
+        ```
 
 5. Collect on the board the smallest and the largest number of cores in the
    room, and the smallest and the largest memory.
 
-You should now see two ranges on the board, for example 4 to 12 cores and 8
-to 32 GB.
+!!! success "You should now see"
+    Two ranges on the board, for example 4 to 12 cores and 8 to 32 GB.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | `python: command not found` | Use `python3`, or activate the environment of the project |
-    | `No module named numpy` | The terminal uses another Python than the project. Activate the environment, or `python -m pip install numpy pandas` |
+    | macOS: `zsh: command not found: python` | On macOS the program is `python3`, as in the macOS tab |
+    | `No module named numpy` | The terminal uses another Python than the project. Activate the environment of [Seminar 13](seminar_13.md), `source .venv/bin/activate` (Windows `.venv\Scripts\Activate.ps1`), or install NumPy and Pandas as in the box **Before the session** |
     | Windows: the number of cores is twice what the laptop was sold with | `os.cpu_count()` counts hardware threads. Task Manager shows both, as **Cores** and **Logical processors** |
 
-## 2. A stopwatch around a loop { #loop }
+---
+
+### 2. A stopwatch around a loop { #loop }
 
 **0:08 · 14 min**
 
-The sum is written as a loop first, the way Lecture 06 would do it.
-`time.perf_counter()` is read before and after. The loop is timed five
-times, because a single time can be disturbed by whatever else the laptop is
-doing.
+**Tell the room.** The sum is written as a loop first, the way Lecture 06
+would do it. `time.perf_counter()` is read before and after. The loop is
+timed five times, because a single time can be disturbed by whatever else
+the laptop is doing.
 
-1. Create `scripts/time_sum.py` and type the first part. The function goes
-   above the line `if __name__ == "__main__":`, and everything else is
-   indented under it. Section 4 needs it that way.
+1. Create a new file in `scripts` and name it:
+
+    ```text
+    time_sum.py
+    ```
+
+2. Type the first part. The function goes above the line
+   `if __name__ == "__main__":`, and everything else is indented under it.
+   Section 4 needs it that way.
 
     ```text
     import time
@@ -175,11 +239,21 @@ doing.
             print(f"loop   {elapsed * 1000:8.3f} ms  {total!r}")
     ```
 
-2. Run it.
+3. Run it.
 
-    ```text
-    python scripts/time_sum.py
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/time_sum.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/time_sum.py
+        ```
+
+    On the lecturer's laptop it prints:
 
     ```text
     read     14.709 ms  91583 rows
@@ -190,23 +264,32 @@ doing.
     loop      1.565 ms  170720289.9133972
     ```
 
-3. Ask the room what is the same in the five lines and what is not. The sum
+4. Ask the room what is the same in the five lines and what is not. The sum
    is the same. The time is not.
 
-4. Ask which of the five times to quote. The smallest: other programs can
+5. Ask which of the five times to quote. The smallest: other programs can
    only add time. On the lecturer's laptop the loop costs 1.53 ms.
 
-5. Divide the sum by the number of rows. It is the mean mass.
+6. Divide the sum by the number of rows. It is the mean mass.
 
-    ```text
-    python -c "print(170720289.9133972 / 91583)"
-    ```
+    === "macOS"
+
+        ```text
+        python3 -c "print(170720289.9133972 / 91583)"
+        ```
+
+    === "Windows"
+
+        ```text
+        python -c "print(170720289.9133972 / 91583)"
+        ```
 
     The answer is `1864.1045817826146`.
 
-You should now see six lines, and the sum `170720289.9133972` on every
-laptop. The times differ from laptop to laptop. Collect the smallest loop
-time of three or four students on the board.
+!!! success "You should now see"
+    Six lines, and the sum `170720289.9133972` on every laptop. The times
+    differ from laptop to laptop. Collect the smallest loop time of three or
+    four students on the board.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -215,12 +298,15 @@ time of three or four students on the board.
     | `IndentationError` | The lines under `if __name__` are indented by four spaces, the lines under `for` by eight |
     | A sum that ends in other digits | A typing slip in `usecols=0` or `skiprows=1` |
 
-## 3. The same sum in NumPy { #numpy }
+---
+
+### 3. The same sum in NumPy { #numpy }
 
 **0:22 · 8 min**
 
-Lecture 07 replaced loops by array operations. Here the same sum is timed
-both ways in one script, so that the factor belongs to this laptop.
+**Tell the room.** Lecture 07 replaced loops by array operations. Here the
+same sum is timed both ways in one script, so that the factor belongs to
+this laptop.
 
 1. Add a second block at the end of the script, indented like the first.
 
@@ -232,7 +318,21 @@ both ways in one script, so that the factor belongs to this laptop.
             print(f"numpy  {elapsed * 1000:8.3f} ms  {float(total)!r}")
     ```
 
-2. Run the script again. Five more lines appear.
+2. Run the script again.
+
+    === "macOS"
+
+        ```text
+        python3 scripts/time_sum.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/time_sum.py
+        ```
+
+    Five more lines appear:
 
     ```text
     numpy     0.043 ms  170720289.9134
@@ -245,27 +345,30 @@ both ways in one script, so that the factor belongs to this laptop.
 3. Each student divides the smallest loop time by the smallest NumPy time.
    On the lecturer's laptop: 1.531 / 0.018 = 85.
 
-4. Divide both times by the 91 583 rows: 16.7 ns per row for the loop, 0.2 ns
-   for NumPy.
+4. Divide both times by the 91 583 rows: 16.7 ns per row for the loop, 0.2
+   ns for NumPy.
 
 5. Ask why the first NumPy line is the slowest. Code and data are not yet in
    the cache of the processor on the first run.
 
-You should now see a factor on every laptop, most between 50 and 150, and
-the board shows a few of them next to the machine they came from.
+!!! success "You should now see"
+    A factor on every laptop, most between 50 and 150, and the board shows a
+    few of them next to the machine they came from.
 
 The sums of the two methods differ in their last digits: `…9133972` against
 `…9134`. Both are correct to 14 digits. The additions are done in another
 order, and every addition of floats rounds.
 
-## 4. The same sum on four processes { #pool }
+---
+
+### 4. The same sum on four processes { #pool }
 
 **0:30 · 13 min**
 
-The laptop has several cores, and the loop used one. A pool of four worker
-processes splits the rows into four lists and adds up each list on its own
-core. The room predicts the result before running it. Most will say: four
-times faster.
+**Tell the room.** The laptop has several cores, and the loop used one. A
+pool of four worker processes splits the rows into four lists and adds up
+each list on its own core. The room predicts the result before running it.
+Most will say: four times faster.
 
 1. Add one line to the imports at the top of the script.
 
@@ -292,6 +395,20 @@ times faster.
 
 4. Ask for predictions, then run the script.
 
+    === "macOS"
+
+        ```text
+        python3 scripts/time_sum.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/time_sum.py
+        ```
+
+    The last five lines:
+
     ```text
     pool    109.817 ms  170720289.91340062
     pool    100.515 ms  170720289.91340062
@@ -305,9 +422,9 @@ times faster.
    in it takes about 60 ms, and that has to happen for every worker before
    any number is added.
 
-You should now see fifteen lines of timing, and a pool time that is far
-longer than the loop time on every laptop. On Windows it is often longer
-still.
+!!! success "You should now see"
+    Fifteen lines of timing, and a pool time that is far longer than the
+    loop time on every laptop. On Windows it is often longer still.
 
 The sum has changed again in its last digits. Four partial sums added
 together round at other places than one long sum.
@@ -318,26 +435,51 @@ together round at other places than one long sum.
     | Tracebacks without end, with `RuntimeError: An attempt has been made to start a new process` | The pool lines are not under `if __name__ == "__main__":`. Stop with `Ctrl+C`, several times if needed, and indent them |
     | `NameError: name 'Pool' is not defined` | The import line of step 1 is missing |
 
-## 5. A job worth splitting { #split }
+---
+
+### 5. A job worth splitting { #split }
 
 **0:43 · 12 min**
 
-Splitting costs about a tenth of a second before any work is done. It pays
-for a job that takes much longer than that. The next script does the same
-loop 1 200 times over, 110 million additions, and takes the number of
-workers from the command line.
+**Tell the room.** Splitting costs about a tenth of a second before any
+work is done. It pays for a job that takes much longer than that. The next
+script does the same loop 1 200 times over, 110 million additions, and
+takes the number of workers from the command line.
 
-1. Download [`hpc_sum_parallel.py`](../data/hpc_sum_parallel.py) and save it
-   as `scripts/sum_parallel.py`. Open it and read it with the room: the
-   function `sum_passes` reads the file and loops over it, and each worker
-   gets its share of the 1 200 passes.
+1. Download [`hpc_sum_parallel.py`](../data/hpc_sum_parallel.py){ download="sum_parallel.py" }
+   and save it in `scripts` as:
+
+    ```text
+    sum_parallel.py
+    ```
+
+    Open it and read it with the room: the function `sum_passes` reads the
+    file and loops over it, and each worker gets its share of the 1 200
+    passes.
 
 2. Run it with one worker, then with two.
 
-    ```text
-    python scripts/sum_parallel.py --workers 1
-    python scripts/sum_parallel.py --workers 2
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/sum_parallel.py --workers 1
+        ```
+
+        ```text
+        python3 scripts/sum_parallel.py --workers 2
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/sum_parallel.py --workers 1
+        ```
+
+        ```text
+        python scripts/sum_parallel.py --workers 2
+        ```
+
+    On the lecturer's laptop:
 
     ```text
     workers  1  passes 1200  time  1.964 s  sum 204864347896.70938
@@ -360,17 +502,26 @@ workers from the command line.
 
 5. Run it and compare.
 
-    ```text
-    python scripts/sum_parallel.py --workers 4
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/sum_parallel.py --workers 4
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/sum_parallel.py --workers 4
+        ```
 
     ```text
     workers  4  passes 1200  time  0.586 s  sum 204864347895.95145
     ```
 
-You should now see three times on every laptop and a prediction next to the
-third. On the lecturer's laptop the prediction is off by 2 ms. Each student
-runs each line twice or three times and keeps the smallest time.
+!!! success "You should now see"
+    Three times on every laptop and a prediction next to the third. On the
+    lecturer's laptop the prediction is off by 2 ms. Each student runs each
+    line twice or three times and keeps the smallest time.
 
 The serial part is 0.124 s of 1.964 s, or 6.3 %. By Amdahl's law no number
 of cores makes this job more than 1 / 0.063 = 16 times faster.
@@ -380,31 +531,51 @@ of cores makes this job more than 1 / 0.063 = 16 times faster.
     measured time for four is longer than the prediction. That is the right
     result for that laptop: the model assumes a free core for every worker.
 
+---
+
 ## Part 2 · Memory before loading { #part-2 }
 
 **0:55 to 1:23 · sections 6 to 8**
 
 Time was the first thing to measure. Memory is the second. A script that
 needs more memory than the laptop has does not get slower by a factor. It
-stops, or it stops the laptop.
+stops, or it stops the laptop. The size of the table in memory is worked out
+on paper, checked against the loaded table, and compared with the peak
+while reading.
 
-## 6. Estimate, then check { #bytes }
+---
+
+### 6. Estimate, then check { #bytes }
 
 **0:55 · 10 min**
 
-A table of numbers needs rows × columns × bytes per value. A float64 has 8
-bytes and a float32 has 4, as in Lecture 03. The room does the product on
-paper first.
+**Tell the room.** A table of numbers needs rows × columns × bytes per
+value. A float64 has 8 bytes and a float32 has 4, as in Lecture 03. The room
+does the product on paper first.
 
-1. Ask for the product: 91 583 rows, 4 columns, 8 bytes.
+1. Ask for the product: 91 583 rows, 4 columns, 8 bytes. Then check it.
 
-    ```text
-    python -c "print(91583 * 4 * 8)"
-    ```
+    === "macOS"
+
+        ```text
+        python3 -c "print(91583 * 4 * 8)"
+        ```
+
+    === "Windows"
+
+        ```text
+        python -c "print(91583 * 4 * 8)"
+        ```
 
     The answer is `2930656`, about 2.9 MB.
 
-2. Create `scripts/table_size.py`.
+2. Create a new file in `scripts` and name it:
+
+    ```text
+    table_size.py
+    ```
+
+    Type:
 
     ```text
     import numpy as np
@@ -422,9 +593,17 @@ paper first.
 
 3. Run it.
 
-    ```text
-    python scripts/table_size.py
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/table_size.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/table_size.py
+        ```
 
     ```text
     (91583, 4) float64 2930656
@@ -445,18 +624,28 @@ paper first.
    table is smaller than its text file, by the factor 2 930 656 / 3 926 142 =
    0.75.
 
-You should now see the number `2930656` twice: once from the product and
-once from `nbytes`.
+!!! success "You should now see"
+    The number `2930656` twice: once from the product and once from
+    `nbytes`.
 
-## 7. The peak while reading { #peak }
+---
+
+### 7. The peak while reading { #peak }
 
 **1:05 · 10 min**
 
-The table is not all the memory a script needs. While a file is read, the
-text and the numbers are in memory at the same moment. `tracemalloc`, a
-module that comes with Python, reports the largest amount that was in use.
+**Tell the room.** The table is not all the memory a script needs. While a
+file is read, the text and the numbers are in memory at the same moment.
+`tracemalloc`, a module that comes with Python, reports the largest amount
+that was in use.
 
-1. Create `scripts/peak_memory.py`.
+1. Create a new file in `scripts` and name it:
+
+    ```text
+    peak_memory.py
+    ```
+
+    Type:
 
     ```text
     import tracemalloc
@@ -480,9 +669,17 @@ module that comes with Python, reports the largest amount that was in use.
 
 2. Run it.
 
-    ```text
-    python scripts/peak_memory.py
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/peak_memory.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/peak_memory.py
+        ```
 
     ```text
     loadtxt   table 2930656  peak 3107323
@@ -496,25 +693,75 @@ module that comes with Python, reports the largest amount that was in use.
    for a working copy such as `M - M.mean()`, one for the reader and for
    whatever else runs.
 
-You should now see two peaks, both larger than their table. The last digits
-of the peaks vary from run to run and from laptop to laptop.
+!!! success "You should now see"
+    Two peaks, both larger than their table. The last digits of the peaks
+    vary from run to run and from laptop to laptop.
 
-## 8. Will a larger file fit? { #fit }
+---
+
+### 8. Will a larger file fit? { #fit }
 
 **1:15 · 8 min**
 
-The estimate is made before a file is opened, from its size alone. The room
-does it for a file of 4 GB with the same four columns, and then each student
-for their own laptop.
+**Tell the room.** The estimate is made before a file is opened, from its
+size alone. The room does it for a file of 4 GB with the same four columns,
+and then each student for their own laptop.
 
-1. Bytes per row of text, from Seminar 3: 3 926 142 bytes / 91 584 lines =
-   42.9.
+1. Measure the bytes per row of text, as in
+   [Seminar 4, section 7](seminar_04.md#sizes): first the size of the file
+   in bytes, then the number of lines.
+
+    === "macOS"
+
+        ```text
+        wc -c data/raw/D0_KPi.csv
+        ```
+
+        ```text
+         3926142 data/raw/D0_KPi.csv
+        ```
+
+        ```text
+        wc -l data/raw/D0_KPi.csv
+        ```
+
+        ```text
+           91584 data/raw/D0_KPi.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Item data/raw/D0_KPi.csv).Length
+        ```
+
+        ```text
+        3926142
+        ```
+
+        ```text
+        (Get-Content data/raw/D0_KPi.csv).Count
+        ```
+
+        ```text
+        91584
+        ```
+
+    3 926 142 bytes / 91 584 lines = 42.87 bytes per line.
 
 2. Rows in a file of 4 GB.
 
-    ```text
-    python -c "print(4e9 / 42.87)"
-    ```
+    === "macOS"
+
+        ```text
+        python3 -c "print(4e9 / 42.87)"
+        ```
+
+    === "Windows"
+
+        ```text
+        python -c "print(4e9 / 42.87)"
+        ```
 
     About 93 million rows.
 
@@ -532,8 +779,11 @@ for their own laptop.
    are needed (`usecols=0` is a quarter of the table), read them as float32,
    or read the file in pieces and keep only the sum.
 
-You should now see one number per student: the largest file of this kind
-that their laptop can load.
+!!! success "You should now see"
+    One number per student: the largest file of this kind that their laptop
+    can load.
+
+---
 
 ## Part 3 · A job in the background { #part-3 }
 
@@ -544,24 +794,40 @@ starts a job of half a minute in the background and learns the four things
 that go with it: the log, following the log, stopping the job, and finding
 an error afterwards.
 
-## 9. A job that reports its progress { #job }
+---
+
+### 9. A job that reports its progress { #job }
 
 **1:23 · 8 min**
 
-The job of this part adds up the mass column 300 times per step, for 60
-steps, and prints one line per step with the time of day. It stands for any
-long analysis.
+**Tell the room.** The job of this part adds up the mass column 300 times
+per step, for 60 steps, and prints one line per step with the time of day.
+It stands for any long analysis.
 
-1. Download [`hpc_long_job.py`](../data/hpc_long_job.py) and save it as
-   `scripts/long_job.py`. Open it and find three things with the room: the
-   two options `--steps` and `--path`, the `print` inside the loop, and the
-   last line, which prints `done`.
+1. Download [`hpc_long_job.py`](../data/hpc_long_job.py){ download="long_job.py" }
+   and save it in `scripts` as:
+
+    ```text
+    long_job.py
+    ```
+
+    Open it and find three things with the room: the two options `--steps`
+    and `--path`, the `print` inside the loop, and the last line, which
+    prints `done`.
 
 2. Run it in the foreground with five steps.
 
-    ```text
-    python scripts/long_job.py --steps 5
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/long_job.py --steps 5
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/long_job.py --steps 5
+        ```
 
     ```text
     18:44:19  read 91583 rows from data/raw/D0_KPi.csv
@@ -573,39 +839,64 @@ long analysis.
     18:44:22  done  mean of M = 1864.1046
     ```
 
-3. Ask the shell how the script ended.
+3. Ask the shell how the script ended: its exit status.
 
-    ```text
-    echo $?
-    ```
+    === "macOS"
 
-    It prints `0`: the script ended without an error.
+        ```text
+        echo $?
+        ```
+
+    === "Windows"
+
+        ```text
+        $LASTEXITCODE
+        ```
+
+    It prints `0`: the script ended without an error. Any other number
+    means an error.
 
 4. From the time per step, estimate the full job of 60 steps. On the
    lecturer's laptop: 60 × 0.47 s = 28 s.
 
-You should now see seven lines, a `0`, and an estimate for 60 steps on every
-laptop.
+!!! success "You should now see"
+    Seven lines, a `0`, and an estimate for 60 steps on every laptop.
 
-## 10. Into the background { #background }
+---
+
+### 10. Into the background { #background }
 
 **1:31 · 14 min**
 
-`&` at the end of a command starts it in the background: the prompt comes
-back at once. `> results/run.log` sends what the script prints into a file,
-and `2>&1` sends error messages to the same file. The first attempt goes
-wrong on purpose.
+**Tell the room.** `&` at the end of a command starts it in the background:
+the prompt comes back at once. Both shells have it. `> results/run.log`
+sends what the script prints into a file, and `2>&1` sends error messages
+to the same file. PowerShell runs such a command as a *job*, in a second
+PowerShell of its own, and has its own commands to list and stop it. The
+first attempt goes wrong on purpose.
 
 1. Start the job in the background.
 
-    ```text
-    python scripts/long_job.py > results/run.log 2>&1 &
-    ```
+    === "macOS"
 
-    The shell prints the job number and a process number, such as
-    `[1] 26267`.
+        ```text
+        python3 scripts/long_job.py > results/run.log 2>&1 &
+        ```
 
-2. Look at the log, twice, a few seconds apart.
+        `zsh` prints the job number and a process number, such as
+        `[1] 26267`.
+
+    === "Windows"
+
+        ```text
+        python scripts/long_job.py > results/run.log 2>&1 &
+        ```
+
+        PowerShell prints a table of one row: the job's `Id` 1, its name
+        `Job1`, and the state `Running`.
+
+2. Look at the log, twice, a few seconds apart. `cat` is the same word in
+   both shells.
 
     ```text
     cat results/run.log
@@ -613,37 +904,86 @@ wrong on purpose.
 
     It prints nothing. Ask the room why.
 
-3. List the jobs, then stop the job and look once more.
+3. List the jobs, then stop the job.
+
+    === "macOS"
+
+        ```text
+        jobs
+        ```
+
+        ```text
+        [1]  + running    python3 scripts/long_job.py > results/run.log 2>&1
+        ```
+
+        ```text
+        kill %1
+        ```
+
+    === "Windows"
+
+        ```text
+        Get-Job
+        ```
+
+        The row of job 1 shows `Running`.
+
+        ```text
+        Stop-Job 1
+        ```
+
+    Look at the log once more:
 
     ```text
-    jobs
-    kill %1
     cat results/run.log
     ```
 
-    `jobs` shows the job as `Running`. After `kill %1` the log is still
-    empty.
+    The log is still empty.
 
 4. Explain. When its output goes into a file, Python collects it in a buffer
-   and writes it when the buffer is full or the script ends. A killed script
-   loses its buffer. `python -u` writes every line at once.
+   and writes it when the buffer is full or the script ends. A stopped
+   script loses its buffer. `python -u` writes every line at once.
 
-5. Start the job again with `-u` and follow the log.
+5. Start the job again with `-u`, and follow the log. The lines appear one
+   by one. `Ctrl+C` ends the following. The job goes on.
 
-    ```text
-    python -u scripts/long_job.py > results/run.log 2>&1 &
-    tail -f results/run.log
-    ```
+    === "macOS"
 
-    The lines appear one by one. `Ctrl+C` ends `tail`. The job goes on.
+        ```text
+        python3 -u scripts/long_job.py > results/run.log 2>&1 &
+        ```
 
-6. Check that the job is still there, wait for it to end, and read the end
-   of the log.
+        ```text
+        tail -f results/run.log
+        ```
 
-    ```text
-    jobs
-    tail -n 3 results/run.log
-    ```
+    === "Windows"
+
+        ```text
+        python -u scripts/long_job.py > results/run.log 2>&1 &
+        ```
+
+        This job gets the `Id` 3: PowerShell also numbers the part inside
+        each job.
+
+        ```text
+        Get-Content results/run.log -Wait
+        ```
+
+6. Check that the job is still there: `jobs` (Windows `Get-Job`). Wait for
+   it to end, and read the end of the log.
+
+    === "macOS"
+
+        ```text
+        tail -n 3 results/run.log
+        ```
+
+    === "Windows"
+
+        ```text
+        Get-Content results/run.log -Tail 3
+        ```
 
     ```text
     18:27:10  step 59 of 60   27.4 s
@@ -651,64 +991,135 @@ wrong on purpose.
     18:27:10  done  mean of M = 1864.1046
     ```
 
-You should now see a log of 62 lines whose last line says `done`. `wc -l
-results/run.log` counts them.
+!!! success "You should now see"
+    A log of 62 lines whose last line says `done`. This command counts them:
+
+    === "macOS"
+
+        ```text
+        wc -l results/run.log
+        ```
+
+        ```text
+              62 results/run.log
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Content results/run.log).Count
+        ```
+
+        ```text
+        62
+        ```
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | `tail -f` shows nothing | The job was started without `-u`. `Ctrl+C`, `kill %1`, start again |
-    | `kill %1` says there is no such job | The job has ended, or it was started in another terminal. `jobs` lists what this terminal has |
-    | Windows: the job is still running after `kill %1` | End it in Task Manager: the process is named `python.exe` |
-    | macOS: `jobs` prints `running` in lower case | The terminal is zsh, not bash. The commands are the same |
+    | The log stays empty while the job runs | The job was started without `-u`. `Ctrl+C`, stop the job, start it again with `-u` |
+    | macOS: `kill: %1: no such job` | The job has ended, or it was started in another terminal. `jobs` lists what this terminal has |
+    | Windows: `Stop-Job: The command cannot find a job with the job ID 1.` | `Get-Job` lists the jobs of this terminal with their `Id`. Use the `Id` of the row that shows `Running` |
+    | Windows: `Get-Content` is still waiting after `done` | It follows the file until it is stopped. `Ctrl+C` |
+    | A job ends as soon as its terminal is closed | Correct, in both shells. The stretch goals show how a job outlives its terminal on macOS |
 
-## 11. An error in the log { #error }
+---
+
+### 11. An error in the log { #error }
 
 **1:45 · 5 min**
 
-A job that fails at night has nobody at the terminal. Its error message has
-to be in the log. That is what `2>&1` is for.
+**Tell the room.** A job that fails at night has nobody at the terminal. Its
+error message has to be in the log. That is what `2>&1` is for.
 
 1. Start the job with a file name that does not exist, and without `2>&1`.
 
+    === "macOS"
+
+        ```text
+        python3 scripts/long_job.py --path data/raw/none.csv > results/run.log
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/long_job.py --path data/raw/none.csv > results/run.log
+        ```
+
+    The traceback appears in the terminal. Look at the log:
+
     ```text
-    python scripts/long_job.py --path data/raw/none.csv > results/run.log
+    cat results/run.log
     ```
 
-    The traceback appears in the terminal. `cat results/run.log` prints
-    nothing.
+    It prints nothing.
 
 2. Run the same line with `2>&1` at the end. Nothing appears in the
    terminal.
 
-    ```text
-    python scripts/long_job.py --path data/raw/none.csv > results/run.log 2>&1
-    ```
+    === "macOS"
 
-3. Read the last line of the log, and ask the shell how the script ended.
+        ```text
+        python3 scripts/long_job.py --path data/raw/none.csv > results/run.log 2>&1
+        ```
 
-    ```text
-    tail -n 1 results/run.log
-    echo $?
-    ```
+    === "Windows"
 
-    ```text
-    FileNotFoundError: data/raw/none.csv not found.
-    0
-    ```
+        ```text
+        python scripts/long_job.py --path data/raw/none.csv > results/run.log 2>&1
+        ```
 
-    The `0` belongs to `tail`, the last command. Run the failing line again
-    and then `echo $?` at once: it prints `1`.
+3. Read the last line of the log, then ask the shell how the script ended.
 
-You should now see the line with `FileNotFoundError` in the log, and the
-room can say which stream it came through.
+    === "macOS"
 
-## 12. Write down what was measured { #readme }
+        ```text
+        tail -n 1 results/run.log
+        ```
+
+        ```text
+        echo $?
+        ```
+
+        ```text
+        FileNotFoundError: data/raw/none.csv not found.
+        0
+        ```
+
+        The `0` belongs to `tail`, the last program. Run the failing line
+        again and then `echo $?` at once: it prints `1`.
+
+    === "Windows"
+
+        ```text
+        Get-Content results/run.log -Tail 1
+        ```
+
+        ```text
+        $LASTEXITCODE
+        ```
+
+        ```text
+        FileNotFoundError: data/raw/none.csv not found.
+        1
+        ```
+
+        `$LASTEXITCODE` is set by programs only. `Get-Content` is a part
+        of PowerShell, so the `1` is still the one Python left.
+
+!!! success "You should now see"
+    The line with `FileNotFoundError` in the log, and the room can say which
+    stream it came through.
+
+---
+
+### 12. Write down what was measured { #readme }
 
 **1:50 · 7 min**
 
-A timing belongs in the README, together with the machine. Whoever runs the
-project on another laptop then knows what to expect.
+**Tell the room.** A timing belongs in the README, together with the
+machine. Whoever runs the project on another laptop then knows what to
+expect.
 
 1. Open `README.md` and add a section. The room fills in its own machine and
    its own times.
@@ -727,24 +1138,25 @@ project on another laptop then knows what to expect.
 
     The table takes 2 930 656 bytes in memory: 91 583 x 4 x 8.
 
-    A long run is started with
-    `python -u scripts/long_job.py > results/run.log 2>&1 &`.
+    A long run is started in the background, with a log
+    (on macOS `python3`):
+    `python -u scripts/long_job.py > results/run.log 2>&1 &`
     ```
 
 2. Open the preview with `Ctrl+K`, then `V` (macOS `Cmd+K`, then `V`) and
    read the section.
 
-You should now see a **Timing** section with a table of three rows in the
-preview.
+!!! success "You should now see"
+    A **Timing** section with a table of three rows in the preview.
 
-## 13. Wrap up { #wrap-up }
+---
+
+### 13. Wrap up { #wrap-up }
 
 **1:57 · 3 min**
 
-Put the tasks of the next section on the projector and read them aloud. Ask
-on the way out which result was the least expected.
-
-What the room has learned:
+Read the list aloud. Ask on the way out which result was the least
+expected.
 
 - A time is measured several times and the smallest is kept. It is quoted
   with the machine.
@@ -755,26 +1167,15 @@ What the room has learned:
   the time on more workers.
 - A table of numbers takes rows × columns × bytes per value. Reading it
   takes up to twice that, and three times the table should be free.
-- `python -u script.py > run.log 2>&1 &` runs a job in the background with a
-  log. `jobs`, `tail -f` and `kill %1` look at it, follow it and stop it.
+- `echo $?` (Windows `$LASTEXITCODE`) tells how the last program ended:
+  `0` is success.
+- `python -u script.py > run.log 2>&1 &` (macOS `python3`) runs a job in the
+  background with a log, in both shells. `zsh` lists, follows and stops it
+  with `jobs`, `tail -f` and `kill %1`; PowerShell with `Get-Job`,
+  `Get-Content -Wait` and `Stop-Job`.
 - The sum changes in its last digits with the order of the additions.
 
-## Next steps, at home
-
-**30 min**
-
-1. Time the reading of your own dataset and one computation on it, five
-   times each. If the computation is a loop, time it as an array operation
-   too. Write the smallest times into your README, with your machine.
-
-2. Estimate the memory of your own table from rows, columns and bytes per
-   value before loading it. Then check with `nbytes` or with
-   `df.memory_usage(deep=True)`. For a column of text the option
-   `deep=True` is needed, and the result will be larger than the estimate.
-
-3. Give your own analysis script a progress line per step and a last line
-   that says `done`. Run it in the background with a log, and follow the
-   log.
+---
 
 ## Stretch goals
 
@@ -795,32 +1196,58 @@ with the times of the lecturer's laptop.
   0.41 s, and 24 workers take about 0.7 s: more workers than cores only add
   starting time.
 - Give every run a folder of its own. The log lands in a folder such as
-  `results/run_2026-10-04_1826`.
+  `results/run_2026-10-04_1826`. Type the three lines one by one.
+
+    === "macOS"
+
+        ```text
+        RUN=results/run_$(date +%Y-%m-%d_%H%M)
+        mkdir -p "$RUN"
+        python3 -u scripts/long_job.py > "$RUN/run.log" 2>&1 &
+        ```
+
+    === "Windows"
+
+        ```text
+        $RUN = "results/run_$(Get-Date -Format yyyy-MM-dd_HHmm)"
+        mkdir $RUN
+        python -u scripts/long_job.py > "$RUN/run.log" 2>&1 &
+        ```
+
+- macOS: start the job with `nohup` in front, close the terminal with the
+  bin icon, open a new one and read the log. The job has run to `done`.
+  Without `nohup` it stops when the terminal closes. On Windows a job of
+  PowerShell always ends with its terminal.
 
     ```text
-    RUN=results/run_$(date +%Y-%m-%d_%H%M)
-    mkdir -p "$RUN"
-    python -u scripts/long_job.py > "$RUN/run.log" 2>&1 &
+    nohup python3 -u scripts/long_job.py > results/run.log 2>&1 &
     ```
 
-- macOS and Linux: start the job with `nohup` in front, close the terminal
-  window, open a new one and read the log. The job has run to `done`.
-  Without `nohup` it stops when the window closes.
-
-    ```text
-    nohup python -u scripts/long_job.py > results/run.log 2>&1 &
-    ```
-
-- Download the job script of the lecture, [`hpc_job.sh`](../data/hpc_job.sh),
-  save it as `scripts/job.sh` and run it with bash. For bash the `#SBATCH`
-  lines are comments. The script prints a start line, the line of
-  `sum_parallel.py` and a done line. It activates the environment
-  `.venv/bin/activate`. On Windows that file is `.venv/Scripts/activate`.
-  Delete the line if the project has no environment.
+- macOS: download the job script of the lecture,
+  [`hpc_job.sh`](../data/hpc_job.sh){ download="job.sh" }, save it as
+  `scripts/job.sh` and run it with `bash`, which every Mac has. For `bash`
+  the `#SBATCH` lines are comments. The script prints a start line, the
+  line of `sum_parallel.py` and a done line. It first activates the
+  environment `.venv` of [Seminar 13](seminar_13.md), so that `python`
+  is found; without that folder it stops at once with
+  `.venv/bin/activate: No such file or directory`. On Windows read the
+  script against the slide of the lecture instead: PowerShell does not run
+  it.
 
     ```text
     SLURM_JOB_ID=1 SLURM_CPUS_PER_TASK=2 bash scripts/job.sh
     ```
+
+A student who has a dataset of their own can repeat the session on it:
+
+- Time the reading of the dataset and one computation on it, five times
+  each. If the computation is a loop, time it as an array operation too.
+- Estimate the memory of the table from rows, columns and bytes per value
+  before loading it. Then check with `nbytes` or with
+  `df.memory_usage(deep=True)`. For a column of text the option `deep=True`
+  is needed, and the result will be larger than the estimate.
+- Give an analysis script a progress line per step and a last line that
+  says `done`. Run it in the background with a log, and follow the log.
 
 ## If students ask for more
 
@@ -836,4 +1263,4 @@ account with a cloud provider.
 
 ## Aims practised
 
-⚙️ a job that runs without its author and reports what it does · 🔧 the same commands on Windows, macOS and a cluster · 📁 a table sized before it is loaded · ♻️ timings written down with the machine
+⚙️ a job that runs without its author and reports what it does · 🔧 one job run in the background from `zsh` and from PowerShell, and the job script a cluster expects · 📁 a table sized before it is loaded · ♻️ timings written down with the machine

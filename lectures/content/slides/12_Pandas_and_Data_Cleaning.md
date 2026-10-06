@@ -20,10 +20,12 @@ python:
 ##### <span class="aims-badge">📁 data & files · ⚙️ automation · ♻️ reproducibility</span>
 
 <!--
-Speaker: the small table that was repaired in the editor comes back today. The
-same repair is written as a script, and then the method is used on the file
-with 91 583 rows. Two things are new: the library Pandas, and cleaning as a
-list of checks with a count for each. (~1 min)
+Speaker: Lectures 9 to 11 computed with tables that were already in order.
+Today is about how a table gets into that state. The pendulum table comes back
+with the script handed out in Lecture 4, and a second file from the lab
+partner. Then the method is used on the file with 91 583 rows. Two things are
+new: the library Pandas, and cleaning as a list of rules with a count for
+each. (~1 min)
 -->
 
 ---
@@ -33,6 +35,130 @@ layout: quote
 
 # Like families, tidy datasets are all alike but every messy dataset is messy in **its own way**.
 Hadley Wickham — *Tidy Data*, Journal of Statistical Software, 2014
+
+---
+hideInToc: true
+---
+
+# The Partner's **Second File**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📥 **`data/raw/pendulum_run2.csv`**
+
+```text
+nr;length_cm;t10_s
+1;20;8,97
+2;30;11,02
+3;40;12,74
+4;50;14,15
+5;60;15,58
+6;70;16,83
+7;80;
+8;90;19,08
+9;100;20,04
+;Mean;14,80
+```
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔁 **The form of the first file**
+
+`;` between values, decimal commas, a column `nr`, a summary in the last line. On the first file, Lecture 4's `scripts/clean_pendulum.py` made the four edits of Lecture 2: 9 rows, 97 bytes, SHA-256 `be05af03…fff0870b` on every laptop.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ❓ **The same line on this file**
+
+The partner timed the same nine lengths, 20 to 100 cm. How many rows should the script write?
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+Speaker: the lab partner's second series, 125 bytes, made by
+pendulum_run2.py in the workbook's data folder. Let the room read the file
+for half a minute before asking. The answer they should reach: nine lengths,
+and only eight of them have a time. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What Lecture 4's Script **Wrote**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+```text
+% python3 scripts/clean_pendulum.py data/raw/pendulum_run2.csv data/processed/run2_script.csv
+10 rows written to data/processed/run2_script.csv
+PS> python scripts/clean_pendulum.py data/raw/pendulum_run2.csv data/processed/run2_script.csv
+10 rows written to data/processed/run2_script.csv
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📤 **`run2_script.csv`, the end**
+
+```text
+70,16.83
+80,
+90,19.08
+100,20.04
+Mean,14.80
+```
+
+Ten rows for nine lengths. One holds no time, and one is not a measurement.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📜 **`clean_pendulum.py`, lines 27–31**
+
+```python
+for line in lines:
+    if "mean" in line:
+        continue
+    line = line.replace(",", ".").replace(";", ",")
+    out.append(line.split(",", 1)[1])
+```
+
+In Lecture 3's ASCII table `A` is 65 and `a` is 97; `M` is 77 and `m` is 109. `"mean" in ";Mean;14,80"` is `False`.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+No error and no warning. The script did what its text says: it moves characters. Nothing in it knows that `t10_s` holds numbers, or that a measurement has a row number.
+
+</div>
+
+<!--
+Speaker: the line is the one from Lecture 4 and Seminar 4; only the file
+names differ. Python is python3 on macOS and python on Windows. The output is
+103 bytes on both systems. Ask: which line of clean() would have to change,
+and how would it know? The empty time went through as an empty piece of text.
+(~3 min)
+-->
 
 ---
 hideInToc: true
@@ -94,59 +220,12 @@ hideInToc: true
 
 # Cleaning by **Script**
 
-<!--
-Speaker: one small file, cleaned twice: once by hand, which is done, and once
-by a script, which is this section. At the end the two results are compared
-byte by byte. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# The Pendulum Table, Cleaned **by Hand**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## 📥 **`data/raw/pendulum.csv`**
-
-```text
-nr;length_cm;t10_s
-1;20;9,02
-2;30;11,05
-…
-9;100;20,01
-;mean;15,14
-```
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✍️ **Four edits in the editor**
-
-1. The line with the mean deleted: 1 line
-2. `,` replaced by `.`: 9 places
-3. `;` replaced by `,`: 20 places
-4. The column `nr` deleted with a cursor on every line: 10 lines
-
-The result is `data/processed/pendulum.csv`: ten lines, 97 bytes.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The README lists the four edits. A list can be read. It cannot be run. When the lab partner sends the table for 200 lengths, every edit is made again, and nothing checks that it was made the same way.
-
-</div>
+Lecture 4's script edits characters. A cleaning that knows what a column holds starts by reading the file as a table, first on the file whose right answer is known: 97 bytes.
 
 <!--
-Speaker: ask the room what they would do if the same partner sent a second
-file tomorrow. The honest answer is: the same four edits, from memory. (~2 min)
+Speaker: the first file again, cleaned a second time, now by Pandas. Lecture
+4's script and the hand-cleaned copy already agree; the new script has to give
+the same bytes before it is trusted with the second file. (~1 min)
 -->
 
 ---
@@ -368,7 +447,7 @@ df = df[keep]
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-The line states a rule: a measurement has a row number, and the line with the mean has none.
+The line states a rule: a measurement has a row number, and the line with the mean has none. The partner's `;Mean;14,80` has none either. The rule does not depend on how the word is spelt.
 
 </div>
 
@@ -470,7 +549,7 @@ length_cm,t10_s
 …
 ```
 
-Only the columns of the table. This is the form of the hand-cleaned file.
+Only the columns of the table. This is the form of Lecture 4's `pendulum_script.csv`.
 
 </div>
 
@@ -484,7 +563,7 @@ Only the columns of the table. This is the form of the hand-cleaned file.
 
 <div class="note-text mt-sm">
 
-Before the first run the hand-cleaned file is renamed `pendulum_by_hand.csv`, so that the two can be compared.
+`data/processed/pendulum_script.csv`, written by Lecture 4's script, stays as it is: it is the file to compare with.
 
 </div>
 
@@ -506,10 +585,10 @@ hideInToc: true
 ## 🔢 **As tables**
 
 ```python
-by_hand = "data/processed/pendulum_by_hand.csv"
-hand = pd.read_csv(by_hand)
-script = pd.read_csv(out)
-print(hand.equals(script))
+script4 = "data/processed/pendulum_script.csv"
+before = pd.read_csv(script4)
+now = pd.read_csv(out)
+print(before.equals(now))
 ```
 
 ```text
@@ -525,14 +604,14 @@ The same columns, the same types, the same values.
 ## 🧱 **As bytes**
 
 ```text
-by hand     97 bytes
-by script   95 bytes
+Lecture 4   97 bytes
+Pandas      95 bytes
 
-by hand     80,17.90    90,19.10
-by script   80,17.9     90,19.1
+Lecture 4   80,17.90    90,19.10
+Pandas      80,17.9     90,19.1
 ```
 
-Two lines differ, by one character each.
+Two lines differ, by one character each. On Windows the Pandas file has 105 bytes: ten more.
 
 </div>
 
@@ -545,8 +624,10 @@ Two lines differ, by one character each.
 </div>
 
 <!--
-Speaker: ask which of the two answers a reader of a paper needs. For the numbers, the table. For "is
-this the file that was published", the bytes. (~2 min)
+Speaker: Lecture 4's script copies the characters of the raw file; Pandas
+reads numbers and writes them again. Ask which of the two answers a reader of
+a paper needs. For the numbers, the table. For "is this the file that was
+published", the bytes. (~2 min)
 -->
 
 ---
@@ -577,10 +658,12 @@ df.to_csv(out, index=False,
 ## 🔐 **Compare the checksums**
 
 ```text
-$ cd data/processed
-$ sha256sum pendulum.csv pendulum_by_hand.csv
+% shasum -a 256 pendulum*.csv
 be05af03…fff0870b  pendulum.csv
-be05af03…fff0870b  pendulum_by_hand.csv
+be05af03…fff0870b  pendulum_script.csv
+PS> (Get-FileHash pendulum*.csv).Hash
+BE05AF03…FFF0870B
+BE05AF03…FFF0870B
 ```
 
 Both files have 97 bytes and one SHA-256. They are identical.
@@ -591,13 +674,16 @@ Both files have 97 bytes and one SHA-256. They are identical.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The same check in Python: `Path(out).read_bytes() == Path(by_hand).read_bytes()` gives `True`. On macOS the command is `shasum -a 256`.
+The lines of Lecture 4, run after `cd data/processed`, which is the same in both shells. In Python, on every system: `Path(out).read_bytes() == Path(script4).read_bytes()` gives `True`.
 
 </div>
 
 <!--
-Speaker: this is the proof that the script does what the hands did. From here
-on the hand-cleaned file is not needed: the script makes it. (~2 min)
+Speaker: Lecture 4's script matched the copy cleaned by hand; the Pandas
+script now matches Lecture 4's. shasum writes the digits in lower case,
+Get-FileHash in upper case: one number. Without lineterminator, Pandas ends
+each line with the line ending of the system, CR LF on Windows: 105 bytes.
+(~2 min)
 -->
 
 ---
@@ -628,7 +714,9 @@ print(f"{len(df)} rows written to {OUT}")
 ## ▶️ **Run it**
 
 ```text
-$ python scripts/clean_pendulum.py
+% python3 scripts/clean.py
+9 rows written to data/processed/pendulum.csv
+PS> python scripts/clean.py
 9 rows written to data/processed/pendulum.csv
 ```
 
@@ -638,7 +726,7 @@ $ python scripts/clean_pendulum.py
 
 ## ♻️ **Run it again**
 
-Delete `data/processed/pendulum.csv` and run the script. The file is back, with the same 97 bytes.
+`scripts/clean.py` is a new file next to Lecture 4's `clean_pendulum.py`. Delete `data/processed/pendulum.csv` and run it: the file is back, with the same 97 bytes.
 
 </div>
 
@@ -646,41 +734,110 @@ Delete `data/processed/pendulum.csv` and run the script. The file is back, with 
 
 <!--
 Speaker: run it live from the terminal of VS Code, delete the output in the
-Side Bar, run it again. Each of the four hand edits is one line here: the two
-replacements are the two options of read_csv. (~3 min)
+Side Bar, run it again. Each of the four edits of Lecture 2 is one line here:
+the two replacements are the two options of read_csv. The line that runs it
+is the same in both shells after the first word. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# By Hand and **By Script**
+# The Second File, **by Rule**
 
-| | **By hand, in the editor** | **By script** |
-| --- | --- | --- |
-| The record of what was done | A list in the README, written afterwards | The script itself |
-| A new file with 200 rows | The four edits again | The same command |
-| A mistake found a month later | Start again from the raw file | Change one line, run again |
-| Proof that the result is the same | None | The same checksum on every run |
-| The raw file | One slip in the wrong tab changes it | Opened for reading only |
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-success card-glass pad-compact mt-md">
+```text
+% python3 scripts/clean.py
+9 rows written to data/processed/pendulum_run2.csv
+PS> python scripts/clean.py
+9 rows written to data/processed/pendulum_run2.csv
+```
 
-⚙️ A script is the written-down form of the cleaning. It can be read, it can be run again, and it is kept under Git next to the README.
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔎 **`raw.isna().sum()`, before cleaning**
+
+```text
+nr           1
+length_cm    0
+t10_s        1
+```
+
+`length_cm` is `object` again: one cell says `Mean`.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📤 **`pendulum_run2.csv`, the end**
+
+```text
+70,16.83
+80,
+90,19.08
+100,20.04
+```
+
+Nine rows. The summary line is gone.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+The line with `Mean` has no `nr`, so the rule drops it, whatever the spelling. The missing time is NaN and is written as an empty cell: the file still says that 80 cm was not timed.
 
 </div>
 
 <!--
-Speaker: the editor remains the right tool for looking at a file and for a
-single edit. The line is crossed when the result of an edit is used for a
-number that somebody else will read. (~2 min)
+Speaker: RAW and OUT in scripts/clean.py now name pendulum_run2.csv; nothing
+else changed. raw is the table as read_csv returns it, before the mask. The
+types and the count of empty cells point at both rows before anything is
+cleaned: that answers the question the lecture opened with. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Try It: the Cleaning in the **Browser**
+# Two Scripts, **Two Files**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| | **Lecture 4: `clean_pendulum.py`** | **Today: `clean.py`** |
+| --- | --- | --- |
+| What it reads | lines of text | columns with names and types |
+| The summary line | skipped if it contains `mean` | dropped: it has no `nr` |
+| The first file | 9 rows, 97 bytes, `be05af03…` | 9 rows, 97 bytes, `be05af03…` |
+| The second file | 10 rows, `Mean,14.80` kept | 9 rows, one gap at 80 cm |
+| A missing time | an empty piece of text | NaN, counted by `isna()` |
+| The file names | two words on the command line | `RAW` and `OUT`, typed in the script |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+⚙️ Both are scripts: they can be read, run again and kept under Git. The difference is what a rule refers to: the characters of a line, or the meaning of a column.
+
+</div>
+
+<!--
+Speaker: the editor remains the right tool for looking at a file. Lecture 4's
+script is still right for the first file: same bytes. Ask which row of the
+table matters for the next file the partner sends. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Cleaning in the **Browser**
 
 ```py {monaco-run} {autorun:false}
 import io
@@ -716,6 +873,8 @@ hideInToc: true
 ---
 
 # The **DataFrame**
+
+The script read, filtered and wrote a DataFrame without saying what one is: columns with names, one type each, and a label on every row.
 
 <!--
 Speaker: the script used a DataFrame without saying what it is. This section
@@ -897,14 +1056,14 @@ print(df.round(3).head(6))
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-An assignment to a new name adds a column. The arithmetic is done on whole columns, as with arrays, and no loop is written. The unit stands in the name: with `length_cm` in the formula the last column reads 970 to 993, a hundred times g.
+Lecture 7 computed these nine values of g as an array, 9.70 to 9.93. Here they are a column with a name, next to the length and the time they came from. With `length_cm` in the formula the last column reads 970 to 993, a hundred times g: the unit stands in the name.
 
 </div>
 
 <!--
-Speaker: head(6) keeps the printout short. All nine values of g lie between
-9.70 and 9.93. Put df["length_cm"] into the formula to show the factor 100.
-(~2 min)
+Speaker: head(6) keeps the printout short. An assignment to a new name adds a
+column, and the arithmetic runs on whole columns, as with arrays. Put
+df["length_cm"] into the formula to show the factor 100. (~2 min)
 -->
 
 ---
@@ -927,14 +1086,15 @@ print(f"g = {g.mean():.2f} ± {g.std() / len(g)**0.5:.2f} m/s²")
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-`sort_values` returns the table in a new order, each row with its label. Pandas divides by n − 1 in `std`, NumPy by n: 0.085 against 0.080 for nine values. The standard error is 0.085 / √9 = 0.03.
+`sort_values` keeps each row's label. Pandas divides by n − 1 in `std`, NumPy by n: 0.085 against 0.080. Here ± 0.03 is 0.085 / √9, the scatter of these nine values. Lecture 9 weighted them with 0.1 cm and 0.1 s assumed: 9.80 ± 0.04. Lecture 10 fitted T² against L: 9.84 ± 0.09. Same rows, three methods, three uncertainties.
 
 </div>
 
 <!--
 Speaker: g = 9.80 ± 0.03 m/s² from nine rows and three lines. The n − 1 is
-the estimate from a sample. Neither default is wrong. They are different
-defaults, and a report says which one it used. (~2 min)
+the estimate from a sample. Neither default is wrong, and a report says which
+one it used. The three results do not contradict each other: each answers its
+own question, and a report names the method next to the number. (~2 min)
 -->
 
 ---
@@ -943,6 +1103,8 @@ hideInToc: true
 ---
 
 # A Real **File**
+
+The nine rows of the pendulum table fit on one screen. The LHCb file has 91 583, and every statement about it is the output of a line of code.
 
 <!--
 Speaker: the same steps on D0_KPi.csv, 91 583 rows. Nobody can read this file
@@ -1078,13 +1240,13 @@ max     2453.658400  64509.950000      0.578799  891711.060000
 
 <div class="card card-success card-glass pad-compact">
 
-**M**: mean 1864.10, median 1864.08. They agree, and half of the rows lie between 1845.99 and 1881.53.
+**M**: mean 1864.10, median 1864.08. They agree: the median of Lecture 9, which the row with 2453.66 hardly moves.
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-**TAU**: median 0.000272, mean −0.0525, minimum −100. A mean decay time below zero.
+**TAU**: median 0.000272, mean −0.0525, minimum −100: the code of Lecture 7, still in the column.
 
 </div>
 
@@ -1092,62 +1254,9 @@ max     2453.658400  64509.950000      0.578799  891711.060000
 
 <!--
 Speaker: print(df.describe()) is the first thing to run on any table. Read it
-row by row with the room and ask which number cannot be right. A mean far from
-the median means a few values far from the rest. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# 49 Rows Move the **Mean**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔎 **The value −100**
-
-```python
-print((df["TAU"] == -100).sum())
-```
-
-```text
-49
-```
-
-`TAU = -100` is this file's code for *no decay time was computed*. The mask `TAU != -100` kept 91 534 rows of the array. The other 49 are 0.054 % of the file.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ➗ **The mean, by hand**
-
-```text
-49 rows × (−100)       −4900.000
-91 534 other rows         +89.868
-sum of TAU             −4810.132
-
-−4810.132 / 91 583  =  −0.0525
-    89.868 / 91 534  =   0.000982
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ One row in about 1900 turns a mean of 0.000982 ns into −0.0525 ns and a standard deviation of 0.0044 into 2.31. The median barely moves: 0.0002723 against 0.0002725. A code for a missing value is a number, and every sum counts it.
-
-</div>
-
-<!--
-Speaker: nothing warned. describe() ran, a fit would run, a histogram would
-be drawn. With the array the code had to be masked out by hand in every
-calculation. The check is to look at min and max of every column and ask
-whether such a value can be measured. (~3 min)
+row by row with the room. Half of the masses lie between 1845.99 and 1881.53.
+A mean far from the median means a few values far from the rest; the room
+knows the 49 rows of -100 from Lecture 7. (~3 min)
 -->
 
 ---
@@ -1174,18 +1283,70 @@ histogram with one bar far from all the others is the picture of a code.
 hideInToc: true
 ---
 
+# Lecture 7's Mask, Kept in the **Table**
+
+<div class="note-text mt-sm">
+
+Lecture 7: `TAU.mean()` gave −0.0525 ns with the code and `TAU[mask].mean()` 0.000982 ns without it. The mask went into every calculation, and the 49 rows left the array with their other three values.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```python
+before = df.mean()
+df["TAU"] = df["TAU"].replace(-100, np.nan)
+print(pd.DataFrame({"before": before, "after": df.mean()}))
+```
+
+```text
+             before        after
+M       1864.104582  1864.104582
+PT      3448.928182  3448.928182
+TAU       -0.052522     0.000982
+IPCHI2   457.513042   457.513042
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+Only `TAU` changes. The 49 rows stay, with their `M`, `PT` and `IPCHI2`.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+Every later mean, sum and plot leaves the gap out by itself. No mask is written again.
+
+</div>
+
+</div>
+
+<!--
+Speaker: df.mean() gives one mean per column, a Series with the column names
+as labels; the DataFrame of two Series puts them side by side. Ask before the
+output: which of the four means changes? The median of TAU is 0.000272 in
+both cases. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # From a Code to **NaN**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🕳️ **Replace the code**
+## 🕳️ **Count the gaps**
 
 ```python
-df["TAU"] = df["TAU"].replace(-100, np.nan)
 print(df.isna().sum())
-print(df["TAU"].count(), df["TAU"].mean())
+print(df["TAU"].count(), len(df))
 ```
 
 ```text
@@ -1194,7 +1355,7 @@ PT         0
 TAU       49
 IPCHI2     0
 dtype: int64
-91534 0.000981802006321804
+91534 91583
 ```
 
 </div>
@@ -1405,6 +1566,8 @@ hideInToc: true
 
 # Data **Quality**
 
+The types said the LHCb file was clean, and 49 codes were still in it. A gap is one kind of problem; four more questions find the others.
+
 <!--
 Speaker: the missing values were one kind of problem. This section goes
 through the others in a fixed order, each with one line of Pandas and its
@@ -1521,8 +1684,9 @@ print(df[~df["M"].between(1800, 1930)])
 
 ## 📏 **What the file shows**
 
+- Lecture 4 found these two at the ends of the sorted column and left them open. Its search printed lines 10048 and 89861: the header is line 1 and labels start at 0
 - All other 91 581 masses lie between 1808.14 and 1920.35 MeV/c²
-- Row 10046 also has the smallest `PT` of the file, 755.27. The next smallest is 2495.66
+- Row 10046 also has the smallest `PT` of the file, 755.27
 
 </div>
 
@@ -1543,8 +1707,9 @@ An **outlier** is a value far from the others. It can be an error, or the most i
 </div>
 
 <!--
-Speaker: between(a, b) is True from a to b, both ends included. The two rows
-were found by looking at min and max in describe(). (~2 min)
+Speaker: between(a, b) is True from a to b, both ends included. Line number =
+label + 2: one for the header, one because labels count from 0. Row 10046 has
+the smallest PT of the file; the next smallest is 2495.66. (~2 min)
 -->
 
 ---
@@ -1559,7 +1724,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-Q1 and Q3 are the `25%` and `75%` rows of `describe()`. IQR = Q3 − Q1. The fences are Q1 − 1.5 IQR and Q3 + 1.5 IQR. For `M`: 1881.53 − 1845.99 = 35.54, fences 1792.68 and 1934.84, 2 rows outside.
+Q1 and Q3 are the `25%` and `75%` rows of `describe()`. IQR = Q3 − Q1. The fences are Q1 − 1.5 IQR and Q3 + 1.5 IQR. For `M`: 1881.53 − 1845.99 = 35.54, fences 1792.68 and 1934.84, 2 rows outside. Lecture 8's box plot draws its whiskers to the last masses inside the fences, 1808.14 and 1920.35.
 
 </div>
 
@@ -1647,7 +1812,7 @@ The D⁰ mass is 1864.84 MeV/c²: `M` is in MeV/c², not GeV/c². The D⁰ lifet
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A unit check compares one typical value of the column with a number known from elsewhere. A wrong unit shows as a factor of 10, 100 or 1000.
+Lecture 4 wrote MeV/c² and ns into the README, because no command finds a unit in the file. This check tests that line: a typical value against a number known from elsewhere. A wrong unit shows as a factor of 10, 100 or 1000.
 
 </div>
 
@@ -1714,7 +1879,7 @@ The five lines take a minute on any table. They are run before the first plot an
 
 <div class="card card-success card-glass pad-compact">
 
-The result is a list of counts. It goes into the README, next to where the data came from.
+The result is a list of counts for the README. Lecture 4 counted the 49 codes of `TAU` with `grep -c`. `(df == -100).sum()` counts them in every column at once.
 
 </div>
 
@@ -1761,6 +1926,8 @@ hideInToc: true
 ---
 
 # The Cleaned **Table**
+
+The audit counted 49 codes, 3 negative decay times and 2 masses far outside. Each decision about them becomes one line of a script, with its count.
 
 <!--
 Speaker: the audit found 49 codes, 3 negative decay times and 2 masses far
@@ -1844,7 +2011,7 @@ print("rows written       ", len(clean))
 
 <div class="card card-success card-glass pad-compact">
 
-## 🧾 **`python scripts/clean_d0.py`**
+## 🧾 **The log of `scripts/clean_d0.py`**
 
 ```text
 rows read           91583
@@ -1889,7 +2056,7 @@ hideInToc: true
 | Rows | 91 583 | 91 578 |
 | Bytes | 3 926 142 | 3 925 641 |
 | Gaps | 49, written `-100.0` | 49, written as nothing |
-| SHA-256 | `25c3c972…c1505136` | `7aa9470b…bb91b16` |
+| SHA-256 | `25c3c972…c1505136` | `7aa9470b…3bb91b16` |
 
 </div>
 
@@ -1916,9 +2083,9 @@ clean   1818.1002,2978.644,,9901.186
 </div>
 
 <!--
-Speaker: the checksum of the raw file is the one in the README since the
-first week with this file. Run sha256sum on it once more after the script.
-(~2 min)
+Speaker: the checksum of the raw file is the one computed in Lecture 4,
+25c3c972…c1505136. Run it once more after the script: shasum -a 256 on macOS,
+(Get-FileHash data\raw\D0_KPi.csv).Hash in PowerShell. (~2 min)
 -->
 
 ---
@@ -1992,6 +2159,8 @@ hideInToc: true
 
 # Reshape & **Join**
 
+One table is clean. The partner's second file is a second series of the same lengths, and two tables have to become one.
+
 <!--
 Speaker: so far one table. Real work has several: two series of the same
 measurement, a table of values and a table of descriptions. Three operations
@@ -2042,13 +2211,13 @@ A third series adds rows. The code stays.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A table is **tidy** when each row is one observation, each column one variable and each cell one value. The raw pendulum file broke the rule twice: a row that was not an observation, the mean, and a column that was not a variable, the row number.
+A table is **tidy** when each row is one observation, each column one variable and each cell one value: the anatomy of a table of Lecture 2. The raw pendulum file broke the rule twice: a row that was not an observation, the mean, and a column that was not a variable, the row number.
 
 </div>
 
 <!--
-Speaker: run2 is a second series for three of the lengths, example values
-like the first. Wide tables are good for reading and tidy ones for computing.
+Speaker: run2 is the partner's second file at three of its lengths, 20, 40
+and 60 cm. Wide tables are good for reading and tidy ones for computing.
 groupby, plotting and fitting all expect the tidy form. (~2 min)
 -->
 
@@ -2166,73 +2335,46 @@ join can do to a table are on this slide: lose a match and double a row.
 -->
 
 ---
-layout: section
 hideInToc: true
 ---
 
-# CSV or **Parquet**
+# The Second File, **Five Questions**
 
-<!--
-Speaker: one more file format, in two slides. CSV stays the format of this
-course. Parquet is what the same table looks like when programs, not people,
-are the readers. (~1 min)
--->
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
 
----
-hideInToc: true
----
+| Question | One line on `pendulum_run2.csv`, cleaned | Answer |
+| --- | --- | --- |
+| **Completeness** | `df.isna().sum()` | 1 gap: `t10_s` at 80 cm |
+| **Validity** | `(df["t10_s"] <= 0).sum()` | 0 rows |
+| **Uniqueness** | `df["length_cm"].duplicated().sum()` | 0 rows |
+| **Consistency** | `df["t10_s"].mean()` | 14.80125, the partner wrote `14,80` |
+| **Units** | `g.median()`, with `length_cm / 100` | 9.76 m/s² |
 
-# The Same Table as **Parquet**
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
-## 💾 **Write, read, compare**
-
-```python
-clean = pd.read_csv("data/processed/d0_clean.csv")
-out = "data/processed/d0_clean.parquet"
-clean.to_parquet(out)
-back = pd.read_parquet(out)
-print(back.equals(clean))
-```
-
-```text
-True
-```
-
-Pandas needs one more library for this format: `python -m pip install pyarrow`. Without it `to_parquet` stops with `ImportError: Unable to find a usable engine`.
+Had the empty cell become a 0, the mean would be 118.41 / 9 = 13.16, and the partner's line would disagree. NaN is left out, as the spreadsheet left out the empty cell.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact table-compact">
+<div class="card card-success card-glass pad-compact">
 
-## ⚖️ **`d0_clean`, 91 578 rows**
-
-| | CSV | Parquet |
-| --- | --- | --- |
-| Form | text, row by row | binary, column by column |
-| Reader | any editor | programs only |
-| Types | found at each read | stored in the file |
-| Gap | an empty cell | stored as missing |
-| Size | 3.9 MB | 3.3 MB |
-| Read | 18 ms | 2 ms |
+Lecture 4's script wrote 10 rows and no warning. `clean.py` wrote 9, and five lines say what is in them: one gap, every value possible, each length once, the mean confirmed, g of the right size.
 
 </div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Parquet stores each column with its type, so nothing is guessed at reading and one column can be read without the others. The numbers of this file have many digits, and the file is only about 15 % smaller. CSV is the format a person can open and check. Parquet is for large tables that programs pass on.
 
 </div>
 
 <!--
-Speaker: the times are from one laptop and the size depends a little on the
-version of pyarrow. The order is what matters: a few times faster to read, and
-no separator, decimal sign or missing-value code to state. (~2 min)
+Speaker: the closing slide; do not cut it. df is read from
+data/processed/pendulum_run2.csv; g is the column of the DataFrame section,
+4π² L / T², eight values from 9.73 to 9.86. The partner's mean of the eight
+times is 118.41 / 8 = 14.80125. Ask the room which question would have caught
+the Mean row of Lecture 4's output: consistency, since length_cm would be
+text. (~3 min)
 -->
 
 ---
@@ -2245,7 +2387,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write a cleaning as a **script** that reads `data/raw/`, writes `data/processed/` and gives the same bytes on every run
+✅ Clean by **rule**, not by text: a script that reads `data/raw/`, writes `data/processed/`, gives the same bytes on every run, and counts what each rule took
 
 </div>
 
@@ -2283,7 +2425,8 @@ hideInToc: true
 
 <!--
 Speaker: the habit to take away is the count. Rows in, rows out, and one
-line for every rule in between. (~1 min)
+line for every rule in between: 10 in, 9 out, 1 gap for the partner's file;
+91 583 in, 91 578 out for the LHCb file. (~1 min)
 -->
 
 ---

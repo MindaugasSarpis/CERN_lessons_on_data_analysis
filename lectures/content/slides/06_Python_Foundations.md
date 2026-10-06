@@ -13,8 +13,9 @@ title: "Python Foundations"
 
 <!--
 Speaker: ask who has written Python before, and seat each of them next to
-someone who has not. The code blocks with a play button run in the browser, so
-a laptop with a broken installation can still follow. (~1 min)
+someone who has not. Python was installed in Seminar 4. The code blocks with a
+play button run in the browser, so a laptop where the installation failed can
+still follow. (~1 min)
 -->
 
 ---
@@ -25,9 +26,10 @@ layout: quote
 # The goal of this lecture is to **read and write a short Python program**: values and their types, names, decisions, loops, lists and dictionaries, and what to do when the program stops with an error.
 
 <!--
-Speaker: the two running examples are the pendulum table and the LHCb file.
-By the end one line of each is turned into numbers, and a loop does it for
-every row. (~1 min)
+Speaker: the three running examples are the pendulum table, the LHCb file
+and the short script that cleaned the pendulum table in Seminar 4. One line
+of each file is turned into numbers, a loop does it for every row, and every
+line of the script is read. (~1 min)
 -->
 
 ---
@@ -66,7 +68,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-🔁 Repeat a step for every row with **`for`** and decide with **`if`**
+🔁 Repeat a step for every row with **`for`**, decide with **`if`**, skip with **`continue`**
 
 </div>
 
@@ -99,48 +101,58 @@ today and not written. (~1 min)
 hideInToc: true
 ---
 
-# Why **Python**
+# The Script from **Seminar 4**
 
-<div class="grid-2 gap-md mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
+
+```text
+% python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
+PS> python scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
+9 rows written to data/processed/pendulum_script.csv
+```
+
+</div>
+
+<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 3fr 2fr;">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔬 **At CERN**
+## 📜 **`scripts/clean_pendulum.py`, lines 25–32**
 
-At ATLAS, CMS, ALICE and LHCb the analysis is written in Python: selecting candidates, filling histograms, fitting, plotting. The libraries underneath are C++. Python is the layer that people type.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🗺️ **Other languages**
-
-R for statistics. C++, Julia and Rust for speed. SQL for databases. Values, types, loops and functions exist in each of them under another spelling. What is learned here carries over.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🖱️ **A calculation by clicking**
-
-A spreadsheet shows the result and not the steps. Nobody can see which cells were dragged, and the work cannot be run again on a new file.
+```python {*}{lines:true,startLine:25}
+def clean(lines):
+    out = []
+    for line in lines:
+        if "mean" in line:
+            continue
+        line = line.replace(",", ".").replace(";", ",")
+        out.append(line.split(",", 1)[1])
+    return out
+```
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## 📄 **A calculation as a script**
+## ✅ **What was checked**
 
-A script is a text file that states every step. It runs again with one command, gives the same result on Windows, macOS and Linux, and goes into Git next to the README.
+The output has 97 bytes and the SHA-256 `be05af03…fff0870b` on every laptop: the size and checksum that Lecture 04 wrote into the README for the pendulum table.
 
 </div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+❓ The script was run and checked, and not read. What does each of these eight lines do?
 
 </div>
 
 <!--
-Speaker: the reason for a language is the bottom row. A script is the record
-of the calculation, in the same way as the README is the record of the data.
-Python is free and open source. (~2 min)
+Speaker: open scripts/clean_pendulum.py in VS Code. Seminar 4 ran it once
+the installation worked; on a laptop where it failed, the run was on the
+projector. Lecture 04 matched four of these lines to the four edits of the
+README; nobody read the words. Leave the question on the screen. (~2 min)
 -->
 
 ---
@@ -150,7 +162,7 @@ hideInToc: true
 
 # Running **Python**
 
-The interpreter, its prompt, a script, and the Python extension of VS Code.
+The script was started by one line typed at the shell's prompt. The first word of that line is a program, and the program has a prompt of its own.
 
 <!--
 Speaker: everything in this section is done live in VS Code beside the slides.
@@ -167,70 +179,130 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔍 **Check that it is there**
+## 🍎 **macOS · zsh**
 
-In the terminal of VS Code:
-
-```bash
-python --version
+```text
+% python3 --version
+Python 3.13.9
 ```
-
-It prints `Python 3.13.9`, or the version on your laptop. On macOS the command is `python3`. These slides write `python`.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
+## 🪟 **Windows · PowerShell**
+
+```text
+PS> python --version
+Python 3.13.9
+```
+
+</div>
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-accent card-glass pad-compact">
+
 ## ⚙️ **What it does**
 
-- `python` is a program: the **interpreter**
+- `python3` or `python` is a program, the **interpreter**, started by the shell like `ls` in Lecture 04
 - It reads Python text one statement at a time and carries each one out
-- Lecture 03 called a list of exact steps an algorithm. A Python program is an algorithm in a form that this program can read
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+## 📄 **Two ways in**
+
+Typed at its prompt, one line at a time, or written into a file. These slides write `python`; on macOS type `python3`. Every block here ran with Python 3.13.
+
 </div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The text reaches the interpreter in two ways: typed at its prompt, one line at a time, or written into a file. Every code block of this lecture was run with Python 3.13. Another version may word a message slightly differently.
 
 </div>
 
 <!--
-Speaker: run the command live. If a laptop answers "command not found", its
-owner follows in the browser today and shows the message afterwards.
-(~2 min)
+Speaker: Seminar 4 checked the version once the installation was done; run
+it again live. Another 3.x number is fine; an older version may word a
+message slightly differently. Lecture 03 called a list of exact steps an algorithm: a Python
+program is an algorithm in a form this program can read. If a laptop answers
+"command not found", its owner follows in the browser today and shows the
+message afterwards. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Prompt and the **Script**
+# The `>>>` **Prompt**
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 gap-md mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
 
-## ⌨️ **The prompt**: one line at a time
+## 🍎 **macOS · zsh**
 
 ```text
-python
+% python3
 >>> 9.02 / 10
 0.9019999999999999
->>> 2 ** 10
-1024
 >>> exit()
+%
 ```
-
-`>>>` waits for a line. Python works it out and prints the value. After `exit()` nothing is kept.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📄 **The script**: a file, `scripts/period.py`
+## 🪟 **Windows · PowerShell**
+
+```text
+PS> python
+>>> 9.02 / 10
+0.9019999999999999
+>>> exit()
+PS>
+```
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact table-compact mt-sm">
+
+## 🔀 **The same line at another prompt**
+
+| Typed at | `9.02 / 10` | `python3 scripts/period.py` |
+| --- | --- | --- |
+| `%`, zsh | `zsh: command not found: 9.02` | runs the script |
+| `PS>`, PowerShell | `0.902` | runs it, typed with `python` |
+| `>>>`, Python | `0.9019999999999999` | `SyntaxError: invalid syntax` |
+
+</div>
+
+<div class="note-text mt-sm">The mark says who reads the line: <code>%</code> and <code>PS&gt;</code> the shell, <code>&gt;&gt;&gt;</code> Python. PowerShell divides by itself and prints 15 digits; <code>(9.02 / 10) -eq 0.902</code> still answers False.</div>
+
+<!--
+Speaker: type it live in both shells. Lecture 04 read the prompt of the
+shell; >>> is the third prompt, and exit() hands the line back to the shell.
+Ask the room what the first slip will be: a shell command typed at >>>, or
+Python typed at %. The long decimals of 0.902 are explained on the float
+slide; say only that they are expected. The PowerShell 0.902 is the same
+float shown with fewer digits. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The First **Script**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **A file: `scripts/period.py`**
 
 ```python
 length_cm = 20
@@ -239,11 +311,19 @@ period_s = t10_s / 10
 print(period_s)
 ```
 
-```bash
-python scripts/period.py
-```
+</div>
 
-It prints `0.9019999999999999`.
+<div class="card card-secondary card-glass pad-compact">
+
+## ▶️ **Run from the project folder**
+
+```text
+% python3 scripts/period.py
+0.9019999999999999
+
+PS> python scripts/period.py
+0.9019999999999999
+```
 
 </div>
 
@@ -251,14 +331,13 @@ It prints `0.9019999999999999`.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A script is a text file whose name ends in `.py`. It holds the lines that would be typed at the prompt. Tomorrow it runs again and gives the same result. The numbers are the first row of the pendulum table: a length of 20 cm, 10 swings in 9.02 s.
+A script is a text file whose name ends in `.py`. It holds the lines that would be typed at `>>>`, and tomorrow it gives the same result. `scripts/period.py` is a relative path (Lecture 04): the line works where the prompt shows the project folder. The numbers are the first row of the pendulum table: 20 cm, 10 swings in 9.02 s.
 
 </div>
 
 <!--
-Speaker: type both live. The prompt is the calculator used in Lecture 03 for
-0.1 + 0.2. The long decimals of 0.902 are explained on the float slide; say
-only that they are expected. (~3 min)
+Speaker: write the file live next to hello.py from Seminar 4 and run it.
+This is the shape of the line that ran clean_pendulum.py. (~2 min)
 -->
 
 ---
@@ -354,8 +433,8 @@ hideInToc: true
 
 ## ▶️ **Three ways to run**
 
-- **In the terminal:** `python scripts/period.py`. This is the form that goes into a README
-- **Run Python File**, the ▶ at the top right of the Editor. VS Code types the same command into the terminal
+- **In the terminal:** `python3 scripts/period.py` on macOS, `python scripts/period.py` on Windows. This is the form that goes into a README
+- **Run Python File**, the ▶ at the top right of the Editor. VS Code types the same command, with absolute paths
 - **`Shift+Enter`** on a line. That line is sent to a prompt in the terminal
 
 </div>
@@ -370,8 +449,9 @@ hideInToc: true
 
 <!--
 Speaker: install the extension live and run period.py in all three ways. Point
-at the command that the ▶ button types: it is the terminal command with full
-paths. (~3 min)
+at the command that the ▶ button types: the absolute paths of Lecture 04,
+/Users/ada/... on a Mac and C:\Users\ada\... on Windows, so it runs from any
+folder. The relative form is the one that works on every laptop. (~3 min)
 -->
 
 ---
@@ -381,11 +461,11 @@ hideInToc: true
 
 # Values, Types & **Names**
 
-Four types, what `+` and `/` do with each of them, and what a name is.
+The script printed 0.9019999999999999 for 9.02 / 10. Every value it makes has a type, and the type decides what an operation does with it.
 
 <!--
 Speaker: Lecture 03 built integers, floats and text from bits. This section
-shows the same three in Python. (~1 min)
+shows the same three in Python, and explains the long decimals. (~1 min)
 -->
 
 ---
@@ -505,9 +585,10 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: 0.9019999999999999 was on the screen since the first script. Now it
+Speaker: 0.9019999999999999 was on the screen since the >>> prompt. Now it
 has a reason: the multiply-by-2 slide of Lecture 03. Nothing is wrong with the
-measurement or with Python. (~2 min)
+measurement or with Python. PowerShell's 0.902 was this float cut to 15
+digits for the reader, which is the last sentence of the bottom card. (~2 min)
 -->
 
 ---
@@ -656,13 +737,14 @@ math.pi           # 3.141592653589793
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-This lecture calls `print`, `type`, `len`, `float`, `int`, `str`, `round`, `abs`, `min`, `max`, `sum`, `sorted` and `range`. `print` writes to the terminal and hands back nothing.
+`round(9.02 / 10, 3)` is worked out from the inside: first the argument, 9.02 / 10 = 0.9019999999999999, then the call, which hands back `0.902`. `print` writes to the terminal and hands back nothing.
 
 </div>
 
 <!--
-Speaker: a function is used here as a ready-made tool. Read a call aloud:
-"round of this number to 3 places". (~2 min)
+Speaker: a function is used here as a ready-made tool. Read the call aloud:
+"round of 9.02 over 10, to 3 places". clean_pendulum.py calls replace,
+split and append the same way, as methods after a dot. (~2 min)
 -->
 
 ---
@@ -682,16 +764,16 @@ word = "ąžuolas"
 print(len(word))                     # 7 characters
 print(len(word.encode("utf-8")))     # 9 bytes: ą and ž take two bytes each
 print(ord("ą"), hex(ord("ą")))       # 261 0x105: the code point U+0105
-print("ą".encode("utf-8"))           # b'\xc4\x85': the bytes C4 85 of the hex view
+print("ą".encode("utf-8"))           # b'\xc4\x85': the two bytes C4 85
 print(len("20,9.02\n"))              # 8: \n is one character, the line break
 ```
 
 <div class="note-text mt-sm">Single and double quotes make the same string. Inside quotes, \n stands for the line break, byte 0A.</div>
 
 <!--
-Speaker: the same ą that was encoded by hand in Lecture 03, and the same two
-bytes that the Hex Editor showed. Python keeps characters and bytes apart as
-two types, str and bytes. (~2 min)
+Speaker: the same ą that was encoded by hand in Lecture 03: code point
+U+0105, packed by UTF-8 into the two bytes C4 85, both on the slide. Python
+keeps characters and bytes apart as two types, str and bytes. (~2 min)
 -->
 
 ---
@@ -735,13 +817,14 @@ not m > 1855             # False
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`=` puts a name on a value. `==` asks whether two values are equal and answers with a `bool`.<br>A text is never equal to a number: `"20" == 20` is `False`, with no error and no warning.<br>`1880.649` is the mass in the first row of the LHCb file, 15.6&nbsp;MeV/c² above the D⁰.
+`=` puts a name on a value. `==` asks whether two values are equal and answers with a `bool`.<br>A text is never equal to a number: `"20" == 20` is `False`, with no error and no warning.<br>`1880.649` is the mass in the first row of the LHCb file, 15.8&nbsp;MeV/c² above the D⁰ mass of 1864.84.
 
 </div>
 
 <!--
 Speaker: = against == is the classic slip. The last comparison of the left
-card is the dangerous one, because it fails silently. (~2 min)
+card is the dangerous one, because it fails silently. The `in` of the last
+line on the right is line 28 of clean_pendulum.py: "mean" in line. (~2 min)
 -->
 
 ---
@@ -782,14 +865,15 @@ round(9.99)       # 10
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Everything that comes from a text file is a `str`, and arithmetic needs numbers. `float` accepts a decimal point only. The table of Lecture 02 with `9,02` has to be repaired in the editor first, or the comma replaced in the program.
+**A file holds text. A value becomes a number only by a step the script states, and a wrong step often gives no message.** `float` accepts a decimal point only, so `9,02` is repaired first: line 30 of `clean_pendulum.py` does that.
 
 </div>
 
 <!--
 Speaker: the last two lines of the left card are the reason this slide exists.
 Text plus text is longer text, with no error. The right card is three messages
-the room will see within the hour. (~3 min)
+the room will see within the hour. Read the bold sentence aloud: it is the
+claim of this lecture. (~3 min)
 -->
 
 ---
@@ -799,11 +883,11 @@ hideInToc: true
 
 # Strings & **Lists**
 
-One line of a data file is a string. Cut at the commas, it is a list.
+`float("9.02")` converts one value. A line of `D0_KPi.csv` holds four, as one string with commas between them; cut at the commas, it is a list.
 
 <!--
-Speaker: this section ends with the central recipe of the lecture: one line
-of a CSV file becomes four numbers. (~1 min)
+Speaker: the section builds the central recipe of the lecture: one line of a
+CSV file becomes four numbers. (~1 min)
 -->
 
 ---
@@ -855,14 +939,15 @@ line[-9:]     # '1299.1675'
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Positions count from 0, so the last of 42 characters has the index 41.<br>`line[42]` stops with `IndexError: string index out of range`. A string cannot be changed: `line[0] = "2"` is a `TypeError`.
+Positions count from 0, so the last of 42 characters has the index 41. In the file the line takes 43 bytes: 42 characters, one byte each, and the line break `0A`.<br>`line[42]` stops with `IndexError: string index out of range`. A string cannot be changed: `line[0] = "2"` is a `TypeError`.
 
 </div>
 
 <!--
-Speaker: 42 is the number counted in the hex view: 42 characters and a line
-break made the 43 bytes per row. Draw the positions between the characters on
-the board: a slice cuts at two of them. (~3 min)
+Speaker: draw the positions between the characters on the board: a slice
+cuts at two of them. The 43 bytes are digits, points and commas, all ASCII,
+so characters and bytes count alike here; the ą of the str slide was the
+case where they do not. (~3 min)
 -->
 
 ---
@@ -880,8 +965,8 @@ hideInToc: true
 ```python
 "20,9.02\n".strip()            # '20,9.02'
 "20,9.02".split(",")           # ['20', '9.02']
+"1,20,9.02".split(",", 1)      # ['1', '20,9.02']
 "9,02".replace(",", ".")       # '9.02'
-"length_cm".upper()            # 'LENGTH_CM'
 "t10_s".startswith("t10")      # True
 ";".join(["1", "20", "9,02"])  # '1;20;9,02'
 ```
@@ -898,7 +983,7 @@ a = raw.replace(",", ".")     # '1;20;9.02'
 b = a.replace(";", ",")       # '1,20,9.02'
 ```
 
-In the other order the result is `'1.20.9.02'`. It is the Find and Replace of Lecture 02, written down: the decimal comma goes first.
+In the other order the result is `'1.20.9.02'`. The decimal comma goes first, as in the Find and Replace of Lecture 02. Line 30 of `clean_pendulum.py` is these two lines in one.
 
 </div>
 
@@ -906,13 +991,15 @@ In the other order the result is `'1.20.9.02'`. It is the Find and Replace of Le
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A method hands back a **new** string. The original stays as it was: `raw` is still `'1;20;9,02'`. `strip` removes spaces and line breaks at both ends. `split` cuts at the separator and gives a list of the pieces.
+A method hands back a **new** string: `raw` is still `'1;20;9,02'`. `strip` removes spaces and line breaks at both ends. `split` cuts at the separator; with a second argument, `1`, it cuts once, which is how line 31 drops the column `nr`.
 
 </div>
 
 <!--
 Speaker: the right card is the repair of the raw pendulum file as two lines of
-code. The order argument is the same as in the editor. (~3 min)
+code, and line 30 of the script writes them as one:
+line.replace(",", ".").replace(";", ","), the second method called on the
+result of the first. The order argument is the same as in the editor. (~3 min)
 -->
 
 ---
@@ -965,7 +1052,8 @@ A list is indexed and sliced like a string. Unlike a string it **can be changed*
 <!--
 Speaker: square brackets make a list. The difference from a string that
 matters is the last card: a list changes in place, and that has a consequence
-two slides on. (~2 min)
+on the slide Two Names, One List. out = [] and out.append(...) are lines 26
+and 31 of clean_pendulum.py: an empty list, then one item per row. (~2 min)
 -->
 
 ---
@@ -1047,7 +1135,8 @@ print(tau == -100)        # True: this row has no decay time
 
 <!--
 Speaker: step 3 is the decimal comma of Lecture 02 once more. The split makes
-five parts, m is 1818.0 and tau is 2978.644: wrong numbers, no message. (~3 min)
+five parts, m is 1818.0 and tau is 2978.644: wrong numbers, no message, the
+bold sentence of From Text to Number. (~3 min)
 -->
 
 ---
@@ -1111,11 +1200,12 @@ hideInToc: true
 
 # Decisions & **Loops**
 
-`if` runs a block or skips it. `for` runs a block once for each item.
+One line became four numbers. The pendulum table has nine rows and `D0_KPi.csv` 91 583, so the steps for one line have to run once for each line, and skip some.
 
 <!--
-Speaker: with these two a script stops being a calculator. The section ends
-with the period of every row of the pendulum table. (~1 min)
+Speaker: with for and if a script stops being a calculator. The section
+computes the period of every row of the pendulum table, and ends with every
+line of clean() read. (~1 min)
 -->
 
 ---
@@ -1164,9 +1254,10 @@ It prints `decay time missing`.
 </div>
 
 <!--
-Speaker: the LHCb file marks a missing decay time with -100, found with
-Ctrl+F in the first seminar: 49 rows. With tau = 0.00041271152 the same lines
-print "decay time 0.00041271152". (~3 min)
+Speaker: the LHCb file marks a missing decay time with -100. Lecture 04
+counted 49 such rows, and Seminar 4 wrote data/processed/D0_valid.csv without
+them. With tau = 0.00041271152 the same lines print
+"decay time 0.00041271152". (~3 min)
 -->
 
 ---
@@ -1216,7 +1307,9 @@ It prints `[0.9019999999999999, 1.105, 1.261]`.
 
 <!--
 Speaker: walk the table with a finger on the code. The loop variable is an
-ordinary name, moved by the loop. `periods = []` is an empty list. (~3 min)
+ordinary name, moved by the loop. `periods = []` is an empty list. The same
+shape is lines 26, 27 and 31 of clean_pendulum.py: out = [], for line in
+lines:, out.append(...). (~3 min)
 -->
 
 ---
@@ -1267,11 +1360,12 @@ lines[1:3]     # ['20,9.02', '30,11.05']
 
 </div>
 
-<div class="note-text mt-sm">The text between the quotes is the content of data/processed/pendulum.csv, copied from the editor.</div>
+<div class="note-text mt-sm">The text between the quotes is data/processed/pendulum_script.csv, the file clean_pendulum.py wrote in Seminar 4, copied from the editor.</div>
 
 <!--
-Speaker: the table that was cleaned by hand in Lecture 02, now inside a
-script. Ten lines: one header and nine rows. (~2 min)
+Speaker: the table repaired on the projector at the end of Lecture 02 and by
+the script in Seminar 4, now inside a script. Ten lines: one header and nine
+rows. (~2 min)
 -->
 
 ---
@@ -1357,7 +1451,7 @@ print(mean)       # 1.5138888888888888
 
 <div class="card card-success card-glass pad-compact">
 
-**The check:** the raw file of Lecture 02 had the line `;mean;15,14` for 10 swings. One swing is 1.514 s.
+**The check:** the raw file has the line `;mean;15,14`, the one `clean()` skips: 15.14 s for 10 swings, so one swing is 1.514 s.
 
 </div>
 
@@ -1494,18 +1588,102 @@ for line in rows.splitlines():
     tau = float(line.split(",")[2])
     if tau == -100:
         print("missing:", line)
-    else:
-        n_ok += 1
-        total += tau
+        continue                 # the rest of the block is skipped for this line
+    n_ok += 1
+    total += tau
 print(n_ok, total / n_ok)        # 3 0.00026125764666666665
 ```
 
-<div class="note-text mt-sm">Four rows of the LHCb file. Averaged without the <code>if</code>, all four give a mean of −24.9998: one marker decides the result.</div>
+<div class="note-text mt-sm">Averaged without the <code>if</code>, the four rows give −24.9998: −100 counted as a number, with no message. Lecture 04 saw the same on the whole file, −0.0525 against 0.00098 ns. <code>continue</code> is line 29 of clean_pendulum.py.</div>
 
 <!--
-Speaker: a loop, a decision inside it, and two running values. Without the if
-the mean decay time is negative, which no time can be. A marker such as -100
-has to be handled before any arithmetic. (~3 min)
+Speaker: a loop, a decision inside it, and two running values. continue ends
+this turn of the loop at once and goes on with the next line, so the two
+updates below it are skipped for the -100 row. Without the if the mean decay
+time is negative, which no time can be. A marker such as -100 has to be
+handled before any arithmetic. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `clean()`, Line by **Line**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Line | Code | What it does |
+| --- | --- | --- |
+| 25 | `def clean(lines):` | Gives the block below a name, `clean`, and its input a name, `lines` |
+| 26 | `out = []` | An empty list for the lines that are kept |
+| 27 | `for line in lines:` | Runs lines 28–31 once for each line of the file |
+| 28 | `if "mean" in line:` | A `bool`: does the text `mean` occur in this line? |
+| 29 | `continue` | If it does, lines 30–31 are skipped for this line |
+| 30 | `line = line.replace(",", ".").replace(";", ",")` | Decimal comma to point first, then `;` to `,` |
+| 31 | `out.append(line.split(",", 1)[1])` | One cut at the first comma; item `[1]`, the part after it, is kept |
+| 32 | `return out` | Hands the list of kept lines back to whoever called `clean` |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+Row 1 of the raw file: `1;20;9,02` → line 30 → `1,20,9.02` → `split(",", 1)` → `['1', '20,9.02']` → item `[1]` → `20,9.02`. The column `nr` is gone, and the line `;mean;15,14` never reaches line 30.
+
+</div>
+
+<!--
+Speaker: this answers the question of the opening slide. Let the room read
+each line aloud before the right column is shown, and name the slide that
+taught it: Lists (26), for (27), bool and if (28), Skip the Missing Value
+(29), String Methods (30, 31), Index and Slice for [1] (31). Lines 25 and 32
+make clean a function of its own; the slides called functions and did not
+write one. main(), which opens the files, is the rest of the script. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The 97 Bytes, **Rebuilt**
+
+```py {monaco-run} {autorun:false}
+import hashlib                  # a module of Python: its sha256 is called, not read
+raw = ("nr;length_cm;t10_s\n1;20;9,02\n2;30;11,05\n3;40;12,61\n4;50;14,23\n5;60;15,49\n"
+       "6;70;16,84\n7;80;17,90\n8;90;19,10\n9;100;20,01\n;mean;15,14\n")   # data/raw/pendulum.csv
+out = []
+for line in raw.splitlines():
+    if "mean" in line:
+        continue
+    line = line.replace(",", ".").replace(";", ",")
+    out.append(line.split(",", 1)[1])
+data = ("\n".join(out) + "\n").encode("utf-8")
+print(len(out), out[0], out[1])                          # 10 length_cm,t10_s 20,9.02
+print(len(data), hashlib.sha256(data).hexdigest()[:8])   # 97 be05af03
+```
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+Lines 4–9 are the body of `clean()`, run on the 130 bytes of the raw file pasted as text. Two strings side by side in brackets are joined into one.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+97 bytes and `be05af03`: the size and the start of the checksum from Seminar 4 and the README. `hashlib` comes with Python and is used as given, like `math.sqrt`.
+
+</div>
+
+</div>
+
+<!--
+Speaker: run it. Ten lines kept, the header and nine rows, joined with a line
+break after each: 97 bytes, and the checksum starts be05af03 as in Seminar 4.
+The script was read line by line and gives the same bytes in the browser.
+Change "mean" to "means" and run again: 11 lines, 108 bytes, checksum
+74e1a2a7, because the line mean,15.14 is kept. One wrong word, no message:
+only the known size and checksum show it. (~3 min)
 -->
 
 ---
@@ -1515,7 +1693,7 @@ hideInToc: true
 
 # Dictionaries & **Tuples**
 
-A list finds a value by its position. A dictionary finds it by a name.
+The loops found each value by its position: `parts[2]` is the decay time only because the header says so. A dictionary finds a value by a name.
 
 <!--
 Speaker: parts[2] says nothing about what the third value is. A dictionary
@@ -1590,7 +1768,7 @@ for name, value in row.items():        # each pair in turn
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Line 1 of the file gives the keys, line 2 the values. `range(len(names))` counts the positions, and the same `i` picks the name and its value. `items()` hands the pairs to a loop with two names.
+Line 1 of the file gives the keys, line 2 the values. `range(len(names))` counts the positions, and the same `i` picks the name and its value. `items()` hands over each pair, and `name, value` puts one name on each half.
 
 </div>
 
@@ -1701,7 +1879,7 @@ hideInToc: true
 
 # Readable **Output**
 
-A printed number is read by a person. The f-string says how it is written.
+The loop printed 1.7899999999999998 s for a time read to 0.01 s over ten swings. A number printed for a person shows the digits the measurement has.
 
 <!--
 Speaker: the pendulum loop printed 0.9019999999999999. This section prints
@@ -1816,7 +1994,7 @@ hideInToc: true
 
 # Errors & **Debugging**
 
-What Python reports, how the report is read, and how a wrong number is found when nothing is reported.
+Every error so far was made on purpose, and Python named each one in its last line. The lines above it say where, and a wrong result has no line at all.
 
 <!--
 Speaker: every script fails many times before it works. Reading the message
@@ -1859,7 +2037,7 @@ It prints `start`, then a traceback that ends with<br>`ZeroDivisionError: float 
 
 ## 🔇 **The third kind has no message**
 
-Python finds the first two and names the line. The third is found only by someone who knows what the result should be. Decide on an expected value before the script runs.
+Python finds the first two and names the line. The third is found only by a value known in advance: 1.514 s for the mean period, 97 bytes and `be05af03` for the cleaned table.
 
 </div>
 
@@ -1916,7 +2094,7 @@ TypeError: unsupported operand type(s) for /: 'str' and 'int'</code></pre>
 
 <div class="card card-accent card-glass pad-compact">
 
-**2. Above it: where.** The file, line 4, the line itself, and marks under the part that failed.
+**2. Above it: where.** The file by its absolute path (on Windows `C:\Users\ada\…`), line 4, the line itself, marks under the part that failed.
 
 </div>
 
@@ -1931,7 +2109,9 @@ TypeError: unsupported operand type(s) for /: 'str' and 'int'</code></pre>
 <!--
 Speaker: read from the bottom. The line that fails is often not the line that
 is wrong: line 4 is correct, line 3 forgot the conversion. The path before
-scripts/ is the folder of the project on each laptop. (~4 min)
+scripts/ is the absolute path of the project on each laptop:
+/Users/ada/.../scripts/period.py on a Mac,
+C:\Users\ada\...\scripts\period.py on Windows. (~4 min)
 -->
 
 ---
@@ -2133,7 +2313,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ After the loop `total` is 13.625, and `lines` opens to ten items with `len(): 10`. Ten lines and nine rows: the division counts the header. In the Debug Console, `total / 9` gives 1.5138888888888888.
+✅ After the loop `total` is 13.625, and `lines` opens to ten items with `len(): 10`. Ten lines and nine rows: the script prints 13.625 / 10 = 1.3625, the header counted as a row. In the Debug Console, `total / 9` gives 1.5138888888888888, the 1.514 s expected.
 
 </div>
 
@@ -2204,11 +2384,11 @@ hideInToc: true
 
 # Code That Can Be **Read**
 
-A script is read more often than it is written, and most often by its author some months later.
+The wrong mean was found by comparing what each name held with what it should hold. That is quick when the name says what it holds, and in which unit.
 
 <!--
-Speaker: Python accepts any name and almost any layout. The reader does not.
-(~1 min)
+Speaker: Python accepts any name and almost any layout. The reader does not,
+and the reader is most often the author, some months later. (~1 min)
 -->
 
 ---
@@ -2307,213 +2487,73 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-PEP 8 is the style guide of the Python project. Python runs code that ignores it. People read code faster when every script looks alike, and a change in Git then shows what was changed and not how it was spaced.
+PEP 8 is the style guide of the Python project. Python runs code that ignores it, but people read code faster when every script looks alike. In VS Code the extension **Black Formatter** with **Editor: Format On Save** applies the layout at every save.
 
 </div>
 
 <!--
 Speaker: nobody learns PEP 8 by heart. The layout half of it is applied by a
-program, on the next slide. The names half is up to the author. (~2 min)
+program: show it on a line typed without spaces, x=9.02/10, which becomes
+x = 9.02 / 10 at the save. The names half is up to the author. In Git, a file
+kept in one layout shows what was changed and not how it was spaced. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Editor Does the **Typing**
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⌨️ **Completion**
-
-Type `per` and a list offers `period_s`. `Tab` accepts it. `Ctrl+Space` opens the list at any time.
-
-A name that was completed is not misspelled.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧩 **Snippets**
-
-A short word that expands into lines you often type. Command Palette, **Snippets: Configure Snippets**, then `python`.
-
-Example: `hdr` for the first comment lines of a script.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🧹 **Format on save**
-
-Install the extension **Black Formatter**. **Format Document** is `Shift+Alt+F` (macOS `Shift+Option+F`).
-
-The setting **Editor: Format On Save** runs it at every save.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-⚙️ A formatter rewrites the layout of the file to PEP 8: spaces, quotes, line length. It does not change what the script does, and it does not choose names.
-
-</div>
-
-<!--
-Speaker: show the formatter on a line typed without spaces, x=9.02/10. It
-becomes x = 9.02 / 10 at the save. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Script or **Notebook**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-success card-glass pad-compact">
-
-## 📜 **Script**, a `.py` file
-
-- Plain text, run from top to bottom
-- The same order at every run, so the same result
-- Git shows what changed, line by line
-- One command runs it: `python scripts/periods.py`
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📓 **Notebook**, an `.ipynb` file
-
-- Cells of code with their output and plots below each
-- Cells can be run in any order, and the names of every earlier run stay
-- A result may depend on a cell that was changed or deleted since
-- Suited to trying things out
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-This course writes scripts. A notebook is trusted once it gives the same output after **Restart** and **Run All**. That test is what a script passes every time it runs.
-
-</div>
-
-<!--
-Speaker: some of the room know Jupyter. Nothing is wrong with it for a first
-look at data. Work that someone has to run again goes into a script. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# **Recap** — You Can Now…
+# **Recap**
 
 <div class="grid-2 gap-md mt-sm">
 
-<div class="card card-success card-glass pad-compact">
-
-✅ **Run** Python at the prompt, as a script in the terminal, and from VS Code
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Tell `20`, `9.02` and `"9.02"` apart by **type**, and convert between them
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Say what a **name** is, and when two names stand for one list
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Turn a line of a CSV file into numbers: **strip, split, convert**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Apply a step to every row with **`for`**, and decide with **`if`**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Keep a row as a **dictionary**, and count with one
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Print numbers in columns with **f-strings**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Read a **traceback** from the bottom, and find a wrong number with `print` and the **debugger**
-
-</div>
-
-</div>
-
-<!--
-Speaker: have the room tick each one. The two worked examples carry all eight:
-one line of the LHCb file into four numbers, and the period for every row of
-the pendulum table. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Read **More**
-
-<div class="grid-2 gap-md mt-md">
-
 <div class="card card-primary card-glass pad-compact">
 
-## 📖 **Python**
+## 📜 **The script from Seminar 4, read**
 
-- [The Python Tutorial](https://docs.python.org/3/tutorial/), chapters 3 to 5: numbers, strings, lists, `if`, `for`, dictionaries
-- [Built-in Functions](https://docs.python.org/3/library/functions.html): the full list, one paragraph each
-- [String Methods](https://docs.python.org/3/library/stdtypes.html#string-methods)
-- [PEP 8](https://peps.python.org/pep-0008/), the style guide
+`clean()` keeps an empty list, loops over the lines, skips the one with `mean` by `continue`, makes two replacements in order, cuts once at the first comma and keeps the rest. Run in the browser, its lines gave the same 97 bytes and `be05af03`.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-## 🧰 **VS Code**
+## ✅ **Two values known in advance**
 
-- [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)
-- [Python debugging in VS Code](https://code.visualstudio.com/docs/python/debugging)
-- [Snippets in VS Code](https://code.visualstudio.com/docs/editing/userdefinedsnippets)
+1.514 s, from the `;mean;15,14` of the raw file, showed that a mean of 1.3625 s had counted the header as a row. 97 bytes and `be05af03` showed that the lines read today are the lines that ran.
 
 </div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+**A file holds text. A value becomes a number only by a step the script states, and a wrong step often gives no message:** text joined to text, a decimal comma split into five parts, −100 in a mean, a header counted as a row.
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-All of these are free. At the prompt, `help(round)` prints the description of a function, and `help(str)` lists every string method.
+<div class="grid-2 gap-md">
+
+<div>
+
+📝 `period.py`, `parse_line.py` and `periods.py` go into Git like the README. The two lines are the same in zsh and in PowerShell.
+
+</div>
+
+```text
+git add scripts
+git commit -m "First scripts"
+```
+
+</div>
 
 </div>
 
 <!--
-Speaker: the official tutorial covers everything of today in about an hour of
-reading. (~1 min)
+Speaker: this slide answers the opening slide, do not cut it. Ask the room to
+read clean() aloud once more, line by line, from the script open in VS Code.
+The two known values are the habit to take away: decide on a number before
+the script runs. Commit the scripts live. (~2 min)
 -->
 
 ---

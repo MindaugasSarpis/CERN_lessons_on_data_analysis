@@ -30,6 +30,57 @@ layout: quote
 hideInToc: true
 ---
 
+# Delete `results/`. **Now What?**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
+
+```text
+% rm -r results
+% ls results
+ls: results: No such file or directory
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · PowerShell**
+
+```text
+PS> Remove-Item -Recurse results
+PS> Test-Path results
+False
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+## ✍️ **On paper, in one minute**
+
+The plot and `report.md` are gone. Write down every command that brings them back, in order, and everything that has to be installed first.
+
+</div>
+
+<div class="note-text mt-sm">Lecture 1 set the rule for a finished project: delete <code>data/processed/</code> and <code>results/</code>, then rebuild both with one command.</div>
+
+<!--
+Speaker: delete the folder live in the shell of your laptop, then give the
+room one minute. Collect two or three answers and write them on the board,
+in the order given. Most lists miss the order of the scripts, the pandas
+version, and the g that was typed into the report by hand. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Learning **Objectives**
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
@@ -86,6 +137,8 @@ hideInToc: true
 
 # From Steps by Hand to a **Pipeline**
 
+The lists on paper are the analysis as it stands: commands in an order written nowhere, and a number typed into the report by hand.
+
 <!--
 Speaker: first the state of the project as it is, then what goes wrong with it,
 then a picture of what it should become. (~1 min)
@@ -125,15 +178,15 @@ analysis-project/
 ## ⌨️ **How a result is made**
 
 ```text
-$ python scripts/clean.py
-$ python scripts/plot.py
-$ python scripts/fit.py
+python scripts/clean.py
+python scripts/plot.py
+python scripts/fit.py
 g = 9.84 +- 0.06 m/s^2
 ```
 
-Then `results/report.md` is opened in the editor and the number is typed in.
+The same lines in both shells; on macOS the program is `python3`. Then `results/report.md` is opened in the editor and the number is typed in.
 
-Each script names its files in the code. The order of the three commands is in nobody's files.
+`plot.py` does the work of Lecture 8's `plot_pendulum.py`, named after its stage. Each script names its files in the code. The order of the three commands is in nobody's files.
 
 </div>
 
@@ -146,9 +199,10 @@ Every step works. What is missing is written nowhere: which commands, in which o
 </div>
 
 <!--
-Speaker: this is the folder of the first weeks with three scripts in it. Run the
-three commands live. Then ask the room: if this folder is sent to a colleague,
-what does the colleague have to be told? (~2 min)
+Speaker: this is the folder of the first weeks with three scripts in it. Set
+it beside the lists on the board: these three lines are the best answer, and
+the order, the packages and the typed number are written nowhere. Run the
+three commands live. (~2 min)
 -->
 
 ---
@@ -165,7 +219,7 @@ hideInToc: true
 | 9.84 is typed into the report as 9.48 | A number is copied by hand | A script writes the report |
 | The plot looks right and is wrong | Nothing checks the result | Tests |
 
-<div class="note-text mt-sm">Each remedy is one section of this lecture. The scripts stay. What surrounds them is written down.</div>
+<div class="note-text mt-sm">The scripts stay. What surrounds them is written down.</div>
 
 <!--
 Speaker: ask who has met each row. The third row is the dangerous one: nothing
@@ -360,9 +414,10 @@ Everything new is plain text and small. Together the new entries hold what was i
 </div>
 
 <!--
-Speaker: the layout is the one built in the first seminar. Nothing moves and
-nothing is renamed. Point at the five new lines: by the end of the lecture each
-of them exists. (~2 min)
+Speaker: the layout is the one of Lecture 4 and Seminar 4: data/raw,
+data/processed, scripts, results, README.md. Nothing moves and nothing is
+renamed. Point at the five new lines: each holds something that so far was
+in the head of the person who ran the scripts. (~2 min)
 -->
 
 ---
@@ -371,6 +426,8 @@ hideInToc: true
 ---
 
 # A Script with a **Command Line**
+
+The diagram names every file a stage reads and writes; the scripts still have those names typed into their code.
 
 <!--
 Speaker: first remedy. The file names leave the code and become arguments, the
@@ -383,46 +440,43 @@ hideInToc: true
 
 # File Names Typed into the **Code**
 
-<div class="card card-warning card-glass pad-compact mt-md">
+<div class="card card-warning card-glass pad-compact mt-sm">
 
-## 📄 **`scripts/clean.py`, as it is**
+## 📄 **`scripts/clean.py` of Lecture 12**
 
 ```python
+"""Clean the pendulum table: data/raw -> data/processed."""
 import pandas as pd
 
-raw = pd.read_csv("data/raw/pendulum.csv", sep=";", decimal=",")
-rows = raw[raw["nr"].notna()]
-table = rows[["length_cm", "t10_s"]].astype({"length_cm": int})
-table.to_csv("data/processed/pendulum.csv", index=False)
+RAW = "data/raw/pendulum.csv"
+OUT = "data/processed/pendulum.csv"
+
+df = pd.read_csv(RAW, sep=";", decimal=",")     # ; between values, decimal comma
+df = df[df["nr"].notna()]                       # the mean line has no row number
+df = df.drop(columns="nr")                      # bookkeeping, not a measurement
+df["length_cm"] = df["length_cm"].astype(int)
+df.to_csv(OUT, index=False, float_format="%.2f", lineterminator="\n")
+print(f"{len(df)} rows written to {OUT}")
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 🔁 **A second file arrives**
 
-To clean `pendulum_run2.csv`, two lines of the script are edited. To go back to the first file, they are edited again. Git records each edit as a change of the code, although the method did not change.
+Lecture 12 cleaned `pendulum_run2.csv` by editing `RAW` and `OUT`; the first file needs them edited back. Git records each edit as a change of the code, although the method did not change. File names are not part of the method: they are **arguments**, as for `clean_pendulum.py` of Lecture 4.
 
 </div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔌 **Nobody else can call it**
-
-A program that wants this cleaning for another file cannot ask for it. The script knows one input and one output.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">The file names are not part of the method. They are <strong>arguments</strong>: given when the script is run, as in <code>cp old.csv new.csv</code>.</div>
 
 <!--
-Speaker: the script is correct and it is the one the room wrote. The only
-complaint is lines 3 and 6. (~2 min)
+Speaker: the script is correct, and it wrote the same 97 bytes as the script
+of Lecture 4, in zsh and in PowerShell. Without float_format and
+lineterminator it would write 95 bytes on a Mac, 105 on Windows. The only
+complaint is RAW and OUT: the last row of Lecture 12's table "Two Scripts,
+Two Files". And nobody else can call it: a program that wants this cleaning
+for another file cannot ask for it, because the script knows one input and
+one output. (~2 min)
 -->
 
 ---
@@ -446,7 +500,7 @@ print(sys.argv)
 ## ▶️ **Run with four more words**
 
 ```text
-$ python show_args.py raw.csv out.csv --dpi 300
+python show_args.py raw.csv out.csv --dpi 300
 ['show_args.py', 'raw.csv', 'out.csv', '--dpi', '300']
 ```
 
@@ -469,14 +523,15 @@ $ python show_args.py raw.csv out.csv --dpi 300
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A script could read `sys.argv[1]` and `sys.argv[2]` itself. The module `argparse`, which comes with Python, does that and adds what is missing: names, types, defaults, a help text and error messages.
+The script handed out in Lecture 4, `clean_pendulum.py`, reads its two file names this way: its last line is `sys.exit(main(sys.argv[1:]))`, and `main` counts the words itself. The module `argparse`, which comes with Python, does that and adds what is missing: names, types, defaults, a help text and error messages.
 
 </div>
 
 <!--
-Speaker: run it live with other words. The room has typed commands with
-arguments since the shell lecture: cp, grep, git commit -m. This is the other
-side of it. (~2 min)
+Speaker: run it live with other words; zsh and PowerShell cut the line the
+same way. The room has typed commands with arguments since the shell lecture,
+and has passed clean_pendulum.py two file names since Lecture 4. This is the
+other side of it. (~2 min)
 -->
 
 ---
@@ -522,18 +577,19 @@ def main():
 <div class="card card-success card-glass pad-compact mt-sm">
 
 ```text
-$ python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
+python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
 data/processed/pendulum.csv: 9 rows
 ```
 
 </div>
 
-<div class="note-text mt-sm">macOS: <code>python3</code> in place of <code>python</code>. With <code>float_format</code> the file keeps <code>17.90</code>, and <code>lineterminator</code> sets the line ending to LF on every system. The result has 97 bytes: the same bytes as the copy cleaned by hand in the editor and saved with LF.</div>
+<div class="note-text mt-sm"><code>float_format</code> keeps <code>17.90</code>, <code>lineterminator</code> sets LF everywhere: 97 bytes, SHA-256 <code>be05af03…</code>, as in the README of Lecture 4.</div>
 
 <!--
 Speaker: the two file names of the old script are now args.raw and args.out.
 Nothing else changed. Run the command, then run it with another output name.
-The 97 bytes are those measured in the seminar on files as bytes. (~3 min)
+Check the checksum live (zsh: shasum -a 256; PowerShell: Get-FileHash): the
+same be05af03 in both shells. (~3 min)
 -->
 
 ---
@@ -547,7 +603,7 @@ hideInToc: true
 ## ❓ **`--help` is written by argparse**
 
 ```text
-$ python scripts/clean.py --help
+python scripts/clean.py --help
 usage: clean.py [-h] raw out
 
 Clean the raw pendulum file: write a plain CSV table.
@@ -567,7 +623,7 @@ options:
 ## ⚠️ **A missing argument gets a message, not a traceback**
 
 ```text
-$ python scripts/clean.py data/raw/pendulum.csv
+python scripts/clean.py data/raw/pendulum.csv
 usage: clean.py [-h] raw out
 clean.py: error: the following arguments are required: out
 ```
@@ -598,9 +654,9 @@ hideInToc: true
 ```
 
 ```text
-$ python scripts/plot.py data/processed/pendulum.csv poster.png --dpi 300
+python scripts/plot.py data/processed/pendulum.csv poster.png --dpi 300
 poster.png: 9 points
-$ python scripts/plot.py data/processed/pendulum.csv poster.png --dpi high
+python scripts/plot.py data/processed/pendulum.csv poster.png --dpi high
 usage: plot.py [-h] [--dpi DPI] table out
 plot.py: error: argument --dpi: invalid int value: 'high'
 ```
@@ -618,7 +674,11 @@ plot.py: error: argument --dpi: invalid int value: 'high'
 </div>
 
 <!--
-Speaker: type=int turns the string '300' into the number 300 and refuses
+Speaker: plot.py draws what plot_pendulum.py of Lecture 8 drew: nine points,
+both axis labels with units, 150 dpi, which is now the default of --dpi. It
+reads the table with pandas, draws a smaller figure with a grid, and takes
+its file names as arguments in place of names typed in the code.
+type=int turns the string '300' into the number 300 and refuses
 'high'. Without --dpi the value is 150: the picture is 720 by 480 pixels, with
 300 it is 1440 by 960. (~2 min)
 -->
@@ -672,7 +732,7 @@ The function takes a path and returns a table. It does not print and it does not
 </div>
 
 <!--
-Speaker: the four edits made with Find and Replace and many cursors are now
+Speaker: the four edits shown live in Lecture 2 with Find and Replace are now
 four lines that can be run again on the next file. Show raw.dtypes live: nr is
 float64, length_cm is text, t10_s is float64. (~3 min)
 -->
@@ -796,50 +856,66 @@ hideInToc: true
 
 # **Exit Codes**
 
-<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🚦 **The number a program hands back**
+## 🍎 **macOS · zsh**
 
 ```text
-$ python scripts/clean.py data/raw/pendulum.csv out.csv
-out.csv: 9 rows
-$ echo $?
-0
-$ python scripts/clean.py data/raw/pendulum.csv
+% python3 scripts/clean.py
 usage: clean.py [-h] raw out
-clean.py: error: the following arguments are required: out
-$ echo $?
+clean.py: error: … required: raw, out
+% echo $?
 2
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact table-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🔢 **What the numbers mean**
+## 🪟 **Windows · PowerShell**
+
+```text
+PS> python scripts/clean.py
+usage: clean.py [-h] raw out
+clean.py: error: … required: raw, out
+PS> $?
+False
+PS> $LASTEXITCODE
+2
+```
+
+</div>
+
+</div>
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-accent card-glass pad-compact table-compact">
 
 | What happened | Code |
 | --- | --- |
 | The script ran to its end | 0 |
-| An exception stopped it, for example `FileNotFoundError` | 1 |
+| An exception stopped it | 1 |
 | argparse refused the command line | 2 |
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+Every program ends with an exit code: 0 for success, anything else for failure. zsh keeps it in `$?`. PowerShell keeps it in `$LASTEXITCODE`; its own `$?` says only True or False. `clean_pendulum.py` of Lecture 4 uses the same numbers: `return 2` for a wrong command line, `return 1` for a missing file.
+
 </div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Every program ends with an exit code. 0 means success, anything else means failure. In the shell `$?` holds the code of the last command. A program that starts other programs reads the code to decide whether to go on. In your own script, `sys.exit("no data")` prints the message and ends with code 1.
 
 </div>
 
 <!--
 Speaker: the exit code is how programs talk to each other without a person
-reading the screen. A script that prints "error" and ends with 0 has told the
-next program that all is well. (~2 min)
+reading the screen. Run the line in both shells if two laptops are at hand. A
+script that prints "error" and ends with 0 has told the next program that all
+is well. In your own script, sys.exit("no data") prints the message and ends
+with code 1. (~2 min)
 -->
 
 ---
@@ -887,7 +963,7 @@ JSON writes a dict as text: names in double quotes, numbers, strings, `true` and
 <div class="card card-success card-glass pad-compact mt-md">
 
 ```text
-$ python scripts/fit.py data/processed/pendulum.csv config.json results/fit.json
+python scripts/fit.py data/processed/pendulum.csv config.json results/fit.json
 results/fit.json: g = 9.84 +- 0.06 m/s^2
 ```
 
@@ -941,7 +1017,7 @@ The theory has no intercept. A free intercept allows for a length measured to th
 
 </div>
 
-<div class="note-text mt-sm">Both fits are unweighted: the uncertainty comes from the scatter of the nine points. With 0.1 s assumed on every timing, as in Lecture 10, the same data give 9.84 ± 0.09. YAML and TOML are other formats for such a file; JSON needs no installed package.</div>
+<div class="note-text mt-sm">Both fits are unweighted: the uncertainty comes from the scatter of the nine points. YAML and TOML are other formats for such a file; JSON needs no installed package.</div>
 
 <!--
 Speaker: change false to true in config.json, run the fit again, and read the
@@ -953,47 +1029,47 @@ line in config.json. (~3 min)
 hideInToc: true
 ---
 
-# A Diagram Git Can **Compare**
+# *g* by **Method**
 
-<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
 
-<div class="card card-primary card-glass pad-compact">
+## 🧮 **Nine rows of one table, five numbers**
 
-## ➕ **`config.json` joins the diagram in the README**
-
-```diff
-$ git diff
---- a/README.md
-+++ b/README.md
-@@ -10,6 +10,7 @@ flowchart LR
-     clean --> table[processed/pendulum.csv]
-     table --> plot([plot.py]) --> png[pendulum_plot.png]
-     table --> fit([fit.py]) --> json[fit.json]
-+    config[config.json] --> fit
-     table --> report([report.py])
-     png --> report
-     json --> report
-```
+| Where | Method | The ± comes from | Intercept | *g* in m/s² |
+| --- | --- | --- | --- | --- |
+| Lecture 9 | weighted mean of the nine *g*ᵢ | 0.1 s and 0.1 cm assumed | none | 9.805 ± 0.042 |
+| Lecture 10 | weighted fit of T² against L | 0.1 s assumed | fixed at 0 | 9.806 ± 0.042 |
+| Lecture 10 | weighted fit of T² against L | 0.1 s assumed | free | 9.845 ± 0.090 |
+| `fit.py`, `true` | unweighted fit | the scatter of the points | fixed at 0 | 9.810 ± 0.023 |
+| `fit.py`, `false` | unweighted fit | the scatter of the points | free | 9.836 ± 0.062 |
 
 </div>
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔍 **One arrow, one line**
+## 🔍 **The intercept moves the value**
 
-- The change can be read in the diff, reviewed and undone, like a change of code
-- A picture exported from a drawing program changes as a whole. Git can only say that the file differs
-- The diagram is changed in the same commit as the script it describes
+Free or fixed at 0: 9.84 against 9.81, by either kind of fit. The weights move the uncertainty: 0.062 becomes 0.090. The nine points scatter less than 0.1 s per timing would predict, so the scatter gives the smaller ±. Lecture 9 saw the same: all nine error bars crossed the result.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🧾 **Which one is *g*?**
+
+Each is right for its method, and none is right without it. The first two agree to 0.001: the same analysis, up to a linear approximation. A number in a report therefore comes with its method, and the method sits in `config.json`, under Git.
 
 </div>
 
 </div>
-
-<div class="note-text mt-sm">The output of <code>git diff</code> is shown without its first two lines.</div>
 
 <!--
-Speaker: this is the reason for writing diagrams as text. The picture has a
-history, and the history is readable. (~1 min)
+Speaker: every number of the table was computed again from the cleaned table
+of the project. The two choices are the intercept, written in config.json, and
+the uncertainty of each timing, which fit.py does not use. Ask the room which
+row their report shows. (~3 min)
 -->
 
 ---
@@ -1053,11 +1129,12 @@ A straight-line fit of T² against L gives g = 9.84 ± 0.06 m/s².
 
 </div>
 
-<div class="note-text mt-sm">No number is typed twice. The table that was built with a cursor on every line is now built by a loop of two lines.</div>
+<div class="note-text mt-sm">No number is typed twice. The Markdown table of the report is built by a loop of two lines, not by hand.</div>
 
 <!--
-Speaker: open results/report.md with the preview. It is the report of the
-first seminar, with one more sentence. Nobody typed 9.84. (~2 min)
+Speaker: open results/report.md with the preview. It is the report.md of
+the project folder, now with its table and its last sentence written by a
+script. Nobody typed 9.84. (~2 min)
 -->
 
 ---
@@ -1066,6 +1143,8 @@ hideInToc: true
 ---
 
 # **Environments**
+
+Every stage now takes its files as arguments and writes its numbers into a file; on a laptop without pandas, none of them starts.
 
 <!--
 Speaker: second remedy. The scripts are in the folder. The packages they need
@@ -1153,7 +1232,9 @@ hideInToc: true
 ## 🔎 **Ask the scripts**
 
 ```text
-$ grep -hE "^(import|from)" scripts/*.py | sort -u
+% grep -hE "^(import|from)" scripts/*.py | sort -u
+PS> Select-String "^(import|from)" scripts/*.py -Raw |
+>>   Sort-Object -Unique
 from pathlib import Path
 from scipy.optimize import curve_fit
 import argparse
@@ -1179,7 +1260,7 @@ import pandas as pd
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`grep -h` leaves out the file names, `-E` reads the pattern as a regular expression: lines that start with `import` or `from`. `sort -u` sorts and drops repeated lines. A laptop has many more packages than these, installed over a semester. An empty environment shows which ones the project needs.
+The regular expression of Lecture 4: lines that start with `import` or `from`. `grep -h` and `-Raw` leave out the file names; `sort -u` and `-Unique` drop repeated lines. On the four stage scripts both shells print these seven lines; the scripts of Lecture 4 add `import csv` and `import sys`. A laptop has many more packages, installed over a semester. An empty environment shows which ones the project needs.
 
 </div>
 
@@ -1203,10 +1284,10 @@ A **virtual environment** is a folder with its own `python` and its own packages
 
 <div class="card card-primary card-glass pad-compact mt-sm table-compact">
 
-| | Windows, in Git Bash | macOS, Linux |
+| | 🍎 macOS · zsh | 🪟 Windows · PowerShell |
 | --- | --- | --- |
-| Create it, once | `python -m venv .venv` | `python3 -m venv .venv` |
-| Activate it, in every new terminal | `source .venv/Scripts/activate` | `source .venv/bin/activate` |
+| Create it, once | `python3 -m venv .venv` | `python -m venv .venv` |
+| Activate it, in every new terminal | `source .venv/bin/activate` | `.venv\Scripts\Activate.ps1` |
 | Leave it | `deactivate` | `deactivate` |
 
 </div>
@@ -1218,11 +1299,13 @@ A **virtual environment** is a folder with its own `python` and its own packages
 ## ✅ **Is it active?**
 
 ```text
-(.venv) $ which python
+(.venv) % which python
 …/analysis-project/.venv/bin/python
+(.venv) PS> (Get-Command python).Source
+…\analysis-project\.venv\Scripts\python.exe
 ```
 
-The prompt starts with `(.venv)`. On Windows the path ends in `.venv/Scripts/python`.
+In both shells the prompt starts with `(.venv)`, and `python` is the one in the folder.
 
 </div>
 
@@ -1238,8 +1321,10 @@ The prompt starts with `(.venv)`. On Windows the path ends in `.venv/Scripts/pyt
 
 <!--
 Speaker: venv comes with Python, nothing is installed for it. Create and
-activate live. which is the shell command that prints where a program is found.
-(~3 min)
+activate live. which (zsh) and Get-Command (PowerShell) print where a program
+is found. If PowerShell answers that running scripts is disabled, the laptop
+has a stricter policy than the PowerShell 7 default:
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned, once. (~3 min)
 -->
 
 ---
@@ -1251,16 +1336,16 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-(.venv) $ pip list
+pip list
 Package Version
 ------- -------
 pip     25.2
-(.venv) $ python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
+python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
 Traceback (most recent call last):
   File "…/analysis-project/scripts/clean.py", line 4, in <module>
     import pandas as pd
 ModuleNotFoundError: No module named 'pandas'
-(.venv) $ pip install pandas matplotlib scipy pytest
+pip install pandas matplotlib scipy pytest
 …
 Successfully installed contourpy-1.4.0 cycler-0.12.1 … scipy-1.18.1 six-1.17.0
 ```
@@ -1273,7 +1358,7 @@ Successfully installed contourpy-1.4.0 cycler-0.12.1 … scipy-1.18.1 six-1.17.0
 
 ## 🧪 **What the error shows**
 
-The script never said that it needs pandas. On the old laptop pandas was there, so nobody noticed. The empty environment is the other laptop, tried out at home.
+The same commands in both shells, with `(.venv)` in the prompt. The script never said that it needs pandas. On the old laptop pandas was there, so nobody noticed. The empty environment is the other laptop, tried out on this one.
 
 </div>
 
@@ -1338,7 +1423,7 @@ six==1.17.0
 ## 🔁 **On another laptop**
 
 ```text
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 In a new, active environment this installs the same 17 versions. It took 12 s here.
@@ -1353,7 +1438,7 @@ In a new, active environment this installs the same 17 versions. It took 12 s he
 
 <!--
 Speaker: the file is the environment written as text. The folder .venv can be
-deleted at any time. Show du -sh .venv and wc -l requirements.txt. (~3 min)
+deleted at any time. Open requirements.txt in the editor: 17 lines. (~3 min)
 -->
 
 ---
@@ -1518,6 +1603,8 @@ hideInToc: true
 
 # One **Command**
 
+The packages and their versions are written down; the order of the four commands is still in someone's head.
+
 <!--
 Speaker: third remedy. The four commands and their order go into a file, and
 the file decides what has to run. (~1 min)
@@ -1545,14 +1632,13 @@ flowchart LR
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-$ python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
+python scripts/clean.py data/raw/pendulum.csv data/processed/pendulum.csv
 data/processed/pendulum.csv: 9 rows
-$ python scripts/plot.py data/processed/pendulum.csv results/pendulum_plot.png
+python scripts/plot.py data/processed/pendulum.csv results/pendulum_plot.png
 results/pendulum_plot.png: 9 points
-$ python scripts/fit.py data/processed/pendulum.csv config.json results/fit.json
+python scripts/fit.py data/processed/pendulum.csv config.json results/fit.json
 results/fit.json: g = 9.84 +- 0.06 m/s^2
-$ python scripts/report.py data/processed/pendulum.csv results/fit.json \
-      results/pendulum_plot.png results/report.md
+python scripts/report.py data/processed/pendulum.csv results/fit.json results/pendulum_plot.png results/report.md
 results/report.md: 19 lines
 ```
 
@@ -1561,7 +1647,9 @@ results/report.md: 19 lines
 <div class="note-text mt-sm">A shell script with these four commands reruns everything, every time. Here that takes 2 s. When one stage takes an hour, it should run only when its result is out of date.</div>
 
 <!--
-Speaker: the commands are long, and that is fine, because nobody will type them
+Speaker: config.json has joined the diagram as one line of its source, an
+arrow from config.json to fit, and git diff of the README shows exactly that
+line. The commands are long, and that is fine, because nobody will type them
 again. Ask: plot.py was edited, which of the four have to run? The room answers
 from the diagram. The computer needs a rule. (~2 min)
 -->
@@ -1592,13 +1680,14 @@ The files it is made from are its inputs **and the script** that writes it.
 ## 🕒 **The time is already stored**
 
 ```text
-$ ls -l results
+% ls -l results
+PS> Get-ChildItem results
 … 10:03 fit.json
 … 10:02 pendulum_plot.png
 … 10:04 report.md
 ```
 
-Every file carries the time of its last change. `ls -l` prints it. Nothing has to be recorded by hand.
+Every file carries the time of its last change, and both shells print it. Nothing has to be recorded by hand.
 
 </div>
 
@@ -1610,7 +1699,7 @@ The rule needs only what the diagram says: which files each stage reads and whic
 
 </div>
 
-<div class="note-text mt-sm">The listing is shortened: <code>ls -l</code> also prints the permissions, the owner, the size and the date.</div>
+<div class="note-text mt-sm">The listing is shortened: both commands also print the size and the date, and <code>ls -l</code> the permissions and the owner.</div>
 
 <!--
 Speaker: the script counts as an input. A changed script gives another result
@@ -1829,7 +1918,7 @@ hideInToc: true
 ## 1️⃣ **Nothing is built yet**
 
 ```text
-$ python run_all.py
+python run_all.py
 data/processed/pendulum.csv: 9 rows
 results/pendulum_plot.png: 9 points
 results/fit.json: g = 9.84 +- 0.06 m/s^2
@@ -1843,7 +1932,7 @@ results/report.md: 19 lines
 ## 2️⃣ **Run again at once**
 
 ```text
-$ python run_all.py
+python run_all.py
 data/processed/pendulum.csv: up to date
 results/pendulum_plot.png: up to date
 results/fit.json: up to date
@@ -1857,7 +1946,7 @@ results/report.md: up to date
 ## 3️⃣ **After an edit of `plot.py`**
 
 ```text
-$ python run_all.py
+python run_all.py
 data/processed/pendulum.csv: up to date
 results/pendulum_plot.png: 9 points
 results/fit.json: up to date
@@ -1871,7 +1960,7 @@ results/report.md: 19 lines
 ## 4️⃣ **After `through_origin` is set to `true`**
 
 ```text
-$ python run_all.py
+python run_all.py
 data/processed/pendulum.csv: up to date
 results/pendulum_plot.png: up to date
 results/fit.json: g = 9.81 +- 0.02 m/s^2
@@ -1903,17 +1992,14 @@ hideInToc: true
 ## 🗑️ **Everything that was made, deleted**
 
 ```text
-$ rm -r data/processed results
-$ git status --short
- D results/fit.json
- D results/pendulum_plot.png
- D results/report.md
-$ python run_all.py
+% rm -r data/processed results
+PS> Remove-Item -Recurse data/processed, results
+python run_all.py
 data/processed/pendulum.csv: 9 rows
 results/pendulum_plot.png: 9 points
 results/fit.json: g = 9.84 +- 0.06 m/s^2
 results/report.md: 19 lines
-$ git status
+git status
 On branch main
 nothing to commit, working tree clean
 ```
@@ -1930,7 +2016,13 @@ nothing to commit, working tree clean
 
 ## 🔢 **The same check by checksum**
 
-`sha256sum results/report.md` gives `1bf0d728…fb3f` before and after.
+```text
+% shasum -a 256 results/report.md
+PS> (Get-FileHash results/report.md).Hash
+1bf0d728…fb3f
+```
+
+The same digits before and after, in both shells; PowerShell writes them in upper case.
 
 </div>
 
@@ -1938,13 +2030,15 @@ nothing to commit, working tree clean
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Anything in `data/processed` and `results` can be deleted at any time. Nothing in `data/raw`, `scripts` or `config.json` can. That line between the two kinds of files is what the project folder was built for.
+✅ The answer to the paper at the start: one line, the same in both shells, `python run_all.py`. Anything in `data/processed` and `results` can be deleted; nothing in `data/raw`, `scripts` or `config.json` can.
 
 </div>
 
 <!--
-Speaker: this is the acceptance test of the whole lecture. Do it live. On macOS
-the checksum command is shasum -a 256. (~3 min)
+Speaker: this is the acceptance test of the whole lecture. Do it live, in the
+shell of your laptop, and set it beside the lists on the board. Lines after
+the delete are the same in both shells; git status --short between the delete
+and the rebuild lists the three results as D, deleted. (~3 min)
 -->
 
 ---
@@ -1990,13 +2084,13 @@ $(FIT): $(TABLE) config.json scripts/fit.py
 - `make` builds the first rule and whatever it needs, by the rule of the file times
 
 ```text
-$ touch scripts/plot.py
-$ make -n
+% touch scripts/plot.py
+% make -n
 python scripts/plot.py …
 python scripts/report.py …
 ```
 
-`make -n` prints the commands without running them.
+On macOS, in zsh. `make -n` prints the commands without running them.
 
 </div>
 
@@ -2022,11 +2116,10 @@ hideInToc: true
 
 ## 🪟 **Where `make` is**
 
-- Linux: installed, or one package away
 - macOS: comes with the developer tools that also bring Git
-- Windows: not there. Git Bash does not include it
+- Windows: not there. PowerShell does not include it, and neither does Python
 
-On Windows it has to be installed separately. `run_all.py` needs nothing but the Python the project uses anyway. That is why it is the form used here.
+On Windows it has to be installed separately. `run_all.py` needs nothing but the Python the project uses anyway, and it runs the same in zsh and in PowerShell. That is why it is the form used here.
 
 </div>
 
@@ -2062,6 +2155,8 @@ hideInToc: true
 ---
 
 # **Tests**
+
+One command rebuilds the same bytes every time; the same bytes are not yet shown to be the right ones.
 
 <!--
 Speaker: fourth remedy. The pipeline now gives the same result every time. That
@@ -2234,7 +2329,7 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-(.venv) $ python -m pytest
+python -m pytest
 ============================= test session starts ==============================
 platform darwin -- Python 3.13.9, pytest-9.1.1, pluggy-1.6.0
 rootdir: …/analysis-project
@@ -2512,7 +2607,7 @@ if tests.returncode != 0:
 ```
 
 ```text
-$ python run_all.py
+python run_all.py
 .....                                              [100%]
 5 passed in 0.45s
 data/processed/pendulum.csv: up to date
@@ -2554,6 +2649,8 @@ hideInToc: true
 ---
 
 # Beyond **One Laptop**
+
+The tests run before every rebuild, on this laptop; another person, another computer and a later time are still untried.
 
 <!--
 Speaker: the project now rebuilds on this laptop. The last section is about the
@@ -2613,63 +2710,60 @@ to compare a rebuild with. (~2 min)
 hideInToc: true
 ---
 
-# The README Gains **How to Rebuild**
+# How to Rebuild, **Second Version**
 
-<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **The new section of `README.md`**
-
-````md
-## How to rebuild
-
-Needs Python 3.13. On Windows, use Git Bash.
-
-```text
-python -m venv .venv
-source .venv/Scripts/activate
-pip install -r requirements.txt
-python run_all.py
-```
-
-On macOS and Linux the first two lines are
-`python3 -m venv .venv` and `source .venv/bin/activate`.
-````
-
-</div>
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 2fr 3fr;">
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🧪 **Tried on a fresh copy**
+## 📄 **Lecture 4: one step per file**
 
-A new folder made with `git clone`, then the four commands in their macOS form and nothing else:
-
-```text
-5 passed in 5.06s
-…
-results/report.md: 19 lines
-$ git status
-…
-nothing to commit, working tree clean
+```md
+1. The cleaned pendulum table,
+   97 bytes, SHA-256 `be05af03…`:
+   `python scripts/clean_pendulum.py …`
+2. `D0_valid.csv`: one line
+   per shell
 ```
 
-The tests took 5 s on this first run and 0.5 s on the next one.
+Right for one script. Four stages would need four lines in the right order, and no line says which packages they import.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **Today: an environment, then one command**
+
+```md
+## How to rebuild
+
+Needs Python 3.13. Once, in the project folder:
+
+- zsh: `python3 -m venv .venv`, then
+  `source .venv/bin/activate`
+- PowerShell: `python -m venv .venv`, then
+  `.venv\Scripts\Activate.ps1`
+- Both: `pip install -r requirements.txt`
+
+Every time: `python run_all.py`. The cleaned
+table: 97 bytes, SHA-256 `be05af03…`.
+```
 
 </div>
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-The README already says what the project is, where the data came from and what was changed by hand. This section is the only new part. Its test is a person: someone else follows it on another laptop without asking a question.
+🧪 The test of Lecture 4, run again: a fresh copy, the lines of one shell and nothing else. `5 passed`, four stages, and `report.md` with the checksum `1bf0d728…` in zsh and in PowerShell. The section passes when someone else follows it on another laptop without asking a question.
 
 </div>
 
 <!--
-Speaker: four lines replace the paragraph that used to explain which script to
-run first. The fresh clone is the "other computer" of the definition, tried
-before anyone else has to. (~2 min)
+Speaker: the section of Lecture 4 named one script and its checksum. The
+pipeline replaces its first line; the D0 line stays below it. On a fresh copy
+the first run of the tests took 5 s, the next 0.5 s. A fresh git clone, built
+this way, ends with git status clean. (~2 min)
 -->
 
 ---
@@ -2707,7 +2801,7 @@ jobs:
 ## 🤖 **A server follows the README**
 
 - After every `git push`, GitHub starts a fresh Linux machine
-- It takes a copy of the project, installs Python 3.13, and runs the two commands of the last two lines
+- It takes a copy of the project, installs Python 3.13, and runs the two lines of How to rebuild that both shells share
 - If a command ends with an exit code other than 0, the commit is marked with a red cross
 
 ## 🎯 **What it is for**
@@ -2724,57 +2818,6 @@ The fresh-copy test of the previous slide, done by a machine after every push, w
 Speaker: the name says it: every change is integrated and checked at once, not
 at the end. The file is YAML, a format like JSON with indentation in place of
 braces. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# **pre-commit**: Checks Before a Commit
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🚫 **A commit that is refused**
-
-```text
-$ git add data/raw/D0_KPi.csv
-$ git commit -m "Add the LHCb file"
-check for added large files..............................................Failed
-- hook id: check-added-large-files
-- exit code: 1
-
-data/raw/D0_KPi.csv (3835 KB) exceeds 500 KB.
-
-fix end of files.........................................................Passed
-trim trailing whitespace.................................................Passed
-```
-
-</div>
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔍 **What it is**
-
-A program, installed with `pip install pre-commit`, that runs small checks each time `git commit` is typed. The checks are listed in `.pre-commit-config.yaml`. If one fails, the commit does not happen.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🎯 **What it is for**
-
-Mistakes that are cheap to catch and tedious to undo: a data file of 3.9 MB in the history, spaces at line ends. It checks the form of what is committed. It does not run the analysis.
-
-</div>
-
-</div>
-
-<!--
-Speaker: the three checks shown are from the standard set that comes with the
-tool. A file that got into the Git history stays there, in every copy, so the
-first check pays for itself on the first day. (~2 min)
 -->
 
 ---
@@ -2969,7 +3012,7 @@ hideInToc: true
 - **F**: a README. Missing: a DOI and a public address
 - **A**: nothing yet. Missing: a public repository
 - **I**: CSV, JSON and Markdown, with units in the column names
-- **R**: provenance, pinned versions, one command, tests. Missing: a licence file
+- **R**: provenance, pinned versions, one command, tests, and a `LICENSE` file, as Lecture 4 asks
 
 </div>
 
@@ -2982,63 +3025,9 @@ The project folder already serves I and R. The other two need a public place: a 
 </div>
 
 <!--
-Speaker: the room has been on the receiving end of FAIR since the first
-seminar: the DOI and the licence of record 401 are in every README. The right
-card is the same check on their own work. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Four **Aims**, in One Folder
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔧 **Tool-agnostic**
-
-Every file is plain text or an open format: CSV, Markdown, JSON, Python. The pipeline runs from any terminal, with or without VS Code. `run_all.py` and a Makefile say the same thing, and either can replace the other.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ♻️ **Reproducible**
-
-The raw data is untouched, with its source in the README. The code and its parameters are under Git. The versions are in `requirements.txt`. A fresh copy with those versions rebuilds to the same bytes.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ⚙️ **Automated**
-
-No step is done by hand: not the cleaning, not the table in the report, not the number in its last sentence. One command tests, decides what is out of date, and runs it.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📁 **Data and files in order**
-
-`data/raw`, `data/processed`, `scripts`, `results`, `README.md`. The folder built in the first seminar holds the whole analysis, and whatever can be deleted is known.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-These are the four aims the course started with. The pendulum table has nine rows. Nothing in the folder or in `run_all.py` depends on that number: a file of 91 583 rows goes through stages of the same form.
-
-</div>
-
-<!--
-Speaker: this is the last scheduled lecture, so this slide closes the course.
-Go through the four cards with the project open in VS Code and point at the
-file that stands for each sentence. (~3 min)
+Speaker: the room has used record 401 since Lecture 2, from the receiving
+end: its DOI and its licence are what Lecture 4 asks the README to name. The
+right card is the same check on their own work. (~3 min)
 -->
 
 ---
@@ -3090,6 +3079,67 @@ hideInToc: true
 <!--
 Speaker: the "you can now" beat. Ask which of the six the room would add to its
 own project first. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Four **Aims**, Answered
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔧 **Tool agnosticism**
+
+*Lecture 1: "A file anyone can open."* `run_all.py` and a Makefile state one rule; CSV, JSON, Markdown and Mermaid are plain text; the lines run in zsh and in PowerShell.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ♻️ **Reproducibility**
+
+*"If someone else, or future you, cannot rebuild your result, it is not yet a result."* `requirements.txt`, `config.json` and How to rebuild: a fresh copy gives the same bytes.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⚙️ **Automation**
+
+*"Do it once by hand, twice by script."* `run_all.py` tests, finds what is out of date and runs it. Nobody types 9.84 into the report.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📁 **Efficient work with data & files**
+
+*"Knowing which file is which."* `data/raw` is never written, `results` is deleted at will, and the README holds the checksum.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🗑️ **Delete `results/`. Now what?** `python run_all.py`: five tests pass, the three stages that write into `results/` run, `git status` is clean. The rule of Lecture 1 holds for this folder.
+
+</div>
+
+<div class="note-text mt-sm">Lecture 1 asked: <em>"I send you only 9.84. How do you check it?"</em> The answer: send this folder.</div>
+
+<!--
+Speaker: this is the last scheduled lecture, so this slide closes the course.
+The four cards are the aims of Lecture 1, each with a sentence of it;
+under each is the file that now makes it true. Point at each file with the
+project open in VS Code, then read the last card: the question of the first
+slide, answered. The last line goes back to Ben's 9.84 of Lecture 1: an
+unweighted line with a free intercept, which is fit.py with through_origin
+false, the method written down in fit.py and config.json.
+(~3 min)
 -->
 
 ---
@@ -3170,7 +3220,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="After `rm -r data/processed results` and `python run_all.py`, `git status` reports that `results/pendulum_plot.png` is modified, and nothing else. What is the most likely cause?"
+  question="`data/processed` and `results` are deleted, then `python run_all.py` runs. `git status` reports that `results/pendulum_plot.png` is modified, and nothing else. What is the most likely cause?"
   :options="[
     'The raw data file was changed',
     'The fit gave another value of g',
@@ -3202,13 +3252,13 @@ hideInToc: true
 ---
 
 <MCQ
-  question="What makes an analysis scriptable?"
+  question="In PowerShell, `python scripts/clean.py` is run without its two file names. Which line then prints the exit code, 2?"
   :options="[
-    'It is written down by hand in a lab notebook',
-    'Every step is code or a command, and all of it can be run again from the raw data',
-    'It is done through the menus of a program with a graphical interface',
-    'It is run once and its outputs are kept'
+    '<code>echo $?</code>',
+    '<code>$?</code>',
+    '<code>$LASTEXITCODE</code>',
+    '<code>sys.exit()</code>'
   ]"
-  :correct="1"
-  explanation="Steps that are code can be repeated, compared by Git and run by another person or a server. Steps that are clicks leave no record that a computer can replay."
+  :correct="2"
+  explanation="PowerShell keeps the exit code of the last program in $LASTEXITCODE. Its own $? holds only True or False, here False. echo $? is the zsh form, and sys.exit() is Python, not a shell command."
 />

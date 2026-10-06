@@ -70,7 +70,7 @@ hideInToc: true
 
 <!--
 Speaker: read these as promises, not a syllabus. Today is the mental model —
-bits up to files — that everything later in the course sits on. (~1 min)
+bits up to files — of what a computer stores and how. (~1 min)
 -->
 
 ---
@@ -952,7 +952,7 @@ hideInToc: true
 
 <div class="note-text">
 
-*A preview in Python — the language itself is introduced later in the course.*
+*Written in Python. Reading it needs no Python: the comment on each line gives the result.*
 
 </div>
 
@@ -1129,7 +1129,7 @@ td, th { padding-top: 0.25em; padding-bottom: 0.25em; }
 </style>
 
 <!--
-Speaker: the NumPy example is a preview — the point
+Speaker: the NumPy lines are not explained here — the point
 is only that a fixed-width value wraps with no error. Ask: what happens to a
 16-bit event counter on the 65,536th event? (~2 min)
 -->
@@ -1470,7 +1470,7 @@ A float32 has 24 binary digits, wherever the point stands. So the step from one 
 
 ## 🎯 **What this means for data**
 
-- The value `1880.649` is stored as 1880.6490478515625, the nearest float32
+- `1880.649`, the first M in the LHCb file `D0_KPi.csv`, is stored as 1880.6490478515625, the nearest float32
 - Digits after the seventh are not information. They come from the rounding
 - A float32 cannot count by one from 16&nbsp;777&nbsp;216 on: 16&nbsp;777&nbsp;216&nbsp;+&nbsp;1 gives 16&nbsp;777&nbsp;216
 
@@ -1485,7 +1485,11 @@ A float32 has 24 binary digits, wherever the point stands. So the step from one 
 </div>
 
 <!--
-Speaker: 16 777 216 is 2 to the power 24. Above it the 24 digits no longer
+Speaker: 1880.649 is the invariant mass, in MeV/c², in the first data row of
+D0_KPi.csv: 1880.649,3000.9534,0.00041271152,1299.1675. Its float32 neighbours
+are 0.000 12 apart (2 to the power -13), so the stored value differs from the
+written one in the ninth significant digit.
+16 777 216 is 2 to the power 24. Above it the 24 digits no longer
 reach down to the ones place. The practical rule: sum in float64, store in
 float32 if 7 digits are enough. (~2 min)
 -->
@@ -1494,13 +1498,13 @@ float32 if 7 digits are enough. (~2 min)
 hideInToc: true
 ---
 
-# Try It in Your Terminal!
+# Try It **Here**
 
 <div class="card card-success card-glass pad-tight mt-md">
 
 ## 🧪 **Live Demo**
 
-Press ▶ to run it here. Then open the terminal in VS Code (**Terminal** > **New Terminal**), type `python` and press Enter (macOS: `python3`), and type the same three lines:
+Two lines from Floating-Point Gotchas, and a third that prints 20 decimals of the number really stored for `0.1`. Predict each line, then press ▶:
 
 ```py {monaco-run} {autorun:false}
 print(0.1 + 0.2)
@@ -1512,7 +1516,7 @@ print(f"{0.1:.20f}")
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💡 These are not bugs. Every computer stores decimals this way, and it matters whenever two measured numbers are compared. `exit()` leaves Python.
+💡 These are not bugs. Every computer stores decimals this way, and it matters whenever two measured numbers are compared.
 
 </div>
 
@@ -1599,6 +1603,19 @@ class: text-size-5
 |   7     | **BEL**  |   23    | **ETB**  |   39    | **'**    |   55    | **7**    |   71    | **G**    |   87    | **W**    |  103    | **g**    |  119    | **w**    |
 
 *(excerpt — first 8 rows of each block)*
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔢 In Lecture 2, Sort Lines put `100` before `20` because `1` comes before `2`. One level down: `1` is stored as 49 = 0x31 and `2` as 50 = 0x32. The sort compares these numbers, and 0x31 < 0x32.
+
+</div>
+
+<!--
+Speaker: this takes Lecture 2's answer one level down. There, 100 sorted
+before 20 because the character 1 comes before 2; here "comes before" is a
+comparison of two numbers. Point at 49 and 50 in the table. A text sort compares the first byte of
+each line and looks further only on a tie; 30 (0x33) comes after both. (~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1689,7 +1706,7 @@ hideInToc: true
 
 <div class="note-text">
 
-*A preview. Reading it needs no Python.*
+*Written in Python. Reading it needs no Python: the comment on each line gives the result.*
 
 </div>
 
@@ -1914,7 +1931,7 @@ Used by: **x86/x64** and (typically) **ARM** — most PCs & phones
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Mismatched endianness → garbage values. NumPy *(a Python library you'll meet later in the course)* lets you say which you mean: `dtype='>f4'` (big) or `dtype='<f4'` (little).
+⚠️ Mismatched endianness → garbage values. NumPy, a Python library for arrays of numbers, lets you say which you mean: `dtype='>f4'` (big) or `dtype='<f4'` (little).
 
 </div>
 
@@ -2216,19 +2233,21 @@ A cryptographic hash (**SHA-256**) boils any file down to a 256-bit fingerprint 
 ## 🧾 **In practice**
 
 ```text
-$ sha256sum data.csv
-3b1f0c7a…9d2e9  data.csv        # 64 hex digits = 256 bits
+pendulum.csv, 97 bytes        SHA-256, 64 hex digits = 256 bits
+be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b
 ```
 
 - Flip **one bit** anywhere in the file → a **completely different** hash (it never says "how close")
-- **Publish the hash next to the download** — the reader recomputes it, and a matching hash proves the copy is byte-identical.
+- **Publish the hash next to the file**: is the copy on your laptop these same 97 bytes? Yes, if all 64 hex digits match.
 
 </div>
 
 <!--
 Speaker: the lecture's most practical minute. Every dataset you publish should
 ship with its hash; every dataset you download should be checked against one.
-"Different in every digit" is the expected symptom of *any* change. (~2 min)
+"Different in every digit" is the expected symptom of *any* change. The hash
+shown is that of pendulum.csv, the 97-byte table of the hexdump slide; it is
+the same on every system. (~2 min)
 -->
 
 ---
@@ -2410,7 +2429,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="You download data.csv; its published SHA-256 is 3b1f…e9, but sha256sum on your copy prints a hash that differs in every digit. What can you conclude?"
+  question="You download data.csv; its published SHA-256 is 3b1f…e9, but the SHA-256 of your copy differs from it in every digit. What can you conclude?"
   :options="[
     'The file is almost identical — only a few bytes must differ',
     'Your copy differs from the published file somewhere — even a single flipped bit would do this',

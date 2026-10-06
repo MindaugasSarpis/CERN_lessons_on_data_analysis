@@ -5,23 +5,29 @@ rows selected with a mask, values counted with `np.histogram`. The numbers
 were printed. Lecture 8 draws them. It introduces Matplotlib on the two files
 of the course, the pendulum table and the mass column of `D0_KPi.csv`, and
 then goes through the decisions that hold for a figure made with any
-program: which chart, which axes, which colours, which title.
+program: which chart, which axes, which colours, which title. It opens on two
+pictures the room has seen, the pendulum plot of Lecture 2's `report.md` and
+the 20 counts of Lecture 7, and asks which lines of Python draw them and which
+of their choices a person made. The first section answers it, and the closing
+slide lists every choice with the number behind it.
 
 ## What the lecture covers
 
-1. **Why a figure** — what a figure is for; Anscombe's quartet: four tables
-   with the same means, the same closest line and the same *r*, told apart
-   only by a plot.
+1. **Why a figure** — two pictures and their numbers: nine points and twenty
+   counts; what a figure is for; Anscombe's quartet: four tables with the
+   same means, the same closest line and the same *r*, told apart only by a
+   plot.
 2. **A first plot** — Figure, Axes and artists; the pendulum table in four
    lines of Matplotlib, then as points with labelled axes, units and limits;
    the mass column as a histogram with the default binning, and with a range
    (1810 to 1920 MeV/c²) and a bin width (2 MeV/c², 55 bins) chosen from the
    numbers.
-3. **Mechanics of a figure** — the ranking of visual channels; the parts of a
-   figure; the legend; axis labels with units and their size; the coordinate
+3. **Mechanics of a figure** — the visual channels and their ranking; the
+   parts of a figure; the legend; axis labels with units and their size; the coordinate
    system; the aspect ratio.
 4. **Chart families** — amounts (bars from zero, sorted bars, the dot plot);
-   distributions (density, bin width, boxplot, violin, strip, empirical CDF,
+   distributions (density, bin width, a peak on a flat background in the
+   browser, boxplot, violin, strip, empirical CDF,
    ridgeline, heatmap); proportions (pie, stacked bar, treemap); associations
    (scatter, bubble, overlapping points, hexagonal bins, correlation heatmap,
    pair plot, slopegraph); trends; uncertainty (error bars, band, many lines).
@@ -33,6 +39,8 @@ program: which chart, which axes, which colours, which title.
 7. **Hands-on Matplotlib** — a bar chart; the pendulum points with the curve
    of the formula; the mass histogram as counts with error bars, an
    annotation and a title; one style for all figures; file formats.
+8. **Wrap-up** — a checklist for a figure; every choice in the two figures,
+   each with the number that justified it; the recap.
 
 ## Statistics used before Lecture 9
 
@@ -41,62 +49,69 @@ terms, and each is defined in one sentence on the slide that uses it.
 
 | Term | Slide | As defined there |
 |--|--|--|
-| Correlation *r* | 5, 52 | How near the points lie to a straight line: +1 on a rising line, −1 on a falling one, 0 with no trend |
-| Scatter of a count | 16, 69, 80 | A count *N* scatters by about √*N* when the measurement is repeated |
-| Kernel density | 37 | Each value replaced by a small bell-shaped bump, and the bumps added up |
-| Median, quartiles, IQR | 40 | Half of the values lie below the median, a quarter below the first quartile, three quarters below the third; the IQR is the length of the box |
-| Standard error | 57 | The standard deviation of the *N* values divided by √*N* |
+| Correlation *r* | 6, 53 | How near the points lie to a straight line: +1 on a rising line, −1 on a falling one, 0 with no trend |
+| Scatter of a count | 12, 17, 70, 81 | A count *N* scatters by about √*N* when the measurement is repeated |
+| Kernel density | 38 | Each value replaced by a small bell-shaped bump, and the bumps added up |
+| Median, quartiles, IQR | 41 | Half of the values lie below the median, a quarter below the first quartile, three quarters below the third; the IQR is the length of the box |
+| Standard error | 58 | The standard deviation of the *N* values divided by √*N* |
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–86 and estimates about 136 min. Slides 87–95 are the
+The lecture is slides 1–87 and estimates about 141 min. Slides 88–96 are the
 self-check quizzes and take no lecture time. In a 2-hour slot nothing has to
 be skipped. For a 90-minute slot, skip the slides in the second table. To
 jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–5 | Objectives, what a figure is for, Anscombe's quartet |
-| 0:07 | 6–12 | A first plot: Figure and Axes, the pendulum as points, the mass histogram |
-| 0:21 | 13–16, 20 | Visual channels, the parts of a figure, axis labels with units |
-| 0:28 | 24–28, 33 | Amounts: bars, bars from zero, the dot plot |
-| 0:35 | 37, 38, 40 | Distributions: density, bin width, boxplot and its terms |
-| 0:40 | 45, 46, 48, 55, 57, 58 | Proportions, the scatter plot, trends, uncertainty, which chart |
-| 0:51 | 59–67, 70, 71 | Design: ink, colour, the logarithmic scale, small multiples |
-| 1:07 | 72–76 | The finding: title, direct labels, annotation, reference line |
-| 1:14 | 77–80, 82 | Matplotlib again: bar chart, formula curve, error bars, saving |
-| 1:24 | 83–86 | Checklist, sources, recap |
+| 0:00 | 1–6 | Nine points and twenty counts (the question of the lecture), objectives, what a figure is for, Anscombe's quartet |
+| 0:09 | 7–13 | A first plot: Figure and Axes, the pendulum as points, the mass histogram. Slide 13 answers the opening question |
+| 0:23 | 14–17, 21 | Visual channels and their ranking, the parts of a figure, axis labels with units |
+| 0:30 | 25–29, 34 | Amounts: bars, bars from zero, the dot plot |
+| 0:37 | 38, 39, 41 | Distributions: density, bin width, boxplot and its terms |
+| 0:42 | 46, 47, 49, 56, 58, 59 | Proportions, the scatter plot, trends, uncertainty, which chart |
+| 0:53 | 60–68, 71, 72 | Design: ink, colour, the logarithmic scale, small multiples |
+| 1:09 | 73–77 | The finding: title, direct labels, annotation, reference line |
+| 1:15 | 78, 80, 81, 83 | Matplotlib again: formula curve, error bars, saving |
+| 1:22 | 84–87 | Checklist, every choice in the two figures, recap |
 | 1:30 | | Move to the seminar |
 
 | Skip | Slides | Saves |
 |--|--|--|
-| The legend and its two examples | 17–19 | 4 min |
-| Label size, coordinate system, aspect ratio | 21–23 | 4 min |
-| Ordered categories, stacked bars, bars in three and two dimensions | 29–32 | 5 min |
-| Life expectancy, three slides | 34–36 | 4 min |
-| Try It — Bin Width | 39 | 3 min |
-| Empirical CDF, ridgeline plot, lines or fill, heatmap | 41–44 | 7 min |
-| The treemap | 47 | 1 min |
-| Bubble chart, overlapping points, hexagonal bins, correlation heatmap, pair plot, slopegraph | 49–54 | 10 min |
-| Trend and seasonal cycle | 56 | 1 min |
-| Try It — Which Scale?, the square-root scale | 68–69 | 4 min |
-| One style for all figures | 81 | 2 min |
+| The legend and its two examples | 18–20 | 4 min |
+| Label size, coordinate system, aspect ratio | 22–24 | 4 min |
+| Ordered categories, stacked bars, bars in three and two dimensions | 30–33 | 5 min |
+| Life expectancy, three slides | 35–37 | 4 min |
+| A Peak on a Flat Background, Live | 40 | 3 min |
+| Empirical CDF, ridgeline plot, lines or fill, heatmap | 42–45 | 7 min |
+| The treemap | 48 | 1 min |
+| Bubble chart, overlapping points, hexagonal bins, correlation heatmap, pair plot, slopegraph | 50–55 | 10 min |
+| Trend and seasonal cycle | 57 | 1 min |
+| Linear or Logarithmic, Live; the square-root scale | 69–70 | 4 min |
+| A minimal bar chart | 79 | 2 min |
+| One style for all figures | 82 | 2 min |
 
-- **Do not cut** slides 7–12 (A First Plot). The seminar makes exactly these
-  two figures, with the same calls, the same range and the same bin width.
-- **Do not cut** slides 27–28 (bars from zero), 40 (the boxplot and its
-  terms), 57 (error bars and the standard error) or 79–80 (formula curve,
+- **Do not cut** slide 3 (Nine Points and Twenty Counts) or slides 8–13
+  (A First Plot), which answer it. The seminar makes exactly these two
+  figures, with the same calls, the same range and the same bin width.
+- **Do not cut** slide 86 (Every Choice in the Two Figures), the closing
+  slide: it lists every choice of the two figures with the number behind it.
+- **Do not cut** slides 28–29 (bars from zero), 41 (the boxplot and its
+  terms), 58 (error bars and the standard error) or 80–81 (formula curve,
   error bars). Lectures 9 and 10 build on them.
-- **Slides 8–12 are shown live.** Keep VS Code open beside the slides, with
-  the project folder and Matplotlib installed. Type the script of slide 8,
-  run it, open `results/pendulum_plot.png` beside it, then make the changes
-  of slide 9. Do the same for slides 10 and 12 in a second script. Slide 11
-  is the reasoning between them: run `bins=11` and `bins=550` once each.
-- **Slide 16** (The Parts of a Figure) builds up in five clicks. The figure
+- **Slides 9–13 are shown live.** Keep VS Code open beside the slides, with
+  the project folder and Matplotlib installed. Type the script of slide 9 as
+  `scripts/plot_pendulum.py`, run it, open `results/pendulum_plot.png` beside
+  it, then make the changes of slide 10. Do the same for slides 11 and 13 in
+  `scripts/plot_mass.py`. Slide 12 is the reasoning between them: run
+  `bins=11` and `bins=550` once each.
+- **Slides 6, 19, 28 and 30** show the figure first and the explanation on
+  the next click: ask the room before clicking.
+- **Slide 17** (The Parts of a Figure) builds up in five clicks. The figure
   uses example values, not the course file.
-- **Slides 39 and 68** run Python in the browser. The first run downloads
+- **Slides 40 and 69** run Python in the browser. The first run downloads
   the Python runtime, so run each once before the lecture.
-- **Slides 78–80** highlight the code in steps. Each click moves to the next
+- **Slides 79–81** highlight the code in steps. Each click moves to the next
   group of lines.
 
 Before the session, start the local copy of the slides:
@@ -106,7 +121,7 @@ Before the session, start the local copy of the slides:
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 87–95: eight quiz slides for students to try afterwards. The same
+slides 88–96: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. Four tables give the same mean of x, the same mean of y, the same closest
@@ -146,17 +161,19 @@ questions, with their answers:
 ## Paired seminar
 
 [Seminar 8 — Two Figures with Matplotlib](../seminars/seminar_08.md) installs
-Matplotlib with pip and makes the two figures of slides 8–12 from the room's
+Matplotlib with pip and makes the two figures of slides 9–13 from the room's
 own keyboard: the pendulum table as points, and the mass column as a
 histogram with a range and a bin width that the room chooses from the
 numbers. Both figures are saved to `results/` and placed in
 `results/report.md`, each with a sentence that says what it shows. The README
-gets a table of the figures and the scripts that make them. At home students
-make the same two kinds of figure from their own dataset.
+gets a table of the figures and the scripts that make them.
 
 ## Slides that left the deck
 
 Five slides of the earlier deck are not in this one, and three were replaced.
+Since 6 October 2026 the sources slide is parked in
+`lectures/content/parked/08_Data_Visualisation.md`; its list is under
+*Further reading* below.
 The earlier deck can be read with
 `git show cc65310:lectures/content/slides/08_Data_Visualisation.md`.
 
@@ -165,11 +182,24 @@ The earlier deck can be read with
 | Roadmap for this Lecture | Removed | It repeated the learning objectives |
 | Q–Q Plots | Removed | It needs the Normal distribution and quantiles, which Lecture 9 teaches |
 | Quantile Dot Plot | Removed | It needs probability, which Lecture 9 teaches |
-| The Seminar Dataset | Removed | The histogram of the real file is now made on slides 10–12 |
-| Practice Exercise | Removed | The same tasks are the homework of the seminar |
-| The Mental Model | Replaced by slide 7, in the first section | Matplotlib is introduced before it is used |
-| Scatter with a Fit | Replaced by slide 79 | The room has no fitting yet. The curve is the formula of the pendulum |
-| Histogram + Density Overlay | Replaced by slide 80 | It used SciPy. The slide now shows counts with error bars from the course file |
+| The Seminar Dataset | Removed | The histogram of the real file is now made on slides 11–13 |
+| Practice Exercise | Removed | The room builds the same figures in the seminar |
+| The Mental Model | Replaced by slide 8, in the first section | Matplotlib is introduced before it is used |
+| Scatter with a Fit | Replaced by slide 80 | The room has no fitting yet. The curve is the formula of the pendulum |
+| Histogram + Density Overlay | Replaced by slide 81 | It used SciPy. The slide now shows counts with error bars from the course file |
+| Further Reading | Parked; the list is below | Slide 86 answers the opening slide in its place |
+
+## Further reading
+
+- **C. O. Wilke**, *Fundamentals of Data Visualization*, free online at
+  clauswilke.com/dataviz: the source of most figures in this lecture.
+- **W. S. Cleveland**, *The Elements of Graphing Data*: the ranking of visual
+  channels.
+- **A. Cairo**, *The Truthful Art*: charts and maps for a general reader.
+- **E. R. Tufte**, *The Visual Display of Quantitative Information*: the
+  data-ink ratio.
+- Every Matplotlib call is documented at matplotlib.org, with a gallery of
+  examples and their code.
 
 ## Take-aways
 

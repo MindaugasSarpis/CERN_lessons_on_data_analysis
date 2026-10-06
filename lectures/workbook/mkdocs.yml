@@ -23,6 +23,9 @@ theme:
 markdown_extensions:
   - admonition
   - attr_list
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
   - tables
   - toc:
       permalink: true
@@ -61,9 +64,9 @@ nav:
   - Seminars:
       - Overview: seminars/overview.md
       - S1 VS Code, Markdown & text editing: seminars/seminar_01.md
-      - At home · Install Python & Git: seminars/install_python_git.md
       - S3 A file as bytes: seminars/seminar_03.md
       - S4 Work on Files from the Shell: seminars/seminar_04.md
+      - S4 · Install Python, Git and PowerShell 7: seminars/install_python_git.md
       - S5 The Project Folder under Git: seminars/seminar_05.md
       - S6 A Line of Text into Numbers: seminars/seminar_06.md
       - S7 The Whole File in Python: seminars/seminar_07.md

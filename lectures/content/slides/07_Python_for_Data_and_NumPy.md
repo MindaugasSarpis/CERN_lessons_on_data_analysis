@@ -35,6 +35,60 @@ layout: quote
 hideInToc: true
 ---
 
+# One Task, **Two Ways**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The file**, `data/raw/D0_KPi.csv`
+
+```text
+M,PT,TAU,IPCHI2
+1880.649,3000.9534,0.00041271152,1299.1675
+1860.6599,2803.4126,0.0001864154,0.34182164
+1913.8755,2542.169,0.00018464602,17.386473
+…
+```
+
+91 583 rows, four columns, 3 926 142 bytes. `M` is a mass in MeV/c². `TAU` is a decay time in ns, and `-100` in that column marks a missing value.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ❓ **Four questions**
+
+1. How many rows does the file have?
+2. What is the mean of `M`?
+3. In how many rows is `TAU` valid?
+4. What is the mean of the valid `TAU`?
+
+🎯 **Guess 4 now.** The first three rows have `TAU` = 0.41, 0.19 and 0.18 ps. 1 ps is 0.001 ns.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Lecture 06 split one line of this file into four numbers. Here all 91 583 are read, twice. First with lists and a loop, which needs three new tools: functions, exceptions and the `csv` module. Then with a NumPy array. Both versions are timed.
+
+</div>
+
+<!--
+Speaker: the file is data/raw/D0_KPi.csv, the one Lecture 04 ran
+column_stats.py on. Lecture 06 split one of its lines by hand. Write the four
+questions on the board, and next to question 4 the guesses of the room. Most
+will say about 0.26 ps, the mean of the three rows. Anyone who remembers
+0.00098 ns from column_stats.py is right: then ask why that is larger than
+all three rows. Both are settled at "Question 4, Answered". (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Learning **Objectives**
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
@@ -80,60 +134,13 @@ hideInToc: true
 </div>
 
 ---
-hideInToc: true
----
-
-# One Task, **Two Ways**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **The file**, `data/raw/D0_KPi.csv`
-
-```text
-M,PT,TAU,IPCHI2
-1880.649,3000.9534,0.00041271152,1299.1675
-1860.6599,2803.4126,0.0001864154,0.34182164
-1913.8755,2542.169,0.00018464602,17.386473
-…
-```
-
-91 583 rows, four columns, 3 926 142 bytes. `M` is a mass in MeV/c². `TAU` is a decay time in ns, and `-100` in that column marks a missing value.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ❓ **Four questions**
-
-1. How many rows does the file have?
-2. What is the mean of `M`?
-3. In how many rows is `TAU` valid?
-4. What is the mean of the valid `TAU`?
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The questions are answered twice. First with lists and a loop, which needs three new tools: functions, exceptions and the `csv` module. Then with a NumPy array. Both versions are timed.
-
-</div>
-
-<!--
-Speaker: the file is the one in data/raw since week 2. The room has parsed one
-of its lines by hand. Write the four questions on the board: they stay there
-for the whole lecture and get their answers on the way. (~2 min)
--->
-
----
 layout: section
 hideInToc: true
 ---
 
 # **Functions**
+
+Lecture 06 turned one line of the file into four numbers: strip, split, `float`. The file has 91 583 such lines, so the steps need a name that can be called again.
 
 <!--
 Speaker: so far every script was a list of steps run once from top to bottom.
@@ -411,6 +418,8 @@ hideInToc: true
 
 # **Exceptions**
 
+`parse_line` works on line 2 of the file. Line 1 is the header, and `float("M")` has no number to return.
+
 <!--
 Speaker: a data file has a header, empty fields and typing errors. A program
 that reads it has to say what happens then. (~1 min)
@@ -657,6 +666,8 @@ hideInToc: true
 
 # Files & the **csv Module**
 
+One line is parsed and a bad line is caught and counted. What is left: open the file, find it from any folder, and split its lines by the rules of CSV.
+
 <!--
 Speaker: three steps to the whole file in Python: open it, find it from any
 laptop, and split its lines by the rules of the CSV format. (~1 min)
@@ -714,14 +725,15 @@ The file then holds one line: `rows 91583`.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`open` gives a file object, and the loop takes one line at a time as a `str` that ends in `\n`. `with` closes the file at the end of the block, also when an exception is raised inside it. `encoding="utf-8"` names the table from bytes to characters. Without it Python takes the default of the system, and that differs between laptops.
+**91 584 lines are one header and 91 583 rows: question 1.** The loop takes one line at a time as a `str` that ends in `\n`. `with` closes the file at the end of the block, also when an exception is raised inside it. `encoding="utf-8"` names the table from bytes to characters. Without it Python takes the default of the system, and that differs between laptops.
 
 </div>
 
 <!--
-Speaker: 91 584 lines are one header line and 91 583 rows. That is the answer
-to question 1, and it agrees with the line count in VS Code. repr shows the
-line break that print would turn into an empty line. (~3 min)
+Speaker: 91 584 agrees with the line count of Lecture 04, wc -l in zsh and
+(Get-Content ...).Count in PowerShell. Write 91 583 next to question 1. repr
+shows the line break that print would turn into an empty line. open gives a
+file object; the for loop asks it for one line at a time. (~3 min)
 -->
 
 ---
@@ -730,53 +742,55 @@ hideInToc: true
 
 # A Path Starts at the **Working Directory**
 
-<div class="grid-2 mt-md gap-md">
+<div class="note-text mt-sm"><code>scripts/first_line.py</code> holds three lines: <code>open("data/raw/D0_KPi.csv", encoding="utf-8")</code>, then print the first line. It is run twice, from two folders.</div>
+
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 `scripts/first_line.py`
-
-```python
-with open("data/raw/D0_KPi.csv",
-          encoding="utf-8") as f:
-    print(f.readline().strip())
-```
-
-Run in the project folder:
+## 🍎 **macOS · zsh**
 
 ```text
-$ python scripts/first_line.py
+% python3 scripts/first_line.py
 M,PT,TAU,IPCHI2
-```
-
-Run in `scripts`:
-
-```text
-$ cd scripts
-$ python first_line.py
-FileNotFoundError: [Errno 2] No such file
-or directory: 'data/raw/D0_KPi.csv'
+% cd scripts
+% python3 first_line.py
+FileNotFoundError: [Errno 2] No such
+file or directory: 'data/raw/D0_KPi.csv'
 ```
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🧭 **Where a relative path begins**
+## 🪟 **Windows · PowerShell**
 
-- A relative path begins at the folder the terminal is in: the working directory. `pwd` prints it
-- It does not begin at the folder of the script
-- The **Run** button of VS Code starts the script in the folder that is open
-- Open the project folder, run from the project folder, write every path from the project folder
-- An absolute path such as `C:\Users\ona\Documents\…` exists on one laptop only. It does not go into a script
+```text
+PS> python scripts/first_line.py
+M,PT,TAU,IPCHI2
+PS> cd scripts
+PS> python first_line.py
+FileNotFoundError: [Errno 2] No such
+file or directory: 'data/raw/D0_KPi.csv'
+```
 
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The script did not change. The folder did, and the prompt shows it: it ends in `scripts %` in zsh and in `\scripts>` in PowerShell. A relative path begins at the working directory, the folder `pwd` prints, not at the folder of the script. The **Run** button of VS Code starts in the folder that is open. So: open the project folder, run from it, write every path from it.
 
 </div>
 
 <!--
-Speaker: do both runs live. This error is the most common one of the first
-weeks with files, and its cause is never in the script. (~2 min)
+Speaker: do both runs live, in either shell; cd scripts is the same line in
+both. This is the cd of Seminar 3, and the prompt is the one read in Lecture
+04. The message is the same on both systems, letter for letter: Python
+prints the path as the script wrote it. An absolute path such as
+C:\Users\ada\Documents\... exists on one laptop only and does not go into a
+script. (~2 min)
 -->
 
 ---
@@ -813,7 +827,7 @@ print(path.stat().st_size)   # 3926142
 - `/` joins the parts. On Windows the first line prints `data\raw\D0_KPi.csv`, and the script is the same on every system
 - A string knows nothing about folders and endings. A `Path` has them as attributes
 - `exists()` answers before `open` fails
-- `st_size` is the size in bytes, the number `ls -l` shows
+- `st_size` is the size in bytes: `wc -c` in zsh, `(Get-Item …).Length` in PowerShell
 - `open(path)` takes a `Path` wherever it takes a string
 
 </div>
@@ -972,8 +986,9 @@ print(n_valid, len(TAU) - n_valid)
 | Mean of `M` | 1864.10 MeV/c² |
 | Rows with a valid `TAU` | 91 534 |
 | Rows with `TAU` = −100 | 49 |
+| Mean of the valid `TAU` | open: the guess stays on the board |
 
-The mean lies at the D⁰ peak near 1865 MeV/c². The 49 are the places that Find showed for `-100` when the file was first opened in VS Code.
+The mean of `M` lies at the D⁰ peak near 1865 MeV/c². One of the 49 is the line Lecture 06 split by hand: `1818.1002,2978.644,-100.0,9901.186`.
 
 </div>
 
@@ -981,7 +996,7 @@ The mean lies at the D⁰ peak near 1865 MeV/c². The 49 are the places that Fin
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Every further question is a further loop: the smallest value, the largest, the mean of the valid `TAU`, the same for `PT`.
+Every further question is a further loop: the smallest value, the largest, the mean of the valid `TAU` with the `if` of Lecture 06, the same for `PT`.
 
 </div>
 
@@ -1057,6 +1072,8 @@ hideInToc: true
 ---
 
 # From Lists to **Arrays**
+
+The loop answers three of the four questions. Every value in its lists is a separate Python object, and the loop pays for that on each of the 91 583 rows.
 
 <!--
 Speaker: the loop works. The question of this section is what it costs, in
@@ -1175,7 +1192,8 @@ hideInToc: true
 ## ✏️ **Install, import, first array**
 
 ```text
-python -m pip install numpy
+% python3 -m pip install numpy
+PS> python -m pip install numpy
 ```
 
 ```python
@@ -1193,7 +1211,7 @@ print(t10.sum())     # 32.68
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`pip` is the installer that comes with Python. It fetches the library from the Python Package Index, pypi.org. On macOS the command starts with `python3`. `np` is the name everyone gives the library on import.
+`pip` is the installer that comes with the Python of Seminar 4. It fetches the library from the Python Package Index, pypi.org. After the name of the program the line is the same in both shells. `np` is the name everyone gives the library on import.
 
 </div>
 
@@ -1247,7 +1265,7 @@ Each of these is taken apart in the rest of the lecture.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The loop gave 1864.1045817826146. The two means differ from the 14th digit on. NumPy adds the values in another order, and every addition of floats rounds. A float64 holds 15 to 16 digits, so both are right to that precision.
+The loop gave 1864.1045817826146. The two means agree in 14 digits and differ from the 15th on. NumPy adds the values in another order, and every addition of floats rounds. A float64 holds 15 to 16 digits, so both are right to that precision.
 
 </div>
 
@@ -1282,8 +1300,8 @@ hideInToc: true
 import time
 import numpy as np
 
-array = np.linspace(1800, 1900, 91583)
-values = array.tolist()            # the same numbers as a list
+array = np.linspace(1800, 1900, 91583)  # 91 583 evenly spaced values, 1800 to 1900
+values = array.tolist()                 # the same numbers as a list
 
 t0 = time.perf_counter()
 for repeat in range(20):
@@ -1312,6 +1330,8 @@ hideInToc: true
 ---
 
 # `dtype` & **Shape**
+
+`np.loadtxt` gave one block of 91 583 × 4 numbers, 8 bytes each. An array is no more than that: one type for every value, and a number of rows and columns.
 
 <!--
 Speaker: an array is described by two things: the type of its values and how
@@ -1470,41 +1490,16 @@ Near 1.7 × 10⁸ the step from one `float32` to the next is 16. Towards the end
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`.sum()` adds in pairs, so its partial sums stay small for longer and lose less. Store in `float32` when 7 digits are enough: the file takes half the memory. Compute sums in `float64`.
+1880.6490478515625 is the float32 of 1880.649 from Lecture 03, The Steps Between Floats. The step there was 0.000 12; near the total it is 16. `.sum()` adds in pairs, so its partial sums stay small for longer. Store in `float32` when 7 digits are enough, and sum in `float64`.
 
 </div>
 
 <!--
 Speaker: Lecture 03 said that adding many small numbers to one large number
 loses the small ones. Here it is on the data file: 590 MeV off in the sum, 6
-keV off in the mean. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# Try It — **Creating Arrays**
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-
-print(np.array([20, 30, 40]))
-print(np.zeros(4))
-print(np.arange(20, 101, 10))
-print(np.linspace(1815, 1915, 5))
-print(np.zeros((2, 3)))
-```
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-`np.array` takes a list. `np.zeros(n)` gives *n* zeros to be filled later. `np.arange(start, stop, step)` counts like `range` and leaves the stop out. `np.linspace(start, stop, n)` gives *n* values at equal distances and includes both ends. `np.zeros((2, 3))` has two rows and three columns.
-
-</div>
-
-<!--
-Speaker: run it, then ask for the nine lengths of the pendulum table in
-metres: np.arange(20, 101, 10) / 100, or np.linspace(0.2, 1.0, 9). (~3 min)
+keV off in the mean. The step grows with the number: 0.000 12 near 1880, 16
+near 1.7 × 10⁸, because 2²⁷ < 1.7 × 10⁸ < 2²⁸ and 24 binary digits leave
+2⁽²⁷⁻²³⁾ = 16 as the last place. (~3 min)
 -->
 
 ---
@@ -1564,6 +1559,8 @@ hideInToc: true
 ---
 
 # Indexing, Slicing & **Masks**
+
+An array has a type and a shape. Question 4 needs only part of it: the rows in which `TAU` is not −100.
 
 <!--
 Speaker: three ways to take a part of an array: by position, by a range of
@@ -1773,36 +1770,41 @@ These are questions 1 and 3, answered without a loop: 91 583 rows, 91 534 of the
 hideInToc: true
 ---
 
-# What 49 Rows Do to a **Mean**
+# Question 4, **Answered**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact">
 
-## ✏️ **With and without the mask**
+## ✏️ **The valid `TAU`, in ps**
 
 ```python
-print(TAU.mean())         # -0.05252210273908192
-print(TAU[mask].mean())   # 0.000981802006321804
-print(TAU.min())          # -100.0
+valid = TAU[mask] * 1000
+print(valid.mean())        # 0.981802006321804
+print(np.median(valid))    # 0.27245521
+print(valid.max())         # 578.7994
+below = valid < valid.mean()
+print(below.mean())        # 0.8424847597614001
+print(TAU.mean() * 1000)   # -52.52210273908192
 ```
 
-The first is −52.5 ps. The second is +0.98 ps.
+`np.median` is the value in the middle of the sorted column.
 
 </div>
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact table-compact">
 
-## 🧮 **Where −0.0525 comes from**
+## 🎯 **The guess against the file**
 
-```text
-sum of the 91 534 valid values      89.868
-49 values of -100                -4900.000
-sum of all 91 583 values         -4810.132
+| | ps |
+| --- | --- |
+| The three rows: the guess | 0.26 |
+| Median of the 91 534 | 0.27 |
+| Mean of the 91 534 | **0.98** |
+| Largest | 578.8 |
+| Mean with the 49 marks | −52.5 |
 
--4810.132 / 91 583  =  -0.0525 ns
-   89.868 / 91 534  =   0.000982 ns
-```
+84 % of the decay times lie below the mean. The 1 453 above 10 ps are 1.6 % of the rows and carry 35 % of the sum.
 
 </div>
 
@@ -1810,15 +1812,17 @@ sum of all 91 583 values         -4810.132
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-49 rows are 0.05 % of the file. They give the mean the wrong sign and make it 53 times too large. `-100` is not a measurement. It is a mark for "no value", and it has to be taken out before any number is computed from the column. The minimum shows it at once: no decay time is −100 ns.
+The guess was right about a typical row: the median is 0.27 ps. A few long decay times pull the mean up to 0.98 ps. The −52.5 ps is the −0.0525 ns that `column_stats.py` printed in Lecture 04, with 49 × (−100) in the sum. One mask takes it out.
 
 </div>
 
 <!--
-Speaker: this is question 4. Ask the room for the answer before showing the
-right-hand card: the mean of the valid values is 0.98 ps, about one
-picosecond. Then ask what a histogram of the unmasked column would look like.
-(~3 min)
+Speaker: this is question 4. Take the guesses from the board first, then
+show the left card line by line. Ask why the mean is four times the three
+rows before showing the table: the answer is the long tail, 1 453 rows above
+10 ps. Lecture 06 saw the other half of the story on four rows: one -100
+made their mean -24.9998. Here 49 marks in 91 583 rows, 0.05 %, give the
+mean the wrong sign. (~4 min)
 -->
 
 ---
@@ -1905,6 +1909,8 @@ hideInToc: true
 
 # Arithmetic & **Broadcasting**
 
+A comparison ran on every value at once and gave a mask. Arithmetic does the same, also between two arrays of different shapes.
+
 <!--
 Speaker: an operator between arrays works on all their values at once. This
 section is the rule for which shapes may meet in one operation. (~1 min)
@@ -1966,45 +1972,29 @@ hideInToc: true
 
 # *g* from Nine Pendulums, **Without a Loop**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+```py {monaco-run} {autorun:false}
+import numpy as np
 
-```python
 length_cm = np.array([20, 30, 40, 50, 60, 70, 80, 90, 100])
 t10 = np.array([9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01])
 
 T = t10 / 10                                    # one swing, s
 g = 4 * np.pi**2 * (length_cm / 100) / T**2     # m/s^2
-
 print(g.round(2))     # [9.7  9.7  9.93 9.75 9.87 9.74 9.86 9.74 9.86]
 print(g.mean())       # 9.795148016389398
 ```
 
-</div>
+<div class="card card-info card-glass pad-compact mt-md">
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧮 **The formula, once**
-
-*T* = 2π√(*L*/*g*) solved for *g* is *g* = 4π²*L*/*T*². The line for `g` is that formula as it is written on paper. It runs on nine lengths and nine times at once.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## ✅ **The result**
-
-Nine values between 9.70 and 9.93 m/s², with a mean of 9.80. Each row of the table is one measurement of *g*.
-
-</div>
+The nine rows of `data/processed/pendulum_script.csv`, the table `clean_pendulum.py` writes. Lecture 06 divided each `t10` by 10 inside a `for` loop; `t10 / 10` does all nine. *T* = 2π√(*L*/*g*) solved for *g* is *g* = 4π²*L*/*T*², and the line for `g` is that formula as written on paper. Nine values between 9.70 and 9.93 m/s², with a mean of 9.80.
 
 </div>
 
 <!--
-Speaker: this is the pendulum table of week 2. Every operand is either an
-array of nine values or a single number. The single numbers, 10, 100 and
-4π², are used for all nine. That is the first case of broadcasting. (~3 min)
+Speaker: run it. Every operand is either an array of nine values or a
+single number. The single numbers, 10, 100 and 4π², are used for all nine:
+that is the first case of broadcasting. Each row of the table is one
+measurement of g. (~3 min)
 -->
 
 ---
@@ -2057,49 +2047,6 @@ The second line of the output is measured minus predicted for each length. No di
 hideInToc: true
 ---
 
-# Two Shapes in One Operation: **Broadcasting**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📐 **The rule**
-
-1. Write the two shapes one under the other, aligned at the right
-2. Compare the lengths column by column, from the right
-3. Two lengths fit if they are equal, or if one of them is 1. A missing length counts as 1
-4. Where a length is 1, that array is used again for every position of the other
-
-If one pair does not fit, NumPy raises `ValueError`.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 🧮 **Shapes that meet**
-
-| First | Second | Result |
-| --- | --- | --- |
-| `(9,)` | a number | `(9,)` |
-| `(2, 3)` | `(3,)` | `(2, 3)` |
-| `(2, 3)` | `(2, 1)` | `(2, 3)` |
-| `(2, 3)` | `(2,)` | error: 3 against 2 |
-| `(91583, 4)` | `(4,)` | `(91583, 4)` |
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-`t10 / 10` was the first row of the table: nine values and one number. Nothing is copied in memory. The compiled loop reads the same value again.
-
-</div>
-
----
-hideInToc: true
----
-
 # Broadcasting: a Worked **2-by-3** Example
 
 <img class="fig" src="/figures/viz_arrays_broadcasting.svg" style="display:block;margin:0.3rem auto 0;max-height:240px;">
@@ -2128,7 +2075,7 @@ print(A + two)
 
 `ValueError: operands could not be broadcast together with shapes (2,3) (2,)`
 
-From the right, 3 stands against 2. `two.reshape(2, 1)` is the column, and it fits.
+From the right, 3 meets 2: no pair. `two.reshape(2, 1)` is the column, and it fits.
 
 </div>
 
@@ -2139,6 +2086,49 @@ Speaker: work the two additions on the board before showing the figure. The
 outputs are [[11 22 33] [14 25 36]] and [[101 102 103] [204 205 206]]. The
 dashed cells are not in memory. (~4 min)
 -->
+
+---
+hideInToc: true
+---
+
+# Two Shapes in One Operation: **Broadcasting**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **The rule behind the three additions**
+
+1. Write the two shapes one under the other, aligned at the right
+2. Compare the lengths column by column, from the right
+3. Two lengths fit if they are equal, or if one of them is 1. A missing length counts as 1
+4. Where a length is 1, that array is used again for every position of the other
+
+If one pair does not fit, NumPy raises `ValueError`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🧮 **Shapes that meet**
+
+| First | Second | Result |
+| --- | --- | --- |
+| `(9,)` | a number | `(9,)` |
+| `(2, 3)` | `(3,)` | `(2, 3)` |
+| `(2, 3)` | `(2, 1)` | `(2, 3)` |
+| `(2, 3)` | `(2,)` | error: 3 against 2 |
+| `(91583, 4)` | `(4,)` | `(91583, 4)` |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`t10 / 10` was the first row of the table: `(9,)` and a number. Nothing is copied in memory. The compiled loop reads the same value again.
+
+</div>
 
 ---
 hideInToc: true
@@ -2178,7 +2168,7 @@ print(data.mean(axis=0))
  -5.25221027e-02  4.57513042e+02]
 ```
 
-The four numbers are the means of `M`, `PT`, `TAU` and `IPCHI2` over all 91 583 rows. The third is the −0.0525 from before.
+The four numbers are the means of `M`, `PT`, `TAU` and `IPCHI2` over all 91 583 rows. The third is the −0.0525 ns of `TAU` with its 49 marks.
 
 </div>
 
@@ -2190,6 +2180,8 @@ hideInToc: true
 ---
 
 # Summary Numbers & the **Histogram**
+
+The mean of the valid `TAU` is 0.98 ps, and its median 0.27 ps. One number does not describe a column of 91 583 values: a few more do, and counts in bins.
 
 <!--
 Speaker: a column of 91 583 values is described by a few numbers, and then by
@@ -2232,10 +2224,11 @@ print(x.mean())                                  # 5.0
 print(np.sqrt(((x - x.mean()) ** 2).mean()))     # 2.0
 print(x.std())                                   # 2.0
 
-print(M.mean())    # 1864.1045817826453
+print(g.std())     # 0.07994024113139558
 print(M.std())     # 25.564956548991027
-print(M.min(), M.max())    # 1766.2096 2453.6584
 ```
+
+The nine values of *g* scatter by 0.08 m/s² around 9.80. The masses scatter by 25.56 MeV/c² around 1864.10.
 
 </div>
 
@@ -2249,8 +2242,9 @@ print(M.min(), M.max())    # 1766.2096 2453.6584
 
 <!--
 Speaker: the standard deviation is defined here by its steps and used as a
-measure of width. The mass column has a mean of 1864.10 and a standard
-deviation of 25.56 MeV/c². (~3 min)
+measure of width. g is the array of nine values from the pendulum slide;
+g.std(ddof=1) is 0.085. Ask the room which number is the better summary of
+nine measurements of g: 9.80 alone, or 9.80 with 0.08. (~3 min)
 -->
 
 ---
@@ -2275,7 +2269,7 @@ print(good.max(axis=0))
 print(np.median(good, axis=0))
 ```
 
-Each line prints four numbers, one for each column. The median is the value in the middle when the column is sorted.
+Each line prints four numbers, one for each column. `np.median` is the middle value of question 4, now with `axis`.
 
 </div>
 
@@ -2297,7 +2291,7 @@ Each line prints four numbers, one for each column. The median is the value in t
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ For `M` the mean and the median agree, and the standard deviation says how wide the column is. For `IPCHI2` the mean is 436 and the median is 6.29: a few very large values carry the mean. Read the minimum, the maximum and the median before trusting a mean.
+⚠️ For `M` the mean and the median agree, and the standard deviation says how wide the column is. For `IPCHI2` the mean is 436 and the median is 6.29: a few very large values carry the mean, as they did for `TAU`. Read the minimum, the maximum and the median before trusting a mean.
 
 </div>
 
@@ -2456,47 +2450,40 @@ hideInToc: true
 
 # `np.histogram`: Counting in **Bins**
 
-<div class="grid-2 mt-md gap-md">
+```py {monaco-run} {autorun:false}
+import numpy as np
+
+masses = [1880.649, 1860.6599, 1913.8755, 1888.7571, 1862.51, 1826.5465,
+          1871.8599, 1911.6691, 1898.9976, 1827.2965, 1856.4816]
+
+counts, edges = np.histogram(masses, bins=4, range=(1825, 1925))
+print(counts)     # [2 4 3 2]
+print(edges)      # [1825. 1850. 1875. 1900. 1925.]
+print(np.histogram([1850, 1925, 1930], bins=4, range=(1825, 1925))[0])   # [0 1 0 1]
+```
+
+<div class="grid-2 gap-md mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🧮 **Nine values, three bins**
-
-```python
-x = np.array([1.2, 1.9, 2.1, 2.5, 2.7,
-              3.3, 3.8, 3.9, 4.0])
-counts, edges = np.histogram(x, bins=3, range=(1, 4))
-print(counts)    # [2 3 4]
-print(edges)     # [1. 2. 3. 4.]
-```
-
-```text
-bin 0   from 1 to 2    1.2 1.9            2
-bin 1   from 2 to 3    2.1 2.5 2.7        3
-bin 2   from 3 to 4    3.3 3.8 3.9 4.0    4
-```
+The first 11 masses of the file. Lecture 06 counted them with a dict and `m // 25`: 2, 4, 3 and 2. One call gives the same counts, and the `edges`: four bins have five.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🧩 **What comes back**
-
-- The range is cut into `bins` intervals of equal width. Their borders are the `edges`
-- `counts[i]` is the number of values from `edges[i]` up to `edges[i + 1]`
-- Three bins have four edges: `len(edges)` is `len(counts) + 1`
-- A value on an edge goes to the bin on its right. The last bin takes its right edge too: `4.0` is counted
-- A value outside the range is not counted at all
+A value on an edge goes to the bin on its right: 1850 is in bin 1. The last bin takes its right edge too: 1925 is counted. 1930 lies outside the range and is not counted.
 
 </div>
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-The function returns two arrays, and the two names on the left take them. No picture is made. The counts are numbers to compute with.
-
-</div>
+<!--
+Speaker: run it. counts[i] is the number of values from edges[i] up to
+edges[i + 1]. The function returns two arrays, and the two names on the left
+take them; the [0] on the last line takes only the counts. No picture is
+made: the counts are numbers to compute with. (~3 min)
+-->
 
 ---
 hideInToc: true
@@ -2616,43 +2603,35 @@ it prints the same four lines. (~2 min)
 hideInToc: true
 ---
 
-# **Recap** — You Can Now…
+# **Recap** — Four Questions, **Two Ways**
 
-<div class="grid-2 gap-md mt-sm">
+<div class="grid-2 gap-md mt-md">
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-success card-glass pad-compact table-compact">
 
-✅ Write a **function** that takes values in through parameters and gives one back with `return`
+## ✅ **The four questions, answered**
 
-</div>
+| Question | Answer |
+| --- | --- |
+| Rows | 91 583 |
+| Mean of `M` | 1864.10 MeV/c² |
+| Rows with a valid `TAU` | 91 534 |
+| Mean of the valid `TAU` | 0.98 ps |
 
-<div class="card card-success card-glass pad-compact">
-
-✅ Catch a named **exception** with `try` and `except`, count the rows that were skipped
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Build a path with **pathlib** and read a CSV file with **csv.reader** into lists
+The guess from three rows was 0.26 ps, and the median is 0.27 ps. With the 49 marks left in, the mean is −52.5 ps.
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-✅ Read the file with **np.loadtxt** and state the `dtype` and the `shape` of the array
+## ⏱️ **Two ways, the same answers**
 
-</div>
+| On 91 583 rows | Loop | Array |
+| --- | --- | --- |
+| Read the file | 61 ms | 18 ms |
+| Mean and std of `M` | 6.7 ms | 0.14 ms |
 
-<div class="card card-success card-glass pad-compact">
-
-✅ Select with an index, a slice and a **mask**, and combine masks with `&`, `|`, `~`
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Compute on whole arrays, with **broadcasting** and `axis`, and count in bins with **np.histogram**
+The two means of `M` agree to 14 digits. The array reads 3.4 times faster and computes 47 times faster, with no loop written.
 
 </div>
 
@@ -2662,14 +2641,15 @@ hideInToc: true
 
 ## 🔬 **Before computing with a column**
 
-Print its `shape`, its `dtype`, its minimum and its maximum. Count the values that mark "missing" and mask them. Then take the mean.
+Print its `shape`, its `dtype`, its minimum, its maximum and its median. Count the values that mark "missing" and mask them. Then take the mean.
 
 </div>
 
 <!--
-Speaker: the loop took 6.7 ms for a mean and a standard deviation and the
-array 0.14 ms. The 49 rows changed the sign of a mean. Those are the two
-numbers to remember. (~1 min)
+Speaker: read the left card against the board: the four answers, and the
+guesses next to question 4. The times are the median of 51 runs on one
+laptop, from the slide "Measured: Loop Against Array". Do not cut this
+slide. (~2 min)
 -->
 
 ---

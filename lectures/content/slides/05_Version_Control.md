@@ -19,8 +19,8 @@ layout: quote
 # **Version control** keeps every state a project went through, with who changed what, when and why.
 
 <!--
-Speaker: everyone in the room has a folder with files named final, final_v2,
-final_corrected. Ask for a show of hands, then go on. (~1 min)
+Speaker: read the line and go straight to the two copies of the table.
+(~1 min)
 -->
 
 ---
@@ -73,7 +73,106 @@ hideInToc: true
 
 <!--
 Speaker: the order of the lecture is the order of the cards. First what Git
-stores, then the commands. (~1 min)
+stores, then the commands, and at the end the question of the two copies of
+the table, answered. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Copies of the **Table**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Lecture 4 wrote into the README: the cleaned pendulum table has 97 bytes and the SHA-256 `be05af03…fff0870b`. Here are two copies of `pendulum.csv`, one saved on 13 October and one on 20 October. Both have 97 bytes.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🍎 **macOS · zsh** · 🪟 **Windows · PowerShell**
+
+```text
+% shasum -a 256 13oct/pendulum.csv 20oct/pendulum.csv
+be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  13oct/pendulum.csv
+17dbc893e5cace7a45153d89fe7d07d9a3881fc59c3b37a2b1e8e632a1440bc9  20oct/pendulum.csv
+
+PS> (Get-FileHash 13oct/pendulum.csv, 20oct/pendulum.csv).Hash
+BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
+17DBC893E5CACE7A45153D89FE7D07D9A3881FC59C3B37A2B1E8E632A1440BC9
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+The copy of 13 October is the table of the README. The copy of 20 October is another table of the same size. The checksum says that the two differ. It does not say where, who changed it, or why.
+
+</div>
+
+<!--
+Speaker: ask first: which copy does the README mean? The room reads be05 off
+the README and finds it in the first line. Then: what is different in the
+other one? Nobody can say from 64 digits. A show of hands while they think:
+who has folders or files named final, final_v2, final_corrected? (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which **Line**, and **Who**?
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **The same line in both shells**
+
+```text
+git diff --no-index 13oct/pendulum.csv 20oct/pendulum.csv
+diff --git a/13oct/pendulum.csv b/20oct/pendulum.csv
+index 2b7ca66..92775c2 100644
+--- a/13oct/pendulum.csv
++++ b/20oct/pendulum.csv
+@@ -1,5 +1,5 @@
+ length_cm,t10_s
+-20,9.02
++20,9.03
+ 30,11.05
+ 40,12.61
+ 50,14.23
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🧾 **Three questions**
+
+| Question | Answer |
+| --- | --- |
+| Which copy is the README's? | 13 October, by the checksum |
+| Which line differs? | Line 2: `9.02` against `9.03`, by `git diff` |
+| Who changed it, when, and why? | Nothing in either folder says |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`git diff` compares two files line by line, also outside a project. A line with `-` is in the first file only, a line with `+` in the second only, a line with a space in both.
+
+</div>
+
+<!--
+Speaker: Git was installed in Seminar 4; this command needs no repository.
+Read the two marked lines aloud. Then point at the empty third row: was 9.03
+read from the lab book, or typed by mistake? The two folders cannot tell.
+On Windows, Git as installed first prints two warnings, "LF will be replaced
+by CRLF"; the diff below them is the same. (~3 min)
 -->
 
 ---
@@ -89,9 +188,9 @@ hideInToc: true
 ## ⚠️ **What goes wrong**
 
 - A file that changes gets copied: `report_final.md`, `report_final_v2.md`, `report_final_v2_corrected.md`
-- The names do not say what changed between two copies, or why
+- A checksum says that two copies differ, and `git diff` says in which line
+- No copy says who changed the line, when, or why
 - Two copies edited on the same day have to be joined by hand
-- The same happens to a script, a table and a README
 - A change that turned out wrong can be taken back only if the older copy was kept
 
 </div>
@@ -104,6 +203,11 @@ hideInToc: true
 
 </div>
 
+<!--
+Speaker: the third row of the table is the gap. A copy keeps the bytes and the
+name; who, when and why live in somebody's memory. (~2 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -115,8 +219,8 @@ hideInToc: true
 ## 🔍 **What a version control system records**
 
 - Each state of the files, and what changed since the state before
-- Who made the change, when, and a note that says why
-- Any earlier state can be brought back, and any two states can be compared line by line
+- Who made the change, when, and a note that says why: the third row of the table
+- Any earlier state can be brought back, and any two states can be compared line by line, as `git diff` compared the two copies
 - **Git** is the version control system of nearly all research software. It is free, and it works on a folder of the laptop without any server
 
 </div>
@@ -129,98 +233,17 @@ project folder of the course is the folder that goes under Git today. (~2 min)
 -->
 
 ---
-hideInToc: true
----
-
-# Two Lines of Work, **Joined**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-Two people, or one person on two days, change the same starting state in different ways. The histories diverge. Git joins them: changes to different lines are combined without help, and changes to the same line are shown to a person who decides.
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="text-center">
-
-<img src="/figures/versions.svg" style="max-height: 270px; display: inline-block;">
-
-</div>
-
-<div class="text-center">
-
-<img src="/figures/merge.svg" style="max-height: 270px; display: inline-block;">
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Git Is Installed: a **Check**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⌨️ **In the terminal of VS Code**
-
-```text
-$ git --version
-git version 2.54.0 (Apple Git-157)
-$ git config --global user.name
-Mindaugas Sarpis
-$ git config --global user.email
-mindaugas.sarpis@cern.ch
-```
-
-Your version number differs. On Windows it ends in `.windows.1`, and the terminal is **Git Bash**.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ➕ **Three more settings, today**
-
-```text
-$ git config --global init.defaultBranch main
-$ git config --global pull.rebase false
-$ git config --global core.autocrlf false
-```
-
-The first names the first branch of a new repository `main` instead of `master`. The second lets `git pull` join two histories by a merge. The third keeps Git for Windows from rewriting line endings, so every file keeps its bytes. None of them prints anything.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ An empty answer means the setting is missing. Set it with `git config --global user.name "Your Name"`, and the same for `user.email`. Both are written into every commit you make.
-
-</div>
-
-<!--
-Speaker: installation and the two settings on the left were homework. Ask
-for hands: who gets a version number, who gets a name. The three lines on the
-right are typed now, on every laptop. Without the third, a clone on Windows
-gets CRLF line endings: the data file grows by 91 584 bytes and its checksum
-no longer matches. (~3 min)
--->
-
----
 layout: section
 hideInToc: true
 ---
 
 # The **Model**
 
+A checksum says that a file changed, and a diff says which line. To keep who, when and why as well, Git stores every version under a name computed from its bytes.
+
 <!--
 Speaker: before any command, what Git stores. Four ideas, each built on the
-hash of Lecture 03: a blob, a tree, a commit, a branch. With the model the
+checksum of Lecture 4: a blob, a tree, a commit, a branch. With the model the
 commands need no memorising. (~30 sec)
 -->
 
@@ -253,7 +276,7 @@ analysis-project_2026-10-20/
 analysis-project_2026-10-20_fixed/
 ```
 
-The project holds 3.95 MB in eight files. Twelve copies take 47 MB, and 3.93 MB of each copy are the same data file.
+After Seminar 4 the project holds 7.88 MB in twelve files. Twelve copies take 94.5 MB, and 7.85 MB of each copy are the same two data files.
 
 </div>
 
@@ -261,14 +284,14 @@ The project holds 3.95 MB in eight files. Twelve copies take 47 MB, and 3.93 MB 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Git keeps the same four things and stores each content once. The tool for it is the hash of Lecture 03: a short number computed from all the bytes of a content.
+Git keeps the same four things and stores each content once. The tool for it is a checksum, as in Lecture 4: a short number computed from all the bytes of a content.
 
 </div>
 
 <!--
-Speaker: a copied folder has the first two items and loses the last two. It
-also cannot say what differs between two copies without a comparison of every
-file. (~2 min)
+Speaker: a copied folder has the first two items and loses the last two. The
+two copies of the table were exactly this case. 3 926 142 bytes of D0_KPi.csv
+plus 3 924 368 of D0_valid.csv are 7.85 MB in every copy. (~2 min)
 -->
 
 ---
@@ -281,92 +304,104 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔢 **`git hash-object`**
+## 🍎 **macOS · zsh**
 
 ```text
-$ echo "hello" | git hash-object --stdin
+% echo "hello" | git hash-object --stdin
 ce013625030ba8dba906f756967f9e9ca394464a
-$ echo "hallo" | git hash-object --stdin
+% echo "hallo" | git hash-object --stdin
 4cf5aa5f9a644263dbe3d6e78bcbef45487a802c
 ```
-
-`echo` writes six bytes: five letters and a line break.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
+## 🪟 **Windows · PowerShell**
+
+```text
+PS> echo "hello" | git hash-object --stdin
+ef0493b275aa2080237f676d2ef6559246f56636
+PS> echo "hallo" | git hash-object --stdin
+dc1f818dcffa4047762578fcf6e6f394c74b2497
+```
+
+</div>
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-info card-glass pad-compact">
+
 ## 📏 **What the number is**
 
-- 40 hex digits are 160 bits. The hash function is **SHA-1**, an older relative of SHA-256
-- The same six bytes give the same 40 digits on every computer
+- 40 hex digits are 160 bits. The hash is **SHA-1**, an older relative of the SHA-256 of Lecture 4, which has 64 digits
 - One changed letter changes the whole number
 - Git calls the number the **id** of the content, and stores the content under it
 
 </div>
 
+<div class="card card-warning card-glass pad-compact">
+
+## 🔀 **The same line, two ids**
+
+`hello` gives `ce013625…` in zsh and `ef0493b2…` in PowerShell. The command is the same, so the bytes that reached Git must differ.
+
 </div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-A content that occurs twice has one id, so it is stored once. A store in which the name of a thing is computed from the thing is called **content-addressed**.
 
 </div>
 
 <!--
-Speaker: type both lines live. The command needs no repository. Ask the room
-to compare the first four digits with a neighbour. (~2 min)
+Speaker: type the hello line live in both shells and let the room compare the
+first four digits with a neighbour: ce01 on a Mac, ef04 on Windows. The
+command needs no repository. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Compute It **Yourself**
+# What Git **Hashes**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+62 6c 6f 62 20 36 00 68 65 6c 6c 6f 0a          zsh: 13 bytes
+b  l  o  b     6     h  e  l  l  o  LF
+
+62 6c 6f 62 20 37 00 68 65 6c 6c 6f 0d 0a       PowerShell: 14 bytes
+b  l  o  b     7     h  e  l  l  o  CR LF
+```
+
+</div>
 
 <div class="grid-2 gap-md mt-md">
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## ❌ **The plain SHA-1 is another number**
+## 🧾 **A header, then the bytes**
 
-```text
-$ echo "hello" | shasum
-f572d396fae9206628714fb2ce00f72e94f2258f  -
-```
+The header is the word `blob`, a space, the number of bytes as decimal text, and one zero byte. A **blob** is Git's word for the content of a file. The id is the SHA-1 of the header and the content together.
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
-## ✅ **Git hashes a header, then the bytes**
+## ↩️ **Where the 7 comes from**
 
-```text
-$ printf 'blob 6\0hello\n' | shasum
-ce013625030ba8dba906f756967f9e9ca394464a  -
-```
+`echo` in zsh ends the text with `0a`: 6 bytes. PowerShell hands the text to `git` with `0d 0a` at the end, as it ended the lines of `copy.csv` in Lecture 4: 7 bytes. Other bytes, so another id.
 
 </div>
 
 </div>
 
-<div class="card card-primary card-glass pad-compact mt-md">
-
-```text
-62 6c 6f 62 20 36 00 68 65 6c 6c 6f 0a
-b  l  o  b     6     h  e  l  l  o         13 bytes are hashed
-```
-
-The header is the word `blob`, a space, the number of bytes as decimal text, and one zero byte. A **blob** is Git's word for the content of a file. `printf` writes exactly what it is given: `\0` is the zero byte and `\n` the line break.
-
-</div>
-
-<div class="note-text mt-sm">Git Bash and Linux: <code>sha1sum</code> in place of <code>shasum</code>.</div>
+<div class="note-text mt-sm">Read the bytes with the ASCII table of Lecture 3: 62 is b, 20 the space, 36 the digit 6, 37 the digit 7.</div>
 
 <!--
-Speaker: the id is not secret knowledge of Git. It is a SHA-1 that anyone can
-compute with the tools of Lecture 04. Read the 13 bytes with the ASCII table:
-62 is b, 20 is the space, 36 is the digit 6. (~3 min)
+Speaker: the id is not secret knowledge of Git: it is a SHA-1 of bytes that
+can be written down. The size in the header is the length of the content,
+6 or 7. (~3 min)
 -->
 
 ---
@@ -377,11 +412,11 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
+## ⌨️ **The same line and the same answer in both shells**
+
 ```text
-$ git hash-object data/raw/D0_KPi.csv
+git hash-object data/raw/D0_KPi.csv
 4a45f2be5e087d6b6dccd287fe1bfd36fe659aeb
-$ (printf 'blob 3926142\0'; cat data/raw/D0_KPi.csv) | shasum
-4a45f2be5e087d6b6dccd287fe1bfd36fe659aeb  -
 ```
 
 </div>
@@ -392,7 +427,7 @@ $ (printf 'blob 3926142\0'; cat data/raw/D0_KPi.csv) | shasum
 
 ## 💻 **The same on every laptop**
 
-The file has 3 926 142 bytes on every laptop in the room, so every laptop prints these 40 digits. A copy under another name has the same id: the name and the date of a file are not hashed.
+Git hashes `blob 3926142`, a zero byte, then the 3 926 142 bytes of the file. A file is read as it is, so no line ending is added. The SHA-256 of Lecture 4, `25c3c972…5136`, is another function of the same bytes. A copy under another name has the same id: the name and the date of a file are not hashed.
 
 </div>
 
@@ -400,16 +435,17 @@ The file has 3 926 142 bytes on every laptop in the room, so every laptop prints
 
 ## 🗜️ **Stored once, compressed**
 
-Git keeps the blob in `.git/objects/4a/`, in a file named by the other 38 digits. That file has 1 906 370 bytes. Git compresses with DEFLATE, the method of zip.
+`git add` keeps the blob in `.git/objects/4a/`, in a file named by the other 38 digits. That file has 1 906 370 bytes. Git compresses with DEFLATE, the method of zip.
 
 </div>
 
 </div>
 
 <!--
-Speaker: run the first command in the project folder and let the room read
-the first six digits aloud. A laptop that prints another number has another
-file: it was saved from a spreadsheet. (~2 min)
+Speaker: run the line in the project folder and let the room read the first
+six digits aloud: 4a45f2 in zsh and in PowerShell. A laptop that prints
+another number has another file, for example one saved from a spreadsheet.
+(~2 min)
 -->
 
 ---
@@ -418,15 +454,62 @@ hideInToc: true
 
 # A Folder Is a **List**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+## 📋 **The list of checksums of Lecture 4**
 
 ```text
-$ git cat-file -p 13419c27
-100644 blob b6af2caae9c7036b94ecf06a89cab6672562c43c    .gitignore
-100644 blob 42b2fadc2fa4a689102a57b8137a3a2dc681fdad    README.md
-040000 tree 23affee8da0d5649f12054e3601ff1ad75ccee01    data
+cat data/checksums.txt
+25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136  data/raw/D0_KPi.csv
+26b8b610c1191a6f3c9802605e247e6514344c684e5e5faaf62a635a64ff31f8  data/raw/pendulum.csv
+```
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🌳 **The list Git keeps for `data/raw`**
+
+```text
+git cat-file -p dba72972
+100644 blob 4a45f2be5e087d6b6dccd287fe1bfd36fe659aeb    D0_KPi.csv
+100644 blob 2178dfb0fe9f46a9a5dc901aa24c9a4e93226797    pendulum.csv
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Both lists have one line per file: a hash and a name. Git's list of a folder is a **tree**. It uses the blob ids and puts a mode and a kind in front: `100644 blob` is an ordinary file. The tree is itself content, so it has an id of its own: `dba72972…`.
+
+</div>
+
+<!--
+Speaker: git cat-file -p prints any object in readable form. This output and
+those after it come from the lecturer's project after three commits; the
+data/raw tree is the same on every laptop with the same two files. In
+PowerShell cat is Get-Content, so the first line is the same. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Lists Inside **Lists**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+git cat-file -p 7f49025f
+100644 blob 920b0391c5e30f971bf2bcf74f42bfa8569b8c8d    .gitignore
+100644 blob 6f96530a19b6aedd751f0bf988f5ef9979af6405    README.md
+040000 tree b87462b390527ddbbe50168789e744c1b79ca651    data
 040000 tree 0ba5815945791155813636448a8fe4eac31909c8    results
-040000 tree 3290e4281557f2189862baa360a4b499be499327    scripts
+040000 tree 8fdb30ccde63489dca7dfffdf2cc629e430e0ef1    scripts
+git cat-file -p b87462b3
+100644 blob e1ab0aef656dc5738b3d6cfeed4ff40319c3f8d3    checksums.txt
+040000 tree d89887278446434e9ef511fbd83c57ccfa4e41ec    processed
+040000 tree dba72972670cd75d7694a3b71c531bb6465b9195    raw
 ```
 
 </div>
@@ -435,9 +518,9 @@ $ git cat-file -p 13419c27
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📋 **A tree**
+## 📂 **A subfolder is a tree**
 
-One line per entry: its kind, its id, its name. A file is a `blob`, and a subfolder is another `tree`. The list itself is stored under its SHA-1, here `13419c27…`.
+A line `040000 tree` names the list of a subfolder. `raw` is the list of the slide before, `dba72972`. The top list names `data`, and `data` names `raw`.
 
 </div>
 
@@ -445,17 +528,15 @@ One line per entry: its kind, its id, its name. A file is a `blob`, and a subfol
 
 ## 🔗 **One id for the whole project**
 
-Change one byte of `D0_KPi.csv`. Its blob id changes, so the list of `raw` changes, then the list of `data`, then this list. The id of the top tree fixes every byte and every name in the project.
+Change one byte of `D0_KPi.csv`. Its blob id changes, so the list of `raw` changes, then the list of `data`, then the top list. The id `7f49025f` fixes every byte and every name in the project.
 
 </div>
 
 </div>
 
 <!--
-Speaker: git cat-file -p prints any object in readable form. This output and
-the next ones come from the project of the lecture after three commits. An
-empty folder has no entry: Git stores files, and a folder only as the list of
-what is in it. (~2 min)
+Speaker: an empty folder has no entry. Git stores files, and a folder only as
+the list of what is in it. (~2 min)
 -->
 
 ---
@@ -467,13 +548,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
-$ git cat-file -p 97937dd
-tree 13419c27b7bd0e78b06c213f576d19f634c47fe5
-parent 2e7477ecd00357677f781cd558c886e97a510c9c
+git cat-file -p 01fb5c2
+tree 7f49025fb691a3c7fbe61639a847f44b3b636286
+parent eb35e80dc3fc7d113d4710b671e57751718e526c
 author Mindaugas Sarpis <mindaugas.sarpis@cern.ch> 1792481100 +0300
 committer Mindaugas Sarpis <mindaugas.sarpis@cern.ch> 1792481100 +0300
 
-Add the data, the report and the first script
+Add the data, the report and the scripts
 ```
 
 </div>
@@ -490,7 +571,7 @@ Add the data, the report and the first script
 
 <div class="card card-info card-glass pad-compact">
 
-The last line is the message: why. A commit is these 280 bytes of text. It holds no file and no difference between files. It points to a complete snapshot.
+The last line is the message: why. A commit is these 275 bytes of text. It holds no file and no difference between files. It points to a complete snapshot.
 
 </div>
 
@@ -508,14 +589,16 @@ hideInToc: true
 
 # The Id of a **Commit**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-$ git cat-file -s 97937dd
-280
-$ (printf 'commit 280\0'; git cat-file commit 97937dd) | shasum
-97937dde182cbd0da376b64588928ef3d4c7ae97  -
+git cat-file -s 01fb5c2
+275
+git cat-file commit 01fb5c2 | git hash-object -t commit --stdin
+01fb5c2ca3812c696ad4a24fc751c889fa1df0df
 ```
+
+The same lines in both shells. The recipe of the blob, with `commit 275` and a zero byte as the header.
 
 </div>
 
@@ -525,7 +608,7 @@ $ (printf 'commit 280\0'; git cat-file commit 97937dd) | shasum
 
 ## 🔒 **What the id fixes**
 
-The hashed text contains the id of the tree and the id of the parent. So one commit id fixes every file of this version and every version before it. Two computers that show the same commit id hold the same project with the same history.
+The hashed text holds the id of the tree and the id of the parent. So one commit id fixes every file of this version and every version before it. Two computers that show the same commit id hold the same project with the same history.
 
 </div>
 
@@ -534,17 +617,24 @@ The hashed text contains the id of the tree and the id of the parent. So one com
 ## 📌 **What follows**
 
 - An old version cannot be changed unnoticed: every later id would change
-- The same files committed by two people give the same tree and two commit ids, because the name and the time differ
-- The first seven digits are enough to name a commit: `97937dd`
+- The same files committed by two people give one tree and two commit ids: the name and the time differ
 
 </div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+♻️ A commit id is a checksum of the whole project and of every version before it.
 
 </div>
 
 <!--
-Speaker: the same recipe as for the blob, with the word commit in the header.
-The ids on these slides are those of the lecturer's project. Every student
-gets other commit ids and the same blob id for the data file. (~3 min)
+Speaker: -s prints the size; -t commit puts the word commit in the header
+instead of blob. The first seven digits are enough to name a commit. The text
+goes from one git to the other through the pipe, unchanged in both shells. The ids on these slides are those of the
+lecturer's project. Every student gets other commit ids and the same blob id
+for the data file. (~3 min)
 -->
 
 ---
@@ -557,9 +647,9 @@ hideInToc: true
 
 ```mermaid {scale: 0.95}
 flowchart RL
-    C3["97937dd<br/>Add the data, the report<br/>and the first script"] -- parent --> C2["2e7477e<br/>Add .gitignore"] -- parent --> C1["0cc21b2<br/>Add the README"]
-    T3[("tree 13419c27")]
-    T1[("tree 0a5d1fba")]
+    C3["01fb5c2<br/>Add the data, the report<br/>and the scripts"] -- parent --> C2["eb35e80<br/>Add .gitignore"] -- parent --> C1["93e4c79<br/>Add the README"]
+    T3[("tree 7f49025f")]
+    T1[("tree fb37da2c")]
     C3 -- tree --> T3
     C1 -- tree --> T1
 ```
@@ -576,15 +666,14 @@ Every commit names its parent. The first commit has none, and a merge has two. T
 
 <div class="card card-secondary card-glass pad-compact">
 
-Each commit has its own tree, a complete snapshot. Two snapshots share every blob that did not change: `README.md` is blob `42b2fadc…` in all three commits here.
+Each commit has its own tree, a complete snapshot. Two snapshots share every blob that did not change: `README.md` is blob `6f96530a…` in all three commits here.
 
 </div>
 
 </div>
 
 <!--
-Speaker: draw the three circles on the board and keep them there. Branches,
-merges and remotes are all drawn on this picture later. (~2 min)
+Speaker: draw the three circles on the board and keep them there. (~2 min)
 -->
 
 ---
@@ -600,10 +689,10 @@ hideInToc: true
 ## 🏷️ **A file of 41 bytes**
 
 ```text
-$ cat .git/HEAD
+cat .git/HEAD
 ref: refs/heads/main
-$ cat .git/refs/heads/main
-97937dde182cbd0da376b64588928ef3d4c7ae97
+cat .git/refs/heads/main
+01fb5c2ca3812c696ad4a24fc751c889fa1df0df
 ```
 
 The branch `main` is 40 hex digits and a line break. `HEAD` says which branch is in use.
@@ -615,11 +704,11 @@ The branch `main` is 40 hex digits and a line break. `HEAD` says which branch is
 ## ➡️ **A commit moves the name**
 
 ```text
-$ git commit -m "Say how to fetch the ROOT file"
-[main e5e7d3d] Say how to fetch the ROOT file
+git commit -m "Say how to fetch the ROOT file"
+[main c0f7f81] Say how to fetch the ROOT file
  1 file changed, 6 insertions(+)
-$ cat .git/refs/heads/main
-e5e7d3d13e6c765bcdb54fb49cd7f7dd0b87a9ff
+cat .git/refs/heads/main
+c0f7f814d6c3e3cd27169e23c7b73cd075488195
 ```
 
 </div>
@@ -633,9 +722,10 @@ A second branch is a second file of 41 bytes. No file of the project is copied. 
 </div>
 
 <!--
-Speaker: on the board, write "main" beside the newest circle and move it when
-you draw a fourth circle. The word branch suggests a line of commits. What
-Git stores is one name on one commit. (~2 min)
+Speaker: in PowerShell cat is Get-Content (Lecture 4), so these lines are the
+same in both shells. On the board, write "main" beside the newest circle and
+move it when you draw a fourth circle. The word branch suggests a line of
+commits. What Git stores is one name on one commit. (~2 min)
 -->
 
 ---
@@ -683,7 +773,7 @@ The files as they are now. You edit here.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The staging area exists so that one commit has one purpose. Five files changed for two reasons become two commits, each with its own message.
+The staging area exists so that one commit has one purpose. The three commits of the graph were made from one folder: the README first, then `.gitignore`, then the rest, each staged alone and each with its own message.
 
 </div>
 
@@ -700,10 +790,66 @@ hideInToc: true
 
 # First **Commits**
 
+The model says what Git stores: blobs, trees, commits and a name. The project folder of Seminar 4 now goes into it, one commit at a time.
+
 <!--
 Speaker: now the project folder. Each step is done once in the Source Control
 view and once typed, so the room sees that the button and the command are the
 same thing. (~30 sec)
+-->
+
+---
+hideInToc: true
+---
+
+# Git Is Installed: a **Check**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⌨️ **The same lines in zsh and PowerShell**
+
+```text
+git --version
+git version 2.54.0 (Apple Git-157)
+git config --global user.name
+Mindaugas Sarpis
+git config --global user.email
+mindaugas.sarpis@cern.ch
+```
+
+Your version number differs. On Windows it ends in `.windows.1`, such as `2.51.0.windows.1`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➕ **Three more settings, today**
+
+```text
+git config --global init.defaultBranch main
+git config --global pull.rebase false
+git config --global core.autocrlf false
+```
+
+The first names the first branch of a new repository `main` instead of `master`. The second lets `git pull` join two histories by a merge. The third keeps Git from rewriting line endings, so every file keeps its bytes. None of them prints anything.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ An empty answer means the setting is missing: `git config --global user.name "Your Name"`, and the same for `user.email`. Both are written into every commit. A line that starts with `git` is typed the same in both shells, so the slides show it once, without `%` or `PS>`.
+
+</div>
+
+<!--
+Speaker: installation and the two settings on the left were done in class in
+Seminar 4. Ask for hands: who gets a version number, who gets a name. The
+three lines on the right are typed now, on every laptop. Git for Windows comes
+with master and with core.autocrlf true. (~3 min)
 -->
 
 ---
@@ -755,11 +901,11 @@ Select **Initialize Repository**. The view then lists every file of the folder u
 ## ⌨️ **Typed**
 
 ```text
-$ git init
+git init
 Initialized empty Git repository in …/analysis-project/.git/
 ```
 
-`ls -a` now shows one more folder, `.git`.
+The folder holds one more folder, `.git`. `ls -a` shows it in zsh, `ls -Force` in PowerShell, where Git marks `.git` as hidden.
 
 </div>
 
@@ -782,8 +928,9 @@ A **repository** is the project folder together with its `.git` folder. All comm
 </div>
 
 <!--
-Speaker: do it with the button. Then show ls -a in the terminal: the button
-did nothing else than make this folder. (~2 min)
+Speaker: do it with the button. Then show ls -a (zsh) or ls -Force
+(PowerShell) in the terminal: the button did nothing else than make this
+folder. (~2 min)
 -->
 
 ---
@@ -803,7 +950,7 @@ hideInToc: true
 <div class="card card-secondary card-glass pad-compact">
 
 ```text
-$ git status
+git status
 On branch main
 
 No commits yet
@@ -847,14 +994,14 @@ hideInToc: true
 ## ⌨️ **Typed**
 
 ```text
-$ git add README.md
-$ git commit -m "Add the README"
-[main (root-commit) 0cc21b2] Add the README
- 1 file changed, 48 insertions(+)
+git add README.md
+git commit -m "Add the README"
+[main (root-commit) 93e4c79] Add the README
+ 1 file changed, 61 insertions(+)
  create mode 100644 README.md
 ```
 
-The answer names the branch, the first seven digits of the id, the message, and 48 new lines.
+The answer names the branch, the first seven digits of the id, the message, and 61 new lines.
 
 </div>
 
@@ -963,9 +1110,11 @@ hideInToc: true
 
 # Data in a **Repository**
 
+The first commit holds the README. The rest of the folder holds raw data, scripts, and files that a line of the README makes again, and not all of them belong in a repository.
+
 <!--
-Speaker: the project has data files, and Git was made for text written by
-people. Which files go in, which stay out, and what the README then has to
+Speaker: Git was made for text written by people, and the project has data
+files. Which files go in, which stay out, and what the README then has to
 say. (~30 sec)
 -->
 
@@ -990,7 +1139,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`data/processed/pendulum.csv` was cleaned by hand, so it goes in. `pendulum_script.csv` is written by `scripts/clean_pendulum.sh`: the script goes in, and the file it writes may stay out.
+`data/processed/pendulum.csv` was cleaned by hand, so it goes in. `pendulum_script.csv` and `D0_valid.csv` are written by the lines under *How to rebuild* in the README of Lecture 4. `scripts/clean_pendulum.py` and the lines go in; the two files stay out. The SHA-256 `be05af03…` in the README shows that a rebuilt table is the same table.
 
 </div>
 
@@ -1007,9 +1156,9 @@ hideInToc: true
 ## ✅ **`D0_KPi.csv`, 3 926 142 bytes**
 
 - Stored once, as 1 906 370 bytes
-- After twelve commits `.git` takes 2.2 MB: the content of the data file never changed, so its blob was stored once
-- Twelve copies of the folder would take 47 MB
-- The first push sends the whole history in 1.68 MiB
+- After twelve commits `.git` takes 2.0 MB: the content of the data file never changed, so its blob was stored once
+- Twelve copies of the folder would take 94.5 MB
+- The first push sends seven commits and the data file in 1.68 MiB
 
 </div>
 
@@ -1028,7 +1177,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A file that stays out of the repository is still in `data/raw` on the disk. Git is told to ignore it, and the README says where it comes from.
+A file that stays out of the repository is still on the disk. Git is told to ignore it, and the README says where it comes from or which line makes it.
 
 </div>
 
@@ -1055,8 +1204,9 @@ hideInToc: true
 .DS_Store
 Thumbs.db
 
-# fetched, not stored: see README.md
-data/raw/MasterclassData.root
+# made by the commands in README.md
+data/processed/D0_valid.csv
+data/processed/pendulum_script.csv
 ```
 
 One pattern per line, and `#` starts a comment. `*.tmp` is every file whose name ends in `.tmp`. `scratch/` is a whole folder.
@@ -1072,10 +1222,10 @@ Right-click a file under **Changes**, then **Add to .gitignore**. The file leave
 ## ⌨️ **Typed**
 
 ```text
-$ git add .gitignore
-$ git commit -m "Add .gitignore"
-[main 2e7477e] Add .gitignore
- 1 file changed, 6 insertions(+)
+git add .gitignore
+git commit -m "Add .gitignore"
+[main eb35e80] Add .gitignore
+ 1 file changed, 7 insertions(+)
  create mode 100644 .gitignore
 ```
 
@@ -1083,12 +1233,12 @@ $ git commit -m "Add .gitignore"
 
 </div>
 
-<div class="note-text mt-sm"><code>MasterclassData.root</code> has 1.3 MB and would fit. It stands here for a file that is too large. <code>.gitignore</code> acts only on files that Git does not track yet.</div>
+<div class="note-text mt-sm"><code>D0_valid.csv</code> has 3 924 368 bytes and would fit. It stays out because one line of the README makes it again. <code>.gitignore</code> acts only on files that Git does not track yet.</div>
 
 <!--
 Speaker: .gitignore is itself a file of the project and is committed. The
-ROOT file is the original of the record. The record keeps it, so the project
-need not. (~3 min)
+two lines under the second comment are the two files that How to rebuild
+makes. (~3 min)
 -->
 
 ---
@@ -1102,15 +1252,18 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-$ git add .
-$ git status
+git add .
+git status
 On branch main
 Changes to be committed:
+        new file:   data/checksums.txt
         new file:   data/processed/pendulum.csv
         new file:   data/raw/D0_KPi.csv
         new file:   data/raw/pendulum.csv
         new file:   results/pendulum_plot.png
         new file:   results/report.md
+        new file:   scripts/clean_pendulum.py
+        new file:   scripts/column_stats.py
         new file:   scripts/hello.py
 ```
 
@@ -1119,8 +1272,8 @@ Changes to be committed:
 <div class="card card-secondary card-glass pad-compact">
 
 - `git add .` stages everything in the present folder that is not ignored. In the view it is the **+** on the **Changes** header
-- Read the list before the commit. `MasterclassData.root` is not in it
-- The commit reports `6 files changed, 91623 insertions(+)`. Insertions are lines, and 91 584 of them are the data file
+- Read the list before the commit. `D0_valid.csv` and `pendulum_script.csv` are not in it
+- The commit reports `9 files changed, 91732 insertions(+)`. Insertions are lines, and 91 584 of them are the data file
 - The picture is binary and counts as no lines
 
 </div>
@@ -1130,16 +1283,15 @@ Changes to be committed:
 <div class="card card-info card-glass pad-compact mt-md">
 
 ```text
-$ git commit -m "Add the data, the report and the first script"
-[main 97937dd] Add the data, the report and the first script
+git commit -m "Add the data, the report and the scripts"
+[main 01fb5c2] Add the data, the report and the scripts
 ```
 
 </div>
 
-<div class="note-text mt-sm">The hint line of <code>git status</code> and six <code>create mode</code> lines of the commit are left out here.</div>
-
 <!--
-Speaker: typed this time. Stop after git status and let the room check the
+Speaker: the hint line of git status and the nine create mode lines of the
+commit are left out on the slide. Typed this time. Stop after git status and let the room check the
 list against the Explorer. (~2 min)
 -->
 
@@ -1156,7 +1308,7 @@ hideInToc: true
 ```md
 ## Data not stored here
 
-- **File:** `data/raw/MasterclassData.root`, 1 289 541 bytes
+- **File:** `MasterclassData.root`, 1 289 541 bytes, the original of `D0_KPi.csv`
 - **Fetch from:** https://opendata.cern.ch/record/401
 - **SHA-256:** `8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b`
 ```
@@ -1169,7 +1321,7 @@ hideInToc: true
 
 ## 🧾 **Three facts**
 
-Where the file comes from, how large it is, and its SHA-256. Whoever fetches it computes the checksum and knows that it is the same file: `shasum -a 256` on macOS, `sha256sum` in Git Bash and on Linux.
+Where the file comes from, how large it is, and its SHA-256. Whoever fetches it computes the checksum as in Lecture 4, `shasum -a 256` in zsh or `Get-FileHash` in PowerShell, and knows that it is the same file.
 
 </div>
 
@@ -1184,8 +1336,10 @@ These three lines serve a file of any size. A repository with this README and a 
 </div>
 
 <!--
-Speaker: this is the provenance note of Lecture 02 with one more job. Commit
-it: "Say how to fetch the ROOT file". (~2 min)
+Speaker: this is the provenance note of Lecture 02 with one more job. The
+ROOT file is not in the project at all; the record keeps it. Commit the
+section: "Say how to fetch the ROOT file", the commit c0f7f81 of the branch
+slide. (~2 min)
 -->
 
 ---
@@ -1195,9 +1349,10 @@ hideInToc: true
 
 # Changes & **History**
 
+Four commits hold the project and the README. From here a file changes, and the history says what changed, when and why.
+
 <!--
-Speaker: four commits exist. Now a file changes, and the history is read.
-(~30 sec)
+Speaker: now a file changes, and the history is read. (~30 sec)
 -->
 
 ---
@@ -1249,7 +1404,7 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-$ git diff
+git diff
 diff --git a/results/report.md b/results/report.md
 index e5abf54..cd058bf 100644
 --- a/results/report.md
@@ -1300,14 +1455,14 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-$ git log --oneline
-817fc99 (HEAD -> main) Name the pendulum in the report
-e5e7d3d Say how to fetch the ROOT file
-97937dd Add the data, the report and the first script
-2e7477e Add .gitignore
-0cc21b2 Add the README
-$ git log -1 817fc99
-commit 817fc99091e0024d77247e2febae05ad7fa901c0
+git log --oneline
+9f58046 (HEAD -> main) Name the pendulum in the report
+c0f7f81 Say how to fetch the ROOT file
+01fb5c2 Add the data, the report and the scripts
+eb35e80 Add .gitignore
+93e4c79 Add the README
+git log -1 9f58046
+commit 9f580461710e4033e04c0fec6181bb4b789eedf8 (HEAD -> main)
 Author: Mindaugas Sarpis <mindaugas.sarpis@cern.ch>
 Date:   Tue Oct 20 10:40:00 2026 +0300
 
@@ -1347,8 +1502,8 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-$ git show --stat --oneline 817fc99
-817fc99 Name the pendulum in the report
+git show --stat --oneline 9f58046
+9f58046 (HEAD -> main) Name the pendulum in the report
  results/report.md | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
@@ -1358,19 +1513,19 @@ $ git show --stat --oneline 817fc99
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
 ```text
-$ git blame -s results/report.md | head -5
-97937dde  1) # Pendulum
-97937dde  2) 
-817fc990  3) Time of 10 swings of a pendulum for nine lengths.
-97937dde  4) 
-97937dde  5) | length_cm | t10_s |
+git blame -s -L 1,5 results/report.md
+01fb5c2c 1) # Pendulum
+01fb5c2c 2) 
+9f580461 3) Time of 10 swings of a pendulum for nine lengths.
+01fb5c2c 4) 
+01fb5c2c 5) | length_cm | t10_s |
 ```
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-`git show` prints one commit: its message and what it changed. Without `--stat` it prints the full diff. `git blame` names, for every line of a file, the commit that last changed it. In VS Code the Status Bar gives the author and the age of that commit for the line the cursor is in.
+`git show` prints one commit: its message and what it changed. Without `--stat` it prints the full diff. `git blame` names, for every line of a file, the commit that last changed it; `-L 1,5` limits it to lines 1 to 5. In VS Code the Status Bar gives the author and the age of that commit for the line the cursor is in.
 
 </div>
 
@@ -1385,6 +1540,8 @@ hideInToc: true
 ---
 
 # **Undoing**
+
+The history keeps each change with its reason. A change can also be wrong, and how it is taken back depends on how far it got.
 
 <!--
 Speaker: three cases, by how far the change got: an edit in the working
@@ -1414,11 +1571,11 @@ hideInToc: true
 ## ⌨️ **Typed**
 
 ```text
-$ git diff --stat
+git diff --stat
  results/report.md | 5 -----
  1 file changed, 5 deletions(-)
-$ git restore results/report.md
-$ git status
+git restore results/report.md
+git status
 On branch main
 nothing to commit, working tree clean
 ```
@@ -1452,13 +1609,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-$ git commit -m "Remove teh plot"
-[main c1b6b27] Remove teh plot
- 1 file changed, 1 deletion(-)
-$ git commit --amend -m "Remove the plot from the report"
-[main fb457d5] Remove the plot from the report
- Date: Tue Oct 20 10:50:00 2026 +0300
- 1 file changed, 1 deletion(-)
+git commit -m "Use 9.03 s for 20 cm, as in teh lab book"
+[main 4e9c5c9] Use 9.03 s for 20 cm, as in teh lab book
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+git commit --amend -m "Use 9.03 s for 20 cm, as in the lab book"
+[main aadfccb] Use 9.03 s for 20 cm, as in the lab book
+ Date: Tue Oct 20 10:45:00 2026 +0300
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
 </div>
@@ -1467,7 +1624,7 @@ $ git commit --amend -m "Remove the plot from the report"
 
 ## 🔁 **A new commit replaces the old**
 
-The id went from `c1b6b27` to `fb457d5`. The message is part of the hashed text, so a corrected commit is another commit. The old one leaves the history.
+The edit: line 2 of `data/processed/pendulum.csv`, `20,9.02` to `20,9.03`. The id went from `4e9c5c9` to `aadfccb`. The message is part of the hashed text, so a corrected commit is another commit. The old one leaves the history.
 
 In the view: the arrow on the **Commit** button, then **Commit (Amend)**.
 
@@ -1487,45 +1644,84 @@ hideInToc: true
 
 # Take Back a Commit: **revert**
 
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-$ git revert --no-edit fb457d5
-[main 2c7e920] Revert "Remove the plot from the report"
+git revert --no-edit aadfccb
+[main fc2061c] Revert "Use 9.03 s for 20 cm, as in the lab book"
  Date: Tue Oct 20 10:55:00 2026 +0300
- 1 file changed, 1 insertion(+)
-$ git log --oneline -3
-2c7e920 (HEAD -> main) Revert "Remove the plot from the report"
-fb457d5 Remove the plot from the report
-817fc99 Name the pendulum in the report
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+git log --oneline -3
+fc2061c (HEAD -> main) Revert "Use 9.03 s for 20 cm, as in the lab book"
+aadfccb Use 9.03 s for 20 cm, as in the lab book
+9f58046 Name the pendulum in the report
 ```
 
 </div>
+
+<div class="grid-2 gap-md mt-md">
 
 <div class="card card-secondary card-glass pad-compact">
 
 ## ↩️ **A commit that does the opposite**
 
-`revert` adds a commit with the reverse change. Nothing leaves the history, so it is safe for commits that are pushed. `--no-edit` keeps the proposed message.
-
-One file as it was in an old commit: `git restore --source=0cc21b2 README.md`
+The raw file says `9,02`, and the README promises `be05af03…` for the table: with `9.03` it is `17dbc893…`. `revert` adds a commit with the reverse change. Nothing leaves the history, so it is safe for pushed commits. `--no-edit` keeps the proposed message.
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+## 🗂️ **One file, or everything**
+
+One file as it was in an old commit: `git restore --source=93e4c79 README.md`. Many answers on the web use `git reset --hard`, which discards uncommitted work and moves the branch name. Nothing in this course needs it.
+
 </div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Many answers on the web use `git reset --hard`. It discards uncommitted work and moves the branch name. Nothing in this course needs it.
 
 </div>
 
 <!--
-Speaker: the plot was removed from the report and that was a mistake. The
+Speaker: the lab book was misread; the partner's raw file says 9,02. Run the
+cleaning script of Lecture 4 and compare the checksum before the revert. The
 history keeps both the mistake and its correction. (~2 min)
 -->
+
+---
+hideInToc: true
+---
+
+# Put Work Aside: **stash**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+```text
+git stash
+Saved working directory and index state WIP on main: fc2061c Revert "Use 9.03 s for 20 cm, as in the lab book"
+git status
+On branch main
+nothing to commit, working tree clean
+```
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧰 **When**
+
+An edit is half done, and something else has to be committed first. The command stores the edit and puts the working folder back to the last commit, without a commit.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⌨️ **The other half**
+
+`git stash pop` brings the edit back. `git stash list` shows what is stored. In the view: **...** on the **Changes** header, then **Stash**.
+
+</div>
+
+</div>
 
 ---
 layout: section
@@ -1534,9 +1730,10 @@ hideInToc: true
 
 # **Remotes**
 
+Every commit so far lives in one `.git` folder on one laptop. A remote holds the same objects, under the same ids, on a second computer.
+
 <!--
-Speaker: so far everything is in one .git folder on one laptop. A remote is
-the same history on a server. (~30 sec)
+Speaker: a remote is the same history on a server. (~30 sec)
 -->
 
 ---
@@ -1666,14 +1863,14 @@ On `github.com`: **New repository**, the name `analysis-project`, **Private**, n
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-$ git remote add origin https://github.com/mindaugassarpis/analysis-project.git
-$ git remote -v
+git remote add origin https://github.com/mindaugassarpis/analysis-project.git
+git remote -v
 origin  https://github.com/mindaugassarpis/analysis-project.git (fetch)
 origin  https://github.com/mindaugassarpis/analysis-project.git (push)
-$ git push -u origin main
-Enumerating objects: 31, done.
+git push -u origin main
+Enumerating objects: 35, done.
 …
-Writing objects: 100% (31/31), 1.68 MiB | 8.12 MiB/s, done.
+Writing objects: 100% (35/35), 1.68 MiB | 5.14 MiB/s, done.
 To https://github.com/mindaugassarpis/analysis-project.git
  * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
@@ -1690,7 +1887,8 @@ branch 'main' set up to track 'origin/main'.
 <!--
 Speaker: use one of the two ways, not both: a repository published from VS
 Code already has its remote. The seven commits and the data file travel as
-1.68 MiB. (~2 min)
+1.68 MiB. Ask: push again at once, with nothing new. How much is sent?
+Nothing: Everything up-to-date, because the ids are compared. (~2 min)
 -->
 
 ---
@@ -1704,14 +1902,15 @@ hideInToc: true
 ## 📥 **Clone: on a second computer**
 
 ```text
-$ git clone https://github.com/mindaugassarpis/analysis-project.git
+git clone https://github.com/mindaugassarpis/analysis-project.git
 Cloning into 'analysis-project'...
 …
-$ ls analysis-project/data/raw
-D0_KPi.csv      pendulum.csv
+cd analysis-project
+git log --oneline -1
+fc2061c (HEAD -> main, origin/main, origin/HEAD) Revert "Use 9.03 s for 20 cm, as in the lab book"
 ```
 
-The clone has every commit and every committed file. `MasterclassData.root` is not there. The README says how to fetch it.
+The clone has every commit, under the same ids, and every committed file. `D0_valid.csv` is not there: a line of the README makes it.
 
 </div>
 
@@ -1722,9 +1921,9 @@ The clone has every commit and every committed file. `MasterclassData.root` is n
 ## ⬇️ **Pull: fetch what is new**
 
 ```text
-$ git pull
+git pull
 …
-Updating 2c7e920..2c8eceb
+Updating fc2061c..3013a5e
 Fast-forward
  README.md | 1 +
  1 file changed, 1 insertion(+)
@@ -1744,9 +1943,97 @@ Pull before you start to work, and push when you stop. Then two computers never 
 
 <!--
 Speaker: origin/main is a third name. It marks where main stood on the remote
-at the last contact. (~3 min)
+at the last contact. The commit made on the second computer is "Note when
+version control started", one line in the README. (~3 min)
 -->
 
+---
+hideInToc: true
+---
+
+# One Table, Two **Line Endings**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **Two ids for one table**
+
+```text
+git hash-object pendulum.csv copy.csv
+2b7ca66d176fcac71f435dd3a99efeedb54704cd
+d4bcd752bacfab6385be8697187be942d64118d3
+git diff --no-index --stat pendulum.csv copy.csv
+ pendulum.csv => copy.csv | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **The same ten lines**
+
+`copy.csv` is the copy that PowerShell wrote in Lecture 4: the ten lines of `pendulum.csv`, each ended by `0d 0a` in place of `0a`. 97 + 10 = 107 bytes. The editor shows the same table, with `LF` against `CRLF` in the Status Bar (Lecture 3).
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+For Git the ten lines are ten other lines: other bytes, another blob, and a diff in which every line changed. A line ending is part of the line, as the `0d 0a` of PowerShell was part of `hello` in the model.
+
+</div>
+
+<!--
+Speaker: run the two lines in a folder that holds both files. Ask before the
+second line: how many lines will Git call changed? The room expects none.
+On a laptop still at core.autocrlf true the first line prints 2b7ca66d twice:
+Git takes the 0d out while it reads. (~2 min)
+-->
+---
+hideInToc: true
+---
+
+# A Clone on **Windows**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🪟 **Git for Windows as installed: `core.autocrlf` is `true`**
+
+```text
+PS> git clone https://github.com/mindaugassarpis/analysis-project.git crlf
+Cloning into 'crlf'...
+…
+PS> (Get-Item crlf/data/raw/D0_KPi.csv).Length
+4017726
+PS> (Get-FileHash crlf/data/raw/D0_KPi.csv).Hash
+CD1B75934BD8DA44EBD2C9E22A909297E7EA5B2C690FB46B3CBFCAFFC9962F68
+PS> cd crlf
+PS> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+`core.autocrlf true` writes `0d 0a` at the end of every line that Git puts into the folder: 91 584 lines, 91 584 bytes more, and the checksum list of Lecture 4 fails. Yet `git status` sees no change. Git takes the `0d` out again when it reads, so the blob is still `4a45f2be…`. With `false` the disk holds the bytes of the repository.
+
+</div>
+
+<!--
+Speaker: this is the third setting of the check slide, and the surprise is the
+last line: Git says clean while the checksum fails. The cleaned table becomes
+the 107 bytes of copy.csv (C06D…), not be05af03. Measured on Windows with
+Git 2.51 and PowerShell 7.6: core.autocrlf is true in the system configuration
+that the installer writes. A clone with core.autocrlf false has 3 926 142
+bytes and 25C3C972. (~3 min)
+-->
 ---
 hideInToc: true
 ---
@@ -1779,7 +2066,7 @@ ssh-keygen -t ed25519 -C "you@example.com"
 cat ~/.ssh/id_ed25519.pub
 ```
 
-Paste the printed line into GitHub: **Settings** > **SSH and GPG keys** > **New SSH key**.
+The same two lines in both shells. Paste the printed line into GitHub: **Settings** > **SSH and GPG keys** > **New SSH key**.
 
 An existing repository changes over with `git remote set-url`, the name `origin` and the second address.
 
@@ -1794,9 +2081,11 @@ hideInToc: true
 
 # Branches & **Merging**
 
+A push and a pull moved the name `main` on two computers. A second name on the same computer is a branch, and a merge joins the commits that two names point to.
+
 <!--
-Speaker: a branch is a name for a commit. Now two names, and how their
-histories are joined. (~30 sec)
+Speaker: a branch is a name for a commit, the file of 41 bytes of the
+model. (~30 sec)
 -->
 
 ---
@@ -1822,12 +2111,12 @@ Select the branch name at the left of the Status Bar, then **Create new branch..
 ## ⌨️ **Typed**
 
 ```text
-$ git switch -c table-units
+git switch -c table-units
 Switched to a new branch 'table-units'
-$ git branch
+git branch
   main
 * table-units
-$ cat .git/HEAD
+cat .git/HEAD
 ref: refs/heads/table-units
 ```
 
@@ -1852,14 +2141,14 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-$ git commit -m "Write the units into the table header"
-[table-units b72ad2b] Write the units into the table header
+git commit -m "Write the units into the table header"
+[table-units f6115ef] Write the units into the table header
  1 file changed, 1 insertion(+), 1 deletion(-)
-$ git switch main
+git switch main
 Switched to branch 'main'
 Your branch is up to date with 'origin/main'.
-$ git merge table-units
-Updating 2c8eceb..b72ad2b
+git merge table-units
+Updating 3013a5e..f6115ef
 Fast-forward
  results/report.md | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -1870,7 +2159,7 @@ Fast-forward
 <div class="card card-secondary card-glass pad-compact">
 
 - `git switch main` puts the files of `main` into the working folder. The table header is the old one again
-- `main` had no commit of its own, so the merge moves the name `main` forward to `b72ad2b`: a **fast-forward**
+- `main` had no commit of its own, so the merge moves the name `main` forward to `f6115ef`: a **fast-forward**
 - In the view: **...** on the **Changes** header, **Branch**, **Merge...**
 - `git branch -d table-units` deletes the name. The commit stays
 
@@ -1881,7 +2170,8 @@ Fast-forward
 <!--
 Speaker: watch the file in the editor while you switch: the header line
 changes back and forth. Nothing is lost. Each branch has its own snapshot.
-(~3 min)
+Ask before the switch: how many bytes did git switch -c write? One file of
+41 bytes, no file of the project copied. (~3 min)
 -->
 
 ---
@@ -1894,14 +2184,14 @@ hideInToc: true
 
 ```mermaid {scale: 0.85}
 gitGraph
-    commit id: "2c8eceb"
-    commit id: "b72ad2b"
+    commit id: "3013a5e"
+    commit id: "f6115ef"
     branch wording
     checkout wording
-    commit id: "8d53fbf"
+    commit id: "2e96673"
     checkout main
-    commit id: "a139100"
-    merge wording id: "45d31a3"
+    commit id: "0ac2b41"
+    merge wording id: "1cf563f"
 ```
 
 </div>
@@ -1909,12 +2199,12 @@ gitGraph
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-$ git log --oneline --graph --all -4
-* a139100 (HEAD -> main) Give the range of lengths
-| * 8d53fbf (wording) Reword the first sentence
-|/  
-* b72ad2b Write the units into the table header
-* 2c8eceb (origin/main, origin/HEAD) Note when version control started
+git log --oneline --graph --all -4
+* 0ac2b41 (HEAD -> main) Give the range of lengths
+| * 2e96673 (wording) Reword the first sentence
+|/
+* f6115ef Write the units into the table header
+* 3013a5e (origin/main) Note when version control started
 ```
 
 </div>
@@ -1936,7 +2226,7 @@ hideInToc: true
 <div class="card card-warning card-glass pad-compact mt-md">
 
 ```text
-$ git merge wording
+git merge wording
 Auto-merging results/report.md
 CONFLICT (content): Merge conflict in results/report.md
 Automatic merge failed; fix conflicts and then commit the result.
@@ -2015,13 +2305,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-$ git add results/report.md
-$ git commit -m "Merge branch 'wording'"
-[main 45d31a3] Merge branch 'wording'
-$ git cat-file -p 45d31a3
-tree d04149463ec5238dd79870d84a0129ace9597c9d
-parent a1391001035a4dfa81f9e7c572b4cce72a994027
-parent 8d53fbf20e006a4025dca1c7be1531ffcdd766ae
+git add results/report.md
+git commit -m "Merge branch 'wording'"
+[main 1cf563f] Merge branch 'wording'
+git cat-file -p 1cf563f
+tree d3b6f0ec830bdb0449110d3ded809922911892f8
+parent 0ac2b4188b3200fab771771367fd0c49b6391e10
+parent 2e9667309edc2d19d568dfec6c382b6d8c76363d
 …
 ```
 
@@ -2030,13 +2320,13 @@ parent 8d53fbf20e006a4025dca1c7be1531ffcdd766ae
 <div class="card card-secondary card-glass pad-compact">
 
 ```text
-$ git log --oneline --graph -4
-*   45d31a3 (HEAD -> main) Merge branch 'wording'
-|\  
-| * 8d53fbf (wording) Reword the first sentence
-* | a139100 Give the range of lengths
-|/  
-* b72ad2b Write the units into the table header
+git log --oneline --graph -4
+*   1cf563f (HEAD -> main) Merge branch 'wording'
+|\
+| * 2e96673 (wording) Reword the first sentence
+* | 0ac2b41 Give the range of lengths
+|/
+* f6115ef Write the units into the table header
 ```
 
 </div>
@@ -2071,7 +2361,7 @@ hideInToc: true
 - The Graph shows both. Four commits lie between them, and the button reads **Sync Changes 4↑**
 
 ```text
-$ git status
+git status
 On branch main
 Your branch is ahead of 'origin/main' by 4 commits.
   (use "git push" to publish your local commits)
@@ -2091,11 +2381,94 @@ with the next push. (~2 min)
 -->
 
 ---
+hideInToc: true
+---
+
+# When Git Says **No**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+```text
+fatal: not a git repository (or any of
+the parent directories): .git
+```
+
+The terminal is not in the project folder. `pwd` says where it is, and `cd` goes to the project.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+```text
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to '…'
+```
+
+The remote has a commit that this computer lacks. Fetch and merge it with <code style="white-space: nowrap;">git pull --no-edit</code>, then push again.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+```text
+Your branch and 'origin/main' have diverged,
+and have 1 and 1 different commits each
+```
+
+`git status` after such a fetch. Both sides have a commit of their own. The same pull joins them.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+A screen full of `~` signs after `git commit` or `git merge`: Git opened the editor Vim for a message. Type `:q!` and press Enter to leave it. Then give the message with `-m`, or use `--no-edit`.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The first message is printed on one line. Read the last lines of a long answer first: Git usually names the command that helps.</div>
+
+<!--
+Speaker: these four cover most of what stops a beginner. None of them means
+that anything is lost. The editor that opens depends on the choice made when
+Git was installed; on a Mac it is Vim. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Source Control and **Commands**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Step | In Source Control | Typed |
+| --- | --- | --- |
+| Create the repository | **Initialize Repository** | `git init` |
+| See what changed | The **Changes** list. Select a file for its diff | `git status`, `git diff` |
+| Stage, unstage | **+**, **−** | `git add <file>`, `git restore --staged <file>` |
+| Commit | Message, then **Commit** | `git commit -m "…"` |
+| Discard an edit | **Discard Changes** | `git restore <file>` |
+| Read the history | **Graph**, **Timeline** | `git log --oneline`, `git show <id>` |
+| New branch | Branch name in the Status Bar | `git switch -c <name>` |
+| Merge | **...** > **Branch** > **Merge...** | `git merge <name>` |
+| Send and fetch | **Sync Changes** | `git push`, `git pull` |
+
+</div>
+
+<div class="note-text mt-sm">A working day: pull, edit, read the diff, stage, commit with a message that says why, push.</div>
+
+---
 layout: section
 hideInToc: true
 ---
 
 # Working with **Others**
+
+One person joined two branches on one laptop. In a team the same merge waits until a second person has read the diff.
 
 <!--
 Speaker: a branch and a remote together give the way teams work: nobody
@@ -2111,7 +2484,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-A pull request asks the owners of a repository to merge a branch. The branch is pushed with `git push -u origin fit-range`, the request is opened on the website, and others read the diff before it reaches `main`.
+A pull request asks the owners of a repository to merge a branch. The branch `wording` would be pushed with `git push -u origin wording`, the request opened on the website, and a second person would read its one changed line before it reached `main`.
 
 </div>
 
@@ -2188,7 +2561,7 @@ hideInToc: true
 ## 🧑‍🏫 **As a reviewer**
 
 - Review the change, not the person
-- Ask before you demand: "why this cut on `PT`?"
+- Ask before you demand: "why are the 49 rows with `TAU = -100` left out?"
 - Check the method first, then the names and the comments
 - Answer within a day. A waiting request blocks the author
 
@@ -2258,13 +2631,14 @@ layout: section
 hideInToc: true
 ---
 
-# Tags & **Stash**
+# A Result and Its **Commit**
+
+A reviewed change reaches `main`, and `main` moves with every commit. A result that leaves the project needs a name that stays on one commit.
 
 <!--
-Speaker: two short tools. A tag marks the version behind a result. A stash
-puts unfinished work aside. (~30 sec)
+Speaker: two slides: a name that does not move, and the question of the two
+copies of the table, answered from the history. (~30 sec)
 -->
-
 ---
 hideInToc: true
 ---
@@ -2274,11 +2648,11 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
-$ git tag -a v1.0 -m "Report as shown on 20 October"
-$ git log --oneline -2
-45d31a3 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Merge branch 'wording'
-a139100 Give the range of lengths
-$ git push origin v1.0
+git tag -a v1.0 -m "Report as shown on 20 October"
+git log --oneline -2
+1cf563f (HEAD -> main, tag: v1.0, origin/main) Merge branch 'wording'
+0ac2b41 Give the range of lengths
+git push origin v1.0
 …
  * [new tag]         v1.0 -> v1.0
 ```
@@ -2291,7 +2665,7 @@ $ git push origin v1.0
 
 ## 🏷️ **A name that does not move**
 
-A branch name moves with every commit. The tag `v1.0` stays on `45d31a3`. `-a` stores who set it, when, and a message. A tag is pushed by its name.
+A branch name moves with every commit. The tag `v1.0` stays on `1cf563f`. `-a` stores who set it, when, and a message. A tag is pushed by its name.
 
 </div>
 
@@ -2309,163 +2683,54 @@ Tag the commit behind every result that leaves the project: a report handed in, 
 hideInToc: true
 ---
 
-# Put Work Aside: **stash**
+# The Three Questions, **Answered**
 
-<div class="card card-primary card-glass pad-compact mt-md">
-
-```text
-$ git stash
-Saved working directory and index state WIP on main: 45d31a3 Merge branch 'wording'
-$ git status
-On branch main
-Your branch is up to date with 'origin/main'.
-
-nothing to commit, working tree clean
-```
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧰 **When**
-
-An edit is half done, and another branch is needed now. The command stores the edit and puts the working folder back to the last commit.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## ⌨️ **The other half**
-
-`git stash pop` brings the edit back. `git stash list` shows what is stored. In the view: **...** on the **Changes** header, then **Stash**.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# When Git Says **No**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-```text
-fatal: not a git repository (or any of
-the parent directories): .git
-```
-
-The terminal is not in the project folder. `pwd` says where it is, and `cd` goes to the project.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-```text
- ! [rejected]        main -> main (fetch first)
-error: failed to push some refs to '…'
-```
-
-The remote has a commit that this computer lacks. Fetch and merge it with <code style="white-space: nowrap;">git pull --no-edit</code>, then push again.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-```text
-Your branch and 'origin/main' have diverged,
-and have 1 and 1 different commits each
-```
-
-`git status` after such a fetch. Both sides have a commit of their own. The same pull joins them.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-A screen full of `~` signs after `git commit` or `git merge`: Git opened the editor Vim for a message. Type `:q!` and press Enter to leave it. Then give the message with `-m`, or use `--no-edit`.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">The first message is printed on one line. Read the last lines of a long answer first: Git usually names the command that helps.</div>
-
-<!--
-Speaker: these four cover most of what stops a beginner. None of them means
-that anything is lost. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Whole **Picture**
-
-<div class="mt-md" style="display: flex; justify-content: center;">
-
-```mermaid {scale: 0.9}
-flowchart LR
-    W["Working folder"] -- "git add" --> S["Staging area"]
-    S -- "git commit" --> R["Repository"]
-    R -- "git push" --> O["Remote"]
-    O -- "git pull" --> R
-    R -- "git restore" --> W
-```
-
-</div>
-
-<div class="grid-3 gap-md mt-md">
+<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 3fr 2fr;">
 
 <div class="card card-primary card-glass pad-compact">
 
-`git status` and `git diff` look and change nothing. Run them before every step.
+## 📜 **The history of the table**
+
+```text
+git log --oneline -- data/processed/pendulum.csv
+fc2061c Revert "Use 9.03 s for 20 cm, as in the lab book"
+aadfccb Use 9.03 s for 20 cm, as in the lab book
+01fb5c2 Add the data, the report and the scripts
+git log -1 aadfccb
+commit aadfccbcd246d60c929a245c30f82854815a4928
+Author: Mindaugas Sarpis <mindaugas.sarpis@cern.ch>
+Date:   Tue Oct 20 10:45:00 2026 +0300
+
+    Use 9.03 s for 20 cm, as in the lab book
+```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact table-compact">
 
-`git switch` exchanges the files of the working folder for the snapshot of another branch.
+## 🧾 **The table of the start**
 
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-`git merge` joins another branch into the one in use. A pull is a fetch and a merge.
-
-</div>
+| Question | Answer |
+| --- | --- |
+| Which copy? | `be05af03…`, as committed in `01fb5c2` |
+| Which line? | Line 2, by `git show aadfccb` |
+| Who, when, why? | Author, Date and message, on the left |
 
 </div>
 
----
-hideInToc: true
----
+</div>
 
-# Source Control and **Commands**
+<div class="card card-success card-glass pad-compact mt-md">
 
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Step | In Source Control | Typed |
-| --- | --- | --- |
-| Create the repository | **Initialize Repository** | `git init` |
-| See what changed | The **Changes** list. Select a file for its diff | `git status`, `git diff` |
-| Stage, unstage | **+**, **−** | `git add <file>`, `git restore --staged <file>` |
-| Commit | Message, then **Commit** | `git commit -m "…"` |
-| Discard an edit | **Discard Changes** | `git restore <file>` |
-| Read the history | **Graph**, **Timeline** | `git log --oneline`, `git show <id>` |
-| New branch | Branch name in the Status Bar | `git switch -c <name>` |
-| Merge | **...** > **Branch** > **Merge...** | `git merge <name>` |
-| Send and fetch | **Sync Changes** | `git push`, `git pull` |
+♻️ The two copies could say only that line 2 differs. The repository holds the change, its author, its time and its reason, and the commit that took it back. Each answer is fixed by a commit id, and the report handed in names `v1.0`.
 
 </div>
 
-<div class="note-text mt-sm">A working day: pull, edit, read the diff, stage, commit with a message that says why, push.</div>
-
+<!--
+Speaker: do not cut this slide. Point at the third row of the table of the
+second slide, then at Author, Date and the message here. -- data/processed/
+pendulum.csv limits the log to the commits that changed that file. (~3 min)
+-->
 ---
 hideInToc: true
 ---
@@ -2476,7 +2741,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Say what a blob, a tree, a commit and a branch are, and compute an **id** by hand
+✅ Say what a blob, a tree, a commit and a branch are, and which bytes give an **id**
 
 </div>
 
@@ -2556,7 +2821,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`echo &quot;hi&quot; | git hash-object --stdin` prints an id. Which bytes did Git hash?"
+  question="In zsh, `echo &quot;hi&quot; | git hash-object --stdin` prints an id. Which bytes did Git hash?"
   :options="[
     'The two letters h and i',
     'The word blob, a space, the digit 3, a zero byte, then h, i and a line break',
@@ -2564,7 +2829,7 @@ hideInToc: true
     'The name of the file and its date, then the letters'
   ]"
   :correct="1"
-  explanation="echo writes three bytes: h, i and a line break. Git puts the header blob 3 and a zero byte in front and hashes all nine bytes. The id is 45b983be36b73c0788dc9cbcb76cbb80fc7bb057 on every computer."
+  explanation="echo in zsh writes three bytes: h, i and a line break. Git puts the header blob 3 and a zero byte in front and hashes all ten bytes. The id is 45b983be36b73c0788dc9cbcb76cbb80fc7bb057 on every Mac. PowerShell on Windows sends h, i, 0d, 0a: the header says blob 4, and the id is edf0effbb6851d0055229878b4bf0d7212167642."
 />
 
 ---
@@ -2628,7 +2893,7 @@ hideInToc: true
     'git status says master until the first commit exists'
   ]"
   :correct="1"
-  explanation="A new repository gets the branch name main only when init.defaultBranch says so. One line sets it for all later repositories: git config --global init.defaultBranch main. The branch of an existing repository is renamed with git branch -m main."
+  explanation="A new repository gets the branch name main only when init.defaultBranch says so. Git for Windows even writes master into its own system settings. One line sets it for all later repositories: git config --global init.defaultBranch main. The branch of an existing repository is renamed with git branch -m main."
 />
 
 ---

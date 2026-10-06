@@ -16,7 +16,7 @@ Speaker: let the cold open on the next slide run first, then welcome them, intro
 yourself, and set the tone — this is a practical course, not a lecture course.
 Everything is graded on one project of the student's own choosing; the seminars are
 where the skills get practised. No seminar today: the first seminar is in the next
-session and starts from zero — the last slide says what to bring. (~2 min)
+session and starts from zero — the slide before the films says what to bring. (~2 min)
 -->
 
 ---
@@ -52,33 +52,497 @@ layout: quote
 hideInToc: true
 ---
 
+# Nine Rows from a **Lab Partner**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📄 **The file, as it arrived**
+
+```text
+nr;length_cm;t10_s
+1;20;9,02
+2;30;11,05
+3;40;12,61
+4;50;14,23
+5;60;15,49
+6;70;16,84
+7;80;17,90
+8;90;19,10
+9;100;20,01
+;mean;15,14
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ⏱️ **What it holds**
+
+- A weight on a string, swinging. For nine lengths, from 20 cm to 100 cm, a stopwatch timed **10 swings**
+- The longer the string, the slower the swing: 9.02 s at 20 cm, 20.01 s at 100 cm
+- How fast a pendulum swings depends on how hard the Earth pulls, *g*. So every row gives a value of *g*
+- The file is **130 bytes**: 11 lines, `;` between the fields, `,` as the decimal sign, a numbering column `nr`, and a last line that holds a mean
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
+
+❓ From these nine rows: **what is *g*?**
+
+</div>
+
+<!--
+Speaker: this is the course's running example: the same small table comes back
+almost every week. Read two rows aloud with the room. Then ask the question and
+let two or three people say how they would start. No formula is needed today:
+the next slide shows two people who both answered it. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two People, **Two Answers**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧮 **Ada: one *g* per row, then the average**
+
+Each row on its own gives a value of *g*, in m/s²:
+
+9.705 · 9.700 · 9.931 · 9.748 · 9.872 · 9.745 · 9.857 · 9.739 · 9.860
+
+The average of the nine is 9.795, so Ada reports **9.80**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📈 **Ben: one line through all nine**
+
+Ben squares each swing time and plots it against the length. The nine points lie close to a straight line. He takes the line that passes closest to all of them and reads *g* from its steepness.
+
+Ben reports **9.84**.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+Same file, same nine rows, no mistake by either. **I send you only 9.84. How do you check it?**
+
+</div>
+
+<div class="note-text mt-sm">“The first principle is that you must not fool yourself, and you are the easiest person to fool.” Richard Feynman, Caltech, 1974</div>
+
+<!--
+Speaker: let the room answer for two or three minutes and write the answers
+on the board. They usually come in this order: "send me the file", "which
+rows did you use?", "how did you get the number?", "I can't open your file".
+Sort them into four piles: the file as it was received; every step done to
+it; the program that computed 9.84, with what it ran on; a form anyone can
+open. The next slide names the four piles. Neither Ada nor Ben is wrong: the
+two numbers differ by method, and only a written-down method says which one
+you are holding. (~4 min)
+
+The numbers, for questions: g = 4π²L/T², with T the time of one swing
+(t10_s / 10). Ada's values are that formula row by row; their mean is
+9.7952. Ben fits T² = a·L + b without weights: a = 4.0136 s²/m, so
+g = 4π²/a = 9.836. All computed from pendulum.csv.
+-->
+
+---
+hideInToc: true
+---
+
+# One File, **Seven Numbers**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-tight table-compact">
+
+| **What was done to the nine rows** | ***g*, m/s²** |
+| --- | --- |
+| Ben's line through all nine | 9.84 |
+| Ben's line, the 100 cm row left out | 9.79 |
+| Ben's line, the 90 cm row left out | 9.88 |
+| Ada's average of nine values | 9.80 |
+| A line forced through zero | 9.81 |
+| Lengths left in cm, not m | 983.61 |
+| 10 swings read as one swing | 0.098 |
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔍 **What 9.84 hides**
+
+Every line is one honest-looking choice about the same file. Leaving out any one row moves Ben's answer anywhere from 9.79 to 9.88.
+
+The last two are slips, easy to spot. The first five are not: each could be the number in your inbox.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The number alone cannot tell you which of these it is. To check 9.84, you need what is behind it.
+
+</div>
+
+<!--
+Speaker: every value was computed from pendulum.csv. Leaving out each row in
+turn gives 9.83, 9.82, 9.86, 9.83, 9.84, 9.84, 9.82, 9.88 (90 cm out) and
+9.79 (100 cm out). Lengths in cm make the slope 100 times smaller, so g
+comes out 100 times larger; reading the time of 10 swings as one swing makes
+each squared time 100 times larger, so g comes out 100 times smaller. Then
+back to the question on the board. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Four <span class="gradient-text">Aims</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Every answer to “how do you check 9.84?” lands in one of four piles. Each pile is one aim of this course, and your project is graded on them.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-scale">
+
+## 🔧 **Tool agnosticism**
+
+A file anyone can open: plain text, read by any editor and any language, not only by the program I happen to own.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight reveal-scale">
+
+## ♻️ **Reproducibility**
+
+The file exactly as received, the code that gave 9.84 and the versions it ran on. With those you get 9.84 too.
+
+</div>
+
+<div class="card card-accent card-glass pad-tight reveal-scale">
+
+## ⚙️ **Automation**
+
+Every step written as a program, not done by hand: the edits to the file and the line through the points. A program repeats them exactly.
+
+</div>
+
+<div class="card card-success card-glass pad-tight reveal-scale">
+
+## 📁 **Efficient work with data & files**
+
+Knowing which file is which: the one as received, never edited, kept apart from the cleaned copy that a program wrote.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Watch for the 🔧 ♻️ ⚙️ 📁 icons throughout: every lecture advances at least one.</div>
+
+<!--
+Speaker: point from each pile on the board to its card. The before/after
+pairs that follow keep the same order, one per aim, each counted on the
+pendulum file. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 🔧 Before / After — **Tool Agnosticism**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **pendulum.xlsx**
+
+- The same nine rows saved as a spreadsheet (here by Python's `openpyxl`): about **5 000 bytes**
+- An `.xlsx` is a zip archive, here of 9 files. A text editor shows `PK` and then noise
+- Reading a number needs a program that knows the format
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **pendulum.csv**
+
+- The cleaned table as plain text: **97 bytes**, 10 lines, small enough to read on a slide
+- Opens in Notepad, TextEdit, VS Code, a spreadsheet, Python or R
+- Every number is readable by eye: `100,20.01`
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">We still <em>use</em> specific tools (Python, VS Code, Git), but every skill is chosen to transfer beyond them.</div>
+
+<!--
+Speaker: the next four slides are one before/after pair per aim, all on the
+nine-row table. Ask for a show of hands at each "before": almost everyone
+recognises themselves. The xlsx figures were measured by writing the
+cleaned table with openpyxl 3.1.5: 4 993 to 5 007 bytes, depending on the
+install and the sheet name, always a zip of 9 files. Excel writes a file of
+the same kind, a zip of XML files, with a different byte count. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# ♻️ Before / After — **Reproducibility**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **A screenshot of 9.84**
+
+- The same 97 bytes gave seven different values of *g*
+- The screenshot cannot say which choice it shows
+- Nor which rows went into it
+- Six months later even the author cannot say
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **The folder that made it**
+
+- The file as received, the code, the versions it ran on
+- Run it, on any laptop: 9.84 again
+- Change the method in one place: 9.81, and the difference is explained
+- “What changed?” has an exact answer
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">If someone else, or future you, cannot rebuild your result, it is not yet a result.</div>
+
+<!--
+Speaker: the line forced through zero has no intercept: slope 4.024 s²/m,
+g = 9.810. In the folder that choice is one setting, so switching it shows
+where 9.81 and 9.84 part. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# ⚙️ Before / After — **Automation**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **Four edits by hand**
+
+- Delete the mean line; replace **9** decimal commas by points and **20** semicolons by commas; delete the `nr` column
+- The order matters. Replace `;` first, and the first row becomes `1.20.9.02`: three numbers, no telling them apart
+- The partner's next file needs all four again
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **One script**
+
+- The four edits written down once, in the right order
+- Run on the next file of this shape: done
+- The output is the same **97 bytes** on Windows, macOS and Linux
+- The script is the method, written down: anyone can read what was done
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Do it once by hand, twice by script. Let the machine repeat the boring parts.</div>
+
+<!--
+Speaker: count the edits with the room on the file from two slides back:
+11 lines, 22 semicolons and 10 commas. The mean line goes first, which
+leaves 20 semicolons and 9 commas. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same Edits in the **Wrong Order**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **Decimal commas first**
+
+Replace `,` by `.`, then `;` by `,`:
+
+```text
+nr,length_cm,t10_s
+1,20,9.02
+2,30,11.05
+3,40,12.61
+```
+
+Every decimal comma is a point before the semicolons become commas. With the mean line gone and `nr` dropped: 97 bytes.
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **Semicolons first**
+
+Replace `;` by `,`, then `,` by `.`:
+
+```text
+nr.length_cm.t10_s
+1.20.9.02
+2.30.11.05
+3.40.12.61
+```
+
+After the first step, separators and decimal signs are the same character. The second step turns all of them into points.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Two replacements, two orders, and only one of them is right. A person redoing it by hand for every new file has to remember the order every time. A script remembers it.
+
+</div>
+
+<!--
+Speaker: ask the room first which replacement to do first, then show both
+columns. Both are from the real file: the right order is the one written in
+the seminar README ("Mean line deleted, , replaced by ., ; replaced by ,,
+column nr deleted"). In the wrong order the mean line, if it were still
+there, would turn into ".mean.15.14". (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 📁 Before / After — **Data & Files**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **The Desktop**
+
+- `pendulum.csv`, `pendulum(1).csv`, `pendulum_final_v2.csv`
+- Which still has the mean line? Which has the commas? Only opening each one tells
+- The file as received was edited in place: the original is gone
+
+</div>
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **Two folders**
+
+- `data/raw/pendulum.csv`: **130 bytes**, as received, never edited
+- `data/processed/pendulum.csv`: **97 bytes**, written by the script
+- The size alone tells them apart
+- The processed copy can be deleted at any time: the script writes it again
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The same two folders work for any project: build them once and repeat them on your own data.</div>
+
+---
+hideInToc: true
+---
+
+# The Aims **Reinforce** Each Other
+
+```mermaid {scale: 0.8}
+graph LR
+    A[⚙️ Automation] --> R[♻️ Reproducibility]
+    F[📁 Data & files] --> R
+    T[🔧 Tool agnosticism] --> F
+    R --> S[🏆 Trustworthy results]
+```
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔗 **Not four separate boxes**
+
+On the pendulum: the script (⚙️) is what lets anyone rebuild 9.84 (♻️). Two folders (📁) keep the script simple: it reads `data/raw`, writes `data/processed`. Plain CSV (🔧) keeps every step readable anywhere.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧭 **Use them as a compass**
+
+Unsure how to do something? Ask: *which choice serves more of the aims?* That one question resolves most practical dilemmas in this course — and in research.
+
+</div>
+
+</div>
+
+---
+layout: section
+hideInToc: true
+---
+
+# How This Course **Works**
+
+The four aims answer the 9.84 question. Thirteen Tuesdays are built to practise them: a lecture for the idea, a seminar for the hands.
+
+---
+hideInToc: true
+---
+
 # Course **Structure**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-tight">
 
-## 📖 **Lectures**
+## 📖 **The lecture, 2 h**
 
-- **Theory / Overviews** — main goal is exposure
-- **Discussion** — building intuition, interactivity is important
-
-Some of the elements require deeper understanding in statistics, programming,
-mathematics. The idea is to strike a balance of what to keep as a "black box"
-and what needs to be understood in detail.
+- Why a practice matters and how to think about it, on real examples, including from CERN
+- Interactive: questions, votes, short reflections
+- Exposure and intuition, not memorising commands. Some parts stay a “black box”; others are worked out in detail
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🔬 **Seminars**
+## 🔬 **The seminar, 2 h, same day**
 
-- **Demos** — live demonstrations
-- **Hands-on sessions** — you type, the instructor circulates
-- **Case Studies** — real-world examples
+- You do it yourself, on real data, in your own project folder
+- You type, break things and fix them; the instructor circulates
+- The goal is a **working result**, saved before you leave
 
-It is very important to practice throughout the course. Using the tools and
-concepts on your own projects is the best way to learn.
 </div>
 
 </div>
@@ -102,63 +566,11 @@ concepts on your own projects is the best way to learn.
 
 </div>
 
----
-hideInToc: true
----
-
-# Course **Content** — 16 lectures, 5 blocks
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact reveal-scale">
-
-**A · Foundations & Tooling** *(01–05)*
-Orientation, data, computers, command line & files, Git
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact reveal-scale">
-
-**B · Programming** *(06–07)*
-Python foundations, then Python for data and NumPy arrays
-
-</div>
-
-<div class="card card-info card-glass pad-compact reveal-scale">
-
-**C · Data Analysis Core** *(08–11)*
-Visualisation, probability & statistics, fitting from first principles, the perceptron
-
-</div>
-
-<div class="card card-success card-glass pad-compact reveal-scale">
-
-**D · Practical Data Work** *(12–13)*
-Pandas & data cleaning, reproducible workflows & automation
-
-</div>
-
-<div class="card card-warning card-glass pad-compact reveal-scale">
-
-**E · Further Topics** *(14–16, as time allows)*
-Concepts of data analysis, computing infrastructure & HPC, machine learning & AI
-
-</div>
-
-<div class="card card-accent card-glass pad-compact reveal-scale">
-
-**🧪 Paired seminars**
-Each lecture has a hands-on seminar — self-contained exercises on a shared open dataset; your own project is separate and graded
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm" style="text-align: center;">
-
-Order and depth adapt to the group.
-
-</div>
+<!--
+Speaker: the lecture and the seminar are one unit. Miss the seminar and the
+lecture stays abstract; skip the lecture and the seminar feels like magic.
+(~2 min)
+-->
 
 ---
 hideInToc: true
@@ -191,7 +603,7 @@ Every **Tuesday**: **2 h lecture** + **2 h seminar**, **8 Sep – 22 Dec 2026**.
 
 </div>
 
-<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work. Block <strong>E</strong>, Further Topics, is extra material. <strong>Final project presentations</strong> are in the exam session.</div>
+<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work. Block <strong>E</strong>, Further Topics (concepts of data analysis, computing infrastructure, machine learning), is extra material. <strong>Final project presentations</strong> are in the exam session.</div>
 
 <style scoped>
 table {
@@ -213,334 +625,6 @@ table th:nth-child(3) {
   white-space: nowrap;
 }
 </style>
-
----
-hideInToc: true
----
-
-# The Four <span class="gradient-text">Aims</span>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Everything in this course serves four durable practices. They outlast any tool or language — and your project is graded on them.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-scale">
-
-## 🔧 **Tool agnosticism**
-
-Learn the *idea* first, then a tool. Concepts transfer; frameworks come and go.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-scale">
-
-## ♻️ **Reproducibility**
-
-If someone else — or future you — can't rebuild your result, it isn't a result.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight reveal-scale">
-
-## ⚙️ **Automation**
-
-Do it once by hand, twice by script. Let the machine repeat the boring parts.
-
-</div>
-
-<div class="card card-success card-glass pad-tight reveal-scale">
-
-## 📁 **Efficient work with data & files**
-
-Organise, name, and format your data so it stays trustworthy and usable.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Watch for the 🔧 ♻️ ⚙️ 📁 icons throughout — every lecture advances at least one.</div>
-
----
-hideInToc: true
----
-
-# 📁 Before / After — **Data & Files**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **The Downloads folder**
-
-- `data.csv`, `data(1).csv`, `data_final_v2_REAL.csv`
-- Raw data, figures, and drafts all in one directory
-- Which file fed the plot in the report? Nobody knows
-- Deleting anything feels dangerous — so nothing is ever deleted
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **A structured project**
-
-- `data/raw/` is read-only; `data/processed/` is regenerable
-- One folder per purpose: `scripts/`, `results/`, `docs/`
-- Names carry meaning: `2026-03_temperature_vilnius.csv`
-- "Where does this number come from?" answered in seconds
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">The same structure works for any project: build it once and repeat it on your own.</div>
-
-<!--
-Speaker: the next four slides are one before/after pair per aim, all drawn from real
-projects — including mine. Don't rush them — they are the emotional core of week 1.
-Ask for a show of hands at each "before": almost everyone recognises themselves. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# ♻️ Before / After — **Reproducibility**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **“It worked on my laptop”**
-
-- The result exists — as a screenshot in an old email
-- Rebuilding it needs a specific person, machine, and mood
-- Six months later even the author can't remake the plot
-- Reviewer asks "what changed since draft one?" — silence
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Anyone can rerun it**
-
-- Data, code, and environment are recorded together
-- One command rebuilds every figure and number
-- A new team member reproduces the result on day one
-- "What changed?" has an exact, versioned answer
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">This is the single strongest predictor of a good project grade — and of trust in your science.</div>
-
----
-hideInToc: true
----
-
-# ⚙️ Before / After — **Automation**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **40 manual steps in a spreadsheet**
-
-- Open file → copy column → paste → sort → delete rows → …
-- Every rerun costs an afternoon and invites a fresh typo
-- New data arrives → the whole ritual starts again
-- The process lives only in one person's muscle memory
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **One script**
-
-- The same 40 steps written down once, executed in seconds
-- New data arrives → rerun → done
-- The script *is* the documentation of the method
-- Boring parts are delegated; your attention goes to thinking
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Rule of thumb from the aims slide: once by hand, twice by script.</div>
-
----
-hideInToc: true
----
-
-# 🔧 Before / After — **Tool Agnosticism**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **Locked in**
-
-- Data lives inside one proprietary tool's project file
-- Analysis steps exist only as clicks nobody recorded
-- Licence expires, company folds, format changes → work stranded
-- Collaborators must buy the same tool just to *look*
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **Open by default**
-
-- Data in open formats: CSV, JSON, plain text
-- Logic captured in code — portable across tools and decades
-- Concepts learned once transfer to whatever comes next
-- Anyone can inspect, verify, and build on your work
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">We still <em>use</em> specific tools (Python, VS Code, Git) — but every skill is chosen to transfer beyond them.</div>
-
----
-hideInToc: true
----
-
-# The Aims **Reinforce** Each Other
-
-```mermaid {scale: 0.8}
-graph LR
-    A[⚙️ Automation] --> R[♻️ Reproducibility]
-    F[📁 Data & files] --> R
-    T[🔧 Tool agnosticism] --> F
-    R --> S[🏆 Trustworthy results]
-```
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔗 **Not four separate boxes**
-
-A scripted pipeline (⚙️) is automatically re-runnable (♻️). A clean file structure (📁) keeps scripts simple. Open formats (🔧) keep everything rebuildable anywhere.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧭 **Use them as a compass**
-
-Unsure how to do something? Ask: *which choice serves more of the aims?* That one question resolves most practical dilemmas in this course — and in research.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Grading **Structure**
-
-<div class="card card-success card-glass pad-tight mt-md glow">
-
-## 🎯 **One course-long project — 100%**
-
-The whole grade is a project you carry through the course — the natural place to *practise* everything we cover.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-left">
-
-## 📋 **What it is**
-
-- Related to **your** field of study or work
-- Includes real **data analysis and/or automation**
-- Built with Python and the good practices from this course
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-left">
-
-## ✅ **Graded on the four aims**
-
-- 🔧 **Tool-agnostic**, reasoned choices
-- ♻️ **Reproducible** — someone else can rebuild your results
-- ⚙️ **Automated** where it counts
-- 📁 **Well-organised** data & files, clearly documented
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Assessed on a final presentation (graded on the spot) plus the project repository.</div>
-
----
-hideInToc: true
----
-
-# Project **Details**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📋 **Requirements**
-
-- Should be a well-developed project
-- Graded relative to where you start — beginners and experienced coders are both welcome
-- Can be functional (app, dashboard, website)
-- Can be more educational (applying a specific method — e.g. a neural network — and explaining the concepts)
-- Can use AI tools and components but must understand your code and be able to explain it
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 📦 **Deliverables**
-
-- Codebase available on course repository (info in eMokymai)
-- Project written up in a **one-page report** (added to the repository)
-- 10–30 second video showcasing the project (linked to the repository)
-- Final **presentation** at the end of the course (graded on the spot)
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Your Project — **Your Call**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧭 **Any field, any form**
-
-**One project of your own** — topic, data, and form are entirely your call: a data analysis, a working app or dashboard, an educational piece that explains a method — from physics, biology, economics, or a hobby. Pick something you actually want to exist.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 🔬 **The seminars feed it**
-
-One hands-on brief per week on a **real, open dataset** — LHCb collision data, or a dataset from your own field. The seminars teach the moves; the project is where you make them yours. How much the two overlap is up to you.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Graded on the four aims, not on the topic. Bring a first idea to an early seminar and talk it through — the sooner a project exists, the more of the course it can absorb.</div>
 
 ---
 hideInToc: true
@@ -603,54 +687,6 @@ hideInToc: true
 <div class="note-text mt-md">Eight outcomes, one thread: by the end you can take a dataset you have never seen, in a tool you have never used, and produce a result someone else can rebuild.</div>
 
 ---
-layout: section
-hideInToc: true
----
-
-# How This Course **Works**
-
----
-hideInToc: true
----
-
-# Two Halves of **One Week**
-
-```mermaid {scale: 0.62}
-graph LR
-    L[📖 2h Lecture<br/>ideas & intuition] --> S[🔬 2h Seminar<br/>hands-on practice]
-    S --> P[📦 Skills you carry<br/>into your own project]
-    P --> N[➡️ Next week]
-```
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📖 **The lecture**
-
-- Explains *why* a practice matters and *how* to think about it
-- Shows the idea on real examples — including from CERN
-- Interactive: questions, votes, and short reflections
-- Goal is **exposure and intuition**, not memorising commands
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔬 **The seminar**
-
-- You do it yourself, on a real dataset, in your own project folder
-- Inverted classroom: you type, break things, and fix them
-- The instructor circulates — help is closest when you are stuck
-- Goal is a **working result**, saved in your project before you leave
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">From week 2, every week has this shape — concepts first, muscle memory second. Miss the seminar and the lecture stays abstract; skip the lecture and the seminar feels like magic. <strong>They are one unit.</strong> Each seminar is a self-contained exercise on a shared, real dataset; every skill it teaches is meant to be carried straight into your own project.</div>
-
----
 hideInToc: true
 ---
 
@@ -692,11 +728,13 @@ You can say, in one sentence, what it does and why.
 
 </div>
 
+<div class="note-text mt-md">The same three tests as for 9.84: it exists in the folder, it comes out again, and someone can say how it was made.</div>
+
 ---
 hideInToc: true
 ---
 
-# How to **Succeed** Here
+# Habits That **Work**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -718,7 +756,7 @@ hideInToc: true
 - Bingeing every lecture the night before the presentation
 - Collecting tools you never actually use on your data
 - Hiding a broken step instead of asking about it
-- Treating "it ran once" as the same as "it's reproducible"
+- Treating “it ran once” as the same as “it's reproducible”
 
 </div>
 
@@ -752,39 +790,12 @@ The instructor, your neighbour, the error message in a search engine, the docs �
 
 </div>
 
----
-hideInToc: true
----
-
-# What This Course **Is Not**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-tight">
-
-## 🚫 **Not this**
-
-- Not a deep programming course — we write *enough* code to get work done
-- Not tied to one tool you must adopt forever
-- Not a race to the fanciest machine-learning model
-- Not graded on exams full of syntax to memorise
-
-</div>
-
-<div class="card card-success card-glass pad-tight">
-
-## 🎯 **But this**
-
-- A course in *practices* that survive any language or tool
-- Enough hands-on fluency to be dangerous — and to keep learning
-- One honest, reproducible project you understand end to end
-- Judgement about **which** tool, and **why**
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Already code well? The challenge just shifts from syntax to doing it <em>reproducibly</em>. There's a level here for everyone.</div>
+<!--
+Speaker: this is not a deep programming course and not a race to the
+fanciest model; it is a course in practices that survive any language.
+Already code well? The challenge shifts from syntax to doing it
+reproducibly. (~2 min)
+-->
 
 ---
 layout: section
@@ -792,6 +803,81 @@ hideInToc: true
 ---
 
 # Seminars & **Your Project**
+
+A seminar ends with one step saved in the folder. A project is those steps, grown around a question of your own, and graded on the four aims.
+
+---
+hideInToc: true
+---
+
+# The Grade: **One Project**
+
+<div class="card card-success card-glass pad-tight mt-md glow">
+
+## 🎯 **One course-long project — 100%**
+
+The whole grade is a project you carry through the course. It is graded relative to where you start: beginners and experienced coders are both welcome.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight reveal-left">
+
+## 🧭 **Any field, any form**
+
+Topic, data and form are your call: a data analysis, an app or dashboard, or an educational piece that explains a method, from physics, biology, economics or a hobby. It includes real **data analysis and/or automation**, built with Python.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight reveal-left">
+
+## ✅ **Graded on the four aims**
+
+- 🔧 **Tool-agnostic**, reasoned choices
+- ♻️ **Reproducible** — someone else can rebuild your results
+- ⚙️ **Automated** where it counts
+- 📁 **Well-organised** data & files, clearly documented
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Graded on the four aims, not on the topic. The seminars work on two shared files, the pendulum table and a file from LHCb; your project is where the same moves meet your own data.</div>
+
+---
+hideInToc: true
+---
+
+# What You **Hand In**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📋 **Requirements**
+
+- Should be a well-developed project
+- Can be functional (app, dashboard, website)
+- Can be more educational (applying a specific method — e.g. a neural network — and explaining the concepts)
+- Can use AI tools and components but must understand your code and be able to explain it
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 📦 **Deliverables**
+
+- Codebase available on course repository (info in eMokymai)
+- Project written up in a **one-page report** (added to the repository)
+- 10–30 second video showcasing the project (linked to the repository)
+- Final **presentation** at the end of the course (graded on the spot)
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Talk a first idea through at an early seminar: the sooner a project exists, the more of the course it can absorb.</div>
 
 ---
 hideInToc: true
@@ -813,7 +899,7 @@ CERN publishes its data so anyone can check the science. In the seminars you dow
 
 ## 🔬 **Real means messy**
 
-Real data carries noise, background, and quirks a clean textbook set never shows. Learning to handle that *is* the skill worth having.
+Real data carries noise, background, and quirks a clean textbook set never shows. The nine-row table already has three: a mean line, decimal commas, a numbering column.
 
 </div>
 
@@ -831,69 +917,30 @@ Open data, recorded provenance, a rebuildable analysis — the seminar exercises
 hideInToc: true
 ---
 
-# What the Seminars **Cover**
+# One Table Through the **Course**
 
-| **Seminars** | **Hands-on focus** |
-| --- | --- |
-| 1 | VS Code, Markdown, the project folder, editing many lines at once |
-| 3–5 | A file as bytes; the command line; Git |
-| 6–7 | Python from the first line; files and arrays |
-| 8–9 | A first figure; a value with its uncertainty |
-| 10–11 | **A fit from first principles**; a perceptron built by hand |
-| 12–13 | Cleaning by script; one command that rebuilds everything |
+| **Block** | **Lectures** | **What happens to the pendulum table** |
+| --- | --- | --- |
+| A | 02–05 | Repaired by hand; read as bytes; cleaned by a script; kept under Git |
+| B | 06–07 | Read line by line in Python, then as arrays |
+| C | 08–10 | Plotted; *g* given an uncertainty; the line fitted: 9.84 |
+| D | 12–13 | Cleaned with Pandas; the whole analysis rebuilt by one command |
 
-<div class="note-text mt-sm">Every one of these transfers straight into your own project — that is the point.</div>
+<div class="card card-info card-glass pad-compact mt-md">
 
----
-hideInToc: true
----
+## ⚛️ **The second shared file**
 
-# From Raw Data to a **Result**
-
-```mermaid {scale: 0.72}
-graph LR
-    R[📥 Raw events] --> C[🧹 Clean]
-    C --> M[🔢 Compute mass]
-    M --> H[📊 Histogram]
-    H --> F[📈 Fit the peak]
-    F --> V[✅ Mass ± error]
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-This is the whole arc in one line — and every box is built in the seminars. The same shape fits any dataset: swap "compute mass" for "compute your variable" and the pipeline is your project's.
+`D0_KPi.csv`, a file recorded by the LHCb experiment at CERN. Lecture 2 opens it and asks what it holds.
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<div class="note-text mt-md">Your project repeats each of these steps on data of your own.</div>
 
-<div class="card card-primary card-glass pad-compact">
-
-## 📥 **Raw → Clean**
-
-The raw file as bytes, a clean project structure, cleaning by script
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📊 **Compute → Histogram**
-
-A first figure, then a value with its uncertainty
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📈 **Fit → Result**
-
-The fit, then a rebuild in one command
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">By the end, one command walks the entire chain, raw to result, untouched by hand.</div>
+<!--
+Speaker: this is the map of the course in terms of one file instead of a
+list of topics. The 9.84 from the opening is the number the fit in block C
+gives. (~2 min)
+-->
 
 ---
 hideInToc: true
@@ -901,48 +948,51 @@ hideInToc: true
 
 # The Finished **Product**
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
 
 <div class="card card-primary card-glass pad-tight">
 
 ## 📦 **What you hand in**
 
-A single versioned repository: raw data (if any), scripts, results, a pinned environment, and a `README`. The report, video, and presentation from *Project Details* all describe this one thing.
+One versioned repository. The report, video and presentation all describe this one thing.
 
-Every seminar practises one piece of this tree on the shared dataset; your project assembles the whole of it around your own question.
+This is the pendulum analysis at the end of the course. Your project has the same shape around your own question.
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
 ```text
-my-project/
-├─ data/raw/        # inputs, untouched
-│                   # (if your project has data)
-├─ scripts/         # one per step
-├─ results/         # all regenerable
-├─ environment.yml  # pinned
-├─ Makefile         # make all
-└─ README.md        # how to rebuild
+analysis-project/
+├── data/raw/          as received, never edited
+├── data/processed/    written by clean.py
+├── scripts/           clean.py  plot.py  fit.py  report.py
+├── results/           the plot, fit.json, report.md
+├── tests/             checks of the scripts
+├── config.json        the parameters
+├── requirements.txt   the packages and versions
+├── run_all.py         the one command
+├── .gitignore         what Git leaves out
+└── README.md          what it is, how to rebuild
 ```
 
 </div>
 
 </div>
 
-<div class="note-text mt-md">Clean, automated, documented — the four aims made concrete, in a form you can show a supervisor or an employer.</div>
+<div class="note-text mt-md">Clean, automated, documented: the four aims made concrete, in a form you can show a supervisor or an employer.</div>
 
 ---
 hideInToc: true
 ---
 
-# The Golden **Rule**
+# Delete and **Rebuild**
 
 <div class="card card-success card-glass pad-tight mt-md glow">
 
-## 🏆 **Delete everything but `data/raw/` and `scripts/` — then rebuild it all with one command.**
+## 🏆 **Delete `data/processed/` and `results/`, then rebuild both with one command.**
 
-If that is true of your project, you've succeeded. Every practice in this course exists to make that one sentence true of your work.
+If that works for your project, it is reproducible. Every practice in this course exists to make that one sentence true of your work.
 
 </div>
 
@@ -952,7 +1002,7 @@ If that is true of your project, you've succeeded. Every practice in this course
 
 ## 🗑️ **Safe to delete — it regenerates**
 
-`data/processed/`, `results/`, every figure, table and number in the report: outputs of the scripts, never edited by hand.
+`data/processed/` and `results/`: the cleaned table, the plot, `fit.json`, the report. Outputs of the scripts, never edited by hand.
 
 </div>
 
@@ -960,13 +1010,13 @@ If that is true of your project, you've succeeded. Every practice in this course
 
 ## 🔒 **The recipe — keep it**
 
-`data/raw/` (cannot be regenerated), `scripts/` (every step), plus `environment.yml`, `Makefile` and `README.md` — the instructions for the rebuild.
+`data/raw/` (it cannot be regenerated), `scripts/`, `tests/`, `config.json`, `requirements.txt`, `run_all.py` and `README.md`.
 
 </div>
 
 </div>
 
-<div class="note-text mt-md">Reproducibility isn't a chore you bolt on at the end — it's the property that makes everything else trustworthy.</div>
+<div class="note-text mt-md">On the pendulum: delete the cleaned table, run the one command, and the same 97 bytes come back, and with them the same 9.84.</div>
 
 ---
 hideInToc: true
@@ -1014,9 +1064,89 @@ Statistics decide whether a bump in the data is a discovery — or noise.
 
 <div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
 
-You don't need a particle accelerator to use any of this. **Next lecture: what data actually is — then we build the skills, from how a computer works to the command line.**
+You don't need a particle accelerator to use any of this: nine rows from a lab partner need the same four aims as a petabyte.
 
 </div>
+
+---
+hideInToc: true
+---
+
+# Numbers and a **Rule**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📡 **What arrived**
+
+Mariner 4 flew past Mars on 14–15 July 1965 and took 21 pictures, and part of a 22nd. Each picture came back to Earth as numbers: 200 × 200 = **40 000** brightness values, one per point.
+
+The computer that turned the numbers into a picture was still at work.
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🖍️ **What the engineers did**
+
+At JPL, Richard Grumm's team printed the numbers on paper strips, stapled the strips side by side on a wall, and coloured every number with pastels from an art shop, by a key that matched each number to a shade.
+
+The first picture of Mars from a spacecraft was coloured by hand.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Numbers plus a written rule give a picture. Anyone with the 40 000 numbers and the key gets the same picture, by hand or by computer. Nine rows plus a written method give 9.84 in the same way.
+
+</div>
+
+<!--
+Speaker: the framed pastel picture was given to JPL's director, William
+Pickering. The Mariner 4 clip in the reel pans across the pictures as the
+computer later made them. Sources: NSSDC Mariner 4 page (21 pictures plus 21 lines of a 22nd,
+14–15 July 1965); Scientific American, "First View of Mars Was a
+Paint-by-Numbers" (Grumm, strips stapled to a wall, pastels); Caltech
+magazine, "A Planet Painted by Hand" (colour key, the gift to Pickering).
+Transmission times quoted for one picture disagree between sources (6, 8
+or 10 hours), so the slide gives none. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What a Result **Needs**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The opening question: **I send you only 9.84. How do you check it?** One line per aim.
+
+</div>
+
+| | **I send you** | **You do** |
+| --- | --- | --- |
+| 🔧 | Plain text throughout: CSV, Python, a README | Read every step without my programs |
+| ♻️ | The script, and the versions it ran on | Run it on your laptop: 9.84 |
+| ⚙️ | The four edits and the fit, as code | See exactly what was done to which rows |
+| 📁 | `data/raw/pendulum.csv`, 130 bytes, as received | Check it is the file I started from |
+
+<div class="card card-success card-glass pad-tight mt-md">
+
+## ✅ **9.84, checked**
+
+With these four, 9.84 is a result: you get it again, and you can see why Ada got 9.80, an average of nine values instead of one line. Without them, it is a number in an e-mail.
+
+</div>
+
+<!--
+Speaker: this answers the question of the "Two People, Two Answers" slide.
+Read the four lines against the piles on the board. Do not cut this slide.
+(~3 min)
+-->
 
 ---
 hideInToc: true
@@ -1038,11 +1168,11 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🗂️ **Think of a dataset**
+## 🗂️ **Your own data, in class**
 
-- A table from a field you care about: weather, sport, prices, health, astronomy, your lab
-- It becomes the data of your own project
-- No file is needed yet. One sentence about it is enough
+- In the seminar, the first file you write is a README for your project
+- One line of it says what data you would like to look at: weather, sport, prices, health, astronomy, your lab
+- One sentence is enough, written there and then
 
 </div>
 
@@ -1065,13 +1195,13 @@ hideInToc: true
 
 ## and what can we learn from it
 
+Mariner 4 sent numbers, and a key turned them into a picture. Every instrument in these films, camera, rover, telescope and detector, writes numbers too.
+
 <!--
 Speaker: dim the lights. Let the films run — don't narrate over them. The one cue
 to plant beforehand: spot the instrument in every scene — camera, rover, telescope,
 chamber — and ask what its output looks like once it is stored. Pick it up between
 clips if the room is awake: which of these would *you* analyse first? (~1 min setup)
-
-NOTE (reel pass 1): 17 of these 18 clips are HEVC — verify the venue browser decodes HEVC (Firefox and Linux Chrome do not: they show 'Video not available' or black video with sound). Pass 2 re-encodes to H.264.
 -->
 
 ---
@@ -1112,7 +1242,7 @@ hideInToc: true
 
 <VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" />
 
-<!-- Reel · Act I · Perseverance landing on Mars (3:10; this is the 1080p asset under its misspelt release name — pass 2 replaces it with perseverance_rover_landing_nasa.mp4 trimmed to 1:30) -->
+<!-- Reel · Act I · Perseverance landing on Mars (3:10) -->
 
 ---
 hideInToc: true
@@ -1120,7 +1250,7 @@ hideInToc: true
 
 <VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" />
 
-<!-- Reel · Act I · Cassini at Saturn (3:41; trimmed to 1:30 in pass 2) -->
+<!-- Reel · Act I · Cassini at Saturn (3:41) -->
 
 ---
 hideInToc: true
@@ -1154,7 +1284,7 @@ hideInToc: true
 
 <VideoPlayer src="Webb_Reel.mp4" />
 
-<!-- Reel · Act I · JWST reel (2:58; trimmed to 1:30 in pass 2) -->
+<!-- Reel · Act I · JWST reel (2:58) -->
 
 ---
 hideInToc: true
@@ -1170,7 +1300,7 @@ hideInToc: true
 
 <VideoPlayer src="QGP_Formation.mp4" />
 
-<!-- Reel · Act II · quark-gluon plasma forms (0:33). Pass 2 adds the Standard Model animation after this. -->
+<!-- Reel · Act II · quark-gluon plasma forms (0:33) -->
 
 ---
 hideInToc: true
@@ -1186,7 +1316,7 @@ hideInToc: true
 
 <VideoPlayer src="Cloud_Chamber_Audio.mp4" />
 
-<!-- Reel · Act II · cloud chamber — particles made visible (2:29; trimmed to 1:30 in pass 2) -->
+<!-- Reel · Act II · cloud chamber — particles made visible (2:29) -->
 
 ---
 hideInToc: true
@@ -1194,7 +1324,7 @@ hideInToc: true
 
 <VideoPlayer src="CERN_Overview_Short.mp4" />
 
-<!-- Reel · Act III · CERN aerial (0:11). Pass 2 adds the LHC tunnel travelling shot after this. -->
+<!-- Reel · Act III · CERN aerial (0:11) -->
 
 ---
 hideInToc: true
@@ -1210,7 +1340,7 @@ hideInToc: true
 
 <VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" />
 
-<!-- CERN block · CERN video 2019-050-008 (1:35, silent). Added 2026-09-08; release asset is an H.264 web encode of the HEVC Drive master. -->
+<!-- CERN block · CERN video 2019-050-008 (1:35, silent). Added 2026-09-08. -->
 
 ---
 hideInToc: true
@@ -1218,7 +1348,7 @@ hideInToc: true
 
 <VideoPlayer src="LHCb.mp4" />
 
-<!-- Reel · Act III · LHCb — home of the seminar dataset (0:47). Pass 2 adds collision, event display, data centre, WLCG, exabyte chart, accelerator-complex animation after this. -->
+<!-- Reel · Act III · LHCb — home of the seminar dataset (0:47) -->
 
 ---
 hideInToc: true
@@ -1242,6 +1372,7 @@ hideInToc: true
 
 # Extra Material — What is **CERN**?
 
+The films ended inside LHCb. Behind them: the organisation, the machine, the chain of accelerators that feeds it, and how a detector sees a collision.
 
 <img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-8 h-48" />
 
@@ -1499,13 +1630,13 @@ hideInToc: true
 ---
 
 <MCQ
-  question="The ‘golden rule’ of a reproducible project says you could delete everything except two folders and rebuild the whole analysis with one command. Which two folders?"
+  question="In a reproducible project, two folders can be deleted at any time and rebuilt with one command. Which two?"
   :options="[
-    'results/ and data/processed/',
     'data/raw/ and scripts/',
-    'data/processed/ and Makefile',
-    'README.md and results/'
+    'data/processed/ and results/',
+    'data/raw/ and results/',
+    'scripts/ and data/processed/'
   ]"
   :correct="1"
-  explanation="Raw data can't be regenerated, and scripts encode every step that turns it into results. Keep those two and everything else — cleaned tables, figures, numbers — can be rebuilt automatically. (The Makefile, environment.yml and README stay too: they are part of the recipe, not results.) That's reproducibility and automation working together."
+  explanation="data/processed/ and results/ hold only what the scripts write: the cleaned table, the plot, the fit, the report. data/raw/ cannot be regenerated, and scripts/ (with run_all.py, config.json, requirements.txt and the README) is the recipe. Delete the outputs, run the one command, and the same 97 bytes and the same 9.84 come back."
 />

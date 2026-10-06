@@ -102,13 +102,15 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Nine rows gave **g = 9.84 ± 0.09 m/s²**. 91&nbsp;583 rows gave a peak at **1864.47 ± 0.10 MeV/c²**. Both came from files in the project folder, by scripts that can be run again. This lecture asks what such a number is worth, and what stands around it: other people, rules, plans.
+Nine rows gave **g = 9.84 ± 0.09 m/s²**, by the weighted fit of Lecture 10. 91&nbsp;583 rows gave a peak at **1864.47 ± 0.10 MeV/c²**. Both came from files in the project folder, by scripts that can be run again. This lecture asks what such a number is worth, and what stands around it: other people, rules, plans.
 
 </div>
 
 <!--
 Speaker: both fits are the ones of Lecture 10. Left: T squared against the length,
-the slope is 4 pi squared over g. Right: the mass column in 2 MeV bins, a Gaussian
+weighted with 0.1 s per timing and a free intercept, the slope is 4 pi squared
+over g. Lecture 13's table "g by Method" gives the other numbers the same nine
+rows give. Right: the mass column in 2 MeV bins, a Gaussian
 on a straight line. Ask who still has both numbers in their own report. (~2 min)
 -->
 
@@ -553,8 +555,8 @@ hideInToc: true
 # 5 · The **Result**
 
 ```md
-g = 9.84 ± 0.09 m/s² (statistical), from a straight-line fit of T² against ℓ
-for nine lengths, with 0.1 s on each time of ten swings.
+g = 9.84 ± 0.09 m/s² (statistical), from a weighted straight-line fit of
+T² against ℓ for nine lengths, with 0.1 s on each time of ten swings.
 
 The K⁻π⁺ mass peak is at 1864.47 ± 0.10 MeV/c² (statistical), with a width
 of 7.65 ± 0.10 MeV/c² and 20 990 ± 280 candidates.

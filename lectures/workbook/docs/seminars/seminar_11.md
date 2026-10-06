@@ -3,82 +3,90 @@
 **Paired lecture:** 11 The Perceptron · **Format:** follow-along · **~120 min**
 in class
 
-The seminar has four parts, in this order.
+**Today's goal:** every student writes a neuron from an empty file, trains
+it on 300 labelled points, and quotes its accuracy on 75 points it has not
+seen: 67 correct, 89 % ± 4 %.
 
-1. **A neuron by hand.** The room reads a file of 300 labelled points, plots
-   it, and writes the neuron as a function with weights read off the plot.
-2. **Rosenblatt's rule.** The rule is written and checked on the AND gate
-   against the table of the lecture, then run on the file.
-3. **The logistic neuron.** Sigmoid, loss, gradient and the training loop.
-   The loop fails on the inputs as they are, works on standardised inputs,
-   and is judged on points it has not seen.
-4. **The result.** The boundary is drawn over the data and the numbers are
-   written into the report.
+The tools are VS Code, the terminal and Python with NumPy and Matplotlib,
+all from earlier seminars, and nothing is installed today. Everything is
+typed: the room ends with a script of about 100 lines that needs NumPy and
+Matplotlib and nothing else.
 
-Everything is typed. The room starts from an empty file and ends with a
-script of about 100 lines that needs NumPy and Matplotlib and nothing else.
+## Run sheet
 
-## How to use this page
+One screen for the front of the room. Each line links to its section.
 
-This page is written for the person at the front. Students can follow the
-same page.
+| Clock | Section | On the projector | The room ends with |
+|--|--|--|--|
+| | **Part 1 · A neuron by hand** · 30 min | | |
+| 0:00 | [1. Get the file and look at it](#file) | `head` and `wc -l`, or `Get-Content`, on the file | The file in `data/raw/`, its three columns named |
+| 0:08 | [2. Load and plot](#plot) | `np.loadtxt` in a new `scripts/perceptron.py` | Two arrays and a picture of two clouds |
+| 0:20 | [3. A neuron with weights set by hand](#by-hand) | `predict(X, w, b)` with `w = (100, 1)`, `b = -825` | 88 % correct with a line read off the plot |
+| | **Part 2 · Rosenblatt's rule** · 25 min | | |
+| 0:30 | [4. The rule on AND](#gate) | `scripts/gate.py` beside the lecture's table | The ten updates of the lecture, reproduced |
+| 0:45 | [5. The rule on the file](#rule-on-data) | The rule on `X`, ten epochs | A rule that never stops |
+| | **Part 3 · The logistic neuron** · 45 min | | |
+| 0:55 | [6. Sigmoid and loss](#loss) | `sigmoid` and `loss` | The loss 0.6931 for zero weights |
+| 1:05 | [7. The gradient and the loop](#loop) | The loop with `eta = 0.5` | A loop that prints `nan` |
+| 1:20 | [8. Standardise the inputs](#standardise) | `Z = (X - m) / s` | The loss falling to 0.2542 |
+| 1:30 | [9. Train and test](#test) | `order[:225]` and `order[225:]` | 67 of 75 unseen points correct |
+| | **Part 4 · The result** · 20 min | | |
+| 1:40 | [10. Draw the boundary](#boundary) | `w_x = w / s`, the line on the plot | The line over the two clouds |
+| 1:50 | [11. Write it down](#report) | `results/report.md`, then the commit | Five lines and a picture in the report |
+| 1:55 | [12. Wrap up](#wrap-up) | The list of what was learned | |
 
-- The **paragraph at the top of a section** is what to tell the room.
-- The **numbered steps** are what to do on the projector. The room repeats
-  each step on their own laptops.
-- **You should now see** closes a section. Ask for hands: "who sees this?"
-  Go on when about four in five have it. The rest get help from a neighbour.
-- **Watch for** is the usual slip in that section.
+**If time runs short:** leave out sections 5 and 9 and train on all 300
+points. Section 10 then starts from the weights of section 8, and the report
+of section 11 gives 267 of 300 points and the numbers the script prints.
 
-Keys are written for Windows, with macOS in brackets. The script is run from
-the terminal in the project folder:
+??? info "How to use this page"
+    This page is written for the person at the front. Students follow the
+    same page.
 
-```text
-Windows (Git Bash)    python scripts/perceptron.py
-macOS, Linux          python3 scripts/perceptron.py
-```
+    - **Tell the room** is the paragraph to say before the steps.
+    - The **numbered steps** are what to do on the projector. The room
+      repeats each step on their own laptops.
+    - **You should now see** closes a section. Ask for hands: "who sees
+      this?" Go on when about four in five have it. The rest get help from a
+      neighbour.
+    - **Watch for** is the usual slip in that section.
 
-The page writes `python` from here on. Every number on this page was
-produced by running the step as written. The data file is generated with a
-fixed seed and the split uses a fixed seed, so every laptop prints the same
-numbers.
+    Keys are written for Windows, with macOS in brackets. The script is run
+    from the terminal of VS Code in the project folder: `zsh` on macOS,
+    PowerShell 7 on Windows, as set up in [Seminar 4](seminar_04.md). The
+    program is `python3` on macOS and `python` on Windows. Where a step
+    differs between the two, it has a tab for **macOS** and one for
+    **Windows**. **Run the script** means the same command again: `↑`, then
+    `Enter`.
 
-| Clock | Section | The room ends with |
-|--|--|--|
-| | **Part 1 · A neuron by hand** · 30 min | |
-| 0:00 | [1. Get the file and look at it](#file) | The file in `data/raw/`, its three columns named |
-| 0:08 | [2. Load and plot](#plot) | Two arrays and a picture of two clouds |
-| 0:20 | [3. A neuron with weights set by hand](#by-hand) | 88 % correct with a line read off the plot |
-| | **Part 2 · Rosenblatt's rule** · 25 min | |
-| 0:30 | [4. The rule on AND](#gate) | The ten updates of the lecture, reproduced |
-| 0:45 | [5. The rule on the file](#rule-on-data) | A rule that never stops |
-| | **Part 3 · The logistic neuron** · 45 min | |
-| 0:55 | [6. Sigmoid and loss](#loss) | The loss 0.6931 for zero weights |
-| 1:05 | [7. The gradient and the loop](#loop) | A loop that prints `nan` |
-| 1:20 | [8. Standardise the inputs](#standardise) | The loss falling to 0.2542 |
-| 1:30 | [9. Train and test](#test) | 67 of 75 unseen points correct |
-| | **Part 4 · The result** · 20 min | |
-| 1:40 | [10. Draw the boundary](#boundary) | The line over the two clouds |
-| 1:50 | [11. Write it down](#report) | Five lines and a picture in the report |
-| 1:55 | [12. Wrap up](#wrap-up) | The homework known |
+    Every number on this page was produced by running the step as written.
+    The data file is generated with a fixed seed and the split uses a fixed
+    seed, so every laptop prints the same numbers.
 
-In a 90-minute slot, leave out sections 5 and 9 and train on all 300 points.
-Section 10 then starts from the weights of section 8.
+??? info "Before the session"
+    For the room: the project folder with `data/raw/`, `scripts/`,
+    `results/` and `results/report.md`, under Git since
+    [Seminar 5](seminar_05.md). Python with NumPy, installed in
+    [Seminar 7](seminar_07.md), and Matplotlib, installed in
+    [Seminar 8](seminar_08.md). The lecture's slides *The Rule*, *The
+    Training Loop* and *Standardising the Inputs* at hand.
 
-## Prerequisites
+    For you:
 
-For the room: the project folder with `data/raw/`, `scripts/` and
-`results/`, Python with NumPy and Matplotlib, and the lecture's slides
-*The Rule*, *The Training Loop* and *Standardising the Inputs* at hand.
+    - The whole page done once on your own laptop, with the script kept as a
+      reference.
+    - [`perceptron_points.csv`](../data/perceptron_points.csv) on a USB
+      stick, in case the network fails.
+    - The lecture's table *AND by the Rule* ready to show beside the
+      terminal in section 4.
 
-For you, before the session:
+??? info "Files for this seminar"
+    | File | What it is |
+    |--|--|
+    | [`perceptron_points.csv`](../data/perceptron_points.csv) | Section 1: 300 generated points, two inputs and a label |
+    | [`perceptron_make_points.py`](../data/perceptron_make_points.py) | The script that made the points, with its fixed seed |
 
-- The whole page done once on your own laptop, with the script kept as a
-  reference.
-- [`perceptron_points.csv`](../data/perceptron_points.csv) on a USB stick,
-  in case the network fails.
-- The lecture's table *AND by the Rule* ready to show beside the terminal
-  in section 4.
+---
 
 ## Part 1 · A neuron by hand { #part-1 }
 
@@ -87,56 +95,97 @@ For you, before the session:
 The room ends this part with the data as two arrays, a picture of them, and
 a neuron whose three numbers were read off the picture.
 
-## 1. Get the file and look at it { #file }
+---
+
+### 1. Get the file and look at it { #file }
 
 **0:00 · 8 min**
 
-The file holds 300 points. Each has two inputs, `x1` and `x2`, and a label,
-0 or 1. The points are generated: the script that made them is
-[`perceptron_make_points.py`](../data/perceptron_make_points.py). The task
-of the session is a rule that gives the label from the two inputs. Before
-any code the file is read as text.
+**Tell the room.** The file holds 300 points. Each has two inputs, `x1` and
+`x2`, and a label, 0 or 1. The points are generated: the script that made
+them is [`perceptron_make_points.py`](../data/perceptron_make_points.py).
+The task of the session is a rule that gives the label from the two inputs.
+Before any code the file is read as text.
 
 1. Download [`perceptron_points.csv`](../data/perceptron_points.csv) and
    drag it from **Downloads** onto the `raw` folder in the Side Bar.
 
-2. Select the file to open it. Line 1 names the columns: `x1,x2,label`.
+2. Select the file to open it. Line 1 names the columns:
+
+    ```text
+    x1,x2,label
+    ```
 
 3. Press `Ctrl+End` (macOS `Cmd+↓`). VS Code numbers 302 lines and the last
    one is empty: one header line and 300 rows.
 
-4. Open the terminal and look at the same file from there.
+4. Open the terminal and look at the same file from there. First the top:
 
-    ```text
-    head -5 data/raw/perceptron_points.csv
-    wc -l data/raw/perceptron_points.csv
-    ```
+    === "macOS"
 
-5. Ask the room what one row is, and how large the numbers of each column
+        ```text
+        head -n 5 data/raw/perceptron_points.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        Get-Content -Head 5 data/raw/perceptron_points.csv
+        ```
+
+5. Then the number of lines:
+
+    === "macOS"
+
+        ```text
+        wc -l data/raw/perceptron_points.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Content data/raw/perceptron_points.csv).Count
+        ```
+
+6. Ask the room what one row is, and how large the numbers of each column
    are. `x1` is near 5. `x2` is near 300.
 
-You should now see, in the terminal, the header with four rows, and 301
-lines:
+!!! success "You should now see"
+    In the terminal, the header with four rows:
 
-```text
-x1,x2,label
-4.37,374.2,0
-7.42,522.4,1
-6.43,426.7,1
-7.98,471.3,1
-```
+    ```text
+    x1,x2,label
+    4.37,374.2,0
+    7.42,522.4,1
+    6.43,426.7,1
+    7.98,471.3,1
+    ```
 
-## 2. Load and plot { #plot }
+    and 301 lines. PowerShell prints the number alone, `zsh` adds the file
+    name:
+
+    ```text
+         301 data/raw/perceptron_points.csv
+    ```
+
+---
+
+### 2. Load and plot { #plot }
 
 **0:08 · 12 min**
 
-A classifier is built on a picture of the data. The file is read into one
-array with `np.loadtxt`, the first two columns become the inputs `X` and
-the third the labels `y`. A mask picks the points of one class, as in the
-lecture on NumPy.
+**Tell the room.** A classifier is built on a picture of the data. The file
+is read into one array with `np.loadtxt`, the first two columns become the
+inputs `X` and the third the labels `y`. A mask picks the points of one
+class, as in the lecture on NumPy.
 
-1. Select the `scripts` folder, then **New File**, and type
-   `perceptron.py`. The file is empty.
+1. Select the `scripts` folder, then **New File**, and type:
+
+    ```text
+    perceptron.py
+    ```
+
+    The file is empty.
 
 2. Type the block and save.
 
@@ -162,19 +211,32 @@ lecture on NumPy.
     fig.savefig("results/perceptron_points.png", dpi=150)
     ```
 
-3. Run it: `python scripts/perceptron.py`.
+3. Run it from the terminal in the project folder.
+
+    === "macOS"
+
+        ```text
+        python3 scripts/perceptron.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/perceptron.py
+        ```
 
 4. Select `results/perceptron_points.png` in the Side Bar. Ask the room:
    can one straight line separate the two classes?
 
-You should now see three lines in the terminal, and a picture of two clouds
-that overlap in the middle:
+!!! success "You should now see"
+    Three lines in the terminal, and a picture of two clouds that overlap in
+    the middle:
 
-```text
-(300, 2) (300,)
-class 1: 150 of 300
-mean: [  5.06 329.43]  std: [  1.4  113.75]
-```
+    ```text
+    (300, 2) (300,)
+    class 1: 150 of 300
+    mean: [  5.06 329.43]  std: [  1.4  113.75]
+    ```
 
 No line separates the classes completely. The two columns are on different
 scales: `x2` is about 65 times larger than `x1`. Both facts come back later.
@@ -183,17 +245,19 @@ scales: `x2` is about 65 times larger than `x1`. Both facts come back later.
     | On the screen | What to do |
     |--|--|
     | `FileNotFoundError` | The terminal is not in the project folder. Run `pwd`, then `cd` to it |
-    | `ModuleNotFoundError: No module named 'matplotlib'` | `python -m pip install matplotlib` |
+    | `ModuleNotFoundError: No module named 'matplotlib'` | Install it as in Seminar 8: `python3 -m pip install matplotlib` on macOS, `python -m pip install matplotlib` on Windows |
     | A window with the plot opens and the script waits | There is a `plt.show()` in the file. Delete it: the picture is saved to a file |
 
-## 3. A neuron with weights set by hand { #by-hand }
+---
+
+### 3. A neuron with weights set by hand { #by-hand }
 
 **0:20 · 10 min**
 
-The neuron of the lecture is two operations: the weighted sum
-`z = w · x + b` and the step. With `X @ w` the sum is computed for all 300
-points at once. Its weights are first set by hand: once as a threshold on
-one input, once as a line read off the plot.
+**Tell the room.** The neuron of the lecture is two operations: the
+weighted sum `z = w · x + b` and the step. With `X @ w` the sum is computed
+for all 300 points at once. Its weights are first set by hand: once as a
+threshold on one input, once as a line read off the plot.
 
 1. Add the neuron at the end of the script.
 
@@ -224,12 +288,13 @@ one input, once as a line read off the plot.
 
 4. Run the script.
 
-You should now see two more lines:
+!!! success "You should now see"
+    Two more lines:
 
-```text
-x1 > 5: 0.83
-a line by eye: 0.8833333333333333
-```
+    ```text
+    x1 > 5: 0.83
+    a line by eye: 0.8833333333333333
+    ```
 
 The threshold is right for 249 of the 300 points and the line for 265.
 Using both inputs gains 16 points. The rest of the session finds the three
@@ -239,6 +304,8 @@ numbers from the data.
     `ValueError: matmul: Input operand 1 has a mismatch`. Then `w` does not
     have two numbers, or `X` was built with `data[:, :3]`.
 
+---
+
 ## Part 2 · Rosenblatt's rule { #part-2 }
 
 **0:30 to 0:55 · sections 4 and 5**
@@ -246,15 +313,21 @@ numbers from the data.
 The rule of the lecture is written once on a problem with a known answer,
 and then let loose on the file.
 
-## 4. The rule on AND { #gate }
+---
+
+### 4. The rule on AND { #gate }
 
 **0:30 · 15 min**
 
-A new piece of code is tested on a case where the answer is known. The
-lecture worked the AND gate through by hand: ten updates, and at the end
-`w = (2, 1)`, `b = -2`. The code has to print the same.
+**Tell the room.** A new piece of code is tested on a case where the answer
+is known. The lecture worked the AND gate through by hand: ten updates, and
+at the end `w = (2, 1)`, `b = -2`. The code has to print the same.
 
-1. Select the `scripts` folder, then **New File**, and type `gate.py`.
+1. Select the `scripts` folder, then **New File**, and type:
+
+    ```text
+    gate.py
+    ```
 
 2. Type the block. The two lines after `y_hat` are the rule: the weights
    change by the error times the input.
@@ -277,26 +350,48 @@ lecture worked the AND gate through by hand: ten updates, and at the end
         print("epoch", epoch, " w", w, " b", b, " updates", updates)
     ```
 
-3. Run it: `python scripts/gate.py`. Compare each line with the table of
-   the lecture: the weights after steps 4, 8, 12, 16, 20 and 24.
+3. Run it.
 
-4. Change the targets to OR, `y = np.array([0, 1, 1, 1])`, and run again.
-   Ask the room to check the last line by hand for all four inputs.
+    === "macOS"
 
-You should now see, for AND:
+        ```text
+        python3 scripts/gate.py
+        ```
 
-```text
-epoch 1  w [1. 1.]  b 1.0  updates 1
-epoch 2  w [2. 1.]  b 0.0  updates 3
-epoch 3  w [2. 1.]  b -1.0  updates 3
-epoch 4  w [2. 2.]  b -1.0  updates 2
-epoch 5  w [2. 1.]  b -2.0  updates 1
-epoch 6  w [2. 1.]  b -2.0  updates 0
-```
+    === "Windows"
 
-For OR the updates are 1, 2, 1 and then 0, and the weights end at
-`w [1. 1.]  b 0.0`. An epoch without an update means that every point is
-right, and the weights stay as they are.
+        ```text
+        python scripts/gate.py
+        ```
+
+    Compare each line with the table of the lecture: the weights after
+    steps 4, 8, 12, 16, 20 and 24.
+
+4. Change the targets to OR and run again:
+
+    ```text
+    y = np.array([0, 1, 1, 1])
+    ```
+
+    Ask the room to check the last line by hand for all four inputs.
+
+!!! success "You should now see"
+    For AND:
+
+    ```text
+    epoch 1  w [1. 1.]  b 1.0  updates 1
+    epoch 2  w [2. 1.]  b 0.0  updates 3
+    epoch 3  w [2. 1.]  b -1.0  updates 3
+    epoch 4  w [2. 2.]  b -1.0  updates 2
+    epoch 5  w [2. 1.]  b -2.0  updates 1
+    epoch 6  w [2. 1.]  b -2.0  updates 0
+    ```
+
+    For OR the updates are 1, 2, 1 and then 0, and the weights end at
+    `w [1. 1.]  b 0.0`.
+
+An epoch without an update means that every point is right, and the weights
+stay as they are.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -304,13 +399,15 @@ right, and the weights stay as they are.
     | The updates never reach 0 | The comparison is `>= 0` in place of `> 0`, or `b` is not updated |
     | `IndentationError` | The four lines under `for x, target` are indented by eight spaces, the `print` by four |
 
-## 5. The rule on the file { #rule-on-data }
+---
+
+### 5. The rule on the file { #rule-on-data }
 
 **0:45 · 10 min**
 
-The convergence theorem holds for data that a line can separate. The plot
-showed that the 300 points are not of that kind. The room runs the rule on
-them and sees what the theorem does not cover.
+**Tell the room.** The convergence theorem holds for data that a line can
+separate. The plot showed that the 300 points are not of that kind. The
+room runs the rule on them and sees what the theorem does not cover.
 
 1. In `perceptron.py`, add at the end:
 
@@ -336,18 +433,21 @@ them and sees what the theorem does not cover.
 4. Select the eleven lines of this step and press `Ctrl+/` (macOS `Cmd+/`).
    Each line gets a `#` in front and is no longer run.
 
-You should now see ten lines of this kind. The first two are:
+!!! success "You should now see"
+    Ten lines of this kind. The first two are:
 
-```text
-epoch 1 updates 143 correct 0.5
-epoch 2 updates 142 correct 0.5
-```
+    ```text
+    epoch 1 updates 143 correct 0.5
+    epoch 2 updates 142 correct 0.5
+    ```
 
 Every epoch has between 135 and 147 updates, and after every epoch half of
 the points are right: the neuron gives all 300 points the same label. The
 rule does not settle, for two reasons. The classes overlap, so some point
 is always wrong. And one update adds a whole point to the weights: with
 `x2` near 300 a single update throws the line across the entire cloud.
+
+---
 
 ## Part 3 · The logistic neuron { #part-3 }
 
@@ -357,14 +457,17 @@ The step is replaced by the sigmoid and the rule by gradient descent on the
 cross-entropy. Each piece is typed as a function and checked on a number
 known from the lecture before the next one is added.
 
-## 6. Sigmoid and loss { #loss }
+---
+
+### 6. Sigmoid and loss { #loss }
 
 **0:55 · 10 min**
 
-Two functions. The sigmoid turns `z` into a probability. The loss is the
-mean of `-ln` of the probability that the neuron gives to the true label.
-Both are checked on numbers from the lecture: σ(2) = 0.881, and a neuron
-with zero weights has the loss ln 2 = 0.6931, whatever the data.
+**Tell the room.** Two functions. The sigmoid turns `z` into a probability.
+The loss is the mean of `-ln` of the probability that the neuron gives to
+the true label. Both are checked on numbers from the lecture: σ(2) = 0.881,
+and a neuron with zero weights has the loss ln 2 = 0.6931, whatever the
+data.
 
 1. Add at the end of `perceptron.py`:
 
@@ -389,22 +492,23 @@ with zero weights has the loss ln 2 = 0.6931, whatever the data.
 3. Ask why the loss is 0.6931 before the neuron has seen anything. With
    zero weights every `z` is 0 and every output is 0.5, and −ln 0.5 = ln 2.
 
-You should now see:
+!!! success "You should now see"
+    ```text
+    [0.119 0.5   0.881]
+    loss with zero weights: 0.6931
+    ```
 
-```text
-[0.119 0.5   0.881]
-loss with zero weights: 0.6931
-```
+---
 
-## 7. The gradient and the loop { #loop }
+### 7. The gradient and the loop { #loop }
 
 **1:05 · 15 min**
 
-The lecture derived the gradient of the loss: the mean of the error
-`y_hat - y` times the input, and for the bias the mean of the error. In
-NumPy that is `X.T @ (y_hat - y) / len(y)` and `np.mean(y_hat - y)`. One
-pass of the loop computes the outputs, then moves the weights one step
-against the gradient.
+**Tell the room.** The lecture derived the gradient of the loss: the mean
+of the error `y_hat - y` times the input, and for the bias the mean of the
+error. In NumPy that is `X.T @ (y_hat - y) / len(y)` and
+`np.mean(y_hat - y)`. One pass of the loop computes the outputs, then moves
+the weights one step against the gradient.
 
 1. Add at the end:
 
@@ -425,15 +529,16 @@ against the gradient.
 
 3. Run the script.
 
-You should now see warnings, and a loss that is not a number:
+!!! success "You should now see"
+    Warnings, and a loss that is not a number:
 
-```text
-RuntimeWarning: overflow encountered in exp
-RuntimeWarning: divide by zero encountered in log
-0 0.6931 0.5
-200 nan 0.5
-400 nan 0.5
-```
+    ```text
+    RuntimeWarning: overflow encountered in exp
+    RuntimeWarning: divide by zero encountered in log
+    0 0.6931 0.5
+    200 nan 0.5
+    400 nan 0.5
+    ```
 
 The code is right and the result is useless. After the first step `w2` is
 so large that every `z` is a huge number, every output is exactly 0 or 1,
@@ -446,13 +551,15 @@ neuron gives all of them the same label.
     with half of the points right: the loop hardly moves. Say that this is
     the other half of the same problem, and go on to section 8.
 
-## 8. Standardise the inputs { #standardise }
+---
+
+### 8. Standardise the inputs { #standardise }
 
 **1:20 · 10 min**
 
-The remedy of the lecture: bring every column to mean 0 and standard
-deviation 1. Then one learning rate suits both weights, and the result no
-longer depends on the units of the file.
+**Tell the room.** The remedy of the lecture: bring every column to mean 0
+and standard deviation 1. Then one learning rate suits both weights, and
+the result no longer depends on the units of the file.
 
 1. Above the line `eta = 0.5`, add:
 
@@ -473,17 +580,18 @@ longer depends on the units of the file.
 
 4. Run the script.
 
-You should now see no warning, and the loss falling:
+!!! success "You should now see"
+    No warning, and the loss falling:
 
-```text
-0 0.6931 0.5
-200 0.2544 0.8866666666666667
-400 0.2542 0.89
-600 0.2542 0.89
-800 0.2542 0.89
-1000 0.2542 0.89
-w [2.707 1.977] b -0.142
-```
+    ```text
+    0 0.6931 0.5
+    200 0.2544 0.8866666666666667
+    400 0.2542 0.89
+    600 0.2542 0.89
+    800 0.2542 0.89
+    1000 0.2542 0.89
+    w [2.707 1.977] b -0.142
+    ```
 
 267 of the 300 points are right, two more than with the line read off the
 plot. The loss has reached its minimum after about 400 epochs: more epochs
@@ -495,14 +603,17 @@ change nothing.
     | Still `nan` | One of the two `X` in the loop was not changed to `Z` |
     | The loss stays near 0.69 | `eta` is still the small value tried in section 7. Set it back to 0.5 |
 
-## 9. Train and test { #test }
+---
+
+### 9. Train and test { #test }
 
 **1:30 · 10 min**
 
-The 89 % were measured on the points the neuron was trained on. The task
-was a rule for points it has not seen. So 75 points are held back: the loop
-does not see them, and they are used once, at the end. The mean and
-standard deviation for standardising come from the training points alone.
+**Tell the room.** The 89 % were measured on the points the neuron was
+trained on. The task was a rule for points it has not seen. So 75 points
+are held back: the loop does not see them, and they are used once, at the
+end. The mean and standard deviation for standardising come from the
+training points alone.
 
 1. Replace the three lines of section 8 that make `m`, `s` and `Z` by:
 
@@ -545,19 +656,18 @@ standard deviation for standardising come from the training points alone.
 5. Work out the uncertainty of the test accuracy with the room. Each test
    point is right or wrong, a binomial count: √(0.893 · 0.107 / 75) = 0.036.
 
-You should now see:
-
-```text
-0 0.6931
-200 0.2504
-400 0.2501
-600 0.2501
-800 0.2501
-1000 0.2501
-w [2.848 1.678] b 0.11
-train: 201 of 225 0.893
-test:  67 of 75 0.893
-```
+!!! success "You should now see"
+    ```text
+    0 0.6931
+    200 0.2504
+    400 0.2501
+    600 0.2501
+    800 0.2501
+    1000 0.2501
+    w [2.848 1.678] b 0.11
+    train: 201 of 225 0.893
+    test:  67 of 75 0.893
+    ```
 
 The result of the session is the test accuracy with its uncertainty:
 89 % ± 4 %. The training accuracy is the same here. A neuron with three
@@ -567,18 +677,25 @@ parameters cannot learn 225 points by heart.
     `order[:225]` typed as `order[225]`. Then `train` is one number, and the
     script stops with an error about a dimension.
 
+---
+
 ## Part 4 · The result { #part-4 }
 
 **1:40 to 2:00 · sections 10 to 12**
 
-## 10. Draw the boundary { #boundary }
+The weights are turned back into the units of the file, drawn, and written
+into the report.
+
+---
+
+### 10. Draw the boundary { #boundary }
 
 **1:40 · 10 min**
 
-The weights belong to the standardised inputs. To draw the line on the plot
-of section 2, they are converted back to the units of the file. Insert
-`z = (x - m) / s` into `w · z + b`: the weight of each column is divided by
-its `s`, and the bias takes up the means.
+**Tell the room.** The weights belong to the standardised inputs. To draw
+the line on the plot of section 2, they are converted back to the units of
+the file. Insert `z = (x - m) / s` into `w · z + b`: the weight of each
+column is divided by its `s`, and the bias takes up the means.
 
 1. Add at the end:
 
@@ -613,27 +730,30 @@ its `s`, and the bias takes up the means.
 
 4. Run the script and open `results/perceptron_boundary.png`.
 
-You should now see three more lines, and a straight line between the two
-clouds in the new picture:
+!!! success "You should now see"
+    Three more lines, and a straight line between the two clouds in the new
+    picture:
 
-```text
-for the file's units: w [2.034  0.0143] b -14.79
-same answers: True
-P(class 1) at (5.0, 300): 0.417
-```
+    ```text
+    for the file's units: w [2.034  0.0143] b -14.79
+    same answers: True
+    P(class 1) at (5.0, 300): 0.417
+    ```
 
 Compare with the line read off the plot in section 3. Divided by its `w2`,
 the trained neuron is `142 x1 + x2 - 1035 = 0`. The hand-set line was
 `100 x1 + x2 - 825 = 0`. The point (5.0, 300) lies almost on the boundary:
 the neuron gives it to class 1 with probability 0.42.
 
-## 11. Write it down { #report }
+---
+
+### 11. Write it down { #report }
 
 **1:50 · 5 min**
 
-A result that is not written down has to be computed again. The report gets
-what a reader needs to repeat it: the data, the method, the settings and
-the number with its uncertainty.
+**Tell the room.** A result that is not written down has to be computed
+again. The report gets what a reader needs to repeat it: the data, the
+method, the settings and the number with its uncertainty.
 
 1. Open `results/report.md` and add at the end:
 
@@ -655,19 +775,29 @@ the number with its uncertainty.
 
 3. In the Source Control view, stage `scripts/perceptron.py`,
    `scripts/gate.py`, the report and the two pictures, and commit them
-   with the message `Train a logistic neuron on two classes`.
+   with the message:
 
-You should now see the five lines and the picture in the preview, and no
-changed files left in the Source Control view.
+    ```text
+    Train a logistic neuron on two classes
+    ```
 
-## 12. Wrap up { #wrap-up }
+!!! success "You should now see"
+    The five lines and the picture in the preview, and no changed files left
+    in the Source Control view.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | No `report.md` in `results` | Select the `results` folder, then **New File**, type `report.md`, and add the lines of step 1 |
+    | The Source Control view offers **Initialize Repository** | The folder is not under Git. Select **Initialize Repository**, as in Seminar 5, then commit |
+
+---
+
+### 12. Wrap up { #wrap-up }
 
 **1:55 · 5 min**
 
-Put the tasks of the next section on the projector and read them aloud. Ask
-on the way out which step was hardest.
-
-What the room has learned:
+Read the list aloud. Ask on the way out which step was hardest.
 
 - A neuron is a weighted sum, a bias and a threshold. In NumPy it is one
   line for all points: `X @ w + b > 0`.
@@ -681,21 +811,7 @@ What the room has learned:
 - A result is judged on points that were held back, and an accuracy is
   quoted with its uncertainty.
 
-## Next steps, at home
-
-**45 min, before the next session**
-
-1. In your own dataset, choose two columns of numbers as inputs and a
-   yes-or-no property as the label. If the data have no such column, make
-   one: a third column above or below its median.
-
-2. Copy `perceptron.py` to a new script and change the lines that read the
-   file. Plot the two classes first.
-
-3. Standardise, hold back a quarter of the rows, train, and write into your
-   README the test accuracy with its uncertainty, and the accuracy of
-   always answering with the more frequent class. A neuron that does not
-   beat that number has learned nothing.
+---
 
 ## Stretch goals
 
@@ -719,6 +835,13 @@ lecturer.
 - Run `gate.py` with the targets of XOR, `[0, 1, 1, 0]`, and 12 epochs.
   The answer: from epoch 3 on every epoch has 4 updates and ends at
   `w [-1.  0.]  b 1.0`.
+- For a student with a dataset of their own: two columns of numbers as
+  inputs and a yes-or-no property as the label, or a third column above or
+  below its median. Copy `perceptron.py`, change the lines that read the
+  file, plot the classes, standardise, hold back a quarter of the rows and
+  train. Compare the test accuracy with the accuracy of always answering
+  with the more frequent class. A neuron that does not beat that number has
+  learned nothing. No answer is given: it depends on the data.
 
 ## If students ask for more
 

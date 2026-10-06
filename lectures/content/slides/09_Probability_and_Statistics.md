@@ -37,6 +37,46 @@ layout: quote
 hideInToc: true
 ---
 
+# One Quantity, **91 583 Values**
+
+<img class="fig" src="/figures/viz_handson_mass_errorbars.svg" style="display:block;margin:0 auto;max-height:250px;">
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The figure of Lecture 08**
+
+Column `M` of `D0_KPi.csv`, one K⁻π⁺ candidate per row, in bins of 1 MeV/c². Every bin carries a bar of ± √N: 1916 ± 44 at the top, about 700 ± 26 in the flat part. The bar was drawn, not derived.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ❓ **Four questions**
+
+- Which one number stands for all 91 583 values?
+- How far from it does a single value lie?
+- How well is that one number known?
+- Why is the bar on a count exactly √N?
+
+</div>
+
+</div>
+
+<!--
+Speaker: last week's figure, made by the errorbar call of Lecture 08. The same
+quantity was computed for 91 583 candidates, and the values differ from row to
+row. Ask the room for a guess at the first answer before going on. The four
+answers are the mean, the standard deviation, the standard error and the
+Poisson distribution of a count. All four are derived today, and the last
+slide of the lecture collects them. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Learning **Objectives**
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
@@ -88,47 +128,13 @@ hideInToc: true
 
 # Probability and Its **Rules**
 
-<!--
-Speaker: the section starts from a real column of numbers, defines probability
-as a frequency, and derives the rules the rest of the lecture uses: complement,
-addition, conditional probability, independence, Bayes. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# One Quantity, **91 583 Values**
-
-<img class="fig" src="/figures/viz_probability_mass.svg" style="display:block;margin:0 auto;max-height:265px;">
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **The data**
-
-Column `M` of `D0_KPi.csv`: the mass of one K⁻π⁺ candidate per row, in MeV/c². The first four rows give 1880.649, 1860.6599, 1913.8755 and 1888.7571.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ❓ **Three questions**
-
-- Which one number stands for all the values?
-- How far from it does a single value lie?
-- How well is that one number known?
-
-</div>
-
-</div>
+Before the bar of ± √N can be derived, a probability has to be defined, and its rules derived from three axioms.
 
 <!--
-Speaker: the same quantity, computed for 91 583 candidates, and the values
-differ from row to row. The three answers are the mean, the standard deviation
-and the standard error. All three are derived today, and the line and the band
-on the figure are the first two. (~2 min)
+Speaker: the section defines probability as a frequency, on a die, and derives
+the rules the rest of the lecture uses: complement, addition, conditional
+probability, independence, Bayes. Independence is then tested on two columns
+of the file. (~1 min)
 -->
 
 ---
@@ -147,68 +153,17 @@ An experiment is repeated $n$ times. The event $A$ occurs in $n_A$ of them. The 
 
 <div class="note-text mt-sm">
 
-A die rolled a million times in NumPy. The fraction of sixes is 0.2 after 10 rolls, 0.162 after 1000 and 0.1665 after a million: it settles at 1/6 = 0.1667. For an event that cannot be repeated, such as rain tomorrow, a probability is read as a degree of belief. The rules are the same for both readings.
+A die rolled a million times in NumPy, with the fraction of sixes drawn after every roll. For an event that cannot be repeated, such as rain tomorrow, a probability is read as a degree of belief. The rules are the same for both readings.
 
 </div>
 
 <!--
-Speaker: the frequency reading is the one a physicist uses for a measurement
-that can be repeated. The degree-of-belief reading is the Bayesian one. Nothing
-derived today depends on which reading is taken. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Random Numbers in **NumPy**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⌨️ **A generator with a seed**
-
-```python
-import numpy as np
-
-rng = np.random.default_rng(1)
-print(rng.random(3))            # in [0, 1)
-print(rng.integers(1, 7, 10))   # a die
-print(rng.normal(0, 1, 3))      # Gaussian
-```
-
-```text
-[0.51182162 0.9504637  0.14415961]
-[5 6 2 2 6 3 2 5 2 3]
-[0.3645724  0.2941325  0.02842224]
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🎰 **What the seed does**
-
-- `default_rng(1)` makes a generator. The seed, here 1, fixes the whole sequence
-- The same seed gives the same numbers in every run and on every laptop
-- Another seed gives other numbers with the same properties
-- The numbers come from a formula. For a simulation they behave as random ones
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-A **simulation** replaces the die by `rng.integers(1, 7, n)`: the lower end 1 is included, the upper end 7 is not. A million rolls take a few milliseconds. Every simulation in this lecture starts from a seeded generator, so each of its numbers can be reproduced.
-
-</div>
-
-<!--
-Speaker: run the six lines live. Then run them again: the same numbers. Change
-the seed to 2: other numbers. A result that depends on random numbers is
-reproducible only if the seed is written down. (~2 min)
+Speaker: before the next slide, ask the room: what fraction of sixes do ten
+rolls give, and how close to 1/6 is the fraction after a million? Write two or
+three guesses on the board; the next slide runs it. The frequency reading is
+the one a physicist uses for a measurement that can be repeated. The
+degree-of-belief reading is the Bayesian one. Nothing derived today depends on
+which reading is taken. (~2 min)
 -->
 
 ---
@@ -235,12 +190,15 @@ for n in [10, 100, 1000, 10_000, 100_000, 1_000_000]:
 
 <div class="note-text mt-sm">
 
-`rolls == 6` is a mask of `True` and `False`. Its mean is the fraction of `True`. A hundred times more rolls bring the fraction about ten times closer to 1/6.
+`default_rng` is the seeded generator of Lecture 08, here with the seed 1. The seed fixes the whole sequence, so every laptop rolls the same million. `integers(1, 7, n)` includes 1 and excludes 7. `rolls == 6` is a mask, and its mean is the fraction of `True`. A hundred times more rolls bring the fraction about ten times closer to 1/6.
 
 </div>
 
 <!--
-Speaker: run it. The table above is the output. Ask for the pattern in the
+Speaker: run it, and compare with the guesses on the board: ten rolls gave
+0.2, a million 0.1665. Run it again: the same numbers. Change the seed to 2:
+other numbers, the same pattern. A result that depends on random numbers is
+reproducible only if the seed is written down. Then ask for the pattern in the
 last row: two more zeros in n, one more zero in the difference. That is a
 square root, and the section on the standard error derives it. (~3 min)
 -->
@@ -509,6 +467,69 @@ even. (~2 min)
 hideInToc: true
 ---
 
+# Independence, Tested on the **File**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **Two events for one row**
+
+```python
+M, PT = np.loadtxt("data/raw/D0_KPi.csv",
+                   delimiter=",", skiprows=1,
+                   usecols=(0, 1), unpack=True)
+W = (M > 1855) & (M < 1875)   # in the peak window
+H = PT > np.median(PT)        # PT in the upper half
+print(W.mean(), H.mean())
+print((W & H).mean())
+print((W & H).sum() / H.sum())
+```
+
+```text
+0.33993208346527193 0.4999945404714849
+0.2012928163523798
+0.4025900286082418
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔀 **The product rule, checked**
+
+| | Probability |
+| --- | --- |
+| $P(W)$ | 0.340 |
+| $P(H)$ | 0.500 |
+| $P(W)\,P(H)$, if independent | 0.170 |
+| $P(W \cap H)$, counted | 0.201 |
+| $P(W \mid H)$ | 0.403 |
+| $P(W \mid \text{not } H)$ | 0.277 |
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The two events are not independent. Among the rows with a high `PT`, 40 % lie in the peak window; among the others, 28 %. The rows of the file are of two kinds, and a high `PT` makes the kind that forms the peak more likely.
+
+</div>
+
+<!--
+Speaker: ask first: does knowing PT change the chance that a row lies in the
+peak? Most say no: a momentum and a mass are different things. If W and H were
+independent, 0.340 × 0.5 = 0.170 of the rows, 15 566, would be in both. The
+file has 18 435. unpack=True and the masks are from Lecture 07; the median
+of PT, 3049 MeV/c, splits the rows into two halves, so P(H) is 0.5 by
+construction. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Bayes' **Theorem**
 
 <div class="grid-2 mt-md gap-md">
@@ -611,6 +632,8 @@ hideInToc: true
 ---
 
 # Random **Variables**
+
+The rules give the probability of an event. A count or a mass is a number, so each outcome now gets a number, and the numbers get a mean and a spread.
 
 <!--
 Speaker: from events to numbers. A distribution, its mean and its variance,
@@ -790,7 +813,7 @@ $E[\Delta X\,\Delta Y]$ is the **covariance** $\mathrm{Cov}(X, Y)$. It is 0 for 
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-For independent variables the variances add, and a factor comes out squared:
+**For independent variables the variances add**, and a factor comes out squared. Every uncertainty derived today follows from these two rules:
 
 $$\mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y), \qquad \mathrm{Var}(aX + b) = a^2\,\mathrm{Var}(X)$$
 
@@ -799,9 +822,12 @@ Two dice: mean 3.5 + 3.5 = 7, variance 2.917 + 2.917 = 5.833, $\sigma$ = 2.415. 
 </div>
 
 <!--
-Speaker: the two rules in the bottom card are used three more times today: for
-the binomial, for the standard error and for error propagation. A simulation
-of 100 000 pairs of dice gives a variance of 5.804. (~3 min)
+Speaker: the two rules in the bottom card are used again for the binomial,
+for the standard error, for error propagation and for the weighted mean. A
+simulation of 100 000 pairs of dice with default_rng(2) gives a mean of 7.007
+and a variance of 5.804. Ask: if the standard deviations added, what would
+the spread of the sum be? 3.416, against the 2.415 that the simulation
+confirms. (~3 min)
 -->
 
 ---
@@ -862,6 +888,8 @@ hideInToc: true
 ---
 
 # Three **Distributions**
+
+For independent variables the means add and the variances add. Applied to independent trials, these two rules give the binomial, the Poisson and the Gaussian distribution.
 
 <!--
 Speaker: the binomial from independent trials, the Poisson as its limit, the
@@ -997,7 +1025,7 @@ $$\mathrm{Var}(X) = E[X^2] - p^2 = p\,(1-p)$$
 
 ## 🔢 **n trials**
 
-The count is a sum of independent trials, $k = X_1 + \dots + X_n$. Means add and variances add:
+The count is a sum of independent trials, $k = X_1 + \dots + X_n$. By the rules for sums, means add and variances add:
 
 $$E[k] = np$$
 
@@ -1170,8 +1198,10 @@ For $\lambda$ = 3: no event with probability 0.050, six or more with 0.084.
 </div>
 
 <!--
-Speaker: this is the origin of the square root of N that is drawn as the error
-bar of a histogram bin. (~2 min)
+Speaker: this answers the fourth question of the opening slide: the bar of
+± √N on a histogram bin is the standard deviation of a Poisson count. Ask:
+a bin holds 2500 rows; how large is its bar, and what is it relative to the
+count? 50, which is 2 %. (~2 min)
 -->
 
 ---
@@ -1208,7 +1238,8 @@ print(counts.mean(), counts.std(ddof=1))
 | --- | --- | --- |
 | 100 | 10 | 10 % |
 | 1461 | 38 | 2.6 % |
-| 3746, the highest bin | 61 | 1.6 % |
+| 1916, the top bar of Lecture 08 | 44 | 2.3 % |
+| 3746, the highest 2 MeV/c² bin | 61 | 1.6 % |
 | 10 000 | 100 | 1 % |
 
 </div>
@@ -1217,20 +1248,93 @@ print(counts.mean(), counts.std(ddof=1))
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-From 1816 to 1844 MeV/c² the bins of 2 MeV/c² hold about the same number of rows. Their counts scatter with a standard deviation of 34. The Poisson prediction is √1461 = 38. Fourteen counts fix a standard deviation to about one part in five, so 34 and 38 agree.
+Lecture 08 drew a bar of ± √N on every bin and took √N as given. Here is the check: from 1816 to 1844 MeV/c² the bins of 2 MeV/c² hold about the same number of rows, and their counts scatter by 34. The Poisson prediction is √1461 = 38. Fourteen counts fix a standard deviation to about one part in five, so 34 and 38 agree.
 
 </div>
 
 <!--
-Speaker: nothing in the file says that the counts are Poisson. The scatter of
-neighbouring bins shows it. (~2 min)
+Speaker: point back at the figure of the opening slide: every bar there is
+± the square root of its count, and now it is derived. Nothing in the file
+says that the counts are Poisson. The scatter of neighbouring bins shows it.
+The bins here are 2 MeV/c² wide, so each holds about twice the rows of a bin
+of Lecture 08. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The **Gaussian** Distribution
+# Adding Makes a **Bell**
+
+<img class="fig" src="/figures/viz_probability_clt.svg" style="display:block;margin:0 auto;max-height:215px;">
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🎰 **The simulation**
+
+Each panel holds 100 000 sums of $N$ uniform random numbers. One number is flat, two make a triangle, twelve make a bell. The rules for sums give its centre and its width: the mean $N/2$ and the variance $N/12$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📜 **The central limit theorem**
+
+The sum of $N$ independent random variables with finite variances tends to one bell-shaped curve as $N$ grows, whatever the distribution of each one. Its mean is the sum of the means and its variance the sum of the variances.
+
+</div>
+
+</div>
+
+<!--
+Speaker: ask before showing the panels: what does the histogram of sums of
+two flat random numbers look like? Most say flat. Nothing in a uniform number
+is bell-shaped. The shape comes from adding. The theorem is stated here and
+shown by simulation; its proof needs tools this course does not have. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Sums in **NumPy**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| $N$ | 1 | 2 | 3 | 12 | Rules for sums |
+| --- | --- | --- | --- | --- | --- |
+| Mean, standard deviation of the sums | 0.500, 0.289 | 1.000, 0.409 | 1.501, 0.500 | 6.003, 1.002 | $N/2$, $\sqrt{N/12}$ |
+| Fraction within ±1σ of the mean | 57.6 % | 64.9 % | 66.7 % | 67.7 % | |
+
+</div>
+
+```python {monaco-run} {autorun:false}
+rng = np.random.default_rng(4)
+for N in [1, 2, 3, 12]:
+    s = rng.random((100_000, N)).sum(axis=1)     # 100 000 sums of N numbers
+    z = (s - N / 2) / np.sqrt(N / 12)            # distance from the mean in σ
+    print(N, s.mean().round(3), s.std().round(3), (abs(z) < 1).mean().round(3))
+```
+
+<div class="note-text mt-sm">
+
+`rng.random((100_000, N))` is a table of 100 000 rows and $N$ columns. `.sum(axis=1)` adds along each row. The fraction within ±1σ climbs with $N$ and settles near 68 %: the bell has a fixed shape.
+
+</div>
+
+<!--
+Speaker: run it, then put 50 into the list. The mean and the standard deviation
+follow N/2 and the square root of N/12 from the first line on. Only the shape
+needs N to grow. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Bell Is the **Gaussian**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1240,7 +1344,7 @@ hideInToc: true
 
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\,\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
-Two parameters: the mean $\mu$, where the peak is, and the standard deviation $\sigma$, its width. It is also called the normal distribution.
+Two parameters: the mean $\mu$, where the peak is, and the standard deviation $\sigma$, its width. It is also called the normal distribution. The sums of twelve put 67.7 % within ±σ. The curve puts:
 
 | Interval | Probability |
 | --- | --- |
@@ -1267,77 +1371,9 @@ This is what an uncertainty means. A result written $x \pm \sigma$ says: if the 
 </div>
 
 <!--
-Speaker: the three percentages are areas under the curve. They are worth
-knowing by heart: two in three, 19 in 20, 369 in 370. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Sums Tend to a **Gaussian**
-
-<img class="fig" src="/figures/viz_probability_clt.svg" style="display:block;margin:0 auto;max-height:215px;">
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🎰 **The simulation**
-
-Each panel holds 100 000 sums of $N$ uniform random numbers. The curve is the Gaussian with the mean $N/2$ and the variance $N/12$ that the rules for sums give. One number is flat, two make a triangle, twelve follow the curve.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📜 **The central limit theorem**
-
-The sum of $N$ independent random variables with finite variances tends to a Gaussian as $N$ grows, whatever the distribution of each one. Its mean is the sum of the means and its variance the sum of the variances.
-
-</div>
-
-</div>
-
-<!--
-Speaker: nothing in a uniform number is bell-shaped. The shape comes from
-adding. The theorem is stated here and shown by simulation; its proof needs
-tools this course does not have. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Sums in **NumPy**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| $N$ | 1 | 2 | 3 | 12 | Gaussian |
-| --- | --- | --- | --- | --- | --- |
-| Mean, standard deviation of the sums | 0.500, 0.289 | 1.000, 0.409 | 1.501, 0.500 | 6.003, 1.002 | $N/2$, $\sqrt{N/12}$ |
-| Fraction within ±1σ of the mean | 57.6 % | 64.9 % | 66.7 % | 67.7 % | 68.3 % |
-
-</div>
-
-```python {monaco-run} {autorun:false}
-rng = np.random.default_rng(4)
-for N in [1, 2, 3, 12]:
-    s = rng.random((100_000, N)).sum(axis=1)     # 100 000 sums of N numbers
-    z = (s - N / 2) / np.sqrt(N / 12)            # distance from the mean in σ
-    print(N, s.mean().round(3), s.std().round(3), (abs(z) < 1).mean().round(3))
-```
-
-<div class="note-text mt-sm">
-
-`rng.random((100_000, N))` is a table of 100 000 rows and $N$ columns. `.sum(axis=1)` adds along each row.
-
-</div>
-
-<!--
-Speaker: run it, then put 50 into the list. The mean and the standard deviation
-follow N/2 and the square root of N/12 from the first line on. Only the shape
-needs N to grow. (~3 min)
+Speaker: this is the curve drawn over the sums two slides back. The three
+percentages are areas under it. They are worth knowing by heart: two in
+three, 19 in 20, 369 in 370. (~2 min)
 -->
 
 ---
@@ -1387,6 +1423,8 @@ hideInToc: true
 ---
 
 # Samples and the Standard **Error**
+
+Each distribution so far came with its μ and σ given. The mass column comes without them: 91 583 values, from which both have to be estimated.
 
 <!--
 Speaker: from distributions with known parameters to a sample with unknown
@@ -1454,6 +1492,88 @@ sample mean; s is computed from the sample, sigma belongs to the distribution.
 hideInToc: true
 ---
 
+# Covariance and **Correlation**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Two columns $x$ and $y$ of the same $N$ rows. The **covariance** $s_{xy}$ is positive when $x$ and $y$ lie on the same side of their means together. Divided by both standard deviations it is the **correlation coefficient** $r$, a number without unit between −1 and +1. For two random variables the same ratio is written $\rho$:
+
+$$s_{xy} = \frac{1}{N-1}\sum_{i=1}^{N} (x_i-\bar{x})(y_i-\bar{y}), \qquad r = \frac{s_{xy}}{s_x\,s_y}, \qquad \rho = \frac{\mathrm{Cov}(X, Y)}{\sigma_X\,\sigma_Y}$$
+
+</div>
+
+<img class="fig mt-sm" src="/figures/viz_probability_correlation.svg" style="display:block;margin:0.6rem auto 0;max-height:185px;">
+
+<div class="note-text mt-sm">
+
+$r = \pm 1$: the points lie on a straight line. $r$ = 0: no straight-line relation. In the last panel $y$ follows from $x$ up to a little noise and $r$ is still 0.00: the coefficient sees only the straight-line part of a relation.
+
+</div>
+
+<!--
+Speaker: the covariance is the sample version of E[ΔX ΔY] from the slide on
+sums. 150 seeded points per panel. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Correlation in **Numbers**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✍️ **The pendulum table, by hand**
+
+Length $x$ in cm, time of 10 swings $y$ in s, nine rows.
+
+- $\bar{x}$ = 60, $\bar{y}$ = 15.139
+- $\sum (x_i-\bar{x})(y_i-\bar{y})$ = 813.0
+- $s_{xy}$ = 813.0 / 8 = 101.6 cm·s
+- $s_x$ = 27.39 cm, $s_y$ = 3.732 s
+- $r$ = 101.6 / (27.39 × 3.732) = 0.994
+
+`np.corrcoef(length, t10)[0, 1]` gives 0.9942.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📄 **Four pairs of columns**
+
+| Columns | $r$ |
+| --- | --- |
+| length, time of 10 swings | 0.994 |
+| length, $T^2$ | 0.9999 |
+| `M`, `PT` | 0.002 |
+| `TAU`, `IPCHI2` | 0.62 |
+
+The time grows like the square root of the length, and $r$ is still 0.994. `M` and `PT` give 0.002, yet a high `PT` raised the share of rows in the peak from 0.28 to 0.40: a dependence, but not along a line.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ A correlation does not say why. Two columns move together when one causes the other, when a third quantity drives both, or when the rows were selected in a way that ties them.
+
+</div>
+
+<!--
+Speaker: the M, PT row is the pair of Independence, Tested on the File: r is
+0.002 and the two are still not independent, as in the last panel of the
+slide before. T² against the length is a straight line, r = 0.9999. The last
+pair leaves out the 49 rows with TAU = -100, the marker of a missing value.
+With them in, the coefficient describes the marker and not the data. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
 # The Standard Error of the **Mean**
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -1495,9 +1615,10 @@ The **standard error of the mean**: the standard deviation of $\bar{x}$. In prac
 </div>
 
 <!--
-Speaker: this is the central derivation of the lecture, and it is two lines.
-It needs independence: N copies of the same row would not reduce the
-uncertainty. (~3 min)
+Speaker: this is the central derivation of the lecture, and it is two lines,
+both from the rules of Sums of Random Variables. It needs independence: N
+copies of the same row would not reduce the uncertainty. Ask: how many rows
+halve the uncertainty of the mean? Four times as many. (~3 min)
 -->
 
 ---
@@ -1744,90 +1865,12 @@ The mass of the D⁰ meson is 1864.84 ± 0.05 MeV/c² (Particle Data Group).
 </div>
 
 <!--
-Speaker: the selection uses a mask: M[(M > 1850) & (M < 1880)]. The mean moves
-by 0.7 between the first and the last line of the table, far more than any of
-the standard errors. A small uncertainty is not the same as a correct result.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Covariance and **Correlation**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Two columns $x$ and $y$ of the same $N$ rows. The **covariance** $s_{xy}$ is positive when $x$ and $y$ lie on the same side of their means together. Divided by both standard deviations it is the **correlation coefficient** $r$, a number without unit between −1 and +1. For two random variables the same ratio is written $\rho$:
-
-$$s_{xy} = \frac{1}{N-1}\sum_{i=1}^{N} (x_i-\bar{x})(y_i-\bar{y}), \qquad r = \frac{s_{xy}}{s_x\,s_y}, \qquad \rho = \frac{\mathrm{Cov}(X, Y)}{\sigma_X\,\sigma_Y}$$
-
-</div>
-
-<img class="fig mt-sm" src="/figures/viz_probability_correlation.svg" style="display:block;margin:0.6rem auto 0;max-height:185px;">
-
-<div class="note-text mt-sm">
-
-$r = \pm 1$: the points lie on a straight line. $r$ = 0: no straight-line relation. In the last panel $y$ follows from $x$ up to a little noise and $r$ is still 0.00: the coefficient sees only the straight-line part of a relation.
-
-</div>
-
-<!--
-Speaker: the covariance is the sample version of E[ΔX ΔY] from the slide on
-sums. 150 seeded points per panel. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Correlation in **Numbers**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✍️ **The pendulum table, by hand**
-
-Length $x$ in cm, time of 10 swings $y$ in s, nine rows.
-
-- $\bar{x}$ = 60, $\bar{y}$ = 15.139
-- $\sum (x_i-\bar{x})(y_i-\bar{y})$ = 813.0
-- $s_{xy}$ = 813.0 / 8 = 101.6 cm·s
-- $s_x$ = 27.39 cm, $s_y$ = 3.732 s
-- $r$ = 101.6 / (27.39 × 3.732) = 0.994
-
-`np.corrcoef(length, t10)[0, 1]` gives 0.9942.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 📄 **Four pairs of columns**
-
-| Columns | $r$ |
-| --- | --- |
-| length, time of 10 swings | 0.994 |
-| length, $T^2$ | 0.9999 |
-| `M`, `PT` | 0.002 |
-| `TAU`, `IPCHI2` | 0.62 |
-
-The time grows like the square root of the length, and $r$ is still 0.994. $T^2$ against the length is a straight line.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ A correlation does not say why. Two columns move together when one causes the other, when a third quantity drives both, or when the rows were selected in a way that ties them.
-
-</div>
-
-<!--
-Speaker: the last pair leaves out the 49 rows with TAU = -100, the marker of a
-missing value. With them in, the coefficient describes the marker and not the
-data. (~3 min)
+Speaker: ask first: is 1864.10 ± 0.08 the mass of the D0? The answer is on
+the slide: no, 0.74 below it. The flat part is the second kind of row found
+on Independence, Tested on the File. The selection uses a mask:
+M[(M > 1850) & (M < 1880)]. The mean moves by 0.7 between the first and the
+last line of the table, far more than any of the standard errors. A small
+uncertainty is not the same as a correct result. (~3 min)
 -->
 
 ---
@@ -1836,6 +1879,8 @@ hideInToc: true
 ---
 
 # Error **Propagation**
+
+The mean of the mass column is known to 0.08 MeV/c². A value of g is not measured but computed from a length and a time, and it inherits their uncertainties.
 
 <!--
 Speaker: a measured quantity has an uncertainty. A quantity computed from it
@@ -2073,9 +2118,10 @@ $$\frac{\sigma_g}{g} = \sqrt{(0.10\,\%)^2 + (2 \times 0.50\,\%)^2} = 1.00\,\%$$
 </div>
 
 <!--
-Speaker: the two ways are the same computation. The second one shows at a
-glance which input matters: the period enters squared, so its relative
-uncertainty counts twice. (~3 min)
+Speaker: ask: which instrument would you improve, the ruler or the
+stopwatch? The stopwatch: it gives 99 % of the variance. The two ways are the
+same computation. The second one shows at a glance which input matters: the
+period enters squared, so its relative uncertainty counts twice. (~3 min)
 -->
 
 ---
@@ -2161,7 +2207,126 @@ layout: section
 hideInToc: true
 ---
 
+# Testing a **Hypothesis**
+
+Error propagation gave g = 9.86 ± 0.10 m/s² from one pendulum row. A value with its uncertainty can now be set against a value known from elsewhere.
+
+<!--
+Speaker: a short section. A result and its uncertainty are compared with a
+value that is known from elsewhere: g with 9.81, the mean of the mass column
+with the D0 mass. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Is a Result Compatible with a Known **Value**?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **The distance in units of σ**
+
+Measured: $g$ = 9.86 ± 0.10 m/s². The reference value is 9.81 m/s². Hypothesis: the measurement is a Gaussian draw around 9.81 with $\sigma$ = 0.10.
+
+$$z = \frac{x - \mu_0}{\sigma} = \frac{9.86 - 9.81}{0.10} = 0.5$$
+
+The **p-value** is the probability, if the hypothesis holds, of a distance at least as large as the observed one.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔔 **From the Gaussian, both sides**
+
+| $\lvert z \rvert$ | p-value |
+| --- | --- |
+| 0.5 | 0.62 |
+| 1 | 0.32 |
+| 2 | 0.046 |
+| 3 | 0.0027 |
+| 5 | 5.7 × 10⁻⁷ |
+
+In Python: `math.erfc(z / math.sqrt(2))`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+$p$ = 0.62: a distance of this size or more occurs in 62 % of repetitions. The result is compatible with 9.81. The mean of the mass column against the D⁰ mass: $z$ = (1864.10 − 1864.84) / 0.084 = −8.7 and $p$ = 3 × 10⁻¹⁸. That hypothesis is rejected, and the reason is known: the rows are not all D⁰.
+
+</div>
+
+<!--
+Speaker: the table is one minus the areas of the Gaussian slide: 1 − 0.6827 =
+0.32. Particle physics asks for 5 sigma before it speaks of a discovery. Many
+fields use p below 0.05, which is 2 sigma. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What a p-Value Is **Not**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔄 **Not the probability of the hypothesis**
+
+It is $P(\text{data this far off} \mid \text{hypothesis})$. The reverse, $P(\text{hypothesis} \mid \text{data})$, needs Bayes' theorem and a prior probability of the hypothesis.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🤷 **A large p proves nothing**
+
+$p$ = 0.62 says that the data do not contradict 9.81. With an uncertainty of 0.10 they would not contradict 9.75 or 9.90 either.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🎣 **Many tests**
+
+20 independent tests at the 5 % level, every hypothesis true. The probability that at least one gives $p$ < 0.05 is 1 − 0.95²⁰ = 0.64.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📐 **Significant is not large**
+
+With 91 583 rows a difference of 0.74 MeV/c² in 1864, which is 0.04 %, stands 8.7σ away. The p-value measures how sure a difference is, not how big.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the third card uses the complement and the independence of the first
+section. The remedy is to decide what to test before looking at the data and
+to report every test that was made. Conventions: many fields call a result
+significant at p < 0.05, about 2 sigma. Particle physics speaks of evidence at
+3 sigma and of an observation at 5 sigma, counted on one side: 2.9 × 10⁻⁷, or
+1 in 3.5 million. A threshold is a convention; the value, its uncertainty and
+the distance in sigma are the result. (~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
 # **Likelihood**
+
+Until now a parameter was given and the data were predicted, or tested against it. Read the other way, the same formulas say which parameter makes the observed data most probable.
 
 <!--
 Speaker: so far a parameter was given and the data were predicted. Now the
@@ -2472,8 +2637,10 @@ The result lies closer to the more precise value, and it is more precise than ei
 </div>
 
 <!--
-Speaker: the weights add. Every further measurement increases the sum of the
-weights and so reduces the uncertainty, however little. (~3 min)
+Speaker: before the numbers, ask the room to guess the combination of
+9.70 ± 0.22 and 9.86 ± 0.10. Most say 9.78, the plain mean; it is 9.83. The
+weights add. Every further measurement increases the sum of the weights and so
+reduces the uncertainty, however little. (~3 min)
 -->
 
 ---
@@ -2528,183 +2695,58 @@ The uncertainties run from 0.22 m/s² for 20 cm to 0.10 for 100 cm: the same 0.1
 <!--
 Speaker: the relative uncertainties are divided by the same units as the
 values: 0.1 cm by the length in cm, 0.1 s by the time in s. One row gave
-9.86 ± 0.10. Nine rows
-give 9.80 ± 0.04. (~3 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Testing a **Hypothesis**
-
-<!--
-Speaker: a short closing section. A result and its uncertainty are compared
-with a value that is known from elsewhere. (~1 min)
+9.86 ± 0.10. Nine rows give 9.80 ± 0.04. Ask: all nine bars cross the result;
+is that good? About six of nine should, so the stated 0.1 s is larger than
+the real scatter. (~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Is a Result Compatible with a Known **Value**?
+# The Four Questions, **Answered**
 
-<div class="grid-2 mt-md gap-md">
+<img class="fig" src="/figures/viz_probability_mass.svg" style="display:block;margin:0 auto;max-height:140px;">
+
+<div class="grid-2 gap-tight mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📏 **The distance in units of σ**
-
-Measured: $g$ = 9.86 ± 0.10 m/s². The reference value is 9.81 m/s². Hypothesis: the measurement is a Gaussian draw around 9.81 with $\sigma$ = 0.10.
-
-$$z = \frac{x - \mu_0}{\sigma} = \frac{9.86 - 9.81}{0.10} = 0.5$$
-
-The **p-value** is the probability, if the hypothesis holds, of a distance at least as large as the observed one.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 🔔 **From the Gaussian, both sides**
-
-| $\lvert z \rvert$ | p-value |
-| --- | --- |
-| 0.5 | 0.62 |
-| 1 | 0.32 |
-| 2 | 0.046 |
-| 3 | 0.0027 |
-| 5 | 5.7 × 10⁻⁷ |
-
-In Python: `math.erfc(z / math.sqrt(2))`
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-$p$ = 0.62: a distance of this size or more occurs in 62 % of repetitions. The result is compatible with 9.81. The mean of the mass column against the D⁰ mass: $z$ = (1864.10 − 1864.84) / 0.084 = −8.7 and $p$ = 3 × 10⁻¹⁸. That hypothesis is rejected, and the reason is known: the rows are not all D⁰.
-
-</div>
-
-<!--
-Speaker: the table is one minus the areas of the Gaussian slide: 1 − 0.6827 =
-0.32. Particle physics asks for 5 sigma before it speaks of a discovery. Many
-fields use p below 0.05, which is 2 sigma. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# What a p-Value Is **Not**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔄 **Not the probability of the hypothesis**
-
-It is $P(\text{data this far off} \mid \text{hypothesis})$. The reverse, $P(\text{hypothesis} \mid \text{data})$, needs Bayes' theorem and a prior probability of the hypothesis.
+📍 **One number**: the mean, 1864.10 MeV/c², the maximum of the likelihood for equal uncertainties.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🤷 **A large p proves nothing**
-
-$p$ = 0.62 says that the data do not contradict 9.81. With an uncertainty of 0.10 they would not contradict 9.75 or 9.90 either.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🎣 **Many tests**
-
-20 independent tests at the 5 % level, every hypothesis true. The probability that at least one gives $p$ < 0.05 is 1 − 0.95²⁰ = 0.64.
+↔️ **One value**: the standard deviation $s$ = 25.57 MeV/c². More rows make it better known, not smaller.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📐 **Significant is not large**
+🎯 **How well**: the standard error $s/\sqrt{N}$ = 0.08 MeV/c². The mean lies 8.7 of them below the D⁰ mass: a systematic error.
 
-With 91 583 rows a difference of 0.74 MeV/c² in 1864, which is 0.04 %, stands 8.7σ away. The p-value measures how sure a difference is, not how big.
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+📊 **The bar**: a count is Poisson, its variance equals its mean: 1916 ± 44. Checked: 34 against √1461 = 38.
 
 </div>
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-success card-glass pad-compact mt-sm">
 
-**Conventions.** Many fields call a result significant at $p$ < 0.05, about 2σ. Particle physics speaks of evidence at 3σ and of an observation at 5σ, counted on one side: a probability of 2.9 × 10⁻⁷, or 1 in 3.5 million. A threshold is a convention. The value, its uncertainty and the distance in σ are the result.
-
-</div>
-
-<!--
-Speaker: the third card uses the complement and the independence of the first
-section. The remedy is to decide what to test before looking at the data and
-to report every test that was made. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# **Recap** — You Can Now…
-
-<div class="grid-2 gap-md mt-sm">
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Compute with **probabilities**: complement, addition rule, conditional probability, Bayes' theorem
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Derive the **binomial** and the **Poisson** distribution, and write a count as N ± √N
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Report a **mean** with its **standard error** s/√N, and tell it from the standard deviation
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ **Propagate** uncertainties through a formula and check the result by simulation
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Write a **likelihood** and maximise it: the mean and the weighted mean
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Compare a result with a known value in units of σ
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔢 **The numbers of this lecture**
-
-The mass column: mean 1864.10 ± 0.08 MeV/c², standard deviation 25.57. One pendulum row: $g$ = 9.86 ± 0.10 m/s². Nine rows, weighted: $g$ = 9.80 ± 0.04 m/s².
+✅ One rule carried every uncertainty: for independent values the variances add. It gave √N, $s/\sqrt{N}$, and $g$ = 9.86 ± 0.10 m/s² from one pendulum row and 9.80 ± 0.04 m/s² from nine.
 
 </div>
 
 <!--
-Speaker: every one of these numbers was computed on a slide from the two files
-of the project folder. (~1 min)
+Speaker: back to the four questions of the opening slide, now answered with
+numbers the room has seen computed. The figure is the mass column with its
+mean and the band of ± s. The list of skills is on the workbook page, under
+Take-aways. Do not cut this slide. (~2 min)
 -->
 
 ---
@@ -2801,22 +2843,6 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Two independent measurements of the same quantity give 10.0 ± 0.1 and 10.6 ± 0.3. What is their weighted mean?"
-  :options="[
-    '10.30 ± 0.16',
-    '10.06 ± 0.09',
-    '10.30 ± 0.32',
-    '10.06 ± 0.20'
-  ]"
-  :correct="1"
-  explanation="The weights are 1/0.1² = 100 and 1/0.3² = 11.1. The weighted mean is (100 × 10.0 + 11.1 × 10.6) / 111.1 = 10.06, and its uncertainty is 1/√111.1 = 0.09. The plain mean, 10.30, gives the less precise value as much say as the precise one."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
   question="A measurement gives 5.3 ± 0.2 and the expected value is 4.7. How many standard deviations apart are they, and what is the two-sided p-value?"
   :options="[
     '0.6σ; p = 0.55',
@@ -2826,4 +2852,20 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="z = (5.3 − 4.7) / 0.2 = 3. For a Gaussian, 99.73 % of repetitions lie within 3σ, so a distance of 3σ or more has the probability 0.0027. This is the probability of such data if the expected value is right, not the probability that it is right."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Two independent measurements of the same quantity give 10.0 ± 0.1 and 10.6 ± 0.3. What is their weighted mean?"
+  :options="[
+    '10.30 ± 0.16',
+    '10.06 ± 0.09',
+    '10.30 ± 0.32',
+    '10.06 ± 0.20'
+  ]"
+  :correct="1"
+  explanation="The weights are 1/0.1² = 100 and 1/0.3² = 11.1. The weighted mean is (100 × 10.0 + 11.1 × 10.6) / 111.1 = 10.06, and its uncertainty is 1/√111.1 = 0.09. The plain mean, 10.30, gives the less precise value as much say as the precise one."
 />

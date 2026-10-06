@@ -1,90 +1,130 @@
 # 2: Introduction to Data
 
-Lecture 1 was the *why* — the course, the four aims, and the motivation reel
-from the cosmos down to CERN. Lecture 2 is the *what*: what a dataset is, where
-one comes from, how you write down where it came from, and the two tools for
-doing so, Markdown and a text editor.
+Lecture 1 ended its reel at LHCb and said the seminars use the same events
+physicists used. Lecture 2 opens on that file: the first four lines of
+`D0_KPi.csv`, 91 584 lines and 3 926 142 bytes, with no note. The room lists
+what the file does not say, and the lecture answers those five questions one
+section at a time. It ends on the same four lines, annotated, and on the tools
+for writing the answers down: a README in Markdown and a text editor.
 
 ## What the lecture covers
 
-1. **Data in your life** — a day's worth of datasets; the definition of data;
-   its lifecycle from collecting to sharing.
-2. **Kinds of data** — structured vs unstructured; the four flavours (numbers,
-   text, images, events) and their parametrisation — how each one is written
-   as numbers; kinds of variables (continuous, discrete, nominal, ordinal);
-   measurement vs metadata; the anatomy of a table; the same table as CSV,
-   spreadsheet and binary file.
-3. **Open data & provenance** — portals, the anatomy of a record, licences
-   (CC0 / CC BY / share-alike), the minimal provenance note, data you bring
-   yourself, from record to your project folder.
-4. **Case study: CERN** — the four LHC experiments; from collision to dataset
-   and why the trigger works in real time.
-5. **A dataset up close** — the LHCb example as a file: rows are candidates,
-   four computed columns, units are metadata, five questions to ask any file
-   before writing code.
+1. **A file with no note** — four lines of `D0_KPi.csv`; the five questions
+   they leave open; data as symbols plus the rule that lets someone else read
+   them back; the lifecycle, and where the file stands in it.
+2. **Kinds of data** — structured vs unstructured; numbers, text, images and
+   events as numbers; kinds of variables; the anatomy of a table on
+   `pendulum_raw.csv` as received; which columns can be averaged, worked out
+   on it; the same table as CSV, spreadsheet and binary file, and the LHCb
+   table measured as 3 926 142 bytes of text against 1 289 541 bytes of ROOT.
+3. **Where the file came from** — portals, the anatomy of record 401,
+   licences (CC0 / CC BY / share-alike), the minimal provenance note, your own
+   dataset, from record to project folder.
+4. **How one row was made** — the four LHC experiments, LHCb and the D⁰; from
+   collision to stored event; one row of the file against one stored event;
+   what the trigger kept, and the two columns, `TAU` and `IPCHI2`, that
+   measure it.
+5. **Reading the file** — one row read aloud; three questions answered with
+   `Ctrl+End`, `Ctrl+G` and `Ctrl+F`; 147 columns declared and 4 filled; the
+   units worked out from the numbers; the five questions answered, then asked
+   of a dataset from the student's own field.
 6. **Markdown & text editing** — the project folder and its names; Markdown
    as source and preview: headings, lists, links, images, tables, the usual
-   mistakes; then one small table that arrives in the wrong format and is
-   repaired in the editor with Find and Replace, whole-line keys, a cursor on
-   every line and selected matches.
+   mistakes; the pendulum table repaired in the editor with Find and Replace,
+   whole-line keys, a cursor on every line and selected matches; the four
+   edits written into the README. The lecture closes on the four lines of
+   `D0_KPi.csv`, annotated.
 
 ## The definition of data
 
-Slide 8 gives the definition of ISO/IEC 2382, *Information technology —
+Slide 7 gives the definition of ISO/IEC 2382, *Information technology —
 Vocabulary*:
 
 > Data is a reinterpretable representation of information in a formalized
 > manner suitable for communication, interpretation, or processing.
 
-Three words carry it. A **representation**: the symbols `11.2` are not a
-temperature, they stand for one. **Formalized**: the symbols follow a fixed
-rule, and a file format and a column name carry that rule. **Reinterpretable**:
-someone else, or a program, can get the information back. The rest of the
-lecture returns to each word: variables and tables are the rule, metadata and
-provenance are what makes a file reinterpretable, and Lecture 3 goes down to
-the lowest level of representation, the bit.
+Three words carry it. A **representation**: the symbols `1880.649` are not a
+mass, they may stand for one. **Formalized**: the symbols follow a fixed rule,
+and a file format and a column name carry part of that rule.
+**Reinterpretable**: someone else, or a program, can get the information back.
+The lecture's thesis is one sentence: *a number is data only together with the
+rule that lets someone else read it back.* Each section ends by adding one part
+of the rule for `D0_KPi.csv`: the kind of each column (slide 14), the record
+and its checksum (slide 21), the selection that made a row (slide 37), the
+units (slide 42). The last slide, 63, shows them all on the file's first four
+lines.
+
+## The numbers on the slides
+
+All were computed on the files in `lectures/workbook/docs/data/`.
+
+- `D0_KPi.csv`: 91 584 lines (91 583 rows and a header), 3 926 142 bytes,
+  42.9 bytes per row. `MasterclassData.root`: 1 289 541 bytes, 14.1 bytes per
+  row, 147 columns declared and 4 filled; the CSV is 3.0× larger.
+- Record 401 says "about 60k events" and lists 53 948; the file has 91 583
+  rows, 1.7 per event.
+- Line 5000: `1868.8636,5537.248,0.0007151779,10.399748`. `-100` occurs 49
+  times, each one `-100.0` in `TAU`.
+- Medians: `M` 1864.08 (D⁰ mass 1864.84 MeV/c²), `PT` 3 049, `TAU` 0.000272
+  (D⁰ lifetime 0.41 ps; ln 2 × 0.41 = 0.28 ps). The busiest 5-unit bin of `M`
+  is 1860–1865, with 8 931 candidates.
+- `pendulum_raw.csv`: 130 bytes. Sums 45, 540 and 136.25; means 5.0, 60 cm and
+  15.139 s; with the mean line left in, 151.39 / 10 = 15.139 s again. The
+  cleaned `pendulum.csv` is 97 bytes: the mean line is 12 bytes, column `nr`
+  21 bytes, and 130 − 97 = 33.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–62 and estimates about 120 min. Slides 63–71 are the
+The lecture is slides 1–64 and estimates about 126 min. Slides 65–73 are the
 self-check quizzes and take no lecture time. In a 2-hour slot nothing is
-skipped. For a 90-minute slot, skip the slides in the second table. To
-jump, type the slide number and press Enter.
+skipped. For a 90-minute slot, skip the slides in the second table. The hook
+of slide 3 is answered on slide 43, at about 1:00. To jump, type the slide
+number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–9 | Data in your life, the definition of data, the lifecycle |
-| 0:15 | 10–17 | Kinds of data, variables, tables, files, thought exercise |
-| 0:34 | 18–24 | Open data and provenance |
-| 0:48 | 32–37 | LHCb, why analysis matters, from collision to dataset |
-| 0:59 | 40–44 | The example file up close |
+| 0:00 | 1–5 | Four lines of `D0_KPi.csv`, the five questions, objectives |
+| 0:08 | 6–8 | Data and information, the lifecycle |
+| 0:14 | 9, 12–16 | Kinds of variables, the pendulum table, which columns can be averaged, three files, two sizes |
+| 0:27 | 17, 19, 21, 23 | Record 401, provenance, the project folder |
+| 0:35 | 24, 31–35, 37 | LHCb and its clip, from collision to dataset, the data-flow clip, what the trigger kept |
+| 0:48 | 38–40, 42–43 | One row read aloud, three questions clicked, units by reasoning, the five questions answered |
+| 1:02 | 44 | The five questions on the student's own dataset (5 min) |
 | 1:08 | 45–52 | The project folder and Markdown |
-| 1:23 | 62 | Recap |
-| 1:25 | | Move to the seminar. Slides 53–61 open it |
+| 1:23 | 63–64 | The file, annotated; Recap |
+| 1:26 | | Move to the seminar. Slides 53–62 open it |
 
 | Skip | Slides | Saves |
 |--|--|--|
-| ATLAS and CMS, ALICE, their fly-ins, the quark–gluon plasma clip | 26–31 | 12 min |
-| From Events to Petabytes, Why It Has to Be Real-Time | 38–39 | 5 min |
-| Editing many lines, shown at the start of the seminar instead | 53–61 | 19 min |
+| Structured vs unstructured; numbers, text, images, events | 10–11 | 5 min |
+| Portals, licences, your own dataset | 18, 20, 22 | 6 min |
+| ATLAS and CMS, ALICE, their fly-ins, the quark–gluon plasma clip | 25–30 | 12 min |
+| From Events to Petabytes | 36 | 3 min |
+| 147 Columns, 4 Filled | 41 | 2 min |
+| Editing many lines and writing the edits down, shown at the start of the seminar instead | 53–62 | 22 min |
 
-- **Do not cut** slides 10–16 (kinds of data, tables, files), 18–24 (open data
-  and provenance) or 40–44 (the example file). The seminar uses every one of
-  them.
-- **The LHCb clip stays in** (slide 33, 0:47): it is the detector the example
-  file comes from.
-- **The data-flow clip stays in** (slide 37, 2:51, with music): accelerator
+- **Do not cut** slide 63 (The File, Annotated): it closes the lecture by
+  answering slide 3. Slides 3–4 (the hook), 7 (the thesis), 13–16 (the
+  pendulum table and the two sizes), 37 and 39–43 (the file read and
+  answered) carry the story.
+- **The LHCb clip stays in** (slide 32, 0:47): it is the detector the file
+  comes from.
+- **The data-flow clip stays in** (slide 35, 2:51, with music): accelerator
   chain, detectors, trigger, data centre, grid.
-- **Slide 16** (One Table, Three Files) introduces the decimal comma. The file
-  on slide 53 and the seminar's comparison in a spreadsheet both build on it.
-  Do not rush it.
-- **Slide 17** (thought exercise, 5 min): ask students to keep their answer.
-  They write it into their README in the seminar.
-- **Slides 45–61 are shown live.** Keep VS Code open beside the slides and do
+- **Slide 14** (which columns can be averaged): let the room add up `t10_s`
+  and guess what the mean line does to the mean before showing it.
+- **Slides 40 and 42 are shown live.** Open `D0_KPi.csv` in VS Code on the
+  projector: `Ctrl+End`, `Ctrl+G` 5000, `Ctrl+F` `-100`. Ask the room for
+  each unit before showing the card.
+- **Slide 44** (5 min): students answer the five questions for a dataset of
+  their own field, on paper. The answers are the first lines of their README
+  in the seminar.
+- **Slides 45–62 are shown live.** Keep VS Code open beside the slides and do
   each step on the projector: type the six lines of slide 47 and open the
-  preview, make the mistakes of slide 52, and repair the file of slide 53 with
-  the keys of slides 54–59. Slide 61 is the key sheet. It stays on the
-  projector while the room works through Part 3 of the seminar.
+  preview, make the mistakes of slide 52, repair the file of slide 53 with
+  the keys of slides 54–59, and type the README lines of slide 60. Slide 62
+  is the key sheet. It stays on the projector while the room works through
+  Part 3 of the seminar.
 
 Before the session, start the local copy of the slides:
 `node scripts/serve-local.mjs 8123`, then open
@@ -93,31 +133,30 @@ Before the session, start the local copy of the slides:
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 63–71: eight quiz slides for students to try afterwards. The same
+slides 65–73: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
-1. Alarm, transit card, recommendations, fraud checks: what do they have in
-   common as data analysis?
-   *Each runs the same loop: collect, store, clean, analyse, decide, then share
-   or archive.*
+1. A colleague sends a file of numbers with no header and no note. By the
+   definition of data, what is missing?
+   *The rule that lets someone else read the numbers back: what each one is,
+   in which unit, from where.*
 2. You downloaded a CSV file six months ago and want a reader to get exactly
    the same data. What must you have recorded?
    *The record's DOI or stable URL, the version or the date you fetched it, and
    the checksum of the file.*
-3. What does the 5-sigma standard of a discovery mean?
-   *With no new particle, background alone produces a signal this strong in
-   fewer than 1 in 3.5 million experiments. It is not the chance that the
-   discovery is wrong.*
-4. The detector electronics put out about 1 PB of raw signal per second. Why is
+3. The detector electronics put out about 1 PB of raw signal per second. Why is
    it not all recorded?
    *No system can write 1 PB/s to disk. The trigger reduces it to the few
    thousand events per second that computing can absorb.*
-5. CERN publishes its collision data years after recording it. Which stage of
+4. CERN publishes its collision data years after recording it. Which stage of
    the lifecycle is that, and what makes it possible?
    *Sharing, the last stage. It works only because provenance, formats and
    software were kept at every stage before it.*
-6. What is one row of the LHCb example file?
+5. What is one row of the LHCb example file?
    *One K⁻π⁺ candidate from one collision.*
+6. A candidate has `TAU` = 0.0003 and no unit is written. Which unit fits?
+   *Nanoseconds: 0.0003 ns = 0.3 ps, the size of the D⁰ lifetime of 0.41 ps.
+   In seconds it would be hundreds of millions of times too long.*
 7. A file has lines like `1;20;9,02` and must become `1,20,9.02`. Which
    replacement comes first?
    *The decimal comma, `,` to `.`, while it is the only comma in the file. In
@@ -134,36 +173,42 @@ is the first session in class and starts from zero. It has four parts: install
 VS Code and build a project folder; write the README in Markdown; clean a small
 table with Find and Replace and a cursor on every line, and turn it into a
 table in a short report; put the lecture's example file into `data/raw/` and
-write into the README where it came from. At home students choose a dataset
-from their own field and
-[install Python and Git](../seminars/install_python_git.md).
+write into the README where it came from. All of it is done in class. Python,
+Git and PowerShell 7 are installed in class at the start of
+[Seminar 4](../seminars/seminar_04.md).
 
 ## Parked slides
 
 Slides that left the deck are kept in
 `lectures/content/parked/02_Introduction_to_Data.md`: What Each Flavour Is Used
-For, Data at Work (two slides), Common Threads, Working with the Data, and the
-section Beyond Physics. The file is not built. To put a
+For, Data at Work (two slides), Common Threads, Working with the Data, the
+section Beyond Physics, and from the rework of 6 October: A Day in Data (two
+slides), Every One of These Is a Dataset, Measurement vs Metadata, the weather
+version of Anatomy of a Table, the thought exercise, Why Data Analysis Matters
+at CERN, the old Recap and two quiz slides. The file is not built. To put a
 slide back, move it into the lecture file.
 
 ## Take-aways
 
 - Data is a representation of information by a fixed rule, which someone else
-  can read back. A number without its rule is not yet data anyone can use.
+  can read back. A number without its rule is not yet data anyone can use:
+  `1880.649` became information once its kind, source, row and unit were
+  found.
 - Parametrisation: every flavour of data is written as a set of numbers before
-  it is analysed — a character as a code, a pixel as three values 0–255, an
-  event as a time plus what was measured. Written as a number is not the same
-  as behaving like one: a postcode has no average.
-- Cite the **record**, not the file: DOI or stable URL, version or fetch date,
-  checksum.
-- Read the record before the data: what is one row, how was it selected, what
-  may you publish.
-- Units are metadata — if the file does not say, your README must.
+  it is analysed. Written as a number is not the same as behaving like one: a
+  row number has a mean of 5.0 that says nothing.
 - A row is one observation, a column is one variable of one kind, a cell is
-  one value.
-- A CSV file is plain text; a spreadsheet shows its own interpretation of it.
-- A file that is too large, or not yours to share, stays out of the folder you
-  pass on. The README says how to fetch it.
+  one value. A mean line in a table breaks the first rule, and the mean cannot
+  show it: only the count can.
+- The same table is 3.0× larger as text than as ROOT. Neither one stores its
+  units.
+- Cite the **record**, not the file: DOI or stable URL, version or fetch date,
+  checksum. A converted copy says how it was converted.
+- The trigger decides what becomes a row. `TAU` and `IPCHI2` measure the
+  flight it looks for.
+- Units are metadata. When the file does not say, work them out from the
+  numbers against a value you know, check them against any note that came
+  with the file (here `root_to_csv.py`), and write them into the README.
 - A file in `data/raw` is never edited. It is cleaned on a copy, and the
   README lists what was changed.
 - An edit that is the same on every line is made once: Find and Replace for

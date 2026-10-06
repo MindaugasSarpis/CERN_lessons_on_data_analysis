@@ -89,38 +89,8 @@ hideInToc: true
 A fit returns a number with an uncertainty. A classifier returns one of two labels. The method stays the same: a model with parameters, a likelihood, a loss to minimise.
 
 <!--
-Speaker: this section sets the problem and the data, and fixes the symbols.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# What Lecture 10 **Built**, and What Changes
-
-<div class="card card-info card-glass pad-compact mt-sm table-compact">
-
-| | **A fit** (Lecture 10) | **A classification** (this lecture) |
-| --- | --- | --- |
-| The data | points $(x_i, y_i)$, with $y_i$ a measured number | points $(\mathbf{x}_i, y_i)$, with $y_i$ either 0 or 1 |
-| The model | a curve $f(x; \theta)$ | a function of $\mathbf{w} \cdot \mathbf{x} + b$ |
-| The parameters | $\theta$: slope, intercept, mass, width | the weights $\mathbf{w}$ and the bias $b$ |
-| The probability of the data | Gaussian around the curve | Bernoulli: $y = 1$ with probability $\hat{y}$ |
-| The loss, $-\ln$ of the likelihood | $\chi^2$ | the cross-entropy |
-| How it is minimised | in closed form, or $\theta \leftarrow \theta - \eta \nabla \chi^2$ | $\mathbf{w} \leftarrow \mathbf{w} - \eta \nabla L$ |
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-The left column is known. The right column is this lecture, row by row. Only two things are new: the output is a class, and the probability that describes a class is not a Gaussian.
-
-</div>
-
-<!--
-Speaker: read the table as the plan. Each row of the right column is derived
-today. The last row is the same line of mathematics in both columns. (~2 min)
+Speaker: this section sets the problem, the data and the question of the
+lecture. (~1 min)
 -->
 
 ---
@@ -201,52 +171,31 @@ the method of this lecture. The question for the next 80 minutes is how. (~2 min
 hideInToc: true
 ---
 
-# The **Symbols** of This Lecture
+# What Lecture 10 **Built**, and What Changes
 
-<div class="grid-2 mt-sm gap-md">
+<div class="card card-info card-glass pad-compact mt-sm table-compact">
 
-<div class="card card-primary card-glass pad-compact table-compact">
-
-| Symbol | Meaning |
-| --- | --- |
-| $\mathbf{x} = (x_1, x_2)$ | the inputs of one point, a vector |
-| $y$ | its label, the **target**: 0 or 1 |
-| $\mathbf{w} = (w_1, w_2)$ | the **weights**, one per input |
-| $b$ | the **bias**, one number |
-| $z = \mathbf{w} \cdot \mathbf{x} + b$ | the weighted sum |
-| $\hat{y}$ | the **output** of the neuron |
-| $\eta$ | the learning rate |
-| $L$ | the loss |
+| | **A fit** (Lecture 10) | **A classification** (this lecture) |
+| --- | --- | --- |
+| The data | points $(x_i, y_i)$, with $y_i$ a measured number | points $(\mathbf{x}_i, y_i)$, with $y_i$ either 0 or 1 |
+| The model | a curve $f(x; \theta)$ | a function of $\mathbf{w} \cdot \mathbf{x} + b$ |
+| The parameters | $\theta$: slope, intercept, mass, width | the weights $\mathbf{w}$ and the bias $b$ |
+| The probability of the data | Gaussian around the curve | Bernoulli: $y = 1$ with probability $\hat{y}$ |
+| The loss, from the likelihood $\mathcal{L}$ | $-2 \ln \mathcal{L} = \chi^2 + \text{const}$ | $-\frac{1}{N} \ln \mathcal{L}$, the cross-entropy |
+| How it is minimised | in closed form, or $\theta \leftarrow \theta - \eta \nabla \chi^2$ | $\mathbf{w} \leftarrow \mathbf{w} - \eta \nabla L$ |
 
 </div>
 
-<div>
+<div class="card card-primary card-glass pad-compact mt-md">
 
-<div class="card card-secondary card-glass pad-compact">
-
-## ✖️ **The dot product**
-
-$$
-\mathbf{w} \cdot \mathbf{x} = w_1 x_1 + w_2 x_2
-$$
-
-With $\mathbf{w} = (2, -1)$ and $\mathbf{x} = (3, 2)$: $\;2 \cdot 3 + (-1) \cdot 2 = 4$.
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-An index $i$ numbers the points: $\mathbf{x}_i$, $y_i$, with $i = 1 \ldots N$. An index 1 or 2 on a plain letter numbers the inputs. The parameters of the model are $w_1$, $w_2$ and $b$: three numbers.
-
-</div>
-
-</div>
+The left column is known. The right column is this lecture, row by row. Only two things are new: the output is a class, and the probability that describes a class is not a Gaussian. An index $i$ numbers the points, $i = 1 \ldots N$; an index 1 or 2 numbers the inputs.
 
 </div>
 
 <!--
-Speaker: bold letters are vectors. The hat on y marks what the model says, as
-the hat on theta marked an estimate in Lecture 10. (~2 min)
+Speaker: read the table as the plan for the question of the last slide, how
+the line of 185 was found. Each row of the right column is derived today. The
+last row is the same line of mathematics in both columns. (~2 min)
 -->
 
 ---
@@ -256,7 +205,7 @@ hideInToc: true
 
 # One **Neuron**
 
-A weighted sum, a bias and a threshold. What it computes is a line in the plane of the inputs, and everything about that line can be read off the weights.
+The line that put 185 of 200 points on the right side has three parameters: two weights and a bias. One neuron computes with exactly these three, and everything about its line can be read off them.
 
 <!--
 Speaker: no learning yet. The weights are set by hand in this section, so that
@@ -278,7 +227,11 @@ hideInToc: true
 ## 🧮 **Two operations**
 
 $$
-z = \mathbf{w} \cdot \mathbf{x} + b \qquad\quad \hat{y} = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{if } z \le 0 \end{cases}
+z = \mathbf{w} \cdot \mathbf{x} + b = w_1 x_1 + w_2 x_2 + b
+$$
+
+$$
+\hat{y} = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{if } z \le 0 \end{cases}
 $$
 
 </div>
@@ -297,7 +250,9 @@ $\mathbf{w} = (2, -1)$, $b = -1$.
 </div>
 
 <!--
-Speaker: this unit with the step is the perceptron. The bias is drawn as a
+Speaker: bold letters are vectors, and w . x is the dot product. The hat on y
+marks what the model says, as the hat on theta marked an estimate in Lecture
+10. This unit with the step is the perceptron. The bias is drawn as a
 weight on a constant input 1: that picture is used again in the proof. On the
 convention: z exactly 0 gives 0 here. Other books choose 1. It matters only for
 points exactly on the line. (~2 min)
@@ -310,6 +265,8 @@ hideInToc: true
 # A Neuron Computes **AND** and **OR**
 
 <div class="grid-2 mt-sm gap-md">
+
+<div>
 
 <div class="card card-primary card-glass pad-compact table-compact">
 
@@ -328,6 +285,14 @@ NOT needs one input: $w = -1$, $b = 0.5$ gives $z = 0.5$ for 0 and $z = -0.5$ fo
 
 </div>
 
+<div class="card card-warning card-glass pad-compact mt-md">
+
+🧩 **XOR** is 1 when the two inputs differ: for (0, 1) and (1, 0). Find $\mathbf{w}$ and $b$.
+
+</div>
+
+</div>
+
 <div>
 
 <img class="fig" src="/figures/viz_perceptron_gates.svg" style="display:block;margin:0 auto;width:100%;">
@@ -339,7 +304,9 @@ NOT needs one input: $w = -1$, $b = 0.5$ gives $z = 0.5$ for 0 and $z = -0.5$ fo
 <!--
 Speaker: these are the truth tables of Lecture 03, now computed by a weighted
 sum and a threshold. Let the room check one row of each. In the pictures the
-shaded side is where z is positive. (~2 min)
+shaded side is where z is positive. Then the puzzle: one minute, collect two or
+three attempts and check one row of each aloud. Every attempt gets a row wrong.
+Leave it open: the section on XOR settles it. (~3 min)
 -->
 
 ---
@@ -559,7 +526,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Take the points one after another. For each point compute $\hat{y}$, then change the weights:
+Take the points one after another. For each point compute $\hat{y}$, then change the weights, with $\eta$ the learning rate of Lecture 10:
 
 $$
 \mathbf{w} \leftarrow \mathbf{w} + \eta\,(y - \hat{y})\,\mathbf{x} \qquad\qquad b \leftarrow b + \eta\,(y - \hat{y})
@@ -1075,8 +1042,10 @@ hideInToc: true
 <!--
 Speaker: the same rule, the points in a shuffled order, 100 epochs. After each
 epoch between 14 and 26 points are on the wrong side, and the line of epoch 98
-is not the line of epoch 100. Real data overlap. The next two sections replace
-the rule by one that has an answer for this case. (~2 min)
+is not the line of epoch 100. Real data overlap. One more thing is open:
+Rosenblatt wrote the rule down, he did not derive it. Why the error times the
+input? The next two sections replace the rule by one that has an answer for
+the overlap, and that answer explains the form of the rule. (~2 min)
 -->
 
 ---
@@ -1086,7 +1055,7 @@ hideInToc: true
 
 # From the Step to the **Sigmoid**
 
-Lecture 10 minimised a loss by following its slope. The step has no slope to follow. A smooth function in its place gives one, and turns the output into a probability.
+On the 200 overlapping points Rosenblatt's rule never stops, and its output is only 0 or 1. Lecture 10 minimised a loss by following its slope, and the step has none. A smooth function in its place gives one, and turns the output into a probability.
 
 <!--
 Speaker: one change to the neuron, and everything of Lecture 10 becomes
@@ -1346,7 +1315,7 @@ hideInToc: true
 
 # The Loss: From Likelihood to **Cross-Entropy**
 
-Lecture 10 turned the Gaussian likelihood into $\chi^2$. The same three steps, applied to labels that are 0 or 1, give the loss of the logistic neuron and its gradient.
+The output is now a probability, so every label has one, and the 200 labels have a likelihood. Lecture 10 turned the Gaussian likelihood into $\chi^2$. The same three steps, applied to labels that are 0 or 1, give the loss of the logistic neuron and its gradient.
 
 <!--
 Speaker: this is the centre of the lecture. Nothing in it is chosen for
@@ -1362,7 +1331,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-The recipe of Lecture 10: write the likelihood of the data, take $-\ln$, minimise. For Gaussian errors it gave $\chi^2$. A label is not a number with a Gaussian error. It is one of two outcomes.
+The recipe of Lecture 10: write the likelihood of the data, take $-\ln$, minimise. For Gaussian errors $-2\ln$ of the likelihood was $\chi^2$ plus a constant. A label is not a number with a Gaussian error. It is one of two outcomes.
 
 </div>
 
@@ -1730,19 +1699,21 @@ $\mathbf{w} = (0.5, -0.3)$, $b = 0.1$, one point $\mathbf{x} = (2, 1)$ with $y =
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div>
 
-## 🔬 **By a small step**
-
-Raise $w_1$ by 0.001 and compute the loss again:
-
-$$
-\frac{0.370481 - 0.371101}{0.001} = -0.620
-$$
-
-The formula and the difference quotient agree.
-
-**One update with $\eta = 0.5$** gives $\mathbf{w} = (0.810, -0.145)$ and $b = 0.255$. Then $z = 1.730$ and $\hat{y} = 0.849$: the loss has fallen from 0.371 to 0.163.
+```py {monaco-run} {autorun:false}
+import numpy as np
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+x = np.array([2.0, 1.0])            # label y = 1
+w, b = np.array([0.5, -0.3]), 0.1
+def loss(w):
+    return -np.log(sigmoid(w @ x + b))
+grad = (sigmoid(w @ x + b) - 1) * x
+print(grad.round(4))         # [-0.6201 -0.31  ]
+d = loss(w + [0.001, 0]) - loss(w)
+print(round(d / 0.001, 4))   # -0.6196
+```
 
 </div>
 
@@ -1750,13 +1721,16 @@ The formula and the difference quotient agree.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A derivative worked out on paper is checked this way before it is trusted in a program: change one parameter a little, and compare the change of the loss with the formula.
+The last two lines raise $w_1$ by 0.001 and compute the loss again. The difference quotient, −0.6196, agrees with the formula, −0.6201. A derivative worked out on paper is checked this way before it is trusted in a program.
 
 </div>
 
 <!--
-Speaker: the gradient is negative in w1, so raising w1 lowers the loss, and
-the update raises it: 0.5 minus 0.5 times -0.620 is 0.810. (~3 min)
+Speaker: run it. The two printed numbers agree to within 0.001; the small
+difference is the curvature of the loss over a step of 0.001. The gradient is
+negative in w1, so raising w1 lowers the loss, and the update raises it: one
+update with eta = 0.5 gives w = (0.810, -0.145) and b = 0.255, z = 1.730,
+y-hat = 0.849, and the loss falls from 0.371 to 0.163. (~3 min)
 -->
 
 ---
@@ -1787,14 +1761,15 @@ $$
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The formula is Rosenblatt's, letter for letter. The difference is in $\hat{y}$: it is now a number between 0 and 1, so $y - \hat{y}$ is never exactly zero and every point pulls on the line.
+This is the rule of the slide **The Rule**, letter for letter: Rosenblatt wrote it down in 1958, and here it follows from the Bernoulli likelihood. The difference is in $\hat{y}$: it is now a number between 0 and 1, so $y - \hat{y}$ is never exactly zero and every point pulls on the line.
 
 </div>
 
 <!--
-Speaker: the first row is the least-squares line written in today's symbols,
-with all errors equal. Its gradient is the residual times the input. Three
-models, one update. (~2 min)
+Speaker: this answers the question left on What the Theorem Does Not Say:
+why the error times the input. The first row is the least-squares line written
+in today's symbols, with all errors equal. Its gradient is the residual times
+the input. Three models, one update. (~2 min)
 -->
 
 ---
@@ -1857,7 +1832,7 @@ hideInToc: true
 
 # Training in **NumPy**
 
-The gradient is a mean over the points, and NumPy computes it for all points in one line. The whole training loop is a dozen lines.
+The loss has one minimum, and its gradient is a mean of $(\hat{y} - y)\,\mathbf{x}$ over the points. NumPy computes that mean for all 200 points in one line, and the whole training loop is a dozen lines.
 
 <!--
 Speaker: first the notation for all points at once, then the loop, then what
@@ -1930,41 +1905,13 @@ print("w", w.round(3), "b", round(b, 3))
 Speaker: run it. Each line of output is the epoch, the loss and the share of
 points classified correctly. Measured: 0.6931 and 0.5 at epoch 0, 0.1651 and
 0.92 at epoch 250, 0.1616 and 0.925 at epoch 1000, then w [2.1 2.257] and b
--4.315. Change eta to 0.05 and run again: the loss at epoch 1000 is 0.1809,
-not yet at the minimum. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Loss **Falls**
-
-<img class="fig" src="/figures/viz_perceptron_loss.svg" style="display:block;margin:0 auto;max-height:300px;">
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-| Epoch | 0 | 10 | 100 | 200 | 1000 |
-| --- | --- | --- | --- | --- | --- |
-| Loss | 0.6931 | 0.3356 | 0.1806 | 0.1673 | 0.1616 |
-| Correct | 50 % | 88 % | 92.5 % | 92 % | 92.5 % |
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-**Why 0.6931 at the start.** With $\mathbf{w} = 0$ and $b = 0$ every $z$ is 0 and every $\hat{y}$ is 0.5. Each point costs $-\ln 0.5 = \ln 2 = 0.6931$.
-
-</div>
-
-</div>
-
-<!--
-Speaker: the loss falls at every epoch. The accuracy does not: it is 93.5 % at
-epoch 50, 92.5 % at 100 and 92 % at 200. The loop minimises the loss, and the
-accuracy only follows it roughly. (~2 min)
+-4.315. 0.925 of 200 is 185: this is the line of the slide A Rule with One
+Input, a Rule with Two, found. Change eta to 0.05 and run again: the loss at
+epoch 1000 is 0.1809, not yet at the minimum. Why 0.6931 at the start: with
+w = 0 and b = 0 every y-hat is 0.5, and each point costs ln 2. The loss falls
+at every epoch, the accuracy does not: 93.5 % at epoch 50, 92.5 % at 100, 92 %
+at 200. The loop minimises the loss, and the accuracy only follows it roughly.
+(~3 min)
 -->
 
 ---
@@ -2034,7 +1981,7 @@ The exact values follow from the slide Where the Sigmoid Comes From: $\mathbf{w}
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The neuron has recovered the rule that made the data, to within what 200 points allow. No rule can do better than 92.1 % here: the clouds overlap, and a point of class 1 that fell among class 0 cannot be told apart.
+The line of the slide **A Rule with One Input, a Rule with Two**, right for 185 of 200, is this neuron. It has recovered the rule that made the data, to within what 200 points allow. No rule does better than 92.1 % on new points: the clouds overlap.
 
 </div>
 
@@ -2052,7 +1999,7 @@ hideInToc: true
 
 # Training in **Practice**
 
-The loop works on these 200 points because their inputs are of order 1 and the learning rate suits them. Three things have to be decided for other data: the learning rate, the scale of the inputs, and the points on which the result is judged.
+The loop recovered the line of the generator, on 200 points whose inputs are of order 1 and with a learning rate that suits them. Other data need three decisions: the learning rate, the scale of the inputs, and the points on which the result is judged.
 
 <!--
 Speaker: nothing new is derived in this section. It is the same loop under
@@ -2302,7 +2249,7 @@ hideInToc: true
 
 # The Limit: **XOR**
 
-One neuron draws one line. There is a problem of four points in which no single line is enough, and it can be shown in four lines of algebra.
+Every result so far came from one line. The puzzle of the gates slide, XOR, has four points that no single line separates, and four lines of algebra show it.
 
 <!--
 Speaker: the last part of the argument. A proof that something is impossible,
@@ -2348,7 +2295,7 @@ In the plane the two points of class 1 lie on one diagonal of the square and the
 
 <div class="note-text mt-sm">
 
-Each line tried leaves at least one point on the wrong side. That is not yet a proof.
+Each line tried, as at the puzzle of the gates slide, leaves at least one point on the wrong side. That is not yet a proof.
 
 </div>
 
@@ -2357,9 +2304,9 @@ Each line tried leaves at least one point on the wrong side. That is not yet a p
 </div>
 
 <!--
-Speaker: let the room try to draw a line on paper for half a minute. Trying
-lines shows nothing: there are infinitely many. The next slide settles it for
-all of them at once. (~2 min)
+Speaker: back to the puzzle of the gates slide. Every attempt the room made
+left a point on the wrong side. Trying lines shows nothing: there are
+infinitely many. The next slide settles it for all of them at once. (~2 min)
 -->
 
 ---
@@ -2622,7 +2569,7 @@ hideInToc: true
 
 # **History** in Three Dates
 
-The unit of this lecture is nearly seventy years old. Three publications mark what was found, what was shown to be impossible, and what removed the obstacle.
+The last slide ended on hidden units that neither rule of this lecture can train. Three publications mark what was found, what was shown to be impossible, and how hidden layers came to be trained.
 
 <!--
 Speaker: three dates, each with its source. (~1 min)
@@ -2640,7 +2587,7 @@ hideInToc: true
 
 ## 1958 · **The perceptron**
 
-F. Rosenblatt, *The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain*, Psychological Review 65, 386–408. A unit with adjustable weights that are found from examples: the rule of the third section.
+F. Rosenblatt, *The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain*, Psychological Review 65, 386–408. A unit with adjustable weights that are found from examples: the rule of the third section. The New York Times, 8 July 1958: “The Navy revealed the embryo of an electronic computer today that it expects will be able to walk, talk, see, write, reproduce itself and be conscious of its existence.” It drew one line.
 
 </div>
 
@@ -2760,15 +2707,16 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-## 🧭 **The numbers of this lecture**
+## 🧭 **How the line of 185 was found**
 
-AND: 10 updates, $\mathbf{w} = (2, 1)$, $b = -2$, against a bound of 51. The 200 points: loss from 0.6931 to 0.1616, 92.5 % correct, where the best possible is 92.1 % on average. XOR: weights $(1, 1)$ with biases $-0.5$ and $-1.5$, then $(1, -1)$ with $-0.5$.
+1000 steps against the gradient of the Bernoulli likelihood, the mean of $(\hat{y} - y)\,\mathbf{x}$ over the 200 points: loss from 0.6931 to 0.1616, 185 of 200 right, where no line does better than 92.1 % on new points. Rosenblatt's rule is the same $(y - \hat{y})\,\mathbf{x}$ with a step in place of $\sigma$, one point at a time, and no single line computes XOR.
 
 </div>
 
 <!--
 Speaker: one neuron, fully understood: its geometry, two ways to train it,
-where the second way comes from, and its limit. (~1 min)
+where the second way comes from, and its limit. The bottom card answers the
+question of the slide A Rule with One Input, a Rule with Two. (~1 min)
 -->
 
 ---

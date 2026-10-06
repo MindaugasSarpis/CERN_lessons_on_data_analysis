@@ -1,17 +1,22 @@
 # 9: Probability & Statistics
 
 Lecture 8 drew the data: the pendulum table as points and the mass column as
-a histogram, with error bars taken as given. Lecture 9 says what an error bar
-is. It derives how a quantity that comes out differently every time is
-described, and it ends with the likelihood, the starting point of fitting.
+a histogram, with a bar of ± √N on every bin taken as given. Lecture 9 opens
+on that figure and four questions: which one number stands for the 91 583
+masses, how far a single value lies from it, how well that number is known,
+and why the bar on a count is √N. It derives how a quantity that comes out
+differently every time is described, ends with the likelihood, and closes on
+the four answers.
 
 ## What the lecture covers
 
 1. **Probability and its rules** — probability as a long-run frequency,
-   shown with a million simulated rolls; random numbers in NumPy with a
-   seed; outcomes and events; the three axioms; the complement and the
-   addition rule derived from them; conditional probability; independence;
-   Bayes' theorem with a test worked by counting and by formula.
+   shown with a million simulated rolls from a seeded generator; outcomes
+   and events; the three axioms; the complement and the addition rule
+   derived from them; conditional probability; independence, and a test of
+   it on the file: a high `PT` raises the share of rows in the peak window
+   from 0.28 to 0.40; Bayes' theorem with a test worked by counting and by
+   formula.
 2. **Random variables** — a distribution (the sum of two dice); the
    expected value as the average of many repetitions; variance and standard
    deviation; the mean and the variance of a sum, with the covariance;
@@ -20,25 +25,28 @@ described, and it ends with the likelihood, the starting point of fitting.
 3. **Three distributions** — the binomial from independent trials and
    counting; its mean np and variance np(1 − p) from the rules for sums; the
    Poisson distribution as its limit, derived and then computed for
-   n = 1000, p = 0.003 against λ = 3; a count as N ± √N, checked on 14 bins
-   of the mass histogram; the Gaussian and its 68.3 %, 95.4 %, 99.7 %; the
-   central limit theorem by simulation, with sums of uniform numbers.
+   n = 1000, p = 0.003 against λ = 3; a count as N ± √N, the bar of
+   Lecture 8, checked on 14 bins of the mass histogram; sums of uniform
+   numbers that turn into a bell, the central limit theorem; the bell named
+   as the Gaussian, with its 68.3 %, 95.4 %, 99.7 %.
 4. **Samples and the standard error** — sample mean x̄ and standard
-   deviation s; σ/√N derived from the variance of a sum and checked by
-   simulation and on 915 groups of 100 mass values; standard deviation
-   against standard error; why N − 1; what the standard error does not
-   cover; covariance and the correlation coefficient.
+   deviation s; covariance and the correlation coefficient; σ/√N derived
+   from the variance of a sum and checked by simulation and on 915 groups
+   of 100 mass values; standard deviation against standard error; why
+   N − 1; what the standard error does not cover: the mean lies 8.7
+   standard errors below the D⁰ mass.
 5. **Error propagation** — the first-order Taylor expansion for one and for
    several measurements; the rules for sums and for products of powers;
    g = 4π²ℓ/T² from one pendulum row with stated uncertainties; the same by
    simulation; how a result is written.
-6. **Likelihood** — the binomial read as a function of p; maximum
+6. **Testing a hypothesis** — the distance from a known value in units of
+   σ, the p-value, and what a p-value is not.
+7. **Likelihood** — the binomial read as a function of p; maximum
    likelihood; the likelihood L(θ) of independent measurements; the Gaussian
    mean is the sample mean; the width of the likelihood is the standard
    error; unequal uncertainties give the weighted mean with weights 1/σᵢ²
-   and the uncertainty (Σ 1/σᵢ²)^(−1/2); g from nine rows.
-7. **Testing a hypothesis** — the distance from a known value in units of
-   σ, the p-value, and what a p-value is not.
+   and the uncertainty (Σ 1/σᵢ²)^(−1/2); g from nine rows. The closing
+   slide answers the four questions of the opening one.
 
 ## Notation
 
@@ -59,6 +67,9 @@ project folder, or from a seeded simulation.
 
 | Quantity | Value |
 |--|--|
+| Rows in the peak window 1855 < M < 1875 | 31 132, P(W) = 0.340 |
+| Share in the window for PT above / below its median | 0.403 / 0.277 |
+| Top bar of the Lecture 8 histogram (1 MeV/c² bins) | 1916 ± 44 |
 | Mass column, 91 583 rows: mean ± standard error | 1864.10 ± 0.08 MeV/c² |
 | Mass column: standard deviation | 25.57 MeV/c² |
 | 14 flat bins of 2 MeV/c²: mean count, scatter, √N | 1461, 34, 38 |
@@ -71,54 +82,69 @@ the length and 0.1 s on the time of 10 swings.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–65 and estimates about 140 min. Slides 66–73 are the
+The lecture is slides 1–65 and estimates about 141 min. Slides 66–73 are the
 self-check quizzes and take no lecture time. For a 90-minute slot, skip the
-slides in the second table: the estimate is then about 95 min. To jump, type
+slides in the second table: the estimate is then about 97 min. To jump, type
 the slide number and press Enter.
+
+The opening slide (3) asks four questions about last week's histogram. The
+plan answers them by about minute 60: the bar of ± √N on slide 30 (about
+0:50), the mean, s and the standard error on slides 36 and 39 (about 1:00),
+and what the standard error does not cover on slide 44.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–7, 9–13 | Probability and its rules |
-| 0:22 | 16–21 | Random variables: mean, variance, sums, density |
-| 0:35 | 22–27, 29, 31–32 | Binomial, Poisson, Gaussian, sums tend to a Gaussian |
-| 0:53 | 35–37, 40, 43 | Sample, standard error, covariance and correlation |
-| 1:03 | 45–50 | Error propagation, g from one pendulum row |
-| 1:15 | 53–60 | Likelihood, the mean, the weighted mean |
-| 1:32 | 65 | Recap |
-| 1:35 | | Move to the seminar |
+| 0:00 | 1–8, 10–13, 15 | Four questions; probability and its rules; independence on the file; Bayes by counting |
+| 0:26 | 16–22 | Random variables: mean, variance, sums, density |
+| 0:39 | 24–26, 29–31, 33 | Binomial, Poisson, √N on the mass column, adding makes a bell, the Gaussian |
+| 0:56 | 35–36, 39, 41–42, 44 | Mean, s and standard error of the mass column; what it does not cover |
+| 1:08 | 45–50 | Error propagation, g from one pendulum row |
+| 1:20 | 56–57, 59–60, 62–64 | Likelihood, the mean, the weighted mean, g from nine rows |
+| 1:35 | 65 | The four questions, answered |
+| 1:37 | | Move to the seminar |
 
 | Skip | Slides | Saves |
 |--|--|--|
-| The Frequency of a Six, Simulated | 8 | 4 min |
-| Bayes' Theorem, Bayes' Theorem: a Test | 14–15 | 5 min |
-| The Limit, Computed | 28 | 3 min |
-| √N, Checked on the Mass Column | 30 | 2 min |
-| The Sums in NumPy, Where the Gaussian Applies | 33–34 | 6 min |
-| The Standard Error, Checked; The Means of 100 Mass Values | 38–39 | 4 min |
-| Why N − 1, What the Standard Error Does Not Cover | 41–42 | 5 min |
-| Correlation in Numbers | 44 | 3 min |
+| Three Axioms | 9 | 2 min |
+| Bayes' Theorem (slide 15 is worked by counting) | 14 | 3 min |
+| Independent Trials: Counting | 23 | 2 min |
+| The Limit in Numbers, The Limit, Computed | 27–28 | 5 min |
+| The Sums in NumPy | 32 | 4 min |
+| Where the Gaussian Applies | 34 | 2 min |
+| Covariance and Correlation, Correlation in Numbers | 37–38 | 5 min |
+| The Standard Error, Checked | 40 | 2 min |
+| Why N − 1 | 43 | 3 min |
 | The Same by Simulation, Writing a Result | 51–52 | 6 min |
-| g from Nine Measurements | 61 | 2 min |
-| Testing a Hypothesis | 62–64 | 5 min |
+| Testing a Hypothesis | 53–55 | 5 min |
+| Maximum Likelihood | 58 | 2 min |
+| The Width of the Likelihood | 61 | 2 min |
 
-- **Do not cut** slides 20 (sums of random variables), 37 (the standard
-  error), 46–50 (error propagation and g) or 56–60 (the likelihood of many
-  measurements, the mean, the weighted mean and its uncertainty). Slide 20
-  carries the two rules that every later derivation uses. Slides 56–60 are
-  what the lecture on fitting starts from.
-- **Slides 38, 39, 51 and 61 are repeated in the seminar** as typed scripts,
-  with the same numbers. They are the first to skip.
-- **Slides 8, 28, 33 and 51 run live.** Each has a code block with a play
+- **Do not cut** slide 65, the closing slide: it answers the four questions
+  of slide 3. Do not cut slides 3 (the questions), 20 (sums of random
+  variables), 30 (√N, checked), 39 (the standard error), 44 (what the
+  standard error does not cover), 46–50 (error propagation and g) or 59–63
+  (the likelihood of many measurements, the mean, the weighted mean and its
+  uncertainty). Slide 20 carries the two rules that every later derivation
+  uses.
+- **Slides 40, 41, 51 and 64 are repeated in the seminar** as typed
+  scripts, with the same numbers. Slides 40 and 51 are skipped above; if
+  the clock is behind, slide 41 goes next.
+- **Slides 7, 28, 32 and 51 run live.** Each has a code block with a play
   button. The first run loads NumPy into the browser and takes some seconds:
-  run slide 8 once before the session. Then change one number: the seed on
-  slide 8, `n, p = 10, 0.3` on slide 28, a `50` in the list on slide 33,
+  run slide 7 once before the session. Then change one number: the seed on
+  slide 7, `n, p = 10, 0.3` on slide 28, a `50` in the list on slide 32,
   `2.0` in place of `0.1` on slide 51.
-- **Slides 10–13, 19, 23, 26, 37, 55, 57 and 59 are derivations.** Do them on
+- **Ask before showing.** Slide 6: the fraction of sixes after ten rolls and
+  after a million (slide 7 answers). Slide 13: does knowing `PT` change the
+  chance that a row lies in the peak? Slide 31: what do sums of two flat
+  numbers look like? Slide 62: the combination of 9.70 ± 0.22 and
+  9.86 ± 0.10 (most say 9.78; it is 9.83).
+- **Slides 9–12, 19, 23, 26, 39, 58, 60 and 62 are derivations.** Do them on
   the board, one line at a time, and use the slide as the fair copy.
 - **Slide 49** states the uncertainties of the pendulum example, 0.1 cm and
   0.1 s. Say that they are chosen, not read from the file.
-- If the clock is still behind, slides 10 (Three Axioms) and 58 (The Width
-  of the Likelihood) can also go: 5 min.
+- If the clock is still behind, slides 21 (Continuous Variables: Density)
+  and 41 (The Means of 100 Mass Values) can also go: 5 min.
 
 ## Check yourself
 
@@ -144,12 +170,12 @@ questions, with their answers:
    area?
    *10.00 ± 0.22 m². The relative uncertainties 1 % and 2 % add in
    quadrature to 2.2 %.*
-6. Two measurements give 10.0 ± 0.1 and 10.6 ± 0.3. What is their weighted
-   mean?
-   *10.06 ± 0.09, with the weights 100 and 11.1.*
-7. A measurement gives 5.3 ± 0.2 and the expected value is 4.7. How far
+6. A measurement gives 5.3 ± 0.2 and the expected value is 4.7. How far
    apart are they, and what is the p-value?
    *3σ, and p = 0.0027 for both sides.*
+7. Two measurements give 10.0 ± 0.1 and 10.6 ± 0.3. What is their weighted
+   mean?
+   *10.06 ± 0.09, with the weights 100 and 11.1.*
 
 ## Paired seminar
 

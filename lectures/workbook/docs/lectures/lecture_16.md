@@ -153,8 +153,7 @@ follow-along session on the two-class file. The room loads and plots it,
 splits it with a seed, trains the neuron of Lecture 11 and then the network
 of this lecture as two functions, chooses the number of hidden units with
 the validation rows, uses the test rows once, counts the confusion matrix by
-hand and checks it with scikit-learn. At home students do the same on a
-yes-or-no question in their own dataset.
+hand, checks it with scikit-learn, and writes the result into the README.
 
 ## Further reading
 

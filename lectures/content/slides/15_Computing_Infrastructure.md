@@ -111,10 +111,11 @@ hideInToc: true
 
 - **Windows:** Task Manager (`Ctrl+Shift+Esc`), tab **Performance**. **CPU** shows the cores, **Memory** the total
 - **macOS:** Apple menu, **About This Mac**: the chip and the memory
-- **Any system:**
+- **Any system**, in zsh or in PowerShell:
 
-```bash
-python -c "import os; print(os.cpu_count())"
+```text
+% python3 -c "import os; print(os.cpu_count())"
+PS> python -c "import os; print(os.cpu_count())"
 ```
 
 It prints `12` on this machine.
@@ -1590,9 +1591,10 @@ hideInToc: true
 A job of an hour should not need a person at the keyboard. It runs in the background, writes what it does into a file, and can be checked or stopped at any time.
 
 <!--
-Speaker: everything in this section runs on a laptop, in Git Bash on Windows
-and in the terminal of macOS. The same commands are what a remote machine and
-a cluster expect. (~30 sec)
+Speaker: everything in this section runs on a laptop: zsh on macOS,
+PowerShell 7 on Windows, with the environment of Lecture 13 active, so the
+program is python in both. A line without a prompt is the same in both shells.
+The zsh lines are what a remote Linux machine and a cluster expect. (~30 sec)
 -->
 
 ---
@@ -1675,13 +1677,14 @@ hideInToc: true
 <div class="card card-info card-glass pad-compact mt-md">
 
 ```text
-$ python scripts/long_job.py --path data/raw/missing.csv > results/run.log
+python scripts/long_job.py --path data/raw/missing.csv > results/run.log
 Traceback (most recent call last):
   ...
 FileNotFoundError: data/raw/missing.csv not found.
-$ cat results/run.log
-$ python scripts/long_job.py --path data/raw/missing.csv > results/run.log 2>&1
-$ tail -n 1 results/run.log
+cat results/run.log
+python scripts/long_job.py --path data/raw/missing.csv > results/run.log 2>&1
+% tail -n 1 results/run.log
+PS> Get-Content results/run.log -Tail 1
 FileNotFoundError: data/raw/missing.csv not found.
 ```
 
@@ -1695,8 +1698,9 @@ After the first command the log is empty: the error went to the terminal. After 
 
 <!--
 Speaker: the `...` stands for nine lines of traceback. The file name is wrong
-on purpose. A job that fails at night has nobody at the terminal, so the error
-has to be in the file. (~2.5 min)
+on purpose. `>` and `2>&1` mean the same in zsh and in PowerShell 7, and `cat`
+is a PowerShell name for Get-Content. A job that fails at night has nobody
+at the terminal, so the error has to be in the file. (~2.5 min)
 -->
 
 ---
@@ -1705,54 +1709,54 @@ hideInToc: true
 
 # Into the Background with **&**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
 
 ```text
-$ python -u scripts/long_job.py > results/run.log 2>&1 &
+% python -u scripts/long_job.py > results/run.log 2>&1 &
 [1] 26395
-$ jobs
-[1]+  Running                 python -u scripts/long_job.py > results/run.log 2>&1 &
-$ tail -n 2 results/run.log
+% jobs
+[1]  + running    python -u scripts/long_job.py > …
+% tail -n 2 results/run.log
 18:26:34  step 10 of 60    4.7 s
 18:26:35  step 11 of 60    5.2 s
-$ kill %1
-$ tail -n 1 results/run.log
-18:26:38  step 18 of 60    8.5 s
-[1]+  Terminated: 15          python -u scripts/long_job.py > results/run.log 2>&1
+% kill %1
+[1]  + terminated  python -u scripts/long_job.py > …
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-secondary card-glass pad-compact table-compact">
 
-<div class="card card-secondary card-glass pad-compact">
+## 🪟 **Windows · PowerShell**
 
-## ▶️ **Start and look**
+| zsh | PowerShell 7 |
+| --- | --- |
+| `… &` | `… &`, a job |
+| `jobs` | `Get-Job` |
+| `tail -f` | `Get-Content -Wait` |
+| `kill %1` | `Stop-Job 1` |
 
-- `&` at the end starts the command and gives the prompt back at once. `[1]` is the job number
-- `jobs` lists the background jobs of this terminal
-- `tail -f results/run.log` follows the log until `Ctrl+C`
+</div>
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-accent card-glass pad-compact mt-md">
 
-## ⏹️ **Stop**
-
-- `kill %1` stops job 1. The shell reports it at the next prompt
-- With `-u` the log holds every line up to the stop
-- A job that ended by itself is reported as `Done`, one that failed as `Exit 1`
-
-</div>
+`&` at the end starts the command and gives the prompt back at once; `[1]` is the job number. `tail -f results/run.log` follows the log until `Ctrl+C`. With `-u` the log holds every line up to the stop. zsh reports a job that ended by itself as `done`, one that failed as `exit 1`; `Get-Job` shows `Completed` for both, so the log says which.
 
 </div>
 
 <!--
-Speaker: the transcript is from bash. In zsh, the default on macOS, the words
-are in lower case: `running`, `terminated`, `done`. `26395` is the number of
-the process. `fg` brings a job back to the foreground, where Ctrl+C stops it.
-Show it live with two terminals side by side: the job in one, `tail -f` in the
-other. (~3 min)
+Speaker: the transcript is from zsh. `26395` is the number of the process. In
+PowerShell 7 the same line with & prints a table with the job number 1 and
+the state Running; Get-Job prints it again, Stop-Job 1 stops the job and the
+Python in it. Tried in both shells. `fg` brings a zsh job back to the
+foreground, where Ctrl+C stops it. Show it live with two terminals side by
+side: the job in one, `tail -f` or `Get-Content -Wait` in the other. (~3 min)
 -->
 
 ---
@@ -1764,14 +1768,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-$ python scripts/long_job.py > results/run.log 2>&1 &
+% python scripts/long_job.py > results/run.log 2>&1 &
 [1] 14332
-$ cat results/run.log
-$ kill %1
-$ jobs
-[1]+  Terminated: 15          python scripts/long_job.py > results/run.log 2>&1
-$ cat results/run.log
-$
+% cat results/run.log
+% kill %1
+[1]  + terminated  python scripts/long_job.py > results/run.log 2>&1
+% cat results/run.log
+%
 ```
 
 </div>
@@ -1801,7 +1804,9 @@ $
 </div>
 
 <!--
-Speaker: the same happens on Windows. The buffer exists because one write to
+Speaker: the same happens in PowerShell 7: after `Stop-Job` the log is just
+as empty (tried). PowerShell counts on: each job takes two numbers, so the
+second job of a session is 3, and `Get-Job` shows it. The buffer exists because one write to
 the disk per line would slow down a program that prints millions of lines.
 A progress line every few seconds costs nothing. (~2 min)
 -->
@@ -1837,7 +1842,7 @@ hideInToc: true
 - The first line names the input and its row count: the right file was read
 - Every line starts with the time. A gap shows which step was slow
 - The last line says `done`. A log without it belongs to a job that did not finish
-- After a run in the foreground, `echo $?` prints the exit code: 0 for success, 1 after an error
+- After a run in the foreground, `echo $?` in zsh or `$LASTEXITCODE` in PowerShell prints the exit code: 0 for success, 1 after an error
 
 </div>
 
@@ -1861,45 +1866,55 @@ hideInToc: true
 
 # When the Terminal Closes: **nohup**
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔌 **The hang-up signal**
+## 🍎 **macOS · zsh**
 
-- A job started with `&` belongs to its terminal. When the terminal closes, the system sends the job a hang-up signal, and the job stops
-- `nohup`, for no hang-up, starts a command that ignores this signal
+A job started with `&` belongs to its terminal. When the terminal closes, the job gets a hang-up signal and stops. `nohup`, for no hang-up, starts a command that ignores it:
 
-```bash
+```text
 nohup python -u scripts/long_job.py \
     > results/run.log 2>&1 &
 ```
-
-Tested on this laptop in bash and in zsh: without `nohup` the job was gone after the terminal closed. With it the job ran to its last step.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
+## 🪟 **Windows · PowerShell**
+
+A job started with `&` stops when PowerShell closes, and there is no `nohup`. `Start-Process` starts a program outside the terminal, with a log for each stream:
+
+```text
+Start-Process python `
+  "-u scripts/long_job.py" `
+  -WindowStyle Hidden `
+  -RedirectStandardOutput results/run.log `
+  -RedirectStandardError results/err.log
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
 ## 🌐 **Where it matters**
 
-- `ssh name@machine` opens a shell on another computer over the network. When the laptop sleeps or the connection drops, that shell closes, and every job it started gets the signal
-- **tmux** is a terminal that lives on the remote machine. Start a job in it, detach, log out. After the next login, attach: the terminal is as it was left
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-A job on a laptop also stops when the laptop goes to sleep. A job for the night belongs on a machine that stays on.
+`ssh name@machine` opens a shell on another computer, almost always a Linux one. When the laptop sleeps or the connection drops, that shell closes, and its jobs get the signal. **tmux** is a terminal that lives on the remote machine: start a job in it, detach, log out, attach after the next login. A job for the night belongs on a machine that stays on.
 
 </div>
 
 <!--
-Speaker: the backslash at the end of the first line continues the command on
-the next line. In tmux: `tmux new -s run` starts a session, Ctrl+B then D
-detaches, `tmux attach -t run` returns to it. (~2.5 min)
+Speaker: tried on a laptop. In zsh, without nohup the job was gone after the
+terminal closed, with it the job ran on. In PowerShell 7 a job started with &
+stopped when PowerShell closed, a hidden Start-Process ran on. The backslash
+in zsh and the backtick in PowerShell continue a command on the next line.
+Start-Process refuses one file for both streams, so it gets two. In tmux:
+`tmux new -s run` starts a session, Ctrl+B then D detaches, `tmux attach -t
+run` returns to it. (~2.5 min)
 -->
 
 ---
@@ -1908,7 +1923,7 @@ hideInToc: true
 
 # One Folder per **Run**
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 1fr 2fr;">
 
 <div class="card card-warning card-glass pad-compact">
 
@@ -1922,9 +1937,11 @@ A second run writes over the results of the first. A week later nobody knows whi
 
 ## 📁 **A folder named by date and time**
 
-```bash
-RUN=results/run_$(date +%Y-%m-%d_%H%M)
-mkdir -p "$RUN"
+```text
+% RUN=results/run_$(date +%Y-%m-%d_%H%M)
+% mkdir -p "$RUN"
+PS> $RUN = "results/run_$(Get-Date -Format yyyy-MM-dd_HHmm)"
+PS> mkdir $RUN
 python -u scripts/long_job.py > "$RUN/run.log" 2>&1 &
 ```
 
@@ -1955,8 +1972,9 @@ Two runs can be compared file by file. Equal results from two runs are the test 
 </div>
 
 <!--
-Speaker: `$(...)` puts the output of a command into the line: here the date in
-the form 2026-10-04_1826. A batch system does the same with a job number
+Speaker: `$(...)` puts the output of a command into the line, in both shells:
+here the date in the form 2026-10-04_1826. The last line is the same in zsh
+and in PowerShell (tried in both). A batch system does the same with a job number
 instead of the time. (~2 min)
 -->
 
@@ -2113,7 +2131,7 @@ echo "$(date +%H:%M:%S)  done"
 
 ## 📝 **An example to read**
 
-This room has no cluster. The script is `scripts/job.sh`, a shell script like those of Lecture 04, with the request in its first lines.
+This room has no cluster. The script is `scripts/job.sh`, a script for bash, the shell of the Linux machines of a cluster, with the request in its first lines.
 
 </div>
 
@@ -2121,14 +2139,14 @@ This room has no cluster. The script is `scripts/job.sh`, a shell script like th
 
 ## 💡 **Comments for bash, a request for Slurm**
 
-A line that starts with `#` is a comment for bash, so the script also runs on a laptop. Slurm reads the `#SBATCH` lines and sets the two `$SLURM_…` variables.
+A line that starts with `#` is a comment for bash, so the script also runs on a Mac in bash. Slurm reads the `#SBATCH` lines and sets the two `$SLURM_…` variables.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the script was run on the laptop with
+Speaker: the script was run on a Mac with
 `SLURM_JOB_ID=1 SLURM_CPUS_PER_TASK=4 bash scripts/job.sh` and printed the
 start line, the sum with its time, and the done line. The folder `logs` has to
 exist before the job is submitted. Stdout and stderr both go into the one log.
@@ -2178,8 +2196,8 @@ They are the measured time and the measured peak memory of the job. The next req
 
 <!--
 Speaker: the job number 4187263 is an example. The four commands map onto the
-laptop section: `&` became sbatch, `jobs` became squeue, `kill %1` became
-scancel. (~2 min)
+laptop section: `&` became sbatch, `jobs` (Get-Job) became squeue, `kill %1`
+(Stop-Job 1) became scancel. (~2 min)
 -->
 
 ---

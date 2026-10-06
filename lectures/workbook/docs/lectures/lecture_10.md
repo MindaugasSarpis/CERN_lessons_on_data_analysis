@@ -1,43 +1,52 @@
 # 10: Data Fitting from First Principles
 
-Lecture 9 ended with the likelihood: the estimate of a quantity measured
-several times is the value that makes the measured data most probable, and
-for Gaussian uncertainties that value is the weighted mean. Lecture 10 takes
-the next step. The measured quantity now changes with a second quantity, a
-model says how, and the same likelihood gives the method of least squares.
-Every step is carried out on the pendulum table of Lecture 2, and the
-nonlinear case on the mass column of `D0_KPi.csv`.
+Lecture 9 left two loose ends. Its table of four means of the mass
+column, each with a small standard error, disagreed by 0.7 MeV/c², because
+the rows are a peak on a flat part that is not D⁰. And the nine pendulum rows
+gave g = 9.80 ± 0.04 m/s² with the formula T² = 4π²ℓ/g taken as exact.
+Lecture 10 opens on the first of them, "which of the four numbers would you
+report?", and answers it with a fit. The fit is derived from the same
+likelihood and built on the pendulum table (`pendulum.csv`, 97 bytes, as
+`scripts/clean_pendulum.py` writes it), where every step can be checked with
+a calculator; then it is carried to the D⁰ peak of `D0_KPi.csv`.
 
 ## What the lecture covers
 
-1. **What a fit is** — the pendulum table as T² against length, a straight
+1. **The opening table** — Lecture 9's four means of column `M`, 1864.10 to
+   1864.81 MeV/c², and the question which one to report.
+2. **What a fit is** — the pendulum table as T² against length, a straight
    line whose slope is 4π²/g; the uncertainty assumed for each point, 0.1 s
    on the time of ten swings, propagated to T²; the three parts of a fit: a
    model, data with uncertainties, a measure of mismatch.
-2. **From likelihood to χ²** — one Gaussian per point, the product over all
-   points, the logarithm: −2 ln L = χ² + const. χ² worked out for one line by
-   hand. The weighted mean as the fit of a constant.
-3. **The straight line in closed form** — two derivatives set to zero, the
+3. **From likelihood to χ²** — one Gaussian per point, the product over all
+   points, the logarithm: −2 ln L = χ² + const. χ² worked out for three lines
+   drawn by eye.
+4. **The straight line in closed form** — two derivatives set to zero, the
    normal equations, slope and intercept from five sums; the sums of the
-   pendulum table, row by row; the same in NumPy.
-4. **Uncertainties of the parameters** — the slope as a weighted sum of the
+   pendulum table, row by row; the best line beats all three drawn by eye;
+   the same in NumPy.
+5. **Uncertainties of the parameters** — the slope as a weighted sum of the
    data and its uncertainty by error propagation; χ² around its minimum, the
    rule Δχ² = 1, the covariance matrix as the inverse of the curvature
-   matrix; why slope and intercept are correlated; g with its uncertainty.
-5. **The same in matrix form** — the design matrix, the normal equations for
+   matrix; why slope and intercept are correlated; g with its uncertainty,
+   and the intercept as the test of the formula.
+6. **The same in matrix form** — the design matrix, the normal equations for
    any model that is linear in its parameters, `np.linalg.lstsq` and
    `np.polyfit`.
-6. **Models that are not linear** — the gradient, the update rule
-   θ ← θ − η∇χ², five steps by hand, a learning rate that is too large;
-   why the descent is slow and what Newton's step does; SciPy and
-   `curve_fit` with its arguments; the D⁰ mass peak fitted with a Gaussian
-   on a linear background, and what the result means.
-7. **Goodness of fit** — the expected χ², degrees of freedom, the p-value,
+7. **Models that are not linear** — the gradient (the chain rule), the update
+   rule θ ← θ − η∇χ², five steps by hand, a learning rate that is too large;
+   why the descent is slow and what Newton's step does; `curve_fit` with its
+   arguments.
+8. **The D⁰ peak** — counts with Poisson uncertainties, a Gaussian on a
+   linear background, starting values from the plot, the fit run on the
+   slide, and the answer to the opening table: a mean follows its window, a
+   fit does not.
+9. **Goodness of fit** — the expected χ², degrees of freedom, the p-value,
    χ²/ndf, residuals and pulls; a model with too few terms and one with too
    many.
-8. **What goes wrong** — starting values and a local minimum, correlated
-   parameters, small counts, an outlier, an error common to all points;
-   how a fit is reported.
+10. **What goes wrong** — starting values and a local minimum, small counts,
+    an outlier, an error common to all points; how a fit is reported; the
+    number to report for the peak, with the models that move it.
 
 ## The results of the lecture
 
@@ -48,60 +57,76 @@ nonlinear case on the mass column of `D0_KPi.csv`.
 | Pendulum, g | 9.84 ± 0.09 m/s², with χ² = 2.65 for 7 degrees of freedom |
 | D⁰ peak, position | 1864.47 ± 0.10 MeV/c² |
 | D⁰ peak, width | 7.65 ± 0.10 MeV/c², with χ² = 53.4 for 40 degrees of freedom |
+| Mean of `M`, window 1855–1875 and 1854–1874 | 1864.81 and 1864.06 ± 0.03 MeV/c² |
+| Fit, window moved 4 MeV either way | μ = 1864.45 and 1864.50 MeV/c² |
+| Fit, background without slope (rejected, χ² = 99.4/41) | μ = 1864.34 ± 0.09 MeV/c² |
+| Fit, background parabola; two Gaussians on a line | μ = 1864.46 and 1864.45 MeV/c² |
 
 All uncertainties are statistical. The closed formulas, `np.polyfit` and
-`curve_fit` give the same pendulum numbers to six decimals. Every number
-of the lecture is printed by `python figures/src/fitting.py` in the course
-repository, which reads `pendulum.csv` and `D0_KPi.csv`.
+`curve_fit` give the same pendulum numbers to six decimals. The PDG value of
+the D⁰ mass, 1864.84 ± 0.05 MeV/c², lies 0.37 above the fit, and no window or
+model in the table reaches it. The numbers of the first seven rows are printed
+by `python figures/src/fitting.py` in the course repository, which reads
+`pendulum.csv` and `D0_KPi.csv`. The last four rows use the same histogram
+(45 bins of 2 MeV) and the same `curve_fit` call with the window or the model
+changed as named.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–73 and estimates about 143 min. Slides 74–80 are the
+The lecture is slides 1–72 and estimates about 143 min. Slides 73–79 are the
 self-check quizzes and take no lecture time. For a 90-minute slot, skip the
 slides in the second table. To jump, type the slide number and press Enter.
+The opening question of slide 2 is answered on slide 55, at about minute 58.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–4 | What Lecture 9 established |
-| 0:03 | 5–9 | The pendulum table, its uncertainties, the three parts of a fit |
-| 0:12 | 10–14 | From the likelihood to χ² |
-| 0:21 | 16–22 | The straight line in closed form, on the pendulum |
-| 0:34 | 24–31 | Uncertainties, Δχ² = 1, the covariance matrix, g |
-| 0:43 | 37–45 | Gradient descent |
-| 0:59 | 46–47 | SciPy and `curve_fit` |
-| 1:03 | 50–56 | The D⁰ mass peak |
-| 1:14 | 57–64 | Goodness of fit |
-| 1:24 | 66–70 | Starting values, an outlier |
-| 1:29 | 73 | Recap |
-| 1:31 | | Move to the seminar |
+| 0:00 | 1–3, 5 | The opening table and the vote; what Lecture 9 established |
+| 0:05 | 6–10 | The pendulum table, its uncertainties, three lines drawn by eye |
+| 0:12 | 11–15 | From the likelihood to χ² |
+| 0:20 | 16–22 | The straight line in closed form, on the pendulum |
+| 0:30 | 24, 26, 28, 31 | Uncertainties, Δχ² = 1, g and the test of the intercept |
+| 0:37 | 36–41 | The gradient, the update rule, steps by hand, a learning rate too large |
+| 0:46 | 44–45 | Newton's step and the `curve_fit` call |
+| 0:48 | 48–51, 53–55 | The D⁰ peak, the fit run live, the opening table answered |
+| 0:58 | 56–57, 59–61, 63 | Goodness of fit |
+| 1:08 | 65–66, 68–69 | Starting values, an outlier, what χ² cannot see |
+| 1:15 | 71–72 | The number to report, Recap |
+| 1:21 | | Questions; move to the seminar |
+
+The plan leaves about nine minutes for the two votes and for questions.
 
 | Skip | Slides | Saves |
 |--|--|--|
-| Learning Objectives | 3 | 2 min |
-| The Weighted Mean Is a Fit | 15 | 3 min |
+| Learning Objectives | 4 | 2 min |
 | The Same in NumPy: the seminar types it | 23 | 4 min |
 | The Slope Is a Sum over the Data | 25 | 2 min |
 | χ² Around Its Minimum | 27 | 2 min |
+| The Covariance Matrix | 29 | 2 min |
 | Why Slope and Intercept Are Correlated | 30 | 2 min |
-| The Same in Matrix Form, the whole section | 32–36 | 10 min |
-| Gradient Descent in NumPy | 44 | 4 min |
-| `absolute_sigma`: the Default Rescales | 48 | 2 min |
-| Three Ways, One Result | 49 | 4 min |
-| Starting Values from the Plot | 53 | 2 min |
-| The χ² Distribution and the p-value | 59 | 2 min |
-| A Model with Too Few Terms, and its pulls | 62–63 | 3 min |
-| Too Few, Enough, Too Many | 65 | 1 min |
-| Correlated Parameters | 68 | 2 min |
-| Errors That Are Not Gaussian: Small Counts | 69 | 3 min |
-| What χ² Cannot See | 71 | 2 min |
-| Reporting a Fit | 72 | 3 min |
+| The Same in Matrix Form, the whole section | 32–35 | 8 min |
+| Two Learning Rates, Drawn | 42 | 1 min |
+| Gradient Descent in NumPy | 43 | 4 min |
+| `absolute_sigma`: the Default Rescales | 46 | 2 min |
+| Three Ways, One Result | 47 | 4 min |
+| Starting Values from the Plot | 52 | 2 min |
+| The χ² Distribution and the p-value | 58 | 2 min |
+| Too Few Terms: the Pulls | 62 | 1 min |
+| Too Few, Enough, Too Many | 64 | 1 min |
+| Errors That Are Not Gaussian: Small Counts | 67 | 3 min |
+| Reporting a Fit | 70 | 3 min |
 
-- **Do not cut** slides 11–13 (the derivation of χ²), 17–21 (the normal
-  equations and the five sums of the pendulum), 26 and 31 (the
-  uncertainties and g), and 40–42 (the update rule, the steps by hand, the
-  learning rate that is too large). The seminar computes exactly these
-  numbers, and the rest of the lecture stands on them.
-- **If slide 48 is skipped**, say its one sentence at slide 47: with real
+- **Do not cut** slide 2 (the opening table), slides 12–14 (the derivation
+  of χ²), 17–21 (the normal equations and the five sums of the pendulum),
+  26 and 31 (the uncertainties and g), 39–41 (the update rule, the steps by
+  hand, the learning rate that is too large), 53 and 55 (the D⁰ fit and the
+  answer to the opening table), and **71–72, the closing: do not cut**. The
+  seminar computes the pendulum numbers, and the closing answers the question
+  the lecture opens on.
+- **Slide 2**: take a vote on the four rows and write it on the board. Most
+  pick the last row, nearest the PDG value. Slide 55 answers it: Lecture 9's
+  windows were all centred on 1865, and a window moved by 1 MeV moves the
+  mean by 0.75.
+- **If slide 46 is skipped**, say its one sentence at slide 45: with real
   uncertainties, `absolute_sigma=True` belongs in every call.
 - **Slide 20** (The Pendulum: Five Sums): let the room compute the first row
   on a calculator. 1/0.01804² = 3072.75, times 0.2 is 614.55, times 0.8136
@@ -110,23 +135,22 @@ slides in the second table. To jump, type the slide number and press Enter.
   rounded to two decimals and give a denominator of 8 874 543. NumPy keeps
   all digits and gets 8 874 453. Slope and intercept agree to the four
   decimals shown.
-- **Slide 41** (Gradient Descent by Hand): the room does the first step on
+- **Slide 40** (Gradient Descent by Hand): the room does the first step on
   the calculator and gets a = 3.2064, b = 0.3451.
-- **Slides 23, 44 and 49** hold code that runs on the slide with the ▶
+- **Slides 23, 43, 47 and 53** hold code that runs on the slide with the ▶
   button. The first run loads Python into the browser and takes some
   seconds. The same code runs in VS Code.
-  On slide 44, set `eta` to `1e-4` and run again to see χ² grow.
-- **Slide 54** (The Fit in Code) is static: the browser has no access to
-  `D0_KPi.csv`. To show it live, run the code of slides 51 and 54 in VS
-  Code from the project folder.
-- **Slide 15**: the nine values of g, row by row, are 9.70, 9.70, 9.93,
-  9.75, 9.87, 9.74, 9.86, 9.74, 9.86 m/s², with uncertainties 0.22, 0.18,
-  0.16, 0.14, 0.13, 0.12, 0.11, 0.10, 0.10.
+  On slide 43, set `eta` to `1e-4` and run again to see χ² grow.
+- **Slide 53** (The Fit in Code) fits the D⁰ peak live. The 45 bin counts
+  are typed into the page, because the browser cannot read `D0_KPi.csv`; in
+  a script they come from the `np.histogram` line of slide 50. At slide 66
+  (Starting Values), change `p0` in this runner to `[2300, 1840, 2, 1400, 0]`
+  and run it: μ = 1827.57, A = −2876, χ² = 3285.3, and no warning.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 74–80: six quiz slides for students to try afterwards. The same
+slides 73–79: six quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. Three points have residuals 0.2, −0.3 and 0.1 from a model, each with
@@ -180,5 +204,9 @@ and covariance, g with its uncertainty and χ², repeats the fit with
 - χ² is expected near the number of degrees of freedom, points minus
   parameters. The pulls show where a model fails. Too few terms leave a
   pattern in them; too many terms follow the noise.
+- A mean over a window follows the window: moved by 1 MeV, it moves by
+  0.75. A fit of peak and background moves by 0.03 when its window moves by
+  4 MeV. A background model that χ² rejects moves μ by 0.13; the models it
+  accepts agree within 0.02.
 - The uncertainty from a fit is statistical. An error shared by all points
   changes the result and leaves χ² as it was.

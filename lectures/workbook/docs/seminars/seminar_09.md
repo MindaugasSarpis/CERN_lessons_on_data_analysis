@@ -1,71 +1,100 @@
 # Seminar 9 — A Result with Its Uncertainty
 
 **Paired lecture:** 09 Probability & Statistics · **Format:** follow-along · **~120 min**
-in class, 30 min at home
+in class
 
-The seminar has four parts, in this order.
-
-1. **A mean with its standard error.** Random numbers with a seed, then the
-   mean, the standard deviation and the standard error of the mass column.
-2. **A histogram against a Gaussian.** The mass values do not follow a
-   Gaussian. The means of 100 values do.
-3. **The uncertainty of g.** Error propagation on every row of the pendulum
-   table, the weighted mean of the nine values, and a check by simulation.
-4. **The report.** The results are written down with their uncertainties.
+**Today's goal:** every student writes two results into `results/report.md`
+with their uncertainties: the mean of the mass column,
+1864.10 ± 0.08 MeV/c², and g = 9.80 ± 0.04 m/s² from the pendulum table.
 
 Everything is NumPy and Matplotlib from the last two seminars. The new
 tools are `np.random.default_rng`, `std(ddof=1)` and `reshape`.
 
-## How to use this page
+## Run sheet
 
-This page is written for the person at the front. Students can follow the
-same page.
+One screen for the front of the room. Each line links to its section.
 
-- The **paragraph at the top of a section** is what to tell the room.
-- The **numbered steps** are what to do on the projector. The room repeats
-  each step on their own laptops.
-- **You should now see** closes a section. Ask for hands: "who sees this?"
-  Go on when about four in five have it. The rest get help from a neighbour.
-- **Watch for** is the usual slip in that section.
+| Clock | Section | On the projector | The room ends with |
+|--|--|--|--|
+| | **Part 1 · A mean with its standard error** · 40 min | | |
+| 0:00 | [1. Random numbers with a seed](#seed) | `scripts/dice.py`, run twice | The same 1000 rolls on every laptop |
+| 0:10 | [2. The mean of the mass column](#mean) | `scripts/mass_stats.py` | 1864.10 ± 0.08 MeV/c² |
+| 0:25 | [3. More rows, a smaller standard error](#rows) | The loop over `[100, 1000, 10000, N]` | A table of four sample sizes |
+| | **Part 2 · A histogram against a Gaussian** · 35 min | | |
+| 0:40 | [4. The mass values against a Gaussian](#gauss) | `scripts/mass_gauss.py` | `results/mass_gauss.png`, and 62.7 % |
+| 1:00 | [5. The means of 100 values](#means) | `reshape(915, 100)` | `results/mass_means.png`, and 68.2 % |
+| | **Part 3 · The uncertainty of g** · 35 min | | |
+| 1:15 | [6. g from each row](#g) | `scripts/pendulum_g.py` | Nine values of g with their uncertainties |
+| 1:30 | [7. The weighted mean](#weighted) | `w = 1 / sg**2` | g = 9.80 ± 0.04 m/s² |
+| 1:40 | [8. The same by simulation](#simulation) | `rng.normal`, 100 000 times | 0.099 from 100 000 simulated measurements |
+| | **Part 4 · The report** · 10 min | | |
+| 1:50 | [9. Write the results down](#report) | `results/report.md`, then the preview | Two results with uncertainties in `report.md` |
+| 1:57 | [10. Wrap up](#wrap-up) | The list of what was learned | |
 
-Scripts are run in the VS Code terminal, from the project folder. The
-command is written as `python`. On macOS and Linux it is `python3`.
+**If time runs short:** leave out sections 5 and 8; section 9 then places
+only `mass_gauss.png`. Every part starts from files the room already has.
 
-| Clock | Section | The room ends with |
-|--|--|--|
-| | **Part 1 · A mean with its standard error** · 40 min | |
-| 0:00 | [1. Random numbers with a seed](#seed) | The same 1000 rolls on every laptop |
-| 0:10 | [2. The mean of the mass column](#mean) | 1864.10 ± 0.08 MeV/c² |
-| 0:25 | [3. More rows, a smaller standard error](#rows) | A table of four sample sizes |
-| | **Part 2 · A histogram against a Gaussian** · 35 min | |
-| 0:40 | [4. The mass values against a Gaussian](#gauss) | `results/mass_gauss.png`, and 62.7 % |
-| 1:00 | [5. The means of 100 values](#means) | `results/mass_means.png`, and 68.2 % |
-| | **Part 3 · The uncertainty of g** · 35 min | |
-| 1:15 | [6. g from each row](#g) | Nine values of g with their uncertainties |
-| 1:30 | [7. The weighted mean](#weighted) | g = 9.80 ± 0.04 m/s² |
-| 1:40 | [8. The same by simulation](#simulation) | 0.099 from 100 000 simulated measurements |
-| | **Part 4 · The report** · 10 min | |
-| 1:50 | [9. Write the results down](#report) | Two results with uncertainties in `report.md` |
-| 1:57 | [10. Wrap up](#wrap-up) | The homework known |
+??? info "How to use this page"
+    This page is written for the person at the front. Students follow the
+    same page.
 
-In a 90-minute slot, leave out sections 5 and 8. They are then done at
-home. Every part starts from files the room already has, so the session can
-also stop after Part 2.
+    - **Tell the room** is the paragraph to say before the steps.
+    - The **numbered steps** are what to do on the projector. The room
+      repeats each step on their own laptops.
+    - **You should now see** closes a section. Ask for hands: "who sees
+      this?" Go on when about four in five have it. The rest get help from a
+      neighbour.
+    - **Watch for** is the usual slip in that section.
 
-## Prerequisites
+    Scripts are run in the VS Code terminal, from the project folder:
+    `zsh` on macOS, PowerShell 7 on Windows. The command is `python3` on
+    macOS and `python` on Windows, so each run has a tab for each.
 
-For the room: the project folder with `data/raw/D0_KPi.csv`,
-`data/processed/pendulum.csv` and `results/report.md`, and a Python that
-has NumPy and Matplotlib, as used in the last two seminars. A student
-without the files downloads [`D0_KPi.csv`](../data/D0_KPi.csv) and
-[`pendulum.csv`](../data/pendulum.csv) now.
+    Keys are written for Windows, with macOS in brackets.
 
-For you, before the session:
+??? info "Before the session"
+    For the room: the project folder with `data/raw/D0_KPi.csv`,
+    `data/processed/pendulum.csv` and `results/report.md`, and a Python that
+    has NumPy and Matplotlib, as used in the last two seminars. A student
+    without one of the files downloads it now from the box below. A student
+    without the project folder downloads
+    [`project_after_s3.zip`](../data/project_after_s3.zip), unpacks it, and
+    opens `analysis-project` with **File** > **Open Folder...**. A laptop
+    without NumPy or Matplotlib installs them now, as in
+    [Seminar 7](seminar_07.md#install) and [Seminar 8](seminar_08.md#install):
 
-- All four scripts of this page run once on your own laptop. The numbers on
-  this page are the ones your screen must show.
-- The slide "The Uncertainty of g" of the lecture at hand. Section 6 is
-  that slide for nine rows.
+    === "macOS"
+
+        ```text
+        python3 -m pip install numpy matplotlib
+        ```
+
+    === "Windows"
+
+        ```text
+        python -m pip install numpy matplotlib
+        ```
+
+    For you:
+
+    - All four scripts of this page run once on your own laptop. The numbers
+      on this page are the ones your screen must show.
+    - The slide "The Uncertainty of g" of the lecture at hand. Section 6 is
+      that slide for nine rows.
+
+??? info "Files for this seminar"
+    A browser saves each file under the name in the second column. Drag it
+    into the folder in the third.
+
+    | File | Saved as | Goes into |
+    |--|--|--|
+    | [`D0_KPi.csv`](../data/D0_KPi.csv){ download="D0_KPi.csv" } | `D0_KPi.csv` | `data/raw/` |
+    | [`pendulum.csv`](../data/pendulum.csv){ download="pendulum.csv" } | `pendulum.csv` | `data/processed/` |
+    | [`pendulum_report.txt`](../data/pendulum_report.txt){ download="report.md" } | `report.md` | `results/` |
+    | [`pendulum_plot.png`](../data/pendulum_plot.png){ download="pendulum_plot.png" } | `pendulum_plot.png` | `results/`, next to `report.md`, which shows it |
+    | [`project_after_s3.zip`](../data/project_after_s3.zip) | `project_after_s3.zip` | Unpacked anywhere: the whole `analysis-project` folder with all the files above |
+
+---
 
 ## Part 1 · A mean with its standard error { #part-1 }
 
@@ -74,15 +103,21 @@ For you, before the session:
 The room computes the three numbers of the lecture on a real column: the
 mean, the standard deviation and the standard error.
 
-## 1. Random numbers with a seed { #seed }
+---
+
+### 1. Random numbers with a seed { #seed }
 
 **0:00 · 10 min**
 
-A simulation needs random numbers, and a result must be reproducible. Both
-hold when the generator is given a seed: the same seed gives the same
-numbers on every laptop.
+**Tell the room.** A simulation needs random numbers, and a result must be
+reproducible. Both hold when the generator is given a seed: the same seed
+gives the same numbers on every laptop.
 
-1. In the Side Bar select `scripts`, then **New File**, and type `dice.py`.
+1. In the Side Bar select `scripts`, then **New File**, and name it:
+
+    ```text
+    dice.py
+    ```
 
 2. Type the script and save it.
 
@@ -98,22 +133,38 @@ numbers on every laptop.
 
 3. Open the terminal with **Terminal** > **New Terminal** and run it.
 
-    ```text
-    python scripts/dice.py
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/dice.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/dice.py
+        ```
 
 4. Run it a second time with `↑` and Enter. The output is the same.
 
-5. Change the seed from `1` to `2`, save and run. The numbers change. Put
-   the seed back to `1`.
+5. Change the seed from `1` to `2`, so that the line reads as below. Save
+   and run. The numbers change.
 
-You should now see the same three lines on every laptop:
+    ```text
+    rng = np.random.default_rng(2)
+    ```
 
-```text
-[3 4 5 6 1 1 5 6 2 2]
-3.493 1.7061248084070115
-0.162
-```
+6. Put the seed back to `1`, save and run once more. The three lines of the
+   page are back.
+
+!!! success "You should now see"
+    The same three lines on every laptop:
+
+    ```text
+    [3 4 5 6 1 1 5 6 2 2]
+    3.493 1.7061248084070115
+    0.162
+    ```
 
 A die has the mean 3.5 and the standard deviation 1.708. A thousand rolls
 give 3.493 and 1.706. The fraction of sixes is 0.162, and 1/6 is 0.167.
@@ -121,20 +172,26 @@ give 3.493 and 1.706. The fraction of sixes is 0.162, and 1/6 is 0.167.
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | `python` is not found | macOS and Linux: `python3 scripts/dice.py` |
+    | macOS: `zsh: command not found: python` | On macOS the program is `python3`, as in the macOS tab |
     | `No such file or directory` | The terminal is not in the project folder. Run `pwd`, then `cd` to it |
     | The numbers differ from the page | The seed is not `1`, or the upper end is `6` instead of `7`. The upper end is not included |
 
-## 2. The mean of the mass column { #mean }
+---
+
+### 2. The mean of the mass column { #mean }
 
 **0:10 · 15 min**
 
-The column `M` holds 91 583 values of one quantity. Three numbers describe
-them: the mean, the standard deviation `s` of single values, and the
-standard error `s / sqrt(N)` of the mean. `ddof=1` makes NumPy divide by
-N − 1.
+**Tell the room.** The column `M` holds 91 583 values of one quantity. Three
+numbers describe them: the mean, the standard deviation `s` of single
+values, and the standard error `s / sqrt(N)` of the mean. `ddof=1` makes
+NumPy divide by N − 1.
 
-1. Create `scripts/mass_stats.py`.
+1. In `scripts`, create a new file named:
+
+    ```text
+    mass_stats.py
+    ```
 
 2. Type the script and save it.
 
@@ -154,7 +211,19 @@ N − 1.
     print(f"M = {mean:.2f} +- {se:.2f} MeV/c2")
     ```
 
-3. Run it with `python scripts/mass_stats.py`.
+3. Run it.
+
+    === "macOS"
+
+        ```text
+        python3 scripts/mass_stats.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/mass_stats.py
+        ```
 
 4. Ask the room which of the printed digits mean something. The standard
    error is 0.08, so the mean is known to the second decimal. The last line
@@ -164,27 +233,29 @@ N − 1.
    about 25.57 MeV/c² from the mean. The mean itself is known to
    0.08 MeV/c².
 
-You should now see:
-
-```text
-N    = 91583
-mean = 1864.1045817826453
-s    = 25.565096122743306
-se   = 0.08447729461566507
-M = 1864.10 +- 0.08 MeV/c2
-```
+!!! success "You should now see"
+    ```text
+    N    = 91583
+    mean = 1864.1045817826453
+    s    = 25.565096122743306
+    se   = 0.08447729461566507
+    M = 1864.10 +- 0.08 MeV/c2
+    ```
 
 !!! warning "Watch for"
-    `s = 25.564956548991027`: `ddof=1` is missing. With 91 583 values the
-    difference is in the sixth digit. With five values it is 12 %.
+    | On the screen | What to do |
+    |--|--|
+    | `s = 25.564956548991027` | `ddof=1` is missing. With 91 583 values the difference is in the sixth digit. With five values it is 12 % |
 
-## 3. More rows, a smaller standard error { #rows }
+---
+
+### 3. More rows, a smaller standard error { #rows }
 
 **0:25 · 15 min**
 
-The standard deviation is a property of the data and stays. The standard
-error falls like one over the square root of the number of rows. The room
-sees both in one table.
+**Tell the room.** The standard deviation is a property of the data and
+stays. The standard error falls like one over the square root of the number
+of rows. The room sees both in one table.
 
 1. Add these lines at the end of `scripts/mass_stats.py`.
 
@@ -201,6 +272,18 @@ sees both in one table.
 
 3. Run the script.
 
+    === "macOS"
+
+        ```text
+        python3 scripts/mass_stats.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/mass_stats.py
+        ```
+
 4. Read the table with the room. The third column stays near 25. The last
    falls from 2.6 to 0.08.
 
@@ -208,18 +291,21 @@ sees both in one table.
    and its own standard error is 2.6. Each mean is within about one of its
    own standard errors of the last one.
 
-You should now see four more lines:
+!!! success "You should now see"
+    Four more lines:
 
-```text
-100 1865.68 26.14 2.614
-1000 1863.58 25.38 0.803
-10000 1863.87 24.98 0.25
-91583 1864.1 25.57 0.084
-```
+    ```text
+    100 1865.68 26.14 2.614
+    1000 1863.58 25.38 0.803
+    10000 1863.87 24.98 0.25
+    91583 1864.1 25.57 0.084
+    ```
 
-Say it in these words: the standard deviation describes the data, the
+**Say it in these words.** The standard deviation describes the data, the
 standard error belongs to the result. Half the standard error costs four
 times the rows.
+
+---
 
 ## Part 2 · A histogram against a Gaussian { #part-2 }
 
@@ -228,15 +314,23 @@ times the rows.
 A mean and a standard deviation define a Gaussian. Whether the data follow
 it is a separate question, and a figure answers it.
 
-## 4. The mass values against a Gaussian { #gauss }
+---
+
+### 4. The mass values against a Gaussian { #gauss }
 
 **0:40 · 20 min**
 
-A density gives a probability per unit of `M`. A histogram shows rows per
-bin. To draw one over the other, the density is multiplied by the number
-of rows and by the bin width.
+**Tell the room.** A density gives a probability per unit of `M`. A
+histogram shows rows per bin. To draw one over the other, the density is
+multiplied by the number of rows and by the bin width.
 
-1. Create `scripts/mass_gauss.py`, type the script and save it.
+1. In `scripts`, create a new file named:
+
+    ```text
+    mass_gauss.py
+    ```
+
+2. Type the script and save it.
 
     ```text
     import numpy as np
@@ -268,25 +362,38 @@ of rows and by the bin width.
     print("within two s:", (abs(M - mean) < 2 * s).mean())
     ```
 
-2. Run it with `python scripts/mass_gauss.py`.
+3. Run it.
 
-3. Open `results/mass_gauss.png` from the Side Bar.
+    === "macOS"
 
-4. Ask where the curve fails. The peak of the data is narrower and higher,
+        ```text
+        python3 scripts/mass_gauss.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/mass_gauss.py
+        ```
+
+4. Open `results/mass_gauss.png` from the Side Bar.
+
+5. Ask where the curve fails. The peak of the data is narrower and higher,
    3700 rows against 2900. From 1815 to 1845 and from 1885 to 1915 the
    histogram is flat near 1400 while the curve falls. Outside that range
    the curve still has area and the data have none.
 
-5. Compare the two printed fractions with the Gaussian values 68.3 % and
+6. Compare the two printed fractions with the Gaussian values 68.3 % and
    95.4 %.
 
-You should now see the figure with a peak on a flat part and a wider curve
-over it, and in the terminal:
+!!! success "You should now see"
+    The figure with a peak on a flat part and a wider curve over it, and in
+    the terminal:
 
-```text
-within one s: 0.626732035421421
-within two s: 0.9989408514680672
-```
+    ```text
+    within one s: 0.626732035421421
+    within two s: 0.9989408514680672
+    ```
 
 The column is a mixture: a peak of D⁰ candidates on a flat part of other
 pairs. One Gaussian with the mean and `s` of the whole column describes
@@ -299,13 +406,15 @@ neither.
     | `IndentationError` | The two lines under `def` start with four spaces |
     | No picture in `results` | The script stopped at an error before `savefig`. Read the last line of the message |
 
-## 5. The means of 100 values { #means }
+---
+
+### 5. The means of 100 values { #means }
 
 **1:00 · 15 min**
 
-The central limit theorem says that a mean of many values is Gaussian even
-when the values are not, with the width `s / sqrt(100)`. The file has
-enough rows to test it: 915 groups of 100.
+**Tell the room.** The central limit theorem says that a mean of many values
+is Gaussian even when the values are not, with the width `s / sqrt(100)`.
+The file has enough rows to test it: 915 groups of 100.
 
 1. Add these lines at the end of `scripts/mass_gauss.py`.
 
@@ -336,23 +445,38 @@ enough rows to test it: 915 groups of 100.
 
 3. Run the script and open `results/mass_means.png`.
 
-4. Compare the first printed line: the 915 means scatter with 2.60, and
+    === "macOS"
+
+        ```text
+        python3 scripts/mass_gauss.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/mass_gauss.py
+        ```
+
+4. Compare the first new line: the 915 means scatter with 2.60, and
    `s / sqrt(100)` is 2.56.
 
 5. Compare the last two lines with 68.3 % and 95.4 %.
 
-You should now see a histogram that follows its curve, and four more lines
-in the terminal:
+!!! success "You should now see"
+    A histogram that follows its curve, and three more lines in the
+    terminal:
 
-```text
-2.5956512602849324 2.5565096122743305
-within one se: 0.6819672131147541
-within two se: 0.9508196721311475
-```
+    ```text
+    2.5956512602849324 2.5565096122743305
+    within one se: 0.6819672131147541
+    within two se: 0.9508196721311475
+    ```
 
 The single values gave 62.7 % and 99.9 %. Their means give 68.2 % and
 95.1 %. This is why a mean is quoted with a Gaussian uncertainty even when
 the data are not Gaussian.
+
+---
 
 ## Part 3 · The uncertainty of g { #part-3 }
 
@@ -363,15 +487,24 @@ The pendulum table gives g from every row: g = 4π²ℓ / T², with the length
 They are stated here: 0.1 cm on the length and 0.1 s on the time of 10
 swings.
 
-## 6. g from each row { #g }
+---
+
+### 6. g from each row { #g }
 
 **1:15 · 15 min**
 
-For a product of powers the relative uncertainties add in quadrature, each
-times its power. The period enters squared, so its relative uncertainty
-counts twice. The relative uncertainty of T is that of t₁₀.
+**Tell the room.** For a product of powers the relative uncertainties add in
+quadrature, each times its power. The period enters squared, so its
+relative uncertainty counts twice. The relative uncertainty of T is that of
+t₁₀.
 
-1. Create `scripts/pendulum_g.py`, type the script and save it.
+1. In `scripts`, create a new file named:
+
+    ```text
+    pendulum_g.py
+    ```
+
+2. Type the script and save it.
 
     ```text
     import numpy as np
@@ -391,31 +524,43 @@ counts twice. The relative uncertainty of T is that of t₁₀.
         print(int(length[i]), round(g[i], 2), round(sg[i], 2))
     ```
 
-2. Run it with `python scripts/pendulum_g.py`.
+3. Run it.
 
-3. Check the last line by hand with the room: 0.1 / 100 is 0.1 %,
+    === "macOS"
+
+        ```text
+        python3 scripts/pendulum_g.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/pendulum_g.py
+        ```
+
+4. Check the last line by hand with the room: 0.1 / 100 is 0.1 %,
    2 × 0.1 / 20.01 is 1.0 %, together 1.0 %, and 1.0 % of 9.86 is 0.10.
 
-4. Ask why the first row has more than twice the uncertainty of the last.
+5. Ask why the first row has more than twice the uncertainty of the last.
    The same 0.1 s is 1.1 % of 9.02 s and 0.5 % of 20.01 s.
 
-5. Ask which input to improve. In the last row the timing gives 99 % of
+6. Ask which input to improve. In the last row the timing gives 99 % of
    the variance. A better ruler changes nothing.
 
-You should now see nine lines: the length in cm, g and its uncertainty in
-m/s².
+!!! success "You should now see"
+    Nine lines: the length in cm, g and its uncertainty in m/s².
 
-```text
-20 9.7 0.22
-30 9.7 0.18
-40 9.93 0.16
-50 9.75 0.14
-60 9.87 0.13
-70 9.74 0.12
-80 9.86 0.11
-90 9.74 0.1
-100 9.86 0.1
-```
+    ```text
+    20 9.7 0.22
+    30 9.7 0.18
+    40 9.93 0.16
+    50 9.75 0.14
+    60 9.87 0.13
+    70 9.74 0.12
+    80 9.86 0.11
+    90 9.74 0.1
+    100 9.86 0.1
+    ```
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -423,13 +568,15 @@ m/s².
     | g near 986 or 0.0986 | The length was not divided by 100, or was divided twice |
     | All nine uncertainties near 0.01 | The factor 2 before `s_t10` is missing, or `s_t10` was divided by `T` instead of `t10` |
 
-## 7. The weighted mean { #weighted }
+---
+
+### 7. The weighted mean { #weighted }
 
 **1:30 · 10 min**
 
-Nine values of the same quantity with unequal uncertainties are combined
-with the weights 1/σᵢ². The uncertainty of the result is one over the
-square root of the sum of the weights.
+**Tell the room.** Nine values of the same quantity with unequal
+uncertainties are combined with the weights 1/σᵢ². The uncertainty of the
+result is one over the square root of the sum of the weights.
 
 1. Add these lines at the end of `scripts/pendulum_g.py`.
 
@@ -443,26 +590,42 @@ square root of the sum of the weights.
 
 2. Run the script.
 
+    === "macOS"
+
+        ```text
+        python3 scripts/pendulum_g.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/pendulum_g.py
+        ```
+
 3. Compare with one row: 9.86 ± 0.10 from the last row alone, 9.80 ± 0.04
    from all nine.
 
 4. Read the last line: the result lies 0.13 of its uncertainty below 9.81.
    It is compatible with it.
 
-You should now see two more lines:
+!!! success "You should now see"
+    Two more lines:
 
-```text
-g = 9.80 +- 0.04 m/s2
-z = -0.1252849750622698
-```
+    ```text
+    g = 9.80 +- 0.04 m/s2
+    z = -0.1252849750622698
+    ```
 
-## 8. The same by simulation { #simulation }
+---
+
+### 8. The same by simulation { #simulation }
 
 **1:40 · 10 min**
 
-Error propagation replaces the function by its tangent. A simulation needs
-no such step: it repeats the measurement in the computer, with the length
-and the time drawn from Gaussians, and looks at the spread of the results.
+**Tell the room.** Error propagation replaces the function by its tangent.
+A simulation needs no such step: it repeats the measurement in the
+computer, with the length and the time drawn from Gaussians, and looks at
+the spread of the results.
 
 1. Add these lines at the end of `scripts/pendulum_g.py`.
 
@@ -474,27 +637,45 @@ and the time drawn from Gaussians, and looks at the spread of the results.
     print(sim_g.mean(), sim_g.std())
     ```
 
-2. Run the script and compare the last line with the last row of section
-   6: 9.86 and 0.10.
+2. Run the script.
 
-You should now see one more line. The spread of 100 000 simulated
-measurements is 0.099, as from the formula.
+    === "macOS"
 
-```text
-9.860474937008293 0.09899416541917415
-```
+        ```text
+        python3 scripts/pendulum_g.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/pendulum_g.py
+        ```
+
+3. Compare the last line with the last row of section 6: 9.86 and 0.10.
+
+!!! success "You should now see"
+    One more line. The spread of 100 000 simulated measurements is 0.099,
+    as from the formula.
+
+    ```text
+    9.860474937008293 0.09899416541917415
+    ```
+
+---
 
 ## Part 4 · The report { #part-4 }
 
 **1:50 to 2:00 · sections 9 and 10**
 
-## 9. Write the results down { #report }
+---
+
+### 9. Write the results down { #report }
 
 **1:50 · 7 min**
 
-A result is a value, its uncertainty, its unit and a word on what the
-uncertainty is. The uncertainty has one or two significant digits, and the
-value is rounded to the same decimal place.
+**Tell the room.** A result is a value, its uncertainty, its unit and a word
+on what the uncertainty is. The uncertainty has one or two significant
+digits, and the value is rounded to the same decimal place.
 
 1. Open `results/report.md` and add at the end:
 
@@ -518,18 +699,22 @@ value is rounded to the same decimal place.
     the time of 10 swings.
     ```
 
-2. Open the preview with `Ctrl+K`, then `V` (macOS `Cmd+K`, then `V`).
+    If section 5 was left out, leave out the line with `mass_means.png`.
 
-You should now see two new sections in the preview, with a table, two
-figures and one line for g.
+2. Save, and open the preview with `Ctrl+K`, then `V` (macOS `Cmd+K`, then
+   `V`).
 
-## 10. Wrap up { #wrap-up }
+!!! success "You should now see"
+    Two new sections in the preview, with a table, two figures and one line
+    for g.
+
+---
+
+### 10. Wrap up { #wrap-up }
 
 **1:57 · 3 min**
 
-Put the tasks of the next section on the projector and read them aloud.
-
-What the room has learned:
+Read the list aloud. Ask on the way out which step was hardest.
 
 - A seed makes a simulation reproducible.
 - `std(ddof=1)` is the standard deviation of single values. Divided by the
@@ -544,21 +729,7 @@ What the room has learned:
 - Values with unequal uncertainties are combined with the weights 1/σ².
 - A simulation checks a propagated uncertainty without any derivative.
 
-## Next steps, at home
-
-**30 min, before the next session**
-
-1. Take one numeric column of your own dataset. Compute its mean, its
-   standard deviation and the standard error of the mean, and write the
-   result into your report as value ± uncertainty with the unit.
-
-2. Draw the histogram of that column with the Gaussian of its mean and
-   standard deviation over it. Write one sentence on where the curve
-   describes the data and where it does not.
-
-3. Find one quantity in your dataset that is computed from two columns, a
-   ratio or a product. State an uncertainty for each column and propagate
-   it for one row.
+---
 
 ## Stretch goals
 
@@ -584,6 +755,9 @@ lecturer.
 - For the last row, work out on paper the uncertainty of g if 50 swings
   are timed instead of 10, with the same 0.1 s. The answer is 0.022 m/s²:
   the relative uncertainty of the period falls from 0.5 % to 0.1 %.
+- A student who has a dataset of their own: the mean, the standard
+  deviation and the standard error of one numeric column, and its
+  histogram with the Gaussian over it.
 
 ## If students ask for more
 

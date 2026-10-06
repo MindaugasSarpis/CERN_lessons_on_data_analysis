@@ -1,102 +1,110 @@
 # Seminar 1 — Get Started with VS Code and Markdown
 
 **Paired lecture:** 02 Introduction to Data · **Format:** follow-along, from zero · **~120 min**
-in class, 30 min at home
+in class
 
-The seminar has four parts, in this order.
+**Today's goal:** every student has a project folder open in VS Code, with a
+README in Markdown that says what is in the folder and where its data came
+from, and a small table cleaned in the editor.
 
-1. **VS Code.** The room installs Visual Studio Code, learns the parts of its
-   window and builds a project folder.
-2. **Markdown.** The room writes a first document: the README of that folder.
-3. **Edit many lines at once.** A small table arrives in the wrong format. The
-   room cleans a copy of it and turns it into a table in a short report.
-4. **A real data file.** A file with 91 583 rows is opened in VS Code, and the
-   README records where it came from.
+The tools are VS Code and a web browser. No Python, no Git, no terminal. It
+is the first hands-on session of the course and it starts from zero.
 
-It is the first hands-on session of the course and it starts from zero.
-Today needs VS Code and a web browser. No Python, no Git, no terminal.
+!!! note "Autumn 2026"
+    This seminar ran on 29 September with a folder layout of its own, and
+    Part 3 was not done with the room. The page below is the seminar as it is
+    meant to run.
 
-## How to use this page
+## Run sheet
 
-This page is written for the person at the front. Students can follow the
-same page.
+One screen for the front of the room. Each line links to its section.
 
-- The **paragraph at the top of a section** is what to tell the room.
-- The **numbered steps** are what to do on the projector. The room repeats
-  each step on their own laptops.
-- **You should now see** closes a section. Ask for hands: "who sees this?"
-  Go on when about four in five have it. The rest get help from a neighbour.
-- **Watch for** is the usual slip in that section.
+| Clock | Section | On the projector | The room ends with |
+|--|--|--|--|
+| | **Part 1 · VS Code** · 40 min | | |
+| 0:00 | [1. Install VS Code](#install) | `code.visualstudio.com`, **Download** | VS Code running |
+| 0:15 | [2. Open a folder](#open-folder) | **File** > **Open Folder...** | The project folder open |
+| 0:20 | [3. Explore the user interface](#interface) | The five regions, then `Ctrl+Shift+P` | Five regions named, the Command Palette used |
+| 0:30 | [4. Create folders and a file](#folders) | **New Folder** and **New File** in the Side Bar | The project skeleton and an empty README |
+| | **Part 2 · Markdown** · 15 min | | |
+| 0:40 | [5. Write Markdown](#markdown) | `README.md` beside its preview | A README with headings, a list, a table, a link |
+| | **Part 3 · Edit many lines at once** · 30 min | | |
+| 0:55 | [6. Work with whole lines](#lines) | `Shift+Alt+↓`, `Alt+↑`, `Ctrl+Shift+K` | A table row copied, moved and deleted with one key each |
+| 1:00 | [7. Find and replace](#replace) | `Ctrl+H`: first `,` to `.`, then `;` to `,` | A copy of the table with `,` between values and `.` as the decimal sign |
+| 1:08 | [8. Put a cursor on every line](#cursors) | `Shift+Alt+I`, `Home`, `Ctrl+Shift+→` | The first column deleted on all lines at once |
+| 1:15 | [9. Make a table for a report](#report) | `Ctrl+Shift+L` on the commas, then the preview | `results/report.md` with a title, the table and a plot |
+| | **Part 4 · A real data file** · 30 min | | |
+| 1:25 | [10. Look at a data file](#data-file) | `D0_KPi.csv` in VS Code, then in a spreadsheet | The file in `data/raw/`, rows counted, seen in a spreadsheet |
+| 1:45 | [11. Record where the data came from](#provenance) | Record 401 on the portal, then `README.md` | A **Data** section in the README |
+| 1:55 | [12. Wrap up](#wrap-up) | The list of what was learned | |
 
-Keys are written for Windows, with macOS in brackets: `Ctrl+S` (macOS
-`Cmd+S`). Linux has the Windows keys. The one exception on this page is
-named where it occurs.
+**If time runs short:** section 6 is the one to leave out. A student who
+falls behind downloads the file of that step from **Files for this seminar**
+and goes on.
 
-| Clock | Section | The room ends with |
-|--|--|--|
-| | **Part 1 · VS Code** · 40 min | |
-| 0:00 | [1. Install VS Code](#install) | VS Code running |
-| 0:15 | [2. Open a folder](#open-folder) | The project folder open |
-| 0:20 | [3. Explore the user interface](#interface) | Five regions named, the Command Palette used |
-| 0:30 | [4. Create folders and a file](#folders) | The project skeleton and an empty README |
-| | **Part 2 · Markdown** · 15 min | |
-| 0:40 | [5. Write Markdown](#markdown) | A README with headings, a list, a table, a link |
-| | **Part 3 · Edit many lines at once** · 30 min | |
-| 0:55 | [6. Work with whole lines](#lines) | A table row copied, moved and deleted with one key each |
-| 1:00 | [7. Find and replace](#replace) | A copy of the table with `,` between values and `.` as the decimal sign |
-| 1:08 | [8. Put a cursor on every line](#cursors) | The first column deleted on all lines at once |
-| 1:15 | [9. Make a table for a report](#report) | `results/report.md` with a title, the table and a plot |
-| | **Part 4 · A real data file** · 30 min | |
-| 1:25 | [10. Look at a data file](#data-file) | The file in `data/raw/`, rows counted, seen in a spreadsheet |
-| 1:45 | [11. Record where the data came from](#provenance) | A **Data** section in the README |
-| 1:55 | [12. Wrap up](#wrap-up) | The homework known |
+??? info "How to use this page"
+    This page is written for the person at the front. Students follow the
+    same page.
 
-In a 90-minute slot, stop after Part 3 and go to the wrap-up. Part 4 then
-opens the next session. Every part starts from files the room already has, so
-the session can also stop after Part 2.
+    - **Tell the room** is the paragraph to say before the steps.
+    - The **numbered steps** are what to do on the projector. The room
+      repeats each step on their own laptops.
+    - **You should now see** closes a section. Ask for hands: "who sees
+      this?" Go on when about four in five have it. The rest get help from a
+      neighbour.
+    - **Watch for** is the usual slip in that section.
 
-## Prerequisites
+    Keys are written for Windows, with macOS in brackets: `Ctrl+S` (macOS
+    `Cmd+S`). Linux has the Windows keys. The one exception on this page is
+    named where it occurs. Where a step differs between systems, it has a
+    tab for each.
 
-For the room: a laptop and a web browser. Nothing installed, no programming
-experience.
+??? info "Before the session"
+    For the room: a laptop and a web browser. Nothing installed, no
+    programming experience.
 
-For you, before the session:
+    For you:
 
-- Your own VS Code looks like a fresh installation: default theme, Side Bar
-  on the left, no `analysis-project` folder yet. You build it with the room.
-- A USB stick with the VS Code installers for Windows and macOS and with
-  `D0_KPi.csv`, `pendulum_raw.csv` and `pendulum_plot.png`, in case the
-  network fails.
-- `D0_KPi.csv` opened once in the spreadsheet program on your laptop, so that
-  you know which of the three outcomes in section 10 your computer shows.
-- Sections 7 to 9 done once on your own laptop. They are short, and every key
-  in them has to work under your fingers.
-- This page open on a second device, or printed.
+    - Your own VS Code looks like a fresh installation: default theme, Side
+      Bar on the left, no `analysis-project` folder yet. You build it with
+      the room.
+    - A USB stick with the VS Code installers for Windows and macOS and with
+      `D0_KPi.csv`, `pendulum_raw.csv` and `pendulum_plot.png`, in case the
+      network fails.
+    - `D0_KPi.csv` opened once in the spreadsheet program on your laptop, so
+      that you know which of the three outcomes in section 10 your computer
+      shows.
+    - Sections 7 to 9 done once on your own laptop. They are short, and every
+      key in them has to work under your fingers.
+    - This page open on a second device, or printed.
 
-At the start, ask who has written code before. Seat each of them next to
-someone who has not. The rule for the experienced one: explain, never take
-the keyboard.
+    At the start, ask who has written code before. Seat each of them next to
+    someone who has not. The rule for the experienced one: explain, never
+    take the keyboard.
 
-## Files for this seminar { #files }
+<a id="files"></a>
 
-Each file is the state that a step ends in. A student who lost a step
-downloads it and goes on from there. A browser saves it under the name in
-the second column.
+??? info "Files for this seminar"
+    Each file is the state that a step ends in. A student who lost a step
+    downloads it and goes on from there. A browser saves it under the name in
+    the second column.
 
-| File | Saved as | The state at the end of |
-|--|--|--|
-| [`pendulum_raw.csv`](../data/pendulum_raw.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 7, step 1: the table as received, for `data/raw/` |
-| [`pendulum_replaced.csv`](../data/pendulum_replaced.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 7: `,` and `;` replaced, for `data/processed/` |
-| [`pendulum.csv`](../data/pendulum.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 8: column `nr` deleted, for `data/processed/` |
-| [`pendulum_report.txt`](../data/pendulum_report.txt){ download="report.md" } | `report.md` | Section 9, for `results/` |
-| [`pendulum_plot.png`](../data/pendulum_plot.png){ download="pendulum_plot.png" } | `pendulum_plot.png` | Section 9, step 9, for `results/` |
-| [`D0_KPi.csv`](../data/D0_KPi.csv) | `D0_KPi.csv` | Section 10, for `data/raw/` |
-| [`project_README_s1.txt`](../data/project_README_s1.txt){ download="README.md" } | `README.md` | Section 11: the README of the whole seminar |
-| [`project_after_s1.zip`](../data/project_after_s1.zip) | `project_after_s1.zip` | The seminar: the whole `analysis-project` folder |
+    | File | Saved as | The state at the end of |
+    |--|--|--|
+    | [`pendulum_raw.csv`](../data/pendulum_raw.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 7, step 1: the table as received, for `data/raw/` |
+    | [`pendulum_replaced.csv`](../data/pendulum_replaced.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 7: `,` and `;` replaced, for `data/processed/` |
+    | [`pendulum.csv`](../data/pendulum.csv){ download="pendulum.csv" } | `pendulum.csv` | Section 8: column `nr` deleted, for `data/processed/` |
+    | [`pendulum_report.txt`](../data/pendulum_report.txt){ download="report.md" } | `report.md` | Section 9, for `results/` |
+    | [`pendulum_plot.png`](../data/pendulum_plot.png){ download="pendulum_plot.png" } | `pendulum_plot.png` | Section 9, step 9, for `results/` |
+    | [`D0_KPi.csv`](../data/D0_KPi.csv) | `D0_KPi.csv` | Section 10, for `data/raw/` |
+    | [`project_README_s1.txt`](../data/project_README_s1.txt){ download="README.md" } | `README.md` | Section 11: the README of the whole seminar |
+    | [`project_after_s1.zip`](../data/project_after_s1.zip) | `project_after_s1.zip` | The seminar: the whole `analysis-project` folder |
 
-The zip is for a student who missed the session. Unpack it, then
-**File** > **Open Folder...** and pick `analysis-project`. Its README
-still says *your name* and *one sentence*, so fill those in.
+    The zip is for a student who missed the session. Unpack it, then
+    **File** > **Open Folder...** and pick `analysis-project`. Its README
+    still says *your name* and *one sentence*, so fill those in.
+
+---
 
 ## Part 1 · VS Code { #part-1 }
 
@@ -105,29 +113,42 @@ still says *your name* and *one sentence*, so fill those in.
 The room ends this part with VS Code installed and a project folder open in
 it. Nothing is typed into a file yet.
 
-## 1. Install VS Code { #install }
+---
+
+### 1. Install VS Code { #install }
 
 **0:00 · 15 min**
 
-VS Code is a free editor for text and code. It looks and behaves the same on
-Windows, macOS and Linux, so every screen in the room shows the same thing.
-Everything done today by clicking can be done in any other editor.
+**Tell the room.** VS Code is a free editor for text and code. It looks and
+behaves the same on Windows, macOS and Linux, so every screen in the room
+shows the same thing. Everything done today by clicking can be done in any
+other editor.
 
-1. Open `code.visualstudio.com` in a browser and select the **Download**
-   button for your system.
+1. Open this address in a browser and select the **Download** button for
+   your system:
+
+    ```text
+    code.visualstudio.com
+    ```
 
 2. Install it.
 
-    - **Windows:** run the downloaded installer and keep every default.
-    - **macOS:** open the downloaded file and drag **Visual Studio Code**
-      into the **Applications** folder.
+    === "macOS"
+
+        Open the downloaded file and drag **Visual Studio Code** into the
+        **Applications** folder.
+
+    === "Windows"
+
+        Run the downloaded installer and keep every default.
 
 3. Start VS Code.
 
 4. If a **Chat** panel is open on the right, close it with the **X** in its
    corner. It is not used today.
 
-You should now see a window with a **Welcome** tab.
+!!! success "You should now see"
+    A window with a **Welcome** tab.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -135,20 +156,26 @@ You should now see a window with a **Welcome** tab.
     | Windows: the installer asks for an administrator password | Take the **User Installer** from the download page. It needs none |
     | macOS: "cannot be opened because it is from an unidentified developer" | The file was opened from **Downloads**. Drag it to **Applications** first |
     | macOS: VS Code is gone after a restart | It was started from the downloaded archive. Drag it to **Applications** |
-    | A university or work laptop blocks the installation | Use [vscode.dev](https://vscode.dev) in Chrome or Edge today. It can open a local folder. Install at home |
+    | A university or work laptop blocks the installation | Open [vscode.dev](https://vscode.dev) in Chrome or Edge, which can open a local folder, and pair with a neighbour. The tools are installed in class, in [Seminar 4, Part 1](seminar_04.md#part-1) |
     | The download is slow | Pass round the USB stick |
 
-## 2. Open a folder { #open-folder }
+---
+
+### 2. Open a folder { #open-folder }
 
 **0:15 · 5 min**
 
-VS Code can open a single file, but it is made to work on a folder. That
-folder is the project: everything that belongs to one piece of work lives in
-it. For Excel users: a project folder is what a workbook is in Excel, except
-that every sheet is a separate file.
+**Tell the room.** VS Code can open a single file, but it is made to work on
+a folder. That folder is the project: everything that belongs to one piece
+of work lives in it. For Excel users: a project folder is what a workbook is
+in Excel, except that every sheet is a separate file.
 
 1. In the file manager (File Explorer on Windows, Finder on macOS), create a
-   folder named `analysis-project`, for example in **Documents**.
+   folder, for example in **Documents**, named:
+
+    ```text
+    analysis-project
+    ```
 
 2. In VS Code select **File** > **Open Folder...** and pick
    `analysis-project`.
@@ -156,14 +183,17 @@ that every sheet is a separate file.
 3. If a dialog asks whether you trust the authors, select
    **Yes, I trust the authors**.
 
-You should now see the title `ANALYSIS-PROJECT` on the left, with nothing
-under it.
+!!! success "You should now see"
+    The title `ANALYSIS-PROJECT` on the left, with nothing under it.
 
-## 3. Explore the user interface { #interface }
+---
+
+### 3. Explore the user interface { #interface }
 
 **0:20 · 10 min**
 
-The window has five regions. Point at each one on the projector and name it.
+**Tell the room.** The window has five regions. Point at each one on the
+projector and name it.
 
 ```text
 +---+-------------+------------------------------------+
@@ -193,25 +223,34 @@ The window has five regions. Point at each one on the projector and name it.
 3. Press `Ctrl+Shift+P` (macOS `Cmd+Shift+P`). This is the
    **Command Palette**: a search box for everything VS Code can do.
 
-4. Type `theme` and select **Preferences: Color Theme**. Move through the
-   list with the arrow keys and press Enter on the theme you like.
+4. Type into the Command Palette:
+
+    ```text
+    theme
+    ```
+
+    Select **Preferences: Color Theme**. Move through the list with the
+    arrow keys and press Enter on the theme you like.
 
 5. Press `Ctrl+=` (macOS `Cmd+=`) to make everything larger and `Ctrl+-`
    (macOS `Cmd+-`) to make it smaller. Set your own zoom for the projector
    now.
 
-You should now see your own theme, and the Explorer in the Side Bar.
+!!! success "You should now see"
+    Your own theme, and the Explorer in the Side Bar.
 
 !!! tip
     The Command Palette is the one shortcut worth memorising today. Every
     other action can be found through it by typing part of its name.
 
-## 4. Create folders and a file { #folders }
+---
+
+### 4. Create folders and a file { #folders }
 
 **0:30 · 10 min**
 
-A project has the same few folders every time. Files that were downloaded
-are kept apart from everything that is made from them.
+**Tell the room.** A project has the same few folders every time. Files that
+were downloaded are kept apart from everything that is made from them.
 
 | Folder | What goes in |
 |--|--|
@@ -221,44 +260,64 @@ are kept apart from everything that is made from them.
 | `results` | Figures and numbers that the code produces |
 
 1. Move the mouse over the Side Bar. Four small icons appear next to the
-   project name. Select **New Folder**, type `data` and press Enter.
+   project name. Select **New Folder**, type the name and press Enter:
 
-2. Select `data`, then **New Folder**, and type `raw`.
+    ```text
+    data
+    ```
+
+2. Select `data`, then **New Folder**, and type:
+
+    ```text
+    raw
+    ```
 
     The Side Bar shows `data / raw` on one row. VS Code joins a folder with
     its only subfolder. The row splits in the next step.
 
-3. Select the empty area below the folders, then **New Folder**, and type
-   `data/processed`. A name with `/` creates the folder in the right place.
+3. Select the empty area below the folders, then **New Folder**, and type:
+
+    ```text
+    data/processed
+    ```
+
+    A name with `/` creates the folder in the right place.
 
 4. The room does this step alone: create `scripts` and `results` the same
    way.
 
-5. Select the empty area again, then **New File**, and type `README.md`. The
-   file opens in the Editor.
+5. Select the empty area again, then **New File**, and type:
+
+    ```text
+    README.md
+    ```
+
+    The file opens in the Editor.
 
 6. Right-click `README.md` and select **Reveal in File Explorer** (macOS
    **Reveal in Finder**). It is an ordinary file in an ordinary folder. VS
    Code only shows it.
 
-You should now see this in the Side Bar. VS Code lists folders first, so
-`README.md` is the last row.
+!!! success "You should now see"
+    This in the Side Bar. VS Code lists folders first, so `README.md` is the
+    last row.
 
-```text
-analysis-project/
-|- data/
-|  |- processed/
-|  |- raw/
-|- results/
-|- scripts/
-|- README.md
-```
+    ```text
+    analysis-project/
+    |- data/
+    |  |- processed/
+    |  |- raw/
+    |- results/
+    |- scripts/
+    |- README.md
+    ```
 
 !!! warning "Watch for"
-    A new folder that lands inside the folder that was selected. This is the
-    most common slip of the session. Drag the folder onto the empty area of
-    the Side Bar to move it out. To rename, select it and press `F2` (macOS
-    `Enter`).
+    | On the screen | What to do |
+    |--|--|
+    | A new folder lands inside the folder that was selected | The most common slip of the session. Drag the folder onto the empty area of the Side Bar to move it out. To rename, select it and press `F2` (macOS `Enter`) |
+
+---
 
 ## Part 2 · Markdown { #part-2 }
 
@@ -267,16 +326,31 @@ analysis-project/
 The room ends this part with a README that has a title, two sections, a
 list, a table and a link, and with the preview open beside the text.
 
-## 5. Write Markdown { #markdown }
+---
+
+### 5. Write Markdown { #markdown }
 
 **0:40 · 15 min**
 
-Markdown is plain text with a few signs for structure: `#` starts a heading,
-`-` starts a list item, `**` makes text bold. Any editor can open it, and it
-can be read without any formatting at all. The file name ends in `.md`.
+**Tell the room.** Markdown is plain text with a few signs for structure:
+`#` starts a heading, `-` starts a list item, `**` makes text bold. Any
+editor can open it, and it can be read without any formatting at all. The
+file name ends in `.md`. `README.md` is the first file anyone opens in a
+project. It says what the project is and what is in it.
 
-`README.md` is the first file anyone opens in a project. It says what the
-project is and what is in it.
+Leave this table on the projector while the room types:
+
+| You type | You get |
+|--|--|
+| `# Title` | The title of the page |
+| `## Section` | A section heading |
+| `*text*` | Italic |
+| `**text**` | Bold |
+| `- item` | A list item |
+| `` `text` `` | A file name or code |
+| `[text](address)` | A link |
+| `![description](file)` | A picture |
+| `| a | b |` | A row of a table |
 
 1. Type into `README.md`:
 
@@ -296,7 +370,8 @@ project is and what is in it.
    formatted page on the right.
 
 4. Add a section with a list. Each student fills in their own answers. The
-   last line is the answer from the lecture's thought exercise.
+   last line names, in one sentence, the dataset the student picked on the
+   lecture slide *The Five Questions, Your Dataset*.
 
     ```text
     ## About
@@ -325,23 +400,9 @@ project is and what is in it.
     The example data is from the [CERN Open Data Portal](https://opendata.cern.ch).
     ```
 
-You should now see a formatted page on the right: one title, two sections, a
-list with three items, a table with four rows, and a link that opens the
-portal.
-
-Leave this table on the projector while the room types:
-
-| You type | You get |
-|--|--|
-| `# Title` | The title of the page |
-| `## Section` | A section heading |
-| `*text*` | Italic |
-| `**text**` | Bold |
-| `- item` | A list item |
-| `` `text` `` | A file name or code |
-| `[text](address)` | A link |
-| `![description](file)` | A picture |
-| `| a | b |` | A row of a table |
+!!! success "You should now see"
+    A formatted page on the right: one title, two sections, a list with three
+    items, a table with four rows, and a link that opens the portal.
 
 Leave an empty line before a list and before a table, as in the blocks above.
 The preview in VS Code forgives a missing one. Other programs that read
@@ -355,6 +416,8 @@ Markdown do not.
     | Two lines show as one | A single line break does not show. An empty line starts a new paragraph |
     | The table shows as text with `|` signs | The second line, `|--|--|`, is missing |
 
+---
+
 ## Part 3 · Edit many lines at once { #part-3 }
 
 **0:55 to 1:25 · sections 6 to 9**
@@ -365,13 +428,15 @@ is made once and lands on every line. The lecture slide
 *Keys — Windows & macOS* lists every key of this part. Leave it on the
 projector while the room works.
 
-## 6. Work with whole lines { #lines }
+---
+
+### 6. Work with whole lines { #lines }
 
 **0:55 · 5 min**
 
-A line is moved, copied or deleted with one key. Nothing has to be selected
-first: the keys act on the line the cursor is in. The room tries them on the
-table in the README.
+**Tell the room.** A line is moved, copied or deleted with one key. Nothing
+has to be selected first: the keys act on the line the cursor is in. The
+room tries them on the table in the README.
 
 1. In `README.md`, click anywhere in the last row of the **Folders** table,
    the row of `results`.
@@ -399,8 +464,8 @@ table in the README.
 7. Press `Ctrl+Shift+K` (macOS `Cmd+Shift+K`). The line with the cursor is
    deleted.
 
-You should now see, in the preview, a table of five rows that begins with
-`README.md`.
+!!! success "You should now see"
+    In the preview, a table of five rows that begins with `README.md`.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -408,19 +473,26 @@ You should now see, in the preview, a table of five rows that begins with
     | The preview shows text with `|` signs instead of the table | The row was moved above `|--|--|`. Press `Alt+↓` once |
     | Windows: the keyboard changes between Lithuanian and English | Left `Alt` and `Shift` pressed alone switch the language. Press them once more |
 
-## 7. Find and replace { #replace }
+---
+
+### 7. Find and replace { #replace }
 
 **1:00 · 8 min**
 
-A lab partner sends a small table: the time of 10 swings of a pendulum for
-nine lengths. It was saved from a spreadsheet on a computer set to
-Lithuanian, so it has `;` between the values and `,` as the decimal sign. The
-file is kept as received and a copy is cleaned. The first tool is Find and
-Replace: it changes the same text everywhere in the file.
+**Tell the room.** A lab partner sends a small table: the time of 10 swings
+of a pendulum for nine lengths. It was saved from a spreadsheet on a
+computer set to Lithuanian, so it has `;` between the values and `,` as the
+decimal sign. The file is kept as received and a copy is cleaned. The first
+tool is Find and Replace: it changes the same text everywhere in the file.
 
-1. Select the `raw` folder in the Side Bar, then **New File**, and type
-   `pendulum.csv`. Copy the block below with the button in its corner, paste
-   it into the file and save.
+1. Select the `raw` folder in the Side Bar, then **New File**, and type:
+
+    ```text
+    pendulum.csv
+    ```
+
+    Copy the block below with the button in its corner, paste it into the
+    file and save.
 
     ```text
     nr;length_cm;t10_s
@@ -447,23 +519,45 @@ Replace: it changes the same text everywhere in the file.
 4. Press `Ctrl+H` (macOS `Cmd+Option+F`). Two boxes open at the top of the
    Editor: **Find** and **Replace**.
 
-5. Type `,` into **Find**. Every comma lights up, and the counter beside the
-   box ends in `of 9`: nine rows, nine decimal commas.
+5. Type into **Find**:
 
-6. Type `.` into **Replace** and select **Replace All**, the second of the
-   two small buttons beside that box.
+    ```text
+    ,
+    ```
 
-7. Do the same for the semicolons: `;` in **Find**, `,` in **Replace**. The
-   counter ends in `of 20`. Select **Replace All** and close the boxes with
-   `Esc`.
+    Every comma lights up, and the counter beside the box ends in `of 9`:
+    nine rows, nine decimal commas.
 
-You should now see ten lines. The first three are:
+6. Type into **Replace**, then select **Replace All**, the second of the two
+   small buttons beside that box:
 
-```text
-nr,length_cm,t10_s
-1,20,9.02
-2,30,11.05
-```
+    ```text
+    .
+    ```
+
+7. Do the same for the semicolons. Into **Find**:
+
+    ```text
+    ;
+    ```
+
+    Into **Replace**:
+
+    ```text
+    ,
+    ```
+
+    The counter ends in `of 20`. Select **Replace All** and close the boxes
+    with `Esc`.
+
+!!! success "You should now see"
+    Ten lines. The first three are:
+
+    ```text
+    nr,length_cm,t10_s
+    1,20,9.02
+    2,30,11.05
+    ```
 
 Ask the room what happens when the semicolons are replaced first. Let one
 student try it on the projector and take it back with `Ctrl+Z`. The line
@@ -477,13 +571,15 @@ one from the others. The sign that can be told apart is replaced first.
     | The file in `raw` has changed | The work was done in the wrong tab. Press `Ctrl+Z` in that tab until line 1 reads `nr;length_cm;t10_s` again |
     | Pasting does not work | Download [`pendulum_raw.csv`](../data/pendulum_raw.csv){ download="pendulum.csv" } and drag it onto the `raw` folder |
 
-## 8. Put a cursor on every line { #cursors }
+---
+
+### 8. Put a cursor on every line { #cursors }
 
 **1:08 · 7 min**
 
-Find and Replace cannot delete a column, and the row numbers in the first
-column are not needed. The editor can place a cursor on every line. Whatever
-is typed or deleted then happens on all lines at once.
+**Tell the room.** Find and Replace cannot delete a column, and the row
+numbers in the first column are not needed. The editor can place a cursor on
+every line. Whatever is typed or deleted then happens on all lines at once.
 
 1. Press `Ctrl+A` (macOS `Cmd+A`). Everything is selected.
 
@@ -500,20 +596,19 @@ is typed or deleted then happens on all lines at once.
 
 6. Press `Delete`, then `Esc` to go back to one cursor.
 
-You should now see:
-
-```text
-length_cm,t10_s
-20,9.02
-30,11.05
-40,12.61
-50,14.23
-60,15.49
-70,16.84
-80,17.90
-90,19.10
-100,20.01
-```
+!!! success "You should now see"
+    ```text
+    length_cm,t10_s
+    20,9.02
+    30,11.05
+    40,12.61
+    50,14.23
+    60,15.49
+    70,16.84
+    80,17.90
+    90,19.10
+    100,20.01
+    ```
 
 Say why step 4 uses the word key. `nr` has two characters and `1` has one, so
 cursors that move by characters end up in different places. `Home`, `End`
@@ -526,20 +621,27 @@ length.
     | The laptop has no `Home` and `End` keys | `Fn+←` and `Fn+→` |
     | A cursor is missing or in the wrong place | Press `Esc`, then `Ctrl+Z` until the file is whole, and start again at step 1 |
 
-## 9. Make a table for a report { #report }
+---
+
+### 9. Make a table for a report { #report }
 
 **1:15 · 10 min**
 
-A report shows the numbers as a table. A Markdown table is the same text
-with `|` signs in it, so three edits turn the cleaned file into a table. The
-report is a result, and it goes into `results`.
+**Tell the room.** A report shows the numbers as a table. A Markdown table
+is the same text with `|` signs in it, so three edits turn the cleaned file
+into a table. The report is a result, and it goes into `results`.
 
 1. In the cleaned file press `Ctrl+A`, then `Ctrl+C` (macOS `Cmd+A`,
    `Cmd+C`).
 
-2. Select the `results` folder, then **New File**, and type `report.md`.
-   Paste with `Ctrl+V` and open the preview with `Ctrl+K`, then `V`. The
-   preview shows one paragraph: single line breaks do not show.
+2. Select the `results` folder, then **New File**, and type:
+
+    ```text
+    report.md
+    ```
+
+    Paste with `Ctrl+V` and open the preview with `Ctrl+K`, then `V`. The
+    preview shows one paragraph: single line breaks do not show.
 
 3. Click just before any comma, hold `Shift` and press `→`. One comma is
    selected.
@@ -553,7 +655,13 @@ report is a result, and it goes into `results`.
 6. Press `Home` (macOS `Cmd+←`). Type `|` and a space. Press `Esc`.
 
 7. Click in line 1 and press `Ctrl+Enter` (macOS `Cmd+Enter`). An empty
-   line 2 opens. Type `|--|--|`. The preview now shows a table.
+   line 2 opens. Type into it:
+
+    ```text
+    |--|--|
+    ```
+
+    The preview now shows a table.
 
 8. Press `Ctrl+Home` (macOS `Cmd+↑`) to go to the top of the file. Press
    `Enter` twice and `↑` twice, then type a title and one sentence. Keep an
@@ -573,18 +681,19 @@ report is a result, and it goes into `results`.
     ![Time of 10 swings against length](pendulum_plot.png)
     ```
 
-You should now see, in the preview, a title, one sentence, a table with a
-header and nine rows, and the plot. The text on the left begins:
+!!! success "You should now see"
+    In the preview, a title, one sentence, a table with a header and nine
+    rows, and the plot. The text on the left begins:
 
-```text
-# Pendulum
+    ```text
+    # Pendulum
 
-Time of 10 swings for nine lengths.
+    Time of 10 swings for nine lengths.
 
-| length_cm | t10_s |
-|--|--|
-| 20 | 9.02 |
-```
+    | length_cm | t10_s |
+    |--|--|
+    | 20 | 9.02 |
+    ```
 
 Say that the same three edits make a table of ten lines or of ten thousand.
 The change is described once and the editor repeats it.
@@ -596,6 +705,8 @@ The change is described once and the editor repeats it.
     | A lone `|  |` at the end of the file | The file ended with two empty lines and one of them got a cursor. Delete that line |
     | The picture is broken | The file is not in `results`, or it is named `pendulum_plot (1).png` |
 
+---
+
 ## Part 4 · A real data file { #part-4 }
 
 **1:25 to 1:55 · sections 10 and 11**
@@ -604,13 +715,16 @@ Section 10 uses VS Code to read a file that is too long to read by eye.
 Section 11 uses Markdown to write down where the files came from and what
 was done to them.
 
-## 10. Look at a data file { #data-file }
+---
+
+### 10. Look at a data file { #data-file }
 
 **1:25 · 20 min**
 
-Everyone uses the same file, `D0_KPi.csv`, so that every screen in the room
-shows the same thing. It is the file from the lecture's section
-*A Dataset Up Close*. Students choose their own dataset at home.
+**Tell the room.** Everyone uses the same file, `D0_KPi.csv`, so that every
+screen in the room shows the same thing. It is the file from the lecture's
+section *Reading the File*. A dataset of a student's own belongs to their
+semester project, not to the seminars.
 
 1. Download [`D0_KPi.csv`](../data/D0_KPi.csv) with the browser. The file
    lands in **Downloads**.
@@ -634,13 +748,24 @@ shows the same thing. It is the file from the lecture's section
     ends with a line break. That leaves 91 584 lines: one header line and
     **91 583 rows of data**.
 
-5. Press `Ctrl+G` (the same key on macOS), type `5000` and press Enter. Line
-   5000 begins with `1868.8636`.
+5. Press `Ctrl+G` (the same key on macOS), type the line number and press
+   Enter:
 
-6. Press `Ctrl+F` (macOS `Cmd+F`) and type `-100`. VS Code finds 49 places,
-   all in the third column, `TAU`. In these rows the decay time could not be
-   computed, and the file marks that with `-100`. This is how this file
-   writes a missing value.
+    ```text
+    5000
+    ```
+
+    Line 5000 begins with `1868.8636`.
+
+6. Press `Ctrl+F` (macOS `Cmd+F`) and type:
+
+    ```text
+    -100
+    ```
+
+    VS Code finds 49 places, all in the third column, `TAU`. In these rows
+    the decay time could not be computed, and the file marks that with
+    `-100`. This is how this file writes a missing value.
 
 7. Open the same file in a spreadsheet program (Excel, LibreOffice, Numbers)
    **without saving anything**. Right-click the file in the Side Bar, select
@@ -663,11 +788,13 @@ shows the same thing. It is the file from the lecture's section
 
 9. Close the spreadsheet. If it asks whether to save, the answer is **No**.
 
-You should now have `D0_KPi.csv` in `data/raw/`, and every student can say
-the number of data rows and the four column names.
+!!! success "You should now see"
+    `D0_KPi.csv` in `data/raw/`, and every student can say the number of
+    data rows and the four column names.
 
-This comparison is the centre of the session. Say it in these words: the
-file is the same on every laptop, and VS Code shows the same text on every
+This comparison is the centre of the session.
+
+**Say it in these words.** The file is the same on every laptop, and VS Code shows the same text on every
 laptop. The spreadsheet shows an interpretation, and the interpretation
 depends on the settings of the computer. Saving from the spreadsheet writes
 that interpretation back into the file. That is why a file in `data/raw/` is
@@ -681,18 +808,24 @@ never edited and never saved from a spreadsheet.
     | The file is not under `raw` | It was dropped onto another folder. Drag it again |
     | Someone saved from the spreadsheet | They download the file again |
 
-## 11. Record where the data came from { #provenance }
+---
+
+### 11. Record where the data came from { #provenance }
 
 **1:45 · 10 min**
 
-A data file without a note on its origin cannot be checked by anyone,
-including its owner six months later. The note goes into the README. It is
-written in the Markdown from section 5, and it also lists what was changed
-by hand.
+**Tell the room.** A data file without a note on its origin cannot be
+checked by anyone, including its owner six months later. The note goes into
+the README. It is written in the Markdown from section 5, and it also lists
+what was changed by hand.
 
 1. Open [record 401](https://opendata.cern.ch/record/401) of the CERN Open
    Data Portal in the browser. Find the DOI and the licence on the page
    together with the room.
+
+    ```text
+    https://opendata.cern.ch/record/401
+    ```
 
 2. Add a **Data** section to `README.md`. The room types the labels and
    looks up the values. Filled in, the section reads:
@@ -714,9 +847,16 @@ by hand.
     The line **One row** is the one that needs thought. Give the room a
     minute before you show the answer.
 
-3. Look up the size of the file in the file manager. Windows shows about
-   3 835 KB and macOS about 3.9 MB. Both are 3 926 142 bytes: Windows counts
-   in units of 1024, macOS in units of 1000.
+3. Look up the size of the file in the file manager. Both systems show
+   3 926 142 bytes, rounded in different units.
+
+    === "macOS"
+
+        About 3.9 MB: macOS counts in units of 1000.
+
+    === "Windows"
+
+        About 3 835 KB: Windows counts in units of 1024.
 
 4. Add the second file under it. A change made by hand is part of where a
    file came from, so the edits of sections 7 and 8 are listed.
@@ -731,26 +871,20 @@ by hand.
    you find and download the same file? Tell them what was missing. This
    takes three minutes.
 
-You should now see a **Data** section in the preview that a stranger could
-follow.
+!!! success "You should now see"
+    A **Data** section in the preview that a stranger could follow.
 
 The record holds `MasterclassData.root`, and the CSV is a converted copy. The
 README names both, because the file in `data/raw/` is not the file a
 stranger would download from the portal.
 
-## 12. Wrap up { #wrap-up }
+---
+
+### 12. Wrap up { #wrap-up }
 
 **1:55 · 5 min**
 
-Put the three tasks of the next section on the projector and read them
-aloud. Then:
-
-- Say that an installation which fails at home is not a problem. Students
-  bring the error message, a photo of the screen is enough, and it gets
-  fixed at the start of the next session.
-- Ask on the way out which step was hardest.
-
-What the room has learned:
+Read the list aloud. Ask on the way out which step was hardest.
 
 - VS Code works on a folder. The folder is the project.
 - Markdown is plain text with a few signs for structure.
@@ -765,27 +899,7 @@ What the room has learned:
   depends on the computer.
 - A file in `data/raw/` is never edited.
 
-## Next steps, at home
-
-**30 min, before the next session**
-
-1. **Choose a dataset of your own.** A table from a field you care about:
-   weather, sport, prices, health, astronomy, your lab. Good places to look
-   are the portals from the lecture (Eurostat, Copernicus, NASA, Zenodo,
-   Kaggle) and the [Lithuanian open data portal](https://data.gov.lt). It
-   should be a CSV file with at least a few hundred rows and at least one
-   column of numbers.
-
-2. Put it in `data/raw/` and add an entry to the **Data** section of the
-   README, with the same lines as in section 11.
-
-3. Answer the five questions from the lecture for your file, in the README:
-   how many rows and columns, what one row is, which columns are measured,
-   derived or bookkeeping, the units, how missing values are marked.
-
-4. Install Python and Git by following
-   [Install Python and Git](install_python_git.md). Neither was needed
-   today.
+---
 
 ## Stretch goals
 
@@ -795,12 +909,19 @@ terminal and Python. Answers are given for the lecturer.
 - Open the terminal with **Terminal** > **New Terminal** and compute the
   checksum of the file, a fingerprint that proves two copies are
   byte-identical. The answer is SHA-256 `25c3c972…c1505136` on every system.
+  Windows prints it in capitals.
 
-    ```text
-    Windows (PowerShell)   Get-FileHash data\raw\D0_KPi.csv -Algorithm SHA256
-    macOS                  shasum -a 256 data/raw/D0_KPi.csv
-    Linux, Git Bash        sha256sum data/raw/D0_KPi.csv
-    ```
+    === "macOS"
+
+        ```text
+        shasum -a 256 data/raw/D0_KPi.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        Get-FileHash data\raw\D0_KPi.csv -Algorithm SHA256
+        ```
 
 - Write `scripts/count_rows.py` that prints the number of data rows and the
   smallest and largest value of column `M`, without Pandas. The answer is
@@ -826,6 +947,18 @@ Four more need only the editor.
   `marp: true`, `---` at the top of a copy of `report.md` and a line `---`
   between its parts. The preview shows slides, and the Marp button at the
   top of the Editor exports them as a PDF file.
+
+One more for a student who has finished everything else and has data in mind.
+
+- Put a dataset of your own in `data/raw/`: a table from a field you care
+  about, such as weather, sport, prices, health, astronomy or your lab. Good
+  places to look are the portals of the lecture (Eurostat, Copernicus, NASA,
+  Zenodo, Kaggle) and the [Lithuanian open data portal](https://data.gov.lt).
+  It should be a CSV file with at least a few hundred rows and at least one
+  column of numbers. Add an entry to the **Data** section of the README with the same lines as
+  in section 11, and answer the five questions of the lecture for it: how
+  many rows and columns, what one row is, which columns are measured,
+  derived or bookkeeping, the units, how missing values are marked.
 
 ## If students ask for more
 

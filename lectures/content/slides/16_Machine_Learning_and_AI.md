@@ -2002,7 +2002,7 @@ hideInToc: true
 python -m pip install scikit-learn
 ```
 
-The package is imported under the name `sklearn`. The numbers of this section were made with version 1.7.2.
+The same line in zsh and in PowerShell, with the environment of Lecture 13 active. The package is imported under the name `sklearn`. The numbers of this section were made with version 1.7.2.
 
 </div>
 

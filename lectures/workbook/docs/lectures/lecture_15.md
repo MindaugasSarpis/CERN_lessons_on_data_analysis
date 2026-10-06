@@ -103,7 +103,7 @@ smallest of five runs.
 | Loop, NumPy, four processes | 6–9, 19 | [`hpc_time_sum.py`](../data/hpc_time_sum.py) |
 | 1 to 12 workers, the serial share | 20–22 | [`hpc_sum_parallel.py`](../data/hpc_sum_parallel.py) `--workers N` |
 | The log and the background job | 40–44 | [`hpc_long_job.py`](../data/hpc_long_job.py) |
-| The job script | 50 | [`hpc_job.sh`](../data/hpc_job.sh), run on the laptop with bash |
+| The job script | 50 | [`hpc_job.sh`](../data/hpc_job.sh), a cluster script; on a Mac it also runs with `bash` |
 
 - The long file of slides 10, 14, 32 and 33 is the 91 583 data rows written
   100 times into one file of 392 612 616 bytes. It is not kept.

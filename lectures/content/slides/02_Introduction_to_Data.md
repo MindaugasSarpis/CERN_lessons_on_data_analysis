@@ -12,11 +12,10 @@ title: "Introduction to Data"
 ##### <span class="aims-badge">📁 data & files · ♻️ reproducibility</span>
 
 <!--
-Speaker: last time was the why — the films and CERN. Today is the what: data
-itself. Start from their own day, then kinds of data, tables and files, then how
-to find and document a dataset. CERN comes after that, as the case study, with
-its example file. The lecture ends with the tools for text files: the project
-folder, Markdown, and changing many lines at once. (~2 min)
+Speaker: Lecture 1 ended its reel at LHCb and said the seminars use the same
+events physicists used. Today opens on that file, four lines of it, and asks
+what can be said about it. Every section answers one of the questions it
+raises. (~1 min)
 -->
 
 ---
@@ -31,6 +30,109 @@ Sherlock Holmes — Arthur Conan Doyle, *A Scandal in Bohemia*
 hideInToc: true
 ---
 
+# A File With No **Note**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 📄 **`D0_KPi.csv`, the first four lines**
+
+```text
+M,PT,TAU,IPCHI2
+1880.649,3000.9534,0.00041271152,1299.1675
+1860.6599,2803.4126,0.0001864154,0.34182164
+1913.8755,2542.169,0.00018464602,17.386473
+```
+
+**91 584 lines, 3 926 142 bytes.** Nothing else came with it: no note, no units, no word on where it was made.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **What the file shows**
+
+A header line with four names. Then lines of four numbers, separated by commas. Every line has the same shape.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❓ **What is in it?**
+
+Is `1880.649` a mass, a price, a distance? In which unit? Is one line one person, one second, one collision?
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Lecture 1 promised real data, the same events physicists used. This is that file, opened in a text editor.</div>
+
+<!--
+Speaker: leave the four lines up and ask "what is in this file?" Collect what the
+room can say (a header, commas, four numbers per line, about 91 583 rows) and
+what it cannot (what a number stands for, its unit, where the file came from,
+what one line is). Write the second list on the board: it becomes the next
+slide. (~4 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What the File Does **Not** Say
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Five questions the four lines cannot answer. The sections of this lecture answer them in this order, and the closing slide writes the answers onto the same four lines.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+1️⃣ What **kind** of variable is each column, and which ones can be **averaged**?
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+2️⃣ Where did the file **come from**, and may we publish what we make from it?
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+3️⃣ What is **one row**: a person, an hour, a collision?
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+4️⃣ In which **unit** is each column?
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+5️⃣ How are **missing** values marked? Some lines have `-100.0` in `TAU`.
+
+</div>
+
+</div>
+
+<!--
+Speaker: these are the room's own questions from the last slide, in the order
+the lecture answers them. Point at the part of the four lines each one is about:
+the columns, the file as a whole, one line, the numbers, the -100.0. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Learning **Objectives**
 
 <div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
@@ -39,52 +141,32 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🗂️ Spot the **datasets** in an ordinary day and sort them into the **four flavours**
+🔣 Say what turns symbols into **data**: a rule that lets someone else read them back
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🔄 Walk a dataset through its **lifecycle** — collect, store, clean, analyse, decide, share — and say where it silently goes wrong
+📋 Read a **table**: rows as observations, columns as variables, the **kind** of each, and which can be averaged
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-📋 Read a **table** — rows as observations, columns as variables — and say which **kind of variable** each column holds
+🌐 Find a dataset's **record** and write down its **provenance**, and trace how a **collision** became one row
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-🌐 Find an **open dataset** and document it — portal, record, **DOI**, licence, provenance
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-⚛️ Trace how a **collision becomes a dataset** at CERN — detector, trigger, storage
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-📄 Read a real data file — **rows, columns, units, metadata** — before writing a line of code
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-✍️ Write a README in **Markdown** and change **many lines** of a text file with one edit
+📄 Work out a file's **units** from its numbers, and write them into a **README** in Markdown
 
 </div>
 
 </div>
 
 <!--
-Speaker: read these as promises. By the end they should know what a dataset
-*is*, how a table is built, where to get one and how to write down where it came
-from. (~1 min)
+Speaker: four objectives, one per question group of the last slide. (~1 min)
 -->
 
 ---
@@ -92,111 +174,9 @@ layout: section
 hideInToc: true
 ---
 
-# Data in **Your Life**
+# Data and **Information**
 
----
-hideInToc: true
----
-
-# A Day in Data — **Morning**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ⏰ **Before breakfast**
-
-- Your phone logs the exact second the alarm went off
-- A wearable scores how you slept — from heart rate and motion all night
-- A weather app pushes a forecast computed from millions of sensor readings
-- The battery graph has logged every charge and discharge of the past week
-
-Ten minutes awake and you have already generated — and consumed — several datasets. None of it felt like "data".
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🚌 **The commute**
-
-- A transit card taps in — a timestamp and a location, stored for years
-- Maps reroutes you around traffic it inferred from other phones moving slowly
-- Dozens of cameras log the same walk from different angles
-- A playlist auto-queues songs a model predicts you'll keep
-
-Each tap, ping, and skip is a row in someone's table — and the routing that helped you was itself built from yesterday's data.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# A Day in Data — **Afternoon to Lights-Out**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-accent card-glass pad-tight">
-
-## 💻 **Work & screens**
-
-- Every click, scroll, and pause feeds product-analytics dashboards
-- A shop's "customers also bought" is a live recommendation model
-- Each card payment is scored for fraud in under a second
-- Spam filters classify every message before you see it
-
-Most of this analysis runs with no person in the loop: the ⚙️ automation and ♻️ reproducibility this course teaches. You notice it only when it fails.
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## 🌙 **Evening**
-
-- A streaming service picks your thumbnail from thousands of A/B tests
-- A run is logged as a GPS track, then compared to last month's pace
-- A smart meter reports the day's electricity in fine-grained slices
-- The cycle closes as the wearable starts scoring tonight's sleep
-
-From alarm to lights-out you moved through hundreds of small analyses — almost all of them made by someone else, about you.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Every One of These Is a **Dataset**
-
-<div class="card card-success card-glass pad-tight mt-sm">
-
-Behind each convenience is the same loop you'll learn to run in this course: **collect → store → clean → analyse → decide → share**. The recommendation, the forecast, the fraud alert — all of it is somebody's pipeline running on somebody's table.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔎 **Three questions for any app**
-
-What does it **record**? In what **table** does that end up? Which **decision** does the result feed? Later today you ask the same of your own field.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🎓 **What carries over**
-
-The forecast, the playlist and the fraud check need the same four skills: organising files, writing code, statistics, reproducibility. Those are this course.
-
-</div>
-
-</div>
+The file holds a header and four numbers per line. The symbols arrived; what they stand for did not.
 
 ---
 hideInToc: true
@@ -218,7 +198,7 @@ hideInToc: true
 
 ## 🔣 **A representation**
 
-Symbols that stand for something: digits, letters, pixels. `11.2` is not a temperature. It stands for one.
+Symbols that stand for something: digits, letters, pixels. `1880.649` is not a mass. It may stand for one.
 
 </div>
 
@@ -242,17 +222,19 @@ Another person, or a program, gets the information back from the symbols. Withou
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-In this course: **data is recorded observation**, written down consistently enough to count, sort and compare. One value says little. Thousands of them, organised, show a trend, a spread, a peak.
+🧭 **A number is data only together with the rule that lets someone else read it back.** The four lines of `D0_KPi.csv` came with the symbols and almost none of the rule.
 
 </div>
 
-<div class="note-text mt-sm"><code>11.2</code> is data. "Vilnius, 29 September, 08:00: 11.2 °C" is information: the data together with what it means.</div>
+<div class="note-text mt-sm"><code>1880.649</code> is data. "One K⁻π⁺ pair recorded by LHCb has the mass 1880.649 MeV/c²" would be information: the data together with its rule. Each part of that sentence is found in this lecture.</div>
 
 <!--
 Speaker: read the definition once, then take its three words one at a time. A
 representation: the symbols are not the thing. Formalized: there is a rule.
-Reinterpretable: the rule lets someone else read it back. Ask what is missing
-when a colleague sends a file of numbers with no column names. (~2 min)
+Reinterpretable: the rule lets someone else read it back. Then point back at the
+four lines: which of the three does the file have? The representation and part
+of the format (commas, a header); the rest of the rule is missing. The sentence
+at the bottom is what the lecture builds up, one part per section. (~3 min)
 -->
 
 ---
@@ -283,11 +265,11 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The loop from two slides ago. The figure names the stages differently; the cycle is the same. Every project — yours, a bank's, a physics collaboration's — walks it, and each answer raises fresh questions that restart it.
+Every project passes these stages, from the first measurement to the archive. `D0_KPi.csv` stands after the second stage: stored, not yet cleaned.
 
 </div>
 
-<div class="note-text mt-md">Most problems in practice come from skipping a stage: analysing before cleaning, or deciding before storing where the data came from.</div>
+<div class="note-text mt-md">Most problems in practice come from skipping a stage: analysing before cleaning, or deciding before storing where the data came from. The rule of a file is written at the first two stages, or it is lost.</div>
 
 </div>
 
@@ -300,9 +282,12 @@ hideInToc: true
 
 # Kinds of **Data**
 
+A file needs a rule to be read back. The first part of that rule is what kind of thing each column holds, and that shows only in a table laid out by fixed rules.
+
 <!--
-Speaker: from "data is everywhere" to telling one kind from another. Three new
-ideas: the kind of variable, the shape of a table, the format of a file. (~1 min)
+Speaker: question 1 of the hook. Three ideas: the kind of variable, the shape of
+a table, the format of a file. They are worked on a second, smaller file first,
+a pendulum table from a lab, and then carried back to D0_KPi.csv. (~1 min)
 -->
 
 ---
@@ -321,7 +306,7 @@ Lives in neat rows and columns — a table, a spreadsheet, a database. Each colu
 
 - Sensor logs, transaction records, survey answers
 - Easy to sort, filter, and compute on directly
-- **Most of this course lives here** — the tidy table
+- `D0_KPi.csv` is structured: a header, then four values on every line
 
 </div>
 
@@ -345,7 +330,7 @@ Free-form — text, images, audio, video. Rich, but a computer can't average it 
 hideInToc: true
 ---
 
-# Four **Flavours** of Data
+# Numbers, Text, Images, **Events**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -355,7 +340,7 @@ hideInToc: true
 
 Measurements you can add, average, and plot. The core of statistics and fitting.
 
-**As numbers:** already there — 21.4 °C, 1864.8 MeV.
+**As numbers:** already there — 21.4 °C, 1864.8 MeV/c².
 
 </div>
 
@@ -395,7 +380,7 @@ Timestamped things that happened — a click, a tap, a particle collision.
 
 ## 🎛️ **Parametrisation**
 
-Describing a thing by a set of numbers. Everything in a dataset can be expressed as numbers: a colour is 3 numbers, a place on Earth is 2 (latitude, longitude), a collision ends as one mass, 1864.8 MeV. Written as a number is not the same as behaving like one — next slide.
+Describing a thing by a set of numbers. Everything in a dataset can be expressed as numbers: a colour is 3 numbers, a place on Earth is 2 (latitude, longitude), a collision ends as one mass, 1864.8 MeV/c². Written as a number is not the same as behaving like one — next slide.
 
 </div>
 
@@ -420,7 +405,7 @@ hideInToc: true
 
 ## 📏 **Quantitative — continuous**
 
-Any value in a range: a temperature of 21.4 °C, a mass of 1864.8 MeV. You can average it.
+Any value in a range: a temperature of 21.4 °C, a mass of 1864.8 MeV/c². You can average it.
 
 </div>
 
@@ -461,55 +446,39 @@ The kind of variable decides the summary, the plot and the distribution. (~2 min
 hideInToc: true
 ---
 
-# Measurement vs **Metadata**
+# Anatomy of a **Table**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-warning card-glass pad-compact">
 
-## 📐 **The measurement**
+## 📥 **`pendulum_raw.csv`, as received**
 
-The number you care about — the temperature, the price, the particle's momentum. The reason the record exists at all.
+```text
+nr;length_cm;t10_s
+1;20;9,02
+2;30;11,05
+3;40;12,61
+4;50;14,23
+5;60;15,49
+6;70;16,84
+7;80;17,90
+8;90;19,10
+9;100;20,01
+;mean;15,14
+```
 
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🏷️ **The metadata**
-
-Data *about* the measurement — when, where, by which instrument, in what units, under what settings.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-## ⚠️ **Metadata is not optional** 📁 ♻️
-
-A momentum with no units, a reading with no timestamp, a file with no source — that's a number you can neither trust nor reproduce. Much of data work is keeping the metadata attached to the numbers.
+130 bytes from a lab partner: the time of 10 swings of a pendulum for nine lengths.
 
 </div>
 
----
-hideInToc: true
----
-
-# Anatomy of a **Table**
-
-| **station** | **time** | **temp_C** | **pressure_hPa** | **sky** |
-| --- | --- | --- | --- | --- |
-| Vilnius | 2026-09-29 08:00 | 11.2 | 1018.4 | cloudy |
-| Vilnius | 2026-09-29 09:00 | 12.0 | 1018.1 | cloudy |
-| Kaunas | 2026-09-29 08:00 | 11.9 | 1017.6 | rain |
-
-<div class="grid-3 mt-md gap-md">
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-compact">
 
 ## ➡️ **A row**
 
-One observation: one station at one hour. Everything in the row belongs to that observation.
+One observation: one length, timed. Everything in the row belongs to it.
 
 </div>
 
@@ -517,7 +486,7 @@ One observation: one station at one hour. Everything in the row belongs to that 
 
 ## ⬇️ **A column**
 
-One variable, of one kind, in one unit. `temp_C` is continuous; `sky` is nominal.
+One variable, of one kind, in one unit. The unit sits in the name, `_cm` and `_s`, because a CSV file has nowhere else for it. That is **metadata**: data about the measurement.
 
 </div>
 
@@ -525,18 +494,72 @@ One variable, of one kind, in one unit. `temp_C` is continuous; `sky` is nominal
 
 ## 🔲 **A cell**
 
-One value. Not "11.2 °C (approx.)", not two readings, not a colour that carries meaning.
+One value. `9,02` is one value, written with a decimal comma.
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">Illustrative values. A table that keeps these three rules is called <strong>tidy</strong>, and every tool in this course expects it.</div>
+</div>
+
+<div class="note-text mt-sm">A table that keeps these three rules is called <strong>tidy</strong>. The last line, <code>;mean;15,14</code>, breaks the first one: a mean is not an observation.</div>
 
 <!--
-Speaker: the table is made up for the slide. Point out that the unit sits in the
-column name because a CSV file has nowhere else to put it. Ask: what is one row
-in a spreadsheet you use? (~2 min)
+Speaker: a second file, small enough to read whole. Ask what one row is (one
+length), which column is set by the experimenter (length_cm), which is measured
+(t10_s), and which is only a counter (nr). Then ask which line does not belong.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which Columns Can Be **Averaged**?
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏷️ **`nr`**
+
+1 + 2 + … + 9 = 45, and 45 / 9 = **5.0**. A label for the row, like a postcode: its mean says nothing.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **`length_cm`**
+
+20 + 30 + … + 100 = 540, and 540 / 9 = **60 cm**. Continuous, but chosen by the experimenter, not measured.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⏱️ **`t10_s`**
+
+9.02 + 11.05 + … + 20.01 = 136.25, and 136.25 / 9 = **15.139 s**. The file's own last line says `15,14`: the check closes.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+## 😮 **Leave the mean line in**
+
+(136.25 + 15.14) / 10 = 151.39 / 10 = **15.139 s**: the same mean. A value equal to the mean does not move the mean, so the mean cannot show that the line is there. The count can: 10 rows for 9 lengths.
+
+</div>
+
+<div class="note-text mt-sm">Question 1 of the hook, answered for <code>D0_KPi.csv</code>: its four columns are continuous, and each one can be averaged.</div>
+
+<!--
+Speaker: let the room add up t10_s before showing it (136.25). Then ask what
+happens to the mean if the mean line is left in. Most will expect it to change.
+It does not: adding a value equal to the mean keeps the mean. That is why a mean
+line in a table is dangerous, and why one row has to be one observation. (~4 min)
 -->
 
 ---
@@ -553,7 +576,7 @@ hideInToc: true
 
 - One line per row, values separated by commas
 - Opens in any program, on any system
-- Stores no types and no units: `11.2` is just four characters
+- Stores no types and no units: `9.02` is just four characters
 
 </div>
 
@@ -563,7 +586,7 @@ hideInToc: true
 
 - The table plus formatting, formulas, several sheets
 - The program decides how a value is shown and stored
-- Excel turned gene names such as `SEPT2` into dates so often that geneticists renamed the genes in 2020
+- The file itself is a zip archive of XML text files
 
 </div>
 
@@ -581,66 +604,71 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ **Decimal comma or decimal point?** `1,5` and `1.5` are the same number written in two countries. A CSV file does not say which one it uses. A spreadsheet decides from the computer's regional settings, so the same file can open differently on two computers.
+⚠️ **Decimal comma or decimal point?** `1,5` and `1.5` are the same number written in two countries. A CSV file does not say which one it uses. A spreadsheet decides from the computer's regional settings, so the same file can open differently on two computers. `pendulum_raw.csv` uses the comma.
 
 </div>
 
 <!--
-Speaker: the point is the comparison — the same table as plain text and as a
-spreadsheet. Do not rush it. (~2 min)
+Speaker: the point is the comparison: the same table as plain text, as a
+spreadsheet and as a binary file. The next slide measures it on the LHCb file.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Thought Exercise — Data in **Your Field**
+# One Table, Two **Sizes**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-tight">
+<div class="card card-primary card-glass pad-compact">
 
-## 🤔 **Think** (2 min)
+## 📄 **`D0_KPi.csv`, text**
 
-Pick a project, hobby, or job you know well.
-
-- What data gets generated?
-- Who collects it, and how?
-- What decisions does it inform?
+**3 926 142 bytes** for 91 583 rows. 3 926 142 / 91 583 = **42.9 bytes per row**. Row 1, `1880.649,3000.9534,0.00041271152,1299.1675`, is 42 characters and a line end, one byte each.
 
 </div>
 
-<div class="card card-secondary card-glass pad-tight">
+<div class="card card-accent card-glass pad-compact">
 
-## 💬 **Discuss** (3 min)
+## 📦 **`MasterclassData.root`, binary**
 
-Share with a neighbour:
-
-- What is one decision that could be improved if the data were better collected, stored, or analysed?
-- What would "good enough" data analysis look like in your context?
+**1 289 541 bytes** for the same rows. 1 289 541 / 91 583 = **14.1 bytes per row**. Four numbers of 4 bytes each make 16, and ROOT compresses them below that.
 
 </div>
 
 </div>
 
-<div class="card card-accent card-glass pad-tight mt-md">
+<div class="card card-warning card-glass pad-compact mt-md">
 
-## 🎯 **Takeaway**
+## 😮 **147 columns, and still 3× smaller**
 
-Keep your answer. The data you just described is a candidate for your semester project.
+The ROOT file declares **147 columns**. Only 4 are filled, and the CSV keeps those 4. Yet the text copy is 3 926 142 / 1 289 541 = **3.0×** larger: the empty columns cost almost nothing, and a number written as text takes about 10 characters.
 
 </div>
+
+<div class="note-text mt-sm">Neither file says what the numbers are. The ROOT file stores a type for each column, the CSV not even that. The rest of the rule has to be written down somewhere else.</div>
+
+<!--
+Speaker: the CSV in the workbook is a converted copy of the ROOT file in the
+record. Count the first row together: 8 + 1 + 9 + 1 + 13 + 1 + 9 = 42
+characters, plus the line end. (~3 min)
+-->
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# Open Data & **Provenance**
+# Where the File **Came From**
+
+Column names and commas are only part of a file's rule. Who recorded the file, and on what terms it may be used, is written in the record it was published with.
 
 <!--
-Speaker: shift gears — from *what data is* to *where you get it and how you prove
-where it came from*. (~1 min)
+Speaker: question 2 of the hook. From what the numbers are to where the file
+came from, and how to write that down so someone else can fetch the same
+bytes. (~1 min)
 -->
 
 ---
@@ -717,7 +745,7 @@ hideInToc: true
 - *LHCb event file for real measurement*
 - DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
 - Licence **CC0** — no conditions
-- One **ROOT** file, 1.3 MB — particle decays recorded by LHCb at CERN
+- One **ROOT** file, 1 289 541 bytes — particle decays recorded by LHCb at CERN
 - Downloadable by anyone — no CERN account needed
 - The workbook keeps a **CSV converted from it** — a derived file, and documented as one
 
@@ -735,7 +763,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Licences — What “Open” **Actually Permits**
+# Licences: CC0, CC BY, **Share-Alike**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -810,7 +838,7 @@ Changes:  none — D0_KPi.csv is a converted copy
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-♻️ Reproducibility starts **before** the analysis: someone else — or you in six months — must be able to fetch the **same bytes**. The checksum is how you prove it.
+♻️ Someone else, or you in six months, must be able to fetch the **same bytes**; the checksum is how you prove it. It belongs to the record's ROOT file. `D0_KPi.csv` has other bytes, so the note says how it was made: by `root_to_csv.py`.
 
 </div>
 
@@ -818,7 +846,7 @@ Changes:  none — D0_KPi.csv is a converted copy
 hideInToc: true
 ---
 
-# Data You **Bring Yourself**
+# Your Own **Dataset**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -892,7 +920,7 @@ analysis-project/
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-♻️ File too large, or not yours to share? Pass on the README: it says exactly how to fetch the data again. That is the difference between "I have the data" and "the analysis is reproducible".
+♻️ Lecture 1 kept `data/raw/` out of every rebuild because it cannot be regenerated. A file too large, or not yours to share, stays out of the folder you pass on, and the README says how to fetch it again. The README is where the file's rule is written down.
 
 </div>
 
@@ -901,15 +929,15 @@ layout: section
 hideInToc: true
 ---
 
-# The LHC **Experiments**
+# How One Row Was **Made**
 
-The case study. One accelerator, four detectors: ATLAS, CMS, ALICE, LHCb.
+Record 401 names the experiment that recorded the file: LHCb. It is one of four detectors on the LHC ring, and each of them asks a different question.
 
 <!--
-Speaker: the CERN case study starts here; everything before it was general.
-ATLAS and CMS share one slide; ALICE and LHCb get one each. ATLAS, CMS and ALICE
-have a silent 3D fly-in from the ring to the detector — talk over the clips.
-LHCb has a 0:47 clip instead; today's example file comes from LHCb. (~1 min)
+Speaker: question 3 of the hook, what one row is, starts here. ATLAS and CMS
+share one slide; ALICE and LHCb get one each. ATLAS, CMS and ALICE have a silent
+3D fly-in from the ring to the detector: talk over the clips. LHCb has a 0:47
+clip instead; the file comes from LHCb. (~1 min)
 -->
 
 ---
@@ -1046,7 +1074,7 @@ Precision measurements of **beauty** and **charm** quark decays, in a forward de
 
 ## 🏆 **A 2019 First**
 
-LHCb observed **CP violation in charm**, in decays of the **D⁰ meson**: the particle in today's example file.
+LHCb observed **CP violation in charm**, in decays of the **D⁰ meson**. Each row of `D0_KPi.csv` is a K⁻π⁺ pair that may come from one.
 
 </div>
 
@@ -1071,57 +1099,14 @@ layout: section
 hideInToc: true
 ---
 
-# Data at the **LHC**
+# From Collision to **Row**
+
+Each of the four detectors, LHCb among them, sees the bunches cross 40 million times a second. Almost every collision is thrown away within microseconds, and what is kept becomes rows.
 
 <!--
-Speaker: from the detectors to what they produce: 1 PB/s of raw output, of which
-almost nothing is signal. The rest of the section is how that becomes a dataset
-someone can analyse. (~1 min)
+Speaker: from the detectors to what they keep. The section ends on one row of
+the file and the two columns that come from the selection. (~1 min)
 -->
-
----
-hideInToc: true
----
-
-# Why <span class="gradient-text">Data Analysis</span> Matters at CERN
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight reveal-scale">
-
-## 📊 **The Scale**
-
-- The LHC produces **~1 PB per second** of raw detector output
-- Only **~1 in a billion** collisions contains interesting physics
-- Must filter, reconstruct, and analyse in near real time
-- Finding the Higgs required sifting through **trillions** of events
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight reveal-scale">
-
-## 🔍 **Signal vs Background**
-
-- Collision events produce **detector readings** (energy, momentum, position)
-- Signal events look almost identical to background noise
-- Statistical methods decide if a discovery is **real or a fluctuation**
-- The 5-sigma standard: if there were **no new particle**, a background fluctuation this strong would appear in fewer than **1 in 3.5 million** experiments
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md glow">
-
-💾 **Data Pipeline:** Raw detector signals &#8594; Trigger selection (real-time filtering) &#8594; Event reconstruction &#8594; Physics analysis &#8594; Statistical inference &#8594; Publication
-
-<div class="mt-sm">
-
-Each stage is a skill from this course, from handling files to statistical inference.
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -1131,7 +1116,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🚦 Nothing can store 1 PB **every second**, so the experiments decide **in real time** which collisions to keep. This selection is the **trigger**. It discards almost everything, within microseconds.
+🚦 The raw signal comes to about 1 PB **every second**. Nothing can store that, so the experiments decide **in real time** which collisions to keep. This selection is the **trigger**. It discards almost everything, within microseconds.
 
 </div>
 
@@ -1185,7 +1170,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧮 The same chain in numbers, from one **event** to one **year** of data.
+🧮 The same chain in numbers, from one **event** to one **year** of data, and back down to one **row** of the file.
 
 </div>
 
@@ -1209,7 +1194,39 @@ graph LR
 
 ## 📦 **The Arithmetic**
 
-**~1–2 MB** per event × a few **thousand** events/s ≈ **10 GB/s** to disk and tape; × ~**10⁷ s** of beam per year ≈ **100+ PB per year**. One analysis uses a tiny part of that: today's example file is 1.3 MB.
+**~1–2 MB** per event × a few **thousand** events/s ≈ **10 GB/s** to disk and tape; × ~**10⁷ s** of beam per year ≈ **100+ PB per year**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **One Row of the File**
+
+1 289 541 bytes / 91 583 rows = **14 bytes** per candidate in the ROOT file. A stored event is 1–2 MB, about **100 000×** more. The row keeps four numbers computed from two of the event's tracks.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# What the Trigger **Kept**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⏱️ Bunches cross every **25 ns**: 1 s / 40 000 000 crossings. The electronics hold an event for a few **microseconds**, and a collision not kept by then is overwritten. The keep or discard decision is code, written before anyone sees the data.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **What it looks for in charm**
+
+A D⁰ flies a few millimetres before it decays, so its kaon and pion tracks **do not point back** to the collision. The trigger keeps such pairs.
 
 </div>
 
@@ -1217,39 +1234,7 @@ graph LR
 
 ## 💻 **LHCb, Since Run 3**
 
-No hardware trigger at all: every crossing — **30 million per second** — is read out in full and judged by a **software trigger** (its first stage on GPUs). That is the detector behind today's example dataset.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Why It Has to Be <span class="gradient-text">Real-Time</span>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🎯 **Why not store everything?** Nothing can *write* 1 PB every second, and the detector cannot wait: the keep/discard decision has to be made in **microseconds**.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⏱️ **25 ns Between Crossings**
-
-Bunches cross every **25 nanoseconds**. The next collisions arrive long before any software has finished judging the last ones.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📦 **A Few Microseconds of Memory**
-
-The detector electronics can hold an event for only a few **microseconds**. If the first trigger level has not said "keep" by then, it is overwritten.
+No hardware trigger at all: every crossing, **30 million per second**, is read out in full and judged by a **software trigger**, its first stage on GPUs.
 
 </div>
 
@@ -1257,47 +1242,54 @@ The detector electronics can hold an event for only a few **microseconds**. If t
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-🔍 **What the trigger looks for:** a few high-energy leptons or jets, missing energy — or, at LHCb, tracks that **don't point back** to the collision, because a D⁰ flies a few millimetres before it decays. The selection is code, written before anyone sees the data.
+📄 Two columns of the file measure that flight. `TAU` is the time the candidate flew before it decayed. `IPCHI2` says how well the pair, taken together, points back to the collision: row 2's `0.34182164` points back well, row 1's `1299.1675` does not.
 
 </div>
+
+<div class="note-text mt-sm">Question 3 of the hook, answered: one row is one K⁻π⁺ pair that the selection kept from one collision. The selection is part of the file's rule.</div>
+
+<!--
+Speaker: point at rows 1 and 2 of the hook. Ask which of the two pairs looks
+more like a D⁰ made in the collision itself (row 2: it points back). (~3 min)
+-->
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# A Dataset **Up Close**
+# Reading the **File**
+
+The record and the trigger say how a row was made. How many rows there are, and in which units, only the file itself can show.
 
 <!--
-Speaker: now open the example file, conceptually — no code yet. Apply the table
-and variable slides from earlier to it. (Pass 2 of the reel adds a 2:28 LHCb
-decay animation as the opener of this section.) (~1 min)
+Speaker: back to the four lines of the hook, now in VS Code on the projector.
+Questions 4 and 5 are answered here, by clicking and by reasoning. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# From File to **Table**
+# One Row, **Read Aloud**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **The LHCb sample as a CSV file**
+## 📄 **The file as a table**
 
-- One **header line** naming the columns
-- **91 583** lines after it — the record says "about 60k events"; count for yourself
+- One **header line** naming the four columns
 - Each **row** = one **candidate**: a K⁻π⁺ pair from one collision that might be a D⁰
-- Each **column** = one quantity computed for that pair — four in all
+- Each **column** = one quantity computed for that pair
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 🧮 **What a row says**
+## 🧮 **What row 1 says**
 
-"In this collision we found a kaon and a pion that may have come from one D⁰: their combined mass is *M*, the pair's transverse momentum *PT*, it flew for a time *TAU* before decaying, and *IPCHI2* says how well it points back to the collision."
+"In one collision LHCb found a kaon and a pion that may have come from one D⁰. Their combined mass is `M` = 1880.649, the pair's transverse momentum `PT` = 3000.9534, it flew for `TAU` = 0.00041271152 before decaying, and `IPCHI2` = 1299.1675 says it points back badly."
 
 </div>
 
@@ -1305,39 +1297,48 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-💾 The CSV file is plain text. Today we read what it **means**.
+💾 Every number in that sentence still lacks its unit, and the sentence says nothing yet about the other 91 582 rows.
 
 </div>
+
+<!--
+Speaker: read row 1 aloud as a sentence, then ask a student to read row 2 the
+same way. (~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Columns, Units and **Meaning**
+# Three Questions, **Clicked**
 
 <div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📏 **Measured**
+## ⬇️ **How many rows?**
 
-Track momenta, charges, particle-ID scores — what the detector recorded. The ROOT file names these columns but ships them **empty**.
+`Ctrl+End` jumps to line **91 585**, and it is empty: the file ends with a line end. 91 584 lines minus the header = **91 583 rows**.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🧮 **Derived**
+## 🎯 **And in the middle?**
 
-Computed from the tracks: invariant mass `M`, transverse momentum `PT`, decay time `TAU`, `IPCHI2` — the **four columns that are filled**.
+`Ctrl+G`, then `5000`:
+
+`1868.8636,5537.248,`<br>`0.0007151779,10.399748`
+
+Four numbers again, the shape of row 1.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 🗂️ **Bookkeeping**
+## 🔎 **Where are the gaps?**
 
-Event and run numbers — which collision, which data-taking period. Emptied here too; keep them in your own data.
+`Ctrl+F`, then `-100`: **49** matches, each one `-100.0` in `TAU`. No decay lasts −100 of anything. It marks "no valid time", as the converter's notes say.
 
 </div>
 
@@ -1345,7 +1346,54 @@ Event and run numbers — which collision, which data-taking period. Emptied her
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ **Units are metadata.** A column named `M` means nothing until you know it is in MeV/c². Here neither the file nor the record says — you work it out (a D⁰ weighs 1865 MeV/c²) and write it into your README.
+😮 **The record says "about 60k events" and lists 53 948. The file has 91 583 rows.** 91 583 / 53 948 = 1.7 rows per event: a row is a candidate, not a collision, and one collision can hold more than one K⁻π⁺ pair. Which rows share a collision the file cannot say; its event-number column is empty.
+
+</div>
+
+<div class="note-text mt-sm">macOS: <code>Cmd+↓</code>, <code>Ctrl+G</code>, <code>Cmd+F</code>. Question 5 of the hook, answered: <code>-100.0</code> marks a missing time, in 49 rows.</div>
+
+<!--
+Speaker: do the three on the projector with D0_KPi.csv open in VS Code. Before
+Ctrl+End, ask the room to guess the row count from the record. (~4 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 147 Columns, **4 Filled**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **Measured**
+
+Track momenta, charges, particle-ID scores: what the detector recorded. The ROOT file names these columns but ships them **empty**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Derived**
+
+Computed from the tracks: invariant mass `M`, transverse momentum `PT`, decay time `TAU`, `IPCHI2`. The **four columns that are filled**.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🗂️ **Bookkeeping**
+
+Event and run numbers: which collision, which data-taking period. Emptied here too; keep them in your own data.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ **Units are metadata, and here they are missing.** Neither the file nor the record says which unit a column is in. The numbers themselves carry enough to work it out.
 
 </div>
 
@@ -1353,45 +1401,106 @@ Event and run numbers — which collision, which data-taking period. Emptied her
 hideInToc: true
 ---
 
-# Read Before You **Compute**
+# Units by **Reasoning**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-3 mt-md gap-md">
 
-## ❓ **Five questions for any data file**
+<div class="card card-primary card-glass pad-compact">
 
-1. How many **rows** and **columns** — and does the size make sense for that?
-2. What is **one row** — an event, a person, an hour, a pixel?
-3. Which columns are **measured**, which **derived**, which **bookkeeping**?
-4. What are the **units** — and where is that written down?
-5. How are **missing** or invalid values marked — blank, `NaN`, `-999`? *(This file: `TAU = -100`.)*
+## ⚖️ **`M`**
+
+Median of the 91 583 values: **1864.08**. A D⁰ weighs **1864.84 MeV/c²**. In GeV/c² it would be more than ten times the heaviest elementary particle, the top quark at 173 GeV/c². So **MeV/c²**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⏱️ **`TAU`**
+
+Median: **0.000272**. A D⁰ lives on average **0.41 ps = 0.00041 ns**. Read in ns, the median is 0.27 ps, the same size. In seconds it would be 660 million times too long. So **ns**.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📐 **`PT`, `IPCHI2`**
+
+`PT` comes from the same tracks as `M`, in the same units: median 3 049, so **MeV/c**, about 3 GeV/c. `IPCHI2` is a distance divided by its uncertainty, squared: **no unit**.
+
+</div>
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Answer these on paper before the first line of code.
+✅ **Two checks.** The busiest 5-unit bin of `M` is 1860 to 1865, with 8 931 candidates: the D⁰ peak, where MeV/c² puts it. Half of all decays come within ln 2 × 0.41 = 0.28 ps; the file's median is 0.27.
 
 </div>
+
+<div class="note-text mt-sm">Question 4 of the hook, answered, and checked: the notes of <code>root_to_csv.py</code>, which made the CSV, list the same four units.</div>
+
+<!--
+Speaker: ask the room for each unit before showing the card. For TAU, let them
+try seconds first: 0.27 ms is a lifetime 660 million times the D0's. The
+medians were computed with pandas on the whole file. (~5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Same Questions, **Your** Dataset
+# The Five Questions, **Answered**
+
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+
+| | **Question** | **`D0_KPi.csv`** |
+| --- | --- | --- |
+| 1 | Kind of each column | Four continuous columns; each one can be averaged |
+| 2 | Where it came from | Record 401, DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`, CC0; converted from `MasterclassData.root` |
+| 3 | One row | One K⁻π⁺ pair, kept by the trigger from one collision |
+| 4 | Units | `M` MeV/c², `PT` MeV/c, `TAU` ns, `IPCHI2` none |
+| 5 | Missing values | `-100.0` in `TAU`, 49 rows |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Five answers, and none of them was in the four lines. Each one is part of the file's rule, found on the record, in the trigger or in the numbers themselves.
+
+</div>
+
+<!--
+Speaker: the hook, answered. Go back to the four lines of slide 3 for a moment
+and read row 1 with its units. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Five Questions, **Your Dataset**
 
 | | 🌦️ **Weather station** | 📋 **Survey** | 🖼️ **Image collection** |
 | --- | --- | --- | --- |
-| **One row** | One hour at one station | One respondent | One image file |
-| **Measured** | Temperature, pressure, humidity | Answers, stored as codes | Pixels, in the image files |
-| **Derived** | Daily mean | Total score | Label |
-| **Bookkeeping** | Station, time | Respondent number | File name, size, time taken |
+| **Kind** | Continuous | Ordinal, 1 to 5 | Pixels 0–255; a label |
+| **Source** | A weather portal | Your questionnaire | An image archive |
+| **Row** | One hour at one station | One respondent | One image file |
 | **Units** | °C, hPa, % | Listed in the codebook | Bytes for the file size |
+| **Missing** | A gap in the hours, or `-999` | A blank answer | A file that does not open |
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-accent card-glass pad-compact mt-md">
 
-🔁 Where the example file has the mass `M`, read *your own numeric variable*. Where it has a D⁰ candidate, read *one row of your data*.
+## 🤔 **Your turn** (5 min)
+
+Pick a dataset from your own field and answer the five questions for it with a neighbour, on paper, before any code. Keep the answers: they are the first lines of your project README.
 
 </div>
+
+<!--
+Speaker: give the room five minutes. Walk round and ask two or three people
+for their answer to question 2: where does the data come from, and may they
+publish what they make from it? (~6 min)
+-->
 
 ---
 layout: section
@@ -1399,6 +1508,8 @@ hideInToc: true
 ---
 
 # Markdown & **Text Editing**
+
+The five answers are not in the file, so they are written next to it in a README. A README is plain text like the data, and so is the pendulum table, which still needs its repair.
 
 <!--
 Speaker: the example file was plain text, and so is the README that describes
@@ -2061,6 +2172,54 @@ appears in the preview at step 3. (~3 min)
 hideInToc: true
 ---
 
+# Write Down What You **Changed**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📝 **In `README.md`, under Data**
+
+```md
+- **File:** `data/raw/pendulum.csv`,
+  from a lab partner, 2026-09-29
+- **Cleaned copy:** `data/processed/pendulum.csv`.
+  Mean line deleted, `,` replaced by `.`,
+  `;` replaced by `,`, column `nr` deleted
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **130 bytes became 97**
+
+- The mean line, `;mean;15,14` and its line end: **12** bytes
+- Column `nr`: `nr;` and `1;` to `9;`, 3 + 9 × 2 = **21** bytes
+- The two replacements swap one character for one: **0**
+
+12 + 21 = 33 = 130 − 97. The check closes.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+✍️ Four edits, made by hand and listed in words. The next file from the lab partner needs all four again. Without the list nobody can tell that these 97 bytes came from those 130: the list is part of the cleaned file's rule.
+
+</div>
+
+<!--
+Speaker: type the two lines into the README on the projector. Then check the
+byte count together: right-click the file, Properties on Windows or Get Info on
+macOS, shows the size in bytes. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Text Commands in the **Command Palette**
 
 <div class="grid-2 mt-md gap-md">
@@ -2150,58 +2309,78 @@ the three that pay off first are Shift+Alt+I, Ctrl+D and Alt+arrow. (~1 min)
 hideInToc: true
 ---
 
-# **Recap** — You Can Now…
+# The File, **Annotated**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+M,PT,TAU,IPCHI2                               ← column names; no units
+1880.649,3000.9534,0.00041271152,1299.1675    ← one K⁻π⁺ pair from one collision
+1860.6599,2803.4126,0.0001864154,0.34182164   ← this pair points back well
+1913.8755,2542.169,0.00018464602,17.386473    ← 91 580 more rows like these
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md table-compact">
+
+| **Column** | `M` | `PT` | `TAU` | `IPCHI2` |
+| --- | --- | --- | --- | --- |
+| **Unit** | MeV/c² | MeV/c | ns | none |
+| **Seen in the file** | peak at 1860–1865 | median 3 049 | `-100.0` = missing, 49 rows | small = points back |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🧭 Record 401, DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`, CC0, converted from 1 289 541 bytes of ROOT. **A number is data only together with the rule that lets someone else read it back.** Before computing on a file, write its rule into the README.
+
+</div>
+
+<!--
+Speaker: the four lines of slide 3, with every question answered. Read row 1
+aloud once more, now with its units: a K-pi+ pair of mass 1880.649 MeV/c2 that
+flew 0.41 ps and does not point back to the collision. Do not cut this slide.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Recap**
 
 <div class="stack-tight mt-sm">
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Spot the **datasets** in an ordinary day and sort them into the **four flavours**
+✅ Data is symbols plus a rule. `1880.649` became information when its kind, source, row and unit were found
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Walk a dataset through its **lifecycle** — collect to share — and name the step where it silently goes wrong
+✅ A table: one row per observation, one variable per column, one value per cell; a mean line breaks the first rule and the mean cannot show it
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Read a **table** — observations in rows, variables in columns — and name the **kind of variable** in each column
+✅ The record gives source, DOI, licence and checksum; the trigger decides what becomes a row
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Find an **open dataset**, read its **record** (title, DOI, licence) and write down its **provenance**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Trace a **collision** from detector through trigger to stored dataset
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Open a data file and read **rows, columns, units and metadata** before touching code
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Write a README in **Markdown** and change **many lines** of a text file with one edit
+✅ Units come from the numbers when the file is silent; the README holds them, with every edit made to the data
 
 </div>
 
 </div>
 
 <!--
-Speaker: the "you can now" beat — have them nod along to each. (~1 min)
+Speaker: one line per objective of slide 5. (~1 min)
 -->
-
 
 ---
 layout: section
@@ -2217,15 +2396,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Across a whole day — alarm, transit card, recommendations, fraud checks — what makes all of it 'data analysis' rather than magic?"
+  question="A colleague sends a file of numbers with no header and no note. By the definition of data, what is missing?"
   :options="[
-    'Each one runs the same loop: collect, store, clean, analyse, decide — then share or archive',
-    'Collecting and storing the readings is itself the analysis — once data is saved, the work is done',
-    'Behind each service, analysts review your raw activity streams and decide case by case',
-    'Each device analyses its own data locally, so nothing needs to be stored or cleaned first'
+    'Nothing: the numbers are the data, and the rest is decoration',
+    'The rule that lets someone else read the numbers back: what each one is, in which unit, from where',
+    'A larger sample: one file of numbers is too little to count as data',
+    'A binary format, because plain text cannot hold data'
   ]"
-  :correct="0"
-  explanation="However different the domains look, they share one pipeline — collect, store, clean, analyse, decide, share. Recognising that shared shape is the whole point of these opening lectures: the skills transfer because the loop is always the same."
+  :correct="1"
+  explanation="Data is a representation by a fixed rule that someone else can read back. The symbols arrived; the rule did not. 1880.649 says nothing until its column, unit and source are known."
 />
 
 ---
@@ -2242,22 +2421,6 @@ hideInToc: true
   ]"
   :correct="0"
   explanation="A DOI or stable record URL identifies the dataset independently of where the file sits today; the version or fetch date pins which release you used; the checksum proves the bytes are unchanged. Name and size can collide; a homepage plus a title can move or change silently, and a person's memory cannot be resolved to exact bytes."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="The Higgs discovery met the '5-sigma' standard. What does that actually mean?"
-  :options="[
-    'There is less than a one-in-3.5-million chance that the discovery itself is wrong',
-    'With no new particle, a background fluke this strong shows up in fewer than 1 in 3.5 million experiments',
-    'The Higgs mass was pinned down to five decimal places by combining ATLAS and CMS',
-    'Five independent detectors each confirmed the signal at the same mass on the same day'
-  ]"
-  :correct="1"
-  explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading)."
 />
 
 ---
@@ -2306,6 +2469,22 @@ hideInToc: true
   ]"
   :correct="3"
   explanation="Each row is one candidate pair found in one event: its invariant mass, transverse momentum, decay time and impact-parameter score. Columns are the quantities; rows are the things measured. Knowing what one row is comes before any statistics."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A candidate in the LHCb file has `TAU` = 0.0003, and no unit is written anywhere. Which unit fits, and why?"
+  :options="[
+    'Seconds, because SI units are the default in a CSV file',
+    'Nanoseconds: 0.0003 ns = 0.3 ps, the size of a D⁰ lifetime of 0.41 ps',
+    'Picoseconds, because a D⁰ lives for picoseconds',
+    'Millimetres, because TAU is a flight distance'
+  ]"
+  :correct="1"
+  explanation="Read in ns, 0.0003 is 0.3 ps, the same size as the D⁰ lifetime of 0.41 ps. In seconds it would be hundreds of millions of times too long, in ps about a thousand times too short."
 />
 
 ---

@@ -3,81 +3,87 @@
 **Paired lecture:** 06 Python Foundations · **Format:** follow-along · **~120 min**
 in class
 
-The seminar has four parts, in this order.
+**Today's goal:** every student turns one line of `D0_KPi.csv` into four
+numbers in a script, runs the same steps over the first lines in a loop, and
+reads a traceback from the bottom.
 
-1. **Run Python.** The room checks Python, installs the Python extension of
-   VS Code, uses the prompt as a calculator and runs a first script in three
-   ways.
-2. **One line into numbers.** One line of `D0_KPi.csv` is pasted into a
-   script and turned into four numbers. Three errors are made on purpose
-   and read.
-3. **A loop over the first lines.** The first lines of the file are parsed
-   in a loop, printed as a table, and averaged. A missing value is skipped.
-4. **Find a bug.** A script that gives a wrong number without any message
-   is examined with `print` and with the debugger.
-
-The new tool of the session is Python, with the Python extension of VS Code.
-Everything else is known: the project folder, the terminal, Git. No function
-is written today and no file is opened from Python: the lines of data are
+The new tool is Python, with the Python extension of VS Code. Everything
+else is known: the project folder, the terminal of VS Code (`zsh` on macOS,
+PowerShell 7 on Windows, as set up in Seminar 4), Git. No function is
+written today and no file is opened from Python: the lines of data are
 pasted into the script.
 
-## How to use this page
+## Run sheet
 
-This page is written for the person at the front. Students can follow the
-same page.
+One screen for the front of the room. Each line links to its section.
 
-- The **paragraph at the top of a section** is what to tell the room.
-- The **numbered steps** are what to do on the projector. The room repeats
-  each step on their own laptops.
-- **You should now see** closes a section. Ask for hands: "who sees this?"
-  Go on when about four in five have it. The rest get help from a neighbour.
-- **Watch for** is the usual slip in that section.
+| Clock | Section | On the projector | The room ends with |
+|--|--|--|--|
+| | **Part 1 · Run Python** · 30 min | | |
+| 0:00 | [1. Check Python and install the extension](#check) | `python3 --version` (Windows `python`), then Extensions, `python`, **Install** | A version number, and coloured code |
+| 0:10 | [2. The prompt](#prompt) | `"9.02" / 10` at `>>>` | A number, a text, and the error between them |
+| 0:20 | [3. A first script](#script) | `python3 scripts/period.py` (Windows `python`) | `scripts/period.py`, run in three ways |
+| | **Part 2 · One line into numbers** · 35 min | | |
+| 0:30 | [4. A line of the file as a string](#line) | `clean.split(",")` | A list of four strings |
+| 0:42 | [5. Four numbers](#numbers) | `float(parts[0])` | Four floats, a formatted line, a dictionary |
+| 0:55 | [6. Read the message](#tracebacks) | `parts[4]`, and the traceback read from the bottom | Three tracebacks read, one silent error seen |
+| | **Part 3 · A loop over the first lines** · 35 min | | |
+| 1:05 | [7. The first lines in a loop](#loop) | `for line in lines[1:]:` | A table of five rows |
+| 1:20 | [8. A mean and a missing value](#mean) | `if tau == MISSING:` | A mean that is wrong, and the same mean put right |
+| | **Part 4 · Find a bug** · 20 min | | |
+| 1:40 | [9. A wrong number without a message](#debug) | A breakpoint on line 16, then `F5` | The bug found with `print` and with the debugger |
+| 1:55 | [10. Wrap up](#wrap-up) | `git commit -m "Add the first Python scripts"` | The scripts listed in the README and committed |
 
-Keys are written for Windows, with macOS in brackets. Commands are written
-with `python`. **On macOS type `python3` wherever this page says `python`.**
-The terminal is the one inside VS Code: Git Bash on Windows, the default
-terminal on macOS and Linux.
+**If time runs short:** section 9 is the one to leave out. Go from section 8
+to the wrap-up and leave `mean_period.py` out of the README list.
 
-| Clock | Section | The room ends with |
-|--|--|--|
-| | **Part 1 · Run Python** · 30 min | |
-| 0:00 | [1. Check Python and install the extension](#check) | A version number, and coloured code |
-| 0:10 | [2. The prompt](#prompt) | A number, a text, and the error between them |
-| 0:20 | [3. A first script](#script) | `scripts/period.py`, run in three ways |
-| | **Part 2 · One line into numbers** · 35 min | |
-| 0:30 | [4. A line of the file as a string](#line) | A list of four strings |
-| 0:42 | [5. Four numbers](#numbers) | Four floats, a formatted line, a dictionary |
-| 0:55 | [6. Read the message](#tracebacks) | Three tracebacks read, one silent error seen |
-| | **Part 3 · A loop over the first lines** · 35 min | |
-| 1:05 | [7. The first lines in a loop](#loop) | A table of five rows |
-| 1:20 | [8. A mean and a missing value](#mean) | A mean that is wrong, and the same mean put right |
-| | **Part 4 · Find a bug** · 20 min | |
-| 1:40 | [9. A wrong number without a message](#debug) | The bug found with `print` and with the debugger |
-| 1:55 | [10. Wrap up](#wrap-up) | The scripts committed, the homework known |
+??? info "How to use this page"
+    This page is written for the person at the front. Students follow the
+    same page.
 
-In a 90-minute slot, leave out sections 8 and 9 and go from section 7 to the
-wrap-up. Both are then done at home, and section 9 can open the next session.
+    - **Tell the room** is the paragraph to say before the steps.
+    - The **numbered steps** are what to do on the projector. The room
+      repeats each step on their own laptops.
+    - **You should now see** closes a section. Ask for hands: "who sees
+      this?" Go on when about four in five have it. The rest get help from a
+      neighbour.
+    - **Watch for** is the usual slip in that section.
 
-## Prerequisites
+    Every command stands alone in a block. It is typed as it stands and
+    ended with `Enter`. The terminal is the one inside VS Code: `zsh` on
+    macOS, PowerShell 7 on Windows. Where the two differ, the step has a
+    tab for **macOS** and one for **Windows**: Python is `python3` on macOS
+    and `python` on Windows. Python itself, at `>>>` and in a script, is the
+    same on both. The outputs were printed by `zsh` and by PowerShell 7.6 on
+    Windows. Keys are written for Windows, with macOS in brackets.
 
-For the room:
+??? info "Before the session"
+    For the room:
 
-- The project folder of the earlier seminars with `data/raw/D0_KPi.csv` and
-  `data/processed/pendulum.csv`.
-- Python installed at home ([Install Python and Git](install_python_git.md))
-  and the terminal of VS Code as used since week 4.
+    - The project folder as Seminar 4 left it, with `data/raw/D0_KPi.csv`
+      and `data/processed/pendulum.csv`. A student who does not have them
+      downloads [`project_after_s1.zip`](../data/project_after_s1.zip),
+      unpacks it, and opens `analysis-project` with **File** >
+      **Open Folder...**.
+    - Python, installed in class in Seminar 4
+      ([Install Python, Git and PowerShell 7](install_python_git.md)), and
+      the terminal of VS Code set up there: `zsh` on macOS, PowerShell 7 on
+      Windows.
 
-For you, before the session:
+    A student whose Python does not start follows on a neighbour's laptop
+    today and stays for five minutes after the session.
 
-- All ten sections done once on your own laptop, with the breakpoints of
-  section 9 placed and removed at least once.
-- The Python installers for Windows and macOS on a USB stick, for a laptop
-  on which the installation at home failed.
-- Decide whether to remove the Python extension from your own VS Code, so
-  that you install it together with the room in section 1.
+    For you:
 
-A student whose Python does not start follows on a neighbour's laptop today
-and stays for five minutes after the session.
+    - All ten sections done once on a Mac and once on a Windows laptop with
+      PowerShell 7, with the breakpoints of section 9 placed and removed at
+      least once.
+    - The Python installers for Windows and macOS on a USB stick, for a
+      laptop on which the installation in Seminar 4 failed.
+    - Decide whether to remove the Python extension from your own VS Code,
+      so that you install it together with the room in section 1.
+
+---
 
 ## Part 1 · Run Python { #part-1 }
 
@@ -86,13 +92,17 @@ and stays for five minutes after the session.
 The room ends this part with a script of five lines that prints a number,
 and knows three ways to run it.
 
-## 1. Check Python and install the extension { #check }
+---
+
+### 1. Check Python and install the extension { #check }
 
 **0:00 · 10 min**
 
-Python is a program on the laptop. It was installed at home and checked once
-with one command. VS Code needs an extension to work with it: the extension
-colours the code, completes names and adds a button that runs a script. The
+**Tell the room.** Python is a program on the laptop. It was installed in
+Seminar 4 and ran `scripts/clean_pendulum.py` there, the script that
+Lecture 06 then read line by line. Today the room writes scripts of its
+own. VS Code needs an extension to work with them: the extension colours
+the code, completes names and adds a button that runs a script. The
 extension does not contain Python.
 
 1. Open the project folder in VS Code and open the terminal with
@@ -100,65 +110,114 @@ extension does not contain Python.
 
 2. Ask Python for its version.
 
-    ```text
-    python --version
-    ```
+    === "macOS"
 
-    It prints one line such as `Python 3.13.9`. Any version from 3.11 on
+        ```text
+        python3 --version
+        ```
+
+    === "Windows"
+
+        ```text
+        python --version
+        ```
+
+    It prints one line such as `Python 3.14.0`. Any version from 3.11 on
     is fine.
 
 3. Select the **Extensions** icon in the Activity Bar, or press
-   `Ctrl+Shift+X` (macOS `Cmd+Shift+X`). Type `python` into the search box.
-   Select **Python**, published by Microsoft, and then **Install**. A few
+   `Ctrl+Shift+X` (macOS `Cmd+Shift+X`). Type into the search box:
+
+    ```text
+    python
+    ```
+
+4. Select **Python**, published by Microsoft, and then **Install**. A few
    more extensions are installed with it, among them **Pylance** and
    **Python Debugger**.
 
-4. Go back to the Explorer. Right-click the folder `scripts`, select
-   **New File** and type `period.py`. The file opens empty.
+5. Go back to the Explorer. Right-click the folder `scripts`, select
+   **New File** and type:
 
-5. Look at the right end of the Status Bar. It now shows the version of
-   Python that VS Code has found, for example `3.13.9`.
+    ```text
+    period.py
+    ```
 
-You should now see an empty file `period.py` in `scripts`, and a Python
-version in the Status Bar.
+    The file opens empty.
+
+6. Look at the right end of the Status Bar. It now shows the version of
+   Python that VS Code has found, for example `3.14.0`.
+
+!!! success "You should now see"
+    An empty file `period.py` in `scripts`, and a Python version in the
+    Status Bar.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | macOS: `command not found: python` | Type `python3`, here and in every later step |
-    | Windows: `Python was not found`, or the Microsoft Store opens | Try `py --version`. If it prints a version, type `py` instead of `python` today, and repair the installation at home with **Add python.exe to PATH** ticked |
+    | macOS: `zsh: command not found: python` | Type `python3`, as in the macOS tab, here and in every later step |
+    | Windows: `Python was not found`, or the Microsoft Store opens | Try `py --version`. If it prints a version, type `py` instead of `python` for now. Repair the installation after the session, with the student, as in Seminar 4: run the installer again, select **Modify**, **Next**, tick **Add Python to environment variables**, **Install** |
     | The Status Bar shows **Select Interpreter** instead of a version | Select it and pick the entry with the version that the terminal printed |
-    | Nothing is found although Python was installed today | Close VS Code and open it again |
+    | Nothing is found although Python is installed | Close VS Code with **File** > **Exit** (macOS `Cmd+Q`) and start it again |
 
-## 2. The prompt { #prompt }
+---
+
+### 2. The prompt { #prompt }
 
 **0:10 · 10 min**
 
-Python can be used one line at a time. It then shows `>>>`, waits for a
-line, works it out and prints the value. This is the place to try a line
-before it goes into a script. The first row of the pendulum table gives the
-numbers: a length of 20 cm, and 10 swings in 9.02 s.
+**Tell the room.** Python can be used one line at a time. It then shows
+`>>>`, waits for a line, works it out and prints the value. This is the
+place to try a line before it goes into a script. The first row of the
+pendulum table gives the numbers: a length of 20 cm, and 10 swings in
+9.02 s.
 
-1. Type `python` in the terminal and press Enter. A line with the version
-   appears, then `>>>`.
+1. Start the prompt in the terminal. A line with the version appears, then
+   `>>>`.
+
+    === "macOS"
+
+        ```text
+        python3
+        ```
+
+    === "Windows"
+
+        ```text
+        python
+        ```
 
 2. Type each line and press Enter. Ask the room for the result before each
    Enter.
 
     ```text
     9.02 / 10
+    ```
+
+    ```text
     type(9.02)
+    ```
+
+    ```text
     type("9.02")
+    ```
+
+    ```text
     "9.02" / 10
+    ```
+
+    ```text
     float("9.02") / 10
     ```
+
+    Python answers:
 
     | Line | Python answers |
     |--|--|
     | `9.02 / 10` | `0.9019999999999999` |
     | `type(9.02)` | `<class 'float'>` |
     | `type("9.02")` | `<class 'str'>` |
-    | `"9.02" / 10` | Four lines. The last is `TypeError: unsupported operand type(s) for /: 'str' and 'int'` |
+    | `"9.02" / 10` | A traceback. Its last line is `TypeError: unsupported operand type(s) for /: 'str' and 'int'` |
     | `float("9.02") / 10` | `0.9019999999999999` |
 
 3. Say what the fourth line shows: `"9.02"` in quotes is a text of four
@@ -168,32 +227,44 @@ numbers: a length of 20 cm, and 10 swings in 9.02 s.
 
     ```text
     2 ** 64
+    ```
+
+    ```text
     len("ąžuolas")
     ```
 
     They answer `18446744073709551616` and `7`.
 
-5. Type `exit()` and press Enter. The prompt of the terminal is back.
+5. Leave the prompt. The prompt of the terminal is back.
 
-You should now see the terminal prompt again, and the room can say why
-`0.9019999999999999` is not an error: 9.02 has no exact binary form, as 0.1
-had none in Lecture 3.
+    ```text
+    exit()
+    ```
+
+!!! success "You should now see"
+    The terminal prompt again, and the room can say why
+    `0.9019999999999999` is not an error: 9.02 has no exact binary form, as
+    0.1 had none in Lecture 3.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | Windows, Git Bash: after `python` nothing appears and the terminal does not answer | Press `Ctrl+C`. Start the prompt with `winpty python` instead |
-    | `SyntaxError` after typing `python scripts/period.py` at `>>>` | That is a terminal command, typed at the Python prompt. `exit()` first |
-    | `command not found: 9.02` | That is Python, typed at the terminal prompt. Type `python` first |
+    | `SyntaxError: invalid syntax` after typing `python3 scripts/period.py` at `>>>` | That is a terminal command, typed at the Python prompt. `exit()` first |
+    | macOS: `zsh: command not found: 9.02` | That is Python, typed at the shell's prompt `%`. Type `python3` first |
+    | Windows: `0.902`, with the PowerShell prompt `PS>` before the line instead of `>>>` | PowerShell worked out the line itself, with fewer digits. Type `python` first, then the line again |
 
-## 3. A first script { #script }
+---
+
+### 3. A first script { #script }
 
 **0:20 · 10 min**
 
-A script is a text file with the lines that would be typed at the prompt.
-Python runs it from the first line to the last and keeps nothing afterwards.
-The file stays, so the calculation can be run again and can be put under
-Git.
+**Tell the room.** A script is a text file with the lines that would be
+typed at the prompt. Python runs it from the first line to the last and
+keeps nothing afterwards. The file stays, so the calculation can be run
+again and can be put under Git. It is run with the same kind of line that
+ran `clean_pendulum.py` in Seminar 4: the program, then the path of the
+script.
 
 1. Type into `scripts/period.py`:
 
@@ -207,21 +278,38 @@ Git.
 
 2. Save with `Ctrl+S` (macOS `Cmd+S`). Run the script in the terminal.
 
-    ```text
-    python scripts/period.py
-    ```
+    === "macOS"
+
+        ```text
+        python3 scripts/period.py
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/period.py
+        ```
 
     It prints `0.9019999999999999`.
 
 3. Run it a second way: select the ▶ button at the top right of the Editor,
    **Run Python File**. VS Code types a command into the terminal and the
-   same number appears. Read the command: it is `python` with the full path
-   of the file.
+   same number appears. Read the command: the full path of Python, then the
+   full path of the file, the absolute paths of Lecture 04.
 
 4. Run one line a third way: put the cursor in line 3 and press
    `Shift+Enter`. VS Code opens a Python prompt in the terminal and sends
-   the line to it. Type `t10_s` at that prompt: it answers `9.02`. Leave
-   with `exit()`.
+   the line to it. Type at that prompt:
+
+    ```text
+    t10_s
+    ```
+
+    It answers `9.02`. Leave that prompt:
+
+    ```text
+    exit()
+    ```
 
 5. The room does this step alone: add a sixth line that prints the period
    with three decimals, and run the script.
@@ -230,28 +318,31 @@ Git.
     print(f"T = {period_s:.3f} s")
     ```
 
-You should now see two lines in the terminal:
+!!! success "You should now see"
+    Two lines in the terminal:
 
-```text
-0.9019999999999999
-T = 0.902 s
-```
+    ```text
+    0.9019999999999999
+    T = 0.902 s
+    ```
 
 Leave this table on the projector while the room types.
 
 | Way to run | Use it for |
 |--|--|
-| `python scripts/period.py` in the terminal | Every run that counts. This line goes into the README |
+| `python3 scripts/period.py` in the terminal (Windows `python`) | Every run that counts. This line goes into the README |
 | ▶ **Run Python File** | The same, with one click |
 | `Shift+Enter` on a line | Trying one line of a script |
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | `can't open file '…/scripts/period.py': [Errno 2] No such file or directory` | The terminal is not in the project folder, or the name is misspelled. `pwd`, then `ls scripts` |
+    | `can't open file '…period.py': [Errno 2] No such file or directory` | The terminal is not in the project folder, or the name is misspelled. `pwd`, then `ls scripts`: both work in `zsh` and in PowerShell |
     | The old output, or no output | The file is not saved. A dot on the tab means *not saved* |
     | `IndentationError: unexpected indent` | A space stands before the first character of a line. Delete it |
     | `NameError: name 'period_s' is not defined` | The lines are in another order, or a name is spelled in two ways |
+
+---
 
 ## Part 2 · One line into numbers { #part-2 }
 
@@ -261,29 +352,47 @@ Everything a program reads from a text file arrives as text. This part
 takes one line of the data file and makes four numbers of it in three
 steps: strip, split, convert.
 
-## 4. A line of the file as a string { #line }
+---
+
+### 4. A line of the file as a string { #line }
 
 **0:30 · 12 min**
 
-The line is copied from the file and pasted into the script between quotes.
-To Python it is then a string of 43 characters: 42 that can be seen and the
-line break. Seminar 3 counted the same 42 characters and one line break in
-the hex view.
+**Tell the room.** The line is copied from the file and pasted into the
+script between quotes. To Python it is then a string of 43 characters: 42
+that can be seen and the line break. Seminar 4 counted the same bytes per
+row: 42 characters and one line break.
 
 1. Print the first two lines of the data file in the terminal.
 
-    ```text
-    head -2 data/raw/D0_KPi.csv
-    ```
+    === "macOS"
+
+        ```text
+        head -n 2 data/raw/D0_KPi.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        Get-Content data/raw/D0_KPi.csv -Head 2
+        ```
+
+    The terminal shows:
 
     ```text
     M,PT,TAU,IPCHI2
     1880.649,3000.9534,0.00041271152,1299.1675
     ```
 
-2. Create `scripts/parse_line.py`. Type `line = "`, paste the second line
-   of the output, and close it with `\n"`. The two characters `\n` stand
-   for the line break that ends the line in the file.
+2. Create a new file in `scripts`:
+
+    ```text
+    parse_line.py
+    ```
+
+    Type `line = "`, paste the second line of the output, and close it
+    with `\n"`. The two characters `\n` stand for the line break that ends
+    the line in the file.
 
     ```text
     line = "1880.649,3000.9534,0.00041271152,1299.1675\n"
@@ -311,16 +420,17 @@ the hex view.
     print(type(parts[0]))
     ```
 
-You should now see six lines of output:
+!!! success "You should now see"
+    Six lines of output:
 
-```text
-43
-42
-['1880.649', '3000.9534', '0.00041271152', '1299.1675']
-4
-1880.649
-<class 'str'>
-```
+    ```text
+    43
+    42
+    ['1880.649', '3000.9534', '0.00041271152', '1299.1675']
+    4
+    1880.649
+    <class 'str'>
+    ```
 
 Point at the quotes in the third line. `parts` is a list of four strings.
 `parts[0]` prints as `1880.649` and looks like a number, and its type is
@@ -332,13 +442,16 @@ still `str`.
     | `SyntaxError: unterminated string literal` | The closing `"` is missing, or the pasted text brought a real line break with it. The string has to stand on one line |
     | `44` instead of `43` | A space was pasted with the line. Delete it |
 
-## 5. Four numbers { #numbers }
+---
+
+### 5. Four numbers { #numbers }
 
 **0:42 · 13 min**
 
-`float` turns a string into a number. After that the values can be used in
-arithmetic. The four names are the four columns of the header line: the
-mass `M`, the transverse momentum `PT`, the decay time `TAU` and `IPCHI2`.
+**Tell the room.** `float` turns a string into a number. After that the
+values can be used in arithmetic. The four names are the four columns of
+the header line: the mass `M`, the transverse momentum `PT`, the decay time
+`TAU` and `IPCHI2`.
 
 1. Delete every `print` line except `print(parts)`. Four lines remain.
    Then add:
@@ -373,31 +486,38 @@ mass `M`, the transverse momentum `PT`, the decay time `TAU` and `IPCHI2`.
     print(row["TAU"])
     ```
 
-You should now see:
-
-```text
-['1880.649', '3000.9534', '0.00041271152', '1299.1675']
-1880.649 3000.9534 0.00041271152 1299.1675
-15.648999999999887
-M = 1880.6, 15.6 above 1865
-{'M': 1880.649, 'PT': 3000.9534, 'TAU': 0.00041271152, 'IPCHI2': 1299.1675}
-0.00041271152
-```
+!!! success "You should now see"
+    ```text
+    ['1880.649', '3000.9534', '0.00041271152', '1299.1675']
+    1880.649 3000.9534 0.00041271152 1299.1675
+    15.648999999999887
+    M = 1880.6, 15.6 above 1865
+    {'M': 1880.649, 'PT': 3000.9534, 'TAU': 0.00041271152, 'IPCHI2': 1299.1675}
+    0.00041271152
+    ```
 
 Compare the first two lines of the output: with quotes and without. That
 difference is the whole section. Then compare `parts[2]` with `row["TAU"]`:
 the same value, and only the second says what it is.
 
-## 6. Read the message { #tracebacks }
+---
+
+### 6. Read the message { #tracebacks }
 
 **0:55 · 10 min**
 
-A script that cannot go on stops and prints a traceback. It is read from
-the bottom: the last line says what went wrong, the lines above it say
-where. The room now makes three errors on purpose, reads each message and
-takes the error back with `Ctrl+Z` (macOS `Cmd+Z`).
+**Tell the room.** A script that cannot go on stops and prints a traceback.
+It is read from the bottom: the last line says what went wrong, the lines
+above it say where. The room now makes three errors on purpose, reads each
+message and takes the error back with `Ctrl+Z` (macOS `Cmd+Z`).
 
-1. In line 9 change `parts[3]` to `parts[4]` and run.
+1. In line 9 change `parts[3]` to `parts[4]`. The line reads:
+
+    ```text
+    ipchi2 = float(parts[4])
+    ```
+
+    Run it. The traceback ends:
 
     ```text
         ipchi2 = float(parts[4])
@@ -408,7 +528,13 @@ takes the error back with `Ctrl+Z` (macOS `Cmd+Z`).
     The list has four items with the indices 0 to 3. The line above the
     message names the file and `line 9`. Undo the change.
 
-2. In line 6 change `m = float(parts[0])` to `m = parts[0]` and run.
+2. In line 6 change `m = float(parts[0])` to:
+
+    ```text
+    m = parts[0]
+    ```
+
+    Run it. The traceback ends:
 
     ```text
         print(m - 1865)
@@ -420,17 +546,29 @@ takes the error back with `Ctrl+Z` (macOS `Cmd+Z`).
     line 6, where `m` was made. Ask the room how to get from line 11 to
     line 6: follow the name `m` upwards. Undo the change.
 
-3. In line 10 change `ipchi2` to `ipchi` and run.
+3. In line 10 change `ipchi2` to `ipchi`. The line reads:
+
+    ```text
+    print(m, pt, tau, ipchi)
+    ```
+
+    Before running, look at the Editor: the extension has drawn a wavy
+    line under `ipchi`. Run it. The last line of the traceback:
 
     ```text
     NameError: name 'ipchi' is not defined. Did you mean: 'ipchi2'?
     ```
 
-    Before running, look at the Editor: the extension has drawn a wavy
-    line under `ipchi`. Undo the change.
+    Undo the change.
 
 4. Now an error without a message. In line 1 change `1880.649` to
-   `1880,649`, a decimal comma, and run. The output begins:
+   `1880,649`, a decimal comma. The line reads:
+
+    ```text
+    line = "1880,649,3000.9534,0.00041271152,1299.1675\n"
+    ```
+
+    Run it. The output begins:
 
     ```text
     ['1880', '649', '3000.9534', '0.00041271152', '1299.1675']
@@ -441,11 +579,14 @@ takes the error back with `Ctrl+Z` (macOS `Cmd+Z`).
     every value moved one place to the right: the momentum is now 649 and
     the decay time 3000.9534. Undo the change and run once more.
 
-You should now see the six lines of section 5 again.
+!!! success "You should now see"
+    The six lines of section 5 again.
 
-Say it in these words: Python finds a line that it cannot carry out. It
-does not find a number that is wrong. For that someone has to know what
-the number should be.
+**Say it in these words.** Python finds a line that it cannot carry out. It
+does not find a number that is wrong. For that someone has to know what the
+number should be.
+
+---
 
 ## Part 3 · A loop over the first lines { #part-3 }
 
@@ -455,23 +596,39 @@ The three steps of Part 2 work for one line. A loop applies them to every
 line that it is given: five lines today, 91 583 once the whole file is
 read.
 
-## 7. The first lines in a loop { #loop }
+---
+
+### 7. The first lines in a loop { #loop }
 
 **1:05 · 15 min**
 
-A string between three quotes may run over several lines. `splitlines`
-cuts it into a list with one string for each line. The loop
-`for line in lines:` then runs its block once for each of them. The block
-is the lines that are indented by four spaces.
+**Tell the room.** A string between three quotes may run over several
+lines. `splitlines` cuts it into a list with one string for each line. The
+loop `for line in lines:` then runs its block once for each of them. The
+block is the lines that are indented by four spaces.
 
 1. Print the first six lines of the file in the terminal and copy them.
 
+    === "macOS"
+
+        ```text
+        head -n 6 data/raw/D0_KPi.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        Get-Content data/raw/D0_KPi.csv -Head 6
+        ```
+
+2. Create a new file in `scripts`:
+
     ```text
-    head -6 data/raw/D0_KPi.csv
+    first_rows.py
     ```
 
-2. Create `scripts/first_rows.py`. Type `table = """`, paste the six lines,
-   and close with `"""` directly after the last number.
+    Type `table = """`, paste the six lines, and close with `"""`
+    directly after the last number.
 
     ```text
     table = """M,PT,TAU,IPCHI2
@@ -510,6 +667,10 @@ is the lines that are indented by four spaces.
 5. Change `lines` in the `for` line to `lines[1:]`: every line from index 1
    on. Run again. Five masses are printed.
 
+    ```text
+    for line in lines[1:]:
+    ```
+
 6. Print two columns with a fixed width. Replace the loop by:
 
     ```text
@@ -521,18 +682,17 @@ is the lines that are indented by four spaces.
         print(f"{m:>10.1f}{pt:>10.1f}")
     ```
 
-You should now see:
-
-```text
-6
-M,PT,TAU,IPCHI2
-         M        PT
-    1880.6    3001.0
-    1860.7    2803.4
-    1913.9    2542.2
-    1888.8    4453.1
-    1862.5    2764.2
-```
+!!! success "You should now see"
+    ```text
+    6
+    M,PT,TAU,IPCHI2
+             M        PT
+        1880.6    3001.0
+        1860.7    2803.4
+        1913.9    2542.2
+        1888.8    4453.1
+        1862.5    2764.2
+    ```
 
 `>10.1f` reads: to the right, in a width of 10 characters, with one
 decimal. The numbers stand under each other because every one of them takes
@@ -546,17 +706,26 @@ the same width.
     | Only one row is printed | The `print` line is not indented, so it runs once, after the loop |
     | `ValueError: could not convert string to float: ''` | An empty line stands before the closing `"""`. Close the quotes directly after the last number |
 
-## 8. A mean and a missing value { #mean }
+---
+
+### 8. A mean and a missing value { #mean }
 
 **1:20 · 20 min**
 
-A sum is built in a loop from three pieces: a start value before the loop,
-an update inside it, and the result after it. The file marks a missing
-decay time with `-100`. Seminar 1 found 49 such rows with `Ctrl+F`. A
-marker like this has to be taken out before any arithmetic.
+**Tell the room.** A sum is built in a loop from three pieces: a start value
+before the loop, an update inside it, and the result after it. The file
+marks a missing decay time with `-100`. Seminar 4 counted 49 such rows with
+`grep -c` and `Select-String`. A marker like this has to be taken out
+before any arithmetic.
 
 1. Open `data/raw/D0_KPi.csv`, press `Ctrl+G` (the same key on macOS), type
-   `343` and press Enter. Line 343 is the first row without a decay time:
+   the line number and press Enter.
+
+    ```text
+    343
+    ```
+
+    Line 343 is the first row without a decay time:
 
     ```text
     1818.1002,2978.644,-100.0,9901.186
@@ -581,7 +750,7 @@ marker like this has to be taken out before any arithmetic.
 
 3. The room does this step alone: copy the seven lines below themselves and
    change the copy to the mean of the decay time, column 2, printed with
-   `:.6f`.
+   `:.6f`. The last line is then:
 
     ```text
     6 rows, mean TAU = -16.666393
@@ -610,15 +779,16 @@ marker like this has to be taken out before any arithmetic.
     print(f"mean TAU = {total / n:.6f}")
     ```
 
-You should now see, as the last lines of the output:
+!!! success "You should now see"
+    As the last lines of the output:
 
-```text
-    1818.1    2978.6
-6 rows, mean M = 1870.8
-6 rows, mean TAU = -16.666393
-5 rows with a decay time, 1 without
-mean TAU = 0.000328
-```
+    ```text
+        1818.1    2978.6
+    6 rows, mean M = 1870.8
+    6 rows, mean TAU = -16.666393
+    5 rows with a decay time, 1 without
+    mean TAU = 0.000328
+    ```
 
 The block under `if` is indented twice: once for the loop and once for the
 decision. `MISSING` is written in capitals because it never changes, and it
@@ -629,23 +799,37 @@ has a name because a bare `-100` in the middle of a script explains nothing.
     `total = total + tau` stands outside the `else`, so the −100 is added
     after all. Its indentation has to match `n = n + 1`.
 
+---
+
 ## Part 4 · Find a bug { #part-4 }
 
 **1:40 to 2:00 · sections 9 and 10**
 
-## 9. A wrong number without a message { #debug }
+A script that gives a wrong number without any message is examined with
+`print` and with the debugger. Then the scripts are committed.
+
+---
+
+### 9. A wrong number without a message { #debug }
 
 **1:40 · 15 min**
 
-The pendulum table of Lecture 2 came with a line `;mean;15,14`: ten swings
-took 15.14 s on average, so the mean period is 1.514 s. That is the
-expected value. The script below gets another number and reports no error.
-The room finds the reason twice: with a `print`, and with the debugger,
-which stops the script at a line and shows every name with its value.
+**Tell the room.** The pendulum table of Lecture 2 came with a line
+`;mean;15,14`: ten swings took 15.14 s on average, so the mean period is
+1.514 s. That is the expected value. The script below gets another number
+and reports no error. The room finds the reason twice: with a `print`, and
+with the debugger, which stops the script at a line and shows every name
+with its value.
 
-1. Create `scripts/mean_period.py`. Open `data/processed/pendulum.csv`,
-   copy its ten lines and paste them between three quotes. Then type the
-   rest as it stands here, with the mistake in it.
+1. Create a new file in `scripts`:
+
+    ```text
+    mean_period.py
+    ```
+
+    Open `data/processed/pendulum.csv`, copy its ten lines and paste them
+    between three quotes. Then type the rest as it stands here, with the
+    mistake in it.
 
     ```text
     table = """length_cm,t10_s
@@ -676,6 +860,8 @@ which stops the script at a line and shows every name with its value.
     print(f"{total=} {len(lines)=}")
     ```
 
+    The output:
+
     ```text
     total=13.625 len(lines)=10
     1.3625
@@ -703,8 +889,13 @@ which stops the script at a line and shows every name with its value.
 8. Click the red dot to remove it and put one at line 17. Press `F5`. The
    loop is finished: `total = 13.625`. Under **Variables** open `lines`
    with the arrow in front of it. Its last entry is `len(): 10`. Select the
-   **Debug Console** tab in the Panel, type `total / 9` and press Enter. It
-   answers `1.5138888888888888`.
+   **Debug Console** tab in the Panel, type and press Enter:
+
+    ```text
+    total / 9
+    ```
+
+    It answers `1.5138888888888888`.
 
 9. Press `Shift+F5` to stop. Remove the breakpoint. Repair line 17 and
    print the result for a reader.
@@ -714,7 +905,8 @@ which stops the script at a line and shows every name with its value.
     print(f"mean period = {mean:.3f} s")
     ```
 
-You should now see `mean period = 1.514 s` in the terminal.
+!!! success "You should now see"
+    `mean period = 1.514 s` in the terminal.
 
 `print` answers the one question that was asked. The debugger shows every
 name at once, at any line, without a change to the script.
@@ -727,12 +919,14 @@ name at once, at any line, without a change to the script.
     | The script runs through without stopping | The red dot stands on an empty line or on a line of the table. Put it on line 16 |
     | The yellow mark stays and the terminal is silent | The script is stopped, not broken. `F5` continues, `Shift+F5` ends |
 
-## 10. Wrap up { #wrap-up }
+---
+
+### 10. Wrap up { #wrap-up }
 
 **1:55 · 5 min**
 
-The scripts are part of the project now. They are listed in the README and
-committed, like every other file of the folder.
+**Tell the room.** The scripts are part of the project now. They are listed
+in the README and committed, like every other file of the folder.
 
 1. Add a section to `README.md`.
 
@@ -740,7 +934,8 @@ committed, like every other file of the folder.
     ## Scripts
 
     Run from the project folder, for example
-    `python scripts/parse_line.py` (macOS `python3`).
+    `python3 scripts/parse_line.py` in zsh,
+    `python scripts/parse_line.py` in PowerShell.
 
     - `period.py`: the period of one pendulum row
     - `parse_line.py`: one line of `D0_KPi.csv` as four numbers
@@ -750,15 +945,28 @@ committed, like every other file of the folder.
 
 2. Commit the four scripts and the README: in the **Source Control** view
    stage the changes, type the message `Add the first Python scripts` and
-   select **Commit**. Or type:
+   select **Commit**. Or type the two lines below, the same in `zsh` and in
+   PowerShell:
 
     ```text
     git add scripts README.md
+    ```
+
+    ```text
     git commit -m "Add the first Python scripts"
     ```
 
-3. Put the tasks of the next section on the projector and read them aloud.
-   Ask on the way out which step was hardest.
+3. Read the list below aloud. Ask on the way out which step was hardest.
+
+!!! success "You should now see"
+    The commit `Add the first Python scripts` in the **Source Control**
+    view.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | `fatal: not a git repository` | The folder was unpacked from the zip today and is not under Git. Select **Initialize Repository** in the **Source Control** view once, as in Seminar 5, then commit |
+    | Windows: `warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it` | A note, not an error: the commit is made. Git on this laptop missed the setting of Seminar 5. Type `git config --global core.autocrlf false` once |
 
 What the room has learned:
 
@@ -776,24 +984,7 @@ What the room has learned:
 - A wrong number without a message is found by comparing with an expected
   value, with `print` or with a breakpoint.
 
-## Next steps, at home
-
-**45 min, before the next session**
-
-1. **Your own dataset.** Create `scripts/my_first_rows.py`. Paste the
-   header line and the first five rows of your dataset between three
-   quotes. Split each line with the separator of your file and convert the
-   columns that hold numbers.
-
-2. Print two of the columns as a table with a fixed width, as in section 7.
-
-3. Find out which columns `float` cannot convert, and why: a text, a date,
-   a decimal comma, an empty field. Write one line on each into the README.
-
-4. If your file marks missing values, count them in your rows with an `if`,
-   as in section 8.
-
-5. Add the script to the **Scripts** section of the README and commit.
+---
 
 ## Stretch goals
 
@@ -818,6 +1009,13 @@ lecturer.
 - Build one dictionary per row in `first_rows.py`, with the names of the
   header line as keys, and collect them in a list `rows`. The answer:
   `rows[0]["M"]` is 1880.649 and `rows[-1]["TAU"]` is -100.0.
+- A student with a dataset of their own pastes its header line and first
+  five rows into `scripts/my_first_rows.py`, splits each line with the
+  separator of the file and converts the columns that hold numbers. Which
+  columns does `float` not convert, and why: a text, a date, a decimal
+  comma, an empty field? Then print two columns with a fixed width, as in
+  section 7, and, if the file marks missing values, count them with an
+  `if`, as in section 8.
 
 ## If students ask for more
 

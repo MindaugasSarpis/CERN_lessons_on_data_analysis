@@ -3,7 +3,9 @@ layout: cover
 title: "Data Fitting from First Principles"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md).
 # The prelude holds the pendulum arrays of the slide "The Same in NumPy", so
-# every later runner works without that slide having been run first.
+# every later runner works without that slide having been run first, and the
+# 45 bins of the D0 mass histogram of the slide "Counts and Their Uncertainty"
+# (1820 to 1910 MeV/c^2 in bins of 2 MeV; the browser cannot read D0_KPi.csv).
 python:
   installs: ["numpy", "scipy"]
   prelude: |
@@ -14,6 +16,12 @@ python:
     T = t10 / 10
     y = T**2
     sy = 2 * T * 0.01
+    n = np.array([1443, 1477, 1419, 1480, 1426, 1505, 1430, 1444, 1534, 1471, 1456, 1494,
+                  1611, 1611, 1774, 1868, 2068, 2454, 2749, 3068, 3426, 3746, 3605, 3499,
+                  3220, 2824, 2515, 2254, 2027, 1768, 1658, 1506, 1484, 1419, 1473, 1338,
+                  1386, 1321, 1421, 1324, 1363, 1340, 1359, 1312, 1310])
+    m = np.arange(1821, 1910, 2.0)
+    s = np.sqrt(n)
   loadPackagesFromImports: true
   suppressDeprecationWarnings: true
 ---
@@ -27,8 +35,57 @@ python:
 ##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
 
 <!--
-Speaker: one table of nine rows carries most of the lecture. Every step is done
-on it three times: with a calculator, in NumPy, with SciPy. (~1 min)
+Speaker: the lecture opens on the table Lecture 09 left on the mass column and
+answers it with a fit. The fit is built on the nine pendulum rows first, where
+every step can be done with a calculator, in NumPy and with SciPy. (~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which Number Would You **Report**?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📋 **Lecture 09: the mean of column `M`**
+
+| Rows with | $N$ | mean (MeV/c²) |
+| --- | --- | --- |
+| all | 91 583 | 1864.10 ± 0.08 |
+| 1840 < $M$ < 1890 | 56 577 | 1864.71 ± 0.05 |
+| 1850 < $M$ < 1880 | 41 090 | 1864.79 ± 0.04 |
+| 1855 < $M$ < 1875 | 31 132 | 1864.81 ± 0.03 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🤔 **Four answers to one question**
+
+Each mean has a small standard error, yet the four lie up to 0.71 MeV/c² apart, more than twenty times the smallest error. The D⁰ mass is 1864.84 ± 0.05 MeV/c² (Particle Data Group).
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+Lecture 09 named the reason: the rows are a peak on a flat part that is not D⁰. A mean cannot tell the two apart. A **model** of peak and flat part can.
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+Speaker: the table is the one of Lecture 09, "What the Standard Error Does Not
+Cover". Ask the room which row they would write into a report, and take a vote.
+Most pick the last row because it is nearest the PDG value. Write the vote
+on the board and leave it open. (~3 min)
 -->
 
 ---
@@ -118,13 +175,14 @@ $$\hat\mu = \frac{\sum_i y_i/\sigma_i^2}{\sum_i 1/\sigma_i^2}, \qquad \sigma_{\h
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Today the measured quantity changes with a second quantity $x$, and a model $f(x;\theta)$ says how. The steps stay the same: write the likelihood, find its maximum, find the uncertainty of the result.
+On the nine pendulum rows it gave $g = 9.80 \pm 0.04$ m/s², with $T^2 = 4\pi^2\ell/g$ taken as exact. Today the measured quantity changes with a second quantity $x$, and a model $f(x;\theta)$ says how. The steps stay the same: write the likelihood, find its maximum, find the uncertainty of the result.
 
 </div>
 
 <!--
 Speaker: write the two formulas of the weighted mean on the board and leave
-them there. They come back three times today. (~2 min)
+them there. Nothing in Lecture 09 tested
+the formula of the pendulum: the fit of today does. (~2 min)
 -->
 
 ---
@@ -133,6 +191,8 @@ hideInToc: true
 ---
 
 # What a **Fit** Is
+
+A mean takes the formula behind the data on trust. A fit puts the formula in, as a model with free parameters, and lets the data set them: first on nine pendulum rows, where every step can be checked by hand.
 
 ---
 hideInToc: true
@@ -191,8 +251,9 @@ The length is written $\ell$ today. The letter $L$ is the likelihood.
 </div>
 
 <!--
-Speaker: the table is the one cleaned by hand in Lecture 02. Ask the room what
-they would plot to get g. (~2 min)
+Speaker: the table is the 97-byte pendulum.csv that scripts/clean_pendulum.py
+writes, run in Lecture 04 and Seminar 4. Ask the room what they would plot to
+get g. (~2 min)
 -->
 
 ---
@@ -203,7 +264,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-The same nine rows, plotted twice. A straight line has two parameters and can be fitted by hand. The dashed curves are the theory with $g = 9.81$ m/s².
+The same nine rows, plotted twice. A straight line has two parameters and can be fitted by hand. The dashed curves are the theory with $g = 9.81$ m/s², put in as Lecture 08 did. Today the data set $g$.
 
 </div>
 
@@ -269,7 +330,7 @@ The length is taken as exact. An error of 1 mm in $\ell$ moves $T^2$ by 0.004 s�
 
 <!--
 Speaker: the 0.1 s is an assumption, and the lecture says so every time it is
-used. The goodness of fit later tests it. The uncertainties are not equal: the
+used. The uncertainties are not equal: the
 long pendulum has twice the uncertainty in T squared. (~2 min)
 -->
 
@@ -318,8 +379,8 @@ Three lines chosen by eye. At full scale they look alike. With $4\ell$ subtracte
 <!--
 Speaker: ask for a vote on A, B or C before going on. The slope a gives
 g = 4 pi squared over a. The intercept b tests the theory, which demands
-b = 0. The right panel is the data with one known line subtracted; the lecture
-uses this view again. (~3 min)
+b = 0. The right panel is the data with one known line subtracted, so that
+differences of 0.01 s squared become visible. (~3 min)
 -->
 
 ---
@@ -328,6 +389,8 @@ hideInToc: true
 ---
 
 # From Likelihood to **χ²**
+
+Three lines drawn by eye look alike at full scale. Ranking them needs one number that uses the uncertainty of every point, and the likelihood of Lecture 09 supplies it.
 
 ---
 hideInToc: true
@@ -496,64 +559,13 @@ Speaker: do the first row on the board. 0.8136 minus 0.8 is 0.0136; divided by
 -->
 
 ---
-hideInToc: true
----
-
-# The Weighted Mean Is a **Fit**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## 1️⃣ **The simplest model: a constant,** $f(x;\mu) = \mu$
-
-$$\chi^2(\mu) = \sum_i \frac{(y_i-\mu)^2}{\sigma_i^2}, \qquad \frac{d\chi^2}{d\mu} = -2\sum_i \frac{y_i-\mu}{\sigma_i^2} = 0 \quad\Longrightarrow\quad \hat\mu = \frac{\sum_i y_i/\sigma_i^2}{\sum_i 1/\sigma_i^2}$$
-
-The weighted mean of Lecture 09 is the least-squares fit of a constant.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🕰️ **On the pendulum**
-
-Each row gives its own $g_i = 4\pi^2\ell_i/T_i^2$, from $9.70 \pm 0.22$ at 0.2 m to $9.86 \pm 0.10$ at 1.0 m. The fit of a constant to the nine values:
-
-$$\hat g = 9.804 \pm 0.042\ \text{m/s}^2$$
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❓ **What this leaves open**
-
-- It takes $T^2 = (4\pi^2/g)\,\ell$ as exact. Nothing tests it
-- If every length is off by the same amount, the line misses the origin, and each $g_i$ is wrong by a different factor
-- A line with a free intercept has two parameters, and no value per row to average
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-🧭 The recipe for any model: write $\chi^2$, set its derivative with respect to each parameter to zero, solve for the parameters.
-
-</div>
-
-<!--
-Speaker: the nine values are 9.70, 9.70, 9.93, 9.75, 9.87, 9.74, 9.86, 9.74,
-9.86 with uncertainties 0.22, 0.18, 0.16, 0.14, 0.13, 0.12, 0.11, 0.10, 0.10.
-Keep 9.804 plus or minus 0.042 in mind: the straight-line fit returns to it
-when the intercept is fixed at zero. (~3 min)
--->
-
----
 layout: section
 hideInToc: true
 ---
 
 # The Straight Line in **Closed Form**
+
+χ² ranks any line: line A scores 5.14, B and C more. The best line is the lowest point of χ², and for a straight line that point can be solved for.
 
 ---
 hideInToc: true
@@ -759,7 +771,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-$T^2 = 4.010\,\ell + 0.009$. Left: the line through the nine points. Right: what is left of each point after the line is subtracted, the **residual**, with its error bar $\sigma_i$.
+$T^2 = 4.010\,\ell + 0.009$ with $\chi^2 = 2.65$, lower than line A (5.14), B and C. Left: the line through the nine points. Right: what is left of each point after the line is subtracted, the **residual**, with its error bar $\sigma_i$.
 
 </div>
 
@@ -801,6 +813,8 @@ hideInToc: true
 
 # Uncertainties of the **Parameters**
 
+Five sums gave a = 4.0102 s²/m and g = 9.845 m/s². Without its uncertainty that number cannot be compared with 9.81, nor with the 9.80 of Lecture 09.
+
 ---
 hideInToc: true
 ---
@@ -827,7 +841,7 @@ $$\sigma_a^2 = \sum_i c_i^2\,\sigma_i^2 = \frac{1}{\Delta^2}\sum_i \frac{(S\,x_i
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-If the nine times were measured again, each $y_i$ would come out a little different, and so would $\hat a$. $\sigma_a$ is the width of that scatter.
+If the nine times were measured again, each $y_i$ would come out a little different, and so would $\hat a$. $\sigma_a$ is the width of that scatter, the spread that Lecture 08's band of 400 resampled lines drew.
 
 </div>
 
@@ -1073,16 +1087,17 @@ $b = 0.009 \pm 0.019$ s² is 0.5σ from zero. The data agree with a line through
 
 ## 🔒 **With b fixed at 0**
 
-One parameter: $a = S_{xy}/S_{xx} = 4.026 \pm 0.017$ and $g = 9.806 \pm 0.042$ m/s², the weighted mean of the nine $g_i$. The free intercept doubles $\sigma_g$. That is the price of the test.
+One parameter: $a = S_{xy}/S_{xx} = 4.026 \pm 0.017$ and $g = 9.806 \pm 0.042$ m/s², where Lecture 09's weighted mean gave 9.80 ± 0.04. The free intercept doubles $\sigma_g$. That is the price of the test.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the weighted mean of the nine values was 9.804; the fit through the
-origin gives 9.806. They are the same analysis up to the linear approximation
-in the error propagation. (~3 min)
+Speaker: Lecture 09's weighted mean of the nine values was 9.8047, with 1 mm
+on each length; with the lengths exact, as today, it is 9.8045. The fit
+through the origin gives 9.8061. They are the same analysis up to the linear
+approximation in the error propagation. (~3 min)
 -->
 
 ---
@@ -1091,6 +1106,8 @@ hideInToc: true
 ---
 
 # The Same in **Matrix Form**
+
+The five sums gave the parameters, and the curvature of χ² their covariance. Written with matrices, both steps hold for any number of parameters.
 
 ---
 hideInToc: true
@@ -1114,35 +1131,7 @@ $A$ has one row per point and one column per parameter.
 
 $$A^{\mathsf T} W A\;\hat{\boldsymbol\theta} = A^{\mathsf T} W\,\mathbf y, \qquad V = \big(A^{\mathsf T} W A\big)^{-1}$$
 
-The normal equations and the covariance matrix, for any number of parameters.
-
-</div>
-
----
-hideInToc: true
----
-
-# The Pendulum as **Matrices**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## ➕ **The products are the five sums**
-
-$$A^{\mathsf T} W A = \begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix} = \begin{pmatrix} 3353.27 & 5582.56\\ 5582.56 & 11\,940.44\end{pmatrix}, \qquad A^{\mathsf T} W\,\mathbf y = \begin{pmatrix} S_{xy}\\ S_y\end{pmatrix} = \begin{pmatrix} 13\,500\\ 22\,500\end{pmatrix}$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔄 **Invert and multiply**
-
-$$V = \begin{pmatrix} 0.001345 & -0.000629\\ -0.000629 & 0.000378\end{pmatrix}, \qquad \hat{\boldsymbol\theta} = V\,A^{\mathsf T} W\,\mathbf y = \begin{pmatrix} 4.0102\\ 0.0095\end{pmatrix}$$
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The same numbers as before: $\sqrt{0.001345} = 0.0367 = \sigma_a$, $\sqrt{0.000378} = 0.0194 = \sigma_b$, and the off-diagonal element is $\operatorname{cov}(a,b)$.
+The normal equations and the covariance matrix, for any number of parameters. For the pendulum $A^{\mathsf T} W A$ is the matrix of the five sums, and $V$ holds $\sigma_a^2 = 0.001345$, $\sigma_b^2 = 0.000378$ and $\operatorname{cov}(a,b) = -0.000629$, the numbers found before.
 
 </div>
 
@@ -1231,6 +1220,8 @@ hideInToc: true
 
 # Models That Are **Not Linear**
 
+The matrix form needs a model that is a sum of known functions, each times one parameter. The position and the width of a peak sit inside an exponential.
+
 ---
 hideInToc: true
 ---
@@ -1299,7 +1290,7 @@ This is the first-order expansion that gave the error-propagation formula in Lec
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Among all small steps of one length, the step along $\nabla\chi^2$ raises $\chi^2$ the most, and the opposite step lowers it the most. The gradient points uphill.
+Each term is the **chain rule**: the derivative of the square, $-2\,(y_i - f)/\sigma_i^2$, times the derivative of $f$. Among all small steps of one length, the step along $\nabla\chi^2$ raises $\chi^2$ the most, and the opposite step lowers it the most. The gradient points uphill.
 
 </div>
 
@@ -1411,7 +1402,7 @@ After 500 steps the result is that of the closed formulas: $a = 4.0102$, $b = 0.
 
 <!--
 Speaker: have the room do step 1 on the calculator. The first step removes six
-sevenths of chi2. Then the progress is slow: the slide after next shows why.
+sevenths of chi2. Then the progress is slow.
 (~3 min)
 -->
 
@@ -1552,53 +1543,16 @@ For a nonlinear model the curvature changes from place to place, and the step is
 hideInToc: true
 ---
 
-# **SciPy**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📦 **What it is**
-
-A library of numerical methods that work on NumPy arrays: minimisation and fitting (`scipy.optimize`), probability distributions (`scipy.stats`), integration, interpolation, linear algebra, signal processing.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⬇️ **Install it once**
-
-```text
-Windows         python -m pip install scipy
-macOS, Linux    python3 -m pip install scipy
-```
-
-The code on these slides was run with SciPy 1.16 and NumPy 2.3.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-## 🐍 **Import the one function**
-
-```python
-import numpy as np
-from scipy.optimize import curve_fit
-```
-
-SciPy is imported part by part. `curve_fit` minimises $\chi^2$ for a model given as a Python function, linear in its parameters or not.
-
-</div>
-
----
-hideInToc: true
----
-
 # `curve_fit`: the **Call**
 
+<div class="note-text mt-sm">
+
+SciPy is a library of numerical methods on NumPy arrays, imported part by part. Its `curve_fit` minimises $\chi^2$ with the Levenberg–Marquardt method, for a model given as a Python function.
+
+</div>
+
 ```python
+from scipy.optimize import curve_fit
 popt, pcov = curve_fit(f, xdata, ydata, p0=[...], sigma=..., absolute_sigma=True)
 ```
 
@@ -1703,6 +1657,15 @@ the hand descent. (~3 min)
 -->
 
 ---
+layout: section
+hideInToc: true
+---
+
+# The D⁰ **Peak**
+
+`curve_fit` walks downhill on any χ² and gave the pendulum numbers a third time. Back to the opening table: a peak on a flat part, and the mean could not tell them apart.
+
+---
 hideInToc: true
 ---
 
@@ -1746,7 +1709,7 @@ For large $n$ the Poisson distribution is close to a Gaussian, so $\chi^2$ appli
 
 ## 📊 **In this histogram**
 
-| Bin | n | √n | relative |
+| Bin (Lecture 08) | n | √n | relative |
 | --- | --- | --- | --- |
 | smallest | 1310 | 36.2 | 2.8 % |
 | largest | 3746 | 61.2 | 1.6 % |
@@ -1864,55 +1827,29 @@ hideInToc: true
 
 # The Fit in **Code**
 
-<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 1.75fr 1fr;">
-
-<div>
-
-```python
+```py {monaco-run} {autorun:false}
+from scipy.optimize import curve_fit      # m, n, s: the 45 bins of "Counts and Their Uncertainty"
 def model(m, A, mu, sigma, c0, c1):
     peak = A * np.exp(-(m - mu)**2 / (2 * sigma**2))
     return peak + c0 + c1 * (m - 1865)
 
-p0 = [2300, 1865, 8, 1400, 0]
-popt, pcov = curve_fit(model, m, n, p0=p0,
-                       sigma=s, absolute_sigma=True)
+popt, pcov = curve_fit(model, m, n, p0=[2300, 1865, 8, 1400, 0], sigma=s, absolute_sigma=True)
 err = np.sqrt(np.diag(pcov))
-pull = (n - model(m, *popt)) / s
-chi2 = np.sum(pull**2)
-names = ["A", "mu", "sigma", "c0", "c1"]
-for name, v, e in zip(names, popt, err):
-    print(f"{name:5s} = {v:9.3f} +- {e:.3f}")
-print(f"chi2 = {chi2:.1f}, ndf = {len(m) - 5}")
+chi2 = np.sum(((n - model(m, *popt)) / s)**2)
+print(f"mu    = {popt[1]:.3f} +- {err[1]:.3f}")     # mu    = 1864.472 +- 0.096
+print(f"sigma = {popt[2]:.3f} +- {err[2]:.3f}")     # sigma = 7.645 +- 0.099
+print(f"chi2  = {chi2:.1f}, ndf = {len(m) - 5}")    # chi2  = 53.4, ndf = 40
 ```
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🖨️ **Output**
-
-```text
-A     =  2190.942 +- 27.180
-mu    =  1864.472 +- 0.096
-sigma =     7.645 +- 0.099
-c0    =  1414.085 +- 7.654
-c1    =    -1.508 +- 0.222
-chi2 = 53.4, ndf = 40
-```
-
-`*popt` passes the five values as five arguments.
-
-</div>
-
-</div>
 
 <!--
-Speaker: m, n and s are the arrays of the slide "Counts and Their
-Uncertainty". curve_fit evaluated the model 31 times. Plain gradient descent
-with one learning rate for the five parameters is at chi2 = 57.6 after
-100 000 steps. (~3 min)
+Speaker: the 45 counts are typed into the page because the browser has no
+file to read; in a script they come from the np.histogram line of "Counts and
+Their Uncertainty". The fit also returns A = 2190.9, c0 = 1414.1 and
+c1 = -1.508. *popt passes the five values as five arguments. curve_fit evaluated
+the model 31 times. Plain gradient descent with one learning rate for the
+five parameters is at chi2 = 57.6 after 100 000 steps. Ask the room before
+running: from the starting values, where will mu land? (~3 min)
 -->
-
 ---
 hideInToc: true
 ---
@@ -1927,47 +1864,63 @@ hideInToc: true
 
 # What the Result **Says**
 
-<div class="card card-success card-glass pad-compact mt-md">
+<div class="card card-success card-glass pad-compact mt-sm">
 
 $$\mu = 1864.47 \pm 0.10\ \text{MeV}/c^2, \qquad \sigma = 7.65 \pm 0.10\ \text{MeV}/c^2, \qquad \chi^2/\text{ndf} = 53.4/40$$
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-## ✅ **What it means**
+## 🔁 **Move the window**
 
-- 0.10 MeV/c² is the statistical uncertainty: the scatter of $\mu$ over repetitions with as many new events
-- Bins of 1 MeV give 1864.48, bins of 3 MeV give 1864.50: less than the uncertainty
-- $\sigma$ is the mass resolution of the detector. The natural width of the D⁰ is a billion times smaller
+| Number | Window (MeV/c²) | μ (MeV/c²) |
+| --- | --- | --- |
+| mean of the rows | 1855 to 1875 | 1864.81 ± 0.03 |
+| mean of the rows | 1854 to 1874 | 1864.06 ± 0.03 |
+| fit | 1816 to 1906 | 1864.45 ± 0.10 |
+| fit | 1820 to 1910 | 1864.47 ± 0.10 |
+| fit | 1824 to 1914 | 1864.50 ± 0.10 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ✅ **The opening table, answered**
+
+A window moved by 1 MeV moves the mean by 0.75. Everything in it, the flat part and the tails of the peak, pulls the mean towards the centre of the window. Lecture 09's windows were all centred on 1865, so their means were pulled towards 1865 and came near 1864.84. A fit window moved by 4 MeV moves μ by 0.03. Report the fit.
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-## ⚠️ **What it does not mean**
+0.10 is the statistical uncertainty. The PDG value lies 0.37 above, nearly four times as far.
 
-- It is not a measurement of the D⁰ mass. The Particle Data Group value is 1864.84 ± 0.05 MeV/c². The fit lies 0.37 below, nearly four times its statistical uncertainty
-- The fit knows nothing of the calibration of the detector or of the true shape of the peak. Those are systematic uncertainties. This teaching file comes without them
+</div>
 
 </div>
 
 </div>
 
 <!--
-Speaker: the honest sentence for a report: the peak in this file is at
-1864.47 plus or minus 0.10 (statistical), with a Gaussian on a linear
-background fitted between 1820 and 1910. (~3 min)
+Speaker: go back to the vote on the opening slide. The room's favourite, the
+last row, was near the PDG value by the choice of its window. Bins of 1 MeV
+give 1864.48, bins of 3 MeV 1864.50: less than the uncertainty. sigma is the
+mass resolution of the detector; the natural width of the D0 is a billion
+times smaller. (~3 min)
 -->
-
 ---
 layout: section
 hideInToc: true
 ---
 
 # Goodness of **Fit**
+
+Each fit ended on a χ²: 2.65 for the line through nine points, 53.4 for the peak in 45 bins. Whether a χ² is good depends on what it should be.
 
 ---
 hideInToc: true
@@ -2024,7 +1977,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-The **p-value** is the probability of a $\chi^2$ as large as the observed one or larger, if the model and the $\sigma_i$ are right. 0.08 means: 1 correct fit in 13 looks this bad or worse.
+The **p-value** of Lecture 09, now for $\chi^2$: the probability of a $\chi^2$ as large as the observed one or larger, if the model and the $\sigma_i$ are right. 0.08 means: 1 correct fit in 13 looks this bad or worse.
 
 </div>
 
@@ -2259,7 +2212,7 @@ Nine parameters for nine points: the curve passes through every point, $\chi^2 =
 
 <div class="card card-secondary card-glass pad-compact">
 
-From degree 1 to 2, $\chi^2$ falls by 0.04, and each further term buys less than 1. The line is enough.
+From degree 1 to 2 (the third column of "Linear in the Parameters"), $\chi^2$ falls by 0.04, and each further term buys less than 1. The line is enough.
 
 </div>
 
@@ -2294,6 +2247,8 @@ hideInToc: true
 
 # What Goes **Wrong**
 
+χ² and the pulls test a model against the scatter of its points. A fit can still go wrong in ways that neither of them shows.
+
 ---
 hideInToc: true
 ---
@@ -2322,36 +2277,12 @@ hideInToc: true
 <!--
 Speaker: a Gaussian of width 2 at 1840 does not overlap the peak at 1865. The
 derivative of chi2 with respect to mu is nearly zero there, so the descent has
-no direction to the peak and fits a wide negative Gaussian instead. (~3 min)
+no direction to the peak and fits a wide negative Gaussian instead. Ask the
+room first: which number on the output says that something is wrong? chi2 =
+3285 for 40 degrees of freedom, and a negative height A. To show it live,
+change p0 in the runner of "The Fit in Code" to [2300, 1840, 2, 1400, 0].
+(~3 min)
 -->
-
----
-hideInToc: true
----
-
-# Correlated **Parameters**
-
-<img class="fig" src="/figures/viz_fitting_covariance.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:285px;">
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ↔️ **ρ(A, σ) = −0.46**
-
-A higher, narrower peak and a lower, wider one describe the data almost equally well. The data fix the area of the peak better than its height or width.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧮 **The number of D⁰ in the peak**
-
-$N_{\text{sig}} = A\,\sigma\sqrt{2\pi}\,/\,(2\ \text{MeV}) = 20\,990$. Its uncertainty is 280 with the covariance of $A$ and $\sigma$, and 380 without it.
-
-</div>
-
-</div>
 
 ---
 hideInToc: true
@@ -2516,13 +2447,69 @@ A number without an uncertainty cannot be compared with anything. An uncertainty
 hideInToc: true
 ---
 
+# The Number to **Report**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## ⛰️ **One histogram, four models**
+
+| Model, 1820 to 1910 | k | χ²/ndf | p | μ (MeV/c²) |
+| --- | --- | --- | --- | --- |
+| Gaussian on a constant | 4 | 99.4/41 | 9 × 10⁻⁷ | 1864.34 ± 0.09 |
+| Gaussian on a line | 5 | 53.4/40 | 0.08 | 1864.47 ± 0.10 |
+| Gaussian on a parabola | 6 | 43.3/39 | 0.29 | 1864.46 ± 0.10 |
+| Two Gaussians on a line | 7 | 37.4/38 | 0.50 | 1864.45 ± 0.10 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📏 **The model moves μ**
+
+A background with no slope moves μ by 0.13, more than the statistical uncertainty. χ² rejects that model. The three models it accepts agree within 0.02.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📝 **The sentence for the report**
+
+"The peak is at μ = 1864.47 ± 0.10 (stat) MeV/c²: a Gaussian on a linear background, fitted from 1820 to 1910 MeV/c², χ² = 53.4 for 40 degrees of freedom."
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+No window and no model on these slides reaches the PDG value 1864.84. The gap of 0.37 stays open, and the report says so: its uncertainty is statistical only.
+
+</div>
+
+<!--
+Speaker: this answers the opening slide. Ask the room again which number they
+would report: not one of the four means, but the fit, with its model, its
+window and its chi2. The constant background is the middle panel of "Too Few
+Terms: the Pulls": the tilt in its pulls is the slope it misses. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
 # **Recap** — You Can Now…
 
 <div class="grid-2 gap-md mt-sm">
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Derive **χ²** from the Gaussian likelihood: $-2\ln L = \chi^2 + \text{const}$
+✅ Derive **χ²** as $-2\ln L$ for Gaussian errors, and minimise $-2\ln L$ itself for other errors
 
 </div>
 
@@ -2562,7 +2549,7 @@ hideInToc: true
 
 ## 🔬 **The two results of today**
 
-Pendulum: $g = 9.84 \pm 0.09$ m/s², $\chi^2/\text{ndf} = 2.65/7$. D⁰ peak: $\mu = 1864.47 \pm 0.10$ MeV/c², $\sigma = 7.65 \pm 0.10$ MeV/c², $\chi^2/\text{ndf} = 53.4/40$. Both uncertainties are statistical.
+Pendulum: $g = 9.84 \pm 0.09$ m/s², $\chi^2/\text{ndf} = 2.65/7$, and $b = 0.009 \pm 0.019$ s² passes the test of the formula. D⁰ peak: $\mu = 1864.47 \pm 0.10$ MeV/c², from a fit and not from a mean over a window, $\chi^2/\text{ndf} = 53.4/40$. Both uncertainties are statistical.
 
 </div>
 

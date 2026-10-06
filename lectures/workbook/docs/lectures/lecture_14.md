@@ -165,7 +165,8 @@ has four parts. The room first reviews a short report whose script does not
 give the number in the report. Then each student rebuilds a neighbour's
 project on their own laptop and reviews it with the twelve questions of
 slide 37. The author answers every comment and fixes one. Last, each
-student writes a data management plan of one page for their own dataset.
+student writes a data management plan of one page for the course files,
+and adds their own dataset if they have one.
 
 ## Sources
 

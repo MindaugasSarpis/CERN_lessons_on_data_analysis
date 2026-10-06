@@ -123,22 +123,23 @@ def _d0_alt_models():
     def gauss_const(m, A, mu, sigma, c0):
         return A * np.exp(-(m - mu) ** 2 / (2 * sigma ** 2)) + c0
 
+    def gauss_parabola(m, A, mu, sigma, c0, c1, c2):
+        return d0_model(m, A, mu, sigma, c0, c1) + c2 * (m - 1865) ** 2
+
     def two_gauss(m, A, mu, s1, f, s2, c0, c1):
         g = f * np.exp(-(m - mu) ** 2 / (2 * s1 ** 2)) \
             + (1 - f) * np.exp(-(m - mu) ** 2 / (2 * s2 ** 2))
         return A * g + c0 + c1 * (m - 1865)
 
-    out = {}
-    p, _ = curve_fit(line, m, n, sigma=s, absolute_sigma=True)
-    out["line"] = (line, p, chi2(line, p), len(m) - 2)
-    p, _ = curve_fit(gauss_const, m, n, p0=D0_P0[:4], sigma=s, absolute_sigma=True)
-    out["gauss_const"] = (gauss_const, p, chi2(gauss_const, p), len(m) - 4)
-    p, _ = curve_fit(d0_model, m, n, p0=D0_P0, sigma=s, absolute_sigma=True)
-    out["gauss_line"] = (d0_model, p, chi2(d0_model, p), len(m) - 5)
-    p, _ = curve_fit(two_gauss, m, n, p0=[2300, 1865, 6, 0.7, 12, 1400, 0],
-                     sigma=s, absolute_sigma=True)
-    out["two_gauss"] = (two_gauss, p, chi2(two_gauss, p), len(m) - 7)
-    return out
+    def fit(f, p0=None):
+        p, c = curve_fit(f, m, n, p0=p0, sigma=s, absolute_sigma=True)
+        return f, p, chi2(f, p), len(m) - len(p), np.sqrt(np.diag(c))
+
+    return {"line": fit(line),
+            "gauss_const": fit(gauss_const, D0_P0[:4]),
+            "gauss_line": fit(d0_model, D0_P0),
+            "gauss_parabola": fit(gauss_parabola, D0_P0 + [0]),
+            "two_gauss": fit(two_gauss, [2300, 1865, 6, 0.7, 12, 1400, 0])}
 
 
 def d0_plain_descent(steps=100_000):
@@ -308,9 +309,50 @@ def numbers():
     print(f"signal events = {A_ * sg_ * np.sqrt(2 * np.pi) / 2:.0f} +- "
           f"{np.sqrt(J @ d['pcov'] @ J):.0f} (without covariance "
           f"{np.sqrt((J ** 2 * np.diag(d['pcov'])).sum()):.0f})")
-    for key, (_, p, c2, ndf) in _d0_alt_models().items():
-        print(f"model {key:12s}: chi2 = {c2:.1f}, ndf = {ndf}, mean = "
-              f"{p[1] if len(p) > 2 else float('nan'):.2f}")
+    print("\n== D0: one histogram, k-parameter models (1820-1910, 45 bins) ==")
+    alt = _d0_alt_models()
+    for key, (_, p, c2, ndf, e) in alt.items():
+        pv = stats.chi2.sf(c2, ndf)
+        mu = f"{p[1]:.2f} +- {e[1]:.2f}" if len(p) > 2 else "-"
+        print(f"model {key:14s}: k = {len(p)}, chi2 = {c2:.1f}, ndf = {ndf}, "
+              f"chi2/ndf = {c2 / ndf:.2f}, p = "
+              f"{f'{pv:.2f}' if pv >= 0.01 else f'{pv:.1e}'}, mu = {mu}")
+    c2 = {k: v[2] for k, v in alt.items()}
+    mus = {k: v[1][1] for k, v in alt.items() if k != "line"}
+    p_line = stats.chi2.sf(c2["gauss_line"], alt["gauss_line"][3])
+    print(f"Delta chi2: slope c1 {c2['gauss_const'] - c2['gauss_line']:.1f}, "
+          f"second Gaussian {c2['gauss_line'] - c2['two_gauss']:.1f}; "
+          f"p = {p_line:.3f} is 1 fit in {1 / p_line:.0f}")
+    acc = [mus[k] for k in ("gauss_line", "gauss_parabola", "two_gauss")]
+    gap = 1864.84 - mus["gauss_line"]
+    print(f"mu shift of the constant background "
+          f"{mus['gauss_line'] - mus['gauss_const']:.3f}; accepted models agree "
+          f"within {max(acc) - min(acc):.3f}; PDG 1864.84 lies {gap:.2f} above "
+          f"the reported mu, {gap / alt['gauss_line'][4][1]:.1f} times its error")
+
+    print("\n== D0: move the window (mean of the rows against the fit) ==")
+    means, sems = {}, {}
+    for lo, hi in ((None, None), (1840, 1890), (1850, 1880), (1855, 1875),
+                   (1854, 1874)):
+        r = M if lo is None else M[(M > lo) & (M < hi)]
+        means[lo], sems[lo] = r.mean(), r.std(ddof=1) / np.sqrt(len(r))
+        label = "all rows" if lo is None else f"{lo} < M < {hi}"
+        print(f"mean of the rows, {label}: N = {len(r)}, "
+              f"mean = {r.mean():.2f} +- {sems[lo]:.2f}")
+    l09 = [means[k] for k in (None, 1840, 1850, 1855)]
+    spread = max(l09) - min(l09)
+    print(f"Lecture 09 means lie {spread:.3f} apart, {spread / sems[1855]:.1f} "
+          f"times the smallest error; window moved by 1 MeV moves the mean by "
+          f"{means[1855] - means[1854]:.3f}")
+    fits = []
+    for shift in (-4, 0, 4):
+        lo, hi = D0_WINDOW[0] + shift, D0_WINDOW[1] + shift
+        dd = d0_fit(lo=lo, hi=hi)
+        fits.append(dd["popt"][1])
+        print(f"fit, window {lo:.0f}-{hi:.0f}, 45 bins: mu = {dd['popt'][1]:.2f} "
+              f"+- {dd['err'][1]:.2f}, chi2 = {dd['chi2']:.1f}/{dd['ndf']}")
+    print(f"fit window moved by 4 MeV moves mu by {fits[1] - fits[0]:.3f} "
+          f"(down) and {fits[2] - fits[1]:.3f} (up)")
     for lo, hi, bins in ((1815, 1915, 50), (1820, 1910, 90), (1820, 1910, 30)):
         dd = d0_fit(lo=lo, hi=hi, bins=bins,
                     p0=[2300 * 45 / bins * (hi - lo) / 90, 1865, 8,
@@ -632,7 +674,7 @@ def _d0_models():
             ("gauss_line", "Gaussian on a line, 5 parameters")]
     fig, axes = plt.subplots(3, 1, figsize=(11.0, 5.0), sharex=True)
     for ax, (key, label) in zip(axes, rows):
-        fn, p, c2, ndf = alt[key]
+        fn, p, c2, ndf, _ = alt[key]
         pulls = (n - fn(m, *p)) / s
         lim = 52 if key == "line" else 4.6
         if key != "line":
