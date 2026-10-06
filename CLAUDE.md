@@ -13,7 +13,7 @@ University-level lecture course "Best Research and Data Analysis Practices from 
 All commands run from the repository root.
 
 ```bash
-pnpm install                 # install dependencies
+pnpm install                 # install dependencies (pnpm version pinned by `packageManager` in package.json; settings in pnpm-workspace.yaml)
 
 pnpm build                   # build ALL decks + landing → dist/ (scripts/build-all.mjs)
 pnpm qa                      # build every deck at base '/' + gate each for overflow (scripts/qa-all.mjs) (includes the landing smoke test)
@@ -130,6 +130,7 @@ Each lecture markdown file follows a consistent structure:
 - **Tables inside cards** render at slide scale and overflow. Add `table-compact` to the card for a reference table on the card's body scale (L02 key sheet).
 - **Markdown inside one-line HTML** — a single-line `<div class="note-text">text with *em* or `code`</div>` is an HTML block: markdown is NOT parsed and prints literal asterisks/backticks. Either use `<em>/<strong>/<code>` inside the div, or put blank lines between the tags and the text (multi-line form) so markdown-it parses it. Same for the `question=` prop of `<MCQ>` — it accepts `code` spans only (the component converts them); no other markdown.
 - **`$$` math blocks inside HTML** — Slidev ≥ 52.19 wraps `$$ … $$` in a KaTeX wrapper component; a `$$` line directly after an opening tag (no blank line), or an empty line inside the math, makes the build fail with `Element is missing end tag`. Always leave a blank line between a tag and `$$`, and keep the math contiguous.
+- **Mermaid 12 defaults are switched off** — mermaid 12 lays flowcharts out with ELK, draws them in the `neo` look (gradient strokes, shadows), wraps labels at 120px and widens every node to 120px. `setup/mermaid.ts` restores `layout: 'dagre'`, `look: 'classic'`, `flowchart.wrappingWidth: 200` and `minNodeWidth: 0`, the settings every diagram was sized with; keep them.
 - **Mermaid styling is global** — the course look for every diagram lives in `lectures/content/setup/mermaid.ts` (`themeVariables` + `themeCSS`); the canonical semantic `classDef`s are in `theme/mermaid-config.md`. Slidev renders each diagram into a **shadow root**, so page CSS (`mermaid-styles.css`) cannot style nodes/edges — it only holds the light-DOM measuring container's label font (same weight as `mermaid.ts`, so labels measure and draw alike). The navy fills that slide `classDef`s spell out are stripped at build time by `setup/transformers.ts` for the semantic class names (`input`, `process`, `output`, `check`, `bad`, … — see `theme/mermaid-config.md`); `themeCSS` colours those classes. Don't add `%%{init: …}%%` colour blocks to fences; layout-only directives (spacing, `showCommitLabel`) are fine.
 - **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. Fenced code is `v-pre`, so the old `{{'<<<<<<< HEAD'}}` trick renders literally — do NOT use it. Show a conflict as a raw HTML block instead: `<pre class="slidev-code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD … &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch</code></pre>` (see L05 "Merge Conflicts — What They Look Like").
 

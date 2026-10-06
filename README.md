@@ -8,7 +8,7 @@ A 16-lecture + 16-seminar university course delivered as interactive [Slidev](ht
 
 ## Setup
 
-Prerequisites: Node.js 20+, pnpm, and (for the workbook + figure pipeline) Conda/Mamba.
+Prerequisites: Node.js 22.12+, pnpm (any recent one: it switches itself to the version pinned in `package.json`), and (for the workbook + figure pipeline) Conda/Mamba.
 
 ```bash
 pnpm install                    # Slidev, theme, QA tooling (Playwright Chromium)

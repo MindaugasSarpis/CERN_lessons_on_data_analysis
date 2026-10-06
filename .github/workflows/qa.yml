@@ -35,17 +35,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0   # --changed-since needs the base commit's history (merge-base)
 
-      - uses: pnpm/action-setup@v4
-        with:
-          # Pin to 9: matches the v9.0 lockfile and runs package build scripts
-          # (esbuild, playwright-chromium) without pnpm 10's ERR_PNPM_IGNORED_BUILDS gate.
-          version: 9
+      # pnpm version: the `packageManager` field of package.json (one pin for
+      # CI and every laptop, so the lockfile's patch hash always agrees).
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 'lts/*'
           cache: 'pnpm'
@@ -60,13 +58,13 @@ jobs:
       - name: Install Chromium (browser + system libraries)
         run: pnpm exec playwright install --with-deps chromium
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
-          python-version: '3.12'
+          python-version: '3.14'
 
       - name: Workbook builds strictly (MkDocs)
         run: |
-          pip install mkdocs mkdocs-material
+          pip install 'mkdocs<2' mkdocs-material   # MkDocs 2.0 drops plugins + themes
           mkdocs build --strict -f lectures/workbook/mkdocs.yml -d /tmp/workbook-qa
 
       - name: Timing gate (fast)
@@ -105,15 +103,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
-        with:
-          # Pin to 9: matches the v9.0 lockfile and runs package build scripts
-          # (esbuild, etc.) without pnpm 10's fatal ERR_PNPM_IGNORED_BUILDS gate.
-          version: 9
+      - uses: pnpm/action-setup@v6   # version from package.json `packageManager`
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 'lts/*'
           cache: 'pnpm'
@@ -121,12 +115,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
-          python-version: '3.12'
+          python-version: '3.14'
 
       - name: Install MkDocs (student workbook)
-        run: pip install mkdocs mkdocs-material
+        run: pip install 'mkdocs<2' mkdocs-material   # MkDocs 2.0 drops plugins + themes
 
       - name: Build all decks + landing page + workbook
         env:
@@ -134,10 +128,10 @@ jobs:
         run: node scripts/build-all.mjs --out dist --base "/${{ github.event.repository.name }}"
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -153,4 +147,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

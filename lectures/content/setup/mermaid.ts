@@ -161,6 +161,11 @@ const themeCSS = `
 // Slidev calls this once (a singleton promise) before the first render.
 export default (): MermaidConfig => ({
   theme: 'dark',
+  // Mermaid 12 defaults to the ELK layout and the `neo` look (gradient strokes,
+  // shadows), which re-lays out every diagram and fights the hairline style
+  // below. Keep the dagre layout and the classic look the slides were sized for.
+  layout: 'dagre',
+  look: 'classic',
   themeVariables: {
     fontFamily: font,
     fontSize: '16px',
@@ -239,6 +244,10 @@ export default (): MermaidConfig => ({
     nodeSpacing: 40,
     rankSpacing: 48,
     padding: 14,
+    // Mermaid 12 wraps labels at 120px and widens every node to 120px; the
+    // slides were laid out with mermaid 11's 200px wrap and content-sized nodes.
+    wrappingWidth: 200,
+    minNodeWidth: 0,
   },
   sequence: {
     useMaxWidth: true,
