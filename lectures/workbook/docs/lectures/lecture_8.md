@@ -6,7 +6,7 @@
 
 **Duration**: ~120 minutes (2 h slot)
 
-**Prerequisites**: L4 (command line basics), L7-L8 (Python — for understanding what files to track)
+**Prerequisites**: L3 (command line basics), L7-L8 (Python — for understanding what files to track)
 
 **Learning Objectives**:
 - Explain why version control is essential for scientific work

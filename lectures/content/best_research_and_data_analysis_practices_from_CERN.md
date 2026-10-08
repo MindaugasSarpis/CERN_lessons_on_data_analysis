@@ -36,11 +36,11 @@ src: slides/02_Introduction_to_Data.md
 ---
 
 ---
-src: slides/03_How_Computers_Work.md
+src: slides/03_Command_Line_and_Files.md
 ---
 
 ---
-src: slides/04_Command_Line_and_Files.md
+src: slides/04_How_Computers_Work.md
 ---
 
 ---

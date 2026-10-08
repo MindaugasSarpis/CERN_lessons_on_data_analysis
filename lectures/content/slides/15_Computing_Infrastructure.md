@@ -213,7 +213,7 @@ hideInToc: true
 - **Decode** it — which operation, on which operands
 - **Execute** it — arithmetic, logic, load/store, jump
 
-Billions of times per second — the fetch–decode–execute cycle from Lecture 03.
+Billions of times per second — the fetch–decode–execute cycle from Lecture 04.
 
 </div>
 
@@ -260,7 +260,7 @@ Billions of times per second — the fetch–decode–execute cycle from Lecture
 </div>
 
 <!--
-Speaker: connect to Lecture 03 — they traced fetch–decode–execute by hand there;
+Speaker: connect to Lecture 04 — they traced fetch–decode–execute by hand there;
 this is the silicon that does it. (~2 min)
 -->
 
@@ -701,7 +701,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-💡 Cycles at ~3 GHz. Same ladder as the four-rung version you saw in Lecture 03 — now with the cache levels filled in. A cache miss to RAM costs ~300 instructions' worth of time; a disk read, millions.
+💡 Cycles at ~3 GHz. Same ladder as the four-rung version you saw in Lecture 04 — now with the cache levels filled in. A cache miss to RAM costs ~300 instructions' worth of time; a disk read, millions.
 </div>
 
 <!--
@@ -1649,7 +1649,7 @@ nohup python analysis.py > run.log 2>&1 &
 tail -f run.log   # watch progress live
 ```
 
-You met `nohup … &` in Lecture 04 — the redirect is the new part: all output lands in `run.log`.
+You met `nohup … &` in Lecture 03 — the redirect is the new part: all output lands in `run.log`.
 
 </div>
 
@@ -1937,7 +1937,7 @@ Hardware abstracted into virtual machines and containers — scalable, on-demand
 
 <div class="note-text mt-sm">
 
-🐧 **Linux** — every cluster and grid node runs it, which is why the shell skills from Lecture 04 transfer.
+🐧 **Linux** — every cluster and grid node runs it, which is why the shell skills from Lecture 03 transfer.
 </div>
 
 <!--

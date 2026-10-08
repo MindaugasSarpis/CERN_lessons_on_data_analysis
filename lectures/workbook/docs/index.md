@@ -5,13 +5,20 @@ Companion notes for **Best Research and Data Analysis Practices from CERN** — 
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
 
-## This week: 29 September
+## This week: 6 October
 
 | | Page |
 |--|--|
-| Lecture, 90 min | [02 Introduction to Data](lectures/lecture_2.md#the-lecture-in-90-minutes): the route through the deck and the slides to skip |
-| Seminar, 90 min | [Seminar 1 — Get Started with VS Code and Markdown](seminars/seminar_01.md): a follow-along tutorial for the person at the front |
-| Homework | [Install Python and Git](seminars/install_python_git.md) |
+| Lecture, 15:00–17:00 | [03 Command Line & File Handling](lectures/lecture_3_command_line.md): the run sheet for the afternoon, what to type and when |
+| Seminar, 17:15–19:00 | [Seminar 2 — Six Questions for One File](seminars/seminar_02.md): tasks for pairs, with the answers |
+| Before the session | Students have [Python and Git installed](seminars/install_python_git.md). Git brings Git Bash on Windows |
+
+## Last week: 29 September
+
+| | Page |
+|--|--|
+| Lecture | [02 Introduction to Data](lectures/lecture_2.md) |
+| Seminar | [Seminar 1 — Get Started with VS Code and Markdown](seminars/seminar_01.md) |
 
 ## Hands-on seminars
 
@@ -28,7 +35,8 @@ The seminar briefs are in the **Seminars** section of the navigation.
 
 1. [Orientation & Motivation](lectures/lecture_1.md)
 2. [Introduction to Data](lectures/lecture_2.md)
-3. – 5. [Computing, Files & Tooling](lectures/lecture_3.md) *(computer science, command line, file handling, Markdown, VS Code)*
+3. [Command Line & File Handling](lectures/lecture_3_command_line.md)
+4. – 5. [Computing, Files & Tooling](lectures/lecture_3.md) *(computer science, Markdown, VS Code)*
 6. [Version Control with Git](lectures/lecture_8.md)
 7. – 8. [Python Programming](lectures/lecture_5.md)
 9. [Concepts of Data Analysis](lectures/lecture_6.md)

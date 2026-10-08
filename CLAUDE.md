@@ -38,7 +38,7 @@ pnpm export                  # export the combined deck to PDF
 cd lectures/workbook && mkdocs serve     # student workbook (needs mkdocs + mkdocs-material, e.g. conda env from env.yaml); deployed at <site>/workbook/ by build-all when mkdocs is on PATH (CI installs it)
 ```
 
-There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test.** A second gate, **`pnpm timing:check`**, keeps every week's content sized to the 2h lecture + 2h seminar slots (model + band: `docs/superpowers/specs/2026-07-06-course-timing-rebalance-design.md`) — a deck must estimate 105–145 min, a seminar brief must declare ~120 min; slightly over is preferred to under.
+There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test.** A second gate, **`pnpm timing:check`**, keeps every week's content sized to the 2h lecture + 2h seminar slots (model + band: `docs/superpowers/specs/2026-07-06-course-timing-rebalance-design.md`) — a deck must estimate 105–145 min, a seminar brief must declare ~120 min; slightly over is preferred to under. Two slide-frontmatter keys feed the estimate: `demo: N` adds N minutes of live typing to a slide (L03's **Live** slides), and `extra: true` on a section slide marks it and every slide after it as extra material that is not counted.
 
 ### Build pipeline (manifest-driven)
 

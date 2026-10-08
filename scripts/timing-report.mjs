@@ -22,6 +22,10 @@
 //   {monaco-run}     (+1.5 each: run, tweak, explain)       +1.5
 //   <VideoPlayer>    (+1.5 each: clip plays out)            +1.5
 //   ```mermaid       (+0.5 each: diagram walked through)    +0.5
+//   demo: N          (slide frontmatter: N minutes of live typing in the
+//                     terminal or editor, on top of the slide itself)   +N
+//   extra: true      (slide frontmatter: this slide and every slide after
+//                     it are extra material, not delivered in the slot)  0
 //
 // Target band: a 2h slot minus break/admin gives ~110 teaching minutes.
 // The course prefers slightly too much over too little, so a deck should
@@ -106,8 +110,17 @@ function countWords(text) {
 function estimateDeck(src) {
   const slides = splitSlides(src);
   let minutes = 0;
-  const counts = { slides: slides.length, structural: 0, content: 0, words: 0, mcq: 0, monaco: 0, video: 0, mermaid: 0 };
+  const counts = { slides: slides.length, structural: 0, content: 0, words: 0, mcq: 0, monaco: 0, video: 0, mermaid: 0, demo: 0, extra: 0 };
+  let inExtras = false;
   for (const s of slides) {
+    if (/^extra\s*:\s*true\s*$/m.test(s.frontmatter)) inExtras = true;
+    if (inExtras) {
+      counts.extra += 1;
+      continue;
+    }
+    const demo = Number((s.frontmatter.match(/^demo\s*:\s*(\d+(?:\.\d+)?)\s*$/m) || [])[1] || 0);
+    counts.demo += demo;
+    minutes += demo;
     const layout = (s.frontmatter.match(/^layout\s*:\s*(\S+)/m) || [])[1];
     const words = countWords(s.content);
     counts.words += words;
@@ -185,11 +198,11 @@ if (AS_JSON) {
   console.log(JSON.stringify({ band: BAND, lectures, seminars }, null, 2));
 } else {
   console.log(`Lectures — estimated delivery minutes (target band ${BAND.min}–${BAND.max} for a 2h slot)\n`);
-  console.log('  deck                                    slides  words   mcq mon vid  est   flag');
+  console.log('  deck                                    slides  words   mcq mon vid demo extra  est   flag');
   for (const r of lectures) {
     const name = r.file.replace(/\.md$/, '').padEnd(40);
     console.log(
-      `  ${name}${String(r.slides).padStart(4)}${String(r.words).padStart(8)}${String(r.mcq).padStart(6)}${String(r.monaco).padStart(4)}${String(r.video).padStart(4)}${String(r.minutes).padStart(6)}   ${r.flag === 'ok' ? '' : r.flag}`,
+      `  ${name}${String(r.slides).padStart(4)}${String(r.words).padStart(8)}${String(r.mcq).padStart(6)}${String(r.monaco).padStart(4)}${String(r.video).padStart(4)}${String(r.demo).padStart(5)}${String(r.extra).padStart(6)}${String(r.minutes).padStart(5)}   ${r.flag === 'ok' ? '' : r.flag}`,
     );
   }
   const total = lectures.reduce((a, r) => a + r.minutes, 0);

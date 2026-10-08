@@ -9,3 +9,26 @@
 }
 .md-header { border-bottom: 1px solid rgba(255,255,255,0.08); }
 .md-typeset h1 { font-weight: 600; }
+
+/* Lesson pages are built from numbered blocks. A block starts at an h2. */
+.md-typeset h2 {
+  margin-top: 2.4em;
+  padding-top: 0.9em;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  font-weight: 600;
+}
+/* The line under a block title: clock, minutes, slides. */
+.md-typeset .block-meta {
+  margin-top: -0.4em;
+  color: #8b97a6;
+  font-size: 0.8em;
+  letter-spacing: 0.02em;
+}
+/* "Type" and "Output" labels on code blocks. */
+.md-typeset .highlight span.filename {
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8b97a6;
+}

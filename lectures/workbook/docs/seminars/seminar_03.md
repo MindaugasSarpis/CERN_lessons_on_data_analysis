@@ -1,6 +1,6 @@
 # Seminar 3 — Bit, Number & Format Explorer ⚡
 
-**Paired lecture:** 03 How Computers Work · **Format:** hackathon · **~120 min**
+**Paired lecture:** 04 How Computers Work · **Format:** hackathon · **~120 min**
 
 **Suggested timing:** 0:00 warm-up & recap · 0:10 core tasks · 1:20 stretch goals · 1:50 wrap-up & commit
 
@@ -12,7 +12,7 @@ Demystify "it's just a CSV" by looking at the actual bytes, and connect file siz
 to the number/precision concepts from the lecture.
 
 ## Prerequisites
-Seminar 1 (dataset in `raw/`).
+Seminar 2 (dataset in `raw/`, the shell).
 
 ## Tasks
 1. How big is the file, in bytes and in human units? (`ls -l`, `du -h`.) How many

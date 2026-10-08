@@ -112,7 +112,7 @@ notes   = "Cosmic expansion funnel, VP8 WebM 1 Mbps"
 [[videos]]
 name    = "QGP_Formation.mp4"
 profile = "remux"
-used_in = ["L01", "L02"]
+used_in = ["L01"]
 notes   = "Quark-gluon plasma formation sim, HEVC 1.9 Mbps"
 
 [[videos]]
@@ -148,7 +148,7 @@ notes   = "ATLAS shaft construction, HEVC 2.2 Mbps (1920x1280 crop)"
 [[videos]]
 name    = "LHCb.mp4"
 profile = "remux"
-used_in = ["L01", "L02"]
+used_in = ["L01"]
 notes   = "LHCb detector reel, HEVC 878 kbps"
 
 [[videos]]
@@ -182,13 +182,13 @@ used_in = []  # not in any deck since the 2026-09 L01/L02 re-split; stays on the
 notes   = "NVIDIA GTC 2020 excerpt, HEVC 1.4 Mbps, 3:20"
 
 # ---------------------------------------------------------------------------
-# L03 — Crash Course on Computer Science
+# L04 — Crash Course on Computer Science
 # ---------------------------------------------------------------------------
 
 [[videos]]
 name    = "Technology_Size_Comparison.mp4"
 profile = "remux"
-used_in = ["L03"]
+used_in = ["L04"]
 notes   = "Tech scale comparison, HEVC 1.7 Mbps, 3:51"
 
 # ---------------------------------------------------------------------------
@@ -275,23 +275,23 @@ notes   = "LHCb 3D fly-in from the LHC ring to the detector, 0:56 (added 2026-09
 [[videos]]
 name    = "cern_footage_2022_042_002.mp4"
 profile = "web-h264-silent"
-used_in = ["L02"]
+used_in = ["L01"]
 notes   = "CMS 3D fly-in, 0:39 (added 2026-09-29). Raw = Drive master videos/released/CERN-FOOTAGE-2022-042-002-2160p.mp4 (H.264 2160p25 5.3 Mbps, 26 MB; the audio is digital silence); videos/raw/ is a symlink to it."
 
 [[videos]]
 name    = "cern_footage_2022_042_003.mp4"
 profile = "web-h264-silent"
-used_in = ["L02"]
+used_in = ["L01"]
 notes   = "ATLAS 3D fly-in, 0:38 (added 2026-09-29). Raw = Drive master videos/released/CERN-FOOTAGE-2022-042-003-2160p.mp4 (H.264 2160p25 5.8 Mbps, 28 MB; the audio is digital silence); videos/raw/ is a symlink to it."
 
 [[videos]]
 name    = "cern_footage_2022_042_004.mp4"
 profile = "web-h264-silent"
-used_in = ["L02"]
+used_in = ["L01"]
 notes   = "ALICE 3D fly-in, 1:10 (added 2026-09-29). Raw = Drive master videos/released/CERN-FOOTAGE-2022-042-004-2160p.mp4 (H.264 2160p25 7.7 Mbps, 67 MB; the audio is digital silence); videos/raw/ is a symlink to it."
 
 [[videos]]
 name    = "cern_video_2015_024_001.mp4"
 profile = "web-h264"
-used_in = ["L02"]
+used_in = ["L01"]
 notes   = "L02, Data at the LHC (added 2026-09-29): CERN-VIDEO-2015-024-001, the whole data flow in one clip — accelerator chain, the four detectors, trigger levels, data centre, WLCG tiers — 2:51, music, labels in English and French. Raw = Drive master videos/cern/cern_video_2015_024_001_1080p.mp4 (H.264 1080p25 6.2 Mbps + AAC stereo, 133 MB; the CDS 1080p export, not the 3.5 GB .mov); videos/raw/ is a symlink to it."

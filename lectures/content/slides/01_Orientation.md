@@ -15,8 +15,8 @@ title: "Orientation & Motivation"
 Speaker: let the cold open on the next slide run first, then welcome them, introduce
 yourself, and set the tone — this is a practical course, not a lecture course.
 Everything is graded on one project of the student's own choosing; the seminars are
-where the skills get practised. No seminar today: the setup is homework and Seminar 1's
-brief is self-paced — the last slide says so. (~2 min)
+where the skills get practised. No seminar today: the first one is next session and
+starts from zero — the last slide before the films says so. (~2 min)
 -->
 
 ---
@@ -37,7 +37,7 @@ layout: fact
 
 <!--
 Speaker: three quick shows of hands. Fields calibrate the later examples; the OS split
-(Windows / macOS / Linux) tells you what Seminar 2's install checkpoint will hit; "coded
+(Windows / macOS / Linux) tells you what the first seminar's installation will hit; "coded
 before" lets you seat an experienced student next to a beginner from week 2.
 -->
 
@@ -113,7 +113,7 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact reveal-scale">
 
 **A · Foundations & Tooling** *(01–06)*
-Orientation, data, computers, command line & files, Markdown & VS Code, Git
+Orientation, data, command line & files, computers, Markdown & VS Code, Git
 
 </div>
 
@@ -166,35 +166,31 @@ hideInToc: true
 
 # **Schedule**
 
-Every **Tuesday**: **2 h lecture** + **2 h seminar** — 16 weeks, **8 Sep – 22 Dec 2026**. Week 1 is lecture only; seminars start in week 2.
+Every **Tuesday, 15:00–19:00**: lecture, break, seminar. **8 Sep – 22 Dec 2026**, no sessions on 15 Sep, 22 Sep and 24 Nov. Week 1 is lecture only.
 
 <div class="grid-2 gap-sm mt-sm">
 
 | **Wk** | **Tue** | **Lecture** |
 | --- | --- | --- |
 | 1 | 8 Sep | **A** · Orientation & Motivation *(lecture only)* |
-| 2 | ~~15 Sep~~ | ~~**A** · Introduction to Data~~ |
-| 3 | ~~22 Sep~~ | ~~**A** · How Computers Work~~ |
-| 4 | 29 Sep | **A** · Command Line & File Handling |
-| 5 | 6 Oct | **A** · Markdown & VS Code |
-| 6 | 13 Oct | **A** · Version Control with Git |
-| 7 | 20 Oct | **B** · Python Foundations |
-| 8 | 27 Oct | **B** · Python for Data Work |
+| 2 | 29 Sep | **A** · Introduction to Data |
+| 3 | 6 Oct | **A** · Command Line & File Handling |
+| 4 | 13 Oct | **A** · How Computers Work |
+| 5 | 20 Oct | **A** · Version Control with Git |
+| 6 | 27 Oct | **B** · Python Foundations |
+| 7 | 3 Nov | **B** · Python for Data Work |
 
 | **Wk** | **Tue** | **Lecture** |
 | --- | --- | --- |
-| 9 | 3 Nov | **C** · Concepts of Data Analysis |
-| 10 | 10 Nov | **C** · Data Visualisation |
-| 11 | 17 Nov | **C** · Probability & Statistics |
-| ~~12~~ | ~~24 Nov~~ | ~~**C** · Practical Data Fitting~~ |
-| 13 | 1 Dec | **D** · NumPy & Pandas |
-| 14 | 8 Dec | **D** · Reproducible Workflows & Automation |
-| 15 | 15 Dec | **E** · Computing Infrastructure & HPC |
-| 16 | 22 Dec | **E** · Machine Learning & AI |
+| 8 | 10 Nov | **C** · Concepts of Data Analysis |
+| 9 | 17 Nov | **C** · Data Visualisation |
+| 10 | 1 Dec | **C** · Probability & Statistics |
+| 11 | 8 Dec | **C** · Practical Data Fitting |
+| 12 | 15 Dec | **D** · NumPy & Pandas |
+| 13 | 22 Dec | **D** · Reproducible Workflows & Automation |
+| | | *Markdown & VS Code: in the seminars* |
 
 </div>
-
-<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work · <strong>E</strong> Advanced (optional) — <strong>Final Project Presentations</strong> in the exam session.</div>
 
 <style scoped>
 table {
@@ -302,7 +298,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">Lecture 4 (command line &amp; files) and Seminar 4 build exactly this structure on the seminar dataset — repeat it on your own project the same afternoon.</div>
+<div class="note-text mt-md">Lecture 3 (command line &amp; files) and Seminar 2 build exactly this structure on the seminar dataset — repeat it on your own project the same afternoon.</div>
 
 <!--
 Speaker: the next four slides are one before/after pair per aim, all drawn from real
@@ -889,13 +885,12 @@ hideInToc: true
 
 | **Seminars** | **Hands-on focus** |
 | --- | --- |
-| S1–S2 *(both on 29 Sep)* | Toolkit; repo skeleton + first commit; a dataset with provenance |
-| S3–S5 | The raw file as bytes; clean structure; a real README |
-| S6–S8 | Git — branch & merge; parse one line; read a whole file |
-| S9–S11 | Data-quality audit; a first figure; a value ± its error |
-| S12 | **The fit** — a peak → value ± error, with a χ² |
-| S13–S14 | Tidy tables; one-command reproducible rebuild |
-| S15–S16 *(optional)* | Batch-run a pipeline; an honest classifier |
+| Seminar 1 | VS Code and Markdown; a project folder with a README; three slides made from text |
+| Seminar 2 | The command line: six questions about a data file, answered with pipelines and saved as a script |
+| Seminar 3 | The raw file as bytes: encoding, size, format |
+| Then | Git: branch and merge. Python: parse one line, read a whole file |
+| Then | Data-quality audit; a first figure; **the fit**: a value ± its error |
+| Last | Tidy tables; a rebuild of everything in one command |
 
 <div class="note-text mt-sm">Every one of these transfers straight into your own project — that is the point.</div>
 
@@ -905,50 +900,60 @@ hideInToc: true
 
 # From Raw Data to a **Result**
 
-```mermaid {scale: 0.72}
-graph LR
-    R[📥 Raw events] --> C[🧹 Clean]
-    C --> M[🔢 Compute mass]
-    M --> H[📊 Histogram]
-    H --> F[📈 Fit the peak]
-    F --> V[✅ Mass ± error]
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-This is the whole arc in one line — and every box is built in the seminars. The same shape fits any dataset: swap "compute mass" for "compute your variable" and the pipeline is your project's.
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
+<div class="grid-3 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📥 **Raw → Clean**
+## 📥 **The file**
 
-S3–S9: the raw file as bytes, a clean project structure, a data-quality audit
+```text
+M,PT,TAU,IPCHI2
+1880.649,3000.9534,...
+1860.6599,2803.4126,...
+1913.8755,2542.169,...
+```
+
+91 583 rows, recorded by LHCb at CERN, open to anyone.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📊 **Compute → Histogram**
+## 📊 **The fit**
 
-S10–S11: first figure, then value ± error
+<img src="/figures/viz_example_d0_fit.svg" style="display:block;margin:0 auto;max-height:170px;">
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📈 **Fit → Result**
+## ✅ **The result**
 
-S12–S14: the fit, tidy tables, a rebuild in one command
+Mass of the D⁰ meson:
+
+**1864.48 ± 0.10 MeV/c²**
+
+from 21 170 ± 270 decays.
 
 </div>
 
 </div>
 
-<div class="note-text mt-md">By the end, one command walks the entire chain, raw to result, untouched by hand.</div>
+<div class="card card-warning card-glass pad-compact mt-md">
+
+🔎 The accepted value is **1864.84 ± 0.05 MeV/c²**. The two differ by 0.36, more than three times the uncertainty. The fit is correct and the data is real. What the uncertainty leaves out is a question for the statistics lectures.
+
+</div>
+
+<div class="note-text mt-sm">The same steps fit any dataset: read a file, plot a column, fit a model, report a value with its uncertainty. Replace the mass by your own variable.</div>
+
+<!--
+Speaker: a real result from the real file, made with the course's own figure
+script (figures/src/example_file.py). The disagreement with the accepted value
+is the hook: a statistical uncertainty is not the whole uncertainty. The
+momentum scale of the detector, the shape chosen for the peak and the
+background each move the value. Do not resolve it today. (~3 min)
+-->
 
 ---
 hideInToc: true
@@ -1099,29 +1104,21 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🖥️ **Install three tools**
+## 💻 **Bring a laptop**
 
-- **Python 3.10+** — [python.org](https://python.org)
-- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com)
-- **Git** — [git-scm.com](https://git-scm.com)
+- Windows, macOS or Linux, with a web browser
+- Nothing has to be installed beforehand
+- No programming experience is needed
 
-*🔧 Tool-agnostic: conda, PyCharm, or another editor is fine — the aim is the skill, not the tool.*
+*🔧 Tool-agnostic: the course uses VS Code, Python and Git. Another editor is fine.*
 
 </div>
 
 <div class="card card-secondary card-glass pad-tight">
 
-## ⚡ **Prove they work**
+## 🤔 **Think of a dataset**
 
-Open a terminal and run:
-
-```bash
-python --version   # or python3
-git --version
-code --version
-```
-
-Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills it.
+A table from a field you care about: weather, sport, prices, health, your lab. You will be asked for it in the first seminar.
 
 </div>
 
@@ -1129,9 +1126,9 @@ Three version numbers = done. Then `mkdir analysis-project` — Seminar 1 fills 
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-## 🔬 **No seminar today — Seminar 1 is self-paced**
+## 🔬 **No seminar today**
 
-Its brief in the workbook walks through the setup step by step. We check it together at the start of **Seminar 2 on 29 September**, then go straight on to the first dataset. Stuck? Bring the error message — that is what the first 40 minutes of that session are for.
+The first seminar is next session. It starts from zero: VS Code is installed in class, and Python and Git follow at home, with a step-by-step guide in the workbook.
 
 </div>
 
@@ -1317,6 +1314,7 @@ hideInToc: true
 ---
 layout: section
 hideInToc: true
+extra: true
 ---
 
 # Extra Material — What is **CERN**?
@@ -1512,5 +1510,201 @@ Stops **hadrons** — particles made of quarks (protons, neutrons, pions) — ag
 <div class="card card-warning card-glass pad-compact mt-md reveal-up">
 
 💾 One collision → **millions of electronic signals** across these layers. Software reassembles them into particles — those are the "detector readings" every analysis starts from.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">ATLAS</span> & <span class="gradient-text">CMS</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔭 Two **general-purpose** detectors. Same physics programme: the Higgs boson, searches for new particles. **Different designs**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏟️ **ATLAS**
+
+- The **largest** collider detector ever built
+- **46 m** long, **25 m** in diameter, 100 m underground
+- ~**7,000 tonnes**, ~100 million readout channels
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧲 **CMS**
+
+- One superconducting **solenoid** magnet, **3.8 T**
+- **21 m** long, **15 m** in diameter
+- **14,000 tonnes**: half the size of ATLAS, twice the weight
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🤝 On **4 July 2012** both announced the Higgs **independently, on the same day**. The LHC was built with two general-purpose detectors so that each result can be checked by the other.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_footage_2022_042_003.mp4" />
+
+<!-- ATLAS — 3D fly-in from the LHC ring to the detector (0:38, silent). -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_footage_2022_042_002.mp4" />
+
+<!-- CMS — 3D fly-in from the LHC ring to the detector (0:39, silent). -->
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">ALICE</span> — Quark–Gluon Plasma
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 💥 **The Question**
+
+What was matter like in the first **millionths of a second** after the Big Bang, before protons and neutrons existed?
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌡️ **The Method**
+
+Collide **lead nuclei** instead of protons. For an instant the collision forms **quark–gluon plasma**, over **100,000×** hotter than the core of the Sun.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+📈 One lead–lead collision can produce **tens of thousands** of particle tracks. Software has to reconstruct every one of them before any physics is done.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_footage_2022_042_004.mp4" />
+
+<!-- ALICE — 3D fly-in from the LHC ring to the detector (1:10, silent). -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_video_2015_024_001.mp4" />
+
+<!-- The whole data flow in one clip (2:51, music): accelerator chain, detectors, trigger levels, data centre, the grid. -->
+
+---
+hideInToc: true
+---
+
+# CERN's Impact Beyond **Physics**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-info card-glass pad-compact">
+
+## 🌐 **The World Wide Web**
+
+Invented at CERN by **Tim Berners-Lee** in **1989** to share data between scientists. Now used by **5+ billion** people.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🖥️ **Computing Grid (WLCG)**
+
+The **Worldwide LHC Computing Grid** connects **170+ centres** in **40+ countries** and stores **hundreds of petabytes** of new data every year
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🏥 **Medical Applications**
+
+Accelerator technology is used in **hadron therapy** for cancer, which is more precise than conventional radiotherapy
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📂 **Open Science**
+
+The CERN **Open Data Portal** publishes real collision data for teaching and independent research
+
+</div>
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+📖 **Open publishing:** CERN co-founded **SCOAP3**, which makes almost all particle-physics journal articles free to read. Preprints appear on **arXiv** before any journal sees them.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The LHC Computing <span class="gradient-text">Grid</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🌍 No single data centre can process the LHC's output. The work is spread over a **tiered global grid** *(as of 2026: 170+ sites, 42 countries, ~1.4 million CPU cores)*.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+🏛️ **Tier 0 — CERN** · the custodial copy of all raw data on tape, first-pass reconstruction
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+🏢 **Tier 1 — ~15 national labs** · second copies, large-scale reprocessing, round-the-clock links to CERN
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+🏫 **Tier 2 — ~150 universities** · simulation and the everyday analyses of individual physicists
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md reveal-up">
+
+💡 A physicist who starts an analysis usually does not know **in which country** the jobs run. The same idea at your scale: compute where convenient, keep the data organised and portable.
+
+🔭 What comes next: the **Future Circular Collider (FCC)** feasibility study, reported in **2025**, proposes a 91 km ring, more than three times the LHC's 27 km.
 
 </div>

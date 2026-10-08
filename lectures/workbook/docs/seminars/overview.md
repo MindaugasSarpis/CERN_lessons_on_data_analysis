@@ -16,18 +16,33 @@ used before the session that introduces it.
 
 | Session | New | Still by clicking |
 |--|--|--|
-| 29 Sep, [Seminar 1](seminar_01.md) | VS Code, Markdown, the project folder, the README, provenance | Everything |
-| Next | The file as text: encoding, separators, size. First three terminal commands: `pwd`, `ls`, `cd` | Creating and moving files |
-| Then | Terminal: make, copy, move, delete. Running a Python script that is handed out | Editing |
+| 29 Sep, [Seminar 1](seminar_01.md) | VS Code, Markdown, the project folder, the README, editing with several cursors, slides with Marp. The data file and its provenance, if time allows | Everything |
+| 6 Oct, [Seminar 2](seminar_02.md) | The shell: moving, copying, reading a file, pipelines, a first script | Editing |
+| Then | The file as bytes: encoding, separators, size | |
 | Then | The README as a full document: columns, units, how to rebuild | |
 | Then | Git from the Source Control view first, then the same steps typed | |
 | Then | Python, from the first line: variables, a loop, reading the data file | |
 
-Seminar 1 is written as a follow-along tutorial for the person at the front.
-Briefs 3–16 were written for an earlier plan and still carry the number of
-their lecture. They assume bash commands that do not exist in PowerShell and
-a data file with columns the real one does not have. Each is rewritten in
-the style of Seminar 1 before its week.
+Seminar 1 is a follow-along tutorial for the person at the front. Seminar 2
+gives exercises, and the room works in pairs. Briefs 3–16 were written for
+an earlier plan and still carry the number of their lecture, which is why
+there is no brief 4. They assume a data file with columns the real one does
+not have. Each is rewritten in blocks before its week.
+
+## How a page is built
+
+The pages of Lectures 2 and 3 and of Seminars 1 and 2 are built from
+numbered blocks, in the manner of a Software Carpentry lesson.
+
+| Part | What it holds |
+|--|--|
+| **Overview** | The time, the questions of the session, what students can do after it, what it needs |
+| The table of blocks | Clock, minutes and slides of each block. Each title is a link |
+| **Say** | What to tell the room, in two or three sentences |
+| **Type** and **Output** | What to type, and what comes back |
+| **Exercise** and **Solution** | A task for the room. The solution opens with a click |
+| **Watch for** | The usual slips of the block, and what to do |
+| **Key points** | What the room takes from the block |
 
 ## Two things run in parallel
 
@@ -79,7 +94,7 @@ Seminar 1 creates a small project folder that later seminars reuse:
 analysis-project/
 |- README.md            # what this is, data provenance, how to rebuild (S1, S5)
 |- data/
-|  |- raw/              # the CSV exactly as downloaded — READ ONLY (S1, S4)
+|  |- raw/              # the CSV exactly as downloaded — READ ONLY (S1, S2)
 |  |- processed/        # cleaned tables, produced by scripts only (S13)
 |- scripts/            # one script per step (S7-S16)
 |- results/            # figures and numbers, all regenerable (S10-S12)
@@ -96,10 +111,10 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 
 | Seminar | Hands-on focus |
 |--|--|
-| 1 | VS Code; Markdown; the project folder and its README; a data file in `data/raw/`; provenance recorded |
+| 1 | VS Code; Markdown; the project folder and its README; a data file in `data/raw/`; its columns and provenance recorded; the README as three slides |
 | At home | Python and Git installed *(after Seminar 1)* |
+| 2 | The shell on the data file: six questions answered with pipelines; the commands saved as a script |
 | 3 | The raw file understood as bytes (encoding, size, format) |
-| 4 | `raw/`–`processed/` structure; clean filenames; CLI inspection |
 | 5 | A real `README.md` (provenance, columns, units, rebuild steps) |
 | 6 | The repo under Git; a feature branch made and merged |
 | 7 | First parsing: one event line → numbers |

@@ -1205,7 +1205,7 @@ print(summarise(rows))
 <div class="card card-info card-glass pad-compact mt-md">
 
 - The `analyse.py` you just saved has the same flaw — its data is typed into the source; to analyse another file you must **edit the code**, which is error-prone and not repeatable
-- A shell loop (Lecture 4) can't help here — the script ignores its arguments while the filename is hard-coded
+- A shell loop (Lecture 3) can't help here — the script ignores its arguments while the filename is hard-coded
 - The fix: read the filename as an **argument** when the script runs
 
 </div>
