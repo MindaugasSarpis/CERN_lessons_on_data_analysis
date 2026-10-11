@@ -218,3 +218,66 @@ Not a session: a rework asked for by the lecturer after the notes above.
   10-credit course; the physics course has about 76 h of self-study. To be
   set from the course description.
 - Lecture 01 has no entry in this log for 8 September.
+
+## 2026-10-11 · Lecture 04, Seminar 4 and the editor slides of Lectures 02 and 03
+
+Not a session: a rework asked for by the lecturer before 13 October.
+
+**What the lecturer asked for**
+
+- Lecture 04 and Seminar 4 self-contained: no reliance on what an earlier
+  seminar did or did not do, and the seminar after the lecture, in its order.
+- What the seminars do in Markdown, in the editor and in the terminal laid
+  out in the lectures first (Lectures 01 to 04).
+- Lecture 04 checked for coherence, and package managers and environments
+  introduced thoroughly.
+
+**Changed in response** (11 October)
+
+- Lecture 04 names the terminal, the shell and the prompt from zero; the
+  nine references to Seminar 3 as a terminal session are gone, and so are
+  the room-state notes ("most Windows laptops have no Python yet").
+- Lecture 04 has a seventh section, *Tools & Environments*, 11 slides between
+  *Programs Someone Else Wrote* and *Checksums & Backups*: where a program
+  comes from, the `PATH` list (which explains `Python was not found` by the
+  stand-in in `WindowsApps`), a package manager and its five jobs, PowerShell
+  7 installed by `winget`, pip, `pip install numpy` measured (16.7 MB wheel,
+  43 MB unpacked), one shared Python breaking a project (`np.float_` removed
+  in NumPy 2.0), a virtual environment measured (14 MB, 891 files), the
+  empty environment filled, and `requirements.txt`. The README's *How to
+  rebuild* names the Python and the three environment lines. Two quizzes
+  were added. Lecture 13 keeps its deeper treatment and was not changed.
+- Five slides left Lecture 04 for `parked/`: *A Path That Fails*, *One
+  Pattern, Two Shells*, *Wildcards Are Not Regular Expressions*, *A Pattern
+  on Another Laptop* and *A Checksum by Hand* (which Lecture 03 has). The
+  deck estimates 156 min, over the 145 band; the lecture page's 90-minute
+  plan skips most of the new section's detail and keeps `PATH`, the virtual
+  environment and `requirements.txt`.
+- Lecture 02 has three slides on VS Code before *Markdown*: the editor and
+  opening the folder, the five regions of the window and the Command
+  Palette, files and saving in the Side Bar. Lecture 03 has one slide on
+  installing an extension, the Hex Editor, before *Reading a Hexdump*. Both
+  were the gaps between Seminars 1 and 3 and the lectures before them.
+- Seminar 4 follows the lecture's order: tools, the shell named, the data
+  file by command, then a program, a checksum, a new section 13 that makes
+  the project's environment (`python -m venv .venv`, `pip install numpy`,
+  `pip freeze`), and the README with the environment lines. The bytes
+  exercise of the old Part 3 is optional section 16. Links from Seminars 3,
+  7 and 15 were renumbered.
+- Lecture 01's hours are 52 h contact and 78 h self-study (13 sessions of
+  4 h; 130 h for the 5-credit elective), from the lecturer's note.
+
+**Open**
+
+- Not run on a Mac or on a Windows laptop: the `which python3` and
+  `Get-Command` paths, the `PATH` listings and the `winget` output of the new
+  slides are the installers' defaults and winget's documented lines. Run
+  them once before 13 October and correct the slides. The pip and venv
+  outputs were measured on Linux with Python 3.14.8 (pip 26.2.1, numpy
+  2.5.4); a python.org Python may bundle another pip.
+- Seminar 4 leaves `.venv/` and `requirements.txt` in every project folder.
+  Seminar 5's `.gitignore` and Seminar 7's `pip install numpy` (global) do
+  not know about them yet.
+- The spec's Lecture 04 paragraph still says Git Bash and does not mention
+  the tools section; an amendment line was added below it.
+

@@ -10,10 +10,9 @@ The tools are VS Code from Seminar 1 and one extension, the **Hex Editor**.
 No terminal, no Python, no Git. The terminal comes after Lecture 04 has
 named its parts.
 
-??? note "Autumn 2026"
-    This seminar ran as a terminal session that year, and its byte part moved
-    to Part 3 of [Seminar 4](seminar_04.md#part-3). The page below is the seminar as
-    it is meant to run.
+??? note "If the byte part was not reached"
+    [Seminar 4, section 16](seminar_04.md#bytes) measures the same bytes by
+    command, as an optional section.
 
 ## Run sheet
 

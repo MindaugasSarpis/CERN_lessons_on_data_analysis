@@ -1552,7 +1552,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-📝 A data file and a README are both **plain text**. One program opens both: a **text editor**. This course uses **VS Code**. It is free and works the same on Windows, macOS and Linux. Every step shown here exists in other editors too.
+📝 A data file and a README are both **plain text**. One program opens both: a **text editor**. The next three slides are the editor of this course, **VS Code**.
 
 </div>
 
@@ -1560,6 +1560,166 @@ hideInToc: true
 Speaker: the tree itself was on the slide "From Record to Your Project Folder".
 Here the rules: one folder, the same subfolders, raw is never edited, and names
 that survive every system. Open the folder in VS Code and show it. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Editor: **VS Code**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧰 **What it is**
+
+- A text editor: it shows the bytes of a text file as characters and writes them back. Nothing is added to the file
+- Free, from `code.visualstudio.com`, and the same window on Windows, macOS and Linux
+- Every step shown in this course exists in other editors too
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📥 **Install, then open the folder**
+
+- Windows: the **User Installer**, which needs no administrator password. macOS: drag **Visual Studio Code** into **Applications**
+- **File** > **Open Folder…**, then the project folder. The question **Do you trust the authors?** is answered once, with Yes
+- The folder's name appears in capitals at the top of the Side Bar
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+VS Code works on a **folder**, not on one file. With the project folder open, every file in it is one click away, and the search and the terminal know where the project is. A file opened on its own, by double-click in the file manager, has none of that.
+
+</div>
+
+<!--
+Speaker: open the project folder live on the projector and leave it open for
+the rest of the lecture. A Word document holds its formatting inside the
+file; a text editor holds nothing but the characters, which is why the data
+file and the README are opened with it. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Window: **Five Regions**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+```text
++---+---------+----------------------+
+|   |         |                      |
+| 1 |    2    |          3           |
+|   |         |                      |
+|   |         +----------------------+
+|   |         |          4           |
++---+---------+----------------------+
+|                  5                 |
++------------------------------------+
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+| | Region | What it holds |
+| --- | --- | --- |
+| 1 | **Activity Bar** | Icons. Each one switches what the Side Bar shows |
+| 2 | **Side Bar** | The files of the folder: the **Explorer** view |
+| 3 | **Editor** | The open files, one tab each |
+| 4 | **Panel** | Hidden at first. The terminal lives here |
+| 5 | **Status Bar** | Facts about the open file: line and column, encoding, line ending |
+
+</div>
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔍 **Command Palette**
+
+`Ctrl+Shift+P` (macOS `Cmd+Shift+P`). A search box for everything VS Code can do: part of a command's name finds it. No other key has to be remembered.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ↔️ **Side Bar on and off**
+
+`Ctrl+B` (macOS `Cmd+B`) hides the Side Bar and brings it back. The Explorer icon at the top of the Activity Bar does the same.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🔎 **Size and colours**
+
+`Ctrl+=` and `Ctrl+-` (macOS `Cmd`) zoom the whole window: set it for the projector. **Preferences: Color Theme** in the Command Palette changes the colours.
+
+</div>
+
+</div>
+
+<!--
+Speaker: point at each region on the projector and name it. Then the three
+keys, typed live: Ctrl+B twice, the Command Palette with "theme", and one
+zoom step. The Panel stays hidden today. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Files in the **Side Bar**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🗂️ **Make, name, move**
+
+- Mouse over the Side Bar: four icons appear next to the folder's name. **New File** and **New Folder** are the first two
+- A new item lands **inside the selected folder**. For the top level, select the empty area below the tree first
+- `data/raw` typed as a folder name makes `data` and `raw` in one go
+- `F2` (macOS `Enter`) renames. A file dragged from **Downloads** onto a folder is copied into it
+- **Reveal in File Explorer** (macOS **Reveal in Finder**) in the right-click menu shows the same file in the file manager
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💾 **Saved, or not**
+
+- A **dot** on the tab in place of the ×: the file on disk still holds the old characters
+- `Ctrl+S` (macOS `Cmd+S`) writes the new ones. **File** > **Auto Save** writes after every change
+- The right end of the Status Bar names the encoding and the line ending of the open file, `UTF-8` and `LF` or `CRLF`
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ `Data` and `data` are two folders on Linux and one folder on Windows and macOS. A folder that was made as `Data` is renamed with `F2`, to the small letters of the rules two slides back; moving its files by drag and drop into a new `data` works as well.
+
+</div>
+
+<!--
+Speaker: make the four folders of the project live, with data/raw typed as
+one name, and watch where a new folder lands when a folder is selected: that
+is the usual slip. Then the README: New File, the dot on its tab, Ctrl+S.
+(~3 min)
 -->
 
 ---

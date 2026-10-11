@@ -28,8 +28,10 @@ for writing the answers down: a README in Markdown and a text editor.
    `Ctrl+End`, `Ctrl+G` and `Ctrl+F`; 147 columns declared and 4 filled; the
    units worked out from the numbers; the five questions answered, then asked
    of a dataset from the student's own field.
-6. **Markdown & text editing** — the project folder and its names; Markdown
-   as source and preview: headings, lists, links, images, tables, the usual
+6. **Markdown & text editing** — the project folder and its names; VS Code
+   as the editor: opening the folder, the five regions of the window, the
+   Command Palette, files made and renamed in the Side Bar, the unsaved dot
+   and `Ctrl+S`; Markdown as source and preview: headings, lists, links, images, tables, the usual
    mistakes; the pendulum table repaired in the editor with Find and Replace,
    whole-line keys, a cursor on every line and selected matches; the four
    edits written into the README. The lecture closes on the four lines of
@@ -75,11 +77,11 @@ All were computed on the files in `lectures/workbook/docs/data/`.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–64 and estimates about 126 min. Slides 65–73 are the
+The lecture is slides 1–67 and estimates about 134 min. Slides 68–76 are the
 self-check quizzes and take no lecture time. In a 2-hour slot nothing is
-skipped. For a 90-minute slot, skip the slides in the second table. The hook
-of slide 3 is answered on slide 43, at about 1:00. To jump, type the slide
-number and press Enter.
+skipped. For a 90-minute slot, skip the slides in the second table; that
+leaves about 93 min. The hook of slide 3 is answered on slide 43, at about
+1:00. To jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
@@ -90,9 +92,9 @@ number and press Enter.
 | 0:35 | 24, 31–35, 37 | LHCb and its clip, from collision to dataset, the data-flow clip, what the trigger kept |
 | 0:48 | 38–40, 42–43 | One row read aloud, three questions clicked, units by reasoning, the five questions answered |
 | 1:02 | 44 | The five questions on the student's own dataset (5 min) |
-| 1:08 | 45–52 | The project folder and Markdown |
-| 1:23 | 63–64 | The file, annotated; Recap |
-| 1:26 | | Move to the seminar. Slides 53–62 open it |
+| 1:08 | 45–55 | The project folder, VS Code, and Markdown |
+| 1:30 | 66–67 | The file, annotated; Recap |
+| 1:33 | | Move to the seminar. Slides 56–65 open it |
 
 | Skip | Slides | Saves |
 |--|--|--|
@@ -101,9 +103,9 @@ number and press Enter.
 | ATLAS and CMS, ALICE, their fly-ins, the quark–gluon plasma clip | 25–30 | 12 min |
 | From Events to Petabytes | 36 | 3 min |
 | 147 Columns, 4 Filled | 41 | 2 min |
-| Editing many lines and writing the edits down, shown at the start of the seminar instead | 53–62 | 22 min |
+| Editing many lines and writing the edits down, shown at the start of the seminar instead | 56–65 | 22 min |
 
-- **Do not cut** slide 63 (The File, Annotated): it closes the lecture by
+- **Do not cut** slide 66 (The File, Annotated): it closes the lecture by
   answering slide 3. Slides 3–4 (the hook), 7 (the thesis), 13–16 (the
   pendulum table and the two sizes), 37 and 39–43 (the file read and
   answered) carry the story.
@@ -119,12 +121,14 @@ number and press Enter.
 - **Slide 44** (5 min): students answer the five questions for a dataset of
   their own field, on paper. The answers are the first lines of their README
   in the seminar.
-- **Slides 45–62 are shown live.** Keep VS Code open beside the slides and do
-  each step on the projector: type the six lines of slide 47 and open the
-  preview, make the mistakes of slide 52, repair the file of slide 53 with
-  the keys of slides 54–59, and type the README lines of slide 60. Slide 62
-  is the key sheet. It stays on the projector while the room works through
-  Part 3 of the seminar.
+- **Slides 45–65 are shown live.** Keep VS Code open beside the slides and do
+  each step on the projector: install nothing, but open the project folder
+  (slide 47), point at the five regions and type the three keys (48), make
+  the four folders and the README in the Side Bar (49), type the six lines
+  of slide 50 and open the preview, make the mistakes of slide 55, repair
+  the file of slide 56 with the keys of slides 57–62, and type the README
+  lines of slide 63. Slide 65 is the key sheet. It stays on the projector
+  while the room works through Part 3 of the seminar.
 
 Before the session, start the local copy of the slides:
 `node scripts/serve-local.mjs 8123`, then open

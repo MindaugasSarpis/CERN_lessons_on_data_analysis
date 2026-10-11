@@ -1960,6 +1960,48 @@ hideInToc: true
 hideInToc: true
 ---
 
+# Extensions: the **Hex Editor**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧩 **What an extension is**
+
+- A program added to VS Code from its catalogue, the **Marketplace**: a viewer, a language, a theme
+- The Extensions view opens with `Ctrl+Shift+X` (macOS `Cmd+Shift+X`). A name typed into its search box lists what fits, with the **publisher** under each name
+- Installed once per laptop, with the **Install** button
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔬 **Hex Editor, by Microsoft**
+
+- Search `hex editor`, take the one whose publisher is **Microsoft**, **Install**
+- Right-click a file in the Side Bar, **Open With…**, **Hex Editor**: the bytes of the file, laid out as the next slide reads them
+- A `.csv` opens as text by default. **Open With…** chooses the viewer for this one opening
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Two extensions can share a name. The publisher's name is the check, as the size and the checksum are the check for a data file: the Hex Editor these slides show is the one published by Microsoft.
+
+</div>
+
+<!--
+Speaker: install it live, then open pendulum.csv with it: the view of the
+next slide, with the offsets on the left and the characters on the right.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
 # Reading a **Hexdump**
 
 <div class="card card-info card-glass pad-compact mt-sm">

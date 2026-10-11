@@ -289,7 +289,7 @@ division. A count is a loop with an `if`. Both are written by hand once.
 
 The mean of the mass column is 1864.10 MeV/c², at the D⁰ peak. The 49 rows
 are the 49 lines that `grep -c` and `Select-String` counted for `,-100` in
-[Seminar 4, section 8](seminar_04.md#count).
+[Seminar 4, section 7](seminar_04.md#count).
 
 Ask what the script needs for the smallest mass, the largest mass and the
 mean of the valid decay times: one more loop for each.
@@ -529,7 +529,7 @@ in the rows that have a value.
 4. Put the two means beside the slide *What 49 Rows Do to a Mean* of
    Lecture 04: −0.0525 ns with the marks, +0.00098 ns without. They are
    the numbers of `column_stats.py` in
-   [Seminar 4, section 13](seminar_04.md#list), now from one array and one
+   [Seminar 4, section 12](seminar_04.md#list), now from one array and one
    mask. The sum on that slide, 49 × (−100) / 91 583 = −0.0535, is the
    shift the marks cause.
 
@@ -832,7 +832,7 @@ lecturer.
 - Compare the array with the file. `data.nbytes` is 2 930 656 bytes:
   32 bytes per row, four values of 8 bytes. The file on disk has
   3 926 142 bytes, about 43 per line, as `wc -c` and `Get-Item` measured
-  in [Seminar 4, section 7](seminar_04.md#sizes). As text a value takes as
+  in [Seminar 4, section 6](seminar_04.md#sizes). As text a value takes as
   many bytes as it has characters, in an array always 8.
   `data.astype(np.float32).nbytes` is 1 465 328, half again.
 - Compute *g* from the pendulum table without a loop. Read

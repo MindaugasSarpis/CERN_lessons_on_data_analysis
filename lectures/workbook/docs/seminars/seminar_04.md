@@ -4,14 +4,16 @@
 in class
 
 **Today's goal:** every laptop has Python and Git, and every student
-measures, searches and cleans the project's files by typed commands, and
-ends with the same checksum for the cleaned table as everyone else in the
-room, written into the README.
+measures, searches and cleans the project's files by typed commands, gives
+the project a Python environment of its own, and ends with the same
+checksum for the cleaned table as everyone else in the room, written into
+the README.
 
 The tool is the terminal of VS Code: `zsh` on macOS, **PowerShell 7** on
-Windows, side by side as on the slides of Lecture 04. Windows laptops install
-PowerShell 7 in the first minutes. Python runs two handed-out scripts, and
-Git is only told a name today.
+Windows, side by side as on the slides of Lecture 04. Windows laptops
+install PowerShell 7 in the first minutes, by the typed line of the
+lecture. Python runs two handed-out scripts and makes the environment; Git
+is only told a name today.
 
 ## Run sheet
 
@@ -24,30 +26,29 @@ One screen for the front of the room. Each line links to its section.
 | 0:05 | [2. Bring the folder up to date](#folder) | The Side Bar against the list of files | Every file of the list, and the line **Cleaned copy** in the README |
 | 0:12 | [3. Install Python and Git](#install) | The two installers, then VS Code restarted | Both installed |
 | 0:19 | [4. PowerShell 7, and a first script](#shell) | **Select Default Profile**, `$PSVersionTable.PSVersion.Major` | `7`, two version lines, `ready` |
-| | **Part 2 · The shell, named** · 10 min | | |
+| | **Part 2 · The shell, named** · 16 min | | |
 | 0:25 | [5. Name what you type](#terms) | The slide *Read the Prompt*, `pwd` | Prompt, program, option, argument, path named |
-| | **Part 3 · A file as bytes, by command** · 20 min | | |
-| 0:35 | [6. Count the bytes of a text](#bytes) | `wc -c`, `(Get-Item bytes.txt).Length`, the hex view | 3, 5, then 6 or 7 bytes, and `E0` |
-| 0:49 | [7. The data file in bytes](#sizes) | `wc -c`, `wc -l` on `D0_KPi.csv` | 43 bytes per line, line 2 = 42 characters and one line break |
-| | **Part 4 · The data file by command** · 30 min | | |
-| 0:55 | [8. Three questions](#count) | The slide *Three Questions, Clicked and Typed* | 91 584, line 5000, 49 |
-| 1:03 | [9. The ends of a column, and repeats](#sort) | `sort -n`, `uniq -c`, `Group-Object` | The four far masses, and the mark `-100.0` |
-| 1:15 | [10. Keep lines: `D0_valid.csv`](#grep) | `grep -v`, `Select-String -NotMatch` | 91 535 lines, 3 924 368 or 4 015 903 bytes |
-| | **Part 5 · A program, a checksum, the README** · 30 min | | |
-| 1:25 | [11. Run a program someone else wrote](#script) | `clean_pendulum.py` | 9 rows, 97 bytes |
-| 1:31 | [12. One checksum in the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `fff0870b` on every laptop |
-| 1:40 | [13. A list of checksums, and a mean](#list) | `data/checksums.txt`, `column_stats.py` | `OK` twice, two means |
-| 1:47 | [14. Write it into the README](#readme) | `README.md` and its preview | Size and SHA-256, **How to rebuild** |
+| 0:35 | [6. The data file in bytes](#sizes) | `wc -c`, `wc -l` on `D0_KPi.csv` | 43 bytes per line, line 2 = 42 characters and one line break |
+| | **Part 3 · The data file by command** · 30 min | | |
+| 0:41 | [7. Three questions](#count) | The slide *Three Questions, Clicked and Typed* | 91 584, line 5000, 49 |
+| 0:49 | [8. The ends of a column, and repeats](#sort) | `sort -n`, `uniq -c`, `Group-Object` | The four far masses, and the mark `-100.0` |
+| 1:01 | [9. Keep lines: `D0_valid.csv`](#grep) | `grep -v`, `Select-String -NotMatch` | 91 535 lines, 3 924 368 or 4 015 903 bytes |
+| | **Part 4 · A program, an environment, the README** · 49 min | | |
+| 1:11 | [10. Run a program someone else wrote](#script) | `clean_pendulum.py` | 9 rows, 97 bytes |
+| 1:17 | [11. One checksum in the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `fff0870b` on every laptop |
+| 1:26 | [12. A list of checksums, and a mean](#list) | `data/checksums.txt`, `column_stats.py` | `OK` twice, two means |
+| 1:33 | [13. An environment for the project](#environment) | `python -m venv .venv`, `pip install numpy`, `pip freeze` | `(.venv)` in the prompt, `requirements.txt` with one line |
+| 1:45 | [14. Write it into the README](#readme) | `README.md` and its preview | Size and SHA-256, **How to rebuild** with the environment |
 | 1:55 | [15. Wrap up](#wrap-up) | The list of what was learned | |
 | | **Optional, if the room is fast** | | |
-| — | [16. Regex in the Find box](#regex) | `Ctrl+H`, the button `.*` | The raw table cleaned again, `be05af03…` |
-| — | [17. The same patterns in the shell](#grep-e) | `grep -E`, `Select-String` | Four far rows by line number |
-| — | [18. Complete the README](#readme-more) | Columns and units, licence, the test | The README a stranger can use |
+| — | [16. Count the bytes of a text](#bytes) | `wc -c`, `(Get-Item bytes.txt).Length`, the hex view | 3, 5, then 6 or 7 bytes, and `E0` |
+| — | [17. Regex in the Find box](#regex) | `Ctrl+H`, the button `.*` | The raw table cleaned again, `be05af03…` |
+| — | [18. The same patterns in the shell](#grep-e) | `grep -E`, `Select-String` | Four far rows by line number |
+| — | [19. Complete the README](#readme-more) | Columns and units, licence, the test | The README a stranger can use |
 
-**If time runs short:** leave out steps 8 and 9 of section 6, and in
-section 9 do only the low end of the mass column; never cut section 7,
-which Seminar 6 refers back to, or sections 11 to 14, whose files Seminar 5
-starts from.
+**If time runs short:** in section 8 do only the low end of the mass
+column, and in section 12 only the list; never cut sections 10 to 14, whose
+files and README lines are the result of the day.
 
 ??? info "How to use this page"
     This page is written for the person at the front. Students follow the
@@ -66,22 +67,15 @@ starts from.
     shells differ, the step has a tab for **macOS** (`zsh`) and one for
     **Windows** (PowerShell 7). The outputs were printed by `zsh` and by
     PowerShell 7.6 on Windows, in a folder at
-    `C:\Users\ada\Documents\analysis-project`. Dates, times and the user
-    name differ on every laptop. Keys are written for Windows, with macOS in
+    `C:\Users\ada\Documents\analysis-project`; the environment lines of
+    section 13 by Python 3.14.8 on Linux. Dates, times and the user name
+    differ on every laptop. Keys are written for Windows, with macOS in
     brackets.
 
 ??? info "Before the session"
     For the room: a laptop on which the student can install programs, and
     the project folder `analysis-project` in whatever state it is.
     Section 2 brings every folder to the same state.
-
-    In 2026 the room comes in with less than the lecture assumed. Seminar 3
-    ran as two hours of `pwd`, `ls`, `cd` and `clear` in the terminal VS Code
-    opened, Windows PowerShell 5.1 on Windows, with nothing named and no byte
-    work. Part 3 of Seminar 1, the cleaning of the pendulum table, was not
-    done with the room, so many folders lack `data/processed/pendulum.csv`,
-    `results` and the README line **Cleaned copy** that Lecture 04 opens
-    on. Python and Git are on almost no laptop.
 
     For you:
 
@@ -91,8 +85,8 @@ starts from.
       [Install Python, Git and PowerShell 7](install_python_git.md), and the
       files of the next box.
     - The lecture slides *Read the Prompt*, *Three Questions, Clicked and
-      Typed* and *Which Copy? The README Says* ready to put on the
-      projector.
+      Typed*, *A Virtual Environment* and *Which Copy? The README Says*
+      ready to put on the projector.
 
 ??? info "Files for this seminar"
     A browser saves each file under the name in the second column. Drag it
@@ -104,14 +98,14 @@ starts from.
     | [`D0_KPi.csv`](../data/D0_KPi.csv){ download="D0_KPi.csv" } | `D0_KPi.csv` | `data/raw` | The LHCb file, 3 926 142 bytes |
     | [`pendulum_raw.csv`](../data/pendulum_raw.csv){ download="pendulum.csv" } | `pendulum.csv` | `data/raw` | The pendulum table as the lab partner sent it, 130 bytes |
     | [`pendulum.csv`](../data/pendulum.csv){ download="pendulum.csv" } | `pendulum.csv` | `data/processed` | The cleaned table, 97 bytes |
-    | [`cli_clean_pendulum.py`](../data/cli_clean_pendulum.py){ download="clean_pendulum.py" } | `clean_pendulum.py` | `scripts` | Section 11: the four hand edits of Lecture 2, as a program |
-    | [`cli_column_stats.py`](../data/cli_column_stats.py){ download="column_stats.py" } | `column_stats.py` | `scripts` | Section 13: rows, smallest, largest and mean of one column |
-    | [`pendulum_report.txt`](../data/pendulum_report.txt){ download="report.md" } | `report.md` | `results` | The short report of Seminar 1. Seminar 5 edits it |
+    | [`cli_clean_pendulum.py`](../data/cli_clean_pendulum.py){ download="clean_pendulum.py" } | `clean_pendulum.py` | `scripts` | Section 10: the four hand edits of Lecture 2, as a program |
+    | [`cli_column_stats.py`](../data/cli_column_stats.py){ download="column_stats.py" } | `column_stats.py` | `scripts` | Section 12: rows, smallest, largest and mean of one column |
+    | [`pendulum_report.txt`](../data/pendulum_report.txt){ download="report.md" } | `report.md` | `results` | The short report written with the Markdown of Lecture 2 |
     | [`pendulum_plot.png`](../data/pendulum_plot.png){ download="pendulum_plot.png" } | `pendulum_plot.png` | `results` | The plot the report shows |
-    | [`project_README_s1.txt`](../data/project_README_s1.txt){ download="README.md" } | `README.md` | compare only | The README of Seminar 1, with the line **Cleaned copy** at the end |
-    | [`bytes_utf8.txt`](../data/bytes_utf8.txt){ download="bytes.txt" } | `bytes.txt` | compare only | Section 6: `abcą` and LF in UTF-8, 6 bytes |
-    | [`bytes_1257.txt`](../data/bytes_1257.txt){ download="bytes_1257.txt" } | `bytes_1257.txt` | compare only | Section 6: the same text saved as Windows 1257, 5 bytes |
-    | [`pendulum_crlf.csv`](../data/pendulum_crlf.csv){ download="pendulum_crlf.csv" } | `pendulum_crlf.csv` | compare only | Section 12: copy C of the lecture, CRLF, 107 bytes |
+    | [`project_README_s1.txt`](../data/project_README_s1.txt){ download="README.md" } | `README.md` | compare only | The README as Lecture 2 left it, with the line **Cleaned copy** at the end |
+    | [`bytes_utf8.txt`](../data/bytes_utf8.txt){ download="bytes.txt" } | `bytes.txt` | compare only | Section 16: `abcą` and LF in UTF-8, 6 bytes |
+    | [`bytes_1257.txt`](../data/bytes_1257.txt){ download="bytes_1257.txt" } | `bytes_1257.txt` | compare only | Section 16: the same text saved as Windows 1257, 5 bytes |
+    | [`pendulum_crlf.csv`](../data/pendulum_crlf.csv){ download="pendulum_crlf.csv" } | `pendulum_crlf.csv` | compare only | Section 11: copy C of the lecture, CRLF, 107 bytes |
 
 ---
 
@@ -120,9 +114,9 @@ starts from.
 **0:00 to 0:25 · sections 1 to 4**
 
 The slow downloads start first. While they run, the room brings its project
-folder to the state Lecture 04 assumed. Then the programs are installed,
-and every laptop ends the part with the same shell on its system and a
-script that prints `ready`.
+folder to the state of the lecture. Then the programs are installed, and
+every laptop ends the part with the same shell on its system and a script
+that prints `ready`.
 [Install Python, Git and PowerShell 7](install_python_git.md) has the same
 steps per system, with every error message, for helpers at a laptop.
 
@@ -134,8 +128,11 @@ steps per system, with every error message, for helpers at a laptop.
 
 **Tell the room.** Today every laptop gets the tools of the course: a
 shell that is the same on every Windows laptop, Python, which runs programs,
-and Git, which keeps versions from next week on. Downloads are slow when
-the whole room downloads at once, so all of them start now.
+and Git, which keeps versions of files. Downloads are slow when the whole
+room downloads at once, so all of them start now. On Windows the first
+line is the one of the slide *PowerShell 7, by One Typed Line*: `winget`,
+the package manager that comes with Windows, installs PowerShell 7 by
+name.
 
 1. Open VS Code on the project folder and select **Terminal** > **New
    Terminal**.
@@ -154,7 +151,8 @@ the whole room downloads at once, so all of them start now.
 
     === "Windows"
 
-        The terminal is Windows PowerShell 5.1, as in Seminar 3. Type:
+        The terminal VS Code opens is Windows PowerShell 5.1, the built-in
+        one. Type:
 
         ```text
         winget install --id Microsoft.PowerShell --source winget
@@ -209,10 +207,10 @@ the whole room downloads at once, so all of them start now.
 
 **0:05 · 7 min**
 
-**Tell the room.** Lecture 04 started from a project folder with the raw
+**Tell the room.** Lecture 04 worked in a project folder with the raw
 files, the cleaned table, and a README line that lists the four edits made
-by hand. Many folders lack some of it. While the downloads run, every
-folder gets the same files.
+by hand. While the downloads run, every folder gets the same files, so
+that every command of the day prints the same answer in the whole room.
 
 1. Compare the Side Bar with this list. Folder names are small letters.
 
@@ -226,8 +224,7 @@ folder gets the same files.
     └─ results/        report.md  pendulum_plot.png
     ```
 
-2. A folder that lacks most of it, or a student who was not in Seminar 1:
-   download [`project_after_s1.zip`](../data/project_after_s1.zip), unpack
+2. A folder that lacks most of it: download [`project_after_s1.zip`](../data/project_after_s1.zip), unpack
    it, and open the unpacked `analysis-project` with **File** > **Open
    Folder...**. It has everything but the two scripts.
 
@@ -267,10 +264,11 @@ folder gets the same files.
 **0:12 · 7 min**
 
 **Tell the room.** An installer copies a program onto the disk and tells
-the system where it is. That second part matters: the terminal finds a
-program only in the folders listed in `PATH`, as Lecture 04 showed with
-`Python was not found`. On Windows one box in the Python installer adds
-Python to that list.
+the system where it is. That second part matters: the shell finds a
+program only in the folders listed in `PATH`, the list of the slide *The
+List the Shell Searches*. On Windows one box in the Python installer puts
+Python's folder on that list, in front of the stand-in that answers
+`Python was not found`.
 
 1. Install Python.
 
@@ -318,8 +316,8 @@ Python to that list.
 **0:19 · 6 min**
 
 **Tell the room.** Windows has two PowerShells. Windows PowerShell 5.1 is
-built in and was the terminal of Seminar 3. PowerShell 7 is the newer one,
-the shell of the slides, and it runs on macOS and Linux as well. VS Code is
+built in. PowerShell 7 is the newer one, the shell of the slides, and it
+runs on macOS and Linux as well. VS Code is
 told once to open PowerShell 7. On macOS nothing changes: the shell is `zsh`.
 
 1. **Windows only.** Press `Ctrl+Shift+P` and type:
@@ -380,7 +378,8 @@ told once to open PowerShell 7. On macOS nothing changes: the shell is `zsh`.
         ```
 
 4. Tell Git who you are, once per computer, with your own name and address.
-   Seminar 5 needs both. Nothing is printed, which is correct.
+   Git writes both into every version it keeps. Nothing is printed, which
+   is correct.
 
     ```text
     git config --global user.name "Ada Lovelace"
@@ -438,11 +437,11 @@ page starts there.
 
 ## Part 2 · The shell, named { #part-2 }
 
-**0:25 to 0:35 · section 5**
+**0:25 to 0:41 · sections 5 and 6**
 
-In Seminar 3 the room typed `pwd`, `ls`, `cd` and `clear` without names for
-what it saw. Lecture 04 gave the names. The room types the same commands
-again and names every part.
+Lecture 04 named the terminal, the shell, the prompt and the parts of a
+command. The room types the first commands and names every part, then
+measures the data file in bytes.
 
 ---
 
@@ -610,30 +609,948 @@ that starts with `/Users/ada` or `C:\Users\ada` works on one.
 
 ---
 
-## Part 3 · A file as bytes, by command { #part-3 }
+### 6. The data file in bytes { #sizes }
 
-**0:35 to 0:55 · sections 6 and 7**
+**0:35 · 6 min**
 
-The byte part of Seminar 3, now measured with the commands of Lecture 04:
-`wc -c` and `Length` count the bytes of a file, `hexdump -C` and
-`Format-Hex` show them.
+**Tell the room.** `D0_KPi.csv` cannot be counted by hand, and it does not
+need to be. Its size and its number of lines give the bytes per line, and
+one line checks the result.
 
-??? note "Autumn 2026"
-    This part is here because Seminar 3 of 2026 ran as a terminal session,
-    and its byte part was not done. A year whose Seminar 3 covered the bytes
-    in the Hex Editor skips Part 3 and gives its 20 minutes to the optional
-    sections.
+1. Count the bytes and the lines.
+
+    === "macOS"
+
+        ```text
+        wc -c data/raw/D0_KPi.csv
+        ```
+
+        ```text
+         3926142 data/raw/D0_KPi.csv
+        ```
+
+        ```text
+        wc -l data/raw/D0_KPi.csv
+        ```
+
+        ```text
+           91584 data/raw/D0_KPi.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Item data/raw/D0_KPi.csv).Length
+        ```
+
+        ```text
+        3926142
+        ```
+
+        ```text
+        (Get-Content data/raw/D0_KPi.csv).Count
+        ```
+
+        ```text
+        91584
+        ```
+
+2. Divide on the board: 3 926 142 / 91 584 is about 43 bytes per line.
+
+3. Check it on line 2.
+
+    === "macOS"
+
+        ```text
+        head -n 2 data/raw/D0_KPi.csv | tail -n 1 | wc -c
+        ```
+
+        ```text
+              43
+        ```
+
+        43 bytes: 42 characters and the line break, which `wc -c` counts.
+
+    === "Windows"
+
+        ```text
+        (Get-Content data/raw/D0_KPi.csv -Head 2)[1].Length
+        ```
+
+        ```text
+        42
+        ```
+
+        42 characters. `Get-Content` drops the line break, so the line on
+        disk has 43 bytes. `[1]` is line 2: PowerShell counts from 0.
+
+    ```text
+    1880.649,3000.9534,0.00041271152,1299.1675
+    ```
+
+!!! success "You should now see"
+    Three numbers on the board: 3 926 142 bytes, 91 584 lines, about 43
+    bytes per line, and line 2 as 42 characters and one line break.
+
+The file is UTF-8 with LF line breaks, as the Status Bar of VS Code shows
+for it, so every character is one byte and every line break one more.
+
+!!! warning "Watch for"
+    The size is not 3 926 142, or the Status Bar reads `CRLF` for this file.
+    It was opened and saved by another program, and it is no longer the file
+    that was downloaded. Download it again.
 
 ---
 
-### 6. Count the bytes of a text { #bytes }
+## Part 3 · The data file by command { #part-3 }
 
-**0:35 · 14 min**
+**0:41 to 1:11 · sections 7 to 9**
+
+The room asks `D0_KPi.csv` the questions of Lecture 04, each with one typed
+line. A line that joins programs with `|`, the pipe, is built stage by
+stage: run it, read the output, press `↑`, add the next stage.
+
+---
+
+### 7. Three questions { #count }
+
+**0:41 · 8 min**
+
+**Tell the room.** Lecture 04 opened with three questions that VS Code
+answers with clicks. A typed line answers them too, and the line can be
+kept. Put the slide *Three Questions, Clicked and Typed* on the projector.
+
+1. How many lines?
+
+    === "macOS"
+
+        ```text
+        wc -l data/raw/D0_KPi.csv
+        ```
+
+        ```text
+           91584 data/raw/D0_KPi.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Content data/raw/D0_KPi.csv).Count
+        ```
+
+        ```text
+        91584
+        ```
+
+2. What is on line 5000? On macOS the first program hands 5000 lines to the
+   second, which keeps the last. PowerShell counts lines from 0, so line
+   5000 is number 4999.
+
+    === "macOS"
+
+        ```text
+        head -n 5000 data/raw/D0_KPi.csv | tail -n 1
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Content data/raw/D0_KPi.csv)[4999]
+        ```
+
+    ```text
+    1868.8636,5537.248,0.0007151779,10.399748
+    ```
+
+3. How many rows have `-100`? The text stands in single quotes, with the
+   comma in front.
+
+    === "macOS"
+
+        ```text
+        grep -c ',-100' data/raw/D0_KPi.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Select-String ',-100' data/raw/D0_KPi.csv).Count
+        ```
+
+    ```text
+    49
+    ```
+
+4. Check one answer in VS Code: open the file, press `Ctrl+G` (the same
+   keys on macOS) and type:
+
+    ```text
+    5000
+    ```
+
+    The cursor stands on the same line.
+
+!!! success "You should now see"
+    91 584, the line that begins with `1868.8636`, and 49, on every laptop.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | macOS: the terminal waits and prints nothing | The text was typed as `-100` without the comma, and `grep` took it for an option. Press `Ctrl+C` |
+    | Windows: line 5000 begins with another number | `[5000]` was typed. PowerShell counts from 0: `[4999]` |
+
+---
+
+### 8. The ends of a column, and repeats { #sort }
+
+**0:49 · 12 min**
+
+**Tell the room.** A wrong value usually sits at an end of a sorted column.
+A measured value almost never occurs twice, so a value that occurs many
+times is a mark. These are the first two checks of a new data file.
+
+1. The low end of the mass column `M`: the header off, the column kept,
+   ordered as numbers, the first two taken.
+
+    === "macOS"
+
+        ```text
+        tail -n +2 data/raw/D0_KPi.csv | cut -d, -f1 | sort -n | head -n 2
+        ```
+
+    === "Windows"
+
+        ```text
+        Import-Csv data/raw/D0_KPi.csv | Select-Object -ExpandProperty M | Sort-Object {[double]$_} | Select-Object -First 2
+        ```
+
+    ```text
+    1766.2096
+    1808.1385
+    ```
+
+2. Press `↑` and take the high end: `tail -n 2` in place of `head -n 2`, or
+   `-Last 2` in place of `-First 2`.
+
+    ```text
+    1920.3453
+    2453.6584
+    ```
+
+    The second value from each end lies much closer in than the first: one
+    row at each end is far from all the others.
+
+3. Count the repeats in the decay time `TAU`, field 3, and show the three
+   most frequent values.
+
+    === "macOS"
+
+        ```text
+        cut -d, -f3 data/raw/D0_KPi.csv | sort | uniq -c | sort -n | tail -n 3
+        ```
+
+        ```text
+           2 0.0026546149
+           2 0.0035111452
+          49 -100.0
+        ```
+
+    === "Windows"
+
+        ```text
+        Import-Csv data/raw/D0_KPi.csv | Group-Object TAU -NoElement | Sort-Object Count | Select-Object -Last 3
+        ```
+
+        ```text
+        Count Name
+        ----- ----
+            2 0.0001520892
+            2 0.00017826671
+           49 -100.0
+        ```
+
+    191 values occur twice, so the two shells list different ones before
+    the 49.
+
+!!! success "You should now see"
+    The mass column from 1766.2096 to 2453.6584 on the board, and `-100.0`
+    49 times: the mark for "no decay time", found without being told.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | macOS: `uniq -c` prints thousands of lines of `1` | `sort` is missing before `uniq`. `uniq` only merges lines that stand next to each other |
+    | `-n`, or the braces `{[double]$_}`, left out, and the same answer | Luck: every mass has four digits before the point, so text order is number order here. In a column with `20` and `100` it is not: as text `100` comes first (the slide *Order*). Keep them |
+    | macOS: a sorted column with points looks wrong | The laptop's language reads the comma as the decimal sign. Write `LC_ALL=C sort -n` in place of `sort -n` |
+
+---
+
+### 9. Keep lines: `D0_valid.csv` { #grep }
+
+**1:01 · 10 min**
+
+**Tell the room.** The 49 marked rows are taken out by a typed line. The raw
+file is read and stays as it is. The new file goes to `data/processed`, and
+the line that made it says exactly what was done.
+
+1. Show the first marked row with its line number.
+
+    === "macOS"
+
+        ```text
+        grep -n ',-100' data/raw/D0_KPi.csv | head -n 1
+        ```
+
+        ```text
+        343:1818.1002,2978.644,-100.0,9901.186
+        ```
+
+    === "Windows"
+
+        ```text
+        Select-String ',-100' data/raw/D0_KPi.csv | Select-Object -First 1
+        ```
+
+        ```text
+        data\raw\D0_KPi.csv:343:1818.1002,2978.644,-100.0,9901.186
+        ```
+
+2. Write every line **without** the text into a new file. `>` sends the
+   output into a file.
+
+    === "macOS"
+
+        ```text
+        grep -v ',-100' data/raw/D0_KPi.csv > data/processed/D0_valid.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        Select-String ',-100' data/raw/D0_KPi.csv -NotMatch -Raw > data/processed/D0_valid.csv
+        ```
+
+        `-Raw` passes on only the text of each line, without the file name
+        and the line number.
+
+3. Count its lines and its bytes.
+
+    === "macOS"
+
+        ```text
+        wc -l data/processed/D0_valid.csv
+        ```
+
+        ```text
+           91535 data/processed/D0_valid.csv
+        ```
+
+        ```text
+        wc -c data/processed/D0_valid.csv
+        ```
+
+        ```text
+         3924368 data/processed/D0_valid.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Content data/processed/D0_valid.csv).Count
+        ```
+
+        ```text
+        91535
+        ```
+
+        ```text
+        (Get-Item data/processed/D0_valid.csv).Length
+        ```
+
+        ```text
+        4015903
+        ```
+
+4. Check the lines on the board: 91 584 − 49 = 91 535, the header and
+   91 534 rows, in both shells. Then the bytes: 4 015 903 − 3 924 368 =
+   91 535, one byte more for each line. Show where it is.
+
+    === "macOS"
+
+        ```text
+        hexdump -C -n 32 data/processed/D0_valid.csv
+        ```
+
+        ```text
+        00000000  4d 2c 50 54 2c 54 41 55  2c 49 50 43 48 49 32 0a  |M,PT,TAU,IPCHI2.|
+        00000010  31 38 38 30 2e 36 34 39  2c 33 30 30 30 2e 39 35  |1880.649,3000.95|
+        00000020
+        ```
+
+    === "Windows"
+
+        ```text
+        Format-Hex data/processed/D0_valid.csv -Count 32
+        ```
+
+        ```text
+           Label: C:\Users\ada\Documents\analysis-project\data\processed\D0_valid.csv
+
+                  Offset Bytes                                           Ascii
+                         00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+                  ------ ----------------------------------------------- -----
+        0000000000000000 4D 2C 50 54 2C 54 41 55 2C 49 50 43 48 49 32 0D M,PT,TAU,IPCHI2�
+        0000000000000010 0A 31 38 38 30 2E 36 34 39 2C 33 30 30 30 2E 39 �1880.649,3000.9
+        ```
+
+    PowerShell writes each line itself and ends it with CRLF, `0D 0A`. The
+    raw file has LF. Same rows, other bytes.
+
+!!! success "You should now see"
+    `D0_valid.csv` in `data/processed`: 91 535 lines on every laptop,
+    3 924 368 bytes on a Mac and 4 015 903 on Windows, and `D0_KPi.csv`
+    unchanged at 3 926 142.
+
+**Say it in these words.** The raw file was read and not changed. The new
+file can be deleted and made again with one line. The two systems write the
+same rows with different line breaks, so the two files will not have the
+same checksum: section 11 comes back to it.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | `D0_valid.csv` is empty, or `D0_KPi.csv` is | The line had `> data/raw/...`, or the same file on both sides. `>` empties its file before anything is read. Download `D0_KPi.csv` again |
+    | Windows: `A parameter cannot be found that matches parameter name 'Raw'.` | The terminal is Windows PowerShell 5.1, which has no `-Raw` here. Section 4, step 1. Delete the empty `D0_valid.csv` it left |
+    | Windows: every line of the new file starts with `data\raw\D0_KPi.csv:` | `-Raw` is missing. Run the line again with it |
+
+---
+
+## Part 4 · A program, an environment, the README { #part-4 }
+
+**1:11 to 2:00 · sections 10 to 15**
+
+The four hand edits of Lecture 2 are run as one typed line, and a checksum
+shows that every laptop in the room wrote the same bytes. The project gets
+a Python of its own, and the README gets the size, the checksum, and the
+lines that rebuild the environment and the files.
+
+---
+
+### 10. Run a program someone else wrote { #script }
+
+**1:11 · 6 min**
+
+**Tell the room.** Filters count, sort and keep lines. The four edits of
+Lecture 2 take a program, and a program someone else wrote is run like any
+other command: the program `python3` or `python`, its first argument the
+script, then the file it reads and the file it writes.
+
+1. Run the cleaning script.
+
+    === "macOS"
+
+        ```text
+        python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
+        ```
+
+    ```text
+    9 rows written to data/processed/pendulum_script.csv
+    ```
+
+2. Measure what it wrote.
+
+    === "macOS"
+
+        ```text
+        wc -c data/processed/pendulum_script.csv
+        ```
+
+        ```text
+              97 data/processed/pendulum_script.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Item data/processed/pendulum_script.csv).Length
+        ```
+
+        ```text
+        97
+        ```
+
+3. Open `data/processed/pendulum_script.csv` in VS Code. It begins with
+   `length_cm,t10_s` and `20,9.02`, and the Status Bar reads `LF` also on
+   Windows: the script states its line break itself.
+
+!!! success "You should now see"
+    9 rows, and 97 bytes on every laptop, Mac and Windows alike.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | `no file data/raw/pendulum.csv` | The raw table is missing or misnamed. Section 2 |
+    | `can't open file ... scripts/clean_pendulum.py` | The script is not in `scripts`, or was saved as `clean_pendulum (1).py` |
+    | A size other than 97 | The raw file differs from the lab partner's table. Compare it with [`pendulum_raw.csv`](../data/pendulum_raw.csv): 130 bytes |
+
+---
+
+### 11. One checksum in the room { #checksum }
+
+**1:17 · 9 min**
+
+**Tell the room.** Lecture 04 opened on four copies of the cleaned table,
+97, 96, 107 and 105 bytes, that all look the same in VS Code. A checksum is
+computed from every byte of a file: the same bytes always give the same 64
+hex digits. The room now checks whether 30 laptops wrote the same file.
+
+1. Compute the checksum of the file the script wrote.
+
+    === "macOS"
+
+        ```text
+        shasum -a 256 data/processed/pendulum_script.csv
+        ```
+
+        ```text
+        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum_script.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-FileHash data/processed/pendulum_script.csv).Hash
+        ```
+
+        ```text
+        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
+        ```
+
+        `Get-FileHash` writes the digits in upper case. `be05` and `BE05`
+        are one number.
+
+2. Read the last eight digits aloud, row by row: `fff0870b`. Ask who has
+   other digits. One checksum in the whole room, on macOS and on Windows.
+
+3. Now your own cleaned copy, next to the script's. The wildcard takes both
+   files.
+
+    === "macOS"
+
+        ```text
+        shasum -a 256 data/processed/pendulum*.csv
+        ```
+
+        ```text
+        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum.csv
+        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum_script.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-FileHash data/processed/pendulum*.csv).Hash
+        ```
+
+        ```text
+        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
+        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
+        ```
+
+4. Put the slide *Which Copy? The README Says* on the projector. Each
+   student finds their own `pendulum.csv` in the table, by its first eight
+   digits.
+
+    | Copy | Bytes | SHA-256 | What differs |
+    |--|--|--|--|
+    | A | 97 | `be05af03…fff0870b` | nothing: the script's file |
+    | B | 96 | `139c90c8…18ddfe54` | no `0A` after the last line |
+    | C | 107 | `c06d1344…f102106d` | CRLF |
+    | D | 105 | `12c5c5ca…3afb291b` | CRLF, and no line break after the last line |
+    | other | 97 or another size | other digits | a value or a character differs |
+
+5. A copy that is not A is replaced by the script's file. The README will
+   name A. `cp` is the same word in both shells, and replaces without
+   asking.
+
+    ```text
+    cp data/processed/pendulum_script.csv data/processed/pendulum.csv
+    ```
+
+!!! success "You should now see"
+    `be05af03…fff0870b` twice on every laptop.
+
+**Say it in these words.** Same checksum, same bytes. The table cleaned by
+hand and the table written by the script are one file when the checksums
+agree. Size alone cannot tell A from a copy with one digit changed: the
+checksum can.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | `pendulum_script.csv` has other digits than `be05af03…` | The raw file or the script differs from the handed-out ones. Download both again and run section 10 again |
+    | Windows: a table with `Algorithm`, `Hash` and `Path` | The round brackets and `.Hash` are missing. The digits are the same |
+
+---
+
+### 12. A list of checksums, and a mean { #list }
+
+**1:26 · 7 min**
+
+**Tell the room.** Lecture 2 said raw files are never edited. A list of
+their checksums, written once, turns the rule into a test that runs in a
+second. Then a second program computes what no filter can: a mean.
+
+1. Write the list for `data/raw` and check it at once. The list stands in
+   `data`, so that `data/raw/*` never includes it.
+
+    === "macOS"
+
+        ```text
+        shasum -a 256 data/raw/* > data/checksums.txt
+        ```
+
+        ```text
+        shasum -a 256 -c data/checksums.txt
+        ```
+
+        ```text
+        data/raw/D0_KPi.csv: OK
+        data/raw/pendulum.csv: OK
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-FileHash data/raw/*).Hash | Set-Content data/checksums.txt
+        ```
+
+        ```text
+        $list = Get-Content data/checksums.txt
+        ```
+
+        ```text
+        $now = (Get-FileHash data/raw/*).Hash
+        ```
+
+        ```text
+        Compare-Object $list $now
+        ```
+
+        `Compare-Object` prints only the lines that differ. Nothing means
+        the same. `$list = …` keeps an output under a name for the next
+        line.
+
+2. Open `data/checksums.txt`. The line for `D0_KPi.csv` starts with
+   `25c3c972`, or `25C3C972`, on every laptop.
+
+3. Run the second handed-out script on the raw file, for the column `TAU`.
+
+    === "macOS"
+
+        ```text
+        python3 scripts/column_stats.py data/raw/D0_KPi.csv TAU
+        ```
+
+    === "Windows"
+
+        ```text
+        python scripts/column_stats.py data/raw/D0_KPi.csv TAU
+        ```
+
+    ```text
+    file    data/raw/D0_KPi.csv
+    column  TAU
+    rows    91583
+    min     -100.0
+    max     0.5787994
+    mean    -0.0525221
+    ```
+
+4. Press `↑` and change the path to `data/processed/D0_valid.csv`.
+
+    ```text
+    file    data/processed/D0_valid.csv
+    column  TAU
+    rows    91534
+    min     -0.13715266
+    max     0.5787994
+    mean    0.000981802
+    ```
+
+!!! success "You should now see"
+    `OK` twice, or nothing from `Compare-Object`, and two means on the
+    board: −0.0525 ns with the 49 marked rows, +0.00098 ns without them.
+
+**Say it in these words.** 49 rows of 91 583 are 0.05% of the file:
+49 × (−100) / 91 583 = −0.0535. They move the mean decay time to the wrong
+sign. A mark for "no value" written as a number is counted as a number by
+every program.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | `FAILED`, or `Compare-Object` prints two lines | A raw file changed after the list was written. If the list is seconds old, the file is open in a spreadsheet or was saved by one |
+    | `no column tau in ...` | Column names are written as in the header: `TAU` |
+    | macOS: `shasum: data/checksums.txt: no properly formatted SHA checksum lines found` | The list is empty, or was written by the Windows line. Run the first line of step 1 again |
+
+---
+
+### 13. An environment for the project { #environment }
+
+**1:33 · 12 min**
+
+**Tell the room.** Lecture 04 gave the project a Python of its own, a
+virtual environment, so that the packages one project installs cannot
+break another. The room makes one, sees that it is empty, fills it with one
+package, and writes the list down. Every line of this section is on the
+slides *A Virtual Environment*, *An Empty Environment, Filled* and
+*requirements.txt*.
+
+1. Make the environment. It takes a few seconds, and a folder `.venv`
+   appears in the Side Bar.
+
+    === "macOS"
+
+        ```text
+        python3 -m venv .venv
+        ```
+
+    === "Windows"
+
+        ```text
+        python -m venv .venv
+        ```
+
+2. Activate it. The prompt now starts with `(.venv)`.
+
+    === "macOS"
+
+        ```text
+        source .venv/bin/activate
+        ```
+
+    === "Windows"
+
+        ```text
+        .venv\Scripts\Activate.ps1
+        ```
+
+3. Ask which Python the word `python` now names. The answer is a path
+   inside the project folder, on every laptop, Mac and Windows alike.
+
+    === "macOS"
+
+        ```text
+        which python
+        ```
+
+        ```text
+        /Users/ada/Documents/analysis-project/.venv/bin/python
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-Command python).Source
+        ```
+
+        ```text
+        C:\Users\ada\Documents\analysis-project\.venv\Scripts\python.exe
+        ```
+
+4. List what the environment holds. From here on the lines are the same in
+   both shells: inside the environment the program is `python` on every
+   system.
+
+    ```text
+    python -m pip list
+    ```
+
+    ```text
+    Package Version
+    ------- -------
+    pip     26.2.1
+    ```
+
+5. Ask for a package it does not have.
+
+    ```text
+    python -c "import numpy"
+    ```
+
+    ```text
+    ModuleNotFoundError: No module named 'numpy'
+    ```
+
+6. Install it. The download is 5 to 17 MB, depending on the system; the
+   last line names the version that arrived.
+
+    ```text
+    python -m pip install numpy
+    ```
+
+    ```text
+    Successfully installed numpy-2.5.4
+    ```
+
+7. Run step 5 again with `↑`: nothing is printed, which is correct. Then
+   print the version.
+
+    ```text
+    python -c "import numpy; print(numpy.__version__)"
+    ```
+
+    ```text
+    2.5.4
+    ```
+
+8. Write the list down, and open the file it made.
+
+    ```text
+    python -m pip freeze > requirements.txt
+    ```
+
+    ```text
+    numpy==2.5.4
+    ```
+
+9. Leave the environment. The prompt loses `(.venv)`.
+
+    ```text
+    deactivate
+    ```
+
+!!! success "You should now see"
+    `.venv` and `requirements.txt` in the project folder, and one line in
+    the file: `numpy==` and the version of the day.
+
+**Say it in these words.** The folder `.venv` is made again from the file
+with three lines, on any laptop. The file is kept with the project, the
+folder is not: it is not copied, not backed up and not sent to anyone.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | Windows: `.venv\Scripts\Activate.ps1 cannot be loaded because running scripts is disabled on this system.` | The terminal is Windows PowerShell 5.1 (section 4, step 1), or scripts are switched off. In PowerShell 7 type `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, answer `Y`, and activate again |
+    | macOS: `zsh: command not found: python` in step 3 | The environment is not active: the prompt lacks `(.venv)`. Step 2 again |
+    | `No module named pip`, or `pip: command not found` | Always `python -m pip`, never `pip` alone. If `python -m pip` fails too, the environment was made with another Python: delete `.venv` and do step 1 again |
+    | `error: externally-managed-environment` | The word `python3` named the system's Python, not the python.org one, and no environment is active. Step 2, then `python -m pip` |
+    | The install takes minutes | The whole room downloads at once. Wait; the line finishes on its own |
+    | A version other than 2.5.4 | The newest numpy of the day. The file of step 8 holds that version, which is the point |
+
+---
+
+### 14. Write it into the README { #readme }
+
+**1:45 · 10 min**
+
+**Tell the room.** The README said in words what was done to the pendulum
+table. Now it names the copy it means, by size and checksum, and keeps the
+lines that make the files of `data/processed`, and the three lines that
+make the environment. These lines are the work, not a story of it.
+
+1. Open `README.md` and its preview with `Ctrl+K`, then `V` (macOS `Cmd+K`,
+   then `V`). Change the line **Cleaned copy** to name the size and the
+   checksum. Copy the 64 digits out of the terminal: select them and press
+   `Ctrl+C` (macOS `Cmd+C`). Upper or lower case is the same number.
+
+    ```text
+    - **Cleaned copy:** `data/processed/pendulum.csv`, 97 bytes,
+      SHA-256 `be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b`.
+      Mean line deleted, `,` replaced by `.`, `;` replaced by `,`, column `nr` deleted
+    ```
+
+2. Add a section **How to rebuild** at the end of the README. Copy the
+   lines from this page, or from the terminal history with `↑`, never from
+   memory.
+
+    ```text
+    ## How to rebuild
+
+    Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
+    Python 3.14 from python.org. The environment, once:
+    `python3 -m venv .venv` (Windows `python -m venv .venv`),
+    `source .venv/bin/activate` (Windows `.venv\Scripts\Activate.ps1`),
+    `python -m pip install -r requirements.txt`.
+
+    1. The cleaned pendulum table, 97 bytes, SHA-256 `be05af03…fff0870b`:
+       - zsh: `python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv`
+       - PowerShell: `python scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv`
+    2. `D0_KPi.csv` without the 49 rows marked `-100`, 91 535 lines:
+       - zsh: `grep -v ',-100' data/raw/D0_KPi.csv > data/processed/D0_valid.csv`
+       - PowerShell: `Select-String ',-100' data/raw/D0_KPi.csv -NotMatch -Raw > data/processed/D0_valid.csv`
+    ```
+
+3. Save and read both parts in the preview.
+
+!!! success "You should now see"
+    In the preview: the line **Cleaned copy** with 97 bytes and the 64
+    digits, and a section **How to rebuild** with the environment lines and
+    two numbered steps, each with a line for each shell.
+
+**Say it in these words.** The README may promise the checksum of the
+pendulum table: the script writes the same 97 bytes on every system. For
+`D0_valid.csv` it promises the lines, not the checksum, because each shell
+writes its own line breaks.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | The preview shows the list as one paragraph | An empty line is missing before `1.`, or the `-` lines are not indented by three spaces |
+    | The checksum in the README ends in other digits | It was typed, not copied. Copy it again from the terminal |
+
+---
+
+### 15. Wrap up { #wrap-up }
+
+**1:55 · 5 min**
+
+Read the list aloud. Ask on the way out which step was hardest.
+
+- Python and Git are installed. On Windows the terminal is PowerShell 7, on
+  macOS `zsh`. The ideas are the same in both, the words differ.
+- The prompt shows the working directory. A command is a program, options
+  (parameters) and arguments. A relative path works on every laptop.
+- `wc -c` and `Length` count the bytes of a file: 3 926 142 bytes and
+  91 584 lines, about 43 bytes per line.
+- The ends of a sorted column and the count of repeated values found four
+  far masses and the mark `-100.0` in 49 rows.
+- Commands read from `data/raw` and write to `data/processed`. `>` empties
+  the file it writes to.
+- A program someone else wrote runs with one typed line: `python3` on
+  macOS, `python` on Windows.
+- One checksum, `be05af03…fff0870b`, in the whole room: the same 97 bytes
+  on every laptop.
+- The project has a Python of its own in `.venv`, made with one line and
+  filled from `requirements.txt`, which is kept; the folder is not.
+- The README names the copy by size and checksum, and keeps the lines that
+  rebuild the files.
+
+---
+
+## Optional, if the room is fast { #optional }
+
+Four sections for a room that is ahead of the clock. Each starts from files
+the room already has. Do them in this order, and stop at 1:55 for the wrap
+up.
+
+---
+
+### 16. Count the bytes of a text { #bytes }
+
+**Optional · 14 min**
 
 **Tell the room.** A file is a sequence of bytes. For plain English text one
 character is one byte. Other letters take more, and a line break is a byte
-too. Before each measurement, the room predicts the number. Lecture 3 gave
-the reasons. Today a command measures them.
+too. Before each measurement, the room predicts the number; a command
+measures it.
 
 1. In the Side Bar select the empty area below the folders, then
    **New File**, and name it:
@@ -803,790 +1720,7 @@ the wrong table: it is reopened, not retyped.
 
 ---
 
-### 7. The data file in bytes { #sizes }
-
-**0:49 · 6 min**
-
-**Tell the room.** `D0_KPi.csv` cannot be counted by hand, and it does not
-need to be. Its size and its number of lines give the bytes per line, and
-one line checks the result.
-
-1. Count the bytes and the lines.
-
-    === "macOS"
-
-        ```text
-        wc -c data/raw/D0_KPi.csv
-        ```
-
-        ```text
-         3926142 data/raw/D0_KPi.csv
-        ```
-
-        ```text
-        wc -l data/raw/D0_KPi.csv
-        ```
-
-        ```text
-           91584 data/raw/D0_KPi.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-Item data/raw/D0_KPi.csv).Length
-        ```
-
-        ```text
-        3926142
-        ```
-
-        ```text
-        (Get-Content data/raw/D0_KPi.csv).Count
-        ```
-
-        ```text
-        91584
-        ```
-
-2. Divide on the board: 3 926 142 / 91 584 is about 43 bytes per line.
-
-3. Check it on line 2.
-
-    === "macOS"
-
-        ```text
-        head -n 2 data/raw/D0_KPi.csv | tail -n 1 | wc -c
-        ```
-
-        ```text
-              43
-        ```
-
-        43 bytes: 42 characters and the line break, which `wc -c` counts.
-
-    === "Windows"
-
-        ```text
-        (Get-Content data/raw/D0_KPi.csv -Head 2)[1].Length
-        ```
-
-        ```text
-        42
-        ```
-
-        42 characters. `Get-Content` drops the line break, so the line on
-        disk has 43 bytes. `[1]` is line 2: PowerShell counts from 0.
-
-    ```text
-    1880.649,3000.9534,0.00041271152,1299.1675
-    ```
-
-!!! success "You should now see"
-    Three numbers on the board: 3 926 142 bytes, 91 584 lines, about 43
-    bytes per line, and line 2 as 42 characters and one line break.
-
-The file is UTF-8 with LF line breaks, as the Status Bar of VS Code shows
-for it, so every character is one byte and every line break one more.
-
-!!! warning "Watch for"
-    The size is not 3 926 142, or the Status Bar reads `CRLF` for this file.
-    It was opened and saved by another program, and it is no longer the file
-    that was downloaded. Download it again.
-
----
-
-## Part 4 · The data file by command { #part-4 }
-
-**0:55 to 1:25 · sections 8 to 10**
-
-The room asks `D0_KPi.csv` the questions of Lecture 04, each with one typed
-line. A line that joins programs with `|`, the pipe, is built stage by
-stage: run it, read the output, press `↑`, add the next stage.
-
----
-
-### 8. Three questions { #count }
-
-**0:55 · 8 min**
-
-**Tell the room.** Lecture 04 opened with three questions that VS Code
-answers with clicks. A typed line answers them too, and the line can be
-kept. Put the slide *Three Questions, Clicked and Typed* on the projector.
-
-1. How many lines?
-
-    === "macOS"
-
-        ```text
-        wc -l data/raw/D0_KPi.csv
-        ```
-
-        ```text
-           91584 data/raw/D0_KPi.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-Content data/raw/D0_KPi.csv).Count
-        ```
-
-        ```text
-        91584
-        ```
-
-2. What is on line 5000? On macOS the first program hands 5000 lines to the
-   second, which keeps the last. PowerShell counts lines from 0, so line
-   5000 is number 4999.
-
-    === "macOS"
-
-        ```text
-        head -n 5000 data/raw/D0_KPi.csv | tail -n 1
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-Content data/raw/D0_KPi.csv)[4999]
-        ```
-
-    ```text
-    1868.8636,5537.248,0.0007151779,10.399748
-    ```
-
-3. How many rows have `-100`? The text stands in single quotes, with the
-   comma in front.
-
-    === "macOS"
-
-        ```text
-        grep -c ',-100' data/raw/D0_KPi.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Select-String ',-100' data/raw/D0_KPi.csv).Count
-        ```
-
-    ```text
-    49
-    ```
-
-4. Check one answer in VS Code: open the file, press `Ctrl+G` (the same
-   keys on macOS) and type:
-
-    ```text
-    5000
-    ```
-
-    The cursor stands on the same line.
-
-!!! success "You should now see"
-    91 584, the line that begins with `1868.8636`, and 49, on every laptop.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | macOS: the terminal waits and prints nothing | The text was typed as `-100` without the comma, and `grep` took it for an option. Press `Ctrl+C` |
-    | Windows: line 5000 begins with another number | `[5000]` was typed. PowerShell counts from 0: `[4999]` |
-
----
-
-### 9. The ends of a column, and repeats { #sort }
-
-**1:03 · 12 min**
-
-**Tell the room.** A wrong value usually sits at an end of a sorted column.
-A measured value almost never occurs twice, so a value that occurs many
-times is a mark. These are the first two checks of a new data file.
-
-1. The low end of the mass column `M`: the header off, the column kept,
-   ordered as numbers, the first two taken.
-
-    === "macOS"
-
-        ```text
-        tail -n +2 data/raw/D0_KPi.csv | cut -d, -f1 | sort -n | head -n 2
-        ```
-
-    === "Windows"
-
-        ```text
-        Import-Csv data/raw/D0_KPi.csv | Select-Object -ExpandProperty M | Sort-Object {[double]$_} | Select-Object -First 2
-        ```
-
-    ```text
-    1766.2096
-    1808.1385
-    ```
-
-2. Press `↑` and take the high end: `tail -n 2` in place of `head -n 2`, or
-   `-Last 2` in place of `-First 2`.
-
-    ```text
-    1920.3453
-    2453.6584
-    ```
-
-    The second value from each end lies much closer in than the first: one
-    row at each end is far from all the others.
-
-3. Count the repeats in the decay time `TAU`, field 3, and show the three
-   most frequent values.
-
-    === "macOS"
-
-        ```text
-        cut -d, -f3 data/raw/D0_KPi.csv | sort | uniq -c | sort -n | tail -n 3
-        ```
-
-        ```text
-           2 0.0026546149
-           2 0.0035111452
-          49 -100.0
-        ```
-
-    === "Windows"
-
-        ```text
-        Import-Csv data/raw/D0_KPi.csv | Group-Object TAU -NoElement | Sort-Object Count | Select-Object -Last 3
-        ```
-
-        ```text
-        Count Name
-        ----- ----
-            2 0.0001520892
-            2 0.00017826671
-           49 -100.0
-        ```
-
-    191 values occur twice, so the two shells list different ones before
-    the 49.
-
-!!! success "You should now see"
-    The mass column from 1766.2096 to 2453.6584 on the board, and `-100.0`
-    49 times: the mark for "no decay time", found without being told.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | macOS: `uniq -c` prints thousands of lines of `1` | `sort` is missing before `uniq`. `uniq` only merges lines that stand next to each other |
-    | `-n`, or the braces `{[double]$_}`, left out, and the same answer | Luck: every mass has four digits before the point, so text order is number order here. In a column with `20` and `100` it is not: as text `100` comes first (the slide *Order*). Keep them |
-    | macOS: a sorted column with points looks wrong | The laptop's language reads the comma as the decimal sign. Write `LC_ALL=C sort -n` in place of `sort -n` |
-
----
-
-### 10. Keep lines: `D0_valid.csv` { #grep }
-
-**1:15 · 10 min**
-
-**Tell the room.** The 49 marked rows are taken out by a typed line. The raw
-file is read and stays as it is. The new file goes to `data/processed`, and
-the line that made it says exactly what was done.
-
-1. Show the first marked row with its line number.
-
-    === "macOS"
-
-        ```text
-        grep -n ',-100' data/raw/D0_KPi.csv | head -n 1
-        ```
-
-        ```text
-        343:1818.1002,2978.644,-100.0,9901.186
-        ```
-
-    === "Windows"
-
-        ```text
-        Select-String ',-100' data/raw/D0_KPi.csv | Select-Object -First 1
-        ```
-
-        ```text
-        data\raw\D0_KPi.csv:343:1818.1002,2978.644,-100.0,9901.186
-        ```
-
-2. Write every line **without** the text into a new file. `>` sends the
-   output into a file.
-
-    === "macOS"
-
-        ```text
-        grep -v ',-100' data/raw/D0_KPi.csv > data/processed/D0_valid.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        Select-String ',-100' data/raw/D0_KPi.csv -NotMatch -Raw > data/processed/D0_valid.csv
-        ```
-
-        `-Raw` passes on only the text of each line, without the file name
-        and the line number.
-
-3. Count its lines and its bytes.
-
-    === "macOS"
-
-        ```text
-        wc -l data/processed/D0_valid.csv
-        ```
-
-        ```text
-           91535 data/processed/D0_valid.csv
-        ```
-
-        ```text
-        wc -c data/processed/D0_valid.csv
-        ```
-
-        ```text
-         3924368 data/processed/D0_valid.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-Content data/processed/D0_valid.csv).Count
-        ```
-
-        ```text
-        91535
-        ```
-
-        ```text
-        (Get-Item data/processed/D0_valid.csv).Length
-        ```
-
-        ```text
-        4015903
-        ```
-
-4. Check the lines on the board: 91 584 − 49 = 91 535, the header and
-   91 534 rows, in both shells. Then the bytes: 4 015 903 − 3 924 368 =
-   91 535, one byte more for each line. Show where it is.
-
-    === "macOS"
-
-        ```text
-        hexdump -C -n 32 data/processed/D0_valid.csv
-        ```
-
-        ```text
-        00000000  4d 2c 50 54 2c 54 41 55  2c 49 50 43 48 49 32 0a  |M,PT,TAU,IPCHI2.|
-        00000010  31 38 38 30 2e 36 34 39  2c 33 30 30 30 2e 39 35  |1880.649,3000.95|
-        00000020
-        ```
-
-    === "Windows"
-
-        ```text
-        Format-Hex data/processed/D0_valid.csv -Count 32
-        ```
-
-        ```text
-           Label: C:\Users\ada\Documents\analysis-project\data\processed\D0_valid.csv
-
-                  Offset Bytes                                           Ascii
-                         00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
-                  ------ ----------------------------------------------- -----
-        0000000000000000 4D 2C 50 54 2C 54 41 55 2C 49 50 43 48 49 32 0D M,PT,TAU,IPCHI2�
-        0000000000000010 0A 31 38 38 30 2E 36 34 39 2C 33 30 30 30 2E 39 �1880.649,3000.9
-        ```
-
-    PowerShell writes each line itself and ends it with CRLF, `0D 0A`. The
-    raw file has LF. Same rows, other bytes.
-
-!!! success "You should now see"
-    `D0_valid.csv` in `data/processed`: 91 535 lines on every laptop,
-    3 924 368 bytes on a Mac and 4 015 903 on Windows, and `D0_KPi.csv`
-    unchanged at 3 926 142.
-
-**Say it in these words.** The raw file was read and not changed. The new
-file can be deleted and made again with one line. The two systems write the
-same rows with different line breaks, so the two files will not have the
-same checksum: section 12 comes back to it.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `D0_valid.csv` is empty, or `D0_KPi.csv` is | The line had `> data/raw/...`, or the same file on both sides. `>` empties its file before anything is read. Download `D0_KPi.csv` again |
-    | Windows: `A parameter cannot be found that matches parameter name 'Raw'.` | The terminal is Windows PowerShell 5.1, which has no `-Raw` here. Section 4, step 1. Delete the empty `D0_valid.csv` it left |
-    | Windows: every line of the new file starts with `data\raw\D0_KPi.csv:` | `-Raw` is missing. Run the line again with it |
-
----
-
-## Part 5 · A program, a checksum, the README { #part-5 }
-
-**1:25 to 2:00 · sections 11 to 15**
-
-The four hand edits of Lecture 2 are run as one typed line. A checksum then
-shows that every laptop in the room wrote the same bytes, and the README
-gets the size, the checksum and the lines that rebuild the files.
-
----
-
-### 11. Run a program someone else wrote { #script }
-
-**1:25 · 6 min**
-
-**Tell the room.** Filters count, sort and keep lines. The four edits of
-Lecture 2 take a program, and a program someone else wrote is run like any
-other command: the program `python3` or `python`, its first argument the
-script, then the file it reads and the file it writes.
-
-1. Run the cleaning script.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
-        ```
-
-    ```text
-    9 rows written to data/processed/pendulum_script.csv
-    ```
-
-2. Measure what it wrote.
-
-    === "macOS"
-
-        ```text
-        wc -c data/processed/pendulum_script.csv
-        ```
-
-        ```text
-              97 data/processed/pendulum_script.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-Item data/processed/pendulum_script.csv).Length
-        ```
-
-        ```text
-        97
-        ```
-
-3. Open `data/processed/pendulum_script.csv` in VS Code. It begins with
-   `length_cm,t10_s` and `20,9.02`, and the Status Bar reads `LF` also on
-   Windows: the script states its line break itself.
-
-!!! success "You should now see"
-    9 rows, and 97 bytes on every laptop, Mac and Windows alike.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `no file data/raw/pendulum.csv` | The raw table is missing or misnamed. Section 2 |
-    | `can't open file ... scripts/clean_pendulum.py` | The script is not in `scripts`, or was saved as `clean_pendulum (1).py` |
-    | A size other than 97 | The raw file differs from the lab partner's table. Compare it with [`pendulum_raw.csv`](../data/pendulum_raw.csv): 130 bytes |
-
----
-
-### 12. One checksum in the room { #checksum }
-
-**1:31 · 9 min**
-
-**Tell the room.** Lecture 04 opened on four copies of the cleaned table,
-97, 96, 107 and 105 bytes, that all look the same in VS Code. A checksum is
-computed from every byte of a file: the same bytes always give the same 64
-hex digits. The room now checks whether 30 laptops wrote the same file.
-
-1. Compute the checksum of the file the script wrote.
-
-    === "macOS"
-
-        ```text
-        shasum -a 256 data/processed/pendulum_script.csv
-        ```
-
-        ```text
-        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum_script.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-FileHash data/processed/pendulum_script.csv).Hash
-        ```
-
-        ```text
-        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
-        ```
-
-        `Get-FileHash` writes the digits in upper case. `be05` and `BE05`
-        are one number.
-
-2. Read the last eight digits aloud, row by row: `fff0870b`. Ask who has
-   other digits. One checksum in the whole room, on macOS and on Windows.
-
-3. Now your own cleaned copy, next to the script's. The wildcard takes both
-   files.
-
-    === "macOS"
-
-        ```text
-        shasum -a 256 data/processed/pendulum*.csv
-        ```
-
-        ```text
-        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum.csv
-        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum_script.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-FileHash data/processed/pendulum*.csv).Hash
-        ```
-
-        ```text
-        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
-        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
-        ```
-
-4. Put the slide *Which Copy? The README Says* on the projector. Each
-   student finds their own `pendulum.csv` in the table, by its first eight
-   digits.
-
-    | Copy | Bytes | SHA-256 | What differs |
-    |--|--|--|--|
-    | A | 97 | `be05af03…fff0870b` | nothing: the script's file |
-    | B | 96 | `139c90c8…18ddfe54` | no `0A` after the last line |
-    | C | 107 | `c06d1344…f102106d` | CRLF |
-    | D | 105 | `12c5c5ca…3afb291b` | CRLF, and no line break after the last line |
-    | other | 97 or another size | other digits | a value or a character differs |
-
-5. A copy that is not A is replaced by the script's file. The README will
-   name A. `cp` is the same word in both shells, and replaces without
-   asking.
-
-    ```text
-    cp data/processed/pendulum_script.csv data/processed/pendulum.csv
-    ```
-
-!!! success "You should now see"
-    `be05af03…fff0870b` twice on every laptop.
-
-**Say it in these words.** Same checksum, same bytes. The table cleaned by
-hand and the table written by the script are one file when the checksums
-agree. Size alone cannot tell A from a copy with one digit changed: the
-checksum can.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `pendulum_script.csv` has other digits than `be05af03…` | The raw file or the script differs from the handed-out ones. Download both again and run section 11 again |
-    | Windows: a table with `Algorithm`, `Hash` and `Path` | The round brackets and `.Hash` are missing. The digits are the same |
-
----
-
-### 13. A list of checksums, and a mean { #list }
-
-**1:40 · 7 min**
-
-**Tell the room.** Lecture 2 said raw files are never edited. A list of
-their checksums, written once, turns the rule into a test that runs in a
-second. Then a second program computes what no filter can: a mean.
-
-1. Write the list for `data/raw` and check it at once. The list stands in
-   `data`, so that `data/raw/*` never includes it. Seminar 5 uses it.
-
-    === "macOS"
-
-        ```text
-        shasum -a 256 data/raw/* > data/checksums.txt
-        ```
-
-        ```text
-        shasum -a 256 -c data/checksums.txt
-        ```
-
-        ```text
-        data/raw/D0_KPi.csv: OK
-        data/raw/pendulum.csv: OK
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-FileHash data/raw/*).Hash | Set-Content data/checksums.txt
-        ```
-
-        ```text
-        $list = Get-Content data/checksums.txt
-        ```
-
-        ```text
-        $now = (Get-FileHash data/raw/*).Hash
-        ```
-
-        ```text
-        Compare-Object $list $now
-        ```
-
-        `Compare-Object` prints only the lines that differ. Nothing means
-        the same. `$list = …` keeps an output under a name for the next
-        line.
-
-2. Open `data/checksums.txt`. The line for `D0_KPi.csv` starts with
-   `25c3c972`, or `25C3C972`, on every laptop.
-
-3. Run the second handed-out script on the raw file, for the column `TAU`.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/column_stats.py data/raw/D0_KPi.csv TAU
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/column_stats.py data/raw/D0_KPi.csv TAU
-        ```
-
-    ```text
-    file    data/raw/D0_KPi.csv
-    column  TAU
-    rows    91583
-    min     -100.0
-    max     0.5787994
-    mean    -0.0525221
-    ```
-
-4. Press `↑` and change the path to `data/processed/D0_valid.csv`.
-
-    ```text
-    file    data/processed/D0_valid.csv
-    column  TAU
-    rows    91534
-    min     -0.13715266
-    max     0.5787994
-    mean    0.000981802
-    ```
-
-!!! success "You should now see"
-    `OK` twice, or nothing from `Compare-Object`, and two means on the
-    board: −0.0525 ns with the 49 marked rows, +0.00098 ns without them.
-
-**Say it in these words.** 49 rows of 91 583 are 0.05% of the file:
-49 × (−100) / 91 583 = −0.0535. They move the mean decay time to the wrong
-sign. A mark for "no value" written as a number is counted as a number by
-every program.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `FAILED`, or `Compare-Object` prints two lines | A raw file changed after the list was written. If the list is seconds old, the file is open in a spreadsheet or was saved by one |
-    | `no column tau in ...` | Column names are written as in the header: `TAU` |
-    | macOS: `shasum: data/checksums.txt: no properly formatted SHA checksum lines found` | The list is empty, or was written by the Windows line. Run the first line of step 1 again |
-
----
-
-### 14. Write it into the README { #readme }
-
-**1:47 · 8 min**
-
-**Tell the room.** The README said in words what was done to the pendulum
-table. Now it names the copy it means, by size and checksum, and keeps the
-lines that make the files of `data/processed`. These lines are the work,
-not a story of it. Seminar 5 relies on them.
-
-1. Open `README.md` and its preview with `Ctrl+K`, then `V` (macOS `Cmd+K`,
-   then `V`). Change the line **Cleaned copy** to name the size and the
-   checksum. Copy the 64 digits out of the terminal: select them and press
-   `Ctrl+C` (macOS `Cmd+C`). Upper or lower case is the same number.
-
-    ```text
-    - **Cleaned copy:** `data/processed/pendulum.csv`, 97 bytes,
-      SHA-256 `be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b`.
-      Mean line deleted, `,` replaced by `.`, `;` replaced by `,`, column `nr` deleted
-    ```
-
-2. Add a section **How to rebuild** at the end of the README. Copy the
-   lines from this page, or from the terminal history with `↑`, never from
-   memory.
-
-    ```text
-    ## How to rebuild
-
-    Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
-
-    1. The cleaned pendulum table, 97 bytes, SHA-256 `be05af03…fff0870b`:
-       - zsh: `python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv`
-       - PowerShell: `python scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv`
-    2. `D0_KPi.csv` without the 49 rows marked `-100`, 91 535 lines:
-       - zsh: `grep -v ',-100' data/raw/D0_KPi.csv > data/processed/D0_valid.csv`
-       - PowerShell: `Select-String ',-100' data/raw/D0_KPi.csv -NotMatch -Raw > data/processed/D0_valid.csv`
-    ```
-
-3. Save and read both parts in the preview.
-
-!!! success "You should now see"
-    In the preview: the line **Cleaned copy** with 97 bytes and the 64
-    digits, and a section **How to rebuild** with two numbered steps, each
-    with a line for each shell.
-
-**Say it in these words.** The README may promise the checksum of the
-pendulum table: the script writes the same 97 bytes on every system. For
-`D0_valid.csv` it promises the lines, not the checksum, because each shell
-writes its own line breaks.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The preview shows the list as one paragraph | An empty line is missing before `1.`, or the `-` lines are not indented by three spaces |
-    | The checksum in the README ends in other digits | It was typed, not copied. Copy it again from the terminal |
-
----
-
-### 15. Wrap up { #wrap-up }
-
-**1:55 · 5 min**
-
-Read the list aloud. Ask on the way out which step was hardest.
-
-- Python and Git are installed. On Windows the terminal is PowerShell 7, on
-  macOS `zsh`. The ideas are the same in both, the words differ.
-- The prompt shows the working directory. A command is a program, options
-  (parameters) and arguments. A relative path works on every laptop.
-- `wc -c` and `Length` count the bytes of a file, `hexdump -C` and
-  `Format-Hex` show them. `ą` takes two bytes in UTF-8, a line break one or
-  two.
-- The ends of a sorted column and the count of repeated values found four
-  far masses and the mark `-100.0` in 49 rows.
-- Commands read from `data/raw` and write to `data/processed`. `>` empties
-  the file it writes to.
-- A program someone else wrote runs with one typed line: `python3` on
-  macOS, `python` on Windows.
-- One checksum, `be05af03…fff0870b`, in the whole room: the same 97 bytes
-  on every laptop.
-- The README names the copy by size and checksum, and keeps the lines that
-  rebuild the files.
-
----
-
-## Optional, if the room is fast { #optional }
-
-Three sections for a room that is ahead of the clock. Each starts from files
-the room already has. Do them in this order, and stop at 1:55 for the wrap
-up.
-
----
-
-### 16. Regex in the Find box { #regex }
+### 17. Regex in the Find box { #regex }
 
 **Optional · 12 min**
 
@@ -1689,8 +1823,7 @@ replacements, and checks the result by its checksum.
         BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
         ```
 
-9. Delete the copy. It was practice, and no line of the README makes it,
-   so it would only be one more file for Git in Seminar 5.
+9. Delete the copy. It was practice, and no line of the README makes it.
 
     ```text
     rm data/processed/pendulum_regex.csv
@@ -1698,7 +1831,7 @@ replacements, and checks the result by its checksum.
 
 !!! success "You should now see"
     `be05af03…fff0870b`: four replacements made the same 97 bytes as the
-    hands in Lecture 2 and the script in section 11.
+    hands in Lecture 2 and the script in section 10.
 
 `([0-9]),([0-9])` fits a comma only between two digits, so it cannot touch
 a comma that separates two values. That is why the order of the
@@ -1713,7 +1846,7 @@ replacements no longer matters.
 
 ---
 
-### 17. The same patterns in the shell { #grep-e }
+### 18. The same patterns in the shell { #grep-e }
 
 **Optional · 10 min**
 
@@ -1801,7 +1934,7 @@ them the shell reads `*`, `[`, `,` and `|` itself.
    the rows.
 
 !!! success "You should now see"
-    Four lines with their numbers: the four far masses of section 9.
+    Four lines with their numbers: the four far masses of section 8.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -1811,7 +1944,7 @@ them the shell reads `*`, `[`, `,` and `|` itself.
 
 ---
 
-### 18. Complete the README { #readme-more }
+### 19. Complete the README { #readme-more }
 
 **Optional · 15 min**
 
@@ -1891,7 +2024,7 @@ to rebuild** is tested the way a stranger would use it.
 
 !!! success "You should now see"
     Two new sections in the preview, and the files of `data/processed` back
-    with the sizes of sections 10 and 11.
+    with the sizes of sections 9 and 10.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -1932,13 +2065,13 @@ For students who finish a section early. Answers are given for the lecturer.
 - Find every file of the project larger than 1 MB: `find . -size +1M`, or
   `Get-ChildItem -Recurse -File | Where-Object Length -gt 1MB | Select-Object Name, Length`.
   The answer is `D0_KPi.csv` and `D0_valid.csv`.
-- Write the numbers of section 7 into the README as a section **File
+- Write the numbers of section 6 into the README as a section **File
   anatomy**, in the form of [Seminar 3, section 7](seminar_03.md#readme).
 - Copy the project folder to a USB drive with the file manager, open the
-  copy in VS Code, and run the check of section 13 inside it. Every line
+  copy in VS Code, and run the check of section 12 inside it. Every line
   ends in `OK`, or `Compare-Object` prints nothing.
 - A student with a dataset of their own runs the three questions of
-  section 8 and the two ends of one numeric column on it.
+  section 7 and the two ends of one numeric column on it.
 - Add a file `LICENSE` to the project folder with the text of the MIT
   licence from [choosealicense.com](https://choosealicense.com/licenses/mit/),
   with the year and the student's name filled in.
@@ -1951,11 +2084,11 @@ For students who finish a section early. Answers are given for the lecturer.
 | Writing a program like `clean_pendulum.py` or `column_stats.py` | 6 and 7 (Python) |
 | Plotting the histogram of the mass | 8 (Data Visualisation) |
 | Cleaning a table whose mark for "no value" is not known in advance | 12 (Pandas & Data Cleaning) |
-| One command that rebuilds everything | 13 (Reproducible Workflows) |
+| Pinned versions, and one command that rebuilds everything | 13 (Reproducible Workflows) |
 
 Leave out altogether, even if asked: Git Bash, `awk`, `vim`, aliases of your own, the
 shell's start-up files, remote login.
 
 ## Aims practised
 
-⚙️ a step typed once and run again · 📁 a file measured in bytes, raw data read and never written · 🔧 one task in two shells, the same answer · ♻️ one checksum for the same file in the whole room
+⚙️ a step typed once and run again · 📁 a file measured in bytes, raw data read and never written · 🔧 one task in two shells, the same answer · ♻️ one checksum for the same file in the whole room · 📦 an environment made from a list and written back to it

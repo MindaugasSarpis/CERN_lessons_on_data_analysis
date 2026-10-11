@@ -551,11 +551,11 @@ hideInToc: true
 
 <div class="stat-grid">
   <div class="stat">
-    <span class="stat-num gradient-text">64</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text">52</span><span class="stat-unit">h</span>
     <div class="stat-label">Contact hours</div>
   </div>
   <div class="stat">
-    <span class="stat-num gradient-text energy">196</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text energy">78</span><span class="stat-unit">h</span>
     <div class="stat-label">Self study</div>
   </div>
   <div class="stat">
@@ -569,7 +569,8 @@ hideInToc: true
 <!--
 Speaker: the lecture and the seminar are one unit. Miss the seminar and the
 lecture stays abstract; skip the lecture and the seminar feels like magic.
-(~2 min)
+The hours are those of the 5-credit elective: 13 sessions of 4 h, and 78 h
+of self-study, 130 h in all. (~2 min)
 -->
 
 ---

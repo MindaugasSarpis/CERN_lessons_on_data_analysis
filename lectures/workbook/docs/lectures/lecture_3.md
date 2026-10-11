@@ -25,14 +25,15 @@ number, a letter and a whole file are written as bits.
    encoding and the line ending in the Status Bar of VS Code; what a
    spreadsheet does to a CSV file.
 6. **Files & formats** — file sizes; byte order; the first bytes of a file
-   say what it is; the hexdump of a small CSV file; one number as text and as
+   say what it is; an extension installed from the Marketplace, the Hex
+   Editor by Microsoft; the hexdump of a small CSV file; one number as text and as
    a float32.
 7. **Compression & integrity** — why text compresses well; a checksum worked
    by hand, what it catches and what it misses; CRC and SHA-256.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–79 and estimates about 125 min. Slides 80–84 are the
+The lecture is slides 1–80 and estimates about 127 min. Slides 81–85 are the
 self-check quizzes and take no lecture time. For a 90-minute slot, skip the
 slides in the second table. To jump, type the slide number and press Enter.
 
@@ -43,9 +44,9 @@ slides in the second table. To jump, type the slide number and press Enter.
 | 0:39 | 40, 44 | How the CPU runs an algorithm |
 | 0:42 | 46–56 | Integers, two's complement, floating point |
 | 1:00 | 58–66 | Text and encodings; `100` before `20` answered in bytes at 60 |
-| 1:14 | 67–72 | Files and formats |
-| 1:24 | 74–79 | Compression, hashing, back to the box, recap |
-| 1:33 | | Move to the seminar |
+| 1:14 | 67–73 | Files and formats, the Hex Editor installed |
+| 1:26 | 75–80 | Compression, hashing, back to the box, recap |
+| 1:35 | | Move to the seminar |
 
 | Skip | Slides | Saves |
 |--|--|--|
@@ -57,15 +58,15 @@ slides in the second table. To jump, type the slide number and press Enter.
 | Data Types in Practice | 57 | 2 min |
 | Python for Encoding Conversions | 63 | 2 min |
 | Endianness | 69 | 2 min |
-| Image Quality vs Bit Depth | 73 | 2 min |
-| A Checksum by Hand | 76 | 2 min |
+| Image Quality vs Bit Depth | 74 | 2 min |
+| A Checksum by Hand | 77 | 2 min |
 
-- **Do not cut** slides 59–62 and 64–66 (text and encodings) or 68 and 70–72
-  (file sizes, formats, the hexdump, one number as text and as binary). The
-  seminar measures and opens files in exactly these terms.
-- **Do not cut** slide 77 (Error Detection & Hashing, the SHA-256 of the
-  97-byte `pendulum.csv`), slide 78 (Key Takeaways, which returns to the box
-  of slide 4) or slide 79 (the Recap, the closing slide). If time runs short,
+- **Do not cut** slides 59–62 and 64–66 (text and encodings) or 68 and 70–73
+  (file sizes, formats, the Hex Editor, the hexdump, one number as text and
+  as binary). The seminar measures and opens files in exactly these terms.
+- **Do not cut** slide 78 (Error Detection & Hashing, the SHA-256 of the
+  97-byte `pendulum.csv`), slide 79 (Key Takeaways, which returns to the box
+  of slide 4) or slide 80 (the Recap, the closing slide). If time runs short,
   cut from the skip list above, not from the end.
 - **Slide 60** (the ASCII table) takes Lecture 2's answer one level down.
   Sort Lines put `100` before `20` because `1` comes before `2`; in bytes,
@@ -80,7 +81,10 @@ slides in the second table. To jump, type the slide number and press Enter.
 - **Slide 65** (Encoding & Line Endings in VS Code) is done live: open a file
   with Lithuanian letters, select `UTF-8` in the Status Bar, reopen it as
   **Baltic (Windows 1257)** and back.
-- **Slide 71** (Reading a Hexdump) shows the first bytes of the small table
+- **Slide 71** (Extensions: the Hex Editor) is done live: the Extensions
+  view, `hex editor`, the publisher Microsoft, **Install**, then **Open
+  With…** on `pendulum.csv`.
+- **Slide 72** (Reading a Hexdump) shows the first bytes of the small table
   that was cleaned in Lecture 2.
 
 ## Check yourself

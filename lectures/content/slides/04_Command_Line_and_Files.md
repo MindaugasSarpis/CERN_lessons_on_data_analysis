@@ -68,7 +68,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-⚙️ Run a Python **script** that someone else wrote, with one typed line in either shell
+⚙️ Run a Python **script** that someone else wrote, install a program and a **package** by a typed line, and give a project its own **environment**
 
 </div>
 
@@ -81,7 +81,7 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: one line per section. The thread through all six is the pendulum
+Speaker: one line per section. The thread through all seven is the pendulum
 table of Lecture 2: cleaned by hand on the projector then, cleaned by a typed
 line today, and checked byte for byte at the end. (~1 min)
 -->
@@ -135,8 +135,9 @@ Two lines, one per system. macOS names the program `python3`, Windows `python`. 
 Speaker: open the README and read the line "Cleaned copy" aloud. Then run the
 typed line once, without explaining it: nine rows, the table of Lecture 2.
 The script is not opened now; it is run like any other command, and the
-section on programs opens it later. Most Windows laptops in the room have no
-Python yet: they watch this line on the projector. (~2 min)
+section on programs opens it later. A laptop without Python answers
+"Python was not found" to this line; the section Tools & Environments says
+why, and installs it. (~2 min)
 -->
 
 ---
@@ -249,13 +250,12 @@ hideInToc: true
 
 # The **Shell**
 
-A typed line can be kept, and Seminar 3 typed `pwd`, `ls`, `cd` and `clear` without naming anything. This section names the window, the program that reads the line, and the parts of the line.
+A typed line can be kept. This section names the window where it is typed, the program that reads it, and the parts of the line.
 
 <!--
 Speaker: where commands are typed, what reads them, and how a file is named in
-a command. The room typed pwd, ls, cd and clear for two hours in Seminar 3,
-most of it in Windows PowerShell and in zsh on the Macs, and nothing was named.
-This section names the parts of what they typed. (~1 min)
+a command. Nothing is assumed: the terminal, the shell and the prompt are
+named here before they are used. (~1 min)
 -->
 
 ---
@@ -284,7 +284,7 @@ hideInToc: true
 
 ## 🪟 **Windows · PowerShell**
 
-- In VS Code, **Terminal** > **New Terminal**, as in Seminar 3
+- In VS Code, **Terminal** > **New Terminal**, the same menu
 - The name at the top right of the Panel reads `powershell` or `pwsh`. The version line tells which
 
 ```text
@@ -298,22 +298,21 @@ PS> $PSVersionTable.PSVersion.Major
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🔧 Windows has two PowerShells. **Windows PowerShell 5.1** is built in: it was the terminal of Seminar 3, and it answers `5`. **PowerShell 7** answers `7`, and it runs on macOS and Linux as well. Every Windows command on these slides is for PowerShell 7.
+🔧 Windows has two PowerShells. **Windows PowerShell 5.1** is built in and answers `5`. **PowerShell 7** answers `7`, and it runs on macOS and Linux as well; the section Tools & Environments installs it with one typed line. Every Windows command on these slides is for PowerShell 7.
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-🪟 Windows: a terminal that answers `5` runs Windows PowerShell 5.1. Its users follow the PowerShell column on the projector.
+🪟 A terminal that answers `5` runs Windows PowerShell 5.1. Most lines of the PowerShell column work there too, and the slides say where 5.1 differs.
 
 </div>
 
 <!--
 Speaker: open a terminal on the projector and type the version line. Ask the
-room: who sees zsh, who sees powershell (5.1), who already has pwsh. Most
-Windows laptops answer 5 today, and none of them has Python yet: those
-students read the PowerShell column and watch it run at the front. Where 5.1
-gives another answer than 7, the slide says so. (~3 min)
+room: who sees zsh, who sees powershell (5.1), who already has pwsh. A laptop
+that answers 5 follows the PowerShell column; where 5.1 gives another answer
+than 7, the slide says so. (~3 min)
 -->
 
 ---
@@ -387,7 +386,7 @@ cd   Set-Location
 <!--
 Speaker: the same word, two different things. On the Mac, ls is a file on the
 disk. In PowerShell it is a short alias for the cmdlet Get-ChildItem, so the
-commands of Seminar 3 worked in both shells. A name with no alias does not
+same word works in both shells. A name with no alias does not
 cross over: wc is a program of macOS, and PowerShell answers "The term 'wc' is
 not recognized". The | is explained in the pipes section; here it picks two
 columns. (~3 min)
@@ -403,7 +402,7 @@ hideInToc: true
 
 | Shell | The prompt, as it first appears | The folder it shows |
 | --- | --- | --- |
-| PowerShell 5.1, Seminar 3 | `PS C:\Users\ada\Documents\analysis-project>` | The whole path |
+| Windows PowerShell 5.1, built in | `PS C:\Users\ada\Documents\analysis-project>` | The whole path |
 | PowerShell 7 | `PS C:\Users\ada\Documents\analysis-project>` | The same, letter for letter |
 | macOS, `zsh` | `ada@MacBook-Air analysis-project %` | The last folder only |
 | Python, started by `python3` or `python` | `>>>` | None. `exit()` gives the shell back |
@@ -439,8 +438,8 @@ The folder the shell is in: the one `pwd` prints and `cd` changes. `~` is the ho
 </div>
 
 <!--
-Speaker: ask the room to read their own prompt from Seminar 3 aloud: most
-Windows laptops showed PS C:\Users\... . The two PowerShells print the same
+Speaker: ask the room to read their own prompt aloud, part by part. The two
+PowerShells print the same
 prompt, which is why the first slide of this section checked the version. The folder in the
 prompt is the working directory, and every relative path of the next slides
 starts there. (~3 min)
@@ -698,53 +697,6 @@ speaking. (~3 min)
 -->
 
 ---
-hideInToc: true
----
-
-# A Path That **Fails**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% cat data/raw/D0_KPi.cvs
-cat: data/raw/D0_KPi.cvs: No such file or directory
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> cat data/raw/D0_KPi.cvs
-Get-Content: Cannot find path
-'C:\Users\ada\Documents\analysis-project\
-data\raw\D0_KPi.cvs' because it does not
-exist.
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The program complains this time, not the shell: `cat` on macOS, `Get-Content` behind the alias `cat` in PowerShell. PowerShell turns the relative path into an absolute one and shows where it looked. The fix is the same in both shells: `pwd`, then `ls`, and complete the name with `Tab`.
-
-</div>
-
-<!--
-Speaker: the typo is cvs for csv. A command
-that works prints only what was asked for; a message means something went
-wrong, and its first word says who noticed. (~2 min)
--->
-
----
 layout: section
 hideInToc: true
 ---
@@ -754,7 +706,7 @@ hideInToc: true
 A command is a program, its options and its arguments, and a path names the file it works on. The first commands work on whole files: read, count, copy, delete.
 
 <!--
-Speaker: Seminar 3 moved between folders. This section works on the files in
+Speaker: the last section moved between folders. This section works on the files in
 them: read, count, make, copy, move, delete, many at once. Every command slide has
 macOS on the left and PowerShell on the right, run in the same project folder.
 (~1 min)
@@ -2101,152 +2053,6 @@ line. PowerShell knows $1 too: (Get-Content data/raw/pendulum.csv) -replace
 -->
 
 ---
-hideInToc: true
----
-
-# One Pattern, **Two Shells**
-
-<div class="note-text mt-sm">Question: which rows lie far from the peak, with a mass below 1810 or from 1920 up?</div>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-```text
-% grep -nE '^(17|180|19[2-9]|2)' data/raw/D0_KPi.csv
-10048:2453.6584,755.2686,0.2276815,1.0500937
-43608:1808.1385,3632.4104,0.06656479,11200.344
-67877:1920.3453,4999.695,0.00015124853,1.0319226
-89861:1766.2096,12493.022,0.0037266747,214.38336
-PS> Select-String '^(17|180|19[2-9]|2)' data/raw/D0_KPi.csv
-
-data\raw\D0_KPi.csv:10048:2453.6584,755.2686,0.2276815,1.0500937
-data\raw\D0_KPi.csv:43608:1808.1385,3632.4104,0.06656479,11200.344
-data\raw\D0_KPi.csv:67877:1920.3453,4999.695,0.00015124853,1.0319226
-data\raw\D0_KPi.csv:89861:1766.2096,12493.022,0.0037266747,214.38336
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact mt-md">
-
-| | Signs `+` `{ }` `( )` `\|` | `tau` and `TAU` | Line number | Count |
-| --- | --- | --- | --- | --- |
-| `grep` | with `-E` | differ, equal with `-i` | with `-n` | `-c` |
-| `Select-String` | always | equal, differ with `-CaseSensitive` | always | `( ).Count` |
-
-</div>
-
-<!--
-Speaker: read the pattern aloud, one alternative at a time: a mass that
-begins with 17, with 180, with 19 and a digit from 2 to 9, or with 2. Both
-shells find the same four rows at the same line numbers. The four masses
-are the ends of the mass column; Ctrl+G 10048 in VS Code goes to the first.
-Case: grep -c tau data/raw/D0_KPi.csv gives 0, (Select-String tau
-data/raw/D0_KPi.csv).Count gives 1, the header M,PT,TAU,IPCHI2, and with
--CaseSensitive it gives 0 again. For the peak: grep -cE '^18[5-7]' and
-(Select-String '^18[5-7]' data/raw/D0_KPi.csv).Count both give 41091, 45% of
-the rows. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# Wildcards Are Not **Regular Expressions**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| | Wildcard | Regular expression |
-| --- | --- | --- |
-| Read by | zsh, or in PowerShell the command, for file names | `grep -E`, `Select-String`, the Find box |
-| Any one character | `?` | `.` |
-| Any number of characters | `*` | `.*` |
-| One of a list | `[pr]` | `[pr]` |
-| Must fit | the whole name | any part of the line, unless `^` and `$` pin it |
-| Every CSV file | `*.csv` | `.*\.csv$` |
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-```text
-% grep -cE [0-9],[0-9] data/raw/pendulum.csv
-zsh: no matches found: [0-9],[0-9]
-PS> (Select-String [0-9],[0-9] data/raw/pendulum.csv).Count
-11
-```
-
-⚠️ Without quotes the shell reads the pattern first. zsh took it for a wildcard, found no file name that fits and stopped. PowerShell took the comma for a list of two patterns, `[0-9]` twice, and counted every line with a digit: 11 where 10 is right. A pattern stands in single quotes, in both shells.
-
-</div>
-
-<!--
-Speaker: the table first, then the same pattern without quotes in both
-shells. zsh at least says so; PowerShell gives a wrong number and no warning.
-With the quotes, grep -cE '[0-9],[0-9]' and (Select-String '[0-9],[0-9]'
-data/raw/pendulum.csv).Count both give 10. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Pattern on **Another Laptop**
-
-<div class="note-text mt-sm">Ada writes the raw pendulum table with PowerShell on Windows and mails the file to a Mac.</div>
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% wc -c results/pendulum_ps.csv
-     141 results/pendulum_ps.csv
-% grep -c '0$' results/pendulum_ps.csv
-0
-% grep -c '0$' data/raw/pendulum.csv
-2
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Get-Content data/raw/pendulum.csv |
-    Set-Content results/pendulum_ps.csv
-PS> (Get-Item results/pendulum_ps.csv).Length
-141
-PS> Select-String '0$' results/pendulum_ps.csv
-
-results\pendulum_ps.csv:8:7;80;17,90
-results\pendulum_ps.csv:9:8;90;19,10
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ The raw file has 130 bytes. PowerShell on Windows ended each of the 11 lines with CRLF: 11 bytes `0D` more. For `grep` the `0D` is the last character of the line, so `0$` fits nothing. `Select-String` and the Find box of VS Code read both line endings.
-
-</div>
-
-<div class="note-text mt-sm"><code>\d</code> for a digit works in Select-String and VS Code, but not in every grep: on Linux <code>grep -cE '\d,\d'</code> counts 0 where 10 is right. <code>[0-9]</code> works everywhere.</div>
-
-<!--
-Speaker: the bytes of Lecture 3, measured: 141 minus 130 is 11, one 0D per
-line. The Windows column is real; the Mac column is the same file copied
-over. A pattern that works on one laptop is tried on the other system before
-it goes into a script. Delete results/pendulum_ps.csv afterwards (rm, or
-Remove-Item). (~3 min)
--->
-
----
 layout: section
 hideInToc: true
 ---
@@ -2414,7 +2220,7 @@ open(target, "w", encoding="utf-8", newline="\n")
 
 </div>
 
-<div class="note-text mt-sm">Windows PowerShell 5.1 of Seminar 3 writes 216 bytes: <code>FF FE</code>, then two bytes per character (UTF-16).</div>
+<div class="note-text mt-sm">Windows PowerShell 5.1 writes 216 bytes: <code>FF FE</code>, then two bytes per character (UTF-16).</div>
 
 <!--
 Speaker: run the copy live in both shells and delete results/copy.csv
@@ -2545,52 +2351,571 @@ layout: section
 hideInToc: true
 ---
 
-# Checksums & **Backups**
+# Tools & **Environments**
 
-The script wrote 97 bytes in both shells, PowerShell's copy of the same ten lines 107. A checksum tells files apart by their bytes, however alike their text looks.
+The cleaning line starts with `python3` or `python`: a program that somebody installed. This section is about where programs come from, how the shell finds them, and how a project writes down which ones it needs.
 
 <!--
-Speaker: Lecture 3 may have stopped before its checksum slides, so the next
-slide works one by hand. Then it is a command, in both shells, and it does
-three jobs: it compares the script with the hand, it guards the raw data, and
-it tells the copies of the opening apart. (~1 min)
+Speaker: every command so far was a program that was already on the laptop.
+Python was not: "Python was not found", from the Shell section, is where a
+laptop without it stops. This section installs programs by typed lines and
+ends with a list from which another laptop installs the same ones. (~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# A Checksum **by Hand**
+# Where a Program **Comes From**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **macOS · zsh** · 🪟 **Windows · PowerShell**
+
+```text
+% which python3
+/Library/Frameworks/Python.framework/Versions/3.14/bin/python3
+PS> (Get-Command python).Source
+C:\Users\ada\AppData\Local\Programs\Python\Python314\python.exe
+```
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧱 **Built in**
+
+`ls`, `cat`, `Get-Content`: they came with the system, in `/bin` or inside PowerShell.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📦 **An installer**
+
+Python from python.org, VS Code: a file downloaded from a web page and clicked through. It copies the program into a folder of its own.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🗂️ **A package manager**
+
+One program that installs other programs by name, with a typed line: `winget` on Windows, Homebrew on macOS. Two slides on.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+`which` and `Get-Command` print where the shell found the program: the folder the installer made. A program is usable from the prompt when two things hold: its files are in a folder, and that folder is on the list the shell searches. The list is the next slide.
+
+</div>
+
+<!--
+Speaker: the two paths are where the python.org installers put Python by
+default, the framework folder on macOS and the per-user Programs folder on
+Windows. They were not yet checked on the lecturer's own laptops: run the two
+lines once before the lecture. A Mac without the python.org install answers
+/usr/bin/python3, Apple's copy from the developer tools. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The List the Shell Searches: **PATH**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **macOS · zsh** · 🪟 **Windows · PowerShell**, shortened
+
+```text
+% echo $PATH | tr ':' '\n'
+/Library/Frameworks/Python.framework/Versions/3.14/bin
+/usr/bin
+PS> $env:PATH -split ';'
+C:\Windows\system32
+C:\Program Files\PowerShell\7\
+C:\Users\ada\AppData\Local\Programs\Python\Python314\
+C:\Users\ada\AppData\Local\Microsoft\WindowsApps
+```
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➡️ **Left to right**
+
+The shell takes the first folder on the list that holds a program of the typed name. Of two Pythons on the list, the first one runs.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🪟 **`Python was not found`**
+
+`WindowsApps` holds a stand-in `python.exe` from Windows. **Add python.exe to PATH** puts `Python314` on the list before it; without the tick, the stand-in answers.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🍎 **`python3`, not `python`**
+
+macOS ships no program named `python`. The installer adds `python3` and `python3.14`, so `python` stays `command not found`.
+
+</div>
+
+</div>
+
+<!--
+Speaker: a terminal reads PATH once, when it opens, so a program installed
+while a terminal is open is found only in a new one. PATH is one text, folders separated by : on macOS and by ; on
+Windows; tr and -split print one per line. The lists are shortened to the
+folders that matter here; a real laptop shows ten to twenty. The Windows
+order is real: the system's folders first, then the user's, and the Python
+installer puts its two folders in front of WindowsApps. Let the room predict
+what happens when the installer's folder is missing before you say it. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Package **Manager**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+A package manager is a program that installs other programs. It looks a name up in a **catalogue**, downloads the files, puts them in a folder, and puts the folder on `PATH`. It also lists what it installed, upgrades it, and removes it. Each of these is a typed line.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| Job | 🪟 `winget`, comes with Windows | 🍎 Homebrew, `brew` |
+| --- | --- | --- |
+| Find a name in the catalogue | `winget search powershell` | `brew search git` |
+| Install | `winget install --id Microsoft.PowerShell` | `brew install git` |
+| What is installed, with versions | `winget list` | `brew list --versions` |
+| Newer versions | `winget upgrade --all` | `brew upgrade` |
+| Remove | `winget uninstall --id Microsoft.PowerShell` | `brew uninstall git` |
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-## ➕ **Add up the bytes**
+## 📜 **Why a typed line**
 
-```text
-a    b    c
-97 + 98 + 99 = 294
-294 mod 256  =  38
-
-a    c    b
-97 + 99 + 98 = 294   →   38
-```
-
-The sum, kept to one byte, is 38. Swap two letters and it stays 38: this change goes unseen.
+The install line goes into the README, like the cleaning line. On the next laptop it installs the same program, and `winget list` shows which version. An installer clicked through leaves no line behind.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔐 **SHA-256 mixes every byte**
+## 🧭 **What this course installs**
+
+PowerShell 7 by `winget`. Python from python.org on both systems. Git from git-scm.com on Windows, and on a Mac from Apple's developer tools, `xcode-select --install`. Homebrew is not needed for the course. Linux has `apt`, with the same five jobs.
+
+</div>
+
+</div>
+
+<!--
+Speaker: the five jobs are the same in every package manager; the table has
+the two of this room. winget is part of Windows 10 and 11 (the App Installer).
+Homebrew has to be installed first, from brew.sh, which is why the course
+takes Python from python.org instead. A Homebrew Python also refuses pip
+install with "externally-managed-environment": its packages come from brew.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# PowerShell 7, **by One Typed Line**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🪟 **In Windows PowerShell 5.1, the built-in one**
 
 ```text
-abc   ba7816bf…f20015ad
-acb   8e976608…e272fa57
+PS> winget install --id Microsoft.PowerShell --source winget
+Found PowerShell [Microsoft.PowerShell] Version 7.6.6
+Downloading https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi
+Successfully installed
 ```
 
-The same three bytes in another order give other digits, all 64 of them. Nobody has found two different files with the same SHA-256.
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🏷️ **The line, read**
+
+`--id Microsoft.PowerShell` is the name in the catalogue, `--source winget` the catalogue. The output names the version it found, the file it downloaded, and the result.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔍 **Afterwards**
+
+`PATH` has `C:\Program Files\PowerShell\7\`, so a new terminal finds `pwsh`. VS Code is told once to open it: **Terminal: Select Default Profile**, then **PowerShell**. `$PSVersionTable.PSVersion.Major` answers `7`.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🍎 **On a Mac**
+
+`git --version` on a Mac without Git opens the installer of Apple's developer tools, the same as `xcode-select --install`. Python comes from the installer on python.org, with every default.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm"><code>winget</code> asks once whether the source agreements are accepted: <code>Y</code>. A managed laptop may ask for an administrator password; the same <code>.msi</code> file, run by hand, installs the same version.</div>
+
+<!--
+Speaker: the three output lines are the ones winget prints for this package
+(found, downloading, installed); its licence notice and progress bar are left
+out. Not yet run on the lecturer's Windows laptop with 7.6.6: run it once
+before the lecture and correct the version on the slide. The same line works
+in PowerShell 7 to upgrade. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **pip**: the Package Manager of Python
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **macOS · zsh** · 🪟 **Windows · PowerShell**
+
+```text
+% python3 -m pip --version
+pip 26.2.1 from /Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/pip (python 3.14)
+PS> python -m pip --version
+pip 26.2.1 from C:\Users\ada\AppData\Local\Programs\Python\Python314\Lib\site-packages\pip (python 3.14)
+```
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📚 **The catalogue**
+
+PyPI, pypi.org. A package has a name, a version, and the list of packages it needs itself. `numpy` is one of them.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🐍 **`python -m pip`**
+
+pip is itself a Python program, and this form runs it inside a named Python. With more than one Python on a laptop it says which one gets the package. `pip` alone takes the first on `PATH`.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 📂 **Where packages go**
+
+`site-packages`, a folder inside that Python. `import` searches a list of folders as the shell searches `PATH`; the list is `sys.path`, and `site-packages` is on it.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+Two levels. `winget` and Homebrew install programs for the whole system, Python among them. pip installs packages into one Python. Both answer the same five jobs: search, install, list, upgrade, remove.
+
+</div>
+
+<!--
+Speaker: the two paths are the python.org defaults; pip comes with Python, so
+nothing is installed to get it. The version was measured in Python 3.14.8 on
+Linux; the pip bundled with a python.org 3.14 can be another one. Say "python
+dash m pip" aloud once and keep that form on every slide. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `pip install numpy`, **Measured**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **`python3` on macOS** · 🪟 **`python` on Windows, the same lines**
+
+```text
+% python3 -c "import numpy"
+ModuleNotFoundError: No module named 'numpy'
+% python3 -m pip install numpy
+Downloading numpy-2.5.4-….whl (16.7 MB)
+Successfully installed numpy-2.5.4
+% python3 -m pip list
+Package Version
+------- -------
+numpy   2.5.4
+pip     26.2.1
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **What arrived**
+
+One file, a *wheel*: numpy 2.5.4 built for this Python and this system, 16.7 MB. Unpacked into `site-packages/numpy`: 43 MB of files, and `import numpy` finds them.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔁 **The line again**
+
+On a laptop that has it: `Requirement already satisfied: numpy … (2.5.4)`. One version is asked for with `==`: `pip install numpy==2.5.4`. `pip uninstall numpy` removes it.
+
+</div>
+
+</div>
+
+<!--
+Speaker: measured on Linux with Python 3.14.8; the wheel is another file on
+macOS and on Windows, with another size, and the rest of the output is the
+same. pip show numpy prints the Location, the site-packages folder. Ask the
+room where the 43 MB are, and show the folder in the Side Bar if it is quick.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Python, **Every Project**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+% python3 -c "import numpy as np; print(np.float_)"
+AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float64` instead.
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **One `site-packages`, one version**
+
+Every project on the laptop imports the same numpy. A script written for numpy 1.26 uses `np.float_`. After `pip install --upgrade numpy` for another project, it stops with this message. The upgrade for one project broke the other.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **One Python per project**
+
+A project gets a Python of its own, with its own `site-packages`: a **virtual environment**. Packages installed into it are seen by that project only, and the laptop's Python stays as it was.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The message was produced with numpy 2.5.4. <code>np.float_</code> existed up to numpy 1.26 and was removed in 2.0, released in June 2024.</div>
+
+<!--
+Speaker: this is the usual way a working script stops working: nothing in the
+script changed, a package on the laptop did. The two cards are the problem
+and its fix; the next three slides do the fix. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Virtual **Environment**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
+
+```text
+% python3 -m venv .venv
+% ls .venv
+bin        include    lib        pyvenv.cfg
+% source .venv/bin/activate
+(.venv) % which python
+…/analysis-project/.venv/bin/python
+(.venv) % deactivate
+%
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · PowerShell**
+
+```text
+PS> python -m venv .venv
+PS> ls .venv -Name
+Include
+Lib
+Scripts
+pyvenv.cfg
+PS> .venv\Scripts\Activate.ps1
+(.venv) PS> (Get-Command python).Source
+…\analysis-project\.venv\Scripts\python.exe
+(.venv) PS> deactivate
+```
+
+</div>
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📁 **A folder**
+
+`.venv` in the project: 14 MB, 891 files, most of them a copy of pip. `pyvenv.cfg` names the Python it was made from: `home = …`, `version = 3.14.8`.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔛 **Activation**
+
+The script puts `.venv/bin`, or `.venv\Scripts`, at the front of `PATH`. From then on `python` is the environment's Python in both shells, and the prompt shows `(.venv)`. `deactivate` takes it off the list.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🚫 **Not a file to keep**
+
+`.venv` is made again with one line, like `data/processed`. It is not copied to another laptop and not backed up.
+
+</div>
+
+</div>
+
+<!--
+Speaker: type the lines live. The sizes were measured on Linux for a fresh
+environment of Python 3.14.8; a python.org Python gives numbers of the same
+order. The activate script does one thing worth saying twice: it edits PATH,
+the list of the slide before last, for this terminal only. In Windows
+PowerShell 5.1 the activate script is refused by the execution policy;
+PowerShell 7 runs it. (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# An Empty Environment, **Filled**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **macOS · zsh** · 🪟 **Windows · PowerShell, the same lines**
+
+```text
+(.venv) % python -m pip list
+Package Version
+------- -------
+pip     26.2.1
+(.venv) % python -c "import numpy"
+ModuleNotFoundError: No module named 'numpy'
+(.venv) % python -m pip install numpy
+Successfully installed numpy-2.5.4
+(.venv) % python -m pip show numpy
+Location: /Users/ada/Documents/analysis-project/.venv/lib/python3.14/site-packages
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🧪 **The empty environment is a test**
+
+The laptop has numpy; the environment does not see it. A script that runs in a fresh environment has named everything it needs, and nothing it needs is hidden somewhere on the laptop.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📂 **Inside the project**
+
+The package went into `.venv/lib/python3.14/site-packages`, on Windows `.venv\Lib\site-packages`: 83 MB with numpy. The environment of another project holds numpy 1.26 next to it.
+
+</div>
+
+</div>
+
+<!--
+Speaker: with (.venv) in the prompt the word is python on both systems, so
+the lines are the same. pip show prints seven lines; only Location is on the
+slide, and on Windows it reads C:\Users\ada\...\.venv\Lib\site-packages. The
+83 MB and 2228 files were measured on Linux. (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **requirements.txt**: the List, Written Down
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+(.venv) % python -m pip freeze > requirements.txt
+(.venv) % cat requirements.txt
+numpy==2.5.4
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **On another laptop**
+
+Three lines: `python3 -m venv .venv`, `source .venv/bin/activate` and `python -m pip install -r requirements.txt`; on Windows `python -m venv .venv` and `.venv\Scripts\Activate.ps1`. The same numpy 2.5.4 arrives, because the version stands in the file.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📁 **What the project keeps**
+
+`requirements.txt` is kept and passed on, like `scripts`. `.venv` is made again from it, like `data/processed` from `data/raw`. The section **How to rebuild** of the README starts with the three lines.
 
 </div>
 
@@ -2598,16 +2923,32 @@ The same three bytes in another order give other digits, all 64 of them. Nobody 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🧮 A checksum is a short number computed from every byte of a file. The same bytes always give the same number. Other digits mean other bytes, and that is what the check rests on.
+`pip freeze` writes every installed package with its exact version, `==`: one line here, one line per package in a larger project. The pinned versions are what makes the rebuild on another laptop give the same numbers.
 
 </div>
 
 <!--
-Speaker: work the sum on the board: a is 97, b 98, c 99 (the ASCII table of
-Lecture 3). mod 256 keeps the remainder after dividing by 256, so the sum fits
-one byte: 294 - 256 = 38. The hashes are the SHA-256 of the three bytes abc
-and acb (printf abc | shasum -a 256 on a Mac); only the first and last eight
-of 64 hex digits are shown. (~2 min)
+Speaker: the file is the environment, written down, in the same sense as the
+README lines are the cleaning, written down. Today's two scripts need no
+package, so the project's own requirements.txt stays empty and the README
+names the Python version instead; the file grows with the first import of an
+installed package. (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Checksums & **Backups**
+
+The script wrote 97 bytes in both shells, PowerShell's copy of the same ten lines 107. A checksum tells files apart by their bytes, however alike their text looks.
+
+<!--
+Speaker: a checksum is a short number computed from every byte of a file,
+as Lecture 3 worked out by hand; here it is a command, in both shells, and it does
+three jobs: it compares the script with the hand, it guards the raw data, and
+it tells the copies of the opening apart. (~1 min)
 -->
 
 ---
@@ -2922,7 +3263,7 @@ hideInToc: true
 - What is `TAU`, and in which unit?
 - Why is `TAU` `-100.0` in 49 rows?
 - Are the raw files the ones that were downloaded?
-- Which lines make `data/processed`, and in which shell?
+- Which Python, and which lines, make `data/processed`, and in which shell?
 - Which of the four copies is the cleaned table?
 - May I copy the scripts?
 
@@ -2988,7 +3329,7 @@ What is in `data/raw`, `data/processed`, `scripts` and `results`.
 
 ## ▶️ **How to rebuild**
 
-The lines, in order, that make every file in `data/processed`, and the shell each one runs in.
+The Python, then the lines, in order, that make every file in `data/processed`, and the shell each one runs in.
 
 </div>
 
@@ -3079,6 +3420,7 @@ hideInToc: true
 ## How to rebuild
 
 Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
+Python 3.14 from python.org; the scripts need no package beyond it.
 
 1. The cleaned pendulum table, 97 bytes, SHA-256 `be05af03…fff0870b`:
    - zsh: `python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv`
@@ -3316,7 +3658,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Run a Python **script** that someone else wrote: `python3` on macOS, `python` on Windows
+✅ Run a Python **script** that someone else wrote, install a program with `winget` and a package with `pip`, and give a project a **virtual environment** with `requirements.txt`
 
 </div>
 
@@ -3461,4 +3803,36 @@ hideInToc: true
   ]"
   :correct="2"
   explanation="There are three copies, and the stick is a second kind of storage. But all three travel in one bag, so one theft or one fire takes them all. A copy on university storage, in a cloud service or on a drive kept at home meets the 1."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Two folders on PATH hold a program named python: C:\Python312 is listed before C:\Python314. The terminal types python --version. Which Python answers?"
+  :options="[
+    'Python 3.14, because the newer version wins',
+    'Python 3.12, because the shell stops at the first folder that holds the name',
+    'Both print a line, one after the other',
+    'Neither: two programs of one name on PATH is an error'
+  ]"
+  :correct="1"
+  explanation="The shell goes through PATH from left to right and runs the first program of that name it finds. The order of the folders decides, and a newer version further down the list is never reached. That is why the Python installer puts its folder in front, and why a stand-in python.exe in a folder listed earlier answers in its place."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A colleague receives the project folder without .venv. requirements.txt holds the line numpy==2.5.4. Which lines give them the same environment?"
+  :options="[
+    '<code>pip install numpy</code>, nothing else',
+    'Copy the .venv folder from your laptop into theirs',
+    '<code>python -m venv .venv</code>, activate it, then <code>python -m pip install -r requirements.txt</code>',
+    'Open requirements.txt in VS Code: the packages install themselves'
+  ]"
+  :correct="2"
+  explanation="A virtual environment is made on the laptop it runs on, with one line, and filled from the file. The -r reads every line of requirements.txt, and the == pins the version, so numpy 2.5.4 arrives and not the newest one. A copied .venv holds paths of the other laptop and a Python built for it. pip install numpy without the file installs whatever version is newest that day."
 />
