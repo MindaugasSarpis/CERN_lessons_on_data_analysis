@@ -146,7 +146,8 @@ Each lecture markdown file follows a consistent structure:
 One branch (`main`) and one GitHub Actions workflow:
 
 - **`.github/workflows/qa.yml`** — on every push to `main` (and on PRs / manual dispatch) runs both gates (`pnpm qa` + `pnpm timing:check`); then, on `main` only, a `build` job (`needs: qa`) builds all decks + landing + workbook and a `deploy` job publishes to GitHub Pages. A push is live ~8 min later **only if the gates are green**; a red run deploys nothing and the previous site stays up.
-- **No second branch.** `git push origin main` is the deploy. Keep unfinished edits to a live deck on a PR branch (gates run there, no deploy); drafts are safe to push. `gh workflow run qa.yml --ref main` redeploys without a commit. `ff2026` (old work branch) and `bs2026` (old deploy branch) are frozen at the 2026-09-06 cutover — nothing deploys from them.
+- **The earlier edition stays up.** `decks.json` → `site.archive` names a frozen branch (`bs2026`, the autumn-2026 business-school run) and a path; the `build` job checks that branch out, runs its own `build-all.mjs` with `--out dist/bs2026 --base /<repo>/bs2026`, and the landing footer links it. Students of that run (resits) keep a working site at `<site>/bs2026/`. Remove the `archive` entry and the three workflow steps to retire it.
+- **No second branch.** `git push origin main` is the deploy. Keep unfinished edits to a live deck on a PR branch (gates run there, no deploy); drafts are safe to push. `gh workflow run qa.yml --ref main` redeploys without a commit. `ff2026` (old work branch) and `bs2026` (old deploy branch) are frozen at the 2026-09-06 cutover; `bs2026` is only built into `dist/bs2026/` by the `build` job, never deployed on its own.
 
 ## Releasing lectures during the semester
 

@@ -48,6 +48,8 @@ async function checkRows(page) {
   // Seminar briefs are internal — the landing must not link them.
   ok(await page.locator('li > a.sem').count() === 0, 'no seminar links on the landing');
   ok(await page.locator(`footer.foot a[href="${PREFIX}/workbook/"]`).count() === 1, 'workbook link in footer');
+  const archive = manifest.site && manifest.site.archive;
+  if (archive) ok(await page.locator(`footer.foot a[href="${PREFIX}/${archive.path}/"]`).count() === 1, `archive link ${archive.path} in footer`);
 }
 
 const MIME = {
