@@ -111,7 +111,7 @@ and press Enter.
 | Skip | Slides | Saves |
 |--|--|--|
 | The Cleaning in the Browser | 18 | 4 min |
-| Rows: Position and Label; Sort and Summarise | 23, 26 | 8 min |
+| Select Rows by Position or by Label; Sort and Summarise | 23, 26 | 8 min |
 | The Code in a Histogram; How NaN Behaves | 31, 34 | 5 min |
 | Outliers and the 1.5 × IQR rule | 41–42 | 4 min |
 | Mixed Units in One Column; The Checklist as a Function | 45, 47 | 7 min |

@@ -21,7 +21,7 @@ many lines at once.
 3. **Where the file came from**: portals, the anatomy of a record (with CERN
    Open Data record 401 as the real example), licences, the provenance note
    for `weather.csv`, your own dataset, from record to project folder.
-4. **How one row was made**: one hour, one row at the station; at CERN, the
+4. **How one row was made**: one line per hour at the station; at CERN, the
    trigger that decides which collisions become rows; the data-flow clip.
 5. **Reading the file**: one row read aloud; the rows counted with
    `Ctrl+End` in a text editor and checked against 10 years of hours; line 5000 found with
@@ -29,10 +29,10 @@ many lines at once.
    numbers; `-999` found with `Ctrl+F`, below absolute zero, and what it does
    to a mean; the five questions answered, then asked of the student's own
    dataset.
-6. **The editor**: the project folder and names that travel; VS Code, the
-   five regions of its window, three keys, files in the Side Bar, saving.
+6. **The editor**: the project folder and rules for file names; VS Code, the
+   five regions of its window, first keys, files in the Side Bar, saving.
 7. **Markdown**: source and preview, headings, lists, links and images,
-   tables, five usual mistakes.
+   tables, usual mistakes.
 8. **Editing many lines**: the daily export repaired in the editor with
    whole-line keys, Find and Replace, a cursor on every line and selected
    matches; turned into a Markdown table; the four edits written into the
@@ -92,7 +92,7 @@ that leaves about 92 min. To jump, type the slide number and press Enter.
 | 0:13 | 13–16 | Kinds of variables, the daily table, which columns can be averaged, the mean line left in |
 | 0:23 | 19 | The decimal comma |
 | 0:25 | 22, 24, 26, 28 | A record, the provenance note, the project folder |
-| 0:32 | 29–31 | One hour, one row; the trigger at CERN |
+| 0:32 | 29–31 | One line per hour; the trigger at CERN |
 | 0:38 | 33, 35, 37–40 | The rows counted, the units, `-999`, what it does to a mean, the five answers |
 | 0:53 | 42–43, 45–46, 48–49 | The project folder and VS Code |
 | 1:05 | 50–53, 55 | Markdown: the source and its preview |
@@ -104,13 +104,13 @@ that leaves about 92 min. To jump, type the slide number and press Enter.
 |--|--|--|
 | The lifecycle | 9 | 2 min |
 | Structured and unstructured; everything as numbers | 11–12 | 4 min |
-| Measured or derived; three files; the spreadsheet; two sizes | 17–18, 20–21 | 8 min |
+| Measured or derived; file formats; the spreadsheet; a row as text and as binary | 17–18, 20–21 | 8 min |
 | Portals, licences, your own dataset | 23, 25, 27 | 6 min |
 | The data-flow clip | 32 | 3 min |
-| One row read aloud, a line in the middle, your dataset | 34, 36, 41 | 10 min |
-| Names that travel, three keys | 44, 47 | 4 min |
-| Links and images, five mistakes | 54, 56 | 4 min |
-| The same word everywhere, the size check, text commands, the key sheet | 63, 65–67 | 8 min |
+| A row read aloud, a line in the middle, other datasets | 34, 36, 41 | 10 min |
+| Rules for file names, first keys | 44, 47 | 4 min |
+| Links and images, usual mistakes | 54, 56 | 4 min |
+| Every match of a word, the size check, text commands, the key sheet | 63, 65–67 | 8 min |
 
 - **Do not cut** slides 3–4 (the questions), 8 (the thesis), 14–16 (the
   table and its mean), 38–40 (`-999` and the answers) and 68 (The File,

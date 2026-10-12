@@ -30,7 +30,7 @@ layout: quote
 hideInToc: true
 ---
 
-# Delete `results/`. **Now What?**
+# Delete `results/`: Which Commands **Rebuild It**?
 
 <div class="grid-2 mt-md gap-md">
 
@@ -68,10 +68,9 @@ The plot and `report.md` are gone. Write down every command that brings them bac
 
 </div>
 
-<div class="note-text mt-sm">Lecture 1 set the rule for a finished project: delete <code>data/processed/</code> and <code>results/</code>, then rebuild both with one command.</div>
-
 <!--
-Speaker: delete the folder live in the shell of your laptop, then give the
+Speaker: Lecture 1 set the rule for a finished project: delete data/processed/
+and results/, then rebuild both with one command. Delete the folder live in the shell of your laptop, then give the
 room one minute. Collect two or three answers and write them on the board,
 in the order given. Most lists miss the order of the scripts, the pandas
 version, and the g that was typed into the report by hand. (~3 min)
@@ -82,8 +81,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="grid-2 gap-md mt-sm">
 
@@ -140,8 +137,7 @@ hideInToc: true
 The lists on paper are the analysis as it stands: commands in an order written nowhere, and a number typed into the report by hand.
 
 <!--
-Speaker: first the state of the project as it is, then what goes wrong with it,
-then a picture of what it should become. (~1 min)
+(~1 min)
 -->
 
 ---
@@ -192,12 +188,6 @@ The same lines in both shells; on macOS the program is `python3`. Then `results/
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-Every step works. What is missing is written nowhere: which commands, in which order, with which packages, and how anyone knows the number is right.
-
-</div>
-
 <!--
 Speaker: this is the folder of the first weeks with three scripts in it. Set
 it beside the lists on the board: these three lines are the best answer, and
@@ -218,8 +208,6 @@ hideInToc: true
 | The report shows the *g* from before a change | A step was not rerun | One command that knows the order |
 | 9.84 is typed into the report as 9.48 | A number is copied by hand | A script writes the report |
 | The plot looks right and is wrong | Nothing checks the result | Tests |
-
-<div class="note-text mt-sm">The scripts stay. What surrounds them is written down.</div>
 
 <!--
 Speaker: ask who has met each row. The third row is the dangerous one: nothing
@@ -265,8 +253,6 @@ The first is a property of a project folder. It can be reached in an afternoon. 
 </div>
 
 </div>
-
-<div class="note-text mt-sm">The first two rows of the table exist in the project. The last two are made today, and tests add the evidence that the result is right.</div>
 
 <!--
 Speaker: "another person, another computer, a later time" are the three tests.
@@ -359,7 +345,7 @@ flowchart LR
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The language is **Mermaid**. In a Markdown file the lines go into a code block marked `mermaid`. GitHub draws the diagram in the README. The preview of VS Code draws it once the extension *Markdown Preview Mermaid Support* is installed. The diagrams of these slides are written this way.
+The language is **Mermaid**. In a Markdown file the lines go into a code block marked `mermaid`. GitHub draws the diagram in the README. The preview of VS Code draws it once the extension *Markdown Preview Mermaid Support* is installed.
 
 </div>
 
@@ -596,7 +582,7 @@ same be05af03 in both shells. (~3 min)
 hideInToc: true
 ---
 
-# The Script **Explains Itself**
+# Help and Error Messages from **argparse**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -741,7 +727,7 @@ float64, length_cm is text, t10_s is float64. (~3 min)
 hideInToc: true
 ---
 
-# A Command **and a Module**
+# Run as a Command, Import as a **Module**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -969,8 +955,6 @@ results/fit.json: g = 9.84 +- 0.06 m/s^2
 
 </div>
 
-<div class="note-text mt-sm">The 10 was a bare number inside the script. Now it has a name, and it stands in a file that Git tracks.</div>
-
 <!--
 Speaker: the config file is one more input of the stage, so it is one more
 positional argument. The period is the time of 10 swings divided by 10, and the
@@ -981,7 +965,7 @@ length in metres is the length in cm divided by 100. (~2 min)
 hideInToc: true
 ---
 
-# One Parameter, **Two Results**
+# The Intercept Changes the **Result**
 
 <div class="card card-primary card-glass pad-compact mt-sm table-compact">
 
@@ -1033,7 +1017,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm table-compact">
 
-## 🧮 **Nine rows of one table, five numbers**
+## 🧮 **Five fits of the same nine rows**
 
 | Where | Method | The ± comes from | Intercept | *g* in m/s² |
 | --- | --- | --- | --- | --- |
@@ -1129,8 +1113,6 @@ A straight-line fit of T² against L gives g = 9.84 ± 0.06 m/s².
 
 </div>
 
-<div class="note-text mt-sm">No number is typed twice. The Markdown table of the report is built by a loop of two lines, not by hand.</div>
-
 <!--
 Speaker: open results/report.md with the preview. It is the report.md of
 the project folder, now with its table and its last sentence written by a
@@ -1155,13 +1137,13 @@ are somewhere on the laptop, in versions nobody wrote down. (~1 min)
 hideInToc: true
 ---
 
-# One Program, **Two Answers**
+# A New pandas Version Changes the **Result**
 
 <div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **Five lines**
+## 📄 **A script that changes one value**
 
 ```python
 import pandas as pd
@@ -1175,7 +1157,7 @@ print(pd.__version__, table["t10_s"][0])
 
 <div class="card card-warning card-glass pad-compact">
 
-## 💻 **Two laptops**
+## 💻 **Its output in pandas 2.3.3 and 3.0.6**
 
 ```text
 2.3.3 9.2
@@ -1248,7 +1230,7 @@ import pandas as pd
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📦 **Two kinds**
+## 📦 **Standard library and installed packages**
 
 - **Come with Python**, the standard library: `argparse`, `json`, `math`, `pathlib`
 - **Installed with pip**: `pandas`, `matplotlib`, `scipy`
@@ -1364,7 +1346,7 @@ The same commands in both shells, with `(.venv)` in the prompt. The script never
 
 <div class="card card-info card-glass pad-compact">
 
-## 🔢 **Four asked for, 17 installed**
+## 🔢 **The packages pip adds**
 
 Each package names the packages it needs, and pip fetches those as well: NumPy for pandas, Pillow for Matplotlib. `pytest` is for the tests.
 
@@ -1548,7 +1530,7 @@ fix. (~2 min)
 hideInToc: true
 ---
 
-# The Editor Has **Requirements Too**
+# Recommended **Extensions** for the Editor
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1751,8 +1733,6 @@ The plot was not out of date when the report was written. It became newer than t
 
 </div>
 
-<div class="note-text mt-sm">Two stages run and two are skipped. The fit is not repeated, because nothing it reads has changed.</div>
-
 <!--
 Speaker: do the four comparisons with the room before showing the right-hand
 card. The files were given exactly these times and the rule was run: it reran
@@ -1909,7 +1889,7 @@ lines. (~3 min)
 hideInToc: true
 ---
 
-# One Command, **Four Cases**
+# What `run_all.py` Reruns, **Case by Case**
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -2045,7 +2025,7 @@ and the rebuild lists the three results as D, deleted. (~3 min)
 hideInToc: true
 ---
 
-# **Make**: the Same Table Since 1976
+# **Make**: the Rule in a Makefile
 
 <div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
@@ -2119,7 +2099,7 @@ hideInToc: true
 - macOS: comes with the developer tools that also bring Git
 - Windows: not there. PowerShell does not include it, and neither does Python
 
-On Windows it has to be installed separately. `run_all.py` needs nothing but the Python the project uses anyway, and it runs the same in zsh and in PowerShell. That is why it is the form used here.
+On Windows it has to be installed separately. `run_all.py` needs nothing but the Python the project uses anyway, and it runs the same in zsh and in PowerShell.
 
 </div>
 
@@ -2135,12 +2115,6 @@ On Windows it has to be installed separately. `run_all.py` needs nothing but the
 A freshly cloned folder has new times on every file. They no longer say what was built from what. Here that does no harm: the cleaned table is not in Git, so a fresh copy runs all four stages.
 
 </div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-🔧 The idea is the same in all of them: write down what each file is made from, and let a program work out what to run. The tool is a detail that can be exchanged.
 
 </div>
 
@@ -2167,7 +2141,7 @@ says nothing about whether the result is right. (~1 min)
 hideInToc: true
 ---
 
-# It Ran, and the Plot Looked **Fine**
+# A Wrong Result That Ran **Without an Error**
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -2425,8 +2399,6 @@ The line marked `E`: the text `'9,02'` on the left, the number 9.02 on the right
 
 </div>
 
-<div class="note-text mt-xs">Found in a quarter of a second, at the stage where the mistake was made.</div>
-
 <!--
 Speaker: break clean.py live, run pytest, read the three parts aloud, put the
 argument back, run again. The other two tests still pass: nine rows and two
@@ -2592,7 +2564,7 @@ that was found by accident gets a test, so that it cannot come back unseen.
 hideInToc: true
 ---
 
-# The Tests Join the **One Command**
+# `run_all.py` Runs the **Tests** First
 
 <div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
 
@@ -2620,7 +2592,7 @@ results/report.md: up to date
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🚦 **Again the exit code**
+## 🚦 **The exit code of pytest decides**
 
 - pytest ends with 0 only if every test passed
 - With the comma mistake in `clean.py` the command ends with `1 failed, 4 passed` and `tests failed, nothing rebuilt`
@@ -2629,12 +2601,6 @@ results/report.md: up to date
 `-q` is the short output: one line of dots.
 
 </div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-⚙️ One command now does what took a person a list: check the code, find what is out of date, run those stages in order, stop at the first failure.
 
 </div>
 
@@ -2653,9 +2619,7 @@ hideInToc: true
 The tests run before every rebuild, on this laptop; another person, another computer and a later time are still untried.
 
 <!--
-Speaker: the project now rebuilds on this laptop. The last section is about the
-other computer and the other person: what goes into Git, what a server can do
-with it, and what makes data usable by strangers. (~1 min)
+Speaker: the project now rebuilds on this laptop. (~1 min)
 -->
 
 ---
@@ -2710,7 +2674,7 @@ to compare a rebuild with. (~2 min)
 hideInToc: true
 ---
 
-# How to Rebuild, **Second Version**
+# The README's **How to Rebuild**, for the Pipeline
 
 <div class="grid-2 mt-sm gap-md" style="grid-template-columns: 2fr 3fr;">
 
@@ -2806,13 +2770,13 @@ jobs:
 
 ## 🎯 **What it is for**
 
-The fresh-copy test of the previous slide, done by a machine after every push, without anyone remembering to do it.
+The fresh-copy test of How to rebuild, done by a machine after every push, without anyone remembering to do it.
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">This is <strong>GitHub Actions</strong>. It needs the project on GitHub. GitLab has the same service with a file named <code>.gitlab-ci.yml</code>. The slides of this course are checked and published this way after every push.</div>
+<div class="note-text mt-sm">This is <strong>GitHub Actions</strong>. It needs the project on GitHub. GitLab has the same service with a file named <code>.gitlab-ci.yml</code>.</div>
 
 <!--
 Speaker: the name says it: every change is integrated and checked at once, not
@@ -2824,7 +2788,7 @@ braces. (~2 min)
 hideInToc: true
 ---
 
-# **Docker**: the Operating System Too
+# **Docker**: the Operating System in a Container
 
 <div class="grid-2 mt-md gap-md">
 
@@ -2908,7 +2872,7 @@ Three lines: the format, the SHA-256 of the file, its size. The file itself is k
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🧰 **Two tools, one idea**
+## 🧰 **Git LFS and DVC**
 
 **Git LFS** is an extension of Git, and GitHub supports it. **DVC** does the same with storage of your choice and can also record pipelines. Both replace the file by its checksum.
 

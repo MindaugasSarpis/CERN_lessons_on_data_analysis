@@ -71,7 +71,7 @@ Enter.
 |--|--|--|
 | Without the Sigmoid, Two Layers Are One | 8 | 3 min |
 | The Check: Nudge One Weight; One Step of Gradient Descent | 17–18 | 4 min |
-| What Helps | 26 | 2 min |
+| What Helps a Run Succeed | 26 | 2 min |
 | When Accuracy Misleads | 37 | 2 min |
 | The ROC curve by hand, its area, the ROC of the test rows | 39–41 | 7 min |
 | Cross-Validation | 43 | 2 min |

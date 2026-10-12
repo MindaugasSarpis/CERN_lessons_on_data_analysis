@@ -63,7 +63,7 @@ Enter.
 | Binary addition, Logical Operations, Bitwise Operations | 42–44 | 7 min |
 | The Memory Hierarchy | 46 | 2 min |
 | Worked Example: 5.75 as float32 | 53 | 2 min |
-| Try It Here, Four Types | 57–58 | 5 min |
+| The Float Stored for 0.1, The Type of a Value | 57–58 | 5 min |
 | Text and Bytes in Python | 64 | 3 min |
 | What a Spreadsheet Changes | 67 | 2 min |
 | Byte Order | 70 | 2 min |

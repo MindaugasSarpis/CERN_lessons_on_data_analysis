@@ -65,7 +65,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🤔 **Four answers to one question**
+## 🤔 **The four means disagree**
 
 Each mean has a small standard error, yet the four lie up to 0.71 MeV/c² apart, more than twenty times the smallest error. The D⁰ mass is 1864.84 ± 0.05 MeV/c² (Particle Data Group).
 
@@ -100,8 +100,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="grid-2 mt-md gap-md">
 
@@ -192,7 +190,7 @@ hideInToc: true
 
 # What a **Fit** Is
 
-A mean takes the formula behind the data on trust. A fit puts the formula in, as a model with free parameters, and lets the data set them: first on nine pendulum rows, where every step can be checked by hand.
+A mean takes the formula behind the data on trust. A fit puts the formula in, as a model with free parameters, and lets the data set them.
 
 ---
 hideInToc: true
@@ -390,13 +388,13 @@ hideInToc: true
 
 # From Likelihood to **χ²**
 
-Three lines drawn by eye look alike at full scale. Ranking them needs one number that uses the uncertainty of every point, and the likelihood of Lecture 09 supplies it.
+Ranking lines needs one number that uses the uncertainty of every point, and the likelihood of Lecture 09 supplies it.
 
 ---
 hideInToc: true
 ---
 
-# One Point, One **Gaussian**
+# The Gaussian Scatter of One **Point**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -428,7 +426,7 @@ The Gaussian of Lecture 09, with $f(x_i;\theta)$ in the place of the mean $\mu$.
 hideInToc: true
 ---
 
-# All Points: the **Likelihood**
+# The Likelihood of All **Points**
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
@@ -499,7 +497,7 @@ not chosen. It follows from the Gaussian and from independence. (~3 min)
 hideInToc: true
 ---
 
-# χ² in **Numbers**
+# χ² of Lines A, B and **C**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -565,7 +563,7 @@ hideInToc: true
 
 # The Straight Line in **Closed Form**
 
-χ² ranks any line: line A scores 5.14, B and C more. The best line is the lowest point of χ², and for a straight line that point can be solved for.
+The best line is the lowest point of χ², and for a straight line that point can be solved for.
 
 ---
 hideInToc: true
@@ -813,7 +811,7 @@ hideInToc: true
 
 # Uncertainties of the **Parameters**
 
-Five sums gave a = 4.0102 s²/m and g = 9.845 m/s². Without its uncertainty that number cannot be compared with 9.81, nor with the 9.80 of Lecture 09.
+Without its uncertainty, g = 9.845 m/s² cannot be compared with 9.81, nor with the 9.80 of Lecture 09.
 
 ---
 hideInToc: true
@@ -1461,7 +1459,7 @@ A rate that is too small is safe and slow: $\eta = 3 \times 10^{-6}$ needs ten t
 hideInToc: true
 ---
 
-# Two Learning Rates, **Drawn**
+# Descent Paths for Two Learning **Rates**
 
 <div class="note-text mt-sm">
 
@@ -1491,14 +1489,9 @@ for step in range(501):
     a, b = a - eta * grad_a, b - eta * grad_b
 ```
 
-<div class="note-text mt-sm">
-
-Run it, then set `eta` to `1e-4` and run it again.
-
-</div>
-
 <!--
-Speaker: the two gradient lines are the general formula with df/da = x and
+Speaker: run it, then set eta to 1e-4 and run it again. The two gradient
+lines are the general formula with df/da = x and
 df/db = 1. Nothing in the loop knows that the model is a straight line except
 those two lines and chi2_at. (~3 min)
 -->
@@ -1625,7 +1618,7 @@ Here $\chi^2_{\min}/(N-k) = 2.647/7 = 0.378$, and the default shrinks both uncer
 hideInToc: true
 ---
 
-# Three Ways, One **Result**
+# Closed Formulas, `polyfit` and `curve_fit` **Agree**
 
 ```python {monaco-run} {autorun:false}
 from scipy.optimize import curve_fit
@@ -1663,7 +1656,7 @@ hideInToc: true
 
 # The D⁰ **Peak**
 
-`curve_fit` walks downhill on any χ² and gave the pendulum numbers a third time. Back to the opening table: a peak on a flat part, and the mean could not tell them apart.
+The masses are a peak on a flat part. A mean cannot tell the two apart; a model of both can.
 
 ---
 hideInToc: true
@@ -2230,7 +2223,7 @@ A model with too many terms **overfits**: it follows the scatter of these nine p
 hideInToc: true
 ---
 
-# Too Few, Enough, Too **Many**
+# Three Pendulum Models and Their **Pulls**
 
 <div class="note-text mt-sm">
 

@@ -96,7 +96,7 @@ and what the standard error does not cover on slide 44.
 |--|--|--|
 | 0:00 | 1–8, 10–13, 15 | Four questions; probability and its rules; independence on the file; Bayes by counting |
 | 0:26 | 16–22 | Random variables: mean, variance, sums, density |
-| 0:39 | 24–26, 29–31, 33 | Binomial, Poisson, √N on the mass column, adding makes a bell, the Gaussian |
+| 0:39 | 24–26, 29–31, 33 | Binomial, Poisson, √N on the mass column, sums of uniform numbers form a bell, the Gaussian |
 | 0:56 | 35–36, 39, 41–42, 44 | Mean, s and standard error of the mass column; what it does not cover |
 | 1:08 | 45–50 | Error propagation, g from one pendulum row |
 | 1:20 | 56–57, 59–60, 62–64 | Likelihood, the mean, the weighted mean, g from nine rows |
@@ -114,7 +114,7 @@ and what the standard error does not cover on slide 44.
 | Covariance and Correlation, Correlation in Numbers | 37–38 | 5 min |
 | The Standard Error, Checked | 40 | 2 min |
 | Why N − 1 | 43 | 3 min |
-| The Same by Simulation, Writing a Result | 51–52 | 6 min |
+| The Uncertainty of g, Simulated, Writing a Result | 51–52 | 6 min |
 | Testing a Hypothesis | 53–55 | 5 min |
 | Maximum Likelihood | 58 | 2 min |
 | The Width of the Likelihood | 61 | 2 min |

@@ -112,18 +112,18 @@ slide number and press Enter.
 | 0:31 | 26–27, 29, 31 | Environments: two answers from one program, venv in zsh and PowerShell, `requirements.txt` |
 | 0:41 | 35–43 | One command: the rule, the worked example, `run_all.py`, four cases, delete and rebuild. Slide 43 answers the opening at about 1:00 |
 | 1:02 | 46–51, 55 | Tests: the plot that looked fine, assert, the first test, pytest, a failure, tests in the one command |
-| 1:17 | 56, 58–59, 63–65 | How to rebuild, second version; continuous integration; FAIR on two cases; recap; the four aims, answered |
+| 1:17 | 56, 58–59, 63–65 | The README's How to Rebuild, for the pipeline; continuous integration; FAIR on two cases; recap; the four aims, answered |
 | 1:30 | | Move to the seminar |
 
 | Skip | Slides | Saves |
 |--|--|--|
 | Learning Objectives | 4 | 2 min |
 | Diagrams as Text, The Project Folder Extended | 10–11 | 5 min |
-| The Words of a Command, The Script Explains Itself, Options | 14, 16–17 | 7 min |
+| The Words of a Command, Help and Error Messages from argparse, Options | 14, 16–17 | 7 min |
 | Docstrings | 20 | 2 min |
-| One Parameter Two Results, *g* by Method | 23–24 | 5 min |
+| The Intercept Changes the Result, *g* by Method | 23–24 | 5 min |
 | What Do the Scripts Need?, An Empty Environment Is a Test | 28, 30 | 5 min |
-| What the File Fixes and What It Does Not, conda and uv, The Editor Has Requirements Too | 32–34 | 7 min |
+| What the File Fixes and What It Does Not, conda and uv, Recommended Extensions for the Editor | 32–34 | 7 min |
 | Make, Make on Windows and Larger Pipelines | 44–45 | 5 min |
 | Floats in a Test, A Test with a Known Answer, What to Test | 52–54 | 8 min |
 | What Goes into Git | 57 | 2 min |

@@ -32,8 +32,6 @@ hideInToc: true
 
 # Learning **Objectives**
 
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
-
 <div class="stack-tight mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
@@ -96,13 +94,13 @@ computed in this section. The question is what makes a number a result. (~1 min)
 hideInToc: true
 ---
 
-# Two Results of **This Course**
+# Two Fitted Results: g and the **D⁰ Mass**
 
 <img class="fig" src="/figures/viz_concepts_two_cases.svg" style="display:block;margin:0.4rem auto 0;max-height:300px;">
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Nine rows gave **g = 9.84 ± 0.09 m/s²**, by the weighted fit of Lecture 10. 91&nbsp;583 rows gave a peak at **1864.47 ± 0.10 MeV/c²**. Both came from files in the project folder, by scripts that can be run again. This lecture asks what such a number is worth, and what stands around it: other people, rules, plans.
+Nine rows gave **g = 9.84 ± 0.09 m/s²**, by the weighted fit of Lecture 10. 91&nbsp;583 rows gave a peak at **1864.47 ± 0.10 MeV/c²**. Both came from files in the project folder, by scripts that can be run again.
 
 </div>
 
@@ -167,7 +165,7 @@ A plot without a question is a picture. A number without an uncertainty cannot b
 hideInToc: true
 ---
 
-# The Uncertainty **Decides**
+# The Uncertainty Decides the **Verdict**
 
 <img class="fig" src="/figures/viz_concepts_uncertainty.svg" style="display:block;margin:0.3rem auto 0;max-height:200px;">
 
@@ -246,7 +244,7 @@ A distance of 3.4σ happens by chance less than once in 1000 cases. Has this cou
 
 <!--
 Speaker: the table is the Gaussian of Lecture 09. Let the question stand for a
-moment before the next slide. Most rooms split between "yes" and "we made a
+moment. Most rooms split between "yes" and "we made a
 mistake". Both miss the third reading. (~2 min)
 -->
 
@@ -290,7 +288,7 @@ figure: one line falls, the other does not. (~3 min)
 hideInToc: true
 ---
 
-# 3.4σ and **No Discovery**
+# Why 3.4σ Is Not a **Discovery**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -674,7 +672,7 @@ programming error or bad intent. (~1 min)
 hideInToc: true
 ---
 
-# No Bug **Needed**
+# Wrong Results Without a **Bug**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
@@ -714,7 +712,7 @@ Two columns move together, and one is declared the reason for the other.
 hideInToc: true
 ---
 
-# One Look, **Twenty Looks**
+# The Chance of a False Alarm in **Twenty Looks**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -993,7 +991,7 @@ columns have long tails. (~2 min)
 hideInToc: true
 ---
 
-# The Table That **Reverses**
+# Better in Each Group, Worse **Overall**
 
 | **Success** | **A** · open surgery | **B** · through the skin |
 | --- | --- | --- |
@@ -1271,7 +1269,7 @@ agreement with the expected value.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Four comments. Each says what was run and what came out, and the author can act on every one of them.
+Each comment says what was run and what came out, and the author can act on every one of them.
 
 </div>
 
@@ -1279,7 +1277,7 @@ Four comments. Each says what was run and what came out, and the author can act 
 hideInToc: true
 ---
 
-# Writing a Review, **Answering One**
+# Write a Review, Answer a **Review**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1372,9 +1370,7 @@ is about the wide space between a mistake and a lie. (~1 min)
 hideInToc: true
 ---
 
-# Four **Principles**
-
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact">
 
 The *European Code of Conduct for Research Integrity* (ALLEA, revised 2023) rests on four principles. Horizon Europe grants bind their holders to it. Universities have codes of their own: read yours.
 
@@ -1420,7 +1416,7 @@ From the idea to the publication. *Your name stands for every number.*
 hideInToc: true
 ---
 
-# Three Kinds of **Misconduct**
+# What Counts as **Misconduct**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -1470,7 +1466,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-sm">
 
-## 🧬 **Five papers, one sign**
+## 🧬 **Chang and colleagues, 2006**
 
 In 2006 the group of Geoffrey Chang found that a home-written program had flipped a sign in their data. The protein structures built on it were wrong. Within months the group retracted five papers, three of them in *Science*. The error came to light when another group's structure disagreed.
 
@@ -1631,7 +1627,7 @@ And when nobody asks? Vines and colleagues (2014) requested the data behind 516 
 hideInToc: true
 ---
 
-# Six **Headings**
+# The Headings of a Data Management **Plan**
 
 | | **Heading** | **It answers** |
 | --- | --- | --- |
@@ -1718,8 +1714,7 @@ hideInToc: true
 
 <!--
 Speaker: the two course files contain no person. Most data in most fields
-does. One slide of definitions, one of cases, one of duties, one on what the
-law does not cover. (~1 min)
+does. (~1 min)
 -->
 
 ---
@@ -1759,7 +1754,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📮 **Three columns**
+## 📮 **Postcode, birth date and sex**
 
 Sweeney (2000): 87 % of the people in the United States are the only one with their postcode, date of birth and sex.
 
@@ -1932,7 +1927,7 @@ It cannot answer for a result. You do.
 hideInToc: true
 ---
 
-# Along the **Loop**
+# AI Tools at Each Step of the **Loop**
 
 | **Step** | **Reasonable use** | **Risk** |
 | --- | --- | --- |

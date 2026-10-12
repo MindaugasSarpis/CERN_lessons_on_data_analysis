@@ -80,12 +80,12 @@ Enter.
 | `axis`: Down the Rows or Along Them | 53 | 2 min |
 | The Four Columns in Numbers, Centre and Scale, `np.loadtxt` in Full, An Array on Disk | 56–59 | 10 min |
 
-- **Do not cut** slide 63 (Recap — Four Questions, Two Ways): it answers
+- **Do not cut** slide 63 (Recap): it answers
   the opening slide. Nor slides 19–24 (files, the working directory, `csv`,
   the loop), 40–44 (two-dimensional indexing, masks and the answer to
   question 4) or 60–61 (`np.histogram`). The seminar does exactly these
   steps.
-- **Slide 3** (One Task, Two Ways): write the four questions on the board,
+- **Slide 3** (Four Questions for the Data File): write the four questions on the board,
   and next to question 4 the guesses of the room. Most guess about 0.26 ps,
   the mean of the three rows shown. They stay on the board until slide 44
   and the Recap.

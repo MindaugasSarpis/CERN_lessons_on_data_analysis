@@ -98,7 +98,7 @@ reaches the answer at about minute 60: the training loop of slide 47 prints
 | Where the Sigmoid Comes From | 33 | 3 min |
 | What the Loss Charges, The Loss of Four Points | 37–38 | 5 min |
 | The Gradient, Checked with Numbers | 42 | 3 min |
-| One Minimum | 44 | 3 min |
+| The Loss Has One Minimum | 44 | 3 min |
 | Reading the Loop, The Boundary Moves | 46, 48 | 5 min |
 | The Learning Rate, Inputs on Different Scales | 51–52 | 4 min |
 | Train and Test, How Sure Is an Accuracy? | 54–55 | 5 min |

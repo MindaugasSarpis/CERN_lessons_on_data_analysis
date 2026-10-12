@@ -104,14 +104,14 @@ The plan leaves about nine minutes for the two votes and for questions.
 | The Covariance Matrix | 29 | 2 min |
 | Why Slope and Intercept Are Correlated | 30 | 2 min |
 | The Same in Matrix Form, the whole section | 32–35 | 8 min |
-| Two Learning Rates, Drawn | 42 | 1 min |
+| Descent Paths for Two Learning Rates | 42 | 1 min |
 | Gradient Descent in NumPy | 43 | 4 min |
 | `absolute_sigma`: the Default Rescales | 46 | 2 min |
-| Three Ways, One Result | 47 | 4 min |
+| Closed Formulas, `polyfit` and `curve_fit` Agree | 47 | 4 min |
 | Starting Values from the Plot | 52 | 2 min |
 | The χ² Distribution and the p-value | 58 | 2 min |
 | Too Few Terms: the Pulls | 62 | 1 min |
-| Too Few, Enough, Too Many | 64 | 1 min |
+| Three Pendulum Models and Their Pulls | 64 | 1 min |
 | Errors That Are Not Gaussian: Small Counts | 67 | 3 min |
 | Reporting a Fit | 70 | 3 min |
 

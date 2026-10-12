@@ -37,7 +37,7 @@ layout: quote
 hideInToc: true
 ---
 
-# One Quantity, **91 583 Values**
+# The **Mass Column** of `D0_KPi.csv`
 
 <img class="fig" src="/figures/viz_handson_mass_errorbars.svg" style="display:block;margin:0 auto;max-height:250px;">
 
@@ -69,8 +69,7 @@ Speaker: last week's figure, made by the errorbar call of Lecture 08. The same
 quantity was computed for 91 583 candidates, and the values differ from row to
 row. Ask the room for a guess at the first answer before going on. The four
 answers are the mean, the standard deviation, the standard error and the
-Poisson distribution of a count. All four are derived today, and the last
-slide of the lecture collects them. (~2 min)
+Poisson distribution of a count. All four are derived today. (~2 min)
 -->
 
 ---
@@ -78,8 +77,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="stack-tight mt-sm">
 
@@ -128,7 +125,7 @@ hideInToc: true
 
 # Probability and Its **Rules**
 
-Before the bar of ± √N can be derived, a probability has to be defined, and its rules derived from three axioms.
+A probability is defined, and its rules are derived from three axioms.
 
 <!--
 Speaker: the section defines probability as a frequency, on a die, and derives
@@ -158,9 +155,9 @@ A die rolled a million times in NumPy, with the fraction of sixes drawn after ev
 </div>
 
 <!--
-Speaker: before the next slide, ask the room: what fraction of sixes do ten
-rolls give, and how close to 1/6 is the fraction after a million? Write two or
-three guesses on the board; the next slide runs it. The frequency reading is
+Speaker: ask the room: what fraction of sixes do ten rolls give, and how
+close to 1/6 is the fraction after a million? Write two or three guesses on
+the board. The frequency reading is
 the one a physicist uses for a measurement that can be repeated. The
 degree-of-belief reading is the Bayesian one. Nothing derived today depends on
 which reading is taken. (~2 min)
@@ -200,7 +197,7 @@ Speaker: run it, and compare with the guesses on the board: ten rolls gave
 other numbers, the same pattern. A result that depends on random numbers is
 reproducible only if the seed is written down. Then ask for the pattern in the
 last row: two more zeros in n, one more zero in the difference. That is a
-square root, and the section on the standard error derives it. (~3 min)
+square root. (~3 min)
 -->
 
 ---
@@ -317,14 +314,14 @@ Kolmogorov wrote the three axioms down in 1933. Every other rule of probability 
 
 <!--
 Speaker: these are the only statements of the lecture that are not derived.
-Everything after this slide is. (~2 min)
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Two Rules, **Derived**
+# Rules Derived from the **Axioms**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -571,8 +568,7 @@ The names: $P(A)$ is the **prior** probability of the hypothesis, before the res
 </div>
 
 <!--
-Speaker: the theorem turns a conditional probability round. The next slide
-puts numbers in. (~2 min)
+Speaker: the theorem turns a conditional probability round. (~2 min)
 -->
 
 ---
@@ -675,8 +671,7 @@ $X$ is the variable, $x$ one of its values. A variable with separate values, suc
 </div>
 
 <!--
-Speaker: the distribution is the full description of X. The next two slides
-compress it into two numbers. (~2 min)
+Speaker: the distribution is the full description of X. (~2 min)
 -->
 
 ---
@@ -822,9 +817,7 @@ Two dice: mean 3.5 + 3.5 = 7, variance 2.917 + 2.917 = 5.833, $\sigma$ = 2.415. 
 </div>
 
 <!--
-Speaker: the two rules in the bottom card are used again for the binomial,
-for the standard error, for error propagation and for the weighted mean. A
-simulation of 100 000 pairs of dice with default_rng(2) gives a mean of 7.007
+Speaker: a simulation of 100 000 pairs of dice with default_rng(2) gives a mean of 7.007
 and a variance of 5.804. Ask: if the standard deviations added, what would
 the spread of the sum be? 3.416, against the 2.415 that the simulation
 confirms. (~3 min)
@@ -878,8 +871,7 @@ A density is not a probability. Its unit is 1 over the unit of $x$, and it can e
 
 <!--
 Speaker: the last sentence is how a density is drawn over a histogram: multiply
-it by the number of values and by the bin width. The mean 1/2 and the variance
-1/12 of the uniform density are used again in the simulation of sums. (~3 min)
+it by the number of values and by the bin width. (~3 min)
 -->
 
 ---
@@ -1264,7 +1256,7 @@ of Lecture 08. (~2 min)
 hideInToc: true
 ---
 
-# Adding Makes a **Bell**
+# Sums of Uniform Numbers Form a **Bell**
 
 <img class="fig" src="/figures/viz_probability_clt.svg" style="display:block;margin:0 auto;max-height:215px;">
 
@@ -1880,7 +1872,7 @@ hideInToc: true
 
 # Error **Propagation**
 
-The mean of the mass column is known to 0.08 MeV/c². A value of g is not measured but computed from a length and a time, and it inherits their uncertainties.
+A value of g is not measured but computed from a length and a time, and it inherits their uncertainties.
 
 <!--
 Speaker: a measured quantity has an uncertainty. A quantity computed from it
@@ -1926,7 +1918,7 @@ The period from the time of 10 swings: $T = t_{10}/10$, so $\sigma_T = \sigma_{t
 
 <!--
 Speaker: the figure is g against the period for a length of 1 m. The band in T
-is drawn ten times wider than in the example that follows, so that it can be
+is drawn ten times wider than in the pendulum example, so that it can be
 seen. The slope turns a width in T into a width in g. (~3 min)
 -->
 
@@ -1980,7 +1972,7 @@ measurement. (~3 min)
 hideInToc: true
 ---
 
-# Two Rules That **Follow**
+# Propagation for Sums and **Products**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -2128,7 +2120,7 @@ period enters squared, so its relative uncertainty counts twice. (~3 min)
 hideInToc: true
 ---
 
-# The Same by **Simulation**
+# The Uncertainty of *g*, **Simulated**
 
 <div class="note-text mt-sm">
 
@@ -2209,7 +2201,7 @@ hideInToc: true
 
 # Testing a **Hypothesis**
 
-Error propagation gave g = 9.86 ± 0.10 m/s² from one pendulum row. A value with its uncertainty can now be set against a value known from elsewhere.
+A value with its uncertainty is set against a value known from elsewhere.
 
 <!--
 Speaker: a short section. A result and its uncertainty are compared with a
@@ -2330,8 +2322,7 @@ Until now a parameter was given and the data were predicted, or tested against i
 
 <!--
 Speaker: so far a parameter was given and the data were predicted. Now the
-data are given and the parameter is estimated. The section ends with the mean
-and the weighted mean as maximum-likelihood estimates. (~1 min)
+data are given and the parameter is estimated. (~1 min)
 -->
 
 ---
@@ -2454,7 +2445,7 @@ Each measurement lowers $\ln L$ by half the square of its distance from $\mu$, c
 
 <!--
 Speaker: this formula is the end point of the first four sections: the
-Gaussian density, independence, and the product rule. Notation from here on:
+Gaussian density, independence, and the product rule. Notation:
 theta for parameters, L of theta for the likelihood. (~3 min)
 -->
 

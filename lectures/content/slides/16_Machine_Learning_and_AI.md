@@ -39,8 +39,6 @@ hideInToc: true
 
 # Learning **Objectives**
 
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
-
 <div class="stack-tight mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
@@ -121,7 +119,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-For data, nobody can set the weights by hand. This lecture finds them by gradient descent. That needs the derivative of the loss with respect to a weight of the hidden layer. Then the network is trained on XOR and on a file of 600 rows, and the result is measured on rows it has not seen.
+For data, nobody can set the weights by hand. Finding them by gradient descent needs the derivative of the loss with respect to a weight of the hidden layer.
 
 </div>
 
@@ -298,7 +296,7 @@ The derivative of the loss with respect to every weight of the network, by the c
 hideInToc: true
 ---
 
-# Nine **Derivatives**
+# The Derivatives Gradient Descent **Needs**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -394,8 +392,7 @@ Lecture 11 applied the chain rule through one neuron. A network needs one more f
 </div>
 
 <!--
-Speaker: the two tools of this section. The numeric check of the example is
-the same check that is applied to the network six slides on. (~3 min)
+Speaker: the two tools of this section. (~3 min)
 -->
 
 ---
@@ -494,7 +491,7 @@ The error $\delta$ goes back along each connection and is multiplied by the weig
 
 <!--
 Speaker: h is not a parameter, so nothing is updated here. The derivative with
-respect to h is an intermediate result, needed for the next step. (~2 min)
+respect to h is an intermediate result. (~2 min)
 -->
 
 ---
@@ -536,7 +533,7 @@ h2 (1 - h2) = 0.4502 · 0.5498 = 0.2475
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ The factor $h_j\,(1 - h_j)$ is at most 0.25. A saturated hidden unit, with $h_j$ near 0 or 1, passes almost no error back. This matters in the training runs of the next section.
+⚠️ The factor $h_j\,(1 - h_j)$ is at most 0.25. A saturated hidden unit, with $h_j$ near 0 or 1, passes almost no error back.
 
 </div>
 
@@ -958,7 +955,7 @@ is the gate through which the error has to pass. (~3 min)
 hideInToc: true
 ---
 
-# What **Helps**
+# What Helps a Run **Succeed**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1046,7 +1043,7 @@ scales. (~2 min)
 hideInToc: true
 ---
 
-# Three Sets, Three **Jobs**
+# Split the Rows into **Three Sets**
 
 <div class="grid-3 mt-sm gap-md">
 
@@ -1311,9 +1308,7 @@ Speaker: four counts from two masks. The sign ~ turns True into False.
 hideInToc: true
 ---
 
-# Accuracy, Precision, **Recall**
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -1692,8 +1687,7 @@ Duplicate rows, several candidates from one collision or repeated measurements o
 <!--
 Speaker: three forms, in the order of how often they are found. The
 standardisation of this lecture followed the first habit: mu and sd came from
-the training rows. The next slide is the first form, on the file of this
-course. (~3 min)
+the training rows. (~3 min)
 -->
 
 ---
@@ -2068,7 +2062,7 @@ it. (~3 min)
 hideInToc: true
 ---
 
-# A Default Is a **Choice** Too
+# The Default Solver **Stops Too Early**
 
 ```python
 from sklearn.neural_network import MLPClassifier
@@ -2242,7 +2236,7 @@ for n in range(5):
 <!--
 Speaker: the dictionary follow is the table of the last slide. zip pairs every
 word with its successor. Drawing from the list of followers gives each word
-with the probability of the table. Measured output on the next slide. (~3 min)
+with the probability of the table. (~3 min)
 -->
 
 ---
@@ -2349,7 +2343,7 @@ this slide has not changed since 2017. (~3 min)
 hideInToc: true
 ---
 
-# What Follows from **That**
+# What Follows from Predicting the **Next Token**
 
 <div class="stack-tight mt-md">
 

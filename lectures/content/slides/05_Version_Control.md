@@ -29,8 +29,6 @@ hideInToc: true
 
 # Learning **Objectives**
 
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
-
 <div class="stack-tight mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
@@ -72,9 +70,7 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: the order of the lecture is the order of the cards. First what Git
-stores, then the commands, and at the end the question of the two copies of
-the table, answered. (~1 min)
+(~1 min)
 -->
 
 ---
@@ -122,7 +118,7 @@ who has folders or files named final, final_v2, final_corrected? (~3 min)
 hideInToc: true
 ---
 
-# Which **Line**, and **Who**?
+# Compare Two Copies: `git diff`
 
 <div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
 
@@ -149,7 +145,7 @@ index 2b7ca66..92775c2 100644
 
 <div class="card card-secondary card-glass pad-compact table-compact">
 
-## 🧾 **Three questions**
+## 🧾 **What the two copies can tell**
 
 | Question | Answer |
 | --- | --- |
@@ -212,9 +208,7 @@ name; who, when and why live in somebody's memory. (~2 min)
 hideInToc: true
 ---
 
-# A History of **Changes**
-
-<div class="card card-info card-glass pad-tight mt-md">
+<div class="card card-info card-glass pad-tight">
 
 ## 🔍 **What a version control system records**
 
@@ -228,8 +222,8 @@ hideInToc: true
 <img src="/figures/play-changes.svg" style="display:block;margin:0.8rem auto 0;max-height:210px;">
 
 <!--
-Speaker: Git was written in 2005 for the development of the Linux kernel. The
-project folder of the course is the folder that goes under Git today. (~2 min)
+Speaker: Git was written in 2005 for the development of the Linux kernel.
+(~2 min)
 -->
 
 ---
@@ -495,7 +489,7 @@ PowerShell cat is Get-Content, so the first line is the same. (~2 min)
 hideInToc: true
 ---
 
-# Lists Inside **Lists**
+# The Tree of the Whole **Project**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -614,18 +608,12 @@ The hashed text holds the id of the tree and the id of the parent. So one commit
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📌 **What follows**
+## 📌 **Consequences**
 
 - An old version cannot be changed unnoticed: every later id would change
 - The same files committed by two people give one tree and two commit ids: the name and the time differ
 
 </div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-♻️ A commit id is a checksum of the whole project and of every version before it.
 
 </div>
 
@@ -732,9 +720,7 @@ commits. What Git stores is one name on one commit. (~2 min)
 hideInToc: true
 ---
 
-# Three **Areas**
-
-<div class="mt-sm" style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;">
 
 ```mermaid {scale: 0.95}
 flowchart LR
@@ -779,8 +765,7 @@ The staging area exists so that one commit has one purpose. The three commits of
 
 <!--
 Speaker: this closes the model. Blob, tree, commit, branch, and the three
-areas a change passes through. Everything from here on is a command that
-moves content between the areas or moves a name. (~2 min)
+areas a change passes through. (~2 min)
 -->
 
 ---
@@ -790,7 +775,7 @@ hideInToc: true
 
 # First **Commits**
 
-The model says what Git stores: blobs, trees, commits and a name. The project folder of Seminar 4 now goes into it, one commit at a time.
+The project folder of Seminar 4 goes into a repository, one commit at a time.
 
 <!--
 Speaker: now the project folder. Each step is done once in the Source Control
@@ -802,7 +787,7 @@ same thing. (~30 sec)
 hideInToc: true
 ---
 
-# Git Is Installed: a **Check**
+# Check Git and Its **Settings**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -825,7 +810,7 @@ Your version number differs. On Windows it ends in `.windows.1`, such as `2.51.0
 
 <div class="card card-secondary card-glass pad-compact">
 
-## ➕ **Three more settings, today**
+## ➕ **Three more settings**
 
 ```text
 git config --global init.defaultBranch main
@@ -873,7 +858,6 @@ hideInToc: true
 - The **Source Control** view is the third icon of the Activity Bar, or `Ctrl+Shift+G` on Windows and on macOS
 - VS Code runs the Git that is installed. Every button of the view runs a Git command
 - The same commands are typed in the terminal: **Terminal** > **New Terminal**
-- In this lecture each step is shown in the view first, then typed
 - Another editor has other buttons. The commands are the same everywhere 🔧
 
 </div>
@@ -937,7 +921,7 @@ folder. (~2 min)
 hideInToc: true
 ---
 
-# What Git **Sees**
+# What Git Sees: `git status`
 
 <div class="grid-2 gap-md mt-md" style="grid-template-columns: 1fr 2fr;">
 
@@ -1147,7 +1131,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 3.9 MB Fits, 3 GB Does **Not**
+# Which Data Files Fit in a **Repository**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -1349,7 +1333,7 @@ hideInToc: true
 
 # Changes & **History**
 
-Four commits hold the project and the README. From here a file changes, and the history says what changed, when and why.
+A file changes, and the history says what changed, when and why.
 
 <!--
 Speaker: now a file changes, and the history is read. (~30 sec)
@@ -1497,7 +1481,7 @@ shows a colon: the arrow keys scroll and q leaves. (~2 min)
 hideInToc: true
 ---
 
-# One Commit, One Line: **show** and **blame**
+# Read a Commit, Trace a Line: **show** and **blame**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -1715,7 +1699,7 @@ An edit is half done, and something else has to be committed first. The command 
 
 <div class="card card-accent card-glass pad-compact">
 
-## ⌨️ **The other half**
+## ⌨️ **Bring the edit back**
 
 `git stash pop` brings the edit back. `git stash list` shows what is stored. In the view: **...** on the **Changes** header, then **Stash**.
 
@@ -1852,7 +1836,7 @@ commits with the same ids as in the terminal. (~3 min)
 hideInToc: true
 ---
 
-# The Same, **Typed**
+# Publish to GitHub, **Typed**
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
@@ -1951,7 +1935,7 @@ version control started", one line in the README. (~3 min)
 hideInToc: true
 ---
 
-# One Table, Two **Line Endings**
+# Line Endings Change the **Blob Id**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -2384,7 +2368,7 @@ with the next push. (~2 min)
 hideInToc: true
 ---
 
-# When Git Says **No**
+# Common Git Errors and Their **Fixes**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -2441,9 +2425,7 @@ Git was installed; on a Mac it is Vim. (~2 min)
 hideInToc: true
 ---
 
-# Source Control and **Commands**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+<div class="card card-primary card-glass pad-compact table-compact">
 
 | Step | In Source Control | Typed |
 | --- | --- | --- |
@@ -2590,9 +2572,7 @@ A program can check that code runs. Only a reader can ask whether the method is 
 hideInToc: true
 ---
 
-# Issues, Forks, **GitLab**
-
-<div class="grid-3 gap-md mt-md">
+<div class="grid-3 gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -2636,8 +2616,7 @@ hideInToc: true
 A reviewed change reaches `main`, and `main` moves with every commit. A result that leaves the project needs a name that stays on one commit.
 
 <!--
-Speaker: two slides: a name that does not move, and the question of the two
-copies of the table, answered from the history. (~30 sec)
+(~30 sec)
 -->
 ---
 hideInToc: true
@@ -2683,7 +2662,7 @@ Tag the commit behind every result that leaves the project: a report handed in, 
 hideInToc: true
 ---
 
-# The Three Questions, **Answered**
+# Who Changed the Table, When and **Why**
 
 <div class="grid-2 gap-md mt-sm" style="grid-template-columns: 3fr 2fr;">
 

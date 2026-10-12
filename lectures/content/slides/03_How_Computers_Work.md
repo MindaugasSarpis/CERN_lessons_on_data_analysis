@@ -27,7 +27,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# One Table, **148 Bytes**
+# `daily.csv` and Its **Size**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -76,8 +76,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="stack-tight mt-sm">
 
@@ -695,7 +693,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# n Bits, 2ⁿ **Values**
+# n Bits Hold 2ⁿ **Values**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -727,8 +725,6 @@ To tell *k* things apart, *n* bits are needed with 2ⁿ ≥ *k*.
 </div>
 
 </div>
-
-<div class="note-text mt-sm">One bit answers one yes-or-no question. Each added bit splits every case in two: 2ⁿ.</div>
 
 <!--
 **Ask:** how many bits for 26 letters? Let the room work it out before the answer.
@@ -778,7 +774,7 @@ hideInToc: true
 class: text-center
 ---
 
-# Hex Example: 0x2A
+# 0x2A in Decimal
 
 <div class="powers">
     <span>16<sup>1</sup></span> &nbsp;&nbsp;&nbsp;
@@ -880,7 +876,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact">
 
-🔬 **Hexdumps**: every byte of a file, later today
+🔬 **Hexdumps**: every byte of a file
 
 </div>
 
@@ -1000,13 +996,7 @@ hideInToc: true
 
 # Bitwise **Operations**
 
-<div class="note-text">
-
-Written in Python. The comment on each line gives the result.
-
-</div>
-
-<div class="mt-md">
+<div class="mt-sm">
 
 ```py {monaco-run} {autorun:false}
 a = 0b1100  # 12 in decimal
@@ -1125,7 +1115,7 @@ hideInToc: true
 | 32 | 0 to about 4.3 × 10⁹ |
 | 64 | 0 to about 1.8 × 10¹⁹ |
 
-Unix time counts seconds since 1970. Stored as a signed 32-bit integer (next slide), it runs out on 19 January 2038.
+Unix time counts seconds since 1970. Stored as a signed 32-bit integer, it runs out on 19 January 2038.
 
 </div>
 
@@ -1288,7 +1278,7 @@ A **float** is this idea in base 2, in a fixed number of bits. The mantissa has 
 </div>
 
 <!--
-**Say:** a sign, significant digits, and a power that sets the scale. The same three parts in base 2 are next.
+**Say:** a sign, significant digits, and a power that sets the scale.
 (~2 min)
 -->
 
@@ -1499,7 +1489,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Try It **Here**
+# The Float Stored for **0.1**
 
 <div class="card card-success card-glass pad-compact mt-md">
 
@@ -1525,7 +1515,7 @@ print(f"{0.1:.20f}")
 hideInToc: true
 ---
 
-# Four **Types**
+# The Type of a **Value**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1558,7 +1548,7 @@ hideInToc: true
 <div class="note-text mt-sm">Every value in a program has a type. The type decides what the bits mean, how much memory a value takes, and what can be done with it.</div>
 
 <!--
-**Say:** the names are those of Python. Strings are the next section.
+**Say:** the names are those of Python.
 (~1 min)
 -->
 
@@ -1704,12 +1694,6 @@ hideInToc: true
 
 # Text and **Bytes** in Python
 
-<div class="note-text">
-
-Written in Python. The comment on each line gives the result.
-
-</div>
-
 <div class="mt-sm">
 
 ```py {monaco-run} {autorun:false}
@@ -1731,7 +1715,7 @@ print(b.decode("utf-8"))  # back to str
 hideInToc: true
 ---
 
-# Mojibake: the **Wrong Table**
+# Mojibake: Bytes Read by the Wrong **Table**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1967,7 +1951,7 @@ The ending of a file name is a hint for people. The first bytes, the **magic num
 hideInToc: true
 ---
 
-# Extensions: the **Hex Editor**
+# Install the **Hex Editor**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -2054,13 +2038,11 @@ daily.csv, the first 32 of 148 bytes
 hideInToc: true
 ---
 
-# One Number, **Two Files**
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **As text**
+## 📄 **−16.3 as text**
 
 ```text
 -16.3
@@ -2073,7 +2055,7 @@ Five characters, five bytes. Any program and any person can read them.
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📦 **As a float32**
+## 📦 **−16.3 as a float32**
 
 ```text
 -16.3
@@ -2152,9 +2134,7 @@ The Hex Editor showed the bytes of one file by clicks. A terminal reaches files 
 hideInToc: true
 ---
 
-# Terminal and **Shell**
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -2434,7 +2414,7 @@ d----          2026-10-13    10:14                backup
 
 </div>
 
-<div class="note-text mt-sm">The same word in both shells, <b>make directory</b>. zsh prints nothing, PowerShell prints the new folder. The Side Bar of VS Code shows it at once.</div>
+<div class="note-text mt-sm"><code>mkdir</code>, <b>make directory</b>, is the same word in both shells.</div>
 
 <!--
 **Say:** a name without spaces is one word for the shell. `my backup` would be read as two names.
@@ -2599,7 +2579,7 @@ PS> Format-Hex data/processed/daily.csv
 
 </div>
 
-<div class="note-text mt-sm">The same bytes as in the hexdump read earlier. <code>hexdump</code> ends on the size in hex: 0x94 = 9 × 16 + 4 = 148.</div>
+<div class="note-text mt-sm"><code>hexdump</code> ends on the size in hex: 0x94 = 9 × 16 + 4 = 148.</div>
 
 <!--
 **Do:** find the first `0a` with the room.

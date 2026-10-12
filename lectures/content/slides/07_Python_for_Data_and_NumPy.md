@@ -35,7 +35,7 @@ layout: quote
 hideInToc: true
 ---
 
-# One Task, **Two Ways**
+# Four Questions for the **Data File**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -70,19 +70,13 @@ M,PT,TAU,IPCHI2
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-Lecture 06 split one line of this file into four numbers. Here all 91 583 are read, twice. First with lists and a loop, which needs three new tools: functions, exceptions and the `csv` module. Then with a NumPy array. Both versions are timed.
-
-</div>
-
 <!--
 Speaker: the file is data/raw/D0_KPi.csv, the one Lecture 04 ran
 column_stats.py on. Lecture 06 split one of its lines by hand. Write the four
 questions on the board, and next to question 4 the guesses of the room. Most
 will say about 0.26 ps, the mean of the three rows. Anyone who remembers
 0.00098 ns from column_stats.py is right: then ask why that is larger than
-all three rows. Both are settled at "Question 4, Answered". (~3 min)
+all three rows. (~3 min)
 -->
 
 ---
@@ -90,8 +84,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="stack-tight mt-sm">
 
@@ -363,7 +355,7 @@ These are the nine times of the pendulum table. The file as received had a last 
 <!--
 Speaker: run it: 15.138888888888886 and 15.14. Let the room write spread with
 max() and min(), or with a loop. Then call mean([]) and read the
-ZeroDivisionError: the next section is about such cases. (~4 min)
+ZeroDivisionError. (~4 min)
 -->
 
 ---
@@ -894,7 +886,7 @@ print(first)
 hideInToc: true
 ---
 
-# Four Columns, Four **Lists**
+# Read the Four Columns into **Lists**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1062,8 +1054,7 @@ The part that does the work is six lines and reads like the task. The second col
 
 <!--
 Speaker: this is the first half of the lecture in one slide: a path, the csv
-module, a loop, two functions. Keep the two numbers on the board. The second
-half gets them again with an array. (~3 min)
+module, a loop, two functions. Keep the two numbers on the board. (~3 min)
 -->
 
 ---
@@ -1257,8 +1248,6 @@ print((TAU != -100).sum())
 - `M.mean()` is the loop over 91 583 values, run in compiled code
 - `TAU != -100` compares every value, and `.sum()` counts the `True`
 
-Each of these is taken apart in the rest of the lecture.
-
 </div>
 
 </div>
@@ -1316,7 +1305,7 @@ print(f"loop  {(t1 - t0) / 20 * 1000:.3f} ms")
 print(f"NumPy {(t2 - t1) / 20 * 1000:.3f} ms")
 ```
 
-<div class="note-text mt-sm">The data file is not in the browser, so 91 583 numbers are made here. Each version runs 20 times.</div>
+<div class="note-text mt-sm">The data file is not in the browser, so 91 583 numbers are made here.</div>
 
 <!--
 Speaker: run it twice and compare the two results: timings scatter. The
@@ -2440,8 +2429,8 @@ Reading the binary file is 70 times faster, because no text is turned into numbe
 </div>
 
 <!--
-Speaker: this is the slide "One Number, Two Files" of Lecture 03 at the scale
-of the whole table. As float32 the .npy file has 1 465 456 bytes. (~2 min)
+Speaker: this is −16.3 as text and as a float32, from Lecture 03, at the
+scale of the whole table. As float32 the .npy file has 1 465 456 bytes. (~2 min)
 -->
 
 ---
@@ -2603,7 +2592,7 @@ it prints the same four lines. (~2 min)
 hideInToc: true
 ---
 
-# **Recap** — Four Questions, **Two Ways**
+# **Recap**
 
 <div class="grid-2 gap-md mt-md">
 

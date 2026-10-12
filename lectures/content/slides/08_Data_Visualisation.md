@@ -31,7 +31,7 @@ John W. Tukey, *Exploratory Data Analysis* (1977)
 hideInToc: true
 ---
 
-# Nine Points and **Twenty Counts**
+# The Pendulum Plot and the Mass **Counts**
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -71,9 +71,7 @@ The nine rows of the pendulum table as nine points
 Speaker: two things the room has already seen. Left, the picture on the
 report.md slide of Lecture 2. Right, the counts Lecture 7 printed for the mass
 column. Ask the room to name one choice in the left picture (points, not a
-line; both axes from zero). The first section answers both: the pendulum on
-"Points, Labels, Units", the mass column on "The Mass Column as a Histogram".
-(~2 min)
+line; both axes from zero). (~2 min)
 -->
 
 ---
@@ -81,8 +79,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="stack-tight mt-sm">
 
@@ -172,8 +168,7 @@ The rules for an honest figure are the rules by which a misleading one is recogn
 </div>
 
 <!--
-Speaker: one sentence per card. The next slide is the second card in numbers.
-(~1 min)
+Speaker: one sentence per card. (~1 min)
 -->
 
 ---
@@ -253,7 +248,7 @@ Matplotlib is a Python library, installed with `python -m pip install matplotlib
 </div>
 
 <!--
-Speaker: three words for the rest of the lecture. The Figure is the sheet, the
+Speaker: the Figure is the sheet, the
 Axes is one plot on it, and everything drawn is an artist that a call on ax put
 there. NumPy holds the numbers, Matplotlib draws them. (~2 min)
 -->
@@ -262,7 +257,7 @@ there. NumPy holds the numbers, Matplotlib draws them. (~2 min)
 hideInToc: true
 ---
 
-# A Plot in **Four Lines**
+# Plot the Pendulum Table: `ax.plot`
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -311,7 +306,7 @@ Code. Ask what is missing, next to the picture of the opening slide. (~2 min)
 hideInToc: true
 ---
 
-# Points, Labels, **Units**
+# Add Points, Labels and **Units**
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -490,7 +485,7 @@ Speaker: the same call with two more arguments, and two labels. The peak is the
 D0 meson: pairs that come from its decay have its mass, 1865 MeV/c², and the
 others have any mass in the window. The window itself, about 1815 to 1915, was
 set when the file was made. This answers the opening slide: the pendulum
-picture is the script of "Points, Labels, Units", the 20 counts are one
+picture is the script of "Add Points, Labels and Units", the 20 counts are one
 ax.hist call, and the choices in both were made from numbers. (~2 min)
 -->
 
@@ -650,7 +645,7 @@ A legend lists the colours, shapes and sizes used in a plot and says which group
 hideInToc: true
 ---
 
-# Two Countries, **One Legend**
+# A Legend Without **Samples**
 
 <div v-click class="card card-warning card-glass pad-compact mt-sm">
 
@@ -669,7 +664,7 @@ unit. Then click for the card. (~1 min)
 hideInToc: true
 ---
 
-# Three **Legends**
+# Legends for Colour, Size and **Shape**
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
@@ -687,7 +682,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The pendulum plot took the same step, from A Plot in Four Lines to Points, Labels, Units.
+🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The pendulum plot took the same step with `ax.set_xlabel` and `ax.set_ylabel`.
 
 </div>
 
@@ -965,7 +960,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# One Dataset, Three **Bin Widths**
+# Bin Widths of 0.5, 5 and 20 **Years**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
@@ -1009,9 +1004,7 @@ a window instead. (~2 min)
 hideInToc: true
 ---
 
-# One Distribution, **Three Charts**
-
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact">
 
 📦 The fuel economy of cars with 4, 6 and 8 cylinders, drawn three ways.
 
@@ -1141,7 +1134,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
-## 🧩 **One survey, three charts**
+## 🧩 **The shares of six tools**
 
 The shares of six tools in a survey of 240 people, as a pie, as one stacked bar and as separate bars. In the pie the shares are compared by angle. As separate bars they are compared by position on a common scale.
 
@@ -1377,13 +1370,7 @@ hideInToc: true
 
 # Visualising **Uncertainty**
 
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📏 A measured or estimated value has an uncertainty. Three ways to draw it.
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
+<div class="grid-3 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact text-center">
 
@@ -1430,13 +1417,7 @@ hideInToc: true
 
 # Which **Chart** for Which Question
 
-<div class="card card-info card-glass pad-compact mt-sm">
-
-The chart follows from what is compared:
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="stack-tight">
 
@@ -1547,8 +1528,8 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: ask the room to name the ink that shows no data in the left panel of
-the next slide. The defaults of plotting programs are a common source of it.
+Speaker: ask the room to name the ink that shows no data in a plot drawn with
+the defaults. The defaults of plotting programs are a common source of it.
 (~1 min)
 -->
 
@@ -1626,13 +1607,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Three **Kinds of Palette**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🎨 The palette follows the kind of variable: categories without an order, values from low to high, or values on both sides of a midpoint such as zero.
-
-</div>
+# The Palette Follows the Kind of **Variable**
 
 <div style="display:grid; grid-template-columns: 1fr 2fr; align-items:center; column-gap: 1.5rem; row-gap: 1rem; margin-top: 1.2rem;">
 
@@ -1827,7 +1802,7 @@ hideInToc: true
 
 # Stating the **Finding**
 
-A figure with little ink, a palette that fits and the right scale is correct, and the reader can still miss what it shows. Four means put the result on the figure.
+A figure with little ink, a palette that fits and the right scale is correct, and the reader can still miss what it shows.
 
 <!--
 Speaker: a correct figure can still leave the reader to work out what it
@@ -1952,11 +1927,10 @@ hideInToc: true
 
 # Hands-on **Matplotlib**
 
-Each rule of the last four sections is one call on `ax`. The pendulum and the mass column of the first section come back with a reference curve, error bars, an annotation and a title that states the finding.
+Each rule of the last four sections is one call on `ax`.
 
 <!--
-Speaker: back to code. Three scripts with their output, then one style for
-all figures, then file formats. (~0.5 min)
+Speaker: back to code. (~0.5 min)
 -->
 
 ---
@@ -2167,7 +2141,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-## 🔁 **One script, two files**
+## 🔁 **Save SVG and PNG**
 
 ```python
 for ext in ("svg", "png"):
@@ -2192,7 +2166,6 @@ hideInToc: true
 The two figures of the first section now carry a reference curve, error bars and a title that states the finding, and each is made again by its script.
 
 <!--
-Speaker: a checklist, the two figures with every choice in them, the recap.
 (~0.5 min)
 -->
 
@@ -2206,7 +2179,7 @@ hideInToc: true
 
 ## 🧪 **Before a figure goes into a report**
 
-Five questions. A "no" means the figure is not finished.
+A "no" means the figure is not finished.
 
 </div>
 

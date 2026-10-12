@@ -442,9 +442,11 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
 
 - The script outputs of Lecture 04 slides 85 and 86 ran in zsh 5.9.2 and
   PowerShell 7.6.6 on Linux; the Windows paths in them are shortened by
-  hand. Lectures 01 to 03 have slogan titles of the same kind ("Two People,
-  Two Answers", "One Table, Three Files", "One Row, Two Sizes", "One Table,
-  148 Bytes") and are not swept yet.
+  hand. Every deck, 01 to 16, was then swept the same way with the
+  skill (slogan titles rewritten, titles that repeated their boxes removed,
+  "By the end of this lecture" lead-ins, narration and forward references
+  gone; no slide added or removed). Seminar pages other than Seminar 4 are
+  not swept yet.
 - Not run on a Mac or a Windows laptop: in Lecture 04 the `chsh` dialogue,
   the `winget` output, PowerShell's `ls` table, the `which` and
   `Get-Command` paths and the `PATH` listings; macOS formats of `wc` and

@@ -66,7 +66,7 @@ jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–10 | What an analysis is: three parts, the uncertainty decides, statistical and systematic |
+| 0:00 | 1–10 | What an analysis is: three parts, the uncertainty decides the verdict, statistical and systematic |
 | 0:16 | 12–17, 19–20 | The loop, step by step, on the pendulum and the LHCb file |
 | 0:32 | 21–25, 28–29, 31–32 | How analyses go wrong: many looks, selection after the result, correlation and cause |
 | 0:50 | 33–35, 37–38 | Review: what the author cannot see, the checklist, a report reviewed |
@@ -84,25 +84,25 @@ jump, type the slide number and press Enter.
 | A Bump at 750 GeV, Dropping Two Rows | 26–27 | 4 min |
 | Two Columns That Move Together | 30 | 2 min |
 | Review and Repetition | 36 | 2 min |
-| Writing a Review, A Decision Log | 39–40 | 4 min |
+| Write a Review, Answer a Review; A Decision Log | 39–40 | 4 min |
 | When a Mistake Is Found | 44 | 2 min |
 | Authorship: Roles and Problems | 46 | 2 min |
 | A Plan on One Page, After the Project | 50–51 | 4 min |
 | Beyond the Law | 56 | 2 min |
-| What the Tool Is, Along the Loop | 58–59 | 4 min |
+| What the Tool Is, AI Tools at Each Step of the Loop | 58–59 | 4 min |
 | Sources | 64 | 2 min |
 
-- **Do not cut** slides 7–10. The step from "3.4σ" to "no discovery" is the
+- **Do not cut** slides 7–10. The step from "3.4σ" to "not a discovery" is the
   centre of the first section, and the later sections return to it.
 - **Do not cut** slides 23–25 and 28–29: one derivation, two demonstrations
   on the course files, and the defence.
 - **Do not cut** slides 37–38 (the checklist and the reviewed report) and
-  slide 49 (the six headings). The seminar uses both.
+  slide 49 (the headings of a data management plan). The seminar uses both.
 - **Slide 8** ends on a question: has this course found that the D⁰ mass is
   wrong? Let the room answer before slide 9.
 - **Slide 23** is derived on the board: 0.95 for one quiet look, 0.95ᵏ for
   k of them.
-- **Slide 31** (the table that reverses): let the room check one row of
+- **Slide 31** (better in each group, worse overall): let the room check one row of
   percentages by hand, then ask which treatment they would choose.
 - **Slide 60** can be run live: the code prints `9.81`, `981.0` and
   `0.09809999999999999`.

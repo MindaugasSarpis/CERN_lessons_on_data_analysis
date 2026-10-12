@@ -13,8 +13,8 @@ slide lists every choice with the number behind it.
 
 ## What the lecture covers
 
-1. **Why a figure** — two pictures and their numbers: nine points and twenty
-   counts; what a figure is for; Anscombe's quartet: four tables with the
+1. **Why a figure** — two pictures and their numbers: the pendulum plot and
+   the mass counts; what a figure is for; Anscombe's quartet: four tables with the
    same means, the same closest line and the same *r*, told apart only by a
    plot.
 2. **A first plot** — Figure, Axes and artists; the pendulum table in four
@@ -64,7 +64,7 @@ jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–6 | Nine points and twenty counts (the question of the lecture), objectives, what a figure is for, Anscombe's quartet |
+| 0:00 | 1–6 | The pendulum plot and the mass counts (the question of the lecture), objectives, what a figure is for, Anscombe's quartet |
 | 0:09 | 7–13 | A first plot: Figure and Axes, the pendulum as points, the mass histogram. Slide 13 answers the opening question |
 | 0:23 | 14–17, 21 | Visual channels and their ranking, the parts of a figure, axis labels with units |
 | 0:30 | 25–29, 34 | Amounts: bars, bars from zero, the dot plot |
@@ -91,7 +91,7 @@ jump, type the slide number and press Enter.
 | A minimal bar chart | 79 | 2 min |
 | One style for all figures | 82 | 2 min |
 
-- **Do not cut** slide 3 (Nine Points and Twenty Counts) or slides 8–13
+- **Do not cut** slide 3 (The Pendulum Plot and the Mass Counts) or slides 8–13
   (A First Plot), which answer it. The seminar makes exactly these two
   figures, with the same calls, the same range and the same bin width.
 - **Do not cut** slide 86 (Every Choice in the Two Figures), the closing

@@ -20,7 +20,7 @@ questions, answered from the history of the project.
    with `git hash-object`, and why the same line gives another id in
    PowerShell (`0d 0a`); the header `blob <size>` and a zero byte; the id of
    the data file, the same on every laptop; a folder as a list, set beside
-   the `data/checksums.txt` of Lecture 4; lists inside lists; a commit as a
+   the `data/checksums.txt` of Lecture 4; the tree of the whole project; a commit as a
    text with a tree, a parent, an author and a message; the id of a commit,
    computed again by `git hash-object`; history as a graph; a branch as a
    file of 41 bytes; the three areas.
@@ -64,9 +64,9 @@ slides in the second table. To jump, type the slide number and press Enter.
 | 0:54 | 34, 37 | The history |
 | 0:57 | 39, 41, 42 | The `9.03` change, amended and reverted: who, when and why |
 | 1:01 | 44, 45, 47–49 | A remote, publish, push, clone, pull |
-| 1:11 | 50, 51 | One table with two line endings, a clone on Windows |
+| 1:11 | 50, 51 | Line endings change the blob id, a clone on Windows |
 | 1:16 | 53–58 | A branch, a merge, a conflict |
-| 1:27 | 68–70 | A tag; the three questions, answered |
+| 1:27 | 68–70 | A tag; who changed the table, when and why |
 | 1:32 | 71 | Recap |
 | 1:33 | | Move to the seminar |
 
@@ -74,19 +74,19 @@ slides in the second table. To jump, type the slide number and press Enter.
 |--|--|--|
 | Source Control in VS Code: say it while doing slide 23 | 22 | 1 min |
 | What Git Sees, The Letters, The Commit Message | 24, 26, 27 | 5 min |
-| 3.9 MB Fits; the README says how to fetch | 30, 33 | 5 min |
+| Which Data Files Fit in a Repository; the README says how to fetch | 30, 33 | 5 min |
 | The diff in the view and typed; show and blame | 35, 36, 38 | 7 min |
 | restore; stash. The seminar does restore | 40, 43 | 4 min |
 | A GitHub Account: students create one in the break | 46 | 2 min |
 | SSH: the Alternative | 52 | 2 min |
-| Resolve It, Typed; Ahead and Behind; When Git Says No | 59–61 | 6 min |
-| Source Control and Commands: on the projector during the seminar | 62 | 2 min |
+| Resolve It, Typed; Ahead and Behind; Common Git Errors and Their Fixes | 59–61 | 6 min |
+| The table of steps in Source Control and typed: on the projector during the seminar | 62 | 2 min |
 | Working with Others | 63–67 | 9 min |
 
 - **The third question is answered by about minute 60**, at slides 41–42:
   the change of line 2 is a commit with an author, a time and a message,
   and the revert that took it back is another.
-- **Do not cut slide 70**, *The Three Questions, Answered*. It closes the
+- **Do not cut slide 70**, *Who Changed the Table, When and Why*. It closes the
   lecture on the question of slides 4–5.
 - **Do not cut** slides 9–19 (the model). Each of them needs the one before
   it, and slides 30, 41, 45 and 59 argue from it.

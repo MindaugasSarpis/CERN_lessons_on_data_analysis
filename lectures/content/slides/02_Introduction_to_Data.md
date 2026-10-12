@@ -67,7 +67,7 @@ Where it came from, what one line is, the units, and what is missing.
 
 <!--
 **Ask:** what can you say about this file? What can you not say?
-**Do:** write the second list on the board. It becomes the next slide.
+**Do:** write the second list on the board.
 (~4 min)
 -->
 
@@ -76,8 +76,6 @@ hideInToc: true
 ---
 
 # What the File Does **Not** Say
-
-<div class="note-text mt-sm">Five questions. The sections of this lecture answer them in this order.</div>
 
 <div class="stack-tight mt-md">
 
@@ -114,7 +112,7 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** these are the room's own questions, in the order the lecture answers them. Each is about one part of the four lines: the columns, the whole file, one line, the numbers.
+**Say:** these are the room's own questions. Each is about one part of the four lines: the columns, the whole file, one line, the numbers.
 (~2 min)
 -->
 
@@ -123,8 +121,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="stack-tight mt-sm">
 
@@ -169,7 +165,6 @@ hideInToc: true
 The file brought the symbols. The rule for reading them back did not come with it.
 
 <!--
-**Say:** first a definition, then what the file has of it and what it lacks.
 (~1 min)
 -->
 
@@ -225,7 +220,7 @@ Someone else, or a program, gets the information back. Without the rule, nobody 
 hideInToc: true
 ---
 
-# Symbols Plus a **Rule**
+# Data Is Symbols Plus a **Rule**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -253,12 +248,12 @@ At midnight on 1 January 2016, one weather station measured −4.4 °C, 93 % hum
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🧭 **A number is data only together with the rule that lets someone else read it back.** Each part of the sentence on the right is found in this lecture.
+🧭 **A number is data only together with the rule that lets someone else read it back.**
 
 </div>
 
 <!--
-**Say:** the right card is information. Nobody can write it from the left card alone yet: the station, the units and what one line is all come later today.
+**Say:** the right card is information. Nobody can write it from the left card alone: the station, the units and what one line is are not in the file.
 (~2 min)
 -->
 
@@ -313,7 +308,7 @@ hideInToc: true
 The first part of the rule: what kind of thing each column holds, and what may be computed from it.
 
 <!--
-**Say:** question 1. The ideas are worked on a small table first, then carried back to `weather.csv`.
+**Say:** question 1.
 (~1 min)
 -->
 
@@ -348,8 +343,6 @@ Free form: text, images, sound, video.
 </div>
 
 </div>
-
-<div class="note-text mt-md">The first job of many projects is to turn the second kind into the first.</div>
 
 <!--
 **Ask:** which kind is a folder of holiday photos? A list of exam marks?
@@ -402,7 +395,7 @@ A time, and what was measured at that moment: a click, a sale, a reading.
 
 <!--
 **Say:** more examples aloud: a place on Earth is 2 numbers, a colour is 3, one second of CD sound is 44 100.
-**Say:** written as a number is not the same as behaving like one. Next slide.
+**Say:** written as a number is not the same as behaving like one.
 (~2 min)
 -->
 
@@ -626,7 +619,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">Two columns named <code>temp_c</code>, two different things. A derived value is checkable only if the README says how it was computed.</div>
+<div class="note-text mt-md">A derived value is checkable only if the README says how it was computed.</div>
 
 <!--
 **Say:** the daily table's 6,3 for 1 October is the mean of the 24 hourly rows of that day in `weather.csv`.
@@ -638,7 +631,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# One Table, Three **Files**
+# File Formats for a **Table**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -675,7 +668,7 @@ hideInToc: true
 <div class="note-text mt-md">Formats such as HDF5 and ROOT are binary. Large experiments, CERN among them, store their data that way.</div>
 
 <!--
-**Say:** the same table can be saved in all three. The next slides stay with CSV: what it leaves open, and what text costs against binary.
+**Say:** the same table can be saved in all three.
 **If asked:** an .xlsx file is a zip archive of XML text files.
 (~2 min)
 -->
@@ -759,7 +752,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# One Row, Two **Sizes**
+# A Row as Text and as **Binary**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -902,7 +895,7 @@ CERN Open Data Portal, record 401:
 hideInToc: true
 ---
 
-# Licences: CC0, CC BY, **Share-Alike**
+# Open-Data **Licences**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -981,8 +974,6 @@ Changes:  none
 
 </div>
 
-<div class="note-text mt-md">Question 2 answered: the station's operator sent it, and CC0 lets anyone use it.</div>
-
 <!--
 **Say:** the file came with no note, but its sender is known. Ask once, then write the answers down.
 **Say:** someone else, or you in six months, must be able to get the same bytes. A checksum, a fingerprint of the bytes, proves it.
@@ -999,7 +990,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact">
 
-## 🎒 **The same note**
+## 🎒 **The provenance note**
 
 - Where it came from: a web address, an instrument, a colleague
 - The terms of use
@@ -1017,8 +1008,6 @@ hideInToc: true
 </div>
 
 </div>
-
-<div class="note-text mt-md">The semester project is on data of your own choice. This note is what makes that choice safe to build on.</div>
 
 <!--
 **Ask:** what would the source line be for data you collected yourself?
@@ -1065,7 +1054,7 @@ weather-project/
 </div>
 
 <!--
-**Say:** `data/raw` holds files exactly as received. Everything made from them goes elsewhere. The folder itself is built in VS Code later today.
+**Say:** `data/raw` holds files exactly as received. Everything made from them goes elsewhere.
 (~2 min)
 -->
 
@@ -1079,7 +1068,7 @@ hideInToc: true
 A row is a decision: what was measured, how often, and what was kept.
 
 <!--
-**Say:** question 3, what one row is. A weather station first, then the same question at CERN.
+**Say:** question 3, what one row is.
 (~1 min)
 -->
 
@@ -1087,7 +1076,7 @@ A row is a decision: what was measured, how often, and what was kept.
 hideInToc: true
 ---
 
-# One Hour, **One Row**
+# The Station Writes One Line per **Hour**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1156,7 +1145,6 @@ hideInToc: true
 
 <!--
 **Say:** the same question as at the station, at the largest scale there is. The raw signal is about 1 PB a second; nothing can store it.
-**Do:** let the clip on the next slide run: the whole chain, 2:51, with music.
 (~3 min)
 -->
 
@@ -1167,6 +1155,7 @@ hideInToc: true
 <VideoPlayer src="cern_video_2015_024_001.mp4" />
 
 <!--
+**Do:** let it run: the whole chain, 2:51, with music.
 **Say:** accelerator chain, detectors, trigger, data centre, grid. Talk over it only at the trigger.
 (~3 min)
 -->
@@ -1189,7 +1178,7 @@ How many rows, in which units, and where the gaps are: the file itself shows it.
 hideInToc: true
 ---
 
-# One Row, **Read Aloud**
+# Read a Row **Aloud**
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
@@ -1247,11 +1236,9 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">One row per hour, and not one hour missing.</div>
-
 <!--
 **Ask:** before showing the cards: how many rows should ten years of hours have?
-**If asked:** any text editor has these keys; the one used in this course, VS Code, comes at the end of the lecture.
+**If asked:** any text editor has these keys.
 **Say:** the count closes, so every hour has its row. That says nothing yet about the values in it.
 (~3 min)
 -->
@@ -1322,7 +1309,7 @@ From 34 to 100, never above. **Percent**, as `_pct` says.
 
 <!--
 **Ask:** for each column, which unit fits, before showing its card. For `wind_ms` let the room argue: milliseconds of wind makes no sense.
-**If asked:** the medians and ranges were computed on the whole file, without the marked rows of the next slide.
+**If asked:** the medians and ranges were computed on the whole file, without the 120 rows marked `-999`.
 (~4 min)
 -->
 
@@ -1330,7 +1317,7 @@ From 34 to 100, never above. **Percent**, as `_pct` says.
 hideInToc: true
 ---
 
-# Colder Than **Absolute Zero**
+# How Missing Values Are **Marked**
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
@@ -1349,7 +1336,7 @@ hideInToc: true
 <div class="note-text mt-md">Other files mark a missing value with an empty cell, <code>NA</code>, <code>-1</code> or <code>9999</code>.</div>
 
 <!--
-**Say:** question 5. The mark is a number, so every program that reads the file counts it as one. Next slide.
+**Say:** question 5. The mark is a number, so every program that reads the file counts it as one.
 (~3 min)
 -->
 
@@ -1424,7 +1411,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# The Five Questions, **Your Dataset**
+# The Five Questions for Other **Datasets**
 
 <div class="table-compact">
 
@@ -1461,7 +1448,7 @@ hideInToc: true
 The five answers are not in the file, so they are written next to it, in a README. Both are plain text, and one editor opens both.
 
 <!--
-**Say:** answers that stay in this room are lost. From here on: the folder they go into, the editor, the README.
+**Say:** answers that stay in this room are lost.
 (~1 min)
 -->
 
@@ -1485,7 +1472,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🔒 **One rule**
+## 🔒 **The rule for `data/raw`**
 
 A file in `data/raw` is never edited. Changes are made on a copy in `data/processed`.
 
@@ -1502,7 +1489,7 @@ A file in `data/raw` is never edited. Changes are made on a copy in `data/proces
 hideInToc: true
 ---
 
-# Names That **Travel**
+# Rules for File **Names**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-md">
 
@@ -1607,7 +1594,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Three Keys to **Start**
+# First Keys in **VS Code**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -1646,7 +1633,7 @@ Sets the size for the projector.
 <div class="note-text mt-md">The Command Palette is the one key worth remembering: every other command can be found through it.</div>
 
 <!--
-**Say:** on macOS `Cmd` stands where Windows and Linux have `Ctrl`. Every key slide gives both.
+**Say:** on macOS `Cmd` stands where Windows and Linux have `Ctrl`.
 (~2 min)
 -->
 
@@ -1689,7 +1676,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Saved, or **Not**
+# Is the File **Saved**?
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1728,7 +1715,6 @@ hideInToc: true
 The README is written in Markdown: plain text with a few signs for structure.
 
 <!--
-**Say:** each slide of this section shows the source on the left and what the preview makes of it on the right.
 (~1 min)
 -->
 
@@ -1972,7 +1958,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Five Usual **Mistakes**
+# Usual Markdown **Mistakes**
 
 <div class="table-compact">
 
@@ -1985,8 +1971,6 @@ hideInToc: true
 | `![plot](plot.png)` | A broken picture | The file is in another folder |
 
 </div>
-
-<div class="note-text mt-md">The preview is the test. Read it after every block you type.</div>
 
 <!--
 **Ask:** for each row, what goes wrong? Let the room answer before reading the reason.
@@ -2003,7 +1987,7 @@ hideInToc: true
 The daily table arrived in a spreadsheet's format. Each fix is the same on every line, and the editor makes it once.
 
 <!--
-**Say:** back to the nine-day table of slide 14. It is repaired here by hand, on a copy, one fix per slide.
+**Say:** back to the nine-day table of slide 14. It is repaired here by hand, on a copy.
 (~1 min)
 -->
 
@@ -2011,7 +1995,7 @@ The daily table arrived in a spreadsheet's format. Each fix is the same on every
 hideInToc: true
 ---
 
-# One Edit, **Many Lines**
+# What the Daily Table **Needs**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -2058,7 +2042,7 @@ date,temp_c
 hideInToc: true
 ---
 
-# Whole **Lines**
+# Keys for Whole **Lines**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -2224,7 +2208,7 @@ date,temp_c
 hideInToc: true
 ---
 
-# The Same Word, **Everywhere**
+# Select Every Match of a **Word**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -2310,8 +2294,6 @@ date | temp_c
 </div>
 
 </div>
-
-<div class="note-text mt-md">The same three steps for 10 lines and for 10 000: say the change once, and it is made on every line.</div>
 
 <!--
 **Say:** the preview shows a table only after step 3: the second line makes it.

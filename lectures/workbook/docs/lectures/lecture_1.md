@@ -78,7 +78,7 @@ press Enter.
 - **Do not cut** slides 5–8 (the question and the four aims) or slide 32
   (*What a Result Needs*, which answers it). If time runs short, cut from the
   skip list, never the closing slide.
-- **Slide 6** (Two People, Two Answers): give the room two or three minutes
+- **Slide 6** (The Mean Temperature, Computed Two Ways): give the room two or three minutes
   and write their answers on the board; slide 8 sorts them into the four aims.
 - **Slide 12** (The Same Edits in the Wrong Order): ask which replacement
   comes first before showing the two columns.

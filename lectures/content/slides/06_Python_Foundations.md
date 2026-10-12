@@ -38,8 +38,6 @@ hideInToc: true
 
 # Learning **Objectives**
 
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
-
 <div class="grid-2 gap-md mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
@@ -287,8 +285,8 @@ PS>
 Speaker: type it live in both shells. Lecture 04 read the prompt of the
 shell; >>> is the third prompt, and exit() hands the line back to the shell.
 Ask the room what the first slip will be: a shell command typed at >>>, or
-Python typed at %. The long decimals of 0.902 are explained on the float
-slide; say only that they are expected. The PowerShell 0.902 is the same
+Python typed at %. Say only that the long decimals of 0.902 are
+expected. The PowerShell 0.902 is the same
 float shown with fewer digits. (~3 min)
 -->
 
@@ -378,9 +376,7 @@ The prompt prints every value by itself. A script prints nothing unless it calls
 </div>
 
 <!--
-Speaker: read the table as the interpreter would, line by line. This picture,
-a list of names that grows, is what the Variables panel of the debugger shows
-later in the lecture. (~2 min)
+Speaker: read the table as the interpreter would, line by line. (~2 min)
 -->
 
 ---
@@ -464,8 +460,8 @@ hideInToc: true
 The script printed 0.9019999999999999 for 9.02 / 10. Every value it makes has a type, and the type decides what an operation does with it.
 
 <!--
-Speaker: Lecture 03 built integers, floats and text from bits. This section
-shows the same three in Python, and explains the long decimals. (~1 min)
+Speaker: Lecture 03 built integers, floats and text from bits. Python has
+the same three, and the long decimals come from the float. (~1 min)
 -->
 
 ---
@@ -871,9 +867,8 @@ round(9.99)       # 10
 
 <!--
 Speaker: the last two lines of the left card are the reason this slide exists.
-Text plus text is longer text, with no error. The right card is three messages
-the room will see within the hour. Read the bold sentence aloud: it is the
-claim of this lecture. (~3 min)
+Text plus text is longer text, with no error. Read the bold sentence aloud:
+it is the claim of this lecture. (~3 min)
 -->
 
 ---
@@ -886,8 +881,8 @@ hideInToc: true
 `float("9.02")` converts one value. A line of `D0_KPi.csv` holds four, as one string with commas between them; cut at the commas, it is a list.
 
 <!--
-Speaker: the section builds the central recipe of the lecture: one line of a
-CSV file becomes four numbers. (~1 min)
+Speaker: the central recipe of the lecture: one line of a CSV file becomes
+four numbers. (~1 min)
 -->
 
 ---
@@ -1051,8 +1046,7 @@ A list is indexed and sliced like a string. Unlike a string it **can be changed*
 
 <!--
 Speaker: square brackets make a list. The difference from a string that
-matters is the last card: a list changes in place, and that has a consequence
-on the slide Two Names, One List. out = [] and out.append(...) are lines 26
+matters is the last card: a list changes in place. out = [] and out.append(...) are lines 26
 and 31 of clean_pendulum.py: an empty list, then one item per row. (~2 min)
 -->
 
@@ -1060,7 +1054,7 @@ and 31 of clean_pendulum.py: an empty list, then one item per row. (~2 min)
 hideInToc: true
 ---
 
-# One Line, **Four Numbers**
+# Turn a Line of `D0_KPi.csv` into **Numbers**
 
 ```python
 line = "1880.649,3000.9534,0.00041271152,1299.1675\n"
@@ -1143,7 +1137,7 @@ bold sentence of From Text to Number. (~3 min)
 hideInToc: true
 ---
 
-# Two Names, One **List**
+# A Second Name Is Not a **Copy**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -1203,9 +1197,7 @@ hideInToc: true
 One line became four numbers. The pendulum table has nine rows and `D0_KPi.csv` 91 583, so the steps for one line have to run once for each line, and skip some.
 
 <!--
-Speaker: with for and if a script stops being a calculator. The section
-computes the period of every row of the pendulum table, and ends with every
-line of clean() read. (~1 min)
+Speaker: with for and if a script stops being a calculator. (~1 min)
 -->
 
 ---
@@ -1414,7 +1406,7 @@ The block is the recipe of the last section, for one line: split, convert, compu
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-⚙️ The same five lines handle 9 rows and 91 583 rows. Four of the nine periods show their float64 digits. The section on output prints them with three decimals.
+⚙️ The same five lines handle 9 rows and 91 583 rows. Four of the nine periods show their float64 digits.
 
 </div>
 
@@ -1823,9 +1815,7 @@ dictionary, sorted, and a string times a number. (~3 min)
 hideInToc: true
 ---
 
-# Four **Containers**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+<div class="card card-primary card-glass pad-compact table-compact">
 
 | Container | Written as | Found by | Can be changed | Use |
 | --- | --- | --- | --- | --- |
@@ -1882,8 +1872,8 @@ hideInToc: true
 The loop printed 1.7899999999999998 s for a time read to 0.01 s over ten swings. A number printed for a person shows the digits the measurement has.
 
 <!--
-Speaker: the pendulum loop printed 0.9019999999999999. This section prints
-0.902 without changing the stored value. (~1 min)
+Speaker: the pendulum loop printed 0.9019999999999999. Printing 0.902 does
+not change the stored value. (~1 min)
 -->
 
 ---
@@ -2118,7 +2108,7 @@ C:\Users\ada\...\scripts\period.py on Windows. (~4 min)
 hideInToc: true
 ---
 
-# Six **Messages**
+# Common Error **Messages**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
@@ -2395,7 +2385,7 @@ and the reader is most often the author, some months later. (~1 min)
 hideInToc: true
 ---
 
-# Names with **Units**, Numbers with Names
+# Name Every Value and Its **Unit**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -2458,7 +2448,7 @@ length_cm and t10_s. The script continues what the file started. (~2 min)
 hideInToc: true
 ---
 
-# PEP 8: One **Style** for Everyone
+# PEP 8: Python's **Style Guide**
 
 <div class="grid-2 gap-md mt-md">
 

@@ -74,7 +74,7 @@ slides in the second table. To jump, type the slide number and press Enter.
 | What a Log Tells; One Folder per Run | 44, 46 | 5 min |
 | Submit, Watch, Cancel; What to Ask For; An Honest Request Starts Sooner | 51–53 | 7 min |
 | The cloud | 58–59 | 5 min |
-| Three Numbers Before Starting | 61 | 3 min |
+| What to Estimate Before a Long Run | 61 | 3 min |
 
 - **Do not cut** slides 6–8 (the loop, the noise, NumPy), 17–21 (the pool
   and the test of Amdahl's law), 30 and 32 (the bytes of a table) or 41–43

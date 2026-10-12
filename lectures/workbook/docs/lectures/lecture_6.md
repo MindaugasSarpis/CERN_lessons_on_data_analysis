@@ -77,7 +77,7 @@ the slides in the second. To jump, type the slide number and press Enter.
 | 1:03 | 40–41 | A row as a dictionary |
 | 1:06 | 45–46 | f-strings |
 | 1:09 | 48–50, 54–56 | Three kinds of error, the traceback, `print`, the debugger |
-| 1:22 | 58–59 | Names with units |
+| 1:22 | 58–59 | Name every value and its unit |
 | 1:25 | 61 | Recap. **Do not cut** |
 | 1:30 | | Move to the seminar |
 
@@ -86,11 +86,11 @@ the slides in the second. To jump, type the slide number and press Enter.
 | Try It — The First Script, done live on slide 8 instead | 10 | 3 min |
 | `int`: No Fixed Width, `str`: Unicode Text | 14, 19 | 7 min |
 | Arithmetic | 16 | 2 min |
-| Try It — Parse Another Line, Two Names, One List | 27–28 | 6 min |
+| Try It — Parse Another Line, A Second Name Is Not a Copy | 27–28 | 6 min |
 | `while` and `range`, A List in One Line | 35–36 | 4 min |
-| Try It — Header and Line into a dict, Counting with a dict, Four Containers | 42–44 | 10 min |
+| Try It — Header and Line into a dict, Counting with a dict, the table of four containers | 42–44 | 10 min |
 | The Format After the Colon | 47 | 3 min |
-| Six Messages | 51 | 3 min |
+| Common Error Messages | 51 | 3 min |
 | Fix It — NameError, Fix It — ValueError | 52–53 | 7 min |
 | When a Script Fails | 57 | 2 min |
 | PEP 8 | 60 | 2 min |
@@ -122,7 +122,7 @@ the slides in the second. To jump, type the slide number and press Enter.
 - **Slide 15** needs the slide *Why 0.1 Is Not Exact* of Lecture 3. The room
   has seen `0.9019999999999999` since slide 7. This is the slide that
   explains it.
-- **Slide 26** (One Line, Four Numbers) is the centre of the first half.
+- **Slide 26** (Turn a Line of `D0_KPi.csv` into Numbers) is the centre of the first half.
   Type it live in `scripts/parse_line.py` and print after every line. Do
   not rush it.
 - **Slide 38** answers the opening question. Let the room read each line

@@ -38,8 +38,6 @@ hideInToc: true
 
 # Learning **Objectives**
 
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
-
 <div class="stack-tight mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
@@ -142,7 +140,7 @@ lecture computes how many it can get right. (~2 min)
 hideInToc: true
 ---
 
-# A Rule with One Input, a Rule with **Two**
+# Classify by a Threshold or by a **Line**
 
 <img class="fig" src="/figures/viz_perceptron_threshold_vs_line.svg" style="display:block;margin:0 auto;max-height:330px;">
 
@@ -164,16 +162,14 @@ hideInToc: true
 
 <!--
 Speaker: the threshold was found by trying every value. The line was found by
-the method of this lecture. The question for the next 80 minutes is how. (~2 min)
+the method of this lecture. The question of the lecture is how. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# What Lecture 10 **Built**, and What Changes
-
-<div class="card card-info card-glass pad-compact mt-sm table-compact">
+<div class="card card-info card-glass pad-compact table-compact">
 
 | | **A fit** (Lecture 10) | **A classification** (this lecture) |
 | --- | --- | --- |
@@ -188,7 +184,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-The left column is known. The right column is this lecture, row by row. Only two things are new: the output is a class, and the probability that describes a class is not a Gaussian. An index $i$ numbers the points, $i = 1 \ldots N$; an index 1 or 2 numbers the inputs.
+Only two things are new: the output is a class, and the probability that describes a class is not a Gaussian. An index $i$ numbers the points, $i = 1 \ldots N$; an index 1 or 2 numbers the inputs.
 
 </div>
 
@@ -253,7 +249,7 @@ $\mathbf{w} = (2, -1)$, $b = -1$.
 Speaker: bold letters are vectors, and w . x is the dot product. The hat on y
 marks what the model says, as the hat on theta marked an estimate in Lecture
 10. This unit with the step is the perceptron. The bias is drawn as a
-weight on a constant input 1: that picture is used again in the proof. On the
+weight on a constant input 1. On the
 convention: z exactly 0 gives 0 here. Other books choose 1. It matters only for
 points exactly on the line. (~2 min)
 -->
@@ -306,7 +302,7 @@ Speaker: these are the truth tables of Lecture 03, now computed by a weighted
 sum and a threshold. Let the room check one row of each. In the pictures the
 shaded side is where z is positive. Then the puzzle: one minute, collect two or
 three attempts and check one row of each aloud. Every attempt gets a row wrong.
-Leave it open: the section on XOR settles it. (~3 min)
+Leave it open. (~3 min)
 -->
 
 ---
@@ -355,8 +351,7 @@ On one side $z > 0$ and the output is 1. On the other side $z < 0$ and the outpu
 
 <!--
 Speaker: the neuron cuts the plane in two with a straight line. This is all it
-can do, and the last section of the lecture is about a case where one cut is
-not enough. (~2 min)
+can do. (~2 min)
 -->
 
 ---
@@ -499,8 +494,8 @@ With $n$ inputs the neuron has $n + 1$ parameters, and the boundary $z = 0$ is a
 </div>
 
 <!--
-Speaker: the third panel matters later. The line fixes the weights only up to a
-common factor. The step ignores that factor. The sigmoid will not. (~2 min)
+Speaker: the line fixes the weights only up to a common factor. The step
+ignores that factor. (~2 min)
 -->
 
 ---
@@ -510,7 +505,7 @@ hideInToc: true
 
 # Rosenblatt's **Learning Rule**
 
-So far the weights were set by hand. The rule of 1958 finds them from labelled examples, one point at a time.
+The rule of 1958 finds the weights from labelled examples, one point at a time.
 
 <!--
 Speaker: the section has three parts. The rule and why it moves the line the
@@ -722,7 +717,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-`w @ x` is the dot product of two arrays. The output is the table of the last three slides, one line per epoch.
+`w @ x` is the dot product of two arrays.
 
 </div>
 
@@ -831,8 +826,8 @@ Bounded is the number of **updates**. The theorem is silent on sets that are not
 
 <!--
 Speaker: read the four assumptions slowly. The theorem counts mistakes, not
-epochs and not seconds. A wide margin and short points give a small bound. The
-next three slides are the idea of the proof. (~3 min)
+epochs and not seconds. A wide margin and short points give a small bound.
+(~3 min)
 -->
 
 ---
@@ -1044,8 +1039,7 @@ Speaker: the same rule, the points in a shuffled order, 100 epochs. After each
 epoch between 14 and 26 points are on the wrong side, and the line of epoch 98
 is not the line of epoch 100. Real data overlap. One more thing is open:
 Rosenblatt wrote the rule down, he did not derive it. Why the error times the
-input? The next two sections replace the rule by one that has an answer for
-the overlap, and that answer explains the form of the rule. (~2 min)
+input? (~2 min)
 -->
 
 ---
@@ -1088,8 +1082,7 @@ hideInToc: true
 
 <!--
 Speaker: both curves are along one parameter, the bias, with the weights fixed
-at (2, 2). The left curve is what the step gives. The right curve is where this
-section and the next are heading. (~2 min)
+at (2, 2). The left curve is what the step gives. (~2 min)
 -->
 
 ---
@@ -1196,8 +1189,7 @@ $\sigma'(0) = 0.5 \cdot 0.5 = 0.25$, the largest value. $\sigma'(2) = 0.881 \cdo
 </div>
 
 <!--
-Speaker: do it on the board in these four lines. The result is used once, in
-the gradient, where it cancels against another factor. (~3 min)
+Speaker: do it on the board in these four lines. (~3 min)
 -->
 
 ---
@@ -1413,8 +1405,7 @@ $$
 </div>
 
 <!--
-Speaker: step 3, minimising, takes the rest of the section. Dividing by N
-does not move the minimum. It makes the loss of 200
+Speaker: dividing by N does not move the minimum. It makes the loss of 200
 points comparable with the loss of 2000. Of the two terms in the bracket, only
 one is non-zero for each point. (~3 min)
 -->
@@ -1776,7 +1767,7 @@ the input. Three models, one update. (~2 min)
 hideInToc: true
 ---
 
-# One **Minimum**
+# The Loss Has One **Minimum**
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -1905,8 +1896,8 @@ print("w", w.round(3), "b", round(b, 3))
 Speaker: run it. Each line of output is the epoch, the loss and the share of
 points classified correctly. Measured: 0.6931 and 0.5 at epoch 0, 0.1651 and
 0.92 at epoch 250, 0.1616 and 0.925 at epoch 1000, then w [2.1 2.257] and b
--4.315. 0.925 of 200 is 185: this is the line of the slide A Rule with One
-Input, a Rule with Two, found. Change eta to 0.05 and run again: the loss at
+-4.315. 0.925 of 200 is 185: this is the line of the slide Classify by a
+Threshold or by a Line, found. Change eta to 0.05 and run again: the loss at
 epoch 1000 is 0.1809, not yet at the minimum. Why 0.6931 at the start: with
 w = 0 and b = 0 every y-hat is 0.5, and each point costs ln 2. The loss falls
 at every epoch, the accuracy does not: 93.5 % at epoch 50, 92.5 % at 100, 92 %
@@ -1981,7 +1972,7 @@ The exact values follow from the slide Where the Sigmoid Comes From: $\mathbf{w}
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The line of the slide **A Rule with One Input, a Rule with Two**, right for 185 of 200, is this neuron. It has recovered the rule that made the data, to within what 200 points allow. No rule does better than 92.1 % on new points: the clouds overlap.
+The line of the slide **Classify by a Threshold or by a Line**, right for 185 of 200, is this neuron. It has recovered the rule that made the data, to within what 200 points allow. No rule does better than 92.1 % on new points: the clouds overlap.
 
 </div>
 
@@ -2099,8 +2090,7 @@ The red curve is computed in a form that cannot overflow. Its values lie between
 
 <!--
 Speaker: no physics has changed, only the unit of one column. A method whose
-result depends on the unit of a column needs a remedy, and the remedy is on
-the next slide. (~2 min)
+result depends on the unit of a column needs a remedy. (~2 min)
 -->
 
 ---
@@ -2249,7 +2239,7 @@ hideInToc: true
 
 # The Limit: **XOR**
 
-Every result so far came from one line. The puzzle of the gates slide, XOR, has four points that no single line separates, and four lines of algebra show it.
+XOR has four points that no single line separates.
 
 <!--
 Speaker: the last part of the argument. A proof that something is impossible,
@@ -2306,7 +2296,7 @@ Each line tried, as at the puzzle of the gates slide, leaves at least one point 
 <!--
 Speaker: back to the puzzle of the gates slide. Every attempt the room made
 left a point on the wrong side. Trying lines shows nothing: there are
-infinitely many. The next slide settles it for all of them at once. (~2 min)
+infinitely many. (~2 min)
 -->
 
 ---
@@ -2370,7 +2360,7 @@ neuron that knows nothing. (~3 min)
 hideInToc: true
 ---
 
-# Two Lines **Solve It**
+# Two Lines Separate **XOR**
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -2569,7 +2559,7 @@ hideInToc: true
 
 # **History** in Three Dates
 
-The last slide ended on hidden units that neither rule of this lecture can train. Three publications mark what was found, what was shown to be impossible, and how hidden layers came to be trained.
+Three publications mark what was found, what was shown to be impossible, and how hidden layers came to be trained.
 
 <!--
 Speaker: three dates, each with its source. (~1 min)
@@ -2579,9 +2569,7 @@ Speaker: three dates, each with its source. (~1 min)
 hideInToc: true
 ---
 
-# Three **Publications**
-
-<div class="stack-tight mt-sm">
+<div class="stack-tight">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -2716,7 +2704,7 @@ hideInToc: true
 <!--
 Speaker: one neuron, fully understood: its geometry, two ways to train it,
 where the second way comes from, and its limit. The bottom card answers the
-question of the slide A Rule with One Input, a Rule with Two. (~1 min)
+question of the slide Classify by a Threshold or by a Line. (~1 min)
 -->
 
 ---

@@ -13,8 +13,7 @@ title: "Computing Infrastructure & HPC"
 
 <!--
 Speaker: a lecture of the block Further Topics. It uses the shell, Python and
-NumPy as known. Every timing on the slides was measured on one laptop, which
-the second section slide names. (~1 min)
+NumPy as known. Every timing on the slides was measured on one laptop. (~1 min)
 -->
 
 ---
@@ -29,8 +28,6 @@ hideInToc: true
 ---
 
 # Learning **Objectives**
-
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
 
 <div class="stack-tight mt-sm">
 
@@ -126,13 +123,13 @@ It prints `12` on this machine.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Lecture 03 named the parts: a processor that fetches, decodes and executes instructions, and the memory hierarchy from registers to disk. This lecture puts numbers on them. A timing without the machine is not a measurement, so every table here belongs to this laptop.
+A timing without the machine it ran on is not a measurement.
 
 </div>
 
 <!--
 Speaker: ask for the smallest and the largest memory in the room, and the
-number of cores. Write them on the board. The spread matters later: a table
+number of cores. Write them on the board. The spread matters: a table
 that fits on one laptop does not fit on another. (~2 min)
 -->
 
@@ -241,7 +238,7 @@ loop      1.565 ms  170720289.9133972
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The rule of this lecture: time a thing five times and keep the smallest. The loop costs **1.53 ms**.
+Time a thing five times and keep the smallest. The loop costs **1.53 ms**.
 
 </div>
 
@@ -297,14 +294,13 @@ Lecture 07 showed medians of 51 runs and found factors of 47 to 70. The smallest
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The first NumPy run took 0.043 ms, more than twice the fifth: the first-run effect of the previous slide. A time of 18 microseconds is easily doubled by a disturbance, so its median and its smallest value lie far apart. For the loop, which takes a hundred times longer, they nearly agree.
+The first NumPy run took 0.043 ms, more than twice the fifth: the first-run effect. A time of 18 microseconds is easily doubled by a disturbance, so its median and its smallest value lie far apart. For the loop, which takes a hundred times longer, they nearly agree.
 
 </div>
 
 <!--
-Speaker: someone will ask about the last digits. Short answer now: the order
-of the additions differs, and every addition rounds. The slide "The Sum
-Changes in the Last Digits" has the numbers. (~2 min)
+Speaker: someone will ask about the last digits. Short answer: the order
+of the additions differs, and every addition rounds. (~2 min)
 -->
 
 ---
@@ -459,7 +455,7 @@ hideInToc: true
 
 # Amdahl's **Law**
 
-How much faster a run gets when one part of it is made faster: derived, then applied to the numbers of the last slides.
+How much faster a run gets when one part of it is made faster.
 
 <!--
 Speaker: the law is one line of algebra. Its use is to decide what to work on
@@ -627,9 +623,7 @@ hideInToc: true
 The laptop has 12 cores, and the loop used one of them. The same sum is split over several, timed, and compared with what Amdahl's law predicts.
 
 <!--
-Speaker: the section has one surprise and one test. The surprise: four cores
-are slower for this file. The test: the law predicts a time before it is
-measured. (~30 sec)
+(~30 sec)
 -->
 
 ---
@@ -736,7 +730,7 @@ guard runs on all three systems. (~2 min)
 hideInToc: true
 ---
 
-# Four Processes: **Slower**
+# The Sum on Four Processes Is **Slower**
 
 <img class="fig" src="/figures/viz_computing_three_ways.svg" style="display:block;margin:0.4rem auto 0;max-height:165px;">
 
@@ -831,7 +825,7 @@ The job is 109&nbsp;899&nbsp;600 additions, as if the file had 110 million rows.
 Speaker: `python scripts/sum_parallel.py --workers 4`, shown live. The sum
 printed at the end differs in its last digits from one worker count to the
 next. Two workers are nearly twice as fast, twelve are not twelve times as
-fast. The next slide asks whether a formula could have said so. (~2.5 min)
+fast. (~2.5 min)
 -->
 
 ---
@@ -887,7 +881,7 @@ For four workers the prediction is right to 2 ms. The serial 0.124 s is the star
 <!--
 Speaker: this is the method of the whole course in small: a model with two
 parameters, fixed by two measurements, tested on a third. It passes at N = 4
-and fails at 8 and 12. The failure has a cause, on the next slide. (~3 min)
+and fails at 8 and 12. (~3 min)
 -->
 
 ---
@@ -938,7 +932,7 @@ $T_p / N$ assumes that every added worker is as fast as the first and has a core
 
 <div class="card card-success card-glass pad-compact">
 
-## 📏 **So measure**
+## 📏 **The number of workers, measured**
 
 The number of workers to use is found by measuring, as here. On this laptop four workers give 3.35 and eight give 4.84: the second four add less than half of what the first four did.
 
@@ -1052,7 +1046,7 @@ hideInToc: true
 A processor built for one kind of work: the same operation on very many numbers at once.
 
 <!--
-Speaker: a short section. What the chip is, a clip, and when it pays. (~30 sec)
+(~30 sec)
 -->
 
 ---
@@ -1065,7 +1059,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact table-compact">
 
-## ⚖️ **Two processors**
+## ⚖️ **The laptop's CPU and a graphics card**
 
 | | CPU of this laptop | A graphics card |
 | --- | --- | --- |
@@ -1308,7 +1302,7 @@ Tested on the file written 100 times over, 392&nbsp;612&nbsp;616 bytes: predicte
 
 <div class="card card-secondary card-glass pad-compact table-compact">
 
-## 🧮 **Three sizes**
+## 🧮 **Three files, in memory**
 
 | Rows | Text file | In memory | Three times that |
 | --- | --- | --- | --- |
@@ -1432,7 +1426,7 @@ Streams differ far less. Data that is read in order and in large pieces travels 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Lecture 03 listed these levels. Here they have numbers, for one laptop in 2026. A link of 100 Mbit/s carries 12.5 MB/s: eight bits to the byte.
+A link of 100 Mbit/s carries 12.5 MB/s: eight bits to the byte.
 
 </div>
 
@@ -1470,7 +1464,7 @@ a[i_random].sum()     # 59 ms
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔍 **Same work, 4.4 times the time**
+## 🔍 **Why the random order takes 4.4 times as long**
 
 - In order: 1.3 ns per value. At random places: 5.9 ns
 - The processor keeps recently used memory in its cache and fetches the next values ahead while an array is read in order
@@ -2078,7 +2072,7 @@ Hundreds of users share thousands of cores. Two jobs must not get the same core,
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-## 🏷️ **Two names**
+## 🏷️ **Slurm and HTCondor**
 
 **Slurm** runs most university and national clusters, LUMI in Finland among them. **HTCondor** runs the batch service of CERN. The commands differ, the five steps do not.
 
@@ -2129,9 +2123,9 @@ echo "$(date +%H:%M:%S)  done"
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📝 **An example to read**
+## 📝 **A script for bash**
 
-This room has no cluster. The script is `scripts/job.sh`, a script for bash, the shell of the Linux machines of a cluster, with the request in its first lines.
+The script is `scripts/job.sh`, a script for bash, the shell of the Linux machines of a cluster, with the request in its first lines.
 
 </div>
 
@@ -2561,7 +2555,7 @@ Speaker: the closing section puts the measurements of the lecture to use.
 hideInToc: true
 ---
 
-# Three Numbers Before **Starting**
+# What to Estimate Before a Long **Run**
 
 <div class="grid-3 mt-md gap-md">
 

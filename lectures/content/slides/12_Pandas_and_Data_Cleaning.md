@@ -166,8 +166,6 @@ hideInToc: true
 
 # Learning **Objectives**
 
-<div class="note-text mt-sm">By the end of this lecture, you will be able to:</div>
-
 <div class="stack-tight mt-sm">
 
 <div class="card card-primary card-glass pad-compact">
@@ -281,7 +279,7 @@ it there is what Pandas is for. (~2 min)
 hideInToc: true
 ---
 
-# Read the File: **Three Attempts**
+# Read the File with **`read_csv`**
 
 <div class="grid-3 mt-md gap-md">
 
@@ -561,12 +559,6 @@ Only the columns of the table. This is the form of Lecture 4's `pendulum_script.
 
 </div>
 
-<div class="note-text mt-sm">
-
-`data/processed/pendulum_script.csv`, written by Lecture 4's script, stays as it is: it is the file to compare with.
-
-</div>
-
 <!--
 Speaker: index=False is forgotten once by everybody. The sign is a first
 column named "Unnamed: 0" when the file is read again. (~2 min)
@@ -576,7 +568,7 @@ column named "Unnamed: 0" when the file is read again. (~2 min)
 hideInToc: true
 ---
 
-# The Same File? **Compare**
+# Is It the Same **File**?
 
 <div class="grid-2 mt-md gap-md">
 
@@ -634,7 +626,7 @@ published", the bytes. (~2 min)
 hideInToc: true
 ---
 
-# Identical, and **How to Know**
+# Write the Same Bytes as Lecture 4's **Script**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -743,7 +735,7 @@ is the same in both shells after the first word. (~3 min)
 hideInToc: true
 ---
 
-# The Second File, **by Rule**
+# Run `clean.py` on the Second **File**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
@@ -806,7 +798,7 @@ cleaned: that answers the question the lecture opened with. (~3 min)
 hideInToc: true
 ---
 
-# Two Scripts, **Two Files**
+# Compare the Two **Scripts**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-md">
 
@@ -944,15 +936,14 @@ A dict with one key per column and a list of values for each: that is a DataFram
 </div>
 
 <!--
-Speaker: the cleaned pendulum table, typed in. The following fences start
-from the same two lines. (~2 min)
+Speaker: the cleaned pendulum table, typed in. (~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# One Column, **Several Columns**
+# Select Columns by **Name**
 
 ```py {monaco-run} {autorun:false}
 import pandas as pd
@@ -983,7 +974,7 @@ array. to_numpy() is the way back to everything the room knows. (~2 min)
 hideInToc: true
 ---
 
-# Rows: **Position and Label**
+# Select Rows by Position or by **Label**
 
 ```py {monaco-run} {autorun:false}
 import pandas as pd
@@ -1004,8 +995,7 @@ print(long.iloc[0].tolist())             # its first row has the label 6
 
 <!--
 Speaker: the label is what lets a row be found again in the raw table after
-any amount of filtering. It is used that way later, to name the bad rows.
-(~2 min)
+any amount of filtering. (~2 min)
 -->
 
 ---
@@ -1571,7 +1561,7 @@ The types said the LHCb file was clean, and 49 codes were still in it. A gap is 
 <!--
 Speaker: the missing values were one kind of problem. This section goes
 through the others in a fixed order, each with one line of Pandas and its
-result on the file, and ends with the list on one slide. (~1 min)
+result on the file. (~1 min)
 -->
 
 ---
@@ -1855,7 +1845,7 @@ rows in place. (~2 min)
 hideInToc: true
 ---
 
-# Five Questions for **Any Table**
+# A Checklist for **Any Table**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-md">
 
@@ -2338,7 +2328,7 @@ join can do to a table are on this slide: lose a match and double a row.
 hideInToc: true
 ---
 
-# The Second File, **Five Questions**
+# The Checklist on the Second **File**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-md">
 

@@ -106,7 +106,7 @@ time,temp_c,humidity_pct,wind_ms
 hideInToc: true
 ---
 
-# Two People, **Two Answers**
+# The Mean Temperature, Computed **Two Ways**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -142,7 +142,7 @@ Same file, no mistake by either. **I send you only 7.16. How do you check it?**
 
 <!--
 **Do:** give the room two or three minutes and write their answers on the board.
-**Say:** sort the answers into four piles: the file as it was received; every step done to it; the program and what it ran on; a form anyone can open. The next slides name the piles.
+**Say:** sort the answers into four piles: the file as it was received; every step done to it; the program and what it ran on; a form anyone can open.
 **If asked:** (lowest + highest) / 2 is a common definition of a day's mean temperature at weather services. 3 653 days minus the 5 days with no reading = 3 648.
 (~4 min)
 -->
@@ -151,7 +151,7 @@ Same file, no mistake by either. **I send you only 7.16. How do you check it?**
 hideInToc: true
 ---
 
-# One File, **Seven Numbers**
+# What Each Choice Gives for the **Mean**
 
 <div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
 
@@ -180,8 +180,6 @@ The last two are slips, easy to spot. The first five are not: each could be the 
 </div>
 
 </div>
-
-<div class="note-text mt-md">The number alone cannot say which line it came from. To check 7.16, you need what is behind it.</div>
 
 <!--
 **Say:** every value was computed from weather.csv.
@@ -233,11 +231,9 @@ Knowing which file is which: the one as received, never edited, kept apart from 
 
 </div>
 
-<div class="note-text mt-md">Watch for the 🔧 ♻️ ⚙️ 📁 icons: every lecture advances at least one.</div>
-
 <!--
 **Do:** point from each pile on the board to its card.
-**Say:** the next slides are one before and after pair per aim, in this order.
+**Say:** the 🔧 ♻️ ⚙️ 📁 icons mark the aims in every lecture.
 (~2 min)
 -->
 
@@ -271,12 +267,10 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">Smaller is not the point. The CSV can be read by anything, the spreadsheet only by a program that knows its format.</div>
-
 <!--
-**Ask:** a show of hands at each "before", here and in the three pairs that follow: who has done this?
+**Ask:** a show of hands at each "before": who has done this?
 **Say:** we use specific tools (Python, VS Code, Git), and every skill is chosen to work beyond them.
-**If asked:** the .xlsx was written with Python's openpyxl 3.1.5. Excel writes the same kind of file, a zip of XML files, with another byte count.
+**If asked:** the .xlsx is smaller because it is a zip; size is not the point. It was written with Python's openpyxl 3.1.5. Excel writes the same kind of file, a zip of XML files, with another byte count.
 (~2 min)
 -->
 
@@ -409,11 +403,9 @@ After the first step, separators and decimal signs are the same character.
 
 </div>
 
-<div class="note-text mt-md">Two orders, one of them right. A person who does it by hand has to remember the order every time. A script remembers it.</div>
-
 <!--
 **Ask:** which replacement comes first? Take a vote before showing the columns.
-**Say:** in the right order, with the mean line and nr gone, the table is 148 bytes.
+**Say:** by hand, the order has to be remembered every time; a script remembers it. In the right order, with the mean line and nr gone, the table is 148 bytes.
 **If asked:** in the wrong order the mean line would become ".mean.7.97".
 (~2 min)
 -->
@@ -449,8 +441,6 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">The same two folders work for any project: build them once and repeat them on your own data.</div>
-
 <!--
 **Ask:** who has a folder of files named final, final2, final_really?
 **If asked:** 180 − 148 = 32 bytes: the mean line, 11 bytes, and the column nr, 3 bytes in the header and 2 in each of the nine rows, 21. The other edits swap one character for one character.
@@ -475,7 +465,7 @@ graph LR
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🔗 **Not four separate boxes**
+## 🔗 **On the weather log**
 
 On the weather log: the script (⚙️) lets anyone rebuild 7.16 (♻️). Two folders (📁) keep the script simple: it reads `data/raw`, writes `data/processed`. Plain CSV (🔧) keeps every step readable anywhere.
 
@@ -483,7 +473,7 @@ On the weather log: the script (⚙️) lets anyone rebuild 7.16 (♻️). Two f
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🧭 **A compass**
+## 🧭 **A rule for choosing**
 
 Unsure how to do something? Ask which choice serves more of the aims. That one question settles most practical choices in this course, and in research.
 
@@ -503,7 +493,7 @@ hideInToc: true
 
 # How This Course **Works**
 
-The four aims answer the 7.16 question. Thirteen Tuesdays practise them: a lecture for the idea, a seminar for the hands.
+Thirteen Tuesdays practise the four aims: a lecture for the idea, a seminar for the hands.
 
 ---
 hideInToc: true
@@ -677,8 +667,6 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">One thread through all eight: take a dataset you have never seen, in a tool you have never used, and produce a result someone else can rebuild.</div>
-
 <!--
 **Say:** these are the course's official outcomes; the four aims are how we get there.
 (~1 min)
@@ -689,8 +677,6 @@ hideInToc: true
 ---
 
 # What **“Done”** Looks Like Each Week
-
-<div class="note-text mt-sm">Every seminar ends the same way: one small step works, and it is saved in your project folder.</div>
 
 <div class="grid-3 gap-md mt-md">
 
@@ -720,10 +706,8 @@ You can say, in one sentence, what it does and why.
 
 </div>
 
-<div class="note-text mt-md">The same three tests as for 7.16: it exists in the folder, it comes out again, and someone can say how it was made.</div>
-
 <!--
-**Say:** not a perfect thing, not a whole project: one honest step, saved and dated.
+**Say:** not a perfect thing, not a whole project: one honest step, saved and dated. The same three tests as for 7.16.
 (~1 min)
 -->
 
@@ -817,11 +801,9 @@ A seminar ends with one step saved in the folder. A project is those steps, grow
 hideInToc: true
 ---
 
-# The Grade: **One Project**
+<div class="card card-success card-glass pad-tight glow">
 
-<div class="card card-success card-glass pad-tight mt-md glow">
-
-## 🎯 **One course-long project, 100%**
+## 🎯 **The grade: one course-long project, 100%**
 
 The whole grade is a project you carry through the course. It is graded relative to where you start: beginners and experienced coders are both welcome.
 
@@ -849,8 +831,6 @@ Topic, data and form are your call: a data analysis, an app or dashboard, or a p
 </div>
 
 </div>
-
-<div class="note-text mt-md">Graded on the four aims, not on the topic. Each seminar hands out small practice files of its own; your project is where the same moves meet your own data.</div>
 
 <!--
 **Say:** graded relative to where you start: a beginner who reaches a clean, rebuildable analysis does as well as an expert who does the same.
@@ -889,10 +869,8 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">Talk a first idea through at an early seminar: the sooner a project exists, the more of the course it can absorb.</div>
-
 <!--
-**Say:** the report, the video and the presentation all describe the one repository.
+**Say:** the report, the video and the presentation all describe the one repository. Talk a first idea through at an early seminar.
 (~2 min)
 -->
 
@@ -922,8 +900,6 @@ Lectures and seminars use small files with the faults real files have: a mean li
 
 </div>
 
-<div class="note-text mt-md">Open data, a recorded source and an analysis anyone can rebuild: the four aims, on files anyone can inspect.</div>
-
 <!--
 **Ask:** what data would you like to look at? Collect two or three answers.
 (~2 min)
@@ -933,7 +909,7 @@ Lectures and seminars use small files with the faults real files have: a mean li
 hideInToc: true
 ---
 
-# The Finished **Product**
+# The Folder of a Finished **Analysis**
 
 <div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
 
@@ -966,8 +942,6 @@ analysis-project/
 </div>
 
 </div>
-
-<div class="note-text mt-md">Clean, automated, documented: the four aims made concrete, in a form you can show a supervisor or an employer.</div>
 
 <!--
 **Say:** every folder and file in the tree gets its own lecture; by December it is yours.
@@ -1022,10 +996,10 @@ hideInToc: true
 
 # Back to **7.16**
 
-A petabyte at CERN, 40 000 numbers from Mars and 87 672 readings from one station need the same four things before anyone can trust a result.
+Any data, from a petabyte to one station's log, needs the same four things before anyone can trust a result.
 
 <!--
-**Say:** the course part is done; now the answer to the opening question.
+**Say:** the course part is done; back to the opening question.
 (~1 min)
 -->
 
@@ -1046,12 +1020,6 @@ hideInToc: true
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md" style="text-align: center;">
-
-You don't need a particle accelerator to use any of this: ten years of one weather station need the same four aims as a petabyte.
-
-</div>
-
 <!--
 **Say:** CERN turns raw collisions into discoveries with the toolkit this course builds, one row of the table per block of the course.
 (~2 min)
@@ -1061,7 +1029,7 @@ You don't need a particle accelerator to use any of this: ten years of one weath
 hideInToc: true
 ---
 
-# Numbers and a **Rule**
+# Mariner 4: a Picture from Numbers and a **Key**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -1094,7 +1062,7 @@ Numbers plus a written rule give a picture. Anyone with the 40 000 numbers and 
 </div>
 
 <!--
-**Say:** the framed pastel picture was given to JPL's director, William Pickering. The Mariner 4 clip in the reel pans across the pictures as the computer later made them.
+**Say:** the framed pastel picture was given to JPL's director, William Pickering.
 **If asked:** sources: NSSDC Mariner 4 page (21 pictures plus 21 lines of a 22nd, 14–15 July 1965); Scientific American, "First View of Mars Was a Paint-by-Numbers"; Caltech magazine, "A Planet Painted by Hand". Transmission times for one picture disagree between sources (6, 8 or 10 hours), so the slide gives none.
 (~2 min)
 -->
@@ -1105,7 +1073,7 @@ hideInToc: true
 
 # What a Result **Needs**
 
-<div class="note-text mt-sm">The opening question: <strong>I send you only 7.16. How do you check it?</strong> One line per aim.</div>
+<div class="note-text mt-sm">The opening question: <strong>I send you only 7.16. How do you check it?</strong></div>
 
 | | **I send you** | **You do** |
 | --- | --- | --- |
@@ -1357,8 +1325,6 @@ hideInToc: true
 
 # Extra Material: What Is **CERN**?
 
-The films ended inside LHCb. Behind them: the organisation, the machine, the chain of accelerators that feeds it, and how a detector sees a collision.
-
 <img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-8 h-48" />
 
 <!--
@@ -1492,11 +1458,6 @@ hideInToc: true
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md reveal-up">
-
-💡 Each machine was once CERN's frontier: today's record-holder is tomorrow's injector.
-
-</div>
 
 ---
 hideInToc: true
