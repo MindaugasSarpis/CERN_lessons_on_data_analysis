@@ -1,99 +1,111 @@
 # 3: How Computers Work
 
-Lecture 2 defined data as a representation of information by a fixed rule,
-and ended on a text file in which `100` sorted before `20`, because the editor
-saw characters and not numbers. Lecture 3 is what lies underneath: how a
-number, a letter and a whole file are written as bits.
+Lecture 3 is what lies underneath a data file. It opens on a table of ten
+short lines that takes 148 bytes on disk, and asks what a byte is and which
+148 these are. On the way it builds up bits, numbers, text and files, and
+the terminal commands that reach a file from a typed line. It closes with
+every one of the 148 bytes named.
 
 ## What the lecture covers
 
-1. **The box** — input, algorithm, output; an algorithm worked through by
-   hand, one instruction at a time.
+1. **The box** — a table of 148 bytes; input, algorithm, output; an
+   algorithm worked through by hand, one instruction at a time.
 2. **Data representation** — unary, binary and decimal counting; the bit and
    the byte; *n* bits give 2ⁿ values, and how many bits tell *k* things apart;
    hexadecimal; converting decimal to binary by repeated division and binary
    to hex in groups of four.
-3. **How computers compute** — logic gates and bitwise operations; how the CPU
-   runs an algorithm; the memory hierarchy.
+3. **How computers compute** — binary addition, logic gates and bitwise
+   operations; how the CPU runs an algorithm; the memory hierarchy.
 4. **Numbers in computers** — integers of fixed width and overflow; two's
    complement as a recipe and as a sum of weights; floating point as
    scientific notation in base 2; why 0.1 has no exact float, derived by
    multiplying by 2; the step from one float to the next, and what it means
-   for a stored measurement.
-5. **Text & encodings** — ASCII, Unicode and UTF-8; how UTF-8 packs a code
-   point, with `ą` encoded by hand; mojibake, with Lithuanian letters; the
-   encoding and the line ending in the Status Bar of VS Code; what a
-   spreadsheet does to a CSV file.
+   for a stored temperature.
+5. **Text & encodings** — ASCII, and why `10.4` sorts before `5.0` as text;
+   Unicode and UTF-8, with `ą` encoded by hand; mojibake, with Lithuanian
+   letters; the encoding and the line ending in the Status Bar of VS Code;
+   what a spreadsheet does to a CSV file.
 6. **Files & formats** — file sizes; byte order; the first bytes of a file
-   say what it is; an extension installed from the Marketplace, the Hex
-   Editor by Microsoft; the hexdump of a small CSV file; one number as text and as
-   a float32.
-7. **Compression & integrity** — why text compresses well; a checksum worked
-   by hand, what it catches and what it misses; CRC and SHA-256.
+   say what it is; the Hex Editor extension by Microsoft; the hexdump of the
+   148-byte table, every byte counted; one number as text and as a float32.
+7. **Files from the terminal** — terminal and shell; the terminal of VS
+   Code; the prompt; `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv`, `rm`; the size of
+   a file (`wc -c`, `(Get-Item FILE).Length`) and its bytes (`hexdump -C`,
+   `Format-Hex`). Every line works in zsh and in both Windows PowerShells.
+8. **Compression & integrity** — lossless and lossy compression, with the
+   gzip size of the station's hourly log; a checksum worked by hand, what it
+   catches and what it misses; SHA-256 by command, for the table with LF and
+   with CRLF.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–80 and estimates about 127 min. Slides 81–85 are the
-self-check quizzes and take no lecture time. For a 90-minute slot, skip the
-slides in the second table. To jump, type the slide number and press Enter.
+The lecture is slides 1–93 and estimates about 142 min. Slides 94–99 are
+the self-check quizzes and take no lecture time. For a 90-minute slot, skip
+the slides in the second table. To jump, type the slide number and press
+Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–6 | The box: input, algorithm, output |
-| 0:09 | 8–38 | Bits, binary counting, bytes, hexadecimal, converting between bases |
-| 0:39 | 40, 44 | How the CPU runs an algorithm |
-| 0:42 | 46–56 | Integers, two's complement, floating point |
-| 1:00 | 58–66 | Text and encodings; `100` before `20` answered in bytes at 60 |
-| 1:14 | 67–73 | Files and formats, the Hex Editor installed |
-| 1:26 | 75–80 | Compression, hashing, back to the box, recap |
-| 1:35 | | Move to the seminar |
+| 0:00 | 1–7 | The table of 148 bytes; the box: input, algorithm, output |
+| 0:08 | 9–39 | Bits, binary counting, bytes, hexadecimal, converting between bases |
+| 0:34 | 41, 45 | How the CPU runs an algorithm |
+| 0:37 | 47–52, 54–56 | Integers, two's complement, floating point |
+| 0:52 | 59–63, 65–66 | Text and encodings; `10.4` before `5.0` answered in bytes at 61 |
+| 1:03 | 68–69, 71–74 | Files and formats; the 148 bytes counted at 73 |
+| 1:13 | 76–87 | Files from the terminal |
+| 1:28 | 88, 91–93 | SHA-256, take-aways, recap |
+| 1:33 | | Move to the seminar |
 
 | Skip | Slides | Saves |
 |--|--|--|
-| A Bit of Foresight | 7 | 2 min |
-| Why Hex in Computing? | 39 | 1 min |
-| Logic gates, Logical Operations, Bitwise Operations Example | 41–43 | 5 min |
-| The Memory Hierarchy | 45 | 2 min |
-| Worked Example: 5.75 as float32 | 52 | 2 min |
-| Data Types in Practice | 57 | 2 min |
-| Python for Encoding Conversions | 63 | 2 min |
-| Endianness | 69 | 2 min |
-| Image Quality vs Bit Depth | 74 | 2 min |
-| A Checksum by Hand | 77 | 2 min |
+| Data and Code as Files | 8 | 2 min |
+| Where Hex Appears | 40 | 1 min |
+| Binary addition, Logical Operations, Bitwise Operations | 42–44 | 7 min |
+| The Memory Hierarchy | 46 | 2 min |
+| Worked Example: 5.75 as float32 | 53 | 2 min |
+| Try It Here, Four Types | 57–58 | 5 min |
+| Text and Bytes in Python | 64 | 3 min |
+| What a Spreadsheet Changes | 67 | 2 min |
+| Byte Order | 70 | 2 min |
+| Bit Depth of an Image | 75 | 1 min |
+| Compression, A Checksum by Hand | 89–90 | 4 min |
 
-- **Do not cut** slides 59–62 and 64–66 (text and encodings) or 68 and 70–73
-  (file sizes, formats, the Hex Editor, the hexdump, one number as text and
-  as binary). The seminar measures and opens files in exactly these terms.
-- **Do not cut** slide 78 (Error Detection & Hashing, the SHA-256 of the
-  97-byte `pendulum.csv`), slide 79 (Key Takeaways, which returns to the box
-  of slide 4) or slide 80 (the Recap, the closing slide). If time runs short,
-  cut from the skip list above, not from the end.
-- **Slide 60** (the ASCII table) takes Lecture 2's answer one level down.
-  Sort Lines put `100` before `20` because `1` comes before `2`; in bytes,
-  `1` is 49 = 0x31 and `2` is 50 = 0x32, and the sort compares those
-  numbers. Reach it by about minute 60.
-- **Slides 9–33 are fast.** Most are one word or one picture: counting in
+- **Before the lecture,** unpack
+  [`weather_project.zip`](../data/weather_project.zip) and save
+  [`weather_daily.csv`](../data/weather_daily.csv){ download="daily.csv" }
+  as `daily.csv` in its folder `data/processed`: the ten lines of slide 3,
+  148 bytes.
+  Delete `data/processed/daily_crlf.csv` if it is left from a rehearsal:
+  slide 86 makes it live.
+- **Do not cut** slide 3 (the table of 148 bytes) or slide 93 (the Recap,
+  which names all 148). Slide 73 (Reading a Hexdump) is where the count is
+  done; reach it by about minute 70.
+- **Do not cut** slides 76–87, the terminal. The seminar uses exactly these
+  commands, and the room has not seen a terminal before.
+- **Slides 10–34 are fast.** Most are one word or one picture: counting in
   unary, binary and decimal. Together they take about ten minutes.
-- **Slide 38** (From Decimal to Binary and Hex): do 37 on the board, then
+- **Slide 39** (From Decimal to Binary and Hex): do 37 on the board, then
   give the room 100 to convert on paper. The answers are `1100100` and `0x64`.
-- **Slide 56** (Try It Here) runs in the browser, inside the slide. Ask the
-  room to predict the three lines before pressing ▶. No terminal is needed.
-- **Slide 65** (Encoding & Line Endings in VS Code) is done live: open a file
-  with Lithuanian letters, select `UTF-8` in the Status Bar, reopen it as
-  **Baltic (Windows 1257)** and back.
-- **Slide 71** (Extensions: the Hex Editor) is done live: the Extensions
+- **Slide 61** (the ASCII table): sorted as text, `10.4` comes before `5.0`,
+  because `1` is 0x31 and `5` is 0x35.
+- **Slide 66** (Encoding and Line Ending in VS Code) is done live: open a
+  file with Lithuanian letters, select `UTF-8` in the Status Bar, reopen it
+  as **Baltic (Windows 1257)** and back.
+- **Slide 72** (Extensions: the Hex Editor) is done live: the Extensions
   view, `hex editor`, the publisher Microsoft, **Install**, then **Open
-  With…** on `pendulum.csv`.
-- **Slide 72** (Reading a Hexdump) shows the first bytes of the small table
-  that was cleaned in Lecture 2.
+  With…** on `data/processed/daily.csv`.
+- **Slides 78–87** are typed live in the terminal of VS Code, in the folder
+  `weather-project`. On slide 86, first `cp data/processed/daily.csv
+  data/processed/daily_crlf.csv`, open the copy, select `LF` in the Status
+  Bar, choose `CRLF`, save; then measure both files.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 80–84: four quiz slides for students to try afterwards. The same
+slides 94–99: five quiz slides for students to try afterwards. The same
 questions, with their answers:
 
-1. A detector writes each reading as a 16-bit unsigned integer. How many
+1. A sensor writes each reading as a 16-bit unsigned integer. How many
    values can a reading take?
    *2¹⁶ = 65 536, from 0 to 65 535.*
 2. In two's complement, what is the 4-bit pattern `1010`?
@@ -105,6 +117,10 @@ questions, with their answers:
    digit. What follows?
    *Your copy differs somewhere, by at least one bit. The hash says that
    something changed, never how much.*
+5. The prompt is `PS C:\Users\ada\Documents\weather-project\data>`. Which
+   line prints the size of `daily.csv` in `data/processed`?
+   *`(Get-Item processed/daily.csv).Length`. The working directory is
+   `data`, so the relative path starts there.*
 
 ## Demos to run live
 
@@ -121,22 +137,16 @@ questions, with their answers:
     math.isclose(0.1 + 0.2, 0.3, rel_tol=1e-12)  # True
     ```
 
-- Overflow of a fixed-width integer, for a room that has NumPy:
-
-    ```python
-    import numpy as np
-    np.int8(127) + np.int8(1)                    # -128, with a warning
-    ```
-
 ## Paired seminar
 
-[Seminar 3 — A File as Bytes](../seminars/seminar_03.md) works in VS Code
-alone. The room opens a file of four characters in the Hex Editor, counts its
-bytes, reads it with the wrong encoding, and does the same for the two data
-files of the project. The terminal waits for Lecture 04.
-
-In 2026 the seminar ran as a terminal session, and its byte part moved to
-Part 3 of [Seminar 4](../seminars/seminar_04.md#part-3).
+[Seminar 3 — Files and Bytes from the Terminal](../seminars/seminar_03.md)
+hands out its own folder of seven everyday files, `inbox`. The room opens a
+terminal, moves around with `pwd`, `ls` and `cd`, makes a folder, fixes a
+name with a space, and sorts the files with `mkdir`, `mv`, `cp` and `rm`.
+Then every file is measured to the byte: a letter of two bytes, a line
+break of two bytes, a file in the old Baltic encoding, a picture whose name
+ends in `.txt`, and two tables that differ in one byte, found by their
+SHA-256.
 
 ## Take-aways
 
@@ -152,9 +162,7 @@ Part 3 of [Seminar 4](../seminars/seminar_04.md#part-3).
   reopened with the right encoding, not retyped.
 - A file is a named sequence of bytes. The ending of its name is a hint; the
   first bytes say what it is.
+- The terminal reaches files by typed lines: `pwd`, `ls` and `cd` look
+  around, `mkdir`, `cp`, `mv` and `rm` change things, and `rm` cannot be
+  undone.
 - A hash is a fingerprint of the bytes. Any change gives a different one.
-- *n* bits hold 2ⁿ values. The same bits are different numbers under
-  different types, so the type belongs to the description of the data.
-- The step between neighbouring floats grows with the number. A float32 keeps
-  about 7 significant digits; digits beyond them are rounding, not
-  measurement.

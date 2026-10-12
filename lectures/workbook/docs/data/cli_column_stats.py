@@ -6,11 +6,11 @@ like any other command, and nobody has to read it. It needs nothing but Python.
 
 Usage, from the project folder:
 
-    python scripts/column_stats.py data/raw/D0_KPi.csv TAU
+    python3 scripts/column_stats.py data/raw/weather.csv temp_c
 
 The file must have a header line, a comma between the values and a point as
-the decimal sign. Every row is counted, also a row that holds a marker for a
-missing value such as -100.
+the decimal sign. Every row is counted, also a row that holds a mark for a
+missing value such as -999.
 """
 import csv
 import math

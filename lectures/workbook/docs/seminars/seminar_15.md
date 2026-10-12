@@ -708,7 +708,7 @@ size alone. The room does it for a file of 4 GB with the same four columns,
 and then each student for their own laptop.
 
 1. Measure the bytes per row of text, as in
-   [Seminar 4, section 6](seminar_04.md#sizes): first the size of the file
+   [Seminar 4, section 6](seminar_04.md#count): first the size of the file
    in bytes, then the number of lines.
 
     === "macOS"

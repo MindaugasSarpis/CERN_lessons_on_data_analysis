@@ -161,7 +161,7 @@ path so that the same script runs on Windows and on macOS.
     | On the screen | What to do |
     |--|--|
     | `False`, then `FileNotFoundError` | The terminal is not in the project folder. Run `pwd`. Go there with `cd`, or open the project folder with **File** > **Open Folder...** |
-    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python. See [Seminar 4, section 4](seminar_04.md#shell), Watch for. Until it is fixed, `py` works in place of `python` |
+    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python. See [Seminar 4, section 10](seminar_04.md#python), Watch for. Until it is fixed, `py` works in place of `python` |
     | `IndentationError` | The lines under `with` start with four spaces. Select them and press `Tab` |
 
 ---
@@ -288,8 +288,8 @@ division. A count is a loop with an `if`. Both are written by hand once.
     ```
 
 The mean of the mass column is 1864.10 MeV/c², at the D⁰ peak. The 49 rows
-are the 49 lines that `grep -c` and `Select-String` counted for `,-100` in
-[Seminar 4, section 7](seminar_04.md#count).
+are the 49 lines that `grep -c ',-100'` and `Select-String ',-100'` count
+in `D0_KPi.csv`.
 
 Ask what the script needs for the smallest mass, the largest mass and the
 mean of the valid decay times: one more loop for each.
@@ -528,8 +528,8 @@ in the rows that have a value.
 
 4. Put the two means beside the slide *What 49 Rows Do to a Mean* of
    Lecture 04: −0.0525 ns with the marks, +0.00098 ns without. They are
-   the numbers of `column_stats.py` in
-   [Seminar 4, section 12](seminar_04.md#list), now from one array and one
+   the numbers `column_stats.py` prints for the raw file and for the file
+   without the marked rows, now from one array and one
    mask. The sum on that slide, 49 × (−100) / 91 583 = −0.0535, is the
    shift the marks cause.
 
@@ -831,8 +831,8 @@ lecturer.
   `(TAU[mask] < 0).sum()` is 3.
 - Compare the array with the file. `data.nbytes` is 2 930 656 bytes:
   32 bytes per row, four values of 8 bytes. The file on disk has
-  3 926 142 bytes, about 43 per line, as `wc -c` and `Get-Item` measured
-  in [Seminar 4, section 6](seminar_04.md#sizes). As text a value takes as
+  3 926 142 bytes, about 43 per line, as `wc -c` and `Get-Item` measure
+  it. As text a value takes as
   many bytes as it has characters, in an array always 8.
   `data.astype(np.float32).nbytes` is 1 465 328, half again.
 - Compute *g* from the pendulum table without a loop. Read

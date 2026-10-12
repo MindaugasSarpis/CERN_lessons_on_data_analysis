@@ -126,6 +126,25 @@ D⁰ analysis "the course project": the semester project is each student's own.
 - The former seminar briefs mention momentum, charge and particle-ID columns.
   The file does not have them. Do not use them.
 
+*Amended 12 October 2026 (lecturer's request):* the pendulum table and the
+LHCb file are no longer the examples of weeks 1 to 4, which were never
+introduced in class as such and made the course look particle-physics
+specific. **Lectures 01 to 04** share one generic example, a made-up weather
+station (`lectures/workbook/docs/data/weather_files.py`: an hourly log of
+2016 to 2025 with a five-day `-999` gap, and a spreadsheet export of nine
+daily means), labelled as generated. **Seminars sandbox their lecture's
+ideas with files of their own, never the lecture's**: Seminar 1 `books_*`,
+Seminar 3 `inbox_*`, Seminar 4 `bikes_*`. The order is VS Code and Markdown
+(02, S1), files, bytes and the first commands (03, S3), the command line in
+full (04, S4), Git (05), Python (06). In 2026 the room reached Lecture 04
+having typed only `pwd`, `ls`, `cd` and `clear`, so Lecture 04 starts the
+command line from zero, shells installed first; in a later run its first
+part is a recap of Lecture 03's terminal section. Decks hold one step per
+slide and short prose; every speaker note reads **Do / Say / Ask / If
+asked / minutes**. Lectures 05 to 16 keep the pendulum and the LHCb file
+until they are reworked the same way, and several assume files that the old
+Seminar 4 made (`clean_pendulum.py`, `D0_valid.csv`).
+
 ## 5. The standard for a deck
 
 Read `CLAUDE.md` first: commands, conventions, gotchas. Then look at the

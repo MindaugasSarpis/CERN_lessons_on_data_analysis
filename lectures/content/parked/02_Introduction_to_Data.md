@@ -690,3 +690,358 @@ hideInToc: true
   :correct="1"
   explanation="5 sigma limits how often pure background fakes a signal this strong — not the chance the discovery is wrong (option one's misreading)."
 />
+
+---
+hideInToc: true
+---
+
+<!--
+Parked 2026-10-12, when the deck changed its example file to the weather station
+(no particle-physics data thread any more). These slides stood in the sections
+"How One Row Was Made" (ATLAS and CMS, ALICE, LHCb, with their fly-in clips and
+the quark-gluon plasma clip) and "From Collision to Row" (From Collision to
+Dataset, From Events to Petabytes, What the Trigger Kept), and "147 Columns, 4
+Filled" stood in "Reading the File". The deck keeps one CERN slide on the
+trigger and the data-flow clip. Several of these slides refer to D0_KPi.csv.
+-->
+
+# Parked **2026-10-12**
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">ATLAS</span> & <span class="gradient-text">CMS</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔭 Two **general-purpose** detectors. Same physics programme: the Higgs boson, searches for new particles. **Different designs**.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🏟️ **ATLAS**
+
+- The **largest** collider detector ever built
+- **46 m** long, **25 m** in diameter, 100 m underground
+- ~**7,000 tonnes**, ~100 million readout channels
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🧲 **CMS**
+
+- One superconducting **solenoid** magnet, **3.8 T**
+- **21 m** long, **15 m** in diameter
+- **14,000 tonnes**: half the size of ATLAS, twice the weight
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🤝 On **4 July 2012** both announced the Higgs **independently, on the same day**. The LHC was built with two general-purpose detectors so that each result can be checked by the other.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_footage_2022_042_003.mp4" />
+
+<!-- ATLAS — 3D fly-in from the LHC ring to the detector (0:38, silent). -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_footage_2022_042_002.mp4" />
+
+<!-- CMS — 3D fly-in from the LHC ring to the detector (0:39, silent). -->
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">ALICE</span> — Quark–Gluon Plasma
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 💥 **The Question**
+
+What was matter like in the first **millionths of a second** after the Big Bang, before protons and neutrons existed?
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌡️ **The Method**
+
+Collide **lead nuclei** instead of protons. For an instant the collision forms **quark–gluon plasma**, over **100,000×** hotter than the core of the Sun.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+📈 One lead–lead collision can produce **tens of thousands** of particle tracks. Software has to reconstruct every one of them before any physics is done.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="QGP_Formation.mp4" />
+
+<!-- Quark–gluon plasma forming (0:33) — ALICE's physics. -->
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_footage_2022_042_004.mp4" />
+
+<!-- ALICE — 3D fly-in from the LHC ring to the detector (1:10, silent). -->
+
+---
+hideInToc: true
+---
+
+# <span class="gradient-text">LHCb</span> — Matter and Antimatter
+
+<div class="card card-primary card-glass pad-tight mt-sm">
+
+## ⚖️ **The Question**
+
+The Big Bang should have produced matter and antimatter in **equal amounts**, yet the universe is made of matter. LHCb measures the small **asymmetries** between the two (*CP violation*).
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔬 **The Method**
+
+Precision measurements of **beauty** and **charm** quark decays, in a forward detector with sensors **millimetres** from the beam.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🏆 **A 2019 First**
+
+LHCb observed **CP violation in charm**, in decays of the **D⁰ meson**. Each row of `D0_KPi.csv` is a K⁻π⁺ pair that may come from one.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧭 The asymmetries measured so far are **far too small** to account for the matter in the universe. The question is open.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="LHCb.mp4" />
+
+<!-- LHCb reel (0:47) — where the example file comes from. -->
+
+---
+hideInToc: true
+---
+
+# From Collision to <span class="gradient-text">Dataset</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🚦 The raw signal comes to about 1 PB **every second**. Nothing can store that, so the experiments decide **in real time** which collisions to keep. This selection is the **trigger**. It discards almost everything, within microseconds.
+
+</div>
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact reveal-left">
+
+💥 **~40 million bunch crossings** per second inside each detector — and a crossing is not a collision: each packs **dozens of overlapping proton–proton collisions**, about **1 billion collisions per second** in all
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact reveal-left">
+
+⚡ **Level-1 Trigger** — custom electronics decide in **microseconds** → ~**100,000** events/s survive
+
+</div>
+
+<div class="card card-accent card-glass pad-compact reveal-left">
+
+🖥️ **High-Level Trigger** — a computing farm inspects the full event → a few **thousand** events/s written to storage
+
+</div>
+
+<div class="card card-success card-glass pad-compact reveal-left">
+
+💾 Only these events become the **datasets** physicists analyse: fewer than **one collision in a hundred thousand** is stored
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md reveal-up">
+
+⚠️ A trigger decision is **final**: a discarded collision cannot be recovered. Deciding what to keep is itself data analysis.
+
+</div>
+
+---
+hideInToc: true
+---
+
+<VideoPlayer src="cern_video_2015_024_001.mp4" />
+
+<!-- The whole data flow in one clip (2:51, music): accelerator chain, detectors, trigger levels, data centre, the grid. -->
+
+---
+hideInToc: true
+---
+
+# From Events to <span class="gradient-text">Petabytes</span>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧮 The same chain in numbers, from one **event** to one **year** of data, and back down to one **row** of the file.
+
+</div>
+
+<div class="mt-md" style="text-align: center;">
+
+```mermaid {scale: 0.85}
+graph LR
+    A[Crossings 40 MHz] --> B[L1 Trigger 100 kHz]
+    B --> C[HLT few kHz]
+    C --> D[Storage 10 GB/s]
+
+    classDef stage fill:#0a1f3f,stroke:#38bdf8,color:#e8f1ff;
+    class A,B,C,D stage;
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📦 **The Arithmetic**
+
+**~1–2 MB** per event × a few **thousand** events/s ≈ **10 GB/s** to disk and tape; × ~**10⁷ s** of beam per year ≈ **100+ PB per year**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **One Row of the File**
+
+1 289 541 bytes / 91 583 rows = **14 bytes** per candidate in the ROOT file. A stored event is 1–2 MB, about **100 000×** more. The row keeps four numbers computed from two of the event's tracks.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# What the Trigger **Kept**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⏱️ Bunches cross every **25 ns**: 1 s / 40 000 000 crossings. The electronics hold an event for a few **microseconds**, and a collision not kept by then is overwritten. The keep or discard decision is code, written before anyone sees the data.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **What it looks for in charm**
+
+A D⁰ flies a few millimetres before it decays, so its kaon and pion tracks **do not point back** to the collision. The trigger keeps such pairs.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **LHCb, Since Run 3**
+
+No hardware trigger at all: every crossing, **30 million per second**, is read out in full and judged by a **software trigger**, its first stage on GPUs.
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+📄 Two columns of the file measure that flight. `TAU` is the time the candidate flew before it decayed. `IPCHI2` says how well the pair, taken together, points back to the collision: row 2's `0.34182164` points back well, row 1's `1299.1675` does not.
+
+</div>
+
+<div class="note-text mt-sm">Question 3 of the hook, answered: one row is one K⁻π⁺ pair that the selection kept from one collision. The selection is part of the file's rule.</div>
+
+<!--
+Speaker: point at rows 1 and 2 of the hook. Ask which of the two pairs looks
+more like a D⁰ made in the collision itself (row 2: it points back). (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 147 Columns, **4 Filled**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **Measured**
+
+Track momenta, charges, particle-ID scores: what the detector recorded. The ROOT file names these columns but ships them **empty**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Derived**
+
+Computed from the tracks: invariant mass `M`, transverse momentum `PT`, decay time `TAU`, `IPCHI2`. The **four columns that are filled**.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🗂️ **Bookkeeping**
+
+Event and run numbers: which collision, which data-taking period. Emptied here too; keep them in your own data.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ **Units are metadata, and here they are missing.** Neither the file nor the record says which unit a column is in. The numbers themselves carry enough to work it out.
+
+</div>
+

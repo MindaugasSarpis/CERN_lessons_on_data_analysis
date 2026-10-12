@@ -10,13 +10,14 @@ hands-on **seminar** briefs.
 
 | | Page |
 |--|--|
-| Lecture | [04 Command Line & File Handling](lectures/lecture_4.md#the-lecture-in-90-minutes): the terminal, the shell and the prompt named; macOS and Windows PowerShell side by side |
-| Seminar | [Seminar 4 — Work on Files from the Shell](seminars/seminar_04.md): Python, Git and PowerShell 7 installed in class first |
+| Lecture | [04 Command Line & File Handling](lectures/lecture_4.md#the-lecture-in-90-minutes): the shells set up, then the command line one step per slide; macOS `zsh` and PowerShell 7 side by side |
+| Seminar | [Seminar 4 — Work on Files from the Shell](seminars/seminar_04.md): a project folder built by typed commands on two years of bicycle counts; PowerShell 7, Git and Python installed in class |
 
 ## Hands-on seminars
 
-Every lecture from week 2 on has a paired, self-contained seminar practised on
-a shared real dataset (LHCb open data, or one from your own field). Students'
+Every lecture from week 2 on has a paired, self-contained seminar. Seminars
+1, 3 and 4 bring small files of their own, made for the course; from
+Seminar 5 on the seminars use a shared real dataset (LHCb open data). Students'
 semester projects are separate and entirely their own choice. Start here:
 
 - **[Overview](seminars/overview.md)** — how the seminars relate to the project,

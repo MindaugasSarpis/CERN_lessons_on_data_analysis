@@ -1,0 +1,20 @@
+# My Reading List
+
+Twelve books, with the pages of the edition read and my rating.
+
+| title | author | pages | rating |
+|--|--|--|--|
+| The Little Prince | Antoine de Saint-Exupéry | 96 | 3.5 |
+| Pride and Prejudice | Jane Austen | 432 | 4.5 |
+| Frankenstein | Mary Shelley | 280 | 5.0 |
+| Metai | Kristijonas Donelaitis | 120 | 5.0 |
+| Dracula | Bram Stoker | 418 | 5.0 |
+| Brave New World | Aldous Huxley | 288 | 3.0 |
+| The Old Man and the Sea | Ernest Hemingway | 127 | 4.0 |
+| Animal Farm | George Orwell | 112 | 3.0 |
+| Altorių šešėly | Vincas Mykolaitis-Putinas | 452 | 4.0 |
+| Crime and Punishment | Fyodor Dostoevsky | 671 | 5.0 |
+| The Martian | Andy Weir | 369 | 4.0 |
+| Solaris | Stanisław Lem | 204 | 4.0 |
+
+![Pages per book](reading_pages.png)

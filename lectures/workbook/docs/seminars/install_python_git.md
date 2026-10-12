@@ -1,8 +1,8 @@
 # Install Python, Git and PowerShell 7
 
-**Format:** in class, [Seminar 4](seminar_04.md), Part 1 · about 20 min
+**Format:** in class, [Seminar 4](seminar_04.md), sections 1, 2 and 10 · about 20 min
 
-**This page is the reference for Part 1 of Seminar 4.** The seminar page has
+**This page is the reference for the installs of Seminar 4.** The seminar page has
 the same steps in the order the room does them. This page has them per
 system, with every error message the room is likely to meet, so that a
 helper at a laptop can look one up.
@@ -13,7 +13,9 @@ helper at a laptop can look one up.
 | Python | from python.org, program name `python` | from python.org, program name `python3` | Seminar 4 (two handed-out scripts), Lecture 6 on |
 | Git | Git for Windows | the developer tools of macOS | Seminar 5 |
 
-Everything is installed in class, in Part 1 of Seminar 4.
+Everything is installed in class, in Seminar 4: the downloads and the
+installs of PowerShell 7 and Git start in section 1, and Python is
+installed in section 10, where the scripts first need it.
 
 ??? info "For the lecturer: the USB stick"
     The network of the room is slow when 30 laptops download at once. Bring
@@ -24,9 +26,11 @@ Everything is installed in class, in Part 1 of Seminar 4.
     - the Windows installer (64-bit) and the macOS installer of the current
       Python 3.14, from `python.org/downloads`
     - Git for Windows (64-bit), from `git-scm.com`
-    - [`project_after_s1.zip`](../data/project_after_s1.zip),
-      [`clean_pendulum.py`](../data/cli_clean_pendulum.py){ download="clean_pendulum.py" }
-      and [`column_stats.py`](../data/cli_column_stats.py){ download="column_stats.py" }
+    - the files of Seminar 4: [`bikes_hourly.csv`](../data/bikes_hourly.csv){ download="bikes.csv" },
+      [`bikes_monthly_export.csv`](../data/bikes_monthly_export.csv){ download="monthly_export.csv" },
+      [`clean_export.py`](../data/cli_clean_export.py){ download="clean_export.py" },
+      [`column_stats.py`](../data/cli_column_stats.py){ download="column_stats.py" }
+      and [`bikes_project.zip`](../data/bikes_project.zip)
 
     The Git of macOS cannot go on a stick: it comes from Apple's servers
     when `git --version` is typed for the first time.

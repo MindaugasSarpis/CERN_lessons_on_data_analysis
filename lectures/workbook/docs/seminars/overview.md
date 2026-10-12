@@ -18,9 +18,9 @@ lecture, so there is no Seminar 2.
 
 | Date in 2026 | Seminar | New |
 |--|--|--|
-| 29 Sep | [1](seminar_01.md) | VS Code, Markdown, the project folder, the README, editing many lines at once, provenance |
-| 6 Oct | [3](seminar_03.md) | A file as bytes in the Hex Editor: encoding, line endings, size. *In 2026 it ran as a terminal session with `pwd`, `ls`, `cd`, `clear`* |
-| 13 Oct | [4](seminar_04.md) | Python and Git installed; the shell and the prompt named; a file as bytes, by command; files and folders, pipes, a first script, checksums |
+| 29 Sep | [1](seminar_01.md) | VS Code, Markdown, the project folder, the README; a reading list repaired in the editor; a long file read; provenance |
+| 6 Oct | [3](seminar_03.md) | Files and bytes from the terminal: a folder of seven files tidied with `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv`, `rm`; sizes, encodings, line endings and a checksum. *In 2026 it ran as a terminal session with `pwd`, `ls`, `cd`, `clear`* |
+| 13 Oct | [4](seminar_04.md) | PowerShell 7, Git and Python installed; a project folder built by typed commands; files and folders, pipes and filters on two years of bicycle counts, a program someone else wrote, a checksum, the README |
 | 20 Oct | [5](seminar_05.md) | Git: the project folder under version control, from the Source Control view and typed; a remote; a branch and a merge |
 | 27 Oct | [6](seminar_06.md) | Python from the first line: a line of the data file turned into numbers |
 | 3 Nov | [7](seminar_07.md) | Functions, reading the whole file, NumPy arrays and masks |
@@ -54,16 +54,23 @@ How much the two overlap is up to you: a seminar step can be repeated on
 your own data, or your project can go somewhere else entirely. No seminar
 needs your own data, and none depends on work done outside class.
 
-## The example dataset
+## The example data
 
-Every seminar runs on two shared files: the pendulum table cleaned by hand in
-Seminar 1, and the **LHCb open-data
-masterclass** sample from the CERN Open Data Portal: events pre-selected to
-contain **D⁰ → K⁻π⁺** decay candidates. Each of its 91,583 rows is one candidate,
-with its **K–π invariant mass** `M`, transverse momentum `PT`, decay time `TAU`
-and impact-parameter score `IPCHI2` — histogram `M` and the D⁰ appears as a peak
-near **1865 MeV**. Your own project can use any dataset you like: you do
-**not** have to measure the D⁰ mass.
+**Seminars 1, 3 and 4 bring files of their own.** Each is generated for the
+course by a small script and labelled so: a reading list and a library's
+loans log (Seminar 1), a folder of short files (Seminar 3), two bicycle
+counters over two years (Seminar 4). They are everyday data on purpose:
+nothing has to be explained before the work starts. The lectures use a
+different example, a made-up weather station, so a seminar never repeats a
+lecture's demo; it practises its ideas on new files.
+
+**From Seminar 5 on**, the seminars still run on two shared files: the
+pendulum table, and the **LHCb open-data masterclass** sample from the CERN
+Open Data Portal, events pre-selected to contain **D⁰ → K⁻π⁺** decay
+candidates. Each of its 91,583 rows is one candidate, with its **K–π
+invariant mass** `M`, transverse momentum `PT`, decay time `TAU` and
+impact-parameter score `IPCHI2`. Your own project can use any dataset you
+like: you do **not** have to measure the D⁰ mass.
 
 - Source: CERN Open Data Portal — *LHCb event file for real measurement*,
   [record 401](https://opendata.cern.ch/record/401),
@@ -72,8 +79,6 @@ near **1865 MeV**. Your own project can use any dataset you like: you do
 - Files: the record holds one ROOT file, `MasterclassData.root`. The examples
   read [`D0_KPi.csv`](../data/D0_KPi.csv), converted from it by
   [`root_to_csv.py`](../data/root_to_csv.py) — values unchanged.
-- Why this one: real collision data, a genuine signal to find, fit and classify,
-  and small enough to work with on a laptop.
 
 > Offline or the portal is down? The workbook keeps a byte-identical copy of the
 > original, [`MasterclassData.root`](../data/MasterclassData.root); the instructor
@@ -81,7 +86,9 @@ near **1865 MeV**. Your own project can use any dataset you like: you do
 
 ## The project folder
 
-Seminar 1 creates a small project folder that every later seminar works in:
+Seminars 1 and 4 each build a project folder of this layout from an empty
+folder (`reading-project`, `bike-project`); from Seminar 5 on the seminars
+work in one folder named like this:
 
 ```text
 analysis-project/
@@ -105,8 +112,8 @@ and rebuild the whole thing with one command. If that's true, you've succeeded.
 
 | Seminar | Hands-on focus |
 |--|--|
-| 1 | VS Code; Markdown; the project folder and its README; a small table cleaned in the editor; a data file in `data/raw/`; provenance recorded |
-| 3 | The raw file understood as bytes in the Hex Editor (encoding, line endings, size, format) |
+| 1 | VS Code; Markdown; the project folder and its README; a reading list cleaned in the editor; a library's loans log in `data/raw/`; provenance recorded |
+| 3 | Files and bytes from the terminal: a folder tidied by typed commands; sizes, encodings, line endings, a file under the wrong name, a checksum |
 | 4 | Work on Files from the Shell |
 | 5 | The Project Folder under Git |
 | 6 | A Line of Text into Numbers |
