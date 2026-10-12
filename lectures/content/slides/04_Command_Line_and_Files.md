@@ -12,7 +12,6 @@ title: "Command Line & File Handling"
 ##### <span class="aims-badge">⚙️ automation · 📁 data & files · 🔧 tool-agnostic</span>
 
 <!--
-**Do:** before the start, open VS Code with the folder `weather-project` and a terminal in the Panel. Every command slide has two columns: type the column of your laptop, read the other one aloud.
 **Say:** today every step on a file is a typed line.
 (~1 min)
 -->
@@ -121,12 +120,8 @@ weather-project/
 
 </div>
 
-<div class="note-text mt-md">The station is made up. A script generated both files for this course, and they behave like a real station's log.</div>
-
 <!--
-**Do:** show the folder in the Side Bar of VS Code.
 **Say:** a colleague sent this folder. Today we answer questions about it with typed lines.
-**If asked:** the folder is on the workbook page of this lecture, as `weather_project.zip`.
 (~2 min)
 -->
 
@@ -161,7 +156,6 @@ time,temp_c,humidity_pct,wind_ms
 <div class="note-text mt-md">Line 1 names the columns. Every later line is one hour, the values separated by commas: a CSV file.</div>
 
 <!--
-**Do:** open `data/raw/weather.csv` in VS Code and scroll a little.
 **Say:** the time is written largest unit first, ISO 8601. That order also sorts correctly as text.
 (~2 min)
 -->
@@ -203,8 +197,8 @@ Answers all three. The line can be kept in the README and run again on the next 
 </div>
 
 <!--
-**Do:** show the first two answers live in VS Code. On a Mac: `Cmd+↓` and `Ctrl+G`.
 **Ask:** how would you find the coldest hour among 87 672?
+**If asked:** on a Mac the keys are `Cmd+↓` and `Ctrl+G`.
 **Say:** leave the question open. A typed line answers it in the middle of the lecture.
 (~3 min)
 -->
@@ -335,7 +329,6 @@ The shell is zsh. Nothing to install: it is part of macOS.
 </div>
 
 <!--
-**Do:** open Terminal on the Mac on the projector and type the line.
 **Ask:** who sees `/bin/bash`? Their account is older than 2019: the next slide.
 (~2 min)
 -->
@@ -427,7 +420,6 @@ PS C:\Users\ada> $PSVersionTable.PSVersion.Major
 <div class="note-text mt-md">This course uses PowerShell 7. The next slide installs it from the Windows PowerShell window.</div>
 
 <!--
-**Do:** open Windows PowerShell on the Windows laptop and type the version line.
 **Say:** `$PSVersionTable` is a table PowerShell keeps about itself; `.PSVersion.Major` picks one number from it.
 (~2 min)
 -->
@@ -482,7 +474,6 @@ The newest version on the day it runs. 7.6.6 is from 8 September 2026.
 </div>
 
 <!--
-**Do:** run it on the Windows laptop, or show it if it is installed already.
 **Say:** winget asks once to accept its source agreements: `Y`. A university laptop may ask for an administrator password.
 **If asked:** the same line upgrades an older PowerShell 7.
 (~3 min)
@@ -566,7 +557,6 @@ hideInToc: true
 </div>
 
 <!--
-**Do:** open the terminal in VS Code on the projector.
 **Say:** on Windows the list offers PowerShell (that is 7) and Windows PowerShell (5.1). Pick PowerShell.
 **If asked:** `Ctrl+`` (backtick) opens and closes the Panel.
 (~2 min)
@@ -582,7 +572,7 @@ hideInToc: true
 One command per slide: where the shell is, what is there, how to move, and what to do when a line fails.
 
 <!--
-**Say:** every command from here on is typed in the terminal of VS Code, in `weather-project`.
+**Say:** every command from here on runs in the terminal of VS Code, in `weather-project`.
 (~1 min)
 -->
 
@@ -676,7 +666,6 @@ PS>
 </div>
 
 <!--
-**Do:** type it, then let the room type it.
 **Say:** `echo` prints what follows it. The four steps are the same for every command today.
 (~1 min)
 -->
@@ -719,7 +708,7 @@ C:\Users\ada\Documents\weather-project
 <div class="note-text mt-md"><code>pwd</code>, print working directory: the folder of the prompt, as a whole path. The same word in both shells.</div>
 
 <!--
-**Ask:** why do three laptops print three different answers? The user name differs.
+**Ask:** why would three laptops print three different answers? The user name differs.
 **If asked:** in PowerShell `pwd` is a short name for `Get-Location`; it prints a small table with one column, `Path`.
 (~1 min)
 -->
@@ -759,7 +748,7 @@ Mode           LastWriteTime   Length Name
 d----    2026-10-13  09:00            data
 d----    2026-10-13  09:00            results
 d----    2026-10-13  09:00            scripts
--a---    2026-10-13  09:00        772 README.md
+-a---    2026-10-13  09:00        688 README.md
 ```
 
 </div>
@@ -769,7 +758,6 @@ d----    2026-10-13  09:00            scripts
 <div class="note-text mt-md"><code>ls</code>, list: the names in a folder. Without a name it lists the working directory, with a name it lists that folder.</div>
 
 <!--
-**Do:** type `ls`, then `ls data`.
 **Say:** PowerShell prints a table: `d` marks a folder, `Length` is the size of a file in bytes.
 **If asked:** the date column follows the laptop's date settings.
 (~2 min)
@@ -817,7 +805,7 @@ PS C:\…\weather-project>
 <div class="note-text mt-md"><code>cd</code>, change directory: the prompt shows the new folder. <code>..</code> is the folder one level up.</div>
 
 <!--
-**Do:** watch the prompt change while you type.
+**Do:** follow the prompt: it changes after each `cd`.
 **Say:** `-Name` makes PowerShell's `ls` print names only.
 **If asked:** `cd` alone goes to the home folder in zsh; in PowerShell `cd ~` does it.
 (~2 min)
@@ -921,7 +909,6 @@ The working directory.
 </div>
 
 <!--
-**Do:** `cd scripts`, `ls ../data/raw`, `cd ..`. The same lines in both shells.
 **Say:** a relative path starts at the working directory, so it does not start with `/` or `C:\`.
 **If asked:** PowerShell reads `/` and `\` alike.
 (~2 min)
@@ -990,7 +977,6 @@ What to work on: the path.
 </div>
 
 <!--
-**Do:** type both lines.
 **Say:** the words differ, the parts do not. PowerShell names its commands Verb-Noun; options are called parameters there.
 **If asked:** zsh tells `-n` from `-N`; PowerShell ignores case, so `-head` works too.
 (~2 min)
@@ -1074,7 +1060,7 @@ A name that `Tab` completed exists. If `Tab` adds nothing, no name fits: the pat
 <div class="note-text mt-md">PowerShell completes a folder without the last <code>/</code> and writes <code>.\data\raw\weather.csv</code>. It reads that as well as <code>data/raw/weather.csv</code>.</div>
 
 <!--
-**Do:** type `head -n 2 da`, Tab, `r`, Tab, `w`, Tab. Let the room count the keys.
+**Ask:** count the keys: how many were typed, how many did Tab add?
 **If asked:** with two names that fit, zsh lists them on a second Tab; PowerShell cycles through them, `Ctrl+Space` lists them.
 (~2 min)
 -->
@@ -1100,7 +1086,6 @@ hideInToc: true
 <div class="note-text mt-md">The mouse does not move the cursor inside a line. The arrow keys do.</div>
 
 <!--
-**Do:** press ↑ to bring back the `head` line, change 2 to 3, Enter.
 **Say:** a line once typed is never typed again: ↑ brings it back.
 **If asked:** in PowerShell `Ctrl+C` copies when text is selected.
 (~2 min)
@@ -1155,7 +1140,6 @@ SYNTAX
 <div class="note-text mt-md">Every command has a manual. The options of this lecture are all in it.</div>
 
 <!--
-**Do:** open `man head`, find `-n`, press `q`.
 **Say:** PowerShell 7 ships without its help texts. `-Online` opens them in the browser; `Update-Help` downloads them once.
 (~2 min)
 -->
@@ -1204,7 +1188,7 @@ exist.
 <div class="note-text mt-md">The word before the first colon says who complains: the shell found no program, or the program found no file.</div>
 
 <!--
-**Do:** make both typos live and let the room read each message aloud first.
+**Ask:** what does each message say went wrong? Let the room read it before you explain.
 **Say:** an error message is an answer. Read it before retyping.
 (~2 min)
 -->
@@ -1268,7 +1252,6 @@ PS> Get-Content data/raw/weather.csv -Tail 2
 <div class="note-text mt-md">The first and the last lines of a file: its header, and how far it goes. The log runs from New Year 2016 to New Year's Eve 2025.</div>
 
 <!--
-**Do:** run both lines.
 **Say:** `head` reads only as far as it prints, so it answers at once even for a large file.
 (~2 min)
 -->
@@ -1319,7 +1302,6 @@ A spreadsheet with European settings writes this. Most programs expect `,` and `
 <div class="note-text mt-md"><code>cat</code> prints a whole file, in both shells. On a large file <code>Ctrl+C</code> stops it.</div>
 
 <!--
-**Do:** `cat` the export. Then `cat data/raw/weather.csv` and stop it with Ctrl+C.
 **Say:** remember this file: later a program cleans it in one line.
 **If asked:** `less FILE` (macOS) and `Get-Content FILE | more` show one screen at a time: Space goes on, q leaves.
 (~2 min)
@@ -1456,7 +1438,6 @@ daily_export.csv
 </div>
 
 <!--
-**Do:** watch the folder appear in the Side Bar while you type.
 **Say:** PowerShell's `mkdir` prints a short table with the new folder; zsh prints nothing.
 **If asked:** in PowerShell `cp` is a short name, an alias, for `Copy-Item`.
 (~2 min)
@@ -1827,7 +1808,7 @@ The first 5000 lines go into the pipe, the last of them comes out: line 5000, th
 </div>
 
 <!--
-**Do:** run it. Compare with `Ctrl+G` 5000 in VS Code.
+**Say:** the same line as `Ctrl+G` 5000 in VS Code.
 **Say:** a line that ends in `|` goes on in the next line; PowerShell shows `>>` there.
 (~2 min)
 -->
@@ -2284,8 +2265,7 @@ hideInToc: true
 <div class="note-text mt-md">A backslash takes the special meaning away: <code>\.</code> fits a point and nothing else.</div>
 
 <!--
-**Do:** run one or two rows: `grep -cE 'PATTERN' data/raw/daily_export.csv`, or `(Select-String 'PATTERN' data/raw/daily_export.csv).Count`. The same counts come out.
-**Ask:** before running `10.`, how many lines will it fit?
+**Ask:** before reading the count for `10.`, how many lines will it fit?
 (~3 min)
 -->
 
@@ -2357,7 +2337,6 @@ Find          Matches
 </div>
 
 <!--
-**Do:** open the export, switch the button on, type the three patterns, read the counter after each.
 **Say:** the counter is the check: nine rows, nine matches.
 (~3 min)
 -->
@@ -2411,7 +2390,6 @@ Replace   | $2 | $3 |
 </div>
 
 <!--
-**Do:** the first replacement on a copy of the export, then `Ctrl+Z`.
 **If asked:** PowerShell knows `$1` too: `(Get-Content data/raw/daily_export.csv) -replace '([0-9]),([0-9])', '$1.$2'`.
 (~3 min)
 -->
@@ -2464,7 +2442,6 @@ def clean(lines):
 </div>
 
 <!--
-**Do:** open the file in VS Code and point at the three lines.
 **Say:** the order matters: the decimal comma becomes a point while it is still the only comma.
 (~2 min)
 -->
@@ -2511,7 +2488,6 @@ The program, `python3` or `python`. Then its file. Then two words for the script
 </div>
 
 <!--
-**Do:** run it on both laptops at the front, then open `data/processed/daily.csv`.
 **Say:** macOS names the program `python3`, Windows `python`. The paths are the same.
 **If asked:** "Python was not found" on Windows: the section Tools & Environments explains it.
 (~3 min)
@@ -2572,7 +2548,6 @@ Line 49 of `clean_export.py`: `newline="\n"`. Every line ends with LF on every s
 </div>
 
 <!--
-**Do:** run the copy, then delete `results/copy.csv`.
 **Say:** neither shell is wrong; each writes text by its own rule. A file whose bytes must match everywhere is written by a program that states the rule.
 (~2 min)
 -->
@@ -3004,7 +2979,6 @@ Puts `.venv/bin` or `.venv\Scripts` at the top of `PATH`. `python` is now the en
 </div>
 
 <!--
-**Do:** type the lines live.
 **Say:** the activate script edits PATH, the list of two slides ago, for this terminal only.
 **If asked:** sizes measured on Linux with Python 3.14.8.
 (~3 min)
@@ -3088,6 +3062,166 @@ Make `.venv`, activate it, then `python -m pip install -r requirements.txt`. The
 -->
 
 ---
+hideInToc: true
+---
+
+# An Alias and a **Prompt**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
+
+```text
+% alias ..='cd ..'
+% PROMPT='%1~ %# '
+weather-project % cd data
+data % ..
+weather-project %
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · PowerShell**
+
+```text
+PS> function .. { Set-Location .. }
+PS> function prompt { "$((Get-Item .).Name)> " }
+weather-project> cd data
+data> ..
+weather-project>
+```
+
+</div>
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-info card-glass pad-compact">
+
+## 🏷️ **An alias**
+
+A short name for a longer command: `..` now means `cd ..`. The prompt now shows only the folder.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **Only here**
+
+Both last until this terminal closes, and exist only on this laptop. A README line uses the full command.
+
+</div>
+
+</div>
+
+<!--
+**Say:** like the virtual environment, these settings last only as long as this terminal.
+**If asked:** `%1~` is the last folder of the path, `%#` the `%` sign. A PowerShell alias cannot carry an argument such as `..`, so a function does it.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A File the Shell Runs at **Start**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **zsh: `~/.zshrc`**
+
+```text
+# run by every new zsh
+alias ..='cd ..'
+PROMPT='%1~ %# '
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **PowerShell: `$PROFILE`**
+
+```text
+# run by every new PowerShell
+function .. { Set-Location .. }
+function prompt { "$((Get-Item .).Name)> " }
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+```text
+% echo ~/.zshrc
+/Users/ada/.zshrc
+PS> $PROFILE
+C:\Users\ada\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+```
+
+</div>
+
+<div class="note-text mt-md">A new terminal reads the file. <code>source ~/.zshrc</code> or <code>. $PROFILE</code> reads it again in the open one.</div>
+
+<!--
+**Say:** the same lines as on the last slide, written once into a file: from now on every terminal starts with them.
+**If asked:** neither file exists on a new laptop; the first save makes it. With OneDrive, `$PROFILE` lies under `OneDrive\Documents`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Ready-Made Settings: **Oh My Zsh**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧰 **What it is**
+
+- Settings for zsh, shared on GitHub: 371 plugins and 143 prompt themes
+- One line installs it. It writes a new `~/.zshrc` and keeps the old one
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **Two lines of its `~/.zshrc`**
+
+```text
+ZSH_THEME="robbyrussell"
+plugins=(git)
+```
+
+```text
+➜  weather-project cd data
+➜  data
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">PowerShell: Oh My Posh, or Starship for both shells. Each is one <code>winget</code> line and one line in <code>$PROFILE</code>.</div>
+
+<!--
+**Say:** a theme only changes the prompt, a plugin adds aliases. Nothing in this course needs either.
+**If asked:** the arrow is green, red after a command that failed. In a Git project the prompt adds the branch. The `git` plugin adds `gst` for `git status`. Counts from October 2026.
+(~2 min)
+-->
+
+---
 layout: section
 hideInToc: true
 ---
@@ -3144,7 +3278,7 @@ Lower case on the Mac, upper case on Windows: one number. 64 hex digits are the 
 </div>
 
 <!--
-**Ask:** is the `weather.csv` on your laptop the same file as on mine? 2.5 million bytes cannot be compared by eye. Read the first and the last four digits: 3f1a and 0756.
+**Ask:** a colleague has a `weather.csv` too. Is it the same file? 2.5 million bytes cannot be compared by eye. Read the first and the last four digits: 3f1a and 0756.
 (~2 min)
 -->
 
@@ -3225,7 +3359,6 @@ InputObject                                                      SideIndicator
 <div class="note-text mt-md">In a copy of the project, <code>6,3</code> in row 1 of the export became <code>6,4</code>. <code>&lt;=</code> marks the checksum in the list, <code>=&gt;</code> the one computed now.</div>
 
 <!--
-**Do:** change the digit in a copy of the project, never in the file itself.
 **Say:** zsh names the file. PowerShell shows the old and the new checksum; the old one is line 1 of the list, the export.
 (~1 min)
 -->
@@ -3370,7 +3503,7 @@ The test for a README: someone with the project folder and an empty laptop gets 
 </div>
 
 <!--
-**Do:** open README.md with its preview (`Ctrl+K`, then `V`) and tick off the left card.
+**Do:** tick off the left card, line by line.
 **Say:** the checksum list answered the third question already. The next slides answer the others.
 (~2 min)
 -->
@@ -3421,7 +3554,6 @@ The names and the 120 come out of the file. The units do not: the README has to 
 </div>
 
 <!--
-**Do:** type the table into the README with the preview open.
 **Say:** every line of it except the units was checked by a command anyone can run again.
 (~2 min)
 -->
@@ -3459,7 +3591,7 @@ Python 3.14 from python.org; the scripts need no package beyond it.
 </div>
 
 <!--
-**Do:** bring the lines back with ↑ and paste them; do not retype them.
+**Say:** the lines are brought back with ↑ and pasted, never retyped.
 **Say:** a line that was copied and ran has been tested. A line typed from memory has not.
 (~2 min)
 -->
@@ -3560,7 +3692,7 @@ Without one, others may read but not copy, change or pass on. The text goes into
 ```md
 ## Licence
 
-Data: CC0, generated for the course.
+Data: CC0, from the station's operator.
 Scripts and text: MIT, see `LICENSE`.
 ```
 

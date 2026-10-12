@@ -7,11 +7,6 @@ answers those five questions one section at a time. It ends with the tools
 for writing the answers down: VS Code, a README in Markdown, and edits made on
 many lines at once.
 
-The weather files are generated for the course by
-[`weather_files.py`](../data/weather_files.py): the station is made up, and
-every number on the slides can be checked on the files. The deck says so on
-slide 26.
-
 ## What the lecture covers
 
 1. **A file with no note**: four lines of `weather.csv`; the five questions
@@ -85,8 +80,8 @@ All were computed on the files in `lectures/workbook/docs/data/`.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–69 and estimates about 113 min; shown live, with the
-pauses for the room, it runs nearer 140. Slides 70–78 are the self-check
+The lecture is slides 1–69 and estimates about 113 min; with the pauses for
+the room it runs longer. Slides 70–78 are the self-check
 quizzes and take no lecture time. For a 90-minute slot, skip the slides in
 the second table; that leaves about 92 min. To jump, type the slide number
 and press Enter.
@@ -100,9 +95,9 @@ and press Enter.
 | 0:25 | 22, 24, 26, 28 | A record, the provenance note, the project folder |
 | 0:32 | 29–31 | One hour, one row; the trigger at CERN |
 | 0:38 | 33, 35, 37–40 | The rows counted, the units, `-999`, what it does to a mean, the five answers |
-| 0:53 | 42–43, 45–46, 48–49 | The project folder and VS Code, shown live |
-| 1:05 | 50–53, 55 | Markdown, typed live into `README.md` |
-| 1:13 | 57–62, 64 | The daily export repaired live, then made a Markdown table |
+| 0:53 | 42–43, 45–46, 48–49 | The project folder and VS Code |
+| 1:05 | 50–53, 55 | Markdown: the source and its preview |
+| 1:13 | 57–62, 64 | The daily export repaired, then made a Markdown table |
 | 1:29 | 68–69 | The file, annotated; Recap |
 | 1:32 | | End |
 
@@ -121,23 +116,15 @@ and press Enter.
 - **Do not cut** slides 3–4 (the questions), 8 (the thesis), 14–16 (the
   table and its mean), 38–40 (`-999` and the answers) and 68 (The File,
   Annotated): together they carry the story.
-- **Shown live from slide 33 on.** Keep VS Code open beside the slides, with
-  `weather.csv` and `weather_daily_export.csv` in a folder. Press `Ctrl+End`,
-  `Ctrl+G` 5000 and `Ctrl+F` `-999` on the projector, and ask the room for
-  each unit before showing its card.
-- **Slides 42–64 are what Seminar 1 practises** with its own files. Do each
-  step once on the projector: open the folder, make the four folders and the
-  README, type the Markdown, repair a copy of the daily export.
+- **The slides carry everything.** Each step in VS Code is shown on its
+  slide with its result, so nothing is opened beside the deck. Ask the room
+  for each unit before showing its card.
+- **Slides 42–64 are what Seminar 1 practises** with its own files, by hand.
 - **The speaker notes** of every slide have the same short form: **Do**,
   **Say**, **Ask**, **If asked**, and the minutes.
 
-Before the session, about 5 minutes:
-
-- Download [`weather.csv`](../data/weather.csv){ download="weather.csv" } and
-  [`weather_daily_export.csv`](../data/weather_daily_export.csv){ download="weather_daily_export.csv" }
-  into a folder on the laptop that drives the projector.
-- Start the local copy of the slides: `node scripts/serve-local.mjs 8123`,
-  then open `http://localhost:8123/02-intro-to-data/`.
+To show the slides offline: `node scripts/serve-local.mjs 8123`, then open
+`http://localhost:8123/02-intro-to-data/`.
 
 ## Check yourself
 
@@ -180,8 +167,7 @@ questions, with their answers:
 
 [Seminar 1, VS Code and Markdown](../seminars/seminar_01.md) is the first
 session in class and starts from zero. It practises the ideas of slides
-42–67 with files of its own, a made-up reading list and a library's loans
-log, not the weather files: install VS Code and build a project folder; write
+42–67 with files of its own, a reading list and a library's loans log, not the weather files: install VS Code and build a project folder; write
 the README in Markdown; repair the reading list in the editor and turn it
 into a report; count a long file, read its units and its missing-value mark
 `NA`, open it in a spreadsheet, and write where the data came from. All of it

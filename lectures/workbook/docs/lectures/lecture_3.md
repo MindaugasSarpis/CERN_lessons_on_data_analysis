@@ -70,13 +70,6 @@ Enter.
 | Bit Depth of an Image | 75 | 1 min |
 | Compression, A Checksum by Hand | 89–90 | 4 min |
 
-- **Before the lecture,** unpack
-  [`weather_project.zip`](../data/weather_project.zip) and save
-  [`weather_daily.csv`](../data/weather_daily.csv){ download="daily.csv" }
-  as `daily.csv` in its folder `data/processed`: the ten lines of slide 3,
-  148 bytes.
-  Delete `data/processed/daily_crlf.csv` if it is left from a rehearsal:
-  slide 86 makes it live.
 - **Do not cut** slide 3 (the table of 148 bytes) or slide 93 (the Recap,
   which names all 148). Slide 73 (Reading a Hexdump) is where the count is
   done; reach it by about minute 70.
@@ -88,16 +81,8 @@ Enter.
   give the room 100 to convert on paper. The answers are `1100100` and `0x64`.
 - **Slide 61** (the ASCII table): sorted as text, `10.4` comes before `5.0`,
   because `1` is 0x31 and `5` is 0x35.
-- **Slide 66** (Encoding and Line Ending in VS Code) is done live: open a
-  file with Lithuanian letters, select `UTF-8` in the Status Bar, reopen it
-  as **Baltic (Windows 1257)** and back.
-- **Slide 72** (Extensions: the Hex Editor) is done live: the Extensions
-  view, `hex editor`, the publisher Microsoft, **Install**, then **Open
-  With…** on `data/processed/daily.csv`.
-- **Slides 78–87** are typed live in the terminal of VS Code, in the folder
-  `weather-project`. On slide 86, first `cp data/processed/daily.csv
-  data/processed/daily_crlf.csv`, open the copy, select `LF` in the Status
-  Bar, choose `CRLF`, save; then measure both files.
+- **The slides carry everything.** Every command is on its slide with its
+  output in both shells, so nothing is opened beside the deck.
 
 ## Check yourself
 
@@ -121,21 +106,6 @@ questions, with their answers:
    line prints the size of `daily.csv` in `data/processed`?
    *`(Get-Item processed/daily.csv).Length`. The working directory is
    `data`, so the relative path starts there.*
-
-## Demos to run live
-
-- A drawing of a cube on the whiteboard is read as a cube only by someone who
-  knows the convention. A representation needs a rule: the opening for the
-  section on data representation.
-- The ASCII control characters still act. In the Python prompt,
-  `print("\a")` rings the terminal bell, which is character 7, `BEL`.
-- Floating point, in the Python prompt:
-
-    ```python
-    0.1 + 0.2 == 0.3                             # False
-    import math
-    math.isclose(0.1 + 0.2, 0.3, rel_tol=1e-12)  # True
-    ```
 
 ## Paired seminar
 

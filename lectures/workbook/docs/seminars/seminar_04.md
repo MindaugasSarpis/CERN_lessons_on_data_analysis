@@ -18,33 +18,34 @@ One screen for the front of the room. Each line links to its section.
 
 | Clock | Section | On the projector | The room ends with |
 |--|--|--|--|
-| | **Part 1 · Warm-up: from an empty folder** · 42 min | | |
+| | **Part 1 · Warm-up: from an empty folder** · 49 min | | |
 | 0:00 | [1. Start the installs](#installs) | `winget install …`, `git --version`, python.org | Installs running in the background |
 | 0:05 | [2. VS Code, region by region](#vscode) | The five regions, `Ctrl+Shift+P` | The regions named, a terminal open |
 | 0:11 | [3. Terminal, shell, prompt](#terminal) | `pwd`, `ls`, `cd`, `Tab`, `↑`, `clear` | The prompt read aloud, part by part |
 | 0:18 | [4. A project folder, typed](#folder) | `mkdir` six times, **Open Folder** | `bike-project` with its four folders |
 | 0:24 | [5. A README in Markdown](#readme-md) | `README.md` and its preview | A title, a list, a table, a link |
 | 0:31 | [6. The shell of the course](#shell) | **Select Default Profile** | `7` or `/bin/zsh` |
-| 0:34 | [7. A small file, byte by byte](#bytes) | `counts.csv`, `wc -c`, `hexdump -C`, `Format-Hex` | 35 characters, 39 bytes (42 with CRLF) |
+| 0:34 | [7. A small file, byte by byte](#bytes) | `counts.csv`, `wc -c`, `hexdump -C`, `Format-Hex`; `hello.sh` with CRLF | 39 bytes (42 with CRLF); a script that does not run on a Mac |
 | | **Part 2 · A large file** · 17 min | | |
-| 0:42 | [8. Two files, moved in](#files) | `mv ~/Downloads/…` | `bikes.csv` and `column_stats.py` in place |
-| 0:45 | [9. Read and count](#count) | `head`, `wc -l`, `Get-Content`, `Get-Item` | 35 089 lines, 900 314 bytes |
-| 0:53 | [10. Copy, rename, delete](#copy) | `cp`, `mv`, `rm`, `*` | A backup made and removed again |
+| 0:49 | [8. Two files, moved in](#files) | `mv ~/Downloads/…` | `bikes.csv` and `column_stats.py` in place |
+| 0:52 | [9. Read and count](#count) | `head`, `wc -l`, `Get-Content`, `Get-Item` | 35 089 lines, 900 314 bytes |
+| 1:00 | [10. Copy, rename, delete](#copy) | `cp`, `mv`, `rm`, `*` | A backup made and removed again |
 | | **Part 3 · Pipes and filters** · 17 min | | |
-| 0:59 | [11. The ends of a column](#sort) | `sort -n`, `Sort-Object` | `9999` at the top: a mark, not a count |
-| 1:07 | [12. Count the mark, keep the rest](#grep) | `grep`, `uniq -c`, `Select-String`, `>` | 168 rows, one broken week, `bikes_valid.csv` |
+| 1:06 | [11. The ends of a column](#sort) | `sort -n`, `Sort-Object` | `9999` at the top: a mark, not a count |
+| 1:14 | [12. Count the mark, keep the rest](#grep) | `grep`, `uniq -c`, `Select-String`, `>` | 168 rows, one broken week, `bikes_valid.csv` |
 | | **Part 4 · Python, a checksum, the README** · 27 min | | |
-| 1:16 | [13. Python, and a program someone else wrote](#python) | The Python installer, `column_stats.py` | Python 3.14, the mean of `counts.csv`: 400 |
-| 1:24 | [14. A mean, with and without the mark](#mean) | `column_stats.py` twice | 86.3 and 38.6 bicycles per hour |
-| 1:28 | [15. One checksum in the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
-| 1:33 | [16. How to rebuild](#readme) | `README.md` and its preview | Data, columns, the mark, one rebuild line |
-| 1:39 | [17. Wrap up](#wrap-up) | `git config`, the list of the day | Git knows each name |
+| 1:23 | [13. Python, and a program someone else wrote](#python) | The Python installer, `column_stats.py` | Python 3.14, the mean of `counts.csv`: 400 |
+| 1:31 | [14. A mean, with and without the mark](#mean) | `column_stats.py` twice | 86.3 and 38.6 bicycles per hour |
+| 1:35 | [15. One checksum in the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
+| 1:40 | [16. How to rebuild](#readme) | `README.md` and its preview | Data, columns, the mark, one rebuild line |
+| 1:46 | [17. Wrap up](#wrap-up) | `git config`, the list of the day | Git knows each name |
 | | **Optional, if the room is fast** | | |
 | — | [18. A program that cleans an export](#clean) | `clean_export.py` | `monthly.csv`, `ea4ce2ce…` on every laptop |
 | — | [19. Patterns](#regex) | The `.*` button, `grep -E`, `Select-String` | 168, 4022, 37 |
 | — | [20. An environment for the project](#environment) | `python -m venv .venv`, `pip install numpy` | `(.venv)` in the prompt, `requirements.txt` |
 | — | [21. A list of checksums](#list) | `shasum -a 256 -c`, `Compare-Object` | `OK`, then one digit caught |
 | — | [22. Test the README](#readme-test) | Delete, paste, count | `bikes_valid.csv` back, 34 921 lines |
+| — | [23. The shell's own settings](#settings) | `alias`, `~/.zshrc`, `$PROFILE`, Oh My Zsh, Oh My Posh | A short prompt and `..` in every new terminal |
 
 **If time runs short:** in the warm-up keep sections 3, 4 and 7 and do 2
 and 5 in two minutes each; in section 12 leave out the last step (text
@@ -87,9 +88,7 @@ of the day.
       value `9999`. Let the room find it; do not announce it.
 
 ??? info "Files for this seminar"
-    The bicycle files are generated for the course: the city and its two
-    counters are made up, and the counts behave like real ones (rush hours,
-    weekends, winter, rain). A browser saves each file in **Downloads**
+    A browser saves each file in **Downloads**
     under the name in the second column; the page moves it into the project
     folder with a typed command.
 
@@ -109,7 +108,7 @@ of the day.
 
 ## Part 1 · Warm-up: from an empty folder { #part-1 }
 
-**0:00 to 0:42 · sections 1 to 7**
+**0:00 to 0:49 · sections 1 to 7**
 
 The slow installs start first and run while the room rebuilds, from
 nothing, what Seminars 1 and 3 did: VS Code and its regions, the terminal,
@@ -585,13 +584,14 @@ checks it.
 
 ### 7. A small file, byte by byte { #bytes }
 
-**0:34 · 8 min**
+**0:34 · 15 min**
 
 **Tell the room.** A file is a row of bytes. A letter `a` to `z` is one
 byte in UTF-8; a Lithuanian letter such as `ž` is two. The end of a line is
 a byte too: `0A`, called LF, on a Mac; two bytes, `0D 0A`, called CRLF, in
 what VS Code writes on Windows. We type a file of three lines, predict its
-size, and let the shell measure it.
+size, and let the shell measure it. Then a file of two lines shows what the
+line ending does when a file goes from Windows to a Mac.
 
 1. In the Explorer select the folder `raw` inside `data`, then the **New
    File** icon. Name the file:
@@ -699,8 +699,126 @@ size, and let the shell measure it.
     One byte less on each of the three lines. Now the file has the same
     bytes on every laptop in the room.
 
+8. **A file that does not run.** Work in pairs, one Mac and one Windows
+   laptop. In the Explorer select the folder `scripts`, then **New File**.
+
+    === "macOS"
+
+        Name the file `hello.sh` and type two lines, with `Enter` after the
+        second. Save.
+
+        ```text
+        #!/bin/zsh
+        echo hello
+        ```
+
+        The first line names the program that runs the file. Allow the
+        file to run as a command, then run it:
+
+        ```text
+        chmod +x scripts/hello.sh
+        ```
+
+        ```text
+        ./scripts/hello.sh
+        ```
+
+        ```text
+        hello
+        ```
+
+    === "Windows"
+
+        Name the file `hello.ps1` and type one line. Save.
+
+        ```text
+        Write-Output hello
+        ```
+
+        Run it:
+
+        ```text
+        ./scripts/hello.ps1
+        ```
+
+        ```text
+        hello
+        ```
+
+        The Status Bar shows `CRLF`: a new file on Windows gets the
+        Windows line ending. Show it to your Mac neighbour.
+
+9. **The Windows line ending on a Mac.**
+
+    === "macOS"
+
+        Select `LF` in the Status Bar, choose `CRLF`, save. The file now
+        has the bytes VS Code writes on Windows, as if your neighbour had
+        sent it. Look at the bytes, then run it again:
+
+        ```text
+        hexdump -C scripts/hello.sh
+        ```
+
+        ```text
+        00000000  23 21 2f 62 69 6e 2f 7a  73 68 0d 0a 65 63 68 6f  |#!/bin/zsh..echo|
+        00000010  20 68 65 6c 6c 6f 0d 0a                           | hello..|
+        00000018
+        ```
+
+        ```text
+        ./scripts/hello.sh
+        ```
+
+        ```text
+        zsh: ./scripts/hello.sh: bad interpreter: /bin/zsh^M: no such file or directory
+        ```
+
+        `^M` is the byte `0d`. The Mac ends the first line at `0a` alone,
+        so the name of the program is now `/bin/zsh` followed by `0d`, and
+        no program has that name. The file does not run at all.
+
+    === "Windows"
+
+        Select `CRLF` in the Status Bar, choose `LF`, save, and run it
+        again:
+
+        ```text
+        ./scripts/hello.ps1
+        ```
+
+        ```text
+        hello
+        ```
+
+        PowerShell reads both line endings. Look at your neighbour's
+        screen: the same two bytes stop their file.
+
+10. **Back to LF, then clean up.** On the Mac, select `CRLF` in the Status
+    Bar, choose `LF`, save, and run `./scripts/hello.sh` again: `hello`.
+    Then both delete the script, which the project does not need:
+
+    === "macOS"
+
+        ```text
+        rm scripts/hello.sh
+        ```
+
+    === "Windows"
+
+        ```text
+        rm scripts/hello.ps1
+        ```
+
+    A file that runs on Windows can fail on a Mac with no difference to
+    see in the editor; the Status Bar shows it. To make VS Code write LF
+    in every new file on Windows: `Ctrl+,`, search `eol`, set **Files:
+    Eol** to `\n`.
+
 !!! success "You should now see"
-    39 bytes on every laptop, and `c5 be` for `ž` in the hex view.
+    39 bytes on every laptop, and `c5 be` for `ž` in the hex view. On a
+    Mac, `bad interpreter` for the script with CRLF and `hello` again with
+    LF; on Windows, `hello` with both.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -709,12 +827,15 @@ size, and let the shell measure it.
     | 38 bytes, and no `c5 be` in the hex view | `Uzupis` was typed without `ž`. Copy the line from this page |
     | The size does not change after an edit | The file was not saved: a dot on the tab means *not saved* |
     | Windows: `Cannot find path` | The file is not in `data/raw`, or the terminal is not in `bike-project`. `pwd`, then `ls data/raw` |
+    | macOS: `zsh: permission denied: ./scripts/hello.sh` | `chmod +x scripts/hello.sh` was skipped. Run it, then the script again |
+    | macOS: still `hello` after choosing `CRLF` | The file was not saved after the switch |
+    | Windows: `… cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1. Switch to PowerShell 7 (section 6), or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
 
 ---
 
 ## Part 2 · A large file { #part-2 }
 
-**0:42 to 0:59 · sections 8 to 10**
+**0:49 to 1:06 · sections 8 to 10**
 
 Two files come from the web and are moved in by typed commands. The large
 one has thousands of lines; nobody opens it to count them.
@@ -723,7 +844,7 @@ one has thousands of lines; nobody opens it to count them.
 
 ### 8. Two files, moved in { #files }
 
-**0:42 · 3 min**
+**0:49 · 3 min**
 
 **Tell the room.** The browser saves into **Downloads**. `mv` moves a file:
 first where it is, then where it goes. `~/Downloads/bikes.csv` is the same
@@ -770,7 +891,7 @@ that `Tab` completed has no typing mistake in it.
 
 ### 9. Read and count { #count }
 
-**0:45 · 8 min**
+**0:52 · 8 min**
 
 **Tell the room.** A command has parts: the **program** first, then
 **options** that say how, then **arguments** that say what to work on.
@@ -965,7 +1086,7 @@ argument, a path.
 
 ### 10. Copy, rename, delete { #copy }
 
-**0:53 · 6 min**
+**1:00 · 6 min**
 
 **Tell the room.** `cp` copies, `mv` moves and renames, `rm` deletes. In
 PowerShell the same short words work: they are short names of `Copy-Item`,
@@ -1050,7 +1171,7 @@ for it.
 
 ## Part 3 · Pipes and filters { #part-3 }
 
-**0:59 to 1:16 · sections 11 and 12**
+**1:06 to 1:23 · sections 11 and 12**
 
 So far each command printed its answer. Now the answer of one command
 becomes the input of the next, with `|`, and the last answer goes into a
@@ -1061,7 +1182,7 @@ busiest hour?
 
 ### 11. The ends of a column { #sort }
 
-**0:59 · 8 min**
+**1:06 · 8 min**
 
 **Tell the room.** `A | B` is a **pipe**: what `A` prints goes into `B`,
 not onto the screen. A program that reads, changes and passes on is a
@@ -1182,7 +1303,7 @@ always at an end.
 
 ### 12. Count the mark, keep the rest { #grep }
 
-**1:07 · 9 min**
+**1:14 · 9 min**
 
 **Tell the room.** `grep` and `Select-String` keep the lines that contain a
 text. `,9999$` means: a comma, 9999, and then the end of the line. They can
@@ -1374,7 +1495,7 @@ empties one that exists.
 
 ## Part 4 · Python, a checksum, the README { #part-4 }
 
-**1:16 to 1:43 · sections 13 to 17**
+**1:23 to 1:50 · sections 13 to 17**
 
 Python arrives and runs a program someone else wrote. A checksum shows that
 a file is the same on every laptop, and the README writes down what was
@@ -1384,7 +1505,7 @@ done, as a line anyone can run again.
 
 ### 13. Python, and a program someone else wrote { #python }
 
-**1:16 · 8 min**
+**1:23 · 8 min**
 
 **Tell the room.** A program is a file. To run a Python program, the shell
 needs Python, and finds it in the folders listed in `PATH`. On Windows one
@@ -1489,7 +1610,7 @@ VS Code is restarted, so that its terminal reads the new list.
 
 ### 14. A mean, with and without the mark { #mean }
 
-**1:24 · 4 min**
+**1:31 · 4 min**
 
 **Tell the room.** The same program on the large file. It counts every
 value it finds, the mark too: it cannot know that 9999 means "no count".
@@ -1539,7 +1660,7 @@ value it finds, the mark too: it cannot know that 9999 means "no count".
 
 ### 15. One checksum in the room { #checksum }
 
-**1:28 · 5 min**
+**1:35 · 5 min**
 
 **Tell the room.** A **checksum** is a long number computed from every
 byte of a file. Two files with the same bytes have the same checksum; one
@@ -1629,7 +1750,7 @@ that they hold the same file by reading eight characters aloud.
 
 ### 16. How to rebuild { #readme }
 
-**1:33 · 6 min**
+**1:40 · 6 min**
 
 **Tell the room.** The README of section 5 says what the project is. A
 stranger also needs to know where the data came from, what each column
@@ -1644,8 +1765,8 @@ terminal, not retyped from memory.
 
     - `data/raw/counts.csv`: the two places above, typed by hand.
     - `data/raw/bikes.csv`: two bicycle counters, one row per counter and hour
-      of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`. Generated for the
-      course; the city and its counters are made up.
+      of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`. From the
+      course workbook, Seminar 4.
 
     ## Columns of `bikes.csv`
 
@@ -1693,7 +1814,7 @@ terminal, not retyped from memory.
 
 ### 17. Wrap up { #wrap-up }
 
-**1:39 · 4 min**
+**1:46 · 4 min**
 
 **Tell the room.** Git keeps versions of files, from next week on. It
 writes a name and an address into every version, so it is told both once,
@@ -2259,6 +2380,153 @@ delete what it says can be made again, run its line, and measure.
 !!! success "You should now see"
     `bikes_valid.csv` back in `data/processed`, with the number of lines the
     README states.
+
+---
+
+### 23. The shell's own settings { #settings }
+
+**— · 12 min**
+
+**Tell the room.** Every terminal so far started the same way. A shell
+reads one file of settings when it starts: `~/.zshrc` for zsh, `$PROFILE`
+for PowerShell. What is written there comes back in every new terminal.
+Nothing in this course needs it, and it stays on this laptop: a README
+line always uses the full command.
+
+1. Try an alias and a shorter prompt, for this terminal only.
+
+    === "macOS"
+
+        ```text
+        alias ..='cd ..'
+        ```
+
+        ```text
+        PROMPT='%1~ %# '
+        ```
+
+    === "Windows"
+
+        ```text
+        function .. { Set-Location .. }
+        ```
+
+        ```text
+        function prompt { "$((Get-Item .).Name)> " }
+        ```
+
+    Then go down and up again:
+
+    ```text
+    cd data
+    ```
+
+    ```text
+    ..
+    ```
+
+    The prompt shows only the folder: `data %` and `bike-project %` on a
+    Mac, `data>` and `bike-project>` on Windows. Close the terminal with
+    the bin icon of the Panel and open a new one with `+`: both settings
+    are gone.
+
+2. Write them into the start-up file.
+
+    === "macOS"
+
+        ```text
+        echo "alias ..='cd ..'" >> ~/.zshrc
+        ```
+
+        ```text
+        echo "PROMPT='%1~ %# '" >> ~/.zshrc
+        ```
+
+        ```text
+        tail -n 2 ~/.zshrc
+        ```
+
+        ```text
+        alias ..='cd ..'
+        PROMPT='%1~ %# '
+        ```
+
+    === "Windows"
+
+        The folder of `$PROFILE` may not exist yet. This line makes it,
+        and does nothing if it is there:
+
+        ```text
+        New-Item -Force -ItemType Directory (Split-Path $PROFILE) | Out-Null
+        ```
+
+        ```text
+        Add-Content $PROFILE 'function .. { Set-Location .. }'
+        ```
+
+        ```text
+        Add-Content $PROFILE 'function prompt { "$((Get-Item .).Name)> " }'
+        ```
+
+        ```text
+        Get-Content $PROFILE
+        ```
+
+        ```text
+        function .. { Set-Location .. }
+        function prompt { "$((Get-Item .).Name)> " }
+        ```
+
+3. Open a new terminal with `+`. The short prompt is there, and `..` goes
+   up one folder.
+
+4. **For the curious: a ready-made set.** Show it on the projector; the
+   room may follow.
+
+    === "macOS"
+
+        Oh My Zsh is a collection of zsh settings, 371 plugins and 143
+        prompt themes. It needs Git (section 1). It writes a new
+        `~/.zshrc` and keeps the old one as `~/.zshrc.pre-oh-my-zsh`:
+
+        ```text
+        sh -c "$(curl -fsSL https://install.ohmyz.sh/)"
+        ```
+
+        A new zsh starts with the prompt `➜  bike-project`. The two lines
+        of step 2 are now in `~/.zshrc.pre-oh-my-zsh`; the theme is set by
+        the line `ZSH_THEME="robbyrussell"` in the new `~/.zshrc`. To go
+        back: `uninstall_oh_my_zsh`, which puts the old file back.
+
+    === "Windows"
+
+        Oh My Posh sets the prompt of PowerShell from a theme:
+
+        ```text
+        winget install JanDeDobbeleer.OhMyPosh --source winget
+        ```
+
+        Open a new terminal, so that it finds the program, then:
+
+        ```text
+        Add-Content $PROFILE 'oh-my-posh init pwsh | Invoke-Expression'
+        ```
+
+        A new terminal shows its prompt; some symbols stay boxes until a
+        Nerd Font is installed (ohmyposh.dev, **Fonts**). To go back:
+        `notepad $PROFILE`, delete the last line, save.
+
+!!! success "You should now see"
+    A new terminal whose prompt shows only the folder, and `..` going up one
+    folder.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | macOS: `zsh: permission denied: ..` | The alias is missing. `tail -n 2 ~/.zshrc`, then step 2 again |
+    | Windows: `Could not find a part of the path` | The folder line of step 2 was skipped. Run it, then the two `Add-Content` lines |
+    | Windows: `… cannot be loaded because running scripts is disabled on this system` when a terminal opens | The profile is a script. Run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
+    | A profile path under `OneDrive\Documents` | Correct: OneDrive keeps `Documents` there |
 
 ---
 

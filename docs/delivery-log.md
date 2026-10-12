@@ -369,6 +369,22 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   is optional. Core 1 h 43 min. Handing out files by `git clone` and
   `git pull` fits from Seminar 5 on, from a small repository of its own:
   this repository is 328 MB packed.
+- After a further note ("I will follow the slides during lecture, not
+  showcase a file, I will showcase something during seminar"; "the slides
+  should be self contained and not mention a specific file, the seminars
+  can mention specific files"): the "made up / generated for the course"
+  labels left the slides, the lecture pages and the handed-out READMEs,
+  and no slide or note of Lectures 01 to 04 asks to open, type or install
+  anything beside the deck. Example names and paths stay where the slide
+  shows everything; the provenance of the weather log is told in the
+  story (the station's operator, by e-mail, CC0). Lecture 04 gains three
+  slides on the shell's own settings (an alias and a prompt, `~/.zshrc`
+  and `$PROFILE`, Oh My Zsh with Oh My Posh and Starship), 73 to 75, in the
+  90-minute skip list. Seminar 4 gains, in section 7, a two-line script
+  that runs on a Mac with LF and stops with `bad interpreter:
+  /bin/zsh^M` once saved with CRLF (warm-up now 49 min, core 1 h 50 min),
+  and an optional section 23 that writes the same settings into the
+  start-up files and shows Oh My Zsh or Oh My Posh.
 
 **Open**
 
@@ -379,6 +395,11 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   other outputs were run in zsh 5.9 and PowerShell 7.6.6 on Linux. The
   same holds for Seminars 1, 3 and 4 (listed on their pages' worker notes:
   VS Code counters and keys not tried on real laptops).
+- Not run on a Mac or Windows either: the Oh My Zsh install and
+  `uninstall_oh_my_zsh`, Oh My Posh by `winget` and its profile line, and
+  the `$PROFILE` path on Windows. The zsh and PowerShell lines of Seminar 4
+  section 23 and the `bad interpreter` message ran in zsh 5.9.2 and
+  PowerShell 7.6.6 on Linux.
 - Lectures 05 to 16 and Seminars 5 to 16 still use the pendulum table and
   the LHCb file, and some assume files that Seminar 4 no longer makes
   (Seminar 5: checksums of `D0_KPi.csv`; Seminar 6 and Lecture 6:

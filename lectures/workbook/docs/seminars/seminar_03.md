@@ -73,9 +73,8 @@ the board instead. Every section of Part 3 and Part 4 starts from the folder
       `Format-Hex` differs a little between them; the bytes are the same.
 
 ??? info "Files for this seminar"
-    The files are made up for this seminar by
-    [`inbox_files.py`](../data/inbox_files.py). Each one hides a single thing
-    that only its bytes show.
+    Each file hides a single thing that only its bytes show. They were made
+    by [`inbox_files.py`](../data/inbox_files.py).
 
     | File | What it is |
     |--|--|
@@ -294,8 +293,8 @@ sorts the files into folders, all from the terminal.
 **0:20 · 10 min**
 
 **Tell the room.** The files for today come as a zip: seven everyday files
-copied from an old laptop. They were made up for this seminar. Each hides
-one thing that only its bytes show. `notes.md` lists the three questions of
+copied from an old laptop. Each hides one thing that only its bytes
+show. `notes.md` lists the three questions of
 the day.
 
 1. Download [`inbox.zip`](../data/inbox.zip).

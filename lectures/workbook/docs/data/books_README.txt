@@ -1,7 +1,7 @@
 # Reading Project
 
-A made-up reading list and the loans log of a made-up library, used to
-practise VS Code and Markdown.
+A reading list and the loans log of a library, used to practise VS Code
+and Markdown.
 
 ## Folders
 
@@ -15,8 +15,7 @@ practise VS Code and Markdown.
 
 ## Data
 
-- **Source:** generated for the course by `books_files.py`; the list and
-  the library are made up, the titles are real books
+- **Source:** the course workbook, Seminar 1 page
 - **Licence:** CC0
 - **Received:** 2026-09-29
 - **File:** `data/raw/reading_list.csv`, 546 bytes, 12 books,

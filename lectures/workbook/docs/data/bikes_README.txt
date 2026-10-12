@@ -23,8 +23,8 @@ Course pages: [the workbook](https://mindaugassarpis.github.io/CERN_lessons_on_d
 
 - `data/raw/counts.csv`: the two places above, typed by hand.
 - `data/raw/bikes.csv`: two bicycle counters, one row per counter and hour
-  of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`. Generated for the
-  course; the city and its counters are made up.
+  of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`. From the
+  course workbook, Seminar 4.
 
 ## Columns of `bikes.csv`
 

@@ -13,7 +13,6 @@ title: "How Computers Work"
 
 <!--
 **Say:** today is what a computer stores, from one bit up to a whole file, and how it runs a list of instructions on it. No programming today.
-**Do:** keep VS Code open beside the slides, with the folder `weather-project`.
 (~1 min)
 -->
 
@@ -65,10 +64,8 @@ Ten lines: a header, and the daily mean temperature of nine days at a weather st
 
 </div>
 
-<div class="note-text mt-sm">The station is made up. Its files were generated for this course and behave like a real station's log.</div>
-
 <!--
-**Do:** open `data/processed/daily.csv` in the folder `weather-project`. Show its size: Cmd+I in Finder, or Properties in Explorer.
+**If asked:** the size is in Finder with Cmd+I, or in Properties in Explorer.
 **Ask:** how many characters has one line? Let the room count `2025-10-01,6.3`: 14.
 **Say:** by the end of the lecture every one of the 148 bytes has a name.
 (~2 min)
@@ -1789,7 +1786,6 @@ hideInToc: true
 <div class="note-text mt-sm"><code>ą</code> is two bytes in UTF-8, <code>C4 85</code>, and one byte in the Baltic table Windows-1257, <code>E0</code>. <code>a</code> to <code>z</code> are the same byte in every table.</div>
 
 <!--
-**Do:** open a file with Lithuanian letters, select `UTF-8` in the Status Bar, Reopen with Encoding, Baltic (Windows 1257): the letters turn into Ä and Å. Reopen as UTF-8: they are back. Nothing in the file changed.
 **Say:** this is why names of files and folders keep to `a` to `z`.
 (~3 min)
 -->
@@ -1983,7 +1979,6 @@ hideInToc: true
 <div class="note-text mt-sm">Two extensions can share a name. The publisher is the check.</div>
 
 <!--
-**Do:** install it live, then right-click `data/processed/daily.csv`, Open With…, Hex Editor.
 **Say:** a `.csv` opens as text by default. Open With chooses the viewer for this one opening.
 (~2 min)
 -->
@@ -2198,7 +2193,6 @@ hideInToc: true
 <div class="note-text mt-sm">The key is <code>Ctrl+`</code> on both systems: the backtick, left of <code>1</code>. The same shells also run in the apps called Terminal on macOS and on Windows.</div>
 
 <!--
-**Do:** open the terminal on the projector. Make the font larger with Ctrl and + if the back row cannot read it.
 **If asked:** `powershell` is Windows PowerShell 5.1, `pwsh` is PowerShell 7. Both run every line of this section.
 (~2 min)
 -->
@@ -2294,8 +2288,8 @@ C:\Users\ada\Documents\weather-project
 </div>
 
 <!--
-**Do:** type `pwd` and read the answer from left to right as a walk down the folders.
-**Ask:** why do three laptops print three different paths? The user names differ.
+**Do:** read the answer from left to right as a walk down the folders.
+**Ask:** why would three laptops print three different paths? The user names differ.
 (~2 min)
 -->
 
@@ -2340,13 +2334,13 @@ Mode                 LastWriteTime         Length Name
 d----          2026-10-13    10:12                data
 d----          2026-10-13    10:12                results
 d----          2026-10-13    10:12                scripts
--a---          2026-10-13    10:12            772 README.md
+-a---          2026-10-13    10:12            688 README.md
 ```
 
 </div>
 
 <!--
-**Do:** type `ls`, then compare with the Side Bar of VS Code: the same four names.
+**Say:** the same four names as in the Side Bar of VS Code.
 **Say:** zsh prints names only. The date column follows the laptop's language settings.
 (~2 min)
 -->
@@ -2385,7 +2379,7 @@ PS C:\Users\ada\Documents\weather-project>
 <div class="note-text mt-sm"><code>data</code> is a <b>relative</b> path: it starts at the working directory. <code>..</code> is the folder above. The prompt shows every move.</div>
 
 <!--
-**Do:** go down into `data`, then `processed`, then back up with `cd ../..`. Watch the prompt.
+**Do:** follow the prompt line by line: after each `cd` it names the new folder.
 **Say:** `cd` with no path goes to the home folder; `cd ~/Documents/weather-project` comes back from anywhere.
 (~2 min)
 -->
@@ -2427,7 +2421,6 @@ d----          2026-10-13    10:14                backup
 <div class="note-text mt-sm">The same word in both shells, <b>make directory</b>. zsh prints nothing, PowerShell prints the new folder. The Side Bar of VS Code shows it at once.</div>
 
 <!--
-**Do:** type it and point at `backup` appearing in the Side Bar.
 **Say:** a name without spaces is one word for the shell. `my backup` would be read as two names.
 (~1 min)
 -->
@@ -2474,7 +2467,7 @@ Moves a file. A new name in the same folder renames it.
 <div class="note-text mt-sm">In PowerShell, <code>ls backup</code> prints the table of the last slides, with <b>Length</b> 148: the copy has every byte.</div>
 
 <!--
-**Do:** type the three lines; in PowerShell `PS>` stands where zsh has `%`.
+**Say:** in PowerShell `PS>` stands where zsh has `%`.
 **Say:** `cp` replaces a file of the same name without asking, in both shells.
 (~2 min)
 -->
@@ -2503,7 +2496,7 @@ hideInToc: true
 </div>
 
 <!--
-**Do:** say the name aloud before pressing Enter.
+**Say:** read the name before pressing Enter: `rm` has no undo.
 **Say:** `-r` is an option: it changes how `rm` works, here "the folder and all inside it".
 **If asked:** in PowerShell `rm` is a short name for `Remove-Item`, and `-r` for `-Recurse`.
 (~2 min)
@@ -2552,7 +2545,6 @@ PS> (Get-Item data/processed/daily_crlf.csv).Length
 </div>
 
 <!--
-**Do:** first make the copy: `cp data/processed/daily.csv data/processed/daily_crlf.csv`. Open the copy, select `LF` in the Status Bar, choose `CRLF`, save. Then measure both.
 **Say:** the size is exact to the byte, unlike KB in a file manager.
 (~2 min)
 -->
@@ -2593,7 +2585,7 @@ PS> Format-Hex data/processed/daily.csv
 <div class="note-text mt-sm">The same bytes as in the Hex Editor. <code>hexdump</code> ends on the size in hex: 0x94 = 9 × 16 + 4 = 148.</div>
 
 <!--
-**Do:** run your shell's line and find the first `0a`.
+**Do:** find the first `0a` with the room.
 **Say:** a `hexdump` line has 16 bytes; 148 bytes take 9 full lines and 4 bytes.
 **If asked:** Format-Hex also prints a Label line with the path and two header lines; Windows PowerShell 5.1 prints the same bytes in an older layout.
 (~2 min)
@@ -2738,7 +2730,7 @@ B68430C5…721A899E
 
 <!--
 **Say:** the slide shortens the 64 digits to the first and last eight. Lower or upper case is the same number.
-**Ask:** is the `daily.csv` on your laptop the same 148 bytes as on mine? Compare the first and the last eight digits.
+**Ask:** two people each have a `daily.csv`. How do they know it is the same 148 bytes? Compare the first and the last eight digits.
 (~2 min)
 -->
 

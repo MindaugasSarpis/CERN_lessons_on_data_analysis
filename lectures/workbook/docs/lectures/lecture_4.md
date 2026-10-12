@@ -7,9 +7,7 @@ laptop, and one command per slide. Every command is shown in two shells side
 by side: `zsh` on macOS and PowerShell 7 on Windows.
 
 One small project folder runs through the lecture: `weather-project`, the
-log of a weather station. The station is made up. A script generated its
-files for the course, and they behave like a real station's log. The
-lecture opens with three questions about the log: how many lines, what is on
+log of a weather station. The lecture opens with three questions about the log: how many lines, what is on
 line 5000, and which hour was the coldest. Typed lines answer all three. The
 third answer is −999 °C, which is not a measurement but the mark the
 logger wrote while its thermometer was down.
@@ -50,7 +48,9 @@ logger wrote while its thermometer was down.
    stand-in in `WindowsApps` answers `Python was not found`; a package
    manager's five jobs, with `winget` and Homebrew; pip and PyPI;
    `pip install numpy` measured; one shared Python breaking a project; a
-   virtual environment; `requirements.txt`.
+   virtual environment; `requirements.txt`; settings that stay: an alias
+   and a prompt, the start-up files `~/.zshrc` and `$PROFILE`, and Oh My
+   Zsh, Oh My Posh and Starship as ready-made settings.
 8. **Checksums & backups**: SHA-256 as one command in each shell; a list of
    checksums for `data/raw`; one digit changed; how files are lost; the
    3-2-1 rule with its arithmetic.
@@ -58,43 +58,18 @@ logger wrote while its thermometer was down.
    rebuild, one line per shell, and its test; the licence; which copy of
    the cleaned export the README means.
 
-## Before the lecture
+## Showing the slides offline
 
-- Download [`weather_project.zip`](../data/weather_project.zip) and unzip
-  it into `Documents` on each laptop you show. It holds the folder
-  `weather-project`: the README, `data/raw/weather.csv`,
-  `data/raw/daily_export.csv`, and in `scripts` the two handed-out programs
-  [`clean_export.py`](../data/cli_clean_export.py){ download="clean_export.py" }
-  and [`column_stats.py`](../data/cli_column_stats.py){ download="column_stats.py" }.
-  The files are made by
-  [`weather_files.py`](../data/weather_files.py){ download="weather_files.py" }.
-- Open the folder in VS Code (**File > Open Folder**) with a terminal in the
-  Panel. Python 3.14 from python.org is needed from slide 59 on.
-- **Run once before the lecture, and correct the slide if it differs.**
-  These lines were not run on a Mac or on Windows: the `chsh` dialogue
-  (slide 11), the `winget` output (slide 13), the `ls` table of PowerShell
-  (slide 20; its date column follows the laptop's settings), `which python3`
-  and `(Get-Command python).Source` (slide 64), the two `PATH` listings
-  (slide 65). Every other output was run in `zsh` 5.9 and PowerShell 7.6.6
-  on Linux on the same files; macOS formats (`wc`, `uniq -c`, error
-  messages) and the Windows CRLF sizes were then written by hand from the
-  rules on the slides. The pip and venv numbers (slides 67–72) are from
-  Python 3.14.8 on Linux.
-- **The demos leave files behind**: `results/note.txt`, `results/copy.csv`,
-  `data/processed/daily.csv`, `data/processed/weather_valid.csv`,
-  `data/checksums.txt`, `.venv`, `requirements.txt`. Unzip a fresh copy for
-  the next group.
-
-To show the slides offline: `node scripts/serve-local.mjs 8123`, then open
+`node scripts/serve-local.mjs 8123`, then open
 `http://localhost:8123/04-command-line-and-files/`.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–86. Its speaker notes add up to about 160 minutes.
+The lecture is slides 1–89. Its speaker notes add up to about 167 minutes.
 The plan below takes 91 of them: it keeps every idea the core of Seminar 4
 uses, and leaves the ideas of the seminar's optional sections (regular
 expressions, the virtual environment, the list of checksums) for a longer
-slot. Slide 87 opens the self-check section, and slides 88–97 are its ten
+slot. Slide 90 opens the self-check section, and slides 91–100 are its ten
 quizzes: they take no lecture time. To jump, type the slide number and
 press Enter.
 
@@ -107,8 +82,8 @@ press Enter.
 | 0:59 | 40–41, 43, 46–48, 50 | `>`, the pipe, `sort`, the ends of a column (−999), `grep`, `data/processed` |
 | 1:12 | 57, 59, 62 | `clean_export.py` run and measured, what 120 rows do to a mean |
 | 1:18 | 63, 65 | `PATH`, and "Python was not found" |
-| 1:22 | 73–74 | The checksum of a file |
-| 1:25 | 79, 82, 85–86 | How to rebuild, which copy the README means, the Recap |
+| 1:22 | 76–77 | The checksum of a file |
+| 1:25 | 82, 85, 88–89 | How to rebuild, which copy the README means, the Recap |
 | 1:31 | | Move to the seminar |
 
 The second table lists what the plan skips. In a 2-hour slot, add the rows
@@ -129,14 +104,15 @@ marked **add**: about 20 minutes.
 | Where a Program Comes From; A Package Manager; pip; `pip install numpy`; One Python, Every Project | 64, 66–69 | 10 min | |
 | A Virtual Environment; requirements.txt | 70, 72 | 5 min | add |
 | An Empty Environment, Filled | 71 | 2 min | |
-| A List of Checksums for `data/raw` | 75 | 2 min | add |
-| One Digit Changed; How Files Are Lost; the 3-2-1 Rule | 76–78 | 5 min | |
-| What a Stranger Asks; Columns and Units; Test the Section; The Licence | 80–81, 83–84 | 9 min | |
+| An Alias and a Prompt; A File the Shell Runs at Start; Ready-Made Settings: Oh My Zsh | 73–75 | 6 min | |
+| A List of Checksums for `data/raw` | 78 | 2 min | add |
+| One Digit Changed; How Files Are Lost; the 3-2-1 Rule | 79–81 | 5 min | |
+| What a Stranger Asks; Columns and Units; Test the Section; The Licence | 83–84, 86–87 | 9 min | |
 
 - **Never skip** slide 6 (the three questions), 17 (the prompt), 19–21
   (`pwd`, `ls`, `cd`), 23 (relative paths), 24 (the parts of a command),
   43 (the pipe), 47–48 (−999 found, and where), 62 (the mean), 65 (`PATH`),
-  74 (the checksum), 85 (which copy) and 86 (the Recap).
+  77 (the checksum), 88 (which copy) and 89 (the Recap).
 - **The three questions of slide 6 are answered on slides 33, 43 and 47.**
   Point back to slide 6 at each.
 - **A room that had Lecture 02 in its version of 12 October** has met the
@@ -144,20 +120,20 @@ marked **add**: about 20 minutes.
   same check by a typed line: ask the room what the coldest hour will be
   before running it. In 2026 the room had the earlier Lecture 02, so the
   mark is new to it.
-- **Slides 10–15 are for both systems.** Show your own system live and read
-  the other aloud. Installing is done with the room in the seminar, not
-  here.
-- **Every speaker note has the same form**: **Do** (what to type or show),
+- **Slides 10–15 are for both systems.** Read both columns. Installing is
+  done with the room in the seminar, not here.
+- **The slides carry everything.** Every command is on its slide with its
+  output in both shells, so nothing is opened beside the deck.
+- **Every speaker note has the same form**: **Do** (something done with the
+  room: the board, a show of hands),
   **Say** (the one point of the slide), **Ask** (a question for the room),
   **If asked** (the detail kept off the slide), then the minutes. In
   presenter mode the note is on the right of the slide.
-- **Slide 76** (One Digit Changed): change the digit in a copy of the
-  project, never in the folder of the lecture.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 87–97: ten quiz slides for students to try afterwards. The same
+slides 90–100: ten quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. The terminal is in `weather-project/results`. Which path names the raw
@@ -221,19 +197,22 @@ questions, with their answers:
 ## Paired seminar
 
 [Seminar 4 — Work on Files from the Shell](../seminars/seminar_04.md)
-starts from an empty folder. Its first 42 minutes are a warm-up that
+starts from an empty folder. Its first 49 minutes are a warm-up that
 revisits Seminars 1 and 3 by hand while the installs run: the regions of
 VS Code, terminal, shell and prompt, a project folder made with `mkdir`, a
 README in Markdown, the switch to PowerShell 7, and a three-line file typed
 from the page and measured byte by byte (one letter of two bytes, LF
-against CRLF). Then it follows this lecture's order on files of its own,
-two years of hourly counts from two made-up bicycle counters: read and
+against CRLF), then a two-line script that runs on a Mac with LF and does
+not run at all with the CRLF that VS Code writes on Windows. Then it
+follows this lecture's order on files of its own, two years of hourly
+counts from two bicycle counters: read and
 count, copy and delete, the mark `9999` at an end of a sorted column,
 `grep` and a clean copy, Python and `column_stats.py`, one checksum in the
 room, and the README's *How to rebuild*. The core needs two downloads,
 `bikes.csv` and `column_stats.py`. The cleaning script, regular
-expressions, a virtual environment, a list of checksums and a test of the
-README are its optional sections.
+expressions, a virtual environment, a list of checksums, a test of the
+README and the shell's own settings (an alias, a prompt, Oh My Zsh or Oh
+My Posh) are its optional sections.
 
 ## What left the deck
 

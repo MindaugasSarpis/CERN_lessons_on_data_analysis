@@ -18,6 +18,5 @@ mean temperatures typed into a spreadsheet from it.
   2025-12-31 23:00.
 - `data/raw/daily_export.csv`: the daily mean temperature of 1 to 9 October
   2025, exported from a spreadsheet.
-- **Source:** generated for the course by `weather_files.py`. The station is
-  made up; the files behave like a real station's log.
+- **Source:** the station's operator, by e-mail
 - **Received:** 2026-10-13

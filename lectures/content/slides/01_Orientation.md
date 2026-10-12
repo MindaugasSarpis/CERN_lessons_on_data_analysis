@@ -79,7 +79,6 @@ time,temp_c,humidity_pct,wind_ms
 - One row per hour, 2016 to 2025: **87 672 rows**
 - Temperature in °C, humidity in %, wind in m/s
 - While the sensor was down, the logger wrote **−999**
-- A made-up station, generated for this course. It has the faults of a real one
 
 </div>
 

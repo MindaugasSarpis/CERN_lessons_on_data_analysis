@@ -8,10 +8,8 @@ check it?* The answers the room gives sort into four piles, and the four piles
 are the four aims of the course. The lecture answers the question again at the
 end, then runs the film reel from the cosmos down to the LHCb detector.
 
-The station is made up. Its files are generated for the course by
-[`weather_files.py`](../data/weather_files.py) and behave like a real
-station's log: a yearly and a daily cycle, and five days in July 2019 when
-the sensor was down and the logger wrote `-999`.
+The log has a yearly and a daily cycle, and five days in July 2019 when the
+sensor was down and the logger wrote `-999`.
 
 ## What the lecture covers
 
