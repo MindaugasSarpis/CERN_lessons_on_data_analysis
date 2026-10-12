@@ -407,8 +407,44 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   slide and section by section, and fixed in place (notes, bridges,
   arithmetic, run-sheet sums, Watch-for rows).
 
+- **Slide text, at the lecturer's request (12 October, evening).** "One
+  Row, Four Values" and "Three Questions" were called empty slogans that add
+  no meaning; "Terminal, Shell, Program" over the cards Terminal, Shell and
+  Program was called repeated; "This course uses PowerShell 7. The next
+  slide installs it…" was called something said in words; "don't need to
+  say what's on the next slides". Section slides stay, as pauses for
+  questions, and titles that state the step ("Read the Prompt", "Where Am I:
+  `pwd`") stay. In Lecture 04 every slogan title was rewritten or removed
+  (three slides now have no title), every forward reference and narration
+  line went from slides and notes, and section subtitles no longer list the
+  next slides. Seminar 4's headings say what each section does, with the
+  same anchors. The rule is CLAUDE.md convention 15 and the project skill
+  `.claude/skills/writing-lecture-slides`.
+- **Lecture 04 content (12 October, evening).** Reviewed for coherence: a
+  first shell script, which the course spec lists after Lecture 04, was
+  missing, and the checksum section opened on 148 against 158 bytes from
+  sixteen slides earlier. Now: the five install slides are two (macOS: check
+  the shell, with what a variable is; Windows: install PowerShell 7);
+  slide 8 defines terminal, shell and program precisely; *Checksums &
+  Backups* comes before *Tools & Environments*; two slides on a first shell
+  script close the README section (`#!/bin/zsh`, `chmod +x`, `./`, and
+  stopping at the first error: `set -e`, and in PowerShell both
+  `$ErrorActionPreference = 'Stop'` and
+  `$PSNativeCommandUseErrorActionPreference = $true`, because `Stop` alone
+  does not stop at a failing `python`); one quiz on `$?`. Slide 4 links
+  `weather_project.zip`. Five slides have a `**Live:**` moment (Tab and
+  history, the line count, line 5000, the pipe built filter by filter, the
+  rebuild script; the checksum check optional), listed with setup on the
+  lecture page. The deck is 101 slides, 158 min by the timing model, 177 by
+  the notes; the 90-minute plan ends at 1:31.
+
 **Open**
 
+- The script outputs of Lecture 04 slides 85 and 86 ran in zsh 5.9.2 and
+  PowerShell 7.6.6 on Linux; the Windows paths in them are shortened by
+  hand. Lectures 01 to 03 have slogan titles of the same kind ("Two People,
+  Two Answers", "One Table, Three Files", "One Row, Two Sizes", "One Table,
+  148 Bytes") and are not swept yet.
 - Not run on a Mac or a Windows laptop: in Lecture 04 the `chsh` dialogue,
   the `winget` output, PowerShell's `ls` table, the `which` and
   `Get-Command` paths and the `PATH` listings; macOS formats of `wc` and

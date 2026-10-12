@@ -15,10 +15,10 @@ logger wrote while its thermometer was down.
 ## What the lecture covers
 
 1. **Set up the shell**: terminal, shell and program as three things; one
-   shell per system; on macOS, check that the shell is `zsh` and make it the
-   default with `chsh -s /bin/zsh` if an old account still starts bash; on
-   Windows, the two PowerShells, PowerShell 7.6.6 installed with one
-   `winget` line, and opened as `pwsh`; the terminal of VS Code and its
+   shell per system; on macOS, `echo $SHELL` (and what a variable is), and
+   `chsh -s /bin/zsh` if an old account still starts bash; on Windows,
+   Windows PowerShell 5.1 next to PowerShell 7.6.6, installed with one
+   `winget` line and opened as `pwsh`; the terminal of VS Code and its
    default profile.
 2. **First commands**: the prompt read part by part; `echo`; `pwd`, `ls`
    and `cd`; absolute and relative paths, `.`, `..` and `~`; program,
@@ -44,7 +44,10 @@ logger wrote while its thermometer was down.
    bytes come from when PowerShell writes the lines; the handed-out
    `column_stats.py`; what 120 marked rows do to a mean, 7.16 against
    5.78 °C.
-7. **Tools & environments**: where a program comes from, with Python and
+7. **Checksums & backups**: SHA-256 as one command in each shell; a list of
+   checksums for `data/raw`; one digit changed; how files are lost; the
+   3-2-1 rule with its arithmetic.
+8. **Tools & environments**: where a program comes from, with Python and
    `conda` from Miniforge; `PATH`, and why a stand-in in `WindowsApps`
    answers `Python was not found`; a package manager's five jobs, with
    `winget` and Homebrew; settings that stay: an alias and a prompt, the
@@ -56,11 +59,11 @@ logger wrote while its thermometer was down.
    as a change of `PATH`; `conda install numpy` measured; `environment.yml`
    from `conda env export --from-history`, and why the full export works
    on one system only.
-8. **Checksums & backups**: SHA-256 as one command in each shell; a list of
-   checksums for `data/raw`; one digit changed; how files are lost; the
-   3-2-1 rule with its arithmetic.
-9. **The README**: what a stranger still asks; columns and units; how to
-   rebuild, one line per shell, and its test; the licence; which copy of
+9. **The README**: what it must still answer; columns and units; how to
+   rebuild, one line per shell, and its test; the rebuild lines as a shell
+   script (`#!/bin/zsh`, `chmod +x`, `./`), and a script that stops at its
+   first error (`set -e`; in PowerShell `$ErrorActionPreference` and
+   `$PSNativeCommandUseErrorActionPreference`); the licence; which copy of
    the cleaned export the README means.
 
 ## Showing the slides offline
@@ -68,79 +71,124 @@ logger wrote while its thermometer was down.
 `node scripts/serve-local.mjs 8123`, then open
 `http://localhost:8123/04-command-line-and-files/`.
 
+Slide 4 links the project folder as
+[`weather_project.zip`](../data/weather_project.zip) (565 KB): both data
+files, the README and the two scripts. Every command of the lecture runs on
+it.
+
 ## The lecture in 90 minutes
 
-The lecture is slides 1–90. Its speaker notes add up to about 169 minutes.
-The plan below takes 92 of them: it keeps every idea the core of Seminar 4
-uses, and leaves the ideas of the seminar's optional sections (regular
-expressions, a conda environment for the project, the list of checksums)
-for a longer slot. Slide 91 opens the self-check section, and slides 92–101
-are its ten
-quizzes: they take no lecture time. To jump, type the slide number and
-press Enter.
+The lecture is slides 1–89. Its speaker notes add up to about 177 minutes,
+live moments included. The plan below takes 91 of them: it keeps every idea
+the core of Seminar 4 uses, and leaves the ideas of the seminar's optional
+sections (regular expressions, a conda environment for the project, the
+list of checksums) for a longer slot. Slide 90 opens the self-check
+section, and slides 91–101 are its eleven quizzes: they take no lecture
+time. To jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–2, 4–6 | The goal, the folder, one row, three questions |
-| 0:09 | 7–15 | Set up the shell: zsh on macOS, PowerShell 7 on Windows, the terminal of VS Code |
-| 0:25 | 16–26, 29 | Prompt, `echo`, `pwd`, `ls`, `cd`, paths, the parts of a command, spaces, `Tab`, an error |
-| 0:45 | 30–31, 33–38 | `head` and `tail`, counting lines and bytes, `mkdir`, `cp`, `mv`, `rm`, wildcards |
-| 0:59 | 40–41, 43, 46–48, 50 | `>`, the pipe, `sort`, the ends of a column (−999), `grep`, `data/processed` |
-| 1:12 | 57, 59, 62 | `clean_export.py` run and measured, what 120 rows do to a mean |
-| 1:18 | 65, 70 | `PATH`, "Python was not found", and the `(base)` that `conda init` puts in the prompt |
-| 1:23 | 77–78 | The checksum of a file |
-| 1:26 | 83, 86, 89–90 | How to rebuild, which copy the README means, the Recap |
-| 1:32 | | Move to the seminar |
+| 0:00 | 1–2, 4–6 | The goal, the project folder, the columns of `weather.csv`, three questions |
+| 0:09 | 7–11 | Set up the shell: zsh on macOS, PowerShell 7 on Windows |
+| 0:19 | 13–14, 16–21, 23, 26 | Prompt, `pwd`, `ls`, `cd`, paths, the parts of a command, `Tab` (live), an error |
+| 0:38 | 27–28, 30–34 | `head` and `tail`, counting lines (live) and bytes, `mkdir`, `cp`, `mv`, `rm` |
+| 0:51 | 37–38, 40, 43–45, 47 | `>`, the pipe (live), `sort`, the ends of a column (live, −999), `grep`, `data/processed` |
+| 1:07 | 54, 56, 59 | `clean_export.py` run and measured, the mean with and without the −999 rows |
+| 1:13 | 60–61 | The checksum of a file |
+| 1:16 | 68, 73 | `PATH`, "Python was not found", and the `(base)` that `conda init` puts in the prompt |
+| 1:21 | 80, 83, 85, 88–89 | How to rebuild, the rebuild script (live), which copy the README means, the Recap |
+| 1:31 | | Move to the seminar |
 
 The second table lists what the plan skips. In a 2-hour slot, add the rows
-marked **add**: about 26 minutes.
+marked **add**: about 29 minutes.
 
 | Skipped in 90 minutes | Slides | Saves | 2-hour slot |
 |--|--|--|--|
 | Learning Objectives | 3 | 1 min | |
-| History, Stop, Clear; Help on a Command | 27–28 | 4 min | |
-| The Whole File: `cat`; The Project Folder, from the Shell | 32, 39 | 3 min | |
-| 24 Characters, 26 or 28 Bytes | 42 | 2 min | add |
-| The Pipe Carries Text or Objects; Columns | 44–45 | 4 min | add |
-| Count Groups: `uniq -c` | 49 | 2 min | |
-| Regular Expressions; A Pattern Instead of a Text | 51–52 | 3 min | add |
-| Signs for One Character; Signs for How Many and Where; the Find box; Capture Groups | 53–56 | 12 min | |
-| A Program Is a Text File; A Program for 87 672 Rows | 58, 61 | 4 min | add |
-| Where 158 Bytes Come From | 60 | 2 min | |
-| Tools & Environments; Where a Program Comes From; A Package Manager | 63–64, 66 | 5 min | |
-| An Alias and a Prompt; A File the Shell Runs at Start; Ready-Made Settings: Oh My Zsh | 67–69 | 6 min | |
-| `conda`: Packages and Environments; One Python, Every Project; An Environment Is a Folder; Activation Changes PATH | 71–74 | 9 min | add |
-| `conda install numpy`, Measured | 75 | 2 min | |
-| environment.yml: the List, Written Down | 76 | 2 min | add |
-| A List of Checksums for `data/raw` | 79 | 2 min | add |
-| One Digit Changed; How Files Are Lost; the 3-2-1 Rule | 80–82 | 5 min | |
-| What a Stranger Asks; Columns and Units; Test the Section; The Licence | 84–85, 87–88 | 9 min | |
+| Open a Terminal in VS Code | 12 | 2 min | |
+| Run a Command: `echo`; Spaces in Names | 15, 22 | 2 min | |
+| Keys for the Shell; Help on a Command | 24–25 | 4 min | |
+| The Whole File: `cat`; Many Files at Once: Wildcards; Where Commands Read and Write | 29, 35–36 | 5 min | |
+| Why the Sizes Differ: Line Endings | 39 | 2 min | add |
+| zsh Pipes Text, PowerShell Pipes Objects; Pick Columns | 41–42 | 4 min | add |
+| Count Rows per Year: `uniq -c` | 46 | 2 min | |
+| Regular Expressions; Below Freezing: a Fixed Text or a Pattern | 48–49 | 3 min | add |
+| Signs for One Character; Signs for How Many and Where; Regex in VS Code's Find Box; Replace with Capture Groups | 50–53 | 12 min | |
+| A Program Is a Text File; The Mean of a Column | 55, 58 | 4 min | add |
+| PowerShell's `>` Adds CRLF | 57 | 2 min | |
+| A List of Checksums for `data/raw` | 62 | 2 min | add |
+| A Changed File Fails the Check; How Files Are Lost; Backups: the 3-2-1 Rule | 63–65 | 5 min | |
+| Tools & Environments; Where a Program Comes From; A Package Manager | 66–67, 69 | 5 min | |
+| An Alias and a Prompt; A File the Shell Runs at Start; Ready-Made Settings: Oh My Zsh | 70–72 | 6 min | |
+| `conda`: Packages and Environments; An Upgrade for One Project Breaks Another; An Environment Is a Folder; Activation Changes PATH | 74–77 | 9 min | add |
+| Install numpy into One Environment | 78 | 2 min | |
+| Write the Environment Down: `environment.yml` | 79 | 2 min | add |
+| What the README Must Answer; Columns and Units; Test the Rebuild Lines; Licence | 81–82, 84, 87 | 9 min | |
+| Stop at the First Error | 86 | 3 min | add |
 
-- **Never skip** slide 6 (the three questions), 17 (the prompt), 19–21
-  (`pwd`, `ls`, `cd`), 23 (relative paths), 24 (the parts of a command),
-  43 (the pipe), 47–48 (−999 found, and where), 62 (the mean), 65 (`PATH`),
-  78 (the checksum), 89 (which copy) and 90 (the Recap).
-- **The three questions of slide 6 are answered on slides 33, 43 and 47.**
+- **Never skip** slide 6 (the three questions), 14 (the prompt), 16–18
+  (`pwd`, `ls`, `cd`), 20 (relative paths), 21 (the parts of a command),
+  40 (the pipe), 44–45 (−999 found, and where), 59 (the mean), 61 (the
+  checksum), 68 (`PATH`), 85 (the rebuild script), 88 (which copy) and 89
+  (the Recap).
+- **The three questions of slide 6 are answered on slides 30, 40 and 44.**
   Point back to slide 6 at each.
 - **A room that had Lecture 02 in its version of 12 October** has met the
-  mark −999 already, found there with `Ctrl+F`. Slide 47 then becomes the
+  mark −999 already, found there with `Ctrl+F`. Slide 44 then becomes the
   same check by a typed line: ask the room what the coldest hour will be
   before running it. In 2026 the room had the earlier Lecture 02, so the
   mark is new to it.
-- **Slides 10–15 are for both systems.** Read both columns. Installing is
+- **Slides 10–11 are for both systems.** Read both columns. Installing is
   done with the room in the seminar, not here.
 - **The slides carry everything.** Every command is on its slide with its
-  output in both shells, so nothing is opened beside the deck.
-- **Every speaker note has the same form**: **Do** (something done with the
-  room: the board, a show of hands),
-  **Say** (the one point of the slide), **Ask** (a question for the room),
-  **If asked** (the detail kept off the slide), then the minutes. In
-  presenter mode the note is on the right of the slide.
+  output in both shells. The few live moments below run the same lines in
+  a terminal first; the slide after them is the record.
+- **Every speaker note has the same form**: **Live** (a line run in the
+  terminal, only on the slides below), **Do** (something done with the
+  room: the board, a show of hands), **Say** (the one point of the slide),
+  **Ask** (a question for the room), **If asked** (the detail kept off the
+  slide), then the minutes. In presenter mode the note is on the right of
+  the slide.
+
+## Live in the lecture
+
+Five moments run in a terminal what their slide shows, because a slide
+cannot show a key being pressed or a line growing. Each costs about a
+minute more than the slide alone, and the minutes above include it. If a
+line misbehaves, go to the slide: it has the output.
+
+**Before the lecture.** On the laptop that drives the projector, unzip
+[`weather_project.zip`](../data/weather_project.zip), open the folder
+`weather-project` in VS Code, open its terminal, make the font large
+(`Cmd +` a few times) and shorten the prompt: `PROMPT='%1~ %# '`. Run
+`clear` before each moment. Running the five once beforehand also checks
+the macOS outputs on the slides.
+
+| Slide | What to type |
+|--|--|
+| 23 | `head -n 2 da`, then `Tab` three times, `Enter`; then `↑` brings the line back |
+| 30 | `wc -l data/raw/weather.csv` |
+| 40 | `head -n 5000 data/raw/weather.csv | tail -n 1` |
+| 44 | `cut -d, -f2 data/raw/weather.csv | head`, then with `↑` add `| sort -n` before `| head`, then change the last `head` to `head -n 1` |
+| 85 | In VS Code, a new file `scripts/rebuild.sh` with the three lines below; then `chmod +x scripts/rebuild.sh`, `rm data/processed/*`, `./scripts/rebuild.sh`, `wc -c data/processed/*` |
+| 63, optional | `shasum -a 256 data/raw/* > data/checksums.txt`; change `6,3` to `6,4` in `daily_export.csv` and save; `shasum -a 256 -c data/checksums.txt`. Change it back and save |
+
+The file of slide 85:
+
+```text
+#!/bin/zsh
+python3 scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
+grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
+```
+
+`data/processed` must hold the two files when slide 85 starts, from slide
+47 and slide 56 or from the README lines of slide 83: if neither ran live,
+`rm` has nothing to remove, which does no harm.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 91–101: ten quiz slides for students to try afterwards. The same
+slides 91–101: eleven quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. The terminal is in `weather-project/results`. Which path names the raw
@@ -201,6 +249,12 @@ questions, with their answers:
     version, so 2.5.4 arrives and not the newest one. A copied environment
     folder holds the paths of the other laptop, and `base` is shared by
     every project.*
+11. A `zsh` script without `set -e` has three lines. Line 2 fails, line 3
+    works. What does `echo $?` print after the script?
+    *0. Without `set -e` a script runs every line, and its status is the
+    status of its last line. Line 3 worked, so the script reports success,
+    and the failure in line 2 is easy to miss. With `set -e` it stops at
+    line 2 and reports that line's status.*
 
 ## Paired seminar
 
@@ -230,9 +284,13 @@ the weather station, so the lecture assumes no example from an earlier
 week, and it introduces the command line from the start, one step per
 slide: the shells are installed and checked before the first command. The
 notes on Windows PowerShell 5.1 went, because the room uses PowerShell 7
-from slide 14 on. Later on 12 October the section Tools & Environments
+from slide 11 on. Later on 12 October the section Tools & Environments
 changed from python.org, pip, a virtual environment and `requirements.txt`
-to Miniforge, `conda` environments and `environment.yml`. The earlier
+to Miniforge, `conda` environments and `environment.yml`. In the evening
+of 12 October the five install slides became two, *Checksums & Backups*
+moved before *Tools & Environments*, two slides on a first shell script
+joined the README section, slide 4 got the download link, and five slides
+got a live moment. The earlier
 versions are in the history of the
 repository; the slides parked before are in
 `lectures/content/parked/04_Command_Line_and_Files.md`.
@@ -271,3 +329,6 @@ repository; the slides parked before are in
   them in another place.
 - A README names a file by its size and checksum and keeps the lines that
   rebuild every file, one per shell.
+- A script is those lines in a file, run with one command. Without a stop
+  line it runs on after a failure and reports success; `set -e` in `zsh`,
+  and two lines in PowerShell, end it at the first error.

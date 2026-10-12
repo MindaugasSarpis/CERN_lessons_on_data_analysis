@@ -20,32 +20,32 @@ One screen for the front of the room. Each line links to its section.
 |--|--|--|--|
 | | **Part 1 · Warm-up: from an empty folder** · 49 min | | |
 | 0:00 | [1. Start the installs](#installs) | `winget install …`, `git --version`, the Miniforge download | Installs and downloads running in the background |
-| 0:05 | [2. VS Code, region by region](#vscode) | The five regions, `Ctrl+Shift+P` | The regions named, a terminal open |
-| 0:11 | [3. Terminal, shell, prompt](#terminal) | `pwd`, `ls`, `cd`, `Tab`, `↑`, `clear` | The prompt read aloud, part by part |
-| 0:18 | [4. A project folder, typed](#folder) | `mkdir` six times, **Open Folder** | `bike-project` with its four folders |
+| 0:05 | [2. The five regions of VS Code](#vscode) | The five regions, `Ctrl+Shift+P` | The regions named, a terminal open |
+| 0:11 | [3. Read the prompt; `pwd`, `ls`, `cd`](#terminal) | `pwd`, `ls`, `cd`, `Tab`, `↑`, `clear` | The prompt read aloud, part by part |
+| 0:18 | [4. Make the project folder with `mkdir`](#folder) | `mkdir` six times, **Open Folder** | `bike-project` with its four folders |
 | 0:24 | [5. A README in Markdown](#readme-md) | `README.md` and its preview | A title, a list, a table, a link |
-| 0:31 | [6. The shell of the course](#shell) | **Select Default Profile** | `7` or `/bin/zsh` |
-| 0:34 | [7. A small file, byte by byte](#bytes) | `counts.csv`, `wc -c`, `hexdump -C`, `Format-Hex`; `hello.sh` with CRLF | 39 bytes (42 with CRLF); a script that does not run on a Mac |
-| | **Part 2 · A large file** · 17 min | | |
-| 0:49 | [8. Two files, moved in](#files) | `mv ~/Downloads/…` | `bikes.csv` and `column_stats.py` in place |
-| 0:52 | [9. Read and count](#count) | `head`, `wc -l`, `Get-Content`, `Get-Item` | 35 089 lines, 900 314 bytes |
+| 0:31 | [6. Check the shell; PowerShell 7 in VS Code](#shell) | **Select Default Profile** | `7` or `/bin/zsh` |
+| 0:34 | [7. Count the bytes of a small file; a script with CRLF](#bytes) | `counts.csv`, `wc -c`, `hexdump -C`, `Format-Hex`; `hello.sh` with CRLF | 39 bytes (42 with CRLF); a script that does not run on a Mac |
+| | **Part 2 · Read, count and copy a large file** · 17 min | | |
+| 0:49 | [8. Move the downloaded files into the project](#files) | `mv ~/Downloads/…` | `bikes.csv` and `column_stats.py` in place |
+| 0:52 | [9. Read `bikes.csv`, count its lines and bytes](#count) | `head`, `wc -l`, `Get-Content`, `Get-Item` | 35 089 lines, 900 314 bytes |
 | 1:00 | [10. Copy, rename, delete](#copy) | `cp`, `mv`, `rm`, `*` | A backup made and removed again |
 | | **Part 3 · Pipes and filters** · 17 min | | |
-| 1:06 | [11. The ends of a column](#sort) | `sort -n`, `Sort-Object` | `9999` at the top: a mark, not a count |
-| 1:14 | [12. Count the mark, keep the rest](#grep) | `grep`, `uniq -c`, `Select-String`, `>` | 168 rows, one broken week, `bikes_valid.csv` |
+| 1:06 | [11. A pipe: sort the counts, read both ends](#sort) | `sort -n`, `Sort-Object` | `9999` at the top: the mark for a missing count |
+| 1:14 | [12. Count the 9999 rows, keep the others in a new file](#grep) | `grep`, `uniq -c`, `Select-String`, `>` | 168 rows, one broken week, `bikes_valid.csv` |
 | | **Part 4 · Python, a checksum, the README** · 29 min | | |
-| 1:23 | [13. Python, and a program someone else wrote](#python) | The Miniforge installer, `conda init`, `column_stats.py` | `(base)` in the prompt, Python 3.14.7, the mean of `counts.csv`: 400 |
-| 1:33 | [14. A mean, with and without the mark](#mean) | `column_stats.py` twice | 86.3 and 38.6 bicycles per hour |
-| 1:37 | [15. One checksum in the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
-| 1:42 | [16. How to rebuild](#readme) | `README.md` and its preview | Data, columns, the mark, one rebuild line |
+| 1:23 | [13. Install Miniforge, run `column_stats.py`](#python) | The Miniforge installer, `conda init`, `column_stats.py` | `(base)` in the prompt, Python 3.14.7, the mean of `counts.csv`: 400 |
+| 1:33 | [14. The mean with and without the 9999 rows](#mean) | `column_stats.py` twice | 86.3 and 38.6 bicycles per hour |
+| 1:37 | [15. Compare checksums across the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
+| 1:42 | [16. Data, columns and the rebuild line in the README](#readme) | `README.md` and its preview | Data, columns, the mark, one rebuild line |
 | 1:48 | [17. Wrap up](#wrap-up) | `git config`, the list of the day | Git knows each name |
 | | **Optional, if the room is fast** | | |
 | — | [18. A program that cleans an export](#clean) | `clean_export.py` | `monthly.csv`, `ea4ce2ce…` on every laptop |
-| — | [19. Patterns](#regex) | The `.*` button, `grep -E`, `Select-String` | 168, 4022, 37 |
-| — | [20. An environment for the project](#environment) | `conda create`, `conda activate`, `conda install numpy` | `(bikes)` in the prompt, `environment.yml` |
+| — | [19. Regular expressions in VS Code and the shell](#regex) | The `.*` button, `grep -E`, `Select-String` | 168, 4022, 37 |
+| — | [20. A conda environment for the project](#environment) | `conda create`, `conda activate`, `conda install numpy` | `(bikes)` in the prompt, `environment.yml` |
 | — | [21. A list of checksums](#list) | `shasum -a 256 -c`, `Compare-Object` | `OK`, then one digit caught |
 | — | [22. Test the README](#readme-test) | Delete, paste, count | `bikes_valid.csv` back, 34 921 lines |
-| — | [23. The shell's own settings](#settings) | `alias`, `~/.zshrc`, `$PROFILE`, Oh My Zsh, Oh My Posh | A short prompt and `..` in every new terminal |
+| — | [23. Aliases, the prompt and the start-up file](#settings) | `alias`, `~/.zshrc`, `$PROFILE`, Oh My Zsh, Oh My Posh | A short prompt and `..` in every new terminal |
 
 **If time runs short:** in the warm-up keep sections 3, 4 and 7 and do 2
 and 5 in two minutes each; in section 7 show the script (steps 8 to 10) on
@@ -213,7 +213,7 @@ twenty minutes.
 
 ---
 
-### 2. VS Code, region by region { #vscode }
+### 2. The five regions of VS Code { #vscode }
 
 **0:05 · 6 min**
 
@@ -257,11 +257,11 @@ today names the region it happens in.
 
 ---
 
-### 3. Terminal, shell, prompt { #terminal }
+### 3. Read the prompt; `pwd`, `ls`, `cd` { #terminal }
 
 **0:11 · 7 min**
 
-**Tell the room.** Three words. The **terminal** is the window that shows
+**Tell the room.** The **terminal** is the window that shows
 text: here, the Panel. The **shell** is the program inside it that reads
 each line you type, runs it, prints the answer and waits: `zsh` on a Mac,
 PowerShell on Windows. The **prompt** is the line where it waits. The shell
@@ -377,7 +377,7 @@ is always in one folder, the **working directory**: the prompt shows it,
 
 ---
 
-### 4. A project folder, typed { #folder }
+### 4. Make the project folder with `mkdir` { #folder }
 
 **0:18 · 6 min**
 
@@ -526,7 +526,7 @@ preview shows how it looks.
 
 ---
 
-### 6. The shell of the course { #shell }
+### 6. Check the shell; PowerShell 7 in VS Code { #shell }
 
 **0:31 · 3 min**
 
@@ -592,7 +592,7 @@ checks it.
 
 ---
 
-### 7. A small file, byte by byte { #bytes }
+### 7. Count the bytes of a small file; a script with CRLF { #bytes }
 
 **0:34 · 15 min**
 
@@ -709,7 +709,7 @@ line ending does when a file goes from Windows to a Mac.
     One byte less on each of the three lines. Now the file has the same
     bytes on every laptop in the room.
 
-8. **A file that does not run.** Work in pairs, one Mac and one Windows
+8. **A two-line script.** Work in pairs, one Mac and one Windows
    laptop; a room of one system watches the projector for the other. In
    the Explorer select the folder `scripts`, then **New File**.
 
@@ -759,7 +759,7 @@ line ending does when a file goes from Windows to a Mac.
         The Status Bar shows `CRLF`: a new file on Windows gets the
         Windows line ending. Show it to your Mac neighbour.
 
-9. **The Windows line ending on a Mac.**
+9. **Switch the line ending and run it again.**
 
     === "macOS"
 
@@ -844,7 +844,7 @@ line ending does when a file goes from Windows to a Mac.
 
 ---
 
-## Part 2 · A large file { #part-2 }
+## Part 2 · Read, count and copy a large file { #part-2 }
 
 **0:49 to 1:06 · sections 8 to 10**
 
@@ -853,7 +853,7 @@ one has thousands of lines; nobody opens it to count them.
 
 ---
 
-### 8. Two files, moved in { #files }
+### 8. Move the downloaded files into the project { #files }
 
 **0:49 · 3 min**
 
@@ -900,7 +900,7 @@ that `Tab` completed has no typing mistake in it.
 
 ---
 
-### 9. Read and count { #count }
+### 9. Read `bikes.csv`, count its lines and bytes { #count }
 
 **0:52 · 8 min**
 
@@ -951,7 +951,7 @@ argument, a path.
     2025-12-31T23:00,park,1
     ```
 
-3. A small file, whole: `cat` prints a file in both shells.
+3. `cat` prints a whole file, in both shells. The small one:
 
     ```text
     cat data/raw/counts.csv
@@ -1186,12 +1186,12 @@ for it.
 
 So far each command printed its answer. Now the answer of one command
 becomes the input of the next, with `|`, and the last answer goes into a
-file, with `>`. The room asks the large file one question: what is the
-busiest hour?
+file, with `>`. The question of this part is which hour had the most
+bicycles.
 
 ---
 
-### 11. The ends of a column { #sort }
+### 11. A pipe: sort the counts, read both ends { #sort }
 
 **1:06 · 8 min**
 
@@ -1283,7 +1283,7 @@ always at an end.
    second, at midnight in March? No. A value like this is a **mark**: the
    counter's way of writing "no count".
 
-5. The other end, for completeness.
+5. The three lowest counts.
 
     === "macOS"
 
@@ -1312,7 +1312,7 @@ always at an end.
 
 ---
 
-### 12. Count the mark, keep the rest { #grep }
+### 12. Count the 9999 rows, keep the others in a new file { #grep }
 
 **1:14 · 9 min**
 
@@ -1368,7 +1368,7 @@ empties one that exists.
     ```
 
     From Monday 10 March to Sunday 16 March 2025, at the park: 7 days of 24
-    hours, 7 × 24 = 168. One broken week.
+    hours, 7 × 24 = 168, so all 168 marks fall in this one week.
 
 3. Count the rows per counter: is any counter missing hours?
 
@@ -1401,7 +1401,7 @@ empties one that exists.
         ```
 
     731 × 24 = 17 544: every hour is there at both counters. The broken
-    week has rows; their count is the mark.
+    week has its rows, with 9999 in their `bikes` column.
 
 4. Keep every line without the mark, in a new file in `data/processed`.
    `data/raw` is only read.
@@ -1514,7 +1514,7 @@ done, as a line anyone can run again.
 
 ---
 
-### 13. Python, and a program someone else wrote { #python }
+### 13. Install Miniforge, run `column_stats.py` { #python }
 
 **1:23 · 10 min**
 
@@ -1704,7 +1704,7 @@ restarted, so that its terminal runs those lines.
 
 ---
 
-### 14. A mean, with and without the mark { #mean }
+### 14. The mean with and without the 9999 rows { #mean }
 
 **1:33 · 4 min**
 
@@ -1754,7 +1754,7 @@ value it finds, the mark too: it cannot know that 9999 means "no count".
 
 ---
 
-### 15. One checksum in the room { #checksum }
+### 15. Compare checksums across the room { #checksum }
 
 **1:37 · 5 min**
 
@@ -1828,8 +1828,8 @@ that they hold the same file by reading eight characters aloud.
         8BD1459D4D008B89DB57AC1A902B0B9C6944275B1F4891F1C5205B641AA6AD31
         ```
 
-    Same rows, different checksums. PowerShell on Windows ends each line it
-    writes with CRLF, as VS Code did in section 7: 34 921 bytes more,
+    The rows are the same on both systems, the checksums are not. PowerShell
+    on Windows ends each line it writes with CRLF, as VS Code did in section 7: 34 921 bytes more,
     930 699 against 895 778.
 
 !!! success "You should now see"
@@ -1844,7 +1844,7 @@ that they hold the same file by reading eight characters aloud.
 
 ---
 
-### 16. How to rebuild { #readme }
+### 16. Data, columns and the rebuild line in the README { #readme }
 
 **1:42 · 6 min**
 
@@ -1897,8 +1897,9 @@ terminal, not retyped from memory.
 !!! success "You should now see"
     In the preview: **Data** with the checksum of `bikes.csv`, a table of
     three columns, the line about `9999`, and **How to rebuild** with the
-    line that made `bikes_valid.csv`. The README promises its lines, not
-    its checksum: section 15 showed why.
+    line that made `bikes_valid.csv`. The README gives that line and no
+    checksum for the file: section 15 showed that it differs between macOS
+    and Windows.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -1940,9 +1941,9 @@ now. Nothing is printed, which is correct.
       (CRLF).
     - A command is a program, options and arguments. `head`, `tail`, `cat`,
       `wc`, `cp`, `mv`, `rm`, `mkdir`, `*`.
-    - `|` joins filters, `>` writes a file. Sort a column and look at both
-      ends: `9999` was a mark, 168 rows, one broken week, a mean more than
-      doubled.
+    - `|` joins filters, `>` writes a file. The sorted column showed `9999`
+      at its top end: the mark for no count, in 168 rows, one week of the
+      park counter, and it more than doubled the mean.
     - Python comes with Miniforge, in conda's environment `base`, which
       every new terminal switches on: `(base)` in the prompt.
     - A program someone else wrote runs with one line; a checksum shows that
@@ -2109,7 +2110,7 @@ deletes the column `nr`.
 
 ---
 
-### 19. Patterns { #regex }
+### 19. Regular expressions in VS Code and the shell { #regex }
 
 **— · 10 min**
 
@@ -2188,7 +2189,7 @@ Find box of VS Code and in the shell.
 
 ---
 
-### 20. An environment for the project { #environment }
+### 20. A conda environment for the project { #environment }
 
 **— · 12 min**
 
@@ -2290,7 +2291,8 @@ that list.
 
     From here the word is `python` in both shells.
 
-4. The environment has Python and nothing else. Fill it.
+4. The environment has Python and nothing else: numpy is missing. Install
+   it.
 
     ```text
     python -c "import numpy"
@@ -2318,7 +2320,8 @@ that list.
     2.5.4
     ```
 
-5. `base` did not get it. Switch back, ask, and switch on `bikes` again.
+5. numpy went into `bikes` only. Switch back to `base`, ask, and switch on
+   `bikes` again.
 
     ```text
     conda deactivate
@@ -2579,7 +2582,7 @@ delete what it says can be made again, run its line, and measure.
         (Get-Content data/processed/bikes_valid.csv).Count
         ```
 
-    34 921 lines, as the README promises.
+    34 921 lines, the number the README states.
 
 !!! success "You should now see"
     `bikes_valid.csv` back in `data/processed`, with the number of lines the
@@ -2593,7 +2596,7 @@ delete what it says can be made again, run its line, and measure.
 
 ---
 
-### 23. The shell's own settings { #settings }
+### 23. Aliases, the prompt and the start-up file { #settings }
 
 **— · 12 min**
 
@@ -2694,8 +2697,8 @@ laptop: a README line always uses the full command.
 3. Open a new terminal with `+`. The short prompt is there, and `..` goes
    up one folder.
 
-4. **For the curious: a ready-made set.** Show it on the projector; the
-   room may follow.
+4. **Oh My Zsh or Oh My Posh.** Show it on the projector; the room may
+   follow.
 
     === "macOS"
 
