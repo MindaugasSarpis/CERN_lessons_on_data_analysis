@@ -20,7 +20,7 @@ lecture, so there is no Seminar 2.
 |--|--|--|
 | 29 Sep | [1](seminar_01.md) | VS Code, Markdown, the project folder, the README; a reading list repaired in the editor; a long file read; provenance |
 | 6 Oct | [3](seminar_03.md) | Files and bytes from the terminal: a folder of seven files tidied with `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv`, `rm`; sizes, encodings, line endings and a checksum. *In 2026 it ran as a terminal session with `pwd`, `ls`, `cd`, `clear`* |
-| 13 Oct | [4](seminar_04.md) | PowerShell 7, Git and Python installed; a project folder built by typed commands; files and folders, pipes and filters on two years of bicycle counts, a program someone else wrote, a checksum, the README |
+| 13 Oct | [4](seminar_04.md) | A warm-up that revisits Seminars 1 and 3 from an empty folder (VS Code, the terminal, `mkdir`, a README, a small file byte by byte); PowerShell 7, Git and Python installed; files, pipes and filters on two years of bicycle counts, a program someone else wrote, a checksum, the README |
 | 20 Oct | [5](seminar_05.md) | Git: the project folder under version control, from the Source Control view and typed; a remote; a branch and a merge |
 | 27 Oct | [6](seminar_06.md) | Python from the first line: a line of the data file turned into numbers |
 | 3 Nov | [7](seminar_07.md) | Functions, reading the whole file, NumPy arrays and masks |

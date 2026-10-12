@@ -220,14 +220,18 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 4 — Work on Files from the Shell](../seminars/seminar_04.md) does
-the ideas of this lecture with the room, in the same order and in both
-shells, on files of its own: two years of hourly counts from two made-up
-bicycle counters. The room installs PowerShell 7, Git and Python, builds a
-project folder with `mkdir`, reads and counts the files, finds the mark
-`9999` at an end of the count column and the broken week behind it, writes
-a clean copy, runs `clean_export.py` and `column_stats.py`, gets one
-checksum on every laptop, and writes the README. Bytes, regular
+[Seminar 4 — Work on Files from the Shell](../seminars/seminar_04.md)
+starts from an empty folder. Its first 42 minutes are a warm-up that
+revisits Seminars 1 and 3 by hand while the installs run: the regions of
+VS Code, terminal, shell and prompt, a project folder made with `mkdir`, a
+README in Markdown, the switch to PowerShell 7, and a three-line file typed
+from the page and measured byte by byte (one letter of two bytes, LF
+against CRLF). Then it follows this lecture's order on files of its own,
+two years of hourly counts from two made-up bicycle counters: read and
+count, copy and delete, the mark `9999` at an end of a sorted column,
+`grep` and a clean copy, Python and `column_stats.py`, one checksum in the
+room, and the README's *How to rebuild*. The core needs two downloads,
+`bikes.csv` and `column_stats.py`. The cleaning script, regular
 expressions, a virtual environment, a list of checksums and a test of the
 README are its optional sections.
 

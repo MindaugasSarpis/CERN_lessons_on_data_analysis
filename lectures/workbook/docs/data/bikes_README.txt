@@ -1,14 +1,30 @@
 # Bike Counters
 
-Two bicycle counters of a city, one on a bridge and one on a park path:
-how many bicycles passed in each hour of 2024 and 2025.
+Practice project of Seminar 4: bicycle counts, read and checked with typed
+commands.
+
+## Folders
+
+- `data/raw`: files as they arrived, never edited
+- `data/processed`: files that commands make from `data/raw`
+- `scripts`: programs
+- `results`: numbers and figures
+
+## Two places
+
+| Place | Bicycles |
+|--|--|
+| Antakalnis | 412 |
+| Užupis | 388 |
+
+Course pages: [the workbook](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/)
 
 ## Data
 
-- `data/raw/bikes.csv`: one row per counter and hour, 35 088 rows.
-  Generated for the course; the city and its counters are made up.
-- `data/raw/monthly_export.csv`: the mean number of bicycles per day on the
-  bridge, for each month of 2025, exported from a spreadsheet.
+- `data/raw/counts.csv`: the two places above, typed by hand.
+- `data/raw/bikes.csv`: two bicycle counters, one row per counter and hour
+  of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`. Generated for the
+  course; the city and its counters are made up.
 
 ## Columns of `bikes.csv`
 
@@ -25,9 +41,7 @@ Missing value: `bikes` is `9999` in 168 rows, the park counter from
 
 Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
 
-1. `data/processed/monthly.csv`, 189 bytes, SHA-256 `ea4ce2ce…19396ef6`:
-   - zsh: `python3 scripts/clean_export.py data/raw/monthly_export.csv data/processed/monthly.csv`
-   - PowerShell: `python scripts/clean_export.py data/raw/monthly_export.csv data/processed/monthly.csv`
-2. `data/processed/bikes_valid.csv`, `bikes.csv` without the 168 rows marked `9999`:
-   - zsh: `grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv`
-   - PowerShell: `Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv`
+- `data/processed/bikes_valid.csv`: `bikes.csv` without the rows marked
+  `9999`, 34 921 lines.
+  - zsh: `grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv`
+  - PowerShell: `Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv`

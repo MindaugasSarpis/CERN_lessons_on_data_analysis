@@ -9,19 +9,23 @@ with fewer), and one of them was broken for a week: while it was broken, its
 logger wrote 9999.
 
   bikes_hourly.csv          saved as bikes.csv: 35 088 rows, time,counter,bikes
-  bikes_monthly_export.csv  saved as monthly_export.csv: the mean number of
-                            bicycles per day on the bridge in each month of
-                            2025, as a spreadsheet with European settings
-                            exports it: `;` between the values, a decimal
-                            comma, a column `nr`, and a line with the mean
+  bikes_monthly_export.csv  saved as monthly_export.csv (an optional section):
+                            the mean number of bicycles per day on the bridge
+                            in each month of 2025, as a spreadsheet with
+                            European settings exports it: `;` between the
+                            values, a decimal comma, a column `nr`, and a
+                            line with the mean
   bikes_README.txt          the README at the end of the seminar
-  bikes_project.zip         the folder `bike-project` at the end of the
-                            seminar, for a student who lost a step
+  bikes_project.zip         the folder `bike-project` at the end of the core
+                            of the seminar, for a student who lost a step:
+                            the README, `counts.csv` as typed in the warm-up
+                            (LF), `bikes.csv`, `bikes_valid.csv` as zsh
+                            writes it, and `column_stats.py`
 
 The README is `.txt` because MkDocs turns every `.md` file in `docs/` into a
 page. The random numbers are seeded and the zip carries a fixed date, so the
-output is the same on every run. Reads `cli_clean_export.py` and
-`cli_column_stats.py`, which go into the zip.
+output is the same on every run. Reads `cli_column_stats.py`, which goes
+into the zip.
 
 Usage:  python3 bikes_files.py
 """
@@ -40,6 +44,7 @@ END = datetime(2026, 1, 1)
 COUNTERS = {"bridge": 1.0, "park": 0.55}
 BROKEN = ("park", datetime(2025, 3, 10), datetime(2025, 3, 17))
 MARK = "9999"
+COUNTS = "place,bikes\nAntakalnis,412\nUžupis,388\n"  # typed in the warm-up
 
 
 def poisson(rng, mean):
@@ -107,17 +112,11 @@ def main():
     export_bytes = ("\n".join(export) + "\n").encode()
     (HERE / "bikes_monthly_export.csv").write_bytes(export_bytes)
 
-    # The two files the seminar makes, as the scripts and zsh make them.
+    # The file the core of the seminar makes, as zsh writes it (LF).
     valid = ("\n".join(l for l in lines if not l.endswith("," + MARK)) + "\n").encode()
-    monthly = ["month,per_day"] + [
-        f"2025-{m:02d},{v:.1f}" for m, v in zip(range(1, 13), means)
-    ]
-    monthly_bytes = ("\n".join(monthly) + "\n").encode()
 
-    digest = hashlib.sha256(monthly_bytes).hexdigest()
-    readme = README.format(
-        size=len(monthly_bytes), short=f"{digest[:8]}…{digest[-8:]}"
-    ).encode()
+    digest = hashlib.sha256(hourly).hexdigest()
+    readme = README.format(short=f"{digest[:8]}…{digest[-8:]}").encode()
     (HERE / "bikes_README.txt").write_bytes(readme)
     root = "bike-project/"
     with zipfile.ZipFile(HERE / "bikes_project.zip", "w", zipfile.ZIP_DEFLATED) as z:
@@ -135,12 +134,10 @@ def main():
         put("data/")
         put("data/raw/")
         put("data/raw/bikes.csv", hourly)
-        put("data/raw/monthly_export.csv", export_bytes)
+        put("data/raw/counts.csv", COUNTS.encode())
         put("data/processed/")
         put("data/processed/bikes_valid.csv", valid)
-        put("data/processed/monthly.csv", monthly_bytes)
         put("scripts/")
-        put("scripts/clean_export.py", (HERE / "cli_clean_export.py").read_bytes())
         put("scripts/column_stats.py", (HERE / "cli_column_stats.py").read_bytes())
         put("results/")
 
@@ -148,15 +145,31 @@ def main():
 README = """\
 # Bike Counters
 
-Two bicycle counters of a city, one on a bridge and one on a park path:
-how many bicycles passed in each hour of 2024 and 2025.
+Practice project of Seminar 4: bicycle counts, read and checked with typed
+commands.
+
+## Folders
+
+- `data/raw`: files as they arrived, never edited
+- `data/processed`: files that commands make from `data/raw`
+- `scripts`: programs
+- `results`: numbers and figures
+
+## Two places
+
+| Place | Bicycles |
+|--|--|
+| Antakalnis | 412 |
+| Užupis | 388 |
+
+Course pages: [the workbook](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/)
 
 ## Data
 
-- `data/raw/bikes.csv`: one row per counter and hour, 35 088 rows.
-  Generated for the course; the city and its counters are made up.
-- `data/raw/monthly_export.csv`: the mean number of bicycles per day on the
-  bridge, for each month of 2025, exported from a spreadsheet.
+- `data/raw/counts.csv`: the two places above, typed by hand.
+- `data/raw/bikes.csv`: two bicycle counters, one row per counter and hour
+  of 2024 and 2025, 35 088 rows, SHA-256 `{short}`. Generated for the
+  course; the city and its counters are made up.
 
 ## Columns of `bikes.csv`
 
@@ -173,12 +186,10 @@ Missing value: `bikes` is `9999` in 168 rows, the park counter from
 
 Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
 
-1. `data/processed/monthly.csv`, {size} bytes, SHA-256 `{short}`:
-   - zsh: `python3 scripts/clean_export.py data/raw/monthly_export.csv data/processed/monthly.csv`
-   - PowerShell: `python scripts/clean_export.py data/raw/monthly_export.csv data/processed/monthly.csv`
-2. `data/processed/bikes_valid.csv`, `bikes.csv` without the 168 rows marked `9999`:
-   - zsh: `grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv`
-   - PowerShell: `Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv`
+- `data/processed/bikes_valid.csv`: `bikes.csv` without the rows marked
+  `9999`, 34 921 lines.
+  - zsh: `grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv`
+  - PowerShell: `Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv`
 """
 
 

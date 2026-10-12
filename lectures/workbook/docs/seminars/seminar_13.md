@@ -158,7 +158,7 @@ versions made by hand.
     | On the screen | What to do |
     |--|--|
     | `fatal: not a git repository` | The folder is not under Git yet. Run `git init`, then the two commands of step 3 |
-    | Windows: the Panel reads `powershell`, not `pwsh` | That is Windows PowerShell 5.1. Make PowerShell 7 the default as in [Seminar 4, section 4](seminar_04.md#shell), step 1, and open a new terminal |
+    | Windows: the Panel reads `powershell`, not `pwsh` | That is Windows PowerShell 5.1. Make PowerShell 7 the default as in [Seminar 4, section 6](seminar_04.md#shell), step 1, and open a new terminal |
 
 ---
 

@@ -358,6 +358,17 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   checksum); core about 105 min.
 - The handed-out scripts are generic: `clean_export.py` cleans any such
   export, `column_stats.py` takes any file and column.
+- After a further note ("S4 such that it rigorously introduces (revisits
+  the concepts) from S1-S3 … so now maybe the files should be minimal"),
+  Seminar 4 opens with a 42-minute warm-up from an empty folder while the
+  installs run: VS Code region by region, terminal, shell and prompt, the
+  project folder by `mkdir`, a README in Markdown, the switch to PowerShell
+  7, and `counts.csv` typed from the page (three lines, 35 characters, 39
+  bytes with LF, 42 with CRLF, `ž` as `c5 be`). The core needs two
+  downloads, `bikes.csv` and `column_stats.py`; the cleaning of the export
+  is optional. Core 1 h 43 min. Handing out files by `git clone` and
+  `git pull` fits from Seminar 5 on, from a small repository of its own:
+  this repository is 328 MB packed.
 
 **Open**
 

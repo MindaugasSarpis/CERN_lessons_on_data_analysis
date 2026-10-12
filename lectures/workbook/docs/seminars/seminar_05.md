@@ -1123,7 +1123,7 @@ For students who finish a section early. Answers are given for the lecturer.
     The answer is `pendulum.csv` alone: the two ignored files are not in
     the clone. Copy the two lines of your shell under **How to rebuild**
     out of the README and run them inside `check`. Then check the raw files
-    against the list, as in Seminar 4, section 13.
+    against the list, as in [Seminar 4, section 21](seminar_04.md#list).
 
     === "macOS"
 
