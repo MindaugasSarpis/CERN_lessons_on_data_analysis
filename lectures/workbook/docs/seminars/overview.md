@@ -3,8 +3,8 @@
 Every lecture from week 2 on is paired with a **hands-on seminar**. Week 1 is
 lecture only. The first session in class is
 [Seminar 1](seminar_01.md), taught with Lecture 2: it starts from zero and
-needs only VS Code. Python and Git are installed in class at the start of
-[Seminar 4](seminar_04.md), with the steps of
+needs only VS Code. Python (from Miniforge, with conda) and Git are
+installed in class in [Seminar 4](seminar_04.md), with the steps of
 [Install Python, Git and PowerShell 7](install_python_git.md). Each brief is
 **self-contained** and sized to ~120 min, all of it in class: there is no
 homework, and no session depends on work done at home. The seminars practise the course's four aims —
@@ -20,7 +20,7 @@ lecture, so there is no Seminar 2.
 |--|--|--|
 | 29 Sep | [1](seminar_01.md) | VS Code, Markdown, the project folder, the README; a reading list repaired in the editor; a long file read; provenance |
 | 6 Oct | [3](seminar_03.md) | Files and bytes from the terminal: a folder of seven files tidied with `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv`, `rm`; sizes, encodings, line endings and a checksum. *In 2026 it ran as a terminal session with `pwd`, `ls`, `cd`, `clear`* |
-| 13 Oct | [4](seminar_04.md) | A warm-up that revisits Seminars 1 and 3 from an empty folder (VS Code, the terminal, `mkdir`, a README, a small file byte by byte); PowerShell 7, Git and Python installed; files, pipes and filters on two years of bicycle counts, a program someone else wrote, a checksum, the README |
+| 13 Oct | [4](seminar_04.md) | A warm-up that revisits Seminars 1 and 3 from an empty folder (VS Code, the terminal, `mkdir`, a README, a small file byte by byte); PowerShell 7, Git and Python (Miniforge, with conda) installed; files, pipes and filters on two years of bicycle counts, a program someone else wrote, a checksum, the README |
 | 20 Oct | [5](seminar_05.md) | Git: the project folder under version control, from the Source Control view and typed; a remote; a branch and a merge |
 | 27 Oct | [6](seminar_06.md) | Python from the first line: a line of the data file turned into numbers |
 | 3 Nov | [7](seminar_07.md) | Functions, reading the whole file, NumPy arrays and masks |

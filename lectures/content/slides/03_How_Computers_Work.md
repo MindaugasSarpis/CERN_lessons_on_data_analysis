@@ -65,9 +65,9 @@ Ten lines: a header, and the daily mean temperature of nine days at a weather st
 </div>
 
 <!--
-**If asked:** the size is in Finder with Cmd+I, or in Properties in Explorer.
-**Ask:** how many characters has one line? Let the room count `2025-10-01,6.3`: 14.
 **Say:** by the end of the lecture every one of the 148 bytes has a name.
+**Ask:** how many characters has one line? Let the room count `2025-10-01,6.3`: 14.
+**If asked:** the size is in Finder with Cmd+I, or in Properties in Explorer.
 (~2 min)
 -->
 
@@ -144,6 +144,11 @@ graph LR
     linkStyle 0 stroke-width:3px;
     linkStyle 1 stroke-width:3px;
 ```
+
+<!--
+**Ask:** what goes into the empty box? Whatever turns the input into the output, step by step.
+(~1 min)
+-->
 
 
 ---
@@ -705,7 +710,7 @@ hideInToc: true
 | 7 | 128 | the ASCII characters |
 | 8 | 256 | one byte |
 | 16 | 65 536 | a 16-bit sensor reading, 0 to 65 535 |
-| 32 | about 4.3 × 10⁹ | |
+| 32 | about 4.3 × 10⁹ | the seconds of 136 years |
 
 </div>
 
@@ -984,6 +989,11 @@ class: text-center
 
 </div>
 
+<!--
+**Say:** a gate takes bits in and gives one bit out. AND gives 1 only when both inputs are 1, OR when at least one is, NOT turns a bit over. Addition is built from such gates.
+(~2 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1045,7 +1055,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-The largest number in `[7, 2, 9, 4]` is compares and jumps, repeated. An algorithm becomes instructions, and instructions are numbers.
+Finding the largest number in `[7, 2, 9, 4]` is a compare and a jump, repeated. An algorithm becomes instructions, and instructions are numbers.
 
 </div>
 
@@ -1115,7 +1125,7 @@ hideInToc: true
 | 32 | 0 to about 4.3 × 10⁹ |
 | 64 | 0 to about 1.8 × 10¹⁹ |
 
-32-bit Unix time, seconds since 1970, ends on 19 January 2038.
+Unix time counts seconds since 1970. Stored as a signed 32-bit integer (next slide), it runs out on 19 January 2038.
 
 </div>
 
@@ -1337,7 +1347,7 @@ the digits after the point of **1.m**; the leading 1 is not stored
 hideInToc: true
 ---
 
-# Worked Example: 5.75 as float32
+# Worked Example: **5.75 as float32**
 
 <div class="text-center text-3xl my-4">
 
@@ -1347,12 +1357,11 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight mt-sm">
 
-- 5.75 → 101.11₂
+- 5 = 101₂ and 0.75 = 0.5 + 0.25 = 0.11₂, so 5.75 = 101.11₂
 - In scientific notation: $1.0111_2 \times 2^2$
 - **s** = 0 (positive)
-- **m** = 01110000000000000000000
-- **e** = 2, stored as e + bias = 2 + 127 = 129 = 10000001₂
-- **b** = 127 (float32 exponent bias)
+- **e** = 2, stored as e + b = 2 + 127 = 129 = 10000001₂
+- **m** = 01110000000000000000000, the digits after the point, filled to 23
 
 </div>
 
@@ -1361,6 +1370,12 @@ hideInToc: true
 `0 10000001 01110000000000000000000`
 
 </div>
+
+<!--
+**Do:** work it on the board: move the point two places left, so the exponent is 2.
+**Say:** sign, exponent, mantissa: 1 + 8 + 23 bits, read from left to right.
+(~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1786,8 +1801,9 @@ hideInToc: true
 <div class="note-text mt-sm"><code>ą</code> is two bytes in UTF-8, <code>C4 85</code>, and one byte in the Baltic table Windows-1257, <code>E0</code>. <code>a</code> to <code>z</code> are the same byte in every table.</div>
 
 <!--
-**Say:** this is why names of files and folders keep to `a` to `z`.
-(~3 min)
+**Say:** **Reopen with Encoding** is the repair of the last slide: the same bytes, read by another table. **Save with Encoding** changes the bytes.
+**If asked:** names of files and folders keep to `a` to `z` because those bytes are the same in every table.
+(~2 min)
 -->
 
 ---
@@ -2128,7 +2144,7 @@ hideInToc: true
 The Hex Editor showed the bytes of one file by clicks. A terminal reaches files and their bytes by typed lines, and a typed line can be written down and run again.
 
 <!--
-**Say:** six commands to look around and change folders, then two that measure a file. All of them work in zsh on a Mac and in both PowerShells of Windows, 5.1 and 7.
+**Say:** seven commands, `pwd` to `rm`, to look around and to change folders and files, then two that measure a file. All of them work in zsh on a Mac and in both PowerShells of Windows, 5.1 and 7.
 (~1 min)
 -->
 
@@ -2241,7 +2257,7 @@ The folder the shell is in, the **working directory**. zsh shows its name, Power
 </div>
 
 <!--
-**Ask:** read your own prompt aloud, part by part.
+**Ask:** read the two prompts aloud, part by part: who, where, waiting.
 **Say:** every command below starts from the working directory.
 (~2 min)
 -->
@@ -2341,7 +2357,7 @@ d----          2026-10-13    10:12                scripts
 
 <!--
 **Say:** the same four names as in the Side Bar of VS Code.
-**Say:** zsh prints names only. The date column follows the laptop's language settings.
+**If asked:** the date column of PowerShell follows the laptop's language settings.
 (~2 min)
 -->
 
@@ -2467,8 +2483,7 @@ Moves a file. A new name in the same folder renames it.
 <div class="note-text mt-sm">In PowerShell, <code>ls backup</code> prints the table of the last slides, with <b>Length</b> 148: the copy has every byte.</div>
 
 <!--
-**Say:** in PowerShell `PS>` stands where zsh has `%`.
-**Say:** `cp` replaces a file of the same name without asking, in both shells.
+**Say:** `cp` replaces a file of the same name without asking, in both shells. In PowerShell the lines start at `PS>`.
 (~2 min)
 -->
 
@@ -2496,8 +2511,7 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** read the name before pressing Enter: `rm` has no undo.
-**Say:** `-r` is an option: it changes how `rm` works, here "the folder and all inside it".
+**Say:** read the name before pressing Enter: `rm` has no undo. `-r` is an option: it changes how `rm` works, here "the folder and all inside it".
 **If asked:** in PowerShell `rm` is a short name for `Remove-Item`, and `-r` for `-Recurse`.
 (~2 min)
 -->
@@ -2508,7 +2522,9 @@ hideInToc: true
 
 # The Size of a **File**
 
-<div class="grid-2 mt-md gap-md">
+<div class="note-text"><code>daily_crlf.csv</code> is a copy of <code>daily.csv</code>, saved with <code>CRLF</code> from the Status Bar of VS Code.</div>
+
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -2546,6 +2562,7 @@ PS> (Get-Item data/processed/daily_crlf.csv).Length
 
 <!--
 **Say:** the size is exact to the byte, unlike KB in a file manager.
+**If asked:** the copy is `cp data/processed/daily.csv data/processed/daily_crlf.csv`, then `LF` to `CRLF` in the Status Bar of the copy, and save.
 (~2 min)
 -->
 
@@ -2582,7 +2599,7 @@ PS> Format-Hex data/processed/daily.csv
 
 </div>
 
-<div class="note-text mt-sm">The same bytes as in the Hex Editor. <code>hexdump</code> ends on the size in hex: 0x94 = 9 × 16 + 4 = 148.</div>
+<div class="note-text mt-sm">The same bytes as in the hexdump read earlier. <code>hexdump</code> ends on the size in hex: 0x94 = 9 × 16 + 4 = 148.</div>
 
 <!--
 **Do:** find the first `0a` with the room.

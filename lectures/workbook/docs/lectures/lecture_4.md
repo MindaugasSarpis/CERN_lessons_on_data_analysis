@@ -44,13 +44,18 @@ logger wrote while its thermometer was down.
    bytes come from when PowerShell writes the lines; the handed-out
    `column_stats.py`; what 120 marked rows do to a mean, 7.16 against
    5.78 °C.
-7. **Tools & environments**: where a program comes from; `PATH`, and why a
-   stand-in in `WindowsApps` answers `Python was not found`; a package
-   manager's five jobs, with `winget` and Homebrew; pip and PyPI;
-   `pip install numpy` measured; one shared Python breaking a project; a
-   virtual environment; `requirements.txt`; settings that stay: an alias
-   and a prompt, the start-up files `~/.zshrc` and `$PROFILE`, and Oh My
-   Zsh, Oh My Posh and Starship as ready-made settings.
+7. **Tools & environments**: where a program comes from, with Python and
+   `conda` from Miniforge; `PATH`, and why a stand-in in `WindowsApps`
+   answers `Python was not found`; a package manager's five jobs, with
+   `winget` and Homebrew; settings that stay: an alias and a prompt, the
+   start-up files `~/.zshrc` and `$PROFILE`, Oh My Zsh, Oh My Posh and
+   Starship; what `conda init` wrote into those files, and `(base)` in the
+   prompt; `conda` as a package manager and an environment manager, with
+   the channel conda-forge; one shared Python breaking a project; an
+   environment as a folder (`conda create`, `conda env list`); activation
+   as a change of `PATH`; `conda install numpy` measured; `environment.yml`
+   from `conda env export --from-history`, and why the full export works
+   on one system only.
 8. **Checksums & backups**: SHA-256 as one command in each shell; a list of
    checksums for `data/raw`; one digit changed; how files are lost; the
    3-2-1 rule with its arithmetic.
@@ -65,11 +70,12 @@ logger wrote while its thermometer was down.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–89. Its speaker notes add up to about 167 minutes.
-The plan below takes 91 of them: it keeps every idea the core of Seminar 4
+The lecture is slides 1–90. Its speaker notes add up to about 169 minutes.
+The plan below takes 92 of them: it keeps every idea the core of Seminar 4
 uses, and leaves the ideas of the seminar's optional sections (regular
-expressions, the virtual environment, the list of checksums) for a longer
-slot. Slide 90 opens the self-check section, and slides 91–100 are its ten
+expressions, a conda environment for the project, the list of checksums)
+for a longer slot. Slide 91 opens the self-check section, and slides 92–101
+are its ten
 quizzes: they take no lecture time. To jump, type the slide number and
 press Enter.
 
@@ -81,13 +87,13 @@ press Enter.
 | 0:45 | 30–31, 33–38 | `head` and `tail`, counting lines and bytes, `mkdir`, `cp`, `mv`, `rm`, wildcards |
 | 0:59 | 40–41, 43, 46–48, 50 | `>`, the pipe, `sort`, the ends of a column (−999), `grep`, `data/processed` |
 | 1:12 | 57, 59, 62 | `clean_export.py` run and measured, what 120 rows do to a mean |
-| 1:18 | 63, 65 | `PATH`, and "Python was not found" |
-| 1:22 | 76–77 | The checksum of a file |
-| 1:25 | 82, 85, 88–89 | How to rebuild, which copy the README means, the Recap |
-| 1:31 | | Move to the seminar |
+| 1:18 | 65, 70 | `PATH`, "Python was not found", and the `(base)` that `conda init` puts in the prompt |
+| 1:23 | 77–78 | The checksum of a file |
+| 1:26 | 83, 86, 89–90 | How to rebuild, which copy the README means, the Recap |
+| 1:32 | | Move to the seminar |
 
 The second table lists what the plan skips. In a 2-hour slot, add the rows
-marked **add**: about 20 minutes.
+marked **add**: about 26 minutes.
 
 | Skipped in 90 minutes | Slides | Saves | 2-hour slot |
 |--|--|--|--|
@@ -101,18 +107,19 @@ marked **add**: about 20 minutes.
 | Signs for One Character; Signs for How Many and Where; the Find box; Capture Groups | 53–56 | 12 min | |
 | A Program Is a Text File; A Program for 87 672 Rows | 58, 61 | 4 min | add |
 | Where 158 Bytes Come From | 60 | 2 min | |
-| Where a Program Comes From; A Package Manager; pip; `pip install numpy`; One Python, Every Project | 64, 66–69 | 10 min | |
-| A Virtual Environment; requirements.txt | 70, 72 | 5 min | add |
-| An Empty Environment, Filled | 71 | 2 min | |
-| An Alias and a Prompt; A File the Shell Runs at Start; Ready-Made Settings: Oh My Zsh | 73–75 | 6 min | |
-| A List of Checksums for `data/raw` | 78 | 2 min | add |
-| One Digit Changed; How Files Are Lost; the 3-2-1 Rule | 79–81 | 5 min | |
-| What a Stranger Asks; Columns and Units; Test the Section; The Licence | 83–84, 86–87 | 9 min | |
+| Tools & Environments; Where a Program Comes From; A Package Manager | 63–64, 66 | 5 min | |
+| An Alias and a Prompt; A File the Shell Runs at Start; Ready-Made Settings: Oh My Zsh | 67–69 | 6 min | |
+| `conda`: Packages and Environments; One Python, Every Project; An Environment Is a Folder; Activation Changes PATH | 71–74 | 9 min | add |
+| `conda install numpy`, Measured | 75 | 2 min | |
+| environment.yml: the List, Written Down | 76 | 2 min | add |
+| A List of Checksums for `data/raw` | 79 | 2 min | add |
+| One Digit Changed; How Files Are Lost; the 3-2-1 Rule | 80–82 | 5 min | |
+| What a Stranger Asks; Columns and Units; Test the Section; The Licence | 84–85, 87–88 | 9 min | |
 
 - **Never skip** slide 6 (the three questions), 17 (the prompt), 19–21
   (`pwd`, `ls`, `cd`), 23 (relative paths), 24 (the parts of a command),
   43 (the pipe), 47–48 (−999 found, and where), 62 (the mean), 65 (`PATH`),
-  77 (the checksum), 88 (which copy) and 89 (the Recap).
+  78 (the checksum), 89 (which copy) and 90 (the Recap).
 - **The three questions of slide 6 are answered on slides 33, 43 and 47.**
   Point back to slide 6 at each.
 - **A room that had Lecture 02 in its version of 12 October** has met the
@@ -133,7 +140,7 @@ marked **add**: about 20 minutes.
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 90–100: ten quiz slides for students to try afterwards. The same
+slides 91–101: ten quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. The terminal is in `weather-project/results`. Which path names the raw
@@ -186,33 +193,34 @@ questions, with their answers:
    *Python 3.12. The shell goes through `PATH` in order and runs the first
    program of that name it finds; a newer version further down is never
    reached.*
-10. A colleague receives the project folder without `.venv`.
-    `requirements.txt` holds the line `numpy==2.5.4`. Which lines give them
-    the same environment?
-    *`python -m venv .venv`, activate it, then
-    `python -m pip install -r requirements.txt`. The `==` pins the version,
-    so numpy 2.5.4 arrives and not the newest one. A copied `.venv` holds
-    the paths of the other laptop.*
+10. A colleague receives the project folder with `environment.yml`, which
+    lists `python=3.14` and `numpy=2.5.4`. Which lines give them the same
+    environment?
+    *`conda env create -f environment.yml`, then `conda activate weather`.
+    The file names the channel and the packages, and `numpy=2.5.4` pins the
+    version, so 2.5.4 arrives and not the newest one. A copied environment
+    folder holds the paths of the other laptop, and `base` is shared by
+    every project.*
 
 ## Paired seminar
 
-[Seminar 4 — Work on Files from the Shell](../seminars/seminar_04.md)
-starts from an empty folder. Its first 49 minutes are a warm-up that
-revisits Seminars 1 and 3 by hand while the installs run: the regions of
-VS Code, terminal, shell and prompt, a project folder made with `mkdir`, a
-README in Markdown, the switch to PowerShell 7, and a three-line file typed
-from the page and measured byte by byte (one letter of two bytes, LF
-against CRLF), then a two-line script that runs on a Mac with LF and does
-not run at all with the CRLF that VS Code writes on Windows. Then it
-follows this lecture's order on files of its own, two years of hourly
-counts from two bicycle counters: read and
-count, copy and delete, the mark `9999` at an end of a sorted column,
-`grep` and a clean copy, Python and `column_stats.py`, one checksum in the
-room, and the README's *How to rebuild*. The core needs two downloads,
-`bikes.csv` and `column_stats.py`. The cleaning script, regular
-expressions, a virtual environment, a list of checksums, a test of the
-README and the shell's own settings (an alias, a prompt, Oh My Zsh or Oh
-My Posh) are its optional sections.
+[Seminar 4 — Work on Files from the Shell](../seminars/seminar_04.md) starts
+from an empty folder. Its first 49 minutes are a warm-up that revisits
+Seminars 1 and 3 by hand while the installs run: the regions of VS Code,
+terminal, shell and prompt, a project folder made with `mkdir`, a README in
+Markdown, the switch to PowerShell 7, and a three-line file typed from the
+page and measured byte by byte (one letter of two bytes, LF against CRLF),
+then a two-line script that runs on a Mac with LF and does not run at all
+with the CRLF that VS Code writes on Windows. Then it follows this lecture's
+order on files of its own, two years of hourly counts from two bicycle
+counters: read and count, copy and delete, the mark `9999` at an end of a
+sorted column, `grep` and a clean copy, Python from Miniforge and
+`column_stats.py`, one checksum in the room, and the README's *How to
+rebuild*. The core needs two downloads, `bikes.csv` and `column_stats.py`.
+The cleaning script, regular expressions, a conda environment for the
+project, a list of checksums, a test of the README and the shell's own
+settings (an alias, a prompt, Oh My Zsh or Oh My Posh) are its optional
+sections.
 
 ## What left the deck
 
@@ -222,7 +230,10 @@ the weather station, so the lecture assumes no example from an earlier
 week, and it introduces the command line from the start, one step per
 slide: the shells are installed and checked before the first command. The
 notes on Windows PowerShell 5.1 went, because the room uses PowerShell 7
-from slide 14 on. The earlier versions are in the history of the
+from slide 14 on. Later on 12 October the section Tools & Environments
+changed from python.org, pip, a virtual environment and `requirements.txt`
+to Miniforge, `conda` environments and `environment.yml`. The earlier
+versions are in the history of the
 repository; the slides parked before are in
 `lectures/content/parked/04_Command_Line_and_Files.md`.
 
@@ -251,8 +262,10 @@ repository; the slides parked before are in
 - The shell finds a program in the folders of `PATH`, in order, and stops at
   the first.
 - A package manager installs programs by name with a typed line that can be
-  kept: `winget` for the system, pip for one Python. A virtual environment
-  gives a project a Python of its own; `requirements.txt` makes it again.
+  kept: `winget` for the system, `conda` for one environment. A conda
+  environment is a folder with a Python and packages of its own;
+  activation puts it first on `PATH`, and `environment.yml` makes it again
+  on any laptop.
 - Two files with the same SHA-256 are the same, byte for byte. A list of
   checksums guards `data/raw`. Three copies, on two kinds of storage, one of
   them in another place.

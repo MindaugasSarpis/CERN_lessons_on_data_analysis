@@ -277,6 +277,12 @@ folder. VS Code opens it, and its terminal then starts there.
     VS Code with `FILES-LAB` at the top of the Side Bar, and a prompt that
     ends in `files-lab`.
 
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | `pwd` still prints the home folder | The terminal was opened before the folder. Close it with the bin icon of the Panel and open a new one |
+    | `File exists`, or `An item with the specified name … already exists` | The folder is there from an earlier try. Go on with step 2 |
+
 ---
 
 ## Part 2 · A folder to tidy { #part-2 }
@@ -293,9 +299,8 @@ sorts the files into folders, all from the terminal.
 **0:20 · 10 min**
 
 **Tell the room.** The files for today come as a zip: seven everyday files
-copied from an old laptop. Each hides one thing that only its bytes
-show. `notes.md` lists the three questions of
-the day.
+copied from an old laptop. Each hides one thing that only its bytes show.
+`notes.md` lists the three questions of the day.
 
 1. Download [`inbox.zip`](../data/inbox.zip).
 
@@ -335,7 +340,7 @@ the day.
     | On the screen | What to do |
     |--|--|
     | `No such file or directory` after `mv` | The folder has another name, such as `inbox 2`, or the zip is still packed. `ls ~/Downloads` shows what is there |
-    | Windows: a folder `inbox` inside `inbox` | Extract All was pointed at a new folder. Move the inner one: `mv ~/Downloads/inbox/inbox .` |
+    | The seven files lie loose in Downloads, with no folder `inbox` | The zip was unpacked without a folder. Make a folder `inbox` in Downloads in Finder or Explorer, drag the seven files into it, then `mv` again |
 
 ---
 
@@ -382,6 +387,11 @@ spaces needs no quotes at all.
 !!! success "You should now see"
     `shopping_list.txt` in the Side Bar, and no name with a space in
     `inbox`.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | A prompt `dquote>` (macOS) or `>>` (Windows), waiting | A closing quote is missing. Press `Ctrl+C` and type the line again |
 
 ---
 
@@ -701,8 +711,8 @@ programs. The first bytes of the file say what it is.
         00000000  89 50 4e 47 0d 0a 1a 0a  00 00 00 0d 49 48 44 52  |.PNG........IHDR|
         ```
 
-        That is the first of ten lines. The last one, `00000098`, is the
-        size: 9 × 16 + 8 = 152.
+        That is the first of ten rows of bytes. The line after them,
+        `00000098`, is the size: 9 × 16 + 8 = 152.
 
     === "Windows"
 

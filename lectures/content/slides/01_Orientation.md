@@ -48,6 +48,11 @@ layout: quote
 
 # The goal of this course is to build **intuition**, **competence** and **confidence** in working with data, with the tools and practices of modern science
 
+<!--
+**Say:** all three start with one file. The next slide is ten years of a weather station's log.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -269,7 +274,7 @@ hideInToc: true
 <div class="note-text mt-md">Smaller is not the point. The CSV can be read by anything, the spreadsheet only by a program that knows its format.</div>
 
 <!--
-**Ask:** a show of hands at each "before" of the next four slides: who has done this?
+**Ask:** a show of hands at each "before", here and in the three pairs that follow: who has done this?
 **Say:** we use specific tools (Python, VS Code, Git), and every skill is chosen to work beyond them.
 **If asked:** the .xlsx was written with Python's openpyxl 3.1.5. Excel writes the same kind of file, a zip of XML files, with another byte count.
 (~2 min)
@@ -626,7 +631,7 @@ hideInToc: true
 | --- | --- | --- |
 | 02 | The editor VS Code, the project folder, Markdown | A README |
 | 03 | What a file is: bytes and text; first commands in a terminal | Files measured, byte by byte |
-| 04 | The command line: pipes, filters, programs, checksums | Files made by typed lines |
+| 04 | The shell set up; pipes, filters, programs; conda environments; checksums | Files made by typed lines, an `environment.yml` |
 | 05 | Git | A history of every change |
 | 06–07 | Python, then arrays of numbers | Scripts of your own |
 | 08–13 | Plots, statistics, fitting, cleaning, one command for all | Results that rebuild |
@@ -636,8 +641,7 @@ hideInToc: true
 <div class="note-text mt-md">Each step uses the one before. Markdown is written in the editor, the terminal opens in the same folder, Git keeps the text files, Python runs from the terminal.</div>
 
 <!--
-**Say:** VS Code, Markdown, files, the command line, Git, Python: in that order, each one needs the one before.
-**Say:** your project repeats each step on data of your own.
+**Say:** VS Code, Markdown, files, the command line, Git, Python: in that order, each one needs the one before. Your project repeats each step on data of your own.
 (~2 min)
 -->
 
@@ -746,7 +750,7 @@ hideInToc: true
 
 ## 🚧 **Avoid this**
 
-- Every lecture the night before the presentation
+- Catching up on every lecture the night before the presentation
 - Collecting tools you never use on your data
 - Hiding a broken step instead of asking about it
 - Taking “it ran once” for “it is reproducible”
@@ -910,9 +914,9 @@ CERN publishes its data so that anyone can check the science. Portals such as CE
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🧪 **Practice files, messy on purpose**
+## 🧪 **Practice files with real faults**
 
-Lectures and seminars use small files made for the course. They carry the faults of real files: a mean line, decimal commas, a mark for a missing value.
+Lectures and seminars use small files with the faults real files have: a mean line, decimal commas, a mark for a missing value.
 
 </div>
 
@@ -953,7 +957,7 @@ analysis-project/
 ├── results/           the plot, fit.json, report.md
 ├── tests/             checks of the scripts
 ├── config.json        the parameters
-├── requirements.txt   the packages and versions
+├── environment.yml    the packages and versions
 ├── run_all.py         the one command
 ├── .gitignore         what Git leaves out
 └── README.md          what it is, how to rebuild
@@ -998,7 +1002,7 @@ If that works for your project, it is reproducible. Every practice in this cours
 
 ## 🔒 **The recipe: keep it**
 
-`data/raw/` (it cannot be made again), `scripts/`, `tests/`, `config.json`, `requirements.txt`, `run_all.py` and `README.md`.
+`data/raw/` (it cannot be made again), `scripts/`, `tests/`, `config.json`, `environment.yml`, `run_all.py` and `README.md`.
 
 </div>
 
@@ -1106,7 +1110,7 @@ hideInToc: true
 | | **I send you** | **You do** |
 | --- | --- | --- |
 | 🔧 | Plain text throughout: CSV, Python, a README | Read every step without my programs |
-| ♻️ | The script, and the versions it ran on | Run it on your laptop: 7.16 |
+| ♻️ | The script, and `environment.yml`: the versions it ran on | Run it on your laptop: 7.16 |
 | ⚙️ | Every step as code: the 120 marked hours left out, the mean taken | See exactly what was done to which rows |
 | 📁 | `data/raw/weather.csv`, 2 515 215 bytes, as received | Check it is the file I started from |
 
@@ -1171,9 +1175,9 @@ layout: section
 hideInToc: true
 ---
 
-# Why do we need CERN
+# Why We Need **CERN**
 
-## and what can we learn from it
+## and what we can learn from it
 
 Mariner 4 sent numbers, and a key turned them into a picture. Every instrument in these films, camera, rover, telescope and detector, writes numbers too.
 
@@ -1602,7 +1606,7 @@ hideInToc: true
     'Their written assurance that it ran fine on their own laptop'
   ]"
   :correct="1"
-  explanation="♻️ Reproducibility means someone else can rebuild the result. That takes the inputs (data), the exact steps (code), and the context they ran in (environment and versions). A sharper picture or a promise changes nothing."
+  explanation="♻️ Reproducibility means someone else can rebuild the result. That takes the inputs (data), the exact steps (code), and the context they ran in (environment and versions, written down in an environment.yml). A sharper picture or a promise changes nothing."
 />
 
 ---
@@ -1634,5 +1638,5 @@ hideInToc: true
     'scripts/ and data/processed/'
   ]"
   :correct="1"
-  explanation="data/processed/ and results/ hold only what the scripts write: the cleaned tables, the plot, the fit, the report. data/raw/ cannot be made again, and scripts/ (with run_all.py, config.json, requirements.txt and the README) is the recipe. Delete the outputs, run the one command, and the same files and the same numbers come back."
+  explanation="data/processed/ and results/ hold only what the scripts write: the cleaned tables, the plot, the fit, the report. data/raw/ cannot be made again, and scripts/ (with run_all.py, config.json, environment.yml and the README) is the recipe. Delete the outputs, run the one command, and the same files and the same numbers come back."
 />

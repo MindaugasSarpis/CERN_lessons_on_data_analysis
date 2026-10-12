@@ -19,7 +19,7 @@ One screen for the front of the room. Each line links to its section.
 | Clock | Section | On the projector | The room ends with |
 |--|--|--|--|
 | | **Part 1 · Warm-up: from an empty folder** · 49 min | | |
-| 0:00 | [1. Start the installs](#installs) | `winget install …`, `git --version`, python.org | Installs running in the background |
+| 0:00 | [1. Start the installs](#installs) | `winget install …`, `git --version`, the Miniforge download | Installs and downloads running in the background |
 | 0:05 | [2. VS Code, region by region](#vscode) | The five regions, `Ctrl+Shift+P` | The regions named, a terminal open |
 | 0:11 | [3. Terminal, shell, prompt](#terminal) | `pwd`, `ls`, `cd`, `Tab`, `↑`, `clear` | The prompt read aloud, part by part |
 | 0:18 | [4. A project folder, typed](#folder) | `mkdir` six times, **Open Folder** | `bike-project` with its four folders |
@@ -33,23 +33,24 @@ One screen for the front of the room. Each line links to its section.
 | | **Part 3 · Pipes and filters** · 17 min | | |
 | 1:06 | [11. The ends of a column](#sort) | `sort -n`, `Sort-Object` | `9999` at the top: a mark, not a count |
 | 1:14 | [12. Count the mark, keep the rest](#grep) | `grep`, `uniq -c`, `Select-String`, `>` | 168 rows, one broken week, `bikes_valid.csv` |
-| | **Part 4 · Python, a checksum, the README** · 27 min | | |
-| 1:23 | [13. Python, and a program someone else wrote](#python) | The Python installer, `column_stats.py` | Python 3.14, the mean of `counts.csv`: 400 |
-| 1:31 | [14. A mean, with and without the mark](#mean) | `column_stats.py` twice | 86.3 and 38.6 bicycles per hour |
-| 1:35 | [15. One checksum in the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
-| 1:40 | [16. How to rebuild](#readme) | `README.md` and its preview | Data, columns, the mark, one rebuild line |
-| 1:46 | [17. Wrap up](#wrap-up) | `git config`, the list of the day | Git knows each name |
+| | **Part 4 · Python, a checksum, the README** · 29 min | | |
+| 1:23 | [13. Python, and a program someone else wrote](#python) | The Miniforge installer, `conda init`, `column_stats.py` | `(base)` in the prompt, Python 3.14.7, the mean of `counts.csv`: 400 |
+| 1:33 | [14. A mean, with and without the mark](#mean) | `column_stats.py` twice | 86.3 and 38.6 bicycles per hour |
+| 1:37 | [15. One checksum in the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
+| 1:42 | [16. How to rebuild](#readme) | `README.md` and its preview | Data, columns, the mark, one rebuild line |
+| 1:48 | [17. Wrap up](#wrap-up) | `git config`, the list of the day | Git knows each name |
 | | **Optional, if the room is fast** | | |
 | — | [18. A program that cleans an export](#clean) | `clean_export.py` | `monthly.csv`, `ea4ce2ce…` on every laptop |
 | — | [19. Patterns](#regex) | The `.*` button, `grep -E`, `Select-String` | 168, 4022, 37 |
-| — | [20. An environment for the project](#environment) | `python -m venv .venv`, `pip install numpy` | `(.venv)` in the prompt, `requirements.txt` |
+| — | [20. An environment for the project](#environment) | `conda create`, `conda activate`, `conda install numpy` | `(bikes)` in the prompt, `environment.yml` |
 | — | [21. A list of checksums](#list) | `shasum -a 256 -c`, `Compare-Object` | `OK`, then one digit caught |
 | — | [22. Test the README](#readme-test) | Delete, paste, count | `bikes_valid.csv` back, 34 921 lines |
 | — | [23. The shell's own settings](#settings) | `alias`, `~/.zshrc`, `$PROFILE`, Oh My Zsh, Oh My Posh | A short prompt and `..` in every new terminal |
 
 **If time runs short:** in the warm-up keep sections 3, 4 and 7 and do 2
-and 5 in two minutes each; in section 12 leave out the last step (text
-against number). Never cut sections 13 to 15, whose numbers are the result
+and 5 in two minutes each; in section 7 show the script (steps 8 to 10) on
+the projector only; in section 12 leave out the last step (text against
+number). Never cut sections 13 to 15, whose numbers are the result
 of the day.
 
 ??? info "How to use this page"
@@ -88,9 +89,8 @@ of the day.
       value `9999`. Let the room find it; do not announce it.
 
 ??? info "Files for this seminar"
-    A browser saves each file in **Downloads**
-    under the name in the second column; the page moves it into the project
-    folder with a typed command.
+    A browser saves each file in **Downloads** under the name in the second
+    column; the page moves it into the project folder with a typed command.
 
     | File | Saved as | Moved into | What it is |
     |--|--|--|--|
@@ -123,10 +123,11 @@ installs per system, with every error message, for helpers at a laptop.
 **0:00 · 5 min**
 
 **Tell the room.** Three programs come today: PowerShell 7 on Windows, a
-shell that is the same on every Windows laptop; Python, which runs
-programs; and Git, which is used next week. When the whole room downloads
-at once the network is slow, so everything starts now and runs in the
-background. Type the lines exactly; every word is explained in the next
+shell that is the same on every Windows laptop; Miniforge, which brings
+Python and conda, a program that installs packages and keeps each
+project's packages apart; and Git, which is used next week. When the whole
+room downloads at once the network is slow, so everything starts now and
+runs in the background. Type the lines exactly; every word is explained in the next
 twenty minutes.
 
 1. Open a terminal of the system.
@@ -169,34 +170,43 @@ twenty minutes.
 
         Each ends with `Successfully installed`. Leave the window open.
 
-2. In the browser, download the Python installer. Do not run it yet:
-   section 13 needs it.
+2. Download the Miniforge installer. Do not run it yet: section 13 needs
+   it.
 
     === "macOS"
 
-        Open the address below and select **Download Python 3.14.…**:
+        In the same Terminal window, go into **Downloads** and fetch the
+        installer:
 
         ```text
-        python.org/downloads
+        cd ~/Downloads
         ```
+
+        ```text
+        curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+        ```
+
+        `$(uname)` and `$(uname -m)` fill in the system and the chip of
+        this Mac, so one line fits every Mac. A table counts the download
+        up to `100`.
 
     === "Windows"
 
-        Open the address below. Under the newest **Python 3.14** select
-        **Download Windows installer (64-bit)**:
-
-        ```text
-        python.org/downloads/windows
-        ```
+        Select this link; the browser saves the installer in
+        **Downloads**:
+        [Miniforge3-Windows-x86_64.exe](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Windows-x86_64.exe).
+        Not `winget`: the Miniforge it offers is from 2022.
 
 !!! success "You should now see"
-    On macOS the developer tools installing. On Windows `winget` at work.
-    On both, the Python installer in **Downloads**.
+    On macOS the developer tools installing, and `curl` at `100`. On
+    Windows `winget` at work, and the Miniforge installer in **Downloads**.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
     | Windows: `winget` asks whether you agree to the source agreements | Type `Y` and `Enter` |
+    | macOS: `curl: (6) Could not resolve host: github.com` | No network. Copy the Miniforge installer from the USB stick into **Downloads** |
+    | Windows: the browser asks whether to keep the installer | Select **Keep**. It comes from the release page of conda-forge on GitHub |
     | Windows: `winget` is not recognized | Install `PowerShell-7.6.6-win-x64.msi` and Git for Windows from the USB stick, with every default |
     | An installer asks for an administrator password the student does not have | The laptop is managed by the university or an employer. The student pairs with a neighbour today |
     | No VS Code on the laptop | Download it from `code.visualstudio.com` and install it with every default, now |
@@ -700,7 +710,8 @@ line ending does when a file goes from Windows to a Mac.
     bytes on every laptop in the room.
 
 8. **A file that does not run.** Work in pairs, one Mac and one Windows
-   laptop. In the Explorer select the folder `scripts`, then **New File**.
+   laptop; a room of one system watches the projector for the other. In
+   the Explorer select the folder `scripts`, then **New File**.
 
     === "macOS"
 
@@ -824,7 +835,7 @@ line ending does when a file goes from Windows to a Mac.
     | On the screen | What to do |
     |--|--|
     | 38 bytes on a Mac, 40 on Windows | No `Enter` after the last line. Add it and save |
-    | 38 bytes, and no `c5 be` in the hex view | `Uzupis` was typed without `ž`. Copy the line from this page |
+    | 38 bytes on a Mac (41 on Windows), and no `c5 be` in the hex view | `Uzupis` was typed without `ž`. Copy the line from this page |
     | The size does not change after an edit | The file was not saved: a dot on the tab means *not saved* |
     | Windows: `Cannot find path` | The file is not in `data/raw`, or the terminal is not in `bike-project`. `pwd`, then `ls data/raw` |
     | macOS: `zsh: permission denied: ./scripts/hello.sh` | `chmod +x scripts/hello.sh` was skipped. Run it, then the script again |
@@ -1495,7 +1506,7 @@ empties one that exists.
 
 ## Part 4 · Python, a checksum, the README { #part-4 }
 
-**1:23 to 1:50 · sections 13 to 17**
+**1:23 to 1:52 · sections 13 to 17**
 
 Python arrives and runs a program someone else wrote. A checksum shows that
 a file is the same on every laptop, and the README writes down what was
@@ -1505,12 +1516,16 @@ done, as a line anyone can run again.
 
 ### 13. Python, and a program someone else wrote { #python }
 
-**1:23 · 8 min**
+**1:23 · 10 min**
 
 **Tell the room.** A program is a file. To run a Python program, the shell
-needs Python, and finds it in the folders listed in `PATH`. On Windows one
-box in the installer adds Python's folder to that list. After the install,
-VS Code is restarted, so that its terminal reads the new list.
+needs Python, and finds it in the folders listed in `PATH`. Python comes
+with **Miniforge**. It installs **conda**, a program that installs packages
+and keeps them apart in **environments**, and a first environment, `base`,
+with Python in it. The installer adds a few lines to a file the shell runs
+whenever it starts, `~/.zshrc` on a Mac and `profile.ps1` on Windows, so
+that every new terminal finds conda and Python. Then VS Code is
+restarted, so that its terminal runs those lines.
 
 1. Ask the shell for Python before the install.
 
@@ -1522,7 +1537,7 @@ VS Code is restarted, so that its terminal reads the new list.
 
         Either `Python 3.9.6`, the copy that came with the developer tools
         of section 1, or, while those are still installing, a note about
-        them. Both are fine: the installer below brings its own Python.
+        them. Both are fine: Miniforge brings its own Python.
 
     === "Windows"
 
@@ -1536,37 +1551,113 @@ VS Code is restarted, so that its terminal reads the new list.
 
         A stand-in of Windows answered, not Python.
 
-2. Run the installer that section 1 downloaded.
+2. Install Miniforge from the file that section 1 downloaded.
 
     === "macOS"
 
-        Open `python-3.14.…-macos11.pkg` in **Downloads** and keep every
-        default.
+        In the terminal of VS Code:
+
+        ```text
+        bash ~/Downloads/Miniforge3-$(uname)-$(uname -m).sh
+        ```
+
+        The installer stops five times:
+
+        | It prints | You type |
+        |--|--|
+        | `Please, press ENTER to continue` | `Enter` |
+        | The licence, one screen at a time | `q`, which jumps to its end |
+        | `Do you accept the license terms?` | `yes` |
+        | `[/Users/ada/miniforge3] >>>` | `Enter`: the folder is right |
+        | `Proceed with initialization?` and `[no] >>>` | `yes`. The answer in brackets is the default, so `Enter` alone would say no |
+
+        It ends with:
+
+        ```text
+        Thank you for installing Miniforge3!
+        ```
 
     === "Windows"
 
-        Open `python-3.14.…-amd64.exe` in **Downloads**. On the first
-        screen tick **Add python.exe to PATH** at the bottom, then select
-        **Install Now**, and **Close** at the end.
+        Open `Miniforge3-Windows-x86_64.exe` in **Downloads**. Select
+        **Next** and **I Agree**, choose **Just Me (recommended)**, and keep
+        every other default: the folder `C:\Users\ada\miniforge3`, the
+        boxes as they are, **Install**, then **Finish**.
+
+        Then press the Windows key, type `Miniforge Prompt` and press
+        `Enter`. In the window that opens, let conda add its lines to the
+        profile scripts of PowerShell:
+
+        ```text
+        conda init powershell
+        ```
+
+        It lists the files it looked at and ends with:
+
+        ```text
+        ==> For changes to take effect, close and re-open your current shell. <==
+        ```
+
+        Close the Miniforge Prompt.
 
 3. Quit VS Code with **File** > **Exit** (macOS `Cmd+Q`) and start it again.
-   It opens `bike-project`. Open a new terminal and ask again.
+   It opens `bike-project`. Open a new terminal: the prompt now starts with
+   `(base)`, the environment conda switched on. Ask again.
 
     === "macOS"
+
+        ```text
+        conda --version
+        ```
+
+        ```text
+        conda 26.7.2
+        ```
 
         ```text
         python3 --version
         ```
 
+        ```text
+        Python 3.14.7
+        ```
+
+        ```text
+        which python3
+        ```
+
+        ```text
+        /Users/ada/miniforge3/bin/python3
+        ```
+
     === "Windows"
+
+        ```text
+        conda --version
+        ```
+
+        ```text
+        conda 26.7.2
+        ```
 
         ```text
         python --version
         ```
 
-    ```text
-    Python 3.14.…
-    ```
+        ```text
+        Python 3.14.7
+        ```
+
+        ```text
+        (Get-Command python).Source
+        ```
+
+        ```text
+        C:\Users\ada\miniforge3\python.exe
+        ```
+
+    The folder of `base` now comes first in `PATH`, so the shell finds this
+    Python before any other.
 
 4. Run the program on the file you typed: the program, the file to run,
    then two words for the program: the file it reads and the column.
@@ -1596,21 +1687,26 @@ VS Code is restarted, so that its terminal reads the new list.
     today; it was tested on a file whose answer we know.
 
 !!! success "You should now see"
-    `Python 3.14.…`, and the mean 400 on every laptop.
+    `(base)` in the prompt, `Python 3.14.7`, and the mean 400 on every
+    laptop.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | Windows: still `Python was not found` | Either **Add python.exe to PATH** was not ticked (run the installer again, **Modify**, **Next**, tick **Add Python to environment variables**, **Install**) or VS Code was not quit and started again. Never install from the Store. Until it works, `py` runs in place of `python` |
-    | macOS: `python3 --version` still prints `Python 3.9.6` | The installer has not finished, or the terminal is old. Quit VS Code with `Cmd+Q` and start it again |
-    | macOS: `zsh: command not found: python` | On macOS the program is `python3` |
+    | macOS: no `(base)` in the new terminal, or `zsh: command not found: conda` | The last question of the installer was answered with `Enter`, which means no. Run `~/miniforge3/bin/conda init zsh`, then open a new terminal |
+    | macOS: `bash: /Users/ada/Downloads/Miniforge3-…: No such file or directory` | The download of section 1 did not finish. `ls ~/Downloads`, or copy the installer from the USB stick into **Downloads** |
+    | macOS: `ERROR: File or directory already exists: '/Users/ada/miniforge3'` | Miniforge is there already, from an earlier try. Go on with step 3 |
+    | Windows: "Windows protected your PC" when the installer starts | Select **More info**, then **Run anyway** |
+    | Windows: `conda : The term 'conda' is not recognized …`, and no `(base)` | `conda init powershell` was not run in the Miniforge Prompt, or VS Code was not quit and started again |
+    | Windows: `… profile.ps1 cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1: switch to PowerShell 7 (section 6). Or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once, answer `Y`, and open a new terminal |
+    | Windows: still `Python was not found` | conda is not on in this terminal: there is no `(base)` in the prompt. See the two rows above. Never install Python from the Store |
     | `no column bikes in data/raw/counts.csv` | The header of `counts.csv` was typed differently. It must read `place,bikes` |
 
 ---
 
 ### 14. A mean, with and without the mark { #mean }
 
-**1:31 · 4 min**
+**1:33 · 4 min**
 
 **Tell the room.** The same program on the large file. It counts every
 value it finds, the mark too: it cannot know that 9999 means "no count".
@@ -1660,7 +1756,7 @@ value it finds, the mark too: it cannot know that 9999 means "no count".
 
 ### 15. One checksum in the room { #checksum }
 
-**1:35 · 5 min**
+**1:37 · 5 min**
 
 **Tell the room.** A **checksum** is a long number computed from every
 byte of a file. Two files with the same bytes have the same checksum; one
@@ -1750,7 +1846,7 @@ that they hold the same file by reading eight characters aloud.
 
 ### 16. How to rebuild { #readme }
 
-**1:40 · 6 min**
+**1:42 · 6 min**
 
 **Tell the room.** The README of section 5 says what the project is. A
 stranger also needs to know where the data came from, what each column
@@ -1814,7 +1910,7 @@ terminal, not retyped from memory.
 
 ### 17. Wrap up { #wrap-up }
 
-**1:46 · 4 min**
+**1:48 · 4 min**
 
 **Tell the room.** Git keeps versions of files, from next week on. It
 writes a name and an address into every version, so it is told both once,
@@ -1847,6 +1943,8 @@ now. Nothing is printed, which is correct.
     - `|` joins filters, `>` writes a file. Sort a column and look at both
       ends: `9999` was a mark, 168 rows, one broken week, a mean more than
       doubled.
+    - Python comes with Miniforge, in conda's environment `base`, which
+      every new terminal switches on: `(base)` in the prompt.
     - A program someone else wrote runs with one line; a checksum shows that
       two files hold the same bytes; the README holds the line that makes
       the processed file again.
@@ -2094,13 +2192,16 @@ Find box of VS Code and in the shell.
 
 **— · 12 min**
 
-**Tell the room.** `pip` installs Python packages. Installed into the
-Python of the laptop, a package is shared by every project, and an upgrade
-for one can break another. A **virtual environment** is a Python of the
-project's own, in the folder `.venv`. Activating it puts its folder at the
-front of `PATH`, so `python` means this one.
+**Tell the room.** Since section 13 every terminal starts in conda's
+environment `base`: one Python, shared by everything on the laptop. A
+package installed there is shared by every project, and an upgrade for one
+can break another. An **environment** is a folder with a Python and
+packages of its own. **Activating** it puts its folder at the front of
+`PATH`, so that `python` means this one. The project keeps the list of what
+is in it, `environment.yml`, and any laptop makes the same environment from
+that list.
 
-1. Where the shell finds Python now.
+1. Where the shell finds Python now. The prompt starts with `(base)`.
 
     === "macOS"
 
@@ -2109,7 +2210,7 @@ front of `PATH`, so `python` means this one.
         ```
 
         ```text
-        /Library/Frameworks/Python.framework/Versions/3.14/bin/python3
+        /Users/ada/miniforge3/bin/python3
         ```
 
     === "Windows"
@@ -2119,69 +2220,95 @@ front of `PATH`, so `python` means this one.
         ```
 
         ```text
-        C:\Users\ada\AppData\Local\Programs\Python\Python314\python.exe
+        C:\Users\ada\miniforge3\python.exe
         ```
 
-2. Make the environment and switch it on.
+2. Make an environment for the project, with Python 3.14.
+
+    ```text
+    conda create -n bikes python=3.14
+    ```
+
+    conda shows its plan, the folder first, and asks before it installs:
 
     === "macOS"
 
         ```text
-        python3 -m venv .venv
+        ## Package Plan ##
+
+          environment location: /Users/ada/miniforge3/envs/bikes
+
+          added / updated specs:
+            - python=3.14
         ```
 
+    === "Windows"
+
         ```text
-        source .venv/bin/activate
+        ## Package Plan ##
+
+          environment location: C:\Users\ada\miniforge3\envs\bikes
+
+          added / updated specs:
+            - python=3.14
         ```
+
+    Below the plan comes the list of packages, Python and the libraries it
+    needs, then `Proceed ([y]/n)?`. Press `Enter`. It ends with:
+
+    ```text
+    #     $ conda activate bikes
+    ```
+
+3. Switch it on.
+
+    ```text
+    conda activate bikes
+    ```
+
+    The prompt now starts with `(bikes)`.
+
+    === "macOS"
 
         ```text
         which python
         ```
 
         ```text
-        /Users/ada/bike-project/.venv/bin/python
+        /Users/ada/miniforge3/envs/bikes/bin/python
         ```
 
     === "Windows"
-
-        ```text
-        python -m venv .venv
-        ```
-
-        ```text
-        .venv\Scripts\Activate.ps1
-        ```
 
         ```text
         (Get-Command python).Source
         ```
 
         ```text
-        C:\Users\ada\bike-project\.venv\Scripts\python.exe
+        C:\Users\ada\miniforge3\envs\bikes\python.exe
         ```
 
-    The prompt now starts with `(.venv)`. From here the line is the same in
-    both shells: `python`.
+    From here the word is `python` in both shells.
 
-3. The environment is empty. Fill it.
+4. The environment has Python and nothing else. Fill it.
 
     ```text
-    python -m pip list
+    python -c "import numpy"
     ```
 
     ```text
-    Package Version
-    ------- -------
-    pip     26.2.1
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+        import numpy
+    ModuleNotFoundError: No module named 'numpy'
     ```
 
     ```text
-    python -m pip install numpy
+    conda install numpy
     ```
 
-    ```text
-    Successfully installed numpy-2.5.4
-    ```
+    Press `Enter` at `Proceed ([y]/n)?`. numpy comes with the libraries it
+    calls for its arithmetic.
 
     ```text
     python -c "import numpy; print(numpy.__version__)"
@@ -2191,37 +2318,107 @@ front of `PATH`, so `python` means this one.
     2.5.4
     ```
 
-4. Write the list down, so that another laptop installs the same versions.
+5. `base` did not get it. Switch back, ask, and switch on `bikes` again.
 
     ```text
-    python -m pip freeze > requirements.txt
+    conda deactivate
+    ```
+
+    The prompt shows `(base)` again.
+
+    === "macOS"
+
+        ```text
+        python3 -c "import numpy"
+        ```
+
+    === "Windows"
+
+        ```text
+        python -c "import numpy"
+        ```
+
+    ```text
+    ModuleNotFoundError: No module named 'numpy'
     ```
 
     ```text
-    cat requirements.txt
+    conda activate bikes
     ```
 
+6. Write the list down, so that another laptop makes the same environment.
+
     ```text
-    numpy==2.5.4
+    conda env export --from-history -f environment.yml
     ```
 
-5. Switch it off.
+    Open `environment.yml` in VS Code:
 
     ```text
-    deactivate
+    name: bikes
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14
+      - numpy
+    prefix: /Users/ada/miniforge3/envs/bikes
+    ```
+
+    `--from-history` writes what was asked for, not every library that
+    came with it: those differ between a Mac and Windows. Two edits, then
+    save:
+
+    - Delete the last line, `prefix: …`. It names a folder on this laptop.
+    - Change `- numpy` to `- numpy=2.5.4`. Without a version, the next
+      laptop gets whatever numpy is newest that day.
+
+7. List the environments, then switch `bikes` off.
+
+    ```text
+    conda env list
+    ```
+
+    === "macOS"
+
+        ```text
+        # conda environments:
+        #
+        # * -> active
+        # + -> frozen
+        base                     /Users/ada/miniforge3
+        bikes                *   /Users/ada/miniforge3/envs/bikes
+        ```
+
+    === "Windows"
+
+        ```text
+        # conda environments:
+        #
+        # * -> active
+        # + -> frozen
+        base                     C:\Users\ada\miniforge3
+        bikes                *   C:\Users\ada\miniforge3\envs\bikes
+        ```
+
+    ```text
+    conda deactivate
     ```
 
 !!! success "You should now see"
-    `(.venv)` in the prompt while it was on, and `requirements.txt` with one
-    line. On another laptop, three lines make the same environment: make
-    `.venv`, activate it, `python -m pip install -r requirements.txt`.
+    `(bikes)` in the prompt while it was on, numpy 2.5.4 in `bikes` and
+    not in `base`, and `environment.yml` of six lines in the project. On
+    another laptop one line makes the same environment from it:
+    `conda env create -f environment.yml`.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
+    | `conda: command not found`, or `The term 'conda' is not recognized` | conda is not on in this terminal: section 13, step 3 |
+    | `EnvironmentNameNotFound: Could not find conda environment: bikez` | A typo, or `conda create` did not finish. `conda env list` shows the names |
+    | `conda install numpy` ran with `(base)` in the prompt | numpy went into `base`. `conda remove numpy`, then `conda activate bikes` and install it again |
+    | `environment.yml` still ends with `prefix:` | Delete that line and save |
     | Windows: `… cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1. Switch to PowerShell 7 (section 6), or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
-    | Other version numbers | A newer pip or numpy was released. Fine |
-    | `.venv` shows in the Explorer with many files | Correct. It is made again from `requirements.txt` and never edited by hand |
+    | Other version numbers | A newer Python 3.14 or numpy was released. Fine |
 
 ---
 
@@ -2343,6 +2540,13 @@ second.
     `OK` for every file of the project, and the one changed file caught in
     the copy: one digit out of 900 314 bytes.
 
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | macOS: a file of `data/raw` has no `OK` line | It came into `data/raw` after the list was written, for example in section 18. `-c` checks only the files on the list: write the list again (step 1) |
+    | Windows: a checksum with `=>` and none with `<=` before any change | The same: a file came in after the list was written. Write the list again (step 1) |
+    | In the copy, `ls` shows a folder `bike-project` and no `data` | `bike-copy` was there from an earlier try, so the project went inside it. `cd ~`, `rm -r ~/bike-copy`, then step 3 again |
+
 ---
 
 ### 22. Test the README { #readme-test }
@@ -2381,17 +2585,24 @@ delete what it says can be made again, run its line, and measure.
     `bikes_valid.csv` back in `data/processed`, with the number of lines the
     README states.
 
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | The count says the file does not exist | The pasted line did not run. Press `Enter` after pasting |
+    | Windows: the prompt shows `>>` and waits | The backticks came along: a backtick at the end of a line tells PowerShell the line goes on. `Ctrl+C`, then copy the line from the preview, not from the source |
+
 ---
 
 ### 23. The shell's own settings { #settings }
 
 **— · 12 min**
 
-**Tell the room.** Every terminal so far started the same way. A shell
-reads one file of settings when it starts: `~/.zshrc` for zsh, `$PROFILE`
-for PowerShell. What is written there comes back in every new terminal.
-Nothing in this course needs it, and it stays on this laptop: a README
-line always uses the full command.
+**Tell the room.** A shell runs a file of settings whenever it starts:
+`~/.zshrc` for zsh, `$PROFILE` for PowerShell. conda's lines of section 13
+went into `~/.zshrc` on a Mac, and into `profile.ps1`, a file beside
+`$PROFILE`, on Windows. What is written there comes back in every new
+terminal. Nothing in this course needs more of it, and it stays on this
+laptop: a README line always uses the full command.
 
 1. Try an alias and a shorter prompt, for this terminal only.
 
@@ -2412,8 +2623,11 @@ line always uses the full command.
         ```
 
         ```text
-        function prompt { "$((Get-Item .).Name)> " }
+        function prompt { "$env:CONDA_PROMPT_MODIFIER$((Get-Item .).Name)> " }
         ```
+
+        `$env:CONDA_PROMPT_MODIFIER` holds `(base) `, or the name of the
+        environment that is on, so the prompt keeps showing it.
 
     Then go down and up again:
 
@@ -2426,9 +2640,9 @@ line always uses the full command.
     ```
 
     The prompt shows only the folder: `data %` and `bike-project %` on a
-    Mac, `data>` and `bike-project>` on Windows. Close the terminal with
-    the bin icon of the Panel and open a new one with `+`: both settings
-    are gone.
+    Mac, `(base) data>` and `(base) bike-project>` on Windows. Close the
+    terminal with the bin icon of the Panel and open a new one with `+`:
+    both settings are gone.
 
 2. Write them into the start-up file.
 
@@ -2465,7 +2679,7 @@ line always uses the full command.
         ```
 
         ```text
-        Add-Content $PROFILE 'function prompt { "$((Get-Item .).Name)> " }'
+        Add-Content $PROFILE 'function prompt { "$env:CONDA_PROMPT_MODIFIER$((Get-Item .).Name)> " }'
         ```
 
         ```text
@@ -2474,7 +2688,7 @@ line always uses the full command.
 
         ```text
         function .. { Set-Location .. }
-        function prompt { "$((Get-Item .).Name)> " }
+        function prompt { "$env:CONDA_PROMPT_MODIFIER$((Get-Item .).Name)> " }
         ```
 
 3. Open a new terminal with `+`. The short prompt is there, and `..` goes
@@ -2493,10 +2707,18 @@ line always uses the full command.
         sh -c "$(curl -fsSL https://install.ohmyz.sh/)"
         ```
 
-        A new zsh starts with the prompt `➜  bike-project`. The two lines
-        of step 2 are now in `~/.zshrc.pre-oh-my-zsh`; the theme is set by
-        the line `ZSH_THEME="robbyrussell"` in the new `~/.zshrc`. To go
-        back: `uninstall_oh_my_zsh`, which puts the old file back.
+        A new zsh starts with the prompt `➜  bike-project`. The old
+        `~/.zshrc` is now `~/.zshrc.pre-oh-my-zsh`, with the two lines of
+        step 2 and conda's lines of section 13. Give conda its lines back
+        in the new file, then open a new terminal:
+
+        ```text
+        ~/miniforge3/bin/conda init zsh
+        ```
+
+        The theme is set by the line `ZSH_THEME="robbyrussell"` in the new
+        `~/.zshrc`. To go back: `uninstall_oh_my_zsh`, which puts the old
+        file back.
 
     === "Windows"
 
@@ -2524,6 +2746,8 @@ line always uses the full command.
     | On the screen | What to do |
     |--|--|
     | macOS: `zsh: permission denied: ..` | The alias is missing. `tail -n 2 ~/.zshrc`, then step 2 again |
+    | macOS: `(base)` is gone from the prompt | The new `PROMPT` replaced the prompt conda had set; in `~/.zshrc` it comes after conda's lines. conda still works, and `conda activate bikes` adds the name again: `(bikes) bike-project %` |
+    | macOS, after Oh My Zsh: `zsh: command not found: conda` | conda's lines stayed in `~/.zshrc.pre-oh-my-zsh`. `~/miniforge3/bin/conda init zsh`, then a new terminal |
     | Windows: `Could not find a part of the path` | The folder line of step 2 was skipped. Run it, then the two `Add-Content` lines |
     | Windows: `… cannot be loaded because running scripts is disabled on this system` when a terminal opens | The profile is a script. Run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
     | A profile path under `OneDrive\Documents` | Correct: OneDrive keeps `Documents` there |
@@ -2549,12 +2773,15 @@ line always uses the full command.
   long file one screen at a time: `Space` goes on, `q` leaves.
 - `history` lists the commands typed in this terminal, in both shells.
 - `Ctrl+R` searches the earlier commands as you type.
+- `conda env remove -n bikes` deletes the environment of section 20;
+  `conda env create -f environment.yml` makes it again.
 
 ## Aims practised
 
 - 🔧 **Tool-agnostic:** the same work in two shells, and in VS Code.
 - ♻️ **Reproducible:** a README whose line makes the processed file again,
-  and a checksum that names the raw file.
+  a checksum that names the raw file, and (section 20) an `environment.yml`
+  from which any laptop makes the same environment.
 - ⚙️ **Automation:** typed lines and a program in place of clicks.
 - 📁 **Data & files:** a project folder from nothing, a file read byte by
   byte, raw data that is only read, a mark for missing values found and

@@ -385,6 +385,27 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   /bin/zsh^M` once saved with CRLF (warm-up now 49 min, core 1 h 50 min),
   and an optional section 23 that writes the same settings into the
   start-up files and shows Oh My Zsh or Oh My Posh.
+- After "we want to rigorously introduce what conda environments are and no
+  venv" (and the choice "Miniforge only"): Python on the students' laptops
+  comes from Miniforge 26.7.2 (conda plus Python, conda-forge only), not
+  python.org. Lecture 04's Tools & Environments section is rebuilt: the
+  shell-settings slides come first, then what `conda init` wrote, conda as
+  package and environment manager, one shared Python against one
+  environment per project, an environment as a folder (`conda create`,
+  `conda env list`), activation as a change of `PATH`, `conda install
+  numpy` measured, and `environment.yml` from `conda env export
+  --from-history`. The pip, venv and `requirements.txt` slides left.
+  Seminar 4 installs Miniforge in sections 1 and 13 (the macOS installer's
+  "Proceed with initialization?" defaults to no; Windows needs `conda init
+  powershell` in the Miniforge Prompt; winget's Miniforge3 package is from
+  2022) and builds a conda environment `bikes` in optional section 20. A
+  prompt line of one's own hides conda's environment name unless it keeps
+  `$env:CONDA_PROMPT_MODIFIER` (PowerShell loads conda's `profile.ps1`
+  before `$PROFILE`).
+- After "carefully check for readability, clarity, flow … implement":
+  Lectures 01 to 04, their pages and Seminars 1, 3 and 4 were read slide by
+  slide and section by section, and fixed in place (notes, bridges,
+  arithmetic, run-sheet sums, Watch-for rows).
 
 **Open**
 
@@ -400,6 +421,19 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   the `$PROFILE` path on Windows. The zsh and PowerShell lines of Seminar 4
   section 23 and the `bad interpreter` message ran in zsh 5.9.2 and
   PowerShell 7.6.6 on Linux.
+- Not run on a Mac or Windows: the Miniforge installers' screens, every
+  macOS and Windows path in the conda outputs (`/Users/ada/miniforge3/…`,
+  `C:\Users\ada\miniforge3\…`), `conda init powershell` writing
+  `profile.ps1` for both PowerShells (read from conda's source). The conda
+  commands, versions, sizes and package counts ran with Miniforge 26.7.2 on
+  Linux.
+- Later seminars still install packages with pip into whichever Python is
+  active, which is now conda's `base`: Seminar 7 (numpy), 10 (scipy), 11
+  (matplotlib), 12 (pandas, pyarrow), 16 (scikit-learn); Seminars 7 and 12
+  also point to python.org in a Watch-for row. Lecture and Seminar 13 and
+  lines of 14 and 15 use venv and `requirements.txt`, and `overview.md`
+  lists `requirements.txt` in the project layout. Each becomes a conda
+  environment with `environment.yml` at its rework.
 - Lectures 05 to 16 and Seminars 5 to 16 still use the pendulum table and
   the LHCb file, and some assume files that Seminar 4 no longer makes
   (Seminar 5: checksums of `D0_KPi.csv`; Seminar 6 and Lecture 6:

@@ -67,7 +67,7 @@ Where it came from, what one line is, the units, and what is missing.
 
 <!--
 **Ask:** what can you say about this file? What can you not say?
-**Say:** write the second list on the board. It becomes the next slide.
+**Do:** write the second list on the board. It becomes the next slide.
 (~4 min)
 -->
 
@@ -114,8 +114,7 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** these are the room's own questions, in the order the lecture answers them.
-**Do:** point at the part of the four lines each one is about: the columns, the whole file, one line, the numbers.
+**Say:** these are the room's own questions, in the order the lecture answers them. Each is about one part of the four lines: the columns, the whole file, one line, the numbers.
 (~2 min)
 -->
 
@@ -676,7 +675,7 @@ hideInToc: true
 <div class="note-text mt-md">Formats such as HDF5 and ROOT are binary. Large experiments, CERN among them, store their data that way.</div>
 
 <!--
-**Say:** the same table can be saved in all three. The next two slides compare text and numbers in a file.
+**Say:** the same table can be saved in all three. The next slides stay with CSV: what it leaves open, and what text costs against binary.
 **If asked:** an .xlsx file is a zip archive of XML text files.
 (~2 min)
 -->
@@ -733,7 +732,9 @@ hideInToc: true
 
 # Opened in a **Spreadsheet**
 
-<div class="card card-primary card-glass pad-compact table-compact mt-md">
+<div class="note-text mt-sm"><code>weather.csv</code>, with <code>,</code> between the values and <code>.</code> as the decimal sign, opened on three computers:</div>
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
 | On the screen | Reason |
 | --- | --- |
@@ -1155,7 +1156,7 @@ hideInToc: true
 
 <!--
 **Say:** the same question as at the station, at the largest scale there is. The raw signal is about 1 PB a second; nothing can store it.
-**Do:** the next slide is a clip of the whole chain, 2:51, with music.
+**Do:** let the clip on the next slide run: the whole chain, 2:51, with music.
 (~3 min)
 -->
 
@@ -1222,7 +1223,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## ⬇️ **Clicked**
+## ⬇️ **In a text editor**
 
 `Ctrl+End` (macOS `Cmd+↓`) jumps to line **87 674**, and it is empty: the file ends with a line end.
 
@@ -1232,7 +1233,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-## 🧮 **Checked**
+## 🧮 **By arithmetic**
 
 2016 to 2025 is 10 years, 3 of them leap years:
 
@@ -1249,7 +1250,8 @@ hideInToc: true
 <div class="note-text mt-md">One row per hour, and not one hour missing.</div>
 
 <!--
-**Ask:** before pressing the key: how many rows should ten years of hours have?
+**Ask:** before showing the cards: how many rows should ten years of hours have?
+**If asked:** any text editor has these keys; the one used in this course, VS Code, comes at the end of the lecture.
 **Say:** the count closes, so every hour has its row. That says nothing yet about the values in it.
 (~3 min)
 -->
@@ -1262,7 +1264,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## 🎯 **`Ctrl+G`, then `5000`**
+## 🎯 **Go to line 5000: `Ctrl+G`**
 
 ```text
 2016-07-27T06:00,18.2,71,1.1
@@ -1459,6 +1461,7 @@ hideInToc: true
 The five answers are not in the file, so they are written next to it, in a README. Both are plain text, and one editor opens both.
 
 <!--
+**Say:** answers that stay in this room are lost. From here on: the folder they go into, the editor, the README.
 (~1 min)
 -->
 
@@ -1516,6 +1519,7 @@ hideInToc: true
 
 <!--
 **Ask:** why does `2025-10-01` sort right and `1.10.2025` not? Text is sorted from the left, character by character.
+**If asked:** `Data` and `data` are two folders on Linux and one on Windows and macOS: small letters avoid the question.
 (~2 min)
 -->
 
@@ -1642,6 +1646,7 @@ Sets the size for the projector.
 <div class="note-text mt-md">The Command Palette is the one key worth remembering: every other command can be found through it.</div>
 
 <!--
+**Say:** on macOS `Cmd` stands where Windows and Linux have `Ctrl`. Every key slide gives both.
 (~2 min)
 -->
 
@@ -1709,7 +1714,7 @@ The file on disk still holds the old text. `Ctrl+S` (macOS `Cmd+S`) writes the n
 <div class="note-text mt-md">The right end of the Status Bar names the file's encoding and line ending: <code>UTF-8</code>, <code>LF</code> or <code>CRLF</code>.</div>
 
 <!--
-**If asked:** `Data` and `data` are two folders on Linux and one on Windows and macOS.
+**Say:** a program that reads the file reads the disk, not the tab. Unsaved text does not exist for it.
 (~2 min)
 -->
 
@@ -1723,6 +1728,7 @@ hideInToc: true
 The README is written in Markdown: plain text with a few signs for structure.
 
 <!--
+**Say:** each slide of this section shows the source on the left and what the preview makes of it on the right.
 (~1 min)
 -->
 
@@ -1997,6 +2003,7 @@ hideInToc: true
 The daily table arrived in a spreadsheet's format. Each fix is the same on every line, and the editor makes it once.
 
 <!--
+**Say:** back to the nine-day table of slide 14. It is repaired here by hand, on a copy, one fix per slide.
 (~1 min)
 -->
 

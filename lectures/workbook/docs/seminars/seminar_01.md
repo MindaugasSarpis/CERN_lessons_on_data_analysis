@@ -22,7 +22,7 @@ are a reading list and the loans log of a library.
 | | **Part 2 · Markdown** · 15 min | | |
 | 0:25 | [5. Write the README](#markdown) | `README.md` beside its preview | A README with a title, a list, a table, a link |
 | 0:35 | [6. Five mistakes, on purpose](#mistakes) | `#Title` without the space | Each mistake seen and fixed |
-| | **Part 3 · Repair a table** · 30 min | | |
+| | **Part 3 · Repair a table** · 31 min | | |
 | 0:40 | [7. The reading list arrives](#copy) | The file in `data/raw`, a copy in `data/processed` | Two copies of the list |
 | 0:45 | [8. Whole lines](#lines) | `Ctrl+Shift+K` on the mean line | The mean line gone |
 | 0:50 | [9. Find and replace](#replace) | `Ctrl+H`: `,` to `.`, then `;` to `,` | Commas between the values |
@@ -161,8 +161,10 @@ everything that belongs to one piece of work lives in it.
 
 **0:15 · 5 min**
 
-**Tell the room.** The window has five regions. Point at each one and name
-it.
+**Tell the room.** The window has five regions, and the rest of the course
+calls them by these names.
+
+Point at each region on the projector while you name it.
 
 | | Region | What it is for |
 |--|--|--|
@@ -716,7 +718,8 @@ file in `data/raw` is never saved from a spreadsheet.
 
 **Tell the room.** A data file without a note on its origin cannot be checked
 by anyone, its owner included, six months later. The note goes into the
-README, with every change made by hand.
+README, with every change made by hand. The source is where the file came
+from to you: today, this page.
 
 1. Add to `README.md`:
 

@@ -198,8 +198,8 @@ Answers all three. The line can be kept in the README and run again on the next 
 
 <!--
 **Ask:** how would you find the coldest hour among 87 672?
-**If asked:** on a Mac the keys are `Cmd+↓` and `Ctrl+G`.
 **Say:** leave the question open. A typed line answers it in the middle of the lecture.
+**If asked:** on a Mac the keys are `Cmd+↓` and `Ctrl+G`.
 (~3 min)
 -->
 
@@ -617,7 +617,7 @@ PS C:\Users\ada\Documents\weather-project>
 <div class="note-text mt-md">The folder in the prompt is the <strong>working directory</strong>. Every command starts there.</div>
 
 <!--
-**Ask:** read your own prompt aloud, part by part.
+**Ask:** read the two prompts on the slide aloud, part by part.
 **Say:** zsh shows only the last folder, PowerShell the whole path. Both name the same thing.
 (~2 min)
 -->
@@ -1399,7 +1399,7 @@ PS> (Get-Item data/raw/weather.csv).Length
 hideInToc: true
 ---
 
-# Make a Folder, Copy a File
+# Make a Folder, Copy a **File**
 
 <div class="grid-2 gap-md mt-md">
 
@@ -1808,8 +1808,7 @@ The first 5000 lines go into the pipe, the last of them comes out: line 5000, th
 </div>
 
 <!--
-**Say:** the same line as `Ctrl+G` 5000 in VS Code.
-**Say:** a line that ends in `|` goes on in the next line; PowerShell shows `>>` there.
+**Say:** the same line as `Ctrl+G` 5000 in VS Code. A line that ends in `|` goes on in the next line; PowerShell shows `>>` there.
 (~2 min)
 -->
 
@@ -2654,7 +2653,7 @@ hideInToc: true
 
 # Tools & **Environments**
 
-The cleaning line starts with `python3` or `python`: a program somebody installed. Where programs come from, how the shell finds them, and how a project lists the ones it needs.
+The cleaning line starts with `python3` or `python`: a program somebody installed. Where programs come from, how the shell finds them, what it runs at start, and how a project lists the ones it needs.
 
 <!--
 **Say:** every command so far was already on the laptop, or came with one typed line, like PowerShell 7. Python is the next one.
@@ -2671,9 +2670,9 @@ hideInToc: true
 
 ```text
 % which python3
-/Library/Frameworks/Python.framework/Versions/3.14/bin/python3
+/Users/ada/miniforge3/bin/python3
 PS> (Get-Command python).Source
-C:\Users\ada\AppData\Local\Programs\Python\Python314\python.exe
+C:\Users\ada\miniforge3\python.exe
 ```
 
 </div>
@@ -2692,7 +2691,7 @@ C:\Users\ada\AppData\Local\Programs\Python\Python314\python.exe
 
 ## 📦 **An installer**
 
-Python from python.org, VS Code: downloaded and clicked through.
+VS Code, and Miniforge, which brings Python and `conda`: downloaded and run once.
 
 </div>
 
@@ -2710,7 +2709,7 @@ A typed line: `winget` installed PowerShell 7 at the start.
 
 <!--
 **Say:** a program is usable at the prompt when its folder is on the list the shell searches. That list is the next slide.
-**If asked:** a Mac without the python.org install answers `/usr/bin/python3`, Apple's copy.
+**If asked:** Miniforge installs into the folder `miniforge3` in the home folder. A Mac without it answers `/usr/bin/python3`, Apple's copy.
 (~2 min)
 -->
 
@@ -2724,12 +2723,14 @@ hideInToc: true
 
 ```text
 % echo $PATH | tr ':' '\n'
-/Library/Frameworks/Python.framework/Versions/3.14/bin
+/Users/ada/miniforge3/bin
+/Users/ada/miniforge3/condabin
 /usr/bin
 PS> $env:PATH -split ';'
+C:\Users\ada\miniforge3
+C:\Users\ada\miniforge3\Scripts
 C:\Windows\system32
 C:\Program Files\PowerShell\7\
-C:\Users\ada\AppData\Local\Programs\Python\Python314\
 C:\Users\ada\AppData\Local\Microsoft\WindowsApps
 ```
 
@@ -2749,7 +2750,7 @@ The shell takes the first folder that holds a program of the typed name. Of two 
 
 ## 🪟 **"Python was not found"**
 
-`WindowsApps` holds a stand-in `python.exe`. The Python installer's tick **Add python.exe to PATH** puts its folder above it.
+`WindowsApps` holds a stand-in `python.exe`. In a PowerShell where conda was never set up, the Miniforge folders are missing, and the stand-in answers.
 
 </div>
 
@@ -2757,7 +2758,7 @@ The shell takes the first folder that holds a program of the typed name. Of two 
 
 <!--
 **Say:** a terminal reads PATH when it opens: a program installed meanwhile is found only in a new terminal. The lists are shortened; a real laptop shows ten to twenty folders.
-**If asked:** macOS has no program named `python`, only `python3`, so `python` there says `command not found`.
+**If asked:** without Miniforge a Mac has only `python3`, so the course writes `python3` there. Inside Miniforge both names work.
 (~3 min)
 -->
 
@@ -2786,278 +2787,8 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** the five jobs are the same in every package manager. The course needs no Homebrew; Python comes from python.org on both systems.
+**Say:** the five jobs are the same in every package manager. The course needs no Homebrew: Python comes from Miniforge on both systems, and its `conda` is a package manager too.
 **If asked:** Linux has `apt`, with the same five jobs.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# **pip**: Packages for Python
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-% python3 -m pip --version
-pip 26.2.1 from /Library/Frameworks/…/python3.14/site-packages/pip (python 3.14)
-PS> python -m pip --version
-pip 26.2.1 from C:\Users\ada\…\Python314\Lib\site-packages\pip (python 3.14)
-```
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📚 **The catalogue**
-
-PyPI, pypi.org. `numpy` is one package in it.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🐍 **`python -m pip`**
-
-Runs pip inside the Python named first: that Python gets the package.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 📂 **`site-packages`**
-
-The folder inside that Python where packages go.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Two levels: <code>winget</code> and Homebrew install programs, Python among them. pip installs packages into one Python.</div>
-
-<!--
-**Say:** pip comes with Python; nothing more to install. Say "python dash m pip" aloud once and keep that form.
-**If asked:** the version was measured with Python 3.14.8; a python.org Python may bundle another pip.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# `pip install numpy`, **Measured**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🍎 **`python3` on macOS** · 🪟 **`python` on Windows, the same lines**
-
-```text
-% python3 -c "import numpy"
-ModuleNotFoundError: No module named 'numpy'
-% python3 -m pip install numpy
-Downloading numpy-2.5.4-….whl (16.7 MB)
-Successfully installed numpy-2.5.4
-% python3 -m pip list
-Package Version
-------- -------
-numpy   2.5.4
-pip     26.2.1
-```
-
-</div>
-
-<div class="note-text mt-md">One file arrived, a <em>wheel</em> of 16.7 MB, unpacked into <code>site-packages/numpy</code>: 43 MB. <code>pip install numpy==2.5.4</code> asks for one version.</div>
-
-<!--
-**Say:** `-c` runs one line of Python: here it only tries the import.
-**If asked:** measured on Linux with Python 3.14.8; on macOS and Windows the wheel is another file of another size.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# One Python, **Every Project**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-% python3 -c "import numpy as np; print(np.float_)"
-AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float64` instead.
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **One `site-packages`**
-
-Every project on the laptop imports the same numpy. An upgrade for one project broke a script of another, written for numpy 1.26.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **One Python per project**
-
-A project gets a Python of its own, with its own `site-packages`: a **virtual environment**.
-
-</div>
-
-</div>
-
-<!--
-**Say:** this is the usual way a working script stops working: nothing in the script changed, a package on the laptop did.
-**If asked:** `np.float_` existed up to numpy 1.26 and was removed in 2.0, June 2024.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Virtual **Environment**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% python3 -m venv .venv
-% source .venv/bin/activate
-(.venv) % which python
-…/weather-project/.venv/bin/python
-(.venv) % deactivate
-%
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> python -m venv .venv
-PS> .venv\Scripts\Activate.ps1
-(.venv) PS> (Get-Command python).Source
-…\weather-project\.venv\Scripts\python.exe
-(.venv) PS> deactivate
-PS>
-```
-
-</div>
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔛 **Activation**
-
-Puts `.venv/bin` or `.venv\Scripts` at the top of `PATH`. `python` is now the environment's Python, and the prompt shows `(.venv)`.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 📁 **A folder, made again**
-
-`.venv`: 14 MB, 891 files. One line makes it again, so it is not copied or backed up.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the activate script edits PATH, the list of two slides ago, for this terminal only.
-**If asked:** sizes measured on Linux with Python 3.14.8.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# An Empty Environment, **Filled**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🍎 **macOS · zsh** · 🪟 **PowerShell: the same lines**
-
-```text
-(.venv) % python -m pip list
-Package Version
-------- -------
-pip     26.2.1
-(.venv) % python -m pip install numpy
-Successfully installed numpy-2.5.4
-(.venv) % python -m pip show numpy
-Location: /Users/ada/Documents/weather-project/.venv/lib/python3.14/site-packages
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-🧪 The laptop has numpy, the new environment does not see it. A script that runs in a fresh environment has named everything it needs.
-
-</div>
-
-<!--
-**Say:** with `(.venv)` in the prompt the word is `python` on both systems.
-**If asked:** on Windows the location is `…\.venv\Lib\site-packages`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# **requirements.txt**: the List, Written Down
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-(.venv) % python -m pip freeze > requirements.txt
-(.venv) % cat requirements.txt
-numpy==2.5.4
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 💻 **On another laptop**
-
-Make `.venv`, activate it, then `python -m pip install -r requirements.txt`. The same numpy 2.5.4 arrives: the version is in the file.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 📁 **What the project keeps**
-
-`requirements.txt`, like `scripts`. `.venv` is made again from it, like `data/processed` from `data/raw`.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the file is the environment, written down, as the README lines are the cleaning, written down.
-**If asked:** today's two scripts need no package, so this project's own list stays empty.
 (~2 min)
 -->
 
@@ -3120,7 +2851,7 @@ Both last until this terminal closes, and exist only on this laptop. A README li
 </div>
 
 <!--
-**Say:** like the virtual environment, these settings last only as long as this terminal.
+**Say:** the Miniforge installer changes how every new shell starts. First, two settings typed by hand. They last only as long as this terminal; the next slide keeps them.
 **If asked:** `%1~` is the last folder of the path, `%#` the `%` sign. A PowerShell alias cannot carry an argument such as `..`, so a function does it.
 (~2 min)
 -->
@@ -3218,6 +2949,329 @@ plugins=(git)
 <!--
 **Say:** a theme only changes the prompt, a plugin adds aliases. Nothing in this course needs either.
 **If asked:** the arrow is green, red after a command that failed. In a Git project the prompt adds the branch. The `git` plugin adds `gst` for `git status`. Counts from October 2026.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What `conda init` **Wrote**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **zsh: the end of `~/.zshrc`**
+
+```text
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/ada/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+…
+# <<< conda initialize <<<
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🪟 **PowerShell: `profile.ps1`, in the folder of `$PROFILE`**
+
+```text
+#region conda initialize
+If (Test-Path "C:\Users\ada\miniforge3\Scripts\conda.exe") {
+    (& "C:\Users\ada\miniforge3\Scripts\conda.exe" "shell.powershell" "hook") | … | Invoke-Expression
+}
+#endregion
+```
+
+</div>
+
+<div class="note-text mt-md">Every new terminal runs the block: it asks <code>conda</code> for a few lines of shell code and runs them. The prompt then starts with <code>(base)</code>.</div>
+
+<!--
+**Say:** the Mac installer asks "Proceed with initialization?"; yes runs `conda init`, which writes these lines into the start-up file from two slides ago. On Windows, `conda init powershell`, typed once in the Miniforge Prompt, writes them.
+**If asked:** a prompt line of your own, as two slides ago, hides `(base)`: in zsh write it above conda's block, in PowerShell start it with `$env:CONDA_PROMPT_MODIFIER`. `conda init --reverse zsh` takes the block out again; `conda config --set auto_activate false` keeps `(base)` off at start. Oh My Zsh writes a new `~/.zshrc` without the block: `conda init zsh` puts it back. The slides shorten every prompt to `%` and `PS>`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `conda`: Packages and **Environments**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
+
+```text
+(base) % conda --version
+conda 26.7.2
+(base) % conda config --show channels
+channels:
+  - conda-forge
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **A package manager**
+
+Installs packages from a **channel**, a catalogue: here conda-forge. A package can be Python itself, a Python library, or a C library that a Python library needs.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🧪 **An environment manager**
+
+An **environment** is a folder with one Python and its packages. The installer made the first one, `base`.
+
+</div>
+
+</div>
+
+<!--
+**Say:** two jobs in one program. `winget` installs a program for the whole laptop; `conda` installs into one environment at a time.
+**If asked:** Miniforge is conda with conda-forge as its only channel, free to use. Anaconda's own channel, `defaults`, has terms for large organisations.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Python, **Every Project**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💥 **A script for numpy 1.26, run where numpy 2.5 is installed**
+
+```text
+% python -c "import numpy as np; print(np.float_)"
+AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float64` instead.
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **One Python for all**
+
+Every project run in one shared Python imports the same numpy. An upgrade for one project broke a script of another.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **One environment per project**
+
+Each project gets a Python and packages of its own. `base` stays as the installer made it, without numpy.
+
+</div>
+
+</div>
+
+<!--
+**Say:** this is the usual way a working script stops working: nothing in the script changed, a package on the laptop did.
+**If asked:** `np.float_` existed up to numpy 1.26 and was removed in 2.0, June 2024.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# An Environment Is a **Folder**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
+
+```text
+(base) % conda create -n weather python=3.14
+  environment location: /Users/ada/miniforge3/envs/weather
+…
+Proceed ([y]/n)? y
+(base) % conda env list
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                 *   /Users/ada/miniforge3
+weather                  /Users/ada/miniforge3/envs/weather
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📁 **What is in it**
+
+24 packages: Python 3.14.8, pip, and 22 that Python needs. 221 MB in 6135 files.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🗑️ **Made again, never copied**
+
+`conda env remove -n weather` deletes the folder. One line makes it again.
+
+</div>
+
+</div>
+
+<!--
+**Say:** `-n` names the environment, `python=3.14` asks for its Python. Nothing is active yet: the `*` is still at `base`.
+**If asked:** on Windows the folder is `C:\Users\ada\miniforge3\envs\weather`. Counts and sizes measured on Linux with Miniforge 26.7.2; they differ a little by system.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Activation Changes **PATH**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
+
+```text
+(base) % conda activate weather
+(weather) % which python
+/Users/ada/miniforge3/envs/weather/bin/python
+(weather) % python --version
+Python 3.14.8
+(weather) % conda deactivate
+(base) %
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · PowerShell**
+
+```text
+(base) PS> conda activate weather
+(weather) PS> (Get-Command python).Source
+C:\Users\ada\miniforge3\envs\weather\python.exe
+(weather) PS> python --version
+Python 3.14.8
+(weather) PS> conda deactivate
+(base) PS>
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔛 Activation puts the environment's folder first on `PATH`: `python` is now the environment's, and the prompt names it. `conda deactivate` undoes both.
+
+</div>
+
+<!--
+**Say:** with `(weather)` in the prompt the word is `python` on both systems.
+**If asked:** `echo $PATH | tr ':' '\n'` now starts with `/Users/ada/miniforge3/envs/weather/bin`. On Windows the environment's folder holds `python.exe` itself; its `Scripts` follows on `PATH`.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `conda install numpy`, **Measured**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
+
+```text
+(weather) % python -c "import numpy"
+ModuleNotFoundError: No module named 'numpy'
+(weather) % conda install numpy
+…
+Proceed ([y]/n)? y
+(weather) % conda list numpy
+# packages in environment at /Users/ada/miniforge3/envs/weather:
+#
+# Name                     Version          Build            Channel
+numpy                      2.5.4            py314hd3a7d6b_0  conda-forge
+(weather) % conda deactivate
+(base) % python -c "import numpy"
+ModuleNotFoundError: No module named 'numpy'
+```
+
+</div>
+
+<div class="note-text mt-md">numpy came with six more packages: OpenBLAS, a C library for linear algebra, and the Fortran runtime it uses. <code>base</code> did not change.</div>
+
+<!--
+**Say:** `-c` runs one line of Python: here it only tries the import.
+**If asked:** measured on Linux with Miniforge 26.7.2; the build string and the extra packages differ by system. pip is in every environment: `python -m pip install NAME` in the activated environment, only for what conda-forge lacks, never into `base`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **environment.yml**: the List, Written Down
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
+
+```text
+(weather) % conda env export --from-history > environment.yml
+(weather) % cat environment.yml
+name: weather
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14
+  - numpy
+prefix: /Users/ada/miniforge3/envs/weather
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **On another laptop**
+
+Delete the line `prefix:`, which names this laptop. `conda env create -f environment.yml` then makes `weather` there. `- numpy=2.5.4` would ask for one version.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🧭 **Why `--from-history`**
+
+The full export lists every package with its build, such as `bzip2=1.0.8=hda65f42_10`: made for one system. This file keeps what was asked for, and works on every system.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the file is the environment, written down, as the README lines are the cleaning, written down. The project keeps `environment.yml` like `scripts`, and makes the environment again from it, like `data/processed` from `data/raw`.
+**If asked:** today's two scripts need no package, so this project's own file would list only `python=3.14`.
 (~2 min)
 -->
 
@@ -3572,7 +3626,7 @@ hideInToc: true
 ## How to rebuild
 
 In the project folder: zsh on macOS, PowerShell 7 on Windows.
-Python 3.14 from python.org; the scripts need no package beyond it.
+Python 3.14 from Miniforge; the scripts need no package beyond it.
 
 1. The cleaned export, 148 bytes, SHA-256 `33fe5e77…f705483d`:
    - zsh: `python3 scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv`
@@ -3591,8 +3645,7 @@ Python 3.14 from python.org; the scripts need no package beyond it.
 </div>
 
 <!--
-**Say:** the lines are brought back with ↑ and pasted, never retyped.
-**Say:** a line that was copied and ran has been tested. A line typed from memory has not.
+**Say:** the lines are brought back with ↑ and pasted, never retyped. A line that was copied and ran has been tested; a line typed from memory has not.
 (~2 min)
 -->
 
@@ -3673,7 +3726,7 @@ hideInToc: true
 
 ## 📥 **The licence of the data**
 
-Set by whoever published the data. It decides whether the raw files may be passed on with the project. These files are made for the course: CC0, free for any use.
+Set by whoever published the data. It decides whether the raw files may be passed on with the project. Here the station's operator chose CC0: free for any use.
 
 </div>
 
@@ -3770,7 +3823,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Run a **script** someone else wrote, install with `winget` and `pip`, and make a **virtual environment**
+✅ Run a **script** someone else wrote, install with `winget` and `conda`, and give a project its own **conda environment**
 
 </div>
 
@@ -3937,7 +3990,7 @@ hideInToc: true
     'Neither: two programs of one name on PATH is an error'
   ]"
   :correct="1"
-  explanation="The shell goes through PATH in order and runs the first program of that name it finds. A newer version further down the list is never reached. That is why the Python installer puts its folder in front, and why a stand-in python.exe in a folder listed earlier answers in its place."
+  explanation="The shell goes through PATH in order and runs the first program of that name it finds. A newer version further down the list is never reached. That is why conda puts the folder of the active environment first, and why a stand-in python.exe in a folder listed earlier answers in its place."
 />
 
 ---
@@ -3945,13 +3998,13 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A colleague receives the project folder without .venv. requirements.txt holds the line numpy==2.5.4. Which lines give them the same environment?"
+  question="A colleague receives the project folder with environment.yml, which lists python=3.14 and numpy=2.5.4. Which lines give them the same environment?"
   :options="[
-    '<code>pip install numpy</code>, nothing else',
-    'Copy the .venv folder from your laptop into theirs',
-    '<code>python -m venv .venv</code>, activate it, then <code>python -m pip install -r requirements.txt</code>',
-    'Open requirements.txt in VS Code: the packages install themselves'
+    '<code>conda install numpy</code> in base, nothing else',
+    'Copy the folder miniforge3/envs/weather from your laptop into theirs',
+    '<code>conda env create -f environment.yml</code>, then <code>conda activate weather</code>',
+    'Open environment.yml in VS Code: the packages install themselves'
   ]"
   :correct="2"
-  explanation="A virtual environment is made on the laptop it runs on, with one line, and filled from the file. The -r reads every line of requirements.txt, and the == pins the version, so numpy 2.5.4 arrives and not the newest one. A copied .venv holds paths of the other laptop."
+  explanation="An environment is made on the laptop it runs on, from the file. conda env create reads the channel and the packages, and numpy=2.5.4 pins the version, so 2.5.4 arrives and not the newest one. A copied environment folder holds paths of the other laptop, and base is shared by every project."
 />

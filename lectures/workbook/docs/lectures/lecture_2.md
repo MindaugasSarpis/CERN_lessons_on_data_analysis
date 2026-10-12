@@ -24,7 +24,7 @@ many lines at once.
 4. **How one row was made**: one hour, one row at the station; at CERN, the
    trigger that decides which collisions become rows; the data-flow clip.
 5. **Reading the file**: one row read aloud; the rows counted with
-   `Ctrl+End` and checked against 10 years of hours; line 5000 found with
+   `Ctrl+End` in a text editor and checked against 10 years of hours; line 5000 found with
    `Ctrl+G` and checked against its time; the units worked out from the
    numbers; `-999` found with `Ctrl+F`, below absolute zero, and what it does
    to a mean; the five questions answered, then asked of the student's own
@@ -81,10 +81,9 @@ All were computed on the files in `lectures/workbook/docs/data/`.
 ## The lecture in 90 minutes
 
 The lecture is slides 1–69 and estimates about 113 min; with the pauses for
-the room it runs longer. Slides 70–78 are the self-check
-quizzes and take no lecture time. For a 90-minute slot, skip the slides in
-the second table; that leaves about 92 min. To jump, type the slide number
-and press Enter.
+the room it runs longer. Slides 70–78 are the self-check quizzes and take no
+lecture time. For a 90-minute slot, skip the slides in the second table;
+that leaves about 92 min. To jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
@@ -167,11 +166,12 @@ questions, with their answers:
 
 [Seminar 1, VS Code and Markdown](../seminars/seminar_01.md) is the first
 session in class and starts from zero. It practises the ideas of slides
-42–67 with files of its own, a reading list and a library's loans log, not the weather files: install VS Code and build a project folder; write
-the README in Markdown; repair the reading list in the editor and turn it
-into a report; count a long file, read its units and its missing-value mark
-`NA`, open it in a spreadsheet, and write where the data came from. All of it
-is done in class.
+42–67 with files of its own, a reading list and a library's loans log, not
+the weather files: install VS Code and build a project folder; write the
+README in Markdown; repair the reading list in the editor and turn it into a
+report; count a long file, read its units and its missing-value mark `NA`,
+open it in a spreadsheet, and write where the data came from. All of it is
+done in class.
 
 ## Parked slides
 

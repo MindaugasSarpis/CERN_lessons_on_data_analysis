@@ -1,15 +1,13 @@
 # 1: Orientation & Motivation
 
 Lecture 1 opens on one file: ten years of hourly readings from a weather
-station, 87 672 rows. Ada averages every hour and reports a mean of 7.16 °C.
+station, 87 672 rows, with five days in July 2019 when the sensor was down
+and the logger wrote `-999`. Ada averages every hour and reports a mean of 7.16 °C.
 Ben takes the middle of each day and averages the days: 7.11 °C. Neither made
 a mistake. The question of the lecture is: *I send you only 7.16. How do you
 check it?* The answers the room gives sort into four piles, and the four piles
 are the four aims of the course. The lecture answers the question again at the
 end, then runs the film reel from the cosmos down to the LHCb detector.
-
-The log has a yearly and a daily cycle, and five days in July 2019 when the
-sensor was down and the logger wrote `-999`.
 
 ## What the lecture covers
 
@@ -29,8 +27,9 @@ sensor was down and the logger wrote `-999`.
    (180 bytes) and `data/processed` (148 bytes).
 4. **How this course works**: the lecture and the seminar of each Tuesday, the
    schedule, the path of the course (VS Code and Markdown, files, the command
-   line, Git, Python, then data analysis), the learning outcomes, what "done"
-   means each week, habits that work.
+   line with its shells and conda environments, Git, Python, then data
+   analysis), the learning outcomes, what "done" means each week, habits that
+   work.
 5. **Seminars & your project**: the grade is one project of your own, graded
    on the four aims; what you hand in; open data and practice files; the
    finished project tree; delete `data/processed/` and `results/` and rebuild
@@ -104,8 +103,8 @@ questions, with their answers:
    reproducibility too, but the direct target is automation.*
 3. A colleague sends you a PDF of the final plot. What is the minimum you
    would need for the result to count as reproducible?
-   *The raw data, the code, and a note of the environment it ran in. A
-   sharper picture or a promise changes nothing.*
+   *The raw data, the code, and a note of the environment it ran in, such as
+   an `environment.yml`. A sharper picture or a promise changes nothing.*
 4. It's week 5. You attend every lecture but skip the seminars because you
    "get the ideas already". Why is this the riskiest habit in this course?
    *The seminars are where an idea becomes a working skill, and the project is
@@ -114,15 +113,16 @@ questions, with their answers:
    rebuilt with one command. Which two?
    *`data/processed/` and `results/`: they hold only what the scripts write.
    `data/raw/` cannot be made again, and the scripts with `run_all.py`,
-   `config.json`, `requirements.txt` and the README are the recipe.*
+   `config.json`, `environment.yml` and the README are the recipe.*
 
 ## Before the first seminar
 
 Nothing has to be installed. The first session in class starts from zero and
-needs only VS Code, which the room installs together. The terminal programs
-and Python are installed in class when the command line needs them. A laptop
-on which programs can be installed is all that is needed: on a university or
-work laptop, check that now.
+needs only VS Code, which the room installs together. PowerShell 7 on
+Windows, Git, and Python with conda through Miniforge are installed in class
+in Seminar 4, when the command line needs them. A laptop on which programs
+can be installed is all that is needed: on a university or work laptop,
+check that now.
 
 ## Paired seminar
 
@@ -135,7 +135,8 @@ None: week 1 is lecture only. The first session in class is
   method, 7.03 to 7.29 when one year is left out, and 5.78 when the marks
   for a missing value are read as temperatures.
 - To check a result you need the file as received, every step as code, the
-  versions it ran on, and formats anyone can open: the four aims.
+  versions it ran on (an `environment.yml`), and formats anyone can open: the
+  four aims.
 - Once by hand, twice by script. Two replacements in the wrong order ruin the
   table; a script keeps the order.
 - Delete `data/processed/` and `results/`, run one command, and the same
