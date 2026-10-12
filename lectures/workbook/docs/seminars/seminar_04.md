@@ -69,8 +69,8 @@ of the day.
     ended with `Enter`. The output follows in its own block. Where the two
     shells differ, the step has a tab for **macOS** (`zsh`) and one for
     **Windows** (PowerShell). Where they agree, the line stands once. The
-    user on the page is called `ada`; the home folder is `/Users/ada` on a
-    Mac and `C:\Users\ada` on Windows. Keys are written for Windows, with
+    user on the page is called `smilte`; the home folder is `/Users/smilte` on a
+    Mac and `C:\Users\smilte` on Windows. Keys are written for Windows, with
     macOS in brackets.
 
 ??? info "Before the session (5 minutes)"
@@ -273,7 +273,7 @@ is always in one folder, the **working directory**: the prompt shows it,
     === "macOS"
 
         ```text
-        ada@MacBook-Air ~ %
+        smilte@MacBook-Air ~ %
         ```
 
         The user, the computer, the folder the shell is in (`~` is the home
@@ -282,7 +282,7 @@ is always in one folder, the **working directory**: the prompt shows it,
     === "Windows"
 
         ```text
-        PS C:\Users\ada>
+        PS C:\Users\smilte>
         ```
 
         `PS`, the folder the shell is in, and `>`: the shell waits. Until
@@ -308,7 +308,7 @@ is always in one folder, the **working directory**: the prompt shows it,
     === "macOS"
 
         ```text
-        /Users/ada
+        /Users/smilte
         ```
 
     === "Windows"
@@ -316,7 +316,7 @@ is always in one folder, the **working directory**: the prompt shows it,
         ```text
         Path
         ----
-        C:\Users\ada
+        C:\Users\smilte
         ```
 
     An **absolute** path: from the top of the disk, `/` or `C:\`, down to
@@ -682,7 +682,7 @@ line ending does when a file goes from Windows to a Mac.
         ```
 
         ```text
-           Label: C:\Users\ada\bike-project\data\raw\counts.csv
+           Label: C:\Users\smilte\bike-project\data\raw\counts.csv
 
                   Offset Bytes                                           Ascii
                          00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
@@ -1057,7 +1057,7 @@ argument, a path.
         ```
 
         ```text
-        Get-Content: Cannot find path 'C:\Users\ada\bike-project\data\raw\bike.csv' because it does not exist.
+        Get-Content: Cannot find path 'C:\Users\smilte\bike-project\data\raw\bike.csv' because it does not exist.
         ```
 
     The first word of the message names who complains: the shell, or the
@@ -1568,7 +1568,7 @@ restarted, so that its terminal runs those lines.
         | `Please, press ENTER to continue` | `Enter` |
         | The licence, one screen at a time | `q`, which jumps to its end |
         | `Do you accept the license terms?` | `yes` |
-        | `[/Users/ada/miniforge3] >>>` | `Enter`: the folder is right |
+        | `[/Users/smilte/miniforge3] >>>` | `Enter`: the folder is right |
         | `Proceed with initialization?` and `[no] >>>` | `yes`. The answer in brackets is the default, so `Enter` alone would say no |
 
         It ends with:
@@ -1581,7 +1581,7 @@ restarted, so that its terminal runs those lines.
 
         Open `Miniforge3-Windows-x86_64.exe` in **Downloads**. Select
         **Next** and **I Agree**, choose **Just Me (recommended)**, and keep
-        every other default: the folder `C:\Users\ada\miniforge3`, the
+        every other default: the folder `C:\Users\smilte\miniforge3`, the
         boxes as they are, **Install**, then **Finish**.
 
         Then press the Windows key, type `Miniforge Prompt` and press
@@ -1627,7 +1627,7 @@ restarted, so that its terminal runs those lines.
         ```
 
         ```text
-        /Users/ada/miniforge3/bin/python3
+        /Users/smilte/miniforge3/bin/python3
         ```
 
     === "Windows"
@@ -1653,7 +1653,7 @@ restarted, so that its terminal runs those lines.
         ```
 
         ```text
-        C:\Users\ada\miniforge3\python.exe
+        C:\Users\smilte\miniforge3\python.exe
         ```
 
     The folder of `base` now comes first in `PATH`, so the shell finds this
@@ -1694,8 +1694,8 @@ restarted, so that its terminal runs those lines.
     | On the screen | What to do |
     |--|--|
     | macOS: no `(base)` in the new terminal, or `zsh: command not found: conda` | The last question of the installer was answered with `Enter`, which means no. Run `~/miniforge3/bin/conda init zsh`, then open a new terminal |
-    | macOS: `bash: /Users/ada/Downloads/Miniforge3-…: No such file or directory` | The download of section 1 did not finish. `ls ~/Downloads`, or copy the installer from the USB stick into **Downloads** |
-    | macOS: `ERROR: File or directory already exists: '/Users/ada/miniforge3'` | Miniforge is there already, from an earlier try. Go on with step 3 |
+    | macOS: `bash: /Users/smilte/Downloads/Miniforge3-…: No such file or directory` | The download of section 1 did not finish. `ls ~/Downloads`, or copy the installer from the USB stick into **Downloads** |
+    | macOS: `ERROR: File or directory already exists: '/Users/smilte/miniforge3'` | Miniforge is there already, from an earlier try. Go on with step 3 |
     | Windows: "Windows protected your PC" when the installer starts | Select **More info**, then **Run anyway** |
     | Windows: `conda : The term 'conda' is not recognized …`, and no `(base)` | `conda init powershell` was not run in the Miniforge Prompt, or VS Code was not quit and started again |
     | Windows: `… profile.ps1 cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1: switch to PowerShell 7 (section 6). Or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once, answer `Y`, and open a new terminal |
@@ -1925,11 +1925,11 @@ now. Nothing is printed, which is correct.
     ```
 
     ```text
-    git config --global user.name "Ada Lovelace"
+    git config --global user.name "Smiltė"
     ```
 
     ```text
-    git config --global user.email "ada@example.com"
+    git config --global user.email "smilte@example.com"
     ```
 
 2. Read the list of the day with the room:
@@ -2211,7 +2211,7 @@ that list.
         ```
 
         ```text
-        /Users/ada/miniforge3/bin/python3
+        /Users/smilte/miniforge3/bin/python3
         ```
 
     === "Windows"
@@ -2221,7 +2221,7 @@ that list.
         ```
 
         ```text
-        C:\Users\ada\miniforge3\python.exe
+        C:\Users\smilte\miniforge3\python.exe
         ```
 
 2. Make an environment for the project, with Python 3.14.
@@ -2237,7 +2237,7 @@ that list.
         ```text
         ## Package Plan ##
 
-          environment location: /Users/ada/miniforge3/envs/bikes
+          environment location: /Users/smilte/miniforge3/envs/bikes
 
           added / updated specs:
             - python=3.14
@@ -2248,7 +2248,7 @@ that list.
         ```text
         ## Package Plan ##
 
-          environment location: C:\Users\ada\miniforge3\envs\bikes
+          environment location: C:\Users\smilte\miniforge3\envs\bikes
 
           added / updated specs:
             - python=3.14
@@ -2276,7 +2276,7 @@ that list.
         ```
 
         ```text
-        /Users/ada/miniforge3/envs/bikes/bin/python
+        /Users/smilte/miniforge3/envs/bikes/bin/python
         ```
 
     === "Windows"
@@ -2286,7 +2286,7 @@ that list.
         ```
 
         ```text
-        C:\Users\ada\miniforge3\envs\bikes\python.exe
+        C:\Users\smilte\miniforge3\envs\bikes\python.exe
         ```
 
     From here the word is `python` in both shells.
@@ -2364,7 +2364,7 @@ that list.
     dependencies:
       - python=3.14
       - numpy
-    prefix: /Users/ada/miniforge3/envs/bikes
+    prefix: /Users/smilte/miniforge3/envs/bikes
     ```
 
     `--from-history` writes what was asked for, not every library that
@@ -2388,8 +2388,8 @@ that list.
         #
         # * -> active
         # + -> frozen
-        base                     /Users/ada/miniforge3
-        bikes                *   /Users/ada/miniforge3/envs/bikes
+        base                     /Users/smilte/miniforge3
+        bikes                *   /Users/smilte/miniforge3/envs/bikes
         ```
 
     === "Windows"
@@ -2399,8 +2399,8 @@ that list.
         #
         # * -> active
         # + -> frozen
-        base                     C:\Users\ada\miniforge3
-        bikes                *   C:\Users\ada\miniforge3\envs\bikes
+        base                     C:\Users\smilte\miniforge3
+        bikes                *   C:\Users\smilte\miniforge3\envs\bikes
         ```
 
     ```text

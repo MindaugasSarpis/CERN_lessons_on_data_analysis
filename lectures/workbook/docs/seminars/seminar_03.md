@@ -109,19 +109,19 @@ of the line says who you are, where you are, and that the shell waits.
     === "macOS"
 
         ```text
-        ada@MacBook-Air ~ %
+        smilte@MacBook-Air ~ %
         ```
 
-        `ada` is the user, `MacBook-Air` the computer, `~` the home folder,
+        `smilte` is the user, `MacBook-Air` the computer, `~` the home folder,
         and `%` means the shell waits.
 
     === "Windows"
 
         ```text
-        PS C:\Users\ada>
+        PS C:\Users\smilte>
         ```
 
-        `PS` is PowerShell, `C:\Users\ada` the folder it is in, and `>`
+        `PS` is PowerShell, `C:\Users\smilte` the folder it is in, and `>`
         means it waits.
 
 3. Type, and press Enter:
@@ -133,7 +133,7 @@ of the line says who you are, where you are, and that the shell waits.
     === "macOS"
 
         ```text
-        /Users/ada
+        /Users/smilte
         ```
 
     === "Windows"
@@ -141,7 +141,7 @@ of the line says who you are, where you are, and that the shell waits.
         ```text
         Path
         ----
-        C:\Users\ada
+        C:\Users\smilte
         ```
 
 4. Look at the top right of the Panel. It names the shell: `zsh`,
@@ -184,8 +184,8 @@ above.
     cd Downloads
     ```
 
-    The prompt now ends in `Downloads` (macOS `ada@MacBook-Air Downloads %`,
-    Windows `PS C:\Users\ada\Downloads>`).
+    The prompt now ends in `Downloads` (macOS `smilte@MacBook-Air Downloads %`,
+    Windows `PS C:\Users\smilte\Downloads>`).
 
 3. List it:
 
@@ -262,7 +262,7 @@ folder. VS Code opens it, and its terminal then starts there.
     === "macOS"
 
         ```text
-        /Users/ada/files-lab
+        /Users/smilte/files-lab
         ```
 
     === "Windows"
@@ -270,7 +270,7 @@ folder. VS Code opens it, and its terminal then starts there.
         ```text
         Path
         ----
-        C:\Users\ada\files-lab
+        C:\Users\smilte\files-lab
         ```
 
 !!! success "You should now see"
@@ -368,7 +368,7 @@ spaces needs no quotes at all.
     === "Windows"
 
         ```text
-        Get-ChildItem: Cannot find path 'C:\Users\ada\files-lab\inbox\shopping'
+        Get-ChildItem: Cannot find path 'C:\Users\smilte\files-lab\inbox\shopping'
         because it does not exist.
         ```
 

@@ -287,7 +287,7 @@ hideInToc: true
 `Cmd+Space`, type `Terminal`, `Enter`. Then:
 
 ```text
-ada@MacBook-Air ~ % echo $SHELL
+smilte@MacBook-Air ~ % echo $SHELL
 /bin/zsh
 ```
 
@@ -300,9 +300,9 @@ ada@MacBook-Air ~ % echo $SHELL
 ## 🔁 **If it prints `/bin/bash`**
 
 ```text
-MacBook-Air:~ ada$ chsh -s /bin/zsh
-Changing shell for ada.
-Password for ada:
+MacBook-Air:~ smilte$ chsh -s /bin/zsh
+Changing shell for smilte.
+Password for smilte:
 ```
 
 `chsh` changes the shell, `-s` names the new one. Close the window, open a new one: `/bin/zsh`.
@@ -329,9 +329,9 @@ hideInToc: true
 ## 🪟 **In Windows PowerShell 5.1: Start, `PowerShell`, the blue window**
 
 ```text
-PS C:\Users\ada> $PSVersionTable.PSVersion.Major
+PS C:\Users\smilte> $PSVersionTable.PSVersion.Major
 5
-PS C:\Users\ada> winget install --id Microsoft.PowerShell --source winget
+PS C:\Users\smilte> winget install --id Microsoft.PowerShell --source winget
 Found PowerShell [Microsoft.PowerShell] Version 7.6.6
 …
 Successfully installed
@@ -346,7 +346,7 @@ Successfully installed
 ## ✅ **Then: Start, `pwsh`, the black window**
 
 ```text
-PS C:\Users\ada> $PSVersionTable.PSVersion.Major
+PS C:\Users\smilte> $PSVersionTable.PSVersion.Major
 7
 ```
 
@@ -437,10 +437,10 @@ hideInToc: true
 ## 🍎 **macOS · zsh**
 
 ```text
-ada@MacBook-Air weather-project %
+smilte@MacBook-Air weather-project %
 ```
 
-- `ada@MacBook-Air`: user and computer
+- `smilte@MacBook-Air`: user and computer
 - `weather-project`: the folder the shell is in
 - `%`: the shell waits
 
@@ -451,7 +451,7 @@ ada@MacBook-Air weather-project %
 ## 🪟 **Windows · PowerShell**
 
 ```text
-PS C:\Users\ada\Documents\weather-project>
+PS C:\Users\smilte\Documents\weather-project>
 ```
 
 - `PS`: PowerShell
@@ -532,7 +532,7 @@ hideInToc: true
 
 ```text
 % pwd
-/Users/ada/Documents/weather-project
+/Users/smilte/Documents/weather-project
 ```
 
 </div>
@@ -546,7 +546,7 @@ PS> pwd
 
 Path
 ----
-C:\Users\ada\Documents\weather-project
+C:\Users\smilte\Documents\weather-project
 ```
 
 </div>
@@ -589,7 +589,7 @@ processed  raw
 ```text
 PS> ls
 
-    Directory: C:\Users\ada\Documents\weather-project
+    Directory: C:\Users\smilte\Documents\weather-project
 
 Mode           LastWriteTime   Length Name
 ----           -------------   ------ ----
@@ -624,11 +624,11 @@ hideInToc: true
 ## 🍎 **macOS · zsh**
 
 ```text
-ada@MacBook-Air weather-project % cd data
-ada@MacBook-Air data % ls
+smilte@MacBook-Air weather-project % cd data
+smilte@MacBook-Air data % ls
 processed  raw
-ada@MacBook-Air data % cd ..
-ada@MacBook-Air weather-project %
+smilte@MacBook-Air data % cd ..
+smilte@MacBook-Air weather-project %
 ```
 
 </div>
@@ -674,7 +674,7 @@ hideInToc: true
 ```text
 /                       C:\ on Windows
 └─ Users
-   └─ ada
+   └─ smilte
       └─ Documents
          └─ weather-project
             └─ data
@@ -689,8 +689,8 @@ hideInToc: true
 ## 📍 **On macOS and on Windows**
 
 ```text
-/Users/ada/Documents/weather-project/data/raw/weather.csv
-C:\Users\ada\Documents\weather-project\data\raw\weather.csv
+/Users/smilte/Documents/weather-project/data/raw/weather.csv
+C:\Users\smilte\Documents\weather-project\data\raw\weather.csv
 ```
 
 An absolute path starts at the top: `/` on macOS, `C:\` on Windows.
@@ -744,7 +744,7 @@ The working directory.
 
 ## `~` **home**
 
-`/Users/ada` or `C:\Users\ada`.
+`/Users/smilte` or `C:\Users\smilte`.
 
 </div>
 
@@ -1023,7 +1023,7 @@ hed: The term 'hed' is not recognized as
 a name of a cmdlet, function, script file,
 or executable program.
 PS> Get-Content data/raw/wether.csv
-Get-Content: Cannot find path 'C:\Users\ada\
+Get-Content: Cannot find path 'C:\Users\smilte\
 …\data\raw\wether.csv' because it does not
 exist.
 ```
@@ -1520,10 +1520,10 @@ hideInToc: true
 
 ```text
 % echo "made on 2026-10-13" > results/note.txt
-% echo "by ada" >> results/note.txt
+% echo "by smilte" >> results/note.txt
 % cat results/note.txt
 made on 2026-10-13
-by ada
+by smilte
 % wc -c results/note.txt
       26 results/note.txt
 ```
@@ -1536,10 +1536,10 @@ by ada
 
 ```text
 PS> echo "made on 2026-10-13" > results/note.txt
-PS> echo "by ada" >> results/note.txt
+PS> echo "by smilte" >> results/note.txt
 PS> cat results/note.txt
 made on 2026-10-13
-by ada
+by smilte
 PS> (Get-Item results/note.txt).Length
 28
 ```
@@ -1573,10 +1573,10 @@ hideInToc: true
 ```text
 % hexdump -C results/note.txt
 00000000  6d 61 64 65 20 6f 6e 20  32 30 32 36 2d 31 30 2d  |made on 2026-10-|
-00000010  31 33 0a 62 79 20 61 64  61 0a                    |13.by ada.|
+00000010  31 33 0a 62 79 20 61 64  61 0a                    |13.by smilte.|
 PS> Format-Hex results/note.txt
 0000000000000000 6D 61 64 65 20 6F 6E 20 32 30 32 36 2D 31 30 2D made on 2026-10-
-0000000000000010 31 33 0D 0A 62 79 20 61 64 61 0D 0A             13��by ada��
+0000000000000010 31 33 0D 0A 62 79 20 61 64 61 0D 0A             13��by smilte��
 ```
 
 </div>
@@ -1587,7 +1587,7 @@ PS> Format-Hex results/note.txt
 
 ## 🔢 **Count them**
 
-`made on 2026-10-13` is 18 characters, `by ada` 6: 24 in all.
+`made on 2026-10-13` is 18 characters, `by smilte` 6: 24 in all.
 
 </div>
 
@@ -2746,9 +2746,9 @@ hideInToc: true
 
 ```text
 % which python3
-/Users/ada/miniforge3/bin/python3
+/Users/smilte/miniforge3/bin/python3
 PS> (Get-Command python).Source
-C:\Users\ada\miniforge3\python.exe
+C:\Users\smilte\miniforge3\python.exe
 ```
 
 </div>
@@ -2799,15 +2799,15 @@ hideInToc: true
 
 ```text
 % echo $PATH | tr ':' '\n'
-/Users/ada/miniforge3/bin
-/Users/ada/miniforge3/condabin
+/Users/smilte/miniforge3/bin
+/Users/smilte/miniforge3/condabin
 /usr/bin
 PS> $env:PATH -split ';'
-C:\Users\ada\miniforge3
-C:\Users\ada\miniforge3\Scripts
+C:\Users\smilte\miniforge3
+C:\Users\smilte\miniforge3\Scripts
 C:\Windows\system32
 C:\Program Files\PowerShell\7\
-C:\Users\ada\AppData\Local\Microsoft\WindowsApps
+C:\Users\smilte\AppData\Local\Microsoft\WindowsApps
 ```
 
 </div>
@@ -2970,9 +2970,9 @@ function prompt { "$((Get-Item .).Name)> " }
 
 ```text
 % echo ~/.zshrc
-/Users/ada/.zshrc
+/Users/smilte/.zshrc
 PS> $PROFILE
-C:\Users\ada\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+C:\Users\smilte\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
 ```
 
 </div>
@@ -3041,7 +3041,7 @@ hideInToc: true
 ```text
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/ada/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/smilte/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 …
 # <<< conda initialize <<<
 ```
@@ -3054,8 +3054,8 @@ __conda_setup="$('/Users/ada/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/nu
 
 ```text
 #region conda initialize
-If (Test-Path "C:\Users\ada\miniforge3\Scripts\conda.exe") {
-    (& "C:\Users\ada\miniforge3\Scripts\conda.exe" "shell.powershell" "hook") | … | Invoke-Expression
+If (Test-Path "C:\Users\smilte\miniforge3\Scripts\conda.exe") {
+    (& "C:\Users\smilte\miniforge3\Scripts\conda.exe" "shell.powershell" "hook") | … | Invoke-Expression
 }
 #endregion
 ```
@@ -3171,7 +3171,7 @@ hideInToc: true
 
 ```text
 (base) % conda create -n weather python=3.14
-  environment location: /Users/ada/miniforge3/envs/weather
+  environment location: /Users/smilte/miniforge3/envs/weather
 …
 Proceed ([y]/n)? y
 (base) % conda env list
@@ -3179,8 +3179,8 @@ Proceed ([y]/n)? y
 #
 # * -> active
 # + -> frozen
-base                 *   /Users/ada/miniforge3
-weather                  /Users/ada/miniforge3/envs/weather
+base                 *   /Users/smilte/miniforge3
+weather                  /Users/smilte/miniforge3/envs/weather
 ```
 
 </div>
@@ -3207,7 +3207,7 @@ weather                  /Users/ada/miniforge3/envs/weather
 
 <!--
 **Say:** `-n` names the environment, `python=3.14` asks for its Python. Nothing is active yet: the `*` is still at `base`.
-**If asked:** on Windows the folder is `C:\Users\ada\miniforge3\envs\weather`. Counts and sizes measured on Linux with Miniforge 26.7.2; they differ a little by system.
+**If asked:** on Windows the folder is `C:\Users\smilte\miniforge3\envs\weather`. Counts and sizes measured on Linux with Miniforge 26.7.2; they differ a little by system.
 (~2 min)
 -->
 
@@ -3226,7 +3226,7 @@ hideInToc: true
 ```text
 (base) % conda activate weather
 (weather) % which python
-/Users/ada/miniforge3/envs/weather/bin/python
+/Users/smilte/miniforge3/envs/weather/bin/python
 (weather) % python --version
 Python 3.14.8
 (weather) % conda deactivate
@@ -3242,7 +3242,7 @@ Python 3.14.8
 ```text
 (base) PS> conda activate weather
 (weather) PS> (Get-Command python).Source
-C:\Users\ada\miniforge3\envs\weather\python.exe
+C:\Users\smilte\miniforge3\envs\weather\python.exe
 (weather) PS> python --version
 Python 3.14.8
 (weather) PS> conda deactivate
@@ -3261,7 +3261,7 @@ Python 3.14.8
 
 <!--
 **Say:** with `(weather)` in the prompt the word is `python` on both systems.
-**If asked:** `echo $PATH | tr ':' '\n'` now starts with `/Users/ada/miniforge3/envs/weather/bin`. On Windows the environment's folder holds `python.exe` itself; its `Scripts` follows on `PATH`.
+**If asked:** `echo $PATH | tr ':' '\n'` now starts with `/Users/smilte/miniforge3/envs/weather/bin`. On Windows the environment's folder holds `python.exe` itself; its `Scripts` follows on `PATH`.
 (~3 min)
 -->
 
@@ -3282,7 +3282,7 @@ ModuleNotFoundError: No module named 'numpy'
 …
 Proceed ([y]/n)? y
 (weather) % conda list numpy
-# packages in environment at /Users/ada/miniforge3/envs/weather:
+# packages in environment at /Users/smilte/miniforge3/envs/weather:
 #
 # Name                     Version          Build            Channel
 numpy                      2.5.4            py314hd3a7d6b_0  conda-forge
@@ -3320,7 +3320,7 @@ channels:
 dependencies:
   - python=3.14
   - numpy
-prefix: /Users/ada/miniforge3/envs/weather
+prefix: /Users/smilte/miniforge3/envs/weather
 ```
 
 </div>

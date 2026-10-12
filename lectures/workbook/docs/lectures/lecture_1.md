@@ -2,7 +2,7 @@
 
 Lecture 1 opens on one file: ten years of hourly readings from a weather
 station, 87 672 rows, with five days in July 2019 when the sensor was down
-and the logger wrote `-999`. Ada averages every hour and reports a mean of 7.16 °C.
+and the logger wrote `-999`. Smiltė averages every hour and reports a mean of 7.16 °C.
 Ben takes the middle of each day and averages the days: 7.11 °C. Neither made
 a mistake. The question of the lecture is: *I send you only 7.16. How do you
 check it?* The answers the room gives sort into four piles, and the four piles
@@ -54,7 +54,7 @@ press Enter.
 | Clock | Slides | Part |
 |--|--|--|
 | 0:00 | 1–4 | Cover, cold open film, show of hands, the goal |
-| 0:09 | 5–7 | The weather log; Ada's 7.16 and Ben's 7.11; seven numbers from one file |
+| 0:09 | 5–7 | The weather log; Smiltė's 7.16 and Ben's 7.11; seven numbers from one file |
 | 0:19 | 8–14 | The four aims as the answer; one before and after pair per aim |
 | 0:32 | 15–22 | How this course works |
 | 0:41 | 23–28 | Seminars and your project, the project tree, delete and rebuild |
@@ -93,7 +93,7 @@ No quiz interrupts the lecture. The deck closes with a self-check section,
 slides 60–65: five quiz slides for students to try afterwards. The same
 questions, with their answers:
 
-1. From the same file of hourly readings, Ada reports a mean of 7.16 °C and
+1. From the same file of hourly readings, Smiltė reports a mean of 7.16 °C and
    Ben 7.11 °C. What tells you which method a number came from?
    *The code that computed it, run on the file as it was received. A
    screenshot shows the number, not the choices behind it.*

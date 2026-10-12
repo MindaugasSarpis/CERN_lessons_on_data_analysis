@@ -215,7 +215,7 @@ as they are.
         ```
 
         ```text
-        /Users/ada/Documents/analysis-project/.venv/bin/python
+        /Users/smilte/Documents/analysis-project/.venv/bin/python
         ```
 
     === "Windows"
@@ -225,7 +225,7 @@ as they are.
         ```
 
         ```text
-        C:\Users\ada\Documents\analysis-project\.venv\Scripts\python.exe
+        C:\Users\smilte\Documents\analysis-project\.venv\Scripts\python.exe
         ```
 
     The answer is a path inside the project folder. From here on the

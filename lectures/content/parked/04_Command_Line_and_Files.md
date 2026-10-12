@@ -28,7 +28,7 @@ cat: data/raw/D0_KPi.cvs: No such file or directory
 ```text
 PS> cat data/raw/D0_KPi.cvs
 Get-Content: Cannot find path
-'C:\Users\ada\Documents\analysis-project\
+'C:\Users\smilte\Documents\analysis-project\
 data\raw\D0_KPi.cvs' because it does not
 exist.
 ```

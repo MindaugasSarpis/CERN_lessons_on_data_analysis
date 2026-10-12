@@ -805,7 +805,7 @@ It installs the editor, builds a project folder and writes its first file togeth
 Parked 2026-10-12, in the rework for a generic example: the lecturer had not
 introduced the pendulum table or the LHCb file, and the particle-physics file
 made the course look field-specific. The deck now opens on a made-up weather
-station (weather.csv, 87 672 hourly rows; Ada's 7.16 °C against Ben's 7.11 °C).
+station (weather.csv, 87 672 hourly rows; Smiltė's 7.16 °C against Ben's 7.11 °C).
 Where they stood: "Nine Rows from a Lab Partner", "Two People, Two Answers"
 and "One File, Seven Numbers" were slides 5-7, now rewritten on the weather
 log. "Why Real, Open Data" (slide 24) became "Open Data"; "One Table Through
@@ -877,13 +877,13 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🧮 **Ada: one *g* per row, then the average**
+## 🧮 **Smiltė: one *g* per row, then the average**
 
 Each row on its own gives a value of *g*, in m/s²:
 
 9.705 · 9.700 · 9.931 · 9.748 · 9.872 · 9.745 · 9.857 · 9.739 · 9.860
 
-The average of the nine is 9.795, so Ada reports **9.80**.
+The average of the nine is 9.795, so Smiltė reports **9.80**.
 
 </div>
 
@@ -913,12 +913,12 @@ on the board. They usually come in this order: "send me the file", "which
 rows did you use?", "how did you get the number?", "I can't open your file".
 Sort them into four piles: the file as it was received; every step done to
 it; the program that computed 9.84, with what it ran on; a form anyone can
-open. The next slide names the four piles. Neither Ada nor Ben is wrong: the
+open. The next slide names the four piles. Neither Smiltė nor Ben is wrong: the
 two numbers differ by method, and only a written-down method says which one
 you are holding. (~4 min)
 
 The numbers, for questions: g = 4π²L/T², with T the time of one swing
-(t10_s / 10). Ada's values are that formula row by row; their mean is
+(t10_s / 10). Smiltė's values are that formula row by row; their mean is
 9.7952. Ben fits T² = a·L + b without weights: a = 4.0136 s²/m, so
 g = 4π²/a = 9.836. All computed from pendulum.csv.
 -->
@@ -938,7 +938,7 @@ hideInToc: true
 | Ben's line through all nine | 9.84 |
 | Ben's line, the 100 cm row left out | 9.79 |
 | Ben's line, the 90 cm row left out | 9.88 |
-| Ada's average of nine values | 9.80 |
+| Smiltė's average of nine values | 9.80 |
 | A line forced through zero | 9.81 |
 | Lengths left in cm, not m | 983.61 |
 | 10 swings read as one swing | 0.098 |

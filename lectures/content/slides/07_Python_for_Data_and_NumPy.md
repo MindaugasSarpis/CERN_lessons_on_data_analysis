@@ -781,7 +781,7 @@ Speaker: do both runs live, in either shell; cd scripts is the same line in
 both. This is the cd of Seminar 3, and the prompt is the one read in Lecture
 04. The message is the same on both systems, letter for letter: Python
 prints the path as the script wrote it. An absolute path such as
-C:\Users\ada\Documents\... exists on one laptop only and does not go into a
+C:\Users\smilte\Documents\... exists on one laptop only and does not go into a
 script. (~2 min)
 -->
 

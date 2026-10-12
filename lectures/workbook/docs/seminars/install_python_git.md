@@ -127,7 +127,7 @@ Start everything slow first, then do something else while it runs.
         | `Please, press ENTER to continue` | `Enter` |
         | The licence, one screen at a time | `q`, which jumps to its end |
         | `Do you accept the license terms?` | `yes` |
-        | `[/Users/ada/miniforge3] >>>` | `Enter`: the folder is right |
+        | `[/Users/smilte/miniforge3] >>>` | `Enter`: the folder is right |
         | `Proceed with initialization?` and `[no] >>>` | `yes`. The answer in brackets is the default, so `Enter` alone would say no |
 
         The last answer lets the installer add a few lines to `~/.zshrc`,
@@ -141,7 +141,7 @@ Start everything slow first, then do something else while it runs.
     1. **Miniforge.** Run `Miniforge3-Windows-x86_64.exe` from
        **Downloads**. Select **Next** and **I Agree**, choose **Just Me
        (recommended)**, and keep every other default: the folder
-       `C:\Users\ada\miniforge3`, the boxes as they are, **Install**, then
+       `C:\Users\smilte\miniforge3`, the boxes as they are, **Install**, then
        **Finish**. No administrator password is needed.
 
     2. **conda in PowerShell.** Press the Windows key, type
@@ -257,11 +257,11 @@ them into every version of the project. Both lines print nothing, which is
 correct.
 
 ```text
-git config --global user.name "Ada Lovelace"
+git config --global user.name "Smiltė"
 ```
 
 ```text
-git config --global user.email "ada@example.com"
+git config --global user.email "smilte@example.com"
 ```
 
 Check what Git has kept:
@@ -271,8 +271,8 @@ git config --global --list
 ```
 
 ```text
-user.name=Ada Lovelace
-user.email=ada@example.com
+user.name=Smiltė
+user.email=smilte@example.com
 ```
 
 ---
@@ -328,8 +328,8 @@ A laptop that prints `ready` is ready for the course.
 | Windows: the version check prints `5` | The terminal is Windows PowerShell 5.1. Section 3 again: select the other PowerShell entry, close the old terminal, open a new one |
 | Windows: **PowerShell** is not in the list, or is 5.1 | PowerShell 7 is not installed yet, or VS Code was open while it was installed. Restart VS Code, then select the profile again |
 | macOS: `python3 --version` prints `Python 3.9.6` | That is the Python of Apple's developer tools: conda is not on in this terminal. See the first row |
-| macOS: `bash: /Users/ada/Downloads/Miniforge3-…: No such file or directory` | The download did not finish, or the file has another name. `ls ~/Downloads`; from the USB stick, take the file whose name ends in the chip of this Mac (`uname -m` prints it) |
-| macOS: `ERROR: File or directory already exists: '/Users/ada/miniforge3'` | Miniforge is installed already, from an earlier try. Skip to the check of section 4 |
+| macOS: `bash: /Users/smilte/Downloads/Miniforge3-…: No such file or directory` | The download did not finish, or the file has another name. `ls ~/Downloads`; from the USB stick, take the file whose name ends in the chip of this Mac (`uname -m` prints it) |
+| macOS: `ERROR: File or directory already exists: '/Users/smilte/miniforge3'` | Miniforge is installed already, from an earlier try. Skip to the check of section 4 |
 | macOS: `curl: (6) Could not resolve host: github.com` | No network. Copy the installer from the USB stick into **Downloads** |
 | macOS: `xcode-select: note: No developer tools were found, requesting install.` | Correct: the developer tools are being installed. Wait for their window to finish, then type `git --version` again |
 | A download stalls | Copy the installer from the USB stick |

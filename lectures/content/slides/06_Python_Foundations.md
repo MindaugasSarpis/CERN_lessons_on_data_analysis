@@ -446,7 +446,7 @@ hideInToc: true
 <!--
 Speaker: install the extension live and run period.py in all three ways. Point
 at the command that the ▶ button types: the absolute paths of Lecture 04,
-/Users/ada/... on a Mac and C:\Users\ada\... on Windows, so it runs from any
+/Users/smilte/... on a Mac and C:\Users\smilte\... on Windows, so it runs from any
 folder. The relative form is the one that works on every laptop. (~3 min)
 -->
 
@@ -2084,7 +2084,7 @@ TypeError: unsupported operand type(s) for /: 'str' and 'int'</code></pre>
 
 <div class="card card-accent card-glass pad-compact">
 
-**2. Above it: where.** The file by its absolute path (on Windows `C:\Users\ada\…`), line 4, the line itself, marks under the part that failed.
+**2. Above it: where.** The file by its absolute path (on Windows `C:\Users\smilte\…`), line 4, the line itself, marks under the part that failed.
 
 </div>
 
@@ -2100,8 +2100,8 @@ TypeError: unsupported operand type(s) for /: 'str' and 'int'</code></pre>
 Speaker: read from the bottom. The line that fails is often not the line that
 is wrong: line 4 is correct, line 3 forgot the conversion. The path before
 scripts/ is the absolute path of the project on each laptop:
-/Users/ada/.../scripts/period.py on a Mac,
-C:\Users\ada\...\scripts\period.py on Windows. (~4 min)
+/Users/smilte/.../scripts/period.py on a Mac,
+C:\Users\smilte\...\scripts\period.py on Windows. (~4 min)
 -->
 
 ---

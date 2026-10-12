@@ -112,11 +112,11 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-tight">
 
-## 🧮 **Ada: the average of every hour**
+## 🧮 **Smiltė: the average of every hour**
 
 She leaves out the 120 hours marked −999 and averages the other 87 552 readings.
 
-Ada reports **7.16 °C**.
+Smiltė reports **7.16 °C**.
 
 </div>
 
@@ -159,10 +159,10 @@ hideInToc: true
 
 | **What was done to the 87 672 rows** | **Mean, °C** |
 | --- | --- |
-| Ada: the average of every valid hour | 7.16 |
+| Smiltė: the average of every valid hour | 7.16 |
 | Ben: the middle of each day, averaged | 7.11 |
 | The average of the 120 monthly means | 7.14 |
-| Ada's way, one of the ten years left out | 7.03 to 7.29 |
+| Smiltė's way, one of the ten years left out | 7.03 to 7.29 |
 | The middle hour: half colder, half warmer | 6.70 |
 | The 120 hours of −999 read as temperatures | 5.78 |
 | The humidity column taken by mistake | 79.10 |
@@ -1527,7 +1527,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="From the same file of hourly readings, Ada reports a mean of 7.16 °C and Ben 7.11 °C. What tells you which method a number came from?"
+  question="From the same file of hourly readings, Smiltė reports a mean of 7.16 °C and Ben 7.11 °C. What tells you which method a number came from?"
   :options="[
     'The number of decimal places it is given with',
     'The code that computed it, run on the file as it was received',

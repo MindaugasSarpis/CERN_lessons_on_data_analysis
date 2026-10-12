@@ -2203,8 +2203,8 @@ hideInToc: true
 
 | Shell | The prompt, as it first appears |
 | --- | --- |
-| zsh, macOS | `ada@MacBook-Air weather-project %` |
-| PowerShell, Windows | `PS C:\Users\ada\Documents\weather-project>` |
+| zsh, macOS | `smilte@MacBook-Air weather-project %` |
+| PowerShell, Windows | `PS C:\Users\smilte\Documents\weather-project>` |
 
 </div>
 
@@ -2214,7 +2214,7 @@ hideInToc: true
 
 ## 👤 **Who**
 
-`ada@MacBook-Air`: the user and the computer. zsh only
+`smilte@MacBook-Air`: the user and the computer. zsh only
 
 </div>
 
@@ -2256,7 +2256,7 @@ hideInToc: true
 
 ```text
 % pwd
-/Users/ada/Documents/weather-project
+/Users/smilte/Documents/weather-project
 ```
 
 </div>
@@ -2270,7 +2270,7 @@ PS> pwd
 
 Path
 ----
-C:\Users\ada\Documents\weather-project
+C:\Users\smilte\Documents\weather-project
 ```
 
 </div>
@@ -2323,7 +2323,7 @@ README.md  data  results  scripts
 ```text
 PS> ls
 
-    Directory: C:\Users\ada\Documents\weather-project
+    Directory: C:\Users\smilte\Documents\weather-project
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
@@ -2352,10 +2352,10 @@ hideInToc: true
 ## 🍎 **macOS · zsh**, the whole prompt shown
 
 ```text
-ada@MacBook-Air weather-project % cd data
-ada@MacBook-Air data % cd processed
-ada@MacBook-Air processed % cd ../..
-ada@MacBook-Air weather-project %
+smilte@MacBook-Air weather-project % cd data
+smilte@MacBook-Air data % cd processed
+smilte@MacBook-Air processed % cd ../..
+smilte@MacBook-Air weather-project %
 ```
 
 </div>
@@ -2365,9 +2365,9 @@ ada@MacBook-Air weather-project %
 ## 🪟 **Windows · PowerShell**, the whole prompt shown
 
 ```text
-PS C:\Users\ada\Documents\weather-project> cd data
-PS C:\Users\ada\Documents\weather-project\data> cd ..
-PS C:\Users\ada\Documents\weather-project>
+PS C:\Users\smilte\Documents\weather-project> cd data
+PS C:\Users\smilte\Documents\weather-project\data> cd ..
+PS C:\Users\smilte\Documents\weather-project>
 ```
 
 </div>
@@ -2405,7 +2405,7 @@ README.md  backup  data  results  scripts
 ```text
 PS> mkdir backup
 
-    Directory: C:\Users\ada\Documents\weather-project
+    Directory: C:\Users\smilte\Documents\weather-project
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
@@ -2907,7 +2907,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="The prompt is `PS C:\Users\ada\Documents\weather-project\data>`. Which line prints the size of `daily.csv` in `data/processed`?"
+  question="The prompt is `PS C:\Users\smilte\Documents\weather-project\data>`. Which line prints the size of `daily.csv` in `data/processed`?"
   :options="[
     '(Get-Item processed/daily.csv).Length',
     '(Get-Item data/processed/daily.csv).Length',

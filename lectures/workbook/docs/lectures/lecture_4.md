@@ -304,7 +304,7 @@ repository; the slides parked before are in
 - A command is a program, its options and its arguments. A space ends an
   argument.
 - A path that starts at the project folder works on every laptop. A path
-  that starts with `/Users/ada` or `C:\Users\ada` works on one.
+  that starts with `/Users/smilte` or `C:\Users\smilte` works on one.
 - `>` empties the file it writes to. A command never writes into the file it
   reads, and never into `data/raw`.
 - A pipe joins programs: text in `zsh`, objects in PowerShell.

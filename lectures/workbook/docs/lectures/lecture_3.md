@@ -102,7 +102,7 @@ questions, with their answers:
    digit. What follows?
    *Your copy differs somewhere, by at least one bit. The hash says that
    something changed, never how much.*
-5. The prompt is `PS C:\Users\ada\Documents\weather-project\data>`. Which
+5. The prompt is `PS C:\Users\smilte\Documents\weather-project\data>`. Which
    line prints the size of `daily.csv` in `data/processed`?
    *`(Get-Item processed/daily.csv).Length`. The working directory is
    `data`, so the relative path starts there.*
