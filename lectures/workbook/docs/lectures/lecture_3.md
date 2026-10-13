@@ -16,8 +16,10 @@ every one of the 148 bytes named.
    to hex in groups of four.
 3. **How computers compute** — binary addition, logic gates and bitwise
    operations; how the CPU runs an algorithm; the memory hierarchy.
-4. **Numbers in computers** — integers of fixed width and overflow; two's
-   complement as a recipe and as a sum of weights; floating point as
+4. **Numbers in computers** — integers of fixed width as a dial that wraps,
+   like an odometer; negative numbers counted back from zero (two's
+   complement); overflow from 127 to −128 and the type that gives bits their
+   meaning; floating point as
    scientific notation in base 2; why 0.1 has no exact float, derived by
    multiplying by 2; the step from one float to the next, and what it means
    for a stored temperature.
@@ -94,7 +96,8 @@ questions, with their answers:
    values can a reading take?
    *2¹⁶ = 65 536, from 0 to 65 535.*
 2. In two's complement, what is the 4-bit pattern `1010`?
-   *−6. By weights: −8 + 2. As an unsigned integer the same bits are 10.*
+   *−6: six steps back from `0000` (`1111` is −1). As an unsigned integer
+   the same bits are 10, and 10 − 16 = −6.*
 3. What is a file, at the simplest level?
    *A named sequence of bytes kept by the operating system. The ending of the
    name is only a hint at how to read them.*

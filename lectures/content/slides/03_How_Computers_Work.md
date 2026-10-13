@@ -1119,17 +1119,19 @@ Unix time counts seconds since 1970. Stored as a signed 32-bit integer, it runs 
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 💥 **Overflow**
+## 🚗 **Like an odometer**
 
-One past the largest value wraps around, silently:
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-a = np.array([127], dtype=np.int8)  # int8 max
-print(a + 1)  # [-128]: wraps, no warning
+```text
+  99 999 km
++      1 km
+= 00 000 km
 ```
+
+Five digits hold 0 to 99 999. One more, and the dial starts again at 0.
+
+A 16-bit counter is the same dial in binary: after 65 535 comes 0, with no error.
 
 </div>
 
@@ -1138,7 +1140,7 @@ print(a + 1)  # [-128]: wraps, no warning
 <div class="note-text mt-sm">A Python <code>int</code> grows as needed. Arrays and files use fixed widths.</div>
 
 <!--
-**Say:** the NumPy line is not explained today. The point is only that a fixed-width value wraps with no error.
+**Say:** a fixed width is a dial with a fixed number of positions. Past the last one it starts again from zero, and nothing warns you.
 **Ask:** what does a 16-bit counter show after 65 536 events? 0.
 (~2 min)
 -->
@@ -1147,93 +1149,95 @@ print(a + 1)  # [-128]: wraps, no warning
 hideInToc: true
 ---
 
-# Negative Numbers: **Two's Complement**
+# Negative Numbers: Count Back from **Zero**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🧮 **The recipe, in 4 bits**
+## 🚗 **The odometer, backwards**
 
-From 5 to −5:
-
-1. Start: `0101`, which is 5
-2. Flip every bit: `1010`
-3. Add one: `1011`, which is −5
-
-A set top bit means negative.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## ✨ **Addition just works**
+One step back from `000` shows `999`. Agree that `999` means −1, `998` means −2, and so on. Then addition still works:
 
 ```text
-  0101   (+5)
-+ 1011   (−5)
-------
- 10000 → 0000 = 0
+  005   (+5)
++ 999   (−1)
+-----
+ 1004  → 004 = 4
 ```
 
-The carry falls off the fixed width. No subtraction circuit is needed.
+The extra digit falls off the dial.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact table-compact">
+
+## 🔢 **The same in 4 bits**
+
+| Pattern | Value |
+| --- | --- |
+| `0000` … `0111` | 0 … 7 |
+| `1111` | −1 |
+| `1110` | −2 |
+| `1101` | −3 |
+| … | … |
+| `1000` | −8 |
+
+The negative half is every pattern that starts with `1`: **two's complement**.
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">8 bits hold −128 to +127: one more negative value than positive.</div>
+<div class="note-text mt-sm">8 bits hold −128 to 127, 16 bits −32 768 to 32 767.</div>
 
 <!--
-**Say:** there is no minus sign in hardware. Negative integers are a convention, and two's complement is the one every processor uses.
-(~2 min)
+**Say:** hardware has no minus sign. Negative numbers are the top half of the dial, counted back from zero, and the ordinary adder handles them. Every processor does it this way.
+**Ask:** which 4-bit pattern is −5? Five steps back from 0000: 1011.
+**If asked:** the shortcut for −x is "flip every bit, add one": 0101 (5) → 1010 → 1011 (−5). A pattern that starts with 1 is its unsigned value minus 16: 1011 is 11 − 16 = −5.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Two's Complement: **Reading a Pattern**
+# Overflow: **127 + 1** in 8 Bits
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
-## ⚖️ **The top bit has a negative weight**
+## 💥 **Past the positive half**
 
-```text
-weights   −8   4   2   1
-pattern    1   1   0   1
-value     −8 + 4 + 0 + 1  =  −3
+```py {monaco-run} {autorun:false}
+import numpy as np
+a = np.array([127], dtype=np.int8)  # 8 bits
+print(a + 1)  # [-128]: wraps, no warning
 ```
 
-The recipe agrees: flip `1101` to `0010`, add one, `0011` is 3. The pattern is −3.
+127 is `01111111`, the last positive pattern. One step on is `10000000`, the first of the negative half: −128.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact table-compact">
+<div class="card card-primary card-glass pad-compact">
 
-## 📏 **Ranges**
+## 🏷️ **The type says what the bits mean**
 
-| Bits | Smallest | Largest |
-| --- | --- | --- |
-| 4 | −8 | 7 |
-| 8 | −128 | 127 |
-| 16 | −32 768 | 32 767 |
-| *n* | −2ⁿ⁻¹ | 2ⁿ⁻¹ − 1 |
+```text
+11111111  as unsigned 8-bit:  255
+11111111  as signed 8-bit:     −1
+```
 
-</div>
+The same bits, the same place on the dial. Only the type tells them apart, so the type is written down with the data.
 
 </div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ `11111111` is 255 as an unsigned integer and −1 as a signed one. The bits do not say which. The type says it, so the type is written down with the data.
 
 </div>
 
 <!--
-**Say:** the weights are the reason the recipe works, and they make reading a pattern a sum.
+**Say:** the NumPy line is not explained today. The point is that a fixed-width integer wraps with no error, here from the largest positive value into the negative half.
+**Ask:** what is 11111110 as unsigned and as signed? 254 and −2.
 (~2 min)
 -->
 
@@ -2867,7 +2871,7 @@ hideInToc: true
     '−2'
   ]"
   :correct="1"
-  explanation="By weights: −8 + 0 + 2 + 0 = −6. By the recipe: flip 1010 to 0101, add one to get 0110, which is 6, so the pattern is −6. Read as an unsigned integer the same four bits are 10."
+  explanation="1010 starts with 1, so it is in the negative half. Count back from 0000: 1111 is −1, 1110 −2, 1101 −3, 1100 −4, 1011 −5, 1010 −6. Read as an unsigned integer the same four bits are 10, and 10 − 16 = −6."
 />
 
 ---
