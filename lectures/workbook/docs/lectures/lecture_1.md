@@ -34,7 +34,7 @@ end, then runs the film reel from the cosmos down to the LHCb detector.
    on the four aims; what you hand in; open data and practice files; the
    finished project tree; delete `data/processed/` and `results/` and rebuild
    them with one command.
-6. **Back to 7.16**: why CERN needs the same skills; Mariner 4's first picture
+6. **How do you check 7.16?**: why CERN needs the same skills; Mariner 4's first picture
    of Mars, coloured by hand from 40 000 printed numbers and a key; and
    *What a Result Needs*, one line per aim, which answers the opening
    question.
@@ -58,7 +58,7 @@ press Enter.
 | 0:19 | 8–14 | The four aims as the answer; one before and after pair per aim |
 | 0:32 | 15–22 | How this course works |
 | 0:41 | 23–28 | Seminars and your project, the project tree, delete and rebuild |
-| 0:49 | 29–33 | Back to 7.16: why CERN, Mariner 4, **What a Result Needs**, what to bring |
+| 0:49 | 29–33 | How do you check 7.16? Why CERN, Mariner 4, **What a Result Needs**, what to bring |
 | 0:56 | 34–54 | The reel, ending on the LHCb fly-through |
 | 1:30 | | End |
 

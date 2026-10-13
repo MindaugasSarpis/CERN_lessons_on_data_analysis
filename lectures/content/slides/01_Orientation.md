@@ -994,12 +994,12 @@ layout: section
 hideInToc: true
 ---
 
-# Back to **7.16**
+# How Do You **Check 7.16**?
 
-Any data, from a petabyte to one station's log, needs the same four things before anyone can trust a result.
+Smiltė's mean temperature of ten years, sent as one number.
 
 <!--
-**Say:** the course part is done; back to the opening question.
+**Ask:** the question of the opening slides, again: what would you need from Smiltė to check 7.16? Collect two or three answers; "What a Result Needs" lists them.
 (~1 min)
 -->
 
