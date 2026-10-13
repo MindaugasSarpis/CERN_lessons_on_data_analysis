@@ -87,13 +87,15 @@ Smiltė keeps `data/raw/daily_export.csv` of the weather project. Her colleague 
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## 🪟 **PowerShell 7, the same on macOS and Windows**
+## 💻 **zsh · Git Bash**
 
 ```text
-PS> (Get-FileHash smilte/daily_export.csv, tomas/daily_export.csv).Hash
-9D849815D88ECEB18366EE66AC72F26B72E195BEA8BB20AA9A1474372513BBDB
-13FBCAE6A7A4D67EC30FDF3BEDC0B666209F7A4DC453EA72FF6DE7370FFD6AEE
+$ shasum -a 256 smilte/daily_export.csv tomas/daily_export.csv
+9d849815d88eceb18366ee66ac72f26b72e195bea8bb20aa9a1474372513bbdb  smilte/daily_export.csv
+13fbcae6a7a4d67ec30fdf3bedc0b666209f7a4dc453ea72ff6de7370ffd6aee  tomas/daily_export.csv
 ```
+
+Git Bash: `sha256sum` in place of `shasum -a 256`, with the same output.
 
 </div>
 
@@ -105,6 +107,7 @@ The checksums say that the two files differ. They do not say where, who changed 
 
 <!--
 **Ask:** which copy is the file as it arrived from the station? Nobody can tell from 64 digits.
+**If asked:** `$` stands for the prompt of both shells; zsh on a Mac shows `%`.
 **Do:** a show of hands: who has files named final, final_v2, final_corrected?
 (~3 min)
 -->
@@ -122,7 +125,7 @@ hideInToc: true
 ## 🔍 **Line by line**
 
 ```text
-PS> git diff --no-index smilte/daily_export.csv tomas/daily_export.csv
+$ git diff --no-index smilte/daily_export.csv tomas/daily_export.csv
 diff --git a/smilte/daily_export.csv b/tomas/daily_export.csv
 index 0799b86..a2093bf 100644
 --- a/smilte/daily_export.csv
@@ -287,13 +290,15 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## 🪟 **PowerShell 7**
+## 💻 **zsh · Git Bash**
 
 ```text
-PS> "hello" | git hash-object --stdin
+$ echo "hello" | git hash-object --stdin
 ce013625030ba8dba906f756967f9e9ca394464a
-PS> "hallo" | git hash-object --stdin
+$ echo "hallo" | git hash-object --stdin
 4cf5aa5f9a644263dbe3d6e78bcbef45487a802c
+$ printf "hello\r\n" | git hash-object --stdin
+ef0493b275aa2080237f676d2ef6559246f56636
 ```
 
 </div>
@@ -312,17 +317,17 @@ PS> "hallo" | git hash-object --stdin
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🔀 **The same line on Windows**
+## 🔀 **The same word, another ending**
 
-`hello` gives `ce013625…` on macOS and `ef0493b2…` on Windows. The line is the same, so the bytes that reached Git must differ.
+`printf` writes `hello` with `\r\n`, the line ending of Windows programs: `ef0493b2…`. The word is the same, so the bytes that reached Git must differ.
 
 </div>
 
 </div>
 
 <!--
-**Live:** `"hello" | git hash-object --stdin` on the lecture laptop.
-**Ask:** read the first four digits to your neighbour. ce01 on a Mac, ef04 on Windows.
+**Live:** `echo "hello" | git hash-object --stdin` on the lecture laptop.
+**Ask:** read the first four digits to your neighbour: ce01 on every laptop, Mac or Windows.
 (~3 min)
 -->
 
@@ -335,10 +340,10 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-62 6c 6f 62 20 36 00 68 65 6c 6c 6f 0a          macOS: 13 bytes
+62 6c 6f 62 20 36 00 68 65 6c 6c 6f 0a          echo: 13 bytes
 b  l  o  b     6     h  e  l  l  o  LF
 
-62 6c 6f 62 20 37 00 68 65 6c 6c 6f 0d 0a       Windows: 14 bytes
+62 6c 6f 62 20 37 00 68 65 6c 6c 6f 0d 0a       printf "hello\r\n": 14 bytes
 b  l  o  b     7     h  e  l  l  o  CR LF
 ```
 
@@ -358,7 +363,7 @@ The header is the word `blob`, a space, the number of bytes as decimal text, and
 
 ## ↩️ **Where the 7 comes from**
 
-PowerShell ends the text it hands to a program with a line break: `0a` on macOS, `0d 0a` on Windows, as `>` ended the lines of a file in Lecture 4. Other bytes, so another id.
+`echo` ends the text with `0a`: 6 bytes. `printf` was told to write `0d 0a`, the ending a Windows program such as Notepad writes: 7 bytes. Other bytes, so another id.
 
 </div>
 
@@ -379,13 +384,13 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## ⌨️ **The same line and the same answer on every laptop**
+## 💻 **zsh · Git Bash: the same id on every laptop**
 
 ```text
-PS> git hash-object data/raw/weather.csv
+$ git hash-object data/raw/weather.csv
 f811f73d93226acc8a0c96562aef9f7825b85b0a
-PS> (Get-FileHash data/raw/weather.csv).Hash
-3F1AD06D3BB5773EAC79DFC964CDF8AF998689EF58AA8623F25D2050FBE00756
+$ shasum -a 256 data/raw/weather.csv
+3f1ad06d3bb5773eac79dfc964cdf8af998689ef58aa8623f25d2050fbe00756  data/raw/weather.csv
 ```
 
 </div>
@@ -428,9 +433,9 @@ hideInToc: true
 ## 📋 **The checksums of `data/raw`, as in Lecture 4**
 
 ```text
-PS> (Get-FileHash data/raw/*).Hash
-9D849815D88ECEB18366EE66AC72F26B72E195BEA8BB20AA9A1474372513BBDB
-3F1AD06D3BB5773EAC79DFC964CDF8AF998689EF58AA8623F25D2050FBE00756
+$ shasum -a 256 data/raw/*
+9d849815d88eceb18366ee66ac72f26b72e195bea8bb20aa9a1474372513bbdb  data/raw/daily_export.csv
+3f1ad06d3bb5773eac79dfc964cdf8af998689ef58aa8623f25d2050fbe00756  data/raw/weather.csv
 ```
 
 </div>
@@ -440,7 +445,7 @@ PS> (Get-FileHash data/raw/*).Hash
 ## 🌳 **The list Git keeps for `data/raw`**
 
 ```text
-PS> git cat-file -p ee85972a
+$ git cat-file -p ee85972a
 100644 blob 0799b86b8920dc0305f14957ed806fbaa6b29107    daily_export.csv
 100644 blob f811f73d93226acc8a0c96562aef9f7825b85b0a    weather.csv
 ```
@@ -454,7 +459,7 @@ Git's list of a folder is a **tree**: one line per file, a mode, the kind, the b
 </div>
 
 <!--
-**Say:** both lists hold one hash per file, in the order of the names. Git adds the names and the mode.
+**Say:** both lists hold one hash and one name per file, in the order of the names. Git adds the mode and the kind.
 **If asked:** `git cat-file -p` prints any object in readable form. The `data/raw` tree is the same on every laptop with the same two files.
 (~2 min)
 -->
@@ -468,13 +473,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git cat-file -p 248a3850
+$ git cat-file -p b9c01664
 100644 blob f6a280d35eb8d7399aca4d204531729eb933e40e    .gitattributes
-100644 blob 88033e7ab207c7b60ae337da763389a373d0e17c    .gitignore
-100644 blob 5adda7195d45ee93f00257f9cfb01182a74abab3    README.md
+100644 blob 3febadb2ecf24b916a6e8b06b61a44ac77965e79    .gitignore
+100644 blob 5b35420e27065df77187c89dd7602163cf8a2e80    README.md
 040000 tree d87619c94923e48458c24349ca078fdf304b68e5    data
-040000 tree e6e00291a4b24fd8d843e55755be2b215608ec9a    scripts
-PS> git cat-file -p d87619c9
+040000 tree d824278b278d8646a317896458a16a1b99f5b734    scripts
+$ git cat-file -p d87619c9
 040000 tree ee85972aa77240166e830bd65e5514b032637fd5    raw
 ```
 
@@ -494,7 +499,7 @@ A line `040000 tree` names the list of a subfolder. The top list names `data`, a
 
 ## 🔗 **One id for the whole project**
 
-Change one byte of `weather.csv`: its blob id changes, so the list of `raw` changes, then `data`, then the top list. `248a3850` fixes every byte and every name.
+Change one byte of `weather.csv`: its blob id changes, so the list of `raw` changes, then `data`, then the top list. `b9c01664` fixes every byte and every name.
 
 </div>
 
@@ -514,9 +519,9 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
-PS> git cat-file -p 7adcc49
-tree 248a3850adad275f3215eeeb9237660646d1ace7
-parent 6bd13b03020f5dbd12d6376960606df923d854d4
+$ git cat-file -p a9f65a6
+tree b9c0166494b823a041989ceb23623d62173d923d
+parent ef28e402d742c44c8c0a708e035794228ec32a2e
 author Smiltė <smilte@example.org> 1792481100 +0300
 committer Smiltė <smilte@example.org> 1792481100 +0300
 
@@ -558,16 +563,16 @@ hideInToc: true
 
 ```mermaid {scale: 0.78}
 flowchart LR
-    C["commit 7adcc49<br/>Add the data and the scripts"]:::input -- tree --> T["tree 248a3850"]
-    C -- parent --> P["commit 6bd13b0"]
-    T --> R1["blob 5adda719<br/>README.md"]
-    T --> R2["blob 88033e7a<br/>.gitignore"]
+    C["commit a9f65a6<br/>Add the data and the scripts"]:::input -- tree --> T["tree b9c01664"]
+    C -- parent --> P["commit ef28e40"]
+    T --> R1["blob 5b35420e<br/>README.md"]
+    T --> R2["blob 3febadb2<br/>.gitignore"]
     T --> D["tree d87619c9<br/>data"]
-    T --> SC["tree e6e00291<br/>scripts"]
+    T --> SC["tree d824278b<br/>scripts"]
     D --> RAW["tree ee85972a<br/>raw"]
     RAW --> W["blob f811f73d<br/>weather.csv"]:::output
     RAW --> E["blob 0799b86b<br/>daily_export.csv"]:::output
-    SC --> PS["blob f7c9f7be<br/>rebuild.ps1"]
+    SC --> RS["blob eb2b25d9<br/>rebuild.sh"]
     classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
     classDef output fill:#063c34,stroke:#34d399,color:#d1fae5
 ```
@@ -591,10 +596,10 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git cat-file -s 7adcc49
+$ git cat-file -s a9f65a6
 233
-PS> git cat-file commit 7adcc49 | git hash-object -t commit --stdin
-7adcc495fefeb759171e759c391a06a34c32fe26
+$ git cat-file commit a9f65a6 | git hash-object -t commit --stdin
+a9f65a6cc855739979919aae1a861f1a0bc8d58e
 ```
 
 The recipe of the blob, with `commit 233` and a zero byte as the header.
@@ -638,7 +643,7 @@ hideInToc: true
 
 ```mermaid {scale: 0.9}
 flowchart RL
-    C4["7adcc49<br/>Add the data and the scripts<br/>tree 248a3850"] -- parent --> C3["6bd13b0<br/>Keep the committed bytes<br/>tree 0445d6bd"] -- parent --> C2["174208f<br/>Add .gitignore<br/>tree edb257e1"] -- parent --> C1["0f2b089<br/>Add the README<br/>tree 6f296200"]
+    C4["a9f65a6<br/>Add the data and the scripts<br/>tree b9c01664"] -- parent --> C3["ef28e40<br/>Keep the committed bytes<br/>tree e3fe0a2e"] -- parent --> C2["e3f4e26<br/>Add .gitignore<br/>tree b04cfd3c"] -- parent --> C1["c08a1c7<br/>Add the README<br/>tree 5793d65f"]
 ```
 
 </div>
@@ -653,7 +658,7 @@ Every commit names its parent. The first has none, a merge has two. The arrows p
 
 <div class="card card-secondary card-glass pad-compact">
 
-Each commit has its own tree, a complete snapshot. Snapshots share every blob that did not change: `README.md` is blob `5adda719…` in all four.
+Each commit has its own tree, a complete snapshot. Snapshots share every blob that did not change: `README.md` is blob `5b35420e…` in all four.
 
 </div>
 
@@ -677,15 +682,15 @@ hideInToc: true
 ## 🏷️ **A file of 41 bytes**
 
 ```text
-PS> Get-Content .git/HEAD
+$ cat .git/HEAD
 ref: refs/heads/main
-PS> Get-Content .git/refs/heads/main
-7adcc495fefeb759171e759c391a06a34c32fe26
+$ cat .git/refs/heads/main
+a9f65a6cc855739979919aae1a861f1a0bc8d58e
 ```
 
 ```mermaid {scale: 0.6}
 flowchart RL
-    M(["main"]):::input --> C4["7adcc49"] --> C3["6bd13b0"] --> C2["174208f"]
+    M(["main"]):::input --> C4["a9f65a6"] --> C3["ef28e40"] --> C2["e3f4e26"]
     classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
 ```
 
@@ -696,15 +701,15 @@ flowchart RL
 ## ➡️ **A commit moves the name**
 
 ```text
-PS> git commit -m "Give the mean temperature in the README"
-[main f2885b3] Give the mean temperature in the README
-PS> Get-Content .git/refs/heads/main
-f2885b373c47444a1e68e6c03aa6720414af45c3
+$ git commit -m "Give the mean temperature in the README"
+[main 15505c4] Give the mean temperature in the README
+$ cat .git/refs/heads/main
+15505c482d25129590a630d023046267f7abb020
 ```
 
 ```mermaid {scale: 0.6}
 flowchart RL
-    M(["main"]):::input --> C5["f2885b3"] --> C4["7adcc49"] --> C3["6bd13b0"]
+    M(["main"]):::input --> C5["15505c4"] --> C4["a9f65a6"] --> C3["ef28e40"]
     classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
 ```
 
@@ -799,11 +804,11 @@ hideInToc: true
 ## ⌨️ **In the terminal of VS Code**
 
 ```text
-PS> git --version
+$ git --version
 git version 2.56.0
-PS> git config --global user.name
+$ git config --global user.name
 Smiltė
-PS> git config --global user.email
+$ git config --global user.email
 smilte@example.org
 ```
 
@@ -816,9 +821,9 @@ Your version differs. Git for Windows prints `2.56.0.windows.1`, Apple's Git end
 ## ➕ **Three more settings**
 
 ```text
-PS> git config --global init.defaultBranch main
-PS> git config --global pull.rebase false
-PS> git config --global core.autocrlf false
+$ git config --global init.defaultBranch main
+$ git config --global pull.rebase false
+$ git config --global core.autocrlf false
 ```
 
 The first names the first branch `main` instead of `master`. The second lets `git pull` join two histories by a merge. The third keeps Git from rewriting line endings. None prints anything.
@@ -892,14 +897,10 @@ Select **Initialize Repository**. The view then lists every file of the folder u
 ## ⌨️ **Typed**
 
 ```text
-PS> git init
+$ git init
 Initialized empty Git repository in /Users/smilte/weather-project/.git/
-PS> Get-ChildItem -Force -Name
-.git
-data
-results
-scripts
-README.md
+$ ls -a
+.  ..  .git  README.md  data  results  scripts
 ```
 
 </div>
@@ -923,8 +924,8 @@ A **repository** is the project folder together with its `.git` folder. All comm
 </div>
 
 <!--
-**Live:** select **Initialize Repository**, then `Get-ChildItem -Force -Name` in the terminal: the button made this one folder.
-**If asked:** `-Force` shows hidden items; on Windows Git marks `.git` as hidden.
+**Live:** select **Initialize Repository**, then `ls -a` in the terminal: the button made this one folder.
+**If asked:** `-a` shows names that begin with a dot, which `ls` hides. Git Bash may list `README.md` after `data`.
 (~2 min)
 -->
 
@@ -945,7 +946,7 @@ hideInToc: true
 <div class="card card-secondary card-glass pad-compact">
 
 ```text
-PS> git status
+$ git status
 On branch main
 
 No commits yet
@@ -989,9 +990,9 @@ hideInToc: true
 ## ⌨️ **Typed**
 
 ```text
-PS> git add README.md
-PS> git commit -m "Add the README"
-[main (root-commit) 0f2b089] Add the README
+$ git add README.md
+$ git commit -m "Add the README"
+[main (root-commit) c08a1c7] Add the README
  1 file changed, 49 insertions(+)
  create mode 100644 README.md
 ```
@@ -1131,7 +1132,7 @@ hideInToc: true
 | `README.md`, the scripts | Yes | Written by hand. Nothing can make them again |
 | Small raw data: `weather.csv`, 2.5 MB | Yes | The project is complete in one piece |
 | Large raw data: one file of 3 GB | No | Too large for Git and for the host |
-| `data/processed/*`, made by `rebuild.ps1` | No | The script is in the repository and makes them again |
+| `data/processed/*`, made by `rebuild.sh` | No | The script is in the repository and makes them again |
 | `.DS_Store`, `Thumbs.db` | No | Made by the operating system, of no use to anyone |
 | Passwords and access keys | Never | A pushed commit stays readable for good |
 
@@ -1139,7 +1140,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`weather_valid.csv` has 2 511 735 bytes and would fit. It stays out because one line of `rebuild.ps1` makes it again. The README promises its 87 553 lines, so a rebuilt copy can be checked.
+`weather_valid.csv` has 2 511 735 bytes and would fit. It stays out because one line of `rebuild.sh` makes it again. The README promises its 87 553 lines, so a rebuilt copy can be checked.
 
 </div>
 
@@ -1208,7 +1209,7 @@ hideInToc: true
 .DS_Store
 Thumbs.db
 
-# made by scripts/rebuild.ps1
+# made by scripts/rebuild.sh
 data/processed/
 ```
 
@@ -1221,13 +1222,13 @@ One pattern per line, and `#` starts a comment. `*.tmp` is every file ending in 
 ## ⌨️ **Before and after**
 
 ```text
-PS> git status --short
+$ git status --short
 ?? .gitignore
 ?? data/
 ?? scripts/
-PS> git add .gitignore
-PS> git commit -m "Add .gitignore"
-[main 174208f] Add .gitignore
+$ git add .gitignore
+$ git commit -m "Add .gitignore"
+[main e3f4e26] Add .gitignore
  1 file changed, 6 insertions(+)
 ```
 
@@ -1263,9 +1264,9 @@ hideInToc: true
 ```
 
 ```text
-PS> git add .gitattributes
-PS> git commit -m "Keep the committed bytes of every file on checkout"
-[main 6bd13b0] Keep the committed bytes of every file on checkout
+$ git add .gitattributes
+$ git commit -m "Keep the committed bytes of every file on checkout"
+[main ef28e40] Keep the committed bytes of every file on checkout
  1 file changed, 3 insertions(+)
 ```
 
@@ -1275,7 +1276,7 @@ PS> git commit -m "Keep the committed bytes of every file on checkout"
 
 ## 🪟 **Without it, on Windows**
 
-Git for Windows comes with `core.autocrlf true`. A clone then gets `0d 0a` at the end of each of the 87 673 lines of `weather.csv`: 87 673 bytes more, and `Get-FileHash` no longer gives `3F1AD06D…`.
+Git for Windows comes with `core.autocrlf true`. A clone then gets `0d 0a` at the end of each of the 87 673 lines of `weather.csv`: 87 673 bytes more, and `sha256sum` no longer gives `3f1ad06d…`.
 
 `* -text` says: no file of this project is text to convert. It travels with the repository, on every laptop that clones it.
 
@@ -1300,16 +1301,16 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-PS> git add .
-PS> git status --short --ignored
+$ git add .
+$ git status --short --ignored
 A  data/raw/daily_export.csv
 A  data/raw/weather.csv
 A  scripts/clean_export.py
 A  scripts/column_stats.py
-A  scripts/rebuild.ps1
+A  scripts/rebuild.sh
 !! data/processed/
-PS> git commit -m "Add the data and the scripts"
-[main 7adcc49] Add the data and the scripts
+$ git commit -m "Add the data and the scripts"
+[main a9f65a6] Add the data and the scripts
  5 files changed, 87798 insertions(+)
 ```
 
@@ -1327,7 +1328,7 @@ PS> git commit -m "Add the data and the scripts"
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The four commits so far: `0f2b089`, `174208f`, `6bd13b0`, `7adcc49`. They are the four circles of the graph in the model.
+The four commits so far: `c08a1c7`, `e3f4e26`, `ef28e40`, `a9f65a6`. They are the four circles of the graph in the model.
 
 </div>
 
@@ -1399,9 +1400,9 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-PS> git diff
+$ git diff
 diff --git a/README.md b/README.md
-index 5adda71..b2fca1b 100644
+index 5b35420..be10053 100644
 --- a/README.md
 +++ b/README.md
 @@ -43,6 +43,11 @@ It writes `data/processed/…
@@ -1425,7 +1426,7 @@ index 5adda71..b2fca1b 100644
 ## 🔎 **Reading it**
 
 - `---` and `+++` name the old and the new file
-- `5adda71..b2fca1b` are the blob ids of the two contents
+- `5b35420..be10053` are the blob ids of the two contents
 - `@@ -43,6 +43,11 @@`: six lines from line 43 before, eleven after
 - `-` a line that went, `+` a line that came, a space before an unchanged line
 
@@ -1437,7 +1438,7 @@ index 5adda71..b2fca1b 100644
 
 <!--
 **Say:** the three lines around a change are context, so the change can be found again. Long lines are cut here with …
-**Do:** stage and commit: "Give the mean temperature in the README", `f2885b3`.
+**Do:** stage and commit: "Give the mean temperature in the README", `15505c4`.
 (~3 min)
 -->
 
@@ -1452,14 +1453,14 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-PS> git log --oneline
-f2885b3 (HEAD -> main) Give the mean temperature in the README
-7adcc49 Add the data and the scripts
-6bd13b0 Keep the committed bytes of every file on checkout
-174208f Add .gitignore
-0f2b089 Add the README
-PS> git log -1
-commit f2885b373c47444a1e68e6c03aa6720414af45c3 (HEAD -> main)
+$ git log --oneline
+15505c4 (HEAD -> main) Give the mean temperature in the README
+a9f65a6 Add the data and the scripts
+ef28e40 Keep the committed bytes of every file on checkout
+e3f4e26 Add .gitignore
+c08a1c7 Add the README
+$ git log -1
+commit 15505c482d25129590a630d023046267f7abb020 (HEAD -> main)
 Author: Smiltė <smilte@example.org>
 Date:   Tue Oct 20 10:35:00 2026 +0300
 
@@ -1493,8 +1494,8 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git show --stat f2885b3
-commit f2885b373c47444a1e68e6c03aa6720414af45c3 (HEAD -> main)
+$ git show --stat 15505c4
+commit 15505c482d25129590a630d023046267f7abb020 (HEAD -> main)
 Author: Smiltė <smilte@example.org>
 Date:   Tue Oct 20 10:35:00 2026 +0300
 
@@ -1509,9 +1510,9 @@ Date:   Tue Oct 20 10:35:00 2026 +0300
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
 ```text
-PS> git blame -s -L 48,49 README.md
-f2885b3 48) - **Mean air temperature, 2016 to 2025:** 7.16 °C
-f2885b3 49) - **From:** `column_stats.py` on `data/processed/weather_valid.csv`, 87 552 hours
+$ git blame -s -L 48,49 README.md
+15505c4 48) - **Mean air temperature, 2016 to 2025:** 7.16 °C
+15505c4 49) - **From:** `column_stats.py` on `data/processed/weather_valid.csv`, 87 552 hours
 ```
 
 </div>
@@ -1561,11 +1562,11 @@ hideInToc: true
 ## ⌨️ **Typed**
 
 ```text
-PS> git diff --stat
+$ git diff --stat
  README.md | 11 -----------
  1 file changed, 11 deletions(-)
-PS> git restore README.md
-PS> git status
+$ git restore README.md
+$ git status
 On branch main
 nothing to commit, working tree clean
 ```
@@ -1599,13 +1600,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-PS> git add LICENSE
-PS> git commit -m "Add teh LICENSE named in the README"
-[main 2e5b410] Add teh LICENSE named in the README
+$ git add LICENSE
+$ git commit -m "Add teh LICENSE named in the README"
+[main c2422af] Add teh LICENSE named in the README
  1 file changed, 21 insertions(+)
  create mode 100644 LICENSE
-PS> git commit --amend -m "Add the LICENSE named in the README"
-[main 1e55c5b] Add the LICENSE named in the README
+$ git commit --amend -m "Add the LICENSE named in the README"
+[main 2eab6b2] Add the LICENSE named in the README
  Date: Tue Oct 20 10:40:00 2026 +0300
  1 file changed, 21 insertions(+)
  create mode 100644 LICENSE
@@ -1617,7 +1618,7 @@ PS> git commit --amend -m "Add the LICENSE named in the README"
 
 ## 🔁 **A new commit replaces the old**
 
-The README names a file `LICENSE` that did not exist yet. The id went from `2e5b410` to `1e55c5b`: the message is part of the hashed text, so a corrected commit is another commit.
+The README names a file `LICENSE` that did not exist yet. The id went from `c2422af` to `2eab6b2`: the message is part of the hashed text, so a corrected commit is another commit.
 
 In the view: the arrow on **Commit**, then **Commit (Amend)**.
 
@@ -1632,7 +1633,7 @@ In the view: the arrow on **Commit**, then **Commit (Amend)**.
 </div>
 
 <!--
-**Say:** the old commit `2e5b410` leaves the history; nothing points to it any more.
+**Say:** the old commit `c2422af` leaves the history; nothing points to it any more.
 **If asked:** the MIT text is copied from choosealicense.com, with the year and the name.
 (~2 min)
 -->
@@ -1646,32 +1647,29 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git rm data/raw/daily_export.csv
+$ git rm data/raw/daily_export.csv
 rm 'data/raw/daily_export.csv'
-PS> git commit -m "Remove the raw export, daily.csv replaces it"
-[main ae46162] Remove the raw export, daily.csv replaces it
+$ git commit -m "Remove the raw export, daily.csv replaces it"
+[main 172f06a] Remove the raw export, daily.csv replaces it
  1 file changed, 11 deletions(-)
  delete mode 100644 data/raw/daily_export.csv
-PS> ./scripts/rebuild.ps1
+$ ./scripts/rebuild.sh
 no file data/raw/daily_export.csv
-NativeCommandExitException: /Users/smilte/weather-project/scripts/rebuild.ps1:5
-Line |
-   5 |  python scripts/clean_export.py data/raw/daily_export.csv data/process …
-     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     | Program "python" ended with non-zero exit code: 1 (0x01).
+$ echo $?
+1
 ```
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-`git rm` deletes the file and stages the deletion. The commit looked tidy: `daily.csv` holds the same nine values. Then the rebuild stops at line 5, because the script reads the raw export. Raw files are never deleted.
+`git rm` deletes the file and stages the deletion. The commit looked tidy: `daily.csv` holds the same nine values. Then the rebuild stops with status 1, because the script reads the raw export. Raw files are never deleted.
 
 </div>
 
 <!--
 **Ask:** the commit is made. What now: copy the file back from an e-mail, or ask Git?
-**If asked:** the stop at the first error is the two lines at the top of `rebuild.ps1`, from Lecture 4.
+**If asked:** the stop at the first error is `set -e`, line 2 of `rebuild.sh`, from Lecture 4.
 (~2 min)
 -->
 
@@ -1684,16 +1682,16 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git revert --no-edit ae46162
-[main 8eb8797] Revert "Remove the raw export, daily.csv replaces it"
+$ git revert --no-edit 172f06a
+[main 2eb3b1c] Revert "Remove the raw export, daily.csv replaces it"
  Date: Tue Oct 20 10:50:00 2026 +0300
  1 file changed, 11 insertions(+)
  create mode 100644 data/raw/daily_export.csv
-PS> git log --oneline -3
-8eb8797 (HEAD -> main) Revert "Remove the raw export, daily.csv replaces it"
-ae46162 Remove the raw export, daily.csv replaces it
-1e55c5b Add the LICENSE named in the README
-PS> ./scripts/rebuild.ps1
+$ git log --oneline -3
+2eb3b1c (HEAD -> main) Revert "Remove the raw export, daily.csv replaces it"
+172f06a Remove the raw export, daily.csv replaces it
+2eab6b2 Add the LICENSE named in the README
+$ ./scripts/rebuild.sh
 9 rows written to data/processed/daily.csv
 ```
 
@@ -1713,7 +1711,7 @@ PS> ./scripts/rebuild.ps1
 
 ## 🗂️ **One file only**
 
-`git restore --source=7adcc49 data/raw/daily_export.csv` puts one file back as it was in an old commit. Many answers on the web use `git reset --hard`: it discards uncommitted work. Nothing here needs it.
+`git restore --source=a9f65a6 data/raw/daily_export.csv` puts one file back as it was in an old commit. Many answers on the web use `git reset --hard`: it discards uncommitted work. Nothing here needs it.
 
 </div>
 
@@ -1875,15 +1873,15 @@ On `github.com`: **New repository**, the name `weather-project`, **Private**, no
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git remote add origin https://github.com/smilte-example/weather-project.git
-PS> git push -u origin main
+$ git remote add origin https://github.com/smilte-example/weather-project.git
+$ git push -u origin main
 Enumerating objects: 30, done.
 …
-Writing objects: 100% (30/30), 554.08 KiB | 3.01 MiB/s, done.
+Writing objects: 100% (30/30), 554.01 KiB | 2.90 MiB/s, done.
 To https://github.com/smilte-example/weather-project.git
  * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
-PS> git push
+$ git push
 Everything up-to-date
 ```
 
@@ -1910,11 +1908,11 @@ hideInToc: true
 ## 📥 **Tomas clones the project**
 
 ```text
-PS> git clone https://github.com/smilte-example/weather-project.git
+$ git clone https://github.com/smilte-example/weather-project.git
 Cloning into 'weather-project'...
-PS> cd weather-project
-PS> git log --oneline -1
-8eb8797 (HEAD -> main, origin/main, origin/HEAD) Revert "Remove …"
+$ cd weather-project
+$ git log --oneline -1
+2eb3b1c (HEAD -> main, origin/main, origin/HEAD) Revert "Remove …"
 ```
 
 </div>
@@ -1924,13 +1922,12 @@ PS> git log --oneline -1
 ## ♻️ **The ignored folder comes back**
 
 ```text
-PS> Get-ChildItem data -Name
+$ ls data
 raw
-PS> ./scripts/rebuild.ps1
+$ ./scripts/rebuild.sh
 9 rows written to data/processed/daily.csv
-PS> Get-ChildItem data -Name
-processed
-raw
+$ ls data
+processed  raw
 ```
 
 </div>
@@ -1939,7 +1936,7 @@ raw
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The clone has every commit under the same ids, and every committed file. `data/processed` is not there: Git stores files, not folders, and this folder was ignored. Line 3 of `rebuild.ps1` makes the folder, the script fills it.
+The clone has every commit under the same ids, and every committed file. `data/processed` is not there: Git stores files, not folders, and this folder was ignored. Line 3 of `rebuild.sh`, `mkdir -p data/processed`, makes the folder; the next two lines fill it.
 
 </div>
 
@@ -1960,11 +1957,11 @@ hideInToc: true
 ## 💻 **Tomas edits line 2 of the export, commits, pushes**
 
 ```text
-PS> git commit -m "Correct 1 October to 6,4" -m "The station's paper log says 6,4 for 1 October 2025."
-[main de66ce0] Correct 1 October to 6,4
+$ git commit -m "Correct 1 October to 6,4" -m "The station's paper log says 6,4 for 1 October 2025."
+[main f2546ed] Correct 1 October to 6,4
  1 file changed, 1 insertion(+), 1 deletion(-)
-PS> git push
-   8eb8797..de66ce0  main -> main
+$ git push
+   2eb3b1c..f2546ed  main -> main
 ```
 
 </div>
@@ -1974,10 +1971,10 @@ PS> git push
 ## ⬇️ **Smiltė pulls**
 
 ```text
-PS> git pull
+$ git pull
 From https://github.com/smilte-example/weather-project
-   8eb8797..de66ce0  main       -> origin/main
-Updating 8eb8797..de66ce0
+   2eb3b1c..f2546ed  main       -> origin/main
+Updating 2eb3b1c..f2546ed
 Fast-forward
  data/raw/daily_export.csv | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -2030,12 +2027,12 @@ Select the branch name at the left of the Status Bar, then **Create new branch..
 ## ⌨️ **Typed**
 
 ```text
-PS> git switch -c ranges
+$ git switch -c ranges
 Switched to a new branch 'ranges'
-PS> git branch
+$ git branch
   main
 * ranges
-PS> Get-Content .git/HEAD
+$ cat .git/HEAD
 ref: refs/heads/ranges
 ```
 
@@ -2065,18 +2062,18 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-PS> git commit -m "Give the range of each column"
-[ranges 244c496] Give the range of each column
+$ git commit -m "Give the range of each column"
+[ranges 18b522d] Give the range of each column
  1 file changed, 6 insertions(+), 6 deletions(-)
-PS> git switch main
+$ git switch main
 Switched to branch 'main'
-PS> git merge ranges
-Updating de66ce0..244c496
+$ git merge ranges
+Updating f2546ed..18b522d
 Fast-forward
  README.md | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
-PS> git branch -d ranges
-Deleted branch ranges (was 244c496).
+$ git branch -d ranges
+Deleted branch ranges (was 18b522d).
 ```
 
 </div>
@@ -2087,7 +2084,7 @@ Deleted branch ranges (was 244c496).
 
 ```mermaid {scale: 0.6}
 flowchart RL
-    R(["ranges"]):::input --> C2["244c496"] --> C1["de66ce0"]
+    R(["ranges"]):::input --> C2["18b522d"] --> C1["f2546ed"]
     M(["main"]):::input --> C1
     classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
 ```
@@ -2096,7 +2093,7 @@ flowchart RL
 
 ```mermaid {scale: 0.6}
 flowchart RL
-    R(["ranges"]):::input --> C2["244c496"] --> C1["de66ce0"]
+    R(["ranges"]):::input --> C2["18b522d"] --> C1["f2546ed"]
     M(["main"]):::input --> C2
     classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
 ```
@@ -2105,7 +2102,7 @@ flowchart RL
 
 </div>
 
-<div class="note-text mt-sm"><code>main</code> had no commit of its own, so the merge only moves the name <code>main</code> forward to <code>244c496</code>: a <strong>fast-forward</strong>. <code>git branch -d</code> deletes the name; the commit stays. In the view: <strong>...</strong> > <strong>Branch</strong> > <strong>Merge...</strong></div>
+<div class="note-text mt-sm"><code>main</code> had no commit of its own, so the merge only moves the name <code>main</code> forward to <code>18b522d</code>: a <strong>fast-forward</strong>. <code>git branch -d</code> deletes the name; the commit stays. In the view: <strong>...</strong> > <strong>Branch</strong> > <strong>Merge...</strong></div>
 
 <!--
 **Say:** during `git switch main` the README in the editor loses its Range column; after the merge it is back.
@@ -2123,13 +2120,13 @@ hideInToc: true
 
 ```mermaid {scale: 0.8}
 gitGraph
-    commit id: "de66ce0"
-    commit id: "244c496"
+    commit id: "f2546ed"
+    commit id: "18b522d"
     branch wording
     checkout wording
-    commit id: "0243b73"
+    commit id: "5a4b500"
     checkout main
-    commit id: "1ad7092"
+    commit id: "7a2f164"
 ```
 
 </div>
@@ -2137,12 +2134,12 @@ gitGraph
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git log --oneline --graph --all -4
-* 1ad7092 (HEAD -> main) Give the number of hours in the first paragraph
-| * 0243b73 (wording) Reword the first paragraph
+$ git log --oneline --graph --all -4
+* 7a2f164 (HEAD -> main) Give the number of hours in the first paragraph
+| * 5a4b500 (wording) Reword the first paragraph
 |/
-* 244c496 Give the range of each column
-* de66ce0 (origin/main, origin/HEAD) Correct 1 October to 6,4
+* 18b522d Give the range of each column
+* f2546ed (origin/main, origin/HEAD) Correct 1 October to 6,4
 ```
 
 </div>
@@ -2163,7 +2160,7 @@ hideInToc: true
 <div class="card card-warning card-glass pad-compact mt-md">
 
 ```text
-PS> git merge wording
+$ git merge wording
 Auto-merging README.md
 CONFLICT (content): Merge conflict in README.md
 Automatic merge failed; fix conflicts and then commit the result.
@@ -2244,13 +2241,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-PS> git add README.md
-PS> git commit --no-edit
-[main 1891b93] Merge branch 'wording'
-PS> git cat-file -p 1891b93
-tree 80f4dde2cfefe69f5c2c408a441fa42b5e32d001
-parent 1ad70920ce0a8e39a5bfe860fb72c0452f81b107
-parent 0243b733f75ae74229e077f932359025a8b337b8
+$ git add README.md
+$ git commit --no-edit
+[main 7ff1df4] Merge branch 'wording'
+$ git cat-file -p 7ff1df4
+tree 889f04e15d56e858ec9f1426132a082db87c27a9
+parent 7a2f164b942d0d81997bdbe4d903cf465e5c4883
+parent 5a4b500ec42d934eb6faaa1fd1b7ae8232c7a71b
 …
 ```
 
@@ -2259,13 +2256,13 @@ parent 0243b733f75ae74229e077f932359025a8b337b8
 <div class="card card-secondary card-glass pad-compact">
 
 ```text
-PS> git log --oneline --graph -5
-*   1891b93 (HEAD -> main) Merge branch 'wording'
+$ git log --oneline --graph -5
+*   7ff1df4 (HEAD -> main) Merge branch 'wording'
 |\
-| * 0243b73 (wording) Reword the first paragraph
-* | 1ad7092 Give the number of hours in the …
+| * 5a4b500 (wording) Reword the first paragraph
+* | 7a2f164 Give the number of hours in the …
 |/
-* 244c496 Give the range of each column
+* 18b522d Give the range of each column
 ```
 
 </div>
@@ -2305,13 +2302,13 @@ hideInToc: true
 - Four commits lie between them, and the button reads **Sync Changes 4↑**
 
 ```text
-PS> git status
+$ git status
 On branch main
 Your branch is ahead of 'origin/main' by 4 commits.
   (use "git push" to publish your local commits)
-PS> git push
+$ git push
 To https://github.com/smilte-example/weather-project.git
-   de66ce0..1891b93  main -> main
+   f2546ed..7ff1df4  main -> main
 ```
 
 </div>
@@ -2431,13 +2428,13 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git log --oneline -- data/raw
-de66ce0 Correct 1 October to 6,4
-8eb8797 Revert "Remove the raw export, daily.csv replaces it"
-ae46162 Remove the raw export, daily.csv replaces it
-7adcc49 Add the data and the scripts
-PS> git blame -L 2,2 data/raw/daily_export.csv
-de66ce0 (Tomas 2026-10-20 11:30:00 +0300 2) 1;2025-10-01;6,4
+$ git log --oneline -- data/raw
+f2546ed Correct 1 October to 6,4
+2eb3b1c Revert "Remove the raw export, daily.csv replaces it"
+172f06a Remove the raw export, daily.csv replaces it
+a9f65a6 Add the data and the scripts
+$ git blame -L 2,2 data/raw/daily_export.csv
+f2546ed (Tomas 2026-10-20 11:30:00 +0300 2) 1;2025-10-01;6,4
 ```
 
 </div>
@@ -2456,7 +2453,7 @@ Only the commits that changed something in `data/raw`. A folder of files that ar
 
 ## 🔎 **`blame -L 2,2`**
 
-Line 2 of the export, `6,4`, comes from commit `de66ce0`, by Tomas, at 11:30.
+Line 2 of the export, `6,4`, comes from commit `f2546ed`, by Tomas, at 11:30.
 
 </div>
 
@@ -2478,8 +2475,8 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact">
 
 ```text
-PS> git show de66ce0
-commit de66ce073cf27f0a5785ea9df92a41d4c0a9be4f
+$ git show f2546ed
+commit f2546ed4cd7ed6d64259cacbd6d0d6e2532203ca
 Author: Tomas <tomas@example.org>
 Date:   Tue Oct 20 11:30:00 2026 +0300
 
@@ -2506,7 +2503,7 @@ index 0799b86..a2093bf 100644
 
 | Question | Answer |
 | --- | --- |
-| Which copy? | Blob `0799b86b`, as committed in `7adcc49` |
+| Which copy? | Blob `0799b86b`, as committed in `a9f65a6` |
 | Which line? | Line 2, `6,3` to `6,4` |
 | Who? | Tomas |
 | When? | 20 October, 11:30 |
@@ -2531,10 +2528,10 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> ./scripts/rebuild.ps1
+$ ./scripts/rebuild.sh
 9 rows written to data/processed/daily.csv
-PS> (Get-FileHash data/processed/daily.csv).Hash
-58709ABC8E3C698E4DD32FEB2DAE7DB128D29138C6C1883D1F08F46FB40D36B1
+$ shasum -a 256 data/processed/daily.csv
+58709abc8e3c698e4dd32feb2dae7db128d29138c6c1883d1f08f46fb40d36b1  data/processed/daily.csv
 ```
 
 </div>
@@ -2573,16 +2570,16 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> git revert --no-edit de66ce0
-[main 2ad4952] Revert "Correct 1 October to 6,4"
+$ git revert --no-edit f2546ed
+[main 06db171] Revert "Correct 1 October to 6,4"
  Date: Tue Oct 20 12:05:00 2026 +0300
  1 file changed, 1 insertion(+), 1 deletion(-)
-PS> ./scripts/rebuild.ps1
+$ ./scripts/rebuild.sh
 9 rows written to data/processed/daily.csv
-PS> (Get-FileHash data/processed/daily.csv).Hash
-33FE5E77A97900B6E8F94776F266DA4D6E3C96590088D21BC9842987F705483D
-PS> git push
-   1891b93..2ad4952  main -> main
+$ shasum -a 256 data/processed/daily.csv
+33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+$ git push
+   7ff1df4..06db171  main -> main
 ```
 
 </div>
@@ -2607,11 +2604,11 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
-PS> git tag -a v1.0 -m "Data as received; mean 7.16 °C"
-PS> git log --oneline -2
-2ad4952 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 October to 6,4"
-1891b93 Merge branch 'wording'
-PS> git push origin v1.0
+$ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
+$ git log --oneline -2
+06db171 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 October to 6,4"
+7ff1df4 Merge branch 'wording'
+$ git push origin v1.0
 To https://github.com/smilte-example/weather-project.git
  * [new tag]         v1.0 -> v1.0
 ```
@@ -2624,7 +2621,7 @@ To https://github.com/smilte-example/weather-project.git
 
 ## 🏷️ **A name that does not move**
 
-A branch name moves with every commit. The tag `v1.0` stays on `2ad4952`. `-a` stores who set it, when, and a message. A tag is pushed by its name.
+A branch name moves with every commit. The tag `v1.0` stays on `06db171`. `-a` stores who set it, when, and a message. A tag is pushed by its name.
 
 </div>
 
@@ -2732,7 +2729,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="On a Mac, PowerShell runs `&quot;hi&quot; | git hash-object --stdin`. Which bytes does Git hash?"
+  question="In zsh or Git Bash, `echo &quot;hi&quot; | git hash-object --stdin` prints an id. Which bytes does Git hash?"
   :options="[
     'The two letters h and i',
     'The word blob, a space, the digit 3, a zero byte, then h, i and a line break',
@@ -2740,7 +2737,7 @@ hideInToc: true
     'The name of the file and its date, then the letters'
   ]"
   :correct="1"
-  explanation="PowerShell hands h, i and a line break to git: three bytes. Git puts the header blob 3 and a zero byte in front and hashes all ten bytes: 45b983be36b73c0788dc9cbcb76cbb80fc7bb057. On Windows the line break is 0d 0a, the header says blob 4, and the id is edf0effbb6851d0055229878b4bf0d7212167642."
+  explanation="echo hands h, i and a line break to git: three bytes. Git puts the header blob 3 and a zero byte in front and hashes all ten bytes: 45b983be36b73c0788dc9cbcb76cbb80fc7bb057, on every laptop. With a Windows line ending, 0d 0a, the header says blob 4 and the id is edf0effbb6851d0055229878b4bf0d7212167642."
 />
 
 ---
@@ -2817,10 +2814,10 @@ hideInToc: true
     'The clone failed: clone again',
     'Git stores files, not folders, and the files in it were ignored; the rebuild script makes them',
     'GitHub deletes folders larger than 1 MB',
-    'The folder is hidden: Get-ChildItem -Force shows it'
+    'The folder is hidden: ls -a shows it'
   ]"
   :correct="1"
-  explanation="Ignored files were never committed, and an empty folder has no entry in a tree. ./scripts/rebuild.ps1 makes the folder and writes daily.csv and weather_valid.csv again."
+  explanation="Ignored files were never committed, and an empty folder has no entry in a tree. ./scripts/rebuild.sh makes the folder and writes daily.csv and weather_valid.csv again."
 />
 
 ---

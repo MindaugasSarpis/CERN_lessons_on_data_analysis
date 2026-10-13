@@ -1,16 +1,18 @@
-# Install Python, Git and PowerShell 7
+# Install Python and Git
 
 **Format:** in class, [Seminar 4](seminar_04.md), sections 1 and 2 · about 20 min
 
 **This page is the reference for the installs of Seminar 4**, for a helper at
 a laptop: the same steps as the seminar, then every check and the usual
 failures.
+The full walkthrough of everything the course needs, with WSL2 as an
+optional way on Windows, is [Setup](../setup.md).
 
-| Program | What it is | Installed by |
-|--|--|--|
-| PowerShell 7 (`pwsh`) | the shell of the course, on macOS and Windows | Homebrew · `winget` |
-| Git | keeps the versions of a project, from Seminar 5 | Homebrew · `winget` |
-| Miniforge | Python with **conda**, which installs packages into environments; packages from **conda-forge** only | Homebrew · `winget` |
+| Program | What it is | macOS | Windows |
+|--|--|--|--|
+| the shell | reads the typed lines | `zsh`, built in | Git Bash, comes with Git |
+| Git | keeps the versions of a project, from Seminar 5 | Homebrew | `winget` |
+| Miniforge | Python with **conda**, which installs packages into environments; packages from **conda-forge** only | Homebrew | `winget` |
 
 A **package manager** fetches a program, puts it in one known folder and on
 `PATH`, and later updates or removes it: **Homebrew** (`brew`) on macOS,
@@ -28,7 +30,7 @@ that it finds them when it starts.
 ## 1. Install the tools { #install }
 
 **macOS:** in Terminal.app. **Windows:** in Windows PowerShell, which has
-`winget`. One line at a time.
+`winget`; only these two lines are typed there. One line at a time.
 
 === "macOS"
 
@@ -52,11 +54,7 @@ that it finds them when it starts.
 
         A line that starts with `Homebrew`.
 
-    4. The three programs. `powershell` asks for the password again.
-
-        ```text
-        brew install --cask powershell
-        ```
+    4. Git and Miniforge.
 
         ```text
         brew install git
@@ -66,12 +64,12 @@ that it finds them when it starts.
         brew install --cask miniforge
         ```
 
-        Each ends with a line like `🍺  powershell was successfully installed!`
+        The second ends with `🍺  miniforge was successfully installed!`
 
-    5. Let conda set up PowerShell.
+    5. Let conda set up `zsh`.
 
         ```text
-        conda init powershell
+        conda init zsh
         ```
 
         ```text
@@ -82,12 +80,8 @@ that it finds them when it starts.
 
 === "Windows"
 
-    1. Windows key, type `powershell`, `Enter`: Windows PowerShell 5.1.
-    2. The three programs.
-
-        ```text
-        winget install --id Microsoft.PowerShell -e
-        ```
+    1. Windows key, type `powershell`, `Enter`.
+    2. Git (with Git Bash) and Miniforge.
 
         ```text
         winget install --id Git.Git -e
@@ -98,28 +92,18 @@ that it finds them when it starts.
         ```
 
         Each ends with `Successfully installed`. Answer `Y` to the source
-        agreements, **Yes** when Windows asks for permission.
+        agreements, **Yes** when Windows asks for permission. Miniforge
+        goes into your user folder, `C:\Users\smilte\miniforge3`.
 
-    3. Let conda set up PowerShell. Miniforge is in your user folder,
-       `C:\Users\smilte\miniforge3`, and not yet on `PATH`.
+    3. Close the window. conda is set up in Git Bash, in section 2.
 
-        ```text
-        & "$HOME\miniforge3\Scripts\conda.exe" init powershell
-        ```
-
-        ```text
-        ==> For changes to take effect, close and re-open your current shell. <==
-        ```
-
-    4. Close the window.
-
-`conda init powershell` writes a few lines into `profile.ps1`, a script that
-PowerShell runs whenever it starts: they switch on conda's `base`
-environment, shown as `(base)` before the prompt.
+`conda init` writes a few lines into the file the shell runs whenever it
+starts (`~/.zshrc` on macOS, `~/.bash_profile` in Git Bash): they switch on
+conda's `base` environment, shown as `(base)` in the prompt.
 
 ---
 
-## 2. Make PowerShell 7 the terminal of VS Code { #profile }
+## 2. Make the shell the terminal of VS Code { #profile }
 
 1. Start VS Code, **File** > **Open Folder...** > `weather-project`.
 2. Command Palette, `Ctrl+Shift+P` (macOS `Cmd+Shift+P`):
@@ -128,8 +112,8 @@ environment, shown as `(base)` before the prompt.
     Terminal: Select Default Profile
     ```
 
-    Take **pwsh** (macOS) or **PowerShell** (Windows). Not **zsh**,
-    **bash**, **Windows PowerShell**, **Git Bash** or **Command Prompt**.
+    Take **zsh** (macOS) or **Git Bash** (Windows). Not **bash**,
+    **PowerShell** or **Command Prompt**.
 
 3. Command Palette again:
 
@@ -137,8 +121,18 @@ environment, shown as `(base)` before the prompt.
     Terminal: Create New Terminal
     ```
 
-    The top right of the Panel says `pwsh`; the prompt starts with
-    `(base) PS`.
+4. Windows only: let conda set up Git Bash, then close the terminal (the bin
+   icon of the Panel) and open a new one, as in step 3.
+
+    ```text
+    ~/miniforge3/Scripts/conda.exe init bash
+    ```
+
+    ```text
+    ==> For changes to take effect, close and re-open your current shell. <==
+    ```
+
+The prompt now starts with `(base)`.
 
 ---
 
@@ -149,16 +143,20 @@ In the terminal of VS Code. The lines are the same on both systems.
 1. The shell.
 
     ```text
-    $PSVersionTable.PSVersion
+    echo $SHELL
     ```
 
-    ```text
-    Major  Minor  Patch  PreReleaseLabel BuildLabel
-    -----  -----  -----  --------------- ----------
-    7      6      6
-    ```
+    === "macOS"
 
-    Any 7.4 or newer is fine.
+        ```text
+        /bin/zsh
+        ```
+
+    === "Windows"
+
+        ```text
+        /usr/bin/bash
+        ```
 
 2. Git.
 
@@ -192,22 +190,24 @@ In the terminal of VS Code. The lines are the same on both systems.
     Python 3.14.7
     ```
 
-5. Where Python comes from.
+5. Where they come from.
 
     ```text
-    (Get-Command python).Source
+    which git python
     ```
 
     === "macOS"
 
         ```text
+        /opt/homebrew/bin/git
         /opt/homebrew/Caskroom/miniforge/base/bin/python
         ```
 
     === "Windows"
 
         ```text
-        C:\Users\smilte\miniforge3\python.exe
+        /mingw64/bin/git
+        /c/Users/smilte/miniforge3/python
         ```
 
 **Check:** four version lines, and a Python inside Miniforge's folder.
@@ -218,25 +218,25 @@ In the terminal of VS Code. The lines are the same on both systems.
 
 | What you see | What to do |
 |--|--|
-| The terminal of VS Code says `zsh` or `powershell`, or `$PSVersionTable.PSVersion` starts with `5` | Section 2 again: take **pwsh** / **PowerShell**, then a new terminal |
-| **pwsh** or **PowerShell** is not in the profile list | VS Code was open during the install. Quit it (**File** > **Exit**, macOS `Cmd+Q`) and start it again |
-| No `(base)` before the prompt, `conda` not recognized | `conda init powershell` did not run (section 1). Run it, then quit VS Code and start it again |
-| Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python: conda is not on in this terminal. See the row above. Do not install Python from the Store |
-| Windows: the same message with `(base)` before the prompt | **Settings** > **Apps** > **Advanced app settings** > **App execution aliases**: switch off **App Installer** `python.exe` and `python3.exe`. Restart VS Code |
-| Windows: `… profile.ps1 cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1: section 2. Or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once, answer `Y`, open a new terminal |
-| `git`, `pwsh` or `conda` not recognized right after installing | Quit VS Code and start it again; closing the terminal is not enough |
+| Windows: the terminal of VS Code says `powershell`, or its prompt starts with `PS` | Section 2 again: take **Git Bash**, then a new terminal |
+| macOS: `echo $SHELL` prints `/bin/bash` | `chsh -s /bin/zsh`, the laptop's password, then quit VS Code (`Cmd+Q`) and start it again |
+| **Git Bash** is not in the profile list | VS Code was open during the install. Quit it (**File** > **Exit**) and start it again |
+| No `(base)` in the prompt; `conda: command not found` | `conda init zsh` (macOS, section 1) or `~/miniforge3/Scripts/conda.exe init bash` (Git Bash, section 2) did not run. Run it, then a new terminal |
+| `python: command not found`, or Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | conda is not on in this terminal: the row above. Do not install Python from the Store |
+| Windows: the same message with `(base)` in the prompt | **Settings** > **Apps** > **Advanced app settings** > **App execution aliases**: switch off **App Installer** `python.exe` and `python3.exe`. Restart VS Code |
+| `git` or `conda` not found right after installing | Quit VS Code and start it again; closing the terminal is not enough |
 | macOS: `zsh: command not found: brew` | The **Next steps** lines of Homebrew were not run. Run them, or open a new Terminal window |
-| macOS: `zsh: command not found: conda` in Terminal.app | Homebrew's folder is not on `PATH` yet: the row above, then `conda init powershell` again |
+| macOS: `zsh: command not found: conda` in Terminal.app | The same: Homebrew's folder is not on `PATH` yet. Then `conda init zsh` again |
 | macOS: `xcode-select: note: No developer tools were found, requesting install.` | The developer tools are being installed. Wait for their window to finish, then run the Homebrew line again |
-| Windows: `winget` is not recognized | Update **App Installer** in the Microsoft Store, then a new Windows PowerShell window |
+| Windows: `winget` is not recognized | Update **App Installer** in the Microsoft Store, then a new PowerShell window |
 | Windows: `winget` asks about the source agreements | Type `Y`, `Enter` |
-| Windows: `… miniforge3\Scripts\conda.exe` not found | Miniforge went elsewhere. `Get-ChildItem $HOME -Filter miniforge3`; or open **Miniforge Prompt** from Start and run `conda init powershell` there |
+| Windows: `~/miniforge3/Scripts/conda.exe: No such file or directory` | Miniforge went elsewhere: `ls ~ /c/ProgramData` and look for `miniforge3`; or open **Miniforge Prompt** from Start and run `conda init bash` there |
 | An installer asks for a password or an administrator's **Yes** the student does not have | The laptop is managed by the university or an employer. Pair with a neighbour today |
 | VS Code runs in the browser (`vscode.dev`) | It has no terminal. Pair with a neighbour today |
-| A download stalls | Wait, or try the line again; Homebrew and `winget` go on where they stopped |
+| A download stalls | Wait, or run the line again; Homebrew and `winget` go on where they stopped |
 
 ## Aims practised
 
-- 🔧 **Tool-agnostic:** the same shell and the same check lines on every
+- 🔧 **Tool-agnostic:** the same check lines in zsh and Git Bash on every
   laptop.
 - ⚙️ **Automation:** programs installed, updated and removed by typed lines.

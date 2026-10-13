@@ -33,14 +33,13 @@ every one of the 148 bytes named.
    the first bytes of a file say what it is; the Hex Editor extension by
    Microsoft; the hexdump of the 148-byte table, every byte counted; −16.3
    as text and as a float32.
-7. **Files from the terminal**: terminal and shell, PowerShell 7 (`pwsh`)
-   on macOS and on Windows; the terminal of VS Code; the prompt; `pwd`,
-   `dir`, `cd`, `New-Item -ItemType Directory`, `Copy-Item`, `Move-Item`,
-   `Remove-Item`; the size of a file (`(Get-Item FILE).Length`) and its bytes
-   (`Format-Hex`). Each command is one line, the same on both systems.
+7. **Files from the terminal**: terminal and shell, zsh on macOS and Git
+   Bash on Windows; the terminal of VS Code; the prompt; `pwd`, `ls`, `cd`,
+   `mkdir`, `cp`, `mv`, `rm`; the size of a file (`wc -c`) and its bytes
+   (`xxd`). Each command is one line, the same in both shells.
 8. **Compression & integrity**: lossless and lossy compression, with the
    gzip size of the station's hourly log; a checksum worked by hand, what it
-   catches and what it misses; SHA-256 with `Get-FileHash`, for the table
+   catches and what it misses; SHA-256 with `shasum -a 256` (macOS) and `sha256sum` (Git Bash), for the table
    with LF and with CRLF.
 
 ## The lecture in 90 minutes
@@ -104,17 +103,17 @@ picked with `Win+.`), and the bytes of that name.
 On *What a Spreadsheet Changes* (63): a two-line CSV opened in Excel, one cell
 retyped, saved, and compared with the copy kept before.
 
-| | PowerShell 7 (macOS and Windows) | Output |
+| | zsh · Git Bash | Output |
 |--|--|--|
-| Characters from codes | `` "`u{48}`u{69}" `` | `Hi` |
-| One character | `[char]65` | `A` |
-| The code of a character | `[int][char]'A'` | `65` |
-| TAB, code 9 | `` "A`tB" `` | `A       B` |
-| BEL, code 7 | `[char]7` or `` "`a" `` | a beep, nothing printed |
+| Characters from codes | `printf '\x48\x69\n'` | `Hi` |
+| One character | `printf '\x41\n'` | `A` |
+| The code of a character | `printf '%d\n' "'A"` | `65` |
+| TAB, code 9 | `printf 'A\tB\n'` | `A       B` |
+| BEL, code 7 | `printf '\a'` | a beep, nothing printed |
 
 ### A file named 🗺️ (Unicode slide)
 
-Before the lecture, in PowerShell: `New-Item -ItemType Directory ~/map-demo`.
+Before the lecture, in Git Bash: `mkdir ~/map-demo`.
 
 1. In Word, open a blank document and press `F12`: the **Save As** box.
    Go to `map-demo` in your home folder.
@@ -122,22 +121,22 @@ Before the lecture, in PowerShell: `New-Item -ItemType Directory ~/map-demo`.
    (the Windows key and the full stop): the emoji panel opens. Type `map`,
    click 🗺️ (WORLD MAP), press `Esc`. Keep the type **Word Document
    (*.docx)** and select **Save**.
-3. In the terminal:
+3. In Git Bash:
 
     | Line | Output |
     |--|--|
     | `cd ~/map-demo` | |
-    | `dir` | `🗺️.docx` (a box instead of the symbol is only the terminal's font) |
-    | `` "`u{1F5FA}" `` | 🗺 (the backtick is the key left of `1`) |
-    | `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` | `F0 9F 97 BA EF B8 8F` |
+    | `ls` | `🗺️.docx` (a box instead of the symbol is only the terminal's font) |
+    | `printf '\U0001F5FA\n'` | 🗺 |
+    | `ls *.docx \| xxd` | `00000000: f09f 97ba efb8 8f2e 646f 6378 0a` |
 
-   `F0 9F 97 BA` is U+1F5FA in four bytes; `EF B8 8F` is U+FE0F, an
+   `f0 9f 97 ba` is U+1F5FA in four bytes; `ef b8 8f` is U+FE0F, an
    invisible code point the emoji panel adds to ask for the emoji form. On
    a Mac the panel is `Ctrl+Cmd+Space`.
 
 ### A CSV through Excel (*What a Spreadsheet Changes*)
 
-Before the lecture, in PowerShell: `New-Item -ItemType Directory ~/excel-demo`. In VS Code,
+Before the lecture, in Git Bash: `mkdir ~/excel-demo`. In VS Code,
 **File** > **New Text File**, paste the two lines, set `LF` and `UTF-8` in
 the Status Bar, and save as `excel_test.csv` in `excel-demo`:
 
@@ -146,7 +145,7 @@ nr,station,date,reading,place
 007,SEPT2,1-2,12345678901234567,Užupis
 ```
 
-Then in the terminal, in `excel-demo`: `Copy-Item excel_test.csv excel_before.csv`.
+Then in Git Bash, in `excel-demo`: `cp excel_test.csv excel_before.csv`.
 
 In class:
 
@@ -169,9 +168,9 @@ In class:
    Press `Ctrl+S`; if a box warns about the CSV format, select **Keep
    Current Format** (or **Yes**). Close Excel, and **Don't Save** if it
    asks again.
-5. In the terminal, `Get-Content excel_before.csv`, then
-   `Get-Content excel_test.csv`: `7`, the dates, `1.23457E+16`, and
-   `U�upis`. `Format-Hex excel_test.csv` shows `0D 0A` at each line end and
+5. In Git Bash, `cat excel_before.csv`, then
+   `cat excel_test.csv`: `7`, the dates, `1.23457E+16`, and
+   `U�upis`. `xxd excel_test.csv` shows `0d0a` at each line end and
    `ž` as one byte, `9E` on an English Windows or `FE` on a Lithuanian one:
    the file is no longer UTF-8.
 
@@ -197,15 +196,15 @@ questions, with their answers:
    digit. What follows?
    *Your copy differs somewhere, by at least one bit. The hash says that
    something changed, never how much.*
-5. The prompt is `PS C:\Users\smilte\Documents\weather-project\data>`. Which
+5. The working directory is `~/Documents/weather-project/data`. Which
    line prints the size of `daily.csv` in `data/processed`?
-   *`(Get-Item processed/daily.csv).Length`. The working directory is
+   *`wc -c processed/daily.csv`. The working directory is
    `data`, so the relative path starts there.*
 
 ## Paired seminar
 
 [Seminar 3](../seminars/seminar_03.md) works in the terminal of VS Code with
-the commands of slides 72–83, in PowerShell 7: it moves around, makes and
+the commands of slides 72–83, in zsh or Git Bash: it moves around, makes and
 changes folders and files, and measures files to the byte.
 
 ## Parked slides
@@ -233,7 +232,7 @@ slides on two's complement of before 13 October are parked there too.
   reopened with the right encoding, not retyped.
 - A file is a named sequence of bytes. The ending of its name is a hint; the
   first bytes say what it is.
-- The terminal reaches files by typed lines: `pwd`, `dir` and `cd` look
-  around, `New-Item`, `Copy-Item`, `Move-Item` and `Remove-Item` change
-  things, and `Remove-Item` cannot be undone.
+- The terminal reaches files by typed lines: `pwd`, `ls` and `cd` look
+  around, `mkdir`, `cp`, `mv` and `rm` change things, and `rm` cannot be
+  undone.
 - A hash is a fingerprint of the bytes. Any change gives a different one.

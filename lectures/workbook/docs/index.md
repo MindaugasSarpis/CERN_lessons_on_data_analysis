@@ -6,24 +6,29 @@ in every session from the second on. The lectures
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
 
-## This week: 13 October
+## This week: 20 October
 
 | | Page |
 |--|--|
-| Lecture | [04 Command Line & File Handling](lectures/lecture_4.md#the-lecture-in-90-minutes): the shells set up, then the command line one step per slide; macOS `zsh` and PowerShell 7 side by side |
-| Seminar | [Seminar 4 — Work on Files from the Shell](seminars/seminar_04.md): PowerShell 7, Git and Python (from Miniforge, with conda) installed at the start; then a project folder built by typed commands on two years of bicycle counts, a broken week found, the mean computed, and a script that makes every result again |
+| Lecture | [05 Version Control with Git](lectures/lecture_5.md): the weather project under Git, from the model of a commit to a tag |
+| Seminar | [Seminar 5 — Who Changed the Mean?](seminars/seminar_05.md): clone the weather project, find the commit that changed its mean, take it back, commit, publish to GitHub |
+
+## Setup
+
+[Setup](setup.md): VS Code, the shell, Git, Python (Miniforge) and a GitHub
+account, on macOS and on Windows (Git Bash, or WSL2 if you prefer Linux).
 
 ## Hands-on seminars
 
-Every lecture from week 2 on has a paired, self-contained seminar. Seminars
-1, 3 and 4 bring small files of their own, made for the course; from
-Seminar 5 on the seminars use a shared real dataset (LHCb open data). Students'
-semester projects are separate and entirely their own choice. Start here:
+Every lecture from week 2 on has a paired seminar. All of them work on the
+weather project of the lectures, one question per week, in zsh on macOS and
+Git Bash on Windows. Students' semester projects are separate and entirely
+their own choice. Start here:
 
-- **[Overview](seminars/overview.md)** — how the seminars relate to the project,
-  the shared dataset, the seminar repository, and what each session covers.
+- **[Overview](seminars/overview.md)**: the project, the files, and what each
+  session asks.
 
-The seminar briefs are in the **Seminars** section of the navigation.
+The seminar pages are in the **Seminars** section of the navigation.
 
 ## Lecture notes
 

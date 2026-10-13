@@ -7,9 +7,9 @@ in class
 pandas, cleans it rule by rule with a count for each rule, compares it day
 by day with the valley station, and pushes the script and the result.
 
-Everything is typed in the terminal of VS Code (PowerShell 7), in the
-`weather-project` folder. Sections 3 to 8 are typed at the Python prompt
-`>>>`.
+Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
+Windows), in the `weather-project` folder. Sections 3 to 8 are typed at
+the Python prompt `>>>`.
 
 ## Run sheet
 
@@ -122,7 +122,7 @@ station, 180 m higher. Its operator sent the hourly export of 2025.
     @@ -6,3 +6,4 @@ dependencies:
        - numpy=2.5
        - matplotlib-base=3.11
-       - scipy
+       - scipy=1.18
     +  - pandas=3.0.6
     ```
 
@@ -131,7 +131,7 @@ station, 180 m higher. Its operator sent the hourly export of 2025.
     ```
 
     ```text
-    [main 29df5f1] Add pandas to the environment
+    [main 5d6364a] Add pandas to the environment
      1 file changed, 1 insertion(+)
     ```
 
@@ -165,7 +165,7 @@ station, 180 m higher. Its operator sent the hourly export of 2025.
 2. The first lines.
 
     ```text
-    Get-Content data/raw/hill_station.csv -TotalCount 4
+    head -n 4 data/raw/hill_station.csv
     ```
 
     ```text
@@ -178,12 +178,14 @@ station, 180 m higher. Its operator sent the hourly export of 2025.
 3. The number of lines.
 
     ```text
-    (Get-Content data/raw/hill_station.csv).Count
+    wc -l data/raw/hill_station.csv
     ```
 
     ```text
-    8741
+    8741 data/raw/hill_station.csv
     ```
+
+    On macOS `wc` pads the number with spaces on the left.
 
 **Check:** `;` between the values, a decimal comma, the day before the
 month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
@@ -195,7 +197,7 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 ??? note "Answer"
     ```text
-    Select-String '^26\.10\.2025 0[1-5]' data/raw/hill_station.csv
+    grep -n '^26\.10\.2025 0[1-5]' data/raw/hill_station.csv
     ```
 
     ```text
@@ -208,7 +210,7 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
     ```
 
     ```text
-    Select-String '^30\.03\.2025 0[1-5]' data/raw/hill_station.csv
+    grep -n '^30\.03\.2025 0[1-5]' data/raw/hill_station.csv
     ```
 
     ```text
@@ -404,14 +406,14 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 !!! question "Task: where are the missing values?"
     1. Of the 27 missing temperatures, how many were `-999` in the file
        and how many were empty cells? Count in a second terminal (**+** in
-       the terminal panel), with `Select-String`.
+       the terminal panel), with `grep -c`.
     2. From which hour to which hour is the humidity missing?
 
 ??? note "Answer"
     1. 18 and 9; 18 + 9 = 27.
 
         ```text
-        (Select-String ';-999;' data/raw/hill_station.csv).Count
+        grep -c ';-999;' data/raw/hill_station.csv
         ```
 
         ```text
@@ -419,7 +421,7 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
         ```
 
         ```text
-        (Select-String ';;' data/raw/hill_station.csv).Count
+        grep -c ';;' data/raw/hill_station.csv
         ```
 
         ```text
@@ -864,7 +866,7 @@ height: 0.18 km × 6.5 = 1.17 °C.
 3. The file it wrote.
 
     ```text
-    Get-Content data/processed/hill_daily.csv -TotalCount 3
+    head -n 3 data/processed/hill_daily.csv
     ```
 
     ```text
@@ -874,11 +876,11 @@ height: 0.18 km × 6.5 = 1.17 °C.
     ```
 
     ```text
-    (Get-Content data/processed/hill_daily.csv).Count
+    wc -l data/processed/hill_daily.csv
     ```
 
     ```text
-    362
+    362 data/processed/hill_daily.csv
     ```
 
 **Check:** the seven lines of the log, and 362 lines in `hill_daily.csv`:
@@ -890,7 +892,7 @@ the header and 361 days.
 
 **1:45 · 10 min** · The rebuild script runs the new script too, and the README says what it found.
 
-1. In `scripts/rebuild.ps1`, add a last line and save.
+1. In `scripts/rebuild.sh`, add a last line and save.
 
     ```text
     python scripts/clean_hill.py > results/hill.txt
@@ -899,7 +901,7 @@ the header and 361 days.
 2. Rebuild, then read the new result.
 
     ```text
-    ./scripts/rebuild.ps1
+    ./scripts/rebuild.sh
     ```
 
     ```text
@@ -907,7 +909,7 @@ the header and 361 days.
     ```
 
     ```text
-    Get-Content results/hill.txt
+    cat results/hill.txt
     ```
 
     ```text
@@ -938,14 +940,14 @@ the header and 361 days.
 
     ```text
      M README.md
-     M scripts/rebuild.ps1
+     M scripts/rebuild.sh
     ?? scripts/clean_hill.py
     ```
 
 5. Stage, commit, push.
 
     ```text
-    git add README.md scripts/clean_hill.py scripts/rebuild.ps1
+    git add README.md scripts/clean_hill.py scripts/rebuild.sh
     ```
 
     ```text
@@ -953,7 +955,7 @@ the header and 361 days.
     ```
 
     ```text
-    [main 60843ff] Clean the hill station's file and compare it with the valley
+    [main 40ac9f0] Clean the hill station's file and compare it with the valley
      3 files changed, 45 insertions(+)
      create mode 100644 scripts/clean_hill.py
     ```
@@ -964,7 +966,7 @@ the header and 361 days.
 
     ```text
     To https://github.com/your-username/weather-project.git
-       960bb2d..60843ff  main -> main
+       bcee860..40ac9f0  main -> main
     ```
 
 **Check:** on GitHub, `scripts/clean_hill.py` and the **Hill station**
@@ -1168,4 +1170,4 @@ August (−1.63). In winter, cold air settles in the valley.
 - ♻️ **Reproducibility:** the script and its log rebuild the comparison,
   and the README holds the number it prints.
 - 🔧 **Tool-agnostic:** the same pandas lines at the prompt and in the
-  script, the same PowerShell lines on macOS and Windows.
+  script, the same lines in zsh on macOS and Git Bash on Windows.

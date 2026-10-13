@@ -9,7 +9,8 @@ functions and then as one NumPy array; finds the coldest day and the mean
 of each year; commits and pushes.
 
 Everything is typed in VS Code: the scripts in the editor, the commands in
-its terminal (PowerShell 7, the same lines on macOS and Windows).
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
+in both).
 
 ## Run sheet
 
@@ -45,7 +46,7 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
     - **You:** nothing to prepare. Delete your own `weather` environment
       first (`conda env remove -n weather`) to make it with the room.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
-      for a Mac (`/Users/smilte/...`); Windows prints `C:\Users\smilte\...`.
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
@@ -109,7 +110,7 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
     2.5.4
     ```
 
-**Check:** `(weather)` before `PS`, and `2.5.4`.
+**Check:** `(weather)` at the start of the prompt, and `2.5.4`.
 
 !!! warning "`ModuleNotFoundError: No module named 'numpy'`"
     The prompt still says `(base)`: `conda activate weather`, then again.
@@ -626,7 +627,7 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
 2. The file.
 
     ```text
-    Get-Content results/yearly_temp.txt -Tail 2
+    tail -n 2 results/yearly_temp.txt
     ```
 
     ```text

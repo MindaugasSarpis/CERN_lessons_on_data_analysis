@@ -7,8 +7,8 @@ in class
 question with it, sees how many "unusual" months chance alone gives, checks
 the answer under other choices, and pushes it all to GitHub.
 
-Everything is typed in the terminal of VS Code (PowerShell 7), in the
-weather project, with the `weather` environment active.
+Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
+Windows), in the weather project, with the `weather` environment active.
 
 ## Run sheet
 
@@ -604,15 +604,17 @@ table.
 1. The sizes of the raw files.
 
     ```text
-    Get-ChildItem data/raw | Select-Object Name, Length
+    wc -c data/raw/*
     ```
 
     ```text
-    Name              Length
-    ----              ------
-    daily_export.csv     180
-    weather.csv      2515215
+        180 data/raw/daily_export.csv
+     234439 data/raw/hill_station.csv
+    2515215 data/raw/weather.csv
+    2749834 total
     ```
+
+    macOS pads the numbers with a few more spaces.
 
 2. **File** > **New File...**, `DMP.md`. Write one line under each heading.
 
@@ -620,7 +622,8 @@ table.
     # Data management plan
 
     ## Data
-    weather.csv, 2 515 215 bytes, and daily_export.csv, 180 bytes.
+    weather.csv, 2 515 215 bytes; hill_station.csv, 234 439 bytes;
+    daily_export.csv, 180 bytes.
 
     ## Documentation
     README.md: source, columns, units, the -999 hours.
@@ -660,7 +663,7 @@ table.
 
 - ♻️ **Reproducibility:** the rule, the result and the checks are commits in
   order, and any of them reruns with one line.
-- 🔧 **Tool-agnostic:** the same lines in PowerShell on macOS and Windows; the
+- 🔧 **Tool-agnostic:** the same lines in zsh and Git Bash; the
   reasoning (z, chance, choices) holds in any language.
 - 📁 **Files:** the plan is a file in the repository, so its date is the
   date of its commit.

@@ -547,7 +547,9 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
 - One project for lectures and seminars, the weather station.
 - From Seminar 5 on, files come by Git: the room clones a small public
   repository, not the course repository.
-- One shell for the course: PowerShell 7 on macOS and on Windows.
+- One family of shell for the course: zsh on macOS, Git Bash on Windows,
+  with the same Unix commands (first chosen as PowerShell 7 on both by a
+  misread question, converted the same evening).
 - Lecture 05 runs one straight line; pull requests, review, SSH, stash and
   line endings are parked.
 - Seminar steps are typed in the terminal while the Source Control view
@@ -569,14 +571,14 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
 - Seminar 5 rewritten as "Who changed the mean?": clone, `git log`,
   `git blame`, `git show`, `git revert`, the rebuild, `.gitignore`, a commit
   of one's own, GitHub, push and pull; branch, conflict and tag optional.
-  Every output from a run in PowerShell 7.6 with Git 2.56 on Linux.
+  Every output from a run in zsh 5.9 and bash with Git 2.56 on Linux.
 
 - **Lecture 03** (143 to 132 min): six drill slides of the numbers part
   parked (conversions, bitwise operations, 5.75 and 0.1 as float32); hex
   now arrives as the short way to write the first bytes of `weather.csv`,
   binary addition is an hour count 7 + 1, and −16.3 is worked out as a
   float32 (`C1 82 66 66`). Two's complement unchanged. The terminal section
-  is PowerShell 7 only.
+  is in zsh and Git Bash.
 - **Lecture 02** (112 to 109 min): `weather.csv` is on the screen from
   slide 1 and read from slide 13 (was 34); text cards became tables; the
   CERN example is now an ATLAS open-data file (record 328) set beside
@@ -584,8 +586,8 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
 - **Lecture 01**: wording only (slogans and narration out, notes in the
   one form).
 - **Lecture 04** (158 to 128 min): one question, "is 7.16 right?", in
-  eight steps, each section ending on a number or a file; PowerShell 7
-  only; the commands Lecture 03 taught are one recap slide; a full section
+  eight steps, each section ending on a number or a file; zsh and Git
+  Bash, one line for both; the commands Lecture 03 taught are one recap slide; a full section
   on programs, packages and package managers (Homebrew, `winget`, conda
   environments, `environment.yml`); the shell-settings slides (aliases,
   start-up files, Oh My Zsh, `conda init`) and 40 more parked; the quizzes
@@ -596,9 +598,9 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   three areas and merges; new VS Code screenshots; pull requests, review,
   SSH, stash and line endings parked; the quizzes at the end.
 - **Seminars 1, 3, 4 and 6 to 16** rewritten in the layout of Seminar 5,
-  each one question about the weather project. Seminar 4 installs
-  PowerShell 7, Git and Miniforge with Homebrew or `winget` and shows
-  `Select-String` and `Get-ChildItem` in depth. Seminars 1 to 4 hand out
+  each one question about the weather project. Seminar 4 installs Git
+  (with Git Bash) and Miniforge with Homebrew or `winget` and shows `grep`
+  and `find` in depth. Seminars 1 to 4 hand out
   zips from the Releases page of `weather-project`
   (`weather_seminar_files.py`); later seminars pull course commits
   (`misc/weather_repo/files/`, `STAGE=N` in `build.sh`). The install page,

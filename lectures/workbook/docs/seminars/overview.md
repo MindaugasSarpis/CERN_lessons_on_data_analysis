@@ -15,7 +15,7 @@ station: `weather-project`, with ten years of hourly readings in
 title, and answers it by the end.
 
 - **Seminars 1, 3 and 4** build the folder: VS Code and Markdown, the files
-  as bytes, then PowerShell 7, Git and Python installed with a package
+  as bytes, then Git (with Git Bash on Windows) and Python installed with a package
   manager. Their files come as zips from the
   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
   of the project.
@@ -23,14 +23,15 @@ title, and answers it by the end.
   [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
   (about 0.5 MB) and publishes it to their own GitHub. A seminar that needs
   new files gets them with `git pull --no-edit course main`.
-- **One shell:** PowerShell 7, in the terminal of VS Code, on macOS and on
-  Windows. A line typed on the projector is the line typed on every laptop.
+- **The terminal:** zsh on macOS and Git Bash on Windows, in the terminal
+  of VS Code. They take the same commands, so a line typed on the projector
+  is the line typed on every laptop.
 
 | Date in 2026 | Seminar | Question |
 |--|--|--|
 | 29 Sep | [1](seminar_01.md) | What Do the Weather Files Say? VS Code and Markdown |
 | 6 Oct | [3](seminar_03.md) | What Are the 148 Bytes of `daily.csv`? Files as Bytes |
-| 13 Oct | [4](seminar_04.md) | What Is the Mean Temperature of Ten Years? PowerShell on the Weather Project |
+| 13 Oct | [4](seminar_04.md) | What Is the Mean Temperature of Ten Years? The Shell on the Weather Project |
 | 20 Oct | [5](seminar_05.md) | Who Changed the Mean? Git on the Weather Project |
 | 27 Oct | [6](seminar_06.md) | Can You Compute 7.16 Yourself? Python on the Weather Project |
 | 3 Nov | [7](seminar_07.md) | Is It Getting Warmer? Functions and NumPy on the Weather Project |

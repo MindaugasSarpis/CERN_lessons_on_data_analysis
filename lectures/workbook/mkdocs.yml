@@ -18,6 +18,7 @@ theme:
     - navigation.footer
     - search.suggest
     - content.code.copy
+    - content.tabs.link
     - toc.follow
 
 markdown_extensions:
@@ -50,6 +51,7 @@ extra_css:
 
 nav:
   - Home: index.md
+  - Setup: setup.md
   - Lecture notes:
       - 01 Orientation & Motivation: lectures/lecture_1.md
       - 02 Introduction to Data: lectures/lecture_2.md
@@ -73,7 +75,7 @@ nav:
       - S1 What Do the Weather Files Say?: seminars/seminar_01.md
       - S3 What Are the 148 Bytes of daily.csv?: seminars/seminar_03.md
       - S4 What Is the Mean Temperature of Ten Years?: seminars/seminar_04.md
-      - S4 · Install PowerShell 7, Git and Python: seminars/install_python_git.md
+      - S4 · Install Python and Git: seminars/install_python_git.md
       - S5 Who Changed the Mean?: seminars/seminar_05.md
       - S6 Can You Compute 7.16 Yourself?: seminars/seminar_06.md
       - S7 Is It Getting Warmer?: seminars/seminar_07.md

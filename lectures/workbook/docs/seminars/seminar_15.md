@@ -8,8 +8,8 @@ finds which part of it is slow, makes it 17 times faster on one core,
 compares that with more cores, runs it as a background job, and pushes the
 times in the README.
 
-Everything is typed in the terminal of VS Code (PowerShell 7), in the
-weather project, with the `weather` environment active. No cluster and no
+Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
+Windows), in the weather project, with the `weather` environment active. No cluster and no
 account is needed.
 
 ## Run sheet
@@ -18,8 +18,8 @@ account is needed.
 |--|--|--|--|
 | | **Part 1 · How long does it take?** · 25 min | | |
 | 0:00 | [1. Get today's scripts](#pull) | `git pull --no-edit course main` | two new scripts, the number of cores |
-| 0:10 | [2. Time the rebuild](#rebuild) | `Measure-Command { python run_all.py }` | the rebuild in seconds |
-| 0:15 | [3. A time has noise](#noise) | `Measure-Command`, five times | five times, the smallest kept |
+| 0:10 | [2. Time the rebuild](#rebuild) | `time python run_all.py` | the rebuild in seconds |
+| 0:15 | [3. A time has noise](#noise) | `for i in 1 2 3 4 5; do time ...` | five times, the smallest kept |
 | | **Part 2 · Where the time goes** · 35 min | | |
 | 0:25 | [4. The warmest 30 days of each year](#warmest) | `python scripts/warmest.py` | read 0.70 s, windows 0.66 s |
 | 0:35 | [5. The windows in NumPy](#numpy) | `--method numpy` | half the time, not less |
@@ -28,8 +28,8 @@ account is needed.
 | 1:00 | [7. Several years at a time](#workers) | `--workers 4` | times for 1, 2, 4, 8 workers |
 | 1:15 | [8. Cores or a better method](#compare) | `--workers 10` | 0.28 s on ten cores, 0.08 s on one |
 | | **Part 4 · A job that runs without you** · 35 min | | |
-| 1:25 | [9. A job script for a cluster](#slurm) | `Get-Content scripts/warmest_job.sh` | the five `#SBATCH` lines read |
-| 1:35 | [10. A job in the background](#background) | `Start-Job` | `logs/warmest.log`, growing while the job runs |
+| 1:25 | [9. A job script for a cluster](#slurm) | `head -n 6 scripts/warmest_job.sh` | the job script run on the laptop |
+| 1:35 | [10. A job in the background](#background) | `... > logs/warmest.log &` | `logs/warmest.log`, growing while the job runs |
 | 1:45 | [11. Write the times down, push](#push) | `git push` | a **Timing** section on GitHub |
 | 1:55 | [12. Wrap up](#wrap-up) | | |
 | | **Optional, if the room is fast** | | |
@@ -104,21 +104,34 @@ optional on a laptop.
 
 ### 2. Time the rebuild { #rebuild }
 
-**0:10 · 5 min** · `Measure-Command` runs a block and gives its time; the block's own output is not shown.
+**0:10 · 5 min** · `time` in front of a command runs it and then prints how long it took.
 
-1. Time the one command of Seminar 13.
-
-    ```text
-    (Measure-Command { python run_all.py }).TotalSeconds
-    ```
+1. Time the one command of Seminar 13; `> /dev/null` throws its own output
+   away.
 
     ```text
-    0.719002
+    time python run_all.py > /dev/null
     ```
 
-    Your time differs.
+    === "macOS"
 
-**Check:** a number of seconds, below one.
+        ```text
+        python run_all.py > /dev/null  0.63s user 0.08s system 100% cpu 0.709 total
+        ```
+
+    === "Windows"
+
+        ```text
+        real    0m0.662s
+        user    0m0.544s
+        sys     0m0.119s
+        ```
+
+    zsh ends its line with the time on the clock, `0.709 total`; Git Bash
+    gives it as `real`. `user` and `sys` are the time the processor spent.
+    Your times differ.
+
+**Check:** a time on the clock below one second.
 
 ---
 
@@ -129,78 +142,102 @@ optional on a laptop.
 1. The rebuild, five times.
 
     ```text
-    1..5 | ForEach-Object { (Measure-Command { python run_all.py }).TotalSeconds }
+    for i in 1 2 3 4 5; do time python run_all.py > /dev/null; done
     ```
 
-    ```text
-    0.7048154
-    0.7223703
-    0.7141947
-    0.6823602
-    0.7050123
-    ```
+    === "macOS"
 
-    The smallest, 0.68 s, is the time of the rebuild.
+        ```text
+        python run_all.py > /dev/null  0.57s user 0.08s system 100% cpu 0.650 total
+        python run_all.py > /dev/null  0.62s user 0.08s system 100% cpu 0.701 total
+        python run_all.py > /dev/null  0.56s user 0.10s system 100% cpu 0.658 total
+        python run_all.py > /dev/null  0.62s user 0.08s system 100% cpu 0.702 total
+        python run_all.py > /dev/null  0.58s user 0.11s system 100% cpu 0.683 total
+        ```
+
+    === "Windows"
+
+        Five blocks like the one of section 2; their `real` lines:
+
+        ```text
+        real    0m0.678s
+        real    0m0.704s
+        real    0m0.744s
+        real    0m0.674s
+        real    0m0.698s
+        ```
+
+    The smallest, about 0.65 s, is the time of the rebuild.
 
 2. Python starting and stopping, doing nothing.
 
     ```text
-    1..5 | ForEach-Object { (Measure-Command { python -c "pass" }).TotalSeconds }
+    time python -c "pass"
     ```
 
-    ```text
-    0.0106482
-    0.0191034
-    0.0221008
-    0.0099062
-    0.0215421
-    ```
+    === "macOS"
+
+        ```text
+        python -c "pass"  0.02s user 0.00s system 99% cpu 0.022 total
+        ```
+
+    === "Windows"
+
+        ```text
+        real    0m0.020s
+        user    0m0.020s
+        sys     0m0.000s
+        ```
 
 3. Python importing pandas.
 
     ```text
-    1..5 | ForEach-Object { (Measure-Command { python -c "import pandas" }).TotalSeconds }
+    time python -c "import pandas"
     ```
 
-    ```text
-    0.2382045
-    0.2108209
-    0.2133033
-    0.2491469
-    0.2418162
-    ```
+    === "macOS"
 
-**Check:** Python starts in 0.01 s; `import pandas` alone takes 0.21 s.
+        ```text
+        python -c "import pandas"  0.20s user 0.05s system 99% cpu 0.247 total
+        ```
+
+    === "Windows"
+
+        ```text
+        real    0m0.236s
+        user    0m0.200s
+        sys     0m0.036s
+        ```
+
+**Check:** Python starts in 0.02 s; `import pandas` alone takes about
+0.24 s.
 
 !!! question "Task: the slowest stage of the rebuild"
-    `run_all.py` runs five stages (its list `STAGES`). Time each of them
-    three times. Which stage takes most of the 0.68 s, and why?
+    `run_all.py` runs five stages (its list `STAGES`). Time each of them.
+    Which stage takes most of the 0.65 s, and why?
 
 ??? note "Answer"
     ```text
-    1..3 | ForEach-Object { (Measure-Command { python scripts/clean_hill.py }).TotalSeconds }
+    time python scripts/clean_hill.py > /dev/null
     ```
 
     ```text
-    0.2848835
-    0.2773765
-    0.2811533
+    python scripts/clean_hill.py > /dev/null  0.26s user 0.04s system 99% cpu 0.305 total
     ```
 
     ```text
-    1..3 | ForEach-Object { (Measure-Command { python -m pytest -q }).TotalSeconds }
+    time python -m pytest -q > /dev/null
     ```
 
     ```text
-    0.1893908
-    0.1522821
-    0.1540055
+    python -m pytest -q > /dev/null  0.16s user 0.02s system 99% cpu 0.185 total
     ```
 
-    The other three take 0.02 s (`clean_export.py`), 0.03 s
-    (`drop_missing.py`) and 0.09 s (`column_stats.py`). `clean_hill.py` is
-    the slowest at 0.28 s, and 0.21 s of it is `import pandas`: the
-    hill station's 8740 rows take almost nothing.
+    These are the zsh lines; Git Bash gives `real 0m0.304s` and
+    `real 0m0.181s`. The other three take 0.01 s (`clean_export.py`),
+    0.04 s (`drop_missing.py`) and 0.11 s (`column_stats.py`).
+    `clean_hill.py` is the slowest at 0.30 s, and about 0.24 s of it is
+    `import pandas`: the hill station's 8740 rows take almost nothing.
 
 ---
 
@@ -348,7 +385,7 @@ optional on a laptop.
 2. Four and eight, only the last line of each.
 
     ```text
-    python scripts/warmest.py --workers 4 | Select-Object -Last 1
+    python scripts/warmest.py --workers 4 | tail -n 1
     ```
 
     ```text
@@ -356,7 +393,7 @@ optional on a laptop.
     ```
 
     ```text
-    python scripts/warmest.py --workers 8 | Select-Object -Last 1
+    python scripts/warmest.py --workers 8 | tail -n 1
     ```
 
     ```text
@@ -379,7 +416,7 @@ workers rises.
 1. Ten workers.
 
     ```text
-    python scripts/warmest.py --workers 10 | Select-Object -Last 1
+    python scripts/warmest.py --workers 10 | tail -n 1
     ```
 
     ```text
@@ -418,7 +455,7 @@ first, then add cores.
 1. The first lines of the job script.
 
     ```text
-    Get-Content scripts/warmest_job.sh | Select-Object -First 6
+    head -n 6 scripts/warmest_job.sh
     ```
 
     ```text
@@ -431,10 +468,28 @@ first, then add cores.
     ```
 
 2. Open the script and read the rest: it activates `weather` and runs
-   `warmest.py` with as many workers as cores were given.
-3. On a cluster, from the project folder, it is submitted, watched and
-   cancelled with these lines; on the laptop there is no Slurm, so they are
-   not typed today.
+   `warmest.py` with as many workers as Slurm gave cores.
+3. For bash the `#SBATCH` lines are comments, so the script runs on the
+   laptop too. Give it the two numbers Slurm would set.
+
+    ```text
+    SLURM_JOB_ID=1 SLURM_CPUS_PER_TASK=4 bash scripts/warmest_job.sh
+    ```
+
+    ```text
+    start on gluon, job 1
+    2016  from 2016-07-15  19.59 °C
+    ...
+    2025  from 2025-07-08  19.89 °C
+    workers 4  total 0.53 s
+    done
+    ```
+
+    `gluon` is the name of the computer that ran it; yours differs.
+
+4. On a cluster, from the project folder, it is submitted, watched and
+   cancelled with these lines; there is no Slurm on the laptop, so they
+   are not typed today.
 
     | Line | Does |
     |--|--|
@@ -448,67 +503,138 @@ first, then add cores.
 
 ### 10. A job in the background { #background }
 
-**1:35 · 10 min** · `Start-Job` runs a block in a second PowerShell, and the prompt comes back at once.
+**1:35 · 10 min** · `&` at the end of a line runs it in the background, and the prompt comes back at once.
 
-1. A folder for logs, as in the job script of section 9.
+1. A folder for logs, as in the job script.
 
     ```text
-    New-Item -ItemType Directory logs
+    mkdir -p logs
     ```
-
-    It prints the new folder; the columns differ between macOS and Windows.
 
 2. Run `warmest.py` ten times in the background, its last line into the log.
 
     ```text
-    Start-Job -Name warmest { 1..10 | ForEach-Object { python scripts/warmest.py | Select-Object -Last 1 } > logs/warmest.log }
+    for i in {1..10}; do python scripts/warmest.py | tail -n 1; done > logs/warmest.log &
     ```
 
     ```text
-    Id     Name            PSJobTypeName   State         HasMoreData     Location
-    --     ----            -------------   -----         -----------     --------
-    1      warmest         BackgroundJob   Running       True            localhost
+    [1] 2381891
     ```
 
-3. While it runs, read the log.
+    `[1]` is the job's number in this terminal, then its process id; yours
+    differs.
+
+3. The jobs of this terminal.
 
     ```text
-    Get-Content logs/warmest.log
+    jobs
     ```
 
-    ```text
-    read 0.67 s  windows 0.64 s  total 1.31 s
-    read 0.64 s  windows 0.61 s  total 1.25 s
-    read 0.64 s  windows 0.61 s  total 1.25 s
-    ```
+    === "macOS"
 
-4. Ask for its state.
+        ```text
+        [1]  + running    for i in {1..10}; do; python scripts/warmest.py | tail -n 1; done >
+        ```
 
-    ```text
-    Get-Job
-    ```
+    === "Windows"
 
-    ```text
-    Id     Name            PSJobTypeName   State         HasMoreData     Location
-    --     ----            -------------   -----         -----------     --------
-    1      warmest         BackgroundJob   Completed     False           localhost
-    ```
+        ```text
+        [1]+  Running                 for i in {1..10};
+        do
+            python scripts/warmest.py | tail -n 1;
+        done > logs/warmest.log &
+        ```
 
-    `Running` if it has not ended yet. The table also has a `Command` column
-    when the terminal is wide.
-
-5. Read the whole log, ten lines, then remove the job.
+4. While it runs, read the log.
 
     ```text
-    Get-Content logs/warmest.log
+    cat logs/warmest.log
     ```
 
     ```text
-    Remove-Job warmest
+    read 0.64 s  windows 0.62 s  total 1.27 s
+    read 0.65 s  windows 0.62 s  total 1.27 s
+    read 0.66 s  windows 0.61 s  total 1.27 s
     ```
+
+5. Wait for it to end.
+
+    ```text
+    wait
+    ```
+
+    === "macOS"
+
+        ```text
+        [1]  + done       for i in {1..10}; do; python scripts/warmest.py | tail -n 1; done >
+        ```
+
+    === "Windows"
+
+        ```text
+        [1]+  Done                    for i in {1..10};
+        do
+            python scripts/warmest.py | tail -n 1;
+        done > logs/warmest.log
+        ```
+
+6. Count the lines of the log.
+
+    ```text
+    wc -l logs/warmest.log
+    ```
+
+    ```text
+    10 logs/warmest.log
+    ```
+
+    macOS pads the number with spaces.
 
 **Check:** ten lines in `logs/warmest.log`; the smallest total is the time
 of the script.
+
+!!! question "Task: stop a job, and a job that outlives the terminal"
+    1. Start `python scripts/warmest.py > /dev/null &` and stop it before
+       it ends.
+    2. A job started with `&` ends when its terminal is closed. Start
+       `warmest.py --workers 4` so that it does not, with its output in
+       `logs/nohup.log`, and read the log's last line.
+
+??? note "Answer"
+    1. `kill %1` stops job 1. The shell then reports it:
+
+        ```text
+        kill %1
+        ```
+
+        === "macOS"
+
+            ```text
+            [1]  + terminated  python scripts/warmest.py > /dev/null
+            ```
+
+        === "Windows"
+
+            ```text
+            [1]   Terminated              python scripts/warmest.py > /dev/null
+            ```
+
+    2. `nohup` keeps the job running when the terminal closes; `2>&1` sends
+       the errors into the same log.
+
+        ```text
+        nohup python scripts/warmest.py --workers 4 > logs/nohup.log 2>&1 &
+        ```
+
+        ```text
+        tail -n 1 logs/nohup.log
+        ```
+
+        ```text
+        workers 4  total 0.51 s
+        ```
+
+        In Git Bash the log starts with the line `nohup: ignoring input`.
 
 ---
 
@@ -572,19 +698,6 @@ of the script.
 
 **Check:** the **Timing** section on GitHub.
 
-!!! question "Task: ten cores, one per year"
-    On a cluster, each year should get a core of its own. Which line of
-    `warmest_job.sh` changes, and to what? Change it and commit.
-
-??? note "Answer"
-    Only `#SBATCH --cpus-per-task=10`: the script passes
-    `$SLURM_CPUS_PER_TASK` to `--workers`, so the Python line stays. The
-    time limit can stay at 5 minutes. Then:
-
-    ```text
-    git commit -am "Ask for ten cores, one per year"
-    ```
-
 ---
 
 ### 12. Wrap up { #wrap-up }
@@ -593,11 +706,11 @@ of the script.
 
 | To | Type or do |
 |--|--|
-| time a command | `(Measure-Command { ... }).TotalSeconds` |
+| time a command | `time COMMAND` |
 | trust a time | run it five times, keep the smallest |
 | find the slow part | time each part; the profiler of section 14 |
 | speed up | the slow part first: a better method, then more cores |
-| run without waiting | `Start-Job`; on a cluster `sbatch` |
+| run without waiting | `COMMAND &`, `jobs`, `wait`, `kill %1`, `nohup`; on a cluster `sbatch` |
 
 ---
 
@@ -634,24 +747,24 @@ NumPy.
 1. Profile the slow version, the first lines after the script's own output.
 
     ```text
-    python -m cProfile -s tottime scripts/warmest.py | Select-Object -Skip 11 -First 9
+    python -m cProfile -s tottime scripts/warmest.py | sed -n '12,20p'
     ```
 
     ```text
-             6519749 function calls (6517352 primitive calls) in 2.735 seconds
+             6519749 function calls (6517352 primitive calls) in 2.513 seconds
 
        Ordered by: internal time
 
        ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-       876730    0.893    0.000    1.482    0.000 csv.py:173(__next__)
-           10    0.639    0.064    0.646    0.065 warmest.py:52(means_loop)
-           10    0.419    0.042    1.988    0.199 warmest.py:29(read_year)
-       876740    0.319    0.000    0.322    0.000 {built-in method builtins.next}
+       876730    0.828    0.000    1.353    0.000 csv.py:173(__next__)
+           10    0.626    0.063    0.632    0.063 warmest.py:52(means_loop)
+           10    0.365    0.036    1.795    0.180 warmest.py:29(read_year)
+       876740    0.276    0.000    0.278    0.000 {built-in method builtins.next}
     ```
 
 2. 876 730 rows were read: 10 × 87 673, the file ten times over. That is
    what section 6 removed.
-3. The profiled run takes 2.7 s instead of 1.36 s: counting the calls costs
+3. The profiled run takes 2.5 s instead of 1.36 s: counting the calls costs
    time too, most for the functions called most often.
 
 **Check:** `read_year`, called 10 times, holds most of the time.
@@ -665,5 +778,5 @@ NumPy.
 - ♻️ **Reproducibility:** the times are written down with the run that
   gave them, and the ten dates are the same whichever way they are
   computed.
-- 🔧 **Tool-agnostic:** the same PowerShell lines on macOS and Windows; the
+- 🔧 **Tool-agnostic:** the same lines in zsh and Git Bash; the
   same Python on a laptop and on a cluster.

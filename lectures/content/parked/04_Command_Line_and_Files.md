@@ -203,7 +203,7 @@ Answers all three. The line can be kept in the README and run again on the next 
 (~3 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Set Up the Shell, slide 9 '(no title)': the course now uses PowerShell 7 on both systems (13 Oct 2026) -->
+<!-- Parked 2026-10-13 from Lecture 04, section Set Up the Shell, slide 9 '(no title)': the shell slide now names zsh on macOS and Git Bash on Windows (13 Oct 2026) -->
 
 ---
 hideInToc: true
@@ -226,7 +226,7 @@ hideInToc: true
 (~1 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Set Up the Shell, slide 10 'macOS: Check the Shell': zsh and chsh left: PowerShell 7 on both systems, installed on macOS with Homebrew -->
+<!-- Parked 2026-10-13 from Lecture 04, section Set Up the Shell, slide 10 'macOS: Check the Shell': replaced by the macOS install slide (Homebrew, Git, Miniforge); chsh is a note there -->
 
 ---
 hideInToc: true
@@ -739,7 +739,7 @@ A spreadsheet with European settings writes this. Most programs expect `,` and `
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Files & Folders, slide 31 'Count Bytes: `wc -c`': became Lines and Bytes, in PowerShell -->
+<!-- Parked 2026-10-13 from Lecture 04, section Files & Folders, slide 31 'Count Bytes: `wc -c`': became Lines and Bytes -->
 
 ---
 hideInToc: true
@@ -1095,7 +1095,7 @@ macOS ends a line with `0a` (LF): 24 + 2 = 26. Windows ends it with `0D 0A` (CRL
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Pipes & Filters, slide 41 'zsh Pipes Text, PowerShell Pipes Objects': became Lines or Objects, in PowerShell -->
+<!-- Parked 2026-10-13 from Lecture 04, section Pipes & Filters, slide 41 'zsh Pipes Text, PowerShell Pipes Objects': became Pick a Column: cut -->
 
 ---
 hideInToc: true
@@ -1146,7 +1146,7 @@ Objects: one per file, with properties such as `Name` and `Length`.
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Pipes & Filters, slide 42 'Pick Columns: `cut` and `Import-Csv`': became Lines or Objects, in PowerShell -->
+<!-- Parked 2026-10-13 from Lecture 04, section Pipes & Filters, slide 42 'Pick Columns: `cut` and `Import-Csv`': became Pick a Column: cut -->
 
 ---
 hideInToc: true
@@ -1341,7 +1341,7 @@ def clean(lines):
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Programs Someone Else Wrote, slide 57 'PowerShell's `>` Adds CRLF': merged into the checksum slide on files made on two systems -->
+<!-- Parked 2026-10-13 from Lecture 04, section Programs Someone Else Wrote, slide 57 'PowerShell's `>` Adds CRLF': merged into The Same Rows, Other Bytes -->
 
 ---
 hideInToc: true
@@ -1402,7 +1402,7 @@ Line 49 of `clean_export.py`: `newline="\n"`. Every line ends with LF on every s
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Programs Someone Else Wrote, slide 58 'The Mean of a Column: `column_stats.py`': merged into Two Programs, One Mean -->
+<!-- Parked 2026-10-13 from Lecture 04, section Programs Someone Else Wrote, slide 58 'The Mean of a Column: `column_stats.py`': merged into The Mean With and Without the −999 Rows and Two Programs, One Mean -->
 
 ---
 hideInToc: true
@@ -1529,7 +1529,7 @@ hideInToc: true
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section Tools & Environments, slide 67 'Where a Program Comes From': became Where a Command Comes From, in PowerShell -->
+<!-- Parked 2026-10-13 from Lecture 04, section Tools & Environments, slide 67 'Where a Program Comes From': became Where a Program Comes From (type) -->
 
 ---
 hideInToc: true
@@ -2040,7 +2040,7 @@ The names and the 120 come out of the file. The units do not: the README has to 
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section The README, slide 84 'Test the Rebuild Lines': merged into the checksum slide on files made on two systems -->
+<!-- Parked 2026-10-13 from Lecture 04, section The README, slide 84 'Test the Rebuild Lines': merged into The Same Rows, Other Bytes -->
 
 ---
 hideInToc: true
@@ -2152,7 +2152,7 @@ Scripts and text: MIT, see `LICENSE`.
 (~2 min)
 -->
 
-<!-- Parked 2026-10-13 from Lecture 04, section The README, slide 88 'Which Copy Is Right: Size and Checksum': merged into the checksum slide on files made on two systems -->
+<!-- Parked 2026-10-13 from Lecture 04, section The README, slide 88 'Which Copy Is Right: Size and Checksum': merged into The Same Rows, Other Bytes -->
 
 ---
 hideInToc: true

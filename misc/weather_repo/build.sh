@@ -5,8 +5,9 @@
 # all, and writes 5.78 into the README; the seminar finds it and reverts it.
 #
 # Author and committer, name, e-mail and date are fixed, so every run makes
-# the same commit ids, the ids printed on the Seminar 5 page. The shell of
-# the course is PowerShell 7 on macOS and Windows: one script, rebuild.ps1.
+# the same commit ids, the ids printed on the Seminar 5 page. The shells of
+# the course are zsh on macOS and Git Bash on Windows: one script,
+# scripts/rebuild.sh.
 #
 # Usage: bash misc/weather_repo/build.sh [outdir]
 #   writes outdir/weather-project (default: misc/weather_repo/run/, gitignored)
@@ -103,21 +104,22 @@ EOF
 commit smilte "2026-10-14T09:40:00+03:00" "Describe the columns and the -999 rows"
 
 # --- 4. the rebuild script ---------------------------------------------------
-cat > scripts/rebuild.ps1 <<'EOF'
-$ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
-New-Item -ItemType Directory -Force data/processed, results | Out-Null
-Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+cat > scripts/rebuild.sh <<'EOF'
+#!/usr/bin/env bash
+set -e
+mkdir -p data/processed results
+grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
 python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
 EOF
+chmod 755 scripts/rebuild.sh
 cat >> README.md <<'EOF'
 
 ## How to rebuild
 
-In the project folder, in PowerShell 7 on macOS or Windows, with Python from
-Miniforge; the script needs no package beyond it.
+In the project folder, in zsh on macOS or Git Bash on Windows, with Python
+from Miniforge; the script needs no package beyond it.
 
-    ./scripts/rebuild.ps1
+    ./scripts/rebuild.sh
 
 It writes `data/processed/weather_valid.csv`, `weather.csv` without the
 120 rows marked `-999` (87 553 lines), and `data/processed/daily.csv`, the
@@ -126,7 +128,7 @@ EOF
 commit smilte "2026-10-15T14:30:00+03:00" "Add the rebuild script"
 
 # --- 5. the mean -------------------------------------------------------------
-echo 'python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt' >> scripts/rebuild.ps1
+echo 'python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt' >> scripts/rebuild.sh
 python3 - <<'EOF'
 from pathlib import Path
 p = Path("README.md")
@@ -142,7 +144,7 @@ EOF
 commit smilte "2026-10-16T16:10:00+03:00" "Write the mean temperature into results and the README"
 
 # --- 6. the change that the seminar finds ------------------------------------
-sed -i 's|data/processed/weather_valid.csv temp_c|data/raw/weather.csv temp_c|' scripts/rebuild.ps1
+sed -i 's|data/processed/weather_valid.csv temp_c|data/raw/weather.csv temp_c|' scripts/rebuild.sh
 python3 - <<'EOF'
 from pathlib import Path
 p = Path("README.md")

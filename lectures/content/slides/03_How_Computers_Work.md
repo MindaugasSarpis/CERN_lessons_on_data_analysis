@@ -1481,8 +1481,8 @@ td:nth-child(odd) {
 <!--
 **Say:** a text sort compares the first byte of each line, and looks further only on a tie. So the nine temperatures of `daily.csv`, sorted as text, start with 10.4.
 **Ask:** where does `9.8` go? Last: `9` is 0x39.
-**Live:** a character from its code, in PowerShell: `` "`u{48}`u{69}" `` prints `Hi` (0x48, 0x69); `[char]65` prints `A`; `[int][char]'A'` prints 65.
-**Live:** code 7, BEL, is not printed but rung: `[char]7`, or `` "`a" `` (backtick a). The terminal of VS Code may stay silent, so try it on the room's laptop first. `` "A`tB" `` shows code 9, TAB.
+**Live:** a character from its code, in zsh or Git Bash: `printf '\x48\x69\n'` prints `Hi` (0x48, 0x69); `printf '%d\n' "'A"` prints 65.
+**Live:** code 7, BEL, is not printed but rung: `printf '\a'`. Terminal.app beeps; the terminal of VS Code may stay silent, so try it on the room's laptop first. `printf 'A\tB\n'` shows code 9, TAB.
 (~3 min)
 -->
 
@@ -1519,12 +1519,12 @@ Stores a code point in 1 to 4 bytes. The 128 ASCII characters keep their single 
 
 <!--
 **Say:** ASCII has 128 characters. Lithuanian letters, Greek, emoji need Unicode, and Unicode needs a way to become bytes: an encoding.
-**Live:** a file name beyond ASCII, on Windows. Before the lecture: `New-Item -ItemType Directory ~/map-demo`.
+**Live:** a file name beyond ASCII, on Windows. Before the lecture, in Git Bash: `mkdir ~/map-demo`.
 1. Word: a blank document, press `F12` (the **Save As** box). Go to `map-demo` in your home folder.
 2. Click into **File name**, `Ctrl+A`, `Delete`. Press `Win+.` (Windows key and full stop): the emoji panel opens. Type `map`, click 🗺️ (WORLD MAP), `Esc`. Type is **Word Document (*.docx)**. **Save**.
-3. Terminal (PowerShell 7): `cd ~/map-demo`, then `dir`: `🗺️.docx`. A box instead of the symbol is only the terminal's font.
-4. From its code: `` "`u{1F5FA}" `` (the backtick is the key left of `1`) prints 🗺.
-5. Its bytes: `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` gives `F0 9F 97 BA EF B8 8F`. `F0 9F 97 BA` is U+1F5FA in four bytes (first byte `11110`); `EF B8 8F` is U+FE0F, an invisible "draw as emoji" code point the panel adds. One symbol, two code points, seven bytes.
+3. Git Bash: `cd ~/map-demo`, then `ls`: `🗺️.docx`. A box instead of the symbol is only the terminal's font.
+4. From its code: `printf '\U0001F5FA\n'` prints 🗺.
+5. Its bytes: `ls *.docx | xxd` gives `f09f 97ba efb8 8f2e 646f 6378 0a`. `f0 9f 97 ba` is U+1F5FA in four bytes (first byte `11110`); `ef b8 8f` is U+FE0F, an invisible "draw as emoji" code point the panel adds; then `.docx` and the line end. One symbol, two code points, seven bytes.
 **If asked:** on a Mac the panel is `Ctrl+Cmd+Space`, search `world map`.
 (~4 min)
 -->
@@ -1711,14 +1711,14 @@ A program that does not expect it reads `ï»¿` before the first column name.
 <!--
 **Say:** gene names turned into dates were found in about one fifth of genomics papers with gene lists (Ziemann et al., 2016).
 **If asked:** Python reads a file with a BOM with `encoding="utf-8-sig"`.
-**Live:** a CSV through Excel, on Windows. Before the lecture: `New-Item -ItemType Directory ~/excel-demo`; in VS Code **File** > **New Text File**, paste the two lines below, set `LF` and `UTF-8` in the Status Bar, save as `excel_test.csv` in `excel-demo`. In the terminal there: `Copy-Item excel_test.csv excel_before.csv`.
+**Live:** a CSV through Excel, on Windows. Before the lecture, in Git Bash: `mkdir ~/excel-demo`; in VS Code **File** > **New Text File**, paste the two lines below, set `LF` and `UTF-8` in the Status Bar, save as `excel_test.csv` in `excel-demo`. In Git Bash there: `cp excel_test.csv excel_before.csv`.
 `nr,station,date,reading,place`
 `007,SEPT2,1-2,12345678901234567,Užupis`
 1. In File Explorer, double-click `excel_test.csv` (or right-click, **Open with** > **Excel**). Not **Data** > **From Text/CSV**: that dialog lets you choose types and encoding, which is the repair.
 2. If all of each line stands in column A, Windows uses `;` between values (Lithuanian region): that is the first change. Close Excel, replace every `,` by `;` in both files in VS Code, start again.
 3. Point at row 2: `7` (zeros gone), dates for `SEPT2` and `1-2`, `1.23457E+16` (click it: the formula bar shows `12345678901234500`, the last two digits gone), `UÅ¾upis`.
 4. Click the `UÅ¾upis` cell and type `Užupis`, as anyone would. `Ctrl+S`; if a box warns about the CSV format, **Keep Current Format** (or **Yes**). Close Excel, **Don't Save** if it asks again.
-5. Terminal: `Get-Content excel_before.csv`, then `Get-Content excel_test.csv`: `7`, the dates, `1.23457E+16`, and `U�upis`. `Format-Hex excel_test.csv`: `0D 0A` at each line end, and `ž` as one byte, `9E` (English Windows) or `FE` (Lithuanian), no longer UTF-8.
+5. Git Bash: `cat excel_before.csv`, then `cat excel_test.csv`: `7`, the dates, `1.23457E+16`, and `U�upis`. `xxd excel_test.csv`: `0d0a` at each line end, and `ž` as one byte, `9e` (English Windows) or `fe` (Lithuanian), no longer UTF-8.
 **Do:** run it once on the lecture laptop: Excel's version and region change the details, and that run is the one to show.
 (~6 min)
 -->
@@ -1886,9 +1886,8 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-          Offset Bytes                                           Ascii
-0000000000000000 64 61 74 65 2C 74 65 6D 70 5F 63 0A 32 30 32 35 date,temp_c�2025
-0000000000000010 2D 31 30 2D 30 31 2C 36 2E 33 0A 32 30 32 35 2D -10-01,6.3�2025-
+00000000: 6461 7465 2c74 656d 705f 630a 3230 3235  date,temp_c.2025
+00000010: 2d31 302d 3031 2c36 2e33 0a32 3032 352d  -10-01,6.3.2025-
 ```
 
 </div>
@@ -1900,8 +1899,8 @@ hideInToc: true
 ## 👀 **How to read it**
 
 - Left: the **offset**, the number of the first byte, in hex
-- Middle: 16 bytes as hex pairs
-- Right: the same bytes as ASCII, `�` for a byte that is not a printable character
+- Middle: 16 bytes, two hex digits each, in groups of two bytes
+- Right: the same bytes as ASCII, `.` for a byte that is not a printable character
 
 </div>
 
@@ -1912,19 +1911,19 @@ hideInToc: true
 | Bytes | Count |
 | --- | --- |
 | digits, `30` to `39` | 91 |
-| hyphens, `2D` | 18 |
-| commas, `2C` | 10 |
-| points, `2E` | 9 |
+| hyphens, `2d` | 18 |
+| commas, `2c` | 10 |
+| points, `2e` | 9 |
 | letters and `_` | 10 |
-| line breaks, `0A` | 10 |
+| line breaks, `0a` | 10 |
 
 </div>
 
 </div>
 
 <!--
-**Do:** read the first line byte by byte with the ASCII table: 64 is d, 61 is a, 2C is the comma. These are the first 32 of the 148 bytes of `daily.csv`.
-**Say:** 91 + 18 + 10 + 9 + 10 + 10 = 148. The ten bytes nobody sees in the editor are the line breaks, `0A`. No `EF BB BF` at offset 0, so no BOM.
+**Do:** read the first line byte by byte with the ASCII table: 64 is d, 61 is a, 2c is the comma. These are the first 32 of the 148 bytes of `daily.csv`.
+**Say:** 91 + 18 + 10 + 9 + 10 + 10 = 148. The ten bytes nobody sees in the editor are the line breaks, `0a`. No `EF BB BF` at offset 0, so no BOM.
 (~3 min)
 -->
 
@@ -2020,7 +2019,7 @@ hideInToc: true
 A typed line reaches files and their bytes, and it can be written down and run again.
 
 <!--
-**Say:** one shell on both systems, PowerShell 7, and the same line on a Mac and on Windows.
+**Say:** zsh on a Mac and Git Bash on Windows take the same lines. Where they differ, the slide shows both.
 (~1 min)
 -->
 
@@ -2050,18 +2049,18 @@ The program in the window. It reads a typed line, runs it, prints the answer, an
 
 <div class="card card-info card-glass pad-compact table-compact mt-md">
 
-| System | Shell | Program | Installed with |
+| System | Shell | Comes with | The prompt ends in |
 | --- | --- | --- | --- |
-| macOS | PowerShell 7 | `pwsh` | Homebrew: `brew install --cask powershell` |
-| Windows | PowerShell 7 | `pwsh` | winget: `winget install Microsoft.PowerShell` |
+| macOS | `zsh` | macOS | `%` |
+| Windows | Git Bash, `bash` | Git for Windows | `$` |
 
 </div>
 
-<div class="note-text mt-sm"><code>PS&gt;</code> at the start of a line on a slide is printed by the shell, not typed.</div>
+<div class="note-text mt-sm">A line on a slide starts with <code>$</code>, printed by the shell, not typed. On a Mac the shell prints <code>%</code> there.</div>
 
 <!--
 **Say:** terminal is the window, shell is the program in it. The words are often used for each other; here they are kept apart.
-**If asked:** a Mac's Terminal opens zsh, and Windows has the older Windows PowerShell 5.1, the program `powershell`, built in. Every line of this section is typed in PowerShell 7.
+**If asked:** Windows also has PowerShell built in; this course uses Git Bash, which takes the same lines as zsh.
 (~2 min)
 -->
 
@@ -2077,14 +2076,14 @@ hideInToc: true
 
 1. **File**, **Open Folder…**, the folder `weather-project`
 2. **Terminal**, **New Terminal**
-3. The Panel opens at the bottom, in the project folder. Its top right names the shell: `pwsh`
+3. The Panel opens at the bottom, in the project folder. Its top right names the shell: `zsh` or `bash`
 
 </div>
 
-<div class="note-text mt-sm">The key is <code>Ctrl+`</code> on both systems: the backtick, left of <code>1</code>. The arrow beside <b>+</b> in the Panel lists the shells, PowerShell 7 among them.</div>
+<div class="note-text mt-sm">The key is <code>Ctrl+`</code> on both systems: the backtick, left of <code>1</code>. The arrow beside <b>+</b> in the Panel lists the shells, Git Bash among them on Windows.</div>
 
 <!--
-**If asked:** if the Panel names `zsh` or `powershell`, pick PowerShell 7 from the arrow beside +. On Windows VS Code lists it as **PowerShell**, and the old one as **Windows PowerShell**.
+**If asked:** if a Windows Panel names `powershell`, pick **Git Bash** from the arrow beside +. **Terminal: Select Default Profile** in the Command Palette makes it the default.
 (~2 min)
 -->
 
@@ -2096,10 +2095,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-| System | The prompt |
+| Shell | The prompt, as it first appears |
 | --- | --- |
-| macOS | `PS /Users/smilte/Documents/weather-project>` |
-| Windows | `PS C:\Users\smilte\Documents\weather-project>` |
+| zsh, macOS | `smilte@MacBook-Air weather-project %` |
+| Git Bash, Windows | `smilte@laptop MINGW64 ~/Documents/weather-project`, then `$` on the next line |
 
 </div>
 
@@ -2107,33 +2106,34 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🐚 **`PS`**
+## 👤 **Who**
 
-The shell is PowerShell
+`smilte@MacBook-Air`: the user and the computer
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📂 **The path**
+## 📂 **Where**
 
-The folder the shell is in, the **working directory**
+The folder the shell is in, the **working directory**. `~` is the home folder
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## ⏳ **`>`**
+## ⏳ **Waiting**
 
-The shell waits for a line
+`%` or `$`: the shell waits for a line
 
 </div>
 
 </div>
 
 <!--
-**Ask:** read the two prompts aloud, part by part.
-**Say:** a command starts from the working directory. On the slides the path is left out: `PS>`.
+**Ask:** read the two prompts aloud, part by part: who, where, waiting.
+**Say:** a command starts from the working directory. On the slides the prompt is shortened to `$`.
+**If asked:** MINGW64 names the Unix layer that Git Bash runs on.
 (~2 min)
 -->
 
@@ -2145,11 +2145,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-```text
-PS> pwd
+## 💻 **zsh · Git Bash**
 
-Path
-----
+```text
+$ pwd
 /Users/smilte/Documents/weather-project
 ```
 
@@ -2157,7 +2156,7 @@ Path
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`pwd`, **print working directory**, is a short name of `Get-Location`. The path runs from the top of the disk, `/` on macOS and `C:\` on Windows, where it reads `C:\Users\smilte\Documents\weather-project`. A path from the top is **absolute**.
+`pwd`, **print working directory**: the path from the top of the disk, `/`, down to this folder. A path from the top is **absolute**. Git Bash writes the disk `C:` as `/c`: `/c/Users/smilte/Documents/weather-project`.
 
 </div>
 
@@ -2171,29 +2170,28 @@ Path
 hideInToc: true
 ---
 
-# What Is Here: **`dir`**
+# What Is Here: **`ls`**
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> dir -Name
-data
-results
-scripts
-README.md
+$ ls
+README.md  data  results  scripts
 ```
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`dir` is a short name of `Get-ChildItem`: it lists the working directory. `-Name` keeps only the names. `dir` alone prints a table with each file's size and date.
+`ls`, **list**, prints the names in the working directory. `ls -l` adds each file's size in bytes and its date.
 
 </div>
 
 <!--
-**Say:** the same four names as in the Side Bar of VS Code. Folders come first.
-**If asked:** on a Mac, `ls` in PowerShell runs the Mac's own `ls` program, with other options and output. `dir` is the same on both systems.
+**Say:** the same four names as in the Side Bar of VS Code.
+**If asked:** Git Bash sorts without regard to capitals: `data  README.md  results  scripts`.
 (~2 min)
 -->
 
@@ -2205,13 +2203,16 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## 📂 **The whole prompt shown**
+## 💻 **zsh · Git Bash**
 
 ```text
-PS /Users/smilte/Documents/weather-project> cd data
-PS /Users/smilte/Documents/weather-project/data> cd processed
-PS /Users/smilte/Documents/weather-project/data/processed> cd ../..
-PS /Users/smilte/Documents/weather-project>
+$ cd data
+$ pwd
+/Users/smilte/Documents/weather-project/data
+$ cd processed
+$ cd ../..
+$ pwd
+/Users/smilte/Documents/weather-project
 ```
 
 </div>
@@ -2219,8 +2220,8 @@ PS /Users/smilte/Documents/weather-project>
 <div class="note-text mt-md"><code>data</code> is a <b>relative</b> path: it starts at the working directory. <code>..</code> is the folder above. The prompt shows every move.</div>
 
 <!--
-**Do:** follow the prompt line by line: after each `cd` it names the new folder.
-**Say:** `cd` is a short name of `Set-Location`. `cd` with no path goes to the home folder; `cd ~/Documents/weather-project` comes back from anywhere.
+**Do:** follow the path line by line: after each `cd` the working directory changes.
+**Say:** `cd` with no path goes to the home folder; `cd ~/Documents/weather-project` comes back from anywhere.
 (~2 min)
 -->
 
@@ -2228,49 +2229,41 @@ PS /Users/smilte/Documents/weather-project>
 hideInToc: true
 ---
 
-# Make a Folder: **`New-Item`**
+# Make a Folder: **`mkdir`**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
 
 ```text
-PS> New-Item -ItemType Directory backup
-
-    Directory: /Users/smilte/Documents/weather-project
-
-UnixMode         User Group         LastWriteTime         Size Name
---------         ---- -----         -------------         ---- ----
-drwxr-xr-x     smilte staff      10/13/2026 10:14           64 backup
-
-PS> dir -Name
-backup
-data
-results
-scripts
-README.md
+$ mkdir backup
+$ ls
+README.md  backup  data  results  scripts
 ```
 
 </div>
 
-<div class="note-text mt-sm"><code>-ItemType Directory</code> makes a folder; without it <code>New-Item</code> makes an empty file. Windows prints the columns Mode, LastWriteTime, Length and Name.</div>
+<div class="note-text mt-md"><code>mkdir</code>, <b>make directory</b>, prints nothing when it works. <code>mkdir -p data/raw</code> makes both folders at once.</div>
 
 <!--
-**Say:** a name without spaces is one word for the shell. `my backup` would be read as two words.
-**If asked:** on a Mac, `mkdir` in PowerShell runs the Mac's own program; on Windows it is a short name of this line. `New-Item -ItemType Directory` is the same on both.
-(~2 min)
+**Say:** a name without spaces is one word for the shell. `my backup` would be read as two names.
+(~1 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Copy and Rename: **`Copy-Item`**, **`Move-Item`**
+# Copy and Rename: **`cp`**, **`mv`**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Copy-Item data/processed/daily.csv backup
-PS> Move-Item backup/daily.csv backup/daily_copy.csv
-PS> dir backup -Name
+$ cp data/processed/daily.csv backup
+$ mv backup/daily.csv backup/daily_copy.csv
+$ ls backup
 daily_copy.csv
 ```
 
@@ -2280,7 +2273,7 @@ daily_copy.csv
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📋 **`Copy-Item FILE FOLDER`**
+## 📋 **`cp FILE FOLDER`**
 
 Copies the file into the folder, under the same name.
 
@@ -2288,7 +2281,7 @@ Copies the file into the folder, under the same name.
 
 <div class="card card-accent card-glass pad-compact">
 
-## ✏️ **`Move-Item OLD NEW`**
+## ✏️ **`mv OLD NEW`**
 
 Moves a file. A new name in the same folder renames it.
 
@@ -2297,8 +2290,7 @@ Moves a file. A new name in the same folder renames it.
 </div>
 
 <!--
-**Say:** `Copy-Item` replaces a file of the same name without asking.
-**If asked:** `copy` and `move` are short names for both, on every system.
+**Say:** `cp` replaces a file of the same name without asking.
 (~2 min)
 -->
 
@@ -2306,31 +2298,29 @@ Moves a file. A new name in the same folder renames it.
 hideInToc: true
 ---
 
-# Delete: **`Remove-Item`**
+# Delete: **`rm`**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Remove-Item backup/daily_copy.csv
-PS> Remove-Item backup
-PS> dir -Name
-data
-results
-scripts
-README.md
+$ rm backup/daily_copy.csv
+$ rm -r backup
+$ ls
+README.md  data  results  scripts
 ```
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ No Trash, no Recycle Bin, and `Ctrl+Z` brings nothing back. A folder that still holds files is removed only with `-Recurse`, with everything in it. Before `Remove-Item`, check with `pwd` and `dir` where you are and what is there.
+⚠️ No Trash, no Recycle Bin, and `Ctrl+Z` brings nothing back. `rm -r` deletes a folder with everything in it. Before `rm`, check with `pwd` and `ls` where you are and what is there.
 
 </div>
 
 <!--
-**Say:** read the name before pressing Enter: `Remove-Item` has no undo.
-**If asked:** without `-Recurse`, PowerShell asks before it removes a folder that is not empty. `-Recurse` is an option: it changes how the command works, here "the folder and all inside it".
+**Say:** read the name before pressing Enter: `rm` has no undo. `-r` is an option: it changes how `rm` works, here "the folder and all inside it".
 (~2 min)
 -->
 
@@ -2344,24 +2334,26 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> (Get-Item data/processed/daily.csv).Length
-148
-PS> (Get-Item data/processed/daily_crlf.csv).Length
-158
+$ wc -c data/processed/daily.csv
+     148 data/processed/daily.csv
+$ wc -c data/processed/daily_crlf.csv
+     158 data/processed/daily_crlf.csv
 ```
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`Get-Item` fetches the file, and `.Length` is its size in bytes. 158 − 148 = 10: one `0D` more on each of the ten lines.
+`wc -c` counts bytes. Git Bash prints the same numbers without the spaces in front. 158 − 148 = 10: one `0d` more on each of the ten lines.
 
 </div>
 
 <!--
 **Say:** the size is exact to the byte, unlike KB in a file manager.
-**If asked:** the copy is `Copy-Item data/processed/daily.csv data/processed/daily_crlf.csv`, then `LF` to `CRLF` in the Status Bar of the copy, and save.
+**If asked:** the copy is `cp data/processed/daily.csv data/processed/daily_crlf.csv`, then `LF` to `CRLF` in the Status Bar of the copy, and save.
 (~2 min)
 -->
 
@@ -2373,19 +2365,13 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 📄 **The first two and the last line**
+## 💻 **zsh · Git Bash**, the first two and the last line
 
 ```text
-PS> Format-Hex data/processed/daily.csv
-
-   Label: /Users/smilte/Documents/weather-project/data/processed/daily.csv
-
-          Offset Bytes                                           Ascii
-                 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
-          ------ ----------------------------------------------- -----
-0000000000000000 64 61 74 65 2C 74 65 6D 70 5F 63 0A 32 30 32 35 date,temp_c�2025
-0000000000000010 2D 31 30 2D 30 31 2C 36 2E 33 0A 32 30 32 35 2D -10-01,6.3�2025-
-0000000000000090 39 2E 38 0A                                     9.8�
+$ xxd data/processed/daily.csv
+00000000: 6461 7465 2c74 656d 705f 630a 3230 3235  date,temp_c.2025
+00000010: 2d31 302d 3031 2c36 2e33 0a32 3032 352d  -10-01,6.3.2025-
+00000090: 392e 380a                                9.8.
 ```
 
 </div>
@@ -2393,9 +2379,8 @@ PS> Format-Hex data/processed/daily.csv
 <div class="note-text mt-sm">The last line starts at offset 0x90 = 9 × 16 = 144 and holds 4 bytes: 148 in all.</div>
 
 <!--
-**Do:** find the first `0A` with the room.
-**Say:** a line of `Format-Hex` holds 16 bytes; 148 bytes take 9 full lines and 4 bytes.
-**If asked:** Windows PowerShell 5.1 prints the same bytes in an older layout.
+**Do:** find the first `0a` with the room.
+**Say:** a line of `xxd` holds 16 bytes; 148 bytes take 9 full lines and 4 bytes.
 (~2 min)
 -->
 
@@ -2499,25 +2484,44 @@ hideInToc: true
 
 # SHA-256, a **Hash**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
 
 ```text
-PS> (Get-FileHash data/processed/daily.csv).Hash
-33FE5E77A97900B6E8F94776F266DA4D6E3C96590088D21BC9842987F705483D
-PS> (Get-FileHash data/processed/daily_crlf.csv).Hash
-B68430C5FBA80FFDA159A54FACC267B2ED15A1B971F95F94B70CAD41721A899E
+$ shasum -a 256 data/processed/daily.csv
+33fe5e77…f705483d  data/processed/daily.csv
+$ shasum -a 256 data/processed/daily_crlf.csv
+b68430c5…721a899e  data/processed/daily_crlf.csv
 ```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · Git Bash**
+
+```text
+$ sha256sum data/processed/daily.csv
+33fe5e77…f705483d  data/processed/daily.csv
+$ sha256sum data/processed/daily_crlf.csv
+b68430c5…721a899e  data/processed/daily_crlf.csv
+```
+
+</div>
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-64 hex digits, 256 bits, computed from every byte. The same bytes give the same hash on every computer. Ten more bytes, the `0D`s, give a hash that differs in every digit.
+64 hex digits, 256 bits, computed from every byte. The same bytes give the same hash on every computer. Ten more bytes, the `0d`s, give a hash that differs in every digit.
 
 </div>
 
 <!--
-**Say:** `Get-FileHash` computes SHA-256 unless it is told another method.
+**Say:** the slide shortens the 64 digits to the first and last eight. The two programs compute the same SHA-256.
 **Ask:** two people each have a `daily.csv`. How do they know it is the same 148 bytes? Compare the hashes, the first and the last eight digits at least.
 (~2 min)
 -->
@@ -2556,7 +2560,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-⌨️ **Terminal**: `pwd`, `dir`, `cd`, `New-Item`, `Copy-Item`, `Move-Item`, `Remove-Item`, the size and the bytes of a file
+⌨️ **Terminal**: `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv`, `rm`, the size and the bytes of a file
 
 </div>
 
@@ -2611,7 +2615,7 @@ hideInToc: true
 
 ## 🔬 **The 148 bytes of `daily.csv`**
 
-91 digits, 18 hyphens, 10 commas, 9 points, 10 letters and `_`, and 10 line breaks `0A`. Size, encoding, line ending and hash of a data file are checked before a number in it is trusted.
+91 digits, 18 hyphens, 10 commas, 9 points, 10 letters and `_`, and 10 line breaks `0a`. Size, encoding, line ending and hash of a data file are checked before a number in it is trusted.
 
 </div>
 
@@ -2698,12 +2702,12 @@ hideInToc: true
 ---
 
 <MCQ
-  question="The prompt is `PS C:\Users\smilte\Documents\weather-project\data>`. Which line prints the size of `daily.csv` in `data/processed`?"
+  question="The working directory is `~/Documents/weather-project/data`. Which line prints the size of `daily.csv` in `data/processed`?"
   :options="[
-    '(Get-Item processed/daily.csv).Length',
-    '(Get-Item data/processed/daily.csv).Length',
-    '(Get-Item ../daily.csv).Length',
-    '(Get-Item ~/daily.csv).Length'
+    'wc -c processed/daily.csv',
+    'wc -c data/processed/daily.csv',
+    'wc -c ../daily.csv',
+    'wc -c ~/daily.csv'
   ]"
   :correct="0"
   explanation="The working directory is data, so a relative path starts there: processed/daily.csv. The second line would look for data/data/processed/daily.csv."

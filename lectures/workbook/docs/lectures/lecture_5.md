@@ -7,7 +7,8 @@ one her colleague Tomas sent back: the checksum says that they differ,
 `git diff` says which line, and nothing says who changed it, when, or why.
 The lecture first builds what Git stores, from the checksums of Lecture 4,
 then puts the weather project under Git one commit at a time, each step in
-the Source Control view of VS Code and typed in PowerShell 7. It closes on
+the Source Control view of VS Code and typed in zsh (macOS) or Git Bash
+(Windows). It closes on
 the same question, answered from the history: Tomas edited line 2 of a raw
 file, the rebuilt file loses the checksum of the README, and a revert puts
 it back.
@@ -19,10 +20,10 @@ it back.
    against `6,4`; who, when and why stays open. Copies named `final_v2`,
    and what a version control system records.
 2. **The model** — what has to be kept; a name computed from the content
-   with `git hash-object`, and why the same line gives another id on
-   Windows (`0d 0a`); the header `blob <size>` and a zero byte; the id of
+   with `git hash-object`, the same on every laptop, and another id for
+   `hello` with a Windows line ending (`0d 0a`); the header `blob <size>` and a zero byte; the id of
    `weather.csv`, `f811f73d`, the same on every laptop; a folder as a list,
-   set beside `Get-FileHash`; the tree of the whole project; a commit as a
+   set beside `shasum -a 256` (`sha256sum` in Git Bash); the tree of the whole project; a commit as a
    text with a tree, a parent, an author and a message; one commit drawn as
    its objects; the id of a commit, computed again; history as a graph; a
    branch as a file of 41 bytes that a commit moves; the three areas.
@@ -31,7 +32,7 @@ it back.
    `git status --short` says in each state; the commit message.
 4. **Data in a repository** — which files go in; why `weather.csv` (2.5 MB)
    fits and a file of 3 GB does not, with measured sizes; `.gitignore` for
-   `data/processed/`, which `rebuild.ps1` makes; `.gitattributes` with
+   `data/processed/`, which `rebuild.sh` makes; `.gitattributes` with
    `* -text`, so a clone on Windows keeps the bytes; the rest committed.
 5. **Changes and history** — the diff in the view and typed; `git log`;
    `git show` and `git blame`.
@@ -95,14 +96,14 @@ come from the lecture's scratch repository (see below).
 
 **Before the lecture.** Unzip [`weather_project.zip`](../data/weather_project.zip)
 into a new folder, open `weather-project` in VS Code, open its terminal
-(PowerShell 7) and make the font large. Check `git config --global user.name`
+(zsh on a Mac, Git Bash on Windows) and make the font large. Check `git config --global user.name`
 once.
 
 | Slide | What to do | What the room sees |
 |--|--|--|
-| 10 | `"hello" | git hash-object --stdin` | `ce013625…` on a Mac, `ef0493b2…` on Windows |
+| 10 | `echo "hello" | git hash-object --stdin` | `ce013625…` on every laptop |
 | 12 | `git hash-object data/raw/weather.csv` | `f811f73d…`, on every laptop |
-| 24 | Source Control: **Initialize Repository**; then `Get-ChildItem -Force -Name` | `.git` among the folders |
+| 24 | Source Control: **Initialize Repository**; then `ls -a` | `.git` among the folders |
 | 26 | **+** beside `README.md`, message "Add the README", **Commit** | `README.md` leaves the list; the Graph shows one commit |
 | 36 | Add the three lines of the Result section to `README.md`, save, select the file in Source Control; then stage and commit it | The diff view: five green lines |
 | 41 | Select one whole section of the README, delete it, save; `git diff --stat`; `git restore README.md` | The section comes back |
@@ -120,11 +121,12 @@ The Result section of slide 36:
 
 Every command on the slides ran in a scratch repository, and the output is
 copied from the terminal: `bash misc/l05_scratch_repo/build.sh` makes it
-again with the same ids (Git 2.56, PowerShell 7.6, on Linux; author and
+again with the same ids (Git 2.56 and bash on Linux, whose GNU tools are
+those of Git Bash; author and
 committer dates fixed on 20 October 2026). The project in it is the weather
 project as Lecture 4 leaves it: `README.md` with *How to rebuild*,
 `data/raw/weather.csv` and `daily_export.csv`, `scripts/clean_export.py`,
-`column_stats.py` and `rebuild.ps1`. Smiltė makes the commits; Tomas clones
+`column_stats.py` and `rebuild.sh`. Smiltė makes the commits; Tomas clones
 the repository and pushes one.
 
 - **Blob and tree ids are the same for everyone.** `weather.csv` is
@@ -135,10 +137,12 @@ the repository and pushes one.
   `insteadOf`: the commands ran against a repository in a local folder.
   `smilte-example` stands for the user name; the transfer rate of the push
   is that of a local copy.
-- **The Windows ids** of `hello` (`ef0493b2…`, slide 10) and `hi` (quiz 2)
-  were measured with PowerShell 7.6 and Git for Windows 2.51, and computed
-  again here from the bytes `0d 0a`. Everything else ran in PowerShell 7.6
-  on Linux, which hands over the bytes a Mac does.
+- **macOS outputs.** `shasum -a 256` was run as `sha256sum`, which prints
+  the same; `ls` on a Mac lists `README.md` before `data`, as on the
+  slide, while Git Bash may sort it after.
+- **The CRLF ids** of `hello` (`ef0493b2…`, slide 10) and `hi` (quiz 2)
+  come from the bytes `0d 0a`, as a Windows program writes them; they were
+  also measured on Windows with Git for Windows 2.51.
 - **The pictures of VS Code** are from VS Code 1.140 (the web version run
   from the lecture's scratch folders), theme Dark Modern; the message box
   reads `Ctrl+Enter`, on macOS `Cmd+Enter`. *Initialize Repository*,
@@ -159,11 +163,11 @@ questions, with their answers:
    `analysis_final_REAL.py` side by side. What does Git give that these
    copies do not?
    *One file with its full history: what changed, when, and why.*
-2. On a Mac, PowerShell runs `"hi" | git hash-object --stdin`. Which bytes
-   does Git hash?
+2. In zsh or Git Bash, `echo "hi" | git hash-object --stdin` prints an id.
+   Which bytes does Git hash?
    *The word `blob`, a space, the digit 3 and a zero byte, then `h`, `i` and
    a line break: ten bytes. The id is
-   `45b983be36b73c0788dc9cbcb76cbb80fc7bb057`. On Windows the line break is
+   `45b983be36b73c0788dc9cbcb76cbb80fc7bb057` on every laptop. With a Windows line ending,
    `0d 0a`, the header says `blob 4`, and the id is
    `edf0effbb6851d0055229878b4bf0d7212167642`.*
 3. A repository has 40 commits. `weather.csv` (2 515 215 bytes) was added in
@@ -184,7 +188,7 @@ questions, with their answers:
 7. After `git clone`, the folder `data/processed` is missing, and
    `.gitignore` lists `data/processed/`. Why, and what brings it back?
    *Git stores files, not folders, and the files in it were ignored.
-   `./scripts/rebuild.ps1` makes the folder and its files again.*
+   `./scripts/rebuild.sh` makes the folder and its files again.*
 8. On a new computer `git init` is followed by `git status`, which says
    `On branch master`. Why?
    *`init.defaultBranch` is not set to `main` there, so Git uses `master`,

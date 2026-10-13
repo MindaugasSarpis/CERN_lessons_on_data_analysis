@@ -8,8 +8,8 @@ of `data/processed` and `results` with one command that also tests the
 numbers, and proves it in a fresh clone with a fresh environment: the same
 checksums.
 
-Everything is typed in the terminal of VS Code (PowerShell 7), in the
-`weather-project` folder, with `(weather)` in the prompt.
+Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
+Windows), in the `weather-project` folder, with `(weather)` in the prompt.
 
 ## Run sheet
 
@@ -19,14 +19,14 @@ Everything is typed in the terminal of VS Code (PowerShell 7), in the
 | 0:00 | [1. Install pytest](#pytest) | `conda install pytest` | `pytest 9.1.1` |
 | 0:10 | [2. Pin every version](#pin) | `conda list` | six pinned lines, committed |
 | | **Part 2 · One command** · 35 min | | |
-| 0:25 | [3. The -999 rows in Python](#drop) | `python scripts/drop_missing.py` | 87 553 lines, the same bytes on every system |
+| 0:25 | [3. The -999 rows in Python](#drop) | `python scripts/drop_missing.py` | 87 553 lines |
 | 0:35 | [4. `run_all.py`](#run-all) | `python run_all.py` | four stages and five checksums |
-| 0:50 | [5. Delete and rebuild](#rebuild) | `Remove-Item -Recurse data/processed, results` | the same five checksums, committed |
+| 0:50 | [5. Delete and rebuild](#rebuild) | `rm -r data/processed results` | the same five checksums, committed |
 | | **Part 3 · Tests** · 25 min | | |
 | 1:00 | [6. A test file](#test) | `python -m pytest` | `3 passed`, also inside `run_all.py` |
 | 1:15 | [7. Make a test fail](#fail) | `python run_all.py` | `1 failed`, `stopped: exit code 1` |
 | | **Part 4 · A stranger's laptop** · 35 min | | |
-| 1:25 | [8. The README says one command](#readme) | `git rm scripts/rebuild.ps1` | the README on GitHub |
+| 1:25 | [8. The README says one command](#readme) | `git rm scripts/rebuild.sh` | the README on GitHub |
 | 1:35 | [9. A fresh clone, a fresh environment](#clone) | `conda env create -f environment.yml -n weather-check` | the same five checksums |
 | 1:50 | [10. Record the check, push](#record) | `git push` | the check in the README |
 | 1:55 | [11. Wrap up](#wrap-up) | `conda env remove -n weather-check` | |
@@ -188,7 +188,7 @@ Everything is typed in the terminal of VS Code (PowerShell 7), in the
     ```
 
     ```text
-    [main fed9f56] Pin every version in the environment
+    [main ff01c97] Pin every version in the environment
      1 file changed, 5 insertions(+), 4 deletions(-)
     ```
 
@@ -197,7 +197,7 @@ Everything is typed in the terminal of VS Code (PowerShell 7), in the
 **Check:** every line under `dependencies:` has `=` and a full version.
 
 !!! question "Task: what is not pinned?"
-    `conda env create` installs about 150 packages for these six (149 on
+    `conda env create` installs about 100 packages for these six (98 on
     Linux). Which of them does `environment.yml` pin, and what decides
     the versions of the rest?
 
@@ -210,7 +210,7 @@ Everything is typed in the terminal of VS Code (PowerShell 7), in the
     same system:
 
     ```text
-    conda env export | Select-Object -First 8
+    conda env export | head -n 8
     ```
 
     ```text
@@ -219,26 +219,26 @@ Everything is typed in the terminal of VS Code (PowerShell 7), in the
       - conda-forge
     dependencies:
       - _openmp_mutex=4.5=20_gnu
-      - alsa-lib=1.2.16.1=h7cc23a3_1
       - brotli=1.2.0=h505cf86_4
       - brotli-bin=1.2.0=h9908984_4
+      - bzip2=1.0.8=hda65f42_10
     ```
 
-    These lines are from Linux; `alsa-lib` does not exist for macOS or
-    Windows. Six pins that install everywhere are the choice here;
-    section 9 checks that they are enough.
+    These lines are from Linux; `_openmp_mutex=4.5=20_gnu` is a build for
+    Linux that macOS and Windows do not have. Six pins that install
+    everywhere are the choice here; section 9 checks that they are enough.
 
 ---
 
 ## Part 2 · One command { #part-2 }
 
-**0:25 to 1:00** · `scripts/rebuild.ps1` runs four lines. Today a Python script takes its place: the same bytes on every system.
+**0:25 to 1:00** · `scripts/rebuild.sh` runs its lines in the shell. Today a Python script takes its place: it needs only the environment's Python.
 
 ---
 
 ### 3. The -999 rows in Python { #drop }
 
-**0:25 · 10 min** · `>` in PowerShell ends lines with CRLF on Windows and LF on macOS, so `weather_valid.csv` had two checksums.
+**0:25 · 10 min** · `grep -v` and `>` belong to the shell; `run_all.py` runs Python scripts, so the filter becomes one.
 
 1. In the Explorer, right-click `scripts` > **New File...**, type
    `drop_missing.py`, press `Enter`. Write and save:
@@ -274,11 +274,11 @@ Everything is typed in the terminal of VS Code (PowerShell 7), in the
 3. Count the lines.
 
     ```text
-    (Get-Content data/processed/weather_valid.csv).Count
+    wc -l data/processed/weather_valid.csv
     ```
 
     ```text
-    87553
+    87553 data/processed/weather_valid.csv
     ```
 
 **Check:** 87 553 lines: 87 672 hours, minus 120 rows of −999, plus the header.
@@ -382,23 +382,16 @@ above, digit for digit.
 1. Delete both folders.
 
     ```text
-    Remove-Item -Recurse data/processed, results
+    rm -r data/processed results
     ```
 
     ```text
-    Get-ChildItem -Name
+    ls data
     ```
 
     ```text
-    data
-    scripts
-    environment.yml
-    LICENSE
-    README.md
-    run_all.py
+    raw
     ```
-
-    Windows also lists `.gitattributes` and `.gitignore`.
 
 2. Rebuild.
 
@@ -419,7 +412,7 @@ above, digit for digit.
 3. The exit code: 0 means every stage ran.
 
     ```text
-    $LASTEXITCODE
+    echo $?
     ```
 
     ```text
@@ -448,7 +441,7 @@ above, digit for digit.
     ```
 
     ```text
-    [main 2414bd1] Make everything from data/raw with one command
+    [main 799e5a6] Make everything from data/raw with one command
      2 files changed, 50 insertions(+)
      create mode 100644 run_all.py
      create mode 100644 scripts/drop_missing.py
@@ -457,13 +450,13 @@ above, digit for digit.
 **Check:** the same five checksums as before the delete.
 
 !!! question "Task: a stage that fails"
-    Rename `data/raw/daily_export.csv` to `daily_export.bak` with
-    `Move-Item`, run `run_all.py`, and read the exit code. Which stages
+    Rename `data/raw/daily_export.csv` to `daily_export.bak` with `mv`,
+    run `run_all.py`, and read the exit code. Which stages
     ran? Then give the file its name back.
 
 ??? note "Answer"
     ```text
-    Move-Item data/raw/daily_export.csv data/raw/daily_export.bak
+    mv data/raw/daily_export.csv data/raw/daily_export.bak
     ```
 
     ```text
@@ -479,7 +472,7 @@ above, digit for digit.
     ```
 
     ```text
-    $LASTEXITCODE
+    echo $?
     ```
 
     ```text
@@ -490,7 +483,7 @@ above, digit for digit.
     would have read files that were not made.
 
     ```text
-    Move-Item data/raw/daily_export.bak data/raw/daily_export.csv
+    mv data/raw/daily_export.bak data/raw/daily_export.csv
     ```
 
 ---
@@ -607,7 +600,7 @@ above, digit for digit.
     ```
 
     ```text
-    [main 3fe1d1e] Test the results at the end of run_all.py
+    [main 573d364] Test the results at the end of run_all.py
      3 files changed, 32 insertions(+)
      create mode 100644 tests/test_results.py
     ```
@@ -729,7 +722,7 @@ above, digit for digit.
 
 ### 8. The README says one command { #readme }
 
-**1:25 · 10 min** · `run_all.py` does what `rebuild.ps1` did, so the old script goes.
+**1:25 · 10 min** · `run_all.py` does what `rebuild.sh` did, so the old script goes.
 
 1. In `README.md`, replace the section `## How to rebuild` (up to the
    next `##`) with this, and save:
@@ -737,7 +730,7 @@ above, digit for digit.
     ```text
     ## How to rebuild
 
-    In PowerShell 7, on macOS or Windows, with Miniforge, in the project folder:
+    In zsh on macOS or Git Bash on Windows, with Miniforge, in the project folder:
 
         conda env create -f environment.yml
         conda activate weather
@@ -750,11 +743,11 @@ above, digit for digit.
 2. Remove the old script; Git deletes the file and stages the deletion.
 
     ```text
-    git rm scripts/rebuild.ps1
+    git rm scripts/rebuild.sh
     ```
 
     ```text
-    rm 'scripts/rebuild.ps1'
+    rm 'scripts/rebuild.sh'
     ```
 
 3. Stage the README, look, commit.
@@ -769,7 +762,7 @@ above, digit for digit.
 
     ```text
     M  README.md
-    D  scripts/rebuild.ps1
+    D  scripts/rebuild.sh
     ```
 
     ```text
@@ -777,9 +770,9 @@ above, digit for digit.
     ```
 
     ```text
-    [main caa0202] Rebuild with conda and run_all.py
-     2 files changed, 6 insertions(+), 14 deletions(-)
-     delete mode 100644 scripts/rebuild.ps1
+    [main 64f4a99] Rebuild with conda and run_all.py
+     2 files changed, 6 insertions(+), 13 deletions(-)
+     delete mode 100755 scripts/rebuild.sh
     ```
 
 4. Push.
@@ -790,7 +783,7 @@ above, digit for digit.
 
     ```text
     To https://github.com/your-username/weather-project.git
-       60843ff..caa0202  main -> main
+       40ac9f0..64f4a99  main -> main
     ```
 
 **Check:** on GitHub, the README's **How to rebuild** shows the three lines.
@@ -804,7 +797,7 @@ above, digit for digit.
 1. Go to the home folder and clone your repository into `weather-check`.
 
     ```text
-    Set-Location ~
+    cd ~
     ```
 
     ```text
@@ -818,24 +811,18 @@ above, digit for digit.
 2. Go in and look.
 
     ```text
-    Set-Location weather-check
+    cd weather-check
     ```
 
     ```text
-    Get-ChildItem -Name
+    ls data
     ```
 
     ```text
-    data
-    scripts
-    tests
-    environment.yml
-    LICENSE
-    README.md
-    run_all.py
+    raw
     ```
 
-    No `data/processed`, no `results`.
+    No `data/processed`, and no `results` either.
 
 3. A new environment from the file. The name `weather` is taken on this
    laptop, so `-n` gives another one.
@@ -854,7 +841,7 @@ above, digit for digit.
         - scipy=1.18.1
     ```
 
-    About 150 packages; most are in conda's cache from `weather`, so it
+    About 100 packages; most are in conda's cache from `weather`, so it
     takes a minute. It ends with:
 
     ```text
@@ -905,7 +892,7 @@ the room. A test you added in the Task makes it `4 passed`.
 1. Back to the project and its environment.
 
     ```text
-    Set-Location ~/weather-project
+    cd ~/weather-project
     ```
 
     ```text
@@ -926,7 +913,7 @@ the room. A test you added in the Task makes it `4 passed`.
     ```
 
     ```text
-    [main 42e9b25] Record the check in a fresh clone
+    [main 13d8c7a] Record the check in a fresh clone
      1 file changed, 2 insertions(+)
     ```
 
@@ -936,7 +923,7 @@ the room. A test you added in the Task makes it `4 passed`.
 
     ```text
     To https://github.com/your-username/weather-project.git
-       caa0202..42e9b25  main -> main
+       64f4a99..13d8c7a  main -> main
     ```
 
 4. Today's history.
@@ -946,12 +933,12 @@ the room. A test you added in the Task makes it `4 passed`.
     ```
 
     ```text
-    42e9b25 Record the check in a fresh clone
-    caa0202 Rebuild with conda and run_all.py
-    3fe1d1e Test the results at the end of run_all.py
-    2414bd1 Make everything from data/raw with one command
-    fed9f56 Pin every version in the environment
-    60843ff Clean the hill station's file and compare it with the valley
+    13d8c7a Record the check in a fresh clone
+    64f4a99 Rebuild with conda and run_all.py
+    573d364 Test the results at the end of run_all.py
+    799e5a6 Make everything from data/raw with one command
+    ff01c97 Pin every version in the environment
+    40ac9f0 Clean the hill station's file and compare it with the valley
     ```
 
 **Check:** the check line on GitHub.
@@ -971,7 +958,7 @@ the room. A test you added in the Task makes it `4 passed`.
 2. Remove the stranger's folder.
 
     ```text
-    Remove-Item -Recurse -Force ~/weather-check
+    rm -rf ~/weather-check
     ```
 
 | To | Type |
@@ -980,8 +967,8 @@ the room. A test you added in the Task makes it `4 passed`.
 | make the environment on any laptop | `conda env create -f environment.yml` |
 | make every file from `data/raw` | `python run_all.py` |
 | check the numbers | `python -m pytest` |
-| did every stage run? | `$LASTEXITCODE` |
-| delete what the scripts make | `Remove-Item -Recurse data/processed, results` |
+| did every stage run? | `echo $?` |
+| delete what the scripts make | `rm -r data/processed results` |
 | remove a file from Git and the folder | `git rm FILE` |
 
 ---
@@ -1124,7 +1111,7 @@ system; the tests check numbers, not pixels.
     clean_hill.py: error: argument --min-hours: invalid int value: 'twenty'
     ```
 
-    `$LASTEXITCODE` is `2`.
+    `echo $?` prints `2`.
 
 6. Run the one command: `run_all.py` passes no option, so the default 20
    holds and the tests pass. The checksum of `results/hill.txt` changes to

@@ -8,7 +8,7 @@ bytes, names each of the 148 bytes of `daily.csv`, and sees what a line end,
 an encoding and a file format do to the bytes.
 
 Everything happens in VS Code with the **Hex Editor** extension. No terminal
-today: Seminar 4 installs PowerShell 7 and does the same by command.
+today: Seminar 4 sets up the terminal and does the same by command.
 
 ## Run sheet
 

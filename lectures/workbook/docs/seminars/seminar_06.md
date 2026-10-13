@@ -8,7 +8,8 @@ in class
 temperature, 7.15997 °C; fixes a script with two bugs; commits and pushes.
 
 Everything is typed in VS Code: the scripts in the editor, the commands in
-its terminal (PowerShell 7, the same lines on macOS and Windows).
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
+in both).
 
 ## Run sheet
 
@@ -45,7 +46,7 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
     - **You:** remove the Python extension from your VS Code beforehand, to
       install it with the room in section 2.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
-      for a Mac (`/Users/smilte/...`); Windows prints `C:\Users\smilte\...`.
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
@@ -123,7 +124,7 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
 
 **Check:** `3.14.7` in the terminal and in the Status Bar.
 
-!!! warning "`python` is not recognized, or no `(base)` before `PS`"
+!!! warning "`python: command not found`, or no `(base)` at the start of the prompt"
     conda is not on in this terminal: Seminar 4, section 2.
 
 ---
@@ -194,10 +195,10 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
     exit()
     ```
 
-**Check:** `PS` at the start of the prompt again.
+**Check:** the shell's prompt again: `%` on a Mac, `$` in Git Bash.
 
-!!! warning "`44.888` with `PS` before the line, not `>>>`"
-    PowerShell worked the line out itself. Type `python` first.
+!!! warning "`zsh: command not found: 7.16` or `bash: 7.16: command not found`"
+    The line went to the shell, not to Python. Type `python` first.
 
 !!! question "Task: how many rows should `weather.csv` have?"
     The log is hourly from 1 January 2016 to 31 December 2025. 2016, 2020
@@ -474,7 +475,7 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
 3. The same number as `column_stats.py` gave in Seminar 5.
 
     ```text
-    Get-Content results/temp_c.txt
+    cat results/temp_c.txt
     ```
 
     ```text
@@ -486,7 +487,7 @@ its terminal (PowerShell 7, the same lines on macOS and Windows).
     mean    7.15997
     ```
 
-    No `results/` folder: run `./scripts/rebuild.ps1` first.
+    No `results/` folder: run `./scripts/rebuild.sh` first.
 
 **Check:** `mean 7.15997 °C`, from 87 552 hours.
 

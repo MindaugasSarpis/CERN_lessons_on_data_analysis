@@ -8,7 +8,8 @@ project with an honest uncertainty, 7.16 ± 0.22 °C, and the probability of
 a frost hour in each month, commits the scripts and pushes them.
 
 Everything is typed in VS Code: the scripts in the editor, the runs in its
-terminal (PowerShell 7, with the `weather` environment switched on).
+terminal (zsh on macOS, Git Bash on Windows, with the `weather`
+environment switched on).
 
 ## Run sheet
 
@@ -657,7 +658,7 @@ chosen after looking.
 
 - ♻️ **Reproducibility:** every number comes from a committed script, and
   the README says which one.
-- 🔧 **Tool-agnostic:** the same `python` and `git` lines in PowerShell on
-  macOS and Windows.
+- 🔧 **Tool-agnostic:** the same `python` and `git` lines in zsh on macOS
+  and in Git Bash on Windows.
 - 📁 **Files:** figures stay in `results/`, out of the history; scripts and
   README go in.

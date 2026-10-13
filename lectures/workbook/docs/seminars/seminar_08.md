@@ -10,7 +10,8 @@ cycle, the day's cycle, the yearly means and a histogram; commits and
 pushes the script.
 
 Everything is typed in VS Code: the script in the editor, the commands in
-its terminal (PowerShell 7, the same lines on macOS and Windows). Each
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
+in both). Each
 figure opens in VS Code from the Explorer.
 
 ## Run sheet
@@ -45,7 +46,7 @@ figure opens in VS Code from the Explorer.
     - **You:** remove Matplotlib from your `weather` environment
       (`conda remove matplotlib-base`) to install it with the room.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
-      for a Mac (`/Users/smilte/...`); Windows prints `C:\Users\smilte\...`.
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
@@ -500,7 +501,7 @@ January, −3.9 °C.
    files, run, list them.
 
     ```text
-    Remove-Item results/*.png
+    rm results/*.png
     ```
 
     ```text
@@ -514,8 +515,10 @@ January, −3.9 °C.
     ```
 
     ```text
-    Get-ChildItem results -Name
+    ls -1 results
     ```
+
+    `-1`: one name per line.
 
     ```text
     daily_temp.png

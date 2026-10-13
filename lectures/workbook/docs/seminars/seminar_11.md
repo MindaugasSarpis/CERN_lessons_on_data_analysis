@@ -9,7 +9,7 @@ trains it on 2016 to 2022, tests it on 2023 to 2025 (95.9 ± 0.6 % right),
 compares it with a one-line rule, commits and pushes.
 
 Everything is typed in VS Code: the scripts in the editor, the runs in its
-terminal (PowerShell 7, `weather` environment). Nothing is installed today.
+terminal (zsh on macOS, Git Bash on Windows; `weather` environment). Nothing is installed today.
 
 ## Run sheet
 

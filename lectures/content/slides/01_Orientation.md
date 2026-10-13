@@ -624,7 +624,7 @@ hideInToc: true
 | --- | --- | --- |
 | 02 | The editor VS Code, the project folder, Markdown | A README |
 | 03 | What a file is: bytes and text; first commands in a terminal | Files measured, byte by byte |
-| 04 | PowerShell 7, package managers, conda environments, checksums | Files made by typed lines, an `environment.yml` |
+| 04 | zsh and Git Bash, package managers, conda environments, checksums | Files made by typed lines, an `environment.yml` |
 | 05 | Git | A history of every change |
 | 06–07 | Python, then arrays of numbers | Scripts of your own |
 | 08–13 | Plots, statistics, fitting, cleaning, one command for all | Results that rebuild |

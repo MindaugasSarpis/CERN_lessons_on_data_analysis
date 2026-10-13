@@ -2,12 +2,14 @@
 # Scratch repository for Lecture 05: the weather project as Lecture 04 leaves
 # it, put under Git on 20 Oct 2026 by Smiltė, with a colleague, Tomas, who
 # clones it and pushes one commit that edits a raw file. Every git and
-# PowerShell output on the L05 slides comes from one run of this script.
+# shell output on the L05 slides comes from one run of this script. Shell
+# lines run in bash, whose GNU tools are those of Git Bash; zsh on macOS
+# prints the same, `wc` and `ls` up to padding and order.
 # Author and committer dates are fixed, so the commit ids are the same on
 # every run. (Seminar 5 clones another repository, misc/weather_repo/.)
 #
 # Usage: bash misc/l05_scratch_repo/build.sh [outdir]
-#   needs git (2.56 for the slides' wording), pwsh (PowerShell 7), python3,
+#   needs git (2.56 for the slides' wording), python3, sha256sum, xxd,
 #   unzip. It writes outdir/run/ and prints every command with its output.
 # Rerun it whenever weather_files.py, cli_clean_export.py or
 # cli_column_stats.py change: the blob, tree and commit ids depend on them.
@@ -47,11 +49,12 @@ T() { export GIT_AUTHOR_DATE="2026-10-20T$1:00+0300" GIT_COMMITTER_DATE="2026-10
 say() { echo; echo "##### $*"; }
 fix() { sed -e "s#$REMOTE#$URL#g" -e "s#${REMOTE%.git}#${URL%.git}#g" -e "s#$S/run/#/Users/smilte/#g"; }
 run() { echo "\$ $*"; "$@" 2>&1 | fix; }
-ps() {  # one PowerShell line, run in the current folder
-  printf '%s\n' "$1" > "$S/run/cmd.ps1"
-  echo "PS> $1"
-  timeout 120 pwsh -NoProfile -File "$S/run/cmd.ps1" < /dev/null 2>&1 | fix
+sh_() {  # one shell line, run by bash in the current folder
+  echo "\$ $1"
+  bash -c "$1" 2>&1 | fix
 }
+shasum() { sha256sum "${@:3}"; }   # `shasum -a 256 F` on macOS = `sha256sum F`
+export -f shasum
 
 # ---- the project folder as Lecture 04 leaves it -------------------------
 P="$S/run/weather-project"
@@ -94,10 +97,10 @@ Missing value: `temp_c` is `-999` in 120 rows, 2019-07-22 to 07-26.
 
 ## How to rebuild
 
-In the project folder, in PowerShell 7 on macOS or Windows, with Python from
-Miniforge; the script needs no package beyond it.
+In the project folder, in zsh on macOS or Git Bash on Windows, with Python
+from Miniforge; the script needs no package beyond it.
 
-    ./scripts/rebuild.ps1
+    ./scripts/rebuild.sh
 
 It writes `data/processed/weather_valid.csv`, `weather.csv` without the
 120 rows marked `-999` (87 553 lines), and `data/processed/daily.csv`, the
@@ -108,20 +111,21 @@ cleaned export (148 bytes, SHA-256 `33fe5e77…f705483d`).
 Data: CC0, from the station's operator.
 Scripts and text: MIT, see `LICENSE`.
 EOF
-cat > scripts/rebuild.ps1 <<'EOF'
-$ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
-New-Item -ItemType Directory -Force data/processed | Out-Null
-Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+cat > scripts/rebuild.sh <<'EOF'
+#!/usr/bin/env bash
+set -e
+mkdir -p data/processed
+grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
 python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
 EOF
-ps './scripts/rebuild.ps1'
+chmod 755 scripts/rebuild.sh
+sh_ './scripts/rebuild.sh'
 
 say SIZES
 find . -type f -printf '%s %p\n' | sort -k2
 du -sb . data/raw data/processed
-ps 'python scripts/column_stats.py data/processed/weather_valid.csv temp_c'
-ps 'python scripts/column_stats.py data/raw/weather.csv temp_c'
+sh_ 'python scripts/column_stats.py data/processed/weather_valid.csv temp_c'
+sh_ 'python scripts/column_stats.py data/raw/weather.csv temp_c'
 sed -n 1,4p data/raw/daily_export.csv
 
 # ---- the two copies of the opening ---------------------------------------
@@ -130,26 +134,29 @@ mkdir -p "$S/run/copies/smilte" "$S/run/copies/tomas"
 cp data/raw/daily_export.csv "$S/run/copies/smilte/daily_export.csv"
 sed 's/^1;2025-10-01;6,3$/1;2025-10-01;6,4/' data/raw/daily_export.csv > "$S/run/copies/tomas/daily_export.csv"
 ( cd "$S/run/copies"
-  ps '(Get-FileHash smilte/daily_export.csv, tomas/daily_export.csv).Hash'
-  ps 'Get-ChildItem smilte, tomas -File | Select-Object Directory, Name, Length'
+  sh_ 'shasum -a 256 smilte/daily_export.csv tomas/daily_export.csv'
+  sh_ 'wc -c smilte/daily_export.csv tomas/daily_export.csv'
   run git diff --no-index smilte/daily_export.csv tomas/daily_export.csv )
 
 say HELLO
-ps '"hello" | git hash-object --stdin'
-ps '"hallo" | git hash-object --stdin'
-run sh -c 'printf "hello\r\n" | git hash-object --stdin'
+sh_ 'echo "hello" | git hash-object --stdin'
+sh_ 'echo "hallo" | git hash-object --stdin'
+sh_ 'printf "hello\r\n" | git hash-object --stdin'
+sh_ 'echo "hello" | xxd'
+sh_ 'printf "hello\r\n" | xxd'
 
 say BLOB
 run git hash-object data/raw/weather.csv
 run git hash-object data/raw/daily_export.csv
 cp data/raw/weather.csv "$S/run/copy-of-weather.csv"
 run git hash-object "$S/run/copy-of-weather.csv"
-ps '(Get-FileHash data/raw/weather.csv).Hash'
-ps '(Get-FileHash data/raw/*).Hash'
+sh_ 'shasum -a 256 data/raw/weather.csv'
+sh_ 'shasum -a 256 data/raw/*'
 
 # ---- first commits -------------------------------------------------------
 say INIT
 run git init
+sh_ 'LC_ALL=C ls -a'
 run git status
 T 10:15
 run git add README.md
@@ -159,7 +166,7 @@ cat > .gitignore <<'EOF'
 .DS_Store
 Thumbs.db
 
-# made by scripts/rebuild.ps1
+# made by scripts/rebuild.sh
 data/processed/
 EOF
 run git status --short
@@ -193,9 +200,9 @@ run git cat-file -p HEAD:data/raw
 run git cat-file -p HEAD:scripts
 run git log --oneline
 for c in HEAD HEAD~1 HEAD~2 HEAD~3; do git rev-parse "$c^{tree}"; git ls-tree "$c" README.md; done
-ps 'Get-Content .git/HEAD'
-ps 'Get-Content .git/refs/heads/main'
-ps '(Get-Item .git/refs/heads/main).Length'
+sh_ 'cat .git/HEAD'
+sh_ 'cat .git/refs/heads/main'
+sh_ 'wc -c .git/refs/heads/main'
 
 # ---- a change and its diff -----------------------------------------------
 say DIFF
@@ -222,7 +229,7 @@ run git diff
 run git diff --staged --stat
 run git commit -m "Give the mean temperature in the README"
 C4=$(git rev-parse --short HEAD)
-ps 'Get-Content .git/refs/heads/main'
+sh_ 'cat .git/refs/heads/main'
 run git log --oneline
 run git log -1
 run git show --stat "$C4"
@@ -279,12 +286,12 @@ run git rm data/raw/daily_export.csv
 run git commit -m "Remove the raw export, daily.csv replaces it"
 BAD=$(git rev-parse --short HEAD)
 rm -rf data/processed
-ps './scripts/rebuild.ps1'
+sh_ './scripts/rebuild.sh; echo "exit $?"'
 T 10:50
 run git revert --no-edit "$BAD"
 run git log --oneline -3
 run git show --stat HEAD
-ps './scripts/rebuild.ps1'
+sh_ './scripts/rebuild.sh'
 
 # ---- the remote ----------------------------------------------------------
 say PUSH
@@ -303,9 +310,9 @@ mkdir -p "$S/run/tomas" && cd "$S/run/tomas"
   run git clone "$URL"
   cd weather-project
   run git log --oneline -1
-  ps 'Get-ChildItem data -Name'
-  ps './scripts/rebuild.ps1'
-  ps 'Get-ChildItem data -Name'
+  sh_ 'ls data'
+  sh_ './scripts/rebuild.sh'
+  sh_ 'ls data'
   sed -i 's/^1;2025-10-01;6,3$/1;2025-10-01;6,4/' data/raw/daily_export.csv
   run git diff
   T 11:30
@@ -322,8 +329,8 @@ TOM=$(git rev-parse --short HEAD)
 say BRANCH
 run git switch -c ranges
 run git branch
-ps 'Get-Content .git/HEAD'
-ps 'Get-ChildItem .git/refs/heads -Name'
+sh_ 'cat .git/HEAD'
+sh_ 'ls .git/refs/heads'
 python3 - <<'PY'
 t = open("README.md", encoding="utf-8").read()
 old = """| Column | Meaning | Unit |
@@ -347,7 +354,7 @@ run git diff --stat
 T 11:40
 git add README.md
 run git commit -m "Give the range of each column"
-ps 'Get-ChildItem .git/refs/heads -Name'
+sh_ 'ls .git/refs/heads'
 run git switch main
 run git merge ranges
 run git branch -d ranges
@@ -393,12 +400,14 @@ run git log --oneline -- data/raw/daily_export.csv
 run git blame -s -L 2,2 data/raw/daily_export.csv
 run git blame -L 2,2 data/raw/daily_export.csv
 run git show "$TOM"
-ps 'python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv; (Get-FileHash data/processed/daily.csv).Hash'
+sh_ './scripts/rebuild.sh'
+sh_ 'shasum -a 256 data/processed/daily.csv'
 T 12:05
 run git revert --no-edit "$TOM"
 run git show --stat HEAD
 sed -n 2p data/raw/daily_export.csv
-ps './scripts/rebuild.ps1; (Get-FileHash data/processed/daily.csv).Hash'
+sh_ './scripts/rebuild.sh'
+sh_ 'shasum -a 256 data/processed/daily.csv'
 run git push
 
 say TAG

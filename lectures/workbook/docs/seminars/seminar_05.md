@@ -7,8 +7,8 @@ in class
 that changed its mean temperature, takes it back, commits their own work and
 pushes it to their own GitHub repository.
 
-Everything is typed in PowerShell 7, in the terminal of VS Code, the same on
-macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
+Everything is typed in the terminal of VS Code: zsh on macOS, Git Bash on
+Windows; the lines are the same in both. The **Source Control** view (`Ctrl+Shift+G`, macOS
 `Cmd+Shift+G`) stays open and shows each change.
 
 ## Run sheet
@@ -20,11 +20,11 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 | 0:10 | [2. Clone the weather project](#clone) | `git clone https://github.com/MindaugasSarpis/weather-project.git` | `weather-project` open in VS Code |
 | | **Part 2 · Who changed the mean?** · 35 min | | |
 | 0:20 | [3. Read the history: `git log`](#log) | `git log --oneline` | 7 commits, 2 authors |
-| 0:30 | [4. Find who wrote a line: `git blame`](#blame) | `git blame -L 38,38 README.md` | `2cca38a`, Tomas, 19 Oct |
-| 0:40 | [5. See what a commit changed: `git show`](#show) | `git show 2cca38a -- scripts/rebuild.ps1` | the line that reads the raw file |
+| 0:30 | [4. Find who wrote a line: `git blame`](#blame) | `git blame -L 38,38 README.md` | `85e435e`, Tomas, 19 Oct |
+| 0:40 | [5. See what a commit changed: `git show`](#show) | `git show 85e435e -- scripts/rebuild.sh` | the line that reads the raw file |
 | | **Part 3 · Put it right** · 30 min | | |
-| 0:55 | [6. Take the commit back: `git revert`](#revert) | `git revert 2cca38a --no-edit` | 7.16 in the README again |
-| 1:05 | [7. Rebuild and check the mean](#rebuild) | `./scripts/rebuild.ps1` | `mean 7.15997` |
+| 0:55 | [6. Take the commit back: `git revert`](#revert) | `git revert 85e435e --no-edit` | 7.16 in the README again |
+| 1:05 | [7. Rebuild and check the mean](#rebuild) | `./scripts/rebuild.sh` | `mean 7.15997` |
 | 1:10 | [8. Leave made files out: `.gitignore`](#ignore) | `git add .gitignore` | `working tree clean` |
 | 1:15 | [9. Your own commit](#commit) | `git diff`, `git add`, `git commit` | 10 commits |
 | | **Part 4 · Your copy on GitHub** · 35 min | | |
@@ -61,23 +61,13 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 
 **0:00 · 10 min** · Every commit records a name and an e-mail. Set them once.
 
-1. Open VS Code, then the terminal: **View** > **Terminal**. It shows `PS>`.
+1. Open VS Code, then the terminal: **View** > **Terminal**. The prompt
+   ends in `%` on a Mac (zsh) and `$` on Windows (Git Bash).
 
-    ??? warning "The terminal shows `%` (zsh on a Mac): install PowerShell 7"
-        In the terminal, install Homebrew (it asks for your Mac password):
-
-        ```text
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        ```
-
-        Run the two `Next steps` lines it prints, then:
-
-        ```text
-        brew install --cask powershell
-        ```
-
-        In VS Code: `Cmd+Shift+P` > **Terminal: Select Default Profile** >
-        **pwsh**. Close the terminal (bin icon) and open a new one.
+    ??? warning "Windows: the terminal shows `PS` (PowerShell)"
+        `Ctrl+Shift+P` > **Terminal: Select Default Profile** > **Git Bash**.
+        Close the terminal (bin icon) and open a new one. No **Git Bash** in
+        the list: Git is missing, see step 2.
 
 2. Check Git.
 
@@ -91,7 +81,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 
     Any version from 2.40 on is fine.
 
-    ??? warning "`git` is not recognized: install it"
+    ??? warning "`command not found: git`: install it"
         === "macOS"
 
             ```text
@@ -99,6 +89,9 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
             ```
 
         === "Windows"
+
+            In the Windows terminal (PowerShell), then restart VS Code and
+            take **Git Bash** as in step 1:
 
             ```text
             winget install --id Git.Git -e
@@ -154,10 +147,10 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
    the name `weather-project`.
 
     ```text
-    Move-Item weather-project weather-project-s4
+    mv weather-project weather-project-s4
     ```
 
-    No folder of that name: PowerShell says it cannot find the path. Go on.
+    `No such file or directory`: there is no such folder. Go on.
 
 3. Clone.
 
@@ -213,10 +206,10 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    c964141 (HEAD -> main, origin/main, origin/HEAD) Add a licence
-    2cca38a Take the mean over all rows of weather.csv
-    5cfde5c Write the mean temperature into results and the README
-    2770cef Add the rebuild script
+    0f19f54 (HEAD -> main, origin/main, origin/HEAD) Add a licence
+    85e435e Take the mean over all rows of weather.csv
+    a9c513d Write the mean temperature into results and the README
+    9f28b51 Add the rebuild script
     96f2dc4 Describe the columns and the -999 rows
     2d282c7 Add the two scripts handed out with the data
     3e72263 Add the station's hourly log and the spreadsheet export
@@ -230,10 +223,10 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
       commit id: "3e72263 data"
       commit id: "2d282c7 scripts"
       commit id: "96f2dc4 columns"
-      commit id: "2770cef rebuild"
-      commit id: "5cfde5c 7.16"
-      commit id: "2cca38a Tomas" type: HIGHLIGHT
-      commit id: "c964141 licence"
+      commit id: "9f28b51 rebuild"
+      commit id: "a9c513d 7.16"
+      commit id: "85e435e Tomas" type: HIGHLIGHT
+      commit id: "0f19f54 licence"
     ```
 
 2. The last two commits in full.
@@ -243,13 +236,13 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    commit c96414183e432f7c687b242d4d41e459640f5dda (HEAD -> main, origin/main, origin/HEAD)
+    commit 0f19f54e1b79db8133153f28d76be685862182b5 (HEAD -> main, origin/main, origin/HEAD)
     Author: Smiltė <smilte@example.org>
     Date:   Mon Oct 19 17:05:00 2026 +0300
 
         Add a licence
 
-    commit 2cca38a4df60b96a8756316ce62e292e8e20a7fe
+    commit 85e435ef56fe4308debf88b5b2d546e4000bbce6
     Author: Tomas <tomas@example.org>
     Date:   Mon Oct 19 11:45:00 2026 +0300
 
@@ -286,11 +279,11 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 1. Find the line with 5.78.
 
     ```text
-    Select-String '5.78' README.md
+    grep -n '5.78' README.md
     ```
 
     ```text
-    README.md:38:Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
+    38:Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
     ```
 
 2. Ask who wrote line 38.
@@ -300,7 +293,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    2cca38a (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, …
+    85e435e (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, …
     ```
 
 3. Ask which commits added or removed the text `5.78`.
@@ -310,10 +303,10 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    2cca38a Take the mean over all rows of weather.csv
+    85e435e Take the mean over all rows of weather.csv
     ```
 
-**Check:** commit `2cca38a`, Tomas, 19 October.
+**Check:** commit `85e435e`, Tomas, 19 October.
 
 ---
 
@@ -324,11 +317,11 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 1. The files it changed.
 
     ```text
-    git show --stat 2cca38a
+    git show --stat 85e435e
     ```
 
     ```text
-    commit 2cca38a4df60b96a8756316ce62e292e8e20a7fe
+    commit 85e435ef56fe4308debf88b5b2d546e4000bbce6
     Author: Tomas <tomas@example.org>
     Date:   Mon Oct 19 11:45:00 2026 +0300
 
@@ -336,23 +329,23 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 
         The valid file leaves 120 hours out. The raw file has every hour.
 
-     README.md           | 4 ++--
-     scripts/rebuild.ps1 | 2 +-
+     README.md          | 4 ++--
+     scripts/rebuild.sh | 2 +-
      2 files changed, 3 insertions(+), 3 deletions(-)
     ```
 
-2. The change in `rebuild.ps1`.
+2. The change in `rebuild.sh`.
 
     ```text
-    git show 2cca38a -- scripts/rebuild.ps1
+    git show 85e435e -- scripts/rebuild.sh
     ```
 
     The end of its output:
 
     ```text
-    @@ -3,4 +3,4 @@ $PSNativeCommandUseErrorActionPreference = $true
-     New-Item -ItemType Directory -Force data/processed, results | Out-Null
-     Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+    @@ -3,4 +3,4 @@ set -e
+     mkdir -p data/processed results
+     grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
      python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
     -python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
     +python scripts/column_stats.py data/raw/weather.csv temp_c > results/temp_c.txt
@@ -361,7 +354,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 3. Count the rows that the raw file has and the valid file has not.
 
     ```text
-    (Select-String ',-999,' data/raw/weather.csv).Count
+    grep -c ',-999,' data/raw/weather.csv
     ```
 
     ```text
@@ -375,33 +368,33 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 
 !!! question "Task: where did 7.16 come from, and is the data file the same as Smiltė's?"
     1. Find the commit that first wrote 7.16 into the README, and its day.
-    2. Print `scripts/rebuild.ps1` as it was in that commit.
+    2. Print `scripts/rebuild.sh` as it was in that commit.
     3. Ask Git for the id of `data/raw/weather.csv`, and compare it with
        your neighbour's.
 
 ??? note "Answer"
-    1. `5cfde5c`, 16 October: the older of the two lines.
+    1. `a9c513d`, 16 October: the older of the two lines.
 
         ```text
         git log -S "7.16" --oneline
         ```
 
         ```text
-        2cca38a Take the mean over all rows of weather.csv
-        5cfde5c Write the mean temperature into results and the README
+        85e435e Take the mean over all rows of weather.csv
+        a9c513d Write the mean temperature into results and the README
         ```
 
     2. The last line still reads `weather_valid.csv`.
 
         ```text
-        git show 5cfde5c:scripts/rebuild.ps1
+        git show a9c513d:scripts/rebuild.sh
         ```
 
         ```text
-        $ErrorActionPreference = 'Stop'
-        $PSNativeCommandUseErrorActionPreference = $true
-        New-Item -ItemType Directory -Force data/processed, results | Out-Null
-        Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+        #!/usr/bin/env bash
+        set -e
+        mkdir -p data/processed results
+        grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
         python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
         python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
         ```
@@ -432,12 +425,12 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 1. Revert Tomas's commit.
 
     ```text
-    git revert 2cca38a --no-edit
+    git revert 85e435e --no-edit
     ```
 
     ```text
     Auto-merging README.md
-    [main 884e155] Revert "Take the mean over all rows of weather.csv"
+    [main 4caed6e] Revert "Take the mean over all rows of weather.csv"
      Date: Tue Oct 20 10:32:00 2026 +0300
      2 files changed, 3 insertions(+), 3 deletions(-)
     ```
@@ -451,21 +444,21 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    884e155 (HEAD -> main) Revert "Take the mean over all rows of weather.csv"
-    c964141 (origin/main, origin/HEAD) Add a licence
-    2cca38a Take the mean over all rows of weather.csv
+    4caed6e (HEAD -> main) Revert "Take the mean over all rows of weather.csv"
+    0f19f54 (origin/main, origin/HEAD) Add a licence
+    85e435e Take the mean over all rows of weather.csv
     ```
 
     ```mermaid
     gitGraph
-      commit id: "5cfde5c 7.16"
-      commit id: "2cca38a Tomas" type: HIGHLIGHT
-      commit id: "c964141 licence"
-      commit id: "884e155 revert" type: REVERSE
+      commit id: "a9c513d 7.16"
+      commit id: "85e435e Tomas" type: HIGHLIGHT
+      commit id: "0f19f54 licence"
+      commit id: "4caed6e revert" type: REVERSE
     ```
 
 3. In `README.md` the **Result** says 7.16 °C again. Smiltė's licence of
-   `c964141` is still there.
+   `0f19f54` is still there.
 
 **Check:** 7.16 in the README, eight commits.
 
@@ -478,7 +471,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 1. Run the rebuild script.
 
     ```text
-    ./scripts/rebuild.ps1
+    ./scripts/rebuild.sh
     ```
 
     ```text
@@ -488,7 +481,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 2. Read the result.
 
     ```text
-    Get-Content results/temp_c.txt
+    cat results/temp_c.txt
     ```
 
     ```text
@@ -519,7 +512,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 
 **Check:** `mean 7.15997`, and two untracked folders.
 
-!!! warning "`python` is not recognized"
+!!! warning "`command not found: python`"
     Miniforge is missing ([Seminar 4](seminar_04.md), section 1). The script
     made `data/processed/weather_valid.csv` before it stopped; go on.
 
@@ -558,7 +551,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    [main 6765177] Leave out the files the rebuild script makes
+    [main dfc516d] Leave out the files the rebuild script makes
      1 file changed, 2 insertions(+)
      create mode 100644 .gitignore
     ```
@@ -623,7 +616,7 @@ flowchart LR
     ```
 
     ```text
-    [main 4076046] Record the check of the mean
+    [main 36abc3c] Record the check of the mean
      1 file changed, 2 insertions(+)
     ```
 
@@ -735,8 +728,8 @@ flowchart LR
 
         ```text
         From https://github.com/your-username/weather-project
-           4076046..9a5ae80  main       -> origin/main
-        Updating 4076046..9a5ae80
+           36abc3c..05cb5dc  main       -> origin/main
+        Updating 36abc3c..05cb5dc
         Fast-forward
          README.md | 1 +
          1 file changed, 1 insertion(+)
@@ -756,7 +749,7 @@ flowchart LR
 
         ```text
         To https://github.com/your-username/weather-project.git
-           9a5ae80..1da24de  main -> main
+           05cb5dc..970fa60  main -> main
         ```
 
 ---
@@ -820,7 +813,7 @@ Seminar 6 starts from this repository.
     ```
 
     ```text
-    Updating 1da24de..c592876
+    Updating 970fa60..2888a56
     Fast-forward
      README.md | 1 +
      1 file changed, 1 insertion(+)
@@ -921,13 +914,13 @@ gitGraph
     ```
 
     ```text
-    *   52a0aaa (HEAD -> main) Merge branch 'wording'
+    *   a794b93 (HEAD -> main) Merge branch 'wording'
     |\
-    | * d669a9d (wording) Spell out the unit
-    * | 597d7ac Round the Fahrenheit mean to one decimal
+    | * 6b5b4ba (wording) Spell out the unit
+    * | 774103c Round the Fahrenheit mean to one decimal
     |/
-    * c592876 (origin/main, origin/HEAD) Give the mean in Fahrenheit
-    * 1da24de Add a line
+    * 2888a56 (origin/main, origin/HEAD) Give the mean in Fahrenheit
+    * 970fa60 Add a line
     ```
 
 **Check:** no `<<<<<<<` left in `README.md`, `git status` clean.
@@ -963,7 +956,7 @@ gitGraph
 
 - ♻️ **Reproducibility:** the README's number is checked against the script
   that makes it, and the history says who changed what, when and why.
-- 🔧 **Tool-agnostic:** the same lines in PowerShell 7 on macOS and Windows;
+- 🔧 **Tool-agnostic:** the same lines in zsh on macOS and Git Bash on Windows;
   the Source Control view shows the same state.
 - 📁 **Files:** made files stay out of the repository; raw data is restored
   from the history in one command.

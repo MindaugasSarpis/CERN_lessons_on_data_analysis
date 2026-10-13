@@ -95,7 +95,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">Every answer comes from a typed line in PowerShell 7, the same line on macOS and on Windows.</div>
+<div class="note-text mt-md">Every answer comes from a typed line: in zsh on macOS, in Git Bash on Windows, almost always the same line.</div>
 
 <!--
 **Say:** one question per part of the lecture. The answer column fills up as we go; it closes the lecture.
@@ -109,7 +109,7 @@ hideInToc: true
 
 # The **Shell**
 
-Step 1: one shell on every laptop, and the columns of the file.
+Step 1: a shell on every laptop, and the columns of the file.
 
 <!--
 (~1 min)
@@ -133,7 +133,7 @@ The window. It passes what is typed to the shell and shows what comes back.
 
 ## 🐚 **Shell**
 
-A program that reads a typed line, runs what the line names, and waits for the next line: PowerShell, zsh, bash.
+A program that reads a typed line, runs what the line names, and waits for the next line: zsh, bash.
 
 </div>
 
@@ -141,7 +141,7 @@ A program that reads a typed line, runs what the line names, and waits for the n
 
 ## ⚙️ **Program**
 
-A file the computer can run: `pwsh`, `python`, `git`. The shell itself is one.
+A file the computer can run: `head`, `grep`, `python`, `git`. The shell itself is one.
 
 </div>
 
@@ -151,14 +151,14 @@ A file the computer can run: `pwsh`, `python`, `git`. The shell itself is one.
 
 | | Comes with the system | This course |
 | --- | --- | --- |
-| macOS | zsh, in the app Terminal | PowerShell 7, `pwsh` |
-| Windows | Windows PowerShell 5.1 | PowerShell 7, `pwsh` |
+| macOS | zsh, in the app Terminal | zsh |
+| Windows | Windows PowerShell 5.1 | Git Bash: bash and the Unix commands, installed with Git |
 
 </div>
 
 <!--
-**Say:** the terminal is only the window. The shell inside it does the work, and it can be changed without changing the window. One shell on both systems means one line on every slide.
-**If asked:** PowerShell 7 is free and open source, made by Microsoft for Windows, macOS and Linux. Windows PowerShell 5.1 is no longer developed.
+**Say:** the terminal is only the window. The shell inside it does the work. zsh and bash are close relatives: almost every line of today runs in both unchanged.
+**If asked:** Linux usually has bash. Windows PowerShell is a different family of shell; the course uses it only for the first install lines on Windows.
 (~2 min)
 -->
 
@@ -171,7 +171,7 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-PS> Get-Content -TotalCount 2 data/raw/weather.csv
+$ head -n 2 data/raw/weather.csv
 ```
 
 </div>
@@ -182,16 +182,16 @@ PS> Get-Content -TotalCount 2 data/raw/weather.csv
 | --- | --- | --- |
 | 1 | waits for `Enter`, then reads the line | the whole line |
 | 2 | splits it into words at the spaces | 4 words; `"weather station.csv"` in quotes stays one |
-| 3 | replaces what it knows: `$HOME`, `$file`, `( … )` | nothing here |
-| 4 | finds the command the first word names | `Get-Content`, part of PowerShell |
-| 5 | runs it with the other words, shows its output | the first 2 lines of the file |
-| 6 | notes whether it worked, prints the prompt | `PS>` again |
+| 3 | replaces what it knows: `$HOME`, `~`, `*.csv` | nothing here |
+| 4 | finds the program the first word names | `head`, the file `/usr/bin/head` |
+| 5 | starts it with the other words, shows its output | the first 2 lines of the file |
+| 6 | keeps its exit status in `$?`, prints the prompt | `$` again |
 
 </div>
 
 <!--
 **Say:** every line today goes through these six steps. Step 2 is why a space in a file name breaks a line: the shell sees two names.
-**If asked:** `$?` holds the result of step 6: `True` when the last command worked.
+**If asked:** `cd` is no program: the shell does it itself, a builtin. A program cannot change the shell's folder.
 (~2 min)
 -->
 
@@ -199,126 +199,107 @@ PS> Get-Content -TotalCount 2 data/raw/weather.csv
 hideInToc: true
 ---
 
-# macOS: Homebrew, Then **PowerShell 7**
+# macOS: Homebrew, Git and **Miniforge**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🍎 **In the app Terminal, which starts zsh**
+## 🍎 **In the app Terminal**
 
 ```text
+% echo $SHELL
+/bin/zsh
 % /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ==> Installation successful!
-% brew install --cask powershell
-🍺  powershell was successfully installed!
-% pwsh
-PowerShell 7.6.6
-PS> $PSVersionTable.PSVersion.ToString()
-7.6.6
+% brew install git
+% brew install --cask miniforge
+% conda init zsh
 ```
 
 </div>
 
-<div class="note-text mt-md">Homebrew is a package manager for macOS: it installs a program by name. The first line installs Homebrew itself, the second PowerShell 7. <code>pwsh</code> starts it.</div>
+<div class="note-text mt-md">zsh is the shell of every Mac since 2019. Homebrew is a package manager for macOS: it installs a program by name. Then Git, then Miniforge, which brings Python and <code>conda</code>.</div>
 
 <!--
-**Say:** two lines, typed once per laptop. After them the Mac has the same shell as every Windows laptop in the room.
-**If asked:** the Homebrew installer asks for the Mac's login password, and nothing appears while it is typed. On Apple Silicon it ends with "Next steps": two lines to paste, which put `/opt/homebrew/bin` on the list of folders the shell searches.
-(~2 min)
+**Say:** typed once per laptop. `conda init zsh` lets zsh find `conda` and `python` in every new terminal.
+**If asked:** the Homebrew installer asks for the Mac's login password, and nothing appears while it is typed. On Apple Silicon it ends with "Next steps": two lines to paste, which put `/opt/homebrew/bin` on the list of folders the shell searches. An account older than 2019 may still start bash: `chsh -s /bin/zsh`.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Windows: **PowerShell 7** with winget
+# Windows: Git Bash with **winget**
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
-## 🪟 **In Windows PowerShell 5.1: Start, `PowerShell`**
+## 🪟 **In Windows PowerShell: Start, `PowerShell`**
 
 ```text
-PS C:\Users\smilte> winget install --id Microsoft.PowerShell --source winget
-Found PowerShell [Microsoft.PowerShell] Version 7.6.6
+PS C:\Users\smilte> winget install --id Git.Git -e
+Found Git [Git.Git] Version 2.56.0
 …
 Successfully installed
-PS C:\Users\smilte> pwsh
-PowerShell 7.6.6
-PS C:\Users\smilte> $PSVersionTable.PSVersion.ToString()
-7.6.6
+PS C:\Users\smilte> winget install --id CondaForge.Miniforge3 -e
 ```
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-🖥️ VS Code, both systems: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), **Terminal: Select Default Profile**, **pwsh**. Every new terminal of VS Code then starts PowerShell 7.
+🖥️ Then in VS Code: `Ctrl+Shift+P`, **Terminal: Select Default Profile**, **Git Bash**. In the new Git Bash terminal: `conda init bash`, and open a new terminal.
 
 </div>
 
 <!--
-**Say:** winget is the package manager that comes with Windows; the line names the package by its id.
-**If asked:** winget asks once to accept its source agreements: `Y`. A university laptop may ask for an administrator password. On Windows the list offers PowerShell (that is 7) and Windows PowerShell (5.1): pick PowerShell.
-(~2 min)
+**Say:** winget is the package manager that comes with Windows; `--id` names the package, `-e` asks for that exact id. Git for Windows brings Git Bash: bash with `ls`, `grep`, `head` and the rest. After this, Windows PowerShell is not needed again.
+**If asked:** winget asks once to accept its source agreements: `Y`. A university laptop may ask for an administrator password. Git's installer offers many choices; the defaults are right.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Read the Prompt, List the **Folder**
+# Read the **Prompt**
 
-<div class="card card-info card-glass pad-compact mt-sm">
-
-```text
-PS /Users/smilte/Documents/weather-project>        the prompt on macOS
-PS C:\Users\smilte\Documents\weather-project>      the prompt on Windows
-```
-
-</div>
-
-<div class="grid-2 mt-sm gap-md">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🍎 **macOS**
+## 🍎 **macOS · zsh**
 
 ```text
-PS> Get-ChildItem
-
-UnixMode    User   … Size Name
---------    ----     ---- ----
-drwxr-xr-x  smilte …  128 data
-drwxr-xr-x  smilte …   64 results
-drwxr-xr-x  smilte …  128 scripts
--rw-r--r--  smilte …  688 README.md
+smilte@MacBook-Air weather-project % ls
+README.md  data  results  scripts
 ```
+
+User and computer, the folder, `%`.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🪟 **Windows**
+## 🪟 **Windows · Git Bash**
 
 ```text
-PS> Get-ChildItem
-
-Mode    LastWriteTime  Length Name
-----    -------------  ------ ----
-d----   13/10/2026 …          data
-d----   13/10/2026 …          results
-d----   13/10/2026 …          scripts
--a---   13/10/2026 …      688 README.md
+smilte@LAPTOP MINGW64 ~/Documents/weather-project
+$ ls
+README.md  data/  results/  scripts/
 ```
 
-</div>
+User and computer, `MINGW64`, the folder; `$` on the next line.
 
 </div>
 
-<div class="note-text mt-md">The prompt: <code>PS</code>, the folder the shell is in, the <strong>working directory</strong>, then <code>&gt;</code>. Every path on a line starts there. The slides shorten the prompt to <code>PS&gt;</code>.</div>
+</div>
+
+<div class="note-text mt-md">The folder in the prompt is the <strong>working directory</strong>: every path on a line starts there. On the slides a line starts with <code>$</code> and works in both shells; zsh prints <code>%</code> there.</div>
 
 <!--
-**Say:** the same command, the same four names. The table differs by system: `d` marks a folder on both, and the size of a file is `Size` on macOS, `Length` on Windows.
-**If asked:** a folder's `Size` on macOS is the space its list of names takes, not its contents. `Get-ChildItem -Name` prints the names alone.
+**Ask:** read the two prompts aloud, part by part.
+**Say:** `~` is the home folder. Git Bash marks folders with `/` in `ls`.
+**If asked:** MINGW64 names the Unix layer that Git for Windows runs on.
 (~2 min)
 -->
 
@@ -326,32 +307,27 @@ d----   13/10/2026 …          scripts
 hideInToc: true
 ---
 
-# The Commands of Lecture 03, in **PowerShell**
+# The Commands of Lecture 03
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-| To | Command | Short name, on both systems |
-| --- | --- | --- |
-| see where the shell is | `Get-Location` | `pwd` |
-| list a folder | `Get-ChildItem data/raw` | `dir`, `gci` |
-| change folder | `Set-Location data` | `cd` |
-| make a folder | `New-Item -ItemType Directory backup` | `ni` |
-| copy, move or rename | `Copy-Item`, `Move-Item FROM TO` | `copy`, `move` |
-| delete, no undo | `Remove-Item backup -Recurse` | `del` |
-| read a file | `Get-Content data/raw/weather.csv` | `gc`, `type` |
-| measure a file | `(Get-Item data/raw/weather.csv).Length` | |
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ On macOS, `ls`, `cat`, `cp`, `mv`, `rm` and `mkdir` start the Mac's own programs, with other options and output. Write the names of this table.
+| To | zsh · Git Bash |
+| --- | --- |
+| see where the shell is | `pwd` |
+| list a folder | `ls data/raw` |
+| change folder, one up, home | `cd data`, `cd ..`, `cd ~` |
+| make a folder | `mkdir -p data/processed` |
+| copy, move or rename | `cp FROM TO`, `mv FROM TO` |
+| delete, no undo | `rm FILE`, `rm -r FOLDER` |
+| read a file | `cat data/raw/daily_export.csv` |
+| measure a file in bytes | `wc -c data/raw/weather.csv` |
+| look at its bytes | `xxd data/processed/daily.csv` |
 
 </div>
 
 <!--
-**Say:** nothing new here: Lecture 03 typed these. PowerShell names a command Verb-Noun: what it does, then to what.
-**If asked:** on Windows `ls` and `cat` are short names for `Get-ChildItem` and `Get-Content`; on macOS PowerShell leaves those words to the system's programs.
+**Say:** nothing new here: Lecture 03 typed these. They are the same words in zsh and in Git Bash.
+**If asked:** `-p` makes `mkdir` quiet when the folder exists and makes the folders above it too. `hexdump` is on a Mac but not in Git Bash; `xxd` is in both.
 (~2 min)
 -->
 
@@ -369,7 +345,7 @@ hideInToc: true
 | `weather-project/data` | `raw/weather.csv` |
 | `weather-project/scripts` | `../data/raw/weather.csv` |
 | anywhere, on Smiltė's Mac | `/Users/smilte/Documents/weather-project/data/raw/weather.csv` |
-| anywhere, on Smiltė's Windows laptop | `C:\Users\smilte\Documents\weather-project\data\raw\weather.csv` |
+| anywhere, in Git Bash on Smiltė's Windows laptop | `/c/Users/smilte/Documents/weather-project/data/raw/weather.csv` |
 
 </div>
 
@@ -380,7 +356,7 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** `..` is the folder one level up, `.` the folder the shell is in, `~` the home folder. PowerShell on Windows reads `/` and `\` alike, so the slides write `/`.
+**Say:** `..` is the folder one level up, `.` the folder the shell is in, `~` the home folder. Git Bash writes the drive `C:` as `/c`, and `/` between folders.
 (~2 min)
 -->
 
@@ -392,8 +368,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Get-Content -TotalCount 2 data/raw/weather.csv
+$ head -n 2 data/raw/weather.csv
 time,temp_c,humidity_pct,wind_ms
 2016-01-01T00:00,-4.4,93,2.5
 ```
@@ -404,17 +382,17 @@ time,temp_c,humidity_pct,wind_ms
 
 <div class="card card-secondary card-glass pad-compact">
 
-## ⚙️ **Command**
+## ⚙️ **Program**
 
-The first word: `Get-Content`.
+The first word: `head`.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 🎚️ **Parameter**
+## 🎚️ **Option**
 
-How to work, a name with a dash and its value: `-TotalCount 2`.
+How to work, a dash and a letter, often with a value: `-n 2`.
 
 </div>
 
@@ -429,8 +407,7 @@ What to work on: the path.
 </div>
 
 <!--
-**Say:** the order of named parameters does not matter: `Get-Content data/raw/weather.csv -TotalCount 2` is the same line.
-**If asked:** PowerShell ignores case, so `-totalcount` works too. `-Head` is another name for `-TotalCount`.
+**Say:** options come before the arguments. `-n` and `-N` are different options: case counts.
 (~2 min)
 -->
 
@@ -442,29 +419,29 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> $file = 'data/raw/weather.csv'
-PS> $file
+$ file=data/raw/weather.csv
+$ echo $file
 data/raw/weather.csv
-PS> (Get-Content $file).Count
-87673
-PS> $HOME
+$ head -n 1 $file
+time,temp_c,humidity_pct,wind_ms
+$ echo $HOME
 /Users/smilte
-PS> $PSVersionTable.PSVersion.ToString()
-7.6.6
 ```
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A **variable** is a name the shell keeps a value under: `$` and the name. `=` puts a value in; the name alone reads it. PowerShell sets some itself: `$HOME`, `$PSVersionTable`, and after every line `$?`.
+A **variable** is a name the shell keeps a value under. `name=value` puts it in, with no spaces around `=`; `$name` reads it. The shell sets some itself: `$HOME`, `$SHELL`, and after every line `$?`.
 
 </div>
 
 <!--
-**Say:** step 3 of the shell: `$file` is replaced by its value before `Get-Content` runs. A variable lasts until the terminal closes.
-**If asked:** on Windows `$HOME` is `C:\Users\smilte`. `$env:PATH` reads a variable of the system, which every program sees.
+**Say:** step 3 of the shell: `$file` is replaced by its value before `head` starts. A variable lasts until the terminal closes.
+**If asked:** in Git Bash `$HOME` is `/c/Users/smilte`. With spaces, `file = x`, the shell would look for a program named `file`.
 (~2 min)
 -->
 
@@ -481,11 +458,9 @@ hideInToc: true
 ## ⌨️ **Type a start, press `Tab`**
 
 ```text
-Get-Con       Tab →  Get-Content
-… -Tot        Tab →  … -TotalCount
-… da          Tab →  … ./data
-… ./data/r    Tab →  … ./data/raw
-… ./data/raw/w  Tab →  … ./data/raw/weather.csv
+head -n 2 da          Tab →  head -n 2 data/
+head -n 2 data/r      Tab →  head -n 2 data/raw/
+head -n 2 data/raw/w  Tab →  …/raw/weather.csv
 ```
 
 </div>
@@ -502,16 +477,16 @@ A name that `Tab` completed exists. If `Tab` adds nothing, no name fits: the lin
 
 <div class="card card-info card-glass pad-compact table-compact mt-md">
 
-| `↑` `↓` | `Ctrl+R` | `Ctrl+C` | `clear` |
-| --- | --- | --- | --- |
-| the earlier lines | search them | stop what runs | empty the window |
+| `↑` `↓` | `Ctrl+R` | `Ctrl+C` | `Ctrl+A`, `Ctrl+E` | `clear` |
+| --- | --- | --- | --- | --- |
+| the earlier lines | search them | stop what runs | start, end of the line | empty the window |
 
 </div>
 
 <!--
-**Live:** type `Get-Con`, `Tab`, a space, `-Tot`, `Tab`, ` 2 da`, `Tab`, `/r`, `Tab`, `/w`, `Tab`, `Enter`; then `↑` brings the line back.
+**Live:** type `head -n 2 da`, then `Tab` three times, `Enter`; then `↑` brings the line back.
 **Ask:** count the keys: how many were typed, how many did Tab add?
-**If asked:** on Windows Tab writes `.\data\raw\weather.csv`. With two names that fit, Tab goes through them in turn; `Ctrl+Space` lists them.
+**If asked:** with two names that fit, a second Tab lists them.
 (~3 min)
 -->
 
@@ -519,57 +494,57 @@ A name that `Tab` completed exists. If `Tab` adds nothing, no name fits: the lin
 hideInToc: true
 ---
 
-# Find a Command and Its **Parameters**
+# Where a Command Is, and Its **Help**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact">
-
-## 🔎 **Every command for files: noun `Item`**
+## 💻 **zsh · Git Bash**
 
 ```text
-PS> Get-Command -Noun Item
-
-CommandType     Name
------------     ----
-Cmdlet          Clear-Item
-Cmdlet          Copy-Item
-Cmdlet          Get-Item
-Cmdlet          Move-Item
-Cmdlet          New-Item
-Cmdlet          Remove-Item
-…
+$ type cd head
+cd is a shell builtin
+head is /usr/bin/head
 ```
 
 </div>
 
+<div class="grid-2 mt-md gap-md">
+
 <div class="card card-secondary card-glass pad-compact">
 
-## 📖 **The parameters of one**
+## 🍎 **macOS · zsh**
 
 ```text
-PS> Get-Help Get-Content
-
+% man head
+HEAD(1)   General Commands Manual   HEAD(1)
 NAME
-    Get-Content
-
-SYNTAX
-    Get-Content [-Path] <string[]>
-    [-TotalCount <long>] [-Tail <int>]
-    [-Raw] [-Encoding <Encoding>] …
-
-ALIASES
-    gc
-    type
+     head – display first lines of a file
 ```
+
+`Space` scrolls, `q` leaves.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🪟 **Windows · Git Bash**
+
+```text
+$ head --help
+Usage: head [OPTION]... [FILE]...
+Print the first 10 lines of each FILE
+to standard output.
+```
+
+Git Bash has no `man`.
 
 </div>
 
 </div>
 
 <!--
-**Say:** the Verb-Noun names make PowerShell searchable: the verbs are few (Get, Set, New, Remove, Copy, Move), so a guess is often right.
-**If asked:** PowerShell 7 ships without the long help texts. `Get-Help Get-Content -Online` opens them in the browser; `Update-Help` downloads them once. A cmdlet is a command built into PowerShell.
+**Say:** `type` says what a word is: a builtin of the shell, or a program in a folder. The help lists every option of a program.
+**If asked:** the Mac's `head` has fewer options than Git Bash's; the course uses only the ones both have.
 (~2 min)
 -->
 
@@ -579,28 +554,52 @@ hideInToc: true
 
 # Read an Error **Message**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
 
 ```text
-PS> Get-Contnt data/raw/weather.csv
-Get-Contnt: The term 'Get-Contnt' is not recognized as a name of a cmdlet,
-function, script file, or executable program.
-PS> Get-Content data/raw/wether.csv
-Get-Content: Cannot find path '/Users/smilte/Documents/weather-project/data/
-raw/wether.csv' because it does not exist.
-PS> Get-Content -TotalCount 2 weather station.csv
-Get-Content: A positional parameter cannot be found that accepts argument
-'station.csv'.
+% hed -n 2 data/raw/weather.csv
+zsh: command not found: hed
+% head -n 2 data/raw/wether.csv
+head: data/raw/wether.csv: No such
+file or directory
+% head -n 2 weather station.csv
+head: weather: No such file or directory
+head: station.csv: No such file or
+directory
 ```
 
 </div>
 
-<div class="note-text mt-md">The word before the first colon says who complains: the shell found no command, or the command found no file, or the shell split a name in two.</div>
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · Git Bash**
+
+```text
+$ hed -n 2 data/raw/weather.csv
+bash: hed: command not found
+$ head -n 2 data/raw/wether.csv
+head: cannot open 'data/raw/wether.csv'
+for reading: No such file or directory
+$ head -n 2 weather station.csv
+head: cannot open 'weather' for reading:
+No such file or directory
+head: cannot open 'station.csv' for
+reading: No such file or directory
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The word before the first colon says who complains: the shell found no program, or the program found no file. The third line: a space split one name into two.</div>
 
 <!--
 **Ask:** what went wrong in each line? Let the room read before you explain.
 **Say:** an error message is an answer. Read it before retyping.
-**If asked:** on Windows the path in the second message is `C:\Users\smilte\Documents\weather-project\data\raw\wether.csv`.
 (~2 min)
 -->
 
@@ -654,12 +653,14 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Get-Content data/raw/weather.csv -TotalCount 3
+$ head -n 3 data/raw/weather.csv
 time,temp_c,humidity_pct,wind_ms
 2016-01-01T00:00,-4.4,93,2.5
 2016-01-01T01:00,-4.8,95,2.6
-PS> Get-Content data/raw/weather.csv -Tail 2
+$ tail -n 2 data/raw/weather.csv
 2025-12-31T22:00,-9.9,98,4.1
 2025-12-31T23:00,-11.3,100,4.2
 ```
@@ -681,9 +682,11 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> (Get-Content data/raw/weather.csv).Count
-87673
+$ wc -l data/raw/weather.csv
+87673 data/raw/weather.csv
 ```
 
 </div>
@@ -698,10 +701,12 @@ One header line and one line per hour: 87 672 + 1 = **87 673**.
 
 </div>
 
+<div class="note-text mt-md">On macOS <code>wc</code> pads the number with spaces: <code>&nbsp;&nbsp;&nbsp;87673 data/raw/weather.csv</code>.</div>
+
 <!--
-**Live:** `(Get-Content data/raw/weather.csv).Count`, before the slide.
+**Live:** `wc -l data/raw/weather.csv`, before the slide.
 **Say:** the count agrees with the calendar, so no hour is missing and none is there twice. Rows can still be wrong, but there are as many as there should be.
-**If asked:** the round brackets run the command first; `.Count` counts the lines it returned. `Get-Content data/raw/weather.csv | Measure-Object -Line` gives 87 673 as well.
+**If asked:** `wc`, word count: `-l` lines, `-w` words, `-c` bytes.
 (~3 min)
 -->
 
@@ -713,9 +718,11 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> (Get-Item data/raw/weather.csv).Length
-2515215
+$ wc -c data/raw/weather.csv
+2515215 data/raw/weather.csv
 ```
 
 </div>
@@ -752,7 +759,7 @@ hideInToc: true
 Step 3: which rows are not measurements?
 
 <!--
-**Say:** small commands, each doing one thing, joined so that one's output is the next one's input.
+**Say:** small programs, each doing one thing, joined so that one's output is the next one's input.
 (~1 min)
 -->
 
@@ -764,14 +771,16 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Get-Content data/raw/weather.csv -TotalCount 3 > results/first.txt
-PS> (Get-Item results/first.txt).Length
-91
-PS> Get-Content data/raw/wether.csv > results/none.txt
-Get-Content: Cannot find path '…/data/raw/wether.csv' because it does not exist.
-PS> (Get-Item results/none.txt).Length
-0
+$ head -n 3 data/raw/weather.csv > results/first.txt
+$ wc -c results/first.txt
+91 results/first.txt
+$ head -n 3 data/raw/wether.csv > results/none.txt
+head: cannot open 'data/raw/wether.csv' for reading: No such file or directory
+$ wc -c results/none.txt
+0 results/none.txt
 ```
 
 </div>
@@ -780,15 +789,15 @@ PS> (Get-Item results/none.txt).Length
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📤 **Output stream**
+## 📤 **Standard output**
 
-What a command returns. `>` writes it into a file, and first **empties** that file. `>>` adds at the end.
+What a program prints. `>` writes it into a file, and first **empties** that file. `>>` adds at the end.
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-## ⚠️ **Error stream**
+## ⚠️ **Standard error**
 
 Errors go on their own stream and still reach the screen. `2>` writes them into a file.
 
@@ -797,8 +806,8 @@ Errors go on their own stream and still reach the screen. `2>` writes them into 
 </div>
 
 <!--
-**Say:** 91 bytes are the three lines: 33 + 29 + 29. The failed line made an empty file: `>` emptied it before anything came.
-**If asked:** on Windows `>` ends each line with CRLF: 94 bytes. Never write into the file a command reads: `>` empties it first.
+**Say:** 91 bytes are the three lines: 33 + 29 + 29. The failed line made an empty file: `>` emptied it before anything came. Every program also reads a third stream, standard input: the keyboard, or a pipe.
+**If asked:** never write into the file a command reads: `>` empties it first.
 (~2 min)
 -->
 
@@ -834,12 +843,14 @@ Prediction: line 5000 is `2016-07-27T06:00`. A typed line can check it.
 hideInToc: true
 ---
 
-# Join Two Commands: the **Pipe**
+# Join Two Programs: the **Pipe**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Get-Content data/raw/weather.csv -TotalCount 5000 | Select-Object -Last 1
+$ head -n 5000 data/raw/weather.csv | tail -n 1
 2016-07-27T06:00,18.2,71,1.1
 ```
 
@@ -851,7 +862,7 @@ PS> Get-Content data/raw/weather.csv -TotalCount 5000 | Select-Object -Last 1
 
 ## 🔗 **`A | B`**
 
-The output stream of `A` becomes the input of `B`. No file stands between them.
+The standard output of `A` becomes the standard input of `B`. No file stands between them.
 
 </div>
 
@@ -859,16 +870,15 @@ The output stream of `A` becomes the input of `B`. No file stands between them.
 
 ## 🧩 **A filter**
 
-A command that reads a pipe and passes on part of it. Here: 5000 lines in, 1 out, line 5000.
+A program that reads its input and passes on part of it. Here: 5000 lines in, 1 out, line 5000.
 
 </div>
 
 </div>
 
 <!--
-**Live:** `Get-Content data/raw/weather.csv -TotalCount 5000 | Select-Object -Last 1`, before the slide.
-**Say:** two commands, each simple, together answer a question neither answers alone: what is on line 5000. A pipe composes them, as `f(g(x))` composes functions.
-**If asked:** a line that ends in `|` goes on in the next line; PowerShell shows `>>` there.
+**Live:** `head -n 5000 data/raw/weather.csv | tail -n 1`, before the slide.
+**Say:** two programs, each simple, together answer a question neither answers alone. A pipe composes them, as `f(g(x))` composes functions. Both run at once: `tail` reads while `head` writes.
 (~3 min)
 -->
 
@@ -876,46 +886,27 @@ A command that reads a pipe and passes on part of it. Here: 5000 lines in, 1 out
 hideInToc: true
 ---
 
-# Lines or **Objects**
+# Pick a Column: `cut`
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact">
-
-## 📃 **`Get-Content`: lines of text**
+## 💻 **zsh · Git Bash**
 
 ```text
-PS> Get-Content data/raw/weather.csv |
->> Select-Object -First 2
-time,temp_c,humidity_pct,wind_ms
-2016-01-01T00:00,-4.4,93,2.5
+$ cut -d, -f2 data/raw/weather.csv | head -n 3
+temp_c
+-4.4
+-4.8
+$ cut -d, -f1,2 data/raw/weather.csv | tail -n 1
+2025-12-31T23:00,-11.3
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧱 **`Import-Csv`: one object per row**
-
-```text
-PS> Import-Csv data/raw/weather.csv |
->> Select-Object -First 2 time, temp_c
-
-time             temp_c
-----             ------
-2016-01-01T00:00 -4.4
-2016-01-01T01:00 -4.8
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-md"><code>Import-Csv</code> reads line 1 as the names. Each later row becomes an object with four <strong>properties</strong>, picked by name: <code>$_.temp_c</code> is the temperature of the row at hand.</div>
+<div class="note-text mt-md">A pipe carries lines of text. <code>cut</code> splits each line at the separator <code>-d,</code> and keeps the fields <code>-f2</code>, counted from 1. The header is a line like any other.</div>
 
 <!--
-**Say:** a PowerShell pipe carries objects. A line of text is one kind of object; a row with named values is another, and that is what makes columns easy.
-**If asked:** zsh and bash pipes carry only text: there a column is picked by its number, `cut -d, -f2`.
+**Ask:** before running it, which field number has `temp_c`? `head -n 1` shows the names in order.
 (~2 min)
 -->
 
@@ -927,12 +918,12 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Import-Csv data/raw/weather.csv | Sort-Object humidity_pct |
->> Select-Object -First 1 -ExpandProperty humidity_pct
+$ tail -n +2 data/raw/weather.csv | cut -d, -f3 | sort | head -n 1
 100
-PS> Import-Csv data/raw/weather.csv | Sort-Object {[int]$_.humidity_pct} |
->> Select-Object -First 1 -ExpandProperty humidity_pct
+$ tail -n +2 data/raw/weather.csv | cut -d, -f3 | sort -n | head -n 1
 34
 ```
 
@@ -940,12 +931,12 @@ PS> Import-Csv data/raw/weather.csv | Sort-Object {[int]$_.humidity_pct} |
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ The lowest humidity: 100 %? `Import-Csv` reads every value as text, and text is compared character by character: `1` comes before `3`. `[int]` turns each value into a number first: 34 %.
+⚠️ The lowest humidity: 100 %? `sort` compares text character by character, and `1` comes before `3`. `sort -n` compares numbers: 34 %.
 
 </div>
 
 <!--
-**Say:** the braces hold a small piece of code run for each row; `$_` is the row at hand. `[int]` is a whole number, `[double]` a number with a decimal point.
+**Say:** `tail -n +2` prints from line 2 on, so the header stays out.
 **Ask:** where would `9` stand in a text sort of 34, 9 and 100? Last.
 (~2 min)
 -->
@@ -958,15 +949,13 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-```text
-PS> Import-Csv data/raw/weather.csv | Sort-Object {[double]$_.temp_c} -Stable |
->> Select-Object -First 3
+## 💻 **zsh · Git Bash**
 
-time             temp_c humidity_pct wind_ms
-----             ------ ------------ -------
-2019-07-22T00:00 -999   76           3.2
-2019-07-22T01:00 -999   81           3.0
-2019-07-22T02:00 -999   80           3.4
+```text
+$ sort -t, -k2,2n data/raw/weather.csv | head -n 3
+2019-07-22T00:00,-999,76,3.2
+2019-07-22T01:00,-999,81,3.0
+2019-07-22T02:00,-999,80,3.4
 ```
 
 </div>
@@ -978,9 +967,8 @@ time             temp_c humidity_pct wind_ms
 </div>
 
 <!--
-**Live:** build the line one filter at a time: `Import-Csv data/raw/weather.csv | Select-Object -First 3`, then `↑` and add `Sort-Object {[double]$_.temp_c} -Stable |` before `Select-Object`.
-**Say:** a sorted column shows its ends first, and a wrong value usually sits at an end. The other columns of those rows look normal: only the thermometer was down.
-**If asked:** `-Stable` keeps rows of equal value in file order. The warmest hour, the last after sorting, is 2018-06-18 at 15:00, 32.4 °C.
+**Live:** `sort -t, -k2,2n data/raw/weather.csv | head -n 3`; then `↑` and change `head -n 3` to `tail -n 1`: the warmest hour, 2018-06-18 at 15:00, 32.4 °C.
+**Say:** `-t,` names the separator, `-k2,2n` sorts by field 2 as a number. A sorted column shows its ends first, and a wrong value usually sits at an end. The other columns of those rows look normal: only the thermometer was down.
 (~4 min)
 -->
 
@@ -988,16 +976,16 @@ time             temp_c humidity_pct wind_ms
 hideInToc: true
 ---
 
-# Keep Rows by a Condition: `Where-Object`
+# Keep Rows by a Condition: `awk`
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> (Import-Csv data/raw/weather.csv |
->> Where-Object { [double]$_.temp_c -lt -273.15 }).Count
+$ awk -F, '$2 < -273.15' data/raw/weather.csv | wc -l
 120
-PS> (Import-Csv data/raw/weather.csv |
->> Where-Object { [double]$_.temp_c -lt -50 -or [double]$_.temp_c -gt 50 }).Count
+$ awk -F, 'NR > 1 && ($2 < -50 || $2 > 50)' data/raw/weather.csv | wc -l
 120
 ```
 
@@ -1005,17 +993,17 @@ PS> (Import-Csv data/raw/weather.csv |
 
 <div class="card card-info card-glass pad-compact table-compact mt-md">
 
-| `-lt` | `-gt` | `-eq` | `-or` | `-and` |
-| --- | --- | --- | --- | --- |
-| less than | greater than | equal | either | both |
+| `-F,` | `$2` | `NR` | `<` `>` `==` | `&&` | `\|\|` |
+| --- | --- | --- | --- | --- | --- |
+| the separator | field 2 | the line number | compare | both | either |
 
 </div>
 
 <div class="note-text mt-md">Physics, without knowing the mark: below absolute zero, −273.15 °C, is impossible. 120 rows. A wider test, outside −50 to 50 °C for a station like this, finds the same 120 and no others.</div>
 
 <!--
-**Say:** `Where-Object` keeps each row for which the code in braces is true. A test by what is possible finds a mark that nobody told us about.
-**If asked:** PowerShell writes comparisons as words, because `<` and `>` belong to the shell: `>` writes into a file.
+**Say:** `awk` runs a small program on every line and prints the lines for which the condition is true. A test by what is possible finds a mark that nobody told us about.
+**If asked:** `NR > 1` leaves out the header: compared as text, `temp_c` counts as greater than 50. On macOS `wc -l` pads the 120 with spaces.
 (~2 min)
 -->
 
@@ -1023,20 +1011,19 @@ PS> (Import-Csv data/raw/weather.csv |
 hideInToc: true
 ---
 
-# Find Rows with a Text: `Select-String`
+# Find Rows with a Text: `grep`
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-```text
-PS> (Select-String ',-999,' data/raw/weather.csv).Count
-120
-PS> Select-String ',-999,' data/raw/weather.csv |
->> Select-Object -First 1 -Last 1 LineNumber, Line
+## 💻 **zsh · Git Bash**
 
-LineNumber Line
----------- ----
-     31154 2019-07-22T00:00,-999,76,3.2
-     31273 2019-07-26T23:00,-999,66,1.9
+```text
+$ grep -c ',-999,' data/raw/weather.csv
+120
+$ grep -n ',-999,' data/raw/weather.csv | head -n 1
+31154:2019-07-22T00:00,-999,76,3.2
+$ grep -n ',-999,' data/raw/weather.csv | tail -n 1
+31273:2019-07-26T23:00,-999,66,1.9
 ```
 
 </div>
@@ -1048,7 +1035,7 @@ LineNumber Line
 </div>
 
 <!--
-**Say:** `Select-String` keeps the lines that contain a text. Each match is an object with its line number and its line.
+**Say:** `grep` keeps the lines that contain a text: `-c` counts them, `-n` puts the line number in front.
 **If asked:** keep the commas in `',-999,'`: they make sure the whole value is −999, and not part of a longer number.
 (~2 min)
 -->
@@ -1063,19 +1050,18 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-```text
-PS> Import-Csv data/raw/weather.csv |
->> Group-Object {$_.time.Substring(0,4)} -NoElement
+## 💻 **zsh · Git Bash**
 
-Count Name
------ ----
- 8784 2016
- 8760 2017
- 8760 2018
- 8760 2019
- 8784 2020
+```text
+$ cut -c1-4 data/raw/weather.csv | uniq -c
+      1 time
+   8784 2016
+   8760 2017
+   8760 2018
+   8760 2019
+   8784 2020
 …
- 8760 2025
+   8760 2025
 ```
 
 </div>
@@ -1084,7 +1070,7 @@ Count Name
 
 🧮 365 × 24 = 8760 rows, 366 × 24 = 8784 in a leap year.
 
-`Substring(0,4)` takes the first four characters of `time`: the year. `Group-Object` counts the rows of each year.
+`cut -c1-4` keeps the first four characters, the year. `uniq -c` counts equal lines that stand next to each other.
 
 </div>
 
@@ -1094,6 +1080,7 @@ Count Name
 
 <!--
 **Say:** the mark does not remove a row; it sits where the number should be. Every program that reads the column reads −999 as a number.
+**If asked:** the file is in time order, so each year is one block. On unsorted data, `sort` comes before `uniq -c`.
 (~2 min)
 -->
 
@@ -1105,15 +1092,14 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> $days = Import-Csv data/raw/weather.csv |
->> Group-Object { $_.time.Substring(0,10) } -NoElement
-PS> $days.Count
+$ tail -n +2 data/raw/weather.csv | cut -c1-10 | uniq | wc -l
 3653
-PS> ($days | Where-Object Count -ne 24).Count
+$ tail -n +2 data/raw/weather.csv | cut -c1-10 | uniq -c | grep -vc ' 24 '
 0
-PS> (Import-Csv data/raw/weather.csv | Group-Object time -NoElement |
->> Where-Object Count -gt 1).Count
+$ cut -d, -f1 data/raw/weather.csv | sort | uniq -d | wc -l
 0
 ```
 
@@ -1126,8 +1112,7 @@ PS> (Import-Csv data/raw/weather.csv | Group-Object time -NoElement |
 </div>
 
 <!--
-**Say:** the count of step 2 could also come out right with one hour missing and another twice. Grouping by day and by hour rules that out.
-**If asked:** `Where-Object Count -ne 24` is the short form of `Where-Object { $_.Count -ne 24 }`.
+**Say:** the count of step 2 could also come out right with one hour missing and another twice. Grouping by day and by hour rules that out. `grep -v` keeps the lines without the text; `uniq -d` prints only lines that occur twice.
 (~2 min)
 -->
 
@@ -1155,10 +1140,12 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> (Select-String ',-' data/raw/weather.csv).Count
+$ grep -c ',-' data/raw/weather.csv
 22472
-PS> (Select-String ',-[0-9]+\.[0-9],' data/raw/weather.csv).Count
+$ grep -cE ',-[0-9]+\.[0-9],' data/raw/weather.csv
 22352
 ```
 
@@ -1186,7 +1173,7 @@ A minus, digits, a point, one digit. Such a text is a **regular expression**, re
 
 <!--
 **Say:** the temperatures have one decimal, −999 has none. The pattern uses that difference.
-**If asked:** `Select-String` reads every pattern as a regular expression; `-SimpleMatch` makes it read a fixed text.
+**If asked:** `-E` lets grep read `+`, `?`, `{ }`, `|` and `( )` as signs.
 (~2 min)
 -->
 
@@ -1196,25 +1183,37 @@ hideInToc: true
 
 # Quotes Keep a Pattern from the **Shell**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
 
 ```text
-PS> Select-String ,-999, data/raw/weather.csv
-ParserError:
-Line |
-   1 |  Select-String ,-999, data/raw/weather.csv
-     |                ~
-     | Missing argument in parameter list.
-PS> echo '$HOME' "$HOME"
-$HOME
-/Users/smilte
+% grep -cE ,-[0-9]+\.[0-9], data/raw/weather.csv
+zsh: no matches found: ,-[0-9]+.[0-9],
 ```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · Git Bash**
+
+```text
+$ grep -cE ,-[0-9]+\.[0-9], data/raw/weather.csv
+22472
+$ echo ,-[0-9]+\.[0-9],
+,-[0-9]+.[0-9],
+```
+
+</div>
 
 </div>
 
 <div class="card card-info card-glass pad-compact table-compact mt-md">
 
-| Signs the shell reads before the command runs | `,` `$` `\|` `>` `;` `(` `{` `#` `@` space |
+| Signs the shell reads before the program runs | `*` `?` `[ ]` `$` `\|` `>` `<` `;` `&` `\` `~` `#` space |
 | --- | --- |
 | `'single quotes'` | pass every character on unchanged |
 | `"double quotes"` | keep spaces, but replace `$name` by its value |
@@ -1222,9 +1221,8 @@ $HOME
 </div>
 
 <!--
-**Say:** this is step 3 of the shell: it replaces what it knows before the command starts. `,` makes a list in PowerShell, so the shell stopped at it. A pattern goes in single quotes, always.
-**If asked:** `$HOME` is a variable: a name the shell keeps a value under, here the home folder.
-(~2 min)
+**Say:** step 3 of the shell. zsh read `[0-9]` as a file-name pattern, found no such file and stopped. bash passed it on, but ate the backslash: `.` fits any character, and the count is wrong without a word of warning. A pattern goes in single quotes, always.
+(~3 min)
 -->
 
 ---
@@ -1245,7 +1243,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">A backslash takes the special meaning away from the sign after it: <code>.</code> fits any character, <code>\.</code> only a point.</div>
+<div class="note-text mt-md">A backslash takes the special meaning away from the sign after it: <code>.</code> fits any character, <code>\.</code> only a point. Each count is <code>grep -c</code> with the pattern in single quotes.</div>
 
 <!--
 **Ask:** why do 85 132 lines, not all 87 672, have a two-digit value between commas? Humidity of 100 has three digits: 87 672 − 85 132 = 2540 hours at 100 %.
@@ -1260,13 +1258,15 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> (Select-String '7.16' data/raw/weather.csv).Count
+$ grep -c '7.16' data/raw/weather.csv
 600
-PS> Select-String '7.16' data/raw/weather.csv | Select-Object -First 2
-data/raw/weather.csv:162:2016-01-07T16:00,-0.3,72,4.4
-data/raw/weather.csv:402:2016-01-17T16:00,0.5,80,5.6
-PS> (Select-String '7\.16' data/raw/weather.csv).Count
+$ grep -n '7.16' data/raw/weather.csv | head -n 2
+162:2016-01-07T16:00,-0.3,72,4.4
+402:2016-01-17T16:00,0.5,80,5.6
+$ grep -c '7\.16' data/raw/weather.csv
 0
 ```
 
@@ -1281,7 +1281,7 @@ PS> (Select-String '7\.16' data/raw/weather.csv).Count
 <!--
 **Ask:** before the count: how many lines will `'7.16'` find? The room usually says none.
 **Say:** a pattern that "works" can still find the wrong lines. The count is the check, and a look at two of the lines.
-**If asked:** `-SimpleMatch` reads the pattern as a fixed text: 0 lines too.
+**If asked:** `grep -F` reads the pattern as a fixed text: 0 lines too.
 (~2 min)
 -->
 
@@ -1321,28 +1321,26 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-```text
-PS> Get-Content data/raw/weather.csv | Group-Object { $_ -replace '[0-9]', '9' } -NoElement |
->> Sort-Object Count -Descending | Select-Object Count, Name
+## 💻 **zsh · Git Bash**
 
-Count Name
------ ----
-34547 9999-99-99T99:99,99.9,99,9.9
-30355 9999-99-99T99:99,9.9,99,9.9
-19709 9999-99-99T99:99,-9.9,99,9.9
- 1897 9999-99-99T99:99,-9.9,999,9.9
+```text
+$ sed 's/[0-9]/9/g' data/raw/weather.csv | sort | uniq -c | sort -rn
+  34547 9999-99-99T99:99,99.9,99,9.9
+  30355 9999-99-99T99:99,9.9,99,9.9
+  19709 9999-99-99T99:99,-9.9,99,9.9
+   1897 9999-99-99T99:99,-9.9,999,9.9
 …
-  120 9999-99-99T99:99,-999,99,9.9
+    120 9999-99-99T99:99,-999,99,9.9
 …
-    1 time,temp_c,humidity_pct,wind_ms
+      1 time,temp_c,humidity_pct,wind_ms
 ```
 
 </div>
 
-<div class="note-text mt-md"><code>-replace '[0-9]', '9'</code> writes every digit as 9, so lines of one form become one text. 13 forms: 11 with a temperature of one decimal, the 120 rows of <code>-999</code>, and the header.</div>
+<div class="note-text mt-md"><code>sed 's/[0-9]/9/g'</code> writes every digit as 9, so lines of one form become one text. 13 forms: 11 with a temperature of one decimal, the 120 rows of <code>-999</code>, and the header.</div>
 
 <!--
-**Say:** 87 673 lines read as 13. Every form but two has the temperature as digits, a point and one digit; that is the pattern of a measured row.
+**Say:** 87 673 lines read as 13. Every form but two has the temperature as digits, a point and one digit; that is the pattern of a measured row. `s/A/B/g` replaces every A by B; `sort -rn` puts the largest count first.
 **If asked:** the forms differ by the number of digits: `99.9` a warm hour, `-9.9` a frost, `999` humidity of 100 %, `99.9` in the last column wind of 10 m/s or more.
 (~2 min)
 -->
@@ -1367,8 +1365,7 @@ hideInToc: true
 <div class="card card-info card-glass pad-compact mt-md">
 
 ```text
-PS> (Select-String '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' `
->> data/raw/weather.csv).Count
+$ grep -cE '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' data/raw/weather.csv
 87552
 ```
 
@@ -1376,7 +1373,6 @@ PS> (Select-String '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' `
 
 <!--
 **Say:** one piece at a time, each checked by its count. The count drops by 120 at the temperature, and the last two columns drop nothing.
-**If asked:** the backtick at the end of a line continues it on the next line.
 (~2 min)
 -->
 
@@ -1388,14 +1384,16 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> $row = '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$'
-PS> (Select-String $row data/raw/weather.csv -NotMatch).Count
+$ row='^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$'
+$ grep -vcE "$row" data/raw/weather.csv
 121
-PS> Select-String $row data/raw/weather.csv -NotMatch | Select-Object -First 2
-data/raw/weather.csv:1:time,temp_c,humidity_pct,wind_ms
-data/raw/weather.csv:31154:2019-07-22T00:00,-999,76,3.2
-PS> (Select-String '^2019-07-2[2-6]T' data/raw/weather.csv).Count
+$ grep -vnE "$row" data/raw/weather.csv | head -n 2
+1:time,temp_c,humidity_pct,wind_ms
+31154:2019-07-22T00:00,-999,76,3.2
+$ grep -c '^2019-07-2[2-6]T' data/raw/weather.csv
 120
 ```
 
@@ -1408,7 +1406,7 @@ PS> (Select-String '^2019-07-2[2-6]T' data/raw/weather.csv).Count
 </div>
 
 <!--
-**Say:** `$row` keeps the pattern under a name, so it is typed once. `-NotMatch` keeps the lines that do not fit.
+**Say:** `$row` keeps the pattern under a name, so it is typed once; the double quotes keep it one word and let `$row` be replaced. `-v` keeps the lines that do not fit.
 **Ask:** what would a count of 125 have told us? Four more rows of some other form, to be read one by one.
 (~2 min)
 -->
@@ -1434,11 +1432,13 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
-PS> (Get-Content data/processed/weather_valid.csv).Count
-87553
-PS> (Select-String ',-999,' data/processed/weather_valid.csv).Count
+$ grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
+$ wc -l data/processed/weather_valid.csv
+87553 data/processed/weather_valid.csv
+$ grep -c ',-999,' data/processed/weather_valid.csv
 0
 ```
 
@@ -1451,7 +1451,7 @@ PS> (Select-String ',-999,' data/processed/weather_valid.csv).Count
 </div>
 
 <!--
-**Say:** `-NotMatch` keeps the lines without the mark; `-Raw` passes on only the text of each line, without file name and line number.
+**Say:** `-v` keeps the lines without the mark.
 (~2 min)
 -->
 
@@ -1461,35 +1461,16 @@ hideInToc: true
 
 # The Mean With and Without the **−999 Rows**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="card card-warning card-glass pad-compact">
-
-## 📥 **`data/raw/weather.csv`**
+## 💻 **zsh · Git Bash**
 
 ```text
-PS> Import-Csv data/raw/weather.csv |
->> Measure-Object temp_c -Average
-
-Count             : 87672
-Average           : 5.78279610365909
+$ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/raw/weather.csv
+87672 5.7828
+$ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/processed/weather_valid.csv
+87552 7.15997
 ```
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ⚙️ **`weather_valid.csv`**
-
-```text
-PS> Import-Csv data/processed/weather_valid.csv |
->> Measure-Object temp_c -Average
-
-Count             : 87552
-Average           : 7.15996550621346
-```
-
-</div>
 
 </div>
 
@@ -1500,9 +1481,8 @@ Average           : 7.15996550621346
 </div>
 
 <!--
-**Say:** five lost days, 0.14 % of the rows, moved a ten-year mean by 1.38 °C. A mark written as a number is counted as a number by every program. Step 5: 7.16 without the marks, 5.78 with them.
-**If asked:** `Measure-Object` also prints empty `Sum`, `Maximum`, `Minimum` lines and the property name; they are left out here.
-(~2 min)
+**Say:** `awk` adds field 2 of every line after the header into `s`, counts the lines in `n`, and at the end prints the count and `s / n`. Five lost days, 0.14 % of the rows, moved a ten-year mean by 1.38 °C. Step 5: 7.16 without the marks, 5.78 with them.
+(~3 min)
 -->
 
 ---
@@ -1579,14 +1559,14 @@ print("mean   ", f"{math.fsum(values) / len(values):.6g}")
 
 | Line | What it does |
 | --- | --- |
-| 32 | reads the file row by row, line 1 as the names, like `Import-Csv` |
+| 32 | reads the file row by row, line 1 as the names of the columns |
 | 37 | turns every value of the column into a number, −999 too |
 | 48 | the sum divided by the count, to six digits |
 
 </div>
 
 <!--
-**Say:** nobody has to write Python today, but anyone can read what it does: it counts every row, so it will give 5.78 on the raw file.
+**Say:** nobody has to write Python today, but anyone can read what it does: it counts every row, so it will give 5.78 on the raw file. It picks the column by name, `awk` by number.
 (~2 min)
 -->
 
@@ -1594,45 +1574,42 @@ print("mean   ", f"{math.fsum(values) / len(values):.6g}")
 hideInToc: true
 ---
 
-# Where a Command **Comes From**
+# Where a Program **Comes From**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-```text
-PS> Get-Command Get-Content, pwsh, python | Select-Object CommandType, Name, Source
+## 🍎 **macOS · zsh**
 
-CommandType Name        Source
------------ ----        ------
-     Cmdlet Get-Content Microsoft.PowerShell.Management
-Application pwsh        /usr/local/bin/pwsh
-Application python      /opt/homebrew/Caskroom/miniforge/base/bin/python
+```text
+% type head git python
+head is /usr/bin/head
+git is /opt/homebrew/bin/git
+python is /opt/homebrew/Caskroom/miniforge/base/bin/python
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-secondary card-glass pad-compact mt-sm">
 
-<div class="card card-secondary card-glass pad-compact">
+## 🪟 **Windows · Git Bash**
 
-## 🧱 **Cmdlet**
-
-Part of PowerShell, on every laptop that has it.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📦 **Application**
-
-A program in a folder that its installer made. Without Python installed, `python` is not found.
+```text
+$ type head git python
+head is /usr/bin/head
+git is /mingw64/bin/git
+python is /c/Users/smilte/miniforge3/python
+```
 
 </div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📦 `head` came with the system, or with Git Bash. `git` and `python` are in folders their installers made. Without Miniforge installed: `python: not found`.
 
 </div>
 
 <!--
-**Say:** step 4 of the shell, finding the command: its own cmdlets first, then programs in folders.
-**If asked:** on Windows the sources are `C:\Program Files\PowerShell\7\pwsh.exe` and `C:\Users\smilte\miniforge3\python.exe`.
+**Say:** step 4 of the shell, finding the program: each lives in a folder, and the shell knows where to look.
 (~2 min)
 -->
 
@@ -1642,17 +1619,37 @@ hideInToc: true
 
 # How the Shell Finds a Program: **PATH**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
 
 ```text
-PS> $env:PATH -split [IO.Path]::PathSeparator
+% echo $PATH | tr ':' '\n'
 /opt/homebrew/Caskroom/miniforge/base/bin
 /opt/homebrew/Caskroom/miniforge/base/condabin
 /opt/homebrew/bin
-/usr/local/bin
 /usr/bin
 /bin
 ```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🪟 **Windows · Git Bash**
+
+```text
+$ echo $PATH | tr ':' '\n'
+/c/Users/smilte/miniforge3
+/c/Users/smilte/miniforge3/Scripts
+/mingw64/bin
+/usr/bin
+/c/Windows/system32
+```
+
+</div>
 
 </div>
 
@@ -1662,7 +1659,7 @@ PS> $env:PATH -split [IO.Path]::PathSeparator
 
 ## ➡️ **Searched top to bottom**
 
-`PATH` is a variable that holds a list of folders. The shell takes the first folder with a program of the typed name: of two Pythons, the first runs.
+`PATH` holds a list of folders, separated by `:`. The shell takes the first folder with a program of the typed name: of two Pythons, the first runs.
 
 </div>
 
@@ -1677,8 +1674,8 @@ The program lands in a folder, and the folder goes on `PATH`. A terminal reads `
 </div>
 
 <!--
-**Say:** "not recognized as a name of a cmdlet … or executable program" means: in none of these folders.
-**If asked:** `-split` cuts the text at `:` on macOS and `;` on Windows; `[IO.Path]::PathSeparator` is the right one on each. A real laptop lists ten to twenty folders.
+**Say:** "command not found" means: in none of these folders. `tr ':' '\n'` puts each folder on its own line.
+**If asked:** the lists are shortened; a real laptop shows ten to twenty folders.
 (~2 min)
 -->
 
@@ -1690,8 +1687,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-(weather) PS> conda install numpy
+(weather) $ conda install numpy
 The following NEW packages will be INSTALLED:
 
   libblas            …::libblas-3.11.0-…
@@ -1730,13 +1729,12 @@ hideInToc: true
 
 | Job | 🍎 Homebrew, `brew` | 🪟 `winget`, part of Windows |
 | --- | --- | --- |
-| Find a name | `brew search powershell` | `winget search powershell` |
-| Install | `brew install --cask powershell` | `winget install --id Microsoft.PowerShell` |
-| Install Git | `brew install git` | `winget install --id Git.Git` |
-| Install Miniforge | `brew install --cask miniforge` | `winget install --id CondaForge.Miniforge3` |
+| Find a name | `brew search git` | `winget search git` |
+| Install Git | `brew install git` | `winget install --id Git.Git -e` |
+| Install Miniforge | `brew install --cask miniforge` | `winget install --id CondaForge.Miniforge3 -e` |
 | What is installed | `brew list` | `winget list` |
 | Newer versions | `brew upgrade` | `winget upgrade --all` |
-| Remove | `brew uninstall git` | `winget uninstall --id Git.Git` |
+| Remove | `brew uninstall git` | `winget uninstall --id Git.Git -e` |
 
 </div>
 
@@ -1747,8 +1745,8 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** the same jobs in every package manager, with other words. Both lines run in PowerShell 7 too. Miniforge brings Python and `conda`, a package manager for Python's packages.
-**If asked:** a cask is a Homebrew package for an app with an installer. Linux has `apt` or `dnf`, with the same jobs.
+**Say:** the same jobs in every package manager, with other words. Miniforge brings Python and `conda`, a package manager for Python's packages.
+**If asked:** a cask is a Homebrew package for an app with an installer. winget also runs in Git Bash once Git is there. Linux has `apt` or `dnf`, with the same jobs.
 (~2 min)
 -->
 
@@ -1760,10 +1758,12 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-(base) PS> conda --version
+(base) $ conda --version
 conda 26.7.2
-(base) PS> conda config --show channels
+(base) $ conda config --show channels
 channels:
   - conda-forge
 ```
@@ -1792,7 +1792,7 @@ An **environment** is a folder with one Python and its packages. The installer m
 
 <!--
 **Say:** brew and winget install a program for the whole laptop; conda installs into one environment at a time.
-**If asked:** after installing Miniforge, `conda init powershell` is typed once, then a new terminal shows `(base)`. Miniforge is conda with conda-forge as its only channel, free to use.
+**If asked:** `conda init zsh` on a Mac and `conda init bash` in Git Bash, once, then a new terminal shows `(base)`. Miniforge is conda with conda-forge as its only channel, free to use.
 (~2 min)
 -->
 
@@ -1807,7 +1807,7 @@ hideInToc: true
 💥 A script written for numpy 1.26, run where numpy 2.5 is installed:
 
 ```text
-PS> python -c "import numpy as np; print(np.float_)"
+$ python -c "import numpy as np; print(np.float_)"
 AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float64` instead.
 ```
 
@@ -1816,10 +1816,10 @@ AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float6
 <div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
-(base) PS> conda create -n weather python=3.14
-(base) PS> conda activate weather
-(weather) PS> (Get-Command python).Source
-/opt/homebrew/Caskroom/miniforge/base/envs/weather/bin/python
+(base) $ conda create -n weather python=3.14
+(base) $ conda activate weather
+(weather) $ type python
+python is /opt/homebrew/Caskroom/miniforge/base/envs/weather/bin/python
 ```
 
 </div>
@@ -1828,7 +1828,7 @@ AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float6
 
 <!--
 **Say:** nothing in the old script changed; a package on the laptop did. `-n` names the environment, `python=3.14` asks for its Python.
-**If asked:** on Windows the environment is `C:\Users\smilte\miniforge3\envs\weather`. It holds 24 packages, 221 MB. `conda deactivate` returns to `base`; `conda env remove -n weather` deletes the folder.
+**If asked:** in Git Bash the environment is `/c/Users/smilte/miniforge3/envs/weather`. It holds 24 packages, 221 MB. `conda deactivate` returns to `base`; `conda env remove -n weather` deletes the folder.
 (~2 min)
 -->
 
@@ -1840,9 +1840,11 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-(weather) PS> conda env export --from-history > environment.yml
-(weather) PS> Get-Content environment.yml
+(weather) $ conda env export --from-history > environment.yml
+(weather) $ cat environment.yml
 name: weather
 channels:
   - conda-forge
@@ -1887,8 +1889,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-(weather) PS> python scripts/column_stats.py data/processed/weather_valid.csv temp_c
+(weather) $ python scripts/column_stats.py data/processed/weather_valid.csv temp_c
 file    data/processed/weather_valid.csv
 column  temp_c
 rows    87552
@@ -1901,14 +1905,14 @@ mean    7.15997
 
 <div class="card card-secondary card-glass pad-compact table-compact mt-md">
 
-| File | `Measure-Object` | `column_stats.py` |
+| File | `awk` | `column_stats.py` |
 | --- | --- | --- |
-| `data/raw/weather.csv` | 5.78279610365909 | 5.7828 |
-| `data/processed/weather_valid.csv` | 7.15996550621346 | 7.15997 |
+| `data/raw/weather.csv` | 5.7828 | 5.7828 |
+| `data/processed/weather_valid.csv` | 7.15997 | 7.15997 |
 
 </div>
 
-<div class="note-text mt-md">Step 6: two programs, written apart, agree to the sixth digit. The script's line: the program <code>python</code>, its file, then two words for the script.</div>
+<div class="note-text mt-md">Step 6: two programs, written apart, agree to six digits. The script's line: the program <code>python</code>, its file, then two words for the script.</div>
 
 <!--
 **Say:** an agreement between two independent programs rules out a slip in either one. The coldest hour of the valid rows, −16.3 °C, is a plausible winter night.
@@ -1945,11 +1949,12 @@ nr;date;temp_c
 ## ⚙️ **Cleaned by one line**
 
 ```text
-PS> python scripts/clean_export.py `
->> data/raw/daily_export.csv data/processed/daily.csv
+$ python scripts/clean_export.py \
+    data/raw/daily_export.csv \
+    data/processed/daily.csv
 9 rows written to data/processed/daily.csv
-PS> (Get-Item data/processed/daily.csv).Length
-148
+$ wc -c data/processed/daily.csv
+148 data/processed/daily.csv
 ```
 
 </div>
@@ -1960,7 +1965,7 @@ PS> (Get-Item data/processed/daily.csv).Length
 
 <!--
 **Say:** header `date,temp_c` and LF: 12 bytes. Eight rows like `2025-10-01,6.3`: 15 each. `2025-10-06,10.4`: 16. 12 + 8 × 15 + 16 = 148.
-**If asked:** the script states the line ending, `newline="\n"`, so it writes the same 148 bytes on every system.
+**If asked:** a `\` at the end of a line continues the command on the next line. The script states the line ending, `newline="\n"`, so it writes the same 148 bytes on every system.
 (~2 min)
 -->
 
@@ -1986,9 +1991,22 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 🍎 **macOS · zsh**
+
 ```text
-PS> (Get-FileHash data/raw/weather.csv).Hash
-3F1AD06D3BB5773EAC79DFC964CDF8AF998689EF58AA8623F25D2050FBE00756
+% shasum -a 256 data/raw/weather.csv
+3f1ad06d3bb5773eac79dfc964cdf8af998689ef58aa8623f25d2050fbe00756  data/raw/weather.csv
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+## 🪟 **Windows · Git Bash**
+
+```text
+$ sha256sum data/raw/weather.csv
+3f1ad06d3bb5773eac79dfc964cdf8af998689ef58aa8623f25d2050fbe00756  data/raw/weather.csv
 ```
 
 </div>
@@ -2014,7 +2032,8 @@ Another 64 digits, all of them, as Lecture 03 showed: `6.3` against `6.4` in one
 </div>
 
 <!--
-**Ask:** Smiltė's README names `3F1A…0756`. Read the first and the last four digits of yours: the same file.
+**Say:** two program names, one checksum, in the same form: 64 digits, two spaces, the file.
+**Ask:** Smiltė's README names `3f1a…0756`. Read the first and the last four digits of yours: the same file.
 (~2 min)
 -->
 
@@ -2022,14 +2041,17 @@ Another 64 digits, all of them, as Lecture 03 showed: `6.3` against `6.4` in one
 hideInToc: true
 ---
 
-# What a Checksum **Tells**
+# Check Against the **Source**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **Git Bash** · on macOS `shasum -a 256 -c`
+
 ```text
-PS> $sent = '3F1AD06D3BB5773EAC79DFC964CDF8AF998689EF58AA8623F25D2050FBE00756'
-PS> (Get-FileHash data/raw/weather.csv).Hash -eq $sent
-True
+$ cat weather.sha256
+3f1ad06d3bb5773eac79dfc964cdf8af998689ef58aa8623f25d2050fbe00756  data/raw/weather.csv
+$ sha256sum -c weather.sha256
+data/raw/weather.csv: OK
 ```
 
 </div>
@@ -2055,8 +2077,8 @@ Which byte, or which copy is right. That takes the checksum from the source: fro
 </div>
 
 <!--
-**Say:** `-eq` compares two texts and ignores case, so the lower-case digits of another program match as well.
-**If asked:** nobody has found two different files with the same SHA-256. A checksum sent by the same e-mail as a forged file proves nothing: it must come by another route.
+**Say:** `-c` reads a list of checksums and file names, computes each one again and compares. The two programs write and read the same format, so a list made on a Mac checks on Windows.
+**If asked:** a checksum sent by the same e-mail as a forged file proves nothing: it must come by another route.
 (~2 min)
 -->
 
@@ -2068,31 +2090,32 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **Git Bash** · on macOS `shasum -a 256`
+
 ```text
-PS> (Get-FileHash data/raw/*).Hash > data/checksums.txt
-PS> Compare-Object (Get-Content data/checksums.txt) (Get-FileHash data/raw/*).Hash
-PS>
+$ sha256sum data/raw/* > data/checksums.txt
+$ sha256sum -c data/checksums.txt
+data/raw/daily_export.csv: OK
+data/raw/weather.csv: OK
 ```
 
 After `6,3` became `6,4` in row 1 of the export:
 
 ```text
-PS> Compare-Object (Get-Content data/checksums.txt) (Get-FileHash data/raw/*).Hash
-
-InputObject                                                      SideIndicator
------------                                                      -------------
-13FBCAE6A7A4D67EC30FDF3BEDC0B666209F7A4DC453EA72FF6DE7370FFD6AEE =>
-9D849815D88ECEB18366EE66AC72F26B72E195BEA8BB20AA9A1474372513BBDB <=
+$ sha256sum -c data/checksums.txt
+data/raw/daily_export.csv: FAILED
+data/raw/weather.csv: OK
+sha256sum: WARNING: 1 computed checksum did NOT match
 ```
 
 </div>
 
-<div class="note-text mt-md">The list is written once, when the raw files arrive. <code>Compare-Object</code> prints only what differs: nothing means the same bytes. <code>&lt;=</code> is the list, <code>=&gt;</code> the file now.</div>
+<div class="note-text mt-md">The list is written once, when the raw files arrive, and checked after every copy. It stands in <code>data</code>, not in <code>data/raw</code>, so <code>data/raw/*</code> never includes it.</div>
 
 <!--
-**Live (optional):** write the list; in VS Code change `6,3` to `6,4` in `daily_export.csv` and save; compare again. Change it back and save before going on.
-**Say:** "raw is never edited" becomes a test that runs in a second. The list stands in `data`, not in `data/raw`, so `data/raw/*` never includes it.
-(~2 min)
+**Live (optional):** `shasum -a 256 data/raw/* > data/checksums.txt`; in VS Code change `6,3` to `6,4` in `daily_export.csv` and save; `shasum -a 256 -c data/checksums.txt`. Change it back and save before going on.
+**Say:** "raw is never edited" becomes a test that runs in a second.
+(~3 min)
 -->
 
 ---
@@ -2105,26 +2128,27 @@ hideInToc: true
 
 | File | Made by | macOS | Windows |
 | --- | --- | --- | --- |
-| `data/raw/weather.csv` | the station | 2 515 215 B, `3F1AD06D…` | the same |
-| `data/processed/weather_valid.csv` | `Select-String … >` | 2 511 735 B, `85B1F38D…` | 2 599 288 B, `B166C09B…` |
-| `data/processed/daily.csv` | `clean_export.py` | 148 B, `33FE5E77…` | the same |
+| `data/raw/weather.csv` | the station | 2 515 215 B, `3f1ad06d…` | the same |
+| `data/processed/weather_valid.csv` | `grep -v … >` | 2 511 735 B, `85b1f38d…` | the same |
+| `data/processed/daily.csv` | `clean_export.py` | 148 B, `33fe5e77…` | the same |
+| `results/temp_c.txt` | `column_stats.py … >` | 113 B, `ade2805b…` | 119 B |
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🧮 `>` ends each line as the system does: LF on macOS, CRLF on Windows, one byte `0d` more per line. 2 511 735 + 87 553 = 2 599 288. The script states LF, so it writes the same bytes on both.
+🧮 `grep` copies each line's bytes, LF included. Python's `print` ends a line as the system does: LF on macOS, CRLF on Windows, one byte `0d` more on each of the 6 lines: 113 + 6 = 119. `clean_export.py` states LF, so it writes the same bytes on both.
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Step 7: the raw files are named by checksum. A file made by `>` is named by its 87 553 lines and its mean.
+✅ Step 7: the raw files are named by checksum. A result is named by what it says: `mean    7.15997`.
 
 </div>
 
 <!--
-**Say:** same rows, same mean, different bytes. A checksum in the README is only promised for a file whose bytes are the same everywhere.
+**Say:** same mean, different bytes. A checksum in the README is only promised for a file whose bytes are the same everywhere.
 (~2 min)
 -->
 
@@ -2232,11 +2256,12 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 📜 **`scripts/rebuild.ps1`**
+## 📜 **`scripts/rebuild.sh`**
 
 ```text
-New-Item -ItemType Directory -Force data/processed, results | Out-Null
-Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+#!/usr/bin/env bash
+mkdir -p data/processed results
+grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
 python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
 python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
 ```
@@ -2246,19 +2271,20 @@ python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results
 <div class="card card-success card-glass pad-compact mt-md">
 
 ```text
-PS> Remove-Item data/processed, results -Recurse
-PS> ./scripts/rebuild.ps1
+$ chmod +x scripts/rebuild.sh
+$ rm -r data/processed results
+$ ./scripts/rebuild.sh
 9 rows written to data/processed/daily.csv
-PS> Get-Content results/temp_c.txt | Select-Object -Last 1
+$ tail -n 1 results/temp_c.txt
 mean    7.15997
 ```
 
 </div>
 
 <!--
-**Live:** in VS Code make `scripts/rebuild.ps1` from the four lines and save; then `Remove-Item data/processed, results -Recurse`, `./scripts/rebuild.ps1`, `Get-Content results/temp_c.txt`.
-**Say:** the lines are the ones typed today, brought back with `↑` and pasted, never retyped: each one has already run. `./` names the script's folder, because `scripts` is not on `PATH`.
-**If asked:** `-Force` makes `New-Item` quiet when the folder exists; `Out-Null` drops its output. A `.ps1` downloaded from the web is blocked on Windows until `Unblock-File`.
+**Live:** in VS Code make `scripts/rebuild.sh` from the five lines and save; then `chmod +x scripts/rebuild.sh`, `rm -r data/processed results`, `./scripts/rebuild.sh`, `tail -n 1 results/temp_c.txt`.
+**Say:** the lines are the ones typed today, brought back with `↑` and pasted, never retyped: each one has already run. Line 1 names the program that runs the file, bash, on both systems. `chmod +x` marks it as a program; `./` names its folder, because `scripts` is not on `PATH`.
+**If asked:** `bash scripts/rebuild.sh` runs it without `chmod` and `./`. In Git Bash `chmod +x` changes nothing, and the script runs anyway. A `.sh` saved with CRLF stops on a Mac with `bad interpreter`.
 (~4 min)
 -->
 
@@ -2275,12 +2301,12 @@ hideInToc: true
 ```md
 ## How to rebuild
 
-In the project folder, in PowerShell 7 on macOS or Windows,
+In the project folder, in zsh on macOS or Git Bash on Windows,
 with Miniforge installed:
 
     conda env create -f environment.yml
     conda activate weather
-    ./scripts/rebuild.ps1
+    ./scripts/rebuild.sh
 
 The last line of `results/temp_c.txt` reads `mean    7.15997`.
 ```
@@ -2307,35 +2333,28 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
 ```text
-PS> python scripts/column_stats.py data/raw/weather.csv temp_c > results/raw.txt
-PS> $LASTEXITCODE
+$ grep -c ',-999,' data/raw/weather.csv
+120
+$ echo $?
 0
-PS> python scripts/column_stats.py data/raw/wether.csv temp_c
+$ grep -c ',-999,' data/processed/weather_valid.csv
+0
+$ echo $?
+1
+$ python scripts/column_stats.py data/raw/wether.csv temp_c
 no file data/raw/wether.csv
-PS> $LASTEXITCODE
+$ echo $?
 1
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔢 **Exit status**
-
-A program ends by handing the shell a number: 0 for success, anything else for a failure. `$LASTEXITCODE` holds the last one.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## ✅ **`$?`**
-
-`True` when the last command worked, `False` when not: for cmdlets and programs alike.
-
-</div>
+🔢 A program ends by handing the shell a number, its **exit status**: 0 for success, anything else for "no" or a failure. `$?` holds the last one. `grep` says 1 when it found nothing.
 
 </div>
 
@@ -2354,36 +2373,35 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact">
 
-## ⚠️ **A typo in line 3: `daily_exprt.csv`**
+## ⚠️ **A typo: `daily_exprt.csv`**
 
 ```text
-PS> ./scripts/rebuild.ps1
+$ ./scripts/rebuild.sh
 no file data/raw/daily_exprt.csv
-PS> $?
-True
+$ echo $?
+0
 ```
 
-The script runs line 4 anyway and reports success.
+The script runs its last line anyway and reports success.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## 🛑 **Two lines on top**
+## 🛑 **`set -e` as line 2**
 
 ```text
-$ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
+#!/usr/bin/env bash
+set -e
+mkdir -p data/processed results
+…
 ```
 
 ```text
-PS> ./scripts/rebuild.ps1
+$ ./scripts/rebuild.sh
 no file data/raw/daily_exprt.csv
-NativeCommandExitException: …/rebuild.ps1:5
-     | Program "python" ended with
-     | non-zero exit code: 1 (0x01).
-PS> $?
-False
+$ echo $?
+1
 ```
 
 </div>
@@ -2391,8 +2409,8 @@ False
 </div>
 
 <!--
-**Say:** a script that goes on after a failed line hides the failure. `'Stop'` stops at a failing cmdlet; the second line makes a program's non-zero exit status a failure too.
-**If asked:** the second line exists since PowerShell 7.4. In zsh and bash, `set -e` does the same.
+**Say:** a script that goes on after a failed line hides the failure. With `set -e` it ends at the first line whose exit status is not 0, and reports that status.
+**If asked:** a line such as `grep -c` that may say 1 on purpose needs `|| true` after it in such a script.
 (~2 min)
 -->
 
@@ -2404,25 +2422,23 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **Git Bash** · on macOS `shasum -a 256`
+
 ```text
-PS> (Get-FileHash results/temp_c.txt).Hash
-ADE2805B90FE64A0053FA65E28329EEE616AD0389F9CA55DB86400B1C7A9A18B
-PS> ./scripts/rebuild.ps1
+$ sha256sum results/temp_c.txt
+ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c.txt
+$ ./scripts/rebuild.sh
 9 rows written to data/processed/daily.csv
-PS> (Get-FileHash results/temp_c.txt).Hash
-ADE2805B90FE64A0053FA65E28329EEE616AD0389F9CA55DB86400B1C7A9A18B
+$ sha256sum results/temp_c.txt
+ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c.txt
 ```
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-🧮 Run twice on one laptop: the same 113 bytes. On Windows, `>` writes the six lines of `temp_c.txt` with CRLF: 113 + 6 = 119 bytes, another checksum, the same `mean    7.15997`.
-
-</div>
+<div class="note-text mt-md">Run twice on one laptop: the same 113 bytes. On Windows the same six lines take 119 bytes, so across systems compare the line that matters, <code>mean    7.15997</code>.</div>
 
 <!--
-**Say:** a check that runs again and gives the same bytes is a check anyone can repeat. Across systems, compare the line that matters, not the checksum of a file made by `>`.
+**Say:** a check that runs again and gives the same bytes is a check anyone can repeat.
 (~2 min)
 -->
 
@@ -2437,10 +2453,10 @@ hideInToc: true
 | Someone asks about 7.16 | The answer is in |
 | --- | --- |
 | Which file? | `data/raw/weather.csv`, SHA-256 in the README and in `data/checksums.txt` |
-| Which rows were left out? | `rebuild.ps1`, line 4: every row with `,-999,` |
-| Which program computed the mean? | `rebuild.ps1`, line 6: `column_stats.py`, line 48 |
+| Which rows were left out? | `rebuild.sh`, line 4: every row with `,-999,` |
+| Which program computed the mean? | `rebuild.sh`, line 6: `column_stats.py`, line 48 |
 | With which Python? | `environment.yml`: Python 3.14 from conda-forge |
-| Is it still 7.16? | `./scripts/rebuild.ps1`, then `results/temp_c.txt` |
+| Is it still 7.16? | `./scripts/rebuild.sh`, then `results/temp_c.txt` |
 
 </div>
 
@@ -2467,9 +2483,9 @@ hideInToc: true
 | 3 | Which rows are not measurements? | 120 rows of −999, 22 to 26 July 2019 |
 | 4 | Is every other row a measurement? | 87 552 rows fit the pattern |
 | 5 | The mean without them, and with? | 7.16 and 5.78 °C |
-| 6 | A second program? | 7.15997, to the sixth digit |
-| 7 | The file Smiltė used? | SHA-256 `3F1AD06D…FBE00756` |
-| 8 | Can anyone run it again? | `./scripts/rebuild.ps1` |
+| 6 | A second program? | 7.15997, to six digits |
+| 7 | The file Smiltė used? | SHA-256 `3f1ad06d…fbe00756` |
+| 8 | Can anyone run it again? | `./scripts/rebuild.sh` |
 
 </div>
 
@@ -2488,13 +2504,13 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Install **PowerShell 7** on macOS and Windows, and say what the shell does with a line
+✅ Name the shell of your laptop, zsh or Git Bash, and say what it does with a line
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Read and count a file, and join commands with the **pipe**, `>` and `2>`
+✅ Read and count a file, and join programs with the **pipe**, `>` and `2>`
 
 </div>
 
@@ -2558,15 +2574,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`Get-Content data/raw/wether.csv > results/out.txt` runs. The file name has a typo. What happens?"
+  question="`head -n 3 data/raw/wether.csv > results/out.txt` runs. The file name has a typo. What happens?"
   :options="[
     'Nothing is printed, and out.txt holds the error message',
     'The error is printed on the screen, and out.txt is an empty file',
     'The error is printed, and out.txt is not made',
-    'PowerShell corrects the name and copies weather.csv'
+    'The shell corrects the name and copies weather.csv'
   ]"
   :correct="1"
-  explanation="The error goes to the error stream, which still reaches the screen; only the output stream is written by >. And > empties or makes its file before the command runs, so out.txt exists with 0 bytes. 2> would write the error into a file."
+  explanation="The error goes to standard error, which still reaches the screen; > writes only standard output. And > makes or empties its file before the program runs, so out.txt exists with 0 bytes. 2> would write the error into a file."
 />
 
 ---
@@ -2574,15 +2590,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="notes.txt has five lines. Then `'done' > notes.txt` and `'checked' >> notes.txt` run in PowerShell 7. How many bytes does the file have on a Mac and on Windows?"
+  question="notes.txt has five lines. Then `echo done > notes.txt` and `echo checked >> notes.txt` run. How many bytes does notes.txt have?"
   :options="[
-    'More than 13 on both, because the five old lines are kept',
-    '13 and 13',
-    '15 and 13',
-    '13 and 15'
+    'More than 13, because the five old lines are kept',
+    '13',
+    '11, because echo writes no line break',
+    '26, because >> writes the file twice'
   ]"
-  :correct="3"
-  explanation="A single > empties the file first, so the five lines are gone, and >> adds a second line. The letters are 4 + 7 = 11. On macOS each line ends with LF, one byte: 13 bytes. On Windows each line ends with CRLF, two bytes: 15 bytes."
+  :correct="1"
+  explanation="A single > empties the file first, so the five lines are gone, and >> adds a second line. The letters are 4 + 7 = 11, and echo ends each line with LF, one byte: 13 bytes, in zsh and in Git Bash alike."
 />
 
 ---
@@ -2590,15 +2606,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`Import-Csv weather.csv | Sort-Object humidity_pct | Select-Object -First 1` shows a humidity of 100 as the lowest. Why?"
+  question="`cut -d, -f3 weather.csv | sort | head -n 1` prints 100 as the lowest humidity. Why?"
   :options="[
     'The station measured 100 % most often',
-    'Import-Csv reads values as text, and text is compared character by character: 1 comes before 3',
-    'Sort-Object sorts from the largest down',
-    'Select-Object -First 1 takes the last row'
+    'sort compares text character by character, and 1 comes before 3',
+    'cut took the wrong column',
+    'head prints the last line'
   ]"
   :correct="1"
-  explanation="Every value from Import-Csv is text. 100 starts with 1, 34 with 3, so 100 comes first. Sort-Object {[int]$_.humidity_pct} turns each value into a number before comparing and puts 34 first."
+  explanation="Without -n, sort compares the values as text, from the left. 100 starts with 1, 34 with 3, so 100 comes first. sort -n compares numbers and puts 34 first."
 />
 
 ---
@@ -2606,15 +2622,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`Select-String ,-999, data/raw/weather.csv` stops with a ParserError. Why?"
+  question="In zsh, `grep -cE ,-[0-9]+\.[0-9], weather.csv` stops with `no matches found`. Why?"
   :options="[
-    'Select-String cannot search for a minus sign',
-    'The shell reads the comma itself, as the start of a list, before Select-String runs',
-    'The file has no line with -999',
+    'grep cannot search for a minus sign',
+    'The shell reads [0-9] as a pattern for file names before grep runs, and no file fits',
+    'The file has no temperature below zero',
     'A pattern must be written in double quotes'
   ]"
   :correct="1"
-  explanation="The shell reads a line before the command runs, and some signs mean something to it: in PowerShell a comma builds a list. In single quotes, ',-999,', every character reaches Select-String unchanged. Double quotes would work here too, but they replace a $name, so a pattern goes in single quotes."
+  explanation="The shell reads a line before the program runs, and brackets, stars and backslashes mean something to it. zsh stops when a file-name pattern fits no file; bash passes it on but drops the backslash, and the count comes out wrong. In single quotes every character reaches grep unchanged."
 />
 
 ---
@@ -2630,7 +2646,7 @@ hideInToc: true
     'The first two and 7;2025-10-07;9,2'
   ]"
   :correct="1"
-  explanation="The pattern fits a whole line of digits and minus signs, a comma, a number, a point and one digit. The header has letters. The line with semicolons has a semicolon where the pattern allows only digits and minus signs, and no point. Select-String and the Find box of VS Code find the same two lines."
+  explanation="The pattern fits a whole line of digits and minus signs, a comma, a number, a point and one digit. The header has letters. The line with semicolons has a semicolon where the pattern allows only digits and minus signs, and no point. grep -E and the Find box of VS Code find the same two lines."
 />
 
 ---
@@ -2654,7 +2670,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Two folders on PATH hold a program named python: C:\Python312 is listed before C:\Python314. What does `python --version` print?"
+  question="PATH lists /opt/a/bin before /opt/b/bin. Both folders hold a program named python, 3.12 in a and 3.14 in b. What does `python --version` print?"
   :options="[
     'Python 3.14, because the newer version wins',
     'Python 3.12, because the shell stops at the first folder that holds the name',
@@ -2686,15 +2702,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="weather_valid.csv, made with `>` from the same raw file, has 2 511 735 bytes on a Mac and 2 599 288 on Windows. What follows?"
+  question="results/temp_c.txt, written by `python scripts/column_stats.py … > results/temp_c.txt`, has 113 bytes on a Mac and 119 on Windows. What follows?"
   :options="[
-    'One of the two lost rows',
-    'The same 87 553 lines, with LF on the Mac and CRLF on Windows: the checksums differ, the mean does not',
-    'The same bytes, because Get-FileHash ignores line endings',
-    'The Windows file holds the −999 rows'
+    'One of the two runs lost a row',
+    'The same six lines, with LF on the Mac and CRLF on Windows: the checksums differ, the mean does not',
+    'The same bytes, because a checksum ignores line endings',
+    'The Windows run used the raw file'
   ]"
   :correct="1"
-  explanation="2 599 288 − 2 511 735 = 87 553, one byte per line: the 0d of CRLF, which > writes on Windows. The rows and the mean are the same, the bytes and so the checksums are not. The README names such a file by its lines and its mean, and names by checksum only files whose bytes are the same everywhere."
+  explanation="119 − 113 = 6, one byte per line: the 0d of CRLF, which Python's print writes on Windows. The lines and the mean are the same, the bytes and so the checksums are not. The README names such a file by what it says, and names by checksum only files whose bytes are the same everywhere."
 />
 
 ---
@@ -2718,13 +2734,13 @@ hideInToc: true
 ---
 
 <MCQ
-  question="rebuild.ps1 has no stop lines. Its line 3 runs python and fails; line 4 works. What does `$?` print after the script?"
+  question="rebuild.sh has no `set -e`. Its python line for the export fails; the last line works. What does `echo $?` print after the script?"
   :options="[
-    'False, because line 3 failed',
-    'True, because the script ran on and its last line worked',
-    'Nothing: PowerShell asks first whether to go on',
-    'Two values, one for each line'
+    '1, because a line failed',
+    '0, because the script ran on and its last line worked',
+    'Nothing: the shell asks first whether to go on',
+    'Two numbers, one for each line'
   ]"
   :correct="1"
-  explanation="Without the stop lines a script runs every line, and the failure of line 3 only shows as its message. The last line worked, so $? is True. With $ErrorActionPreference = 'Stop' and $PSNativeCommandUseErrorActionPreference = $true the script stops at line 3 and $? is False."
+  explanation="Without set -e a script runs every line, and its exit status is that of its last line. The last line worked, so the script reports 0, success, and the failure shows only as its message. With set -e it stops at the failing line and reports 1."
 />

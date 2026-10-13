@@ -39,7 +39,7 @@ steps and orient myself".
    room (a pager, a missing install), at most one per section. No "what to
    skip" boxes, no "Tell the room" paragraphs, no "How to use this page".
 6. **Real outputs.** Every output was printed by a real run (zsh,
-   PowerShell 7, Python of the course). Ids, dates and timings that differ
+   Git Bash, Python of the course). Ids, dates and timings that differ
    per laptop are marked once: "Your ids differ".
 
 ## Layout
@@ -122,8 +122,8 @@ One sentence: where the typing happens.
     ```
 
   macOS comes first, Windows second, on every page. The terminal is `zsh`
-  on macOS and PowerShell 7 on Windows (no Git Bash); a line both shells
-  share (`git ...`, `cd ...`) stands once, outside tabs. Keys stay inline in
+  on macOS and Git Bash on Windows (since 13 Oct 2026); a line both shells
+  take stands once, outside tabs, which is almost every line. Keys stay inline in
   the old form: `Ctrl+S` (macOS `Cmd+S`).
 - Run sheet: the "Typed" column names the one thing typed or clicked. Optional sections have `—` as their clock and sit under their own
   row at the end of the table.

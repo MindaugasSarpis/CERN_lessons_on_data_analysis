@@ -7,8 +7,9 @@ in class
 a table of days, measures two baselines, trains a linear model and a tree on
 2016 to 2023, tests them once on 2024 and 2025, and pushes the errors in °C.
 
-Everything is typed in the terminal of VS Code (PowerShell 7) and in one
-script, `scripts/forecast.py`, which grows from section to section.
+Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
+Windows) and in one script, `scripts/forecast.py`, which grows from
+section to section.
 
 ## Run sheet
 

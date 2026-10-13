@@ -9,7 +9,7 @@ a cosine to the 3648 daily means (amplitude 11.18 °C, coldest on
 16 January), reads the residuals, commits and pushes.
 
 Everything is typed in VS Code: the scripts in the editor, the runs in its
-terminal (PowerShell 7, `weather` environment). SciPy is installed in
+terminal (zsh on macOS, Git Bash on Windows; `weather` environment). SciPy is installed in
 section 1.
 
 ## Run sheet
@@ -17,7 +17,7 @@ section 1.
 | Clock | Section | Typed | The room ends with |
 |--|--|--|--|
 | | **Part 1 · SciPy and the daily means** · 30 min | | |
-| 0:00 | [1. Install SciPy](#install) | `conda install scipy` | `1.18.1`, `scipy` in `environment.yml` |
+| 0:00 | [1. Install SciPy](#install) | `conda install scipy` | `1.18.1`, `scipy=1.18` in `environment.yml` |
 | 0:10 | [2. The daily means](#daily) | `scripts/fit_cycle.py`, `reshape(-1, 24)` | 3648 daily means |
 | 0:20 | [3. Plot them](#plot) | `ax.plot(d, T, ".")` | ten waves |
 | | **Part 2 · Is it getting warmer?** · 30 min | | |
@@ -99,7 +99,8 @@ sections 10 and 11 stay.
     ```
 
     Press `Enter`. Your line names your system (`osx-arm64`, `win-64`), and
-    on Windows the folder is `C:\Users\smilte\miniforge3\envs\weather`.
+    on Windows the folder is `C:\Users\smilte\miniforge3\envs\weather`
+    (in Git Bash `/c/Users/smilte/miniforge3/envs/weather`).
 
 3. Check.
 
@@ -111,10 +112,11 @@ sections 10 and 11 stay.
     1.18.1
     ```
 
-4. Open `environment.yml`. Add one line at the end of `dependencies`, save.
+4. Open `environment.yml`. Add one line at the end of `dependencies`, with
+   the version pinned like the others, save.
 
     ```text
-      - scipy
+      - scipy=1.18
     ```
 
 5. Look at the change, commit it.
@@ -128,7 +130,7 @@ sections 10 and 11 stay.
        - python=3.14
        - numpy=2.5
        - matplotlib-base=3.11
-    +  - scipy
+    +  - scipy=1.18
     ```
 
     ```text
@@ -614,7 +616,7 @@ points are not independent, so ± 0.069 is too small.
 | any model | `curve_fit(f, x, y, p0=[…])` |
 | the uncertainties | `np.sqrt(np.diag(pcov))` |
 | check the fit | residuals, and their correlation |
-| add a package | `conda install NAME`, a line in `environment.yml` |
+| add a package | `conda install NAME`, a pinned line in `environment.yml` |
 
 Seminar 11 predicts frost from the evening's weather.
 

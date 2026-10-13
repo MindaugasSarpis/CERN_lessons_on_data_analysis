@@ -27,9 +27,9 @@ end, then runs the film reel from the cosmos down to the LHCb detector.
    (180 bytes) and `data/processed` (148 bytes).
 4. **How this course works**: the lecture and the seminar of each Tuesday, the
    schedule, the path of the course (VS Code and Markdown, files, the command
-   line in PowerShell 7 with package managers and conda environments, Git,
-   Python, then data analysis), the learning outcomes, what "done" means each week, habits that
-   work.
+   line in zsh on macOS and Git Bash on Windows, with package managers and
+   conda environments, Git, Python, then data analysis), the learning
+   outcomes, what "done" means each week, habits that work.
 5. **Seminars & your project**: the grade is one project of your own, graded
    on the four aims; what you hand in; open data and practice files; the
    finished project tree; delete `data/processed/` and `results/` and rebuild
@@ -118,9 +118,9 @@ questions, with their answers:
 ## Before the first seminar
 
 Nothing has to be installed. The first session in class starts from zero and
-needs only VS Code, which the room installs together. PowerShell 7 (on macOS
-and on Windows), Git, and Python with conda through Miniforge are installed in
-class, at the start of the seminar that first needs them. A laptop on which programs
+needs only VS Code, which the room installs together. Git (with Git Bash on
+Windows) and Python with conda through Miniforge are installed in class, at
+the start of the seminar that first needs them. A laptop on which programs
 can be installed is all that is needed: on a university or work laptop,
 check that now.
 
