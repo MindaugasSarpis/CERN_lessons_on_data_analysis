@@ -718,7 +718,7 @@ You can say, in one sentence, what it does and why.
 hideInToc: true
 ---
 
-# Habits That **Work**
+# Habits for This **Course**
 
 <div class="grid-2 mt-md gap-md">
 

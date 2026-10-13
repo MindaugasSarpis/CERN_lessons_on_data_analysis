@@ -171,7 +171,7 @@ A line with `-` is in the first file only, a line with `+` in the second only, a
 hideInToc: true
 ---
 
-# Copies Instead of **Versions**
+# Versions Kept as **Copies**
 
 <div class="grid-2 gap-md mt-md">
 

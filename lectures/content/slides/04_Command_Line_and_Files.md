@@ -1134,9 +1134,7 @@ Step 4: is every other row a measurement?
 hideInToc: true
 ---
 
-# Below Freezing: a Fixed Text or a **Pattern**
-
-<div class="note-text mt-sm">In how many hours was it below freezing?</div>
+# Hours Below **Freezing**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -1145,84 +1143,20 @@ hideInToc: true
 ```text
 $ grep -c ',-' data/raw/weather.csv
 22472
-$ grep -cE ',-[0-9]+\.[0-9],' data/raw/weather.csv
-22352
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-warning card-glass pad-compact mt-md">
 
-<div class="card card-warning card-glass pad-compact">
-
-## 🔎 **A fixed text finds too much**
-
-`,-` is also in the 120 rows with `,-999,`. 22 472 − 22 352 = 120.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ✳️ **A pattern**
-
-A minus, digits, a point, one digit. Such a text is a **regular expression**, regex for short.
-
-</div>
+⚠️ `,-` is also in the 120 rows of `,-999,`. A fixed text cannot say "a minus, then a number with a decimal". A **regular expression** can.
 
 </div>
 
 <!--
-**Say:** the temperatures have one decimal, −999 has none. The pattern uses that difference.
-**If asked:** `-E` lets grep read `+`, `?`, `{ }`, `|` and `( )` as signs.
+**Ask:** is 22 472 the number of hours below freezing? Wait for "the −999 rows".
+**Say:** a regular expression, regex for short, is a text with signs in it that describe many texts.
 (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Quotes Keep a Pattern from the **Shell**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% grep -cE ,-[0-9]+\.[0-9], data/raw/weather.csv
-zsh: no matches found: ,-[0-9]+.[0-9],
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · Git Bash**
-
-```text
-$ grep -cE ,-[0-9]+\.[0-9], data/raw/weather.csv
-22472
-$ echo ,-[0-9]+\.[0-9],
-,-[0-9]+.[0-9],
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact table-compact mt-md">
-
-| Signs the shell reads before the program runs | `*` `?` `[ ]` `$` `\|` `>` `<` `;` `&` `\` `~` `#` space |
-| --- | --- |
-| `'single quotes'` | pass every character on unchanged |
-| `"double quotes"` | keep spaces, but replace `$name` by its value |
-
-</div>
-
-<!--
-**Say:** step 3 of the shell. zsh read `[0-9]` as a file-name pattern, found no such file and stopped. bash passed it on, but ate the backslash: `.` fits any character, and the count is wrong without a word of warning. A pattern goes in single quotes, always.
-(~3 min)
 -->
 
 ---
@@ -1231,22 +1165,21 @@ hideInToc: true
 
 # Signs for **One Character**
 
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-| Sign | Fits | Pattern | In `2016-01-01T00:00,-4.4,93,2.5` | Lines of `weather.csv` |
-| --- | --- | --- | --- | --- |
-| a digit, a letter, `,` | itself | `,93,` | `,93,` | 1 530 |
-| `.` | any one character | `T..:` | `T00:` | 87 672 |
-| `[0-9]` | one character from `0` to `9` | `,[0-9][0-9],` | `,93,` | 85 132 |
-| `[^,]` | one character that is **not** `,` | `,[^,][^,],` | `,93,` | 85 132 |
-| `\.` | a point and nothing else | `[0-9]\.[0-9]` | `4.4` | 87 672 |
+| Sign | Fits | Example |
+| --- | --- | --- |
+| `7`, `T`, `,` | itself | `T16` fits `T16` |
+| `.` | any one character | `T..:` fits `T00:`, `T23:` |
+| `[0-9]` | one digit | `,[0-9]` fits `,9` |
+| `\.` | a point, nothing else | `4\.4` fits `4.4` only |
 
 </div>
 
-<div class="note-text mt-md">A backslash takes the special meaning away from the sign after it: <code>.</code> fits any character, <code>\.</code> only a point. Each count is <code>grep -c</code> with the pattern in single quotes.</div>
+<div class="note-text mt-md">The backslash takes the special meaning away from the sign after it.</div>
 
 <!--
-**Ask:** why do 85 132 lines, not all 87 672, have a two-digit value between commas? Humidity of 100 has three digits: 87 672 − 85 132 = 2540 hours at 100 %.
+**Say:** read the table row by row with the example line `2016-01-01T00:00,-4.4,93,2.5` on the board.
 (~2 min)
 -->
 
@@ -1274,14 +1207,13 @@ $ grep -c '7\.16' data/raw/weather.csv
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🧮 `7.16` fits `7T16`: days 7, 17 and 27 at 16:00, 3 × 12 × 10 = 360 lines. And `7-16`: every hour of 16 July, 24 × 10 = 240. 360 + 240 = 600. No hour was 7.16 °C itself, which a temperature with one decimal cannot be.
+🧮 `7.16` fits `7T16` (days 7, 17, 27 at 16:00: 360 lines) and `7-16` (every hour of 16 July: 240 lines).
 
 </div>
 
 <!--
 **Ask:** before the count: how many lines will `'7.16'` find? The room usually says none.
-**Say:** a pattern that "works" can still find the wrong lines. The count is the check, and a look at two of the lines.
-**If asked:** `grep -F` reads the pattern as a fixed text: 0 lines too.
+**Say:** a pattern that runs can still find the wrong lines. Check the count, and look at two of the lines.
 (~2 min)
 -->
 
@@ -1291,88 +1223,21 @@ hideInToc: true
 
 # Signs for **How Many** and **Where**
 
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Sign | Meaning | Pattern | In `2016-01-01T00:00,-4.4,93,2.5` | Lines |
-| --- | --- | --- | --- | --- |
-| `+` | one or more of what stands before | `[0-9]+` | `2016` | 87 672 |
-| `*` | none or more | `,.*,` | `,-4.4,93,` | 87 673 |
-| `?` | none or one | `,-?[0-9]` | `,-4` | 87 672 |
-| `{4}` | exactly four | `^[0-9]{4}` | `2016` | 87 672 |
-| `^` | the start of the line | `^2016` | `2016` | 8 784 |
-| `$` | the end of the line | `\.5$` | `.5` | 8 265 |
-| `( )`, `\|` | a group, and "or" | `T(00\|12):` | `T00:` | 7 306 |
-
-</div>
-
-<div class="note-text mt-md"><code>+</code>, <code>*</code>, <code>?</code> and <code>{4}</code> repeat the one thing before them. <code>^</code> and <code>$</code> fit no character: they pin the pattern to an end of the line.</div>
-
-<!--
-**Say:** `T(00|12):` fits midnight and noon: two hours a day, 2 × 3653 = 7306. `^2016` fits the 8784 hours of 2016.
-**Ask:** `,.*,` fits 87 673 lines, the header too. Why? The header has commas as well.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Forms of the **Lines**
-
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 💻 **zsh · Git Bash**
-
-```text
-$ sed 's/[0-9]/9/g' data/raw/weather.csv | sort | uniq -c | sort -rn
-  34547 9999-99-99T99:99,99.9,99,9.9
-  30355 9999-99-99T99:99,9.9,99,9.9
-  19709 9999-99-99T99:99,-9.9,99,9.9
-   1897 9999-99-99T99:99,-9.9,999,9.9
-…
-    120 9999-99-99T99:99,-999,99,9.9
-…
-      1 time,temp_c,humidity_pct,wind_ms
-```
-
-</div>
-
-<div class="note-text mt-md"><code>sed 's/[0-9]/9/g'</code> writes every digit as 9, so lines of one form become one text. 13 forms: 11 with a temperature of one decimal, the 120 rows of <code>-999</code>, and the header.</div>
-
-<!--
-**Say:** 87 673 lines read as 13. Every form but two has the temperature as digits, a point and one digit; that is the pattern of a measured row. `s/A/B/g` replaces every A by B; `sort -rn` puts the largest count first.
-**If asked:** the forms differ by the number of digits: `99.9` a warm hour, `-9.9` a frost, `999` humidity of 100 %, `99.9` in the last column wind of 10 m/s or more.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Build the Pattern of a **Measured Row**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Add | Pattern so far | Lines it fits |
+| Sign | Means | Example |
 | --- | --- | --- |
-| a date, `T` | `^[0-9-]+T` | 87 672 |
-| the hour, a comma | `^[0-9-]+T[0-9:]+,` | 87 672 |
-| a temperature: a minus or none, digits, a point, one digit | `^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],` | 87 552 |
-| humidity, wind, the end | `^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$` | 87 552 |
+| `+` | one or more of the sign before | `[0-9]+` fits `4`, `93`, `2016` |
+| `?` | the sign before, or nothing | `-?4` fits `4` and `-4` |
+| `^` | the start of the line | `^2016` fits the 8 784 hours of 2016 |
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-```text
-$ grep -cE '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' data/raw/weather.csv
-87552
-```
-
-</div>
+<div class="note-text mt-md"><code>grep -E</code> reads <code>+</code> and <code>?</code> as signs; plain <code>grep</code> takes them as text.</div>
 
 <!--
-**Say:** one piece at a time, each checked by its count. The count drops by 120 at the temperature, and the last two columns drop nothing.
+**Say:** `+` and `?` act on the one sign just before them.
+**If asked:** `*` is "none or more", `$` the end of the line, `{4}` exactly four.
 (~2 min)
 -->
 
@@ -1380,35 +1245,96 @@ $ grep -cE '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' data/raw/wea
 hideInToc: true
 ---
 
-# The Lines the Pattern Does Not **Fit**
+# Below Freezing, One Sign at a **Time**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 💻 **zsh · Git Bash**
+| Pattern | Fits | Lines |
+| --- | --- | --- |
+| `,-` | a comma and a minus | 22 472 |
+| `,-[0-9]+,` | a minus and digits, no point | 120 |
+| `,-[0-9]+\.[0-9],` | a minus, digits, a point, one digit | 22 352 |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
 
 ```text
-$ row='^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$'
-$ grep -vcE "$row" data/raw/weather.csv
-121
-$ grep -vnE "$row" data/raw/weather.csv | head -n 2
-1:time,temp_c,humidity_pct,wind_ms
-31154:2019-07-22T00:00,-999,76,3.2
-$ grep -c '^2019-07-2[2-6]T' data/raw/weather.csv
-120
+$ grep -cE ',-[0-9]+\.[0-9],' data/raw/weather.csv
+22352
+```
+
+22 472 − 120 = 22 352 hours below freezing. The middle pattern finds exactly the −999 rows.
+
+</div>
+
+<!--
+**Say:** one sign added at a time, each step checked by its count.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Put a Pattern in **Single Quotes**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+## 🍎 **macOS · zsh**, without quotes
+
+```text
+% grep -cE ,-[0-9]+\.[0-9], data/raw/weather.csv
+zsh: no matches found: ,-[0-9]+.[0-9],
 ```
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Step 4: 121 = the header + the 120 rows of −999, which fill 22 to 26 July 2019. Every other row, 87 552, is a measurement. −999 is the only mark.
+✅ The shell reads `[ ]`, `*`, `?` and `\` itself before `grep` starts. In `'single quotes'` every sign reaches `grep` unchanged.
 
 </div>
 
 <!--
-**Say:** `$row` keeps the pattern under a name, so it is typed once; the double quotes keep it one word and let `$row` be replaced. `-v` keeps the lines that do not fit.
-**Ask:** what would a count of 125 have told us? Four more rows of some other form, to be read one by one.
+**Say:** zsh took `[0-9]` as part of a file name, found no such file and stopped.
+**If asked:** Git Bash passes the line on but drops the backslash, so `.` fits any character and the count is 22 472, with no warning. That is worse than an error.
 (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Is Every Other Row a **Measurement**?
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ grep -cE ',-?[0-9]+\.[0-9],' data/raw/weather.csv
+87552
+$ grep -vcE ',-?[0-9]+\.[0-9],' data/raw/weather.csv
+121
+$ grep -vnE ',-?[0-9]+\.[0-9],' data/raw/weather.csv | head -n 3
+1:time,temp_c,humidity_pct,wind_ms
+31154:2019-07-22T00:00,-999,76,3.2
+31155:2019-07-22T01:00,-999,81,3.0
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Step 4: a temperature with one decimal, below zero or not, is in 87 552 rows. The other 121 are the header and the 120 rows of −999. −999 is the only mark.
+
+</div>
+
+<!--
+**Say:** `-?` lets the minus be there or not. `-v` keeps the lines that do not fit, `-n` adds their line numbers.
+**Ask:** what would a count of 125 have told us? Four rows of another form, to be read one by one.
+(~3 min)
 -->
 
 ---
@@ -1885,7 +1811,7 @@ It keeps what was asked for, which works on every system. The full export pins e
 hideInToc: true
 ---
 
-# Two Programs, One **Mean**
+# The Mean from `column_stats.py`
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -2122,7 +2048,7 @@ sha256sum: WARNING: 1 computed checksum did NOT match
 hideInToc: true
 ---
 
-# The Same Rows, Other **Bytes**
+# Which Files Have the Same **Bytes** on Both Systems
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
@@ -2329,7 +2255,7 @@ The last line of `results/temp_c.txt` reads `mean    7.15997`.
 hideInToc: true
 ---
 
-# Every Program Ends with a **Number**
+# Exit Status: `$?`
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -2418,7 +2344,7 @@ $ echo $?
 hideInToc: true
 ---
 
-# The Same Result, Byte for **Byte**
+# Rebuild Twice, Compare the **Checksums**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -2446,7 +2372,7 @@ ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c
 hideInToc: true
 ---
 
-# A Script Is a **Record**
+# Where the Answers About 7.16 Are **Written**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
@@ -2472,7 +2398,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# 7.16, **Checked**
+# The Eight Steps, **Answered**
 
 <div class="card card-success card-glass pad-compact table-compact mt-sm">
 

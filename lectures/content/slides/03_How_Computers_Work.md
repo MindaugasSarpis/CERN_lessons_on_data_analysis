@@ -198,7 +198,7 @@ An **algorithm** is a finite list of exact instructions that turns an input into
 hideInToc: true
 ---
 
-# Think Like a **CPU**
+# The Largest Number, Step by **Step**
 
 <div class="card card-success card-glass pad-compact mt-sm">
 

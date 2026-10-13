@@ -46,21 +46,18 @@ padding of `wc`, error messages).
    them by text, lines 31 154 to 31 273; rows per year with `uniq -c`;
    every one of 3653 days has 24 rows and no hour is there twice
    (`uniq -d`).
-4. **Regular expressions** (slides 34–42): hours below freezing, 22 472 by a
-   fixed text and 22 352 by a pattern (`grep -cE`); quotes keep a pattern
-   from the shell (unquoted, zsh stops with `no matches found` and bash
-   drops the backslash and counts 22 472); the signs for one character, for
-   how many and for where, each with the part of line 2 it fits and the
-   number of lines; `'7.16'` fits 600 lines and none of them is 7.16 °C;
-   the 13 forms of the lines (`sed 's/[0-9]/9/g' | sort | uniq -c`); the
-   pattern of a measured row built piece by piece, each piece checked by a
-   count; the 121 lines it does not fit (`grep -v`) are the header and the
-   120 marked rows.
-5. **The mean** (slides 43–46): `weather_valid.csv` with 87 553 lines; an
+4. **Regular expressions** (slides 34–41): `,-` finds 22 472 lines, the
+   −999 rows among them; four signs for one character (itself, `.`,
+   `[0-9]`, `\.`); `'7.16'` fits 600 lines and none of them is 7.16 °C;
+   three signs for how many and where (`+`, `?`, `^`); the pattern for a
+   frost hour built one sign at a time (22 472, 120, 22 352); a pattern in
+   single quotes; `,-?[0-9]+\.[0-9],` fits 87 552 rows, and the 121 it does
+   not fit (`grep -v`) are the header and the 120 marked rows.
+5. **The mean** (slides 42–45): `weather_valid.csv` with 87 553 lines; an
    `awk` line gives 7.15997 without the marks and 5.7828 with them, derived
    from the sum 626 869.3; a formula for what k marks do to a mean, and one
    mark already moves the second decimal.
-6. **Programs and packages** (slides 47–57): `column_stats.py` read as a
+6. **Programs and packages** (slides 46–56): `column_stats.py` read as a
    text file; `type` shows where `head`, `git` and `python` live; `PATH`,
    searched top to bottom, on both systems; what a package is (files, a
    name and a version, dependencies, a repository), shown by `conda install
@@ -71,7 +68,7 @@ padding of `wc`, error messages).
    2.0), `conda create`, `conda activate`; `environment.yml` from `conda env
    export --from-history`; the script gives 7.15997, the same as `awk`; the
    second script cleans the spreadsheet export, 180 bytes to 148.
-7. **Checksums & backups** (slides 58–63): `shasum -a 256` on macOS and
+7. **Checksums & backups** (slides 57–62): `shasum -a 256` on macOS and
    `sha256sum` in Git Bash, the same output; a check against the source with
    `-c`, and what a checksum does and does not tell; a list of checksums
    for `data/raw`, and the `FAILED` after one digit changed; which made
@@ -80,7 +77,7 @@ padding of `wc`, error messages).
    has CRLF on Windows: 113 + 6 = 119 bytes), so the README names raw files
    by checksum and results by what they say; the 3-2-1 rule with its
    arithmetic.
-8. **Make it repeatable** (slides 64–73): the README's column table, the
+8. **Make it repeatable** (slides 63–72): the README's column table, the
    mark and the result; `scripts/rebuild.sh` (`#!/usr/bin/env bash`,
    `chmod +x`, `./`), run after deleting everything it makes; the README's
    three rebuild lines; exit status and `$?` (`grep` says 1 when it found
@@ -100,9 +97,9 @@ it.
 
 ## The lecture in two hours
 
-The lecture is slides 1–73. Its speaker notes add up to about 147 minutes,
+The lecture is slides 1–72. Its speaker notes add up to about 147 minutes,
 the live moments included; a two-hour slot has about 110 minutes of
-teaching. Slide 74 opens the self-check section, and slides 75–86 are its
+teaching. Slide 73 opens the self-check section, and slides 74–85 are its
 twelve quizzes: they take no lecture time. To jump, type the slide number
 and press Enter.
 
@@ -112,12 +109,12 @@ and press Enter.
 | 0:06 | 5–18 | Step 1: the shell, zsh and Git Bash, the installs, the columns |
 | 0:36 | 19–22 | Step 2: 87 673 lines (live) |
 | 0:44 | 23–33 | Step 3: streams, the pipe (live), objects, the coldest hours (live), 120 rows |
-| 1:08 | 34–42 | Step 4: a regular expression, built and counted |
-| 1:26 | 43–46 | Step 5: 7.16 against 5.78 |
-| 1:34 | 47–57 | Step 6: programs, packages, a conda environment, the second program |
-| 1:55 | 58–63 | Step 7: checksums and backups |
-| 2:07 | 64–73 | Step 8: the README, `rebuild.sh` (live), exit status, 7.16 checked |
-| 2:27 | | End |
+| 1:08 | 34–41 | Step 4: a regular expression, one sign at a time |
+| 1:24 | 42–45 | Step 5: 7.16 against 5.78 |
+| 1:32 | 46–56 | Step 6: programs, packages, a conda environment, the second program |
+| 1:53 | 57–62 | Step 7: checksums and backups |
+| 2:05 | 63–72 | Step 8: the README, `rebuild.sh` (live), exit status, 7.16 checked |
+| 2:25 | | End |
 
 In a two-hour slot, skip the slides below: about 30 minutes, and keep the pace of the live moments. Each one
 deepens a step; none is needed by a later slide.
@@ -126,18 +123,19 @@ deepens a step; none is needed by a later slide.
 |--|--|--|
 | Read the Prompt; Where a Command Is, and Its Help; Read an Error Message | 10, 16, 17 | 6 min |
 | Sort as Text or as Numbers; Keep Rows by a Condition; Rows per Year | 28, 30, 32 | 6 min |
-| A Point Fits Any Character; The Forms of the Lines | 38, 40 | 4 min |
-| What One Mark Does to a Mean | 46 | 2 min |
-| A Program Is a Text File; The Second Script | 48, 57 | 4 min |
-| Check Against the Source; Backups: the 3-2-1 Rule | 60, 63 | 4 min |
-| The Same Result, Byte for Byte | 70 | 2 min |
+| A Point Fits Any Character | 37 | 2 min |
+| What One Mark Does to a Mean | 45 | 2 min |
+| A Program Is a Text File; The Second Script | 47, 56 | 4 min |
+| Check Against the Source; Backups: the 3-2-1 Rule | 59, 62 | 4 min |
+| Rebuild Twice, Compare the Checksums | 69 | 2 min |
 
 - **Never skip** slide 4 (the eight steps), 7 (what the shell does), 15
   (`Tab`, live), 21 (the count, live), 26 (the pipe, live), 29 (−999,
-  live), 31 (the 120 rows), 36 (quotes), 41–42 (the pattern and what it leaves), 45 (the
-  two means), 52 (a package manager), 54–55 (an environment and
-  `environment.yml`), 59 and 62 (checksums), 66 (the script, live), 69 (stop
-  at the first error) and 72 (the eight steps answered).
+  live), 31 (the 120 rows), 39 (below freezing, one sign at a time), 41 (every
+  other row a measurement), 44 (the two means), 51 (a package manager),
+  53–54 (an environment and `environment.yml`), 58 and 61 (checksums), 65
+  (the script, live), 68 (stop at the first error) and 71 (the eight steps
+  answered).
 - **Each section slide names its step**, and each section ends on a card
   with a ✅ and the step's answer. Point back to slide 4 there.
 - **Installing is not done here.** Slides 8 and 9 show the install lines
@@ -174,10 +172,10 @@ the macOS outputs on the slides (the Mac pads `wc`'s numbers).
 | 21 | `wc -l data/raw/weather.csv` |
 | 26 | `head -n 5000 data/raw/weather.csv | tail -n 1` |
 | 29 | `sort -t, -k2,2n data/raw/weather.csv | head -n 3`, then with `↑` change `head -n 3` to `tail -n 1` |
-| 66 | In VS Code, a new file `scripts/rebuild.sh` with the five lines below; then `chmod +x scripts/rebuild.sh`, `rm -r data/processed results`, `./scripts/rebuild.sh`, `tail -n 1 results/temp_c.txt` |
-| 61, optional | `shasum -a 256 data/raw/* > data/checksums.txt`; change `6,3` to `6,4` in `daily_export.csv` and save; `shasum -a 256 -c data/checksums.txt`. Change it back and save |
+| 65 | In VS Code, a new file `scripts/rebuild.sh` with the five lines below; then `chmod +x scripts/rebuild.sh`, `rm -r data/processed results`, `./scripts/rebuild.sh`, `tail -n 1 results/temp_c.txt` |
+| 60, optional | `shasum -a 256 data/raw/* > data/checksums.txt`; change `6,3` to `6,4` in `daily_export.csv` and save; `shasum -a 256 -c data/checksums.txt`. Change it back and save |
 
-The file of slide 66 (slide 69 then adds `set -e` as line 2):
+The file of slide 65 (slide 68 then adds `set -e` as line 2):
 
 ```text
 #!/usr/bin/env bash
@@ -193,7 +191,7 @@ or the environment `weather` after `conda activate weather`.
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 74–86: twelve quiz slides for students to try afterwards. The same
+slides 74–85: twelve quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. The terminal is in `weather-project/results`. Which path names the raw
@@ -282,9 +280,11 @@ prompt, the start-up files, Oh My Zsh) and what `conda init` writes.
 Package managers stayed, as a section of their own; the conda environment
 is three slides. New: what the shell does with a line, variables, the two
 output streams, line 5000 by arithmetic, `awk` as a filter and for the
-mean, quotes and the shell, the forms of the lines, a pattern built piece
-by piece, a formula for what a mark does to a mean, exit status, and a
-script as a record. The removed slides are in
+mean, quotes and the shell, a pattern built one sign at a time, a formula for what a mark does to a mean, exit status, and a
+script as a record. Later the same day the regular-expression
+section was made easier to follow: the forms of the lines (`sed`) and the
+full-row pattern were parked, and the section ends on a short pattern for
+the temperature. The removed slides are in
 `lectures/content/parked/04_Command_Line_and_Files.md`, each with a note
 saying where it stood.
 

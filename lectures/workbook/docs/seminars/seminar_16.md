@@ -23,7 +23,7 @@ section to section.
 | 0:30 | [4. Tomorrow beside today](#tomorrow) | `shift(-1)` | 3644 rows with today and tomorrow |
 | 0:40 | [5. Train on the past, test on the future](#split) | `days.index.year <= 2023` | 2914 and 730 days |
 | | **Part 3 · Baselines first** · 20 min | | |
-| 0:45 | [6. Tomorrow as today](#persistence) | `def mae` | 1.10 °C |
+| 0:45 | [6. Predict tomorrow as today](#persistence) | `def mae` | 1.10 °C |
 | 0:55 | [7. The mean of that date](#climatology) | `groupby(...dayofyear)` | 2.46 °C |
 | | **Part 4 · Two models, tested once** · 55 min | | |
 | 1:05 | [8. A linear model](#linear) | `LinearRegression()` | 1.06 °C |
@@ -33,7 +33,7 @@ section to section.
 | 1:55 | [12. Wrap up](#wrap-up) | | |
 | | **Optional, if the room is fast** | | |
 | — | [13. Is 0.04 °C real?](#gain) | `gain.std()` | 0.042 ± 0.017 °C |
-| — | [14. An error of 0.00 °C](#leak) | `rolling(3, center=True)` | a leak found |
+| — | [14. A leak that gives an error of 0.00 °C](#leak) | `rolling(3, center=True)` | a leak found |
 | — | [15. October 2025 in a plot](#plot) | `plt.savefig` | a figure in `results/` |
 
 **If time runs short:** leave out sections 7 and 9 (use depth 6), and do
@@ -300,7 +300,7 @@ once, in section 10 and not before.
 
 ---
 
-### 6. Tomorrow as today { #persistence }
+### 6. Predict tomorrow as today { #persistence }
 
 **0:45 · 10 min** · Persistence says tomorrow's mean will be today's; its error is the mean absolute difference in °C.
 
@@ -620,7 +620,7 @@ real.
 
 ---
 
-### 14. An error of 0.00 °C { #leak }
+### 14. A leak that gives an error of 0.00 °C { #leak }
 
 **— · 10 min** · A smoothed temperature looks like a harmless input.
 

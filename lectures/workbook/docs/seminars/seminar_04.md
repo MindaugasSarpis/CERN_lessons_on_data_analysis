@@ -32,7 +32,7 @@ command differ.
 | 1:15 | [10. Files by name and kind](#find) | `find . -name '*.csv'` | the four CSV files |
 | 1:22 | [11. Files by size and time; search them all](#find-size) | `find . -type f -size +1M` | two large files; where `-999` stands |
 | | **Part 5 · The mean, made by one command** · 25 min | | |
-| 1:30 | [12. The script against your hand: a checksum](#checksum) | `shasum -a 256`, `sha256sum` | `33fe5e77…f705483d` twice |
+| 1:30 | [12. Compare the script's file with yours: a checksum](#checksum) | `shasum -a 256`, `sha256sum` | `33fe5e77…f705483d` twice |
 | 1:36 | [13. The mean, with and without the `-999` rows](#python) | `python scripts/column_stats.py` | 5.7828 and 7.15997 |
 | 1:40 | [14. One script makes it all again](#script) | `./scripts/rebuild.sh` | `results/temp_c.txt` |
 | 1:49 | [15. The README: result and how to rebuild](#readme) | `## Result` | the README of the course |
@@ -962,7 +962,7 @@ description, and not in `weather_valid.csv`.
 
 ---
 
-### 12. The script against your hand: a checksum { #checksum }
+### 12. Compare the script's file with yours: a checksum { #checksum }
 
 **1:30 · 6 min** · A SHA-256 checksum is 64 hex digits computed from every byte: the same bytes give the same digits on every laptop.
 

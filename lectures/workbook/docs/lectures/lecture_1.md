@@ -66,7 +66,7 @@ press Enter.
 |--|--|--|
 | The Aims Reinforce Each Other | 14 | 2 min |
 | Learning Outcomes | 19 | 1 min |
-| Habits That Work, What to Expect | 21–22 | 3 min |
+| Habits for This Course, What to Expect | 21–22 | 3 min |
 | Open Data | 26 | 2 min |
 | Why You Need These Skills | 30 | 2 min |
 

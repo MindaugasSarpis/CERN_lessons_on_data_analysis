@@ -19,7 +19,7 @@ account is needed.
 | | **Part 1 · How long does it take?** · 25 min | | |
 | 0:00 | [1. Get today's scripts](#pull) | `git pull --no-edit course main` | two new scripts, the number of cores |
 | 0:10 | [2. Time the rebuild](#rebuild) | `time python run_all.py` | the rebuild in seconds |
-| 0:15 | [3. A time has noise](#noise) | `for i in 1 2 3 4 5; do time ...` | five times, the smallest kept |
+| 0:15 | [3. Time it five times, keep the smallest](#noise) | `for i in 1 2 3 4 5; do time ...` | five times, the smallest kept |
 | | **Part 2 · Where the time goes** · 35 min | | |
 | 0:25 | [4. The warmest 30 days of each year](#warmest) | `python scripts/warmest.py` | read 0.70 s, windows 0.66 s |
 | 0:35 | [5. The windows in NumPy](#numpy) | `--method numpy` | half the time, not less |
@@ -135,7 +135,7 @@ optional on a laptop.
 
 ---
 
-### 3. A time has noise { #noise }
+### 3. Time it five times, keep the smallest { #noise }
 
 **0:15 · 10 min** · Other programs take the processor now and then and only add time, so time five times and keep the smallest.
 

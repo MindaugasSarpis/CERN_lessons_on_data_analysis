@@ -80,6 +80,26 @@ the run-sheet row match the heading.
 | `# 24 Characters, 26 or 28 Bytes` | `# Why the Sizes Differ: Line Endings` |
 | card `🔢 5 or 7` | `🔢 Windows PowerShell or PowerShell 7` |
 
+## Before and after, Lectures 01–05 (13 October 2026)
+
+Slipped through a rework and caught by the lecturer ("sloppy title again"):
+a pair or a parallel that the slide has to decode is a slogan, even when it
+is true.
+
+| Before | After |
+|--|--|
+| `# Two Programs, One Mean` | `# The Mean from column_stats.py` |
+| `# The Same Rows, Other Bytes` | `# Which Files Have the Same Bytes on Both Systems` |
+| `# Every Program Ends with a Number` | `# Exit Status: $?` |
+| `# The Same Result, Byte for Byte` | `# Rebuild Twice, Compare the Checksums` |
+| `# A Script Is a Record` | `# Where the Answers About 7.16 Are Written` |
+| `# 7.16, Checked` | `# The Eight Steps, Answered` |
+| `# Think Like a CPU` | `# The Largest Number, Step by Step` |
+| `# Copies Instead of Versions` | `# Versions Kept as Copies` |
+
+Before handing a deck back, list every `# ` title of it (`grep '^# '`) and
+run the test above on each line of that list.
+
 The other slide rules (self-contained decks, no "made up" labels, two
 shells side by side, the note form, derive rather than assert, quizzes at
 the end) are in CLAUDE.md under Slide Authoring Conventions.

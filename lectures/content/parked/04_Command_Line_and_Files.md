@@ -2185,3 +2185,71 @@ hideInToc: true
 **Say:** all three look alike in VS Code. With size and checksum in the README, anyone checks a copy with one line, `shasum -a 256` or `Get-FileHash`.
 (~2 min)
 -->
+
+---
+hideInToc: true
+---
+
+<!-- Parked 13 Oct 2026 from Lecture 04, Step 4 (Regular Expressions), after the lecturer found the section hard to read and follow. The section now ends on the short pattern ',-?[0-9]+\.[0-9],'; these two slides built a full-row pattern instead. -->
+
+# The Forms of the **Lines**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ sed 's/[0-9]/9/g' data/raw/weather.csv | sort | uniq -c | sort -rn
+  34547 9999-99-99T99:99,99.9,99,9.9
+  30355 9999-99-99T99:99,9.9,99,9.9
+  19709 9999-99-99T99:99,-9.9,99,9.9
+   1897 9999-99-99T99:99,-9.9,999,9.9
+…
+    120 9999-99-99T99:99,-999,99,9.9
+…
+      1 time,temp_c,humidity_pct,wind_ms
+```
+
+</div>
+
+<div class="note-text mt-md"><code>sed 's/[0-9]/9/g'</code> writes every digit as 9, so lines of one form become one text. 13 forms: 11 with a temperature of one decimal, the 120 rows of <code>-999</code>, and the header.</div>
+
+<!--
+**Say:** 87 673 lines read as 13. Every form but two has the temperature as digits, a point and one digit; that is the pattern of a measured row. `s/A/B/g` replaces every A by B; `sort -rn` puts the largest count first.
+**If asked:** the forms differ by the number of digits: `99.9` a warm hour, `-9.9` a frost, `999` humidity of 100 %, `99.9` in the last column wind of 10 m/s or more.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Build the Pattern of a **Measured Row**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Add | Pattern so far | Lines it fits |
+| --- | --- | --- |
+| a date, `T` | `^[0-9-]+T` | 87 672 |
+| the hour, a comma | `^[0-9-]+T[0-9:]+,` | 87 672 |
+| a temperature: a minus or none, digits, a point, one digit | `^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],` | 87 552 |
+| humidity, wind, the end | `^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$` | 87 552 |
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+```text
+$ grep -cE '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' data/raw/weather.csv
+87552
+```
+
+</div>
+
+<!--
+**Say:** one piece at a time, each checked by its count. The count drops by 120 at the temperature, and the last two columns drop nothing.
+(~2 min)
+-->
+
+---
+hideInToc: true

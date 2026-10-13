@@ -27,7 +27,7 @@ today: Seminar 4 sets up the terminal and does the same by command.
 | 1:15 | [8. Three bytes in front: the BOM](#bom) | **UTF-8 with BOM** | `EF BB BF`, 21 bytes |
 | | **Part 4 · Files that are not text** · 35 min | | |
 | 1:25 | [9. The first bytes of a file](#magic) | `weather-files.zip` | `50 4B`, `PK` |
-| 1:35 | [10. The same bytes, packed](#zip) | the two sizes | 22 % |
+| 1:35 | [10. Pack the files into a zip](#zip) | the two sizes | 22 % |
 | 1:45 | [11. A checksum by hand](#checksum) | `6.3` byte by byte | 151 |
 | 1:55 | [12. Wrap up](#wrap-up) | | |
 | | **Optional, if the room is fast** | | |
@@ -384,7 +384,7 @@ section 11.
 
 ---
 
-### 10. The same bytes, packed { #zip }
+### 10. Pack the files into a zip { #zip }
 
 **1:35 · 10 min** · Lossless compression stores repeats once and gives back every byte.
 

@@ -17,7 +17,7 @@ Everything happens in VS Code and a web browser. No terminal today.
 | | **Part 1 · VS Code and the README** · 40 min | | |
 | 0:00 | [1. Install VS Code](#install) | `code.visualstudio.com` | VS Code running |
 | 0:10 | [2. Make and open the project folder](#open-folder) | **File** > **Open Folder...** | `weather-project` open |
-| 0:15 | [3. Five regions, three keys](#interface) | `Ctrl+Shift+P`, `Ctrl+B`, `Ctrl+=` | the regions named |
+| 0:15 | [3. Name the five regions, try three keys](#interface) | `Ctrl+Shift+P`, `Ctrl+B`, `Ctrl+=` | the regions named |
 | 0:20 | [4. Folders and a README](#folders) | **New Folder** `data/raw` | four folders, `README.md` |
 | 0:25 | [5. Markdown and its preview](#markdown) | `# Weather Station` | a title and a paragraph in the preview |
 | 0:35 | [6. Three mistakes, on purpose](#mistakes) | `#Weather Station` | each mistake seen and undone |
@@ -33,7 +33,7 @@ Everything happens in VS Code and a web browser. No terminal today.
 | 1:40 | [14. Check the size, write down the edits](#note) | **Get Info**, **Properties** | 148 bytes, one line in the README |
 | 1:55 | [15. Wrap up](#wrap-up) | | |
 | | **Optional, if the room is fast** | | |
-| — | [16. Sorting sorts text](#sort) | **Sort Lines Ascending** | `10.4` before `5.0` |
+| — | [16. Sort the lines: numbers sort as text](#sort) | **Sort Lines Ascending** | `10.4` before `5.0` |
 | — | [17. Rename a column everywhere](#rename) | `Ctrl+Shift+L` | `t_mean_c` in the table |
 | — | [18. The export in a spreadsheet](#spreadsheet) | double-click `daily_export.csv` | what the spreadsheet shows |
 
@@ -105,7 +105,7 @@ Everything happens in VS Code and a web browser. No terminal today.
 
 ---
 
-### 3. Five regions, three keys { #interface }
+### 3. Name the five regions, try three keys { #interface }
 
 **0:15 · 5 min** · The rest of the course calls the parts of the window by these names.
 
@@ -589,7 +589,7 @@ Seminar 3 opens `daily.csv` again and names each of its 148 bytes.
 
 ---
 
-### 16. Sorting sorts text { #sort }
+### 16. Sort the lines: numbers sort as text { #sort }
 
 **— · 5 min** · The editor sees characters, not numbers.
 

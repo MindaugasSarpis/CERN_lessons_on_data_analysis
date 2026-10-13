@@ -20,12 +20,12 @@ Windows), in the weather project, with the `weather` environment active.
 | | **Part 2 · Fix the rule, then look** · 30 min | | |
 | 0:20 | [3. Write the rule down](#plan) | `analysis_plan.md` | six lines |
 | 0:30 | [4. Commit the rule](#commit-plan) | `git commit` | the rule in the history |
-| 0:35 | [5. Open the box](#unblind) | `--unblind` | z = −0.47: not unusual |
+| 0:35 | [5. Unblind: compute October 2025](#unblind) | `--unblind` | z = −0.47: not unusual |
 | 0:40 | [6. Write the result](#result) | `README.md`, `git commit -am` | plan, then result, in `git log` |
 | | **Part 3 · Look elsewhere** · 35 min | | |
 | 0:50 | [7. Check all 120 months](#scan) | `python scripts/scan_months.py` | 11 months beyond 2 sd |
 | 1:00 | [8. What chance alone gives](#chance) | `python scripts/chance_scan.py` | 11.3 on average |
-| 1:10 | [9. The −8.79 of April 2025](#april) | `--pooled` | −2.24 |
+| 1:10 | [9. Why April 2025 scores −8.79](#april) | `--pooled` | −2.24 |
 | | **Part 4 · Other choices** · 35 min | | |
 | 1:25 | [10. Another daily mean](#minmax) | `--minmax` | −0.45 |
 | 1:30 | [11. Another reference, another sd](#reference) | `--first 2020`, `--pooled` | −0.16 and −0.57 |
@@ -198,7 +198,7 @@ of section 12 with four lines.
 
 ---
 
-### 5. Open the box { #unblind }
+### 5. Unblind: compute October 2025 { #unblind }
 
 **0:35 · 5 min** · Now, and only now, the value itself.
 
@@ -345,7 +345,7 @@ cooler than the average October.
 
 ---
 
-### 9. The −8.79 of April 2025 { #april }
+### 9. Why April 2025 scores −8.79 { #april }
 
 **1:10 · 15 min** · A z far beyond what chance gives, so look at its parts.
 
