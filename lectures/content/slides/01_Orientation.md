@@ -529,11 +529,11 @@ hideInToc: true
 
 <div class="stat-grid">
   <div class="stat">
-    <span class="stat-num gradient-text">52</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text">64</span><span class="stat-unit">h</span>
     <div class="stat-label">Contact hours</div>
   </div>
   <div class="stat">
-    <span class="stat-num gradient-text energy">78</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text energy">76</span><span class="stat-unit">h</span>
     <div class="stat-label">Self study</div>
   </div>
   <div class="stat">
@@ -546,7 +546,7 @@ hideInToc: true
 
 <!--
 **Say:** the lecture and the seminar are one unit. Miss the seminar and the lecture stays abstract; skip the lecture and the seminar feels like magic.
-**If asked:** a 5-credit elective is 130 h: 13 sessions of 4 h, 52 h, and 78 h of self-study.
+**If asked:** the course is 5 credits, 140 h: 64 h in class, 16 sessions of 4 h, and 76 h of self-study.
 (~2 min)
 -->
 
