@@ -1652,7 +1652,9 @@ Stores a code point in 1 to 4 bytes. The 128 ASCII characters keep their single 
 
 <!--
 **Say:** ASCII has 128 characters. Lithuanian letters, Greek, emoji need Unicode, and Unicode needs a way to become bytes: an encoding.
-(~2 min)
+**Live:** a file name beyond ASCII. In Word on Windows, **File** > **Save As**; in the name box press `Win+.`, search `map`, pick 🗺️ (WORLD MAP, U+1F5FA), save. In PowerShell in that folder: `ls` shows `🗺️.docx`; `` "`u{1F5FA}" `` prints the symbol from its code.
+**Live:** its bytes: `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` gives `F0 9F 97 BA EF B8 8F`. `F0 9F 97 BA` is U+1F5FA in four bytes (first byte `11110`); `EF B8 8F` is U+FE0F, an invisible "draw as emoji" code point the emoji panel adds. One symbol on screen, two code points, seven bytes. On a Mac: `printf '\U0001F5FA' | wc -c` gives 4.
+(~4 min)
 -->
 
 ---

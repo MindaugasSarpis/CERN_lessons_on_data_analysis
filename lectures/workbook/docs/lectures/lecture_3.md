@@ -88,10 +88,12 @@ Enter.
 
 ## Live in the lecture
 
-One planned moment in a terminal, marked **Live:** in the note of the ASCII
-slide: a character typed by its code, and code 7, BEL, rung instead of
-printed. Try the bell on the laptop of the room first: Terminal.app beeps,
-the terminal of VS Code may stay silent.
+Two planned moments, each marked **Live:** in its slide's note. On the
+ASCII slide: a character typed by its code, and code 7, BEL, rung instead
+of printed. Try the bell on the laptop of the room first: Terminal.app
+beeps, the terminal of VS Code may stay silent. On the Unicode slide: a
+Word document saved on Windows under the name 🗺️ (WORLD MAP, U+1F5FA,
+picked with `Win+.`), and the bytes of that name.
 
 | | zsh (macOS) | PowerShell 7 (Windows) | Output |
 |--|--|--|--|
@@ -100,6 +102,14 @@ the terminal of VS Code may stay silent.
 | The code of a character | `printf '%d\n' "'A"` | `[int][char]'A'` | `65` |
 | TAB, code 9 | `printf 'A\tB\n'` | `` "A`tB" `` | `A       B` |
 | BEL, code 7 | `printf '\a'` | `` "`a" `` or `[char]7` | a beep, nothing printed |
+
+On the Unicode slide, in PowerShell in the folder of the saved document:
+
+| Line | Output |
+|--|--|
+| `ls` | `🗺️.docx` |
+| `` "`u{1F5FA}" `` | 🗺 |
+| `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` | `F0 9F 97 BA EF B8 8F`: U+1F5FA in four bytes, then U+FE0F, which asks for the emoji form, in three |
 
 ## Check yourself
 
