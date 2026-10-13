@@ -34,9 +34,11 @@ every one of the 148 bytes named.
    Microsoft; the hexdump of the 148-byte table, every byte counted; −16.3
    as text and as a float32.
 7. **Files from the terminal**: terminal and shell, zsh on macOS and Git
-   Bash on Windows; the terminal of VS Code; the prompt; `pwd`, `ls`, `cd`,
-   `mkdir`, `cp`, `mv`, `rm`; the size of a file (`wc -c`) and its bytes
-   (`xxd`). Each command is one line, the same in both shells.
+   Bash on Windows; the terminal of VS Code; the prompt; `pwd`, `ls` and
+   `cd` as one sequence that grows click by click; `mkdir`, `cp`, `mv` and
+   `rm` as one sequence on a folder listing; the size of a file (`wc -c`) and
+   its bytes (`xxd`), each predicted before the output appears. Each command
+   is one line, the same in both shells.
 8. **Compression & integrity**: lossless and lossy compression, with the
    gzip size of the station's hourly log; a checksum worked by hand, what it
    catches and what it misses; SHA-256 with `shasum -a 256` (macOS) and `sha256sum` (Git Bash), for the table
@@ -44,7 +46,7 @@ every one of the 148 bytes named.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–89 and estimates about 132 min. Slides 90–95 are
+The lecture is slides 1–85 and estimates about 129 min. Slides 86–91 are
 the self-check quizzes and take no lecture time. For a 90-minute slot, skip
 the slides in the second table. To jump, type the slide number and press
 Enter.
@@ -57,9 +59,9 @@ Enter.
 | 0:35 | 45–52 | Integers, two's complement, overflow; floats, −16.3 as a float32, the sum of the nine daily means |
 | 0:52 | 55–59, 61–62 | Text and encodings; `10.4` before `5.0` answered in bytes at 57 |
 | 1:03 | 64, 67, 69–70 | Files and formats; the 148 bytes counted at 69; −16.3 as text and as binary |
-| 1:10 | 72–83 | Files from the terminal |
-| 1:28 | 84, 87, 89 | SHA-256, recap |
-| 1:32 | | Move to the seminar |
+| 1:10 | 72–79 | Files from the terminal |
+| 1:26 | 80, 83, 85 | SHA-256, recap |
+| 1:30 | | Move to the seminar |
 
 | Skip | Slides | Saves |
 |--|--|--|
@@ -73,13 +75,13 @@ Enter.
 | File Sizes, Byte Order | 65–66 | 4 min |
 | Install the Hex Editor | 68 | 2 min |
 | Bit Depth of an Image | 71 | 1 min |
-| Compression, A Checksum by Hand | 85–86 | 4 min |
-| Key Takeaways | 88 | 2 min |
+| Compression, A Checksum by Hand | 81–82 | 4 min |
+| Key Takeaways | 84 | 2 min |
 
-- **Do not cut** slide 3 (the table of 148 bytes) or slide 89 (the Recap,
+- **Do not cut** slide 3 (the table of 148 bytes) or slide 85 (the Recap,
   which names all 148). Slide 69 (Reading a Hexdump) is where the count is
   done; reach it by about minute 65.
-- **Do not cut** slides 72–83, the terminal. The seminar uses exactly these
+- **Do not cut** slides 72–79, the terminal. The seminar uses exactly these
   commands.
 - **Slides 10–34 are fast.** Most are one word or one picture: counting in
   unary, binary and decimal. Together they take about ten minutes.
@@ -89,6 +91,11 @@ Enter.
   on slide 66 (byte order) and slide 70 (stored lowest byte first).
 - **Slide 57** (the ASCII table): sorted as text, `10.4` comes before `5.0`,
   because `1` is 0x31 and `5` is 0x35.
+- **Predict, then click.** Slides 38, 51, 76–79 grow step by step: a
+  command or a row of bits first, its output or its next form on the click.
+  Slides 59, 69 and 79 highlight one line per click. The runners of slides
+  51, 52 and 60 print nothing until ▶. Before each click, ask the room for
+  the prediction named under **Ask:** in the note.
 - **The slides carry everything.** Every command is on its slide with its
   output, so nothing is opened beside the deck.
 
@@ -180,7 +187,7 @@ the lecture laptop; that run is the one to show.
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 90–95: five quiz slides for students to try afterwards. The same
+slides 86–91: five quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A sensor writes each reading as a 16-bit unsigned integer. How many
@@ -204,7 +211,7 @@ questions, with their answers:
 ## Paired seminar
 
 [Seminar 3](../seminars/seminar_03.md) works in the terminal of VS Code with
-the commands of slides 72–83, in zsh or Git Bash: it moves around, makes and
+the commands of slides 72–79, in zsh or Git Bash: it moves around, makes and
 changes folders and files, and measures files to the byte.
 
 ## Parked slides
@@ -216,7 +223,10 @@ Decimal to Binary and Hex, Bitwise Operations, Worked Example: 5.75 as
 float32, Why 0.1 Is Not Exact and The Float Stored for 0.1. Their place is
 taken by the first five bytes of `weather.csv` in hex, an hour count added in
 binary, −16.3 as a float32 and the sum of the nine daily means. The two
-slides on two's complement of before 13 October are parked there too.
+slides on two's complement of before 13 October are parked there too. The same night the eight one-command slides
+of the terminal section (Where Am I, What Is Here, Change Folder, Make a
+Folder, Copy and Rename, Delete, and the old size and bytes slides) were
+parked; slides 76–79 replace them with sequences that grow click by click.
 
 ## Take-aways
 

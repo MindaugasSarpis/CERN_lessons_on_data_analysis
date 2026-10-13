@@ -30,7 +30,7 @@ Lecture sources live in `lectures/content/slides/NN_Title.md`. Decks are always 
 
 ```bash
 pnpm qa                            # build every deck + fail on any slide overflowing its frame
-pnpm qa --only 05-version-control  # gate just the deck you touched (fast loop)
+pnpm qa --only 06-version-control  # gate just the deck you touched (fast loop)
 pnpm qa --changed-since origin/main  # gate only the decks whose slides changed vs main (what CI does)
 pnpm qa:shots                      # also write .qa-shots/<slug>/slide-NNN.png for visual review
 pnpm timing:check                  # every week must fill its 2h lecture + 2h seminar slot

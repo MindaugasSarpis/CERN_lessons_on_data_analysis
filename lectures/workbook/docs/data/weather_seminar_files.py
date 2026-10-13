@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write the zips that Seminars 1, 3 and 4 hand out from the Releases page.
 
-Before Seminar 5 the room has no Git, so files come as zips from
+Before Seminar 6 the room has no Git, so files come as zips from
 https://github.com/MindaugasSarpis/weather-project/releases. Each zip unpacks
 into one folder of the same name in the home folder.
 

@@ -19,7 +19,7 @@ python:
 ##### <span class="aims-badge">📁 data & files · ⚙️ automation · 🔧 tool-agnostic</span>
 
 <!--
-Speaker: Lecture 06 gave values, types, loops, lists and dicts, and one line of
+Speaker: Lecture 05 gave values, types, loops, lists and dicts, and one line of
 the data file was turned into numbers. Today the whole file is read and
 computed with, twice: with a loop over lists, then with a NumPy array. (~1 min)
 -->
@@ -72,7 +72,7 @@ M,PT,TAU,IPCHI2
 
 <!--
 Speaker: the file is data/raw/D0_KPi.csv, the one Lecture 04 ran
-column_stats.py on. Lecture 06 split one of its lines by hand. Write the four
+column_stats.py on. Lecture 05 split one of its lines by hand. Write the four
 questions on the board, and next to question 4 the guesses of the room. Most
 will say about 0.26 ps, the mean of the three rows. Anyone who remembers
 0.00098 ns from column_stats.py is right: then ask why that is larger than
@@ -132,7 +132,7 @@ hideInToc: true
 
 # **Functions**
 
-Lecture 06 turned one line of the file into four numbers: strip, split, `float`. The file has 91 583 such lines, so the steps need a name that can be called again.
+Lecture 05 turned one line of the file into four numbers: strip, split, `float`. The file has 91 583 such lines, so the steps need a name that can be called again.
 
 <!--
 Speaker: so far every script was a list of steps run once from top to bottom.
@@ -394,7 +394,7 @@ print(row[0] + row[1])
 
 ## ✅ **Test it on a line you can check**
 
-- The three steps of Lecture 06 now have a name
+- The three steps of Lecture 05 now have a name
 - The test line is line 2 of the file. Its four numbers can be compared by eye
 - A function is checked once on a case with a known answer. Then it is used on 91 583 lines
 - Line 1 of the file is `M,PT,TAU,IPCHI2`. What does `parse_line` do with it?
@@ -459,7 +459,7 @@ ValueError: could not convert string to float: 'M'
 </div>
 
 <!--
-Speaker: the room read tracebacks from the bottom in Lecture 06. New here: the
+Speaker: the room read tracebacks from the bottom in Lecture 05. New here: the
 traceback has two levels, because the error happened inside a function that
 was called from the script. Python 3.11 and later also print a line of ~ and ^
 signs under the part of the line that failed. (~2 min)
@@ -980,7 +980,7 @@ print(n_valid, len(TAU) - n_valid)
 | Rows with `TAU` = −100 | 49 |
 | Mean of the valid `TAU` | open: the guess stays on the board |
 
-The mean of `M` lies at the D⁰ peak near 1865 MeV/c². One of the 49 is the line Lecture 06 split by hand: `1818.1002,2978.644,-100.0,9901.186`.
+The mean of `M` lies at the D⁰ peak near 1865 MeV/c². One of the 49 is the line Lecture 05 split by hand: `1818.1002,2978.644,-100.0,9901.186`.
 
 </div>
 
@@ -988,7 +988,7 @@ The mean of `M` lies at the D⁰ peak near 1865 MeV/c². One of the 49 is the li
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Every further question is a further loop: the smallest value, the largest, the mean of the valid `TAU` with the `if` of Lecture 06, the same for `PT`.
+Every further question is a further loop: the smallest value, the largest, the mean of the valid `TAU` with the `if` of Lecture 05, the same for `PT`.
 
 </div>
 
@@ -1809,7 +1809,7 @@ The guess was right about a typical row: the median is 0.27 ps. A few long decay
 Speaker: this is question 4. Take the guesses from the board first, then
 show the left card line by line. Ask why the mean is four times the three
 rows before showing the table: the answer is the long tail, 1 453 rows above
-10 ps. Lecture 06 saw the other half of the story on four rows: one -100
+10 ps. Lecture 05 saw the other half of the story on four rows: one -100
 made their mean -24.9998. Here 49 marks in 91 583 rows, 0.05 %, give the
 mean the wrong sign. (~4 min)
 -->
@@ -1975,7 +1975,7 @@ print(g.mean())       # 9.795148016389398
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The nine rows of `data/processed/pendulum_script.csv`, the table `clean_pendulum.py` writes. Lecture 06 divided each `t10` by 10 inside a `for` loop; `t10 / 10` does all nine. *T* = 2π√(*L*/*g*) solved for *g* is *g* = 4π²*L*/*T*², and the line for `g` is that formula as written on paper. Nine values between 9.70 and 9.93 m/s², with a mean of 9.80.
+The nine rows of `data/processed/pendulum_script.csv`, the table `clean_pendulum.py` writes. Lecture 05 divided each `t10` by 10 inside a `for` loop; `t10 / 10` does all nine. *T* = 2π√(*L*/*g*) solved for *g* is *g* = 4π²*L*/*T*², and the line for `g` is that formula as written on paper. Nine values between 9.70 and 9.93 m/s², with a mean of 9.80.
 
 </div>
 
@@ -2455,7 +2455,7 @@ print(np.histogram([1850, 1925, 1930], bins=4, range=(1825, 1925))[0])   # [0 1 
 
 <div class="card card-primary card-glass pad-compact">
 
-The first 11 masses of the file. Lecture 06 counted them with a dict and `m // 25`: 2, 4, 3 and 2. One call gives the same counts, and the `edges`: four bins have five.
+The first 11 masses of the file. Lecture 05 counted them with a dict and `m // 25`: 2, 4, 3 and 2. One call gives the same counts, and the `edges`: four bins have five.
 
 </div>
 

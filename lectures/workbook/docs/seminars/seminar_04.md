@@ -69,7 +69,7 @@ command differ.
 
 ### 1. Install the tools { #installs }
 
-**0:00 · 12 min** · Git keeps the versions of a project, from Seminar 5; Miniforge is Python with conda. VS Code stays closed.
+**0:00 · 12 min** · Git keeps the versions of a project, from Seminar 6; Miniforge is Python with conda. VS Code stays closed.
 
 1. Open the system's terminal.
 
@@ -1229,7 +1229,7 @@ description, and not in `weather_valid.csv`.
 | a checksum | `shasum -a 256 FILE` · `sha256sum FILE` |
 | everything again | `./scripts/rebuild.sh` |
 
-Seminar 5 clones the course's copy of this project with Git.
+Seminar 5 writes Python of its own in this folder; Seminar 6 puts the project under Git.
 
 ---
 

@@ -1,28 +1,232 @@
+<!--
+Parked slides from slides/06_Python_Foundations.md, taken out on 2026-10-06.
+
+They left the deck when it was reworked to open on the handed-out script
+scripts/clean_pendulum.py (run in Seminar 4) and to read its clean() line by
+line, so that the deck stays inside the 105-145 min band. The format-on-save
+part of "The Editor Does the Typing" is now one sentence on the PEP 8 slide;
+the notebook paragraph and the links of "Read More" are on the workbook page
+lecture_6.md. This file is not in decks.json: it is not built, not gated and
+not deployed. A comment before each slide says where it stood. To restore
+one, move it back into the lecture file.
+-->
+
+<!-- Parked 2026-10-06 from Lecture 06, slide 4, between 'Learning Objectives' and the section 'Running Python': replaced by the opening slide 'The Script from Seminar 4' -->
+
 ---
-layout: cover
-title: "Python Foundations"
+hideInToc: true
 ---
 
-# Dr. Mindaugas Šarpis
+# Why **Python**
 
-# Best Research and Data Analysis Practices from CERN
+<div class="grid-2 gap-md mt-md">
 
-## Python Foundations
+<div class="card card-primary card-glass pad-compact">
 
-##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation</span>
+## 🔬 **At CERN**
+
+At ATLAS, CMS, ALICE and LHCb the analysis is written in Python: selecting candidates, filling histograms, fitting, plotting. The libraries underneath are C++. Python is the layer that people type.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🗺️ **Other languages**
+
+R for statistics. C++, Julia and Rust for speed. SQL for databases. Values, types, loops and functions exist in each of them under another spelling. What is learned here carries over.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🖱️ **A calculation by clicking**
+
+A spreadsheet shows the result and not the steps. Nobody can see which cells were dragged, and the work cannot be run again on a new file.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📄 **A calculation as a script**
+
+A script is a text file that states every step. It runs again with one command, gives the same result on Windows, macOS and Linux, and goes into Git next to the README.
+
+</div>
+
+</div>
 
 <!--
-Speaker: ask who has written Python before, and seat each of them next to
-someone who has not. Python was installed in Seminar 4. The code blocks with a
-play button run in the browser, so a laptop where the installation failed can
-still follow. (~1 min)
+Speaker: the reason for a language is the bottom row. A script is the record
+of the calculation, in the same way as the README is the record of the data.
+Python is free and open source. (~2 min)
 -->
+
+
+<!-- Parked 2026-10-06 from Lecture 06, section 'Code That Can Be Read', after 'PEP 8: One Style for Everyone': format on save moved into the PEP 8 slide -->
+
+---
+hideInToc: true
+---
+
+# The Editor Does the **Typing**
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⌨️ **Completion**
+
+Type `per` and a list offers `period_s`. `Tab` accepts it. `Ctrl+Space` opens the list at any time.
+
+A name that was completed is not misspelled.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧩 **Snippets**
+
+A short word that expands into lines you often type. Command Palette, **Snippets: Configure Snippets**, then `python`.
+
+Example: `hdr` for the first comment lines of a script.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🧹 **Format on save**
+
+Install the extension **Black Formatter**. **Format Document** is `Shift+Alt+F` (macOS `Shift+Option+F`).
+
+The setting **Editor: Format On Save** runs it at every save.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+⚙️ A formatter rewrites the layout of the file to PEP 8: spaces, quotes, line length. It does not change what the script does, and it does not choose names.
+
+</div>
+
+<!--
+Speaker: show the formatter on a line typed without spaces, x=9.02/10. It
+becomes x = 9.02 / 10 at the save. (~2 min)
+-->
+
+
+
+<!-- Parked 2026-10-06 from Lecture 06, section 'Code That Can Be Read', after 'The Editor Does the Typing', before the Recap: the notebook paragraph moved to lecture_6.md -->
+
+---
+hideInToc: true
+---
+
+# Script or **Notebook**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 📜 **Script**, a `.py` file
+
+- Plain text, run from top to bottom
+- The same order at every run, so the same result
+- Git shows what changed, line by line
+- One command runs it: `python scripts/periods.py`
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📓 **Notebook**, an `.ipynb` file
+
+- Cells of code with their output and plots below each
+- Cells can be run in any order, and the names of every earlier run stay
+- A result may depend on a cell that was changed or deleted since
+- Suited to trying things out
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+This course writes scripts. A notebook is trusted once it gives the same output after **Restart** and **Run All**. That test is what a script passes every time it runs.
+
+</div>
+
+<!--
+Speaker: some of the room know Jupyter. Nothing is wrong with it for a first
+look at data. Work that someone has to run again goes into a script. (~2 min)
+-->
+
+
+
+<!-- Parked 2026-10-06 from Lecture 06, between the Recap and the section 'Check Yourself': the links moved to lecture_6.md -->
+
+---
+hideInToc: true
+---
+
+# Read **More**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📖 **Python**
+
+- [The Python Tutorial](https://docs.python.org/3/tutorial/), chapters 3 to 5: numbers, strings, lists, `if`, `for`, dictionaries
+- [Built-in Functions](https://docs.python.org/3/library/functions.html): the full list, one paragraph each
+- [String Methods](https://docs.python.org/3/library/stdtypes.html#string-methods)
+- [PEP 8](https://peps.python.org/pep-0008/), the style guide
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧰 **VS Code**
+
+- [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)
+- [Python debugging in VS Code](https://code.visualstudio.com/docs/python/debugging)
+- [Snippets in VS Code](https://code.visualstudio.com/docs/editing/userdefinedsnippets)
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+All of these are free. At the prompt, `help(round)` prints the description of a function, and `help(str)` lists every string method.
+
+</div>
+
+<!--
+Speaker: the official tutorial covers everything of today in about an hour of
+reading. (~1 min)
+-->
+
+
+<!--
+Parked 2026-10-13 from Lecture 05 (until that day Lecture 06), when the lecturer
+swapped weeks 5 and 6 and the deck was rebuilt on the weather project of
+Lectures 01-04 (one line: write the program that computes 7.16 yourself).
+Every slide below is the pendulum / LHCb version of 6 to 13 October 2026, in its
+old order; the topics that stayed (running Python, types, names, strings, lists,
+for, if, dict, f-strings, tracebacks, the debugger) were rewritten on weather.csv.
+Not carried over: clean_pendulum.py read line by line, the 97 bytes rebuilt,
+aliasing (a second name is not a copy), while and range, comprehensions,
+tuples and sets, readable names and PEP 8, and the old quizzes.
+-->
+
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 2: 'The goal of this lecture is to **read and write a short Python program**: values and their' -->
 
 ---
 hideInToc: true
 layout: quote
 ---
-
 # The goal of this lecture is to **read and write a short Python program**: values and their types, names, decisions, loops, lists and dictionaries, and what to do when the program stops with an error.
 
 <!--
@@ -32,10 +236,11 @@ of each file is turned into numbers, a loop does it for every row, and every
 line of the script is read. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 3: 'Learning **Objectives**' -->
+
 ---
 hideInToc: true
 ---
-
 # Learning **Objectives**
 
 <div class="grid-2 gap-md mt-sm">
@@ -95,10 +300,11 @@ Speaker: eight abilities, in the order of the lecture. Functions are called
 today and not written. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 4: 'The Script from **Seminar 4**' -->
+
 ---
 hideInToc: true
 ---
-
 # The Script from **Seminar 4**
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -153,11 +359,12 @@ projector. Lecture 04 matched four of these lines to the four edits of the
 README; nobody read the words. Leave the question on the screen. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 5: 'Running **Python**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Running **Python**
 
 The script was started by one line typed at the shell's prompt. The first word of that line is a program, and the program has a prompt of its own.
@@ -167,10 +374,11 @@ Speaker: everything in this section is done live in VS Code beside the slides.
 (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 6: 'Python Is a **Program**' -->
+
 ---
 hideInToc: true
 ---
-
 # Python Is a **Program**
 
 <div class="grid-2 gap-md mt-md">
@@ -229,10 +437,11 @@ program is an algorithm in a form this program can read. If a laptop answers
 message afterwards. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 7: 'The `>>>` **Prompt**' -->
+
 ---
 hideInToc: true
 ---
-
 # The `>>>` **Prompt**
 
 <div class="grid-2 gap-md mt-sm">
@@ -290,10 +499,11 @@ expected. The PowerShell 0.902 is the same
 float shown with fewer digits. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 8: 'The First **Script**' -->
+
 ---
 hideInToc: true
 ---
-
 # The First **Script**
 
 <div class="grid-2 gap-md mt-md">
@@ -338,10 +548,11 @@ Speaker: write the file live next to hello.py from Seminar 4 and run it.
 This is the shape of the line that ran clean_pendulum.py. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 9: 'A Script Runs **Top to Bottom**' -->
+
 ---
 hideInToc: true
 ---
-
 # A Script Runs **Top to Bottom**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
@@ -379,10 +590,11 @@ The prompt prints every value by itself. A script prints nothing unless it calls
 Speaker: read the table as the interpreter would, line by line. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 10: 'Try It — The First **Script**' -->
+
 ---
 hideInToc: true
 ---
-
 # Try It — The First **Script**
 
 ```py {monaco-run} {autorun:false}
@@ -406,10 +618,11 @@ Speaker: step 3 is the first traceback of the course, made on purpose. The
 last line names the problem: the name does not exist yet at that point. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 11: 'Python in **VS Code**' -->
+
 ---
 hideInToc: true
 ---
-
 # Python in **VS Code**
 
 <div class="grid-2 gap-md mt-md">
@@ -450,11 +663,12 @@ at the command that the ▶ button types: the absolute paths of Lecture 04,
 folder. The relative form is the one that works on every laptop. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 12: 'Values, Types & **Names**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Values, Types & **Names**
 
 The script printed 0.9019999999999999 for 9.02 / 10. Every value it makes has a type, and the type decides what an operation does with it.
@@ -464,10 +678,11 @@ Speaker: Lecture 03 built integers, floats and text from bits. Python has
 the same three, and the long decimals come from the float. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 13: 'Every Value Has a **Type**' -->
+
 ---
 hideInToc: true
 ---
-
 # Every Value Has a **Type**
 
 <div class="grid-2 gap-md mt-md">
@@ -513,10 +728,11 @@ between a number and its text, and most errors of a first data script come
 from mixing the two. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 14: '`int`: No Fixed **Width**' -->
+
 ---
 hideInToc: true
 ---
-
 # `int`: No Fixed **Width**
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -539,10 +755,11 @@ Speaker: ** is the power operator. Ask what an int64 would do at 2 to the 64:
 it would wrap to 0. Python counts on. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 15: '`float`: The float64 of **Lecture 03**' -->
+
 ---
 hideInToc: true
 ---
-
 # `float`: The float64 of **Lecture 03**
 
 <div class="grid-2 gap-md mt-md">
@@ -587,10 +804,11 @@ measurement or with Python. PowerShell's 0.902 was this float cut to 15
 digits for the reader, which is the last sentence of the bottom card. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 16: '**Arithmetic**' -->
+
 ---
 hideInToc: true
 ---
-
 # **Arithmetic**
 
 <div class="grid-2 gap-md mt-md">
@@ -638,10 +856,11 @@ Speaker: the two surprises are / giving a float for 10 / 2, and the minus sign
 binding less tightly than the power. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 17: '**Names**' -->
+
 ---
 hideInToc: true
 ---
-
 # **Names**
 
 <div class="grid-2 gap-md mt-md">
@@ -690,10 +909,11 @@ does not follow anything: line 2 ran once, with the value t10_s had then. To
 get the new period, line 2 has to run again. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 18: 'Calling a **Function**' -->
+
 ---
 hideInToc: true
 ---
-
 # Calling a **Function**
 
 <div class="grid-2 gap-md mt-md">
@@ -743,10 +963,11 @@ Speaker: a function is used here as a ready-made tool. Read the call aloud:
 split and append the same way, as methods after a dot. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 19: '`str`: Unicode **Text**' -->
+
 ---
 hideInToc: true
 ---
-
 # `str`: Unicode **Text**
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -772,10 +993,11 @@ U+0105, packed by UTF-8 into the two bytes C4 85, both on the slide. Python
 keeps characters and bytes apart as two types, str and bytes. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 20: '`bool`: **Comparisons**' -->
+
 ---
 hideInToc: true
 ---
-
 # `bool`: **Comparisons**
 
 <div class="grid-2 gap-md mt-md">
@@ -823,10 +1045,11 @@ card is the dangerous one, because it fails silently. The `in` of the last
 line on the right is line 28 of clean_pendulum.py: "mean" in line. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 21: 'From Text to **Number**' -->
+
 ---
 hideInToc: true
 ---
-
 # From Text to **Number**
 
 <div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
@@ -871,11 +1094,12 @@ Text plus text is longer text, with no error. Read the bold sentence aloud:
 it is the claim of this lecture. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 22: 'Strings & **Lists**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Strings & **Lists**
 
 `float("9.02")` converts one value. A line of `D0_KPi.csv` holds four, as one string with commas between them; cut at the commas, it is a list.
@@ -885,10 +1109,11 @@ Speaker: the central recipe of the lecture: one line of a CSV file becomes
 four numbers. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 23: 'Index and **Slice**' -->
+
 ---
 hideInToc: true
 ---
-
 # Index and **Slice**
 
 ```python
@@ -945,10 +1170,11 @@ so characters and bytes count alike here; the ą of the str slide was the
 case where they do not. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 24: 'String **Methods**' -->
+
 ---
 hideInToc: true
 ---
-
 # String **Methods**
 
 <div class="grid-2 gap-md mt-md">
@@ -997,10 +1223,11 @@ line.replace(",", ".").replace(";", ","), the second method called on the
 result of the first. The order argument is the same as in the editor. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 25: '**Lists**' -->
+
 ---
 hideInToc: true
 ---
-
 # **Lists**
 
 <div class="grid-2 gap-md mt-md">
@@ -1050,10 +1277,11 @@ matters is the last card: a list changes in place. out = [] and out.append(...) 
 and 31 of clean_pendulum.py: an empty list, then one item per row. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 26: 'Turn a Line of `D0_KPi.csv` into **Numbers**' -->
+
 ---
 hideInToc: true
 ---
-
 # Turn a Line of `D0_KPi.csv` into **Numbers**
 
 ```python
@@ -1103,10 +1331,11 @@ print after every line. The four names are the four columns of the header:
 M, PT, TAU, IPCHI2. (~4 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 27: 'Try It — Parse **Another Line**' -->
+
 ---
 hideInToc: true
 ---
-
 # Try It — Parse **Another Line**
 
 ```py {monaco-run} {autorun:false}
@@ -1133,10 +1362,11 @@ five parts, m is 1818.0 and tau is 2978.644: wrong numbers, no message, the
 bold sentence of From Text to Number. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 28: 'A Second Name Is Not a **Copy**' -->
+
 ---
 hideInToc: true
 ---
-
 # A Second Name Is Not a **Copy**
 
 <div class="grid-2 gap-md mt-md">
@@ -1187,11 +1417,12 @@ Speaker: this is the Names slide again, with an object that can change. Ask
 the room for the output of the first print before running it. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 29: 'Decisions & **Loops**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Decisions & **Loops**
 
 One line became four numbers. The pendulum table has nine rows and `D0_KPi.csv` 91 583, so the steps for one line have to run once for each line, and skip some.
@@ -1200,10 +1431,11 @@ One line became four numbers. The pendulum table has nine rows and `D0_KPi.csv` 
 Speaker: with for and if a script stops being a calculator. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 30: '`if`: Run a Block or **Skip It**' -->
+
 ---
 hideInToc: true
 ---
-
 # `if`: Run a Block or **Skip It**
 
 <div class="grid-2 gap-md mt-md">
@@ -1252,10 +1484,11 @@ them. With tau = 0.00041271152 the same lines print
 "decay time 0.00041271152". (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 31: '`for`: Once for **Each Item**' -->
+
 ---
 hideInToc: true
 ---
-
 # `for`: Once for **Each Item**
 
 <div class="grid-2 gap-md mt-md">
@@ -1304,10 +1537,11 @@ shape is lines 26, 27 and 31 of clean_pendulum.py: out = [], for line in
 lines:, out.append(...). (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 32: 'The Table as **Lines**' -->
+
 ---
 hideInToc: true
 ---
-
 # The Table as **Lines**
 
 <div class="grid-2 gap-md mt-md">
@@ -1360,10 +1594,11 @@ the script in Seminar 4, now inside a script. Ten lines: one header and nine
 rows. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 33: 'The Period for **Every Row**' -->
+
 ---
 hideInToc: true
 ---
-
 # The Period for **Every Row**
 
 <div class="grid-2 gap-md mt-md">
@@ -1415,10 +1650,11 @@ Speaker: run it live in scripts/periods.py. A pendulum of 1 m has a period of
 about 2 s: the last row is a check that the numbers are sensible. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 34: 'A Sum in a **Loop**' -->
+
 ---
 hideInToc: true
 ---
-
 # A Sum in a **Loop**
 
 ```py {monaco-run} {autorun:false}
@@ -1455,10 +1691,11 @@ three places, before, inside and after, carry every count, sum, minimum and
 maximum over a file. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 35: '`while` and `range`' -->
+
 ---
 hideInToc: true
 ---
-
 # `while` and `range`
 
 <div class="grid-2 gap-md mt-md">
@@ -1510,10 +1747,11 @@ the bit count of Lecture 03, found by trying. range(20, 101, 10) gives the
 nine lengths of the pendulum table. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 36: 'A List in **One Line**' -->
+
 ---
 hideInToc: true
 ---
-
 # A List in **One Line**
 
 <div class="grid-2 gap-md mt-md">
@@ -1562,10 +1800,11 @@ Speaker: the last line is the convert step of the recipe for a line with any
 number of columns. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 37: 'Try It — Skip the **Missing Value**' -->
+
 ---
 hideInToc: true
 ---
-
 # Try It — Skip the **Missing Value**
 
 ```py {monaco-run} {autorun:false}
@@ -1596,10 +1835,11 @@ time is negative, which no time can be. A marker such as -100 has to be
 handled before any arithmetic. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 38: '`clean()`, Line by **Line**' -->
+
 ---
 hideInToc: true
 ---
-
 # `clean()`, Line by **Line**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
@@ -1632,10 +1872,11 @@ make clean a function of its own; the slides called functions and did not
 write one. main(), which opens the files, is the rest of the script. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 39: 'The 97 Bytes, **Rebuilt**' -->
+
 ---
 hideInToc: true
 ---
-
 # The 97 Bytes, **Rebuilt**
 
 ```py {monaco-run} {autorun:false}
@@ -1678,11 +1919,12 @@ Change "mean" to "means" and run again: 11 lines, 108 bytes, checksum
 only the known size and checksum show it. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 40: 'Dictionaries & **Tuples**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Dictionaries & **Tuples**
 
 The loops found each value by its position: `parts[2]` is the decay time only because the header says so. A dictionary finds a value by a name.
@@ -1692,10 +1934,11 @@ Speaker: parts[2] says nothing about what the third value is. A dictionary
 keeps the column name with the value. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 41: 'A Row with **Names**: `dict`' -->
+
 ---
 hideInToc: true
 ---
-
 # A Row with **Names**: `dict`
 
 <div class="grid-2 gap-md mt-md">
@@ -1739,10 +1982,11 @@ Speaker: a dictionary is a small table with two columns, key and value. The
 keys here are the column names of the header line. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 42: 'Try It — Header and Line into a **dict**' -->
+
 ---
 hideInToc: true
 ---
-
 # Try It — Header and Line into a **dict**
 
 ```py {monaco-run} {autorun:false}
@@ -1770,10 +2014,11 @@ Speaker: the output is {'M': 1880.649, 'PT': 3000.9534, 'TAU': 0.00041271152,
 at the end. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 43: 'Counting with a **dict**' -->
+
 ---
 hideInToc: true
 ---
-
 # Counting with a **dict**
 
 ```py {monaco-run} {autorun:false}
@@ -1811,10 +2056,11 @@ Every tool used so far is in these lines: a list, a loop, //, int, a
 dictionary, sorted, and a string times a number. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 44: 'untitled' -->
+
 ---
 hideInToc: true
 ---
-
 <div class="card card-primary card-glass pad-compact table-compact">
 
 | Container | Written as | Found by | Can be changed | Use |
@@ -1862,11 +2108,12 @@ appear without being asked for, in items() and wherever two values travel
 together. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 45: 'Readable **Output**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Readable **Output**
 
 The loop printed 1.7899999999999998 s for a time read to 0.01 s over ten swings. A number printed for a person shows the digits the measurement has.
@@ -1876,10 +2123,11 @@ Speaker: the pendulum loop printed 0.9019999999999999. Printing 0.902 does
 not change the stored value. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 46: '**f-strings**' -->
+
 ---
 hideInToc: true
 ---
-
 # **f-strings**
 
 <div class="grid-2 gap-md mt-md">
@@ -1927,10 +2175,11 @@ Speaker: the f-string makes a new string. Nothing happens to period_s. Three
 decimals suit a time read to a hundredth of a second over ten swings. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 47: 'The **Format** After the Colon' -->
+
 ---
 hideInToc: true
 ---
-
 # The **Format** After the Colon
 
 <div class="grid-2 gap-md mt-sm">
@@ -1977,11 +2226,12 @@ header line and three rows: 20 0.902, 30 1.105, 40 1.261. 49 of 91 583 is the
 share of rows without a decay time. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 48: 'Errors & **Debugging**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Errors & **Debugging**
 
 Every error so far was made on purpose, and Python named each one in its last line. The lines above it say where, and a wrong result has no line at all.
@@ -1991,10 +2241,11 @@ Speaker: every script fails many times before it works. Reading the message
 is a skill of its own, and it is quick to learn. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 49: 'Three Kinds of **Error**' -->
+
 ---
 hideInToc: true
 ---
-
 # Three Kinds of **Error**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
@@ -2038,10 +2289,11 @@ Speaker: the first two kinds are the friendly ones. The mean of the pendulum
 periods had an expected value, 1.514 s, before any code was written. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 50: 'Anatomy of a **Traceback**' -->
+
 ---
 hideInToc: true
 ---
-
 # Anatomy of a **Traceback**
 
 <div class="grid-2 gap-md mt-sm" style="grid-template-columns: 2fr 3fr;">
@@ -2104,10 +2356,11 @@ scripts/ is the absolute path of the project on each laptop:
 C:\Users\smilte\...\scripts\period.py on Windows. (~4 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 51: 'Common Error **Messages**' -->
+
 ---
 hideInToc: true
 ---
-
 # Common Error **Messages**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
@@ -2134,10 +2387,11 @@ Speaker: all six are real messages of Python 3.13. Let the room guess the
 cause from the message before showing the right column. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 52: 'Fix It — **NameError**' -->
+
 ---
 hideInToc: true
 ---
-
 # Fix It — **NameError**
 
 <div class="card card-warning card-glass pad-compact mt-sm">
@@ -2163,10 +2417,11 @@ Speaker: let the room read the message aloud before anyone repairs it. The
 loop is run, read, repair. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 53: 'Fix It — **ValueError**' -->
+
 ---
 hideInToc: true
 ---
-
 # Fix It — **ValueError**
 
 <div class="card card-warning card-glass pad-compact mt-sm">
@@ -2194,10 +2449,11 @@ Speaker: line 3 works, line 4 fails: the traceback says which. The repair is
 made in the script and the raw file stays as it is. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 54: 'Find a Bug with **print**' -->
+
 ---
 hideInToc: true
 ---
-
 # Find a Bug with **print**
 
 ```py {monaco-run} {autorun:false}
@@ -2233,10 +2489,11 @@ header is counted. The repair is len(lines) - 1, and the mean is 1.089. Take
 the print out again afterwards. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 55: 'The Debugger: Stop at a **Line**' -->
+
 ---
 hideInToc: true
 ---
-
 # The Debugger: Stop at a **Line**
 
 <img src="/figures/python_debugger.svg" alt="The debugger of VS Code stopped at a breakpoint" style="display:block;margin:0 auto;max-height:290px;">
@@ -2265,10 +2522,11 @@ shown live. The Variables panel is the "names after the line" column of the
 slide A Script Runs Top to Bottom, kept up to date by VS Code. (~3 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 56: 'Step, Continue, **Inspect**' -->
+
 ---
 hideInToc: true
 ---
-
 # Step, Continue, **Inspect**
 
 <div class="grid-2 gap-md mt-md">
@@ -2314,10 +2572,11 @@ print asks one question per run. The debugger answers every question in one
 run. On a Mac the function keys may need the Fn key. (~4 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 57: 'When a Script **Fails**' -->
+
 ---
 hideInToc: true
 ---
-
 # When a Script **Fails**
 
 <div class="grid-2 gap-md mt-md">
@@ -2367,11 +2626,12 @@ Speaker: the four steps are the same for every error, whatever the script
 does. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 58: 'Code That Can Be **Read**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Code That Can Be **Read**
 
 The wrong mean was found by comparing what each name held with what it should hold. That is quick when the name says what it holds, and in which unit.
@@ -2381,10 +2641,11 @@ Speaker: Python accepts any name and almost any layout. The reader does not,
 and the reader is most often the author, some months later. (~1 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 59: 'Name Every Value and Its **Unit**' -->
+
 ---
 hideInToc: true
 ---
-
 # Name Every Value and Its **Unit**
 
 <div class="grid-2 gap-md mt-md">
@@ -2444,10 +2705,11 @@ Speaker: the column names of the pendulum table already follow this rule,
 length_cm and t10_s. The script continues what the file started. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 60: 'PEP 8: Python's **Style Guide**' -->
+
 ---
 hideInToc: true
 ---
-
 # PEP 8: Python's **Style Guide**
 
 <div class="grid-2 gap-md mt-md">
@@ -2488,10 +2750,11 @@ x = 9.02 / 10 at the save. The names half is up to the author. In Git, a file
 kept in one layout shows what was changed and not how it was spaced. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 61: '**Recap**' -->
+
 ---
 hideInToc: true
 ---
-
 # **Recap**
 
 <div class="grid-2 gap-md mt-sm">
@@ -2546,19 +2809,21 @@ The two known values are the habit to take away: decide on a number before
 the script runs. Commit the scripts live. (~2 min)
 -->
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 62: 'Check **Yourself**' -->
+
 ---
 layout: section
 hideInToc: true
 ---
-
 # Check **Yourself**
 
 Questions on this lecture, for after it. They are not part of the lecture time.
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 63: 'MCQ' -->
+
 ---
 hideInToc: true
 ---
-
 <MCQ
   question="A script has `x = '30'` and `y = '11.05'`. What is `x + y`?"
   :options="[
@@ -2571,10 +2836,11 @@ hideInToc: true
   explanation="Both values are strings, and + joins two strings. No error is reported. To add the numbers, convert first: float(x) + float(y) gives 41.05. A TypeError appears only when a string meets a number, as in '30' + 11.05."
 />
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 64: 'MCQ' -->
+
 ---
 hideInToc: true
 ---
-
 <MCQ
   question="After `a = [1, 2, 3]`, then `b = a`, then `b.append(4)`: what is `a`?"
   :options="[
@@ -2587,10 +2853,11 @@ hideInToc: true
   explanation="b = a puts a second name on the same list. It copies nothing. A change made through either name is seen through both. An independent list is made with b = a.copy() or b = list(a)."
 />
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 65: 'MCQ' -->
+
 ---
 hideInToc: true
 ---
-
 <MCQ
   question="`masses = [1866, 1810, 1871]`, then `result = masses.sort()`. What are `result` and `masses` now?"
   :options="[
@@ -2603,10 +2870,11 @@ hideInToc: true
   explanation="sort() changes the list in place and hands back None. sorted(masses) leaves the list as it is and hands back a new, sorted list. Use sort() when the original order is not needed again."
 />
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 66: 'MCQ' -->
+
 ---
 hideInToc: true
 ---
-
 <MCQ
   question="`lines` is a list of 250 strings: one header line and 249 rows. How many times does the block of `for line in lines[2:]:` run?"
   :options="[
@@ -2619,10 +2887,11 @@ hideInToc: true
   explanation="lines[2:] starts at index 2, the third item, and runs to the end: 250 - 2 = 248 items. The slice that skips only the header is lines[1:], with 249 items. A loop that silently drops the first row gives a result that looks right and is not."
 />
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 67: 'MCQ' -->
+
 ---
 hideInToc: true
 ---
-
 <MCQ
   question="A script prints `rows read: 6`, then a traceback that names line 12 and ends with `ValueError: could not convert string to float: '12,61'`. What do you know?"
   :options="[
@@ -2635,10 +2904,11 @@ hideInToc: true
   explanation="An exception stops the script at one line. Everything before it has run, which is why there is output. The last line of the traceback gives the kind of error and the exact text that failed: '12,61' has a comma where float() needs a point. Replace it first, or repair the file."
 />
 
+<!-- Parked 2026-10-13 from Lecture 05 (old deck), slide 68: 'MCQ' -->
+
 ---
 hideInToc: true
 ---
-
 <MCQ
   question="`period_s` holds 1.7899999999999998. What does `print(f'{period_s:.2f} s')` write, and what does `period_s` hold afterwards?"
   :options="[
@@ -2650,3 +2920,55 @@ hideInToc: true
   :correct="2"
   explanation="The format .2f writes the value rounded to two decimals: 1.79. The f-string builds a new string. The name period_s still holds the full float64 value, so later calculations lose nothing."
 />
+
+<!-- Parked 2026-10-13 from Lecture 05, slide 23, between 'Cut at the Commas: split' and 'Convert Each Part': a detour from the line of weather.csv into the spreadsheet export -->
+
+---
+hideInToc: true
+---
+
+# Methods of a `str`
+
+```py {monaco-run} {autorun:false}
+row = "1;2025-10-01;6,3"            # a line of daily_export.csv
+parts = row.split(";")
+print(parts)                        # ['1', '2025-10-01', '6,3']
+print(parts[2].replace(",", "."))   # 6.3
+print(parts[1].startswith("2025"))  # True
+print("2.5\n".strip() == "2.5")     # True: the line end is gone
+```
+
+<div class="note-text mt-md">A method hands back a new string: <code>parts[2]</code> is still <code>'6,3'</code>. <code>float("6,3")</code> stops with a <code>ValueError</code>; the decimal comma is replaced first.</div>
+
+<!--
+**Say:** the spreadsheet export of Lecture 02 again: `;` between values, a decimal comma. `clean_export.py` does these replacements on every line.
+**If asked:** `strip` removes spaces and line ends at both ends of a string.
+(~2 min)
+-->
+
+<!-- Parked 2026-10-13 from Lecture 05, slide 36, after 'The Mean Without the −999 Rows': the rounding of a long float sum, a detour inside Step 5 (the float slide keeps 0.1 + 0.2) -->
+
+---
+hideInToc: true
+---
+
+# The Rounding in a **Sum**
+
+```py {monaco-run} {autorun:false}
+tenths = [0.1] * 10          # a list of ten 0.1
+total = 0.0
+for x in tenths:
+    total = total + x
+print(total)                 # 0.9999999999999999
+import math
+print(math.fsum(tenths))     # 1.0
+print(sum(tenths))           # 1.0
+```
+
+<div class="note-text mt-md">Each <code>+</code> rounds to the nearest float64. The loop of <code>mean_temp.py</code> ends with 626 869.3000000009; the exact sum is 626 869.3, and the mean differs in the 15th digit: 7.15996550621346 against …45.</div>
+
+<!--
+**Ask:** ten times 0.1: does the loop reach 1.0?
+**Say:** the 71.69999999999999 of Lecture 03, once more. `math.fsum` and, since Python 3.12, `sum` keep track of the lost digits; `column_stats.py` uses `math.fsum`.
+(~2 min)
+-->

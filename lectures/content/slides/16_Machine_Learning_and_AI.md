@@ -2488,7 +2488,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-🧪 Code from a model is treated like all code in this course: under version control (Lecture 05), run from a clean start, with a test on a case whose answer is known (Lecture 13)
+🧪 Code from a model is treated like all code in this course: under version control (Lecture 06), run from a clean start, with a test on a case whose answer is known (Lecture 13)
 
 </div>
 

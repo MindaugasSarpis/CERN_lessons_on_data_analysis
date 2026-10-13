@@ -778,10 +778,15 @@ hideInToc: true
 
 ## 💾 **As bits and as hex**
 
+````md magic-move
+```text
+bits   0111 0100   0110 1001   0110 1101   0110 0101   0010 1100
+```
 ```text
 bits   0111 0100   0110 1001   0110 1101   0110 0101   0010 1100
 hex       7    4      6    9      6    D      6    5      2    C
 ```
+````
 
 </div>
 
@@ -795,7 +800,7 @@ Each group of four bits is one row of the table: `0010` is 2, `1100` is C. A byt
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div v-click class="card card-accent card-glass pad-compact">
 
 ## 🧮 **The last byte in decimal**
 
@@ -809,7 +814,7 @@ The 40 bits, written in hex: `74 69 6D 65 2C`.
 
 <!--
 **Say:** nobody reads 40 bits. Ten hex digits are the same five bytes, and every hex view of a file writes bytes this way. `0x` in front marks a number as hex.
-**Ask:** which hex pair is `0110 1001`? `69`.
+**Ask:** before the click, the room reads the first group, `0111 0100`, with the hex table: `74`. Then which pair is `0110 1001`? `69`.
 **If asked:** the five bytes are the characters `t`, `i`, `m`, `e` and the comma, the start of the header `time,temp_c,…`; the ASCII table gives each one its number.
 (~3 min)
 -->
@@ -1283,31 +1288,42 @@ hideInToc: true
 
 # −16.3 as a **float32**
 
-<div class="card card-primary card-glass pad-tight mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 - **s** = 1: the number is negative
 - 16 ≤ 16.3 < 32, so 16.3 = 1.01875 × 2⁴: **e** = 4, stored as 4 + 127 = 131 = `10000011`
-- **m**: the digits of 1.01875 after the point, in binary, cut at 23: `00000100110011001100110`. They never end, so the rest is rounded off
+- **m**: the digits of 1.01875 after the point, in binary, cut at 23. They never end, so the rest is rounded off
 
 </div>
 
-<div class="text-center text-3xl mt-md">
+````md magic-move
+```text
+1 10000011 00000100110011001100110
+```
+```text
+1100 0001 1000 0010 0110 0110 0110 0110
+```
+```text
+C1   82   66   66
+```
+````
 
-`1 10000011 00000100110011001100110`
+<div class="mt-sm">
 
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-In groups of four: `1100 0001 1000 0010 0110 0110 0110 0110` = **`C1 82 66 66`**. The value stored is −16.299999237…
+```py {monaco-run} {autorun:false}
+import struct
+b = struct.pack(">f", -16.3)  # 4 bytes, sign first
+print(b.hex(" "))
+print(struct.unpack(">f", b)[0])  # read back
+```
 
 </div>
 
 <!--
-**Do:** point at the three parts of the bit row: 1 bit, 8 bits, 23 bits.
-**Say:** 32 bits are four bytes, and in hex they are eight digits. The rounding is in the last digits: −16.3 cannot be stored exactly.
+**Do:** click through the bit row: the 32 bits, the same bits in groups of four, then one hex digit per group.
+**Ask:** before ▶: which four bytes does Python print, and what comes back when they are read again? `c1 82 66 66` and −16.299999237060547: −16.3 cannot be stored exactly.
 **If asked:** the binary digits of a fraction come from doubling it and keeping the whole part each time: 0.01875, 0.0375, 0.075, 0.15, 0.3, 0.6, 1.2, … The stored value is exactly −16.299999237060546875.
-(~3 min)
+(~4 min)
 -->
 
 ---
@@ -1320,21 +1336,21 @@ hideInToc: true
 
 ```py {monaco-run} {autorun:false}
 total = 6.3 + 5.0 + 5.6 + 7.0 + 9.4 + 10.4 + 9.2 + 9.0 + 9.8
-print(total)          # 71.69999999999999
-print(total == 71.7)  # False
+print(total)
+print(total == 71.7)
 import math           # compare with a tolerance
-print(math.isclose(total, 71.7))  # True
-print(f"{9.4:.20f}")  # 9.40000000000000035527
+print(math.isclose(total, 71.7))
+print(f"{9.4:.20f}")  # 20 decimals of the stored 9.4
 ```
 
 </div>
 
-<div class="note-text mt-sm">9.4 has no end in binary, as 1/3 has none in decimal. Each stored value is rounded, and the rounding errors add up.</div>
+<div v-click class="note-text mt-sm">9.4 has no end in binary, as 1/3 has none in decimal. Each stored value is rounded, and the rounding errors add up.</div>
 
 <!--
-**Ask:** by hand, the nine temperatures of `daily.csv` add up to 71.7. Predict the first two lines, then press ▶.
+**Ask:** by hand the nine temperatures of `daily.csv` add up to 71.7. What do the first two lines print? Take two or three guesses, then ▶: 71.69999999999999 and False; then True and 9.40000000000000035527.
 **Say:** two measured numbers are compared with a tolerance, never with ==.
-**If asked:** the last line prints 20 decimals of the float64 stored for 9.4. Python's `sum()` adds more carefully since version 3.12 and gives 71.7 here; the `+` of the first line is what a plain loop does.
+**If asked:** Python's `sum()` adds more carefully since version 3.12 and gives 71.7 here; the `+` of the first line is what a plain loop does.
 (~3 min)
 -->
 
@@ -1554,7 +1570,7 @@ hideInToc: true
 
 ## ✍️ **`ą` by hand**
 
-```text
+```text {1|2|3|4|5}
 ą = U+0105 = 1 0000 0101    two bytes
 as 11 bits:  00100 000101
 pattern:     110xxxxx 10xxxxxx
@@ -1569,7 +1585,7 @@ in hex:      C4       85
 <div class="note-text mt-sm">The first bits of a byte say what it is: <code>0</code> a whole ASCII character, <code>110</code>, <code>1110</code> or <code>11110</code> the start of a longer one, <code>10</code> a continuation.</div>
 
 <!--
-**Do:** fill in the 11 bits on the board, five into the first byte and six into the second.
+**Do:** click through the five lines; on the fourth, fill in the 11 bits, five into the first byte and six into the second.
 **Say:** a program can start reading anywhere in a file and find the next character.
 (~3 min)
 -->
@@ -1585,15 +1601,15 @@ hideInToc: true
 ```py {monaco-run} {autorun:false}
 s = "Å and 😊"            # str: Unicode characters
 b = s.encode("utf-8")     # bytes
-print(len(s), len(b))     # 7 11: Å takes 2 bytes, 😊 takes 4
-print(b)                  # b'\xc3\x85 and \xf0\x9f\x98\x8a'
+print(len(s), len(b))     # characters, bytes
+print(b)
 print(b.decode("utf-8"))  # back to str
 ```
 
 </div>
 
 <!--
-**Ask:** 7 characters; how many bytes? Count: 5 ASCII characters, 2 for Å, 4 for the emoji: 11.
+**Ask:** before ▶: 7 characters; how many bytes? 5 ASCII characters, 2 for Å, 4 for the emoji: 11. Then `b` prints `b'\xc3\x85 and \xf0\x9f\x98\x8a'`: every byte that is not ASCII is written in hex.
 (~2 min)
 -->
 
@@ -1885,7 +1901,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-```text
+```text {*|1|2}
 00000000: 6461 7465 2c74 656d 705f 630a 3230 3235  date,temp_c.2025
 00000010: 2d31 302d 3031 2c36 2e33 0a32 3032 352d  -10-01,6.3.2025-
 ```
@@ -2016,7 +2032,7 @@ hideInToc: true
 
 # Files from the **Terminal**
 
-A typed line reaches files and their bytes, and it can be written down and run again.
+Where am I, what is here, how many bytes has a file: each answered by a typed line.
 
 <!--
 **Say:** zsh on a Mac and Git Bash on Windows take the same lines. Where they differ, the slide shows both.
@@ -2141,187 +2157,177 @@ The folder the shell is in, the **working directory**. `~` is the home folder
 hideInToc: true
 ---
 
-# Where Am I: **`pwd`**
+# Look Around: **`pwd`**, **`ls`**, **`cd`**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
+```text
+$ pwd
+```
 ```text
 $ pwd
 /Users/smilte/Documents/weather-project
 ```
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-`pwd`, **print working directory**: the path from the top of the disk, `/`, down to this folder. A path from the top is **absolute**. Git Bash writes the disk `C:` as `/c`: `/c/Users/smilte/Documents/weather-project`.
-
-</div>
-
-<!--
-**Do:** read the answer from left to right as a walk down the folders.
-**Ask:** why would three laptops print three different paths? The user names differ.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# What Is Here: **`ls`**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## 💻 **zsh · Git Bash**
-
 ```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ ls
+```
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
 $ ls
 README.md  data  results  scripts
 ```
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-`ls`, **list**, prints the names in the working directory. `ls -l` adds each file's size in bytes and its date.
-
-</div>
-
-<!--
-**Say:** the same four names as in the Side Bar of VS Code.
-**If asked:** Git Bash sorts without regard to capitals: `data  README.md  results  scripts`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Change Folder: **`cd`**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## 💻 **zsh · Git Bash**
-
 ```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ ls
+README.md  data  results  scripts
+$ cd data
+$ pwd
+```
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ ls
+README.md  data  results  scripts
 $ cd data
 $ pwd
 /Users/smilte/Documents/weather-project/data
-$ cd processed
-$ cd ../..
+```
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ ls
+README.md  data  results  scripts
+$ cd data
+$ pwd
+/Users/smilte/Documents/weather-project/data
+$ ls
+```
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ ls
+README.md  data  results  scripts
+$ cd data
+$ pwd
+/Users/smilte/Documents/weather-project/data
+$ ls
+processed  raw
+```
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ ls
+README.md  data  results  scripts
+$ cd data
+$ pwd
+/Users/smilte/Documents/weather-project/data
+$ ls
+processed  raw
+$ cd ..
 $ pwd
 /Users/smilte/Documents/weather-project
 ```
+````
 
 </div>
 
-<div class="note-text mt-md"><code>data</code> is a <b>relative</b> path: it starts at the working directory. <code>..</code> is the folder above. The prompt shows every move.</div>
+<div class="card card-info card-glass pad-compact table-compact">
+
+| Command | Does |
+| --- | --- |
+| `pwd` | prints the working directory |
+| `ls` | lists what is in it |
+| `cd data` | goes into `data` |
+| `cd ..` | goes one folder up |
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm"><code>/Users/…</code> is <b>absolute</b>: it starts at the top of the disk, <code>/</code>. <code>data</code> is <b>relative</b>: it starts at the working directory. Git Bash writes <code>C:</code> as <code>/c</code>: <code>/c/Users/smilte/…</code>.</div>
 
 <!--
-**Do:** follow the path line by line: after each `cd` the working directory changes.
-**Say:** `cd` with no path goes to the home folder; `cd ~/Documents/weather-project` comes back from anywhere.
-(~2 min)
+**Ask:** at every command, before the click: what will it print? After `cd data`, what does `pwd` say, and what does `ls` show?
+**Say:** the four names are those of the Side Bar of VS Code. `cd` with no path goes to the home folder, `~`.
+**If asked:** Git Bash sorts `ls` without regard to capitals: `data  README.md  results  scripts`.
+(~5 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Make a Folder: **`mkdir`**
+# Change Files: **`mkdir`**, **`cp`**, **`mv`**, **`rm`**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
+```text
+$ mkdir backup
+```
 ```text
 $ mkdir backup
 $ ls
 README.md  backup  data  results  scripts
 ```
-
-</div>
-
-<div class="note-text mt-md"><code>mkdir</code>, <b>make directory</b>, prints nothing when it works. <code>mkdir -p data/raw</code> makes both folders at once.</div>
-
-<!--
-**Say:** a name without spaces is one word for the shell. `my backup` would be read as two names.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Copy and Rename: **`cp`**, **`mv`**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
 ```text
 $ cp data/processed/daily.csv backup
+$ ls backup
+```
+```text
+$ cp data/processed/daily.csv backup
+$ ls backup
+daily.csv
+```
+```text
+$ mv backup/daily.csv backup/daily_copy.csv
+$ ls backup
+```
+```text
 $ mv backup/daily.csv backup/daily_copy.csv
 $ ls backup
 daily_copy.csv
 ```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📋 **`cp FILE FOLDER`**
-
-Copies the file into the folder, under the same name.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## ✏️ **`mv OLD NEW`**
-
-Moves a file. A new name in the same folder renames it.
-
-</div>
-
-</div>
-
-<!--
-**Say:** `cp` replaces a file of the same name without asking.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Delete: **`rm`**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
 ```text
-$ rm backup/daily_copy.csv
+$ rm -r backup
+$ ls
+```
+```text
 $ rm -r backup
 $ ls
 README.md  data  results  scripts
 ```
+````
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact table-compact mt-sm">
 
-⚠️ No Trash, no Recycle Bin, and `Ctrl+Z` brings nothing back. `rm -r` deletes a folder with everything in it. Before `rm`, check with `pwd` and `ls` where you are and what is there.
+| Command | Does |
+| --- | --- |
+| `mkdir NAME` | makes a folder; prints nothing when it works |
+| `cp FILE FOLDER` | copies the file into the folder, under the same name |
+| `mv OLD NEW` | moves a file; a new name in the same folder renames it |
+| `rm FILE`, `rm -r FOLDER` | deletes, with no Trash and no undo |
 
 </div>
 
 <!--
-**Say:** read the name before pressing Enter: `rm` has no undo. `-r` is an option: it changes how `rm` works, here "the folder and all inside it".
-(~2 min)
+**Ask:** before each `ls`: what will it list now?
+**Say:** `cp` replaces a file of the same name without asking, and `rm` has no undo. Before `rm`, check with `pwd` and `ls` where you are. `-r` is an option: "the folder and all inside it".
+**If asked:** a name with a space is two words for the shell: `my backup` makes two folders. `mkdir -p data/raw` makes both levels at once.
+(~5 min)
 -->
 
 ---
@@ -2336,25 +2342,40 @@ hideInToc: true
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
+```text
+$ wc -c data/processed/daily.csv
+```
+```text
+$ wc -c data/processed/daily.csv
+     148 data/processed/daily.csv
+```
+```text
+$ wc -c data/processed/daily.csv
+     148 data/processed/daily.csv
+$ wc -c data/processed/daily_crlf.csv
+```
 ```text
 $ wc -c data/processed/daily.csv
      148 data/processed/daily.csv
 $ wc -c data/processed/daily_crlf.csv
      158 data/processed/daily_crlf.csv
 ```
+````
 
 </div>
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div v-click class="card card-info card-glass pad-compact mt-md">
 
-`wc -c` counts bytes. Git Bash prints the same numbers without the spaces in front. 158 − 148 = 10: one `0d` more on each of the ten lines.
+`wc -c` counts bytes. 158 − 148 = 10: one `0d` more on each of the ten lines. Git Bash prints the same numbers without the spaces in front.
 
 </div>
 
 <!--
+**Ask:** before each output: how many bytes? The first is the 148 of the opening slide. For the CRLF copy, the room adds one byte per line: 158.
 **Say:** the size is exact to the byte, unlike KB in a file manager.
 **If asked:** the copy is `cp data/processed/daily.csv data/processed/daily_crlf.csv`, then `LF` to `CRLF` in the Status Bar of the copy, and save.
-(~2 min)
+(~3 min)
 -->
 
 ---
@@ -2367,21 +2388,26 @@ hideInToc: true
 
 ## 💻 **zsh · Git Bash**, the first two and the last line
 
+````md magic-move
 ```text
+$ xxd data/processed/daily.csv
+```
+```text {*|2|3|4}
 $ xxd data/processed/daily.csv
 00000000: 6461 7465 2c74 656d 705f 630a 3230 3235  date,temp_c.2025
 00000010: 2d31 302d 3031 2c36 2e33 0a32 3032 352d  -10-01,6.3.2025-
 00000090: 392e 380a                                9.8.
 ```
+````
 
 </div>
 
-<div class="note-text mt-sm">The last line starts at offset 0x90 = 9 × 16 = 144 and holds 4 bytes: 148 in all.</div>
+<div v-click class="note-text mt-sm">The last line starts at offset 0x90 = 9 × 16 = 144 and holds 4 bytes: 148 in all.</div>
 
 <!--
-**Do:** find the first `0a` with the room.
+**Ask:** before the output: what is the first byte of the file? `d`, 0x64. After it, each highlighted line in turn: where is the first line end, `0a`? Which bytes are the decimal point?
 **Say:** a line of `xxd` holds 16 bytes; 148 bytes take 9 full lines and 4 bytes.
-(~2 min)
+(~3 min)
 -->
 
 ---

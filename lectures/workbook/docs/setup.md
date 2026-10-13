@@ -9,9 +9,9 @@ before, or catching up after.
 |--|--|--|
 | **VS Code** | the editor, with a terminal inside | Seminar 1 |
 | **the shell** | reads typed commands: zsh on macOS, Git Bash on Windows | Seminar 4 |
-| **Git** | keeps the versions of a project | Seminar 5 |
+| **Git** | keeps the versions of a project | Seminar 6 |
 | **Miniforge** | Python with **conda**, which installs packages into environments | Seminar 4 |
-| **a GitHub account** | a copy of your project online | Seminar 5 |
+| **a GitHub account** | a copy of your project online | Seminar 6 |
 
 **Windows: two ways.** **Git Bash** comes with Git and is what the seminars
 show; take it if unsure. **WSL2** runs a real Linux (Ubuntu) inside Windows,
@@ -317,7 +317,7 @@ settings; set them in Ubuntu.
 **Extensions** (`Ctrl+Shift+X`, macOS `Cmd+Shift+X`). On WSL2, install them
 in the **WSL: Ubuntu** window.
 
-1. **Python** (by Microsoft): runs and checks Python files, from Seminar 6.
+1. **Python** (by Microsoft): runs and checks Python files, from Seminar 5.
 2. **Hex Editor** (by Microsoft): shows a file as bytes, Seminar 3.
 
 **Check:** both listed under **Installed**.

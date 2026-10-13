@@ -422,7 +422,7 @@ Sharp: *At what mass is the peak of the column M, how wide is it, and how many c
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A question is ready when it names the quantity, the comparison, and what will count as an answer. It goes into `README.md` before the first plot. A commit records the date (Lecture 05).
+A question is ready when it names the quantity, the comparison, and what will count as an answer. It goes into `README.md` before the first plot. A commit records the date (Lecture 06).
 
 </div>
 

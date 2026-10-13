@@ -2253,3 +2253,173 @@ $ grep -cE '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' data/raw/wea
 
 ---
 hideInToc: true
+
+<!-- Parked 2026-10-13 from Lecture 04, section The Shell, slide 16 'Where a Command Is, and Its Help': `type` moved to Where a Program Comes From; man and --help are an If-asked note on The Parts of a Command -->
+
+---
+hideInToc: true
+---
+
+# Where a Command Is, and Its **Help**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ type cd head
+cd is a shell builtin
+head is /usr/bin/head
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🍎 **macOS · zsh**
+
+```text
+% man head
+HEAD(1)   General Commands Manual   HEAD(1)
+NAME
+     head – display first lines of a file
+```
+
+`Space` scrolls, `q` leaves.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🪟 **Windows · Git Bash**
+
+```text
+$ head --help
+Usage: head [OPTION]... [FILE]...
+Print the first 10 lines of each FILE
+to standard output.
+```
+
+Git Bash has no `man`.
+
+</div>
+
+</div>
+
+<!--
+**Say:** `type` says what a word is: a builtin of the shell, or a program in a folder. The help lists every option of a program.
+**If asked:** the Mac's `head` has fewer options than Git Bash's; the course uses only the ones both have.
+(~2 min)
+-->
+
+<!-- Parked 2026-10-13 from Lecture 04, section Programs and Packages, slide 47 'A Program Is a Text File': Python is taught in Lecture 05; Lecture 04 only runs programs someone else wrote (13 Oct 2026, night) -->
+
+---
+hideInToc: true
+---
+
+# A Program Is a **Text File**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 📜 **`scripts/column_stats.py`, lines 32–48**
+
+```python
+reader = csv.DictReader(handle)
+...
+values = [float(row[column]) for row in reader]
+...
+print("rows   ", len(values))
+print("min    ", min(values))
+print("max    ", max(values))
+print("mean   ", f"{math.fsum(values) / len(values):.6g}")
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
+| Line | What it does |
+| --- | --- |
+| 32 | reads the file row by row, line 1 as the names of the columns |
+| 37 | turns every value of the column into a number, −999 too |
+| 48 | the sum divided by the count, to six digits |
+
+</div>
+
+<!--
+**Say:** nobody has to write Python today, but anyone can read what it does: it counts every row, so it will give 5.78 on the raw file. It picks the column by name, `awk` by number.
+(~2 min)
+-->
+
+<!-- Parked 2026-10-13 from Lecture 04, section Make It Repeatable, slide 70 'Where the Answers About 7.16 Are Written': Step 8 shortened to the README, the script, exit status with set -e, and a second run (13 Oct 2026, night) -->
+
+---
+hideInToc: true
+---
+
+# Where the Answers About 7.16 Are **Written**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Someone asks about 7.16 | The answer is in |
+| --- | --- |
+| Which file? | `data/raw/weather.csv`, SHA-256 in the README and in `data/checksums.txt` |
+| Which rows were left out? | `rebuild.sh`, line 4: every row with `,-999,` |
+| Which program computed the mean? | `rebuild.sh`, line 6: `column_stats.py`, line 48 |
+| With which Python? | `environment.yml`: Python 3.14 from conda-forge |
+| Is it still 7.16? | `./scripts/rebuild.sh`, then `results/temp_c.txt` |
+
+</div>
+
+<div class="note-text mt-md">An e-mail says what came out. A script says what was done, in order, and runs again: on the next laptop, the next file, next year.</div>
+
+<!--
+**Say:** the README tells a reader; the script tells the computer. Both are text, both can be read, compared line by line and kept with the data.
+**Ask:** Ben got 7.11 from the same file. Where would his script differ from Smiltė's?
+(~2 min)
+-->
+
+<!-- Parked 2026-10-13 from Lecture 04, section Regular Expressions, slide 38 'The Forms of the Lines': the lecturer found this part of Step 4 hard to follow -->
+
+---
+hideInToc: true
+---
+
+# The Forms of the **Lines**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ sed 's/[0-9]/9/g' data/raw/weather.csv | sort | uniq -c | sort -rn
+```
+
+<v-click>
+
+```text
+  34547 9999-99-99T99:99,99.9,99,9.9
+  30355 9999-99-99T99:99,9.9,99,9.9
+  19709 9999-99-99T99:99,-9.9,99,9.9
+   1897 9999-99-99T99:99,-9.9,999,9.9
+…
+    120 9999-99-99T99:99,-999,99,9.9
+…
+      1 time,temp_c,humidity_pct,wind_ms
+```
+
+</v-click>
+
+</div>
+
+<div class="note-text mt-md"><code>sed 's/[0-9]/9/g'</code> writes every digit as 9, so lines of one form become one text. 13 forms: 11 with a temperature of one decimal, the 120 rows of <code>-999</code>, and the header.</div>
+
+<!--
+**Ask:** how many different forms will 87 673 lines have? Guesses range from 2 to hundreds.
+**Say:** `s/A/B/g` replaces every A by B; `sort | uniq -c` counts each form; `sort -rn` puts the largest count first. Every form but two has the temperature as digits, a point and one digit: the pattern of the next slide.
+**If asked:** the forms differ by the number of digits: `99.9` a warm hour, `-9.9` a frost, `999` humidity of 100 %, `99.9` in the last column wind of 10 m/s or more.
+(~3 min)
+-->

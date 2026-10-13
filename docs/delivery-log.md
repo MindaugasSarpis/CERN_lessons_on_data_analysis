@@ -623,3 +623,38 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
 - Lectures 06 to 16 still use the pendulum and the LHCb file, and some of
   their pages (13) still describe venv; their seminars already use the
   weather project. Rework each deck before its week.
+
+## 2026-10-13 · Weeks 5 and 6 swapped: Python before Git
+
+**Lecturer's notes**
+
+- "Section 8 of L4 also got complicated, we didn't take python yet so I am
+  trying to avoid examples with python. Do you think the flow would be
+  better if we at least introduce the fundamentals of python sooner?";
+  then "Can still do this, I didn't give L5".
+- "It's difficult to give a lecture on python... it all looks like a 4h
+  seminar doesn't it? The same goes for CLI."
+
+**Changed in response** (13 October)
+
+- Lecture and Seminar 5 are now **Python Foundations** (20 Oct), Lecture
+  and Seminar 6 **Version Control with Git** (27 Oct): files, slugs
+  (`05-python-foundations`, `06-version-control`), `decks.json` (both in
+  block A), the lecture and seminar pages, nav, overview, home page and
+  every cross-reference.
+- The Python deck is reworked onto the weather project as a lecture, not a
+  typing tutorial: short pieces, the room predicts each output before it is
+  shown, and how the interpreter works underneath.
+- Seminar 5 (Python) starts from the folder of Seminar 4, without Git; its
+  buggy `coldest_hour.py` and a catch-up `weather-project-s4.zip` are on the
+  Releases page (`misc/weather_repo/release_files.py`). Seminar 6 (Git) keeps
+  that folder as `weather-project-s5`, copies its scripts into the clone and
+  commits them, and adds the `course` remote for later seminars. The course
+  commit of Seminar 6 in `build.sh` is gone; `STAGE` now defaults to 6.
+
+**Open**
+
+- The Git deck's story is dated 13 to 20 October; it is now given on 27
+  October.
+- For the next run: Lecture 04 can end shell-only (the mean by `awk`), with
+  conda moved to Lecture 05.

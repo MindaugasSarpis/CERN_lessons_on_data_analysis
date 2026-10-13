@@ -611,7 +611,7 @@ above, digit for digit.
 
 ### 7. Make a test fail { #fail }
 
-**1:15 · 10 min** · Tomas's change of Seminar 5 again: the mean of the raw file, `-999` rows and all.
+**1:15 · 10 min** · Tomas's change of Seminar 6 again: the mean of the raw file, `-999` rows and all.
 
 1. In `run_all.py`, in the `column_stats.py` stage, change
    `data/processed/weather_valid.csv` to `data/raw/weather.csv`. Save.
@@ -881,7 +881,7 @@ the room. A test you added in the Task makes it `4 passed`.
 
 !!! warning "`git clone` asks for a password"
     The repository is private. Run the clone in VS Code's terminal, which
-    signs in with the GitHub account of Seminar 5.
+    signs in with the GitHub account of Seminar 6.
 
 ---
 

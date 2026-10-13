@@ -11,7 +11,7 @@ optional way on Windows, is [Setup](../setup.md).
 | Program | What it is | macOS | Windows |
 |--|--|--|--|
 | the shell | reads the typed lines | `zsh`, built in | Git Bash, comes with Git |
-| Git | keeps the versions of a project, from Seminar 5 | Homebrew | `winget` |
+| Git | keeps the versions of a project, from Seminar 6 | Homebrew | `winget` |
 | Miniforge | Python with **conda**, which installs packages into environments; packages from **conda-forge** only | Homebrew | `winget` |
 
 A **package manager** fetches a program, puts it in one known folder and on

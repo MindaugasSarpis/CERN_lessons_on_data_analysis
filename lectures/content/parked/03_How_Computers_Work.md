@@ -321,3 +321,274 @@ print(f"{0.1:.20f}")
 **Say:** this is not a bug. Every computer stores decimals this way.
 (~2 min)
 -->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# Where Am I: **`pwd`**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`pwd`, **print working directory**: the path from the top of the disk, `/`, down to this folder. A path from the top is **absolute**. Git Bash writes the disk `C:` as `/c`: `/c/Users/smilte/Documents/weather-project`.
+
+</div>
+
+<!--
+**Do:** read the answer from left to right as a walk down the folders.
+**Ask:** why would three laptops print three different paths? The user names differ.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# What Is Here: **`ls`**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ ls
+README.md  data  results  scripts
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`ls`, **list**, prints the names in the working directory. `ls -l` adds each file's size in bytes and its date.
+
+</div>
+
+<!--
+**Say:** the same four names as in the Side Bar of VS Code.
+**If asked:** Git Bash sorts without regard to capitals: `data  README.md  results  scripts`.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# Change Folder: **`cd`**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ cd data
+$ pwd
+/Users/smilte/Documents/weather-project/data
+$ cd processed
+$ cd ../..
+$ pwd
+/Users/smilte/Documents/weather-project
+```
+
+</div>
+
+<div class="note-text mt-md"><code>data</code> is a <b>relative</b> path: it starts at the working directory. <code>..</code> is the folder above. The prompt shows every move.</div>
+
+<!--
+**Do:** follow the path line by line: after each `cd` the working directory changes.
+**Say:** `cd` with no path goes to the home folder; `cd ~/Documents/weather-project` comes back from anywhere.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# Make a Folder: **`mkdir`**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ mkdir backup
+$ ls
+README.md  backup  data  results  scripts
+```
+
+</div>
+
+<div class="note-text mt-md"><code>mkdir</code>, <b>make directory</b>, prints nothing when it works. <code>mkdir -p data/raw</code> makes both folders at once.</div>
+
+<!--
+**Say:** a name without spaces is one word for the shell. `my backup` would be read as two names.
+(~1 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# Copy and Rename: **`cp`**, **`mv`**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ cp data/processed/daily.csv backup
+$ mv backup/daily.csv backup/daily_copy.csv
+$ ls backup
+daily_copy.csv
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **`cp FILE FOLDER`**
+
+Copies the file into the folder, under the same name.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ✏️ **`mv OLD NEW`**
+
+Moves a file. A new name in the same folder renames it.
+
+</div>
+
+</div>
+
+<!--
+**Say:** `cp` replaces a file of the same name without asking.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# Delete: **`rm`**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ rm backup/daily_copy.csv
+$ rm -r backup
+$ ls
+README.md  data  results  scripts
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ No Trash, no Recycle Bin, and `Ctrl+Z` brings nothing back. `rm -r` deletes a folder with everything in it. Before `rm`, check with `pwd` and `ls` where you are and what is there.
+
+</div>
+
+<!--
+**Say:** read the name before pressing Enter: `rm` has no undo. `-r` is an option: it changes how `rm` works, here "the folder and all inside it".
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# The Size of a **File**
+
+<div class="note-text"><code>daily_crlf.csv</code> is a copy of <code>daily.csv</code>, saved with <code>CRLF</code> from the Status Bar of VS Code.</div>
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ wc -c data/processed/daily.csv
+     148 data/processed/daily.csv
+$ wc -c data/processed/daily_crlf.csv
+     158 data/processed/daily_crlf.csv
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`wc -c` counts bytes. Git Bash prints the same numbers without the spaces in front. 158 − 148 = 10: one `0d` more on each of the ten lines.
+
+</div>
+
+<!--
+**Say:** the size is exact to the byte, unlike KB in a file manager.
+**If asked:** the copy is `cp data/processed/daily.csv data/processed/daily_crlf.csv`, then `LF` to `CRLF` in the Status Bar of the copy, and save.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 03, section 'Files from the Terminal': one-command slide, replaced by the magic-move slides 'Look Around: pwd, ls, cd', 'Change Files: mkdir, cp, mv, rm' and the predict-then-reveal slides for wc -c and xxd. -->
+
+---
+hideInToc: true
+---
+
+# The Bytes of a **File**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**, the first two and the last line
+
+```text
+$ xxd data/processed/daily.csv
+00000000: 6461 7465 2c74 656d 705f 630a 3230 3235  date,temp_c.2025
+00000010: 2d31 302d 3031 2c36 2e33 0a32 3032 352d  -10-01,6.3.2025-
+00000090: 392e 380a                                9.8.
+```
+
+</div>
+
+<div class="note-text mt-sm">The last line starts at offset 0x90 = 9 × 16 = 144 and holds 4 bytes: 148 in all.</div>
+
+<!--
+**Do:** find the first `0a` with the room.
+**Say:** a line of `xxd` holds 16 bytes; 148 bytes take 9 full lines and 4 bytes.
+(~2 min)
+-->

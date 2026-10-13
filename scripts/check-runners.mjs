@@ -20,7 +20,7 @@
  *
  * Usage:
  *   node scripts/check-runners.mjs                  # every deck with runners
- *   node scripts/check-runners.mjs --only 03-how-computers-work,06-python-foundations
+ *   node scripts/check-runners.mjs --only 03-how-computers-work,05-python-foundations
  *   node scripts/check-runners.mjs --no-build       # reuse .qa-dist/<slug>
  *   node scripts/check-runners.mjs --shots .qa-shots/runners
  *

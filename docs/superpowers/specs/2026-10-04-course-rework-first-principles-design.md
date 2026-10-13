@@ -246,6 +246,8 @@ file, the one-command rebuild) and refers back. Seminar 4 makes the project's
 environment in its section 13. Lecture 04 is self-contained: it names the
 terminal from zero and does not refer to what a seminar did.
 
+*Amended 13 October 2026:* weeks 5 and 6 are swapped. Python Foundations is Lecture 05 (20 Oct) and assumes no Git; Version Control with Git is Lecture 06 (27 Oct) and versions the room's own Python scripts. The two paragraphs below keep their old numbers.
+
 **05 Version Control with Git.** After its six quizzes move, the deck is about
 20 min short: fill it. Build the model before the commands: a commit is a
 snapshot with a parent and an identifier, and the identifier is a SHA hash of

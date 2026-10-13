@@ -3,7 +3,7 @@
 How a seminar page in `lectures/workbook/docs/seminars/seminar_NN.md` is
 laid out. The page is read live, on a second screen, by the person at the
 front of the room, who has no time to read paragraphs between the steps.
-[Seminar 5](../lectures/workbook/docs/seminars/seminar_05.md) is the worked
+[Seminar 6](../lectures/workbook/docs/seminars/seminar_06.md) is the worked
 example (since 13 October 2026; Seminar 3 was the earlier one).
 
 Written on 6 October 2026, after Seminar 3: the lecturer opened a page of
@@ -19,10 +19,10 @@ steps and orient myself".
    does not fit in 120 minutes is an optional section at the end.
 2. **One question, one project.** Every seminar works on the weather
    project (`weather-project`, the same files as the lectures) and answers
-   one question about it, in its title. From Seminar 5 on the project is a
+   one question about it, in its title. From Seminar 6 on the project is a
    Git repository: the room cloned
    [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
-   in Seminar 5 (`misc/weather_repo/build.sh` makes it). A seminar that
+   in Seminar 6 (`misc/weather_repo/build.sh` makes it). A seminar that
    needs new files gets them with `git pull course main`; the files are
    added to the course repository as one commit per seminar, and they only
    add new files, never edit existing ones (so the pull never conflicts).

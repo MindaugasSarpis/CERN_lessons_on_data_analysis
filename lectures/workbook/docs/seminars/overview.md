@@ -19,7 +19,8 @@ title, and answers it by the end.
   manager. Their files come as zips from the
   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
   of the project.
-- **From Seminar 5 on** the project is a Git repository: the room clones
+- **Seminar 5** writes the first Python of the room in that folder.
+- **From Seminar 6 on** the project is a Git repository: the room clones
   [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
   (about 0.5 MB) and publishes it to their own GitHub. A seminar that needs
   new files gets them with `git pull --no-edit course main`.
@@ -32,8 +33,8 @@ title, and answers it by the end.
 | 29 Sep | [1](seminar_01.md) | What Do the Weather Files Say? VS Code and Markdown |
 | 6 Oct | [3](seminar_03.md) | What Are the 148 Bytes of `daily.csv`? Files as Bytes |
 | 13 Oct | [4](seminar_04.md) | What Is the Mean Temperature of Ten Years? The Shell on the Weather Project |
-| 20 Oct | [5](seminar_05.md) | Who Changed the Mean? Git on the Weather Project |
-| 27 Oct | [6](seminar_06.md) | Can You Compute 7.16 Yourself? Python on the Weather Project |
+| 20 Oct | [5](seminar_05.md) | Can You Compute 7.16 Yourself? Python on the Weather Project |
+| 27 Oct | [6](seminar_06.md) | Who Changed the Mean? Git on the Weather Project |
 | 3 Nov | [7](seminar_07.md) | Is It Getting Warmer? Functions and NumPy on the Weather Project |
 | 10 Nov | [8](seminar_08.md) | What Does a Year of Weather Look Like? Figures with Matplotlib |
 | 17 Nov | [9](seminar_09.md) | How Sure Is 7.16? Probability on the Weather Data |

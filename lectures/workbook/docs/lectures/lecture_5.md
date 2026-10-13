@@ -1,238 +1,285 @@
-# 5: Version Control with Git
+# 5: Python Foundations
 
-Lecture 4 ended with a copy of the cleaned export that has the right size
-and one digit changed, and only the checksum told it apart. Lecture 5 opens
-on two copies of the raw export of the weather project, Smiltė's and the
-one her colleague Tomas sent back: the checksum says that they differ,
-`git diff` says which line, and nothing says who changed it, when, or why.
-The lecture first builds what Git stores, from the checksums of Lecture 4,
-then puts the weather project under Git one commit at a time, each step in
-the Source Control view of VS Code and typed in zsh (macOS) or Git Bash
-(Windows). It closes on
-the same question, answered from the history: Tomas edited line 2 of a raw
-file, the rebuilt file loses the checksum of the README, and a revert puts
-it back.
+Lecture 4 checked Smiltė's ten-year mean, **7.16 °C**, with typed lines, and
+in the end with `scripts/column_stats.py`, a Python program someone else
+wrote, run without being read. Lecture 5 writes that program: the lines that
+turn `weather.csv` into 7.16 are built one piece at a time, each piece short
+and shown with its output, and in the end 18 lines of our own give the same
+number. Along the way the lecture says what the interpreter does with a file,
+and ties Python's values to Lecture 3: an `int` does not overflow, a `float`
+is the float64 of Lecture 3, a `str` is Unicode text. The room knows the
+shell (zsh on macOS, Git Bash on Windows), relative paths and the weather
+project from Lecture 4; Git comes in Lecture 6.
+
+| Step | Question | Answer |
+|--|--|--|
+| 1 | What runs a `.py` file, and in which order? | `python`, the interpreter: it checks the whole file, then runs it from the top, one statement at a time, and stops at the first error |
+| 2 | Is `-4.4` in `weather.csv` a number? | No: text, four characters; `float("-4.4")` makes the number |
+| 3 | What are the four values of one line? | `'2016-01-01T00:00'`, `-4.4`, `93`, `2.5`: a `str`, a `float`, an `int` and a `float` |
+| 4 | What is the mean of all 87 672 rows? | 5.782796103659093, the 120 rows of −999 counted as temperatures |
+| 5 | What is it without the −999 rows? | 7.15996550621346, from 87 552 rows |
+| 6 | How does 7.15996550621346 become 7.16 on the screen? | `f"{mean:.2f}"`; the name keeps every digit |
+| 7 | Which year was the warmest? | 2023, 8.31 °C; the coldest 2025, 5.98 °C |
+| 8 | Where and why does a script stop? | The traceback: its last line says what, the lines above it where |
 
 ## What the lecture covers
 
-1. **Two copies of the export** — two copies of `daily_export.csv` with 180
-   bytes each and two checksums; `git diff --no-index` finds line 2, `6,3`
-   against `6,4`; who, when and why stays open. Copies named `final_v2`,
-   and what a version control system records.
-2. **The model** — what has to be kept; a name computed from the content
-   with `git hash-object`, the same on every laptop, and another id for
-   `hello` with a Windows line ending (`0d 0a`); the header `blob <size>` and a zero byte; the id of
-   `weather.csv`, `f811f73d`, the same on every laptop; a folder as a list,
-   set beside `shasum -a 256` (`sha256sum` in Git Bash); the tree of the whole project; a commit as a
-   text with a tree, a parent, an author and a message; one commit drawn as
-   its objects; the id of a commit, computed again; history as a graph; a
-   branch as a file of 41 bytes that a commit moves; the three areas.
-3. **First commits** — the check of Git and three settings; the Source
-   Control view; `git init`; `git status`; stage and commit; what
-   `git status --short` says in each state; the commit message.
-4. **Data in a repository** — which files go in; why `weather.csv` (2.5 MB)
-   fits and a file of 3 GB does not, with measured sizes; `.gitignore` for
-   `data/processed/`, which `rebuild.sh` makes; `.gitattributes` with
-   `* -text`, so a clone on Windows keeps the bytes; the rest committed.
-5. **Changes and history** — the diff in the view and typed; `git log`;
-   `git show` and `git blame`.
-6. **Undoing** — `git restore` for an edit; `--amend` for a message with a
-   typo; a commit that deletes the raw export and breaks the rebuild, taken
-   back with `git revert`.
-7. **Remotes** — what a remote is; a GitHub account; publishing from VS
-   Code and typed; Tomas clones, the ignored folder comes back by the
-   rebuild script; Tomas pushes a commit and Smiltė pulls it.
-8. **Branches and merging** — a branch; a fast-forward merge; two branches
-   that both changed the first paragraph; the conflict, resolved in the
-   editor and typed; ahead and behind; the usual error messages; a table of
-   every step in Source Control and typed.
-9. **A result and its commit** — `git log -- data/raw` and `git blame` find
-   Tomas's commit; `git show` read line by line answers who, when and why;
-   the edit gives `daily.csv` the checksum of Lecture 4's changed copy; a
-   revert restores `33fe5e77…`; a tag `v1.0`.
+1. **The question** (slides 1–4): `column_stats.py` gives 5.7828 on the raw
+   file and 7.15997 without the −999 rows; it is 53 lines of Python. The
+   eight steps of a program for 7.16.
+2. **Running Python** (slides 5–11): `python` is a program on `PATH`,
+   Python 3.14.7 from Miniforge; the interpreter; the `>>>` prompt against
+   the shell's `$` (`7.16 * 9 / 5 + 32` is 44.888 at one and `command not
+   found` at the other); a script, `scripts/hours.py`, which prints 87 672;
+   the Python extension of VS Code and the ▶ button, which types the full
+   paths of the interpreter and the file; what `python` does with a file in
+   six steps (read as UTF-8, check the grammar of the whole file, bytecode,
+   run from the top, stop at an error with exit status 1, end with 0); a run
+   that prints two lines and stops at `ZeroDivisionError`.
+3. **Values and types** (slides 12–19): `int`, `float`, `str`, `bool`;
+   `87672 / 24` is `3653.0`, `//` gives `3653`; an `int` grows past 64 bits
+   (2¹⁰⁰ has 101 bits, 127 + 1 is 128); a `float` is float64
+   (`0.1 + 0.2`, 7.16 stored as 7.16000000000000014211, `-4.4 + 1` is
+   −3.4000000000000004); a `str` counts characters (`"°C"` is 2 characters
+   and 3 bytes); a name points to a value and does not follow another name
+   as a spreadsheet cell does; comparisons, and `"-999" == -999` is
+   `False`; `float()` and `int()` turn text into numbers, `"-4.4" + 1` is a
+   `TypeError`.
+4. **One line** (slides 20–23): index and slice on
+   `2016-01-01T00:00,-4.4,93,2.5` (28 characters, 29 bytes with LF);
+   `split(",")` gives a list of four strings; each part converted under the
+   name of its column.
+5. **Lists and loops** (slides 24–29): a list, `append`, `len`, `min`,
+   `sum`; `for` and its indented block (four temperatures, mean −5.175);
+   every line of `weather.csv` in a list at the prompt (87 673 lines, the
+   header first); a loop over pasted lines with `lines[1:]`; the program
+   grows on one slide (Shiki magic move) from reading the file to the mean
+   of all rows, 5.782796103659093, the 5.7828 of `awk` and
+   `column_stats.py`.
+6. **Decide with `if`** (slides 30–34): `if`, `elif`, `else`; the same five
+   lines with `print` indented or not (1 and 2, against 2); `continue` on
+   four hours around the gap (22.75 against −488.125); the program gains
+   three lines and gives 7.15996550621346 from 87 552 rows.
+7. **Readable output** (slides 35–37): f-strings (`{mean:.2f}`, `{count:,}`,
+   `{x:.2%}`), the value unchanged after printing; widths and alignment.
+8. **Functions and dictionaries** (slides 38–45): calling built-in
+   functions and `math`; `def` and `return` with `to_fahrenheit` (−16.3 °C
+   is 2.6599999999999966 °F); `temp_of(line)`, and a name made inside a
+   function is gone after the call; a dictionary, `get` against `[]` and
+   `KeyError`; counting rows per year; the mean of each year from two
+   dictionaries (2019 has 8640 measured hours, 8760 − 120); 2023 the
+   warmest, 8.31 °C, 2025 the coldest, 5.98 °C.
+9. **Read a traceback** (slides 46–53): syntax error, exception and wrong
+   result; a traceback read from the bottom (`ValueError: could not convert
+   string to float: 'temp_c'` on line 6, caused by line 4 without `[1:]`);
+   `FileNotFoundError` when the script is run from `scripts/`; `NameError`
+   with `Did you mean`; seven common messages; a mean of −3.675 for three
+   hours of −4.4 to −5.5, the header counted, found with `{name=}`; the
+   debugger of VS Code stopped at line 9.
+10. **The program, complete** (slides 54–57): `mean_temp.py` grows on one
+    slide into its last form (a function `temp_of`, a name `MISSING`, two
+    f-strings) and prints `87552 hours, 120 left out` and
+    `mean temp_c: 7.16 °C`; the eight steps answered; the recap.
 
-## The lecture in 90 minutes
+## The lecture in two hours
 
-The lecture is slides 1–68 and estimates about 135 min. Slides 69–77 are the
-self-check quizzes and take no lecture time. For a 90-minute slot, skip the
-slides in the second table. To jump, type the slide number and press Enter.
+The lecture is slides 1–57. Its speaker notes add up to about 123 minutes,
+the two live moments included; a two-hour slot has about 110 minutes of
+teaching. Slide 58 opens the self-check section, and slides 59–67 are its
+nine quizzes: they take no lecture time. To jump, type the slide number and
+press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–7 | Two copies of the export; what version control records |
-| 0:10 | 8–20 | The model: blob, tree, commit, graph, branch, three areas |
-| 0:35 | 22, 24–26, 28 | Settings, `git init`, `git status`, the first commit, the message |
-| 0:44 | 30, 32–34 | Which files go in, `.gitignore`, `.gitattributes`, the rest |
-| 0:52 | 36–39 | The diff, `log`, `show` and `blame` |
-| 1:00 | 41–44 | restore, amend, a commit that breaks the rebuild, revert |
-| 1:08 | 46, 48–51 | A remote, publish, push, clone, pull |
-| 1:17 | 53–57 | A branch, a merge, a conflict |
-| 1:25 | 62–68 | Who changed the export, the revert, the tag, the recap |
-| 1:35 | | Move to the seminar |
+| 0:00 | 1–4 | `column_stats.py`, and the eight steps |
+| 0:07 | 5–11 | Step 1: the interpreter, `>>>` (live), a script, VS Code |
+| 0:22 | 12–19 | Step 2: values and types, names, text to number |
+| 0:38 | 20–23 | Step 3: one line cut and converted |
+| 0:46 | 24–29 | Step 4: lists, `for`, the mean of all rows |
+| 1:02 | 30–34 | Step 5: `if`, `continue`, the mean without −999 |
+| 1:14 | 35–37 | Step 6: f-strings |
+| 1:20 | 38–45 | Step 7: functions, dictionaries, the warmest year |
+| 1:38 | 46–53 | Step 8: tracebacks, a wrong number, the debugger |
+| 1:56 | 54–57 | The program complete (live), the steps answered, recap |
+| 2:04 | | End |
 
-| Skip | Slides | Saves |
+In a two-hour slot, skip the slides below: about 15 minutes. None is needed
+by a later slide.
+
+| Skip if time is short | Slides | Saves |
 |--|--|--|
-| Source Control in VS Code: say it while doing slide 24 | 23 | 2 min |
-| What `git status --short` says in each state | 27 | 3 min |
-| Which data files fit in a repository | 31 | 3 min |
-| A GitHub account: the seminar creates them | 47 | 2 min |
-| Resolve it, typed; ahead and behind | 58, 59 | 4 min |
-| Common errors; the table of steps (on the projector in the seminar) | 60, 61 | 4 min |
+| `int` Has No Fixed Width; `bool`: Comparisons | 14, 18 | 4 min |
+| A Width for Columns (say Step 6's answer at slide 36) | 37 | 2 min |
+| Calling a Function | 39 | 2 min |
+| Count Rows per Year | 43 | 3 min |
+| A Name Never Made; Common Error Messages | 50, 51 | 4 min |
 
-- **Do not cut slides 62–66.** They answer the question of slides 4–5 from
-  the history, with only commands the room has seen.
-- **Do not cut slides 9–20** (the model). Each needs the one before it, and
-  slides 31, 42, 44, 50 and 58 argue from it.
-- **Slide 33** (`.gitattributes`) is short but matters on every Windows
-  laptop: without it, the checksums of Lecture 4 fail after a clone.
+- **Never skip** slide 4 (the eight steps), 10 (what `python` does with a
+  file), 17 (a name points to a value), 19 (text to number), 22–23 (split
+  and convert), 26 (`for`), 29 and 34 (the program grows: 5.78, then
+  7.16), 32 (the indentation), 44 (the mean of each year), 48 (a traceback
+  read), 52 (a wrong number without a message), 54–56 (the program
+  complete, run, the steps answered).
+- **Predict, then reveal.** Most slides hold a few lines; the note's
+  **Ask** has the room predict the output before ▶ is pressed or the
+  output is clicked in. The Python blocks run in the browser (Pyodide) and
+  need the internet in the room; press one ▶ before the lecture so it has
+  loaded. A block that reads a file cannot run in the browser: those slides
+  show the terminal, with the output behind a click.
+- **The program grows on three slides** (29, 34, 54) by Shiki magic move:
+  each click changes the code in place and lights the lines that changed;
+  the output comes in on the click after.
+- **Each section slide names its step**, and each section ends on a card
+  with a ✅ and the step's answer. Point back to slide 4 there.
+- **No whole scripts are typed in the lecture.** Typing them is the
+  seminar's work.
+- **Every speaker note has the same form**: **Live** (a line run in the
+  terminal, only on the two slides below), **Do** (something done with the
+  room), **Say** (the one point of the slide), **Ask** (a question for the
+  room), **If asked** (the detail kept off the slide), then the minutes.
 
 ## Live in the lecture
 
-Six moments, each marked **Live:** in its slide's note, run in one folder,
-in order. Each costs about a minute more than the slide alone; the minutes
-above include it. If a line misbehaves, go to the slide: it has the output.
-The commit ids and line counts on the laptop differ from the slides, which
-come from the lecture's scratch repository (see below).
+Two moments run in a terminal what their slide shows. If a line
+misbehaves, go to the slide: it has the output.
 
-**Before the lecture.** Unzip [`weather_project.zip`](../data/weather_project.zip)
-into a new folder, open `weather-project` in VS Code, open its terminal
-(zsh on a Mac, Git Bash on Windows) and make the font large. Check `git config --global user.name`
-once.
+**Before the lecture.** On the Mac that drives the projector, open the
+weather project in VS Code, open its terminal (zsh) and make the font large
+(`Cmd +` a few times). Check `python --version` (3.14) in that terminal.
+Save the program of slide 54, last step, as `scripts/mean_temp.py` (below).
+Run `clear` before each moment.
 
-| Slide | What to do | What the room sees |
-|--|--|--|
-| 10 | `echo "hello" | git hash-object --stdin` | `ce013625…` on every laptop |
-| 12 | `git hash-object data/raw/weather.csv` | `f811f73d…`, on every laptop |
-| 24 | Source Control: **Initialize Repository**; then `ls -a` | `.git` among the folders |
-| 26 | **+** beside `README.md`, message "Add the README", **Commit** | `README.md` leaves the list; the Graph shows one commit |
-| 36 | Add the three lines of the Result section to `README.md`, save, select the file in Source Control; then stage and commit it | The diff view: five green lines |
-| 41 | Select one whole section of the README, delete it, save; `git diff --stat`; `git restore README.md` | The section comes back |
-
-The Result section of slide 36:
+| Slide | What to type |
+|--|--|
+| 7 | `python`, then `365 * 10 + 3` and `7.16 * 9 / 5 + 32`, then `exit()` |
+| 55 | `python scripts/mean_temp.py` |
 
 ```text
-## Result
+MISSING = -999      # the mark for an hour without a reading
 
-- **Mean air temperature, 2016 to 2025:** 7.16 °C
-- **From:** `column_stats.py` on `data/processed/weather_valid.csv`, 87 552 hours
+def temp_of(line):
+    """The temp_c of one line of weather.csv."""
+    return float(line.split(",")[1])
+
+lines = open("data/raw/weather.csv").read().splitlines()
+total = 0.0
+count = 0
+for line in lines[1:]:
+    temp = temp_of(line)
+    if temp == MISSING:
+        continue
+    total = total + temp
+    count = count + 1
+
+print(f"{count} hours, {len(lines) - 1 - count} left out")
+print(f"mean temp_c: {total / count:.2f} °C")
 ```
-
-## The outputs on the slides
-
-Every command on the slides ran in a scratch repository, and the output is
-copied from the terminal: `bash misc/l05_scratch_repo/build.sh` makes it
-again with the same ids (Git 2.56 and bash on Linux, whose GNU tools are
-those of Git Bash; author and
-committer dates fixed on 20 October 2026). The project in it is the weather
-project as Lecture 4 leaves it: `README.md` with *How to rebuild*,
-`data/raw/weather.csv` and `daily_export.csv`, `scripts/clean_export.py`,
-`column_stats.py` and `rebuild.sh`. Smiltė makes the commits; Tomas clones
-the repository and pushes one.
-
-- **Blob and tree ids are the same for everyone.** `weather.csv` is
-  `f811f73d93226acc8a0c96562aef9f7825b85b0a` on every laptop, and the tree of
-  `data/raw` is `ee85972a…`.
-- **Commit ids differ.** A commit contains its author and its time.
-- **The address in the push, clone and pull outputs** is put in by Git's
-  `insteadOf`: the commands ran against a repository in a local folder.
-  `smilte-example` stands for the user name; the transfer rate of the push
-  is that of a local copy.
-- **macOS outputs.** `shasum -a 256` was run as `sha256sum`, which prints
-  the same; `ls` on a Mac lists `README.md` before `data`, as on the
-  slide, while Git Bash may sort it after.
-- **The CRLF ids** of `hello` (`ef0493b2…`, slide 10) and `hi` (quiz 2)
-  come from the bytes `0d 0a`, as a Windows program writes them; they were
-  also measured on Windows with Git for Windows 2.51.
-- **The pictures of VS Code** are from VS Code 1.140 (the web version run
-  from the lecture's scratch folders), theme Dark Modern; the message box
-  reads `Ctrl+Enter`, on macOS `Cmd+Enter`. *Initialize Repository*,
-  *Publish Branch* and the branch picker are older pictures from macOS.
-- **A Git that prints 64 digits.** Git 3.0 is announced to make SHA-256 the
-  hash of new repositories. If a student's `git hash-object` prints 64 hex
-  digits, the header is hashed with SHA-256 in place of SHA-1. In such a
-  repository a branch is also no longer a file under `.git/refs/heads`: use
-  `git rev-parse main` for slide 19.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 69–77: eight quiz slides for students to try afterwards. The same
+slides 58–67: nine quiz slides for students to try afterwards. The same
 questions, with their answers:
 
-1. A student keeps `analysis.py`, `analysis_v2.py`, `analysis_final.py` and
-   `analysis_final_REAL.py` side by side. What does Git give that these
-   copies do not?
-   *One file with its full history: what changed, when, and why.*
-2. In zsh or Git Bash, `echo "hi" | git hash-object --stdin` prints an id.
-   Which bytes does Git hash?
-   *The word `blob`, a space, the digit 3 and a zero byte, then `h`, `i` and
-   a line break: ten bytes. The id is
-   `45b983be36b73c0788dc9cbcb76cbb80fc7bb057` on every laptop. With a Windows line ending,
-   `0d 0a`, the header says `blob 4`, and the id is
-   `edf0effbb6851d0055229878b4bf0d7212167642`.*
-3. A repository has 40 commits. `weather.csv` (2 515 215 bytes) was added in
-   the first one and never changed. How often is its content stored?
-   *Once. The content has one id, and each of the 40 trees names it.
-   Compressed it takes 722 938 bytes.*
-4. `git cat-file -p` of a commit prints two lines that begin with `parent`.
-   What kind of commit is it?
-   *A merge. It joins two histories.*
-5. The message of your last commit has a typing error, and the commit is
-   not pushed. What is the clean correction?
-   *`git commit --amend -m` with the corrected message. The id changes,
-   because the message is part of the hashed text.*
-6. A colleague pushed a commit that edits a raw data file, and you have
-   pulled it. How do you take it back?
-   *`git revert` with the id of that commit, then push. Every history stays
-   as it is and gains one commit.*
-7. After `git clone`, the folder `data/processed` is missing, and
-   `.gitignore` lists `data/processed/`. Why, and what brings it back?
-   *Git stores files, not folders, and the files in it were ignored.
-   `./scripts/rebuild.sh` makes the folder and its files again.*
-8. On a new computer `git init` is followed by `git status`, which says
-   `On branch master`. Why?
-   *`init.defaultBranch` is not set to `main` there, so Git uses `master`,
-   its old default name. `git branch -m main` renames the branch.*
+1. `x = '7.16'` and `y = '1'`. What is `x + y`?
+   *The text `7.161`. Both are strings, and `+` joins two strings, with no
+   error. `float(x) + float(y)` gives 8.16; `'7.16' + 1` would be a
+   `TypeError`.*
+2. What do `100 / 4` and `100 // 4` give?
+   *`25.0` and `25`. `/` always gives a float; `//` gives the whole part,
+   an `int` when both sides are ints.*
+3. `line = '2020-02-29T12:00,3.1,88,4.0'`. What is `line.split(',')[2]`?
+   *The text `'88'`, the humidity: positions count from 0, and `split`
+   hands back strings.*
+4. `lines` holds 250 strings: a header and 249 rows. How many times does
+   the block of `for line in lines[2:]:` run?
+   *248. `lines[2:]` starts at the third item; `lines[1:]` skips only the
+   header and has 249.*
+5. `a = 5`, then `b = a`, then `a = a + 1`. What does `print(b)` show?
+   *5. `b` points to the value 5; `a = a + 1` moves the name `a` to a new
+   value, 6.*
+6. In `mean_temp.py`, `count = count + 1` is moved above the
+   `if temp == -999:` line. What does the script print as the mean?
+   *7.150165389177845: the sum still leaves out the marks, 626 869.3, but
+   the count is now 87 672. No message: only a number known beforehand
+   shows it.*
+7. A script prints `rows read: 6`, then a traceback that names line 12 and
+   ends with `ValueError: could not convert string to float: ''`. What do
+   you know?
+   *The lines above line 12 ran; on line 12 `float()` was given an empty
+   text, a value missing between two commas in the file.*
+8. `t = 2.6599999999999966`. What does `print(f'{t:.1f} °F')` write, and
+   what does `t` hold afterwards?
+   *`2.7 °F`, and `t` is unchanged: the f-string builds a new string.*
+9. `hours = {'2016': 8784}`. What do `hours.get('2026', 0)` and
+   `hours['2026']` do?
+   *The first gives 0, the second stops with `KeyError: '2026'`. Neither
+   adds a key.*
 
 ## Paired seminar
 
-[Seminar 5](../seminars/seminar_05.md) clones the weather project from
-GitHub (`MindaugasSarpis/weather-project`) and works on its history: who
-changed the mean temperature, when and why, found with `git log`,
-`git blame` and `git show`, and taken back with `git revert`. The room then
-leaves made files out with `.gitignore`, commits its own work, and
-publishes the repository to a private one on each student's GitHub account.
+[Seminar 5](../seminars/seminar_05.md), "Can You Compute 7.16 Yourself?",
+works on the same weather project: the room installs the Python extension,
+works at `>>>`, writes a script that cuts one line of `weather.csv` into
+numbers, then the loop and the `if` that give 7.15997 °C, and fixes a
+script with two bugs.
 
 ## What left the deck
 
-On 13 October 2026 the deck was cut to one line and moved to the weather
-project. These slides are in `lectures/content/parked/05_Version_Control.md`:
-the README that says how to fetch a file kept out of the repository,
-`git stash`, line endings and a clone on Windows with `core.autocrlf true`
-(now one slide, `.gitattributes`), SSH, and the section *Working with
-Others* (pull requests, review, issues, forks, GitLab at CERN), with their
-three quizzes.
+On 13 October 2026 Python Foundations became Lecture 5 (Git moved to
+Lecture 6), and the deck was rebuilt on the weather project of Lectures 1
+to 4, around one question: can we write the program that computes 7.16
+ourselves? Each topic now leads to the next step of that program, and the
+program grows on three slides. Out went the pendulum table, the LHCb file
+and the reading of `clean_pendulum.py` line by line (and the 97 bytes it
+wrote), arithmetic operators in a table, a second name for one list, `while`
+and `range`, list comprehensions, tuples and sets, readable names and PEP 8,
+the methods `replace`, `startswith` and `strip` on the spreadsheet export,
+and the rounding of a long sum (626 869.3000000009 against 626 869.3). The
+slides are in `lectures/content/parked/05_Python_Foundations.md`, each with a
+note saying where it stood.
+
+## Script or notebook
+
+A notebook (`.ipynb`) keeps cells of code with their output and plots
+below each. Cells can be run in any order, and the names of every earlier
+run stay, so a result may depend on a cell that was changed or deleted
+since. That suits a first look at data. This course writes scripts: plain
+text, run from the top, the same order and the same result at every run.
+A notebook can be trusted once it gives the same output after **Restart**
+and **Run All**, which is the test a script passes every time it runs.
+
+## Where to look things up
+
+All of these are free. At the prompt, `help(round)` prints the description
+of a function, and `help(str)` lists every string method.
+
+- [The Python Tutorial](https://docs.python.org/3/tutorial/), chapters 3
+  to 5: numbers, strings, lists, `if`, `for`, dictionaries
+- [Built-in Functions](https://docs.python.org/3/library/functions.html):
+  the full list, one paragraph each
+- [String Methods](https://docs.python.org/3/library/stdtypes.html#string-methods)
+- [Errors and Exceptions](https://docs.python.org/3/tutorial/errors.html)
+- [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)
+- [Python debugging in VS Code](https://code.visualstudio.com/docs/python/debugging)
 
 ## Take-aways
 
-- A checksum says that two copies differ, and `git diff` says which line.
-  Who changed it, when and why is kept only by a history.
-- Git names a content by the SHA-1 of a short header and its bytes. The
-  same bytes have the same id on every computer, and a content is stored
-  once. A line ending is one of the bytes: `0a` and `0d 0a` give two ids.
-- A tree is the list of a folder, like a list of checksums. A commit is a
-  text that names a tree, a parent, an author, a time and a reason. Its id
-  fixes the whole project and every version before it.
-- A branch is a name for a commit. A new commit moves the name.
-- A commit is made in two steps: stage, then commit. One commit has one
-  purpose, and its message says what it does.
-- Small raw data goes into the repository. Files a script makes again stay
-  out by `.gitignore`; `* -text` in `.gitattributes` keeps the bytes of
-  every file on every laptop.
-- `git restore` takes back an edit, `--amend` corrects the last commit
-  before it is pushed, `git revert` takes back a commit by a new one.
-- A remote is a second copy of the repository. Pull before you start, push
-  when you stop.
-- A conflict means that the same lines were changed twice. A person
-  decides.
-- A result that leaves the project carries the id or the tag of its commit.
+- `python` is a program, the interpreter. It reads a `.py` file, checks the
+  grammar of all of it, then runs it from the top, one statement at a time,
+  and stops at the first error.
+- Every value has a type. A Python `int` grows as needed; a `float` is a
+  float64 and rounds; a `str` is text, and `"-4.4"` is not a number until
+  `float()` makes it one.
+- A name points to a value. `=` works out the right side, then moves the
+  name; nothing follows a formula.
+- One line of a CSV file becomes numbers in two steps: `split(",")`, then
+  convert each part. A `for` loop does it for every line; `lines[1:]`
+  leaves out the header.
+- `if` and `continue` leave out the rows of −999. Without them the mean of
+  `weather.csv` is 5.78; with them, 7.16, the same as `column_stats.py`.
+- A dictionary counts and sums by key: hours and means per year.
+- An f-string rounds what is printed, never the value.
+- A traceback is read from the bottom: what, then where. The cause is often
+  a line higher up. A wrong number has no traceback; a value known
+  beforehand finds it.

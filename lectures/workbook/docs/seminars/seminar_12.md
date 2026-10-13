@@ -39,7 +39,7 @@ section 9 holds the same lines. Sections 12 and 13 are optional.
 
 ??? info "Before the session"
     - **Room:** internet (conda downloads pandas). Each student has
-      `weather-project` from [Seminar 5](seminar_05.md) on, the conda
+      `weather-project` from [Seminar 6](seminar_06.md) on, the conda
       environment `weather`, and the remote `course` from Seminar 6.
     - **You:** nothing to prepare. The course repository has the hill
       station's file; section 2 pulls it. Ids of commits differ on every

@@ -1,484 +1,469 @@
-# Seminar 5 — Who Changed the Mean? Git on the Weather Project
+# Seminar 5 — Can You Compute 7.16 Yourself? Python on the Weather Project
 
-**Paired lecture:** 05 Version Control with Git · **Format:** follow-along · **~120 min**
+**Paired lecture:** 05 Python Foundations · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student clones the weather project, finds the commit
-that changed its mean temperature, takes it back, commits their own work and
-pushes it to their own GitHub repository.
+**Today's goal:** every student writes a Python script that reads
+`weather.csv` line by line, leaves out the `-999` hours and prints the mean
+temperature, 7.15997 °C; fixes a script with two bugs; records both
+results in the README.
 
-Everything is typed in the terminal of VS Code: zsh on macOS, Git Bash on
-Windows; the lines are the same in both. The **Source Control** view (`Ctrl+Shift+G`, macOS
-`Cmd+Shift+G`) stays open and shows each change.
+Everything is typed in VS Code: the scripts in the editor, the commands in
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
+in both).
 
 ## Run sheet
 
 | Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · Git and the project** · 20 min | | |
-| 0:00 | [1. Check Git, give it your name](#check) | `git config --global user.name "…"` | three settings |
-| 0:10 | [2. Clone the weather project](#clone) | `git clone https://github.com/MindaugasSarpis/weather-project.git` | `weather-project` open in VS Code |
-| | **Part 2 · Who changed the mean?** · 35 min | | |
-| 0:20 | [3. Read the history: `git log`](#log) | `git log --oneline` | 7 commits, 2 authors |
-| 0:30 | [4. Find who wrote a line: `git blame`](#blame) | `git blame -L 38,38 README.md` | `85e435e`, Tomas, 19 Oct |
-| 0:40 | [5. See what a commit changed: `git show`](#show) | `git show 85e435e -- scripts/rebuild.sh` | the line that reads the raw file |
-| | **Part 3 · Put it right** · 30 min | | |
-| 0:55 | [6. Take the commit back: `git revert`](#revert) | `git revert 85e435e --no-edit` | 7.16 in the README again |
-| 1:05 | [7. Rebuild and check the mean](#rebuild) | `./scripts/rebuild.sh` | `mean 7.15997` |
-| 1:10 | [8. Leave made files out: `.gitignore`](#ignore) | `git add .gitignore` | `working tree clean` |
-| 1:15 | [9. Your own commit](#commit) | `git diff`, `git add`, `git commit` | 10 commits |
-| | **Part 4 · Your copy on GitHub** · 35 min | | |
-| 1:25 | [10. A GitHub account](#account) | `github.com` | signed in |
-| 1:35 | [11. Publish, then push and pull](#publish) | **Publish Branch**, `git push` | the project on GitHub |
-| 1:55 | [12. Wrap up](#wrap-up) | `git log --oneline` | |
+| | **Part 1 · Python in VS Code** · 25 min | | |
+| 0:00 | [1. The project, and one file from the course](#start) | `mv ~/Downloads/coldest_hour.py scripts/` | `scripts/coldest_hour.py` |
+| 0:05 | [2. Python and its extension](#check) | **Python: Select Interpreter** | `Python 3.14.7` |
+| 0:15 | [3. The prompt](#prompt) | `python`, then `7.16 * 9 / 5 + 32` | `44.888` |
+| | **Part 2 · One line into numbers** · 30 min | | |
+| 0:25 | [4. A first script](#script) | `python scripts/first_row.py` | the line printed |
+| 0:35 | [5. Cut the line, convert the parts](#split) | `line.split(",")`, `float(parts[1])` | `-4.4 <class 'float'>` |
+| 0:45 | [6. Read a traceback](#traceback) | `float(parts[0])` | `ValueError`, line 6 |
+| | **Part 3 · The mean of the whole file** · 35 min | | |
+| 0:55 | [7. Every line of the file in a list](#lines) | `open(...).read().splitlines()` | `87673` |
+| 1:05 | [8. A sum in a loop](#loop) | `for line in lines[1:]:` | `5.782796103659093` |
+| 1:15 | [9. Leave out `-999` with `if`](#skip) | `if temp == -999:` | `mean 7.15997 °C` |
+| | **Part 4 · Fix a script, record the results** · 30 min | | |
+| 1:30 | [10. A traceback in someone else's script](#nameerror) | `python scripts/coldest_hour.py` | `NameError` fixed |
+| 1:35 | [11. A wrong number without a message](#wrong) | a `print` in the loop | `-16.3 °C` |
+| 1:45 | [12. Record the results in the README](#readme) | `ls -1 scripts` | two lines in the README |
+| 1:55 | [13. Wrap up](#wrap-up) | | |
 | | **Optional, if the room is fast** | | |
-| — | [13. A branch and a merge](#branch) | `git switch -c fahrenheit` | a merged branch |
-| — | [14. A conflict](#conflict) | `git merge wording` | a conflict resolved |
-| — | [15. Tag the result](#tag) | `git tag -a v1.0` | a tag on GitHub |
+| — | [14. Stop at a line: the debugger](#debugger) | `F5` | the loop watched step by step |
+| — | [15. Hours per year in a dict](#dict) | `hours[year] = hours.get(year, 0) + 1` | 8784 in leap years |
+| — | [16. The mean in two lines](#comprehension) | `[... for line in lines[1:]]` | `7.15997` |
 
-**If time runs short:** stop after section 11; sections 13 to 15 are optional.
+**If time runs short:** stop after section 12; sections 14 to 16 are optional.
 
 ??? info "Before the session"
-    - **Room:** internet, and a mailbox each student can open (GitHub sends a
-      code). Python from Miniforge is used once, in section 7.
-    - **You:** nothing to prepare. The repository
-      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
-      is small (about 0.5 MB to download) and the same for everyone, so its
-      ids on this page are the ids in the room. Ids of commits made today
-      differ on every laptop.
-    - **Page:** the **▶ Steps** button (bottom right) shows one step at a
-      time; arrows or swipe to move, `Esc` to close.
+    - **Room:** `weather-project` in the home folder as Seminar 4 left it
+      (not yet a Git repository), Miniforge from Seminar 4, internet for the
+      extension and one download.
+    - **You:** remove the Python extension from your VS Code beforehand, to
+      install it with the room in section 2.
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · Git and the project { #part-1 }
+## Part 1 · Python in VS Code { #part-1 }
 
-**0:00 to 0:20**
-
----
-
-### 1. Check Git, give it your name { #check }
-
-**0:00 · 10 min** · Every commit records a name and an e-mail. Set them once.
-
-1. Open VS Code, then the terminal: **View** > **Terminal**. The prompt
-   ends in `%` on a Mac (zsh) and `$` on Windows (Git Bash).
-
-    ??? warning "Windows: the terminal shows `PS` (PowerShell)"
-        `Ctrl+Shift+P` > **Terminal: Select Default Profile** > **Git Bash**.
-        Close the terminal (bin icon) and open a new one. No **Git Bash** in
-        the list: Git is missing, see step 2.
-
-2. Check Git.
-
-    ```text
-    git --version
-    ```
-
-    ```text
-    git version 2.56.0
-    ```
-
-    Any version from 2.40 on is fine.
-
-    ??? warning "`command not found: git`: install it"
-        === "macOS"
-
-            ```text
-            brew install git
-            ```
-
-        === "Windows"
-
-            In the Windows terminal (PowerShell), then restart VS Code and
-            take **Git Bash** as in step 1:
-
-            ```text
-            winget install --id Git.Git -e
-            ```
-
-        Close the terminal and open a new one.
-
-3. Your name, as it should appear on every commit.
-
-    ```text
-    git config --global user.name "Your Name"
-    ```
-
-4. Your e-mail; use the one you will give GitHub in section 10.
-
-    ```text
-    git config --global user.email "you@example.org"
-    ```
-
-5. Let `git pull` join two histories with a merge.
-
-    ```text
-    git config --global pull.rebase false
-    ```
-
-6. Check.
-
-    ```text
-    git config --global --list
-    ```
-
-    ```text
-    user.name=Your Name
-    user.email=you@example.org
-    pull.rebase=false
-    ```
-
-**Check:** your own name and e-mail in the list.
+**0:00 to 0:25**
 
 ---
 
-### 2. Clone the weather project { #clone }
+### 1. The project, and one file from the course { #start }
 
-**0:10 · 10 min** · `git clone` downloads a project with its whole history.
+**0:00 · 5 min** · Today's scripts go into `scripts/` of the project of Seminar 4; one script comes from the course.
 
-1. Go to the home folder.
-
-    ```text
-    cd ~
-    ```
-
-2. Keep the folder of Seminar 4 under another name, so the clone can use
-   the name `weather-project`.
-
-    ```text
-    mv weather-project weather-project-s4
-    ```
-
-    `No such file or directory`: there is no such folder. Go on.
-
-3. Clone.
+1. Open VS Code, **File** > **Open Folder...** > `weather-project`. Open
+   the terminal: **View** > **Terminal**.
+2. On the Releases page
+   (`github.com/MindaugasSarpis/weather-project/releases`), under
+   **Assets**, click `coldest_hour.py`. The browser saves it in
+   **Downloads**.
+3. Move it into `scripts`.
 
     ```text
-    git clone https://github.com/MindaugasSarpis/weather-project.git
+    mv ~/Downloads/coldest_hour.py scripts/
     ```
 
     ```text
-    Cloning into 'weather-project'...
-    remote: Enumerating objects: 37, done.
-    remote: Counting objects: 100% (37/37), done.
-    remote: Compressing objects: 100% (20/20), done.
-    remote: Total 37 (delta 15), reused 37 (delta 15), pack-reused 0 (from 0)
-    Receiving objects: 100% (37/37), 554.27 KiB | 4.43 MiB/s, done.
-    Resolving deltas: 100% (15/15), done.
-    ```
-
-4. Open it: **File** > **Open Folder...** > `weather-project` > **Open**.
-   Answer **Yes, I trust the authors**.
-5. Open the terminal again (**View** > **Terminal**). It starts in the
-   project folder.
-
-    ```text
-    git status
+    ls scripts
     ```
 
     ```text
-    On branch main
-    Your branch is up to date with 'origin/main'.
-
-    nothing to commit, working tree clean
+    clean_export.py  coldest_hour.py  column_stats.py  rebuild.sh
     ```
 
-**Check:** the Explorer shows `data`, `scripts`, `LICENSE`, `README.md`.
+**Check:** `scripts/coldest_hour.py` in the Explorer.
+
+??? warning "No `weather-project` from Seminar 4"
+    On the same Releases page, click `weather-project-s4.zip` and unpack it
+    into your home folder (macOS: double-click it in **Downloads**,
+    `Cmd+C`, `Cmd+Shift+H`, `Cmd+V`; Windows: right-click > **Extract
+    All...** > **Browse...** > `C:\Users\` and your name > **Extract**). It
+    already holds `scripts/coldest_hour.py`: skip steps 2 and 3.
 
 ---
 
-## Part 2 · Who changed the mean? { #part-2 }
+### 2. Python and its extension { #check }
 
-**0:20 to 0:55** · Lecture 1 said 7.16 °C. Open `README.md`: its
-**Result** says 5.78 °C.
+**0:05 · 10 min** · The extension colours the code and adds a button that runs it; Python itself comes from Miniforge.
+
+1. The Python of conda's `base`.
+
+    ```text
+    python --version
+    ```
+
+    ```text
+    Python 3.14.7
+    ```
+
+2. **Extensions** (`Ctrl+Shift+X`, macOS `Cmd+Shift+X`), type `python`,
+   select **Python** by Microsoft, **Install**. Pylance and Python
+   Debugger come with it.
+3. `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), type `Python: Select
+   Interpreter`, `Enter`, pick the entry with `miniforge3` in its path.
+4. The Status Bar, bottom right, shows `3.14.7`.
+
+**Check:** `3.14.7` in the terminal and in the Status Bar.
+
+!!! warning "`python: command not found`, or no `(base)` at the start of the prompt"
+    conda is not on in this terminal: Seminar 4, section 2.
 
 ---
 
-### 3. Read the history: `git log` { #log }
+### 3. The prompt { #prompt }
 
-**0:20 · 10 min** · A commit is one saved state: id, author, date, message.
+**0:15 · 10 min** · At `>>>` Python works out one line at a time: the place to try a line.
 
-1. One line per commit, newest first.
-
-    ```text
-    git log --oneline
-    ```
+1. Start Python. The prompt changes to `>>>`.
 
     ```text
-    0f19f54 (HEAD -> main, origin/main, origin/HEAD) Add a licence
-    85e435e Take the mean over all rows of weather.csv
-    a9c513d Write the mean temperature into results and the README
-    9f28b51 Add the rebuild script
-    96f2dc4 Describe the columns and the -999 rows
-    2d282c7 Add the two scripts handed out with the data
-    3e72263 Add the station's hourly log and the spreadsheet export
+    python
     ```
 
-    `HEAD -> main` marks where you are; `origin/main`, where GitHub was at
-    the clone. As a graph, oldest at the left:
-
-    ```mermaid
-    gitGraph
-      commit id: "3e72263 data"
-      commit id: "2d282c7 scripts"
-      commit id: "96f2dc4 columns"
-      commit id: "9f28b51 rebuild"
-      commit id: "a9c513d 7.16"
-      commit id: "85e435e Tomas" type: HIGHLIGHT
-      commit id: "0f19f54 licence"
-    ```
-
-2. The last two commits in full.
+2. The mean of Lecture 1 in Fahrenheit.
 
     ```text
-    git log -n 2
+    7.16 * 9 / 5 + 32
     ```
 
     ```text
-    commit 0f19f54e1b79db8133153f28d76be685862182b5 (HEAD -> main, origin/main, origin/HEAD)
-    Author: Smiltė <smilte@example.org>
-    Date:   Mon Oct 19 17:05:00 2026 +0300
-
-        Add a licence
-
-    commit 85e435ef56fe4308debf88b5b2d546e4000bbce6
-    Author: Tomas <tomas@example.org>
-    Date:   Mon Oct 19 11:45:00 2026 +0300
-
-        Take the mean over all rows of weather.csv
-
-        The valid file leaves 120 hours out. The raw file has every hour.
+    44.888
     ```
 
-3. Only the commits that touched the raw data.
+3. Two types.
 
     ```text
-    git log --oneline -- data/raw
+    type(7.16)
     ```
 
     ```text
-    3e72263 Add the station's hourly log and the spreadsheet export
-    ```
-
-    The raw files are as they arrived: nobody changed them since.
-
-4. In Source Control, open the **Graph** section: the same seven commits.
-
-**Check:** seven commits, by Smiltė and Tomas; one commit for `data/raw`.
-
-!!! warning "The terminal shows `:` or `(END)` and takes no commands"
-    Git shows long output one screen at a time. Press `q`.
-
----
-
-### 4. Find who wrote a line: `git blame` { #blame }
-
-**0:30 · 10 min** · `git blame` gives, for each line, the commit that wrote it.
-
-1. Find the line with 5.78.
-
-    ```text
-    grep -n '5.78' README.md
+    <class 'float'>
     ```
 
     ```text
-    38:Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
-    ```
-
-2. Ask who wrote line 38.
-
-    ```text
-    git blame -L 38,38 README.md
+    type("7.16")
     ```
 
     ```text
-    85e435e (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, …
+    <class 'str'>
     ```
 
-3. Ask which commits added or removed the text `5.78`.
+4. Text and a number do not add.
 
     ```text
-    git log -S "5.78" --oneline
+    "7.16" + 1
     ```
 
+    The last line of the answer:
+
     ```text
-    85e435e Take the mean over all rows of weather.csv
+    TypeError: can only concatenate str (not "int") to str
     ```
 
-**Check:** commit `85e435e`, Tomas, 19 October.
-
----
-
-### 5. See what a commit changed: `git show` { #show }
-
-**0:40 · 15 min** · `git show` prints a commit and its changes: `-` is the old line, `+` the new.
-
-1. The files it changed.
+5. `float` turns the text into a number.
 
     ```text
-    git show --stat 85e435e
+    float("7.16") + 1
     ```
 
     ```text
-    commit 85e435ef56fe4308debf88b5b2d546e4000bbce6
-    Author: Tomas <tomas@example.org>
-    Date:   Mon Oct 19 11:45:00 2026 +0300
-
-        Take the mean over all rows of weather.csv
-
-        The valid file leaves 120 hours out. The raw file has every hour.
-
-     README.md          | 4 ++--
-     scripts/rebuild.sh | 2 +-
-     2 files changed, 3 insertions(+), 3 deletions(-)
+    8.16
     ```
 
-2. The change in `rebuild.sh`.
+6. Leave the prompt.
 
     ```text
-    git show 85e435e -- scripts/rebuild.sh
+    exit()
     ```
 
-    The end of its output:
+**Check:** the shell's prompt again: `%` on a Mac, `$` in Git Bash.
 
-    ```text
-    @@ -3,4 +3,4 @@ set -e
-     mkdir -p data/processed results
-     grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
-     python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-    -python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
-    +python scripts/column_stats.py data/raw/weather.csv temp_c > results/temp_c.txt
-    ```
+!!! warning "`zsh: command not found: 7.16` or `bash: 7.16: command not found`"
+    The line went to the shell, not to Python. Type `python` first.
 
-3. Count the rows that the raw file has and the valid file has not.
-
-    ```text
-    grep -c ',-999,' data/raw/weather.csv
-    ```
-
-    ```text
-    120
-    ```
-
-    Each adds −999 to the sum: that pulls the mean from 7.16 down to 5.78.
-
-**Check:** the mean now reads `data/raw/weather.csv`, with its 120 rows of
-`-999`.
-
-!!! question "Task: where did 7.16 come from, and is the data file the same as Smiltė's?"
-    1. Find the commit that first wrote 7.16 into the README, and its day.
-    2. Print `scripts/rebuild.sh` as it was in that commit.
-    3. Ask Git for the id of `data/raw/weather.csv`, and compare it with
-       your neighbour's.
+!!! question "Task: how many rows should `weather.csv` have?"
+    The log is hourly from 1 January 2016 to 31 December 2025. 2016, 2020
+    and 2024 are leap years. Work it out at `>>>`, then the number of days.
 
 ??? note "Answer"
-    1. `a9c513d`, 16 October: the older of the two lines.
+    ```text
+    365 * 24 * 10 + 3 * 24
+    ```
 
-        ```text
-        git log -S "7.16" --oneline
-        ```
+    ```text
+    87672
+    ```
 
-        ```text
-        85e435e Take the mean over all rows of weather.csv
-        a9c513d Write the mean temperature into results and the README
-        ```
+    ```text
+    87672 // 24
+    ```
 
-    2. The last line still reads `weather_valid.csv`.
+    ```text
+    3653
+    ```
 
-        ```text
-        git show a9c513d:scripts/rebuild.sh
-        ```
-
-        ```text
-        #!/usr/bin/env bash
-        set -e
-        mkdir -p data/processed results
-        grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
-        python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-        python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
-        ```
-
-    3. The same id on every laptop: Git names a file by a hash of its
-       bytes (Lecture 3), so equal ids mean equal bytes.
-
-        ```text
-        git hash-object data/raw/weather.csv
-        ```
-
-        ```text
-        f811f73d93226acc8a0c96562aef9f7825b85b0a
-        ```
+    `87672 / 24` gives `3653.0`: `/` always gives a `float`, `//` an `int`.
+    `weather.csv` has 87 672 rows below its header, one per hour.
 
 ---
 
-## Part 3 · Put it right { #part-3 }
+## Part 2 · One line into numbers { #part-2 }
 
-**0:55 to 1:25**
-
----
-
-### 6. Take the commit back: `git revert` { #revert }
-
-**0:55 · 10 min** · `git revert` makes a new commit that undoes an old one. The history keeps both.
-
-1. Revert Tomas's commit.
-
-    ```text
-    git revert 85e435e --no-edit
-    ```
-
-    ```text
-    Auto-merging README.md
-    [main 4caed6e] Revert "Take the mean over all rows of weather.csv"
-     Date: Tue Oct 20 10:32:00 2026 +0300
-     2 files changed, 3 insertions(+), 3 deletions(-)
-    ```
-
-    Your id and date differ.
-
-2. Look at the history.
-
-    ```text
-    git log --oneline -n 3
-    ```
-
-    ```text
-    4caed6e (HEAD -> main) Revert "Take the mean over all rows of weather.csv"
-    0f19f54 (origin/main, origin/HEAD) Add a licence
-    85e435e Take the mean over all rows of weather.csv
-    ```
-
-    ```mermaid
-    gitGraph
-      commit id: "a9c513d 7.16"
-      commit id: "85e435e Tomas" type: HIGHLIGHT
-      commit id: "0f19f54 licence"
-      commit id: "4caed6e revert" type: REVERSE
-    ```
-
-3. In `README.md` the **Result** says 7.16 °C again. Smiltė's licence of
-   `0f19f54` is still there.
-
-**Check:** 7.16 in the README, eight commits.
+**0:25 to 0:55** · The first row of `weather.csv`: `2016-01-01T00:00,-4.4,93,2.5`.
 
 ---
 
-### 7. Rebuild and check the mean { #rebuild }
+### 4. A first script { #script }
 
-**1:05 · 5 min** · The README's number must come out of the script.
+**0:25 · 10 min** · A script is the lines of the prompt in a file, run top to bottom.
 
-1. Run the rebuild script.
+1. In the Explorer, right-click `scripts` > **New File...**, type
+   `first_row.py`, `Enter`.
+2. Type, then save (`Ctrl+S`, macOS `Cmd+S`).
+
+    ```python
+    line = "2016-01-01T00:00,-4.4,93,2.5"
+    print(line)
+    print(len(line))
+    ```
+
+3. Run it with the ▶ at the top right of the editor. VS Code types a line
+   with the paths of Python and the script, then the output appears.
+4. Run it by hand, from the project folder.
 
     ```text
-    ./scripts/rebuild.sh
+    python scripts/first_row.py
     ```
 
     ```text
-    9 rows written to data/processed/daily.csv
+    2016-01-01T00:00,-4.4,93,2.5
+    28
     ```
 
-2. Read the result.
+**Check:** the line and `28`, its characters.
+
+---
+
+### 5. Cut the line, convert the parts { #split }
+
+**0:35 · 10 min** · `split` cuts a string into a list; `float` makes a part a number.
+
+1. Replace the file with these lines, save.
+
+    ```python
+    line = "2016-01-01T00:00,-4.4,93,2.5"
+    parts = line.split(",")
+    print(parts)
+    print(parts[1], type(parts[1]))
+    print(parts[1] * 2)
+    temp = float(parts[1])
+    print(temp, type(temp))
+    print(temp * 2)
+    ```
+
+2. Run it.
+
+    ```text
+    python scripts/first_row.py
+    ```
+
+    ```text
+    ['2016-01-01T00:00', '-4.4', '93', '2.5']
+    -4.4 <class 'str'>
+    -4.4-4.4
+    -4.4 <class 'float'>
+    -8.8
+    ```
+
+    A list counts from 0: `parts[1]` is the second item. A string times 2
+    is the string twice; a float times 2 is a number.
+
+**Check:** `-8.8` on the last line.
+
+---
+
+### 6. Read a traceback { #traceback }
+
+**0:45 · 10 min** · An error message is read from the bottom: what went wrong, then where.
+
+1. Replace the file with these lines, save, run.
+
+    ```python
+    line = "2016-01-01T00:00,-4.4,93,2.5"
+    parts = line.split(",")
+    temp = float(parts[1])
+    humidity = int(parts[2])
+    wind = float(parts[3])
+    print(float(parts[0]))
+    ```
+
+    ```text
+    python scripts/first_row.py
+    ```
+
+    ```text
+    Traceback (most recent call last):
+      File "/Users/smilte/weather-project/scripts/first_row.py", line 6, in <module>
+        print(float(parts[0]))
+              ~~~~~^^^^^^^^^^
+    ValueError: could not convert string to float: '2016-01-01T00:00'
+    ```
+
+2. The last line: a time is not a number. The line above: line 6, and
+   `^^^` under the part that failed.
+3. `Ctrl+click` (macOS `Cmd+click`) the path: VS Code opens line 6.
+4. Replace line 6 with two lines, save, run.
+
+    ```python
+    time = parts[0]
+    print(f"{time}: {temp} °C, {humidity} %, {wind} m/s")
+    ```
+
+    ```text
+    2016-01-01T00:00: -4.4 °C, 93 %, 2.5 m/s
+    ```
+
+    An `f` before the quotes puts the value of each `{name}` into the text.
+
+**Check:** the sentence printed, no traceback.
+
+!!! question "Task: the wind in km/h, the temperature in °F"
+    Add one line to `first_row.py` that prints the wind in km/h (× 3.6)
+    and the temperature in °F, each with one decimal.
+
+??? note "Answer"
+    `:.1f` after a value in `{}` rounds it to one decimal.
+
+    ```python
+    print(f"wind {wind * 3.6:.1f} km/h, {temp * 9 / 5 + 32:.1f} °F")
+    ```
+
+    ```text
+    wind 9.0 km/h, 24.1 °F
+    ```
+
+---
+
+## Part 3 · The mean of the whole file { #part-3 }
+
+**0:55 to 1:30** · The same steps for every line of `weather.csv`.
+
+---
+
+### 7. Every line of the file in a list { #lines }
+
+**0:55 · 10 min** · `open` reads a file, `splitlines` cuts it into a list of lines.
+
+1. New file `scripts/mean_temp.py`. Type, save.
+
+    ```python
+    lines = open("data/raw/weather.csv").read().splitlines()
+    print(len(lines))
+    print(lines[0])
+    print(lines[1])
+    print(lines[-1])
+    ```
+
+2. Run it.
+
+    ```text
+    python scripts/mean_temp.py
+    ```
+
+    ```text
+    87673
+    time,temp_c,humidity_pct,wind_ms
+    2016-01-01T00:00,-4.4,93,2.5
+    2025-12-31T23:00,-11.3,100,4.2
+    ```
+
+    The header and 87 672 hours. `lines[-1]` is the last item.
+
+**Check:** `87673`.
+
+!!! warning "`FileNotFoundError: ... 'data/raw/weather.csv'`"
+    The terminal is not in the project folder. `cd ~/weather-project`,
+    then run again.
+
+---
+
+### 8. A sum in a loop { #loop }
+
+**1:05 · 10 min** · `for` runs the indented block once for each line; `lines[1:]` leaves out the header.
+
+1. Replace the file, save, run.
+
+    ```python
+    lines = open("data/raw/weather.csv").read().splitlines()
+
+    total = 0.0
+    count = 0
+    for line in lines[1:]:
+        temp = float(line.split(",")[1])
+        total = total + temp
+        count = count + 1
+
+    print(count, total / count)
+    ```
+
+    ```text
+    python scripts/mean_temp.py
+    ```
+
+    ```text
+    87672 5.782796103659093
+    ```
+
+2. 5.78: the mean over the raw log of Seminar 4. The 120 hours of
+   `-999` are in the sum.
+
+**Check:** `5.782796103659093`.
+
+!!! warning "`IndentationError`"
+    The three lines under `for` need the same four spaces. VS Code adds
+    them after the `:` and `Enter`.
+
+---
+
+### 9. Leave out `-999` with `if` { #skip }
+
+**1:15 · 15 min** · `if` decides for each line; `continue` goes on to the next line at once.
+
+1. Under `temp = ...`, add two lines, indented as shown.
+
+    ```python
+        if temp == -999:
+            continue
+    ```
+
+2. Replace the last line with three, save, run.
+
+    ```python
+    mean = total / count
+    print(f"{count} hours, mean {mean:.5f} °C")
+    print(f"mean {mean:.2f} °C")
+    ```
+
+    ```text
+    python scripts/mean_temp.py
+    ```
+
+    ```text
+    87552 hours, mean 7.15997 °C
+    mean 7.16 °C
+    ```
+
+3. The same number as `column_stats.py` gave in Seminar 4.
 
     ```text
     cat results/temp_c.txt
@@ -493,283 +478,224 @@ Windows; the lines are the same in both. The **Source Control** view (`Ctrl+Shif
     mean    7.15997
     ```
 
-3. Ask Git.
+    No `results/` folder: run `./scripts/rebuild.sh` first.
 
-    ```text
-    git status
-    ```
+**Check:** `mean 7.15997 °C`, from 87 552 hours.
 
-    ```text
-    On branch main
-    Your branch is ahead of 'origin/main' by 1 commit.
-      (use "git push" to publish your local commits)
-
-    Untracked files:
-      (use "git add <file>..." to include in what will be committed)
-            data/processed/
-            results/
-    ```
-
-**Check:** `mean 7.15997`, and two untracked folders.
-
-!!! warning "`command not found: python`"
-    Miniforge is missing ([Seminar 4](seminar_04.md), section 1). The script
-    made `data/processed/weather_valid.csv` before it stopped; go on.
-
----
-
-### 8. Leave made files out: `.gitignore` { #ignore }
-
-**1:10 · 5 min** · The script makes these folders again at any time, so they stay out of the history.
-
-1. **File** > **New File...**, type `.gitignore`, press `Enter`. Write two
-   lines and save.
-
-    ```text
-    data/processed/
-    results/
-    ```
-
-2. The two folders are gone from Source Control; `.gitignore` is there.
-
-    ```text
-    git status --short
-    ```
-
-    ```text
-    ?? .gitignore
-    ```
-
-3. Stage it, then commit it.
-
-    ```text
-    git add .gitignore
-    ```
-
-    ```text
-    git commit -m "Leave out the files the rebuild script makes"
-    ```
-
-    ```text
-    [main dfc516d] Leave out the files the rebuild script makes
-     1 file changed, 2 insertions(+)
-     create mode 100644 .gitignore
-    ```
-
-**Check:** `git status` ends with `nothing to commit, working tree clean`.
-
----
-
-### 9. Your own commit { #commit }
-
-**1:15 · 10 min** · Edit, look at the change, stage, commit: the loop of every day.
-
-```mermaid
-flowchart LR
-  W["working folder<br/>your files"] -- "git add" --> S["staging area<br/>the next commit"]
-  S -- "git commit" --> R["repository<br/>the history"]
-  R -- "git push" --> G["GitHub"]
-  G -- "git pull" --> W
-  R -- "git restore" --> W
-```
-
-1. In `README.md`, under the **Result** paragraph, add one line and save.
-
-    ```text
-    Checked on 2026-10-20: the rebuild gives 7.15997.
-    ```
-
-2. What changed.
-
-    ```text
-    git status --short
-    ```
-
-    ```text
-     M README.md
-    ```
-
-3. How it changed. Also: click `README.md` in Source Control.
-
-    ```text
-    git diff
-    ```
-
-    ```text
-    @@ -38,6 +38,8 @@ the temperature sensor was down.
-     Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
-     marked `-999` are left out. The script writes it to `results/temp_c.txt`.
-
-    +Checked on 2026-10-20: the rebuild gives 7.15997.
-    +
-     ## How to rebuild
-    ```
-
-4. Stage, then commit.
-
-    ```text
-    git add README.md
-    ```
-
-    ```text
-    git commit -m "Record the check of the mean"
-    ```
-
-    ```text
-    [main 36abc3c] Record the check of the mean
-     1 file changed, 2 insertions(+)
-    ```
-
-**Check:** `git log --oneline` shows ten commits, three of them yours.
-
-!!! question "Task: break the raw data, then repair it"
-    In VS Code, delete line 2 of `data/raw/weather.csv` and save. Find the
-    change with Git, then undo it with one command.
+!!! question "Task: the mean humidity and the windiest hour"
+    New script `scripts/humidity_wind.py`. It prints the mean of
+    `humidity_pct` (column 2) with one decimal, and the time and speed of
+    the windiest hour (`wind_ms`, column 3). Humidity has no `-999`.
 
 ??? note "Answer"
-    ```text
-    git status --short
+    ```python
+    lines = open("data/raw/weather.csv").read().splitlines()
+
+    total = 0
+    windiest = 0.0
+    windiest_time = ""
+    for line in lines[1:]:
+        parts = line.split(",")
+        total = total + int(parts[2])
+        wind = float(parts[3])
+        if wind > windiest:
+            windiest = wind
+            windiest_time = parts[0]
+
+    print(f"mean humidity {total / (len(lines) - 1):.1f} %")
+    print(f"windiest hour: {windiest_time}, {windiest} m/s")
     ```
 
     ```text
-     M data/raw/weather.csv
+    mean humidity 79.1 %
+    windiest hour: 2019-12-29T16:00, 12.0 m/s
     ```
-
-    ```text
-    git diff --stat
-    ```
-
-    ```text
-     data/raw/weather.csv | 1 -
-     1 file changed, 1 deletion(-)
-    ```
-
-    ```text
-    git restore data/raw/weather.csv
-    ```
-
-    `git status --short` prints nothing: the file has its committed bytes
-    again.
 
 ---
 
-## Part 4 · Your copy on GitHub { #part-4 }
+## Part 4 · Fix a script, record the results { #part-4 }
 
-**1:25 to 2:00**
-
----
-
-### 10. A GitHub account { #account }
-
-**1:25 · 10 min** · GitHub keeps a copy of the repository online.
-
-1. Open [github.com](https://github.com) > **Sign up**.
-2. E-mail, password, a username. The username is in the address of every
-   repository you make.
-3. Type the code that GitHub e-mails you.
-
-**Check:** you are signed in on github.com.
+**1:30 to 2:00** · `scripts/coldest_hour.py` came from the course in section 1. It should print the coldest hour of the ten years.
 
 ---
 
-### 11. Publish, then push and pull { #publish }
+### 10. A traceback in someone else's script { #nameerror }
 
-**1:35 · 20 min** · The clone still points at the course repository, which you cannot write to.
+**1:30 · 5 min** · The last line names the problem, and often the fix.
 
-1. Where the clone points.
+1. Run it.
 
     ```text
-    git remote -v
+    python scripts/coldest_hour.py
     ```
 
     ```text
-    origin  https://github.com/MindaugasSarpis/weather-project.git (fetch)
-    origin  https://github.com/MindaugasSarpis/weather-project.git (push)
+    Traceback (most recent call last):
+      File "/Users/smilte/weather-project/scripts/coldest_hour.py", line 13, in <module>
+        print(f"coldest hour: {coldest_tme}, {coldest} °C")
+                               ^^^^^^^^^^^
+    NameError: name 'coldest_tme' is not defined. Did you mean: 'coldest_time'?
     ```
 
-2. Remove that remote.
+2. On line 13, change `coldest_tme` to `coldest_time`, save, run.
 
     ```text
-    git remote remove origin
-    ```
-
-3. In Source Control, click **Publish Branch** > **Publish to GitHub private
-   repository**. Keep the name `weather-project`, press `Enter`.
-4. VS Code asks to sign in: **Allow**, then **Continue** and **Authorize**
-   in the browser, then back to VS Code.
-5. Where the clone points now.
-
-    ```text
-    git remote -v
+    python scripts/coldest_hour.py
     ```
 
     ```text
-    origin  https://github.com/your-username/weather-project.git (fetch)
-    origin  https://github.com/your-username/weather-project.git (push)
+    coldest hour: 2019-07-22T00:00, -999.0 °C
     ```
 
-6. Open `https://github.com/your-username/weather-project`: the files, and
-   **10 Commits**.
+**Check:** no traceback, and a temperature that cannot be.
 
-**Check:** your repository on GitHub, marked **Private**.
+---
 
-!!! question "Task: one change each way"
-    1. On github.com, edit `README.md` (the pencil), add a line, click
-       **Commit changes**. Bring that commit to your laptop.
-    2. On your laptop, add another line to `README.md`, commit it, and send
-       it to GitHub.
+### 11. A wrong number without a message { #wrong }
+
+**1:35 · 10 min** · A script can run to the end and still be wrong. A `print` inside the loop shows how it got there.
+
+1. Under line 11, `coldest_time = parts[0]`, add one line with the same
+   indent, save, run.
+
+    ```python
+            print(coldest_time, coldest)
+    ```
+
+    ```text
+    python scripts/coldest_hour.py
+    ```
+
+    The first four lines and the last four:
+
+    ```text
+    2016-01-01T00:00 -4.4
+    2016-01-01T01:00 -4.8
+    2016-01-01T02:00 -5.5
+    2016-01-01T03:00 -6.0
+    ...
+    2017-01-15T01:00 -15.4
+    2017-01-15T02:00 -16.0
+    2019-07-22T00:00 -999.0
+    coldest hour: 2019-07-22T00:00, -999.0 °C
+    ```
+
+    Each line is a new coldest hour; the last is the first `-999`.
+
+2. Delete the `print` line. Change line 9 so that `-999` never counts,
+   save, run.
+
+    ```python
+        if temp != -999 and temp < coldest:
+    ```
+
+    ```text
+    python scripts/coldest_hour.py
+    ```
+
+    ```text
+    coldest hour: 2025-01-07T05:00, -16.3 °C
+    ```
+
+**Check:** `-16.3 °C`, the `min` of `results/temp_c.txt`.
+
+---
+
+### 12. Record the results in the README { #readme }
+
+**1:45 · 10 min** · The README says what was found and which script finds it; Seminar 6 puts the scripts under Git.
+
+1. In `README.md`, under the paragraph of **Result**, add two lines and
+   save.
+
+    ```text
+    Checked in Python, `scripts/mean_temp.py`: 7.15997 °C.
+    The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
+    ```
+
+2. Check.
+
+    ```text
+    grep -E 'Checked|coldest' README.md
+    ```
+
+    ```text
+    Checked in Python, `scripts/mean_temp.py`: 7.15997 °C.
+    The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
+    ```
+
+3. The scripts of today, next to those of Seminar 4. `-1`: one name per
+   line.
+
+    ```text
+    ls -1 scripts
+    ```
+
+    ```text
+    clean_export.py
+    coldest_hour.py
+    column_stats.py
+    first_row.py
+    humidity_wind.py
+    mean_temp.py
+    rebuild.sh
+    ```
+
+    `humidity_wind.py` only if the Task of Part 3 was done.
+
+**Check:** two new lines in the README, and `first_row.py`,
+`mean_temp.py`, `coldest_hour.py` in `scripts`.
+
+!!! question "Task: the warmest hour"
+    Copy `coldest_hour.py` to `scripts/warmest_hour.py` and change it to
+    print the warmest hour. Does it need the `-999` check? Add the result
+    to the README.
 
 ??? note "Answer"
-    The ids below are from one run; yours differ.
+    ```python
+    lines = open("data/raw/weather.csv").read().splitlines()
 
-    1. ```text
-       git pull
-       ```
+    warmest = -100.0
+    warmest_time = ""
+    for line in lines[1:]:
+        parts = line.split(",")
+        temp = float(parts[1])
+        if temp > warmest:
+            warmest = temp
+            warmest_time = parts[0]
 
-        ```text
-        From https://github.com/your-username/weather-project
-           36abc3c..05cb5dc  main       -> origin/main
-        Updating 36abc3c..05cb5dc
-        Fast-forward
-         README.md | 1 +
-         1 file changed, 1 insertion(+)
-        ```
+    print(f"warmest hour: {warmest_time}, {warmest} °C")
+    ```
 
-    2. ```text
-       git add README.md
-       ```
+    ```text
+    warmest hour: 2018-06-18T15:00, 32.4 °C
+    ```
 
-        ```text
-        git commit -m "Add a line"
-        ```
+    No check is needed: `-999` is never the largest. The start value
+    `-100.0` must be below every real temperature. The README line:
 
-        ```text
-        git push
-        ```
-
-        ```text
-        To https://github.com/your-username/weather-project.git
-           05cb5dc..970fa60  main -> main
-        ```
+    ```text
+    The warmest hour, `scripts/warmest_hour.py`: 2018-06-18T15:00, 32.4 °C.
+    ```
 
 ---
 
-### 12. Wrap up { #wrap-up }
+### 13. Wrap up { #wrap-up }
 
 **1:55 · 5 min**
 
 | To | Type |
 |--|--|
-| copy a project with its history | `git clone URL` |
-| see the history | `git log --oneline` |
-| find who wrote a line | `git blame -L 38,38 FILE` |
-| see a commit | `git show ID` |
-| undo a commit, keep the history | `git revert ID` |
-| undo an edit not yet committed | `git restore FILE` |
-| commit | `git status`, `git diff`, `git add FILE`, `git commit -m "…"` |
-| sync with GitHub | `git push`, `git pull` |
+| run a script | `python scripts/NAME.py`, or ▶ |
+| try one line | `python`, then the line at `>>>`; `exit()` |
+| cut a line, convert a part | `line.split(",")`, `float(parts[1])` |
+| read a file as lines | `open(PATH).read().splitlines()` |
+| repeat, decide | `for line in lines[1:]:`, `if temp == -999:` |
+| print with decimals | `f"{mean:.2f}"` |
+| read a traceback | from the last line up |
+| move a downloaded file | `mv ~/Downloads/NAME scripts/` |
 
-Seminar 6 starts from this repository.
+Seminar 6 puts these scripts under Git.
 
 ---
 
@@ -777,186 +703,96 @@ Seminar 6 starts from this repository.
 
 ---
 
-### 13. A branch and a merge { #branch }
+### 14. Stop at a line: the debugger { #debugger }
 
-**— · 10 min** · A branch is a second line of commits; merge brings it back. Ids on sections 13 to 15 are from one run; yours differ.
+**— · 10 min** · The debugger stops the script at a line and shows every name and its value.
 
-1. Make a branch and go to it.
+1. Open `coldest_hour.py`. Click left of the number of line 10,
+   `coldest = temp`: a red dot, a breakpoint.
+2. `F5` > **Python Debugger** > **Python File**. The script stops on line
+   10, before it runs it.
+3. **Run and Debug** view, **Variables** > **Locals**: `temp = -4.4`,
+   `coldest = 100.0`, `coldest_time = ''`.
+4. `F5` (Continue): the next stop. `temp = -4.8`, `coldest = -4.4`.
+5. `Shift+F5` stops the script. Click the red dot to remove it.
 
-    ```text
-    git switch -c fahrenheit
-    ```
-
-2. In `README.md`, under the line that ends with `results/temp_c.txt`,
-   add a line and save.
-
-    ```text
-    In Fahrenheit: 44.89 °F.
-    ```
-
-3. Commit all changed files at once.
-
-    ```text
-    git commit -am "Give the mean in Fahrenheit"
-    ```
-
-4. Back to `main`: the line is gone from `README.md`.
-
-    ```text
-    git switch main
-    ```
-
-5. Merge.
-
-    ```text
-    git merge fahrenheit
-    ```
-
-    ```text
-    Updating 970fa60..2888a56
-    Fast-forward
-     README.md | 1 +
-     1 file changed, 1 insertion(+)
-    ```
-
-6. Delete the branch name, push.
-
-    ```text
-    git branch -d fahrenheit
-    ```
-
-    ```text
-    git push
-    ```
-
-**Check:** the Fahrenheit line in `README.md` on `main`.
+**Check:** at each stop, `coldest` holds the `temp` of the stop before.
 
 ---
 
-### 14. A conflict { #conflict }
+### 15. Hours per year in a dict { #dict }
 
-**— · 15 min** · Two branches change the same line; Git asks which to keep.
+**— · 10 min** · A dict keeps a value for each key: here, a count for each year.
 
-```mermaid
-gitGraph
-  commit id: "Fahrenheit"
-  branch wording
-  commit id: "Spell out the unit"
-  checkout main
-  commit id: "Round to 44.9"
-  merge wording id: "merge"
-```
+1. New file `scripts/hours_per_year.py`. Type, save, run.
 
-1. A branch that rewrites the line.
+    ```python
+    lines = open("data/raw/weather.csv").read().splitlines()
 
-    ```text
-    git switch -c wording
-    ```
+    hours = {}
+    for line in lines[1:]:
+        year = line[:4]
+        hours[year] = hours.get(year, 0) + 1
 
-    Change the line to `In degrees Fahrenheit: 44.89.`, save.
-
-    ```text
-    git commit -am "Spell out the unit"
-    ```
-
-2. On `main`, change the same line differently.
-
-    ```text
-    git switch main
-    ```
-
-    Change the line to `In Fahrenheit: 44.9 °F.`, save.
-
-    ```text
-    git commit -am "Round the Fahrenheit mean to one decimal"
-    ```
-
-3. Merge.
-
-    ```text
-    git merge wording
+    for year in hours:
+        print(year, hours[year])
     ```
 
     ```text
-    Auto-merging README.md
-    CONFLICT (content): Merge conflict in README.md
-    Automatic merge failed; fix conflicts and then commit the result.
-    ```
-
-4. `README.md` now holds both lines.
-
-    ```text
-    <<<<<<< HEAD
-    In Fahrenheit: 44.9 °F.
-    =======
-    In degrees Fahrenheit: 44.89.
-    >>>>>>> wording
-    ```
-
-    Above the block VS Code offers **Accept Current Change** (`main`),
-    **Accept Incoming Change** (`wording`), **Accept Both Changes**. Click
-    one, save.
-
-5. Mark it resolved, commit the merge.
-
-    ```text
-    git add README.md
+    python scripts/hours_per_year.py
     ```
 
     ```text
-    git commit --no-edit
+    2016 8784
+    2017 8760
+    2018 8760
+    2019 8760
+    2020 8784
+    2021 8760
+    2022 8760
+    2023 8760
+    2024 8784
+    2025 8760
     ```
 
-6. The history has two lines that join.
+    `line[:4]` is the first four characters. `hours.get(year, 0)` is the
+    count so far, `0` for a year not seen yet.
 
-    ```text
-    git log --oneline --graph -n 5
-    ```
-
-    ```text
-    *   a794b93 (HEAD -> main) Merge branch 'wording'
-    |\
-    | * 6b5b4ba (wording) Spell out the unit
-    * | 774103c Round the Fahrenheit mean to one decimal
-    |/
-    * 2888a56 (origin/main, origin/HEAD) Give the mean in Fahrenheit
-    * 970fa60 Add a line
-    ```
-
-**Check:** no `<<<<<<<` left in `README.md`, `git status` clean.
+**Check:** 8784 hours in 2016, 2020 and 2024, 24 more than in the others.
 
 ---
 
-### 15. Tag the result { #tag }
+### 16. The mean in two lines { #comprehension }
 
-**— · 5 min** · A tag is a name for one commit that never moves: "the state that gave 7.16".
+**— · 5 min** · A list comprehension builds a list in one line, with an `if` to filter.
 
-1. Tag the last commit.
+1. At the end of `mean_temp.py`, add three lines, save, run.
 
-    ```text
-    git tag -a v1.0 -m "Mean 7.16 °C, checked"
-    ```
-
-2. Send the tag to GitHub; tags are not pushed by `git push` alone.
-
-    ```text
-    git push origin v1.0
+    ```python
+    temps = [float(line.split(",")[1]) for line in lines[1:]]
+    valid = [t for t in temps if t != -999]
+    print(len(temps), len(valid), f"{sum(valid) / len(valid):.5f}")
     ```
 
     ```text
-    To https://github.com/your-username/weather-project.git
-     * [new tag]         v1.0 -> v1.0
+    python scripts/mean_temp.py
     ```
 
-**Check:** on GitHub, the branch menu has a **Tags** tab with `v1.0`.
+    ```text
+    87552 hours, mean 7.15997 °C
+    mean 7.16 °C
+    87672 87552 7.15997
+    ```
+
+**Check:** the loop and the two lines give the same mean.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** the README's number is checked against the script
-  that makes it, and the history says who changed what, when and why.
-- 🔧 **Tool-agnostic:** the same lines in zsh on macOS and Git Bash on Windows;
-  the Source Control view shows the same state.
-- 📁 **Files:** made files stay out of the repository; raw data is restored
-  from the history in one command.
+- ♻️ **Reproducibility:** the 7.16 of the README now comes out of a script
+  each student wrote and can read line by line.
+- 🔧 **Tool-agnostic:** the same `python` line on macOS and Windows; the ▶
+  of VS Code runs the same command.
+- ⚙️ **Automation:** a loop does for 87 672 lines what was done by hand for
+  one.

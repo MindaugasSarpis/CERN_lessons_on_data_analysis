@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# The repository github.com/MindaugasSarpis/weather-project, which Seminar 5
+# The repository github.com/MindaugasSarpis/weather-project, which Seminar 6
 # clones: the weather project of Lectures 1 to 4 with seven commits by two
 # people. Commit 6 (Tomas) makes the mean read the raw file, -999 rows and
 # all, and writes 5.78 into the README; the seminar finds it and reverts it.
 #
 # Author and committer, name, e-mail and date are fixed, so every run makes
-# the same commit ids, the ids printed on the Seminar 5 page. The shells of
+# the same commit ids, the ids printed on the Seminar 6 page. The shells of
 # the course are zsh on macOS and Git Bash on Windows: one script,
 # scripts/rebuild.sh.
 #
@@ -13,7 +13,7 @@
 #   writes outdir/weather-project (default: misc/weather_repo/run/, gitignored)
 #   GIT=/path/to/git selects the git binary.
 # The tag seminar-files points to an empty commit outside main and carries
-# the release with the zips of Seminars 1 to 4
+# the release with the zips of Seminars 1 to 5 (release_files.py)
 # (lectures/workbook/docs/data/weather_seminar_files.py writes them to
 # misc/weather_repo/release/).
 # To publish after a change (rewrites the public history; only before the
@@ -193,10 +193,10 @@ EOF
 commit smilte "2026-10-19T17:05:00+03:00" "Add a licence"
 
 # --- later seminars: one commit each, only new files -----------------------
-# STAGE=N adds the commits of the seminars up to N (default 5: the state the
-# room clones in Seminar 5). Push each one after its previous seminar ran,
-# never before Seminar 5, whose page prints the seven commits above.
-STAGE="${STAGE:-5}"
+# STAGE=N adds the commits of the seminars up to N (default 6: the state the
+# room clones in Seminar 6). Push each one after its previous seminar ran,
+# never before Seminar 6, whose page prints the seven commits above.
+STAGE="${STAGE:-6}"
 stage() {  # stage N DATE MESSAGE
   local n="$1" dir="$HERE/files/s$(printf %02d "$1")"
   [ "$STAGE" -ge "$n" ] && [ -d "$dir" ] || return 0
@@ -206,7 +206,6 @@ stage() {  # stage N DATE MESSAGE
   GIT_COMMITTER_NAME="Mindaugas Šarpis" GIT_COMMITTER_EMAIL="mindaugas.sarpis@cern.ch" GIT_COMMITTER_DATE="$2" \
     "$GIT" commit -q -m "$3"
 }
-stage 6 "2026-10-26T18:00:00+02:00" "Add a script with two bugs for Seminar 6"
 stage 12 "2026-12-14T18:00:00+02:00" "Add the hill station's export for Seminar 12"
 stage 14 "2027-01-11T18:00:00+02:00" "Add the scripts of Seminar 14"
 stage 15 "2027-01-18T18:00:00+02:00" "Add the scripts of Seminar 15"

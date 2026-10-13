@@ -41,8 +41,9 @@ in both).
 **If time runs short:** stop after section 12; sections 14 to 16 are optional.
 
 ??? info "Before the session"
-    - **Room:** the weather project as Seminar 6 left it, internet for
-      conda (the environment downloads about 50 MB).
+    - **Room:** the weather project as Seminar 6 left it (a Git repository
+      with the scripts of Seminar 5, pushed to the student's GitHub),
+      internet for conda (the environment downloads about 50 MB).
     - **You:** nothing to prepare. Delete your own `weather` environment
       first (`conda env remove -n weather`) to make it with the room.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
@@ -202,7 +203,7 @@ in both).
 
 ## Part 2 · Functions and the csv module { #part-2 }
 
-**0:25 to 0:55** · Seminar 6 computed the mean in one block of lines. Here the steps get names.
+**0:25 to 0:55** · Seminar 5 computed the mean in one block of lines. Here the steps get names.
 
 ---
 

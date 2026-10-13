@@ -10,8 +10,8 @@ hands-on **seminar** briefs.
 
 | | Page |
 |--|--|
-| Lecture | [05 Version Control with Git](lectures/lecture_5.md): the weather project under Git, from the model of a commit to a tag |
-| Seminar | [Seminar 5 — Who Changed the Mean?](seminars/seminar_05.md): clone the weather project, find the commit that changed its mean, take it back, commit, publish to GitHub |
+| Lecture | [05 Python Foundations](lectures/lecture_5.md): the program that computes 7.16, written from the first line |
+| Seminar | [Seminar 5 — Can You Compute 7.16 Yourself?](seminars/seminar_05.md): a Python script that reads `weather.csv` and prints the mean, and a script with two bugs fixed |
 
 ## Setup
 
@@ -36,8 +36,8 @@ The seminar pages are in the **Seminars** section of the navigation.
 2. [Introduction to Data](lectures/lecture_2.md)
 3. [How Computers Work](lectures/lecture_3.md)
 4. [Command Line & File Handling](lectures/lecture_4.md)
-5. [Version Control with Git](lectures/lecture_5.md)
-6. [Python Foundations](lectures/lecture_6.md)
+5. [Python Foundations](lectures/lecture_5.md)
+6. [Version Control with Git](lectures/lecture_6.md)
 7. [Python for Data & NumPy](lectures/lecture_7.md)
 8. [Data Visualisation](lectures/lecture_8.md)
 9. [Probability & Statistics](lectures/lecture_9.md)

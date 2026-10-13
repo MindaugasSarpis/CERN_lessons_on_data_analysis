@@ -39,7 +39,7 @@ environment switched on).
 section 11 stays.
 
 ??? info "Before the session"
-    - **Room:** the `weather-project` repository of Seminar 5 on every
+    - **Room:** the `weather-project` repository of Seminar 6 on every
       laptop, and the `weather` environment (Python, NumPy, Matplotlib) of
       Seminars 7 and 8. Nothing is installed today.
     - **You:** nothing to prepare. The data are the same in every clone, so
@@ -533,7 +533,7 @@ independent, and 0.244 is not 0.065.
     ?? scripts/mean_error.py
     ```
 
-    `results/` stays out: `.gitignore` of Seminar 5.
+    `results/` stays out: `.gitignore` of Seminar 6.
 
 3. Stage, commit.
 

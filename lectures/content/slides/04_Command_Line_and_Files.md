@@ -335,29 +335,48 @@ hideInToc: true
 hideInToc: true
 ---
 
-# Paths That Work on Every **Laptop**
+# Move Around: `pwd`, `ls`, `cd`
 
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-| The terminal is in | Path to `weather.csv` |
-| --- | --- |
-| `weather-project` | `data/raw/weather.csv` |
-| `weather-project/data` | `raw/weather.csv` |
-| `weather-project/scripts` | `../data/raw/weather.csv` |
-| anywhere, on Smiltė's Mac | `/Users/smilte/Documents/weather-project/data/raw/weather.csv` |
-| anywhere, in Git Bash on Smiltė's Windows laptop | `/c/Users/smilte/Documents/weather-project/data/raw/weather.csv` |
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ ls
+README.md  data  results  scripts
+```
+```text
+$ pwd
+/Users/smilte/Documents/weather-project
+$ cd data/raw
+$ pwd
+/Users/smilte/Documents/weather-project/data/raw
+$ ls
+daily_export.csv  weather.csv
+```
+```text
+$ pwd
+/Users/smilte/Documents/weather-project/data/raw
+$ cd ../..
+$ pwd
+/Users/smilte/Documents/weather-project
+$ head -n 1 data/raw/weather.csv
+time,temp_c,humidity_pct,wind_ms
+```
+````
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md">
-
-♻️ The terminal stays in `weather-project`, and every path starts there. A relative path is the same on every laptop; an absolute path names one user on one computer.
-
-</div>
+<div class="note-text mt-md"><code>data/raw</code> and <code>../..</code> are <strong>relative</strong> paths: they start at the working directory, so they are the same on every laptop. An <strong>absolute</strong> path names one user on one computer: <code>/Users/smilte/…</code> on a Mac, <code>/c/Users/smilte/…</code> in Git Bash.</div>
 
 <!--
-**Say:** `..` is the folder one level up, `.` the folder the shell is in, `~` the home folder. Git Bash writes the drive `C:` as `/c`, and `/` between folders.
-(~2 min)
+**Ask:** after `cd data/raw`, what will `pwd` print? And after `cd ../..`?
+**Say:** the terminal stays in `weather-project` from here on, and every path on the slides starts there.
+**If asked:** `.` is the folder the shell is in, `..` the one above, `~` the home folder.
+(~3 min)
 -->
 
 ---
@@ -372,9 +391,16 @@ hideInToc: true
 
 ```text
 $ head -n 2 data/raw/weather.csv
+```
+
+<v-click>
+
+```text
 time,temp_c,humidity_pct,wind_ms
 2016-01-01T00:00,-4.4,93,2.5
 ```
+
+</v-click>
 
 </div>
 
@@ -407,7 +433,9 @@ What to work on: the path.
 </div>
 
 <!--
+**Ask:** what will this print? The first two lines of the file.
 **Say:** options come before the arguments. `-n` and `-N` are different options: case counts.
+**If asked:** every option of a program is in its help: `man head` on a Mac, `head --help` in Git Bash, which has no `man`.
 (~2 min)
 -->
 
@@ -415,34 +443,43 @@ What to work on: the path.
 hideInToc: true
 ---
 
-# A Variable Holds a **Value**
+# What the Shell **Replaces**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
 ```text
 $ file=data/raw/weather.csv
 $ echo $file
 data/raw/weather.csv
 $ head -n 1 $file
 time,temp_c,humidity_pct,wind_ms
+```
+```text
 $ echo $HOME
 /Users/smilte
+$ echo ~
+/Users/smilte
+$ echo data/raw/*.csv
+data/raw/daily_export.csv data/raw/weather.csv
 ```
+````
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A **variable** is a name the shell keeps a value under. `name=value` puts it in, with no spaces around `=`; `$name` reads it. The shell sets some itself: `$HOME`, `$SHELL`, and after every line `$?`.
+A **variable** is a name the shell keeps a value under: `name=value`, no spaces around `=`; `$name` reads it. Before the program starts, the shell replaces `$name`, `~` and `*`.
 
 </div>
 
 <!--
-**Say:** step 3 of the shell: `$file` is replaced by its value before `head` starts. A variable lasts until the terminal closes.
-**If asked:** in Git Bash `$HOME` is `/c/Users/smilte`. With spaces, `file = x`, the shell would look for a program named `file`.
-(~2 min)
+**Ask:** what will `echo data/raw/*.csv` print? The shell, not `echo`, finds the two names.
+**Say:** step 3 of the shell, made visible with `echo`: `echo` only prints its arguments, and they arrive already replaced.
+**If asked:** in Git Bash `$HOME` is `/c/Users/smilte`.
+(~3 min)
 -->
 
 ---
@@ -488,64 +525,6 @@ A name that `Tab` completed exists. If `Tab` adds nothing, no name fits: the lin
 **Ask:** count the keys: how many were typed, how many did Tab add?
 **If asked:** with two names that fit, a second Tab lists them.
 (~3 min)
--->
-
----
-hideInToc: true
----
-
-# Where a Command Is, and Its **Help**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ type cd head
-cd is a shell builtin
-head is /usr/bin/head
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% man head
-HEAD(1)   General Commands Manual   HEAD(1)
-NAME
-     head – display first lines of a file
-```
-
-`Space` scrolls, `q` leaves.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🪟 **Windows · Git Bash**
-
-```text
-$ head --help
-Usage: head [OPTION]... [FILE]...
-Print the first 10 lines of each FILE
-to standard output.
-```
-
-Git Bash has no `man`.
-
-</div>
-
-</div>
-
-<!--
-**Say:** `type` says what a word is: a builtin of the shell, or a program in a folder. The help lists every option of a program.
-**If asked:** the Mac's `head` has fewer options than Git Bash's; the course uses only the ones both have.
-(~2 min)
 -->
 
 ---
@@ -649,27 +628,32 @@ Step 2: does the file hold every hour of ten years?
 hideInToc: true
 ---
 
-# The First and the Last **Lines**
+# Read the Two Ends of a **File**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
 ```text
 $ head -n 3 data/raw/weather.csv
 time,temp_c,humidity_pct,wind_ms
 2016-01-01T00:00,-4.4,93,2.5
 2016-01-01T01:00,-4.8,95,2.6
+```
+```text
 $ tail -n 2 data/raw/weather.csv
 2025-12-31T22:00,-9.9,98,4.1
 2025-12-31T23:00,-11.3,100,4.2
 ```
+````
 
 </div>
 
 <div class="note-text mt-md">The header, the first hour and the last: the log runs from midnight of New Year 2016 to 23:00 on New Year's Eve 2025, one row per hour.</div>
 
 <!--
+**Ask:** what will the last line of the file be? Midnight before New Year 2026 is 2025-12-31 at 23:00.
 **Say:** the ends of a file tell how far it goes. They do not tell whether an hour in the middle is missing; a count does.
 (~2 min)
 -->
@@ -678,35 +662,37 @@ $ tail -n 2 data/raw/weather.csv
 hideInToc: true
 ---
 
-# Count the **Lines**
+# One Line, Byte by **Byte**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 💻 **zsh · Git Bash**
 
 ```text
-$ wc -l data/raw/weather.csv
-87673 data/raw/weather.csv
+$ sed -n 2p data/raw/weather.csv | xxd
 ```
+
+<v-click>
+
+```text
+00000000: 3230 3136 2d30 312d 3031 5430 303a 3030  2016-01-01T00:00
+00000010: 2c2d 342e 342c 3933 2c32 2e35 0a         ,-4.4,93,2.5.
+```
+
+</v-click>
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🧮 How many hours do ten years hold? 2016, 2020 and 2024 are leap years:
-
-7 × 365 + 3 × 366 = 3653 days, and 3653 × 24 = 87 672 hours.
-
-One header line and one line per hour: 87 672 + 1 = **87 673**.
+🧮 16 + 13 = 29 bytes: 28 characters, each one byte in ASCII, and `0a`, the line break LF. `,` is `2c`, `-` is `2d`, `.` is `2e`. `wc -l` counts the `0a` bytes; `wc -c` counts all bytes.
 
 </div>
 
-<div class="note-text mt-md">On macOS <code>wc</code> pads the number with spaces: <code>&nbsp;&nbsp;&nbsp;87673 data/raw/weather.csv</code>.</div>
-
 <!--
-**Live:** `wc -l data/raw/weather.csv`, before the slide.
-**Say:** the count agrees with the calendar, so no hour is missing and none is there twice. Rows can still be wrong, but there are as many as there should be.
-**If asked:** `wc`, word count: `-l` lines, `-w` words, `-c` bytes.
+**Ask:** how many bytes will this line take? Count the characters with the room: 28, and one more.
+**Say:** `sed -n 2p` prints line 2 only; `xxd` shows each byte in hex, 16 to a row, and the characters on the right, with `.` for the line break.
+**If asked:** a file written with CRLF would end the line in `0d 0a`, 30 bytes.
 (~3 min)
 -->
 
@@ -714,39 +700,43 @@ One header line and one line per hour: 87 672 + 1 = **87 673**.
 hideInToc: true
 ---
 
-# Lines and **Bytes**
+# How Many Lines? Predict, Then **Count**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧮 2016, 2020 and 2024 are leap years: 7 × 365 + 3 × 366 = 3653 days, and 3653 × 24 = 87 672 hours. With the header: **87 673 lines**.
+
+</div>
+
+<v-click>
+
+<div class="card card-primary card-glass pad-compact mt-md">
 
 ## 💻 **zsh · Git Bash**
 
 ```text
+$ wc -l data/raw/weather.csv
+87673 data/raw/weather.csv
 $ wc -c data/raw/weather.csv
 2515215 data/raw/weather.csv
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact table-compact mt-md">
-
-| Line | Characters | Bytes, with the line break `0a` |
-| --- | --- | --- |
-| `time,temp_c,humidity_pct,wind_ms` | 32 | 33 |
-| `2016-01-01T00:00,-4.4,93,2.5` | 28 | 29 |
-| all 87 673 lines | | 2 515 215, on average 28.7 a line |
-
-</div>
+</v-click>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Step 2: 87 673 lines, every hour of ten years, in 2 515 215 bytes.
+✅ Step 2: 87 673 lines, every hour of ten years. 2 515 215 bytes: a line such as `2016-01-01T00:00,-4.4,93,2.5` is 28 characters and its LF, 29 bytes; 28.7 on average.
 
 </div>
 
 <!--
-**Say:** a line is its characters plus one byte for the line break. Colder hours such as `-11.3` take a character more, warm ones such as `9.2` one less: hence 28.7 on average.
-**If asked:** the file arrived with LF line endings, and copying it to Windows does not change its bytes.
-(~2 min)
+**Live:** `wc -l data/raw/weather.csv`, after the prediction.
+**Ask:** how many lines should a file of ten years of hours have? Work it out with the room before the click.
+**Say:** the count agrees with the calendar, so no hour is missing and none is there twice. Rows can still be wrong, but there are as many as there should be.
+**If asked:** on a Mac `wc` pads its number with spaces. `wc`, word count: `-l` lines, `-w` words, `-c` bytes.
+(~4 min)
 -->
 
 ---
@@ -815,44 +805,83 @@ Errors go on their own stream and still reach the screen. `2>` writes them into 
 hideInToc: true
 ---
 
-# Which Hour Is on Line **5000**?
+# Standard Input: `<` and the **Pipe**
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-🧮 Line 1 is the header, line 2 the hour 2016-01-01 00:00. Line 5000 is 5000 − 2 = **4998 hours** later.
+## 💻 **zsh · Git Bash**
 
-4998 = 208 × 24 + 6: **208 days and 6 hours**.
-
-2016 is a leap year. January to June: 31 + 29 + 31 + 30 + 31 + 30 = 182 days, so 1 July is 182 days after 1 January, and 208 − 182 = 26 days after 1 July is **27 July**.
+````md magic-move
+```text
+$ wc -l data/raw/weather.csv
+87673 data/raw/weather.csv
+```
+```text
+$ wc -l data/raw/weather.csv
+87673 data/raw/weather.csv
+$ wc -l < data/raw/weather.csv
+87673
+```
+```text
+$ wc -l data/raw/weather.csv
+87673 data/raw/weather.csv
+$ wc -l < data/raw/weather.csv
+87673
+$ cat data/raw/weather.csv | wc -l
+87673
+```
+````
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
-Prediction: line 5000 is `2016-07-27T06:00`. A typed line can check it.
+📥 Every program has three streams: **standard input**, standard output, standard error. Given a file name, `wc` opens the file and prints its name. With `<`, the shell opens the file and hands it to `wc` as standard input; with `|`, another program's output is its input. Then `wc` never learns a name.
 
 </div>
 
 <!--
-**Ask:** before the arithmetic: in which month will line 5000 fall? Collect two or three guesses.
-**Say:** a prediction worked out by hand, then checked by a command: the way every number today is checked.
-(~2 min)
+**Ask:** before the second step: why would the name disappear from the output?
+**Say:** a filter reads standard input and writes standard output, so it fits anywhere in a pipe. That is the whole idea of the pipe.
+**If asked:** the keyboard is standard input when nothing else is given: `wc -l` alone waits for typed lines, `Ctrl+D` ends them.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Join Two Programs: the **Pipe**
+# Which Hour Is on Line **5000**?
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-info card-glass pad-compact">
+
+🧮 Line 2 is 2016-01-01 00:00, so line 5000 is 4998 hours later: 4998 = 208 × 24 + 6.
+
+January to June 2016: 31 + 29 + 31 + 30 + 31 + 30 = 182 days. 208 − 182 = 26 days after 1 July: **27 July, 06:00**.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
+```text
+$ head -n 5000 data/raw/weather.csv
+time,temp_c,humidity_pct,wind_ms
+2016-01-01T00:00,-4.4,93,2.5
+…
+2016-07-27T06:00,18.2,71,1.1
+```
 ```text
 $ head -n 5000 data/raw/weather.csv | tail -n 1
 2016-07-27T06:00,18.2,71,1.1
 ```
+````
+
+</div>
 
 </div>
 
@@ -870,51 +899,24 @@ The standard output of `A` becomes the standard input of `B`. No file stands bet
 
 ## 🧩 **A filter**
 
-A program that reads its input and passes on part of it. Here: 5000 lines in, 1 out, line 5000.
+A program that reads its input and passes on part of it: 5000 lines in, 1 out.
 
 </div>
 
 </div>
 
 <!--
-**Live:** `head -n 5000 data/raw/weather.csv | tail -n 1`, before the slide.
-**Say:** two programs, each simple, together answer a question neither answers alone. A pipe composes them, as `f(g(x))` composes functions. Both run at once: `tail` reads while `head` writes.
-(~3 min)
+**Live:** `head -n 5000 data/raw/weather.csv`, then `↑` and add `| tail -n 1`.
+**Ask:** before the arithmetic: in which month will line 5000 fall? Collect two or three guesses.
+**Say:** a prediction worked out by hand, then checked by a pipe. Two programs, each simple, answer a question neither answers alone, as `f(g(x))` composes functions. Both run at once: `tail` reads while `head` writes.
+(~4 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Pick a Column: `cut`
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ cut -d, -f2 data/raw/weather.csv | head -n 3
-temp_c
--4.4
--4.8
-$ cut -d, -f1,2 data/raw/weather.csv | tail -n 1
-2025-12-31T23:00,-11.3
-```
-
-</div>
-
-<div class="note-text mt-md">A pipe carries lines of text. <code>cut</code> splits each line at the separator <code>-d,</code> and keeps the fields <code>-f2</code>, counted from 1. The header is a line like any other.</div>
-
-<!--
-**Ask:** before running it, which field number has `temp_c`? `head -n 1` shows the names in order.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Sort as Text or as **Numbers**
+# The Lowest Humidity: Text or **Numbers**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -922,41 +924,76 @@ hideInToc: true
 
 ```text
 $ tail -n +2 data/raw/weather.csv | cut -d, -f3 | sort | head -n 1
+```
+
+<v-click>
+
+```text
 100
+```
+
+</v-click>
+
+<v-click>
+
+```text
 $ tail -n +2 data/raw/weather.csv | cut -d, -f3 | sort -n | head -n 1
 34
 ```
+
+</v-click>
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ The lowest humidity: 100 %? `sort` compares text character by character, and `1` comes before `3`. `sort -n` compares numbers: 34 %.
+⚠️ `sort` compares text character by character, and `1` comes before `3`. `sort -n` compares numbers. `tail -n +2` leaves out the header; `cut -d, -f3` keeps field 3, humidity.
 
 </div>
 
 <!--
-**Say:** `tail -n +2` prints from line 2 on, so the header stays out.
+**Ask:** what is the lowest humidity in ten years? Then: why does the line say 100?
+**Say:** a pipe carries lines of text. Each program in it reads lines and writes lines.
 **Ask:** where would `9` stand in a text sort of 34, 9 and 100? Last.
-(~2 min)
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Coldest **Hours**
+# The Coldest Hour, Filter by **Filter**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
+```text
+$ cut -d, -f2 data/raw/weather.csv | head -n 3
+temp_c
+-4.4
+-4.8
+```
+```text
+$ tail -n +2 data/raw/weather.csv | cut -d, -f2 | head -n 3
+-4.4
+-4.8
+-5.5
+```
+```text
+$ tail -n +2 data/raw/weather.csv | cut -d, -f2 | sort -n | head -n 3
+-999
+-999
+-999
+```
 ```text
 $ sort -t, -k2,2n data/raw/weather.csv | head -n 3
 2019-07-22T00:00,-999,76,3.2
 2019-07-22T01:00,-999,81,3.0
 2019-07-22T02:00,-999,80,3.4
 ```
+````
 
 </div>
 
@@ -967,8 +1004,10 @@ $ sort -t, -k2,2n data/raw/weather.csv | head -n 3
 </div>
 
 <!--
-**Live:** `sort -t, -k2,2n data/raw/weather.csv | head -n 3`; then `↑` and change `head -n 3` to `tail -n 1`: the warmest hour, 2018-06-18 at 15:00, 32.4 °C.
-**Say:** `-t,` names the separator, `-k2,2n` sorts by field 2 as a number. A sorted column shows its ends first, and a wrong value usually sits at an end. The other columns of those rows look normal: only the thermometer was down.
+**Live:** build it in the terminal, `↑` and one filter more each time.
+**Ask:** before the third step: what will the coldest hour of ten years be? Most say about −20 °C.
+**Say:** a sorted column shows its ends first, and a wrong value usually sits at an end. The last step sorts whole rows by field 2 as a number: `-t,` the separator, `-k2,2n` the key. The other columns of those rows look normal: only the thermometer was down.
+**If asked:** `tail -n 1` in place of `head -n 3` gives the warmest hour, 2018-06-18 at 15:00, 32.4 °C.
 (~4 min)
 -->
 
@@ -1044,14 +1083,13 @@ $ grep -n ',-999,' data/raw/weather.csv | tail -n 1
 hideInToc: true
 ---
 
-# Rows per **Year**
+# Every Year, Every Day, Every **Hour**
 
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
 ```text
 $ cut -c1-4 data/raw/weather.csv | uniq -c
       1 time
@@ -1060,60 +1098,34 @@ $ cut -c1-4 data/raw/weather.csv | uniq -c
    8760 2018
    8760 2019
    8784 2020
-…
-   8760 2025
+   …
 ```
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-🧮 365 × 24 = 8760 rows, 366 × 24 = 8784 in a leap year.
-
-`cut -c1-4` keeps the first four characters, the year. `uniq -c` counts equal lines that stand next to each other.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">2019 has all its 8760 rows: the 120 hours are there, with −999 in place of a temperature.</div>
-
-<!--
-**Say:** the mark does not remove a row; it sits where the number should be. Every program that reads the column reads −999 as a number.
-**If asked:** the file is in time order, so each year is one block. On unsorted data, `sort` comes before `uniq -c`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Every Day Has 24 **Hours**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
 ```text
 $ tail -n +2 data/raw/weather.csv | cut -c1-10 | uniq | wc -l
 3653
+```
+```text
 $ tail -n +2 data/raw/weather.csv | cut -c1-10 | uniq -c | grep -vc ' 24 '
 0
+```
+```text
 $ cut -d, -f1 data/raw/weather.csv | sort | uniq -d | wc -l
 0
 ```
+````
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Step 3: 3653 days, none with more or fewer than 24 rows, no hour twice. The only rows that are not measurements are the 120 of −999, 22 to 26 July 2019.
+✅ Step 3: 8760 rows a year, 8784 in a leap year; 3653 days, none with more or fewer than 24 rows; no hour twice. The only rows that are not measurements are the 120 of −999, 22 to 26 July 2019.
 
 </div>
 
 <!--
-**Say:** the count of step 2 could also come out right with one hour missing and another twice. Grouping by day and by hour rules that out. `grep -v` keeps the lines without the text; `uniq -d` prints only lines that occur twice.
-(~2 min)
+**Say:** `cut -c1-4` keeps the year, `cut -c1-10` the date. `uniq -c` counts equal lines that stand next to each other; `uniq -d` prints only lines that occur twice; `grep -v` keeps the lines without the text. The count of step 2 could come out right with one hour missing and another twice: these lines rule that out. 2019 has all its 8760 rows: the mark sits where the number should be.
+**If asked:** on a Mac `uniq -c` pads its counts less.
+(~3 min)
 -->
 
 ---
@@ -1249,6 +1261,29 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ grep -c ',-' data/raw/weather.csv
+22472
+```
+```text
+$ grep -cE ',-[0-9]+,' data/raw/weather.csv
+120
+```
+```text
+$ grep -cE ',-[0-9]+\.[0-9],' data/raw/weather.csv
+22352
+```
+````
+
+</div>
+
+<v-click>
+
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
 | Pattern | Fits | Lines |
 | --- | --- | --- |
 | `,-` | a comma and a minus | 22 472 |
@@ -1257,18 +1292,12 @@ hideInToc: true
 
 </div>
 
-<div class="card card-success card-glass pad-compact mt-md">
+</v-click>
 
-```text
-$ grep -cE ',-[0-9]+\.[0-9],' data/raw/weather.csv
-22352
-```
-
-22 472 − 120 = 22 352 hours below freezing. The middle pattern finds exactly the −999 rows.
-
-</div>
+<div class="note-text mt-md">22 472 − 120 = 22 352 hours below freezing. The middle pattern finds exactly the −999 rows.</div>
 
 <!--
+**Ask:** before each click: more lines or fewer than the step before?
 **Say:** one sign added at a time, each step checked by its count.
 (~3 min)
 -->
@@ -1312,16 +1341,22 @@ hideInToc: true
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
 ```text
 $ grep -cE ',-?[0-9]+\.[0-9],' data/raw/weather.csv
 87552
+```
+```text
 $ grep -vcE ',-?[0-9]+\.[0-9],' data/raw/weather.csv
 121
+```
+```text
 $ grep -vnE ',-?[0-9]+\.[0-9],' data/raw/weather.csv | head -n 3
 1:time,temp_c,humidity_pct,wind_ms
 31154:2019-07-22T00:00,-999,76,3.2
 31155:2019-07-22T01:00,-999,81,3.0
 ```
+````
 
 </div>
 
@@ -1332,6 +1367,7 @@ $ grep -vnE ',-?[0-9]+\.[0-9],' data/raw/weather.csv | head -n 3
 </div>
 
 <!--
+**Ask:** 87 673 lines, 87 552 fit. How many will `-v` find, and which? 121: the header and the 120 marks.
 **Say:** `-?` lets the minus be there or not. `-v` keeps the lines that do not fit, `-n` adds their line numbers.
 **Ask:** what would a count of 125 have told us? Four rows of another form, to be read one by one.
 (~3 min)
@@ -1391,12 +1427,24 @@ hideInToc: true
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
+```text
+$ awk -F, '{ print $2 }' data/raw/weather.csv | head -n 3
+temp_c
+-4.4
+-4.8
+```
+```text
+$ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/raw/weather.csv
+87672 5.7828
+```
 ```text
 $ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/raw/weather.csv
 87672 5.7828
 $ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/processed/weather_valid.csv
 87552 7.15997
 ```
+````
 
 </div>
 
@@ -1407,8 +1455,9 @@ $ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/processed/weathe
 </div>
 
 <!--
-**Say:** `awk` adds field 2 of every line after the header into `s`, counts the lines in `n`, and at the end prints the count and `s / n`. Five lost days, 0.14 % of the rows, moved a ten-year mean by 1.38 °C. Step 5: 7.16 without the marks, 5.78 with them.
-(~3 min)
+**Ask:** before the second step: will the mean of all rows be higher or lower than 7.16, and by how much?
+**Say:** `awk` runs its program on every line: `{ print $2 }` prints field 2; `NR > 1 { s += $2; n++ }` adds field 2 into `s` and counts in `n` for every line after the header; `END { … }` runs once, at the end. Step 5: 7.16 without the marks, 5.78 with them; five lost days moved a ten-year mean by 1.38 °C.
+(~4 min)
 -->
 
 ---
@@ -1456,44 +1505,6 @@ Step 6: a second program for the same mean. It needs Python, and Python comes in
 <!--
 **Say:** two Python programs came with the folder. A second program that agrees is a check of the first; to run it, the laptop needs Python.
 (~1 min)
--->
-
----
-hideInToc: true
----
-
-# A Program Is a **Text File**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 📜 **`scripts/column_stats.py`, lines 32–48**
-
-```python
-reader = csv.DictReader(handle)
-...
-values = [float(row[column]) for row in reader]
-...
-print("rows   ", len(values))
-print("min    ", min(values))
-print("max    ", max(values))
-print("mean   ", f"{math.fsum(values) / len(values):.6g}")
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact mt-md">
-
-| Line | What it does |
-| --- | --- |
-| 32 | reads the file row by row, line 1 as the names of the columns |
-| 37 | turns every value of the column into a number, −999 too |
-| 48 | the sum divided by the count, to six digits |
-
-</div>
-
-<!--
-**Say:** nobody has to write Python today, but anyone can read what it does: it counts every row, so it will give 5.78 on the raw file. It picks the column by name, `awk` by number.
-(~2 min)
 -->
 
 ---
@@ -1756,6 +1767,48 @@ python is /opt/homebrew/Caskroom/miniforge/base/envs/weather/bin/python
 **Say:** nothing in the old script changed; a package on the laptop did. `-n` names the environment, `python=3.14` asks for its Python.
 **If asked:** in Git Bash the environment is `/c/Users/smilte/miniforge3/envs/weather`. It holds 24 packages, 221 MB. `conda deactivate` returns to `base`; `conda env remove -n weather` deletes the folder.
 (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Activation Changes **PATH**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 🍎 **macOS · zsh** · Git Bash: the same lines, the paths under `/c/Users/smilte/miniforge3`
+
+````md magic-move
+```text
+(base) $ type python
+python is /opt/homebrew/Caskroom/miniforge/base/bin/python
+(base) $ echo $PATH | tr ':' '\n' | head -n 1
+/opt/homebrew/Caskroom/miniforge/base/bin
+```
+```text
+(base) $ conda activate weather
+(weather) $ type python
+python is /opt/homebrew/Caskroom/miniforge/base/envs/weather/bin/python
+(weather) $ echo $PATH | tr ':' '\n' | head -n 1
+/opt/homebrew/Caskroom/miniforge/base/envs/weather/bin
+```
+```text
+(weather) $ conda deactivate
+(base) $ type python
+python is /opt/homebrew/Caskroom/miniforge/base/bin/python
+```
+````
+
+</div>
+
+<div class="note-text mt-md">Activation puts the environment's folder first on <code>PATH</code> and its name in the prompt. The shell then finds that environment's <code>python</code> first. Nothing is copied or installed.</div>
+
+<!--
+**Ask:** after `conda activate weather`, which `python` will `type` find?
+**Say:** the rule of `PATH` from a few slides back, used by conda: first folder wins.
+**If asked:** in Git Bash the environment's folder is `/c/Users/smilte/miniforge3/envs/weather`, and `python` sits in it directly.
+(~3 min)
 -->
 
 ---
@@ -2144,20 +2197,13 @@ Step 8: anyone runs the whole check again with one line.
 hideInToc: true
 ---
 
-# The README: the Mark and the **Result**
+# The README: the Result and How to **Rebuild**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ## ✏️ **In `README.md`**
 
 ```md
-## Columns of `weather.csv`
-
-| Column | Meaning | Unit |
-|--|--|--|
-| `time` | start of the hour | ISO 8601 |
-| `temp_c` | air temperature | °C |
-
 Missing value: `temp_c` is `-999` in 120 rows, 2019-07-22 to 07-26.
 `data/raw/weather.csv`: 87 673 lines, SHA-256 `3f1ad06d…fbe00756`.
 
@@ -2165,12 +2211,19 @@ Missing value: `temp_c` is `-999` in 120 rows, 2019-07-22 to 07-26.
 
 Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours.
 The 120 hours marked `-999` are left out.
+
+## How to rebuild
+
+    conda env create -f environment.yml
+    conda activate weather
+    ./scripts/rebuild.sh
 ```
 
 </div>
 
 <!--
-**Say:** every number here came out of a typed line today. The unit did not: the file cannot say °C, so the README must.
+**Say:** every number here came out of a typed line today. The README tells a reader what the result is and which line makes it again; the script holds the steps.
+**If asked:** the unit, °C, cannot come out of the file: the column table of the README holds it.
 (~2 min)
 -->
 
@@ -2178,21 +2231,37 @@ The 120 hours marked `-999` are left out.
 hideInToc: true
 ---
 
-# The Rebuild Lines as a **Script**
+# `rebuild.sh`, Line by **Line**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 📜 **`scripts/rebuild.sh`**
 
-```text
+````md magic-move
+```bash
+#!/usr/bin/env bash
+```
+```bash
+#!/usr/bin/env bash
+mkdir -p data/processed results
+```
+```bash
+#!/usr/bin/env bash
+mkdir -p data/processed results
+grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
+```
+```bash
 #!/usr/bin/env bash
 mkdir -p data/processed results
 grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
 python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
 python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
 ```
+````
 
 </div>
+
+<v-click>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
@@ -2207,10 +2276,13 @@ mean    7.15997
 
 </div>
 
+</v-click>
+
 <!--
-**Live:** in VS Code make `scripts/rebuild.sh` from the five lines and save; then `chmod +x scripts/rebuild.sh`, `rm -r data/processed results`, `./scripts/rebuild.sh`, `tail -n 1 results/temp_c.txt`.
-**Say:** the lines are the ones typed today, brought back with `↑` and pasted, never retyped: each one has already run. Line 1 names the program that runs the file, bash, on both systems. `chmod +x` marks it as a program; `./` names its folder, because `scripts` is not on `PATH`.
-**If asked:** `bash scripts/rebuild.sh` runs it without `chmod` and `./`. In Git Bash `chmod +x` changes nothing, and the script runs anyway. A `.sh` saved with CRLF stops on a Mac with `bad interpreter`.
+**Live:** in VS Code make `scripts/rebuild.sh` from the lines on the slide and save; then `chmod +x scripts/rebuild.sh`, `rm -r data/processed results`, `./scripts/rebuild.sh`, `tail -n 1 results/temp_c.txt`.
+**Say:** line 1 names the program that runs the file, bash, on both systems. Then the lines typed today, in order, brought back with `↑` and pasted, never retyped. The two `python` lines run the programs that came with the folder.
+**Ask:** after `rm -r`, what will the last line of `results/temp_c.txt` be?
+**If asked:** `chmod +x` marks the file as a program; `./` names its folder, because `scripts` is not on `PATH`. In Git Bash `chmod +x` changes nothing and the script runs anyway.
 (~4 min)
 -->
 
@@ -2218,49 +2290,13 @@ mean    7.15997
 hideInToc: true
 ---
 
-# The README: How to **Rebuild**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## ✏️ **In `README.md`**
-
-```md
-## How to rebuild
-
-In the project folder, in zsh on macOS or Git Bash on Windows,
-with Miniforge installed:
-
-    conda env create -f environment.yml
-    conda activate weather
-    ./scripts/rebuild.sh
-
-The last line of `results/temp_c.txt` reads `mean    7.15997`.
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-♻️ The test of a README: someone with the folder and an empty laptop gets the same files and the same 7.16, and asks nobody.
-
-</div>
-
-<!--
-**Say:** three lines: the tools, from `environment.yml`; the steps, from the script; the number to compare with.
-**Ask:** what would the stranger still have to ask? Usually: where to get Miniforge. One more line names it.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Exit Status: `$?`
+# Exit Status and `set -e`
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 💻 **zsh · Git Bash**
 
+````md magic-move
 ```text
 $ grep -c ',-999,' data/raw/weather.csv
 120
@@ -2270,74 +2306,34 @@ $ grep -c ',-999,' data/processed/weather_valid.csv
 0
 $ echo $?
 1
-$ python scripts/column_stats.py data/raw/wether.csv temp_c
-no file data/raw/wether.csv
+```
+```text
+$ ./scripts/rebuild.sh            # a typo: daily_exprt.csv
+no file data/raw/daily_exprt.csv
+$ echo $?
+0
+```
+```text
+$ ./scripts/rebuild.sh            # with set -e as line 2
+no file data/raw/daily_exprt.csv
 $ echo $?
 1
 ```
+````
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🔢 A program ends by handing the shell a number, its **exit status**: 0 for success, anything else for "no" or a failure. `$?` holds the last one. `grep` says 1 when it found nothing.
+🔢 A program ends by handing the shell a number, its **exit status**: 0 for success, anything else for "no" or a failure; `$?` holds the last one. Without `set -e` a script runs every line and reports the status of its last line. `set -e` as line 2 stops it at the first line that fails.
 
 </div>
 
 <!--
-**Say:** the program chooses its numbers: `column_stats.py` returns 1 for a missing file, 2 for a wrong number of words. A script reads them to know whether a line worked.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Stop at the First **Error**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **A typo: `daily_exprt.csv`**
-
-```text
-$ ./scripts/rebuild.sh
-no file data/raw/daily_exprt.csv
-$ echo $?
-0
-```
-
-The script runs its last line anyway and reports success.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🛑 **`set -e` as line 2**
-
-```text
-#!/usr/bin/env bash
-set -e
-mkdir -p data/processed results
-…
-```
-
-```text
-$ ./scripts/rebuild.sh
-no file data/raw/daily_exprt.csv
-$ echo $?
-1
-```
-
-</div>
-
-</div>
-
-<!--
-**Say:** a script that goes on after a failed line hides the failure. With `set -e` it ends at the first line whose exit status is not 0, and reports that status.
-**If asked:** a line such as `grep -c` that may say 1 on purpose needs `|| true` after it in such a script.
-(~2 min)
+**Ask:** before the second step: the script hit a typo in its third command. What will `$?` be? Most say 1; it is 0.
+**Say:** `grep` says 1 when it found nothing. A script that goes on after a failed line hides the failure; with `set -e` it ends there and reports it.
+**If asked:** a line that may say 1 on purpose, such as `grep -c`, needs `|| true` after it in a script with `set -e`.
+(~3 min)
 -->
 
 ---
@@ -2365,32 +2361,6 @@ ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c
 
 <!--
 **Say:** a check that runs again and gives the same bytes is a check anyone can repeat.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Where the Answers About 7.16 Are **Written**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Someone asks about 7.16 | The answer is in |
-| --- | --- |
-| Which file? | `data/raw/weather.csv`, SHA-256 in the README and in `data/checksums.txt` |
-| Which rows were left out? | `rebuild.sh`, line 4: every row with `,-999,` |
-| Which program computed the mean? | `rebuild.sh`, line 6: `column_stats.py`, line 48 |
-| With which Python? | `environment.yml`: Python 3.14 from conda-forge |
-| Is it still 7.16? | `./scripts/rebuild.sh`, then `results/temp_c.txt` |
-
-</div>
-
-<div class="note-text mt-md">An e-mail says what came out. A script says what was done, in order, and runs again: on the next laptop, the next file, next year.</div>
-
-<!--
-**Say:** the README tells a reader; the script tells the computer. Both are text, both can be read, compared line by line and kept with the data.
-**Ask:** Ben got 7.11 from the same file. Where would his script differ from Smiltė's?
 (~2 min)
 -->
 

@@ -57,8 +57,8 @@ nav:
       - 02 Introduction to Data: lectures/lecture_2.md
       - 03 How Computers Work: lectures/lecture_3.md
       - 04 Command Line & File Handling: lectures/lecture_4.md
-      - 05 Version Control with Git: lectures/lecture_5.md
-      - 06 Python Foundations: lectures/lecture_6.md
+      - 05 Python Foundations: lectures/lecture_5.md
+      - 06 Version Control with Git: lectures/lecture_6.md
       - 07 Python for Data & NumPy: lectures/lecture_7.md
       - 08 Data Visualisation: lectures/lecture_8.md
       - 09 Probability & Statistics: lectures/lecture_9.md
@@ -76,8 +76,8 @@ nav:
       - S3 What Are the 148 Bytes of daily.csv?: seminars/seminar_03.md
       - S4 What Is the Mean Temperature of Ten Years?: seminars/seminar_04.md
       - S4 · Install Python and Git: seminars/install_python_git.md
-      - S5 Who Changed the Mean?: seminars/seminar_05.md
-      - S6 Can You Compute 7.16 Yourself?: seminars/seminar_06.md
+      - S5 Can You Compute 7.16 Yourself?: seminars/seminar_05.md
+      - S6 Who Changed the Mean?: seminars/seminar_06.md
       - S7 Is It Getting Warmer?: seminars/seminar_07.md
       - S8 What Does a Year of Weather Look Like?: seminars/seminar_08.md
       - S9 How Sure Is 7.16?: seminars/seminar_09.md
