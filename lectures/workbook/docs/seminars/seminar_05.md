@@ -167,11 +167,11 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
 
     ```text
     Cloning into 'weather-project'...
-    remote: Enumerating objects: 35, done.
-    remote: Counting objects: 100% (35/35), done.
-    remote: Compressing objects: 100% (19/19), done.
-    remote: Total 35 (delta 15), reused 35 (delta 15), pack-reused 0 (from 0)
-    Receiving objects: 100% (35/35), 554.16 KiB | 4.78 MiB/s, done.
+    remote: Enumerating objects: 37, done.
+    remote: Counting objects: 100% (37/37), done.
+    remote: Compressing objects: 100% (20/20), done.
+    remote: Total 37 (delta 15), reused 37 (delta 15), pack-reused 0 (from 0)
+    Receiving objects: 100% (37/37), 554.33 KiB | 4.05 MiB/s, done.
     Resolving deltas: 100% (15/15), done.
     ```
 
