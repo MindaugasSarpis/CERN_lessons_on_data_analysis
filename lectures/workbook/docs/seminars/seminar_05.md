@@ -164,7 +164,7 @@ Windows; the lines are the same in both. The **Source Control** view (`Ctrl+Shif
     remote: Counting objects: 100% (37/37), done.
     remote: Compressing objects: 100% (20/20), done.
     remote: Total 37 (delta 15), reused 37 (delta 15), pack-reused 0 (from 0)
-    Receiving objects: 100% (37/37), 554.33 KiB | 4.05 MiB/s, done.
+    Receiving objects: 100% (37/37), 554.27 KiB | 4.43 MiB/s, done.
     Resolving deltas: 100% (15/15), done.
     ```
 
