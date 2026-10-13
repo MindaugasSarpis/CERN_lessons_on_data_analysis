@@ -1,57 +1,55 @@
 # Seminar 4 — Work on Files from the Shell
 
-**Paired lecture:** 04 Command Line & File Handling · **Format:** follow-along · **~120 min**
+**Paired lecture:** 04 Command Line & File Handling · **Format:** follow-along, with a task for the room in every part · **~120 min**
 in class
 
-**Today's goal:** every student builds a project from an empty folder, with
-VS Code, the terminal, a README and a small file measured byte by byte, then
-finds the broken week in two years of bicycle counts and gets the same
-checksum as everyone else in the room.
-
-The first part revisits Seminars 1 and 3 from scratch, so nobody depends on
-what they did then. The rest follows Lecture 04: the terminal of VS Code,
-`zsh` on macOS and **PowerShell 7** on Windows, and two downloaded files.
+**The question of the day:** two counters, one on a bridge and one on a
+park path, counted the bicycles that passed every hour of 2024 and 2025.
+How many bicycles pass in an hour? Every student installs the tools, gets
+the file and checks it, finds what is wrong in it, computes the answer,
+and writes a script that makes every result again.
 
 ## Run sheet
 
 One screen for the front of the room. Each line links to its section.
+A **Task** is for the room alone; the answer is folded under it.
 
 | Clock | Section | On the projector | The room ends with |
 |--|--|--|--|
-| | **Part 1 · Warm-up: from an empty folder** · 49 min | | |
-| 0:00 | [1. Start the installs](#installs) | `winget install …`, `git --version`, the Miniforge download | Installs and downloads running in the background |
-| 0:05 | [2. The five regions of VS Code](#vscode) | The five regions, `Ctrl+Shift+P` | The regions named, a terminal open |
-| 0:11 | [3. Read the prompt; `pwd`, `ls`, `cd`](#terminal) | `pwd`, `ls`, `cd`, `Tab`, `↑`, `clear` | The prompt read aloud, part by part |
-| 0:18 | [4. Make the project folder with `mkdir`](#folder) | `mkdir` six times, **Open Folder** | `bike-project` with its four folders |
-| 0:24 | [5. A README in Markdown](#readme-md) | `README.md` and its preview | A title, a list, a table, a link |
-| 0:31 | [6. Check the shell; PowerShell 7 in VS Code](#shell) | **Select Default Profile** | `7` or `/bin/zsh` |
-| 0:34 | [7. Count the bytes of a small file; a script with CRLF](#bytes) | `counts.csv`, `wc -c`, `hexdump -C`, `Format-Hex`; `hello.sh` with CRLF | 39 bytes (42 with CRLF); a script that does not run on a Mac |
-| | **Part 2 · Read, count and copy a large file** · 17 min | | |
-| 0:49 | [8. Move the downloaded files into the project](#files) | `mv ~/Downloads/…` | `bikes.csv` and `column_stats.py` in place |
-| 0:52 | [9. Read `bikes.csv`, count its lines and bytes](#count) | `head`, `wc -l`, `Get-Content`, `Get-Item` | 35 089 lines, 900 314 bytes |
-| 1:00 | [10. Copy, rename, delete](#copy) | `cp`, `mv`, `rm`, `*` | A backup made and removed again |
-| | **Part 3 · Pipes and filters** · 17 min | | |
-| 1:06 | [11. A pipe: sort the counts, read both ends](#sort) | `sort -n`, `Sort-Object` | `9999` at the top: the mark for a missing count |
-| 1:14 | [12. Count the 9999 rows, keep the others in a new file](#grep) | `grep`, `uniq -c`, `Select-String`, `>` | 168 rows, one broken week, `bikes_valid.csv` |
-| | **Part 4 · Python, a checksum, the README** · 29 min | | |
-| 1:23 | [13. Install Miniforge, run `column_stats.py`](#python) | The Miniforge installer, `conda init`, `column_stats.py` | `(base)` in the prompt, Python 3.14.7, the mean of `counts.csv`: 400 |
-| 1:33 | [14. The mean with and without the 9999 rows](#mean) | `column_stats.py` twice | 86.3 and 38.6 bicycles per hour |
-| 1:37 | [15. Compare checksums across the room](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
-| 1:42 | [16. Data, columns and the rebuild line in the README](#readme) | `README.md` and its preview | Data, columns, the mark, one rebuild line |
-| 1:48 | [17. Wrap up](#wrap-up) | `git config`, the list of the day | Git knows each name |
+| | **Part 1 · Install and set up** · 36 min | | |
+| 0:00 | [1. Install the tools](#installs) | `winget install …`, the Miniforge installer, `conda init` | PowerShell 7, Git and Miniforge installed |
+| 0:12 | [2. VS Code, its terminal and the shell](#shell) | The five regions, **Select Default Profile** | `(base)` in the prompt, `7` or `/bin/zsh`, `conda 26.7.2` |
+| 0:18 | [3. Read the prompt; `pwd`, `ls`, `cd`](#terminal) | `pwd`, `ls`, `cd`, `Tab`, `↑` | The prompt read aloud, part by part |
+| 0:25 | [4. Make the project folder with `mkdir`](#folder) | `mkdir` six times; **Task**: two paths | `bike-project` with its four folders |
+| 0:32 | [5. Start the README](#readme-md) | `README.md` and its preview | A title, the question, the folders |
+| | **Part 2 · Get the file and check it** · 22 min | | |
+| 0:36 | [6. Move the downloaded files into the project](#files) | `mv ~/Downloads/…` | `bikes.csv` and `column_stats.py` in place |
+| 0:40 | [7. Is it the right file? A checksum](#checksum) | `shasum -a 256`, `Get-FileHash` | `2c68aad2…` on every laptop |
+| 0:44 | [8. Read `bikes.csv`, count its lines and bytes](#count) | `head`, `tail`, `wc`, two mistakes | 35 089 lines, 900 314 bytes |
+| 0:52 | [9. The bytes of the first lines](#bytes) | `hexdump -C`, `Format-Hex`; **Task**: line ends | 19, 26 and 24 bytes; 877 219 if every count had one digit |
+| | **Part 3 · Find what is wrong** · 23 min | | |
+| 0:58 | [10. A pipe: sort the counts, read both ends](#sort) | `sort -n`, `Sort-Object` | `9999` at the top: the mark for a missing count |
+| 1:06 | [11. Count the 9999 rows, find the broken week](#grep) | `grep -c`, `uniq -c`; **Task**: a line, empty hours | 168 rows, one week at the park |
+| 1:15 | [12. Keep the valid rows in a new file](#valid) | `grep -v … >`, text against number | `bikes_valid.csv`, 34 921 lines |
+| | **Part 4 · The answer** · 10 min | | |
+| 1:21 | [13. The mean, with and without the 9999 rows](#python) | `column_stats.py` twice; **Task**: each counter | 86.3 and 38.6 bicycles per hour |
+| | **Part 5 · Make it repeatable** · 25 min | | |
+| 1:31 | [14. A script that makes the files again](#script) | `rebuild.sh`, `chmod +x`, `rm`; **Task**: two more files | One command remakes `data/processed` and `results` |
+| 1:41 | [15. The script from the other system](#crlf) | A copy saved with CRLF | `bad interpreter` on a Mac; the PowerShell script runs with either line end |
+| 1:48 | [16. The README: data, columns, how to rebuild](#readme) | `README.md` and its preview | The checksum, the columns, the mark, the script |
+| 1:53 | [17. Wrap up](#wrap-up) | `git --version`, the list of the day | Git ready for next week |
 | | **Optional, if the room is fast** | | |
 | — | [18. A program that cleans an export](#clean) | `clean_export.py` | `monthly.csv`, `ea4ce2ce…` on every laptop |
 | — | [19. Regular expressions in VS Code and the shell](#regex) | The `.*` button, `grep -E`, `Select-String` | 168, 4022, 37 |
 | — | [20. A conda environment for the project](#environment) | `conda create`, `conda activate`, `conda install numpy` | `(bikes)` in the prompt, `environment.yml` |
 | — | [21. A list of checksums](#list) | `shasum -a 256 -c`, `Compare-Object` | `OK`, then one digit caught |
-| — | [22. Test the README](#readme-test) | Delete, paste, count | `bikes_valid.csv` back, 34 921 lines |
+| — | [22. Stop the script at the first error](#stop) | `set -e`, `$ErrorActionPreference` | A typo that stops the script |
 | — | [23. Aliases, the prompt and the start-up file](#settings) | `alias`, `~/.zshrc`, `$PROFILE`, Oh My Zsh, Oh My Posh | A short prompt and `..` in every new terminal |
 
-**If time runs short:** in the warm-up keep sections 3, 4 and 7 and do 2
-and 5 in two minutes each; in section 7 show the script (steps 8 to 10) on
-the projector only; in section 12 leave out the last step (text against
-number). Never cut sections 13 to 15, whose numbers are the result
-of the day.
+**If time runs short:** do sections 3 and 5 in three minutes each, show
+section 9 and section 15 on the projector only, and shorten a Task to its
+first question. Never cut sections 11 to 14: they hold the finding and the
+answer of the day.
 
 ??? info "How to use this page"
     This page is written for the person at the front. Students follow the
@@ -60,9 +58,12 @@ of the day.
     - **Tell the room** is the paragraph to say before the steps.
     - The **numbered steps** are what to do on the projector. The room
       repeats each step on their own laptops.
-    - **You should now see** closes a section. Ask for hands: "who sees
+    - **You should now see** closes the steps. Ask for hands: "who sees
       this?" Go on when about four in five have it. The rest get help from a
       neighbour.
+    - A **Task** is for the room alone, with only the commands of that part.
+      Give it three to five minutes, then ask a student to show the answer
+      on the projector. The answer is folded under the task.
     - **Watch for** is the usual slip in that section.
 
     Every command stands alone in a block. It is typed as it stands and
@@ -83,9 +84,7 @@ of the day.
     - Put the files of the next box on a USB stick, with the installers
       listed on [Install Python, Git and PowerShell 7](install_python_git.md)
       if the network of the room is slow.
-    - Read section 7 once: the derivation of 39 and 42 bytes is the one
-      piece of arithmetic of the warm-up.
-    - Skim sections 11 and 12: they hold the one surprise of the day, the
+    - Skim sections 10 and 11: they hold the one surprise of the day, the
       value `9999`. Let the room find it; do not announce it.
 
 ??? info "Files for this seminar"
@@ -94,43 +93,42 @@ of the day.
 
     | File | Saved as | Moved into | What it is |
     |--|--|--|--|
-    | [`bikes_hourly.csv`](../data/bikes_hourly.csv){ download="bikes.csv" } | `bikes.csv` | `data/raw` | Section 8. Two counters, one row per counter and hour, 2024 and 2025: 35 088 rows, 900 314 bytes |
-    | [`cli_column_stats.py`](../data/cli_column_stats.py){ download="column_stats.py" } | `column_stats.py` | `scripts` | Section 8. A program that prints rows, smallest, largest and mean of one column |
+    | [`bikes_hourly.csv`](../data/bikes_hourly.csv){ download="bikes.csv" } | `bikes.csv` | `data/raw` | Section 6. Two counters, one row per counter and hour, 2024 and 2025: 35 088 rows, 900 314 bytes, SHA-256 `2c68aad2…e3808991` |
+    | [`cli_column_stats.py`](../data/cli_column_stats.py){ download="column_stats.py" } | `column_stats.py` | `scripts` | Section 6. A program that prints rows, smallest, largest and mean of one column |
     | [`bikes_monthly_export.csv`](../data/bikes_monthly_export.csv){ download="monthly_export.csv" } | `monthly_export.csv` | `data/raw` | Optional section 18. Bicycles per day on the bridge, each month of 2025, as a spreadsheet exported it |
     | [`cli_clean_export.py`](../data/cli_clean_export.py){ download="clean_export.py" } | `clean_export.py` | `scripts` | Optional section 18. A program that cleans such an export |
-    | [`bikes_project.zip`](../data/bikes_project.zip) | `bikes_project.zip` | unpack it | The folder `bike-project` at the end of section 17, for a student who lost a step |
+    | [`bikes_project.zip`](../data/bikes_project.zip) | `bikes_project.zip` | unpack it | The folder `bike-project` at the end of section 17, both scripts in it, for a student who lost a step |
     | [`bikes_README.txt`](../data/bikes_README.txt){ download="README.md" } | `README.md` | compare only | The README of sections 5 and 16 |
 
     The bicycle files were made by [`bikes_files.py`](../data/bikes_files.py).
-    `counts.csv` is not downloaded: every student types it in section 7.
 
 ---
 
-## Part 1 · Warm-up: from an empty folder { #part-1 }
+## Part 1 · Install and set up { #part-1 }
 
-**0:00 to 0:49 · sections 1 to 7**
+**0:00 to 0:36 · sections 1 to 5**
 
-The slow installs start first and run while the room rebuilds, from
-nothing, what Seminars 1 and 3 did: VS Code and its regions, the terminal,
-a project folder, a README in Markdown, and one small file measured byte by
-byte. [Install Python, Git and PowerShell 7](install_python_git.md) has the
-installs per system, with every error message, for helpers at a laptop.
+Everything the day needs is installed first, in the terminal the system
+brings, while VS Code stays closed. Then VS Code starts, finds it all, and
+the room builds the project folder from nothing. [Install Python, Git and
+PowerShell 7](install_python_git.md) has the installs per system, with
+every error message, for helpers at a laptop.
 
 ---
 
-### 1. Start the installs { #installs }
+### 1. Install the tools { #installs }
 
-**0:00 · 5 min**
+**0:00 · 12 min**
 
-**Tell the room.** Three programs come today: PowerShell 7 on Windows, a
-shell that is the same on every Windows laptop; Miniforge, which brings
-Python and conda, a program that installs packages and keeps each
-project's packages apart; and Git, which is used next week. When the whole
-room downloads at once the network is slow, so everything starts now and
-runs in the background. Type the lines exactly; every word is explained in the next
-twenty minutes.
+**Tell the room.** Three programs come today. **PowerShell 7**, on Windows
+only: a shell that is the same on every Windows laptop; a Mac has its
+shell, `zsh`, built in. **Miniforge**: Python, and **conda**, a program
+that installs packages and keeps each project's packages apart. **Git**,
+which keeps versions of files from next week on. VS Code stays closed
+until the installs are done, so that it finds them when it starts. Type
+the lines exactly; every word of them comes back later today.
 
-1. Open a terminal of the system.
+1. Close VS Code if it is open. Open the terminal of the system.
 
     === "macOS"
 
@@ -142,8 +140,9 @@ twenty minutes.
         ```
 
         A window asks to install the **command line developer tools**.
-        Select **Install**, then **Agree**. It takes 5 to 15 minutes. If the
-        line prints `git version 2.…` instead, Git is already there.
+        Select **Install**, then **Agree**. They install on their own for
+        5 to 15 minutes; go on meanwhile. If the line prints
+        `git version 2.…` instead, Git is already there.
 
     === "Windows"
 
@@ -168,15 +167,14 @@ twenty minutes.
         winget install --id Git.Git --source winget
         ```
 
-        Each ends with `Successfully installed`. Leave the window open.
+        It ends with `Successfully installed` too.
 
-2. Download the Miniforge installer. Do not run it yet: section 13 needs
-   it.
+2. Install Miniforge.
 
     === "macOS"
 
-        In the same Terminal window, go into **Downloads** and fetch the
-        installer:
+        In the same window, go into **Downloads**, fetch the installer and
+        run it:
 
         ```text
         cd ~/Downloads
@@ -190,6 +188,26 @@ twenty minutes.
         this Mac, so one line fits every Mac. A table counts the download
         up to `100`.
 
+        ```text
+        bash Miniforge3-$(uname)-$(uname -m).sh
+        ```
+
+        The installer stops five times:
+
+        | It prints | You type |
+        |--|--|
+        | `Please, press ENTER to continue` | `Enter` |
+        | The licence, one screen at a time | `q`, which jumps to its end |
+        | `Do you accept the license terms?` | `yes` |
+        | `[/Users/smilte/miniforge3] >>>` | `Enter`: the folder is right |
+        | `Proceed with initialization?` and `[no] >>>` | `yes`. The answer in brackets is the default, so `Enter` alone would say no |
+
+        It ends with:
+
+        ```text
+        Thank you for installing Miniforge3!
+        ```
+
     === "Windows"
 
         Select this link; the browser saves the installer in
@@ -197,29 +215,56 @@ twenty minutes.
         [Miniforge3-Windows-x86_64.exe](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Windows-x86_64.exe).
         Not `winget`: the Miniforge it offers is from 2022.
 
+        Open the installer in **Downloads**. Select **Next** and **I
+        Agree**, choose **Just Me (recommended)**, and keep every other
+        default: the folder `C:\Users\smilte\miniforge3`, the boxes as they
+        are, **Install**, then **Finish**.
+
+        Then press the Windows key, type `Miniforge Prompt` and press
+        `Enter`. In the window that opens, let conda add its lines to the
+        start-up files of PowerShell, so that every new terminal finds
+        conda and Python:
+
+        ```text
+        conda init powershell
+        ```
+
+        ```text
+        ==> For changes to take effect, close and re-open your current shell. <==
+        ```
+
+3. Close the terminal windows. On a Mac the developer tools go on
+   installing on their own.
+
 !!! success "You should now see"
-    On macOS the developer tools installing, and `curl` at `100`. On
-    Windows `winget` at work, and the Miniforge installer in **Downloads**.
+    On macOS `Thank you for installing Miniforge3!`, and the developer
+    tools installing. On Windows `Successfully installed` twice, and the
+    last line of `conda init powershell`.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
     | Windows: `winget` asks whether you agree to the source agreements | Type `Y` and `Enter` |
-    | macOS: `curl: (6) Could not resolve host: github.com` | No network. Copy the Miniforge installer from the USB stick into **Downloads** |
-    | Windows: the browser asks whether to keep the installer | Select **Keep**. It comes from the release page of conda-forge on GitHub |
     | Windows: `winget` is not recognized | Install `PowerShell-7.6.6-win-x64.msi` and Git for Windows from the USB stick, with every default |
+    | macOS: `curl: (6) Could not resolve host: github.com` | No network. Copy the Miniforge installer from the USB stick into **Downloads** and go on with `bash` |
+    | macOS: `ERROR: File or directory already exists: '/Users/smilte/miniforge3'` | Miniforge is there already, from an earlier try. Go on with section 2 |
+    | Windows: the browser asks whether to keep the installer | Select **Keep**. It comes from the release page of conda-forge on GitHub |
+    | Windows: "Windows protected your PC" when the installer starts | Select **More info**, then **Run anyway** |
     | An installer asks for an administrator password the student does not have | The laptop is managed by the university or an employer. The student pairs with a neighbour today |
     | No VS Code on the laptop | Download it from `code.visualstudio.com` and install it with every default, now |
 
 ---
 
-### 2. The five regions of VS Code { #vscode }
+### 2. VS Code, its terminal and the shell { #shell }
 
-**0:05 · 6 min**
+**0:12 · 6 min**
 
 **Tell the room.** VS Code is the editor of the course: files, Markdown and
-the terminal in one window. The window has five regions, and every step of
-today names the region it happens in.
+the terminal in one window, in five regions. The **terminal** is the
+window that shows text; the **shell** is the program inside it that reads
+each line you type, runs it, prints the answer and waits: `zsh` on a Mac,
+PowerShell 7 on Windows. Windows has two PowerShells, so VS Code is told
+once to open 7.
 
 1. Open VS Code. If it opens a folder from before, select **File** >
    **Close Folder**: today starts from nothing.
@@ -234,60 +279,102 @@ today names the region it happens in.
     | 4 | **Panel** | At the bottom, hidden at first: the terminal |
     | 5 | **Status Bar** | The line at the bottom: facts about the open file |
 
-3. Press `Ctrl+B` (macOS `Cmd+B`) twice. The Side Bar hides and comes back.
+3. Press `Ctrl+Shift+P` (macOS `Cmd+Shift+P`): the **Command Palette**,
+   where every command of VS Code can be found by name.
 
-4. Press `Ctrl+Shift+P` (macOS `Cmd+Shift+P`): the **Command Palette**,
-   where every command of VS Code can be found by name. Type:
+    === "macOS"
+
+        Type `create new terminal` and select **Terminal: Create New
+        Terminal**. The Panel opens at the bottom, with a prompt.
+
+    === "Windows"
+
+        Type `default profile` and select **Terminal: Select Default
+        Profile**, then **PowerShell**. Not **Windows PowerShell**: that is
+        5.1. Press `Ctrl+Shift+P` again, type `create new terminal` and
+        select **Terminal: Create New Terminal**. The Panel opens at the
+        bottom, with a prompt.
+
+4. Check the shell.
+
+    === "macOS"
+
+        ```text
+        echo $SHELL
+        ```
+
+        ```text
+        /bin/zsh
+        ```
+
+    === "Windows"
+
+        ```text
+        $PSVersionTable.PSVersion.Major
+        ```
+
+        ```text
+        7
+        ```
+
+5. Check conda.
 
     ```text
-    create new terminal
+    conda --version
     ```
 
-    Select **Terminal: Create New Terminal**. The Panel opens at the
-    bottom, with a prompt.
+    ```text
+    conda 26.7.2
+    ```
+
+    The prompt starts with `(base)`: conda's first environment, with
+    Python in it, switched on in every new terminal.
 
 !!! success "You should now see"
-    The five regions named, and the Panel open with a prompt in it.
+    A prompt that starts with `(base)`, `/bin/zsh` or `7`, and
+    `conda 26.7.2`.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
+    | macOS: `/bin/bash`, or Terminal says *The default interactive shell is now zsh* | Type `chsh -s /bin/zsh`, then the laptop's password (nothing shows while typing) and `Enter`. Quit VS Code with `Cmd+Q` and start it again |
+    | macOS: no `(base)`, or `zsh: command not found: conda` | The last question of the installer was answered with `Enter`, which means no. Run `~/miniforge3/bin/conda init zsh`, then open a new terminal |
+    | Windows: the version line prints `5` | **Windows PowerShell** was chosen. Step 3 again, then a new terminal |
+    | Windows: **PowerShell** is missing from the list | VS Code started before PowerShell 7 was installed. Quit VS Code with **File** > **Exit**, start it again, step 3 again |
+    | Windows: `conda : The term 'conda' is not recognized …`, and no `(base)` | `conda init powershell` was not run in the Miniforge Prompt (section 1, step 2), or VS Code started before it. Run it, then quit VS Code and start it again |
+    | Windows: `… profile.ps1 cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1: step 3 again. Or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once, answer `Y`, and open a new terminal |
+    | The list offers **Git Bash** | Not in this course. Take **PowerShell** |
     | VS Code runs in the browser (`vscode.dev`) | It has no terminal. The student pairs with a neighbour today |
-    | The Command Palette shows `>` and nothing else | Correct: the `>` means "commands". Type after it |
 
 ---
 
 ### 3. Read the prompt; `pwd`, `ls`, `cd` { #terminal }
 
-**0:11 · 7 min**
+**0:18 · 7 min**
 
-**Tell the room.** The **terminal** is the window that shows
-text: here, the Panel. The **shell** is the program inside it that reads
-each line you type, runs it, prints the answer and waits: `zsh` on a Mac,
-PowerShell on Windows. The **prompt** is the line where it waits. The shell
-is always in one folder, the **working directory**: the prompt shows it,
-`pwd` prints it in full, `ls` lists what is in it, `cd` changes it.
+**Tell the room.** The **prompt** is the line where the shell waits. The
+shell is always in one folder, the **working directory**: the prompt shows
+it, `pwd` prints it in full, `ls` lists what is in it, `cd` changes it.
 
 1. Read the prompt aloud, part by part.
 
     === "macOS"
 
         ```text
-        smilte@MacBook-Air ~ %
+        (base) smilte@MacBook-Air ~ %
         ```
 
-        The user, the computer, the folder the shell is in (`~` is the home
-        folder), and `%`: the shell waits.
+        conda's environment, the user, the computer, the folder the shell
+        is in (`~` is the home folder), and `%`: the shell waits.
 
     === "Windows"
 
         ```text
-        PS C:\Users\smilte>
+        (base) PS C:\Users\smilte>
         ```
 
-        `PS`, the folder the shell is in, and `>`: the shell waits. Until
-        section 6 this is the built-in PowerShell 5.1; every line of the
-        warm-up works in both.
+        conda's environment, `PS`, the folder the shell is in, and `>`:
+        the shell waits.
 
 2. A first command. The shell runs it, prints, and shows the prompt again.
 
@@ -379,7 +466,7 @@ is always in one folder, the **working directory**: the prompt shows it,
 
 ### 4. Make the project folder with `mkdir` { #folder }
 
-**0:18 · 6 min**
+**0:25 · 7 min**
 
 **Tell the room.** Every project of the course has the same layout: raw
 data that is never changed, processed data that commands make from it,
@@ -438,23 +525,49 @@ retyped.
     data    results scripts
     ```
 
-    ```text
-    ls data
-    ```
-
-    ```text
-    processed raw
-    ```
-
     PowerShell prints the same names in its table.
+
+!!! success "You should now see"
+    `data`, `results` and `scripts` in `bike-project`.
+
+!!! question "Task: two paths to one folder"
+    Go to the home folder. From there, list what is in the folder `data` of
+    the project twice: once with a relative path, once with an absolute
+    one. Then go back into `bike-project` with one `cd`.
+
+??? note "Answer"
+    ```text
+    cd ~
+    ```
+
+    ```text
+    ls bike-project/data
+    ```
+
+    === "macOS"
+
+        ```text
+        ls /Users/smilte/bike-project/data
+        ```
+
+    === "Windows"
+
+        ```text
+        ls C:\Users\smilte\bike-project\data
+        ```
+
+    ```text
+    cd bike-project
+    ```
+
+    Both lists show `processed` and `raw`. The relative path starts at the
+    working directory, the home folder; the absolute one at the top of the
+    disk, so it works from anywhere. `cd ~/bike-project` also works from
+    anywhere.
 
 4. Open the folder in VS Code: **File** > **Open Folder...**, select
    `bike-project` in the home folder, **Open**. The window reloads. Then
-   **Terminal** > **New Terminal**.
-
-!!! success "You should now see"
-    The four folders in the Explorer, and a prompt that ends in
-    `bike-project`.
+   **Terminal** > **New Terminal**: the prompt ends in `bike-project`.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -466,14 +579,14 @@ retyped.
 
 ---
 
-### 5. A README in Markdown { #readme-md }
+### 5. Start the README { #readme-md }
 
-**0:24 · 7 min**
+**0:32 · 4 min**
 
 **Tell the room.** The README is the first file anyone opens in a project.
 It is written in Markdown: plain text with a few signs, `#` for a heading,
-`-` for a list item, `|` for a table, `[text](address)` for a link. The
-preview shows how it looks.
+`-` for a list item. Today it starts with the question; in section 16 it
+gets what the files are and how to make them again.
 
 1. In the Explorer, point at the line `BIKE-PROJECT` and select the
    **New File** icon. Name the file:
@@ -487,24 +600,15 @@ preview shows how it looks.
     ```text
     # Bike Counters
 
-    Practice project of Seminar 4: bicycle counts, read and checked with typed
-    commands.
+    Two bicycle counters, one on a bridge and one on a park path, counted
+    every hour of 2024 and 2025. How many bicycles pass in an hour?
 
     ## Folders
 
     - `data/raw`: files as they arrived, never edited
     - `data/processed`: files that commands make from `data/raw`
     - `scripts`: programs
-    - `results`: numbers and figures
-
-    ## Two places
-
-    | Place | Bicycles |
-    |--|--|
-    | Antakalnis | 412 |
-    | Užupis | 388 |
-
-    Course pages: [the workbook](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/)
+    - `results`: numbers that the programs write
     ```
 
 3. Open the preview beside it: `Ctrl+K`, then `V` (macOS `Cmd+K`, then `V`).
@@ -513,357 +617,39 @@ preview shows how it looks.
    means *not saved*.
 
 !!! success "You should now see"
-    In the preview: a large title, a heading **Folders** over a list of
-    four items, a table of two rows, and a link that opens the workbook.
+    In the preview: a large title, the question, and a heading **Folders**
+    over a list of four items.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
     | The list shows as one line | An empty line is missing before the first `-` |
-    | The table shows as plain text | The line of dashes under the header is missing, or the empty line before the table |
     | The `#` shows in the preview | A space is missing after `#` |
     | The file is named `README.md.txt` or `readme.md` | Rename it in the Explorer with `F2` (macOS `Enter`) |
 
 ---
 
-### 6. Check the shell; PowerShell 7 in VS Code { #shell }
+## Part 2 · Get the file and check it { #part-2 }
 
-**0:31 · 3 min**
+**0:36 to 0:58 · sections 6 to 9**
 
-**Tell the room.** Windows has two PowerShells: 5.1, built in, and 7, the
-one installed at the start, which also runs on macOS and Linux. VS Code is
-told once to open 7. On a Mac the shell is `zsh`, built in; this step only
-checks it.
-
-1. Check the shell.
-
-    === "macOS"
-
-        ```text
-        echo $SHELL
-        ```
-
-        ```text
-        /bin/zsh
-        ```
-
-    === "Windows"
-
-        In the PowerShell window of section 1, check that both installs
-        printed `Successfully installed`, then close that window. In VS
-        Code press `Ctrl+Shift+P` and type:
-
-        ```text
-        default profile
-        ```
-
-        Select **Terminal: Select Default Profile**, then **PowerShell**.
-        Not **Windows PowerShell**: that is 5.1.
-
-2. Close the terminal with the bin icon at the top right of the Panel, then
-   **Terminal** > **New Terminal**.
-
-    === "macOS"
-
-        The name at the top right of the Panel reads `zsh`.
-
-    === "Windows"
-
-        ```text
-        $PSVersionTable.PSVersion.Major
-        ```
-
-        ```text
-        7
-        ```
-
-        The name at the top right of the Panel reads `pwsh`.
-
-!!! success "You should now see"
-    `/bin/zsh` or `7`, and a prompt that ends in `bike-project`.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | macOS: `/bin/bash`, or Terminal says *The default interactive shell is now zsh* | Type `chsh -s /bin/zsh`, then the laptop's password (nothing shows while typing) and `Enter`. Quit VS Code with `Cmd+Q` and start it again |
-    | Windows: the version line prints `5` | **Windows PowerShell** was chosen, or the old terminal is still open. Step 1 again, then a new terminal |
-    | Windows: **PowerShell** is missing from the list | PowerShell 7 is not installed yet, or VS Code started before it was. Quit VS Code with **File** > **Exit**, start it again, step 1 again. If it is still installing, go on in 5.1 and switch later |
-    | The list offers **Git Bash** | Not in this course. Take **PowerShell** |
+The counts come from a web page. Before anything is computed from them:
+is it the file the page offers, how large is it, and what does one line of
+it look like, byte by byte?
 
 ---
 
-### 7. Count the bytes of a small file; a script with CRLF { #bytes }
+### 6. Move the downloaded files into the project { #files }
 
-**0:34 · 15 min**
-
-**Tell the room.** A file is a row of bytes. A letter `a` to `z` is one
-byte in UTF-8; a Lithuanian letter such as `ž` is two. The end of a line is
-a byte too: `0A`, called LF, on a Mac; two bytes, `0D 0A`, called CRLF, in
-what VS Code writes on Windows. We type a file of three lines, predict its
-size, and let the shell measure it. Then a file of two lines shows what the
-line ending does when a file goes from Windows to a Mac.
-
-1. In the Explorer select the folder `raw` inside `data`, then the **New
-   File** icon. Name the file:
-
-    ```text
-    counts.csv
-    ```
-
-2. Type, or copy, these three lines. Press `Enter` after the last line
-   too, so that every line ends with a line break. Save.
-
-    ```text
-    place,bikes
-    Antakalnis,412
-    Užupis,388
-    ```
-
-3. Read the right end of the Status Bar: `UTF-8`, and `LF` on a Mac or
-   `CRLF` on Windows.
-
-4. Predict the size with the room. Count the characters:
-
-    | Line | Characters |
-    |--|--|
-    | `place,bikes` | 11 |
-    | `Antakalnis,412` | 14 |
-    | `Užupis,388` | 10 |
-    | together | 35 |
-
-    `ž` takes two bytes, every other character one: 36 bytes. Three line
-    ends: 3 × 1 = 3 bytes with LF, 3 × 2 = 6 with CRLF. So 39 bytes on a
-    Mac, 42 on Windows.
-
-5. Measure.
-
-    === "macOS"
-
-        ```text
-        wc -c data/raw/counts.csv
-        ```
-
-        ```text
-              39 data/raw/counts.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-Item data/raw/counts.csv).Length
-        ```
-
-        ```text
-        42
-        ```
-
-6. Look at the bytes themselves.
-
-    === "macOS"
-
-        ```text
-        hexdump -C data/raw/counts.csv
-        ```
-
-        ```text
-        00000000  70 6c 61 63 65 2c 62 69  6b 65 73 0a 41 6e 74 61  |place,bikes.Anta|
-        00000010  6b 61 6c 6e 69 73 2c 34  31 32 0a 55 c5 be 75 70  |kalnis,412.U..up|
-        00000020  69 73 2c 33 38 38 0a                              |is,388.|
-        00000027
-        ```
-
-        `c5 be` is `ž`: two bytes, two dots on the right. `0a` ends each
-        line. The last line is the size in hex: 0x27 = 2 × 16 + 7 = 39.
-
-    === "Windows"
-
-        ```text
-        Format-Hex data/raw/counts.csv
-        ```
-
-        ```text
-           Label: C:\Users\smilte\bike-project\data\raw\counts.csv
-
-                  Offset Bytes                                           Ascii
-                         00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
-                  ------ ----------------------------------------------- -----
-        0000000000000000 70 6C 61 63 65 2C 62 69 6B 65 73 0D 0A 41 6E 74 place,bikes��Ant
-        0000000000000010 61 6B 61 6C 6E 69 73 2C 34 31 32 0D 0A 55 C5 BE akalnis,412��UÅ¾
-        0000000000000020 75 70 69 73 2C 33 38 38 0D 0A                   upis,388��
-        ```
-
-        `C5 BE` is `ž`; PowerShell shows it on the right as `Å¾`, because
-        it reads each byte alone. `0D 0A` ends each line.
-
-7. **Windows only.** Select `CRLF` in the Status Bar, choose `LF`, save,
-   and measure again:
-
-    ```text
-    (Get-Item data/raw/counts.csv).Length
-    ```
-
-    ```text
-    39
-    ```
-
-    One byte less on each of the three lines. Now the file has the same
-    bytes on every laptop in the room.
-
-8. **A two-line script.** Work in pairs, one Mac and one Windows
-   laptop; a room of one system watches the projector for the other. In
-   the Explorer select the folder `scripts`, then **New File**.
-
-    === "macOS"
-
-        Name the file `hello.sh` and type two lines, with `Enter` after the
-        second. Save.
-
-        ```text
-        #!/bin/zsh
-        echo hello
-        ```
-
-        The first line names the program that runs the file. Allow the
-        file to run as a command, then run it:
-
-        ```text
-        chmod +x scripts/hello.sh
-        ```
-
-        ```text
-        ./scripts/hello.sh
-        ```
-
-        ```text
-        hello
-        ```
-
-    === "Windows"
-
-        Name the file `hello.ps1` and type one line. Save.
-
-        ```text
-        Write-Output hello
-        ```
-
-        Run it:
-
-        ```text
-        ./scripts/hello.ps1
-        ```
-
-        ```text
-        hello
-        ```
-
-        The Status Bar shows `CRLF`: a new file on Windows gets the
-        Windows line ending. Show it to your Mac neighbour.
-
-9. **Switch the line ending and run it again.**
-
-    === "macOS"
-
-        Select `LF` in the Status Bar, choose `CRLF`, save. The file now
-        has the bytes VS Code writes on Windows, as if your neighbour had
-        sent it. Look at the bytes, then run it again:
-
-        ```text
-        hexdump -C scripts/hello.sh
-        ```
-
-        ```text
-        00000000  23 21 2f 62 69 6e 2f 7a  73 68 0d 0a 65 63 68 6f  |#!/bin/zsh..echo|
-        00000010  20 68 65 6c 6c 6f 0d 0a                           | hello..|
-        00000018
-        ```
-
-        ```text
-        ./scripts/hello.sh
-        ```
-
-        ```text
-        zsh: ./scripts/hello.sh: bad interpreter: /bin/zsh^M: no such file or directory
-        ```
-
-        `^M` is the byte `0d`. The Mac ends the first line at `0a` alone,
-        so the name of the program is now `/bin/zsh` followed by `0d`, and
-        no program has that name. The file does not run at all.
-
-    === "Windows"
-
-        Select `CRLF` in the Status Bar, choose `LF`, save, and run it
-        again:
-
-        ```text
-        ./scripts/hello.ps1
-        ```
-
-        ```text
-        hello
-        ```
-
-        PowerShell reads both line endings. Look at your neighbour's
-        screen: the same two bytes stop their file.
-
-10. **Back to LF, then clean up.** On the Mac, select `CRLF` in the Status
-    Bar, choose `LF`, save, and run `./scripts/hello.sh` again: `hello`.
-    Then both delete the script, which the project does not need:
-
-    === "macOS"
-
-        ```text
-        rm scripts/hello.sh
-        ```
-
-    === "Windows"
-
-        ```text
-        rm scripts/hello.ps1
-        ```
-
-    A file that runs on Windows can fail on a Mac with no difference to
-    see in the editor; the Status Bar shows it. To make VS Code write LF
-    in every new file on Windows: `Ctrl+,`, search `eol`, set **Files:
-    Eol** to `\n`.
-
-!!! success "You should now see"
-    39 bytes on every laptop, and `c5 be` for `ž` in the hex view. On a
-    Mac, `bad interpreter` for the script with CRLF and `hello` again with
-    LF; on Windows, `hello` with both.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | 38 bytes on a Mac, 40 on Windows | No `Enter` after the last line. Add it and save |
-    | 38 bytes on a Mac (41 on Windows), and no `c5 be` in the hex view | `Uzupis` was typed without `ž`. Copy the line from this page |
-    | The size does not change after an edit | The file was not saved: a dot on the tab means *not saved* |
-    | Windows: `Cannot find path` | The file is not in `data/raw`, or the terminal is not in `bike-project`. `pwd`, then `ls data/raw` |
-    | macOS: `zsh: permission denied: ./scripts/hello.sh` | `chmod +x scripts/hello.sh` was skipped. Run it, then the script again |
-    | macOS: still `hello` after choosing `CRLF` | The file was not saved after the switch |
-    | Windows: `… cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1. Switch to PowerShell 7 (section 6), or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
-
----
-
-## Part 2 · Read, count and copy a large file { #part-2 }
-
-**0:49 to 1:06 · sections 8 to 10**
-
-Two files come from the web and are moved in by typed commands. The large
-one has thousands of lines; nobody opens it to count them.
-
----
-
-### 8. Move the downloaded files into the project { #files }
-
-**0:49 · 3 min**
+**0:36 · 4 min**
 
 **Tell the room.** The browser saves into **Downloads**. `mv` moves a file:
 first where it is, then where it goes. `~/Downloads/bikes.csv` is the same
 path in both shells. Press `Tab` after a few letters of each name: a name
 that `Tab` completed has no typing mistake in it.
 
-1. Download the two core files of the box **Files for this seminar** at the
-   top of this page: `bikes.csv` and `column_stats.py`. Do not open them.
+1. Download the two files of the box **Files for this seminar** at the top
+   of this page: `bikes.csv` and `column_stats.py`. Do not open them.
 
 2. Move them in.
 
@@ -884,12 +670,12 @@ that `Tab` completed has no typing mistake in it.
     ```
 
     ```text
-    bikes.csv       counts.csv
+    bikes.csv
     ```
 
 !!! success "You should now see"
-    `bikes.csv` next to `counts.csv` in `data/raw`, and `column_stats.py` in
-    `scripts`, in the terminal and in the Explorer.
+    `bikes.csv` in `data/raw` and `column_stats.py` in `scripts`, in the
+    terminal and in the Explorer.
 
 !!! warning "Watch for"
     | On the screen | What to do |
@@ -900,14 +686,61 @@ that `Tab` completed has no typing mistake in it.
 
 ---
 
-### 9. Read `bikes.csv`, count its lines and bytes { #count }
+### 7. Is it the right file? A checksum { #checksum }
 
-**0:52 · 8 min**
+**0:40 · 4 min**
+
+**Tell the room.** A **checksum** is a long number computed from every
+byte of a file. Two files with the same bytes have the same checksum; one
+byte changed gives a completely different one. The page gives the
+checksum of `bikes.csv`, starting `2c68aad2`. Thirty laptops can check
+that they hold that file by reading eight characters aloud.
+
+1. The checksum of the downloaded file.
+
+    === "macOS"
+
+        ```text
+        shasum -a 256 data/raw/bikes.csv
+        ```
+
+        ```text
+        2c68aad221bfb1cc8346625a842eca3897c3c39bba5cfc2fe7d27891e3808991  data/raw/bikes.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        (Get-FileHash data/raw/bikes.csv).Hash
+        ```
+
+        ```text
+        2C68AAD221BFB1CC8346625A842ECA3897C3C39BBA5CFC2FE7D27891E3808991
+        ```
+
+2. Ask three students, one on Windows, to read the first eight characters:
+   `2c68aad2`. The case of the letters does not matter.
+
+!!! success "You should now see"
+    `2c68aad2…e3808991` on every laptop: the same 900 314 bytes everywhere,
+    so every number of today can be compared across the room.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | Another checksum | The file is not the downloaded one: it was opened and saved, or the download broke. Download it again and move it in |
+    | Windows: a table with `Algorithm`, `Hash`, `Path` | The brackets and `.Hash` were left out. The hash is the middle column |
+
+---
+
+### 8. Read `bikes.csv`, count its lines and bytes { #count }
+
+**0:44 · 8 min**
 
 **Tell the room.** A command has parts: the **program** first, then
 **options** that say how, then **arguments** that say what to work on.
 `head -n 3 data/raw/bikes.csv`: the program `head`, the option `-n 3`, the
-argument, a path.
+argument, a path. Before we count, we predict.
 
 1. The first three lines.
 
@@ -951,19 +784,9 @@ argument, a path.
     2025-12-31T23:00,park,1
     ```
 
-3. `cat` prints a whole file, in both shells. The small one:
-
-    ```text
-    cat data/raw/counts.csv
-    ```
-
-    ```text
-    place,bikes
-    Antakalnis,412
-    Užupis,388
-    ```
-
-4. Count the lines of the large file.
+3. Predict the number of lines with the room: 2024 had 366 days and 2025
+   had 365, so 731 days of 24 hours, at two counters: 731 × 24 × 2 =
+   35 088 rows, and the header makes 35 089 lines. Count them.
 
     === "macOS"
 
@@ -985,11 +808,7 @@ argument, a path.
         35089
         ```
 
-    Check it by hand: 2024 had 366 days and 2025 had 365, so 731 days of 24
-    hours, at two counters: 731 × 24 × 2 = 35 088 rows, and the header
-    makes 35 089 lines.
-
-5. Its size in bytes.
+4. Its size in bytes.
 
     === "macOS"
 
@@ -1011,10 +830,7 @@ argument, a path.
         900314
         ```
 
-    About 26 bytes a line, as in section 7: `2024-01-01T00:00,bridge,2` has 25
-    characters, one byte each, and one line break.
-
-6. Make two mistakes on purpose, and read what the shell says. A program
+5. Make two mistakes on purpose, and read what the shell says. A program
    that does not exist:
 
     === "macOS"
@@ -1063,7 +879,7 @@ argument, a path.
     The first word of the message names who complains: the shell, or the
     program that could not find the file.
 
-7. Help on a command. On macOS `q` leaves the manual page.
+6. Help on a command. On macOS `q` leaves the manual page.
 
     === "macOS"
 
@@ -1090,110 +906,103 @@ argument, a path.
     |--|--|
     | `head` waits and prints nothing | The file name is missing, so `head` reads the keyboard. `Ctrl+C` stops it |
     | Windows: `A positional parameter cannot be found that accepts argument …` | A space in a path. Names today have no spaces; check the line |
-    | A size other than 900 314 | The file was opened and saved in Excel or Numbers. Download it again and move it in |
     | macOS: the manual page fills the Panel | `Space` goes on, `q` leaves |
 
 ---
 
-### 10. Copy, rename, delete { #copy }
+### 9. The bytes of the first lines { #bytes }
 
-**1:00 · 6 min**
+**0:52 · 6 min**
 
-**Tell the room.** `cp` copies, `mv` moves and renames, `rm` deletes. In
-PowerShell the same short words work: they are short names of `Copy-Item`,
-`Move-Item` and `Remove-Item`. A `*` stands for any characters in a name.
-`rm` has no bin: what it deletes is gone. So we practise in a folder made
-for it.
+**Tell the room.** A file is a row of bytes. In this file every character
+is one byte: digits, letters, `-`, `:`, the comma. The end of a line is a
+byte too, `0a`, called LF. A hex view shows each byte as a number of two
+hex digits, 16 to a row, with the characters on the right.
 
-1. Make a backup folder and copy the small file into it.
+1. The first 80 bytes.
 
-    ```text
-    mkdir backup
-    ```
+    === "macOS"
 
-    ```text
-    cp data/raw/counts.csv backup/
-    ```
+        ```text
+        hexdump -C -n 80 data/raw/bikes.csv
+        ```
 
-2. Rename the copy with `mv`: first the old name, then the new one.
+        ```text
+        00000000  74 69 6d 65 2c 63 6f 75  6e 74 65 72 2c 62 69 6b  |time,counter,bik|
+        00000010  65 73 0a 32 30 32 34 2d  30 31 2d 30 31 54 30 30  |es.2024-01-01T00|
+        00000020  3a 30 30 2c 62 72 69 64  67 65 2c 32 0a 32 30 32  |:00,bridge,2.202|
+        00000030  34 2d 30 31 2d 30 31 54  30 30 3a 30 30 2c 70 61  |4-01-01T00:00,pa|
+        00000040  72 6b 2c 30 0a 32 30 32  34 2d 30 31 2d 30 31 54  |rk,0.2024-01-01T|
+        00000050
+        ```
 
-    ```text
-    mv backup/counts.csv backup/counts_copy.csv
-    ```
+    === "Windows"
 
-3. Copy a whole folder: `-r` copies everything in it.
+        ```text
+        Format-Hex data/raw/bikes.csv -Count 80
+        ```
 
-    ```text
-    cp -r data backup/
-    ```
+        ```text
+           Label: C:\Users\smilte\bike-project\data\raw\bikes.csv
 
-    ```text
-    ls backup
-    ```
+                  Offset Bytes                                           Ascii
+                         00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+                  ------ ----------------------------------------------- -----
+        0000000000000000 74 69 6D 65 2C 63 6F 75 6E 74 65 72 2C 62 69 6B time,counter,bik
+        0000000000000010 65 73 0A 32 30 32 34 2D 30 31 2D 30 31 54 30 30 es�2024-01-01T00
+        0000000000000020 3A 30 30 2C 62 72 69 64 67 65 2C 32 0A 32 30 32 :00,bridge,2�202
+        0000000000000030 34 2D 30 31 2D 30 31 54 30 30 3A 30 30 2C 70 61 4-01-01T00:00,pa
+        0000000000000040 72 6B 2C 30 0A 32 30 32 34 2D 30 31 2D 30 31 54 rk,0�2024-01-01T
+        ```
 
-    ```text
-    counts_copy.csv data
-    ```
-
-4. A wildcard: every CSV file in `data/raw`.
-
-    ```text
-    ls data/raw/*.csv
-    ```
-
-    ```text
-    data/raw/bikes.csv      data/raw/counts.csv
-    ```
-
-    PowerShell prints the two names in its table.
-
-5. Delete the copy, then the whole backup folder. Say the name aloud before
-   pressing `Enter`.
-
-    ```text
-    rm backup/counts_copy.csv
-    ```
-
-    ```text
-    rm -r backup
-    ```
-
-    ```text
-    ls
-    ```
-
-    ```text
-    README.md       data            results         scripts
-    ```
+2. Read the first row with the room: `74 69 6d 65` is `time`, `2c` is the
+   comma. The number on the left is the position of the first byte of the
+   row, in hex: `00000010` is 16.
 
 !!! success "You should now see"
-    The project folder as it was, with nothing lost from `data/raw`.
+    The same 80 bytes on every laptop, and `0a` where the characters on the
+    right show a dot or a box.
+
+!!! question "Task: where the lines end"
+    1. Find the three `0a` in the hex view. How many bytes does each of the
+       first three lines take? Check by counting the characters of each
+       line.
+    2. Half the 35 088 rows are `bridge` rows, half `park` rows. If every
+       count had one digit, how many bytes would the file take? Why is it
+       900 314?
+
+??? note "Answer"
+    1. The `0a` stand at positions 0x12 = 18, 0x2c = 2 × 16 + 12 = 44 and
+       0x44 = 4 × 16 + 4 = 68, counting from 0. So the lines take 19, 26
+       and 24 bytes: `time,counter,bikes` is 18 characters, the first row
+       25, the second 23 (`park` is two letters shorter than `bridge`),
+       and each line has its `0a`.
+    2. 19 + 17 544 × 26 + 17 544 × 24 = 877 219 bytes. The file has 23 095
+       bytes more: one for each digit after the first. 14 547 counts have
+       two digits, 4 022 three, and 168 four:
+       14 547 + 2 × 4 022 + 3 × 168 = 23 095.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | macOS: `cp: data is a directory (not copied).` | A folder needs `-r` |
-    | Windows: `cp data backup2` made an empty folder `backup2` | Without `-r` PowerShell copies the folder alone, not what is in it. `rm backup2`, then with `-r` |
-    | macOS: `rm: backup: is a directory` | A folder needs `rm -r` |
-    | Windows: `rm backup` asks *The item at … has children …* | `N` and `Enter`, then `rm -r backup` |
-    | Something in `data/raw` was deleted | `counts.csv`: type it again (section 7). `bikes.csv`: download it again and move it in |
+    | Windows: `A parameter cannot be found that matches parameter name 'Count'` | The terminal is Windows PowerShell 5.1, whose `Format-Hex` has no `-Count`. Section 2, step 3 |
+    | macOS: the hex view runs for pages | `-n 80` was left out. `Ctrl+C` stops it |
 
 ---
 
-## Part 3 · Pipes and filters { #part-3 }
+## Part 3 · Find what is wrong { #part-3 }
 
-**1:06 to 1:23 · sections 11 and 12**
+**0:58 to 1:21 · sections 10 to 12**
 
-So far each command printed its answer. Now the answer of one command
-becomes the input of the next, with `|`, and the last answer goes into a
-file, with `>`. The question of this part is which hour had the most
-bicycles.
+Nobody reads 35 088 counts by eye. Now the answer of one command becomes
+the input of the next, with `|`, and the last answer goes into a file,
+with `>`. Sorted, a column shows at its ends what does not belong.
 
 ---
 
-### 11. A pipe: sort the counts, read both ends { #sort }
+### 10. A pipe: sort the counts, read both ends { #sort }
 
-**1:06 · 8 min**
+**0:58 · 8 min**
 
 **Tell the room.** `A | B` is a **pipe**: what `A` prints goes into `B`,
 not onto the screen. A program that reads, changes and passes on is a
@@ -1312,15 +1121,13 @@ always at an end.
 
 ---
 
-### 12. Count the 9999 rows, keep the others in a new file { #grep }
+### 11. Count the 9999 rows, find the broken week { #grep }
 
-**1:14 · 9 min**
+**1:06 · 9 min**
 
 **Tell the room.** `grep` and `Select-String` keep the lines that contain a
 text. `,9999$` means: a comma, 9999, and then the end of the line. They can
-count those lines, show them, or keep every line *without* them. `>` sends
-the result into a file instead of onto the screen: it makes the file, or
-empties one that exists.
+count those lines or show them.
 
 1. How many rows carry the mark?
 
@@ -1403,8 +1210,70 @@ empties one that exists.
     731 × 24 = 17 544: every hour is there at both counters. The broken
     week has its rows, with 9999 in their `bikes` column.
 
-4. Keep every line without the mark, in a new file in `data/processed`.
-   `data/raw` is only read.
+!!! success "You should now see"
+    `168`, and one broken week at the park, from 10 to 16 March 2025.
+
+!!! question "Task: a line and the empty hours"
+    1. On which line of the file is the first hour of 2025 at the bridge?
+       Work it out first, then print that line alone with a pipe.
+    2. How many hours had no bicycle at all, at the park and at the bridge?
+
+??? note "Answer"
+    1. 2024 has 366 × 24 × 2 = 17 568 rows; after the header, the first
+       row of 2025 is line 17 570.
+
+        === "macOS"
+
+            ```text
+            head -n 17570 data/raw/bikes.csv | tail -n 1
+            ```
+
+        === "Windows"
+
+            ```text
+            Get-Content data/raw/bikes.csv -Head 17570 | Select-Object -Last 1
+            ```
+
+        ```text
+        2025-01-01T00:00,bridge,4
+        ```
+
+    2. A comma, the counter, a comma, `0`, the end of the line:
+
+        === "macOS"
+
+            ```text
+            grep -c ',park,0$' data/raw/bikes.csv
+            ```
+
+        === "Windows"
+
+            ```text
+            (Select-String ',park,0$' data/raw/bikes.csv).Count
+            ```
+
+        1372 at the park, and 576 with `bridge` in the line. Fewer
+        bicycles use the park path, so more of its night hours stay empty.
+        Without the `$`, `,park,0` would also count 0 at the start of a
+        longer number, but no count starts with 0.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | Someone typed `9999` alone and got 168 too | Here it gives the same count. The `,` and the `$` make sure that only a whole value 9999 at the end of a line counts |
+
+---
+
+### 12. Keep the valid rows in a new file { #valid }
+
+**1:15 · 6 min**
+
+**Tell the room.** `grep -v` and `Select-String -NotMatch` keep every line
+*without* the text. `>` sends the result into a file instead of onto the
+screen: it makes the file, or empties one that exists. The new file goes
+into `data/processed`; `data/raw` is only read.
+
+1. Keep every line without the mark.
 
     === "macOS"
 
@@ -1421,7 +1290,7 @@ empties one that exists.
         `-Raw` passes on the text of each line alone, without a file name
         and a line number in front.
 
-5. Check the new file.
+2. Check the new file.
 
     === "macOS"
 
@@ -1445,7 +1314,7 @@ empties one that exists.
 
     35 089 − 168 = 34 921.
 
-6. Now the busiest hour, twice: sorted as text, then as numbers.
+3. Now the busiest hour, twice: sorted as text, then as numbers.
 
     === "macOS"
 
@@ -1492,127 +1361,40 @@ empties one that exists.
     bicycles on the bridge on Friday 28 June 2024 at 8:00.
 
 !!! success "You should now see"
-    `168`, one broken week at the park, and `bikes_valid.csv` with 34 921
-    lines in `data/processed`.
+    `bikes_valid.csv` with 34 921 lines in `data/processed`, and 803 as the
+    busiest hour.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | Someone typed `9999` alone and got 168 too | Here it gives the same count. The `,` and the `$` make sure that only a whole value 9999 at the end of a line counts, never a 9999 inside a longer number |
     | `bikes_valid.csv` is empty | The line read from the file it wrote to. Never `>` into the file that is read |
     | Windows: every line of the new file starts with `data\raw\bikes.csv:` | `-Raw` was left out. Run the line again with it |
 
 ---
 
-## Part 4 · Python, a checksum, the README { #part-4 }
+## Part 4 · The answer { #part-4 }
 
-**1:23 to 1:52 · sections 13 to 17**
+**1:21 to 1:31 · section 13**
 
-Python arrives and runs a program someone else wrote. A checksum shows that
-a file is the same on every laptop, and the README writes down what was
-done, as a line anyone can run again.
+A program someone else wrote computes the mean, once on the raw file and
+once on the valid rows.
 
 ---
 
-### 13. Install Miniforge, run `column_stats.py` { #python }
+### 13. The mean, with and without the 9999 rows { #python }
 
-**1:23 · 10 min**
+**1:21 · 10 min**
 
 **Tell the room.** A program is a file. To run a Python program, the shell
-needs Python, and finds it in the folders listed in `PATH`. Python comes
-with **Miniforge**. It installs **conda**, a program that installs packages
-and keeps them apart in **environments**, and a first environment, `base`,
-with Python in it. The installer adds a few lines to a file the shell runs
-whenever it starts, `~/.zshrc` on a Mac and `profile.ps1` on Windows, so
-that every new terminal finds conda and Python. Then VS Code is
-restarted, so that its terminal runs those lines.
+needs Python, and finds it in the folders listed in `PATH`; conda put the
+folder of `base` first in that list. `column_stats.py` prints the number of
+rows, the smallest and largest value and the mean of one column. It counts
+every value it finds, the mark too: it cannot know that 9999 means "no
+count". Nobody has to read the program today.
 
-1. Ask the shell for Python before the install.
+1. Which Python answers?
 
     === "macOS"
-
-        ```text
-        python3 --version
-        ```
-
-        Either `Python 3.9.6`, the copy that came with the developer tools
-        of section 1, or, while those are still installing, a note about
-        them. Both are fine: Miniforge brings its own Python.
-
-    === "Windows"
-
-        ```text
-        python --version
-        ```
-
-        ```text
-        Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.
-        ```
-
-        A stand-in of Windows answered, not Python.
-
-2. Install Miniforge from the file that section 1 downloaded.
-
-    === "macOS"
-
-        In the terminal of VS Code:
-
-        ```text
-        bash ~/Downloads/Miniforge3-$(uname)-$(uname -m).sh
-        ```
-
-        The installer stops five times:
-
-        | It prints | You type |
-        |--|--|
-        | `Please, press ENTER to continue` | `Enter` |
-        | The licence, one screen at a time | `q`, which jumps to its end |
-        | `Do you accept the license terms?` | `yes` |
-        | `[/Users/smilte/miniforge3] >>>` | `Enter`: the folder is right |
-        | `Proceed with initialization?` and `[no] >>>` | `yes`. The answer in brackets is the default, so `Enter` alone would say no |
-
-        It ends with:
-
-        ```text
-        Thank you for installing Miniforge3!
-        ```
-
-    === "Windows"
-
-        Open `Miniforge3-Windows-x86_64.exe` in **Downloads**. Select
-        **Next** and **I Agree**, choose **Just Me (recommended)**, and keep
-        every other default: the folder `C:\Users\smilte\miniforge3`, the
-        boxes as they are, **Install**, then **Finish**.
-
-        Then press the Windows key, type `Miniforge Prompt` and press
-        `Enter`. In the window that opens, let conda add its lines to the
-        profile scripts of PowerShell:
-
-        ```text
-        conda init powershell
-        ```
-
-        It lists the files it looked at and ends with:
-
-        ```text
-        ==> For changes to take effect, close and re-open your current shell. <==
-        ```
-
-        Close the Miniforge Prompt.
-
-3. Quit VS Code with **File** > **Exit** (macOS `Cmd+Q`) and start it again.
-   It opens `bike-project`. Open a new terminal: the prompt now starts with
-   `(base)`, the environment conda switched on. Ask again.
-
-    === "macOS"
-
-        ```text
-        conda --version
-        ```
-
-        ```text
-        conda 26.7.2
-        ```
 
         ```text
         python3 --version
@@ -1633,14 +1415,6 @@ restarted, so that its terminal runs those lines.
     === "Windows"
 
         ```text
-        conda --version
-        ```
-
-        ```text
-        conda 26.7.2
-        ```
-
-        ```text
         python --version
         ```
 
@@ -1656,63 +1430,9 @@ restarted, so that its terminal runs those lines.
         C:\Users\smilte\miniforge3\python.exe
         ```
 
-    The folder of `base` now comes first in `PATH`, so the shell finds this
-    Python before any other.
-
-4. Run the program on the file you typed: the program, the file to run,
-   then two words for the program: the file it reads and the column.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/column_stats.py data/raw/counts.csv bikes
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/column_stats.py data/raw/counts.csv bikes
-        ```
-
-    ```text
-    file    data/raw/counts.csv
-    column  bikes
-    rows    2
-    min     388.0
-    max     412.0
-    mean    400
-    ```
-
-    Check it by hand: (412 + 388) / 2 = 400. Nobody has to read the program
-    today; it was tested on a file whose answer we know.
-
-!!! success "You should now see"
-    `(base)` in the prompt, `Python 3.14.7`, and the mean 400 on every
-    laptop.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | macOS: no `(base)` in the new terminal, or `zsh: command not found: conda` | The last question of the installer was answered with `Enter`, which means no. Run `~/miniforge3/bin/conda init zsh`, then open a new terminal |
-    | macOS: `bash: /Users/smilte/Downloads/Miniforge3-…: No such file or directory` | The download of section 1 did not finish. `ls ~/Downloads`, or copy the installer from the USB stick into **Downloads** |
-    | macOS: `ERROR: File or directory already exists: '/Users/smilte/miniforge3'` | Miniforge is there already, from an earlier try. Go on with step 3 |
-    | Windows: "Windows protected your PC" when the installer starts | Select **More info**, then **Run anyway** |
-    | Windows: `conda : The term 'conda' is not recognized …`, and no `(base)` | `conda init powershell` was not run in the Miniforge Prompt, or VS Code was not quit and started again |
-    | Windows: `… profile.ps1 cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1: switch to PowerShell 7 (section 6). Or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once, answer `Y`, and open a new terminal |
-    | Windows: still `Python was not found` | conda is not on in this terminal: there is no `(base)` in the prompt. See the two rows above. Never install Python from the Store |
-    | `no column bikes in data/raw/counts.csv` | The header of `counts.csv` was typed differently. It must read `place,bikes` |
-
----
-
-### 14. The mean with and without the 9999 rows { #mean }
-
-**1:33 · 4 min**
-
-**Tell the room.** The same program on the large file. It counts every
-value it finds, the mark too: it cannot know that 9999 means "no count".
-
-1. The raw file, then the clean one. The lines are the same in both shells,
-   with `python` on Windows.
+2. The raw file: the program, the file to run, then two words for the
+   program: the file it reads and the column. On Windows the first word is
+   `python`.
 
     ```text
     python3 scripts/column_stats.py data/raw/bikes.csv bikes
@@ -1727,6 +1447,8 @@ value it finds, the mark too: it cannot know that 9999 means "no count".
     mean    86.2712
     ```
 
+3. The valid rows.
+
     ```text
     python3 scripts/column_stats.py data/processed/bikes_valid.csv bikes
     ```
@@ -1740,73 +1462,191 @@ value it finds, the mark too: it cannot know that 9999 means "no count".
     mean    38.5811
     ```
 
-2. Work out the difference with the room: 168 × 9999 = 1 679 832 bicycles
+4. Work out the difference with the room: 168 × 9999 = 1 679 832 bicycles
    that never passed, spread over 35 088 rows, adds about 48 to every
    hour. One broken week in two years more than doubles the mean.
 
 !!! success "You should now see"
-    86.2712 and 38.5811 on every laptop.
+    86.2712 and 38.5811 on every laptop. The answer to the question of the
+    day: about 39 bicycles an hour.
+
+!!! question "Task: each counter alone"
+    What is the mean at the bridge alone, and at the park alone, without
+    the broken week? Make one file per counter in `data/processed`, then
+    run the program on each. A hint: `column_stats.py` needs the header
+    line, and the header contains neither `bridge` nor `park`.
+
+??? note "Answer"
+    Keep every line *without* the other counter: the header stays.
+
+    === "macOS"
+
+        ```text
+        grep -v ',park,' data/processed/bikes_valid.csv > data/processed/bridge.csv
+        ```
+
+        ```text
+        grep -v ',bridge,' data/processed/bikes_valid.csv > data/processed/park.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        Select-String ',park,' data/processed/bikes_valid.csv -NotMatch -Raw > data/processed/bridge.csv
+        ```
+
+        ```text
+        Select-String ',bridge,' data/processed/bikes_valid.csv -NotMatch -Raw > data/processed/park.csv
+        ```
+
+    ```text
+    python3 scripts/column_stats.py data/processed/bridge.csv bikes
+    ```
+
+    ```text
+    file    data/processed/bridge.csv
+    column  bikes
+    rows    17544
+    min     0.0
+    max     803.0
+    mean    49.6184
+    ```
+
+    ```text
+    python3 scripts/column_stats.py data/processed/park.csv bikes
+    ```
+
+    ```text
+    file    data/processed/park.csv
+    column  bikes
+    rows    17376
+    min     0.0
+    max     420.0
+    mean    27.437
+    ```
+
+    About 50 an hour on the bridge, 27 on the park path. Check against the
+    mean of both: (17 544 × 49.6184 + 17 376 × 27.437) / 34 920 = 38.58.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
+    | macOS: `Python 3.9.6`, and `which python3` prints `/usr/bin/python3` | conda is not on in this terminal: no `(base)` in the prompt. Section 2, Watch for |
+    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python: conda is not on in this terminal. Section 2, Watch for. Never install Python from the Store |
     | `no column Bikes` | Column names are exact: `bikes` |
+    | Task: `no column bikes in data/processed/bridge.csv` | The header was lost: the line kept the rows *with* `bridge` (`grep` without `-v`). Keep the rows without `park` instead |
 
 ---
 
-### 15. Compare checksums across the room { #checksum }
+## Part 5 · Make it repeatable { #part-5 }
 
-**1:37 · 5 min**
+**1:31 to 1:56 · sections 14 to 17**
 
-**Tell the room.** A **checksum** is a long number computed from every
-byte of a file. Two files with the same bytes have the same checksum; one
-byte changed gives a completely different one. Thirty laptops can check
-that they hold the same file by reading eight characters aloud.
+Every file in `data/processed` and `results` was made by a line typed
+today. Written into a script, the lines run again with one command, on any
+laptop. The README says what the files are and how to make them.
 
-1. The checksum of the downloaded file.
+---
+
+### 14. A script that makes the files again { #script }
+
+**1:31 · 10 min**
+
+**Tell the room.** A **script** is a text file of commands, run in order
+as if they were typed. On a Mac its first line, `#!/bin/zsh`, names the
+program that runs the file, and `chmod +x` allows the file to run as a
+command. On Windows a file whose name ends in `.ps1` is a PowerShell
+script. `./` in front of the name means "in this folder": the shell runs a
+file only when it is given a path to it.
+
+1. In the Explorer select the folder `scripts`, then **New File**.
+
+    === "macOS"
+
+        Name the file `rebuild.sh` and type, or copy, three lines, with
+        `Enter` after the last. Save.
+
+        ```text
+        #!/bin/zsh
+        grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv
+        python3 scripts/column_stats.py data/processed/bikes_valid.csv bikes > results/bikes_stats.txt
+        ```
+
+    === "Windows"
+
+        Name the file `rebuild.ps1` and type, or copy, two lines, with
+        `Enter` after the last. Save.
+
+        ```text
+        Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv
+        python scripts/column_stats.py data/processed/bikes_valid.csv bikes > results/bikes_stats.txt
+        ```
+
+    The lines of sections 12 and 13; the second sends its answer into
+    `results` instead of onto the screen.
+
+2. **macOS only.** Allow the file to run as a command.
+
+    ```text
+    chmod +x scripts/rebuild.sh
+    ```
+
+3. Delete the file the script makes, then run the script.
+
+    ```text
+    rm data/processed/bikes_valid.csv
+    ```
 
     === "macOS"
 
         ```text
-        shasum -a 256 data/raw/bikes.csv
-        ```
-
-        ```text
-        2c68aad221bfb1cc8346625a842eca3897c3c39bba5cfc2fe7d27891e3808991  data/raw/bikes.csv
+        ./scripts/rebuild.sh
         ```
 
     === "Windows"
 
         ```text
-        (Get-FileHash data/raw/bikes.csv).Hash
+        ./scripts/rebuild.ps1
         ```
 
-        ```text
-        2C68AAD221BFB1CC8346625A842ECA3897C3C39BBA5CFC2FE7D27891E3808991
-        ```
+    Nothing is printed: both lines write into files.
 
-    Ask three students, one on Windows, to read the first eight characters:
-    `2c68aad2`. The case of the letters does not matter.
-
-2. The file you typed. Thirty people typed it; are the bytes the same?
+4. Check what it made.
 
     === "macOS"
 
         ```text
-        shasum -a 256 data/raw/counts.csv
+        wc -l data/processed/bikes_valid.csv
+        ```
+
+        ```text
+           34921 data/processed/bikes_valid.csv
         ```
 
     === "Windows"
 
         ```text
-        (Get-FileHash data/raw/counts.csv).Hash
+        (Get-Content data/processed/bikes_valid.csv).Count
         ```
 
-    `d992afbf…` for the 39 bytes of section 7, on a Mac and on Windows. A
-    laptop with another checksum typed one character differently, or kept
-    CRLF: `c2d52752…` is the 42-byte file.
+        ```text
+        34921
+        ```
 
-3. The file the shell wrote, with `>`.
+    ```text
+    cat results/bikes_stats.txt
+    ```
+
+    ```text
+    file    data/processed/bikes_valid.csv
+    column  bikes
+    rows    34920
+    min     0.0
+    max     803.0
+    mean    38.5811
+    ```
+
+5. Compare a checksum with a neighbour on the other system.
 
     === "macOS"
 
@@ -1828,43 +1668,165 @@ that they hold the same file by reading eight characters aloud.
         8BD1459D4D008B89DB57AC1A902B0B9C6944275B1F4891F1C5205B641AA6AD31
         ```
 
-    The rows are the same on both systems, the checksums are not. PowerShell
-    on Windows ends each line it writes with CRLF, as VS Code did in section 7: 34 921 bytes more,
-    930 699 against 895 778.
+    The rows are the same on both systems, the checksums are not.
+    PowerShell on Windows ends each line it writes with two bytes, `0d 0a`
+    (CRLF), where zsh writes `0a`: 34 921 bytes more, 930 699 against
+    895 778.
 
 !!! success "You should now see"
-    `2c68aad2…` on every laptop, `d992afbf…` on most, and two checksums for
-    `bikes_valid.csv`, one per system.
+    `bikes_valid.csv` made again by one command, 34 921 lines, and the
+    mean 38.5811 in `results/bikes_stats.txt`.
+
+!!! question "Task: the script makes everything"
+    Add the two files of the Task of section 13, `bridge.csv` and
+    `park.csv`, and their means, `results/bridge_stats.txt` and
+    `results/park_stats.txt`, to the script. Then delete everything in
+    `data/processed` and in `results`, run the script, and list both
+    folders.
+
+??? note "Answer"
+    Four lines at the end of the script, after the line that makes
+    `bikes_valid.csv`, which they read:
+
+    === "macOS"
+
+        ```text
+        grep -v ',park,' data/processed/bikes_valid.csv > data/processed/bridge.csv
+        grep -v ',bridge,' data/processed/bikes_valid.csv > data/processed/park.csv
+        python3 scripts/column_stats.py data/processed/bridge.csv bikes > results/bridge_stats.txt
+        python3 scripts/column_stats.py data/processed/park.csv bikes > results/park_stats.txt
+        ```
+
+    === "Windows"
+
+        ```text
+        Select-String ',park,' data/processed/bikes_valid.csv -NotMatch -Raw > data/processed/bridge.csv
+        Select-String ',bridge,' data/processed/bikes_valid.csv -NotMatch -Raw > data/processed/park.csv
+        python scripts/column_stats.py data/processed/bridge.csv bikes > results/bridge_stats.txt
+        python scripts/column_stats.py data/processed/park.csv bikes > results/park_stats.txt
+        ```
+
+    `*` stands for every name in a folder:
+
+    ```text
+    rm data/processed/*
+    ```
+
+    ```text
+    rm results/*
+    ```
+
+    Then `./scripts/rebuild.sh` or `./scripts/rebuild.ps1`, `ls
+    data/processed` and `ls results`: `bikes_valid.csv`, `bridge.csv`,
+    `park.csv`, and `bikes_stats.txt`, `bridge_stats.txt`,
+    `park_stats.txt`. `cat results/park_stats.txt` ends with `mean
+    27.437`.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | Another checksum for `bikes.csv` | The file is not the downloaded one: it was opened and saved, or the download broke. Download it again |
-    | Windows: a table with `Algorithm`, `Hash`, `Path` | The brackets and `.Hash` were left out. The hash is the middle column |
+    | macOS: `zsh: permission denied: ./scripts/rebuild.sh` | `chmod +x scripts/rebuild.sh` was skipped. Run it, then the script again |
+    | `zsh: command not found: rebuild.sh`, or *not recognized* | The `./scripts/` in front is missing |
+    | Windows: `… cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1: section 2, step 3. Or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
+    | macOS: `zsh: no matches found: results/*` | The folder is empty already. Go on |
+    | `results/bikes_stats.txt` holds `no column bikes …` | `bikes_valid.csv` was empty or missing when the second line ran. Check the first line of the script against the page |
 
 ---
 
-### 16. Data, columns and the rebuild line in the README { #readme }
+### 15. The script from the other system { #crlf }
 
-**1:42 · 6 min**
+**1:41 · 7 min**
 
-**Tell the room.** The README of section 5 says what the project is. A
-stranger also needs to know where the data came from, what each column
-means, which value marks a missing one, and how every file in
-`data/processed` is made again: the line that ran today, copied from the
-terminal, not retyped from memory.
+**Tell the room.** Section 9 showed `0a` at the end of every line. VS Code
+on Windows ends each line of a new file with two bytes, `0d 0a`: CRLF. The
+Status Bar shows which. A script sent from a Windows laptop to a Mac
+carries those bytes, and the Mac reads the `0d` as part of the line. Work
+in pairs, one Mac and one Windows laptop; a room of one system watches the
+projector for the other.
 
-1. Open `README.md` and its preview (`Ctrl+K`, then `V`). Add at the end:
+1. **Windows.** Open `scripts/rebuild.ps1`: the right end of the Status
+   Bar reads `CRLF`. Show it to your Mac neighbour.
+
+2. **macOS.** Make a copy of the script, as if the neighbour had written
+   it, and give the copy Windows line ends: open
+   `scripts/rebuild_win.sh`, select `LF` in the Status Bar, choose `CRLF`,
+   save.
+
+    ```text
+    cp scripts/rebuild.sh scripts/rebuild_win.sh
+    ```
+
+    ```text
+    hexdump -C -n 16 scripts/rebuild_win.sh
+    ```
+
+    ```text
+    00000000  23 21 2f 62 69 6e 2f 7a  73 68 0d 0a 67 72 65 70  |#!/bin/zsh..grep|
+    00000010
+    ```
+
+    ```text
+    ./scripts/rebuild_win.sh
+    ```
+
+    ```text
+    zsh: ./scripts/rebuild_win.sh: bad interpreter: /bin/zsh^M: no such file or directory
+    ```
+
+    `^M` is the byte `0d`. The Mac ends the first line at `0a` alone, so
+    the name of the program is now `/bin/zsh` followed by `0d`, and no
+    program has that name. The script does not run at all. Delete the
+    copy:
+
+    ```text
+    rm scripts/rebuild_win.sh
+    ```
+
+3. **Windows.** Select `CRLF` in the Status Bar, choose `LF`, save, and
+   run the script again:
+
+    ```text
+    ./scripts/rebuild.ps1
+    ```
+
+    Nothing is printed, and `bikes_valid.csv` is made again: PowerShell
+    reads both line ends. To make VS Code write LF in every new file:
+    `Ctrl+,`, search `eol`, set **Files: Eol** to `\n`.
+
+!!! success "You should now see"
+    On a Mac, `bad interpreter` for the copy with CRLF; on Windows, the
+    script running with both line ends. A file that runs on one system
+    can fail on another with no difference to see in the editor; the
+    Status Bar shows it.
+
+!!! warning "Watch for"
+    | On the screen | What to do |
+    |--|--|
+    | macOS: the copy still runs after choosing `CRLF` | The file was not saved after the switch |
+    | macOS: `zsh: permission denied: ./scripts/rebuild_win.sh` | `cp` made the copy without the permission: `chmod +x scripts/rebuild_win.sh` |
+
+---
+
+### 16. The README: data, columns, how to rebuild { #readme }
+
+**1:48 · 5 min**
+
+**Tell the room.** A stranger who opens the project needs to know where
+the data came from and which file it is, what each column means, which
+value marks a missing one, and how every file in `data/processed` and
+`results` is made again. The checksum is copied from the terminal, not
+retyped.
+
+1. Open `README.md` and its preview (`Ctrl+K`, then `V`). Add at the end,
+   with the full checksum of section 7 pasted in place of the dots:
 
     ```text
     ## Data
 
-    - `data/raw/counts.csv`: the two places above, typed by hand.
-    - `data/raw/bikes.csv`: two bicycle counters, one row per counter and hour
-      of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`. From the
-      course workbook, Seminar 4.
-
-    ## Columns of `bikes.csv`
+    `data/raw/bikes.csv`: two bicycle counters, one row per counter and
+    hour of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`.
+    From [Seminar 4](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/seminars/seminar_04/)
+    of the course workbook.
 
     | Column | Meaning | Unit |
     |--|--|--|
@@ -1877,88 +1839,74 @@ terminal, not retyped from memory.
 
     ## How to rebuild
 
-    Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
+    In the project folder: `./scripts/rebuild.sh` in zsh on macOS,
+    `./scripts/rebuild.ps1` in PowerShell 7 on Windows. They make:
 
-    - `data/processed/bikes_valid.csv`: `bikes.csv` without the rows marked
-      `9999`, 34 921 lines.
+    - `data/processed/bikes_valid.csv`: `bikes.csv` without the rows
+      marked `9999`, 34 921 lines
+    - `results/bikes_stats.txt`: rows, smallest, largest and mean of
+      `bikes` in it
     ```
 
-2. Under the last item, add the line of your shell. Press `↑` in the
-   terminal until it comes back, select it with the mouse, copy, and paste
-   it between backticks:
-
-    ```text
-      - zsh: `grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv`
-      - PowerShell: `Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv`
-    ```
-
-3. Save with `Ctrl+S` (macOS `Cmd+S`).
+2. If the Task of section 14 was done, add a line for each of the four
+   files it makes. Save.
 
 !!! success "You should now see"
-    In the preview: **Data** with the checksum of `bikes.csv`, a table of
-    three columns, the line about `9999`, and **How to rebuild** with the
-    line that made `bikes_valid.csv`. The README gives that line and no
-    checksum for the file: section 15 showed that it differs between macOS
-    and Windows.
+    In the preview: **Data** with the checksum and a link, a table of three
+    columns, the line about `9999`, and **How to rebuild** with the two
+    scripts and what they make. The README gives no checksum for
+    `bikes_valid.csv`: section 14 showed that it differs between macOS and
+    Windows.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
+    | The table shows as plain text | The line of dashes under the header is missing, or the empty line before the table |
     | The checksum in the README was typed by hand | Copy it from the terminal instead: one wrong character and it names another file |
-    | The command shows without its `$` or with odd formatting | It must stand between backticks, as on this page |
 
 ---
 
 ### 17. Wrap up { #wrap-up }
 
-**1:48 · 4 min**
+**1:53 · 3 min**
 
-**Tell the room.** Git keeps versions of files, from next week on. It
-writes a name and an address into every version, so it is told both once,
-now. Nothing is printed, which is correct.
-
-1. Check that Git is installed, then tell it who you are, with your own
-   name and address.
+1. Git is needed next week. Check that it is there:
 
     ```text
     git --version
     ```
 
     ```text
-    git config --global user.name "Smiltė"
-    ```
-
-    ```text
-    git config --global user.email "smilte@example.com"
+    git version 2.…
     ```
 
 2. Read the list of the day with the room:
 
-    - VS Code has five regions; the Command Palette finds any command.
-    - The shell runs in the terminal; the prompt shows the working
-      directory; `pwd`, `ls`, `cd` move around; `Tab` and `↑` save typing.
-    - A file is bytes: `ž` is two of them, a line end one (LF) or two
-      (CRLF).
-    - A command is a program, options and arguments. `head`, `tail`, `cat`,
-      `wc`, `cp`, `mv`, `rm`, `mkdir`, `*`.
+    - Installs come first, in the system's terminal; VS Code starts after
+      them and finds them. Its terminal runs `zsh` or PowerShell 7, with
+      conda's `(base)` in the prompt.
+    - The prompt shows the working directory; `pwd`, `ls`, `cd` move
+      around, by relative or absolute paths; `Tab` and `↑` save typing.
+    - A checksum shows that every laptop holds the same file.
+    - A file is bytes: one per character here, and `0a` (LF) or `0d 0a`
+      (CRLF) at the end of a line.
     - `|` joins filters, `>` writes a file. The sorted column showed `9999`
-      at its top end: the mark for no count, in 168 rows, one week of the
-      park counter, and it more than doubled the mean.
-    - Python comes with Miniforge, in conda's environment `base`, which
-      every new terminal switches on: `(base)` in the prompt.
-    - A program someone else wrote runs with one line; a checksum shows that
-      two files hold the same bytes; the README holds the line that makes
-      the processed file again.
+      at its top end: the mark for no count, in 168 rows, one week at the
+      park. Counted as bicycles, it more than doubled the mean: 86.3
+      against 38.6 an hour.
+    - A script runs the day's lines again with one command; the README
+      says what the files are and how to make them.
 
 !!! success "You should now see"
     `git version 2.…` on every laptop, and the folder `bike-project` with a
-    README, two raw files, one processed file and one script.
+    README, `bikes.csv`, `bikes_valid.csv`, `column_stats.py`, the rebuild
+    script and `bikes_stats.txt`.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
     | `git: command not found`, or *not recognized* | The install of section 1 has not finished, or VS Code started before it did. Quit VS Code, start it again, `git --version` |
-    | macOS: the developer tools are still installing | Let them finish after the session; `git config` can wait until next week |
+    | macOS: the developer tools are still installing | Let them finish after the session |
 
 ---
 
@@ -2094,9 +2042,10 @@ deletes the column `nr`.
         ```
 
     The same on a Mac and on Windows, unlike `bikes_valid.csv`: the program
-    ends every line with LF on every system. Add it to **How to rebuild**:
-    `data/processed/monthly.csv`, 189 bytes, SHA-256 `ea4ce2ce…19396ef6`,
-    with the line of step 3.
+    ends every line with LF on every system. Add the line of step 3 to the
+    rebuild script of section 14, and the file to **How to rebuild** in the
+    README: `data/processed/monthly.csv`, 189 bytes, SHA-256
+    `ea4ce2ce…19396ef6`.
 
 !!! success "You should now see"
     `monthly.csv` with 12 rows, the mean 1182.04, and `ea4ce2ce…` on every
@@ -2193,7 +2142,7 @@ Find box of VS Code and in the shell.
 
 **— · 12 min**
 
-**Tell the room.** Since section 13 every terminal starts in conda's
+**Tell the room.** Since section 1 every terminal starts in conda's
 environment `base`: one Python, shared by everything on the laptop. A
 package installed there is shared by every project, and an upgrade for one
 can break another. An **environment** is a folder with a Python and
@@ -2416,11 +2365,11 @@ that list.
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | `conda: command not found`, or `The term 'conda' is not recognized` | conda is not on in this terminal: section 13, step 3 |
+    | `conda: command not found`, or `The term 'conda' is not recognized` | conda is not on in this terminal: section 2, Watch for |
     | `EnvironmentNameNotFound: Could not find conda environment: bikez` | A typo, or `conda create` did not finish. `conda env list` shows the names |
     | `conda install numpy` ran with `(base)` in the prompt | numpy went into `base`. `conda remove numpy`, then `conda activate bikes` and install it again |
     | `environment.yml` still ends with `prefix:` | Delete that line and save |
-    | Windows: `… cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1. Switch to PowerShell 7 (section 6), or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
+    | Windows: `… cannot be loaded because running scripts is disabled on this system` | The terminal is Windows PowerShell 5.1. Switch to PowerShell 7 (section 2, step 3), or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and answer `Y` |
     | Other version numbers | A newer Python 3.14 or numpy was released. Fine |
 
 ---
@@ -2458,10 +2407,9 @@ second.
 
         ```text
         data/raw/bikes.csv: OK
-        data/raw/counts.csv: OK
         ```
 
-        A third line, `monthly_export.csv: OK`, if section 18 was done.
+        A second line, `monthly_export.csv: OK`, if section 18 was done.
 
     === "Windows"
 
@@ -2506,7 +2454,6 @@ second.
 
         ```text
         data/raw/bikes.csv: FAILED
-        data/raw/counts.csv: OK
         shasum: WARNING: 1 computed checksum did NOT match
         ```
 
@@ -2552,47 +2499,141 @@ second.
 
 ---
 
-### 22. Test the README { #readme-test }
+### 22. Stop the script at the first error { #stop }
 
-**— · 6 min**
+**— · 8 min**
 
-**Tell the room.** A README is tested the way a stranger would use it:
-delete what it says can be made again, run its line, and measure.
+**Tell the room.** A script runs on after a line fails, and its last line
+decides what it reports. One typo can leave an empty file behind and a
+wrong result in `results`, with nothing on the screen to say so. One line
+on a Mac, two on Windows, make the script stop at the first error.
 
-1. Delete the processed file.
-
-    ```text
-    rm data/processed/bikes_valid.csv
-    ```
-
-2. Open the preview of `README.md`, copy the line of your shell from **How
-   to rebuild** and paste it into the terminal.
-
-3. Count.
+1. Put a typo into the first command of the script: `bike.csv` in place of
+   `bikes.csv`. Save, run it, and ask for its status: `$?` holds the
+   answer of the last command, `0` (`True`) when it worked.
 
     === "macOS"
 
         ```text
-        wc -l data/processed/bikes_valid.csv
+        ./scripts/rebuild.sh
+        ```
+
+        ```text
+        grep: data/raw/bike.csv: No such file or directory
+        ```
+
+        ```text
+        echo $?
+        ```
+
+        ```text
+        1
         ```
 
     === "Windows"
 
         ```text
-        (Get-Content data/processed/bikes_valid.csv).Count
+        ./scripts/rebuild.ps1
         ```
 
-    34 921 lines, the number the README states.
+        ```text
+        Select-String: C:\Users\smilte\bike-project\scripts\rebuild.ps1:1
+        Line |
+           1 |  Select-String ',9999$' data/raw/bike.csv -NotMatch -Raw > data/proces …
+             |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             | Cannot find path 'C:\Users\smilte\bike-project\data\raw\bike.csv' because it does not exist.
+        ```
+
+        ```text
+        $?
+        ```
+
+        ```text
+        True
+        ```
+
+2. Look at what the script left behind.
+
+    ```text
+    cat results/bikes_stats.txt
+    ```
+
+    ```text
+    no column bikes in data/processed/bikes_valid.csv
+    the columns are:
+    ```
+
+    `>` emptied `bikes_valid.csv` before the first command failed, and the
+    second command ran on the empty file. On Windows the script even
+    reports `True`, because its last command worked.
+
+3. Make it stop at the first error. Add as the second line:
+
+    === "macOS"
+
+        ```text
+        set -e
+        ```
+
+    === "Windows"
+
+        As the first two lines: the first stops at a failing PowerShell
+        command, the second at a failing program such as `python`.
+
+        ```text
+        $ErrorActionPreference = 'Stop'
+        $PSNativeCommandUseErrorActionPreference = $true
+        ```
+
+    Save and run it again.
+
+    === "macOS"
+
+        ```text
+        grep: data/raw/bike.csv: No such file or directory
+        ```
+
+        ```text
+        echo $?
+        ```
+
+        ```text
+        2
+        ```
+
+    === "Windows"
+
+        ```text
+        Select-String: C:\Users\smilte\bike-project\scripts\rebuild.ps1:3
+        Line |
+           3 |  Select-String ',9999$' data/raw/bike.csv -NotMatch -Raw > data/proces …
+             |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             | Cannot find path 'C:\Users\smilte\bike-project\data\raw\bike.csv' because it does not exist.
+        ```
+
+        ```text
+        $?
+        ```
+
+        ```text
+        False
+        ```
+
+    The script stopped at line 3 and reports the failure; the second
+    command never ran.
+
+4. Correct the typo, keep the new lines, and run the script once more:
+   `bikes_valid.csv` has 34 921 lines again.
 
 !!! success "You should now see"
-    `bikes_valid.csv` back in `data/processed`, with the number of lines the
-    README states.
+    A script that reports `1` or `True` for a failed run, then `2` or
+    `False` once it stops at the first error.
 
 !!! warning "Watch for"
     | On the screen | What to do |
     |--|--|
-    | The count says the file does not exist | The pasted line did not run. Press `Enter` after pasting |
-    | Windows: the prompt shows `>>` and waits | The backticks came along: a backtick at the end of a line tells PowerShell the line goes on. `Ctrl+C`, then copy the line from the preview, not from the source |
+    | macOS: `set -e` as the first line, and `bad interpreter` | `#!/bin/zsh` must stay the first line |
+    | `$?` prints `0` or `True` after the run | Another command ran in between. Run the script, then `$?` at once |
 
 ---
 
@@ -2601,7 +2642,7 @@ delete what it says can be made again, run its line, and measure.
 **— · 12 min**
 
 **Tell the room.** A shell runs a file of settings whenever it starts:
-`~/.zshrc` for zsh, `$PROFILE` for PowerShell. conda's lines of section 13
+`~/.zshrc` for zsh, `$PROFILE` for PowerShell. conda's lines of section 1
 went into `~/.zshrc` on a Mac, and into `profile.ps1`, a file beside
 `$PROFILE`, on Windows. What is written there comes back in every new
 terminal. Nothing in this course needs more of it, and it stays on this
@@ -2712,7 +2753,7 @@ laptop: a README line always uses the full command.
 
         A new zsh starts with the prompt `➜  bike-project`. The old
         `~/.zshrc` is now `~/.zshrc.pre-oh-my-zsh`, with the two lines of
-        step 2 and conda's lines of section 13. Give conda its lines back
+        step 2 and conda's lines of section 1. Give conda its lines back
         in the new file, then open a new terminal:
 
         ```text
@@ -2764,11 +2805,11 @@ laptop: a README line always uses the full command.
   `-t,` splits at commas and `-k3` sorts by the third field. In PowerShell,
   `Import-Csv data/processed/bikes_valid.csv | Where-Object counter -eq park | Sort-Object {[double]$_.bikes} | Select-Object -Last 1`.
   Both give 420 bicycles, on 6 September 2024 at 8:00.
-- How many hours with no bicycle at all are there at each counter?
-  `grep -c ',park,0$' data/raw/bikes.csv` and the same for the bridge:
-  1372 and 576.
-- Add a third place to `counts.csv` and to the table of the README, predict
-  the new size in bytes, and measure it.
+- How many bytes would `bikes.csv` take with CRLF at the end of every
+  line? Predict it, then check on Windows with a copy saved by VS Code
+  with `CRLF`: 900 314 + 35 089 = 935 403.
+- How many counts have three digits? `grep -E -c ',[0-9]{3}$'` (section
+  19) gives 4022; the Task of section 9 used it.
 
 ## If students ask for more
 
@@ -2782,10 +2823,11 @@ laptop: a README line always uses the full command.
 ## Aims practised
 
 - 🔧 **Tool-agnostic:** the same work in two shells, and in VS Code.
-- ♻️ **Reproducible:** a README whose line makes the processed file again,
-  a checksum that names the raw file, and (section 20) an `environment.yml`
-  from which any laptop makes the same environment.
-- ⚙️ **Automation:** typed lines and a program in place of clicks.
+- ♻️ **Reproducible:** a checksum that names the raw file, a README that
+  says what each file is, and (section 20) an `environment.yml` from which
+  any laptop makes the same environment.
+- ⚙️ **Automation:** a script that makes every processed file and result
+  again with one command.
 - 📁 **Data & files:** a project folder from nothing, a file read byte by
   byte, raw data that is only read, a mark for missing values found and
   removed.

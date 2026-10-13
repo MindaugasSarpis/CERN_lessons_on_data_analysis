@@ -18,9 +18,9 @@ logger wrote 9999.
   bikes_README.txt          the README at the end of the seminar
   bikes_project.zip         the folder `bike-project` at the end of the core
                             of the seminar, for a student who lost a step:
-                            the README, `counts.csv` as typed in the warm-up
-                            (LF), `bikes.csv`, `bikes_valid.csv` as zsh
-                            writes it, and `column_stats.py`
+                            the README, `bikes.csv`, `bikes_valid.csv` as zsh
+                            writes it, `column_stats.py`, the two rebuild
+                            scripts and `results/bikes_stats.txt`
 
 The README is `.txt` because MkDocs turns every `.md` file in `docs/` into a
 page. The random numbers are seeded and the zip carries a fixed date, so the
@@ -30,6 +30,9 @@ into the zip.
 Usage:  python3 bikes_files.py
 """
 import hashlib
+import subprocess
+import sys
+import tempfile
 import math
 import random
 import zipfile
@@ -44,7 +47,15 @@ END = datetime(2026, 1, 1)
 COUNTERS = {"bridge": 1.0, "park": 0.55}
 BROKEN = ("park", datetime(2025, 3, 10), datetime(2025, 3, 17))
 MARK = "9999"
-COUNTS = "place,bikes\nAntakalnis,412\nUžupis,388\n"  # typed in the warm-up
+REBUILD_SH = """\
+#!/bin/zsh
+grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv
+python3 scripts/column_stats.py data/processed/bikes_valid.csv bikes > results/bikes_stats.txt
+"""
+REBUILD_PS1 = """\
+Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv
+python scripts/column_stats.py data/processed/bikes_valid.csv bikes > results/bikes_stats.txt
+"""
 
 
 def poisson(rng, mean):
@@ -115,18 +126,29 @@ def main():
     # The file the core of the seminar makes, as zsh writes it (LF).
     valid = ("\n".join(l for l in lines if not l.endswith("," + MARK)) + "\n").encode()
 
+    # results/bikes_stats.txt, as the script writes it: column_stats.py run
+    # on the valid rows.
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "data/processed/bikes_valid.csv"
+        path.parent.mkdir(parents=True)
+        path.write_bytes(valid)
+        stats = subprocess.run(
+            [sys.executable, str(HERE / "cli_column_stats.py"),
+             "data/processed/bikes_valid.csv", "bikes"],
+            cwd=tmp, capture_output=True, check=True).stdout
+
     digest = hashlib.sha256(hourly).hexdigest()
     readme = README.format(short=f"{digest[:8]}…{digest[-8:]}").encode()
     (HERE / "bikes_README.txt").write_bytes(readme)
     root = "bike-project/"
     with zipfile.ZipFile(HERE / "bikes_project.zip", "w", zipfile.ZIP_DEFLATED) as z:
-        def put(name, data=None):
+        def put(name, data=None, mode=0o644):
             info = zipfile.ZipInfo(root + name, DATE)
             if data is None:
                 info.external_attr = 0o40755 << 16
                 z.writestr(info, b"")
             else:
-                info.external_attr = 0o644 << 16
+                info.external_attr = mode << 16
                 info.compress_type = zipfile.ZIP_DEFLATED
                 z.writestr(info, data)
         put("")
@@ -134,44 +156,35 @@ def main():
         put("data/")
         put("data/raw/")
         put("data/raw/bikes.csv", hourly)
-        put("data/raw/counts.csv", COUNTS.encode())
         put("data/processed/")
         put("data/processed/bikes_valid.csv", valid)
         put("scripts/")
         put("scripts/column_stats.py", (HERE / "cli_column_stats.py").read_bytes())
+        put("scripts/rebuild.sh", REBUILD_SH.encode(), 0o755)
+        put("scripts/rebuild.ps1", REBUILD_PS1.encode())
         put("results/")
+        put("results/bikes_stats.txt", stats)
 
 
 README = """\
 # Bike Counters
 
-Practice project of Seminar 4: bicycle counts, read and checked with typed
-commands.
+Two bicycle counters, one on a bridge and one on a park path, counted
+every hour of 2024 and 2025. How many bicycles pass in an hour?
 
 ## Folders
 
 - `data/raw`: files as they arrived, never edited
 - `data/processed`: files that commands make from `data/raw`
 - `scripts`: programs
-- `results`: numbers and figures
-
-## Two places
-
-| Place | Bicycles |
-|--|--|
-| Antakalnis | 412 |
-| Užupis | 388 |
-
-Course pages: [the workbook](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/)
+- `results`: numbers that the programs write
 
 ## Data
 
-- `data/raw/counts.csv`: the two places above, typed by hand.
-- `data/raw/bikes.csv`: two bicycle counters, one row per counter and hour
-  of 2024 and 2025, 35 088 rows, SHA-256 `{short}`. From the
-  course workbook, Seminar 4.
-
-## Columns of `bikes.csv`
+`data/raw/bikes.csv`: two bicycle counters, one row per counter and
+hour of 2024 and 2025, 35 088 rows, SHA-256 `{short}`.
+From [Seminar 4](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/seminars/seminar_04/)
+of the course workbook.
 
 | Column | Meaning | Unit |
 |--|--|--|
@@ -184,12 +197,13 @@ Missing value: `bikes` is `9999` in 168 rows, the park counter from
 
 ## How to rebuild
 
-Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
+In the project folder: `./scripts/rebuild.sh` in zsh on macOS,
+`./scripts/rebuild.ps1` in PowerShell 7 on Windows. They make:
 
-- `data/processed/bikes_valid.csv`: `bikes.csv` without the rows marked
-  `9999`, 34 921 lines.
-  - zsh: `grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv`
-  - PowerShell: `Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv`
+- `data/processed/bikes_valid.csv`: `bikes.csv` without the rows
+  marked `9999`, 34 921 lines
+- `results/bikes_stats.txt`: rows, smallest, largest and mean of
+  `bikes` in it
 """
 
 

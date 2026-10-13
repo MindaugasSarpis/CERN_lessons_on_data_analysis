@@ -67,7 +67,8 @@ seminar uses a branch.
     `pendulum_script.csv` and `D0_valid.csv`, and `data/checksums.txt` lists
     the raw files. `scripts` holds `hello.py`, `clean_pendulum.py` and
     `column_stats.py`, `results` holds `report.md` and `pendulum_plot.png`.
-    Git installed in Seminar 4, with the name and e-mail set, and on Windows
+    Git installed in Seminar 4 (section 1 of this page sets the name and
+    e-mail), and on Windows
     PowerShell 7 as the terminal of VS Code. A mailbox that can be opened in
     class, for the code that GitHub sends. No Python is needed.
 

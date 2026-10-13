@@ -1,6 +1,6 @@
 # Install Python, Git and PowerShell 7
 
-**Format:** in class, [Seminar 4](seminar_04.md), sections 1, 6 and 13 · about 20 min
+**Format:** in class, [Seminar 4](seminar_04.md), sections 1 and 2 · about 20 min
 
 **This page is the reference for the installs of Seminar 4.** The seminar page has
 the same steps in the order the room does them. This page has them per
@@ -19,10 +19,10 @@ it. Its packages come from **conda-forge**, a free collection kept by
 volunteers. Every terminal that knows conda shows `(base)` before its
 prompt.
 
-Everything is installed in class, in Seminar 4: the installs of PowerShell 7
-and Git and the download of Miniforge start in section 1, VS Code switches
-to PowerShell 7 in section 6, and Miniforge is installed in section 13,
-where the first script needs Python.
+Everything is installed in class, at the start of Seminar 4: PowerShell 7,
+Git and Miniforge in section 1, in the terminal of the system and with VS
+Code closed; then, in section 2, VS Code starts, is switched to PowerShell 7
+on Windows, and shows `(base)` in its terminal.
 
 ??? info "For the lecturer: the USB stick"
     The network of the room is slow when 30 laptops download at once. Bring

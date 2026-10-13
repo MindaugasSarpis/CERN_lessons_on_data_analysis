@@ -161,7 +161,7 @@ path so that the same script runs on Windows and on macOS.
     | On the screen | What to do |
     |--|--|
     | `False`, then `FileNotFoundError` | The terminal is not in the project folder. Run `pwd`. Go there with `cd`, or open the project folder with **File** > **Open Folder...** |
-    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python. See [Seminar 4, section 13](seminar_04.md#python), Watch for. Until it is fixed, `py` works in place of `python` |
+    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python. See [Seminar 4, section 2](seminar_04.md#shell), Watch for. Until it is fixed, `py` works in place of `python` |
     | `IndentationError` | The lines under `with` start with four spaces. Select them and press `Tab` |
 
 ---

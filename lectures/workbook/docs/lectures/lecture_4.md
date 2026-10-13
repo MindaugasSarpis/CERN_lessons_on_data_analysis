@@ -258,23 +258,19 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 4 — Work on Files from the Shell](../seminars/seminar_04.md) starts
-from an empty folder. Its first 49 minutes are a warm-up that revisits
-Seminars 1 and 3 by hand while the installs run: the regions of VS Code,
-terminal, shell and prompt, a project folder made with `mkdir`, a README in
-Markdown, the switch to PowerShell 7, and a three-line file typed from the
-page and measured byte by byte (one letter of two bytes, LF against CRLF),
-then a two-line script that runs on a Mac with LF and does not run at all
-with the CRLF that VS Code writes on Windows. Then it follows this lecture's
-order on files of its own, two years of hourly counts from two bicycle
-counters: read and count, copy and delete, the mark `9999` at an end of a
-sorted column, `grep` and a clean copy, Python from Miniforge and
-`column_stats.py`, one checksum in the room, and the README's *How to
-rebuild*. The core needs two downloads, `bikes.csv` and `column_stats.py`.
-The cleaning script, regular expressions, a conda environment for the
-project, a list of checksums, a test of the README and the shell's own
-settings (an alias, a prompt, Oh My Zsh or Oh My Posh) are its optional
-sections.
+[Seminar 4 — Work on Files from the Shell](../seminars/seminar_04.md) asks
+one question of its own file, two years of hourly counts from two bicycle
+counters: how many bicycles pass in an hour? It installs PowerShell 7, Git
+and Miniforge first, with VS Code closed, then builds the project folder
+from nothing with `mkdir` and starts the README. The room checks the
+downloaded file by its checksum, counts its lines and bytes (with a hex
+view of the first lines), finds the mark `9999` at an end of a sorted
+column, counts the 168 marked rows of one broken week and keeps the others
+in `data/processed`. `column_stats.py` gives the answer, 86.3 bicycles an
+hour with the mark and 38.6 without. A script then makes every processed
+file and result again with one command, a copy saved with CRLF stops it on
+a Mac, and the README says what each file is and how to rebuild it. Every
+part ends with a task the room solves alone.
 
 ## What left the deck
 

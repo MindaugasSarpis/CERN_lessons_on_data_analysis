@@ -171,7 +171,7 @@ more than one Python, and this form installs into the one that the word
     | On the screen | What to do |
     |--|--|
     | macOS: `zsh: command not found: python` | On macOS the program is `python3`, as in the macOS tab |
-    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python. Do as in [Seminar 4, section 13](seminar_04.md#python), Watch for. Until then `py` works in place of `python`, here and in every later step |
+    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python. Do as in [Seminar 4, section 2](seminar_04.md#shell), Watch for. Until then `py` works in place of `python`, here and in every later step |
     | `No module named pip` | Run `python -m ensurepip --upgrade` (macOS `python3 -m ensurepip --upgrade`), then step 3 again |
     | The download does not start | The network of the room blocks it. Connect the laptop to a phone hotspot |
 

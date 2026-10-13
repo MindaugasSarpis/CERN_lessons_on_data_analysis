@@ -1,32 +1,21 @@
 # Bike Counters
 
-Practice project of Seminar 4: bicycle counts, read and checked with typed
-commands.
+Two bicycle counters, one on a bridge and one on a park path, counted
+every hour of 2024 and 2025. How many bicycles pass in an hour?
 
 ## Folders
 
 - `data/raw`: files as they arrived, never edited
 - `data/processed`: files that commands make from `data/raw`
 - `scripts`: programs
-- `results`: numbers and figures
-
-## Two places
-
-| Place | Bicycles |
-|--|--|
-| Antakalnis | 412 |
-| Užupis | 388 |
-
-Course pages: [the workbook](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/)
+- `results`: numbers that the programs write
 
 ## Data
 
-- `data/raw/counts.csv`: the two places above, typed by hand.
-- `data/raw/bikes.csv`: two bicycle counters, one row per counter and hour
-  of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`. From the
-  course workbook, Seminar 4.
-
-## Columns of `bikes.csv`
+`data/raw/bikes.csv`: two bicycle counters, one row per counter and
+hour of 2024 and 2025, 35 088 rows, SHA-256 `2c68aad2…e3808991`.
+From [Seminar 4](https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis/workbook/seminars/seminar_04/)
+of the course workbook.
 
 | Column | Meaning | Unit |
 |--|--|--|
@@ -39,9 +28,10 @@ Missing value: `bikes` is `9999` in 168 rows, the park counter from
 
 ## How to rebuild
 
-Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
+In the project folder: `./scripts/rebuild.sh` in zsh on macOS,
+`./scripts/rebuild.ps1` in PowerShell 7 on Windows. They make:
 
-- `data/processed/bikes_valid.csv`: `bikes.csv` without the rows marked
-  `9999`, 34 921 lines.
-  - zsh: `grep -v ',9999$' data/raw/bikes.csv > data/processed/bikes_valid.csv`
-  - PowerShell: `Select-String ',9999$' data/raw/bikes.csv -NotMatch -Raw > data/processed/bikes_valid.csv`
+- `data/processed/bikes_valid.csv`: `bikes.csv` without the rows
+  marked `9999`, 34 921 lines
+- `results/bikes_stats.txt`: rows, smallest, largest and mean of
+  `bikes` in it

@@ -477,3 +477,38 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   (Seminar 5: checksums of `D0_KPi.csv`; Seminar 6 and Lecture 6:
   `scripts/clean_pendulum.py`; Seminar 7: `D0_valid.csv`). Rework each the
   same way before its week, Seminar 5 first (20 October).
+
+## 2026-10-13 · Seminar 4, before its session
+
+**Lecturer's notes**
+
+- "The S4 doesn't make much sense"; "have some steps, some tasks to
+  actually do"; "if we need to have something installed for the seminar
+  we will do it at the start of that seminar. They are a bit tricky to
+  read."
+
+**Changed in response** (13 October)
+
+- Seminar 4 is one story with one file: how many bicycles pass in an hour?
+  Part 1 installs PowerShell 7, Git and Miniforge first, in the system's
+  terminal with VS Code closed, so VS Code finds them when it starts (no
+  restart mid-session); then the prompt, the project folder, the README's
+  start. Part 2 gets the file and checks it (checksum first, then lines,
+  bytes, a hex view of the first 80 bytes). Part 3 finds the `9999` week
+  and writes `bikes_valid.csv`. Part 4 gives the answer (86.3 against
+  38.6). Part 5 writes `rebuild.sh` / `rebuild.ps1`, breaks a CRLF copy on
+  a Mac, and finishes the README. Every part ends with a **Task** for the
+  room alone, the answer folded under it (two paths; line ends and the
+  file size; a line number and the empty hours; each counter's mean, 49.6
+  and 27.4; the script extended to make those files).
+- Out: `counts.csv` and its two "places", the backup drill, `hello.sh`,
+  `git config` (Seminar 5, section 1 sets it). Optional section 22 is now
+  *Stop the script at the first error* (`set -e`, the two PowerShell
+  lines). `bikes_files.py` writes the new README and a zip with both
+  scripts and `results/bikes_stats.txt`.
+
+**Open**
+
+- The other seminar pages still install or assume things mid-session;
+  lay each out the same way (installs at its start, one question, tasks)
+  when it is reworked.

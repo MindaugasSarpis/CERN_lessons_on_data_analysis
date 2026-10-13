@@ -11,7 +11,7 @@ hands-on **seminar** briefs.
 | | Page |
 |--|--|
 | Lecture | [04 Command Line & File Handling](lectures/lecture_4.md#the-lecture-in-90-minutes): the shells set up, then the command line one step per slide; macOS `zsh` and PowerShell 7 side by side |
-| Seminar | [Seminar 4 — Work on Files from the Shell](seminars/seminar_04.md): a project folder built by typed commands on two years of bicycle counts; PowerShell 7, Git and Python (from Miniforge, with conda) installed in class |
+| Seminar | [Seminar 4 — Work on Files from the Shell](seminars/seminar_04.md): PowerShell 7, Git and Python (from Miniforge, with conda) installed at the start; then a project folder built by typed commands on two years of bicycle counts, a broken week found, the mean computed, and a script that makes every result again |
 
 ## Hands-on seminars
 
