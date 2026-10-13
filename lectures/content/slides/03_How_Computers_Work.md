@@ -1599,6 +1599,12 @@ class: text-size-5
 
 *(excerpt: the first 8 rows of each block)*
 
+<style>
+td:nth-child(odd) {
+  color: var(--accent);
+}
+</style>
+
 <div class="card card-info card-glass pad-compact mt-sm">
 
 🔢 Sorted as text, `10.4` comes before `5.0`. The first bytes decide: `1` is 49 = 0x31, `5` is 53 = 0x35, and 0x31 < 0x35.
