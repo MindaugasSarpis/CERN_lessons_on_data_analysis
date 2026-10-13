@@ -1,731 +1,175 @@
-# Seminar 5 — The Project Folder under Git
+# Seminar 5 — Who Changed the Mean? Git on the Weather Project
 
 **Paired lecture:** 05 Version Control with Git · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student has the project folder under Git, with a
-history of commits, a private copy on GitHub, and one merged branch.
+**Today's goal:** every student clones the weather project, finds the commit
+that changed its mean temperature, takes it back, commits their own work and
+pushes it to their own GitHub repository.
 
-The new tools are Git and GitHub. Each step is done in the Source Control
-view of VS Code first and typed afterwards in the terminal of Seminar 4, as
-in the lecture.
+Everything is typed in PowerShell 7, in the terminal of VS Code, the same on
+macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
+`Cmd+Shift+G`) stays open and shows each change.
 
 ## Run sheet
 
-One screen for the front of the room. Each line links to its section.
-
-| Clock | Section | On the projector | The room ends with |
+| Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · A repository** · 35 min | | |
-| 0:00 | [1. Check Git](#check) | `git config --global --list`, then `git hash-object` | Five settings, and `4a45f2be` on every laptop |
-| 0:10 | [2. Create the repository](#init) | **Initialize Repository**, **+** on `README.md`, **Commit** | A first commit with the README |
-| 0:20 | [3. Ignore, then commit the rest](#ignore) | `.gitignore`, then **+** on **Changes** | Three commits and a clean working folder |
-| | **Part 2 · Changes, typed** · 30 min | | |
-| 0:35 | [4. A change in Source Control](#change) | The diff of `report.md` | A diff read and committed |
-| 0:45 | [5. The same, typed](#typed) | `git status`, `git diff`, `git add`, `git commit` | A commit made with four commands |
-| 0:55 | [6. Undo](#undo) | **Discard Changes**, then `git commit --amend` | An edit discarded, a commit message corrected |
-| | **Part 3 · A remote** · 25 min | | |
-| 1:05 | [7. A GitHub account](#account) | `github.com`, **Sign up** | An account, signed in |
-| 1:15 | [8. Publish and push](#publish) | **Publish Branch**, then `git push` | The project on GitHub, as a private repository |
-| | **Part 4 · A branch and a merge** · 30 min | | |
-| 1:30 | [9. A branch](#branch) | **Create new branch...** in the Status Bar | A change made on a branch and merged |
-| 1:40 | [10. A conflict](#conflict) | `git merge wording` | A conflict resolved, a history with two lines |
-| 1:55 | [11. Wrap up](#wrap-up) | The list of what was learned | |
+| | **Part 1 · Git and the project** · 20 min | | |
+| 0:00 | [1. Check Git, give it your name](#check) | `git config --global user.name "…"` | three settings |
+| 0:10 | [2. Clone the weather project](#clone) | `git clone https://github.com/MindaugasSarpis/weather-project.git` | `weather-project` open in VS Code |
+| | **Part 2 · Who changed the mean?** · 35 min | | |
+| 0:20 | [3. Read the history: `git log`](#log) | `git log --oneline` | 7 commits, 2 authors |
+| 0:30 | [4. Find who wrote a line: `git blame`](#blame) | `git blame -L 38,38 README.md` | `2cca38a`, Tomas, 19 Oct |
+| 0:40 | [5. See what a commit changed: `git show`](#show) | `git show 2cca38a -- scripts/rebuild.ps1` | the line that reads the raw file |
+| | **Part 3 · Put it right** · 30 min | | |
+| 0:55 | [6. Take the commit back: `git revert`](#revert) | `git revert 2cca38a --no-edit` | 7.16 in the README again |
+| 1:05 | [7. Rebuild and check the mean](#rebuild) | `./scripts/rebuild.ps1` | `mean 7.15997` |
+| 1:10 | [8. Leave made files out: `.gitignore`](#ignore) | `git add .gitignore` | `working tree clean` |
+| 1:15 | [9. Your own commit](#commit) | `git diff`, `git add`, `git commit` | 10 commits |
+| | **Part 4 · Your copy on GitHub** · 35 min | | |
+| 1:25 | [10. A GitHub account](#account) | `github.com` | signed in |
+| 1:35 | [11. Publish, then push and pull](#publish) | **Publish Branch**, `git push` | the project on GitHub |
+| 1:55 | [12. Wrap up](#wrap-up) | `git log --oneline` | |
+| | **Optional, if the room is fast** | | |
+| — | [13. A branch and a merge](#branch) | `git switch -c fahrenheit` | a merged branch |
+| — | [14. A conflict](#conflict) | `git merge wording` | a conflict resolved |
+| — | [15. Tag the result](#tag) | `git tag -a v1.0` | a tag on GitHub |
 
-**If time runs short:** leave out section 10, then section 9. No later
-seminar uses a branch.
-
-??? info "How to use this page"
-    This page is written for the person at the front. Students follow the
-    same page.
-
-    - **Tell the room** is the paragraph to say before the steps.
-    - The **numbered steps** are what to do on the projector. The room
-      repeats each step on their own laptops.
-    - **You should now see** closes a section. Ask for hands: "who sees
-      this?" Go on when about four in five have it. The rest get help from a
-      neighbour.
-    - **Watch for** is the usual slip in that section.
-
-    Commands are typed in the terminal of VS Code: `zsh` on macOS,
-    **PowerShell 7** on Windows, as set up in Seminar 4. A line that starts
-    with `git` is typed the same in both shells, so it stands once. Where a
-    line differs, the step has a tab for **macOS** and one for **Windows**.
-    The outputs were printed by `zsh`; Git prints the same lines in
-    PowerShell 7. Keys are written for Windows, with macOS in brackets.
-
-    Every commit has an id, such as `b7d67bc`. The ids on this page are those
-    of one run of the steps. **Your ids differ**, and so do those of every
-    student: a commit contains its author and its time. Blob ids of the same
-    file are the same everywhere.
+**If time runs short:** stop after section 11; sections 13 to 15 are optional.
 
 ??? info "Before the session"
-    For the room: the project folder as [Seminar 4](seminar_04.md) left it.
-    The README has the line **Cleaned copy** with 97 bytes and the SHA-256,
-    and a section **How to rebuild**. `data/raw` holds `D0_KPi.csv` and
-    `pendulum.csv`, `data/processed` holds `pendulum.csv`,
-    `pendulum_script.csv` and `D0_valid.csv`, and `data/checksums.txt` lists
-    the raw files. `scripts` holds `hello.py`, `clean_pendulum.py` and
-    `column_stats.py`, `results` holds `report.md` and `pendulum_plot.png`.
-    Git installed in Seminar 4 (section 1 of this page sets the name and
-    e-mail), and on Windows
-    PowerShell 7 as the terminal of VS Code. A mailbox that can be opened in
-    class, for the code that GitHub sends. No Python is needed.
-
-    A student whose folder lacks the files of Seminar 4 goes on with what
-    they have. Every step of this page works on the folder of
-    [Seminar 1](seminar_01.md) alone. A student who has no folder at all
-    downloads [`project_after_s1.zip`](../data/project_after_s1.zip), unpacks
-    it, and opens `analysis-project` with **File** > **Open Folder...**. A
-    student who missed Seminar 4 has no Git: they install it in section 1
-    from the USB stick, as on
-    [Install Python, Git and PowerShell 7](install_python_git.md), and follow
-    a neighbour's screen meanwhile.
-
-    For you:
-
-    - A GitHub account of your own, and a project folder that is **not** a
-      repository yet. If yours is one, delete its `.git` folder, and delete
-      the repository `analysis-project` on GitHub.
-    - Sections 8 to 10 done once on your own laptop. Section 8 depends on
-      the sign-in of your system, and the first time takes longer.
-    - The installers of Git and of PowerShell 7 on a USB stick, for a laptop
-      that missed Seminar 4.
-    - In VS Code, the terminal in the Panel and the Source Control view both
-      visible: the room has to see that a button and a command do the same.
-    - The lecture slide *Source Control and Commands* ready. It stays on the
-      projector while the room works.
+    - **Room:** internet, and a mailbox each student can open (GitHub sends a
+      code). Python from Miniforge is used once, in section 7.
+    - **You:** nothing to prepare. The repository
+      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
+      is small (about 0.5 MB to download) and the same for everyone, so its
+      ids on this page are the ids in the room. Ids of commits made today
+      differ on every laptop.
+    - **Page:** the **▶ Steps** button (bottom right) shows one step at a
+      time; arrows or swipe to move, `Esc` to close.
 
 ---
 
-## Part 1 · A repository { #part-1 }
+## Part 1 · Git and the project { #part-1 }
 
-**0:00 to 0:35 · sections 1 to 3**
-
-The room ends this part with the whole project in three commits, made with
-the mouse. Nothing leaves the laptop yet.
+**0:00 to 0:20**
 
 ---
 
-### 1. Check Git { #check }
+### 1. Check Git, give it your name { #check }
 
-**0:00 · 10 min**
+**0:00 · 10 min** · Every commit records a name and an e-mail. Set them once.
 
-**Tell the room.** Git was installed in Seminar 4. Every commit carries a
-name and an e-mail address, so Git has to know both. Three more settings
-are made now, on every laptop, so that Git behaves the same in the whole
-room. Then one command shows what the lecture derived: Git names a content
-by a hash of its bytes.
+1. Open VS Code, then the terminal: **View** > **Terminal**. It shows `PS>`.
 
-1. Open the project folder in VS Code and select **Terminal** >
-   **New Terminal**. The terminal is `zsh` on macOS and PowerShell 7 on
-   Windows. Every line of this section starts with `git` and is typed the
-   same in both.
+    ??? warning "The terminal shows `%` (zsh on a Mac): install PowerShell 7"
+        In the terminal, install Homebrew (it asks for your Mac password):
 
-2. Ask Git for its version, its name and its e-mail address.
+        ```text
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        ```
+
+        Run the two `Next steps` lines it prints, then:
+
+        ```text
+        brew install --cask powershell
+        ```
+
+        In VS Code: `Cmd+Shift+P` > **Terminal: Select Default Profile** >
+        **pwsh**. Close the terminal (bin icon) and open a new one.
+
+2. Check Git.
 
     ```text
     git --version
-    git config --global user.name
-    git config --global user.email
     ```
 
-    Three lines come back: a version, a name, an address. An empty answer
-    means the setting is missing. Set it now:
+    ```text
+    git version 2.56.0
+    ```
+
+    Any version from 2.40 on is fine.
+
+    ??? warning "`git` is not recognized: install it"
+        === "macOS"
+
+            ```text
+            brew install git
+            ```
+
+        === "Windows"
+
+            ```text
+            winget install --id Git.Git -e
+            ```
+
+        Close the terminal and open a new one.
+
+3. Your name, as it should appear on every commit.
 
     ```text
     git config --global user.name "Your Name"
-    git config --global user.email "you@example.com"
     ```
 
-3. Type three more settings. None of them prints anything.
+4. Your e-mail; use the one you will give GitHub in section 10.
 
     ```text
-    git config --global init.defaultBranch main
-    git config --global pull.rebase false
-    git config --global core.autocrlf false
+    git config --global user.email "you@example.org"
     ```
 
-    | Setting | What it does |
-    |--|--|
-    | `init.defaultBranch main` | The first branch of a new repository is named `main` |
-    | `pull.rebase false` | `git pull` joins two histories by a merge |
-    | `core.autocrlf false` | Git leaves line endings alone. Every file keeps its bytes |
+5. Let `git pull` join two histories with a merge.
 
-4. Read the settings back.
+    ```text
+    git config --global pull.rebase false
+    ```
+
+6. Check.
 
     ```text
     git config --global --list
     ```
 
     ```text
-    user.name=Mindaugas Sarpis
-    user.email=mindaugas.sarpis@cern.ch
-    init.defaultbranch=main
+    user.name=Your Name
+    user.email=you@example.org
     pull.rebase=false
-    core.autocrlf=false
     ```
 
-5. Ask Git for the id of the data file.
-
-    ```text
-    git hash-object data/raw/D0_KPi.csv
-    ```
-
-    Read the first eight digits aloud: `4a45f2be`.
-
-!!! success "You should now see"
-    Five settings, and the id `4a45f2be5e087d6b6dccd287fe1bfd36fe659aeb` on
-    every laptop.
-
-**Say it in these words.** Git for Windows comes with two settings of its
-own: the first branch is named `master`, and `core.autocrlf` is `true`. The
-lines of step 3 overrule both. With `true`, Git writes CRLF line endings
-into every text file it puts into the working folder, for example in a
-clone. `D0_KPi.csv` would grow from 3 926 142 to 4 017 726 bytes, one `0d`
-more for each of its 91 584 lines, and the checksums of Seminar 4 would
-fail, while `git status` still says that nothing changed. The lecture slide
-*A Clone on Windows* shows it.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `zsh: command not found: git`, or `The term 'git' is not recognized` | VS Code was open during the installation: close it with **File** > **Exit** (macOS `Cmd+Q`) and start it again. If Git is still missing, install it now from the USB stick, or work with a neighbour |
-    | Windows: the terminal is **Git Bash**, its prompt ends in `$` | Not in this course. Close it with the bin icon at the top right of the Panel and open **Terminal** > **New Terminal**: PowerShell 7, as set in Seminar 4 |
-    | The list of settings is longer | Other programs wrote settings too. The five lines have to be among them |
-    | Another id for `D0_KPi.csv` | The file is not the one that was downloaded. Check it with `data/checksums.txt`, as in Seminar 4 |
+**Check:** your own name and e-mail in the list.
 
 ---
 
-### 2. Create the repository { #init }
+### 2. Clone the weather project { #clone }
 
-**0:10 · 10 min**
+**0:10 · 10 min** · `git clone` downloads a project with its whole history.
 
-**Tell the room.** A repository is the project folder together with a
-hidden folder `.git` that holds every commit. It is made once. The first
-commit holds one file, the README, so that the room sees the two steps of
-every commit: stage, then commit.
-
-1. Press `Ctrl+Shift+G` (the same keys on macOS), or select the third icon
-   of the Activity Bar. This is the **Source Control** view.
-
-2. Select **Initialize Repository**. The view now lists every file of the
-   project under **Changes**. Each has the letter `U`: Git sees the file and
-   has no version of it.
-
-3. Move the mouse over `README.md` and select the **+** on its row. The file
-   moves to a new group, **Staged Changes**, and its letter turns to `A`.
-
-4. Click into the box above the **Commit** button and type the message.
+1. Go to the home folder.
 
     ```text
-    Add the README
+    cd ~
     ```
 
-5. Select **Commit**. `README.md` leaves the view. At the bottom of the
-   view, under **Graph**, the commit appears with its message and your name.
-
-6. Type in the terminal:
+2. Clone.
 
     ```text
-    git log --oneline
-    ```
-
-    The answer is one line:
-
-    ```text
-    b7d67bc (HEAD -> main) Add the README
-    ```
-
-!!! success "You should now see"
-    One line from `git log`, with seven digits of your own, and the other
-    files still listed under **Changes**.
-
-**Say it in these words.** The button made the folder `.git`. The **+**
-copied the content of the README into the staging area. **Commit** wrote a
-tree and a commit, and `main` is the name of that commit. Show the hidden
-folder:
-
-=== "macOS"
-
-    ```text
-    ls -a
-    ```
-
-    The list includes `.git`.
-
-=== "Windows"
-
-    ```text
-    ls -Force
-    ```
-
-    The list includes `.git` with the mode `d--h-`: `h` for hidden. Plain
-    `ls` leaves it out, and `ls -a` is refused with
-    `the parameter name 'a' is ambiguous`.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The view offers **Open Repository** in place of **Initialize Repository** | A folder above the project is a repository already, often the home folder. Do not open it. Call the lecturer |
-    | A dialog: *There are no staged changes to commit* | Nothing was staged. Select **Cancel** and do step 3 |
-    | A tab named `COMMIT_EDITMSG` opens | The message box was empty. Type the message into line 1 of that tab and select the check mark at its top right |
-    | A dialog about `user.name` and `user.email` | Section 1, step 2 |
-    | `git log` says `master` | The repository was made by a typed `git init` before section 1, step 3: Git for Windows and the Git of macOS then name the branch `master`. **Initialize Repository** names it `main` by itself. Type `git branch -m main` |
-
----
-
-### 3. Ignore, then commit the rest { #ignore }
-
-**0:20 · 15 min**
-
-**Tell the room.** Not every file belongs in the repository.
-`data/processed/D0_valid.csv` has 3.9 MB and is written by one command that
-stands in the README. The command is kept and the file is left out. The file
-`.gitignore` lists what Git has to leave out. It is a file of the project
-and is committed like the others.
-
-1. Go to the Explorer, select the empty area below the folders, then
-   **New File**, and name it:
-
-    ```text
-    .gitignore
-    ```
-
-    The name begins with a dot and has no ending.
-
-2. Type into the file and save.
-
-    ```text
-    # made by the operating system
-    .DS_Store
-    Thumbs.db
-
-    # made by the commands in README.md
-    data/processed/D0_valid.csv
-    data/processed/pendulum_script.csv
-    ```
-
-3. Go back to Source Control. The two files of `data/processed` have left
-   the list, and `.gitignore` is in it.
-
-4. Stage `.gitignore` with its **+**, type the message and select
-   **Commit**.
-
-    ```text
-    Add .gitignore
-    ```
-
-5. Move the mouse over the header **Changes** and select the **+** on that
-   row. It stages every file at once. Read the list with the room:
-   `D0_KPi.csv` is in it, `D0_valid.csv` is not.
-
-6. Type the message and select **Commit**.
-
-    ```text
-    Add the data, the report and the scripts
-    ```
-
-7. Ask Git for the state of the folder.
-
-    ```text
-    git status
+    git clone https://github.com/MindaugasSarpis/weather-project.git
     ```
 
     ```text
-    On branch main
-    nothing to commit, working tree clean
+    Cloning into 'weather-project'...
+    remote: Enumerating objects: 35, done.
+    remote: Counting objects: 100% (35/35), done.
+    remote: Compressing objects: 100% (19/19), done.
+    remote: Total 35 (delta 15), reused 35 (delta 15), pack-reused 0 (from 0)
+    Receiving objects: 100% (35/35), 554.16 KiB | 4.78 MiB/s, done.
+    Resolving deltas: 100% (15/15), done.
     ```
 
-8. Read the history.
-
-    ```text
-    git log --oneline
-    ```
-
-    ```text
-    2f4088c (HEAD -> main) Add the data, the report and the scripts
-    be1030d Add .gitignore
-    b7d67bc Add the README
-    ```
-
-9. Ask which files were left out.
-
-    ```text
-    git status --ignored
-    ```
-
-    ```text
-    Ignored files:
-      (use "git add -f <file>..." to include in what will be committed)
-            data/processed/D0_valid.csv
-            data/processed/pendulum_script.csv
-    ```
-
-!!! success "You should now see"
-    An empty **Changes** list, three commits, and the two ignored files named
-    by `git status --ignored`.
-
-**Say it in these words.** A file written by hand goes in, because nothing
-can make it again. A file that a command writes may stay out, if the command
-is in the repository. This command shows what the three commits cost, in
-both shells:
-
-```text
-git count-objects -vH
-```
-
-```text
-count: 22
-size: 1.83 MiB
-in-pack: 0
-packs: 0
-size-pack: 0 bytes
-prune-packable: 0
-garbage: 0
-size-garbage: 0 bytes
-```
-
-22 objects, 3 commits, 8 trees and 11 blobs, take about 1.8 MiB for files
-of 3.9 MB, because Git compresses. Windows prints 1.84 MiB.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The two files are still listed | A path in `.gitignore` is mistyped, or the file was saved as `.gitignore.txt` or inside a subfolder |
-    | No ignored files at all | The folder has no files of Seminar 4. Go on: the steps work the same |
-    | A student has put a dataset of their own into `data/raw`, and it has more than 50 MB | Add its path to `.gitignore` before step 5. GitHub refuses a file above 100 MB |
-    | macOS: `.DS_Store` among the ignored files | Correct. The Finder makes it |
-    | A file was committed that should stay out | `git rm --cached <file>`, add its path to `.gitignore`, commit both |
-
----
-
-## Part 2 · Changes, typed { #part-2 }
-
-**0:35 to 1:05 · sections 4 to 6**
-
-The room changes a file, reads the change and commits it: once with the
-mouse, once with four commands. Then two ways to take something back.
-
----
-
-### 4. A change in Source Control { #change }
-
-**0:35 · 10 min**
-
-**Tell the room.** Git compares the working folder with the last commit. A
-file that differs gets the letter `M`, and the diff shows what differs, line
-by line. The diff is read before every commit: it is what the commit will
-contain.
-
-1. Open `results/report.md` and change the first sentence to:
-
-    ```text
-    Time of 10 swings of a pendulum for nine lengths.
-    ```
-
-    Save with `Ctrl+S` (macOS `Cmd+S`).
-
-2. Go to Source Control. `report.md` stands under **Changes** with the
-   letter `M`. Select it.
-
-3. The **diff view** opens. The old line is red, the new line green, and
-   the words that were added have a stronger green.
-
-4. Stage the file with **+**, type the message and select **Commit**.
-
-    ```text
-    Name the pendulum in the report
-    ```
-
-5. Look at the **Graph**: four commits, the newest on top. Select the
-   newest one, then the file under it. The same diff opens again.
-
-!!! success "You should now see"
-    Four commits in the Graph, and the room can say what red and green mean
-    in a diff.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | No `M` appears | The file was not saved. A dot on the tab means *not saved* |
-    | The whole file is red and green | The line endings changed. Select `CRLF` or `LF` in the Status Bar and put back what it was |
-    | Two columns in place of red above green | The window is wide. VS Code then shows the two versions side by side |
-
----
-
-### 5. The same, typed { #typed }
-
-**0:45 · 10 min**
-
-**Tell the room.** Every button of the last section runs a Git command. The
-room now types them. A typed command can be written down, repeated, and used
-on a computer that has no VS Code.
-
-1. Open `README.md`. Under the line **Started** in the section **About**,
-   add a line and save.
-
-    ```text
-    - **Under version control since:** 2026-10-20
-    ```
-
-2. Ask what changed.
-
-    ```text
-    git status
-    ```
-
-    ```text
-    On branch main
-    Changes not staged for commit:
-      (use "git add <file>..." to update what will be committed)
-      (use "git restore <file>..." to discard changes in working directory)
-            modified:   README.md
-
-    no changes added to commit (use "git add" and/or "git commit -a")
-    ```
-
-3. Read the diff.
-
-    ```text
-    git diff
-    ```
-
-    The line with `+` in front is the new one. The lines without a sign
-    around it are unchanged. If the output ends in a line with `:` or
-    `(END)`, press `q`.
-
-4. Stage the file.
-
-    ```text
-    git add README.md
-    ```
-
-5. Look again. `git status` now says `Changes to be committed`.
-
-    ```text
-    git status
-    ```
-
-6. Commit.
-
-    ```text
-    git commit -m "Note when version control started"
-    ```
-
-    ```text
-    [main 803abcb] Note when version control started
-     1 file changed, 1 insertion(+)
-    ```
-
-7. Read the history.
-
-    ```text
-    git log --oneline
-    ```
-
-    ```text
-    803abcb (HEAD -> main) Note when version control started
-    59fe00c Name the pendulum in the report
-    2f4088c Add the data, the report and the scripts
-    be1030d Add .gitignore
-    b7d67bc Add the README
-    ```
-
-!!! success "You should now see"
-    Five commits, and after step 5 `git status` said
-    `Changes to be committed`.
-
-Leave this table on the projector. It is the lecture slide
-*Source Control and Commands*.
-
-| In Source Control | Typed |
-|--|--|
-| The **Changes** list | `git status` |
-| Select a changed file | `git diff` |
-| **+** on a file | `git add <file>` |
-| Message, then **Commit** | `git commit -m "…"` |
-| **Graph** | `git log --oneline` |
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `fatal: not a git repository` | The terminal is not in the project folder. `pwd`, then `cd` |
-    | The terminal fills with `~` signs | `git commit` was typed without `-m`, and Git opened the editor Vim. Type `:q!` and press Enter, then repeat with `-m` |
-    | `dquote>` (zsh) or `>>` (PowerShell) at the start of the line | A quotation mark is missing. Press `Ctrl+C` and type the command again |
-    | Windows: `warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it` | `core.autocrlf` is still `true`. Type the third line of section 1, step 3, and go on. The commit is fine |
-
----
-
-### 6. Undo { #undo }
-
-**0:55 · 10 min**
-
-**Tell the room.** Two things go wrong every week: a file is damaged by an
-edit that was not meant, and a commit gets a message with a mistake. Git
-takes back both. The room damages the report on purpose.
-
-1. In `results/report.md` select the last five rows of the table, from
-   `| 60 |` to `| 100 |`, delete them and save.
-
-2. Ask Git how large the damage is.
-
-    ```text
-    git diff --stat
-    ```
-
-    ```text
-     results/report.md | 5 -----
-     1 file changed, 5 deletions(-)
-    ```
-
-3. In Source Control, move the mouse over `report.md` and select the bent
-   arrow, **Discard Changes**. VS Code asks *Are you sure you want to
-   discard changes in 'report.md'?* Select **Discard File**. The five rows
-   are back. Typed, this is `git restore results/report.md`.
-
-4. Now a commit with a mistake in its message. Add an empty line and this
-   line at the end of `report.md`, and save.
-
-    ```text
-    Measured by a lab partner.
-    ```
-
-    Stage it and commit it with the typing error, on purpose.
-
-    ```text
-    git add results/report.md
-    git commit -m "Say who mesured"
-    ```
-
-5. Correct the message.
-
-    ```text
-    git commit --amend -m "Say who measured"
-    ```
-
-6. Read the last two commits.
-
-    ```text
-    git log --oneline -2
-    ```
-
-    ```text
-    53f4ea5 (HEAD -> main) Say who measured
-    803abcb Note when version control started
-    ```
-
-7. Look at the commit itself.
-
-    ```text
-    git cat-file -p HEAD
-    ```
-
-    ```text
-    tree 757d50af6813e7a8ff793675df9d9b39dbeda5a2
-    parent 803abcb95badf0458247a42238f3715d1b2fc28b
-    author Mindaugas Sarpis <mindaugas.sarpis@cern.ch> 1792497300 +0300
-    committer Mindaugas Sarpis <mindaugas.sarpis@cern.ch> 1792497360 +0300
-
-    Say who measured
-    ```
-
-!!! success "You should now see"
-    Six commits in `git log --oneline`, the last of them with the corrected
-    message, and a table of nine rows in the report.
-
-**Say it in these words.** Ask the room to compare the id of the commit
-before and after step 5. It changed, from `6949f68` to `53f4ea5` in this
-run: the message is part of the text that is hashed. That is why only a
-commit that has not left the laptop is amended.
-
-!!! warning "Watch for"
-    A student discards an edit that was meant. Git has no copy of an edit
-    that was never committed. `Ctrl+Z` in the editor brings it back as long
-    as the tab is open.
-
----
-
-## Part 3 · A remote { #part-3 }
-
-**1:05 to 1:30 · sections 7 and 8**
-
-The repository gets a second copy on GitHub. From here on the work survives
-the loss of the laptop, and it can be fetched on another computer.
-
----
-
-### 7. A GitHub account { #account }
-
-**1:05 · 10 min**
-
-**Tell the room.** GitHub is a hosting service for Git repositories. An
-account is free. Its user name is public and part of every address, so it is
-chosen like a file name: short, lowercase, without spaces, and fit to be
-shown to an employer.
-
-1. Everyone opens this address in the browser.
-
-    ```text
-    github.com
-    ```
-
-2. Ask who has an account. Those students select **Sign in** and help a
-   neighbour. The others select **Sign up**.
-
-3. They enter an e-mail address, a password and a user name. Advise an
-   address that outlives the studies.
-
-4. GitHub sends a code to that address. They type it in.
-
-5. They stay on the free plan and skip the questions about a team.
-
-!!! success "You should now see"
-    On every laptop, a browser that is signed in to GitHub: the picture of
-    the account is at the top right.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The code does not arrive | Look in the spam folder. Until it arrives the student follows on a neighbour's screen |
-    | The user name is taken | Add the initial of the first name, or a number |
-    | A student will not make an account | Sections 9 and 10 work without one. The student skips section 8 and the `git push` of section 10 |
-
----
-
-### 8. Publish and push { #publish }
-
-**1:15 · 15 min**
-
-**Tell the room.** VS Code can create the repository on GitHub and send the
-commits in one step. It signs in through the browser once and keeps the
-sign-in. The repository is made **private**: only its owner sees it.
-
-1. In Source Control the button now reads **Publish Branch**. Select it.
-
-2. VS Code says *The extension 'GitHub' wants to sign in using GitHub*.
-   Select **Allow**. The browser opens. Confirm there, and let the browser
-   open VS Code again.
-
-3. A list opens at the top of the window. Select
-   **Publish to GitHub private repository**.
-
-4. A note at the bottom right confirms the publishing. Select
-   **Open on GitHub**. The browser shows the project: the folders, the
-   number of commits, and the README as formatted text below them.
-
-5. Ask Git where the remote is.
-
-    ```text
-    git remote -v
-    ```
-
-    ```text
-    origin  https://github.com/<user>/analysis-project.git (fetch)
-    origin  https://github.com/<user>/analysis-project.git (push)
-    ```
-
-6. Ask for the state.
+3. Open it: **File** > **Open Folder...** > `weather-project` > **Open**.
+   Answer **Yes, I trust the authors**.
+4. Open the terminal again (**View** > **Terminal**). It starts in the
+   project folder.
 
     ```text
     git status
@@ -738,457 +182,778 @@ sign-in. The repository is made **private**: only its owner sees it.
     nothing to commit, working tree clean
     ```
 
-7. Make one more commit, typed. Add this line at the end of the section
-   **About** in `README.md` and save.
+**Check:** the Explorer shows `data`, `scripts`, `LICENSE`, `README.md`.
+
+---
+
+## Part 2 · Who changed the mean? { #part-2 }
+
+**0:20 to 0:55** · Lecture 1 said 7.16 °C. Open `README.md`: its
+**Result** says 5.78 °C.
+
+---
+
+### 3. Read the history: `git log` { #log }
+
+**0:20 · 10 min** · A commit is one saved state: id, author, date, message.
+
+1. One line per commit, newest first.
 
     ```text
-    - **Repository:** private, on GitHub
+    git log --oneline
     ```
 
-    Stage, commit, and ask for the state.
+    ```text
+    c964141 Add a licence
+    2cca38a Take the mean over all rows of weather.csv
+    5cfde5c Write the mean temperature into results and the README
+    2770cef Add the rebuild script
+    96f2dc4 Describe the columns and the -999 rows
+    2d282c7 Add the two scripts handed out with the data
+    3e72263 Add the station's hourly log and the spreadsheet export
+    ```
+
+    As a graph, oldest at the left:
+
+    ```mermaid
+    gitGraph
+      commit id: "3e72263 data"
+      commit id: "2d282c7 scripts"
+      commit id: "96f2dc4 columns"
+      commit id: "2770cef rebuild"
+      commit id: "5cfde5c 7.16"
+      commit id: "2cca38a Tomas" type: HIGHLIGHT
+      commit id: "c964141 licence"
+    ```
+
+2. The last two commits in full.
 
     ```text
-    git add README.md
-    git commit -m "Say where the repository is"
+    git log -n 2
+    ```
+
+    ```text
+    commit c96414183e432f7c687b242d4d41e459640f5dda
+    Author: Smiltė <smilte@example.org>
+    Date:   Mon Oct 19 17:05:00 2026 +0300
+
+        Add a licence
+
+    commit 2cca38a4df60b96a8756316ce62e292e8e20a7fe
+    Author: Tomas <tomas@example.org>
+    Date:   Mon Oct 19 11:45:00 2026 +0300
+
+        Take the mean over all rows of weather.csv
+
+        The valid file leaves 120 hours out. The raw file has every hour.
+    ```
+
+3. Only the commits that touched the raw data.
+
+    ```text
+    git log --oneline -- data/raw
+    ```
+
+    ```text
+    3e72263 Add the station's hourly log and the spreadsheet export
+    ```
+
+    The raw files are as they arrived: nobody changed them since.
+
+4. In Source Control, open the **Graph** section: the same seven commits.
+
+**Check:** seven commits, by Smiltė and Tomas; one commit for `data/raw`.
+
+!!! warning "The terminal shows `:` or `(END)` and takes no commands"
+    Git shows long output one screen at a time. Press `q`.
+
+---
+
+### 4. Find who wrote a line: `git blame` { #blame }
+
+**0:30 · 10 min** · `git blame` gives, for each line, the commit that wrote it.
+
+1. Find the line with 5.78.
+
+    ```text
+    Select-String '5.78' README.md
+    ```
+
+    ```text
+    README.md:38:Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
+    ```
+
+2. Ask who wrote line 38.
+
+    ```text
+    git blame -L 38,38 README.md
+    ```
+
+    ```text
+    2cca38a (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, …
+    ```
+
+3. Ask which commits added or removed the text `5.78`.
+
+    ```text
+    git log -S "5.78" --oneline
+    ```
+
+    ```text
+    2cca38a Take the mean over all rows of weather.csv
+    ```
+
+**Check:** commit `2cca38a`, Tomas, 19 October.
+
+---
+
+### 5. See what a commit changed: `git show` { #show }
+
+**0:40 · 15 min** · `git show` prints a commit and its changes: `-` is the old line, `+` the new.
+
+1. The files it changed.
+
+    ```text
+    git show --stat 2cca38a
+    ```
+
+    ```text
+    commit 2cca38a4df60b96a8756316ce62e292e8e20a7fe
+    Author: Tomas <tomas@example.org>
+    Date:   Mon Oct 19 11:45:00 2026 +0300
+
+        Take the mean over all rows of weather.csv
+
+        The valid file leaves 120 hours out. The raw file has every hour.
+
+     README.md           | 4 ++--
+     scripts/rebuild.ps1 | 2 +-
+     2 files changed, 3 insertions(+), 3 deletions(-)
+    ```
+
+2. The change in `rebuild.ps1`.
+
+    ```text
+    git show 2cca38a -- scripts/rebuild.ps1
+    ```
+
+    The end of its output:
+
+    ```text
+    @@ -3,4 +3,4 @@ $PSNativeCommandUseErrorActionPreference = $true
+     New-Item -ItemType Directory -Force data/processed, results | Out-Null
+     Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+     python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
+    -python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
+    +python scripts/column_stats.py data/raw/weather.csv temp_c > results/temp_c.txt
+    ```
+
+3. Count the rows that the raw file has and the valid file has not.
+
+    ```text
+    (Select-String ',-999,' data/raw/weather.csv).Count
+    ```
+
+    ```text
+    120
+    ```
+
+    Each adds −999 to the sum: that pulls the mean from 7.16 down to 5.78.
+
+**Check:** the mean now reads `data/raw/weather.csv`, with its 120 rows of
+`-999`.
+
+!!! question "Task: where did 7.16 come from, and is the data file the same as Smiltė's?"
+    1. Find the commit that first wrote 7.16 into the README, and its day.
+    2. Print `scripts/rebuild.ps1` as it was in that commit.
+    3. Ask Git for the id of `data/raw/weather.csv`, and compare it with
+       your neighbour's.
+
+??? note "Answer"
+    1. `5cfde5c`, 16 October: the older of the two lines.
+
+        ```text
+        git log -S "7.16" --oneline
+        ```
+
+        ```text
+        2cca38a Take the mean over all rows of weather.csv
+        5cfde5c Write the mean temperature into results and the README
+        ```
+
+    2. The last line still reads `weather_valid.csv`.
+
+        ```text
+        git show 5cfde5c:scripts/rebuild.ps1
+        ```
+
+        ```text
+        $ErrorActionPreference = 'Stop'
+        $PSNativeCommandUseErrorActionPreference = $true
+        New-Item -ItemType Directory -Force data/processed, results | Out-Null
+        Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+        python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
+        python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
+        ```
+
+    3. The same id on every laptop: Git names a file by a hash of its
+       bytes (Lecture 3), so equal ids mean equal bytes.
+
+        ```text
+        git hash-object data/raw/weather.csv
+        ```
+
+        ```text
+        f811f73d93226acc8a0c96562aef9f7825b85b0a
+        ```
+
+---
+
+## Part 3 · Put it right { #part-3 }
+
+**0:55 to 1:25**
+
+---
+
+### 6. Take the commit back: `git revert` { #revert }
+
+**0:55 · 10 min** · `git revert` makes a new commit that undoes an old one. The history keeps both.
+
+1. Revert Tomas's commit.
+
+    ```text
+    git revert 2cca38a --no-edit
+    ```
+
+    ```text
+    Auto-merging README.md
+    [main 884e155] Revert "Take the mean over all rows of weather.csv"
+     Date: Tue Oct 20 10:32:00 2026 +0300
+     2 files changed, 3 insertions(+), 3 deletions(-)
+    ```
+
+    Your id and date differ.
+
+2. Look at the history.
+
+    ```text
+    git log --oneline -n 3
+    ```
+
+    ```text
+    884e155 Revert "Take the mean over all rows of weather.csv"
+    c964141 Add a licence
+    2cca38a Take the mean over all rows of weather.csv
+    ```
+
+    ```mermaid
+    gitGraph
+      commit id: "5cfde5c 7.16"
+      commit id: "2cca38a Tomas" type: HIGHLIGHT
+      commit id: "c964141 licence"
+      commit id: "884e155 revert" type: REVERSE
+    ```
+
+3. In `README.md` the **Result** says 7.16 °C again. Smiltė's licence of
+   `c964141` is still there.
+
+**Check:** 7.16 in the README, eight commits.
+
+---
+
+### 7. Rebuild and check the mean { #rebuild }
+
+**1:05 · 5 min** · The README's number must come out of the script.
+
+1. Run the rebuild script.
+
+    ```text
+    ./scripts/rebuild.ps1
+    ```
+
+    ```text
+    9 rows written to data/processed/daily.csv
+    ```
+
+2. Read the result.
+
+    ```text
+    Get-Content results/temp_c.txt
+    ```
+
+    ```text
+    file    data/processed/weather_valid.csv
+    column  temp_c
+    rows    87552
+    min     -16.3
+    max     32.4
+    mean    7.15997
+    ```
+
+3. Ask Git.
+
+    ```text
     git status
     ```
 
-    `git status` now says:
-
     ```text
+    On branch main
     Your branch is ahead of 'origin/main' by 1 commit.
+      (use "git push" to publish your local commits)
+
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+            data/processed/
+            results/
     ```
 
-8. Send the commit, and reload the page in the browser.
+**Check:** `mean 7.15997`, and two untracked folders.
 
-    ```text
-    git push
-    ```
-
-    The last line of the answer has two ids and the branch:
-
-    ```text
-    53f4ea5..ed3c15d  main -> main
-    ```
-
-    In the view the same step is the button **Sync Changes**.
-
-!!! success "You should now see"
-    The new line of the README in the browser, and
-    `Your branch is up to date with 'origin/main'.` from `git status`.
-
-**Say it in these words.** A push sends the objects the remote does not have
-yet. Here that is one commit, one tree and one blob, 343 bytes in this run.
-The data file is not sent again.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The browser does not return to VS Code | Select **Open Visual Studio Code** in the dialog of the browser, or copy the code it shows into VS Code |
-    | `git push` asks for a user name and a password | The terminal is not the one inside VS Code. Press `Ctrl+C`, and push from the terminal of VS Code or with **Sync Changes** |
-    | Windows: `git push` opens a window **Connect to GitHub** | Git Credential Manager, installed with Git, signs in once for typed commands. Select **Sign in with your browser** and confirm in the browser |
-    | A name `analysis-project` exists already on the account | Choose another name in the list of step 3 |
-    | The repository was published as public | On its page: **Settings**, at the bottom **Change visibility** |
+!!! warning "`python` is not recognized"
+    Miniforge is missing ([Seminar 4](seminar_04.md), section 1). The script
+    made `data/processed/weather_valid.csv` before it stopped; go on.
 
 ---
 
-## Part 4 · A branch and a merge { #part-4 }
+### 8. Leave made files out: `.gitignore` { #ignore }
 
-**1:30 to 2:00 · sections 9 to 11**
+**1:10 · 5 min** · The script makes these folders again at any time, so they stay out of the history.
 
-A branch is a name for a commit. A second name lets work go on apart from
-`main` until it is good. The room merges twice: once where Git has nothing
-to decide, once where both branches changed the same line.
+1. **File** > **New File...**, type `.gitignore`, press `Enter`. Write two
+   lines and save.
+
+    ```text
+    data/processed/
+    results/
+    ```
+
+2. The two folders are gone from Source Control; `.gitignore` is there.
+
+    ```text
+    git status --short
+    ```
+
+    ```text
+    ?? .gitignore
+    ```
+
+3. Stage it, then commit it.
+
+    ```text
+    git add .gitignore
+    ```
+
+    ```text
+    git commit -m "Leave out the files the rebuild script makes"
+    ```
+
+    ```text
+    [main 6765177] Leave out the files the rebuild script makes
+     1 file changed, 2 insertions(+)
+     create mode 100644 .gitignore
+    ```
+
+**Check:** `git status` ends with `nothing to commit, working tree clean`.
 
 ---
 
-### 9. A branch { #branch }
+### 9. Your own commit { #commit }
 
-**1:30 · 10 min**
+**1:15 · 10 min** · Edit, look at the change, stage, commit: the loop of every day.
 
-**Tell the room.** The table of the report has the column names of the data
-file as its header. A report needs words and units. The change is made on a
-branch.
+```mermaid
+flowchart LR
+  W["working folder<br/>your files"] -- "git add" --> S["staging area<br/>the next commit"]
+  S -- "git commit" --> R["repository<br/>the history"]
+  R -- "git push" --> G["GitHub"]
+  G -- "git pull" --> W
+  R -- "git restore" --> W
+```
 
-1. Select the branch name `main` at the left end of the Status Bar. A list
-   opens at the top. Select **Create new branch...**, type the name and
-   press Enter.
+1. In `README.md`, under the **Result** paragraph, add one line and save.
 
     ```text
-    table-units
+    Checked on 2026-10-20: the rebuild gives 7.15997.
     ```
 
-    The Status Bar now reads `table-units`.
-
-2. In `results/report.md` replace the header line of the table and save.
+2. What changed.
 
     ```text
-    | Length (cm) | Time of 10 swings (s) |
-    ```
-
-3. Stage and commit in Source Control, with the message:
-
-    ```text
-    Write the units into the table header
-    ```
-
-4. Select `table-units` in the Status Bar and select `main` in the list.
-   Look at the report: the header is `| length_cm | t10_s |` again. The
-   working folder now holds the snapshot of `main`.
-
-5. Move the mouse over the header **Changes** and select **...** on that
-   row, then **Branch** > **Merge...**, and select `table-units`. The
-   header with the units is back.
-
-6. Read the last three commits.
-
-    ```text
-    git log --oneline -3
+    git status --short
     ```
 
     ```text
-    01e155f (HEAD -> main, table-units) Write the units into the table header
-    ed3c15d (origin/main) Say where the repository is
-    53f4ea5 Say who measured
+     M README.md
     ```
 
-7. Delete the branch.
+3. How it changed. Also: click `README.md` in Source Control.
 
     ```text
-    git branch -d table-units
+    git diff
     ```
 
     ```text
-    Deleted branch table-units (was 01e155f).
+    @@ -38,6 +38,8 @@ the temperature sensor was down.
+     Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
+     marked `-999` are left out. The script writes it to `results/temp_c.txt`.
+
+    +Checked on 2026-10-20: the rebuild gives 7.15997.
+    +
+     ## How to rebuild
     ```
 
-!!! success "You should now see"
-    `main` and `table-units` on the same commit in the log of step 6, one
-    commit ahead of `origin/main`.
+4. Stage, then commit.
 
-**Say it in these words.** This merge copied nothing. `main` had no commit
-of its own, so Git moved the name `main` forward to the commit of the
-branch. Deleting the branch deletes a name. The commit stays.
+    ```text
+    git add README.md
+    ```
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | After step 4 the header still has the units, and the file has the letter `M` | The change of step 2 was not committed, and Git carried it along to `main`. Go back to `table-units`, commit, and do step 4 again |
-    | The list of step 5 is empty | The Status Bar still reads `table-units`. A branch is merged into the branch in use: do step 4 |
+    ```text
+    git commit -m "Record the check of the mean"
+    ```
+
+    ```text
+    [main 4076046] Record the check of the mean
+     1 file changed, 2 insertions(+)
+    ```
+
+**Check:** `git log --oneline` shows ten commits, three of them yours.
+
+!!! question "Task: break the raw data, then repair it"
+    In VS Code, delete line 2 of `data/raw/weather.csv` and save. Find the
+    change with Git, then undo it with one command.
+
+??? note "Answer"
+    ```text
+    git status --short
+    ```
+
+    ```text
+     M data/raw/weather.csv
+    ```
+
+    ```text
+    git diff --stat
+    ```
+
+    ```text
+     data/raw/weather.csv | 1 -
+     1 file changed, 1 deletion(-)
+    ```
+
+    ```text
+    git restore data/raw/weather.csv
+    ```
+
+    `git status --short` prints nothing: the file has its committed bytes
+    again.
 
 ---
 
-### 10. A conflict { #conflict }
+## Part 4 · Your copy on GitHub { #part-4 }
 
-**1:40 · 15 min**
+**1:25 to 2:00**
 
-**Tell the room.** Two branches now change the same line. Git cannot know
-which text is meant. It writes both into the file and asks. This section is
-typed, and the conflict is resolved in the editor.
+---
 
-1. Make a branch.
+### 10. A GitHub account { #account }
+
+**1:25 · 10 min** · GitHub keeps a copy of the repository online.
+
+1. Open [github.com](https://github.com) > **Sign up**.
+2. E-mail, password, a username. The username is in the address of every
+   repository you make.
+3. Type the code that GitHub e-mails you.
+
+**Check:** you are signed in on github.com.
+
+---
+
+### 11. Publish, then push and pull { #publish }
+
+**1:35 · 20 min** · The clone still points at the course repository, which you cannot write to.
+
+1. Where the clone points.
 
     ```text
-    git switch -c wording
+    git remote -v
     ```
-
-2. On it, change line 3 of `results/report.md` to the line below, and save.
 
     ```text
-    Ten swings of a pendulum, timed for nine lengths.
+    origin  https://github.com/MindaugasSarpis/weather-project.git (fetch)
+    origin  https://github.com/MindaugasSarpis/weather-project.git (push)
     ```
 
-    Commit it.
+2. Remove that remote.
 
     ```text
-    git add results/report.md
-    git commit -m "Reword the first sentence"
+    git remote remove origin
     ```
 
-3. Go back to `main`. Line 3 is the old sentence again.
+3. In Source Control, click **Publish Branch** > **Publish to GitHub private
+   repository**. Keep the name `weather-project`, press `Enter`.
+4. VS Code asks to sign in: **Allow**, then **Continue** and **Authorize**
+   in the browser, then back to VS Code.
+5. Where the clone points now.
+
+    ```text
+    git remote -v
+    ```
+
+    ```text
+    origin  https://github.com/your-username/weather-project.git (fetch)
+    origin  https://github.com/your-username/weather-project.git (push)
+    ```
+
+6. Open `https://github.com/your-username/weather-project`: the files, and
+   **10 Commits**.
+
+**Check:** your repository on GitHub, marked **Private**.
+
+!!! question "Task: one change each way"
+    1. On github.com, edit `README.md` (the pencil), add a line, click
+       **Commit changes**. Bring that commit to your laptop.
+    2. On your laptop, add another line to `README.md`, commit it, and send
+       it to GitHub.
+
+??? note "Answer"
+    The ids below are from one run; yours differ.
+
+    1. ```text
+       git pull
+       ```
+
+        ```text
+        From https://github.com/your-username/weather-project
+           4076046..9a5ae80  main       -> origin/main
+        Updating 4076046..9a5ae80
+        Fast-forward
+         README.md | 1 +
+         1 file changed, 1 insertion(+)
+        ```
+
+    2. ```text
+       git add README.md
+       ```
+
+        ```text
+        git commit -m "Add a line"
+        ```
+
+        ```text
+        git push
+        ```
+
+        ```text
+        To https://github.com/your-username/weather-project.git
+           9a5ae80..1da24de  main -> main
+        ```
+
+---
+
+### 12. Wrap up { #wrap-up }
+
+**1:55 · 5 min**
+
+| To | Type |
+|--|--|
+| copy a project with its history | `git clone URL` |
+| see the history | `git log --oneline` |
+| find who wrote a line | `git blame -L 38,38 FILE` |
+| see a commit | `git show ID` |
+| undo a commit, keep the history | `git revert ID` |
+| undo an edit not yet committed | `git restore FILE` |
+| commit | `git status`, `git diff`, `git add FILE`, `git commit -m "…"` |
+| sync with GitHub | `git push`, `git pull` |
+
+Seminar 6 starts from this repository.
+
+---
+
+## Optional, if the room is fast { #optional }
+
+---
+
+### 13. A branch and a merge { #branch }
+
+**— · 10 min** · A branch is a second line of commits; merge brings it back. Ids on sections 13 to 15 are from one run; yours differ.
+
+1. Make a branch and go to it.
+
+    ```text
+    git switch -c fahrenheit
+    ```
+
+2. In `README.md`, under the line that ends with `results/temp_c.txt`,
+   add a line and save.
+
+    ```text
+    In Fahrenheit: 44.89 °F.
+    ```
+
+3. Commit all changed files at once.
+
+    ```text
+    git commit -am "Give the mean in Fahrenheit"
+    ```
+
+4. Back to `main`: the line is gone from `README.md`.
 
     ```text
     git switch main
     ```
 
-4. Change line 3 to the line below, and save.
-
-    ```text
-    Time of 10 swings of a pendulum for nine lengths from 20 cm to 100 cm.
-    ```
-
-    Commit it.
-
-    ```text
-    git add results/report.md
-    git commit -m "Give the range of lengths"
-    ```
-
 5. Merge.
+
+    ```text
+    git merge fahrenheit
+    ```
+
+    ```text
+    Updating 1da24de..c592876
+    Fast-forward
+     README.md | 1 +
+     1 file changed, 1 insertion(+)
+    ```
+
+6. Delete the branch name, push.
+
+    ```text
+    git branch -d fahrenheit
+    ```
+
+    ```text
+    git push
+    ```
+
+**Check:** the Fahrenheit line in `README.md` on `main`.
+
+---
+
+### 14. A conflict { #conflict }
+
+**— · 15 min** · Two branches change the same line; Git asks which to keep.
+
+```mermaid
+gitGraph
+  commit id: "Fahrenheit"
+  branch wording
+  commit id: "Spell out the unit"
+  checkout main
+  commit id: "Round to 44.9"
+  merge wording id: "merge"
+```
+
+1. A branch that rewrites the line.
+
+    ```text
+    git switch -c wording
+    ```
+
+    Change the line to `In degrees Fahrenheit: 44.89.`, save.
+
+    ```text
+    git commit -am "Spell out the unit"
+    ```
+
+2. On `main`, change the same line differently.
+
+    ```text
+    git switch main
+    ```
+
+    Change the line to `In Fahrenheit: 44.9 °F.`, save.
+
+    ```text
+    git commit -am "Round the Fahrenheit mean to one decimal"
+    ```
+
+3. Merge.
 
     ```text
     git merge wording
     ```
 
     ```text
-    Auto-merging results/report.md
-    CONFLICT (content): Merge conflict in results/report.md
+    Auto-merging README.md
+    CONFLICT (content): Merge conflict in README.md
     Automatic merge failed; fix conflicts and then commit the result.
     ```
 
-6. Look at `results/report.md` in the editor. Lines 3 to 7 are:
+4. `README.md` now holds both lines.
 
     ```text
     <<<<<<< HEAD
-    Time of 10 swings of a pendulum for nine lengths from 20 cm to 100 cm.
+    In Fahrenheit: 44.9 °F.
     =======
-    Ten swings of a pendulum, timed for nine lengths.
+    In degrees Fahrenheit: 44.89.
     >>>>>>> wording
     ```
 
-    Above `=======` is the line of `main`, below it the line of `wording`.
+    Above the block VS Code offers **Accept Current Change** (`main`),
+    **Accept Incoming Change** (`wording`), **Accept Both Changes**. Click
+    one, save.
 
-7. Select **Accept Incoming Change** above the block. The markers go and
-   the line of `wording` stays. Add the range to it by hand, so that it
-   reads as below, and save.
-
-    ```text
-    Ten swings of a pendulum, timed for nine lengths from 20 cm to 100 cm.
-    ```
-
-8. In Source Control the file stands under **Merge Changes** with the sign
-   `!`. Stage it with **+** and select **Continue**. The message
-   `Merge branch 'wording'` is already filled in.
-
-9. Look at the history.
+5. Mark it resolved, commit the merge.
 
     ```text
-    git log --oneline --graph -5
+    git add README.md
     ```
 
     ```text
-    *   5880f8b (HEAD -> main) Merge branch 'wording'
+    git commit --no-edit
+    ```
+
+6. The history has two lines that join.
+
+    ```text
+    git log --oneline --graph -n 5
+    ```
+
+    ```text
+    *   52a0aaa Merge branch 'wording'
     |\
-    | * 0a60f31 (wording) Reword the first sentence
-    * | 6399829 Give the range of lengths
+    | * d669a9d Spell out the unit
+    * | 597d7ac Round the Fahrenheit mean to one decimal
     |/
-    * 01e155f Write the units into the table header
-    * ed3c15d (origin/main) Say where the repository is
+    * c592876 Give the mean in Fahrenheit
+    * 1da24de Add a line
     ```
 
-10. Delete the branch and push.
-
-    ```text
-    git branch -d wording
-    git push
-    ```
-
-!!! success "You should now see"
-    A history that splits and joins, eleven commits in `git log --oneline`,
-    and in the browser the report with the new sentence.
-
-**Say it in these words.** A conflict is not an error. Git reports that one
-line was changed twice and leaves the decision to a person. Nothing is lost
-before the decision, and `git merge --abort` goes back to the state before
-the merge.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `Already up to date.` in step 5 | The branch `wording` has no commit of its own: the file was not saved before step 2 was committed, and Git said `nothing to commit`. Do step 2 again |
-    | `merge: wording - not something we can merge` | The branch was never made. `git branch` lists the branches. Do steps 1 and 2 again |
-    | The markers are committed | The file was staged before it was edited. Remove the markers, save, commit again |
-    | No button **Continue** | Type `git commit --no-edit` |
-    | `git push` is refused with `(fetch first)` | A commit was made on the GitHub page. `git pull --no-edit`, then push |
+**Check:** no `<<<<<<<` left in `README.md`, `git status` clean.
 
 ---
 
-### 11. Wrap up { #wrap-up }
+### 15. Tag the result { #tag }
 
-**1:55 · 5 min**
+**— · 5 min** · A tag is a name for one commit that never moves: "the state that gave 7.16".
 
-Read the list aloud. Ask on the way out which step was hardest.
+1. Tag the last commit.
 
-- A repository is the project folder with its `.git` folder. It is made
-  once.
-- A commit is made in two steps: stage, then commit with a message that
-  says what the commit does.
-- `.gitignore` names the files that stay out. A file that a command can
-  make again need not be stored, if the command is.
-- The diff is read before every commit.
-- An edit is discarded with `git restore`. The last commit is corrected
-  with `--amend`, as long as it has not been pushed.
-- A remote is a second copy. `git push` sends commits, `git pull` fetches
-  them.
-- A branch is a name for a commit. A merge joins two histories, and a
-  conflict is settled by a person.
-- Every button of the Source Control view runs a Git command.
+    ```text
+    git tag -a v1.0 -m "Mean 7.16 °C, checked"
+    ```
+
+2. Send the tag to GitHub; tags are not pushed by `git push` alone.
+
+    ```text
+    git push origin v1.0
+    ```
+
+    ```text
+    To https://github.com/your-username/weather-project.git
+     * [new tag]         v1.0 -> v1.0
+    ```
+
+**Check:** on GitHub, the branch menu has a **Tags** tab with `v1.0`.
 
 ---
-
-## Stretch goals
-
-For students who finish a section early. Answers are given for the lecturer.
-
-- Compute the id of the last commit again, from its text, as on the
-  lecture slide *The Id of a Commit*. The line is the same in both shells.
-
-    ```text
-    git cat-file commit HEAD | git hash-object -t commit --stdin
-    ```
-
-    The answer is the full id of the last commit, the one `git log -1`
-    shows: `5880f8b8c0c85c3d23926f4c46b4aac1716ce24d` in this run. The text
-    goes from one `git` to the other through the pipe unchanged, in `zsh`
-    and in PowerShell 7.
-
-- Ask Git for the id of a two-letter text.
-
-    ```text
-    echo "hi" | git hash-object --stdin
-    ```
-
-    Ask which header Git put in front, and how many bytes it hashed.
-
-    === "macOS"
-
-        It prints `45b983be36b73c0788dc9cbcb76cbb80fc7bb057`. The header is
-        `blob 3` and a zero byte: `hi` and a line break `0a` are three
-        bytes, ten bytes in all.
-
-    === "Windows"
-
-        It prints `edf0effbb6851d0055229878b4bf0d7212167642`. PowerShell
-        ends the text with `0d 0a`, so the header is `blob 4` and a zero
-        byte, eleven bytes in all.
-
-- Find out which commit last changed each of the first five lines of the
-  report.
-
-    ```text
-    git blame -s -L 1,5 results/report.md
-    ```
-
-    The answer is three different ids: the commit that added the report
-    for lines 1, 2 and 4, the merge commit for line 3, the commit of
-    `table-units` for line 5.
-
-- After section 8 or 10, mark the state with a tag, and push the tag.
-
-    ```text
-    git tag -a seminar-5 -m "State after Seminar 5"
-    git push origin seminar-5
-    ```
-
-- If you have put a dataset of your own into `data/raw`, look at its size.
-
-    === "macOS"
-
-        ```text
-        ls -l data/raw
-        ```
-
-    === "Windows"
-
-        ```text
-        ls data/raw
-        ```
-
-        The size in bytes is the column `Length`.
-
-    If it has less than 50 MB, commit it. If it has more, add its path to
-    `.gitignore` and write into the README where it comes from, how large it
-    is and its SHA-256, as on the lecture slide *The README Says How to
-    Fetch It*.
-
-- Clone your repository into a second folder, `check`, beside the project
-  folder, and rebuild what is missing. Take the address from
-  `git remote -v`. These lines are the same in both shells.
-
-    ```text
-    cd ..
-    ```
-
-    ```text
-    git clone <address> check
-    ```
-
-    ```text
-    cd check
-    ```
-
-    ```text
-    ls data/processed
-    ```
-
-    The answer is `pendulum.csv` alone: the two ignored files are not in
-    the clone. Copy the two lines of your shell under **How to rebuild**
-    out of the README and run them inside `check`. Then check the raw files
-    against the list, as in [Seminar 4, section 21](seminar_04.md#list).
-
-    === "macOS"
-
-        ```text
-        shasum -a 256 -c data/checksums.txt
-        ```
-
-        Both raw files print `OK`.
-
-    === "Windows"
-
-        ```text
-        Compare-Object (Get-Content data/checksums.txt) (Get-FileHash data/raw/*).Hash
-        ```
-
-        Nothing is printed: the hashes are the same.
-
-    `git status` in `check` says `nothing to commit, working tree clean`:
-    the rebuilt files are ignored. Go back and delete the clone.
-
-    ```text
-    cd ../analysis-project
-    ```
-
-    === "macOS"
-
-        ```text
-        rm -rf ../check
-        ```
-
-    === "Windows"
-
-        ```text
-        rm -r -Force ../check
-        ```
-
-        Without `-Force` PowerShell deletes the files and stops at
-        `.git`, which is hidden and holds read-only objects.
-
-- Set up an SSH key as on the lecture slide *SSH: the Alternative*, and
-  change the address with `git remote set-url origin` and the address that
-  begins with `git@github.com:`. `git push` then asks for no sign-in.
-
-- Work in pairs. One invites the other on the GitHub page of the
-  repository: **Settings** > **Collaborators**. The guest clones, makes a
-  branch, pushes it and opens a pull request. The owner reads the diff and
-  merges it.
-
-- Do the first four levels of *Introduction Sequence* at
-  [learngitbranching.js.org](https://learngitbranching.js.org/). They show
-  commits, branches and merges as a moving picture.
-
-## If students ask for more
-
-| Topic | Week |
-|--|--|
-| Which Python files stay out of a repository | 6 (Python Foundations) |
-| Data too large for a repository: Git LFS, DVC | 13 (Reproducible Workflows) |
-| One command that rebuilds every ignored file | 13 (Reproducible Workflows) |
-| Checks that run on every push | 13 (Reproducible Workflows) |
-
-Leave out altogether, even if asked: Git Bash, `git rebase`,
-`git reset --hard`, `git push --force`, submodules.
 
 ## Aims practised
 
-♻️ every state of the project kept, with its reason · 🔧 the same commands in every editor and on every host · 📁 raw data in, rebuilt files out, by a written rule · ⚙️ a result tied to the commit that made it
+- ♻️ **Reproducibility:** the README's number is checked against the script
+  that makes it, and the history says who changed what, when and why.
+- 🔧 **Tool-agnostic:** the same lines in PowerShell 7 on macOS and Windows;
+  the Source Control view shows the same state.
+- 📁 **Files:** made files stay out of the repository; raw data is restored
+  from the history in one command.

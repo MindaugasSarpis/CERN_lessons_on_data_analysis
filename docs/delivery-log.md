@@ -512,3 +512,68 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
 - The other seminar pages still install or assume things mid-session;
   lay each out the same way (installs at its start, one question, tasks)
   when it is reworked.
+
+## 2026-10-13 · End of Lecture 3, Lecture 4 and Seminar 4
+
+**Planned**
+
+- The rest of Lecture 03 (numbers in computers), Lecture 04 on its plan,
+  then Seminar 4 as rewritten the same morning.
+
+**What happened** (lecturer's notes of 13 October)
+
+- "Started from L3 how numbers work in computers, it was not bad but then
+  towards the end, the mathematical computations with binary, the hex I
+  just skipped through."
+- "Then L4 was more like a seminar, not a bad thing, but wasn't very
+  coherent. Towards the end content got too complicated and we ended up
+  finishing quicker."
+- "Then tried following the seminar, but it wasn't great. Too much text, the
+  steps are not clear, too many boxes 'what to skip'. Would like a really
+  coherent step by step seminar. But filling the 2 hours. Now the content
+  just wasn't there."
+- The file download did not work from the long workbook link; a TinyURL was
+  used.
+- Later the same day: "the seminars should be very neatly laid out and the
+  steps should be short and coherent, I don't have the time to read long
+  descriptions between the steps and orient myself"; "The seminars I want
+  to have up on iPad and show on my Mac live, even without too much
+  preparation. One step at a time"; "I have a problem with Mac and Windows
+  PS diverging in what they can do in CLI"; "we want to introduce how
+  packages and package managers work in terminal".
+
+**Decided** (13 October, by the lecturer)
+
+- One project for lectures and seminars, the weather station.
+- From Seminar 5 on, files come by Git: the room clones a small public
+  repository, not the course repository.
+- One shell for the course: PowerShell 7 on macOS and on Windows.
+- Lecture 05 runs one straight line; pull requests, review, SSH, stash and
+  line endings are parked.
+- Seminar steps are typed in the terminal while the Source Control view
+  shows them (no click-then-type doubling).
+
+**Changed in response** (13 October)
+
+- `docs/seminar-page-recipe.md` rewritten: one question, installs first,
+  short steps (instruction, typed line, output), one **Check:** line per
+  section, one Task per part, almost no boxes; Seminar 5 is the model.
+- The workbook has a **▶ Steps** button on seminar pages
+  (`javascripts/steps.js`): one step at a time, full screen, arrows or
+  swipe, the place remembered; it also draws the pages' Mermaid diagrams.
+- `misc/weather_repo/build.sh` builds
+  [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project),
+  published the same day: the weather project with seven commits by Smiltė
+  and Tomas, about 0.5 MB to clone. Tomas's commit `2cca38a` makes the mean
+  read the raw file and writes 5.78 into the README.
+- Seminar 5 rewritten as "Who changed the mean?": clone, `git log`,
+  `git blame`, `git show`, `git revert`, the rebuild, `.gitignore`, a commit
+  of one's own, GitHub, push and pull; branch, conflict and tag optional.
+  Every output from a run in PowerShell 7.6 with Git 2.56 on Linux.
+
+**Open**
+
+- Lectures 01–05 and Seminars 1, 3, 4 and 6–16 are being reworked to these
+  decisions (this entry is completed when that work lands).
+- Not run on a Mac or Windows: VS Code's Publish Branch and sign-in
+  dialogs, the Source Control Graph, Homebrew's and `winget`'s screens.

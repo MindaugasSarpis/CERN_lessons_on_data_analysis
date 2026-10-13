@@ -18,3 +18,42 @@
 }
 .md-typeset h3 { font-size: 1.3em; font-weight: 600; margin-top: 0.4em; }
 .md-typeset .highlight code { font-size: 0.92em; }
+
+/* Step view of a seminar page (javascripts/steps.js): one step at a time,
+   large, for a tablet beside the laptop at the front. */
+.steps-open-button {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 5;
+  padding: 0.6rem 1rem; border-radius: 2rem; border: 1px solid var(--md-accent-fg-color);
+  background: var(--md-default-bg-color); color: var(--md-accent-fg-color);
+  font: 600 0.8rem/1 var(--md-text-font-family, sans-serif); cursor: pointer;
+}
+.steps-open .steps-open-button, .steps-open .md-top { display: none; }
+.steps-open body { overflow: hidden; }
+.steps-view {
+  position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column;
+  background: var(--md-default-bg-color); color: var(--md-default-fg-color);
+  padding: max(0.8rem, env(safe-area-inset-top)) 1rem max(0.8rem, env(safe-area-inset-bottom));
+}
+.steps-view[hidden] { display: none; }
+.steps-head { display: flex; align-items: flex-start; gap: 1rem; border-bottom: 1px solid rgba(125,211,252,0.35); padding-bottom: 0.5rem; }
+.steps-where { flex: 1; min-width: 0; }
+.steps-section { font-size: 1.25rem; font-weight: 600; }
+.steps-meta { font-size: 0.85rem; opacity: 0.75; margin-top: 0.2rem; }
+.steps-close { background: none; border: 0; color: inherit; font-size: 1.4rem; cursor: pointer; padding: 0 0.3rem; }
+.steps-kind { margin: 0.8rem 0 0.2rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--md-accent-fg-color); }
+.steps-kind[data-kind="Task"] { color: #fbbf24; }
+.steps-kind[data-kind="Check"] { color: #4ade80; }
+.steps-body { flex: 1; overflow-y: auto; font-size: 1.1rem; -webkit-overflow-scrolling: touch; }
+.steps-body.md-typeset { font-size: 1.1rem; }
+.steps-body.md-typeset .highlight code, .steps-body.md-typeset pre code { font-size: 0.95em; }
+.steps-body > ol { padding-left: 1.6em; margin-top: 0.3em; }
+.steps-tab-label { margin: 0.9em 0 0.2em; font-size: 0.75em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
+.steps-foot { display: flex; align-items: center; gap: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); }
+.steps-foot button {
+  flex: 1; padding: 0.9rem; border-radius: 0.6rem; border: 1px solid rgba(125,211,252,0.5);
+  background: rgba(125,211,252,0.08); color: inherit; font: 600 1rem/1 var(--md-text-font-family, sans-serif); cursor: pointer;
+}
+.steps-foot button:disabled { opacity: 0.3; cursor: default; }
+.steps-count { font-size: 0.85rem; opacity: 0.7; white-space: nowrap; }
+.md-typeset div.diagram { margin: 1em 0; text-align: center; overflow-x: auto; }
+.md-typeset div.diagram svg { width: 100%; max-width: 760px !important; height: auto; }

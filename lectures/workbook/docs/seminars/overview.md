@@ -21,7 +21,7 @@ lecture, so there is no Seminar 2.
 | 29 Sep | [1](seminar_01.md) | VS Code, Markdown, the project folder, the README; a reading list repaired in the editor; a long file read; provenance |
 | 6 Oct | [3](seminar_03.md) | Files and bytes from the terminal: a folder of seven files tidied with `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv`, `rm`; sizes, encodings, line endings and a checksum. *In 2026 it ran as a terminal session with `pwd`, `ls`, `cd`, `clear`* |
 | 13 Oct | [4](seminar_04.md) | PowerShell 7, Git and Python (Miniforge, with conda) installed first; then one question of two years of bicycle counts, how many bicycles pass in an hour: a project folder from nothing, the file checked by its checksum and read byte by byte, the mark `9999` found with pipes and filters, the mean with and without it, a script that remakes every result, the README; a task for the room in every part |
-| 20 Oct | [5](seminar_05.md) | Git: the project folder under version control, from the Source Control view and typed; a remote; a branch and a merge |
+| 20 Oct | [5](seminar_05.md) | Git: clone the weather project, find who changed the mean (`log`, `blame`, `show`), take it back (`revert`), commit, publish to GitHub; branch and merge optional |
 | 27 Oct | [6](seminar_06.md) | Python from the first line: a line of the data file turned into numbers |
 | 3 Nov | [7](seminar_07.md) | Functions, reading the whole file, NumPy arrays and masks |
 | 10 Nov | [8](seminar_08.md) | Matplotlib: two figures, saved and placed in the report |
