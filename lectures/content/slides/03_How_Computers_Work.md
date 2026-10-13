@@ -1608,7 +1608,9 @@ class: text-size-5
 <!--
 **Say:** a text sort compares the first byte of each line, and looks further only on a tie. So the nine temperatures of `daily.csv`, sorted as text, start with 10.4.
 **Ask:** where does `9.8` go? Last: `9` is 0x39.
-(~2 min)
+**Live:** a character from its code. zsh: `printf '\x48\x69\n'` prints `Hi` (0x48, 0x69); `printf '%d\n' "'A"` prints 65. PowerShell: `[char]72`, `[int][char]'A'` (65), `` "`u{48}`u{69}" `` (Hi).
+**Live:** code 7, BEL, is not printed but rung. zsh: `printf '\a'`; PowerShell: `` "`a" `` (backtick a) or `[char]7`. Terminal.app beeps; the terminal of VS Code may stay silent, so try it on the room's laptop first. `printf 'A\tB\n'` shows code 9, TAB.
+(~3 min)
 -->
 
 ---

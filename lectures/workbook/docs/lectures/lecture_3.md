@@ -86,6 +86,21 @@ Enter.
 - **The slides carry everything.** Every command is on its slide with its
   output in both shells, so nothing is opened beside the deck.
 
+## Live in the lecture
+
+One planned moment in a terminal, marked **Live:** in the note of the ASCII
+slide: a character typed by its code, and code 7, BEL, rung instead of
+printed. Try the bell on the laptop of the room first: Terminal.app beeps,
+the terminal of VS Code may stay silent.
+
+| | zsh (macOS) | PowerShell 7 (Windows) | Output |
+|--|--|--|--|
+| Characters from codes | `printf '\x48\x69\n'` | `` "`u{48}`u{69}" `` | `Hi` |
+| One character | `printf '\x41\n'` | `[char]65` | `A` |
+| The code of a character | `printf '%d\n' "'A"` | `[int][char]'A'` | `65` |
+| TAB, code 9 | `printf 'A\tB\n'` | `` "A`tB" `` | `A       B` |
+| BEL, code 7 | `printf '\a'` | `` "`a" `` or `[char]7` | a beep, nothing printed |
+
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
