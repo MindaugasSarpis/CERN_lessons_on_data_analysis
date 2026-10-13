@@ -223,16 +223,11 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 13 — One Command Rebuilds the Analysis](../seminars/seminar_13.md)
-builds the pipeline of the lecture in the room's own project folder. It has
-four parts: an environment and `requirements.txt`; the cleaning script with
-a command line, and three handed-out stages; `run_all.py`, tried on two
-changes and on a rebuild from nothing; one test file, made to fail once.
-It uses `run_all.py` and not Make, because Windows has no `make`, in
-PowerShell or elsewhere, until it is installed separately. Its last section
-replaces the README's *How to rebuild* of Seminar 4 with the second version
-of the lecture. All of it is done in class, on the pendulum table of the
-project folder, in zsh on macOS and PowerShell 7 on Windows.
+[Seminar 13 — Can a Stranger Rebuild Every Number? One Command for the
+Weather Project](../seminars/seminar_13.md) works on the weather project of
+Lectures 1 to 5. Every student pins the project's environment, makes all of
+`data/processed` and `results` with one command that also tests the numbers,
+and proves it in a fresh clone with a fresh environment: the same checksums.
 
 ## Take-aways
 

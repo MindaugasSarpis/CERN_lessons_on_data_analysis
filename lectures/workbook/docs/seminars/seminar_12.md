@@ -1,1206 +1,1171 @@
-# Seminar 12 — Clean a Table by Script
+# Seminar 12 — How Cold Is the Hill? pandas on a Second Station's File
 
 **Paired lecture:** 12 Pandas & Data Cleaning · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student has a script that cleans `D0_KPi.csv` into
-`data/processed/d0_clean.csv`, prints a count for every rule it applied,
-and has those counts in the README.
+**Today's goal:** every student reads a second station's messy export with
+pandas, cleans it rule by rule with a count for each rule, compares it day
+by day with the valley station, and pushes the script and the result.
 
-The new tool of the session is Pandas. Everything else is known: the project
-folder, the terminal (`zsh` on macOS, PowerShell 7 on Windows), running a
-script, NumPy masks, checksums.
+Everything is typed in the terminal of VS Code (PowerShell 7), in the
+`weather-project` folder. Sections 3 to 8 are typed at the Python prompt
+`>>>`.
 
 ## Run sheet
 
-One screen for the front of the room. Each line links to its section.
-
-| Clock | Section | On the projector | The room ends with |
+| Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · A small table by script** · 42 min | | |
-| 0:00 | [1. Install Pandas](#install) | `python3 -m pip install pandas` (Windows `python`) | A version number printed |
-| 0:08 | [2. Read the pendulum file](#read) | `pd.read_csv(RAW, sep=";", decimal=",")` | Three columns, two with the right type |
-| 0:20 | [3. Clean it and compare](#compare) | `scripts/clean.py`, then `shasum -a 256`, `Get-FileHash` | The same bytes as Lecture 4's `pendulum_script.csv` |
-| 0:34 | [4. The partner's second file](#second) | `pendulum_run2.csv` through both scripts | 10 rows from Lecture 4's script, 9 from `clean.py` |
-| | **Part 2 · Audit the data file** · 36 min | | |
-| 0:42 | [5. Shape and types](#types) | `scripts/audit.py`, `df.dtypes` | 91 583 rows, four columns of `float64` |
-| 0:48 | [6. The summary and the code −100](#code) | `df.describe()` | 49 codes turned into NaN |
-| 1:02 | [7. Five questions](#questions) | The audit, one count per line | A count for each question |
-| | **Part 3 · Clean by script** · 21 min | | |
-| 1:18 | [8. The cleaning script](#clean) | `scripts/clean_d0.py` | `data/processed/d0_clean.csv` and a log |
-| 1:30 | [9. Check what it did](#check) | The checksums of both files | The raw file unchanged, the output the same on every laptop |
-| | **Part 4 · Write it down** · 21 min | | |
-| 1:39 | [10. The cleaning in the README](#readme) | `README.md`, then the preview | A **Cleaning** section with the counts, committed |
-| 1:54 | [11. Wrap up](#wrap-up) | The list of what was learned | |
+| | **Part 1 · pandas and the new file** · 20 min | | |
+| 0:00 | [1. Install pandas](#install) | `conda install pandas` | `3.0.6`, one more line in `environment.yml` |
+| 0:10 | [2. Get the hill station's file](#pull) | `git pull --no-edit course main` | `data/raw/hill_station.csv`, 8 741 lines |
+| | **Part 2 · Read it** · 30 min | | |
+| 0:20 | [3. Separator and decimal comma](#read) | `pd.read_csv(RAW, sep=";", decimal=",")` | `temp` as `float64` |
+| 0:35 | [4. -999 and empty cells](#missing) | `na_values=["-999"]`, `df.isna().sum()` | 27 and 30 missing values |
+| | **Part 3 · Clean it** · 30 min | | |
+| 0:50 | [5. Two units in one column](#units) | `df.loc[f, "temp"] = …` | 72 hours converted, max 28.4 |
+| 1:00 | [6. Rows twice, and the hour twice](#duplicates) | `df.drop_duplicates()` | 8 716 rows |
+| 1:10 | [7. Times and daily means](#daily) | `temp.resample("D").agg(…)` | 365 days, 4 too short |
+| | **Part 4 · Compare, by script** · 40 min | | |
+| 1:20 | [8. Join with the valley](#join) | `pd.merge(valley, day, on="time")` | hill − valley = −1.19 °C |
+| 1:30 | [9. The script](#script) | `python scripts/clean_hill.py` | the log and `hill_daily.csv` |
+| 1:45 | [10. Rebuild, README, push](#push) | `git push` | the work on GitHub |
+| 1:55 | [11. Wrap up](#wrap-up) | | |
 | | **Optional, if the room is fast** | | |
-| — | [12. A table by group](#group) | `scripts/tau_by_region.py`, `groupby` | `results/tau_by_region.csv` |
+| — | [12. The summer-time hour in winter time](#timezone) | `tz_localize("Europe/Vilnius")` | hourly spread 0.82 → 0.44 |
+| — | [13. The difference month by month](#month) | `diff.groupby(…)`, `plot.bar` | `results/hill_by_month.png` |
 
-**If time runs short:** show section 4 on the projector only, shorten
-section 9 to step 3, the two checksums, and keep section 10: the README is
-the written result of the session.
-
-??? info "How to use this page"
-    This page is written for the person at the front. Students follow the
-    same page.
-
-    - **Tell the room** is the paragraph to say before the steps.
-    - The **numbered steps** are what to do on the projector. The room
-      repeats each step on their own laptops.
-    - **You should now see** closes a section. Ask for hands: "who sees
-      this?" Go on when about four in five have it. The rest get help from a
-      neighbour.
-    - **Watch for** is the usual slip in that section.
-
-    Every command stands alone in a block. It is typed as it stands, in the
-    terminal of VS Code, in the project folder, and ended with `Enter`. The
-    terminal is `zsh` on macOS and PowerShell 7 on Windows, as since
-    Seminar 4. Where the two differ, the step has a tab for **macOS** and
-    one for **Windows**. Most often the difference is the first word:
-    `python3` on macOS, `python` on Windows. The outputs were printed by
-    `zsh` with Pandas 3.0.1 and by PowerShell 7.6 on Windows with Pandas
-    3.0.6. Keys are written for Windows, with macOS in brackets.
+**If time runs short:** skip section 8 at the prompt; the script of
+section 9 holds the same lines. Sections 12 and 13 are optional.
 
 ??? info "Before the session"
-    For the room: the project folder `analysis-project` with Python from
-    Seminar 4, Git, and the files of the next box in their folders. `pip`
-    installs NumPy together with Pandas in section 1 if it is missing.
-
-    Section 3 compares with `data/processed/pendulum_script.csv`, the file
-    Lecture 4's script writes. It is listed in `.gitignore` since Seminar 5,
-    so it is in the folder and not in the repository. A student who does not
-    have it makes it with the line of Seminar 4:
-
-    === "macOS"
-
-        ```text
-        python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
-        ```
-
-    It prints `9 rows written to data/processed/pendulum_script.csv`.
-
-    For you:
-
-    - The page done once on a Mac and once on a Windows laptop with
-      PowerShell 7.
-    - `pendulum_script.csv` on your own laptop checked: 97 bytes, SHA-256
-      `be05af03…fff0870b`. Section 3 compares against it.
-    - The network of the room tried: section 1 downloads about 10 MB, and
-      about 12 MB more where NumPy is missing. If it is slow, have a phone
-      hotspot ready, and let a student whose download stalls work with a
-      neighbour until it finishes.
-
-??? info "Files for this seminar"
-    A browser saves each file under the name in the second column. Drag it
-    from **Downloads** onto the folder in the third.
-
-    | File | Saved as | Goes into | What it is |
-    |--|--|--|--|
-    | [`pendulum_raw.csv`](../data/pendulum_raw.csv){ download="pendulum.csv" } | `pendulum.csv` | `data/raw` | The pendulum table as the lab partner sent it, 130 bytes |
-    | [`pendulum_run2_raw.csv`](../data/pendulum_run2_raw.csv){ download="pendulum_run2.csv" } | `pendulum_run2.csv` | `data/raw` | Section 4: the partner's second series, 125 bytes |
-    | [`cli_clean_pendulum.py`](../data/cli_clean_pendulum.py){ download="clean_pendulum.py" } | `clean_pendulum.py` | `scripts` | Lecture 4's script, handed out in Seminar 4 |
-    | [`D0_KPi.csv`](../data/D0_KPi.csv){ download="D0_KPi.csv" } | `D0_KPi.csv` | `data/raw` | The LHCb file, 3 926 142 bytes |
+    - **Room:** internet (conda downloads pandas). Each student has
+      `weather-project` from [Seminar 5](seminar_05.md) on, the conda
+      environment `weather`, and the remote `course` from Seminar 6.
+    - **You:** nothing to prepare. The course repository has the hill
+      station's file; section 2 pulls it. Ids of commits differ on every
+      laptop.
+    - **Keys** are written for Windows, macOS in brackets. Every line typed
+      is the same on macOS and Windows.
 
 ---
 
-## Part 1 · A small table by script { #part-1 }
+## Part 1 · pandas and the new file { #part-1 }
 
-**0:00 to 0:42 · sections 1 to 4**
-
-Lecture 2 cleaned the pendulum table by hand: one line deleted, two
-replacements, one column removed. Lecture 4's script `clean_pendulum.py`
-makes the same four edits as text and writes `pendulum_script.csv`, 97
-bytes. The room now writes the cleaning again with Pandas, as rules about
-what a column holds, proves that the result is the same file, and runs both
-scripts on a second file.
+**0:00 to 0:20** · A second station stands on a hill 4 km from the valley
+station, 180 m higher. Its operator sent the hourly export of 2025.
 
 ---
 
-### 1. Install Pandas { #install }
+### 1. Install pandas { #install }
 
-**0:00 · 8 min**
+**0:00 · 10 min** · pandas reads and cleans tables; it goes into the project's environment.
 
-**Tell the room.** Pandas is a library for tables. A table in Pandas has
-columns with names, one type per column, and cells that may be empty. It is
-installed with `pip`, the program that comes with Python and fetches
-libraries.
-
-1. Open the project folder in VS Code and select **Terminal** >
-   **New Terminal**.
-
-2. Install Pandas.
-
-    === "macOS"
-
-        ```text
-        python3 -m pip install pandas
-        ```
-
-    === "Windows"
-
-        ```text
-        python -m pip install pandas
-        ```
-
-    Near the end of the output stands a line that begins with
-    `Successfully installed`.
-
-3. Check that Python finds it.
-
-    === "macOS"
-
-        ```text
-        python3 -c "import pandas; print(pandas.__version__)"
-        ```
-
-    === "Windows"
-
-        ```text
-        python -c "import pandas; print(pandas.__version__)"
-        ```
-
-!!! success "You should now see"
-    A version number, for example `3.0.6`.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | Windows: `No module named pip` | `py -m pip install pandas` |
-    | `externally-managed-environment` | The Python is the one of the system, not the one from python.org. Run the installer from python.org again |
-    | The version starts with `2.` | Nothing. The one difference on this page is named where it occurs |
-
----
-
-### 2. Read the pendulum file { #read }
-
-**0:08 · 12 min**
-
-**Tell the room.** `read_csv` turns a text file into a table. It has to be
-told two things that a spreadsheet takes from the settings of the computer:
-the character between the values and the decimal sign. The room finds both
-by reading the file three times.
-
-1. Select the `scripts` folder, then **New File**, and name it:
+1. Open `weather-project` in VS Code, then the terminal: **View** >
+   **Terminal**. Switch on the environment.
 
     ```text
-    clean.py
+    conda activate weather
     ```
 
-    It is a new file next to Lecture 4's `clean_pendulum.py`, which stays
-    as it is. Type into it:
+    The prompt starts with `(weather)`.
+
+2. pandas is not there yet.
+
+    ```text
+    python -c "import pandas"
+    ```
+
+    ```text
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+        import pandas
+    ModuleNotFoundError: No module named 'pandas'
+    ```
+
+3. Install it.
+
+    ```text
+    conda install pandas
+    ```
+
+    ```text
+      added / updated specs:
+        - pandas
+    ```
+
+    The list below names `pandas-3.0.6`. Press `Enter` at
+    `Proceed ([y]/n)?`.
+
+4. Check.
+
+    ```text
+    python -c "import pandas; print(pandas.__version__)"
+    ```
+
+    ```text
+    3.0.6
+    ```
+
+5. In `environment.yml`, add a last line and save.
+
+    ```text
+      - pandas=3.0.6
+    ```
+
+6. Look at the change, then commit it.
+
+    ```text
+    git diff
+    ```
+
+    ```text
+    @@ -6,3 +6,4 @@ dependencies:
+       - numpy=2.5
+       - matplotlib-base=3.11
+       - scipy
+    +  - pandas=3.0.6
+    ```
+
+    ```text
+    git commit -am "Add pandas to the environment"
+    ```
+
+    ```text
+    [main 29df5f1] Add pandas to the environment
+     1 file changed, 1 insertion(+)
+    ```
+
+    Your id differs.
+
+**Check:** `3.0.6`, and `environment.yml` ends with `- pandas=3.0.6`.
+
+!!! warning "`conda install` ran with `(base)` in the prompt"
+    pandas went into `base`. Run `conda remove pandas`, then
+    `conda activate weather` and install it again.
+
+---
+
+### 2. Get the hill station's file { #pull }
+
+**0:10 · 10 min** · The course repository has one new file; a pull brings it.
+
+1. Pull from the course repository.
+
+    ```text
+    git pull --no-edit course main
+    ```
+
+    ```text
+    Merge made by the 'ort' strategy.
+     data/raw/hill_station.csv | 8741 +++++++++++++++++++++++++++++++++++++++++++++
+     1 file changed, 8741 insertions(+)
+     create mode 100644 data/raw/hill_station.csv
+    ```
+
+2. The first lines.
+
+    ```text
+    Get-Content data/raw/hill_station.csv -TotalCount 4
+    ```
+
+    ```text
+    time;temp;unit;humidity
+    01.01.2025 00:00;-3,9;C;100
+    01.01.2025 01:00;-4,1;C;100
+    01.01.2025 02:00;-4,7;C;100
+    ```
+
+3. The number of lines.
+
+    ```text
+    (Get-Content data/raw/hill_station.csv).Count
+    ```
+
+    ```text
+    8741
+    ```
+
+**Check:** `;` between the values, a decimal comma, the day before the
+month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
+8 760 hours of 2025.
+
+!!! question "Task: two odd days"
+    Print the lines of 26 October 2025 from 01:00 to 05:00, then those of
+    30 March 2025. What is odd, and why?
+
+??? note "Answer"
+    ```text
+    Select-String '^26\.10\.2025 0[1-5]' data/raw/hill_station.csv
+    ```
+
+    ```text
+    data/raw/hill_station.csv:7110:26.10.2025 01:00;-1,7;C;98
+    data/raw/hill_station.csv:7111:26.10.2025 02:00;-2,3;C;97
+    data/raw/hill_station.csv:7112:26.10.2025 03:00;-3,1;C;100
+    data/raw/hill_station.csv:7113:26.10.2025 03:00;-2,8;C;100
+    data/raw/hill_station.csv:7114:26.10.2025 04:00;-3,4;C;100
+    data/raw/hill_station.csv:7115:26.10.2025 05:00;-3,2;C;100
+    ```
+
+    ```text
+    Select-String '^30\.03\.2025 0[1-5]' data/raw/hill_station.csv
+    ```
+
+    ```text
+    data/raw/hill_station.csv:2071:30.03.2025 01:00;5,3;C;98
+    data/raw/hill_station.csv:2072:30.03.2025 02:00;5,0;C;95
+    data/raw/hill_station.csv:2073:30.03.2025 04:00;4,5;C;99
+    data/raw/hill_station.csv:2074:30.03.2025 05:00;4,8;C;100
+    ```
+
+    03:00 comes twice on 26 October and not at all on 30 March. The logger
+    writes the local clock: summer time ended at 04:00 on 26 October
+    (back to 03:00) and began at 03:00 on 30 March (on to 04:00). The
+    valley's `weather.csv` has 87 672 = 3 653 × 24 rows, no hour twice and
+    none missing: it keeps winter time all year.
+
+---
+
+## Part 2 · Read it { #part-2 }
+
+**0:20 to 0:50** · Every option of `read_csv` answers one thing seen in the first lines.
+
+---
+
+### 3. Separator and decimal comma { #read }
+
+**0:20 · 15 min** · `read_csv` assumes `,` between values and `.` as the decimal sign. This file has neither.
+
+1. Start Python.
+
+    ```text
+    python
+    ```
+
+    The prompt is now `>>>`. Every line up to section 8 is typed here.
+
+2. Import pandas and name the file.
 
     ```text
     import pandas as pd
-
-    RAW = "data/raw/pendulum.csv"
-
-    df = pd.read_csv(RAW)
-    print(df.shape)
     ```
 
-2. Save and run it.
+    ```text
+    RAW = "data/raw/hill_station.csv"
+    ```
 
-    === "macOS"
+3. Read it with no options, and ask for its size.
 
-        ```text
-        python3 scripts/clean.py
-        ```
+    ```text
+    df = pd.read_csv(RAW)
+    ```
 
-    === "Windows"
+    ```text
+    df.shape
+    ```
 
-        ```text
-        python scripts/clean.py
-        ```
+    ```text
+    (8740, 1)
+    ```
 
-    It prints `(10, 1)`: ten rows, one column. Pandas expects a comma
-    between the values.
+    One column: pandas found no `,` in the header.
 
-3. Change the line with `read_csv` and add a line under the `print`.
+    ```text
+    df.columns
+    ```
+
+    ```text
+    Index(['time;temp;unit;humidity'], dtype='str')
+    ```
+
+4. Read it with the separator.
 
     ```text
     df = pd.read_csv(RAW, sep=";")
-    print(df.shape)
-    print(df.dtypes)
     ```
 
-    Run it with `↑` and Enter.
+    ```text
+    df.dtypes
+    ```
 
     ```text
-    (10, 3)
-    nr           float64
-    length_cm        str
-    t10_s            str
+    time            str
+    temp            str
+    unit            str
+    humidity    float64
     dtype: object
     ```
 
-    Three columns. `str` means text (Pandas 2 prints `object`). The times
-    are text because `9,02` is not a number to Python.
+    `temp` is text: `-3,9` is not a number to pandas.
 
-4. Give the decimal sign, and print the table itself.
+5. Read it with the decimal comma too.
 
     ```text
     df = pd.read_csv(RAW, sep=";", decimal=",")
-    print(df)
-    print(df.dtypes)
     ```
 
-!!! success "You should now see"
     ```text
-        nr length_cm  t10_s
-    0  1.0        20   9.02
-    1  2.0        30  11.05
-    2  3.0        40  12.61
-    3  4.0        50  14.23
-    4  5.0        60  15.49
-    5  6.0        70  16.84
-    6  7.0        80  17.90
-    7  8.0        90  19.10
-    8  9.0       100  20.01
-    9  NaN      mean  15.14
-    nr           float64
-    length_cm        str
-    t10_s        float64
+    df.dtypes
+    ```
+
+    ```text
+    time            str
+    temp        float64
+    unit            str
+    humidity    float64
     dtype: object
     ```
 
-Ask the room why `nr` is a float and `length_cm` is text. Both answers are
-in row 9. The cell under `nr` is empty: Pandas writes NaN, and NaN is a
-float. The cell under `length_cm` says `mean`, and a column has one type.
-The numbers 0 to 9 on the left are not in the file. They are the index, a
-label for each row.
+6. The first rows.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `FileNotFoundError` | The terminal is not in the project folder. Run `pwd`, then `cd` to the folder |
-    | `ModuleNotFoundError: No module named 'pandas'` | `python` and `pip` belong to two installations. Install with `-m pip` after the same first word, as in section 1 |
+    ```text
+    df.head(3)
+    ```
+
+    ```text
+                   time  temp unit  humidity
+    0  01.01.2025 00:00  -3.9    C     100.0
+    1  01.01.2025 01:00  -4.1    C     100.0
+    2  01.01.2025 02:00  -4.7    C     100.0
+    ```
+
+**Check:** `temp` and `humidity` are `float64`; 8 740 rows.
 
 ---
 
-### 3. Clean it and compare { #compare }
+### 4. -999 and empty cells { #missing }
 
-**0:20 · 14 min**
+**0:35 · 15 min** · A missing value must be `NaN`, the value pandas leaves out of every mean.
 
-**Tell the room.** Each hand edit becomes one line. The two replacements are
-already done: they are the two options of `read_csv`. What is left is the
-line with the mean, the column of row numbers and the type of `length_cm`.
-Then the output is compared with the file Lecture 4's script wrote,
-`data/processed/pendulum_script.csv`. That file stays as it is.
-
-1. Replace the two `print` lines at the end of the script by:
+1. Eight numbers per column.
 
     ```text
-    df = df[df["nr"].notna()]
-    df = df.drop(columns="nr")
-    df["length_cm"] = df["length_cm"].astype(int)
-    print(df.dtypes)
-
-    OUT = "data/processed/pendulum.csv"
-    df.to_csv(OUT, index=False)
-    print(f"{len(df)} rows written to {OUT}")
+    df.describe()
     ```
 
-    The script writes over `data/processed/pendulum.csv`, the cleaned copy
-    the README names. From today a script makes it.
-
-2. Run the script.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/clean.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/clean.py
-        ```
-
-    It prints:
-
     ```text
-    length_cm      int64
-    t10_s        float64
-    dtype: object
-    9 rows written to data/processed/pendulum.csv
+                  temp     humidity
+    count  8731.000000  8710.000000
+    mean      3.192005    84.451206
+    std      46.800672    10.998819
+    min    -999.000000    49.000000
+    25%      -2.650000    76.000000
+    50%       4.500000    85.000000
+    75%      12.300000    94.000000
+    max      73.600000   100.000000
     ```
 
-3. Compare the two files in VS Code. Select `pendulum.csv` in the Side Bar,
-   hold `Ctrl` (macOS `Cmd`) and select `pendulum_script.csv`. Right-click
-   and select **Compare Selected**. Two lines are marked:
+    `min` is −999, the mark for a failed reading. `count` is below 8 740:
+    the empty cells are already `NaN`.
+
+2. Read again, with −999 as missing.
 
     ```text
-    Lecture 4   80,17.90    90,19.10
-    Pandas      80,17.9     90,19.1
+    df = pd.read_csv(RAW, sep=";", decimal=",", na_values=["-999"])
     ```
 
-    17.90 and 17.9 are the same number, and Pandas writes the shorter text.
-    In the file the zero said that the time was read to 0.01 s. The file of
-    Pandas has 95 bytes, and on Windows 105: each line ends in CR LF.
-
-4. Say how the numbers are written. Change the line with `to_csv`:
+3. Count the missing values in each column.
 
     ```text
-    df.to_csv(OUT, index=False, float_format="%.2f",
-              lineterminator="\n")
+    df.isna().sum()
     ```
 
-    `"%.2f"` writes two decimals in every row. `"\n"` ends every line with
-    one byte on every system. Without it Windows writes two.
-
-5. Delete the line `print(df.dtypes)`, run the script and compare the
-   checksums of the two files. The wildcard takes both.
-
-    === "macOS"
-
-        ```text
-        shasum -a 256 data/processed/pendulum*.csv
-        ```
-
-        ```text
-        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum.csv
-        be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b  data/processed/pendulum_script.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-FileHash data/processed/pendulum*.csv).Hash
-        ```
-
-        ```text
-        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
-        BE05AF034937EF615C93B2FB5D8369C899DEF80D0472A6187C5DBD3AFFF0870B
-        ```
-
-!!! success "You should now see"
-    Two lines that end in the same digits, `fff0870b`. The two files are
-    identical: 97 bytes each.
-
-**Say it in these words.** The Pandas script does what Lecture 4's script
-did, and this is the proof. Delete `data/processed/pendulum.csv`, run
-`clean.py`, and it is back with the same 97 bytes.
-
-??? info "The script, complete"
     ```text
-    """Clean the pendulum table: data/raw -> data/processed."""
-    import pandas as pd
-
-    RAW = "data/raw/pendulum.csv"
-    OUT = "data/processed/pendulum.csv"
-
-    df = pd.read_csv(RAW, sep=";", decimal=",")
-    df = df[df["nr"].notna()]
-    df = df.drop(columns="nr")
-    df["length_cm"] = df["length_cm"].astype(int)
-    df.to_csv(OUT, index=False, float_format="%.2f",
-              lineterminator="\n")
-    print(f"{len(df)} rows written to {OUT}")
-    ```
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | Windows: the checksums differ, and **Compare Selected** shows no difference | `lineterminator="\n"` is missing: the file ends its lines in CR LF. `(Get-Item data/processed/pendulum.csv).Length` prints 107, not 97 |
-    | One line only: `pendulum_script.csv` is missing | Make it with the line in **Before the session**, then compare again |
-    | `ValueError: invalid literal for int() with base 10: 'mean'` | The line with `notna()` is missing or stands below `astype` |
-    | The file begins with `,length_cm,t10_s` | `index=False` is missing |
-
----
-
-### 4. The partner's second file { #second }
-
-**0:34 · 8 min**
-
-**Tell the room.** The lab partner sent a second series: the same nine
-lengths, in the same form. A person sees two differences at once. The
-summary line is spelt `Mean`, and the time at 80 cm was not taken. Both
-scripts are run on it, and the room predicts first how many rows a cleaned
-file should have.
-
-1. Download `pendulum_run2_raw.csv` from the box **Files for this seminar**.
-   The browser saves it as `pendulum_run2.csv`. Drag it onto `data/raw` and
-   open it.
-
-    ```text
-    nr;length_cm;t10_s
-    1;20;8,97
-    2;30;11,02
-    3;40;12,74
-    4;50;14,15
-    5;60;15,58
-    6;70;16,83
-    7;80;
-    8;90;19,08
-    9;100;20,04
-    ;Mean;14,80
-    ```
-
-    Ask how many rows the cleaned file should have. Nine lengths, eight of
-    them with a time.
-
-2. Run Lecture 4's script on it.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/clean_pendulum.py data/raw/pendulum_run2.csv data/processed/run2_script.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/clean_pendulum.py data/raw/pendulum_run2.csv data/processed/run2_script.csv
-        ```
-
-    It prints `10 rows written to data/processed/run2_script.csv`. Open
-    the file. It ends in:
-
-    ```text
-    80,
-    90,19.08
-    100,20.04
-    Mean,14.80
-    ```
-
-    The script skips a line that contains `mean`. `M` is not `m`: 77 and
-    109 in the ASCII table of Lecture 3.
-
-3. In `clean.py`, change the two names at the top to:
-
-    ```text
-    RAW = "data/raw/pendulum_run2.csv"
-    OUT = "data/processed/pendulum_run2.csv"
-    ```
-
-    Run it.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/clean.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/clean.py
-        ```
-
-    It prints `9 rows written to data/processed/pendulum_run2.csv`. Open
-    the file. It ends in:
-
-    ```text
-    70,16.83
-    80,
-    90,19.08
-    100,20.04
-    ```
-
-4. Change the two names back to `pendulum.csv` and run the script once
-   more: `9 rows written to data/processed/pendulum.csv`. Seminar 13 turns
-   the two names into words on the command line.
-
-!!! success "You should now see"
-    In `data/processed`: `run2_script.csv` with 10 rows and the `Mean`
-    line, 103 bytes, and `pendulum_run2.csv` with 9 rows and an empty time
-    at 80 cm, 92 bytes.
-
-**Say it in these words.** Lecture 4's script moves characters, and does
-what its text says. `clean.py` drops the row that has no `nr`, whatever the
-summary line is called. The missing time becomes NaN, and the file still
-says that 80 cm was not timed.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `ValueError: invalid literal for int() with base 10: 'Mean'` | `RAW` names the second file and the line with `notna()` is missing |
-    | `FileNotFoundError: ... pendulum_run2.csv` | The file is still in **Downloads**, or was saved as `pendulum_run2_raw.csv`. Rename it in the Side Bar |
-
----
-
-## Part 2 · Audit the data file { #part-2 }
-
-**0:42 to 1:18 · sections 5 to 7**
-
-Nobody can read 91 583 rows. An audit asks the table a fixed list of
-questions, and every answer is a count. Nothing is changed in this part: the
-script only reads and prints.
-
----
-
-### 5. Shape and types { #types }
-
-**0:42 · 6 min**
-
-**Tell the room.** The first look at a table is its size and the type of
-each column. Line 1 of the file becomes the names of the columns.
-
-1. Select the `scripts` folder, then **New File**, and name it:
-
-    ```text
-    audit.py
-    ```
-
-    Type into it:
-
-    ```text
-    import numpy as np
-    import pandas as pd
-
-    df = pd.read_csv("data/raw/D0_KPi.csv")
-    print(df.shape)
-    print(df.dtypes)
-    print(df.head())
-    ```
-
-2. Run it.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/audit.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/audit.py
-        ```
-
-!!! success "You should now see"
-    ```text
-    (91583, 4)
-    M         float64
-    PT        float64
-    TAU       float64
-    IPCHI2    float64
-    dtype: object
-               M         PT       TAU       IPCHI2
-    0  1880.6490  3000.9534  0.000413  1299.167500
-    1  1860.6599  2803.4126  0.000186     0.341822
-    2  1913.8755  2542.1690  0.000185    17.386473
-    3  1888.7571  4453.1040  0.000568    56.797930
-    4  1862.5100  2764.2280  0.000287     3.644997
-    ```
-
-Four columns of `float64` and no column of text: every cell of the file was
-read as a number. The size agrees with the README: 91 583 rows and 4
-columns. The printout is rounded to six decimals. The table holds every
-digit of the file.
-
----
-
-### 6. The summary and the code −100 { #code }
-
-**0:48 · 14 min**
-
-**Tell the room.** `describe()` gives eight numbers for each column. Reading
-them is the fastest way to find a value that cannot be a measurement.
-
-Give the room two minutes with the table before you say anything.
-
-1. Replace the line `print(df.head())` by this line, and run the script:
-
-    ```text
-    print(df.describe())
-    ```
-
-    It prints:
-
-    ```text
-                      M            PT           TAU         IPCHI2
-    count  91583.000000  91583.000000  91583.000000   91583.000000
-    mean    1864.104582   3448.928182     -0.052522     457.513042
-    std       25.565096   1301.067191      2.312500    6378.852807
-    min     1766.209600    755.268600   -100.000000       0.000014
-    25%     1845.991900   2723.341800      0.000185       2.124486
-    50%     1864.078100   3048.925800      0.000272       6.298690
-    75%     1881.531250   3676.466550      0.000605      27.436283
-    max     2453.658400  64509.950000      0.578799  891711.060000
-    ```
-
-2. Ask which numbers cannot be right. Collect the answers on the board:
-
-    | In the table | Why it stands out |
-    |--|--|
-    | `TAU`: mean −0.052522 | A mean decay time below zero |
-    | `TAU`: min −100 | The file's code for a missing value |
-    | `M`: min 1766.2, max 2453.7 | The quartiles are 1846 and 1882 |
-    | `PT`: min 755.3 | The first quartile is 2723 |
-
-3. Put a `#` in front of `print(df.describe())`. Under it, count the code,
-   turn it into NaN and look at the column again.
-
-    ```text
-    print((df == -100).sum())
-    df["TAU"] = df["TAU"].replace(-100, np.nan)
-    print(df.isna().sum())
-    print(df["TAU"].describe())
-    ```
-
-!!! success "You should now see"
-    The same four lines twice:
-
-    ```text
-    M          0
-    PT         0
-    TAU       49
-    IPCHI2     0
+    time         0
+    temp        27
+    unit         0
+    humidity    30
     dtype: int64
     ```
 
-    and then the summary of `TAU` without the code:
+4. The temperature again.
 
     ```text
-    count    91534.000000
-    mean         0.000982
-    std          0.004382
-    min         -0.137153
-    25%          0.000185
-    50%          0.000272
-    75%          0.000605
-    max          0.578799
-    Name: TAU, dtype: float64
+    df["temp"].describe()
     ```
-
-Work out with the room what the 49 rows did. They are 0.054 % of the file.
-Their sum is 49 × (−100) = −4900, and the sum of the other 91 534 values is
-89.868. Together: −4810.132 / 91 583 = −0.0525. Without the code the mean is
-0.000982 and the standard deviation falls from 2.31 to 0.0044. The median
-did not move in its first three digits.
-
-The minimum is still negative: −0.137. That is the next finding.
-
-!!! warning "Watch for"
-    `print(df["TAU"] == -100)` instead of the count. It prints a column of
-    91 583 times True or False. The sum of a mask is the number of True.
-
----
-
-### 7. Five questions { #questions }
-
-**1:02 · 16 min**
-
-**Tell the room.** The audit has five questions: completeness, validity,
-uniqueness, consistency, units. Each is one line and one count. The room
-rewrites `audit.py` so that it prints the whole list, and fills in a table.
-
-1. Replace everything below the line with `read_csv` by:
 
     ```text
-    # Consistency: shape and types as the README says
-    print("shape         ", df.shape)
-    print("types         ", set(df.dtypes.astype(str)))
-
-    # Completeness: empty cells, and the code -100
-    print("empty cells   ", df.isna().sum().to_dict())
-    print("cells == -100 ", (df == -100).sum().to_dict())
-    df["TAU"] = df["TAU"].replace(-100, np.nan)
-
-    # Validity: values that cannot be true
-    print("M <= 0        ", (df["M"] <= 0).sum())
-    print("PT <= 0       ", (df["PT"] <= 0).sum())
-    print("TAU < 0       ", (df["TAU"] < 0).sum())
-    print("IPCHI2 < 0    ", (df["IPCHI2"] < 0).sum())
-    print("M outside     ", (~df["M"].between(1800, 1930)).sum())
-
-    # Uniqueness: rows that are there twice
-    print("duplicate rows", df.duplicated().sum())
-
-    # Units: a typical value against a known number
-    print("median M      ", df["M"].median())
-    print("median TAU, ps", df["TAU"].median() * 1000)
+    count    8713.000000
+    mean        5.262412
+    std        10.740471
+    min       -17.400000
+    25%        -2.600000
+    50%         4.500000
+    75%        12.400000
+    max        73.600000
+    Name: temp, dtype: float64
     ```
 
-2. Run the script.
+    The minimum is a winter night now. The maximum, 73.6, is not a
+    temperature on a Lithuanian hill in °C.
 
-    === "macOS"
+**Check:** 27 missing temperatures, 30 missing humidities, and `max 73.6`.
+
+!!! question "Task: where are the missing values?"
+    1. Of the 27 missing temperatures, how many were `-999` in the file
+       and how many were empty cells? Count in a second terminal (**+** in
+       the terminal panel), with `Select-String`.
+    2. From which hour to which hour is the humidity missing?
+
+??? note "Answer"
+    1. 18 and 9; 18 + 9 = 27.
 
         ```text
-        python3 scripts/audit.py
+        (Select-String ';-999;' data/raw/hill_station.csv).Count
         ```
-
-    === "Windows"
 
         ```text
-        python scripts/audit.py
+        18
         ```
 
-    It prints:
+        ```text
+        (Select-String ';;' data/raw/hill_station.csv).Count
+        ```
 
-    ```text
-    shape          (91583, 4)
-    types          {'float64'}
-    empty cells    {'M': 0, 'PT': 0, 'TAU': 0, 'IPCHI2': 0}
-    cells == -100  {'M': 0, 'PT': 0, 'TAU': 49, 'IPCHI2': 0}
-    M <= 0         0
-    PT <= 0        0
-    TAU < 0        3
-    IPCHI2 < 0     0
-    M outside      2
-    duplicate rows 0
-    median M       1864.0781
-    median TAU, ps 0.27245521000000006
-    ```
+        ```text
+        9
+        ```
 
-3. Look at the rows that broke a rule. Add at the end and run again:
+    2. From 2 September 12:00 to 3 September 17:00, 30 hours in a row.
 
-    ```text
-    print(df[df["TAU"] < 0])
-    print(df[~df["M"].between(1800, 1930)])
-    ```
+        ```text
+        df[df["humidity"].isna()]["time"].iloc[[0, -1]]
+        ```
 
-    It prints:
-
-    ```text
-                   M          PT       TAU      IPCHI2
-    22854  1844.2952  10253.5440 -0.137153   64641.477
-    35318  1822.4904   2943.2370 -0.059467  891711.060
-    42860  1867.3162   2748.1152 -0.098111  120145.600
-                   M          PT       TAU      IPCHI2
-    10046  2453.6584    755.2686  0.227682    1.050094
-    89859  1766.2096  12493.0220  0.003727  214.383360
-    ```
-
-    The number on the left is the label of the row. It is the line of the
-    file minus 2: row 10046 is line 10 048.
-
-4. Fill in the table with the room.
-
-    | Question | Finding |
-    |--|--|
-    | Completeness | No empty cell. 49 cells of `TAU` hold the code −100 |
-    | Validity | 3 negative decay times. 2 masses far outside the range of the others |
-    | Uniqueness | No row is there twice |
-    | Consistency | 91 583 × 4, all `float64`, as the README says |
-    | Units | Median `M` 1864.08, the D⁰ mass is 1864.84 MeV/c². Median `TAU` 0.27 ps, the D⁰ lifetime is 0.41 ps |
-
-!!! success "You should now see"
-    Twelve lines of counts and two small tables in the terminal, and the
-    five findings on the board.
-
-Two points to make. The validity rules come from the meaning of a column: a
-decay time is not negative, whatever the file holds. The window 1800 to 1930
-is different: it comes from this file, where all other masses lie between
-1808.14 and 1920.35. And `TAU < 0` counted 3, not 52: after the replacement
-the 49 gaps are NaN, and a comparison with NaN is False.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `TAU < 0` prints 52 | The line with `replace` stands below the validity lines, or is missing |
-    | `ValueError: The truth value of a Series is ambiguous` | `not` was typed for `~`, or `and` for `&` |
+        ```text
+        5823    02.09.2025 12:00
+        5852    03.09.2025 17:00
+        Name: time, dtype: str
+        ```
 
 ---
 
-## Part 3 · Clean by script { #part-3 }
+## Part 3 · Clean it { #part-3 }
 
-**1:18 to 1:39 · sections 8 and 9**
-
-The audit found 49 codes, 3 impossible values and 2 masses outside the
-window. The cleaning script turns each finding into a decision, applies it
-and reports it.
+**0:50 to 1:20** · Each rule is a mask or a method, and each one is counted.
 
 ---
 
-### 8. The cleaning script { #clean }
+### 5. Two units in one column { #units }
 
-**1:18 · 12 min**
+**0:50 · 10 min** · The column `unit` says how each value is written.
 
-**Tell the room.** Three decisions, said aloud before any typing. A gap
-stays a gap: the 49 rows keep their mass and momentum, and `TAU` becomes
-NaN. A row that breaks a rule is removed. Nothing is filled in. Each rule is
-one mask with a name, and the script prints the count of each.
-
-1. Select the `scripts` folder, then **New File**, and name it:
+1. Count the units.
 
     ```text
-    clean_d0.py
+    df["unit"].value_counts()
     ```
 
-    Type into it:
+    ```text
+    unit
+    C    8668
+    F      72
+    Name: count, dtype: int64
+    ```
+
+2. A mask for the rows in °F, and the first of them.
 
     ```text
-    """Clean the LHCb file: data/raw -> data/processed."""
-    import numpy as np
+    f = df["unit"] == "F"
+    ```
+
+    ```text
+    df[f].head(3)
+    ```
+
+    ```text
+                      time  temp unit  humidity
+    4477  08.07.2025 10:00  63.5    F      86.0
+    4478  08.07.2025 11:00  65.8    F      82.0
+    4479  08.07.2025 12:00  67.8    F      78.0
+    ```
+
+3. Convert those rows: °C = (°F − 32) × 5 / 9.
+
+    ```text
+    df.loc[f, "temp"] = ((df.loc[f, "temp"] - 32) * 5 / 9).round(1)
+    ```
+
+    ```text
+    df.loc[f, "unit"] = "C"
+    ```
+
+4. The same rows now.
+
+    ```text
+    df[f].head(3)
+    ```
+
+    ```text
+                      time  temp unit  humidity
+    4477  08.07.2025 10:00  17.5    C      86.0
+    4478  08.07.2025 11:00  18.8    C      82.0
+    4479  08.07.2025 12:00  19.9    C      78.0
+    ```
+
+    63.5 °F: (63.5 − 32) × 5 / 9 = 17.5 °C.
+
+5. The largest value.
+
+    ```text
+    df["temp"].max()
+    ```
+
+    ```text
+    np.float64(28.4)
+    ```
+
+**Check:** 72 rows converted, the maximum 28.4 °C.
+
+---
+
+### 6. Rows twice, and the hour twice { #duplicates }
+
+**1:00 · 10 min** · A row exported twice is dropped; an hour that happened twice is kept.
+
+1. Rows that are exact copies of an earlier row.
+
+    ```text
+    print(df.duplicated().sum())
+    ```
+
+    ```text
+    24
+    ```
+
+2. Rows whose time came before.
+
+    ```text
+    print(df.duplicated(subset="time").sum())
+    ```
+
+    ```text
+    25
+    ```
+
+    One more: the 03:00 of 26 October, a real second hour (Task of
+    Part 1).
+
+    ```text
+    df[df["time"] == "26.10.2025 03:00"]
+    ```
+
+    ```text
+                      time  temp unit  humidity
+    7110  26.10.2025 03:00  -3.1    C     100.0
+    7111  26.10.2025 03:00  -2.8    C     100.0
+    ```
+
+3. Which day was exported twice.
+
+    ```text
+    df[df.duplicated()]["time"].iloc[[0, -1]]
+    ```
+
+    ```text
+    7732    20.11.2025 00:00
+    7755    20.11.2025 23:00
+    Name: time, dtype: str
+    ```
+
+4. Drop the exact copies only.
+
+    ```text
+    df = df.drop_duplicates()
+    ```
+
+    ```text
+    len(df)
+    ```
+
+    ```text
+    8716
+    ```
+
+**Check:** 8 740 − 24 = 8 716 rows; both 03:00 rows of 26 October are still there.
+
+---
+
+### 7. Times and daily means { #daily }
+
+**1:10 · 10 min** · The valley is compared day by day, so the hours become days.
+
+1. Turn the text into times; the format says where the day and the month are.
+
+    ```text
+    df["time"] = pd.to_datetime(df["time"], format="%d.%m.%Y %H:%M")
+    ```
+
+    ```text
+    df.head(3)
+    ```
+
+    ```text
+                     time  temp unit  humidity
+    0 2025-01-01 00:00:00  -3.9    C     100.0
+    1 2025-01-01 01:00:00  -4.1    C     100.0
+    2 2025-01-01 02:00:00  -4.7    C     100.0
+    ```
+
+2. The temperature, indexed by time.
+
+    ```text
+    temp = df.set_index("time")["temp"]
+    ```
+
+3. One row per day: the mean, and the number of hours it is made of.
+
+    ```text
+    day = temp.resample("D").agg(hill="mean", hours="count")
+    ```
+
+    ```text
+    day.head(3)
+    ```
+
+    ```text
+                    hill  hours
+    time
+    2025-01-01 -3.416667     24
+    2025-01-02 -5.441667     24
+    2025-01-03 -6.995833     24
+    ```
+
+4. How many days, and which have fewer than 20 hours.
+
+    ```text
+    len(day)
+    ```
+
+    ```text
+    365
+    ```
+
+    ```text
+    day[day["hours"] < 20]
+    ```
+
+    ```text
+                     hill  hours
+    time
+    2025-02-11 -11.935714     14
+    2025-02-12        NaN      0
+    2025-02-13 -11.521429     14
+    2025-04-14  -3.850000      6
+    ```
+
+    The logger was off from 11 February 14:00 to 13 February 09:00. On
+    14 April only the six night hours are left, so that mean is too cold.
+
+**Check:** 365 days, four of them with fewer than 20 hours.
+
+!!! question "Task: 23 and 25 hours"
+    How many hours do 30 March and 26 October have in `day`? Which other
+    days do not have 24, and why?
+
+??? note "Answer"
+    ```text
+    day.loc["2025-10-26"]
+    ```
+
+    ```text
+    hill     -0.396
+    hours    25.000
+    Name: 2025-10-26 00:00:00, dtype: float64
+    ```
+
+    30 March has 23 hours, 26 October 25: the summer-time days.
+
+    ```text
+    day[day["hours"] != 24]
+    ```
+
+    ```text
+                     hill  hours
+    time
+    2025-01-26  -4.752174     23
+    2025-02-09  -9.047826     23
+    2025-02-11 -11.935714     14
+    2025-02-12        NaN      0
+    2025-02-13 -11.521429     14
+    2025-03-30   8.795652     23
+    2025-04-11  -0.673913     23
+    2025-04-14  -3.850000      6
+    2025-04-22   1.143478     23
+    2025-06-22  12.773913     23
+    2025-08-13  10.908696     23
+    2025-10-03   4.560870     23
+    2025-10-22   6.308696     23
+    2025-10-26  -0.396000     25
+    2025-12-22  -8.600000     23
+    ```
+
+    The other days with 23 hours each hold one of the 9 empty cells:
+    `count` counts only values that are not `NaN`.
+
+---
+
+## Part 4 · Compare, by script { #part-4 }
+
+**1:20 to 2:00** · The valley's daily means, joined to the hill's by date.
+
+---
+
+### 8. Join with the valley { #join }
+
+**1:20 · 10 min** · `merge` keeps the dates both tables have.
+
+1. The valley station, with −999 as missing.
+
+    ```text
+    WEATHER = "data/raw/weather.csv"
+    ```
+
+    ```text
+    v = pd.read_csv(WEATHER, na_values=["-999"], parse_dates=["time"])
+    ```
+
+2. Its daily means.
+
+    ```text
+    valley = v.set_index("time")["temp_c"].resample("D").mean()
+    ```
+
+    ```text
+    len(valley)
+    ```
+
+    ```text
+    3653
+    ```
+
+3. Join the two by date.
+
+    ```text
+    both = pd.merge(valley, day, on="time")
+    ```
+
+    ```text
+    len(both)
+    ```
+
+    ```text
+    365
+    ```
+
+    3 653 days and 365 days give 365: only 2025 is in both.
+
+4. Keep the days with 20 hours or more.
+
+    ```text
+    both = both[both["hours"] >= 20]
+    ```
+
+    ```text
+    len(both)
+    ```
+
+    ```text
+    361
+    ```
+
+5. Hill minus valley, on average.
+
+    ```text
+    diff = both["hill"] - both["temp_c"]
+    ```
+
+    ```text
+    print(round(diff.mean(), 2))
+    ```
+
+    ```text
+    -1.19
+    ```
+
+6. Leave Python.
+
+    ```text
+    exit()
+    ```
+
+**Check:** −1.19 °C over 361 days. Air cools by about 6.5 °C per km of
+height: 0.18 km × 6.5 = 1.17 °C.
+
+---
+
+### 9. The script { #script }
+
+**1:30 · 15 min** · The lines of sections 3 to 8 in one file, with a count for every rule.
+
+1. In the Explorer, right-click `scripts` > **New File...**, type
+   `clean_hill.py`, press `Enter`. Write and save:
+
+    ```python
+    """Clean the hill station's export; compare it with the valley, day by day.
+
+    Run from the project folder:  python scripts/clean_hill.py
+    """
+    import os
+
     import pandas as pd
 
-    RAW = "data/raw/D0_KPi.csv"
-    OUT = "data/processed/d0_clean.csv"
+    HILL = "data/raw/hill_station.csv"
+    VALLEY = "data/raw/weather.csv"
+    OUT = "data/processed/hill_daily.csv"
 
-    df = pd.read_csv(RAW)
+    df = pd.read_csv(HILL, sep=";", decimal=",", na_values=["-999"])
+    print("rows read      ", len(df))
+    print("temp missing   ", df["temp"].isna().sum())
 
-    # 1. -100 is the file's code for a missing decay time
-    n_code = (df["TAU"] == -100).sum()
-    df["TAU"] = df["TAU"].replace(-100, np.nan)
+    f = df["unit"] == "F"
+    df.loc[f, "temp"] = ((df.loc[f, "temp"] - 32) * 5 / 9).round(1)
+    df.loc[f, "unit"] = "C"
+    print("rows in F      ", f.sum())
 
-    # 2. a decay time is not negative
-    bad_tau = df["TAU"] < 0
-    # 3. outside the mass window of the sample
-    bad_m = ~df["M"].between(1800, 1930)
-    # 4. one candidate written twice
-    dup = df.duplicated()
+    print("duplicate rows ", df.duplicated().sum())
+    df = df.drop_duplicates()
 
-    clean = df[~bad_tau & ~bad_m & ~dup]
-    clean.to_csv(OUT, index=False, lineterminator="\n")
+    df["time"] = pd.to_datetime(df["time"], format="%d.%m.%Y %H:%M")
+    temp = df.set_index("time")["temp"]
+    day = temp.resample("D").agg(hill="mean", hours="count")
+    print("days < 20 hours", (day["hours"] < 20).sum())
+    day = day[day["hours"] >= 20]
+    os.makedirs("data/processed", exist_ok=True)
+    day["hill"].round(2).to_csv(OUT, date_format="%Y-%m-%d", lineterminator="\n")
 
-    print("rows read          ", len(df))
-    print("TAU = -100 -> NaN  ", n_code)
-    print("TAU < 0, dropped   ", bad_tau.sum())
-    print("M outside, dropped ", bad_m.sum())
-    print("duplicates, dropped", dup.sum())
-    print("rows written       ", len(clean))
+    v = pd.read_csv(VALLEY, na_values=["-999"], parse_dates=["time"])
+    valley = v.set_index("time")["temp_c"].resample("D").mean()
+    both = pd.merge(valley, day, on="time")
+    diff = both["hill"] - both["temp_c"]
+    print("days compared  ", len(both))
+    print("hill - valley  ", round(diff.mean(), 2))
     ```
+
+    `lineterminator="\n"` makes the file end its lines the same way on
+    macOS and Windows, so it has the same checksum on both.
 
 2. Run it.
 
-    === "macOS"
-
-        ```text
-        python3 scripts/clean_d0.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/clean_d0.py
-        ```
-
-!!! success "You should now see"
     ```text
-    rows read           91583
-    TAU = -100 -> NaN   49
-    TAU < 0, dropped    3
-    M outside, dropped  2
-    duplicates, dropped 0
-    rows written        91578
+    python scripts/clean_hill.py
     ```
 
-91 583 − 3 − 2 = 91 578. Every row that left the table is in one line of
-the log.
+    ```text
+    rows read       8740
+    temp missing    27
+    rows in F       72
+    duplicate rows  24
+    days < 20 hours 4
+    days compared   361
+    hill - valley   -1.19
+    ```
 
-Ask why the masks are written for the bad rows and then turned round with
-`~`. Let a student try this line on the projector:
+3. The file it wrote.
 
-```text
-clean = df[df["TAU"] >= 0]
-```
+    ```text
+    Get-Content data/processed/hill_daily.csv -TotalCount 3
+    ```
 
-It keeps 91 531 rows. The 49 rows with NaN are gone as well, because NaN is
-not greater than or equal to anything, and nothing was printed.
+    ```text
+    time,hill
+    2025-01-01,-3.42
+    2025-01-02,-5.44
+    ```
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `OSError: Cannot save file into a non-existent directory` | The folder `data/processed` is missing. Create it in the Side Bar |
-    | `rows written 91529` | A mask was written for the good rows. See the paragraph above |
+    ```text
+    (Get-Content data/processed/hill_daily.csv).Count
+    ```
+
+    ```text
+    362
+    ```
+
+**Check:** the seven lines of the log, and 362 lines in `hill_daily.csv`:
+the header and 361 days.
 
 ---
 
-### 9. Check what it did { #check }
+### 10. Rebuild, README, push { #push }
 
-**1:30 · 9 min**
+**1:45 · 10 min** · The rebuild script runs the new script too, and the README says what it found.
 
-**Tell the room.** A cleaning script is trusted after its output has been
-looked at and the raw file has been shown to be untouched.
-
-1. Open `data/processed/d0_clean.csv` in VS Code and press `Ctrl+End`
-   (macOS `Cmd+↓`). The last line is 91 580 and it is empty: one header
-   line and 91 578 rows.
-
-2. Press `Ctrl+F` (macOS `Cmd+F`) and type:
+1. In `scripts/rebuild.ps1`, add a last line and save.
 
     ```text
-    ,,
+    python scripts/clean_hill.py > results/hill.txt
     ```
 
-    VS Code finds 49 places. The first is in line 343:
+2. Rebuild, then read the new result.
 
     ```text
-    1818.1002,2978.644,,9901.186
-    ```
-
-    Pandas writes NaN as an empty cell, and `read_csv` reads an empty cell
-    as NaN.
-
-3. Compute the checksum of both files.
-
-    === "macOS"
-
-        ```text
-        shasum -a 256 data/raw/D0_KPi.csv
-        ```
-
-        ```text
-        shasum -a 256 data/processed/d0_clean.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-FileHash data/raw/D0_KPi.csv).Hash
-        ```
-
-        ```text
-        (Get-FileHash data/processed/d0_clean.csv).Hash
-        ```
-
-    | File | Bytes | SHA-256 |
-    |--|--|--|
-    | `data/raw/D0_KPi.csv` | 3 926 142 | `25c3c972…c1505136` |
-    | `data/processed/d0_clean.csv` | 3 925 641 | `7aa9470b…3bb91b16` |
-
-    `Get-FileHash` writes the same digits in upper case.
-
-4. Delete `d0_clean.csv` in the Side Bar, run the script again and compute
-   the checksum again. It is the same.
-
-!!! success "You should now see"
-    The same two checksums on every laptop in the room.
-
-The first checksum is the one of the file as downloaded: the script read it
-and did not write it. The second is the same on every laptop because the
-script, not a person, made the file. Ask two students to read their last
-eight characters aloud.
-
----
-
-## Part 4 · Write it down { #part-4 }
-
-**1:39 to 2:00 · sections 10 and 11**
-
----
-
-### 10. The cleaning in the README { #readme }
-
-**1:39 · 15 min**
-
-**Tell the room.** The log of the script is the cleaning written as numbers.
-It belongs in the README, next to where the file came from. A reader then
-knows which rows are not in the cleaned table and why, without running
-anything.
-
-1. Open `README.md` and add a section under **Data**:
-
-    ```text
-    ## Cleaning
-
-    `scripts/clean_d0.py` reads `data/raw/D0_KPi.csv` and writes
-    `data/processed/d0_clean.csv`. The raw file is not changed.
-
-    | Rule | Reason | Rows |
-    |--|--|--|
-    | `TAU = -100` to empty | code for a missing value | 49 |
-    | `TAU < 0` dropped | a decay time is not negative | 3 |
-    | `M` outside 1800 to 1930 dropped | outside the mass window | 2 |
-    | duplicate rows dropped | one candidate written twice | 0 |
-
-    Rows read: 91 583. Rows written: 91 578. Run on 2026-12-15.
-
-    `scripts/clean.py` makes `data/processed/pendulum.csv` from
-    `data/raw/pendulum.csv` by rule: a row without `nr` is dropped.
-
-    Run in the project folder:
-
-    - zsh: `python3 scripts/clean.py` and `python3 scripts/clean_d0.py`
-    - PowerShell: `python scripts/clean.py` and `python scripts/clean_d0.py`
-    ```
-
-2. In the **Data** section, change the end of the line **Cleaned copy**.
-   The words after the checksum list the edits made by hand. Replace them
-   by:
-
-    ```text
-    Made by `scripts/clean.py`
-    ```
-
-    Under it, add the second file:
-
-    ```text
-    - **File:** `data/raw/pendulum_run2.csv`, the partner's second series, 2026-12-15
-    ```
-
-3. Open the preview with `Ctrl+K`, then `V` (macOS `Cmd+K`, then `V`), and
-   read the table.
-
-4. Commit the scripts, the second file and the README.
-
-    ```text
-    git add scripts data/raw/pendulum_run2.csv README.md
+    ./scripts/rebuild.ps1
     ```
 
     ```text
-    git commit -m "Clean both tables by script"
+    9 rows written to data/processed/daily.csv
     ```
 
-!!! success "You should now see"
-    A **Cleaning** section with four rules in the preview, and the commit in
-    the Source Control view.
+    ```text
+    Get-Content results/hill.txt
+    ```
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The table shows as text with `|` signs | An empty line is missing before the table, or the line `|--|--|--|` is missing |
-    | Windows: `warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it`, one line per file | A note, not an error: the commit is made. Git on this laptop missed the setting of Seminar 5. Type `git config --global core.autocrlf false` once |
+    ```text
+    rows read       8740
+    temp missing    27
+    rows in F       72
+    duplicate rows  24
+    days < 20 hours 4
+    days compared   361
+    hill - valley   -1.19
+    ```
+
+3. In `README.md`, above `## How to rebuild`, add and save:
+
+    ```text
+    ## Hill station
+
+    `scripts/clean_hill.py` cleans `data/raw/hill_station.csv` (2025, 4 km
+    away, 180 m higher). Over 361 days the hill is 1.19 °C colder than the
+    valley. The counts of each rule are in `results/hill.txt`.
+    ```
+
+4. What changed.
+
+    ```text
+    git status --short
+    ```
+
+    ```text
+     M README.md
+     M scripts/rebuild.ps1
+    ?? scripts/clean_hill.py
+    ```
+
+5. Stage, commit, push.
+
+    ```text
+    git add README.md scripts/clean_hill.py scripts/rebuild.ps1
+    ```
+
+    ```text
+    git commit -m "Clean the hill station's file and compare it with the valley"
+    ```
+
+    ```text
+    [main 60843ff] Clean the hill station's file and compare it with the valley
+     3 files changed, 45 insertions(+)
+     create mode 100644 scripts/clean_hill.py
+    ```
+
+    ```text
+    git push
+    ```
+
+    ```text
+    To https://github.com/your-username/weather-project.git
+       960bb2d..60843ff  main -> main
+    ```
+
+**Check:** on GitHub, `scripts/clean_hill.py` and the **Hill station**
+section of the README.
+
+!!! question "Task: what if the units were left as they are?"
+    Put `#` before the two lines of `clean_hill.py` that convert the °F rows
+    (`df.loc[f, …]`), run the script, read the last line. Then take the
+    file back to its committed state.
+
+??? note "Answer"
+    ```text
+    python scripts/clean_hill.py
+    ```
+
+    ```text
+    rows read       8740
+    temp missing    27
+    rows in F       72
+    duplicate rows  24
+    days < 20 hours 4
+    days compared   361
+    hill - valley   -0.81
+    ```
+
+    The four days of 8 to 11 July read 16 to 45 °C warmer than the valley
+    and pull the mean from −1.19 to −0.81 °C. The script ran without an
+    error.
+
+    ```text
+    git restore scripts/clean_hill.py
+    ```
 
 ---
 
 ### 11. Wrap up { #wrap-up }
 
-**1:54 · 6 min**
+**1:55 · 5 min**
 
-Read the list aloud. Ask on the way out which step was hardest.
+| To | Type |
+|--|--|
+| read a European export | `pd.read_csv(FILE, sep=";", decimal=",")` |
+| turn a mark into a missing value | `na_values=["-999"]` |
+| count missing values | `df.isna().sum()` |
+| change the rows of a mask | `df.loc[mask, "col"] = …` |
+| drop exact copies | `df.drop_duplicates()` |
+| text into times | `pd.to_datetime(col, format="%d.%m.%Y %H:%M")` |
+| hours into days | `.resample("D").agg(hill="mean", hours="count")` |
+| join two tables by a key | `pd.merge(a, b, on="time")` |
 
-- `read_csv` is told the separator and the decimal sign. The types of the
-  columns then show where a cell is not a number.
-- `clean.py` writes the same 97 bytes as Lecture 4's script. On the second
-  file Lecture 4's script kept the `Mean` line; `clean.py` dropped it by
-  rule and kept the missing time as a gap.
-- A script reads `data/raw/` and writes `data/processed/`. The raw file
-  keeps its checksum.
-- `describe()` first: a minimum or a mean that cannot be measured points at
-  a code or an error.
-- A code for a missing value is replaced by NaN before anything is
-  computed.
-- One mask per rule, written for the rows that break it, with a count.
-- The same script gives the same bytes on every laptop.
-- The counts go into the README.
+Seminar 13 makes the whole project from `data/raw` with one command.
 
 ---
 
 ## Optional, if the room is fast { #optional }
 
-Section 12 fits between sections 9 and 10 when the room reaches the end of
-section 9 before 1:32. Nothing later in the course reads its table.
+---
+
+### 12. The summer-time hour in winter time { #timezone }
+
+**— · 15 min** · Hour by hour, the hill's summer clock is one hour ahead of the valley's.
+
+1. Start Python and run the script inside it: its tables stay.
+
+    ```text
+    python
+    ```
+
+    ```text
+    exec(open("scripts/clean_hill.py").read())
+    ```
+
+    The seven lines of the log follow.
+
+2. Join hour by hour, and take the spread of the difference.
+
+    ```text
+    hourly = v.set_index("time")["temp_c"]
+    ```
+
+    ```text
+    h = pd.merge(hourly, temp, on="time")
+    ```
+
+    ```text
+    print(round((h["temp"] - h["temp_c"]).std(), 2))
+    ```
+
+    ```text
+    0.82
+    ```
+
+3. The 03:00 of 26 October is still there twice.
+
+    ```text
+    temp.index.is_unique
+    ```
+
+    ```text
+    False
+    ```
+
+4. Say which clock the times are on, then move them to winter time,
+   UTC+2 (written `Etc/GMT-2`).
+
+    ```text
+    local = temp.index.tz_localize("Europe/Vilnius", ambiguous="infer")
+    ```
+
+    ```text
+    temp.index = local.tz_convert("Etc/GMT-2").tz_localize(None)
+    ```
+
+    ```text
+    temp.index.is_unique
+    ```
+
+    ```text
+    True
+    ```
+
+5. Join again.
+
+    ```text
+    h = pd.merge(hourly, temp, on="time")
+    ```
+
+    ```text
+    print(round((h["temp"] - h["temp_c"]).std(), 2))
+    ```
+
+    ```text
+    0.44
+    ```
+
+**Check:** the spread halves, from 0.82 to 0.44 °C: in summer the old join
+set each hill hour beside the valley hour one hour later.
 
 ---
 
-### 12. A table by group { #group }
+### 13. The difference month by month { #month }
 
-**— · 7 min**
+**— · 10 min** · `groupby` splits the 361 differences by month and takes each mean.
 
-**Tell the room.** An analysis starts from the cleaned file, not from the
-raw one. `groupby` splits the rows by the values of a column, computes
-something for each group and puts the results into one small table. The
-column to split by is made first.
-
-1. Select the `scripts` folder, then **New File**, and name it:
+1. At the prompt of section 12 (or after `exec(...)` again):
 
     ```text
-    tau_by_region.py
-    ```
-
-    Type into it:
-
-    ```text
-    import numpy as np
-    import pandas as pd
-
-    clean = pd.read_csv("data/processed/d0_clean.csv")
-    clean["tau_ps"] = clean["TAU"] * 1000
-    in_peak = clean["M"].between(1840, 1890)
-    clean["region"] = np.where(in_peak, "peak", "side")
-
-    table = clean.groupby("region")["tau_ps"].agg(
-        ["size", "count", "median"])
-    print(table)
-    table.to_csv("results/tau_by_region.csv", lineterminator="\n")
-    ```
-
-2. Run it.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/tau_by_region.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/tau_by_region.py
-        ```
-
-3. Commit the script and the table.
-
-    ```text
-    git add scripts/tau_by_region.py results/tau_by_region.csv
+    month = diff.groupby(diff.index.month).mean().round(2)
     ```
 
     ```text
-    git commit -m "Decay time by mass region"
+    month
     ```
 
-!!! success "You should now see"
     ```text
-             size  count    median
-    region                        
-    peak    56575  56546  0.308202
-    side    35003  34983  0.232948
+    time
+    1    -0.84
+    2    -0.92
+    3    -0.97
+    4    -1.23
+    5    -1.37
+    6    -1.50
+    7    -1.57
+    8    -1.63
+    9    -1.29
+    10   -1.12
+    11   -1.03
+    12   -0.82
+    dtype: float64
     ```
 
-`size` counts rows and `count` counts values: 29 of the gaps are in the
-peak and 20 beside it. The median decay time is 0.308 ps in the peak region
-and 0.233 ps in the sidebands. `results/tau_by_region.csv` has three lines.
-Here the index is written on purpose: it holds the names of the regions.
+2. As a bar chart, saved.
+
+    ```text
+    import matplotlib.pyplot as plt
+    ```
+
+    ```text
+    month.plot.bar(xlabel="month", ylabel="hill - valley (°C)")
+    ```
+
+    ```text
+    <Axes: xlabel='month', ylabel='hill - valley (°C)'>
+    ```
+
+    ```text
+    plt.savefig("results/hill_by_month.png")
+    ```
+
+3. Open `results/hill_by_month.png` in the Explorer.
+
+**Check:** twelve bars, the shortest in December (−0.82), the longest in
+August (−1.63). In winter, cold air settles in the valley.
 
 ---
-
-## Stretch goals
-
-For students who finish a section early. Answers are given for the
-lecturer.
-
-- Read the file with `pd.read_csv(RAW, na_values={"TAU": [-100]})` and
-  compare the table with the one made by `replace`, using `a.equals(b)`.
-  The answer is `True`.
-- Compute the median of `IPCHI2` for the rows with and without a decay
-  time: `df.loc[df["TAU"].isna(), "IPCHI2"].median()` and the same with
-  `notna()`. The answers are 31465.645 and 6.29089965. The gaps are not a
-  random sample of the rows.
-- Apply the rule Q1 − 1.5 IQR and Q3 + 1.5 IQR to `M`, with
-  `df["M"].quantile(0.25)` for Q1. The fences are 1792.68 and 1934.84, and
-  2 rows lie outside. The same rule on `TAU` flags 11 435 rows, 12.5 % of
-  the column: it does not suit a column with a long tail.
-- Flag instead of dropping. Read `data/processed/d0_clean.csv` into
-  `clean`, add `clean["long_tau"] = clean["TAU"] > 0.01` and count it. The answer is
-  1452 rows with a decay time above 10 ps.
-- Save the cleaned table as Parquet. Install the library with
-  `python3 -m pip install pyarrow` (Windows `python`), then
-  `clean.to_parquet(...)` with a name that ends in `.parquet`. The file has
-  about 3.3 MB against 3.9 MB, and `pd.read_parquet(...)` gives a table
-  that `equals` the one written.
-- Sort the cleaned table by `PT`, largest first, and print three rows:
-  `clean.sort_values("PT", ascending=False).head(3)`. The largest is
-  64509.95, in a row whose `TAU` is NaN.
-- Count the empty cells of the second pendulum file before cleaning, as on
-  slide 16: `RAW` naming `pendulum_run2.csv`, print `df.isna().sum()`
-  right after `read_csv`. The answer is 1 in `nr`, 0 in `length_cm` and 1
-  in `t10_s`: the summary line and the missing time, found before anything
-  is cleaned.
-- A student with a dataset of their own points `audit.py` at it: the
-  shape, the types, `describe()`, the empty cells per column and the
-  duplicate rows. How does the file write a missing value: an empty cell,
-  `-999`, `NA`, `n/a`, `?`?
-
-## If students ask for more
-
-| Topic | Week |
-|--|--|
-| A fixed version of Pandas, so that the script gives the same file next year | 13 (Reproducible Workflows) |
-| One command that runs all scripts in the right order | 13 (Reproducible Workflows) |
-| A test that fails when the cleaned file changes | 13 (Reproducible Workflows) |
-
-Leave out, even if asked: filling gaps with a mean, Excel files, databases,
-Polars.
 
 ## Aims practised
 
-♻️ the same bytes on every run · ⚙️ a cleaning that can be run again · 📁 raw data read, never written · 🔧 the same script on every system
+- 📁 **Files:** a European export read as it is, with every fault named,
+  counted and fixed by a rule; the raw file is never edited.
+- ♻️ **Reproducibility:** the script and its log rebuild the comparison,
+  and the README holds the number it prints.
+- 🔧 **Tool-agnostic:** the same pandas lines at the prompt and in the
+  script, the same PowerShell lines on macOS and Windows.

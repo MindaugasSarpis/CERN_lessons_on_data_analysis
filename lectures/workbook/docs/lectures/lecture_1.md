@@ -27,8 +27,8 @@ end, then runs the film reel from the cosmos down to the LHCb detector.
    (180 bytes) and `data/processed` (148 bytes).
 4. **How this course works**: the lecture and the seminar of each Tuesday, the
    schedule, the path of the course (VS Code and Markdown, files, the command
-   line with its shells and conda environments, Git, Python, then data
-   analysis), the learning outcomes, what "done" means each week, habits that
+   line in PowerShell 7 with package managers and conda environments, Git,
+   Python, then data analysis), the learning outcomes, what "done" means each week, habits that
    work.
 5. **Seminars & your project**: the grade is one project of your own, graded
    on the four aims; what you hand in; open data and practice files; the
@@ -45,7 +45,7 @@ end, then runs the film reel from the cosmos down to the LHCb detector.
 
 ## The lecture in 90 minutes
 
-The deck is slides 1–59 and estimates about 112 min, of which slides 55–59
+The deck is slides 1–59 and estimates about 109 min, of which slides 55–59
 (extra material after the closing film) are not delivered. Slides 60–65 are
 the self-check quizzes and take no lecture time. The films run about 32 min
 (slides 35–54) plus 4:42 for the cold open. To jump, type the slide number and
@@ -118,9 +118,9 @@ questions, with their answers:
 ## Before the first seminar
 
 Nothing has to be installed. The first session in class starts from zero and
-needs only VS Code, which the room installs together. PowerShell 7 on
-Windows, Git, and Python with conda through Miniforge are installed in class
-in Seminar 4, when the command line needs them. A laptop on which programs
+needs only VS Code, which the room installs together. PowerShell 7 (on macOS
+and on Windows), Git, and Python with conda through Miniforge are installed in
+class, at the start of the seminar that first needs them. A laptop on which programs
 can be installed is all that is needed: on a university or work laptop,
 check that now.
 

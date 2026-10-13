@@ -160,13 +160,11 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 14 — Review an Analysis, Plan the Data](../seminars/seminar_14.md)
-has four parts. The room first reviews a short report whose script does not
-give the number in the report. Then each student rebuilds a neighbour's
-project on their own laptop and reviews it with the twelve questions of
-slide 37. The author answers every comment and fixes one. Last, each
-student writes a data management plan of one page for the course files,
-and adds their own dataset if they have one.
+[Seminar 14 — Was October 2025 Unusually Warm? A Blind
+Analysis](../seminars/seminar_14.md) works on the weather project of
+Lectures 1 to 5. Every student fixes a rule before looking, answers the
+question with it, sees how many "unusual" months chance alone gives, checks
+the answer under other choices, and pushes it all to GitHub.
 
 ## Sources
 

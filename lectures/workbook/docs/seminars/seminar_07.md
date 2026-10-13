@@ -1,865 +1,850 @@
-# Seminar 7 — The Whole File in Python
+# Seminar 7 — Is It Getting Warmer? Functions and NumPy on the Weather Project
 
 **Paired lecture:** 07 Python for Data & NumPy · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student reads `D0_KPi.csv` into one NumPy array,
-masks its missing values, and has a script that writes the numbers to
-`results/summary.txt`.
+**Today's goal:** every student gives the project a conda environment with
+NumPy, written down in `environment.yml`; reads `weather.csv` with
+functions and then as one NumPy array; finds the coldest day and the mean
+of each year; commits and pushes.
 
-The tools are the editor, the terminal of VS Code (`zsh` on macOS,
-PowerShell 7 on Windows) and Python, as in Seminar 6. The new one is NumPy,
-installed in section 4. The file is first read with plain Python, so that
-the room has seen what an array replaces.
+Everything is typed in VS Code: the scripts in the editor, the commands in
+its terminal (PowerShell 7, the same lines on macOS and Windows).
 
 ## Run sheet
 
-One screen for the front of the room. Each line links to its section.
-
-| Clock | Section | On the projector | The room ends with |
+| Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · The file with plain Python** · 35 min | | |
-| 0:00 | [1. Read the header and the first row](#first-row) | `scripts/read_csv.py`, run in the terminal | Two lists of strings on the screen |
-| 0:10 | [2. Read a column with a function](#column) | `def read_column(path, index):` | A list of 91 583 floats |
-| 0:22 | [3. A mean and a count by loop](#loop) | `def mean(values):`, then a loop over `TAU` | The mean of `M`, and 49 missing values |
-| | **Part 2 · NumPy** · 30 min | | |
-| 0:35 | [4. Install NumPy](#install) | `python -m pip install numpy` (macOS `python3`) | `import numpy` works |
-| 0:45 | [5. Read the file into an array](#loadtxt) | `np.loadtxt(...)` with `skiprows=1` | An array of shape `(91583, 4)` |
-| 0:55 | [6. Columns and their numbers](#columns) | `M.mean(), M.std(), M.min(), M.max()` | Mean, standard deviation, minimum and maximum of `M` and `TAU` |
-| | **Part 3 · Masks and counts** · 35 min | | |
-| 1:05 | [7. Mask the missing values](#mask) | `mask = TAU != -100` | 91 534 valid rows, and a mean that makes sense |
-| 1:17 | [8. Count rows with a condition](#window) | `(M > 1840) & (M < 1890)` | The number of rows in a mass window |
-| 1:27 | [9. Count in bins, and time both scripts](#histogram) | `np.histogram(M, bins=20, range=(1815, 1915))` | 20 counts, and two times in ms |
-| | **Part 4 · Write the result** · 20 min | | |
-| 1:40 | [10. Write the numbers to a file](#write) | `open("results/summary.txt", "w")` | `results/summary.txt` |
-| 1:50 | [11. A note in the README](#readme) | `## Summary numbers` in `README.md`, then a commit | A **Summary numbers** section, committed |
-| 1:55 | [12. Wrap up](#wrap-up) | The list of what was learned | |
+| | **Part 1 · An environment for the project** · 25 min | | |
+| 0:00 | [1. Make the environment `weather`](#install) | `conda create -n weather python=3.14 numpy=2.5` | `(weather)` in the prompt |
+| 0:10 | [2. VS Code uses it](#interpreter) | **Python: Select Interpreter** | `3.14.8` in the Status Bar |
+| 0:15 | [3. Write it down: `environment.yml`](#yml) | `conda env export --from-history -f environment.yml` | the file committed |
+| | **Part 2 · Functions and the csv module** · 30 min | | |
+| 0:25 | [4. A function for the mean](#function) | `def mean_valid(values):` | `2.0` |
+| 0:35 | [5. A column with the csv module](#csv) | `csv.reader(f)` | `mean 7.15997 °C` |
+| 0:45 | [6. A path that works from any folder](#pathlib) | `Path(__file__)` | the same mean from `scripts` |
+| | **Part 3 · The file as one array** · 30 min | | |
+| 0:55 | [7. The file into an array](#loadtxt) | `np.loadtxt(...)` | `(87672, 3) float64` |
+| 1:05 | [8. A mask for `-999`](#mask) | `valid = temp != -999` | `120`, `7.15997` |
+| 1:15 | [9. One row per day: `reshape`](#reshape) | `temp.reshape(3653, 24)` | coldest day 2019-01-26 |
+| | **Part 4 · Is it getting warmer?** · 35 min | | |
+| 1:25 | [10. The year of every row](#year) | `int(t[:4])` | `[2016 2016] [2025 2025]` |
+| 1:30 | [11. A mean for each year](#yearly) | `(year == y) & valid` | ten means, 5.98 to 8.31 |
+| 1:40 | [12. Write the answer, commit, push](#commit) | `git push` | `results/yearly_temp.txt` |
+| 1:55 | [13. Wrap up](#wrap-up) | | |
+| | **Optional, if the room is fast** | | |
+| — | [14. Loop against array: time both](#timing) | `time.perf_counter()` | 6 ms against 0.4 ms |
+| — | [15. Count in bins: `np.histogram`](#histogram) | `np.histogram(v, bins=...)` | eleven counts |
+| — | [16. Skip a bad row: `try` and `except`](#except) | `except ValueError:` | the export's nine values |
 
-**If time runs short:** do section 3 as a demonstration on the projector,
-and leave out the timing, step 5 of section 9. Sections 10 and 11 stay: they
-are the result of the session.
-
-??? info "How to use this page"
-    This page is written for the person at the front. Students follow the
-    same page.
-
-    - **Tell the room** is the paragraph to say before the steps.
-    - The **numbered steps** are what to do on the projector. The room
-      repeats each step on their own laptops.
-    - **You should now see** closes a section. Ask for hands: "who sees
-      this?" Go on when about four in five have it. The rest get help from a
-      neighbour.
-    - **Watch for** is the usual slip in that section.
-
-    Commands are typed in the terminal of VS Code, in the project folder,
-    and ended with `Enter`. Where the two shells differ, the step has a tab
-    for **macOS** (`zsh`) and one for **Windows** (PowerShell 7), as in
-    [Seminar 4](seminar_04.md): the program is `python3` on macOS and
-    `python` on Windows. A command that is the same in both, such as
-    `git ...`, stands in one block.
+**If time runs short:** stop after section 12; sections 14 to 16 are optional.
 
 ??? info "Before the session"
-    For the room: the project folder with `data/raw/D0_KPi.csv`, under Git
-    since [Seminar 5](seminar_05.md), and Python running from the terminal
-    of VS Code, as installed in [Seminar 4](seminar_04.md). A student who
-    does not have [`D0_KPi.csv`](../data/D0_KPi.csv) downloads it now and
-    drags it onto the `raw` folder.
-
-    For you:
-
-    - NumPy installed on your own laptop, and section 4 done once, so that
-      you know what `pip` prints on your system.
-    - A network connection for the room. `pip` downloads up to 13 MB. If the
-      network of the room is weak, a phone hotspot is enough.
-    - Sections 5 to 9 done once. The numbers on your screen must be the
-      numbers on this page.
+    - **Room:** the weather project as Seminar 6 left it, internet for
+      conda (the environment downloads about 50 MB).
+    - **You:** nothing to prepare. Delete your own `weather` environment
+      first (`conda env remove -n weather`) to make it with the room.
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Windows prints `C:\Users\smilte\...`.
 
 ---
 
-## Part 1 · The file with plain Python { #part-1 }
+## Part 1 · An environment for the project { #part-1 }
 
-**0:00 to 0:35 · sections 1 to 3**
-
-The room reads the file with what Python has built in. This is the slow
-way, and it is done first so that everyone has seen what an array replaces.
+**0:00 to 0:25** · NumPy is not part of Python. It goes into an environment of the project's own.
 
 ---
 
-### 1. Read the header and the first row { #first-row }
+### 1. Make the environment `weather` { #install }
 
-**0:00 · 10 min**
+**0:00 · 10 min** · An environment is a folder with its own Python and packages; activating it puts it first on `PATH`.
 
-**Tell the room.** A CSV file is text. The `csv` module of Python splits
-each line at the commas and gives a list of strings. `pathlib` builds the
-path so that the same script runs on Windows and on macOS.
-
-1. In the Side Bar select the `scripts` folder, then **New File**, and name
-   it:
+1. Open `weather-project` in VS Code, then the terminal. The prompt starts
+   with `(base)`.
+2. Make the environment, with the versions written in.
 
     ```text
-    read_csv.py
+    conda create -n weather python=3.14 numpy=2.5
     ```
 
-2. Type into the file:
+    conda shows its plan, then a list of packages:
 
     ```text
+    ## Package Plan ##
+
+      environment location: /Users/smilte/miniforge3/envs/weather
+
+      added / updated specs:
+        - numpy=2.5
+        - python=3.14
+    ```
+
+3. At `Proceed ([y]/n)?` press `Enter`. It ends with:
+
+    ```text
+    #     $ conda activate weather
+    ```
+
+4. Switch it on. The prompt starts with `(weather)`.
+
+    ```text
+    conda activate weather
+    ```
+
+5. Ask its Python and its NumPy.
+
+    ```text
+    python --version
+    ```
+
+    ```text
+    Python 3.14.8
+    ```
+
+    ```text
+    python -c "import numpy; print(numpy.__version__)"
+    ```
+
+    ```text
+    2.5.4
+    ```
+
+**Check:** `(weather)` before `PS`, and `2.5.4`.
+
+!!! warning "`ModuleNotFoundError: No module named 'numpy'`"
+    The prompt still says `(base)`: `conda activate weather`, then again.
+
+---
+
+### 2. VS Code uses it { #interpreter }
+
+**0:10 · 5 min** · The ▶ button and the colours of the editor use the interpreter selected here.
+
+1. `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select Interpreter`,
+   pick the entry with `envs/weather` in its path.
+2. The Status Bar, bottom right, shows `3.14.8` and `weather`.
+3. A new terminal (`+` in the terminal panel) starts with `(weather)`.
+
+**Check:** `weather` in the Status Bar.
+
+---
+
+### 3. Write it down: `environment.yml` { #yml }
+
+**0:15 · 10 min** · The file lists what was asked for; any laptop makes the same environment from it.
+
+1. Export what was asked for.
+
+    ```text
+    conda env export --from-history -f environment.yml
+    ```
+
+2. Open `environment.yml`.
+
+    ```text
+    name: weather
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14
+      - numpy=2.5
+    prefix: /Users/smilte/miniforge3/envs/weather
+    ```
+
+3. Delete the last line, `prefix: ...`: it names a folder on this laptop.
+   Save.
+4. Commit it.
+
+    ```text
+    git add environment.yml
+    ```
+
+    ```text
+    git commit -m "Add the conda environment of the project"
+    ```
+
+    ```text
+    [main eb08d7c] Add the conda environment of the project
+     1 file changed, 6 insertions(+)
+     create mode 100644 environment.yml
+    ```
+
+    Your id differs.
+
+**Check:** `environment.yml` of six lines in the history.
+
+!!! question "Task: does the file make the environment?"
+    Make a second environment, `weather-check`, from `environment.yml`.
+    Ask it for its NumPy version without activating it, then remove it.
+
+??? note "Answer"
+    ```text
+    conda env create -n weather-check -f environment.yml
+    ```
+
+    It ends with `#     $ conda activate weather-check`. The packages come
+    from conda's cache, so it is quick.
+
+    ```text
+    conda run -n weather-check python -c "import numpy; print(numpy.__version__)"
+    ```
+
+    ```text
+    2.5.4
+    ```
+
+    ```text
+    conda env remove -n weather-check
+    ```
+
+---
+
+## Part 2 · Functions and the csv module { #part-2 }
+
+**0:25 to 0:55** · Seminar 6 computed the mean in one block of lines. Here the steps get names.
+
+---
+
+### 4. A function for the mean { #function }
+
+**0:25 · 10 min** · `def` gives a block a name and inputs; `return` hands a value back.
+
+1. New file `scripts/column_mean.py`. Type, save.
+
+    ```python
+    def mean_valid(values):
+        """The mean of the values that are not -999."""
+        valid = [v for v in values if v != -999]
+        return sum(valid) / len(valid)
+
+
+    print(mean_valid([1.0, -999, 3.0]))
+    result = mean_valid([20.5, 21.5])
+    print(result)
+    ```
+
+2. Run it.
+
+    ```text
+    python scripts/column_mean.py
+    ```
+
+    ```text
+    2.0
+    21.0
+    ```
+
+    The `-999` of the first list is left out: (1 + 3) / 2.
+
+**Check:** `2.0` and `21.0`.
+
+---
+
+### 5. A column with the csv module { #csv }
+
+**0:35 · 10 min** · `csv.reader` cuts every line into a list of strings; `with` closes the file at the end of the block.
+
+1. At the top of the file, add one line.
+
+    ```python
     import csv
-    from pathlib import Path
-
-    path = Path("data") / "raw" / "D0_KPi.csv"
-    print(path.exists())
-
-    with open(path, newline="", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        header = next(reader)
-        first = next(reader)
-
-    print(header)
-    print(first)
     ```
 
-3. Open the terminal with **Terminal** > **New Terminal** and run the
-   script.
+2. Under `mean_valid`, add a second function.
 
-    === "macOS"
-
-        ```text
-        python3 scripts/read_csv.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/read_csv.py
-        ```
-
-4. Add a line at the end, run again, and ask the room what it will print
-   before you press Enter.
-
-    ```text
-    print(first[0] + first[1])
-    ```
-
-    It prints `1880.6493000.9534`. The two values are strings, and `+`
-    joins strings.
-
-5. Change that line to the one below and run again. It prints `4881.6024`.
-
-    ```text
-    print(float(first[0]) + float(first[1]))
-    ```
-
-!!! success "You should now see"
-    ```text
-    True
-    ['M', 'PT', 'TAU', 'IPCHI2']
-    ['1880.649', '3000.9534', '0.00041271152', '1299.1675']
-    4881.6024
-    ```
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `False`, then `FileNotFoundError` | The terminal is not in the project folder. Run `pwd`. Go there with `cd`, or open the project folder with **File** > **Open Folder...** |
-    | Windows: `Python was not found; run without arguments to install from the Microsoft Store, …` | A stand-in of Windows answered, not Python. See [Seminar 4, section 2](seminar_04.md#shell), Watch for. Until it is fixed, `py` works in place of `python` |
-    | `IndentationError` | The lines under `with` start with four spaces. Select them and press `Tab` |
-
----
-
-### 2. Read a column with a function { #column }
-
-**0:10 · 12 min**
-
-**Tell the room.** A loop over the reader gives every row. One column is
-collected into a list, and each value is converted with `float`. The steps
-go into a function, so that the second column costs one more line.
-
-1. Delete everything below the two `import` lines and type:
-
-    ```text
+    ```python
     def read_column(path, index):
+        """One column of a CSV file with a header line, as floats."""
         values = []
-        with open(path, newline="", encoding="utf-8") as f:
+        with open(path, newline="") as f:
             reader = csv.reader(f)
+            header = next(reader)
+            print(header)
             for row in reader:
                 values.append(float(row[index]))
         return values
-
-
-    path = Path("data") / "raw" / "D0_KPi.csv"
-    M = read_column(path, 0)
-    print(len(M), "rows")
-    print(M[:3])
     ```
 
-2. Run the script. It stops with a traceback. Read it with the room from
-   the bottom:
+3. Replace the three lines at the bottom with these, save, run.
+
+    ```python
+    temp = read_column("data/raw/weather.csv", 1)
+    print(len(temp), temp[:3])
+    print(f"mean {mean_valid(temp):.5f} °C")
+    ```
 
     ```text
-    ValueError: could not convert string to float: 'M'
+    python scripts/column_mean.py
     ```
-
-    The first line of the file is the header, and `float("M")` has no
-    number to return. The traceback names two places: the line of the
-    script that called the function, and the line inside the function that
-    failed.
-
-3. Add one line to the function, between `reader = csv.reader(f)` and the
-   `for` line, with the same indentation as both:
 
     ```text
-            next(reader)
+    ['time', 'temp_c', 'humidity_pct', 'wind_ms']
+    87672 [-4.4, -4.8, -5.5]
+    mean 7.15997 °C
     ```
 
-    It takes the header off before the loop starts.
+    `next(reader)` takes the header line; the loop gets the rest.
 
-4. Run the script again.
-
-!!! success "You should now see"
-    ```text
-    91583 rows
-    [1880.649, 1860.6599, 1913.8755]
-    ```
-
-**Say it in these words.** A path and a column number go into the function,
-a list of floats comes out. The names `values`, `f`, `reader` and `row`
-exist only inside it.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `TypeError: object of type 'NoneType' has no len()` | The `return values` line is missing |
-    | `1 rows` | `return values` stands inside the `for` loop. It has four spaces, not twelve |
-    | `IndexError: list index out of range` | The file has an empty line at its end that was added by hand. Download the file again |
+**Check:** `mean 7.15997 °C`, from two functions.
 
 ---
 
-### 3. A mean and a count by loop { #loop }
+### 6. A path that works from any folder { #pathlib }
 
-**0:22 · 13 min**
+**0:45 · 10 min** · A relative path starts at the terminal's folder, not at the script's.
 
-**Tell the room.** With the column in a list, a mean is a sum and a
-division. A count is a loop with an `if`. Both are written by hand once.
-
-1. Add a second function under `read_column`, above the line that starts
-   with `path`:
+1. Run the script from the folder `scripts`.
 
     ```text
-    def mean(values):
-        total = 0.0
-        for v in values:
-            total += v
-        return total / len(values)
+    cd scripts
     ```
-
-2. Test it on a case that can be checked in the head. Add at the end of the
-   script and run. It prints `5.0`.
 
     ```text
-    print(mean([2, 4, 9]))
+    python column_mean.py
     ```
 
-3. Now use it on the column. Add:
+    The last lines:
 
     ```text
-    print("mean M:", mean(M))
+      File "/Users/smilte/weather-project/scripts/column_mean.py", line 13, in read_column
+        with open(path, newline="") as f:
+             ~~~~^^^^^^^^^^^^^^^^^^
+    FileNotFoundError: [Errno 2] No such file or directory: 'data/raw/weather.csv'
     ```
 
-4. Read the third column and count the rows in which it is not `-100`. Add:
+2. Under `import csv`, add two lines.
+
+    ```python
+    from pathlib import Path
+
+    ROOT = Path(__file__).resolve().parent.parent
+    ```
+
+    `__file__` is the script's path; two `.parent` up is the project folder.
+
+3. In `read_column`, replace the two lines `header = next(reader)` and
+   `print(header)` with one, `next(reader)`. Replace the three lines at the
+   bottom with these, save.
+
+    ```python
+    print(ROOT)
+    temp = read_column(ROOT / "data/raw/weather.csv", 1)
+    print(f"mean {mean_valid(temp):.5f} °C")
+    ```
+
+4. Run it again from `scripts`, then go back.
 
     ```text
-    TAU = read_column(path, 2)
-    n_valid = 0
-    for t in TAU:
-        if t != -100:
-            n_valid += 1
-    print("valid TAU:", n_valid, " missing:", len(TAU) - n_valid)
+    python column_mean.py
     ```
 
-5. Run the script.
-
-!!! success "You should now see"
     ```text
-    91583 rows
-    [1880.649, 1860.6599, 1913.8755]
-    5.0
-    mean M: 1864.1045817826146
-    valid TAU: 91534  missing: 49
+    /Users/smilte/weather-project
+    mean 7.15997 °C
     ```
 
-The mean of the mass column is 1864.10 MeV/c², at the D⁰ peak. The 49 rows
-are the 49 lines that `grep -c ',-100'` and `Select-String ',-100'` count
-in `D0_KPi.csv`.
+    ```text
+    cd ..
+    ```
 
-Ask what the script needs for the smallest mass, the largest mass and the
-mean of the valid decay times: one more loop for each.
+**Check:** the same mean from `scripts` and from the project folder.
+
+!!! question "Task: humidity and wind"
+    Add two lines to `column_mean.py` that print the mean of
+    `humidity_pct` (column 2) and of `wind_ms` (column 3), with two decimals.
+
+??? note "Answer"
+    ```python
+    print(f"humidity {mean_valid(read_column(ROOT / 'data/raw/weather.csv', 2)):.2f} %")
+    print(f"wind {mean_valid(read_column(ROOT / 'data/raw/weather.csv', 3)):.2f} m/s")
+    ```
+
+    ```text
+    humidity 79.10 %
+    wind 3.50 m/s
+    ```
+
+    A name for the path, `path = ROOT / "data/raw/weather.csv"`, makes
+    both lines shorter.
 
 ---
 
-## Part 2 · NumPy { #part-2 }
+## Part 3 · The file as one array { #part-3 }
 
-**0:35 to 1:05 · sections 4 to 6**
-
-NumPy holds a whole column, or the whole table, in one array. A sum, a mean
-or a comparison is then one call, and the loop runs in compiled code.
+**0:55 to 1:25** · A NumPy array holds numbers of one type, and computes on all of them at once.
 
 ---
 
-### 4. Install NumPy { #install }
+### 7. The file into an array { #loadtxt }
 
-**0:35 · 10 min**
+**0:55 · 10 min** · `np.loadtxt` reads a table of numbers into a two-dimensional array.
 
-**Tell the room.** NumPy is not part of Python. It is installed once per
-computer with `pip`, the installer that comes with Python. `pip` downloads
-the library from the Python Package Index, pypi.org.
+1. New file `scripts/coldest_day.py`. Type, save.
 
-1. In the terminal, type the command for your system and press Enter.
+    ```python
+    from pathlib import Path
 
-    === "macOS"
-
-        ```text
-        python3 -m pip install numpy
-        ```
-
-    === "Windows"
-
-        ```text
-        python -m pip install numpy
-        ```
-
-2. Wait for the download. Near the end the output reads
-   `Successfully installed numpy-` followed by a version number, such as
-   `2.5.3`. A notice about a new release of pip may follow it.
-
-3. Check it.
-
-    === "macOS"
-
-        ```text
-        python3 -c "import numpy; print(numpy.__version__)"
-        ```
-
-    === "Windows"
-
-        ```text
-        python -c "import numpy; print(numpy.__version__)"
-        ```
-
-!!! success "You should now see"
-    A version number: `2.` and two more numbers.
-
-**Say it in these words.** `python -m pip` (`python3 -m pip` on macOS)
-runs the `pip` that belongs to this Python, so the library lands where this
-Python looks for it. A lone `pip install numpy` can belong to another Python
-on the same computer.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | A notice that a new release of pip is available | Nothing. It is not an error |
-    | Windows: `Python was not found; …` | As in section 1. Until it is fixed: `py -m pip install numpy` |
-    | `No module named pip` | `python3 -m ensurepip` on macOS, `python -m ensurepip` on Windows, then the install command again |
-    | `error: externally-managed-environment` | This Python belongs to the system or to Homebrew. Install Python from python.org and use that one |
-    | The check prints a version, and the **Run** button of VS Code says `No module named 'numpy'` | VS Code runs another Python. Press `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), type `Python: Select Interpreter` and pick the one the terminal uses |
-    | The download does not start | Use a phone hotspot. The download is up to 13 MB |
-
----
-
-### 5. Read the file into an array { #loadtxt }
-
-**0:45 · 10 min**
-
-**Tell the room.** `np.loadtxt` reads a text file of numbers into one
-array. It has to be told two things about this file: the sign between the
-values, and that the first line is not data.
-
-1. In the Side Bar select the `scripts` folder, then **New File**, and name
-   it:
-
-    ```text
-    summary.py
-    ```
-
-2. Type into the file:
-
-    ```text
     import numpy as np
 
-    data = np.loadtxt("data/raw/D0_KPi.csv", delimiter=",")
-    print(data.shape)
-    ```
+    ROOT = Path(__file__).resolve().parent.parent
+    path = ROOT / "data/raw/weather.csv"
 
-3. Run it.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/summary.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/summary.py
-        ```
-
-    It stops:
-
-    ```text
-    ValueError: could not convert string 'M' to float64 at row 0, column 1.
-    ```
-
-    This is the header again. NumPy names the row and the column of the
-    field it could not convert.
-
-4. Add `skiprows=1` to the call, and two more lines:
-
-    ```text
-    data = np.loadtxt("data/raw/D0_KPi.csv", delimiter=",", skiprows=1)
-    print(data.shape)
-    print(data.dtype)
+    data = np.loadtxt(path, delimiter=",", skiprows=1, usecols=(1, 2, 3))
+    print(data.shape, data.dtype)
     print(data[0])
+    print(data[:3, 0])
     ```
 
-5. Run it again.
+2. Run it.
 
-!!! success "You should now see"
     ```text
-    (91583, 4)
-    float64
-    [1.8806490e+03 3.0009534e+03 4.1271152e-04 1.2991675e+03]
+    python scripts/coldest_day.py
     ```
 
-Read the three lines with the room. The shape is rows first, then columns:
-91 583 rows and 4 columns. The `dtype` is `float64`, the 64-bit float of
-Lecture 03, for every value of the array. `data[0]` is the first row. NumPy
-prints a row of mixed sizes in powers of ten: `1.8806490e+03` is 1880.649.
+    ```text
+    (87672, 3) float64
+    [-4.4 93.   2.5]
+    [-4.4 -4.8 -5.5]
+    ```
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `ModuleNotFoundError: No module named 'numpy'` | The script runs with another Python than the one of section 4. See the table there |
-    | `FileNotFoundError` | The terminal is not in the project folder |
-    | `could not convert string '1880.649,3000.9534,…'` | `delimiter=","` is missing |
+    87 672 rows, 3 columns. `data[0]` is the first row; `data[:3, 0]` the
+    first three rows of column 0, `temp_c`.
+
+**Check:** `(87672, 3) float64`.
+
+!!! warning "`ValueError: could not convert string '2016-01-01T00:00' to float64`"
+    `usecols` is missing: the time column is not a number.
 
 ---
 
-### 6. Columns and their numbers { #columns }
+### 8. A mask for `-999` { #mask }
 
-**0:55 · 10 min**
+**1:05 · 10 min** · A comparison on an array gives an array of `True` and `False`, a mask; a mask selects rows.
 
-**Tell the room.** An array has no column names. The script gives each
-column a name, with the unit in a comment. Each column then answers `mean`,
-`std`, `min` and `max` without a loop.
+1. At the end of the file, add these lines, save, run.
 
-1. Delete the three `print` lines and add:
-
-    ```text
-    M = data[:, 0]         # mass, MeV/c^2
-    PT = data[:, 1]        # transverse momentum, MeV/c
-    TAU = data[:, 2]       # decay time, ns; -100 = missing
-    IPCHI2 = data[:, 3]    # chi^2 of the impact parameter
-
-    print("M  ", M.mean(), M.std(), M.min(), M.max())
-    print("TAU", TAU.mean(), TAU.std(), TAU.min(), TAU.max())
+    ```python
+    temp = data[:, 0]
+    valid = temp != -999
+    print(valid[:3], valid.sum(), (~valid).sum())
+    print(f"all rows   {temp.mean():.5f}")
+    print(f"valid rows {temp[valid].mean():.5f}")
     ```
 
-2. Run the script.
-
-3. Compare the mean of `M` with the one of section 3,
-   `1864.1045817826146`. The two agree in the first 13 digits. NumPy adds
-   the values in another order, and every addition of floats rounds.
-
-4. The room does this step alone: add the same line for `PT`. The answer is
-   a mean of 3448.93 and a largest value of 64 509.95 MeV/c.
-
-!!! success "You should now see"
     ```text
-    M   1864.1045817826453 25.564956548991027 1766.2096 2453.6584
-    TAU -0.05252210273908192 2.3124877358319695 -100.0 0.5787994
+    python scripts/coldest_day.py
     ```
 
-Ask the room to read the second line as a physicist would. The mean decay
-time is negative, and the smallest decay time is −100 ns. Neither can be
-right.
+    The new lines:
 
-**Say it in these words.** The minimum and the maximum of a column are
-printed before its mean is believed.
+    ```text
+    [ True  True  True] 87552 120
+    all rows   5.78280
+    valid rows 7.15997
+    ```
+
+    `sum` counts the `True`; `~` turns the mask round.
+
+**Check:** 120 rows of `-999`, and 7.15997 without them.
 
 ---
 
-## Part 3 · Masks and counts { #part-3 }
+### 9. One row per day: `reshape` { #reshape }
 
-**1:05 to 1:40 · sections 7 to 9**
+**1:15 · 10 min** · 87 672 hours are 3653 days of 24 hours; `reshape` cuts the column into those rows.
 
-A comparison on an array gives an array of `True` and `False`, a mask. A
-mask counts rows and selects rows. This is how the missing values are taken
-out, and how any other selection is made.
+1. Add these lines, save, run.
 
----
-
-### 7. Mask the missing values { #mask }
-
-**1:05 · 12 min**
-
-**Tell the room.** In this file `-100` in the column `TAU` means that the
-decay time could not be computed. It is a mark, not a measurement. Lecture
-04 showed what the 49 marks do, on the slide *What 49 Rows Do to a Mean*,
-and Seminar 4 got the two means from two files, the raw one and
-`D0_valid.csv`. Here one array gives both. The mask `TAU != -100` is `True`
-in the rows that have a value.
-
-1. Add to `summary.py`:
-
-    ```text
-    mask = TAU != -100
-    print(mask.sum(), (~mask).sum())
+    ```python
+    days = temp.reshape(3653, 24)
+    day_means = days.mean(axis=1)
+    print(days.shape, day_means[:3])
+    dates = np.arange("2016-01-01", "2026-01-01", dtype="datetime64[D]")
+    print(dates[:2], dates[-1])
     ```
 
-2. Run the script. The new line reads `91534 49`. In a sum `True` counts
-   as 1, so `mask.sum()` is the number of rows with a value. `~mask` is the
-   opposite mask.
-
-3. Use the mask as an index. Add and run:
+    The new lines:
 
     ```text
-    print("TAU", TAU[mask].mean(), TAU[mask].std(), TAU[mask].min())
+    (3653, 24) [-4.87083333 -5.13333333 -3.14166667]
+    ['2016-01-01' '2016-01-02'] 2025-12-31
     ```
 
-4. Put the two means beside the slide *What 49 Rows Do to a Mean* of
-   Lecture 04: −0.0525 ns with the marks, +0.00098 ns without. They are
-   the numbers `column_stats.py` prints for the raw file and for the file
-   without the marked rows, now from one array and one
-   mask. The sum on that slide, 49 × (−100) / 91 583 = −0.0535, is the
-   shift the marks cause.
+    `axis=1` averages along each row: one mean per day. `dates` holds the
+    3653 days, in the same order.
 
-5. The room does this step alone: print the two shapes below. The answers
-   are `(91534,)` and `(91534, 4)`. A mask made from one column selects the
-   same rows in any other.
+2. The sensor failure covers whole days, so their mean is exactly `-999`.
+   Add a mask for the days, then the coldest day.
 
-    ```text
-    print(M[mask].shape, data[mask].shape)
+    ```python
+    ok = day_means != -999
+    print(ok.sum(), dates[~ok])
+    i = day_means[ok].argmin()
+    print("coldest day", dates[ok][i], f"{day_means[ok][i]:.2f}")
     ```
 
-!!! success "You should now see"
-    From the line added in step 3:
-
     ```text
-    TAU 0.000981802006321804 0.004381973120438549 -0.13715266
+    3648 ['2019-07-22' '2019-07-23' '2019-07-24' '2019-07-25' '2019-07-26']
+    coldest day 2019-01-26 -13.00
     ```
 
-The mean of the valid decay times is 0.00098 ns, about 1 ps. With the 49
-marks it was −0.0525 ns: the wrong sign and 53 times too large, from 0.05 %
-of the rows.
+    `argmin` gives the position of the smallest value. The same mask on
+    `dates` keeps the days in step.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `AttributeError: 'bool' object has no attribute 'sum'` | `TAU` is a list, as in Part 1. This is `summary.py`, with `TAU = data[:, 2]` |
-    | The count is 91583 and 0 | The comparison reads `TAU != 100`. The mark is `-100` |
+**Check:** `coldest day 2019-01-26 -13.00`.
 
----
+!!! question "Task: the warmest day, and the frost days"
+    Add lines that print the warmest day and its mean, and the number of
+    days whose mean is below 0 °C.
 
-### 8. Count rows with a condition { #window }
-
-**1:17 · 10 min**
-
-**Tell the room.** Two masks are combined with `&` for *and*, `|` for *or*
-and `~` for *not*. Each comparison stands in its own brackets.
-
-1. Add and run:
-
-    ```text
-    window = (M > 1840) & (M < 1890)
-    print(window.sum(), window.mean())
+??? note "Answer"
+    ```python
+    j = day_means[ok].argmax()
+    print("warmest day", dates[ok][j], f"{day_means[ok][j]:.2f}")
+    print("days below 0 °C", (day_means[ok] < 0).sum())
     ```
 
-    It prints `56577 0.6177674895995982`. The mean of a mask is the
-    fraction of `True`: 61.8 % of the rows have a mass within 25 MeV/c² of
-    1865.
-
-2. Leave the brackets out once, and run:
-
     ```text
-    window = M > 1840 & M < 1890
-    ```
-
-    The script stops with a `TypeError`. `&` is applied before `>`, so
-    Python tries `1840 & M` first. Put the brackets back.
-
-3. Replace `&` by `and` once, and run:
-
-    ```text
-    window = (M > 1840) and (M < 1890)
-    ```
-
-    The script stops with `ValueError: The truth value of an array with
-    more than one element is ambiguous`. `and` works on single values. Put
-    `&` back.
-
-4. The room does this step alone: how many rows have `PT` above 5000, and
-   how many of those lie in the window?
-
-    ```text
-    fast = PT > 5000
-    print(fast.sum(), (window & fast).sum())
-    ```
-
-!!! success "You should now see"
-    As the last line:
-
-    ```text
-    7263 5886
+    warmest day 2018-06-18 26.93
+    days below 0 °C 922
     ```
 
 ---
 
-### 9. Count in bins, and time both scripts { #histogram }
+## Part 4 · Is it getting warmer? { #part-4 }
 
-**1:27 · 13 min**
-
-**Tell the room.** A mean and a standard deviation say little about the
-shape of a column. `np.histogram` cuts a range into intervals of equal
-width, the bins, and counts the values in each. The counts are the last
-numbers a plot needs.
-
-1. Add and run:
-
-    ```text
-    counts, edges = np.histogram(M, bins=20, range=(1815, 1915))
-    print(counts)
-    print(len(counts), len(edges))
-    ```
-
-2. Read the output with the room. Twenty bins of 5 MeV/c² have 21 edges.
-   The counts rise from about 3500 to 8931 and fall again.
-
-3. Find the fullest bin. Add and run:
-
-    ```text
-    i = counts.argmax()
-    print(i, edges[i], edges[i + 1], counts[i])
-    ```
-
-    It prints `9 1860.0 1865.0 8931`: the bin from 1860 to 1865 MeV/c².
-
-4. Ask how many rows were not counted. Add and run. 339 rows have a mass
-   outside the range.
-
-    ```text
-    print(len(M) - counts.sum())
-    ```
-
-5. Time the mean in both scripts. At the top of `summary.py` add:
-
-    ```text
-    import time
-    ```
-
-    and at the end:
-
-    ```text
-    t0 = time.perf_counter()
-    m = M.mean()
-    t1 = time.perf_counter()
-    print("NumPy:", (t1 - t0) * 1000, "ms")
-    ```
-
-    Do the same in `read_csv.py`: `import time` at its top, and at its
-    end the loop version:
-
-    ```text
-    t0 = time.perf_counter()
-    m = mean(M)
-    t1 = time.perf_counter()
-    print("loop:", (t1 - t0) * 1000, "ms")
-    ```
-
-    Run both scripts.
-
-!!! success "You should now see"
-    From `summary.py`:
-
-    ```text
-    [3500 3622 3623 3643 3741 3722 4224 5083 7124 8931 8565 6512 4876 3938
-     3602 3378 3412 3397 3287 3064]
-    20 21
-    9 1860.0 1865.0 8931
-    339
-    ```
-
-    and two times that differ from laptop to laptop.
-
-On an Apple M2 Pro the loop takes about 1.6 ms and NumPy about 0.07 ms.
-Collect a few pairs from the room and write the factors on the board.
-
-**Say it in these words.** Both are fast for 91 583 rows. The factor
-matters for a file a thousand times larger, and for a step that is repeated
-a thousand times.
+**1:25 to 2:00** · Ten years of the same station: compare the mean of each year.
 
 ---
 
-## Part 4 · Write the result { #part-4 }
+### 10. The year of every row { #year }
 
-**1:40 to 2:00 · sections 10 to 12**
+**1:25 · 5 min** · The year is the first four characters of `time`.
 
-The numbers of Parts 2 and 3 go into a file, and the README says how the
-file is made.
+1. New file `scripts/yearly_means.py`. Type, save, run.
+
+    ```python
+    from pathlib import Path
+
+    import numpy as np
+
+    ROOT = Path(__file__).resolve().parent.parent
+    path = ROOT / "data/raw/weather.csv"
+
+    temp = np.loadtxt(path, delimiter=",", skiprows=1, usecols=1)
+    time = np.loadtxt(path, delimiter=",", skiprows=1, usecols=0, dtype=str)
+    valid = temp != -999
+    year = np.array([int(t[:4]) for t in time])
+    print(time[:2], year[:2], year[-2:])
+    ```
+
+    ```text
+    python scripts/yearly_means.py
+    ```
+
+    ```text
+    ['2016-01-01T00:00' '2016-01-01T01:00'] [2016 2016] [2025 2025]
+    ```
+
+**Check:** `2016` at the start, `2025` at the end.
 
 ---
 
-### 10. Write the numbers to a file { #write }
+### 11. A mean for each year { #yearly }
 
-**1:40 · 10 min**
+**1:30 · 10 min** · `&` joins two masks: this year, and not `-999`.
 
-**Tell the room.** Numbers on the screen are gone when the terminal is
-closed. The script writes them to a file in `results`, with their units.
-The file can be made again at any time by running the script.
+1. Replace the `print` line with a loop, save, run.
 
-1. In `summary.py`, delete the `print` lines of sections 6 to 9 and the
-   timing lines. Keep the lines that define `data`, the four columns,
-   `mask` and `window`.
-
-2. Add at the end:
-
-    ```text
-    lines = [
-        f"rows {len(data)}",
-        f"rows with a valid TAU {mask.sum()}",
-        f"M mean {M.mean():.2f} std {M.std():.2f} MeV/c^2",
-        f"TAU mean {TAU[mask].mean() * 1000:.3f} ps",
-        f"rows with 1840 < M < 1890: {window.sum()}",
-    ]
-    with open("results/summary.txt", "w", encoding="utf-8") as f:
-        for line in lines:
-            f.write(line + "\n")
-    print("written: results/summary.txt")
+    ```python
+    for y in range(2016, 2026):
+        m = (year == y) & valid
+        print(y, f"{temp[m].mean():.2f}", m.sum())
     ```
 
-3. Run the script and open `results/summary.txt` from the Side Bar.
-
-4. Run the script a second time. The file is the same: `"w"` replaces it.
-
-!!! success "You should now see"
-    In `results/summary.txt`:
-
     ```text
-    rows 91583
-    rows with a valid TAU 91534
-    M mean 1864.10 std 25.56 MeV/c^2
-    TAU mean 0.982 ps
-    rows with 1840 < M < 1890: 56577
+    python scripts/yearly_means.py
     ```
 
-The script reads `data/raw/D0_KPi.csv` and does not change it. The decay
-time is multiplied by 1000 before it is written, so that the file says
-0.982 ps and not 0.001 ns.
+    ```text
+    2016 7.60 8784
+    2017 6.51 8760
+    2018 7.97 8760
+    2019 7.27 8640
+    2020 6.83 8784
+    2021 7.25 8760
+    2022 6.60 8760
+    2023 8.31 8760
+    2024 7.27 8784
+    2025 5.98 8760
+    ```
+
+2. Read it: the years go up and down by up to 2.3 °C, in no order. 2019
+   has 120 hours fewer, the five summer days of the failure.
+
+**Check:** ten means between 5.98 and 8.31.
 
 ---
 
-### 11. A note in the README { #readme }
+### 12. Write the answer, commit, push { #commit }
 
-**1:50 · 5 min**
+**1:40 · 15 min** · The script writes its answer to `results/`; the script goes into the history, the answer does not.
 
-**Tell the room.** A result file is worth as much as the note that says how
-it was made.
+1. Replace the loop with these lines, save, run.
 
-1. Open `README.md` and add a section:
+    ```python
+    lines = []
+    for y in range(2016, 2026):
+        m = (year == y) & valid
+        lines.append(f"{y}  {temp[m].mean():.2f}  {m.sum()}")
 
-    ```text
-    ## Summary numbers
+    first = (year <= 2020) & valid
+    last = (year >= 2021) & valid
+    lines.append(f"2016-2020  {temp[first].mean():.2f}")
+    lines.append(f"2021-2025  {temp[last].mean():.2f}")
 
-    `results/summary.txt` is written by `scripts/summary.py`
-    from `data/raw/D0_KPi.csv`. It needs NumPy:
-    `python3 -m pip install numpy` on macOS,
-    `python -m pip install numpy` on Windows.
-
-    Rows with `TAU = -100` have no decay time. They are left out
-    of the mean of `TAU` and kept in the numbers for `M`.
-    ```
-
-2. Save the two scripts, the result and the README as one commit, in the
-   Source Control view or typed in the terminal:
-
-    ```text
-    git add scripts results README.md
+    text = "\n".join(lines) + "\n"
+    print(text, end="")
+    (ROOT / "results").mkdir(exist_ok=True)
+    (ROOT / "results/yearly_temp.txt").write_text(text)
     ```
 
     ```text
-    git commit -m "Summary numbers of D0_KPi.csv with NumPy"
+    python scripts/yearly_means.py
     ```
 
-!!! success "You should now see"
-    The new section in the preview, and no changed files in the Source
-    Control view.
+    The last two lines:
+
+    ```text
+    2016-2020  7.24
+    2021-2025  7.08
+    ```
+
+    The answer: not warmer. The second five years are 0.16 °C colder,
+    less than the step from one year to the next.
+
+2. The file.
+
+    ```text
+    Get-Content results/yearly_temp.txt -Tail 2
+    ```
+
+    ```text
+    2016-2020  7.24
+    2021-2025  7.08
+    ```
+
+3. What Git sees: the scripts, not `results/`.
+
+    ```text
+    git status --short
+    ```
+
+    ```text
+    ?? scripts/coldest_day.py
+    ?? scripts/column_mean.py
+    ?? scripts/yearly_means.py
+    ```
+
+4. Commit, push.
+
+    ```text
+    git add scripts
+    ```
+
+    ```text
+    git commit -m "Read the weather data with functions and NumPy"
+    ```
+
+    ```text
+    [main 8cc45c7] Read the weather data with functions and NumPy
+     3 files changed, 79 insertions(+)
+     create mode 100644 scripts/coldest_day.py
+     create mode 100644 scripts/column_mean.py
+     create mode 100644 scripts/yearly_means.py
+    ```
+
+    Your id and counts differ.
+
+    ```text
+    git push
+    ```
+
+**Check:** on GitHub, `environment.yml` and the three scripts.
+
+!!! question "Task: the warmest and the coldest month"
+    Add the month of every row (`t[5:7]`) and print the mean temperature of
+    each month over the ten years.
+
+??? note "Answer"
+    ```python
+    month = np.array([int(t[5:7]) for t in time])
+    for mo in range(1, 13):
+        m = (month == mo) & valid
+        print(mo, f"{temp[m].mean():.2f}")
+    ```
+
+    ```text
+    1 -3.87
+    2 -2.45
+    3 1.19
+    4 6.39
+    5 12.16
+    6 17.25
+    7 18.53
+    8 16.12
+    9 13.01
+    10 6.94
+    11 2.64
+    12 -2.30
+    ```
+
+    July is the warmest, 18.53 °C; January the coldest, −3.87 °C.
 
 ---
 
-### 12. Wrap up { #wrap-up }
+### 13. Wrap up { #wrap-up }
 
 **1:55 · 5 min**
 
-Read the list aloud. Ask on the way out which step was hardest.
+| To | Type |
+|--|--|
+| make the project's environment | `conda create -n weather python=3.14 numpy=2.5` |
+| switch it on | `conda activate weather` |
+| write it down | `conda env export --from-history -f environment.yml` |
+| make it on another laptop | `conda env create -f environment.yml` |
+| name a block of steps | `def name(inputs):` ... `return value` |
+| read a CSV file | `csv.reader(f)`, `next(reader)` for the header |
+| a path from the project folder | `Path(__file__).resolve().parent.parent` |
+| a table into an array | `np.loadtxt(path, delimiter=",", skiprows=1, usecols=...)` |
+| select rows | `temp[temp != -999]`, masks joined with `&` |
 
-- `csv.reader` gives every row as a list of strings. `float` makes numbers
-  of them.
-- A function takes values in through its parameters and gives one back with
-  `return`. It is tested on a small case first.
-- NumPy is installed once with `python -m pip install numpy`, `python3` on
-  macOS.
-- `np.loadtxt` with `delimiter` and `skiprows` reads a file of numbers into
-  one array. Its `shape` is rows, then columns.
-- A comparison on an array gives a mask. A mask counts rows with `.sum()`
-  and selects them as an index.
-- A mark for a missing value is masked before a mean is taken. The minimum
-  and the maximum of a column show such a mark.
-- `np.histogram` gives the counts in bins, and one more edge than counts.
+Seminar 8 starts from this repository and the environment `weather`.
 
 ---
 
-## Stretch goals
+## Optional, if the room is fast { #optional }
 
-For students who finish a section early. Answers are given for the
-lecturer.
+---
 
-- Print the median of `M` with `np.median(M)`, and the median and the mean
-  of `IPCHI2`. The answers are 1864.0781, then 6.30 and 457.5: a few very
-  large values carry the mean of `IPCHI2`.
-- Find the row with the largest mass. `M.argmax()` is 10046, and
-  `data[10046]` is a row with `M` = 2453.6584.
-- Count the valid decay times that are negative:
-  `(TAU[mask] < 0).sum()` is 3.
-- Compare the array with the file. `data.nbytes` is 2 930 656 bytes:
-  32 bytes per row, four values of 8 bytes. The file on disk has
-  3 926 142 bytes, about 43 per line, as `wc -c` and `Get-Item` measure
-  it. As text a value takes as
-  many bytes as it has characters, in an array always 8.
-  `data.astype(np.float32).nbytes` is 1 465 328, half again.
-- Compute *g* from the pendulum table without a loop. Read
-  `data/processed/pendulum.csv` with `np.loadtxt`, then
-  `g = 4 * np.pi**2 * (p[:, 0] / 100) / (p[:, 1] / 10)**2`. The nine values
-  lie between 9.70 and 9.93, and `g.mean()` is 9.795.
-- Read the file as received, `data/raw/pendulum.csv`, with
-  `csv.reader(f, delimiter=";")`. Convert the length with `float(row[1])`
-  and the time with `float(row[2].replace(",", "."))` inside `try`, and
-  count the rows that raise `ValueError`. The answer is 9 rows read and 2
-  skipped, the header and the line with the mean. The mean of the nine
-  times is 15.14.
-- A student who already has a dataset of their own reads it the same way:
-  `np.loadtxt` if every field is a number, `read_column` and
-  `np.array(values)` if it has columns of text. Then find how the file
-  marks a missing value, an empty field, a word or a number such as `-999`,
-  and mask those rows.
+### 14. Loop against array: time both { #timing }
 
-## If students ask for more
+**— · 10 min** · `time.perf_counter()` is a clock in seconds; the difference of two readings is the time between them.
 
-| Topic | Week |
-|--|--|
-| Drawing the 20 counts as a histogram | 8 (Data Visualisation) |
-| What a standard deviation says, and the uncertainty of a mean | 9 (Probability & Statistics) |
-| Tables with column names and missing values: Pandas | 12 (Pandas & Data Cleaning) |
-| A script that takes the file name as an argument | 13 (Reproducible Workflows) |
+1. New file `scripts/time_both.py`. Type, save, run twice.
+
+    ```python
+    import time
+
+    import numpy as np
+
+    temp = np.loadtxt("data/raw/weather.csv", delimiter=",", skiprows=1, usecols=1)
+    temps = temp.tolist()
+
+    t0 = time.perf_counter()
+    total = 0.0
+    count = 0
+    for t in temps:
+        if t != -999:
+            total = total + t
+            count = count + 1
+    t1 = time.perf_counter()
+    array_mean = temp[temp != -999].mean()
+    t2 = time.perf_counter()
+
+    print(f"loop  {total / count:.5f} in {(t1 - t0) * 1000:.1f} ms")
+    print(f"array {array_mean:.5f} in {(t2 - t1) * 1000:.1f} ms")
+    ```
+
+    ```text
+    python scripts/time_both.py
+    ```
+
+    ```text
+    loop  7.15997 in 6.2 ms
+    array 7.15997 in 0.4 ms
+    ```
+
+    Your times differ.
+
+**Check:** the same mean, the array about 15 times faster.
+
+---
+
+### 15. Count in bins: `np.histogram` { #histogram }
+
+**— · 5 min** · A histogram counts the values that fall into each bin.
+
+1. At the end of `coldest_day.py`, add these lines, save, run.
+
+    ```python
+    counts, edges = np.histogram(temp[valid], bins=np.arange(-20, 40, 5))
+    print(edges)
+    print(counts)
+    ```
+
+    The new lines:
+
+    ```text
+    [-20 -15 -10  -5   0   5  10  15  20  25  30  35]
+    [   12   686  5589 16065 16582 14050 14880 12261  6111  1230    86]
+    ```
+
+    Twelve edges make eleven bins: 12 hours from −20 to −15 °C, 86 from
+    30 to 35 °C.
+
+**Check:** the counts add up to 87 552.
+
+---
+
+### 16. Skip a bad row: `try` and `except` { #except }
+
+**— · 10 min** · `try` runs a block; if it raises the error named after `except`, that block runs instead.
+
+1. New file `scripts/export_values.py`, for the spreadsheet export with
+   `;` and decimal commas. Type, save, run.
+
+    ```python
+    import csv
+
+    values = []
+    with open("data/raw/daily_export.csv", newline="") as f:
+        reader = csv.reader(f, delimiter=";")
+        next(reader)
+        for row in reader:
+            try:
+                nr = int(row[0])
+            except ValueError:
+                print("skipped:", row)
+                continue
+            values.append(float(row[2].replace(",", ".")))
+
+    print(len(values), values)
+    print(f"mean {sum(values) / len(values):.2f}")
+    ```
+
+    ```text
+    python scripts/export_values.py
+    ```
+
+    ```text
+    skipped: ['', 'mean', '7,97']
+    9 [6.3, 5.0, 5.6, 7.0, 9.4, 10.4, 9.2, 9.0, 9.8]
+    mean 7.97
+    ```
+
+    The last line of the export has no `nr`: `int('')` raises
+    `ValueError`, and the row is skipped.
+
+**Check:** nine values, the mean the spreadsheet wrote, 7.97.
+
+---
 
 ## Aims practised
 
-📁 raw data read by script, never edited · ⚙️ one script from file to result · ♻️ the result file can be made again · 🔧 the same code on every system
+- ♻️ **Reproducibility:** `environment.yml` makes the same environment on
+  any laptop; the answer is a file the script writes again at any time.
+- 🔧 **Tool-agnostic:** the same `conda` and `python` lines on macOS and
+  Windows; a path from `Path(__file__)` works from any folder.
+- 📁 **Files:** the file read three ways (lines, csv, NumPy) to the same
+  7.15997; made files stay in the ignored `results/`.

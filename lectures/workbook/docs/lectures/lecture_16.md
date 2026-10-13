@@ -148,12 +148,12 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 16 — A Small Network, Measured](../seminars/seminar_16.md) is a
-follow-along session on the two-class file. The room loads and plots it,
-splits it with a seed, trains the neuron of Lecture 11 and then the network
-of this lecture as two functions, chooses the number of hidden units with
-the validation rows, uses the test rows once, counts the confusion matrix by
-hand, checks it with scikit-learn, and writes the result into the README.
+[Seminar 16 — Can a Model Forecast Tomorrow's Temperature? scikit-learn on
+the Weather Project](../seminars/seminar_16.md) works on the weather project
+of Lectures 1 to 5. Every student adds scikit-learn to the environment,
+builds a table of days, measures two baselines, trains a linear model and a
+tree on 2016 to 2023, tests them once on 2024 and 2025, and pushes the
+errors in °C.
 
 ## Further reading
 

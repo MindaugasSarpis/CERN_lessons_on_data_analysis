@@ -162,13 +162,12 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 11 — A Perceptron from an Empty File](../seminars/seminar_11.md)
-starts from an empty script. The room reads a file of 300 labelled points,
-plots it, and sets the weights of a neuron by hand. It writes Rosenblatt's
-rule and checks it against the AND table of the lecture. It then writes the
-sigmoid, the loss and the training loop, sees the loop fail on inputs of
-different scales, standardises them, and measures the result on 75 points
-that were held back: 67 correct, 89 % ± 4 %.
+[Seminar 11 — Will It Freeze Tonight? A Perceptron on the Weather
+Data](../seminars/seminar_11.md) works on the weather project of Lectures 1
+to 5. Every student writes a neuron that predicts frost at 06:00 from the
+temperature and humidity at 18:00 the evening before, trains it on 2016 to
+2022, tests it on 2023 to 2025 (95.9 ± 0.6 % right), compares it with a
+one-line rule, commits and pushes.
 
 ## Take-aways
 

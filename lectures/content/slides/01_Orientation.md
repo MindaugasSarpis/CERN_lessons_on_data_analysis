@@ -12,7 +12,7 @@ title: "Orientation & Motivation"
 ##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducible · ⚙️ automation · 📁 data & files</span>
 
 <!--
-**Do:** start the cold open on the next slide; welcome the room only after it.
+**Do:** play the cold open first; welcome the room only after it.
 **Say:** the whole grade is one project of your own; the seminars are where the skills get practised. No seminar today.
 (~2 min)
 -->
@@ -23,9 +23,12 @@ hideInToc: true
 
 <VideoPlayer src="ff_zoom_master.mp4" :autoplay="false" hq />
 
+<!-- Release asset ff_zoom_master.mp4 (1080p60 H.264, from the 2026-09-06 master). Does not auto-start. -->
+
 <!--
-**Do:** press play when the room is settled and let it run before a word of admin. (4:42)
-Cold open: Google Earth pull-back from the Physics Faculty roof at Saulėtekis, Vilnius, out to the cosmic web. Release asset ff_zoom_master.mp4 (1080p60 H.264, from the 2026-09-06 master). Does not auto-start.
+**Do:** press play when the room is settled and let it run before a word of admin.
+**If asked:** a Google Earth pull-back from the roof of the Physics Faculty at Saulėtekis, Vilnius, out to the cosmic web.
+(~5 min, the film is 4:42)
 -->
 
 ---
@@ -49,7 +52,7 @@ layout: quote
 # The goal of this course is to build **intuition**, **competence** and **confidence** in working with data, with the tools and practices of modern science
 
 <!--
-**Say:** all three start with one file. The next slide is ten years of a weather station's log.
+**Say:** all three start with one file.
 (~1 min)
 -->
 
@@ -171,11 +174,11 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-tight">
 
-## 🔍 **What 7.16 hides**
+## 🔍 **Choices and slips**
 
 Each line is one honest-looking choice about the same file.
 
-The last two are slips, easy to spot. The first five are not: each could be the number in your inbox.
+The last two lines are slips and easy to spot. Any of the first five could be the number in your inbox.
 
 </div>
 
@@ -467,7 +470,7 @@ graph LR
 
 ## 🔗 **On the weather log**
 
-On the weather log: the script (⚙️) lets anyone rebuild 7.16 (♻️). Two folders (📁) keep the script simple: it reads `data/raw`, writes `data/processed`. Plain CSV (🔧) keeps every step readable anywhere.
+The script (⚙️) lets anyone rebuild 7.16 (♻️). Two folders (📁) keep the script simple: it reads `data/raw`, writes `data/processed`. Plain CSV (🔧) keeps every step readable anywhere.
 
 </div>
 
@@ -475,7 +478,7 @@ On the weather log: the script (⚙️) lets anyone rebuild 7.16 (♻️). Two f
 
 ## 🧭 **A rule for choosing**
 
-Unsure how to do something? Ask which choice serves more of the aims. That one question settles most practical choices in this course, and in research.
+Of two ways to do the same thing, take the one that serves more of the four aims. Most practical choices in this course are made that way.
 
 </div>
 
@@ -493,7 +496,7 @@ hideInToc: true
 
 # How This Course **Works**
 
-Thirteen Tuesdays practise the four aims: a lecture for the idea, a seminar for the hands.
+Every Tuesday a lecture and a seminar on the same topic.
 
 ---
 hideInToc: true
@@ -545,7 +548,7 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** the lecture and the seminar are one unit. Miss the seminar and the lecture stays abstract; skip the lecture and the seminar feels like magic.
+**Say:** the lecture and the seminar are one unit: the seminar the same afternoon practises what the lecture showed.
 **If asked:** the course is 5 credits, 140 h: 64 h in class, 16 sessions of 4 h, and 76 h of self-study.
 (~2 min)
 -->
@@ -621,7 +624,7 @@ hideInToc: true
 | --- | --- | --- |
 | 02 | The editor VS Code, the project folder, Markdown | A README |
 | 03 | What a file is: bytes and text; first commands in a terminal | Files measured, byte by byte |
-| 04 | The shell set up; pipes, filters, programs; conda environments; checksums | Files made by typed lines, an `environment.yml` |
+| 04 | PowerShell 7, package managers, conda environments, checksums | Files made by typed lines, an `environment.yml` |
 | 05 | Git | A history of every change |
 | 06–07 | Python, then arrays of numbers | Scripts of your own |
 | 08–13 | Plots, statistics, fitting, cleaning, one command for all | Results that rebuild |
@@ -707,7 +710,7 @@ You can say, in one sentence, what it does and why.
 </div>
 
 <!--
-**Say:** not a perfect thing, not a whole project: one honest step, saved and dated. The same three tests as for 7.16.
+**Say:** each week one step, saved and dated. The three tests are the ones 7.16 has to pass.
 (~1 min)
 -->
 
@@ -744,7 +747,7 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** this is not a deep programming course and not a race to the fanciest model; it is a course in practices that survive any language.
+**Say:** the course teaches practices that work in any language; the programming goes only as deep as they need.
 **If asked:** already code well? The challenge moves from syntax to doing it reproducibly.
 (~2 min)
 -->
@@ -795,7 +798,7 @@ hideInToc: true
 
 # Seminars & **Your Project**
 
-A seminar ends with one step saved in the folder. A project is those steps, grown around a question of your own, and graded on the four aims.
+Your project: the steps of the seminars, on a question and data of your own, graded on the four aims.
 
 ---
 hideInToc: true
@@ -958,7 +961,7 @@ hideInToc: true
 
 ## 🏆 **Delete `data/processed/` and `results/`, then rebuild both with one command.**
 
-If that works for your project, it is reproducible. Every practice in this course exists to make that one sentence true of your work.
+If that works for your project, it is reproducible.
 
 </div>
 
@@ -1057,7 +1060,7 @@ The first picture of Mars from a spacecraft was coloured by hand.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Numbers plus a written rule give a picture. Anyone with the 40 000 numbers and the key gets the same picture, by hand or by computer. 87 672 readings plus a written method give 7.16 in the same way.
+Numbers plus a written rule give a picture. Anyone with the 40 000 numbers and the key gets the same picture, by hand or by computer. 87 672 rows plus a written method give 7.16 in the same way.
 
 </div>
 
@@ -1162,7 +1165,11 @@ hideInToc: true
 
 <VideoPlayer src="Drone_Climbing_Mountain.mp4" />
 
-<!-- Reel · Act I · drone ascent — Earth at human scale (0:27, silent). Back in slot 1 on 2026-09-08. -->
+<!-- Back in slot 1 on 2026-09-08. -->
+
+<!--
+**Do:** let it run: a drone climbs a mountain, Earth at human scale (0:27, silent).
+-->
 
 ---
 hideInToc: true
@@ -1170,7 +1177,11 @@ hideInToc: true
 
 <VideoPlayer src="saturn_v_launch_nasa.mp4" />
 
-<!-- Reel · Act I · NASA Saturn V launch, with sound (2:55). Added 2026-09-08; release asset is a capped H.264 encode of the Drive master. -->
+<!-- Added 2026-09-08; release asset is a capped H.264 encode of the Drive master. -->
+
+<!--
+**Do:** let it run: the Saturn V launch, NASA, with sound (2:55).
+-->
 
 ---
 hideInToc: true
@@ -1178,7 +1189,11 @@ hideInToc: true
 
 <VideoPlayer src="blue_ghost_lunar_orbit.mp4" />
 
-<!-- Reel · Act I · the Moon — Blue Ghost lander in lunar orbit, with sound (1:36). Added 2026-09-08; release asset blue_ghost_lunar_orbit.mp4 (remux of the Drive master). -->
+<!-- Added 2026-09-08; release asset blue_ghost_lunar_orbit.mp4 (remux of the Drive master). -->
+
+<!--
+**Do:** let it run: the Moon from the Blue Ghost lander in lunar orbit, with sound (1:36).
+-->
 
 ---
 hideInToc: true
@@ -1186,7 +1201,9 @@ hideInToc: true
 
 <VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
 
-<!-- Reel · Act I · Mariner 4, 1965 — the first data from another planet (0:20) -->
+<!--
+**Do:** let it run: Mariner 4, 1965, the first data from another planet (0:20).
+-->
 
 ---
 hideInToc: true
@@ -1194,7 +1211,9 @@ hideInToc: true
 
 <VideoPlayer src="Perseverence_Rover_Landing_NASA.mp4" />
 
-<!-- Reel · Act I · Perseverance landing on Mars (3:10) -->
+<!--
+**Do:** let it run: Perseverance landing on Mars (3:10).
+-->
 
 ---
 hideInToc: true
@@ -1202,7 +1221,9 @@ hideInToc: true
 
 <VideoPlayer src="Cassini_Grand_Finale_NO_VO.mp4" />
 
-<!-- Reel · Act I · Cassini at Saturn (3:41) -->
+<!--
+**Do:** let it run: Cassini at Saturn (3:41).
+-->
 
 ---
 hideInToc: true
@@ -1210,7 +1231,9 @@ hideInToc: true
 
 <VideoPlayer src="Stars_Pan_Audio.mp4" />
 
-<!-- Reel · Act I · star field pan (0:20) -->
+<!--
+**Do:** let it run: a star field (0:20).
+-->
 
 
 ---
@@ -1219,7 +1242,9 @@ hideInToc: true
 
 <VideoPlayer src="Hubble.mp4" />
 
-<!-- Reel · Act I · Hubble imagery (0:33) -->
+<!--
+**Do:** let it run: pictures from Hubble (0:33).
+-->
 
 
 ---
@@ -1228,7 +1253,9 @@ hideInToc: true
 
 <VideoPlayer src="Telescope.mp4" />
 
-<!-- Reel · Act I · observatory (0:40) -->
+<!--
+**Do:** let it run: an observatory (0:40).
+-->
 
 ---
 hideInToc: true
@@ -1236,7 +1263,9 @@ hideInToc: true
 
 <VideoPlayer src="Webb_Reel.mp4" />
 
-<!-- Reel · Act I · JWST reel (2:58) -->
+<!--
+**Do:** let it run: pictures from the James Webb Space Telescope (2:58).
+-->
 
 ---
 hideInToc: true
@@ -1244,7 +1273,9 @@ hideInToc: true
 
 <VideoPlayer src="Expansion_Funnel_H264_1080p.webm" />
 
-<!-- Reel · Act I · cosmic expansion funnel (0:30) -->
+<!--
+**Do:** let it run: the expansion of the universe (0:30).
+-->
 
 ---
 hideInToc: true
@@ -1252,7 +1283,9 @@ hideInToc: true
 
 <VideoPlayer src="QGP_Formation.mp4" />
 
-<!-- Reel · Act II · quark-gluon plasma forms (0:33) -->
+<!--
+**Do:** let it run: a quark-gluon plasma forms (0:33).
+-->
 
 ---
 hideInToc: true
@@ -1260,7 +1293,11 @@ hideInToc: true
 
 <VideoPlayer src="atoms.mp4" />
 
-<!-- Reel · Act II · journey into the world of atoms — hair → cells → atom → nucleus → quarks, with sound (2:06). The same film as the old silent Voyage_in_to_the_world_of_atoms.mp4; release asset atoms.mp4 (H.264 web encode of the Drive master atoms.mov). -->
+<!-- The same film as the old silent Voyage_in_to_the_world_of_atoms.mp4; release asset atoms.mp4 (H.264 web encode of the Drive master atoms.mov). -->
+
+<!--
+**Do:** let it run: into the atom: a hair, cells, an atom, the nucleus, quarks, with sound (2:06).
+-->
 
 ---
 hideInToc: true
@@ -1268,7 +1305,9 @@ hideInToc: true
 
 <VideoPlayer src="Cloud_Chamber_Audio.mp4" />
 
-<!-- Reel · Act II · cloud chamber — particles made visible (2:29) -->
+<!--
+**Do:** let it run: a cloud chamber, particles made visible (2:29).
+-->
 
 ---
 hideInToc: true
@@ -1276,7 +1315,9 @@ hideInToc: true
 
 <VideoPlayer src="CERN_Overview_Short.mp4" />
 
-<!-- Reel · Act III · CERN aerial (0:11) -->
+<!--
+**Do:** let it run: CERN from the air (0:11).
+-->
 
 ---
 hideInToc: true
@@ -1284,7 +1325,11 @@ hideInToc: true
 
 <VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" />
 
-<!-- CERN block · CERN footage 2022-013-001 — the LHC, with sound (4:14). Added 2026-09-08; release asset is a remux of the Drive master. -->
+<!-- Added 2026-09-08; release asset is a remux of the Drive master. -->
+
+<!--
+**Do:** let it run: the LHC, CERN footage 2022-013-001, with sound (4:14).
+-->
 
 ---
 hideInToc: true
@@ -1292,7 +1337,11 @@ hideInToc: true
 
 <VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" />
 
-<!-- CERN block · CERN video 2019-050-008 (1:35, silent). Added 2026-09-08. -->
+<!-- Added 2026-09-08. -->
+
+<!--
+**Do:** let it run: CERN video 2019-050-008 (1:35, silent).
+-->
 
 ---
 hideInToc: true
@@ -1300,7 +1349,9 @@ hideInToc: true
 
 <VideoPlayer src="LHCb.mp4" />
 
-<!-- Reel · Act III · LHCb, one of the four large LHC experiments (0:47) -->
+<!--
+**Do:** let it run: LHCb, one of the four large experiments at the LHC (0:47).
+-->
 
 ---
 hideInToc: true
@@ -1308,7 +1359,9 @@ hideInToc: true
 
 <VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" />
 
-<!-- Reel · Act III · FCC map — the future (0:18) -->
+<!--
+**Do:** let it run: the map of the Future Circular Collider (0:18).
+-->
 
 ---
 hideInToc: true
@@ -1316,7 +1369,11 @@ hideInToc: true
 
 <VideoPlayer src="lhcb_thanks.mp4" />
 
-<!-- Closing (2:28): LHCb detector fly-through — VELO, RICH, magnet, trackers, calorimeters, muon stations — ending on "Thanks for Your Attention". **Do:** let it run while the room packs up. Release asset lhcb_thanks.mp4 (H.264 web-h264 encode of the maintainer's Drive master, plays on every browser). -->
+<!-- Release asset lhcb_thanks.mp4 (H.264 web-h264 encode of the maintainer's Drive master, plays on every browser). -->
+
+<!--
+**Do:** let it run while the room packs up: the LHCb detector from the inside, layer by layer, ending on "Thanks for Your Attention" (2:28).
+-->
 
 ---
 layout: section
@@ -1328,10 +1385,7 @@ hideInToc: true
 <img src="/figures/logo_CERN_white.svg" alt="CERN" class="mx-auto mt-8 h-48" />
 
 <!--
-Not delivered live: the lecture ends on the LHCb fly-through. These four slides
-stay in the deck for students who were not in the room (or want the background
-behind the CERN clips): the org, the machine, the chain that feeds it, and how a
-detector actually sees a collision.
+**Do:** not shown in the lecture, which ends on the LHCb film. The four slides are for reading afterwards: CERN, the LHC, the accelerator chain, a detector.
 -->
 
 ---
@@ -1357,10 +1411,10 @@ hideInToc: true
 
 ## 🎯 **The Mission**
 
-- Probe the **fundamental structure** of matter
-- Build and operate the world's most powerful **particle accelerators**
-- Push the boundaries of **technology and engineering**
-- Train the **next generation** of scientists
+- Study what **matter** is made of
+- Build and run **particle accelerators**
+- Develop the **technology** they need: the World Wide Web was invented there in 1989
+- Train students and young **scientists**
 
 </div>
 
@@ -1370,7 +1424,7 @@ hideInToc: true
 
 ## 🌍 **By the Numbers**
 
-🔬 World's **largest** particle physics laboratory · 👥 **17,000+** scientists from **110+ nations** · 🏗️ Operating since **1954** · 🧪 Home to the **Large Hadron Collider**
+🔬 The **largest** particle physics laboratory in the world · 👥 **17 000** scientists from more than **110** nations · 🧪 the **Large Hadron Collider**
 
 </div>
 
@@ -1426,7 +1480,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔗 No single machine takes protons from a hydrogen bottle to near light speed: the LHC is only the **last link in a chain**, each accelerator handing faster particles to the next.
+🔗 Protons from a hydrogen bottle pass through a **chain** of accelerators. Each hands faster particles to the next, and the LHC is the last.
 
 </div>
 
@@ -1434,7 +1488,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact reveal-left">
 
-**1. LINAC4**, a linear accelerator, kicks things off: **160 MeV**
+**1. LINAC4**, a linear accelerator: **160 MeV**
 
 </div>
 

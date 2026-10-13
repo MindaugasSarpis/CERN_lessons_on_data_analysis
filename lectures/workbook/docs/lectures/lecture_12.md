@@ -188,15 +188,11 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 12 — Clean a Table by Script](../seminars/seminar_12.md) installs
-Pandas and writes three scripts. The first, `scripts/clean.py`, cleans the
-pendulum table with Pandas, as on slide 15, and gives a file with the same
-checksum as Lecture 4's `pendulum_script.csv`. Both scripts are then run on
-the partner's second file: 10 rows from Lecture 4's, 9 from `clean.py`.
-`audit.py` asks the five questions of `D0_KPi.csv` and prints a count for
-each. `clean_d0.py` writes `data/processed/d0_clean.csv` and a log of what
-it removed. The rules and the counts go into the README. Everything is done
-in class.
+[Seminar 12 — How Cold Is the Hill? pandas on a Second Station's
+File](../seminars/seminar_12.md) works on the weather project of Lectures 1
+to 5. Every student reads a second station's messy export with pandas,
+cleans it rule by rule with a count for each rule, compares it day by day
+with the valley station, and pushes the script and the result.
 
 ## Take-aways
 

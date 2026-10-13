@@ -1,106 +1,66 @@
-# Seminar 1 — VS Code and Markdown
+# Seminar 1 — What Do the Weather Files Say? VS Code and Markdown
 
-**Paired lecture:** 02 Introduction to Data · **Format:** follow-along, from zero · **~120 min**
+**Paired lecture:** 02 Introduction to Data · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student has a project folder open in VS Code, with a
-README in Markdown that says what is in the folder and where its data came
-from, a small table repaired in the editor, and a short report.
+**Today's goal:** every student has the folder `weather-project` open in VS
+Code, with the station's two files in `data/raw`, the export repaired by hand
+into `data/processed/daily.csv`, and a README that says what is in the folder,
+where the data came from and what each column means.
 
-The tools are VS Code and a web browser: no terminal, no Python. The files
-are a reading list and the loans log of a library.
+Everything happens in VS Code and a web browser. No terminal today.
 
 ## Run sheet
 
-| Clock | Section | On the projector | The room ends with |
+| Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · VS Code** · 25 min | | |
-| 0:00 | [1. Install VS Code](#install) | `code.visualstudio.com`, **Download** | VS Code running |
-| 0:10 | [2. Open a project folder](#open-folder) | **File**, **Open Folder…** | `reading-project` open |
-| 0:15 | [3. The window and three keys](#interface) | The five regions, `Ctrl+Shift+P` | The regions named |
-| 0:20 | [4. Folders and a README](#folders) | **New Folder**, **New File** | The project skeleton |
-| | **Part 2 · Markdown** · 15 min | | |
-| 0:25 | [5. Write the README](#markdown) | `README.md` beside its preview | A README with a title, a list, a table, a link |
-| 0:35 | [6. Five mistakes, on purpose](#mistakes) | `#Title` without the space | Each mistake seen and fixed |
-| | **Part 3 · Repair a table** · 31 min | | |
-| 0:40 | [7. The reading list arrives](#copy) | The file in `data/raw`, a copy in `data/processed` | Two copies of the list |
-| 0:45 | [8. Whole lines](#lines) | `Ctrl+Shift+K` on the mean line | The mean line gone |
-| 0:50 | [9. Find and replace](#replace) | `Ctrl+H`: `,` to `.`, then `;` to `,` | Commas between the values |
-| 0:57 | [10. A cursor on every line](#cursors) | `Shift+Alt+I`, `Home`, `Ctrl+Shift+→` | Column `nr` gone |
-| 1:03 | [11. A table for a report](#report) | `Ctrl+Shift+L` on the commas | `results/report.md` with a table and a picture |
-| | **Part 4 · A long file and its note** · 30 min | | |
-| 1:11 | [12. Read a long file](#data-file) | `Ctrl+End`, `Ctrl+G`, `Ctrl+F` | Rows counted, units and the mark `NA` found |
-| 1:23 | [13. Open it in a spreadsheet](#spreadsheet) | Both files in a spreadsheet, nothing saved | Who sees which outcome |
-| 1:28 | [14. Write where the data came from](#provenance) | The **Data** section of the README | A README a stranger can follow |
-| 1:38 | [15. Wrap up](#wrap-up) | The list of what was learned | |
+| | **Part 1 · VS Code and the README** · 40 min | | |
+| 0:00 | [1. Install VS Code](#install) | `code.visualstudio.com` | VS Code running |
+| 0:10 | [2. Make and open the project folder](#open-folder) | **File** > **Open Folder...** | `weather-project` open |
+| 0:15 | [3. Five regions, three keys](#interface) | `Ctrl+Shift+P`, `Ctrl+B`, `Ctrl+=` | the regions named |
+| 0:20 | [4. Folders and a README](#folders) | **New Folder** `data/raw` | four folders, `README.md` |
+| 0:25 | [5. Markdown and its preview](#markdown) | `# Weather Station` | a title and a paragraph in the preview |
+| 0:35 | [6. Three mistakes, on purpose](#mistakes) | `#Weather Station` | each mistake seen and undone |
+| | **Part 2 · The files arrive** · 30 min | | |
+| 0:40 | [7. Download the station's files](#download) | `weather-files.zip` | two files in `data/raw` |
+| 0:50 | [8. Read the long file](#data-file) | `Ctrl+End`, `Ctrl+G`, `Ctrl+F` | 87 672 rows, 120 times `-999` |
+| 1:00 | [9. Write where the data came from](#provenance) | `## Data` | source and date in the README |
+| | **Part 3 · Repair the export** · 45 min | | |
+| 1:10 | [10. A copy to repair](#copy) | `Ctrl+C`, `Ctrl+V`, `F2` | `data/processed/daily.csv` |
+| 1:15 | [11. Delete the mean line](#lines) | `Ctrl+Shift+K` | nine rows |
+| 1:20 | [12. Find and Replace](#replace) | `Ctrl+H`: `,` to `.`, `;` to `,` | commas between the values |
+| 1:30 | [13. A cursor on every line](#cursors) | `Shift+Alt+I`, `Home` | column `nr` gone |
+| 1:40 | [14. Check the size, write down the edits](#note) | **Get Info**, **Properties** | 148 bytes, one line in the README |
+| 1:55 | [15. Wrap up](#wrap-up) | | |
 | | **Optional, if the room is fast** | | |
-| — | [16. Rename a column everywhere](#rename) | `Ctrl+Shift+L` on `rating` | `stars` in README and report |
-| — | [17. Sorting sorts text](#sort) | **Sort Lines Ascending** | `120` before `96` |
-| — | [18. Check the edits by size](#sizes) | The file sizes, then the arithmetic | 546 − 18 − 30 = 498 |
-| — | [19. The five questions, your dataset](#own-data) | A dataset of the student's field | Five answers in the README |
+| — | [16. Sorting sorts text](#sort) | **Sort Lines Ascending** | `10.4` before `5.0` |
+| — | [17. Rename a column everywhere](#rename) | `Ctrl+Shift+L` | `t_mean_c` in the table |
+| — | [18. The export in a spreadsheet](#spreadsheet) | double-click `daily_export.csv` | what the spreadsheet shows |
 
-**If time runs short:** leave out section 13 and the swap test of section 14.
-A student who falls behind downloads the file of that step from **Files for
-this seminar** and goes on.
+**If time runs short:** section 6 in two minutes; leave out the Task of Part
+3, nothing later needs `results/daily.md`.
 
-??? info "How to use this page"
-    This page is written for the person at the front. Students follow the
-    same page.
-
-    - **Tell the room** is what to say before the steps.
-    - The **numbered steps** are done on the projector, and the room repeats
-      each one.
-    - **You should now see** closes a section. Ask for hands, and go on when
-      about four in five have it.
-    - **Watch for** is the usual slip in that section.
-
-    Keys are written for Windows, with macOS in brackets: `Ctrl+S` (macOS
-    `Cmd+S`). Linux has the Windows keys.
-
-??? info "Before the session, about 5 minutes"
-    - Open this page on a second screen or a phone.
-    - Download the two data files once, so you know they arrive:
-      [`reading_list.csv`](../data/books_reading_list.csv){ download="reading_list.csv" }
-      and [`loans.csv`](../data/books_loans.csv){ download="loans.csv" }.
-    - Your VS Code should look like a fresh one: no `reading-project` folder
-      yet. You build it with the room.
-    - Ask who has written code before. Seat each of them next to someone who
-      has not, with one rule: explain, never take the keyboard.
-
-<a id="files"></a>
-
-??? info "Files for this seminar"
-    A browser saves each file under the name in the second column.
-
-    | File | Saved as | Goes to | Used in |
-    |--|--|--|--|
-    | [`books_reading_list.csv`](../data/books_reading_list.csv){ download="reading_list.csv" } | `reading_list.csv` | `data/raw` | Section 7: the list as received |
-    | [`books_reading_list_clean.csv`](../data/books_reading_list_clean.csv){ download="reading_list.csv" } | `reading_list.csv` | `data/processed` | The end of section 10 |
-    | [`books_pages.png`](../data/books_pages.png){ download="reading_pages.png" } | `reading_pages.png` | `results` | Section 11 |
-    | [`books_report.txt`](../data/books_report.txt){ download="report.md" } | `report.md` | `results` | The end of section 11 |
-    | [`books_loans.csv`](../data/books_loans.csv){ download="loans.csv" } | `loans.csv` | `data/raw` | Section 12 |
-    | [`books_README.txt`](../data/books_README.txt){ download="README.md" } | `README.md` | the project folder | The end of section 14 |
-    | [`books_project.zip`](../data/books_project.zip) | `books_project.zip` | | The whole `reading-project` at the end |
+??? info "Before the session"
+    - **Room:** internet, and a laptop on which the student can install
+      programs.
+    - **You:** a VS Code with no `weather-project` folder yet. The zip is on
+      the Releases page of
+      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases).
+    - **Keys** are written for Windows, macOS in brackets.
 
 ---
 
-## Part 1 · VS Code { #part-1 }
+## Part 1 · VS Code and the README { #part-1 }
 
-**0:00 to 0:25 · sections 1 to 4**
-
-The room ends this part with VS Code installed and an empty project folder
-open in it.
+**0:00 to 0:40**
 
 ---
 
 ### 1. Install VS Code { #install }
 
-**0:00 · 10 min**
+**0:00 · 10 min** · VS Code is a free editor for text, the same on Windows, macOS and Linux.
 
-**Tell the room.** VS Code is a free editor for text. It looks the same on
-Windows, macOS and Linux, so every screen in the room shows the same thing.
-
-1. Open this address in a browser and select **Download** for your system:
+1. Open the address in a browser, click **Download** for your system.
 
     ```text
     code.visualstudio.com
@@ -110,661 +70,518 @@ Windows, macOS and Linux, so every screen in the room shows the same thing.
 
     === "macOS"
 
-        Open the downloaded file and drag **Visual Studio Code** into the
-        **Applications** folder.
+        Open the downloaded file. Drag **Visual Studio Code** into
+        **Applications**, then open it from there.
 
     === "Windows"
 
-        Run the downloaded installer and keep every default.
+        Run the installer and keep every default.
 
-3. Start VS Code. If a **Chat** panel is open on the right, close it with
-   the **X** in its corner.
+3. Start VS Code. Close the **Chat** panel on the right if it is open.
 
-!!! success "You should now see"
-    A window with a **Welcome** tab.
+**Check:** a window with a **Welcome** tab.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | Windows asks for an administrator password | Take the **User Installer** from the download page. It needs none |
-    | macOS: "cannot be opened because it is from an unidentified developer" | Drag the app to **Applications** first, then open it from there |
-    | A university laptop blocks the installation | Open [vscode.dev](https://vscode.dev) in Chrome or Edge and pair with a neighbour |
+!!! warning "Windows asks for an administrator password"
+    Take the **User Installer** on the download page. It needs none.
 
 ---
 
-### 2. Open a project folder { #open-folder }
+### 2. Make and open the project folder { #open-folder }
 
-**0:10 · 5 min**
+**0:10 · 5 min** · VS Code works on a folder: one project, one folder.
 
-**Tell the room.** VS Code works on a folder. The folder is the project:
-everything that belongs to one piece of work lives in it.
-
-1. In the file manager (File Explorer on Windows, Finder on macOS), make a
-   folder in **Documents** named:
+1. **File** > **Open Folder...** The dialog opens; go to your home folder (the
+   one with your user name).
+2. Click **New Folder** in the dialog and type the name.
 
     ```text
-    reading-project
+    weather-project
     ```
 
-2. In VS Code select **File**, **Open Folder…** and pick `reading-project`.
+3. Select `weather-project`, click **Open** (Windows **Select Folder**).
+4. Answer **Yes, I trust the authors**.
 
-3. If VS Code asks whether you trust the authors, select
-   **Yes, I trust the authors**.
-
-!!! success "You should now see"
-    `READING-PROJECT` at the top of the left-hand column, with nothing under
-    it.
+**Check:** `WEATHER-PROJECT` at the top of the Side Bar, nothing under it.
 
 ---
 
-### 3. The window and three keys { #interface }
+### 3. Five regions, three keys { #interface }
 
-**0:15 · 5 min**
+**0:15 · 5 min** · The rest of the course calls the parts of the window by these names.
 
-**Tell the room.** The window has five regions, and the rest of the course
-calls them by these names.
+1. Point at each region and name it.
 
-Point at each region on the projector while you name it.
+    | | Region | Holds |
+    |--|--|--|
+    | 1 | **Activity Bar** | the icons on the far left |
+    | 2 | **Side Bar** | the files: the **Explorer** |
+    | 3 | **Editor** | the open files, one tab each |
+    | 4 | **Panel** | hidden today; the terminal, from Seminar 4 |
+    | 5 | **Status Bar** | the line at the bottom: facts about the open file |
 
-| | Region | What it is for |
-|--|--|--|
-| 1 | Activity Bar | The column of icons on the far left |
-| 2 | Side Bar | The files of the project: the **Explorer** |
-| 3 | Editor | The open files, one tab each |
-| 4 | Panel | Hidden today. It holds the terminal, later in the course |
-| 5 | Status Bar | The line at the bottom: facts about the open file |
-
-1. Press `Ctrl+B` (macOS `Cmd+B`) twice. The Side Bar hides and comes back.
-
-2. Press `Ctrl+Shift+P` (macOS `Cmd+Shift+P`). This is the
-   **Command Palette**. Type:
+2. Hide the Side Bar and bring it back: `Ctrl+B` (macOS `Cmd+B`), twice.
+3. Open the **Command Palette**: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`). Type:
 
     ```text
-    theme
+    color theme
     ```
 
-    Select **Preferences: Color Theme** and pick a theme with the arrow
-    keys and Enter.
+    Pick a theme with the arrow keys and `Enter`.
 
-3. Press `Ctrl+=` (macOS `Cmd+=`) and `Ctrl+-` (macOS `Cmd+-`) until the
-   text has a size you like.
+4. Make the text larger and smaller: `Ctrl+=` and `Ctrl+-` (macOS `Cmd`).
 
-!!! success "You should now see"
-    Your theme, and the Explorer in the Side Bar.
+**Check:** everyone can name region 5.
 
 ---
 
 ### 4. Folders and a README { #folders }
 
-**0:20 · 5 min**
+**0:20 · 5 min** · Files as they arrived are kept apart from everything made from them.
 
-**Tell the room.** Every project has the same folders. Files as they arrived
-are kept apart from everything made from them.
-
-| Folder | What goes in |
-|--|--|
-| `data/raw` | Files exactly as received. Never edited |
-| `data/processed` | Cleaned copies |
-| `scripts` | Programs, later in the course |
-| `results` | The report, figures, numbers |
-
-1. Move the mouse over the Side Bar. Four small icons appear next to the
-   project name. Select **New Folder** and type:
+1. Move the mouse over the Side Bar; click the **New Folder** icon. Type:
 
     ```text
     data/raw
     ```
 
-    A name with `/` makes both folders at once.
+    The `/` makes both folders at once.
 
-2. Select the empty area below the folders, then **New Folder**, and type:
+2. Click the empty area under the folders, then **New Folder** again.
 
     ```text
     data/processed
     ```
 
-3. The room does this alone: make `scripts` and `results` the same way.
-
-4. Select the empty area, then **New File**, and type:
+3. The same for `scripts` and `results`.
+4. Click the empty area, then **New File**.
 
     ```text
     README.md
     ```
 
-!!! success "You should now see"
-    ```text
-    reading-project/
-    |- data/
-    |  |- processed/
-    |  |- raw/
-    |- results/
-    |- scripts/
-    |- README.md
-    ```
+**Check:** the Explorer shows this tree.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | A new folder lands inside the folder that was selected | The usual slip. Drag it onto the empty area of the Side Bar |
-    | A folder is called `Data` | Select it and press `F2` (macOS `Enter`) to rename it to `data` |
+```text
+WEATHER-PROJECT
+  data
+    processed
+    raw
+  results
+  scripts
+  README.md
+```
+
+!!! warning "A new folder lands inside the selected folder"
+    Drag it onto the empty area of the Side Bar.
 
 ---
 
-## Part 2 · Markdown { #part-2 }
+### 5. Markdown and its preview { #markdown }
 
-**0:25 to 0:40 · sections 5 and 6**
+**0:25 · 10 min** · Markdown is plain text with a few signs for structure; `README.md` is the first file anyone opens.
 
-The room ends this part with a README that has a title, a list, a table and
-a link, with the preview open beside it.
-
----
-
-### 5. Write the README { #markdown }
-
-**0:25 · 10 min**
-
-**Tell the room.** Markdown is plain text with a few signs for structure.
-The file name ends in `.md`, and `README.md` is the first file anyone opens
-in a project. Leave this table on the projector:
-
-| You type | You get |
-|--|--|
-| `# Title` | The title of the page |
-| `## Section` | A section heading |
-| `**text**` | Bold |
-| `- item` | A list item |
-| `` `text` `` | A file name or code |
-| `[text](address)` | A link |
-| `| a | b |` | A row of a table |
-
-1. Type into `README.md`:
+1. In `README.md`, type:
 
     ```text
-    # Reading Project
+    # Weather Station
 
-    A reading list and the loans log of a library, used to practise
-    VS Code and Markdown.
+    The hourly log of one weather station, 2016 to 2025, and a table of daily
+    mean temperatures typed into a spreadsheet from it.
     ```
 
-2. Look at the tab: a dot means *not saved*. Press `Ctrl+S` (macOS
-   `Cmd+S`). Then select **File**, **Auto Save**.
-
-3. Press `Ctrl+K`, release, then `V` (macOS `Cmd+K`, then `V`). The preview
-   opens beside the text.
-
-4. Add a section with a list. Each student types their own name and
-   today's date, written year, month, day.
-
-    ```text
-    ## About
-
-    - **Author:** your name
-    - **Started:** 2026-09-29
-    ```
-
-5. Add a section with a table.
+2. A dot on the tab means *not saved*. Save: `Ctrl+S` (macOS `Cmd+S`).
+3. Switch on **File** > **Auto Save**: from now on every change is saved.
+4. Open the preview beside the text: `Ctrl+K`, release, then `V` (macOS
+   `Cmd+K`, then `V`).
+5. Add a section heading below the paragraph.
 
     ```text
     ## Folders
+    ```
 
+**Check:** the preview shows a large title, a paragraph and a smaller heading.
+
+| You type | The preview shows |
+|--|--|
+| `# Title` | the title of the page |
+| `## Section` | a section heading |
+| `**text**` | **bold** |
+| `- item` | a list item |
+| `` `name` `` | a file name in code type |
+| `| a | b |` | a row of a table |
+
+---
+
+### 6. Three mistakes, on purpose { #mistakes }
+
+**0:35 · 5 min** · The preview is the test. Make each mistake, read the preview, undo with `Ctrl+Z` (macOS `Cmd+Z`).
+
+1. Delete the space after `#` in the title.
+
+    ```text
+    #Weather Station
+    ```
+
+    The preview shows `#Weather Station` as plain text.
+
+2. Put an empty line inside the paragraph, after `daily`.
+
+    The preview shows two paragraphs: only an empty line starts a new one.
+
+3. Write a bold word with a space before the closing stars.
+
+    ```text
+    **Station **
+    ```
+
+    The preview shows the stars.
+
+**Check:** the README is back as it was at the end of section 5.
+
+!!! question "Task: the Folders section"
+    Under `## Folders`, write a table with two columns, **Folder** and **What
+    goes in**, and one row for each of the four folders. Check it in the
+    preview.
+
+??? note "Answer"
+    ```text
     | Folder | What goes in |
     |--|--|
-    | `data/raw` | files exactly as received, never edited |
-    | `data/processed` | cleaned copies |
-    | `scripts` | programs, later in the course |
-    | `results` | the report and its picture |
+    | `data/raw` | files as they arrived, never edited |
+    | `data/processed` | files made from `data/raw` by commands and scripts |
+    | `scripts` | programs |
+    | `results` | numbers and figures the programs produce |
     ```
 
-6. Add a link at the end of the first paragraph:
-
-    ```text
-    The editor is [VS Code](https://code.visualstudio.com).
-    ```
-
-!!! success "You should now see"
-    In the preview: one title, two sections, a list of two items, a table of
-    four rows, and a link.
+    Without the second line, `|--|--|`, the preview shows text with `|`
+    signs, not a table.
 
 ---
 
-### 6. Five mistakes, on purpose { #mistakes }
+## Part 2 · The files arrive { #part-2 }
 
-**0:35 · 5 min**
-
-**Tell the room.** The preview is the test. Each mistake below is made on
-purpose, read in the preview, and taken back with `Ctrl+Z` (macOS `Cmd+Z`).
-
-| Type this | The preview shows | Reason |
-|--|--|--|
-| `#Reading Project` | `#Reading Project` as text | No space after `#` |
-| `**Author: **` | The asterisks | A space before the closing `**` |
-| Two lines with one line break between | One line | Only an empty line starts a paragraph |
-| The table without `|--|--|` | Text with `|` signs | The second line makes the table |
-| No empty line before the table | Often still a table here, not in other programs | Leave an empty line before a list or a table |
-
-!!! success "You should now see"
-    The README as it was at the end of section 5.
+**0:40 to 1:10** · The station's operator sent two files by e-mail.
 
 ---
 
-## Part 3 · Repair a table { #part-3 }
+### 7. Download the station's files { #download }
 
-**0:40 to 1:11 · sections 7 to 11**
+**0:40 · 10 min** · Files from outside go into `data/raw` and are never edited there.
 
-A table arrives in a spreadsheet's format. The room keeps it as received,
-repairs a copy, and turns the copy into a table in a short report. Every fix
-is made once and lands on every line.
+1. Open the Releases page of the course repository.
+
+    ```text
+    github.com/MindaugasSarpis/weather-project/releases
+    ```
+
+2. Under **Assets**, click `weather-files.zip`. The browser saves it in
+   **Downloads**.
+3. Unpack it into your home folder.
+
+    === "macOS"
+
+        In Finder, open **Downloads** and double-click `weather-files.zip`.
+        Select the new folder `weather-files`, press `Cmd+C`, then
+        `Cmd+Shift+H` (your home folder), then `Cmd+V`.
+
+    === "Windows"
+
+        In File Explorer, open **Downloads**, right-click
+        `weather-files.zip` > **Extract All...** > **Browse...**, choose
+        `C:\Users\` and your name, **Select Folder**, **Extract**.
+
+4. Open the folder `weather-files` in Finder or File Explorer: three files.
+
+    ```text
+    daily_export.csv
+    message.txt
+    weather.csv
+    ```
+
+5. Drag `weather.csv` and `daily_export.csv` onto `data/raw` in the Side Bar
+   of VS Code. They are copied there.
+6. Drag `message.txt` onto the editor area. It opens in a tab, and is not
+   copied into the project.
+
+    ```text
+    here are the two files of our weather station:
+
+    weather.csv        the hourly log, 1 January 2016 to 31 December 2025
+    daily_export.csv   the daily mean temperature of 1 to 9 October 2025,
+                       typed into a spreadsheet and exported from it
+
+    You may use them for anything, with no conditions (CC0).
+    ```
+
+**Check:** `data/raw` holds `daily_export.csv` and `weather.csv`.
 
 ---
 
-### 7. The reading list arrives { #copy }
+### 8. Read the long file { #data-file }
 
-**0:40 · 5 min**
+**0:50 · 10 min** · How many rows, what one row is, and how a missing value is marked: the file shows it.
 
-**Tell the room.** A friend kept a list of the books they read, in a
-spreadsheet set to Lithuanian. The export has `;` between the values and a
-decimal comma. The file goes to `data/raw` and stays as it is; the work is
-done on a copy.
-
-1. Download
-   [`reading_list.csv`](../data/books_reading_list.csv){ download="reading_list.csv" }
-   and drag it from **Downloads** onto the `raw` folder in the Side Bar.
-
-2. Select it to open it:
+1. Click `data/raw/weather.csv`. The first lines:
 
     ```text
-    nr;title;author;pages;rating
-    1;The Little Prince;Antoine de Saint-Exupéry;96;3,5
-    2;Pride and Prejudice;Jane Austen;432;4,5
-    …
-    12;Solaris;Stanisław Lem;204;4,0
-    ;mean;;297,4;4,17
+    time,temp_c,humidity_pct,wind_ms
+    2016-01-01T00:00,-4.4,93,2.5
+    2016-01-01T01:00,-4.8,95,2.6
     ```
 
-3. Right-click `reading_list.csv` in the Side Bar and select **Copy**.
-   Right-click the `processed` folder and select **Paste**.
+2. Read row 2 aloud: "at 01:00 on 1 January 2016, −4.8 °C, 95 % humidity,
+   wind 2.6 m/s".
+3. Jump to the end: `Ctrl+End` (macOS `Cmd+↓`). The line number on the left:
 
-4. Close the tab of the file in `raw` and open the copy in `processed`. From
-   here on only the copy is changed.
+    ```text
+    87674
+    ```
 
-!!! success "You should now see"
-    `reading_list.csv` twice in the Side Bar, under `raw` and under
-    `processed`, and the copy open.
+    The last line is empty. 87 673 lines, minus the header: **87 672 rows**,
+    one per hour of ten years (10 × 365 × 24 + 3 leap days × 24).
 
-Ask the room which four fixes the list needs before a program can read it:
-the mean line out, the decimal comma to a point, `;` to `,`, the column `nr`
-out.
+4. Go to a line: `Ctrl+G` (the same on macOS), type `5000`, `Enter`.
+
+    ```text
+    2016-07-27T06:00,18.2,71,1.1
+    ```
+
+5. Find a value: `Ctrl+F` (macOS `Cmd+F`), type `-999`. The counter:
+
+    ```text
+    1 of 120
+    ```
+
+    Press `Enter` a few times: all are in `temp_c`, 22 to 26 July 2019.
+
+6. Read the Status Bar, bottom right: `UTF-8` and `LF`.
+
+**Check:** 87 672 rows, and 120 rows with `-999`.
 
 ---
 
-### 8. Whole lines { #lines }
+### 9. Write where the data came from { #provenance }
 
-**0:45 · 5 min**
+**1:00 · 10 min** · Someone else, or you in six months, must be able to tell where the files came from.
 
-**Tell the room.** A line is deleted, moved or copied with one key. Nothing
-has to be selected: the keys act on the line the cursor is in.
-
-1. Click in the last line, `;mean;;297,4;4,17`. It is not a book. Press
-   `Ctrl+Shift+K` (macOS `Cmd+Shift+K`). The line is gone.
-
-2. Click in the line of `Dracula`. Press `Alt+↑` (macOS `Option+↑`) twice:
-   the line moves up. Press `Ctrl+Z` (macOS `Cmd+Z`) twice: it is back.
-
-3. Press `Shift+Alt+↓` (macOS `Shift+Option+↓`): the line is copied below.
-   Press `Ctrl+Shift+K` to delete the copy.
-
-!!! success "You should now see"
-    Thirteen lines: the header and twelve books, the last one `Solaris`.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | Windows: the keyboard switches between Lithuanian and English | Left `Alt` and `Shift` pressed alone switch the language. Press them once more |
-    | The file in `raw` changed | Press `Ctrl+Z` in that tab until its last line is `;mean;;297,4;4,17` again |
-
----
-
-### 9. Find and replace { #replace }
-
-**0:50 · 7 min**
-
-**Tell the room.** Find and Replace changes the same text everywhere in the
-file. The counter says how many places match: read it before replacing.
-
-1. Press `Ctrl+H` (macOS `Cmd+Option+F`). Two boxes open: **Find** and
-   **Replace**.
-
-2. Type into **Find**:
-
-    ```text
-    ,
-    ```
-
-    The counter ends in `of 12`: twelve books, twelve decimal commas.
-
-3. Type into **Replace**, then select **Replace All**, the second button
-   beside the box:
-
-    ```text
-    .
-    ```
-
-4. Now the semicolons. Into **Find**:
-
-    ```text
-    ;
-    ```
-
-    Into **Replace**:
-
-    ```text
-    ,
-    ```
-
-    The counter ends in `of 52`: four on each of thirteen lines. Select
-    **Replace All**, then `Esc`.
-
-!!! success "You should now see"
-    ```text
-    nr,title,author,pages,rating
-    1,The Little Prince,Antoine de Saint-Exupéry,96,3.5
-    2,Pride and Prejudice,Jane Austen,432,4.5
-    ```
-
-Ask what happens if the semicolons go first. Try it on the projector, then
-`Ctrl+Z`: the line `1;The Little Prince;…;96;3,5` becomes
-`1,The Little Prince,…,96,3,5`, and nothing tells the decimal comma from
-the separators any more.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The counter says 14 and 56 | The mean line is still there. Delete it, then count again |
-
----
-
-### 10. A cursor on every line { #cursors }
-
-**0:57 · 6 min**
-
-**Tell the room.** Find and Replace cannot delete a column. A cursor on
-every line can: whatever is typed or deleted happens on all lines at once.
-
-1. Press `Ctrl+A` (macOS `Cmd+A`), then `Shift+Alt+I` (macOS
-   `Shift+Option+I`). A cursor stands at the end of every line, and the
-   Status Bar reads `13 selections`.
-
-2. Press `Home` (macOS `Cmd+←`). Every cursor jumps to the start of its
-   line.
-
-3. Press `Ctrl+Shift+→` (macOS `Option+Shift+→`). On every line the first
-   word is selected: `nr`, or a number from `1` to `12`.
-
-4. Press `Shift+→`. The comma is selected too.
-
-5. Press `Delete`, then `Esc`.
-
-!!! success "You should now see"
-    ```text
-    title,author,pages,rating
-    The Little Prince,Antoine de Saint-Exupéry,96,3.5
-    Pride and Prejudice,Jane Austen,432,4.5
-    ```
-
-Say why step 3 uses the word key: `nr` has two characters, `1` has one and
-`12` has two. Cursors that move by one character drift apart on lines of
-different length. `Home`, `End` and the word keys do not.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The laptop has no `Home` key | `Fn+←` |
-    | A cursor is in the wrong place | `Esc`, then `Ctrl+Z` until the file is whole, and start again at step 1 |
-
----
-
-### 11. A table for a report { #report }
-
-**1:03 · 8 min**
-
-**Tell the room.** A Markdown table is the same text with `|` signs in it.
-Three edits turn the repaired list into a table. The report is a result, so
-it goes into `results`.
-
-1. In the repaired copy press `Ctrl+A`, then `Ctrl+C` (macOS `Cmd+A`,
-   `Cmd+C`).
-
-2. Select the `results` folder, then **New File**, and type:
-
-    ```text
-    report.md
-    ```
-
-    Paste with `Ctrl+V` (macOS `Cmd+V`) and open the preview with `Ctrl+K`,
-    then `V`.
-
-3. Click just before any comma, hold `Shift` and press `→`. Press
-   `Ctrl+Shift+L` (macOS `Cmd+Shift+L`): all commas are selected. Type a
-   space, `|` and a space.
-
-4. Press `Ctrl+A`, then `Shift+Alt+I`. Type a space and `|`. Press `Home`,
-   type `|` and a space. Press `Esc`.
-
-5. Click in line 1 and press `Ctrl+Enter` (macOS `Cmd+Enter`). Type into the
-   new line 2:
-
-    ```text
-    |--|--|--|--|
-    ```
-
-6. Press `Ctrl+Home` (macOS `Cmd+↑`), then `Enter` twice and `↑` twice, and
-   type:
-
-    ```text
-    # My Reading List
-
-    Twelve books, with the pages of the edition read and my rating.
-    ```
-
-7. Download [`reading_pages.png`](../data/books_pages.png){ download="reading_pages.png" }
-   and drag it onto the `results` folder. Add at the end of `report.md`,
-   after an empty line:
-
-    ```text
-    ![Pages per book](reading_pages.png)
-    ```
-
-!!! success "You should now see"
-    In the preview: a title, one sentence, a table with a header and twelve
-    rows, and a bar chart of pages per book. The text begins:
-
-    ```text
-    # My Reading List
-
-    Twelve books, with the pages of the edition read and my rating.
-
-    | title | author | pages | rating |
-    |--|--|--|--|
-    | The Little Prince | Antoine de Saint-Exupéry | 96 | 3.5 |
-    ```
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The table shows as text | Line 2 of the table is not `|--|--|--|--|`, or an empty line stands between it and the header |
-    | A lone `|  |` at the end | The file ended with an empty line and it got a cursor. Delete that line |
-    | The picture is broken | The file is not in `results`, or it is called `reading_pages (1).png` |
-
----
-
-## Part 4 · A long file and its note { #part-4 }
-
-**1:11 to 1:41 · sections 12 to 15**
-
-A file too long to read by eye. The room counts it, reads its units from the
-numbers, finds how it marks a missing value, and writes all of it into the
-README.
-
----
-
-### 12. Read a long file { #data-file }
-
-**1:11 · 12 min**
-
-**Tell the room.** A small town library sent its loans log: one line for
-every book lent out from 2021 to 2025. It came with no note.
-
-1. Download [`loans.csv`](../data/books_loans.csv){ download="loans.csv" }
-   and drag it onto the `raw` folder. Open it.
-
-    ```text
-    loan_date,book_id,pages,days_kept,late_fee_eur
-    2021-01-04,B0023,309,19,0.00
-    2021-01-04,B0051,155,22,0.00
-    ```
-
-2. Press `Ctrl+End` (macOS `Cmd+↓`) and read the line number on the left.
-
-    VS Code shows line 17 281, and it is empty: the file ends with a line
-    end. 17 280 lines, one of them the header: **17 279 loans**.
-
-3. Press `Ctrl+G` (the same on macOS) and type:
-
-    ```text
-    1000
-    ```
-
-    Line 1000 is `2021-04-20,B0214,622,7,0.00`: the same shape as line 2.
-
-4. Press `Ctrl+F` (macOS `Cmd+F`) and type:
-
-    ```text
-    NA
-    ```
-
-    The counter shows **438**. Each such line has `NA` twice, in
-    `days_kept` and in `late_fee_eur`: 438 / 2 = **219 loans** with no
-    value. Press `Enter` a few times: most are in December 2025.
-
-5. Work out the units with the room, from the numbers:
-
-    | Column | The numbers | Unit |
-    |--|--|--|
-    | `pages` | 64 to 900 | pages of the book |
-    | `days_kept` | 1 to 70 | days: a loan of 70 hours or 70 weeks makes no sense |
-    | `late_fee_eur` | 0.00 to 4.20 | euros, as `_eur` says |
-
-6. Find the rule of the fee. Press `Ctrl+F` and type `,30,`, then press
-   `Enter` a few times: every loan of 30 days has the fee `0.20`. Then
-   `,46,`: every one has `1.80`. Ask the room for the rule.
-
-    ```text
-    (30 − 28) × 0.10 = 0.20
-    (46 − 28) × 0.10 = 1.80
-    ```
-
-    The fee is **0.10 euro for each day after 28**. It is a derived column:
-    computed from `days_kept`, not measured.
-
-!!! success "You should now see"
-    Every student can say: 17 279 loans, the unit of each column, the
-    missing-value mark `NA` in 219 loans, and the rule of the fee.
-
-`NA` is the library's mark for "the book has not come back". 179 of the 219
-are loans of December 2025, still out when the file was written. The other
-40 are books that never came back.
-
----
-
-### 13. Open it in a spreadsheet { #spreadsheet }
-
-**1:23 · 5 min**
-
-**Tell the room.** VS Code shows the characters of a file, the same on every
-laptop. A spreadsheet shows an interpretation of them, and the
-interpretation depends on the computer's settings.
-
-1. Right-click `loans.csv` in the Side Bar, select **Reveal in File
-   Explorer** (macOS **Reveal in Finder**), and open it in a spreadsheet
-   program from there. Do not save anything.
-
-2. Ask who sees which of these:
-
-    | On the screen | Reason |
-    |--|--|
-    | Every line in column A, as one text | The spreadsheet expects `;` between values |
-    | Columns, but `0.20` turned into a date or text | It expects a decimal comma |
-    | The right columns | The computer's settings match the file |
-
-3. Open `data/raw/reading_list.csv` the same way. It has `;` and a decimal
-   comma. Ask who sees correct columns now: often the other half of the
-   room.
-
-4. Close the spreadsheet. If it asks whether to save, answer **No**.
-
-!!! success "You should now see"
-    Each student knows which of the two files their spreadsheet reads
-    correctly.
-
-**Say it in these words.** The file is the same on every laptop. Saving from
-the spreadsheet writes its interpretation back into the file. That is why a
-file in `data/raw` is never saved from a spreadsheet.
-
----
-
-### 14. Write where the data came from { #provenance }
-
-**1:28 · 10 min**
-
-**Tell the room.** A data file without a note on its origin cannot be checked
-by anyone, its owner included, six months later. The note goes into the
-README, with every change made by hand. The source is where the file came
-from to you: today, this page.
-
-1. Add to `README.md`:
+1. In `README.md`, under the Folders table, add the **Data** section. The
+   source and the date come from `message.txt`.
 
     ```text
     ## Data
 
-    - **Source:** the course workbook, Seminar 1 page
-    - **Licence:** CC0
-    - **Received:** today's date
-    - **File:** `data/raw/reading_list.csv`, 12 books, exported from a
-      spreadsheet: `;` between the values, a decimal comma
-    - **Cleaned copy:** `data/processed/reading_list.csv`. Mean line
-      deleted, `,` replaced by `.`, `;` replaced by `,`, column `nr` deleted
-    - **File:** `data/raw/loans.csv`, 17 279 rows
-      - **One row:** one loan of one book
-      - **Units:** `pages`, `days_kept` in days, `late_fee_eur` in euros,
-        0.10 for each day after 28
-      - **Missing:** `NA` when the book has not come back, 219 rows
+    - `data/raw/weather.csv`: one row per hour, from 2016-01-01 00:00 to
+      2025-12-31 23:00.
+    - `data/raw/daily_export.csv`: the daily mean temperature of 1 to 9 October
+      2025, exported from a spreadsheet.
+    - **Source:** the station's operator, by e-mail
+    - **Received:** 2026-10-13
     ```
 
-2. Swap laptops with a neighbour for three minutes. Using only their README:
-   what is one row of `loans.csv`? What does `NA` mean? Tell them what was
-   missing.
+2. Check the list in the preview: four items, two words in bold.
 
-!!! success "You should now see"
-    A **Data** section in the preview that a stranger could follow.
+**Check:** a stranger reading the README knows what each file is and who sent it.
+
+!!! question "Task: the columns of `weather.csv`"
+    Add a section **Columns of weather.csv** with a table: **Column**,
+    **Meaning**, **Unit**, one row per column. Find each unit from the
+    numbers: `temp_c` runs from −16.3 to 32.4, `humidity_pct` from 34 to
+    100, `wind_ms` has a median of 3.5 and at most 12. Below the table, one
+    line on the `-999` rows.
+
+??? note "Answer"
+    ```text
+    ## Columns of `weather.csv`
+
+    | Column | Meaning | Unit |
+    |--|--|--|
+    | `time` | start of the hour | ISO 8601 |
+    | `temp_c` | air temperature | °C |
+    | `humidity_pct` | relative humidity | % |
+    | `wind_ms` | wind speed | m/s |
+
+    Missing value: `temp_c` is `-999` in 120 rows, 2019-07-22 to 07-26, when
+    the temperature sensor was down.
+    ```
+
+    −999 °C is below absolute zero (−273.15 °C): a mark for "no value", not
+    a temperature. `wind_ms` is metres per second; milliseconds of wind make
+    no sense.
+
+---
+
+## Part 3 · Repair the export { #part-3 }
+
+**1:10 to 1:55** · `daily_export.csv` has to become a plain table, on a copy.
+
+```text
+nr;date;temp_c          date,temp_c
+1;2025-10-01;6,3   ->   2025-10-01,6.3
+...                     ...
+9;2025-10-09;9,8        2025-10-09,9.8
+;mean;7,97
+```
+
+---
+
+### 10. A copy to repair { #copy }
+
+**1:10 · 5 min** · A file in `data/raw` is never edited; the edits go on a copy in `data/processed`.
+
+1. Click `data/raw/daily_export.csv` in the Side Bar. Copy it: `Ctrl+C`
+   (macOS `Cmd+C`).
+2. Click `data/processed`. Paste: `Ctrl+V` (macOS `Cmd+V`).
+3. Rename the copy: `F2` (macOS `Enter`), type the new name, `Enter`.
+
+    ```text
+    daily.csv
+    ```
+
+4. Open `data/processed/daily.csv`.
+
+**Check:** the tab reads `daily.csv` and the path above the text says `processed`.
+
+---
+
+### 11. Delete the mean line { #lines }
+
+**1:15 · 5 min** · One row is one day; the mean line is not a day.
+
+1. Click anywhere in the line `;mean;7,97`.
+2. Delete the whole line: `Ctrl+Shift+K` (macOS `Cmd+Shift+K`).
+3. Move a line and put it back: `Alt+↑`, then `Alt+↓` (macOS `Option`).
+
+**Check:** ten lines: the header and nine days.
+
+---
+
+### 12. Find and Replace { #replace }
+
+**1:20 · 10 min** · The counter shows how many matches there are before anything changes.
+
+1. Open Replace: `Ctrl+H` (macOS `Cmd+Option+F`).
+2. Find `,` and replace with `.`. Read the counter first.
+
+    ```text
+    1 of 9
+    ```
+
+    Click **Replace All** (the button right of the Replace box).
+
+3. Find `;` and replace with `,`.
+
+    ```text
+    1 of 20
+    ```
+
+    **Replace All**.
+
+4. Close the box: `Esc`.
+
+    ```text
+    nr,date,temp_c
+    1,2025-10-01,6.3
+    2,2025-10-02,5.0
+    ```
+
+**Check:** commas between the values, points in the numbers.
+
+!!! warning "In the other order the decimal comma is lost"
+    `;` to `,` first makes `1,2025-10-01,6,3`. Undo with `Ctrl+Z` and start
+    with `,` to `.`.
+
+---
+
+### 13. A cursor on every line { #cursors }
+
+**1:30 · 10 min** · What is typed or deleted happens at every cursor at once.
+
+1. Select the ten lines: click before `nr`, then `Shift`+click after the
+   last `9.8`.
+2. A cursor at the end of every line: `Shift+Alt+I` (macOS `Shift+Option+I`).
+3. All cursors to the line start: `Home` (macOS `Cmd+←`).
+4. Select the first word: `Ctrl+Shift+→` (macOS `Option+Shift+→`).
+5. Add the comma: `Shift+→`.
+6. Delete: `Delete` (macOS `Backspace`).
+7. Back to one cursor: `Esc`.
+
+    ```text
+    date,temp_c
+    2025-10-01,6.3
+    2025-10-02,5.0
+    ```
+
+**Check:** ten lines, two columns, no `nr`.
+
+---
+
+### 14. Check the size, write down the edits { #note }
+
+**1:40 · 5 min** · The size in bytes shows that nothing else changed.
+
+1. Right-click `data/processed/daily.csv` > **Reveal in Finder** (Windows
+   **Reveal in File Explorer**).
+2. The size.
+
+    === "macOS"
+
+        Select the file, `Cmd+I` (**Get Info**): **148 bytes**.
+
+    === "Windows"
+
+        Right-click the file > **Properties**: **Size: 148 bytes**.
+
+3. The arithmetic: 180 − 11 (`;mean;7,97` and its line end) − 21 (`nr;`
+   and `1;` to `9;`) = 148. The replacements swap one character for one.
+4. In `README.md`, add one item at the end of the Data list.
+
+    ```text
+    - **Cleaned copy:** `data/processed/daily.csv`. Mean line deleted, `,` to
+      `.`, `;` to `,`, column `nr` deleted.
+    ```
+
+**Check:** 148 bytes, and the four edits in the README.
+
+!!! question "Task: the daily table in Markdown"
+    Make `results/daily.md`: the ten lines of `daily.csv` as a Markdown
+    table, with the multi-cursor keys and no typing line by line. Check it in
+    the preview.
+
+??? note "Answer"
+    1. Copy all of `daily.csv` into a new file `results/daily.md`.
+    2. Select one `,`, then all of them: `Ctrl+Shift+L` (macOS
+       `Cmd+Shift+L`). Type ` | `.
+    3. Select the ten lines (click, `Shift`+click), `Shift+Alt+I`, type
+       ` |`. `Home` (macOS `Cmd+←`), type `| `. `Esc`.
+    4. In line 1, `Ctrl+Enter` (macOS `Cmd+Enter`) opens a line below it.
+       Type `|--|--|`.
+
+    ```text
+    | date | temp_c |
+    |--|--|
+    | 2025-10-01 | 6.3 |
+    | 2025-10-02 | 5.0 |
+    ```
 
 ---
 
 ### 15. Wrap up { #wrap-up }
 
-**1:38 · 3 min**
+**1:55 · 5 min**
 
-Read the list aloud. Ask on the way out which step was hardest.
+| To | Press |
+|--|--|
+| open the Command Palette | `Ctrl+Shift+P` |
+| preview Markdown | `Ctrl+K`, then `V` |
+| go to the end, to a line | `Ctrl+End`, `Ctrl+G` |
+| find, replace | `Ctrl+F`, `Ctrl+H` |
+| delete a line | `Ctrl+Shift+K` |
+| a cursor on every line | `Ctrl+A`, `Shift+Alt+I` |
+| select every match | `Ctrl+Shift+L` |
 
-- VS Code works on a folder, and the folder is the project.
-- Markdown is plain text with a few signs; the preview is the test.
-- A file in `data/raw` is never edited. Work is done on a copy.
-- Find and Replace changes the same text everywhere. Read the counter first.
-- A cursor on every line makes one edit on all lines. `Home`, `End` and the
-  word keys keep the cursors in step.
-- A long file is counted, and its units and its missing-value mark are read
-  from the numbers.
-- A spreadsheet shows an interpretation; VS Code shows the characters.
-- The README says where each file came from and what was changed by hand.
+macOS: `Cmd` for `Ctrl`, `Option` for `Alt`.
+
+Seminar 3 opens `daily.csv` again and names each of its 148 bytes.
 
 ---
 
@@ -772,129 +589,60 @@ Read the list aloud. Ask on the way out which step was hardest.
 
 ---
 
-### 16. Rename a column everywhere { #rename }
+### 16. Sorting sorts text { #sort }
 
-**Tell the room.** The same word in many places is selected at once and
-typed once.
+**— · 5 min** · The editor sees characters, not numbers.
 
-1. In `report.md`, double-click the word `rating` in the header row.
-
-2. Press `Ctrl+D` (macOS `Cmd+D`): the next `rating`, if any, is added.
-   Press `Ctrl+Shift+L` (macOS `Cmd+Shift+L`) to add all of them.
-
-3. Type:
+1. **File** > **New Text File**. Type five temperatures of `daily.csv`, one
+   per line: `6.3`, `5.0`, `10.4`, `9.8`, `5.6`.
+2. Select them, `Ctrl+Shift+P`, type `sort lines`, take **Sort Lines
+   Ascending**.
 
     ```text
-    stars
+    10.4
+    5.0
+    5.6
     ```
 
-!!! success "You should now see"
-    `stars` in the header and in the sentence under the title, if it named
-    the rating.
+    `10.4` comes first: the character `1` comes before `5`.
+
+3. Close the file without saving.
+
+**Check:** everyone can say why `10.4` stands first.
 
 ---
 
-### 17. Sorting sorts text { #sort }
+### 17. Rename a column everywhere { #rename }
 
-**Tell the room.** The editor sorts characters, not numbers.
+**— · 5 min** · `Ctrl+D` adds the next match to the selection; every match is seen before it changes.
 
-1. Make a new file `results/sort_test.txt` and type three lines:
+1. In `results/daily.md`, double-click `temp_c`.
+2. `Ctrl+D` (macOS `Cmd+D`) until every `temp_c` of the file is selected.
+3. Type `t_mean_c` once.
 
-    ```text
-    96
-    432
-    120
-    ```
-
-2. Select the three lines, press `Ctrl+Shift+P` and type:
-
-    ```text
-    Sort Lines Ascending
-    ```
-
-!!! success "You should now see"
-    ```text
-    120
-    432
-    96
-    ```
-
-    `120` comes first because the character `1` comes before `4` and `9`.
-    Dates written as `2021-01-04` sort right as text; numbers of different
-    length do not.
+**Check:** the preview shows `t_mean_c` in the header.
 
 ---
 
-### 18. Check the edits by size { #sizes }
+### 18. The export in a spreadsheet { #spreadsheet }
 
-**Tell the room.** Each edit removed a known number of bytes. The sizes of
-the two files check the edits.
+**— · 10 min** · A spreadsheet reads the export by the settings of the laptop.
 
-1. Right-click each `reading_list.csv` and select **Reveal in File
-   Explorer** (macOS **Reveal in Finder**). Read the size: **Properties** on
-   Windows, **Get Info** on macOS.
+1. In Finder or File Explorer, double-click `weather-files/daily_export.csv`
+   (the copy outside the project).
+2. Look: one column per value, or all of a line in column A; `6,3` as a
+   number or as text.
+3. Close the spreadsheet with **Don't Save**.
 
-    The raw file is 546 bytes, the repaired copy 498 bytes.
-
-2. Work it out with the room:
-
-    ```text
-    ;mean;;297,4;4,17 and its line end        18
-    nr; then 1; to 9; then 10; 11; 12;        3 + 9 × 2 + 3 × 3 = 30
-    the replacements, one character for one    0
-    546 − 18 − 30 = 498
-    ```
-
-!!! success "You should now see"
-    The arithmetic closes. A different size means one fix went wrong.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | Windows: the copy is larger than 498 | VS Code wrote `CRLF` line ends. The Status Bar shows `CRLF`; select it and choose `LF` |
+**Check:** two neighbours with different settings see the file differently.
 
 ---
-
-### 19. The five questions, your dataset { #own-data }
-
-For a student who has a dataset in mind. Put a CSV file of your own field
-into `data/raw` and answer, in the README, the five questions of the lecture:
-
-1. What kind is each column, and which can be averaged?
-2. Where did the file come from, and under which licence?
-3. What is one row?
-4. In which unit is each column?
-5. How are missing values marked?
-
-Good places to look are the [Lithuanian open data portal](https://data.gov.lt),
-Eurostat, Copernicus and Zenodo.
-
----
-
-## Stretch goals
-
-For students who already program and finish early. Answers are given for the
-lecturer.
-
-- In the Find box, switch on the button `.*` and search a fresh copy of the
-  raw list for `(\d),(\d)`: it matches only a comma between two digits, 14
-  matches, the mean line included. Replace with `$1.$2`. The semicolons stay.
-- Hold `Shift+Alt` (macOS `Shift+Option`) and drag the mouse down through the
-  table in `report.md`: one cursor per row in the same column.
-- Install the **Rainbow CSV** extension from the Extensions view and open
-  `loans.csv` again: each column gets its own colour.
-
-## If students ask for more
-
-Parts of VS Code that later lectures use. Show them for ten seconds if asked.
-
-| Part of VS Code | Lecture |
-|--|--|
-| The Status Bar: encoding, line endings | 3 (How Computers Work) |
-| The terminal in the Panel | 4 (Command Line) |
-| Source Control | 5 (Git) |
-| Running a Python script | 6 (Python Foundations) |
 
 ## Aims practised
 
-♻️ provenance in the README · 📁 raw data kept untouched · ⚙️ one edit applied to every line · 🔧 the same steps on every system
+- 📁 **Files:** raw files kept as they arrived, edits made on a copy and
+  checked by the size in bytes.
+- ♻️ **Reproducibility:** the README says what each file is, where it came
+  from, what each column means and what was changed.
+- 🔧 **Tool-agnostic:** plain text and Markdown, read the same by any editor
+  on any system.

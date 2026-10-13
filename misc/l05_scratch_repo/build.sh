@@ -1,22 +1,31 @@
 #!/usr/bin/env bash
-# Scratch repository for Lecture 05: the project folder after Seminar 4,
-# put under Git on 20 Oct 2026 by the lecturer. Every git output on the
-# slides comes from one run of this script.
+# Scratch repository for Lecture 05: the weather project as Lecture 04 leaves
+# it, put under Git on 20 Oct 2026 by Smiltė, with a colleague, Tomas, who
+# clones it and pushes one commit that edits a raw file. Every git and
+# PowerShell output on the L05 slides comes from one run of this script.
+# Author and committer dates are fixed, so the commit ids are the same on
+# every run. (Seminar 5 clones another repository, misc/weather_repo/.)
 #
-# Usage: bash misc/l05_scratch_repo/build.sh [outdir]   (needs git, python3,
-# shasum, unzip). It writes outdir/run/ and prints every command with its
-# output. Rerun it whenever lectures/workbook/docs/data/cli_clean_pendulum.py
-# changes: the tree and commit ids on the L05 slides depend on its bytes.
+# Usage: bash misc/l05_scratch_repo/build.sh [outdir]
+#   needs git (2.56 for the slides' wording), pwsh (PowerShell 7), python3,
+#   unzip. It writes outdir/run/ and prints every command with its output.
+# Rerun it whenever weather_files.py, cli_clean_export.py or
+# cli_column_stats.py change: the blob, tree and commit ids depend on them.
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 S="${1:-$HERE}"   # output folder: run/ is made inside it (gitignored)
 DATA="$HERE/../../lectures/workbook/docs/data"
-rm -rf "$S/run" && mkdir -p "$S/run/home"
-export HOME="$S/run/home" GIT_CONFIG_NOSYSTEM=1 LC_ALL=C TZ=Europe/Vilnius
-cat > "$HOME/.gitconfig" <<'EOF'
+URL="https://github.com/smilte-example/weather-project.git"
+rm -rf "$S/run" && mkdir -p "$S/run/home" "$S/run/tomas-home" "$S/run/bin"
+ln -s "$(command -v python3)" "$S/run/bin/python"   # the course says `python`
+export PATH="$S/run/bin:$PATH"
+export GIT_CONFIG_NOSYSTEM=1 LC_ALL=C.UTF-8 TZ=Europe/Vilnius
+REMOTE="$S/run/remote/weather-project.git"
+gitconfig() {  # $1 home, $2 name, $3 e-mail
+  cat > "$1/.gitconfig" <<EOF
 [user]
-	name = Mindaugas Sarpis
-	email = mindaugas.sarpis@cern.ch
+	name = $2
+	email = $3
 [init]
 	defaultBranch = main
 [pull]
@@ -24,105 +33,121 @@ cat > "$HOME/.gitconfig" <<'EOF'
 [core]
 	autocrlf = false
 	pager = cat
-[advice]
-	detachedHead = true
+	quotepath = false
 [log]
 	decorate = short
+[url "$REMOTE"]
+	insteadOf = $URL
 EOF
-P="$S/run/analysis-project"
-mkdir -p "$P"/data/raw "$P"/data/processed "$P"/scripts "$P"/results
+}
+gitconfig "$S/run/home" "Smiltė" "smilte@example.org"
+gitconfig "$S/run/tomas-home" "Tomas" "tomas@example.org"
+export HOME="$S/run/home"
+T() { export GIT_AUTHOR_DATE="2026-10-20T$1:00+0300" GIT_COMMITTER_DATE="2026-10-20T$1:00+0300"; }
+say() { echo; echo "##### $*"; }
+fix() { sed -e "s#$REMOTE#$URL#g" -e "s#${REMOTE%.git}#${URL%.git}#g" -e "s#$S/run/#/Users/smilte/#g"; }
+run() { echo "\$ $*"; "$@" 2>&1 | fix; }
+ps() {  # one PowerShell line, run in the current folder
+  printf '%s\n' "$1" > "$S/run/cmd.ps1"
+  echo "PS> $1"
+  timeout 120 pwsh -NoProfile -File "$S/run/cmd.ps1" < /dev/null 2>&1 | fix
+}
+
+# ---- the project folder as Lecture 04 leaves it -------------------------
+P="$S/run/weather-project"
+cd "$S/run" && unzip -q "$DATA/weather_project.zip"
 cd "$P"
-unzip -p "$DATA/project_after_s1.zip" analysis-project/results/report.md > results/report.md
-cp "$DATA/pendulum_plot.png" results/pendulum_plot.png
-cp "$DATA/D0_KPi.csv" data/raw/D0_KPi.csv
-cp "$DATA/pendulum_raw.csv" data/raw/pendulum.csv
-cp "$DATA/pendulum.csv" data/processed/pendulum.csv
-cp "$DATA/cli_clean_pendulum.py" scripts/clean_pendulum.py
-cp "$DATA/cli_column_stats.py" scripts/column_stats.py
-printf 'print("ready")\n' > scripts/hello.py
-python3 scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv
-grep -v ',-100' data/raw/D0_KPi.csv > data/processed/D0_valid.csv
-shasum -a 256 data/raw/* > data/checksums.txt
 cat > README.md <<'EOF'
-# Analysis Project
+# Weather Station
 
-Seminar exercises for the course
-*Best Research and Data Analysis Practices from CERN*.
-
-The example data is from the [CERN Open Data Portal](https://opendata.cern.ch).
-
-## About
-
-- **Author:** Mindaugas Sarpis
-- **Started:** 2026-09-29
+The hourly log of one weather station, 2016 to 2025, and a table of daily
+mean temperatures typed into a spreadsheet from it.
 
 ## Folders
 
 | Folder | What goes in |
 |--|--|
-| `README.md` | what the project is and where the data came from |
-| `data/raw` | files exactly as downloaded, never edited |
-| `data/processed` | cleaned versions, made by scripts |
-| `scripts` | code |
-| `results` | figures and numbers that the code produces |
+| `data/raw` | files as they arrived, never edited |
+| `data/processed` | files made from `data/raw` by commands and scripts |
+| `scripts` | programs |
+| `results` | numbers and figures the programs produce |
 
 ## Data
 
-- **Source:** CERN Open Data Portal, record 401
-- **Address:** https://opendata.cern.ch/record/401
-- **DOI:** 10.7483/OPENDATA.LHCb.E7EJ.JUWR
-- **Licence:** CC0
-- **Fetched:** 2026-09-29
-- **File:** `data/raw/D0_KPi.csv`, converted from the record's
-  `MasterclassData.root` by the course's `root_to_csv.py`
-- **Size:** 3 926 142 bytes, 91 583 rows, 4 columns
-- **One row:** one candidate pair of a kaon and a pion from one collision
+- `data/raw/weather.csv`: one row per hour, from 2016-01-01 00:00 to
+  2025-12-31 23:00.
+- `data/raw/daily_export.csv`: the daily mean temperature of 1 to 9 October
+  2025, exported from a spreadsheet.
+- **Source:** the station's operator, by e-mail
+- **Received:** 2026-10-13
 
-- **File:** `data/raw/pendulum.csv`, from a lab partner, 2026-09-29
-- **Cleaned copy:** `data/processed/pendulum.csv`, 97 bytes,
-  SHA-256 `be05af034937ef615c93b2fb5d8369c899def80d0472a6187c5dbd3afff0870b`
-
-Checksums of `data/raw`: `data/checksums.txt`.
-
-## Columns of `D0_KPi.csv`
+## Columns of `weather.csv`
 
 | Column | Meaning | Unit |
 |--|--|--|
-| `M` | mass of the K⁻π⁺ pair | MeV/c² |
-| `PT` | transverse momentum | MeV/c |
-| `TAU` | decay time | ns |
-| `IPCHI2` | χ² of the impact parameter | none |
+| `time` | start of the hour | ISO 8601 |
+| `temp_c` | air temperature | °C |
+| `humidity_pct` | relative humidity | % |
+| `wind_ms` | wind speed | m/s |
 
-Missing value: `TAU` is `-100.0` in 49 rows.
+Missing value: `temp_c` is `-999` in 120 rows, 2019-07-22 to 07-26.
 
 ## How to rebuild
 
-Run in the project folder: zsh on macOS, PowerShell 7 on Windows.
-On macOS the program is `python3`.
+In the project folder, in PowerShell 7 on macOS or Windows, with Python from
+Miniforge; the script needs no package beyond it.
 
-1. The cleaned pendulum table, 97 bytes, SHA-256 `be05af03…`:
-   `python scripts/clean_pendulum.py data/raw/pendulum.csv data/processed/pendulum_script.csv`
-2. `D0_KPi.csv` without the 49 rows marked `-100`, 91 535 lines:
-   - zsh: `grep -v ',-100' data/raw/D0_KPi.csv > data/processed/D0_valid.csv`
-   - PowerShell: `Select-String ',-100' data/raw/D0_KPi.csv -NotMatch -Raw > data/processed/D0_valid.csv`
+    ./scripts/rebuild.ps1
+
+It writes `data/processed/weather_valid.csv`, `weather.csv` without the
+120 rows marked `-999` (87 553 lines), and `data/processed/daily.csv`, the
+cleaned export (148 bytes, SHA-256 `33fe5e77…f705483d`).
+
+## Licence
+
+Data: CC0, from the station's operator.
+Scripts and text: MIT, see `LICENSE`.
 EOF
-T() { export GIT_AUTHOR_DATE="2026-10-20T$1:00+0300" GIT_COMMITTER_DATE="2026-10-20T$1:00+0300"; }
-say() { echo; echo "##### $*"; }
-run() { echo "\$ $*"; "$@" 2>&1; }
+cat > scripts/rebuild.ps1 <<'EOF'
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+New-Item -ItemType Directory -Force data/processed | Out-Null
+Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
+EOF
+ps './scripts/rebuild.ps1'
 
 say SIZES
-find . -type f -not -path './.git/*' -printf '%s %p\n' | sort -k2
-du -sb --exclude=.git .
-ls data/raw; wc -l README.md
-run git hash-object data/raw/D0_KPi.csv
-run git hash-object data/processed/pendulum.csv
+find . -type f -printf '%s %p\n' | sort -k2
+du -sb . data/raw data/processed
+ps 'python scripts/column_stats.py data/processed/weather_valid.csv temp_c'
+ps 'python scripts/column_stats.py data/raw/weather.csv temp_c'
+sed -n 1,4p data/raw/daily_export.csv
 
+# ---- the two copies of the opening ---------------------------------------
 say HOOK
-mkdir -p "$S/run/copies/13oct" "$S/run/copies/20oct"
-cp data/processed/pendulum.csv "$S/run/copies/13oct/pendulum.csv"
-sed 's/^20,9.02$/20,9.03/' data/processed/pendulum.csv > "$S/run/copies/20oct/pendulum.csv"
-( cd "$S/run/copies" && run shasum -a 256 13oct/pendulum.csv 20oct/pendulum.csv && wc -c 13oct/pendulum.csv 20oct/pendulum.csv && run git diff --no-index 13oct/pendulum.csv 20oct/pendulum.csv )
-( cd "$S/run/copies" && cp "$DATA/pendulum_crlf.csv" copy.csv && cp 13oct/pendulum.csv pendulum.csv && run git hash-object pendulum.csv copy.csv && run git diff --no-index --stat pendulum.csv copy.csv )
+mkdir -p "$S/run/copies/smilte" "$S/run/copies/tomas"
+cp data/raw/daily_export.csv "$S/run/copies/smilte/daily_export.csv"
+sed 's/^1;2025-10-01;6,3$/1;2025-10-01;6,4/' data/raw/daily_export.csv > "$S/run/copies/tomas/daily_export.csv"
+( cd "$S/run/copies"
+  ps '(Get-FileHash smilte/daily_export.csv, tomas/daily_export.csv).Hash'
+  ps 'Get-ChildItem smilte, tomas -File | Select-Object Directory, Name, Length'
+  run git diff --no-index smilte/daily_export.csv tomas/daily_export.csv )
+
+say HELLO
+ps '"hello" | git hash-object --stdin'
+ps '"hallo" | git hash-object --stdin'
+run sh -c 'printf "hello\r\n" | git hash-object --stdin'
+
+say BLOB
+run git hash-object data/raw/weather.csv
+run git hash-object data/raw/daily_export.csv
+cp data/raw/weather.csv "$S/run/copy-of-weather.csv"
+run git hash-object "$S/run/copy-of-weather.csv"
+ps '(Get-FileHash data/raw/weather.csv).Hash'
+ps '(Get-FileHash data/raw/*).Hash'
+
+# ---- first commits -------------------------------------------------------
 say INIT
 run git init
 run git status
@@ -134,160 +159,255 @@ cat > .gitignore <<'EOF'
 .DS_Store
 Thumbs.db
 
-# made by the commands in README.md
-data/processed/D0_valid.csv
-data/processed/pendulum_script.csv
+# made by scripts/rebuild.ps1
+data/processed/
 EOF
+run git status --short
 T 10:20
 run git add .gitignore
 run git commit -m "Add .gitignore"
+cat > .gitattributes <<'EOF'
+# Check out every file with the bytes it was committed with:
+# no CRLF line endings on Windows, the same checksums on every laptop.
+* -text
+EOF
+T 10:22
+run git add .gitattributes
+run git commit -m "Keep the committed bytes of every file on checkout"
 run git add .
 run git status
-run git status --ignored --short
+run git status --short --ignored
 T 10:25
-run git commit -m "Add the data, the report and the scripts"
-C3=$(git rev-parse HEAD)
+run git commit -m "Add the data and the scripts"
+run git count-objects -v
+B=$(git hash-object data/raw/weather.csv)
+ls -l ".git/objects/${B:0:2}/"
+
 say MODEL
 run git cat-file -p HEAD
+run git cat-file -s HEAD
+run sh -c 'git cat-file commit HEAD | git hash-object -t commit --stdin'
 run git cat-file -p 'HEAD^{tree}'
 run git cat-file -p HEAD:data
 run git cat-file -p HEAD:data/raw
-cat data/checksums.txt
-run git cat-file -s HEAD
-run git cat-file -p HEAD~2
-git cat-file commit HEAD | git hash-object -t commit --stdin
-echo "obj D0:"; ls -l .git/objects/4a/
+run git cat-file -p HEAD:scripts
 run git log --oneline
-for c in HEAD HEAD~1 HEAD~2; do git rev-parse "$c^{tree}"; git ls-tree "$c" README.md; done
-cat .git/HEAD; cat .git/refs/heads/main; wc -c .git/refs/heads/main
+for c in HEAD HEAD~1 HEAD~2 HEAD~3; do git rev-parse "$c^{tree}"; git ls-tree "$c" README.md; done
+ps 'Get-Content .git/HEAD'
+ps 'Get-Content .git/refs/heads/main'
+ps '(Get-Item .git/refs/heads/main).Length'
 
-say FETCH
-cat >> README.md <<'EOF'
-
-## Data not stored here
-
-- **File:** `MasterclassData.root`, 1 289 541 bytes, the original of `D0_KPi.csv`
-- **Fetch from:** https://opendata.cern.ch/record/401
-- **SHA-256:** `8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b`
-EOF
-T 10:30
-git add README.md
-run git commit -m "Say how to fetch the ROOT file"
-cat .git/refs/heads/main
-
+# ---- a change and its diff -----------------------------------------------
 say DIFF
-sed -i 's/^Time of 10 swings for nine lengths\.$/Time of 10 swings of a pendulum for nine lengths./' results/report.md
+python3 - <<'EOF'
+from pathlib import Path
+p = Path("README.md")
+t = p.read_text(encoding="utf-8")
+new = """## Result
+
+- **Mean air temperature, 2016 to 2025:** 7.16 °C
+- **From:** `column_stats.py` on `data/processed/weather_valid.csv`, 87 552 hours
+
+## Licence"""
+p.write_text(t.replace("## Licence", new), encoding="utf-8")
+EOF
+run git status --short
+run git status
 run git diff
-T 10:40
-git add results/report.md
+run git diff --stat
+T 10:35
+run git add README.md
+run git status --short
+run git diff
 run git diff --staged --stat
-run git commit -m "Name the pendulum in the report"
+run git commit -m "Give the mean temperature in the README"
+C4=$(git rev-parse --short HEAD)
+ps 'Get-Content .git/refs/heads/main'
 run git log --oneline
-run git log -1 HEAD
-run git show --stat --oneline HEAD
-run git blame -s -L 1,5 results/report.md
-run git log --oneline -- results/report.md
+run git log -1
+run git show --stat "$C4"
+L=$(grep -n "Mean air" README.md | cut -d: -f1)
+run git blame -s -L "$L,$((L+1))" README.md
+run git log --oneline -- README.md
 
 say RESTORE
-sed -i '/^| [2-6]0 |/d' results/report.md
+python3 - <<'EOF'
+import re
+from pathlib import Path
+p = Path("README.md")
+t = p.read_text(encoding="utf-8")
+p.write_text(re.sub(r"## Columns of.*?Missing value[^\n]*\n\n", "", t, flags=re.S), encoding="utf-8")
+EOF
 run git diff --stat
-run git restore results/report.md
+run git restore README.md
 run git status
 
 say AMEND
-sed -i 's/^20,9.02$/20,9.03/' data/processed/pendulum.csv
-run git diff
-run shasum -a 256 data/processed/pendulum.csv
-T 10:45
-git add data/processed/pendulum.csv
-run git commit -m "Use 9.03 s for 20 cm, as in teh lab book"
-BAD1=$(git rev-parse --short HEAD)
-export GIT_COMMITTER_DATE="2026-10-20T10:46:00+0300"
-run git commit --amend -m "Use 9.03 s for 20 cm, as in the lab book"
-BAD=$(git rev-parse --short HEAD)
+cat > LICENSE <<'EOF'
+MIT License
+
+Copyright (c) 2026 Smiltė
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+EOF
+T 10:40
+git add LICENSE
+run git commit -m "Add teh LICENSE named in the README"
+export GIT_COMMITTER_DATE="2026-10-20T10:41:00+0300"
+run git commit --amend -m "Add the LICENSE named in the README"
+run git log --oneline -2
+
 say REVERT
-T 10:55
+T 10:45
+run git rm data/raw/daily_export.csv
+run git commit -m "Remove the raw export, daily.csv replaces it"
+BAD=$(git rev-parse --short HEAD)
+rm -rf data/processed
+ps './scripts/rebuild.ps1'
+T 10:50
 run git revert --no-edit "$BAD"
 run git log --oneline -3
-run git cat-file -p HEAD
-run shasum -a 256 data/processed/pendulum.csv
+run git show --stat HEAD
+ps './scripts/rebuild.ps1'
 
-say STASH
-echo "draft" >> results/report.md
-run git stash
-run git status
-run git stash pop
-git restore results/report.md
+# ---- the remote ----------------------------------------------------------
 say PUSH
 mkdir -p "$S/run/remote"
-git init -q --bare "$S/run/remote/analysis-project.git"
-run git remote add origin "$S/run/remote/analysis-project.git"
+git init -q --bare "$REMOTE"
+run git remote add origin "$URL"
 run git remote -v
-run git push --progress -u origin main
-run git count-objects -vH
+echo "\$ git push -u origin main"
+git push --progress -u origin main 2>&1 | tr '\r' '\n' | grep -v '([0-9]*/[0-9]*)$' | fix
+run git push
+run git status
 
 say CLONE
-cd "$S/run" && mkdir laptop2 && cd laptop2
-run git clone --progress "$S/run/remote/analysis-project.git"
-cd analysis-project
-run git log --oneline -1
-ls data/raw
-sed -i 's/^- \*\*Started:\*\* 2026-09-29$/- **Started:** 2026-09-29\n- **Under Git since:** 2026-10-20/' README.md
-T 11:00
-git add README.md
-run git commit -m "Note when version control started"
-run git push
+mkdir -p "$S/run/tomas" && cd "$S/run/tomas"
+( export HOME="$S/run/tomas-home"
+  run git clone "$URL"
+  cd weather-project
+  run git log --oneline -1
+  ps 'Get-ChildItem data -Name'
+  ps './scripts/rebuild.ps1'
+  ps 'Get-ChildItem data -Name'
+  sed -i 's/^1;2025-10-01;6,3$/1;2025-10-01;6,4/' data/raw/daily_export.csv
+  run git diff
+  T 11:30
+  git add data/raw/daily_export.csv
+  run git commit -m "Correct 1 October to 6,4" -m "The station's paper log says 6,4 for 1 October 2025."
+  run git push )
 cd "$P"
-T 11:02
+T 11:35
 run git pull
+run git log --oneline -3
+TOM=$(git rev-parse --short HEAD)
 
+# ---- branches ------------------------------------------------------------
 say BRANCH
-run git switch -c table-units
+run git switch -c ranges
 run git branch
-cat .git/HEAD
-sed -i 's/^| length_cm | t10_s |$/| length (cm) | time of 10 swings (s) |/' results/report.md
-T 11:05
-git add results/report.md
-run git commit -m "Write the units into the table header"
+ps 'Get-Content .git/HEAD'
+ps 'Get-ChildItem .git/refs/heads -Name'
+python3 - <<'PY'
+t = open("README.md", encoding="utf-8").read()
+old = """| Column | Meaning | Unit |
+|--|--|--|
+| `time` | start of the hour | ISO 8601 |
+| `temp_c` | air temperature | °C |
+| `humidity_pct` | relative humidity | % |
+| `wind_ms` | wind speed | m/s |
+"""
+new = """| Column | Meaning | Unit | Range |
+|--|--|--|--|
+| `time` | start of the hour | ISO 8601 | 2016-01-01T00:00 to 2025-12-31T23:00 |
+| `temp_c` | air temperature | °C | -16.3 to 32.4 |
+| `humidity_pct` | relative humidity | % | 34 to 100 |
+| `wind_ms` | wind speed | m/s | 0.0 to 12.0 |
+"""
+assert old in t
+open("README.md", "w", encoding="utf-8").write(t.replace(old, new))
+PY
+run git diff --stat
+T 11:40
+git add README.md
+run git commit -m "Give the range of each column"
+ps 'Get-ChildItem .git/refs/heads -Name'
 run git switch main
-run git merge table-units
-run git branch -d table-units
+run git merge ranges
+run git branch -d ranges
 
 say CONFLICT
 run git switch -c wording
-sed -i '3s/.*/Ten swings of a pendulum, timed for nine lengths./' results/report.md
-T 11:10
-git add results/report.md
-run git commit -m "Reword the first sentence"
+sed -i '3,4c Ten years of hourly readings from one weather station, and the daily\nmeans of nine days of October 2025, typed into a spreadsheet from them.' README.md
+run git diff
+T 11:45
+git add README.md
+run git commit -m "Reword the first paragraph"
 run git switch main
-sed -i '3s/.*/Time of 10 swings of a pendulum for nine lengths from 20 cm to 100 cm./' results/report.md
-T 11:15
-git add results/report.md
-run git commit -m "Give the range of lengths"
+sed -i '3,4c The hourly log of one weather station, 2016 to 2025, 87 672 hours, and a\ntable of daily mean temperatures typed into a spreadsheet from it.' README.md
+T 11:50
+git add README.md
+run git commit -m "Give the number of hours in the first paragraph"
 run git log --oneline --graph --all -4
-T 11:20
+T 11:55
 run git merge wording
-sed -n 1,9p results/report.md
-sed -i '3,7d' results/report.md
-sed -i '3i Ten swings of a pendulum, timed for nine lengths from 20 cm to 100 cm.' results/report.md
-sed -n 1,6p results/report.md
-git add results/report.md
-run git commit -m "Merge branch 'wording'"
+run git status
+sed -n 1,10p README.md
+python3 - <<'EOF'
+import re
+t = open("README.md", encoding="utf-8").read()
+t = re.sub(r"<<<<<<< HEAD\n.*?>>>>>>> wording\n",
+           "Ten years of hourly readings from one weather station, 87 672 hours, and\n"
+           "the daily means of nine days of October 2025, typed into a spreadsheet\nfrom them.\n",
+           t, flags=re.S)
+open("README.md", "w", encoding="utf-8").write(t)
+EOF
+sed -n 1,7p README.md
+run git add README.md
+run git commit --no-edit
 run git cat-file -p HEAD
 run git log --oneline --graph -5
 run git status
-run git log --oneline --all
-say TAG
-T 11:25
 run git push
-run git tag -a v1.0 -m "Report as shown on 20 October"
-run git log --oneline -2
-run git push origin v1.0
+
+# ---- who edited the raw file ---------------------------------------------
 say CLOSE
-run git log --oneline -- data/processed/pendulum.csv
-run git log -2 -- data/processed/pendulum.csv
-run git show --stat --oneline "$BAD"
-run git blame -s -L 2,2 data/processed/pendulum.csv
+run git log --oneline -- data/raw
+run git log --oneline -- data/raw/daily_export.csv
+run git blame -s -L 2,2 data/raw/daily_export.csv
+run git blame -L 2,2 data/raw/daily_export.csv
+run git show "$TOM"
+ps 'python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv; (Get-FileHash data/processed/daily.csv).Hash'
+T 12:05
+run git revert --no-edit "$TOM"
+run git show --stat HEAD
+sed -n 2p data/raw/daily_export.csv
+ps './scripts/rebuild.ps1; (Get-FileHash data/processed/daily.csv).Hash'
+run git push
+
+say TAG
+T 12:10
+run git tag -a v1.0 -m "Data as received; mean 7.16 °C"
+run git log --oneline -3
+run git push origin v1.0
+run git show v1.0 --stat
+run git log --oneline --graph --all
+
 say SIZE
-du -sb .git; du -sk .git; git count-objects -v
-git log --oneline | wc -l
+du -sb .git; git count-objects -vH; git log --oneline | wc -l

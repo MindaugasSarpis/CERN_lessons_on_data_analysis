@@ -186,14 +186,11 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 6 — A Line of Text into Numbers](../seminars/seminar_06.md) has
-four parts. The room checks Python, installs the Python extension and runs
-a first script in three ways. One line of `D0_KPi.csv` is pasted into a
-script and turned into four numbers, and three errors are made on purpose
-and read. The first lines of the file are parsed in a loop, printed as a
-table and averaged, with the row that has `TAU = -100` skipped. Last, a
-script that prints a wrong mean without any message is examined with
-`print` and with the debugger.
+[Seminar 6 — Can You Compute 7.16 Yourself? Python on the Weather
+Project](../seminars/seminar_06.md) works on the weather project of Lectures
+1 to 5. Every student writes a Python script that reads `weather.csv` line
+by line, leaves out the `-999` hours and prints the mean temperature,
+7.15997 °C; fixes a script with two bugs; commits and pushes.
 
 ## Slides that left the deck
 

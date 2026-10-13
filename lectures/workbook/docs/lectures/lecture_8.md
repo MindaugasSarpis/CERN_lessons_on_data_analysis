@@ -160,13 +160,13 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 8 — Two Figures with Matplotlib](../seminars/seminar_08.md) installs
-Matplotlib with pip and makes the two figures of slides 9–13 from the room's
-own keyboard: the pendulum table as points, and the mass column as a
-histogram with a range and a bin width that the room chooses from the
-numbers. Both figures are saved to `results/` and placed in
-`results/report.md`, each with a sentence that says what it shows. The README
-gets a table of the figures and the scripts that make them.
+[Seminar 8 — What Does a Year of Weather Look Like? Figures with
+Matplotlib](../seminars/seminar_08.md) works on the weather project of
+Lectures 1 to 5. Every student adds Matplotlib to the project's environment
+and writes one script, `scripts/figures.py`, that draws five figures of
+`weather.csv` into `results/`: ten years day by day, the year's cycle, the
+day's cycle, the yearly means and a histogram; commits and pushes the
+script.
 
 ## Slides that left the deck
 

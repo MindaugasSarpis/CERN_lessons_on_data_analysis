@@ -148,13 +148,12 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 15 — Timing, Memory and a Background Job](../seminars/seminar_15.md)
-runs on the laptops of the room. The sum of the mass column is timed as a
-loop, in NumPy and on four processes, and a longer job on 1, 2 and 4
-workers, with the time for 4 predicted from the first two. The size of the
-table in memory is worked out on paper and checked in Python. A job of half
-a minute is started in the background, its log is followed, the job is
-stopped, and an error is found in the log.
+[Seminar 15 — How Long Does It Take, and How to Make It Faster? Timing the
+Weather Project](../seminars/seminar_15.md) works on the weather project of
+Lectures 1 to 5. Every student times the rebuild and one slow script, finds
+which part of it is slow, makes it 17 times faster on one core, compares
+that with more cores, runs it as a background job, and pushes the times in
+the README.
 
 ## Slides that left the deck
 

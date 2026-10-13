@@ -3,32 +3,38 @@
 Lecture 2 opens on a file that arrived with no note: the first four lines of
 `weather.csv`, the hourly log of a weather station, 87 673 lines and
 2 515 215 bytes. The room lists what the file does not say, and the lecture
-answers those five questions one section at a time. It ends with the tools
-for writing the answers down: VS Code, a README in Markdown, and edits made on
-many lines at once.
+answers those five questions one section at a time, each on the file itself.
+A CERN file is asked the same questions: what becomes a row at the LHC, how
+the ATLAS file of CERN Open Data record 328 marks a value that cannot exist
+(`-999.0`, as the station does), and what its record says that the station's
+e-mail did not. The lecture ends with the tools for writing the answers down:
+VS Code, a README in Markdown, and edits made on many lines at once.
 
 ## What the lecture covers
 
 1. **A file with no note**: four lines of `weather.csv`; the five questions
-   they leave open; data as symbols plus the rule that lets someone else
-   read them back; the lifecycle.
-2. **Kinds of data**: structured and unstructured; everything as numbers;
-   kinds of variables; the anatomy of a table on the nine-day spreadsheet
-   export `weather_daily_export.csv`; which columns can be averaged, and why
-   a mean line left in does not move the mean; measured, derived and
-   bookkeeping columns; CSV, spreadsheet and binary; the decimal comma; the
-   same file opened in a spreadsheet; one row as text and as binary numbers.
-3. **Where the file came from**: portals, the anatomy of a record (with CERN
-   Open Data record 401 as the real example), licences, the provenance note
-   for `weather.csv`, your own dataset, from record to project folder.
-4. **How one row was made**: one line per hour at the station; at CERN, the
-   trigger that decides which collisions become rows; the data-flow clip.
-5. **Reading the file**: one row read aloud; the rows counted with
-   `Ctrl+End` in a text editor and checked against 10 years of hours; line 5000 found with
-   `Ctrl+G` and checked against its time; the units worked out from the
-   numbers; `-999` found with `Ctrl+F`, below absolute zero, and what it does
-   to a mean; the five questions answered, then asked of the student's own
-   dataset.
+   they leave open, each next to the part of the file it is about; data as
+   symbols plus the rule that lets someone else read them back; the
+   lifecycle.
+2. **How one row was made**: one line per hour at the station; the same
+   question at the LHC, where the trigger keeps a few thousand collisions a
+   second; the data-flow clip.
+3. **Reading the file**: the rows counted with `Ctrl+End` and checked against
+   10 years of hours; line 5000 found with `Ctrl+G` and checked against its
+   time; the units worked out from the numbers; `-999` found with `Ctrl+F`,
+   below absolute zero, and what it does to a mean; `-999.0` in a CERN file,
+   580 253 of 818 238 rows, where a value cannot exist.
+4. **Kinds of data**: everything as numbers; the four kinds of variables and
+   the columns of `weather.csv`; the anatomy of a table on the nine-day
+   spreadsheet export `daily_export.csv`; which columns can be averaged, and
+   why a mean line left in does not move the mean; the 24 hourly values of
+   1 October behind the export's `6,3`; CSV, spreadsheet and binary with the
+   size of the log in each; the decimal comma; the same file opened in a
+   spreadsheet; one row as text and as binary numbers.
+5. **Where the file came from**: portals; the anatomy of a record, CERN Open
+   Data record 328 next to `weather.csv`; licences; the provenance note for
+   `weather.csv`; from record to project folder; the five questions answered
+   for both files, then asked of other datasets and of the student's own.
 6. **The editor**: the project folder and rules for file names; VS Code, the
    five regions of its window, first keys, files in the Side Bar, saving.
 7. **Markdown**: source and preview, headings, lists, links and images,
@@ -41,7 +47,7 @@ many lines at once.
 
 ## The definition of data
 
-Slide 7 gives the definition of ISO/IEC 2382, *Information technology,
+Slide 6 gives the definition of ISO/IEC 2382, *Information technology,
 Vocabulary*:
 
 > Data is a reinterpretable representation of information in a formalized
@@ -50,19 +56,20 @@ Vocabulary*:
 Three words carry it. A **representation**: the symbols `-4.4` are not a
 temperature, they may stand for one. **Formalized**: the symbols follow a
 fixed rule. **Reinterpretable**: someone else, or a program, can get the
-information back. The lecture's thesis is one sentence, on slide 8: *a number
+information back. The lecture's thesis is one sentence, on slide 7: *a number
 is data only together with the rule that lets someone else read it back.*
-Each section adds one part of the rule for `weather.csv`, and slide 68 shows
+Each section adds one part of the rule for `weather.csv`, and slide 65 shows
 them all on the file's first four lines.
 
 ## The numbers on the slides
 
-All were computed on the files in `lectures/workbook/docs/data/`.
+The weather numbers were computed on the files in `lectures/workbook/docs/data/`.
 
 - `weather.csv`: 87 673 lines (87 672 rows and a header), 2 515 215 bytes,
   28.7 bytes per row. Row 1, `2016-01-01T00:00,-4.4,93,2.5`, is 28
   characters and a line end. As four 4-byte numbers per row the file would be
-  87 672 × 16 = 1 402 752 bytes; the text is 1.8× larger.
+  87 672 × 16 = 1 402 752 bytes; the text is 1.8× larger. Saved as `.xlsx`
+  with `openpyxl` 3.1.5 it is 1 922 248 bytes.
 - Rows: 10 × 365 × 24 = 87 600, plus 3 leap days × 24 = 72, gives 87 672: one
   row per hour from 2016 to 2025. Line 5000 is
   `2016-07-27T06:00,18.2,71,1.1`, 4 998 = 208 × 24 + 6 hours after the first.
@@ -71,54 +78,64 @@ All were computed on the files in `lectures/workbook/docs/data/`.
 - `-999` in `temp_c`: 120 rows, `2019-07-22T00:00` to `2019-07-26T23:00`,
   5 × 24 = 120. Mean temperature without them 7.16 °C, with them 5.78 °C;
   120 × (−999) / 87 672 = −1.37 °C.
-- `weather_daily_export.csv`: 180 bytes, nine days of October 2025. Sums 45
-  (`nr`) and 71.7 (`temp_c`); 71.7 / 9 = 7.967, the `7,97` of its mean line;
-  (71.7 + 7.97) / 10 = 7.967 again. 1 October: 24 hourly values of
-  `weather.csv` sum to 151.1, and 151.1 / 24 = 6.30. Repaired by hand it is
-  148 bytes: the mean line is 11 bytes, column `nr` 3 + 9 × 2 = 21, and
-  180 − 11 − 21 = 148.
+- 1 October 2025 in `weather.csv`: 24 hourly values from 2.7 (02:00) to 10.1
+  (14:00), sum 151.1, and 151.1 / 24 = 6.30, the `6,3` of the export.
+- `daily_export.csv` (in the workbook `weather_daily_export.csv`): 180 bytes,
+  nine days of October 2025. Sums 45 (`nr`) and 71.7 (`temp_c`);
+  71.7 / 9 = 7.967, the `7,97` of its mean line; (71.7 + 7.97) / 10 = 7.967
+  again. Repaired by hand it is 148 bytes: the mean line is 11 bytes, column
+  `nr` 3 + 9 × 2 = 21, and 180 − 11 − 21 = 148.
+- CERN Open Data record 328, *Dataset from the ATLAS Higgs Boson Machine
+  Learning Challenge 2014*, DOI `10.7483/OPENDATA.ATLAS.ZBP2.M5T8`, CC0: one
+  file, `atlas-higgs-challenge-2014-v2.csv.gz`, 65 630 848 bytes, 818 238 rows
+  of simulated collisions and 35 columns. Counted on the file (13 October
+  2026): `PRI_jet_num` is 0 in 327 371 rows and 1 in 252 882;
+  `DER_deltaeta_jet_jet` is `-999.0` in exactly those 580 253 rows (71 %);
+  `DER_mass_MMC` is `-999.0` in 124 602 rows. Rows 100000 to 100002 are
+  shown on slide 19, 4 of their 35 columns. The record describes every
+  column (`DER_deltaeta_jet_jet`: "undefined if PRI_jet_num ≤ 1") but gives
+  no units; the mass columns, near the Higgs mass of 125 GeV, point to GeV.
 
 ## The lecture in 90 minutes
 
-The lecture is slides 1–69 and estimates about 113 min; with the pauses for
-the room it runs longer. Slides 70–78 are the self-check quizzes and take no
+The lecture is slides 1–66 and estimates about 109 min; with the pauses for
+the room it runs longer. Slides 67–75 are the self-check quizzes and take no
 lecture time. For a 90-minute slot, skip the slides in the second table;
-that leaves about 92 min. To jump, type the slide number and press Enter.
+that leaves about 90 min. To jump, type the slide number and press Enter.
 
 | Clock | Slides | Part |
 |--|--|--|
-| 0:00 | 1–5 | Four lines of `weather.csv`, the five questions, objectives |
-| 0:08 | 7–8 | The definition of data, symbols plus a rule |
-| 0:13 | 13–16 | Kinds of variables, the daily table, which columns can be averaged, the mean line left in |
-| 0:23 | 19 | The decimal comma |
-| 0:25 | 22, 24, 26, 28 | A record, the provenance note, the project folder |
-| 0:32 | 29–31 | One line per hour; the trigger at CERN |
-| 0:38 | 33, 35, 37–40 | The rows counted, the units, `-999`, what it does to a mean, the five answers |
-| 0:53 | 42–43, 45–46, 48–49 | The project folder and VS Code |
-| 1:05 | 50–53, 55 | Markdown: the source and its preview |
-| 1:13 | 57–62, 64 | The daily export repaired, then made a Markdown table |
-| 1:29 | 68–69 | The file, annotated; Recap |
-| 1:32 | | End |
+| 0:00 | 1–4 | Four lines of `weather.csv` and the five questions |
+| 0:05 | 6–7 | The definition of data, symbols plus a rule |
+| 0:09 | 9–12 | One line per hour; one row at the LHC; the data-flow clip |
+| 0:17 | 13–14, 16–19 | The rows counted, the units, `-999` and the mean, `-999.0` in a CERN file |
+| 0:29 | 21–26 | Numbers, kinds of variables, the daily export, which columns can be averaged, measured or derived |
+| 0:41 | 28 | The decimal comma |
+| 0:43 | 31, 33, 35–37 | The record next to `weather.csv`, the provenance note, the project folder, the five answers |
+| 0:53 | 39–40, 42–43, 45–46 | The project folder and VS Code |
+| 1:04 | 47–50, 52 | Markdown: the source and its preview |
+| 1:12 | 54–59, 61 | The daily export repaired, then made a Markdown table |
+| 1:27 | 65–66 | The file, annotated; Recap |
+| 1:31 | | End |
 
 | Skip | Slides | Saves |
 |--|--|--|
-| The lifecycle | 9 | 2 min |
-| Structured and unstructured; everything as numbers | 11–12 | 4 min |
-| Measured or derived; file formats; the spreadsheet; a row as text and as binary | 17–18, 20–21 | 8 min |
-| Portals, licences, your own dataset | 23, 25, 27 | 6 min |
-| The data-flow clip | 32 | 3 min |
-| A row read aloud, a line in the middle, other datasets | 34, 36, 41 | 10 min |
-| Rules for file names, first keys | 44, 47 | 4 min |
-| Links and images, usual mistakes | 54, 56 | 4 min |
-| Every match of a word, the size check, text commands, the key sheet | 63, 65–67 | 8 min |
+| The lifecycle | 8 | 1 min |
+| A line in the middle | 15 | 2 min |
+| File formats; the spreadsheet; a row as text and as binary | 27, 29–30 | 6 min |
+| Portals, licences | 32, 34 | 4 min |
+| The five questions for other datasets | 38 | 6 min |
+| Rules for file names, first keys | 41, 44 | 4 min |
+| Links and images, usual mistakes | 51, 53 | 3 min |
+| Every match of a word, the size check, text commands, the key sheet | 60, 62–64 | 8 min |
 
-- **Do not cut** slides 3–4 (the questions), 8 (the thesis), 14–16 (the
-  table and its mean), 38–40 (`-999` and the answers) and 68 (The File,
-  Annotated): together they carry the story.
+- **Do not cut** slides 3–4 (the questions), 7 (the thesis), 17–19 (`-999`,
+  its effect on the mean, the CERN file), 23–25 (the table and its mean), 37
+  (the answers) and 65 (The File, Annotated): together they carry the story.
 - **The slides carry everything.** Each step in VS Code is shown on its
   slide with its result, so nothing is opened beside the deck. Ask the room
   for each unit before showing its card.
-- **Slides 42–64 are what Seminar 1 practises** with its own files, by hand.
+- **Slides 39–64 are what Seminar 1 practises** by hand.
 - **The speaker notes** of every slide have the same short form: **Do**,
   **Say**, **Ask**, **If asked**, and the minutes.
 
@@ -128,7 +145,7 @@ To show the slides offline: `node scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 70–78: eight quiz slides for students to try afterwards. The same
+slides 67–75: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A colleague sends a file of numbers with no header and no note. By the
@@ -166,27 +183,26 @@ questions, with their answers:
 
 [Seminar 1, VS Code and Markdown](../seminars/seminar_01.md) is the first
 session in class and starts from zero. It practises the ideas of slides
-42–67 with files of its own, a reading list and a library's loans log, not
-the weather files: install VS Code and build a project folder; write the
-README in Markdown; repair the reading list in the editor and turn it into a
-report; count a long file, read its units and its missing-value mark `NA`,
-open it in a spreadsheet, and write where the data came from. All of it is
-done in class.
+39–64 by hand: VS Code and a project folder, a README in Markdown, and a
+table repaired in the editor. All of it is done in class.
 
 ## Parked slides
 
 Slides that left the deck are kept in
-`lectures/content/parked/02_Introduction_to_Data.md`. On 12 October 2026, when
-the deck changed its example to the weather station, the CERN detector slides
+`lectures/content/parked/02_Introduction_to_Data.md`. On 13 October 2026,
+when the look at the file moved to the first third of the deck and the CERN
+examples were tied to the same five questions, four text-card slides left
+it: Learning Objectives, Read a Row Aloud (slide 7 reads the same row),
+Structured vs Unstructured and Your Own Dataset. On 12 October 2026, when the
+deck changed its example to the weather station, the CERN detector slides
 left it: ATLAS and CMS, ALICE, LHCb, their fly-in clips and the quark-gluon
 plasma clip, From Collision to Dataset, From Events to Petabytes, What the
-Trigger Kept and 147 Columns, 4 Filled. One CERN slide on the trigger and the
-data-flow clip stay. Earlier parked slides: What Each Flavour Is Used For,
-Data at Work, Common Threads, Working with the Data, the section Beyond
-Physics, A Day in Data, Every One of These Is a Dataset, Measurement vs
-Metadata, the thought exercise, Why Data Analysis Matters at CERN, the old
-Recap and two quiz slides. The file is not built. To put a slide back, move it
-into the lecture file.
+Trigger Kept and 147 Columns, 4 Filled. Earlier parked slides: What Each
+Flavour Is Used For, Data at Work, Common Threads, Working with the Data, the
+section Beyond Physics, A Day in Data, Every One of These Is a Dataset,
+Measurement vs Metadata, the thought exercise, Why Data Analysis Matters at
+CERN, the old Recap and two quiz slides. The file is not built. To put a
+slide back, move it into the lecture file.
 
 ## Take-aways
 
@@ -204,7 +220,8 @@ into the lecture file.
 - A row is a decision: one hour at a station, one kept collision at CERN.
 - Units and missing-value marks come from the numbers when the file is
   silent: −999 °C is below absolute zero, so it is a mark, and counted as a
-  number it moves a ten-year mean by more than a degree.
+  number it moves a ten-year mean by more than a degree. A CERN file uses
+  the same mark for a value that cannot exist for a collision.
 - A file in `data/raw` is never edited. It is cleaned on a copy, and the
   README lists what was changed.
 - An edit that is the same on every line is made once: Find and Replace for

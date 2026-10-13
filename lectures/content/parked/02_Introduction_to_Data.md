@@ -1045,3 +1045,153 @@ Event and run numbers: which collision, which data-taking period. Emptied here t
 
 </div>
 
+
+
+<!-- Parked 2026-10-13 from Lecture 02, after 'What the File Does Not Say', before the section 'Data and Information'. Text-card slide taken out when the deck moved its look at the data forward and tied the CERN examples to the same five questions. -->
+
+---
+hideInToc: true
+---
+
+# Learning **Objectives**
+
+<div class="stack-tight mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+🔣 Say what turns symbols into **data**: a rule that lets someone else read them back
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+📋 Read a **table**: one row per observation, one variable per column, and which columns can be averaged
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+🌐 Write down where a file came from, its **provenance**, and what one row is
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+📝 Work out **units** and **missing** values from the numbers, and write them into a **README** in VS Code
+
+</div>
+
+</div>
+
+<!--
+**Say:** one objective per group of the five questions, and the last one is the tool for writing the answers down.
+(~1 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 02, first slide of the section 'Reading the File'; slide 'Data Is Symbols Plus a Rule' reads the same row as a sentence. Text-card slide taken out when the deck moved its look at the data forward and tied the CERN examples to the same five questions. -->
+
+---
+hideInToc: true
+---
+
+# Read a Row **Aloud**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+```text
+2016-01-01T00:00,-4.4,93,2.5
+```
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+🗣️ "At 00:00 on 1 January 2016 the station measured `temp_c` −4.4, `humidity_pct` 93 and `wind_ms` 2.5."
+
+</div>
+
+<div class="note-text mt-md">The sentence still lacks the units, and says nothing about the other 87 671 rows.</div>
+
+<!--
+**Do:** read row 1 aloud as a sentence, then ask a student to read row 2 the same way.
+**Say:** `T` separates the date from the hour. This way of writing a time is the standard ISO 8601.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 02, first slide of the section 'Kinds of Data'. Text-card slide taken out when the deck moved its look at the data forward and tied the CERN examples to the same five questions. -->
+
+---
+hideInToc: true
+---
+
+# Structured vs **Unstructured**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 📊 **Structured**
+
+Rows and columns: a table, a spreadsheet, a database. Each column has one meaning.
+
+- Sensor logs, survey answers, sales
+- `weather.csv` is structured
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🌀 **Unstructured**
+
+Free form: text, images, sound, video.
+
+- E-mails, photos, recordings
+- A step is needed to turn it into numbers or labels
+
+</div>
+
+</div>
+
+<!--
+**Ask:** which kind is a folder of holiday photos? A list of exam marks?
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-13 from Lecture 02, after 'Provenance, Written Down', section 'Where the File Came From'. Text-card slide taken out when the deck moved its look at the data forward and tied the CERN examples to the same five questions. -->
+
+---
+hideInToc: true
+---
+
+# Your Own **Dataset**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎒 **The provenance note**
+
+- Where it came from: a web address, an instrument, a colleague
+- The terms of use
+- The file exactly as received, and the date
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔒 **Personal data**
+
+- Anonymise before it enters the project folder
+- Never e-mail or upload raw personal data
+
+</div>
+
+</div>
+
+<!--
+**Ask:** what would the source line be for data you collected yourself?
+(~2 min)
+-->

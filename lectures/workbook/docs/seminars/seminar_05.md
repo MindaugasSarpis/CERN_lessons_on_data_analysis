@@ -150,7 +150,16 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     cd ~
     ```
 
-2. Clone.
+2. Keep the folder of Seminar 4 under another name, so the clone can use
+   the name `weather-project`.
+
+    ```text
+    Move-Item weather-project weather-project-s4
+    ```
+
+    No folder of that name: PowerShell says it cannot find the path. Go on.
+
+3. Clone.
 
     ```text
     git clone https://github.com/MindaugasSarpis/weather-project.git
@@ -166,9 +175,9 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     Resolving deltas: 100% (15/15), done.
     ```
 
-3. Open it: **File** > **Open Folder...** > `weather-project` > **Open**.
+4. Open it: **File** > **Open Folder...** > `weather-project` > **Open**.
    Answer **Yes, I trust the authors**.
-4. Open the terminal again (**View** > **Terminal**). It starts in the
+5. Open the terminal again (**View** > **Terminal**). It starts in the
    project folder.
 
     ```text
@@ -204,7 +213,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    c964141 Add a licence
+    c964141 (HEAD -> main, origin/main, origin/HEAD) Add a licence
     2cca38a Take the mean over all rows of weather.csv
     5cfde5c Write the mean temperature into results and the README
     2770cef Add the rebuild script
@@ -213,7 +222,8 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     3e72263 Add the station's hourly log and the spreadsheet export
     ```
 
-    As a graph, oldest at the left:
+    `HEAD -> main` marks where you are; `origin/main`, where GitHub was at
+    the clone. As a graph, oldest at the left:
 
     ```mermaid
     gitGraph
@@ -233,7 +243,7 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    commit c96414183e432f7c687b242d4d41e459640f5dda
+    commit c96414183e432f7c687b242d4d41e459640f5dda (HEAD -> main, origin/main, origin/HEAD)
     Author: Smiltė <smilte@example.org>
     Date:   Mon Oct 19 17:05:00 2026 +0300
 
@@ -441,8 +451,8 @@ macOS and Windows. The **Source Control** view (`Ctrl+Shift+G`, macOS
     ```
 
     ```text
-    884e155 Revert "Take the mean over all rows of weather.csv"
-    c964141 Add a licence
+    884e155 (HEAD -> main) Revert "Take the mean over all rows of weather.csv"
+    c964141 (origin/main, origin/HEAD) Add a licence
     2cca38a Take the mean over all rows of weather.csv
     ```
 
@@ -911,12 +921,12 @@ gitGraph
     ```
 
     ```text
-    *   52a0aaa Merge branch 'wording'
+    *   52a0aaa (HEAD -> main) Merge branch 'wording'
     |\
-    | * d669a9d Spell out the unit
+    | * d669a9d (wording) Spell out the unit
     * | 597d7ac Round the Fahrenheit mean to one decimal
     |/
-    * c592876 Give the mean in Fahrenheit
+    * c592876 (origin/main, origin/HEAD) Give the mean in Fahrenheit
     * 1da24de Add a line
     ```
 

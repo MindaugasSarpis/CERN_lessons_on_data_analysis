@@ -77,82 +77,21 @@ hideInToc: true
 
 # What the File Does **Not** Say
 
-<div class="stack-tight mt-md">
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact">
-
-1️⃣ What **kind** of variable is each column, and which can be **averaged**?
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-2️⃣ Where did the file **come from**, and may we use it?
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-3️⃣ What is **one row**?
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-4️⃣ In which **unit** is each column?
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-5️⃣ How are **missing** values marked?
-
-</div>
+| | **Question** | **Where to look in the four lines** |
+| --- | --- | --- |
+| 1 | What **kind** is each column, and which can be **averaged**? | `time,temp_c,humidity_pct,wind_ms` |
+| 2 | Where did the file **come from**, and may we use it? | Nowhere: 2 515 215 bytes and no note |
+| 3 | What is **one row**? | `2016-01-01T00:00,-4.4,93,2.5` |
+| 4 | In which **unit** is each column? | `-4.4`, `93`, `2.5` |
+| 5 | How are **missing** values marked? | Not in these lines: 87 669 rows more to read |
 
 </div>
 
 <!--
-**Say:** these are the room's own questions. Each is about one part of the four lines: the columns, the whole file, one line, the numbers.
+**Say:** these are the room's own questions, each next to the part of the file it is about.
 (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Learning **Objectives**
-
-<div class="stack-tight mt-sm">
-
-<div class="card card-primary card-glass pad-compact">
-
-🔣 Say what turns symbols into **data**: a rule that lets someone else read them back
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-📋 Read a **table**: one row per observation, one variable per column, and which columns can be averaged
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🌐 Write down where a file came from, its **provenance**, and what one row is
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-📝 Work out **units** and **missing** values from the numbers, and write them into a **README** in VS Code
-
-</div>
-
-</div>
-
-<!--
-**Say:** one objective per group of the five questions, and the last one is the tool for writing the answers down.
-(~1 min)
 -->
 
 ---
@@ -303,766 +242,6 @@ layout: section
 hideInToc: true
 ---
 
-# Kinds of **Data**
-
-The first part of the rule: what kind of thing each column holds, and what may be computed from it.
-
-<!--
-**Say:** question 1.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Structured vs **Unstructured**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 📊 **Structured**
-
-Rows and columns: a table, a spreadsheet, a database. Each column has one meaning.
-
-- Sensor logs, survey answers, sales
-- `weather.csv` is structured
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🌀 **Unstructured**
-
-Free form: text, images, sound, video.
-
-- E-mails, photos, recordings
-- A step is needed to turn it into numbers or labels
-
-</div>
-
-</div>
-
-<!--
-**Ask:** which kind is a folder of holiday photos? A list of exam marks?
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Everything as **Numbers**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔢 **Numbers**
-
-Already numbers: −4.4 °C, 93 %.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔤 **Text**
-
-One code per character, `A` = 65, or one count per category.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🖼️ **Images**
-
-A 12-megapixel photo: 12 million pixels × 3 colours, each 0 to 255.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## ⚡ **Events**
-
-A time, and what was measured at that moment: a click, a sale, a reading.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Describing a thing by a set of numbers is called <strong>parametrisation</strong>. A computer stores and computes only numbers.</div>
-
-<!--
-**Say:** more examples aloud: a place on Earth is 2 numbers, a colour is 3, one second of CD sound is 44 100.
-**Say:** written as a number is not the same as behaving like one.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Kinds of **Variables**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📏 **Continuous**
-
-Any value in a range: −4.4 °C, 2.5 m/s. Can be averaged.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧮 **Discrete**
-
-Counts: visitors, goals, errors. Whole numbers. Can be averaged.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🏷️ **Nominal**
-
-Labels with no order: city, colour, station name. Counted, not averaged.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 📶 **Ordinal**
-
-Labels with an order: grades, low / medium / high. Ranked; a step has no size.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Postcodes and ID numbers are written in digits and are labels: the mean of two postcodes means nothing.</div>
-
-<!--
-**Ask:** which kind is each column of a spreadsheet you know?
-**Say:** the kind decides which summary and which plot make sense.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Anatomy of a **Table**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## 📥 **`weather_daily_export.csv`**
-
-```text
-nr;date;temp_c
-1;2025-10-01;6,3
-2;2025-10-02;5,0
-3;2025-10-03;5,6
-4;2025-10-04;7,0
-5;2025-10-05;9,4
-6;2025-10-06;10,4
-7;2025-10-07;9,2
-8;2025-10-08;9,0
-9;2025-10-09;9,8
-;mean;7,97
-```
-
-</div>
-
-<div class="stack-tight">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ➡️ **A row**
-
-One observation: one day.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⬇️ **A column**
-
-One variable, of one kind, in one unit. `_c` in the name is the unit.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🔲 **A cell**
-
-One value. `6,3` is written with a decimal comma.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">Nine daily mean temperatures, exported from a spreadsheet. The last line is not a day.</div>
-
-<!--
-**Say:** a second file from the same station, small enough to read whole. 180 bytes.
-**Ask:** what is one row? Which column is only a counter? Which line does not belong?
-**Say:** a table with one observation per row, one variable per column and one value per cell is called tidy.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Which Columns Can Be **Averaged**?
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🏷️ **`nr`**
-
-1 + 2 + … + 9 = 45, and 45 / 9 = **5.0**. A label for the row: its mean says nothing.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📅 **`date`**
-
-The days are in order, and the middle one is 2025-10-05. A label for the day, not a measurement.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🌡️ **`temp_c`**
-
-6.3 + 5.0 + … + 9.8 = 71.7, and 71.7 / 9 = **7.967**. The file's last line says `7,97`.
-
-</div>
-
-</div>
-
-<!--
-**Do:** let the room add up `temp_c` before you show the card: 6.3, 5.0, 5.6, 7.0, 9.4, 10.4, 9.2, 9.0, 9.8.
-**Say:** the check closes: 7.967 rounds to the 7,97 of the last line.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Mean Line, **Left In**
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-## 😮 **Ten values instead of nine**
-
-```text
-(71.7 + 7.97) / 10 = 79.67 / 10 = 7.967
-```
-
-The same mean. A value equal to the mean does not move the mean.
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-✅ The mean cannot show that the line is there. The count can: **10 rows for 9 days**. One row is one observation, and a mean is not one.
-
-</div>
-
-<!--
-**Ask:** before showing the card: what happens to the mean if the mean line is counted as a day? Most expect it to change.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Measured or **Derived**?
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📏 **Measured**
-
-`temp_c` in `weather.csv`: one reading per hour, as the station wrote it.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧮 **Derived**
-
-`temp_c` in the daily table: computed from measured values. For 1 October, 24 hourly values sum to 151.1, and 151.1 / 24 = 6.30.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🗂️ **Bookkeeping**
-
-`time`, `date`, `nr`: which hour, which day, which row.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">A derived value is checkable only if the README says how it was computed.</div>
-
-<!--
-**Say:** the daily table's 6,3 for 1 October is the mean of the 24 hourly rows of that day in `weather.csv`.
-**Ask:** is the mean line of the daily table measured or derived?
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# File Formats for a **Table**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **CSV**
-
-- Plain text, one line per row
-- Opens in any program
-- No types, no units
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📗 **Spreadsheet, .xlsx**
-
-- The table plus formatting and formulas
-- The program decides how a value is shown
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📦 **Binary**
-
-- Compact, a type for every column
-- Read only by a program that knows the format
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">Formats such as HDF5 and ROOT are binary. Large experiments, CERN among them, store their data that way.</div>
-
-<!--
-**Say:** the same table can be saved in all three.
-**If asked:** an .xlsx file is a zip archive of XML text files.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Decimal Comma or **Point**?
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🇬🇧 **Point**
-
-```text
-2025-10-01,6.3
-```
-
-The comma separates the values.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🇱🇹 **Comma**
-
-```text
-2025-10-01;6,3
-```
-
-The comma is the decimal sign, so `;` separates the values.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ A CSV file does not say which one it uses. A spreadsheet decides from the computer's regional settings, so one file opens differently on two computers.
-
-</div>
-
-<!--
-**Say:** `weather_daily_export.csv` came from a spreadsheet set to Lithuanian, so it has `;` and the decimal comma.
-**Ask:** whose spreadsheet uses a decimal comma?
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Opened in a **Spreadsheet**
-
-<div class="note-text mt-sm"><code>weather.csv</code>, with <code>,</code> between the values and <code>.</code> as the decimal sign, opened on three computers:</div>
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| On the screen | Reason |
-| --- | --- |
-| Every line in column A, as one text | The spreadsheet expects `;` between values |
-| Columns, but numbers turned into text or dates | It expects `,` as the decimal sign |
-| The right columns | The computer's settings match the file |
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ The file is the same on every laptop. The spreadsheet shows an **interpretation** of it, and saving writes that interpretation back. A file in `data/raw` is never saved from a spreadsheet.
-
-</div>
-
-<!--
-**Say:** VS Code shows the same characters on every laptop. That is why data files are opened in a text editor.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Row as Text and as **Binary**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **As text**
-
-`2016-01-01T00:00,-4.4,93,2.5` is 28 characters and a line end: **29 bytes**. The file: **2 515 215 bytes**, 28.7 per row.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📦 **As binary numbers**
-
-Four numbers of 4 bytes each: **16 bytes** per row. 87 672 × 16 = **1 402 752 bytes**.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-📏 The text copy is 2 515 215 / 1 402 752 = **1.8×** larger. Neither copy says what the numbers mean: that rule is written somewhere else.
-
-</div>
-
-<!--
-**Say:** in text every digit is one byte; in binary a number has a fixed size, whatever its digits.
-**If asked:** the time fits in 4 bytes as a count of hours from the first row.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Where the File **Came From**
-
-Who made a file, and on what terms it may be used, is written where it was published.
-
-<!--
-**Say:** question 2. From what the numbers are to where the file came from, and how to write it down so someone else can get the same bytes.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Open-Data **Portals**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🌍 **Weather and society**
-
-- **Copernicus**, **ECMWF**: weather and climate
-- **Eurostat**, national statistics
-- **data.gov.lt**, Lithuania
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔬 **Science**
-
-- **CERN Open Data Portal**
-- **NASA**, **ESA** archives
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📚 **Any field**
-
-- **Zenodo**: upload anything, get a DOI
-- **Kaggle**, your university's repository
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-🔗 A portal is a **catalogue**. Each dataset on it is a **record** with a stable address. Cite the record, not the file you happened to download.
-
-</div>
-
-<!--
-**Ask:** has anyone downloaded data from one of these? From where?
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Anatomy of a **Record**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧾 **What a record carries**
-
-- **Title** and authors
-- A **persistent identifier**, the DOI
-- **Licence**
-- **Files**, with sizes and checksums
-- **Description**: how the data was made
-- **Version** and date
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## ⚛️ **A real one**
-
-CERN Open Data Portal, record 401:
-
-- DOI `10.7483/OPENDATA.LHCb.E7EJ.JUWR`
-- Licence **CC0**
-- One file, 1 289 541 bytes
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">A DOI keeps working when the portal moves: <code>doi.org/</code> followed by the DOI leads to the record.</div>
-
-<!--
-**Say:** read the record before the data. It answers what one row is, how the data was selected, and what may be published.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Open-Data **Licences**
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-success card-glass pad-compact">
-
-## 🆓 **CC0**
-
-No conditions. Reuse, change, republish.
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🏷️ **CC BY**
-
-Anything, as long as the source is **credited**.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔁 **CC BY-SA, ODbL**
-
-Share-alike: what is made from it stays **equally open**. OpenStreetMap is an example.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-⚠️ **Open to read is not open to pass on.** Some portals allow a download and forbid putting the file online again. Check the licence before sharing data or a table made from it.
-
-</div>
-
-<!--
-**Say:** CERN Open Data is CC0. Most open data portals state the licence on every record.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Provenance, **Written Down**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📝 **The minimal note**
-
-- Source: portal and record, or who sent it
-- **Licence**
-- **Date** it was fetched or received
-- File names, sizes, checksums
-- What was done to it: "nothing" is an answer
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📄 **For `weather.csv`**
-
-```text
-Source:   e-mail from the station's
-          operator
-Licence:  CC0, stated in the e-mail
-Received: 2026-09-29
-File:     data/raw/weather.csv,
-          2 515 215 bytes
-Changes:  none
-```
-
-</div>
-
-</div>
-
-<!--
-**Say:** the file came with no note, but its sender is known. Ask once, then write the answers down.
-**Say:** someone else, or you in six months, must be able to get the same bytes. A checksum, a fingerprint of the bytes, proves it.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Your Own **Dataset**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🎒 **The provenance note**
-
-- Where it came from: a web address, an instrument, a colleague
-- The terms of use
-- The file exactly as received, and the date
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔒 **Personal data**
-
-- Anonymise before it enters the project folder
-- Never e-mail or upload raw personal data
-
-</div>
-
-</div>
-
-<!--
-**Ask:** what would the source line be for data you collected yourself?
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# From Record to **Project Folder**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧭 **Six steps**
-
-1. **Find** the record
-2. **Read** it: DOI, licence, description
-3. **Download** into `data/raw/`, name unchanged
-4. **Look** at it, never edit it
-5. **Write** the note into `README.md`
-6. **Test**: a neighbour finds the data from the README alone
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📁 **One folder per project**
-
-```text
-weather-project/
-├─ README.md
-├─ data/
-│  ├─ raw/
-│  └─ processed/
-├─ scripts/
-└─ results/
-```
-
-</div>
-
-</div>
-
-<!--
-**Say:** `data/raw` holds files exactly as received. Everything made from them goes elsewhere.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
 # How One Row Was **Made**
 
 A row is a decision: what was measured, how often, and what was kept.
@@ -1113,38 +292,24 @@ Its sensors read many times an hour. It writes **one line per hour**: the time a
 hideInToc: true
 ---
 
-# CERN: What Becomes a **Row**
+# One Row at the Station and at the **LHC**
 
-<div class="stack-tight mt-sm">
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact">
-
-💥 Inside each detector of the LHC, bunches of protons cross **40 million times a second**, with dozens of collisions in each crossing
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-⚡ A **trigger**, electronics and a computer farm, decides within microseconds which collisions to keep
+| | 🌡️ **Weather station** | 💥 **A detector of the LHC** |
+| --- | --- | --- |
+| What happens | Sensors read many times an hour | **40 million** bunch crossings a second, dozens of collisions in each |
+| What is kept | One line per hour | A few **thousand** collisions a second, chosen in microseconds by the **trigger** |
+| One row | One hour | One kept collision |
+| What is lost | The readings inside each hour | Every collision not kept |
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
-
-💾 A few **thousand** per second are stored: fewer than one collision in a hundred thousand
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ A collision that is not kept is gone. Deciding what becomes a row is already data analysis, written as code before anyone sees the data.
-
-</div>
+<div class="note-text mt-md">Deciding what becomes a row is part of the analysis, and at the LHC it is written as code before anyone sees the data.</div>
 
 <!--
-**Say:** the same question as at the station, at the largest scale there is. The raw signal is about 1 PB a second; nothing can store it.
+**Say:** question 3 at the largest scale there is. The raw signal is about 1 PB a second; nothing can store it.
+**If asked:** the trigger is electronics and a computer farm. Fewer than one collision in a hundred thousand is stored.
 (~3 min)
 -->
 
@@ -1172,34 +337,6 @@ How many rows, in which units, and where the gaps are: the file itself shows it.
 <!--
 **Say:** questions 4 and 5 are answered from the file itself, by reading and by reasoning.
 (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Read a Row **Aloud**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-```text
-2016-01-01T00:00,-4.4,93,2.5
-```
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-🗣️ "At 00:00 on 1 January 2016 the station measured `temp_c` −4.4, `humidity_pct` 93 and `wind_ms` 2.5."
-
-</div>
-
-<div class="note-text mt-md">The sentence still lacks the units, and says nothing about the other 87 671 rows.</div>
-
-<!--
-**Do:** read row 1 aloud as a sentence, then ask a student to read row 2 the same way.
-**Say:** `T` separates the date from the hour. This way of writing a time is the standard ISO 8601.
-(~2 min)
 -->
 
 ---
@@ -1382,25 +519,669 @@ Mean temperature over ten years: **5.78 °C**
 hideInToc: true
 ---
 
-# The Five Questions, **Answered**
+# −999 in a **CERN File**
 
-<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-| | **Question** | **`weather.csv`** |
+## 📄 **Simulated ATLAS collisions, CERN Open Data record 328: 4 of 35 columns**
+
+```text
+EventId,DER_mass_MMC,DER_deltaeta_jet_jet,PRI_jet_num
+100000,138.47,0.91,2
+100001,160.937,-999.0,1
+100002,-999.0,-999.0,1
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **Counted**
+
+`DER_deltaeta_jet_jet` is the separation between the two jets of a collision. 327&nbsp;371 rows with no jet and 252&nbsp;882 with one: **580&nbsp;253** of 818&nbsp;238 hold −999.0.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📖 **What the mark means here**
+
+A value that cannot exist for that row: one jet has no second one. The record's description says when each column is undefined.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the same mark as at the station, with another meaning: there the sensor was down, here the quantity does not exist. A mean with the marks in it would be mostly marks: 71 % of the rows.
+**If asked:** a jet is a narrow spray of particles. The file was made for a machine-learning challenge in 2014 and is CC0.
+(~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Kinds of **Data**
+
+The first part of the rule: what kind of thing each column holds, and what may be computed from it.
+
+<!--
+**Say:** question 1.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Everything as **Numbers**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| **Thing** | **As numbers** |
+| --- | --- |
+| A temperature | `-4.4` |
+| An hour of the log | `2016-01-01T00:00` is hour 0, and `2025-12-31T23:00` hour 87 671 |
+| A letter | `A` = 65 |
+| A place on Earth | two numbers: latitude and longitude |
+| One pixel of a photo | three numbers from 0 to 255: red, green, blue |
+| A 12-megapixel photo | 12 million pixels × 3 = 36 million numbers |
+
+</div>
+
+<div class="note-text mt-md">Describing a thing by a set of numbers is called <strong>parametrisation</strong>. A computer stores and computes only numbers.</div>
+
+<!--
+**Say:** written as a number is not the same as behaving like one. A pixel value of 255 is a brightness; the 65 of `A` only names a letter.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Kinds of **Variables**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📋 **Four kinds**
+
+| Kind | For example | Mean? |
 | --- | --- | --- |
-| 1 | Kind of each column | A time, then three continuous columns that can be averaged |
-| 2 | Where it came from | The station's operator, by e-mail; CC0 |
-| 3 | One row | One hour at one station |
-| 4 | Units | `temp_c` °C, `humidity_pct` %, `wind_ms` m/s |
-| 5 | Missing values | `-999` in `temp_c`, 120 rows, 22 to 26 July 2019 |
+| 📏 Continuous | −4.4 °C, 2.5 m/s | yes |
+| 🧮 Discrete | visitors, goals | yes |
+| 🏷️ Nominal | city, station name | no: counted |
+| 📶 Ordinal | grades, low to high | no: ranked |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🌡️ **The columns of `weather.csv`**
+
+| Column | Range | Kind |
+| --- | --- | --- |
+| `time` | 2016 to 2025, hourly | a time, in order |
+| `temp_c` | −16.3 to 32.4 | continuous |
+| `humidity_pct` | 34 to 100 | continuous |
+| `wind_ms` | 0.0 to 12.0 | continuous |
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">Postcodes and ID numbers are written in digits and are labels: the mean of two postcodes means nothing.</div>
+
+<!--
+**Ask:** which kind is each column of a spreadsheet you know?
+**Say:** the kind decides which summary and which plot make sense. A discrete count has no half visitor, and an ordinal step has no size.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Anatomy of a **Table**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📥 **`daily_export.csv`**
+
+```text
+nr;date;temp_c
+1;2025-10-01;6,3
+2;2025-10-02;5,0
+3;2025-10-03;5,6
+4;2025-10-04;7,0
+5;2025-10-05;9,4
+6;2025-10-06;10,4
+7;2025-10-07;9,2
+8;2025-10-08;9,0
+9;2025-10-09;9,8
+;mean;7,97
+```
+
+</div>
+
+<div class="stack-tight">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ➡️ **A row**
+
+One observation: one day.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⬇️ **A column**
+
+One variable, of one kind, in one unit. `_c` in the name is the unit.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔲 **A cell**
+
+One value. `6,3` is written with a decimal comma.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Nine daily mean temperatures, exported from a spreadsheet. The last line is not a day.</div>
+
+<!--
+**Say:** a second file from the same station, small enough to read whole. 180 bytes.
+**Ask:** what is one row? Which column is only a counter? Which line does not belong?
+**Say:** a table with one observation per row, one variable per column and one value per cell is called tidy.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which Columns Can Be **Averaged**?
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏷️ **`nr`**
+
+1 + 2 + … + 9 = 45, and 45 / 9 = **5.0**. A label for the row: its mean says nothing.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📅 **`date`**
+
+The days are in order, and the middle one is 2025-10-05. A label for the day, not a measurement.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🌡️ **`temp_c`**
+
+6.3 + 5.0 + … + 9.8 = 71.7, and 71.7 / 9 = **7.967**. The file's last line says `7,97`.
+
+</div>
+
+</div>
+
+<!--
+**Do:** let the room add up `temp_c` before you show the card: 6.3, 5.0, 5.6, 7.0, 9.4, 10.4, 9.2, 9.0, 9.8.
+**Say:** the check closes: 7.967 rounds to the 7,97 of the last line.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Mean Line, **Left In**
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+## 😮 **Ten values instead of nine**
+
+```text
+(71.7 + 7.97) / 10 = 79.67 / 10 = 7.967
+```
+
+The same mean. A value equal to the mean does not move the mean.
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ None of the five answers was in the four lines. Each one is part of the file's rule.
+✅ The mean cannot show that the line is there. The count can: **10 rows for 9 days**. One row is one observation, and a mean is not one.
 
 </div>
+
+<!--
+**Ask:** before showing the card: what happens to the mean if the mean line is counted as a day? Most expect it to change.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Measured or **Derived**?
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 📏 **Measured: `temp_c` of `weather.csv`, 1 October 2025, 00:00 to 23:00**
+
+```text
+ 3.9  3.9  2.7  2.8  3.1  3.5  3.8  4.8  5.9  6.9  7.5  8.2
+ 9.3  9.6 10.1  9.7  9.7  9.4  8.4  7.5  6.8  5.9  4.4  3.3
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Derived: the export's `6,3`**
+
+The 24 values sum to 151.1, and 151.1 / 24 = 6.30: the line `1;2025-10-01;6,3`.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🗂️ **Bookkeeping**
+
+`time`, `date`, `nr`: which hour, which day, which row.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">A derived value is checkable only if the README says how it was computed.</div>
+
+<!--
+**Ask:** is the mean line of the export measured or derived?
+**If asked:** the coldest hour of that day is 2.7 °C at 02:00, the warmest 10.1 °C at 14:00.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# File Formats for a **Table**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| | **Format** | **`weather.csv`, 87 672 rows** | **Read by** |
+| --- | --- | --- | --- |
+| 📄 | CSV: plain text, one line per row | 2 515 215 bytes | any program, and a person |
+| 📗 | Spreadsheet, `.xlsx`: a zip of XML files | 1 922 248 bytes | a program that knows the format |
+| 📦 | Binary: four 4-byte numbers per row | 87 672 × 16 = 1 402 752 bytes | a program told the types and their order |
+
+</div>
+
+<div class="note-text mt-md">HDF5 and ROOT are binary formats that write the types into the file. CERN stores its collision data in ROOT files.</div>
+
+<!--
+**Say:** the same table in three formats. CSV is the largest, and the only one a person can read.
+**If asked:** the .xlsx was written with Python's openpyxl 3.1.5; Excel writes another byte count. An .xlsx file is a zip archive of XML text files.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Decimal Comma or **Point**?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🇬🇧 **Point**
+
+```text
+2025-10-01,6.3
+```
+
+The comma separates the values.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🇱🇹 **Comma**
+
+```text
+2025-10-01;6,3
+```
+
+The comma is the decimal sign, so `;` separates the values.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ A CSV file does not say which one it uses. A spreadsheet decides from the computer's regional settings, so one file opens differently on two computers.
+
+</div>
+
+<!--
+**Say:** `daily_export.csv` came from a spreadsheet set to Lithuanian, so it has `;` and the decimal comma.
+**Ask:** whose spreadsheet uses a decimal comma?
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Opened in a **Spreadsheet**
+
+<div class="note-text mt-sm"><code>weather.csv</code>, with <code>,</code> between the values and <code>.</code> as the decimal sign, opened on three computers:</div>
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| On the screen | Reason |
+| --- | --- |
+| Every line in column A, as one text | The spreadsheet expects `;` between values |
+| Columns, but numbers turned into text or dates | It expects `,` as the decimal sign |
+| The right columns | The computer's settings match the file |
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The file is the same on every laptop. The spreadsheet shows an **interpretation** of it, and saving writes that interpretation back. A file in `data/raw` is never saved from a spreadsheet.
+
+</div>
+
+<!--
+**Say:** VS Code shows the same characters on every laptop. That is why data files are opened in a text editor.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Row as Text and as **Binary**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **As text**
+
+`2016-01-01T00:00,-4.4,93,2.5` is 28 characters and a line end: **29 bytes**. The file: **2 515 215 bytes**, 28.7 per row.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📦 **As binary numbers**
+
+Four numbers of 4 bytes each: **16 bytes** per row. 87 672 × 16 = **1 402 752 bytes**.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📏 The text copy is 2 515 215 / 1 402 752 = **1.8×** larger. Neither copy says what the numbers mean: that rule is written somewhere else.
+
+</div>
+
+<!--
+**Say:** in text every digit is one byte; in binary a number has a fixed size, whatever its digits.
+**If asked:** the time fits in 4 bytes as a count of hours from the first row.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Where the File **Came From**
+
+Who made a file, and on what terms it may be used, is written where it was published.
+
+<!--
+**Say:** question 2.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Open-Data **Portals**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| **Portal** | **Holds** | **For example** |
+| --- | --- | --- |
+| 🌍 Copernicus Climate Data Store | weather and climate | ERA5: hourly temperature on a grid, from 1940 |
+| 📊 Eurostat, data.gov.lt | statistics of the EU and of Lithuania | prices, population, transport |
+| ⚛️ CERN Open Data | particle physics | record 328: 818 238 simulated ATLAS collisions |
+| 📚 Zenodo | any field | the data of a paper, with a DOI |
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🔗 A portal is a **catalogue**. Each dataset on it is a **record** with a stable address. Cite the record, not the file you happened to download.
+
+</div>
+
+<!--
+**Ask:** has anyone downloaded data from one of these? From where?
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Anatomy of a **Record**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| **A record carries** | ⚛️ **CERN Open Data, record 328** | 🌡️ **`weather.csv`** |
+| --- | --- | --- |
+| Title | ATLAS Higgs Boson Machine Learning Challenge 2014 | none |
+| Identifier | DOI `10.7483/OPENDATA.ATLAS.ZBP2.M5T8` | none: an e-mail |
+| Licence | **CC0** | CC0, stated in the e-mail |
+| Files | one, 65 630 848 bytes, with its checksum | one, 2 515 215 bytes |
+| Description | how the collisions were simulated; when a column is undefined | asked for by e-mail |
+
+</div>
+
+<div class="note-text mt-md">A DOI keeps working when the portal moves: <code>doi.org/</code> followed by the DOI leads to the record.</div>
+
+<!--
+**Say:** read the record before the data. Everything in the right column had to be asked for.
+**If asked:** the file of record 328 is a compressed CSV, 818 238 rows and 35 columns.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Open-Data **Licences**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🆓 **CC0**
+
+No conditions. Reuse, change, republish.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🏷️ **CC BY**
+
+Anything, as long as the source is **credited**.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🔁 **CC BY-SA, ODbL**
+
+Share-alike: what is made from it stays **equally open**. OpenStreetMap is an example.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+⚠️ Some portals allow a download and forbid putting the file online again. Check the licence before sharing data or a table made from it.
+
+</div>
+
+<!--
+**Say:** CERN Open Data is CC0. Most open data portals state the licence on every record.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Provenance, **Written Down**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📝 **The minimal note**
+
+- Source: portal and record, or who sent it
+- **Licence**
+- **Date** it was fetched or received
+- File names, sizes, checksums
+- What was done to it: "nothing" is an answer
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **For `weather.csv`**
+
+```text
+Source:   e-mail from the station's
+          operator
+Licence:  CC0, stated in the e-mail
+Received: 2026-09-29
+File:     data/raw/weather.csv,
+          2 515 215 bytes
+Changes:  none
+```
+
+</div>
+
+</div>
+
+<!--
+**Say:** the file came with no note, but its sender is known. Ask once, then write the answers down.
+**Say:** someone else, or you in six months, must be able to get the same bytes. A checksum, a fingerprint of the bytes, proves it.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# From Record to **Project Folder**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧭 **Six steps**
+
+1. **Find** the record
+2. **Read** it: DOI, licence, description
+3. **Download** into `data/raw/`, name unchanged
+4. **Look** at it, never edit it
+5. **Write** the note into `README.md`
+6. **Test**: a neighbour finds the data from the README alone
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📁 **One folder per project**
+
+```text
+weather-project/
+├─ README.md
+├─ data/
+│  ├─ raw/
+│  └─ processed/
+├─ scripts/
+└─ results/
+```
+
+</div>
+
+</div>
+
+<!--
+**Say:** `data/raw` holds files exactly as received. Everything made from them goes elsewhere.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Five Questions, **Answered**
+
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+
+| | **Question** | 🌡️ **`weather.csv`** | ⚛️ **ATLAS file, record 328** |
+| --- | --- | --- | --- |
+| 1 | Kind of each column | A time, three continuous columns | Masses, momenta, angles; a count of jets; a label `s` or `b` |
+| 2 | Where it came from | The station's operator, by e-mail; CC0 | CERN Open Data, with a DOI; CC0 |
+| 3 | One row | One hour at one station | One simulated collision |
+| 4 | Units | °C, %, m/s | Not stated; masses near 125, the Higgs mass in GeV, point to GeV |
+| 5 | Missing values | `-999` in `temp_c`, 120 rows | `-999.0` where a value cannot exist |
+
+</div>
+
+<div class="note-text mt-md">None of the answers for <code>weather.csv</code> was in its four lines. Each one is part of the file's rule.</div>
 
 <!--
 **Do:** go back to the four lines of slide 3 for a moment and read row 1 with its units.
@@ -1987,7 +1768,7 @@ hideInToc: true
 The daily table arrived in a spreadsheet's format. Each fix is the same on every line, and the editor makes it once.
 
 <!--
-**Say:** back to the nine-day table of slide 14. It is repaired here by hand, on a copy.
+**Say:** back to the nine-day table of slide 23. It is repaired here by hand, on a copy.
 (~1 min)
 -->
 
@@ -2502,7 +2283,7 @@ hideInToc: true
 </div>
 
 <!--
-**Say:** one line per objective of slide 5.
+**Say:** one line for each part of the rule.
 (~1 min)
 -->
 

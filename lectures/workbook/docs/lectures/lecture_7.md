@@ -149,12 +149,12 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 7 — The Whole File in Python](../seminars/seminar_07.md) reads
-`D0_KPi.csv` with the `csv` module into lists inside a function and takes
-a mean and a count by loop. The room then installs NumPy with `pip`, reads
-the file with `np.loadtxt`, masks the missing values with `TAU != -100`,
-counts rows in a mass window and in 20 bins, and writes the numbers to
-`results/summary.txt`.
+[Seminar 7 — Is It Getting Warmer? Functions and NumPy on the Weather
+Project](../seminars/seminar_07.md) works on the weather project of Lectures
+1 to 5. Every student gives the project a conda environment with NumPy,
+written down in `environment.yml`; reads `weather.csv` with functions and
+then as one NumPy array; finds the coldest day and the mean of each year;
+commits and pushes.
 
 ## Take-aways
 

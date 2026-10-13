@@ -1,666 +1,697 @@
-# Seminar 10 — Fit a Straight Line and Measure g
+# Seminar 10 — How Strong Is the Yearly Cycle? Fitting the Weather Data
 
-**Paired lecture:** 10 Data Fitting from First Principles · **Format:** follow-along · **~120 min**
+**Paired lecture:** 10 Fitting from First Principles · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student fits a straight line to the pendulum table,
-first from the closed formulas and then with `curve_fit`, and reports
-g = 9.84 ± 0.09 m/s² with χ² and a figure of the residuals.
+**Today's goal:** every student fits a straight line to the ten yearly
+means by the closed formulas of the lecture (−0.6 ± 0.8 °C per decade) and
+a cosine to the 3648 daily means (amplitude 11.18 °C, coldest on
+16 January), reads the residuals, commits and pushes.
 
-Everything is typed into one script, `scripts/fit_pendulum.py`, which grows
-from section to section and is run after every step. The new tool of the
-session is SciPy, with one function.
+Everything is typed in VS Code: the scripts in the editor, the runs in its
+terminal (PowerShell 7, `weather` environment). SciPy is installed in
+section 1.
 
 ## Run sheet
 
-One screen for the front of the room. Each line links to its section.
-
-| Clock | Section | On the projector | The room ends with |
+| Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · The data** · 20 min | | |
-| 0:00 | [1. Install SciPy](#install) | `python -m pip install scipy` | A version number printed |
-| 0:08 | [2. Read the table](#read) | `scripts/fit_pendulum.py`, `np.loadtxt` | Three arrays: x, y and its uncertainty |
-| | **Part 2 · The fit from the closed formulas** · 45 min | | |
-| 0:20 | [3. Five sums](#sums) | `w = 1 / sy**2` and five `np.sum` | S, Sx, Sy, Sxx, Sxy printed |
-| 0:35 | [4. Slope, intercept, uncertainties](#slope) | `D = S * Sxx - Sx**2` | a and b with ± and their covariance |
-| 0:50 | [5. g and χ²](#g) | `g = 4 * np.pi**2 / a` | g = 9.845 ± 0.090 m/s², χ² = 2.65 for 7 |
-| | **Part 3 · The same fit with `curve_fit`** · 25 min | | |
-| 1:05 | [6. Call `curve_fit`](#curve-fit) | `popt, pcov = curve_fit(...)` | The same five numbers from one call |
-| 1:20 | [7. Change the call](#change) | One argument removed at a time | The effect of `absolute_sigma`, `sigma` and `p0` seen |
-| | **Part 4 · Residuals** · 30 min | | |
-| 1:30 | [8. Plot the fit and the residuals](#plot) | `plt.subplots(2, 1, ...)` | `results/pendulum_fit.png` |
-| 1:45 | [9. Write the result down](#report) | `results/report.md`, then the preview | A **Fit** section in the report |
-| 1:55 | [10. Wrap up](#wrap-up) | Source Control, one commit | Script, figure and report committed |
+| | **Part 1 · SciPy and the daily means** · 30 min | | |
+| 0:00 | [1. Install SciPy](#install) | `conda install scipy` | `1.18.1`, `scipy` in `environment.yml` |
+| 0:10 | [2. The daily means](#daily) | `scripts/fit_cycle.py`, `reshape(-1, 24)` | 3648 daily means |
+| 0:20 | [3. Plot them](#plot) | `ax.plot(d, T, ".")` | ten waves |
+| | **Part 2 · Is it getting warmer?** · 30 min | | |
+| 0:30 | [4. Ten yearly means](#yearly) | `scripts/fit_trend.py` | ten points, σ = 0.70 |
+| 0:35 | [5. Five sums, slope and intercept](#sums) | `D = S * Sxx - Sx**2` | a = −0.0555 °C per year |
+| 0:45 | [6. Uncertainties and χ²](#chi2) | `np.sqrt(S / D)` | −0.6 ± 0.8 °C per decade |
+| | **Part 3 · The yearly cycle** · 35 min | | |
+| 1:00 | [7. A cosine and a sine column](#lstsq) | `np.linalg.lstsq` | c, a, b |
+| 1:10 | [8. Amplitude and the coldest day](#amplitude) | `np.hypot(a, b)` | 11.18 °C, day 15.9 |
+| 1:20 | [9. The same with `curve_fit`](#curve-fit) | `curve_fit(cycle, d, T, p0=…)` | 11.179 ± 0.069 |
+| | **Part 4 · The residuals** · 15 min | | |
+| 1:35 | [10. Residuals](#residuals) | `np.corrcoef(res[:-1], res[1:])` | 0.875, `results/cycle_fit.png` |
+| | **Part 5 · Write it down** · 10 min | | |
+| 1:50 | [11. The README, a commit, a push](#commit) | `git commit`, `git push` | the fits on GitHub |
+| 1:55 | [12. Wrap up](#wrap-up) | | |
+| | **Optional, if the room is fast** | | |
+| — | [13. The amplitude year by year](#by-year) | a loop of ten fits | 11.20 ± 0.25 °C |
+| — | [14. The daily cycle](#daily-cycle) | a period of 24 hours | 3.50 °C, warmest at 15:00 |
 
-**If time runs short:** section 7 is the one to leave out. Section 9 stays:
-it is the written result of the session.
-
-??? info "How to use this page"
-    This page is written for the person at the front. Students follow the
-    same page.
-
-    - **Tell the room** is the paragraph to say before the steps.
-    - The **numbered steps** are what to do on the projector. The room
-      repeats each step on their own laptops.
-    - **You should now see** closes a section. Ask for hands: "who sees
-      this?" Go on when about four in five have it. The rest get help from a
-      neighbour.
-    - **Watch for** is the usual slip in that section.
-
-    Keys are written for Windows, with macOS in brackets. Commands are typed
-    in the terminal inside VS Code: `zsh` on macOS, PowerShell 7 on Windows.
-    Where a command differs, it has a tab for each: `python3` on macOS,
-    `python` on Windows.
+**If time runs short:** leave out section 3 and the Task of Part 3;
+sections 10 and 11 stay.
 
 ??? info "Before the session"
-    For the room: the project folder with `data/processed/pendulum.csv`, the
-    cleaned table of [Seminar 4](seminar_04.md#checksum), and
-    `results/report.md`, and Python with NumPy and Matplotlib. A student who
-    does not have `pendulum.csv` downloads it now from the files box below
-    and drags it onto the `processed` folder.
-
-    For you:
-
-    - The whole script run once on your own laptop. The numbers on this page
-      were produced with NumPy 2.3 and SciPy 1.16.
-    - A calculator, for the hand check in section 3.
-
-??? info "Files for this seminar"
-    A browser saves each file under the name in the second column.
-
-    | File | Saved as | What it is |
-    |--|--|--|
-    | [`pendulum.csv`](../data/pendulum.csv){ download="pendulum.csv" } | `pendulum.csv` | The cleaned table, for `data/processed/` |
-    | [`pendulum_report.txt`](../data/pendulum_report.txt){ download="report.md" } | `report.md` | The short report handed out in Seminar 4, for `results/`, for a student who has none |
+    - **Room:** `weather-project` with `environment.yml` and the `weather`
+      environment of Seminars 7 and 8, `scripts/mean_error.py` of Seminar 9.
+      Internet for `conda install scipy`.
+    - **You:** nothing to prepare. The data are the same in every clone, so
+      every number on this page is the number in the room. Commit ids differ.
+    - **Keys** are written for Windows, macOS in brackets.
 
 ---
 
-## Part 1 · The data { #part-1 }
+## Part 1 · SciPy and the daily means { #part-1 }
 
-**0:00 to 0:20 · sections 1 and 2**
-
-SciPy is installed. The pendulum table is read into NumPy arrays, and each
-value gets an uncertainty.
+**0:00 to 0:30**
 
 ---
 
 ### 1. Install SciPy { #install }
 
-**0:00 · 8 min**
+**0:00 · 10 min** · `curve_fit` lives in SciPy. It goes into the environment and into `environment.yml`.
 
-**Tell the room.** SciPy is a library of numerical methods that work on
-NumPy arrays. Today needs one function from it, `curve_fit`. It is
-installed once, like NumPy.
+1. Open `weather-project` in VS Code, then the terminal. Switch on the
+   environment and bring in any commit from GitHub.
 
-1. Open the project folder in VS Code and open the terminal with
-   **Terminal** > **New Terminal**.
+    ```text
+    conda activate weather
+    ```
+
+    ```text
+    git pull
+    ```
+
+    ```text
+    Already up to date.
+    ```
 
 2. Install SciPy.
 
-    === "macOS"
+    ```text
+    conda install scipy
+    ```
 
-        ```text
-        python3 -m pip install scipy
-        ```
+    ```text
+    ## Package Plan ##
 
-    === "Windows"
+      environment location: /Users/smilte/miniforge3/envs/weather
 
-        ```text
-        python -m pip install scipy
-        ```
+      added / updated specs:
+        - scipy
 
-3. Check that Python finds it.
 
-    === "macOS"
+    The following NEW packages will be INSTALLED:
 
-        ```text
-        python3 -c "import scipy; print(scipy.__version__)"
-        ```
+      scipy              conda-forge/linux-64::scipy-1.18.1-py314h36f0660_1
 
-    === "Windows"
 
-        ```text
-        python -c "import scipy; print(scipy.__version__)"
-        ```
+    Proceed ([y]/n)?
+    ```
 
-!!! success "You should now see"
-    A version number, for example `1.16.2`.
+    Press `Enter`. Your line names your system (`osx-arm64`, `win-64`), and
+    on Windows the folder is `C:\Users\smilte\miniforge3\envs\weather`.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `No module named pip` | Python was installed without pip. Run `python -m ensurepip` (macOS `python3 -m ensurepip`) and repeat step 2 |
-    | `ModuleNotFoundError: No module named 'scipy'` in step 3 | Step 2 and step 3 used two different Pythons. Use the word of your tab, `python3` or `python`, in both |
+3. Check.
+
+    ```text
+    python -c "import scipy; print(scipy.__version__)"
+    ```
+
+    ```text
+    1.18.1
+    ```
+
+4. Open `environment.yml`. Add one line at the end of `dependencies`, save.
+
+    ```text
+      - scipy
+    ```
+
+5. Look at the change, commit it.
+
+    ```text
+    git diff
+    ```
+
+    ```text
+    @@ -5,3 +5,4 @@ dependencies:
+       - python=3.14
+       - numpy=2.5
+       - matplotlib-base=3.11
+    +  - scipy
+    ```
+
+    ```text
+    git commit -am "Add SciPy to the environment"
+    ```
+
+    ```text
+    [main b3c4d6b] Add SciPy to the environment
+     1 file changed, 1 insertion(+)
+    ```
+
+**Check:** `1.18.1`, and `git status` clean.
 
 ---
 
-### 2. Read the table { #read }
+### 2. The daily means { #daily }
 
-**0:08 · 12 min**
+**0:10 · 10 min** · 24 rows make a day: `reshape(-1, 24)` gives one row per day.
 
-**Tell the room.** The table has nine lengths in centimetres and the time of
-ten swings in seconds. The fit needs three arrays: x, the length in metres;
-y, the square of the period; and the uncertainty of y. The stopwatch was
-worked by hand, so we assume 0.1 s on the time of ten swings. One period
-then has 0.01 s, and its square has 2 T × 0.01, by the propagation rule of
-Lecture 09.
+1. New file `scripts/fit_cycle.py`. Type and save.
 
-1. In the Side Bar select the `scripts` folder, then **New File**, and name
-   it:
+    ```python
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.optimize import curve_fit
 
-    ```text
-    fit_pendulum.py
+    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=1)
+    days = temp.reshape(-1, 24)
+    good = (days != -999).all(axis=1)
+    T = days[good].mean(axis=1)
+    d = np.arange(len(days))[good]
+    print("days", len(days), "with 24 hours", len(T))
     ```
 
-2. Type the script.
+    `good` keeps the days whose 24 hours are all valid; `d` is the day
+    number, 0 for 1 January 2016.
+
+2. Run it.
 
     ```text
+    python scripts/fit_cycle.py
+    ```
+
+    ```text
+    days 3653 with 24 hours 3648
+    ```
+
+**Check:** 3648 days: the five days of July 2019 are out.
+
+---
+
+### 3. Plot them { #plot }
+
+**0:20 · 5 min** · The model is chosen from the picture.
+
+1. Add at the end, save, run.
+
+    ```python
+
+    fig, ax = plt.subplots(figsize=(8, 3))
+    ax.plot(d, T, ".", ms=2)
+    ax.set_xlabel("day since 2016-01-01")
+    ax.set_ylabel("daily mean (°C)")
+    fig.savefig("results/daily_means.png", dpi=150, bbox_inches="tight")
+    ```
+
+    ```text
+    python scripts/fit_cycle.py
+    ```
+
+2. Open `results/daily_means.png` from the Explorer: ten waves, one per
+   year.
+
+**Check:** ten waves, low at the start of each year, high in summer.
+
+!!! question "Task: read the model off the plot"
+    From the plot alone: the mean level, the amplitude (half the distance
+    from winter to summer), and the day of the coldest point. These are the
+    starting values of section 9.
+
+??? note "Answer"
+    Winter about −4 °C, summer about 18 °C: level (18 − 4)/2 ≈ 7 °C,
+    amplitude (18 + 4)/2 ≈ 11 °C, coldest near day 15, mid-January. The fit
+    gives 7.18, 11.18 and 15.9.
+
+---
+
+## Part 2 · Is it getting warmer? { #part-2 }
+
+**0:30 to 1:00** · A straight line through the ten yearly means, by the five sums of the lecture.
+
+---
+
+### 4. Ten yearly means { #yearly }
+
+**0:30 · 5 min** · x is the year since 2016; σ of each point is 0.70 °C, the scatter of the years in Seminar 9.
+
+1. New file `scripts/fit_trend.py`. Type and save.
+
+    ```python
     import numpy as np
 
-    table = np.loadtxt("data/processed/pendulum.csv", delimiter=",",
-                       skiprows=1)
-    x = table[:, 0] / 100          # length, cm to m
-    t10 = table[:, 1]              # time of 10 swings, s
-
-    T = t10 / 10                   # one period, s
-    y = T**2                       # s squared
-    sy = 2 * T * 0.01              # uncertainty of y: 0.1 s on t10
-
-    print(x)
-    print(y)
-    print(sy)
+    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=0, dtype=str)
+    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=1)
+    year = np.array([int(t[:4]) for t in time])
+    ok = temp != -999
+    x = np.arange(10)              # years since 2016
+    y = np.array([temp[ok & (year == 2016 + k)].mean() for k in x])
+    sy = np.full(10, 0.70)         # the scatter of the years, Seminar 9
+    print(y.round(2))
     ```
 
-3. Save with `Ctrl+S` (macOS `Cmd+S`) and run it in the terminal. Every
-   later "run the script" means this command.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/fit_pendulum.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/fit_pendulum.py
-        ```
-
-!!! success "You should now see"
-    Three arrays of nine numbers:
+2. Run it.
 
     ```text
-    [0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1. ]
-    [0.813604 1.221025 1.590121 2.024929 2.399401 2.835856 3.2041   3.6481
-     4.004001]
-    [0.01804 0.0221  0.02522 0.02846 0.03098 0.03368 0.0358  0.0382  0.04002]
+    python scripts/fit_trend.py
     ```
 
-Ask the room which point is known best. It is the first: the short pendulum
-has the smallest uncertainty in T squared.
+    ```text
+    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
+    ```
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `FileNotFoundError` | The terminal is not in the project folder. Run `pwd`, then `cd` to the project folder |
-    | `could not convert string '1;20;9' to float64` | This is the raw file, with semicolons. The cleaned file is `data/processed/pendulum.csv` |
+**Check:** the ten means of Seminar 9.
 
 ---
 
-## Part 2 · The fit from the closed formulas { #part-2 }
+### 5. Five sums, slope and intercept { #sums }
 
-**0:20 to 1:05 · sections 3 to 5**
+**0:35 · 10 min** · χ² is smallest where both derivatives are zero; the solution needs five sums.
 
-The model is a straight line, y = a x + b. The lecture set the two
-derivatives of χ² to zero and solved for a and b. The solution needs five
-sums over the data and nothing else. The room now computes them.
+1. Add at the end, save.
 
----
+    ```python
 
-### 3. Five sums { #sums }
-
-**0:20 · 15 min**
-
-**Tell the room.** Each point enters every sum with the weight 1/σ². A point
-with half the uncertainty counts four times as much.
-
-1. Delete the three `print` lines. Add at the end of the script:
-
-    ```text
     w = 1 / sy**2
-    S = np.sum(w)
-    Sx = np.sum(w * x)
-    Sy = np.sum(w * y)
-    Sxx = np.sum(w * x * x)
-    Sxy = np.sum(w * x * y)
-    print(f"S = {S:.2f}  Sx = {Sx:.2f}  Sy = {Sy:.2f}")
-    print(f"Sxx = {Sxx:.2f}  Sxy = {Sxy:.2f}")
-    ```
-
-2. Run the script.
-
-3. Check the first weight on a calculator: 1 / 0.01804² = 3072.75. Add this
-   line for a moment and compare with the first element:
-
-    ```text
-    print(w)
-    ```
-
-    The first element is `3072.74792159`. Remove the line again.
-
-4. Ask why `Sy` is a round number. Add this line for a moment:
-
-    ```text
-    print(w * y)
-    ```
-
-    Every element is 2500. The uncertainty is 2 T × 0.01, so y/σ² is
-    T² / (4 T² × 0.01²) = 2500 for every row. Remove the line again.
-
-!!! success "You should now see"
-    ```text
-    S = 11940.44  Sx = 5582.56  Sy = 22500.00
-    Sxx = 3353.27  Sxy = 13500.00
-    ```
-
-!!! warning "Watch for"
-    `Sxx` comes out as 3353.27 only with `w * x * x`. A student who typed
-    `w * x**2` has the same number. A student who typed `(w * x)**2` has
-    3 463 011.91, the sum of the squared products.
-
----
-
-### 4. Slope, intercept, uncertainties { #slope }
-
-**0:35 · 15 min**
-
-**Tell the room.** The slope and the intercept are ratios of these sums. So
-are their uncertainties and their covariance. The denominator is the same in
-all five.
-
-1. Add at the end of the script:
-
-    ```text
+    S, Sx, Sy = w.sum(), (w * x).sum(), (w * y).sum()
+    Sxx, Sxy = (w * x * x).sum(), (w * x * y).sum()
+    print(f"S {S:.2f}, Sx {Sx:.2f}, Sy {Sy:.2f}, Sxx {Sxx:.2f}, Sxy {Sxy:.2f}")
     D = S * Sxx - Sx**2
     a = (S * Sxy - Sx * Sy) / D
     b = (Sxx * Sy - Sx * Sxy) / D
+    print(f"a = {a:.4f} °C per year, b = {b:.3f} °C")
+    ```
+
+2. Run it.
+
+    ```text
+    python scripts/fit_trend.py
+    ```
+
+    ```text
+    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
+    S 20.41, Sx 91.84, Sy 146.12, Sxx 581.63, Sxy 648.21
+    a = -0.0555 °C per year, b = 7.410 °C
+    ```
+
+**Check:** a = −0.0555 °C per year; b = 7.410 °C, the line's value in 2016.
+
+---
+
+### 6. Uncertainties and χ² { #chi2 }
+
+**0:45 · 10 min** · σ_a = √(S/Δ), σ_b = √(Sxx/Δ), cov = −Sx/Δ; χ² near the number of degrees of freedom says the σ fit the scatter.
+
+1. Add at the end, save.
+
+    ```python
+
     sa = np.sqrt(S / D)
     sb = np.sqrt(Sxx / D)
-    cov = -Sx / D
-    print(f"a = {a:.4f} +- {sa:.4f} s2/m")
-    print(f"b = {b:.4f} +- {sb:.4f} s2")
-    print(f"cov = {cov:.6f}  rho = {cov / (sa * sb):.2f}")
+    chi2 = (((y - a * x - b) / sy)**2).sum()
+    print(f"a = {a:.3f} ± {sa:.3f}, b = {b:.2f} ± {sb:.2f}, cov {-Sx / D:.4f}")
+    print(f"chi2 = {chi2:.2f} for {len(x) - 2} degrees of freedom")
+    print(f"per decade: {10 * a:.1f} ± {10 * sa:.1f} °C")
     ```
 
-2. Run the script.
+2. Run it.
 
-3. Read the result with the room. The slope is 4.0102 seconds squared per
-   metre. Theory says 4π²/g, which is 4.024 for g = 9.81. The intercept
-   should be zero, and it is half an uncertainty away from zero.
-
-4. Ask what `rho = -0.88` means. A steeper line through these points meets
-   the axis at x = 0 lower. A larger slope goes with a smaller intercept.
-
-!!! success "You should now see"
     ```text
-    a = 4.0102 +- 0.0367 s2/m
-    b = 0.0095 +- 0.0194 s2
-    cov = -0.000629  rho = -0.88
+    python scripts/fit_trend.py
     ```
 
-**Say it in these words.** The uncertainties did not use the y values at
-all. They follow from the lengths chosen and from the 0.1 s. They were known
-before the first swing was timed.
+    The last three lines:
+
+    ```text
+    a = -0.056 ± 0.077, b = 7.41 ± 0.41, cov -0.0267
+    chi2 = 8.56 for 8 degrees of freedom
+    per decade: -0.6 ± 0.8 °C
+    ```
+
+**Check:** −0.6 ± 0.8 °C per decade: less than one σ from zero. Ten years
+show no trend.
+
+!!! question "Task: the same with `np.polyfit`, then with x centred"
+    1. Fit the same line with `np.polyfit` (lecture: `w=1 / sy`,
+       `cov="unscaled"`). Same numbers?
+    2. Fit again with `x - 4.5` in place of `x`. What happens to the
+       intercept, its ± and the covariance?
+
+??? note "Answer"
+    Add at the end of `fit_trend.py`:
+
+    ```python
+
+    p, C = np.polyfit(x, y, 1, w=1 / sy, cov="unscaled")
+    print("polyfit", p, np.sqrt(np.diag(C)))
+    p, C = np.polyfit(x - 4.5, y, 1, w=1 / sy, cov="unscaled")
+    print("centred", p, np.sqrt(np.diag(C)), f"cov {C[0, 1]:.4f}")
+    ```
+
+    ```text
+    polyfit [-0.05552739  7.40992628] [0.07706746 0.41142767]
+    centred [-0.05552739  7.16005304] [0.07706746 0.22135944] cov -0.0000
+    ```
+
+    1. The same a, b and ±. 2. With x centred the intercept is the mean
+       of the decade, 7.16 ± 0.22 °C (Seminar 9), and the covariance is
+       zero (it may print `0.0000`).
 
 ---
 
-### 5. g and χ² { #g }
+## Part 3 · The yearly cycle { #part-3 }
 
-**0:50 · 15 min**
-
-**Tell the room.** The slope is 4π²/g, so g is 4π² divided by the slope. Its
-relative uncertainty is that of the slope. χ² then says whether nine points
-scatter around the line as much as their uncertainties allow.
-
-1. Add at the end of the script:
-
-    ```text
-    g = 4 * np.pi**2 / a
-    sg = g * sa / a
-    print(f"g = {g:.3f} +- {sg:.3f} m/s2")
-
-    pull = (y - (a * x + b)) / sy
-    chi2 = np.sum(pull**2)
-    ndf = len(x) - 2
-    print(f"chi2 = {chi2:.2f} for {ndf} degrees of freedom")
-    ```
-
-2. Run the script.
-
-3. Add this line for a moment and read the nine pulls:
-
-    ```text
-    print(np.round(pull, 2))
-    ```
-
-    ```text
-    [ 0.12  0.39 -0.93  0.36 -0.52  0.57 -0.38  0.77 -0.39]
-    ```
-
-    No point is more than one uncertainty from the line. Remove the line
-    again.
-
-4. Compare χ² with the number of degrees of freedom. Nine points minus two
-   fitted parameters leave 7. A χ² of 2.65 is below 7: the points lie
-   closer to the line than 0.1 s predicts. With 0.06 s, χ² would be about 7.
-
-!!! success "You should now see"
-    ```text
-    g = 9.845 +- 0.090 m/s2
-    chi2 = 2.65 for 7 degrees of freedom
-    ```
-
-Write the result on the board in the form it is reported:
-g = 9.84 ± 0.09 m/s². The value 9.81 lies 0.4 uncertainties below it.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `g = 9.845 +- 1.448` | `sg` was computed as `g * sa * a`. It is `g * sa / a` |
-    | `chi2 = 3051.44` | The residual was divided by `sy**2`. It is divided by `sy`, and the pull is squared afterwards |
+**1:00 to 1:35** · T = c + a cos ωd + b sin ωd, with ω = 2π/365.25 known, is linear in c, a and b.
 
 ---
 
-## Part 3 · The same fit with `curve_fit` { #part-3 }
+### 7. A cosine and a sine column { #lstsq }
 
-**1:05 to 1:30 · sections 6 and 7**
+**1:00 · 10 min** · The design matrix of the lecture: one column per parameter.
 
-The closed formulas exist for a straight line. For other models a program
-searches for the minimum of χ². `curve_fit` does that for any model written
-as a Python function. On the straight line it has to return what the room
-just computed.
+1. Add at the end of `fit_cycle.py`, save.
+
+    ```python
+
+    om = 2 * np.pi / 365.25
+    A = np.column_stack([np.ones(len(d)), np.cos(om * d), np.sin(om * d)])
+    theta, *rest = np.linalg.lstsq(A, T, rcond=None)
+    c, a, b = theta
+    print(f"c = {c:.3f}, a = {a:.3f}, b = {b:.3f}")
+    ```
+
+2. Run it.
+
+    ```text
+    python scripts/fit_cycle.py
+    ```
+
+    ```text
+    days 3653 with 24 hours 3648
+    c = 7.177, a = -10.763, b = -3.023
+    ```
+
+**Check:** c = 7.177 °C, near the mean of Seminar 9.
 
 ---
 
-### 6. Call `curve_fit` { #curve-fit }
+### 8. Amplitude and the coldest day { #amplitude }
 
-**1:05 · 15 min**
+**1:10 · 10 min** · a cos ωd + b sin ωd = A cos(ωd − φ), with A = √(a² + b²) and φ = atan2(b, a); the minimum is half a period after φ.
 
-**Tell the room.** `curve_fit` needs the model as a function whose first
-argument is x and whose other arguments are the parameters. It needs the
-data, starting values, and the uncertainties.
+1. Add at the end, save.
 
-1. Add a second line at the top of the script, under `import numpy as np`:
+    ```python
 
-    ```text
-    from scipy.optimize import curve_fit
+    amp = np.hypot(a, b)
+    d0 = (np.arctan2(b, a) + np.pi) / om
+    print(f"amplitude {amp:.2f} °C, coldest on day {d0:.1f}")
     ```
 
-2. Add at the end of the script:
+2. Run it.
 
     ```text
-    def line(x, a, b):
-        return a * x + b
-
-
-    popt, pcov = curve_fit(line, x, y, p0=[4.0, 0.0], sigma=sy,
-                           absolute_sigma=True)
-    perr = np.sqrt(np.diag(pcov))
-    print("curve_fit:")
-    print(f"a = {popt[0]:.4f} +- {perr[0]:.4f}")
-    print(f"b = {popt[1]:.4f} +- {perr[1]:.4f}")
-    print(f"cov = {pcov[0, 1]:.6f}")
+    python scripts/fit_cycle.py
     ```
 
-3. Run the script and compare the last four lines with the lines printed
-   in section 4.
-
-4. Name the pieces with the room. `popt` holds the two estimates, in the
-   order of the arguments of `line`. `pcov` is the covariance matrix: the
-   squares of the uncertainties on its diagonal, the covariance beside it.
-
-!!! success "You should now see"
-    Below the earlier output:
+    The last line:
 
     ```text
-    curve_fit:
-    a = 4.0102 +- 0.0367
-    b = 0.0095 +- 0.0194
-    cov = -0.000629
+    amplitude 11.18 °C, coldest on day 15.9
     ```
 
-    The five numbers agree with the closed formulas in every digit shown.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `ModuleNotFoundError: No module named 'scipy'` | Section 1 was skipped, or done with another Python |
-    | `TypeError: line() takes 2 positional arguments but 3 were given` | The function was defined as `line(a, b)`. `x` comes first |
+**Check:** 11.18 °C; day 15.9 is 16 January.
 
 ---
 
-### 7. Change the call { #change }
+### 9. The same with `curve_fit` { #curve-fit }
 
-**1:20 · 10 min**
+**1:20 · 10 min** · Written as c − A cos(ω(d − d0)), the model is not linear in d0: `curve_fit` iterates from starting values.
 
-**Tell the room.** Each argument of the call does one thing. The room
-removes them one at a time, runs the script, reads the result, and puts the
-argument back.
+1. Add at the end, save.
 
-1. Remove `absolute_sigma=True`, so that the call reads:
+    ```python
 
-    ```text
-    popt, pcov = curve_fit(line, x, y, p0=[4.0, 0.0], sigma=sy)
+    def cycle(d, c, amp, d0):
+        return c - amp * np.cos(om * (d - d0))
+
+    popt, pcov = curve_fit(cycle, d, T, p0=[7, 11, 15])
+    err = np.sqrt(np.diag(pcov))
+    print(f"c   = {popt[0]:.3f} ± {err[0]:.3f}")
+    print(f"amp = {popt[1]:.3f} ± {err[1]:.3f}")
+    print(f"d0  = {popt[2]:.2f} ± {err[2]:.2f}")
     ```
 
-    Run. The estimates stay, and the uncertainties shrink to 0.0226 and
-    0.0120. Without this argument `curve_fit` multiplies them by the square
-    root of χ²/ndf, which is √(2.65/7) = 0.61 here. Put the argument back.
+    No `sigma`: the daily means have no σ of their own. `curve_fit` then
+    takes the scatter of the points around the curve as σ (the lecture's
+    default without `absolute_sigma`).
 
-2. Remove `sigma=sy` and `absolute_sigma=True`:
-
-    ```text
-    popt, pcov = curve_fit(line, x, y, p0=[4.0, 0.0])
-    ```
-
-    Run. Now every point counts the same: a = 4.0136 ± 0.0251 and
-    b = 0.0075 ± 0.0164. The estimates moved, because the weights are gone.
-    Put both back.
-
-3. Change the starting values `p0=[4.0, 0.0]` to:
+2. Run it.
 
     ```text
-    p0=[-100.0, 50.0]
+    python scripts/fit_cycle.py
     ```
 
-    Run. The result is the same as before. For a straight line χ² has one
-    minimum, and the search finds it from any start. Put the old values
-    back.
+    The last three lines:
 
-!!! success "You should now see"
-    The output of section 6 again, and this table on the board.
+    ```text
+    c   = 7.177 ± 0.049
+    amp = 11.179 ± 0.069
+    d0  = 15.92 ± 0.36
+    ```
 
-    | The call | a | b |
-    |--|--|--|
-    | as in section 6 | 4.0102 ± 0.0367 | 0.0095 ± 0.0194 |
-    | without `absolute_sigma=True` | 4.0102 ± 0.0226 | 0.0095 ± 0.0120 |
-    | without `sigma` | 4.0136 ± 0.0251 | 0.0075 ± 0.0164 |
-    | with `p0=[-100.0, 50.0]` | 4.0102 ± 0.0367 | 0.0095 ± 0.0194 |
+**Check:** the numbers of sections 7 and 8, now with a ±.
 
-**Say it in these words.** When the uncertainties are real, in the units of
-y, `absolute_sigma=True` belongs in the call. Without it the uncertainty of
-the result no longer depends on the 0.1 s we assumed.
+!!! question "Task: other starting values"
+    1. Start from `p0=[7, 11, 200]`, the warm side of the year.
+    2. Leave `p0` out.
+    Is the curve different?
+
+??? note "Answer"
+    1. `amp = -11.179 ± 0.069` and `d0 = 198.54 ± 0.36`: the warmest
+       day, with the sign of the amplitude turned. 198.54 − 365.25/2 =
+       15.92: the same curve.
+    2. Every parameter starts at 1; here it still finds 11.179 and 15.92.
+       On other data a bad start can end in a wrong minimum.
 
 ---
 
-## Part 4 · Residuals { #part-4 }
+## Part 4 · The residuals { #part-4 }
 
-**1:30 to 2:00 · sections 8 to 10**
-
-A figure of the data, the line and what is left over, and the result
-written into the report.
+**1:35 to 1:50**
 
 ---
 
-### 8. Plot the fit and the residuals { #plot }
+### 10. Residuals { #residuals }
 
-**1:30 · 15 min**
+**1:35 · 10 min** · What the curve leaves over, and whether one day's residual predicts the next.
 
-**Tell the room.** On a plot of the data and the line nothing can be judged:
-the points sit on the line. The residuals, data minus line, are a hundred
-times smaller than the data. They get their own panel, with the same error
-bars.
+1. Add at the end, save.
 
-1. Add a third line at the top of the script:
+    ```python
 
-    ```text
-    import matplotlib.pyplot as plt
+    res = T - cycle(d, *popt)
+    print(f"residuals: std {res.std(ddof=3):.2f}, "
+          f"next day {np.corrcoef(res[:-1], res[1:])[0, 1]:.3f}")
+    fig, (top, bottom) = plt.subplots(2, 1, figsize=(8, 5), sharex=True)
+    top.plot(d, T, ".", ms=2)
+    top.plot(d, cycle(d, *popt), "-")
+    top.set_ylabel("daily mean (°C)")
+    bottom.plot(d, res, ".", ms=2)
+    bottom.axhline(0, color="black")
+    bottom.set_xlabel("day since 2016-01-01")
+    bottom.set_ylabel("residual (°C)")
+    fig.savefig("results/cycle_fit.png", dpi=150, bbox_inches="tight")
     ```
 
-2. Add at the end of the script:
+    `*popt` passes the three values as three arguments.
+
+2. Run it.
 
     ```text
-    fig, (top, bottom) = plt.subplots(2, 1, sharex=True, figsize=(6, 6))
-    top.errorbar(x, y, yerr=sy, fmt="o", label="data")
-    top.plot(x, line(x, a, b), label="fit")
-    top.set_ylabel("T squared (s2)")
-    top.legend()
-
-    bottom.errorbar(x, y - line(x, a, b), yerr=sy, fmt="o")
-    bottom.axhline(0, color="gray")
-    bottom.set_xlabel("length (m)")
-    bottom.set_ylabel("residual (s2)")
-
-    fig.savefig("results/pendulum_fit.png", dpi=150)
+    python scripts/fit_cycle.py
     ```
 
-3. Run the script and open `results/pendulum_fit.png` from the Side Bar.
+    The last line:
 
-4. Read the lower panel with the room. Three questions: do the points
-   scatter on both sides of zero, is there a trend or a bend, and how many
-   error bars miss the zero line.
+    ```text
+    residuals: std 2.94, next day 0.875
+    ```
 
-!!! success "You should now see"
-    A figure with two panels. In the upper one the nine points lie on the
-    line and their error bars are hidden behind the markers. In the lower
-    one the residuals lie between −0.03 and +0.03 s², on both sides of zero
-    and without a trend, and every error bar reaches the zero line.
+3. Open `results/cycle_fit.png`: the curve through the points, and below
+   it the residuals in runs of warm and cold weeks.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `FileNotFoundError` for `results/pendulum_fit.png` | The project has no `results` folder. Create it in the Side Bar |
-    | The old picture is shown | VS Code kept the tab open. Close it and open the file again |
+**Check:** a day's residual correlates with the next by 0.875: the 3648
+points are not independent, so ± 0.069 is too small.
+
+!!! question "Task: the trend from the daily means"
+    Add a term `k * d / 3652.5` (k in °C per decade) to the model and fit
+    it with `curve_fit`. Compare k with section 6.
+
+??? note "Answer"
+    Add at the end of `fit_cycle.py`:
+
+    ```python
+
+    def cycle_trend(d, c, amp, d0, k):
+        return cycle(d, c, amp, d0) + k * d / 3652.5
+
+    p4, c4 = curve_fit(cycle_trend, d, T, p0=[7, 11, 15, 0])
+    print(f"trend {p4[3]:.2f} ± {np.sqrt(c4[3, 3]):.2f} °C per decade")
+    ```
+
+    ```text
+    trend -0.57 ± 0.17 °C per decade
+    ```
+
+    The same slope as the yearly means (−0.6), with a ± 4.5 times
+    smaller: 3.4 σ from zero. It counts 3648 correlated days as
+    independent. The ten yearly means give the honest ± 0.8.
 
 ---
 
-### 9. Write the result down { #report }
+## Part 5 · Write it down { #part-5 }
 
-**1:45 · 10 min**
-
-**Tell the room.** A fit is reported with its model, its assumptions, its
-numbers and its figure. The report of the project is the place for it.
-
-1. Open `results/report.md` and add a section at the end.
-
-    ```text
-    ## Fit
-
-    Model: T² = a·ℓ + b, fitted by weighted least squares to the nine
-    rows of `data/processed/pendulum.csv`. Assumed uncertainty: 0.1 s
-    on the time of 10 swings.
-
-    | Quantity | Value |
-    |--|--|
-    | a | 4.010 ± 0.037 s²/m |
-    | b | 0.009 ± 0.019 s² |
-    | correlation of a and b | −0.88 |
-    | χ² / degrees of freedom | 2.65 / 7 |
-    | g = 4π²/a | 9.84 ± 0.09 m/s² (statistical) |
-
-    ![Fit and residuals](pendulum_fit.png)
-
-    Made by `scripts/fit_pendulum.py`, run from the project folder.
-    ```
-
-2. Open the preview with `Ctrl+K`, then `V` (macOS `Cmd+K`, then `V`).
-
-!!! success "You should now see"
-    The table and the figure in the preview.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | No `report.md` in `results` | Download `report.md` from the files box at the top of the page into `results`, then add the section |
+**1:50 to 2:00**
 
 ---
 
-### 10. Wrap up { #wrap-up }
+### 11. The README, a commit, a push { #commit }
+
+**1:50 · 5 min** · The two results, with the scripts that make them.
+
+1. At the end of `README.md`, add and save:
+
+    ```text
+
+    ## The yearly cycle
+
+    Daily means fitted with c − A cos(2π(d − d0)/365.25) by
+    `scripts/fit_cycle.py`: A = 11.18 °C, coldest on day 15.9 (16 January).
+    The fit's ± 0.07 °C is too small: the residuals of neighbouring days
+    correlate by 0.875.
+
+    Trend of the ten yearly means, `scripts/fit_trend.py`: −0.6 ± 0.8 °C per
+    decade, compatible with zero.
+    ```
+
+2. Stage, commit, push.
+
+    ```text
+    git add README.md scripts
+    ```
+
+    ```text
+    git commit -m "Fit the yearly cycle and the trend"
+    ```
+
+    ```text
+    [main f6ce821] Fit the yearly cycle and the trend
+     3 files changed, 87 insertions(+)
+     create mode 100644 scripts/fit_cycle.py
+     create mode 100644 scripts/fit_trend.py
+    ```
+
+    ```text
+    git push
+    ```
+
+    ```text
+    To https://github.com/your-username/weather-project.git
+       3c589a2..f6ce821  main -> main
+    ```
+
+    Your ids differ, and so do the counts if you kept the Task lines.
+
+**Check:** on GitHub, `environment.yml` lists `scipy` and the README shows
+**The yearly cycle**.
+
+---
+
+### 12. Wrap up { #wrap-up }
 
 **1:55 · 5 min**
 
-1. Commit the script, the figure and the report in the Source Control view,
-   with the message:
+| To | Type |
+|--|--|
+| a straight line by hand | the five sums, `D = S * Sxx - Sx**2` |
+| the same in one call | `np.polyfit(x, y, 1, w=1 / sy, cov="unscaled")` |
+| a model linear in its parameters | `np.linalg.lstsq(A, T, rcond=None)` |
+| any model | `curve_fit(f, x, y, p0=[…])` |
+| the uncertainties | `np.sqrt(np.diag(pcov))` |
+| check the fit | residuals, and their correlation |
+| add a package | `conda install NAME`, a line in `environment.yml` |
 
-    ```text
-    Fit of the pendulum table
-    ```
-
-Read the list aloud. Ask on the way out which step was hardest.
-
-- A fit needs a model, data with uncertainties, and χ² as the measure of
-  mismatch.
-- For a straight line five sums give the slope, the intercept, their
-  uncertainties and their covariance.
-- A quantity computed from a fitted parameter gets its uncertainty by
-  propagation: g = 9.84 ± 0.09 m/s².
-- `curve_fit` returns the estimates and the covariance matrix. With real
-  uncertainties, `sigma` and `absolute_sigma=True` belong in the call.
-- χ² is compared with the number of degrees of freedom, and the residuals
-  are plotted under every fit.
+Seminar 11 predicts frost from the evening's weather.
 
 ---
 
-## Stretch goals
+## Optional, if the room is fast { #optional }
 
-For students who finish a section early. Answers are given for the lecturer.
+---
 
-- Fix the intercept at zero: the model is y = a x, and the closed formula is
-  a = Sxy / Sxx with uncertainty 1/√Sxx. The answer is a = 4.0259 ± 0.0173
-  and g = 9.806 ± 0.042 m/s², with χ² = 2.88 for 8 degrees of freedom. The
-  uncertainty of g is half that of the fit with a free intercept.
-- Assume 0.05 s on the time of ten swings instead of 0.1 s. The answer is
-  the same a and b, half the uncertainties (g = 9.845 ± 0.045 m/s²), and
-  four times the χ²: 10.59 for 7.
-- Do the fit with `np.polyfit(x, y, 1, w=1 / sy, cov="unscaled")`. The
-  answer is `[4.01018132 0.00945546]` for the parameters, and the square
-  roots of the diagonal of the covariance matrix are
-  `[0.03668084 0.01943853]`.
-- Add a term c x² to the model and fit with `curve_fit`. The answer is
-  c = 0.03 ± 0.16: compatible with zero. χ² falls from 2.65 to 2.60, and
-  the data do not ask for the extra term.
-- Fit the D⁰ peak of `data/raw/D0_KPi.csv` with the code of the lecture
-  slides *Counts and Their Uncertainty* and *The Fit in Code*. The answer is
-  a peak position of 1864.47 ± 0.10 MeV/c², a width of 7.65 ± 0.10 MeV/c²,
-  and χ² = 53.4 for 40 degrees of freedom.
-- A student with a dataset of their own finds two columns where a straight
-  line, or another simple function, is a reasonable model, decides on the
-  uncertainty of each y value (instrument resolution, a repeated
-  measurement, or √n for a count), and fits it with `curve_fit`, with
-  `sigma` and `absolute_sigma=True`. For a straight line the result is
-  checked against the closed formulas. χ² is compared with the degrees of
-  freedom, the residuals are plotted under the fit, and a **Fit** section
-  goes into their own report, in the form of section 9.
+### 13. The amplitude year by year { #by-year }
 
-## If students ask for more
+**— · 10 min** · Ten fits, one per year: their scatter gives an honest ± for the amplitude.
 
-| Topic | Where to look |
-|--|--|
-| Limits on a parameter, such as a width that must be positive | The `bounds` argument of `curve_fit` |
-| A fit to small counts, where √n fails | `scipy.optimize.minimize` on −2 ln L of the Poisson distribution |
-| A fitting package with more diagnostics | `lmfit`, and `iminuit`, the minimiser used at CERN |
-| The theory in a book | Hughes and Hase, *Measurements and their Uncertainties* |
+1. Add at the end of `fit_cycle.py`, save, run.
+
+    ```python
+
+    amps = []
+    for y in range(10):
+        sel = (d >= 365.25 * y) & (d < 365.25 * (y + 1))
+        p, cv = curve_fit(cycle, d[sel], T[sel], p0=[7, 11, 15 + 365.25 * y])
+        amps.append(p[1])
+    amps = np.array(amps)
+    print(amps.round(2))
+    print(f"amplitude {amps.mean():.2f} ± {amps.std(ddof=1) / np.sqrt(10):.2f}")
+    ```
+
+    ```text
+    python scripts/fit_cycle.py
+    ```
+
+    The last two lines:
+
+    ```text
+    [11.18 11.   10.63 12.6  10.42 10.41 10.71 11.48 11.06 12.49]
+    amplitude 11.20 ± 0.25
+    ```
+
+**Check:** ± 0.25 °C, 3.6 times the ± 0.069 of section 9.
+
+---
+
+### 14. The daily cycle { #daily-cycle }
+
+**— · 10 min** · The same model with a period of 24 hours, on the mean of each hour of the day.
+
+1. Add at the end, save, run.
+
+    ```python
+
+    hours = days[good].mean(axis=0)
+    h = np.arange(24)
+    B = np.column_stack([np.ones(24), np.cos(2 * np.pi * h / 24),
+                         np.sin(2 * np.pi * h / 24)])
+    (c24, a24, b24), *rest = np.linalg.lstsq(B, hours, rcond=None)
+    warm = (np.arctan2(b24, a24) / (2 * np.pi / 24)) % 24
+    print(f"daily amplitude {np.hypot(a24, b24):.2f} °C, warmest at {warm:.1f} h")
+    ```
+
+    ```text
+    python scripts/fit_cycle.py
+    ```
+
+    The last line:
+
+    ```text
+    daily amplitude 3.50 °C, warmest at 15.0 h
+    ```
+
+**Check:** 3.50 °C between the mean and the warmest hour, 15:00.
+
+---
 
 ## Aims practised
 
-♻️ one script from the data file to the number and the figure · ⚙️ the fit repeated by one command · 🔧 the same result from closed formulas, NumPy and SciPy
+- ♻️ **Reproducibility:** SciPy is written into `environment.yml`, so
+  `conda env create -f environment.yml` makes the same environment.
+- 🔧 **Tool-agnostic:** the same fit three ways (five sums, `polyfit`,
+  `curve_fit`), the same numbers.
+- ⚙️ **Automation:** each number in the README comes from one script run.

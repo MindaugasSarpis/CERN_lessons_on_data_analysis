@@ -1,567 +1,644 @@
-# Seminar 14 — Review an Analysis, Plan the Data
+# Seminar 14 — Was October 2025 Unusually Warm? A Blind Analysis
 
-**Paired lecture:** 14 Concepts of Data Analysis · **Format:** follow-along, then in pairs · **~120 min**
+**Paired lecture:** 14 Concepts of Data Analysis · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student rebuilds and reviews a neighbour's project,
-answers the review of their own, and writes a data management plan of one
-page.
+**Today's goal:** every student fixes a rule before looking, answers the
+question with it, sees how many "unusual" months chance alone gives, checks
+the answer under other choices, and pushes it all to GitHub.
 
-No new tool is needed. The session uses the project folder as it stands
-after Seminar 13, the terminal of VS Code and GitHub.
+Everything is typed in the terminal of VS Code (PowerShell 7), in the
+weather project, with the `weather` environment active.
 
 ## Run sheet
 
-One screen for the front of the room. Each line links to its section.
-
-| Clock | Section | On the projector | The room ends with |
+| Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · A review, together** · 30 min | | |
-| 0:00 | [1. Read the report, run the script](#run) | `python scripts/fit_g_example.py` | An error message, and the first comment |
-| 0:10 | [2. Compare the numbers](#compare) | The two lines that remove rows | 9.84 ± 0.09 against the 9.81 of the report |
-| 0:20 | [3. Write the review](#write) | `review_example.md` | `review_example.md` with six comments |
-| | **Part 2 · A review, in pairs** · 45 min | | |
-| 0:30 | [4. Get the neighbour's project](#clone) | **Git: Clone** | The neighbour's folder on your own laptop |
-| 0:40 | [5. Rebuild it](#rebuild) | `python run_all.py` | Their numbers rebuilt, or the place where it stopped |
-| 0:55 | [6. Twelve questions](#questions) | The table of twelve questions | `review.md`, sent to the author |
-| | **Part 3 · The answer** · 15 min | | |
-| 1:15 | [7. Answer the review](#answer) | **Answer:** under a comment, then `git push` | Every comment answered, one fix committed |
-| | **Part 4 · A plan for the data** · 25 min | | |
-| 1:30 | [8. Six headings](#dmp) | `DMP.md` with six headings | `DMP.md` filled in and committed |
-| 1:55 | [9. Wrap up](#wrap-up) | The list of what was learned | |
+| | **Part 1 · The scripts and the reference** · 20 min | | |
+| 0:00 | [1. Get today's scripts](#pull) | `git pull --no-edit course main` | three new scripts |
+| 0:10 | [2. Look at the other years only](#blind) | `python scripts/month_check.py 2025 10` | mean 7.03, sd 1.95, October 2025 hidden |
+| | **Part 2 · Fix the rule, then look** · 30 min | | |
+| 0:20 | [3. Write the rule down](#plan) | `analysis_plan.md` | six lines |
+| 0:30 | [4. Commit the rule](#commit-plan) | `git commit` | the rule in the history |
+| 0:35 | [5. Open the box](#unblind) | `--unblind` | z = −0.47: not unusual |
+| 0:40 | [6. Write the result](#result) | `README.md`, `git commit -am` | plan, then result, in `git log` |
+| | **Part 3 · Look elsewhere** · 35 min | | |
+| 0:50 | [7. Check all 120 months](#scan) | `python scripts/scan_months.py` | 11 months beyond 2 sd |
+| 1:00 | [8. What chance alone gives](#chance) | `python scripts/chance_scan.py` | 11.3 on average |
+| 1:10 | [9. The −8.79 of April 2025](#april) | `--pooled` | −2.24 |
+| | **Part 4 · Other choices** · 35 min | | |
+| 1:25 | [10. Another daily mean](#minmax) | `--minmax` | −0.45 |
+| 1:30 | [11. Another reference, another sd](#reference) | `--first 2020`, `--pooled` | −0.16 and −0.57 |
+| 1:40 | [12. The table, then push](#push) | `git push` | the verdict under four choices on GitHub |
+| 1:55 | [13. Wrap up](#wrap-up) | | |
+| | **Optional, if the room is fast** | | |
+| — | [14. A neighbour checks the order](#review) | `git log --format=...` | the plan older than the result |
+| — | [15. A data management plan](#dmp) | `DMP.md` | six headings, committed |
 
-**If time runs short:** do Part 1 as a demonstration in 15 minutes, with the
-room watching and not typing. Part 3 stays in class.
-
-??? info "How to use this page"
-    This page is written for the person at the front. Students follow the
-    same page.
-
-    - **Tell the room** is the paragraph to say before the steps.
-    - The **numbered steps** are what to do on the projector. The room
-      repeats each step on their own laptops. In Part 2 the pairs work on
-      their own and you walk through the room.
-    - **You should now see** closes a section. Ask for hands: "who sees
-      this?" Go on when about four in five have it. The rest get help from a
-      neighbour.
-    - **Watch for** is the usual slip in that section.
-
-    Commands are typed in the terminal of VS Code, in the project folder:
-    `zsh` on macOS, PowerShell 7 on Windows. Keys are written for Windows,
-    with macOS in brackets. Where a step differs between systems, it has a
-    tab for each: `python3` on macOS, `python` on Windows.
+**If time runs short:** stop after section 9 and push; Part 4 is the table
+of section 12 with four lines.
 
 ??? info "Before the session"
-    For the room: the project folder as it stands after Seminar 13, with a
-    README, `data/raw`, `data/processed/pendulum.csv`, scripts,
-    `requirements.txt` and `run_all.py`; Python and Git from
-    [Seminar 4](seminar_04.md); and the project pushed to its remote
-    repository ([Seminar 5](seminar_05.md), [Seminar 13](seminar_13.md)).
-    A student without a working project reviews in a group of three. No
-    student needs a dataset of their own: section 8 is written for the
-    course files.
-
-    For you:
-
-    - [`concepts_fit_g.py`](../data/concepts_fit_g.py) downloaded, and
-      sections 1 to 3 done once on your own laptop.
-    - The twelve questions of the lecture on a second screen or printed:
-      they are repeated in [section 6](#questions).
-    - Pairs decided. Seat students next to someone whose project they have
-      not seen.
-
-??? info "Files for this seminar"
-    A browser saves the file under the name in the second column.
-
-    | File | Saved as | What it is |
-    |--|--|--|
-    | [`concepts_fit_g.py`](../data/concepts_fit_g.py){ download="fit_g_example.py" } | `fit_g_example.py` | Section 1: the script of the report, which reads a file from the author's desktop |
+    - **Room:** the weather project as it stands after Seminar 13, pushed to
+      the student's own GitHub repository, with the `course` remote of
+      Seminar 6 and the `weather` environment (pandas in it).
+    - **You:** nothing to prepare. The numbers on this page come from
+      `data/raw/weather.csv` and are the same on every laptop. Commit ids
+      differ.
+    - **Keys** are written for Windows, macOS in brackets. Every line typed is
+      the same on both systems.
 
 ---
 
-## Part 1 · A review, together { #part-1 }
+## Part 1 · The scripts and the reference { #part-1 }
 
-**0:00 to 0:30 · sections 1 to 3**
-
-A report of six lines and a script of thirty. The room does what a reviewer
-does: run it, compare, write down what was found.
+**0:00 to 0:20** · The question of today: was October 2025 unusually warm?
 
 ---
 
-### 1. Read the report, run the script { #run }
+### 1. Get today's scripts { #pull }
 
-**0:00 · 10 min**
+**0:00 · 10 min** · Today's three scripts come from the course repository.
 
-**Tell the room.** A review starts by running the work, not by reading it.
-The first thing a reviewer learns is whether the analysis runs anywhere but
-on the author's laptop.
-
-1. Show the report on the projector. It is all there is.
+1. Open the weather project in VS Code, then the terminal: **View** >
+   **Terminal**.
+2. Activate the environment.
 
     ```text
-    # Pendulum report
-
-    ## Result
-
-    The rows at 20 cm and 80 cm were outliers and were removed.
-
-    g = 9.81 m/s², in excellent agreement with the expected value.
-
-    ![The fit](fit.png)
+    conda activate weather
     ```
 
-2. Download
-   [`concepts_fit_g.py`](../data/concepts_fit_g.py){ download="fit_g_example.py" }
-   and drag it onto the `scripts` folder. It is named:
+    The prompt starts with `(weather)`.
+
+3. Check that the last session left nothing uncommitted.
 
     ```text
-    fit_g_example.py
+    git status --short
     ```
 
-3. Run it from the project folder.
+    It prints nothing.
 
-    === "macOS"
-
-        ```text
-        python3 scripts/fit_g_example.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/fit_g_example.py
-        ```
-
-4. Read the last line of the traceback with the room.
+4. Get the scripts.
 
     ```text
-    FileNotFoundError: C:/Users/student/Desktop/pendulum.csv not found.
+    git pull --no-edit course main
     ```
-
-5. Open the script and find the line with that path. Replace the path by
-   the one below and save.
 
     ```text
-    data/processed/pendulum.csv
+    From https://github.com/MindaugasSarpis/weather-project
+     * branch            main       -> FETCH_HEAD
+    Merge made by the 'ort' strategy.
+     scripts/chance_scan.py | 32 ++++++++++++++++++++++++++
+     scripts/month_check.py | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++
+     scripts/scan_months.py | 36 +++++++++++++++++++++++++++++
+     3 files changed, 130 insertions(+)
     ```
 
-!!! success "You should now see"
-    The script open in the Editor with the corrected path, and the room can
-    say the first review comment: the script reads a file from the author's
-    desktop.
+**Check:** three new files in `scripts`.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
+---
+
+### 2. Look at the other years only { #blind }
+
+**0:10 · 10 min** · `month_check.py` compares a month with the same month of the other years, and hides the month itself.
+
+1. Run it for October 2025.
+
+    ```text
+    python scripts/month_check.py 2025 10
+    ```
+
+    ```text
+    2016 to 2024: 6.84 6.62 10.17 7.37 3.43 6.11 5.86 7.80 9.11
+    reference  9 years  mean 7.03 °C  sd 1.95 °C
+    2025-10    hidden: run again with --unblind
+    ```
+
+2. The first line holds the mean temperature of October in each of the nine
+   years. October 2018 was the warmest, 2020 the coldest.
+3. Open `scripts/month_check.py` and find `if args.unblind:` near the end.
+   Without `--unblind` the value of October 2025 is never printed.
+
+**Check:** mean 7.03 °C, sd 1.95 °C, and no number for October 2025.
+
+!!! question "Task: the rule as two numbers"
+    "Unusual" will mean more than 2 sd from the mean of the nine years. Before
+    anyone looks, work out above which October mean 2025 would be unusually
+    warm, and below which unusually cold.
+
+??? note "Answer"
+    ```text
+    python -c "print(7.03 + 2 * 1.95, 7.03 - 2 * 1.95)"
+    ```
+
+    ```text
+    10.93 3.1300000000000003
+    ```
+
+    Above 10.93 °C warm, below 3.13 °C cold. Only 2018 (10.17) and 2020
+    (3.43) came near.
+
+---
+
+## Part 2 · Fix the rule, then look { #part-2 }
+
+**0:20 to 0:50** · A rule written after the result can be bent to fit it. A rule committed before cannot.
+
+---
+
+### 3. Write the rule down { #plan }
+
+**0:20 · 10 min** · The plan says what is compared, how, and what counts as unusual.
+
+1. **File** > **New File...**, type `analysis_plan.md`, press `Enter`.
+2. Write the plan and save. Put today's date in the second line.
+
+    ```text
+    # Plan: was October 2025 unusually warm?
+
+    Written on 2026-10-20, before the mean of October 2025 was looked at.
+
+    - Data: `data/raw/weather.csv`, the hours marked -999 left out.
+    - The mean of a month: the mean of its daily means.
+    - Reference: October of 2016 to 2024, nine values.
+    - z = (October 2025 - mean of the nine) / sd of the nine.
+    - Unusually warm: z above +2. Unusually cold: z below -2.
+    - Reported whatever comes out: the mean, z and the verdict.
+    ```
+
+**Check:** `analysis_plan.md` in the Explorer, saved.
+
+---
+
+### 4. Commit the rule { #commit-plan }
+
+**0:30 · 5 min** · The commit records when the rule was written.
+
+1. Stage the plan.
+
+    ```text
+    git add analysis_plan.md
+    ```
+
+2. Commit it.
+
+    ```text
+    git commit -m "Fix the rule before looking at October 2025"
+    ```
+
+    ```text
+    [main b371f71] Fix the rule before looking at October 2025
+     1 file changed, 10 insertions(+)
+     create mode 100644 analysis_plan.md
+    ```
+
+    Your id differs.
+
+**Check:** `git status --short` prints nothing.
+
+---
+
+### 5. Open the box { #unblind }
+
+**0:35 · 5 min** · Now, and only now, the value itself.
+
+1. Run the script with `--unblind`.
+
+    ```text
+    python scripts/month_check.py 2025 10 --unblind
+    ```
+
+    ```text
+    2016 to 2024: 6.84 6.62 10.17 7.37 3.43 6.11 5.86 7.80 9.11
+    reference  9 years  mean 7.03 °C  sd 1.95 °C
+    2025-10    mean 6.12 °C  z -0.47
+    ```
+
+2. Apply the rule: −0.47 lies between −2 and +2.
+
+**Check:** z = −0.47. October 2025 was not unusually warm; it was a little
+cooler than the average October.
+
+---
+
+### 6. Write the result { #result }
+
+**0:40 · 10 min** · The answer goes into the README, in a commit after the plan.
+
+1. In `README.md`, above `## How to rebuild`, add a section and save.
+
+    ```text
+    ## October 2025
+
+    Mean 6.12 °C. October 2016 to 2024: mean 7.03 °C, sd 1.95 °C.
+    z = -0.47: not unusual, by the rule in `analysis_plan.md`.
+    ```
+
+2. Commit every changed file at once.
+
+    ```text
+    git commit -am "October 2025: z = -0.47, not unusual"
+    ```
+
+    ```text
+    [main fa9cfb6] October 2025: z = -0.47, not unusual
+     1 file changed, 5 insertions(+)
+    ```
+
+3. The order in the history.
+
+    ```text
+    git log --oneline -n 3
+    ```
+
+    ```text
+    fa9cfb6 October 2025: z = -0.47, not unusual
+    b371f71 Fix the rule before looking at October 2025
+    1a57bac Merge branch 'main' of https://github.com/MindaugasSarpis/weather-project
+    ```
+
+**Check:** the plan's commit stands below the result's commit.
+
+!!! question "Task: November 2025, the same way"
+    Check November 2025 with the same rule. Look at the reference first,
+    then unblind.
+
+??? note "Answer"
+    ```text
+    python scripts/month_check.py 2025 11
+    ```
+
+    ```text
+    2016 to 2024: 2.87 3.23 3.01 5.03 2.88 3.74 1.55 0.69 2.43
+    reference  9 years  mean 2.83 °C  sd 1.24 °C
+    2025-11    hidden: run again with --unblind
+    ```
+
+    ```text
+    python scripts/month_check.py 2025 11 --unblind
+    ```
+
+    ```text
+    2016 to 2024: 2.87 3.23 3.01 5.03 2.88 3.74 1.55 0.69 2.43
+    reference  9 years  mean 2.83 °C  sd 1.24 °C
+    2025-11    mean 0.98 °C  z -1.49
+    ```
+
+    Colder than usual, not unusually cold: −1.49 is above −2.
+
+---
+
+## Part 3 · Look elsewhere { #part-3 }
+
+**0:50 to 1:25** · Someone else checks every month instead of one, and reports the most extreme.
+
+---
+
+### 7. Check all 120 months { #scan }
+
+**0:50 · 10 min** · `scan_months.py` applies the rule to every month of 2016 to 2025, each against the other nine years.
+
+1. Run it.
+
+    ```text
+    python scripts/scan_months.py
+    ```
+
+    ```text
+    months checked 120   beyond 2 sd 11
+    2025-04  mean   3.14 °C  z -8.79
+    2019-07  mean  23.12 °C  z +3.94
+    2020-03  mean  -1.03 °C  z -3.22
+    2025-02  mean  -5.15 °C  z -3.15
+    2020-10  mean   3.43 °C  z -2.65
+    ```
+
+2. Read it as a headline: "April 2025, 8.79 sd below normal".
+
+**Check:** 11 of 120 months beyond 2 sd; April 2025 at −8.79.
+
+---
+
+### 8. What chance alone gives { #chance }
+
+**1:00 · 10 min** · `chance_scan.py` draws 2000 decades of monthly means in which no month is unusual, and scans each as section 7 did.
+
+1. Run it.
+
+    ```text
+    python scripts/chance_scan.py
+    ```
+
+    ```text
+    decades of pure chance  2000
+    months beyond 2 sd, on average  11.3 of 120
+    decades with at least one       100.0%
+    largest z of a decade, median    4.0
+    ```
+
+2. Compare with section 7: 11 months beyond 2 sd is what a decade without
+   any unusual month gives.
+3. One month seldom crosses 2 sd by chance; of 120 months, about 11 do.
+   This is the look-elsewhere effect of the lecture.
+
+**Check:** 11.3 by chance against 11 in the data.
+
+---
+
+### 9. The −8.79 of April 2025 { #april }
+
+**1:10 · 15 min** · A z far beyond what chance gives, so look at its parts.
+
+1. April 2025 on its own.
+
+    ```text
+    python scripts/month_check.py 2025 4 --unblind
+    ```
+
+    ```text
+    2016 to 2024: 6.95 6.49 6.94 7.10 6.96 5.96 6.58 7.29 6.44
+    reference  9 years  mean 6.75 °C  sd 0.41 °C
+    2025-04    mean 3.14 °C  z -8.79
+    ```
+
+2. The nine Aprils lie within 1.3 °C of each other, so their sd is 0.41 °C.
+   Section 2 gave 1.95 °C for October. Nine values give a rough sd.
+3. Take the sd from all twelve months instead: each month minus the mean of
+   its own month, 108 values.
+
+    ```text
+    python scripts/month_check.py 2025 4 --unblind --pooled
+    ```
+
+    ```text
+    2016 to 2024: 6.95 6.49 6.94 7.10 6.96 5.96 6.58 7.29 6.44
+    reference  9 years  mean 6.75 °C  sd 1.61 °C
+    2025-04    mean 3.14 °C  z -2.24
+    ```
+
+4. The whole scan with that sd.
+
+    ```text
+    python scripts/scan_months.py --pooled
+    ```
+
+    ```text
+    months checked 120   beyond 2 sd 8
+    2019-07  mean  23.12 °C  z +3.12
+    2018-01  mean   0.15 °C  z +2.73
+    2025-12  mean  -5.86 °C  z -2.46
+    2023-06  mean  20.76 °C  z +2.37
+    2020-10  mean   3.43 °C  z -2.35
+    ```
+
+**Check:** April 2025 falls from −8.79 to −2.24, one of eight months beyond
+2 sd. The −8.79 came from the small sd of nine Aprils.
+
+!!! question "Task: July 2019 and its missing days"
+    July 2019 now leads, at +3.12. It is also the month in which the sensor
+    was down for 5 days (the `-999` hours). Suppose those 5 days had been as
+    warm as an average July, 18.11 °C. What would the month's mean and z be?
+    The other 26 days have a mean of 23.12 °C.
+
+??? note "Answer"
+    ```text
+    python -c "print(round((26 * 23.12 + 5 * 18.11) / 31, 2))"
+    ```
+
+    ```text
+    22.31
+    ```
+
+    ```text
+    python -c "print(round((22.31 - 18.11) / 1.61, 2))"
+    ```
+
+    ```text
+    2.61
+    ```
+
+    Still beyond 2 sd. With average weather on the missing days z is 2.61,
+    not 3.12: the missing days are an uncertainty of their own, which no
+    number of other hours would shrink.
+
+---
+
+## Part 4 · Other choices { #part-4 }
+
+**1:25 to 2:00** · The plan made three choices. Change each, and see whether the verdict moves.
+
+---
+
+### 10. Another daily mean { #minmax }
+
+**1:25 · 5 min** · Many stations take a day's mean as (min + max) / 2, not as the mean of 24 hours.
+
+1. Run with `--minmax`.
+
+    ```text
+    python scripts/month_check.py 2025 10 --unblind --minmax
+    ```
+
+    ```text
+    2016 to 2024: 6.83 6.60 10.13 7.31 3.34 6.00 5.85 7.75 9.08
+    reference  9 years  mean 6.99 °C  sd 1.96 °C
+    2025-10    mean 6.11 °C  z -0.45
+    ```
+
+**Check:** z = −0.45 against −0.47.
+
+---
+
+### 11. Another reference, another sd { #reference }
+
+**1:30 · 10 min** · The reference years and the sd were choices too.
+
+1. Only the last five years as reference.
+
+    ```text
+    python scripts/month_check.py 2025 10 --unblind --first 2020
+    ```
+
+    ```text
+    2020 to 2024: 3.43 6.11 5.86 7.80 9.11
+    reference  5 years  mean 6.46 °C  sd 2.15 °C
+    2025-10    mean 6.12 °C  z -0.16
+    ```
+
+2. The sd of all twelve months, as in section 9.
+
+    ```text
+    python scripts/month_check.py 2025 10 --unblind --pooled
+    ```
+
+    ```text
+    2016 to 2024: 6.84 6.62 10.17 7.37 3.43 6.11 5.86 7.80 9.11
+    reference  9 years  mean 7.03 °C  sd 1.61 °C
+    2025-10    mean 6.12 °C  z -0.57
+    ```
+
+**Check:** z from −0.57 to −0.16. Each choice moves z, none moves it near
+±2.
+
+---
+
+### 12. The table, then push { #push }
+
+**1:40 · 15 min** · The checks belong next to the result.
+
+1. In `README.md`, under the line `z = -0.47: ...`, add a table and save.
+
+    ```text
+    | Choice | z |
     |--|--|
-    | `No module named numpy` | The environment of Seminar 13 is not active: the prompt does not start with `(.venv)`. Activate it with `source .venv/bin/activate` (Windows `.venv\Scripts\Activate.ps1`) and run the line again |
-    | `can't open file ... fit_g_example.py` | The terminal is not in the project folder, or the file is still in **Downloads** |
-
----
-
-### 2. Compare the numbers { #compare }
-
-**0:10 · 10 min**
-
-**Tell the room.** Now the script runs. The question is whether it gives
-what the report says. A reviewer compares number by number and writes down
-both.
-
-1. Run the script again. It prints:
-
-    ```text
-    rows   9
-    slope  4.010 +- 0.037 s^2/m
-    g      9.84 +- 0.09 m/s^2
-    pulls  0.12 0.39 -0.93 0.36 -0.52 0.57 -0.38 0.77 -0.39
+    | as planned | -0.47 |
+    | a day's mean is (min + max) / 2 | -0.45 |
+    | reference 2020 to 2024 only | -0.16 |
+    | sd of all twelve months | -0.57 |
     ```
 
-2. Ask the room what differs from the report. Three things: the report
-   says 9.81 and the script 9.84; the report has no uncertainty; the report
-   speaks of removed rows and the script uses all nine.
-
-3. Find the pulls of the two rows the report calls outliers. The rows are
-   in the order of the table: 20 cm is the first, 80 cm the seventh. Their
-   pulls are 0.12 and −0.38. The largest in the table is −0.93.
-
-4. Check the report's claim. Add two lines below the line that reads the
-   file, save, and run again.
+2. Look at it: right-click `README.md` > **Open Preview**.
+3. Commit.
 
     ```text
-    keep = (data[:, 0] != 20) & (data[:, 0] != 80)
-    data = data[keep]
-    ```
-
-    The script now prints:
-
-    ```text
-    rows   7
-    slope  4.023 +- 0.050 s^2/m
-    g      9.81 +- 0.12 m/s^2
-    pulls  0.50 -0.88 0.36 -0.56 0.50 0.64 -0.55
-    ```
-
-5. Ask whether any script writes `fit.png`. None does: the report shows a
-   figure that cannot be rebuilt.
-
-!!! success "You should now see"
-    `g      9.81 +- 0.12 m/s^2` in the terminal, and the room can say why the
-    report's 9.81 could not be rebuilt from the script as it was handed out.
-
-**Say it in these words.** The 9.81 is real, and it took two lines that the
-author never showed. Nothing made those two rows outliers. They were the
-two whose removal gave the expected value.
-
----
-
-### 3. Write the review { #write }
-
-**0:20 · 10 min**
-
-**Tell the room.** A review is a list of comments that the author can act
-on. Each comment says what was run and what came out, and is marked as
-*must fix*, *suggestion* or *question*.
-
-1. Create a file in the project folder named:
-
-    ```text
-    review_example.md
-    ```
-
-2. Type the heading and the first comment with the room.
-
-    ```text
-    # Review of the pendulum report
-
-    Run on Windows 11, Python 3.13, 2026-12-29.
-
-    1. **Must fix.** `fit_g_example.py` reads
-       `C:/Users/student/Desktop/pendulum.csv`. On my laptop:
-       FileNotFoundError. With `data/processed/pendulum.csv` it runs.
-    ```
-
-3. The room writes the other comments alone, for five minutes.
-
-4. Collect them on the projector. A complete review has these six.
-
-    | | Mark | Comment |
-    |--|--|--|
-    | 1 | Must fix | The path points to the author's desktop |
-    | 2 | Must fix | The script gives 9.84 ± 0.09 from nine rows. The report says 9.81. The script removes no row |
-    | 3 | Must fix | With the two rows removed I get 9.81 ± 0.12. Their pulls were 0.12 and −0.38, the largest in the table is −0.93. Why are they outliers? |
-    | 4 | Must fix | The report gives no uncertainty |
-    | 5 | Must fix | The report shows `fit.png`. No script makes it |
-    | 6 | Question | *Excellent agreement*, at ± 0.12? |
-
-5. Delete `scripts/fit_g_example.py`: right-click it in the Side Bar and
-   select **Delete**. Keep `review_example.md` as a model for the next part.
-
-!!! success "You should now see"
-    A `review_example.md` with at least four of the six comments on every
-    laptop.
-
-!!! warning "Watch for"
-    Comments about the author ("careless", "did not think"). A comment is
-    about the work: what was run, what came out, what is missing.
-
----
-
-## Part 2 · A review, in pairs { #part-2 }
-
-**0:30 to 1:15 · sections 4 to 6**
-
-Each student is now reviewer of one project and author of another. The
-reviewer works on their own laptop and does not ask the author anything
-before the review is written. A question the reviewer has to ask is a line
-missing from the README.
-
----
-
-### 4. Get the neighbour's project { #clone }
-
-**0:30 · 10 min**
-
-**Tell the room.** The reviewer needs the project as a stranger would get
-it: from the remote repository, into an empty folder.
-
-1. The author opens the repository on GitHub, then **Settings** >
-   **Collaborators** > **Add people**, and enters the reviewer's user name.
-   The reviewer accepts the invitation: it arrives by e-mail and under
-   **Notifications**.
-
-2. The reviewer copies the address of the repository from the green
-   **Code** button, the one that starts with `https://`.
-
-3. The reviewer opens a new window of VS Code, presses `Ctrl+Shift+P`
-   (macOS `Cmd+Shift+P`) and types:
-
-    ```text
-    Git: Clone
-    ```
-
-    Paste the address and choose a folder outside your own project, for
-    example **Documents**.
-
-4. When VS Code asks, select **Open**. The neighbour's project is open.
-
-!!! success "You should now see"
-    The neighbour's files in the Side Bar, and their `README.md` in the
-    Editor.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `Repository not found` | The invitation is not accepted yet. Open the link in the e-mail |
-    | The author has no remote repository | The author compresses the project folder without `.venv` and passes it on a USB stick. The reviewer unpacks it into **Documents** |
-    | The cloned folder has no data | Large or raw data is kept out of the repository. The README has to say how to fetch it: that is question 1 |
-
----
-
-### 5. Rebuild it { #rebuild }
-
-**0:40 · 15 min**
-
-**Tell the room.** The reviewer follows the neighbour's README, and nothing
-else. The aim is to get the numbers of the report out of the files of the
-repository.
-
-1. Read `README.md` from top to bottom before typing anything.
-
-2. Do what it says to set up: fetch the data, create the environment,
-   install the packages. Write down every step that the README did not
-   give and that had to be guessed.
-
-3. Run the command that rebuilds the analysis. In a project that followed
-   Seminar 13 it is:
-
-    === "macOS"
-
-        ```text
-        python3 run_all.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python run_all.py
-        ```
-
-4. Open the report and compare its numbers and figures with what was just
-   built. Write down each number in both versions.
-
-5. Stop after 15 minutes, wherever you are. A rebuild that did not finish
-   in 15 minutes is a finding, and the review says where it stopped.
-
-!!! success "You should now see"
-    One of two things: the neighbour's numbers rebuilt on your laptop, or a
-    note that names the step where the rebuild stopped and the message on
-    the screen.
-
-Walk through the room during this section. Do not repair anything. When a
-pair wants to talk, remind them: the reviewer writes the question down.
-
----
-
-### 6. Twelve questions { #questions }
-
-**0:55 · 20 min**
-
-**Tell the room.** This is the checklist of the lecture. Each question is
-answered with *yes*, *no* or *could not tell*, and every *no* becomes a
-comment.
-
-1. Create a file in the neighbour's project folder named:
-
-    ```text
-    review.md
-    ```
-
-    Its first line says who reviewed, on which system and when.
-
-2. Answer the twelve questions in order.
-
-    | | Question |
-    |--|--|
-    | | **Rebuild** |
-    | 1 | Does the README say where the data came from? |
-    | 2 | Does one command rebuild every number and figure on my laptop? |
-    | 3 | Do the rebuilt numbers equal those in the report? |
-    | | **Data** |
-    | 4 | Is `data/raw` untouched? |
-    | 5 | Is every removed or changed row listed, with a reason? |
-    | 6 | Are the columns and their units written down? |
-    | | **Method** |
-    | 7 | Is the question stated, and was it fixed before the result? |
-    | 8 | Does every result have an uncertainty, and is its kind named? |
-    | 9 | Is there a check that could have failed? |
-    | | **Report** |
-    | 10 | Do the figures have axis labels with units? |
-    | 11 | Does the conclusion claim no more than the numbers support? |
-    | 12 | Are sources, data and tools named? |
-
-3. Write the comments below the answers, in the form of
-   `review_example.md`: a number, a mark, what was run, what came out.
-
-4. Add one thing that is done well. A review that lists only faults is
-   read less carefully.
-
-5. Send `review.md` to the author: commit it and push, or pass the file.
-
-!!! success "You should now see"
-    A `review.md` with twelve answers, at least three comments and one thing
-    done well, and the author has it.
-
-!!! warning "Watch for"
-    | In the review | What to say |
-    |--|--|
-    | "Looks good" with twelve times *yes* | Ask which command was run for question 2 and which numbers were compared for question 3 |
-    | Comments on taste: variable names, colours | Mark them *suggestion*, and keep them few |
-    | The reviewer repaired the neighbour's script | A reviewer reports. The author repairs |
-
----
-
-## Part 3 · The answer { #part-3 }
-
-**1:15 to 1:30 · section 7**
-
-Each student is now the author again, with the review of their own project.
-
----
-
-### 7. Answer the review { #answer }
-
-**1:15 · 15 min**
-
-**Tell the room.** The author now has a list of comments from someone who
-ran the work. Every comment gets an answer in writing. There are two kinds
-of answer: changed, with the commit, or not changed, with the reason.
-
-1. Open the `review.md` you received in your own project. If it came by a
-   push, fetch it first with **Pull** in the Source Control view.
-
-2. Under each comment write one line that starts with **Answer:**.
-
-    ```text
-    2. **Must fix.** README does not say how to create the environment.
-       **Answer:** changed. Added the three commands to the README.
-    ```
-
-3. Fix one *must fix* comment now. Choose the one that stopped the
-   rebuild, if there was one.
-
-4. Commit the fix together with the answered `review.md`, and push.
-
-    ```text
-    git add -A
+    git commit -am "October 2025: the verdict under four choices"
     ```
 
     ```text
-    git commit -m "Answer the review; README says how to rebuild"
+    [main 0184479] October 2025: the verdict under four choices
+     1 file changed, 7 insertions(+)
+    ```
+
+4. Push.
+
+    ```text
+    git push
+    ```
+
+    ```text
+    To https://github.com/your-username/weather-project.git
+       42e9b25..0184479  main -> main
+    ```
+
+**Check:** on GitHub, `README.md` shows the October 2025 section and its
+table.
+
+!!! question "Task: report the scan honestly"
+    Section 7 said "April 2025, 8.79 sd below normal". Write, in two lines
+    under the table, what an honest report of the scan would say instead.
+    Commit and push it.
+
+??? note "Answer"
+    For example:
+
+    ```text
+    A scan of all 120 months finds 11 beyond 2 sd; chance alone gives 11.3.
+    With the sd of all months, April 2025 is at -2.24, one of eight.
+    ```
+
+    ```text
+    git commit -am "Report the scan of all months"
     ```
 
     ```text
     git push
     ```
 
-5. Tell the reviewer in one sentence what was changed, and say thank you.
+---
 
-!!! success "You should now see"
-    A commit on the remote repository that holds `review.md` with an answer
-    under every comment.
+### 13. Wrap up { #wrap-up }
+
+**1:55 · 5 min**
+
+| To | Do |
+|--|--|
+| keep the result from steering the rule | write the rule first, commit it, then unblind |
+| judge one number | compare it with its spread: z = (value − mean) / sd |
+| report a search | say how many places were searched and what chance gives there |
+| trust a verdict | change each choice of the method and see that it holds |
 
 ---
 
-## Part 4 · A plan for the data { #part-4 }
-
-**1:30 to 1:55 · section 8**
-
-The project now has a reviewed analysis. The last part writes down what
-happens to its data.
+## Optional, if the room is fast { #optional }
 
 ---
 
-### 8. Six headings { #dmp }
+### 14. A neighbour checks the order { #review }
 
-**1:30 · 25 min**
+**— · 10 min** · A reviewer can see from the history whether the rule came first.
 
-**Tell the room.** A data management plan says what data a project has and
-what happens to it, during the project and after. Funders ask for one. For
-a project of this size it is one page, and most of its content is already
-in the README. The plan is filled in for the course files on the projector,
-and the room types it with you.
-
-1. Create a file in the project folder named:
+1. Swap laptops with a neighbour. On theirs, list the last commits with
+   their dates.
 
     ```text
-    DMP.md
+    git log --format="%h %ad %s" --date=format:"%H:%M" -n 4
     ```
 
-    Type the six headings.
+    ```text
+    0184479 19:50 October 2025: the verdict under four choices
+    fa9cfb6 19:50 October 2025: z = -0.47, not unusual
+    b371f71 19:50 Fix the rule before looking at October 2025
+    1a57bac 19:50 Merge branch 'main' of https://github.com/MindaugasSarpis/weather-project
+    ```
+
+    Your ids and times differ.
+
+2. Rerun their result.
+
+    ```text
+    python scripts/month_check.py 2025 10 --unblind
+    ```
+
+3. Answer three questions, out loud: Is the plan older than the result? Does
+   the rerun give the README's number? Does the README give the verdict the
+   plan's rule gives?
+
+**Check:** three times yes, or a note to the neighbour saying which not.
+
+---
+
+### 15. A data management plan { #dmp }
+
+**— · 15 min** · What the project's data is, where it lives, and what happens to it at the end.
+
+1. The sizes of the raw files.
+
+    ```text
+    Get-ChildItem data/raw | Select-Object Name, Length
+    ```
+
+    ```text
+    Name              Length
+    ----              ------
+    daily_export.csv     180
+    weather.csv      2515215
+    ```
+
+2. **File** > **New File...**, `DMP.md`. Write one line under each heading.
 
     ```text
     # Data management plan
 
-    ## 1 Data
-    ## 2 Documentation
-    ## 3 Storage and backup
-    ## 4 Legal and ethical questions
-    ## 5 Sharing and preservation
-    ## 6 Responsibilities
+    ## Data
+    weather.csv, 2 515 215 bytes, and daily_export.csv, 180 bytes.
+
+    ## Documentation
+    README.md: source, columns, units, the -999 hours.
+
+    ## Storage and backup
+    Laptop, and the private repository on GitHub.
+
+    ## Legal and ethical questions
+    No personal data. Data under CC0, from the station's operator.
+
+    ## Sharing and preservation
+    At the end: the repository to Zenodo, with a DOI.
+
+    ## Responsibilities
+    Your Name. No cost.
     ```
 
-2. Fill in heading 1 with the room. The sizes are measured, not guessed:
-
-    === "macOS"
-
-        ```text
-        ls -l data/raw data/processed
-        ```
-
-    === "Windows"
-
-        ```text
-        Get-ChildItem data/raw, data/processed
-        ```
-
-        The sizes in bytes stand in the column `Length`.
-
-    ```text
-    ## 1 Data
-    - `pendulum.csv`: 9 rows, own measurement, 97 bytes
-    - `D0_KPi.csv`: 91 583 rows, 3 926 142 bytes, reused from
-      CERN Open Data record 401
-    ```
-
-3. Fill in headings 2 to 6 on the projector, one line each, asking the
-   room for every answer.
-
-    ```text
-    ## 2 Documentation
-    README.md: source, DOI, columns, units, every change made.
-
-    ## 3 Storage and backup
-    Laptop, private repository on GitHub, external disk (weekly).
-
-    ## 4 Legal and ethical questions
-    No personal data. Record 401: CC0. Own measurement: CC BY 4.0.
-
-    ## 5 Sharing and preservation
-    At the end: code and pendulum.csv to Zenodo, with a DOI.
-    D0_KPi.csv is not uploaded again: the README says how to fetch it.
-
-    ## 6 Responsibilities
-    The author. No cost.
-    ```
-
-4. For ten minutes each student makes the plan true for their own project:
-   heading 3 names the places where their copies really are, heading 6 their
-   own name. A student who has a dataset of their own adds it under heading
-   1 and answers heading 4 for it first: does it hold data about people, and
-   under which licence was it obtained?
-
-5. Swap with the neighbour of Part 2 for two minutes. The neighbour marks
-   every line that they could not act on.
-
-6. Commit `DMP.md`.
+3. Commit and push.
 
     ```text
     git add DMP.md
@@ -571,73 +648,19 @@ and the room types it with you.
     git commit -m "Add a data management plan"
     ```
 
-!!! success "You should now see"
-    A `DMP.md` with six filled headings, committed, on every laptop.
+    ```text
+    git push
+    ```
 
-!!! warning "Watch for"
-    | In the plan | What to say |
-    |--|--|
-    | "Backup: GitHub" as the only copy | Data that is kept out of the repository is then on one disk only. Name a second place |
-    | "No personal data" for a survey, a list of users or a set of photos | Go back to the table of the lecture: can a person be singled out? If yes, the plan needs a line on who may see the data and when it is deleted |
-    | No licence | Open the record the data came from and read it. If there is none, write "licence unknown: not to be passed on" |
+**Check:** `DMP.md` on GitHub, six headings, a line under each.
 
 ---
-
-### 9. Wrap up { #wrap-up }
-
-**1:55 · 5 min**
-
-Read the list aloud. Ask which of the twelve questions got the most *no*.
-In most rooms it is question 2.
-
-- A review starts by running the work on another laptop.
-- A comment says what was run and what came out, and is marked *must fix*,
-  *suggestion* or *question*.
-- A number in a report that the scripts do not produce cannot be reviewed.
-- Rows are removed for a reason written down before the result is known.
-- The author answers every comment: changed, or not changed and why.
-- A data management plan has six headings, and for a small project it is
-  one page.
-
----
-
-## Stretch goals
-
-For students who finish a section early. Answers are given for the
-lecturer.
-
-- In how many ways can two of the nine rows be removed, and between which
-  values does g then lie? Write a loop over all pairs. The answer is 36
-  ways, with g from 9.76 to 9.91.
-- Test `fit_g_example.py` on data with a known answer, as in the lecture:
-  lengths 20, 40, 60, 80 and 100 cm, and the time of ten swings computed
-  from g = 9.81. The answer is `g      9.81`.
-- Compute the checksum of the neighbour's copy of `D0_KPi.csv` and compare
-  it with the one in their README, as in
-  [Seminar 4](seminar_04.md#checksum): `shasum -a 256 data/raw/D0_KPi.csv`
-  on macOS, `(Get-FileHash data/raw/D0_KPi.csv).Hash` on Windows. The
-  answer is `25c3c972…c1505136` (Windows `25C3C972…C1505136`) if the file
-  is unchanged.
-- Send the review as an issue on the neighbour's repository on GitHub:
-  **Issues** > **New issue**, one issue per *must fix* comment. The author
-  closes each issue with the commit that fixes it.
-- Fix a second *must fix* comment of the review you received, and push.
-- Add a file `DECISIONS.md` to your project with the three most important
-  choices of your analysis: the date, the decision, the reason, and what
-  the alternative gave.
-- Find out how long your institution asks research data to be kept, and
-  add it to heading 5 of `DMP.md`.
-
-## If students ask for more
-
-| Topic | Where |
-|--|--|
-| A template for a longer plan | The funder's own template, or the tools DMPonline and Argos |
-| Fixing the plan of an analysis in public before the data is seen | Preregistration, for example on the Open Science Framework |
-| Whether a student project needs approval by an ethics committee | The rules of the institution. They differ: ask the supervisor |
-| What applies to a student project whose data is about people | The data protection officer of the institution |
-| Rules for AI tools in a thesis | The rules of the university and of the journal. They differ: ask before handing in |
 
 ## Aims practised
 
-♻️ an analysis rebuilt on a second laptop · 📁 a plan for where the data lives and what happens to it · 🔧 a review that depends on no tool but the project folder
+- ♻️ **Reproducibility:** the rule, the result and the checks are commits in
+  order, and any of them reruns with one line.
+- 🔧 **Tool-agnostic:** the same lines in PowerShell on macOS and Windows; the
+  reasoning (z, chance, choices) holds in any language.
+- 📁 **Files:** the plan is a file in the repository, so its date is the
+  date of its commit.

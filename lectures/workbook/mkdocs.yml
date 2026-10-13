@@ -70,19 +70,19 @@ nav:
       - Miscellaneous: lectures/misc.md
   - Seminars:
       - Overview: seminars/overview.md
-      - S1 VS Code, Markdown & text editing: seminars/seminar_01.md
-      - S3 A file as bytes: seminars/seminar_03.md
-      - S4 Work on Files from the Shell: seminars/seminar_04.md
-      - S4 · Install Python, Git and PowerShell 7: seminars/install_python_git.md
-      - S5 Who Changed the Mean? Git: seminars/seminar_05.md
-      - S6 A Line of Text into Numbers: seminars/seminar_06.md
-      - S7 The Whole File in Python: seminars/seminar_07.md
-      - S8 Two Figures with Matplotlib: seminars/seminar_08.md
-      - S9 A Result with Its Uncertainty: seminars/seminar_09.md
-      - S10 Fit a Straight Line and Measure g: seminars/seminar_10.md
-      - S11 A Perceptron from an Empty File: seminars/seminar_11.md
-      - S12 Clean a Table by Script: seminars/seminar_12.md
-      - S13 One Command Rebuilds the Analysis: seminars/seminar_13.md
-      - S14 Review an Analysis, Plan the Data: seminars/seminar_14.md
-      - S15 Timing, Memory and a Background Job: seminars/seminar_15.md
-      - S16 A Small Network, Measured: seminars/seminar_16.md
+      - S1 What Do the Weather Files Say?: seminars/seminar_01.md
+      - S3 What Are the 148 Bytes of daily.csv?: seminars/seminar_03.md
+      - S4 What Is the Mean Temperature of Ten Years?: seminars/seminar_04.md
+      - S4 · Install PowerShell 7, Git and Python: seminars/install_python_git.md
+      - S5 Who Changed the Mean?: seminars/seminar_05.md
+      - S6 Can You Compute 7.16 Yourself?: seminars/seminar_06.md
+      - S7 Is It Getting Warmer?: seminars/seminar_07.md
+      - S8 What Does a Year of Weather Look Like?: seminars/seminar_08.md
+      - S9 How Sure Is 7.16?: seminars/seminar_09.md
+      - S10 How Strong Is the Yearly Cycle?: seminars/seminar_10.md
+      - S11 Will It Freeze Tonight?: seminars/seminar_11.md
+      - S12 How Cold Is the Hill?: seminars/seminar_12.md
+      - S13 Can a Stranger Rebuild Every Number?: seminars/seminar_13.md
+      - S14 Was October 2025 Unusually Warm?: seminars/seminar_14.md
+      - S15 How Long Does It Take, and How to Make It Faster?: seminars/seminar_15.md
+      - S16 Can a Model Forecast Tomorrow's Temperature?: seminars/seminar_16.md

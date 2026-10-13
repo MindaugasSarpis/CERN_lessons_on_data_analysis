@@ -186,4 +186,23 @@ Data: CC0, from the station's operator. Scripts and text: MIT, see
 EOF
 commit smilte "2026-10-19T17:05:00+03:00" "Add a licence"
 
+# --- later seminars: one commit each, only new files -----------------------
+# STAGE=N adds the commits of the seminars up to N (default 5: the state the
+# room clones in Seminar 5). Push each one after its previous seminar ran,
+# never before Seminar 5, whose page prints the seven commits above.
+STAGE="${STAGE:-5}"
+stage() {  # stage N DATE MESSAGE
+  local n="$1" dir="$HERE/files/s$(printf %02d "$1")"
+  [ "$STAGE" -ge "$n" ] && [ -d "$dir" ] || return 0
+  cp -r "$dir"/. .
+  "$GIT" add -A
+  GIT_AUTHOR_NAME="Mindaugas Šarpis" GIT_AUTHOR_EMAIL="mindaugas.sarpis@cern.ch" GIT_AUTHOR_DATE="$2" \
+  GIT_COMMITTER_NAME="Mindaugas Šarpis" GIT_COMMITTER_EMAIL="mindaugas.sarpis@cern.ch" GIT_COMMITTER_DATE="$2" \
+    "$GIT" commit -q -m "$3"
+}
+stage 6 "2026-10-26T18:00:00+02:00" "Add a script with two bugs for Seminar 6"
+stage 12 "2026-12-14T18:00:00+02:00" "Add the hill station's export for Seminar 12"
+stage 14 "2027-01-11T18:00:00+02:00" "Add the scripts of Seminar 14"
+stage 15 "2027-01-18T18:00:00+02:00" "Add the scripts of Seminar 15"
+
 "$GIT" log --format='%h %an %ad %s' --date=short

@@ -12,7 +12,7 @@ title: "Command Line & File Handling"
 ##### <span class="aims-badge">⚙️ automation · 📁 data & files · 🔧 tool-agnostic</span>
 
 <!--
-**Say:** today every step on a file is a typed line.
+**Say:** today one number is checked, and every step of the check is a typed line.
 (~1 min)
 -->
 
@@ -21,7 +21,7 @@ hideInToc: true
 layout: quote
 ---
 
-# The main goal of this lecture is to work on files with **typed commands**: a step that was typed can be written down, checked and run again
+# A step that was typed can be written down, checked and run again. Today **7.16 °C** is checked by typed lines
 
 <!--
 **Say:** a click leaves nothing behind. A typed line can be pasted into a README, read by someone else and run again on the next file.
@@ -32,58 +32,7 @@ layout: quote
 hideInToc: true
 ---
 
-# Learning **Objectives**
-
-<div class="stack-tight mt-sm">
-
-<div class="card card-primary card-glass pad-compact">
-
-🐚 Set up the **shell** of your laptop, read its prompt, and move between folders
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-📁 Read, count, copy, move and delete **files** with typed commands
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🔗 Join commands with **pipes**, and find the mark for "no value" in 87 672 rows
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-🔎 Describe a kind of text with a **regular expression**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-⚙️ Run a **script** someone else wrote, install a program and a package, and give a project its own **environment**
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-🛡️ Tell files apart by **checksum**, keep **backups**, and write down how every file is made again: in the README and in a **shell script**
-
-</div>
-
-</div>
-
-<!--
-**Say:** one line per part of the lecture. One small project folder runs through all of them.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# The Project **Folder**
+# The Number to **Check**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -103,24 +52,25 @@ weather-project/
 └─ results/
 ```
 
+The whole folder: <a href="../workbook/data/weather_project.zip" download>weather_project.zip</a>, 565 KB
+
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
-## 🌦️ **The files of a weather station**
+## ✉️ **Smiltė's e-mail**
 
-- `weather.csv`: one row per hour, 2016 to 2025
-- `daily_export.csv`: nine daily mean temperatures, typed into a spreadsheet
-- Two small programs in `scripts`
-- `data/raw` holds the files as they arrived. Nothing writes there
-- The whole folder: <a href="../workbook/data/weather_project.zip" download>weather_project.zip</a>, 565 KB
+The mean air temperature at the station, 2016 to 2025: **7.16 °C**.
+
+`weather.csv` has one row per hour. Some hours had no reading; I left them out.
 
 </div>
 
 </div>
 
 <!--
-**Say:** a colleague sent this folder. Today we answer questions about it with typed lines.
+**Say:** Smiltė's number from the first lecture, and the folder she sent with it. `data/raw` holds the files as they arrived; nothing writes there.
+**Ask:** what would you do first to check 7.16?
 (~2 min)
 -->
 
@@ -128,76 +78,28 @@ weather-project/
 hideInToc: true
 ---
 
-# The Columns of `weather.csv`
+# The Check, Step by **Step**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-## 📄 **The first two lines of `weather.csv`**
-
-```text
-time,temp_c,humidity_pct,wind_ms
-2016-01-01T00:00,-4.4,93,2.5
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact mt-md">
-
-| Column | Value on line 2 | Meaning |
+| Step | Question about 7.16 | Answer |
 | --- | --- | --- |
-| `time` | `2016-01-01T00:00` | the hour, as year-month-day, `T`, hour:minute |
-| `temp_c` | `-4.4` | air temperature, °C |
-| `humidity_pct` | `93` | relative humidity, % |
-| `wind_ms` | `2.5` | wind speed, m/s |
+| 1 | Which columns does `weather.csv` have, and which one is the temperature? | ? |
+| 2 | Does it hold every hour of ten years? | ? |
+| 3 | Which rows are not measurements? | ? |
+| 4 | Is every other row a measurement? | ? |
+| 5 | What is the mean without those rows, and with them? | ? |
+| 6 | Does a second program give the same mean? | ? |
+| 7 | Is my `weather.csv` the file Smiltė used? | ? |
+| 8 | Can anyone run the whole check again? | ? |
 
 </div>
 
-<div class="note-text mt-md">Line 1 names the columns. Every later line is one hour, the values separated by commas: a CSV file.</div>
+<div class="note-text mt-md">Every answer comes from a typed line in PowerShell 7, the same line on macOS and on Windows.</div>
 
 <!--
-**Say:** the time is written largest unit first, ISO 8601. That order also sorts correctly as text.
+**Say:** one question per part of the lecture. The answer column fills up as we go; it closes the lecture.
 (~2 min)
--->
-
----
-hideInToc: true
----
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-| Question about `weather.csv` | In VS Code | Answer |
-| --- | --- | --- |
-| How many lines? | `Ctrl+End`, read the line number | 87 673 |
-| What is on line 5000? | `Ctrl+G`, type `5000` | `2016-07-27T06:00,18.2,71,1.1` |
-| What was the coldest hour? | no key does it | ? |
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🖱️ **A click**
-
-Leaves the answer on the screen. For the next file, every step is done again by hand.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ⌨️ **A typed line**
-
-Answers all three. The line can be kept in the README and run again on the next file.
-
-</div>
-
-</div>
-
-<!--
-**Ask:** how would you find the coldest hour among 87 672?
-**Say:** leave the question open. A typed line answers it in the middle of the lecture.
-**If asked:** on a Mac the keys are `Cmd+↓` and `Ctrl+G`.
-(~3 min)
 -->
 
 ---
@@ -205,12 +107,11 @@ layout: section
 hideInToc: true
 ---
 
-# Set Up the **Shell**
+# The **Shell**
 
-The terminal, the shell, and the same shell on every laptop: zsh on macOS, PowerShell 7 on Windows.
+Step 1: one shell on every laptop, and the columns of the file.
 
 <!--
-**Say:** nothing is assumed: everyone starts from an empty terminal.
 (~1 min)
 -->
 
@@ -232,7 +133,7 @@ The window. It passes what is typed to the shell and shows what comes back.
 
 ## 🐚 **Shell**
 
-A program that reads a typed line, starts the program the line names, and waits for the next line: zsh, PowerShell.
+A program that reads a typed line, runs what the line names, and waits for the next line: PowerShell, zsh, bash.
 
 </div>
 
@@ -240,14 +141,24 @@ A program that reads a typed line, starts the program the line names, and waits 
 
 ## ⚙️ **Program**
 
-A file the computer can run: `head`, `wc`, `python3`, the shell itself. The programs of this lecture print text.
+A file the computer can run: `pwsh`, `python`, `git`. The shell itself is one.
 
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact table-compact mt-md">
+
+| | Comes with the system | This course |
+| --- | --- | --- |
+| macOS | zsh, in the app Terminal | PowerShell 7, `pwsh` |
+| Windows | Windows PowerShell 5.1 | PowerShell 7, `pwsh` |
 
 </div>
 
 <!--
-**Say:** the terminal is only the window. The shell inside it does the work, and it can be changed without changing the window.
+**Say:** the terminal is only the window. The shell inside it does the work, and it can be changed without changing the window. One shell on both systems means one line on every slide.
+**If asked:** PowerShell 7 is free and open source, made by Microsoft for Windows, macOS and Linux. Windows PowerShell 5.1 is no longer developed.
 (~2 min)
 -->
 
@@ -255,134 +166,132 @@ A file the computer can run: `head`, `wc`, `python3`, the shell itself. The prog
 hideInToc: true
 ---
 
-<div class="card card-primary card-glass pad-compact table-compact">
+# What the Shell Does with a **Line**
 
-| Laptop | Shell of this course | Comes with the system? | Its prompt ends in |
-| --- | --- | --- | --- |
-| macOS | `zsh` | Yes, the default since macOS 10.15 (2019) | `%` |
-| Windows | PowerShell 7 | No. Windows has the older Windows PowerShell 5.1 | `>` |
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> Get-Content -TotalCount 2 data/raw/weather.csv
+```
 
 </div>
 
-<div class="note-text mt-md">On these slides <code>%</code> starts a zsh line and <code>PS&gt;</code> a PowerShell line. Nobody types either: the shell prints it.</div>
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
+| | The shell | On this line |
+| --- | --- | --- |
+| 1 | waits for `Enter`, then reads the line | the whole line |
+| 2 | splits it into words at the spaces | 4 words; `"weather station.csv"` in quotes stays one |
+| 3 | replaces what it knows: `$HOME`, `$file`, `( … )` | nothing here |
+| 4 | finds the command the first word names | `Get-Content`, part of PowerShell |
+| 5 | runs it with the other words, shows its output | the first 2 lines of the file |
+| 6 | notes whether it worked, prints the prompt | `PS>` again |
+
+</div>
 
 <!--
-**Say:** two shells, one per system. The ideas are the same in both, the words often differ. Every command slide shows both side by side.
-**If asked:** Linux usually has bash. Almost every zsh line of this lecture runs there unchanged.
-(~1 min)
+**Say:** every line today goes through these six steps. Step 2 is why a space in a file name breaks a line: the shell sees two names.
+**If asked:** `$?` holds the result of step 6: `True` when the last command worked.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# macOS: Check the **Shell**
+# macOS: Homebrew, Then **PowerShell 7**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **Open Terminal**
-
-`Cmd+Space`, type `Terminal`, `Enter`. Then:
+## 🍎 **In the app Terminal, which starts zsh**
 
 ```text
-smilte@MacBook-Air ~ % echo $SHELL
-/bin/zsh
+% /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+==> Installation successful!
+% brew install --cask powershell
+🍺  powershell was successfully installed!
+% pwsh
+PowerShell 7.6.6
+PS> $PSVersionTable.PSVersion.ToString()
+7.6.6
 ```
 
-`SHELL` is a **variable**: a name the shell keeps a value under. `$SHELL` reads it, `echo` prints it.
-
 </div>
 
-<div class="card card-warning card-glass pad-compact">
-
-## 🔁 **If it prints `/bin/bash`**
-
-```text
-MacBook-Air:~ smilte$ chsh -s /bin/zsh
-Changing shell for smilte.
-Password for smilte:
-```
-
-`chsh` changes the shell, `-s` names the new one. Close the window, open a new one: `/bin/zsh`.
-
-</div>
-
-</div>
+<div class="note-text mt-md">Homebrew is a package manager for macOS: it installs a program by name. The first line installs Homebrew itself, the second PowerShell 7. <code>pwsh</code> starts it.</div>
 
 <!--
-**Ask:** who sees `/bin/bash`? Their account is older than 2019.
-**Say:** zsh is already on the disk at `/bin/zsh`; `chsh` only makes it the default.
-**If asked:** bash prints "The default interactive shell is now zsh" when it starts. The password is the Mac's login password, and nothing appears while it is typed. bash prompts end in `$`, zsh prompts in `%`.
-(~3 min)
+**Say:** two lines, typed once per laptop. After them the Mac has the same shell as every Windows laptop in the room.
+**If asked:** the Homebrew installer asks for the Mac's login password, and nothing appears while it is typed. On Apple Silicon it ends with "Next steps": two lines to paste, which put `/opt/homebrew/bin` on the list of folders the shell searches.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Windows: Install **PowerShell 7**
+# Windows: **PowerShell 7** with winget
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
-## 🪟 **In Windows PowerShell 5.1: Start, `PowerShell`, the blue window**
+## 🪟 **In Windows PowerShell 5.1: Start, `PowerShell`**
 
 ```text
-PS C:\Users\smilte> $PSVersionTable.PSVersion.Major
-5
 PS C:\Users\smilte> winget install --id Microsoft.PowerShell --source winget
 Found PowerShell [Microsoft.PowerShell] Version 7.6.6
 …
 Successfully installed
+PS C:\Users\smilte> pwsh
+PowerShell 7.6.6
+PS C:\Users\smilte> $PSVersionTable.PSVersion.ToString()
+7.6.6
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-success card-glass pad-compact mt-md">
 
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **Then: Start, `pwsh`, the black window**
-
-```text
-PS C:\Users\smilte> $PSVersionTable.PSVersion.Major
-7
-```
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📦 **The parts**
-
-`winget`: the installer of Windows. `--id`: the program's name in its catalogue. `$PSVersionTable`: a table PowerShell keeps about itself.
-
-</div>
+🖥️ VS Code, both systems: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), **Terminal: Select Default Profile**, **pwsh**. Every new terminal of VS Code then starts PowerShell 7.
 
 </div>
 
 <!--
-**Say:** Windows comes with Windows PowerShell 5.1, which is no longer developed. PowerShell 7 goes next to it, as the program `pwsh`; the blue window stays and still answers 5.
-**If asked:** winget asks once to accept its source agreements: `Y`. A university laptop may ask for an administrator password. 7.6.6 is from 8 September 2026; the same line upgrades an older PowerShell 7.
-(~3 min)
+**Say:** winget is the package manager that comes with Windows; the line names the package by its id.
+**If asked:** winget asks once to accept its source agreements: `Y`. A university laptop may ask for an administrator password. On Windows the list offers PowerShell (that is 7) and Windows PowerShell (5.1): pick PowerShell.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Open a Terminal in **VS Code**
+# Read the Prompt, List the **Folder**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-sm">
+
+```text
+PS /Users/smilte/Documents/weather-project>        the prompt on macOS
+PS C:\Users\smilte\Documents\weather-project>      the prompt on Windows
+```
+
+</div>
+
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
 ## 🍎 **macOS**
 
-1. **File > Open Folder**: `weather-project`
-2. **Terminal > New Terminal**
-3. The Panel opens, in the project folder, with `zsh` at its top right
+```text
+PS> Get-ChildItem
+
+UnixMode    User   … Size Name
+--------    ----     ---- ----
+drwxr-xr-x  smilte …  128 data
+drwxr-xr-x  smilte …   64 results
+drwxr-xr-x  smilte …  128 scripts
+-rw-r--r--  smilte …  688 README.md
+```
 
 </div>
 
@@ -390,83 +299,26 @@ hideInToc: true
 
 ## 🪟 **Windows**
 
-1. **File > Open Folder**: `weather-project`
-2. `Ctrl+Shift+P`, **Terminal: Select Default Profile**, **PowerShell**
-3. **Terminal > New Terminal**: `pwsh` at the top right
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-✅ The terminal of VS Code opens in the folder that VS Code has open. Editor and terminal show the same files.
-
-</div>
-
-<!--
-**Say:** on Windows the list offers PowerShell (that is 7) and Windows PowerShell (5.1). Pick PowerShell.
-**If asked:** `Ctrl+`` (backtick) opens and closes the Panel.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# First **Commands**
-
-Where the shell is, what is there, how to move, and what to do when a line fails.
-
-<!--
-**Say:** every command from here on runs in the terminal of VS Code, in `weather-project`.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Read the **Prompt**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
 ```text
-smilte@MacBook-Air weather-project %
+PS> Get-ChildItem
+
+Mode    LastWriteTime  Length Name
+----    -------------  ------ ----
+d----   13/10/2026 …          data
+d----   13/10/2026 …          results
+d----   13/10/2026 …          scripts
+-a---   13/10/2026 …      688 README.md
 ```
 
-- `smilte@MacBook-Air`: user and computer
-- `weather-project`: the folder the shell is in
-- `%`: the shell waits
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS C:\Users\smilte\Documents\weather-project>
-```
-
-- `PS`: PowerShell
-- `C:\…\weather-project`: the folder, as a whole path
-- `>`: the shell waits
-
 </div>
 
 </div>
 
-<div class="note-text mt-md">The folder in the prompt is the <strong>working directory</strong>. Every command starts there.</div>
+<div class="note-text mt-md">The prompt: <code>PS</code>, the folder the shell is in, the <strong>working directory</strong>, then <code>&gt;</code>. Every path on a line starts there. The slides shorten the prompt to <code>PS&gt;</code>.</div>
 
 <!--
-**Ask:** read the two prompts on the slide aloud, part by part.
-**Say:** zsh shows only the last folder, PowerShell the whole path. Both name the same thing.
+**Say:** the same command, the same four names. The table differs by system: `d` marks a folder on both, and the size of a file is `Size` on macOS, `Length` on Windows.
+**If asked:** a folder's `Size` on macOS is the space its list of names takes, not its contents. `Get-ChildItem -Name` prints the names alone.
 (~2 min)
 -->
 
@@ -474,140 +326,32 @@ PS C:\Users\smilte\Documents\weather-project>
 hideInToc: true
 ---
 
-# Run a Command: `echo`
+# The Commands of Lecture 03, in **PowerShell**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% echo hello
-hello
-%
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> echo hello
-hello
-PS>
-```
+| To | Command | Short name, on both systems |
+| --- | --- | --- |
+| see where the shell is | `Get-Location` | `pwd` |
+| list a folder | `Get-ChildItem data/raw` | `dir`, `gci` |
+| change folder | `Set-Location data` | `cd` |
+| make a folder | `New-Item -ItemType Directory backup` | `ni` |
+| copy, move or rename | `Copy-Item`, `Move-Item FROM TO` | `copy`, `move` |
+| delete, no undo | `Remove-Item backup -Recurse` | `del` |
+| read a file | `Get-Content data/raw/weather.csv` | `gc`, `type` |
+| measure a file | `(Get-Item data/raw/weather.csv).Length` | |
 
 </div>
 
-</div>
+<div class="card card-warning card-glass pad-compact mt-md">
 
-<div class="card card-info card-glass pad-compact mt-md">
-
-1. Type the line. Nothing happens yet
-2. `Enter`: the shell runs it
-3. The program prints its answer
-4. The prompt comes back: the next line can be typed
+⚠️ On macOS, `ls`, `cat`, `cp`, `mv`, `rm` and `mkdir` start the Mac's own programs, with other options and output. Write the names of this table.
 
 </div>
 
 <!--
-**Say:** `echo` prints what follows it. The four steps are the same for every command today.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Where Am I: `pwd`
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% pwd
-/Users/smilte/Documents/weather-project
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> pwd
-
-Path
-----
-C:\Users\smilte\Documents\weather-project
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-md"><code>pwd</code>, print working directory: the folder of the prompt, as a whole path. The same word in both shells.</div>
-
-<!--
-**Ask:** why would three laptops print three different answers? The user name differs.
-**If asked:** in PowerShell `pwd` is a short name for `Get-Location`; it prints a small table with one column, `Path`.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# What Is Here: `ls`
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% ls
-README.md  data  results  scripts
-% ls data
-processed  raw
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> ls
-
-    Directory: C:\Users\smilte\Documents\weather-project
-
-Mode           LastWriteTime   Length Name
-----           -------------   ------ ----
-d----    2026-10-13  09:00            data
-d----    2026-10-13  09:00            results
-d----    2026-10-13  09:00            scripts
--a---    2026-10-13  09:00        688 README.md
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-md"><code>ls</code>, list: the names in a folder. Without a name it lists the working directory, with a name it lists that folder.</div>
-
-<!--
-**Say:** PowerShell prints a table: `d` marks a folder, `Length` is the size of a file in bytes.
-**If asked:** the date column follows the laptop's date settings.
+**Say:** nothing new here: Lecture 03 typed these. PowerShell names a command Verb-Noun: what it does, then to what.
+**If asked:** on Windows `ls` and `cat` are short names for `Get-ChildItem` and `Get-Content`; on macOS PowerShell leaves those words to the system's programs.
 (~2 min)
 -->
 
@@ -615,102 +359,7 @@ d----    2026-10-13  09:00            scripts
 hideInToc: true
 ---
 
-# Change Folder: `cd`
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-smilte@MacBook-Air weather-project % cd data
-smilte@MacBook-Air data % ls
-processed  raw
-smilte@MacBook-Air data % cd ..
-smilte@MacBook-Air weather-project %
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS C:\…\weather-project> cd data
-PS C:\…\weather-project\data> ls -Name
-processed
-raw
-PS C:\…\weather-project\data> cd ..
-PS C:\…\weather-project>
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-md"><code>cd</code>, change directory: the prompt shows the new folder. <code>..</code> is the folder one level up.</div>
-
-<!--
-**Do:** follow the prompt: it changes after each `cd`.
-**Say:** `-Name` makes PowerShell's `ls` print names only.
-**If asked:** `cd` alone goes to the home folder in zsh; in PowerShell `cd ~` does it.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Absolute **Paths**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🌳 **Folders form a tree**
-
-```text
-/                       C:\ on Windows
-└─ Users
-   └─ smilte
-      └─ Documents
-         └─ weather-project
-            └─ data
-               └─ raw
-                  └─ weather.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📍 **On macOS and on Windows**
-
-```text
-/Users/smilte/Documents/weather-project/data/raw/weather.csv
-C:\Users\smilte\Documents\weather-project\data\raw\weather.csv
-```
-
-An absolute path starts at the top: `/` on macOS, `C:\` on Windows.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">It names one file on one computer. On another laptop the user name, and so the path, differs.</div>
-
-<!--
-**Say:** read the path from left to right as a walk down the tree. macOS separates folders with `/`, Windows with `\`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Relative **Paths**
+# Paths That Work on Every **Laptop**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
@@ -719,46 +368,19 @@ hideInToc: true
 | `weather-project` | `data/raw/weather.csv` |
 | `weather-project/data` | `raw/weather.csv` |
 | `weather-project/scripts` | `../data/raw/weather.csv` |
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## `.` **here**
-
-The working directory.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## `..` **one up**
-
-`cd ../..` goes up two levels.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## `~` **home**
-
-`/Users/smilte` or `C:\Users\smilte`.
-
-</div>
+| anywhere, on Smiltė's Mac | `/Users/smilte/Documents/weather-project/data/raw/weather.csv` |
+| anywhere, on Smiltė's Windows laptop | `C:\Users\smilte\Documents\weather-project\data\raw\weather.csv` |
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-♻️ The terminal stays in the project folder, and every path starts there. Then the same line works on every laptop, in both shells.
+♻️ The terminal stays in `weather-project`, and every path starts there. A relative path is the same on every laptop; an absolute path names one user on one computer.
 
 </div>
 
 <!--
-**Say:** a relative path starts at the working directory, so it does not start with `/` or `C:\`.
-**If asked:** PowerShell reads `/` and `\` alike.
+**Say:** `..` is the folder one level up, `.` the folder the shell is in, `~` the home folder. PowerShell on Windows reads `/` and `\` alike, so the slides write `/`.
 (~2 min)
 -->
 
@@ -768,31 +390,13 @@ hideInToc: true
 
 # The Parts of a **Command**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% head -n 2 data/raw/weather.csv
+PS> Get-Content -TotalCount 2 data/raw/weather.csv
 time,temp_c,humidity_pct,wind_ms
 2016-01-01T00:00,-4.4,93,2.5
 ```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Get-Content -Head 2 data/raw/weather.csv
-time,temp_c,humidity_pct,wind_ms
-2016-01-01T00:00,-4.4,93,2.5
-```
-
-</div>
 
 </div>
 
@@ -800,17 +404,17 @@ time,temp_c,humidity_pct,wind_ms
 
 <div class="card card-secondary card-glass pad-compact">
 
-## ⚙️ **Program**
+## ⚙️ **Command**
 
-The first word: `head`, `Get-Content`.
+The first word: `Get-Content`.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 🎚️ **Option**
+## 🎚️ **Parameter**
 
-How to work: `-n 2`, `-Head 2`.
+How to work, a name with a dash and its value: `-TotalCount 2`.
 
 </div>
 
@@ -825,8 +429,8 @@ What to work on: the path.
 </div>
 
 <!--
-**Say:** the words differ, the parts do not. PowerShell names its commands Verb-Noun; options are called parameters there.
-**If asked:** zsh tells `-n` from `-N`; PowerShell ignores case, so `-head` works too.
+**Say:** the order of named parameters does not matter: `Get-Content data/raw/weather.csv -TotalCount 2` is the same line.
+**If asked:** PowerShell ignores case, so `-totalcount` works too. `-Head` is another name for `-TotalCount`.
 (~2 min)
 -->
 
@@ -834,45 +438,34 @@ What to work on: the path.
 hideInToc: true
 ---
 
-# Spaces in **Names**
+# A Variable Holds a **Value**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% head -n 2 weather station.csv
-head: weather: No such file or directory
-head: station.csv: No such file or directory
+PS> $file = 'data/raw/weather.csv'
+PS> $file
+data/raw/weather.csv
+PS> (Get-Content $file).Count
+87673
+PS> $HOME
+/Users/smilte
+PS> $PSVersionTable.PSVersion.ToString()
+7.6.6
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-info card-glass pad-compact mt-md">
 
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Get-Content -Head 2 weather station.csv
-Get-Content: A positional parameter cannot
-be found that accepts argument 'station.csv'.
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ A space ends an argument: the shell reads two names. Quotes hold a name together, `"weather station.csv"`, and names without spaces need no quotes at all.
+A **variable** is a name the shell keeps a value under: `$` and the name. `=` puts a value in; the name alone reads it. PowerShell sets some itself: `$HOME`, `$PSVersionTable`, and after every line `$?`.
 
 </div>
 
 <!--
-**Say:** this is why the project folder uses `_` and `-` and never a space.
-(~1 min)
+**Say:** step 3 of the shell: `$file` is replaced by its value before `Get-Content` runs. A variable lasts until the terminal closes.
+**If asked:** on Windows `$HOME` is `C:\Users\smilte`. `$env:PATH` reads a variable of the system, which every program sees.
+(~2 min)
 -->
 
 ---
@@ -888,9 +481,11 @@ hideInToc: true
 ## ⌨️ **Type a start, press `Tab`**
 
 ```text
-head -n 2 da    Tab →  head -n 2 data/
-head -n 2 data/r  Tab →  head -n 2 data/raw/
-head -n 2 data/raw/w  Tab →  …/raw/weather.csv
+Get-Con       Tab →  Get-Content
+… -Tot        Tab →  … -TotalCount
+… da          Tab →  … ./data
+… ./data/r    Tab →  … ./data/raw
+… ./data/raw/w  Tab →  … ./data/raw/weather.csv
 ```
 
 </div>
@@ -899,18 +494,24 @@ head -n 2 data/raw/w  Tab →  …/raw/weather.csv
 
 ## ✅ **No typing mistakes**
 
-A name that `Tab` completed exists. If `Tab` adds nothing, no name fits: the path is wrong before it runs.
+A name that `Tab` completed exists. If `Tab` adds nothing, no name fits: the line is wrong before it runs.
 
 </div>
 
 </div>
 
-<div class="note-text mt-md">PowerShell completes a folder without the last <code>/</code> and writes <code>.\data\raw\weather.csv</code>. It reads that as well as <code>data/raw/weather.csv</code>.</div>
+<div class="card card-info card-glass pad-compact table-compact mt-md">
+
+| `↑` `↓` | `Ctrl+R` | `Ctrl+C` | `clear` |
+| --- | --- | --- | --- |
+| the earlier lines | search them | stop what runs | empty the window |
+
+</div>
 
 <!--
-**Live:** type `head -n 2 da`, then `Tab` three times, `Enter`; then `↑` brings the line back.
+**Live:** type `Get-Con`, `Tab`, a space, `-Tot`, `Tab`, ` 2 da`, `Tab`, `/r`, `Tab`, `/w`, `Tab`, `Enter`; then `↑` brings the line back.
 **Ask:** count the keys: how many were typed, how many did Tab add?
-**If asked:** with two names that fit, zsh lists them on a second Tab; PowerShell cycles through them, `Ctrl+Space` lists them.
+**If asked:** on Windows Tab writes `.\data\raw\weather.csv`. With two names that fit, Tab goes through them in turn; `Ctrl+Space` lists them.
 (~3 min)
 -->
 
@@ -918,56 +519,33 @@ A name that `Tab` completed exists. If `Tab` adds nothing, no name fits: the pat
 hideInToc: true
 ---
 
-# Keys for the **Shell**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Key or line | What it does | zsh | PowerShell |
-| --- | --- | --- | --- |
-| `↑` `↓` | the earlier lines, one at a time | ✓ | ✓ |
-| `Ctrl+R` | search the earlier lines | ✓ | ✓ |
-| `Ctrl+C` | stop the program that runs | ✓ | ✓ |
-| `clear` | empty the window; files stay as they are | ✓ | ✓ |
-| start, end of line | move the cursor | `Ctrl+A`, `Ctrl+E` | `Home`, `End` |
-
-</div>
-
-<div class="note-text mt-md">The mouse does not move the cursor inside a line. The arrow keys do.</div>
-
-<!--
-**Say:** a line once typed is never typed again: ↑ brings it back.
-**If asked:** in PowerShell `Ctrl+C` copies when text is selected.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Help on a **Command**
+# Find a Command and Its **Parameters**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🍎 **macOS · zsh**
+## 🔎 **Every command for files: noun `Item`**
 
 ```text
-% man head
-HEAD(1)    General Commands Manual    HEAD(1)
+PS> Get-Command -Noun Item
 
-NAME
-     head – display first lines of a file
+CommandType     Name
+-----------     ----
+Cmdlet          Clear-Item
+Cmdlet          Copy-Item
+Cmdlet          Get-Item
+Cmdlet          Move-Item
+Cmdlet          New-Item
+Cmdlet          Remove-Item
 …
 ```
-
-`Space` scrolls, `q` leaves.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🪟 **Windows · PowerShell**
+## 📖 **The parameters of one**
 
 ```text
 PS> Get-Help Get-Content
@@ -976,18 +554,22 @@ NAME
     Get-Content
 
 SYNTAX
-    Get-Content [-Path] <string[]> [-TotalCount <long>]
-    [-Tail <int>] …
-```
+    Get-Content [-Path] <string[]>
+    [-TotalCount <long>] [-Tail <int>]
+    [-Raw] [-Encoding <Encoding>] …
 
-`Get-Help Get-Content -Online` opens the full page.
+ALIASES
+    gc
+    type
+```
 
 </div>
 
 </div>
 
 <!--
-**Say:** PowerShell 7 ships without its help texts. `-Online` opens them in the browser; `Update-Help` downloads them once.
+**Say:** the Verb-Noun names make PowerShell searchable: the verbs are few (Get, Set, New, Remove, Copy, Move), so a guess is often right.
+**If asked:** PowerShell 7 ships without the long help texts. `Get-Help Get-Content -Online` opens them in the browser; `Update-Help` downloads them once. A cmdlet is a command built into PowerShell.
 (~2 min)
 -->
 
@@ -997,46 +579,57 @@ hideInToc: true
 
 # Read an Error **Message**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% hed -n 2 data/raw/weather.csv
-zsh: command not found: hed
-% head -n 2 data/raw/wether.csv
-head: data/raw/wether.csv: No such file
-or directory
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> hed -n 2 data/raw/weather.csv
-hed: The term 'hed' is not recognized as
-a name of a cmdlet, function, script file,
-or executable program.
+PS> Get-Contnt data/raw/weather.csv
+Get-Contnt: The term 'Get-Contnt' is not recognized as a name of a cmdlet,
+function, script file, or executable program.
 PS> Get-Content data/raw/wether.csv
-Get-Content: Cannot find path 'C:\Users\smilte\
-…\data\raw\wether.csv' because it does not
-exist.
+Get-Content: Cannot find path '/Users/smilte/Documents/weather-project/data/
+raw/wether.csv' because it does not exist.
+PS> Get-Content -TotalCount 2 weather station.csv
+Get-Content: A positional parameter cannot be found that accepts argument
+'station.csv'.
 ```
 
 </div>
 
-</div>
-
-<div class="note-text mt-md">The word before the first colon says who complains: the shell found no program, or the program found no file.</div>
+<div class="note-text mt-md">The word before the first colon says who complains: the shell found no command, or the command found no file, or the shell split a name in two.</div>
 
 <!--
-**Ask:** what does each message say went wrong? Let the room read it before you explain.
+**Ask:** what went wrong in each line? Let the room read before you explain.
 **Say:** an error message is an answer. Read it before retyping.
+**If asked:** on Windows the path in the second message is `C:\Users\smilte\Documents\weather-project\data\raw\wether.csv`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Columns of `weather.csv`
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Column | Value on line 2 | Meaning |
+| --- | --- | --- |
+| `time` | `2016-01-01T00:00` | the hour, as year-month-day, `T`, hour:minute |
+| `temp_c` | `-4.4` | air temperature, °C |
+| `humidity_pct` | `93` | relative humidity, % |
+| `wind_ms` | `2.5` | wind speed, m/s |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Step 1: four columns, separated by commas, named on line 1. The temperature is column 2, `temp_c`.
+
+</div>
+
+<!--
+**Say:** the time is written largest unit first, ISO 8601. That order also sorts correctly as text.
+**Ask:** what does `T` stand for? Time: it separates the date from the hour.
 (~2 min)
 -->
 
@@ -1045,12 +638,11 @@ layout: section
 hideInToc: true
 ---
 
-# Files & **Folders**
+# Read and **Count**
 
-Read, count, copy, move and delete files.
+Step 2: does the file hold every hour of ten years?
 
 <!--
-**Say:** every slide has macOS on the left and PowerShell on the right, run in `weather-project`.
 (~1 min)
 -->
 
@@ -1058,32 +650,12 @@ Read, count, copy, move and delete files.
 hideInToc: true
 ---
 
-# Read a File: `head` and `tail`
+# The First and the Last **Lines**
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% head -n 3 data/raw/weather.csv
-time,temp_c,humidity_pct,wind_ms
-2016-01-01T00:00,-4.4,93,2.5
-2016-01-01T01:00,-4.8,95,2.6
-% tail -n 2 data/raw/weather.csv
-2025-12-31T22:00,-9.9,98,4.1
-2025-12-31T23:00,-11.3,100,4.2
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Get-Content data/raw/weather.csv -Head 3
+PS> Get-Content data/raw/weather.csv -TotalCount 3
 time,temp_c,humidity_pct,wind_ms
 2016-01-01T00:00,-4.4,93,2.5
 2016-01-01T01:00,-4.8,95,2.6
@@ -1094,12 +666,10 @@ PS> Get-Content data/raw/weather.csv -Tail 2
 
 </div>
 
-</div>
-
-<div class="note-text mt-md">The first and the last lines of a file: its header, and how far it goes. The log runs from New Year 2016 to New Year's Eve 2025.</div>
+<div class="note-text mt-md">The header, the first hour and the last: the log runs from midnight of New Year 2016 to 23:00 on New Year's Eve 2025, one row per hour.</div>
 
 <!--
-**Say:** `head` reads only as far as it prints, so it answers at once even for a large file.
+**Say:** the ends of a file tell how far it goes. They do not tell whether an hour in the middle is missing; a count does.
 (~2 min)
 -->
 
@@ -1107,74 +677,9 @@ PS> Get-Content data/raw/weather.csv -Tail 2
 hideInToc: true
 ---
 
-# The Whole File: `cat`
+# Count the **Lines**
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh** · 🪟 **PowerShell**
-
-```text
-% cat data/raw/daily_export.csv
-nr;date;temp_c
-1;2025-10-01;6,3
-2;2025-10-02;5,0
-3;2025-10-03;5,6
-4;2025-10-04;7,0
-5;2025-10-05;9,4
-6;2025-10-06;10,4
-7;2025-10-07;9,2
-8;2025-10-08;9,0
-9;2025-10-09;9,8
-;mean;7,97
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧾 **A spreadsheet export**
-
-- `;` between the values, a comma as decimal sign
-- a column `nr` with the row number
-- a last line with the mean
-
-A spreadsheet with European settings writes this. Most programs expect `,` and `.` instead.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md"><code>cat</code> prints a whole file, in both shells. On a large file <code>Ctrl+C</code> stops it.</div>
-
-<!--
-**If asked:** `less FILE` (macOS) and `Get-Content FILE | more` show one screen at a time: Space goes on, q leaves.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Count Lines: `wc -l`
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% wc -l data/raw/weather.csv
-   87673 data/raw/weather.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
 PS> (Get-Content data/raw/weather.csv).Count
@@ -1183,18 +688,20 @@ PS> (Get-Content data/raw/weather.csv).Count
 
 </div>
 
-</div>
-
 <div class="card card-info card-glass pad-compact mt-md">
 
-🧮 One header line and one line per hour. Ten years from 2016 to 2025 hold three leap years: 7 × 365 + 3 × 366 = 3653 days, and 3653 × 24 = 87 672 hours. 87 672 + 1 = 87 673.
+🧮 How many hours do ten years hold? 2016, 2020 and 2024 are leap years:
+
+7 × 365 + 3 × 366 = 3653 days, and 3653 × 24 = 87 672 hours.
+
+One header line and one line per hour: 87 672 + 1 = **87 673**.
 
 </div>
 
 <!--
-**Live:** `wc -l data/raw/weather.csv`, before the slide.
-**Say:** the first question of the opening, answered by a typed line. The count also checks the file: no hour is missing.
-**If asked:** `wc`, word count. The brackets in PowerShell run the command first; `.Count` counts what it returned.
+**Live:** `(Get-Content data/raw/weather.csv).Count`, before the slide.
+**Say:** the count agrees with the calendar, so no hour is missing and none is there twice. Rows can still be wrong, but there are as many as there should be.
+**If asked:** the round brackets run the command first; `.Count` counts the lines it returned. `Get-Content data/raw/weather.csv | Measure-Object -Line` gives 87 673 as well.
 (~3 min)
 -->
 
@@ -1202,294 +709,37 @@ PS> (Get-Content data/raw/weather.csv).Count
 hideInToc: true
 ---
 
-# Count Bytes: `wc -c`
+# Lines and **Bytes**
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% wc data/raw/daily_export.csv
-      11      11     180 data/raw/daily_export.csv
-% wc -c data/raw/weather.csv
- 2515215 data/raw/weather.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> (Get-Item data/raw/daily_export.csv).Length
-180
 PS> (Get-Item data/raw/weather.csv).Length
 2515215
 ```
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
+| Line | Characters | Bytes, with the line break `0a` |
+| --- | --- | --- |
+| `time,temp_c,humidity_pct,wind_ms` | 32 | 33 |
+| `2016-01-01T00:00,-4.4,93,2.5` | 28 | 29 |
+| all 87 673 lines | | 2 515 215, on average 28.7 a line |
+
 </div>
 
-<div class="note-text mt-md"><code>wc</code> alone prints lines, words and bytes. <code>Length</code> is the size of the file in bytes: 2 515 215 bytes, 2.5 MB.</div>
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Step 2: 87 673 lines, every hour of ten years, in 2 515 215 bytes.
+
+</div>
 
 <!--
-**Say:** the export has 11 lines, 11 words because no line has a space, and 180 bytes.
-**If asked:** `Get-Content FILE | Measure-Object -Character` says 169 for the export: it drops the 11 line breaks, 169 + 11 = 180.
+**Say:** a line is its characters plus one byte for the line break. Colder hours such as `-11.3` take a character more, warm ones such as `9.2` one less: hence 28.7 on average.
+**If asked:** the file arrived with LF line endings, and copying it to Windows does not change its bytes.
 (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Make a Folder, Copy a **File**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% mkdir backup
-% cp data/raw/daily_export.csv backup
-% ls backup
-daily_export.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> mkdir backup
-PS> cp data/raw/daily_export.csv backup
-PS> ls backup -Name
-daily_export.csv
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-`mkdir` makes a folder. `cp FROM TO` copies a file; when `TO` is a folder, the copy keeps its name. The same words work in both shells.
-
-</div>
-
-<!--
-**Say:** PowerShell's `mkdir` prints a short table with the new folder; zsh prints nothing.
-**If asked:** in PowerShell `cp` is a short name, an alias, for `Copy-Item`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Move and **Rename**: `mv`
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% mv backup/daily_export.csv backup/export_copy.csv
-% ls backup
-export_copy.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> mv backup/daily_export.csv backup/export_copy.csv
-PS> ls backup -Name
-export_copy.csv
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-md"><code>mv FROM TO</code> moves a file. A new name in the same folder is a rename. A folder as <code>TO</code> moves it there.</div>
-
-<!--
-**Say:** `cp` leaves the original in place, `mv` does not.
-**If asked:** `cp` overwrites a file of the same name without asking, in both shells. PowerShell's `mv` refuses to.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Delete: `rm`
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% rm backup/export_copy.csv
-% rm -r backup
-% ls backup
-ls: backup: No such file or directory
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> rm backup/export_copy.csv
-PS> rm -r backup
-PS> Test-Path backup
-False
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ No Trash, no Recycle Bin, no `Ctrl+Z`. `-r` deletes a folder and everything in it. Before `rm`: `ls` with the same path, and read the names.
-
-</div>
-
-<!--
-**Say:** say the folder name aloud before pressing Enter. What `rm` can take away for good is a file in `data/raw`, a script or the README.
-**If asked:** `rm -rf`, seen on many web pages, fails in PowerShell: write `-r -Force`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Many Files at Once: **Wildcards**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% wc -c data/raw/*.csv
-     180 data/raw/daily_export.csv
- 2515215 data/raw/weather.csv
- 2515395 total
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Get-Item data/raw/*.csv |
->> Select-Object Name, Length
-
-Name              Length
-----              ------
-daily_export.csv     180
-weather.csv      2515215
-```
-
-</div>
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ✳️ **`*`**
-
-Any number of characters, none included. `*.csv` fits every name that ends in `.csv`.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## ❓ **`?`**
-
-Exactly one character. `w?ather.csv` fits `weather.csv`.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the two signs mean the same in both shells. The `|` in the PowerShell line passes the files on to `Select-Object`, which picks two columns.
-**If asked:** zsh replaces `*` by the names before the program starts; PowerShell hands `*` to the command. `echo data/raw/*.csv` shows the difference.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Where Commands Read and **Write**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📁 **weather-project**
-
-```text
-weather-project/
-├─ README.md
-├─ data/
-│  ├─ raw/
-│  └─ processed/
-├─ scripts/
-└─ results/
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📐 **Habits at the prompt**
-
-- The terminal stays in `weather-project`
-- Commands **read** from `data/raw` and never write there
-- What a command makes goes to `data/processed` or `results`
-- No spaces in names
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The layout says which files can be made again. `data/processed` and `results` can, by a command. `data/raw`, `scripts` and the README cannot, and those are the files `rm` takes away for good.
-
-</div>
-
-<!--
-(~1 min)
 -->
 
 ---
@@ -1499,10 +749,10 @@ hideInToc: true
 
 # Pipes & **Filters**
 
-So far each answer went to the screen. It can also go into a file, or into the next command.
+Step 3: which rows are not measurements?
 
 <!--
-**Say:** the centre of the lecture: small programs, each doing one thing, joined so that one's output is the next one's input.
+**Say:** small commands, each doing one thing, joined so that one's output is the next one's input.
 (~1 min)
 -->
 
@@ -1510,101 +760,45 @@ So far each answer went to the screen. It can also go into a file, or into the n
 hideInToc: true
 ---
 
-# Output into a File: `>` and `>>`
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% echo "made on 2026-10-13" > results/note.txt
-% echo "by smilte" >> results/note.txt
-% cat results/note.txt
-made on 2026-10-13
-by smilte
-% wc -c results/note.txt
-      26 results/note.txt
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> echo "made on 2026-10-13" > results/note.txt
-PS> echo "by smilte" >> results/note.txt
-PS> cat results/note.txt
-made on 2026-10-13
-by smilte
-PS> (Get-Item results/note.txt).Length
-28
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-`>` makes the file, or **empties** it first if it exists. `>>` adds at the end. The same two lines of text: 26 bytes on the Mac, 28 on Windows.
-
-</div>
-
-<!--
-**Ask:** why would the sizes differ? Let the room guess.
-**If asked:** `sort results/note.txt > results/note.txt` leaves 0 bytes: the file is emptied before `sort` reads it. Never write into the file a command reads.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Why the Sizes Differ: **Line Endings**
+# Output and Errors Are Two **Streams**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🔬 **The same two lines, byte by byte**
-
 ```text
-% hexdump -C results/note.txt
-00000000  6d 61 64 65 20 6f 6e 20  32 30 32 36 2d 31 30 2d  |made on 2026-10-|
-00000010  31 33 0a 62 79 20 61 64  61 0a                    |13.by smilte.|
-PS> Format-Hex results/note.txt
-0000000000000000 6D 61 64 65 20 6F 6E 20 32 30 32 36 2D 31 30 2D made on 2026-10-
-0000000000000010 31 33 0D 0A 62 79 20 61 64 61 0D 0A             13��by smilte��
+PS> Get-Content data/raw/weather.csv -TotalCount 3 > results/first.txt
+PS> (Get-Item results/first.txt).Length
+91
+PS> Get-Content data/raw/wether.csv > results/none.txt
+Get-Content: Cannot find path '…/data/raw/wether.csv' because it does not exist.
+PS> (Get-Item results/none.txt).Length
+0
 ```
 
 </div>
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 mt-md gap-md">
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🔢 **Count them**
+## 📤 **Output stream**
 
-`made on 2026-10-13` is 18 characters, `by smilte` 6: 24 in all.
+What a command returns. `>` writes it into a file, and first **empties** that file. `>>` adds at the end.
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-## ↩️ **Line endings**
+## ⚠️ **Error stream**
 
-macOS ends a line with `0a` (LF): 24 + 2 = 26. Windows ends it with `0D 0A` (CRLF): 24 + 4 = 28.
+Errors go on their own stream and still reach the screen. `2>` writes them into a file.
 
 </div>
 
 </div>
 
 <!--
-**Do:** point at `0a` and at `0D 0A`.
-**Say:** the text is the same, the bytes are not.
-**If asked:** Format-Hex prints a byte that is no character as a replacement sign.
+**Say:** 91 bytes are the three lines: 33 + 29 + 29. The failed line made an empty file: `>` emptied it before anything came.
+**If asked:** on Windows `>` ends each line with CRLF: 94 bytes. Never write into the file a command reads: `>` empties it first.
 (~2 min)
 -->
 
@@ -1612,50 +806,69 @@ macOS ends a line with `0a` (LF): 24 + 2 = 26. Windows ends it with `0D 0A` (CRL
 hideInToc: true
 ---
 
-# Join Two Programs: the **Pipe**
+# Which Hour Is on Line **5000**?
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-The pipe `A | B` runs both programs. What `A` prints becomes what `B` reads. No file stands between them.
+🧮 Line 1 is the header, line 2 the hour 2016-01-01 00:00. Line 5000 is 5000 − 2 = **4998 hours** later.
+
+4998 = 208 × 24 + 6: **208 days and 6 hours**.
+
+2016 is a leap year. January to June: 31 + 29 + 31 + 30 + 31 + 30 = 182 days, so 1 July is 182 days after 1 January, and 208 − 182 = 26 days after 1 July is **27 July**.
 
 </div>
 
-<div class="grid-2 gap-md mt-md">
+<div class="card card-warning card-glass pad-compact mt-md">
 
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% head -n 5000 data/raw/weather.csv | tail -n 1
-2016-07-27T06:00,18.2,71,1.1
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Get-Content data/raw/weather.csv -Head 5000 |
->> Select-Object -Last 1
-2016-07-27T06:00,18.2,71,1.1
-```
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-The first 5000 lines go into the pipe, the last of them comes out: line 5000, the second question of the opening. A program that reads a pipe and passes on what it keeps is a **filter**.
+Prediction: line 5000 is `2016-07-27T06:00`. A typed line can check it.
 
 </div>
 
 <!--
-**Live:** `head -n 5000 data/raw/weather.csv | tail -n 1`, before the slide.
-**Say:** the same line as `Ctrl+G` 5000 in VS Code. A line that ends in `|` goes on in the next line; PowerShell shows `>>` there.
+**Ask:** before the arithmetic: in which month will line 5000 fall? Collect two or three guesses.
+**Say:** a prediction worked out by hand, then checked by a command: the way every number today is checked.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Join Two Commands: the **Pipe**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> Get-Content data/raw/weather.csv -TotalCount 5000 | Select-Object -Last 1
+2016-07-27T06:00,18.2,71,1.1
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔗 **`A | B`**
+
+The output stream of `A` becomes the input of `B`. No file stands between them.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🧩 **A filter**
+
+A command that reads a pipe and passes on part of it. Here: 5000 lines in, 1 out, line 5000.
+
+</div>
+
+</div>
+
+<!--
+**Live:** `Get-Content data/raw/weather.csv -TotalCount 5000 | Select-Object -Last 1`, before the slide.
+**Say:** two commands, each simple, together answer a question neither answers alone: what is on line 5000. A pipe composes them, as `f(g(x))` composes functions.
+**If asked:** a line that ends in `|` goes on in the next line; PowerShell shows `>>` there.
 (~3 min)
 -->
 
@@ -1663,82 +876,30 @@ The first 5000 lines go into the pipe, the last of them comes out: line 5000, th
 hideInToc: true
 ---
 
-# zsh Pipes **Text**, PowerShell Pipes **Objects**
+# Lines or **Objects**
 
-<div class="grid-2 gap-md mt-md">
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🍎 **macOS · zsh**
+## 📃 **`Get-Content`: lines of text**
 
 ```text
-% wc -c data/raw/* | sort -n
-     180 data/raw/daily_export.csv
- 2515215 data/raw/weather.csv
- 2515395 total
+PS> Get-Content data/raw/weather.csv |
+>> Select-Object -First 2
+time,temp_c,humidity_pct,wind_ms
+2016-01-01T00:00,-4.4,93,2.5
 ```
-
-Lines of text. `sort -n` orders by the number at the start of each line.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> ls data/raw | Sort-Object Length |
->> Select-Object Length, Name
-
- Length Name
- ------ ----
-    180 daily_export.csv
-2515215 weather.csv
-```
-
-Objects: one per file, with properties such as `Name` and `Length`.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the same question, which file is largest, by two routes. In zsh the size is the first word of a line; in PowerShell it is a property with a name.
-**If asked:** zsh's `sort` knows nothing about the line `total` and sorts it with the files.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Pick Columns: `cut` and `Import-Csv`
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% cut -d, -f1,2 data/raw/weather.csv |
-    head -n 3
-time,temp_c
-2016-01-01T00:00,-4.4
-2016-01-01T01:00,-4.8
-```
-
-`-d,` the separator, `-f1,2` the fields, counted from 1.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
+## 🧱 **`Import-Csv`: one object per row**
 
 ```text
 PS> Import-Csv data/raw/weather.csv |
->> Select-Object time, temp_c -First 2
+>> Select-Object -First 2 time, temp_c
 
 time             temp_c
 ----             ------
@@ -1746,15 +907,15 @@ time             temp_c
 2016-01-01T01:00 -4.8
 ```
 
-Line 1 gives the names; columns are picked by name.
-
 </div>
 
 </div>
+
+<div class="note-text mt-md"><code>Import-Csv</code> reads line 1 as the names. Each later row becomes an object with four <strong>properties</strong>, picked by name: <code>$_.temp_c</code> is the temperature of the row at hand.</div>
 
 <!--
-**Ask:** before running `cut`, which field number has `temp_c`? `head -n 1` shows the names in order.
-**Say:** `cut` treats the header like any other line; `Import-Csv` reads it as the names.
+**Say:** a PowerShell pipe carries objects. A line of text is one kind of object; a row with named values is another, and that is what makes columns easy.
+**If asked:** zsh and bash pipes carry only text: there a column is picked by its number, `cut -d, -f2`.
 (~2 min)
 -->
 
@@ -1764,51 +925,28 @@ hideInToc: true
 
 # Sort as Text or as **Numbers**
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% tail -n +2 data/raw/weather.csv |
-    cut -d, -f3 | sort | head -n 1
-100
-% tail -n +2 data/raw/weather.csv |
-    cut -d, -f3 | sort -n | head -n 1
-34
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Import-Csv data/raw/weather.csv |
->> Sort-Object humidity_pct |
+PS> Import-Csv data/raw/weather.csv | Sort-Object humidity_pct |
 >> Select-Object -First 1 -ExpandProperty humidity_pct
 100
-PS> Import-Csv data/raw/weather.csv |
->> Sort-Object {[int]$_.humidity_pct} |
+PS> Import-Csv data/raw/weather.csv | Sort-Object {[int]$_.humidity_pct} |
 >> Select-Object -First 1 -ExpandProperty humidity_pct
 34
 ```
-
-</div>
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ The lowest humidity: 100 %? Text is compared character by character, and `1` comes before `3`. `sort -n` and `[int]` compare numbers: 34 %.
+⚠️ The lowest humidity: 100 %? `Import-Csv` reads every value as text, and text is compared character by character: `1` comes before `3`. `[int]` turns each value into a number first: 34 %.
 
 </div>
 
 <!--
-**Say:** `tail -n +2` prints from line 2 on, so the header stays out. `[int]` turns each value into a whole number before comparing.
-**If asked:** the braces hold a small piece of code run for each row; `$_` is the row at hand.
+**Say:** the braces hold a small piece of code run for each row; `$_` is the row at hand. `[int]` is a whole number, `[double]` a number with a decimal point.
+**Ask:** where would `9` stand in a text sort of 34, 9 and 100? Last.
 (~2 min)
 -->
 
@@ -1816,53 +954,33 @@ PS> Import-Csv data/raw/weather.csv |
 hideInToc: true
 ---
 
-# The Lowest and Highest **Temperature**
+# The Coldest **Hours**
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% cut -d, -f2 data/raw/weather.csv |
-    sort -n | head -n 1
--999
-% cut -d, -f2 data/raw/weather.csv |
-    sort -n | tail -n 1
-32.4
+PS> Import-Csv data/raw/weather.csv | Sort-Object {[double]$_.temp_c} -Stable |
+>> Select-Object -First 3
+
+time             temp_c humidity_pct wind_ms
+----             ------ ------------ -------
+2019-07-22T00:00 -999   76           3.2
+2019-07-22T01:00 -999   81           3.0
+2019-07-22T02:00 -999   80           3.4
 ```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> Import-Csv data/raw/weather.csv |
->> Measure-Object temp_c -Minimum -Maximum
-
-Count             : 87672
-Maximum           : 32.4
-Minimum           : -999
-Property          : temp_c
-```
-
-</div>
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-❓ The coldest hour of ten years: −999 °C. Nothing on Earth is that cold, and nothing anywhere is: −273.15 °C is the lowest temperature there is. −999 is not a measurement.
+❓ The coldest hours of ten years: −999 °C, at midnight in July. Nothing is that cold: −273.15 °C is the lowest temperature there is. −999 is a mark the logger wrote for "no value".
 
 </div>
 
 <!--
-**Live:** build the line one filter at a time, `Enter` after each: `cut -d, -f2 data/raw/weather.csv | head`, then `↑` and add `| sort -n` before `| head`, then `↑` and change the last `head` to `head -n 1`.
-**Say:** the third question of the opening. A sorted column shows its ends first, and a wrong value usually sits at an end. Looking at both ends of every column is the first check of a new file.
-**If asked:** PowerShell also prints empty `Average`, `Sum` and `StandardDeviation` lines; they are left out here.
+**Live:** build the line one filter at a time: `Import-Csv data/raw/weather.csv | Select-Object -First 3`, then `↑` and add `Sort-Object {[double]$_.temp_c} -Stable |` before `Select-Object`.
+**Say:** a sorted column shows its ends first, and a wrong value usually sits at an end. The other columns of those rows look normal: only the thermometer was down.
+**If asked:** `-Stable` keeps rows of equal value in file order. The warmest hour, the last after sorting, is 2018-06-18 at 15:00, 32.4 °C.
 (~4 min)
 -->
 
@@ -1870,50 +988,34 @@ Property          : temp_c
 hideInToc: true
 ---
 
-# Find Rows with a Text: `grep`
+# Keep Rows by a Condition: `Where-Object`
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% grep -c ',-999,' data/raw/weather.csv
+PS> (Import-Csv data/raw/weather.csv |
+>> Where-Object { [double]$_.temp_c -lt -273.15 }).Count
 120
-% grep -n ',-999,' data/raw/weather.csv | head -n 1
-31154:2019-07-22T00:00,-999,76,3.2
-% grep -n ',-999,' data/raw/weather.csv | tail -n 1
-31273:2019-07-26T23:00,-999,66,1.9
+PS> (Import-Csv data/raw/weather.csv |
+>> Where-Object { [double]$_.temp_c -lt -50 -or [double]$_.temp_c -gt 50 }).Count
+120
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-info card-glass pad-compact table-compact mt-md">
 
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> (Select-String ',-999,' data/raw/weather.csv).Count
-120
-PS> Select-String ',-999,' data/raw/weather.csv |
->> Select-Object -First 1
-data\raw\weather.csv:31154:2019-07-22T00:00,-999,76,3.2
-```
+| `-lt` | `-gt` | `-eq` | `-or` | `-and` |
+| --- | --- | --- | --- | --- |
+| less than | greater than | equal | either | both |
 
 </div>
 
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-🧮 Lines 31 154 to 31 273: 31 273 − 31 154 + 1 = 120 hours, from 22 to 26 July 2019, five days of 24 hours. The thermometer was down, and the logger wrote −999 for "no value". The other columns went on.
-
-</div>
+<div class="note-text mt-md">Physics, without knowing the mark: below absolute zero, −273.15 °C, is impossible. 120 rows. A wider test, outside −50 to 50 °C for a station like this, finds the same 120 and no others.</div>
 
 <!--
-**Say:** `grep` keeps the lines that contain a text: `-c` counts them, `-n` puts the line number in front. `Select-String` does both.
-**If asked:** keep the commas in `',-999,'`: they make sure the whole value is −999.
+**Say:** `Where-Object` keeps each row for which the code in braces is true. A test by what is possible finds a mark that nobody told us about.
+**If asked:** PowerShell writes comparisons as words, because `<` and `>` belong to the shell: `>` writes into a file.
 (~2 min)
 -->
 
@@ -1921,32 +1023,45 @@ data\raw\weather.csv:31154:2019-07-22T00:00,-999,76,3.2
 hideInToc: true
 ---
 
-# Count Rows per Year: `uniq -c`
+# Find Rows with a Text: `Select-String`
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% cut -c1-4 data/raw/weather.csv | uniq -c
-   1 time
-8784 2016
-8760 2017
-8760 2018
-8760 2019
-8784 2020
-8760 2021
-…
-8760 2025
+PS> (Select-String ',-999,' data/raw/weather.csv).Count
+120
+PS> Select-String ',-999,' data/raw/weather.csv |
+>> Select-Object -First 1 -Last 1 LineNumber, Line
+
+LineNumber Line
+---------- ----
+     31154 2019-07-22T00:00,-999,76,3.2
+     31273 2019-07-26T23:00,-999,66,1.9
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-info card-glass pad-compact mt-md">
 
-## 🪟 **Windows · PowerShell**
+🧮 Lines 31 154 to 31 273: 31 273 − 31 154 + 1 = 120 lines, 22 to 26 July 2019, five days of 24 hours. One block, no gap.
+
+</div>
+
+<!--
+**Say:** `Select-String` keeps the lines that contain a text. Each match is an object with its line number and its line.
+**If asked:** keep the commas in `',-999,'`: they make sure the whole value is −999, and not part of a longer number.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Rows per **Year**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
 
 ```text
 PS> Import-Csv data/raw/weather.csv |
@@ -1958,18 +1073,27 @@ Count Name
  8760 2017
  8760 2018
  8760 2019
+ 8784 2020
 …
+ 8760 2025
 ```
 
 </div>
 
+<div class="card card-info card-glass pad-compact">
+
+🧮 365 × 24 = 8760 rows, 366 × 24 = 8784 in a leap year.
+
+`Substring(0,4)` takes the first four characters of `time`: the year. `Group-Object` counts the rows of each year.
+
 </div>
 
-<div class="note-text mt-md">Rows per year: 365 × 24 = 8760, and 366 × 24 = 8784 in a leap year. 2019 has all its rows: the 120 marked hours are there, with −999 in them.</div>
+</div>
+
+<div class="note-text mt-md">2019 has all its 8760 rows: the 120 hours are there, with −999 in place of a temperature.</div>
 
 <!--
-**Say:** `cut -c1-4` keeps the first four characters, the year. `uniq -c` merges equal lines that stand next to each other and counts them; the file is in time order, so each year is one block.
-**If asked:** on unsorted data, `sort` comes before `uniq -c`.
+**Say:** the mark does not remove a row; it sits where the number should be. Every program that reads the column reads −999 as a number.
 (~2 min)
 -->
 
@@ -1977,54 +1101,33 @@ Count Name
 hideInToc: true
 ---
 
-# Keep the Valid Rows in `data/processed`
+# Every Day Has 24 **Hours**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## ✍️ **Keep the rows without the mark**
-
 ```text
-% grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
-PS> Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+PS> $days = Import-Csv data/raw/weather.csv |
+>> Group-Object { $_.time.Substring(0,10) } -NoElement
+PS> $days.Count
+3653
+PS> ($days | Where-Object Count -ne 24).Count
+0
+PS> (Import-Csv data/raw/weather.csv | Group-Object time -NoElement |
+>> Where-Object Count -gt 1).Count
+0
 ```
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% wc -l data/processed/weather_valid.csv
-   87553 data/processed/weather_valid.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> (Get-Content data/processed/weather_valid.csv).Count
-87553
-```
-
-</div>
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ 87 673 − 120 = 87 553 lines. The raw file stays as it was: delete the new file, run the line again, and it is back.
+✅ Step 3: 3653 days, none with more or fewer than 24 rows, no hour twice. The only rows that are not measurements are the 120 of −999, 22 to 26 July 2019.
 
 </div>
 
 <!--
-**Say:** `-v` and `-NotMatch` keep the lines that do not contain the text. `-Raw` passes on only the text of each line, without file name and line number.
-**If asked:** the Windows file is larger, 2 599 288 bytes against 2 511 735: one more byte, `0D`, on each of its 87 553 lines.
+**Say:** the count of step 2 could also come out right with one hour missing and another twice. Grouping by day and by hour rules that out.
+**If asked:** `Where-Object Count -ne 24` is the short form of `Where-Object { $_.Count -ne 24 }`.
 (~2 min)
 -->
 
@@ -2035,10 +1138,10 @@ hideInToc: true
 
 # Regular **Expressions**
 
-`grep` kept the lines that contain one fixed text. A pattern describes a kind of text, and the same pattern works in VS Code and in both shells.
+Step 4: is every other row a measurement?
 
 <!--
-**Say:** so far the search was for a fixed text, `,-999,`. Now the search is for a kind of text.
+**Say:** `',-999,'` found one fixed text. A different mark, an empty value or `NA` would have been missed. A pattern describes what a good row looks like.
 (~1 min)
 -->
 
@@ -2048,15 +1151,11 @@ hideInToc: true
 
 # Below Freezing: a Fixed Text or a **Pattern**
 
-<div class="note-text mt-sm">Question: in how many hours was it below freezing?</div>
+<div class="note-text mt-sm">In how many hours was it below freezing?</div>
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% grep -c ',-' data/raw/weather.csv
-22472
-% grep -cE ',-[0-9]+\.[0-9],' data/raw/weather.csv
-22352
 PS> (Select-String ',-' data/raw/weather.csv).Count
 22472
 PS> (Select-String ',-[0-9]+\.[0-9],' data/raw/weather.csv).Count
@@ -2087,7 +1186,44 @@ A minus, digits, a point, one digit. Such a text is a **regular expression**, re
 
 <!--
 **Say:** the temperatures have one decimal, −999 has none. The pattern uses that difference.
-**If asked:** `-E` lets grep read `+`; Select-String reads every pattern as a regex.
+**If asked:** `Select-String` reads every pattern as a regular expression; `-SimpleMatch` makes it read a fixed text.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Quotes Keep a Pattern from the **Shell**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> Select-String ,-999, data/raw/weather.csv
+ParserError:
+Line |
+   1 |  Select-String ,-999, data/raw/weather.csv
+     |                ~
+     | Missing argument in parameter list.
+PS> echo '$HOME' "$HOME"
+$HOME
+/Users/smilte
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact table-compact mt-md">
+
+| Signs the shell reads before the command runs | `,` `$` `\|` `>` `;` `(` `{` `#` `@` space |
+| --- | --- |
+| `'single quotes'` | pass every character on unchanged |
+| `"double quotes"` | keep spaces, but replace `$name` by its value |
+
+</div>
+
+<!--
+**Say:** this is step 3 of the shell: it replaces what it knows before the command starts. `,` makes a list in PowerShell, so the shell stopped at it. A pattern goes in single quotes, always.
+**If asked:** `$HOME` is a variable: a name the shell keeps a value under, here the home folder.
 (~2 min)
 -->
 
@@ -2099,21 +1235,54 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-| Sign | Fits | Pattern | Lines it fits in `daily_export.csv` |
-| --- | --- | --- | --- |
-| a letter, a digit, `,` | itself | `10,` | 1: `6;2025-10-06;10,4` |
-| `.` | any one character | `10.` | 9: every row, at `10-` in the date |
-| `[0-9]` | one character from `0` to `9` | `[0-9],` | 10: the rows and the mean line |
-| `[a-z]` | one lower-case letter | `[a-z]` | 2: the header and the mean line |
-| `[^0-9;,-]` | one character **not** listed | `[^0-9;,-]` | 2: the same two |
+| Sign | Fits | Pattern | In `2016-01-01T00:00,-4.4,93,2.5` | Lines of `weather.csv` |
+| --- | --- | --- | --- | --- |
+| a digit, a letter, `,` | itself | `,93,` | `,93,` | 1 530 |
+| `.` | any one character | `T..:` | `T00:` | 87 672 |
+| `[0-9]` | one character from `0` to `9` | `,[0-9][0-9],` | `,93,` | 85 132 |
+| `[^,]` | one character that is **not** `,` | `,[^,][^,],` | `,93,` | 85 132 |
+| `\.` | a point and nothing else | `[0-9]\.[0-9]` | `4.4` | 87 672 |
 
 </div>
 
-<div class="note-text mt-md">A backslash takes the special meaning away: <code>\.</code> fits a point and nothing else.</div>
+<div class="note-text mt-md">A backslash takes the special meaning away from the sign after it: <code>.</code> fits any character, <code>\.</code> only a point.</div>
 
 <!--
-**Ask:** before reading the count for `10.`, how many lines will it fit?
-(~3 min)
+**Ask:** why do 85 132 lines, not all 87 672, have a two-digit value between commas? Humidity of 100 has three digits: 87 672 − 85 132 = 2540 hours at 100 %.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Point Fits **Any Character**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> (Select-String '7.16' data/raw/weather.csv).Count
+600
+PS> Select-String '7.16' data/raw/weather.csv | Select-Object -First 2
+data/raw/weather.csv:162:2016-01-07T16:00,-0.3,72,4.4
+data/raw/weather.csv:402:2016-01-17T16:00,0.5,80,5.6
+PS> (Select-String '7\.16' data/raw/weather.csv).Count
+0
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧮 `7.16` fits `7T16`: days 7, 17 and 27 at 16:00, 3 × 12 × 10 = 360 lines. And `7-16`: every hour of 16 July, 24 × 10 = 240. 360 + 240 = 600. No hour was 7.16 °C itself, which a temperature with one decimal cannot be.
+
+</div>
+
+<!--
+**Ask:** before the count: how many lines will `'7.16'` find? The room usually says none.
+**Say:** a pattern that "works" can still find the wrong lines. The count is the check, and a look at two of the lines.
+**If asked:** `-SimpleMatch` reads the pattern as a fixed text: 0 lines too.
+(~2 min)
 -->
 
 ---
@@ -2124,121 +1293,124 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-| Sign | Meaning | Pattern | Lines it fits in `daily_export.csv` |
-| --- | --- | --- | --- |
-| `+` | one or more of what stands before | `[0-9]+;` | 9: the rows |
-| `*` | none or more | `;.*;` | 11: all |
-| `{2}` | exactly two | `;[0-9]{2},` | 1: `6;2025-10-06;10,4` |
-| `^` | the start of the line | `^;` | 1: `;mean;7,97` |
-| `$` | the end of the line | `0$` | 3: `5,0`, `7,0`, `9,0` |
-| `( )`, `\|` | a group, and "or" | `-(01\|02);` | 2: 1 and 2 October |
+| Sign | Meaning | Pattern | In `2016-01-01T00:00,-4.4,93,2.5` | Lines |
+| --- | --- | --- | --- | --- |
+| `+` | one or more of what stands before | `[0-9]+` | `2016` | 87 672 |
+| `*` | none or more | `,.*,` | `,-4.4,93,` | 87 673 |
+| `?` | none or one | `,-?[0-9]` | `,-4` | 87 672 |
+| `{4}` | exactly four | `^[0-9]{4}` | `2016` | 87 672 |
+| `^` | the start of the line | `^2016` | `2016` | 8 784 |
+| `$` | the end of the line | `\.5$` | `.5` | 8 265 |
+| `( )`, `\|` | a group, and "or" | `T(00\|12):` | `T00:` | 7 306 |
 
 </div>
 
-<div class="note-text mt-md"><code>+</code>, <code>*</code> and <code>{2}</code> repeat the one thing before them. <code>^</code> and <code>$</code> fit no character: they pin the pattern to an end of the line.</div>
+<div class="note-text mt-md"><code>+</code>, <code>*</code>, <code>?</code> and <code>{4}</code> repeat the one thing before them. <code>^</code> and <code>$</code> fit no character: they pin the pattern to an end of the line.</div>
 
 <!--
-**Say:** `^;` finds the mean line without the word mean: it is the only line with no row number.
-(~3 min)
+**Say:** `T(00|12):` fits midnight and noon: two hours a day, 2 × 3653 = 7306. `^2016` fits the 8784 hours of 2016.
+**Ask:** `,.*,` fits 87 673 lines, the header too. Why? The header has commas as well.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Regex in VS Code's **Find Box**
+# The Forms of the **Lines**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔎 **Switch it on**
-
-- `Ctrl+F` opens Find (macOS `Cmd+F`)
-- The button `.*` at the right end switches regular expressions on
-- The counter shows the matches while the pattern is typed
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧪 **A pattern in three steps**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-In data/raw/daily_export.csv
+PS> Get-Content data/raw/weather.csv | Group-Object { $_ -replace '[0-9]', '9' } -NoElement |
+>> Sort-Object Count -Descending | Select-Object Count, Name
 
-Find          Matches
-[0-9]+        56     every number
-[0-9]+;       18     a number before a ;
-^[0-9]+;       9     the first in a line
+Count Name
+----- ----
+34547 9999-99-99T99:99,99.9,99,9.9
+30355 9999-99-99T99:99,9.9,99,9.9
+19709 9999-99-99T99:99,-9.9,99,9.9
+ 1897 9999-99-99T99:99,-9.9,999,9.9
+…
+  120 9999-99-99T99:99,-999,99,9.9
+…
+    1 time,temp_c,humidity_pct,wind_ms
 ```
 
 </div>
+
+<div class="note-text mt-md"><code>-replace '[0-9]', '9'</code> writes every digit as 9, so lines of one form become one text. 13 forms: 11 with a temperature of one decimal, the 120 rows of <code>-999</code>, and the header.</div>
+
+<!--
+**Say:** 87 673 lines read as 13. Every form but two has the temperature as digits, a point and one digit; that is the pattern of a measured row.
+**If asked:** the forms differ by the number of digits: `99.9` a warm hour, `-9.9` a frost, `999` humidity of 100 %, `99.9` in the last column wind of 10 m/s or more.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Build the Pattern of a **Measured Row**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Add | Pattern so far | Lines it fits |
+| --- | --- | --- |
+| a date, `T` | `^[0-9-]+T` | 87 672 |
+| the hour, a comma | `^[0-9-]+T[0-9:]+,` | 87 672 |
+| a temperature: a minus or none, digits, a point, one digit | `^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],` | 87 552 |
+| humidity, wind, the end | `^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$` | 87 552 |
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+```text
+PS> (Select-String '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$' `
+>> data/raw/weather.csv).Count
+87552
+```
+
+</div>
+
+<!--
+**Say:** one piece at a time, each checked by its count. The count drops by 120 at the temperature, and the last two columns drop nothing.
+**If asked:** the backtick at the end of a line continues it on the next line.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Lines the Pattern Does Not **Fit**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> $row = '^[0-9-]+T[0-9:]+,-?[0-9]+\.[0-9],[0-9]+,[0-9]+\.[0-9]$'
+PS> (Select-String $row data/raw/weather.csv -NotMatch).Count
+121
+PS> Select-String $row data/raw/weather.csv -NotMatch | Select-Object -First 2
+data/raw/weather.csv:1:time,temp_c,humidity_pct,wind_ms
+data/raw/weather.csv:31154:2019-07-22T00:00,-999,76,3.2
+PS> (Select-String '^2019-07-2[2-6]T' data/raw/weather.csv).Count
+120
+```
 
 </div>
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ The third pattern fits the row number with its `;`, once in each of the nine rows. Replaced by nothing, the column `nr` is gone. Do it on a copy in `data/processed`, never in `data/raw`.
+✅ Step 4: 121 = the header + the 120 rows of −999, which fill 22 to 26 July 2019. Every other row, 87 552, is a measurement. −999 is the only mark.
 
 </div>
 
 <!--
-**Say:** the counter is the check: nine rows, nine matches.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Replace with Capture **Groups**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Round brackets mark a part of the match, a capture group. In the Replace box `$1` puts back what the first pair matched, `$2` the second.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔁 **The decimal comma**
-
-```text
-Find      ([0-9]),([0-9])
-Replace   $1.$2
-```
-
-`6,3` becomes `6.3`: 10 matches, the nine rows and the mean line. A `;` is never touched.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📋 **A row of a Markdown table**
-
-```text
-Find      ^([0-9]+);(.*);(.*)$
-Replace   | $2 | $3 |
-```
-
-`1;2025-10-01;6,3` becomes `| 2025-10-01 | 6,3 |`: 9 matches.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ Replace All changes every match, also the ones nobody looked at. Read the counter first.
-
-</div>
-
-<!--
-**If asked:** PowerShell knows `$1` too: `(Get-Content data/raw/daily_export.csv) -replace '([0-9]),([0-9])', '$1.$2'`.
-(~3 min)
+**Say:** `$row` keeps the pattern under a name, so it is typed once. `-NotMatch` keeps the lines that do not fit.
+**Ask:** what would a count of 125 have told us? Four more rows of some other form, to be read one by one.
+(~2 min)
 -->
 
 ---
@@ -2246,12 +1418,11 @@ layout: section
 hideInToc: true
 ---
 
-# Programs **Someone Else Wrote**
+# The **Mean**
 
-Filters count, sort and keep lines. Cleaning the export and computing a mean take a program, and a program runs with one typed line.
+Step 5: the mean without the 120 rows, and with them.
 
 <!--
-**Say:** two small Python programs came with the folder. They are run like any other command; nobody has to read Python today.
 (~1 min)
 -->
 
@@ -2259,190 +1430,28 @@ Filters count, sort and keep lines. Cleaning the export and computing a mean tak
 hideInToc: true
 ---
 
-# A Program Is a **Text File**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 📜 **`scripts/clean_export.py`, lines 27–34**
-
-```python
-def clean(lines):
-    out = []
-    for line in lines:
-        if line.startswith(";"):
-            continue
-        line = line.replace(",", ".").replace(";", ",")
-        out.append(line.split(",", 1)[1])
-    return out
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact mt-md">
-
-| Line | Edit to the export |
-| --- | --- |
-| 30 | a line that starts with `;`, the mean line, is skipped |
-| 32 | `,` becomes `.`, then `;` becomes `,` |
-| 33 | only what follows the first comma is kept: `nr` goes |
-
-</div>
-
-<!--
-**Say:** the order matters: the decimal comma becomes a point while it is still the only comma.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Run a Script, Check Its **Output**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-```text
-% python3 scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-9 rows written to data/processed/daily.csv
-% wc -c data/processed/daily.csv
-     148 data/processed/daily.csv
-PS> python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-9 rows written to data/processed/daily.csv
-PS> (Get-Item data/processed/daily.csv).Length
-148
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧮 **148 bytes, line by line**
-
-Header `date,temp_c` and LF: 12. Eight rows like `2025-10-01,6.3`: 15 each. `2025-10-06,10.4`: 16. 12 + 8 × 15 + 16 = 148.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧭 **The parts of the line**
-
-The program, `python3` or `python`. Then its file. Then two words for the script: the file it reads, the file it writes.
-
-</div>
-
-</div>
-
-<!--
-**Say:** macOS names the program `python3`, Windows `python`. The paths are the same.
-**If asked:** "Python was not found" on Windows: this PowerShell finds a stand-in `python.exe` of Windows, because conda was never set up in it.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# PowerShell's `>` Adds **CRLF**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **The shell copies, zsh**
-
-```text
-% cat data/processed/daily.csv > results/copy.csv
-% wc -c results/copy.csv
-     148 results/copy.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **The shell copies, PowerShell**
-
-```text
-PS> Get-Content data/processed/daily.csv > results/copy.csv
-PS> (Get-Item results/copy.csv).Length
-158
-```
-
-</div>
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🔎 **10 bytes more**
-
-158 − 148 = 10. PowerShell writes each of the ten lines itself and ends it with CRLF.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🧷 **The script sets the line ending**
-
-Line 49 of `clean_export.py`: `newline="\n"`. Every line ends with LF on every system, so the script wrote 148 bytes in both shells.
-
-</div>
-
-</div>
-
-<!--
-**Say:** neither shell is wrong; each writes text by its own rule. A file whose bytes must match everywhere is written by a program that states the rule.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Mean of a Column: `column_stats.py`
+# Keep the Measured Rows in `data/processed`
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% python3 scripts/column_stats.py data/raw/weather.csv temp_c
-PS> python scripts/column_stats.py data/raw/weather.csv temp_c
-file    data/raw/weather.csv
-column  temp_c
-rows    87672
-min     -999.0
-max     32.4
-mean    5.7828
+PS> Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
+PS> (Get-Content data/processed/weather_valid.csv).Count
+87553
+PS> (Select-String ',-999,' data/processed/weather_valid.csv).Count
+0
 ```
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-success card-glass pad-compact mt-md">
 
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧭 **The parts of the line**
-
-The program, its file, then two words for the script: a file and a column name. The output is the same in both shells.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❓ **5.78 °C**
-
-The mean of all 87 672 hours, the −999 rows included. Is that the mean temperature of the station?
-
-</div>
+✅ 87 673 − 120 = 87 553 lines, the header and 87 552 hours, and no −999 left. `data/raw` stays as it arrived: delete the new file, run the line again, and it is back.
 
 </div>
 
 <!--
-**Say:** the shell counts and sorts lines. A mean takes a program: this one is 53 lines that someone else wrote.
-**If asked:** on the raw export it answers `no column temp_c`: with `;` between the values it sees one column, `nr;date;temp_c`. On the cleaned `daily.csv` it gives a mean of 7.96667, the 7,97 of the mean line.
+**Say:** `-NotMatch` keeps the lines without the mark; `-Raw` passes on only the text of each line, without file name and line number.
 (~2 min)
 -->
 
@@ -2459,19 +1468,429 @@ hideInToc: true
 ## 📥 **`data/raw/weather.csv`**
 
 ```text
-rows    87672
-min     -999.0
-max     32.4
-mean    5.7828
+PS> Import-Csv data/raw/weather.csv |
+>> Measure-Object temp_c -Average
+
+Count             : 87672
+Average           : 5.78279610365909
 ```
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## ⚙️ **`data/processed/weather_valid.csv`**
+## ⚙️ **`weather_valid.csv`**
 
 ```text
+PS> Import-Csv data/processed/weather_valid.csv |
+>> Measure-Object temp_c -Average
+
+Count             : 87552
+Average           : 7.15996550621346
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧮 The 87 552 measured hours sum to 626 869.3 °C: 626 869.3 / 87 552 = **7.16**. The marks add 120 × (−999) = −119 880, and the count grows by 120: (626 869.3 − 119 880) / 87 672 = **5.78**.
+
+</div>
+
+<!--
+**Say:** five lost days, 0.14 % of the rows, moved a ten-year mean by 1.38 °C. A mark written as a number is counted as a number by every program. Step 5: 7.16 without the marks, 5.78 with them.
+**If asked:** `Measure-Object` also prints empty `Sum`, `Maximum`, `Minimum` lines and the property name; they are left out here.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What One Mark Does to a **Mean**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧮 n values with mean m, and k marks of value M added. The new mean:
+
+(n·m + k·M) / (n + k) = m + k·(M − m) / (n + k)
+
+</div>
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| Marks k | Shift k · (−999 − 7.15997) / (87 552 + k) | Mean |
+| --- | --- | --- |
+| 0 | 0 | 7.16 |
+| 1 | −0.0115 | 7.15 |
+| 10 | −0.115 | 7.05 |
+| 120 | −1.377 | 5.78 |
+
+</div>
+
+<div class="note-text mt-md">One row of −999 among 87 553 already changes the second decimal. A mark is found before any mean is taken.</div>
+
+<!--
+**Say:** the shift is the distance of the mark from the mean, −1006, times the share of marked rows. A mark far from the data weighs a thousand times a normal value.
+**Ask:** what would 120 rows of 0 instead of −999 have done? 120 × (0 − 7.16) / 87 672 = −0.0098: a shift nobody would notice by eye.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Programs and **Packages**
+
+Step 6: a second program for the same mean. It needs Python, and Python comes in a package.
+
+<!--
+**Say:** two Python programs came with the folder. A second program that agrees is a check of the first; to run it, the laptop needs Python.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Program Is a **Text File**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 📜 **`scripts/column_stats.py`, lines 32–48**
+
+```python
+reader = csv.DictReader(handle)
+...
+values = [float(row[column]) for row in reader]
+...
+print("rows   ", len(values))
+print("min    ", min(values))
+print("max    ", max(values))
+print("mean   ", f"{math.fsum(values) / len(values):.6g}")
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
+| Line | What it does |
+| --- | --- |
+| 32 | reads the file row by row, line 1 as the names, like `Import-Csv` |
+| 37 | turns every value of the column into a number, −999 too |
+| 48 | the sum divided by the count, to six digits |
+
+</div>
+
+<!--
+**Say:** nobody has to write Python today, but anyone can read what it does: it counts every row, so it will give 5.78 on the raw file.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Where a Command **Comes From**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> Get-Command Get-Content, pwsh, python | Select-Object CommandType, Name, Source
+
+CommandType Name        Source
+----------- ----        ------
+     Cmdlet Get-Content Microsoft.PowerShell.Management
+Application pwsh        /usr/local/bin/pwsh
+Application python      /opt/homebrew/Caskroom/miniforge/base/bin/python
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧱 **Cmdlet**
+
+Part of PowerShell, on every laptop that has it.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📦 **Application**
+
+A program in a folder that its installer made. Without Python installed, `python` is not found.
+
+</div>
+
+</div>
+
+<!--
+**Say:** step 4 of the shell, finding the command: its own cmdlets first, then programs in folders.
+**If asked:** on Windows the sources are `C:\Program Files\PowerShell\7\pwsh.exe` and `C:\Users\smilte\miniforge3\python.exe`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# How the Shell Finds a Program: **PATH**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> $env:PATH -split [IO.Path]::PathSeparator
+/opt/homebrew/Caskroom/miniforge/base/bin
+/opt/homebrew/Caskroom/miniforge/base/condabin
+/opt/homebrew/bin
+/usr/local/bin
+/usr/bin
+/bin
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➡️ **Searched top to bottom**
+
+`PATH` is a variable that holds a list of folders. The shell takes the first folder with a program of the typed name: of two Pythons, the first runs.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 📦 **What an install changes**
+
+The program lands in a folder, and the folder goes on `PATH`. A terminal reads `PATH` when it opens: a new install needs a new terminal.
+
+</div>
+
+</div>
+
+<!--
+**Say:** "not recognized as a name of a cmdlet … or executable program" means: in none of these folders.
+**If asked:** `-split` cuts the text at `:` on macOS and `;` on Windows; `[IO.Path]::PathSeparator` is the right one on each. A real laptop lists ten to twenty folders.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What a **Package** Is
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+(weather) PS> conda install numpy
+The following NEW packages will be INSTALLED:
+
+  libblas            …::libblas-3.11.0-…
+  libcblas           …::libcblas-3.11.0-…
+  …
+  libopenblas        …::libopenblas-0.3.34-…
+  numpy              …::numpy-2.5.4-…
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
+| A package holds | For numpy |
+| --- | --- |
+| files | the numpy library for Python |
+| a name and a version | `numpy 2.5.4` |
+| its **dependencies**: the packages it needs | Python; OpenBLAS for linear algebra, which needs the Fortran runtime: 6 more packages |
+| a source: a **repository** | conda-forge |
+
+</div>
+
+<!--
+**Say:** one package asked for, seven installed: the package manager reads the dependencies and fetches them too. A package is not only Python: OpenBLAS is a C and Fortran library.
+**If asked:** the `…` hide the channel and the build of each file, such as `conda-forge/osx-arm64::numpy-2.5.4-…`. Measured with Miniforge 26.7.2; the extra packages differ a little by system.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Package **Manager**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Job | 🍎 Homebrew, `brew` | 🪟 `winget`, part of Windows |
+| --- | --- | --- |
+| Find a name | `brew search powershell` | `winget search powershell` |
+| Install | `brew install --cask powershell` | `winget install --id Microsoft.PowerShell` |
+| Install Git | `brew install git` | `winget install --id Git.Git` |
+| Install Miniforge | `brew install --cask miniforge` | `winget install --id CondaForge.Miniforge3` |
+| What is installed | `brew list` | `winget list` |
+| Newer versions | `brew upgrade` | `winget upgrade --all` |
+| Remove | `brew uninstall git` | `winget uninstall --id Git.Git` |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+📜 A package manager looks the name up in its repository, fetches the package and its dependencies, and puts the program where the shell finds it. The line can go into a README: on the next laptop it installs the same program.
+
+</div>
+
+<!--
+**Say:** the same jobs in every package manager, with other words. Both lines run in PowerShell 7 too. Miniforge brings Python and `conda`, a package manager for Python's packages.
+**If asked:** a cask is a Homebrew package for an app with an installer. Linux has `apt` or `dnf`, with the same jobs.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# `conda`: Packages for Python, in **Environments**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+(base) PS> conda --version
+conda 26.7.2
+(base) PS> conda config --show channels
+channels:
+  - conda-forge
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **A package manager**
+
+Installs from a **channel**, conda's word for a repository: here conda-forge. A package can be Python itself, a Python library, or a C library that one needs.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🧪 **An environment manager**
+
+An **environment** is a folder with one Python and its packages. The installer made the first one, `base`: the prompt names it.
+
+</div>
+
+</div>
+
+<!--
+**Say:** brew and winget install a program for the whole laptop; conda installs into one environment at a time.
+**If asked:** after installing Miniforge, `conda init powershell` is typed once, then a new terminal shows `(base)`. Miniforge is conda with conda-forge as its only channel, free to use.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Environment per **Project**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+💥 A script written for numpy 1.26, run where numpy 2.5 is installed:
+
+```text
+PS> python -c "import numpy as np; print(np.float_)"
+AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float64` instead.
+```
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+```text
+(base) PS> conda create -n weather python=3.14
+(base) PS> conda activate weather
+(weather) PS> (Get-Command python).Source
+/opt/homebrew/Caskroom/miniforge/base/envs/weather/bin/python
+```
+
+</div>
+
+<div class="note-text mt-md">Every project run in one shared Python imports the same numpy, and an upgrade for one breaks another. An environment per project keeps each its own. Activation puts its folder first on <code>PATH</code>.</div>
+
+<!--
+**Say:** nothing in the old script changed; a package on the laptop did. `-n` names the environment, `python=3.14` asks for its Python.
+**If asked:** on Windows the environment is `C:\Users\smilte\miniforge3\envs\weather`. It holds 24 packages, 221 MB. `conda deactivate` returns to `base`; `conda env remove -n weather` deletes the folder.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Write the Environment Down: `environment.yml`
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+(weather) PS> conda env export --from-history > environment.yml
+(weather) PS> Get-Content environment.yml
+name: weather
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14
+prefix: /opt/homebrew/Caskroom/miniforge/base/envs/weather
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **On another laptop**
+
+Delete the line `prefix:`, which names this laptop. `conda env create -f environment.yml` makes `weather` there.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🧭 **Why `--from-history`**
+
+It keeps what was asked for, which works on every system. The full export pins each package to a build of one system.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the file is the environment written down, as the README lines will be the check written down. The two scripts need nothing beyond Python, so the file lists only `python=3.14`.
+**If asked:** `numpy=2.5.4` under `dependencies` would ask for one version.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Programs, One **Mean**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+(weather) PS> python scripts/column_stats.py data/processed/weather_valid.csv temp_c
+file    data/processed/weather_valid.csv
+column  temp_c
 rows    87552
 min     -16.3
 max     32.4
@@ -2480,17 +1899,68 @@ mean    7.15997
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
+| File | `Measure-Object` | `column_stats.py` |
+| --- | --- | --- |
+| `data/raw/weather.csv` | 5.78279610365909 | 5.7828 |
+| `data/processed/weather_valid.csv` | 7.15996550621346 | 7.15997 |
+
 </div>
 
-<div class="card card-primary card-glass pad-compact mt-md">
-
-🧮 120 rows are 0.14 % of the file. Each puts −999 into the sum: 120 × (−999) / 87 672 = −1.37 °C. The mean drops from 7.16 to 5.78 °C. A mark for "no value" written as a number is counted as a number by every program.
-
-</div>
+<div class="note-text mt-md">Step 6: two programs, written apart, agree to the sixth digit. The script's line: the program <code>python</code>, its file, then two words for the script.</div>
 
 <!--
-**Say:** five lost days moved a ten-year mean by more than a degree. This is why the mark is found before any number is computed.
-**If asked:** the last hundredth of the 1.38 comes from the 120 summer hours that are missing from the valid rows.
+**Say:** an agreement between two independent programs rules out a slip in either one. The coldest hour of the valid rows, −16.3 °C, is a plausible winter night.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Second Script: the Spreadsheet **Export**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📥 **`data/raw/daily_export.csv`**
+
+```text
+nr;date;temp_c
+1;2025-10-01;6,3
+2;2025-10-02;5,0
+…
+9;2025-10-09;9,8
+;mean;7,97
+```
+
+`;` between values, a decimal comma, a column `nr`, a mean line: 180 bytes.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ⚙️ **Cleaned by one line**
+
+```text
+PS> python scripts/clean_export.py `
+>> data/raw/daily_export.csv data/processed/daily.csv
+9 rows written to data/processed/daily.csv
+PS> (Get-Item data/processed/daily.csv).Length
+148
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The repair done by hand in the editor in Lecture 02, 180 bytes to 148, as one line that runs again on the next export.</div>
+
+<!--
+**Say:** header `date,temp_c` and LF: 12 bytes. Eight rows like `2025-10-01,6.3`: 15 each. `2025-10-06,10.4`: 16. 12 + 8 × 15 + 16 = 148.
+**If asked:** the script states the line ending, `newline="\n"`, so it writes the same 148 bytes on every system.
 (~2 min)
 -->
 
@@ -2501,10 +1971,10 @@ hideInToc: true
 
 # Checksums & **Backups**
 
-The same ten lines were 148 bytes in one file and 158 in another. A checksum tells files apart by their bytes; backups keep the right ones.
+Step 7: is my `weather.csv` the file Smiltė used?
 
 <!--
-**Say:** a checksum is a short number computed from every byte of a file. Here it is one command in each shell.
+**Say:** two copies of a file of 2.5 million bytes cannot be compared by eye. A checksum is a short number computed from every byte.
 (~1 min)
 -->
 
@@ -2512,13 +1982,11 @@ The same ten lines were 148 bytes in one file and 158 in another. A checksum tel
 hideInToc: true
 ---
 
-# The Checksum of a **File**
+# The Checksum of `weather.csv`
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% shasum -a 256 data/raw/weather.csv
-3f1ad06d3bb5773eac79dfc964cdf8af998689ef58aa8623f25d2050fbe00756  data/raw/weather.csv
 PS> (Get-FileHash data/raw/weather.csv).Hash
 3F1AD06D3BB5773EAC79DFC964CDF8AF998689EF58AA8623F25D2050FBE00756
 ```
@@ -2529,27 +1997,66 @@ PS> (Get-FileHash data/raw/weather.csv).Hash
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔠 **The same 64 digits**
+## 🔠 **64 hex digits**
 
-Lower case on the Mac, upper case on Windows: one number. 64 hex digits are the 256 bits of SHA-256.
+The 256 bits of SHA-256, computed from all 2 515 215 bytes. The same bytes give the same digits on every computer.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 🧬 **A copy with one digit changed**
+## 🧬 **One byte changed**
 
-```text
-33fe5e77…f705483d   2025-10-01,6.3
-58709abc…fb40d36b   2025-10-01,6.4
-```
+Another 64 digits, all of them, as Lecture 03 showed: `6.3` against `6.4` in one row.
 
 </div>
 
 </div>
 
 <!--
-**Ask:** a colleague has a `weather.csv` too. Is it the same file? 2.5 million bytes cannot be compared by eye. Read the first and the last four digits: 3f1a and 0756.
+**Ask:** Smiltė's README names `3F1A…0756`. Read the first and the last four digits of yours: the same file.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What a Checksum **Tells**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> $sent = '3F1AD06D3BB5773EAC79DFC964CDF8AF998689EF58AA8623F25D2050FBE00756'
+PS> (Get-FileHash data/raw/weather.csv).Hash -eq $sent
+True
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **It tells**
+
+The same digits: the same bytes, every one of 2 515 215. Other digits: at least one byte differs.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❓ **It does not tell**
+
+Which byte, or which copy is right. That takes the checksum from the source: from Smiltė, written down when the file arrived.
+
+</div>
+
+</div>
+
+<!--
+**Say:** `-eq` compares two texts and ignores case, so the lower-case digits of another program match as well.
+**If asked:** nobody has found two different files with the same SHA-256. A checksum sent by the same e-mail as a forged file proves nothing: it must come by another route.
 (~2 min)
 -->
 
@@ -2559,65 +2066,18 @@ hideInToc: true
 
 # A List of Checksums for `data/raw`
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% shasum -a 256 data/raw/* > data/checksums.txt
-% shasum -a 256 -c data/checksums.txt
-data/raw/daily_export.csv: OK
-data/raw/weather.csv: OK
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> (Get-FileHash data/raw/*).Hash |
->> Set-Content data/checksums.txt
-PS> $list = Get-Content data/checksums.txt
-PS> $now = (Get-FileHash data/raw/*).Hash
-PS> Compare-Object $list $now
-PS>
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The list is written once, when the raw files arrive, and checked after every copy. `-c` computes each checksum again and compares. `Compare-Object` prints only the lines that differ: nothing means the same.
-
-</div>
-
-<!--
-**Say:** "raw is never edited" becomes a test that runs in a second. The list stands in `data`, not in `data/raw`, so `data/raw/*` never includes it.
-**If asked:** `$list = …` keeps an output under a name for the next line.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Changed File Fails the **Check**
-
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-% shasum -a 256 -c data/checksums.txt
-data/raw/daily_export.csv: FAILED
-data/raw/weather.csv: OK
-shasum: WARNING: 1 computed checksum did NOT match
-PS> $now = (Get-FileHash data/raw/*).Hash
-PS> Compare-Object $list $now
+PS> (Get-FileHash data/raw/*).Hash > data/checksums.txt
+PS> Compare-Object (Get-Content data/checksums.txt) (Get-FileHash data/raw/*).Hash
+PS>
+```
+
+After `6,3` became `6,4` in row 1 of the export:
+
+```text
+PS> Compare-Object (Get-Content data/checksums.txt) (Get-FileHash data/raw/*).Hash
 
 InputObject                                                      SideIndicator
 -----------                                                      -------------
@@ -2627,53 +2087,44 @@ InputObject                                                      SideIndicator
 
 </div>
 
-<div class="note-text mt-md">In a copy of the project, <code>6,3</code> in row 1 of the export became <code>6,4</code>. <code>&lt;=</code> marks the checksum in the list, <code>=&gt;</code> the one computed now.</div>
+<div class="note-text mt-md">The list is written once, when the raw files arrive. <code>Compare-Object</code> prints only what differs: nothing means the same bytes. <code>&lt;=</code> is the list, <code>=&gt;</code> the file now.</div>
 
 <!--
-**Live (optional):** `shasum -a 256 data/raw/* > data/checksums.txt`; in VS Code change `6,3` to `6,4` in `daily_export.csv` and save; `shasum -a 256 -c data/checksums.txt`. Change it back and save before going on.
-**Say:** zsh names the file. PowerShell shows the old and the new checksum; the old one is line 1 of the list, the export.
-(~1 min)
+**Live (optional):** write the list; in VS Code change `6,3` to `6,4` in `daily_export.csv` and save; compare again. Change it back and save before going on.
+**Say:** "raw is never edited" becomes a test that runs in a second. The list stands in `data`, not in `data/raw`, so `data/raw/*` never includes it.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# How Files **Are Lost**
+# The Same Rows, Other **Bytes**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-| What happens | What is lost | What brings it back |
-| --- | --- | --- |
-| `rm`, `>` or a spreadsheet save hits the wrong file | one file | an older copy |
-| The disk fails, the laptop is stolen | everything on it | a copy on another device |
-| Fire or theft where every copy is | every copy in that place | a copy in another place |
-| A file changes unnoticed | unknown | a checksum to notice, an older copy |
+| File | Made by | macOS | Windows |
+| --- | --- | --- | --- |
+| `data/raw/weather.csv` | the station | 2 515 215 B, `3F1AD06D…` | the same |
+| `data/processed/weather_valid.csv` | `Select-String … >` | 2 511 735 B, `85B1F38D…` | 2 599 288 B, `B166C09B…` |
+| `data/processed/daily.csv` | `clean_export.py` | 148 B, `33FE5E77…` | the same |
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-md">
 
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔁 **Can be made again**
-
-`data/processed`, `results`: the commands write them again.
+🧮 `>` ends each line as the system does: LF on macOS, CRLF on Windows, one byte `0d` more per line. 2 511 735 + 87 553 = 2 599 288. The script states LF, so it writes the same bytes on both.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-success card-glass pad-compact mt-md">
 
-## 🧱 **Cannot**
-
-`data/raw`, `scripts`, the README: what a backup is for.
-
-</div>
+✅ Step 7: the raw files are named by checksum. A file made by `>` is named by its 87 553 lines and its mean.
 
 </div>
 
 <!--
-**Ask:** who has lost a file in one of these four ways? Usually every row gets a hand.
+**Say:** same rows, same mean, different bytes. A checksum in the README is only promised for a file whose bytes are the same everywhere.
 (~2 min)
 -->
 
@@ -2717,8 +2168,11 @@ University storage, a cloud service, a drive at home.
 
 </div>
 
+<div class="note-text mt-md">What a backup is for: <code>data/raw</code>, <code>scripts</code>, the README. <code>data/processed</code> and <code>results</code> are made again by commands.</div>
+
 <!--
 **Say:** the 1 in 20 is an assumption for the arithmetic, not a measured rate. The point is the exponent, and when it applies.
+**Ask:** who has lost a file: a wrong save, a dead disk, a stolen bag?
 (~2 min)
 -->
 
@@ -2727,12 +2181,12 @@ layout: section
 hideInToc: true
 ---
 
-# Tools & **Environments**
+# Make It **Repeatable**
 
-The cleaning line starts with `python3` or `python`: a program somebody installed. Where programs come from, how the shell finds them, what it runs at start, and how a project lists the ones it needs.
+Step 8: anyone runs the whole check again with one line.
 
 <!--
-**Say:** every command so far was already on the laptop, or came with one typed line, like PowerShell 7.
+**Say:** every step so far was a typed line. Written down in order, they are the check.
 (~1 min)
 -->
 
@@ -2740,686 +2194,11 @@ The cleaning line starts with `python3` or `python`: a program somebody installe
 hideInToc: true
 ---
 
-# Where a Program **Comes From**
+# The README: the Mark and the **Result**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-```text
-% which python3
-/Users/smilte/miniforge3/bin/python3
-PS> (Get-Command python).Source
-C:\Users\smilte\miniforge3\python.exe
-```
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧱 **Built in**
-
-`ls`, `cat`, `Get-Content`: they came with the system.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📦 **An installer**
-
-VS Code, and Miniforge, which brings Python and `conda`: downloaded and run once.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🗂️ **A package manager**
-
-A typed line: `winget` installed PowerShell 7 at the start.
-
-</div>
-
-</div>
-
-<div class="note-text mt-md"><code>which</code> and <code>Get-Command</code> print where the shell found a program: in the folder its installer made.</div>
-
-<!--
-**Say:** a program is usable at the prompt when its folder is on the list the shell searches, `PATH`.
-**If asked:** Miniforge installs into the folder `miniforge3` in the home folder. A Mac without it answers `/usr/bin/python3`, Apple's copy.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The List the Shell Searches: **PATH**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-% echo $PATH | tr ':' '\n'
-/Users/smilte/miniforge3/bin
-/Users/smilte/miniforge3/condabin
-/usr/bin
-PS> $env:PATH -split ';'
-C:\Users\smilte\miniforge3
-C:\Users\smilte\miniforge3\Scripts
-C:\Windows\system32
-C:\Program Files\PowerShell\7\
-C:\Users\smilte\AppData\Local\Microsoft\WindowsApps
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ➡️ **Searched top to bottom**
-
-`PATH` is a variable that holds the list. The shell takes the first folder with a program of the typed name: of two Pythons, the first runs.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🪟 **"Python was not found"**
-
-`WindowsApps` holds a stand-in `python.exe`. In a PowerShell where conda was never set up, the Miniforge folders are missing, and the stand-in answers.
-
-</div>
-
-</div>
-
-<!--
-**Say:** a terminal reads PATH when it opens: a program installed meanwhile is found only in a new terminal. The lists are shortened; a real laptop shows ten to twenty folders.
-**If asked:** without Miniforge a Mac has only `python3`, so the course writes `python3` there. Inside Miniforge both names work.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# A Package **Manager**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Job | 🪟 `winget`, part of Windows | 🍎 Homebrew, `brew` |
-| --- | --- | --- |
-| Find a name | `winget search powershell` | `brew search git` |
-| Install | `winget install --id Microsoft.PowerShell` | `brew install git` |
-| What is installed | `winget list` | `brew list --versions` |
-| Newer versions | `winget upgrade --all` | `brew upgrade` |
-| Remove | `winget uninstall --id Microsoft.PowerShell` | `brew uninstall git` |
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-📜 A package manager looks a name up in a catalogue, downloads the files, and puts their folder on `PATH`. The install line can go into the README: on the next laptop it installs the same program.
-
-</div>
-
-<!--
-**Say:** the five jobs are the same in every package manager. The course needs no Homebrew: Python comes from Miniforge on both systems, and its `conda` is a package manager too.
-**If asked:** Linux has `apt`, with the same five jobs.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# An Alias and a **Prompt**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% alias ..='cd ..'
-% PROMPT='%1~ %# '
-weather-project % cd data
-data % ..
-weather-project %
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> function .. { Set-Location .. }
-PS> function prompt { "$((Get-Item .).Name)> " }
-weather-project> cd data
-data> ..
-weather-project>
-```
-
-</div>
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-info card-glass pad-compact">
-
-## 🏷️ **An alias**
-
-A short name for a longer command: `..` now means `cd ..`. The prompt now shows only the folder.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **How long they last**
-
-Both last until this terminal closes, and exist only on this laptop. A README line uses the full command.
-
-</div>
-
-</div>
-
-<!--
-**Say:** two settings typed by hand. They change only this terminal.
-**If asked:** `%1~` is the last folder of the path, `%#` the `%` sign. A PowerShell alias cannot carry an argument such as `..`, so a function does it.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A File the Shell Runs at **Start**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **zsh: `~/.zshrc`**
-
-```text
-# run by every new zsh
-alias ..='cd ..'
-PROMPT='%1~ %# '
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **PowerShell: `$PROFILE`**
-
-```text
-# run by every new PowerShell
-function .. { Set-Location .. }
-function prompt { "$((Get-Item .).Name)> " }
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-```text
-% echo ~/.zshrc
-/Users/smilte/.zshrc
-PS> $PROFILE
-C:\Users\smilte\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
-```
-
-</div>
-
-<div class="note-text mt-md">A new terminal reads the file. <code>source ~/.zshrc</code> or <code>. $PROFILE</code> reads it again in the open one.</div>
-
-<!--
-**Say:** the same lines as on the last slide, written once into a file: from now on every terminal starts with them.
-**If asked:** neither file exists on a new laptop; the first save makes it. With OneDrive, `$PROFILE` lies under `OneDrive\Documents`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Ready-Made Settings: **Oh My Zsh**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧰 **What it is**
-
-- Settings for zsh, shared on GitHub: 371 plugins and 143 prompt themes
-- One line installs it. It writes a new `~/.zshrc` and keeps the old one
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📄 **Two lines of its `~/.zshrc`**
-
-```text
-ZSH_THEME="robbyrussell"
-plugins=(git)
-```
-
-```text
-➜  weather-project cd data
-➜  data
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">PowerShell: Oh My Posh, or Starship for both shells. Each is one <code>winget</code> line and one line in <code>$PROFILE</code>.</div>
-
-<!--
-**Say:** a theme only changes the prompt, a plugin adds aliases. Nothing in this course needs either.
-**If asked:** the arrow is green, red after a command that failed. In a Git project the prompt adds the branch. The `git` plugin adds `gst` for `git status`. Counts from October 2026.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# What `conda init` **Wrote**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🍎 **zsh: the end of `~/.zshrc`**
-
-```text
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/smilte/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-…
-# <<< conda initialize <<<
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🪟 **PowerShell: `profile.ps1`, in the folder of `$PROFILE`**
-
-```text
-#region conda initialize
-If (Test-Path "C:\Users\smilte\miniforge3\Scripts\conda.exe") {
-    (& "C:\Users\smilte\miniforge3\Scripts\conda.exe" "shell.powershell" "hook") | … | Invoke-Expression
-}
-#endregion
-```
-
-</div>
-
-<div class="note-text mt-md">Every new terminal runs the block: it asks <code>conda</code> for a few lines of shell code and runs them. The prompt then starts with <code>(base)</code>.</div>
-
-<!--
-**Say:** the Mac installer asks "Proceed with initialization?"; yes runs `conda init`, which writes these lines into the start-up file from two slides ago. On Windows, `conda init powershell`, typed once in the Miniforge Prompt, writes them.
-**If asked:** a prompt line of your own, as two slides ago, hides `(base)`: in zsh write it above conda's block, in PowerShell start it with `$env:CONDA_PROMPT_MODIFIER`. `conda init --reverse zsh` takes the block out again; `conda config --set auto_activate false` keeps `(base)` off at start. Oh My Zsh writes a new `~/.zshrc` without the block: `conda init zsh` puts it back. The slides shorten every prompt to `%` and `PS>`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# `conda`: Packages and **Environments**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
-
-```text
-(base) % conda --version
-conda 26.7.2
-(base) % conda config --show channels
-channels:
-  - conda-forge
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📦 **A package manager**
-
-Installs packages from a **channel**, a catalogue: here conda-forge. A package can be Python itself, a Python library, or a C library that a Python library needs.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🧪 **An environment manager**
-
-An **environment** is a folder with one Python and its packages. The installer made the first one, `base`.
-
-</div>
-
-</div>
-
-<!--
-**Say:** two jobs in one program. `winget` installs a program for the whole laptop; `conda` installs into one environment at a time.
-**If asked:** Miniforge is conda with conda-forge as its only channel, free to use. Anaconda's own channel, `defaults`, has terms for large organisations.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# An Upgrade for One Project Breaks **Another**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💥 **A script for numpy 1.26, run where numpy 2.5 is installed**
-
-```text
-% python -c "import numpy as np; print(np.float_)"
-AttributeError: `np.float_` was removed in the NumPy 2.0 release. Use `np.float64` instead.
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **A shared Python**
-
-Every project run in one shared Python imports the same numpy. An upgrade for one project broke a script of another.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **One environment per project**
-
-Each project gets a Python and packages of its own. `base` stays as the installer made it, without numpy.
-
-</div>
-
-</div>
-
-<!--
-**Say:** this is the usual way a working script stops working: nothing in the script changed, a package on the laptop did.
-**If asked:** `np.float_` existed up to numpy 1.26 and was removed in 2.0, June 2024.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# An Environment Is a **Folder**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
-
-```text
-(base) % conda create -n weather python=3.14
-  environment location: /Users/smilte/miniforge3/envs/weather
-…
-Proceed ([y]/n)? y
-(base) % conda env list
-# conda environments:
-#
-# * -> active
-# + -> frozen
-base                 *   /Users/smilte/miniforge3
-weather                  /Users/smilte/miniforge3/envs/weather
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📁 **What is in it**
-
-24 packages: Python 3.14.8, pip, and 22 that Python needs. 221 MB in 6135 files.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🗑️ **Delete and make again**
-
-`conda env remove -n weather` deletes the folder. One line makes it again.
-
-</div>
-
-</div>
-
-<!--
-**Say:** `-n` names the environment, `python=3.14` asks for its Python. Nothing is active yet: the `*` is still at `base`.
-**If asked:** on Windows the folder is `C:\Users\smilte\miniforge3\envs\weather`. Counts and sizes measured on Linux with Miniforge 26.7.2; they differ a little by system.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Activation Changes **PATH**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-(base) % conda activate weather
-(weather) % which python
-/Users/smilte/miniforge3/envs/weather/bin/python
-(weather) % python --version
-Python 3.14.8
-(weather) % conda deactivate
-(base) %
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-(base) PS> conda activate weather
-(weather) PS> (Get-Command python).Source
-C:\Users\smilte\miniforge3\envs\weather\python.exe
-(weather) PS> python --version
-Python 3.14.8
-(weather) PS> conda deactivate
-(base) PS>
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-🔛 Activation puts the environment's folder first on `PATH`: `python` is now the environment's, and the prompt names it. `conda deactivate` undoes both.
-
-</div>
-
-<!--
-**Say:** with `(weather)` in the prompt the word is `python` on both systems.
-**If asked:** `echo $PATH | tr ':' '\n'` now starts with `/Users/smilte/miniforge3/envs/weather/bin`. On Windows the environment's folder holds `python.exe` itself; its `Scripts` follows on `PATH`.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Install numpy into **One Environment**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
-
-```text
-(weather) % python -c "import numpy"
-ModuleNotFoundError: No module named 'numpy'
-(weather) % conda install numpy
-…
-Proceed ([y]/n)? y
-(weather) % conda list numpy
-# packages in environment at /Users/smilte/miniforge3/envs/weather:
-#
-# Name                     Version          Build            Channel
-numpy                      2.5.4            py314hd3a7d6b_0  conda-forge
-(weather) % conda deactivate
-(base) % python -c "import numpy"
-ModuleNotFoundError: No module named 'numpy'
-```
-
-</div>
-
-<div class="note-text mt-md">numpy came with six more packages: OpenBLAS, a C library for linear algebra, and the Fortran runtime it uses. <code>base</code> did not change.</div>
-
-<!--
-**Say:** `-c` runs one line of Python: here it only tries the import.
-**If asked:** measured on Linux with Miniforge 26.7.2; the build string and the extra packages differ by system. pip is in every environment: `python -m pip install NAME` in the activated environment, only for what conda-forge lacks, never into `base`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Write the Environment Down: `environment.yml`
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 🍎 **zsh** · 🪟 **PowerShell: the same lines**
-
-```text
-(weather) % conda env export --from-history > environment.yml
-(weather) % cat environment.yml
-name: weather
-channels:
-  - conda-forge
-dependencies:
-  - python=3.14
-  - numpy
-prefix: /Users/smilte/miniforge3/envs/weather
-```
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 💻 **On another laptop**
-
-Delete the line `prefix:`, which names this laptop. `conda env create -f environment.yml` then makes `weather` there. `- numpy=2.5.4` would ask for one version.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🧭 **Why `--from-history`**
-
-The full export lists every package with its build, such as `bzip2=1.0.8=hda65f42_10`: made for one system. This file keeps what was asked for, and works on every system.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the file is the environment, written down, as the README lines are the cleaning, written down. The project keeps `environment.yml` like `scripts`, and makes the environment again from it, like `data/processed` from `data/raw`.
-**If asked:** today's two scripts need no package, so this project's own file would list only `python=3.14`.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# The **README**
-
-The README is where the checksums, the meaning of the columns and the lines that make every file again are written down.
-
-<!--
-**Say:** the README of `weather-project` already says what the project is, its folders and where the files came from.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# What the README Must **Answer**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **Already in the README**
-
-- A title and one paragraph
-- The folders and what goes into each
-- The two data files: source, date, what one row is
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❓ **Still open**
-
-- What is `temp_c`, in which unit?
-- Why is `temp_c` −999 in 120 rows?
-- Are the raw files the ones that arrived?
-- Which lines make `data/processed`?
-- May I copy the scripts?
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The test for a README: someone with the project folder and an empty laptop gets the same files and asks nobody.
-
-</div>
-
-<!--
-**Do:** tick off the left card, line by line.
-**Say:** the checksum list answers the third question.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The README: Columns and **Units**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✏️ **In the README**
+## ✏️ **In `README.md`**
 
 ```md
 ## Columns of `weather.csv`
@@ -3428,137 +2207,21 @@ hideInToc: true
 |--|--|--|
 | `time` | start of the hour | ISO 8601 |
 | `temp_c` | air temperature | °C |
-| `humidity_pct` | relative humidity | % |
-| `wind_ms` | wind speed | m/s |
 
-Missing value: `temp_c` is `-999`
-in 120 rows, 2019-07-22 to 07-26.
+Missing value: `temp_c` is `-999` in 120 rows, 2019-07-22 to 07-26.
+`data/raw/weather.csv`: 87 673 lines, SHA-256 `3f1ad06d…fbe00756`.
+
+## Result
+
+Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours.
+The 120 hours marked `-999` are left out.
 ```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔎 **Checked by a command**
-
-```text
-% head -n 1 data/raw/weather.csv
-time,temp_c,humidity_pct,wind_ms
-% grep -c ',-999,' data/raw/weather.csv
-120
-```
-
-The names and the 120 come out of the file. The units do not: the README has to hold them.
-
-</div>
 
 </div>
 
 <!--
-**Say:** every line of it except the units was checked by a command anyone can run again.
+**Say:** every number here came out of a typed line today. The unit did not: the file cannot say °C, so the README must.
 (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The README: How to **Rebuild**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## ✏️ **In the README**
-
-```md
-## How to rebuild
-
-In the project folder: zsh on macOS, PowerShell 7 on Windows.
-Python 3.14 from Miniforge; the scripts need no package beyond it.
-
-1. The cleaned export, 148 bytes, SHA-256 `33fe5e77…f705483d`:
-   - zsh: `python3 scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv`
-   - PowerShell: `python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv`
-2. `weather.csv` without the 120 rows marked `-999`, 87 553 lines:
-   - zsh: `grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv`
-   - PowerShell: `Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv`
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-♻️ The lines are copied from the terminal history with `↑`, so each one has already run.
-
-</div>
-
-<!--
-**Say:** the lines are brought back with ↑ and pasted, never retyped. A line that was copied and ran has been tested; a line typed from memory has not.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Test the Rebuild **Lines**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Delete the two files in `data/processed`, paste the lines of the README into the shell, and measure what came back.
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% wc -c data/processed/*
-     148 data/processed/daily.csv
- 2511735 data/processed/weather_valid.csv
- 2511883 total
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> ls data/processed | Select-Object Name, Length
-
-Name              Length
-----              ------
-daily.csv            148
-weather_valid.csv 2599288
-```
-
-</div>
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-success card-glass pad-compact">
-
-🟰 `daily.csv`: 148 bytes in both shells. The README may promise its checksum.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-🔀 `weather_valid.csv`: one `0D` more per line on Windows. The README promises its 87 553 lines, not its checksum.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the script states its line ending, the filter and `>` do not. A file whose checksum goes into the README is made by a script.
-(~3 min)
 -->
 
 ---
@@ -3569,56 +2232,116 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
+## 📜 **`scripts/rebuild.ps1`**
+
 ```text
-% cat scripts/rebuild.sh
-#!/bin/zsh
-python3 scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
-% chmod +x scripts/rebuild.sh
-% ./scripts/rebuild.sh
-9 rows written to data/processed/daily.csv
-PS> Get-Content scripts/rebuild.ps1
-python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
+New-Item -ItemType Directory -Force data/processed, results | Out-Null
 Select-String ',-999,' data/raw/weather.csv -NotMatch -Raw > data/processed/weather_valid.csv
-PS> ./scripts/rebuild.ps1
-9 rows written to data/processed/daily.csv
+python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
+python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
 ```
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<div class="card card-success card-glass pad-compact mt-md">
 
-<div class="card card-secondary card-glass pad-compact">
-
-## 1️⃣ **`#!/bin/zsh`**
-
-Line 1 names the program that runs the file. A `.ps1` file needs none.
+```text
+PS> Remove-Item data/processed, results -Recurse
+PS> ./scripts/rebuild.ps1
+9 rows written to data/processed/daily.csv
+PS> Get-Content results/temp_c.txt | Select-Object -Last 1
+mean    7.15997
+```
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<!--
+**Live:** in VS Code make `scripts/rebuild.ps1` from the four lines and save; then `Remove-Item data/processed, results -Recurse`, `./scripts/rebuild.ps1`, `Get-Content results/temp_c.txt`.
+**Say:** the lines are the ones typed today, brought back with `↑` and pasted, never retyped: each one has already run. `./` names the script's folder, because `scripts` is not on `PATH`.
+**If asked:** `-Force` makes `New-Item` quiet when the folder exists; `Out-Null` drops its output. A `.ps1` downloaded from the web is blocked on Windows until `Unblock-File`.
+(~4 min)
+-->
 
-## 🔓 **`chmod +x`**
+---
+hideInToc: true
+---
 
-Marks the file as a program that may run. Once per file, on macOS.
+# The README: How to **Rebuild**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## ✏️ **In `README.md`**
+
+```md
+## How to rebuild
+
+In the project folder, in PowerShell 7 on macOS or Windows,
+with Miniforge installed:
+
+    conda env create -f environment.yml
+    conda activate weather
+    ./scripts/rebuild.ps1
+
+The last line of `results/temp_c.txt` reads `mean    7.15997`.
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+♻️ The test of a README: someone with the folder and an empty laptop gets the same files and the same 7.16, and asks nobody.
+
+</div>
+
+<!--
+**Say:** three lines: the tools, from `environment.yml`; the steps, from the script; the number to compare with.
+**Ask:** what would the stranger still have to ask? Usually: where to get Miniforge. One more line names it.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Every Program Ends with a **Number**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+PS> python scripts/column_stats.py data/raw/weather.csv temp_c > results/raw.txt
+PS> $LASTEXITCODE
+0
+PS> python scripts/column_stats.py data/raw/wether.csv temp_c
+no file data/raw/wether.csv
+PS> $LASTEXITCODE
+1
+```
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **Exit status**
+
+A program ends by handing the shell a number: 0 for success, anything else for a failure. `$LASTEXITCODE` holds the last one.
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## 📍 **`./`**
+## ✅ **`$?`**
 
-The folder of the script is not on `PATH`, so the path is typed. In both shells.
+`True` when the last command worked, `False` when not: for cmdlets and programs alike.
 
 </div>
 
 </div>
 
 <!--
-**Live:** in VS Code make `scripts/rebuild.sh` from the two zsh lines of the README and save; then `chmod +x scripts/rebuild.sh`, `rm data/processed/*`, `./scripts/rebuild.sh`, `wc -c data/processed/*`.
-**Say:** the README's lines, saved in a file: one typed line now makes `data/processed` again.
-**If asked:** `zsh scripts/rebuild.sh` runs it without `chmod` and `./`. A `.sh` saved with Windows line endings stops on a Mac with `bad interpreter: /bin/zsh^M`. A `.ps1` downloaded from the web is blocked until `Unblock-File`.
-(~4 min)
+**Say:** the program chooses its numbers: `column_stats.py` returns 1 for a missing file, 2 for a wrong number of words. A script reads them to know whether a line worked.
+(~2 min)
 -->
 
 ---
@@ -3627,30 +2350,26 @@ hideInToc: true
 
 # Stop at the First **Error**
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div class="grid-2 mt-sm gap-md">
 
-⚠️ A typo in the first command: `daily_exprt.csv`. The script prints `no file data/raw/daily_exprt.csv`, runs the next line anyway, and `echo $?` prints 0, success.
+<div class="card card-warning card-glass pad-compact">
 
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **zsh: `set -e` as line 2**
+## ⚠️ **A typo in line 3: `daily_exprt.csv`**
 
 ```text
-% ./scripts/rebuild.sh
+PS> ./scripts/rebuild.ps1
 no file data/raw/daily_exprt.csv
-% echo $?
-1
+PS> $?
+True
 ```
+
+The script runs line 4 anyway and reports success.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-## 🪟 **PowerShell: two first lines**
+## 🛑 **Two lines on top**
 
 ```text
 $ErrorActionPreference = 'Stop'
@@ -3660,9 +2379,9 @@ $PSNativeCommandUseErrorActionPreference = $true
 ```text
 PS> ./scripts/rebuild.ps1
 no file data/raw/daily_exprt.csv
-NativeCommandExitException: …\rebuild.ps1:3
-     | Program "python" ended with non-zero
-     | exit code: 1 (0x01).
+NativeCommandExitException: …/rebuild.ps1:5
+     | Program "python" ended with
+     | non-zero exit code: 1 (0x01).
 PS> $?
 False
 ```
@@ -3671,54 +2390,9 @@ False
 
 </div>
 
-<div class="note-text mt-md"><code>$?</code> is the status of the last command: 0 or <code>True</code> for success. <code>'Stop'</code> alone stops at a PowerShell command, not at a program such as <code>python</code>: the second line adds those.</div>
-
 <!--
-**Say:** a script that goes on after a failed line hides the failure. With the stop lines it ends at that line, and its status says so.
-**If asked:** without the stop lines PowerShell's `$?` is `True` and `$LASTEXITCODE` is 1, the exit code of `python`. The second line exists since PowerShell 7.4.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The README: **Licence**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📥 **The licence of the data**
-
-Set by whoever published the data. It decides whether the raw files may be passed on with the project. Here the station's operator chose CC0: free for any use.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📤 **The licence of your own work**
-
-Without one, others may read but not copy, change or pass on. The text goes into a file `LICENSE`. Usual: MIT for scripts, CC BY 4.0 for text and figures.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-```md
-## Licence
-
-Data: CC0, from the station's operator.
-Scripts and text: MIT, see `LICENSE`.
-```
-
-</div>
-
-<!--
-**Say:** the last question of the stranger, "may I copy the scripts?", has no answer until this section exists.
-**If asked:** choosealicense.com has the text of each licence, ready to copy.
+**Say:** a script that goes on after a failed line hides the failure. `'Stop'` stops at a failing cmdlet; the second line makes a program's non-zero exit status a failure too.
+**If asked:** the second line exists since PowerShell 7.4. In zsh and bash, `set -e` does the same.
 (~2 min)
 -->
 
@@ -3726,31 +2400,81 @@ Scripts and text: MIT, see `LICENSE`.
 hideInToc: true
 ---
 
-# Which Copy Is Right: Size and **Checksum**
+# The Same Result, Byte for **Byte**
 
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-| Copy of the cleaned export | Bytes | SHA-256 | What differs |
-| --- | --- | --- | --- |
-| written by the script | 148 | `33fe5e77…f705483d` | nothing |
-| copied by PowerShell's `>` | 158 | `b68430c5…721a899e` | CRLF line endings |
-| one digit changed | 148 | `58709abc…fb40d36b` | `6.3` became `6.4` |
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-```md
-- **Cleaned export:** `data/processed/daily.csv`, 148 bytes,
-  SHA-256 `33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d`
+```text
+PS> (Get-FileHash results/temp_c.txt).Hash
+ADE2805B90FE64A0053FA65E28329EEE616AD0389F9CA55DB86400B1C7A9A18B
+PS> ./scripts/rebuild.ps1
+9 rows written to data/processed/daily.csv
+PS> (Get-FileHash results/temp_c.txt).Hash
+ADE2805B90FE64A0053FA65E28329EEE616AD0389F9CA55DB86400B1C7A9A18B
 ```
 
 </div>
 
-<div class="note-text mt-md">The size rules out the CRLF copy. Only the checksum rules out the copy with one digit changed.</div>
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧮 Run twice on one laptop: the same 113 bytes. On Windows, `>` writes the six lines of `temp_c.txt` with CRLF: 113 + 6 = 119 bytes, another checksum, the same `mean    7.15997`.
+
+</div>
 
 <!--
-**Say:** all three look alike in VS Code. With size and checksum in the README, anyone checks a copy with one line, `shasum -a 256` or `Get-FileHash`.
+**Say:** a check that runs again and gives the same bytes is a check anyone can repeat. Across systems, compare the line that matters, not the checksum of a file made by `>`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Script Is a **Record**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Someone asks about 7.16 | The answer is in |
+| --- | --- |
+| Which file? | `data/raw/weather.csv`, SHA-256 in the README and in `data/checksums.txt` |
+| Which rows were left out? | `rebuild.ps1`, line 4: every row with `,-999,` |
+| Which program computed the mean? | `rebuild.ps1`, line 6: `column_stats.py`, line 48 |
+| With which Python? | `environment.yml`: Python 3.14 from conda-forge |
+| Is it still 7.16? | `./scripts/rebuild.ps1`, then `results/temp_c.txt` |
+
+</div>
+
+<div class="note-text mt-md">An e-mail says what came out. A script says what was done, in order, and runs again: on the next laptop, the next file, next year.</div>
+
+<!--
+**Say:** the README tells a reader; the script tells the computer. Both are text, both can be read, compared line by line and kept with the data.
+**Ask:** Ben got 7.11 from the same file. Where would his script differ from Smiltė's?
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# 7.16, **Checked**
+
+<div class="card card-success card-glass pad-compact table-compact mt-sm">
+
+| Step | Question about 7.16 | Answer |
+| --- | --- | --- |
+| 1 | Which column is the temperature? | `temp_c`, column 2 of 4 |
+| 2 | Every hour of ten years? | 87 673 lines = 87 672 hours + header |
+| 3 | Which rows are not measurements? | 120 rows of −999, 22 to 26 July 2019 |
+| 4 | Is every other row a measurement? | 87 552 rows fit the pattern |
+| 5 | The mean without them, and with? | 7.16 and 5.78 °C |
+| 6 | A second program? | 7.15997, to the sixth digit |
+| 7 | The file Smiltė used? | SHA-256 `3F1AD06D…FBE00756` |
+| 8 | Can anyone run it again? | `./scripts/rebuild.ps1` |
+
+</div>
+
+<!--
+**Say:** 7.16 is right, and now it is more than a number in an e-mail: the file, the steps, the program and the line that runs them are in the folder.
 (~2 min)
 -->
 
@@ -3764,44 +2488,43 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Set up **zsh** or **PowerShell 7**, read the prompt, and move with `pwd`, `ls` and `cd`
+✅ Install **PowerShell 7** on macOS and Windows, and say what the shell does with a line
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Name a file by an **absolute** or a **relative path**, and read, count, copy, move and delete files
+✅ Read and count a file, and join commands with the **pipe**, `>` and `2>`
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Join commands with **pipes** and `>`, and find the mark −999 in 87 672 rows
+✅ Build a **regular expression** piece by piece, each piece checked by a count
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write a **regular expression** with `[ ]`, `+`, `^`, `$` and groups
+✅ Install programs with a **package manager**, and give a project its own **conda environment**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Run a **script** someone else wrote, install with `winget` and `conda`, and give a project its own **conda environment**
+✅ Name a file by its **SHA-256**, and keep copies by the **3-2-1** rule
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Name a file by size and **SHA-256**, keep copies by the **3-2-1** rule, and rebuild with a **script** that stops at the first error
+✅ Write the check as a **script** that stops at the first error, and read its **exit status**
 
 </div>
 
 </div>
 
 <!--
-**Say:** the three questions of the opening: 87 673 lines, line 5000, and a coldest hour that was a mark, not a measurement.
 (~1 min)
 -->
 
@@ -3819,7 +2542,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="The terminal is in weather-project/results. Which path names the raw weather file, in zsh and in PowerShell alike?"
+  question="The terminal is in weather-project/results. Which path names the raw weather file on every laptop?"
   :options="[
     '<code>data/raw/weather.csv</code>',
     '<code>../data/raw/weather.csv</code>',
@@ -3835,15 +2558,31 @@ hideInToc: true
 ---
 
 <MCQ
-  question="notes.txt has five lines. Then `echo done > notes.txt` and `echo checked >> notes.txt` run. How many bytes does it have in zsh on a Mac and in PowerShell 7 on Windows?"
+  question="`Get-Content data/raw/wether.csv > results/out.txt` runs. The file name has a typo. What happens?"
   :options="[
-    'More than 13 in both, because the five old lines are kept',
+    'Nothing is printed, and out.txt holds the error message',
+    'The error is printed on the screen, and out.txt is an empty file',
+    'The error is printed, and out.txt is not made',
+    'PowerShell corrects the name and copies weather.csv'
+  ]"
+  :correct="1"
+  explanation="The error goes to the error stream, which still reaches the screen; only the output stream is written by >. And > empties or makes its file before the command runs, so out.txt exists with 0 bytes. 2> would write the error into a file."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="notes.txt has five lines. Then `'done' > notes.txt` and `'checked' >> notes.txt` run in PowerShell 7. How many bytes does the file have on a Mac and on Windows?"
+  :options="[
+    'More than 13 on both, because the five old lines are kept',
     '13 and 13',
     '15 and 13',
     '13 and 15'
   ]"
   :correct="3"
-  explanation="A single > empties the file first, so the five lines are gone, and >> adds a second line. The letters are 4 + 7 = 11. zsh ends each line with LF, one byte: 13 bytes. PowerShell on Windows ends each line with CRLF, two bytes: 15 bytes."
+  explanation="A single > empties the file first, so the five lines are gone, and >> adds a second line. The letters are 4 + 7 = 11. On macOS each line ends with LF, one byte: 13 bytes. On Windows each line ends with CRLF, two bytes: 15 bytes."
 />
 
 ---
@@ -3851,15 +2590,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`cut -d, -f3 weather.csv | sort | head -n 1` prints 100 as the lowest humidity. Why?"
+  question="`Import-Csv weather.csv | Sort-Object humidity_pct | Select-Object -First 1` shows a humidity of 100 as the lowest. Why?"
   :options="[
     'The station measured 100 % most often',
-    'sort compares text character by character, and 1 comes before 3',
-    'cut took the wrong column',
-    'head prints the last line'
+    'Import-Csv reads values as text, and text is compared character by character: 1 comes before 3',
+    'Sort-Object sorts from the largest down',
+    'Select-Object -First 1 takes the last row'
   ]"
   :correct="1"
-  explanation="Without -n, sort compares the values as text, from the left. 100 starts with 1, 34 with 3, so 100 comes first. sort -n compares numbers and puts 34 first. In PowerShell, [int] in Sort-Object does the same."
+  explanation="Every value from Import-Csv is text. 100 starts with 1, 34 with 3, so 100 comes first. Sort-Object {[int]$_.humidity_pct} turns each value into a number before comparing and puts 34 first."
 />
 
 ---
@@ -3867,15 +2606,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="In PowerShell, `ls data/raw | Sort-Object Length` lists daily_export.csv (180 bytes) before weather.csv. What does the pipe carry?"
+  question="`Select-String ,-999, data/raw/weather.csv` stops with a ParserError. Why?"
   :options="[
-    'File objects, each with properties such as Name and Length',
-    'Lines of text, in which Sort-Object finds the size as the fifth word',
-    'The bytes of the two files',
-    'Only the two names, and Sort-Object opens each file to measure it'
+    'Select-String cannot search for a minus sign',
+    'The shell reads the comma itself, as the start of a list, before Select-String runs',
+    'The file has no line with -999',
+    'A pattern must be written in double quotes'
   ]"
-  :correct="0"
-  explanation="A PowerShell pipe carries objects. ls hands on two file objects, and Sort-Object reads the property Length of each. A zsh pipe carries lines of text: wc -c data/raw/* | sort -n finds the size as the first word of each line."
+  :correct="1"
+  explanation="The shell reads a line before the command runs, and some signs mean something to it: in PowerShell a comma builds a list. In single quotes, ',-999,', every character reaches Select-String unchanged. Double quotes would work here too, but they replace a $name, so a pattern goes in single quotes."
 />
 
 ---
@@ -3891,7 +2630,7 @@ hideInToc: true
     'The first two and 7;2025-10-07;9,2'
   ]"
   :correct="1"
-  explanation="The pattern fits a whole line of digits and minus signs, a comma, a number, a point and one digit. The header has letters. The line with semicolons has a semicolon where the pattern allows only digits and minus signs, and no point. grep -E, Select-String and the Find box of VS Code find the same two lines."
+  explanation="The pattern fits a whole line of digits and minus signs, a comma, a number, a point and one digit. The header has letters. The line with semicolons has a semicolon where the pattern allows only digits and minus signs, and no point. Select-String and the Find box of VS Code find the same two lines."
 />
 
 ---
@@ -3915,15 +2654,47 @@ hideInToc: true
 ---
 
 <MCQ
-  question="On a Mac, `shasum -a 256 daily.csv` prints 33fe5e77…f705483d. On Windows, `Get-FileHash daily.csv` prints 33FE5E77…F705483D. What follows?"
+  question="Two folders on PATH hold a program named python: C:\Python312 is listed before C:\Python314. What does `python --version` print?"
   :options="[
-    'Nothing, because the two programs compute different checksums',
-    'The two files hold the same values, but their line endings may differ',
-    'The two files hold the same 148 bytes',
-    'The Windows file is larger, because of CRLF'
+    'Python 3.14, because the newer version wins',
+    'Python 3.12, because the shell stops at the first folder that holds the name',
+    'Both print a line, one after the other',
+    'Neither: two programs of one name on PATH is an error'
+  ]"
+  :correct="1"
+  explanation="The shell goes through PATH in order and runs the first program of that name it finds. A newer version further down the list is never reached. That is why conda activate puts the folder of the environment first."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A colleague receives the project folder with environment.yml, which lists python=3.14 and numpy=2.5.4. Which lines give them the same environment?"
+  :options="[
+    '<code>conda install numpy</code> in base, nothing else',
+    'Copy the folder envs/weather from your laptop into theirs',
+    '<code>conda env create -f environment.yml</code>, then <code>conda activate weather</code>',
+    'Open environment.yml in VS Code: the packages install themselves'
   ]"
   :correct="2"
-  explanation="Get-FileHash computes SHA-256 too and writes the hex digits in capitals: the digits are the same. A checksum is computed from every byte, so line endings count. The same table with CRLF line endings has 158 bytes and the checksum b68430c5…."
+  explanation="An environment is made on the laptop it runs on, from the file. conda env create reads the channel and the packages, and numpy=2.5.4 pins the version, so 2.5.4 arrives and not the newest one. A copied environment folder holds paths of the other laptop, and base is shared by every project."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="weather_valid.csv, made with `>` from the same raw file, has 2 511 735 bytes on a Mac and 2 599 288 on Windows. What follows?"
+  :options="[
+    'One of the two lost rows',
+    'The same 87 553 lines, with LF on the Mac and CRLF on Windows: the checksums differ, the mean does not',
+    'The same bytes, because Get-FileHash ignores line endings',
+    'The Windows file holds the −999 rows'
+  ]"
+  :correct="1"
+  explanation="2 599 288 − 2 511 735 = 87 553, one byte per line: the 0d of CRLF, which > writes on Windows. The rows and the mean are the same, the bytes and so the checksums are not. The README names such a file by its lines and its mean, and names by checksum only files whose bytes are the same everywhere."
 />
 
 ---
@@ -3947,45 +2718,13 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Two folders on PATH hold a program named python: C:\Python312 is listed before C:\Python314. The terminal types python --version. Which Python answers?"
+  question="rebuild.ps1 has no stop lines. Its line 3 runs python and fails; line 4 works. What does `$?` print after the script?"
   :options="[
-    'Python 3.14, because the newer version wins',
-    'Python 3.12, because the shell stops at the first folder that holds the name',
-    'Both print a line, one after the other',
-    'Neither: two programs of one name on PATH is an error'
+    'False, because line 3 failed',
+    'True, because the script ran on and its last line worked',
+    'Nothing: PowerShell asks first whether to go on',
+    'Two values, one for each line'
   ]"
   :correct="1"
-  explanation="The shell goes through PATH in order and runs the first program of that name it finds. A newer version further down the list is never reached. That is why conda puts the folder of the active environment first, and why a stand-in python.exe in a folder listed earlier answers in its place."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A colleague receives the project folder with environment.yml, which lists python=3.14 and numpy=2.5.4. Which lines give them the same environment?"
-  :options="[
-    '<code>conda install numpy</code> in base, nothing else',
-    'Copy the folder miniforge3/envs/weather from your laptop into theirs',
-    '<code>conda env create -f environment.yml</code>, then <code>conda activate weather</code>',
-    'Open environment.yml in VS Code: the packages install themselves'
-  ]"
-  :correct="2"
-  explanation="An environment is made on the laptop it runs on, from the file. conda env create reads the channel and the packages, and numpy=2.5.4 pins the version, so 2.5.4 arrives and not the newest one. A copied environment folder holds paths of the other laptop, and base is shared by every project."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A zsh script without `set -e` has three lines. Line 2 fails, line 3 works. What does `echo $?` print after the script?"
-  :options="[
-    'The status of line 2, because the script stopped there',
-    '0, because line 3 ran and worked',
-    'Nothing: zsh asks first whether to go on',
-    'Two numbers, one for each command'
-  ]"
-  :correct="1"
-  explanation="Without set -e a script runs every line, and its status is the status of its last line. Line 3 worked, so the script reports 0, success, and the failure in line 2 is easy to miss. With set -e the script stops at line 2 and reports that line's status."
+  explanation="Without the stop lines a script runs every line, and the failure of line 3 only shows as its message. The last line worked, so $? is True. With $ErrorActionPreference = 'Stop' and $PSNativeCommandUseErrorActionPreference = $true the script stops at line 3 and $? is False."
 />

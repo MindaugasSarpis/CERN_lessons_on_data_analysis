@@ -87,7 +87,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-🔢 Convert numbers between **binary**, **decimal** and **hexadecimal**
+🔢 Read a number in **binary** and a byte in **hexadecimal**
 
 </div>
 
@@ -259,7 +259,7 @@ hideInToc: true
 What a computer stores, from one switch, the bit, up to the byte and the hex digits that name it.
 
 <!--
-**Say:** unary, binary, decimal, the byte, hex. Keep a brisk pace: most slides are one word or one picture.
+**Do:** keep a brisk pace: most slides of this section are one word or one picture.
 (~1 min)
 -->
 
@@ -769,82 +769,48 @@ td, th {
 </style>
 
 ---
-layout: center
-hideInToc: true
-class: text-center
----
-
-# 0x2A in Decimal
-
-<div class="powers">
-    <span>16<sup>1</sup></span> &nbsp;&nbsp;&nbsp;
-    <span>16<sup>0</sup></span>
-</div>
-
-<div class="number"> 2A</div>
-
-<div class="expansion">
-    16 × 2 &nbsp; + &nbsp; 1 × 10 = 42
-</div>
-
-<style>
-    .powers {
-        font-size: 50px;
-    }
-    .number {
-        font-size: 200px;
-    }
-    .expansion {
-        font-size: 50px;
-    }
-</style>
-
----
 hideInToc: true
 ---
 
-# From Decimal to **Binary and Hex**
+# The First Five Bytes of **`weather.csv`**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💾 **As bits and as hex**
+
+```text
+bits   0111 0100   0110 1001   0110 1101   0110 0101   0010 1100
+hex       7    4      6    9      6    D      6    5      2    C
+```
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## ➗ **Decimal to binary: divide by 2**
+## ✂️ **Four bits, one hex digit**
 
-```text
-37 ÷ 2 = 18   remainder 1
-18 ÷ 2 =  9   remainder 0
- 9 ÷ 2 =  4   remainder 1
- 4 ÷ 2 =  2   remainder 0
- 2 ÷ 2 =  1   remainder 0
- 1 ÷ 2 =  0   remainder 1
-```
-
-Read the remainders from the bottom up: `100101`. Check: 32 + 4 + 1 = 37.
+Each group of four bits is one row of the table: `0010` is 2, `1100` is C. A byte is always two hex digits.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-accent card-glass pad-compact">
 
-## 🧩 **Binary to hex: groups of four**
+## 🧮 **The last byte in decimal**
 
-```text
-37  =    10 0101
-    =  0010 0101     pad to full groups
-    =     2    5
-    =  0x25
-```
+`0x2C` = 2 × 16 + 12 = **44**
 
-One hex digit is exactly four bits, so a byte is always two hex digits. Check: 2 × 16 + 5 = 37.
+The 40 bits, written in hex: `74 69 6D 65 2C`.
 
 </div>
 
 </div>
 
 <!--
-**Do:** work 37 on the board.
-**Ask:** the room converts 100 on paper. Answers: `1100100` and `0x64`.
-**Say:** both are algorithms: a fixed list of steps that ends, with the same result whoever carries it out.
+**Say:** nobody reads 40 bits. Ten hex digits are the same five bytes, and every hex view of a file writes bytes this way. `0x` in front marks a number as hex.
+**Ask:** which hex pair is `0110 1001`? `69`.
+**If asked:** the five bytes are the characters `t`, `i`, `m`, `e` and the comma, the start of the header `time,temp_c,…`; the ASCII table gives each one its number.
 (~3 min)
 -->
 
@@ -858,7 +824,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-🔢 **Bytes**: one byte is two hex digits, `00` to `FF`
+🔢 **Bytes of a file**: `74 69 6D 65 2C`, the first five of `weather.csv`
 
 </div>
 
@@ -870,21 +836,20 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact">
 
-💾 **Memory addresses**: `0x7FFE5A3C`
+🔑 **Checksums**: a SHA-256 hash is 32 bytes, 64 hex digits
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-🔬 **Hexdumps**: every byte of a file
+💾 **Memory addresses**: `0x7FFE5A3C`
 
 </div>
 
 </div>
 
 <!--
-**Say:** hex is short binary: four bits per digit, nothing else.
-**Ask:** what is `FF` in decimal? 15 × 16 + 15 = 255.
+**Ask:** what is `FF` in decimal? 15 × 16 + 15 = 255, the largest value of a byte.
 (~1 min)
 -->
 
@@ -898,7 +863,6 @@ hideInToc: true
 Numbers are bits, so arithmetic and logic are operations on 0 and 1. A processor runs them billions of times a second.
 
 <!--
-**Say:** binary addition, three logic gates, then the cycle a processor repeats.
 (~1 min)
 -->
 
@@ -909,24 +873,24 @@ class: text-size-8
 ---
 
 $$
-\begin{array}{rccccc l}
-{\scriptstyle\text{carries}} & {\scriptstyle 1} & {\scriptstyle 1} & {\scriptstyle 1} & & & \\
-& & 1 & 0 & 1 & 1 & (11 \text{ in decimal}) \\
-+ & & 0 & 1 & 1 & 0 & (\phantom{0}6 \text{ in decimal}) \\
+\begin{array}{rcccc l}
+{\scriptstyle\text{carries}} & {\scriptstyle 1} & {\scriptstyle 1} & {\scriptstyle 1} & & \\
+& 0 & 1 & 1 & 1 & (7 \text{ in decimal}) \\
++ & 0 & 0 & 0 & 1 & (1 \text{ in decimal}) \\
 \hline
-& 1 & 0 & 0 & 0 & 1 & (17 \text{ in decimal})
+& 1 & 0 & 0 & 0 & (8 \text{ in decimal})
 \end{array}
 $$
 
 <div class="note-text mt-md text-center">
 
-The only rule: <strong>1 + 1 = 10</strong>. Write 0, carry 1, as 7 + 5 in decimal writes 2 and carries 1.
+An hour count steps from 7 to 8. The only rule: <strong>1 + 1 = 10</strong>, write 0 and carry 1. The carry runs through three columns, as 999&nbsp;+&nbsp;1 does in decimal.
 
 </div>
 
 <!--
-**Do:** work it column by column from the right: 1 + 0 = 1; 1 + 1 = 0, carry 1; 0 + 1 + 1 = 0, carry 1; 1 + 0 + 1 = 0, carry 1; the last carry is the fifth bit.
-**Say:** the same algorithm as school addition, with two symbols instead of ten.
+**Do:** work it from the right: 1 + 1 is 0, carry 1; 1 + 1 is 0, carry 1, twice more; 0 + 1 is 1.
+**Say:** a counter adds 1 this way. From the first row of the hourly log to the last, the hour count goes up by 1 87 671 times.
 (~2 min)
 -->
 
@@ -986,32 +950,8 @@ class: text-center
 </div>
 
 <!--
-**Say:** a gate takes bits in and gives one bit out. AND gives 1 only when both inputs are 1, OR when at least one is, NOT turns a bit over. Addition is built from such gates.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Bitwise **Operations**
-
-<div class="mt-sm">
-
-```py {monaco-run} {autorun:false}
-a = 0b1100  # 12 in decimal
-b = 0b1010  # 10 in decimal
-
-print(f"a & b = {a & b:04b}")  # 1000 (8)
-print(f"a | b = {a | b:04b}")  # 1110 (14)
-print(f"~a = {~a & 0b1111:04b}")  # 0011 (3)
-```
-
-</div>
-
-<!--
-**Ask:** predict each line from the tables of the last slide, bit by bit, then press ▶.
-**If asked:** compression and encryption are built from such operations.
+**Say:** a gate takes bits in and gives one bit out. AND gives 1 only when both inputs are 1, OR when at least one is, NOT turns a bit over.
+**If asked:** addition is built from such gates. In one column the carry is A AND B, and the written bit is 1 when exactly one of A and B is 1.
 (~2 min)
 -->
 
@@ -1045,12 +985,13 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-Finding the largest number in `[7, 2, 9, 4]` is a compare and a jump, repeated. An algorithm becomes instructions, and instructions are numbers.
+The mean of `temp_c` is a loop of such instructions: load a value, compare it with −999, add it and count it, jump back. 87 672 times, then one division: **7.16**.
 
 </div>
 
 <!--
 **Say:** fetch, decode, execute, billions of times a second. Software is data that the processor obeys.
+**If asked:** 87 552 values are added and counted; the compare skips the 120 marked −999.
 (~2 min)
 -->
 
@@ -1092,7 +1033,6 @@ hideInToc: true
 A byte holds 256 values. More bits give more range and precision, and when the bits run out, a value wraps around or is rounded.
 
 <!--
-**Say:** two surprises in this section: an integer that wraps around without an error, and 0.1 + 0.2 that is not 0.3.
 (~1 min)
 -->
 
@@ -1249,7 +1189,7 @@ hideInToc: true
 
 <div class="text-center text-4xl my-6">
 
-$N = s \times m \times 10^{e} \qquad\qquad {-6.022} \times 10^{23}$
+$N = s \times m \times 10^{e} \qquad\qquad -16.3 = {-1.63} \times 10^{1}$
 
 </div>
 
@@ -1263,13 +1203,13 @@ $N = s \times m \times 10^{e} \qquad\qquad {-6.022} \times 10^{23}$
 
 <div class="card card-primary card-glass pad-compact">
 
-**m**, the mantissa: **6.022**, with 1 ≤ m < 10
+**m**, the mantissa: **1.63**, with 1 ≤ m < 10
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**e**, the exponent: **23**
+**e**, the exponent: **1**
 
 </div>
 
@@ -1282,7 +1222,7 @@ A **float** is this idea in base 2, in a fixed number of bits. The mantissa has 
 </div>
 
 <!--
-**Say:** a sign, significant digits, and a power that sets the scale.
+**Say:** −16.3 °C is the coldest hour of the station's log. A sign, significant digits, and a power that sets the scale.
 (~2 min)
 -->
 
@@ -1333,7 +1273,7 @@ the digits after the point of **1.m**; the leading 1 is not stored
 </div>
 
 <!--
-**Say:** the bias lets the exponent be negative without a sign bit of its own: 2 to the power -3 is stored as 124.
+**Say:** the bias lets the exponent be negative without a sign bit of its own: 2 to the power 4 is stored as 4 + 127 = 131, and 2 to the power −3 as 124.
 (~2 min)
 -->
 
@@ -1341,107 +1281,60 @@ the digits after the point of **1.m**; the leading 1 is not stored
 hideInToc: true
 ---
 
-# Worked Example: **5.75 as float32**
-
-<div class="text-center text-3xl my-4">
-
-  $(-1)^{0} \times 1.m \times 2^{e - b}$
-
-</div>
+# −16.3 as a **float32**
 
 <div class="card card-primary card-glass pad-tight mt-sm">
 
-- 5 = 101₂ and 0.75 = 0.5 + 0.25 = 0.11₂, so 5.75 = 101.11₂
-- In scientific notation: $1.0111_2 \times 2^2$
-- **s** = 0 (positive)
-- **e** = 2, stored as e + b = 2 + 127 = 129 = 10000001₂
-- **m** = 01110000000000000000000, the digits after the point, filled to 23
+- **s** = 1: the number is negative
+- 16 ≤ 16.3 < 32, so 16.3 = 1.01875 × 2⁴: **e** = 4, stored as 4 + 127 = 131 = `10000011`
+- **m**: the digits of 1.01875 after the point, in binary, cut at 23: `00000100110011001100110`. They never end, so the rest is rounded off
 
 </div>
 
 <div class="text-center text-3xl mt-md">
 
-`0 10000001 01110000000000000000000`
+`1 10000011 00000100110011001100110`
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+In groups of four: `1100 0001 1000 0010 0110 0110 0110 0110` = **`C1 82 66 66`**. The value stored is −16.299999237…
 
 </div>
 
 <!--
-**Do:** work it on the board: move the point two places left, so the exponent is 2.
-**Say:** sign, exponent, mantissa: 1 + 8 + 23 bits, read from left to right.
-(~2 min)
+**Do:** point at the three parts of the bit row: 1 bit, 8 bits, 23 bits.
+**Say:** 32 bits are four bytes, and in hex they are eight digits. The rounding is in the last digits: −16.3 cannot be stored exactly.
+**If asked:** the binary digits of a fraction come from doubling it and keeping the whole part each time: 0.01875, 0.0375, 0.075, 0.15, 0.3, 0.6, 1.2, … The stored value is exactly −16.299999237060546875.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Floating-Point **Rounding**
+# The Sum of the Nine Daily **Means**
 
-<div class="card card-warning card-glass pad-compact mt-md">
-
-## ⚠️ **Not every decimal is exact in binary**
+<div class="mt-sm">
 
 ```py {monaco-run} {autorun:false}
-print(0.1 + 0.2)            # 0.30000000000000004
-print(0.1 + 0.2 == 0.3)     # False
-
-import math                 # compare with a tolerance
-print(math.isclose(0.1 + 0.2, 0.3))  # True
+total = 6.3 + 5.0 + 5.6 + 7.0 + 9.4 + 10.4 + 9.2 + 9.0 + 9.8
+print(total)          # 71.69999999999999
+print(total == 71.7)  # False
+import math           # compare with a tolerance
+print(math.isclose(total, 71.7))  # True
+print(f"{9.4:.20f}")  # 9.40000000000000035527
 ```
 
 </div>
 
-<div class="note-text mt-sm">0.1 has no end in binary, as 1/3 has none in decimal. A finite number of bits means rounding.</div>
+<div class="note-text mt-sm">9.4 has no end in binary, as 1/3 has none in decimal. Each stored value is rounded, and the rounding errors add up.</div>
 
 <!--
-**Ask:** predict the first two lines before pressing ▶.
+**Ask:** by hand, the nine temperatures of `daily.csv` add up to 71.7. Predict the first two lines, then press ▶.
 **Say:** two measured numbers are compared with a tolerance, never with ==.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Why 0.1 Is **Not Exact**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✖️ **A fraction to binary: multiply by 2**
-
-```text
-0.1 × 2 = 0.2   → 0
-0.2 × 2 = 0.4   → 0
-0.4 × 2 = 0.8   → 0
-0.8 × 2 = 1.6   → 1   keep 0.6
-0.6 × 2 = 1.2   → 1   keep 0.2
-0.2 × 2 = 0.4   → 0   and it repeats
-```
-
-0.1 = 0.000110011001100…₂, without end.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ✂️ **The computer cuts it off**
-
-- A float keeps 24 or 53 binary digits and rounds the rest
-- The number stored for `0.1` is 0.1000000000000000055…
-- 0.5, 0.25 and 0.375 are exact: sums of powers of 2
-- 0.1, 0.2 and 0.3 are not, and their errors do not cancel
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">Decimal has the same problem with 1/3 = 0.333…. Which fractions are exact depends on the base, not on the computer.</div>
-
-<!--
-**Do:** work the first four lines on the board.
-**Say:** the stored 0.1 is 0.1000000000000000055511151231257827, the nearest float64.
+**If asked:** the last line prints 20 decimals of the float64 stored for 9.4. Python's `sum()` adds more carefully since version 3.12 and gives 71.7 here; the `+` of the first line is what a plain loop does.
 (~3 min)
 -->
 
@@ -1493,57 +1386,31 @@ hideInToc: true
 hideInToc: true
 ---
 
-# The Float Stored for **0.1**
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-## 🧪 **Predict each line, then press ▶**
-
-```py {monaco-run} {autorun:false}
-print(0.1 + 0.2)
-print(0.1 + 0.2 == 0.3)
-print(f"{0.1:.20f}")
-```
-
-</div>
-
-<div class="note-text mt-sm">The third line prints 20 decimals of the number really stored for <code>0.1</code>.</div>
-
-<!--
-**Ask:** predictions from three students before pressing ▶. The third line prints 0.10000000000000000555.
-**Say:** this is not a bug. Every computer stores decimals this way.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
 # The Type of a **Value**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-🔢 **Integer**, `int`: `42`, `-7`. Fixed width in arrays and files
+🔢 **Integer**, `int`: `87672`, the rows of `weather.csv`. Fixed width in arrays and files
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-📐 **Float**, `float`: `3.14`, `6.022e23`. Rounded to a fixed number of digits
+📐 **Float**, `float`: `-16.3`, `7.16`. Rounded to a fixed number of digits
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-🔤 **String**, `str`: `"Vilnius"`, `"α"`. Characters, stored by an encoding
+🔤 **String**, `str`: `"2016-01-01T00:00"`, `"Užupis"`. Characters, stored by an encoding
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ **Boolean**, `bool`: `True` or `False`. One yes-or-no answer
+✅ **Boolean**, `bool`: `True` or `False`. One yes-or-no answer: is this value −999?
 
 </div>
 
@@ -1614,8 +1481,8 @@ td:nth-child(odd) {
 <!--
 **Say:** a text sort compares the first byte of each line, and looks further only on a tie. So the nine temperatures of `daily.csv`, sorted as text, start with 10.4.
 **Ask:** where does `9.8` go? Last: `9` is 0x39.
-**Live:** a character from its code. zsh: `printf '\x48\x69\n'` prints `Hi` (0x48, 0x69); `printf '%d\n' "'A"` prints 65. PowerShell: `[char]72`, `[int][char]'A'` (65), `` "`u{48}`u{69}" `` (Hi).
-**Live:** code 7, BEL, is not printed but rung. zsh: `printf '\a'`; PowerShell: `` "`a" `` (backtick a) or `[char]7`. Terminal.app beeps; the terminal of VS Code may stay silent, so try it on the room's laptop first. `printf 'A\tB\n'` shows code 9, TAB.
+**Live:** a character from its code, in PowerShell: `` "`u{48}`u{69}" `` prints `Hi` (0x48, 0x69); `[char]65` prints `A`; `[int][char]'A'` prints 65.
+**Live:** code 7, BEL, is not printed but rung: `[char]7`, or `` "`a" `` (backtick a). The terminal of VS Code may stay silent, so try it on the room's laptop first. `` "A`tB" `` shows code 9, TAB.
 (~3 min)
 -->
 
@@ -1652,12 +1519,12 @@ Stores a code point in 1 to 4 bytes. The 128 ASCII characters keep their single 
 
 <!--
 **Say:** ASCII has 128 characters. Lithuanian letters, Greek, emoji need Unicode, and Unicode needs a way to become bytes: an encoding.
-**Live:** a file name beyond ASCII, on Windows. Before the lecture: `mkdir ~/map-demo`.
+**Live:** a file name beyond ASCII, on Windows. Before the lecture: `New-Item -ItemType Directory ~/map-demo`.
 1. Word: a blank document, press `F12` (the **Save As** box). Go to `map-demo` in your home folder.
 2. Click into **File name**, `Ctrl+A`, `Delete`. Press `Win+.` (Windows key and full stop): the emoji panel opens. Type `map`, click 🗺️ (WORLD MAP), `Esc`. Type is **Word Document (*.docx)**. **Save**.
-3. Terminal (PowerShell 7): `cd ~/map-demo`, then `ls`: `🗺️.docx`. A box instead of the symbol is only the terminal's font.
-4. From its code: `` "`u{1F5FA}" `` (the backtick is the key left of `1`) prints 🗺. In zsh: `printf '\U0001F5FA\n'`.
-5. Its bytes: `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` gives `F0 9F 97 BA EF B8 8F`. `F0 9F 97 BA` is U+1F5FA in four bytes (first byte `11110`); `EF B8 8F` is U+FE0F, an invisible "draw as emoji" code point the panel adds. One symbol, two code points, seven bytes. A Mac: `printf '\U0001F5FA' | od -An -tx1` gives `f0 9f 97 ba`.
+3. Terminal (PowerShell 7): `cd ~/map-demo`, then `dir`: `🗺️.docx`. A box instead of the symbol is only the terminal's font.
+4. From its code: `` "`u{1F5FA}" `` (the backtick is the key left of `1`) prints 🗺.
+5. Its bytes: `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` gives `F0 9F 97 BA EF B8 8F`. `F0 9F 97 BA` is U+1F5FA in four bytes (first byte `11110`); `EF B8 8F` is U+FE0F, an invisible "draw as emoji" code point the panel adds. One symbol, two code points, seven bytes.
 **If asked:** on a Mac the panel is `Ctrl+Cmd+Space`, search `world map`.
 (~4 min)
 -->
@@ -1844,7 +1711,7 @@ A program that does not expect it reads `ï»¿` before the first column name.
 <!--
 **Say:** gene names turned into dates were found in about one fifth of genomics papers with gene lists (Ziemann et al., 2016).
 **If asked:** Python reads a file with a BOM with `encoding="utf-8-sig"`.
-**Live:** a CSV through Excel, on Windows. Before the lecture: `mkdir ~/excel-demo`; in VS Code **File** > **New Text File**, paste the two lines below, set `LF` and `UTF-8` in the Status Bar, save as `excel_test.csv` in `excel-demo`. In the terminal there: `cp excel_test.csv excel_before.csv`.
+**Live:** a CSV through Excel, on Windows. Before the lecture: `New-Item -ItemType Directory ~/excel-demo`; in VS Code **File** > **New Text File**, paste the two lines below, set `LF` and `UTF-8` in the Status Bar, save as `excel_test.csv` in `excel-demo`. In the terminal there: `Copy-Item excel_test.csv excel_before.csv`.
 `nr,station,date,reading,place`
 `007,SEPT2,1-2,12345678901234567,Užupis`
 1. In File Explorer, double-click `excel_test.csv` (or right-click, **Open with** > **Excel**). Not **Data** > **From Text/CSV**: that dialog lets you choose types and encoding, which is the repair.
@@ -1852,7 +1719,7 @@ A program that does not expect it reads `ï»¿` before the first column name.
 3. Point at row 2: `7` (zeros gone), dates for `SEPT2` and `1-2`, `1.23457E+16` (click it: the formula bar shows `12345678901234500`, the last two digits gone), `UÅ¾upis`.
 4. Click the `UÅ¾upis` cell and type `Užupis`, as anyone would. `Ctrl+S`; if a box warns about the CSV format, **Keep Current Format** (or **Yes**). Close Excel, **Don't Save** if it asks again.
 5. Terminal: `Get-Content excel_before.csv`, then `Get-Content excel_test.csv`: `7`, the dates, `1.23457E+16`, and `U�upis`. `Format-Hex excel_test.csv`: `0D 0A` at each line end, and `ž` as one byte, `9E` (English Windows) or `FE` (Lithuanian), no longer UTF-8.
-Run it once on the lecture laptop: Excel's version and region change the details, and that run is the one to show.
+**Do:** run it once on the lecture laptop: Excel's version and region change the details, and that run is the one to show.
 (~6 min)
 -->
 
@@ -1866,7 +1733,6 @@ hideInToc: true
 A file is a named sequence of bytes: a size, an order for the bytes of one number, and first bytes that say how to read the rest.
 
 <!--
-**Say:** sizes, byte order, the first bytes of a file, then the hexdump that names every byte of `daily.csv`.
 (~1 min)
 -->
 
@@ -1907,7 +1773,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-A number of four bytes, `0x12345678`, can be stored with either end first.
+The float32 −16.3 is four bytes, `C1 82 66 66`. A file can store them with either end first.
 
 </div>
 
@@ -1919,7 +1785,7 @@ A number of four bytes, `0x12345678`, can be stored with either end first.
 
 The most significant byte first:
 
-`12 34 56 78`
+`C1 82 66 66`
 
 Used by network protocols.
 
@@ -1931,7 +1797,7 @@ Used by network protocols.
 
 The least significant byte first:
 
-`78 56 34 12`
+`66 66 82 C1`
 
 Used by x86 and ARM processors: most laptops and phones.
 
@@ -1943,7 +1809,7 @@ Used by x86 and ARM processors: most laptops and phones.
 
 <!--
 **Say:** the names come from Gulliver's Travels: which end of an egg to open.
-**If asked:** NumPy writes the byte order into the type of an array.
+**If asked:** `66 66 82 C1` read in the wrong order is a float32 near 2.7 × 10²³. NumPy writes the byte order into the type of an array.
 (~2 min)
 -->
 
@@ -2020,9 +1886,9 @@ hideInToc: true
 <div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
-daily.csv, the first 32 of 148 bytes
-00000000  64 61 74 65 2c 74 65 6d  70 5f 63 0a 32 30 32 35  |date,temp_c.2025|
-00000010  2d 31 30 2d 30 31 2c 36  2e 33 0a 32 30 32 35 2d  |-10-01,6.3.2025-|
+          Offset Bytes                                           Ascii
+0000000000000000 64 61 74 65 2C 74 65 6D 70 5F 63 0A 32 30 32 35 date,temp_c�2025
+0000000000000010 2D 31 30 2D 30 31 2C 36 2E 33 0A 32 30 32 35 2D -10-01,6.3�2025-
 ```
 
 </div>
@@ -2035,7 +1901,7 @@ daily.csv, the first 32 of 148 bytes
 
 - Left: the **offset**, the number of the first byte, in hex
 - Middle: 16 bytes as hex pairs
-- Right: the same bytes as ASCII, `.` for a byte that is not a printable character
+- Right: the same bytes as ASCII, `�` for a byte that is not a printable character
 
 </div>
 
@@ -2046,19 +1912,19 @@ daily.csv, the first 32 of 148 bytes
 | Bytes | Count |
 | --- | --- |
 | digits, `30` to `39` | 91 |
-| hyphens, `2d` | 18 |
-| commas, `2c` | 10 |
-| points, `2e` | 9 |
+| hyphens, `2D` | 18 |
+| commas, `2C` | 10 |
+| points, `2E` | 9 |
 | letters and `_` | 10 |
-| line breaks, `0a` | 10 |
+| line breaks, `0A` | 10 |
 
 </div>
 
 </div>
 
 <!--
-**Do:** read the first line byte by byte with the ASCII table: 64 is d, 61 is a, 2c is the comma.
-**Say:** 91 + 18 + 10 + 9 + 10 + 10 = 148. The ten bytes nobody sees in the editor are the line breaks, `0a`. No `EF BB BF` at offset 0, so no BOM.
+**Do:** read the first line byte by byte with the ASCII table: 64 is d, 61 is a, 2C is the comma. These are the first 32 of the 148 bytes of `daily.csv`.
+**Say:** 91 + 18 + 10 + 9 + 10 + 10 = 148. The ten bytes nobody sees in the editor are the line breaks, `0A`. No `EF BB BF` at offset 0, so no BOM.
 (~3 min)
 -->
 
@@ -2103,7 +1969,7 @@ A row of the station's hourly log, `2016-01-01T00:00,-4.4,93,2.5`, is 29 bytes a
 </div>
 
 <!--
-**Say:** read the text bytes with the ASCII table: 2D is the minus sign, 2E the point. The float32 bytes are sign, exponent and mantissa, lowest byte first.
+**Say:** read the text bytes with the ASCII table: 2D is the minus sign, 2E the point. The float32 bytes are `C1 82 66 66` of the worked example, stored lowest byte first.
 **If asked:** 2 515 215 bytes for the text file against 87 672 × 16 = 1 402 752: a factor of 1.8. Text costs space and is read by everything; binary is compact and needs its description.
 (~2 min)
 -->
@@ -2151,10 +2017,10 @@ hideInToc: true
 
 # Files from the **Terminal**
 
-The Hex Editor showed the bytes of one file by clicks. A terminal reaches files and their bytes by typed lines, and a typed line can be written down and run again.
+A typed line reaches files and their bytes, and it can be written down and run again.
 
 <!--
-**Say:** seven commands, `pwd` to `rm`, to look around and to change folders and files, then two that measure a file. All of them work in zsh on a Mac and in both PowerShells of Windows, 5.1 and 7.
+**Say:** one shell on both systems, PowerShell 7, and the same line on a Mac and on Windows.
 (~1 min)
 -->
 
@@ -2184,17 +2050,18 @@ The program in the window. It reads a typed line, runs it, prints the answer, an
 
 <div class="card card-info card-glass pad-compact table-compact mt-md">
 
-| System | Shell | The prompt ends in | On these slides |
+| System | Shell | Program | Installed with |
 | --- | --- | --- | --- |
-| macOS | `zsh` | `%` | `% pwd` |
-| Windows | PowerShell, 5.1 built in or 7 | `>` | `PS> pwd` |
+| macOS | PowerShell 7 | `pwsh` | Homebrew: `brew install --cask powershell` |
+| Windows | PowerShell 7 | `pwsh` | winget: `winget install Microsoft.PowerShell` |
 
 </div>
 
-<div class="note-text mt-sm">The mark at the start of a line on a slide is not typed. It shows which shell the line is for.</div>
+<div class="note-text mt-sm"><code>PS&gt;</code> at the start of a line on a slide is printed by the shell, not typed.</div>
 
 <!--
-**Say:** terminal is the window, shell is the program in it. The words are often used for each other; today they are kept apart.
+**Say:** terminal is the window, shell is the program in it. The words are often used for each other; here they are kept apart.
+**If asked:** a Mac's Terminal opens zsh, and Windows has the older Windows PowerShell 5.1, the program `powershell`, built in. Every line of this section is typed in PowerShell 7.
 (~2 min)
 -->
 
@@ -2210,14 +2077,14 @@ hideInToc: true
 
 1. **File**, **Open Folder…**, the folder `weather-project`
 2. **Terminal**, **New Terminal**
-3. The Panel opens at the bottom, in the project folder. Its top right names the shell: `zsh`, `powershell` or `pwsh`
+3. The Panel opens at the bottom, in the project folder. Its top right names the shell: `pwsh`
 
 </div>
 
-<div class="note-text mt-sm">The key is <code>Ctrl+`</code> on both systems: the backtick, left of <code>1</code>. The same shells also run in the apps called Terminal on macOS and on Windows.</div>
+<div class="note-text mt-sm">The key is <code>Ctrl+`</code> on both systems: the backtick, left of <code>1</code>. The arrow beside <b>+</b> in the Panel lists the shells, PowerShell 7 among them.</div>
 
 <!--
-**If asked:** `powershell` is Windows PowerShell 5.1, `pwsh` is PowerShell 7. Both run every line of this section.
+**If asked:** if the Panel names `zsh` or `powershell`, pick PowerShell 7 from the arrow beside +. On Windows VS Code lists it as **PowerShell**, and the old one as **Windows PowerShell**.
 (~2 min)
 -->
 
@@ -2229,10 +2096,10 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-| Shell | The prompt, as it first appears |
+| System | The prompt |
 | --- | --- |
-| zsh, macOS | `smilte@MacBook-Air weather-project %` |
-| PowerShell, Windows | `PS C:\Users\smilte\Documents\weather-project>` |
+| macOS | `PS /Users/smilte/Documents/weather-project>` |
+| Windows | `PS C:\Users\smilte\Documents\weather-project>` |
 
 </div>
 
@@ -2240,33 +2107,33 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 👤 **Who**
+## 🐚 **`PS`**
 
-`smilte@MacBook-Air`: the user and the computer. zsh only
+The shell is PowerShell
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📂 **Where**
+## 📂 **The path**
 
-The folder the shell is in, the **working directory**. zsh shows its name, PowerShell its whole path
+The folder the shell is in, the **working directory**
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## ⏳ **Waiting**
+## ⏳ **`>`**
 
-`%` or `>`: the shell waits for a line
+The shell waits for a line
 
 </div>
 
 </div>
 
 <!--
-**Ask:** read the two prompts aloud, part by part: who, where, waiting.
-**Say:** every command below starts from the working directory.
+**Ask:** read the two prompts aloud, part by part.
+**Say:** a command starts from the working directory. On the slides the path is left out: `PS>`.
 (~2 min)
 -->
 
@@ -2276,38 +2143,21 @@ hideInToc: true
 
 # Where Am I: **`pwd`**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% pwd
-/Users/smilte/Documents/weather-project
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
+<div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
 PS> pwd
 
 Path
 ----
-C:\Users\smilte\Documents\weather-project
+/Users/smilte/Documents/weather-project
 ```
-
-</div>
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`pwd`, **print working directory**: the path from the top of the disk, `/` on macOS and `C:\` on Windows, down to this folder. A path from the top is **absolute**.
+`pwd`, **print working directory**, is a short name of `Get-Location`. The path runs from the top of the disk, `/` on macOS and `C:\` on Windows, where it reads `C:\Users\smilte\Documents\weather-project`. A path from the top is **absolute**.
 
 </div>
 
@@ -2321,51 +2171,29 @@ C:\Users\smilte\Documents\weather-project
 hideInToc: true
 ---
 
-# What Is Here: **`ls`**
+# What Is Here: **`dir`**
 
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
+<div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
-% ls
-README.md  data  results  scripts
+PS> dir -Name
+data
+results
+scripts
+README.md
 ```
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-info card-glass pad-compact mt-md">
 
-`ls` lists the working directory. zsh prints the names. PowerShell prints a table: `d` marks a folder, **Length** is a size in bytes.
-
-</div>
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> ls
-
-    Directory: C:\Users\smilte\Documents\weather-project
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
-d----          2026-10-13    10:12                data
-d----          2026-10-13    10:12                results
-d----          2026-10-13    10:12                scripts
--a---          2026-10-13    10:12            688 README.md
-```
+`dir` is a short name of `Get-ChildItem`: it lists the working directory. `-Name` keeps only the names. `dir` alone prints a table with each file's size and date.
 
 </div>
 
 <!--
-**Say:** the same four names as in the Side Bar of VS Code.
-**If asked:** the date column of PowerShell follows the laptop's language settings.
+**Say:** the same four names as in the Side Bar of VS Code. Folders come first.
+**If asked:** on a Mac, `ls` in PowerShell runs the Mac's own `ls` program, with other options and output. `dir` is the same on both systems.
 (~2 min)
 -->
 
@@ -2375,36 +2203,24 @@ hideInToc: true
 
 # Change Folder: **`cd`**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="card card-primary card-glass pad-compact mt-md">
 
-## 🍎 **macOS · zsh**, the whole prompt shown
+## 📂 **The whole prompt shown**
 
 ```text
-smilte@MacBook-Air weather-project % cd data
-smilte@MacBook-Air data % cd processed
-smilte@MacBook-Air processed % cd ../..
-smilte@MacBook-Air weather-project %
+PS /Users/smilte/Documents/weather-project> cd data
+PS /Users/smilte/Documents/weather-project/data> cd processed
+PS /Users/smilte/Documents/weather-project/data/processed> cd ../..
+PS /Users/smilte/Documents/weather-project>
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-## 🪟 **Windows · PowerShell**, the whole prompt shown
-
-```text
-PS C:\Users\smilte\Documents\weather-project> cd data
-PS C:\Users\smilte\Documents\weather-project\data> cd ..
-PS C:\Users\smilte\Documents\weather-project>
-```
-
-</div>
-
-<div class="note-text mt-sm"><code>data</code> is a <b>relative</b> path: it starts at the working directory. <code>..</code> is the folder above. The prompt shows every move.</div>
+<div class="note-text mt-md"><code>data</code> is a <b>relative</b> path: it starts at the working directory. <code>..</code> is the folder above. The prompt shows every move.</div>
 
 <!--
 **Do:** follow the prompt line by line: after each `cd` it names the new folder.
-**Say:** `cd` with no path goes to the home folder; `cd ~/Documents/weather-project` comes back from anywhere.
+**Say:** `cd` is a short name of `Set-Location`. `cd` with no path goes to the home folder; `cd ~/Documents/weather-project` comes back from anywhere.
 (~2 min)
 -->
 
@@ -2412,57 +2228,49 @@ PS C:\Users\smilte\Documents\weather-project>
 hideInToc: true
 ---
 
-# Make a Folder: **`mkdir`**
+# Make a Folder: **`New-Item`**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🍎 **macOS · zsh**
-
 ```text
-% mkdir backup
-% ls
-README.md  backup  data  results  scripts
+PS> New-Item -ItemType Directory backup
+
+    Directory: /Users/smilte/Documents/weather-project
+
+UnixMode         User Group         LastWriteTime         Size Name
+--------         ---- -----         -------------         ---- ----
+drwxr-xr-x     smilte staff      10/13/2026 10:14           64 backup
+
+PS> dir -Name
+backup
+data
+results
+scripts
+README.md
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-## 🪟 **Windows · PowerShell**
-
-```text
-PS> mkdir backup
-
-    Directory: C:\Users\smilte\Documents\weather-project
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
-d----          2026-10-13    10:14                backup
-```
-
-</div>
-
-<div class="note-text mt-sm"><code>mkdir</code>, <b>make directory</b>, is the same word in both shells.</div>
+<div class="note-text mt-sm"><code>-ItemType Directory</code> makes a folder; without it <code>New-Item</code> makes an empty file. Windows prints the columns Mode, LastWriteTime, Length and Name.</div>
 
 <!--
-**Say:** a name without spaces is one word for the shell. `my backup` would be read as two names.
-(~1 min)
+**Say:** a name without spaces is one word for the shell. `my backup` would be read as two words.
+**If asked:** on a Mac, `mkdir` in PowerShell runs the Mac's own program; on Windows it is a short name of this line. `New-Item -ItemType Directory` is the same on both.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Copy and Rename: **`cp`**, **`mv`**
+# Copy and Rename: **`Copy-Item`**, **`Move-Item`**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🍎 **macOS · zsh** · 🪟 **Windows · PowerShell**, the same three lines
-
 ```text
-% cp data/processed/daily.csv backup
-% mv backup/daily.csv backup/daily_copy.csv
-% ls backup
+PS> Copy-Item data/processed/daily.csv backup
+PS> Move-Item backup/daily.csv backup/daily_copy.csv
+PS> dir backup -Name
 daily_copy.csv
 ```
 
@@ -2472,7 +2280,7 @@ daily_copy.csv
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📋 **`cp FILE FOLDER`**
+## 📋 **`Copy-Item FILE FOLDER`**
 
 Copies the file into the folder, under the same name.
 
@@ -2480,7 +2288,7 @@ Copies the file into the folder, under the same name.
 
 <div class="card card-accent card-glass pad-compact">
 
-## ✏️ **`mv OLD NEW`**
+## ✏️ **`Move-Item OLD NEW`**
 
 Moves a file. A new name in the same folder renames it.
 
@@ -2488,10 +2296,9 @@ Moves a file. A new name in the same folder renames it.
 
 </div>
 
-<div class="note-text mt-sm">In PowerShell, <code>ls backup</code> prints the table of the last slides, with <b>Length</b> 148: the copy has every byte.</div>
-
 <!--
-**Say:** `cp` replaces a file of the same name without asking, in both shells. In PowerShell the lines start at `PS>`.
+**Say:** `Copy-Item` replaces a file of the same name without asking.
+**If asked:** `copy` and `move` are short names for both, on every system.
 (~2 min)
 -->
 
@@ -2499,28 +2306,31 @@ Moves a file. A new name in the same folder renames it.
 hideInToc: true
 ---
 
-# Delete: **`rm`**
+# Delete: **`Remove-Item`**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🍎 **macOS · zsh** · 🪟 **Windows · PowerShell**, the same two lines
-
 ```text
-% rm backup/daily_copy.csv
-% rm -r backup
+PS> Remove-Item backup/daily_copy.csv
+PS> Remove-Item backup
+PS> dir -Name
+data
+results
+scripts
+README.md
 ```
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ No Trash, no Recycle Bin, and `Ctrl+Z` brings nothing back. `rm -r` deletes a folder with everything in it. Before `rm`, check with `pwd` and `ls` where you are and what is there.
+⚠️ No Trash, no Recycle Bin, and `Ctrl+Z` brings nothing back. A folder that still holds files is removed only with `-Recurse`, with everything in it. Before `Remove-Item`, check with `pwd` and `dir` where you are and what is there.
 
 </div>
 
 <!--
-**Say:** read the name before pressing Enter: `rm` has no undo. `-r` is an option: it changes how `rm` works, here "the folder and all inside it".
-**If asked:** in PowerShell `rm` is a short name for `Remove-Item`, and `-r` for `-Recurse`.
+**Say:** read the name before pressing Enter: `Remove-Item` has no undo.
+**If asked:** without `-Recurse`, PowerShell asks before it removes a folder that is not empty. `-Recurse` is an option: it changes how the command works, here "the folder and all inside it".
 (~2 min)
 -->
 
@@ -2532,24 +2342,7 @@ hideInToc: true
 
 <div class="note-text"><code>daily_crlf.csv</code> is a copy of <code>daily.csv</code>, saved with <code>CRLF</code> from the Status Bar of VS Code.</div>
 
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% wc -c data/processed/daily.csv
-     148 data/processed/daily.csv
-% wc -c data/processed/daily_crlf.csv
-     158 data/processed/daily_crlf.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ```text
 PS> (Get-Item data/processed/daily.csv).Length
@@ -2560,17 +2353,15 @@ PS> (Get-Item data/processed/daily_crlf.csv).Length
 
 </div>
 
-</div>
-
 <div class="card card-info card-glass pad-compact mt-md">
 
-`wc -c` counts bytes. `Get-Item` fetches the file, and `.Length` is its size in bytes. 158 − 148 = 10: one `0d` more on each of the ten lines.
+`Get-Item` fetches the file, and `.Length` is its size in bytes. 158 − 148 = 10: one `0D` more on each of the ten lines.
 
 </div>
 
 <!--
 **Say:** the size is exact to the byte, unlike KB in a file manager.
-**If asked:** the copy is `cp data/processed/daily.csv data/processed/daily_crlf.csv`, then `LF` to `CRLF` in the Status Bar of the copy, and save.
+**If asked:** the copy is `Copy-Item data/processed/daily.csv data/processed/daily_crlf.csv`, then `LF` to `CRLF` in the Status Bar of the copy, and save.
 (~2 min)
 -->
 
@@ -2582,37 +2373,29 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-## 🍎 **macOS · zsh**, the first two and the last lines
-
-```text
-% hexdump -C data/processed/daily.csv
-00000000  64 61 74 65 2c 74 65 6d  70 5f 63 0a 32 30 32 35  |date,temp_c.2025|
-00000010  2d 31 30 2d 30 31 2c 36  2e 33 0a 32 30 32 35 2d  |-10-01,6.3.2025-|
-00000090  39 2e 38 0a                                       |9.8.|
-00000094
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-## 🪟 **Windows · PowerShell**, the first two lines
+## 📄 **The first two and the last line**
 
 ```text
 PS> Format-Hex data/processed/daily.csv
+
+   Label: /Users/smilte/Documents/weather-project/data/processed/daily.csv
+
           Offset Bytes                                           Ascii
+                 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+          ------ ----------------------------------------------- -----
 0000000000000000 64 61 74 65 2C 74 65 6D 70 5F 63 0A 32 30 32 35 date,temp_c�2025
 0000000000000010 2D 31 30 2D 30 31 2C 36 2E 33 0A 32 30 32 35 2D -10-01,6.3�2025-
+0000000000000090 39 2E 38 0A                                     9.8�
 ```
 
 </div>
 
-<div class="note-text mt-sm"><code>hexdump</code> ends on the size in hex: 0x94 = 9 × 16 + 4 = 148.</div>
+<div class="note-text mt-sm">The last line starts at offset 0x90 = 9 × 16 = 144 and holds 4 bytes: 148 in all.</div>
 
 <!--
-**Do:** find the first `0a` with the room.
-**Say:** a `hexdump` line has 16 bytes; 148 bytes take 9 full lines and 4 bytes.
-**If asked:** Format-Hex also prints a Label line with the path and two header lines; Windows PowerShell 5.1 prints the same bytes in an older layout.
+**Do:** find the first `0A` with the room.
+**Say:** a line of `Format-Hex` holds 16 bytes; 148 bytes take 9 full lines and 4 bytes.
+**If asked:** Windows PowerShell 5.1 prints the same bytes in an older layout.
 (~2 min)
 -->
 
@@ -2626,7 +2409,6 @@ hideInToc: true
 A file can be stored in fewer bytes without losing one, and a short number computed from its bytes shows whether any of them changed.
 
 <!--
-**Say:** lossless against lossy, then a checksum by hand, then SHA-256 by command.
 (~1 min)
 -->
 
@@ -2717,45 +2499,26 @@ hideInToc: true
 
 # SHA-256, a **Hash**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🍎 **macOS · zsh**
-
-```text
-% shasum -a 256 data/processed/daily.csv
-33fe5e77…f705483d  data/processed/daily.csv
-% shasum -a 256 data/processed/daily_crlf.csv
-b68430c5…721a899e  data/processed/daily_crlf.csv
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · PowerShell**
+<div class="card card-primary card-glass pad-compact mt-md">
 
 ```text
 PS> (Get-FileHash data/processed/daily.csv).Hash
-33FE5E77…F705483D
+33FE5E77A97900B6E8F94776F266DA4D6E3C96590088D21BC9842987F705483D
 PS> (Get-FileHash data/processed/daily_crlf.csv).Hash
-B68430C5…721A899E
+B68430C5FBA80FFDA159A54FACC267B2ED15A1B971F95F94B70CAD41721A899E
 ```
-
-</div>
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-64 hex digits, 256 bits, computed from every byte. The same bytes give the same hash on every computer. Ten more bytes, the `0d`s, give a hash that differs in every digit.
+64 hex digits, 256 bits, computed from every byte. The same bytes give the same hash on every computer. Ten more bytes, the `0D`s, give a hash that differs in every digit.
 
 </div>
 
 <!--
-**Say:** the slide shortens the 64 digits to the first and last eight. Lower or upper case is the same number.
-**Ask:** two people each have a `daily.csv`. How do they know it is the same 148 bytes? Compare the first and the last eight digits.
+**Say:** `Get-FileHash` computes SHA-256 unless it is told another method.
+**Ask:** two people each have a `daily.csv`. How do they know it is the same 148 bytes? Compare the hashes, the first and the last eight digits at least.
 (~2 min)
 -->
 
@@ -2793,7 +2556,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-⌨️ **Terminal**: `pwd`, `ls`, `cd`, `mkdir`, `cp`, `mv`, `rm`, the size and the bytes of a file
+⌨️ **Terminal**: `pwd`, `dir`, `cd`, `New-Item`, `Copy-Item`, `Move-Item`, `Remove-Item`, the size and the bytes of a file
 
 </div>
 
@@ -2820,7 +2583,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Convert between **binary**, **decimal** and **hexadecimal**
+✅ Read a number in **binary** and the bytes of a file in **hex**
 
 </div>
 
@@ -2848,7 +2611,7 @@ hideInToc: true
 
 ## 🔬 **The 148 bytes of `daily.csv`**
 
-91 digits, 18 hyphens, 10 commas, 9 points, 10 letters and `_`, and 10 line breaks `0a`. Size, encoding, line ending and hash of a data file are checked before a number in it is trusted.
+91 digits, 18 hyphens, 10 commas, 9 points, 10 letters and `_`, and 10 line breaks `0A`. Size, encoding, line ending and hash of a data file are checked before a number in it is trusted.
 
 </div>
 

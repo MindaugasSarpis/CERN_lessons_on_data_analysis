@@ -571,9 +571,53 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
   of one's own, GitHub, push and pull; branch, conflict and tag optional.
   Every output from a run in PowerShell 7.6 with Git 2.56 on Linux.
 
+- **Lecture 03** (143 to 132 min): six drill slides of the numbers part
+  parked (conversions, bitwise operations, 5.75 and 0.1 as float32); hex
+  now arrives as the short way to write the first bytes of `weather.csv`,
+  binary addition is an hour count 7 + 1, and −16.3 is worked out as a
+  float32 (`C1 82 66 66`). Two's complement unchanged. The terminal section
+  is PowerShell 7 only.
+- **Lecture 02** (112 to 109 min): `weather.csv` is on the screen from
+  slide 1 and read from slide 13 (was 34); text cards became tables; the
+  CERN example is now an ATLAS open-data file (record 328) set beside
+  `weather.csv`, with its own `-999` marks counted from the real file.
+- **Lecture 01**: wording only (slogans and narration out, notes in the
+  one form).
+- **Lecture 04** (158 to 128 min): one question, "is 7.16 right?", in
+  eight steps, each section ending on a number or a file; PowerShell 7
+  only; the commands Lecture 03 taught are one recap slide; a full section
+  on programs, packages and package managers (Homebrew, `winget`, conda
+  environments, `environment.yml`); the shell-settings slides (aliases,
+  start-up files, Oh My Zsh, `conda init`) and 40 more parked; the quizzes
+  at the end.
+- **Lecture 05** (142 to 136 min): the weather project put under Git by
+  Smiltė and cloned by Tomas; one straight line from two copies of the
+  export to a tag; Mermaid diagrams of a commit's objects, the graph, the
+  three areas and merges; new VS Code screenshots; pull requests, review,
+  SSH, stash and line endings parked; the quizzes at the end.
+- **Seminars 1, 3, 4 and 6 to 16** rewritten in the layout of Seminar 5,
+  each one question about the weather project. Seminar 4 installs
+  PowerShell 7, Git and Miniforge with Homebrew or `winget` and shows
+  `Select-String` and `Get-ChildItem` in depth. Seminars 1 to 4 hand out
+  zips from the Releases page of `weather-project`
+  (`weather_seminar_files.py`); later seminars pull course commits
+  (`misc/weather_repo/files/`, `STAGE=N` in `build.sh`). The install page,
+  the overview, the nav and the paired-seminar paragraphs of the lecture
+  pages follow.
+
 **Open**
 
-- Lectures 01–05 and Seminars 1, 3, 4 and 6–16 are being reworked to these
-  decisions (this entry is completed when that work lands).
 - Not run on a Mac or Windows: VS Code's Publish Branch and sign-in
-  dialogs, the Source Control Graph, Homebrew's and `winget`'s screens.
+  dialogs, the Source Control Graph, Homebrew's and `winget`'s screens,
+  conda paths under Homebrew, timings of Seminar 15 (measured on a
+  128-core Linux node).
+- Push the course commit of each later seminar after the one before it
+  ran (`STAGE=6 bash misc/weather_repo/build.sh`, then a normal push),
+  never before Seminar 5: its page prints the seven commits.
+- Lecture 02 now uses an ATLAS file of simulated events (record 328) for
+  its CERN example: to be confirmed by the lecturer.
+- Lecture 01 says 64 h in class (16 sessions of 4 h); the schedule slide
+  lists 13 Tuesdays.
+- Lectures 06 to 16 still use the pendulum and the LHCb file, and some of
+  their pages (13) still describe venv; their seminars already use the
+  weather project. Rework each deck before its week.

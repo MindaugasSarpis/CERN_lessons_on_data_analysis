@@ -179,12 +179,11 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 9 — A Result with Its Uncertainty](../seminars/seminar_09.md) is a
-follow-along session in four parts: the mean of the mass column with its
-standard error; the histogram of the column against a Gaussian, and the
-means of 100 values against a Gaussian; g and its propagated uncertainty
-for every row of the pendulum table, their weighted mean, and a check by
-simulation; the results written into the report.
+[Seminar 9 — How Sure Is 7.16? Probability on the Weather
+Data](../seminars/seminar_09.md) works on the weather project of Lectures 1
+to 5. Every student gives the mean temperature of the weather project with
+an honest uncertainty, 7.16 ± 0.22 °C, and the probability of a frost hour
+in each month, commits the scripts and pushes them.
 
 ## Further reading
 

@@ -1,795 +1,563 @@
-# Seminar 11 — A Perceptron from an Empty File
+# Seminar 11 — Will It Freeze Tonight? A Perceptron on the Weather Data
 
 **Paired lecture:** 11 The Perceptron · **Format:** follow-along · **~120 min**
 in class
 
-**Today's goal:** every student writes a neuron from an empty file, trains
-it on 300 labelled points, and quotes its accuracy on 75 points it has not
-seen: 67 correct, 89 % ± 4 %.
+**Today's goal:** every student writes a neuron that predicts frost at
+06:00 from the temperature and humidity at 18:00 the evening before,
+trains it on 2016 to 2022, tests it on 2023 to 2025 (95.9 ± 0.6 % right),
+compares it with a one-line rule, commits and pushes.
 
-The tools are VS Code, the terminal and Python with NumPy and Matplotlib,
-all from earlier seminars, and nothing is installed today. Everything is
-typed: the room ends with a script of about 100 lines that needs NumPy and
-Matplotlib and nothing else.
+Everything is typed in VS Code: the scripts in the editor, the runs in its
+terminal (PowerShell 7, `weather` environment). Nothing is installed today.
 
 ## Run sheet
 
-One screen for the front of the room. Each line links to its section.
-
-| Clock | Section | On the projector | The room ends with |
+| Clock | Section | Typed | The room ends with |
 |--|--|--|--|
-| | **Part 1 · A neuron by hand** · 30 min | | |
-| 0:00 | [1. Get the file and look at it](#file) | `head` and `wc -l`, or `Get-Content`, on the file | The file in `data/raw/`, its three columns named |
-| 0:08 | [2. Load and plot](#plot) | `np.loadtxt` in a new `scripts/perceptron.py` | Two arrays and a picture of two clouds |
-| 0:20 | [3. A neuron with weights set by hand](#by-hand) | `predict(X, w, b)` with `w = (100, 1)`, `b = -825` | 88 % correct with a line read off the plot |
-| | **Part 2 · Rosenblatt's rule** · 25 min | | |
-| 0:30 | [4. The rule on AND](#gate) | `scripts/gate.py` beside the lecture's table | The ten updates of the lecture, reproduced |
-| 0:45 | [5. The rule on the file](#rule-on-data) | The rule on `X`, ten epochs | A rule that never stops |
-| | **Part 3 · The logistic neuron** · 45 min | | |
-| 0:55 | [6. Sigmoid and loss](#loss) | `sigmoid` and `loss` | The loss 0.6931 for zero weights |
-| 1:05 | [7. The gradient and the loop](#loop) | The loop with `eta = 0.5` | A loop that prints `nan` |
-| 1:20 | [8. Standardise the inputs](#standardise) | `Z = (X - m) / s` | The loss falling to 0.2542 |
-| 1:30 | [9. Train and test](#test) | `order[:225]` and `order[225:]` | 67 of 75 unseen points correct |
-| | **Part 4 · The result** · 20 min | | |
-| 1:40 | [10. Draw the boundary](#boundary) | `w_x = w / s`, the line on the plot | The line over the two clouds |
-| 1:50 | [11. Write it down](#report) | `results/report.md`, then the commit | Five lines and a picture in the report |
-| 1:55 | [12. Wrap up](#wrap-up) | The list of what was learned | |
+| | **Part 1 · Evenings and mornings** · 35 min | | |
+| 0:00 | [1. Open the project](#start) | `conda activate weather`, `git pull` | `(weather)` in the prompt |
+| 0:05 | [2. One row per evening](#evenings) | `scripts/frost_rule.py`, `reshape(-1, 24)` | 3646 evenings, 1229 frosts |
+| 0:20 | [3. The two clouds](#clouds) | `ax.plot(X[y == 1, 0], …)` | `results/frost_points.png` |
+| | **Part 2 · A neuron and Rosenblatt's rule** · 25 min | | |
+| 0:35 | [4. A neuron with weights set by hand](#by-hand) | `predict(X, w, b)` | 0.916 against 0.663 |
+| 0:45 | [5. Rosenblatt's rule](#rule) | the rule, ten epochs | 231 updates in every epoch |
+| | **Part 3 · The logistic neuron** · 40 min | | |
+| 1:00 | [6. Train years and test years](#split) | `scripts/frost_neuron.py`, `year <= 2022` | 2551 and 1095 evenings |
+| 1:05 | [7. Standardise the inputs](#standardise) | `Z = (X - m) / s` | m and s of the training years |
+| 1:10 | [8. The training loop](#loop) | sigmoid, loss, gradient | loss 0.6931 down to 0.1137 |
+| 1:25 | [9. Back to °C and %](#units) | `wx = w / s` | the boundary at 4.10 °C |
+| | **Part 4 · The answer** · 20 min | | |
+| 1:40 | [10. The test years, against the rule](#test) | `p > 0.5` on `Z[test]` | 0.959 ± 0.006 for both |
+| 1:50 | [11. The README, a commit, a push](#commit) | `git commit`, `git push` | the neuron on GitHub |
+| 1:55 | [12. Wrap up](#wrap-up) | | |
+| | **Optional, if the room is fast** | | |
+| — | [13. Draw the boundary](#boundary) | `ax.plot(-(bx + wx[1] * h) / wx[0], h)` | the line over the clouds |
+| — | [14. Without standardising](#raw) | `Z = X` | `nan` |
+| — | [15. Temperature alone](#one-input) | one column in `X` | 0.957 |
 
-**If time runs short:** leave out sections 5 and 9 and train on all 300
-points. Section 10 then starts from the weights of section 8, and the report
-of section 11 gives 267 of 300 points and the numbers the script prints.
-
-??? info "How to use this page"
-    This page is written for the person at the front. Students follow the
-    same page.
-
-    - **Tell the room** is the paragraph to say before the steps.
-    - The **numbered steps** are what to do on the projector. The room
-      repeats each step on their own laptops.
-    - **You should now see** closes a section. Ask for hands: "who sees
-      this?" Go on when about four in five have it. The rest get help from a
-      neighbour.
-    - **Watch for** is the usual slip in that section.
-
-    Keys are written for Windows, with macOS in brackets. The script is run
-    from the terminal of VS Code in the project folder: `zsh` on macOS,
-    PowerShell 7 on Windows, as set up in [Seminar 4](seminar_04.md). The
-    program is `python3` on macOS and `python` on Windows. Where a step
-    differs between the two, it has a tab for **macOS** and one for
-    **Windows**. **Run the script** means the same command again: `↑`, then
-    `Enter`.
-
-    Every number on this page was produced by running the step as written.
-    The data file is generated with a fixed seed and the split uses a fixed
-    seed, so every laptop prints the same numbers.
+**If time runs short:** leave out section 5 and the Task of Part 3;
+sections 10 and 11 stay.
 
 ??? info "Before the session"
-    For the room: the project folder with `data/raw/`, `scripts/`,
-    `results/` and `results/report.md`, under Git since
-    [Seminar 5](seminar_05.md). Python with NumPy, installed in
-    [Seminar 7](seminar_07.md), and Matplotlib, installed in
-    [Seminar 8](seminar_08.md). The lecture's slides *The Rule*, *The
-    Training Loop* and *Standardising the Inputs* at hand.
-
-    For you:
-
-    - The whole page done once on your own laptop, with the script kept as a
-      reference.
-    - [`perceptron_points.csv`](../data/perceptron_points.csv) on a USB
-      stick, in case the network fails.
-    - The lecture's table *AND by the Rule* ready to show beside the
-      terminal in section 4.
-
-??? info "Files for this seminar"
-    | File | What it is |
-    |--|--|
-    | [`perceptron_points.csv`](../data/perceptron_points.csv) | Section 1: 300 generated points, two inputs and a label |
-    | [`perceptron_make_points.py`](../data/perceptron_make_points.py) | The script that made the points, with its fixed seed |
+    - **Room:** `weather-project` and the `weather` environment (NumPy,
+      Matplotlib, SciPy) of Seminars 7 to 10.
+    - **You:** nothing to prepare. The data are the same in every clone, so
+      every number on this page is the number in the room. Commit ids differ.
+    - **Keys** are written for Windows, macOS in brackets.
 
 ---
 
-## Part 1 · A neuron by hand { #part-1 }
+## Part 1 · Evenings and mornings { #part-1 }
 
-**0:00 to 0:30 · sections 1 to 3**
-
-The room ends this part with the data as two arrays, a picture of them, and
-a neuron whose three numbers were read off the picture.
+**0:00 to 0:35** · Seminar 9 found P(frost at 06:00) = 0.984 when 18:00 was below 2 °C. Today a neuron learns that line.
 
 ---
 
-### 1. Get the file and look at it { #file }
+### 1. Open the project { #start }
 
-**0:00 · 8 min**
+**0:00 · 5 min** · The same repository, the same environment.
 
-**Tell the room.** The file holds 300 points. Each has two inputs, `x1` and
-`x2`, and a label, 0 or 1. The points are generated: the script that made
-them is [`perceptron_make_points.py`](../data/perceptron_make_points.py).
-The task of the session is a rule that gives the label from the two inputs.
-Before any code the file is read as text.
-
-1. Download [`perceptron_points.csv`](../data/perceptron_points.csv) and
-   drag it from **Downloads** onto the `raw` folder in the Side Bar.
-
-2. Select the file to open it. Line 1 names the columns:
+1. Open `weather-project` in VS Code, then the terminal. Switch on the
+   environment.
 
     ```text
-    x1,x2,label
+    conda activate weather
     ```
 
-3. Press `Ctrl+End` (macOS `Cmd+↓`). VS Code numbers 302 lines and the last
-   one is empty: one header line and 300 rows.
-
-4. Open the terminal and look at the same file from there. First the top:
-
-    === "macOS"
-
-        ```text
-        head -n 5 data/raw/perceptron_points.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        Get-Content -Head 5 data/raw/perceptron_points.csv
-        ```
-
-5. Then the number of lines:
-
-    === "macOS"
-
-        ```text
-        wc -l data/raw/perceptron_points.csv
-        ```
-
-    === "Windows"
-
-        ```text
-        (Get-Content data/raw/perceptron_points.csv).Count
-        ```
-
-6. Ask the room what one row is, and how large the numbers of each column
-   are. `x1` is near 5. `x2` is near 300.
-
-!!! success "You should now see"
-    In the terminal, the header with four rows:
+2. Bring in any commit from GitHub.
 
     ```text
-    x1,x2,label
-    4.37,374.2,0
-    7.42,522.4,1
-    6.43,426.7,1
-    7.98,471.3,1
+    git pull
     ```
-
-    and 301 lines. PowerShell prints the number alone, `zsh` adds the file
-    name:
 
     ```text
-         301 data/raw/perceptron_points.csv
+    Already up to date.
     ```
+
+**Check:** `(weather)` in the prompt.
 
 ---
 
-### 2. Load and plot { #plot }
+### 2. One row per evening { #evenings }
 
-**0:08 · 12 min**
+**0:05 · 15 min** · Inputs: temperature and humidity at 18:00. Label: 1 if 06:00 next morning is below 0 °C.
 
-**Tell the room.** A classifier is built on a picture of the data. The file
-is read into one array with `np.loadtxt`, the first two columns become the
-inputs `X` and the third the labels `y`. A mask picks the points of one
-class, as in the lecture on NumPy.
+1. New file `scripts/frost_rule.py`. Type and save.
 
-1. Select the `scripts` folder, then **New File**, and type:
-
-    ```text
-    perceptron.py
-    ```
-
-    The file is empty.
-
-2. Type the block and save.
-
-    ```text
+    ```python
     import numpy as np
     import matplotlib.pyplot as plt
 
-    data = np.loadtxt("data/raw/perceptron_points.csv",
-                      delimiter=",", skiprows=1)
-    X = data[:, :2]          # the two inputs, one row per point
-    y = data[:, 2]           # the label, 0 or 1
-    print(X.shape, y.shape)
-    print("class 1:", int(y.sum()), "of", len(y))
-    print("mean:", X.mean(axis=0).round(2),
-          " std:", X.std(axis=0).round(2))
+    data = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=(1, 2))
+    temp = data[:, 0].reshape(-1, 24)
+    hum = data[:, 1].reshape(-1, 24)
+    evening_t = temp[:-1, 18]      # 18:00 of each day
+    evening_h = hum[:-1, 18]
+    morning_t = temp[1:, 6]        # 06:00 of the next day
+    ok = (evening_t != -999) & (morning_t != -999)
+    X = np.column_stack([evening_t, evening_h])[ok]
+    y = (morning_t[ok] < 0).astype(int)
+    print("evenings", len(y), "frost mornings", y.sum())
+    ```
+
+    `temp[:-1, 18]` is column 18 of every day but the last; `temp[1:, 6]`
+    is column 6 of every day but the first: each evening beside the next
+    morning.
+
+2. Run it.
+
+    ```text
+    python scripts/frost_rule.py
+    ```
+
+    ```text
+    evenings 3646 frost mornings 1229
+    ```
+
+**Check:** 3646 evenings (3652 pairs, six touch the days of `-999`), 1229
+with frost the next morning.
+
+---
+
+### 3. The two clouds { #clouds }
+
+**0:20 · 10 min** · Each evening is a point; its colour is the morning.
+
+1. Add at the end, save, run.
+
+    ```python
 
     fig, ax = plt.subplots()
-    ax.plot(X[y == 0, 0], X[y == 0, 1], "o", label="class 0")
-    ax.plot(X[y == 1, 0], X[y == 1, 1], "^", label="class 1")
-    ax.set_xlabel("x1")
-    ax.set_ylabel("x2")
+    ax.plot(X[y == 0, 0], X[y == 0, 1], ".", ms=3, label="no frost")
+    ax.plot(X[y == 1, 0], X[y == 1, 1], ".", ms=3, label="frost")
+    ax.set_xlabel("temperature at 18:00 (°C)")
+    ax.set_ylabel("humidity at 18:00 (%)")
     ax.legend()
-    fig.savefig("results/perceptron_points.png", dpi=150)
+    fig.savefig("results/frost_points.png", dpi=150)
     ```
-
-3. Run it from the terminal in the project folder.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/perceptron.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/perceptron.py
-        ```
-
-4. Select `results/perceptron_points.png` in the Side Bar. Ask the room:
-   can one straight line separate the two classes?
-
-!!! success "You should now see"
-    Three lines in the terminal, and a picture of two clouds that overlap in
-    the middle:
 
     ```text
-    (300, 2) (300,)
-    class 1: 150 of 300
-    mean: [  5.06 329.43]  std: [  1.4  113.75]
+    python scripts/frost_rule.py
     ```
 
-No line separates the classes completely. The two columns are on different
-scales: `x2` is about 65 times larger than `x1`. Both facts come back later.
+2. Open `results/frost_points.png` from the Explorer.
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | `FileNotFoundError` | The terminal is not in the project folder. Run `pwd`, then `cd` to it |
-    | `ModuleNotFoundError: No module named 'matplotlib'` | Install it as in Seminar 8: `python3 -m pip install matplotlib` on macOS, `python -m pip install matplotlib` on Windows |
-    | A window with the plot opens and the script waits | There is a `plt.show()` in the file. Delete it: the picture is saved to a file |
+**Check:** frost on the left, no frost on the right, the two touching near
+4 °C at every humidity.
+
+!!! question "Task: read the plot"
+    1. What share of the mornings froze?
+    2. Where would you draw a straight line between the clouds? Does
+       humidity help?
+
+??? note "Answer"
+    1. 1229 / 3646 = 0.337.
+    2. Nearly upright, at about 4 °C. The colours change from left to right,
+       hardly from bottom to top: humidity adds little.
 
 ---
 
-### 3. A neuron with weights set by hand { #by-hand }
+## Part 2 · A neuron and Rosenblatt's rule { #part-2 }
 
-**0:20 · 10 min**
+**0:35 to 1:00** · A neuron says 1 when w · x + b > 0: a line in the plot.
 
-**Tell the room.** The neuron of the lecture is two operations: the
-weighted sum `z = w · x + b` and the step. With `X @ w` the sum is computed
-for all 300 points at once. Its weights are first set by hand: once as a
-threshold on one input, once as a line read off the plot.
+---
 
-1. Add the neuron at the end of the script.
+### 4. A neuron with weights set by hand { #by-hand }
 
-    ```text
+**0:35 · 10 min** · w = (−1, 0), b = 2 says frost when −T + 2 > 0, that is when T < 2 °C.
+
+1. Add at the end, save.
+
+    ```python
+
     def predict(X, w, b):
         return (X @ w + b > 0).astype(int)
+
+    w = np.array([-1.0, 0.0])
+    b = 2.0
+    print(f"frost if below 2 °C: {np.mean(predict(X, w, b) == y):.3f}")
+    print(f"never frost: {np.mean(y == 0):.3f}")
     ```
 
-2. A threshold on `x1` alone: class 1 if `x1 > 5`. That is `w = (1, 0)` and
-   `b = -5`. Add:
+2. Run it.
 
     ```text
-    w = np.array([1.0, 0.0])
-    b = -5.0
-    print("x1 > 5:", np.mean(predict(X, w, b) == y))
+    python scripts/frost_rule.py
     ```
-
-3. Now a line. On the plot, a line from about (4.25, 400) to (6.25, 200)
-   runs between the clouds. Work out its equation with the room on the
-   board: the slope is (200 − 400) / (6.25 − 4.25) = −100, so
-   `x2 = -100 x1 + 825`, or `100 x1 + x2 - 825 = 0`. Add:
 
     ```text
-    w = np.array([100.0, 1.0])
-    b = -825.0
-    print("a line by eye:", np.mean(predict(X, w, b) == y))
+    evenings 3646 frost mornings 1229
+    frost if below 2 °C: 0.916
+    never frost: 0.663
     ```
 
-4. Run the script.
-
-!!! success "You should now see"
-    Two more lines:
-
-    ```text
-    x1 > 5: 0.83
-    a line by eye: 0.8833333333333333
-    ```
-
-The threshold is right for 249 of the 300 points and the line for 265.
-Using both inputs gains 16 points. The rest of the session finds the three
-numbers from the data.
-
-!!! warning "Watch for"
-    `ValueError: matmul: Input operand 1 has a mismatch`. Then `w` does not
-    have two numbers, or `X` was built with `data[:, :3]`.
+**Check:** 91.6 % right; "never frost" is already 66.3 %, the number to
+beat.
 
 ---
 
-## Part 2 · Rosenblatt's rule { #part-2 }
+### 5. Rosenblatt's rule { #rule }
 
-**0:30 to 0:55 · sections 4 and 5**
+**0:45 · 10 min** · The rule of the lecture: after each wrong answer, add η (target − ŷ) x to w.
 
-The rule of the lecture is written once on a problem with a known answer,
-and then let loose on the file.
+1. Add at the end, save.
 
----
+    ```python
 
-### 4. The rule on AND { #gate }
-
-**0:30 · 15 min**
-
-**Tell the room.** A new piece of code is tested on a case where the answer
-is known. The lecture worked the AND gate through by hand: ten updates, and
-at the end `w = (2, 1)`, `b = -2`. The code has to print the same.
-
-1. Select the `scripts` folder, then **New File**, and type:
-
-    ```text
-    gate.py
-    ```
-
-2. Type the block. The two lines after `y_hat` are the rule: the weights
-   change by the error times the input.
-
-    ```text
-    import numpy as np
-
-    X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-    y = np.array([0, 0, 0, 1])       # AND
-    w = np.zeros(2)
-    b = 0.0
-
-    for epoch in range(1, 7):
-        updates = 0
-        for x, target in zip(X, y):
-            y_hat = int(w @ x + b > 0)
-            w = w + (target - y_hat) * x
-            b = b + (target - y_hat)
-            updates = updates + int(y_hat != target)
-        print("epoch", epoch, " w", w, " b", b, " updates", updates)
-    ```
-
-3. Run it.
-
-    === "macOS"
-
-        ```text
-        python3 scripts/gate.py
-        ```
-
-    === "Windows"
-
-        ```text
-        python scripts/gate.py
-        ```
-
-    Compare each line with the table of the lecture: the weights after
-    steps 4, 8, 12, 16, 20 and 24.
-
-4. Change the targets to OR and run again:
-
-    ```text
-    y = np.array([0, 1, 1, 1])
-    ```
-
-    Ask the room to check the last line by hand for all four inputs.
-
-!!! success "You should now see"
-    For AND:
-
-    ```text
-    epoch 1  w [1. 1.]  b 1.0  updates 1
-    epoch 2  w [2. 1.]  b 0.0  updates 3
-    epoch 3  w [2. 1.]  b -1.0  updates 3
-    epoch 4  w [2. 2.]  b -1.0  updates 2
-    epoch 5  w [2. 1.]  b -2.0  updates 1
-    epoch 6  w [2. 1.]  b -2.0  updates 0
-    ```
-
-    For OR the updates are 1, 2, 1 and then 0, and the weights end at
-    `w [1. 1.]  b 0.0`.
-
-An epoch without an update means that every point is right, and the weights
-stay as they are.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | The updates never reach 0 | The comparison is `>= 0` in place of `> 0`, or `b` is not updated |
-    | `IndentationError` | The four lines under `for x, target` are indented by eight spaces, the `print` by four |
-
----
-
-### 5. The rule on the file { #rule-on-data }
-
-**0:45 · 10 min**
-
-**Tell the room.** The convergence theorem holds for data that a line can
-separate. The plot showed that the 300 points are not of that kind. The
-room runs the rule on them and sees what the theorem does not cover.
-
-1. In `perceptron.py`, add at the end:
-
-    ```text
-    w = np.zeros(2)
-    b = 0.0
+    w, b, eta = np.zeros(2), 0.0, 1.0
     for epoch in range(1, 11):
         updates = 0
         for x, target in zip(X, y):
             y_hat = int(w @ x + b > 0)
-            w = w + (target - y_hat) * x
-            b = b + (target - y_hat)
-            updates = updates + int(y_hat != target)
-        print("epoch", epoch, "updates", updates,
-              "correct", np.mean(predict(X, w, b) == y))
+            w = w + eta * (target - y_hat) * x
+            b = b + eta * (target - y_hat)
+            updates += int(y_hat != target)
+        print("epoch", epoch, "updates", updates)
+    print("w", w, "b", b)
+    print(f"correct: {np.mean(predict(X, w, b) == y):.3f}")
     ```
 
-2. Run the script.
-
-3. Ask the room for the smallest number of updates in an epoch, and for
-   the share of correct points.
-
-4. Select the eleven lines of this step and press `Ctrl+/` (macOS `Cmd+/`).
-   Each line gets a `#` in front and is no longer run.
-
-!!! success "You should now see"
-    Ten lines of this kind. The first two are:
+2. Run it.
 
     ```text
-    epoch 1 updates 143 correct 0.5
-    epoch 2 updates 142 correct 0.5
+    python scripts/frost_rule.py
     ```
 
-Every epoch has between 135 and 147 updates, and after every epoch half of
-the points are right: the neuron gives all 300 points the same label. The
-rule does not settle, for two reasons. The classes overlap, so some point
-is always wrong. And one update adds a whole point to the weights: with
-`x2` near 300 a single update throws the line across the entire cloud.
+    The new lines:
+
+    ```text
+    epoch 1 updates 235
+    epoch 2 updates 231
+    epoch 3 updates 231
+    epoch 4 updates 231
+    epoch 5 updates 231
+    epoch 6 updates 231
+    epoch 7 updates 232
+    epoch 8 updates 233
+    epoch 9 updates 232
+    epoch 10 updates 231
+    w [-40.5   9. ] b -10.0
+    correct: 0.671
+    ```
+
+**Check:** the updates never reach 0. The clouds overlap, so no line
+separates them, and the convergence theorem does not apply. The last w is
+wherever the rule stopped: 67.1 %.
+
+!!! question "Task: the best threshold"
+    Try the rule "frost if below c °C" for c = 0.0, 0.1, … 5.9 on all
+    evenings. Which c is best, and how often is it right?
+
+??? note "Answer"
+    Add at the end of `frost_rule.py`:
+
+    ```python
+
+    cs = np.arange(0, 6, 0.1)
+    accs = [np.mean((X[:, 0] < c) == y) for c in cs]
+    k = np.argmax(accs)
+    print(f"best: below {cs[k]:.1f} °C, {accs[k]:.3f} correct")
+    ```
+
+    ```text
+    best: below 3.8 °C, 0.957 correct
+    ```
+
+    The threshold was chosen on the same evenings it is judged on.
+    Section 10 does it fairly.
 
 ---
 
 ## Part 3 · The logistic neuron { #part-3 }
 
-**0:55 to 1:40 · sections 6 to 9**
-
-The step is replaced by the sigmoid and the rule by gradient descent on the
-cross-entropy. Each piece is typed as a function and checked on a number
-known from the lecture before the next one is added.
+**1:00 to 1:40** · The step becomes a sigmoid, the error a loss, the rule gradient descent.
 
 ---
 
-### 6. Sigmoid and loss { #loss }
+### 6. Train years and test years { #split }
 
-**0:55 · 10 min**
+**1:00 · 5 min** · The neuron learns from 2016 to 2022; 2023 to 2025 judge it.
 
-**Tell the room.** Two functions. The sigmoid turns `z` into a probability.
-The loss is the mean of `-ln` of the probability that the neuron gives to
-the true label. Both are checked on numbers from the lecture: σ(2) = 0.881,
-and a neuron with zero weights has the loss ln 2 = 0.6931, whatever the
-data.
+1. New file `scripts/frost_neuron.py`. Copy lines 1 to 13 of
+   `frost_rule.py` and add the `time` line and the split. Save.
 
-1. Add at the end of `perceptron.py`:
+    ```python
+    import numpy as np
+    import matplotlib.pyplot as plt
 
-    ```text
-    def sigmoid(z):
-        return 1 / (1 + np.exp(-z))
+    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=0, dtype=str)
+    data = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=(1, 2))
+    temp = data[:, 0].reshape(-1, 24)
+    hum = data[:, 1].reshape(-1, 24)
+    evening_t = temp[:-1, 18]      # 18:00 of each day
+    evening_h = hum[:-1, 18]
+    morning_t = temp[1:, 6]        # 06:00 of the next day
+    ok = (evening_t != -999) & (morning_t != -999)
+    X = np.column_stack([evening_t, evening_h])[ok]
+    y = (morning_t[ok] < 0).astype(int)
 
-
-    def loss(y, y_hat):
-        return -np.mean(y * np.log(y_hat)
-                        + (1 - y) * np.log(1 - y_hat))
-
-
-    print(sigmoid(np.array([-2.0, 0.0, 2.0])).round(3))
-    w = np.zeros(2)
-    b = 0.0
-    print("loss with zero weights:", loss(y, sigmoid(X @ w + b)).round(4))
+    year = np.array([int(t[:4]) for t in time[::24]])[:-1][ok]
+    train = year <= 2022
+    test = year >= 2023
+    print("train", train.sum(), "test", test.sum())
     ```
 
-2. Run the script.
+    `time[::24]` is every 24th time: one per day.
 
-3. Ask why the loss is 0.6931 before the neuron has seen anything. With
-   zero weights every `z` is 0 and every output is 0.5, and −ln 0.5 = ln 2.
+2. Run it.
 
-!!! success "You should now see"
     ```text
-    [0.119 0.5   0.881]
-    loss with zero weights: 0.6931
+    python scripts/frost_neuron.py
     ```
+
+    ```text
+    train 2551 test 1095
+    ```
+
+**Check:** 2551 + 1095 = 3646.
 
 ---
 
-### 7. The gradient and the loop { #loop }
+### 7. Standardise the inputs { #standardise }
 
-**1:05 · 15 min**
+**1:05 · 5 min** · Temperature and humidity have different units and ranges; each becomes mean 0, standard deviation 1. m and s come from the training years only.
 
-**Tell the room.** The lecture derived the gradient of the loss: the mean
-of the error `y_hat - y` times the input, and for the bias the mean of the
-error. In NumPy that is `X.T @ (y_hat - y) / len(y)` and
-`np.mean(y_hat - y)`. One pass of the loop computes the outputs, then moves
-the weights one step against the gradient.
+1. Add at the end, save, run.
 
-1. Add at the end:
-
-    ```text
-    eta = 0.5
-    for epoch in range(1001):
-        y_hat = sigmoid(X @ w + b)
-        if epoch % 200 == 0:
-            print(epoch, loss(y, y_hat).round(4),
-                  np.mean((y_hat > 0.5) == y))
-        w = w - eta * X.T @ (y_hat - y) / len(y)
-        b = b - eta * np.mean(y_hat - y)
-    ```
-
-2. Before running, ask the room which of the two weights gets the larger
-   steps. The gradient for `w2` is a mean of errors times `x2`, and `x2`
-   is near 300.
-
-3. Run the script.
-
-!!! success "You should now see"
-    Warnings, and a loss that is not a number:
-
-    ```text
-    RuntimeWarning: overflow encountered in exp
-    RuntimeWarning: divide by zero encountered in log
-    0 0.6931 0.5
-    200 nan 0.5
-    400 nan 0.5
-    ```
-
-The code is right and the result is useless. After the first step `w2` is
-so large that every `z` is a huge number, every output is exactly 0 or 1,
-and the loss contains ln 0. Half of the points are right because the
-neuron gives all of them the same label.
-
-!!! warning "Watch for"
-    A student who lowers `eta` until the warnings stop. With
-    `eta = 0.00001` they are gone, and after 1000 epochs the loss is 0.6702
-    with half of the points right: the loop hardly moves. Say that this is
-    the other half of the same problem, and go on to section 8.
-
----
-
-### 8. Standardise the inputs { #standardise }
-
-**1:20 · 10 min**
-
-**Tell the room.** The remedy of the lecture: bring every column to mean 0
-and standard deviation 1. Then one learning rate suits both weights, and
-the result no longer depends on the units of the file.
-
-1. Above the line `eta = 0.5`, add:
-
-    ```text
-    m = X.mean(axis=0)
-    s = X.std(axis=0)
-    Z = (X - m) / s
-    ```
-
-2. In the loop, change `X` to `Z` in two places: in the line of `y_hat` and
-   in the line of `w`.
-
-3. Under the loop, without indentation, add:
-
-    ```text
-    print("w", w.round(3), "b", b.round(3))
-    ```
-
-4. Run the script.
-
-!!! success "You should now see"
-    No warning, and the loss falling:
-
-    ```text
-    0 0.6931 0.5
-    200 0.2544 0.8866666666666667
-    400 0.2542 0.89
-    600 0.2542 0.89
-    800 0.2542 0.89
-    1000 0.2542 0.89
-    w [2.707 1.977] b -0.142
-    ```
-
-267 of the 300 points are right, two more than with the line read off the
-plot. The loss has reached its minimum after about 400 epochs: more epochs
-change nothing.
-
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | Still `nan` | One of the two `X` in the loop was not changed to `Z` |
-    | The loss stays near 0.69 | `eta` is still the small value tried in section 7. Set it back to 0.5 |
-
----
-
-### 9. Train and test { #test }
-
-**1:30 · 10 min**
-
-**Tell the room.** The 89 % were measured on the points the neuron was
-trained on. The task was a rule for points it has not seen. So 75 points
-are held back: the loop does not see them, and they are used once, at the
-end. The mean and standard deviation for standardising come from the
-training points alone.
-
-1. Replace the three lines of section 8 that make `m`, `s` and `Z` by:
-
-    ```text
-    rng = np.random.default_rng(11)
-    order = rng.permutation(len(y))
-    train = order[:225]
-    test = order[225:]
+    ```python
 
     m = X[train].mean(axis=0)
     s = X[train].std(axis=0)
     Z = (X - m) / s
+    print("m", m.round(2), "s", s.round(2))
     ```
 
-2. Change the loop so that it uses the training points only. It then reads:
+    ```text
+    python scripts/frost_neuron.py
+    ```
+
+    The last line:
 
     ```text
-    eta = 0.5
+    m [ 9.6  72.97] s [9.04 8.53]
+    ```
+
+**Check:** 9.6 °C and 72.97 %, spread 9.04 °C and 8.53 %.
+
+---
+
+### 8. The training loop { #loop }
+
+**1:10 · 15 min** · The four lines of the lecture's loop: ŷ, the loss, w, b.
+
+1. Add at the end, save.
+
+    ```python
+
+    Zt, yt = Z[train], y[train]
+    w, b, eta = np.zeros(2), 0.0, 0.5
     for epoch in range(1001):
-        y_hat = sigmoid(Z[train] @ w + b)
-        if epoch % 200 == 0:
-            print(epoch, loss(y[train], y_hat).round(4))
-        w = w - eta * Z[train].T @ (y_hat - y[train]) / len(train)
-        b = b - eta * np.mean(y_hat - y[train])
-    print("w", w.round(3), "b", b.round(3))
+        y_hat = 1 / (1 + np.exp(-(Zt @ w + b)))
+        loss = -np.mean(yt * np.log(y_hat) + (1 - yt) * np.log(1 - y_hat))
+        if epoch % 250 == 0:
+            print(epoch, round(loss, 4), round(np.mean((y_hat > 0.5) == yt), 3))
+        w = w - eta * Zt.T @ (y_hat - yt) / len(yt)
+        b = b - eta * np.mean(y_hat - yt)
+    print("w", w.round(3), "b", round(b, 3))
     ```
 
-3. Under it, count the correct points of each set:
+2. Run it.
 
     ```text
-    correct = predict(Z, w, b) == y
-    print("train:", correct[train].sum(), "of", len(train),
-          correct[train].mean().round(3))
-    print("test: ", correct[test].sum(), "of", len(test),
-          correct[test].mean().round(3))
+    python scripts/frost_neuron.py
     ```
 
-4. Run the script.
+    The new lines: epoch, loss, share correct.
 
-5. Work out the uncertainty of the test accuracy with the room. Each test
-   point is right or wrong, a binomial count: √(0.893 · 0.107 / 75) = 0.036.
-
-!!! success "You should now see"
     ```text
-    0 0.6931
-    200 0.2504
-    400 0.2501
-    600 0.2501
-    800 0.2501
-    1000 0.2501
-    w [2.848 1.678] b 0.11
-    train: 201 of 225 0.893
-    test:  67 of 75 0.893
+    0 0.6931 0.667
+    250 0.1379 0.951
+    500 0.1226 0.955
+    750 0.1167 0.954
+    1000 0.1137 0.955
+    w [-6.862  0.035] b -4.188
     ```
 
-The result of the session is the test accuracy with its uncertainty:
-89 % ± 4 %. The training accuracy is the same here. A neuron with three
-parameters cannot learn 225 points by heart.
-
-!!! warning "Watch for"
-    `order[:225]` typed as `order[225]`. Then `train` is one number, and the
-    script stops with an error about a dimension.
+**Check:** the loss starts at ln 2 = 0.6931 (every ŷ is 0.5) and falls;
+the temperature weight is about 200 times the humidity weight.
 
 ---
 
-## Part 4 · The result { #part-4 }
+### 9. Back to °C and % { #units }
 
-**1:40 to 2:00 · sections 10 to 12**
+**1:25 · 10 min** · With z = (x − m)/s: w in data units is w/s, and b loses Σ w m/s.
 
-The weights are turned back into the units of the file, drawn, and written
-into the report.
+1. Add at the end, save, run.
+
+    ```python
+
+    wx = w / s
+    bx = b - np.sum(w * m / s)
+    print("per °C and per %:", wx.round(3), "b", round(bx, 2))
+    print(f"boundary at 75 %: {-(bx + wx[1] * 75) / wx[0]:.2f} °C")
+    ```
+
+    ```text
+    python scripts/frost_neuron.py
+    ```
+
+    The last two lines:
+
+    ```text
+    per °C and per %: [-0.759  0.004] b 2.8
+    boundary at 75 %: 4.10 °C
+    ```
+
+**Check:** the boundary is the line −0.759 T + 0.004 H + 2.8 = 0: at 75 %
+humidity, 4.10 °C. 10 % more humidity moves it by 0.05 °C.
+
+!!! question "Task: the learning rate"
+    Train with `eta = 2.0`, then with `eta = 0.05`. What is the loss at
+    epoch 1000, and the weight of humidity in °C and %? Set it back to 0.5.
+
+??? note "Answer"
+    `eta = 2.0`:
+
+    ```text
+    1000 0.1082 0.954
+    w [-8.962e+00  1.000e-03] b -5.568
+    per °C and per %: [-0.991  0.   ] b 3.94
+    ```
+
+    `eta = 0.05`:
+
+    ```text
+    1000 0.1712 0.943
+    w [-3.171  0.322] b -1.839
+    per °C and per %: [-0.351  0.038] b -1.23
+    ```
+
+    A larger step gets closer to the minimum in 1000 epochs, and the
+    humidity weight goes to 0. With 0.05 the loop has not arrived.
 
 ---
 
-### 10. Draw the boundary { #boundary }
+## Part 4 · The answer { #part-4 }
 
-**1:40 · 10 min**
-
-**Tell the room.** The weights belong to the standardised inputs. To draw
-the line on the plot of section 2, they are converted back to the units of
-the file. Insert `z = (x - m) / s` into `w · z + b`: the weight of each
-column is divided by its `s`, and the bias takes up the means.
-
-1. Add at the end:
-
-    ```text
-    w_x = w / s
-    b_x = b - np.sum(w * m / s)
-    print("for the file's units: w", w_x.round(4), "b", b_x.round(2))
-    print("same answers:",
-          np.all(predict(X, w_x, b_x) == predict(Z, w, b)))
-    ```
-
-2. Use the neuron on a point that is not in the file, `x1 = 5.0` and
-   `x2 = 300`:
-
-    ```text
-    point = np.array([5.0, 300.0])
-    print("P(class 1) at (5.0, 300):",
-          sigmoid(point @ w_x + b_x).round(3))
-    ```
-
-3. Draw the line into the picture of section 2. On the boundary `z = 0`,
-   so `x2 = -(w1 x1 + b) / w2`:
-
-    ```text
-    x1 = np.array([X[:, 0].min(), X[:, 0].max()])
-    x2 = -(w_x[0] * x1 + b_x) / w_x[1]
-    ax.plot(x1, x2, "k-", label="boundary")
-    ax.set_ylim(0, 620)
-    ax.legend()
-    fig.savefig("results/perceptron_boundary.png", dpi=150)
-    ```
-
-4. Run the script and open `results/perceptron_boundary.png`.
-
-!!! success "You should now see"
-    Three more lines, and a straight line between the two clouds in the new
-    picture:
-
-    ```text
-    for the file's units: w [2.034  0.0143] b -14.79
-    same answers: True
-    P(class 1) at (5.0, 300): 0.417
-    ```
-
-Compare with the line read off the plot in section 3. Divided by its `w2`,
-the trained neuron is `142 x1 + x2 - 1035 = 0`. The hand-set line was
-`100 x1 + x2 - 825 = 0`. The point (5.0, 300) lies almost on the boundary:
-the neuron gives it to class 1 with probability 0.42.
+**1:40 to 2:00** · The test years, seen for the first time.
 
 ---
 
-### 11. Write it down { #report }
+### 10. The test years, against the rule { #test }
 
-**1:50 · 5 min**
+**1:40 · 10 min** · An accuracy is a count: ± √(p(1 − p)/N), as in the lecture. The rule's threshold is chosen on the training years.
 
-**Tell the room.** A result that is not written down has to be computed
-again. The report gets what a reader needs to repeat it: the data, the
-method, the settings and the number with its uncertainty.
+1. Add at the end, save.
 
-1. Open `results/report.md` and add at the end:
+    ```python
 
-    ```text
-    ## A logistic neuron on two classes
+    p = 1 / (1 + np.exp(-(Z[test] @ w + b)))
+    acc = np.mean((p > 0.5) == y[test])
+    n = test.sum()
+    print(f"neuron on 2023-2025: {acc:.3f} ± {np.sqrt(acc * (1 - acc) / n):.3f}")
 
-    - **Data:** `data/raw/perceptron_points.csv`, 300 generated
-      points, two inputs, one label
-    - **Model:** one neuron with a sigmoid, cross-entropy loss
-    - **Training:** 225 points, inputs standardised, learning
-      rate 0.5, 1000 epochs, seed 11 for the split
-    - **Test:** 67 of 75 points correct, 89 % ± 4 %
-    - **Boundary:** 2.034 x1 + 0.0143 x2 - 14.79 = 0
-
-    ![The two classes and the boundary](perceptron_boundary.png)
+    cs = np.arange(0, 6, 0.1)
+    accs = [np.mean((X[train, 0] < c) == y[train]) for c in cs]
+    c = cs[np.argmax(accs)]
+    rule = np.mean((X[test, 0] < c) == y[test])
+    print(f"rule 'below {c:.1f} °C' on 2023-2025: {rule:.3f}")
     ```
 
-2. Open the preview with `Ctrl+K`, then `V` (macOS `Cmd+K`, then `V`).
+    `Z[test]` uses the m and s of the training years.
 
-3. In the Source Control view, stage `scripts/perceptron.py`,
-   `scripts/gate.py`, the report and the two pictures, and commit them
-   with the message:
+2. Run it.
 
     ```text
-    Train a logistic neuron on two classes
+    python scripts/frost_neuron.py
     ```
 
-!!! success "You should now see"
-    The five lines and the picture in the preview, and no changed files left
-    in the Source Control view.
+    The last two lines:
 
-!!! warning "Watch for"
-    | On the screen | What to do |
-    |--|--|
-    | No `report.md` in `results` | Select the `results` folder, then **New File**, type `report.md`, and add the lines of step 1 |
-    | The Source Control view offers **Initialize Repository** | The folder is not under Git. Select **Initialize Repository**, as in Seminar 5, then commit |
+    ```text
+    neuron on 2023-2025: 0.959 ± 0.006
+    rule 'below 3.6 °C' on 2023-2025: 0.959
+    ```
+
+**Check:** 95.9 % for both. The neuron learned the rule, and humidity
+adds nothing these data can show.
+
+---
+
+### 11. The README, a commit, a push { #commit }
+
+**1:50 · 5 min** · The answer, with the script that gives it.
+
+1. At the end of `README.md`, add and save:
+
+    ```text
+
+    ## Frost tomorrow morning
+
+    A neuron trained on the evenings of 2016 to 2022 (`scripts/frost_neuron.py`)
+    predicts frost at 06:00 from the temperature and humidity at 18:00. On the
+    evenings of 2023 to 2025 it is right 95.9 ± 0.6 % of the time, the same as
+    the rule "frost if 18:00 is below 3.6 °C". Humidity gets a weight near zero.
+    ```
+
+2. Stage, commit, push.
+
+    ```text
+    git add README.md scripts
+    ```
+
+    ```text
+    git commit -m "Predict frost at 06:00 with a neuron"
+    ```
+
+    ```text
+    [main e7d4f68] Predict frost at 06:00 with a neuron
+     3 files changed, 101 insertions(+)
+     create mode 100644 scripts/frost_neuron.py
+     create mode 100644 scripts/frost_rule.py
+    ```
+
+    ```text
+    git push
+    ```
+
+    ```text
+    To https://github.com/your-username/weather-project.git
+       f6ce821..e7d4f68  main -> main
+    ```
+
+    Your ids differ, and so do the counts if you kept the Task lines.
+
+**Check:** on GitHub, the README shows **Frost tomorrow morning**.
+
+!!! question "Task: tonight"
+    The sigmoid gives a probability. At 85 % humidity, what is P(frost at
+    06:00) for an evening at 1 °C, 3 °C and 5 °C?
+
+??? note "Answer"
+    Add at the end of `frost_neuron.py`:
+
+    ```python
+
+    for t in [1.0, 3.0, 5.0]:
+        z = np.array([t, 85.0]) @ wx + bx
+        print(f"{t} °C, 85 %: P(frost) = {1 / (1 + np.exp(-z)):.2f}")
+    ```
+
+    ```text
+    1.0 °C, 85 %: P(frost) = 0.92
+    3.0 °C, 85 %: P(frost) = 0.71
+    5.0 °C, 85 %: P(frost) = 0.34
+    ```
 
 ---
 
@@ -797,60 +565,117 @@ method, the settings and the number with its uncertainty.
 
 **1:55 · 5 min**
 
-Read the list aloud. Ask on the way out which step was hardest.
+| To | Type |
+|--|--|
+| one row per day | `temp.reshape(-1, 24)` |
+| a neuron | `(X @ w + b > 0).astype(int)` |
+| Rosenblatt's rule | `w = w + eta * (target - y_hat) * x` |
+| standardise | `Z = (X - m) / s`, m and s from the training rows |
+| one step of gradient descent | `w = w - eta * Zt.T @ (y_hat - yt) / len(yt)` |
+| an accuracy with its ± | `np.sqrt(acc * (1 - acc) / n)` |
 
-- A neuron is a weighted sum, a bias and a threshold. In NumPy it is one
-  line for all points: `X @ w + b > 0`.
-- New code is tested on a case with a known answer. The rule printed the
-  ten updates of the AND gate before it was trusted with data.
-- Rosenblatt's rule stops only when a line separates the classes. On
-  overlapping classes it never does.
-- The logistic neuron has a loss, and gradient descent lowers it. With zero
-  weights the loss is ln 2 = 0.6931.
-- Inputs on different scales break the loop. Standardised inputs repair it.
-- A result is judged on points that were held back, and an accuracy is
-  quoted with its uncertainty.
+Seminar 12 starts from this repository.
 
 ---
 
-## Stretch goals
+## Optional, if the room is fast { #optional }
 
-For students who finish a section early. Answers are given for the
-lecturer.
+---
 
-- In section 8, run the loop with `eta = 0.05` and with `eta = 5`. The
-  answer: the loss after 1000 epochs is 0.257 and 0.2542. The small rate
-  has not arrived yet. The large one arrives at the same minimum.
-- Take the `#` signs off the rule of section 5 and run it on `Z` in place
-  of `X`, after the lines of section 8. The answer: 45 to 51 updates in
-  every epoch and between 82 % and 89 % correct. Better than on the raw
-  inputs, and still without an end.
-- Change the seed of the split from 11 to each of 0 to 9. The answer: the
-  number of correct test points lies between 62 and 69 of 75. That spread
-  is what ± 4 % means.
-- Write the three neurons of the lecture for XOR: hidden weights `(1, 1)`
-  with biases `-0.5` and `-1.5`, output weights `(1, -1)` with bias
-  `-0.5`. Use `predict` three times. The answer for the four inputs is
-  `[0 1 1 0]`.
-- Run `gate.py` with the targets of XOR, `[0, 1, 1, 0]`, and 12 epochs.
-  The answer: from epoch 3 on every epoch has 4 updates and ends at
-  `w [-1.  0.]  b 1.0`.
-- For a student with a dataset of their own: two columns of numbers as
-  inputs and a yes-or-no property as the label, or a third column above or
-  below its median. Copy `perceptron.py`, change the lines that read the
-  file, plot the classes, standardise, hold back a quarter of the rows and
-  train. Compare the test accuracy with the accuracy of always answering
-  with the more frequent class. A neuron that does not beat that number has
-  learned nothing. No answer is given: it depends on the data.
+### 13. Draw the boundary { #boundary }
 
-## If students ask for more
+**— · 5 min** · The line where w · x + b = 0, over the two clouds.
 
-| Question | Answer |
-|--|--|
-| Why 89 % and not more? | The file was generated from two overlapping Gaussian clouds. No rule can be right for more than 91.5 % of such points on average |
-| Is there a library for this? | Yes. `LogisticRegression` in scikit-learn minimises the same loss. The 100 lines of today are what it does inside |
-| Can it learn a curved boundary? | Not one neuron. The lecture's XOR example shows why, and what a second layer changes |
+1. Add at the end of `frost_neuron.py`, save, run.
+
+    ```python
+
+    h = np.array([40, 100])
+    fig, ax = plt.subplots()
+    ax.plot(X[y == 0, 0], X[y == 0, 1], ".", ms=3, label="no frost")
+    ax.plot(X[y == 1, 0], X[y == 1, 1], ".", ms=3, label="frost")
+    ax.plot(-(bx + wx[1] * h) / wx[0], h, "k-", label="neuron")
+    ax.set_xlabel("temperature at 18:00 (°C)")
+    ax.set_ylabel("humidity at 18:00 (%)")
+    ax.legend()
+    fig.savefig("results/frost_boundary.png", dpi=150)
+    ```
+
+    ```text
+    python scripts/frost_neuron.py
+    ```
+
+2. Open `results/frost_boundary.png`.
+
+**Check:** a nearly upright line at about 4 °C, between the clouds.
+
+---
+
+### 14. Without standardising { #raw }
+
+**— · 5 min** · The lecture's warning, on these data.
+
+1. Change the line `Z = (X - m) / s` to `Z = X`, save, run.
+
+    ```text
+    python scripts/frost_neuron.py
+    ```
+
+    Among the lines (the path shortened):
+
+    ```text
+    …frost_neuron.py:31: RuntimeWarning: divide by zero encountered in log
+    …frost_neuron.py:30: RuntimeWarning: overflow encountered in exp
+    0 0.6931 0.667
+    250 nan 0.956
+    500 nan 0.956
+    ```
+
+2. Change it back to `Z = (X - m) / s`.
+
+**Check:** the loss is `nan`. With inputs of tens of units, w · x + b
+grows to hundreds, `np.exp` overflows, ŷ becomes exactly 0 or 1, and
+log 0 is −∞.
+
+---
+
+### 15. Temperature alone { #one-input }
+
+**— · 5 min** · Is humidity worth its column?
+
+1. In `frost_neuron.py`, change two lines, save, run.
+
+    ```python
+    X = np.column_stack([evening_t])[ok]
+    ```
+
+    ```python
+    w, b, eta = np.zeros(1), 0.0, 0.5
+    ```
+
+    Delete the line that prints `boundary at 75 %`.
+
+    ```text
+    python scripts/frost_neuron.py
+    ```
+
+    The line of the test:
+
+    ```text
+    neuron on 2023-2025: 0.957 ± 0.006
+    ```
+
+2. Undo the changes: `Ctrl+Z` (macOS `Cmd+Z`) in the editor, save.
+
+**Check:** 0.957 against 0.959: two evenings of 1095, far inside ± 0.006.
+
+---
 
 ## Aims practised
 
-⚙️ a model trained by a script, from file to figure · 🔧 NumPy and nothing else · ♻️ fixed seeds, the same numbers on every laptop · 📁 the raw file read and never written
+- ♻️ **Reproducibility:** the split is by years, written in the script, so
+  every laptop trains on the same evenings and gets 0.959.
+- 🔧 **Tool-agnostic:** a neuron in a dozen lines of NumPy, no machine
+  learning library.
+- 📁 **Files:** the inputs and the label are read from `weather.csv` itself;
+  no file is made by hand.

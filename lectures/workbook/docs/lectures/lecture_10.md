@@ -176,11 +176,12 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 10 — Fit a Straight Line and Measure g](../seminars/seminar_10.md)
-builds one script, `scripts/fit_pendulum.py`. The room reads the pendulum
-table, computes the five sums, slope and intercept with their uncertainties
-and covariance, g with its uncertainty and χ², repeats the fit with
-`curve_fit`, and plots the residuals.
+[Seminar 10 — How Strong Is the Yearly Cycle? Fitting the Weather
+Data](../seminars/seminar_10.md) works on the weather project of Lectures 1
+to 5. Every student fits a straight line to the ten yearly means by the
+closed formulas of the lecture (−0.6 ± 0.8 °C per decade) and a cosine to
+the 3648 daily means (amplitude 11.18 °C, coldest on 16 January), reads the
+residuals, commits and pushes.
 
 ## Take-aways
 
