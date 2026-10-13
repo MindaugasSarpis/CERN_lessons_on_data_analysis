@@ -94,8 +94,8 @@ of printed. Try the bell on the laptop of the room first: Terminal.app
 beeps, the terminal of VS Code may stay silent. On the Unicode slide: a
 Word document saved on Windows under the name 🗺️ (WORLD MAP, U+1F5FA,
 picked with `Win+.`), and the bytes of that name.
-On *What a Spreadsheet Changes*: a two-line CSV opened in Excel and saved,
-then compared with the copy kept before.
+On *What a Spreadsheet Changes*: a two-line CSV opened in Excel, one cell
+retyped, saved, and compared with the copy kept before.
 
 | | zsh (macOS) | PowerShell 7 (Windows) | Output |
 |--|--|--|--|
@@ -105,35 +105,72 @@ then compared with the copy kept before.
 | TAB, code 9 | `printf 'A\tB\n'` | `` "A`tB" `` | `A       B` |
 | BEL, code 7 | `printf '\a'` | `` "`a" `` or `[char]7` | a beep, nothing printed |
 
-On the Unicode slide, in PowerShell in the folder of the saved document:
+### A file named 🗺️ (Unicode slide)
 
-| Line | Output |
-|--|--|
-| `ls` | `🗺️.docx` |
-| `` "`u{1F5FA}" `` | 🗺 |
-| `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` | `F0 9F 97 BA EF B8 8F`: U+1F5FA in four bytes, then U+FE0F, which asks for the emoji form, in three |
+Before the lecture, in PowerShell: `mkdir ~/map-demo`.
 
-On *What a Spreadsheet Changes*, the file made in VS Code before the
-lecture (UTF-8, LF), and a copy of it, `excel_before.csv`:
+1. In Word, open a blank document and press `F12`: the **Save As** box.
+   Go to `map-demo` in your home folder.
+2. Click into **File name**, press `Ctrl+A` and `Delete`. Press `Win+.`
+   (the Windows key and the full stop): the emoji panel opens. Type `map`,
+   click 🗺️ (WORLD MAP), press `Esc`. Keep the type **Word Document
+   (*.docx)** and select **Save**.
+3. In the terminal:
+
+    | Line | Output |
+    |--|--|
+    | `cd ~/map-demo` | |
+    | `ls` | `🗺️.docx` (a box instead of the symbol is only the terminal's font) |
+    | `` "`u{1F5FA}" `` | 🗺 (the backtick is the key left of `1`) |
+    | `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` | `F0 9F 97 BA EF B8 8F` |
+
+   `F0 9F 97 BA` is U+1F5FA in four bytes; `EF B8 8F` is U+FE0F, an
+   invisible code point the emoji panel adds to ask for the emoji form. On
+   a Mac the panel is `Ctrl+Cmd+Space`, and `printf '\U0001F5FA\n'` prints
+   the symbol in zsh.
+
+### A CSV through Excel (*What a Spreadsheet Changes*)
+
+Before the lecture, in PowerShell: `mkdir ~/excel-demo`. In VS Code,
+**File** > **New Text File**, paste the two lines, set `LF` and `UTF-8` in
+the Status Bar, and save as `excel_test.csv` in `excel-demo`:
 
 ```text
 nr,station,date,reading,place
 007,SEPT2,1-2,12345678901234567,Užupis
 ```
 
-Each value tests one change. An English Excel typically shows and saves:
+Then in the terminal, in `excel-demo`: `cp excel_test.csv excel_before.csv`.
 
-| Value | In Excel | Why |
-|--|--|--|
-| `007` | `7` | read as a number: the leading zeros go |
-| `SEPT2`, `1-2` | `2-Sep`, `2-Jan` | read as dates |
-| `12345678901234567` | `1.23457E+16` | a number with 15 significant digits at most, shown in scientific notation; the saved file keeps what is shown |
-| `Užupis` | `UÅ¾upis` | a UTF-8 file without a BOM, read by the one-byte table of Windows |
-| line ends | `0D 0A` | Excel writes CRLF |
+In class:
 
-A Lithuanian Windows writes `;` between the values and its own date
-format. Run the file through Excel once on the lecture laptop and keep
-that output; it is the one to show.
+1. In File Explorer, double-click `excel_test.csv` (or right-click,
+   **Open with** > **Excel**). Not **Data** > **From Text/CSV**: that
+   dialog lets you choose the types and the encoding, which is the repair.
+2. If each whole line stands in column A, Windows uses `;` between values,
+   as a Lithuanian region does: that is the first change already. Close
+   Excel, replace every `,` by `;` in both files in VS Code, start again.
+3. Point at row 2:
+
+    | Typed | Excel shows | Why |
+    |--|--|--|
+    | `007` | `7` | read as a number: the leading zeros go |
+    | `SEPT2`, `1-2` | dates, such as `2-Sep` and `2-Jan` | read as dates |
+    | `12345678901234567` | `1.23457E+16`; the formula bar shows `12345678901234500` | 15 significant digits at most: the last two are gone |
+    | `Užupis` | `UÅ¾upis` | a UTF-8 file without a BOM, read by the one-byte table of Windows |
+
+4. Click the `UÅ¾upis` cell and type `Užupis`, as anyone would repair it.
+   Press `Ctrl+S`; if a box warns about the CSV format, select **Keep
+   Current Format** (or **Yes**). Close Excel, and **Don't Save** if it
+   asks again.
+5. In the terminal, `Get-Content excel_before.csv`, then
+   `Get-Content excel_test.csv`: `7`, the dates, `1.23457E+16`, and
+   `U�upis`. `Format-Hex excel_test.csv` shows `0D 0A` at each line end and
+   `ž` as one byte, `9E` on an English Windows or `FE` on a Lithuanian one:
+   the file is no longer UTF-8.
+
+Excel's version and the region settings change the details. Run it once on
+the lecture laptop; that run is the one to show.
 
 ## Check yourself
 

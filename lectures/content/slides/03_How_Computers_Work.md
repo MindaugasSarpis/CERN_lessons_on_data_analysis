@@ -1652,8 +1652,13 @@ Stores a code point in 1 to 4 bytes. The 128 ASCII characters keep their single 
 
 <!--
 **Say:** ASCII has 128 characters. Lithuanian letters, Greek, emoji need Unicode, and Unicode needs a way to become bytes: an encoding.
-**Live:** a file name beyond ASCII. In Word on Windows, **File** > **Save As**; in the name box press `Win+.`, search `map`, pick 🗺️ (WORLD MAP, U+1F5FA), save. In PowerShell in that folder: `ls` shows `🗺️.docx`; `` "`u{1F5FA}" `` prints the symbol from its code.
-**Live:** its bytes: `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` gives `F0 9F 97 BA EF B8 8F`. `F0 9F 97 BA` is U+1F5FA in four bytes (first byte `11110`); `EF B8 8F` is U+FE0F, an invisible "draw as emoji" code point the emoji panel adds. One symbol on screen, two code points, seven bytes. On a Mac: `printf '\U0001F5FA' | wc -c` gives 4.
+**Live:** a file name beyond ASCII, on Windows. Before the lecture: `mkdir ~/map-demo`.
+1. Word: a blank document, press `F12` (the **Save As** box). Go to `map-demo` in your home folder.
+2. Click into **File name**, `Ctrl+A`, `Delete`. Press `Win+.` (Windows key and full stop): the emoji panel opens. Type `map`, click 🗺️ (WORLD MAP), `Esc`. Type is **Word Document (*.docx)**. **Save**.
+3. Terminal (PowerShell 7): `cd ~/map-demo`, then `ls`: `🗺️.docx`. A box instead of the symbol is only the terminal's font.
+4. From its code: `` "`u{1F5FA}" `` (the backtick is the key left of `1`) prints 🗺. In zsh: `printf '\U0001F5FA\n'`.
+5. Its bytes: `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` gives `F0 9F 97 BA EF B8 8F`. `F0 9F 97 BA` is U+1F5FA in four bytes (first byte `11110`); `EF B8 8F` is U+FE0F, an invisible "draw as emoji" code point the panel adds. One symbol, two code points, seven bytes. A Mac: `printf '\U0001F5FA' | od -An -tx1` gives `f0 9f 97 ba`.
+**If asked:** on a Mac the panel is `Ctrl+Cmd+Space`, search `world map`.
 (~4 min)
 -->
 
@@ -1839,10 +1844,16 @@ A program that does not expect it reads `ï»¿` before the first column name.
 <!--
 **Say:** gene names turned into dates were found in about one fifth of genomics papers with gene lists (Ziemann et al., 2016).
 **If asked:** Python reads a file with a BOM with `encoding="utf-8-sig"`.
-**Live:** before the lecture, make `excel_test.csv` in VS Code (UTF-8, LF), two lines: `nr,station,date,reading,place` and `007,SEPT2,1-2,12345678901234567,Užupis`. Keep a copy: `cp excel_test.csv excel_before.csv`.
-**Live:** in class, double-click `excel_test.csv` to open it in Excel and show the cells: `7`, a date for `SEPT2` and for `1-2`, `1.23457E+16`, `UÅ¾upis`. Save with `Ctrl+S`, **Keep Current Format**, close Excel.
-**Live:** in the terminal, `cat excel_before.csv` and `cat excel_test.csv`, one under the other; then `Format-Hex excel_test.csv` for `0D 0A` and the bytes of `ž`. What Excel writes depends on its version and the region settings (a Lithuanian Windows writes `;` and dates its own way), so run it once on the lecture laptop and keep that output.
-(~5 min)
+**Live:** a CSV through Excel, on Windows. Before the lecture: `mkdir ~/excel-demo`; in VS Code **File** > **New Text File**, paste the two lines below, set `LF` and `UTF-8` in the Status Bar, save as `excel_test.csv` in `excel-demo`. In the terminal there: `cp excel_test.csv excel_before.csv`.
+`nr,station,date,reading,place`
+`007,SEPT2,1-2,12345678901234567,Užupis`
+1. In File Explorer, double-click `excel_test.csv` (or right-click, **Open with** > **Excel**). Not **Data** > **From Text/CSV**: that dialog lets you choose types and encoding, which is the repair.
+2. If all of each line stands in column A, Windows uses `;` between values (Lithuanian region): that is the first change. Close Excel, replace every `,` by `;` in both files in VS Code, start again.
+3. Point at row 2: `7` (zeros gone), dates for `SEPT2` and `1-2`, `1.23457E+16` (click it: the formula bar shows `12345678901234500`, the last two digits gone), `UÅ¾upis`.
+4. Click the `UÅ¾upis` cell and type `Užupis`, as anyone would. `Ctrl+S`; if a box warns about the CSV format, **Keep Current Format** (or **Yes**). Close Excel, **Don't Save** if it asks again.
+5. Terminal: `Get-Content excel_before.csv`, then `Get-Content excel_test.csv`: `7`, the dates, `1.23457E+16`, and `U�upis`. `Format-Hex excel_test.csv`: `0D 0A` at each line end, and `ž` as one byte, `9E` (English Windows) or `FE` (Lithuanian), no longer UTF-8.
+Run it once on the lecture laptop: Excel's version and region change the details, and that run is the one to show.
+(~6 min)
 -->
 
 ---
