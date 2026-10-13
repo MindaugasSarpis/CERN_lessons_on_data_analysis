@@ -1839,7 +1839,10 @@ A program that does not expect it reads `ï»¿` before the first column name.
 <!--
 **Say:** gene names turned into dates were found in about one fifth of genomics papers with gene lists (Ziemann et al., 2016).
 **If asked:** Python reads a file with a BOM with `encoding="utf-8-sig"`.
-(~2 min)
+**Live:** before the lecture, make `excel_test.csv` in VS Code (UTF-8, LF), two lines: `nr,station,date,reading,place` and `007,SEPT2,1-2,12345678901234567,Užupis`. Keep a copy: `cp excel_test.csv excel_before.csv`.
+**Live:** in class, double-click `excel_test.csv` to open it in Excel and show the cells: `7`, a date for `SEPT2` and for `1-2`, `1.23457E+16`, `UÅ¾upis`. Save with `Ctrl+S`, **Keep Current Format**, close Excel.
+**Live:** in the terminal, `cat excel_before.csv` and `cat excel_test.csv`, one under the other; then `Format-Hex excel_test.csv` for `0D 0A` and the bytes of `ž`. What Excel writes depends on its version and the region settings (a Lithuanian Windows writes `;` and dates its own way), so run it once on the lecture laptop and keep that output.
+(~5 min)
 -->
 
 ---

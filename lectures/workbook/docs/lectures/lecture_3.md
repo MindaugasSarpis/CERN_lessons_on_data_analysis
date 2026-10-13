@@ -88,12 +88,14 @@ Enter.
 
 ## Live in the lecture
 
-Two planned moments, each marked **Live:** in its slide's note. On the
+Three planned moments, each marked **Live:** in its slide's note. On the
 ASCII slide: a character typed by its code, and code 7, BEL, rung instead
 of printed. Try the bell on the laptop of the room first: Terminal.app
 beeps, the terminal of VS Code may stay silent. On the Unicode slide: a
 Word document saved on Windows under the name 🗺️ (WORLD MAP, U+1F5FA,
 picked with `Win+.`), and the bytes of that name.
+On *What a Spreadsheet Changes*: a two-line CSV opened in Excel and saved,
+then compared with the copy kept before.
 
 | | zsh (macOS) | PowerShell 7 (Windows) | Output |
 |--|--|--|--|
@@ -110,6 +112,28 @@ On the Unicode slide, in PowerShell in the folder of the saved document:
 | `ls` | `🗺️.docx` |
 | `` "`u{1F5FA}" `` | 🗺 |
 | `[System.Text.Encoding]::UTF8.GetBytes((Get-Item *.docx).BaseName) | Format-Hex` | `F0 9F 97 BA EF B8 8F`: U+1F5FA in four bytes, then U+FE0F, which asks for the emoji form, in three |
+
+On *What a Spreadsheet Changes*, the file made in VS Code before the
+lecture (UTF-8, LF), and a copy of it, `excel_before.csv`:
+
+```text
+nr,station,date,reading,place
+007,SEPT2,1-2,12345678901234567,Užupis
+```
+
+Each value tests one change. An English Excel typically shows and saves:
+
+| Value | In Excel | Why |
+|--|--|--|
+| `007` | `7` | read as a number: the leading zeros go |
+| `SEPT2`, `1-2` | `2-Sep`, `2-Jan` | read as dates |
+| `12345678901234567` | `1.23457E+16` | a number with 15 significant digits at most, shown in scientific notation; the saved file keeps what is shown |
+| `Užupis` | `UÅ¾upis` | a UTF-8 file without a BOM, read by the one-byte table of Windows |
+| line ends | `0D 0A` | Excel writes CRLF |
+
+A Lithuanian Windows writes `;` between the values and its own date
+format. Run the file through Excel once on the lecture laptop and keep
+that output; it is the one to show.
 
 ## Check yourself
 
