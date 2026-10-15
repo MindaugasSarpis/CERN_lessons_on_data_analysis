@@ -101,7 +101,7 @@ jobs:
     needs: qa
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
 
@@ -126,6 +126,26 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=4096
         run: node scripts/build-all.mjs --out dist --base "/${{ github.event.repository.name }}"
+
+      # The earlier edition of the course (decks.json `site.archive`) is built
+      # from its frozen branch into dist/<path>/ so that its students keep a
+      # working site next to the current one. The branch has its own
+      # lockfile; its build-all takes the same --out/--base flags.
+      - name: Check out the earlier edition (branch bs2026)
+        uses: actions/checkout@v7
+        with:
+          ref: bs2026
+          path: bs2026
+
+      - name: Install the earlier edition's dependencies
+        working-directory: bs2026
+        run: pnpm install --frozen-lockfile
+
+      - name: Build the earlier edition under /bs2026/
+        working-directory: bs2026
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: node scripts/build-all.mjs --out "$GITHUB_WORKSPACE/dist/bs2026" --base "/${{ github.event.repository.name }}/bs2026"
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

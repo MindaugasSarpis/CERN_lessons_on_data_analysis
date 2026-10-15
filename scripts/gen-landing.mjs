@@ -21,6 +21,12 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 
 export async function genLanding(manifest, outDir, prefix = '') {
   const base = prefix.replace(/\/$/, '');
+  // An earlier edition of the course, built from its own branch into
+  // <out>/<archive.path>/ by qa.yml, gets one line in the footer.
+  const archive = manifest.site && manifest.site.archive;
+  const archiveHtml = archive
+    ? `\n      <p>Earlier edition: the <a href="${base}/${esc(archive.path)}/">${esc(archive.label)} &#8594;</a>.</p>`
+    : '';
   const byBlock = new Map(Object.keys(manifest.blocks).map((k) => [k, []]));
   for (const d of manifest.decks) (byBlock.get(d.block) || byBlock.set(d.block, []).get(d.block)).push(d);
 
@@ -112,7 +118,7 @@ export async function genLanding(manifest, outDir, prefix = '') {
     </header>
     ${blockSections}
     <footer class="foot">
-      <p>Lecture notes are in the <a href="${base}/workbook/">workbook &#8594;</a>.</p>
+      <p>Lecture notes are in the <a href="${base}/workbook/">workbook &#8594;</a>.</p>${archiveHtml}
     </footer>
   </main>
   <script type="module" src="./assets/landing.js"></script>

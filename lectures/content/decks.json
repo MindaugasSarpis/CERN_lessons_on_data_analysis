@@ -7,7 +7,8 @@
     "from CERN"
   ],
   "site": {
-    "url": "https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis"
+    "url": "https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis",
+    "archive": {"label": "autumn 2026 business-school edition", "path": "bs2026", "branch": "bs2026"}
   },
   "presenter": "Dr. Mindaugas Šarpis",
   "blocks": {
