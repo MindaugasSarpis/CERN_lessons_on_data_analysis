@@ -22,7 +22,7 @@
     {"slug": "02-intro-to-data", "title": "Introduction to Data", "block": "A", "srcs": ["02_Introduction_to_Data.md"], "optional": false, "draft": false, "seminar": 1},
     {"slug": "03-how-computers-work", "title": "How Computers Work", "block": "A", "srcs": ["03_How_Computers_Work.md"], "optional": false, "draft": false},
     {"slug": "04-command-line-and-files", "title": "Command Line & File Handling", "block": "A", "srcs": ["04_Command_Line_and_Files.md"], "optional": false, "draft": false},
-    {"slug": "05-python-foundations", "title": "Python Foundations", "block": "A", "srcs": ["05_Python_Foundations.md"], "optional": false, "draft": true},
+    {"slug": "05-python-foundations", "title": "Python Foundations", "block": "A", "srcs": ["05_Python_Foundations.md"], "optional": false, "draft": false},
     {"slug": "06-version-control", "title": "Version Control with Git", "block": "A", "srcs": ["06_Version_Control.md"], "optional": false, "draft": true},
     {"slug": "07-python-for-data-and-numpy", "title": "Python for Data & NumPy", "block": "B", "srcs": ["07_Python_for_Data_and_NumPy.md"], "optional": false, "draft": true},
     {"slug": "08-data-visualisation", "title": "Data Visualisation", "block": "C", "srcs": ["08_Data_Visualisation.md"], "optional": false, "draft": true},
