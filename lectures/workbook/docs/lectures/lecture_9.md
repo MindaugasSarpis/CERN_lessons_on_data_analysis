@@ -80,44 +80,39 @@ project folder, or from a seeded simulation.
 The pendulum file holds no uncertainties. The lecture states them: 0.1 cm on
 the length and 0.1 s on the time of 10 swings.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–65 and estimates about 141 min. Slides 66–73 are the
-self-check quizzes and take no lecture time. For a 90-minute slot, skip the
-slides in the second table: the estimate is then about 97 min. To jump, type
-the slide number and press Enter.
+The lecture is slides 1–65; when time is short, skip the slides of the
+second table. Slides 66–73 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-The opening slide (3) asks four questions about last week's histogram. The
-plan answers them by about minute 60: the bar of ± √N on slide 30 (about
-0:50), the mean, s and the standard error on slides 36 and 39 (about 1:00),
-and what the standard error does not cover on slide 44.
+The opening slide (3) asks four questions about last week's histogram.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–8, 10–13, 15 | Four questions; probability and its rules; independence on the file; Bayes by counting |
-| 0:26 | 16–22 | Random variables: mean, variance, sums, density |
-| 0:39 | 24–26, 29–31, 33 | Binomial, Poisson, √N on the mass column, sums of uniform numbers form a bell, the Gaussian |
-| 0:56 | 35–36, 39, 41–42, 44 | Mean, s and standard error of the mass column; what it does not cover |
-| 1:08 | 45–50 | Error propagation, g from one pendulum row |
-| 1:20 | 56–57, 59–60, 62–64 | Likelihood, the mean, the weighted mean, g from nine rows |
-| 1:35 | 65 | The four questions, answered |
-| 1:37 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–8, 10–13, 15 | Four questions; probability and its rules; independence on the file; Bayes by counting |
+| 16–22 | Random variables: mean, variance, sums, density |
+| 24–26, 29–31, 33 | Binomial, Poisson, √N on the mass column, sums of uniform numbers form a bell, the Gaussian |
+| 35–36, 39, 41–42, 44 | Mean, s and standard error of the mass column; what it does not cover |
+| 45–50 | Error propagation, g from one pendulum row |
+| 56–57, 59–60, 62–64 | Likelihood, the mean, the weighted mean, g from nine rows |
+| 65 | The four questions, answered |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Three Axioms | 9 | 2 min |
-| Bayes' Theorem (slide 15 is worked by counting) | 14 | 3 min |
-| Independent Trials: Counting | 23 | 2 min |
-| The Limit in Numbers, The Limit, Computed | 27–28 | 5 min |
-| The Sums in NumPy | 32 | 4 min |
-| Where the Gaussian Applies | 34 | 2 min |
-| Covariance and Correlation, Correlation in Numbers | 37–38 | 5 min |
-| The Standard Error, Checked | 40 | 2 min |
-| Why N − 1 | 43 | 3 min |
-| The Uncertainty of g, Simulated, Writing a Result | 51–52 | 6 min |
-| Testing a Hypothesis | 53–55 | 5 min |
-| Maximum Likelihood | 58 | 2 min |
-| The Width of the Likelihood | 61 | 2 min |
+| Skip | Slides |
+|--|--|
+| Three Axioms | 9 |
+| Bayes' Theorem (slide 15 is worked by counting) | 14 |
+| Independent Trials: Counting | 23 |
+| The Limit in Numbers, The Limit, Computed | 27–28 |
+| The Sums in NumPy | 32 |
+| Where the Gaussian Applies | 34 |
+| Covariance and Correlation, Correlation in Numbers | 37–38 |
+| The Standard Error, Checked | 40 |
+| Why N − 1 | 43 |
+| The Uncertainty of g, Simulated, Writing a Result | 51–52 |
+| Testing a Hypothesis | 53–55 |
+| Maximum Likelihood | 58 |
+| The Width of the Likelihood | 61 |
 
 - **Do not cut** slide 65, the closing slide: it answers the four questions
   of slide 3. Do not cut slides 3 (the questions), 20 (sums of random
@@ -179,8 +174,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 9 — How Sure Is 7.16? Probability on the Weather
-Data](../seminars/seminar_09.md) works on the weather project of Lectures 1
+[Seminar 9 · Statistics](../seminars/seminar_09.md) works on the weather project of Lectures 1
 to 5. Every student gives the mean temperature of the weather project with
 an honest uncertainty, 7.16 ± 0.22 °C, and the probability of a frost hour
 in each month, commits the scripts and pushes them.

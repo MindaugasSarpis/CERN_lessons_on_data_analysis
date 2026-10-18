@@ -1,0 +1,6 @@
+name: s05
+channels:
+  - conda-forge
+dependencies:
+  - jupyterlab=4.6
+  - python=3.14

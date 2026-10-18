@@ -96,38 +96,36 @@ The weather numbers were computed on the files in `lectures/workbook/docs/data/`
   column (`DER_deltaeta_jet_jet`: "undefined if PRI_jet_num ≤ 1") but gives
   no units; the mass columns, near the Higgs mass of 125 GeV, point to GeV.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–66 and estimates about 109 min; with the pauses for
-the room it runs longer. Slides 67–75 are the self-check quizzes and take no
-lecture time. For a 90-minute slot, skip the slides in the second table;
-that leaves about 90 min. To jump, type the slide number and press Enter.
+The lecture is slides 1–66; when time is short, skip the slides of the
+second table. Slides 67–75 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–4 | Four lines of `weather.csv` and the five questions |
-| 0:05 | 6–7 | The definition of data, symbols plus a rule |
-| 0:09 | 9–12 | One line per hour; one row at the LHC; the data-flow clip |
-| 0:17 | 13–14, 16–19 | The rows counted, the units, `-999` and the mean, `-999.0` in a CERN file |
-| 0:29 | 21–26 | Numbers, kinds of variables, the daily export, which columns can be averaged, measured or derived |
-| 0:41 | 28 | The decimal comma |
-| 0:43 | 31, 33, 35–37 | The record next to `weather.csv`, the provenance note, the project folder, the five answers |
-| 0:53 | 39–40, 42–43, 45–46 | The project folder and VS Code |
-| 1:04 | 47–50, 52 | Markdown: the source and its preview |
-| 1:12 | 54–59, 61 | The daily export repaired, then made a Markdown table |
-| 1:27 | 65–66 | The file, annotated; Recap |
-| 1:31 | | End |
+| Slides | Part |
+|--|--|
+| 1–4 | Four lines of `weather.csv` and the five questions |
+| 6–7 | The definition of data, symbols plus a rule |
+| 9–12 | One line per hour; one row at the LHC; the data-flow clip |
+| 13–14, 16–19 | The rows counted, the units, `-999` and the mean, `-999.0` in a CERN file |
+| 21–26 | Numbers, kinds of variables, the daily export, which columns can be averaged, measured or derived |
+| 28 | The decimal comma |
+| 31, 33, 35–37 | The record next to `weather.csv`, the provenance note, the project folder, the five answers |
+| 39–40, 42–43, 45–46 | The project folder and VS Code |
+| 47–50, 52 | Markdown: the source and its preview |
+| 54–59, 61 | The daily export repaired, then made a Markdown table |
+| 65–66 | The file, annotated; Recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| The lifecycle | 8 | 1 min |
-| A line in the middle | 15 | 2 min |
-| File formats; the spreadsheet; a row as text and as binary | 27, 29–30 | 6 min |
-| Portals, licences | 32, 34 | 4 min |
-| The five questions for other datasets | 38 | 6 min |
-| Rules for file names, first keys | 41, 44 | 4 min |
-| Links and images, usual mistakes | 51, 53 | 3 min |
-| Every match of a word, the size check, text commands, the key sheet | 60, 62–64 | 8 min |
+| Skip | Slides |
+|--|--|
+| The lifecycle | 8 |
+| A line in the middle | 15 |
+| File formats; the spreadsheet; a row as text and as binary | 27, 29–30 |
+| Portals, licences | 32, 34 |
+| The five questions for other datasets | 38 |
+| Rules for file names, first keys | 41, 44 |
+| Links and images, usual mistakes | 51, 53 |
+| Every match of a word, the size check, text commands, the key sheet | 60, 62–64 |
 
 - **Do not cut** slides 3–4 (the questions), 7 (the thesis), 17–19 (`-999`,
   its effect on the mean, the CERN file), 23–25 (the table and its mean), 37

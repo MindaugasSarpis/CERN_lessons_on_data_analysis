@@ -97,40 +97,34 @@ pytest 9.1.1:
   three text results have the same bytes, and the picture differs: 20 868
   bytes against 21 965.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–65 and estimates about 141 min. Slides 66–73 are the
-self-check quizzes and take no lecture time. For a 90-minute slot, skip
-the slides in the second table. In a 2-hour slot, skipping slides 32–34
-and 60–61 alone brings the estimate to about 128 min. To jump, type the
-slide number and press Enter.
+The lecture is slides 1–65; when time is short, skip the slides of the
+second table. Slides 66–73 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–3, 5–9 | `results/` deleted and the lists on paper, the project as it is, what breaks by hand, what reproducible means, the pipeline as a diagram |
-| 0:14 | 12–13, 15, 18–19, 21–22, 25 | The command line: file names in the code, argparse, the cleaning as a function, a command and a module, exit codes in both shells, the config file, results as data |
-| 0:31 | 26–27, 29, 31 | Environments: two answers from one program, venv in zsh and PowerShell, `requirements.txt` |
-| 0:41 | 35–43 | One command: the rule, the worked example, `run_all.py`, four cases, delete and rebuild. Slide 43 answers the opening at about 1:00 |
-| 1:02 | 46–51, 55 | Tests: the plot that looked fine, assert, the first test, pytest, a failure, tests in the one command |
-| 1:17 | 56, 58–59, 63–65 | The README's How to Rebuild, for the pipeline; continuous integration; FAIR on two cases; recap; the four aims, answered |
-| 1:30 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–3, 5–9 | `results/` deleted and the lists on paper, the project as it is, what breaks by hand, what reproducible means, the pipeline as a diagram |
+| 12–13, 15, 18–19, 21–22, 25 | The command line: file names in the code, argparse, the cleaning as a function, a command and a module, exit codes in both shells, the config file, results as data |
+| 26–27, 29, 31 | Environments: two answers from one program, venv in zsh and PowerShell, `requirements.txt` |
+| 35–43 | One command: the rule, the worked example, `run_all.py`, four cases, delete and rebuild. Slide 43 answers the opening at about 1:00 |
+| 46–51, 55 | Tests: the plot that looked fine, assert, the first test, pytest, a failure, tests in the one command |
+| 56, 58–59, 63–65 | The README's How to Rebuild, for the pipeline; continuous integration; FAIR on two cases; recap; the four aims, answered |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Learning Objectives | 4 | 2 min |
-| Diagrams as Text, The Project Folder Extended | 10–11 | 5 min |
-| The Words of a Command, Help and Error Messages from argparse, Options | 14, 16–17 | 7 min |
-| Docstrings | 20 | 2 min |
-| The Intercept Changes the Result, *g* by Method | 23–24 | 5 min |
-| What Do the Scripts Need?, An Empty Environment Is a Test | 28, 30 | 5 min |
-| What the File Fixes and What It Does Not, conda and uv, Recommended Extensions for the Editor | 32–34 | 7 min |
-| Make, Make on Windows and Larger Pipelines | 44–45 | 5 min |
-| Floats in a Test, A Test with a Known Answer, What to Test | 52–54 | 8 min |
-| What Goes into Git | 57 | 2 min |
-| Docker, Large Data, FAIR | 60–62 | 8 min |
-
-Together the rows save about 56 min and bring the estimate to about 85 min,
-which leaves a few minutes for the live runs.
+| Skip | Slides |
+|--|--|
+| Learning Objectives | 4 |
+| Diagrams as Text, The Project Folder Extended | 10–11 |
+| The Words of a Command, Help and Error Messages from argparse, Options | 14, 16–17 |
+| Docstrings | 20 |
+| The Intercept Changes the Result, *g* by Method | 23–24 |
+| What Do the Scripts Need?, An Empty Environment Is a Test | 28, 30 |
+| What the File Fixes and What It Does Not, conda and uv, Recommended Extensions for the Editor | 32–34 |
+| Make, Make on Windows and Larger Pipelines | 44–45 |
+| Floats in a Test, A Test with a Known Answer, What to Test | 52–54 |
+| What Goes into Git | 57 |
+| Docker, Large Data, FAIR | 60–62 |
 
 - **Do not cut** slide 3 or slide 43. Slide 3 asks the room what brings
   `results/` back; slide 43 is the answer, one line in both shells.
@@ -174,10 +168,10 @@ which leaves a few minutes for the live runs.
 Slides taken out of this deck (A Diagram Git Can Compare; pre-commit) are
 kept in `lectures/content/parked/13_Reproducible_Workflows.md`.
 
-Before the session, follow the page of [Seminar 13](../seminars/seminar_13.md)
-once on a copy of your project folder. The result is the project that the
-slides show. Start the local copy of the slides with
-`node scripts/serve-local.mjs 8123`, then open
+Before the session, follow the page of [Seminar
+13](../seminars/seminar_13.md) once on a copy of your project folder. The
+result is the project that the slides show. Start the local copy of the
+slides with `node scripts/serve-local.mjs 8123`, then open
 `http://localhost:8123/13-reproducible-workflows/`.
 
 ## Check yourself
@@ -223,8 +217,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 13 — Can a Stranger Rebuild Every Number? One Command for the
-Weather Project](../seminars/seminar_13.md) works on the weather project of
+[Seminar 13 · Workflows](../seminars/seminar_13.md) works on the weather project of
 Lectures 1 to 5. Every student pins the project's environment, makes all of
 `data/processed` and `results` with one command that also tests the numbers,
 and proves it in a fresh clone with a fresh environment: the same checksums.

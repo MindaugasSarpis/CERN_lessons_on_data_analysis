@@ -55,41 +55,39 @@ terms, and each is defined in one sentence on the slide that uses it.
 | Median, quartiles, IQR | 41 | Half of the values lie below the median, a quarter below the first quartile, three quarters below the third; the IQR is the length of the box |
 | Standard error | 58 | The standard deviation of the *N* values divided by √*N* |
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–87 and estimates about 141 min. Slides 88–96 are the
-self-check quizzes and take no lecture time. In a 2-hour slot nothing has to
-be skipped. For a 90-minute slot, skip the slides in the second table. To
-jump, type the slide number and press Enter.
+The lecture is slides 1–87; when time is short, skip the slides of the
+second table. Slides 88–96 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–6 | The pendulum plot and the mass counts (the question of the lecture), objectives, what a figure is for, Anscombe's quartet |
-| 0:09 | 7–13 | A first plot: Figure and Axes, the pendulum as points, the mass histogram. Slide 13 answers the opening question |
-| 0:23 | 14–17, 21 | Visual channels and their ranking, the parts of a figure, axis labels with units |
-| 0:30 | 25–29, 34 | Amounts: bars, bars from zero, the dot plot |
-| 0:37 | 38, 39, 41 | Distributions: density, bin width, boxplot and its terms |
-| 0:42 | 46, 47, 49, 56, 58, 59 | Proportions, the scatter plot, trends, uncertainty, which chart |
-| 0:53 | 60–68, 71, 72 | Design: ink, colour, the logarithmic scale, small multiples |
-| 1:09 | 73–77 | The finding: title, direct labels, annotation, reference line |
-| 1:15 | 78, 80, 81, 83 | Matplotlib again: formula curve, error bars, saving |
-| 1:22 | 84–87 | Checklist, every choice in the two figures, recap |
-| 1:30 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–6 | The pendulum plot and the mass counts (the question of the lecture), objectives, what a figure is for, Anscombe's quartet |
+| 7–13 | A first plot: Figure and Axes, the pendulum as points, the mass histogram. Slide 13 answers the opening question |
+| 14–17, 21 | Visual channels and their ranking, the parts of a figure, axis labels with units |
+| 25–29, 34 | Amounts: bars, bars from zero, the dot plot |
+| 38, 39, 41 | Distributions: density, bin width, boxplot and its terms |
+| 46, 47, 49, 56, 58, 59 | Proportions, the scatter plot, trends, uncertainty, which chart |
+| 60–68, 71, 72 | Design: ink, colour, the logarithmic scale, small multiples |
+| 73–77 | The finding: title, direct labels, annotation, reference line |
+| 78, 80, 81, 83 | Matplotlib again: formula curve, error bars, saving |
+| 84–87 | Checklist, every choice in the two figures, recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| The legend and its two examples | 18–20 | 4 min |
-| Label size, coordinate system, aspect ratio | 22–24 | 4 min |
-| Ordered categories, stacked bars, bars in three and two dimensions | 30–33 | 5 min |
-| Life expectancy, three slides | 35–37 | 4 min |
-| A Peak on a Flat Background, Live | 40 | 3 min |
-| Empirical CDF, ridgeline plot, lines or fill, heatmap | 42–45 | 7 min |
-| The treemap | 48 | 1 min |
-| Bubble chart, overlapping points, hexagonal bins, correlation heatmap, pair plot, slopegraph | 50–55 | 10 min |
-| Trend and seasonal cycle | 57 | 1 min |
-| Linear or Logarithmic, Live; the square-root scale | 69–70 | 4 min |
-| A minimal bar chart | 79 | 2 min |
-| One style for all figures | 82 | 2 min |
+| Skip | Slides |
+|--|--|
+| The legend and its two examples | 18–20 |
+| Label size, coordinate system, aspect ratio | 22–24 |
+| Ordered categories, stacked bars, bars in three and two dimensions | 30–33 |
+| Life expectancy, three slides | 35–37 |
+| A Peak on a Flat Background, Live | 40 |
+| Empirical CDF, ridgeline plot, lines or fill, heatmap | 42–45 |
+| The treemap | 48 |
+| Bubble chart, overlapping points, hexagonal bins, correlation heatmap, pair plot, slopegraph | 50–55 |
+| Trend and seasonal cycle | 57 |
+| Linear or Logarithmic, Live; the square-root scale | 69–70 |
+| A minimal bar chart | 79 |
+| One style for all figures | 82 |
 
 - **Do not cut** slide 3 (The Pendulum Plot and the Mass Counts) or slides 8–13
   (A First Plot), which answer it. The seminar makes exactly these two
@@ -114,8 +112,8 @@ jump, type the slide number and press Enter.
 - **Slides 79–81** highlight the code in steps. Each click moves to the next
   group of lines.
 
-Before the session, start the local copy of the slides:
-`node scripts/serve-local.mjs 8123`, then open
+Before the session, start the local copy of the slides: `node
+scripts/serve-local.mjs 8123`, then open
 `http://localhost:8123/08-data-visualisation/`.
 
 ## Check yourself
@@ -160,8 +158,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 8 — What Does a Year of Weather Look Like? Figures with
-Matplotlib](../seminars/seminar_08.md) works on the weather project of
+[Seminar 8 · Visualisation](../seminars/seminar_08.md) works on the weather project of
 Lectures 1 to 5. Every student adds Matplotlib to the project's environment
 and writes one script, `scripts/figures.py`, that draws five figures of
 `weather.csv` into `results/`: ten years day by day, the year's cycle, the

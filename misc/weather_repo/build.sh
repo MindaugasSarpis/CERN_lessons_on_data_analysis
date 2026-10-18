@@ -13,7 +13,9 @@
 #   writes outdir/weather-project (default: misc/weather_repo/run/, gitignored)
 #   GIT=/path/to/git selects the git binary.
 # The tag seminar-files points to an empty commit outside main and carries
-# the release with the zips of Seminars 1 to 5 (release_files.py)
+# the release with the starting folder of every seminar, weather-sNN.zip
+# (seminar_zips.py, since 18 Oct 2026; the seminars no longer pull the
+# STAGE commits below), and the older zips of Seminars 1 to 5 (release_files.py)
 # (lectures/workbook/docs/data/weather_seminar_files.py writes them to
 # misc/weather_repo/release/).
 # To publish after a change (rewrites the public history; only before the

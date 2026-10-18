@@ -46,40 +46,38 @@ weights $v_{ji}$ (to hidden unit $j$ from input $i$), biases $c_j$, weighted
 sums $u_j$ and outputs $h_j = \sigma(u_j)$. In code these are `V`, `c`, `w`,
 `b`. Lecture 11 wrote `W1`, `b1`, `w2`, `b2` for its hand-set network.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–66 and estimates about 139 min. Slides 67–73 are the
-self-check quizzes and take no lecture time. In a 2-hour slot, skip the
-section on k-means or the one on scikit-learn. For a 90-minute slot, skip
-the slides in the second table. To jump, type the slide number and press
-Enter.
+The lecture is slides 1–66; when time is short, skip the slides of the
+second table. Slides 67–73 are the self-check quizzes and take no lecture
+time. In a 2-hour slot, skip the section on k-means or the one on
+scikit-learn. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–4 | Where Lecture 11 stopped |
-| 0:06 | 5–7 | The hidden layer, the forward pass by hand |
-| 0:11 | 9–16, 19 | Backpropagation: the four steps, the whole pass, the loop in NumPy |
-| 0:31 | 20–25 | Training on XOR, the seeds that fail |
-| 0:44 | 27–33 | The two-class file, three sets, hidden units, overfitting, the test |
-| 0:59 | 34–36, 38 | Confusion matrix, precision and recall, the threshold |
-| 1:07 | 42, 44–45 | Leakage, and the leak in the LHCb file |
-| 1:13 | 56, 58, 60–64 | Language models: by hand, what they are, verify, disclose |
-| 1:29 | 66 | Recap |
-| 1:31 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–4 | Where Lecture 11 stopped |
+| 5–7 | The hidden layer, the forward pass by hand |
+| 9–16, 19 | Backpropagation: the four steps, the whole pass, the loop in NumPy |
+| 20–25 | Training on XOR, the seeds that fail |
+| 27–33 | The two-class file, three sets, hidden units, overfitting, the test |
+| 34–36, 38 | Confusion matrix, precision and recall, the threshold |
+| 42, 44–45 | Leakage, and the leak in the LHCb file |
+| 56, 58, 60–64 | Language models: by hand, what they are, verify, disclose |
+| 66 | Recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Without the Sigmoid, Two Layers Are One | 8 | 3 min |
-| The Check: Nudge One Weight; One Step of Gradient Descent | 17–18 | 4 min |
-| What Helps a Run Succeed | 26 | 2 min |
-| When Accuracy Misleads | 37 | 2 min |
-| The ROC curve by hand, its area, the ROC of the test rows | 39–41 | 7 min |
-| Cross-Validation | 43 | 2 min |
-| Learning Without Labels, the whole section | 46–51 | 11 min |
-| scikit-learn, the whole section. Seminar 16 does it in its section 8 | 52–55 | 8 min |
-| From Two Classes to Many | 57 | 3 min |
-| Generating Text. Show its output on slide 60 | 59 | 4 min |
-| Keeping the Work Reproducible | 65 | 2 min |
+| Skip | Slides |
+|--|--|
+| Without the Sigmoid, Two Layers Are One | 8 |
+| The Check: Nudge One Weight; One Step of Gradient Descent | 17–18 |
+| What Helps a Run Succeed | 26 |
+| When Accuracy Misleads | 37 |
+| The ROC curve by hand, its area, the ROC of the test rows | 39–41 |
+| Cross-Validation | 43 |
+| Learning Without Labels, the whole section | 46–51 |
+| scikit-learn, the whole section. Seminar 16 does it in its section 8 | 52–55 |
+| From Two Classes to Many | 57 |
+| Generating Text. Show its output on slide 60 | 59 |
+| Keeping the Work Reproducible | 65 |
 
 - **Do not cut** slides 12–16 (the four steps and the whole pass), 21–25
   (the training run and the seeds that fail) or 28–33 (the split, the
@@ -148,8 +146,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 16 — Can a Model Forecast Tomorrow's Temperature? scikit-learn on
-the Weather Project](../seminars/seminar_16.md) works on the weather project
+[Seminar 16 · Machine Learning](../seminars/seminar_16.md) works on the weather project
 of Lectures 1 to 5. Every student adds scikit-learn to the environment,
 builds a table of days, measures two baselines, trains a linear model and a
 tree on 2016 to 2023, tests them once on 2024 and 2025, and pushes the

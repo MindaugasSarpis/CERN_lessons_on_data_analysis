@@ -119,7 +119,11 @@
         return;
       }
       if (!section || tag === "HR") return;
-      if (tag === "P" && !section.meta && /^\s*[\d—]/.test(el.textContent) && el.querySelector("strong")) {
+      // The sentence of purpose right under a section's heading (its clock
+      // is an HTML comment, not shown) is the section's subtitle.
+      var first = section.n === 0;
+      section.n = 1;
+      if (tag === "P" && first && !/^\s*Check:/.test(el.textContent) && el.textContent.length < 300) {
         section.meta = el.textContent.trim();
         return;
       }
@@ -155,7 +159,7 @@
       pending = kind === "Task" ? step : null;
     });
 
-    steps.unshift({ part: "", section: { title: "Run sheet", meta: "", anchor: "" }, kind: "Overview",
+    steps.unshift({ part: "", section: { title: "Start", meta: "", anchor: "" }, kind: "Overview",
       body: new Body(function () { return intro.cloneNode(true); }) });
     return steps;
   }
@@ -227,7 +231,7 @@
     $(".steps-next").addEventListener("click", function () { show(index + 1); });
     $(".steps-prev").addEventListener("click", function () { show(index - 1); });
     $(".steps-close").addEventListener("click", close);
-    // Links in the run sheet jump to the first step of their section.
+    // Links on the start screen jump to the first step of their section.
     $(".steps-body").addEventListener("click", function (ev) {
       var a = ev.target.closest("a[href^='#']");
       if (!a) return;

@@ -45,40 +45,37 @@ measures what the second way gains.
    dict, then the mass column in 20 bins; the whole analysis as one script.
    The Recap answers the four questions and sets the loop against the array.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–63 and estimates about 137 min. Slides 64–70 are the
-self-check quizzes and take no lecture time. In a 2-hour slot nothing is
-skipped. For a 90-minute slot, skip the slides in the second table: the
-estimate is then about 90 min. To jump, type the slide number and press
-Enter.
+The lecture is slides 1–63; when time is short, skip the slides of the
+second table. Slides 64–70 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–8 | The file, the four questions and the guess; functions |
-| 0:13 | 11–14 | One line as a function, exceptions, `try` and `except` |
-| 0:20 | 18–24 | Text files, the working directory, `pathlib`, `csv`, the loop: questions 1–3 |
-| 0:36 | 26–27, 29–31 | The cost of the loop, NumPy, the measured times |
-| 0:45 | 33–35 | `dtype`, `int8` |
-| 0:51 | 38, 40–44 | Two dimensions, masks, **question 4 answered** (slide 44, about 1:00) |
-| 1:02 | 45, 47–49 | Combining masks, arithmetic, *g* from the pendulum table |
-| 1:11 | 51–52, 54–55 | Broadcasting: the worked example, then the rule; mean and standard deviation |
-| 1:18 | 60–63 | `np.histogram`, the mass column, the script, the Recap |
-| 1:30 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–8 | The file, the four questions and the guess; functions |
+| 11–14 | One line as a function, exceptions, `try` and `except` |
+| 18–24 | Text files, the working directory, `pathlib`, `csv`, the loop: questions 1–3 |
+| 26–27, 29–31 | The cost of the loop, NumPy, the measured times |
+| 33–35 | `dtype`, `int8` |
+| 38, 40–44 | Two dimensions, masks, **question 4 answered** (slide 44, about 1:00) |
+| 45, 47–49 | Combining masks, arithmetic, *g* from the pendulum table |
+| 51–52, 54–55 | Broadcasting: the worked example, then the rule; mean and standard deviation |
+| 60–63 | `np.histogram`, the mass column, the script, the Recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Names Inside a Function Are Local, Try It — A Function for the Mean | 9–10 | 6 min |
-| Exceptions in Data Files, Try It — Skip a Bad Row, Catch Only What You Expect | 15–17 | 8 min |
-| The Script as Functions | 25 | 2 min |
-| A List and an Array in Memory | 28 | 2 min |
-| Try It — Time Both | 32 | 4 min |
-| `float32` and `float64` on the Data File, Shape: Rows and Columns | 36–37 | 5 min |
-| Index and Slice, as in a List | 39 | 2 min |
-| Try It — Masks | 46 | 4 min |
-| Functions on Whole Arrays | 50 | 2 min |
-| `axis`: Down the Rows or Along Them | 53 | 2 min |
-| The Four Columns in Numbers, Centre and Scale, `np.loadtxt` in Full, An Array on Disk | 56–59 | 10 min |
+| Skip | Slides |
+|--|--|
+| Names Inside a Function Are Local, Try It — A Function for the Mean | 9–10 |
+| Exceptions in Data Files, Try It — Skip a Bad Row, Catch Only What You Expect | 15–17 |
+| The Script as Functions | 25 |
+| A List and an Array in Memory | 28 |
+| Try It — Time Both | 32 |
+| `float32` and `float64` on the Data File, Shape: Rows and Columns | 36–37 |
+| Index and Slice, as in a List | 39 |
+| Try It — Masks | 46 |
+| Functions on Whole Arrays | 50 |
+| `axis`: Down the Rows or Along Them | 53 |
+| The Four Columns in Numbers, Centre and Scale, `np.loadtxt` in Full, An Array on Disk | 56–59 |
 
 - **Do not cut** slide 63 (Recap): it answers
   the opening slide. Nor slides 19–24 (files, the working directory, `csv`,
@@ -149,8 +146,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 7 — Is It Getting Warmer? Functions and NumPy on the Weather
-Project](../seminars/seminar_07.md) works on the weather project of Lectures
+[Seminar 7 · NumPy](../seminars/seminar_07.md) works on the weather project of Lectures
 1 to 5. Every student gives the project a conda environment with NumPy,
 written down in `environment.yml`; reads `weather.csv` with functions and
 then as one NumPy array; finds the coldest day and the mean of each year;

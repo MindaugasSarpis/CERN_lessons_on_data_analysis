@@ -45,36 +45,35 @@ Pandas as known.
 9. **Estimate before you start** — rows, memory and time for a file of a
    billion rows, on paper; which machine a job needs.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–64 and estimates about 136 min. Slides 65–70 are the
-self-check quizzes and take no lecture time. For a 90-minute slot, skip the
-slides in the second table. To jump, type the slide number and press Enter.
+The lecture is slides 1–64; when time is short, skip the slides of the
+second table. Slides 65–70 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–3 | The goal and the objectives |
-| 0:03 | 4–11 | Where the time goes: the loop, NumPy, time per row, the whole script, text against binary |
-| 0:21 | 12–15 | Amdahl's law, derived and applied |
-| 0:28 | 16–21, 24 | Processes: the pool, four workers, a job worth splitting, the law tested, what splits |
-| 0:43 | 29–30, 32–34, 36 | Memory: the bytes of a table, does it fit, memory against disk against network |
-| 0:56 | 39–43, 45 | Running unattended: streams, the background, the log, `nohup` |
-| 1:09 | 47–50, 54 | The batch system: the cluster, the job script, the job array |
-| 1:20 | 55–57 | The grid |
-| 1:26 | 60, 62–64 | A billion rows, which machine, recap |
-| 1:34 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–3 | The goal and the objectives |
+| 4–11 | Where the time goes: the loop, NumPy, time per row, the whole script, text against binary |
+| 12–15 | Amdahl's law, derived and applied |
+| 16–21, 24 | Processes: the pool, four workers, a job worth splitting, the law tested, what splits |
+| 29–30, 32–34, 36 | Memory: the bytes of a table, does it fit, memory against disk against network |
+| 39–43, 45 | Running unattended: streams, the background, the log, `nohup` |
+| 47–50, 54 | The batch system: the cluster, the job script, the job array |
+| 55–57 | The grid |
+| 60, 62–64 | A billion rows, which machine, recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Twelve Workers, No Faster Than Eight; The Sum Changes in the Last Digits | 22–23 | 5 min |
-| The GPU, with its clip | 25–28 | 8 min |
-| Peak Memory Is Larger Than the Table | 31 | 2 min |
-| Order in Memory Matters | 35 | 3 min |
-| The Limit Set by Light, and the clip on computer memory | 37–38 | 4 min |
-| What a Log Tells; One Folder per Run | 44, 46 | 5 min |
-| Submit, Watch, Cancel; What to Ask For; An Honest Request Starts Sooner | 51–53 | 7 min |
-| The cloud | 58–59 | 5 min |
-| What to Estimate Before a Long Run | 61 | 3 min |
+| Skip | Slides |
+|--|--|
+| Twelve Workers, No Faster Than Eight; The Sum Changes in the Last Digits | 22–23 |
+| The GPU, with its clip | 25–28 |
+| Peak Memory Is Larger Than the Table | 31 |
+| Order in Memory Matters | 35 |
+| The Limit Set by Light, and the clip on computer memory | 37–38 |
+| What a Log Tells; One Folder per Run | 44, 46 |
+| Submit, Watch, Cancel; What to Ask For; An Honest Request Starts Sooner | 51–53 |
+| The cloud | 58–59 |
+| What to Estimate Before a Long Run | 61 |
 
 - **Do not cut** slides 6–8 (the loop, the noise, NumPy), 17–21 (the pool
   and the test of Amdahl's law), 30 and 32 (the bytes of a table) or 41–43
@@ -148,8 +147,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 15 — How Long Does It Take, and How to Make It Faster? Timing the
-Weather Project](../seminars/seminar_15.md) works on the weather project of
+[Seminar 15 · Computing](../seminars/seminar_15.md) works on the weather project of
 Lectures 1 to 5. Every student times the rebuild and one slow script, finds
 which part of it is slow, makes it 17 times faster on one core, compares
 that with more cores, runs it as a background job, and pushes the times in

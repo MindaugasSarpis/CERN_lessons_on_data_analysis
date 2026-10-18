@@ -1,41 +1,19 @@
-# Seminar 1 — What Do the Weather Files Say? VS Code and Markdown
+# Seminar 1 · Data
 
-**Paired lecture:** 02 Introduction to Data · **Format:** follow-along · **~120 min**
-in class
+**Paired lecture:** 02 Introduction to Data · **Format:** follow-along, in class
 
-**Today's goal:** every student has the folder `weather-project` open in VS
+<!-- ~120 min: the length pnpm timing:check reads -->
+
+**Today's goal:** What do the weather files say? Every student has the folder `weather-project` open in VS
 Code, with the station's two files in `data/raw`, the export repaired by hand
 into `data/processed/daily.csv`, and a README that says what is in the folder,
 where the data came from and what each column means.
 
-Everything happens in VS Code and a web browser. No terminal today.
+Everything happens in VS Code and a web browser. No terminal today. In the
+blocks stands the text to type, or what appears on the screen.
 
-## Run sheet
-
-| Clock | Section | Typed | The room ends with |
-|--|--|--|--|
-| | **Part 1 · VS Code and the README** · 40 min | | |
-| 0:00 | [1. Install VS Code](#install) | `code.visualstudio.com` | VS Code running |
-| 0:10 | [2. Make and open the project folder](#open-folder) | **File** > **Open Folder...** | `weather-project` open |
-| 0:15 | [3. Name the five regions, try three keys](#interface) | `Ctrl+Shift+P`, `Ctrl+B`, `Ctrl+=` | the regions named |
-| 0:20 | [4. Folders and a README](#folders) | **New Folder** `data/raw` | four folders, `README.md` |
-| 0:25 | [5. Markdown and its preview](#markdown) | `# Weather Station` | a title and a paragraph in the preview |
-| 0:35 | [6. Three mistakes, on purpose](#mistakes) | `#Weather Station` | each mistake seen and undone |
-| | **Part 2 · The files arrive** · 30 min | | |
-| 0:40 | [7. Download the station's files](#download) | `weather-files.zip` | two files in `data/raw` |
-| 0:50 | [8. Read the long file](#data-file) | `Ctrl+End`, `Ctrl+G`, `Ctrl+F` | 87 672 rows, 120 times `-999` |
-| 1:00 | [9. Write where the data came from](#provenance) | `## Data` | source and date in the README |
-| | **Part 3 · Repair the export** · 45 min | | |
-| 1:10 | [10. A copy to repair](#copy) | `Ctrl+C`, `Ctrl+V`, `F2` | `data/processed/daily.csv` |
-| 1:15 | [11. Delete the mean line](#lines) | `Ctrl+Shift+K` | nine rows |
-| 1:20 | [12. Find and Replace](#replace) | `Ctrl+H`: `,` to `.`, `;` to `,` | commas between the values |
-| 1:30 | [13. A cursor on every line](#cursors) | `Shift+Alt+I`, `Home` | column `nr` gone |
-| 1:40 | [14. Check the size, write down the edits](#note) | **Get Info**, **Properties** | 148 bytes, one line in the README |
-| 1:55 | [15. Wrap up](#wrap-up) | | |
-| | **Optional, if the room is fast** | | |
-| — | [16. Sort the lines: numbers sort as text](#sort) | **Sort Lines Ascending** | `10.4` before `5.0` |
-| — | [17. Rename a column everywhere](#rename) | `Ctrl+Shift+L` | `t_mean_c` in the table |
-| — | [18. The export in a spreadsheet](#spreadsheet) | double-click `daily_export.csv` | what the spreadsheet shows |
+Further reading: [the VS Code user interface](https://code.visualstudio.com/docs/editing/getting-started/userinterface);
+[Markdown in ten minutes, CommonMark](https://commonmark.org/help/).
 
 **If time runs short:** section 6 in two minutes; leave out the Task of Part
 3, nothing later needs `results/daily.md`.
@@ -43,22 +21,27 @@ Everything happens in VS Code and a web browser. No terminal today.
 ??? info "Before the session"
     - **Room:** internet, and a laptop on which the student can install
       programs.
-    - **You:** a VS Code with no `weather-project` folder yet. The zip is on
-      the Releases page of
-      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases).
+    - **You:** a VS Code with no `weather-project` folder yet. Today's files
+      are `weather-s01.zip` on the Releases page of
+      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases);
+      the session needs nothing from any other seminar.
     - **Keys** are written for Windows, macOS in brackets.
 
 ---
 
 ## Part 1 · VS Code and the README { #part-1 }
 
-**0:00 to 0:40**
+<!-- 0:00 to 0:40 -->
+
+VS Code, a folder for the project, and its first file: the README.
 
 ---
 
 ### 1. Install VS Code { #install }
 
-**0:00 · 10 min** · VS Code is a free editor for text, the same on Windows, macOS and Linux.
+<!-- 0:00 · 10 min -->
+
+VS Code is a free editor for text, the same on Windows, macOS and Linux.
 
 1. Open the address in a browser, click **Download** for your system.
 
@@ -88,7 +71,9 @@ Everything happens in VS Code and a web browser. No terminal today.
 
 ### 2. Make and open the project folder { #open-folder }
 
-**0:10 · 5 min** · VS Code works on a folder: one project, one folder.
+<!-- 0:10 · 5 min -->
+
+VS Code works on a folder: one project, one folder.
 
 1. **File** > **Open Folder...** The dialog opens; go to your home folder (the
    one with your user name).
@@ -107,7 +92,9 @@ Everything happens in VS Code and a web browser. No terminal today.
 
 ### 3. Name the five regions, try three keys { #interface }
 
-**0:15 · 5 min** · The rest of the course calls the parts of the window by these names.
+<!-- 0:15 · 5 min -->
+
+The rest of the course calls the parts of the window by these names.
 
 1. Point at each region and name it.
 
@@ -136,7 +123,9 @@ Everything happens in VS Code and a web browser. No terminal today.
 
 ### 4. Folders and a README { #folders }
 
-**0:20 · 5 min** · Files as they arrived are kept apart from everything made from them.
+<!-- 0:20 · 5 min -->
+
+Files as they arrived are kept apart from everything made from them.
 
 1. Move the mouse over the Side Bar; click the **New Folder** icon. Type:
 
@@ -178,7 +167,9 @@ WEATHER-PROJECT
 
 ### 5. Markdown and its preview { #markdown }
 
-**0:25 · 10 min** · Markdown is plain text with a few signs for structure; `README.md` is the first file anyone opens.
+<!-- 0:25 · 10 min -->
+
+Markdown is plain text with a few signs for structure; `README.md` is the first file anyone opens.
 
 1. In `README.md`, type:
 
@@ -214,7 +205,9 @@ WEATHER-PROJECT
 
 ### 6. Three mistakes, on purpose { #mistakes }
 
-**0:35 · 5 min** · The preview is the test. Make each mistake, read the preview, undo with `Ctrl+Z` (macOS `Cmd+Z`).
+<!-- 0:35 · 5 min -->
+
+The preview is the test. Make each mistake, read the preview, undo with `Ctrl+Z` (macOS `Cmd+Z`).
 
 1. Delete the space after `#` in the title.
 
@@ -243,7 +236,7 @@ WEATHER-PROJECT
     goes in**, and one row for each of the four folders. Check it in the
     preview.
 
-??? note "Answer"
+??? success "Answer"
     ```text
     | Folder | What goes in |
     |--|--|
@@ -260,13 +253,17 @@ WEATHER-PROJECT
 
 ## Part 2 · The files arrive { #part-2 }
 
-**0:40 to 1:10** · The station's operator sent two files by e-mail.
+<!-- 0:40 to 1:10 -->
+
+The station's operator sent two files by e-mail.
 
 ---
 
 ### 7. Download the station's files { #download }
 
-**0:40 · 10 min** · Files from outside go into `data/raw` and are never edited there.
+<!-- 0:40 · 10 min -->
+
+Files from outside go into `data/raw` and are never edited there.
 
 1. Open the Releases page of the course repository.
 
@@ -274,23 +271,23 @@ WEATHER-PROJECT
     github.com/MindaugasSarpis/weather-project/releases
     ```
 
-2. Under **Assets**, click `weather-files.zip`. The browser saves it in
+2. Under **Assets**, click `weather-s01.zip`. The browser saves it in
    **Downloads**.
 3. Unpack it into your home folder.
 
     === "macOS"
 
-        In Finder, open **Downloads** and double-click `weather-files.zip`.
-        Select the new folder `weather-files`, press `Cmd+C`, then
+        In Finder, open **Downloads** and double-click `weather-s01.zip`.
+        Select the new folder `weather-s01`, press `Cmd+C`, then
         `Cmd+Shift+H` (your home folder), then `Cmd+V`.
 
     === "Windows"
 
         In File Explorer, open **Downloads**, right-click
-        `weather-files.zip` > **Extract All...** > **Browse...**, choose
+        `weather-s01.zip` > **Extract All...** > **Browse...**, choose
         `C:\Users\` and your name, **Select Folder**, **Extract**.
 
-4. Open the folder `weather-files` in Finder or File Explorer: three files.
+4. Open the folder `weather-s01` in Finder or File Explorer: three files.
 
     ```text
     daily_export.csv
@@ -319,7 +316,9 @@ WEATHER-PROJECT
 
 ### 8. Read the long file { #data-file }
 
-**0:50 · 10 min** · How many rows, what one row is, and how a missing value is marked: the file shows it.
+<!-- 0:50 · 10 min -->
+
+How many rows, what one row is, and how a missing value is marked: the file shows it.
 
 1. Click `data/raw/weather.csv`. The first lines:
 
@@ -362,7 +361,9 @@ WEATHER-PROJECT
 
 ### 9. Write where the data came from { #provenance }
 
-**1:00 · 10 min** · Someone else, or you in six months, must be able to tell where the files came from.
+<!-- 1:00 · 10 min -->
+
+Someone else, or you in six months, must be able to tell where the files came from.
 
 1. In `README.md`, under the Folders table, add the **Data** section. The
    source and the date come from `message.txt`.
@@ -389,7 +390,7 @@ WEATHER-PROJECT
     100, `wind_ms` has a median of 3.5 and at most 12. Below the table, one
     line on the `-999` rows.
 
-??? note "Answer"
+??? success "Answer"
     ```text
     ## Columns of `weather.csv`
 
@@ -412,7 +413,9 @@ WEATHER-PROJECT
 
 ## Part 3 · Repair the export { #part-3 }
 
-**1:10 to 1:55** · `daily_export.csv` has to become a plain table, on a copy.
+<!-- 1:10 to 1:55 -->
+
+`daily_export.csv` has to become a plain table, on a copy.
 
 ```text
 nr;date;temp_c          date,temp_c
@@ -426,7 +429,9 @@ nr;date;temp_c          date,temp_c
 
 ### 10. A copy to repair { #copy }
 
-**1:10 · 5 min** · A file in `data/raw` is never edited; the edits go on a copy in `data/processed`.
+<!-- 1:10 · 5 min -->
+
+A file in `data/raw` is never edited; the edits go on a copy in `data/processed`.
 
 1. Click `data/raw/daily_export.csv` in the Side Bar. Copy it: `Ctrl+C`
    (macOS `Cmd+C`).
@@ -445,7 +450,9 @@ nr;date;temp_c          date,temp_c
 
 ### 11. Delete the mean line { #lines }
 
-**1:15 · 5 min** · One row is one day; the mean line is not a day.
+<!-- 1:15 · 5 min -->
+
+One row is one day; the mean line is not a day.
 
 1. Click anywhere in the line `;mean;7,97`.
 2. Delete the whole line: `Ctrl+Shift+K` (macOS `Cmd+Shift+K`).
@@ -457,7 +464,9 @@ nr;date;temp_c          date,temp_c
 
 ### 12. Find and Replace { #replace }
 
-**1:20 · 10 min** · The counter shows how many matches there are before anything changes.
+<!-- 1:20 · 10 min -->
+
+The counter shows how many matches there are before anything changes.
 
 1. Open Replace: `Ctrl+H` (macOS `Cmd+Option+F`).
 2. Find `,` and replace with `.`. Read the counter first.
@@ -494,7 +503,9 @@ nr;date;temp_c          date,temp_c
 
 ### 13. A cursor on every line { #cursors }
 
-**1:30 · 10 min** · What is typed or deleted happens at every cursor at once.
+<!-- 1:30 · 10 min -->
+
+What is typed or deleted happens at every cursor at once.
 
 1. Select the ten lines: click before `nr`, then `Shift`+click after the
    last `9.8`.
@@ -517,7 +528,9 @@ nr;date;temp_c          date,temp_c
 
 ### 14. Check the size, write down the edits { #note }
 
-**1:40 · 5 min** · The size in bytes shows that nothing else changed.
+<!-- 1:40 · 5 min -->
+
+The size in bytes shows that nothing else changed.
 
 1. Right-click `data/processed/daily.csv` > **Reveal in Finder** (Windows
    **Reveal in File Explorer**).
@@ -547,7 +560,7 @@ nr;date;temp_c          date,temp_c
     table, with the multi-cursor keys and no typing line by line. Check it in
     the preview.
 
-??? note "Answer"
+??? success "Answer"
     1. Copy all of `daily.csv` into a new file `results/daily.md`.
     2. Select one `,`, then all of them: `Ctrl+Shift+L` (macOS
        `Cmd+Shift+L`). Type ` | `.
@@ -567,7 +580,8 @@ nr;date;temp_c          date,temp_c
 
 ### 15. Wrap up { #wrap-up }
 
-**1:55 · 5 min**
+<!-- 1:55 · 5 min -->
+
 
 | To | Press |
 |--|--|
@@ -581,17 +595,17 @@ nr;date;temp_c          date,temp_c
 
 macOS: `Cmd` for `Ctrl`, `Option` for `Alt`.
 
-Seminar 3 opens `daily.csv` again and names each of its 148 bytes.
-
 ---
 
-## Optional, if the room is fast { #optional }
+## Optional, if the room goes fast { #optional }
 
 ---
 
 ### 16. Sort the lines: numbers sort as text { #sort }
 
-**— · 5 min** · The editor sees characters, not numbers.
+<!-- — · 5 min -->
+
+The editor sees characters, not numbers.
 
 1. **File** > **New Text File**. Type five temperatures of `daily.csv`, one
    per line: `6.3`, `5.0`, `10.4`, `9.8`, `5.6`.
@@ -614,7 +628,9 @@ Seminar 3 opens `daily.csv` again and names each of its 148 bytes.
 
 ### 17. Rename a column everywhere { #rename }
 
-**— · 5 min** · `Ctrl+D` adds the next match to the selection; every match is seen before it changes.
+<!-- — · 5 min -->
+
+`Ctrl+D` adds the next match to the selection; every match is seen before it changes.
 
 1. In `results/daily.md`, double-click `temp_c`.
 2. `Ctrl+D` (macOS `Cmd+D`) until every `temp_c` of the file is selected.
@@ -626,15 +642,78 @@ Seminar 3 opens `daily.csv` again and names each of its 148 bytes.
 
 ### 18. The export in a spreadsheet { #spreadsheet }
 
-**— · 10 min** · A spreadsheet reads the export by the settings of the laptop.
+<!-- — · 10 min -->
 
-1. In Finder or File Explorer, double-click `weather-files/daily_export.csv`
+A spreadsheet reads the export by the settings of the laptop.
+
+1. In Finder or File Explorer, double-click `weather-s01/daily_export.csv`
    (the copy outside the project).
 2. Look: one column per value, or all of a line in column A; `6,3` as a
    number or as text.
 3. Close the spreadsheet with **Don't Save**.
 
 **Check:** two neighbours with different settings see the file differently.
+
+---
+
+### 19. Advanced tasks { #advanced }
+
+<!-- — · 20 min -->
+
+Harder questions to the same files, answered with the keys of today.
+
+!!! question "Task: noon below freezing, by a pattern"
+    How many days of 2025 were below 0 °C at noon? In `weather.csv`, open
+    Find (`Ctrl+F`, macOS `Cmd+F`) and switch on **Use Regular Expression**
+    (the `.*` button, or `Alt+R`, macOS `Cmd+Option+R`). In a pattern, `^`
+    is the start of a line, `\d` any digit.
+
+??? success "Answer"
+    ```text
+    ^2025-\d\d-\d\dT12:00,-
+    ```
+
+    The counter reads `1 of 85`: the line starts with a date of 2025, the
+    hour is 12:00, and the temperature after the comma starts with a minus.
+    None of the `-999` rows is in 2025.
+
+!!! question "Task: the warmest and the coldest hour"
+    The warmest hour of the ten years is 32.4 °C, the coldest −16.3 °C. On
+    which lines of `weather.csv` are they, and when? Add both to the
+    README's Columns section.
+
+??? success "Answer"
+    Find `,32.4,` and `,-16.3,`, with the commas, so that `132.4` or
+    `-16.35` could not match. Each counter reads `1 of 1`, and the line
+    number is on the left.
+
+    ```text
+    21593  2018-06-18T15:00,32.4,52,3.1
+    79063  2025-01-07T05:00,-16.3,100,3.3
+    ```
+
+    ```text
+    Warmest hour: 32.4 °C, 2018-06-18 15:00 (line 21 593).
+    Coldest hour: −16.3 °C, 2025-01-07 05:00 (line 79 063).
+    ```
+
+!!! question "Task: check the spreadsheet's mean"
+    The export ended with `;mean;7,97`, deleted in section 11. Compute the
+    mean of the nine temperatures of `daily.csv` with a calculator. Does
+    the spreadsheet's number agree? Write the check into the README.
+
+??? success "Answer"
+    ```text
+    6.3 + 5.0 + 5.6 + 7.0 + 9.4 + 10.4 + 9.2 + 9.0 + 9.8 = 71.7
+    71.7 / 9 = 7.9667
+    ```
+
+    7.97, rounded to two decimals: the line agreed, and could go because
+    it is computed from the nine rows. In the README, under the Data list:
+
+    ```text
+    The deleted mean line, 7.97, is the mean of the nine days (71.7 / 9).
+    ```
 
 ---
 

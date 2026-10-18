@@ -63,47 +63,40 @@ the seminar:
 | 150 training and 50 test points | 93.3 % and 92.0 %; the test accuracy is 92 % ± 4 % |
 | XOR by three step neurons | hidden weights (1, 1) with biases −0.5 and −1.5, output weights (1, −1) with bias −0.5 |
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–67 and estimates about 143 min. Slides 68–74 are the
-self-check quizzes and take no lecture time. In a 2-hour slot nothing is
-skipped. For a 90-minute slot, skip the slides in the second table. To jump,
-type the slide number and press Enter.
+The lecture is slides 1–67; when time is short, skip the slides of the
+second table. Slides 68–74 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-The lecture opens on a question, slide 6: a threshold on one input is right
-for 177 of the 200 points, a line for 185, so how was the line found? The plan
-reaches the answer at about minute 60: the training loop of slide 47 prints
-185 of 200, and slide 49 names it as the line of slide 6.
+| Slides | Part |
+|--|--|
+| 1–7 | The data, the question of the lecture, a fit and a classification |
+| 8–13 | The neuron, AND and OR, the XOR puzzle, the boundary, its normal, the distance |
+| 15–17, 27 | Rosenblatt's rule, AND for two epochs, what the rule cannot do |
+| 28, 30–32 | The sigmoid, its derivative, the output as a probability |
+| 34–36, 39–41, 43 | Likelihood, cross-entropy, the gradient, the update rule |
+| 45, 47, 49 | The training loop, run: the line of slide 6 found |
+| 50, 53 | Standardising the inputs |
+| 56–61 | XOR: the puzzle settled, two lines, the network verified |
+| 65, 67 | Three publications, Recap |
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–7 | The data, the question of the lecture, a fit and a classification |
-| 0:10 | 8–13 | The neuron, AND and OR, the XOR puzzle, the boundary, its normal, the distance |
-| 0:23 | 15–17, 27 | Rosenblatt's rule, AND for two epochs, what the rule cannot do |
-| 0:33 | 28, 30–32 | The sigmoid, its derivative, the output as a probability |
-| 0:42 | 34–36, 39–41, 43 | Likelihood, cross-entropy, the gradient, the update rule |
-| 0:58 | 45, 47, 49 | The training loop, run: the line of slide 6 found |
-| 1:05 | 50, 53 | Standardising the inputs |
-| 1:09 | 56–61 | XOR: the puzzle settled, two lines, the network verified |
-| 1:22 | 65, 67 | Three publications, Recap |
-| 1:25 | | Move to the seminar |
-
-| Skip | Slides | Saves |
-|--|--|--|
-| What **w** and *b* Do | 14 | 2 min |
-| AND, epochs 3 to 6, and the ten updates as lines | 18–20 | 7 min |
-| The Rule in Python | 21 | 3 min |
-| Linearly separable, the theorem and its proof | 22–26 | 14 min |
-| Gradient Descent Needs a Slope | 29 | 2 min |
-| Where the Sigmoid Comes From | 33 | 3 min |
-| What the Loss Charges, The Loss of Four Points | 37–38 | 5 min |
-| The Gradient, Checked with Numbers | 42 | 3 min |
-| The Loss Has One Minimum | 44 | 3 min |
-| Reading the Loop, The Boundary Moves | 46, 48 | 5 min |
-| The Learning Rate, Inputs on Different Scales | 51–52 | 4 min |
-| Train and Test, How Sure Is an Accuracy? | 54–55 | 5 min |
-| The Hidden Layer Changes the Coordinates, What Is Missing | 62–63 | 4 min |
-| The History section slide, What a Modern Network Keeps | 64, 66 | 3 min |
+| Skip | Slides |
+|--|--|
+| What **w** and *b* Do | 14 |
+| AND, epochs 3 to 6, and the ten updates as lines | 18–20 |
+| The Rule in Python | 21 |
+| Linearly separable, the theorem and its proof | 22–26 |
+| Gradient Descent Needs a Slope | 29 |
+| Where the Sigmoid Comes From | 33 |
+| What the Loss Charges, The Loss of Four Points | 37–38 |
+| The Gradient, Checked with Numbers | 42 |
+| The Loss Has One Minimum | 44 |
+| Reading the Loop, The Boundary Moves | 46, 48 |
+| The Learning Rate, Inputs on Different Scales | 51–52 |
+| Train and Test, How Sure Is an Accuracy? | 54–55 |
+| The Hidden Layer Changes the Coordinates, What Is Missing | 62–63 |
+| The History section slide, What a Modern Network Keeps | 64, 66 |
 
 - **Do not cut** slide 6 (the question of the lecture), slides 11–13 (the
   boundary, its normal, the distance), 16–17 (the rule and its first two
@@ -162,8 +155,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 11 — Will It Freeze Tonight? A Perceptron on the Weather
-Data](../seminars/seminar_11.md) works on the weather project of Lectures 1
+[Seminar 11 · Perceptron](../seminars/seminar_11.md) works on the weather project of Lectures 1
 to 5. Every student writes a neuron that predicts frost at 06:00 from the
 temperature and humidity at 18:00 the evening before, trains it on 2016 to
 2022, tests it on 2023 to 2025 (95.9 ± 0.6 % right), compares it with a

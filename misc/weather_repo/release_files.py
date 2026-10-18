@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """The files of Seminar 5 for the release `seminar-files` of weather-project.
 
+Superseded on 18 Oct 2026 by seminar_zips.py: every seminar now starts from
+its own weather-sNN.zip (Seminar 5: weather-s05.zip). Kept because the
+assets it made are still on the release page.
+
 Seminar 5 (Python) comes before Git, so its files are downloads:
 
   weather-project-s4.zip  the folder `weather-project` as Seminar 4 leaves it:

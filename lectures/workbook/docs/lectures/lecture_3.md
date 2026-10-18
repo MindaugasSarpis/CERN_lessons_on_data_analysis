@@ -44,39 +44,37 @@ every one of the 148 bytes named.
    catches and what it misses; SHA-256 with `shasum -a 256` (macOS) and `sha256sum` (Git Bash), for the table
    with LF and with CRLF.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–85 and estimates about 129 min. Slides 86–91 are
-the self-check quizzes and take no lecture time. For a 90-minute slot, skip
-the slides in the second table. To jump, type the slide number and press
-Enter.
+The lecture is slides 1–85; when time is short, skip the slides of the
+second table. Slides 86–91 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–7 | The table of 148 bytes; the box: input, algorithm, output |
-| 0:11 | 9–38 | Bits, binary counting, bytes; hex on the first bytes of `weather.csv` |
-| 0:31 | 40–41, 43 | Adding in binary; how the CPU computes the mean |
-| 0:35 | 45–52 | Integers, two's complement, overflow; floats, −16.3 as a float32, the sum of the nine daily means |
-| 0:52 | 55–59, 61–62 | Text and encodings; `10.4` before `5.0` answered in bytes at 57 |
-| 1:03 | 64, 67, 69–70 | Files and formats; the 148 bytes counted at 69; −16.3 as text and as binary |
-| 1:10 | 72–79 | Files from the terminal |
-| 1:26 | 80, 83, 85 | SHA-256, recap |
-| 1:30 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–7 | The table of 148 bytes; the box: input, algorithm, output |
+| 9–38 | Bits, binary counting, bytes; hex on the first bytes of `weather.csv` |
+| 40–41, 43 | Adding in binary; how the CPU computes the mean |
+| 45–52 | Integers, two's complement, overflow; floats, −16.3 as a float32, the sum of the nine daily means |
+| 55–59, 61–62 | Text and encodings; `10.4` before `5.0` answered in bytes at 57 |
+| 64, 67, 69–70 | Files and formats; the 148 bytes counted at 69; −16.3 as text and as binary |
+| 72–79 | Files from the terminal |
+| 80, 83, 85 | SHA-256, recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Data and Code as Files | 8 | 2 min |
-| Where Hex Appears | 39 | 1 min |
-| Logical Operations | 42 | 2 min |
-| The Memory Hierarchy | 44 | 2 min |
-| The Steps Between Floats, The Type of a Value | 53–54 | 4 min |
-| Text and Bytes in Python | 60 | 3 min |
-| What a Spreadsheet Changes, with its live moment | 63 | 6 min |
-| File Sizes, Byte Order | 65–66 | 4 min |
-| Install the Hex Editor | 68 | 2 min |
-| Bit Depth of an Image | 71 | 1 min |
-| Compression, A Checksum by Hand | 81–82 | 4 min |
-| Key Takeaways | 84 | 2 min |
+| Skip | Slides |
+|--|--|
+| Data and Code as Files | 8 |
+| Where Hex Appears | 39 |
+| Logical Operations | 42 |
+| The Memory Hierarchy | 44 |
+| The Steps Between Floats, The Type of a Value | 53–54 |
+| Text and Bytes in Python | 60 |
+| What a Spreadsheet Changes, with its live moment | 63 |
+| File Sizes, Byte Order | 65–66 |
+| Install the Hex Editor | 68 |
+| Bit Depth of an Image | 71 |
+| Compression, A Checksum by Hand | 81–82 |
+| Key Takeaways | 84 |
 
 - **Do not cut** slide 3 (the table of 148 bytes) or slide 85 (the Recap,
   which names all 148). Slide 69 (Reading a Hexdump) is where the count is

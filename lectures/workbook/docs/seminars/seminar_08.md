@@ -1,50 +1,33 @@
-# Seminar 8 — What Does a Year of Weather Look Like? Figures with Matplotlib
+# Seminar 8 · Visualisation
 
-**Paired lecture:** 08 Data Visualisation · **Format:** follow-along · **~120 min**
-in class
+**Paired lecture:** 08 Data Visualisation · **Format:** type-along tutorial, in class
 
-**Today's goal:** every student adds Matplotlib to the project's
-environment and writes one script, `scripts/figures.py`, that draws five
-figures of `weather.csv` into `results/`: ten years day by day, the year's
-cycle, the day's cycle, the yearly means and a histogram; commits and
-pushes the script.
+<!-- ~120 min: the length pnpm timing:check reads -->
+
+**Today's question:** What does a year of weather look like?
+
+**Today's goal:** every student makes today's conda environment, adds
+Matplotlib to it, and writes one script, `scripts/figures.py`, that draws
+five figures of `weather.csv` into `results/`: ten years day by day, the
+year's cycle, the day's cycle, the yearly means and a histogram; then
+deletes the figures and draws them all again with one line.
 
 Everything is typed in VS Code: the script in the editor, the commands in
 its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
-in both). Each
-figure opens in VS Code from the Explorer.
+in both). Each figure opens in VS Code from the Explorer. In the blocks, a
+line that starts with `$` is typed in the terminal, and every other line is
+what comes back; `...` stands for lines left out.
 
-## Run sheet
-
-| Clock | Section | Typed | The room ends with |
-|--|--|--|--|
-| | **Part 1 · Matplotlib in the environment** · 30 min | | |
-| 0:00 | [1. Install Matplotlib](#install) | `conda install matplotlib-base=3.11` | `3.11.2` |
-| 0:10 | [2. Add it to `environment.yml`](#yml) | `conda env export --from-history -f environment.yml` | the change committed |
-| 0:20 | [3. A first figure](#first) | `fig.savefig(OUT / "daily_temp.png")` | a spike down to −999 |
-| | **Part 2 · Ten years, day by day** · 25 min | | |
-| 0:30 | [4. Leave out the missing days](#mask) | `dates[ok], day_means[ok]` | ten summers, ten winters |
-| 0:40 | [5. Size, label, a title that says the finding](#labels) | `ax.set_title(...)` | `daily_temp.png` finished |
-| | **Part 3 · The year's cycle and the day's cycle** · 30 min | | |
-| 0:55 | [6. One point per month](#monthly) | `ax.set_xticks(months, ...)` | `monthly_temp.png` |
-| 1:10 | [7. Two lines and a legend](#daily-cycle) | `label="July"`, `ax.legend()` | `day_cycle.png` |
-| | **Part 4 · Is it getting warmer, as a figure** · 35 min | | |
-| 1:25 | [8. Ten points and a reference line](#yearly) | `ax.axhline(...)` | `yearly_temp.png` |
-| 1:35 | [9. A histogram of the hours](#histogram) | `ax.hist(..., bins=...)` | `temp_hist.png` |
-| 1:45 | [10. Commit and push the script](#commit) | `git push` | `figures.py` on GitHub |
-| 1:55 | [11. Wrap up](#wrap-up) | | |
-| | **Optional, if the room is fast** | | |
-| — | [12. A heatmap of one year](#heatmap) | `ax.imshow(...)` | 2025 hour by hour |
-| — | [13. One style for all figures](#style) | `plt.rcParams.update(...)` | five figures restyled |
-
-**If time runs short:** stop after section 10; sections 12 and 13 are optional.
+**If time runs short:** stop after section 10; sections 12 to 14 are optional.
 
 ??? info "Before the session"
-    - **Room:** the weather project as Seminar 7 left it, with
-      `environment.yml` and the conda environment `weather`; internet for
-      conda.
-    - **You:** remove Matplotlib from your `weather` environment
-      (`conda remove matplotlib-base`) to install it with the room.
+    - **Room:** Miniforge and VS Code with its Python extension on every
+      laptop (the [Setup](../setup.md) page), internet for the download and
+      for conda (Python and NumPy about 40 MB, Matplotlib about 10 MB, less
+      when conda has them already). Nothing from earlier seminars is
+      needed.
+    - **You:** if you made `s08` before, remove it (`conda env remove -n
+      s08`) to make it with the room.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
       for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
@@ -52,31 +35,91 @@ figure opens in VS Code from the Explorer.
 
 ## Part 1 · Matplotlib in the environment { #part-1 }
 
-**0:00 to 0:30**
+<!-- 0:00 to 0:30 -->
+
+Matplotlib draws figures from Python. It goes into the project's environment, then a first figure shows how its pieces fit.
+
+Further reading: [Matplotlib, Quick start guide](https://matplotlib.org/stable/users/explain/quick_start.html).
 
 ---
 
-### 1. Install Matplotlib { #install }
+### 1. Get today's folder { #start }
 
-**0:00 · 10 min** · A new package goes into the project's environment, never into `base`.
+<!-- 0:00 · 10 min -->
 
-1. Open `weather-project` in VS Code, then the terminal. Switch the
-   environment on; the prompt starts with `(weather)`.
+Today's folder holds the data and `environment.yml`, the list from which conda makes today's environment: Python and NumPy.
+
+1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
+   under **Assets**, click `weather-s08.zip`. Open VS Code, then the
+   terminal (**View** > **Terminal**), and unzip it into the home folder.
 
     ```text
-    conda activate weather
+    $ unzip ~/Downloads/weather-s08.zip -d ~
+    Archive:  /Users/smilte/Downloads/weather-s08.zip
+       creating: /Users/smilte/weather-s08/
+    ...
+      inflating: /Users/smilte/weather-s08/scripts/rebuild.sh
+    $ cd ~/weather-s08
+    $ ls
+    README.md  data  environment.yml  results  scripts
     ```
 
-2. Install Matplotlib, with its version.
+    Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s08 ~`
+    instead.
+
+2. **File** > **Open Folder...** > `weather-s08` > **Open**.
+3. The list for today's environment.
 
     ```text
-    conda install matplotlib-base=3.11
+    $ cat environment.yml
+    name: s08
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14
+      - numpy=2.5
     ```
 
+4. Make the environment from it, then switch it on: the prompt starts
+   with `(s08)`.
+
     ```text
+    $ conda env create -n s08 -f environment.yml
+    Channels:
+     - conda-forge
+    ...
+    #     $ conda activate s08
+    $ conda activate s08
+    ```
+
+5. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
+   Interpreter`, pick the entry with `envs/s08` in its path. The Status
+   Bar shows `s08`.
+
+**Check:** `(s08)` at the start of the prompt, `s08` in the Status Bar.
+
+---
+
+### 2. Install Matplotlib, write it down { #install }
+
+<!-- 0:10 · 10 min -->
+
+A new package goes into the active environment, never into `base`, and into the file that lists it, or the next laptop cannot run the script.
+
+1. Matplotlib is not in it yet.
+
+    ```text
+    $ python -c "import matplotlib"
+    ModuleNotFoundError: No module named 'matplotlib'
+    ```
+
+2. Install it, with its version.
+
+    ```text
+    $ conda install matplotlib-base=3.11
     ## Package Plan ##
 
-      environment location: /Users/smilte/miniforge3/envs/weather
+      environment location: /Users/smilte/miniforge3/envs/s08
 
       added / updated specs:
         - matplotlib-base=3.11
@@ -88,68 +131,71 @@ figure opens in VS Code from the Explorer.
 3. At `Proceed ([y]/n)?` press `Enter`. Then ask for the version.
 
     ```text
-    python -c "import matplotlib; print(matplotlib.__version__)"
-    ```
-
-    ```text
+    $ python -c "import matplotlib; print(matplotlib.__version__)"
     3.11.2
     ```
 
-**Check:** `3.11.2`, with `(weather)` in the prompt.
+4. Export the list again, delete its last line, `prefix: ...`, save.
+
+    ```text
+    $ conda env export --from-history -f environment.yml
+    ```
+
+5. Open `environment.yml`: Matplotlib is the new last line.
+
+    ```text
+    name: s08
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14
+      - numpy=2.5
+      - matplotlib-base=3.11
+    ```
+
+**Check:** `3.11.2`, and `- matplotlib-base=3.11` at the end of
+`environment.yml`.
 
 !!! warning "`ModuleNotFoundError: No module named 'matplotlib'`"
-    The prompt says `(base)`: `conda activate weather`, then again. VS Code's
-    Status Bar must show `weather` too (Seminar 7, section 2).
-
----
-
-### 2. Add it to `environment.yml` { #yml }
-
-**0:10 · 10 min** · The file must list what the scripts need, or the next laptop cannot run them.
-
-1. Export again.
-
-    ```text
-    conda env export --from-history -f environment.yml
-    ```
-
-2. In `environment.yml`, delete the last line, `prefix: ...`, save.
-3. The change.
-
-    ```text
-    git diff
-    ```
-
-    ```text
-    @@ -4,3 +4,4 @@ channels:
-     dependencies:
-       - python=3.14
-       - numpy=2.5
-    +  - matplotlib-base=3.11
-    ```
-
-4. Commit.
-
-    ```text
-    git commit -am "Add Matplotlib to the environment"
-    ```
-
-    ```text
-    [main 4b52d79] Add Matplotlib to the environment
-     1 file changed, 1 insertion(+)
-    ```
-
-    Your id differs.
-
-**Check:** `git status` ends with `working tree clean`.
+    The prompt says `(base)`: `conda activate s08`, then again. VS Code's
+    Status Bar must show `s08` too (section 1, step 5).
 
 ---
 
 ### 3. A first figure { #first }
 
-**0:20 · 10 min** · A Figure holds one Axes; `ax.plot` draws a line on it; `fig.savefig` writes the file.
+<!-- 0:20 · 15 min -->
 
-1. New file `scripts/figures.py`. Type, save.
+A **Figure** is the whole image; an **Axes** is one plot area in it, with its two axes; `ax.plot` draws a line on the Axes; `fig.savefig` writes the image to a file.
+
+1. Four numbers first. New file `scripts/first_figure.py`, the first four
+   hours of the log. Type, save.
+
+    ```python
+    import matplotlib.pyplot as plt
+
+    hours = [0, 1, 2, 3]
+    temps = [-4.4, -4.8, -5.5, -6.0]
+    fig, ax = plt.subplots()
+    print(type(fig), type(ax))
+    ax.plot(hours, temps)
+    fig.savefig("results/first.png")
+    ```
+
+    `plt.subplots()` makes a Figure with one Axes and hands back both.
+
+2. Run it.
+
+    ```text
+    $ python scripts/first_figure.py
+    <class 'matplotlib.figure.Figure'> <class 'matplotlib.axes._axes.Axes'>
+    ```
+
+3. In the Explorer, click `results/first.png`: one line falling from −4.4
+   to −6.0 over the hours 0 to 3. Matplotlib chose the axis ranges from the
+   data.
+
+4. New file `scripts/figures.py`: first the paths and the data. Type.
 
     ```python
     from pathlib import Path
@@ -165,22 +211,27 @@ figure opens in VS Code from the Explorer.
     temp = np.loadtxt(path, delimiter=",", skiprows=1, usecols=1)
     day_means = temp.reshape(3653, 24).mean(axis=1)
     dates = np.arange("2016-01-01", "2026-01-01", dtype="datetime64[D]")
+    ```
 
+    `reshape(3653, 24)`: one row of 24 hours per day; `mean(axis=1)`
+    averages each row.
+
+5. Under them, the figure, as in `first_figure.py`. Save.
+
+    ```python
     fig, ax = plt.subplots()
     ax.plot(dates, day_means)
     fig.savefig(OUT / "daily_temp.png")
     ```
 
-    The first lines are those of `coldest_day.py` from Seminar 7.
-
-2. Run it. It prints nothing.
+6. Run it. It prints nothing.
 
     ```text
-    python scripts/figures.py
+    $ python scripts/figures.py
     ```
 
-3. In the Explorer, click `results/daily_temp.png` (grey: Git ignores
-   it). A wavy band near 0, and one line straight down to −1000 in 2019.
+7. In the Explorer, click `results/daily_temp.png`. A wavy band near 0,
+   and one line straight down to −1000 in 2019.
 
 **Check:** the spike in 2019: the five days of `-999`.
 
@@ -188,7 +239,7 @@ figure opens in VS Code from the Explorer.
     In `figures.py`, change `usecols=1` to `usecols=2`, run, look at the
     figure. Is there a spike? When is the air most humid? Change it back.
 
-??? note "Answer"
+??? success "Answer"
     No spike: `humidity_pct` has no `-999`. The band is highest in winter
     (the January mean is 86.8 %) and lowest in summer (71.8 % in July).
 
@@ -196,13 +247,17 @@ figure opens in VS Code from the Explorer.
 
 ## Part 2 · Ten years, day by day { #part-2 }
 
-**0:30 to 0:55** · One missing value can hide everything else in a figure.
+<!-- 0:30 to 0:55 -->
+
+One missing value can hide everything else in a figure.
 
 ---
 
 ### 4. Leave out the missing days { #mask }
 
-**0:30 · 10 min** · The mask of Seminar 7, on the days and their dates together.
+<!-- 0:30 · 10 min -->
+
+`day_means != -999` is `True` for every day with readings, a **mask**; indexing both `dates` and `day_means` with it keeps each date with its day.
 
 1. Under the `dates = ...` line, add one line.
 
@@ -210,17 +265,19 @@ figure opens in VS Code from the Explorer.
     ok = day_means != -999
     ```
 
-2. Change the `ax.plot` line, save, run.
+2. Change the `ax.plot` line, save.
 
     ```python
     ax.plot(dates[ok], day_means[ok])
     ```
 
+3. Run it.
+
     ```text
-    python scripts/figures.py
+    $ python scripts/figures.py
     ```
 
-3. The figure in VS Code updates: ten summers and ten winters, the y-axis
+4. The figure in VS Code updates: ten summers and ten winters, the y-axis
    from about −15 to 30.
 
 **Check:** no spike, and the same cycle each year.
@@ -229,7 +286,9 @@ figure opens in VS Code from the Explorer.
 
 ### 5. Size, label, a title that says the finding { #labels }
 
-**0:40 · 15 min** · A figure needs a unit on its axis and a title that says what to see.
+<!-- 0:40 · 15 min -->
+
+A figure needs a unit on its axis and a title that says what to see.
 
 1. Replace the three lines from `fig, ax = ...` to `fig.savefig(...)`.
 
@@ -247,7 +306,7 @@ figure opens in VS Code from the Explorer.
 2. Save, run, look.
 
     ```text
-    python scripts/figures.py
+    $ python scripts/figures.py
     ```
 
 **Check:** a wide figure, a y-axis label with °C, the title on top.
@@ -256,7 +315,7 @@ figure opens in VS Code from the Explorer.
     Draw only the days of 2025 into `results/daily_2025.png`. Hint: a
     second mask on `dates`, joined to `ok` with `&`.
 
-??? note "Answer"
+??? success "Answer"
     ```python
     in_2025 = ok & (dates >= np.datetime64("2025-01-01"))
     fig, ax = plt.subplots(figsize=(10, 4))
@@ -272,13 +331,17 @@ figure opens in VS Code from the Explorer.
 
 ## Part 3 · The year's cycle and the day's cycle { #part-3 }
 
-**0:55 to 1:25** · Averages over ten years show what the noise of single days hides.
+<!-- 0:55 to 1:25 -->
+
+Averages over ten years show what the noise of single days hides.
 
 ---
 
 ### 6. One point per month { #monthly }
 
-**0:55 · 15 min** · Twelve means, one for each month of all ten years, as points joined by a line.
+<!-- 0:55 · 15 min -->
+
+Twelve means, one for each month of all ten years, as points joined by a line.
 
 1. At the end of the file, add these lines.
 
@@ -308,10 +371,7 @@ figure opens in VS Code from the Explorer.
 3. Save, run, open `results/monthly_temp.png`.
 
     ```text
-    python scripts/figures.py
-    ```
-
-    ```text
+    $ python scripts/figures.py
     [-3.9 -2.4  1.2  6.4 12.2 17.2 18.5 16.1 13.   6.9  2.6 -2.3]
     ```
 
@@ -322,9 +382,11 @@ January, −3.9 °C.
 
 ### 7. Two lines and a legend { #daily-cycle }
 
-**1:10 · 15 min** · The mean of each hour of the day, for January and for July; a `label` on each line, `ax.legend()` lists them.
+<!-- 1:10 · 15 min -->
 
-1. At the end of the file, add these lines, save, run.
+The mean of each hour of the day, for January and for July; a `label` on each line, `ax.legend()` lists them.
+
+1. At the end of the file, add these lines, save.
 
     ```python
     hour = np.array([int(t[11:13]) for t in time])
@@ -342,18 +404,16 @@ January, −3.9 °C.
     fig.savefig(OUT / "day_cycle.png", dpi=150)
     ```
 
-    ```text
-    python scripts/figures.py
-    ```
-
-    The new lines:
+2. Run it.
 
     ```text
+    $ python scripts/figures.py
+    ...
     January -5.9 -1.8
     July 13.5 23.6
     ```
 
-2. Open `results/day_cycle.png`: both lines are lowest at 03:00 and
+3. Open `results/day_cycle.png`: both lines are lowest at 03:00 and
    highest at 15:00.
 
 **Check:** two lines, a legend with January and July.
@@ -362,7 +422,7 @@ January, −3.9 °C.
     Add April and October to the figure. Which of the two days swings
     more?
 
-??? note "Answer"
+??? success "Answer"
     ```python
     for m, name in [(1, "January"), (4, "April"), (7, "July"), (10, "October")]:
     ```
@@ -381,15 +441,19 @@ January, −3.9 °C.
 
 ## Part 4 · Is it getting warmer, as a figure { #part-4 }
 
-**1:25 to 2:00** · Seminar 7's ten yearly means, and the 87 552 hours behind them.
+<!-- 1:25 to 2:00 -->
+
+The mean of each of the ten years, and the 87 552 hours behind them.
 
 ---
 
 ### 8. Ten points and a reference line { #yearly }
 
-**1:25 · 10 min** · Points, not bars: the y-axis does not start at zero, and the eye compares the points with the line.
+<!-- 1:25 · 10 min -->
 
-1. At the end of the file, add these lines, save, run.
+Points, not bars: the y-axis does not start at zero, and the eye compares the points with the line.
+
+1. At the end of the file, add these lines, save.
 
     ```python
     year = np.array([int(t[:4]) for t in time])
@@ -405,11 +469,13 @@ January, −3.9 °C.
     fig.savefig(OUT / "yearly_temp.png", dpi=150)
     ```
 
+2. Run it.
+
     ```text
-    python scripts/figures.py
+    $ python scripts/figures.py
     ```
 
-2. Open `results/yearly_temp.png`. `"o"` draws points without a line;
+3. Open `results/yearly_temp.png`. `"o"` draws points without a line;
    `axhline` the grey line at 7.16 °C.
 
 **Check:** ten points above and below the line, the last one, 2025, lowest.
@@ -418,9 +484,11 @@ January, −3.9 °C.
 
 ### 9. A histogram of the hours { #histogram }
 
-**1:35 · 10 min** · `ax.hist` counts the values in bins; the bins are chosen from the smallest and largest value, −16.3 and 32.4.
+<!-- 1:35 · 10 min -->
 
-1. At the end of the file, add these lines, save, run.
+`ax.hist` counts the values in bins; the bins are chosen from the smallest and largest value, −16.3 and 32.4.
+
+1. At the end of the file, add these lines, save.
 
     ```python
     fig, ax = plt.subplots()
@@ -431,11 +499,13 @@ January, −3.9 °C.
     fig.savefig(OUT / "temp_hist.png", dpi=150)
     ```
 
+2. Run it.
+
     ```text
-    python scripts/figures.py
+    $ python scripts/figures.py
     ```
 
-2. Open `results/temp_hist.png`. The highest bar, −1 to 0 °C, holds
+3. Open `results/temp_hist.png`. The highest bar, −1 to 0 °C, holds
    3848 hours: the winter hours near freezing. The second hump, around 11
    to 12 °C, holds the rest of the year.
 
@@ -445,7 +515,7 @@ January, −3.9 °C.
     Draw the histogram with bins of 0.1 °C and of 10 °C. What does each
     show, and what does it hide?
 
-??? note "Answer"
+??? success "Answer"
     ```python
     ax.hist(temp[valid], bins=np.arange(-17, 34, 0.1))
     ```
@@ -461,102 +531,70 @@ January, −3.9 °C.
 
 ---
 
-### 10. Commit and push the script { #commit }
+### 10. Draw every figure again { #commit }
 
-**1:45 · 10 min** · The script goes into the history; the five figures do not, since it draws them again in a second.
+<!-- 1:45 · 10 min -->
 
-1. What Git sees.
+The five figures are made files: the script draws all of them again in a few seconds, so the script is what to keep and to describe.
 
-    ```text
-    git status --short
-    ```
+1. Delete the five figures, run the script, list what it made.
 
     ```text
-    ?? scripts/figures.py
-    ```
-
-2. Commit, push.
-
-    ```text
-    git add scripts/figures.py
-    ```
-
-    ```text
-    git commit -m "Draw five figures of the weather data"
-    ```
-
-    ```text
-    [main d6b8c07] Draw five figures of the weather data
-     1 file changed, 68 insertions(+)
-     create mode 100644 scripts/figures.py
-    ```
-
-    Your id and counts differ.
-
-    ```text
-    git push
-    ```
-
-3. Check that the script remakes every figure: delete the five `.png`
-   files, run, list them.
-
-    ```text
-    rm results/*.png
-    ```
-
-    ```text
-    python scripts/figures.py
-    ```
-
-    ```text
+    $ rm results/*.png
+    $ python scripts/figures.py
     [-3.9 -2.4  1.2  6.4 12.2 17.2 18.5 16.1 13.   6.9  2.6 -2.3]
     January -5.9 -1.8
     July 13.5 23.6
-    ```
-
-    ```text
-    ls -1 results
-    ```
-
-    `-1`: one name per line.
-
-    ```text
+    $ ls -1 results
     daily_temp.png
     day_cycle.png
     monthly_temp.png
     temp_hist.png
     yearly_temp.png
-    yearly_temp.txt
     ```
 
-**Check:** on GitHub, `scripts/figures.py` and no `results` folder.
+    `-1`: one name per line. `first.png` is gone for good: no script in
+    the list makes it.
+
+2. In `README.md`, at the end of **How to rebuild**, add two lines and
+   save: how anyone draws the figures again.
+
+    ```text
+    The figures: `python scripts/figures.py` draws five PNG files into
+    `results/`, with the environment of `environment.yml`.
+    ```
+
+**Check:** five figures in `results`, and the README says which line makes
+them.
 
 ---
 
 ### 11. Wrap up { #wrap-up }
 
-**1:55 · 5 min**
+<!-- 1:55 · 5 min -->
+
 
 | To | Type |
 |--|--|
-| add a package | `conda activate weather`, `conda install NAME=VERSION` |
+| make the environment of a folder | `conda env create -n s08 -f environment.yml`, `conda activate s08` |
+| add a package | `conda install NAME=VERSION` |
 | write it down | `conda env export --from-history -f environment.yml`, delete `prefix:` |
 | a figure | `fig, ax = plt.subplots()`, `ax.plot(x, y)`, `fig.savefig(PATH, dpi=150)` |
 | points, a line, a legend | `ax.plot(x, y, "o")`, `ax.axhline(y)`, `label=...`, `ax.legend()` |
 | labels | `ax.set_xlabel`, `ax.set_ylabel` with the unit, `ax.set_title` with the finding |
 | a histogram | `ax.hist(values, bins=np.arange(start, stop, width))` |
 
-Seminar 9 starts from this repository.
-
 ---
 
-## Optional, if the room is fast { #optional }
+## Optional, if the room goes fast { #optional }
 
 ---
 
 ### 12. A heatmap of one year { #heatmap }
 
-**— · 10 min** · Colour as the third axis: the 365 days of 2025 across, the 24 hours up.
+<!-- — · 10 min -->
+
+Colour as the third axis: the 365 days of 2025 across, the 24 hours up.
 
 1. At the end of the file, add these lines, save, run.
 
@@ -581,7 +619,9 @@ hours 12 and 18.
 
 ### 13. One style for all figures { #style }
 
-**— · 5 min** · Settings in `plt.rcParams` hold for every figure the script draws after them.
+<!-- — · 5 min -->
+
+Settings in `plt.rcParams` hold for every figure the script draws after them.
 
 1. Under the `import` lines, add these lines, save, run.
 
@@ -597,6 +637,122 @@ hours 12 and 18.
    border around the plot.
 
 **Check:** every figure changed, by three lines in one place.
+
+### 14. Advanced tasks { #advanced }
+
+<!-- — · 25 min -->
+
+Harder figures from the same script, for a room that is done early. Each answer is folded under its task; add the lines at the end of `figures.py`.
+
+!!! question "Advanced task: two panels, one time axis"
+    Draw the daily mean temperature and the daily mean humidity
+    (`usecols=2`) in one Figure, one above the other, sharing the time
+    axis. What do the two curves do at the same time of year?
+
+??? success "Answer"
+    `plt.subplots(2, 1, sharex=True)` makes two Axes in one column with one
+    x-axis.
+
+    ```python
+    hum = np.loadtxt(path, delimiter=",", skiprows=1, usecols=2)
+    hum_means = hum.reshape(3653, 24).mean(axis=1)
+    fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(10, 6))
+    ax1.plot(dates[ok], day_means[ok], linewidth=0.6)
+    ax1.set_ylabel("Temperature (°C)")
+    ax2.plot(dates, hum_means, linewidth=0.6, color="tab:green")
+    ax2.set_ylabel("Humidity (%)")
+    ax1.set_title("Humid when cold, dry when warm")
+    fig.savefig(OUT / "temp_and_humidity.png", dpi=150)
+    ```
+
+    The humidity peaks every winter, when the temperature is lowest: the
+    two curves move against each other.
+
+!!! question "Advanced task: humidity against temperature"
+    Plot every valid hour as a point, temperature across and humidity up,
+    and put the correlation coefficient `np.corrcoef(x, y)[0, 1]` in the
+    title. 87 552 points cover each other: what makes the dense part
+    visible?
+
+??? success "Answer"
+    Tiny, almost transparent points: `s=1` is their size, `alpha=0.05`
+    their opacity, so only places with many points look dark.
+
+    ```python
+    r = np.corrcoef(temp[valid], hum[valid])[0, 1]
+    print(f"r = {r:.2f}")
+    fig, ax = plt.subplots()
+    ax.scatter(temp[valid], hum[valid], s=1, alpha=0.05)
+    ax.set_xlabel("Temperature (°C)")
+    ax.set_ylabel("Humidity (%)")
+    ax.set_title(f"87 552 hours: r = {r:.2f}")
+    fig.savefig(OUT / "humidity_vs_temp.png", dpi=150)
+    ```
+
+    ```text
+    $ python scripts/figures.py
+    ...
+    r = -0.70
+    ```
+
+    A falling cloud: below 0 °C most hours are above 80 %, above 25 °C
+    most lie between 45 and 65 %. The humidity is a whole number, so the
+    points stand in rows.
+
+!!! question "Advanced task: a fitted line on the yearly means"
+    Add a straight line fitted with `np.polyfit` to the ten yearly means of
+    section 8, with its slope in the legend. Does the line say "colder"?
+
+??? success "Answer"
+    ```python
+    slope, intercept = np.polyfit(list(years), year_means, 1)
+    fig, ax = plt.subplots()
+    ax.plot(years, year_means, "o", label="yearly mean")
+    fit = [slope * y + intercept for y in years]
+    ax.plot(years, fit, label=f"line: {slope:+.3f} °C per year")
+    ax.set_xticks(years)
+    ax.set_ylim(5, 9)
+    ax.legend()
+    fig.savefig(OUT / "yearly_trend.png", dpi=150)
+    print(f"slope {slope:+.3f} °C per year")
+    ```
+
+    ```text
+    $ python scripts/figures.py
+    ...
+    slope -0.056 °C per year
+    ```
+
+    The line falls by half a degree over the decade, but the points
+    scatter around it by more than that: 2023 at 8.31 and 2025 at 5.98. A
+    line through ten noisy points is not yet a trend.
+
+!!! question "Advanced task: PNG, SVG or PDF?"
+    Save the figure of section 5 also as `.svg` and `.pdf` (the format
+    follows the file name). Compare the three sizes, and open each:
+    which stays sharp when you zoom in?
+
+??? success "Answer"
+    Under `fig.savefig(OUT / "daily_temp.png", dpi=150)` of section 5:
+
+    ```python
+    for ext in ["svg", "pdf"]:
+        fig.savefig(OUT / f"daily_temp.{ext}")
+    ```
+
+    ```text
+    $ python scripts/figures.py
+    ...
+    $ wc -c results/daily_temp.*
+     42249 results/daily_temp.pdf
+    128588 results/daily_temp.png
+     95191 results/daily_temp.svg
+    266028 total
+    ```
+
+    macOS pads the numbers differently. PNG is pixels: zoomed in, the line
+    turns into steps. SVG and PDF store the line itself and stay sharp at
+    any size, for a report or a poster; PNG is for a web page or a slide.
 
 ---
 

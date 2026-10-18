@@ -10,8 +10,8 @@ hands-on **seminar** briefs.
 
 | | Page |
 |--|--|
-| Lecture | [05 Python Foundations](lectures/lecture_5.md): the program that computes 7.16, written from the first line |
-| Seminar | [Seminar 5 — Can You Compute 7.16 Yourself?](seminars/seminar_05.md): a Python script that reads `weather.csv` and prints the mean, and a script with two bugs fixed |
+| Lecture | [05 Python Foundations](lectures/lecture_5.md): objects and types, combining them with `for` and `if`, packages and environments |
+| Seminar | [Seminar 5 · Python](seminars/seminar_05.md): Python step by step in the interpreter, a Jupyter notebook, IDLE and VS Code, then scripts, a module of your own and the standard library |
 
 ## Setup
 

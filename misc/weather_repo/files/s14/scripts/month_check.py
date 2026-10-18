@@ -5,10 +5,10 @@ the other years in data/raw/weather.csv.
 The month itself stays hidden until --unblind is given, so the rule can be
 written down before its value is seen.
 
-Usage, from the project folder (macOS: python3, Windows: python):
+Usage, from the project folder:
 
-    python3 scripts/month_check.py 2025 10              the other years only
-    python3 scripts/month_check.py 2025 10 --unblind    and the month itself
+    python scripts/month_check.py 2025 10              the other years only
+    python scripts/month_check.py 2025 10 --unblind    and the month itself
 
 Options for the checks of the method:
 

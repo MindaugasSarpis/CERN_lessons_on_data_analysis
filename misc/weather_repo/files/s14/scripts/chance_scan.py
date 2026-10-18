@@ -5,9 +5,9 @@ Draws ten years of twelve monthly means from one normal distribution, in
 which no month is unusual, scans them as scan_months.py does, and repeats
 that for many decades.
 
-Usage, from the project folder (macOS: python3, Windows: python):
+Usage, from the project folder:
 
-    python3 scripts/chance_scan.py
+    python scripts/chance_scan.py
 """
 import numpy as np
 

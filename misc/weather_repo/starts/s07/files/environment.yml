@@ -1,0 +1,5 @@
+name: s07
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14

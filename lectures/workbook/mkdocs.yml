@@ -72,19 +72,19 @@ nav:
       - Miscellaneous: lectures/misc.md
   - Seminars:
       - Overview: seminars/overview.md
-      - S1 What Do the Weather Files Say?: seminars/seminar_01.md
-      - S3 What Are the 148 Bytes of daily.csv?: seminars/seminar_03.md
-      - S4 What Is the Mean Temperature of Ten Years?: seminars/seminar_04.md
+      - S1 Data: seminars/seminar_01.md
+      - S3 Computers: seminars/seminar_03.md
+      - S4 Command Line: seminars/seminar_04.md
       - S4 · Install Python and Git: seminars/install_python_git.md
-      - S5 Can You Compute 7.16 Yourself?: seminars/seminar_05.md
-      - S6 Who Changed the Mean?: seminars/seminar_06.md
-      - S7 Is It Getting Warmer?: seminars/seminar_07.md
-      - S8 What Does a Year of Weather Look Like?: seminars/seminar_08.md
-      - S9 How Sure Is 7.16?: seminars/seminar_09.md
-      - S10 How Strong Is the Yearly Cycle?: seminars/seminar_10.md
-      - S11 Will It Freeze Tonight?: seminars/seminar_11.md
-      - S12 How Cold Is the Hill?: seminars/seminar_12.md
-      - S13 Can a Stranger Rebuild Every Number?: seminars/seminar_13.md
-      - S14 Was October 2025 Unusually Warm?: seminars/seminar_14.md
-      - S15 How Long Does It Take, and How to Make It Faster?: seminars/seminar_15.md
-      - S16 Can a Model Forecast Tomorrow's Temperature?: seminars/seminar_16.md
+      - S5 Python: seminars/seminar_05.md
+      - S6 Git: seminars/seminar_06.md
+      - S7 NumPy: seminars/seminar_07.md
+      - S8 Visualisation: seminars/seminar_08.md
+      - S9 Statistics: seminars/seminar_09.md
+      - S10 Fitting: seminars/seminar_10.md
+      - S11 Perceptron: seminars/seminar_11.md
+      - S12 Pandas: seminars/seminar_12.md
+      - S13 Workflows: seminars/seminar_13.md
+      - S14 Data Analysis: seminars/seminar_14.md
+      - S15 Computing: seminars/seminar_15.md
+      - S16 Machine Learning: seminars/seminar_16.md

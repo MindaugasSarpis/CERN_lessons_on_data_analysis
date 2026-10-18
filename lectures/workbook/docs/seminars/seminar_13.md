@@ -1,48 +1,34 @@
-# Seminar 13 — Can a Stranger Rebuild Every Number? One Command for the Weather Project
+# Seminar 13 · Workflows
 
-**Paired lecture:** 13 Reproducible Workflows · **Format:** follow-along · **~120 min**
-in class
+**Paired lecture:** 13 Reproducible Workflows · **Format:** type-along tutorial, in class
 
-**Today's goal:** every student pins the project's environment, makes all
+<!-- ~120 min: the length pnpm timing:check reads -->
+
+**Today's goal:** Can a stranger rebuild every number? Every student pins the project's environment, makes all
 of `data/processed` and `results` with one command that also tests the
 numbers, and proves it in a fresh clone with a fresh environment: the same
 checksums.
 
-Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
-Windows), in the `weather-project` folder, with `(weather)` in the prompt.
+Everything is typed in VS Code's terminal (zsh on macOS, Git Bash on
+Windows), in today's folder `weather-s13`, with `(s13)` in the prompt.
+In the blocks, a line that starts with `$` is typed in the terminal, a line
+that starts with `>>>` or `...` is typed at Python's prompt, and every other
+line is what comes back.
 
-## Run sheet
-
-| Clock | Section | Typed | The room ends with |
-|--|--|--|--|
-| | **Part 1 · An environment anyone can make** · 25 min | | |
-| 0:00 | [1. Install pytest](#pytest) | `conda install pytest` | `pytest 9.1.1` |
-| 0:10 | [2. Pin every version](#pin) | `conda list` | six pinned lines, committed |
-| | **Part 2 · One command** · 35 min | | |
-| 0:25 | [3. The -999 rows in Python](#drop) | `python scripts/drop_missing.py` | 87 553 lines |
-| 0:35 | [4. `run_all.py`](#run-all) | `python run_all.py` | four stages and five checksums |
-| 0:50 | [5. Delete and rebuild](#rebuild) | `rm -r data/processed results` | the same five checksums, committed |
-| | **Part 3 · Tests** · 25 min | | |
-| 1:00 | [6. A test file](#test) | `python -m pytest` | `3 passed`, also inside `run_all.py` |
-| 1:15 | [7. Make a test fail](#fail) | `python run_all.py` | `1 failed`, `stopped: exit code 1` |
-| | **Part 4 · A stranger's laptop** · 35 min | | |
-| 1:25 | [8. The README says one command](#readme) | `git rm scripts/rebuild.sh` | the README on GitHub |
-| 1:35 | [9. A fresh clone, a fresh environment](#clone) | `conda env create -f environment.yml -n weather-check` | the same five checksums |
-| 1:50 | [10. Record the check, push](#record) | `git push` | the check in the README |
-| 1:55 | [11. Wrap up](#wrap-up) | `conda env remove -n weather-check` | |
-| | **Optional, if the room is fast** | | |
-| — | [12. A stage of your own: a figure](#figure) | `python scripts/plot_hill.py` | six checksums |
-| — | [13. An option on the command line](#option) | `--min-hours 24` | 351 days compared |
-
-**If time runs short:** skip the Task of Part 3 and go to Part 4 by
-1:30; section 9 is the proof the seminar is about.
+**If time runs short:** skip the Task of Part 3 and go to Part 4; section 9
+is the proof the seminar is about.
 
 ??? info "Before the session"
-    - **Room:** internet (conda downloads pytest, and section 9 makes a
-      second environment). Each student has `weather-project` as Seminar 12
-      left it, pushed to their GitHub, and the conda environment `weather`.
-    - **You:** nothing to prepare. Ids of commits differ on every laptop;
-      the checksums do not.
+    - **Room:** VS Code, Miniforge (`conda`), Git with a name and e-mail
+      set, and internet: section 1 downloads today's folder and makes its
+      environment, section 9 a second one. Nothing from an earlier seminar
+      is needed.
+    - **You:** nothing to prepare. Today's folder is
+      [`weather-s13.zip`](https://github.com/MindaugasSarpis/weather-project/releases)
+      on the course repository's Releases page: the weather project with
+      the hill station's file and `scripts/clean_hill.py`, as a Git
+      repository with one commit. Ids of commits made today differ on every
+      laptop; the checksums do not.
     - **Keys** are written for Windows, macOS in brackets. Every line typed
       is the same on macOS and Windows.
 
@@ -50,84 +36,98 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
 
 ## Part 1 · An environment anyone can make { #part-1 }
 
-**0:00 to 0:25** · `environment.yml` lists what the scripts need; today every line gets an exact version.
+<!-- 0:00 to 0:25 -->
+
+`environment.yml` lists what the scripts need; today every line gets an exact version.
+
+Further reading: [The Turing Way, Reproducible environments](https://book.the-turing-way.org/reproducible-research/renv);
+[pytest, Get started](https://docs.pytest.org/en/stable/getting-started.html).
 
 ---
 
-### 1. Install pytest { #pytest }
+### 1. Today's folder, its environment and pytest { #pytest }
 
-**0:00 · 10 min** · pytest runs the tests of Part 3.
+<!-- 0:00 · 10 min -->
 
-1. Open `weather-project` in VS Code, then the terminal. Switch on the
-   environment.
+Today's folder is a Git repository with one commit. **pytest** runs tests: small functions that check a number. Part 3 writes them.
+
+1. On the course repository's
+   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
+   under **Assets**, click `weather-s13.zip`. In VS Code's terminal,
+   unpack it into the home folder and go in.
 
     ```text
-    conda activate weather
+    $ unzip ~/Downloads/weather-s13.zip -d ~
+    Archive:  /Users/smilte/Downloads/weather-s13.zip
+       creating: /Users/smilte/weather-s13/
+    ...
+    $ cd ~/weather-s13
+    $ ls
+    README.md  data  environment.yml  results  scripts
     ```
 
-2. Start from a clean state.
+    Safari unpacks a download by itself: then type
+    `mv ~/Downloads/weather-s13 ~` instead of `unzip`.
+
+2. **File** > **Open Folder...** > `weather-s13`, then **View** >
+   **Terminal**. The folder is a repository: one commit, nothing changed.
 
     ```text
-    git status
-    ```
-
-    ```text
+    $ git log --oneline
+    7f5c9f6 The starting folder of the seminar
+    $ git status
     On branch main
-    Your branch is up to date with 'origin/main'.
-
     nothing to commit, working tree clean
     ```
 
-3. pytest is not there yet.
+3. Make the conda environment `s13` from `environment.yml` (Python with
+   NumPy, Matplotlib, SciPy and pandas), then switch it on: the prompt
+   starts with `(s13)`.
 
     ```text
-    python -m pytest --version
+    $ conda env create -n s13 -f environment.yml
+    ...
+    #     $ conda activate s13
+    $ conda activate s13
     ```
 
+4. pytest is not there yet. `python -m pytest` runs pytest as a module of
+   this Python; the answer starts with that Python's path.
+
     ```text
-    No module named pytest
+    $ python -m pytest --version
+    /opt/homebrew/Caskroom/miniforge/base/envs/s13/bin/python: No module named pytest
     ```
 
-    The line starts with the path of the environment's Python.
-
-4. Install it. Press `Enter` at `Proceed ([y]/n)?`.
+5. Install it. Press `Enter` at `Proceed ([y]/n)?`. Then check.
 
     ```text
-    conda install pytest
-    ```
-
-    ```text
+    $ conda install pytest
       added / updated specs:
         - pytest
-    ```
-
-5. Check.
-
-    ```text
-    python -m pytest --version
-    ```
-
-    ```text
+    ...
+    $ python -m pytest --version
     pytest 9.1.1
     ```
 
-**Check:** `pytest 9.1.1`.
+**Check:** `(s13)` in the prompt and `pytest 9.1.1`.
 
 ---
 
 ### 2. Pin every version { #pin }
 
-**0:10 · 15 min** · `numpy` without a version means "the newest on the day of install"; a pin means the same on every day.
+<!-- 0:10 · 15 min -->
 
-1. The versions in this environment, for the six packages the project
-   asks for.
+`numpy=2.5` means "the newest 2.5.x on the day of install"; a full pin, `numpy=2.5.4`, means the same on every day.
+
+1. The versions in this environment, for the seven packages the project
+   asks for. `conda list` takes a pattern: `^(...)$` means exactly one of
+   these names.
 
     ```text
-    conda list "^(python|numpy|pandas|matplotlib-base|scipy|pytest)$"
-    ```
-
-    ```text
+    $ conda list "^(jupyterlab|python|numpy|pandas|matplotlib-base|scipy|pytest)$"
     # Name                     Version          Build               Channel
+    jupyterlab                 4.6.4            pyhd8ed1ab_0        conda-forge
     matplotlib-base            3.11.2           py314h9124352_1     conda-forge
     numpy                      2.5.4            py314hd3a7d6b_0     conda-forge
     pandas                     3.0.6            np2py314h9e1d7c2_0  conda-forge
@@ -143,10 +143,11 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
    list, add `- pytest=9.1.1` as the last line, save.
 
     ```text
-    name: weather
+    name: s13
     channels:
       - conda-forge
     dependencies:
+      - jupyterlab=4.6.4
       - python=3.14.8
       - numpy=2.5.4
       - matplotlib-base=3.11.2
@@ -158,38 +159,31 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
     A line from an earlier seminar that is not in this list gets its
     version from `conda list` too.
 
-3. The change.
+3. The change; `-U0` shows the changed lines only.
 
     ```text
-    git diff
-    ```
-
-    ```text
-    @@ -2,8 +2,9 @@ name: weather
-     channels:
-       - conda-forge
-     dependencies:
+    $ git diff -U0
+    @@ -5,5 +5,5 @@ dependencies:
+    -  - jupyterlab=4.6
     -  - python=3.14
     -  - numpy=2.5
     -  - matplotlib-base=3.11
-    -  - scipy
+    -  - scipy=1.18
+    +  - jupyterlab=4.6.4
     +  - python=3.14.8
     +  - numpy=2.5.4
     +  - matplotlib-base=3.11.2
     +  - scipy=1.18.1
-       - pandas=3.0.6
+    @@ -10,0 +11 @@ dependencies:
     +  - pytest=9.1.1
     ```
 
 4. Commit it.
 
     ```text
-    git commit -am "Pin every version in the environment"
-    ```
-
-    ```text
-    [main ff01c97] Pin every version in the environment
-     1 file changed, 5 insertions(+), 4 deletions(-)
+    $ git commit -am "Pin every version in the environment"
+    [main be0e110] Pin every version in the environment
+     1 file changed, 6 insertions(+), 5 deletions(-)
     ```
 
     Your id differs.
@@ -197,48 +191,49 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
 **Check:** every line under `dependencies:` has `=` and a full version.
 
 !!! question "Task: what is not pinned?"
-    `conda env create` installs about 100 packages for these six (98 on
+    `conda env create` installs about 200 packages for these seven (207 on
     Linux). Which of them does `environment.yml` pin, and what decides
     the versions of the rest?
 
-??? note "Answer"
-    Only the six. The others (OpenBLAS for numpy, the fonts and image
-    libraries of matplotlib, …) are what the six depend on; conda picks
-    versions that fit the pinned six, on the day of install, for the
-    system. `conda env export` without `--from-history` writes all of
-    them with their build strings, but that list only installs on the
-    same system:
+??? success "Answer"
+    Only the seven. The others (OpenBLAS for numpy, the fonts and image
+    libraries of matplotlib, the web server of JupyterLab, …) are what
+    the seven depend on; conda picks versions that fit the pinned seven,
+    on the day of install, for the system. `conda env export` without
+    `--from-history` writes all of them with their build strings, but that
+    list only installs on the same system:
 
     ```text
-    conda env export | head -n 8
-    ```
-
-    ```text
-    name: weather
+    $ conda env export | head -n 8
+    name: s13
     channels:
       - conda-forge
     dependencies:
       - _openmp_mutex=4.5=20_gnu
-      - brotli=1.2.0=h505cf86_4
-      - brotli-bin=1.2.0=h9908984_4
-      - bzip2=1.0.8=hda65f42_10
+      - _python_abi3_support=1.0=hd8ed1ab_3
+      - anyio=4.15.1=pyh5ded981_1
+      - argon2-cffi=25.1.0=pyhd8ed1ab_0
     ```
 
     These lines are from Linux; `_openmp_mutex=4.5=20_gnu` is a build for
-    Linux that macOS and Windows do not have. Six pins that install
+    Linux that macOS and Windows do not have. Seven pins that install
     everywhere are the choice here; section 9 checks that they are enough.
 
 ---
 
 ## Part 2 · One command { #part-2 }
 
-**0:25 to 1:00** · `scripts/rebuild.sh` runs its lines in the shell. Today a Python script takes its place: it needs only the environment's Python.
+<!-- 0:25 to 1:00 -->
+
+`scripts/rebuild.sh` runs its lines in the shell. Today a Python script takes its place: it needs only the environment's Python.
 
 ---
 
 ### 3. The -999 rows in Python { #drop }
 
-**0:25 · 10 min** · `grep -v` and `>` belong to the shell; `run_all.py` runs Python scripts, so the filter becomes one.
+<!-- 0:25 · 10 min -->
+
+`grep -v` and `>` belong to the shell; `run_all.py` will run Python scripts only, so the filter becomes one.
 
 1. In the Explorer, right-click `scripts` > **New File...**, type
    `drop_missing.py`, press `Enter`. Write and save:
@@ -261,23 +256,14 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
     print(len(lines) - 1, "rows written to", OUT)
     ```
 
-2. Run it.
+2. Run it, then count the lines it wrote. The list in one line kept every
+   line without `,-999,`; `newline="\n"` writes the same bytes on macOS
+   and Windows.
 
     ```text
-    python scripts/drop_missing.py
-    ```
-
-    ```text
+    $ python scripts/drop_missing.py
     87552 rows written to data/processed/weather_valid.csv
-    ```
-
-3. Count the lines.
-
-    ```text
-    wc -l data/processed/weather_valid.csv
-    ```
-
-    ```text
+    $ wc -l data/processed/weather_valid.csv
     87553 data/processed/weather_valid.csv
     ```
 
@@ -287,11 +273,48 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
 
 ### 4. `run_all.py` { #run-all }
 
-**0:35 · 15 min** · The stages as a table, run in order; the run stops at the first stage that fails.
+<!-- 0:35 · 15 min -->
 
-1. In the Explorer, right-click the empty space under the files > **New
-   File...**, type `run_all.py`, press `Enter`. It sits next to the
-   README. Write and save:
+One Python script runs the others, in order, and stops at the first that fails. First at the prompt, then in a file.
+
+1. Start Python. `subprocess.run` starts a program and waits for it;
+   `sys.executable` is the Python that is running now, the one of the
+   active environment.
+
+    ```pycon
+    $ python
+    >>> import subprocess, sys
+    >>> sys.executable
+    '/opt/homebrew/Caskroom/miniforge/base/envs/s13/bin/python'
+    ```
+
+    Your path differs (Git Bash: `C:\Users\…\miniforge3\envs\s13\python.exe`).
+
+2. Run one stage. `capture_output=True, text=True` keeps what it prints,
+   as text. `returncode` is the exit code: 0 means it worked.
+
+    ```pycon
+    >>> done = subprocess.run([sys.executable, "scripts/drop_missing.py"], capture_output=True, text=True)
+    >>> done.returncode
+    0
+    >>> done.stdout
+    '87552 rows written to data/processed/weather_valid.csv\n'
+    ```
+
+3. A stage that fails: a file that is not there. The exit code is 1, and
+   the message is in `stdout`. Then leave Python.
+
+    ```pycon
+    >>> bad = subprocess.run([sys.executable, "scripts/clean_export.py", "data/raw/nothing.csv", "out.csv"], capture_output=True, text=True)
+    >>> bad.returncode
+    1
+    >>> bad.stdout, bad.stderr
+    ('no file data/raw/nothing.csv\n', '')
+    >>> exit()
+    ```
+
+4. The same in a file: right-click the empty space of the Explorer >
+   **New File...**, `run_all.py` (next to the README). First, the stages:
 
     ```python
     """Make data/processed and results from data/raw: python run_all.py"""
@@ -309,7 +332,12 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
           "temp_c"], "results/temp_c.txt"),
         (["scripts/clean_hill.py"], "results/hill.txt"),
     ]
+    ```
 
+5. Under it, the loop over the stages: it stops at the first exit code
+   that is not 0.
+
+    ```python
     os.makedirs("results", exist_ok=True)
     for words, output in STAGES:
         print("==", " ".join(words), flush=True)
@@ -321,7 +349,11 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
         if output:
             with open(output, "w", encoding="utf-8", newline="\n") as handle:
                 handle.write(done.stdout)
+    ```
 
+6. Last, the checksum of every file made. Save.
+
+    ```python
     # The checksum of every file made: the same digits on every laptop.
     for folder in ["data/processed", "results"]:
         for name in sorted(os.listdir(folder)):
@@ -331,16 +363,10 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
             print(digest[:12], path)
     ```
 
-    `sys.executable` is the Python running `run_all.py`: the one of the
-    active environment.
-
-2. Run it.
+7. Run it. Each stage prints `==` and its words, then what it printed.
 
     ```text
-    python run_all.py
-    ```
-
-    ```text
+    $ python run_all.py
     == scripts/drop_missing.py
     87552 rows written to data/processed/weather_valid.csv
     == scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
@@ -352,6 +378,11 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
     min     -16.3
     max     32.4
     mean    7.15997
+    ```
+
+8. Then the hill's stage:
+
+    ```text
     == scripts/clean_hill.py
     rows read       8740
     temp missing    27
@@ -360,15 +391,18 @@ Windows), in the `weather-project` folder, with `(weather)` in the prompt.
     days < 20 hours 4
     days compared   361
     hill - valley   -1.19
+    ```
+
+9. Last, the checksums of the files it made: the first 12 hex digits of
+   each file's SHA-256.
+
+    ```text
     33fe5e77a979 data/processed/daily.csv
     67106615f8c1 data/processed/hill_daily.csv
     85b1f38d0df9 data/processed/weather_valid.csv
     58c921c33f22 results/hill.txt
     ade2805b90fe results/temp_c.txt
     ```
-
-    Files made by your own scripts of earlier seminars are listed too;
-    section 5 deletes them.
 
 **Check:** `mean 7.15997`, `hill - valley -1.19`, and the five checksums
 above, digit for digit.
@@ -377,31 +411,23 @@ above, digit for digit.
 
 ### 5. Delete and rebuild { #rebuild }
 
-**0:50 · 10 min** · Everything in `data/processed` and `results` must come back from `data/raw` alone.
+<!-- 0:50 · 10 min -->
+
+Everything in `data/processed` and `results` must come back from `data/raw` alone.
 
 1. Delete both folders.
 
     ```text
-    rm -r data/processed results
-    ```
-
-    ```text
-    ls data
-    ```
-
-    ```text
+    $ rm -r data/processed results
+    $ ls data
     raw
     ```
 
-2. Rebuild.
+2. Rebuild. The same lines as in section 4, ending with:
 
     ```text
-    python run_all.py
-    ```
-
-    The same lines as in section 4, ending with:
-
-    ```text
+    $ python run_all.py
+    ...
     33fe5e77a979 data/processed/daily.csv
     67106615f8c1 data/processed/hill_daily.csv
     85b1f38d0df9 data/processed/weather_valid.csv
@@ -412,20 +438,14 @@ above, digit for digit.
 3. The exit code: 0 means every stage ran.
 
     ```text
-    echo $?
-    ```
-
-    ```text
+    $ echo $?
     0
     ```
 
 4. Git sees only the two new files; the made files are in `.gitignore`.
 
     ```text
-    git status --short
-    ```
-
-    ```text
+    $ git status --short
     ?? run_all.py
     ?? scripts/drop_missing.py
     ```
@@ -433,15 +453,9 @@ above, digit for digit.
 5. Commit.
 
     ```text
-    git add run_all.py scripts/drop_missing.py
-    ```
-
-    ```text
-    git commit -m "Make everything from data/raw with one command"
-    ```
-
-    ```text
-    [main 799e5a6] Make everything from data/raw with one command
+    $ git add run_all.py scripts/drop_missing.py
+    $ git commit -m "Make everything from data/raw with one command"
+    [main 315a8af] Make everything from data/raw with one command
      2 files changed, 50 insertions(+)
      create mode 100644 run_all.py
      create mode 100644 scripts/drop_missing.py
@@ -454,80 +468,98 @@ above, digit for digit.
     run `run_all.py`, and read the exit code. Which stages
     ran? Then give the file its name back.
 
-??? note "Answer"
+??? success "Answer"
     ```text
-    mv data/raw/daily_export.csv data/raw/daily_export.bak
-    ```
-
-    ```text
-    python run_all.py
-    ```
-
-    ```text
+    $ mv data/raw/daily_export.csv data/raw/daily_export.bak
+    $ python run_all.py
     == scripts/drop_missing.py
     87552 rows written to data/processed/weather_valid.csv
     == scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
     no file data/raw/daily_export.csv
     stopped: exit code 1
-    ```
-
-    ```text
-    echo $?
-    ```
-
-    ```text
+    $ echo $?
     1
+    $ mv data/raw/daily_export.bak data/raw/daily_export.csv
     ```
 
     The first stage ran, the second failed, the last two did not run: they
     would have read files that were not made.
 
-    ```text
-    mv data/raw/daily_export.bak data/raw/daily_export.csv
-    ```
-
 ---
 
 ## Part 3 · Tests { #part-3 }
 
-**1:00 to 1:25** · A test states a number known without the scripts; a wrong number then stops the run.
+<!-- 1:00 to 1:25 -->
+
+A test states a number known without the scripts; a wrong number then stops the run.
 
 ---
 
 ### 6. A test file { #test }
 
-**1:00 · 15 min** · pytest runs every function whose name starts with `test_`, in files named `test_*.py`.
+<!-- 1:00 · 15 min -->
 
-1. In the Explorer, right-click the empty space > **New File...**, type
-   `tests/test_results.py`, press `Enter`. VS Code makes the folder too.
-   Write and save:
+A test is an `assert`: a line that does nothing when its statement is true and stops when it is false.
+
+1. At the prompt first. `assert` with a true statement prints nothing;
+   with a false one it raises `AssertionError`.
+
+    ```pycon
+    $ python
+    >>> assert 87672 - 120 == 87552
+    >>> assert 87672 - 120 == 87553
+    Traceback (most recent call last):
+      ...
+    AssertionError
+    ```
+
+2. Floats are compared within a tolerance: `0.1 + 0.2` is not exactly
+   `0.3` in binary. `pytest.approx` says "equal within".
+
+    ```pycon
+    >>> 0.1 + 0.2 == 0.3
+    False
+    >>> import pytest
+    >>> 0.1 + 0.2 == pytest.approx(0.3)
+    True
+    >>> 7.15997 == pytest.approx(7.16, abs=0.005)
+    True
+    >>> 7.15997 == pytest.approx(7.17, abs=0.005)
+    False
+    >>> exit()
+    ```
+
+3. pytest runs every function whose name starts with `test_`, in files
+   named `test_*.py`. In the Explorer, right-click the empty space > **New
+   File...**, type `tests/test_results.py`, press `Enter`. VS Code makes
+   the folder too. Write its first part, two helpers that read a file:
 
     ```python
     """Facts about the results, known without the scripts: python -m pytest"""
     import pytest
-
 
     def read(path):
         """The lines of a file the rebuild made."""
         with open(path, encoding="utf-8") as handle:
             return handle.read().splitlines()
 
-
     def numbers(path):
         """A file of `name value` lines, as a dict."""
         return dict(line.rsplit(maxsplit=1) for line in read(path))
+    ```
 
+4. Under them, the three tests, each a number known without the scripts.
+   Save.
 
+    ```python
     def test_valid_rows():
         # 87 672 hours, 120 of them -999, and the header line
         assert len(read("data/processed/weather_valid.csv")) == 87553
-
 
     def test_mean_temperature():
         stats = numbers("results/temp_c.txt")
         assert stats["rows"] == "87552"
         assert float(stats["mean"]) == pytest.approx(7.16, abs=0.005)
-
 
     def test_hill_station():
         hill = numbers("results/hill.txt")
@@ -535,19 +567,14 @@ above, digit for digit.
         assert float(hill["hill - valley"]) == pytest.approx(-1.19, abs=0.005)
     ```
 
-    `pytest.approx` compares floats within a tolerance: 7.15997 is 7.16
-    within 0.005.
-
-2. Run the tests.
+5. Run the tests: one dot per test that passed.
 
     ```text
-    python -m pytest
-    ```
-
-    ```text
+    $ python -m pytest
     ============================= test session starts ==============================
-    platform darwin -- Python 3.14.8, pytest-9.1.1, pluggy-1.6.0
-    rootdir: /Users/smilte/weather-project
+    platform darwin -- Python 3.14.8, pytest-9.1.1, pluggy-1.7.0
+    rootdir: /Users/smilte/weather-s13
+    plugins: platformdirs-4.13.3, anyio-4.15.1
     collected 3 items
 
     tests/test_results.py ...                                                [100%]
@@ -555,30 +582,20 @@ above, digit for digit.
     ============================== 3 passed in 0.01s ===============================
     ```
 
-    One dot per test that passed.
+    Python left a `__pycache__` folder in `tests`; `.gitignore` already
+    leaves it out.
 
-3. Python left a `__pycache__` folder in `tests`. In `.gitignore`, add a
-   last line and save.
-
-    ```text
-    __pycache__/
-    ```
-
-4. In `run_all.py`, add the tests as the last stage, before the `]`.
+6. In `run_all.py`, add the tests as the last stage, before the `]`.
 
     ```text
         (["-m", "pytest", "-q"], None),
     ```
 
-5. Run the one command.
+7. Run the one command. It ends with:
 
     ```text
-    python run_all.py
-    ```
-
-    It ends with:
-
-    ```text
+    $ python run_all.py
+    ...
     == -m pytest -q
     ...                                                                      [100%]
     3 passed in 0.01s
@@ -589,19 +606,13 @@ above, digit for digit.
     ade2805b90fe results/temp_c.txt
     ```
 
-6. Commit the three files.
+8. Commit the two files.
 
     ```text
-    git add .gitignore run_all.py tests/test_results.py
-    ```
-
-    ```text
-    git commit -m "Test the results at the end of run_all.py"
-    ```
-
-    ```text
-    [main 573d364] Test the results at the end of run_all.py
-     3 files changed, 32 insertions(+)
+    $ git add run_all.py tests/test_results.py
+    $ git commit -m "Test the results at the end of run_all.py"
+    [main 3182c7e] Test the results at the end of run_all.py
+     2 files changed, 26 insertions(+)
      create mode 100644 tests/test_results.py
     ```
 
@@ -611,17 +622,17 @@ above, digit for digit.
 
 ### 7. Make a test fail { #fail }
 
-**1:15 · 10 min** · Tomas's change of Seminar 6 again: the mean of the raw file, `-999` rows and all.
+<!-- 1:15 · 10 min -->
+
+Tomas's change of Seminar 6 again: the mean of the raw file, `-999` rows and all.
 
 1. In `run_all.py`, in the `column_stats.py` stage, change
    `data/processed/weather_valid.csv` to `data/raw/weather.csv`. Save.
-2. Run.
+2. Run. The stage runs without an error:
 
     ```text
-    python run_all.py
-    ```
-
-    ```text
+    $ python run_all.py
+    ...
     == scripts/column_stats.py data/raw/weather.csv temp_c
     file    data/raw/weather.csv
     column  temp_c
@@ -631,7 +642,8 @@ above, digit for digit.
     mean    5.7828
     ```
 
-    The stage ran without an error. The tests stop it:
+3. The tests stop it. The failure names the test, the line, and the two
+   values.
 
     ```text
     == -m pytest -q
@@ -647,44 +659,35 @@ above, digit for digit.
     E         - 87552
     E         + 87672
 
-    tests/test_results.py:23: AssertionError
+    tests/test_results.py:19: AssertionError
+    ```
+
+4. The last lines: the summary, and `run_all.py` stops.
+
+    ```text
     =========================== short test summary info ============================
     FAILED tests/test_results.py::test_mean_temperature - AssertionError: assert ...
     1 failed, 2 passed in 0.02s
     stopped: exit code 1
     ```
 
-    The failure names the test, the line, and the two values.
-
-3. Take the edit back.
-
-    ```text
-    git restore run_all.py
-    ```
-
-4. The tests read the files, which are still the wrong ones.
+5. Take the edit back. The tests read the files, which are still the
+   wrong ones; the summary line comes last, after the failure.
 
     ```text
-    python -m pytest -q
-    ```
-
-    ```text
+    $ git restore run_all.py
+    $ python -m pytest -q
+    ...
     1 failed, 2 passed in 0.02s
     ```
 
-    That line comes last, after the failure.
-
-5. Rebuild.
+6. Rebuild. This line comes just above the five checksums:
 
     ```text
-    python run_all.py
-    ```
-
-    ```text
+    $ python run_all.py
+    ...
     3 passed in 0.01s
     ```
-
-    That line comes just above the five checksums.
 
 **Check:** `3 passed` again, and `git status` clean.
 
@@ -692,7 +695,7 @@ above, digit for digit.
     Add a test: `data/processed/daily.csv` has 10 lines, and its first
     row is 1 October 2025. Run the one command.
 
-??? note "Answer"
+??? success "Answer"
     At the end of `tests/test_results.py`:
 
     ```python
@@ -703,10 +706,8 @@ above, digit for digit.
     ```
 
     ```text
-    python run_all.py
-    ```
-
-    ```text
+    $ python run_all.py
+    ...
     4 passed in 0.01s
     ```
 
@@ -716,13 +717,17 @@ above, digit for digit.
 
 ## Part 4 · A stranger's laptop { #part-4 }
 
-**1:25 to 2:00** · A stranger has the repository and the README, nothing else. A second folder and a second environment play the stranger.
+<!-- 1:25 to 2:00 -->
+
+A stranger has the repository and the README, nothing else. A clone in a second folder and a second environment play the stranger.
 
 ---
 
 ### 8. The README says one command { #readme }
 
-**1:25 · 10 min** · `run_all.py` does what `rebuild.sh` did, so the old script goes.
+<!-- 1:25 · 10 min -->
+
+`run_all.py` does what `rebuild.sh` did, so the old script goes.
 
 1. In `README.md`, replace the section `## How to rebuild` (up to the
    next `##`) with this, and save:
@@ -733,138 +738,86 @@ above, digit for digit.
     In zsh on macOS or Git Bash on Windows, with Miniforge, in the project folder:
 
         conda env create -f environment.yml
-        conda activate weather
+        conda activate s13
         python run_all.py
 
     `run_all.py` makes `data/processed` and `results` from `data/raw`, runs the
     tests and prints the checksum of every file it made.
     ```
 
-2. Remove the old script; Git deletes the file and stages the deletion.
+2. Remove the old script; `git rm` deletes the file and stages the
+   deletion.
 
     ```text
-    git rm scripts/rebuild.sh
-    ```
-
-    ```text
+    $ git rm scripts/rebuild.sh
     rm 'scripts/rebuild.sh'
     ```
 
-3. Stage the README, look, commit.
+3. Stage the README, look, commit. `M` is a changed file, `D` a deleted
+   one; both are staged (first column).
 
     ```text
-    git add README.md
-    ```
-
-    ```text
-    git status --short
-    ```
-
-    ```text
+    $ git add README.md
+    $ git status --short
     M  README.md
     D  scripts/rebuild.sh
-    ```
-
-    ```text
-    git commit -m "Rebuild with conda and run_all.py"
-    ```
-
-    ```text
-    [main 64f4a99] Rebuild with conda and run_all.py
+    $ git commit -m "Rebuild with conda and run_all.py"
+    [main 3a13222] Rebuild with conda and run_all.py
      2 files changed, 6 insertions(+), 13 deletions(-)
      delete mode 100755 scripts/rebuild.sh
     ```
 
-4. Push.
-
-    ```text
-    git push
-    ```
-
-    ```text
-    To https://github.com/your-username/weather-project.git
-       40ac9f0..64f4a99  main -> main
-    ```
-
-**Check:** on GitHub, the README's **How to rebuild** shows the three lines.
+**Check:** right-click `README.md` > **Open Preview**: **How to rebuild**
+shows the three lines.
 
 ---
 
 ### 9. A fresh clone, a fresh environment { #clone }
 
-**1:35 · 15 min** · The stranger follows the README word for word, in a second folder.
+<!-- 1:35 · 15 min -->
 
-1. Go to the home folder and clone your repository into `weather-check`.
+The stranger follows the README word for word, in a second folder.
 
-    ```text
-    cd ~
-    ```
-
-    ```text
-    git clone https://github.com/your-username/weather-project.git weather-check
-    ```
+1. Go to the home folder and clone today's repository into
+   `weather-check`. A clone has only what was committed, as a clone from
+   GitHub would.
 
     ```text
+    $ cd ~
+    $ git clone weather-s13 weather-check
     Cloning into 'weather-check'...
+    done.
     ```
 
-2. Go in and look.
+2. Go in and look: no `data/processed`, and no `results` either.
 
     ```text
-    cd weather-check
-    ```
-
-    ```text
-    ls data
-    ```
-
-    ```text
+    $ cd weather-check
+    $ ls data
     raw
     ```
 
-    No `data/processed`, and no `results` either.
-
-3. A new environment from the file. The name `weather` is taken on this
-   laptop, so `-n` gives another one.
-
-    ```text
-    conda env create -f environment.yml -n weather-check
-    ```
+3. A new environment from the file. The name `s13` is taken on this
+   laptop, so `-n` gives another one. About 200 packages; most are in
+   conda's cache from `s13`, so it takes a minute.
 
     ```text
-      added / updated specs:
-        - matplotlib-base=3.11.2
-        - numpy=2.5.4
-        - pandas=3.0.6
-        - pytest=9.1.1
-        - python=3.14.8
-        - scipy=1.18.1
-    ```
-
-    About 100 packages; most are in conda's cache from `weather`, so it
-    takes a minute. It ends with:
-
-    ```text
+    $ conda env create -f environment.yml -n weather-check
+    ...
     #     $ conda activate weather-check
     ```
 
-4. Switch it on.
+4. Switch it on: the prompt starts with `(weather-check)`.
 
     ```text
-    conda activate weather-check
+    $ conda activate weather-check
     ```
 
-    The prompt starts with `(weather-check)`.
-
-5. The one command.
+5. The one command. It ends with:
 
     ```text
-    python run_all.py
-    ```
-
-    It ends with:
-
-    ```text
+    $ python run_all.py
+    ...
     3 passed in 0.01s
     33fe5e77a979 data/processed/daily.csv
     67106615f8c1 data/processed/hill_daily.csv
@@ -879,24 +832,19 @@ above, digit for digit.
 **Check:** the same five checksums in both folders and on every laptop in
 the room. A test you added in the Task makes it `4 passed`.
 
-!!! warning "`git clone` asks for a password"
-    The repository is private. Run the clone in VS Code's terminal, which
-    signs in with the GitHub account of Seminar 6.
-
 ---
 
-### 10. Record the check, push { #record }
+### 10. Record the check { #record }
 
-**1:50 · 5 min** · The README says when the check was made and what it found.
+<!-- 1:50 · 5 min -->
+
+The README says when the check was made and what it found.
 
 1. Back to the project and its environment.
 
     ```text
-    cd ~/weather-project
-    ```
-
-    ```text
-    conda activate weather
+    $ cd ~/weather-s13
+    $ conda activate s13
     ```
 
 2. In `README.md`, under the line that ends with `every file it made.`,
@@ -906,66 +854,53 @@ the room. A test you added in the Task makes it `4 passed`.
     Checked on 2026-12-22 in a fresh clone: the same five checksums.
     ```
 
-3. Commit and push.
+3. Commit.
 
     ```text
-    git commit -am "Record the check in a fresh clone"
-    ```
-
-    ```text
-    [main 13d8c7a] Record the check in a fresh clone
+    $ git commit -am "Record the check in a fresh clone"
+    [main 41cc816] Record the check in a fresh clone
      1 file changed, 2 insertions(+)
     ```
 
-    ```text
-    git push
-    ```
+4. Today's history, on top of the folder's first commit.
 
     ```text
-    To https://github.com/your-username/weather-project.git
-       64f4a99..13d8c7a  main -> main
+    $ git log --oneline
+    41cc816 Record the check in a fresh clone
+    3a13222 Rebuild with conda and run_all.py
+    3182c7e Test the results at the end of run_all.py
+    315a8af Make everything from data/raw with one command
+    be0e110 Pin every version in the environment
+    7f5c9f6 The starting folder of the seminar
     ```
 
-4. Today's history.
+    Your ids differ, except `7f5c9f6`: that commit came in the zip.
 
-    ```text
-    git log --oneline -n 6
-    ```
-
-    ```text
-    13d8c7a Record the check in a fresh clone
-    64f4a99 Rebuild with conda and run_all.py
-    573d364 Test the results at the end of run_all.py
-    799e5a6 Make everything from data/raw with one command
-    ff01c97 Pin every version in the environment
-    40ac9f0 Clean the hill station's file and compare it with the valley
-    ```
-
-**Check:** the check line on GitHub.
+**Check:** six commits, and the check line in the README.
 
 ---
 
 ### 11. Wrap up { #wrap-up }
 
-**1:55 · 5 min**
+<!-- 1:55 · 5 min -->
 
-1. Remove the stranger's environment; answer `y` to both questions.
+The stranger's environment and folder go; the table holds the lines of today.
 
-    ```text
-    conda env remove -n weather-check
-    ```
-
-2. Remove the stranger's folder.
+1. Remove the stranger's environment; answer `y` to both questions. Then
+   remove the stranger's folder.
 
     ```text
-    rm -rf ~/weather-check
+    $ conda env remove -n weather-check
+    $ rm -rf ~/weather-check
     ```
 
 | To | Type |
 |--|--|
 | see the exact version of a package | `conda list pandas` |
 | make the environment on any laptop | `conda env create -f environment.yml` |
+| run a program from Python | `subprocess.run([sys.executable, "script.py"])` |
 | make every file from `data/raw` | `python run_all.py` |
+| state a fact in a test | `assert value == pytest.approx(7.16, abs=0.005)` |
 | check the numbers | `python -m pytest` |
 | did every stage run? | `echo $?` |
 | delete what the scripts make | `rm -r data/processed results` |
@@ -973,13 +908,15 @@ the room. A test you added in the Task makes it `4 passed`.
 
 ---
 
-## Optional, if the room is fast { #optional }
+## Optional, if the room goes fast { #optional }
 
 ---
 
 ### 12. A stage of your own: a figure { #figure }
 
-**— · 10 min** · A file in `results` that no stage makes cannot be rebuilt by a stranger. Each script of your own from earlier seminars gets a stage the same way.
+<!-- — · 10 min -->
+
+A file in `results` that no stage makes cannot be rebuilt by a stranger. Every script that writes a result gets a stage the same way.
 
 1. In `scripts`, a new file `plot_hill.py`. Write and save:
 
@@ -1007,15 +944,11 @@ the room. A test you added in the Task makes it `4 passed`.
         (["scripts/plot_hill.py"], None),
     ```
 
-3. Run.
+3. Run. It ends with:
 
     ```text
-    python run_all.py
-    ```
-
-    It ends with:
-
-    ```text
+    $ python run_all.py
+    ...
     == scripts/plot_hill.py
     results/hill_by_month.png: 12 bars from -0.82 to -1.63
     == -m pytest -q
@@ -1032,11 +965,8 @@ the room. A test you added in the Task makes it `4 passed`.
 4. Run it again: the figure's checksum stays. Commit both files.
 
     ```text
-    git add run_all.py scripts/plot_hill.py
-    ```
-
-    ```text
-    git commit -m "Plot the difference by month as a stage"
+    $ git add run_all.py scripts/plot_hill.py
+    $ git commit -m "Plot the difference by month as a stage"
     ```
 
 **Check:** six checksums, the figure's the same on every run on this
@@ -1047,7 +977,9 @@ system; the tests check numbers, not pixels.
 
 ### 13. An option on the command line { #option }
 
-**— · 10 min** · The 20 hours of `clean_hill.py` become an option with a default, read by `argparse`.
+<!-- — · 10 min -->
+
+The 20 hours of `clean_hill.py` become an option with a default, read by `argparse`.
 
 1. In `scripts/clean_hill.py`, add `import argparse` above `import os`.
    Under the line `OUT = …`, add:
@@ -1069,10 +1001,7 @@ system; the tests check numbers, not pixels.
 3. The help, written by `argparse`.
 
     ```text
-    python scripts/clean_hill.py --help
-    ```
-
-    ```text
+    $ python scripts/clean_hill.py --help
     usage: clean_hill.py [-h] [--min-hours MIN_HOURS]
 
     Clean the hill station's export; compare it with the valley, day by day. Run
@@ -1087,10 +1016,7 @@ system; the tests check numbers, not pixels.
 4. Only full days.
 
     ```text
-    python scripts/clean_hill.py --min-hours 24
-    ```
-
-    ```text
+    $ python scripts/clean_hill.py --min-hours 24
     rows read       8740
     temp missing    27
     rows in F       72
@@ -1100,24 +1026,156 @@ system; the tests check numbers, not pixels.
     hill - valley   -1.2
     ```
 
-5. A word where a number belongs.
+5. A word where a number belongs: `argparse` refuses it, and `echo $?`
+   then prints `2`.
 
     ```text
-    python scripts/clean_hill.py --min-hours twenty
-    ```
-
-    ```text
+    $ python scripts/clean_hill.py --min-hours twenty
     usage: clean_hill.py [-h] [--min-hours MIN_HOURS]
     clean_hill.py: error: argument --min-hours: invalid int value: 'twenty'
     ```
-
-    `echo $?` prints `2`.
 
 6. Run the one command: `run_all.py` passes no option, so the default 20
    holds and the tests pass. The checksum of `results/hill.txt` changes to
    `b8bc8972e9c6`: one label of its text changed, the numbers did not.
 
 **Check:** 351 days with `--min-hours 24`, 361 without.
+
+---
+
+### 14. Advanced tasks { #advanced }
+
+<!-- — · 20 min -->
+
+Harder questions on the same project, for a room that is done early. Each answer is one way; others are fine.
+
+!!! question "Advanced task: a test for the checksums"
+    The tests check four numbers; the checksums cover every byte, but only
+    a person compares them. Write the five checksums into `checksums.txt`
+    and add a test that recomputes each one. Then change one number in
+    `results/hill.txt` that no other test looks at, and run the tests.
+
+??? success "Answer"
+    `grep -E` keeps the lines that start with 12 hex digits and a space:
+
+    ```text
+    $ python run_all.py | grep -E '^[0-9a-f]{12} ' > checksums.txt
+    $ cat checksums.txt
+    33fe5e77a979 data/processed/daily.csv
+    67106615f8c1 data/processed/hill_daily.csv
+    85b1f38d0df9 data/processed/weather_valid.csv
+    58c921c33f22 results/hill.txt
+    ade2805b90fe results/temp_c.txt
+    ```
+
+    `tests/test_checksums.py`:
+
+    ```python
+    """The files of the rebuild have the checksums written in checksums.txt."""
+    import hashlib
+
+
+    def test_checksums():
+        with open("checksums.txt", encoding="utf-8") as listing:
+            for line in listing:
+                digest, path = line.split()
+                with open(path, "rb") as handle:
+                    made = hashlib.sha256(handle.read()).hexdigest()[:12]
+                assert made == digest, path
+    ```
+
+    With `rows read 8740` changed to `8741` in `results/hill.txt`:
+
+    ```text
+    $ python -m pytest -q
+    ...
+    >               assert made == digest, path
+    E               AssertionError: results/hill.txt
+    E               assert '0321502665df' == '58c921c33f22'
+    ...
+    1 failed, 3 passed in 0.02s
+    ```
+
+    `python run_all.py` makes the file again and the four tests pass.
+    Commit `checksums.txt` with the test: a stranger's run then checks the
+    bytes too. A change made on purpose (a new stage, a new label) needs a
+    new `checksums.txt` in the same commit.
+
+!!! question "Advanced task: how long does each stage take?"
+    Make `run_all.py` print the seconds of each stage under its output.
+    Which stage is the slowest, and why?
+
+??? success "Answer"
+    `time.perf_counter()` reads a clock; the difference of two readings is
+    seconds. In `run_all.py`, `import time` at the top, and in the loop:
+
+    ```python
+        start = time.perf_counter()
+        done = subprocess.run([sys.executable] + words,
+                              capture_output=True, text=True)
+        seconds = time.perf_counter() - start
+        print(done.stdout + done.stderr, end="")
+        print(f"   {seconds:.2f} s")
+    ```
+
+    ```text
+    $ python run_all.py | grep -E "^==| s$"
+    == scripts/drop_missing.py
+       0.04 s
+    == scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
+       0.02 s
+    == scripts/column_stats.py data/processed/weather_valid.csv temp_c
+       0.10 s
+    == scripts/clean_hill.py
+       0.33 s
+    == -m pytest -q
+       0.17 s
+    ```
+
+    Your times differ. `clean_hill.py` is the slowest: it starts pandas,
+    which takes most of the third of a second, and reads two files. The
+    whole rebuild takes under a second; a project with many slow stages
+    would skip a stage whose inputs did not change, which is what tools
+    such as `make` and Snakemake do.
+
+!!! question "Advanced task: one test, four numbers"
+    `test_mean_temperature` checks two lines of `results/temp_c.txt`.
+    Write one test that checks `rows`, `min`, `max` and `mean`, and that
+    pytest reports as four tests. Look up `pytest.mark.parametrize`.
+
+??? success "Answer"
+    `tests/test_stats.py`:
+
+    ```python
+    """The statistics of temp_c, one test per number: python -m pytest -v"""
+    import pytest
+
+
+    @pytest.mark.parametrize("name, value", [
+        ("rows", "87552"),
+        ("min", "-16.3"),
+        ("max", "32.4"),
+        ("mean", "7.15997"),
+    ])
+    def test_temp_c(name, value):
+        with open("results/temp_c.txt", encoding="utf-8") as handle:
+            stats = dict(line.rsplit(maxsplit=1) for line in handle.read().splitlines())
+        assert stats[name] == value
+    ```
+
+    ```text
+    $ python -m pytest -v tests/test_stats.py
+    ...
+    tests/test_stats.py::test_temp_c[rows-87552] PASSED                      [ 25%]
+    tests/test_stats.py::test_temp_c[min--16.3] PASSED                       [ 50%]
+    tests/test_stats.py::test_temp_c[max-32.4] PASSED                        [ 75%]
+    tests/test_stats.py::test_temp_c[mean-7.15997] PASSED                    [100%]
+
+    ============================== 4 passed in 0.01s ===============================
+    ```
+
+    The function runs once per pair; a failure names the pair, for
+    example `test_temp_c[min--16.3]`.
 
 ---
 

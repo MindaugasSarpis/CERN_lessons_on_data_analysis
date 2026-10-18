@@ -1,49 +1,30 @@
-# Seminar 12 — How Cold Is the Hill? pandas on a Second Station's File
+# Seminar 12 · Pandas
 
-**Paired lecture:** 12 Pandas & Data Cleaning · **Format:** follow-along · **~120 min**
-in class
+**Paired lecture:** 12 Pandas & Data Cleaning · **Format:** type-along tutorial, in class
 
-**Today's goal:** every student reads a second station's messy export with
+<!-- ~120 min: the length pnpm timing:check reads -->
+
+**Today's goal:** How cold is the hill? Every student reads a second station's messy export with
 pandas, cleans it rule by rule with a count for each rule, compares it day
-by day with the valley station, and pushes the script and the result.
+by day with the valley station, and writes the result into the README.
 
-Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
-Windows), in the `weather-project` folder. Sections 3 to 8 are typed at
-the Python prompt `>>>`.
+Everything is typed in VS Code's terminal (zsh on macOS, Git Bash on
+Windows), in today's folder `weather-s12`. In the blocks, a line that
+starts with `$` is typed in the terminal, a line that starts with `>>>` or
+`...` is typed at Python's prompt, and every other line is what comes back.
 
-## Run sheet
-
-| Clock | Section | Typed | The room ends with |
-|--|--|--|--|
-| | **Part 1 · pandas and the new file** · 20 min | | |
-| 0:00 | [1. Install pandas](#install) | `conda install pandas` | `3.0.6`, one more line in `environment.yml` |
-| 0:10 | [2. Get the hill station's file](#pull) | `git pull --no-edit course main` | `data/raw/hill_station.csv`, 8 741 lines |
-| | **Part 2 · Read it** · 30 min | | |
-| 0:20 | [3. Separator and decimal comma](#read) | `pd.read_csv(RAW, sep=";", decimal=",")` | `temp` as `float64` |
-| 0:35 | [4. -999 and empty cells](#missing) | `na_values=["-999"]`, `df.isna().sum()` | 27 and 30 missing values |
-| | **Part 3 · Clean it** · 30 min | | |
-| 0:50 | [5. Two units in one column](#units) | `df.loc[f, "temp"] = …` | 72 hours converted, max 28.4 |
-| 1:00 | [6. Rows twice, and the hour twice](#duplicates) | `df.drop_duplicates()` | 8 716 rows |
-| 1:10 | [7. Times and daily means](#daily) | `temp.resample("D").agg(…)` | 365 days, 4 too short |
-| | **Part 4 · Compare, by script** · 40 min | | |
-| 1:20 | [8. Join with the valley](#join) | `pd.merge(valley, day, on="time")` | hill − valley = −1.19 °C |
-| 1:30 | [9. The script](#script) | `python scripts/clean_hill.py` | the log and `hill_daily.csv` |
-| 1:45 | [10. Rebuild, README, push](#push) | `git push` | the work on GitHub |
-| 1:55 | [11. Wrap up](#wrap-up) | | |
-| | **Optional, if the room is fast** | | |
-| — | [12. The summer-time hour in winter time](#timezone) | `tz_localize("Europe/Vilnius")` | hourly spread 0.82 → 0.44 |
-| — | [13. The difference month by month](#month) | `diff.groupby(…)`, `plot.bar` | `results/hill_by_month.png` |
-
-**If time runs short:** skip section 8 at the prompt; the script of
-section 9 holds the same lines. Sections 12 and 13 are optional.
+**If time runs short:** skip section 9 at the prompt; the script of
+section 10 holds the same lines. Sections 13 to 15 are optional.
 
 ??? info "Before the session"
-    - **Room:** internet (conda downloads pandas). Each student has
-      `weather-project` from [Seminar 6](seminar_06.md) on, the conda
-      environment `weather`, and the remote `course` from Seminar 6.
-    - **You:** nothing to prepare. The course repository has the hill
-      station's file; section 2 pulls it. Ids of commits differ on every
-      laptop.
+    - **Room:** VS Code, Miniforge (`conda`) and internet: section 1
+      downloads today's folder and makes its conda environment (about 200
+      packages, a few minutes the first time). Nothing from an earlier
+      seminar is needed.
+    - **You:** nothing to prepare. Today's folder is
+      [`weather-s12.zip`](https://github.com/MindaugasSarpis/weather-project/releases)
+      on the course repository's Releases page; it holds the valley's log,
+      the hill station's export and `environment.yml`.
     - **Keys** are written for Windows, macOS in brackets. Every line typed
       is the same on macOS and Windows.
 
@@ -51,141 +32,133 @@ section 9 holds the same lines. Sections 12 and 13 are optional.
 
 ## Part 1 · pandas and the new file { #part-1 }
 
-**0:00 to 0:20** · A second station stands on a hill 4 km from the valley
-station, 180 m higher. Its operator sent the hourly export of 2025.
+<!-- 0:00 to 0:20 -->
+
+A second station stands on a hill 4 km from the valley station, 180 m higher. Its operator sent the hourly export of 2025.
+
+Further reading: [pandas, 10 minutes to pandas](https://pandas.pydata.org/docs/user_guide/10min.html);
+[HSF Analysis Essentials, Pandas](https://hsf-training.github.io/analysis-essentials/python/README.html).
 
 ---
 
-### 1. Install pandas { #install }
+### 1. Today's folder, its environment and pandas { #install }
 
-**0:00 · 10 min** · pandas reads and cleans tables; it goes into the project's environment.
+<!-- 0:00 · 10 min -->
 
-1. Open `weather-project` in VS Code, then the terminal: **View** >
-   **Terminal**. Switch on the environment.
+Everything for today is in one zip. **pandas**, which reads and cleans tables, is a package: it goes into the folder's conda environment and into `environment.yml`.
+
+1. On the course repository's
+   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
+   under **Assets**, click `weather-s12.zip`. In VS Code, **View** >
+   **Terminal**, then unpack it into the home folder and go in.
 
     ```text
-    conda activate weather
+    $ unzip ~/Downloads/weather-s12.zip -d ~
+    Archive:  /Users/smilte/Downloads/weather-s12.zip
+       creating: /Users/smilte/weather-s12/
+    ...
+    $ cd ~/weather-s12
+    $ ls
+    README.md  data  environment.yml  results  scripts
     ```
 
-    The prompt starts with `(weather)`.
+    Safari unpacks a download by itself: then type
+    `mv ~/Downloads/weather-s12 ~` instead of `unzip`.
 
-2. pandas is not there yet.
+2. **File** > **Open Folder...** > `weather-s12`, then **View** >
+   **Terminal** again: the terminal now starts in the folder.
+
+3. Make the conda environment `s12` from the folder's `environment.yml`:
+   Python 3.14 with NumPy, Matplotlib and SciPy. It ends with the line to
+   switch it on; type it. The prompt then starts with `(s12)`.
 
     ```text
-    python -c "import pandas"
+    $ conda env create -n s12 -f environment.yml
+    ...
+    #     $ conda activate s12
+    $ conda activate s12
     ```
 
+4. pandas is not there yet. `python -c` runs one line of Python from the
+   shell.
+
     ```text
+    $ python -c "import pandas"
     Traceback (most recent call last):
       File "<string>", line 1, in <module>
         import pandas
     ModuleNotFoundError: No module named 'pandas'
     ```
 
-3. Install it.
+5. Install pandas 3.0.6 from conda-forge. conda shows its plan and asks;
+   press `Enter` at `Proceed ([y]/n)?`. Then check the version.
 
     ```text
-    conda install pandas
-    ```
-
-    ```text
+    $ conda install pandas=3.0.6
       added / updated specs:
-        - pandas
-    ```
-
-    The list below names `pandas-3.0.6`. Press `Enter` at
-    `Proceed ([y]/n)?`.
-
-4. Check.
-
-    ```text
-    python -c "import pandas; print(pandas.__version__)"
-    ```
-
-    ```text
+        - pandas=3.0.6
+    ...
+    $ python -c "import pandas; print(pandas.__version__)"
     3.0.6
     ```
 
-5. In `environment.yml`, add a last line and save.
+6. Write the environment down again. `--from-history` lists only what was
+   asked for, with the versions typed.
 
     ```text
+    $ conda env export --from-history -f environment.yml
+    ```
+
+7. In `environment.yml`, delete the last line, `prefix: ...` (it names a
+   folder on this laptop only), save, and look at the file.
+
+    ```text
+    $ cat environment.yml
+    name: s12
+    channels:
+      - conda-forge
+    dependencies:
+      - jupyterlab=4.6
+      - matplotlib-base=3.11
+      - numpy=2.5
+      - python=3.14
+      - scipy=1.18
       - pandas=3.0.6
     ```
 
-6. Look at the change, then commit it.
-
-    ```text
-    git diff
-    ```
-
-    ```text
-    @@ -6,3 +6,4 @@ dependencies:
-       - numpy=2.5
-       - matplotlib-base=3.11
-       - scipy=1.18
-    +  - pandas=3.0.6
-    ```
-
-    ```text
-    git commit -am "Add pandas to the environment"
-    ```
-
-    ```text
-    [main 5d6364a] Add pandas to the environment
-     1 file changed, 1 insertion(+)
-    ```
-
-    Your id differs.
-
-**Check:** `3.0.6`, and `environment.yml` ends with `- pandas=3.0.6`.
+**Check:** `(s12)` in the prompt, `3.0.6`, and `environment.yml` ends with
+`- pandas=3.0.6`.
 
 !!! warning "`conda install` ran with `(base)` in the prompt"
     pandas went into `base`. Run `conda remove pandas`, then
-    `conda activate weather` and install it again.
+    `conda activate s12` and install it again.
 
 ---
 
-### 2. Get the hill station's file { #pull }
+### 2. The hill station's file { #pull }
 
-**0:10 · 10 min** · The course repository has one new file; a pull brings it.
+<!-- 0:10 · 10 min -->
 
-1. Pull from the course repository.
+The hill's export is `data/raw/hill_station.csv`, next to the valley's `weather.csv`. First a look in the shell.
 
-    ```text
-    git pull --no-edit course main
-    ```
-
-    ```text
-    Merge made by the 'ort' strategy.
-     data/raw/hill_station.csv | 8741 +++++++++++++++++++++++++++++++++++++++++++++
-     1 file changed, 8741 insertions(+)
-     create mode 100644 data/raw/hill_station.csv
-    ```
-
-2. The first lines.
+1. The first lines. Look at what separates the values and how a decimal
+   is written.
 
     ```text
-    head -n 4 data/raw/hill_station.csv
-    ```
-
-    ```text
+    $ head -n 4 data/raw/hill_station.csv
     time;temp;unit;humidity
     01.01.2025 00:00;-3,9;C;100
     01.01.2025 01:00;-4,1;C;100
     01.01.2025 02:00;-4,7;C;100
     ```
 
-3. The number of lines.
+2. The number of lines. On macOS `wc` pads the number with spaces on the
+   left.
 
     ```text
-    wc -l data/raw/hill_station.csv
-    ```
-
-    ```text
+    $ wc -l data/raw/hill_station.csv
     8741 data/raw/hill_station.csv
     ```
-
-    On macOS `wc` pads the number with spaces on the left.
 
 **Check:** `;` between the values, a decimal comma, the day before the
 month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
@@ -195,29 +168,20 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
     Print the lines of 26 October 2025 from 01:00 to 05:00, then those of
     30 March 2025. What is odd, and why?
 
-??? note "Answer"
+??? success "Answer"
     ```text
-    grep -n '^26\.10\.2025 0[1-5]' data/raw/hill_station.csv
-    ```
-
-    ```text
-    data/raw/hill_station.csv:7110:26.10.2025 01:00;-1,7;C;98
-    data/raw/hill_station.csv:7111:26.10.2025 02:00;-2,3;C;97
-    data/raw/hill_station.csv:7112:26.10.2025 03:00;-3,1;C;100
-    data/raw/hill_station.csv:7113:26.10.2025 03:00;-2,8;C;100
-    data/raw/hill_station.csv:7114:26.10.2025 04:00;-3,4;C;100
-    data/raw/hill_station.csv:7115:26.10.2025 05:00;-3,2;C;100
-    ```
-
-    ```text
-    grep -n '^30\.03\.2025 0[1-5]' data/raw/hill_station.csv
-    ```
-
-    ```text
-    data/raw/hill_station.csv:2071:30.03.2025 01:00;5,3;C;98
-    data/raw/hill_station.csv:2072:30.03.2025 02:00;5,0;C;95
-    data/raw/hill_station.csv:2073:30.03.2025 04:00;4,5;C;99
-    data/raw/hill_station.csv:2074:30.03.2025 05:00;4,8;C;100
+    $ grep -n '^26\.10\.2025 0[1-5]' data/raw/hill_station.csv
+    7110:26.10.2025 01:00;-1,7;C;98
+    7111:26.10.2025 02:00;-2,3;C;97
+    7112:26.10.2025 03:00;-3,1;C;100
+    7113:26.10.2025 03:00;-2,8;C;100
+    7114:26.10.2025 04:00;-3,4;C;100
+    7115:26.10.2025 05:00;-3,2;C;100
+    $ grep -n '^30\.03\.2025 0[1-5]' data/raw/hill_station.csv
+    2071:30.03.2025 01:00;5,3;C;98
+    2072:30.03.2025 02:00;5,0;C;95
+    2073:30.03.2025 04:00;4,5;C;99
+    2074:30.03.2025 05:00;4,8;C;100
     ```
 
     03:00 comes twice on 26 October and not at all on 30 March. The logger
@@ -230,67 +194,147 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 ## Part 2 · Read it { #part-2 }
 
-**0:20 to 0:50** · Every option of `read_csv` answers one thing seen in the first lines.
+<!-- 0:20 to 0:55 -->
+
+First a table of three rows typed by hand, then the valley's clean file, then the hill's messy one: every option of `read_csv` answers one thing seen in its first lines.
 
 ---
 
-### 3. Separator and decimal comma { #read }
+### 3. A table in pandas: DataFrame and Series { #frame }
 
-**0:20 · 15 min** · `read_csv` assumes `,` between values and `.` as the decimal sign. This file has neither.
+<!-- 0:20 · 15 min -->
 
-1. Start Python.
+A **DataFrame** is a table: named columns, numbered rows. One column of it is a **Series**.
 
-    ```text
-    python
+1. Start Python. Every line up to section 9 is typed at its prompt `>>>`.
+   `import pandas as pd` is the usual short name.
+
+    ```pycon
+    $ python
+    >>> import pandas as pd
     ```
 
-    The prompt is now `>>>`. Every line up to section 8 is typed here.
+2. A table of the first three hours of the valley's log, typed as a
+   dictionary: each key is a column name, each value the column's list.
 
-2. Import pandas and name the file.
-
-    ```text
-    import pandas as pd
+    ```pycon
+    >>> df = pd.DataFrame({"time": ["2016-01-01T00:00", "2016-01-01T01:00", "2016-01-01T02:00"], "temp_c": [-4.4, -4.8, -5.5]})
+    >>> df
+                   time  temp_c
+    0  2016-01-01T00:00    -4.4
+    1  2016-01-01T01:00    -4.8
+    2  2016-01-01T02:00    -5.5
+    >>> df.shape
+    (3, 2)
     ```
 
-    ```text
-    RAW = "data/raw/hill_station.csv"
+    The numbers on the left are the **index**, the name of each row.
+    `shape` is (rows, columns).
+
+3. A column by its name, in square brackets: a Series, with the index
+   beside each value. A Series has methods for the whole column.
+
+    ```pycon
+    >>> df["temp_c"]
+    0   -4.4
+    1   -4.8
+    2   -5.5
+    Name: temp_c, dtype: float64
+    >>> df["temp_c"].max()
+    np.float64(-4.4)
     ```
 
-3. Read it with no options, and ask for its size.
+    pandas keeps numbers as NumPy's (Seminar 7): `np.float64(-4.4)` is the
+    value −4.4.
 
-    ```text
-    df = pd.read_csv(RAW)
+4. A comparison on a column gives a Series of `True` and `False`, a
+   **mask**. A mask in square brackets keeps the rows where it is `True`.
+
+    ```pycon
+    >>> df["temp_c"] < -4.5
+    0    False
+    1     True
+    2     True
+    Name: temp_c, dtype: bool
+    >>> df[df["temp_c"] < -4.5]
+                   time  temp_c
+    1  2016-01-01T01:00    -4.8
+    2  2016-01-01T02:00    -5.5
     ```
 
-    ```text
-    df.shape
+5. `df.loc[rows, column]` picks cells, and with `=` changes them: here the
+   cells of the masked rows in `temp_c`.
+
+    ```pycon
+    >>> df.loc[df["temp_c"] < -4.5, "temp_c"] = -5.0
+    >>> df
+                   time  temp_c
+    0  2016-01-01T00:00    -4.4
+    1  2016-01-01T01:00    -5.0
+    2  2016-01-01T02:00    -5.0
     ```
 
-    ```text
+6. A file becomes a DataFrame with `read_csv`. The valley's log is a clean
+   CSV, so no option is needed.
+
+    ```pycon
+    >>> v = pd.read_csv("data/raw/weather.csv")
+    >>> v.shape
+    (87672, 4)
+    >>> v.head(3)
+                   time  temp_c  humidity_pct  wind_ms
+    0  2016-01-01T00:00    -4.4            93      2.5
+    1  2016-01-01T01:00    -4.8            95      2.6
+    2  2016-01-01T02:00    -5.5            95      2.7
+    >>> v.dtypes
+    time                str
+    temp_c          float64
+    humidity_pct      int64
+    wind_ms         float64
+    dtype: object
+    ```
+
+    `dtypes` is the type of each column: text (`str`), floats, integers.
+
+7. The −999 hours are in it as numbers: a mask and `sum` count them
+   (`True` counts as 1).
+
+    ```pycon
+    >>> v["temp_c"].min()
+    np.float64(-999.0)
+    >>> (v["temp_c"] == -999).sum()
+    np.int64(120)
+    ```
+
+**Check:** `(87672, 4)`, and 120 rows of −999.
+
+---
+
+### 4. Separator and decimal comma { #read }
+
+<!-- 0:35 · 10 min -->
+
+`read_csv` assumes `,` between values and `.` as the decimal sign. The hill's file has neither.
+
+1. Name the file, read it with no options, and ask for its size.
+
+    ```pycon
+    >>> RAW = "data/raw/hill_station.csv"
+    >>> df = pd.read_csv(RAW)
+    >>> df.shape
     (8740, 1)
-    ```
-
-    One column: pandas found no `,` in the header.
-
-    ```text
-    df.columns
-    ```
-
-    ```text
+    >>> df.columns
     Index(['time;temp;unit;humidity'], dtype='str')
     ```
 
-4. Read it with the separator.
+    One column: pandas found no `,` in the header, so the whole line is
+    one name.
 
-    ```text
-    df = pd.read_csv(RAW, sep=";")
-    ```
+2. Read it with the separator.
 
-    ```text
-    df.dtypes
-    ```
-
-    ```text
+    ```pycon
+    >>> df = pd.read_csv(RAW, sep=";")
+    >>> df.dtypes
     time            str
     temp            str
     unit            str
@@ -300,31 +344,17 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
     `temp` is text: `-3,9` is not a number to pandas.
 
-5. Read it with the decimal comma too.
+3. Read it with the decimal comma too.
 
-    ```text
-    df = pd.read_csv(RAW, sep=";", decimal=",")
-    ```
-
-    ```text
-    df.dtypes
-    ```
-
-    ```text
+    ```pycon
+    >>> df = pd.read_csv(RAW, sep=";", decimal=",")
+    >>> df.dtypes
     time            str
     temp        float64
     unit            str
     humidity    float64
     dtype: object
-    ```
-
-6. The first rows.
-
-    ```text
-    df.head(3)
-    ```
-
-    ```text
+    >>> df.head(3)
                    time  temp unit  humidity
     0  01.01.2025 00:00  -3.9    C     100.0
     1  01.01.2025 01:00  -4.1    C     100.0
@@ -335,17 +365,16 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 ---
 
-### 4. -999 and empty cells { #missing }
+### 5. -999 and empty cells { #missing }
 
-**0:35 · 15 min** · A missing value must be `NaN`, the value pandas leaves out of every mean.
+<!-- 0:45 · 10 min -->
 
-1. Eight numbers per column.
+A missing value must be `NaN` ("not a number"), the value pandas leaves out of every mean.
 
-    ```text
-    df.describe()
-    ```
+1. Eight numbers per column: `describe` is the first look at any table.
 
-    ```text
+    ```pycon
+    >>> df.describe()
                   temp     humidity
     count  8731.000000  8710.000000
     mean      3.192005    84.451206
@@ -360,19 +389,12 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
     `min` is −999, the mark for a failed reading. `count` is below 8 740:
     the empty cells are already `NaN`.
 
-2. Read again, with −999 as missing.
+2. Read again, with −999 as missing, and count the missing values in each
+   column.
 
-    ```text
-    df = pd.read_csv(RAW, sep=";", decimal=",", na_values=["-999"])
-    ```
-
-3. Count the missing values in each column.
-
-    ```text
-    df.isna().sum()
-    ```
-
-    ```text
+    ```pycon
+    >>> df = pd.read_csv(RAW, sep=";", decimal=",", na_values=["-999"])
+    >>> df.isna().sum()
     time         0
     temp        27
     unit         0
@@ -380,13 +402,10 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
     dtype: int64
     ```
 
-4. The temperature again.
+3. The temperature again.
 
-    ```text
-    df["temp"].describe()
-    ```
-
-    ```text
+    ```pycon
+    >>> df["temp"].describe()
     count    8713.000000
     mean        5.262412
     std        10.740471
@@ -409,32 +428,20 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
        the terminal panel), with `grep -c`.
     2. From which hour to which hour is the humidity missing?
 
-??? note "Answer"
+??? success "Answer"
     1. 18 and 9; 18 + 9 = 27.
 
         ```text
-        grep -c ';-999;' data/raw/hill_station.csv
-        ```
-
-        ```text
+        $ grep -c ';-999;' data/raw/hill_station.csv
         18
-        ```
-
-        ```text
-        grep -c ';;' data/raw/hill_station.csv
-        ```
-
-        ```text
+        $ grep -c ';;' data/raw/hill_station.csv
         9
         ```
 
     2. From 2 September 12:00 to 3 September 17:00, 30 hours in a row.
 
-        ```text
-        df[df["humidity"].isna()]["time"].iloc[[0, -1]]
-        ```
-
-        ```text
+        ```pycon
+        >>> df[df["humidity"].isna()]["time"].iloc[[0, -1]]
         5823    02.09.2025 12:00
         5852    03.09.2025 17:00
         Name: time, dtype: str
@@ -444,61 +451,42 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 ## Part 3 · Clean it { #part-3 }
 
-**0:50 to 1:20** · Each rule is a mask or a method, and each one is counted.
+<!-- 0:55 to 1:25 -->
+
+Each rule is a mask or a method, and each one is counted.
 
 ---
 
-### 5. Two units in one column { #units }
+### 6. Two units in one column { #units }
 
-**0:50 · 10 min** · The column `unit` says how each value is written.
+<!-- 0:55 · 10 min -->
 
-1. Count the units.
+The column `unit` says how each value is written: the 73.6 is in °F.
 
-    ```text
-    df["unit"].value_counts()
-    ```
+1. Count the units, then make a mask for the rows in °F and look at the
+   first of them.
 
-    ```text
+    ```pycon
+    >>> df["unit"].value_counts()
     unit
     C    8668
     F      72
     Name: count, dtype: int64
-    ```
-
-2. A mask for the rows in °F, and the first of them.
-
-    ```text
-    f = df["unit"] == "F"
-    ```
-
-    ```text
-    df[f].head(3)
-    ```
-
-    ```text
+    >>> f = df["unit"] == "F"
+    >>> df[f].head(3)
                       time  temp unit  humidity
     4477  08.07.2025 10:00  63.5    F      86.0
     4478  08.07.2025 11:00  65.8    F      82.0
     4479  08.07.2025 12:00  67.8    F      78.0
     ```
 
-3. Convert those rows: °C = (°F − 32) × 5 / 9.
+2. Convert those rows, °C = (°F − 32) × 5 / 9, and say so in `unit`. The
+   arithmetic runs on the whole masked column at once.
 
-    ```text
-    df.loc[f, "temp"] = ((df.loc[f, "temp"] - 32) * 5 / 9).round(1)
-    ```
-
-    ```text
-    df.loc[f, "unit"] = "C"
-    ```
-
-4. The same rows now.
-
-    ```text
-    df[f].head(3)
-    ```
-
-    ```text
+    ```pycon
+    >>> df.loc[f, "temp"] = ((df.loc[f, "temp"] - 32) * 5 / 9).round(1)
+    >>> df.loc[f, "unit"] = "C"
+    >>> df[f].head(3)
                       time  temp unit  humidity
     4477  08.07.2025 10:00  17.5    C      86.0
     4478  08.07.2025 11:00  18.8    C      82.0
@@ -507,13 +495,10 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
     63.5 °F: (63.5 − 32) × 5 / 9 = 17.5 °C.
 
-5. The largest value.
+3. The largest value now.
 
-    ```text
-    df["temp"].max()
-    ```
-
-    ```text
+    ```pycon
+    >>> df["temp"].max()
     np.float64(28.4)
     ```
 
@@ -521,50 +506,36 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 ---
 
-### 6. Rows twice, and the hour twice { #duplicates }
+### 7. Rows twice, and the hour twice { #duplicates }
 
-**1:00 · 10 min** · A row exported twice is dropped; an hour that happened twice is kept.
+<!-- 1:05 · 10 min -->
 
-1. Rows that are exact copies of an earlier row.
+A row exported twice is dropped; an hour that happened twice is kept.
 
-    ```text
-    print(df.duplicated().sum())
-    ```
+1. Rows that are exact copies of an earlier row, then rows whose time
+   came before.
 
-    ```text
+    ```pycon
+    >>> print(df.duplicated().sum())
     24
-    ```
-
-2. Rows whose time came before.
-
-    ```text
-    print(df.duplicated(subset="time").sum())
-    ```
-
-    ```text
+    >>> print(df.duplicated(subset="time").sum())
     25
     ```
 
-    One more: the 03:00 of 26 October, a real second hour (Task of
-    Part 1).
+2. One more by time: the 03:00 of 26 October, a real second hour (the
+   Task of Part 1).
 
-    ```text
-    df[df["time"] == "26.10.2025 03:00"]
-    ```
-
-    ```text
+    ```pycon
+    >>> df[df["time"] == "26.10.2025 03:00"]
                       time  temp unit  humidity
     7110  26.10.2025 03:00  -3.1    C     100.0
     7111  26.10.2025 03:00  -2.8    C     100.0
     ```
 
-3. Which day was exported twice.
+3. Which day was exported twice: the first and the last copied row.
 
-    ```text
-    df[df.duplicated()]["time"].iloc[[0, -1]]
-    ```
-
-    ```text
+    ```pycon
+    >>> df[df.duplicated()]["time"].iloc[[0, -1]]
     7732    20.11.2025 00:00
     7755    20.11.2025 23:00
     Name: time, dtype: str
@@ -572,15 +543,9 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 4. Drop the exact copies only.
 
-    ```text
-    df = df.drop_duplicates()
-    ```
-
-    ```text
-    len(df)
-    ```
-
-    ```text
+    ```pycon
+    >>> df = df.drop_duplicates()
+    >>> len(df)
     8716
     ```
 
@@ -588,44 +553,31 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 ---
 
-### 7. Times and daily means { #daily }
+### 8. Times and daily means { #daily }
 
-**1:10 · 10 min** · The valley is compared day by day, so the hours become days.
+<!-- 1:15 · 10 min -->
 
-1. Turn the text into times; the format says where the day and the month are.
+The valley is compared day by day, so the hours become days.
 
-    ```text
-    df["time"] = pd.to_datetime(df["time"], format="%d.%m.%Y %H:%M")
-    ```
+1. Turn the text into times; the format says where the day and the month
+   are (`%d.%m.%Y %H:%M`).
 
-    ```text
-    df.head(3)
-    ```
-
-    ```text
+    ```pycon
+    >>> df["time"] = pd.to_datetime(df["time"], format="%d.%m.%Y %H:%M")
+    >>> df.head(3)
                      time  temp unit  humidity
     0 2025-01-01 00:00:00  -3.9    C     100.0
     1 2025-01-01 01:00:00  -4.1    C     100.0
     2 2025-01-01 02:00:00  -4.7    C     100.0
     ```
 
-2. The temperature, indexed by time.
+2. The temperature, indexed by time; then one row per day with
+   `resample("D")`: the mean, and the number of hours it is made of.
 
-    ```text
-    temp = df.set_index("time")["temp"]
-    ```
-
-3. One row per day: the mean, and the number of hours it is made of.
-
-    ```text
-    day = temp.resample("D").agg(hill="mean", hours="count")
-    ```
-
-    ```text
-    day.head(3)
-    ```
-
-    ```text
+    ```pycon
+    >>> temp = df.set_index("time")["temp"]
+    >>> day = temp.resample("D").agg(hill="mean", hours="count")
+    >>> day.head(3)
                     hill  hours
     time
     2025-01-01 -3.416667     24
@@ -633,21 +585,12 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
     2025-01-03 -6.995833     24
     ```
 
-4. How many days, and which have fewer than 20 hours.
+3. How many days, and which have fewer than 20 hours.
 
-    ```text
-    len(day)
-    ```
-
-    ```text
+    ```pycon
+    >>> len(day)
     365
-    ```
-
-    ```text
-    day[day["hours"] < 20]
-    ```
-
-    ```text
+    >>> day[day["hours"] < 20]
                      hill  hours
     time
     2025-02-11 -11.935714     14
@@ -665,12 +608,9 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
     How many hours do 30 March and 26 October have in `day`? Which other
     days do not have 24, and why?
 
-??? note "Answer"
-    ```text
-    day.loc["2025-10-26"]
-    ```
-
-    ```text
+??? success "Answer"
+    ```pycon
+    >>> day.loc["2025-10-26"]
     hill     -0.396
     hours    25.000
     Name: 2025-10-26 00:00:00, dtype: float64
@@ -678,11 +618,8 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
     30 March has 23 hours, 26 October 25: the summer-time days.
 
-    ```text
-    day[day["hours"] != 24]
-    ```
-
-    ```text
+    ```pycon
+    >>> day[day["hours"] != 24]
                      hill  hours
     time
     2025-01-26  -4.752174     23
@@ -709,86 +646,48 @@ month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
 
 ## Part 4 · Compare, by script { #part-4 }
 
-**1:20 to 2:00** · The valley's daily means, joined to the hill's by date.
+<!-- 1:25 to 2:00 -->
+
+The valley's daily means, joined to the hill's by date; then the lines of the prompt go into a script.
 
 ---
 
-### 8. Join with the valley { #join }
+### 9. Join with the valley { #join }
 
-**1:20 · 10 min** · `merge` keeps the dates both tables have.
+<!-- 1:25 · 10 min -->
 
-1. The valley station, with −999 as missing.
+`merge` keeps the dates both tables have.
 
-    ```text
-    WEATHER = "data/raw/weather.csv"
-    ```
+1. The valley station again, now with −999 as missing and `time` read as
+   times; then its daily means.
 
-    ```text
-    v = pd.read_csv(WEATHER, na_values=["-999"], parse_dates=["time"])
-    ```
-
-2. Its daily means.
-
-    ```text
-    valley = v.set_index("time")["temp_c"].resample("D").mean()
-    ```
-
-    ```text
-    len(valley)
-    ```
-
-    ```text
+    ```pycon
+    >>> v = pd.read_csv("data/raw/weather.csv", na_values=["-999"], parse_dates=["time"])
+    >>> valley = v.set_index("time")["temp_c"].resample("D").mean()
+    >>> len(valley)
     3653
     ```
 
-3. Join the two by date.
+2. Join the two by date, then keep the days with 20 hours or more.
 
-    ```text
-    both = pd.merge(valley, day, on="time")
-    ```
-
-    ```text
-    len(both)
-    ```
-
-    ```text
+    ```pycon
+    >>> both = pd.merge(valley, day, on="time")
+    >>> len(both)
     365
+    >>> both = both[both["hours"] >= 20]
+    >>> len(both)
+    361
     ```
 
     3 653 days and 365 days give 365: only 2025 is in both.
 
-4. Keep the days with 20 hours or more.
+3. Hill minus valley, on average. Then leave Python.
 
-    ```text
-    both = both[both["hours"] >= 20]
-    ```
-
-    ```text
-    len(both)
-    ```
-
-    ```text
-    361
-    ```
-
-5. Hill minus valley, on average.
-
-    ```text
-    diff = both["hill"] - both["temp_c"]
-    ```
-
-    ```text
-    print(round(diff.mean(), 2))
-    ```
-
-    ```text
+    ```pycon
+    >>> diff = both["hill"] - both["temp_c"]
+    >>> print(round(diff.mean(), 2))
     -1.19
-    ```
-
-6. Leave Python.
-
-    ```text
-    exit()
+    >>> exit()
     ```
 
 **Check:** −1.19 °C over 361 days. Air cools by about 6.5 °C per km of
@@ -796,12 +695,14 @@ height: 0.18 km × 6.5 = 1.17 °C.
 
 ---
 
-### 9. The script { #script }
+### 10. The script { #script }
 
-**1:30 · 15 min** · The lines of sections 3 to 8 in one file, with a count for every rule.
+<!-- 1:35 · 15 min -->
+
+The lines of sections 4 to 9 in one file, with a count for every rule.
 
 1. In the Explorer, right-click `scripts` > **New File...**, type
-   `clean_hill.py`, press `Enter`. Write and save:
+   `clean_hill.py`. Write its first part: the files, the reading, two counts.
 
     ```python
     """Clean the hill station's export; compare it with the valley, day by day.
@@ -819,7 +720,11 @@ height: 0.18 km × 6.5 = 1.17 °C.
     df = pd.read_csv(HILL, sep=";", decimal=",", na_values=["-999"])
     print("rows read      ", len(df))
     print("temp missing   ", df["temp"].isna().sum())
+    ```
 
+2. Under it, the rules of sections 6 and 7, each with a count.
+
+    ```python
     f = df["unit"] == "F"
     df.loc[f, "temp"] = ((df.loc[f, "temp"] - 32) * 5 / 9).round(1)
     df.loc[f, "unit"] = "C"
@@ -827,7 +732,11 @@ height: 0.18 km × 6.5 = 1.17 °C.
 
     print("duplicate rows ", df.duplicated().sum())
     df = df.drop_duplicates()
+    ```
 
+3. Under it, the days and the comparison of sections 8 and 9. Save.
+
+    ```python
     df["time"] = pd.to_datetime(df["time"], format="%d.%m.%Y %H:%M")
     temp = df.set_index("time")["temp"]
     day = temp.resample("D").agg(hill="mean", hours="count")
@@ -844,16 +753,12 @@ height: 0.18 km × 6.5 = 1.17 °C.
     print("hill - valley  ", round(diff.mean(), 2))
     ```
 
-    `lineterminator="\n"` makes the file end its lines the same way on
-    macOS and Windows, so it has the same checksum on both.
-
-2. Run it.
-
-    ```text
-    python scripts/clean_hill.py
-    ```
+4. Run it. (`lineterminator="\n"` makes `hill_daily.csv` end its lines
+   the same way on macOS and Windows, so it has the same checksum on
+   both.)
 
     ```text
+    $ python scripts/clean_hill.py
     rows read       8740
     temp missing    27
     rows in F       72
@@ -863,23 +768,14 @@ height: 0.18 km × 6.5 = 1.17 °C.
     hill - valley   -1.19
     ```
 
-3. The file it wrote.
+5. The file it wrote.
 
     ```text
-    head -n 3 data/processed/hill_daily.csv
-    ```
-
-    ```text
+    $ head -n 3 data/processed/hill_daily.csv
     time,hill
     2025-01-01,-3.42
     2025-01-02,-5.44
-    ```
-
-    ```text
-    wc -l data/processed/hill_daily.csv
-    ```
-
-    ```text
+    $ wc -l data/processed/hill_daily.csv
     362 data/processed/hill_daily.csv
     ```
 
@@ -888,11 +784,14 @@ the header and 361 days.
 
 ---
 
-### 10. Rebuild, README, push { #push }
+### 11. Rebuild and README { #push }
 
-**1:45 · 10 min** · The rebuild script runs the new script too, and the README says what it found.
+<!-- 1:50 · 10 min -->
 
-1. In `scripts/rebuild.sh`, add a last line and save.
+The rebuild script runs the new script too, and the README says what it found.
+
+1. In `scripts/rebuild.sh`, add a last line and save. `>` writes what the
+   script prints into a file.
 
     ```text
     python scripts/clean_hill.py > results/hill.txt
@@ -901,18 +800,9 @@ the header and 361 days.
 2. Rebuild, then read the new result.
 
     ```text
-    ./scripts/rebuild.sh
-    ```
-
-    ```text
+    $ ./scripts/rebuild.sh
     9 rows written to data/processed/daily.csv
-    ```
-
-    ```text
-    cat results/hill.txt
-    ```
-
-    ```text
+    $ cat results/hill.txt
     rows read       8740
     temp missing    27
     rows in F       72
@@ -932,57 +822,19 @@ the header and 361 days.
     valley. The counts of each rule are in `results/hill.txt`.
     ```
 
-4. What changed.
+4. Look at it: right-click `README.md` > **Open Preview**.
 
-    ```text
-    git status --short
-    ```
-
-    ```text
-     M README.md
-     M scripts/rebuild.sh
-    ?? scripts/clean_hill.py
-    ```
-
-5. Stage, commit, push.
-
-    ```text
-    git add README.md scripts/clean_hill.py scripts/rebuild.sh
-    ```
-
-    ```text
-    git commit -m "Clean the hill station's file and compare it with the valley"
-    ```
-
-    ```text
-    [main 40ac9f0] Clean the hill station's file and compare it with the valley
-     3 files changed, 45 insertions(+)
-     create mode 100644 scripts/clean_hill.py
-    ```
-
-    ```text
-    git push
-    ```
-
-    ```text
-    To https://github.com/your-username/weather-project.git
-       bcee860..40ac9f0  main -> main
-    ```
-
-**Check:** on GitHub, `scripts/clean_hill.py` and the **Hill station**
-section of the README.
+**Check:** `results/hill.txt` holds the seven lines of the log, and the
+README's preview shows the **Hill station** section.
 
 !!! question "Task: what if the units were left as they are?"
     Put `#` before the two lines of `clean_hill.py` that convert the °F rows
-    (`df.loc[f, …]`), run the script, read the last line. Then take the
-    file back to its committed state.
+    (`df.loc[f, …]`), run the script, read the last line. Then remove the
+    two `#` again and save.
 
-??? note "Answer"
+??? success "Answer"
     ```text
-    python scripts/clean_hill.py
-    ```
-
-    ```text
+    $ python scripts/clean_hill.py
     rows read       8740
     temp missing    27
     rows in F       72
@@ -996,18 +848,17 @@ section of the README.
     and pull the mean from −1.19 to −0.81 °C. The script ran without an
     error.
 
-    ```text
-    git restore scripts/clean_hill.py
-    ```
-
 ---
 
-### 11. Wrap up { #wrap-up }
+### 12. Wrap up { #wrap-up }
 
-**1:55 · 5 min**
+<!-- 1:55 · 5 min -->
 
 | To | Type |
 |--|--|
+| make a table by hand | `pd.DataFrame({"col": [...], ...})` |
+| one column, as a Series | `df["temp"]` |
+| keep the rows of a mask | `df[df["temp"] < 0]` |
 | read a European export | `pd.read_csv(FILE, sep=";", decimal=",")` |
 | turn a mark into a missing value | `na_values=["-999"]` |
 | count missing values | `df.isna().sum()` |
@@ -1021,84 +872,65 @@ Seminar 13 makes the whole project from `data/raw` with one command.
 
 ---
 
-## Optional, if the room is fast { #optional }
+## Optional, if the room goes fast { #optional }
 
 ---
 
-### 12. The summer-time hour in winter time { #timezone }
+### 13. The summer-time hour in winter time { #timezone }
 
-**— · 15 min** · Hour by hour, the hill's summer clock is one hour ahead of the valley's.
+<!-- — · 15 min -->
 
-1. Start Python and run the script inside it: its tables stay.
+Hour by hour, the hill's summer clock is one hour ahead of the valley's.
 
-    ```text
-    python
+1. Start Python and run the script inside it with `exec`: its tables
+   (`df`, `temp`, `v`, `diff`) stay at the prompt.
+
+    ```pycon
+    $ python
+    >>> exec(open("scripts/clean_hill.py").read())
+    rows read       8740
+    temp missing    27
+    rows in F       72
+    duplicate rows  24
+    days < 20 hours 4
+    days compared   361
+    hill - valley   -1.19
     ```
 
-    ```text
-    exec(open("scripts/clean_hill.py").read())
-    ```
+2. Join hour by hour, and take the spread (standard deviation) of the
+   difference.
 
-    The seven lines of the log follow.
-
-2. Join hour by hour, and take the spread of the difference.
-
-    ```text
-    hourly = v.set_index("time")["temp_c"]
-    ```
-
-    ```text
-    h = pd.merge(hourly, temp, on="time")
-    ```
-
-    ```text
-    print(round((h["temp"] - h["temp_c"]).std(), 2))
-    ```
-
-    ```text
+    ```pycon
+    >>> hourly = v.set_index("time")["temp_c"]
+    >>> h = pd.merge(hourly, temp, on="time")
+    >>> print(round((h["temp"] - h["temp_c"]).std(), 2))
     0.82
     ```
 
-3. The 03:00 of 26 October is still there twice.
+3. The 03:00 of 26 October is still there twice, so the index is not
+   unique.
 
-    ```text
-    temp.index.is_unique
-    ```
-
-    ```text
+    ```pycon
+    >>> temp.index.is_unique
     False
     ```
 
 4. Say which clock the times are on, then move them to winter time,
-   UTC+2 (written `Etc/GMT-2`).
+   UTC+2 (written `Etc/GMT-2`). `ambiguous="infer"` sorts out the two
+   03:00 hours by their order.
 
-    ```text
-    local = temp.index.tz_localize("Europe/Vilnius", ambiguous="infer")
-    ```
-
-    ```text
-    temp.index = local.tz_convert("Etc/GMT-2").tz_localize(None)
-    ```
-
-    ```text
-    temp.index.is_unique
-    ```
-
-    ```text
+    ```pycon
+    >>> local = temp.index.tz_localize("Europe/Vilnius", ambiguous="infer")
+    >>> temp.index = local.tz_convert("Etc/GMT-2").tz_localize(None)
+    >>> temp.index.is_unique
     True
     ```
 
 5. Join again.
 
-    ```text
-    h = pd.merge(hourly, temp, on="time")
-    ```
-
-    ```text
-    print(round((h["temp"] - h["temp_c"]).std(), 2))
-    ```
-
-    ```text
+    ```pycon
+    >>> h = pd.merge(hourly, temp, on="time")
+    >>> print(round((h["temp"] - h["temp_c"]).std(), 2))
     0.44
     ```
 
@@ -1107,21 +939,17 @@ set each hill hour beside the valley hour one hour later.
 
 ---
 
-### 13. The difference month by month { #month }
+### 14. The difference month by month { #month }
 
-**— · 10 min** · `groupby` splits the 361 differences by month and takes each mean.
+<!-- — · 10 min -->
 
-1. At the prompt of section 12 (or after `exec(...)` again):
+`groupby` splits the 361 differences by month and takes each mean.
 
-    ```text
-    month = diff.groupby(diff.index.month).mean().round(2)
-    ```
+1. At the prompt of section 13:
 
-    ```text
-    month
-    ```
-
-    ```text
+    ```pycon
+    >>> month = diff.groupby(diff.index.month).mean().round(2)
+    >>> month
     time
     1    -0.84
     2    -0.92
@@ -1138,22 +966,13 @@ set each hill hour beside the valley hour one hour later.
     dtype: float64
     ```
 
-2. As a bar chart, saved.
+2. As a bar chart, saved into `results`.
 
-    ```text
-    import matplotlib.pyplot as plt
-    ```
-
-    ```text
-    month.plot.bar(xlabel="month", ylabel="hill - valley (°C)")
-    ```
-
-    ```text
+    ```pycon
+    >>> import matplotlib.pyplot as plt
+    >>> month.plot.bar(xlabel="month", ylabel="hill - valley (°C)")
     <Axes: xlabel='month', ylabel='hill - valley (°C)'>
-    ```
-
-    ```text
-    plt.savefig("results/hill_by_month.png")
+    >>> plt.savefig("results/hill_by_month.png")
     ```
 
 3. Open `results/hill_by_month.png` in the Explorer.
@@ -1163,11 +982,86 @@ August (−1.63). In winter, cold air settles in the valley.
 
 ---
 
+### 15. Advanced tasks { #advanced }
+
+<!-- — · 20 min -->
+
+Harder questions on the same files, for a room that is done early. Each answer is one way; others are fine.
+
+!!! question "Advanced task: find the °F rows without the column `unit`"
+    Suppose the export had no column `unit`. Find the 72 rows in °F from
+    the temperatures alone. Hint: from one hour to the next, the air does
+    not warm by 40 °C.
+
+??? success "Answer"
+    `diff()` is each value minus the one before it. The jump into °F and
+    the jump back out of it are the only two jumps above 10 °C:
+
+    ```pycon
+    >>> raw = pd.read_csv("data/raw/hill_station.csv", sep=";", decimal=",", na_values=["-999"]).drop_duplicates()
+    >>> raw["time"] = pd.to_datetime(raw["time"], format="%d.%m.%Y %H:%M")
+    >>> t = raw.set_index("time")["temp"]
+    >>> jump = t.diff().abs()
+    >>> t[jump > 10]
+    time
+    2025-07-08 10:00:00    63.5
+    2025-07-11 10:00:00    17.0
+    Name: temp, dtype: float64
+    ```
+
+    The °F rows run from 8 July 10:00 up to, not including, 11 July 10:00:
+    3 days × 24 = 72 hours. A rule like this finds a fault no column
+    announces; it would also flag a real front passing, so look at what it
+    finds before acting on it.
+
+!!! question "Advanced task: the humidity, the same way"
+    Is the hill more or less humid than the valley? Use the hill's
+    `humidity` and the valley's `humidity_pct`, day by day, on the days
+    with at least 20 hours of humidity.
+
+??? success "Answer"
+    After `exec(open("scripts/clean_hill.py").read())` (section 13, step 1):
+
+    ```pycon
+    >>> hum = df.set_index("time")["humidity"].resample("D").agg(hill="mean", hours="count")
+    >>> vh = v.set_index("time")["humidity_pct"].resample("D").mean()
+    >>> b = pd.merge(vh, hum, on="time")
+    >>> b = b[b["hours"] >= 20]
+    >>> print(len(b), round((b["hill"] - b["humidity_pct"]).mean(), 2))
+    360 4.55
+    ```
+
+    On 360 days, the hill's air is 4.55 percentage points more humid:
+    colder air holds less water, so the same water is a higher relative
+    humidity. Five days have fewer than 20 hours of humidity: the three
+    days of February when the logger was off, and 2 and 3 September (12
+    and 6 hours), the 30 missing hours.
+
+!!! question "Advanced task: is there a daily cycle?"
+    After section 13 (winter-time hours), take the mean of hill minus
+    valley for each hour of the day. At which hour is the difference
+    largest, at which smallest, and is that a cycle worth reporting?
+
+??? success "Answer"
+    ```pycon
+    >>> d = h["temp"] - h["temp_c"]
+    >>> by_hour = d.groupby(d.index.hour).mean().round(2)
+    >>> print(by_hour.idxmin(), by_hour.min(), by_hour.idxmax(), by_hour.max())
+    2 -1.21 11 -1.16
+    ```
+
+    From −1.21 °C at 02:00 to −1.16 °C at 11:00: 0.05 °C apart, against
+    a spread of 0.44 °C for single hours. There is no daily cycle to
+    report; the difference is the same at every hour.
+
+---
+
 ## Aims practised
 
 - 📁 **Files:** a European export read as it is, with every fault named,
   counted and fixed by a rule; the raw file is never edited.
 - ♻️ **Reproducibility:** the script and its log rebuild the comparison,
-  and the README holds the number it prints.
+  the README holds the number it prints, and `environment.yml` says what
+  the script needs.
 - 🔧 **Tool-agnostic:** the same pandas lines at the prompt and in the
   script, the same lines in zsh on macOS and Git Bash on Windows.

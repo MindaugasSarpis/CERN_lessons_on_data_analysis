@@ -1,156 +1,142 @@
-# Seminar 10 — How Strong Is the Yearly Cycle? Fitting the Weather Data
+# Seminar 10 · Fitting
 
-**Paired lecture:** 10 Fitting from First Principles · **Format:** follow-along · **~120 min**
-in class
+**Paired lecture:** 10 Fitting from First Principles · **Format:** follow-along, in class
 
-**Today's goal:** every student fits a straight line to the ten yearly
-means by the closed formulas of the lecture (−0.6 ± 0.8 °C per decade) and
-a cosine to the 3648 daily means (amplitude 11.18 °C, coldest on
-16 January), reads the residuals, commits and pushes.
+<!-- ~120 min: the length pnpm timing:check reads -->
+
+**Today's goal:** How strong is the yearly cycle? Every student fits a straight line to the ten yearly
+means by five sums (−0.6 ± 0.8 °C per decade) and a cosine to the 3648
+daily means (amplitude 11.18 °C, coldest on 16 January), reads the
+residuals, and writes both results into the README.
 
 Everything is typed in VS Code: the scripts in the editor, the runs in its
-terminal (zsh on macOS, Git Bash on Windows; `weather` environment). SciPy is installed in
-section 1.
-
-## Run sheet
-
-| Clock | Section | Typed | The room ends with |
-|--|--|--|--|
-| | **Part 1 · SciPy and the daily means** · 30 min | | |
-| 0:00 | [1. Install SciPy](#install) | `conda install scipy` | `1.18.1`, `scipy=1.18` in `environment.yml` |
-| 0:10 | [2. The daily means](#daily) | `scripts/fit_cycle.py`, `reshape(-1, 24)` | 3648 daily means |
-| 0:20 | [3. Plot them](#plot) | `ax.plot(d, T, ".")` | ten waves |
-| | **Part 2 · Is it getting warmer?** · 30 min | | |
-| 0:30 | [4. Ten yearly means](#yearly) | `scripts/fit_trend.py` | ten points, σ = 0.70 |
-| 0:35 | [5. Five sums, slope and intercept](#sums) | `D = S * Sxx - Sx**2` | a = −0.0555 °C per year |
-| 0:45 | [6. Uncertainties and χ²](#chi2) | `np.sqrt(S / D)` | −0.6 ± 0.8 °C per decade |
-| | **Part 3 · The yearly cycle** · 35 min | | |
-| 1:00 | [7. A cosine and a sine column](#lstsq) | `np.linalg.lstsq` | c, a, b |
-| 1:10 | [8. Amplitude and the coldest day](#amplitude) | `np.hypot(a, b)` | 11.18 °C, day 15.9 |
-| 1:20 | [9. The same with `curve_fit`](#curve-fit) | `curve_fit(cycle, d, T, p0=…)` | 11.179 ± 0.069 |
-| | **Part 4 · The residuals** · 15 min | | |
-| 1:35 | [10. Residuals](#residuals) | `np.corrcoef(res[:-1], res[1:])` | 0.875, `results/cycle_fit.png` |
-| | **Part 5 · Write it down** · 10 min | | |
-| 1:50 | [11. The README, a commit, a push](#commit) | `git commit`, `git push` | the fits on GitHub |
-| 1:55 | [12. Wrap up](#wrap-up) | | |
-| | **Optional, if the room is fast** | | |
-| — | [13. The amplitude year by year](#by-year) | a loop of ten fits | 11.20 ± 0.25 °C |
-| — | [14. The daily cycle](#daily-cycle) | a period of 24 hours | 3.50 °C, warmest at 15:00 |
+terminal (zsh on macOS, Git Bash on Windows; today's environment
+`s10`). SciPy is installed in section 1. In the blocks, a line that starts with `$` is
+typed in the terminal, and every other line is what comes back.
 
 **If time runs short:** leave out section 3 and the Task of Part 3;
 sections 10 and 11 stay.
 
 ??? info "Before the session"
-    - **Room:** `weather-project` with `environment.yml` and the `weather`
-      environment of Seminars 7 and 8, `scripts/mean_error.py` of Seminar 9.
-      Internet for `conda install scipy`.
-    - **You:** nothing to prepare. The data are the same in every clone, so
-      every number on this page is the number in the room. Commit ids differ.
+    - **Room:** VS Code and Miniforge on every laptop (Seminar 4, or the
+      [Setup](../setup.md) page), and internet: today's folder and its
+      packages download in section 1, about 180 MB the first time.
+    - **You:** nothing to prepare. Today's folder is the same for everyone,
+      so every number on this page is the number in the room.
     - **Keys** are written for Windows, macOS in brackets.
 
 ---
 
 ## Part 1 · SciPy and the daily means { #part-1 }
 
-**0:00 to 0:30**
+<!-- 0:00 to 0:30 -->
+
+A fit needs a model; the model is read off a plot of the data.
 
 ---
 
-### 1. Install SciPy { #install }
+### 1. Get today's folder, install SciPy { #install }
 
-**0:00 · 10 min** · `curve_fit` lives in SciPy. It goes into the environment and into `environment.yml`.
+<!-- 0:00 · 10 min -->
 
-1. Open `weather-project` in VS Code, then the terminal. Switch on the
-   environment and bring in any commit from GitHub.
+Today's folder holds the data, the scripts so far and `environment.yml`. **SciPy** is the package of scientific methods built on NumPy; its `curve_fit` fits any model. It goes into today's environment and into `environment.yml`.
+
+1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
+   of the course repository, under **Assets**, click `weather-s10.zip`.
+2. Open VS Code, then **View** > **Terminal**. Unpack the zip into the
+   home folder and go there. Git Bash shows `/c/Users/smilte/...`.
 
     ```text
-    conda activate weather
+    $ unzip ~/Downloads/weather-s10.zip -d ~
+    Archive:  /Users/smilte/Downloads/weather-s10.zip
+       creating: /Users/smilte/weather-s10/
+    ...
+      inflating: /Users/smilte/weather-s10/scripts/weather.py
+    $ cd ~/weather-s10
     ```
 
+    Safari unpacks a download by itself: then type
+    `mv ~/Downloads/weather-s10 ~` instead of `unzip`.
+
+3. **File** > **Open Folder...** > `weather-s10`. VS Code opens a new
+   window; **View** > **Terminal** there starts in the folder.
+4. Make today's environment from `environment.yml`: Python, NumPy,
+   Matplotlib and JupyterLab, in the versions the file names. Then switch
+   it on: the prompt starts with `(s10)`.
+
     ```text
-    git pull
+    $ conda env create -n s10 -f environment.yml
+    Channels:
+     - conda-forge
+    ...
+    #     $ conda activate s10
+    $ conda activate s10
     ```
 
-    ```text
-    Already up to date.
-    ```
-
-2. Install SciPy.
+5. Install SciPy 1.18 from conda-forge. conda shows its plan and asks.
 
     ```text
-    conda install scipy
-    ```
-
-    ```text
+    $ conda install scipy=1.18
+    ...
     ## Package Plan ##
 
-      environment location: /Users/smilte/miniforge3/envs/weather
+      environment location: /Users/smilte/miniforge3/envs/s10
 
       added / updated specs:
-        - scipy
-
+        - scipy=1.18
 
     The following NEW packages will be INSTALLED:
 
       scipy              conda-forge/linux-64::scipy-1.18.1-py314h36f0660_1
 
-
     Proceed ([y]/n)?
     ```
 
-    Press `Enter`. Your line names your system (`osx-arm64`, `win-64`), and
-    on Windows the folder is `C:\Users\smilte\miniforge3\envs\weather`
-    (in Git Bash `/c/Users/smilte/miniforge3/envs/weather`).
-
-3. Check.
+6. Press `Enter`. Your line names your system (`osx-arm64`, `win-64`), and
+   on Windows the folder is `/c/Users/smilte/miniforge3/envs/s10`.
+   Then check:
 
     ```text
-    python -c "import scipy; print(scipy.__version__)"
-    ```
-
-    ```text
+    $ python -c "import scipy; print(scipy.__version__)"
     1.18.1
     ```
 
-4. Open `environment.yml`. Add one line at the end of `dependencies`, with
-   the version pinned like the others, save.
+7. Write the environment down again. `--from-history` lists only what was
+   asked for, with the versions typed.
 
     ```text
+    $ conda env export --from-history -f environment.yml
+    ```
+
+8. In `environment.yml`, delete the last line, `prefix: ...` (it names a
+   folder on this laptop only), save. SciPy is the new last line:
+
+    ```text
+    $ cat environment.yml
+    name: s10
+    channels:
+      - conda-forge
+    dependencies:
+      - jupyterlab=4.6
+      - matplotlib-base=3.11
+      - numpy=2.5
+      - python=3.14
       - scipy=1.18
     ```
 
-5. Look at the change, commit it.
-
-    ```text
-    git diff
-    ```
-
-    ```text
-    @@ -5,3 +5,4 @@ dependencies:
-       - python=3.14
-       - numpy=2.5
-       - matplotlib-base=3.11
-    +  - scipy=1.18
-    ```
-
-    ```text
-    git commit -am "Add SciPy to the environment"
-    ```
-
-    ```text
-    [main b3c4d6b] Add SciPy to the environment
-     1 file changed, 1 insertion(+)
-    ```
-
-**Check:** `1.18.1`, and `git status` clean.
+**Check:** `1.18.1`, and `scipy=1.18` in `environment.yml`.
 
 ---
 
 ### 2. The daily means { #daily }
 
-**0:10 · 10 min** · 24 rows make a day: `reshape(-1, 24)` gives one row per day.
+<!-- 0:10 · 10 min -->
 
-1. New file `scripts/fit_cycle.py`. Type and save.
+24 rows make a day: `reshape(-1, 24)` turns the 87 672 hours into 3653 rows of 24, one row per day.
+
+1. New file `scripts/fit_cycle.py`. Type and save. `.all(axis=1)` asks of
+   each row whether all its hours are valid; `.mean(axis=1)` averages
+   each row.
 
     ```python
     import numpy as np
@@ -166,16 +152,10 @@ sections 10 and 11 stay.
     print("days", len(days), "with 24 hours", len(T))
     ```
 
-    `good` keeps the days whose 24 hours are all valid; `d` is the day
-    number, 0 for 1 January 2016.
-
-2. Run it.
+2. Run it. `d` is the day number, 0 for 1 January 2016.
 
     ```text
-    python scripts/fit_cycle.py
-    ```
-
-    ```text
+    $ python scripts/fit_cycle.py
     days 3653 with 24 hours 3648
     ```
 
@@ -185,9 +165,11 @@ sections 10 and 11 stay.
 
 ### 3. Plot them { #plot }
 
-**0:20 · 5 min** · The model is chosen from the picture.
+<!-- 0:20 · 5 min -->
 
-1. Add at the end, save, run.
+The model is chosen from the picture.
+
+1. Add at the end, save. `"."` draws each day as a dot, `ms=2` small.
 
     ```python
 
@@ -198,12 +180,13 @@ sections 10 and 11 stay.
     fig.savefig("results/daily_means.png", dpi=150, bbox_inches="tight")
     ```
 
-    ```text
-    python scripts/fit_cycle.py
-    ```
+2. Run it, then open `results/daily_means.png` from the Explorer: ten
+   waves, one per year.
 
-2. Open `results/daily_means.png` from the Explorer: ten waves, one per
-   year.
+    ```text
+    $ python scripts/fit_cycle.py
+    days 3653 with 24 hours 3648
+    ```
 
 **Check:** ten waves, low at the start of each year, high in summer.
 
@@ -212,7 +195,7 @@ sections 10 and 11 stay.
     from winter to summer), and the day of the coldest point. These are the
     starting values of section 9.
 
-??? note "Answer"
+??? success "Answer"
     Winter about −4 °C, summer about 18 °C: level (18 − 4)/2 ≈ 7 °C,
     amplitude (18 + 4)/2 ≈ 11 °C, coldest near day 15, mid-January. The fit
     gives 7.18, 11.18 and 15.9.
@@ -221,15 +204,21 @@ sections 10 and 11 stay.
 
 ## Part 2 · Is it getting warmer? { #part-2 }
 
-**0:30 to 1:00** · A straight line through the ten yearly means, by the five sums of the lecture.
+<!-- 0:30 to 1:00 -->
+
+A straight line y = a x + b through the ten yearly means: a is the change per year.
 
 ---
 
-### 4. Ten yearly means { #yearly }
+### 4. Ten yearly means, and how well a line fits { #yearly }
 
-**0:30 · 5 min** · x is the year since 2016; σ of each point is 0.70 °C, the scatter of the years in Seminar 9.
+<!-- 0:30 · 5 min -->
 
-1. New file `scripts/fit_trend.py`. Type and save.
+**χ²** (chi-squared) adds up each point's distance from the line, in units of its σ, squared: the smaller, the better the line fits.
+
+1. New file `scripts/fit_trend.py`. Type and save. x is the year since
+   2016; σ of each point is 0.70 °C, how much the years scatter
+   (Seminar 9).
 
     ```python
     import numpy as np
@@ -246,23 +235,43 @@ sections 10 and 11 stay.
     print(y.round(2))
     ```
 
-2. Run it.
+2. Run it: the ten means of Seminar 9.
 
     ```text
-    python scripts/fit_trend.py
-    ```
-
-    ```text
+    $ python scripts/fit_trend.py
     [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
     ```
 
-**Check:** the ten means of Seminar 9.
+3. Add a function for χ² of any line, and try two lines by guess: a flat
+   one at 7.16 °C, and one rising 0.1 °C per year.
+
+    ```python
+
+    def chi2_of(a, b):
+        return (((y - a * x - b) / sy)**2).sum()
+
+    print(f"flat line at 7.16: chi2 {chi2_of(0, 7.16):.2f}")
+    print(f"slope 0.1 per year: chi2 {chi2_of(0.1, 6.7):.2f}")
+    ```
+
+4. Run it. The rising line fits worse.
+
+    ```text
+    $ python scripts/fit_trend.py
+    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
+    flat line at 7.16: chi2 9.08
+    slope 0.1 per year: chi2 12.64
+    ```
+
+**Check:** χ² 9.08 for the flat line, 12.64 for the rising one.
 
 ---
 
 ### 5. Five sums, slope and intercept { #sums }
 
-**0:35 · 10 min** · χ² is smallest where both derivatives are zero; the solution needs five sums.
+<!-- 0:35 · 10 min -->
+
+Guessing is slow. χ² is smallest where its derivatives by a and by b are both zero; solving those two equations needs five sums of the data, each point weighted by w = 1/σ².
 
 1. Add at the end, save.
 
@@ -278,14 +287,11 @@ sections 10 and 11 stay.
     print(f"a = {a:.4f} °C per year, b = {b:.3f} °C")
     ```
 
-2. Run it.
+2. Run it. The last two lines are new.
 
     ```text
-    python scripts/fit_trend.py
-    ```
-
-    ```text
-    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
+    $ python scripts/fit_trend.py
+    ...
     S 20.41, Sx 91.84, Sy 146.12, Sxx 581.63, Sxy 648.21
     a = -0.0555 °C per year, b = 7.410 °C
     ```
@@ -296,7 +302,9 @@ sections 10 and 11 stay.
 
 ### 6. Uncertainties and χ² { #chi2 }
 
-**0:45 · 10 min** · σ_a = √(S/Δ), σ_b = √(Sxx/Δ), cov = −Sx/Δ; χ² near the number of degrees of freedom says the σ fit the scatter.
+<!-- 0:45 · 10 min -->
+
+The same sums give the uncertainties: σ_a = √(S/D), σ_b = √(Sxx/D), and the covariance of a and b, −Sx/D. χ² near the **degrees of freedom** (points − parameters, here 10 − 2) says the σ match the scatter.
 
 1. Add at the end, save.
 
@@ -310,30 +318,27 @@ sections 10 and 11 stay.
     print(f"per decade: {10 * a:.1f} ± {10 * sa:.1f} °C")
     ```
 
-2. Run it.
+2. Run it. The last three lines:
 
     ```text
-    python scripts/fit_trend.py
-    ```
-
-    The last three lines:
-
-    ```text
+    $ python scripts/fit_trend.py
+    ...
     a = -0.056 ± 0.077, b = 7.41 ± 0.41, cov -0.0267
     chi2 = 8.56 for 8 degrees of freedom
     per decade: -0.6 ± 0.8 °C
     ```
 
 **Check:** −0.6 ± 0.8 °C per decade: less than one σ from zero. Ten years
-show no trend.
+show no trend. χ² 8.56 is below both guesses of section 4.
 
 !!! question "Task: the same with `np.polyfit`, then with x centred"
-    1. Fit the same line with `np.polyfit` (lecture: `w=1 / sy`,
-       `cov="unscaled"`). Same numbers?
+    1. Fit the same line with `np.polyfit(x, y, 1, w=1 / sy,
+       cov="unscaled")`: `w=1 / sy` weights each point by 1/σ,
+       `cov="unscaled"` takes the σ as given. Same numbers?
     2. Fit again with `x - 4.5` in place of `x`. What happens to the
        intercept, its ± and the covariance?
 
-??? note "Answer"
+??? success "Answer"
     Add at the end of `fit_trend.py`:
 
     ```python
@@ -357,15 +362,20 @@ show no trend.
 
 ## Part 3 · The yearly cycle { #part-3 }
 
-**1:00 to 1:35** · T = c + a cos ωd + b sin ωd, with ω = 2π/365.25 known, is linear in c, a and b.
+<!-- 1:00 to 1:35 -->
+
+T = c + a cos ωd + b sin ωd, with ω = 2π/365.25 known: a cosine and a sine of the day, each with its own weight.
 
 ---
 
 ### 7. A cosine and a sine column { #lstsq }
 
-**1:00 · 10 min** · The design matrix of the lecture: one column per parameter.
+<!-- 1:00 · 10 min -->
 
-1. Add at the end of `fit_cycle.py`, save.
+The model is linear in c, a and b, so it is solved like the straight line: one column per parameter in a **design matrix** A, and `np.linalg.lstsq` finds the weights with the smallest sum of squares.
+
+1. Add at the end of `fit_cycle.py`, save. `np.column_stack` puts three
+   columns side by side: ones (for c), cos ωd, sin ωd.
 
     ```python
 
@@ -379,10 +389,7 @@ show no trend.
 2. Run it.
 
     ```text
-    python scripts/fit_cycle.py
-    ```
-
-    ```text
+    $ python scripts/fit_cycle.py
     days 3653 with 24 hours 3648
     c = 7.177, a = -10.763, b = -3.023
     ```
@@ -393,9 +400,11 @@ show no trend.
 
 ### 8. Amplitude and the coldest day { #amplitude }
 
-**1:10 · 10 min** · a cos ωd + b sin ωd = A cos(ωd − φ), with A = √(a² + b²) and φ = atan2(b, a); the minimum is half a period after φ.
+<!-- 1:10 · 10 min -->
 
-1. Add at the end, save.
+A cosine and a sine of the same period add up to one shifted cosine: a cos ωd + b sin ωd = A cos(ωd − φ), with A = √(a² + b²) and φ = atan2(b, a). The minimum is half a period after φ.
+
+1. Add at the end, save. `np.hypot(a, b)` is √(a² + b²).
 
     ```python
 
@@ -404,15 +413,11 @@ show no trend.
     print(f"amplitude {amp:.2f} °C, coldest on day {d0:.1f}")
     ```
 
-2. Run it.
+2. Run it. The last line:
 
     ```text
-    python scripts/fit_cycle.py
-    ```
-
-    The last line:
-
-    ```text
+    $ python scripts/fit_cycle.py
+    ...
     amplitude 11.18 °C, coldest on day 15.9
     ```
 
@@ -422,9 +427,13 @@ show no trend.
 
 ### 9. The same with `curve_fit` { #curve-fit }
 
-**1:20 · 10 min** · Written as c − A cos(ω(d − d0)), the model is not linear in d0: `curve_fit` iterates from starting values.
+<!-- 1:20 · 10 min -->
 
-1. Add at the end, save.
+Written as c − A cos(ω(d − d0)), the model is not linear in d0. `curve_fit` then searches: it starts from guessed values `p0` and improves them step by step.
+
+1. Add at the end, save. No `sigma`: the daily means have no σ of their
+   own, so `curve_fit` takes the scatter of the points around the curve
+   as σ.
 
     ```python
 
@@ -438,19 +447,12 @@ show no trend.
     print(f"d0  = {popt[2]:.2f} ± {err[2]:.2f}")
     ```
 
-    No `sigma`: the daily means have no σ of their own. `curve_fit` then
-    takes the scatter of the points around the curve as σ (the lecture's
-    default without `absolute_sigma`).
-
-2. Run it.
+2. Run it. `popt` holds the best values, `pcov` their covariance matrix,
+   whose diagonal holds the σ².
 
     ```text
-    python scripts/fit_cycle.py
-    ```
-
-    The last three lines:
-
-    ```text
+    $ python scripts/fit_cycle.py
+    ...
     c   = 7.177 ± 0.049
     amp = 11.179 ± 0.069
     d0  = 15.92 ± 0.36
@@ -463,7 +465,7 @@ show no trend.
     2. Leave `p0` out.
     Is the curve different?
 
-??? note "Answer"
+??? success "Answer"
     1. `amp = -11.179 ± 0.069` and `d0 = 198.54 ± 0.36`: the warmest
        day, with the sign of the amplitude turned. 198.54 − 365.25/2 =
        15.92: the same curve.
@@ -474,15 +476,20 @@ show no trend.
 
 ## Part 4 · The residuals { #part-4 }
 
-**1:35 to 1:50**
+<!-- 1:35 to 1:50 -->
+
+A **residual** is a point minus the curve: what the model leaves over.
 
 ---
 
 ### 10. Residuals { #residuals }
 
-**1:35 · 10 min** · What the curve leaves over, and whether one day's residual predicts the next.
+<!-- 1:35 · 10 min -->
 
-1. Add at the end, save.
+What the curve leaves over, and whether one day's residual predicts the next.
+
+1. Add at the end, save. `*popt` passes the three values as three
+   arguments.
 
     ```python
 
@@ -500,17 +507,11 @@ show no trend.
     fig.savefig("results/cycle_fit.png", dpi=150, bbox_inches="tight")
     ```
 
-    `*popt` passes the three values as three arguments.
-
-2. Run it.
+2. Run it. The last line:
 
     ```text
-    python scripts/fit_cycle.py
-    ```
-
-    The last line:
-
-    ```text
+    $ python scripts/fit_cycle.py
+    ...
     residuals: std 2.94, next day 0.875
     ```
 
@@ -524,7 +525,7 @@ points are not independent, so ± 0.069 is too small.
     Add a term `k * d / 3652.5` (k in °C per decade) to the model and fit
     it with `curve_fit`. Compare k with section 6.
 
-??? note "Answer"
+??? success "Answer"
     Add at the end of `fit_cycle.py`:
 
     ```python
@@ -548,13 +549,17 @@ points are not independent, so ± 0.069 is too small.
 
 ## Part 5 · Write it down { #part-5 }
 
-**1:50 to 2:00**
+<!-- 1:50 to 2:00 -->
+
+The two results go into the README, with the scripts that make them.
 
 ---
 
-### 11. The README, a commit, a push { #commit }
+### 11. Write the results into the README { #commit }
 
-**1:50 · 5 min** · The two results, with the scripts that make them.
+<!-- 1:50 · 5 min -->
+
+The two results, with the scripts that make them.
 
 1. At the end of `README.md`, add and save:
 
@@ -571,42 +576,31 @@ points are not independent, so ± 0.069 is too small.
     decade, compatible with zero.
     ```
 
-2. Stage, commit, push.
+2. Run both scripts once more: every number of the paragraph is in their
+   output.
 
     ```text
-    git add README.md scripts
+    $ python scripts/fit_trend.py
+    ...
+    per decade: -0.6 ± 0.8 °C
+    $ python scripts/fit_cycle.py
+    days 3653 with 24 hours 3648
+    c = 7.177, a = -10.763, b = -3.023
+    amplitude 11.18 °C, coldest on day 15.9
+    ...
+    residuals: std 2.94, next day 0.875
     ```
 
-    ```text
-    git commit -m "Fit the yearly cycle and the trend"
-    ```
-
-    ```text
-    [main f6ce821] Fit the yearly cycle and the trend
-     3 files changed, 87 insertions(+)
-     create mode 100644 scripts/fit_cycle.py
-     create mode 100644 scripts/fit_trend.py
-    ```
-
-    ```text
-    git push
-    ```
-
-    ```text
-    To https://github.com/your-username/weather-project.git
-       3c589a2..f6ce821  main -> main
-    ```
-
-    Your ids differ, and so do the counts if you kept the Task lines.
-
-**Check:** on GitHub, `environment.yml` lists `scipy` and the README shows
-**The yearly cycle**.
+**Check:** the README ends with **The yearly cycle**, and
+`environment.yml` lists `scipy=1.18`.
 
 ---
 
 ### 12. Wrap up { #wrap-up }
 
-**1:55 · 5 min**
+<!-- 1:55 · 5 min -->
+
+The lines of today, for the next time they are needed.
 
 | To | Type |
 |--|--|
@@ -616,21 +610,24 @@ points are not independent, so ± 0.069 is too small.
 | any model | `curve_fit(f, x, y, p0=[…])` |
 | the uncertainties | `np.sqrt(np.diag(pcov))` |
 | check the fit | residuals, and their correlation |
-| add a package | `conda install NAME`, a pinned line in `environment.yml` |
+| add a package | `conda install NAME=VERSION`, then `conda env export --from-history -f environment.yml` |
 
 Seminar 11 predicts frost from the evening's weather.
 
 ---
 
-## Optional, if the room is fast { #optional }
+## Optional, if the room goes fast { #optional }
 
 ---
 
 ### 13. The amplitude year by year { #by-year }
 
-**— · 10 min** · Ten fits, one per year: their scatter gives an honest ± for the amplitude.
+<!-- — · 10 min -->
 
-1. Add at the end of `fit_cycle.py`, save, run.
+Ten fits, one per year: their scatter gives an honest ± for the amplitude.
+
+1. Add at the end of `fit_cycle.py`, save. Each year's fit starts from
+   the coldest day of that year, `15 + 365.25 * y`.
 
     ```python
 
@@ -644,13 +641,11 @@ Seminar 11 predicts frost from the evening's weather.
     print(f"amplitude {amps.mean():.2f} ± {amps.std(ddof=1) / np.sqrt(10):.2f}")
     ```
 
-    ```text
-    python scripts/fit_cycle.py
-    ```
-
-    The last two lines:
+2. Run it. The last two lines:
 
     ```text
+    $ python scripts/fit_cycle.py
+    ...
     [11.18 11.   10.63 12.6  10.42 10.41 10.71 11.48 11.06 12.49]
     amplitude 11.20 ± 0.25
     ```
@@ -661,9 +656,12 @@ Seminar 11 predicts frost from the evening's weather.
 
 ### 14. The daily cycle { #daily-cycle }
 
-**— · 10 min** · The same model with a period of 24 hours, on the mean of each hour of the day.
+<!-- — · 10 min -->
 
-1. Add at the end, save, run.
+The same model with a period of 24 hours, on the mean of each hour of the day.
+
+1. Add at the end, save. `days[good].mean(axis=0)` averages each column:
+   one mean per hour of the day.
 
     ```python
 
@@ -676,17 +674,117 @@ Seminar 11 predicts frost from the evening's weather.
     print(f"daily amplitude {np.hypot(a24, b24):.2f} °C, warmest at {warm:.1f} h")
     ```
 
-    ```text
-    python scripts/fit_cycle.py
-    ```
-
-    The last line:
+2. Run it. The last line:
 
     ```text
+    $ python scripts/fit_cycle.py
+    ...
     daily amplitude 3.50 °C, warmest at 15.0 h
     ```
 
 **Check:** 3.50 °C between the mean and the warmest hour, 15:00.
+
+---
+
+### 15. Advanced tasks { #advanced }
+
+<!-- — · 20 min -->
+
+Harder and open, with the solutions folded.
+
+!!! question "Advanced task: the ± of the slope from χ²"
+    σ_a has a second meaning: the slopes whose best line has a χ² at most
+    1 above the minimum lie within a ± σ_a. Scan slopes from −0.3 to 0.2
+    in steps of 0.001; for each, the best intercept is `(Sy - t * Sx) / S`.
+    Which slopes keep χ² ≤ χ²_min + 1?
+
+??? success "Answer"
+    Add at the end of `fit_trend.py`:
+
+    ```python
+
+    chi2_min = chi2_of(a, b)
+    slopes = np.arange(-0.3, 0.2, 0.001)
+    chi2s = np.array([chi2_of(t, (Sy - t * Sx) / S) for t in slopes])
+    inside = slopes[chi2s <= chi2_min + 1]
+    print(f"chi2 <= {chi2_min:.2f} + 1 for a from {inside.min():.3f} "
+          f"to {inside.max():.3f}")
+    ```
+
+    ```text
+    chi2 <= 8.56 + 1 for a from -0.132 to 0.021
+    ```
+
+    Half the width, (0.021 + 0.132)/2 = 0.077: σ_a of section 6. For a
+    model whose χ² is not a parabola, this scan is how the ± is found.
+
+!!! question "Advanced task: leave one year out"
+    Fit the slope ten times, each time without one of the years. How much
+    does the trend per decade depend on a single year?
+
+??? success "Answer"
+    Add at the end of `fit_trend.py`:
+
+    ```python
+
+    for k in range(10):
+        keep = x != k
+        p = np.polyfit(x[keep], y[keep], 1, w=1 / sy[keep])
+        print(2016 + k, f"{10 * p[0]:.2f}")
+    ```
+
+    ```text
+    2016 -0.39
+    2017 -1.03
+    2018 -0.31
+    2019 -0.55
+    2020 -0.58
+    2021 -0.56
+    2022 -0.46
+    2023 -1.03
+    2024 -0.73
+    2025 0.22
+    ```
+
+    From −1.03 to +0.22 °C per decade: without the cold 2025 the sign
+    turns. The spread is the size of the ± 0.8 of section 6, as it should
+    be.
+
+!!! question "Advanced task: the yearly cycle of humidity"
+    Fit the same c + a cos ωd + b sin ωd to the daily mean humidity
+    (column 2) of the good days. What is its amplitude, and on which day
+    is the air most humid? Compare with the coldest day.
+
+??? success "Answer"
+    A new script, `scripts/fit_humidity.py`. The most humid day is where
+    the cosine peaks: atan2(b, a)/ω.
+
+    ```python
+    import numpy as np
+
+    data = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=(1, 2))
+    temp = data[:, 0].reshape(-1, 24)
+    hum = data[:, 1].reshape(-1, 24)
+    good = (temp != -999).all(axis=1)
+    H = hum[good].mean(axis=1)
+    d = np.arange(len(temp))[good]
+    om = 2 * np.pi / 365.25
+    A = np.column_stack([np.ones(len(d)), np.cos(om * d), np.sin(om * d)])
+    (c, a, b), *rest = np.linalg.lstsq(A, H, rcond=None)
+    peak = (np.arctan2(b, a) / om) % 365.25
+    print(f"mean {c:.1f} %, amplitude {np.hypot(a, b):.1f} %, "
+          f"most humid on day {peak:.0f}")
+    ```
+
+    ```text
+    $ python scripts/fit_humidity.py
+    mean 79.1 %, amplitude 7.1 %, most humid on day 16
+    ```
+
+    Day 16, the coldest day of section 8: the two cycles are opposite.
+    Cold air holds less water, so the same water is a higher relative
+    humidity.
 
 ---
 

@@ -57,40 +57,38 @@ a simulation with seed 14. `python figures/src/concepts.py --numbers`
 prints them; `python figures/src/build.py --only concepts` redraws the ten
 figures.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–65 and estimates about 126 min. Slides 66–72 are
-the self-check quizzes and take no lecture time. In a 2-hour slot nothing
-is skipped. For a 90-minute slot, skip the slides in the second table. To
-jump, type the slide number and press Enter.
+The lecture is slides 1–65; when time is short, skip the slides of the
+second table. Slides 66–72 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–10 | What an analysis is: three parts, the uncertainty decides the verdict, statistical and systematic |
-| 0:16 | 12–17, 19–20 | The loop, step by step, on the pendulum and the LHCb file |
-| 0:32 | 21–25, 28–29, 31–32 | How analyses go wrong: many looks, selection after the result, correlation and cause |
-| 0:50 | 33–35, 37–38 | Review: what the author cannot see, the checklist, a report reviewed |
-| 1:00 | 41–43, 45 | Integrity, misconduct, who is an author |
-| 1:06 | 47–49 | The data management plan |
-| 1:12 | 52–55 | Personal data and the GDPR |
-| 1:19 | 57, 60–63 | AI tools: verify, never paste, disclose |
-| 1:29 | 65 | Recap |
-| 1:31 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–10 | What an analysis is: three parts, the uncertainty decides the verdict, statistical and systematic |
+| 12–17, 19–20 | The loop, step by step, on the pendulum and the LHCb file |
+| 21–25, 28–29, 31–32 | How analyses go wrong: many looks, selection after the result, correlation and cause |
+| 33–35, 37–38 | Review: what the author cannot see, the checklist, a report reviewed |
+| 41–43, 45 | Integrity, misconduct, who is an author |
+| 47–49 | The data management plan |
+| 52–55 | Personal data and the GDPR |
+| 57, 60–63 | AI tools: verify, never paste, disclose |
+| 65 | Recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Four Kinds of Question | 11 | 2 min |
-| 5 · The Result | 18 | 2 min |
-| A Bump at 750 GeV, Dropping Two Rows | 26–27 | 4 min |
-| Two Columns That Move Together | 30 | 2 min |
-| Review and Repetition | 36 | 2 min |
-| Write a Review, Answer a Review; A Decision Log | 39–40 | 4 min |
-| When a Mistake Is Found | 44 | 2 min |
-| Authorship: Roles and Problems | 46 | 2 min |
-| A Plan on One Page, After the Project | 50–51 | 4 min |
-| Beyond the Law | 56 | 2 min |
-| What the Tool Is, AI Tools at Each Step of the Loop | 58–59 | 4 min |
-| Sources | 64 | 2 min |
+| Skip | Slides |
+|--|--|
+| Four Kinds of Question | 11 |
+| 5 · The Result | 18 |
+| A Bump at 750 GeV, Dropping Two Rows | 26–27 |
+| Two Columns That Move Together | 30 |
+| Review and Repetition | 36 |
+| Write a Review, Answer a Review; A Decision Log | 39–40 |
+| When a Mistake Is Found | 44 |
+| Authorship: Roles and Problems | 46 |
+| A Plan on One Page, After the Project | 50–51 |
+| Beyond the Law | 56 |
+| What the Tool Is, AI Tools at Each Step of the Loop | 58–59 |
+| Sources | 64 |
 
 - **Do not cut** slides 7–10. The step from "3.4σ" to "not a discovery" is the
   centre of the first section, and the later sections return to it.
@@ -160,8 +158,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 14 — Was October 2025 Unusually Warm? A Blind
-Analysis](../seminars/seminar_14.md) works on the weather project of
+[Seminar 14 · Data Analysis](../seminars/seminar_14.md) works on the weather project of
 Lectures 1 to 5. Every student fixes a rule before looking, answers the
 question with it, sees how many "unusual" months chance alone gives, checks
 the answer under other choices, and pushes it all to GitHub.

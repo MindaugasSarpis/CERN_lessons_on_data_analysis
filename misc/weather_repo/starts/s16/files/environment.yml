@@ -1,0 +1,8 @@
+name: s16
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14.8
+  - numpy=2.5.4
+  - pandas=3.0.6
+  - matplotlib-base=3.11.2

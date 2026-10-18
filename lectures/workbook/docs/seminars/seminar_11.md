@@ -1,87 +1,94 @@
-# Seminar 11 — Will It Freeze Tonight? A Perceptron on the Weather Data
+# Seminar 11 · Perceptron
 
-**Paired lecture:** 11 The Perceptron · **Format:** follow-along · **~120 min**
-in class
+**Paired lecture:** 11 The Perceptron · **Format:** follow-along, in class
 
-**Today's goal:** every student writes a neuron that predicts frost at
+<!-- ~120 min: the length pnpm timing:check reads -->
+
+**Today's goal:** Will it freeze tonight? Every student writes a neuron that predicts frost at
 06:00 from the temperature and humidity at 18:00 the evening before,
 trains it on 2016 to 2022, tests it on 2023 to 2025 (95.9 ± 0.6 % right),
-compares it with a one-line rule, commits and pushes.
+compares it with a one-line rule, and writes the answer into the README.
 
 Everything is typed in VS Code: the scripts in the editor, the runs in its
-terminal (zsh on macOS, Git Bash on Windows; `weather` environment). Nothing is installed today.
-
-## Run sheet
-
-| Clock | Section | Typed | The room ends with |
-|--|--|--|--|
-| | **Part 1 · Evenings and mornings** · 35 min | | |
-| 0:00 | [1. Open the project](#start) | `conda activate weather`, `git pull` | `(weather)` in the prompt |
-| 0:05 | [2. One row per evening](#evenings) | `scripts/frost_rule.py`, `reshape(-1, 24)` | 3646 evenings, 1229 frosts |
-| 0:20 | [3. The two clouds](#clouds) | `ax.plot(X[y == 1, 0], …)` | `results/frost_points.png` |
-| | **Part 2 · A neuron and Rosenblatt's rule** · 25 min | | |
-| 0:35 | [4. A neuron with weights set by hand](#by-hand) | `predict(X, w, b)` | 0.916 against 0.663 |
-| 0:45 | [5. Rosenblatt's rule](#rule) | the rule, ten epochs | 231 updates in every epoch |
-| | **Part 3 · The logistic neuron** · 40 min | | |
-| 1:00 | [6. Train years and test years](#split) | `scripts/frost_neuron.py`, `year <= 2022` | 2551 and 1095 evenings |
-| 1:05 | [7. Standardise the inputs](#standardise) | `Z = (X - m) / s` | m and s of the training years |
-| 1:10 | [8. The training loop](#loop) | sigmoid, loss, gradient | loss 0.6931 down to 0.1137 |
-| 1:25 | [9. Back to °C and %](#units) | `wx = w / s` | the boundary at 4.10 °C |
-| | **Part 4 · The answer** · 20 min | | |
-| 1:40 | [10. The test years, against the rule](#test) | `p > 0.5` on `Z[test]` | 0.959 ± 0.006 for both |
-| 1:50 | [11. The README, a commit, a push](#commit) | `git commit`, `git push` | the neuron on GitHub |
-| 1:55 | [12. Wrap up](#wrap-up) | | |
-| | **Optional, if the room is fast** | | |
-| — | [13. Draw the boundary](#boundary) | `ax.plot(-(bx + wx[1] * h) / wx[0], h)` | the line over the clouds |
-| — | [14. Without standardising](#raw) | `Z = X` | `nan` |
-| — | [15. Temperature alone](#one-input) | one column in `X` | 0.957 |
+terminal (zsh on macOS, Git Bash on Windows; today's environment
+`s11`). Nothing is installed beyond today's environment. In the blocks, a line that starts with `$` is
+typed in the terminal, and every other line is what comes back.
 
 **If time runs short:** leave out section 5 and the Task of Part 3;
 sections 10 and 11 stay.
 
 ??? info "Before the session"
-    - **Room:** `weather-project` and the `weather` environment (NumPy,
-      Matplotlib, SciPy) of Seminars 7 to 10.
-    - **You:** nothing to prepare. The data are the same in every clone, so
-      every number on this page is the number in the room. Commit ids differ.
+    - **Room:** VS Code and Miniforge on every laptop (Seminar 4, or the
+      [Setup](../setup.md) page), and internet: today's folder and its
+      packages download in section 1, about 180 MB the first time.
+    - **You:** nothing to prepare. Today's folder is the same for everyone,
+      so every number on this page is the number in the room.
     - **Keys** are written for Windows, macOS in brackets.
 
 ---
 
 ## Part 1 · Evenings and mornings { #part-1 }
 
-**0:00 to 0:35** · Seminar 9 found P(frost at 06:00) = 0.984 when 18:00 was below 2 °C. Today a neuron learns that line.
+<!-- 0:00 to 0:35 -->
+
+Seminar 9 found P(frost at 06:00) = 0.984 when 18:00 was below 2 °C. Today a neuron learns that line from the data.
 
 ---
 
-### 1. Open the project { #start }
+### 1. Get today's folder { #start }
 
-**0:00 · 5 min** · The same repository, the same environment.
+<!-- 0:00 · 5 min -->
 
-1. Open `weather-project` in VS Code, then the terminal. Switch on the
-   environment.
+Today's folder holds the data, the scripts so far and `environment.yml`; nothing from an earlier seminar is needed.
 
-    ```text
-    conda activate weather
-    ```
-
-2. Bring in any commit from GitHub.
+1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
+   of the course repository, under **Assets**, click `weather-s11.zip`.
+2. Open VS Code, then **View** > **Terminal**. Unpack the zip into the
+   home folder and go there. Git Bash shows `/c/Users/smilte/...`.
 
     ```text
-    git pull
+    $ unzip ~/Downloads/weather-s11.zip -d ~
+    Archive:  /Users/smilte/Downloads/weather-s11.zip
+       creating: /Users/smilte/weather-s11/
+    ...
+      inflating: /Users/smilte/weather-s11/scripts/weather.py
+    $ cd ~/weather-s11
     ```
+
+    Safari unpacks a download by itself: then type
+    `mv ~/Downloads/weather-s11 ~` instead of `unzip`.
+
+3. **File** > **Open Folder...** > `weather-s11`. VS Code opens a new
+   window; **View** > **Terminal** there starts in the folder.
+4. Make today's environment from `environment.yml`: Python, NumPy,
+   Matplotlib, SciPy and JupyterLab, in the versions the file names. conda
+   keeps what it downloads, so the next seminar's environment is quicker.
 
     ```text
-    Already up to date.
+    $ conda env create -n s11 -f environment.yml
+    Channels:
+     - conda-forge
+    ...
+    #     $ conda activate s11
     ```
 
-**Check:** `(weather)` in the prompt.
+5. Switch it on. The prompt then starts with `(s11)`.
+
+    ```text
+    $ conda activate s11
+    $ python -c "import numpy, matplotlib; print(numpy.__version__, matplotlib.__version__)"
+    2.5.4 3.11.2
+    ```
+
+**Check:** `(s11)` in the prompt, and `2.5.4 3.11.2`.
 
 ---
 
 ### 2. One row per evening { #evenings }
 
-**0:05 · 15 min** · Inputs: temperature and humidity at 18:00. Label: 1 if 06:00 next morning is below 0 °C.
+<!-- 0:05 · 15 min -->
+
+Each evening becomes one example: two **inputs**, the temperature and humidity at 18:00, and a **label**, 1 if 06:00 the next morning is below 0 °C, else 0.
 
 1. New file `scripts/frost_rule.py`. Type and save.
 
@@ -102,17 +109,12 @@ sections 10 and 11 stay.
     print("evenings", len(y), "frost mornings", y.sum())
     ```
 
-    `temp[:-1, 18]` is column 18 of every day but the last; `temp[1:, 6]`
-    is column 6 of every day but the first: each evening beside the next
-    morning.
-
-2. Run it.
+2. Run it. With one row per day, `temp[:-1, 18]` is 18:00 of every day
+   but the last, `temp[1:, 6]` 06:00 of every day but the first: each
+   evening beside the next morning.
 
     ```text
-    python scripts/frost_rule.py
-    ```
-
-    ```text
+    $ python scripts/frost_rule.py
     evenings 3646 frost mornings 1229
     ```
 
@@ -123,9 +125,12 @@ with frost the next morning.
 
 ### 3. The two clouds { #clouds }
 
-**0:20 · 10 min** · Each evening is a point; its colour is the morning.
+<!-- 0:20 · 10 min -->
 
-1. Add at the end, save, run.
+Each evening is a point at (temperature, humidity); its colour is the morning.
+
+1. Add at the end, save. `X[y == 1, 0]` is the temperature column of the
+   evenings followed by frost.
 
     ```python
 
@@ -138,11 +143,12 @@ with frost the next morning.
     fig.savefig("results/frost_points.png", dpi=150)
     ```
 
-    ```text
-    python scripts/frost_rule.py
-    ```
+2. Run it, then open `results/frost_points.png` from the Explorer.
 
-2. Open `results/frost_points.png` from the Explorer.
+    ```text
+    $ python scripts/frost_rule.py
+    evenings 3646 frost mornings 1229
+    ```
 
 **Check:** frost on the left, no frost on the right, the two touching near
 4 °C at every humidity.
@@ -152,7 +158,7 @@ with frost the next morning.
     2. Where would you draw a straight line between the clouds? Does
        humidity help?
 
-??? note "Answer"
+??? success "Answer"
     1. 1229 / 3646 = 0.337.
     2. Nearly upright, at about 4 °C. The colours change from left to right,
        hardly from bottom to top: humidity adds little.
@@ -161,15 +167,20 @@ with frost the next morning.
 
 ## Part 2 · A neuron and Rosenblatt's rule { #part-2 }
 
-**0:35 to 1:00** · A neuron says 1 when w · x + b > 0: a line in the plot.
+<!-- 0:35 to 1:00 -->
+
+A **neuron** multiplies each input by a **weight**, adds them and a **bias** b, and says 1 when the sum w · x + b is above 0: a straight line in the plot.
 
 ---
 
 ### 4. A neuron with weights set by hand { #by-hand }
 
-**0:35 · 10 min** · w = (−1, 0), b = 2 says frost when −T + 2 > 0, that is when T < 2 °C.
+<!-- 0:35 · 10 min -->
 
-1. Add at the end, save.
+w = (−1, 0), b = 2 says frost when −T + 2 > 0, that is when T < 2 °C; humidity gets weight 0.
+
+1. Add at the end, save. `X @ w` multiplies each row of `X` with `w`
+   pair by pair and adds: one sum per evening.
 
     ```python
 
@@ -182,13 +193,10 @@ with frost the next morning.
     print(f"never frost: {np.mean(y == 0):.3f}")
     ```
 
-2. Run it.
+2. Run it. `np.mean(... == y)` is the share of evenings it gets right.
 
     ```text
-    python scripts/frost_rule.py
-    ```
-
-    ```text
+    $ python scripts/frost_rule.py
     evenings 3646 frost mornings 1229
     frost if below 2 °C: 0.916
     never frost: 0.663
@@ -201,9 +209,12 @@ beat.
 
 ### 5. Rosenblatt's rule { #rule }
 
-**0:45 · 10 min** · The rule of the lecture: after each wrong answer, add η (target − ŷ) x to w.
+<!-- 0:45 · 10 min -->
 
-1. Add at the end, save.
+The perceptron learns its weights: for each evening it predicts ŷ, and when ŷ is wrong it adds η (target − ŷ) x to w and η (target − ŷ) to b. η, the **learning rate**, sets the step size.
+
+1. Add at the end, save. One pass over all evenings is an **epoch**; the
+   loop counts the wrong answers, the updates, in each.
 
     ```python
 
@@ -220,15 +231,11 @@ beat.
     print(f"correct: {np.mean(predict(X, w, b) == y):.3f}")
     ```
 
-2. Run it.
+2. Run it. The new lines:
 
     ```text
-    python scripts/frost_rule.py
-    ```
-
-    The new lines:
-
-    ```text
+    $ python scripts/frost_rule.py
+    ...
     epoch 1 updates 235
     epoch 2 updates 231
     epoch 3 updates 231
@@ -243,15 +250,15 @@ beat.
     correct: 0.671
     ```
 
-**Check:** the updates never reach 0. The clouds overlap, so no line
-separates them, and the convergence theorem does not apply. The last w is
-wherever the rule stopped: 67.1 %.
+**Check:** the updates never reach 0. The rule stops only when one line
+separates the two clouds without error; these clouds overlap, so the last w
+is wherever it stopped: 67.1 %.
 
 !!! question "Task: the best threshold"
     Try the rule "frost if below c °C" for c = 0.0, 0.1, … 5.9 on all
     evenings. Which c is best, and how often is it right?
 
-??? note "Answer"
+??? success "Answer"
     Add at the end of `frost_rule.py`:
 
     ```python
@@ -273,16 +280,19 @@ wherever the rule stopped: 67.1 %.
 
 ## Part 3 · The logistic neuron { #part-3 }
 
-**1:00 to 1:40** · The step becomes a sigmoid, the error a loss, the rule gradient descent.
+<!-- 1:00 to 1:40 -->
+
+The step becomes a smooth **sigmoid**, 1/(1 + e^−z), which gives a probability between 0 and 1; the count of errors becomes a **loss**; the rule becomes **gradient descent**, small steps downhill on the loss.
 
 ---
 
 ### 6. Train years and test years { #split }
 
-**1:00 · 5 min** · The neuron learns from 2016 to 2022; 2023 to 2025 judge it.
+<!-- 1:00 · 5 min -->
 
-1. New file `scripts/frost_neuron.py`. Copy lines 1 to 13 of
-   `frost_rule.py` and add the `time` line and the split. Save.
+A model is judged on data it has not seen: it learns from 2016 to 2022, and 2023 to 2025 judge it.
+
+1. New file `scripts/frost_neuron.py`; copy from `frost_rule.py`. Save.
 
     ```python
     import numpy as np
@@ -300,6 +310,12 @@ wherever the rule stopped: 67.1 %.
     ok = (evening_t != -999) & (morning_t != -999)
     X = np.column_stack([evening_t, evening_h])[ok]
     y = (morning_t[ok] < 0).astype(int)
+    ```
+
+2. Only the `time` line is new above. Add the split at the end, save.
+   `time[::24]` is every 24th time: one per day, the year of each evening.
+
+    ```python
 
     year = np.array([int(t[:4]) for t in time[::24]])[:-1][ok]
     train = year <= 2022
@@ -307,15 +323,10 @@ wherever the rule stopped: 67.1 %.
     print("train", train.sum(), "test", test.sum())
     ```
 
-    `time[::24]` is every 24th time: one per day.
-
-2. Run it.
+3. Run it.
 
     ```text
-    python scripts/frost_neuron.py
-    ```
-
-    ```text
+    $ python scripts/frost_neuron.py
     train 2551 test 1095
     ```
 
@@ -325,9 +336,11 @@ wherever the rule stopped: 67.1 %.
 
 ### 7. Standardise the inputs { #standardise }
 
-**1:05 · 5 min** · Temperature and humidity have different units and ranges; each becomes mean 0, standard deviation 1. m and s come from the training years only.
+<!-- 1:05 · 5 min -->
 
-1. Add at the end, save, run.
+Temperature and humidity have different units and ranges. **Standardising** turns each into mean 0, standard deviation 1, so that one learning rate suits both; m and s come from the training years only.
+
+1. Add at the end, save. `axis=0` takes the mean of each column.
 
     ```python
 
@@ -337,13 +350,11 @@ wherever the rule stopped: 67.1 %.
     print("m", m.round(2), "s", s.round(2))
     ```
 
-    ```text
-    python scripts/frost_neuron.py
-    ```
-
-    The last line:
+2. Run it. The last line:
 
     ```text
+    $ python scripts/frost_neuron.py
+    ...
     m [ 9.6  72.97] s [9.04 8.53]
     ```
 
@@ -353,9 +364,12 @@ wherever the rule stopped: 67.1 %.
 
 ### 8. The training loop { #loop }
 
-**1:10 · 15 min** · The four lines of the lecture's loop: ŷ, the loss, w, b.
+<!-- 1:10 · 15 min -->
 
-1. Add at the end, save.
+Each epoch: ŷ for every training evening, the **log loss** (small when ŷ is near the label), then one step of w and b against the loss's slope, which for this loss is Zᵀ(ŷ − y)/N.
+
+1. Add at the end, save. Every 250 epochs it prints the epoch, the loss
+   and the share correct.
 
     ```python
 
@@ -371,15 +385,11 @@ wherever the rule stopped: 67.1 %.
     print("w", w.round(3), "b", round(b, 3))
     ```
 
-2. Run it.
+2. Run it. The new lines: epoch, loss, share correct.
 
     ```text
-    python scripts/frost_neuron.py
-    ```
-
-    The new lines: epoch, loss, share correct.
-
-    ```text
+    $ python scripts/frost_neuron.py
+    ...
     0 0.6931 0.667
     250 0.1379 0.951
     500 0.1226 0.955
@@ -395,9 +405,12 @@ the temperature weight is about 200 times the humidity weight.
 
 ### 9. Back to °C and % { #units }
 
-**1:25 · 10 min** · With z = (x − m)/s: w in data units is w/s, and b loses Σ w m/s.
+<!-- 1:25 · 10 min -->
 
-1. Add at the end, save, run.
+The weights belong to the standardised inputs. With z = (x − m)/s, the weight per °C or per % is w/s, and b loses Σ w m/s.
+
+1. Add at the end, save. The boundary is where w · x + b = 0; at 75 %
+   humidity it is solved for the temperature.
 
     ```python
 
@@ -407,13 +420,11 @@ the temperature weight is about 200 times the humidity weight.
     print(f"boundary at 75 %: {-(bx + wx[1] * 75) / wx[0]:.2f} °C")
     ```
 
-    ```text
-    python scripts/frost_neuron.py
-    ```
-
-    The last two lines:
+2. Run it. The last two lines:
 
     ```text
+    $ python scripts/frost_neuron.py
+    ...
     per °C and per %: [-0.759  0.004] b 2.8
     boundary at 75 %: 4.10 °C
     ```
@@ -425,7 +436,7 @@ humidity, 4.10 °C. 10 % more humidity moves it by 0.05 °C.
     Train with `eta = 2.0`, then with `eta = 0.05`. What is the loss at
     epoch 1000, and the weight of humidity in °C and %? Set it back to 0.5.
 
-??? note "Answer"
+??? success "Answer"
     `eta = 2.0`:
 
     ```text
@@ -449,15 +460,20 @@ humidity, 4.10 °C. 10 % more humidity moves it by 0.05 °C.
 
 ## Part 4 · The answer { #part-4 }
 
-**1:40 to 2:00** · The test years, seen for the first time.
+<!-- 1:40 to 2:00 -->
+
+The test years, seen for the first time.
 
 ---
 
 ### 10. The test years, against the rule { #test }
 
-**1:40 · 10 min** · An accuracy is a count: ± √(p(1 − p)/N), as in the lecture. The rule's threshold is chosen on the training years.
+<!-- 1:40 · 10 min -->
 
-1. Add at the end, save.
+An accuracy is a share of N evenings, so it has a ± like any count: √(p(1 − p)/N). The rule's threshold is chosen on the training years, for a fair match.
+
+1. Add at the end, save. `Z[test]` uses the m and s of the training
+   years.
 
     ```python
 
@@ -473,17 +489,11 @@ humidity, 4.10 °C. 10 % more humidity moves it by 0.05 °C.
     print(f"rule 'below {c:.1f} °C' on 2023-2025: {rule:.3f}")
     ```
 
-    `Z[test]` uses the m and s of the training years.
-
-2. Run it.
+2. Run it. The last two lines:
 
     ```text
-    python scripts/frost_neuron.py
-    ```
-
-    The last two lines:
-
-    ```text
+    $ python scripts/frost_neuron.py
+    ...
     neuron on 2023-2025: 0.959 ± 0.006
     rule 'below 3.6 °C' on 2023-2025: 0.959
     ```
@@ -493,9 +503,11 @@ adds nothing these data can show.
 
 ---
 
-### 11. The README, a commit, a push { #commit }
+### 11. Write the answer into the README { #commit }
 
-**1:50 · 5 min** · The answer, with the script that gives it.
+<!-- 1:50 · 5 min -->
+
+The answer, with the script that gives it.
 
 1. At the end of `README.md`, add and save:
 
@@ -509,41 +521,24 @@ adds nothing these data can show.
     the rule "frost if 18:00 is below 3.6 °C". Humidity gets a weight near zero.
     ```
 
-2. Stage, commit, push.
+2. Run the script once more: the paragraph's numbers are its last lines.
 
     ```text
-    git add README.md scripts
+    $ python scripts/frost_neuron.py
+    ...
+    per °C and per %: [-0.759  0.004] b 2.8
+    boundary at 75 %: 4.10 °C
+    neuron on 2023-2025: 0.959 ± 0.006
+    rule 'below 3.6 °C' on 2023-2025: 0.959
     ```
 
-    ```text
-    git commit -m "Predict frost at 06:00 with a neuron"
-    ```
-
-    ```text
-    [main e7d4f68] Predict frost at 06:00 with a neuron
-     3 files changed, 101 insertions(+)
-     create mode 100644 scripts/frost_neuron.py
-     create mode 100644 scripts/frost_rule.py
-    ```
-
-    ```text
-    git push
-    ```
-
-    ```text
-    To https://github.com/your-username/weather-project.git
-       f6ce821..e7d4f68  main -> main
-    ```
-
-    Your ids differ, and so do the counts if you kept the Task lines.
-
-**Check:** on GitHub, the README shows **Frost tomorrow morning**.
+**Check:** the README ends with **Frost tomorrow morning**.
 
 !!! question "Task: tonight"
     The sigmoid gives a probability. At 85 % humidity, what is P(frost at
     06:00) for an evening at 1 °C, 3 °C and 5 °C?
 
-??? note "Answer"
+??? success "Answer"
     Add at the end of `frost_neuron.py`:
 
     ```python
@@ -563,7 +558,9 @@ adds nothing these data can show.
 
 ### 12. Wrap up { #wrap-up }
 
-**1:55 · 5 min**
+<!-- 1:55 · 5 min -->
+
+The lines of today, for the next time they are needed.
 
 | To | Type |
 |--|--|
@@ -574,19 +571,22 @@ adds nothing these data can show.
 | one step of gradient descent | `w = w - eta * Zt.T @ (y_hat - yt) / len(yt)` |
 | an accuracy with its ± | `np.sqrt(acc * (1 - acc) / n)` |
 
-Seminar 12 starts from this repository.
+Seminar 12 reads a second station's file with pandas.
 
 ---
 
-## Optional, if the room is fast { #optional }
+## Optional, if the room goes fast { #optional }
 
 ---
 
 ### 13. Draw the boundary { #boundary }
 
-**— · 5 min** · The line where w · x + b = 0, over the two clouds.
+<!-- — · 5 min -->
 
-1. Add at the end of `frost_neuron.py`, save, run.
+The line where w · x + b = 0, over the two clouds.
+
+1. Add at the end of `frost_neuron.py`, save. At humidity h the boundary
+   temperature is −(b + w_H h)/w_T.
 
     ```python
 
@@ -601,11 +601,8 @@ Seminar 12 starts from this repository.
     fig.savefig("results/frost_boundary.png", dpi=150)
     ```
 
-    ```text
-    python scripts/frost_neuron.py
-    ```
-
-2. Open `results/frost_boundary.png`.
+2. Run it with `python scripts/frost_neuron.py`, then open
+   `results/frost_boundary.png`.
 
 **Check:** a nearly upright line at about 4 °C, between the clouds.
 
@@ -613,17 +610,15 @@ Seminar 12 starts from this repository.
 
 ### 14. Without standardising { #raw }
 
-**— · 5 min** · The lecture's warning, on these data.
+<!-- — · 5 min -->
 
-1. Change the line `Z = (X - m) / s` to `Z = X`, save, run.
+What happens when the inputs keep their units.
 
-    ```text
-    python scripts/frost_neuron.py
-    ```
-
-    Among the lines (the path shortened):
+1. Change the line `Z = (X - m) / s` to `Z = X`, save, run. Among the
+   lines (the path shortened):
 
     ```text
+    $ python scripts/frost_neuron.py
     …frost_neuron.py:31: RuntimeWarning: divide by zero encountered in log
     …frost_neuron.py:30: RuntimeWarning: overflow encountered in exp
     0 0.6931 0.667
@@ -641,33 +636,148 @@ log 0 is −∞.
 
 ### 15. Temperature alone { #one-input }
 
-**— · 5 min** · Is humidity worth its column?
+<!-- — · 5 min -->
 
-1. In `frost_neuron.py`, change two lines, save, run.
+Is humidity worth its column?
+
+1. In `frost_neuron.py`, change two lines and delete the line that prints
+   `boundary at 75 %`, save.
 
     ```python
     X = np.column_stack([evening_t])[ok]
-    ```
-
-    ```python
     w, b, eta = np.zeros(1), 0.0, 0.5
     ```
 
-    Delete the line that prints `boundary at 75 %`.
+2. Run it. The line of the test:
 
     ```text
-    python scripts/frost_neuron.py
-    ```
-
-    The line of the test:
-
-    ```text
+    $ python scripts/frost_neuron.py
+    ...
     neuron on 2023-2025: 0.957 ± 0.006
     ```
 
-2. Undo the changes: `Ctrl+Z` (macOS `Cmd+Z`) in the editor, save.
+3. Undo the changes: `Ctrl+Z` (macOS `Cmd+Z`) in the editor, save.
 
 **Check:** 0.957 against 0.959: two evenings of 1095, far inside ± 0.006.
+
+---
+
+### 16. Advanced tasks { #advanced }
+
+<!-- — · 20 min -->
+
+Harder and open, with the solutions folded.
+
+!!! question "Advanced task: missed frosts against false alarms"
+    95.9 % right hides two kinds of error: a frost that was not predicted
+    (a gardener loses the plants) and a predicted frost that did not come
+    (a false alarm). Count both on the test years for the threshold
+    `p > 0.5`, then for `p > 0.3`. Which would a gardener choose?
+
+??? success "Answer"
+    Add at the end of `frost_neuron.py`:
+
+    ```python
+
+    for thr in [0.5, 0.3]:
+        pred = p > thr
+        frost = y[test] == 1
+        print(f"threshold {thr}: caught {(pred & frost).sum()}, "
+              f"missed {(~pred & frost).sum()}, "
+              f"false alarms {(pred & ~frost).sum()}")
+    ```
+
+    ```text
+    threshold 0.5: caught 361, missed 18, false alarms 27
+    threshold 0.3: caught 371, missed 8, false alarms 59
+    ```
+
+    At 0.3 the missed frosts fall from 18 to 8, and the false alarms rise
+    from 27 to 59; the share right drops to 93.9 %. A gardener takes 0.3:
+    the threshold is a choice about which error costs more, not part of
+    the model.
+
+!!! question "Advanced task: a third input, the wind"
+    A calm evening cools faster. Add the wind at 18:00 (column 3 of
+    `weather.csv`) as a third input, train and test again. Does it help?
+
+??? success "Answer"
+    In `frost_neuron.py`, read three columns, add `wind`, give `X` a third
+    column and `w` three zeros. Delete the lines of the Task "tonight"
+    first, if you kept them: they multiply two numbers with three weights.
+
+    ```python
+    data = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=(1, 2, 3))
+    temp = data[:, 0].reshape(-1, 24)
+    hum = data[:, 1].reshape(-1, 24)
+    wind = data[:, 2].reshape(-1, 24)
+    ```
+
+    ```python
+    X = np.column_stack([evening_t, evening_h, wind[:-1, 18]])[ok]
+    ```
+
+    ```python
+    w, b, eta = np.zeros(3), 0.0, 0.5
+    ```
+
+    ```text
+    $ python scripts/frost_neuron.py
+    train 2551 test 1095
+    m [ 9.6  72.97  4.05] s [9.04 8.53 1.88]
+    ...
+    w [-6.841  0.045  0.069] b -4.19
+    ...
+    neuron on 2023-2025: 0.958 ± 0.006
+    ```
+
+    0.958 against 0.959: no gain. The wind's weight, 0.069, is a hundred
+    times smaller than the temperature's. On these data the temperature
+    at 18:00 carries the answer.
+
+!!! question "Advanced task: a later evening"
+    Would 21:00 or 23:00 predict the 06:00 frost better than 18:00? For
+    the hours 12, 15, 18, 21 and 23, choose the best threshold "below c °C"
+    on the training years and score it on the test years.
+
+??? success "Answer"
+    A new script, `scripts/frost_hour.py`:
+
+    ```python
+    import numpy as np
+
+    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=0, dtype=str)
+    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
+                      skiprows=1, usecols=1).reshape(-1, 24)
+    morning_t = temp[1:, 6]
+    year = np.array([int(t[:4]) for t in time[::24]])[:-1]
+    cs = np.arange(0, 6, 0.1)
+    for h in [12, 15, 18, 21, 23]:
+        ev = temp[:-1, h]
+        ok = (ev != -999) & (morning_t != -999)
+        frost = morning_t < 0
+        tr = ok & (year <= 2022)
+        te = ok & (year >= 2023)
+        accs = [np.mean((ev[tr] < c) == frost[tr]) for c in cs]
+        c = cs[np.argmax(accs)]
+        acc = np.mean((ev[te] < c) == frost[te])
+        print(f"{h}:00  below {c:.1f} °C  {acc:.3f}")
+    ```
+
+    ```text
+    $ python scripts/frost_hour.py
+    12:00  below 4.5 °C  0.946
+    15:00  below 4.8 °C  0.953
+    18:00  below 3.6 °C  0.959
+    21:00  below 2.2 °C  0.961
+    23:00  below 0.5 °C  0.972
+    ```
+
+    The later the evening, the better the forecast and the lower the
+    threshold: at 23:00 the night has done most of its cooling. A forecast
+    is a trade between how early it comes and how right it is.
 
 ---
 

@@ -51,33 +51,32 @@ it back.
    the edit gives `daily.csv` the checksum of Lecture 4's changed copy; a
    revert restores `33fe5e77…`; a tag `v1.0`.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–68 and estimates about 135 min. Slides 69–77 are the
-self-check quizzes and take no lecture time. For a 90-minute slot, skip the
-slides in the second table. To jump, type the slide number and press Enter.
+The lecture is slides 1–68; when time is short, skip the slides of the
+second table. Slides 69–77 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–7 | Two copies of the export; what version control records |
-| 0:10 | 8–20 | The model: blob, tree, commit, graph, branch, three areas |
-| 0:35 | 22, 24–26, 28 | Settings, `git init`, `git status`, the first commit, the message |
-| 0:44 | 30, 32–34 | Which files go in, `.gitignore`, `.gitattributes`, the rest |
-| 0:52 | 36–39 | The diff, `log`, `show` and `blame` |
-| 1:00 | 41–44 | restore, amend, a commit that breaks the rebuild, revert |
-| 1:08 | 46, 48–51 | A remote, publish, push, clone, pull |
-| 1:17 | 53–57 | A branch, a merge, a conflict |
-| 1:25 | 62–68 | Who changed the export, the revert, the tag, the recap |
-| 1:35 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–7 | Two copies of the export; what version control records |
+| 8–20 | The model: blob, tree, commit, graph, branch, three areas |
+| 22, 24–26, 28 | Settings, `git init`, `git status`, the first commit, the message |
+| 30, 32–34 | Which files go in, `.gitignore`, `.gitattributes`, the rest |
+| 36–39 | The diff, `log`, `show` and `blame` |
+| 41–44 | restore, amend, a commit that breaks the rebuild, revert |
+| 46, 48–51 | A remote, publish, push, clone, pull |
+| 53–57 | A branch, a merge, a conflict |
+| 62–68 | Who changed the export, the revert, the tag, the recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| Source Control in VS Code: say it while doing slide 24 | 23 | 2 min |
-| What `git status --short` says in each state | 27 | 3 min |
-| Which data files fit in a repository | 31 | 3 min |
-| A GitHub account: the seminar creates them | 47 | 2 min |
-| Resolve it, typed; ahead and behind | 58, 59 | 4 min |
-| Common errors; the table of steps (on the projector in the seminar) | 60, 61 | 4 min |
+| Skip | Slides |
+|--|--|
+| Source Control in VS Code: say it while doing slide 24 | 23 |
+| What `git status --short` says in each state | 27 |
+| Which data files fit in a repository | 31 |
+| A GitHub account: the seminar creates them | 47 |
+| Resolve it, typed; ahead and behind | 58, 59 |
+| Common errors; the table of steps (on the projector in the seminar) | 60, 61 |
 
 - **Do not cut slides 62–66.** They answer the question of slides 4–5 from
   the history, with only commands the room has seen.

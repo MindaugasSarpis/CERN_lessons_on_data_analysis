@@ -12,7 +12,7 @@ title: "Python Foundations"
 ##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation</span>
 
 <!--
-**Say:** Lecture 04 got 7.16 from a program someone else wrote. Today the same number comes from a program written line by line on these slides.
+**Say:** Lecture 04 got 7.16 from a program someone else wrote. Today: what Python is made of, objects and the lines that combine them, and where the objects come from that Python does not have.
 (~1 min)
 -->
 
@@ -21,10 +21,10 @@ hideInToc: true
 layout: quote
 ---
 
-# A program is a text that the interpreter carries out, one statement after another. Today the text that turns `weather.csv` into **7.16 °C** is written in Python
+# In Python every value is an object of a type. A program combines objects with `for` and `if`; packages bring objects that other people wrote
 
 <!--
-**Say:** Python is the language; `python` is the program that reads it. Every piece today is short and shown with its output.
+**Say:** three parts, in this order: the objects, the lines that combine them, the packages.
 (~1 min)
 -->
 
@@ -63,34 +63,27 @@ mean    5.7828
 
 <!--
 **Say:** the two numbers of Lecture 04: 5.78 with the 120 marked rows, 7.16 without them. Both came out of a program nobody here has read.
-**Ask:** what does a program have to do to get 7.16 out of `weather.csv`? Collect the steps on the board: read the file, cut each line, turn text into numbers, add, count, leave out −999, print.
-(~3 min)
+**Ask:** what does a program need to get 7.16 out of `weather.csv`? Collect on the board: the file's text, a number per line, a sum, a count, a rule that leaves out −999.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# A Program for 7.16, Step by **Step**
+<div class="card card-primary card-glass pad-compact table-compact mt-lg">
 
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Step | Question | Answer |
+| Part | Question | Answer |
 | --- | --- | --- |
-| 1 | What runs a `.py` file, and in which order? | ? |
-| 2 | Is `-4.4` in `weather.csv` a number? | ? |
-| 3 | What are the four values of one line? | ? |
-| 4 | What is the mean of all 87 672 rows? | ? |
-| 5 | What is it without the −999 rows? | ? |
-| 6 | How does 7.15996550621346 become 7.16 on the screen? | ? |
-| 7 | Which year was the warmest? | ? |
-| 8 | Where and why does a script stop? | ? |
+| 1 | What kinds of values does Python have, and what can each do? | ? |
+| 2 | How do `for` and `if` turn 87 672 lines into 7.16? | ? |
+| 3 | Where do the objects come from that Python does not have, and which version arrives? | ? |
 
 </div>
 
 <!--
-**Say:** one question per part of the lecture, each answered by a short piece of Python.
-(~2 min)
+**Say:** one question per part; the answers fill the last column at the end.
+(~1 min)
 -->
 
 ---
@@ -98,9 +91,9 @@ layout: section
 hideInToc: true
 ---
 
-# Running **Python**
+# Objects and **Types**
 
-Step 1: what runs a `.py` file, and in which order?
+Part 1: what kinds of values does Python have, and what can each do?
 
 <!--
 (~1 min)
@@ -110,39 +103,54 @@ Step 1: what runs a `.py` file, and in which order?
 hideInToc: true
 ---
 
-# `python` Is a **Program**
+# Every Value Is an **Object**
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
 
-## 🍎 **macOS · zsh**
+<div>
 
-```text
-% type python
-python is /opt/homebrew/Caskroom/miniforge/base/bin/python
-% python --version
-Python 3.14.7
+````md magic-move {lines: true}
+```py
+temp = -4.4
+print(type(temp))
 ```
+```py
+temp = -4.4
+print(type(temp))        # <class 'float'>
+```
+```py {3}
+temp = -4.4
+print(type(temp))        # <class 'float'>
+print(temp.is_integer()) # False
+```
+```py {4}
+temp = -4.4
+print(type(temp))        # <class 'float'>
+print(temp.is_integer()) # False
+print(round(temp))       # -4
+```
+````
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact mt-sm">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🪟 **Windows · Git Bash**
+## 📦 **An object has**
 
-```text
-$ type python
-python is /c/Users/smilte/miniforge3/python
-$ python --version
-Python 3.14.7
-```
+- a **type**: `float`
+- a **value**: −4.4
+- **methods**, written after a dot: `temp.is_integer()`
+
+`temp = -4.4` puts the name `temp` on the object.
 
 </div>
 
-<div class="note-text mt-md">The <strong>interpreter</strong>: a program that reads Python text and carries out one statement after another. The processor runs only machine code (Lecture 03); <code>python</code> is machine code that reads yours.</div>
+</div>
 
 <!--
-**Say:** the same `type` line as in Lecture 04: `python` is a file in a folder on `PATH`, installed with Miniforge. "Python" names the language, `python` the program.
-**If asked:** C or Rust are translated into machine code once, before they run, by a compiler. Python translates each file when it starts, every time.
+**Do:** click line by line; before each comment appears, ask for the output.
+**Say:** `type()` and `round()` are functions; `is_integer()` is a method, a function that belongs to the float and is written after a dot.
+**If asked:** `dir(temp)` lists every method a float has.
 (~2 min)
 -->
 
@@ -150,46 +158,109 @@ Python 3.14.7
 hideInToc: true
 ---
 
-# The `>>>` **Prompt**
+# Numbers: `int`, `float`, `bool`
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ python
-Python 3.14.7 | packaged by conda-forge | …
->>> 365 * 10 + 3
-3653
->>> 7.16 * 9 / 5 + 32
-44.888
->>> exit()
-$
+````md magic-move {lines: true}
+```py
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
 ```
+```py {3}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)
+```
+```py {3-4}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+```
+```py {5}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+print(2 ** 100)               # 1267650600228229401496703205376
+```
+```py {6-7}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+print(2 ** 100)               # 1267650600228229401496703205376
+print(hours > 80000)          # True
+print(type(hours > 80000))    # <class 'bool'>
+```
+```py {8}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+print(2 ** 100)               # 1267650600228229401496703205376
+print(hours > 80000)          # True
+print(type(hours > 80000))    # <class 'bool'>
+print(0.1 + 0.2)              # 0.30000000000000004
+```
+````
 
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 🔀 **Who reads the line**
-
-| Prompt | Read by | `7.16 * 9 / 5 + 32` |
-| --- | --- | --- |
-| `$`, `%` | the shell | `command not found: 7.16` |
-| `>>>` | Python | `44.888` |
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">At <code>&gt;&gt;&gt;</code> Python works out one line and prints its value. 3653 days in ten years, three of them leap years; 7.16 °C is 44.888 °F.</div>
+<div class="note-text mt-md">An <code>int</code> takes as many bits as its number needs: 2¹⁰⁰ needs 101, and nothing wraps. A <code>float</code> is the float64 of Lecture 03, rounded to about 16 digits. A comparison gives a <code>bool</code>.</div>
 
 <!--
-**Live:** `python`, then the two lines, then `exit()`.
-**Ask:** before `Enter` on the second line: what will Python print?
-**Say:** the first slip of everyone: Python typed at the shell's prompt, or a shell command typed at `>>>`. The prompt says who reads.
+**Ask:** before the third step: 87672 / 24, is it 3653 or 3653.0?
+**Say:** `**` is the power. 3653 days: ten years with three leap years. The last line is float64 showing through: measured values are compared with a tolerance, never with `==`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Line of `weather.csv` Is a `str`
+
+````md magic-move {lines: true}
+```py
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+```
+```py {3-4}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+```
+```py {5}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
+```
+```py {6}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
+print(parts[1] + 1)               # TypeError: can only concatenate str (not "int") to str
+```
+```py {6-7}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
+temp = float(parts[1])
+print(temp + 1)                   # -3.4000000000000004
+```
+````
+
+<div class="note-text mt-md">Positions count from 0; <code>[0:4]</code> stops before 4. <code>split(",")</code> cuts at the commas and hands back a list of four strings. In the file <code>-4.4</code> is text, four characters, until <code>float()</code> makes the number.</div>
+
+<!--
+**Do:** draw the first ten characters on the board with their positions 0 to 9 below them.
+**Ask:** after the split, is `parts[1]` a number? What does `parts[1] + 1` do?
+**Say:** cut, then convert: two steps for every line of the file.
 (~3 min)
 -->
 
@@ -197,47 +268,43 @@ $
 hideInToc: true
 ---
 
-# A Script: Lines in a **File**
+# Containers: `list` and `tuple`
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **`scripts/hours.py`**
-
-```python
-days = 365 * 10 + 3    # 2016, 2020, 2024
-hours = days * 24
-print(hours)
+````md magic-move {lines: true}
+```py
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
 ```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ python scripts/hours.py
+```py {3-4}
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
+temps.append(-6.0)                 # 03:00
+print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
 ```
-
-<v-click>
-
-```text
-87672
+```py {5-6}
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
+temps.append(-6.0)                 # 03:00
+print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
+row = ("2016-01-01T00:00", -4.4, 93, 2.5)
+print(row[1])                      # -4.4
 ```
+```py {7}
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
+temps.append(-6.0)                 # 03:00
+print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
+row = ("2016-01-01T00:00", -4.4, 93, 2.5)
+print(row[1])                      # -4.4
+row[1] = 0.0                       # TypeError: 'tuple' object does not support item assignment
+```
+````
 
-</v-click>
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">A script is a text file whose name ends in <code>.py</code>. The shell starts <code>python</code>, and <code>python</code> reads the file. Only <code>print</code> writes to the terminal. <code>#</code> starts a comment: the rest of the line is skipped.</div>
+<div class="note-text mt-md">A <strong>list</strong> <code>[…]</code> holds values in order and can grow. A <strong>tuple</strong> <code>(…)</code> holds values in order and never changes: one row of the file, fixed.</div>
 
 <!--
-**Say:** the lines of the prompt, kept in a file; they give the same 87 672 tomorrow. 87 672 is the number of rows Lecture 04 counted with `wc -l`, less the header.
-**Ask:** what does the script print without its last line? Nothing: at `>>>` values are shown by themselves, in a script only `print` shows them.
+**Ask:** after the `append`, what is `temps[-1]`? A negative position counts from the end: −6.0.
+**Say:** both are indexed like a string. The list is for values that come in one by one; the tuple for a record that must stay as it was read.
 (~2 min)
 -->
 
@@ -245,44 +312,48 @@ $ python scripts/hours.py
 hideInToc: true
 ---
 
-# Python in **VS Code**
+# Containers: `dict` and `set`
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧩 **The Python extension**
-
-- Extensions view, `Python` by Microsoft, **Install**
-- Colours the code, completes names, underlines a name that was never made
-- Status Bar: `3.14.7`, the interpreter it uses. A click selects another one
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ▶️ **Run Python File**
-
-The ▶ at the top right of the editor types one line into the terminal: the full path of the interpreter, then the full path of the file.
-
-```text
-$ /opt/homebrew/…/base/bin/python /Users/smilte/weather-project/scripts/hours.py
-87672
+````md magic-move {lines: true}
+```py
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
 ```
+```py {4-5}
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
+row["temp_f"] = row["temp_c"] * 9 / 5 + 32
+print(row["temp_f"])              # 24.08
+```
+```py {6-7}
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
+row["temp_f"] = row["temp_c"] * 9 / 5 + 32
+print(row["temp_f"])              # 24.08
+print(row.get("rain_mm", 0))      # 0: no such key
+print(row["rain_mm"])             # KeyError: 'rain_mm'
+```
+```py {8-9}
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
+row["temp_f"] = row["temp_c"] * 9 / 5 + 32
+print(row["temp_f"])              # 24.08
+print(row.get("rain_mm", 0))      # 0: no such key
+print(row["rain_mm"])             # KeyError: 'rain_mm'
+years = {"2016", "2016", "2017"}
+print(len(years))                 # 2
+```
+````
 
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ The extension contains no Python: it runs the interpreter it shows. The file runs as it is saved; a dot on the editor tab means unsaved changes.
-
-</div>
+<div class="note-text mt-md">A <strong>dict</strong> <code>{key: value}</code> finds a value by its key, here by the name of the column. A <strong>set</strong> <code>{…}</code> keeps each value once. Containers hold any objects, other containers too: a list of tuples, a dictionary of dictionaries.</div>
 
 <!--
-**Say:** the ▶ button and the typed line do the same thing. The typed line, with relative paths, is the one that goes into a README.
-**If asked:** Windows shows `C:\Users\smilte\miniforge3\python.exe` and `C:\Users\smilte\weather-project\scripts\hours.py`.
+**Ask:** `row.get("rain_mm", 0)` against `row["rain_mm"]`: what does each do?
+**Say:** the dictionary is the row with its header attached: `row["temp_c"]` instead of `parts[1]`. Assigning to a new key adds it.
 (~2 min)
 -->
 
@@ -290,51 +361,171 @@ $ /opt/homebrew/…/base/bin/python /Users/smilte/weather-project/scripts/hours.
 hideInToc: true
 ---
 
-# What `python` Does with a **File**
+# A matplotlib Figure, Built Line by **Line**
 
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
 
-| | `python` | With `scripts/hours.py` |
-| --- | --- | --- |
-| 1 | reads the file's bytes as UTF-8 text | 73 bytes, 3 lines |
-| 2 | checks the grammar of the whole file | a missing `)` stops it here: `SyntaxError`, nothing runs |
-| 3 | translates it into bytecode, simple steps for itself | |
-| 4 | runs the statements from the top, one at a time | line 1, line 2, line 3 |
-| 5 | at an error: stops and prints a traceback | exit status 1 |
-| 6 | after the last statement: ends | exit status 0, `echo $?` prints `0` |
+<div>
+
+````md magic-move {lines: true}
+```py
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+```
+```py {3}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+```
+```py {4-5}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+hours = [0, 1, 2, 3]
+ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
+```
+```py {6-7}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+hours = [0, 1, 2, 3]
+ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
+ax.set(xlabel="hour", ylabel="temp_c")
+plt.show()
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🖼️ **Objects inside objects**
+
+```text
+Figure          the image
+└─ Axes         one plot area
+   └─ Line2D    one line of data
+```
+
+Each has its own methods: `ax.plot`, `ax.set`, `fig.savefig`.
+
+</div>
 
 </div>
 
 <!--
-**Say:** the same six-step reading as the shell's in Lecture 04, one level up. Step 2 is why one missing bracket on line 30 means not even line 1 runs.
-**Ask:** `print(hours` without its `)` on line 3: does line 1 run? No. Python says `SyntaxError: '(' was never closed` and runs nothing.
-**If asked:** the bytecode is kept in `__pycache__` folders for imported modules, so a second start is quicker.
-(~3 min)
+**Say:** `matplotlib` is a package, not part of Python; Part 3 is about where it comes from. A figure is an object like −4.4, only with more inside it.
+**If asked:** `plt.subplots` hands back two objects at once, a figure and its axes, and `fig, ax =` names both.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Run Stops at the First **Error**
+# Draw the Figure
 
 ```py {monaco-run} {autorun:false}
-print("start")
-hours = 87672
-print(hours / 24)    # 3653.0
-print(hours / 0)     # ZeroDivisionError
-print("end")         # never runs
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+hours = [0, 1, 2, 3]
+ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
+ax.set(xlabel="hour", ylabel="temp_c")
+plt.show()
 ```
 
-<div class="card card-success card-glass pad-compact mt-md">
+<!--
+**Do:** press ▶; the first run waits a few seconds for matplotlib to load.
+**Ask:** change `figsize=(6, 1.3)` to `(6, 1)` and run again: what changes?
+**If asked:** `len(fig.axes)` is 1 and `len(ax.lines)` is 1: each object keeps a list of the objects inside it.
+(~2 min)
+-->
 
-✅ Step 1: `python`, the interpreter, checks the whole file, runs it from the top one statement at a time, and stops at the first error.
+---
+hideInToc: true
+---
+
+# The Answer of a Weather Service: **JSON**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🌐 **api.open-meteo.com, 18 Oct 2026, 10:30**
+
+```text
+{"latitude": 54.68259,
+ "longitude": 25.273773,
+ "elevation": 95.0,
+ "current_units": {"temperature_2m": "°C",
+                   "wind_speed_10m": "km/h"},
+ "current": {"time": "2026-10-18T10:30",
+             "temperature_2m": 8.7,
+             "wind_speed_10m": 10.4}}
+```
 
 </div>
 
+<div>
+
+````md magic-move {lines: true}
+```py
+print(type(answer))              # <class 'dict'>
+```
+```py {2}
+print(type(answer))              # <class 'dict'>
+print(type(answer["current"]))   # <class 'dict'>
+```
+```py {3}
+print(type(answer))              # <class 'dict'>
+print(type(answer["current"]))   # <class 'dict'>
+print(answer["current"]["temperature_2m"])  # 8.7
+```
+```py {4-5}
+print(type(answer))              # <class 'dict'>
+print(type(answer["current"]))   # <class 'dict'>
+print(answer["current"]["temperature_2m"])  # 8.7
+units = answer["current_units"]
+print(units["temperature_2m"])   # °C
+```
+````
+
+</div>
+
+</div>
+
+<div class="note-text mt-md"><strong>JSON</strong> is text that writes numbers, strings, lists and dictionaries. <code>json.loads</code> turns it into Python objects: here a dictionary of dictionaries, read one key at a time.</div>
+
 <!--
-**Ask:** which lines appear before ▶? `start`, `3653.0`, then the error; `end` never.
-**Say:** the output before the error is real: those lines ran. The traceback's last line says what stopped the run.
+**Say:** five numbers about Vilnius right now, and the units beside them. Square brackets twice: the dictionary inside the dictionary.
+**If asked:** a few keys are left out here (`generationtime_ms`, `timezone`, …); the answer has nine.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Ask the Weather Service Now
+
+```py {monaco-run} {autorun:false}
+import json
+from pyodide.http import open_url   # in a browser; urllib on a laptop
+url = ("https://api.open-meteo.com/v1/forecast?latitude=54.69"
+       "&longitude=25.28&current=temperature_2m,wind_speed_10m")
+answer = json.loads(open_url(url).read())
+print(len(answer))                         # 9 keys
+print(answer["current"]["time"])           # 2026-10-18T10:30 when written
+print(answer["current"]["temperature_2m"]) # 8.7 when written
+```
+
+<div class="note-text mt-md">The same three steps as for <code>weather.csv</code>: text arrives, becomes objects, one value is picked out. The block needs the internet; its answer changes every 15 minutes.</div>
+
+<!--
+**Do:** press ▶. Compare the temperature with the window.
+**Say:** the object was built a second ago on a server in another country; to the program it is a dictionary like `row`.
+**If asked:** on a laptop the second line is `from urllib.request import urlopen`, and `urlopen(url).read()` gives the bytes.
 (~2 min)
 -->
 
@@ -343,12 +534,12 @@ layout: section
 hideInToc: true
 ---
 
-# Values and **Types**
+# Combine Objects: `for` and **`if`**
 
-Step 2: is `-4.4` in `weather.csv` a number?
+Part 2: how do `for` and `if` turn 87 672 lines into 7.16?
 
 <!--
-**Say:** Lecture 03 built integers, floats and text out of bits. Python has the same three.
+**Say:** the objects are known; now the lines that repeat a step and choose between steps.
 (~1 min)
 -->
 
@@ -356,307 +547,54 @@ Step 2: is `-4.4` in `weather.csv` a number?
 hideInToc: true
 ---
 
-# Every Value Has a **Type**
-
-```py {monaco-run} {autorun:false}
-print(type(87672))      # <class 'int'>
-print(type(7.16))       # <class 'float'>
-print(type("-4.4"))     # <class 'str'>
-print(type(7.16 > 0))   # <class 'bool'>
-print(87672 / 24)       # 3653.0: / always gives a float
-print(87672 // 24)      # 3653: the whole part, an int
-```
-
-<div class="note-text mt-md">The type decides what an operation does with a value. Lecture 03: the same bits mean another value under another type.</div>
-
-<!--
-**Ask:** the last two lines: the same division, what does each print? `/` gives a float even when it divides evenly; `//` keeps the whole part.
-**Say:** quotes make text. `"-4.4"` is four characters, `-4.4` a number.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# `int` Has No Fixed **Width**
-
-```py {monaco-run} {autorun:false}
-print(127 + 1)                  # 128: no wrap to -128
-print(2 ** 63)                  # 9223372036854775808
-print(2 ** 100)                 # 1267650600228229401496703205376
-print((2 ** 100).bit_length())  # 101 bits
-```
-
-<div class="note-text mt-md">In Lecture 03, 8 bits held −128 to 127 and 127 + 1 wrapped to −128. A Python <code>int</code> takes as many bits as its number needs.</div>
-
-<!--
-**Ask:** 127 + 1 in Python: 128 or −128?
-**Say:** `**` is the power. 2⁶³ does not fit a signed 64-bit integer; Python's `int` grows to 64 bits, then 101, and stays exact.
-**If asked:** the price is memory and speed. Large tables of numbers are kept in fixed widths, as the files of Lecture 03 were.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# `float` Is the float64 of Lecture 03
-
-```py {monaco-run} {autorun:false}
-print(0.1 + 0.2)          # 0.30000000000000004
-print(0.1 + 0.2 == 0.3)   # False
-print(f"{7.16:.20f}")     # 7.16000000000000014211
-print(-4.4 + 1)           # -3.4000000000000004
-```
-
-<div class="note-text mt-md">64 bits: 53 binary digits, about 16 decimal digits. 7.16 has no end in binary, so the nearest float64 is stored, and every sum is rounded.</div>
-
-<!--
-**Ask:** −4.4 + 1: what does Python print?
-**Say:** the long tails are float64 showing through, not a fault of Python. Measured values are compared with a tolerance, never with `==`.
-**If asked:** `:.20f` asks for 20 decimals of the stored value.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# `str` Is Unicode **Text**
-
-```py {monaco-run} {autorun:false}
-temp = "-4.4"
-print(len(temp))                  # 4 characters
-print(temp + "1")                 # -4.41: text joined to text
-unit = "°C"
-print(len(unit))                  # 2 characters
-print(len(unit.encode("utf-8")))  # 3 bytes: ° is C2 B0
-```
-
-<div class="note-text mt-md">A <code>str</code> is a row of Unicode characters. Its bytes appear when it is encoded, as in Lecture 03.</div>
-
-<!--
-**Ask:** `temp + "1"`: what comes out? Text plus text is longer text, with no error.
-**Say:** `len` counts characters; the bytes of UTF-8 are a different count.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Name Points to a **Value**
+# Add One to a Count: `count = count + 1`
 
 <div class="grid-2 mt-md gap-md">
 
 <div>
 
-```py {monaco-run} {autorun:false}
-mean = 7.16
-old = mean
-mean = mean * 9 / 5 + 32
-print(mean)   # 44.888
-print(old)    # 7.16
+````md magic-move {lines: true}
+```py
+count = 0
+count = count + 1
 ```
+```py {3}
+count = 0
+count = count + 1
+print(count)
+```
+```py {3}
+count = 0
+count = count + 1
+print(count)   # 1
+```
+```py {3-5}
+count = 0
+count = count + 1
+count = count + 1
+count = count + 1
+print(count)   # 3
+```
+````
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📌 **After line 3**
+## 📐 **`=` in Python**
 
-```text
-mean ───▶ 44.888
-old  ───▶ 7.16
-```
+1. work out the right side, with the value the name has now
+2. put the name on the result
 
-`=` works out the right side first, then puts the name on the result. A name with its value is a **variable**.
+`count = count + 1` is not an equation: it moves `count` from 0 to 1.
 
 </div>
 
 </div>
 
-<div class="note-text mt-md">A spreadsheet cell <code>=A1*9/5+32</code> follows A1. A Python name does not follow anything: line 3 ran once, with the value <code>mean</code> had then.</div>
-
 <!--
-**Ask:** what does `old` hold after line 3?
-**Say:** line 3 moves the name `mean` to a new value. `old` still points to 7.16. `=` is not the equals of mathematics: `count = count + 1` adds one.
-**If asked:** a name has letters, digits and `_`, no digit first, and case counts: `Mean` and `mean` are two names.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# `bool`: **Comparisons**
-
-```py {monaco-run} {autorun:false}
-temp = -999.0
-print(temp == -999)      # True: -999.0 equals -999
-print(temp < -50)        # True
-print(-50 < temp < 50)   # False
-print("-999" == -999)    # False: text is never a number
-```
-
-<div class="note-text mt-md"><code>=</code> puts a name on a value. <code>==</code> asks whether two values are equal and answers <code>True</code> or <code>False</code>.</div>
-
-<!--
-**Ask:** the last line: True or False?
-**Say:** the last comparison is the dangerous one: it fails with no error and no warning.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# From Text to **Number**: `float` and `int`
-
-```py {monaco-run} {autorun:false}
-print(float("-4.4"))       # -4.4
-print(float("-4.4") + 1)   # -3.4000000000000004
-print(int("93") + 1)       # 94
-print(float("-999"))       # -999.0
-print("-4.4" + 1)          # TypeError
-```
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-✅ Step 2: no. In the file `-4.4` is text, four characters. `float("-4.4")` makes the float64 that arithmetic works on.
-
-</div>
-
-<!--
-**Ask:** the last line: `-3.4`, `-4.41` or an error? Text and a number do not add: `TypeError: can only concatenate str (not "int") to str`.
-**Say:** the type name converts: `float(...)`, `int(...)`, `str(...)`. A file holds text; a value becomes a number only by a step the program states.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# One **Line**
-
-Step 3: what are the four values of one line of `weather.csv`?
-
-<!--
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Index and **Slice**
-
-```py {monaco-run} {autorun:false}
-line = "2016-01-01T00:00,-4.4,93,2.5"
-print(len(line))    # 28
-print(line[0])      # 2
-print(line[0:4])    # 2016: the year
-print(line[5:7])    # 01: the month
-print(line[-3:])    # 2.5
-```
-
-<div class="note-text mt-md">Positions count from 0. <code>[start:stop]</code> stops before <code>stop</code>; a negative position counts from the end. In the file the line has 29 bytes: 28 characters and LF.</div>
-
-<!--
-**Do:** draw the first ten characters on the board with their positions 0 to 9 below them.
-**Ask:** what is `line[5:7]`? Positions 5 and 6: `01`.
-**Say:** the 29 bytes are the row of Lecture 03; every character here is ASCII, one byte each.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Cut at the Commas: `split`
-
-```py {monaco-run} {autorun:false}
-line = "2016-01-01T00:00,-4.4,93,2.5"
-parts = line.split(",")
-print(parts)           # ['2016-01-01T00:00', '-4.4', '93', '2.5']
-print(len(parts))      # 4
-print(parts[1])        # -4.4
-print(type(parts[1]))  # <class 'str'>
-```
-
-<div class="note-text mt-md"><code>split</code> is a <strong>method</strong>: a function that belongs to a value and is written after a dot. It hands back a <strong>list</strong> of four strings.</div>
-
-<!--
-**Ask:** after the split, is `parts[1]` a number?
-**Say:** the commas are gone; the four pieces are still text. A list is written in square brackets and indexed like a string.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Convert Each **Part**
-
-```py {monaco-run} {autorun:false}
-line = "2016-01-01T00:00,-4.4,93,2.5"
-parts = line.split(",")
-time = parts[0]
-temp_c = float(parts[1])
-humidity_pct = int(parts[2])
-wind_ms = float(parts[3])
-print(time, temp_c, humidity_pct, wind_ms)  # 2016-01-01T00:00 -4.4 93 2.5
-print(temp_c * 9 / 5 + 32)                  # 24.08
-```
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Step 3: `'2016-01-01T00:00'`, `-4.4`, `93`, `2.5`: a `str`, a `float`, an `int` and a `float`, under the names of the columns.
-
-</div>
-
-<!--
-**Ask:** which of the four stays text, and why? The time: nothing is computed with it today.
-**Say:** cut, then convert: two steps for every line of the file. The names are the header's, with their units.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Lists and **Loops**
-
-Step 4: what is the mean of all 87 672 rows?
-
-<!--
-**Say:** one line is done. A loop does the same for 87 672 lines.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# A List Holds Values in **Order**
-
-```py {monaco-run} {autorun:false}
-temps = [-4.4, -4.8, -5.5, -6.0]   # 1 January 2016, 00:00 to 03:00
-print(len(temps))                  # 4
-print(temps[0], temps[-1])         # -4.4 -6.0
-temps.append(-5.9)                 # 04:00
-print(temps)                       # [-4.4, -4.8, -5.5, -6.0, -5.9]
-print(min(temps), sum(temps))      # -6.0 -26.6
-```
-
-<div class="note-text mt-md">A list is indexed and sliced like a <code>str</code>, and it can be changed: <code>append</code> adds an item at the end.</div>
-
-<!--
-**Ask:** what does `temps[-1]` give before the `append`?
-**Say:** `len`, `min`, `max` and `sum` work on any list of numbers.
+**Ask:** before the fourth step: what does `print(count)` show?
+**Say:** every count and every sum over a file is this one line, run once per row.
 (~2 min)
 -->
 
@@ -670,7 +608,27 @@ hideInToc: true
 
 <div>
 
-```py {monaco-run} {autorun:false}
+````md magic-move {lines: true}
+```py
+temps = [-4.4, -4.8, -5.5, -6.0]
+for t in temps:
+    print(t)
+```
+```py {2,4}
+temps = [-4.4, -4.8, -5.5, -6.0]
+total = 0.0
+for t in temps:
+    total = total + t
+    print(t)
+```
+```py {5}
+temps = [-4.4, -4.8, -5.5, -6.0]
+total = 0.0
+for t in temps:
+    total = total + t
+    print(t, total)
+```
+```py {6}
 temps = [-4.4, -4.8, -5.5, -6.0]
 total = 0.0
 for t in temps:
@@ -678,6 +636,7 @@ for t in temps:
     print(t, total)
 print(total / len(temps))   # -5.175
 ```
+````
 
 </div>
 
@@ -687,47 +646,16 @@ print(total / len(temps))   # -5.175
 
 - The `for` line ends with `:`
 - The **block** is the lines below it, indented by 4 spaces
-- `t` names each item in turn, and the block runs once for it
-- After the last item Python goes on with the first line that is not indented
+- `t` names each item in turn; the block runs once for each
+- The first line that is not indented runs after the last item
 
 </div>
 
 </div>
 
 <!--
-**Ask:** how many lines does it print? Four from inside the loop, one after it.
+**Ask:** after step 1: how many lines does it print? Four, one per item.
 **Say:** a start value before the loop, an update inside it, the result after it. Every count and sum over a file has these three places.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Every Line of `weather.csv` in a **List**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ python
->>> lines = open("data/raw/weather.csv").read().splitlines()
->>> len(lines)
-87673
->>> lines[0]
-'time,temp_c,humidity_pct,wind_ms'
->>> lines[1]
-'2016-01-01T00:00,-4.4,93,2.5'
-```
-
-</div>
-
-<div class="note-text mt-md"><code>open</code> opens the file, <code>read</code> hands back its text as one <code>str</code> of 2 515 215 characters, <code>splitlines</code> cuts it at the line ends. 87 673 lines: the count of <code>wc -l</code>, the header first.</div>
-
-<!--
-**Say:** three calls joined by dots, each on the result of the one before. The path is relative: it starts at the folder the terminal is in, the project folder.
-**If asked:** the slides' Python blocks run in the browser and cannot read a file on the laptop; reading a file is shown at the prompt.
 (~2 min)
 -->
 
@@ -735,26 +663,99 @@ $ python
 hideInToc: true
 ---
 
-# A Loop over **Lines**
+# The Loop, Turn by **Turn**
 
-```py {monaco-run} {autorun:false}
-text = """time,temp_c,humidity_pct,wind_ms
-2016-01-01T00:00,-4.4,93,2.5
-2016-01-01T01:00,-4.8,95,2.6
-2016-01-01T02:00,-5.5,95,2.7"""
-lines = text.splitlines()
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The loop**
+
+```py
+temps = [-4.4, -4.8, -5.5, -6.0]
 total = 0.0
-for line in lines[1:]:
-    total = total + float(line.split(",")[1])
-print(len(lines) - 1, total)    # 3 -14.7
+for t in temps:
+    total = total + t
+    print(t, total)
+print(total / len(temps))
 ```
 
-<div class="note-text mt-md">The first four lines of <code>weather.csv</code>, pasted between three quotes. <code>lines[1:]</code> is every line but the first, the header.</div>
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔁 **Each turn**
+
+| Turn | `t` | `total` after line 4 |
+| --- | --- | --- |
+| before | | 0.0 |
+| <span v-click="1">1</span> | <span v-click="1">−4.4</span> | <span v-click="1">−4.4</span> |
+| <span v-click="2">2</span> | <span v-click="2">−4.8</span> | <span v-click="2">−9.2</span> |
+| <span v-click="3">3</span> | <span v-click="3">−5.5</span> | <span v-click="3">−14.7</span> |
+| <span v-click="4">4</span> | <span v-click="4">−6.0</span> | <span v-click="4">−20.7</span> |
+| <span v-click="5">after</span> | | <span v-click="5">−20.7 / 4 = −5.175</span> |
+
+</div>
+
+</div>
 
 <!--
-**Ask:** why `lines[1:]` and not `lines`? What would `float` do with the header's second part, `temp_c`?
-**Say:** inside the loop: cut, pick part 1, convert, add. The same three lines run on 3 lines and on 87 672.
-(~3 min)
+**Do:** before each click, have the room say the next `total`.
+**Say:** the computer does exactly this, 87 672 times for `weather.csv`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Loop over the Lines of a **File**
+
+````md magic-move {lines: true}
+```py
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+for line in lines:
+    print(line)
+```
+```py {5}
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+for line in lines[1:]:
+    print(line)
+```
+```py {6-7}
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+for line in lines[1:]:
+    parts = line.split(",")
+    print(float(parts[1]))
+```
+```py {5,8-9}
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+total = 0.0
+for line in lines[1:]:
+    parts = line.split(",")
+    total = total + float(parts[1])
+print(total)    # -14.7
+```
+````
+
+<div class="note-text mt-md">The first four lines of <code>weather.csv</code> as a list of strings. <code>lines[1:]</code> is every line but the first, the header.</div>
+
+<!--
+**Ask:** why `lines[1:]`? What would `float` do with the header's second part, `temp_c`?
+**Say:** inside the loop: cut, pick part 1, convert, add. The same lines run on 3 lines and on 87 672.
+(~2 min)
 -->
 
 ---
@@ -808,99 +809,76 @@ $ python scripts/mean_all.py
 
 <v-click>
 
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Step 4: 5.782796103659093, the 5.7828 of <code>awk</code> and <code>column_stats.py</code> on the raw file. The 120 rows of −999 are counted as temperatures.
-
-</div>
+<div class="note-text mt-sm"><code>open</code>, <code>read</code> and <code>splitlines</code> turn the file into a list of 87 673 strings, the header first. 5.7828 is the mean of <code>column_stats.py</code> on the raw file: the 120 rows of −999 are counted as temperatures.</div>
 
 </v-click>
 
 <!--
 **Do:** click through the program as it grows: the lines of the file (it prints 87673), the sum in a loop (506989.30000000005), the count and the mean.
 **Ask:** before the output: 7.16 or 5.78?
-**Say:** the script does what it says: every row is a temperature to it. Python gives no warning; the number known beforehand, 5.7828, shows it computed what `awk` computed.
-(~4 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Decide with **`if`**
-
-Step 5: what is the mean without the −999 rows?
-
-<!--
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# `if`: Run a Block or Skip **It**
-
-```py {monaco-run} {autorun:false}
-for temp in [23.6, -999.0, -4.4]:
-    if temp == -999:
-        print(temp, "missing")
-    elif temp < 0:
-        print(temp, "below freezing")
-    else:
-        print(temp, "measured")
-```
-
-<div class="note-text mt-md">The conditions are tried from the top. The first true one runs its block, and the others are skipped. <code>elif</code> and <code>else</code> can be left out.</div>
-
-<!--
-**Ask:** what is printed for −999.0? It is below freezing too, but the first true condition wins.
-**Say:** 23.6 is 23:00 on 21 July 2019, the hour before the gap.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Indentation Is the **Block**
-
-<div class="grid-2 mt-md gap-md">
-
-<div>
-
-```py {monaco-run} {autorun:false}
-count = 0
-for temp in [23.6, -999.0, -4.4]:
-    if temp != -999:
-        count = count + 1
-        print(count)
-```
-
-</div>
-
-<div>
-
-```py {monaco-run} {autorun:false}
-count = 0
-for temp in [23.6, -999.0, -4.4]:
-    if temp != -999:
-        count = count + 1
-print(count)
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">The same five lines; only the spaces before <code>print</code> differ. In Python the spaces at the start of a line decide which block the line belongs to.</div>
-
-<!--
-**Ask:** what does each print? Left: 1 and 2, the `print` is inside the `if`. Right: 2, once, after the loop.
-**Say:** `!=` means "not equal". VS Code indents by 4 spaces after a `:`.
-**If asked:** a line after `if …:` with no indented block stops Python before anything runs: `IndentationError`.
+**Say:** the script does what it says: every row is a temperature to it. Python gives no warning.
 (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Choose a Block: `if`, `elif`, `else`
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+temp = -999.0
+if temp == -999:
+    print("missing")         # printed
+```
+```py {4-5}
+temp = -999.0
+if temp == -999:
+    print("missing")         # printed
+else:
+    print("measured")
+```
+```py {1,3,5}
+temp = -4.4
+if temp == -999:
+    print("missing")
+else:
+    print("measured")        # printed
+```
+```py {4-5,7}
+temp = -4.4
+if temp == -999:
+    print("missing")
+elif temp < 0:
+    print("below freezing")  # printed
+else:
+    print("measured")
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **The rules**
+
+- `==` asks: equal? The answer is a `bool`
+- The conditions are tried from the top; the first `True` one runs its block
+- `elif` and `else` can be left out
+
+</div>
+
+</div>
+
+<!--
+**Ask:** at the last step, −4.4 is also "not missing": why "below freezing" and not "measured"? The first true condition wins.
+**Say:** `=` puts a name on a value; `==` compares two values.
+(~2 min)
 -->
 
 ---
@@ -909,7 +887,17 @@ hideInToc: true
 
 # Skip the −999 Rows: `continue`
 
-```py {monaco-run} {autorun:false}
+````md magic-move {lines: true}
+```py
+temps = [23.6, -999.0, -999.0, 21.9]   # 21 July 2019 23:00, two marks, 27 July 00:00
+total = 0.0
+count = 0
+for temp in temps:
+    total = total + temp
+    count = count + 1
+print(count, total / count)            # 4 -488.125
+```
+```py {5-6}
 temps = [23.6, -999.0, -999.0, 21.9]   # 21 July 2019 23:00, two marks, 27 July 00:00
 total = 0.0
 count = 0
@@ -919,15 +907,15 @@ for temp in temps:
     total = total + temp
     count = count + 1
 print(count, total / count)            # 2 22.75
-print(sum(temps) / len(temps))         # -488.125
 ```
+````
 
 <div class="note-text mt-md"><code>continue</code> ends this turn of the loop: the two lines below it are skipped for a −999 row.</div>
 
 <!--
-**Ask:** the last line averages all four. What comes out? −488.125 °C: two marks among four rows.
+**Ask:** with the two marks in: what is the mean? −488.125 °C. And after the two new lines?
 **Say:** the two hours around the gap give 22.75, a July night. The marks must be left out before any arithmetic.
-(~3 min)
+(~2 min)
 -->
 
 ---
@@ -962,7 +950,9 @@ print(count, total / count)
 ```
 ````
 
-<div class="card card-secondary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
 
 ## 💻 **zsh · Git Bash**
 
@@ -980,142 +970,18 @@ $ python scripts/mean_temp.py
 
 </div>
 
-<v-click>
+<div v-click class="card card-success card-glass pad-compact">
 
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Step 5: 7.15996550621346, from 87 552 rows; 87 672 − 87 552 = 120 left out. <code>column_stats.py</code> on <code>weather_valid.csv</code>: 7.15997.
+✅ Part 2: 7.15996550621346 from 87 552 rows, the 7.15997 of `column_stats.py`.
 
 </div>
-
-</v-click>
-
-<!--
-**Do:** start from the loop of Step 4, then click: the temperature gets a name, and three lines leave out the mark.
-**Ask:** how many rows will be counted now?
-**Say:** our own program gives Smiltė's number, and agrees with a program written by someone else.
-(~3 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Readable **Output**
-
-Step 6: how does 7.15996550621346 become 7.16 on the screen?
-
-<!--
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# **f-strings**
-
-```py {monaco-run} {autorun:false}
-mean = 7.15996550621346
-count = 87552
-print("mean", mean)                       # mean 7.15996550621346
-print(f"mean {mean:.2f} °C")              # mean 7.16 °C
-print(f"{count} rows, {count:,} rows")    # 87552 rows, 87,552 rows
-print(f"{120 / 87672:.2%} of the rows")   # 0.14% of the rows
-print(mean)                               # 7.15996550621346
-```
-
-<div class="note-text mt-md">An <code>f</code> before the quote makes a template: <code>{mean}</code> is replaced by the value, <code>{mean:.2f}</code> by the value with two decimals. After the colon stands the <strong>format</strong>.</div>
-
-<!--
-**Ask:** after the f-string, what does `mean` hold? Still all 15 digits: the f-string makes a new string and changes nothing.
-**Say:** compute with every digit, round only what is printed.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# A Width for **Columns**
-
-```py {monaco-run} {autorun:false}
-print(f"[{7.16:8.2f}]")      # [    7.16]
-print(f"[{-16.3:8.2f}]")     # [  -16.30]
-print(f"[{87552:>8}]")       # [   87552]
-print(f"[{'temp_c':<8}]")    # [temp_c  ]
-print(f"[{7:03d}]")          # [007]
-```
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-✅ Step 6: `f"{mean:.2f}"` prints 7.16; `mean` keeps 7.15996550621346. `8.2f`: 8 characters wide, 2 decimals; `>` and `<` push to the right or left.
 
 </div>
 
 <!--
-**Ask:** how many spaces before 7.16 in a width of 8? Four: `7.16` is four characters.
-**Say:** a fixed width per column lines numbers up under each other, as in a table. The brackets only show where the spaces are.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Functions and **Dictionaries**
-
-Step 7: which year was the warmest?
-
-<!--
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Calling a **Function**
-
-```py {monaco-run} {autorun:false}
-print(len("2016-01-01T00:00"))      # 16
-print(round(7.15996550621346, 2))   # 7.16
-print(max([-4.4, 32.4, -16.3]))     # 32.4
-print(abs(-999))                    # 999
-import math
-print(math.isclose(7.15996550621346, 7.16, abs_tol=0.005))   # True
-```
-
-<div class="note-text mt-md">A call is a name, brackets, and the <strong>arguments</strong> between them; the function hands back a value. <code>import math</code> brings in a module of functions, used as <code>math.…</code></div>
-
-<!--
-**Say:** `print`, `float`, `len` were calls from the first slide on. A call is worked out from the inside: first the arguments, then the function.
-**If asked:** `abs_tol=0.005` is an argument given by name: "close if they differ by less than 0.005".
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Write a Function: `def`
-
-```py {monaco-run} {autorun:false}
-def to_fahrenheit(celsius):
-    return celsius * 9 / 5 + 32
-
-print(to_fahrenheit(7.16))    # 44.888
-print(to_fahrenheit(-16.3))   # 2.6599999999999966
-print(to_fahrenheit(32.4))    # 90.32
-```
-
-<div class="note-text mt-md"><code>def</code> gives the block below it a name and names its input, the <strong>parameter</strong>. <code>return</code> hands the result back. The block runs only when the function is called, once per call.</div>
-
-<!--
-**Ask:** the coldest hour of ten years, −16.3 °C: what does the function return? 2.66 °F, with the float64 tail.
-**Say:** −16.3 and 32.4 are the min and max of `column_stats.py`. The formula is written once and used three times.
+**Do:** start from the loop of all rows, then click: the temperature gets a name, and three lines leave out the mark.
+**Ask:** how many rows will be counted now? 87 672 − 120.
+**Say:** our own eleven lines give Smiltė's number, and agree with a program written by someone else.
 (~3 min)
 -->
 
@@ -1123,139 +989,279 @@ print(to_fahrenheit(32.4))    # 90.32
 hideInToc: true
 ---
 
-# A Function for One **Line**
+# Write a Step Once: `def`
 
-```py {monaco-run} {autorun:false}
+````md magic-move {lines: true}
+```py
+line1 = "2016-01-01T00:00,-4.4,93,2.5"
+print(float(line1.split(",")[1]))   # -4.4
+```
+```py {3-4}
+line1 = "2016-01-01T00:00,-4.4,93,2.5"
+print(float(line1.split(",")[1]))   # -4.4
+line2 = "2016-01-01T01:00,-4.8,95,2.6"
+print(float(line2.split(",")[1]))   # -4.8
+```
+```py {1-3,7-8}
 def temp_of(line):
     """The temp_c of one line of weather.csv."""
-    fields = line.split(",")
-    return float(fields[1])
+    return float(line.split(",")[1])
 
-print(temp_of("2016-01-01T00:00,-4.4,93,2.5"))   # -4.4
-print(temp_of("2019-07-22T00:00,-999,76,3.2"))   # -999.0
-print(fields)                                    # NameError
+line1 = "2016-01-01T00:00,-4.4,93,2.5"
+line2 = "2016-01-01T01:00,-4.8,95,2.6"
+print(temp_of(line1))               # -4.4
+print(temp_of(line2))               # -4.8
 ```
+```py {5-7}
+def temp_of(line):
+    """The temp_c of one line of weather.csv."""
+    return float(line.split(",")[1])
 
-<div class="note-text mt-md">A name made inside a function lives only while the function runs. The text in three quotes under <code>def</code> says what the function does.</div>
+for line in ["2016-01-01T00:00,-4.4,93,2.5",
+             "2016-01-01T01:00,-4.8,95,2.6"]:
+    print(temp_of(line))            # -4.4, then -4.8
+```
+````
+
+<div class="note-text mt-md"><code>def</code> gives a block a name and names its input, the <strong>parameter</strong>. <code>return</code> hands the result back. The block runs when the function is called, once per call. The text in three quotes says what it does.</div>
 
 <!--
-**Ask:** the last line: what does it print? `fields` was made inside `temp_of` and is gone after each call.
-**Say:** a function packs a step with a name: the loop can say `temp = temp_of(line)`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Dictionary: Values Found by a **Key**
-
-```py {monaco-run} {autorun:false}
-hours = {"2016": 8784, "2017": 8760}
-print(hours["2016"])          # 8784
-hours["2018"] = 8760          # a new key and its value
-print(len(hours))             # 3
-print("2019" in hours)        # False
-print(hours.get("2019", 0))   # 0
-print(hours["2019"])          # KeyError
-```
-
-<div class="note-text mt-md">A <code>dict</code> holds <code>key: value</code> pairs in curly brackets. A list finds a value by its position, a dictionary by its key.</div>
-
-<!--
-**Ask:** `hours.get("2019", 0)` against `hours["2019"]`: what does each do?
-**Say:** `get` hands back a default for a key that is not there; square brackets stop with `KeyError`. 8784 = 366 × 24: 2016 is a leap year.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Count Rows per **Year**
-
-```py {monaco-run} {autorun:false}
-lines = ["2016-12-31T22:00,-0.9,78,4.7",
-         "2016-12-31T23:00,-1.3,81,4.3",
-         "2017-01-01T00:00,-1.9,83,4.8"]
-hours = {}
-for line in lines:
-    year = line[:4]
-    hours[year] = hours.get(year, 0) + 1
-print(hours)    # {'2016': 2, '2017': 1}
-```
-
-<div class="note-text mt-md">The count so far, or 0 for a year not seen yet, plus one. The first time a year appears, the key is made.</div>
-
-<!--
-**Ask:** what does the dictionary hold after the loop?
-**Say:** the three lines around New Year 2017. A dictionary of counts is the `uniq -c` of Lecture 04, inside a program.
+**Ask:** after step 2: the same line written twice with one name changed. What goes wrong when the column moves?
+**Say:** the step is written once, under a name, and the loop says `temp_of(line)`. A file of such functions can be used by many scripts: a module.
 (~3 min)
 -->
 
 ---
+layout: section
 hideInToc: true
 ---
 
-# The Mean of Each **Year**
+# Packages and **Versions**
 
-<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+Part 3: where do the objects come from that Python does not have, and which version arrives?
+
+<!--
+**Say:** `float` and `dict` came with Python; the `Figure` did not.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Built In, Standard Library, **Packages**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| | Where it is | Examples | Used as |
+| --- | --- | --- | --- |
+| **built in** | in `python` itself | `float`, `str`, `dict`, `print`, `len`, `open` | at once |
+| **standard library** | comes with every Python | `math`, `json`, `urllib`, `csv` | `import json` |
+| **packages** | installed by a package manager | `matplotlib`, `numpy`, `pandas` | `import numpy`, after an install |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**, in an environment with only Python
+
+```text
+$ python -c "import json; print(json.loads('[7.16]'))"
+[7.16]
+$ python -c "import numpy"
+ModuleNotFoundError: No module named 'numpy'
+```
+
+</div>
+
+<!--
+**Say:** a **module** is a `.py` file of functions; `import` runs it once and makes its names available. A **package** is a folder of modules, installed together.
+**If asked:** `python -c` runs the text after it as a one-line script. The traceback above `ModuleNotFoundError` is left out.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# PyPI and conda-forge: Where Packages **Come From**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Index | Packages on 18 Oct 2026 | Installed with | Who publishes |
+| --- | --- | --- | --- |
+| **PyPI**, pypi.org | 916 606 projects | `pip install NAME` | anyone with an account |
+| **conda-forge**, conda-forge.org | 34 699 packages | `conda install NAME` | a community that builds and reviews each recipe |
+
+</div>
+
+<div class="note-text mt-md">A <strong>package manager</strong> finds a package in an index, downloads the build for your system and Python, and puts it into one environment. Miniforge's <code>conda</code> installs only from conda-forge: fewer packages, each built the same way for macOS, Windows and Linux, with the libraries it needs.</div>
+
+<!--
+**Ask:** guess the number of projects on PyPI before the table appears. Most of them are small, old or abandoned; a few thousand are used by nearly everyone.
+**If asked:** the count on PyPI is of the project names in its simple index; conda-forge's from its channel data.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Package Brings Other **Packages**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| A new environment with | Packages installed | Among them |
+| --- | --- | --- |
+| `python=3.14` | 23 | `python`, `openssl`, `libsqlite`, `tk`, `pip` |
+| `python=3.14 jupyterlab` | 139 | the 23, `ipykernel`, `ipython`, `tornado`, `jinja2`, … |
+
+</div>
+
+<div class="note-text mt-md">A package names the packages it needs, its <strong>dependencies</strong>, each with the versions it works with; they name theirs. Asking for one package, JupyterLab, brings 116. Counted with <code>conda create --dry-run</code> from conda-forge on Linux, 18 Oct 2026; macOS and Windows differ by a few.</div>
+
+<!--
+**Say:** the package manager solves a puzzle: one version of each of 139 packages, all compatible with each other and with Python 3.14.
+**Ask:** what can go wrong when two projects share one set of packages? One needs NumPy 1, the other NumPy 2.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# How Often Packages **Change**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Package | Releases, 18 Oct 2025 to 18 Oct 2026 | From | To |
+| --- | --- | --- | --- |
+| `numpy` | 15 | 2.3.5 | 2.5.4 |
+| `pandas` | 11 | 3.0.0rc0 | 3.1.0rc0 |
+| `matplotlib` | 7 | 3.10.8 | 3.11.2 |
+| `requests` | 6 | 2.33.0 | 2.34.2 |
+| `jupyterlab` | 33 | 4.4.10 | 4.7.0a2 |
+| Python | 1 a year, in October | 3.14.0, 7 Oct 2025 | 3.15.0, 9 Oct 2026 |
+
+</div>
+
+<div class="note-text mt-md">An install without a version takes the newest. The same line typed a year apart gives other packages, and a script can give another number or stop.</div>
+
+<!--
+**Say:** release dates from PyPI and python.org. Each Python is supported about five years: 3.10 ended on 1 October 2026.
+**Ask:** a script written today, run next October with whatever is newest: what has changed under it?
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Reading a Version Number: 2.5.4
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Part | Example | What a change means |
+| --- | --- | --- |
+| **major** | pandas 2.3 → **3**.0 | old code may break: pandas 3.0 changed defaults (copy-on-write, a new string type) |
+| **minor** | numpy 2.4 → 2.**5** | new functions; old code keeps working, a few old names go after a warning |
+| **patch** | numpy 2.5.3 → 2.5.**4** | fixes only |
+| pre-release | pandas 3.1.0**rc0**, jupyterlab 4.7.0**a2** | release candidate, alpha: for testing, not for results |
+
+</div>
+
+<div class="note-text mt-md">Most scientific packages follow this scheme, <strong>semantic versioning</strong>, more or less closely. Pinning <code>numpy=2.5</code> takes the newest 2.5.x: fixes yes, new minor versions no.</div>
+
+<!--
+**Ask:** 2.5.4 to 2.6.0: which part changed, and is it safe? The minor: new things, mostly safe.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which Python a Package **Supports**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🐍 **Python versions**
+
+| Version | Released | Supported until |
+| --- | --- | --- |
+| 3.15 | 9 Oct 2026 | Oct 2031 |
+| 3.14 | 7 Oct 2025 | Oct 2030 |
+| 3.13 | 7 Oct 2024 | Oct 2029 |
+| 3.12 | 2 Oct 2023 | Oct 2028 |
+| 3.11 | 24 Oct 2022 | Oct 2027 |
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📦 **Builds on PyPI, 18 Oct 2026**
+
+| Package | For Python |
+| --- | --- |
+| numpy 2.5.4 | 3.12 to 3.15 |
+| pandas 3.0.6 | 3.11 to 3.15 |
+| matplotlib 3.11.2 | 3.11 to 3.15 |
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">An environment with Python 3.11 cannot have NumPy 2.5: the package manager takes an older NumPy that still supports 3.11. The Python version is one more version to write down.</div>
+
+<!--
+**Say:** a package drops a Python a few years after its release; a new Python gets builds within weeks.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# An Environment: One Python and Its **Packages**
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **`scripts/year_means.py`**
+## 📁 **`miniforge3/envs/weather/`** on macOS
 
-```python
-lines = open("data/raw/weather.csv").read().splitlines()
-sums = {}
-counts = {}
-for line in lines[1:]:
-    parts = line.split(",")
-    temp = float(parts[1])
-    if temp == -999:
-        continue
-    year = parts[0][:4]
-    sums[year] = sums.get(year, 0.0) + temp
-    counts[year] = counts.get(year, 0) + 1
-for year in sums:
-    mean = sums[year] / counts[year]
-    print(f"{year} {counts[year]} {mean:.2f}")
+```text
+bin/python                 Python 3.14.8
+lib/python3.14/site-packages/
+├─ jupyterlab/             4.6.4
+├─ numpy/                  2.5.4
+└─ …
 ```
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 💻 **zsh · Git Bash**
+## 📁 **`miniforge3/envs/old-thesis/`**
 
 ```text
-$ python scripts/year_means.py
+bin/python                 Python 3.11.17
+lib/python3.11/site-packages/
+├─ numpy/                  1.26.4
+└─ …
 ```
-
-<v-click>
-
-```text
-2016 8784 7.60
-2017 8760 6.51
-2018 8760 7.97
-2019 8640 7.27
-2020 8784 6.83
-2021 8760 7.25
-2022 8760 6.60
-2023 8760 8.31
-2024 8784 7.27
-2025 8760 5.98
-```
-
-</v-click>
 
 </div>
 
 </div>
+
+<div class="note-text mt-md">An <strong>environment</strong> is a folder with one Python and the packages installed for it. One environment per project, so an upgrade for one project cannot break another. <code>conda activate weather</code> puts its <code>bin</code> first on <code>PATH</code> (Lecture 04): <code>python</code> then means that Python. On Windows: <code>envs\weather\python.exe</code> and <code>Lib\site-packages</code>.</div>
 
 <!--
-**Ask:** which year is short, and by how much? 2019: 8640 = 8760 − 120, the five days of marks.
-**Say:** two dictionaries with the same keys: one for the sums, one for the counts. A `for` over a dictionary goes through its keys in the order they were added.
+**Say:** Miniforge's own environment is `base`; projects get their own.
+**Ask:** after `conda activate old-thesis`, what does `import numpy; print(numpy.__version__)` print? 1.26.4.
 (~3 min)
 -->
 
@@ -1263,409 +1269,84 @@ $ python scripts/year_means.py
 hideInToc: true
 ---
 
-# The Warmest and the Coldest **Year**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| | Year | Measured hours | Mean, °C |
-| --- | --- | --- | --- |
-| warmest | 2023 | 8760 | 8.31 |
-| coldest | 2025 | 8760 | 5.98 |
-| all ten years | | 87 552 | 7.16 |
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-✅ Step 7: 2023, at 8.31 °C. The ten yearly means lie between 5.98 and 8.31 °C, 2.33 °C apart.
-
-</div>
-
-<!--
-**Ask:** is 7.16 the mean of the ten yearly means? Nearly: 7.16005. The leap years have 24 hours more and 2019 has 120 fewer, so the years do not weigh the same.
-**Say:** one more `for`, one more dictionary, and the question of a whole decade has an answer per year.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Read a **Traceback**
-
-Step 8: where and why does a script stop?
-
-<!--
-**Say:** every program fails many times before it works. Python says where and why, in its last lines.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Three Kinds of **Error**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Kind | When | What appears | Example |
-| --- | --- | --- | --- |
-| **Syntax error**: not valid Python | before line 1 runs | `SyntaxError` and the line, no output | `print(hours` |
-| **Exception**: a line cannot be carried out | while it runs | the output so far, then a traceback | `float("temp_c")` |
-| **Wrong result** | never | a number that looks fine | 5.78 instead of 7.16 |
-
-</div>
-
-<div class="note-text mt-md">Python finds the first two and names the line. The third is found only by a number known beforehand: 7.15997 from <code>column_stats.py</code>, 87 672 rows from the calendar.</div>
-
-<!--
-**Say:** step 2 and step 5 of what `python` does with a file: the grammar check, and the stop at an error.
-**Ask:** which kind was `mean_all.py`? The third: no message, and the marks counted as temperatures.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Anatomy of a **Traceback**
+# Write the Versions Down: `environment.yml`
 
 <div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **`scripts/mean_temp.py`, `[1:]` left out**
+## 📄 **`environment.yml`**
 
-```python {*}{lines:true,startLine:4}
-for line in lines:
-    parts = line.split(",")
-    temp = float(parts[1])
+```yaml
+name: weather
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14
+  - jupyterlab=4.6
 ```
 
 </div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 💥 **The terminal shows**
-
-```text
-$ python scripts/mean_temp.py
-```
-
-<v-click>
-
-```text
-Traceback (most recent call last):
-  File "/Users/smilte/weather-project/
-    scripts/mean_temp.py", line 6, in <module>
-    temp = float(parts[1])
-ValueError: could not convert string to
-float: 'temp_c'
-```
-
-</v-click>
-
-</div>
-
-</div>
-
-<div v-click class="grid-3 mt-md gap-md">
 
 <div class="card card-secondary card-glass pad-compact">
 
-**1. The last line: what.** The kind of error and the text that failed: `'temp_c'`.
+## 💻 **zsh · Git Bash**
+
+```text
+$ conda create -n weather python=3.14 jupyterlab=4.6
+$ conda env export --from-history -f environment.yml
+$ conda env create -f environment.yml
+```
+
+1. make the environment
+2. write down what was asked for
+3. on another laptop: make the same environment
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+</div>
 
-**2. Above it: where.** The file by its full path, line 6, and the line.
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Part 3: from the standard library with `import`, from conda-forge or PyPI by a package manager, into one environment per project, with the versions pinned and written down.
+
+</div>
+
+<!--
+**Say:** six lines that let anyone rebuild the environment, and you yourself next year. They go into the project folder, beside `data/` and `scripts/`.
+**If asked:** `--from-history` writes only what was typed, not all 139 packages; the export ends with a `prefix:` line, the folder on this laptop, which is deleted.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<div class="stack-tight mt-lg">
+
+<div class="card card-success card-glass pad-compact">
+
+**1. What kinds of values does Python have, and what can each do?** Objects of a type: `int`, `float`, `bool`, `str`; the containers `list`, `tuple`, `dict`, `set`; larger objects such as a `Figure` or the answer of a web service. The type says which methods it has.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-**3. Then upwards: why.** Line 4 starts the loop at the header. `lines[1:]` skips it.
+**2. How do `for` and `if` turn 87 672 lines into 7.16?** A `for` over the lines, `split` and `float` on each, `if` and `continue` for −999: 7.15996550621346 from 87 552 rows.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+**3. Where do the other objects come from, and which version arrives?** From the standard library, or as packages from conda-forge and PyPI; the newest unless pinned. So: one environment per project, written down in `environment.yml`.
 
 </div>
 
 </div>
 
 <!--
-**Say:** read from the bottom. The line that fails is often not the line that is wrong: line 6 is right, line 4 forgot `[1:]`.
-**If asked:** the long lines are wrapped here for the slide; the terminal shows each on one line. On Windows the path is `C:\Users\smilte\weather-project\scripts\mean_temp.py`.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Wrong **Folder**: `FileNotFoundError`
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ cd scripts
-$ python mean_temp.py
-```
-
-<v-click>
-
-```text
-Traceback (most recent call last):
-  File "/Users/smilte/weather-project/scripts/mean_temp.py", line 1, in <module>
-    lines = open("data/raw/weather.csv").read().splitlines()
-FileNotFoundError: [Errno 2] No such file or directory: 'data/raw/weather.csv'
-$ cd ..
-$ python scripts/mean_temp.py
-87552 7.15996550621346
-```
-
-</v-click>
-
-</div>
-
-<div class="note-text mt-md">A relative path starts at the folder the terminal is in, not at the script (Lecture 04).</div>
-
-<!--
-**Ask:** the file is there. Why does Python not find it?
-**Say:** from `scripts`, `data/raw/weather.csv` would be `scripts/data/raw/weather.csv`. Run every script from the project folder, as the README says.
-**If asked:** Python 3.14 also prints a row of `~` and `^` under the line, pointing at the call that failed; it is left out here.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Name Never Made: `NameError`
-
-```py {monaco-run} {autorun:false}
-total = 626869.3
-count = 87552
-print(totl / count)    # NameError
-```
-
-<div class="note-text mt-md">The last line names the nearest name Python knows: <code>Did you mean: 'total'?</code> In VS Code the extension underlines <code>totl</code> before the script runs.</div>
-
-<!--
-**Ask:** run it and read the last line aloud. What is the repair?
-**Say:** a typo, or a name used above the line that makes it: Python reads from the top.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Common Error **Messages**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| The last line of the traceback | The usual cause |
-| --- | --- |
-| `NameError: name 'totl' is not defined. Did you mean: 'total'?` | a typo, or a name used too early |
-| `TypeError: can only concatenate str (not "int") to str` | a text never converted to a number |
-| `ValueError: could not convert string to float: 'temp_c'` | the right type, a value that cannot be used |
-| `IndexError: list index out of range` | `parts[4]` in a list of four |
-| `KeyError: '2019'` | a key that is not in the dictionary |
-| `SyntaxError: '(' was never closed` | a bracket or a quote without its partner |
-| `FileNotFoundError: [Errno 2] No such file or directory` | a path from the wrong folder |
-
-</div>
-
-<div class="note-text mt-md">The text in quotes is exactly what Python was given, so a space or a comma in it shows. Copy the last line as it stands when asking someone.</div>
-
-<!--
-**Ask:** cover the right column. Which cause goes with each line?
-**Say:** six of the seven were on earlier slides; `IndexError` comes from a position past the end, `parts[4]` in a list of four.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Wrong Number Without a **Message**
-
-```py {monaco-run} {autorun:false}
-lines = ["time,temp_c,humidity_pct,wind_ms",
-         "2016-01-01T00:00,-4.4,93,2.5",
-         "2016-01-01T01:00,-4.8,95,2.6",
-         "2016-01-01T02:00,-5.5,95,2.7"]
-total = 0.0
-for line in lines[1:]:
-    total = total + float(line.split(",")[1])
-print(total / len(lines))    # -3.675
-```
-
-<div class="note-text mt-md">−4.4, −4.8 and −5.5 cannot have a mean above −4.4. <code>print(f"{total=} {len(lines)=}")</code> above the last line prints <code>total=-14.7 len(lines)=4</code>: the header was counted.</div>
-
-<!--
-**Ask:** no traceback. Is the number right? Which of the two, the sum or the count, is wrong?
-**Say:** `{name=}` in an f-string prints the name and its value. The repair is `len(lines) - 1`: −4.9.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Stop at a Line: the **Debugger**
-
-<img src="/figures/python_debugger_weather.svg" alt="The debugger of VS Code stopped before line 9 of mean_temp.py, with the values of its names" style="display:block;margin:0 auto;max-height:250px;">
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| | |
-| --- | --- |
-| click left of line 9 | a red dot: a **breakpoint** |
-| `F5`, **Python Debugger: Python File** | the script runs and stops **before** line 9 |
-| `F10` / `F5` / `Shift+F5` | one line on / to the next stop / end |
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Step 8: the last line of the traceback says what stopped Python; the lines above it say where. The cause is often a line higher up.
-
-</div>
-
-<!--
-**Say:** third stop at line 9: `temp` is −5.5, `total` holds the first two hours, −9.2. The Variables panel lists every name with its value at that moment.
-**If asked:** on a Mac the function keys may need `fn`.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# `mean_temp.py`, **Complete**
-
-````md magic-move {lines: true}
-```py {6-8}
-lines = open("data/raw/weather.csv").read().splitlines()
-total = 0.0
-count = 0
-for line in lines[1:]:
-    parts = line.split(",")
-    temp = float(parts[1])
-    if temp == -999:
-        continue
-    total = total + temp
-    count = count + 1
-print(count, total / count)
-```
-```py {1-3,10}
-def temp_of(line):
-    """The temp_c of one line of weather.csv."""
-    return float(line.split(",")[1])
-
-lines = open("data/raw/weather.csv").read().splitlines()
-total = 0.0
-count = 0
-for line in lines[1:]:
-    temp = temp_of(line)
-    if temp == -999:
-        continue
-    total = total + temp
-    count = count + 1
-print(count, total / count)
-```
-```py {1,12,17-18}
-MISSING = -999      # the mark for an hour without a reading
-
-def temp_of(line):
-    """The temp_c of one line of weather.csv."""
-    return float(line.split(",")[1])
-
-lines = open("data/raw/weather.csv").read().splitlines()
-total = 0.0
-count = 0
-for line in lines[1:]:
-    temp = temp_of(line)
-    if temp == MISSING:
-        continue
-    total = total + temp
-    count = count + 1
-
-print(f"{count} hours, {len(lines) - 1 - count} left out")
-print(f"mean temp_c: {total / count:.2f} °C")
-```
-````
-
-<!--
-**Do:** click through: the line's step becomes a function, then the mark gets a name and the output an f-string.
-**Ask:** what will the last two lines print?
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Run `mean_temp.py`
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ python scripts/mean_temp.py
-```
-
-<v-click>
-
-```text
-87552 hours, 120 left out
-mean temp_c: 7.16 °C
-```
-
-</v-click>
-
-</div>
-
-<div v-click class="card card-success card-glass pad-compact mt-md">
-
-✅ 7.16 °C: the number in Smiltė's e-mail, from 18 lines read on these slides. `awk` and `column_stats.py` give the same 7.15997.
-
-</div>
-
-<!--
-**Live:** `python scripts/mean_temp.py` in the project folder.
-**Ask:** which one change gives the mean wind speed? `[1]` becomes `[3]` in `temp_of`: 3.50 m/s.
-**Say:** a number with a meaning gets a name, once, at the top: `MISSING`. Every line of the program was on an earlier slide.
-(~3 min)
--->
----
-hideInToc: true
----
-
-# The Eight Steps, **Answered**
-
-<div class="card card-success card-glass pad-compact table-compact mt-sm">
-
-| Step | Question | Answer |
-| --- | --- | --- |
-| 1 | What runs a `.py` file, and in which order? | `python`: the whole file checked, then run from the top |
-| 2 | Is `-4.4` in `weather.csv` a number? | No, text; `float("-4.4")` makes it one |
-| 3 | The four values of one line? | `'2016-01-01T00:00'`, `-4.4`, `93`, `2.5` |
-| 4 | The mean of all 87 672 rows? | 5.782796103659093 |
-| 5 | Without the −999 rows? | 7.15996550621346, from 87 552 rows |
-| 6 | 7.16 on the screen? | `f"{mean:.2f}"` |
-| 7 | The warmest year? | 2023, 8.31 °C |
-| 8 | Where and why does a script stop? | the traceback: the last line says what, the lines above it where |
-
-</div>
-
-<!--
-**Say:** 7.16 now comes from 18 lines anyone here can read, and agrees with `column_stats.py` and with `awk`.
-(~2 min)
+**Say:** 7.16 now comes from eleven lines anyone here can read, and each object in them has a type that says what it can do.
+(~1 min)
 -->
 
 ---
@@ -1678,37 +1359,31 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Run Python at `>>>`, as a script from the terminal, and from VS Code, and say what the interpreter does with a file
+✅ Name the type of a value, `int`, `float`, `bool` or `str`, and turn text into a number
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Name the type of a value, `int`, `float`, `str` or `bool`, and convert text to a number
+✅ Choose a container, `list`, `tuple`, `dict` or `set`, and read a dictionary of dictionaries
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Cut a line into parts with `split`, and repeat a step for every line with `for`
+✅ Repeat a step with `for`, choose with `if`, leave out rows with `continue`
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Leave out rows with `if` and `continue`, and count by key in a `dict`
+✅ Write a step once as a function with `def`
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write a function, and print numbers with an f-string
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Read a traceback from the bottom, and catch a wrong number by a value known beforehand
+✅ Read a version number, and say why each project has its own environment with pinned versions
 
 </div>
 
@@ -1766,13 +1441,13 @@ hideInToc: true
 <MCQ
   question="`line = '2020-02-29T12:00,3.1,88,4.0'`. What is `line.split(',')[2]`?"
   :options="[
-    'The int 88',
-    'The text 88',
+    'The number 3.1',
     'The text 3.1',
-    'The float 88.0'
+    'The text 88',
+    'The number 88'
   ]"
-  :correct="1"
-  explanation="Positions count from 0, so [2] is the third part, the humidity. split hands back strings: '88' is text until int('88') converts it."
+  :correct="2"
+  explanation="Positions count from 0: part 0 is the time, part 1 the temperature, part 2 the humidity. split hands back strings, so it is the text '88'."
 />
 
 ---
@@ -1788,7 +1463,7 @@ hideInToc: true
     '2'
   ]"
   :correct="2"
-  explanation="lines[2:] starts at position 2, the third item: 250 − 2 = 248 items. lines[1:] skips only the header and has 249. A loop that drops the first row silently gives a result that looks right and is not."
+  explanation="lines[2:] starts at the third item, position 2, so it leaves out the header and the first row: 248. lines[1:] would leave out only the header: 249."
 />
 
 ---
@@ -1796,63 +1471,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`a = 5`, then `b = a`, then `a = a + 1`. What does `print(b)` show?"
+  question="Which container holds one row of `weather.csv` so that its temperature is found as `row['temp_c']`?"
   :options="[
-    '6, because b follows a',
-    '5, because b still points to the value 5',
-    'An error, because a changed',
-    '11'
-  ]"
-  :correct="1"
-  explanation="b = a puts the name b on the value 5. a = a + 1 makes a new value, 6, and moves the name a to it. b still points to 5. A Python name does not follow another name, as a spreadsheet cell follows a formula."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="In mean_temp.py, `count = count + 1` is moved above the `if temp == -999:` line. The sum is unchanged. What does the script print as the mean?"
-  :options="[
-    '7.15996550621346, unchanged',
-    '5.782796103659093',
-    '7.150165389177845',
-    'A ValueError'
+    'A list',
+    'A tuple',
+    'A dict',
+    'A set'
   ]"
   :correct="2"
-  explanation="The sum still leaves out the 120 marks, 626 869.3, but the count now has every row, 87 672. 626 869.3 / 87 672 = 7.150165389177845. No message: a wrong result is found only by a number known beforehand."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A script prints `rows read: 6`, then a traceback that names line 12 and ends with `ValueError: could not convert string to float: ''`. What do you know?"
-  :options="[
-    'Nothing ran: Python checks the whole file first',
-    'The lines above line 12 ran; on line 12 float() was given an empty text, an empty field in the file',
-    'The number is too large for a float',
-    'The script file is damaged at line 12'
-  ]"
-  :correct="1"
-  explanation="An exception stops the script at one line; everything before it ran, which is why there is output. The text in quotes is what float received: '' is an empty string, a value missing between two commas."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="`t = 2.6599999999999966`. What does `print(f'{t:.1f} °F')` write, and what does `t` hold afterwards?"
-  :options="[
-    '2.6 °F, and t is now 2.6',
-    '2.7 °F, and t is now 2.7',
-    '2.7 °F, and t is unchanged',
-    '2.6599999999999966 °F, and t is unchanged'
-  ]"
-  :correct="2"
-  explanation="The format .1f writes the value rounded to one decimal: 2.7. The f-string builds a new string; the name t still holds the full float64."
+  explanation="A dict finds a value by its key, here the column name. A list and a tuple find values by position (row[1]); a set has no order and no keys."
 />
 
 ---
@@ -1868,5 +1495,53 @@ hideInToc: true
     'Both add the key 2026'
   ]"
   :correct="1"
-  explanation="get hands back the default, 0, for a key that is not there. Square brackets look the key up and stop with KeyError: '2026'. Neither adds a key; hours['2026'] = 0 would."
+  explanation="get hands back the default for a key that is not there; square brackets stop with KeyError: '2026'. Neither adds a key."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="In the loop for 7.16, `count = count + 1` is moved above the `if temp == -999:` line. The sum is unchanged. What does the script print as the mean?"
+  :options="[
+    '7.15996550621346, as before',
+    '7.150165389177845, with no message',
+    '5.782796103659093',
+    'A ValueError'
+  ]"
+  :correct="1"
+  explanation="The sum still leaves out the marks, 626 869.3, but the count is now 87 672: 626 869.3 / 87 672 = 7.150165389177845. No message: only a number known beforehand shows it."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="NumPy goes from 2.5.4 to 2.6.0. Which part of the version changed, and what does it mean?"
+  :options="[
+    'The major: old code may break',
+    'The minor: new functions, old code keeps working',
+    'The patch: fixes only',
+    'A pre-release: not for results'
+  ]"
+  :correct="1"
+  explanation="MAJOR.MINOR.PATCH: 2.5 to 2.6 is the minor part, new functions with old code still working. 3.0.0 would be a major release, 2.5.5 a patch."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Two projects need NumPy 1.26 and NumPy 2.5. What keeps both working on one laptop?"
+  :options="[
+    'Installing both versions into base',
+    'An environment per project, each with its own NumPy',
+    'Upgrading the older project to NumPy 2.5 at once',
+    'Installing NumPy 2.5 from PyPI and 1.26 from conda-forge'
+  ]"
+  :correct="1"
+  explanation="One environment holds one version of each package. Each project gets its own environment, with its NumPy pinned and written down in environment.yml."
 />

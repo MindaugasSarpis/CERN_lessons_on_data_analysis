@@ -50,7 +50,6 @@ a calculator; then it is carried to the D⁰ peak of `D0_KPi.csv`.
 
 ## The results of the lecture
 
-| | Result |
 |--|--|
 | Pendulum, slope | a = 4.010 ± 0.037 s²/m |
 | Pendulum, intercept | b = 0.009 ± 0.019 s², correlation with a: −0.88 |
@@ -71,49 +70,45 @@ by `python figures/src/fitting.py` in the course repository, which reads
 (45 bins of 2 MeV) and the same `curve_fit` call with the window or the model
 changed as named.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–72 and estimates about 143 min. Slides 73–79 are the
-self-check quizzes and take no lecture time. For a 90-minute slot, skip the
-slides in the second table. To jump, type the slide number and press Enter.
-The opening question of slide 2 is answered on slide 55, at about minute 58.
+The lecture is slides 1–72; when time is short, skip the slides of the
+second table. Slides 73–79 are the self-check quizzes and take no lecture
+time. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–3, 5 | The opening table and the vote; what Lecture 9 established |
-| 0:05 | 6–10 | The pendulum table, its uncertainties, three lines drawn by eye |
-| 0:12 | 11–15 | From the likelihood to χ² |
-| 0:20 | 16–22 | The straight line in closed form, on the pendulum |
-| 0:30 | 24, 26, 28, 31 | Uncertainties, Δχ² = 1, g and the test of the intercept |
-| 0:37 | 36–41 | The gradient, the update rule, steps by hand, a learning rate too large |
-| 0:46 | 44–45 | Newton's step and the `curve_fit` call |
-| 0:48 | 48–51, 53–55 | The D⁰ peak, the fit run live, the opening table answered |
-| 0:58 | 56–57, 59–61, 63 | Goodness of fit |
-| 1:08 | 65–66, 68–69 | Starting values, an outlier, what χ² cannot see |
-| 1:15 | 71–72 | The number to report, Recap |
-| 1:21 | | Questions; move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–3, 5 | The opening table and the vote; what Lecture 9 established |
+| 6–10 | The pendulum table, its uncertainties, three lines drawn by eye |
+| 11–15 | From the likelihood to χ² |
+| 16–22 | The straight line in closed form, on the pendulum |
+| 24, 26, 28, 31 | Uncertainties, Δχ² = 1, g and the test of the intercept |
+| 36–41 | The gradient, the update rule, steps by hand, a learning rate too large |
+| 44–45 | Newton's step and the `curve_fit` call |
+| 48–51, 53–55 | The D⁰ peak, the fit run live, the opening table answered |
+| 56–57, 59–61, 63 | Goodness of fit |
+| 65–66, 68–69 | Starting values, an outlier, what χ² cannot see |
+| 71–72 | The number to report, Recap |
 
-The plan leaves about nine minutes for the two votes and for questions.
-
-| Skip | Slides | Saves |
-|--|--|--|
-| Learning Objectives | 4 | 2 min |
-| The Same in NumPy: the seminar types it | 23 | 4 min |
-| The Slope Is a Sum over the Data | 25 | 2 min |
-| χ² Around Its Minimum | 27 | 2 min |
-| The Covariance Matrix | 29 | 2 min |
-| Why Slope and Intercept Are Correlated | 30 | 2 min |
-| The Same in Matrix Form, the whole section | 32–35 | 8 min |
-| Descent Paths for Two Learning Rates | 42 | 1 min |
-| Gradient Descent in NumPy | 43 | 4 min |
-| `absolute_sigma`: the Default Rescales | 46 | 2 min |
-| Closed Formulas, `polyfit` and `curve_fit` Agree | 47 | 4 min |
-| Starting Values from the Plot | 52 | 2 min |
-| The χ² Distribution and the p-value | 58 | 2 min |
-| Too Few Terms: the Pulls | 62 | 1 min |
-| Three Pendulum Models and Their Pulls | 64 | 1 min |
-| Errors That Are Not Gaussian: Small Counts | 67 | 3 min |
-| Reporting a Fit | 70 | 3 min |
+| Skip | Slides |
+|--|--|
+| Learning Objectives | 4 |
+| The Same in NumPy: the seminar types it | 23 |
+| The Slope Is a Sum over the Data | 25 |
+| χ² Around Its Minimum | 27 |
+| The Covariance Matrix | 29 |
+| Why Slope and Intercept Are Correlated | 30 |
+| The Same in Matrix Form, the whole section | 32–35 |
+| Descent Paths for Two Learning Rates | 42 |
+| Gradient Descent in NumPy | 43 |
+| `absolute_sigma`: the Default Rescales | 46 |
+| Closed Formulas, `polyfit` and `curve_fit` Agree | 47 |
+| Starting Values from the Plot | 52 |
+| The χ² Distribution and the p-value | 58 |
+| Too Few Terms: the Pulls | 62 |
+| Three Pendulum Models and Their Pulls | 64 |
+| Errors That Are Not Gaussian: Small Counts | 67 |
+| Reporting a Fit | 70 |
 
 - **Do not cut** slide 2 (the opening table), slides 12–14 (the derivation
   of χ²), 17–21 (the normal equations and the five sums of the pendulum),
@@ -176,8 +171,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 10 — How Strong Is the Yearly Cycle? Fitting the Weather
-Data](../seminars/seminar_10.md) works on the weather project of Lectures 1
+[Seminar 10 · Fitting](../seminars/seminar_10.md) works on the weather project of Lectures 1
 to 5. Every student fits a straight line to the ten yearly means by the
 closed formulas of the lecture (−0.6 ± 0.8 °C per decade) and a cosine to
 the 3648 daily means (amplitude 11.18 °C, coldest on 16 January), reads the

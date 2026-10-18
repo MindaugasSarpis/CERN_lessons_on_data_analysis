@@ -21,8 +21,8 @@ that it finds them when it starts.
 
 ??? info "For the lecturer: a slow network"
     Thirty laptops downloading at once make the room's network slow. Start
-    section 1 first thing, and keep the two zips of Seminar 4,
-    `weather-scripts.zip` and `weather-project-s1.zip`, from the Releases page
+    section 1 first thing, and keep the zip of Seminar 4,
+    `weather-s04.zip`, from the Releases page
     of `github.com/MindaugasSarpis/weather-project` on a USB stick.
 
 ---

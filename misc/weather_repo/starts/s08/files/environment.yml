@@ -1,0 +1,6 @@
+name: s08
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14
+  - numpy=2.5

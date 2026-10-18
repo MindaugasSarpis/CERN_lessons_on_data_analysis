@@ -29,6 +29,11 @@
 // The course prefers slightly too much over too little, so a deck should
 // ESTIMATE in [105, 145]; < 105 is UNDER (must fix), > 145 is HEAVY
 // (trim or mark a backup section).
+//
+// A week that is mostly hands-on can move time from the lecture to the
+// seminar: `"split": {"lecture": 60, "seminar": 180}` on its deck in
+// decks.json (Lecture 05, Oct 2026). The deck's band is then scaled to its
+// minutes (60 → 53–73) and its seminar must declare at least `seminar`.
 
 import { readFile, readdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
@@ -146,11 +151,21 @@ function estimateDeck(src) {
   return { minutes: Math.round(minutes), ...counts };
 }
 
-function bandFlag(minutes) {
-  if (minutes < BAND.min) return 'UNDER';
-  if (minutes > BAND.max) return 'HEAVY';
+const SLOT = 120;
+
+function bandOf(split) {
+  if (!split) return BAND;
+  return { min: Math.round((BAND.min * split.lecture) / SLOT), max: Math.round((BAND.max * split.lecture) / SLOT) };
+}
+
+function bandFlag(minutes, band = BAND) {
+  if (minutes < band.min) return 'UNDER';
+  if (minutes > band.max) return 'HEAVY';
   return 'ok';
 }
+
+// Seminar number → the minutes its week gives it (default SEMINAR_MIN).
+const seminarMinutes = new Map();
 
 async function reportLectures() {
   // Drive from the deck manifest, not the directory: a slide file that was
@@ -163,10 +178,14 @@ async function reportLectures() {
     console.error(`note: slide file(s) not in decks.json, ignored: ${stray.join(', ')}`);
   }
   const rows = [];
-  for (const f of files) {
-    const src = await readFile(join(SLIDES_DIR, f), 'utf8');
-    const est = estimateDeck(src);
-    rows.push({ file: f, ...est, flag: bandFlag(est.minutes) });
+  for (const d of manifest.decks) {
+    const band = bandOf(d.split);
+    if (d.split) seminarMinutes.set(d.seminar ?? Number(d.slug.slice(0, 2)), d.split.seminar);
+    for (const f of d.srcs) {
+      const src = await readFile(join(SLIDES_DIR, f), 'utf8');
+      const est = estimateDeck(src);
+      rows.push({ file: f, ...est, band, flag: bandFlag(est.minutes, band) });
+    }
   }
   return rows;
 }
@@ -176,17 +195,21 @@ async function reportSeminars() {
   const rows = [];
   for (const f of files) {
     const src = await readFile(join(SEMINARS_DIR, f), 'utf8');
-    const declared = Number((src.match(/\*\*~(\d+)\s*min\*\*/) || [])[1] || 0);
+    // The length is an HTML comment near the top (`<!-- ~120 min ... -->`), kept
+    // out of the rendered page since 18 Oct 2026; the older bold form still counts.
+    const declared = Number((src.match(/<!--\s*~(\d+)\s*min/) || src.match(/\*\*~(\d+)\s*min\*\*/) || [])[1] || 0);
     const tasksSection = (src.split(/^## Tasks\s*$/m)[1] || '').split(/^## /m)[0];
     const stretchSection = (src.split(/^## Stretch goals\s*$/m)[1] || '').split(/^## /m)[0];
     const tasks = (tasksSection.match(/^\d+\.\s/gm) || []).length;
     const stretch = (stretchSection.match(/^-\s/gm) || []).length;
+    const slot = seminarMinutes.get(Number(f.match(/\d+/)[0])) ?? SEMINAR_MIN;
     rows.push({
       file: f,
       declared,
+      slot,
       tasks,
       stretch,
-      flag: declared < SEMINAR_MIN ? 'UNDER' : 'ok',
+      flag: declared < slot ? 'UNDER' : 'ok',
     });
   }
   return rows;
@@ -203,7 +226,7 @@ if (AS_JSON) {
   for (const r of lectures) {
     const name = r.file.replace(/\.md$/, '').padEnd(40);
     console.log(
-      `  ${name}${String(r.slides).padStart(4)}${String(r.words).padStart(8)}${String(r.mcq).padStart(6)}${String(r.monaco).padStart(4)}${String(r.video).padStart(4)}${String(r.minutes).padStart(6)}   ${r.flag === 'ok' ? '' : r.flag}`,
+      `  ${name}${String(r.slides).padStart(4)}${String(r.words).padStart(8)}${String(r.mcq).padStart(6)}${String(r.monaco).padStart(4)}${String(r.video).padStart(4)}${String(r.minutes).padStart(6)}   ${r.flag === 'ok' ? '' : r.flag}${r.band === BAND ? '' : ` (band ${r.band.min}–${r.band.max})`}`,
     );
   }
   const total = lectures.reduce((a, r) => a + r.minutes, 0);
@@ -213,7 +236,7 @@ if (AS_JSON) {
   console.log('  brief          declared  tasks  stretch  flag');
   for (const r of seminars) {
     console.log(
-      `  ${r.file.replace(/\.md$/, '').padEnd(16)}${String(r.declared).padStart(5)}${String(r.tasks).padStart(8)}${String(r.stretch).padStart(8)}   ${r.flag === 'ok' ? '' : r.flag}`,
+      `  ${r.file.replace(/\.md$/, '').padEnd(16)}${String(r.declared).padStart(5)}${String(r.tasks).padStart(8)}${String(r.stretch).padStart(8)}   ${r.flag === 'ok' ? '' : r.flag}${r.slot === SEMINAR_MIN ? '' : ` (slot ${r.slot})`}`,
     );
   }
 }

@@ -89,34 +89,32 @@ text has the type `object` up to Pandas 2 and `str` from Pandas 3 on. The
 runnable fences use the Pandas of the browser, 2.2.0, and build their small
 tables in the code, because the browser has no project folder.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The lecture is slides 1–61 and estimates about 143 min. Slides 62–68 are
-the self-check quizzes and take no lecture time. In a 2-hour slot, skip the
-section Reshape & Join or leave it for the room to read. For a 90-minute
-slot, skip the slides in the second table. To jump, type the slide number
-and press Enter.
+The lecture is slides 1–61; when time is short, skip the slides of the
+second table. Slides 62–68 are the self-check quizzes and take no lecture
+time. In a 2-hour slot, skip the section Reshape & Join or leave it for the
+room to read. To jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–6 | Opening: the partner's second file, what Lecture 4's script wrote, objectives |
-| 0:08 | 7–17 | The first file by Pandas, compared with Lecture 4's output; the second file by rule (the opening is answered at slide 16) |
-| 0:33 | 19–22, 24–25 | The DataFrame: columns, masks, a new column |
-| 0:44 | 27–30, 32–33, 35–37 | The real file: types, `describe()`, the code −100 kept as NaN, the comparison with NaN, the gaps |
-| 1:03 | 38–40, 43–44, 46 | Data quality and the five questions |
-| 1:15 | 48–50, 52 | The cleaning script, its log, `groupby` |
-| 1:24 | 60–61 | The second file, five questions; Recap |
-| 1:28 | | Move to the seminar |
+| Slides | Part |
+|--|--|
+| 1–6 | Opening: the partner's second file, what Lecture 4's script wrote, objectives |
+| 7–17 | The first file by Pandas, compared with Lecture 4's output; the second file by rule (the opening is answered at slide 16) |
+| 19–22, 24–25 | The DataFrame: columns, masks, a new column |
+| 27–30, 32–33, 35–37 | The real file: types, `describe()`, the code −100 kept as NaN, the comparison with NaN, the gaps |
+| 38–40, 43–44, 46 | Data quality and the five questions |
+| 48–50, 52 | The cleaning script, its log, `groupby` |
+| 60–61 | The second file, five questions; Recap |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| The Cleaning in the Browser | 18 | 4 min |
-| Select Rows by Position or by Label; Sort and Summarise | 23, 26 | 8 min |
-| The Code in a Histogram; How NaN Behaves | 31, 34 | 5 min |
-| Outliers and the 1.5 × IQR rule | 41–42 | 4 min |
-| Mixed Units in One Column; The Checklist as a Function | 45, 47 | 7 min |
-| What the Script Changed; The Groups in a Picture | 51, 53 | 4 min |
-| Reshape & Join | 54–59 | 18 min |
+| Skip | Slides |
+|--|--|
+| The Cleaning in the Browser | 18 |
+| Select Rows by Position or by Label; Sort and Summarise | 23, 26 |
+| The Code in a Histogram; How NaN Behaves | 31, 34 |
+| Outliers and the 1.5 × IQR rule | 41–42 |
+| Mixed Units in One Column; The Checklist as a Function | 45, 47 |
+| What the Script Changed; The Groups in a Picture | 51, 53 |
+| Reshape & Join | 54–59 |
 
 - **Do not cut** slides 3–4 (the opening), 8–17 (the file read three
   times, the row, the column, the type, the comparison, the script, the
@@ -188,8 +186,7 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 12 — How Cold Is the Hill? pandas on a Second Station's
-File](../seminars/seminar_12.md) works on the weather project of Lectures 1
+[Seminar 12 · Pandas](../seminars/seminar_12.md) works on the weather project of Lectures 1
 to 5. Every student reads a second station's messy export with pandas,
 cleans it rule by rule with a count for each rule, compares it day by day
 with the valley station, and pushes the script and the result.

@@ -43,32 +43,30 @@ end, then runs the film reel from the cosmos down to the LHCb detector.
    accelerator chain, how a detector sees a collision) follow the closing
    film as extra material and are not delivered.
 
-## The lecture in 90 minutes
+## The lecture, part by part
 
-The deck is slides 1–59 and estimates about 109 min, of which slides 55–59
-(extra material after the closing film) are not delivered. Slides 60–65 are
-the self-check quizzes and take no lecture time. The films run about 32 min
-(slides 35–54) plus 4:42 for the cold open. To jump, type the slide number and
-press Enter.
+The lecture is slides 1–54; slides 55–59 (extra material after the closing
+film) are not delivered. When time is short, skip the slides of the second
+table. Slides 60–65 are the self-check quizzes and take no lecture time. To
+jump, type the slide number and press Enter.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–4 | Cover, cold open film, show of hands, the goal |
-| 0:09 | 5–7 | The weather log; Smiltė's 7.16 and Ben's 7.11; seven numbers from one file |
-| 0:19 | 8–14 | The four aims as the answer; one before and after pair per aim |
-| 0:32 | 15–22 | How this course works |
-| 0:41 | 23–28 | Seminars and your project, the project tree, delete and rebuild |
-| 0:49 | 29–33 | How do you check 7.16? Why CERN, Mariner 4, **What a Result Needs**, what to bring |
-| 0:56 | 34–54 | The reel, ending on the LHCb fly-through |
-| 1:30 | | End |
+| Slides | Part |
+|--|--|
+| 1–4 | Cover, cold open film, show of hands, the goal |
+| 5–7 | The weather log; Smiltė's 7.16 and Ben's 7.11; seven numbers from one file |
+| 8–14 | The four aims as the answer; one before and after pair per aim |
+| 15–22 | How this course works |
+| 23–28 | Seminars and your project, the project tree, delete and rebuild |
+| 29–33 | How do you check 7.16? Why CERN, Mariner 4, **What a Result Needs**, what to bring |
+| 34–54 | The reel, ending on the LHCb fly-through |
 
-| Skip | Slides | Saves |
-|--|--|--|
-| The Aims Reinforce Each Other | 14 | 2 min |
-| Learning Outcomes | 19 | 1 min |
-| Habits for This Course, What to Expect | 21–22 | 3 min |
-| Open Data | 26 | 2 min |
-| Why You Need These Skills | 30 | 2 min |
+| Skip | Slides |
+|--|--|
+| The Aims Reinforce Each Other | 14 |
+| Learning Outcomes | 19 |
+| Habits for This Course, What to Expect | 21–22 |
+| Open Data | 26 |
+| Why You Need These Skills | 30 |
 
 - **The notes are short on purpose.** Each slide's speaker note says what to
   **Do**, **Say** or **Ask**, and what to answer **If asked**, with the

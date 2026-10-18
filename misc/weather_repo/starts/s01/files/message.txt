@@ -1,0 +1,14 @@
+13 October 2026
+
+Hello,
+
+here are the two files of our weather station:
+
+weather.csv        the hourly log, 1 January 2016 to 31 December 2025
+daily_export.csv   the daily mean temperature of 1 to 9 October 2025,
+                   typed into a spreadsheet and exported from it
+
+You may use them for anything, with no conditions (CC0).
+
+Best regards,
+the station's operator

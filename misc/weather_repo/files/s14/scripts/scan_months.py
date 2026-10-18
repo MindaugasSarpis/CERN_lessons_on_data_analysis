@@ -2,10 +2,10 @@
 """Check every month of 2016 to 2025 the way month_check.py checks one:
 z = (the month - the mean of the same month in the other nine years) / sd.
 
-Usage, from the project folder (macOS: python3, Windows: python):
+Usage, from the project folder:
 
-    python3 scripts/scan_months.py            sd of the same month
-    python3 scripts/scan_months.py --pooled   sd of all twelve months
+    python scripts/scan_months.py            sd of the same month
+    python scripts/scan_months.py --pooled   sd of all twelve months
 """
 import argparse
 

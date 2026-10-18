@@ -94,40 +94,37 @@ Slide 3 links the project folder as
 files, the README and the two scripts. Every command of the lecture runs on
 it.
 
-## The lecture in two hours
+## The lecture, part by part
 
-The lecture is slides 1–66. Its speaker notes add up to about 145 minutes,
-the live moments included; a two-hour slot has about 110 minutes of
-teaching. Slide 67 opens the self-check section, and slides 68–79 are its
-twelve quizzes: they take no lecture time. To jump, type the slide number
-and press Enter. Many slides take several clicks: the output, or the next
-step of a growing command, comes on the click.
+The lecture is slides 1–66; when time is short, skip the slides of the
+second table. Slide 67 opens the self-check section, and slides 68–79 are
+its twelve quizzes: they take no lecture time. To jump, type the slide
+number and press Enter. Many slides take several clicks: the output, or the
+next step of a growing command, comes on the click.
 
-| Clock | Slides | Part |
-|--|--|--|
-| 0:00 | 1–4 | The number to check, and the eight steps |
-| 0:06 | 5–17 | Step 1: the shell, zsh and Git Bash, the installs, the columns |
-| 0:36 | 18–21 | Step 2: 87 673 lines, predicted, then counted (live) |
-| 0:46 | 22–30 | Step 3: streams, line 5000 (live), the coldest hour (live), 120 rows |
-| 1:10 | 31–38 | Step 4: a regular expression, one sign at a time |
-| 1:27 | 39–42 | Step 5: 7.16 against 5.78 |
-| 1:36 | 43–53 | Step 6: programs, packages, a conda environment, the second program |
-| 1:58 | 54–59 | Step 7: checksums and backups |
-| 2:10 | 60–66 | Step 8: the README, `rebuild.sh` (live), `set -e`, 7.16 checked |
-| 2:25 | | End |
+| Slides | Part |
+|--|--|
+| 1–4 | The number to check, and the eight steps |
+| 5–17 | Step 1: the shell, zsh and Git Bash, the installs, the columns |
+| 18–21 | Step 2: 87 673 lines, predicted, then counted (live) |
+| 22–30 | Step 3: streams, line 5000 (live), the coldest hour (live), 120 rows |
+| 31–38 | Step 4: a regular expression, one sign at a time |
+| 39–42 | Step 5: 7.16 against 5.78 |
+| 43–53 | Step 6: programs, packages, a conda environment, the second program |
+| 54–59 | Step 7: checksums and backups |
+| 60–66 | Step 8: the README, `rebuild.sh` (live), `set -e`, 7.16 checked |
 
-In a two-hour slot, skip the slides below: about 33 minutes. Each one
-deepens a step; none is needed by a later slide.
+Each one deepens a step; none is needed by a later slide.
 
-| Skip if time is short | Slides | Saves |
-|--|--|--|
-| Read the Prompt; The Commands of Lecture 03; Read an Error Message | 10, 11, 16 | 6 min |
-| One Line, Byte by Byte; Standard Input | 20, 24 | 6 min |
-| The Lowest Humidity; Keep Rows by a Condition; Every Year, Every Day, Every Hour | 26, 28, 30 | 8 min |
-| A Point Fits Any Character | 34 | 2 min |
-| What One Mark Does to a Mean | 42 | 2 min |
-| Activation Changes PATH; The Second Script | 50, 53 | 5 min |
-| Check Against the Source; Backups: the 3-2-1 Rule | 56, 59 | 4 min |
+| Skip if time is short | Slides |
+|--|--|
+| Read the Prompt; The Commands of Lecture 03; Read an Error Message | 10, 11, 16 |
+| One Line, Byte by Byte; Standard Input | 20, 24 |
+| The Lowest Humidity; Keep Rows by a Condition; Every Year, Every Day, Every Hour | 26, 28, 30 |
+| A Point Fits Any Character | 34 |
+| What One Mark Does to a Mean | 42 |
+| Activation Changes PATH; The Second Script | 50, 53 |
+| Check Against the Source; Backups: the 3-2-1 Rule | 56, 59 |
 
 - **Never skip** slide 4 (the eight steps), 7 (what the shell does), 15
   (`Tab`, live), 21 (the count, live), 25 (line 5000, live), 27 (the
