@@ -21,6 +21,9 @@ section 10 holds the same lines. Sections 13 to 15 are optional.
       downloads today's folder and makes its conda environment (about 200
       packages, a few minutes the first time). Nothing from an earlier
       seminar is needed.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
+      extension: [Setup, step 7](../setup.md#extensions).
     - **You:** nothing to prepare. Today's folder is
       [`weather-s12.zip`](https://github.com/MindaugasSarpis/weather-project/releases)
       on the course repository's Releases page; it holds the valley's log,
@@ -78,6 +81,9 @@ Everything for today is in one zip. **pandas**, which reads and cleans tables, i
     #     $ conda activate s12
     $ conda activate s12
     ```
+
+    `conda: command not found`: install Miniforge as on the
+    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
 4. pandas is not there yet. `python -c` runs one line of Python from the
    shell.

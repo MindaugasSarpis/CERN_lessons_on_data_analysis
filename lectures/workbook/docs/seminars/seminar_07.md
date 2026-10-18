@@ -24,6 +24,9 @@ every other line is what comes back; `...` stands for lines left out.
       laptop (the [Setup](../setup.md) page), internet for the download and
       for conda (Python about 30 MB, NumPy about 9 MB, less when conda has
       them already). Nothing from earlier seminars is needed.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
+      extension: [Setup, step 7](../setup.md#extensions).
     - **You:** if you made `s07` before, remove it (`conda env remove -n
       s07`) to make it with the room.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
@@ -89,6 +92,9 @@ Today's folder holds the data, the scripts that come with it and `environment.ym
     ...
     #     $ conda activate s07
     ```
+
+    `conda: command not found`: install Miniforge as on the
+    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
 5. Switch it on: the prompt starts with `(s07)`, and `python` is the
    environment's Python.

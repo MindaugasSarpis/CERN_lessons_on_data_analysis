@@ -26,6 +26,9 @@ what comes back; `...` stands for lines left out.
       for conda (Python and NumPy about 40 MB, Matplotlib about 10 MB, less
       when conda has them already). Nothing from earlier seminars is
       needed.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
+      extension: [Setup, step 7](../setup.md#extensions).
     - **You:** if you made `s08` before, remove it (`conda env remove -n
       s08`) to make it with the room.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
@@ -91,6 +94,9 @@ Today's folder holds the data and `environment.yml`, the list from which conda m
     #     $ conda activate s08
     $ conda activate s08
     ```
+
+    `conda: command not found`: install Miniforge as on the
+    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
 5. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
    Interpreter`, pick the entry with `envs/s08` in its path. The Status

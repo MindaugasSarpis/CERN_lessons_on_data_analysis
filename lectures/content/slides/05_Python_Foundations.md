@@ -12,7 +12,7 @@ title: "Python Foundations"
 ##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation</span>
 
 <!--
-**Say:** Lecture 04 got 7.16 from a program someone else wrote. Today: what Python is made of, objects and the lines that combine them, and where the objects come from that Python does not have.
+**Say:** no Python is assumed today. Four steps: values and their types, containers that hold many values, the two lines that repeat and choose, and where the rest of Python comes from.
 (~1 min)
 -->
 
@@ -21,10 +21,10 @@ hideInToc: true
 layout: quote
 ---
 
-# In Python every value is an object of a type. A program combines objects with `for` and `if`; packages bring objects that other people wrote
+# A program is a text of instructions that the computer carries out one after another. Python is a language for writing that text
 
 <!--
-**Say:** three parts, in this order: the objects, the lines that combine them, the packages.
+**Say:** a recipe for the computer, written in a language strict enough that a program can follow it.
 (~1 min)
 -->
 
@@ -32,38 +32,87 @@ layout: quote
 hideInToc: true
 ---
 
-# The Mean from `column_stats.py`
+# What Happens When Python Runs
 
-<div class="card card-primary card-glass pad-compact mt-sm">
+<div class="grid-2 mt-md gap-md">
 
-## 💻 **zsh · Git Bash**
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **A program of three lines**
+
+```py
+mean = 7.16
+fahrenheit = mean * 9 / 5 + 32
+print(fahrenheit)
+```
 
 ```text
-$ python scripts/column_stats.py data/raw/weather.csv temp_c
-file    data/raw/weather.csv
-column  temp_c
-rows    87672
-min     -999.0
-max     32.4
-mean    5.7828
+44.888
 ```
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+<div class="card card-secondary card-glass pad-compact">
 
-| File | rows | mean |
-| --- | --- | --- |
-| `data/raw/weather.csv` | 87 672 | 5.7828 |
-| `data/processed/weather_valid.csv`, without the −999 rows | 87 552 | 7.15997 |
+## ⚙️ **The interpreter**
+
+1. reads the text from the top, one line at a time
+2. carries out each line before it reads the next
+3. writes to the screen only what `print` gives it
 
 </div>
 
-<div class="note-text mt-md"><code>column_stats.py</code> is 53 lines of Python. Lecture 04 ran it without reading it.</div>
+</div>
+
+<div class="note-text mt-md"><strong>Python</strong> is the language; <code>python</code> is the program that reads it, the <strong>interpreter</strong>. Lines can be typed into it one by one, or kept in a text file ending in <code>.py</code>, a <strong>script</strong>.</div>
 
 <!--
-**Say:** the two numbers of Lecture 04: 5.78 with the 120 marked rows, 7.16 without them. Both came out of a program nobody here has read.
-**Ask:** what does a program need to get 7.16 out of `weather.csv`? Collect on the board: the file's text, a number per line, a sum, a count, a rule that leaves out −999.
+**Say:** the processor itself only runs machine code (Lecture 03); `python` is machine code that reads Python text and does what it says.
+**Ask:** what does the program print? 7.16 °C in Fahrenheit, 44.888.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The File of Today: `weather.csv`
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The first four lines**
+
+```text
+time,temp_c,humidity_pct,wind_ms
+2016-01-01T00:00,-4.4,93,2.5
+2016-01-01T01:00,-4.8,95,2.6
+2016-01-01T02:00,-5.5,95,2.7
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔢 **What it holds**
+
+| | |
+| --- | --- |
+| rows | 87 672, one per hour |
+| years | 2016 to 2025 |
+| missing hours | 120, written as −999 |
+| mean temperature | 7.16 °C |
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">One weather station, one line of text per hour: the time, the temperature in °C, the humidity in % and the wind in m/s, separated by commas.</div>
+
+<!--
+**Say:** today's examples come from this file, and the lecture ends with 7.16 computed by eleven lines of Python.
+**Ask:** what would a mean over all rows give, with the −999 hours counted as temperatures? Lower: 5.78.
 (~2 min)
 -->
 
@@ -75,14 +124,15 @@ hideInToc: true
 
 | Part | Question | Answer |
 | --- | --- | --- |
-| 1 | What kinds of values does Python have, and what can each do? | ? |
-| 2 | How do `for` and `if` turn 87 672 lines into 7.16? | ? |
-| 3 | Where do the objects come from that Python does not have, and which version arrives? | ? |
+| 1 | What is a value in Python, and what can it do? | ? |
+| 2 | How are values kept by name, and in larger objects? | ? |
+| 3 | How do `for` and `if` turn 87 672 lines into 7.16? | ? |
+| 4 | Where does the rest of Python come from, and which version arrives? | ? |
 
 </div>
 
 <!--
-**Say:** one question per part; the answers fill the last column at the end.
+**Say:** one question per part; the last column is filled at the end.
 (~1 min)
 -->
 
@@ -91,9 +141,9 @@ layout: section
 hideInToc: true
 ---
 
-# Objects and **Types**
+# Values and **Types**
 
-Part 1: what kinds of values does Python have, and what can each do?
+Part 1: what is a value in Python, and what can it do?
 
 <!--
 (~1 min)
@@ -103,7 +153,7 @@ Part 1: what kinds of values does Python have, and what can each do?
 hideInToc: true
 ---
 
-# Every Value Is an **Object**
+# A First Line: `print`
 
 <div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
 
@@ -111,395 +161,49 @@ hideInToc: true
 
 ````md magic-move {lines: true}
 ```py
-temp = -4.4
-print(type(temp))
+print("Hello")
 ```
 ```py
-temp = -4.4
-print(type(temp))        # <class 'float'>
-```
-```py {3}
-temp = -4.4
-print(type(temp))        # <class 'float'>
-print(temp.is_integer()) # False
-```
-```py {4}
-temp = -4.4
-print(type(temp))        # <class 'float'>
-print(temp.is_integer()) # False
-print(round(temp))       # -4
-```
-````
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📦 **An object has**
-
-- a **type**: `float`
-- a **value**: −4.4
-- **methods**, written after a dot: `temp.is_integer()`
-
-`temp = -4.4` puts the name `temp` on the object.
-
-</div>
-
-</div>
-
-<!--
-**Do:** click line by line; before each comment appears, ask for the output.
-**Say:** `type()` and `round()` are functions; `is_integer()` is a method, a function that belongs to the float and is written after a dot.
-**If asked:** `dir(temp)` lists every method a float has.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Numbers: `int`, `float`, `bool`
-
-````md magic-move {lines: true}
-```py
-hours = 87672                 # ten years of hours
-print(type(hours))            # <class 'int'>
-```
-```py {3}
-hours = 87672                 # ten years of hours
-print(type(hours))            # <class 'int'>
-print(hours / 24)
-```
-```py {3-4}
-hours = 87672                 # ten years of hours
-print(type(hours))            # <class 'int'>
-print(hours / 24)             # 3653.0: / always gives a float
-print(hours // 24)            # 3653: the whole part, an int
-```
-```py {5}
-hours = 87672                 # ten years of hours
-print(type(hours))            # <class 'int'>
-print(hours / 24)             # 3653.0: / always gives a float
-print(hours // 24)            # 3653: the whole part, an int
-print(2 ** 100)               # 1267650600228229401496703205376
-```
-```py {6-7}
-hours = 87672                 # ten years of hours
-print(type(hours))            # <class 'int'>
-print(hours / 24)             # 3653.0: / always gives a float
-print(hours // 24)            # 3653: the whole part, an int
-print(2 ** 100)               # 1267650600228229401496703205376
-print(hours > 80000)          # True
-print(type(hours > 80000))    # <class 'bool'>
-```
-```py {8}
-hours = 87672                 # ten years of hours
-print(type(hours))            # <class 'int'>
-print(hours / 24)             # 3653.0: / always gives a float
-print(hours // 24)            # 3653: the whole part, an int
-print(2 ** 100)               # 1267650600228229401496703205376
-print(hours > 80000)          # True
-print(type(hours > 80000))    # <class 'bool'>
-print(0.1 + 0.2)              # 0.30000000000000004
-```
-````
-
-<div class="note-text mt-md">An <code>int</code> takes as many bits as its number needs: 2¹⁰⁰ needs 101, and nothing wraps. A <code>float</code> is the float64 of Lecture 03, rounded to about 16 digits. A comparison gives a <code>bool</code>.</div>
-
-<!--
-**Ask:** before the third step: 87672 / 24, is it 3653 or 3653.0?
-**Say:** `**` is the power. 3653 days: ten years with three leap years. The last line is float64 showing through: measured values are compared with a tolerance, never with `==`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Line of `weather.csv` Is a `str`
-
-````md magic-move {lines: true}
-```py
-line = "2016-01-01T00:00,-4.4,93,2.5"
-print(line[0:4])                  # 2016
-```
-```py {3-4}
-line = "2016-01-01T00:00,-4.4,93,2.5"
-print(line[0:4])                  # 2016
-parts = line.split(",")
-print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
-```
-```py {5}
-line = "2016-01-01T00:00,-4.4,93,2.5"
-print(line[0:4])                  # 2016
-parts = line.split(",")
-print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
-print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
-```
-```py {6}
-line = "2016-01-01T00:00,-4.4,93,2.5"
-print(line[0:4])                  # 2016
-parts = line.split(",")
-print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
-print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
-print(parts[1] + 1)               # TypeError: can only concatenate str (not "int") to str
-```
-```py {6-7}
-line = "2016-01-01T00:00,-4.4,93,2.5"
-print(line[0:4])                  # 2016
-parts = line.split(",")
-print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
-print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
-temp = float(parts[1])
-print(temp + 1)                   # -3.4000000000000004
-```
-````
-
-<div class="note-text mt-md">Positions count from 0; <code>[0:4]</code> stops before 4. <code>split(",")</code> cuts at the commas and hands back a list of four strings. In the file <code>-4.4</code> is text, four characters, until <code>float()</code> makes the number.</div>
-
-<!--
-**Do:** draw the first ten characters on the board with their positions 0 to 9 below them.
-**Ask:** after the split, is `parts[1]` a number? What does `parts[1] + 1` do?
-**Say:** cut, then convert: two steps for every line of the file.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Containers: `list` and `tuple`
-
-````md magic-move {lines: true}
-```py
-temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
-print(temps[0], len(temps))        # -4.4 3
-```
-```py {3-4}
-temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
-print(temps[0], len(temps))        # -4.4 3
-temps.append(-6.0)                 # 03:00
-print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
-```
-```py {5-6}
-temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
-print(temps[0], len(temps))        # -4.4 3
-temps.append(-6.0)                 # 03:00
-print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
-row = ("2016-01-01T00:00", -4.4, 93, 2.5)
-print(row[1])                      # -4.4
-```
-```py {7}
-temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
-print(temps[0], len(temps))        # -4.4 3
-temps.append(-6.0)                 # 03:00
-print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
-row = ("2016-01-01T00:00", -4.4, 93, 2.5)
-print(row[1])                      # -4.4
-row[1] = 0.0                       # TypeError: 'tuple' object does not support item assignment
-```
-````
-
-<div class="note-text mt-md">A <strong>list</strong> <code>[…]</code> holds values in order and can grow. A <strong>tuple</strong> <code>(…)</code> holds values in order and never changes: one row of the file, fixed.</div>
-
-<!--
-**Ask:** after the `append`, what is `temps[-1]`? A negative position counts from the end: −6.0.
-**Say:** both are indexed like a string. The list is for values that come in one by one; the tuple for a record that must stay as it was read.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Containers: `dict` and `set`
-
-````md magic-move {lines: true}
-```py
-row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
-       "humidity_pct": 93, "wind_ms": 2.5}
-print(row["temp_c"])              # -4.4
-```
-```py {4-5}
-row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
-       "humidity_pct": 93, "wind_ms": 2.5}
-print(row["temp_c"])              # -4.4
-row["temp_f"] = row["temp_c"] * 9 / 5 + 32
-print(row["temp_f"])              # 24.08
-```
-```py {6-7}
-row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
-       "humidity_pct": 93, "wind_ms": 2.5}
-print(row["temp_c"])              # -4.4
-row["temp_f"] = row["temp_c"] * 9 / 5 + 32
-print(row["temp_f"])              # 24.08
-print(row.get("rain_mm", 0))      # 0: no such key
-print(row["rain_mm"])             # KeyError: 'rain_mm'
-```
-```py {8-9}
-row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
-       "humidity_pct": 93, "wind_ms": 2.5}
-print(row["temp_c"])              # -4.4
-row["temp_f"] = row["temp_c"] * 9 / 5 + 32
-print(row["temp_f"])              # 24.08
-print(row.get("rain_mm", 0))      # 0: no such key
-print(row["rain_mm"])             # KeyError: 'rain_mm'
-years = {"2016", "2016", "2017"}
-print(len(years))                 # 2
-```
-````
-
-<div class="note-text mt-md">A <strong>dict</strong> <code>{key: value}</code> finds a value by its key, here by the name of the column. A <strong>set</strong> <code>{…}</code> keeps each value once. Containers hold any objects, other containers too: a list of tuples, a dictionary of dictionaries.</div>
-
-<!--
-**Ask:** `row.get("rain_mm", 0)` against `row["rain_mm"]`: what does each do?
-**Say:** the dictionary is the row with its header attached: `row["temp_c"]` instead of `parts[1]`. Assigning to a new key adds it.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A matplotlib Figure, Built Line by **Line**
-
-<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
-
-<div>
-
-````md magic-move {lines: true}
-```py
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
-```
-```py {3}
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
-print(type(fig))   # <class 'matplotlib.figure.Figure'>
-```
-```py {4-5}
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
-print(type(fig))   # <class 'matplotlib.figure.Figure'>
-hours = [0, 1, 2, 3]
-ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
-```
-```py {6-7}
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
-print(type(fig))   # <class 'matplotlib.figure.Figure'>
-hours = [0, 1, 2, 3]
-ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
-ax.set(xlabel="hour", ylabel="temp_c")
-plt.show()
-```
-````
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🖼️ **Objects inside objects**
-
-```text
-Figure          the image
-└─ Axes         one plot area
-   └─ Line2D    one line of data
-```
-
-Each has its own methods: `ax.plot`, `ax.set`, `fig.savefig`.
-
-</div>
-
-</div>
-
-<!--
-**Say:** `matplotlib` is a package, not part of Python; Part 3 is about where it comes from. A figure is an object like −4.4, only with more inside it.
-**If asked:** `plt.subplots` hands back two objects at once, a figure and its axes, and `fig, ax =` names both.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Draw the Figure
-
-```py {monaco-run} {autorun:false}
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
-print(type(fig))   # <class 'matplotlib.figure.Figure'>
-hours = [0, 1, 2, 3]
-ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
-ax.set(xlabel="hour", ylabel="temp_c")
-plt.show()
-```
-
-<!--
-**Do:** press ▶; the first run waits a few seconds for matplotlib to load.
-**Ask:** change `figsize=(6, 1.3)` to `(6, 1)` and run again: what changes?
-**If asked:** `len(fig.axes)` is 1 and `len(ax.lines)` is 1: each object keeps a list of the objects inside it.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Answer of a Weather Service: **JSON**
-
-<div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🌐 **api.open-meteo.com, 18 Oct 2026, 10:30**
-
-```text
-{"latitude": 54.68259,
- "longitude": 25.273773,
- "elevation": 95.0,
- "current_units": {"temperature_2m": "°C",
-                   "wind_speed_10m": "km/h"},
- "current": {"time": "2026-10-18T10:30",
-             "temperature_2m": 8.7,
-             "wind_speed_10m": 10.4}}
-```
-
-</div>
-
-<div>
-
-````md magic-move {lines: true}
-```py
-print(type(answer))              # <class 'dict'>
+print("Hello")               # Hello
 ```
 ```py {2}
-print(type(answer))              # <class 'dict'>
-print(type(answer["current"]))   # <class 'dict'>
+print("Hello")               # Hello
+print(7.16)
+```
+```py {2}
+print("Hello")               # Hello
+print(7.16)                  # 7.16
 ```
 ```py {3}
-print(type(answer))              # <class 'dict'>
-print(type(answer["current"]))   # <class 'dict'>
-print(answer["current"]["temperature_2m"])  # 8.7
+print("Hello")               # Hello
+print(7.16)                  # 7.16
+print(7.16 * 9 / 5 + 32)
 ```
-```py {4-5}
-print(type(answer))              # <class 'dict'>
-print(type(answer["current"]))   # <class 'dict'>
-print(answer["current"]["temperature_2m"])  # 8.7
-units = answer["current_units"]
-print(units["temperature_2m"])   # °C
+```py {3}
+print("Hello")               # Hello
+print(7.16)                  # 7.16
+print(7.16 * 9 / 5 + 32)     # 44.888
 ```
 ````
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **Reading a line**
+
+- `print(…)` shows the value between the brackets
+- text stands in quotes; numbers do not
+- `*` multiplies, `/` divides: Python works out the line first
+- `#` starts a **comment**: Python skips the rest of the line. On these slides a comment shows what the line prints
+
 </div>
 
-<div class="note-text mt-md"><strong>JSON</strong> is text that writes numbers, strings, lists and dictionaries. <code>json.loads</code> turns it into Python objects: here a dictionary of dictionaries, read one key at a time.</div>
+</div>
 
 <!--
-**Say:** five numbers about Vilnius right now, and the units beside them. Square brackets twice: the dictionary inside the dictionary.
-**If asked:** a few keys are left out here (`generationtime_ms`, `timezone`, …); the answer has nine.
+**Do:** before each result appears, ask the room what will be printed.
+**Say:** the third line is the conversion to Fahrenheit: multiplication and division before addition, as in arithmetic.
 (~2 min)
 -->
 
@@ -507,40 +211,56 @@ print(units["temperature_2m"])   # °C
 hideInToc: true
 ---
 
-# Ask the Weather Service Now
+# A Name for a Value: `=`
 
-```py {monaco-run} {autorun:false}
-import json
-from pyodide.http import open_url   # in a browser; urllib on a laptop
-url = ("https://api.open-meteo.com/v1/forecast?latitude=54.69"
-       "&longitude=25.28&current=temperature_2m,wind_speed_10m")
-answer = json.loads(open_url(url).read())
-print(len(answer))                         # 9 keys
-print(answer["current"]["time"])           # 2026-10-18T10:30 when written
-print(answer["current"]["temperature_2m"]) # 8.7 when written
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+mean = 7.16
 ```
+```py {2}
+mean = 7.16
+print(mean)
+```
+```py {2}
+mean = 7.16
+print(mean)                       # 7.16
+```
+```py {3}
+mean = 7.16
+print(mean)                       # 7.16
+fahrenheit = mean * 9 / 5 + 32
+```
+```py {4}
+mean = 7.16
+print(mean)                       # 7.16
+fahrenheit = mean * 9 / 5 + 32
+print(fahrenheit)                 # 44.888
+```
+````
 
-<div class="note-text mt-md">The same three steps as for <code>weather.csv</code>: text arrives, becomes objects, one value is picked out. The block needs the internet; its answer changes every 15 minutes.</div>
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📐 **`=` in Python**
+
+1. work out the right side
+2. put the name on the result
+
+A name with its value is a **variable**. A name has letters, digits and `_`, no spaces, and `Mean` is not `mean`.
+
+</div>
+
+</div>
 
 <!--
-**Do:** press ▶. Compare the temperature with the window.
-**Say:** the object was built a second ago on a server in another country; to the program it is a dictionary like `row`.
-**If asked:** on a laptop the second line is `from urllib.request import urlopen`, and `urlopen(url).read()` gives the bytes.
+**Ask:** step 2: what will `print(mean)` show, the word mean or 7.16? Without quotes, `mean` is a name and Python uses its value.
+**Say:** `=` is not the equals of mathematics: it is an instruction, "put this name on that value".
 (~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Combine Objects: `for` and **`if`**
-
-Part 2: how do `for` and `if` turn 87 672 lines into 7.16?
-
-<!--
-**Say:** the objects are known; now the lines that repeat a step and choose between steps.
-(~1 min)
 -->
 
 ---
@@ -596,6 +316,771 @@ print(count)   # 3
 **Ask:** before the fourth step: what does `print(count)` show?
 **Say:** every count and every sum over a file is this one line, run once per row.
 (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Every Value Has a **Type**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🏷️ **Four basic types**
+
+| Value | Type | What it is |
+| --- | --- | --- |
+| `87672` | `int` | a whole number |
+| `7.16` | `float` | a number with a point |
+| `"-4.4"` | `str` | text, in quotes |
+| `True` | `bool` | `True` or `False` |
+
+</div>
+
+<div>
+
+````md magic-move {lines: true}
+```py
+print(type(87672))
+```
+```py
+print(type(87672))    # <class 'int'>
+```
+```py {2}
+print(type(87672))    # <class 'int'>
+print(type(7.16))     # <class 'float'>
+```
+```py {3}
+print(type(87672))    # <class 'int'>
+print(type(7.16))     # <class 'float'>
+print(type("-4.4"))   # <class 'str'>
+```
+```py {4}
+print(type(87672))    # <class 'int'>
+print(type(7.16))     # <class 'float'>
+print(type("-4.4"))   # <class 'str'>
+print(type(True))     # <class 'bool'>
+```
+````
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The <strong>type</strong> decides what can be done with a value: numbers add up, texts are joined. <code>type()</code> asks a value for its type.</div>
+
+<!--
+**Ask:** before the third line: `"-4.4"` with quotes, a number or text?
+**Say:** Lecture 03 stored whole numbers, floats and text as bits in different ways; Python keeps the type with every value.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Arithmetic with `int` and `float`
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+hours = 87672             # ten years of hours
+```
+```py {2}
+hours = 87672             # ten years of hours
+print(hours / 24)         # 3653.0
+```
+```py {3}
+hours = 87672             # ten years of hours
+print(hours / 24)         # 3653.0
+print(hours // 24)        # 3653
+```
+```py {4}
+hours = 87672             # ten years of hours
+print(hours / 24)         # 3653.0
+print(hours // 24)        # 3653
+print(hours % 24)         # 0
+```
+```py {5}
+hours = 87672             # ten years of hours
+print(hours / 24)         # 3653.0
+print(hours // 24)        # 3653
+print(hours % 24)         # 0
+print(2 ** 10)            # 1024
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## ➗ **Operators**
+
+| | |
+| --- | --- |
+| `+ - *` | add, subtract, multiply |
+| `/` | divide: always a `float` |
+| `//` | the whole part: an `int` |
+| `%` | the remainder |
+| `**` | the power |
+
+</div>
+
+</div>
+
+<!--
+**Ask:** step 2: 87672 / 24, will Python print 3653 or 3653.0?
+**Say:** 3653 days: ten years with three leap years. The remainder 0 says the hours fill whole days.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A `float` Is Rounded
+
+````md magic-move {lines: true}
+```py
+print(0.1 + 0.2)               # 0.30000000000000004
+```
+```py {2}
+print(0.1 + 0.2)               # 0.30000000000000004
+print(0.1 + 0.2 == 0.3)        # False
+```
+```py {3}
+print(0.1 + 0.2)               # 0.30000000000000004
+print(0.1 + 0.2 == 0.3)        # False
+print(round(0.1 + 0.2, 2))     # 0.3
+```
+````
+
+<div class="note-text mt-md">A <code>float</code> is stored in 64 bits, about 16 decimal digits (Lecture 03). 0.1 has no end in binary, so the nearest stored number is used and every sum is rounded a little. <code>==</code> asks whether two values are equal; <code>round(x, 2)</code> keeps two decimals, for printing.</div>
+
+<!--
+**Ask:** step 2: is 0.1 + 0.2 equal to 0.3?
+**Say:** not a fault of Python: every language with float64 prints the same. Measured values are compared with a tolerance, never with `==`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Compare: `True` or `False`
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+hours = 87672
+print(hours > 80000)       # True
+```
+```py {3-4}
+hours = 87672
+print(hours > 80000)       # True
+temp = -999.0
+print(temp == -999)        # True
+```
+```py {5}
+hours = 87672
+print(hours > 80000)       # True
+temp = -999.0
+print(temp == -999)        # True
+print(temp != -999)        # False
+```
+```py {6}
+hours = 87672
+print(hours > 80000)       # True
+temp = -999.0
+print(temp == -999)        # True
+print(temp != -999)        # False
+print("-999" == -999)      # False
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## ⚖️ **Comparisons**
+
+| | |
+| --- | --- |
+| `==` | equal |
+| `!=` | not equal |
+| `<  >` | less, greater |
+| `<= >=` | or equal |
+
+The answer is a `bool`. `=` names a value; `==` compares two.
+
+</div>
+
+</div>
+
+<!--
+**Ask:** the last line: the text "-999" and the number −999, equal?
+**Say:** never: text is not a number. The −999 rows of the file will be found with exactly this comparison.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A `list`: Values in Order
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+temps = [-4.4, -4.8, -5.5]   # 00:00 to 02:00
+```
+```py {2}
+temps = [-4.4, -4.8, -5.5]   # 00:00 to 02:00
+print(temps[0])              # -4.4
+```
+```py {3}
+temps = [-4.4, -4.8, -5.5]   # 00:00 to 02:00
+print(temps[0])              # -4.4
+print(len(temps))            # 3
+```
+```py {4}
+temps = [-4.4, -4.8, -5.5]   # 00:00 to 02:00
+print(temps[0])              # -4.4
+print(len(temps))            # 3
+temps.append(-6.0)           # 03:00
+```
+```py {5}
+temps = [-4.4, -4.8, -5.5]   # 00:00 to 02:00
+print(temps[0])              # -4.4
+print(len(temps))            # 3
+temps.append(-6.0)           # 03:00
+print(temps)                 # [-4.4, -4.8, -5.5, -6.0]
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **A list**
+
+- square brackets, items separated by commas
+- each item has a position, counted from 0: `temps[0]` is the first
+- it can grow: `append` is a method of every list
+
+</div>
+
+</div>
+
+<!--
+**Ask:** step 2: which position holds −4.4? Position 0, the first.
+**Say:** the first three hours of 1 January 2016; the list keeps them in the order they came. Counting from 0 is how Python counts positions everywhere: in a text too.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Text: a `str`, Position by Position
+
+````md magic-move {lines: true}
+```py
+line = "2016-01-01T00:00,-4.4,93,2.5"
+```
+```py {2}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(len(line))        # 28
+```
+```py {3}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(len(line))        # 28
+print(line[0])          # 2
+```
+```py {4}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(len(line))        # 28
+print(line[0])          # 2
+print(line[0:4])        # 2016
+```
+```py {5}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(len(line))        # 28
+print(line[0])          # 2
+print(line[0:4])        # 2016
+print(line[5:7])        # 01
+```
+````
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+```text
+char  2 0 1 6 - 0 1 - 0 1
+pos   0 1 2 3 4 5 6 7 8 9
+```
+
+</div>
+
+<div class="note-text">A <strong>str</strong> is a row of characters with positions, like the items of a list: <code>len</code> counts them, <code>line[0]</code> is the first. <code>[start:stop]</code> takes a piece and stops before <code>stop</code>: <code>[0:4]</code> is the year, <code>[5:7]</code> the month.</div>
+
+</div>
+
+<!--
+**Do:** point at the positions under the characters while the steps appear.
+**Ask:** step 5: which characters are positions 5 and 6?
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Text Is Not a Number: `float()`
+
+````md magic-move {lines: true}
+```py
+temp = "-4.4"
+print(temp + "1")         # -4.41
+```
+```py {3}
+temp = "-4.4"
+print(temp + "1")         # -4.41
+print(temp + 1)           # TypeError: can only concatenate str (not "int") to str
+```
+```py {3-4}
+temp = "-4.4"
+print(temp + "1")         # -4.41
+number = float(temp)
+print(number + 1)         # -3.4000000000000004
+```
+````
+
+<div class="note-text mt-md">For two texts <code>+</code> joins them; a text and a number do not add, and Python stops with a <code>TypeError</code>. <code>float("-4.4")</code> makes the number from the text, <code>int("93")</code> a whole number, <code>str(7.16)</code> text again. A file holds text: every value read from it starts as a <code>str</code>.</div>
+
+<!--
+**Ask:** step 1: what is "-4.4" + "1"? Text joined to text: -4.41, not −3.4.
+**Say:** the tail of the last result is the rounding of the float slide.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Objects Have **Methods**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+name = "weather"
+print(name.upper())             # WEATHER
+```
+```py {3-4}
+name = "weather"
+print(name.upper())             # WEATHER
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line.split(","))
+```
+```py {4-5}
+name = "weather"
+print(name.upper())             # WEATHER
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line.split(","))
+# ['2016-01-01T00:00', '-4.4', '93', '2.5']
+```
+```py {6}
+name = "weather"
+print(name.upper())             # WEATHER
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line.split(","))
+# ['2016-01-01T00:00', '-4.4', '93', '2.5']
+print((7.16).is_integer())      # False
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 📦 **An object has**
+
+- a **type**: `str`
+- a **value**: `"weather"`
+- **methods**: functions of its type, written after a dot
+
+| function | method |
+| --- | --- |
+| `len(line)` | `line.split(",")` |
+
+</div>
+
+</div>
+
+<!--
+**Say:** in Python every value is an **object**. A `str` can split itself at commas; a `float` can say whether it is whole.
+**Ask:** step 3: what does `split(",")` hand back? A list of four texts, in square brackets.
+**If asked:** `dir(name)` lists every method a `str` has.
+(~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Containers and **Objects**
+
+Part 2: how are values kept by name, and in larger objects?
+
+<!--
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A `dict`: Values Found by a **Name**
+
+````md magic-move {lines: true}
+```py
+row = {"temp_c": -4.4, "humidity_pct": 93}
+```
+```py {2}
+row = {"temp_c": -4.4, "humidity_pct": 93}
+print(row["temp_c"])        # -4.4
+```
+```py {3}
+row = {"temp_c": -4.4, "humidity_pct": 93}
+print(row["temp_c"])        # -4.4
+row["wind_ms"] = 2.5
+```
+```py {4}
+row = {"temp_c": -4.4, "humidity_pct": 93}
+print(row["temp_c"])        # -4.4
+row["wind_ms"] = 2.5
+print(row)                  # {'temp_c': -4.4, 'humidity_pct': 93, 'wind_ms': 2.5}
+```
+```py {5}
+row = {"temp_c": -4.4, "humidity_pct": 93}
+print(row["temp_c"])        # -4.4
+row["wind_ms"] = 2.5
+print(row)                  # {'temp_c': -4.4, 'humidity_pct': 93, 'wind_ms': 2.5}
+print(row["rain_mm"])       # KeyError: 'rain_mm'
+```
+````
+
+<div class="note-text mt-md">A <strong>dictionary</strong> holds pairs <code>key: value</code> in curly brackets. A list finds a value by its position, a dictionary by its key, here the name of the column. Assigning to a new key adds it; asking for a key that is not there stops with <code>KeyError</code>.</div>
+
+<!--
+**Ask:** step 2: what does `row["temp_c"]` give? And step 5, a key that is not there?
+**Say:** the dictionary is one row of the file with the header's names attached.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Four **Containers**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| Container | Written | Finds a value by | Can change | Example |
+| --- | --- | --- | --- | --- |
+| **list** | `[ … ]` | position | yes | `[-4.4, -4.8, -5.5]` |
+| **tuple** | `( … )` | position | no | `("2016-01-01T00:00", -4.4)` |
+| **dict** | `{key: value}` | key | yes | `{"temp_c": -4.4}` |
+| **set** | `{ … }` | (each value once) | yes | `{"2016", "2017"}` |
+
+</div>
+
+<div class="note-text mt-md">A container holds any objects, other containers too. A list of dictionaries is a table: one dictionary per row.</div>
+
+<!--
+**Say:** a tuple is a record that must stay as it was read; a set answers "which different values are there".
+**Ask:** which container for the temperature of every hour, in order? A list. For one row with column names? A dict.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Objects Inside Objects: a **Table**
+
+````md magic-move {lines: true}
+```py
+rows = [{"time": "00:00", "temp_c": -4.4},
+        {"time": "01:00", "temp_c": -4.8}]
+```
+```py {3}
+rows = [{"time": "00:00", "temp_c": -4.4},
+        {"time": "01:00", "temp_c": -4.8}]
+print(len(rows))              # 2
+```
+```py {4}
+rows = [{"time": "00:00", "temp_c": -4.4},
+        {"time": "01:00", "temp_c": -4.8}]
+print(len(rows))              # 2
+print(rows[1])                # {'time': '01:00', 'temp_c': -4.8}
+```
+```py {5}
+rows = [{"time": "00:00", "temp_c": -4.4},
+        {"time": "01:00", "temp_c": -4.8}]
+print(len(rows))              # 2
+print(rows[1])                # {'time': '01:00', 'temp_c': -4.8}
+print(rows[1]["temp_c"])      # -4.8
+```
+````
+
+<div class="note-text mt-md">Read from the outside in: <code>rows[1]</code> is the second dictionary, and <code>["temp_c"]</code> picks a value inside it.</div>
+
+<!--
+**Ask:** step 4: what is `rows[1]`, a number or a dictionary?
+**Say:** larger objects are built the same way: objects that hold objects, each with its own methods.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Larger Object: a **Figure**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+import matplotlib.pyplot as plt
+```
+```py {2}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+```
+```py {3}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+```
+```py {4}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+ax.plot([0, 1, 2, 3], [-4.4, -4.8, -5.5, -6.0])
+```
+```py {5}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+ax.plot([0, 1, 2, 3], [-4.4, -4.8, -5.5, -6.0])
+plt.show()
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🖼️ **Objects inside objects**
+
+```text
+Figure          the image
+└─ Axes         one plot area
+   └─ Line2D    one line of data
+```
+
+`import` brings in a package that is not part of Python (Part 4). `plt.subplots()` hands back two objects, named `fig` and `ax`.
+
+</div>
+
+</div>
+
+<!--
+**Say:** a figure is an object like −4.4, with more inside: axes, lines, labels, each an object with methods such as `ax.plot` and `fig.savefig`.
+**Ask:** step 4: two lists go into `ax.plot`. Which is the hour and which the temperature?
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Draw the Figure
+
+```py {monaco-run} {autorun:false}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+hours = [0, 1, 2, 3]
+ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
+ax.set(xlabel="hour", ylabel="temp_c")
+plt.show()
+```
+
+<!--
+**Do:** press ▶; the first run waits a few seconds for matplotlib to load.
+**Ask:** change `figsize=(6, 1.3)` to `(6, 1)` and run again: what changes?
+**If asked:** `len(fig.axes)` is 1 and `len(ax.lines)` is 1: each object keeps a list of the objects inside it.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# An Object from Text: **JSON**
+
+````md magic-move {lines: true}
+```py
+import json
+text = '{"temp_c": 8.7, "unit": "°C"}'
+```
+```py {3}
+import json
+text = '{"temp_c": 8.7, "unit": "°C"}'
+answer = json.loads(text)
+```
+```py {4}
+import json
+text = '{"temp_c": 8.7, "unit": "°C"}'
+answer = json.loads(text)
+print(type(text), type(answer))   # <class 'str'> <class 'dict'>
+```
+```py {5}
+import json
+text = '{"temp_c": 8.7, "unit": "°C"}'
+answer = json.loads(text)
+print(type(text), type(answer))   # <class 'str'> <class 'dict'>
+print(answer["temp_c"])           # 8.7
+```
+````
+
+<div class="note-text mt-md"><strong>JSON</strong> is a way of writing numbers, texts, lists and dictionaries as text, so that programs can send them to each other. <code>json.loads</code> reads that text and builds the Python objects; <code>json</code> comes with every Python.</div>
+
+<!--
+**Ask:** step 3: before and after `json.loads`, what has changed? The same content, first as one text, then as a dictionary.
+**Say:** a weather service on the internet answers in JSON.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Answer of a Weather Service: a `dict` of `dict`s
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🌐 **api.open-meteo.com, 18 Oct 2026, 10:30**
+
+```text
+{"latitude": 54.68259,
+ "longitude": 25.273773,
+ "elevation": 95.0,
+ "current_units": {"temperature_2m": "°C",
+                   "wind_speed_10m": "km/h"},
+ "current": {"time": "2026-10-18T10:30",
+             "temperature_2m": 8.7,
+             "wind_speed_10m": 10.4}}
+```
+
+</div>
+
+<div>
+
+````md magic-move {lines: true}
+```py
+print(type(answer))              # <class 'dict'>
+```
+```py {2}
+print(type(answer))              # <class 'dict'>
+print(type(answer["current"]))   # <class 'dict'>
+```
+```py {3}
+print(type(answer))              # <class 'dict'>
+print(type(answer["current"]))   # <class 'dict'>
+print(answer["current"]["temperature_2m"])  # 8.7
+```
+```py {4-5}
+print(type(answer))              # <class 'dict'>
+print(type(answer["current"]))   # <class 'dict'>
+print(answer["current"]["temperature_2m"])  # 8.7
+units = answer["current_units"]
+print(units["temperature_2m"])   # °C
+```
+````
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The answer of api.open-meteo.com for Vilnius, read with <code>json.loads</code> into <code>answer</code>: a dictionary whose values are dictionaries, read one key at a time.</div>
+
+<!--
+**Say:** five numbers about Vilnius right now, and the units beside them. Square brackets twice: the dictionary inside the dictionary.
+**If asked:** a few keys are left out here (`generationtime_ms`, `timezone`, …); the answer has nine.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Ask the Weather Service Now
+
+```py {monaco-run} {autorun:false}
+import json
+from pyodide.http import open_url   # in a browser; urllib on a laptop
+url = ("https://api.open-meteo.com/v1/forecast?latitude=54.69"
+       "&longitude=25.28&current=temperature_2m,wind_speed_10m")
+answer = json.loads(open_url(url).read())
+print(len(answer))                         # 9 keys
+print(answer["current"]["time"])           # 2026-10-18T10:30 when written
+print(answer["current"]["temperature_2m"]) # 8.7 when written
+```
+
+<div class="note-text mt-md">The same three steps as for <code>weather.csv</code>: text arrives, becomes objects, one value is picked out. The block needs the internet; its answer changes every 15 minutes.</div>
+
+<!--
+**Do:** press ▶. Compare the temperature with the window.
+**Say:** the object was built a second ago on a server in another country; to the program it is a dictionary like `row`.
+**If asked:** on a laptop the second line is `from urllib.request import urlopen`, and `urlopen(url).read()` gives the bytes.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Combine Objects: `for` and **`if`**
+
+Part 3: how do `for` and `if` turn 87 672 lines into 7.16?
+
+<!--
+**Say:** the values and containers are known; now the two lines that repeat a step and choose between steps.
+(~1 min)
 -->
 
 ---
@@ -709,121 +1194,6 @@ print(total / len(temps))
 hideInToc: true
 ---
 
-# A Loop over the Lines of a **File**
-
-````md magic-move {lines: true}
-```py
-lines = ["time,temp_c,humidity_pct,wind_ms",
-         "2016-01-01T00:00,-4.4,93,2.5",
-         "2016-01-01T01:00,-4.8,95,2.6",
-         "2016-01-01T02:00,-5.5,95,2.7"]
-for line in lines:
-    print(line)
-```
-```py {5}
-lines = ["time,temp_c,humidity_pct,wind_ms",
-         "2016-01-01T00:00,-4.4,93,2.5",
-         "2016-01-01T01:00,-4.8,95,2.6",
-         "2016-01-01T02:00,-5.5,95,2.7"]
-for line in lines[1:]:
-    print(line)
-```
-```py {6-7}
-lines = ["time,temp_c,humidity_pct,wind_ms",
-         "2016-01-01T00:00,-4.4,93,2.5",
-         "2016-01-01T01:00,-4.8,95,2.6",
-         "2016-01-01T02:00,-5.5,95,2.7"]
-for line in lines[1:]:
-    parts = line.split(",")
-    print(float(parts[1]))
-```
-```py {5,8-9}
-lines = ["time,temp_c,humidity_pct,wind_ms",
-         "2016-01-01T00:00,-4.4,93,2.5",
-         "2016-01-01T01:00,-4.8,95,2.6",
-         "2016-01-01T02:00,-5.5,95,2.7"]
-total = 0.0
-for line in lines[1:]:
-    parts = line.split(",")
-    total = total + float(parts[1])
-print(total)    # -14.7
-```
-````
-
-<div class="note-text mt-md">The first four lines of <code>weather.csv</code> as a list of strings. <code>lines[1:]</code> is every line but the first, the header.</div>
-
-<!--
-**Ask:** why `lines[1:]`? What would `float` do with the header's second part, `temp_c`?
-**Say:** inside the loop: cut, pick part 1, convert, add. The same lines run on 3 lines and on 87 672.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Mean of All 87 672 **Rows**
-
-````md magic-move {lines: true}
-```py {1-2}
-lines = open("data/raw/weather.csv").read().splitlines()
-print(len(lines))
-```
-```py {2-6}
-lines = open("data/raw/weather.csv").read().splitlines()
-total = 0.0
-for line in lines[1:]:
-    parts = line.split(",")
-    total = total + float(parts[1])
-print(total)
-```
-```py {3,7-8}
-lines = open("data/raw/weather.csv").read().splitlines()
-total = 0.0
-count = 0
-for line in lines[1:]:
-    parts = line.split(",")
-    total = total + float(parts[1])
-    count = count + 1
-print(count, total / count)
-```
-````
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ python scripts/mean_all.py
-```
-
-<v-click>
-
-```text
-87672 5.782796103659093
-```
-
-</v-click>
-
-</div>
-
-<v-click>
-
-<div class="note-text mt-sm"><code>open</code>, <code>read</code> and <code>splitlines</code> turn the file into a list of 87 673 strings, the header first. 5.7828 is the mean of <code>column_stats.py</code> on the raw file: the 120 rows of −999 are counted as temperatures.</div>
-
-</v-click>
-
-<!--
-**Do:** click through the program as it grows: the lines of the file (it prints 87673), the sum in a loop (506989.30000000005), the count and the mean.
-**Ask:** before the output: 7.16 or 5.78?
-**Say:** the script does what it says: every row is a temperature to it. Python gives no warning.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
 # Choose a Block: `if`, `elif`, `else`
 
 <div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
@@ -922,11 +1292,121 @@ print(count, total / count)            # 2 22.75
 hideInToc: true
 ---
 
-# The Mean Without the −999 **Rows**
+# A Loop over the Lines of a **File**
 
 ````md magic-move {lines: true}
-```py {4-7}
-lines = open("data/raw/weather.csv").read().splitlines()
+```py
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+for line in lines:
+    print(line)
+```
+```py {5}
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+for line in lines[1:]:
+    print(line)
+```
+```py {6-7}
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+for line in lines[1:]:
+    parts = line.split(",")
+    print(float(parts[1]))
+```
+```py {5,8-9}
+lines = ["time,temp_c,humidity_pct,wind_ms",
+         "2016-01-01T00:00,-4.4,93,2.5",
+         "2016-01-01T01:00,-4.8,95,2.6",
+         "2016-01-01T02:00,-5.5,95,2.7"]
+total = 0.0
+for line in lines[1:]:
+    parts = line.split(",")
+    total = total + float(parts[1])
+print(total)    # -14.7
+```
+````
+
+<div class="note-text mt-md">The first four lines of <code>weather.csv</code> as a list of strings. <code>lines[1:]</code> is every line but the first, the header.</div>
+
+<!--
+**Ask:** why `lines[1:]`? What would `float` do with the header's second part, `temp_c`?
+**Say:** inside the loop: cut, pick part 1, convert, add. The same lines run on 3 lines and on 87 672.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Read a File: `open`
+
+````md magic-move {lines: true}
+```py
+text = open("data/raw/weather.csv").read()
+```
+```py {2}
+text = open("data/raw/weather.csv").read()
+print(len(text))          # 2515215
+```
+```py {3}
+text = open("data/raw/weather.csv").read()
+print(len(text))          # 2515215
+lines = text.splitlines()
+```
+```py {4}
+text = open("data/raw/weather.csv").read()
+print(len(text))          # 2515215
+lines = text.splitlines()
+print(len(lines))         # 87673
+```
+```py {5}
+text = open("data/raw/weather.csv").read()
+print(len(text))          # 2515215
+lines = text.splitlines()
+print(len(lines))         # 87673
+print(lines[1])           # 2016-01-01T00:00,-4.4,93,2.5
+```
+````
+
+<div class="note-text mt-md"><code>open</code> finds the file, and its method <code>read</code> hands back all of the text as one <code>str</code> of 2 515 215 characters. <code>splitlines</code> cuts it at the line ends into a list of 87 673 strings: the header, then one line per hour. The path starts at the folder the program runs in.</div>
+
+<!--
+**Ask:** step 4: 87 673 lines, and the file has 87 672 hours. Where is the extra line? The header, `lines[0]`.
+**If asked:** the slides' runnable blocks work in the browser and cannot read a file on a laptop, so this one is shown, not run.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Mean of All 87 672 **Rows**
+
+````md magic-move {lines: true}
+```py {1-3}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+print(len(lines))
+```
+```py {3-7}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+total = 0.0
+for line in lines[1:]:
+    parts = line.split(",")
+    total = total + float(parts[1])
+print(total)
+```
+```py {4,8-9}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
 total = 0.0
 count = 0
 for line in lines[1:]:
@@ -935,8 +1415,60 @@ for line in lines[1:]:
     count = count + 1
 print(count, total / count)
 ```
-```py {6-10}
-lines = open("data/raw/weather.csv").read().splitlines()
+````
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ python scripts/mean_all.py
+```
+
+<v-click>
+
+```text
+87672 5.782796103659093
+```
+
+</v-click>
+
+</div>
+
+<v-click>
+
+<div class="note-text mt-sm">5.7828: the 120 rows of −999 are counted as temperatures. Python gives no warning; the script does exactly what it says.</div>
+
+</v-click>
+
+<!--
+**Do:** click through the program as it grows: the lines of the file (it prints 87673), the sum in a loop (506989.30000000005), the count and the mean.
+**Ask:** before the output: 7.16 or 5.78?
+**Say:** the script does what it says: every row is a temperature to it. Python gives no warning.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Mean Without the −999 **Rows**
+
+````md magic-move {lines: true}
+```py {5-8}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+total = 0.0
+count = 0
+for line in lines[1:]:
+    parts = line.split(",")
+    total = total + float(parts[1])
+    count = count + 1
+print(count, total / count)
+```
+```py {7-11}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
 total = 0.0
 count = 0
 for line in lines[1:]:
@@ -972,7 +1504,7 @@ $ python scripts/mean_temp.py
 
 <div v-click class="card card-success card-glass pad-compact">
 
-✅ Part 2: 7.15996550621346 from 87 552 rows, the 7.15997 of `column_stats.py`.
+✅ Part 3: 7.15996550621346 from 87 552 rows: the 7.16 °C of the file, 120 hours left out.
 
 </div>
 
@@ -1038,7 +1570,7 @@ hideInToc: true
 
 # Packages and **Versions**
 
-Part 3: where do the objects come from that Python does not have, and which version arrives?
+Part 4: where does the rest of Python come from, and which version arrives?
 
 <!--
 **Say:** `float` and `dict` came with Python; the `Figure` did not.
@@ -1308,7 +1840,7 @@ $ conda env create -f environment.yml
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Part 3: from the standard library with `import`, from conda-forge or PyPI by a package manager, into one environment per project, with the versions pinned and written down.
+✅ Part 4: from the standard library with `import`, from conda-forge or PyPI by a package manager, into one environment per project, with the versions pinned and written down.
 
 </div>
 
@@ -1326,26 +1858,32 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-**1. What kinds of values does Python have, and what can each do?** Objects of a type: `int`, `float`, `bool`, `str`; the containers `list`, `tuple`, `dict`, `set`; larger objects such as a `Figure` or the answer of a web service. The type says which methods it has.
+**1. What is a value, and what can it do?** An object with a type: `int`, `float`, `bool`, `str`. The type says what it can do; methods are written after a dot: `line.split(",")`.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-**2. How do `for` and `if` turn 87 672 lines into 7.16?** A `for` over the lines, `split` and `float` on each, `if` and `continue` for −999: 7.15996550621346 from 87 552 rows.
+**2. How are values kept by name, and in larger objects?** In containers: `list` by position, `dict` by key, `tuple` fixed, `set` once each. Larger objects, a `Figure` or a weather service's answer, are containers of objects.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-**3. Where do the other objects come from, and which version arrives?** From the standard library, or as packages from conda-forge and PyPI; the newest unless pinned. So: one environment per project, written down in `environment.yml`.
+**3. How do `for` and `if` give 7.16?** A `for` over the lines, `split` and `float` on each, `if` and `continue` for −999: 7.15996550621346 from 87 552 rows.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+**4. Where does the rest come from?** The standard library with `import`; packages from conda-forge or PyPI, the newest unless pinned. One environment per project, written down in `environment.yml`.
 
 </div>
 
 </div>
 
 <!--
-**Say:** 7.16 now comes from eleven lines anyone here can read, and each object in them has a type that says what it can do.
+**Say:** 7.16 now comes from eleven lines anyone here can read.
 (~1 min)
 -->
 
@@ -1359,25 +1897,25 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Name the type of a value, `int`, `float`, `bool` or `str`, and turn text into a number
+✅ Read a line of Python: `print`, a name with `=`, a comment after `#`
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Choose a container, `list`, `tuple`, `dict` or `set`, and read a dictionary of dictionaries
+✅ Name the type of a value, `int`, `float`, `bool` or `str`, and turn text into a number with `float()`
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Repeat a step with `for`, choose with `if`, leave out rows with `continue`
+✅ Choose a container, `list`, `tuple`, `dict` or `set`, and read an object inside an object
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write a step once as a function with `def`
+✅ Repeat a step with `for`, choose with `if`, leave out rows with `continue`, and write a step once with `def`
 
 </div>
 
@@ -1487,15 +2025,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`hours = {'2016': 8784}`. What do `hours.get('2026', 0)` and `hours['2026']` do?"
+  question="`row = {'temp_c': -4.4}`. What does `row['rain_mm']` do?"
   :options="[
-    'Both give 0',
-    'The first gives 0, the second stops with KeyError',
-    'Both stop with KeyError',
-    'Both add the key 2026'
+    'It gives 0',
+    'It gives None',
+    'It stops with KeyError',
+    'It adds the key rain_mm'
   ]"
-  :correct="1"
-  explanation="get hands back the default for a key that is not there; square brackets stop with KeyError: '2026'. Neither adds a key."
+  :correct="2"
+  explanation="A key that is not in the dictionary stops the program with KeyError: 'rain_mm'. Assigning row['rain_mm'] = 0.0 would add the key."
 />
 
 ---

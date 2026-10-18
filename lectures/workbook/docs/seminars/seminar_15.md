@@ -21,6 +21,9 @@ optional on a laptop.
     - **Room:** VS Code and Miniforge (Seminar 4, or the Setup page), and
       internet: today's folder is 0.6 MB, its environment about 45
       packages. Nothing from an earlier seminar is needed.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
+      extension: [Setup, step 7](../setup.md#extensions).
     - **You:** nothing to prepare. Every time on this page was measured on
       one machine (Linux); times in the room differ, often by a factor of
       two. On macOS and Windows each worker of Part 3 starts a fresh Python,
@@ -74,6 +77,9 @@ One zip holds everything: the weather data, the hill station's file, the scripts
     ...
     #     $ conda activate s15
     ```
+
+    `conda: command not found`: install Miniforge as on the
+    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
 5. Switch it on; the prompt starts with `(s15)`.
 

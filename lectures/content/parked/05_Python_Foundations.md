@@ -4693,3 +4693,399 @@ hideInToc: true
   :correct="2"
   explanation="The format .1f writes the value rounded to one decimal: 2.7. The f-string builds a new string; the name t still holds the full float64."
 />
+
+<!-- ===== Parked 18 Oct 2026 (afternoon), from the deck of the morning, after "the code blocks need to be built up gradually, a bit more theoretical content. It gets complicated too soon" ===== -->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: opened the lecture (slide 3) until the rework of 18 Oct, afternoon: it carried Lecture 4 over -->
+
+# The Mean from `column_stats.py`
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ python scripts/column_stats.py data/raw/weather.csv temp_c
+file    data/raw/weather.csv
+column  temp_c
+rows    87672
+min     -999.0
+max     32.4
+mean    5.7828
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact mt-md">
+
+| File | rows | mean |
+| --- | --- | --- |
+| `data/raw/weather.csv` | 87 672 | 5.7828 |
+| `data/processed/weather_valid.csv`, without the −999 rows | 87 552 | 7.15997 |
+
+</div>
+
+<div class="note-text mt-md"><code>column_stats.py</code> is 53 lines of Python. Lecture 04 ran it without reading it.</div>
+
+<!--
+**Say:** the two numbers of Lecture 04: 5.78 with the 120 marked rows, 7.16 without them. Both came out of a program nobody here has read.
+**Ask:** what does a program need to get 7.16 out of `weather.csv`? Collect on the board: the file's text, a number per line, a sum, a count, a rule that leaves out −999.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: slide 4, the three-question table -->
+
+<div class="card card-primary card-glass pad-compact table-compact mt-lg">
+
+| Part | Question | Answer |
+| --- | --- | --- |
+| 1 | What kinds of values does Python have, and what can each do? | ? |
+| 2 | How do `for` and `if` turn 87 672 lines into 7.16? | ? |
+| 3 | Where do the objects come from that Python does not have, and which version arrives? | ? |
+
+</div>
+
+<!--
+**Say:** one question per part; the answers fill the last column at the end.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: slide 6, the first code slide: replaced by print, =, types and methods, one slide each -->
+
+# Every Value Is an **Object**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+temp = -4.4
+print(type(temp))
+```
+```py
+temp = -4.4
+print(type(temp))        # <class 'float'>
+```
+```py {3}
+temp = -4.4
+print(type(temp))        # <class 'float'>
+print(temp.is_integer()) # False
+```
+```py {4}
+temp = -4.4
+print(type(temp))        # <class 'float'>
+print(temp.is_integer()) # False
+print(round(temp))       # -4
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📦 **An object has**
+
+- a **type**: `float`
+- a **value**: −4.4
+- **methods**, written after a dot: `temp.is_integer()`
+
+`temp = -4.4` puts the name `temp` on the object.
+
+</div>
+
+</div>
+
+<!--
+**Do:** click line by line; before each comment appears, ask for the output.
+**Say:** `type()` and `round()` are functions; `is_integer()` is a method, a function that belongs to the float and is written after a dot.
+**If asked:** `dir(temp)` lists every method a float has.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: slide 7: five ideas on one slide, split into arithmetic, rounding and comparisons -->
+
+# Numbers: `int`, `float`, `bool`
+
+````md magic-move {lines: true}
+```py
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+```
+```py {3}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)
+```
+```py {3-4}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+```
+```py {5}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+print(2 ** 100)               # 1267650600228229401496703205376
+```
+```py {6-7}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+print(2 ** 100)               # 1267650600228229401496703205376
+print(hours > 80000)          # True
+print(type(hours > 80000))    # <class 'bool'>
+```
+```py {8}
+hours = 87672                 # ten years of hours
+print(type(hours))            # <class 'int'>
+print(hours / 24)             # 3653.0: / always gives a float
+print(hours // 24)            # 3653: the whole part, an int
+print(2 ** 100)               # 1267650600228229401496703205376
+print(hours > 80000)          # True
+print(type(hours > 80000))    # <class 'bool'>
+print(0.1 + 0.2)              # 0.30000000000000004
+```
+````
+
+<div class="note-text mt-md">An <code>int</code> takes as many bits as its number needs: 2¹⁰⁰ needs 101, and nothing wraps. A <code>float</code> is the float64 of Lecture 03, rounded to about 16 digits. A comparison gives a <code>bool</code>.</div>
+
+<!--
+**Ask:** before the third step: 87672 / 24, is it 3653 or 3653.0?
+**Say:** `**` is the power. 3653 days: ten years with three leap years. The last line is float64 showing through: measured values are compared with a tolerance, never with `==`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: slide 8: split into list, str positions, float() and methods -->
+
+# A Line of `weather.csv` Is a `str`
+
+````md magic-move {lines: true}
+```py
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+```
+```py {3-4}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+```
+```py {5}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
+```
+```py {6}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
+print(parts[1] + 1)               # TypeError: can only concatenate str (not "int") to str
+```
+```py {6-7}
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(line[0:4])                  # 2016
+parts = line.split(",")
+print(parts)                      # ['2016-01-01T00:00', '-4.4', '93', '2.5']
+print(parts[1], type(parts[1]))   # -4.4 <class 'str'>
+temp = float(parts[1])
+print(temp + 1)                   # -3.4000000000000004
+```
+````
+
+<div class="note-text mt-md">Positions count from 0; <code>[0:4]</code> stops before 4. <code>split(",")</code> cuts at the commas and hands back a list of four strings. In the file <code>-4.4</code> is text, four characters, until <code>float()</code> makes the number.</div>
+
+<!--
+**Do:** draw the first ten characters on the board with their positions 0 to 9 below them.
+**Ask:** after the split, is `parts[1]` a number? What does `parts[1] + 1` do?
+**Say:** cut, then convert: two steps for every line of the file.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: slide 9: the list got its own slide; the tuple went into the table of four containers -->
+
+# Containers: `list` and `tuple`
+
+````md magic-move {lines: true}
+```py
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
+```
+```py {3-4}
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
+temps.append(-6.0)                 # 03:00
+print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
+```
+```py {5-6}
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
+temps.append(-6.0)                 # 03:00
+print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
+row = ("2016-01-01T00:00", -4.4, 93, 2.5)
+print(row[1])                      # -4.4
+```
+```py {7}
+temps = [-4.4, -4.8, -5.5]         # 00:00 to 02:00, 1 Jan 2016
+print(temps[0], len(temps))        # -4.4 3
+temps.append(-6.0)                 # 03:00
+print(temps)                       # [-4.4, -4.8, -5.5, -6.0]
+row = ("2016-01-01T00:00", -4.4, 93, 2.5)
+print(row[1])                      # -4.4
+row[1] = 0.0                       # TypeError: 'tuple' object does not support item assignment
+```
+````
+
+<div class="note-text mt-md">A <strong>list</strong> <code>[…]</code> holds values in order and can grow. A <strong>tuple</strong> <code>(…)</code> holds values in order and never changes: one row of the file, fixed.</div>
+
+<!--
+**Ask:** after the `append`, what is `temps[-1]`? A negative position counts from the end: −6.0.
+**Say:** both are indexed like a string. The list is for values that come in one by one; the tuple for a record that must stay as it was read.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: slide 10: the dict got its own slide; get and set left out -->
+
+# Containers: `dict` and `set`
+
+````md magic-move {lines: true}
+```py
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
+```
+```py {4-5}
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
+row["temp_f"] = row["temp_c"] * 9 / 5 + 32
+print(row["temp_f"])              # 24.08
+```
+```py {6-7}
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
+row["temp_f"] = row["temp_c"] * 9 / 5 + 32
+print(row["temp_f"])              # 24.08
+print(row.get("rain_mm", 0))      # 0: no such key
+print(row["rain_mm"])             # KeyError: 'rain_mm'
+```
+```py {8-9}
+row = {"time": "2016-01-01T00:00", "temp_c": -4.4,
+       "humidity_pct": 93, "wind_ms": 2.5}
+print(row["temp_c"])              # -4.4
+row["temp_f"] = row["temp_c"] * 9 / 5 + 32
+print(row["temp_f"])              # 24.08
+print(row.get("rain_mm", 0))      # 0: no such key
+print(row["rain_mm"])             # KeyError: 'rain_mm'
+years = {"2016", "2016", "2017"}
+print(len(years))                 # 2
+```
+````
+
+<div class="note-text mt-md">A <strong>dict</strong> <code>{key: value}</code> finds a value by its key, here by the name of the column. A <strong>set</strong> <code>{…}</code> keeps each value once. Containers hold any objects, other containers too: a list of tuples, a dictionary of dictionaries.</div>
+
+<!--
+**Ask:** `row.get("rain_mm", 0)` against `row["rain_mm"]`: what does each do?
+**Say:** the dictionary is the row with its header attached: `row["temp_c"]` instead of `parts[1]`. Assigning to a new key adds it.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<!-- Parked: slide 11: the figure, rebuilt without figsize and ax.set -->
+
+# A matplotlib Figure, Built Line by **Line**
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+```
+```py {3}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+```
+```py {4-5}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+hours = [0, 1, 2, 3]
+ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
+```
+```py {6-7}
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(6, 1.3), layout="constrained")
+print(type(fig))   # <class 'matplotlib.figure.Figure'>
+hours = [0, 1, 2, 3]
+ax.plot(hours, [-4.4, -4.8, -5.5, -6.0])
+ax.set(xlabel="hour", ylabel="temp_c")
+plt.show()
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🖼️ **Objects inside objects**
+
+```text
+Figure          the image
+└─ Axes         one plot area
+   └─ Line2D    one line of data
+```
+
+Each has its own methods: `ax.plot`, `ax.set`, `fig.savefig`.
+
+</div>
+
+</div>
+
+<!--
+**Say:** `matplotlib` is a package, not part of Python; Part 3 is about where it comes from. A figure is an object like −4.4, only with more inside it.
+**If asked:** `plt.subplots` hands back two objects at once, a figure and its axes, and `fig, ax =` names both.
+(~2 min)
+-->

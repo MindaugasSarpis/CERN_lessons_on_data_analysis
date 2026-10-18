@@ -21,7 +21,8 @@ seminar asks one question about it and answers it by the end.
   conda environment. Missing a week costs nothing; nothing has to be
   carried over from an earlier session.
 - **Seminar 5** is the first Python of the room: the interpreter, a Jupyter
-  notebook, IDLE and VS Code, and the first conda environment.
+  notebook, IDLE and VS Code, and the first conda environment. It starts
+  from an empty folder and downloads its two files with `curl`.
 - **Seminar 6** is Git: the room clones
   [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
   (about 0.5 MB) and publishes it to their own GitHub. Seminar 13 uses Git

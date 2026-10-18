@@ -39,7 +39,8 @@ model for the HSF look.
    the `environment.yml`. It is made by `misc/weather_repo/seminar_zips.py`
    from `misc/weather_repo/starts/sNN/`. No file or environment comes from
    an earlier session, no `git pull course main`, no pushes to the
-   student's GitHub outside the Git seminars (6 and 13). Seminar 6 still
+   student's GitHub outside the Git seminars (6 and 13). Seminar 5 starts
+   from an empty folder and fetches its two files with `curl`; Seminar 6 still
    clones the course repository, because cloning is its lesson.
 3. **Installs at the start.** Anything the seminar needs installed is
    section 1.

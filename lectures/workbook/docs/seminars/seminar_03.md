@@ -19,6 +19,7 @@ section 11.
 ??? info "Before the session"
     - **Room:** internet, for today's folder and the extension. The session
       needs nothing from any other seminar.
+    - **Missing a tool?** No VS Code: [Setup, step 1](../setup.md#vscode).
     - **You:** nothing to prepare.
     - **Keys** are written for Windows, macOS in brackets. Bytes are written
       as two hex digits, as the Hex Editor shows them.

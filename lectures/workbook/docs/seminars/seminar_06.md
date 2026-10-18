@@ -23,6 +23,9 @@ each change.
       page), internet, and a mailbox each student can open (GitHub sends a
       code). Nothing from earlier seminars is needed: the clone and one zip
       bring every file.
+    - **Missing a tool?** Git and Miniforge: [Setup, steps
+      2–4](../setup.md#shell); your name for Git and a GitHub account:
+      [Setup, step 6](../setup.md#github).
     - **You:** nothing to prepare. The repository
       [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
       is small (about 0.5 MB to download) and the same for everyone, so its

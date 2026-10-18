@@ -22,6 +22,9 @@ section 12.
       internet: today's folder is 0.6 MB, its environment about 90
       packages, scikit-learn about 10 MB more. Nothing from an earlier
       seminar is needed.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
+      extension: [Setup, step 7](../setup.md#extensions).
     - **You:** nothing to prepare. The numbers on this page come from
       `data/raw/weather.csv` and are the same on every laptop; scikit-learn
       1.9.1, pandas 3.0.
@@ -74,6 +77,9 @@ Everything today's seminar needs is in one zip: the data, the scripts and an `en
     ...
     #     $ conda activate s16
     ```
+
+    `conda: command not found`: install Miniforge as on the
+    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
 5. Switch it on; the prompt starts with `(s16)`.
 

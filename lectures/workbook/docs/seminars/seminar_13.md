@@ -23,6 +23,9 @@ is the proof the seminar is about.
       set, and internet: section 1 downloads today's folder and makes its
       environment, section 9 a second one. Nothing from an earlier seminar
       is needed.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` and Git: [Setup, steps 2–4](../setup.md#shell); your name for
+      Git: [Setup, step 6](../setup.md#github).
     - **You:** nothing to prepare. Today's folder is
       [`weather-s13.zip`](https://github.com/MindaugasSarpis/weather-project/releases)
       on the course repository's Releases page: the weather project with
@@ -90,6 +93,9 @@ Today's folder is a Git repository with one commit. **pytest** runs tests: small
     #     $ conda activate s13
     $ conda activate s13
     ```
+
+    `conda: command not found`: install Miniforge as on the
+    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
 4. pytest is not there yet. `python -m pytest` runs pytest as a module of
    this Python; the answer starts with that Python's path.

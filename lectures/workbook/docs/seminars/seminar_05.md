@@ -20,11 +20,10 @@ file); 15 and 16 can be left out.
 
 ??? info "Before the session"
     - **Room:** VS Code, and Miniforge with `(base)` in the prompt of
-      VS Code's terminal ([Setup](../setup.md)). Internet: today's folder,
-      `weather-s05.zip` on the
-      [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-      and the environment, about 70 MB per laptop. The session needs
-      nothing from any other seminar.
+      VS Code's terminal; a laptop without Miniforge installs it in
+      section 1. Internet: the environment is about 70 MB per laptop, the
+      weather log 2.5 MB. The session needs nothing from any other
+      seminar: it starts in an empty folder.
     - **You:** remove the Python extension from your VS Code beforehand, to
       install it with the room in section 13. Paths are shown for a Mac
       (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`. Keys are
@@ -36,46 +35,65 @@ file); 15 and 16 can be left out.
 
 <!-- 0:00 to 0:15 -->
 
-Today's folder, and one conda environment for the Python and the programs of today.
+An empty folder for today, and one conda environment for the Python and the programs of today.
 
 ---
 
-### 1. Today's folder and an environment { #start }
+### 1. A folder and an environment { #start }
 
 <!-- 0:00 · 15 min -->
 
-Today's folder holds the weather project: the station's log, two programs, a script that makes every result again, and one script with two bugs. A **conda environment** is a folder with one Python and the packages one project needs. Today's needs JupyterLab, the notebook program; it brings about 140 packages with it.
+**conda** installs Python and packages; it comes with **Miniforge**. A **conda environment** is a folder with one Python and the packages one project needs. Today's needs JupyterLab, the notebook program; it brings about 140 packages with it.
 
-1. On the
-   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**, click `weather-s05.zip`. The browser saves it in
-   **Downloads**.
-
-2. In VS Code, **View** > **Terminal**. Unpack the zip into your home
-   folder (`-q`: quietly; `-d ~`: into `~`), then look into it.
+1. In VS Code, **View** > **Terminal**. Check that conda is there.
 
     ```text
-    $ unzip -q ~/Downloads/weather-s05.zip -d ~
-    $ ls ~/weather-s05
-    README.md  data  results  scripts
+    $ conda --version
+    conda 26.7.2
     ```
 
-    Safari unpacks a download by itself: then type
-    `mv ~/Downloads/weather-s05 ~` instead of `unzip`.
+    Any version is fine. The prompt starts with `(base)`: conda's own
+    environment, which stays as it is.
 
-3. **File** > **Open Folder...** > `weather-s05` (in your home folder) >
-   **Open**, then **View** > **Terminal**. The prompt starts with
-   `(base)`: conda's own environment, which stays as it is.
+2. `command not found`? Install Miniforge now, then open a new terminal.
+   Details, and Homebrew if `brew` is missing:
+   [Setup, steps 2–4](../setup.md#shell).
+
+    === "macOS"
+
+        ```text
+        $ brew install --cask miniforge
+        $ conda init zsh
+        ```
+
+    === "Windows"
+
+        ```text
+        PS> winget install --id CondaForge.Miniforge3 -e
+        $ ~/miniforge3/Scripts/conda.exe init bash
+        ```
+
+        The first line in PowerShell (`Start`, type `PowerShell`), the
+        second in VS Code's terminal.
+
+3. An empty folder for today, in your home folder. The files arrive
+   when they are needed.
 
     ```text
+    $ mkdir ~/weather-s05
+    $ cd ~/weather-s05
     $ pwd
     /Users/smilte/weather-s05
-    $ ls scripts
-    clean_export.py  coldest_hour.py  column_stats.py  rebuild.sh
     ```
 
-4. Make the environment `s05` with Python 3.14 and JupyterLab 4.6, from
-   conda-forge. It lists what it will download and asks.
+4. **File** > **Open Folder...** > `weather-s05` (in your home folder) >
+   **Open**, then **View** > **Terminal**: the new terminal starts in the
+   folder.
+
+5. Make the environment `s05` with Python 3.14 and JupyterLab 4.6. conda
+   downloads them from **conda-forge**, the free collection of packages
+   that Miniforge uses: nothing more to install. It lists what it will
+   download and asks.
 
     ```text
     $ conda create -n s05 python=3.14 jupyterlab=4.6
@@ -87,13 +105,13 @@ Today's folder holds the weather project: the station's log, two programs, a scr
     Proceed ([y]/n)?
     ```
 
-5. Press `Enter`. The download takes a few minutes. It ends with:
+6. Press `Enter`. The download takes a few minutes. It ends with:
 
     ```text
     #     $ conda activate s05
     ```
 
-6. Switch it on: the prompt starts with `(s05)`. Each new terminal starts
+7. Switch it on: the prompt starts with `(s05)`. Each new terminal starts
    in `(base)`, so type this line first in each.
 
     ```text
@@ -102,7 +120,7 @@ Today's folder holds the weather project: the station's log, two programs, a scr
     Python 3.14.8
     ```
 
-7. How many packages came with it. `conda list` prints one line per
+8. How many packages came with it. `conda list` prints one line per
    package after three lines of header.
 
     ```text
@@ -145,7 +163,7 @@ The `>>>` prompt: the place to try one line.
     ```
 
 2. Type an expression and press `Enter`: Python prints its value. The
-   mean of the README in Fahrenheit:
+   station's mean temperature, 7.16 °C, in Fahrenheit:
 
     ```pycon
     >>> 2 + 2
@@ -432,7 +450,25 @@ Further reading: [The Python Tutorial, chapters 4 and 5](https://docs.python.org
 
 JupyterLab is a program in the browser; the terminal runs its server.
 
-1. A folder for notebooks, then start JupyterLab in the project folder,
+1. The weather log, from the course's Releases page into `data/raw`.
+   `curl` downloads a file: `-sSL` is quiet, but shows errors and follows
+   GitHub's redirect; `-o` names the file to write. Then look at its
+   first lines.
+
+    ```text
+    $ mkdir -p data/raw
+    $ curl -sSL -o data/raw/weather.csv https://github.com/MindaugasSarpis/weather-project/releases/download/seminar-files/weather.csv
+    $ head -n 3 data/raw/weather.csv
+    time,temp_c,humidity_pct,wind_ms
+    2016-01-01T00:00,-4.4,93,2.5
+    2016-01-01T01:00,-4.8,95,2.6
+    ```
+
+    One reading per hour, 2016 to 2025: the time, the temperature in °C,
+    the humidity in %, the wind in m/s. An hour without a reading has
+    `-999`.
+
+2. A folder for notebooks, then start JupyterLab in the project folder,
    with `(s05)` in the prompt.
 
     ```text
@@ -446,10 +482,10 @@ JupyterLab is a program in the browser; the terminal runs its server.
     The browser opens JupyterLab. The terminal stays busy while it runs:
     leave it open.
 
-2. On the left, the files of the project. Double-click `notebooks`.
-3. In the **Launcher**, under **Notebook**, click **Python 3
+3. On the left, the files of the project. Double-click `notebooks`.
+4. In the **Launcher**, under **Notebook**, click **Python 3
    (ipykernel)**. A file `Untitled.ipynb` opens.
-4. Right-click its tab > **Rename Notebook...**, type `explore.ipynb`,
+5. Right-click its tab > **Rename Notebook...**, type `explore.ipynb`,
    **Rename**.
 
 **Check:** `notebooks/explore.ipynb` in the file list, an empty cell with
@@ -605,7 +641,7 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     (87552, 7.15996550621346)
     ```
 
-5. The README's 7.16: round only what is printed. An `f` before the
+5. The 7.16: round only what is printed. An `f` before the
    quotes puts the value of each `{...}` into the text; `:.2f` gives two
    decimals.
 
@@ -801,8 +837,9 @@ IDLE comes with every Python: a prompt, an editor and a Run key. It shows what a
     print(hours)
     ```
 
-4. **File** > **Save As...**, go to `weather-s05`, then `scripts`,
-   name it `hours.py`, **Save**.
+4. A folder for the scripts: in VS Code's terminal, `mkdir scripts`.
+   Then in IDLE **File** > **Save As...**, go to `weather-s05`, then
+   `scripts`, name it `hours.py`, **Save**.
 5. **Run** > **Run Module** (`F5`). The Shell prints a line with
    `RESTART` and the file's path, then the result:
 
@@ -873,7 +910,15 @@ line.
 
 `coldest_hour.py` should print the coldest hour of the ten years. It has two bugs: one Python reports, one it cannot see.
 
-1. Open `scripts/coldest_hour.py` and run it. An error message, a
+1. Download it into `scripts`, as the weather log in section 7.
+
+    ```text
+    $ curl -sSL -o scripts/coldest_hour.py https://github.com/MindaugasSarpis/weather-project/releases/download/seminar-files/coldest_hour.py
+    $ ls scripts
+    coldest_hour.py  hours.py  mean_temp.py
+    ```
+
+2. Open `scripts/coldest_hour.py` and run it. An error message, a
    **traceback**, is read from the bottom: the last line says what, the
    lines above it where.
 
@@ -886,7 +931,7 @@ line.
     NameError: name 'coldest_tme' is not defined. Did you mean: 'coldest_time'?
     ```
 
-2. `Ctrl+click` (macOS `Cmd+click`) the path: VS Code opens line 13.
+3. `Ctrl+click` (macOS `Cmd+click`) the path: VS Code opens line 13.
    Change `coldest_tme` to `coldest_time`, save, run.
 
     ```text
@@ -896,10 +941,10 @@ line.
 
     No message, and a temperature that cannot be.
 
-3. A **breakpoint** stops the script at a line. Click left of line 10
+4. A **breakpoint** stops the script at a line. Click left of line 10
    (a red dot), right-click it > **Edit Breakpoint...**, type
    `temp < -900`, `Enter`: it stops only when that is true.
-4. `F5` > **Python Debugger** > **Python File**. The script stops on line
+5. `F5` > **Python Debugger** > **Python File**. The script stops on line
    10. In **Run and Debug**, **Variables** > **Locals**:
 
     ```text
@@ -912,7 +957,7 @@ line.
 
     The first `-999` beats every real temperature.
 
-5. `Shift+F5` stops the debugger. Click the red dot to remove it. Change
+6. `Shift+F5` stops the debugger. Click the red dot to remove it. Change
    line 9 so that `-999` never counts, save, run.
 
     ```python
@@ -1148,16 +1193,18 @@ A package from conda lives in the environment's folder. `environment.yml` lists 
       - python=3.14
     ```
 
-5. In `README.md`, under the paragraph of **Result**, add two lines,
-   save.
+5. A `README.md` says what the folder is and what came out. New file
+   `README.md` in the folder, type four lines, save.
 
     ```text
-    Checked in Python, `scripts/mean_temp.py`: 7.16 °C over 87 552 hours.
-    The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
+    # Weather station, Seminar 5
+
+    The mean, `python scripts/mean_temp.py`: 7.16 °C over 87 552 hours.
+    The coldest hour, `python scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
     ```
 
-**Check:** `environment.yml` with two dependencies, and two new lines in the
-README.
+**Check:** `environment.yml` with two dependencies, and a `README.md` with
+the two results.
 
 !!! question "Task: the mean wind"
     Add a function `wind_of(line)` to `weather.py` (the fourth value,
@@ -1213,9 +1260,9 @@ README.
 | use a module | `import weather`, `weather.temp_of(line)` |
 | write the environment down | `conda env export --from-history -f environment.yml` |
 
-The files of today: `notebooks/explore.ipynb`, `scripts/hours.py`,
-`mean_temp.py`, `weather.py`, `now.py`, the repaired `coldest_hour.py`,
-`environment.yml`.
+The files of today: `data/raw/weather.csv`, `notebooks/explore.ipynb`,
+`scripts/hours.py`, `mean_temp.py`, `weather.py`, `now.py`, the repaired
+`coldest_hour.py`, `environment.yml`, `README.md`.
 
 ---
 
@@ -1261,7 +1308,8 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
 
 `open(path, "w")` opens a file for writing; `with` closes it at the end of the block.
 
-1. At the end of `mean_temp.py`, add three lines, save, run.
+1. A folder for results, in the terminal: `mkdir results`. Then at the
+   end of `mean_temp.py`, add three lines, save, run.
 
     ```python
     with open("results/mean_temp.txt", "w") as out:
@@ -1277,7 +1325,7 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
     mean 7.15997 °C
     ```
 
-    `\n` ends a line. No `results` folder: `mkdir results` first.
+    `\n` ends a line.
 
 **Check:** `results/mean_temp.txt` with two lines.
 

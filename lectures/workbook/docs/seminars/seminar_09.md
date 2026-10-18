@@ -21,6 +21,9 @@ section 11 stays.
     - **Room:** VS Code and Miniforge on every laptop (Seminar 4, or the
       [Setup](../setup.md) page), and internet: today's folder and its
       packages download in section 1, about 170 MB the first time.
+    - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
+      extension: [Setup, step 7](../setup.md#extensions).
     - **You:** nothing to prepare. Today's folder is the same for everyone,
       so every number on this page is the number in the room.
     - **Keys** are written for Windows, macOS in brackets.
@@ -71,6 +74,9 @@ Today's folder holds the data, the scripts so far and `environment.yml`; nothing
     ...
     #     $ conda activate s09
     ```
+
+    `conda: command not found`: install Miniforge as on the
+    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
 5. Switch it on. The prompt then starts with `(s09)`.
 
