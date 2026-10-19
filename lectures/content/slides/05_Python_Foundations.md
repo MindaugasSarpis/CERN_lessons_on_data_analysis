@@ -111,7 +111,7 @@ time,temp_c,humidity_pct,wind_ms
 <div class="note-text mt-md">One weather station, one line of text per hour: the time, the temperature in °C, the humidity in % and the wind in m/s, separated by commas.</div>
 
 <!--
-**Say:** today's examples come from this file; Part 3 computes 7.16 in eleven lines of Python.
+**Say:** today's examples come from this file; Part 3 computes 7.16 in twelve lines of Python.
 **Ask:** what would a mean over all rows give, with the −999 hours counted as temperatures? Lower: 5.78.
 (~2 min)
 -->
@@ -910,7 +910,7 @@ Figure          the image
    └─ Line2D    one line of data
 ```
 
-`import` brings in a package that is not part of Python (Part 4). `plt.subplots()` hands back two objects, named `fig` and `ax`.
+`import` (Part 5) brings in a package that is not part of Python (Part 6). `plt.subplots()` hands back two objects, named `fig` and `ax`.
 
 </div>
 
@@ -1515,7 +1515,7 @@ $ python scripts/mean_temp.py
 <!--
 **Do:** start from the loop of all rows, then click: the temperature gets a name, and three lines leave out the mark.
 **Ask:** how many rows will be counted now? 87 672 − 120.
-**Say:** our own eleven lines give Smiltė's number, and agree with a program written by someone else.
+**Say:** our own twelve lines give Smiltė's number, and agree with a program written by someone else.
 (~3 min)
 -->
 
@@ -1974,6 +1974,7 @@ $ python scripts/mean_temp.py
 <!--
 **Do:** first step: `mean_temp.py` of Part 3; second step: the same script with the module.
 **Say:** what is left in the script is its own question. How a line is cut and what −999 means is in `weather.py`.
+**If asked:** `temps` is not in the module because `Hour` keeps the time beside the temperature; a list of numbers would lose it.
 (~2 min)
 -->
 

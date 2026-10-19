@@ -7,7 +7,7 @@ written once as a function and the values of one hour kept in a class,
 modules and `import`, and where the rest of Python comes from, with which
 version. Every piece of code grows on its slide one line, or one result,
 per click. The example is the weather station's `weather.csv`, introduced
-on slide 4; Part 3 computes its mean, 7.16 °C, in eleven lines, and Part 5
+on slide 4; Part 3 computes its mean, 7.16 °C, in twelve lines, and Part 5
 moves the steps into a module `weather.py` that every script imports. The
 tools (the interpreter, a notebook, an editor, scripts) are shown live in
 Seminar 5.
