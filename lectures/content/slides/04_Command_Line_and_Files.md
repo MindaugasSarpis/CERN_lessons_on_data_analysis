@@ -2004,7 +2004,7 @@ The 256 bits of SHA-256, computed from all 2 515 215 bytes. The same bytes give 
 
 ## 🧬 **One byte changed**
 
-Another 64 digits, all of them, as Lecture 03 showed: `6.3` against `6.4` in one row.
+Another 64 digits, all of them, as with the CRLF copy of Lecture 03; here `6.3` against `6.4` in one row.
 
 </div>
 

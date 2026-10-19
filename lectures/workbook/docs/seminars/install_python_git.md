@@ -105,7 +105,7 @@ conda's `base` environment, shown as `(base)` in the prompt.
 
 ## 2. Make the shell the terminal of VS Code { #profile }
 
-1. Start VS Code, **File** > **Open Folder...** > `weather-project`.
+1. Start VS Code, **File** > **Open Folder...** > `weather-s04`.
 2. Command Palette, `Ctrl+Shift+P` (macOS `Cmd+Shift+P`):
 
     ```text

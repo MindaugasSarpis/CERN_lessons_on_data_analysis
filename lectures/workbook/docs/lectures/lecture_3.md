@@ -79,7 +79,7 @@ time. To jump, type the slide number and press Enter.
 - **Do not cut** slide 3 (the table of 148 bytes) or slide 85 (the Recap,
   which names all 148). Slide 69 (Reading a Hexdump) is where the count is
   done; reach it by about minute 65.
-- **Do not cut** slides 72–79, the terminal. The seminar uses exactly these
+- **Do not cut** slides 72–79, the terminal. Seminar 4 uses exactly these
   commands.
 - **Slides 10–34 are fast.** Most are one word or one picture: counting in
   unary, binary and decimal. Together they take about ten minutes.
@@ -208,9 +208,9 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 3](../seminars/seminar_03.md) works in the terminal of VS Code with
-the commands of slides 72–79, in zsh or Git Bash: it moves around, makes and
-changes folders and files, and measures files to the byte.
+[Seminar 3](../seminars/seminar_03.md) opens the same files as bytes in VS
+Code's Hex Editor and names the 148 bytes of `daily.csv`; the commands of
+slides 72–79 are typed in Seminar 4.
 
 ## Parked slides
 

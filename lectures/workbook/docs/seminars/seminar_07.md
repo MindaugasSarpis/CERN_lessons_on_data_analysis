@@ -208,7 +208,7 @@ The file lists what was asked for; any laptop makes the same environment from it
 
 <!-- 0:25 to 0:55 -->
 
-A function gives a block of steps a name. Here the mean becomes a function, and the csv module reads the file.
+The mean becomes a function, as `temp_of` and `mean` were in Seminar 5, and the csv module reads the file.
 
 Further reading: [The Python Tutorial, Defining functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions).
 
@@ -218,7 +218,7 @@ Further reading: [The Python Tutorial, Defining functions](https://docs.python.o
 
 <!-- 0:25 · 10 min -->
 
-`def` gives a block a name and inputs; `return` hands a value back.
+As in Seminar 5: `def` gives a block a name and inputs; `return` hands a value back.
 
 1. New file `scripts/column_mean.py`. Type, save.
 
@@ -657,7 +657,7 @@ The year is the first four characters of `time`.
 
 ---
 
-### 12. Write the answer to a file { #commit }
+### 12. Write the answer to a file { #answer }
 
 <!-- 1:40 · 15 min -->
 
@@ -1005,5 +1005,5 @@ Harder questions on the same arrays, for a room that is done early. Each answer 
   any laptop; the answer is a file the script writes again at any time.
 - 🔧 **Tool-agnostic:** the same `conda` and `python` lines on macOS and
   Windows; a path from `Path(__file__)` works from any folder.
-- 📁 **Files:** the file read three ways (lines, csv, NumPy) to the same
+- 📁 **Files:** the file read two ways (csv, NumPy) to the same
   7.15997; made files go to `results/`, and the scripts make them again.

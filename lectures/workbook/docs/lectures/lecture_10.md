@@ -50,6 +50,7 @@ a calculator; then it is carried to the D⁰ peak of `D0_KPi.csv`.
 
 ## The results of the lecture
 
+| Quantity | Value |
 |--|--|
 | Pendulum, slope | a = 4.010 ± 0.037 s²/m |
 | Pendulum, intercept | b = 0.009 ± 0.019 s², correlation with a: −0.88 |
@@ -93,7 +94,7 @@ time. To jump, type the slide number and press Enter.
 | Skip | Slides |
 |--|--|
 | Learning Objectives | 4 |
-| The Same in NumPy: the seminar types it | 23 |
+| The Same in NumPy | 23 |
 | The Slope Is a Sum over the Data | 25 |
 | χ² Around Its Minimum | 27 |
 | The Covariance Matrix | 29 |
@@ -115,7 +116,7 @@ time. To jump, type the slide number and press Enter.
   26 and 31 (the uncertainties and g), 39–41 (the update rule, the steps by
   hand, the learning rate that is too large), 53 and 55 (the D⁰ fit and the
   answer to the opening table), and **71–72, the closing: do not cut**. The
-  seminar computes the pendulum numbers, and the closing answers the question
+  seminar computes the five sums on the ten yearly means, and the closing answers the question
   the lecture opens on.
 - **Slide 2**: take a vote on the four rows and write it on the board. Most
   pick the last row, nearest the PDG value. Slide 55 answers it: Lecture 9's
@@ -175,7 +176,7 @@ questions, with their answers:
 to 5. Every student fits a straight line to the ten yearly means by the
 closed formulas of the lecture (−0.6 ± 0.8 °C per decade) and a cosine to
 the 3648 daily means (amplitude 11.18 °C, coldest on 16 January), reads the
-residuals, commits and pushes.
+residuals, and writes both results into the README.
 
 ## Take-aways
 

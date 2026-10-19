@@ -46,8 +46,8 @@ valley. The counts of each rule are in `results/hill.txt`.
 
 ## How to rebuild
 
-In the project folder, in zsh on macOS or Git Bash on Windows, with Python
-from Miniforge; the script needs no package beyond it.
+In the project folder, in zsh on macOS or Git Bash on Windows, with the
+environment of `environment.yml` active (`clean_hill.py` needs pandas).
 
     ./scripts/rebuild.sh
 

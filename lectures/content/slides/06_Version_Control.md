@@ -784,7 +784,7 @@ hideInToc: true
 
 # First **Commits**
 
-The weather project of Lecture 4 goes into a repository, one commit at a time.
+The weather project of Lecture 4, with a shorter `rebuild.sh`, goes into a repository, one commit at a time.
 
 <!--
 **Say:** each step once in the Source Control view and once typed: the button and the command are the same thing.
@@ -2542,7 +2542,7 @@ $ shasum -a 256 data/processed/daily.csv
 
 ## ❌ **Not the promised file**
 
-The README promises `daily.csv` with SHA-256 `33fe5e77…f705483d`. With `6,4` the rebuild gives `58709abc…fb40d36b`: the copy with one digit changed from Lecture 4.
+The README promises `daily.csv` with SHA-256 `33fe5e77…f705483d`. With `6,4` the rebuild gives `58709abc…fb40d36b`: the cleaned copy of the export with `6,4`.
 
 </div>
 

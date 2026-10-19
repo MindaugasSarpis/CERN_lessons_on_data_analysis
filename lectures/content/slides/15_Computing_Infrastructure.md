@@ -108,11 +108,10 @@ hideInToc: true
 
 - **Windows:** Task Manager (`Ctrl+Shift+Esc`), tab **Performance**. **CPU** shows the cores, **Memory** the total
 - **macOS:** Apple menu, **About This Mac**: the chip and the memory
-- **Any system**, in zsh or in PowerShell:
+- **Any system**, in zsh and in Git Bash:
 
 ```text
-% python3 -c "import os; print(os.cpu_count())"
-PS> python -c "import os; print(os.cpu_count())"
+$ python -c "import os; print(os.cpu_count())"
 ```
 
 It prints `12` on this machine.

@@ -51,8 +51,7 @@ problem it cannot solve.
 
 ## The numbers of the lecture
 
-Every number on the slides was computed. The ones the room meets again in
-the seminar:
+Every number on the slides was computed:
 
 | Where | Result |
 |--|--|
@@ -107,7 +106,7 @@ time. To jump, type the slide number and press Enter.
   collect two or three attempts, check one row of each aloud, and leave it
   open. Slides 57–58 settle it.
 - **Slides 17–19 are done with the room.** Steps 1 to 6 on the board, each
-  number said aloud. In the 90-minute plan the run stops after epoch 2: say
+  number said aloud. If the clock is behind, the run stops after epoch 2: say
   its end, ten updates and then **w** = (2, 1), *b* = −2.
 - **Slide 27** (What the Theorem Does Not Say): say aloud that Rosenblatt
   wrote his rule down and did not derive it. Slide 43 derives it from the
@@ -118,7 +117,7 @@ time. To jump, type the slide number and press Enter.
 - **Slide 21** (The Rule in Python): after the run, change `y` to
   `[0, 1, 1, 1]` and run again: OR, four updates, `w [1. 1.]  b 0.0`.
 - **Slide 47** (The Training Loop): after the run, set `eta` to `0.05` and
-  to `20`. This replaces slide 51 in the 90-minute plan.
+  to `20`. This replaces slide 51 when it is skipped.
 - **Slides 24–26** (the proof): if they are skipped, say what the theorem
   bounds, the number of updates, and that slide 27 shows what happens
   without its assumption.
@@ -159,7 +158,7 @@ questions, with their answers:
 to 5. Every student writes a neuron that predicts frost at 06:00 from the
 temperature and humidity at 18:00 the evening before, trains it on 2016 to
 2022, tests it on 2023 to 2025 (95.9 ± 0.6 % right), compares it with a
-one-line rule, commits and pushes.
+one-line rule, and writes the answer into the README.
 
 ## Take-aways
 

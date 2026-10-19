@@ -6,7 +6,7 @@
 
 **Today's goal:** How sure is 7.16? Every student gives the mean temperature of the weather
 project with an honest uncertainty, 7.16 ± 0.22 °C, and the probability of
-a frost hour in each month, and writes both into the README.
+a frost hour in each month, and writes the first into the README.
 
 Everything is typed in VS Code: the scripts in the editor, the runs in its
 terminal (zsh on macOS, Git Bash on Windows, with today's environment

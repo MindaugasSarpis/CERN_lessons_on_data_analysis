@@ -1,7 +1,8 @@
 # 7: Python for Data & NumPy
 
-Lecture 6 gave the language: values, types, loops, lists, dicts, strings and
-the traceback, and one line of the data file was turned into four numbers.
+Lecture 5 gave the language: values, types, loops, lists, dicts, strings,
+functions, one class and `import`, and one line of the data file was turned
+into four numbers.
 Lecture 7 reads the whole file, 91 583 rows, and computes with it. It does
 so twice: with lists and a loop, and then with a NumPy array, and it
 measures what the second way gains.
@@ -12,7 +13,7 @@ measures what the second way gains.
    questions: how many rows, the mean of `M`, the number of valid `TAU`, the
    mean of the valid `TAU`. The room guesses the fourth from the first three
    rows (0.41, 0.19 and 0.18 ps) and writes the guess on the board.
-2. **Functions** — `def`, parameters and arguments, a default value,
+2. **Functions, again** — `def`, parameters and arguments, a default value,
    `return` against `print`, local names; the period of a pendulum and the
    parsing of one line as functions.
 3. **Exceptions** — what a traceback through a function shows; `try` and
@@ -20,14 +21,14 @@ measures what the second way gains.
    row; why a bare `except:` hides errors.
 4. **Files & the csv module** — reading and writing a text file with `with
    open` (91 584 lines: question 1); the working directory, run in zsh and in
-   PowerShell; `pathlib`; `csv.reader`; four columns into four lists; a mean
+   Git Bash; `pathlib`; `csv.reader`; four columns into four lists; a mean
    and a count by loop (questions 2 and 3); the script as two functions.
 5. **From lists to arrays** — what one step of the loop costs; a list and an
    array in memory; installing and importing NumPy; the same task with an
    array; the two versions timed on the file.
 6. **`dtype` & shape** — one type per array; `int8` wrapping around, worked
    by the weights of Lecture 3; `float32` against `float64` on the sum of
-   the mass column, with the 1880.6490478515625 of Lecture 3; rows and
+   the mass column, with the float32 1880.6490478515625; rows and
    columns.
 7. **Indexing, slicing & masks** — index and slice in one and two
    dimensions; a slice is a view; a comparison gives a mask; `TAU != -100`
@@ -41,8 +42,8 @@ measures what the second way gains.
 9. **Summary numbers & the histogram** — the mean and the standard
    deviation by hand and as array code, on the nine values of *g*; the four
    columns in numbers; `np.loadtxt` and its arguments; text against binary
-   on disk; `np.histogram` on the 11 masses that Lecture 6 counted with a
-   dict, then the mass column in 20 bins; the whole analysis as one script.
+   on disk; `np.histogram` on the first 11 masses, counted by hand in bins
+   of 25, then the mass column in 20 bins; the whole analysis as one script.
    The Recap answers the four questions and sets the loop against the array.
 
 ## The lecture, part by part
@@ -88,9 +89,8 @@ time. To jump, type the slide number and press Enter.
   and the Recap.
 - **Slide 7** (Parameters, Arguments, Defaults) stays in: `delimiter=","`
   and `skiprows=1` in `np.loadtxt` are arguments given by name.
-- **Slides 6–8** are typed live in VS Code, in a scratch file.
 - **Slide 20** (A Path Starts at the Working Directory) is done live, in
-  zsh or in PowerShell: run the script from the project folder, then
+  zsh or in Git Bash: run the script from the project folder, then
   `cd scripts` and run it again. The prompt shows the folder; the message is
   the same on both systems.
 - **Slides 27, 31 and 63** show times measured on one laptop: an Apple M2
@@ -149,8 +149,8 @@ questions, with their answers:
 [Seminar 7 · NumPy](../seminars/seminar_07.md) works on the weather project of Lectures
 1 to 5. Every student gives the project a conda environment with NumPy,
 written down in `environment.yml`; reads `weather.csv` with functions and
-then as one NumPy array; finds the coldest day and the mean of each year;
-commits and pushes.
+then as one NumPy array; finds the coldest day and the mean of each year, and writes
+the answer to `results/yearly_temp.txt`.
 
 ## Take-aways
 

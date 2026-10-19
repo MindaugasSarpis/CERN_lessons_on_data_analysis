@@ -74,15 +74,15 @@ scikit-learn. To jump, type the slide number and press Enter.
 | The ROC curve by hand, its area, the ROC of the test rows | 39–41 |
 | Cross-Validation | 43 |
 | Learning Without Labels, the whole section | 46–51 |
-| scikit-learn, the whole section. Seminar 16 does it in its section 8 | 52–55 |
+| scikit-learn, the whole section. Seminar 16 does it in sections 2 and 9–11 | 52–55 |
 | From Two Classes to Many | 57 |
 | Generating Text. Show its output on slide 60 | 59 |
 | Keeping the Work Reproducible | 65 |
 
 - **Do not cut** slides 12–16 (the four steps and the whole pass), 21–25
   (the training run and the seeds that fail) or 28–33 (the split, the
-  network on the file, the test). The seminar types this code and repeats
-  these numbers.
+  network on the file, the test). The seminar reuses the split of slides 28–33 on the weather
+  data.
 - **Slides 7 and 12–18 are one worked example.** The nine weights and the
   point of slide 7 are used on every one of them. Write the weights on the
   board at slide 7 and leave them there.
@@ -149,8 +149,8 @@ questions, with their answers:
 [Seminar 16 · Machine Learning](../seminars/seminar_16.md) works on the weather project
 of Lectures 1 to 5. Every student adds scikit-learn to the environment,
 builds a table of days, measures two baselines, trains a linear model and a
-tree on 2016 to 2023, tests them once on 2024 and 2025, and pushes the
-errors in °C.
+tree on 2016 to 2023, tests them once on 2024 and 2025, and writes the
+errors in °C into the README.
 
 ## Further reading
 

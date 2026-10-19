@@ -28,7 +28,7 @@ end, then runs the film reel from the cosmos down to the LHCb detector.
 4. **How this course works**: the lecture and the seminar of each Tuesday, the
    schedule, the path of the course (VS Code and Markdown, files, the command
    line in zsh on macOS and Git Bash on Windows, with package managers and
-   conda environments, Git, Python, then data analysis), the learning
+   conda environments, Python, Git, then data analysis), the learning
    outcomes, what "done" means each week, habits that work.
 5. **Seminars & your project**: the grade is one project of your own, graded
    on the four aims; what you hand in; open data and practice files; the

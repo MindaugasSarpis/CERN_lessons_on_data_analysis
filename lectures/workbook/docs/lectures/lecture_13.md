@@ -71,8 +71,8 @@ two differ, and once where it is the same (`python`, `pip`, `git`; on macOS
 | `scripts/report.py` | the cleaned table, `fit.json`, the plot | `results/report.md` |
 
 `run_all.py` at the top of the project runs the tests and then every stage
-whose output is out of date. The files are those of
-[Seminar 13](../seminars/seminar_13.md), where they can be downloaded.
+whose output is out of date. The files are the
+`workflows_*` files of the workbook's data folder.
 
 The numbers that the slides quote, all from one run on macOS with Python
 3.13.9, pandas 3.0.6, NumPy 2.5.3, Matplotlib 3.11.2, SciPy 1.18.1 and
@@ -168,9 +168,7 @@ time. To jump, type the slide number and press Enter.
 Slides taken out of this deck (A Diagram Git Can Compare; pre-commit) are
 kept in `lectures/content/parked/13_Reproducible_Workflows.md`.
 
-Before the session, follow the page of [Seminar
-13](../seminars/seminar_13.md) once on a copy of your project folder. The
-result is the project that the slides show. Start the local copy of the
+Start the local copy of the
 slides with `node scripts/serve-local.mjs 8123`, then open
 `http://localhost:8123/13-reproducible-workflows/`.
 

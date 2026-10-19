@@ -71,8 +71,8 @@ M,PT,TAU,IPCHI2
 </div>
 
 <!--
-Speaker: the file is data/raw/D0_KPi.csv, the one Lecture 04 ran
-column_stats.py on. Lecture 05 split one of its lines by hand. Write the four
+Speaker: the file is data/raw/D0_KPi.csv, a second file with four columns;
+the column_stats.py of Lecture 04 reads it too. Write the four
 questions on the board, and next to question 4 the guesses of the room. Most
 will say about 0.26 ps, the mean of the three rows. Anyone who remembers
 0.00098 ns from column_stats.py is right: then ask why that is larger than
@@ -132,12 +132,12 @@ hideInToc: true
 
 # **Functions**
 
-Lecture 05 turned one line of the file into four numbers: strip, split, `float`. The file has 91 583 such lines, so the steps need a name that can be called again.
+Lecture 05 wrote `temp_of(line)` for one line of `weather.csv`. This file has 91 583 lines of four numbers: the same functions, now over a whole file.
 
 <!--
-Speaker: so far every script was a list of steps run once from top to bottom.
-A function gives a group of steps a name, so that they can be run again with
-other values. (~1 min)
+Speaker: `def`, `return` and a module are known from Lecture 05; the next
+slides apply them to this file, so go quickly over what the room knows.
+(~1 min)
 -->
 
 ---
@@ -722,8 +722,7 @@ The file then holds one line: `rows 91583`.
 </div>
 
 <!--
-Speaker: 91 584 agrees with the line count of Lecture 04, wc -l in zsh and
-(Get-Content ...).Count in PowerShell. Write 91 583 next to question 1. repr
+Speaker: 91 584 agrees with wc -l, the same line in both shells. Write 91 583 next to question 1. repr
 shows the line break that print would turn into an empty line. open gives a
 file object; the for loop asks it for one line at a time. (~3 min)
 -->
@@ -743,10 +742,10 @@ hideInToc: true
 ## 🍎 **macOS · zsh**
 
 ```text
-% python3 scripts/first_line.py
+% python scripts/first_line.py
 M,PT,TAU,IPCHI2
 % cd scripts
-% python3 first_line.py
+% python first_line.py
 FileNotFoundError: [Errno 2] No such
 file or directory: 'data/raw/D0_KPi.csv'
 ```
@@ -755,13 +754,13 @@ file or directory: 'data/raw/D0_KPi.csv'
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🪟 **Windows · PowerShell**
+## 🪟 **Windows · Git Bash**
 
 ```text
-PS> python scripts/first_line.py
+$ python scripts/first_line.py
 M,PT,TAU,IPCHI2
-PS> cd scripts
-PS> python first_line.py
+$ cd scripts
+$ python first_line.py
 FileNotFoundError: [Errno 2] No such
 file or directory: 'data/raw/D0_KPi.csv'
 ```
@@ -772,13 +771,13 @@ file or directory: 'data/raw/D0_KPi.csv'
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The script did not change. The folder did, and the prompt shows it: it ends in `scripts %` in zsh and in `\scripts>` in PowerShell. A relative path begins at the working directory, the folder `pwd` prints, not at the folder of the script. The **Run** button of VS Code starts in the folder that is open. So: open the project folder, run from it, write every path from it.
+The script did not change. The folder did, and the prompt shows it: it ends in `scripts %` in zsh and in `scripts $` in Git Bash. A relative path begins at the working directory, the folder `pwd` prints, not at the folder of the script. The **Run** button of VS Code starts in the folder that is open. So: open the project folder, run from it, write every path from it.
 
 </div>
 
 <!--
 Speaker: do both runs live, in either shell; cd scripts is the same line in
-both. This is the cd of Seminar 3, and the prompt is the one read in Lecture
+both. This is the cd of Seminar 4, and the prompt is the one read in Lecture
 04. The message is the same on both systems, letter for letter: Python
 prints the path as the script wrote it. An absolute path such as
 C:\Users\smilte\Documents\... exists on one laptop only and does not go into a
@@ -819,7 +818,7 @@ print(path.stat().st_size)   # 3926142
 - `/` joins the parts. On Windows the first line prints `data\raw\D0_KPi.csv`, and the script is the same on every system
 - A string knows nothing about folders and endings. A `Path` has them as attributes
 - `exists()` answers before `open` fails
-- `st_size` is the size in bytes: `wc -c` in zsh, `(Get-Item …).Length` in PowerShell
+- `st_size` is the size in bytes: `wc -c` in both shells
 - `open(path)` takes a `Path` wherever it takes a string
 
 </div>
@@ -980,7 +979,7 @@ print(n_valid, len(TAU) - n_valid)
 | Rows with `TAU` = −100 | 49 |
 | Mean of the valid `TAU` | open: the guess stays on the board |
 
-The mean of `M` lies at the D⁰ peak near 1865 MeV/c². One of the 49 is the line Lecture 05 split by hand: `1818.1002,2978.644,-100.0,9901.186`.
+The mean of `M` lies at the D⁰ peak near 1865 MeV/c². One of the 49 is the line `1818.1002,2978.644,-100.0,9901.186`.
 
 </div>
 
@@ -1183,8 +1182,7 @@ hideInToc: true
 ## ✏️ **Install, import, first array**
 
 ```text
-% python3 -m pip install numpy
-PS> python -m pip install numpy
+$ conda install numpy=2.5
 ```
 
 ```python
@@ -1202,7 +1200,7 @@ print(t10.sum())     # 32.68
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`pip` is the installer that comes with the Python of Seminar 4. It fetches the library from the Python Package Index, pypi.org. After the name of the program the line is the same in both shells. `np` is the name everyone gives the library on import.
+`conda` installs the library into the project's environment from conda-forge, as Seminar 7 does; the line is the same in both shells. `np` is the name everyone gives the library on import.
 
 </div>
 
@@ -1479,7 +1477,7 @@ Near 1.7 × 10⁸ the step from one `float32` to the next is 16. Towards the end
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-1880.6490478515625 is the float32 of 1880.649 from Lecture 03, The Steps Between Floats. The step there was 0.000 12; near the total it is 16. `.sum()` adds in pairs, so its partial sums stay small for longer. Store in `float32` when 7 digits are enough, and sum in `float64`.
+1880.6490478515625 is the float32 nearest to 1880.649: the steps between floats of Lecture 03. The step there was 0.000 12; near the total it is 16. `.sum()` adds in pairs, so its partial sums stay small for longer. Store in `float32` when 7 digits are enough, and sum in `float64`.
 
 </div>
 
@@ -1801,7 +1799,7 @@ print(TAU.mean() * 1000)   # -52.52210273908192
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The guess was right about a typical row: the median is 0.27 ps. A few long decay times pull the mean up to 0.98 ps. The −52.5 ps is the −0.0525 ns that `column_stats.py` printed in Lecture 04, with 49 × (−100) in the sum. One mask takes it out.
+The guess was right about a typical row: the median is 0.27 ps. A few long decay times pull the mean up to 0.98 ps. The −52.5 ps is the −0.0525 ns that `column_stats.py` prints for this file, with 49 × (−100) in the sum. One mask takes it out.
 
 </div>
 
@@ -1809,8 +1807,8 @@ The guess was right about a typical row: the median is 0.27 ps. A few long decay
 Speaker: this is question 4. Take the guesses from the board first, then
 show the left card line by line. Ask why the mean is four times the three
 rows before showing the table: the answer is the long tail, 1 453 rows above
-10 ps. Lecture 05 saw the other half of the story on four rows: one -100
-made their mean -24.9998. Here 49 marks in 91 583 rows, 0.05 %, give the
+10 ps. Lecture 05 saw the same on weather.csv: 120 rows of -999 pulled the
+mean from 7.16 to 5.78. Here 49 marks in 91 583 rows, 0.05 %, give the
 mean the wrong sign. (~4 min)
 -->
 
@@ -1975,7 +1973,7 @@ print(g.mean())       # 9.795148016389398
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The nine rows of `data/processed/pendulum_script.csv`, the table `clean_pendulum.py` writes. Lecture 05 divided each `t10` by 10 inside a `for` loop; `t10 / 10` does all nine. *T* = 2π√(*L*/*g*) solved for *g* is *g* = 4π²*L*/*T*², and the line for `g` is that formula as written on paper. Nine values between 9.70 and 9.93 m/s², with a mean of 9.80.
+The nine rows of `data/processed/pendulum_script.csv`, the table `clean_pendulum.py` writes. A `for` loop would divide each `t10` by 10 in turn; `t10 / 10` does all nine. *T* = 2π√(*L*/*g*) solved for *g* is *g* = 4π²*L*/*T*², and the line for `g` is that formula as written on paper. Nine values between 9.70 and 9.93 m/s², with a mean of 9.80.
 
 </div>
 
@@ -2455,7 +2453,7 @@ print(np.histogram([1850, 1925, 1930], bins=4, range=(1825, 1925))[0])   # [0 1 
 
 <div class="card card-primary card-glass pad-compact">
 
-The first 11 masses of the file. Lecture 05 counted them with a dict and `m // 25`: 2, 4, 3 and 2. One call gives the same counts, and the `edges`: four bins have five.
+The first 11 masses of the file. Counted by hand in bins of 25: 2, 4, 3 and 2. One call gives the same counts, and the `edges`: four bins have five.
 
 </div>
 

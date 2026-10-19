@@ -249,8 +249,8 @@ The length is written $\ell$ today. The letter $L$ is the likelihood.
 </div>
 
 <!--
-Speaker: the table is the 97-byte pendulum.csv that scripts/clean_pendulum.py
-writes, run in Lecture 04 and Seminar 4. Ask the room what they would plot to
+Speaker: the table is the 97-byte pendulum.csv of the workbook's data folder.
+Ask the room what they would plot to
 get g. (~2 min)
 -->
 

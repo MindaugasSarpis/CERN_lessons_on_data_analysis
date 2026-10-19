@@ -121,9 +121,10 @@ The opening slide (3) asks four questions about last week's histogram.
   (the likelihood of many measurements, the mean, the weighted mean and its
   uncertainty). Slide 20 carries the two rules that every later derivation
   uses.
-- **Slides 40, 41, 51 and 64 are repeated in the seminar** as typed
-  scripts, with the same numbers. Slides 40 and 51 are skipped above; if
-  the clock is behind, slide 41 goes next.
+- **Slides 37–40 come back in the seminar** on the weather hours: the
+  correlation of neighbours, the standard error, and s/√N checked by
+  simulation. Slides 40 and 51 are skipped above; if the clock is behind,
+  slide 41 goes next.
 - **Slides 7, 28, 32 and 51 run live.** Each has a code block with a play
   button. The first run loads NumPy into the browser and takes some seconds:
   run slide 7 once before the session. Then change one number: the seed on
@@ -177,7 +178,7 @@ questions, with their answers:
 [Seminar 9 · Statistics](../seminars/seminar_09.md) works on the weather project of Lectures 1
 to 5. Every student gives the mean temperature of the weather project with
 an honest uncertainty, 7.16 ± 0.22 °C, and the probability of a frost hour
-in each month, commits the scripts and pushes them.
+in each month, and writes the first into the README.
 
 ## Further reading
 

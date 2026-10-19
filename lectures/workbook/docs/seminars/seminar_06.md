@@ -19,8 +19,8 @@ each change.
 **If time runs short:** stop after section 11; sections 13 to 16 are optional.
 
 ??? info "Before the session"
-    - **Room:** Git and Miniforge on every laptop (the [Setup](../setup.md)
-      page), internet, and a mailbox each student can open (GitHub sends a
+    - **Room:** Git and Miniforge on every laptop (installed in Seminar 4;
+      the [Setup](../setup.md) page for a laptop that missed it), internet, and a mailbox each student can open (GitHub sends a
       code). Nothing from earlier seminars is needed: the clone and one zip
       bring every file.
     - **Missing a tool?** Git and Miniforge: [Setup, steps
@@ -529,8 +529,8 @@ flowchart LR
 1. The work of Seminar 5 comes as one zip: on the
    [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
    under **Assets**, click `weather-s06.zip`. It holds a folder
-   `weather-s06` with the Python scripts, the notebook and the environment
-   file of Seminar 5. The clone has the same name, so unzipping it into the
+   `weather-s06` with the module, scripts, notebook and environment file
+   of Seminar 5. The clone has the same name, so unzipping it into the
    home folder puts the files into the clone.
 
     ```text

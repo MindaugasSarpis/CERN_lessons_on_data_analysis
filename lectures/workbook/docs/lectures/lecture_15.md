@@ -77,11 +77,10 @@ time. To jump, type the slide number and press Enter.
 
 - **Do not cut** slides 6–8 (the loop, the noise, NumPy), 17–21 (the pool
   and the test of Amdahl's law), 30 and 32 (the bytes of a table) or 41–43
-  (streams, background, the log). The seminar types and runs exactly these.
-- **Slides 6–8 and 19 are shown live:** `python scripts/time_sum.py` in the
-  terminal. The room sees the five times scatter and the pool lose.
-- **Slide 20 is shown live:** `python scripts/sum_parallel.py --workers 1`,
-  then 2, then 4. Write the times on the board and do slide 21 with them.
+  (streams, background, the log). The seminar types and runs the timing,
+  the pool and the background job.
+- **Slides 6–8 and 19** carry the five scattered times and the pool that
+  loses; slide 20 the times for 1, 2 and 4 workers, which slide 21 uses.
 - **Slide 37:** run `ping cern.ch` (macOS: `ping -c 4 cern.ch`) and compare
   with the bound of 16.5 ms.
 - **Slides 41–43 are shown live** with two terminals side by side: the job
@@ -150,7 +149,7 @@ questions, with their answers:
 [Seminar 15 · Computing](../seminars/seminar_15.md) works on the weather project of
 Lectures 1 to 5. Every student times the rebuild and one slow script, finds
 which part of it is slow, makes it 17 times faster on one core, compares
-that with more cores, runs it as a background job, and pushes the times in
+that with more cores, runs it as a background job, and writes the times into
 the README.
 
 ## Slides that left the deck

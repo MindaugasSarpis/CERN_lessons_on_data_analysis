@@ -161,7 +161,7 @@ questions, with their answers:
 [Seminar 14 · Data Analysis](../seminars/seminar_14.md) works on the weather project of
 Lectures 1 to 5. Every student fixes a rule before looking, answers the
 question with it, sees how many "unusual" months chance alone gives, checks
-the answer under other choices, and pushes it all to GitHub.
+the answer under other choices, and records each step in a commit.
 
 ## Sources
 

@@ -2,8 +2,8 @@
 
 Every lecture from week 2 on is paired with a **hands-on seminar**. Week 1 is
 lecture only. A page carries the number of its lecture, except Seminar 1,
-which pairs with Lecture 2; there is no Seminar 2. Each seminar takes ~120
-min, all of it in class: there is no homework, and no session depends on
+which pairs with Lecture 2; there is no Seminar 2. Each seminar takes about
+two hours (Seminar 5, the first Python, runs longer), all of it in class: there is no homework, and no session depends on
 work done at home. The seminars practise the course's four aims:
 🔧 tool-agnostic, ♻️ reproducible, ⚙️ automated, 📁 well-organised data & files.
 
@@ -21,7 +21,8 @@ seminar asks one question about it and answers it by the end.
   conda environment. Missing a week costs nothing; nothing has to be
   carried over from an earlier session.
 - **Seminar 5** is the first Python of the room: the interpreter, a Jupyter
-  notebook, IDLE and VS Code, and the first conda environment. It starts
+  notebook, IDLE and VS Code, functions, a class and a module, and the first
+  conda environment. It starts
   from an empty folder and downloads its two files with `curl`.
 - **Seminar 6** is Git: the room clones
   [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
@@ -56,8 +57,8 @@ weather-sNN/
 
 The same layout is a sound default for your own project.
 
-**The golden rule:** you could delete everything except `data/raw/` and
-`scripts/` and rebuild the whole thing with one command.
+**The golden rule:** you could delete `data/processed/` and `results/` and
+rebuild both with one command.
 
 ## Seminars and your project
 

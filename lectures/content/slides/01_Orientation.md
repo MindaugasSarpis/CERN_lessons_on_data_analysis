@@ -549,7 +549,7 @@ hideInToc: true
 
 <!--
 **Say:** the lecture and the seminar are one unit: the seminar the same afternoon practises what the lecture showed.
-**If asked:** the course is 5 credits, 140 h: 64 h in class, 16 sessions of 4 h, and 76 h of self-study.
+**If asked:** the course is 5 credits, 140 h: 52 h in class, 13 sessions of 4 h, and 88 h of self-study.
 (~2 min)
 -->
 
@@ -569,8 +569,8 @@ Every **Tuesday**: **2 h lecture** + **2 h seminar**, **8 Sep to 22 Dec 2026**. 
 | 2 | 29 Sep | **A** · Introduction to Data |
 | 3 | 6 Oct | **A** · How Computers Work |
 | 4 | 13 Oct | **A** · Command Line & File Handling |
-| 5 | 20 Oct | **A** · Version Control with Git |
-| 6 | 27 Oct | **B** · Python Foundations |
+| 5 | 20 Oct | **A** · Python Foundations |
+| 6 | 27 Oct | **A** · Version Control with Git |
 | 7 | 3 Nov | **B** · Python for Data & NumPy |
 
 | | **Tue** | **Lecture** |
@@ -625,8 +625,8 @@ hideInToc: true
 | 02 | The editor VS Code, the project folder, Markdown | A README |
 | 03 | What a file is: bytes and text; first commands in a terminal | Files measured, byte by byte |
 | 04 | zsh and Git Bash, package managers, conda environments, checksums | Files made by typed lines, an `environment.yml` |
-| 05 | Git | A history of every change |
-| 06–07 | Python, then arrays of numbers | Scripts of your own |
+| 05 | Python | Scripts of your own |
+| 06–07 | Git, then arrays of numbers | A history of every change |
 | 08–13 | Plots, statistics, fitting, cleaning, one command for all | Results that rebuild |
 
 </div>
@@ -634,7 +634,7 @@ hideInToc: true
 <div class="note-text mt-md">Each step uses the one before. Markdown is written in the editor, the terminal opens in the same folder, Git keeps the text files, Python runs from the terminal.</div>
 
 <!--
-**Say:** VS Code, Markdown, files, the command line, Git, Python: in that order, each one needs the one before. Your project repeats each step on data of your own.
+**Say:** VS Code, Markdown, files, the command line, Python, Git: in that order, each one needs the one before. Your project repeats each step on data of your own.
 (~2 min)
 -->
 

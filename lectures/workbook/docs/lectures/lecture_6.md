@@ -1,7 +1,7 @@
 # 6: Version Control with Git
 
-Lecture 4 ended with a copy of the cleaned export that has the right size
-and one digit changed, and only the checksum told it apart. Lecture 6 opens
+Lecture 4 checked the raw export against a list of checksums: one digit
+changed, and only `FAILED` told it apart. Lecture 6 opens
 on two copies of the raw export of the weather project, Smiltė's and the
 one her colleague Tomas sent back: the checksum says that they differ,
 `git diff` says which line, and nothing says who changed it, when, or why.
@@ -48,7 +48,7 @@ it back.
    every step in Source Control and typed.
 9. **A result and its commit** — `git log -- data/raw` and `git blame` find
    Tomas's commit; `git show` read line by line answers who, when and why;
-   the edit gives `daily.csv` the checksum of Lecture 4's changed copy; a
+   the edit gives `daily.csv` a checksum other than the README's `33fe5e77…`; a
    revert restores `33fe5e77…`; a tag `v1.0`.
 
 ## The lecture, part by part
@@ -123,7 +123,7 @@ copied from the terminal: `bash misc/l05_scratch_repo/build.sh` makes it
 again with the same ids (Git 2.56 and bash on Linux, whose GNU tools are
 those of Git Bash; author and
 committer dates fixed on 20 October 2026). The project in it is the weather
-project as Lecture 4 leaves it: `README.md` with *How to rebuild*,
+project as Lecture 4 leaves it, with a shorter `rebuild.sh`: `README.md` with *How to rebuild*,
 `data/raw/weather.csv` and `daily_export.csv`, `scripts/clean_export.py`,
 `column_stats.py` and `rebuild.sh`. Smiltė makes the commits; Tomas clones
 the repository and pushes one.
@@ -205,7 +205,7 @@ publishes the repository to a private one on each student's GitHub account.
 ## What left the deck
 
 On 13 October 2026 the deck was cut to one line and moved to the weather
-project. These slides are in `lectures/content/parked/05_Version_Control.md`:
+project. These slides are in `lectures/content/parked/06_Version_Control.md`:
 the README that says how to fetch a file kept out of the repository,
 `git stash`, line endings and a clone on Windows with `core.autocrlf true`
 (now one slide, `.gitattributes`), SSH, and the section *Working with

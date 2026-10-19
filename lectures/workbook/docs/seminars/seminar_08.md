@@ -537,7 +537,7 @@ Points, not bars: the y-axis does not start at zero, and the eye compares the po
 
 ---
 
-### 10. Draw every figure again { #commit }
+### 10. Draw every figure again { #redraw }
 
 <!-- 1:45 · 10 min -->
 
@@ -766,6 +766,6 @@ Harder figures from the same script, for a room that is done early. Each answer 
 
 - ♻️ **Reproducibility:** one script draws every figure from the raw data;
   `environment.yml` lists the package it needs, with its version.
-- 📁 **Files:** the figures are made files in the ignored `results/`; the
-  script is what goes into the history.
+- 📁 **Files:** the figures are made files in `results/`; the
+  script is what is kept and described.
 - ⚙️ **Automation:** five figures in one run, again after every change.

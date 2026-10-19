@@ -37,7 +37,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact text-center">
 
-## 📄 **Lecture 2: a picture in `report.md`**
+## 📄 **The pendulum table as a picture**
 
 <img class="fig fig-light" src="/figures/pendulum_plot.png" style="display:block;margin:0 auto;max-height:180px;">
 
@@ -68,8 +68,8 @@ The nine rows of the pendulum table as nine points
 </div>
 
 <!--
-Speaker: two things the room has already seen. Left, the picture on the
-report.md slide of Lecture 2. Right, the counts Lecture 7 printed for the mass
+Speaker: two things the room has already seen. Left, the pendulum
+table of Lecture 7 as a picture. Right, the counts Lecture 7 printed for the mass
 column. Ask the room to name one choice in the left picture (points, not a
 line; both axes from zero). (~2 min)
 -->
@@ -243,7 +243,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Matplotlib is a Python library, installed with `python -m pip install matplotlib` (`python3` on macOS). Shorter calls such as `plt.plot(x, y)` exist and draw into the figure that was made last. A call on `ax` names the axes it draws into, which stays clear when a script makes several figures.
+Matplotlib is a Python library, installed into the project's environment with `conda install matplotlib-base=3.11`, as Seminar 8 does. Shorter calls such as `plt.plot(x, y)` exist and draw into the figure that was made last. A call on `ax` names the axes it draws into, which stays clear when a script makes several figures.
 
 </div>
 
@@ -296,7 +296,7 @@ Lines 2, 9, 10 and 11 are Matplotlib. `ax.plot(x, y)` takes two arrays of equal 
 </div>
 
 <!--
-Speaker: the table is the pendulum table of Lecture 2: nine lengths in cm and
+Speaker: the table is the pendulum table of Lecture 7: nine lengths in cm and
 the time of 10 swings in s. np.loadtxt is from Lecture 7. Save the script as
 scripts/plot_pendulum.py, run it and open results/pendulum_plot.png in VS
 Code. Ask what is missing, next to the picture of the opening slide. (~2 min)
@@ -337,7 +337,7 @@ fig.savefig("results/pendulum_plot.png", dpi=150)
 
 <img class="fig" src="/figures/viz_handson_pendulum_points.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **The output.** Nine points, two axes with a name and a unit, both from zero: the picture of Lecture 2, now made by a script.
+✅ **The output.** Nine points, two axes with a name and a unit, both from zero: the picture of slide 3, now made by a script.
 
 </div>
 
@@ -393,7 +393,7 @@ fig.savefig("results/mass_hist.png")
 </div>
 
 <!--
-Speaker: the second running example, the file from Lecture 2. One row is one
+Speaker: the second running example, the file from Lecture 7. One row is one
 candidate, so there is nothing to plot against: the question is how often each
 value occurs. np.histogram is from Lecture 7; ax.hist counts in the same way and
 draws. Lecture 7 chose 20 bins from 1815 to 1915; given only the column,

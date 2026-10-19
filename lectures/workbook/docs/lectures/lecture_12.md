@@ -2,9 +2,8 @@
 
 Lectures 9 to 11 computed with tables that were already in order: a mean, a
 fit, a trained neuron. Lecture 12 is about how a table gets into that state.
-It opens on a second pendulum file from the lab partner. The script handed
-out in Lecture 4, `clean_pendulum.py`, makes the four edits of Lecture 2 as
-text. On this file it writes 10 rows for nine lengths with no warning: a
+It opens on a second pendulum file from the lab partner. The older script
+`clean_pendulum.py` makes the four edits by hand as text. On this file it writes 10 rows for nine lengths with no warning: a
 `Mean` row and an empty time pass through. The lecture writes the cleaning
 again with Pandas, as rules about what a column holds. The new script gives
 the same 97 bytes as Lecture 4's on the first file and 9 rows on the second.
@@ -80,7 +79,7 @@ The first command needs NumPy and Pandas, the second NumPy and Matplotlib.
 The second file is made by `lectures/workbook/docs/data/pendulum_run2.py`,
 which writes `pendulum_run2_raw.csv` (students save it as
 `data/raw/pendulum_run2.csv`). The numbers for it were checked by running
-both scripts on it, in `zsh` with Pandas 3.0.1 and in Windows PowerShell 7
+both scripts on it, in `zsh` with Pandas 3.0.1 and in Git Bash on Windows
 with Pandas 3.0.6: the same rows and the same bytes.
 
 The code and output on the slides for the two files were run with Pandas
@@ -126,14 +125,15 @@ room to read. To jump, type the slide number and press Enter.
   and 16, asks the five questions of slide 46 in `audit.py`, and writes the
   script of slide 50.
 - **Slides 3–4** need the room's eyes first: show the file, ask how many
-  rows the script should write, then run it. Lecture 4's script is
-  `scripts/clean_pendulum.py` from Lecture 4 and Seminar 4; the second file
+  rows the script should write, then run it. The script is
+  `scripts/clean_pendulum.py`, the older cleaner of the workbook's data
+  folder; the second file
   is [`pendulum_run2_raw.csv`](../data/pendulum_run2_raw.csv){ download="pendulum_run2.csv" },
   saved as `data/raw/pendulum_run2.csv`.
 - **Slides 8–15 are shown live** in VS Code: type the script of slide 15
   line by line, run it after each line, and compare its output with
   Lecture 4's `pendulum_script.csv` by checksum in the terminal (`shasum -a
-  256` on macOS, `Get-FileHash` in PowerShell).
+  256` on macOS, `sha256sum` in Git Bash).
 - **Slide 13** has the point that is easy to rush: the two files are equal
   as tables and differ as bytes, 95 against 97. Let the room find the two
   lines before slide 14 repairs them.
@@ -189,7 +189,7 @@ questions, with their answers:
 [Seminar 12 · Pandas](../seminars/seminar_12.md) works on the weather project of Lectures 1
 to 5. Every student reads a second station's messy export with pandas,
 cleans it rule by rule with a count for each rule, compares it day by day
-with the valley station, and pushes the script and the result.
+with the valley station, and writes the result into the README.
 
 ## Take-aways
 

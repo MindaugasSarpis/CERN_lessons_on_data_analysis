@@ -6,7 +6,7 @@ were printed. Lecture 8 draws them. It introduces Matplotlib on the two files
 of the course, the pendulum table and the mass column of `D0_KPi.csv`, and
 then goes through the decisions that hold for a figure made with any
 program: which chart, which axes, which colours, which title. It opens on two
-pictures the room has seen, the pendulum plot of Lecture 2's `report.md` and
+pictures the room has seen, the pendulum plot of Lecture 7's table and
 the 20 counts of Lecture 7, and asks which lines of Python draw them and which
 of their choices a person made. The first section answers it, and the closing
 slide lists every choice with the number behind it.
@@ -90,19 +90,16 @@ time. To jump, type the slide number and press Enter.
 | One style for all figures | 82 |
 
 - **Do not cut** slide 3 (The Pendulum Plot and the Mass Counts) or slides 8–13
-  (A First Plot), which answer it. The seminar makes exactly these two
-  figures, with the same calls, the same range and the same bin width.
+  (A First Plot), which answer it. The seminar draws the weather file with
+  the same calls: `subplots`, `plot`, `hist`, `savefig`.
 - **Do not cut** slide 86 (Every Choice in the Two Figures), the closing
   slide: it lists every choice of the two figures with the number behind it.
 - **Do not cut** slides 28–29 (bars from zero), 41 (the boxplot and its
   terms), 58 (error bars and the standard error) or 80–81 (formula curve,
   error bars). Lectures 9 and 10 build on them.
-- **Slides 9–13 are shown live.** Keep VS Code open beside the slides, with
-  the project folder and Matplotlib installed. Type the script of slide 9 as
-  `scripts/plot_pendulum.py`, run it, open `results/pendulum_plot.png` beside
-  it, then make the changes of slide 10. Do the same for slides 11 and 13 in
-  `scripts/plot_mass.py`. Slide 12 is the reasoning between them: run
-  `bins=11` and `bins=550` once each.
+- **Slides 9–13** show each script with the figure it makes; nothing is
+  opened beside the deck. Slide 12 is the reasoning between them, `bins=11`
+  against `bins=550`.
 - **Slides 6, 19, 28 and 30** show the figure first and the explanation on
   the next click: ask the room before clicking.
 - **Slide 17** (The Parts of a Figure) builds up in five clicks. The figure
@@ -162,8 +159,7 @@ questions, with their answers:
 Lectures 1 to 5. Every student adds Matplotlib to the project's environment
 and writes one script, `scripts/figures.py`, that draws five figures of
 `weather.csv` into `results/`: ten years day by day, the year's cycle, the
-day's cycle, the yearly means and a histogram; commits and pushes the
-script.
+day's cycle, the yearly means and a histogram, and draws them all again with one line.
 
 ## Slides that left the deck
 

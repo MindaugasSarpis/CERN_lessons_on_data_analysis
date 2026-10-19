@@ -77,7 +77,7 @@ Today's folder is a Git repository with one commit. **pytest** runs tests: small
 
     ```text
     $ git log --oneline
-    7f5c9f6 The starting folder of the seminar
+    8cd6522 The starting folder of the seminar
     $ git status
     On branch main
     nothing to commit, working tree clean
@@ -161,9 +161,6 @@ Today's folder is a Git repository with one commit. **pytest** runs tests: small
       - pandas=3.0.6
       - pytest=9.1.1
     ```
-
-    A line from an earlier seminar that is not in this list gets its
-    version from `conda list` too.
 
 3. The change; `-U0` shows the changed lines only.
 
@@ -877,10 +874,10 @@ The README says when the check was made and what it found.
     3182c7e Test the results at the end of run_all.py
     315a8af Make everything from data/raw with one command
     be0e110 Pin every version in the environment
-    7f5c9f6 The starting folder of the seminar
+    8cd6522 The starting folder of the seminar
     ```
 
-    Your ids differ, except `7f5c9f6`: that commit came in the zip.
+    Your ids differ, except `8cd6522`: that commit came in the zip.
 
 **Check:** six commits, and the check line in the README.
 

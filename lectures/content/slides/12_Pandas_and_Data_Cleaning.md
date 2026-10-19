@@ -22,7 +22,7 @@ python:
 <!--
 Speaker: Lectures 9 to 11 computed with tables that were already in order.
 Today is about how a table gets into that state. The pendulum table comes back
-with the script handed out in Lecture 4, and a second file from the lab
+with the older script `clean_pendulum.py`, and a second file from the lab
 partner. Then the method is used on the file with 91 583 rows. Two things are
 new: the library Pandas, and cleaning as a list of rules with a count for
 each. (~1 min)
@@ -70,7 +70,7 @@ nr;length_cm;t10_s
 
 ## 🔁 **The form of the first file**
 
-`;` between values, decimal commas, a column `nr`, a summary in the last line. On the first file, Lecture 4's `scripts/clean_pendulum.py` made the four edits of Lecture 2: 9 rows, 97 bytes, SHA-256 `be05af03…fff0870b` on every laptop.
+`;` between values, decimal commas, a column `nr`, a summary in the last line. On the first file, `scripts/clean_pendulum.py` made the four edits by hand: 9 rows, 97 bytes, SHA-256 `be05af03…fff0870b` on every laptop.
 
 </div>
 
@@ -97,14 +97,12 @@ and only eight of them have a time. (~2 min)
 hideInToc: true
 ---
 
-# What Lecture 4's Script **Wrote**
+# What `clean_pendulum.py` **Wrote**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
 ```text
-% python3 scripts/clean_pendulum.py data/raw/pendulum_run2.csv data/processed/run2_script.csv
-10 rows written to data/processed/run2_script.csv
-PS> python scripts/clean_pendulum.py data/raw/pendulum_run2.csv data/processed/run2_script.csv
+$ python scripts/clean_pendulum.py data/raw/pendulum_run2.csv data/processed/run2_script.csv
 10 rows written to data/processed/run2_script.csv
 ```
 
@@ -153,8 +151,8 @@ No error and no warning. The script did what its text says: it moves characters.
 </div>
 
 <!--
-Speaker: the line is the one from Lecture 4 and Seminar 4; only the file
-names differ. Python is python3 on macOS and python on Windows. The output is
+Speaker: the line is the same in both shells; only the file names differ
+from the first run. The output is
 103 bytes on both systems. Ask: which line of clean() would have to change,
 and how would it know? The empty time went through as an empty piece of text.
 (~3 min)
@@ -218,7 +216,7 @@ hideInToc: true
 
 # Cleaning by **Script**
 
-Lecture 4's script edits characters. A cleaning that knows what a column holds starts by reading the file as a table, first on the file whose right answer is known: 97 bytes.
+`clean_pendulum.py` edits characters. A cleaning that knows what a column holds starts by reading the file as a table, first on the file whose right answer is known: 97 bytes.
 
 <!--
 Speaker: the first file again, cleaned a second time, now by Pandas. Lecture
@@ -266,7 +264,7 @@ ValueError: could not convert string
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-🐼 **Pandas** is a library for tables: columns with names, one type per column, cells that may be empty, and readers for files as they arrive. Every numeric column is a NumPy array inside. Install it once with `python -m pip install pandas` (macOS `python3 -m pip install pandas`). The usual import is `import pandas as pd`.
+🐼 **Pandas** is a library for tables: columns with names, one type per column, cells that may be empty, and readers for files as they arrive. Every numeric column is a NumPy array inside. Install it once into the project's environment with `conda install pandas=3.0.6`, as Seminar 12 does. The usual import is `import pandas as pd`.
 
 </div>
 
@@ -547,7 +545,7 @@ length_cm,t10_s
 …
 ```
 
-Only the columns of the table. This is the form of Lecture 4's `pendulum_script.csv`.
+Only the columns of the table. This is the form of `pendulum_script.csv`.
 
 </div>
 
@@ -626,7 +624,7 @@ published", the bytes. (~2 min)
 hideInToc: true
 ---
 
-# Write the Same Bytes as Lecture 4's **Script**
+# Write the Same Bytes as **`clean_pendulum.py`**
 
 <div class="grid-2 mt-md gap-md">
 
@@ -653,9 +651,9 @@ df.to_csv(out, index=False,
 % shasum -a 256 pendulum*.csv
 be05af03…fff0870b  pendulum.csv
 be05af03…fff0870b  pendulum_script.csv
-PS> (Get-FileHash pendulum*.csv).Hash
-BE05AF03…FFF0870B
-BE05AF03…FFF0870B
+$ sha256sum pendulum*.csv
+be05af03…fff0870b  pendulum.csv
+be05af03…fff0870b  pendulum_script.csv
 ```
 
 Both files have 97 bytes and one SHA-256. They are identical.
@@ -666,14 +664,14 @@ Both files have 97 bytes and one SHA-256. They are identical.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The lines of Lecture 4, run after `cd data/processed`, which is the same in both shells. In Python, on every system: `Path(out).read_bytes() == Path(script4).read_bytes()` gives `True`.
+The lines run after `cd data/processed`, the same in both shells. In Python, on every system: `Path(out).read_bytes() == Path(script4).read_bytes()` gives `True`.
 
 </div>
 
 <!--
-Speaker: Lecture 4's script matched the copy cleaned by hand; the Pandas
-script now matches Lecture 4's. shasum writes the digits in lower case,
-Get-FileHash in upper case: one number. Without lineterminator, Pandas ends
+Speaker: clean_pendulum.py matched the copy cleaned by hand; the Pandas
+script now matches it. shasum and sha256sum print the same digits: one
+number. Without lineterminator, Pandas ends
 each line with the line ending of the system, CR LF on Windows: 105 bytes.
 (~2 min)
 -->
@@ -706,9 +704,7 @@ print(f"{len(df)} rows written to {OUT}")
 ## ▶️ **Run it**
 
 ```text
-% python3 scripts/clean.py
-9 rows written to data/processed/pendulum.csv
-PS> python scripts/clean.py
+$ python scripts/clean.py
 9 rows written to data/processed/pendulum.csv
 ```
 
@@ -718,7 +714,7 @@ PS> python scripts/clean.py
 
 ## ♻️ **Run it again**
 
-`scripts/clean.py` is a new file next to Lecture 4's `clean_pendulum.py`. Delete `data/processed/pendulum.csv` and run it: the file is back, with the same 97 bytes.
+`scripts/clean.py` is a new file next to `clean_pendulum.py`. Delete `data/processed/pendulum.csv` and run it: the file is back, with the same 97 bytes.
 
 </div>
 
@@ -726,7 +722,7 @@ PS> python scripts/clean.py
 
 <!--
 Speaker: run it live from the terminal of VS Code, delete the output in the
-Side Bar, run it again. Each of the four edits of Lecture 2 is one line here:
+Side Bar, run it again. Each of the four edits by hand is one line here:
 the two replacements are the two options of read_csv. The line that runs it
 is the same in both shells after the first word. (~3 min)
 -->
@@ -740,9 +736,7 @@ hideInToc: true
 <div class="card card-info card-glass pad-compact mt-sm">
 
 ```text
-% python3 scripts/clean.py
-9 rows written to data/processed/pendulum_run2.csv
-PS> python scripts/clean.py
+$ python scripts/clean.py
 9 rows written to data/processed/pendulum_run2.csv
 ```
 
@@ -802,7 +796,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact table-compact mt-md">
 
-| | **Lecture 4: `clean_pendulum.py`** | **Today: `clean.py`** |
+| | **Before: `clean_pendulum.py`** | **Today: `clean.py`** |
 | --- | --- | --- |
 | What it reads | lines of text | columns with names and types |
 | The summary line | skipped if it contains `mean` | dropped: it has no `nr` |
@@ -2075,7 +2069,7 @@ clean   1818.1002,2978.644,,9901.186
 <!--
 Speaker: the checksum of the raw file is the one computed in Lecture 4,
 25c3c972…c1505136. Run it once more after the script: shasum -a 256 on macOS,
-(Get-FileHash data\raw\D0_KPi.csv).Hash in PowerShell. (~2 min)
+sha256sum in Git Bash. (~2 min)
 -->
 
 ---
@@ -2201,7 +2195,7 @@ A third series adds rows. The code stays.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A table is **tidy** when each row is one observation, each column one variable and each cell one value: the anatomy of a table of Lecture 2. The raw pendulum file broke the rule twice: a row that was not an observation, the mean, and a column that was not a variable, the row number.
+A table is **tidy** when each row is one observation, each column one variable and each cell one value: the anatomy of a table. The raw pendulum file broke the rule twice: a row that was not an observation, the mean, and a column that was not a variable, the row number.
 
 </div>
 

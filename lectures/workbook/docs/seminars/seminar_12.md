@@ -141,7 +141,7 @@ Everything for today is in one zip. **pandas**, which reads and cleans tables, i
 
 ---
 
-### 2. The hill station's file { #pull }
+### 2. The hill station's file { #file }
 
 <!-- 0:10 · 10 min -->
 
@@ -790,7 +790,7 @@ the header and 361 days.
 
 ---
 
-### 11. Rebuild and README { #push }
+### 11. Rebuild and README { #readme }
 
 <!-- 1:50 · 10 min -->
 
@@ -825,7 +825,8 @@ The rebuild script runs the new script too, and the README says what it found.
 
     `scripts/clean_hill.py` cleans `data/raw/hill_station.csv` (2025, 4 km
     away, 180 m higher). Over 361 days the hill is 1.19 °C colder than the
-    valley. The counts of each rule are in `results/hill.txt`.
+    valley. The counts of each rule are in `results/hill.txt`. Rebuild with
+    the environment `s12` active: `clean_hill.py` needs pandas.
     ```
 
 4. Look at it: right-click `README.md` > **Open Preview**.
