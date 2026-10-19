@@ -24,8 +24,8 @@ day; do them, and 19 (the environment file).
 
 ??? info "Before the session"
     - **Room:** VS Code, and Miniforge with `(base)` in the prompt of
-      VS Code's terminal; a laptop without Miniforge installs it in
-      section 1. Internet: the environment is about 70 MB per laptop, the
+      VS Code's terminal; a laptop without Miniforge (or, on Windows,
+      without Git Bash) installs them in section 1, step 2. Internet: the environment is about 70 MB per laptop, the
       weather log 2.5 MB. The session needs nothing from any other
       seminar: it starts in an empty folder.
     - **You:** remove the Python extension from your VS Code beforehand, to
@@ -59,26 +59,70 @@ An empty folder for today, and one conda environment for the Python and the prog
     Any version is fine. The prompt starts with `(base)`: conda's own
     environment, which stays as it is.
 
-2. `command not found`? Install Miniforge now, then open a new terminal.
-   Details, and Homebrew if `brew` is missing:
-   [Setup, steps 2–4](../setup.md#shell).
+2. `command not found`, or a Windows terminal without `$` in its prompt?
+   Install the tools now, about 10 minutes; the others go on with step 3.
+   A laptop without an administrator's password pairs with a neighbour
+   today.
 
     === "macOS"
 
-        ```text
-        $ brew install --cask miniforge
-        $ conda init zsh
-        ```
+        1. Open the system's terminal: `Cmd+Space`, type `Terminal`,
+           `Enter`. Its shell is `zsh`.
+        2. Check the package manager **Homebrew**.
+
+            ```text
+            $ brew --version
+            Homebrew …
+            ```
+
+        3. `command not found`? Install Homebrew. Type the laptop's
+           password when asked: nothing shows while typing. It may install
+           the developer tools of macOS first, which takes a while.
+
+            ```text
+            $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            ```
+
+            At the end it prints **Next steps**: copy the lines it lists
+            there, paste them, `Enter`.
+
+        4. Install Miniforge, then let conda set up `zsh`, so that every
+           new terminal finds Python.
+
+            ```text
+            $ brew install --cask miniforge
+            $ conda init zsh
+            ==> For changes to take effect, close and re-open your current shell. <==
+            ```
 
     === "Windows"
 
-        ```text
-        PS> winget install --id CondaForge.Miniforge3 -e
-        $ ~/miniforge3/Scripts/conda.exe init bash
-        ```
+        1. Open PowerShell: Windows key, type `powershell`, `Enter`. Only
+           the next two lines are typed here.
+        2. Install Git, which brings **Git Bash**, the course's shell on
+           Windows, and Miniforge, one line at a time. Each ends with
+           `Successfully installed`. Answer `Y` if winget asks about the
+           source agreements, **Yes** if Windows asks for permission.
 
-        The first line in PowerShell (`Start`, type `PowerShell`), the
-        second in VS Code's terminal.
+            ```text
+            PS> winget install --id Git.Git -e
+            PS> winget install --id CondaForge.Miniforge3 -e
+            ```
+
+        3. Quit VS Code and start it again. Command Palette,
+           `Ctrl+Shift+P`, type and choose `Terminal: Select Default
+           Profile`, take **Git Bash**. Then `Terminal: Create New
+           Terminal` from the Command Palette.
+        4. Let conda set up Git Bash.
+
+            ```text
+            $ ~/miniforge3/Scripts/conda.exe init bash
+            ==> For changes to take effect, close and re-open your current shell. <==
+            ```
+
+    Quit VS Code (**File** > **Exit**, macOS `Cmd+Q`), start it again and
+    open **View** > **Terminal**: `(base)` at the start of the prompt, and
+    `conda --version` prints a version as in step 1.
 
 3. An empty folder for today, in your home folder. The files arrive
    when they are needed.

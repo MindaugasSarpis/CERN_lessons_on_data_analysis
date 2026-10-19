@@ -2044,8 +2044,7 @@ weather-project/
 └── scripts/
     ├── weather.py
     ├── mean_temp.py
-    ├── coldest_hour.py
-    └── mean_wind.py
+    └── coldest_hour.py
 ```
 
 </div>
