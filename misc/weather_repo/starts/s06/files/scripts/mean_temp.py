@@ -1,12 +1,9 @@
 import weather
 
-total = 0.0
-count = 0
+temps = []
 for line in weather.read_lines("data/raw/weather.csv"):
-    temp = weather.temp_of(line)
-    if temp == weather.MISSING:
-        continue
-    total = total + temp
-    count = count + 1
+    h = weather.Hour(line)
+    if not h.is_missing():
+        temps.append(h.temp)
 
-print(f"{count} hours, mean {total / count:.2f} °C")
+print(f"{len(temps)} hours, mean {weather.mean(temps):.2f} °C")

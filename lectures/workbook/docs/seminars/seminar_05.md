@@ -2,21 +2,25 @@
 
 **Paired lecture:** 05 Python Foundations · **Format:** type-along tutorial, in class
 
-<!-- ~180 min: the length pnpm timing:check reads -->
+<!-- ~205 min: the length pnpm timing:check reads -->
 
 **Today's goal:** Can Python compute 7.16 for us? Every student types Python in four places (the
 interpreter, a Jupyter notebook, an editor, a script with its own module)
 and gets the mean temperature of `weather.csv`, 7.16 °C, in each; repairs a
-script with two bugs; asks a weather service for the temperature now; and
-writes the project's conda environment into `environment.yml`.
+script with two bugs; writes its steps once, as functions and a class in a
+module `weather.py` that every script imports; asks a weather service for
+the temperature now; and writes the project's conda environment into
+`environment.yml`.
 
 Everything is typed in VS Code's terminal (zsh on macOS, Git Bash on
 Windows; the lines are the same in both). In the blocks, a line that starts
 with `$` is typed in the terminal, a line that starts with `>>>` or `...`
 is typed at Python's prompt, and every other line is what comes back.
 
-**If time runs short:** stop after section 14 and do 17 (the environment
-file); 15 and 16 can be left out.
+**If time runs short:** leave out sections 10 to 12 (tuples and
+dictionaries, the order of cells, IDLE) and 18 (the temperature now).
+Sections 15 to 17, functions, a class and a module, are the point of the
+day; do them, and 19 (the environment file).
 
 ??? info "Before the session"
     - **Room:** VS Code, and Miniforge with `(base)` in the prompt of
@@ -1001,25 +1005,182 @@ line.
 
 ---
 
-## Part 4 · Scripts, modules, libraries { #part-4 }
+## Part 4 · Functions, classes, modules { #part-4 }
 
-<!-- 2:30 to 3:00 -->
+<!-- 2:30 to 3:25 -->
 
-A function gives a step a name; a module is a file of functions other scripts import; a library is a module someone else wrote.
+Three scripts now repeat the same lines. A function writes a step once, a class keeps the values of one hour together, and a module holds both for every script.
 
-Further reading: [The Python Tutorial, chapter 6: modules](https://docs.python.org/3/tutorial/modules.html),
-[chapter 10: the standard library](https://docs.python.org/3/tutorial/stdlib.html).
+Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions),
+[chapter 9: classes](https://docs.python.org/3/tutorial/classes.html),
+[chapter 6: modules](https://docs.python.org/3/tutorial/modules.html).
 
 ---
 
-### 15. Functions in a module of your own { #module }
+### 15. Write a step once: functions { #functions }
 
 <!-- 2:30 · 10 min -->
 
-`def` names a few lines; `return` hands their result back to the line that called them.
+`def` gives a few lines a name; `return` hands their result back to the line that called them.
 
-1. New file `scripts/weather.py`. Type, save. The text in three quotes
-   under `def` says what the function does.
+1. `mean_temp.py`, `coldest_hour.py` and `warmest_hour.py` each read the
+   file, cut a line and take its second value. Try one step as a function
+   at `>>>` first. The block of a `def` ends with an empty line.
+
+    ```pycon
+    >>> def temp_of(line):
+    ...     return float(line.split(",")[1])
+    ...
+    >>> temp_of("2016-01-01T00:00,-4.4,93,2.5")
+    -4.4
+    >>> temp_of("2016-01-01T01:00,-4.8,95,2.6")
+    -4.8
+    >>> def mean(values):
+    ...     return sum(values) / len(values)
+    ...
+    >>> mean([-4.4, -4.8, -5.5, -6.0])
+    -5.175
+    ```
+
+    `sum` is built in, like `len`. `mean` works on any list of numbers.
+
+2. A name made inside a function is its own: it is gone when the
+   function returns.
+
+    ```pycon
+    >>> def double(x):
+    ...     result = 2 * x
+    ...     return result
+    ...
+    >>> double(3.5)
+    7.0
+    >>> result
+    Traceback (most recent call last):
+      ...
+    NameError: name 'result' is not defined
+    >>> exit()
+    ```
+
+3. Rewrite `mean_temp.py` with three functions at the top. The text in
+   three quotes under a `def` says what the function does.
+
+    ```python
+    def read_lines(path):
+        """The lines of a file, without its header."""
+        return open(path).read().splitlines()[1:]
+
+    def temp_of(line):
+        """The temp_c of one line of weather.csv."""
+        return float(line.split(",")[1])
+
+    def mean(values):
+        """The mean of a list of numbers."""
+        return sum(values) / len(values)
+
+    temps = []
+    for line in read_lines("data/raw/weather.csv"):
+        temp = temp_of(line)
+        if temp != -999:
+            temps.append(temp)
+
+    print(f"{len(temps)} hours, mean {mean(temps):.2f} °C")
+    ```
+
+4. Run it: the same result as before.
+
+    ```text
+    $ python scripts/mean_temp.py
+    87552 hours, mean 7.16 °C
+    ```
+
+**Check:** `87552 hours, mean 7.16 °C` from the script with three `def`s.
+
+---
+
+### 16. One hour as an object: a class { #class }
+
+<!-- 2:40 · 10 min -->
+
+A **class** is a type of your own: its objects keep values together, and its methods are functions that belong to them.
+
+1. At `>>>`, a class `Hour` made from one line of the file. `__init__`
+   runs once when `Hour(...)` makes an object; `self` is that object, and
+   `self.time = ...` keeps a value in it. Inside a class at `>>>`, leave no
+   empty line between the two `def`s.
+
+    ```pycon
+    >>> class Hour:
+    ...     def __init__(self, line):
+    ...         parts = line.split(",")
+    ...         self.time = parts[0]
+    ...         self.temp = float(parts[1])
+    ...     def is_missing(self):
+    ...         return self.temp == -999
+    ...
+    >>> h = Hour("2016-01-01T00:00,-4.4,93,2.5")
+    >>> h.time
+    '2016-01-01T00:00'
+    >>> h.temp
+    -4.4
+    >>> h.is_missing()
+    False
+    >>> Hour("2019-07-22T00:00,-999,76,3.2").is_missing()
+    True
+    >>> type(h)
+    <class '__main__.Hour'>
+    >>> exit()
+    ```
+
+    `is_missing` is a **method**: Python passes the object before the dot
+    as `self`, as `line.split(",")` passes `line`.
+
+2. Rewrite `coldest_hour.py` with the class. The coldest hour so far is
+   an `Hour`, so its time stays with its temperature. `not` turns `True`
+   into `False`; `and` is true when both sides are.
+
+    ```python
+    class Hour:
+        """One line of weather.csv: its time and temperature."""
+
+        def __init__(self, line):
+            parts = line.split(",")
+            self.time = parts[0]
+            self.temp = float(parts[1])
+
+        def is_missing(self):
+            return self.temp == -999
+
+    lines = open("data/raw/weather.csv").read().splitlines()[1:]
+
+    coldest = Hour(lines[0])
+    for line in lines[1:]:
+        h = Hour(line)
+        if not h.is_missing() and h.temp < coldest.temp:
+            coldest = h
+
+    print(f"coldest hour: {coldest.time}, {coldest.temp} °C")
+    ```
+
+3. Run it.
+
+    ```text
+    $ python scripts/coldest_hour.py
+    coldest hour: 2025-01-07T05:00, -16.3 °C
+    ```
+
+**Check:** `-16.3 °C` on 7 January 2025, from the script with `class Hour`.
+
+---
+
+### 17. A module for every script { #module }
+
+<!-- 2:50 · 15 min -->
+
+A **module** is a `.py` file of definitions; `import` runs it once and gives the script its names.
+
+1. New file `scripts/weather.py`: the functions and the class, once.
+   It asks no question and prints nothing. `MISSING` gives the mark a
+   name, in capitals because it never changes.
 
     ```python
     """Read the hourly log of the weather station."""
@@ -1030,35 +1191,62 @@ Further reading: [The Python Tutorial, chapter 6: modules](https://docs.python.o
         """The lines of a file, without its header."""
         return open(path).read().splitlines()[1:]
 
-    def temp_of(line):
-        """The temp_c of one line of weather.csv."""
-        return float(line.split(",")[1])
+    class Hour:
+        """One line of weather.csv: its time and temperature."""
+
+        def __init__(self, line):
+            parts = line.split(",")
+            self.time = parts[0]
+            self.temp = float(parts[1])
+
+        def is_missing(self):
+            return self.temp == MISSING
+
+    def mean(values):
+        """The mean of a list of numbers."""
+        return sum(values) / len(values)
     ```
 
-2. Change `mean_temp.py` to use it. `import weather` reads `weather.py`
-   from the script's folder; its names are then used with `weather.` in
-   front.
+2. Replace `mean_temp.py` with a script that imports it. `import weather`
+   finds `weather.py` in the script's folder; its names are then used
+   with `weather.` in front.
 
     ```python
     import weather
 
-    total = 0.0
-    count = 0
+    temps = []
     for line in weather.read_lines("data/raw/weather.csv"):
-        temp = weather.temp_of(line)
-        if temp == weather.MISSING:
-            continue
-        total = total + temp
-        count = count + 1
+        h = weather.Hour(line)
+        if not h.is_missing():
+            temps.append(h.temp)
 
-    print(f"{count} hours, mean {total / count:.2f} °C")
+    print(f"{len(temps)} hours, mean {weather.mean(temps):.2f} °C")
     ```
 
-3. Run it: the same result.
+3. Replace `coldest_hour.py` the same way: the class goes, the import
+   comes.
+
+    ```python
+    import weather
+
+    lines = weather.read_lines("data/raw/weather.csv")
+
+    coldest = weather.Hour(lines[0])
+    for line in lines[1:]:
+        h = weather.Hour(line)
+        if not h.is_missing() and h.temp < coldest.temp:
+            coldest = h
+
+    print(f"coldest hour: {coldest.time}, {coldest.temp} °C")
+    ```
+
+4. Run both: the same results, from one module.
 
     ```text
     $ python scripts/mean_temp.py
     87552 hours, mean 7.16 °C
+    $ python scripts/coldest_hour.py
+    coldest hour: 2025-01-07T05:00, -16.3 °C
     $ ls scripts/__pycache__
     weather.cpython-314.pyc
     ```
@@ -1067,26 +1255,93 @@ Further reading: [The Python Tutorial, chapter 6: modules](https://docs.python.o
     Python 3.14, to start faster next time. Python makes it again when it
     is missing.
 
-4. At `>>>` in the project folder, `weather` is not found: Python looks
-   for a module in the folder of the script it runs, and at the prompt in
-   the folder of the terminal.
+5. Python looks for a module in the folder of the script it runs, and at
+   `>>>` in the folder of the terminal. From the project folder,
+   `weather` is not found; from `scripts` it is, and `from ... import`
+   takes one name out of it.
 
-    ```pycon
+    ```text
+    $ python
     >>> import weather
     Traceback (most recent call last):
       ...
     ModuleNotFoundError: No module named 'weather'
     >>> exit()
+    $ cd scripts
+    $ python
+    >>> from weather import Hour
+    >>> Hour("2016-01-01T00:00,-4.4,93,2.5").temp
+    -4.4
+    >>> exit()
+    $ cd ..
     ```
 
-**Check:** `87552 hours, mean 7.16 °C` from `mean_temp.py` with
-`import weather` at the top.
+**Check:** both scripts start with `import weather`, define nothing
+themselves, and print 7.16 and −16.3.
+
+!!! question "Task: the mean wind"
+    Give `Hour` a third value, `self.wind`, the fourth part of the line
+    (`wind_ms`), and write `scripts/mean_wind.py`: the mean wind of all
+    hours with two decimals, from `weather.Hour` and `weather.mean`. The
+    wind has no `-999`. Does `mean_temp.py` still run?
+
+??? success "Answer"
+    In `weather.py`, one line more in `__init__`:
+
+    ```python
+            self.wind = float(parts[3])
+    ```
+
+    `scripts/mean_wind.py`:
+
+    ```python
+    import weather
+
+    winds = []
+    for line in weather.read_lines("data/raw/weather.csv"):
+        winds.append(weather.Hour(line).wind)
+
+    print(f"{len(winds)} hours, mean wind {weather.mean(winds):.2f} m/s")
+    ```
+
+    ```text
+    $ python scripts/mean_wind.py
+    87672 hours, mean wind 3.50 m/s
+    $ python scripts/mean_temp.py
+    87552 hours, mean 7.16 °C
+    ```
+
+    One edit in the module, and every script that imports it has the wind.
+
+!!! question "Task: the warmest hour, with the module"
+    Rewrite `warmest_hour.py` of section 14 so that it imports `weather`
+    and defines nothing itself.
+
+??? success "Answer"
+    ```python
+    import weather
+
+    lines = weather.read_lines("data/raw/weather.csv")
+
+    warmest = weather.Hour(lines[0])
+    for line in lines[1:]:
+        h = weather.Hour(line)
+        if h.temp > warmest.temp:
+            warmest = h
+
+    print(f"warmest hour: {warmest.time}, {warmest.temp} °C")
+    ```
+
+    ```text
+    $ python scripts/warmest_hour.py
+    warmest hour: 2018-06-18T15:00, 32.4 °C
+    ```
 
 ---
 
-### 16. The standard library: the temperature now { #stdlib }
+### 18. The standard library: the temperature now { #stdlib }
 
-<!-- 2:40 · 10 min -->
+<!-- 3:05 · 10 min -->
 
 Python comes with about 200 modules, the **standard library**: no install needed.
 
@@ -1139,9 +1394,9 @@ Python comes with about 200 modules, the **standard library**: no install needed
 
 ---
 
-### 17. Write the environment down { #environment }
+### 19. Write the environment down { #environment }
 
-<!-- 2:50 · 5 min -->
+<!-- 3:15 · 5 min -->
 
 A package from conda lives in the environment's folder. `environment.yml` lists what the project asked for, so another laptop can make the same environment.
 
@@ -1206,41 +1461,11 @@ A package from conda lives in the environment's folder. `environment.yml` lists 
 **Check:** `environment.yml` with two dependencies, and a `README.md` with
 the two results.
 
-!!! question "Task: the mean wind"
-    Add a function `wind_of(line)` to `weather.py` (the fourth value,
-    `wind_ms`) and a script `scripts/mean_wind.py` that prints the mean
-    wind of all hours with two decimals. The wind has no `-999`.
-
-??? success "Answer"
-    In `weather.py`:
-
-    ```python
-    def wind_of(line):
-        """The wind_ms of one line of weather.csv."""
-        return float(line.split(",")[3])
-    ```
-
-    `scripts/mean_wind.py`:
-
-    ```python
-    import weather
-
-    winds = [weather.wind_of(line) for line in weather.read_lines("data/raw/weather.csv")]
-    print(f"{len(winds)} hours, mean wind {sum(winds) / len(winds):.2f} m/s")
-    ```
-
-    ```text
-    $ python scripts/mean_wind.py
-    87672 hours, mean wind 3.50 m/s
-    ```
-
-    The list in one line is section 19; a loop with a sum gives the same.
-
 ---
 
-### 18. Wrap up { #wrap-up }
+### 20. Wrap up { #wrap-up }
 
-<!-- 2:55 · 5 min -->
+<!-- 3:20 · 5 min -->
 
 
 | Where | Good for | Start |
@@ -1257,12 +1482,15 @@ the two results.
 | repeat, decide | `for line in lines[1:]:`, `if temp == -999:` |
 | count by key | `hours[year] = hours.get(year, 0) + 1` |
 | print with decimals | `f"{mean:.2f}"` |
-| use a module | `import weather`, `weather.temp_of(line)` |
+| write a step once | `def mean(values):` … `return sum(values) / len(values)` |
+| keep the values of one hour together | `class Hour:`, `h = Hour(line)`, `h.temp`, `h.is_missing()` |
+| use a module | `import weather`, `weather.Hour(line)` |
 | write the environment down | `conda env export --from-history -f environment.yml` |
 
 The files of today: `data/raw/weather.csv`, `notebooks/explore.ipynb`,
-`scripts/hours.py`, `mean_temp.py`, `weather.py`, `now.py`, the repaired
-`coldest_hour.py`, `environment.yml`, `README.md`.
+`scripts/hours.py`, the module `weather.py` and the scripts that import it,
+`mean_temp.py`, `coldest_hour.py` (repaired, then rewritten) and
+`mean_wind.py`; `now.py`, `environment.yml`, `README.md`.
 
 ---
 
@@ -1270,7 +1498,7 @@ The files of today: `data/raw/weather.csv`, `notebooks/explore.ipynb`,
 
 ---
 
-### 19. The mean in two lines { #comprehension }
+### 21. The mean in two lines { #comprehension }
 
 <!-- — · 5 min -->
 
@@ -1302,7 +1530,7 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
 
 ---
 
-### 20. Write the result into a file { #write }
+### 22. Write the result into a file { #write }
 
 <!-- — · 5 min -->
 
@@ -1313,8 +1541,8 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
 
     ```python
     with open("results/mean_temp.txt", "w") as out:
-        out.write(f"{count} hours\n")
-        out.write(f"mean {total / count:.5f} °C\n")
+        out.write(f"{len(temps)} hours\n")
+        out.write(f"mean {weather.mean(temps):.5f} °C\n")
     ```
 
     ```text
@@ -1331,7 +1559,7 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
 
 ---
 
-### 21. A module that is also a script { #main }
+### 23. A module that is also a script { #main }
 
 <!-- — · 5 min -->
 
@@ -1341,7 +1569,7 @@ When a file runs as a script, its `__name__` is `"__main__"`; when it is importe
 
     ```python
     if __name__ == "__main__":
-        print(temp_of("2016-01-01T00:00,-4.4,93,2.5"))
+        print(Hour("2016-01-01T00:00,-4.4,93,2.5").temp)
     ```
 
 2. Run `weather.py` itself, then `mean_temp.py`, which imports it.
@@ -1359,7 +1587,7 @@ When a file runs as a script, its `__name__` is `"__main__"`; when it is importe
 
 ---
 
-### 22. Advanced tasks { #advanced }
+### 24. Advanced tasks { #advanced }
 
 <!-- — · 30 min -->
 
@@ -1381,10 +1609,10 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     longest = 0
     longest_start = ""
     for line in weather.read_lines("data/raw/weather.csv"):
-        temp = weather.temp_of(line)
-        if temp < 0 and temp != weather.MISSING:
+        h = weather.Hour(line)
+        if h.temp < 0 and not h.is_missing():
             if run == 0:
-                run_start = line[:16]
+                run_start = h.time
             run = run + 1
             if run > longest:
                 longest = run
@@ -1400,7 +1628,7 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     longest frost: 1172 hours (48.8 days) from 2024-12-31T16:00
     ```
 
-    Without `temp != weather.MISSING`, the 120 marked hours of July 2019
+    Without `not h.is_missing()`, the 120 marked hours of July 2019
     would count as a frost of five days in summer.
 
 !!! question "Advanced task: the column from the command line"
@@ -1475,9 +1703,9 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     day = tomorrow[5:]                       # '10-19': month and day
     station = []
     for line in weather.read_lines("data/raw/weather.csv"):
-        temp = weather.temp_of(line)
-        if line[5:10] == day and temp != weather.MISSING:
-            station.append(temp)
+        h = weather.Hour(line)
+        if h.time[5:10] == day and not h.is_missing():
+            station.append(h.temp)
 
     print(f"{tomorrow}: forecast mean {sum(forecast) / len(forecast):.1f} °C "
           f"from {len(forecast)} hours")
@@ -1497,7 +1725,7 @@ Four harder tasks for whoever is done early, each solved with what today showed;
 !!! question "Advanced task: a check that 7.16 stays 7.16"
     Add a function `mean_valid(values)` to `weather.py` (the mean without
     `MISSING`), and a script `scripts/check_weather.py` that checks
-    `temp_of`, `mean_valid` on a short list whose mean you know, and the
+    `Hour`, `mean_valid` on a short list whose mean you know, and the
     mean of the whole file. `assert condition` does nothing when the
     condition is true and stops with `AssertionError` when it is false.
     Then break `mean_valid` on purpose and run the checks again.
@@ -1518,10 +1746,10 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     """Checks of weather.py: run with  python scripts/check_weather.py"""
     import weather
 
-    assert weather.temp_of("2016-01-01T00:00,-4.4,93,2.5") == -4.4
+    assert weather.Hour("2016-01-01T00:00,-4.4,93,2.5").temp == -4.4
     assert weather.mean_valid([1.0, -999.0, 3.0]) == 2.0
 
-    temps = [weather.temp_of(line) for line in weather.read_lines("data/raw/weather.csv")]
+    temps = [weather.Hour(line).temp for line in weather.read_lines("data/raw/weather.csv")]
     mean = weather.mean_valid(temps)
     assert abs(mean - 7.16) < 0.005, mean
 

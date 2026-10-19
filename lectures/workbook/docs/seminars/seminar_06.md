@@ -606,7 +606,7 @@ flowchart LR
     ```text
     $ git commit -m "Add the Python work of Seminar 5"
     [main b982e59] Add the Python work of Seminar 5
-     8 files changed, 460 insertions(+)
+     8 files changed, 468 insertions(+)
      create mode 100644 environment.yml
      create mode 100644 notebooks/explore.ipynb
      create mode 100644 scripts/coldest_hour.py

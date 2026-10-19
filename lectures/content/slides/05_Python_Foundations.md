@@ -12,7 +12,7 @@ title: "Python Foundations"
 ##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation</span>
 
 <!--
-**Say:** no Python is assumed today. Four steps: values and their types, containers that hold many values, the two lines that repeat and choose, and where the rest of Python comes from.
+**Say:** no Python is assumed today. Six steps: values and their types, containers that hold many values, the two lines that repeat and choose, functions and classes, modules, and where the rest of Python comes from.
 (~1 min)
 -->
 
@@ -111,7 +111,7 @@ time,temp_c,humidity_pct,wind_ms
 <div class="note-text mt-md">One weather station, one line of text per hour: the time, the temperature in °C, the humidity in % and the wind in m/s, separated by commas.</div>
 
 <!--
-**Say:** today's examples come from this file, and the lecture ends with 7.16 computed by eleven lines of Python.
+**Say:** today's examples come from this file; Part 3 computes 7.16 in eleven lines of Python.
 **Ask:** what would a mean over all rows give, with the −999 hours counted as temperatures? Lower: 5.78.
 (~2 min)
 -->
@@ -127,7 +127,9 @@ hideInToc: true
 | 1 | What is a value in Python, and what can it do? | ? |
 | 2 | How are values kept by name, and in larger objects? | ? |
 | 3 | How do `for` and `if` turn 87 672 lines into 7.16? | ? |
-| 4 | Where does the rest of Python come from, and which version arrives? | ? |
+| 4 | How is a step written once and used again? | ? |
+| 5 | How do several scripts share one file of functions? | ? |
+| 6 | Where does the rest of Python come from, and which version arrives? | ? |
 
 </div>
 
@@ -1518,6 +1520,82 @@ $ python scripts/mean_temp.py
 -->
 
 ---
+layout: section
+hideInToc: true
+---
+
+# Functions and **Classes**
+
+Part 4: how is a step written once and used again?
+
+<!--
+**Say:** the mean works. Every project then asks more: the coldest hour, the mean wind, each a new script.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same Lines in Two Scripts
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`mean_temp.py`**
+
+```py {1,2,5-9}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+total = 0.0
+count = 0
+for line in lines[1:]:
+    parts = line.split(",")
+    temp = float(parts[1])
+    if temp == -999:
+        continue
+    total = total + temp
+    count = count + 1
+print(count, total / count)
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **`coldest_hour.py`**
+
+```py {1,2,5-9}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+coldest = 100.0
+coldest_time = ""
+for line in lines[1:]:
+    parts = line.split(",")
+    temp = float(parts[1])
+    if temp == -999:
+        continue
+    if temp < coldest:
+        coldest = temp
+        coldest_time = parts[0]
+print(coldest_time, coldest)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Seven lines are the same. A new column before <code>temp_c</code>, or a new mark for a missing hour, is an edit in every copy; a copy that is missed gives a wrong number, with no error.</div>
+
+<!--
+**Do:** point at the lit lines in both scripts: reading the file, cutting a line, the temperature, the −999 test.
+**Ask:** a third script, for the mean wind: how many of its lines would be copied from these two?
+**Say:** copies drift apart. One gets a fix, the other does not, and both still run.
+(~2 min)
+-->
+
+---
 hideInToc: true
 ---
 
@@ -1559,8 +1637,472 @@ for line in ["2016-01-01T00:00,-4.4,93,2.5",
 
 <!--
 **Ask:** after step 2: the same line written twice with one name changed. What goes wrong when the column moves?
-**Say:** the step is written once, under a name, and the loop says `temp_of(line)`. A file of such functions can be used by many scripts: a module.
+**Say:** the step is written once, under a name, and the loop says `temp_of(line)`. A change to the column is one edit, in the function.
 (~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# All Temperatures of a File: `temps(path)`
+
+````md magic-move {lines: true}
+```py
+def read_lines(path):
+    return open(path).read().splitlines()[1:]
+
+print(len(read_lines("data/raw/weather.csv")))   # 87672
+```
+```py {4-5}
+def read_lines(path):
+    return open(path).read().splitlines()[1:]
+
+def temp_of(line):
+    return float(line.split(",")[1])
+
+print(len(read_lines("data/raw/weather.csv")))   # 87672
+```
+```py {7-13,15}
+def read_lines(path):
+    return open(path).read().splitlines()[1:]
+
+def temp_of(line):
+    return float(line.split(",")[1])
+
+def temps(path):
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != -999:
+            result.append(temp)
+    return result
+
+print(len(temps("data/raw/weather.csv")))        # 87552
+```
+````
+
+<div class="note-text mt-sm"><code>temps</code> calls <code>read_lines</code> and <code>temp_of</code>: each function does one step and can be checked alone. <code>result</code> exists only while <code>temps</code> runs; outside it the name is unknown.</div>
+
+<!--
+**Do:** click through: the lines without the header, one temperature, then the list of all temperatures without −999.
+**Ask:** `!=` instead of `==` and `continue`: which rows reach `append`?
+**If asked:** `print(result)` after the function gives `NameError: name 'result' is not defined`. Names made inside a function are its own, so two functions can both say `result` without a clash.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Mean of a List: `mean(values)`
+
+````md magic-move {lines: true}
+```py
+def mean(values):
+    return sum(values) / len(values)
+
+print(mean([-4.4, -4.8, -5.5, -6.0]))          # -5.175
+```
+```py {5}
+def mean(values):
+    return sum(values) / len(values)
+
+print(mean([-4.4, -4.8, -5.5, -6.0]))          # -5.175
+print(mean(temps("data/raw/weather.csv")))     # 7.15996550621345
+```
+````
+
+<div class="note-text mt-md">The twelve lines of Part 3 are one line now, read from the inside out: the temperatures of the file, then their mean. <code>sum</code> is built in, like <code>len</code>; <code>mean</code> works for any list of numbers, not only this file.</div>
+
+<!--
+**Ask:** before the second step: what will `mean(temps(...))` print?
+**Say:** small functions, each one tested on four numbers, then put together. The same mean as the loop of Part 3.
+**If asked:** the last digit is 5 here and 6 from the loop: since Python 3.12 `sum` adds floats with a correction for their rounding, and the loop does not.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Time Beside the Temperature: `class`
+
+````md magic-move {lines: true}
+```py
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(temp_of(line))           # -4.4, the time is lost
+```
+```py
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+```
+```py {7-9}
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+h = Hour("2016-01-01T00:00,-4.4,93,2.5")
+print(h.time, h.temp)          # 2016-01-01T00:00 -4.4
+print(type(h))                 # <class '__main__.Hour'>
+```
+````
+
+<div class="note-text mt-sm">A <strong>class</strong> is a new type. <code>Hour(line)</code> makes an object of it and runs <code>__init__</code> once; <code>self</code> is that new object, and <code>self.time</code> keeps a value in it, an <strong>attribute</strong>. <code>str</code>, <code>dict</code> and <code>Figure</code> are classes too.</div>
+
+<!--
+**Ask:** the coldest hour needs its time. `temp_of` gives only the number: where does the time go?
+**Say:** the values of one hour are kept together in one object, and reached by name after a dot, like `fig.axes`.
+**If asked:** `__main__` is the name of the script that defined the class; from a module it reads `weather.Hour`.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Method: `is_missing()`
+
+````md magic-move {lines: true}
+```py
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+```
+```py {7-8}
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+    def is_missing(self):
+        return self.temp == -999
+```
+```py {10-13}
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+    def is_missing(self):
+        return self.temp == -999
+
+h = Hour("2016-01-01T00:00,-4.4,93,2.5")
+print(h.is_missing())          # False
+h = Hour("2019-07-22T00:00,-999,76,3.2")
+print(h.is_missing())          # True
+```
+````
+
+<div class="note-text mt-sm">A <strong>method</strong> is a <code>def</code> inside the class. Python passes the object before the dot as <code>self</code>, so <code>h.is_missing()</code> asks <code>h</code> about its own temperature, as <code>line.split(",")</code> asks <code>line</code>.</div>
+
+<!--
+**Say:** the −999 rule now lives in one place, inside the class. A script asks the hour, and does not need to know the mark.
+**If asked:** the second line is a real hour of the file: 22 July 2019, midnight, one of the 120 missing hours.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Coldest Hour with `Hour` Objects
+
+````md magic-move {lines: true}
+```py
+lines = read_lines("data/raw/weather.csv")
+coldest = Hour(lines[0])
+print(coldest.time, coldest.temp)    # 2016-01-01T00:00 -4.4
+```
+```py {3-6}
+lines = read_lines("data/raw/weather.csv")
+coldest = Hour(lines[0])
+for line in lines[1:]:
+    h = Hour(line)
+    if not h.is_missing() and h.temp < coldest.temp:
+        coldest = h
+print(coldest.time, coldest.temp)    # 2025-01-07T05:00 -16.3
+```
+````
+
+<div class="note-text mt-sm"><code>not</code> turns <code>True</code> into <code>False</code>; <code>and</code> is <code>True</code> when both sides are. The object found keeps its time with its temperature, so nothing has to be copied beside it.</div>
+
+<div v-click class="card card-success card-glass pad-compact mt-sm">
+
+✅ Part 4: a step is written once as a function, `def`, and called by its name; values that belong together are one object of a class, with methods. The coldest hour: 2025-01-07T05:00, −16.3 °C.
+
+</div>
+
+<!--
+**Do:** first step: start from the first hour as the coldest so far; second step: each hour that is colder takes its place.
+**Ask:** what if the first hour of the file were a −999? `coldest.temp` would start at −999 and no hour would be colder.
+(~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Modules and **`import`**
+
+Part 5: how do several scripts share one file of functions?
+
+<!--
+**Say:** the functions and the class are still inside one script; the other scripts cannot see them.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Module: a File of Functions, `weather.py`
+
+````md magic-move {lines: true}
+```py
+"""Read the hourly log of the weather station."""
+
+MISSING = -999.0
+```
+```py {5-6}
+"""Read the hourly log of the weather station."""
+
+MISSING = -999.0
+
+def read_lines(path):
+    return open(path).read().splitlines()[1:]
+```
+```py {8-15}
+"""Read the hourly log of the weather station."""
+
+MISSING = -999.0
+
+def read_lines(path):
+    return open(path).read().splitlines()[1:]
+
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+    def is_missing(self):
+        return self.temp == MISSING
+```
+```py {17-18}
+"""Read the hourly log of the weather station."""
+
+MISSING = -999.0
+
+def read_lines(path):
+    return open(path).read().splitlines()[1:]
+
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+    def is_missing(self):
+        return self.temp == MISSING
+
+def mean(values):
+    return sum(values) / len(values)
+```
+````
+
+<!--
+**Say:** a **module** is a `.py` file of definitions. This one asks no question and prints nothing: it only defines a name for the mark, a function, a class, and the mean.
+**Do:** click through: the text at the top says what the file is; `MISSING` gives the mark a name, written in capitals as a constant.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Use the Module: `import weather`
+
+````md magic-move {lines: true}
+```py
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+total = 0.0
+count = 0
+for line in lines[1:]:
+    parts = line.split(",")
+    temp = float(parts[1])
+    if temp == -999:
+        continue
+    total = total + temp
+    count = count + 1
+print(count, total / count)
+```
+```py
+import weather
+
+temps = []
+for line in weather.read_lines("data/raw/weather.csv"):
+    h = weather.Hour(line)
+    if not h.is_missing():
+        temps.append(h.temp)
+print(len(temps), weather.mean(temps))
+```
+````
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**, with `weather.py` and `mean_temp.py` in `scripts/`
+
+```text
+$ python scripts/mean_temp.py
+87552 7.15996550621345
+```
+
+</div>
+
+<!--
+**Do:** first step: `mean_temp.py` of Part 3; second step: the same script with the module.
+**Say:** what is left in the script is its own question. How a line is cut and what −999 means is in `weather.py`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What `import weather` Does
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔎 **Three steps**
+
+1. finds `weather.py`: in the script's folder, then in the standard library, then in the environment's packages
+2. runs it once, top to bottom: `def` and `class` make the functions and the class
+3. names the result `weather`: `weather.Hour` is the class inside it
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## ✍️ **Three ways to write it**
+
+| The line | Then |
+| --- | --- |
+| `import weather` | `weather.Hour(line)` |
+| `from weather import Hour` | `Hour(line)` |
+| `import matplotlib.pyplot as plt` | `plt.subplots()` |
+
+</div>
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**, in a folder without `weather.py`
+
+```text
+$ python -c "import weather"
+ModuleNotFoundError: No module named 'weather'
+```
+
+</div>
+
+<!--
+**Ask:** a script imports `weather` twice: does `weather.py` run twice? No: once per program; the second `import` reuses the module.
+**If asked:** the folders searched are the list `sys.path`. A folder `__pycache__` appears beside `weather.py`: the module translated for this Python, to start faster next time.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Every Script Imports the Module
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📁 **The project**
+
+```text
+weather-project/
+├── data/raw/weather.csv
+└── scripts/
+    ├── weather.py
+    ├── mean_temp.py
+    ├── coldest_hour.py
+    └── mean_wind.py
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **`coldest_hour.py`**
+
+```py
+import weather
+
+lines = weather.read_lines("data/raw/weather.csv")
+coldest = weather.Hour(lines[0])
+for line in lines[1:]:
+    h = weather.Hour(line)
+    if not h.is_missing() and h.temp < coldest.temp:
+        coldest = h
+print(coldest.time, coldest.temp)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Functions and classes are written once, in <code>weather.py</code>; each script imports them and holds only its own question. A new column in the file is one edit, in <code>weather.py</code>, and every script follows.</div>
+
+<!--
+**Ask:** the station adds a column `pressure_hpa` after `time`. Which files change? Only `weather.py`: `parts[1]` becomes `parts[2]`.
+**Say:** the rule of every programming project: what is used twice goes into a module; a script imports it and does not define it again.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Library: Modules Someone Else Wrote
+
+```py {monaco-run} {autorun:false}
+import statistics
+import math
+
+print(statistics.mean([-4.4, -4.8, -5.5, -6.0]))   # -5.175
+print(math.sqrt(87672))                            # 296.09457948432623
+print(math.pi)                                     # 3.141592653589793
+```
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+✅ Part 5: a **module** is a `.py` file of functions and classes; `import` finds it, runs it once and gives it a name. A **library** is modules someone else wrote and tested, imported the same way: `statistics.mean` does what our `mean` does.
+
+</div>
+
+<!--
+**Do:** run the block: two modules that come with Python.
+**Say:** `weather.py` was written by us for one file; `statistics` by others, for every list of numbers, and tested by thousands of users.
+(~2 min)
 -->
 
 ---
@@ -1570,10 +2112,10 @@ hideInToc: true
 
 # Packages and **Versions**
 
-Part 4: where does the rest of Python come from, and which version arrives?
+Part 6: where does the rest of Python come from, and which version arrives?
 
 <!--
-**Say:** `float` and `dict` came with Python; the `Figure` did not.
+**Say:** `float` and `dict` are built in, `statistics` came with Python; the `Figure` did not.
 (~1 min)
 -->
 
@@ -1607,7 +2149,7 @@ ModuleNotFoundError: No module named 'numpy'
 </div>
 
 <!--
-**Say:** a **module** is a `.py` file of functions; `import` runs it once and makes its names available. A **package** is a folder of modules, installed together.
+**Say:** a **package** is a folder of modules, installed together: `matplotlib.pyplot` is the module `pyplot` in the package `matplotlib`.
 **If asked:** `python -c` runs the text after it as a one-line script. The traceback above `ModuleNotFoundError` is left out.
 (~2 min)
 -->
@@ -1840,7 +2382,7 @@ $ conda env create -f environment.yml
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Part 4: from the standard library with `import`, from conda-forge or PyPI by a package manager, into one environment per project, with the versions pinned and written down.
+✅ Part 6: from the standard library with `import`, from conda-forge or PyPI by a package manager, into one environment per project, with the versions pinned and written down.
 
 </div>
 
@@ -1854,36 +2396,21 @@ $ conda env create -f environment.yml
 hideInToc: true
 ---
 
-<div class="stack-tight mt-lg">
+<div class="card card-success card-glass pad-compact table-compact mt-md">
 
-<div class="card card-success card-glass pad-compact">
-
-**1. What is a value, and what can it do?** An object with a type: `int`, `float`, `bool`, `str`. The type says what it can do; methods are written after a dot: `line.split(",")`.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-**2. How are values kept by name, and in larger objects?** In containers: `list` by position, `dict` by key, `tuple` fixed, `set` once each. Larger objects, a `Figure` or a weather service's answer, are containers of objects.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-**3. How do `for` and `if` give 7.16?** A `for` over the lines, `split` and `float` on each, `if` and `continue` for −999: 7.15996550621346 from 87 552 rows.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-**4. Where does the rest come from?** The standard library with `import`; packages from conda-forge or PyPI, the newest unless pinned. One environment per project, written down in `environment.yml`.
-
-</div>
+| Part | Answer |
+| --- | --- |
+| 1 · a value | an object with a type, `int`, `float`, `bool`, `str`; methods after a dot: `line.split(",")` |
+| 2 · containers | `list` by position, `dict` by key, `tuple`, `set`; a `Figure` is a container of objects |
+| 3 · `for` and `if` | a loop over the lines, `split` and `float`, `continue` for −999: 7.15996550621346 |
+| 4 · write it once | a function, `def`; the values of one hour together in an object of a class, `Hour` |
+| 5 · share it | a module, `weather.py`, written once; each script says `import weather` |
+| 6 · the rest | the standard library; packages from conda-forge or PyPI, one environment per project |
 
 </div>
 
 <!--
-**Say:** 7.16 now comes from eleven lines anyone here can read.
+**Say:** 7.16 now comes from a script of eight lines and a module that every script of the project imports.
 (~1 min)
 -->
 
@@ -1897,13 +2424,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Read a line of Python: `print`, a name with `=`, a comment after `#`
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Name the type of a value, `int`, `float`, `bool` or `str`, and turn text into a number with `float()`
+✅ Read a line of Python, name the type of a value, `int`, `float`, `bool` or `str`, and turn text into a number with `float()`
 
 </div>
 
@@ -1915,7 +2436,13 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Repeat a step with `for`, choose with `if`, leave out rows with `continue`, and write a step once with `def`
+✅ Repeat a step with `for`, choose with `if`, leave out rows with `continue`
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Write a step once with `def`, keep the values of one hour in an object of a class, and import both from a module
 
 </div>
 
@@ -2050,6 +2577,38 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="The sum still leaves out the marks, 626 869.3, but the count is now 87 672: 626 869.3 / 87 672 = 7.150165389177845. No message: only a number known beforehand shows it."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="`scripts/weather.py` defines the class `Hour`. A script in `scripts/` starts with `import weather`. How does it make an `Hour` from `line`?"
+  :options="[
+    'Hour(line)',
+    'weather.Hour(line)',
+    'import Hour(line)',
+    'weather(Hour, line)'
+  ]"
+  :correct="1"
+  explanation="import weather gives the script one name, weather; what the module defines is reached after a dot. Hour(line) alone is a NameError, unless the script says from weather import Hour."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="Why do the scripts of a project import `weather.py` instead of each defining `read_lines` and `Hour` again?"
+  :options="[
+    'Python cannot call a function defined in the same script',
+    'A script may hold only one def',
+    'A change, such as a new column in the file, is then one edit, and every script follows',
+    'An imported function runs faster'
+  ]"
+  :correct="2"
+  explanation="A function defined in a script works too, but every copy has to be changed when the file changes, and a copy that is missed gives a wrong number without an error. Defined once and imported, the step changes in one place."
 />
 
 ---
