@@ -4,10 +4,12 @@
 
 <!-- ~205 min: the length pnpm timing:check reads -->
 
-**Today's goal:** Can Python compute 7.16 for us? Every student types Python in four places (the
-interpreter, a Jupyter notebook, an editor, a script with its own module)
-and gets the mean temperature of `weather.csv`, 7.16 °C, in each; repairs a
-script with two bugs; writes its steps once, as functions and a class in a
+**Today's goal:** Can Python compute the mean temperature for us? Every
+student types Python in four places (the interpreter, a Jupyter notebook,
+an editor, a script with its own module) and gets the mean temperature of
+six hours of the station's log, typed from this page, in each: 25.3 °C
+without the two hours the sensor missed; types and repairs a script with
+two bugs; writes its steps once, as functions and a class in a
 module `weather.py` that every script imports; asks a weather service for
 the temperature now; and writes the project's conda environment into
 `environment.yml`.
@@ -25,9 +27,11 @@ day; do them, and 19 (the environment file).
 ??? info "Before the session"
     - **Room:** VS Code, and Miniforge with `(base)` in the prompt of
       VS Code's terminal; a laptop without Miniforge (or, on Windows,
-      without Git Bash) installs them in section 1, step 2. Internet: the environment is about 70 MB per laptop, the
-      weather log 2.5 MB. The session needs nothing from any other
-      seminar: it starts in an empty folder.
+      without Git Bash) installs them in section 1, step 2. Internet: the
+      environment is about 70 MB per laptop, and section 18 asks a weather
+      service. The session needs no file from the course or from any other
+      seminar: it starts in an empty folder, and the room types its data
+      from this page.
     - **You:** remove the Python extension from your VS Code beforehand, to
       install it with the room in section 13. Paths are shown for a Mac
       (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`. Keys are
@@ -124,8 +128,8 @@ An empty folder for today, and one conda environment for the Python and the prog
     open **View** > **Terminal**: `(base)` at the start of the prompt, and
     `conda --version` prints a version as in step 1.
 
-3. An empty folder for today, in your home folder. The files arrive
-   when they are needed.
+3. An empty folder for today, in your home folder. Every file of today is
+   typed into it.
 
     ```text
     $ mkdir ~/weather-s05
@@ -211,25 +215,26 @@ The `>>>` prompt: the place to try one line.
     ```
 
 2. Type an expression and press `Enter`: Python prints its value. The
-   station's mean temperature, 7.16 °C, in Fahrenheit:
+   station's reading at 23:00 on 21 July 2019, 23.6 °C, in Fahrenheit:
 
     ```pycon
     >>> 2 + 2
     4
-    >>> 7.16 * 9 / 5 + 32
-    44.888
+    >>> 23.6 * 9 / 5 + 32
+    74.48
     ```
 
 3. `/` always gives a **float** (a number with a point); `//` and `%`
    give the whole part and the remainder as **int**s. `**` is the power.
+   Two hours after 23:00 is hour 25: one whole day, and 01:00.
 
     ```pycon
-    >>> 87672 / 24
-    3653.0
-    >>> 87672 // 24
-    3653
-    >>> 87672 % 24
-    0
+    >>> 25 / 24
+    1.0416666666666667
+    >>> 25 // 24
+    1
+    >>> 25 % 24
+    1
     >>> 2 ** 10
     1024
     ```
@@ -245,7 +250,7 @@ The `>>>` prompt: the place to try one line.
     Measured values are compared with a tolerance, never for exact
     equality.
 
-**Check:** `44.888` and `3653`.
+**Check:** `74.48`, and `1` from `25 % 24`.
 
 ---
 
@@ -255,17 +260,15 @@ The `>>>` prompt: the place to try one line.
 
 `=` puts a name on a value, so a later line can use it.
 
-1. How many hourly rows should ten years have? Three of them (2016, 2020,
-   2024) are leap years. `=` prints nothing; typing the name shows its
-   value.
+1. Six hours of the station's log, two of them without a temperature: how
+   many have one? `=` prints nothing; typing the name shows its value.
 
     ```pycon
-    >>> hours = 365 * 24 * 10 + 3 * 24
-    >>> hours
-    87672
-    >>> days = hours // 24
-    >>> days
-    3653
+    >>> rows = 6
+    >>> missing = 2
+    >>> valid = rows - missing
+    >>> valid
+    4
     ```
 
 2. `=` works out the right side first, then puts the name on the result.
@@ -282,7 +285,7 @@ The `>>>` prompt: the place to try one line.
     A name has letters, digits and `_`, does not start with a digit, and
     `Count` is another name than `count`.
 
-**Check:** `hours` gives `87672`.
+**Check:** `valid` gives `4`.
 
 ---
 
@@ -292,15 +295,16 @@ The `>>>` prompt: the place to try one line.
 
 Text between quotes is a **string** (`str`). The file is text, so each line arrives as a string.
 
-1. The first row of the log, as a string. At the prompt Python shows it
+1. One hour of the station's log, as a string: the time, the temperature
+   in °C, the humidity in %, the wind in m/s. At the prompt Python shows it
    with quotes; `print` shows the text itself.
 
     ```pycon
-    >>> line = "2016-01-01T00:00,-4.4,93,2.5"
+    >>> line = "2019-07-21T20:00,27.3,63,4.5"
     >>> line
-    '2016-01-01T00:00,-4.4,93,2.5'
+    '2019-07-21T20:00,27.3,63,4.5'
     >>> print(line)
-    2016-01-01T00:00,-4.4,93,2.5
+    2019-07-21T20:00,27.3,63,4.5
     >>> len(line)
     28
     ```
@@ -313,22 +317,22 @@ Text between quotes is a **string** (`str`). The file is text, so each line arri
     >>> line[0]
     '2'
     >>> line[0:4]
-    '2016'
+    '2019'
     >>> line[5:7]
-    '01'
+    '07'
     >>> line[-3:]
-    '2.5'
+    '4.5'
     >>> line[17:21]
-    '-4.4'
+    '27.3'
     ```
 
-3. `'-4.4'` is four characters, not a number. `+` joins two strings, and
+3. `'27.3'` is four characters, not a number. `+` joins two strings, and
    refuses a string and a number:
 
     ```pycon
-    >>> "-4.4" + "1"
-    '-4.41'
-    >>> "-4.4" + 1
+    >>> "27.3" + "1"
+    '27.31'
+    >>> "27.3" + 1
     Traceback (most recent call last):
       ...
     TypeError: can only concatenate str (not "int") to str
@@ -337,14 +341,14 @@ Text between quotes is a **string** (`str`). The file is text, so each line arri
     The last line of an error says what went wrong.
 
 4. `float(...)` turns the text into a number (`int(...)` into a whole
-   number). The tail of digits is the float of section 2, step 4.
+   number).
 
     ```pycon
-    >>> float("-4.4") + 1
-    -3.4000000000000004
+    >>> float("27.3") + 1
+    28.3
     ```
 
-**Check:** `line[17:21]` gives `'-4.4'`, with quotes.
+**Check:** `line[17:21]` gives `'27.3'`, with quotes.
 
 ---
 
@@ -360,34 +364,48 @@ A **list** holds several values in order, in square brackets.
     ```pycon
     >>> parts = line.split(",")
     >>> parts
-    ['2016-01-01T00:00', '-4.4', '93', '2.5']
+    ['2019-07-21T20:00', '27.3', '63', '4.5']
     >>> parts[1]
-    '-4.4'
+    '27.3'
     >>> len(parts)
     4
     ```
 
-2. A list of numbers: the first three hours of 2016. `append` adds a
-   fourth; `sum`, `len`, `min` work on the whole list.
+2. A list of numbers: the temperatures at 20:00, 21:00 and 22:00.
+   `append` adds the one at 23:00; `sum`, `len`, `min` work on the whole
+   list.
 
     ```pycon
-    >>> temps = [-4.4, -4.8, -5.5]
-    >>> temps.append(-6.0)
+    >>> temps = [27.3, 25.6, 24.6]
+    >>> temps.append(23.6)
     >>> temps
-    [-4.4, -4.8, -5.5, -6.0]
+    [27.3, 25.6, 24.6, 23.6]
     >>> sum(temps) / len(temps)
-    -5.175
+    25.275000000000002
     >>> min(temps)
-    -6.0
+    23.6
     ```
 
-3. A list can be changed in place. A string cannot: a changed text is
-   always a new string.
+    The mean is 25.275; the tail of digits is the float of section 2,
+    step 4.
+
+3. A list can be changed in place: `append` changes `temps` itself. The
+   two hours after midnight have `-999`, the station's mark for an hour
+   without a reading. In the list they pull the mean below any
+   temperature.
 
     ```pycon
-    >>> temps[0] = -4.5
+    >>> temps.append(-999)
+    >>> temps.append(-999)
     >>> temps
-    [-4.5, -4.8, -5.5, -6.0]
+    [27.3, 25.6, 24.6, 23.6, -999, -999]
+    >>> sum(temps) / len(temps)
+    -316.15000000000003
+    ```
+
+4. A string cannot be changed: a changed text is always a new string.
+
+    ```pycon
     >>> line[0] = "3"
     Traceback (most recent call last):
       ...
@@ -397,8 +415,8 @@ A **list** holds several values in order, in square brackets.
     A value that can change is **mutable** (a list); one that cannot is
     **immutable** (a string, a number).
 
-**Check:** the mean of the four hours, `-5.175`, before step 3 changed the
-first one.
+**Check:** `25.275000000000002` for the four hours, `-316.15000000000003`
+with the two `-999`.
 
 ---
 
@@ -411,7 +429,7 @@ Every value is an **object**: it has a type, and the type decides what it can do
 1. `type` names the type.
 
     ```pycon
-    >>> type(7.16)
+    >>> type(27.3)
     <class 'float'>
     >>> type(line)
     <class 'str'>
@@ -446,36 +464,36 @@ Every value is an **object**: it has a type, and the type decides what it can do
     ```
 
 4. The arrow up brings back the lines typed before. Leave the
-   interpreter, start it again, and ask for `hours`:
+   interpreter, start it again, and ask for `valid`:
 
     ```pycon
     >>> exit()
     $ python
-    >>> hours
+    >>> valid
     Traceback (most recent call last):
       ...
-    NameError: name 'hours' is not defined
+    NameError: name 'valid' is not defined
     >>> exit()
     ```
 
     Everything typed at `>>>` is gone when it ends. Part 2 keeps it.
 
-**Check:** `NameError` for `hours` in the new interpreter, and the shell's
+**Check:** `NameError` for `valid` in the new interpreter, and the shell's
 prompt (`%` or `$`) after `exit()`.
 
 !!! question "Task: the wind in km/h, the temperature in °F"
-    From `parts` of the first row, work out at `>>>` the wind in km/h (the
+    From `parts` of the hour 20:00, work out at `>>>` the wind in km/h (the
     fourth value, in m/s, × 3.6) and the temperature in °F (× 9 / 5 + 32).
     Make `line` and `parts` again first: the new interpreter forgot them.
 
 ??? success "Answer"
     ```pycon
-    >>> line = "2016-01-01T00:00,-4.4,93,2.5"
+    >>> line = "2019-07-21T20:00,27.3,63,4.5"
     >>> parts = line.split(",")
     >>> float(parts[3]) * 3.6
-    9.0
+    16.2
     >>> float(parts[1]) * 9 / 5 + 32
-    24.08
+    81.14
     ```
 
     `parts[3]` is the fourth value: positions start at 0.
@@ -492,35 +510,40 @@ Further reading: [The Python Tutorial, chapters 4 and 5](https://docs.python.org
 
 ---
 
-### 7. Start JupyterLab { #jupyter }
+### 7. Type the log, start JupyterLab { #jupyter }
 
 <!-- 1:00 · 10 min -->
 
-JupyterLab is a program in the browser; the terminal runs its server.
+First the log, typed into a file; then JupyterLab, a program in the browser whose server runs in the terminal.
 
-1. The weather log, from the course's Releases page into `data/raw`.
-   `curl` downloads a file: `-sSL` is quiet, but shows errors and follows
-   GitHub's redirect; `-o` names the file to write. Then look at its
-   first lines.
+1. Folders for the data and for the notebooks. `-p` makes `data` as well.
 
     ```text
-    $ mkdir -p data/raw
-    $ curl -sSL -o data/raw/weather.csv https://github.com/MindaugasSarpis/weather-project/releases/download/seminar-files/weather.csv
-    $ head -n 3 data/raw/weather.csv
-    time,temp_c,humidity_pct,wind_ms
-    2016-01-01T00:00,-4.4,93,2.5
-    2016-01-01T01:00,-4.8,95,2.6
+    $ mkdir -p data/raw notebooks
     ```
 
-    One reading per hour, 2016 to 2025: the time, the temperature in °C,
-    the humidity in %, the wind in m/s. An hour without a reading has
-    `-999`.
-
-2. A folder for notebooks, then start JupyterLab in the project folder,
-   with `(s05)` in the prompt.
+2. In VS Code's Explorer, right-click `raw` > **New File...**, type
+   `weather.csv`, `Enter`. Type the seven lines, with no empty line after
+   the last, and save (`Ctrl+S`, macOS `Cmd+S`).
 
     ```text
-    $ mkdir notebooks
+    time,temp_c,humidity_pct,wind_ms
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
+    2019-07-21T22:00,24.6,68,3.5
+    2019-07-21T23:00,23.6,74,3.4
+    2019-07-22T00:00,-999,76,3.2
+    2019-07-22T01:00,-999,81,3.0
+    ```
+
+    Six hours of the station's log, the evening of 21 July 2019 when its
+    temperature sensor failed: the time, the temperature in °C, the
+    humidity in %, the wind in m/s. An hour without a reading has `-999`.
+    The station's full log has 87 672 such rows, 2016 to 2025.
+
+3. Start JupyterLab in the project folder, with `(s05)` in the prompt.
+
+    ```text
     $ jupyter lab
     [I 2026-10-18 13:37:05.535 ServerApp] Serving notebooks from local directory: /Users/smilte/weather-s05
     [I 2026-10-18 13:37:05.535 ServerApp] Jupyter Server 2.21.1 is running at:
@@ -530,10 +553,10 @@ JupyterLab is a program in the browser; the terminal runs its server.
     The browser opens JupyterLab. The terminal stays busy while it runs:
     leave it open.
 
-3. On the left, the files of the project. Double-click `notebooks`.
-4. In the **Launcher**, under **Notebook**, click **Python 3
+4. On the left, the files of the project. Double-click `notebooks`.
+5. In the **Launcher**, under **Notebook**, click **Python 3
    (ipykernel)**. A file `Untitled.ipynb` opens.
-5. Right-click its tab > **Rename Notebook...**, type `explore.ipynb`,
+6. Right-click its tab > **Rename Notebook...**, type `explore.ipynb`,
    **Rename**.
 
 **Check:** `notebooks/explore.ipynb` in the file list, an empty cell with
@@ -571,10 +594,10 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
     ```text
-    87673
+    7
     ```
 
-    The header and 87 672 hours, the number of section 3.
+    The header and six hours.
 
 3. One cell per question: the second line and the last.
 
@@ -583,7 +606,7 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
     ```text
-    '2016-01-01T00:00,-4.4,93,2.5'
+    '2019-07-21T20:00,27.3,63,4.5'
     ```
 
     ```python
@@ -591,7 +614,7 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
     ```text
-    '2025-12-31T23:00,-11.3,100,4.2'
+    '2019-07-22T01:00,-999,81,3.0'
     ```
 
 4. A note between the cells: click the first cell's left edge, press `B`
@@ -603,7 +626,7 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
 
     It shows as a heading. Save: `Ctrl+S` (macOS `Cmd+S`).
 
-**Check:** `87673` under the cell, a heading above it.
+**Check:** `7` under the cell, a heading above it.
 
 ---
 
@@ -622,9 +645,9 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
     ```text
-    2016-01-01T00:00,-4.4,93,2.5
-    2016-01-01T01:00,-4.8,95,2.6
-    2016-01-01T02:00,-5.5,95,2.7
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
+    2019-07-21T22:00,24.6,68,3.5
     ```
 
     `lines[1:4]` is positions 1, 2 and 3: the header, position 0, is left
@@ -636,16 +659,16 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```python
     for line in lines[1:4]:
         temp = float(line.split(",")[1])
-        if temp < -5:
-            print(temp, "below -5")
+        if temp < 25:
+            print(temp, "below 25")
         else:
-            print(temp, "-5 or warmer")
+            print(temp, "25 or warmer")
     ```
 
     ```text
-    -4.4 -5 or warmer
-    -4.8 -5 or warmer
-    -5.5 below -5
+    27.3 25 or warmer
+    25.6 25 or warmer
+    24.6 below 25
     ```
 
 3. The mean of every hour. One cell starts the sum and the count, the
@@ -669,12 +692,12 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
     ```text
-    (87672, 5.782796103659093)
+    (6, -316.15000000000003)
     ```
 
-4. 5.78, not 7.16: the 120 hours marked `-999` are in the sum. Add the
-   two `if` lines (`continue` skips to the next line), then run the three
-   cells again from the first.
+4. −316.15 is no temperature: the two hours marked `-999` are in the sum.
+   Add the two `if` lines (`continue` skips to the next line), then run
+   the three cells again from the first.
 
     ```python
     for line in lines[1:]:
@@ -686,22 +709,25 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
     ```text
-    (87552, 7.15996550621346)
+    (4, 25.275)
     ```
 
-5. The 7.16: round only what is printed. An `f` before the
-   quotes puts the value of each `{...}` into the text; `:.2f` gives two
-   decimals.
+    Section 5 printed 25.275000000000002 for the same four hours: `sum`
+    keeps track of what each addition rounds away, a loop with `+` does
+    not. With one decimal, both are 25.3.
+
+5. Round only what is printed. An `f` before the quotes puts the value of
+   each `{...}` into the text; `:.1f` gives one decimal, as in the log.
 
     ```python
-    f"{count} hours, mean {total / count:.2f} °C"
+    f"{count} hours, mean {total / count:.1f} °C"
     ```
 
     ```text
-    '87552 hours, mean 7.16 °C'
+    '4 hours, mean 25.3 °C'
     ```
 
-**Check:** `(87552, 7.15996550621346)`: 120 hours fewer than 87 672.
+**Check:** `(4, 25.275)`: the two `-999` hours left out.
 
 !!! warning "`IndentationError`"
     The lines under `for` or `if` need the same indentation. JupyterLab
@@ -724,52 +750,43 @@ A **tuple** is a fixed group of values, in round brackets. A **dictionary** (`di
     ```
 
     ```text
-    ('2016-01-01T00:00', -4.4)
+    ('2019-07-21T20:00', 27.3)
     ```
 
-2. Hours per year, with the year (`line[:4]`) as key. `hours.get(year,
-   0)` is the count so far, 0 for a new year.
+2. Hours per day, with the date (`line[:10]`) as key. `hours.get(day,
+   0)` is the count so far, 0 for a new day.
 
     ```python
     hours = {}
     for line in lines[1:]:
-        year = line[:4]
-        hours[year] = hours.get(year, 0) + 1
+        day = line[:10]
+        hours[day] = hours.get(day, 0) + 1
     ```
 
-3. The whole dictionary, in a cell of its own. JupyterLab prints a long
-   one with one key per line.
+3. The whole dictionary, in a cell of its own: each key, a colon, its
+   value.
 
     ```python
     hours
     ```
 
     ```text
-    {'2016': 8784,
-     '2017': 8760,
-     '2018': 8760,
-     '2019': 8760,
-     '2020': 8784,
-     '2021': 8760,
-     '2022': 8760,
-     '2023': 8760,
-     '2024': 8784,
-     '2025': 8760}
+    {'2019-07-21': 4, '2019-07-22': 2}
     ```
 
 4. One value by its key.
 
     ```python
-    hours["2016"]
+    hours["2019-07-21"]
     ```
 
     ```text
-    8784
+    4
     ```
 
-    366 × 24: 2016 is a leap year.
+    Four hours on 21 July, two after midnight.
 
-**Check:** 8784 hours in 2016, 2020 and 2024, 8760 in the other years.
+**Check:** `{'2019-07-21': 4, '2019-07-22': 2}`.
 
 ---
 
@@ -784,65 +801,55 @@ A notebook remembers what ran, not what the page shows: a cell run twice, or out
    higher than the others.
 
     ```text
-    (175104, 7.159965506213419)
+    (8, 25.275)
     ```
 
     Twice the hours: the loop added to the sum and count of the first run.
-    The mean barely changed, so the mistake is easy to miss.
+    The mean did not change, so the mistake is easy to miss.
 
 2. **Kernel** > **Restart Kernel and Run All Cells...** > **Restart**. The
    kernel, the Python behind the notebook, forgets everything; the cells
    run from the top, numbered 1, 2, 3, …
 
     ```text
-    (87552, 7.15996550621346)
+    (4, 25.275)
     ```
 
 3. Save (`Ctrl+S`). Stop JupyterLab: **File** > **Shut Down** >
    **Shut Down**. The terminal's prompt comes back.
 
 **Check:** after **Run All**, the cells numbered in order from the top and
-`87552` again.
+`4` again.
 
-!!! question "Task: the mean of each year"
-    In a new cell of `explore.ipynb`, the mean temperature of each year,
-    without the `-999` hours, with two decimals. Which year was the
-    warmest? Start JupyterLab again with `jupyter lab` and open the
-    notebook.
+!!! question "Task: the mean humidity of each day"
+    In a new cell of `explore.ipynb`, the mean humidity of each day (the
+    third value of a line), with one decimal. Which day was more humid?
+    Start JupyterLab again with `jupyter lab` and open the notebook.
 
 ??? success "Answer"
-    Two dictionaries with the year as key: one for the sums, one for the
+    Two dictionaries with the date as key: one for the sums, one for the
     counts.
 
     ```python
     sums = {}
     counts = {}
     for line in lines[1:]:
-        year = line[:4]
-        temp = float(line.split(",")[1])
-        if temp == -999:
-            continue
-        sums[year] = sums.get(year, 0.0) + temp
-        counts[year] = counts.get(year, 0) + 1
+        day = line[:10]
+        humidity = float(line.split(",")[2])
+        sums[day] = sums.get(day, 0.0) + humidity
+        counts[day] = counts.get(day, 0) + 1
 
-    for year in sums:
-        print(year, f"{sums[year] / counts[year]:.2f}")
+    for day in sums:
+        print(day, f"{sums[day] / counts[day]:.1f}")
     ```
 
     ```text
-    2016 7.60
-    2017 6.51
-    2018 7.97
-    2019 7.27
-    2020 6.83
-    2021 7.25
-    2022 6.60
-    2023 8.31
-    2024 7.27
-    2025 5.98
+    2019-07-21 67.5
+    2019-07-22 78.5
     ```
 
-    The warmest year is 2023, the coldest 2025.
+    22 July, the two hours after midnight. The humidity has no `-999`, so
+    no hour is skipped.
 
 ---
 
@@ -873,16 +880,16 @@ IDLE comes with every Python: a prompt, an editor and a Run key. It shows what a
 2. In the IDLE Shell, try one line.
 
     ```pycon
-    >>> 7.16 * 9 / 5 + 32
-    44.888
+    >>> 23.6 * 9 / 5 + 32
+    74.48
     ```
 
 3. **File** > **New File**. Type three lines.
 
     ```python
-    days = 365 * 10 + 3
-    hours = days * 24
-    print(hours)
+    temps = [27.3, 25.6, 24.6, 23.6]
+    mean = sum(temps) / len(temps)
+    print(f"mean {mean:.1f} °C")
     ```
 
 4. A folder for the scripts: in VS Code's terminal, `mkdir scripts`.
@@ -892,15 +899,15 @@ IDLE comes with every Python: a prompt, an editor and a Run key. It shows what a
    `RESTART` and the file's path, then the result:
 
     ```text
-    87672
+    mean 25.3 °C
     ```
 
     In a file only `print` shows a value; at `>>>` every value is shown.
 
 6. Close both IDLE windows.
 
-**Check:** `scripts/hours.py` in VS Code's Explorer, and `87672` printed
-by `F5`.
+**Check:** `scripts/hours.py` in VS Code's Explorer, and `mean 25.3 °C`
+printed by `F5`.
 
 ---
 
@@ -931,7 +938,7 @@ VS Code is the editor of the course; its Python extension runs a file with the e
         total = total + temp
         count = count + 1
 
-    print(f"{count} hours, mean {total / count:.2f} °C")
+    print(f"{count} hours, mean {total / count:.1f} °C")
     ```
 
 4. Run it with the ▶ at the top right of the editor: VS Code types the
@@ -940,11 +947,10 @@ VS Code is the editor of the course; its Python extension runs a file with the e
 
     ```text
     $ python scripts/mean_temp.py
-    87552 hours, mean 7.16 °C
+    4 hours, mean 25.3 °C
     ```
 
-**Check:** `87552 hours, mean 7.16 °C`, from the ▶ and from the typed
-line.
+**Check:** `4 hours, mean 25.3 °C`, from the ▶ and from the typed line.
 
 !!! warning "`FileNotFoundError: ... 'data/raw/weather.csv'`"
     The terminal is not in the project folder: `cd ~/weather-s05`,
@@ -956,30 +962,40 @@ line.
 
 <!-- 2:15 · 15 min -->
 
-`coldest_hour.py` should print the coldest hour of the ten years. It has two bugs: one Python reports, one it cannot see.
+`coldest_hour.py` should print the coldest hour of `weather.csv`. It has two bugs: one Python reports, one it cannot see.
 
-1. Download it into `scripts`, as the weather log in section 7.
+1. In the Explorer, right-click `scripts` > **New File...**, type
+   `coldest_hour.py`, `Enter`. Type the twelve lines as they stand, with
+   their two mistakes, and save.
 
-    ```text
-    $ curl -sSL -o scripts/coldest_hour.py https://github.com/MindaugasSarpis/weather-project/releases/download/seminar-files/coldest_hour.py
-    $ ls scripts
-    coldest_hour.py  hours.py  mean_temp.py
+    ```python
+    lines = open("data/raw/weather.csv").read().splitlines()
+
+    coldest = 100.0
+    coldest_time = ""
+    for line in lines[1:]:
+        parts = line.split(",")
+        temp = float(parts[1])
+        if temp < coldest:
+            coldest = temp
+            coldest_time = parts[0]
+
+    print(f"coldest hour: {coldest_tme}, {coldest} °C")
     ```
 
-2. Open `scripts/coldest_hour.py` and run it. An error message, a
-   **traceback**, is read from the bottom: the last line says what, the
-   lines above it where.
+2. Run it. An error message, a **traceback**, is read from the bottom:
+   the last line says what, the lines above it where.
 
     ```text
     $ python scripts/coldest_hour.py
     Traceback (most recent call last):
-      File "/Users/smilte/weather-s05/scripts/coldest_hour.py", line 13, in <module>
+      File "/Users/smilte/weather-s05/scripts/coldest_hour.py", line 12, in <module>
         print(f"coldest hour: {coldest_tme}, {coldest} °C")
                                ^^^^^^^^^^^
     NameError: name 'coldest_tme' is not defined. Did you mean: 'coldest_time'?
     ```
 
-3. `Ctrl+click` (macOS `Cmd+click`) the path: VS Code opens line 13.
+3. `Ctrl+click` (macOS `Cmd+click`) the path: VS Code opens line 12.
    Change `coldest_tme` to `coldest_time`, save, run.
 
     ```text
@@ -989,15 +1005,15 @@ line.
 
     No message, and a temperature that cannot be.
 
-4. A **breakpoint** stops the script at a line. Click left of line 10
+4. A **breakpoint** stops the script at a line. Click left of line 9
    (a red dot), right-click it > **Edit Breakpoint...**, type
    `temp < -900`, `Enter`: it stops only when that is true.
 5. `F5` > **Python Debugger** > **Python File**. The script stops on line
-   10. In **Run and Debug**, **Variables** > **Locals**:
+   9. In **Run and Debug**, **Variables** > **Locals**:
 
     ```text
-    coldest: -16.0
-    coldest_time: '2017-01-15T02:00'
+    coldest: 23.6
+    coldest_time: '2019-07-21T23:00'
     line: '2019-07-22T00:00,-999,76,3.2'
     parts: ['2019-07-22T00:00', '-999', '76', '3.2']
     temp: -999.0
@@ -1006,7 +1022,7 @@ line.
     The first `-999` beats every real temperature.
 
 6. `Shift+F5` stops the debugger. Click the red dot to remove it. Change
-   line 9 so that `-999` never counts, save, run.
+   line 8 so that `-999` never counts, save, run.
 
     ```python
         if temp != -999 and temp < coldest:
@@ -1014,10 +1030,10 @@ line.
 
     ```text
     $ python scripts/coldest_hour.py
-    coldest hour: 2025-01-07T05:00, -16.3 °C
+    coldest hour: 2019-07-21T23:00, 23.6 °C
     ```
 
-**Check:** `-16.3 °C` on 7 January 2025.
+**Check:** `23.6 °C` at 23:00 on 21 July 2019.
 
 !!! question "Task: the warmest hour"
     Copy `coldest_hour.py` to `scripts/warmest_hour.py` and change it to
@@ -1041,7 +1057,7 @@ line.
 
     ```text
     $ python scripts/warmest_hour.py
-    warmest hour: 2018-06-18T15:00, 32.4 °C
+    warmest hour: 2019-07-21T20:00, 27.3 °C
     ```
 
     No check: `-999` is never the largest. The start value `-100.0` must
@@ -1075,15 +1091,15 @@ Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.pyt
     >>> def temp_of(line):
     ...     return float(line.split(",")[1])
     ...
-    >>> temp_of("2016-01-01T00:00,-4.4,93,2.5")
-    -4.4
-    >>> temp_of("2016-01-01T01:00,-4.8,95,2.6")
-    -4.8
+    >>> temp_of("2019-07-21T20:00,27.3,63,4.5")
+    27.3
+    >>> temp_of("2019-07-21T21:00,25.6,65,4.0")
+    25.6
     >>> def mean(values):
     ...     return sum(values) / len(values)
     ...
-    >>> mean([-4.4, -4.8, -5.5, -6.0])
-    -5.175
+    >>> mean([27.3, 25.6, 24.6, 23.6])
+    25.275000000000002
     ```
 
     `sum` is built in, like `len`. `mean` works on any list of numbers.
@@ -1127,17 +1143,17 @@ Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.pyt
         if temp != -999:
             temps.append(temp)
 
-    print(f"{len(temps)} hours, mean {mean(temps):.2f} °C")
+    print(f"{len(temps)} hours, mean {mean(temps):.1f} °C")
     ```
 
 4. Run it: the same result as before.
 
     ```text
     $ python scripts/mean_temp.py
-    87552 hours, mean 7.16 °C
+    4 hours, mean 25.3 °C
     ```
 
-**Check:** `87552 hours, mean 7.16 °C` from the script with three `def`s.
+**Check:** `4 hours, mean 25.3 °C` from the script with three `def`s.
 
 ---
 
@@ -1161,11 +1177,11 @@ A **class** is a type of your own: its objects keep values together, and its met
     ...     def is_missing(self):
     ...         return self.temp == -999
     ...
-    >>> h = Hour("2016-01-01T00:00,-4.4,93,2.5")
+    >>> h = Hour("2019-07-21T20:00,27.3,63,4.5")
     >>> h.time
-    '2016-01-01T00:00'
+    '2019-07-21T20:00'
     >>> h.temp
-    -4.4
+    27.3
     >>> h.is_missing()
     False
     >>> Hour("2019-07-22T00:00,-999,76,3.2").is_missing()
@@ -1209,10 +1225,11 @@ A **class** is a type of your own: its objects keep values together, and its met
 
     ```text
     $ python scripts/coldest_hour.py
-    coldest hour: 2025-01-07T05:00, -16.3 °C
+    coldest hour: 2019-07-21T23:00, 23.6 °C
     ```
 
-**Check:** `-16.3 °C` on 7 January 2025, from the script with `class Hour`.
+**Check:** `23.6 °C` at 23:00 on 21 July 2019, from the script with
+`class Hour`.
 
 ---
 
@@ -1264,7 +1281,7 @@ A **module** is a `.py` file of definitions; `import` runs it once and gives the
         if not h.is_missing():
             temps.append(h.temp)
 
-    print(f"{len(temps)} hours, mean {weather.mean(temps):.2f} °C")
+    print(f"{len(temps)} hours, mean {weather.mean(temps):.1f} °C")
     ```
 
 3. Replace `coldest_hour.py` the same way: the class goes, the import
@@ -1288,9 +1305,9 @@ A **module** is a `.py` file of definitions; `import` runs it once and gives the
 
     ```text
     $ python scripts/mean_temp.py
-    87552 hours, mean 7.16 °C
+    4 hours, mean 25.3 °C
     $ python scripts/coldest_hour.py
-    coldest hour: 2025-01-07T05:00, -16.3 °C
+    coldest hour: 2019-07-21T23:00, 23.6 °C
     $ ls scripts/__pycache__
     weather.cpython-314.pyc
     ```
@@ -1314,19 +1331,19 @@ A **module** is a `.py` file of definitions; `import` runs it once and gives the
     $ cd scripts
     $ python
     >>> from weather import Hour
-    >>> Hour("2016-01-01T00:00,-4.4,93,2.5").temp
-    -4.4
+    >>> Hour("2019-07-21T20:00,27.3,63,4.5").temp
+    27.3
     >>> exit()
     $ cd ..
     ```
 
 **Check:** both scripts start with `import weather`, define nothing
-themselves, and print 7.16 and −16.3.
+themselves, and print 25.3 and 23.6.
 
 !!! question "Task: the mean wind"
     Give `Hour` a third value, `self.wind`, the fourth part of the line
     (`wind_ms`), and write `scripts/mean_wind.py`: the mean wind of all
-    hours with two decimals, from `weather.Hour` and `weather.mean`. The
+    hours with one decimal, from `weather.Hour` and `weather.mean`. The
     wind has no `-999`. Does `mean_temp.py` still run?
 
 ??? success "Answer"
@@ -1345,14 +1362,14 @@ themselves, and print 7.16 and −16.3.
     for line in weather.read_lines("data/raw/weather.csv"):
         winds.append(weather.Hour(line).wind)
 
-    print(f"{len(winds)} hours, mean wind {weather.mean(winds):.2f} m/s")
+    print(f"{len(winds)} hours, mean wind {weather.mean(winds):.1f} m/s")
     ```
 
     ```text
     $ python scripts/mean_wind.py
-    87672 hours, mean wind 3.50 m/s
+    6 hours, mean wind 3.6 m/s
     $ python scripts/mean_temp.py
-    87552 hours, mean 7.16 °C
+    4 hours, mean 25.3 °C
     ```
 
     One edit in the module, and every script that imports it has the wind.
@@ -1378,7 +1395,7 @@ themselves, and print 7.16 and −16.3.
 
     ```text
     $ python scripts/warmest_hour.py
-    warmest hour: 2018-06-18T15:00, 32.4 °C
+    warmest hour: 2019-07-21T20:00, 27.3 °C
     ```
 
 ---
@@ -1389,15 +1406,19 @@ themselves, and print 7.16 and −16.3.
 
 Python comes with about 200 modules, the **standard library**: no install needed.
 
-1. Two of them at `>>>`: `math` and `statistics`.
+1. Two of them at `>>>`. `math.isclose` compares two floats with a
+   tolerance (section 2, step 4); `statistics` has a `mean`, as section 15
+   wrote one.
 
     ```pycon
     >>> import math
-    >>> math.sqrt(87672)
-    296.09457948432623
+    >>> 0.1 + 0.2 == 0.3
+    False
+    >>> math.isclose(0.1 + 0.2, 0.3)
+    True
     >>> import statistics
-    >>> statistics.mean([-4.4, -4.8, -5.5, -6.0])
-    -5.175
+    >>> statistics.mean([27.3, 25.6, 24.6, 23.6])
+    25.275000000000002
     >>> exit()
     ```
 
@@ -1498,8 +1519,8 @@ A package from conda lives in the environment's folder. `environment.yml` lists 
     ```text
     # Weather station, Seminar 5
 
-    The mean, `python scripts/mean_temp.py`: 7.16 °C over 87 552 hours.
-    The coldest hour, `python scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
+    The mean, `python scripts/mean_temp.py`: 25.3 °C over 4 hours.
+    The coldest hour, `python scripts/coldest_hour.py`: 2019-07-21T23:00, 23.6 °C.
     ```
 
 **Check:** `environment.yml` with two dependencies, and a `README.md` with
@@ -1524,8 +1545,8 @@ the two results.
 | switch the environment on | `conda activate s05` |
 | cut a line, convert a part | `line.split(",")`, `float(parts[1])` |
 | repeat, decide | `for line in lines[1:]:`, `if temp == -999:` |
-| count by key | `hours[year] = hours.get(year, 0) + 1` |
-| print with decimals | `f"{mean:.2f}"` |
+| count by key | `hours[day] = hours.get(day, 0) + 1` |
+| print with decimals | `f"{mean:.1f}"` |
 | write a step once | `def mean(values):` … `return sum(values) / len(values)` |
 | keep the values of one hour together | `class Hour:`, `h = Hour(line)`, `h.temp`, `h.is_missing()` |
 | use a module | `import weather`, `weather.Hour(line)` |
@@ -1557,7 +1578,7 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
     ```
 
     ```text
-    (87672, 87552, -16.3, 32.4)
+    (6, 4, 23.6, 27.3)
     ```
 
 2. The mean, with five decimals.
@@ -1567,7 +1588,7 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
     ```
 
     ```text
-    '7.15997'
+    '25.27500'
     ```
 
 **Check:** the same mean as the loop of section 9.
@@ -1591,10 +1612,10 @@ A **list comprehension** builds a list in one line, with an `if` to filter.
 
     ```text
     $ python scripts/mean_temp.py
-    87552 hours, mean 7.16 °C
+    4 hours, mean 25.3 °C
     $ cat results/mean_temp.txt
-    87552 hours
-    mean 7.15997 °C
+    4 hours
+    mean 25.27500 °C
     ```
 
     `\n` ends a line.
@@ -1613,21 +1634,21 @@ When a file runs as a script, its `__name__` is `"__main__"`; when it is importe
 
     ```python
     if __name__ == "__main__":
-        print(Hour("2016-01-01T00:00,-4.4,93,2.5").temp)
+        print(Hour("2019-07-21T20:00,27.3,63,4.5").temp)
     ```
 
 2. Run `weather.py` itself, then `mean_temp.py`, which imports it.
 
     ```text
     $ python scripts/weather.py
-    -4.4
+    27.3
     $ python scripts/mean_temp.py
-    87552 hours, mean 7.16 °C
+    4 hours, mean 25.3 °C
     ```
 
     The check runs only when `weather.py` is the script.
 
-**Check:** `-4.4` from `weather.py`, and no `-4.4` from `mean_temp.py`.
+**Check:** `27.3` from `weather.py`, and no `27.3` from `mean_temp.py`.
 
 ---
 
@@ -1637,24 +1658,24 @@ When a file runs as a script, its `__name__` is `"__main__"`; when it is importe
 
 Four harder tasks for whoever is done early, each solved with what today showed; the answers are folded.
 
-!!! question "Advanced task: the longest frost"
-    The most hours in a row below 0 °C, and when that frost began. A loop
+!!! question "Advanced task: the longest spell below 25 °C"
+    The most hours in a row below 25 °C, and when that spell began. A loop
     that remembers the length of the current run. Mind the `-999` hours:
-    they are below 0 too.
+    they are below 25 too.
 
 ??? success "Answer"
-    `scripts/longest_frost.py`:
+    `scripts/longest_cool.py`:
 
     ```python
     import weather
 
-    run = 0                 # hours below 0 °C in a row, up to this line
+    run = 0                 # hours below 25 °C in a row, up to this line
     run_start = ""
     longest = 0
     longest_start = ""
     for line in weather.read_lines("data/raw/weather.csv"):
         h = weather.Hour(line)
-        if h.temp < 0 and not h.is_missing():
+        if h.temp < 25 and not h.is_missing():
             if run == 0:
                 run_start = h.time
             run = run + 1
@@ -1664,16 +1685,16 @@ Four harder tasks for whoever is done early, each solved with what today showed;
         else:
             run = 0
 
-    print(f"longest frost: {longest} hours ({longest / 24:.1f} days) from {longest_start}")
+    print(f"longest below 25 °C: {longest} hours from {longest_start}")
     ```
 
     ```text
-    $ python scripts/longest_frost.py
-    longest frost: 1172 hours (48.8 days) from 2024-12-31T16:00
+    $ python scripts/longest_cool.py
+    longest below 25 °C: 2 hours from 2019-07-21T22:00
     ```
 
-    Without `not h.is_missing()`, the 120 marked hours of July 2019
-    would count as a frost of five days in summer.
+    Without `not h.is_missing()`, the two marked hours after midnight
+    count too, and the spell is 4 hours.
 
 !!! question "Advanced task: the column from the command line"
     A script `scripts/column_mean.py` that takes the name of a column when
@@ -1703,29 +1724,30 @@ Four harder tasks for whoever is done early, each solved with what today showed;
 
     values = [float(line.split(",")[i]) for line in lines[1:]]
     valid = [v for v in values if v != -999]
-    print(f"{column}: {len(valid)} values, mean {sum(valid) / len(valid):.2f}")
+    print(f"{column}: {len(valid)} values, mean {sum(valid) / len(valid):.1f}")
     ```
 
     ```text
     $ python scripts/column_mean.py temp_c
-    temp_c: 87552 values, mean 7.16
+    temp_c: 4 values, mean 25.3
     $ python scripts/column_mean.py humidity_pct
-    humidity_pct: 87672 values, mean 79.10
+    humidity_pct: 6 values, mean 71.2
     $ python scripts/column_mean.py rain_mm
     no column 'rain_mm'; the columns are temp_c, humidity_pct, wind_ms
     $ python scripts/column_mean.py
     usage: python scripts/column_mean.py COLUMN
     ```
 
-!!! question "Advanced task: tomorrow against ten years"
-    Ask Open-Meteo for the hourly forecast of tomorrow (add
+!!! question "Advanced task: tomorrow against today"
+    Ask Open-Meteo for the hourly forecast of today and tomorrow (add
     `&hourly=temperature_2m&forecast_days=2` to the address instead of
-    `&current=...`) and compare its mean with the station's mean of the
-    same date over 2016 to 2025. Is tomorrow warmer than usual?
+    `&current=...`). Is tomorrow warmer than today, by the mean of its 24
+    hours (`weather.mean`), and when is its coldest hour?
 
 ??? success "Answer"
     `data["hourly"]` holds two lists of 48 values, `time` and
-    `temperature_2m`; `zip` walks through both together.
+    `temperature_2m`, from 00:00 today: `[:24]` is today, `[24:]`
+    tomorrow. `zip` walks through two lists together.
 
     ```python
     import json
@@ -1739,34 +1761,31 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     with urllib.request.urlopen(URL) as response:
         data = json.load(response)
 
-    times = data["hourly"]["time"]           # '2026-10-18T00:00', ... 48 hours
+    times = data["hourly"]["time"]           # 48 hours: today, then tomorrow
     temps = data["hourly"]["temperature_2m"]
-    tomorrow = times[24][:10]                # the date of hour 24
-    forecast = [t for when, t in zip(times, temps) if when.startswith(tomorrow)]
+    print(f"{times[0][:10]}: mean {weather.mean(temps[:24]):.1f} °C")
+    print(f"{times[24][:10]}: mean {weather.mean(temps[24:]):.1f} °C")
 
-    day = tomorrow[5:]                       # '10-19': month and day
-    station = []
-    for line in weather.read_lines("data/raw/weather.csv"):
-        h = weather.Hour(line)
-        if h.time[5:10] == day and not h.is_missing():
-            station.append(h.temp)
-
-    print(f"{tomorrow}: forecast mean {sum(forecast) / len(forecast):.1f} °C "
-          f"from {len(forecast)} hours")
-    print(f"{day} in 2016-2025: mean {sum(station) / len(station):.1f} °C "
-          f"from {len(station)} hours")
+    coldest = 100.0
+    coldest_time = ""
+    for when, t in zip(times[24:], temps[24:]):
+        if t < coldest:
+            coldest = t
+            coldest_time = when
+    print(f"coldest hour tomorrow: {coldest_time}, {coldest} °C")
     ```
 
     ```text
     $ python scripts/tomorrow.py
-    2026-10-19: forecast mean 7.1 °C from 24 hours
-    10-19 in 2016-2025: mean 5.8 °C from 240 hours
+    2026-10-20: mean 9.5 °C
+    2026-10-21: mean 10.8 °C
+    coldest hour tomorrow: 2026-10-21T02:00, 7.0 °C
     ```
 
-    Run on 18 October; your date and numbers differ. 240 hours: ten years
-    of 24 hours. The forecast is in UTC, as is the station's log.
+    Run on 20 October; your dates and numbers differ. The times are in
+    UTC.
 
-!!! question "Advanced task: a check that 7.16 stays 7.16"
+!!! question "Advanced task: a check that the mean stays 25.275"
     Add a function `mean_valid(values)` to `weather.py` (the mean without
     `MISSING`), and a script `scripts/check_weather.py` that checks
     `Hour`, `mean_valid` on a short list whose mean you know, and the
@@ -1790,19 +1809,19 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     """Checks of weather.py: run with  python scripts/check_weather.py"""
     import weather
 
-    assert weather.Hour("2016-01-01T00:00,-4.4,93,2.5").temp == -4.4
+    assert weather.Hour("2019-07-21T20:00,27.3,63,4.5").temp == 27.3
     assert weather.mean_valid([1.0, -999.0, 3.0]) == 2.0
 
     temps = [weather.Hour(line).temp for line in weather.read_lines("data/raw/weather.csv")]
     mean = weather.mean_valid(temps)
-    assert abs(mean - 7.16) < 0.005, mean
+    assert abs(mean - 25.275) < 0.0005, mean
 
     print(f"3 checks passed, mean {mean:.5f} °C")
     ```
 
     ```text
     $ python scripts/check_weather.py
-    3 checks passed, mean 7.15997 °C
+    3 checks passed, mean 25.27500 °C
     ```
 
     With `valid = list(values)` in `mean_valid` (the `-999` check gone):
@@ -1816,17 +1835,18 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     AssertionError
     ```
 
-    The short list catches the mistake before the whole file is read.
+    The short list catches the mistake before the file is read.
     Seminar 13 runs such checks with `pytest`.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** the 7.16 of the README comes out of a script and
-  a notebook each student typed, and `environment.yml` says which Python
-  and packages they need.
+- ♻️ **Reproducibility:** the 25.3 of the README comes out of a script
+  and a notebook each student typed, and `environment.yml` says which
+  Python and packages they need.
 - 🔧 **Tool-agnostic:** the same Python in the interpreter, a notebook,
   IDLE and VS Code, on macOS and Windows.
-- ⚙️ **Automation:** a loop does for 87 672 lines what was done by hand
-  for one, and `now.py` asks a weather service without a browser.
+- ⚙️ **Automation:** a loop does for every line of a file what was done
+  by hand for one, the same for six lines as for the station's 87 672,
+  and `now.py` asks a weather service without a browser.

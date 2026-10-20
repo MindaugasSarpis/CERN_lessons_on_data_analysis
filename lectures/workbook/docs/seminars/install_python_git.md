@@ -21,9 +21,8 @@ that it finds them when it starts.
 
 ??? info "For the lecturer: a slow network"
     Thirty laptops downloading at once make the room's network slow. Start
-    section 1 first thing, and keep the zip of Seminar 4,
-    `weather-s04.zip`, from the Releases page
-    of `github.com/MindaugasSarpis/weather-project` on a USB stick.
+    section 1 first thing: the installs are the only downloads of Seminar 4,
+    which types its data from the page.
 
 ---
 
@@ -105,7 +104,7 @@ conda's `base` environment, shown as `(base)` in the prompt.
 
 ## 2. Make the shell the terminal of VS Code { #profile }
 
-1. Start VS Code, **File** > **Open Folder...** > `weather-s04`.
+1. Start VS Code, with no folder: Seminar 4 makes the project folder later.
 2. Command Palette, `Ctrl+Shift+P` (macOS `Cmd+Shift+P`):
 
     ```text

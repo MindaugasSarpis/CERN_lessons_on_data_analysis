@@ -261,9 +261,10 @@ questions, with their answers:
 ## Paired seminar
 
 [Seminar 4](../seminars/seminar_04.md) works on the same weather project:
-the room installs the tools with a package manager, sets up its shell, and
-checks and rebuilds the mean temperature, 7.16 °C, with typed lines and a
-script.
+the room installs the tools with a package manager, sets up its shell,
+types six hours of the station's log into a file from the terminal, and
+checks and rebuilds their mean temperature, 25.3 °C without the `-999`
+rows, with typed lines and a script.
 
 ## What left the deck
 

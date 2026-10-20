@@ -208,8 +208,8 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 3](../seminars/seminar_03.md) opens the same files as bytes in VS
-Code's Hex Editor and names the 148 bytes of `daily.csv`; the commands of
+[Seminar 3](../seminars/seminar_03.md) types `daily.csv` and opens it as
+bytes in VS Code's Hex Editor and names the 148 bytes of `daily.csv`; the commands of
 slides 72–79 are typed in Seminar 4.
 
 ## Parked slides

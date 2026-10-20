@@ -4,28 +4,29 @@
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** What is the mean temperature of ten years? Every student installs Git and Python with a package
-manager, searches `weather.csv` with `grep` and the project folder with
-`find`, gets the mean temperature, 7.16 °C, and writes a script that makes
-every result again.
+**Today's goal:** What was the mean temperature of the evening the sensor
+failed? Every student installs Git and Python with a package manager, types
+six hours of the station's log into `weather.csv`, searches it with `grep`
+and the project folder with `find`, gets the mean temperature, 25.275 °C,
+and writes a script that makes every result again.
 
 Everything is typed in the terminal of VS Code: `zsh` on macOS, Git Bash on
-Windows. The lines are the same in both; only the installs and the checksum
-command differ. In the blocks, a line that starts with `$` is typed (a Mac
-shows `%`), and every other line is what comes back.
+Windows, the data too, from this page. The lines are the same in both; only
+the installs and the checksum command differ. In the blocks, a line that
+starts with `$` is typed (a Mac shows `%`), and every other line is what
+comes back.
 
 Further reading: [The Unix Shell, Software Carpentry](https://swcarpentry.github.io/shell-novice/),
 the lessons this seminar follows in spirit, on other data.
 
-**If time runs short:** the Task of Part 4 can go; never cut sections 12 to
-15: they give the answer and the script.
+**If time runs short:** the Task of Part 4 can go; never cut sections 13 to
+16: they give the answer and the script.
 
 ??? info "Before the session"
-    - **Room:** internet, and laptops on which students can install programs
-      (macOS asks for the laptop's password, Windows for an administrator's
-      **Yes**). Today's folder is `weather-s04.zip` on the Releases page of
-      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases);
-      the session needs nothing from any other seminar.
+    - **Room:** internet for the installs, and laptops on which students can
+      install programs (macOS asks for the laptop's password, Windows for an
+      administrator's **Yes**). The session needs no file and nothing from
+      any other seminar.
     - **You:** nothing to prepare.
       [Install Python and Git](install_python_git.md) has every error
       message of the installs, for helpers.
@@ -37,7 +38,7 @@ the lessons this seminar follows in spirit, on other data.
 
 ## Part 1 · Install with a package manager { #part-1 }
 
-<!-- 0:00 to 0:28 -->
+<!-- 0:00 to 0:26 -->
 
 A package manager fetches a program, puts it in one known folder and on `PATH`, and later updates or removes it.
 
@@ -128,31 +129,14 @@ Git keeps the versions of a project, from Seminar 6; Miniforge is Python with co
 
 ---
 
-### 2. Today's folder, VS Code's terminal and conda { #shell }
+### 2. VS Code's terminal and conda { #shell }
 
-<!-- 0:12 · 8 min -->
+<!-- 0:12 · 6 min -->
 
-Today's folder holds the weather project: the station's log, the export and its hand-repaired copy, a README, and two programs that arrived with the data. The **terminal** is the window; the **shell** is the program in it that reads each line: `zsh` on macOS, Git Bash on Windows.
+The **terminal** is the window; the **shell** is the program in it that reads each line: `zsh` on macOS, Git Bash on Windows.
 
-1. On the Releases page (`github.com/MindaugasSarpis/weather-project/releases`),
-   under **Assets**, click `weather-s04.zip`, and unpack it into your home
-   folder.
-
-    === "macOS"
-
-        In Finder, open **Downloads** and double-click `weather-s04.zip`.
-        Select the new folder `weather-s04`, press `Cmd+C`, then
-        `Cmd+Shift+H` (your home folder), then `Cmd+V`.
-
-    === "Windows"
-
-        In File Explorer, open **Downloads**, right-click
-        `weather-s04.zip` > **Extract All...** > **Browse...**, choose
-        `C:\Users\` and your name, **Select Folder**, **Extract**.
-
-2. Open VS Code: **File** > **Open Folder...** > `weather-s04` (in your
-   home folder) > **Open**, and answer **Yes, I trust the authors**.
-3. Command Palette, `Ctrl+Shift+P` (macOS `Cmd+Shift+P`). Type and choose:
+1. Open VS Code, with no folder: the project folder is made in section 4.
+2. Command Palette, `Ctrl+Shift+P` (macOS `Cmd+Shift+P`). Type and choose:
 
     ```text
     Terminal: Select Default Profile
@@ -160,21 +144,23 @@ Today's folder holds the weather project: the station's log, the export and its 
 
     Take **zsh** (macOS) or **Git Bash** (Windows).
 
-4. Command Palette again:
+3. Command Palette again:
 
     ```text
     Terminal: Create New Terminal
     ```
 
-5. Windows only: let conda set up Git Bash. Then close the terminal (the
-   bin icon of the Panel) and open a new one, as in step 4.
+    With no folder open, it starts in your home folder.
+
+4. Windows only: let conda set up Git Bash. Then close the terminal (the
+   bin icon of the Panel) and open a new one, as in step 3.
 
     ```text
     $ ~/miniforge3/Scripts/conda.exe init bash
     ==> For changes to take effect, close and re-open your current shell. <==
     ```
 
-6. Check the shell.
+5. Check the shell.
 
     === "macOS"
 
@@ -190,7 +176,7 @@ Today's folder holds the weather project: the station's log, the export and its 
         /usr/bin/bash
         ```
 
-7. Check conda and Python. `python` is the name on both systems.
+6. Check conda and Python. `python` is the name on both systems.
 
     ```text
     $ conda --version
@@ -202,7 +188,7 @@ Today's folder holds the weather project: the station's log, the export and its 
 **Check:** `(base)` in the prompt: conda's first environment, with Python in it.
 
 !!! warning "`python: command not found`, or no `(base)` in the prompt"
-    conda is not set up in this shell: step 5 (Windows) or section 1, step 5
+    conda is not set up in this shell: step 4 (Windows) or section 1, step 5
     (macOS) again, then quit VS Code (**File** > **Exit**, macOS `Cmd+Q`)
     and start it again.
 
@@ -210,7 +196,7 @@ Today's folder holds the weather project: the station's log, the export and its 
 
 ### 3. Where the programs landed { #packages }
 
-<!-- 0:20 · 8 min -->
+<!-- 0:18 · 8 min -->
 
 The shell finds a program by searching the folders of `PATH`, in order.
 
@@ -307,32 +293,32 @@ The shell finds a program by searching the folders of `PATH`, in order.
 
 ## Part 2 · Around the project { #part-2 }
 
-<!-- 0:28 to 0:45 -->
+<!-- 0:26 to 0:48 -->
 
 A typed line names a program, its options and the files it works on.
 
 ---
 
-### 4. Read the prompt: `pwd`, `ls`, `cd` { #terminal }
+### 4. Read the prompt, make the project folder: `pwd`, `mkdir`, `cd` { #terminal }
 
-<!-- 0:28 · 6 min -->
+<!-- 0:26 · 8 min -->
 
-The shell always works in one folder, the **working directory**.
+The shell always works in one folder, the **working directory**; a new terminal starts in the home folder, `~`.
 
-1. Read the prompt aloud: the conda environment, who, where, and the sign
-   that it waits (`%` in zsh, `$` in Git Bash).
+1. Read the prompt aloud: the conda environment, who, where (`~`), and the
+   sign that it waits (`%` in zsh, `$` in Git Bash).
 
     === "macOS"
 
         ```text
-        (base) smilte@MacBook-Air weather-s04 %
+        (base) smilte@MacBook-Air ~ %
         ```
 
     === "Windows"
 
         ```text
         (base)
-        smilte@LAPTOP MINGW64 ~/weather-s04
+        smilte@LAPTOP MINGW64 ~
         $
         ```
 
@@ -340,21 +326,30 @@ The shell always works in one folder, the **working directory**.
 
     ```text
     $ pwd
+    /c/Users/smilte
+    ```
+
+    macOS: `/Users/smilte`.
+
+3. Make the project folder and go into it.
+
+    ```text
+    $ mkdir weather-s04
+    $ cd weather-s04
+    $ pwd
     /c/Users/smilte/weather-s04
     ```
 
-    macOS: `/Users/smilte/weather-s04`.
-
-3. What is here.
+4. Its four folders, in one line. `-p` makes `data` on the way to
+   `data/raw`, and says nothing if a folder is already there.
 
     ```text
+    $ mkdir -p data/raw data/processed scripts results
     $ ls
-    data  incoming  README.md  results  scripts
+    data  results  scripts
     ```
 
-    macOS puts `README.md` first: it sorts capitals before small letters.
-
-4. Into `data`, look, back up one level.
+5. Into `data`, look, back up one level.
 
     ```text
     $ cd data
@@ -363,118 +358,163 @@ The shell always works in one folder, the **working directory**.
     $ cd ..
     ```
 
-**Check:** the prompt names `weather-s04` again.
+6. Open the folder in VS Code: **File** > **Open Folder...** >
+   `weather-s04` (in your home folder) > **Open**, and answer **Yes, I
+   trust the authors**. The window starts again; open a terminal as in
+   section 2, step 3.
+
+**Check:** the prompt names `weather-s04`; the Side Bar shows `data`, `results` and `scripts`.
 
 ---
 
-### 5. Read and count the log { #count }
+### 5. Write the log into a file, read and count it { #count }
 
-<!-- 0:34 · 5 min -->
+<!-- 0:34 · 8 min -->
 
-The first lines, the last lines and the size of the log, by command.
+Six hours of the station's log, the evening its temperature sensor failed, 21 to 22 July 2019; the station's full log has 87 672 such rows, 2016 to 2025.
 
-1. The first three lines.
+1. Write the file from the terminal. `cat` prints what it reads; `>` sends
+   that into a file, new or overwritten; `<<'EOF'` gives `cat` the lines
+   typed next, up to the line `EOF`. After the first line the shell answers
+   `>` (zsh: `heredoc>`): it is still reading.
+
+    ```text
+    $ cat > data/raw/weather.csv <<'EOF'
+    > time,temp_c,humidity_pct,wind_ms
+    > 2019-07-21T20:00,27.3,63,4.5
+    > 2019-07-21T21:00,25.6,65,4.0
+    > 2019-07-21T22:00,24.6,68,3.5
+    > 2019-07-21T23:00,23.6,74,3.4
+    > 2019-07-22T00:00,-999,76,3.2
+    > 2019-07-22T01:00,-999,81,3.0
+    > EOF
+    ```
+
+    Nothing comes back. A typo: type the block again; `>` writes the file
+    anew.
+
+2. The first three lines.
 
     ```text
     $ head -n 3 data/raw/weather.csv
     time,temp_c,humidity_pct,wind_ms
-    2016-01-01T00:00,-4.4,93,2.5
-    2016-01-01T01:00,-4.8,95,2.6
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
     ```
 
-2. The last two.
+3. The last two: the hours the sensor was down, marked `-999`.
 
     ```text
     $ tail -n 2 data/raw/weather.csv
-    2025-12-31T22:00,-9.9,98,4.1
-    2025-12-31T23:00,-11.3,100,4.2
+    2019-07-22T00:00,-999,76,3.2
+    2019-07-22T01:00,-999,81,3.0
     ```
 
-3. The number of lines.
+4. The number of lines.
 
     ```text
     $ wc -l data/raw/weather.csv
-    87673 data/raw/weather.csv
+    7 data/raw/weather.csv
     ```
 
-4. The number of bytes.
+5. The number of bytes.
 
     ```text
     $ wc -c data/raw/weather.csv
-    2515215 data/raw/weather.csv
+    207 data/raw/weather.csv
     ```
 
-**Check:** 87 673 lines (a header and 87 672 hours), 2 515 215 bytes.
+    The header is 32 characters, each hour 28, and every line ends with one
+    byte, LF: 33 + 6 × 29 = 207.
+
+**Check:** 7 lines (a header and 6 hours), 207 bytes.
 
 ---
 
-### 6. The scripts arrive { #files }
+### 6. Write the export, count both files { #files }
 
-<!-- 0:39 · 6 min -->
+<!-- 0:42 · 6 min -->
 
-Two programs came with the data, in the folder `incoming`; they go into `scripts`.
+The daily mean temperatures of 1 to 9 October 2025 as a spreadsheet exported them: `;` between the values, a decimal comma, a row number `nr` in front and a mean line at the end.
 
-1. Look into `incoming`.
-
-    ```text
-    $ ls incoming
-    clean_export.py  column_stats.py
-    ```
-
-2. Copy both into `scripts`. `*` stands for any text.
+1. Write it as in section 5.
 
     ```text
-    $ cp incoming/*.py scripts/
-    $ ls scripts
-    clean_export.py  column_stats.py
+    $ cat > data/raw/daily_export.csv <<'EOF'
+    > nr;date;temp_c
+    > 1;2025-10-01;6,3
+    > 2;2025-10-02;5,0
+    > 3;2025-10-03;5,6
+    > 4;2025-10-04;7,0
+    > 5;2025-10-05;9,4
+    > 6;2025-10-06;10,4
+    > 7;2025-10-07;9,2
+    > 8;2025-10-08;9,0
+    > 9;2025-10-09;9,8
+    > ;mean;7,97
+    > EOF
     ```
 
-3. Delete `incoming`. No Trash: read the line before `Enter`.
+2. What is in `data/raw` now.
 
     ```text
-    $ rm -r incoming
-    $ ls
-    data  README.md  results  scripts
+    $ ls data/raw
+    daily_export.csv  weather.csv
     ```
 
-**Check:** two `.py` files in `scripts`, also in the Side Bar.
+3. The lines of both files. `*` stands for any text, so `data/raw/*.csv`
+   names both; `wc` adds a total line.
 
-!!! question "Task: the export, counted and copied"
-    1. How many lines and bytes have `data/raw/daily_export.csv` and
-       `data/processed/daily.csv`? One line for each count.
-    2. Make a folder `backup`, copy `daily.csv` into it, rename the copy to
-       `daily_copy.csv`, list `backup`, then delete the folder.
+    ```text
+    $ wc -l data/raw/*.csv
+     11 data/raw/daily_export.csv
+      7 data/raw/weather.csv
+     18 total
+    ```
+
+4. Their bytes.
+
+    ```text
+    $ wc -c data/raw/*.csv
+    180 data/raw/daily_export.csv
+    207 data/raw/weather.csv
+    387 total
+    ```
+
+**Check:** two files in `data/raw`, also in the Side Bar: 11 and 7 lines.
+
+!!! question "Task: a backup of `data/raw`"
+    1. Make a folder `backup`, copy both CSV files of `data/raw` into it
+       with one `cp`, rename `backup/daily_export.csv` to
+       `export_copy.csv`, list `backup`, then delete the folder.
+    2. Which line of the export is not a day? Print it with one command.
 
 ??? success "Answer"
-    1. `wc` takes several files and adds a total line.
-
-        ```text
-        $ wc -l data/raw/daily_export.csv data/processed/daily.csv
-         11 data/raw/daily_export.csv
-         10 data/processed/daily.csv
-         21 total
-        $ wc -c data/raw/daily_export.csv data/processed/daily.csv
-        180 data/raw/daily_export.csv
-        148 data/processed/daily.csv
-        328 total
-        ```
-
-    2. Five lines; `mv` renames when the target is a new name.
+    1. `mv` renames when the target is a new name. `rm -r` deletes a folder
+       with everything in it, and there is no Trash: read the line before
+       `Enter`.
 
         ```text
         $ mkdir backup
-        $ cp data/processed/daily.csv backup/
-        $ mv backup/daily.csv backup/daily_copy.csv
+        $ cp data/raw/*.csv backup/
+        $ mv backup/daily_export.csv backup/export_copy.csv
         $ ls backup
-        daily_copy.csv
+        export_copy.csv  weather.csv
         $ rm -r backup
+        ```
+
+    2. The last one, the spreadsheet's mean.
+
+        ```text
+        $ tail -n 1 data/raw/daily_export.csv
+        ;mean;7,97
         ```
 
 ---
 
 ## Part 3 · Search inside files: `grep` { #part-3 }
 
-<!-- 0:45 to 1:15 -->
+<!-- 0:48 to 1:12 -->
 
 `grep` prints the lines of a file that hold a text.
 
@@ -482,58 +522,55 @@ Two programs came with the data, in the folder `incoming`; they go into `scripts
 
 ### 7. Lines that hold a text { #grep }
 
-<!-- 0:45 · 10 min -->
+<!-- 0:48 · 7 min -->
 
 First the text in quotes, then the file. The commas around `-999` make sure the whole value is `-999`.
 
-1. The matching lines, the first three of them: `|` hands the output of
-   `grep` to `head`.
+1. The matching lines.
 
     ```text
-    $ grep ',-999,' data/raw/weather.csv | head -n 3
+    $ grep ',-999,' data/raw/weather.csv
     2019-07-22T00:00,-999,76,3.2
     2019-07-22T01:00,-999,81,3.0
-    2019-07-22T02:00,-999,80,3.4
     ```
 
 2. Count them: `-c`.
 
     ```text
     $ grep -c ',-999,' data/raw/weather.csv
-    120
+    2
     ```
 
-3. With line numbers, the last one: `-n`.
+3. With line numbers: `-n`.
 
     ```text
-    $ grep -n ',-999,' data/raw/weather.csv | tail -n 1
-    31273:2019-07-26T23:00,-999,66,1.9
+    $ grep -n ',-999,' data/raw/weather.csv
+    6:2019-07-22T00:00,-999,76,3.2
+    7:2019-07-22T01:00,-999,81,3.0
     ```
 
-    The first is line 31 154. 31 273 − 31 154 + 1 = 120 lines in a row: five
-    days of 24 hours.
-
-4. Upper and lower case. Every line has a capital `T` between date and hour.
+4. Upper and lower case. Every hour has a capital `T` between date and
+   time.
 
     ```text
     $ grep -c 't' data/raw/weather.csv
     1
     $ grep -ci 't' data/raw/weather.csv
-    87673
+    7
     ```
 
     `grep` tells `t` from `T`; `-i` ignores case. Only the header has a small
     `t`.
 
-**Check:** 120 rows marked `-999`, lines 31 154 to 31 273.
+**Check:** 2 rows marked `-999`, lines 6 and 7.
 
 ---
 
 ### 8. Keep the other lines: `grep -v` { #valid }
 
-<!-- 0:55 · 7 min -->
+<!-- 0:55 · 5 min -->
 
-`-v` keeps the lines without the text; `>` writes them into a file.
+`-v` keeps the lines without the text; `>` writes them into a file, as with `cat` in section 5.
 
 1. Every line without `,-999,`.
 
@@ -541,140 +578,141 @@ First the text in quotes, then the file. The commas around `-999` make sure the 
     $ grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
     ```
 
-2. Count its lines.
+2. Read it.
+
+    ```text
+    $ cat data/processed/weather_valid.csv
+    time,temp_c,humidity_pct,wind_ms
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
+    2019-07-21T22:00,24.6,68,3.5
+    2019-07-21T23:00,23.6,74,3.4
+    ```
+
+3. Count its lines: 7 − 2 = 5.
 
     ```text
     $ wc -l data/processed/weather_valid.csv
-    87553 data/processed/weather_valid.csv
+    5 data/processed/weather_valid.csv
     ```
 
-    87 673 − 120 = 87 553.
-
-3. No mark left.
+4. No mark left.
 
     ```text
     $ grep -c ',-999,' data/processed/weather_valid.csv
     0
     ```
 
-4. Its size.
+5. Its size: 207 − 2 × 29 = 149.
 
     ```text
     $ wc -c data/processed/weather_valid.csv
-    2511735 data/processed/weather_valid.csv
+    149 data/processed/weather_valid.csv
     ```
 
-    The same bytes on both systems: `grep` copies each line as it is.
-
-**Check:** `weather_valid.csv`, 87 553 lines; `data/raw` untouched.
+**Check:** `weather_valid.csv`, 5 lines; `data/raw` untouched.
 
 ---
 
 ### 9. Patterns: `grep -E` { #regex }
 
-<!-- 1:02 · 13 min -->
+<!-- 1:00 · 12 min -->
 
 A **regular expression** describes a kind of text, not one fixed text. `-E` lets `grep` read `+`, `|` and `( )`.
 
 | Sign | Means |
 |--|--|
 | `^` | the start of the line |
-| `[0-9]` | one digit; `[2-6]` one of 2 to 6 |
+| `[0-9]` | one digit; `[0-3]` one of 0 to 3 |
 | `+` | one or more of what stands before |
 | `.` | any one character; `\.` a point itself |
 | `.*` | anything, or nothing |
 
-1. A date range: the hours of 22 to 26 July 2019.
+1. One day: the lines that start with `2019-07-22T`.
 
     ```text
-    $ grep -c '^2019-07-2[2-6]T' data/raw/weather.csv
-    120
+    $ grep -c '^2019-07-22T' data/raw/weather.csv
+    2
     ```
 
-    The same 120: every hour of those five days is marked. Check by a
-    pipe: of those lines, how many lack the mark?
+    Both are marked. Check by a pipe: `|` hands the output of the first
+    command to the second, which counts the lines without the mark.
 
     ```text
-    $ grep '^2019-07-2[2-6]T' data/raw/weather.csv | grep -vc ',-999,'
+    $ grep '^2019-07-22T' data/raw/weather.csv | grep -vc ',-999,'
     0
     ```
 
-2. A year.
+2. The hours 20:00 to 23:00.
 
     ```text
-    $ grep -c '^2024-' data/raw/weather.csv
-    8784
+    $ grep 'T2[0-3]:' data/raw/weather.csv
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
+    2019-07-21T22:00,24.6,68,3.5
+    2019-07-21T23:00,23.6,74,3.4
     ```
 
-    366 days × 24 hours: 2024 is a leap year.
+3. A measured temperature: digits, a point, one digit, between commas.
 
-3. Below freezing. A minus after a comma finds too much:
+    ```text
+    $ grep -cE ',[0-9]+\.[0-9],' data/raw/weather.csv
+    4
+    ```
+
+    A minus after a comma finds only the marks: no hour of that July
+    evening was below freezing. 4 + 2 = 6 hours.
 
     ```text
     $ grep -c ',-' data/raw/weather.csv
-    22472
+    2
     ```
 
-    A minus, digits, a point, one digit, a comma:
+4. Two hours: `(20|23)` means `20` or `23`.
 
     ```text
-    $ grep -cE ',-[0-9]+\.[0-9],' data/raw/weather.csv
-    22352
+    $ grep -E 'T(20|23):' data/raw/weather.csv
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T23:00,23.6,74,3.4
     ```
 
-    22 472 − 22 352 = 120: the `-999` rows have no point.
-
-4. Two months: `(01|02)` means `01` or `02`.
-
-    ```text
-    $ grep -cE '^2016-(01|02)-' data/raw/weather.csv
-    1440
-    ```
-
-    (31 + 29) × 24 = 1 440.
-
-**Check:** 120, 8 784, 22 352.
+**Check:** 2 marked hours on 22 July; 4 measured temperatures, 20:00 to 23:00.
 
 !!! question "Task: questions to the log"
-    1. How many hours had 30 °C or more?
-    2. How many hours of 2025 were below freezing?
-    3. On which line is 29 February 2020, 00:00?
-    4. When was the coldest hour, −16.3 °C?
+    1. How many hours had 25 °C or more?
+    2. Which hours had a humidity of 70 % or more?
+    3. On which line is 23:00?
 
 ??? success "Answer"
-    1. 86. `temp_c` is the only column with a point and a comma after it.
+    1. 2. `temp_c` is the only column with a point and a comma after it.
 
         ```text
-        $ grep -cE ',3[0-9]\.[0-9],' data/raw/weather.csv
-        86
+        $ grep -cE ',2[5-9]\.[0-9],' data/raw/weather.csv
+        2
         ```
 
-    2. 2 677.
+    2. 23:00, 00:00 and 01:00. `humidity_pct` is the only column with two
+       digits and no point between its commas.
 
         ```text
-        $ grep -cE '^2025-.*,-[0-9]+\.[0-9],' data/raw/weather.csv
-        2677
+        $ grep -E ',[7-9][0-9],' data/raw/weather.csv
+        2019-07-21T23:00,23.6,74,3.4
+        2019-07-22T00:00,-999,76,3.2
+        2019-07-22T01:00,-999,81,3.0
         ```
 
-    3. Line 36 482.
+    3. Line 5.
 
         ```text
-        $ grep -n '^2020-02-29T00' data/raw/weather.csv
-        36482:2020-02-29T00:00,-3.7,89,3.5
-        ```
-
-    4. 7 January 2025, 05:00.
-
-        ```text
-        $ grep -n ',-16\.3,' data/raw/weather.csv
-        79063:2025-01-07T05:00,-16.3,100,3.3
+        $ grep -n 'T23:00' data/raw/weather.csv
+        5:2019-07-21T23:00,23.6,74,3.4
         ```
 
 ---
 
 ## Part 4 · Find files: `find` { #part-4 }
 
-<!-- 1:15 to 1:30 -->
+<!-- 1:12 to 1:24 -->
 
 `find` goes through a folder and every folder below it, and prints each file that passes its tests. `.` is the folder you are in.
 
@@ -682,7 +720,7 @@ A **regular expression** describes a kind of text, not one fixed text. `-E` lets
 
 ### 10. Files by name and kind { #find }
 
-<!-- 1:15 · 7 min -->
+<!-- 1:12 · 5 min -->
 
 `-name` tests the name, `-type f` keeps files, `-type d` folders. `find` prints in the order of the disk; `sort` puts the lines in order.
 
@@ -691,7 +729,6 @@ A **regular expression** describes a kind of text, not one fixed text. `-E` lets
 
     ```text
     $ find . -name '*.csv' | sort
-    ./data/processed/daily.csv
     ./data/processed/weather_valid.csv
     ./data/raw/daily_export.csv
     ./data/raw/weather.csv
@@ -709,50 +746,44 @@ A **regular expression** describes a kind of text, not one fixed text. `-E` lets
     ./scripts
     ```
 
-3. Every file.
+3. The folders with nothing in them yet: `-empty`.
 
     ```text
-    $ find . -type f | sort
-    ./data/processed/daily.csv
-    ./data/processed/weather_valid.csv
-    ./data/raw/daily_export.csv
-    ./data/raw/weather.csv
-    ./README.md
-    ./results/daily.md
-    ./scripts/clean_export.py
-    ./scripts/column_stats.py
+    $ find . -type d -empty | sort
+    ./results
+    ./scripts
     ```
 
-    macOS puts `./README.md` first.
-
-**Check:** eight files, the same as in the Side Bar.
+**Check:** three files, the same as in the Side Bar.
 
 ---
 
 ### 11. Files by size and time; search them all { #find-size }
 
-<!-- 1:22 · 8 min -->
+<!-- 1:17 · 7 min -->
 
-`-size` and `-mmin` test size and age; `-exec` runs a command on the files found.
+`-size` and `-newer` test size and age; `-exec` runs a command on the files found.
 
-1. Files over 1 MB.
+1. Files over 150 bytes: `c` after the number means bytes, `+` more than.
 
     ```text
-    $ find . -type f -size +1M
+    $ find . -type f -size +150c | sort
+    ./data/raw/daily_export.csv
     ./data/raw/weather.csv
-    ./data/processed/weather_valid.csv
     ```
 
-2. Files changed in the last 60 minutes (`-mtime -1`: in the last day).
+2. Files changed in the last 60 minutes: all of them. Then the files
+   changed after `weather.csv`: the export and `weather_valid.csv`.
 
     ```text
-    $ find . -type f -mmin -60
+    $ find . -type f -mmin -60 | sort
     ./data/processed/weather_valid.csv
-    ./scripts/column_stats.py
-    ./scripts/clean_export.py
+    ./data/raw/daily_export.csv
+    ./data/raw/weather.csv
+    $ find . -type f -newer data/raw/weather.csv | sort
+    ./data/processed/weather_valid.csv
+    ./data/raw/daily_export.csv
     ```
-
-    The file of section 8 and the two copies of section 6.
 
 3. Which files hold `-999`? `-exec grep -l` runs `grep` on the files found;
    `-l` prints only the names of files with a match. `--` tells `grep` that
@@ -760,96 +791,91 @@ A **regular expression** describes a kind of text, not one fixed text. `-E` lets
 
     ```text
     $ find . -type f -exec grep -l -- '-999' {} +
-    ./README.md
     ./data/raw/weather.csv
-    ./scripts/column_stats.py
     ```
 
-**Check:** `-999` stands in the README, the raw log and a script's
-description, and not in `weather_valid.csv`.
+**Check:** `-999` stands in the raw log only, not in `weather_valid.csv`.
 
 !!! question "Task: find the small files"
-    1. Which files are smaller than 1 000 bytes? (`c` after a number means
-       bytes.)
-    2. Every `.py` file.
+    1. Which files are smaller than 150 bytes?
+    2. Every file whose name starts with `weather`.
     3. Which files mention `temp_c`?
 
 ??? success "Answer"
-    1. `-size -1000c`: fewer than 1 000 bytes.
+    1. `-size -150c`: fewer than 150 bytes. `weather_valid.csv` has 149.
 
         ```text
-        $ find . -type f -size -1000c
-        ./data/raw/daily_export.csv
-        ./data/processed/daily.csv
-        ./results/daily.md
+        $ find . -type f -size -150c
+        ./data/processed/weather_valid.csv
         ```
 
-    2. A name test alone finds files and folders; no folder ends in `.py`.
+    2. `*` after the name: any text, or none.
 
         ```text
-        $ find . -name '*.py'
-        ./scripts/column_stats.py
-        ./scripts/clean_export.py
+        $ find . -name 'weather*' | sort
+        ./data/processed/weather_valid.csv
+        ./data/raw/weather.csv
         ```
 
-    3. Every data file, the README, `results/daily.md` and one script.
+    3. All three: the export's header names `temp_c` too.
 
         ```text
         $ find . -type f -exec grep -l 'temp_c' {} + | sort
-        ./data/processed/daily.csv
         ./data/processed/weather_valid.csv
         ./data/raw/daily_export.csv
         ./data/raw/weather.csv
-        ./README.md
-        ./results/daily.md
-        ./scripts/column_stats.py
         ```
 
 ---
 
 ## Part 5 · The mean, made by one command { #part-5 }
 
-<!-- 1:30 to 2:00 -->
+<!-- 1:24 to 2:00 -->
 
-A script repeats the cleaning; a checksum shows that it made the same bytes as the hand repair.
+A checksum shows that two programs made the same bytes; a script repeats every step.
 
 ---
 
-### 12. Compare the script's file with yours: a checksum { #checksum }
+### 12. Keep the measured rows a second way, compare by checksum { #checksum }
 
-<!-- 1:30 · 6 min -->
+<!-- 1:24 · 6 min -->
 
 A SHA-256 checksum is 64 hex digits computed from every byte: the same bytes give the same digits on every laptop.
 
-1. The checksum of `data/processed/daily.csv`, the export repaired by hand
-   in a text editor.
+1. The checksum of `data/processed/weather_valid.csv`, the file `grep -v`
+   made in section 8.
 
     === "macOS"
 
         ```text
-        $ shasum -a 256 data/processed/daily.csv
-        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+        $ shasum -a 256 data/processed/weather_valid.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_valid.csv
         ```
 
     === "Windows"
 
         ```text
-        $ sha256sum data/processed/daily.csv
-        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+        $ sha256sum data/processed/weather_valid.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_valid.csv
         ```
 
-2. Keep it under another name.
+2. The same rows by another program, `awk`. `-F,` splits each line at the
+   commas, `$2` is field 2, and `awk` prints the lines for which the test is
+   true: `!=` is "not equal". The header passes: `temp_c` is not `-999`.
 
     ```text
-    $ mv data/processed/daily.csv data/processed/daily_hand.csv
+    $ awk -F, '$2 != -999' data/raw/weather.csv
+    time,temp_c,humidity_pct,wind_ms
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
+    2019-07-21T22:00,24.6,68,3.5
+    2019-07-21T23:00,23.6,74,3.4
     ```
 
-3. Let the script make the four edits: `python`, then the script, then the
-   file it reads and the file it writes.
+3. Into a second file.
 
     ```text
-    $ python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-    9 rows written to data/processed/daily.csv
+    $ awk -F, '$2 != -999' data/raw/weather.csv > data/processed/weather_awk.csv
     ```
 
 4. Both checksums.
@@ -857,66 +883,123 @@ A SHA-256 checksum is 64 hex digits computed from every byte: the same bytes giv
     === "macOS"
 
         ```text
-        $ shasum -a 256 data/processed/daily*.csv
-        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
-        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily_hand.csv
+        $ shasum -a 256 data/processed/weather_*.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_awk.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_valid.csv
         ```
 
     === "Windows"
 
         ```text
-        $ sha256sum data/processed/daily*.csv
-        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
-        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily_hand.csv
+        $ sha256sum data/processed/weather_*.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_awk.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_valid.csv
         ```
 
-5. The same 148 bytes. Delete the hand-made copy.
+5. The same 149 bytes from two programs. Delete the second copy.
 
     ```text
-    $ rm data/processed/daily_hand.csv
+    $ rm data/processed/weather_awk.csv
     ```
 
-**Check:** `33fe5e77…f705483d` on every laptop in the room.
+**Check:** `d029d87a…9061d6a` on every laptop in the room; other digits mean a typo in `weather.csv` (compare it with section 5).
 
 ---
 
-### 13. The mean, with and without the `-999` rows { #python }
+### 13. The mean, with and without the `-999` rows: `awk` { #python }
 
-<!-- 1:36 · 4 min -->
+<!-- 1:30 · 4 min -->
 
-`column_stats.py` prints the rows, the smallest, the largest and the mean of one column.
+`awk` also computes: a program in `{ }` runs on every line it selects, one in `END { }` once, after the last line.
 
-1. Over the raw log.
-
-    ```text
-    $ python scripts/column_stats.py data/raw/weather.csv temp_c
-    file    data/raw/weather.csv
-    column  temp_c
-    rows    87672
-    min     -999.0
-    max     32.4
-    mean    5.7828
-    ```
-
-2. Over the valid rows.
+1. Field 2 of every line.
 
     ```text
-    $ python scripts/column_stats.py data/processed/weather_valid.csv temp_c
-    file    data/processed/weather_valid.csv
-    column  temp_c
-    rows    87552
-    min     -16.3
-    max     32.4
-    mean    7.15997
+    $ awk -F, '{ print $2 }' data/raw/weather.csv
+    temp_c
+    27.3
+    25.6
+    24.6
+    23.6
+    -999
+    -999
     ```
 
-**Check:** 7.16 °C, the mean of Lecture 1; 5.78 counts −999 as a temperature.
+2. The mean over the raw log. `NR` is the line number, so `NR > 1` leaves
+   out the header; `s += $2` adds field 2 to `s`, `n++` adds one to `n`;
+   at the end it prints the count and the sum over the count.
+
+    ```text
+    $ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/raw/weather.csv
+    6 -316.15
+    ```
+
+3. Over the valid rows: `↑` brings the line back, change the file.
+
+    ```text
+    $ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/processed/weather_valid.csv
+    4 25.275
+    ```
+
+**Check:** 25.275 °C, (27.3 + 25.6 + 24.6 + 23.6) / 4 = 101.1 / 4; −316.15 counts −999 as a temperature: (101.1 − 1 998) / 6.
 
 ---
 
-### 14. One script makes it all again { #script }
+### 14. Clean the export by one line: `grep -v`, `tr`, `cut` { #export }
 
-<!-- 1:40 · 9 min -->
+<!-- 1:34 · 7 min -->
+
+The four edits of a hand repair as one pipe: the mean line out, `,` to `.`, `;` to `,`, the column `nr` out.
+
+1. The mean line out: `^;` is a `;` at the start of the line.
+
+    ```text
+    $ grep -v '^;' data/raw/daily_export.csv | tail -n 2
+    8;2025-10-08;9,0
+    9;2025-10-09;9,8
+    ```
+
+2. Two signs swapped. `tr ',;' '.,'` replaces each character of the first
+   set by the one in the same place of the second, both in one pass: one
+   after the other, every `;` turned into `,` would then become `.` too.
+
+    ```text
+    $ grep -v '^;' data/raw/daily_export.csv | tr ',;' '.,' | head -n 3
+    nr,date,temp_c
+    1,2025-10-01,6.3
+    2,2025-10-02,5.0
+    ```
+
+3. The column `nr` out: `cut -d, -f2-` keeps field 2 to the end.
+
+    ```text
+    $ grep -v '^;' data/raw/daily_export.csv | tr ',;' '.,' | cut -d, -f2- | head -n 3
+    date,temp_c
+    2025-10-01,6.3
+    2025-10-02,5.0
+    ```
+
+4. Into the file, and its size. `↑`, then replace `| head -n 3` by
+   `> data/processed/daily.csv`.
+
+    ```text
+    $ grep -v '^;' data/raw/daily_export.csv | tr ',;' '.,' | cut -d, -f2- > data/processed/daily.csv
+    $ wc -l data/processed/daily.csv
+    10 data/processed/daily.csv
+    $ wc -c data/processed/daily.csv
+    148 data/processed/daily.csv
+    ```
+
+    The header and its LF are 12 bytes, eight days like `2025-10-01,6.3`
+    15 each, `2025-10-06,10.4` 16: 12 + 8 × 15 + 16 = 148.
+
+**Check:** `data/processed/daily.csv`, 10 lines, 148 bytes.
+
+---
+
+### 15. One script makes it all again { #script }
+
+<!-- 1:41 · 8 min -->
 
 The lines of today in one file: one command makes `data/processed` and `results` again.
 
@@ -928,15 +1011,16 @@ The lines of today in one file: one command makes `data/processed` and `results`
 
 2. Windows: the Status Bar says `CRLF`; click it and choose `LF`.
 3. Type the six lines and save. Line 1 names the program that runs the
-   file; `set -e` stops it at the first error.
+   file; `set -e` stops it at the first error. Lines 4 to 6 are the lines
+   of sections 8, 14 and 13; the mean goes into `results/temp_c.txt`.
 
     ```text
     #!/usr/bin/env bash
     set -e
     mkdir -p data/processed results
     grep -v ',-999,' data/raw/weather.csv > data/processed/weather_valid.csv
-    python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.csv
-    python scripts/column_stats.py data/processed/weather_valid.csv temp_c > results/temp_c.txt
+    grep -v '^;' data/raw/daily_export.csv | tr ',;' '.,' | cut -d, -f2- > data/processed/daily.csv
+    awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/processed/weather_valid.csv > results/temp_c.txt
     ```
 
 4. macOS only: mark the file as a program that may run.
@@ -948,14 +1032,14 @@ The lines of today in one file: one command makes `data/processed` and `results`
 5. Delete everything the script makes.
 
     ```text
-    $ rm -r data/processed
+    $ rm -r data/processed results
     ```
 
-6. Run it. `./` says "this folder": the shell does not search it.
+6. Run it. `./` says "this folder": the shell does not search it. Nothing
+   comes back: every result goes into a file.
 
     ```text
     $ ./scripts/rebuild.sh
-    9 rows written to data/processed/daily.csv
     ```
 
 7. What it made, and the result.
@@ -966,114 +1050,142 @@ The lines of today in one file: one command makes `data/processed` and `results`
     daily.csv  weather_valid.csv
 
     results:
-    daily.md  temp_c.txt
+    temp_c.txt
     $ cat results/temp_c.txt
-    file    data/processed/weather_valid.csv
-    column  temp_c
-    rows    87552
-    min     -16.3
-    max     32.4
-    mean    7.15997
+    4 25.275
     ```
 
-**Check:** `mean 7.15997` in `results/temp_c.txt`, made by one line.
+8. The checksum of the new `weather_valid.csv`: the digits of section 12.
+
+    === "macOS"
+
+        ```text
+        $ shasum -a 256 data/processed/weather_valid.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_valid.csv
+        ```
+
+    === "Windows"
+
+        ```text
+        $ sha256sum data/processed/weather_valid.csv
+        d029d87add61a7e6b3fe0cef506b761e796da323a5e503af79077f0cc9061d6a  data/processed/weather_valid.csv
+        ```
+
+**Check:** `4 25.275` in `results/temp_c.txt`, made by one line.
 
 !!! warning "`$'\r': command not found` or `set: -: invalid option`"
     The script was saved with CRLF: step 2, save, run again.
 
 ---
 
-### 15. The README: result and how to rebuild { #readme }
+### 16. The README: result and how to rebuild { #readme }
 
-<!-- 1:49 · 6 min -->
+<!-- 1:49 · 7 min -->
 
-The README says what the result is and which line makes it.
+The README says what the folder holds, what the result is and which line makes it.
 
-1. In `README.md`, delete the item **Cleaned copy** of the Data list: the
-   script makes that file now.
-2. At the end of the README, add two sections. The command line is indented
-   by four spaces.
+1. In the Side Bar, click an empty place below the folders, then the
+   **New File** icon at its top:
 
     ```text
+    README.md
+    ```
+
+2. Type it and save. The command line is indented by four spaces.
+
+    ```text
+    # Weather Station
+
+    Six hours of the station's hourly log, from 21 July 2019, 20:00, to 22
+    July, 01:00, and the daily mean temperatures of 1 to 9 October 2025.
+
+    ## Data
+
+    - `data/raw/weather.csv`: one row per hour; `temp_c` is `-999` while the
+      temperature sensor was down.
+    - `data/raw/daily_export.csv`: a spreadsheet's export, with `;` between
+      the values and a decimal comma.
+
     ## Result
 
-    Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
-    marked `-999` are left out. The script writes it to `results/temp_c.txt`.
+    Mean `temp_c`: **25.275 °C**, over the 4 measured hours; the 2 hours
+    marked `-999` are left out. `results/temp_c.txt` holds the hours and the
+    mean.
 
     ## How to rebuild
 
-    In the project folder, in zsh on macOS or Git Bash on Windows, with Python
-    from Miniforge; the script needs no package beyond it.
+    In the project folder, in zsh on macOS or Git Bash on Windows:
 
         ./scripts/rebuild.sh
 
     It writes `data/processed/weather_valid.csv`, `weather.csv` without the
-    120 rows marked `-999` (87 553 lines), and `data/processed/daily.csv`, the
-    cleaned export (148 bytes).
+    rows marked `-999`, and `data/processed/daily.csv`, the cleaned export.
     ```
 
 3. Check the headings.
 
     ```text
     $ grep -n '^## ' README.md
-    6:## Folders
-    15:## Data
-    24:## Columns of `weather.csv`
-    36:## Result
-    41:## How to rebuild
+    6:## Data
+    13:## Result
+    19:## How to rebuild
     ```
 
     Your line numbers may differ.
 
-**Check:** five sections, and no **Cleaned copy** line.
+**Check:** three sections: Data, Result, How to rebuild.
 
 !!! question "Task: the other columns"
     1. The mean `humidity_pct` over the raw log and over `weather_valid.csv`.
        Which one is right?
     2. The mean `wind_ms`.
+    3. The mean of the nine days in `data/processed/daily.csv`. Does it match
+       the export's last line?
 
 ??? success "Answer"
-    1. 79.0974 over the raw log (87 672 rows), 79.1172 over the valid rows
-       (87 552). The raw one is right: in the 120 marked hours only the
-       thermometer was down, so their humidity was measured.
+    1. 71.1667 over the raw log (6 rows), 67.5 over the valid rows (4). The
+       raw one is right: in the 2 marked hours only the thermometer was
+       down, so their humidity was measured. Field 3 is `$3`.
 
         ```text
-        $ python scripts/column_stats.py data/raw/weather.csv humidity_pct
-        file    data/raw/weather.csv
-        column  humidity_pct
-        rows    87672
-        min     34.0
-        max     100.0
-        mean    79.0974
+        $ awk -F, 'NR > 1 { s += $3; n++ } END { print n, s / n }' data/raw/weather.csv
+        6 71.1667
+        $ awk -F, 'NR > 1 { s += $3; n++ } END { print n, s / n }' data/processed/weather_valid.csv
+        4 67.5
         ```
 
-    2. 3.50352 m/s.
+    2. 3.6 m/s.
 
         ```text
-        $ python scripts/column_stats.py data/raw/weather.csv wind_ms
-        file    data/raw/weather.csv
-        column  wind_ms
-        rows    87672
-        min     0.0
-        max     12.0
-        mean    3.50352
+        $ awk -F, 'NR > 1 { s += $4; n++ } END { print n, s / n }' data/raw/weather.csv
+        6 3.6
+        ```
+
+    3. 7.96667, the 7,97 of the spreadsheet before rounding: 71.7 / 9.
+
+        ```text
+        $ awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }' data/processed/daily.csv
+        9 7.96667
         ```
 
 ---
 
-### 16. Wrap up { #wrap-up }
+### 17. Wrap up { #wrap-up }
 
-<!-- 1:55 · 5 min -->
+<!-- 1:56 · 4 min -->
 
 
 | To | Type |
 |--|--|
 | install, list, remove a program | `brew install`, `brew list`, `brew uninstall` · `winget install --id`, `winget list`, `winget uninstall` |
-| where am I, what is here | `pwd`, `ls`, `cd` |
+| where am I, what is here, a new folder | `pwd`, `ls`, `cd`, `mkdir -p` |
+| a file from typed lines | `cat > FILE <<'EOF'`, the lines, `EOF` |
 | read, count | `head -n 3`, `tail -n 2`, `wc -l`, `wc -c` |
 | copy, move, delete | `cp`, `mv`, `rm -r` |
 | lines with a text, or without | `grep`, `-c`, `-n`, `-i`, `-v`, `-E` |
-| files by name, kind, size, age | `find . -name '*.csv'`, `-type f`, `-size +1M`, `-mmin -60` |
+| files by name, kind, size, age | `find . -name '*.csv'`, `-type f`, `-size +150c`, `-newer FILE` |
+| swap characters, keep columns | `tr ',;' '.,'`, `cut -d, -f2-` |
+| rows by a test, a mean | `awk -F, '$2 != -999'`, `awk -F, 'NR > 1 { s += $2; n++ } END { print n, s / n }'` |
 | a checksum | `shasum -a 256 FILE` · `sha256sum FILE` |
 | everything again | `./scripts/rebuild.sh` |
 
@@ -1083,32 +1195,38 @@ The README says what the result is and which line makes it.
 
 ---
 
-### 17. Stop at the first error { #stop }
+### 18. Stop at the first error { #stop }
 
 <!-- — · 5 min -->
 
 Without `set -e` a script runs on after a failed line and hides the failure.
 
-1. In `scripts/rebuild.sh`, change `daily_export.csv` to `daily_exprt.csv`
-   and save.
+1. In line 4 of `scripts/rebuild.sh`, change `data/raw/weather.csv` to
+   `data/raw/wether.csv` and save.
 2. Run it, then ask for its status: `0` is success.
 
     ```text
     $ ./scripts/rebuild.sh
-    no file data/raw/daily_exprt.csv
+    grep: data/raw/wether.csv: No such file or directory
     $ echo $?
-    1
+    2
     ```
 
-    It stopped at line 5; line 6 did not run.
+    It stopped at line 4; lines 5 and 6 did not run. The `>` had already
+    emptied the file it writes:
 
-3. Put `daily_export.csv` back and save.
+    ```text
+    $ wc -c data/processed/weather_valid.csv
+    0 data/processed/weather_valid.csv
+    ```
 
-**Check:** the script runs to the end again.
+3. Put `weather.csv` back, save, and run the script again.
+
+**Check:** the script runs to the end again; `weather_valid.csv` has 149 bytes.
 
 ---
 
-### 18. A list of checksums { #list }
+### 19. A list of checksums { #list }
 
 <!-- — · 5 min -->
 
@@ -1145,34 +1263,27 @@ Written once when the raw files arrive, checked after every copy. Windows: `sha2
 
 ---
 
-### 19. Rows per year { #years }
+### 20. Rows per day { #years }
 
 <!-- — · 5 min -->
 
-`cut -c1-4` keeps the first four characters, the year; `uniq -c` counts equal lines next to each other.
+`tail -n +2` prints from line 2 on; `cut -c1-10` keeps the first ten characters, the date; `uniq -c` counts equal lines next to each other.
 
-1. Count the rows of each year.
+1. Count the rows of each day.
 
     ```text
-    $ cut -c1-4 data/raw/weather.csv | uniq -c
-          1 time
-       8784 2016
-       8760 2017
-       8760 2018
-       8760 2019
-       8784 2020
-       8760 2021
-       8760 2022
-       8760 2023
-       8784 2024
-       8760 2025
+    $ tail -n +2 data/raw/weather.csv | cut -c1-10 | uniq -c
+          4 2019-07-21
+          2 2019-07-22
     ```
 
-**Check:** three leap years of 8 784 hours, seven of 8 760: 87 672.
+    macOS pads the counts with fewer spaces.
+
+**Check:** 4 + 2 = 6 hours, the two of 22 July both marked.
 
 ---
 
-### 20. A conda environment for the project { #environment }
+### 21. A conda environment for the project { #environment }
 
 <!-- — · 10 min -->
 
@@ -1231,58 +1342,33 @@ One environment per project: its own Python and packages, written down in `envir
 
 ---
 
-### 21. Advanced tasks { #advanced }
+### 22. Advanced tasks { #advanced }
 
 <!-- — · 20 min -->
 
-Harder questions to the same files, each solved by joining the commands of today with `|`.
+Harder questions to the same files, each solved with the commands of today.
 
-!!! question "Task: the cold hours of 2025, month by month"
-    How many hours of 2025 were at −10 °C or colder, and in which months?
-    Use `grep -E`, then `cut` and `uniq -c` (section 19) on the matching
-    lines.
-
-??? success "Answer"
-    `-1[0-9]\.[0-9]` is a minus, a 1, one more digit, a point and a digit:
-    −10.0 to −19.9. `cut -c1-7` keeps the year and the month.
-
-    ```text
-    $ grep -cE '^2025-.*,-1[0-9]\.[0-9],' data/raw/weather.csv
-    322
-    $ grep -E '^2025-.*,-1[0-9]\.[0-9],' data/raw/weather.csv | cut -c1-7 | uniq -c
-        103 2025-01
-         86 2025-02
-        133 2025-12
-    ```
-
-    322 = 103 + 86 + 133: January, February and December, none in March.
-    macOS pads the counts with fewer spaces.
-
-!!! question "Task: the three warmest and the three coldest hours"
+!!! question "Task: the coldest and the warmest measured hour"
     `sort` puts lines in order. Find its options for a comma between the
     columns (`-t`), for sorting by the second column only (`-k2,2`), as
-    numbers (`-n`) and backwards (`-r`), and print the three warmest and
-    the three coldest hours of `weather_valid.csv`.
+    numbers (`-n`) and backwards (`-r`), and print the coldest and the
+    warmest hour of `weather_valid.csv`. `tail -n +2` leaves out the header.
 
 ??? success "Answer"
     ```text
-    $ sort -t, -k2,2 -n -r data/processed/weather_valid.csv | head -n 3
-    2018-06-18T15:00,32.4,52,3.1
-    2018-06-18T16:00,32.3,53,2.4
-    2019-06-14T13:00,32.2,63,6.0
-    $ sort -t, -k2,2 -n data/processed/weather_valid.csv | head -n 3
-    2025-01-07T05:00,-16.3,100,3.3
-    2025-01-07T03:00,-16.1,100,3.0
-    2025-01-07T06:00,-16.1,100,3.9
+    $ tail -n +2 data/processed/weather_valid.csv | sort -t, -k2,2 -n | head -n 1
+    2019-07-21T23:00,23.6,74,3.4
+    $ tail -n +2 data/processed/weather_valid.csv | sort -t, -k2,2 -n -r | head -n 1
+    2019-07-21T20:00,27.3,63,4.5
     ```
 
-    Without `-n`, `sort` compares characters, and `-16.3` would sort
-    after `-1.0`. On `data/raw/weather.csv` the coldest lines would be the
-    120 marks of −999: the reason for `weather_valid.csv`.
+    With the header, `sort -n` reads `temp_c` as 0 and puts it first. On
+    `data/raw/weather.csv` the coldest line would be a mark of −999: the
+    reason for `weather_valid.csv`.
 
 !!! question "Task: the script also writes the number of marked rows"
-    Add one line to `scripts/rebuild.sh` that writes `missing 120` into
-    `results/missing.txt`, with the 120 counted by `grep`, not typed. Run
+    Add one line to `scripts/rebuild.sh` that writes `missing 2` into
+    `results/missing.txt`, with the 2 counted by `grep`, not typed. Run
     the script and show the file. (`$( )` puts the output of a command into
     a line.)
 
@@ -1295,22 +1381,49 @@ Harder questions to the same files, each solved by joining the commands of today
 
     ```text
     $ ./scripts/rebuild.sh
-    9 rows written to data/processed/daily.csv
     $ cat results/missing.txt
-    missing 120
+    missing 2
     ```
 
     The shell runs the command inside `$( )` first and puts its output,
-    `120`, into the text before `echo` runs. If the station sends a new log
+    `2`, into the text before `echo` runs. If the station sends a new log
     with more marks, the file follows by itself.
+
+!!! question "Task: a failure inside a pipe"
+    In line 5 of `scripts/rebuild.sh`, change `daily_export.csv` to
+    `daily_exprt.csv`. Run the script and ask for its status. Did `set -e`
+    stop it? What is in `daily.csv`? Then add the line `set -o pipefail`
+    under `set -e`, run it again, and put `daily_export.csv` back.
+
+??? success "Answer"
+    ```text
+    $ ./scripts/rebuild.sh
+    grep: data/raw/daily_exprt.csv: No such file or directory
+    $ echo $?
+    0
+    $ wc -c data/processed/daily.csv
+    0 data/processed/daily.csv
+    ```
+
+    The status of a pipe is the status of its last command, `cut`, which
+    read nothing and ended well: the script ran to the end and left an
+    empty `daily.csv`. With `set -o pipefail` a pipe fails when any of its
+    commands fails:
+
+    ```text
+    $ ./scripts/rebuild.sh
+    grep: data/raw/daily_exprt.csv: No such file or directory
+    $ echo $?
+    2
+    ```
 
 ---
 
 ## Aims practised
 
-- ⚙️ **Automation:** the searches, the cleaning and the mean are lines in
+- ⚙️ **Automation:** the cleaning and the mean are lines in
   `scripts/rebuild.sh`; one command makes every result again.
-- ♻️ **Reproducibility:** the hand repair and the script give the same
+- ♻️ **Reproducibility:** `grep -v`, `awk` and the script give the same
   checksum; the README states the result and the line that makes it.
-- 🔧 **Tool-agnostic:** the same `grep`, `find` and `python` lines in zsh and
+- 🔧 **Tool-agnostic:** the same `grep`, `find` and `awk` lines in zsh and
   Git Bash; programs installed and removed by a package manager.

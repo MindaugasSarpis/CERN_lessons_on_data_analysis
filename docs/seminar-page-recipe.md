@@ -30,7 +30,8 @@ model for the HSF look.
    "look weird").
    **Every seminar is self-contained** (lecturer, 18 Oct 2026: "without
    carry over of files. Especially if someone skips a seminar, and it's
-   also easier for me"). Section 1 is "Get today's folder": download
+   also easier for me"). From Seminar 6 on, section 1 is "Get today's
+   folder": download
    `weather-sNN.zip` from the release `seminar-files` of
    [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases),
    `unzip ~/Downloads/weather-sNN.zip -d ~`, `cd ~/weather-sNN`, and, when
@@ -39,9 +40,32 @@ model for the HSF look.
    the `environment.yml`. It is made by `misc/weather_repo/seminar_zips.py`
    from `misc/weather_repo/starts/sNN/`. No file or environment comes from
    an earlier session, no `git pull course main`, no pushes to the
-   student's GitHub outside the Git seminars (6 and 13). Seminar 5 starts
-   from an empty folder and fetches its two files with `curl`; Seminar 6 still
+   student's GitHub outside the Git seminars (6 and 13). Seminar 6 still
    clones the course repository, because cloning is its lesson.
+   **Seminars 1 to 5 download nothing** (lecturer, 20 Oct 2026: "it's best
+   not to have prerequisite files needed (at least up until 5) it's better
+   to define a small list or smth directly. Even a small csv file with a few
+   lines. It's cleaner that way and people don't have to download
+   anything."). The student makes the folder and types the data from the
+   page: a Python list where values are enough, else the same short
+   `weather.csv`, six real hours of the log, the evening the temperature
+   sensor failed:
+
+       time,temp_c,humidity_pct,wind_ms
+       2019-07-21T20:00,27.3,63,4.5
+       2019-07-21T21:00,25.6,65,4.0
+       2019-07-21T22:00,24.6,68,3.5
+       2019-07-21T23:00,23.6,74,3.4
+       2019-07-22T00:00,-999,76,3.2
+       2019-07-22T01:00,-999,81,3.0
+
+   (mean 25.275 without the `-999` rows, −316.15 with them), and, where
+   needed, the 11 lines of `daily_export.csv`. The full log's facts
+   (87 672 rows, the mean 7.16 °C) appear in one sentence at most, never
+   as something the room opens. Where byte counts matter, a step checks
+   `LF` in VS Code's status bar (Windows saves a new file with CRLF).
+   Software installs and a network call that is the lesson (Seminar 5's
+   weather service) stay.
 3. **Installs at the start.** Anything the seminar needs installed is
    section 1.
 4. **Short steps, a light tutorial look** (as in the

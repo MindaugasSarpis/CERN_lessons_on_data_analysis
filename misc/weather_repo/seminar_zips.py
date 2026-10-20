@@ -4,7 +4,9 @@
 Since 18 Oct 2026 every seminar is self-contained: it starts from its own
 folder, downloaded from the release `seminar-files` of weather-project, and
 never from what an earlier seminar left on a laptop (lecturer: "especially
-if someone skips a seminar, and it's also easier for me").
+if someone skips a seminar, and it's also easier for me"). Since 20 Oct 2026
+Seminars 1 to 5 download nothing: the room types its data from the page, so
+only Seminars 6 to 16 have a starts/sNN/ folder and a zip.
 
 Each seminar NN has a folder starts/sNN/ with
   manifest.json   {"base": "s4" | "none", "git": false, "dirs": [...],

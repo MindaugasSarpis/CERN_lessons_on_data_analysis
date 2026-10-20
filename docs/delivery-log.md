@@ -667,3 +667,52 @@ Not a session: a rework asked for by the lecturer the day before Lecture 04.
 - **Later the same day:** "Now I like the seminar format, can we back-propagate this", "better always have more (a few advanced tasks at the end if it goes really well) but the leadup should always be gradual", and seminar titles shortened ("look weird"). Every seminar page now has the Seminar 5 look (typed line and output in one block, explained where used, a gradual first section), ends with `## Optional, if the room goes fast` holding three or four advanced tasks with folded answers (all run on the real data), and is titled `# Seminar N · Topic` (nav `SN Topic`); the question moved to the goal line. Four steps (S12 50 and 71, S13 19, S14 12) still run 6–12 px past an iPad screen, empty margin only.
 - **Then:** "Can we keep seminars to this format and self-contained (without carry over of files). Especially if someone skips a seminar, and it's also easier for me. […] Up until now I still had to just do seminars off hand, they were too difficult to read anyway." Every seminar now starts from its own `weather-sNN.zip` (release `seminar-files`, built by `misc/weather_repo/seminar_zips.py` from `misc/weather_repo/starts/sNN/`, uploaded 18 Oct) and, when it needs packages, a fresh conda environment `sNN` from the zip's `environment.yml` (the lecturer's choice over one topped-up environment). No `git pull course main`, no pushes outside Seminar 6; Seminars 13 and 14 start from a one-commit repository. Each page was run from its zip alone. Not checked: `unzip` in Git Bash (believed to ship with Git for Windows), Safari's auto-unzip (each page names `mv` instead).
 - **19 Oct, before delivery:** "I want to gradually show functionality of python, then show why we should have functions / classes, and only then show how import work and what are modules / libraries, also show that in a programming project we want to have code separated into modules, then in scripts just import the universal functions and not redefine them every time." Lecture 5's single `def` slide became two parts: Part 4, functions and classes (the seven lines `mean_temp.py` and `coldest_hour.py` share, `def`, `temps(path)`, `mean(values)`, a class `Hour` with `is_missing()`, the coldest hour 2025-01-07T05:00, −16.3 °C) and Part 5, modules and `import` (`weather.py` built up, `import weather`, what `import` does, every script importing the module, `statistics` and `math` as a library). Packages and versions is Part 6. Two quiz questions on modules were added. The lecturer chose a 105/135 split (estimate 121 min, band 92–127) and one class with one method. Seminar 5's Part 4 follows the same order: functions, a class, then a module that `mean_temp.py` and `coldest_hour.py` import (~205 min of steps, more than the session; the page says what to leave out). The starting zips of Seminars 6 and 9–11 carry the new `weather.py`; Seminar 6's commit now shows 468 insertions.
+
+## 2026-10-20 · Lecture 5 and Seminar 5
+
+**Planned:** Lecture 5, Python Foundations (estimate ~121 min, a 105/135 split
+with the seminar): objects and types, `for` and `if` to the mean 7.16,
+functions and a class, a module `weather.py` and `import`, packages and
+versions. Seminar 5 from an empty folder: Miniforge, the interpreter, a conda
+environment with JupyterLab, scripts and a module, with `weather.csv` and
+`coldest_hour.py` fetched by `curl` when needed.
+
+**Lecturer's notes**
+
+- "in seminars, it's best not to have prerequisite files needed (at least up
+  until 5) it's better to define a small list or smth directly. Even a small
+  csv file with a few lines. It's cleaner that way and people don't have to
+  download anything."
+- "L5 was quite dry, just a bunch of python function not much story telling.
+  Need to see how to make it a little bit more educational. Maybe compare
+  with proprietary tools or smth"
+
+- Then: "Classes - way too steep"; the thread for the lecture: "Why we
+  need python, not excel."; and "Make sure to rework all the seminars up
+  until now to have no prerequisite".
+
+**Changed in response** (20 October)
+
+- Seminars 1, 3, 4 and 5 download nothing. The room makes the folder and
+  types its data from the page: a Python list where values are enough,
+  else the same short `weather.csv`, six real hours of the log, 21 July
+  2019 20:00 to 22 July 01:00, the evening the temperature sensor failed
+  (four readings, two `-999`; mean 25.275 without them, −316.15 with
+  them), and the 11 lines of `daily_export.csv` where needed. Seminar 1
+  quotes the operator's e-mail on the page; Seminar 3 types `daily.csv`
+  (still 148 bytes) and zips the folder it made; Seminar 4 writes both
+  files by heredoc, loses the two handed-out Python scripts and gets the
+  mean by `awk` and `daily.csv` by `grep -v | tr | cut` in a shell-only
+  `rebuild.sh`; Seminar 5 types `coldest_hour.py` (12 lines, both bugs,
+  the `-999` hour comes out coldest). Recipe, overview, CLAUDE.md and the
+  Lecture 3 and 4 pages say so; `misc/weather_repo/starts/s01`, `s03`,
+  `s04` are gone (their zips stay on the release, unused).
+
+**Open**
+
+- Lecture 5 needs a story: why Python, not Excel; writing a class is too
+  steep for the first Python lecture.
+- The reworked seminars were run on Linux only: VS Code's Find counts,
+  BSD `awk`/`wc`/`uniq` padding on macOS, Git Bash, the Finder and
+  Explorer zip menus (a Finder zip may add `__MACOSX`) are not checked.
+- Seminars 6 to 16 still start from a zip.

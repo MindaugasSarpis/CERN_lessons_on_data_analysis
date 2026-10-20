@@ -5,9 +5,9 @@
 <!-- ~120 min: the length pnpm timing:check reads -->
 
 **Today's goal:** What do the weather files say? Every student has the folder `weather-project` open in VS
-Code, with the station's two files in `data/raw`, the export repaired by hand
-into `data/processed/daily.csv`, and a README that says what is in the folder,
-where the data came from and what each column means.
+Code, with the station's two short files typed into `data/raw`, the export
+repaired by hand into `data/processed/daily.csv`, and a README that says what
+is in the folder, where the data came from and what each column means.
 
 Everything happens in VS Code and a web browser. No terminal today. In the
 blocks stands the text to type, or what appears on the screen.
@@ -21,10 +21,9 @@ Further reading: [the VS Code user interface](https://code.visualstudio.com/docs
 ??? info "Before the session"
     - **Room:** internet, and a laptop on which the student can install
       programs.
-    - **You:** a VS Code with no `weather-project` folder yet. Today's files
-      are `weather-s01.zip` on the Releases page of
-      [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases);
-      the session needs nothing from any other seminar.
+    - **You:** a VS Code with no `weather-project` folder yet. Both data
+      files are typed from this page; the session needs nothing from any
+      other seminar.
     - **Keys** are written for Windows, macOS in brackets.
 
 ---
@@ -176,8 +175,8 @@ Markdown is plain text with a few signs for structure; `README.md` is the first 
     ```text
     # Weather Station
 
-    The hourly log of one weather station, 2016 to 2025, and a table of daily
-    mean temperatures typed into a spreadsheet from it.
+    Six hours of the hourly log of one weather station, and a table of daily
+    mean temperatures of the same station, typed into a spreadsheet.
     ```
 
 2. A dot on the tab means *not saved*. Save: `Ctrl+S` (macOS `Cmd+S`).
@@ -255,107 +254,128 @@ The preview is the test. Make each mistake, read the preview, undo with `Ctrl+Z`
 
 <!-- 0:40 to 1:10 -->
 
-The station's operator sent two files by e-mail.
+The station's operator sent two short files by e-mail; they are typed in
+from this page.
 
 ---
 
-### 7. Download the station's files { #download }
+### 7. Type the station's two files into `data/raw` { #download }
 
-<!-- 0:40 · 10 min -->
+<!-- 0:40 · 15 min -->
 
 Files from outside go into `data/raw` and are never edited there.
 
-1. Open the Releases page of the course repository.
+1. Read the operator's e-mail: it says what each file is and where it comes
+   from.
 
     ```text
-    github.com/MindaugasSarpis/weather-project/releases
-    ```
+    13 October 2026
 
-2. Under **Assets**, click `weather-s01.zip`. The browser saves it in
-   **Downloads**.
-3. Unpack it into your home folder.
+    Hello,
 
-    === "macOS"
+    here are two files of our weather station:
 
-        In Finder, open **Downloads** and double-click `weather-s01.zip`.
-        Select the new folder `weather-s01`, press `Cmd+C`, then
-        `Cmd+Shift+H` (your home folder), then `Cmd+V`.
-
-    === "Windows"
-
-        In File Explorer, open **Downloads**, right-click
-        `weather-s01.zip` > **Extract All...** > **Browse...**, choose
-        `C:\Users\` and your name, **Select Folder**, **Extract**.
-
-4. Open the folder `weather-s01` in Finder or File Explorer: three files.
-
-    ```text
-    daily_export.csv
-    message.txt
-    weather.csv
-    ```
-
-5. Drag `weather.csv` and `daily_export.csv` onto `data/raw` in the Side Bar
-   of VS Code. They are copied there.
-6. Drag `message.txt` onto the editor area. It opens in a tab, and is not
-   copied into the project.
-
-    ```text
-    here are the two files of our weather station:
-
-    weather.csv        the hourly log, 1 January 2016 to 31 December 2025
+    weather.csv        six hours of the hourly log, 21 July 2019 20:00
+                       to 22 July 2019 01:00; the full log, 2016 to 2025,
+                       has 87 672 such rows
     daily_export.csv   the daily mean temperature of 1 to 9 October 2025,
                        typed into a spreadsheet and exported from it
 
     You may use them for anything, with no conditions (CC0).
+
+    Best regards,
+    the station's operator
     ```
 
-**Check:** `data/raw` holds `daily_export.csv` and `weather.csv`.
+2. Click the empty area of the Side Bar, then **New File**. The `/` puts the
+   file into `data/raw`.
 
----
+    ```text
+    data/raw/weather.csv
+    ```
 
-### 8. Read the long file { #data-file }
-
-<!-- 0:50 · 10 min -->
-
-How many rows, what one row is, and how a missing value is marked: the file shows it.
-
-1. Click `data/raw/weather.csv`. The first lines:
+3. Type the seven lines, then `Enter` after the last: line 8 stays empty.
 
     ```text
     time,temp_c,humidity_pct,wind_ms
-    2016-01-01T00:00,-4.4,93,2.5
-    2016-01-01T01:00,-4.8,95,2.6
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
+    2019-07-21T22:00,24.6,68,3.5
+    2019-07-21T23:00,23.6,74,3.4
+    2019-07-22T00:00,-999,76,3.2
+    2019-07-22T01:00,-999,81,3.0
     ```
 
-2. Read row 2 aloud: "at 01:00 on 1 January 2016, −4.8 °C, 95 % humidity,
-   wind 2.6 m/s".
+4. Read the Status Bar, bottom right: `LF`, the line end of the file, one
+   character. If it reads `CRLF` (two characters, the Windows default),
+   click it and pick `LF` at the top.
+5. The second file the same way: **New File**, the path below, the eleven
+   lines, `Enter` after the last (line 12 stays empty), `LF`.
+
+    ```text
+    data/raw/daily_export.csv
+    ```
+
+    ```text
+    nr;date;temp_c
+    1;2025-10-01;6,3
+    2;2025-10-02;5,0
+    3;2025-10-03;5,6
+    4;2025-10-04;7,0
+    5;2025-10-05;9,4
+    6;2025-10-06;10,4
+    7;2025-10-07;9,2
+    8;2025-10-08;9,0
+    9;2025-10-09;9,8
+    ;mean;7,97
+    ```
+
+**Check:** `data/raw` holds `daily_export.csv` and `weather.csv`, both `LF`,
+each with an empty last line.
+
+---
+
+### 8. Read a row, count the rows, find the `-999` { #data-file }
+
+<!-- 0:55 · 5 min -->
+
+What one row is, how many there are and how a missing value is marked: the file shows it.
+
+1. Click `data/raw/weather.csv`. Line 1, the header, names the four
+   columns; every line below it is one hour.
+2. Read row 2 aloud: "at 21:00 on 21 July 2019, 25.6 °C, 65 % humidity,
+   wind 4.0 m/s".
+
+    ```text
+    2019-07-21T21:00,25.6,65,4.0
+    ```
+
 3. Jump to the end: `Ctrl+End` (macOS `Cmd+↓`). The line number on the left:
 
     ```text
-    87674
+    8
     ```
 
-    The last line is empty. 87 673 lines, minus the header: **87 672 rows**,
-    one per hour of ten years (10 × 365 × 24 + 3 leap days × 24).
+    The last line is empty. 7 lines, minus the header: **6 rows**, one per
+    hour, 20:00 to 01:00.
 
-4. Go to a line: `Ctrl+G` (the same on macOS), type `5000`, `Enter`.
+4. Go to a line: `Ctrl+G` (the same on macOS), type `5`, `Enter`. The last
+   hour with a temperature:
 
     ```text
-    2016-07-27T06:00,18.2,71,1.1
+    2019-07-21T23:00,23.6,74,3.4
     ```
 
 5. Find a value: `Ctrl+F` (macOS `Cmd+F`), type `-999`. The counter:
 
     ```text
-    1 of 120
+    1 of 2
     ```
 
-    Press `Enter` a few times: all are in `temp_c`, 22 to 26 July 2019.
+    Press `Enter`: both are in `temp_c`, at 00:00 and 01:00 on 22 July, while
+    humidity and wind go on.
 
-6. Read the Status Bar, bottom right: `UTF-8` and `LF`.
-
-**Check:** 87 672 rows, and 120 rows with `-999`.
+**Check:** 6 rows, and 2 rows with `-999`.
 
 ---
 
@@ -366,13 +386,14 @@ How many rows, what one row is, and how a missing value is marked: the file show
 Someone else, or you in six months, must be able to tell where the files came from.
 
 1. In `README.md`, under the Folders table, add the **Data** section. The
-   source and the date come from `message.txt`.
+   rows, the source and the date come from the operator's e-mail in
+   section 7.
 
     ```text
     ## Data
 
-    - `data/raw/weather.csv`: one row per hour, from 2016-01-01 00:00 to
-      2025-12-31 23:00.
+    - `data/raw/weather.csv`: six rows, one per hour, from 2019-07-21 20:00
+      to 2019-07-22 01:00. The station's full log has 87 672 such rows.
     - `data/raw/daily_export.csv`: the daily mean temperature of 1 to 9 October
       2025, exported from a spreadsheet.
     - **Source:** the station's operator, by e-mail
@@ -385,9 +406,8 @@ Someone else, or you in six months, must be able to tell where the files came fr
 
 !!! question "Task: the columns of `weather.csv`"
     Add a section **Columns of weather.csv** with a table: **Column**,
-    **Meaning**, **Unit**, one row per column. Find each unit from the
-    numbers: `temp_c` runs from −16.3 to 32.4, `humidity_pct` from 34 to
-    100, `wind_ms` has a median of 3.5 and at most 12. Below the table, one
+    **Meaning**, **Unit**, one row per column. Find each unit from the six
+    rows: which unit makes the numbers a July evening? Below the table, one
     line on the `-999` rows.
 
 ??? success "Answer"
@@ -401,13 +421,15 @@ Someone else, or you in six months, must be able to tell where the files came fr
     | `humidity_pct` | relative humidity | % |
     | `wind_ms` | wind speed | m/s |
 
-    Missing value: `temp_c` is `-999` in 120 rows, 2019-07-22 to 07-26, when
-    the temperature sensor was down.
+    Missing value: `temp_c` is `-999` at 2019-07-22 00:00 and 01:00, when
+    the temperature sensor gave no reading; humidity and wind go on.
     ```
 
+    23.6 to 27.3 °C is a warm evening; as °F it would be below freezing.
     −999 °C is below absolute zero (−273.15 °C): a mark for "no value", not
-    a temperature. `wind_ms` is metres per second; milliseconds of wind make
-    no sense.
+    a temperature. `pct` in `humidity_pct` is per cent. `wind_ms` is metres
+    per second: 3.0 to 4.5 m/s is a breeze, and milliseconds of wind make no
+    sense.
 
 ---
 
@@ -555,6 +577,10 @@ The size in bytes shows that nothing else changed.
 
 **Check:** 148 bytes, and the four edits in the README.
 
+!!! warning "158 bytes instead of 148"
+    The file has `CRLF` line ends, one byte more on each of its ten lines.
+    Click `CRLF` in the Status Bar and pick `LF`.
+
 !!! question "Task: the daily table in Markdown"
     Make `results/daily.md`: the ten lines of `daily.csv` as a Markdown
     table, with the multi-cursor keys and no typing line by line. Check it in
@@ -646,11 +672,12 @@ The editor sees characters, not numbers.
 
 A spreadsheet reads the export by the settings of the laptop.
 
-1. In Finder or File Explorer, double-click `weather-s01/daily_export.csv`
-   (the copy outside the project).
+1. Right-click `data/raw/daily_export.csv` > **Reveal in Finder** (Windows
+   **Reveal in File Explorer**), then double-click the file.
 2. Look: one column per value, or all of a line in column A; `6,3` as a
    number or as text.
-3. Close the spreadsheet with **Don't Save**.
+3. Close the spreadsheet with **Don't Save**: the file in `data/raw` stays
+   as it came.
 
 **Check:** two neighbours with different settings see the file differently.
 
@@ -662,39 +689,40 @@ A spreadsheet reads the export by the settings of the laptop.
 
 Harder questions to the same files, answered with the keys of today.
 
-!!! question "Task: noon below freezing, by a pattern"
-    How many days of 2025 were below 0 °C at noon? In `weather.csv`, open
-    Find (`Ctrl+F`, macOS `Cmd+F`) and switch on **Use Regular Expression**
-    (the `.*` button, or `Alt+R`, macOS `Cmd+Option+R`). In a pattern, `^`
-    is the start of a line, `\d` any digit.
+!!! question "Task: the hours with a temperature, by a pattern"
+    In a long log the hours cannot be counted by eye; a pattern counts them.
+    In `weather.csv`, open Find (`Ctrl+F`, macOS `Cmd+F`) and switch on
+    **Use Regular Expression** (the `.*` button, or `Alt+R`, macOS
+    `Cmd+Option+R`). In a pattern, `\d` is any digit, `+` one or more of
+    what stands before it, `\.` a point. Write one that matches the four
+    temperatures and none of the `-999`.
 
 ??? success "Answer"
     ```text
-    ^2025-\d\d-\d\dT12:00,-
+    ,\d+\.\d,
     ```
 
-    The counter reads `1 of 85`: the line starts with a date of 2025, the
-    hour is 12:00, and the temperature after the comma starts with a minus.
-    None of the `-999` rows is in 2025.
+    The counter reads `1 of 4`. A temperature has a point and stands
+    between two commas; `-999` has no point, and `wind_ms` has its point but
+    no comma after it. A winter hour has a minus: `,-?\d+\.\d,`, where `?`
+    makes the minus optional.
 
-!!! question "Task: the warmest and the coldest hour"
-    The warmest hour of the ten years is 32.4 °C, the coldest −16.3 °C. On
-    which lines of `weather.csv` are they, and when? Add both to the
-    README's Columns section.
+!!! question "Task: the mean temperature of the evening"
+    With a calculator, compute the mean of `temp_c` over the six rows, and
+    over the four rows with a reading. Which one goes into the README?
 
 ??? success "Answer"
-    Find `,32.4,` and `,-16.3,`, with the commas, so that `132.4` or
-    `-16.35` could not match. Each counter reads `1 of 1`, and the line
-    number is on the left.
-
     ```text
-    21593  2018-06-18T15:00,32.4,52,3.1
-    79063  2025-01-07T05:00,-16.3,100,3.3
+    (27.3 + 25.6 + 24.6 + 23.6 − 999 − 999) / 6 = −1896.9 / 6 = −316.15
+    (27.3 + 25.6 + 24.6 + 23.6) / 4             =   101.1 / 4 =   25.275
     ```
 
+    −316.15 °C is below absolute zero: the two `-999` were counted as
+    temperatures. In the README, under the Columns table:
+
     ```text
-    Warmest hour: 32.4 °C, 2018-06-18 15:00 (line 21 593).
-    Coldest hour: −16.3 °C, 2025-01-07 05:00 (line 79 063).
+    Mean of `temp_c`, 2019-07-21 20:00 to 23:00: 25.275 °C (4 hours; the 2
+    rows with `-999` left out).
     ```
 
 !!! question "Task: check the spreadsheet's mean"

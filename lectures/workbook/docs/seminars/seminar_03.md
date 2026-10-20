@@ -4,9 +4,10 @@
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** What are the 148 bytes of `daily.csv`? Every student opens the files of today's folder, `weather-s03`, as
-bytes, names each of the 148 bytes of `daily.csv`, and sees what a line end,
-an encoding and a file format do to the bytes.
+**Today's goal:** What are the 148 bytes of `daily.csv`? Every student types
+the station's ten-line table `daily.csv` into a new folder, opens it as
+bytes, names each of its 148 bytes, and sees what a line end, an encoding
+and a file format do to the bytes.
 
 Everything happens in VS Code with the **Hex Editor** extension. No terminal
 today: Seminar 4 sets up the terminal and does the same by command. In the
@@ -17,8 +18,8 @@ type.
 section 11.
 
 ??? info "Before the session"
-    - **Room:** internet, for today's folder and the extension. The session
-      needs nothing from any other seminar.
+    - **Room:** internet, for the extension. The session needs nothing from
+      any other seminar: every file is typed from this page.
     - **Missing a tool?** No VS Code: [Setup, step 1](../setup.md#vscode).
     - **You:** nothing to prepare.
     - **Keys** are written for Windows, macOS in brackets. Bytes are written
@@ -34,48 +35,59 @@ A file is a row of bytes; the Hex Editor shows each one as two hex digits.
 
 ---
 
-### 1. Get today's folder, install the Hex Editor { #hex-editor }
+### 1. Install the Hex Editor, type `daily.csv` { #hex-editor }
 
 <!-- 0:00 · 10 min -->
 
-Today's folder holds the weather project with the station's two files, the export repaired by hand as `daily.csv`, and a README. An extension adds a tool to VS Code; this one shows the bytes of a file.
+An extension adds a tool to VS Code; this one shows the bytes of a file. `daily.csv` holds the station's daily mean temperature, 1 to 9 October 2025: a header and nine rows.
 
-1. Open the Releases page of the course repository and, under **Assets**,
-   click `weather-s03.zip`. The browser saves it in **Downloads**.
-
-    ```text
-    github.com/MindaugasSarpis/weather-project/releases
-    ```
-
-2. Unpack it into your home folder.
-
-    === "macOS"
-
-        In Finder, open **Downloads** and double-click `weather-s03.zip`.
-        Select the new folder `weather-s03`, press `Cmd+C`, then
-        `Cmd+Shift+H` (your home folder), then `Cmd+V`.
-
-    === "Windows"
-
-        In File Explorer, open **Downloads**, right-click
-        `weather-s03.zip` > **Extract All...** > **Browse...**, choose
-        `C:\Users\` and your name, **Select Folder**, **Extract**.
-
-3. Open VS Code, **File** > **Open Folder...** > `weather-s03` (in your home
-   folder) > **Open**, and answer **Yes, I trust the authors**. The Side Bar
-   shows `data`, `results`, `scripts` and `README.md`.
-
-4. Open the Extensions view: `Ctrl+Shift+X` (macOS `Cmd+Shift+X`).
-5. Search:
+1. Open the Extensions view: `Ctrl+Shift+X` (macOS `Cmd+Shift+X`).
+2. Search:
 
     ```text
     hex editor
     ```
 
-6. Take **Hex Editor** by **Microsoft** (the publisher under the name), click
+3. Take **Hex Editor** by **Microsoft** (the publisher under the name), click
    **Install**.
+4. **File** > **Open Folder...**, go to your home folder (the one with your
+   user name), click **New Folder** in the dialog and type the name.
 
-**Check:** the Extensions view lists **Hex Editor** as installed.
+    ```text
+    weather-s03
+    ```
+
+5. Select `weather-s03`, click **Open** (Windows **Select Folder**), and
+   answer **Yes, I trust the authors**.
+6. Move the mouse over the Side Bar, click the **New File** icon and type
+   the name.
+
+    ```text
+    daily.csv
+    ```
+
+7. Copy the block with the button at its top right, paste it into
+   `daily.csv`, then press `Enter` once: the cursor stands on line 11, which
+   stays empty.
+
+    ```text
+    date,temp_c
+    2025-10-01,6.3
+    2025-10-02,5.0
+    2025-10-03,5.6
+    2025-10-04,7.0
+    2025-10-05,9.4
+    2025-10-06,10.4
+    2025-10-07,9.2
+    2025-10-08,9.0
+    2025-10-09,9.8
+    ```
+
+8. Windows: the Status Bar says `CRLF`; click it and choose `LF`.
+9. Save: `Ctrl+S` (macOS `Cmd+S`).
+
+**Check:** `daily.csv` saved with `LF` in the Status Bar, and the Extensions
+view lists **Hex Editor** as installed.
 
 ---
 
@@ -85,8 +97,8 @@ Today's folder holds the weather project with the station's two files, the expor
 
 A file is a row of bytes; the editor turns them into letters by a table.
 
-1. In the Side Bar, right-click `data/processed/daily.csv` > **Open
-   With...** > **Hex Editor**.
+1. In the Side Bar, right-click `daily.csv` > **Open With...** > **Hex
+   Editor**.
 2. Read the three columns: the **offset** (number of the first byte of the
    row, in hex), 16 bytes, the same bytes as text.
 
@@ -168,8 +180,8 @@ The end of a line is a byte too, and not the same byte on every system.
 
 The size in bytes is exact; kB and MB are rounded, and counted two ways.
 
-1. Right-click `data/processed/daily.csv` > **Reveal in Finder** (Windows
-   **Reveal in File Explorer**).
+1. Right-click `daily.csv` > **Reveal in Finder** (Windows **Reveal in File
+   Explorer**).
 2. The size.
 
     === "macOS"
@@ -188,24 +200,12 @@ The size in bytes is exact; kB and MB are rounded, and counted two ways.
         Size:          148 bytes
         ```
 
-3. The same for `data/raw/weather.csv`.
+    Larger files are shown in MB, rounded, and macOS and Windows count
+    them differently: the station's full log, 2 515 215 bytes, is 2.5 MB in
+    Finder (1 MB = 1 000 000 bytes) and 2.39 MB in File Explorer
+    (1 MB = 1 048 576 bytes).
 
-    === "macOS"
-
-        ```text
-        Size: 2,515,215 bytes (2.5 MB on disk)
-        ```
-
-    === "Windows"
-
-        ```text
-        Size:          2.39 MB (2,515,215 bytes)
-        ```
-
-    macOS counts 1 MB = 1 000 000 bytes, Windows 1 MB = 1 048 576 bytes:
-    2 515 215 / 1 048 576 = 2.399.
-
-**Check:** both files measured to the byte.
+**Check:** `daily.csv` measured to the byte: 148.
 
 ---
 
@@ -215,8 +215,8 @@ The size in bytes is exact; kB and MB are rounded, and counted two ways.
 
 A line end is one byte, `0A` (LF), on macOS and Linux; Windows programs often write two, `0D 0A` (CRLF).
 
-1. In the Side Bar, click `data/processed/daily.csv`, `Ctrl+C`, `Ctrl+V`
-   (macOS `Cmd`). A copy appears, `daily copy.csv`.
+1. In the Side Bar, click `daily.csv`, `Ctrl+C`, `Ctrl+V` (macOS `Cmd`). A
+   copy appears, `daily copy.csv`.
 2. Rename it: `F2` (macOS `Enter`).
 
     ```text
@@ -243,17 +243,18 @@ A line end is one byte, `0A` (LF), on macOS and Linux; Windows programs often wr
 
 **Check:** 158 bytes and `0D 0A` at each line end.
 
-!!! question "Task: `weather.csv` with CRLF"
-    1. `weather.csv` has 87 673 lines. How many bytes would it have with
-       CRLF? Compute first.
-    2. Check it on a copy in `data/processed` (never in `data/raw`), then
-       delete the copy and `daily_crlf.csv` (right-click > **Delete**).
+!!! question "Task: where does 6 October start with CRLF?"
+    1. At which offset does `2025-10-06` start in `daily_crlf.csv`?
+       Compute it from the line lengths, then find it.
+    2. How many bytes would `daily.csv` have without the line end after
+       `9.8`? And `daily_crlf.csv`?
+    3. Delete `daily_crlf.csv` (right-click > **Delete**).
 
 ??? success "Answer"
-    1. 2 515 215 + 87 673 = **2 602 888 bytes**.
-    2. Copy `data/raw/weather.csv` into `data/processed` as in step 1, open
-       the copy, `LF` > `CRLF` in the Status Bar, save, measure: 2 602 888
-       bytes. Then delete both copies.
+    1. Offset `5D`, in decimal 93 = 13 + 5 × 16: with CRLF the header is 13
+       bytes and each row before it 16. The Hex Editor shows it in row
+       `00000050`, column `0D`.
+    2. 147 and 156: the last line end is one byte with LF, two with CRLF.
 
 ---
 
@@ -271,7 +272,7 @@ ASCII has 128 characters; UTF-8 writes every other letter in two to four bytes.
 
 In UTF-8, `a` to `z` and the digits take one byte; `Š`, `ė` and `°` take two.
 
-1. Click `results` in the Side Bar, then **New File**.
+1. Click the empty area of the Side Bar, then **New File**.
 
     ```text
     note.txt
@@ -353,14 +354,14 @@ Some programs put `EF BB BF`, the byte-order mark, in front of a UTF-8 file.
 !!! question "Task: count before you look"
     1. How many characters and how many bytes is `Vėjas 3 m/s` (no line
        end) in UTF-8, and in Windows 1257?
-    2. Your `README.md` has one `°`. By how many bytes is its size larger
-       than its number of characters?
+    2. How many bytes would `daily.csv` have saved with Windows 1257? With
+       UTF-8 with BOM?
 
 ??? success "Answer"
     1. 11 characters. UTF-8: 12 bytes (`ė` is two). Windows 1257: 11.
-    2. By 1: `°` is `C2 B0`, the other characters are ASCII. On Windows the
-       README may also have CRLF line ends (Status Bar): one more byte per
-       line, which is not a character.
+    2. 148 in Windows 1257: every character of `daily.csv` is ASCII, and
+       the 128 ASCII characters have the same bytes in both tables. With
+       the BOM, 148 + 3 = 151.
 
 ---
 
@@ -378,19 +379,28 @@ A picture, a zip or a spreadsheet is bytes as well, but not text; its first byte
 
 The name's ending is a hint for people; the first bytes, the **magic number**, say what a file is.
 
-1. **File** > **Open File...** > **Downloads** > `weather-s03.zip`, the
-   zip of section 1.
-2. VS Code says the file is binary. Click **Open Anyway**, then **Hex
-   Editor**.
+1. Pack today's folder into a zip.
 
-    ```text
-    00000000  50 4B 03 04 14 00 00 00 00 00 00 60 21 5D 00 00  PK.........`!]..
-    00000010  00 00 00 00 00 00 00 00 00 00 0C 00 00 00 77 65  ..............we
-    00000020  61 74 68 65 72 2D 73 30 33 2F 50 4B 03 04 14 00  ather-s03/PK....
-    ```
+    === "macOS"
 
-3. `50 4B` is `PK`, the start of every ZIP file. Further on, the name of the
-   folder in it, `weather-s03/`.
+        In Finder, `Cmd+Shift+H` (your home folder), right-click
+        `weather-s03` > **Compress "weather-s03"**. `weather-s03.zip`
+        appears next to the folder.
+
+    === "Windows"
+
+        In File Explorer, open `C:\Users\` and your name, right-click
+        `weather-s03` > **Compress to ZIP file** (or **Compress to** >
+        **ZIP File**; Windows 10: **Send to** > **Compressed (zipped)
+        folder**). `weather-s03.zip` appears next to the folder.
+
+2. In VS Code, **File** > **Open File...** (macOS **Open...**) >
+   `weather-s03.zip` in your home folder. VS Code says the file is binary.
+   Click **Open Anyway**, then **Hex Editor**.
+3. The row `00000000` starts with `50 4B 03 04`, `PK` in the text column:
+   the start of every ZIP file. From offset `1E`, after 30 bytes, stands
+   the name of the first thing packed. The bytes between hold the date and
+   the packing program, so they differ from laptop to laptop.
 
 | Kind | First bytes |
 |--|--|
@@ -403,31 +413,48 @@ The name's ending is a hint for people; the first bytes, the **magic number**, s
 
 ---
 
-### 10. Pack the files into a zip { #zip }
+### 10. Measure the zip, pack a file of repeats { #zip }
 
 <!-- 1:35 · 10 min -->
 
-Lossless compression stores repeats once and gives back every byte.
+Lossless compression stores repeats once and gives back every byte; a zip also stores the name of every file in it, twice.
 
-1. The size of `weather-s03.zip` in Finder or File Explorer.
-
-    ```text
-    563,677 bytes
-    ```
-
-2. It holds `weather.csv`, 2 515 215 bytes, and four small files.
+1. The size of `weather-s03.zip`, as in section 4: more than the
+   148 + 18 = 166 bytes of `daily.csv` and `note.txt`. Each file
+   has a header of 30 bytes and its name in front of its bytes, and an entry
+   of 46 bytes and its name again at the end. For `weather-s03/daily.csv`,
+   21 characters, that is at least:
 
     ```text
-    563 677 / 2 515 215 = 0.22
+    30 + 21 + 46 + 21 = 118 bytes
     ```
 
-3. Why it packs so well: every line of `weather.csv` starts with `20`, a
-   year, `-`, a month. Scroll the Hex Editor of `weather.csv`: the same
-   bytes again and again.
-4. Unpacked in section 1, the file had its 2 515 215 bytes again: nothing
-   lost.
+2. In the Side Bar, copy `daily.csv` as in section 5 and rename the copy.
 
-**Check:** 22 %, and the same bytes after unpacking.
+    ```text
+    repeats.csv
+    ```
+
+3. Open it, click into its text and double it seven times: `Ctrl+A`,
+   `Ctrl+C`, `Ctrl+V`, `Ctrl+V` (macOS `Cmd`), seven times over. Save. The
+   Status Bar shows where the cursor is.
+
+    ```text
+    Ln 1281, Col 1
+    ```
+
+    1 280 lines, the ten of `daily.csv` 128 times: 148 × 128 = 18 944 bytes.
+
+4. Pack `repeats.csv` alone: right-click it > **Reveal in Finder** (Windows
+   **Reveal in File Explorer**), right-click > **Compress "repeats.csv"**
+   (Windows **Compress to ZIP file**). The size of `repeats.csv.zip`
+   (Windows `repeats.zip`): a few hundred bytes. The ten lines are stored
+   once, the rest as "the same again".
+
+    Real data repeats less: the station's full log, 2 515 215 bytes, packs
+    to about 22 % of its size.
+
+**Check:** `repeats.csv`, 18 944 bytes, packs into a few hundred.
 
 !!! question "Task: a picture with a wrong name"
     1. Take a screenshot (macOS `Cmd+Shift+4`, drag; Windows `Win+PrtScn`,
@@ -489,8 +516,9 @@ A checksum is a number computed from every byte; a changed byte changes it.
 | change the line ends | `LF` / `CRLF` in the Status Bar |
 | read by another table | Status Bar encoding > **Reopen with Encoding** |
 | write by another table | **Save with Encoding**, only on purpose |
+| pack into a zip | **Compress** (Windows **Compress to ZIP file**) |
 
-Seminar 4 measures the same files from the terminal.
+Seminar 4 measures files from the terminal.
 
 ---
 
@@ -498,41 +526,41 @@ Seminar 4 measures the same files from the terminal.
 
 ---
 
-### 13. A spreadsheet saves the export { #spreadsheet }
+### 13. A spreadsheet saves the table { #spreadsheet }
 
 <!-- — · 10 min -->
 
 An `.xlsx` file is a ZIP of text files.
 
-1. In Finder or File Explorer, open `weather-s03/data/raw/daily_export.csv`
-   in Excel or Numbers. Change nothing.
-2. **File** > **Save As...** > **Excel Workbook (.xlsx)**, into
-   `weather-s03/results` (never into `data/raw`).
+1. In Finder or File Explorer, open `weather-s03/daily.csv` in Excel or
+   Numbers (right-click > **Open With**). Change nothing.
+2. Excel: **File** > **Save As...** > **Excel Workbook (.xlsx)**; Numbers:
+   **File** > **Export To** > **Excel...**. Save it into `weather-s03`.
 3. Open the `.xlsx` with the Hex Editor: it starts with `50 4B`, `PK`.
 
 **Check:** the same first bytes as `weather-s03.zip`.
 
 ---
 
-### 14. The README by another table { #readme-1257 }
+### 14. `note.txt` by the wrong table { #readme-1257 }
 
 <!-- — · 5 min -->
 
 Mojibake: UTF-8 bytes read by the wrong table.
 
-1. Open `README.md`. Status Bar `UTF-8` > **Reopen with Encoding** >
-   **Baltic (Windows 1257)**.
-2. The units in the Columns table.
+1. Open `note.txt`, saved as UTF-8 at the end of section 8. Status Bar
+   `UTF-8` > **Reopen with Encoding** > **Baltic (Windows 1257)**.
 
     ```text
-    | `temp_c` | air temperature | Ā°C |
+    Å ilutÄ—: 6.3 Ā°C
     ```
 
-    `C2` is `Ā` in Windows 1257, `B0` is `°`.
+    Each two-byte letter reads as two: `C5 A0` is `Å` and a space that does
+    not break, `C4 97` is `Ä—`, `C2 B0` is `Ā°`.
 
-3. **Reopen with Encoding** > **UTF-8**. Nothing was saved.
+2. **Reopen with Encoding** > **UTF-8**. Nothing was saved.
 
-**Check:** `°C` again.
+**Check:** `Šilutė: 6.3 °C` again.
 
 ---
 
@@ -559,31 +587,44 @@ Harder questions about the same bytes, with the Data Inspector and Find of the H
     four bytes are the text `date`, a whole number or a float: the bytes
     carry no type, the program that reads them chooses one.
 
-!!! question "Task: where the five days of `-999` start"
-    At which offset of `data/raw/weather.csv` does the line of
-    2019-07-22 00:00, the first `-999` row, start? Use Find in the Hex
-    Editor (`Ctrl+F`, macOS `Cmd+F`, with the text option). Why can this
-    one not be computed from line lengths, as in section 3?
-
-??? success "Answer"
-    Find `,-999,`: the first match is at `0xDA61C`. The line starts 16
-    bytes earlier, after the `0A` of the line before:
+!!! question "Task: where the `-999` rows start"
+    Six hours of the station's log, the evening the temperature sensor
+    failed. Make a new file `weather.csv` from this block as in section 1
+    (a line end after the last row; Windows: `LF`).
 
     ```text
-    000DA600  32 33 2E 36 2C 37 34 2C 33 2E 34 0A 32 30 31 39  23.6,74,3.4.2019
+    time,temp_c,humidity_pct,wind_ms
+    2019-07-21T20:00,27.3,63,4.5
+    2019-07-21T21:00,25.6,65,4.0
+    2019-07-21T22:00,24.6,68,3.5
+    2019-07-21T23:00,23.6,74,3.4
+    2019-07-22T00:00,-999,76,3.2
+    2019-07-22T01:00,-999,81,3.0
     ```
 
-    `0A` at `0xDA60B` ends the hour before the gap (21 July, 23:00,
-    23.6 °C); `32 30 31 39`, `2019`, starts the first marked line.
+    At which offset does the line of 2019-07-22 00:00, the first `-999`
+    row, start? Compute it from the line lengths, then check it with Find
+    in the Hex Editor (`Ctrl+F`, macOS `Cmd+F`, with the text option).
 
-    Offset `0xDA60C` = **894 476**: 894 476 bytes in the 31 153 lines
-    before it. Here the lines differ in length (`-4.4` and `18.2`, a
-    humidity of `93` or `100`), so only the file itself can tell.
+??? success "Answer"
+    The header is 33 bytes (32 characters and `0A`), every row 29: 33 +
+    4 × 29 = **149**, `0x95`.
+
+    ```text
+    00000090  2C 33 2E 34 0A 32 30 31 39 2D 30 37 2D 32 32 54  ,3.4.2019-07-22T
+    ```
+
+    `0A` at `0x94` ends 23:00, the last hour with a temperature, 23.6 °C;
+    `32 30 31 39`, `2019`, starts the first marked line. Find `-999` stops
+    at `0xA6` = 166 = 149 + 17: the time and a comma come first. The file
+    is 33 + 6 × 29 = 207 bytes. In the station's full log the lines run
+    from 28 to 31 bytes (`0.0` or `-10.3`, a humidity of `80` or `100`):
+    there only the file itself can tell where a line starts.
 
 !!! question "Task: UTF-16, two bytes for every letter"
-    Save `results/note.txt` (section 6) with **UTF-16 LE**. Predict its
-    size first. What do its first four bytes say? Save it as **UTF-8**
-    again afterwards.
+    Save `note.txt` (section 6) with **UTF-16 LE**. Predict its size first.
+    What do its first four bytes say? Save it as **UTF-8** again
+    afterwards.
 
 ??? success "Answer"
     ```text
