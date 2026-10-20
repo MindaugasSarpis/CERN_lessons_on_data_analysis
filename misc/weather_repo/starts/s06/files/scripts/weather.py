@@ -13,7 +13,6 @@ class Hour:
         parts = line.split(",")
         self.time = parts[0]
         self.temp = float(parts[1])
-        self.wind = float(parts[3])
 
     def is_missing(self):
         return self.temp == MISSING

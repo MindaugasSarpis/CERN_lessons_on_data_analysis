@@ -208,8 +208,9 @@ questions, with their answers:
 
 ## Paired seminar
 
-[Seminar 3](../seminars/seminar_03.md) types `daily.csv` and opens it as
-bytes in VS Code's Hex Editor and names the 148 bytes of `daily.csv`; the commands of
+[Seminar 3](../seminars/seminar_03.md) types `daily.csv` and six hours of
+`weather.csv`, opens them as bytes in VS Code's Hex Editor, names the 148
+bytes of `daily.csv` and finds the `-999` of the six hours among the bytes; the commands of
 slides 72–79 are typed in Seminar 4.
 
 ## Parked slides

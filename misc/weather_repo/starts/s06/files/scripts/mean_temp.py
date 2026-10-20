@@ -6,4 +6,4 @@ for line in weather.read_lines("data/raw/weather.csv"):
     if not h.is_missing():
         temps.append(h.temp)
 
-print(f"{len(temps)} hours, mean {weather.mean(temps):.2f} °C")
+print(f"{len(temps)} hours, mean {weather.mean(temps):.1f} °C")

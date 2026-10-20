@@ -20,7 +20,9 @@ with `$` is typed in the terminal, a line that starts with `>>>` or `...`
 is typed at Python's prompt, and every other line is what comes back.
 
 **If time runs short:** leave out sections 10 to 12 (tuples and
-dictionaries, the order of cells, IDLE) and 18 (the temperature now).
+dictionaries, the order of cells, IDLE) and 18 (the temperature now);
+after section 9, save the notebook and stop JupyterLab (**File** >
+**Shut Down**).
 Sections 15 to 17, functions, a class and a module, are the point of the
 day; do them, and 19 (the environment file).
 
@@ -64,7 +66,8 @@ An empty folder for today, and one conda environment for the Python and the prog
     environment, which stays as it is.
 
 2. `command not found`, or a Windows terminal without `$` in its prompt?
-   Install the tools now, about 10 minutes; the others go on with step 3.
+   Install the tools now, about 10 minutes; the others make today's folder
+   meanwhile.
    A laptop without an administrator's password pairs with a neighbour
    today.
 
@@ -126,7 +129,7 @@ An empty folder for today, and one conda environment for the Python and the prog
 
     Quit VS Code (**File** > **Exit**, macOS `Cmd+Q`), start it again and
     open **View** > **Terminal**: `(base)` at the start of the prompt, and
-    `conda --version` prints a version as in step 1.
+    `conda --version` prints its version.
 
 3. An empty folder for today, in your home folder. Every file of today is
    typed into it.
@@ -142,10 +145,10 @@ An empty folder for today, and one conda environment for the Python and the prog
    **Open**, then **View** > **Terminal**: the new terminal starts in the
    folder.
 
-5. Make the environment `s05` with Python 3.14 and JupyterLab 4.6. conda
-   downloads them from **conda-forge**, the free collection of packages
-   that Miniforge uses: nothing more to install. It lists what it will
-   download and asks.
+5. Make the environment `s05` with Python 3.14 and JupyterLab 4.6, from
+   **conda-forge**, the free collection of packages that Miniforge uses.
+   conda lists what it will download and asks: press `Enter`. The download
+   takes a few minutes.
 
     ```text
     $ conda create -n s05 python=3.14 jupyterlab=4.6
@@ -155,15 +158,11 @@ An empty folder for today, and one conda environment for the Python and the prog
         - python=3.14
     ...
     Proceed ([y]/n)?
-    ```
-
-6. Press `Enter`. The download takes a few minutes. It ends with:
-
-    ```text
+    ...
     #     $ conda activate s05
     ```
 
-7. Switch it on: the prompt starts with `(s05)`. Each new terminal starts
+6. Switch it on: the prompt starts with `(s05)`. Each new terminal starts
    in `(base)`, so type this line first in each.
 
     ```text
@@ -172,7 +171,7 @@ An empty folder for today, and one conda environment for the Python and the prog
     Python 3.14.8
     ```
 
-8. How many packages came with it. `conda list` prints one line per
+7. How many packages came with it. `conda list` prints one line per
    package after three lines of header.
 
     ```text
@@ -386,13 +385,12 @@ A **list** holds several values in order, in square brackets.
     23.6
     ```
 
-    The mean is 25.275; the tail of digits is the float of section 2,
-    step 4.
+    The mean is 25.275; the tail of digits is a float's binary rounding,
+    as in `0.1 + 0.2`.
 
 3. A list can be changed in place: `append` changes `temps` itself. The
    two hours after midnight have `-999`, the station's mark for an hour
-   without a reading. In the list they pull the mean below any
-   temperature.
+   without a reading. In the list they drag the mean to −316.15.
 
     ```pycon
     >>> temps.append(-999)
@@ -476,7 +474,7 @@ Every value is an **object**: it has a type, and the type decides what it can do
     >>> exit()
     ```
 
-    Everything typed at `>>>` is gone when it ends. Part 2 keeps it.
+    Everything typed at `>>>` is gone when it ends; a notebook keeps it.
 
 **Check:** `NameError` for `valid` in the new interpreter, and the shell's
 prompt (`%` or `$`) after `exit()`.
@@ -516,15 +514,16 @@ Further reading: [The Python Tutorial, chapters 4 and 5](https://docs.python.org
 
 First the log, typed into a file; then JupyterLab, a program in the browser whose server runs in the terminal.
 
-1. Folders for the data and for the notebooks. `-p` makes `data` as well.
+1. Folders for the data, the notebooks and the scripts. `-p` makes `data`
+   as well.
 
     ```text
-    $ mkdir -p data/raw notebooks
+    $ mkdir -p data/raw notebooks scripts
     ```
 
 2. In VS Code's Explorer, right-click `raw` > **New File...**, type
-   `weather.csv`, `Enter`. Type the seven lines, with no empty line after
-   the last, and save (`Ctrl+S`, macOS `Cmd+S`).
+   `weather.csv`, `Enter`. Type the seven lines, no empty line after the
+   last, and save (`Ctrl+S`, macOS `Cmd+S`).
 
     ```text
     time,temp_c,humidity_pct,wind_ms
@@ -537,9 +536,7 @@ First the log, typed into a file; then JupyterLab, a program in the browser whos
     ```
 
     Six hours of the station's log, the evening of 21 July 2019 when its
-    temperature sensor failed: the time, the temperature in °C, the
-    humidity in %, the wind in m/s. An hour without a reading has `-999`.
-    The station's full log has 87 672 such rows, 2016 to 2025.
+    temperature sensor failed: an hour without a reading has `-999`.
 
 3. Start JupyterLab in the project folder, with `(s05)` in the prompt.
 
@@ -553,11 +550,10 @@ First the log, typed into a file; then JupyterLab, a program in the browser whos
     The browser opens JupyterLab. The terminal stays busy while it runs:
     leave it open.
 
-4. On the left, the files of the project. Double-click `notebooks`.
-5. In the **Launcher**, under **Notebook**, click **Python 3
-   (ipykernel)**. A file `Untitled.ipynb` opens.
-6. Right-click its tab > **Rename Notebook...**, type `explore.ipynb`,
-   **Rename**.
+4. Make the notebook. On the left, the files of the project: double-click
+   `notebooks`. In the **Launcher**, under **Notebook**, click **Python 3
+   (ipykernel)**: `Untitled.ipynb` opens. Right-click its tab > **Rename
+   Notebook...**, type `explore.ipynb`, **Rename**.
 
 **Check:** `notebooks/explore.ipynb` in the file list, an empty cell with
 `[ ]:` beside it.
@@ -575,7 +571,7 @@ First the log, typed into a file; then JupyterLab, a program in the browser whos
 A cell is run with `Shift+Enter`; the value of its last line appears under it.
 
 1. Type in the first cell, then `Shift+Enter`. `[1]` beside it counts the
-   runs; the answer appears under it, and a new cell below.
+   runs; the answer appears under the cell, then a new empty cell.
 
     ```python
     2 + 2
@@ -586,7 +582,8 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
 2. Read the file into a list of lines. The notebook runs in
-   `notebooks`, so the path starts with `..`, the folder above.
+   `notebooks`, so the path starts with `..`, the project folder that
+   holds `notebooks`.
 
     ```python
     lines = open("../data/raw/weather.csv").read().splitlines()
@@ -618,7 +615,8 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     ```
 
 4. A note between the cells: click the first cell's left edge, press `B`
-   (a new cell below), `M` (make it Markdown), type, `Shift+Enter`.
+   (a new cell after it), `M` (make it Markdown), `Enter`, type,
+   `Shift+Enter`.
 
     ```text
     # The hourly log of weather.csv
@@ -626,7 +624,7 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
 
     It shows as a heading. Save: `Ctrl+S` (macOS `Cmd+S`).
 
-**Check:** `7` under the cell, a heading above it.
+**Check:** the heading, then the cell with `len(lines)` and `7` under it.
 
 ---
 
@@ -712,8 +710,8 @@ A cell is run with `Shift+Enter`; the value of its last line appears under it.
     (4, 25.275)
     ```
 
-    Section 5 printed 25.275000000000002 for the same four hours: `sum`
-    keeps track of what each addition rounds away, a loop with `+` does
+    At `>>>`, `sum(temps) / len(temps)` gave 25.275000000000002 for the
+    same four hours: `sum` keeps what each addition rounds away, `+` does
     not. With one decimal, both are 25.3.
 
 5. Round only what is printed. An `f` before the quotes puts the value of
@@ -753,14 +751,16 @@ A **tuple** is a fixed group of values, in round brackets. A **dictionary** (`di
     ('2019-07-21T20:00', 27.3)
     ```
 
-2. Hours per day, with the date (`line[:10]`) as key. `hours.get(day,
-   0)` is the count so far, 0 for a new day.
+2. The hours with a temperature, per day, with the date (`line[:10]`) as
+   key. `hours.get(day, 0)` is the count so far, 0 for a new day.
 
     ```python
     hours = {}
     for line in lines[1:]:
         day = line[:10]
-        hours[day] = hours.get(day, 0) + 1
+        temp = float(line.split(",")[1])
+        if temp != -999:
+            hours[day] = hours.get(day, 0) + 1
     ```
 
 3. The whole dictionary, in a cell of its own: each key, a colon, its
@@ -771,22 +771,24 @@ A **tuple** is a fixed group of values, in round brackets. A **dictionary** (`di
     ```
 
     ```text
-    {'2019-07-21': 4, '2019-07-22': 2}
+    {'2019-07-21': 4}
     ```
 
-4. One value by its key.
+    No key for 22 July: neither of its hours has a temperature.
+
+4. One value by its key. `hours["2019-07-22"]` would stop with a
+   `KeyError`; `get` gives the default instead.
 
     ```python
-    hours["2019-07-21"]
+    hours["2019-07-21"], hours.get("2019-07-22", 0)
     ```
 
     ```text
-    4
+    (4, 0)
     ```
 
-    Four hours on 21 July, two after midnight.
-
-**Check:** `{'2019-07-21': 4, '2019-07-22': 2}`.
+**Check:** `{'2019-07-21': 4}`: on 22 July the sensor gave no temperature at
+all.
 
 ---
 
@@ -796,9 +798,9 @@ A **tuple** is a fixed group of values, in round brackets. A **dictionary** (`di
 
 A notebook remembers what ran, not what the page shows: a cell run twice, or out of order, gives another answer.
 
-1. Run only the loop's cell of section 9 again (click it, `Shift+Enter`),
-   then the cell `count, total / count`. Its number beside it is now
-   higher than the others.
+1. Run only the cell that adds each hour to `total` and `count` again
+   (click it, `Shift+Enter`), then the cell `count, total / count`. Its
+   number beside it is now higher than the others.
 
     ```text
     (8, 25.275)
@@ -815,8 +817,8 @@ A notebook remembers what ran, not what the page shows: a cell run twice, or out
     (4, 25.275)
     ```
 
-3. Save (`Ctrl+S`). Stop JupyterLab: **File** > **Shut Down** >
-   **Shut Down**. The terminal's prompt comes back.
+    Save (`Ctrl+S`) and stop JupyterLab, **File** > **Shut Down** >
+    **Shut Down**: the terminal's prompt comes back.
 
 **Check:** after **Run All**, the cells numbered in order from the top and
 `4` again.
@@ -824,7 +826,9 @@ A notebook remembers what ran, not what the page shows: a cell run twice, or out
 !!! question "Task: the mean humidity of each day"
     In a new cell of `explore.ipynb`, the mean humidity of each day (the
     third value of a line), with one decimal. Which day was more humid?
-    Start JupyterLab again with `jupyter lab` and open the notebook.
+    Start JupyterLab again with `jupyter lab`, open the notebook and run
+    its cells first (**Run** > **Run All Cells**): the kernel forgot
+    `lines`.
 
 ??? success "Answer"
     Two dictionaries with the date as key: one for the sums, one for the
@@ -871,20 +875,20 @@ Further reading: [IDLE](https://docs.python.org/3/library/idle.html);
 IDLE comes with every Python: a prompt, an editor and a Run key. It shows what an IDE is.
 
 1. Start it, with `(s05)` in the prompt. A window **IDLE Shell
-   3.14.8** opens: the `>>>` of Part 1, with colours.
+   3.14.8** opens: Python's `>>>` prompt, with colours. Try one line in it.
 
     ```text
     $ python -m idlelib
     ```
-
-2. In the IDLE Shell, try one line.
 
     ```pycon
     >>> 23.6 * 9 / 5 + 32
     74.48
     ```
 
-3. **File** > **New File**. Type three lines.
+2. **File** > **New File**. Type three lines, then **File** > **Save
+   As...**, go to `weather-s05`, then `scripts`, name it `hours.py`,
+   **Save**.
 
     ```python
     temps = [27.3, 25.6, 24.6, 23.6]
@@ -892,10 +896,7 @@ IDLE comes with every Python: a prompt, an editor and a Run key. It shows what a
     print(f"mean {mean:.1f} °C")
     ```
 
-4. A folder for the scripts: in VS Code's terminal, `mkdir scripts`.
-   Then in IDLE **File** > **Save As...**, go to `weather-s05`, then
-   `scripts`, name it `hours.py`, **Save**.
-5. **Run** > **Run Module** (`F5`). The Shell prints a line with
+3. **Run** > **Run Module** (`F5`). The Shell prints a line with
    `RESTART` and the file's path, then the result:
 
     ```text
@@ -903,8 +904,7 @@ IDLE comes with every Python: a prompt, an editor and a Run key. It shows what a
     ```
 
     In a file only `print` shows a value; at `>>>` every value is shown.
-
-6. Close both IDLE windows.
+    Close both IDLE windows.
 
 **Check:** `scripts/hours.py` in VS Code's Explorer, and `mean 25.3 °C`
 printed by `F5`.
@@ -984,7 +984,7 @@ VS Code is the editor of the course; its Python extension runs a file with the e
     ```
 
 2. Run it. An error message, a **traceback**, is read from the bottom:
-   the last line says what, the lines above it where.
+   the last line says what went wrong, the lines before it where.
 
     ```text
     $ python scripts/coldest_hour.py
@@ -1008,8 +1008,8 @@ VS Code is the editor of the course; its Python extension runs a file with the e
 4. A **breakpoint** stops the script at a line. Click left of line 9
    (a red dot), right-click it > **Edit Breakpoint...**, type
    `temp < -900`, `Enter`: it stops only when that is true.
-5. `F5` > **Python Debugger** > **Python File**. The script stops on line
-   9. In **Run and Debug**, **Variables** > **Locals**:
+5. `F5` > **Python Debugger** > **Python File**. The script stops on
+   line 9. In **Run and Debug**, **Variables** > **Locals**:
 
     ```text
     coldest: 23.6
@@ -1069,7 +1069,7 @@ VS Code is the editor of the course; its Python extension runs a file with the e
 
 <!-- 2:30 to 3:25 -->
 
-Three scripts now repeat the same lines. A function writes a step once, a class keeps the values of one hour together, and a module holds both for every script.
+The scripts now repeat the same lines. A function writes a step once, a class keeps the values of one hour together, and a module holds both for every script.
 
 Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions),
 [chapter 9: classes](https://docs.python.org/3/tutorial/classes.html),
@@ -1083,11 +1083,12 @@ Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.pyt
 
 `def` gives a few lines a name; `return` hands their result back to the line that called them.
 
-1. `mean_temp.py`, `coldest_hour.py` and `warmest_hour.py` each read the
-   file, cut a line and take its second value. Try one step as a function
-   at `>>>` first. The block of a `def` ends with an empty line.
+1. `mean_temp.py` and `coldest_hour.py` both read the file, cut each line
+   and take its second value. Try one step as a function at `>>>` first.
+   The block of a `def` ends with an empty line.
 
     ```pycon
+    $ python
     >>> def temp_of(line):
     ...     return float(line.split(",")[1])
     ...
@@ -1121,8 +1122,8 @@ Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.pyt
     >>> exit()
     ```
 
-3. Rewrite `mean_temp.py` with three functions at the top. The text in
-   three quotes under a `def` says what the function does.
+3. Rewrite `mean_temp.py` with three functions at the top, save, run. The
+   text in three quotes under a `def` says what the function does.
 
     ```python
     def read_lines(path):
@@ -1146,8 +1147,6 @@ Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.pyt
     print(f"{len(temps)} hours, mean {mean(temps):.1f} °C")
     ```
 
-4. Run it: the same result as before.
-
     ```text
     $ python scripts/mean_temp.py
     4 hours, mean 25.3 °C
@@ -1164,11 +1163,12 @@ Further reading: [The Python Tutorial, 4.8: defining functions](https://docs.pyt
 A **class** is a type of your own: its objects keep values together, and its methods are functions that belong to them.
 
 1. At `>>>`, a class `Hour` made from one line of the file. `__init__`
-   runs once when `Hour(...)` makes an object; `self` is that object, and
-   `self.time = ...` keeps a value in it. Inside a class at `>>>`, leave no
-   empty line between the two `def`s.
+   runs when `Hour(...)` makes an object; `self` is that object, and
+   `self.time = ...` keeps a value in it. At `>>>`, no empty line between
+   the two `def`s.
 
     ```pycon
+    $ python
     >>> class Hour:
     ...     def __init__(self, line):
     ...         parts = line.split(",")
@@ -1194,9 +1194,9 @@ A **class** is a type of your own: its objects keep values together, and its met
     `is_missing` is a **method**: Python passes the object before the dot
     as `self`, as `line.split(",")` passes `line`.
 
-2. Rewrite `coldest_hour.py` with the class. The coldest hour so far is
-   an `Hour`, so its time stays with its temperature. `not` turns `True`
-   into `False`; `and` is true when both sides are.
+2. Rewrite `coldest_hour.py` with the class, save, run. The coldest hour
+   so far is an `Hour`, so its time stays with its temperature. `not`
+   turns `True` into `False`; `and` is true when both sides are.
 
     ```python
     class Hour:
@@ -1220,8 +1220,6 @@ A **class** is a type of your own: its objects keep values together, and its met
 
     print(f"coldest hour: {coldest.time}, {coldest.temp} °C")
     ```
-
-3. Run it.
 
     ```text
     $ python scripts/coldest_hour.py
@@ -1284,8 +1282,8 @@ A **module** is a `.py` file of definitions; `import` runs it once and gives the
     print(f"{len(temps)} hours, mean {weather.mean(temps):.1f} °C")
     ```
 
-3. Replace `coldest_hour.py` the same way: the class goes, the import
-   comes.
+3. Replace `coldest_hour.py` with a script that imports `weather`: its
+   class goes, `weather.Hour` and `weather.read_lines` come.
 
     ```python
     import weather
@@ -1374,30 +1372,6 @@ themselves, and print 25.3 and 23.6.
 
     One edit in the module, and every script that imports it has the wind.
 
-!!! question "Task: the warmest hour, with the module"
-    Rewrite `warmest_hour.py` of section 14 so that it imports `weather`
-    and defines nothing itself.
-
-??? success "Answer"
-    ```python
-    import weather
-
-    lines = weather.read_lines("data/raw/weather.csv")
-
-    warmest = weather.Hour(lines[0])
-    for line in lines[1:]:
-        h = weather.Hour(line)
-        if h.temp > warmest.temp:
-            warmest = h
-
-    print(f"warmest hour: {warmest.time}, {warmest.temp} °C")
-    ```
-
-    ```text
-    $ python scripts/warmest_hour.py
-    warmest hour: 2019-07-21T20:00, 27.3 °C
-    ```
-
 ---
 
 ### 18. The standard library: the temperature now { #stdlib }
@@ -1407,10 +1381,11 @@ themselves, and print 25.3 and 23.6.
 Python comes with about 200 modules, the **standard library**: no install needed.
 
 1. Two of them at `>>>`. `math.isclose` compares two floats with a
-   tolerance (section 2, step 4); `statistics` has a `mean`, as section 15
-   wrote one.
+   tolerance, so `0.1 + 0.2` is close to `0.3`; `statistics` has a `mean`,
+   like the one in `weather.py`.
 
     ```pycon
+    $ python
     >>> import math
     >>> 0.1 + 0.2 == 0.3
     False
@@ -1532,30 +1507,34 @@ the two results.
 
 <!-- 3:20 · 5 min -->
 
+The four places Python ran today, the lines typed in them, and today's folder.
 
-| Where | Good for | Start |
-|--|--|--|
-| the interpreter | one line, a quick question | `python`, then `exit()` |
-| a notebook | trying step by step, output kept beside the code | `jupyter lab` |
-| an editor (IDLE, VS Code) | a program in a file, the debugger | `python -m idlelib`, `code .` |
-| a script | the same result every time, from one line | `python scripts/mean_temp.py` |
+1. Where to type Python, and what each place is good for.
 
-| To | Type |
-|--|--|
-| switch the environment on | `conda activate s05` |
-| cut a line, convert a part | `line.split(",")`, `float(parts[1])` |
-| repeat, decide | `for line in lines[1:]:`, `if temp == -999:` |
-| count by key | `hours[day] = hours.get(day, 0) + 1` |
-| print with decimals | `f"{mean:.1f}"` |
-| write a step once | `def mean(values):` … `return sum(values) / len(values)` |
-| keep the values of one hour together | `class Hour:`, `h = Hour(line)`, `h.temp`, `h.is_missing()` |
-| use a module | `import weather`, `weather.Hour(line)` |
-| write the environment down | `conda env export --from-history -f environment.yml` |
+    | Where | Good for | Start |
+    |--|--|--|
+    | the interpreter | one line, a quick question | `python`, then `exit()` |
+    | a notebook | trying step by step, output kept beside the code | `jupyter lab` |
+    | an editor (IDLE, VS Code) | a program in a file, the debugger | `python -m idlelib`, `code .` |
+    | a script | the same result every time, from one line | `python scripts/mean_temp.py` |
 
-The files of today: `data/raw/weather.csv`, `notebooks/explore.ipynb`,
-`scripts/hours.py`, the module `weather.py` and the scripts that import it,
-`mean_temp.py`, `coldest_hour.py` (repaired, then rewritten) and
-`mean_wind.py`; `now.py`, `environment.yml`, `README.md`.
+2. The lines of today, by what they do.
+
+    | To | Type |
+    |--|--|
+    | switch the environment on | `conda activate s05` |
+    | cut a line, convert a part | `line.split(",")`, `float(parts[1])` |
+    | repeat, decide | `for line in lines[1:]:`, `if temp == -999:` |
+    | count by key | `hours[day] = hours.get(day, 0) + 1` |
+    | print with decimals | `f"{mean:.1f}"` |
+    | write a step once | `def mean(values):` … `return sum(values) / len(values)` |
+    | keep the values of one hour together | `class Hour:`, `h = Hour(line)`, `h.temp`, `h.is_missing()` |
+    | use a module | `import weather`, `weather.Hour(line)` |
+    | write the environment down | `conda env export --from-history -f environment.yml` |
+
+**Check:** in VS Code's Explorer, `weather-s05` holds `data/raw/weather.csv`,
+`notebooks/explore.ipynb`, `scripts` (the module `weather.py`, the scripts
+that import it, `hours.py`, `now.py`), `environment.yml` and `README.md`.
 
 ---
 
@@ -1569,29 +1548,27 @@ The files of today: `data/raw/weather.csv`, `notebooks/explore.ipynb`,
 
 A **list comprehension** builds a list in one line, with an `if` to filter.
 
-1. In a new cell of `explore.ipynb` (or at the end of a script):
+1. At `>>>`, in the project folder: the file's lines, then two lists in
+   one line each, every temperature and the valid ones.
 
-    ```python
-    temps = [float(line.split(",")[1]) for line in lines[1:]]
-    valid = [t for t in temps if t != -999]
-    len(temps), len(valid), min(valid), max(valid)
-    ```
-
-    ```text
+    ```pycon
+    $ python
+    >>> lines = open("data/raw/weather.csv").read().splitlines()
+    >>> temps = [float(line.split(",")[1]) for line in lines[1:]]
+    >>> valid = [t for t in temps if t != -999]
+    >>> len(temps), len(valid), min(valid), max(valid)
     (6, 4, 23.6, 27.3)
     ```
 
 2. The mean, with five decimals.
 
-    ```python
-    f"{sum(valid) / len(valid):.5f}"
-    ```
-
-    ```text
+    ```pycon
+    >>> f"{sum(valid) / len(valid):.5f}"
     '25.27500'
+    >>> exit()
     ```
 
-**Check:** the same mean as the loop of section 9.
+**Check:** `'25.27500'`, the 25.3 °C of `mean_temp.py` with five decimals.
 
 ---
 
@@ -1656,12 +1633,37 @@ When a file runs as a script, its `__name__` is `"__main__"`; when it is importe
 
 <!-- — · 30 min -->
 
-Four harder tasks for whoever is done early, each solved with what today showed; the answers are folded.
+Five more tasks for whoever is done early, each solved with what today showed; the answers are folded.
 
-!!! question "Advanced task: the longest spell below 25 °C"
-    The most hours in a row below 25 °C, and when that spell began. A loop
+!!! question "Advanced task: the warmest hour, with the module"
+    Rewrite `scripts/warmest_hour.py` (or write it new) so that it prints
+    the warmest hour from `weather.read_lines` and `weather.Hour`, and
+    defines nothing itself.
+
+??? success "Answer"
+    ```python
+    import weather
+
+    lines = weather.read_lines("data/raw/weather.csv")
+
+    warmest = weather.Hour(lines[0])
+    for line in lines[1:]:
+        h = weather.Hour(line)
+        if h.temp > warmest.temp:
+            warmest = h
+
+    print(f"warmest hour: {warmest.time}, {warmest.temp} °C")
+    ```
+
+    ```text
+    $ python scripts/warmest_hour.py
+    warmest hour: 2019-07-21T20:00, 27.3 °C
+    ```
+
+!!! question "Advanced task: the longest spell under 25 °C"
+    The most hours in a row under 25 °C, and when that spell began. A loop
     that remembers the length of the current run. Mind the `-999` hours:
-    they are below 25 too.
+    they are under 25 too.
 
 ??? success "Answer"
     `scripts/longest_cool.py`:
@@ -1669,7 +1671,7 @@ Four harder tasks for whoever is done early, each solved with what today showed;
     ```python
     import weather
 
-    run = 0                 # hours below 25 °C in a row, up to this line
+    run = 0                 # hours under 25 °C in a row, up to this line
     run_start = ""
     longest = 0
     longest_start = ""
@@ -1685,12 +1687,12 @@ Four harder tasks for whoever is done early, each solved with what today showed;
         else:
             run = 0
 
-    print(f"longest below 25 °C: {longest} hours from {longest_start}")
+    print(f"longest under 25 °C: {longest} hours from {longest_start}")
     ```
 
     ```text
     $ python scripts/longest_cool.py
-    longest below 25 °C: 2 hours from 2019-07-21T22:00
+    longest under 25 °C: 2 hours from 2019-07-21T22:00
     ```
 
     Without `not h.is_missing()`, the two marked hours after midnight
@@ -1848,5 +1850,6 @@ Four harder tasks for whoever is done early, each solved with what today showed;
 - 🔧 **Tool-agnostic:** the same Python in the interpreter, a notebook,
   IDLE and VS Code, on macOS and Windows.
 - ⚙️ **Automation:** a loop does for every line of a file what was done
-  by hand for one, the same for six lines as for the station's 87 672,
-  and `now.py` asks a weather service without a browser.
+  by hand for one, the same for these six lines as for the 87 672 of the
+  station's full log, and `now.py` asks a weather service without a
+  browser.

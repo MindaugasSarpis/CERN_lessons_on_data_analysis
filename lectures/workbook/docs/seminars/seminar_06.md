@@ -94,7 +94,8 @@ Every commit records a name and an e-mail. Set them once.
     $ git config --global user.name "Your Name"
     ```
 
-4. Your e-mail; use the one you will give GitHub in section 10.
+4. Your e-mail: the one of your GitHub account, or the one you will sign
+   up with today.
 
     ```text
     $ git config --global user.email "you@example.org"
@@ -106,7 +107,7 @@ Every commit records a name and an e-mail. Set them once.
     $ git config --global pull.rebase false
     ```
 
-6. Check.
+6. List what Git now knows.
 
     ```text
     $ git config --global --list
@@ -125,16 +126,11 @@ Every commit records a name and an e-mail. Set them once.
 
 `git clone` downloads a project with its whole history.
 
-1. Go to the home folder.
+1. From the home folder, clone the project into a new folder,
+   `weather-s06`: the name after the address names the folder.
 
     ```text
     $ cd ~
-    ```
-
-2. Clone it into a new folder, `weather-s06`: the name after the address
-   names the folder.
-
-    ```text
     $ git clone https://github.com/MindaugasSarpis/weather-project.git weather-s06
     Cloning into 'weather-s06'...
     remote: Enumerating objects: 37, done.
@@ -145,9 +141,9 @@ Every commit records a name and an e-mail. Set them once.
     Resolving deltas: 100% (15/15), done.
     ```
 
-3. Open it: **File** > **Open Folder...** > `weather-s06` > **Open**.
+2. Open it: **File** > **Open Folder...** > `weather-s06` > **Open**.
    Answer **Yes, I trust the authors**.
-4. Open the terminal again (**View** > **Terminal**). It starts in the
+3. Open the terminal again (**View** > **Terminal**). It starts in the
    project folder.
 
     ```text
@@ -158,17 +154,16 @@ Every commit records a name and an e-mail. Set them once.
     nothing to commit, working tree clean
     ```
 
-5. The history lives in a hidden folder, `.git`, inside the project.
-   `ls` hides names that start with a dot; `-a` shows them, `-d` names the
-   folder instead of listing what is in it.
+4. The history lives in a hidden folder, `.git`: `ls` leaves out names
+   that start with a dot unless one is asked for by name, and `-d` names
+   the folder instead of listing what is in it.
 
     ```text
     $ ls -d .git
     .git
     ```
 
-    Delete `.git` and the folder is a plain folder again; keep it and every
-    command below works.
+    Without `.git` the folder is a plain folder again.
 
 **Check:** the Explorer shows `data`, `scripts`, `LICENSE`, `README.md`.
 
@@ -204,20 +199,7 @@ A commit is one saved state: id, author, date, message.
     The seven-character code is the commit's **id**. `HEAD -> main` marks
     where you are; `origin/main`, where GitHub was at the clone.
 
-2. The same seven commits as a graph, oldest at the left.
-
-    ```mermaid
-    gitGraph
-      commit id: "3e72263 data"
-      commit id: "2d282c7 scripts"
-      commit id: "96f2dc4 columns"
-      commit id: "9f28b51 rebuild"
-      commit id: "a9c513d 7.16"
-      commit id: "85e435e Tomas" type: HIGHLIGHT
-      commit id: "0f19f54 licence"
-    ```
-
-3. The last two commits in full.
+2. The last two commits in full.
 
     ```text
     $ git log -n 2
@@ -236,7 +218,7 @@ A commit is one saved state: id, author, date, message.
         The valid file leaves 120 hours out. The raw file has every hour.
     ```
 
-4. Only the commits that touched the raw data. `--` separates the
+3. Only the commits that touched the raw data. `--` separates the
    options from the paths.
 
     ```text
@@ -246,7 +228,19 @@ A commit is one saved state: id, author, date, message.
 
     The raw files are as they arrived: nobody changed them since.
 
-5. In Source Control, open the **Graph** section: the same seven commits.
+4. In Source Control, open the **Graph** section: the same seven commits,
+   newest at the top. Drawn the other way, oldest at the left:
+
+    ```mermaid
+    gitGraph
+      commit id: "3e72263 data"
+      commit id: "2d282c7 scripts"
+      commit id: "96f2dc4 columns"
+      commit id: "9f28b51 rebuild"
+      commit id: "a9c513d 7.16"
+      commit id: "85e435e Tomas" type: HIGHLIGHT
+      commit id: "0f19f54 licence"
+    ```
 
 **Check:** seven commits, by Smiltė and Tomas; one commit for `data/raw`.
 
@@ -261,18 +255,19 @@ A commit is one saved state: id, author, date, message.
 
 `git blame` gives, for each line, the commit that wrote it.
 
-1. Find the line with 5.78.
+1. The **Result** in `README.md` says 5.78 °C; without the 120 hours of
+   `-999` the mean is 7.16 °C. Find the line with 5.78.
 
     ```text
     $ grep -n '5.78' README.md
     38:Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
     ```
 
-2. Ask who wrote line 38.
+2. Ask who wrote line 38. `blame` prints one more digit of the id.
 
     ```text
     $ git blame -L 38,38 README.md
-    85e435e (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, …
+    85e435ef (Tomas 2026-10-19 11:45:00 +0300 38) Mean `temp_c`, 2016 to 2025: **5.78 °C**, over all 87 672 hours of
     ```
 
 3. Ask which commits added or removed the text `5.78`.
@@ -329,7 +324,8 @@ A commit is one saved state: id, author, date, message.
     120
     ```
 
-    Each adds −999 to the sum: that pulls the mean from 7.16 down to 5.78.
+    Each adds −999 to the sum:
+    (87 552 × 7.16 − 120 × 999) / 87 672 = 5.78.
 
 **Check:** the mean now reads `data/raw/weather.csv`, with its 120 rows of
 `-999`.
@@ -398,7 +394,7 @@ Undo the change without losing the history, check the number against the script,
 
     Your id and date differ.
 
-2. Look at the history.
+2. Look at the history: Tomas's commit stays, and the new one undoes it.
 
     ```text
     $ git log --oneline -n 3
@@ -406,8 +402,6 @@ Undo the change without losing the history, check the number against the script,
     0f19f54 (origin/main, origin/HEAD) Add a licence
     85e435e Take the mean over all rows of weather.csv
     ```
-
-3. As a graph: Tomas's commit stays, and the new one undoes it.
 
     ```mermaid
     gitGraph
@@ -417,7 +411,7 @@ Undo the change without losing the history, check the number against the script,
       commit id: "32855d4 revert" type: REVERSE
     ```
 
-4. In `README.md` the **Result** says 7.16 °C again. Smiltė's licence of
+3. In `README.md` the **Result** says 7.16 °C again. Smiltė's licence of
    `0f19f54` is still there.
 
 **Check:** 7.16 in the README, eight commits.
@@ -449,7 +443,7 @@ The README's number must come out of the script.
     mean    7.15997
     ```
 
-3. Ask Git.
+3. Ask Git what is new: the two folders the script made.
 
     ```text
     $ git status
@@ -461,6 +455,8 @@ The README's number must come out of the script.
       (use "git add <file>..." to include in what will be committed)
             data/processed/
             results/
+
+    nothing added to commit but untracked files present (use "git add" to track)
     ```
 
 **Check:** `mean 7.15997`, and two untracked folders.
@@ -477,16 +473,15 @@ The README's number must come out of the script.
 
 Files that programs make again at any time stay out of the history.
 
-1. **File** > **New File...**, type `.gitignore`, press `Enter`. Write four
-   lines and save. The first two folders come from `rebuild.sh`;
-   `__pycache__` from Python's `import`, `.ipynb_checkpoints` from
-   JupyterLab; the files of section 9 make both.
+1. **File** > **New File...**, type `.gitignore`, press `Enter`. Write three
+   lines and save: the two folders that `rebuild.sh` makes, and
+   `__pycache__`, which Python makes when a script imports a module such as
+   the `weather.py` of Seminar 5.
 
     ```text
     data/processed/
     results/
     __pycache__/
-    .ipynb_checkpoints/
     ```
 
 2. The two folders of the rebuild are gone from Source Control;
@@ -501,9 +496,9 @@ Files that programs make again at any time stay out of the history.
 
     ```text
     $ git add .gitignore
-    $ git commit -m "Leave out the files the rebuild script makes"
-    [main 0f56dc6] Leave out the files the rebuild script makes
-     1 file changed, 4 insertions(+)
+    $ git commit -m "Leave out the files that scripts make"
+    [main bdde04f] Leave out the files that scripts make
+     1 file changed, 3 insertions(+)
      create mode 100644 .gitignore
     ```
 
@@ -517,21 +512,11 @@ Files that programs make again at any time stay out of the history.
 
 Copy, look at the change, stage, commit: the loop of every day.
 
-```mermaid
-flowchart LR
-  W["working folder<br/>your files"] -- "git add" --> S["staging area<br/>the next commit"]
-  S -- "git commit" --> R["repository<br/>the history"]
-  R -- "git push" --> G["GitHub"]
-  G -- "git pull" --> W
-  R -- "git restore" --> W
-```
-
-1. The work of Seminar 5 comes as one zip: on the
+1. Download `weather-s06.zip` from the
    [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**, click `weather-s06.zip`. It holds a folder
-   `weather-s06` with the module, scripts, notebook and environment file
-   of Seminar 5. The clone has the same name, so unzipping it into the
-   home folder puts the files into the clone.
+   under **Assets**. It holds a folder `weather-s06` with the files of
+   Seminar 5; unzipped into the home folder, they go into the clone, which
+   has the same name.
 
     ```text
     $ unzip ~/Downloads/weather-s06.zip -d ~
@@ -546,11 +531,23 @@ flowchart LR
       inflating: /Users/smilte/weather-s06/scripts/weather.py
     ```
 
-    Safari unpacks a zip by itself: then the folder `weather-s06` is in
-    `Downloads`, and `cp -R ~/Downloads/weather-s06/ ~/weather-s06/` copies
-    its files into the clone.
+    Safari unpacks a zip by itself: then
+    `cp -R ~/Downloads/weather-s06/. ~/weather-s06/` copies its files into
+    the clone.
 
-2. What changed: seven new files, shown as untracked (`??`).
+2. Run two of its scripts, written in Seminar 5 for six hours, on the
+   clone's full log. To one decimal they agree with `results/temp_c.txt`
+   (`mean 7.15997`, `min -16.3`).
+
+    ```text
+    $ python scripts/mean_temp.py
+    87552 hours, mean 7.2 °C
+    $ python scripts/coldest_hour.py
+    coldest hour: 2025-01-07T05:00, -16.3 °C
+    ```
+
+3. What changed: seven new files, shown as untracked (`??`). The run made
+   `scripts/__pycache__`; `.gitignore` keeps it out of the list.
 
     ```text
     $ git status --short
@@ -563,30 +560,47 @@ flowchart LR
     ?? scripts/weather.py
     ```
 
-3. In `README.md`, under the **Result** paragraph, add two lines and save.
+4. In `README.md`, under the **Result** paragraph, write the two results
+   as two lines and save.
 
     ```text
-    Checked in Python, `scripts/mean_temp.py`: 7.16 °C over 87 552 hours.
+    Checked in Python, `scripts/mean_temp.py`: 7.2 °C over 87 552 hours.
     The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
     ```
 
-4. How the README changed. Also: click `README.md` in Source Control.
+5. How the README changed. Also: click `README.md` in Source Control.
 
     ```text
     $ git diff
+    diff --git a/README.md b/README.md
+    index a74c2dc..2e5c394 100644
+    --- a/README.md
+    +++ b/README.md
     @@ -38,6 +38,9 @@ the temperature sensor was down.
      Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
      marked `-999` are left out. The script writes it to `results/temp_c.txt`.
 
-    +Checked in Python, `scripts/mean_temp.py`: 7.16 °C over 87 552 hours.
+    +Checked in Python, `scripts/mean_temp.py`: 7.2 °C over 87 552 hours.
     +The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
     +
      ## How to rebuild
+
+     In the project folder, in zsh on macOS or Git Bash on Windows, with Python
     ```
 
     `git diff` shows changed files only; new files have no old version yet.
 
-5. Stage all of it, look again.
+6. Stage all of it, look again. `git add` puts the files in the staging
+   area, the content of the next commit.
+
+    ```mermaid
+    flowchart LR
+      W["working folder<br/>your files"] -- "git add" --> S["staging area<br/>the next commit"]
+      S -- "git commit" --> R["repository<br/>the history"]
+      R -- "git push" --> G["GitHub"]
+      G -- "git pull" --> W
+      R -- "git restore" --> W
+    ```
 
     ```text
     $ git add scripts notebooks environment.yml README.md
@@ -601,12 +615,12 @@ flowchart LR
     A  scripts/weather.py
     ```
 
-6. Commit.
+7. Commit.
 
     ```text
     $ git commit -m "Add the Python work of Seminar 5"
-    [main b982e59] Add the Python work of Seminar 5
-     8 files changed, 468 insertions(+)
+    [main 335cde1] Add the Python work of Seminar 5
+     8 files changed, 377 insertions(+)
      create mode 100644 environment.yml
      create mode 100644 notebooks/explore.ipynb
      create mode 100644 scripts/coldest_hour.py
@@ -616,7 +630,7 @@ flowchart LR
      create mode 100644 scripts/weather.py
     ```
 
-    Your id and numbers differ.
+    Your id differs.
 
 **Check:** `git log --oneline` shows ten commits, three of them yours.
 
@@ -653,10 +667,18 @@ A **remote** is another copy of the repository, here on GitHub: `git push` sends
 
 GitHub keeps a copy of the repository online.
 
-1. Open [github.com](https://github.com) > **Sign up**.
-2. E-mail, password, a username. The username is in the address of every
-   repository you make.
-3. Type the code that GitHub e-mails you.
+1. Ask Git which e-mail your commits carry. Sign up with that one, and
+   GitHub shows those commits as yours.
+
+    ```text
+    $ git config user.email
+    you@example.org
+    ```
+
+2. Open [github.com](https://github.com) > **Sign up**: that e-mail, a
+   password and a username, then the code that GitHub e-mails you. The
+   username is in the address of every repository you make. With an
+   account already: **Sign in**.
 
 **Check:** you are signed in on github.com.
 
@@ -682,11 +704,11 @@ The clone still points at the course repository, which you cannot write to.
     $ git remote remove origin
     ```
 
-3. In Source Control, click **Publish Branch** > **Publish to GitHub private
-   repository**. VS Code proposes the folder's name, `weather-s06`; keep
-   it, press `Enter`.
-4. VS Code asks to sign in: **Allow**, then **Continue** and **Authorize**
-   in the browser, then back to VS Code.
+3. In Source Control, click **Publish Branch**. VS Code asks to sign in
+   to GitHub: **Allow**, then **Continue** and **Authorize** in the
+   browser, then back to VS Code.
+4. VS Code proposes the folder's name, `weather-s06`: keep it, click
+   **Publish to GitHub private repository**. VS Code sends the ten commits.
 5. Where the clone points now.
 
     ```text
@@ -697,6 +719,7 @@ The clone still points at the course repository, which you cannot write to.
 
 6. Open `https://github.com/your-username/weather-s06`: the files, and
    **10 Commits**.
+
 **Check:** your repository on GitHub, marked **Private**.
 
 !!! question "Task: one change each way"
@@ -713,8 +736,8 @@ The clone still points at the course repository, which you cannot write to.
         ```text
         $ git pull
         From https://github.com/your-username/weather-s06
-           b982e59..631a247  main       -> origin/main
-        Updating b982e59..631a247
+           335cde1..1bc67f8  main       -> origin/main
+        Updating 335cde1..1bc67f8
         Fast-forward
          README.md | 1 +
          1 file changed, 1 insertion(+)
@@ -725,9 +748,11 @@ The clone still points at the course repository, which you cannot write to.
         ```text
         $ git add README.md
         $ git commit -m "Add a line"
+        [main 415f809] Add a line
+         1 file changed, 1 insertion(+)
         $ git push
         To https://github.com/your-username/weather-s06.git
-           631a247..066dcb5  main -> main
+           1bc67f8..415f809  main -> main
         ```
 
 ---
@@ -736,17 +761,30 @@ The clone still points at the course repository, which you cannot write to.
 
 <!-- 1:55 · 5 min -->
 
+Who changed the mean, asked of the history once more; then today's commands.
 
-| To | Type |
-|--|--|
-| copy a project with its history | `git clone URL` |
-| see the history | `git log --oneline` |
-| find who wrote a line | `git blame -L 38,38 FILE` |
-| see a commit | `git show ID` |
-| undo a commit, keep the history | `git revert ID` |
-| undo an edit not yet committed | `git restore FILE` |
-| commit | `git status`, `git diff`, `git add FILE`, `git commit -m "…"` |
-| sync with GitHub | `git push`, `git pull` |
+1. Ask which commits added or removed the text `5.78`: Tomas's added it,
+   your revert took it out. The first id is your revert's, so yours differs.
+
+    ```text
+    $ git log -S "5.78" --oneline
+    32855d4 Revert "Take the mean over all rows of weather.csv"
+    85e435e Take the mean over all rows of weather.csv
+    ```
+
+2. The room names the command for each row, then reads the right column.
+
+    | To | Type |
+    |--|--|
+    | copy a project with its history | `git clone URL` |
+    | see the history | `git log --oneline` |
+    | find who wrote a line | `git blame -L 38,38 FILE` |
+    | find the commits that added or removed a text | `git log -S "TEXT" --oneline` |
+    | see a commit | `git show ID` |
+    | undo a commit, keep the history | `git revert ID` |
+    | undo an edit not yet committed | `git restore FILE` |
+    | commit | `git status`, `git diff`, `git add FILE`, `git commit -m "…"` |
+    | sync with GitHub | `git push`, `git pull` |
 
 ---
 
@@ -758,16 +796,17 @@ The clone still points at the course repository, which you cannot write to.
 
 <!-- — · 10 min -->
 
-A branch is a second line of commits; merge brings it back. Ids on sections 13 to 15 are from one run; yours differ.
+A branch is a second line of commits; merge brings it back. Your ids differ.
 
 1. Make a branch and go to it.
 
     ```text
     $ git switch -c fahrenheit
+    Switched to a new branch 'fahrenheit'
     ```
 
 2. In `README.md`, under the line that ends with `results/temp_c.txt`,
-   add a line and save.
+   add a line and save: 7.16 × 9 / 5 + 32 = 44.89.
 
     ```text
     In Fahrenheit: 44.89 °F.
@@ -777,19 +816,24 @@ A branch is a second line of commits; merge brings it back. Ids on sections 13 t
 
     ```text
     $ git commit -am "Give the mean in Fahrenheit"
+    [fahrenheit 917aa83] Give the mean in Fahrenheit
+     1 file changed, 1 insertion(+)
     ```
 
 4. Back to `main`: the line is gone from `README.md`.
 
     ```text
     $ git switch main
+    Switched to branch 'main'
+    Your branch is up to date with 'origin/main'.
     ```
 
-5. Merge.
+5. Merge `fahrenheit` into `main`. `main` has no commit of its own since
+   the branch began, so Git only moves it forward: a fast-forward.
 
     ```text
     $ git merge fahrenheit
-    Updating 066dcb5..8f1c7d7
+    Updating 415f809..917aa83
     Fast-forward
      README.md | 1 +
      1 file changed, 1 insertion(+)
@@ -799,7 +843,10 @@ A branch is a second line of commits; merge brings it back. Ids on sections 13 t
 
     ```text
     $ git branch -d fahrenheit
+    Deleted branch fahrenheit (was 917aa83).
     $ git push
+    To https://github.com/your-username/weather-s06.git
+       415f809..917aa83  main -> main
     ```
 
 **Check:** the Fahrenheit line in `README.md` on `main`.
@@ -812,41 +859,48 @@ A branch is a second line of commits; merge brings it back. Ids on sections 13 t
 
 Two branches change the same line; Git asks which to keep.
 
-```mermaid
-gitGraph
-  commit id: "Fahrenheit"
-  branch wording
-  commit id: "Spell out the unit"
-  checkout main
-  commit id: "Round to 44.9"
-  merge wording id: "merge"
-```
-
-1. A branch that rewrites the line.
+1. A branch, `wording`, that rewrites the Fahrenheit line.
 
     ```text
     $ git switch -c wording
+    Switched to a new branch 'wording'
     ```
 
     Change the line to `In degrees Fahrenheit: 44.89.`, save.
 
     ```text
     $ git commit -am "Spell out the unit"
+    [wording 925a396] Spell out the unit
+     1 file changed, 1 insertion(+), 1 deletion(-)
     ```
 
-2. On `main`, change the same line differently.
+2. On `main`, change the Fahrenheit line differently.
 
     ```text
     $ git switch main
+    Switched to branch 'main'
+    Your branch is up to date with 'origin/main'.
     ```
 
     Change the line to `In Fahrenheit: 44.9 °F.`, save.
 
     ```text
     $ git commit -am "Round the Fahrenheit mean to one decimal"
+    [main 4f7a803] Round the Fahrenheit mean to one decimal
+     1 file changed, 1 insertion(+), 1 deletion(-)
     ```
 
-3. Merge.
+3. Merge `wording` into `main`. Both changed the same line, so Git stops.
+
+    ```mermaid
+    gitGraph
+      commit id: "Fahrenheit"
+      branch wording
+      commit id: "Spell out the unit"
+      checkout main
+      commit id: "Round to 44.9"
+      merge wording id: "merge"
+    ```
 
     ```text
     $ git merge wording
@@ -865,28 +919,29 @@ gitGraph
     >>>>>>> wording
     ```
 
-    Above the block VS Code offers **Accept Current Change** (`main`),
-    **Accept Incoming Change** (`wording`), **Accept Both Changes**. Click
-    one, save.
+    Over the `<<<<<<< HEAD` line VS Code offers **Accept Current Change**
+    (`main`), **Accept Incoming Change** (`wording`), **Accept Both
+    Changes**. Click one, save.
 
 5. Mark it resolved, commit the merge.
 
     ```text
     $ git add README.md
     $ git commit --no-edit
+    [main ca806f8] Merge branch 'wording'
     ```
 
-6. The history has two lines that join.
+6. The history has two lines that join. Your ids differ.
 
     ```text
     $ git log --oneline --graph -n 5
-    *   e5e6111 (HEAD -> main) Merge branch 'wording'
+    *   ca806f8 (HEAD -> main) Merge branch 'wording'
     |\
-    | * ece21fe (wording) Spell out the unit
-    * | c798c1e Round the Fahrenheit mean to one decimal
+    | * 925a396 (wording) Spell out the unit
+    * | 4f7a803 Round the Fahrenheit mean to one decimal
     |/
-    * 8f1c7d7 (origin/main, origin/HEAD) Give the mean in Fahrenheit
-    * 066dcb5 Add a line
+    * 917aa83 (origin/main) Give the mean in Fahrenheit
+    * 415f809 Add a line
     ```
 
 **Check:** no `<<<<<<<` left in `README.md`, `git status` clean.
@@ -914,6 +969,8 @@ A tag is a name for one commit that never moves: "the state that gave 7.16".
     ```
 
 **Check:** on GitHub, the branch menu has a **Tags** tab with `v1.0`.
+
+---
 
 ### 16. Advanced tasks { #advanced }
 

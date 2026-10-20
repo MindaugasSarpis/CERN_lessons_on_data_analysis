@@ -177,7 +177,8 @@ questions, with their answers:
 [Seminar 5](../seminars/seminar_05.md) follows and shows live what the
 lecture explained: Python at the `>>>` prompt, a conda environment with
 JupyterLab and a first notebook, an editor (IDLE, then VS Code), the script
-`scripts/mean_temp.py` that prints 7.16, the same steps as functions, a
+`scripts/mean_temp.py` that prints 25.3 for six typed hours of the log, the
+same steps as functions, a
 class `Hour`, and a module `scripts/weather.py` that `mean_temp.py` and
 `coldest_hour.py` import, the standard library (the Open-Meteo answer fetched with
 `urllib` and `json`), and the environment written down in

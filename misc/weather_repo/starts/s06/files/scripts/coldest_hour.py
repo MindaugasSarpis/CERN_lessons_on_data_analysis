@@ -1,4 +1,3 @@
-# The coldest hour in weather.csv: when it was, and how cold.
 import weather
 
 lines = weather.read_lines("data/raw/weather.csv")

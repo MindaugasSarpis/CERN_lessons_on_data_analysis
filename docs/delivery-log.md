@@ -708,8 +708,32 @@ environment with JupyterLab, scripts and a module, with `weather.csv` and
   Lecture 3 and 4 pages say so; `misc/weather_repo/starts/s01`, `s03`,
   `s04` are gone (their zips stay on the release, unused).
 
+- Then: "The step by step seminars are a good idea. Make sure they are
+  significant and coherent." Seminars 1, 3, 4, 5 and 6 were read screen by
+  screen as the ▶ Steps view shows them: one-key steps joined the step
+  they finish, no screen points "above" or "below", loose paragraphs went
+  into steps, and every section makes something the session uses. The
+  thread of 1 to 5 is the six hours and their `-999`: S1 documents them,
+  S3 finds them among the bytes (a new section), S4 filters them with
+  `grep` (its pattern section now asks whether every other line is a
+  reading; `find` went to Optional, `set -e` came into the main path), S5
+  skips them in code. Bugs found on the way: S1's key table sent Mac users
+  to `Cmd+H` (hides VS Code), S3 opened `note.txt` before saving it, S5's
+  `scripts` folder was made only in the IDLE section and JupyterLab stayed
+  in command mode, S6's outputs missed lines. S1's folder is `weather-s01`,
+  like the others. `starts/s06` now holds Seminar 5's final files, so the
+  S6 commit is 377 insertions; the zip is rebuilt locally only.
+
 **Open**
 
+- **Upload the new `weather-s06.zip`** to the release `seminar-files`
+  before 27 October (`gh release upload seminar-files
+  misc/weather_repo/release/weather-s06.zip --clobber -R
+  MindaugasSarpis/weather-project`); until then the room's unzip gives the
+  old scripts and 468 insertions.
+- Seminar 5's scripts print one decimal (25.3: with two, the loop gives
+  25.27 and `sum()` 25.28); on the full log in Seminar 6 that prints 7.2
+  next to the README's 7.16.
 - Lecture 5 needs a story: why Python, not Excel; writing a class is too
   steep for the first Python lecture.
 - The reworked seminars were run on Linux only: VS Code's Find counts,
