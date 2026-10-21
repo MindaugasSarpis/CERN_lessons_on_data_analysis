@@ -689,7 +689,8 @@ environment with JupyterLab, scripts and a module, with `weather.csv` and
 
 - Then: "Classes - way too steep"; the thread for the lecture: "Why we
   need python, not excel."; and "Make sure to rework all the seminars up
-  until now to have no prerequisite".
+  until now to have no prerequisite". Later: "what's with the first 5
+  slides? I don't need them" (the deck was not named).
 
 **Changed in response** (20 October)
 
@@ -726,17 +727,64 @@ environment with JupyterLab, scripts and a module, with `weather.csv` and
 
 **Open**
 
-- **Upload the new `weather-s06.zip`** to the release `seminar-files`
+- **Upload the new `weather-s06.zip`** (done 21 Oct) to the release `seminar-files`
   before 27 October (`gh release upload seminar-files
   misc/weather_repo/release/weather-s06.zip --clobber -R
   MindaugasSarpis/weather-project`); until then the room's unzip gives the
   old scripts and 468 insertions.
 - Seminar 5's scripts print one decimal (25.3: with two, the loop gives
   25.27 and `sum()` 25.28); on the full log in Seminar 6 that prints 7.2
-  next to the README's 7.16.
+  next to the README's 7.16. (21 Oct: Seminar 6 says so where it runs
+  them, "To one decimal they agree with `results/temp_c.txt`"; closed.)
 - Lecture 5 needs a story: why Python, not Excel; writing a class is too
   steep for the first Python lecture.
 - The reworked seminars were run on Linux only: VS Code's Find counts,
   BSD `awk`/`wc`/`uniq` padding on macOS, Git Bash, the Finder and
   Explorer zip menus (a Finder zip may add `__MACOSX`) are not checked.
 - Seminars 6 to 16 still start from a zip.
+
+## 2026-10-21 · Lecture 6 and Seminar 6, released before their session
+
+**Planned:** Lecture 6, Version Control with Git (27 Oct, estimate ~135
+min), and Seminar 6 (~120 min), released six days early at the lecturer's
+word: "Release L6 and S6, see if they need any improvements".
+
+**Changed before release**
+
+- The notes on Lecture 5 (dry, little story, "compare with proprietary
+  tools") applied to the opening of Lecture 6. The Learning Objectives
+  slide is gone: the deck opens on the two copies of the export, as
+  Lectures 4 and 5 open on their problem. The slide "What a version
+  control system records" became two: "What Drive, Dropbox and Word
+  Keep", a table of Google Drive and Dropbox, Track Changes in Word and
+  Git (what has versions, for how long, who and when, why, two editors on
+  one file, which files), and "Where Git Comes From": the Linux kernel
+  kept its history in the proprietary BitKeeper from 2002, lost the free
+  version in April 2005, and Linus Torvalds started Git on 3 April; the
+  first commit of Git, `e83c516` of 7 April 2005, read with `git log
+  --reverse` in a clone of Git. Sources: Google Drive help (a version is
+  deleted after 30 days or 100 newer versions unless kept forever),
+  Dropbox help (30 days on Basic, Plus and Family, 180 or 365 on the
+  business plans), Wikipedia on Git and BitKeeper, the git/git
+  repository (82 542 commits on 19 Oct 2026). The deck keeps 77 slides,
+  the numbers from slide 8 on are unchanged, the estimate stays 135 min.
+- Seminar 6 replayed from the page on Linux, a local bare repository
+  standing in for GitHub: every output of the main path matches (the
+  clone's 37 objects, the seven ids, 5.78 and 7.16, the 377 insertions,
+  ten commits). Fixed on the way: the `git bisect` lines stand under
+  `start`, which prints them; pull and push blocks mark their progress
+  lines with `...`, and the page says what `...` means; the section 2
+  Check names `.gitattributes`; "stop after section 12" (11 dropped the
+  wrap-up).
+- `pnpm release 6`: Lectures 1 to 6 live. `weather-s06.zip` (Seminar 5's
+  final scripts, 3 456 bytes) uploaded to the release `seminar-files`; the
+  public download has the local checksum `28df9347…`.
+
+**Open**
+
+- The model, slides 8 to 20, is thirteen slides of Git's objects before
+  the first commit, down to the bytes of a blob header. After "Classes -
+  way too steep" it may be steep for this room too; nothing was cut (the
+  lecture page says each slide needs the one before).
+- "what's with the first 5 slides? I don't need them" (20 Oct): which
+  deck is meant is not known; only Lecture 6's objectives slide went.

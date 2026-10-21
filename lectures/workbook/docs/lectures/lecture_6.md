@@ -17,8 +17,11 @@ it back.
 
 1. **Two copies of the export** — two copies of `daily_export.csv` with 180
    bytes each and two checksums; `git diff --no-index` finds line 2, `6,3`
-   against `6,4`; who, when and why stays open. Copies named `final_v2`,
-   and what a version control system records.
+   against `6,4`; who, when and why stays open. Copies named `final_v2`;
+   what Google Drive, Dropbox and Track Changes in Word keep, set against
+   Git; where Git comes from: the Linux kernel lost its proprietary tool,
+   BitKeeper, in April 2005, and Git's own first commit, of 7 April, still
+   says who, when and why.
 2. **The model** — what has to be kept; a name computed from the content
    with `git hash-object`, the same on every laptop, and another id for
    `hello` with a Windows line ending (`0d 0a`); the header `blob <size>` and a zero byte; the id of
@@ -59,7 +62,7 @@ time. To jump, type the slide number and press Enter.
 
 | Slides | Part |
 |--|--|
-| 1–7 | Two copies of the export; what version control records |
+| 1–7 | Two copies of the export; Drive, Dropbox and Word against Git; where Git comes from |
 | 8–20 | The model: blob, tree, commit, graph, branch, three areas |
 | 22, 24–26, 28 | Settings, `git init`, `git status`, the first commit, the message |
 | 30, 32–34 | Which files go in, `.gitignore`, `.gitattributes`, the rest |
@@ -78,7 +81,7 @@ time. To jump, type the slide number and press Enter.
 | Resolve it, typed; ahead and behind | 58, 59 |
 | Common errors; the table of steps (on the projector in the seminar) | 60, 61 |
 
-- **Do not cut slides 62–66.** They answer the question of slides 4–5 from
+- **Do not cut slides 62–66.** They answer the question of slides 3–4 from
   the history, with only commands the room has seen.
 - **Do not cut slides 9–20** (the model). Each needs the one before it, and
   slides 31, 42, 44, 50 and 58 argue from it.

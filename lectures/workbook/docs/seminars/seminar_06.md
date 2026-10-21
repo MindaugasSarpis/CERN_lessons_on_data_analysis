@@ -12,11 +12,11 @@ pushes it to their own GitHub repository.
 
 Everything is typed in the terminal of VS Code (zsh on macOS, Git Bash on
 Windows; the lines are the same in both). In the blocks, a line that starts
-with `$` is typed, and every other line is what comes back. The **Source
-Control** view (`Ctrl+Shift+G`, macOS `Cmd+Shift+G`) stays open and shows
+with `$` is typed, every other line is what comes back, and `...` stands
+for lines left out. The **Source Control** view (`Ctrl+Shift+G`, macOS `Cmd+Shift+G`) stays open and shows
 each change.
 
-**If time runs short:** stop after section 11; sections 13 to 16 are optional.
+**If time runs short:** stop after section 12; sections 13 to 16 are optional.
 
 ??? info "Before the session"
     - **Room:** Git and Miniforge on every laptop (installed in Seminar 4;
@@ -165,7 +165,7 @@ Every commit records a name and an e-mail. Set them once.
 
     Without `.git` the folder is a plain folder again.
 
-**Check:** the Explorer shows `data`, `scripts`, `LICENSE`, `README.md`.
+**Check:** the Explorer shows `data`, `scripts`, `.gitattributes`, `LICENSE`, `README.md`.
 
 ---
 
@@ -735,6 +735,7 @@ The clone still points at the course repository, which you cannot write to.
 
         ```text
         $ git pull
+        ...
         From https://github.com/your-username/weather-s06
            335cde1..1bc67f8  main       -> origin/main
         Updating 335cde1..1bc67f8
@@ -751,6 +752,7 @@ The clone still points at the course repository, which you cannot write to.
         [main 415f809] Add a line
          1 file changed, 1 insertion(+)
         $ git push
+        ...
         To https://github.com/your-username/weather-s06.git
            1bc67f8..415f809  main -> main
         ```
@@ -845,6 +847,7 @@ A branch is a second line of commits; merge brings it back. Your ids differ.
     $ git branch -d fahrenheit
     Deleted branch fahrenheit (was 917aa83).
     $ git push
+    ...
     To https://github.com/your-username/weather-s06.git
        415f809..917aa83  main -> main
     ```
@@ -964,6 +967,7 @@ A tag is a name for one commit that never moves: "the state that gave 7.16".
 
     ```text
     $ git push origin v1.0
+    ...
     To https://github.com/your-username/weather-s06.git
      * [new tag]         v1.0 -> v1.0
     ```
@@ -990,13 +994,16 @@ Harder questions about the same history, for a room that is done early. Each ans
 
     ```text
     $ git bisect start 0f19f54 3e72263
-    $ git bisect run sh -c '! grep -q "5.78" README.md'
     Bisecting: 2 revisions left to test after this (roughly 2 steps)
     [9f28b51be4d356315e48263d9037af025ee83553] Add the rebuild script
+    $ git bisect run sh -c '! grep -q "5.78" README.md'
     ...
     85e435ef56fe4308debf88b5b2d546e4000bbce6 is the first bad commit
     ...
     $ git bisect reset
+    ...
+    Switched to branch 'main'
+    ...
     ```
 
     Three tests for six commits; a thousand commits would take ten. With a

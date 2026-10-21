@@ -27,56 +27,6 @@ layout: quote
 hideInToc: true
 ---
 
-# Learning **Objectives**
-
-<div class="stack-tight mt-sm">
-
-<div class="card card-primary card-glass pad-compact">
-
-🧱 Say what a **commit** is: a snapshot, a parent, and an id computed from the content
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-✍️ Record changes as commits, in the **Source Control** view of VS Code and typed
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-📦 Decide which files of a data project go into the repository, and write a `.gitignore`
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-🕰️ Read the **history** of a project and undo a change at each stage
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-☁️ Keep a copy on a **remote** and move commits both ways
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-🌿 Work on a **branch**, **merge** it, and resolve a conflict
-
-</div>
-
-</div>
-
-<!--
-(~1 min)
--->
-
----
-hideInToc: true
----
-
 # Two Copies of the **Export**
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -203,21 +153,62 @@ hideInToc: true
 hideInToc: true
 ---
 
-<div class="card card-info card-glass pad-tight">
+# What Drive, Dropbox and Word **Keep**
 
-## 🔍 **What a version control system records**
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
-- Each state of the files, and what changed since the state before
-- Who made the change, when, and a note that says why: the third row of the table
-- Any earlier state can be brought back, and any two states compared line by line
-- **Git** is the version control system of nearly all research software. It is free, and it works on a folder of the laptop without any server
+| | Google Drive, Dropbox | Track Changes in Word | Git |
+| --- | --- | --- | --- |
+| Versions of | Each file on its own | One document | The whole project at once |
+| Kept for | Drive 30 days, Dropbox 30 to 365 | Until a change is accepted | For good |
+| Who and when | Yes | Yes | Yes |
+| Why | Nothing | A comment, if someone writes one | A message with every commit |
+| Two editors, one file | Dropbox makes a *conflicted copy* | Both edits marked in one file | A merge, line by line |
+| Which files | Any | Word documents | Any; line by line for text |
 
 </div>
 
-<img src="/figures/play-changes.svg" style="display:block;margin:0.8rem auto 0;max-height:210px;">
+<!--
+**Ask:** who has brought back an old version from Drive or Dropbox? How far back could it go?
+**Say:** each tool on the left keeps a history of something. Git keeps one history of the whole project, with a reason for every step, and that column is what this lecture builds.
+**If asked:** Drive deletes a version of an uploaded file after 30 days or 100 newer versions, unless it is marked **Keep forever**; Dropbox keeps 30 days on Basic and Plus, 180 or 365 on the business plans. Google Docs has its own history, per document.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Where Git Comes **From**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+## 📅 **BitKeeper, 2002 to 2005**
+
+- 2002: the Linux kernel keeps its history in BitKeeper, a proprietary tool, free of charge for the kernel's developers
+- April 2005: the company withdraws the free version
+- 3 April: Linus Torvalds starts Git. 16 June: kernel 2.6.12 is released from Git
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash: the first commit, in a clone of Git**
+
+```text
+$ git log --reverse | head -5
+commit e83c5163316f89bfbde7d9ab23ca2e25604af290
+Author: Linus Torvalds <torvalds@ppc970.osdl.org>
+Date:   Thu Apr 7 15:13:13 2005 -0700
+
+    Initial revision of "git", the information manager from hell
+```
+
+</div>
 
 <!--
-**If asked:** Git was written in 2005 for the development of the Linux kernel.
+**Say:** the kernel's history sat in a tool its developers did not own. Git is free, and every copy holds the whole history: 21 years on, its first commit still says who, when and why, under the same id in every copy.
+**If asked:** BitKeeper was free on one condition, no work on a competing tool; it became open source in 2016. Git's own history had 82 542 commits on 19 October 2026.
 (~2 min)
 -->
 
@@ -2415,7 +2406,7 @@ hideInToc: true
 The question of the two copies, answered from the history.
 
 <!--
-**Say:** back to the first slide: one line of the raw export differs. Who changed it, when, and why?
+**Say:** back to slide 3: one line of the raw export differs. Who changed it, when, and why?
 (~1 min)
 -->
 
@@ -2514,8 +2505,8 @@ index 0799b86..a2093bf 100644
 </div>
 
 <!--
-**Do:** point at the third row of the table on the second slide, then at Author, Date and the message here.
-**Say:** `0799b86` and `a2093bf` are the blob ids of the two copies of the first slide.
+**Do:** point at the third row of the table of "Compare Two Copies", slide 4, then at Author, Date and the message here.
+**Say:** `0799b86` and `a2093bf` are the blob ids of the two copies of slide 3.
 (~3 min)
 -->
 
