@@ -24,6 +24,9 @@
 //   ```mermaid       (+0.5 each: diagram walked through)    +0.5
 //   self-check       (the section slide `# Check **Yourself**` and every
 //   slide after it: quizzes for after the lecture)          0
+//   for the curious  (the section slide `# For the **Curious**` and every
+//   slide after it: the inner workings, shown only if time
+//   is left; lecturer, 21 Oct 2026)                         0
 //
 // Target band: a 2h slot minus break/admin gives ~110 teaching minutes.
 // The course prefers slightly too much over too little, so a deck should
@@ -49,6 +52,9 @@ const SEMINAR_MIN = 120;
 
 // Title of the section slide that opens a deck's self-check quizzes.
 const SELF_CHECK_TITLE = /^#\s+Check\s+\*\*Yourself\*\*\s*$/m;
+// Title of the section slide that opens the optional inner workings, after
+// the recap and before the quizzes: not part of the delivered lecture.
+const CURIOUS_TITLE = /^#\s+For\s+the\s+\*\*Curious\*\*\s*$/m;
 
 const STRUCTURAL_LAYOUTS = new Set([
   'cover', 'intro', 'quote', 'section', 'statement', 'fact', 'center-bkg', 'end',
@@ -117,12 +123,13 @@ function estimateDeck(src) {
   const slides = splitSlides(src);
   let minutes = 0;
   const counts = { slides: slides.length, structural: 0, content: 0, words: 0, mcq: 0, monaco: 0, video: 0, mermaid: 0, selfCheck: 0 };
-  // A deck may end with a self-check section: quiz slides for after the
-  // lecture. It is not delivered, so it costs no lecture time.
+  // A deck may end with a section for the curious (shown only if time is
+  // left) and a self-check section (quiz slides for after the lecture).
+  // Neither is part of the delivered lecture, so they cost no lecture time.
   let selfCheck = false;
   for (const s of slides) {
     const layout = (s.frontmatter.match(/^layout\s*:\s*(\S+)/m) || [])[1];
-    if (layout === 'section' && SELF_CHECK_TITLE.test(s.content)) selfCheck = true;
+    if (layout === 'section' && (SELF_CHECK_TITLE.test(s.content) || CURIOUS_TITLE.test(s.content))) selfCheck = true;
     if (selfCheck) {
       counts.selfCheck += 1;
       counts.mcq += (s.content.match(/<MCQ/g) || []).length;

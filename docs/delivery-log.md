@@ -788,3 +788,96 @@ word: "Release L6 and S6, see if they need any improvements".
   lecture page says each slide needs the one before).
 - "what's with the first 5 slides? I don't need them" (20 Oct): which
   deck is meant is not known; only Lecture 6's objectives slide went.
+
+## 2026-10-21 · Lectures 5 and 6 reworked: simple first, the inner workings for the curious
+
+**Why:** the lecturer on Lecture 6 as released the same day: "Now it looks
+very complicated from the start. I had this before:
+https://hsf-training.github.io/git-novice/aio.html I even had some pictures
+sourced and prepared. Could we first schematically show everything as here
+(or as the previous version of git lecture, but improved and coherent) and
+then towards the end the 'inner workings' but only for curious." On the
+eight-line `git rm` block: "this and similar ones are very difficult to read
+in a lecture. If ne need them, use shicki magic move to show one line at a
+time"; then "reciprocate this to L5 as well" and "go ahead improve the
+slidedeck and deploy". Lecture 5's notes of 20 Oct ("quite dry", "Classes -
+way too steep", "Why we need python, not excel.", "what's with the first 5
+slides?") are answered in the same pass. Design:
+`docs/superpowers/specs/2026-10-21-lectures-5-6-simple-first-design.md`;
+CLAUDE.md conventions 10 (For the Curious) and 16 (no walls of code).
+
+**Changed**
+
+- A new optional section, `# For the **Curious**`, after the Recap and
+  before Check Yourself; `timing-report.mjs` counts it as 0 min, so the
+  main path alone fills the band.
+- Lecture 5 (76 slides, ~121 min, band 92–127): the quote, "What Happens
+  When Python Runs", "The File of Today" and the table of parts are parked;
+  the deck opens on `weather.csv` in a spreadsheet (`AVERAGE` 5.78,
+  `AVERAGEIF(…;"<>-999")` 7.16), the `.xls` limit (65 536 rows: the log
+  would stop at 2023-06-23T14:00, lose 22 137 hours and average 7.08) with
+  Public Health England's 15 841 cases of October 2020, and spreadsheet
+  errors in published research (gene names `SEPT2` → 2-Sep in 704 of 3 597
+  papers, 27 genes renamed by 2020; Reinhart and Rogoff's rows 30 to 44,
+  −0.1 % against 2.2 %). Part 3 adds "Every Hour in Fahrenheit" (a formula
+  copied down 87 672 rows against a loop written once); Part 4 builds the
+  coldest hour (2025-01-07T05:00, −16.3 °C) with functions instead of a
+  class; a closing table sets what the sheet and the script leave behind
+  for 7.16. `class Hour`, `is_missing()` and the coldest hour with `Hour`
+  objects moved to For the Curious. Two new quizzes (`.xls` rows,
+  `SEPT2`). Sources: PHE's statement of 4 Oct 2020 (The Guardian, The
+  Register, 5 Oct); Ziemann, Eren and El-Osta, Genome Biology 17, 177
+  (2016); Bruford et al., Nature Genetics (2020); Herndon, Ash and Pollin,
+  Cambridge Journal of Economics 38, 257 (2014), working paper April 2013;
+  every number about `weather.csv` computed from the file.
+- Lecture 6 (83 slides, ~117 min): Software Carpentry's order and figures
+  (CC BY 4.0, credited on each slide): the copies and the comic, two copies
+  of the export side by side, a file as a sequence of changes, versions and
+  a merge, Drive/Dropbox/Word, BitKeeper; then setting up, the three areas
+  as a picture, the first commits, what goes into a repository, history,
+  undo, remotes (three figures adapted with the weather project's names,
+  `git-weather-remote-*.svg`), branches and conflicts, and the story's
+  question answered from the history. New main-path slides state the one
+  fact of the model the rest needs, in plain words: What a Commit Keeps
+  (its id, `c08a1c73…`, checked against a rerun of
+  `misc/l05_scratch_repo/build.sh`), Invite a Collaborator, Choose the Undo
+  by How Far the Change Got. Git's objects (blob, tree, commit, a branch as
+  41 bytes) moved unchanged to For the Curious, slides 63–74. Parked: the
+  checksum opening, `git diff --no-index`, the mermaid versions of the
+  three areas and the remote, Read a Commit. Pull requests are not taught.
+- Both decks: terminal and code blocks over about five lines are cut with
+  `...` or built up with magic-move, one command and its answer per click
+  (15 slides in L06). Every slide fits at its last click as well as its
+  first (checked by rendering both).
+- Corrected on the way: VS Code's Source Control Graph has no Revert
+  action (its documentation lists Open Changes, Compare, Cherry Pick and
+  Checkout); both tables of L06 now say revert is typed.
+
+**Decided by the builder, for the lecturer to check**
+
+- L06: "What goes into a repository" comes before history and undo, not
+  after as in git-novice: the real outputs commit `.gitignore` before the
+  README diff.
+- L05: the formulas use `;` between arguments, with a note that some
+  spreadsheets want `,`. "A `float` Is Rounded", "What `import weather`
+  Does" and the version slides stay in the main path (moving them to For
+  the Curious would bring L05 to about 115 min).
+- L06 keeps its definition quote as slide 2.
+
+**Closed:** the open items of the entry above. The model of L06 is now For
+the Curious; "the first 5 slides" was taken to mean Lecture 5's opening
+(played back and approved on 21 Oct).
+
+**Open**
+
+- Seminar 6 as the lecturer pictures it: a course repository for the
+  projects, everyone registered, "make it so your files appear here", the
+  room finding out what a pull request is. Not designed yet; the
+  repository has to be made by the lecturer. The released Seminar 6 page
+  stays as it is until then.
+- The starting zips of Seminars 6, 9, 10 and 11 still ship `weather.py`
+  with `class Hour`, and their scripts use it; Seminar 5 (delivered) taught
+  the class. To revisit when those seminars are reworked.
+- `check-slides.mjs` measures a slide at its first click only and shoots
+  before mermaid draws; the last-click check of this pass was a one-off
+  script.

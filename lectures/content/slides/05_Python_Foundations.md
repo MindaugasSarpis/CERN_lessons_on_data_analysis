@@ -12,130 +12,146 @@ title: "Python Foundations"
 ##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation</span>
 
 <!--
-**Say:** no Python is assumed today. Six steps: values and their types, containers that hold many values, the two lines that repeat and choose, functions and classes, modules, and where the rest of Python comes from.
+**Say:** no Python is assumed today. The question of the lecture: why the mean of the weather station is worked out in Python and not in a spreadsheet.
 (~1 min)
 -->
 
 ---
 hideInToc: true
-layout: quote
 ---
 
-# A program is a text of instructions that the computer carries out one after another. Python is a language for writing that text
+# The Mean of `weather.csv` in a Spreadsheet
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+## 📊 **`weather.csv`, opened in a spreadsheet**
+
+| | A | B | C | D |
+| --- | --- | --- | --- | --- |
+| **1** | time | temp_c | humidity_pct | wind_ms |
+| **2** | 2016-01-01T00:00 | -4.4 | 93 | 2.5 |
+| **3** | 2016-01-01T01:00 | -4.8 | 95 | 2.6 |
+| … | | | | |
+| **87673** | 2025-12-31T23:00 | -11.3 | 100 | 4.2 |
+
+</div>
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Two formulas, in cells F1 and F2**
+
+````md magic-move
+```text
+F1   =AVERAGE(B2:B87673)
+```
+```text
+F1   =AVERAGE(B2:B87673)               5.78
+```
+```text
+F1   =AVERAGE(B2:B87673)               5.78
+F2   =AVERAGEIF(B2:B87673;"<>-999")
+```
+```text
+F1   =AVERAGE(B2:B87673)               5.78
+F2   =AVERAGEIF(B2:B87673;"<>-999")    7.16
+```
+````
+
+</div>
+
+<div class="note-text">One line per hour, 2016 to 2025. 120 hours are written as −999, when the sensor failed: <code>AVERAGE</code> counts them as temperatures. The sheet keeps each formula and its number, not what was done to the rows before.</div>
+
+</div>
 
 <!--
-**Say:** a recipe for the computer, written in a language strict enough that a program can follow it.
-(~1 min)
+**Say:** the file of the course, opened the way most people would: column B is the temperature, and two formulas give two answers.
+**Ask:** which number is right? And a year later, how would a reader of the sheet know which rows went into it, and whether one was sorted, deleted or typed over?
+**If asked:** some spreadsheets take `,` between the arguments instead of `;`, depending on the language settings.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# What Happens When Python Runs
+# The Old `.xls` Format Holds 65 536 Rows
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📄 **`weather.csv` saved as `.xls`**
+
+| | |
+| --- | --- |
+| lines in the file | 87 673: the header and 87 672 hours |
+| rows in `.xls` | 65 536: the header and 65 535 hours |
+| last hour kept | 2023-06-23T14:00 |
+| hours lost | the last 22 137 |
+| mean of the rest | 7.08 °C, not 7.16 |
+
+</div>
+
+<div v-click class="card card-warning card-glass pad-compact">
+
+## 🦠 **Public Health England, October 2020**
+
+Covid-19 test results were loaded into the old `.xls` format, and the rows past its limit were dropped: **15 841 positive cases** of 25 September to 2 October were left out of the daily figures.
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The newer <code>.xlsx</code> format holds 1 048 576 rows.</div>
+
+<!--
+**Ask:** 87 673 lines into 65 536 rows: how many hours are lost? 87 672 − 65 535 = 22 137, two and a half years.
+**Say:** the mean of what is left is 7.08: a number that looks right. The same limit cost England a week of positive tests.
+**If asked:** PHE's statement of 4 October 2020, reported by The Guardian and The Register on 5 October; the rest is computed from `weather.csv`.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Spreadsheet Errors in Published Research
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **A program of three lines**
-
-```py
-mean = 7.16
-fahrenheit = mean * 9 / 5 + 32
-print(fahrenheit)
-```
+## 🧬 **Gene names typed into Excel**
 
 ```text
-44.888
+typed    SEPT2    MARCH1
+shown    2-Sep    1-Mar
 ```
 
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⚙️ **The interpreter**
-
-1. reads the text from the top, one line at a time
-2. carries out each line before it reads the next
-3. writes to the screen only what `print` gives it
+- such errors in 704 of 3 597 papers with gene lists in Excel, about one in five (2016)
+- by 2020, 27 human genes renamed rather than wait for Excel: `SEPTIN2`, `MARCHF1`
 
 </div>
 
-</div>
+<div v-click class="card card-secondary card-glass pad-compact">
 
-<div class="note-text mt-md"><strong>Python</strong> is the language; <code>python</code> is the program that reads it, the <strong>interpreter</strong>. Lines can be typed into it one by one, or kept in a text file ending in <code>.py</code>, a <strong>script</strong>.</div>
+## 📉 **Reinhart and Rogoff, 2010**
 
-<!--
-**Say:** the processor itself only runs machine code (Lecture 03); `python` is machine code that reads Python text and does what it says.
-**Ask:** what does the program print? 7.16 °C in Fahrenheit, 44.888.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The File of Today: `weather.csv`
-
-<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **The first four lines**
-
-```text
-time,temp_c,humidity_pct,wind_ms
-2016-01-01T00:00,-4.4,93,2.5
-2016-01-01T01:00,-4.8,95,2.6
-2016-01-01T02:00,-5.5,95,2.7
-```
+- a mean over rows 30 to 44 instead of 30 to 49: Australia, Austria, Belgium, Canada and Denmark left out
+- found by Herndon, Ash and Pollin in 2013
+- growth at a debt above 90 % of GDP, with this and two other choices corrected: 2.2 %, not −0.1 %
 
 </div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 🔢 **What it holds**
-
-| | |
-| --- | --- |
-| rows | 87 672, one per hour |
-| years | 2016 to 2025 |
-| missing hours | 120, written as −999 |
-| mean temperature | 7.16 °C |
-
-</div>
-
-</div>
-
-<div class="note-text mt-md">One weather station, one line of text per hour: the time, the temperature in °C, the humidity in % and the wind in m/s, separated by commas.</div>
-
-<!--
-**Say:** today's examples come from this file; Part 3 computes 7.16 in twelve lines of Python.
-**Ask:** what would a mean over all rows give, with the −999 hours counted as temperatures? Lower: 5.78.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-<div class="card card-primary card-glass pad-compact table-compact mt-lg">
-
-| Part | Question | Answer |
-| --- | --- | --- |
-| 1 | What is a value in Python, and what can it do? | ? |
-| 2 | How are values kept by name, and in larger objects? | ? |
-| 3 | How do `for` and `if` turn 87 672 lines into 7.16? | ? |
-| 4 | How is a step written once and used again? | ? |
-| 5 | How do several scripts share one file of functions? | ? |
-| 6 | Where does the rest of Python come from, and which version arrives? | ? |
 
 </div>
 
 <!--
-**Say:** one question per part; the last column is filled at the end.
-(~1 min)
+**Say:** the sheet guessed what a cell was, or took the range it was given, and gave a number with no warning. Others found the errors years later, from the files.
+**Ask:** what would have shown the short range at once? The steps written down, where anyone can read them and run them again: that is what a script is.
+**If asked:** Ziemann, Eren and El-Osta, Genome Biology 17, 177 (2016); Bruford et al., Guidelines for human gene nomenclature, Nature Genetics, 2020; Herndon, Ash and Pollin, Cambridge Journal of Economics 38, 257 (2014), first a working paper of April 2013.
+(~3 min)
 -->
 
 ---
@@ -148,6 +164,7 @@ hideInToc: true
 Part 1: what is a value in Python, and what can it do?
 
 <!--
+**Say:** the same file in Python: each step a line of text, kept, read and run again.
 (~1 min)
 -->
 
@@ -203,9 +220,12 @@ print(7.16 * 9 / 5 + 32)     # 44.888
 
 </div>
 
+<div class="note-text mt-md"><code>python</code>, the <strong>interpreter</strong>, reads the lines from the top and carries out each one before it reads the next. Lines kept in a file ending in <code>.py</code> are a <strong>script</strong>.</div>
+
 <!--
 **Do:** before each result appears, ask the room what will be printed.
 **Say:** the third line is the conversion to Fahrenheit: multiplication and division before addition, as in arithmetic.
+**If asked:** the processor runs only machine code (Lecture 03); `python` is machine code that reads Python text and does what it says.
 (~2 min)
 -->
 
@@ -261,7 +281,7 @@ A name with its value is a **variable**. A name has letters, digits and `_`, no 
 
 <!--
 **Ask:** step 2: what will `print(mean)` show, the word mean or 7.16? Without quotes, `mean` is a name and Python uses its value.
-**Say:** `=` is not the equals of mathematics: it is an instruction, "put this name on that value".
+**Say:** `=` is not the equals of mathematics: it is an instruction, "put this name on that value". A sheet keeps a value in a cell, `F1`; a name says what the value is.
 (~2 min)
 -->
 
@@ -668,13 +688,21 @@ print(temp + "1")         # -4.41
 number = float(temp)
 print(number + 1)         # -3.4000000000000004
 ```
+```py {5}
+temp = "-4.4"
+print(temp + "1")         # -4.41
+number = float(temp)
+print(number + 1)         # -3.4000000000000004
+print(float("SEPT2"))     # ValueError: could not convert string to float: 'SEPT2'
+```
 ````
 
-<div class="note-text mt-md">For two texts <code>+</code> joins them; a text and a number do not add, and Python stops with a <code>TypeError</code>. <code>float("-4.4")</code> makes the number from the text, <code>int("93")</code> a whole number, <code>str(7.16)</code> text again. A file holds text: every value read from it starts as a <code>str</code>.</div>
+<div class="note-text mt-md">For two texts <code>+</code> joins them; a text and a number do not add: <code>TypeError</code>. <code>float()</code> makes the number from a text, and stops with a <code>ValueError</code> when the text is not a number, where a spreadsheet guessed a date. A file holds text: every value read from it starts as a <code>str</code>.</div>
 
 <!--
 **Ask:** step 1: what is "-4.4" + "1"? Text joined to text: -4.41, not −3.4.
-**Say:** the tail of the last result is the rounding of the float slide.
+**Say:** Python does not guess a type. `"SEPT2"` stays a text until the script asks for a number, and then the script stops instead of making it 2-Sep.
+**If asked:** the tail of −3.4000000000000004 is the rounding of a `float`; `int("93")` makes a whole number, `str(7.16)` text again.
 (~2 min)
 -->
 
@@ -792,7 +820,7 @@ print(row["rain_mm"])       # KeyError: 'rain_mm'
 
 <!--
 **Ask:** step 2: what does `row["temp_c"]` give? And step 5, a key that is not there?
-**Say:** the dictionary is one row of the file with the header's names attached.
+**Say:** the dictionary is one row of the file with the header's names attached: `row["temp_c"]`, where a sheet says `B2`.
 (~2 min)
 -->
 
@@ -999,12 +1027,9 @@ hideInToc: true
 ```text
 {"latitude": 54.68259,
  "longitude": 25.273773,
- "elevation": 95.0,
- "current_units": {"temperature_2m": "°C",
-                   "wind_speed_10m": "km/h"},
+ ...
  "current": {"time": "2026-10-18T10:30",
-             "temperature_2m": 8.7,
-             "wind_speed_10m": 10.4}}
+             "temperature_2m": 8.7, ...}}
 ```
 
 </div>
@@ -1024,12 +1049,11 @@ print(type(answer))              # <class 'dict'>
 print(type(answer["current"]))   # <class 'dict'>
 print(answer["current"]["temperature_2m"])  # 8.7
 ```
-```py {4-5}
+```py {4}
 print(type(answer))              # <class 'dict'>
 print(type(answer["current"]))   # <class 'dict'>
 print(answer["current"]["temperature_2m"])  # 8.7
-units = answer["current_units"]
-print(units["temperature_2m"])   # °C
+print(answer["latitude"])        # 54.68259
 ```
 ````
 
@@ -1037,11 +1061,11 @@ print(units["temperature_2m"])   # °C
 
 </div>
 
-<div class="note-text mt-md">The answer of api.open-meteo.com for Vilnius, read with <code>json.loads</code> into <code>answer</code>: a dictionary whose values are dictionaries, read one key at a time.</div>
+<div class="note-text mt-md">The answer of api.open-meteo.com for Vilnius, read with <code>json.loads</code> into <code>answer</code>: a dictionary whose values are dictionaries, read one key at a time. <code>...</code> marks keys left out.</div>
 
 <!--
-**Say:** five numbers about Vilnius right now, and the units beside them. Square brackets twice: the dictionary inside the dictionary.
-**If asked:** a few keys are left out here (`generationtime_ms`, `timezone`, …); the answer has nine.
+**Say:** the temperature in Vilnius right now: square brackets twice, the dictionary inside the dictionary.
+**If asked:** the keys left out are `elevation`, `current_units` (°C, km/h), `generationtime_ms`, `timezone` and a few more; the answer has nine, and `current` also holds `wind_speed_10m`, 10.4.
 (~2 min)
 -->
 
@@ -1190,6 +1214,49 @@ print(total / len(temps))
 **Do:** before each click, have the room say the next `total`.
 **Say:** the computer does exactly this, 87 672 times for `weather.csv`.
 (~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Every Hour in Fahrenheit
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 📊 **In a sheet: column E, one formula per row**
+
+| Cell | Formula | Shows |
+| --- | --- | --- |
+| E2 | `=B2*9/5+32` | 24.08 |
+| E3 | `=B3*9/5+32` | 23.36 |
+| … | | |
+| E87673 | `=B87673*9/5+32` | 11.66 |
+
+</div>
+
+<div>
+
+```py {monaco-run} {autorun:false}
+temps = [-4.4, -4.8, -5.5, -6.0]
+for t in temps:
+    print(t * 9 / 5 + 32)
+# 24.08  23.36  22.1  21.2
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">The sheet holds 87 672 copies of the formula, made by copying the first one down, and each copy can be changed alone. The loop is written once and runs once for each item.</div>
+
+<!--
+**Do:** press ▶: four lines, one per item.
+**Say:** one step, in one place, to read and to fix; the sheet has a copy of it in every row.
+**Ask:** what do both give for an hour of −999? −1766.2: neither knows the mark until it is told.
+(~3 min)
 -->
 
 ---
@@ -1381,6 +1448,7 @@ print(lines[1])           # 2016-01-01T00:00,-4.4,93,2.5
 
 <!--
 **Ask:** step 4: 87 673 lines, and the file has 87 672 hours. Where is the extra line? The header, `lines[0]`.
+**Say:** every line is read, all 87 673; the `.xls` format would have stopped at 65 536.
 **If asked:** the slides' runnable blocks work in the browser and cannot read a file on a laptop, so this one is shown, not run.
 (~2 min)
 -->
@@ -1439,14 +1507,14 @@ $ python scripts/mean_all.py
 
 <v-click>
 
-<div class="note-text mt-sm">5.7828: the 120 rows of −999 are counted as temperatures. Python gives no warning; the script does exactly what it says.</div>
+<div class="note-text mt-sm">5.7828, the number of <code>=AVERAGE</code>: the 120 rows of −999 are counted as temperatures. Python gives no warning; the script does exactly what it says.</div>
 
 </v-click>
 
 <!--
 **Do:** click through the program as it grows: the lines of the file (it prints 87673), the sum in a loop (506989.30000000005), the count and the mean.
 **Ask:** before the output: 7.16 or 5.78?
-**Say:** the script does what it says: every row is a temperature to it. Python gives no warning.
+**Say:** one thing is already better than the sheet: `lines[1:]` is every line the file has, while a range like `B2:B87673` is typed by hand, and one that stops early, as Reinhart and Rogoff's did, still gives a number.
 (~3 min)
 -->
 
@@ -1506,7 +1574,7 @@ $ python scripts/mean_temp.py
 
 <div v-click class="card card-success card-glass pad-compact">
 
-✅ Part 3: 7.15996550621346 from 87 552 rows: the 7.16 °C of the file, 120 hours left out.
+✅ Part 3: 7.15996550621346 from 87 552 rows, the 7.16 of `AVERAGEIF`, with every step written down.
 
 </div>
 
@@ -1515,7 +1583,7 @@ $ python scripts/mean_temp.py
 <!--
 **Do:** start from the loop of all rows, then click: the temperature gets a name, and three lines leave out the mark.
 **Ask:** how many rows will be counted now? 87 672 − 120.
-**Say:** our own twelve lines give Smiltė's number, and agree with a program written by someone else.
+**Say:** twelve lines give the number of the sheet, and each step can be read: which column, which mark, which rows.
 (~3 min)
 -->
 
@@ -1524,12 +1592,12 @@ layout: section
 hideInToc: true
 ---
 
-# Functions and **Classes**
+# **Functions**
 
 Part 4: how is a step written once and used again?
 
 <!--
-**Say:** the mean works. Every project then asks more: the coldest hour, the mean wind, each a new script.
+**Say:** the mean works. A project asks more of the same file: the coldest hour, the mean wind, each a new script.
 (~1 min)
 -->
 
@@ -1537,14 +1605,9 @@ Part 4: how is a step written once and used again?
 hideInToc: true
 ---
 
-# The Same Lines in Two Scripts
+# The Coldest Hour, from a Copy of `mean_temp.py`
 
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **`mean_temp.py`**
-
+````md magic-move {lines: true}
 ```py {1,2,5-9}
 text = open("data/raw/weather.csv").read()
 lines = text.splitlines()
@@ -1559,14 +1622,7 @@ for line in lines[1:]:
     count = count + 1
 print(count, total / count)
 ```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📄 **`coldest_hour.py`**
-
-```py {1,2,5-9}
+```py {3-4,10-13}
 text = open("data/raw/weather.csv").read()
 lines = text.splitlines()
 coldest = 100.0
@@ -1581,18 +1637,37 @@ for line in lines[1:]:
         coldest_time = parts[0]
 print(coldest_time, coldest)
 ```
+````
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ python scripts/coldest_hour.py
+```
+
+<v-click>
+
+```text
+2025-01-07T05:00 -16.3
+```
+
+</v-click>
 
 </div>
 
-</div>
+<div class="note-text">Seven lines are the same in both scripts. A new column before <code>temp_c</code>, or a new mark for a missing hour, is an edit in every copy; a copy that is missed gives a wrong number, with no error.</div>
 
-<div class="note-text mt-sm">Seven lines are the same. A new column before <code>temp_c</code>, or a new mark for a missing hour, is an edit in every copy; a copy that is missed gives a wrong number, with no error.</div>
+</div>
 
 <!--
-**Do:** point at the lit lines in both scripts: reading the file, cutting a line, the temperature, the −999 test.
-**Ask:** a third script, for the mean wind: how many of its lines would be copied from these two?
-**Say:** copies drift apart. One gets a fix, the other does not, and both still run.
-(~2 min)
+**Do:** first step: `mean_temp.py` of Part 3, the seven lines it shares lit; click: the copy becomes `coldest_hour.py`, its six new lines lit.
+**Ask:** a third script, for the mean wind: how many of its lines would be copied again?
+**Say:** in a sheet the range and `"<>-999"` are typed again into each formula; here seven lines are. Copies drift apart: one gets a fix, the other does not, and both still run.
+(~3 min)
 -->
 
 ---
@@ -1726,125 +1801,47 @@ print(mean(temps("data/raw/weather.csv")))     # 7.15996550621345
 hideInToc: true
 ---
 
-# The Time Beside the Temperature: `class`
+# The Coldest Hour with `read_lines` and `temp_of`
 
 ````md magic-move {lines: true}
-```py
-line = "2016-01-01T00:00,-4.4,93,2.5"
-print(temp_of(line))           # -4.4, the time is lost
-```
-```py
-class Hour:
-    def __init__(self, line):
-        parts = line.split(",")
-        self.time = parts[0]
-        self.temp = float(parts[1])
-```
-```py {7-9}
-class Hour:
-    def __init__(self, line):
-        parts = line.split(",")
-        self.time = parts[0]
-        self.temp = float(parts[1])
-
-h = Hour("2016-01-01T00:00,-4.4,93,2.5")
-print(h.time, h.temp)          # 2016-01-01T00:00 -4.4
-print(type(h))                 # <class '__main__.Hour'>
-```
-````
-
-<div class="note-text mt-sm">A <strong>class</strong> is a new type. <code>Hour(line)</code> makes an object of it and runs <code>__init__</code> once; <code>self</code> is that new object, and <code>self.time</code> keeps a value in it, an <strong>attribute</strong>. <code>str</code>, <code>dict</code> and <code>Figure</code> are classes too.</div>
-
-<!--
-**Ask:** the coldest hour needs its time. `temp_of` gives only the number: where does the time go?
-**Say:** the values of one hour are kept together in one object, and reached by name after a dot, like `fig.axes`.
-**If asked:** `__main__` is the name of the script that defined the class; from a module it reads `weather.Hour`.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# A Method: `is_missing()`
-
-````md magic-move {lines: true}
-```py
-class Hour:
-    def __init__(self, line):
-        parts = line.split(",")
-        self.time = parts[0]
-        self.temp = float(parts[1])
-```
-```py {7-8}
-class Hour:
-    def __init__(self, line):
-        parts = line.split(",")
-        self.time = parts[0]
-        self.temp = float(parts[1])
-
-    def is_missing(self):
-        return self.temp == -999
-```
-```py {10-13}
-class Hour:
-    def __init__(self, line):
-        parts = line.split(",")
-        self.time = parts[0]
-        self.temp = float(parts[1])
-
-    def is_missing(self):
-        return self.temp == -999
-
-h = Hour("2016-01-01T00:00,-4.4,93,2.5")
-print(h.is_missing())          # False
-h = Hour("2019-07-22T00:00,-999,76,3.2")
-print(h.is_missing())          # True
-```
-````
-
-<div class="note-text mt-sm">A <strong>method</strong> is a <code>def</code> inside the class. Python passes the object before the dot as <code>self</code>, so <code>h.is_missing()</code> asks <code>h</code> about its own temperature, as <code>line.split(",")</code> asks <code>line</code>.</div>
-
-<!--
-**Say:** the −999 rule now lives in one place, inside the class. A script asks the hour, and does not need to know the mark.
-**If asked:** the second line is a real hour of the file: 22 July 2019, midnight, one of the 120 missing hours.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Coldest Hour with `Hour` Objects
-
-````md magic-move {lines: true}
-```py
-lines = read_lines("data/raw/weather.csv")
-coldest = Hour(lines[0])
-print(coldest.time, coldest.temp)    # 2016-01-01T00:00 -4.4
-```
-```py {3-6}
-lines = read_lines("data/raw/weather.csv")
-coldest = Hour(lines[0])
+```py {1-2,5-9,12}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+coldest = 100.0
+coldest_time = ""
 for line in lines[1:]:
-    h = Hour(line)
-    if not h.is_missing() and h.temp < coldest.temp:
-        coldest = h
-print(coldest.time, coldest.temp)    # 2025-01-07T05:00 -16.3
+    parts = line.split(",")
+    temp = float(parts[1])
+    if temp == -999:
+        continue
+    if temp < coldest:
+        coldest = temp
+        coldest_time = parts[0]
+print(coldest_time, coldest)
+```
+```py {3-5,7}
+coldest = 100.0
+coldest_time = ""
+for line in read_lines("data/raw/weather.csv"):
+    temp = temp_of(line)
+    if temp != -999 and temp < coldest:
+        coldest = temp
+        coldest_time = line.split(",")[0]
+print(coldest_time, coldest)     # 2025-01-07T05:00 -16.3
 ```
 ````
 
-<div class="note-text mt-sm"><code>not</code> turns <code>True</code> into <code>False</code>; <code>and</code> is <code>True</code> when both sides are. The object found keeps its time with its temperature, so nothing has to be copied beside it.</div>
+<div class="note-text mt-sm"><code>and</code> is <code>True</code> when both sides are: the hour was measured, and it is colder than every hour before it.</div>
 
 <div v-click class="card card-success card-glass pad-compact mt-sm">
 
-✅ Part 4: a step is written once as a function, `def`, and called by its name; values that belong together are one object of a class, with methods. The coldest hour: 2025-01-07T05:00, −16.3 °C.
+✅ Part 4: a step is written once as a function, `def`, and called by its name: `read_lines`, `temp_of`, `temps`, `mean`. The coldest hour: 2025-01-07T05:00, −16.3 °C.
 
 </div>
 
 <!--
-**Do:** first step: start from the first hour as the coldest so far; second step: each hour that is colder takes its place.
-**Ask:** what if the first hour of the file were a −999? `coldest.temp` would start at −999 and no hour would be colder.
+**Do:** first step: `coldest_hour.py` as it was copied, the copied steps lit; click: they become two calls.
+**Ask:** leave out `temp != -999 and`: which hour comes out coldest? 2019-07-22T00:00, at −999.0, the first missing hour.
 (~3 min)
 -->
 
@@ -1858,7 +1855,7 @@ hideInToc: true
 Part 5: how do several scripts share one file of functions?
 
 <!--
-**Say:** the functions and the class are still inside one script; the other scripts cannot see them.
+**Say:** the functions are still inside one script; the other scripts cannot see them.
 (~1 min)
 -->
 
@@ -1874,15 +1871,18 @@ hideInToc: true
 
 MISSING = -999.0
 ```
-```py {5-6}
+```py {5-9}
 """Read the hourly log of the weather station."""
 
 MISSING = -999.0
 
 def read_lines(path):
     return open(path).read().splitlines()[1:]
+
+def temp_of(line):
+    return float(line.split(",")[1])
 ```
-```py {8-15}
+```py {11-17}
 """Read the hourly log of the weather station."""
 
 MISSING = -999.0
@@ -1890,16 +1890,18 @@ MISSING = -999.0
 def read_lines(path):
     return open(path).read().splitlines()[1:]
 
-class Hour:
-    def __init__(self, line):
-        parts = line.split(",")
-        self.time = parts[0]
-        self.temp = float(parts[1])
+def temp_of(line):
+    return float(line.split(",")[1])
 
-    def is_missing(self):
-        return self.temp == MISSING
+def temps(path):
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            result.append(temp)
+    return result
 ```
-```py {17-18}
+```py {19-20}
 """Read the hourly log of the weather station."""
 
 MISSING = -999.0
@@ -1907,14 +1909,16 @@ MISSING = -999.0
 def read_lines(path):
     return open(path).read().splitlines()[1:]
 
-class Hour:
-    def __init__(self, line):
-        parts = line.split(",")
-        self.time = parts[0]
-        self.temp = float(parts[1])
+def temp_of(line):
+    return float(line.split(",")[1])
 
-    def is_missing(self):
-        return self.temp == MISSING
+def temps(path):
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            result.append(temp)
+    return result
 
 def mean(values):
     return sum(values) / len(values)
@@ -1922,7 +1926,7 @@ def mean(values):
 ````
 
 <!--
-**Say:** a **module** is a `.py` file of definitions. This one asks no question and prints nothing: it only defines a name for the mark, a function, a class, and the mean.
+**Say:** a **module** is a `.py` file of definitions. This one asks no question and prints nothing: a name for the mark and the four functions of Part 4. The −999 rule is written once, as `MISSING`; in the sheet it was inside each formula.
 **Do:** click through: the text at the top says what the file is; `MISSING` gives the mark a name, written in capitals as a constant.
 (~2 min)
 -->
@@ -1951,12 +1955,8 @@ print(count, total / count)
 ```py
 import weather
 
-temps = []
-for line in weather.read_lines("data/raw/weather.csv"):
-    h = weather.Hour(line)
-    if not h.is_missing():
-        temps.append(h.temp)
-print(len(temps), weather.mean(temps))
+values = weather.temps("data/raw/weather.csv")
+print(len(values), weather.mean(values))
 ```
 ````
 
@@ -1974,7 +1974,7 @@ $ python scripts/mean_temp.py
 <!--
 **Do:** first step: `mean_temp.py` of Part 3; second step: the same script with the module.
 **Say:** what is left in the script is its own question. How a line is cut and what −999 means is in `weather.py`.
-**If asked:** `temps` is not in the module because `Hour` keeps the time beside the temperature; a list of numbers would lose it.
+**If asked:** the script runs from the project folder, so the path starts at `data/`; Python finds `weather.py` because it sits beside the script.
 (~2 min)
 -->
 
@@ -1991,8 +1991,8 @@ hideInToc: true
 ## 🔎 **Three steps**
 
 1. finds `weather.py`: in the script's folder, then in the standard library, then in the environment's packages
-2. runs it once, top to bottom: `def` and `class` make the functions and the class
-3. names the result `weather`: `weather.Hour` is the class inside it
+2. runs it once, top to bottom: each `def` makes a function
+3. names the result `weather`: `weather.temps` is the function inside it
 
 </div>
 
@@ -2002,8 +2002,8 @@ hideInToc: true
 
 | The line | Then |
 | --- | --- |
-| `import weather` | `weather.Hour(line)` |
-| `from weather import Hour` | `Hour(line)` |
+| `import weather` | `weather.temps(path)` |
+| `from weather import temps` | `temps(path)` |
 | `import matplotlib.pyplot as plt` | `plt.subplots()` |
 
 </div>
@@ -2052,28 +2052,23 @@ weather-project/
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📄 **`coldest_hour.py`**
+## 💻 **zsh · Git Bash**, in `weather-project`
 
-```py
-import weather
-
-lines = weather.read_lines("data/raw/weather.csv")
-coldest = weather.Hour(lines[0])
-for line in lines[1:]:
-    h = weather.Hour(line)
-    if not h.is_missing() and h.temp < coldest.temp:
-        coldest = h
-print(coldest.time, coldest.temp)
+```text
+$ python scripts/mean_temp.py
+87552 7.15996550621345
+$ python scripts/coldest_hour.py
+2025-01-07T05:00 -16.3
 ```
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">Functions and classes are written once, in <code>weather.py</code>; each script imports them and holds only its own question. A new column in the file is one edit, in <code>weather.py</code>, and every script follows.</div>
+<div class="note-text mt-sm">Both scripts start with <code>import weather</code>. <code>coldest_hour.py</code> calls <code>weather.read_lines</code> and <code>weather.temp_of</code>, <code>mean_temp.py</code> calls <code>weather.temps</code> and <code>weather.mean</code>; each holds only its own question. A new column in the file is one edit, in <code>weather.py</code>, and every script follows.</div>
 
 <!--
-**Ask:** the station adds a column `pressure_hpa` after `time`. Which files change? Only `weather.py`: `parts[1]` becomes `parts[2]`.
+**Ask:** the station adds a column `pressure_hpa` after `time`. Which files change? Only `weather.py`: in `temp_of`, `[1]` becomes `[2]`; the time stays at `[0]`.
 **Say:** the rule of every programming project: what is used twice goes into a module; a script imports it and does not define it again.
 (~2 min)
 -->
@@ -2095,7 +2090,7 @@ print(math.pi)                                     # 3.141592653589793
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Part 5: a **module** is a `.py` file of functions and classes; `import` finds it, runs it once and gives it a name. A **library** is modules someone else wrote and tested, imported the same way: `statistics.mean` does what our `mean` does.
+✅ Part 5: a **module** is a `.py` file of functions; `import` finds it, runs it once and gives it a name. A **library** is modules someone else wrote and tested, imported the same way: `statistics.mean` does what our `mean` does.
 
 </div>
 
@@ -2387,7 +2382,7 @@ $ conda env create -f environment.yml
 </div>
 
 <!--
-**Say:** six lines that let anyone rebuild the environment, and you yourself next year. They go into the project folder, beside `data/` and `scripts/`.
+**Say:** six lines that let anyone rebuild the environment, and you yourself next year. They go into the project folder, beside `data/` and `scripts/`. A sheet is worked out by whatever spreadsheet program, in whatever version, each laptop has.
 **If asked:** `--from-history` writes only what was typed, not all 139 packages; the export ends with a `prefix:` line, the folder on this laptop, which is deleted.
 (~2 min)
 -->
@@ -2396,22 +2391,26 @@ $ conda env create -f environment.yml
 hideInToc: true
 ---
 
-<div class="card card-success card-glass pad-compact table-compact mt-md">
+# What the Sheet and the Script Leave Behind for 7.16
 
-| Part | Answer |
-| --- | --- |
-| 1 · a value | an object with a type, `int`, `float`, `bool`, `str`; methods after a dot: `line.split(",")` |
-| 2 · containers | `list` by position, `dict` by key, `tuple`, `set`; a `Figure` is a container of objects |
-| 3 · `for` and `if` | a loop over the lines, `split` and `float`, `continue` for −999: 7.15996550621346 |
-| 4 · write it once | a function, `def`; the values of one hour together in an object of a class, `Hour` |
-| 5 · share it | a module, `weather.py`, written once; each script says `import weather` |
-| 6 · the rest | the standard library; packages from conda-forge or PyPI, one environment per project |
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| | 📊 Spreadsheet | 🐍 Script |
+| --- | --- | --- |
+| the number | 7.16 in cell F2 | `87552 7.15996550621345`, printed |
+| how it was made | its formula; sorts, deletions, retyped cells not kept | every step, as text: `mean_temp.py`, `weather.py` |
+| the −999 rule | `"<>-999"`, in each formula | `MISSING`, once, in `weather.py` |
+| which rows | `B2:B87673`, typed by hand; `.xls` stops at 65 536 | `lines[1:]`: every line of the file |
+| `SEPT2` | guessed: the date 2-Sep | a `str`; `float()` stops with `ValueError` |
+| which program | whatever version is on each laptop | Python and packages pinned in `environment.yml` |
+| to do it again | open, select, type the formula | `python scripts/mean_temp.py` |
 
 </div>
 
 <!--
-**Say:** 7.16 now comes from a script of eight lines and a module that every script of the project imports.
-(~1 min)
+**Say:** both give 7.16. Only the script can be read line by line, run again by anyone with one command, and checked by someone who was not there.
+**Ask:** which row of the table would have caught each of the three published errors?
+(~2 min)
 -->
 
 ---
@@ -2421,6 +2420,12 @@ hideInToc: true
 # **Recap**: You Can Now…
 
 <div class="stack-tight mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Say what a script keeps of a result that a spreadsheet does not: every step, as text that runs again
+
+</div>
 
 <div class="card card-success card-glass pad-compact">
 
@@ -2442,7 +2447,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write a step once with `def`, keep the values of one hour in an object of a class, and import both from a module
+✅ Write a step once with `def`, and import it from a module instead of copying it
 
 </div>
 
@@ -2463,9 +2468,159 @@ layout: section
 hideInToc: true
 ---
 
+# For the **Curious**
+
+Optional: a type of your own, a `class`.
+
+<!--
+**Say:** only if time is left. Nothing in the lecture needs it; it shows how `str`, `dict` and `Figure` are made.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Time Beside the Temperature: `class`
+
+````md magic-move {lines: true}
+```py
+line = "2016-01-01T00:00,-4.4,93,2.5"
+print(temp_of(line))           # -4.4, the time is lost
+```
+```py
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+```
+```py {7-9}
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+h = Hour("2016-01-01T00:00,-4.4,93,2.5")
+print(h.time, h.temp)          # 2016-01-01T00:00 -4.4
+print(type(h))                 # <class '__main__.Hour'>
+```
+````
+
+<div class="note-text mt-sm">A <strong>class</strong> is a new type. <code>Hour(line)</code> makes an object of it and runs <code>__init__</code> once; <code>self</code> is that new object, and <code>self.time</code> keeps a value in it, an <strong>attribute</strong>. <code>str</code>, <code>dict</code> and <code>Figure</code> are classes too.</div>
+
+<!--
+**Ask:** the coldest hour of Part 4 kept its time in a second name, `coldest_time`. A script that needs the time, temperature and wind of every hour: how many names?
+**Say:** the values of one hour are kept together in one object, and reached by name after a dot, like `fig.axes`.
+**If asked:** `__main__` is the name of the script that defined the class; from a module it reads `weather.Hour`.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Method: `is_missing()`
+
+````md magic-move {lines: true}
+```py
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+```
+```py {7-8}
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+    def is_missing(self):
+        return self.temp == -999
+```
+```py {10-13}
+class Hour:
+    def __init__(self, line):
+        parts = line.split(",")
+        self.time = parts[0]
+        self.temp = float(parts[1])
+
+    def is_missing(self):
+        return self.temp == -999
+
+h = Hour("2016-01-01T00:00,-4.4,93,2.5")
+print(h.is_missing())          # False
+h = Hour("2019-07-22T00:00,-999,76,3.2")
+print(h.is_missing())          # True
+```
+````
+
+<div class="note-text mt-sm">A <strong>method</strong> is a <code>def</code> inside the class. Python passes the object before the dot as <code>self</code>, so <code>h.is_missing()</code> asks <code>h</code> about its own temperature, as <code>line.split(",")</code> asks <code>line</code>.</div>
+
+<!--
+**Say:** the −999 test now belongs to the hour: a script asks the hour, and does not need to know the mark.
+**If asked:** the second line is a real hour of the file: 22 July 2019, midnight, one of the 120 missing hours.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Coldest Hour with `Hour` Objects
+
+````md magic-move {lines: true}
+```py
+lines = read_lines("data/raw/weather.csv")
+coldest = Hour(lines[0])
+print(coldest.time, coldest.temp)    # 2016-01-01T00:00 -4.4
+```
+```py {3-6}
+lines = read_lines("data/raw/weather.csv")
+coldest = Hour(lines[0])
+for line in lines[1:]:
+    h = Hour(line)
+    if not h.is_missing() and h.temp < coldest.temp:
+        coldest = h
+print(coldest.time, coldest.temp)    # 2025-01-07T05:00 -16.3
+```
+````
+
+<div class="note-text mt-sm"><code>not</code> turns <code>True</code> into <code>False</code>. The object found keeps its time with its temperature, so no second name, <code>coldest_time</code>, has to be kept beside it. In a module the class is used as <code>weather.Hour(line)</code>.</div>
+
+<!--
+**Do:** first step: start from the first hour as the coldest so far; second step: each hour that is colder takes its place.
+**Ask:** what if the first hour of the file were a −999? `coldest.temp` would start at −999 and no hour would be colder.
+(~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
 # Check **Yourself**
 
 Questions on this lecture, for after it. They are not part of the lecture time.
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="The old `.xls` format holds 65 536 rows. How many hours of `weather.csv`, a header line and 87 672 hours, does it keep?"
+  :options="[
+    '65 536',
+    '65 535',
+    '87 672',
+    '22 137'
+  ]"
+  :correct="1"
+  explanation="The header takes the first row, so 65 535 hours fit, up to 2023-06-23T14:00. The last 22 137 hours are lost, and the mean of the rest is 7.08 °C, not 7.16. Public Health England lost 15 841 positive cases to the same limit in 2020."
+/>
 
 ---
 hideInToc: true
@@ -2481,6 +2636,22 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="Both values are strings, and + joins two strings, with no error. float(x) + float(y) gives 8.16. A TypeError appears only when a string meets a number, as in '7.16' + 1."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A list of gene names read from a file holds the text `'SEPT2'`. What does `float('SEPT2')` do?"
+  :options="[
+    'It gives the date 2-Sep',
+    'It stops with a ValueError',
+    'It gives 0.0',
+    'It gives the text SEPT2 back'
+  ]"
+  :correct="1"
+  explanation="Python does not guess a type: float() makes a number from a text that is one, and otherwise stops with ValueError: could not convert string to float: 'SEPT2'. A spreadsheet guesses as it opens the file, and SEPT2 becomes the date 2-Sep."
 />
 
 ---
@@ -2584,15 +2755,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="`scripts/weather.py` defines the class `Hour`. A script in `scripts/` starts with `import weather`. How does it make an `Hour` from `line`?"
+  question="`scripts/weather.py` defines the function `temps`. A script in `scripts/` starts with `import weather`. How does it call `temps` for `path`?"
   :options="[
-    'Hour(line)',
-    'weather.Hour(line)',
-    'import Hour(line)',
-    'weather(Hour, line)'
+    'temps(path)',
+    'weather.temps(path)',
+    'import temps(path)',
+    'weather(temps, path)'
   ]"
   :correct="1"
-  explanation="import weather gives the script one name, weather; what the module defines is reached after a dot. Hour(line) alone is a NameError, unless the script says from weather import Hour."
+  explanation="import weather gives the script one name, weather; what the module defines is reached after a dot. temps(path) alone is a NameError, unless the script says from weather import temps."
 />
 
 ---
@@ -2600,7 +2771,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Why do the scripts of a project import `weather.py` instead of each defining `read_lines` and `Hour` again?"
+  question="Why do the scripts of a project import `weather.py` instead of each defining `read_lines` and `temp_of` again?"
   :options="[
     'Python cannot call a function defined in the same script',
     'A script may hold only one def',

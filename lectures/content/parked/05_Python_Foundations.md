@@ -5089,3 +5089,290 @@ Each has its own methods: `ax.plot`, `ax.set`, `fig.savefig`.
 **If asked:** `plt.subplots` hands back two objects at once, a figure and its axes, and `fig, ax =` names both.
 (~2 min)
 -->
+
+<!--
+Parked 2026-10-21 from Lecture 05 (the deck delivered on 20 Oct 2026), when it was
+reworked on the thread "why Python, not Excel" (lecturer, 20 Oct: "what's with the
+first 5 slides? I don't need them"; "L5 was quite dry"). The deck now opens on
+weather.csv in a spreadsheet. The interpreter is said on the slide "A First Line:
+print"; the columns of the file are on the spreadsheet slide. Writing a class moved
+to the section For the Curious at the end of the deck, so the scripts of Parts 4
+and 5 no longer use Hour.
+-->
+
+<!-- Parked 2026-10-21 from Lecture 05, slide 2, the quote after the cover: the deck opens on the spreadsheet problem -->
+
+---
+hideInToc: true
+layout: quote
+---
+
+# A program is a text of instructions that the computer carries out one after another. Python is a language for writing that text
+
+<!--
+**Say:** a recipe for the computer, written in a language strict enough that a program can follow it.
+(~1 min)
+-->
+
+
+<!-- Parked 2026-10-21 from Lecture 05, slide 3, 'What Happens When Python Runs': the interpreter is now one sentence on 'A First Line: print' -->
+
+---
+hideInToc: true
+---
+
+# What Happens When Python Runs
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **A program of three lines**
+
+```py
+mean = 7.16
+fahrenheit = mean * 9 / 5 + 32
+print(fahrenheit)
+```
+
+```text
+44.888
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚙️ **The interpreter**
+
+1. reads the text from the top, one line at a time
+2. carries out each line before it reads the next
+3. writes to the screen only what `print` gives it
+
+</div>
+
+</div>
+
+<div class="note-text mt-md"><strong>Python</strong> is the language; <code>python</code> is the program that reads it, the <strong>interpreter</strong>. Lines can be typed into it one by one, or kept in a text file ending in <code>.py</code>, a <strong>script</strong>.</div>
+
+<!--
+**Say:** the processor itself only runs machine code (Lecture 03); `python` is machine code that reads Python text and does what it says.
+**Ask:** what does the program print? 7.16 °C in Fahrenheit, 44.888.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-21 from Lecture 05, slide 4, 'The File of Today: weather.csv': the file and its columns are now on the opening slide 'The Mean of weather.csv in a Spreadsheet' -->
+
+---
+hideInToc: true
+---
+
+# The File of Today: `weather.csv`
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **The first four lines**
+
+```text
+time,temp_c,humidity_pct,wind_ms
+2016-01-01T00:00,-4.4,93,2.5
+2016-01-01T01:00,-4.8,95,2.6
+2016-01-01T02:00,-5.5,95,2.7
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔢 **What it holds**
+
+| | |
+| --- | --- |
+| rows | 87 672, one per hour |
+| years | 2016 to 2025 |
+| missing hours | 120, written as −999 |
+| mean temperature | 7.16 °C |
+
+</div>
+
+</div>
+
+<div class="note-text mt-md">One weather station, one line of text per hour: the time, the temperature in °C, the humidity in % and the wind in m/s, separated by commas.</div>
+
+<!--
+**Say:** today's examples come from this file; Part 3 computes 7.16 in twelve lines of Python.
+**Ask:** what would a mean over all rows give, with the −999 hours counted as temperatures? Lower: 5.78.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-21 from Lecture 05, slide 5, the table of the six parts: no table of parts at the opening (design of 21 Oct 2026) -->
+
+---
+hideInToc: true
+---
+
+<div class="card card-primary card-glass pad-compact table-compact mt-lg">
+
+| Part | Question | Answer |
+| --- | --- | --- |
+| 1 | What is a value in Python, and what can it do? | ? |
+| 2 | How are values kept by name, and in larger objects? | ? |
+| 3 | How do `for` and `if` turn 87 672 lines into 7.16? | ? |
+| 4 | How is a step written once and used again? | ? |
+| 5 | How do several scripts share one file of functions? | ? |
+| 6 | Where does the rest of Python come from, and which version arrives? | ? |
+
+</div>
+
+<!--
+**Say:** one question per part; the last column is filled at the end.
+(~1 min)
+-->
+
+
+<!-- Parked 2026-10-21 from Lecture 05, slide 37, 'The Same Lines in Two Scripts', the first slide of Part 4: two 13-line blocks side by side; replaced by 'The Coldest Hour, from a Copy of mean_temp.py', the copy built by magic move -->
+
+---
+hideInToc: true
+---
+
+# The Same Lines in Two Scripts
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`mean_temp.py`**
+
+```py {1,2,5-9}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+total = 0.0
+count = 0
+for line in lines[1:]:
+    parts = line.split(",")
+    temp = float(parts[1])
+    if temp == -999:
+        continue
+    total = total + temp
+    count = count + 1
+print(count, total / count)
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **`coldest_hour.py`**
+
+```py {1,2,5-9}
+text = open("data/raw/weather.csv").read()
+lines = text.splitlines()
+coldest = 100.0
+coldest_time = ""
+for line in lines[1:]:
+    parts = line.split(",")
+    temp = float(parts[1])
+    if temp == -999:
+        continue
+    if temp < coldest:
+        coldest = temp
+        coldest_time = parts[0]
+print(coldest_time, coldest)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Seven lines are the same. A new column before <code>temp_c</code>, or a new mark for a missing hour, is an edit in every copy; a copy that is missed gives a wrong number, with no error.</div>
+
+<!--
+**Do:** point at the lit lines in both scripts: reading the file, cutting a line, the temperature, the −999 test.
+**Ask:** a third script, for the mean wind: how many of its lines would be copied from these two?
+**Say:** copies drift apart. One gets a fix, the other does not, and both still run.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-21 from Lecture 05, slide 48, 'Every Script Imports the Module': its coldest_hour.py used the class Hour, now in For the Curious; replaced by the same slide with the two scripts run -->
+
+---
+hideInToc: true
+---
+
+# Every Script Imports the Module
+
+<div class="grid-2 mt-md gap-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📁 **The project**
+
+```text
+weather-project/
+├── data/raw/weather.csv
+└── scripts/
+    ├── weather.py
+    ├── mean_temp.py
+    └── coldest_hour.py
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **`coldest_hour.py`**
+
+```py
+import weather
+
+lines = weather.read_lines("data/raw/weather.csv")
+coldest = weather.Hour(lines[0])
+for line in lines[1:]:
+    h = weather.Hour(line)
+    if not h.is_missing() and h.temp < coldest.temp:
+        coldest = h
+print(coldest.time, coldest.temp)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Functions and classes are written once, in <code>weather.py</code>; each script imports them and holds only its own question. A new column in the file is one edit, in <code>weather.py</code>, and every script follows.</div>
+
+<!--
+**Ask:** the station adds a column `pressure_hpa` after `time`. Which files change? Only `weather.py`: `parts[1]` becomes `parts[2]`.
+**Say:** the rule of every programming project: what is used twice goes into a module; a script imports it and does not define it again.
+(~2 min)
+-->
+
+
+<!-- Parked 2026-10-21 from Lecture 05, slide 59, the six questions answered: no table of parts any more; replaced by 'What the Sheet and the Script Leave Behind for 7.16' -->
+
+---
+hideInToc: true
+---
+
+<div class="card card-success card-glass pad-compact table-compact mt-md">
+
+| Part | Answer |
+| --- | --- |
+| 1 · a value | an object with a type, `int`, `float`, `bool`, `str`; methods after a dot: `line.split(",")` |
+| 2 · containers | `list` by position, `dict` by key, `tuple`, `set`; a `Figure` is a container of objects |
+| 3 · `for` and `if` | a loop over the lines, `split` and `float`, `continue` for −999: 7.15996550621346 |
+| 4 · write it once | a function, `def`; the values of one hour together in an object of a class, `Hour` |
+| 5 · share it | a module, `weather.py`, written once; each script says `import weather` |
+| 6 · the rest | the standard library; packages from conda-forge or PyPI, one environment per project |
+
+</div>
+
+<!--
+**Say:** 7.16 now comes from a script of eight lines and a module that every script of the project imports.
+(~1 min)
+-->

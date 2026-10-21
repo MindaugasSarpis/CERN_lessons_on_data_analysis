@@ -511,3 +511,247 @@ hideInToc: true
   explanation="git stash stores the unfinished edit and puts the working folder back to the last commit. After the correction, git stash pop brings the edit back. A half-done commit spoils the history, a copied folder is what Git replaces, and reset --hard destroys the edit."
 />
 
+
+<!-- Parked 2026-10-21 from Lecture 06 when the deck was reworked simple first (docs/superpowers/specs/2026-10-21-lectures-5-6-simple-first-design.md): the main path shows what Git does, with the Software Carpentry figures, and the model (blob, tree, commit, branch) moved to the section For the Curious after the recap. These five slides left the deck; a comment before each says where it stood. -->
+
+<!-- Parked 2026-10-21 from Lecture 06, slide 3 'Two Copies of the Export', the version with the two checksums: the opening now tells the story without a terminal (the two files side by side); the checksums are in the note of the new slide 4 -->
+
+---
+hideInToc: true
+---
+
+# Two Copies of the **Export**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Smiltė keeps `data/raw/daily_export.csv` of the weather project. Her colleague Tomas sends back his copy of the same file. Both have 180 bytes.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ shasum -a 256 smilte/daily_export.csv tomas/daily_export.csv
+9d849815d88eceb18366ee66ac72f26b72e195bea8bb20aa9a1474372513bbdb  smilte/daily_export.csv
+13fbcae6a7a4d67ec30fdf3bedc0b666209f7a4dc453ea72ff6de7370ffd6aee  tomas/daily_export.csv
+```
+
+Git Bash: `sha256sum` in place of `shasum -a 256`, with the same output.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+The checksums say that the two files differ. They do not say where, who changed the file, or why.
+
+</div>
+
+<!--
+**Ask:** which copy is the file as it arrived from the station? Nobody can tell from 64 digits.
+**If asked:** `$` stands for the prompt of both shells; zsh on a Mac shows `%`.
+**Do:** a show of hands: who has files named final, final_v2, final_corrected?
+(~3 min)
+-->
+<!-- Parked 2026-10-21 from Lecture 06, slide 4, after 'Two Copies of the Export': git diff --no-index on the two copies; the opening has no terminal output any more, and the diff is first read on 'A Change, Seen as a Diff' -->
+
+---
+hideInToc: true
+---
+
+# Compare Two Copies: `git diff`
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔍 **Line by line**
+
+```text
+$ git diff --no-index smilte/daily_export.csv tomas/daily_export.csv
+diff --git a/smilte/daily_export.csv b/tomas/daily_export.csv
+index 0799b86..a2093bf 100644
+--- a/smilte/daily_export.csv
++++ b/tomas/daily_export.csv
+@@ -1,5 +1,5 @@
+ nr;date;temp_c
+-1;2025-10-01;6,3
++1;2025-10-01;6,4
+ 2;2025-10-02;5,0
+ 3;2025-10-03;5,6
+ 4;2025-10-04;7,0
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🧾 **What the two copies tell**
+
+| Question | Answer |
+| --- | --- |
+| Do they differ? | Yes, by the checksum |
+| Where? | Line 2: `6,3` against `6,4`, by `git diff` |
+| Who changed it, when, and why? | Nothing in either file says |
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A line with `-` is in the first file only, a line with `+` in the second only, a line with a space in both.
+
+</div>
+
+<!--
+**Say:** Git was installed in Seminar 4; `--no-index` compares two files outside any project.
+**Ask:** was 6,4 read off a paper log, or typed by mistake? The two copies cannot tell.
+(~3 min)
+-->
+<!-- Parked 2026-10-21 from Lecture 06, slide 20, the last slide of the section The Model: the mermaid drawing of the three areas; replaced by 'The Three Areas' with the Software Carpentry figure git-staging-area.svg, at the start of Tracking Changes -->
+
+---
+hideInToc: true
+---
+
+# The Three **Areas**
+
+<div style="display: flex; justify-content: center;">
+
+```mermaid {scale: 0.85}
+flowchart LR
+    W["Working folder<br/>the files on disk"] -- "git add" --> S["Staging area<br/>content of the next commit"] -- "git commit" --> R["Repository<br/>the commits, in .git"]
+    S -- "git restore --staged" --> W
+    R -- "git restore" --> W
+```
+
+</div>
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📂 **Working folder**
+
+The files as they are now. You edit here.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **Staging area**
+
+`git add` copies the present content of a file into it. An edit made afterwards is not in it.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🗄️ **Repository**
+
+`git commit` turns the staging area into a tree and a commit.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">The staging area lets one commit have one purpose: the first four commits were made from one folder, each part staged alone.</div>
+
+<!--
+**Say:** this closes the model: blob, tree, commit, branch, and the three areas a change passes through. The diagram comes back with every command.
+(~2 min)
+-->
+
+<!-- Parked 2026-10-21 from Lecture 06, slide 39, section Changes & History, after 'Reading the History: log': git show and git blame are now introduced where they answer the opening question, in 'Who Changed the Raw Export' and 'Read Tomas's Commit Line by Line' -->
+
+---
+hideInToc: true
+---
+
+# Read a Commit, Trace a Line: **show** and **blame**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ git show --stat 15505c4
+commit 15505c482d25129590a630d023046267f7abb020 (HEAD -> main)
+Author: Smiltė <smilte@example.org>
+Date:   Tue Oct 20 10:35:00 2026 +0300
+
+    Give the mean temperature in the README
+
+ README.md | 5 +++++
+ 1 file changed, 5 insertions(+)
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+```text
+$ git blame -s -L 48,49 README.md
+15505c4 48) - **Mean air temperature, 2016 to 2025:** 7.16 °C
+15505c4 49) - **From:** `column_stats.py` on `data/processed/weather_valid.csv`, 87 552 hours
+```
+
+</div>
+
+<div class="note-text mt-sm"><code>git show</code> prints one commit with what it changed; without <code>--stat</code> the full diff. <code>git blame</code> names, for every line, the commit that last changed it; <code>-L 48,49</code> limits it to two lines, <code>-s</code> leaves out name and date.</div>
+
+<!--
+**Say:** blame answers "since when does this line read like this, and why": take the id from blame and give it to git show.
+**If asked:** in VS Code the Status Bar shows the author and age of the commit behind the line the cursor is in.
+(~2 min)
+-->
+
+<!-- Parked 2026-10-21 from Lecture 06, slide 46, the first slide of Remotes: the mermaid drawing of push, pull and clone; replaced by 'A Remote Is a Second Copy' with the Software Carpentry figure, adapted to the weather project (git-weather-remote-pushed.svg) -->
+
+---
+hideInToc: true
+---
+
+# A Remote Is a Second **Copy**
+
+<div style="display: flex; justify-content: center;">
+
+```mermaid {scale: 0.95}
+flowchart LR
+    W["Working folder"] -- "git add" --> S["Staging area"] -- "git commit" --> R["Repository<br/>.git on the laptop"]:::input -- "git push" --> G["Remote<br/>on GitHub"]:::input
+    G -- "git pull" --> R
+    G -- "git clone" --> L["A second laptop"]
+    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
+```
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ☁️ **What it is**
+
+- The same repository on another computer: the same objects under the same ids
+- A host keeps it reachable: GitHub, GitLab, Bitbucket. This lecture uses GitHub
+- `origin` is the usual name of the first remote
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🎯 **What it is for**
+
+- A copy of the project outside the laptop
+- The same project on a second computer
+- Work with other people on one history
+
+</div>
+
+</div>
+
+<!--
+**Say:** a push sends the objects the remote lacks, then moves the branch name there. A pull does the same the other way. Ids are compared, not files: an object already there is not sent again.
+(~2 min)
+-->
+

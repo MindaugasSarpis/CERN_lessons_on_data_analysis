@@ -19,102 +19,8 @@ layout: quote
 # **Version control** keeps every state a project went through, with who changed what, when and why.
 
 <!--
-**Say:** read the line, then go straight to the two copies of the export.
+**Say:** read the line, then go straight to the copies.
 (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Two Copies of the **Export**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Smiltė keeps `data/raw/daily_export.csv` of the weather project. Her colleague Tomas sends back his copy of the same file. Both have 180 bytes.
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## 💻 **zsh · Git Bash**
-
-```text
-$ shasum -a 256 smilte/daily_export.csv tomas/daily_export.csv
-9d849815d88eceb18366ee66ac72f26b72e195bea8bb20aa9a1474372513bbdb  smilte/daily_export.csv
-13fbcae6a7a4d67ec30fdf3bedc0b666209f7a4dc453ea72ff6de7370ffd6aee  tomas/daily_export.csv
-```
-
-Git Bash: `sha256sum` in place of `shasum -a 256`, with the same output.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-The checksums say that the two files differ. They do not say where, who changed the file, or why.
-
-</div>
-
-<!--
-**Ask:** which copy is the file as it arrived from the station? Nobody can tell from 64 digits.
-**If asked:** `$` stands for the prompt of both shells; zsh on a Mac shows `%`.
-**Do:** a show of hands: who has files named final, final_v2, final_corrected?
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Compare Two Copies: `git diff`
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔍 **Line by line**
-
-```text
-$ git diff --no-index smilte/daily_export.csv tomas/daily_export.csv
-diff --git a/smilte/daily_export.csv b/tomas/daily_export.csv
-index 0799b86..a2093bf 100644
---- a/smilte/daily_export.csv
-+++ b/tomas/daily_export.csv
-@@ -1,5 +1,5 @@
- nr;date;temp_c
--1;2025-10-01;6,3
-+1;2025-10-01;6,4
- 2;2025-10-02;5,0
- 3;2025-10-03;5,6
- 4;2025-10-04;7,0
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 🧾 **What the two copies tell**
-
-| Question | Answer |
-| --- | --- |
-| Do they differ? | Yes, by the checksum |
-| Where? | Line 2: `6,3` against `6,4`, by `git diff` |
-| Who changed it, when, and why? | Nothing in either file says |
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-A line with `-` is in the first file only, a line with `+` in the second only, a line with a space in both.
-
-</div>
-
-<!--
-**Say:** Git was installed in Seminar 4; `--no-index` compares two files outside any project.
-**Ask:** was 6,4 read off a paper log, or typed by mistake? The two copies cannot tell.
-(~3 min)
 -->
 
 ---
@@ -138,14 +44,128 @@ hideInToc: true
 
 <div>
 
-<img src="/figures/comic_version.jfif" style="max-height: 430px;">
+<img src="/figures/comic_version.jfif" style="max-height: 415px;">
 
 </div>
 
 </div>
 
 <!--
-**Say:** the third row of the table is the gap. A copy keeps the bytes and the name; who, when and why live in somebody's memory.
+**Do:** a show of hands: who has files named final, final_v2, final_corrected?
+**Say:** a copy keeps the bytes and the name. Who, when and why live in somebody's memory.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Copies of the **Export**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Smiltė keeps `data/raw/daily_export.csv` of the weather project: the daily mean temperatures of 1 to 9 October 2025. Her colleague Tomas sends his copy back by e-mail. Both files have 180 bytes.
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **Smiltė's copy, lines 1 to 4**
+
+```text
+nr;date;temp_c
+1;2025-10-01;6,3
+2;2025-10-02;5,0
+3;2025-10-03;5,6
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📄 **Tomas's copy, lines 1 to 4**
+
+```text
+nr;date;temp_c
+1;2025-10-01;6,4
+2;2025-10-02;5,0
+3;2025-10-03;5,6
+```
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact table-compact mt-md">
+
+| Question | What the two files say |
+| --- | --- |
+| Do they differ? | Yes, in line 2: `6,3` against `6,4` |
+| Who changed it, when, and why? | Nothing in either file |
+
+</div>
+
+<!--
+**Ask:** which copy is the file as it came from the station? Was 6,4 read off a paper log, or typed by mistake?
+**If asked:** the checksums of Lecture 4, `9d849815…` and `13fbcae6…`, say that the two files differ, not where.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A File as a Sequence of **Changes**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+A version control system records every change of a file, one after another, each with who made it, when, and why. Any earlier version can be brought back, and nothing is copied by hand.
+
+</div>
+
+<img class="fig fig-light" src="/figures/play-changes.svg" style="display:block;margin:1.2rem auto 0;max-height:210px;">
+
+<div class="caption-text">Figure: Software Carpentry, <em>Version Control with Git</em>, CC BY 4.0</div>
+
+<!--
+**Say:** the first sheet is the start, each dashed line a change. Smiltė's export with Tomas's change would be the second sheet, with his name, the time and his reason beside the change.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# How a Merge Joins Two **Versions**
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-primary card-glass pad-compact text-center">
+
+## 🔀 **Two versions from one start**
+
+<img class="fig fig-light" src="/figures/versions.svg" style="display:inline-block;max-height:250px;">
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+## 🔗 **A merge joins them**
+
+<img class="fig fig-light" src="/figures/merge.svg" style="display:inline-block;max-height:250px;">
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Changes to different lines are joined without help. Changes to the same line are a <strong>conflict</strong>: Git shows both, and a person decides.</div>
+
+<div class="caption-text" style="margin-top:0.3rem;">Figures: Software Carpentry, <em>Version Control with Git</em>, CC BY 4.0</div>
+
+<!--
+**Say:** Smiltė and Tomas change the same export on the same day. With copies, someone joins the two by hand; Git joins them line by line.
 (~2 min)
 -->
 
@@ -217,12 +237,2299 @@ layout: section
 hideInToc: true
 ---
 
-# The **Model**
+# Setting **Up**
 
-To keep who, when and why, Git stores every version under a name computed from its bytes.
+Git writes a name and an e-mail address into every commit.
 
 <!--
-**Say:** four ideas, each built on the checksum of Lecture 4: a blob, a tree, a commit, a branch. With the model the commands need no memorising.
+**Say:** Git was installed in Seminar 4. Before the first commit it has to know who is committing.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Check Git and Its **Settings**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git --version
+git version 2.56.0
+```
+```text
+$ git --version
+git version 2.56.0
+$ git config --global user.name
+Smiltė
+```
+```text
+$ git --version
+git version 2.56.0
+$ git config --global user.name
+Smiltė
+$ git config --global user.email
+smilte@example.org
+```
+````
+
+Your version differs. Git for Windows prints `2.56.0.windows.1`, Apple's Git ends in `(Apple Git-…)`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ➕ **Three more settings**
+
+```text
+$ git config --global init.defaultBranch main
+$ git config --global pull.rebase false
+$ git config --global core.autocrlf false
+```
+
+The first names the first branch `main` instead of `master`. The second lets `git pull` join two histories by a merge. The third keeps Git from rewriting line endings. None prints anything.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ An empty answer means the setting is missing: `git config --global user.name "Your Name"`, and the same for `user.email`. Both are written into every commit.
+
+</div>
+
+<!--
+**Live:** `git --version`, then `git config --global user.name`, in the terminal of VS Code.
+**Ask:** hands up, who gets a version number? Who gets a name?
+**Say:** the three lines on the right are typed now, on every laptop. Git for Windows comes with master and with core.autocrlf true.
+(~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Tracking **Changes**
+
+The weather project of Lecture 4, with a shorter `rebuild.sh`, goes into a repository, one commit at a time.
+
+<!--
+**Say:** each step once in the Source Control view and once typed: the button and the command are the same thing.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Three **Areas**
+
+<img class="fig fig-light" src="/figures/git-staging-area.svg" style="display:block;margin:0.4rem auto 0;max-height:230px;">
+
+<div class="caption-text" style="margin-top:0.3rem;">Figure: Software Carpentry, <em>Version Control with Git</em>, CC BY 4.0</div>
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📂 **Working folder**
+
+The files as they are on the disk. You edit here: the sheet on the left.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📋 **Staging area**
+
+`git add` copies the present content of a file into it. An edit made afterwards is not in it.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🗄️ **Repository**
+
+`git commit` keeps everything staged as one version, a **commit**, in the folder `.git`.
+
+</div>
+
+</div>
+
+<!--
+**Say:** every change passes three places: the file on the disk, the staging area, the repository. The grey box is `.git`; it holds the last two.
+**If asked:** the staging area is also called the *index*. It lets one commit hold one purpose: stage the parts that belong together, leave the rest for the next commit.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Source Control in **VS Code**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="text-center">
+
+<img src="/figures/git_vscode_init.png" style="max-height: 400px; display: inline-block; border-radius: 8px;">
+
+</div>
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🧭 **Two ways to the same Git**
+
+- The **Source Control** view is the third icon of the Activity Bar: `Ctrl+Shift+G` (macOS `Cmd+Shift+G`)
+- VS Code runs the Git that is installed. Every button of the view runs a Git command
+- The same commands are typed in the terminal: **Terminal** > **New Terminal**
+- Another editor has other buttons. The commands are the same everywhere 🔧
+
+</div>
+
+</div>
+
+<!--
+**Do:** open the weather project in VS Code, then the Source Control view.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Create the **Repository**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🖱️ **In Source Control**
+
+Select **Initialize Repository**. The view then lists every file of the folder under **Changes**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⌨️ **Typed**
+
+```text
+$ git init
+Initialized empty Git repository in /Users/smilte/weather-project/.git/
+$ ls -a
+.  ..  .git  README.md  data  results  scripts
+```
+
+</div>
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-info card-glass pad-compact">
+
+A **repository** is the project folder together with its `.git` folder. All commits are in `.git`. It is made once per project.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+⚠️ Deleting `.git` deletes the history and leaves the files. Never make a repository inside another one, and never in the home folder.
+
+</div>
+
+</div>
+
+<!--
+**Live:** select **Initialize Repository**, then `ls -a` in the terminal: the button made this one folder.
+**If asked:** `-a` shows names that begin with a dot, which `ls` hides. Git Bash may list `README.md` after `data`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What Git Sees: `git status`
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="text-center">
+
+<img src="/figures/git_weather_changes.png" style="max-height: 360px; display: inline-block; border-radius: 8px;">
+
+</div>
+
+<div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ git status --short
+?? README.md
+?? data/
+?? scripts/
+```
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`U` in the view and `??` in the terminal say the same: the file is **untracked**, Git sees it and has no version of it. The terminal names a folder once; `results` is empty and not listed.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Without <code>--short</code>, <code>git status</code> says the same in sentences, with a hint for the next command. It changes nothing.</div>
+
+<!--
+**Ask:** count the files in the view: 8. Which two did a script make? `daily.csv` and `weather_valid.csv`.
+**If asked:** the long form starts `On branch main`, `No commits yet`, and lists the three names under `Untracked files:`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Stage, Then **Commit**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="text-center">
+
+<img src="/figures/git_weather_staged.png" style="max-height: 340px; display: inline-block; border-radius: 8px;">
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⌨️ **Typed**
+
+```text
+$ git add README.md
+$ git commit -m "Add the README"
+[main (root-commit) c08a1c7] Add the README
+ 1 file changed, 49 insertions(+)
+ create mode 100644 README.md
+```
+
+The answer names the branch, `main`, then `c08a1c7`, the first seven digits of the commit's **id**, then the message and 49 new lines.
+
+</div>
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+🖱️ In the view: **+** beside `README.md` moves it to **Staged Changes**, and its letter turns to `A`. Type the message, then **Commit**, or `Ctrl+Enter` (macOS `Cmd+Enter`).
+
+</div>
+
+<!--
+**Live:** stage `README.md` with **+**, type "Add the README", commit. The other seven files stay under Changes.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What a Commit **Keeps**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| A commit keeps | In `c08a1c7`, the first commit |
+| --- | --- |
+| Every file of the staging area, complete | `README.md`, 49 lines |
+| The commit before it | None: it is the first, the *root-commit* |
+| Who, and when | Smiltė, 20 October 2026, 10:15 |
+| Why | The message, *Add the README* |
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The **id**, `c08a1c73cb29ed8ed399f19e74f14996d05636d4`, is a checksum of all four. The same commit has the same id on every copy of the repository; another file, message or time gives another id.
+
+</div>
+
+<!--
+**Say:** a commit is a complete picture of the staged files, with a pointer to the commit before it. Git shows it as the change from that one.
+**If asked:** Git stores the four as a short text and hashes it; the slides For the Curious show that text.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What `git status --short` Says in Each **State**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-sm">
+
+| State of the file | `git status --short` | Letter in the view |
+| --- | --- | --- |
+| New, Git has no version of it | <code style="white-space: pre">?? .gitignore</code> | `U` |
+| New and staged | <code style="white-space: pre">A  data/raw/weather.csv</code> | `A` under **Staged Changes** |
+| Changed since the last commit, not staged | <code style="white-space: pre"> M README.md</code> | `M` |
+| Changed and staged | <code style="white-space: pre">M  README.md</code> | `M` under **Staged Changes** |
+| Deleted from the folder, not staged | <code style="white-space: pre"> D data/raw/daily_export.csv</code> | `D` |
+| Changed on two branches, a merge stopped | <code style="white-space: pre">UU README.md</code> | `!` |
+| Ignored, shown with `--ignored` | <code style="white-space: pre">!! data/processed/</code> | not listed |
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+Two columns before the name: the left one is the staging area, the right one the working folder. `M` on the left is staged, `M` on the right is not.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+A file with no letter is as in the last commit. The Status Bar shows `main*` with changes, `main*+` with staged ones, `main!` during a conflict.
+
+</div>
+
+</div>
+
+<!--
+**Say:** every line of this table is an output of the lecture project. Read the two columns before the file name: left the staging area, right the working folder.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Commit **Message**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## ✍️ **Rules**
+
+- One commit has one purpose. If the message needs the word *and*, make two commits
+- The first line has at most about 50 characters
+- It says what the commit does, as an instruction: *Add*, *Give*, *Remove*
+- The reason goes below an empty line, when the first line does not give it
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🔎 **Examples**
+
+❌ `update`
+
+❌ `fixed stuff`
+
+❌ `final version`
+
+✅ `Add the README`
+
+✅ `Give the mean temperature in the README`
+
+✅ `Mark the 120 hours of -999 in the README`
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The message is read months later, by someone who sees one line per commit and nothing else.
+
+</div>
+
+<!--
+**Say:** "Add the data and the scripts" is two things that belong together: the scripts read the data.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# What Goes into a **Repository**
+
+The project holds raw data, scripts, and files that a script makes again. Not all of them belong in a repository.
+
+<!--
+**Say:** Git was made for text written by people, and the project has data files. Which go in, which stay out, and what the README then has to say.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which Files Go **In**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| File | In the repository | Reason |
+| --- | --- | --- |
+| `README.md`, the scripts | Yes | Written by hand. Nothing can make them again |
+| Small raw data: `weather.csv`, 2.5 MB | Yes | The project is complete in one piece |
+| Large raw data: one file of 3 GB | No | Too large for Git and for the host |
+| `data/processed/*`, made by `rebuild.sh` | No | The script is in the repository and makes them again |
+| `.DS_Store`, `Thumbs.db` | No | Made by the operating system, of no use to anyone |
+| Passwords and access keys | Never | A pushed commit stays readable for good |
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+`weather_valid.csv` has 2 511 735 bytes and would fit. It stays out because one line of `rebuild.sh` makes it again. The README promises its 87 553 lines, so a rebuilt copy can be checked.
+
+</div>
+
+<!--
+**Ask:** where does `daily.csv` go? Out: the script writes it, and the README gives its checksum, 33fe5e77…
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which Data Files Fit in a **Repository**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-success card-glass pad-tight">
+
+## ✅ **`weather.csv`, 2 515 215 bytes**
+
+- Git keeps each content once, compressed: 722 938 bytes
+- After 14 commits `.git` takes 1.05 MB: the data file never changed, so it was kept once
+- Twelve copies of the folder would take 60.7 MB
+- The first push sends 30 objects in 554 KiB
+
+</div>
+
+<div class="card card-warning card-glass pad-tight">
+
+## ❌ **One file of 3 GB**
+
+- GitHub refuses a file above 100 MB and warns above 50 MB
+- A changed line gives a second version of the whole file
+- Every copy of the repository carries every version of every file
+- A commit cannot be removed later without rewriting every commit after it
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A file that stays out is still on the disk. Git is told to ignore it, and the README says where it comes from or which script makes it.
+
+</div>
+
+<!--
+**Say:** the numbers on the left are measured on the lecture project. Each commit names the one before it, so taking one out changes every commit after it.
+**If asked:** the folder holds 5.06 MB; twelve copies are 12 × 5 056 982 bytes = 60.7 MB.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The File **`.gitignore`**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`.gitignore`, in the project folder**
+
+```text
+# made by the operating system
+.DS_Store
+Thumbs.db
+
+# made by scripts/rebuild.sh
+data/processed/
+```
+
+One pattern per line, and `#` starts a comment. `*.tmp` is every file ending in `.tmp`. `data/processed/` is the whole folder.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ git add .gitignore
+$ git commit -m "Add .gitignore"
+[main e3f4e26] Add .gitignore
+ 1 file changed, 6 insertions(+)
+...
+```
+
+🖱️ In the view: right-click a file, **Add to .gitignore**.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm"><code>.gitignore</code> is a file of the project and is committed. It acts only on files that Git does not track yet.</div>
+
+<!--
+**Ask:** after this commit, how many files are left under Changes? Six: the two in `data/processed` are gone from the list.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same Bytes on Every Laptop: **`.gitattributes`**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📄 **`.gitattributes`**
+
+```text
+# Check out every file with the bytes it was committed with:
+# no CRLF line endings on Windows, the same checksums on every laptop.
+* -text
+```
+
+```text
+$ git add .gitattributes
+$ git commit -m "Keep the committed bytes of every file on checkout"
+[main ef28e40] Keep the committed bytes of every file on checkout
+...
+```
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🪟 **Without it, on Windows**
+
+Git for Windows comes with `core.autocrlf true`. A clone then gets `0d 0a` at the end of each of the 87 673 lines of `weather.csv`: 87 673 bytes more, and `sha256sum` no longer gives `3f1ad06d…`.
+
+`* -text` says: no file of this project is text to convert. It travels with the repository, on every laptop that clones it.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the global setting of the check slide acts on one laptop; this file acts on every clone.
+**If asked:** `git status` stays clean even with the extra bytes, because Git takes the `0d` out again when it reads. Only the checksum shows it.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Commit the **Rest**
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git add .
+$ git status --short --ignored
+A  data/raw/daily_export.csv
+A  data/raw/weather.csv
+A  scripts/clean_export.py
+A  scripts/column_stats.py
+A  scripts/rebuild.sh
+!! data/processed/
+```
+```text
+$ git add .
+$ git status --short --ignored
+A  data/raw/daily_export.csv
+A  data/raw/weather.csv
+A  scripts/clean_export.py
+A  scripts/column_stats.py
+A  scripts/rebuild.sh
+!! data/processed/
+$ git commit -m "Add the data and the scripts"
+[main a9f65a6] Add the data and the scripts
+ 5 files changed, 87798 insertions(+)
+...
+```
+````
+
+</div>
+
+<div>
+
+<img class="fig fig-light" src="/figures/git-committing.svg" style="display:block;margin:0 auto;max-height:235px;">
+
+<div class="caption-text" style="margin-top:0.3rem;">Figure: Software Carpentry, CC BY 4.0</div>
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+- `git add .` stages everything in the present folder that is not ignored: the **+** on the **Changes** header
+- Read the list before the commit: `!!` marks the ignored folder
+- 87 673 of the 87 798 new lines are `weather.csv`
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+**Do:** stop after `git status` and let the room check the list against the Explorer.
+**Say:** five files staged, one commit: as in the picture, where two files go into one commit.
+**If asked:** the commit also prints one `create mode` line per file; they are cut here.
+(~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Changes & **History**
+
+A file changes, and the history says what changed, when and why.
+
+<!--
+**Say:** from here on, every change goes the same way: edit, read the diff, stage, commit.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Change, Seen as a **Diff**
+
+<div class="text-center mt-sm">
+
+<img src="/figures/git_weather_diff.png" style="max-height: 200px; display: inline-block; border-radius: 8px;">
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🖱️ **In Source Control**
+
+Smiltė adds a section **Result** to the README with the mean of Lecture 4. The file gets the letter `M`. Select it and the **diff view** opens: green lines are new, red lines gone.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 👀 **Read it before every commit**
+
+The diff is what the commit will contain. It also shows an edit that was not meant: a deleted line, a stray character.
+
+</div>
+
+</div>
+
+<!--
+**Live:** add the three Result lines to `README.md`, save, select the file in Source Control; then stage and commit it: *Give the mean temperature in the README*.
+**If asked:** a wide window shows the two versions side by side, a narrow one line under line as here.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same Diff, **Typed**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ git diff
+...
++## Result
++
++- **Mean air temperature, 2016 to 2025:** 7.16 °C
++- **From:** `column_stats.py` on `data/processed/…
++
+ ## Licence
+...
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔎 **Reading it**
+
+- `+` a line that came
+- `-` a line that went
+- a space: an unchanged line, shown so the change can be found
+- `...` marks lines cut on this slide
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Then the cycle closes as for every change: `git add README.md`, `git commit -m "Give the mean temperature in the README"`. The new commit is `15505c4`.
+
+</div>
+
+<!--
+**Say:** `git diff` compares the working folder with the staging area; after `git add` it prints nothing, and `git diff --staged` shows what will be committed.
+**If asked:** the cut lines are a header with the two file names and `@@ -43,6 +43,11 @@`: six lines from line 43 before, eleven after.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Reading the History: **log**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ git log --oneline
+15505c4 (HEAD -> main) Give the mean temperature in the README
+a9f65a6 Add the data and the scripts
+ef28e40 Keep the committed bytes of every file on checkout
+e3f4e26 Add .gitignore
+c08a1c7 Add the README
+```
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+- One line per commit, newest first: the id, then the message
+- `(HEAD -> main)` marks the commit the working folder is at, the newest of the branch `main`
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+- `git log` without `--oneline` adds the author and the date of each commit
+- The **Graph** at the bottom of Source Control lists the same commits
+
+</div>
+
+</div>
+
+<!--
+**Ask:** which commit made the README say 7.16? The newest.
+**If asked:** a list longer than the window ends in a colon: the arrow keys scroll, q leaves.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# **Undoing**
+
+A change can be wrong. How it is taken back depends on how far it got.
+
+<!--
+**Say:** three cases, by how far the change got: an edit in the working folder, the last commit, an older commit.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Undo an Edit: **restore**
+
+<div class="grid-2 gap-md mt-sm">
+
+<div>
+
+<img class="fig fig-light" src="/figures/git-restore.svg" style="display:block;margin:0 auto;max-height:215px;">
+
+<div class="caption-text" style="margin-top:0.3rem;">Figure: Software Carpentry, CC BY 4.0</div>
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+🖱️ The bent arrow beside a changed file is **Discard Changes**: the content of the last commit comes back. **−** beside a staged file unstages it; the edit stays.
+
+</div>
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git diff --stat
+ README.md | 11 -----------
+ 1 file changed, 11 deletions(-)
+```
+```text
+$ git diff --stat
+ README.md | 11 -----------
+ 1 file changed, 11 deletions(-)
+$ git restore README.md
+```
+```text
+$ git diff --stat
+ README.md | 11 -----------
+ 1 file changed, 11 deletions(-)
+$ git restore README.md
+$ git status
+On branch main
+nothing to commit, working tree clean
+```
+````
+
+`git restore --staged README.md` unstages.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ An edit that was never committed and is discarded is gone. Git has no copy of it. Read the diff first.
+
+</div>
+
+<!--
+**Live:** in the README select one whole section, delete it, save; `git diff --stat`; `git restore README.md`.
+**Say:** this undo works after the editor was closed.
+**If asked:** the picture also restores from an older commit, `HEAD~1` being the one before the last: `git restore --source=<id> <file>` does that for one file.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Correct the Last Commit: **amend**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git add LICENSE
+$ git commit -m "Add teh LICENSE named in the README"
+[main c2422af] Add teh LICENSE named in the README
+...
+```
+```text
+$ git add LICENSE
+$ git commit -m "Add teh LICENSE named in the README"
+[main c2422af] Add teh LICENSE named in the README
+...
+$ git commit --amend -m "Add the LICENSE named in the README"
+[main 2eab6b2] Add the LICENSE named in the README
+...
+```
+```text
+$ git add LICENSE
+$ git commit -m "Add teh LICENSE named in the README"
+[main c2422af] Add teh LICENSE named in the README
+...
+$ git commit --amend -m "Add the LICENSE named in the README"
+[main 2eab6b2] Add the LICENSE named in the README
+...
+$ git log --oneline -2
+2eab6b2 (HEAD -> main) Add the LICENSE named in the README
+15505c4 Give the mean temperature in the README
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **A new commit replaces the old**
+
+The README names a file `LICENSE` that did not exist yet. `--amend` makes a new commit with the corrected message, `2eab6b2`, and `c2422af` leaves the history.
+
+In the view: the arrow on **Commit**, then **Commit (Amend)**.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ Amend only a commit that has not been pushed. A commit that others may already have is corrected by a new commit.
+
+</div>
+
+<!--
+**Say:** the id is computed from the whole commit, message included, so a corrected commit is another commit with another id.
+**If asked:** the MIT text is copied from choosealicense.com, with the year and the name.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Commit That Breaks the **Rebuild**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git rm data/raw/daily_export.csv
+rm 'data/raw/daily_export.csv'
+```
+```text
+$ git rm data/raw/daily_export.csv
+rm 'data/raw/daily_export.csv'
+$ git commit -m "Remove the raw export, daily.csv replaces it"
+[main 172f06a] Remove the raw export, daily.csv replaces it
+...
+```
+```text
+$ git rm data/raw/daily_export.csv
+rm 'data/raw/daily_export.csv'
+$ git commit -m "Remove the raw export, daily.csv replaces it"
+[main 172f06a] Remove the raw export, daily.csv replaces it
+...
+$ ./scripts/rebuild.sh
+no file data/raw/daily_export.csv
+```
+```text
+$ git rm data/raw/daily_export.csv
+rm 'data/raw/daily_export.csv'
+$ git commit -m "Remove the raw export, daily.csv replaces it"
+[main 172f06a] Remove the raw export, daily.csv replaces it
+...
+$ ./scripts/rebuild.sh
+no file data/raw/daily_export.csv
+$ echo $?
+1
+```
+````
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+`git rm` deletes the file and stages the deletion. The commit looked tidy: `daily.csv` holds the same nine values. Then the rebuild stops with status 1, because the script reads the raw export. Raw files are never deleted.
+
+</div>
+
+<!--
+**Ask:** the commit is made. What now: copy the file back from an e-mail, or ask Git?
+**If asked:** the stop at the first error is `set -e`, line 2 of `rebuild.sh`, from Lecture 4.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Take Back a Commit: **revert**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git revert --no-edit 172f06a
+[main 2eb3b1c] Revert "Remove the raw export, daily.csv replaces it"
+...
+```
+```text
+$ git revert --no-edit 172f06a
+[main 2eb3b1c] Revert "Remove the raw export, daily.csv replaces it"
+...
+$ git log --oneline -3
+2eb3b1c (HEAD -> main) Revert "Remove the raw export, daily.csv replaces it"
+172f06a Remove the raw export, daily.csv replaces it
+2eab6b2 Add the LICENSE named in the README
+```
+```text
+$ git revert --no-edit 172f06a
+[main 2eb3b1c] Revert "Remove the raw export, daily.csv replaces it"
+...
+$ git log --oneline -3
+2eb3b1c (HEAD -> main) Revert "Remove the raw export, daily.csv replaces it"
+172f06a Remove the raw export, daily.csv replaces it
+2eab6b2 Add the LICENSE named in the README
+$ ./scripts/rebuild.sh
+9 rows written to data/processed/daily.csv
+```
+````
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ↩️ **A commit that does the opposite**
+
+`revert` adds a commit with the reverse change. Nothing leaves the history, so it is safe for pushed commits. `--no-edit` keeps the proposed message.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🗂️ **One file only**
+
+`git restore --source=a9f65a6 data/raw/daily_export.csv` puts one file back as it was in an old commit. Many answers on the web use `git reset --hard`: it discards uncommitted work. Nothing here needs it.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the history keeps both the mistake and its correction, with the reason in each message.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Choose the Undo by How Far the Change **Got**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| How far the change got | Typed | In Source Control |
+| --- | --- | --- |
+| Edited, not staged | `git restore <file>` | **Discard Changes** |
+| Staged, not committed | `git restore --staged <file>` | **−** beside the file |
+| The last commit, not pushed | `git commit --amend` | **Commit (Amend)** |
+| Any commit, pushed or not | `git revert <id>` | No button: typed |
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ Only the first row loses work: an edit that was never committed has no copy in Git. Every other row keeps what was committed.
+
+</div>
+
+<!--
+**Ask:** Tomas pushed a commit last week that was wrong. Which row? The last: revert.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# **Remotes**
+
+Every commit so far lives in one `.git` folder on one laptop.
+
+<!--
+**Say:** a remote is the same history on a server.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Remote Is a Second **Copy**
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-primary card-glass pad-compact text-center">
+
+## 🆕 **A new, empty repository on GitHub**
+
+<img class="fig fig-light" src="/figures/git-weather-remote-empty.svg" style="display:inline-block;max-height:260px;">
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact text-center">
+
+## ⬆️ **After the first push**
+
+<img class="fig fig-light" src="/figures/git-weather-remote-pushed.svg" style="display:inline-block;max-height:260px;">
+
+</div>
+
+</div>
+
+<div class="caption-text" style="margin-top:0.3rem;">Figures adapted from Software Carpentry, <em>Version Control with Git</em>, CC BY 4.0</div>
+
+<div class="note-text mt-sm">A <strong>remote</strong> is the same repository on another computer, with the same commits under the same ids. GitHub, GitLab and Bitbucket keep remotes reachable; <code>origin</code> is the usual name of the first.</div>
+
+<!--
+**Say:** the top box is Smiltė's laptop, the bottom box GitHub. `git push` sends the commits GitHub lacks; `git pull` fetches the ones the laptop lacks. What is there already is not sent again.
+**Ask:** what is a remote for? A copy of the project outside the laptop, the same project on a second computer, work with other people on one history.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A GitHub **Account**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🪪 **Create it once**
+
+1. Open `github.com` and select **Sign up**
+2. Enter an e-mail address, a password and a user name
+3. Type in the code that GitHub sends to that address
+4. Stay on the free plan. It allows private and public repositories without limit
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## 🤔 **Choose with care**
+
+- The user name is public and part of every address: `github.com/<user>/<repository>`
+- Use an e-mail address that you keep after your studies
+- A **private** repository is seen by you and those you invite, a **public** one by everyone
+- The e-mail of `git config` is in every commit, readable in a public repository
+
+</div>
+
+</div>
+
+<!--
+**Ask:** who has an account already? The others create one in the seminar; it takes three minutes and the mailbox.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Publish from **VS Code**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="text-center">
+
+<img src="/figures/git_vscode_publish.png" style="max-height: 170px; display: inline-block; border-radius: 8px;">
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🖱️ **In Source Control**
+
+1. When everything is committed, the button reads **Publish Branch**. Select it
+2. VS Code asks: *The extension 'GitHub' wants to sign in using GitHub.* Select **Allow**, sign in in the browser and return
+3. Choose **Publish to GitHub private repository**
+4. **Open on GitHub** shows the project in the browser, with the README as its front page
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+From now on the button reads **Sync Changes**, with the number of commits to fetch ↓ and to send ↑. **Sync** pulls, then pushes.
+
+</div>
+
+<!--
+**Do:** publish with your own account, open the repository in the browser and show the files, the rendered README, and the commits with the same ids as in the terminal.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Publish to GitHub, **Typed**
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+## 🌐 **On `github.com` first**
+
+**New repository**, the name `weather-project`, **Private**, no README, **Create repository**. The page then shows the address of the empty repository. `remote add` names it `origin`, and `push -u` sends `main` and ties it to `origin/main`, so a later `git push` or `git pull` needs no more words.
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+```text
+$ git remote add origin https://github.com/smilte-example/weather-project.git
+$ git push -u origin main
+...
+To https://github.com/smilte-example/weather-project.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+```
+
+</div>
+
+<!--
+**Say:** one of the two ways, not both: a repository published from VS Code already has its remote. The first push asks for the GitHub sign-in in the browser.
+**Ask:** push again at once, with nothing new. How much is sent? Nothing: `git push` answers `Everything up-to-date`.
+**If asked:** the cut lines count what is sent: 30 objects, 554 KiB for eight commits and the data.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Invite a **Collaborator**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-tight">
+
+## 🤝 **On `github.com`, in Smiltė's repository**
+
+1. **Settings**, then **Collaborators** in the list on the left
+2. **Add people**, type Tomas's user name, select him
+3. GitHub sends Tomas an invitation; he accepts it in the e-mail or on GitHub
+
+</div>
+
+<div class="card card-secondary card-glass pad-tight">
+
+## ✍️ **What Tomas may do then**
+
+- See the private repository and clone it
+- Push his commits to it, as Smiltė does
+- Anyone not invited does not see a private repository at all
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A collaborator writes to the same history. Every commit still carries its author, so the history says which of the two made each change.
+
+</div>
+
+<!--
+**Say:** Smiltė and Tomas now share one repository on GitHub, and each has a copy on the laptop.
+**If asked:** the free plan allows any number of collaborators, on private repositories too.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Clone on a Second **Computer**
+
+<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 2fr 3fr;">
+
+<div>
+
+<img class="fig fig-light" src="/figures/git-weather-remote-clone.svg" style="display:block;margin:0 auto;max-height:330px;">
+
+<div class="caption-text" style="margin-top:0.3rem;">After Software Carpentry, CC BY 4.0</div>
+
+</div>
+
+<div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📥 **Tomas clones the project**
+
+````md magic-move
+```text
+$ git clone https://github.com/smilte-example/weather-project.git
+Cloning into 'weather-project'...
+...
+```
+```text
+$ git clone https://github.com/smilte-example/weather-project.git
+Cloning into 'weather-project'...
+...
+$ cd weather-project
+$ git log --oneline -1
+2eb3b1c (HEAD -> main, origin/main, origin/HEAD) Revert "Remove …"
+```
+````
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The clone has every commit, under the same ids, and every committed file. Tomas commits in it as on any repository, and his pushes reach Smiltė's repository on GitHub.
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+**Say:** the picture is the whole setup: Smiltė's laptop on top, GitHub in the middle, Tomas's laptop below, each with the same history.
+**If asked:** `origin/HEAD` is the remote's default branch, recorded by the clone. The last line is cut with … here.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Rebuild What the Clone **Lacks**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash, in Tomas's clone**
+
+````md magic-move
+```text
+$ ls data
+raw
+```
+```text
+$ ls data
+raw
+$ ./scripts/rebuild.sh
+9 rows written to data/processed/daily.csv
+```
+```text
+$ ls data
+raw
+$ ./scripts/rebuild.sh
+9 rows written to data/processed/daily.csv
+$ ls data
+processed  raw
+```
+````
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ♻️ **The ignored folder comes back**
+
+`data/processed` is not in the clone: Git stores files, not folders, and this folder was ignored. Line 3 of `rebuild.sh`, `mkdir -p data/processed`, makes the folder; the next two lines fill it.
+
+</div>
+
+</div>
+
+<!--
+**Ask:** where do the two made files come from on Tomas's laptop? From the raw files and the script, both in the repository.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Pull: Fetch What Is **New**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **Tomas changes line 2 of the export to 6,4, commits, pushes**
+
+```text
+$ git commit -m "Correct 1 October to 6,4" -m "The station's paper log says 6,4 for 1 October 2025."
+[main f2546ed] Correct 1 October to 6,4
+...
+$ git push
+...
+   2eb3b1c..f2546ed  main -> main
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+## ⬇️ **Smiltė pulls**
+
+```text
+$ git pull
+...
+Fast-forward
+ data/raw/daily_export.csv | 2 +-
+...
+```
+
+</div>
+
+<div class="note-text mt-sm"><code>git pull</code> fetches the new commit and moves <code>main</code> forward. Pull before you start to work, push when you stop: then two computers never hold different work.</div>
+
+<!--
+**Say:** a second `-m` gives the message a body, below an empty line: the reason. `2eb3b1c..f2546ed` is the old and the new last commit.
+**Ask:** this is the change of the two copies at the start. Should a raw file change at all? Keep the question open.
+(~3 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# Branches & **Merging**
+
+A branch holds work that is tried apart from `main`. A merge joins it back.
+
+<!--
+**Say:** the pictures of the start, two versions from one and a merge, now with commands.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Create a **Branch**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🖱️ **In Source Control**
+
+<img src="/figures/git_vscode_branch.png" style="border-radius: 6px;">
+
+Select the branch name at the left of the Status Bar, then **Create new branch...**, type `ranges`, Enter. The Status Bar now reads `ranges`.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⌨️ **Typed**
+
+```text
+$ git switch -c ranges
+Switched to a new branch 'ranges'
+$ git branch
+  main
+* ranges
+```
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Commits made now go to `ranges`. `main` stays as it was. Work that may fail is tried on a branch and reaches `main` when it is good.
+
+</div>
+
+<!--
+**Ask:** how much of the project did `git switch -c` copy? Nothing: a branch is a name, and the files stay where they are.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Work on the Branch, Then **Merge**
+
+<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git commit -m "Give the range of each column"
+[ranges 18b522d] Give the range of each column
+...
+```
+```text
+$ git commit -m "Give the range of each column"
+[ranges 18b522d] Give the range of each column
+...
+$ git switch main
+Switched to branch 'main'
+...
+```
+```text
+$ git commit -m "Give the range of each column"
+[ranges 18b522d] Give the range of each column
+...
+$ git switch main
+Switched to branch 'main'
+...
+$ git merge ranges
+Updating f2546ed..18b522d
+Fast-forward
+...
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🏷️ **Before the merge**
+
+```mermaid {scale: 0.6}
+flowchart RL
+    R(["ranges"]):::input --> C2["18b522d"] --> C1["f2546ed"]
+    M(["main"]):::input --> C1
+    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
+```
+
+## 🏷️ **After it**
+
+```mermaid {scale: 0.6}
+flowchart RL
+    R(["ranges"]):::input --> C2["18b522d"] --> C1["f2546ed"]
+    M(["main"]):::input --> C2
+    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm"><code>main</code> had no commit of its own, so the merge only moves <code>main</code> forward to <code>18b522d</code>: a <strong>fast-forward</strong>. <code>git branch -d ranges</code> then deletes the name; the commit stays. In the view: <strong>...</strong> > <strong>Branch</strong> > <strong>Merge...</strong></div>
+
+<!--
+**Say:** during `git switch main` the README in the editor loses its Range column; after the merge it is back.
+**If asked:** the column ranges (-16.3 to 32.4 °C, 34 to 100 %, 0.0 to 12.0 m/s) are the minimum and maximum of the valid rows.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Branches, Both **Changed**
+
+<div class="mt-sm" style="display: flex; justify-content: center;">
+
+```mermaid {scale: 0.8}
+gitGraph
+    commit id: "f2546ed"
+    commit id: "18b522d"
+    branch wording
+    checkout wording
+    commit id: "5a4b500"
+    checkout main
+    commit id: "7a2f164"
+```
+
+</div>
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ git log --oneline --graph --all -4
+* 7a2f164 (HEAD -> main) Give the number of hours in the first paragraph
+| * 5a4b500 (wording) Reword the first paragraph
+|/
+* 18b522d Give the range of each column
+* f2546ed (origin/main, origin/HEAD) Correct 1 October to 6,4
+```
+
+</div>
+
+<div class="note-text mt-sm">The branch <code>wording</code> rewrites the first paragraph of the README. Meanwhile <code>main</code> changes the same two lines. Neither history contains the other, so a merge needs a new commit that joins both.</div>
+
+<!--
+**Say:** this is the picture of the start, two versions from one, as Git prints it.
+**If asked:** if the two branches had changed different lines, Git would make the merge commit without a question.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Merge **Conflict**
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+```text
+$ git merge wording
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 📄 **`README.md` now**
+
+<pre class="slidev-code conflict-block"><code># Weather Station
+
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+The hourly log of one weather station, 2016 to 2025, 87 672 hours, and a
+table of daily mean temperatures typed into a spreadsheet from it.
+=======
+Ten years of hourly readings from one weather station, and the daily
+means of nine days of October 2025, typed into a spreadsheet from them.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; wording</code></pre>
+
+Above `=======` the lines of the branch in use, below them the lines that come in. Nothing is lost, and nothing is decided.
+
+</div>
+
+<!--
+**Say:** a conflict is no error. Git reports that the same lines changed twice and asks which text is meant. `git status` now lists the file as `both modified`, `UU` in short.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Resolve It in the **Editor**
+
+<div class="text-center mt-sm">
+
+<img src="/figures/git_weather_conflict.png" style="max-height: 220px; display: inline-block; border-radius: 8px;">
+
+</div>
+
+<div class="grid-3 gap-md mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+**1.** The file stands under **Merge Changes** with the sign `!`. Select it.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+**2.** Above the block: **Accept Current Change**, **Accept Incoming Change**, **Accept Both Changes**. Or edit the lines. The markers must go.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+**3.** **+** stages the file. **Continue** makes the merge commit. Its message is already filled in.
+
+</div>
+
+</div>
+
+<!--
+**Say:** here the incoming lines are accepted and "87 672 hours" is added by hand. The result has something of both, the usual case.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Resolve It, **Typed**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git add README.md
+$ git commit --no-edit
+[main 7ff1df4] Merge branch 'wording'
+```
+```text
+$ git add README.md
+$ git commit --no-edit
+[main 7ff1df4] Merge branch 'wording'
+$ git log --oneline --graph -5
+*   7ff1df4 (HEAD -> main) Merge branch 'wording'
+|\
+| * 5a4b500 (wording) Reword the first paragraph
+* | 7a2f164 Give the number of hours in the first paragraph
+|/
+* 18b522d Give the range of each column
+...
+```
+````
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Edit the file until it reads as it should, with no marker left. `git add` tells Git the conflict is settled, the commit closes the merge. A merge commit has two commits before it, one from each branch: the two lines that join in the graph. `git merge --abort` puts everything back as it was before the merge.
+
+</div>
+
+<!--
+**Say:** the graph is the merge picture of the start: two lines of work, joined in `7ff1df4`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Ahead and **Behind**
+
+<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
+
+<div class="text-center">
+
+<img src="/figures/git_weather_graph.png" style="max-height: 330px; display: inline-block; border-radius: 8px;">
+
+</div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## ☁️ **Two names for `main`**
+
+- `main` is where this laptop is, `origin/main` where the remote stood at the last contact
+- Four commits lie between them, and the button reads **Sync Changes 4↑**
+
+````md magic-move
+```text
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 4 commits.
+...
+```
+```text
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 4 commits.
+...
+$ git push
+...
+   f2546ed..7ff1df4  main -> main
+```
+````
+
+</div>
+
+</div>
+
+<!--
+**Say:** the merge happens on the laptop. The remote learns of it with the next push.
+**If asked:** the Graph on the left is the end of the lecture's history; the purple cloud marks `origin/main`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Common Git Errors and Their **Fixes**
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+```text
+fatal: not a git repository (or any of
+the parent directories): .git
+```
+
+The terminal is not in the project folder. `pwd` says where it is, and `cd` goes to the project.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+```text
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to '…'
+```
+
+The remote has a commit that this laptop lacks. Fetch and merge it with <code style="white-space: nowrap;">git pull --no-edit</code>, then push again.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+```text
+Your branch and 'origin/main' have diverged,
+and have 1 and 1 different commits each
+```
+
+`git status` after such a fetch. Both sides have a commit of their own. The same pull joins them.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+A screen full of `~` signs after `git commit` or `git merge`: Git opened the editor Vim for a message. Type `:q!` and press Enter. Then give the message with `-m`, or use `--no-edit`.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">Read the last lines of a long answer first: Git usually names the command that helps.</div>
+
+<!--
+**Say:** these four cover most of what stops a beginner. None of them means that anything is lost.
+**If asked:** the editor depends on the choice made when Git was installed; on a Mac it is Vim.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Where Each Command Moves a **Change**
+
+<div class="mt-sm" style="display: flex; justify-content: center;">
+
+<img class="fig" src="/figures/git_flow.svg" style="max-height: 425px; max-width: 100%;">
+
+</div>
+
+<!--
+**Say:** one map of the lecture: the working folder, the staging area (*index*), the repository on the laptop (*HEAD*), the remote. `add` and `commit` go right, `push` crosses to GitHub, `fetch` and `pull` come back.
+**Ask:** where on this map is `git restore`? From the repository back to the working folder.
+**If asked:** `git commit -a` stages every tracked file and commits in one step; `git fetch` fetches without merging, and `pull` is fetch plus merge.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+| Step | In Source Control | Typed |
+| --- | --- | --- |
+| Create the repository | **Initialize Repository** | `git init` |
+| See what changed | The **Changes** list. Select a file for its diff | `git status`, `git diff` |
+| Stage, unstage | **+**, **−** | `git add <file>`, `git restore --staged <file>` |
+| Commit | Message, then **Commit** | `git commit -m "…"` |
+| Discard an edit | **Discard Changes** | `git restore <file>` |
+| Read the history | **Graph**, **Timeline** | `git log --oneline`, `git show <id>`, `git blame <file>` |
+| Take back a commit | No button: typed | `git revert <id>` |
+| New branch | Branch name in the Status Bar | `git switch -c <name>` |
+| Merge | **...** > **Branch** > **Merge...** | `git merge <name>` |
+| Send and fetch | **Sync Changes** | `git push`, `git pull` |
+
+</div>
+
+<div class="note-text mt-sm">A working day: pull, edit, read the diff, stage, commit with a message that says why, push.</div>
+
+<!--
+**Say:** two rows are new: `git show` prints one commit in full, `git blame` names the commit behind each line of a file.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# A Result and Its **Commit**
+
+The question of the two copies, answered from the history.
+
+<!--
+**Say:** back to the start: one line of the raw export differs. Who changed it, when, and why?
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Who Changed the Raw **Export**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git log --oneline -- data/raw
+f2546ed Correct 1 October to 6,4
+2eb3b1c Revert "Remove the raw export, daily.csv replaces it"
+172f06a Remove the raw export, daily.csv replaces it
+a9f65a6 Add the data and the scripts
+```
+```text
+$ git log --oneline -- data/raw
+f2546ed Correct 1 October to 6,4
+2eb3b1c Revert "Remove the raw export, daily.csv replaces it"
+172f06a Remove the raw export, daily.csv replaces it
+a9f65a6 Add the data and the scripts
+$ git blame -L 2,2 data/raw/daily_export.csv
+f2546ed (Tomas 2026-10-20 11:30:00 +0300 2) 1;2025-10-01;6,4
+```
+````
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📜 **`git log -- data/raw`**
+
+Only the commits that changed something in `data/raw`. A folder of files that are never edited should have one: the commit that added them. Here it has four.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 🔎 **`git blame -L 2,2`**
+
+For each line, the commit that last changed it, with its author and time. Line 2 of the export, `6,4`, comes from `f2546ed`, by Tomas, at 11:30.
+
+</div>
+
+</div>
+
+<!--
+**Ask:** two of the four we know: the deletion and its revert. Which one is new?
+**If asked:** in VS Code the Status Bar shows the author and age of the commit behind the line the cursor is in.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Read Tomas's Commit **Line by Line**
+
+<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 3fr 2fr;">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git show f2546ed
+commit f2546ed4cd7ed6d64259cacbd6d0d6e2532203ca
+Author: Tomas <tomas@example.org>
+Date:   Tue Oct 20 11:30:00 2026 +0300
+...
+```
+```text
+$ git show f2546ed
+commit f2546ed4cd7ed6d64259cacbd6d0d6e2532203ca
+Author: Tomas <tomas@example.org>
+Date:   Tue Oct 20 11:30:00 2026 +0300
+
+    Correct 1 October to 6,4
+
+    The station's paper log says 6,4 for 1 October 2025.
+...
+```
+```text
+$ git show f2546ed
+commit f2546ed4cd7ed6d64259cacbd6d0d6e2532203ca
+Author: Tomas <tomas@example.org>
+Date:   Tue Oct 20 11:30:00 2026 +0300
+
+    Correct 1 October to 6,4
+
+    The station's paper log says 6,4 for 1 October 2025.
+...
+ nr;date;temp_c
+-1;2025-10-01;6,3
++1;2025-10-01;6,4
+...
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🧾 **The questions of the start**
+
+| Question | Answer |
+| --- | --- |
+| Which line? | Line 2, `6,3` to `6,4` |
+| Who? | Tomas |
+| When? | 20 October, 11:30 |
+| Why? | The paper log, in the message body |
+
+</div>
+
+</div>
+
+<!--
+**Do:** point at the table of "Two Copies of the Export", slide 4, then at Author, Date and the message here.
+**Say:** `git show` prints one commit: who, when, the message, then the diff of what it changed. The cut lines are the diff's header and the lines around the change.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Edit Changes the **Result**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+```text
+$ ./scripts/rebuild.sh
+9 rows written to data/processed/daily.csv
+$ shasum -a 256 data/processed/daily.csv
+58709abc8e3c698e4dd32feb2dae7db128d29138c6c1883d1f08f46fb40d36b1  data/processed/daily.csv
+```
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ❌ **Not the promised file**
+
+The README promises `daily.csv` with SHA-256 `33fe5e77…f705483d`. With `6,4` the rebuild gives `58709abc…fb40d36b`: the cleaned copy of the export with `6,4`.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## 📁 **Where the paper log belongs**
+
+`data/raw` holds the files as they arrived. A value from another source goes into the README, as a note with its source, and the raw file stays as it came.
+
+</div>
+
+</div>
+
+<!--
+**Say:** Tomas may well be right about the paper log. The fault is the place: a raw file edited in place breaks the checksum and hides what the station sent.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Take It Back and **Check**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git revert --no-edit f2546ed
+[main 06db171] Revert "Correct 1 October to 6,4"
+...
+```
+```text
+$ git revert --no-edit f2546ed
+[main 06db171] Revert "Correct 1 October to 6,4"
+...
+$ ./scripts/rebuild.sh
+9 rows written to data/processed/daily.csv
+$ shasum -a 256 data/processed/daily.csv
+33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+```
+```text
+$ git revert --no-edit f2546ed
+[main 06db171] Revert "Correct 1 October to 6,4"
+...
+$ ./scripts/rebuild.sh
+9 rows written to data/processed/daily.csv
+$ shasum -a 256 data/processed/daily.csv
+33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+$ git push
+...
+   7ff1df4..06db171  main -> main
+```
+````
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+♻️ Tomas's commit stays in the history, with its reason, and so does the revert. The rebuilt file has the checksum of the README again.
+
+</div>
+
+<!--
+**Say:** revert, not amend: the commit was pushed and Tomas has it. Amend would give Smiltė and Tomas two different histories.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Tag Names a **Version**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 💻 **zsh · Git Bash**
+
+````md magic-move
+```text
+$ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
+```
+```text
+$ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
+$ git log --oneline -2
+06db171 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 October to 6,4"
+7ff1df4 Merge branch 'wording'
+```
+```text
+$ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
+$ git log --oneline -2
+06db171 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 October to 6,4"
+7ff1df4 Merge branch 'wording'
+$ git push origin v1.0
+To https://github.com/smilte-example/weather-project.git
+ * [new tag]         v1.0 -> v1.0
+```
+````
+
+</div>
+
+<div class="grid-2 gap-md mt-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🏷️ **A name that does not move**
+
+A branch name moves with every commit. The tag `v1.0` stays on `06db171`. `-a` stores who set it, when, and a message. A tag is pushed by its name.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ♻️ **Which files made this number?**
+
+Tag the commit behind every result that leaves the project: a mean in an e-mail, a figure in a thesis. `git switch --detach v1.0` brings those files back, `git switch main` returns.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the 7.16 of Lecture 1, sent as one number, now comes with a name that fixes every file behind it.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Recap**: You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Say what a history keeps that copies do not: who, when and **why**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Stage and **commit**, in the Source Control view and typed
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Keep made files out with `.gitignore`, and the bytes of every file with `.gitattributes`
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read a **diff** and the history, and undo an edit or a commit
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Push to a **remote**, clone and pull
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ **Branch**, **merge**, and resolve a conflict
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-tight mt-md">
+
+## 🔬 **A result and its commit**
+
+A number that leaves the project carries the id or the tag of the commit that made it. With the id, the files behind the result come back exactly.
+
+</div>
+
+<!--
+**Do:** go through the six cards; let the room nod or object.
+(~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# For the **Curious**
+
+How Git keeps every version: under a name computed from its bytes.
+
+<!--
+**Say:** shown only if time is left, or read after the lecture. Nothing before this slide needs it.
 (~1 min)
 -->
 
@@ -497,7 +2804,7 @@ Change one byte of `weather.csv`: its blob id changes, so the list of `raw` chan
 </div>
 
 <!--
-**Say:** `data/processed` has no line here: it is left out on purpose, as the next section shows. An empty folder has no entry either.
+**Say:** `data/processed` has no line here: `.gitignore` keeps it out. An empty folder has no entry either.
 (~2 min)
 -->
 
@@ -552,7 +2859,7 @@ hideInToc: true
 
 <div class="mt-sm" style="display: flex; justify-content: center;">
 
-```mermaid {scale: 0.78}
+```mermaid {scale: 0.72}
 flowchart LR
     C["commit a9f65a6<br/>Add the data and the scripts"]:::input -- tree --> T["tree b9c01664"]
     C -- parent --> P["commit ef28e40"]
@@ -612,6 +2919,7 @@ The hashed text holds the id of the tree and the id of the parent. So one commit
 ## 📌 **Consequences**
 
 - An old version cannot be changed unnoticed: every later id would change
+- A corrected message gives another id: `--amend` makes a new commit
 - The same files committed by two people give one tree and two commit ids: name and time differ
 
 </div>
@@ -656,7 +2964,7 @@ Each commit has its own tree, a complete snapshot. Snapshots share every blob th
 </div>
 
 <!--
-**Do:** draw the four circles on the board and keep them there for the rest of the lecture.
+**Say:** the four commits of Tracking Changes, each naming the one before it.
 (~2 min)
 -->
 
@@ -711,1983 +3019,9 @@ flowchart RL
 <div class="note-text mt-sm"><code>HEAD</code> says which branch is in use. A second branch is a second file of 41 bytes: no file of the project is copied.</div>
 
 <!--
-**Do:** on the board, write "main" beside the newest circle and move it when you draw a fifth.
+**Do:** on the board, draw the four commits, write "main" beside the newest, and move it when you draw a fifth.
 **Say:** the word branch suggests a line of commits. What Git stores is one name on one commit.
 (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Three **Areas**
-
-<div style="display: flex; justify-content: center;">
-
-```mermaid {scale: 0.85}
-flowchart LR
-    W["Working folder<br/>the files on disk"] -- "git add" --> S["Staging area<br/>content of the next commit"] -- "git commit" --> R["Repository<br/>the commits, in .git"]
-    S -- "git restore --staged" --> W
-    R -- "git restore" --> W
-```
-
-</div>
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📂 **Working folder**
-
-The files as they are now. You edit here.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📋 **Staging area**
-
-`git add` copies the present content of a file into it. An edit made afterwards is not in it.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 🗄️ **Repository**
-
-`git commit` turns the staging area into a tree and a commit.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">The staging area lets one commit have one purpose: the first four commits were made from one folder, each part staged alone.</div>
-
-<!--
-**Say:** this closes the model: blob, tree, commit, branch, and the three areas a change passes through. The diagram comes back with every command.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# First **Commits**
-
-The weather project of Lecture 4, with a shorter `rebuild.sh`, goes into a repository, one commit at a time.
-
-<!--
-**Say:** each step once in the Source Control view and once typed: the button and the command are the same thing.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Check Git and Its **Settings**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⌨️ **In the terminal of VS Code**
-
-```text
-$ git --version
-git version 2.56.0
-$ git config --global user.name
-Smiltė
-$ git config --global user.email
-smilte@example.org
-```
-
-Your version differs. Git for Windows prints `2.56.0.windows.1`, Apple's Git ends in `(Apple Git-…)`.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ➕ **Three more settings**
-
-```text
-$ git config --global init.defaultBranch main
-$ git config --global pull.rebase false
-$ git config --global core.autocrlf false
-```
-
-The first names the first branch `main` instead of `master`. The second lets `git pull` join two histories by a merge. The third keeps Git from rewriting line endings. None prints anything.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ An empty answer means the setting is missing: `git config --global user.name "Your Name"`, and the same for `user.email`. Both are written into every commit.
-
-</div>
-
-<!--
-**Ask:** hands up, who gets a version number? Who gets a name?
-**Say:** the three lines on the right are typed now, on every laptop. Git for Windows comes with master and with core.autocrlf true.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Source Control in **VS Code**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_vscode_init.png" style="max-height: 400px; display: inline-block; border-radius: 8px;">
-
-</div>
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🧭 **Two ways to the same Git**
-
-- The **Source Control** view is the third icon of the Activity Bar: `Ctrl+Shift+G` (macOS `Cmd+Shift+G`)
-- VS Code runs the Git that is installed. Every button of the view runs a Git command
-- The same commands are typed in the terminal: **Terminal** > **New Terminal**
-- Another editor has other buttons. The commands are the same everywhere 🔧
-
-</div>
-
-</div>
-
-<!--
-**Do:** open the weather project in VS Code, then the Source Control view.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Create the **Repository**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🖱️ **In Source Control**
-
-Select **Initialize Repository**. The view then lists every file of the folder under **Changes**.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⌨️ **Typed**
-
-```text
-$ git init
-Initialized empty Git repository in /Users/smilte/weather-project/.git/
-$ ls -a
-.  ..  .git  README.md  data  results  scripts
-```
-
-</div>
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-info card-glass pad-compact">
-
-A **repository** is the project folder together with its `.git` folder. All commits are in `.git`. It is made once per project.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-⚠️ Deleting `.git` deletes the history and leaves the files. Never make a repository inside another one, and never in the home folder.
-
-</div>
-
-</div>
-
-<!--
-**Live:** select **Initialize Repository**, then `ls -a` in the terminal: the button made this one folder.
-**If asked:** `-a` shows names that begin with a dot, which `ls` hides. Git Bash may list `README.md` after `data`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# What Git Sees: `git status`
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_weather_changes.png" style="max-height: 360px; display: inline-block; border-radius: 8px;">
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-```text
-$ git status
-On branch main
-
-No commits yet
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        README.md
-        data/
-        scripts/
-
-nothing added to commit but untracked files present (use "git add" to track)
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm"><code>U</code> in the view and <em>untracked</em> in the terminal say the same: Git sees the file and has no version of it. The terminal names a folder once; <code>results</code> is empty and not listed. <code>git status</code> changes nothing.</div>
-
-<!--
-**Ask:** count the files in the view: 8. Which two did a script make? `daily.csv` and `weather_valid.csv`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Stage, Then **Commit**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_weather_staged.png" style="max-height: 340px; display: inline-block; border-radius: 8px;">
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⌨️ **Typed**
-
-```text
-$ git add README.md
-$ git commit -m "Add the README"
-[main (root-commit) c08a1c7] Add the README
- 1 file changed, 49 insertions(+)
- create mode 100644 README.md
-```
-
-The answer names the branch, the first seven digits of the id, the message, and 49 new lines.
-
-</div>
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-🖱️ In the view: **+** beside `README.md` moves it to **Staged Changes**, and its letter turns to `A`. Type the message, then **Commit**, or `Ctrl+Enter` (macOS `Cmd+Enter`).
-
-</div>
-
-<!--
-**Live:** stage `README.md` with **+**, type "Add the README", commit. The other seven files stay under Changes.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# What `git status --short` Says in Each **State**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| State of the file | `git status --short` | Letter in the view |
-| --- | --- | --- |
-| New, Git has no version of it | <code style="white-space: pre">?? .gitignore</code> | `U` |
-| New and staged | <code style="white-space: pre">A  data/raw/weather.csv</code> | `A` under **Staged Changes** |
-| Changed since the last commit, not staged | <code style="white-space: pre"> M README.md</code> | `M` |
-| Changed and staged | <code style="white-space: pre">M  README.md</code> | `M` under **Staged Changes** |
-| Deleted from the folder, not staged | <code style="white-space: pre"> D data/raw/daily_export.csv</code> | `D` |
-| Changed on two branches, a merge stopped | <code style="white-space: pre">UU README.md</code> | `!` |
-| Ignored, shown with `--ignored` | <code style="white-space: pre">!! data/processed/</code> | not listed |
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-Two columns before the name: the left one is the staging area, the right one the working folder. `M` on the left is staged, `M` on the right is not.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-A file with no letter is as in the last commit. The Status Bar shows `main*` with changes, `main*+` with staged ones, `main!` during a conflict.
-
-</div>
-
-</div>
-
-<!--
-**Say:** every line of this table is an output of the lecture project. Read the two columns before the file name: left the staging area, right the working folder.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Commit **Message**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ✍️ **Rules**
-
-- One commit has one purpose. If the message needs the word *and*, make two commits
-- The first line has at most about 50 characters
-- It says what the commit does, as an instruction: *Add*, *Give*, *Remove*
-- The reason goes below an empty line, when the first line does not give it
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔎 **Examples**
-
-❌ `update`
-
-❌ `fixed stuff`
-
-❌ `final version`
-
-✅ `Add the README`
-
-✅ `Give the mean temperature in the README`
-
-✅ `Mark the 120 hours of -999 in the README`
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The message is read months later, by someone who sees one line per commit and nothing else.
-
-</div>
-
-<!--
-**Say:** "Add the data and the scripts" is two things that belong together: the scripts read the data.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Data in a **Repository**
-
-The project holds raw data, scripts, and files that a script makes again. Not all of them belong in a repository.
-
-<!--
-**Say:** Git was made for text written by people, and the project has data files. Which go in, which stay out, and what the README then has to say.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Which Files Go **In**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-md">
-
-| File | In the repository | Reason |
-| --- | --- | --- |
-| `README.md`, the scripts | Yes | Written by hand. Nothing can make them again |
-| Small raw data: `weather.csv`, 2.5 MB | Yes | The project is complete in one piece |
-| Large raw data: one file of 3 GB | No | Too large for Git and for the host |
-| `data/processed/*`, made by `rebuild.sh` | No | The script is in the repository and makes them again |
-| `.DS_Store`, `Thumbs.db` | No | Made by the operating system, of no use to anyone |
-| Passwords and access keys | Never | A pushed commit stays readable for good |
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-`weather_valid.csv` has 2 511 735 bytes and would fit. It stays out because one line of `rebuild.sh` makes it again. The README promises its 87 553 lines, so a rebuilt copy can be checked.
-
-</div>
-
-<!--
-**Ask:** where does `daily.csv` go? Out: the script writes it, and the README gives its checksum, 33fe5e77…
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Which Data Files Fit in a **Repository**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-success card-glass pad-tight">
-
-## ✅ **`weather.csv`, 2 515 215 bytes**
-
-- Stored once, as 722 938 bytes
-- After 14 commits `.git` takes 1.05 MB: the content of the data file never changed, so its blob was stored once
-- Twelve copies of the folder would take 60.7 MB
-- The first push sends 30 objects in 554 KiB
-
-</div>
-
-<div class="card card-warning card-glass pad-tight">
-
-## ❌ **One file of 3 GB**
-
-- GitHub refuses a file above 100 MB and warns above 50 MB
-- A changed line gives new content and a new id: a second blob
-- Every copy of the repository carries every version of every file
-- A commit cannot be removed later without changing every id after it
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-A file that stays out is still on the disk. Git is told to ignore it, and the README says where it comes from or which script makes it.
-
-</div>
-
-<!--
-**Say:** the numbers on the left are measured on the lecture project. The last point on the right follows from the model: the id of a commit depends on everything before it.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The File **`.gitignore`**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **`.gitignore`, in the project folder**
-
-```text
-# made by the operating system
-.DS_Store
-Thumbs.db
-
-# made by scripts/rebuild.sh
-data/processed/
-```
-
-One pattern per line, and `#` starts a comment. `*.tmp` is every file ending in `.tmp`. `data/processed/` is the whole folder.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⌨️ **Before and after**
-
-```text
-$ git status --short
-?? .gitignore
-?? data/
-?? scripts/
-$ git add .gitignore
-$ git commit -m "Add .gitignore"
-[main e3f4e26] Add .gitignore
- 1 file changed, 6 insertions(+)
-```
-
-🖱️ In the view: right-click a file, **Add to .gitignore**.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm"><code>.gitignore</code> is a file of the project and is committed. It acts only on files that Git does not track yet.</div>
-
-<!--
-**Ask:** after this commit, how many files are left under Changes? Six: the two in `data/processed` are gone from the list.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Same Bytes on Every Laptop: **`.gitattributes`**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📄 **`.gitattributes`**
-
-```text
-# Check out every file with the bytes it was committed with:
-# no CRLF line endings on Windows, the same checksums on every laptop.
-* -text
-```
-
-```text
-$ git add .gitattributes
-$ git commit -m "Keep the committed bytes of every file on checkout"
-[main ef28e40] Keep the committed bytes of every file on checkout
- 1 file changed, 3 insertions(+)
-```
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 🪟 **Without it, on Windows**
-
-Git for Windows comes with `core.autocrlf true`. A clone then gets `0d 0a` at the end of each of the 87 673 lines of `weather.csv`: 87 673 bytes more, and `sha256sum` no longer gives `3f1ad06d…`.
-
-`* -text` says: no file of this project is text to convert. It travels with the repository, on every laptop that clones it.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the global setting of the check slide acts on one laptop; this file acts on every clone.
-**If asked:** `git status` stays clean even with the extra bytes, because Git takes the `0d` out again when it reads. Only the checksum shows it.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Commit the **Rest**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-```text
-$ git add .
-$ git status --short --ignored
-A  data/raw/daily_export.csv
-A  data/raw/weather.csv
-A  scripts/clean_export.py
-A  scripts/column_stats.py
-A  scripts/rebuild.sh
-!! data/processed/
-$ git commit -m "Add the data and the scripts"
-[main a9f65a6] Add the data and the scripts
- 5 files changed, 87798 insertions(+)
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-- `git add .` stages everything in the present folder that is not ignored. In the view it is the **+** on the **Changes** header
-- Read the list before the commit: `!!` marks the ignored folder
-- Insertions are lines, and 87 673 of the 87 798 are `weather.csv`
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The four commits so far: `c08a1c7`, `e3f4e26`, `ef28e40`, `a9f65a6`. They are the four circles of the graph in the model.
-
-</div>
-
-<!--
-**Do:** stop after `git status` and let the room check the list against the Explorer.
-**If asked:** the commit also prints one `create mode` line per file; they are left out here.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Changes & **History**
-
-A file changes, and the history says what changed, when and why.
-
-<!--
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# A Change, Seen as a **Diff**
-
-<div class="text-center mt-sm">
-
-<img src="/figures/git_weather_diff.png" style="max-height: 200px; display: inline-block; border-radius: 8px;">
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🖱️ **In Source Control**
-
-Smiltė adds a section **Result** to the README with the mean of Lecture 4. The file gets the letter `M`. Select it and the **diff view** opens: green lines are new, red lines gone.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 👀 **Read it before every commit**
-
-The diff is what the commit will contain. It also shows an edit that was not meant: a deleted line, a stray character.
-
-</div>
-
-</div>
-
-<!--
-**Live:** add the three Result lines to `README.md`, save, select the file in Source Control; then stage and commit it with the message of the next slide.
-**If asked:** a wide window shows the two versions side by side, a narrow one line under line as here.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Same Diff, **Typed**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-```text
-$ git diff
-diff --git a/README.md b/README.md
-index 5b35420..be10053 100644
---- a/README.md
-+++ b/README.md
-@@ -43,6 +43,11 @@ It writes `data/processed/…
- 120 rows marked `-999` (87 553 lines), and …
- cleaned export (148 bytes, SHA-256 `33fe5e77…
- 
-+## Result
-+
-+- **Mean air temperature, 2016 to 2025:** 7.16 °C
-+- **From:** `column_stats.py` on `data/processed/…
-+
- ## Licence
- 
- Data: CC0, from the station's operator.
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔎 **Reading it**
-
-- `---` and `+++` name the old and the new file
-- `5b35420..be10053` are the blob ids of the two contents
-- `@@ -43,6 +43,11 @@`: six lines from line 43 before, eleven after
-- `-` a line that went, `+` a line that came, a space before an unchanged line
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm"><code>git diff</code> compares the working folder with the staging area, <code>git diff --staged</code> the staging area with the last commit. After <code>git add</code> the first prints nothing.</div>
-
-<!--
-**Say:** the three lines around a change are context, so the change can be found again. Long lines are cut here with …
-**Do:** stage and commit: "Give the mean temperature in the README", `15505c4`.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Reading the History: **log**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-```text
-$ git log --oneline
-15505c4 (HEAD -> main) Give the mean temperature in the README
-a9f65a6 Add the data and the scripts
-ef28e40 Keep the committed bytes of every file on checkout
-e3f4e26 Add .gitignore
-c08a1c7 Add the README
-$ git log -1
-commit 15505c482d25129590a630d023046267f7abb020 (HEAD -> main)
-Author: Smiltė <smilte@example.org>
-Date:   Tue Oct 20 10:35:00 2026 +0300
-
-    Give the mean temperature in the README
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-- Newest first. `(HEAD -> main)` is the branch name of the model, printed beside its commit
-- `-1` shows one commit in full: id, author, date, message
-- `git log --oneline -- README.md` lists only the commits that changed that file
-- The **Graph** at the bottom of Source Control lists the same commits
-
-</div>
-
-</div>
-
-<!--
-**If asked:** a list longer than the window ends in a colon: the arrow keys scroll, q leaves.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Read a Commit, Trace a Line: **show** and **blame**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ git show --stat 15505c4
-commit 15505c482d25129590a630d023046267f7abb020 (HEAD -> main)
-Author: Smiltė <smilte@example.org>
-Date:   Tue Oct 20 10:35:00 2026 +0300
-
-    Give the mean temperature in the README
-
- README.md | 5 +++++
- 1 file changed, 5 insertions(+)
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-```text
-$ git blame -s -L 48,49 README.md
-15505c4 48) - **Mean air temperature, 2016 to 2025:** 7.16 °C
-15505c4 49) - **From:** `column_stats.py` on `data/processed/weather_valid.csv`, 87 552 hours
-```
-
-</div>
-
-<div class="note-text mt-sm"><code>git show</code> prints one commit with what it changed; without <code>--stat</code> the full diff. <code>git blame</code> names, for every line, the commit that last changed it; <code>-L 48,49</code> limits it to two lines, <code>-s</code> leaves out name and date.</div>
-
-<!--
-**Say:** blame answers "since when does this line read like this, and why": take the id from blame and give it to git show.
-**If asked:** in VS Code the Status Bar shows the author and age of the commit behind the line the cursor is in.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# **Undoing**
-
-A change can be wrong. How it is taken back depends on how far it got.
-
-<!--
-**Say:** three cases, by how far the change got: an edit in the working folder, the last commit, an older commit.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Undo an Edit: **restore**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🖱️ **In Source Control**
-
-- The bent arrow beside a changed file is **Discard Changes**
-- VS Code asks: *Are you sure you want to discard changes in 'README.md'?* **Discard File** puts back the content of the last commit
-- **−** beside a staged file unstages it. The edit stays in the file
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⌨️ **Typed**
-
-```text
-$ git diff --stat
- README.md | 11 -----------
- 1 file changed, 11 deletions(-)
-$ git restore README.md
-$ git status
-On branch main
-nothing to commit, working tree clean
-```
-
-`git restore --staged README.md` unstages.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ An edit that was never committed and is discarded is gone. Git has no copy of it. Read the diff first.
-
-</div>
-
-<!--
-**Live:** in the README select one whole section, delete it, save; `git diff --stat`; `git restore README.md`.
-**Say:** this undo works after the editor was closed.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Correct the Last Commit: **amend**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-```text
-$ git add LICENSE
-$ git commit -m "Add teh LICENSE named in the README"
-[main c2422af] Add teh LICENSE named in the README
- 1 file changed, 21 insertions(+)
- create mode 100644 LICENSE
-$ git commit --amend -m "Add the LICENSE named in the README"
-[main 2eab6b2] Add the LICENSE named in the README
- Date: Tue Oct 20 10:40:00 2026 +0300
- 1 file changed, 21 insertions(+)
- create mode 100644 LICENSE
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔁 **A new commit replaces the old**
-
-The README names a file `LICENSE` that did not exist yet. The id went from `c2422af` to `2eab6b2`: the message is part of the hashed text, so a corrected commit is another commit.
-
-In the view: the arrow on **Commit**, then **Commit (Amend)**.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ Amend only a commit that has not been pushed. A commit that others may already have is corrected by a new commit.
-
-</div>
-
-<!--
-**Say:** the old commit `c2422af` leaves the history; nothing points to it any more.
-**If asked:** the MIT text is copied from choosealicense.com, with the year and the name.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Commit That Breaks the **Rebuild**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ git rm data/raw/daily_export.csv
-rm 'data/raw/daily_export.csv'
-$ git commit -m "Remove the raw export, daily.csv replaces it"
-[main 172f06a] Remove the raw export, daily.csv replaces it
- 1 file changed, 11 deletions(-)
- delete mode 100644 data/raw/daily_export.csv
-$ ./scripts/rebuild.sh
-no file data/raw/daily_export.csv
-$ echo $?
-1
-```
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-`git rm` deletes the file and stages the deletion. The commit looked tidy: `daily.csv` holds the same nine values. Then the rebuild stops with status 1, because the script reads the raw export. Raw files are never deleted.
-
-</div>
-
-<!--
-**Ask:** the commit is made. What now: copy the file back from an e-mail, or ask Git?
-**If asked:** the stop at the first error is `set -e`, line 2 of `rebuild.sh`, from Lecture 4.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Take Back a Commit: **revert**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ git revert --no-edit 172f06a
-[main 2eb3b1c] Revert "Remove the raw export, daily.csv replaces it"
- Date: Tue Oct 20 10:50:00 2026 +0300
- 1 file changed, 11 insertions(+)
- create mode 100644 data/raw/daily_export.csv
-$ git log --oneline -3
-2eb3b1c (HEAD -> main) Revert "Remove the raw export, daily.csv replaces it"
-172f06a Remove the raw export, daily.csv replaces it
-2eab6b2 Add the LICENSE named in the README
-$ ./scripts/rebuild.sh
-9 rows written to data/processed/daily.csv
-```
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ↩️ **A commit that does the opposite**
-
-`revert` adds a commit with the reverse change. Nothing leaves the history, so it is safe for pushed commits. `--no-edit` keeps the proposed message.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🗂️ **One file only**
-
-`git restore --source=a9f65a6 data/raw/daily_export.csv` puts one file back as it was in an old commit. Many answers on the web use `git reset --hard`: it discards uncommitted work. Nothing here needs it.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the history keeps both the mistake and its correction, with the reason in each message.
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# **Remotes**
-
-Every commit so far lives in one `.git` folder on one laptop.
-
-<!--
-**Say:** a remote is the same history on a server, under the same ids.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# A Remote Is a Second **Copy**
-
-<div style="display: flex; justify-content: center;">
-
-```mermaid {scale: 0.95}
-flowchart LR
-    W["Working folder"] -- "git add" --> S["Staging area"] -- "git commit" --> R["Repository<br/>.git on the laptop"]:::input -- "git push" --> G["Remote<br/>on GitHub"]:::input
-    G -- "git pull" --> R
-    G -- "git clone" --> L["A second laptop"]
-    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
-```
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## ☁️ **What it is**
-
-- The same repository on another computer: the same objects under the same ids
-- A host keeps it reachable: GitHub, GitLab, Bitbucket. This lecture uses GitHub
-- `origin` is the usual name of the first remote
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🎯 **What it is for**
-
-- A copy of the project outside the laptop
-- The same project on a second computer
-- Work with other people on one history
-
-</div>
-
-</div>
-
-<!--
-**Say:** a push sends the objects the remote lacks, then moves the branch name there. A pull does the same the other way. Ids are compared, not files: an object already there is not sent again.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A GitHub **Account**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 🪪 **Create it once**
-
-1. Open `github.com` and select **Sign up**
-2. Enter an e-mail address, a password and a user name
-3. Type in the code that GitHub sends to that address
-4. Stay on the free plan. It allows private and public repositories without limit
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🤔 **Choose with care**
-
-- The user name is public and part of every address: `github.com/<user>/<repository>`
-- Use an e-mail address that you keep after your studies
-- A **private** repository is seen by you and those you invite, a **public** one by everyone
-- The e-mail of `git config` is in every commit, readable in a public repository
-
-</div>
-
-</div>
-
-<!--
-**Ask:** who has an account already? The others create one in the seminar; it takes three minutes and the mailbox.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Publish from **VS Code**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_vscode_publish.png" style="max-height: 170px; display: inline-block; border-radius: 8px;">
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🖱️ **In Source Control**
-
-1. When everything is committed, the button reads **Publish Branch**. Select it
-2. VS Code asks: *The extension 'GitHub' wants to sign in using GitHub.* Select **Allow**, sign in in the browser and return
-3. Choose **Publish to GitHub private repository**
-4. **Open on GitHub** shows the project in the browser, with the README as its front page
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-From now on the button reads **Sync Changes**, with the number of commits to fetch ↓ and to send ↑. **Sync** pulls, then pushes.
-
-</div>
-
-<!--
-**Do:** publish with your own account, open the repository in the browser and show the files, the rendered README, and the commits with the same ids as in the terminal.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Publish to GitHub, **Typed**
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-On `github.com`: **New repository**, the name `weather-project`, **Private**, no README, **Create repository**. The page then shows the address of the empty repository.
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ git remote add origin https://github.com/smilte-example/weather-project.git
-$ git push -u origin main
-Enumerating objects: 30, done.
-…
-Writing objects: 100% (30/30), 554.01 KiB | 2.90 MiB/s, done.
-To https://github.com/smilte-example/weather-project.git
- * [new branch]      main -> main
-branch 'main' set up to track 'origin/main'.
-$ git push
-Everything up-to-date
-```
-
-</div>
-
-<div class="note-text mt-sm"><code>-u</code> ties <code>main</code> to <code>origin/main</code>; after that <code>git push</code> and <code>git pull</code> need no more words. The first push asks for the GitHub sign-in in the browser.</div>
-
-<!--
-**Say:** one of the two ways, not both: a repository published from VS Code already has its remote. Eight commits and the data travel as 554 KiB.
-**Ask:** push again at once, with nothing new. How much is sent? Nothing: the ids are compared.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Clone on a Second **Computer**
-
-<div class="grid-2 gap-md mt-sm">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📥 **Tomas clones the project**
-
-```text
-$ git clone https://github.com/smilte-example/weather-project.git
-Cloning into 'weather-project'...
-$ cd weather-project
-$ git log --oneline -1
-2eb3b1c (HEAD -> main, origin/main, origin/HEAD) Revert "Remove …"
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ♻️ **The ignored folder comes back**
-
-```text
-$ ls data
-raw
-$ ./scripts/rebuild.sh
-9 rows written to data/processed/daily.csv
-$ ls data
-processed  raw
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The clone has every commit under the same ids, and every committed file. `data/processed` is not there: Git stores files, not folders, and this folder was ignored. Line 3 of `rebuild.sh`, `mkdir -p data/processed`, makes the folder; the next two lines fill it.
-
-</div>
-
-<!--
-**Say:** Smiltė invited Tomas on GitHub (**Settings** > **Collaborators**), so he may push to her repository.
-**If asked:** `origin/HEAD` is the remote's default branch, recorded by the clone.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Pull: Fetch What Is **New**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-## 💻 **Tomas edits line 2 of the export, commits, pushes**
-
-```text
-$ git commit -m "Correct 1 October to 6,4" -m "The station's paper log says 6,4 for 1 October 2025."
-[main f2546ed] Correct 1 October to 6,4
- 1 file changed, 1 insertion(+), 1 deletion(-)
-$ git push
-   2eb3b1c..f2546ed  main -> main
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-## ⬇️ **Smiltė pulls**
-
-```text
-$ git pull
-From https://github.com/smilte-example/weather-project
-   2eb3b1c..f2546ed  main       -> origin/main
-Updating 2eb3b1c..f2546ed
-Fast-forward
- data/raw/daily_export.csv | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-```
-
-</div>
-
-<div class="note-text mt-sm"><code>git pull</code> fetches the new commit and moves <code>main</code> forward. Pull before you start to work, push when you stop: then two computers never hold different work.</div>
-
-<!--
-**Say:** a second `-m` gives the message a body, below an empty line: the reason.
-**Ask:** one line of a raw file changed. Should it have? Keep the question open; the last section comes back to it.
-(~3 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Branches & **Merging**
-
-A second name on the same computer is a branch. A merge joins the commits that two names point to.
-
-<!--
-**Say:** a branch is the file of 41 bytes of the model.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Create a **Branch**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🖱️ **In Source Control**
-
-<img src="/figures/git_vscode_branch.png" style="border-radius: 6px;">
-
-Select the branch name at the left of the Status Bar, then **Create new branch...**, type `ranges`, Enter. The Status Bar now reads `ranges`.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⌨️ **Typed**
-
-```text
-$ git switch -c ranges
-Switched to a new branch 'ranges'
-$ git branch
-  main
-* ranges
-$ cat .git/HEAD
-ref: refs/heads/ranges
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Commits made now move `ranges`. `main` stays on its commit. Work that may fail is tried on a branch and reaches `main` when it is good.
-
-</div>
-
-<!--
-**Ask:** how many bytes did `git switch -c` write? One file of 41 bytes; no file of the project was copied.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Work on the Branch, Then **Merge**
-
-<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-```text
-$ git commit -m "Give the range of each column"
-[ranges 18b522d] Give the range of each column
- 1 file changed, 6 insertions(+), 6 deletions(-)
-$ git switch main
-Switched to branch 'main'
-$ git merge ranges
-Updating f2546ed..18b522d
-Fast-forward
- README.md | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-$ git branch -d ranges
-Deleted branch ranges (was 18b522d).
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🏷️ **Before the merge**
-
-```mermaid {scale: 0.6}
-flowchart RL
-    R(["ranges"]):::input --> C2["18b522d"] --> C1["f2546ed"]
-    M(["main"]):::input --> C1
-    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
-```
-
-## 🏷️ **After it**
-
-```mermaid {scale: 0.6}
-flowchart RL
-    R(["ranges"]):::input --> C2["18b522d"] --> C1["f2546ed"]
-    M(["main"]):::input --> C2
-    classDef input fill:#0b2a4a,stroke:#5eead4,color:#e8f1ff
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm"><code>main</code> had no commit of its own, so the merge only moves the name <code>main</code> forward to <code>18b522d</code>: a <strong>fast-forward</strong>. <code>git branch -d</code> deletes the name; the commit stays. In the view: <strong>...</strong> > <strong>Branch</strong> > <strong>Merge...</strong></div>
-
-<!--
-**Say:** during `git switch main` the README in the editor loses its Range column; after the merge it is back.
-**If asked:** the column ranges (-16.3 to 32.4 °C, 34 to 100 %, 0.0 to 12.0 m/s) are the minimum and maximum of the valid rows.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Two Branches, Both **Changed**
-
-<div class="mt-sm" style="display: flex; justify-content: center;">
-
-```mermaid {scale: 0.8}
-gitGraph
-    commit id: "f2546ed"
-    commit id: "18b522d"
-    branch wording
-    checkout wording
-    commit id: "5a4b500"
-    checkout main
-    commit id: "7a2f164"
-```
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ git log --oneline --graph --all -4
-* 7a2f164 (HEAD -> main) Give the number of hours in the first paragraph
-| * 5a4b500 (wording) Reword the first paragraph
-|/
-* 18b522d Give the range of each column
-* f2546ed (origin/main, origin/HEAD) Correct 1 October to 6,4
-```
-
-</div>
-
-<div class="note-text mt-sm">The branch <code>wording</code> rewrites the first paragraph of the README. Meanwhile <code>main</code> changes the same two lines. Neither history contains the other, so a merge needs a new commit with two parents.</div>
-
-<!--
-**Say:** if the two branches had changed different lines, Git would make the merge commit without a question.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Merge **Conflict**
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-```text
-$ git merge wording
-Auto-merging README.md
-CONFLICT (content): Merge conflict in README.md
-Automatic merge failed; fix conflicts and then commit the result.
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 📄 **`README.md` now**
-
-<pre class="slidev-code conflict-block"><code># Weather Station
-
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-The hourly log of one weather station, 2016 to 2025, 87 672 hours, and a
-table of daily mean temperatures typed into a spreadsheet from it.
-=======
-Ten years of hourly readings from one weather station, and the daily
-means of nine days of October 2025, typed into a spreadsheet from them.
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; wording</code></pre>
-
-Above `=======` the lines of the branch in use, below them the lines that come in. Nothing is lost, and nothing is decided.
-
-</div>
-
-<!--
-**Say:** a conflict is no error. Git reports that the same lines changed twice and asks which text is meant. `git status` now lists the file as `both modified`, `UU` in short.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Resolve It in the **Editor**
-
-<div class="text-center mt-sm">
-
-<img src="/figures/git_weather_conflict.png" style="max-height: 220px; display: inline-block; border-radius: 8px;">
-
-</div>
-
-<div class="grid-3 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-**1.** The file stands under **Merge Changes** with the sign `!`. Select it.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-**2.** Above the block: **Accept Current Change**, **Accept Incoming Change**, **Accept Both Changes**. Or edit the lines. The markers must go.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-**3.** **+** stages the file. **Continue** makes the merge commit. Its message is already filled in.
-
-</div>
-
-</div>
-
-<!--
-**Say:** here the incoming lines are accepted and "87 672 hours" is added by hand. The result has something of both, the usual case.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Resolve It, **Typed**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-```text
-$ git add README.md
-$ git commit --no-edit
-[main 7ff1df4] Merge branch 'wording'
-$ git cat-file -p 7ff1df4
-tree 889f04e15d56e858ec9f1426132a082db87c27a9
-parent 7a2f164b942d0d81997bdbe4d903cf465e5c4883
-parent 5a4b500ec42d934eb6faaa1fd1b7ae8232c7a71b
-…
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-```text
-$ git log --oneline --graph -5
-*   7ff1df4 (HEAD -> main) Merge branch 'wording'
-|\
-| * 5a4b500 (wording) Reword the first paragraph
-* | 7a2f164 Give the number of hours in the …
-|/
-* 18b522d Give the range of each column
-```
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Edit the file until it reads as it should, with no marker left. `git add` tells Git the conflict is settled, the commit closes the merge. A merge commit has two parents. `git merge --abort` puts everything back as it was before the merge.
-
-</div>
-
-<!--
-**Say:** the two parent lines are the two arrows that join in the graph.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Ahead and **Behind**
-
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_weather_graph.png" style="max-height: 330px; display: inline-block; border-radius: 8px;">
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## ☁️ **Two names for `main`**
-
-- `main` is where this laptop is, `origin/main` where the remote stood at the last contact
-- Four commits lie between them, and the button reads **Sync Changes 4↑**
-
-```text
-$ git status
-On branch main
-Your branch is ahead of 'origin/main' by 4 commits.
-  (use "git push" to publish your local commits)
-$ git push
-To https://github.com/smilte-example/weather-project.git
-   f2546ed..7ff1df4  main -> main
-```
-
-</div>
-
-</div>
-
-<!--
-**Say:** the merge happens on the laptop. The remote learns of it with the next push.
-**If asked:** the Graph on the left is the end of the lecture's history; the purple cloud marks `origin/main`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Common Git Errors and Their **Fixes**
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-```text
-fatal: not a git repository (or any of
-the parent directories): .git
-```
-
-The terminal is not in the project folder. `pwd` says where it is, and `cd` goes to the project.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-```text
- ! [rejected]        main -> main (fetch first)
-error: failed to push some refs to '…'
-```
-
-The remote has a commit that this laptop lacks. Fetch and merge it with <code style="white-space: nowrap;">git pull --no-edit</code>, then push again.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-```text
-Your branch and 'origin/main' have diverged,
-and have 1 and 1 different commits each
-```
-
-`git status` after such a fetch. Both sides have a commit of their own. The same pull joins them.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-A screen full of `~` signs after `git commit` or `git merge`: Git opened the editor Vim for a message. Type `:q!` and press Enter. Then give the message with `-m`, or use `--no-edit`.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">Read the last lines of a long answer first: Git usually names the command that helps.</div>
-
-<!--
-**Say:** these four cover most of what stops a beginner. None of them means that anything is lost.
-**If asked:** the editor depends on the choice made when Git was installed; on a Mac it is Vim.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-| Step | In Source Control | Typed |
-| --- | --- | --- |
-| Create the repository | **Initialize Repository** | `git init` |
-| See what changed | The **Changes** list. Select a file for its diff | `git status`, `git diff` |
-| Stage, unstage | **+**, **−** | `git add <file>`, `git restore --staged <file>` |
-| Commit | Message, then **Commit** | `git commit -m "…"` |
-| Discard an edit | **Discard Changes** | `git restore <file>` |
-| Read the history | **Graph**, **Timeline** | `git log --oneline`, `git show <id>`, `git blame <file>` |
-| Take back a commit | right-click it in the **Graph**, **Revert** | `git revert <id>` |
-| New branch | Branch name in the Status Bar | `git switch -c <name>` |
-| Merge | **...** > **Branch** > **Merge...** | `git merge <name>` |
-| Send and fetch | **Sync Changes** | `git push`, `git pull` |
-
-</div>
-
-<div class="note-text mt-sm">A working day: pull, edit, read the diff, stage, commit with a message that says why, push.</div>
-
-<!--
-(~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# A Result and Its **Commit**
-
-The question of the two copies, answered from the history.
-
-<!--
-**Say:** back to slide 3: one line of the raw export differs. Who changed it, when, and why?
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# Who Changed the Raw **Export**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ git log --oneline -- data/raw
-f2546ed Correct 1 October to 6,4
-2eb3b1c Revert "Remove the raw export, daily.csv replaces it"
-172f06a Remove the raw export, daily.csv replaces it
-a9f65a6 Add the data and the scripts
-$ git blame -L 2,2 data/raw/daily_export.csv
-f2546ed (Tomas 2026-10-20 11:30:00 +0300 2) 1;2025-10-01;6,4
-```
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📜 **`-- data/raw`**
-
-Only the commits that changed something in `data/raw`. A folder of files that are never edited should have one: the commit that added them. Here it has four.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 🔎 **`blame -L 2,2`**
-
-Line 2 of the export, `6,4`, comes from commit `f2546ed`, by Tomas, at 11:30.
-
-</div>
-
-</div>
-
-<!--
-**Ask:** two of the four we know: the deletion and its revert. Which one is new?
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Read Tomas's Commit **Line by Line**
-
-<div class="grid-2 gap-md mt-sm" style="grid-template-columns: 3fr 2fr;">
-
-<div class="card card-primary card-glass pad-compact">
-
-```text
-$ git show f2546ed
-commit f2546ed4cd7ed6d64259cacbd6d0d6e2532203ca
-Author: Tomas <tomas@example.org>
-Date:   Tue Oct 20 11:30:00 2026 +0300
-
-    Correct 1 October to 6,4
-
-    The station's paper log says 6,4 for 1 October 2025.
-
-diff --git a/data/raw/daily_export.csv b/data/raw/daily_export.csv
-index 0799b86..a2093bf 100644
---- a/data/raw/daily_export.csv
-+++ b/data/raw/daily_export.csv
-@@ -1,5 +1,5 @@
- nr;date;temp_c
--1;2025-10-01;6,3
-+1;2025-10-01;6,4
- 2;2025-10-02;5,0
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 🧾 **The table of the start**
-
-| Question | Answer |
-| --- | --- |
-| Which copy? | Blob `0799b86b`, as committed in `a9f65a6` |
-| Which line? | Line 2, `6,3` to `6,4` |
-| Who? | Tomas |
-| When? | 20 October, 11:30 |
-| Why? | The paper log, in the message body |
-
-</div>
-
-</div>
-
-<!--
-**Do:** point at the third row of the table of "Compare Two Copies", slide 4, then at Author, Date and the message here.
-**Say:** `0799b86` and `a2093bf` are the blob ids of the two copies of slide 3.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Edit Changes the **Result**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ ./scripts/rebuild.sh
-9 rows written to data/processed/daily.csv
-$ shasum -a 256 data/processed/daily.csv
-58709abc8e3c698e4dd32feb2dae7db128d29138c6c1883d1f08f46fb40d36b1  data/processed/daily.csv
-```
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Not the promised file**
-
-The README promises `daily.csv` with SHA-256 `33fe5e77…f705483d`. With `6,4` the rebuild gives `58709abc…fb40d36b`: the cleaned copy of the export with `6,4`.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-## 📁 **Where the paper log belongs**
-
-`data/raw` holds the files as they arrived. A value from another source goes into the README, as a note with its source, and the raw file stays as it came.
-
-</div>
-
-</div>
-
-<!--
-**Say:** Tomas may well be right about the paper log. The fault is the place: a raw file edited in place breaks the checksum and hides what the station sent.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Take It Back and **Check**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-```text
-$ git revert --no-edit f2546ed
-[main 06db171] Revert "Correct 1 October to 6,4"
- Date: Tue Oct 20 12:05:00 2026 +0300
- 1 file changed, 1 insertion(+), 1 deletion(-)
-$ ./scripts/rebuild.sh
-9 rows written to data/processed/daily.csv
-$ shasum -a 256 data/processed/daily.csv
-33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
-$ git push
-   7ff1df4..06db171  main -> main
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-♻️ Tomas's commit stays in the history, with its reason, and so does the revert. The rebuilt file has the checksum of the README again.
-
-</div>
-
-<!--
-**Say:** revert, not amend: the commit was pushed and Tomas has it. Amend would give Smiltė and Tomas two different histories.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Tag Names a **Version**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-```text
-$ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
-$ git log --oneline -2
-06db171 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 October to 6,4"
-7ff1df4 Merge branch 'wording'
-$ git push origin v1.0
-To https://github.com/smilte-example/weather-project.git
- * [new tag]         v1.0 -> v1.0
-```
-
-</div>
-
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🏷️ **A name that does not move**
-
-A branch name moves with every commit. The tag `v1.0` stays on `06db171`. `-a` stores who set it, when, and a message. A tag is pushed by its name.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## ♻️ **Which files made this number?**
-
-Tag the commit behind every result that leaves the project: a mean in an e-mail, a figure in a thesis. `git switch --detach v1.0` brings those files back, `git switch main` returns.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the 7.16 of Lecture 1, sent as one number, now comes with a name that fixes every file behind it.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# **Recap**: You Can Now…
-
-<div class="grid-2 gap-md mt-sm">
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Say what a blob, a tree, a commit and a branch are, and which bytes give an **id**
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Stage and **commit**, in the Source Control view and typed
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Keep made files out with `.gitignore`, and the bytes of every file with `.gitattributes`
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Read a **diff** and the history, and undo an edit or a commit
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Push to a **remote**, clone and pull
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ **Branch**, **merge**, and resolve a conflict
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔬 **A result and its commit**
-
-A number that leaves the project carries the id or the tag of the commit that made it. With the id, the files behind the result come back exactly.
-
-</div>
-
-<!--
-**Do:** go through the six cards; let the room nod or object.
-(~1 min)
 -->
 
 ---
@@ -2776,7 +3110,7 @@ hideInToc: true
     'Nothing can change a commit message'
   ]"
   :correct="0"
-  explanation="For a commit that exists on one computer only, --amend replaces it with a corrected one. The id changes, because the message is part of the hashed text. After a push the commit may be on other computers, and then a new commit is the correction."
+  explanation="For a commit that exists on one computer only, --amend replaces it with a corrected one. The id changes: the corrected commit is a new commit, and the old one leaves the history. After a push the commit may be on other computers, and then a new commit is the correction."
 />
 
 ---
