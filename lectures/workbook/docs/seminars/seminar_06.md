@@ -101,10 +101,14 @@ Every commit records a name and an e-mail. Set them once.
     $ git config --global user.email "you@example.org"
     ```
 
-5. Let `git pull` join two histories with a merge.
+5. The three settings of the lecture: the first branch of a new repository
+   is called `main`, `git pull` joins two histories with a merge, and Git
+   leaves line endings as they are. None prints anything.
 
     ```text
+    $ git config --global init.defaultBranch main
     $ git config --global pull.rebase false
+    $ git config --global core.autocrlf false
     ```
 
 6. List what Git now knows.
@@ -113,8 +117,13 @@ Every commit records a name and an e-mail. Set them once.
     $ git config --global --list
     user.name=Your Name
     user.email=you@example.org
+    init.defaultbranch=main
     pull.rebase=false
+    core.autocrlf=false
     ```
+
+    Git prints the names in small letters: `init.defaultbranch` is the
+    setting typed as `init.defaultBranch`.
 
 **Check:** your own name and e-mail in the list.
 

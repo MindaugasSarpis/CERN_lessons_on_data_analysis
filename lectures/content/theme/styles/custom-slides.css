@@ -815,3 +815,25 @@
   padding: 0.24rem 0.4rem;
   line-height: 1.3;
 }
+
+/* A slide with a planned live moment (frontmatter `class: live`): a corner
+   tag in the style of the cover's corner labels, so the presenter sees on
+   the slide itself that its steps are done on the laptop now; the
+   speaker note's **Live:** line says what. Absolutely positioned: adds no
+   layout height. */
+.slidev-layout.live { position: relative; }
+.slidev-layout.live::after {
+  content: "Live demo";
+  position: absolute;
+  right: 4rem;
+  bottom: 0.3rem;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+}

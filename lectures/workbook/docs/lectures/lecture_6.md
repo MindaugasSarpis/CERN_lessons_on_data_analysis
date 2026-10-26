@@ -31,8 +31,7 @@ tree, the commit as text, a branch as a file) comes after the recap, in
 3. **Tracking changes** — the three areas as a picture; the Source Control
    view; `git init`; `git status --short`; stage and commit; what a commit
    keeps (every staged file, the commit before it, who and when, why) and
-   its id, a checksum of all four; what `git status --short` says in each
-   state; the commit message.
+   its id, a checksum of all four; the commit message.
 4. **What goes into a repository** — which files go in; why `weather.csv`
    (2.5 MB) fits and a file of 3 GB does not, with measured sizes;
    `.gitignore` for `data/processed/`, which `rebuild.sh` makes;
@@ -48,7 +47,7 @@ tree, the commit as text, a branch as a file) comes after the recap, in
    commit and Smiltė pulls it.
 8. **Branches and merging** — a branch; a fast-forward merge; two branches
    that both changed the first paragraph; the conflict, resolved in the
-   editor and typed; ahead and behind; the usual error messages; the
+   editor and typed; ahead and behind; what `git status --short` says in each state; the usual error messages; the
    commands between the four places, as one picture; a table of every step
    in Source Control and typed.
 9. **A result and its commit** — `git log -- data/raw` and `git blame` find
@@ -67,70 +66,81 @@ tree, the commit as text, a branch as a file) comes after the recap, in
 
 ## The lecture, part by part
 
-The lecture is slides 1–62; when time is short, skip the slides of the
-second table. **Slides 63–74, For the Curious, are optional:** show them
+The lecture is slides 1–63. The minutes in the notes add up to about 130
+for them, so in the two-hour slot **plan to skip the slides of the second
+table** (about 115 min then); show them only when the room is fast. **Slides 64–75, For the Curious, are optional:** show them
 only if time is left, or leave them for the room to read; the timing
-counts them as no lecture time. Slides 75–83 are the self-check quizzes and
+counts them as no lecture time. Slides 76–84 are the self-check quizzes and
 take no lecture time either. To jump, type the slide number and press
 Enter.
 
 | Slides | Part |
 |--|--|
 | 1–8 | Copies, two copies of the export, changes, versions and a merge as pictures; Drive, Dropbox and Word against Git; where Git comes from |
-| 9–10 | Setting up: version, name, e-mail |
-| 11–12, 14–17, 19 | The three areas, `git init`, `git status`, the first commit, what a commit keeps, the message |
-| 20–21, 23–25 | Which files go in, `.gitignore`, `.gitattributes`, the rest |
-| 26–29 | The diff, `log` |
-| 30–35 | restore, amend, a commit that breaks the rebuild, revert, which undo for which case |
-| 36–37, 39–44 | A remote, publish, a collaborator, clone, pull |
-| 45–50, 54 | A branch, a merge, a conflict, the commands as one picture |
-| 56–62 | Who changed the export, the revert, the tag, the recap |
-| 63–74 | For the Curious (optional) |
+| 9–10 | Setting up: version, name, e-mail, three settings |
+| 11–12, 14–18 | The three areas, `git init`, `git status`, the first commit, what a commit keeps, the message |
+| 19–20, 22–24 | Which files go in, `.gitignore`, `.gitattributes`, the rest |
+| 25–28 | The diff, `log` |
+| 29–34 | restore, amend, a commit that breaks the rebuild, revert, which undo for which case |
+| 35–36, 38–43 | A remote, publish, a collaborator, clone, pull |
+| 44–50, 55 | A branch, a fast-forward merge, two branches that change the same lines, the conflict, the commands as one picture |
+| 57–63 | Who changed the export, the revert, the tag, the recap |
+| 64–75 | For the Curious (optional) |
 
 | Skip | Slides |
 |--|--|
 | Source Control in VS Code: say it while doing slide 14 | 13 |
-| What `git status --short` says in each state | 18 |
-| Which data files fit in a repository | 22 |
-| A GitHub account: the seminar creates them | 38 |
-| Resolve it, typed; ahead and behind | 51, 52 |
-| Common errors; the table of steps (on the projector in the seminar) | 53, 55 |
+| Which data files fit in a repository | 21 |
+| A GitHub account: the seminar creates them | 37 |
+| Ahead and behind (if skipped, say that Smiltė pushes the merge: slide 61 starts from it) | 52 |
+| What `git status --short` says in each state; common errors; the table of steps (all three are on the projector in the seminar) | 53, 54, 56 |
 
-- **Do not cut slides 57–60.** They answer the question of slide 4 from
+- **Do not cut slides 58–61.** They answer the question of slide 4 from
   the history, with commands the room has seen or that the slide itself
-  explains (`git blame`, `git show`). The table on slide 58 has the
+  explains (`git blame`, `git show`). The table on slide 59 has the
   questions of slide 4, answered.
 - **Slide 17** (what a commit keeps) is the one fact of the model the
   main path needs: the id is a checksum of the files, the commit before,
-  who, when and why. Slide 32 (amend: a corrected message gives a new id)
+  who, when and why. Slide 31 (amend: a corrected message gives a new id)
   and the remotes (the same commits under the same ids) rest on it.
-- **Nothing in slides 1–62 needs slides 63–74.** For the Curious starts
+- **Nothing in slides 1–63 needs slides 64–75.** For the Curious starts
   from the checksums of Lecture 4 and ends at a branch as a file of 41
   bytes; each of its slides needs the one before.
-- **Slide 24** (`.gitattributes`) is short but matters on every Windows
+- **Slide 23** (`.gitattributes`) is short but matters on every Windows
   laptop: without it, the checksums of Lecture 4 fail after a clone.
 
 ## Live in the lecture
 
-Five moments, each marked **Live:** in its slide's note, run in one folder,
-in order. Each costs about a minute more than the slide alone; the minutes
-above include it. If a line misbehaves, go to the slide: it has the output.
-The commit ids and line counts on the laptop differ from the slides, which
-come from the lecture's scratch repository (see below).
+Five moments, run in one folder, in order. Each slide with a live moment
+carries the tag **LIVE DEMO** in its lower right corner, and its note
+begins with **Live:**. Each costs about a minute more than the slide
+alone; the minutes below include it. If a line misbehaves, go back to the
+slide: it has the output. The commit ids on the laptop differ from the
+slides (a commit contains its author and its time); the line counts are
+the same.
 
-**Before the lecture.** Unzip [`weather_project.zip`](../data/weather_project.zip)
-into a new folder, open `weather-project` in VS Code, open its terminal
-(zsh on a Mac, Git Bash on Windows) and make the font large.
+**Before the lecture.** Unzip [`weather_project_git.zip`](../data/weather_project_git.zip)
+(1.1 MB) into a new folder: the weather project of the slides before
+`git init`, with `rebuild.sh` and the two files it makes. Open
+`weather-project` in VS Code, open the Source Control view and the
+terminal (zsh on a Mac, Git Bash on Windows) and make the font large.
 
-| Slide | What to do | What the room sees |
-|--|--|--|
-| 10 | `git --version`, then `git config --global user.name` | The version and the name |
-| 14 | Source Control: **Initialize Repository**; then `ls -a` | `.git` among the folders |
-| 16 | **+** beside `README.md`, message "Add the README", **Commit** | `README.md` leaves the list; the Graph shows one commit |
-| 27 | Add the three lines of the Result section to `README.md`, save, select the file in Source Control; then stage and commit it | The diff view: five green lines |
-| 31 | Select one whole section of the README, delete it, save; `git diff --stat`; `git restore README.md` | The section comes back |
+| Slide | Min | What to do | What the room sees |
+|--|--|--|--|
+| 10 | 3 | `git --version`, then `git config --global user.name` | The version and the name |
+| 14 | 2 | Source Control: **Initialize Repository**; then `ls -a` | `.git` among the folders; 8 files under **Changes** |
+| 16 | 3 | **+** beside `README.md`, message "Add the README", **Commit** | `README.md` leaves the list; the Graph shows one commit |
+| 26 | 2 | Type the Result section below into `README.md` above `## Licence`, save, select the file in Source Control; then **+** and commit "Give the mean temperature in the README" | The diff view: five green lines |
+| 30 | 2 | Select the section *Columns of `weather.csv`* (11 lines, down to *Missing value*), delete it, save; `git diff --stat`; `git restore README.md` | `11 deletions`, then the section comes back |
 
-The Result section of slide 27:
+Slides 22–24 (`.gitignore`, `.gitattributes`, the rest) are shown, not
+typed: on the laptop the other seven files stay under **Changes** until
+the end, and that is fine. For the same reason a `git status` typed at
+slide 30 lists `data/` and `scripts/` as untracked instead of
+`working tree clean`: leave it to the slide. Slide 38 (publish from VS Code) is not live
+either: it needs a GitHub sign-in on the projector.
+
+The Result section of slide 26:
 
 ```text
 ## Result
@@ -139,7 +149,7 @@ The Result section of slide 27:
 - **From:** `column_stats.py` on `data/processed/weather_valid.csv`, 87 552 hours
 ```
 
-If For the Curious is shown, its slides 65 and 67 have two more:
+If For the Curious is shown, its slides 66 and 68 have two more:
 `echo "hello" | git hash-object --stdin` (`ce013625…` on every laptop) and
 `git hash-object data/raw/weather.csv` (`f811f73d…`, on every laptop).
 
@@ -158,9 +168,11 @@ the repository and pushes one.
 - **A line `...` in a block** marks lines cut on the slide; long lines are
   cut at `…`. Blocks of more than about five lines grow one command per
   click (magic-move).
-- **`git status --short` on slide 15** was run on 21 October 2026 in the
-  same scratch repository, right after `git init` (Git 2.47); the rest of
-  the outputs are from the build of 20 October.
+- **Git 2.56.0.** On 27 October 2026 the script was run again with Git
+  2.56.0 (conda-forge), the version the room installs, and every output on
+  the slides matched; `git status --short` on slide 15 and the five live
+  moments were replayed from `weather_project_git.zip`, which the same
+  script writes.
 - **Blob and tree ids are the same for everyone.** `weather.csv` is
   `f811f73d93226acc8a0c96562aef9f7825b85b0a` on every laptop, and the tree of
   `data/raw` is `ee85972a…`.
@@ -172,7 +184,7 @@ the repository and pushes one.
 - **macOS outputs.** `shasum -a 256` was run as `sha256sum`, which prints
   the same; `ls` on a Mac lists `README.md` before `data`, as on the
   slide, while Git Bash may sort it after.
-- **The CRLF ids** of `hello` (`ef0493b2…`, slide 65) and `hi` (quiz 2)
+- **The CRLF ids** of `hello` (`ef0493b2…`, slide 66) and `hi` (quiz 2)
   come from the bytes `0d 0a`, as a Windows program writes them; they were
   also measured on Windows with Git for Windows 2.51.
 - **The pictures of VS Code** are from VS Code 1.140 (the web version run
@@ -182,21 +194,22 @@ the repository and pushes one.
 - **The schematic figures** are from Software Carpentry's *Version Control
   with Git* (CC BY 4.0), credited on each slide: `play-changes`,
   `versions`, `merge`, `git-staging-area`, `git-committing`,
-  `git-restore`. The three GitHub figures of slides 37 and 42 are
+  `git-restore`. The three GitHub figures of slides 36 and 41 are
   copies of its `git-freshly-made-github-repo`,
   `github-repo-after-first-push` and `github-collaboration` with the
   weather project's names (`git-weather-remote-*.svg`). `git_flow.svg`
-  on slide 54 is the course's own.
+  on slide 55 is the course's own, drawn with the lecture's words (working
+  folder, staging area, repository, remote) and only its commands.
 - **A Git that prints 64 digits.** Git 3.0 is announced to make SHA-256 the
   hash of new repositories. If a student's `git hash-object` prints 64 hex
   digits, the header is hashed with SHA-256 in place of SHA-1. In such a
   repository a branch is also no longer a file under `.git/refs/heads`: use
-  `git rev-parse main` for slide 74.
+  `git rev-parse main` for slide 75.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 75–83: eight quiz slides for students to try afterwards. Questions 2
+slides 76–84: eight quiz slides for students to try afterwards. Questions 2
 and 4 are on For the Curious. The same questions, with their answers:
 
 1. A student keeps `analysis.py`, `analysis_v2.py`, `analysis_final.py` and

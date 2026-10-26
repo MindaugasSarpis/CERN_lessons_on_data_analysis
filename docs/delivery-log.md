@@ -881,3 +881,73 @@ the Curious; "the first 5 slides" was taken to mean Lecture 5's opening
 - `check-slides.mjs` measures a slide at its first click only and shoots
   before mermaid draws; the last-click check of this pass was a one-off
   script.
+
+## 2026-10-27 · Lecture 6 reviewed for a cold delivery
+
+**Why:** the lecturer, the night before: "carefully review L6 about version
+control. Has to be really really good and clear. I will be giving the
+lecture without looking at the slides again. Fully complete and deploy."
+Done overnight without questions; decisions below are the builder's.
+
+**How:** every command on the slides replayed with Git 2.56.0 (the version
+the room installs; conda-forge) by `misc/l05_scratch_repo/build.sh`: every
+id and output matched. Three independent reviews, two rounds each: a
+first-year student who never used Git, Git correctness (outputs, VS Code
+and Git for Windows behaviour checked in their sources), and a lecturer
+giving it cold (flow, timing, live moments).
+
+**Changed**
+
+- The live folder was wrong: the lecture page sent the lecturer to
+  `weather_project.zip`, Lecture 4's start (22-line README, no
+  `rebuild.sh`), so the live counts (8 files, 49 insertions) could not
+  appear. `build.sh` now also writes `weather_project_git.zip`, the
+  slides' project before `git init`, with fixed dates (byte-identical on
+  rerun); the five live moments were replayed from it.
+- A **LIVE DEMO** corner tag (`class: live`, `custom-slides.css`) on the
+  five live slides (10, 14, 16, 26, 30) and the two of For the Curious;
+  notes 26 and 30 say exactly what to type or delete (CLAUDE.md
+  convention 13).
+- Hidden steps shown: the `git add` before Tomas's commit and the `ranges`
+  commit (typed as on the slides, the commits print "no changes added");
+  a new slide 47 with the commands of both branches before the conflict;
+  the resolved paragraph on "Resolve It, Typed"; where `LICENSE` comes from.
+- Wrong or loose facts fixed: "six files left under Changes" (five);
+  `.git` "1.05 MB after 14 commits" and "twelve copies, 60.7 MB" (0.77 MB
+  by `du -sb`, 14 copies of 5 032 295 bytes = 70.5 MB, folder 5.03 MB);
+  `main*+` (staged alone is `main+`); Vim `:q!` stops a commit but keeps
+  the message of a merge or pull; `git restore` restores from the staging
+  area; "233 bytes, not 231 characters"; the `diverged` message in full;
+  the status table's ` D` row (the lecture's `git rm` gives `D `);
+  `set -e` was not what stopped the rebuild; `switch --detach` prints no
+  warning, `git status` says `HEAD detached at v1.0`.
+- Flow: the `git status --short` table moved from the first commits to
+  after the merge part, where every state in it has been seen; the
+  message rule ("two changes that do not belong together are two
+  commits") no longer contradicts "Add the data and the scripts", which
+  now says why it is one purpose; `.gitattributes` says why the global
+  `core.autocrlf false` is not enough; "Where Each Command Moves a Change"
+  redrawn (`git_flow.svg`) with the lecture's words and only its commands,
+  with `pull = fetch + merge` as its caption; the table of steps got a
+  title and lost commands not yet taught; the result section asks which
+  of four commits changed line 2.
+- Seminar 6, step 5: the three settings of the lecture
+  (`init.defaultBranch`, `pull.rebase`, `core.autocrlf`), not one.
+- `lecture_6.md`: slide numbers recounted (84 slides, main path 1–63),
+  live table with minutes, skip list (the notes add up to ~131 min for
+  1–63; with the skip list ~115).
+
+**Decided by the builder, for the lecturer to check**
+
+- Five live moments kept; slides 22–24 shown, not typed. Publishing from
+  VS Code (slide 38) is no longer a live step: it needs a GitHub sign-in
+  on the projector.
+- The peer brief said "anchored on D0_KPi.csv"; the deck stays on the
+  weather project, the course's one project since 13 Oct.
+- Skip list: 13, 21, 37, 52, 53, 54, 56; slide 51 (the merge commit) is
+  no longer skipped.
+
+**Open**
+
+- The restore figure (Software Carpentry) shows a restore from an older
+  commit, more than the slide's case; kept.

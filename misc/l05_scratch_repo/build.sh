@@ -10,7 +10,10 @@
 #
 # Usage: bash misc/l05_scratch_repo/build.sh [outdir]
 #   needs git (2.56 for the slides' wording), python3, sha256sum, xxd,
-#   unzip. It writes outdir/run/ and prints every command with its output.
+#   unzip. It writes outdir/run/ and prints every command with its output,
+#   and writes lectures/workbook/docs/data/weather_project_git.zip, the
+#   project before `git init`: the folder the lecturer opens for the live
+#   moments of Lecture 6.
 # Rerun it whenever weather_files.py, cli_clean_export.py or
 # cli_column_stats.py change: the blob, tree and commit ids depend on them.
 set -u
@@ -120,6 +123,29 @@ python scripts/clean_export.py data/raw/daily_export.csv data/processed/daily.cs
 EOF
 chmod 755 scripts/rebuild.sh
 sh_ './scripts/rebuild.sh'
+
+# The lecturer's live folder: this project before `git init`, as a zip with
+# fixed dates and modes, so a rerun writes the same bytes (lecture_6.md).
+python3 - "$DATA/weather_project_git.zip" <<'EOF'
+import os, sys, zipfile
+out = sys.argv[1]
+with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
+    for root, dirs, files in os.walk("."):
+        dirs.sort()
+        rel = os.path.relpath(root, ".")
+        names = [rel] if rel != "." else []
+        names += [os.path.join(rel, f) for f in sorted(files)]
+        for n in names:
+            arc = os.path.normpath(os.path.join("weather-project", n))
+            info = zipfile.ZipInfo(arc + ("/" if os.path.isdir(n) else ""), (2026, 10, 20, 10, 0, 0))
+            if os.path.isdir(n):
+                info.external_attr = (0o40755 << 16) | 0x10
+                z.writestr(info, b"")
+            else:
+                info.external_attr = (0o100755 if os.access(n, os.X_OK) else 0o100644) << 16
+                info.compress_type = zipfile.ZIP_DEFLATED
+                z.writestr(info, open(n, "rb").read())
+EOF
 
 say SIZES
 find . -type f -printf '%s %p\n' | sort -k2
