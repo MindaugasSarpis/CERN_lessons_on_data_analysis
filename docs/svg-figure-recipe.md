@@ -1,6 +1,6 @@
 # SVG Diagram Recipe
 
-Reusable template + palette for hand-built SVG figures that match the deck's dark, glass-card aesthetic. Used by `git_flow.svg`, `git_staging.svg`, `data_types.svg`.
+Reusable template + palette for hand-built SVG figures that match the deck's dark, glass-card aesthetic. Used by `git_staging.svg`, `data_types.svg`. (`git_flow.svg` and the other Lecture 6 diagrams are drawn by `figures/src/git.py` since 27 Oct 2026: a hand-built SVG with live text falls back to a system font inside `<img>`, while the matplotlib pipeline embeds Space Grotesk as outlines.)
 
 ## Canvas
 
@@ -134,6 +134,6 @@ Or inline for small inserts:
 
 ## Existing diagrams as references
 
-- `git_flow.svg` — 4-lane swim diagram, solid+dashed arrows, legend.
+- `git_flow.svg` — 4-lane swim diagram, solid+dashed arrows (now drawn by `figures/src/git.py`).
 - `git_staging.svg` — 3-zone hub-and-spoke with commit chain.
 - `data_types.svg` — hierarchy tree with colored branches and leaf chips.

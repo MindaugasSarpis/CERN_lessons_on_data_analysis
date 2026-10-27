@@ -951,3 +951,70 @@ giving it cold (flow, timing, live moments).
 
 - The restore figure (Software Carpentry) shows a restore from an older
   commit, more than the slide's case; kept.
+
+## 2026-10-27 · Lecture 6 delivered: too difficult; reworked the same evening
+
+**What happened:** the lecturer, after the lecture: "L6 was too difficult.
+Carefully explain how add, commit, push works. What it does. Ways of
+collaborating - same repos and pull requests from forks." Then, on the
+figures: "Make visuals uniform, rewamp the old white images, also these
+neon ones, they look too AI generated. Make them adhere to general style
+of lectures, make them look good."
+
+**Changed in response:**
+
+- add, commit, push: one overview of the four places a change passes
+  (working folder, staging area, repository, GitHub) and one slide and
+  picture per command, showing where the change is afterwards; the first
+  `add` and the first `commit` are now two live moments; "One Change,
+  Three Steps" (what `git status --short` says after the edit, the add,
+  the commit); "Send the Commits to GitHub: push" (a staged edit is not
+  pushed: `Everything up-to-date`); "Where the Change Is After Each Step"
+  (who sees it, what a lost laptop takes).
+- A section *Working Together*: two ways as one picture. A shared
+  repository: Tomas's commit is pulled; then both change lines 3–4 of the
+  README, Smiltė's push is refused, `git pull --no-edit` stops on a
+  conflict, she resolves it, commits the merge and pushes. A fork and a
+  pull request: Rūta forks the (now public) repository, clones her fork,
+  commits the column ranges on a branch `ranges`, pushes it, opens pull
+  request #1; Smiltė reviews and merges it on GitHub and pulls. The two
+  side by side. Four new quizzes on add/commit/push, a refused push, a
+  fork.
+- Lighter main path (slides 1–62, ~119 min with the skip list): the
+  branches on one laptop and *Ahead and Behind* left the deck;
+  rebuilding a clone, the revert of Tomas's edit, the tag, the map of the
+  commands, the data sizes, `.gitattributes`, the status table and the
+  error messages moved to a part *More Commands* after For the Curious.
+- `misc/l05_scratch_repo/build.sh` tells the new story after Tomas's
+  first push; every id up to `94dccdc` is unchanged. The merge message
+  of `git pull` named the remote by its local path, so the later ids
+  depended on the folder the script ran in; it now writes GitHub's
+  address, and two runs in different folders give the same output.
+- Every diagram redrawn by `figures/src/git.py` in the course style
+  (hairline panels, the deck's cyan for what a step moves, Space Grotesk
+  and Space Mono as outlines): the Software Carpentry figures and the
+  hand-built SVGs with live text, which fell back to a system font, are
+  gone from the deck, and so are the Mermaid commit graphs. The
+  screenshots share one frame and are cropped to what they show. The
+  PhD Comics cartoon on slide 3 stays.
+- Three independent reviews (a first-year student, Git and GitHub
+  correctness, visual design); their findings applied: one meaning of
+  the staging area on every slide (it holds the next commit, and after a
+  commit equals it), `git add` shown before every commit, the push
+  figure with the staged edit that stays behind, pull as a picture,
+  `--no-edit`, *Checks* and *Submit review* in the GitHub steps, fewer
+  unexplained words (branch, origin, Sync).
+
+**Decided by the builder, for the lecturer to check:**
+
+- The fork example needs a public repository: the slide says Smiltė's
+  became public when her report came out.
+- The conflict picture of VS Code was edited (incoming label set to
+  Tomas's commit id, as a pull shows it; the Source Control panel cut off).
+- Seminar 6 does not practise a fork and a pull request yet.
+
+**Open:**
+
+- Seminar 6: let pairs try the shared repository (one invites the other)
+  and a fork + pull request? Forks of `MindaugasSarpis/weather-project`
+  would open pull requests on the lecturer's public repository.

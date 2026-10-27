@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Scratch repository for Lecture 05: the weather project as Lecture 04 leaves
 # it, put under Git on 20 Oct 2026 by Smiltė, with a colleague, Tomas, who
-# clones it and pushes one commit that edits a raw file. Every git and
+# clones it and pushes one commit that edits a raw file, then a reworded
+# paragraph that conflicts with Smiltė's, and Rūta, who forks it and sends
+# a column of ranges by a pull request (Lecture 6). Every git and
 # shell output on the L05 slides comes from one run of this script. Shell
 # lines run in bash, whose GNU tools are those of Git Bash; zsh on macOS
 # prints the same, `wc` and `ls` up to padding and order.
@@ -186,7 +188,9 @@ sh_ 'LC_ALL=C ls -a'
 run git status
 T 10:15
 run git add README.md
+run git status --short
 run git commit -m "Add the README"
+run git status --short
 cat > .gitignore <<'EOF'
 # made by the operating system
 .DS_Store
@@ -254,6 +258,7 @@ run git status --short
 run git diff
 run git diff --staged --stat
 run git commit -m "Give the mean temperature in the README"
+run git status --short
 C4=$(git rev-parse --short HEAD)
 sh_ 'cat .git/refs/heads/main'
 run git log --oneline
@@ -329,6 +334,12 @@ echo "\$ git push -u origin main"
 git push --progress -u origin main 2>&1 | tr '\r' '\n' | grep -v '([0-9]*/[0-9]*)$' | fix
 run git push
 run git status
+# push sends commits only: a staged edit stays on the laptop
+echo "Draft: the wind column." >> README.md
+git add README.md
+run git status --short
+run git push
+git restore --staged README.md && git restore README.md
 
 say CLONE
 mkdir -p "$S/run/tomas" && cd "$S/run/tomas"
@@ -351,13 +362,66 @@ run git pull
 run git log --oneline -3
 TOM=$(git rev-parse --short HEAD)
 
-# ---- branches ------------------------------------------------------------
-say BRANCH
-run git switch -c ranges
-run git branch
-sh_ 'cat .git/HEAD'
-sh_ 'ls .git/refs/heads'
-python3 - <<'PY'
+# ---- two people, one repository: a push refused, a conflict ---------------
+say REFUSED
+( export HOME="$S/run/tomas-home"
+  cd "$S/run/tomas/weather-project"
+  sed -i '3,4c Ten years of hourly readings from one weather station, and the daily\nmeans of nine days of October 2025, typed into a spreadsheet from them.' README.md
+  T 11:45
+  git add README.md
+  run git commit -m "Reword the first paragraph"
+  run git push )
+cd "$P"
+sed -i '3,4c The hourly log of one weather station, 2016 to 2025, 87 672 hours, and a\ntable of daily mean temperatures typed into a spreadsheet from it.' README.md
+T 11:50
+git add README.md
+run git commit -m "Give the number of hours in the first paragraph"
+run git push
+T 11:55
+run git pull --no-edit
+run git status
+run git status --short
+sed -n 1,10p README.md
+python3 - <<'EOF'
+import re
+t = open("README.md", encoding="utf-8").read()
+t = re.sub(r"<<<<<<< HEAD\n.*?>>>>>>> [0-9a-f]{40}\n",
+           "Ten years of hourly readings from one weather station, 87 672 hours, and\n"
+           "the daily means of nine days of October 2025, typed into a spreadsheet\nfrom them.\n",
+           t, flags=re.S)
+open("README.md", "w", encoding="utf-8").write(t)
+EOF
+sed -n 1,7p README.md
+run git add README.md
+# the message names the remote by its local path; GitHub's address in its place
+sed -i "s#${REMOTE%.git}#${URL%.git}#" .git/MERGE_MSG
+run git commit --no-edit
+run git cat-file -p HEAD
+run git log --oneline --graph -5
+run git status
+run git push
+run git log --oneline --graph -4
+
+# ---- a fork and a pull request -------------------------------------------
+# GitHub's Fork button is a bare copy of the remote under Rūta's name; the
+# merge button of the pull request is a merge commit by Smiltė, committed
+# by GitHub. The lines `remote: ...` that GitHub adds to a push are not
+# printed by a local remote: the slides add them as GitHub prints them.
+say FORK
+FORKURL="https://github.com/ruta-example/weather-project.git"
+FORK="$S/run/remote/ruta-weather-project.git"
+git clone -q --bare "$REMOTE" "$FORK"
+mkdir -p "$S/run/ruta-home" "$S/run/ruta"
+gitconfig "$S/run/ruta-home" "Rūta" "ruta@example.org"
+printf '[url "%s"]\n\tinsteadOf = %s\n' "$FORK" "$FORKURL" >> "$S/run/ruta-home/.gitconfig"
+fixf() { sed -e "s#$FORK#$FORKURL#g" -e "s#${FORK%.git}#${FORKURL%.git}#g" | fix; }
+( export HOME="$S/run/ruta-home"
+  cd "$S/run/ruta"
+  echo "\$ git clone $FORKURL"; git clone "$FORKURL" 2>&1 | fixf
+  cd weather-project
+  echo "\$ git remote -v"; git remote -v 2>&1 | fixf
+  run git switch -c ranges
+  python3 - <<'EOF'
 t = open("README.md", encoding="utf-8").read()
 old = """| Column | Meaning | Unit |
 |--|--|--|
@@ -375,49 +439,27 @@ new = """| Column | Meaning | Unit | Range |
 """
 assert old in t
 open("README.md", "w", encoding="utf-8").write(t.replace(old, new))
-PY
-run git diff --stat
-T 11:40
-git add README.md
-run git commit -m "Give the range of each column"
-sh_ 'ls .git/refs/heads'
-run git switch main
-run git merge ranges
-run git branch -d ranges
-
-say CONFLICT
-run git switch -c wording
-sed -i '3,4c Ten years of hourly readings from one weather station, and the daily\nmeans of nine days of October 2025, typed into a spreadsheet from them.' README.md
-run git diff
-T 11:45
-git add README.md
-run git commit -m "Reword the first paragraph"
-run git switch main
-sed -i '3,4c The hourly log of one weather station, 2016 to 2025, 87 672 hours, and a\ntable of daily mean temperatures typed into a spreadsheet from it.' README.md
-T 11:50
-git add README.md
-run git commit -m "Give the number of hours in the first paragraph"
-run git log --oneline --graph --all -4
-T 11:55
-run git merge wording
-run git status
-sed -n 1,10p README.md
-python3 - <<'EOF'
-import re
-t = open("README.md", encoding="utf-8").read()
-t = re.sub(r"<<<<<<< HEAD\n.*?>>>>>>> wording\n",
-           "Ten years of hourly readings from one weather station, 87 672 hours, and\n"
-           "the daily means of nine days of October 2025, typed into a spreadsheet\nfrom them.\n",
-           t, flags=re.S)
-open("README.md", "w", encoding="utf-8").write(t)
 EOF
-sed -n 1,7p README.md
-run git add README.md
-run git commit --no-edit
-run git cat-file -p HEAD
-run git log --oneline --graph -5
-run git status
-run git push
+  run git diff --stat
+  T 12:30
+  git add README.md
+  run git commit -m "Give the range of each column"
+  echo "\$ git push -u origin ranges"; git push -u origin ranges 2>&1 | fixf
+  run git status )
+# the pull request #1, merged on GitHub by Smiltė
+W="$S/run/github-merge"
+git clone -q "$URL" "$W"
+( cd "$W"
+  git fetch -q "$FORK" ranges
+  T 12:40
+  GIT_COMMITTER_NAME=GitHub GIT_COMMITTER_EMAIL=noreply@github.com \
+    git merge -q --no-ff -m "Merge pull request #1 from ruta-example/ranges" -m "Give the range of each column" FETCH_HEAD
+  git push -q origin main
+  run git cat-file -p HEAD )
+cd "$P"
+T 12:45
+run git pull
+run git log --oneline --graph -3
 
 # ---- who edited the raw file ---------------------------------------------
 say CLOSE
@@ -428,7 +470,7 @@ run git blame -L 2,2 data/raw/daily_export.csv
 run git show "$TOM"
 sh_ './scripts/rebuild.sh'
 sh_ 'shasum -a 256 data/processed/daily.csv'
-T 12:05
+T 12:50
 run git revert --no-edit "$TOM"
 run git show --stat HEAD
 sed -n 2p data/raw/daily_export.csv
@@ -437,7 +479,7 @@ sh_ 'shasum -a 256 data/processed/daily.csv'
 run git push
 
 say TAG
-T 12:10
+T 12:55
 run git tag -a v1.0 -m "Data as received; mean 7.16 °C"
 run git log --oneline -3
 run git push origin v1.0
