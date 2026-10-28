@@ -125,7 +125,8 @@ jobs:
       - name: Build all decks + landing page + workbook
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-        run: node scripts/build-all.mjs --out dist --base "/${{ github.event.repository.name }}"
+        # --review: the unlisted page ataskaita/ with every deck, drafts included
+        run: node scripts/build-all.mjs --out dist --base "/${{ github.event.repository.name }}" --review
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

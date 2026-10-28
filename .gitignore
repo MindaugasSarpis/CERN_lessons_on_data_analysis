@@ -65,3 +65,6 @@ landing/dist-assets/
 
 # Claude Code git worktrees checked out inside the repo (never commit as gitlinks)
 .claude/worktrees/
+
+# Grant reports (Edukacinė iniciatyva): personal and financial data, kept out of the public repository
+misc/description/mokslines_iniciatyvos_paraiska/

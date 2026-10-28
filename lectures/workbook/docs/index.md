@@ -6,12 +6,12 @@ in every session from the second on. The lectures
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
 
-## This week: 20 October
+## This week: 27 October
 
 | | Page |
 |--|--|
-| Lecture | [05 Python Foundations](lectures/lecture_5.md): objects and types, combining them with `for` and `if`, packages and environments |
-| Seminar | [Seminar 5 · Python](seminars/seminar_05.md): Python step by step in the interpreter, a Jupyter notebook, IDLE and VS Code, then scripts, a module of your own and the standard library |
+| Lecture | [06 Version Control with Git](lectures/lecture_6.md): what `git add`, `git commit` and `git push` each do, history and undo, working together in one shared repository or through a fork and a pull request |
+| Seminar | [Seminar 6 · Git](seminars/seminar_06.md): clone the weather project, find the commit that changed its mean, take it back, commit your own work and push it to your own GitHub repository |
 
 ## Setup
 

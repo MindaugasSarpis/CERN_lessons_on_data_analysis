@@ -15,16 +15,21 @@
  *                     (default '' → '/<slug>/'; Pages uses '/<repo>')
  *     --only a,b      build only these slugs (landing still lists all)
  *     --include-drafts also build decks marked `draft: true` in decks.json
+ *     --review        also build the draft decks into <out>/ataskaita/<slug>/ and
+ *                     write the unlisted page <out>/ataskaita/index.html
+ *                     (scripts/gen-review.mjs: the material for the report on
+ *                     the educational initiative; nothing links to it)
  *   Decks marked `draft: true` are skipped by default (not deployed, not linked;
  *   the landing lists them greyed as "coming soon"). `--flat-base` (QA) always
  *   builds them so parked lectures keep passing the overflow gate.
  *   Exit non-zero if any deck build fails.
  */
-import { readFile, rm, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, rm, mkdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildLanding } from './build-landing.mjs';
+import { genReview, REVIEW_DIR } from './gen-review.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = join(ROOT, 'lectures', 'content');
@@ -39,6 +44,7 @@ const INCLUDE_DRAFTS = argv.includes('--include-drafts');
 // --flat-base: build every deck at base '/' (each served standalone at root),
 // which is what the headless overflow checker needs. No landing page in this mode.
 const FLAT = argv.includes('--flat-base');
+const REVIEW = argv.includes('--review') && !FLAT;
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
 
@@ -58,12 +64,16 @@ if (!FLAT) await buildLanding(OUT, PREFIX);
 // built when named explicitly via --only (explicit intent wins).
 const buildDrafts = FLAT || INCLUDE_DRAFTS;
 const targets = manifest.decks.filter((d) => ONLY ? ONLY.has(d.slug) : (buildDrafts || !d.draft));
+// --review: the drafts again, under ataskaita/, for the unlisted report page
+const reviewTargets = REVIEW ? manifest.decks.filter((d) => d.draft && (!ONLY || ONLY.has(d.slug))) : [];
 const skipped = ONLY ? [] : manifest.decks.filter((d) => d.draft && !buildDrafts);
 if (skipped.length) console.log(`— skipping ${skipped.length} draft deck(s) (not deployed): ${skipped.map((d) => d.slug).join(', ')}`);
 let failed = 0;
-for (const deck of targets) {
-  const base = FLAT ? '/' : `${PREFIX}/${deck.slug}/`;
-  const outDir = join(OUT, deck.slug);
+const jobs = [
+  ...targets.map((deck) => ({ deck, base: FLAT ? '/' : `${PREFIX}/${deck.slug}/`, outDir: join(OUT, deck.slug), review: false })),
+  ...reviewTargets.map((deck) => ({ deck, base: `${PREFIX}/${REVIEW_DIR}/${deck.slug}/`, outDir: join(OUT, REVIEW_DIR, deck.slug), review: true })),
+];
+for (const { deck, base, outDir, review } of jobs) {
   process.stdout.write(`\n▶ building ${deck.slug} (base ${base}) …\n`);
   const r = spawnSync(
     'pnpm',
@@ -80,7 +90,12 @@ for (const deck of targets) {
       await rm(join(outDir, 'videos'), { recursive: true, force: true });
       await rm(join(outDir, 'videos-hq'), { recursive: true, force: true });
     }
-    console.log(`✓ ${deck.slug}`);
+    if (review) {
+      // keep the unreleased copies out of search engines
+      const index = join(outDir, 'index.html');
+      await writeFile(index, (await readFile(index, 'utf8')).replace('<head>', '<head>\n  <meta name="robots" content="noindex, nofollow">'));
+    }
+    console.log(`✓ ${deck.slug}${review ? ` (${REVIEW_DIR}/)` : ''}`);
   }
 }
 
@@ -99,7 +114,12 @@ if (!FLAT) {
   else console.log(`✓ workbook → ${join(OUT, 'workbook')}`);
 }
 
+if (REVIEW) {
+  await genReview(manifest, OUT, PREFIX);
+  console.log(`✓ ${REVIEW_DIR}/index.html (${reviewTargets.length} draft deck(s) under ${REVIEW_DIR}/)`);
+}
+
 if (!FLAT) console.log(`\nLanding page → ${join(OUT, 'index.html')}`);
 
-if (failed) { console.error(`\n❌ ${failed}/${targets.length} deck(s) failed to build.`); process.exit(1); }
-console.log(`\n✅ Built ${targets.length} deck(s) → ${OUT}`);
+if (failed) { console.error(`\n❌ ${failed}/${jobs.length} deck(s) failed to build.`); process.exit(1); }
+console.log(`\n✅ Built ${jobs.length} deck(s) → ${OUT}`);
