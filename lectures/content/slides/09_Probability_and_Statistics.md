@@ -45,7 +45,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **The figure of Lecture 08**
+## 📄 **The mass column with error bars**
 
 Column `M` of `D0_KPi.csv`, one K⁻π⁺ candidate per row, in bins of 1 MeV/c². Every bin carries a bar of ± √N: 1916 ± 44 at the top, about 700 ± 26 in the flat part. The bar was drawn, not derived.
 
@@ -65,7 +65,7 @@ Column `M` of `D0_KPi.csv`, one K⁻π⁺ candidate per row, in bins of 1 MeV/c�
 </div>
 
 <!--
-Speaker: last week's figure, made by the errorbar call of Lecture 08. The same
+Speaker: the mass histogram as points with error bars of ± √N. The same
 quantity was computed for 91 583 candidates, and the values differ from row to
 row. Ask the room for a guess at the first answer before going on. The four
 answers are the mean, the standard deviation, the standard error and the
@@ -187,7 +187,7 @@ for n in [10, 100, 1000, 10_000, 100_000, 1_000_000]:
 
 <div class="note-text mt-sm">
 
-`default_rng` is the seeded generator of Lecture 08, here with the seed 1. The seed fixes the whole sequence, so every laptop rolls the same million. `integers(1, 7, n)` includes 1 and excludes 7. `rolls == 6` is a mask, and its mean is the fraction of `True`. A hundred times more rolls bring the fraction about ten times closer to 1/6.
+`default_rng(1)` is NumPy's random generator with the seed 1. The seed fixes the whole sequence, so every laptop rolls the same million. `integers(1, 7, n)` includes 1 and excludes 7. `rolls == 6` is a mask, and its mean is the fraction of `True`. A hundred times more rolls bring the fraction about ten times closer to 1/6.
 
 </div>
 
@@ -518,7 +518,7 @@ print((W & H).sum() / H.sum())
 Speaker: ask first: does knowing PT change the chance that a row lies in the
 peak? Most say no: a momentum and a mass are different things. If W and H were
 independent, 0.340 × 0.5 = 0.170 of the rows, 15 566, would be in both. The
-file has 18 435. unpack=True and the masks are from Lecture 07; the median
+file has 18 435. unpack=True and the masks are from Lecture 08; the median
 of PT, 3049 MeV/c, splits the rows into two halves, so P(H) is 0.5 by
 construction. (~3 min)
 -->
@@ -1230,7 +1230,7 @@ print(counts.mean(), counts.std(ddof=1))
 | --- | --- | --- |
 | 100 | 10 | 10 % |
 | 1461 | 38 | 2.6 % |
-| 1916, the top bar of Lecture 08 | 44 | 2.3 % |
+| 1916, the top bar of the opening figure | 44 | 2.3 % |
 | 3746, the highest 2 MeV/c² bin | 61 | 1.6 % |
 | 10 000 | 100 | 1 % |
 
@@ -1240,7 +1240,7 @@ print(counts.mean(), counts.std(ddof=1))
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Lecture 08 drew a bar of ± √N on every bin and took √N as given. Here is the check: from 1816 to 1844 MeV/c² the bins of 2 MeV/c² hold about the same number of rows, and their counts scatter by 34. The Poisson prediction is √1461 = 38. Fourteen counts fix a standard deviation to about one part in five, so 34 and 38 agree.
+The opening figure drew a bar of ± √N on every bin and took √N as given. Here is the check: from 1816 to 1844 MeV/c² the bins of 2 MeV/c² hold about the same number of rows, and their counts scatter by 34. The Poisson prediction is √1461 = 38. Fourteen counts fix a standard deviation to about one part in five, so 34 and 38 agree.
 
 </div>
 
@@ -1249,7 +1249,7 @@ Speaker: point back at the figure of the opening slide: every bar there is
 ± the square root of its count, and now it is derived. Nothing in the file
 says that the counts are Poisson. The scatter of neighbouring bins shows it.
 The bins here are 2 MeV/c² wide, so each holds about twice the rows of a bin
-of Lecture 08. (~2 min)
+of the opening figure. (~2 min)
 -->
 
 ---

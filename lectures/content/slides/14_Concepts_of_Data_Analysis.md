@@ -886,7 +886,7 @@ Three thresholds on the LHCb file, each one reasonable: PT above a value, IPCHI2
 <div class="note-text mt-sm">The spread of 0.44 is four times the statistical uncertainty: a systematic effect to be understood, not a menu.</div>
 
 <!--
-Speaker: a threshold is a mask, as in Lecture 07. The trend is real: a higher
+Speaker: a threshold is a mask, as in Lecture 08. The trend is real: a higher
 PT threshold lowers the peak. That is physics of the detector, and exactly the
 kind of thing a selection chosen after the fact hides. (~3 min)
 -->

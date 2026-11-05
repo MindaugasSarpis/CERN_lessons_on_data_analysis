@@ -14,9 +14,9 @@ title: "Data Visualisation"
 ##### Inspired by: C. O. Wilke, *Fundamentals of Data Visualization*
 
 <!--
-Speaker: ask who has had to read a figure whose axes had no labels. The lecture
-has two parts: how a figure is made with Matplotlib, and how to decide what the
-figure shows. (~1 min)
+**Ask:** who has had to read a figure whose axes had no labels?
+**Say:** two parts: how a figure is made with Matplotlib, and how to decide what it shows.
+(~1 min)
 -->
 
 ---
@@ -31,47 +31,47 @@ John W. Tukey, *Exploratory Data Analysis* (1977)
 hideInToc: true
 ---
 
-# The Pendulum Plot and the Mass **Counts**
+# The Mean of 87 552 **Hours**
 
-<div class="grid-2 mt-sm gap-md">
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
 
-<div class="card card-primary card-glass pad-compact text-center">
+<div class="card card-primary card-glass pad-compact">
 
-## 📄 **The pendulum table as a picture**
+## 📄 **The first and the last lines of `weather.csv`**
 
-<img class="fig fig-light" src="/figures/pendulum_plot.png" style="display:block;margin:0 auto;max-height:180px;">
-
-The nine rows of the pendulum table as nine points
+```text
+time,temp_c,humidity_pct,wind_ms
+2016-01-01T00:00,-4.4,93,2.5
+2016-01-01T01:00,-4.8,95,2.6
+...
+2025-12-31T23:00,-11.3,100,4.2
+```
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔢 **Lecture 7: the mass column in 20 bins**
+## 💻 **zsh · Git Bash**
 
 ```text
-[3500 3622 3623 3643 3741 3722 4224 5083
- 7124 8931 8565 6512 4876 3938 3602 3378
- 3412 3397 3287 3064]
+$ python scripts/mean_temp.py
+87552 7.15996550621345
 ```
 
-`np.histogram(M, bins=20, range=(1815, 1915))`. The fullest bin, 1860 to 1865 MeV/c², holds 8931 rows, and the figure is these 20 numbers drawn as bars.
-
 </div>
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div class="card card-warning card-glass pad-compact mt-md">
 
-❓ Both pictures come from a data file. Which lines of Python draw them, and which choices in them did a person make: points or a line, where the axes start, the range, the width of a bin?
+❓ The mean of the 87 552 hours is 7.16 °C. Do more hours lie between 7 and 8 °C than in any other degree, or fewer?
 
 </div>
 
 <!--
-Speaker: two things the room has already seen. Left, the pendulum
-table of Lecture 7 as a picture. Right, the counts Lecture 7 printed for the mass
-column. Ask the room to name one choice in the left picture (points, not a
-line; both axes from zero). (~2 min)
+**Say:** the script of Lecture 5: every hour of the station without the −999 rows, and their mean.
+**Ask:** hands up for more, hands up for fewer. The answer comes with the first histogram.
+(~2 min)
 -->
 
 ---
@@ -84,7 +84,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact">
 
-🐍 Make a figure with **Matplotlib**: points with labelled axes, a histogram, a file in `results/`
+🐍 Make a figure with **Matplotlib** from lists: ten years as a line, a histogram, a file in `results/`
 
 </div>
 
@@ -121,8 +121,8 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: six abilities. The first is new code, the other five are decisions
-that hold for any plotting program. (~1 min)
+**Say:** six abilities: the first is new code, the other five are decisions that hold for any plotting program.
+(~1 min)
 -->
 
 ---
@@ -137,7 +137,7 @@ hideInToc: true
 
 ## 👁️ **Reading**
 
-A column of 91 583 masses cannot be read, and its mean and standard deviation did not show the peak. The 20 counts as bars are read in a few seconds: one peak on a flat background.
+A column of 87 552 temperatures cannot be read, and its mean, 7.16 °C, does not say how the hours are spread. Counts drawn as bars are read in a few seconds.
 
 </div>
 
@@ -168,7 +168,8 @@ The rules for an honest figure are the rules by which a misleading one is recogn
 </div>
 
 <!--
-Speaker: one sentence per card. (~1 min)
+**Say:** one sentence per card.
+(~1 min)
 -->
 
 ---
@@ -187,16 +188,15 @@ hideInToc: true
 
 <img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg" style="display:block;margin:0 auto;max-height:290px;">
 
-<div class="note-text mt-sm text-center">Only the plot tells the four apart, as only the 20 counts showed the peak of the mass column.</div>
+<div class="note-text mt-sm text-center">Only the plot tells the four apart.</div>
 
 </div>
 
 <!--
-Speaker: read the four numbers first and ask what the data look like. Then
-click: a line with scatter, a curve, a line with one point off it, and ten
-points at one x with a single point that makes the whole slope. The mass
-column did the same: mean 1864.10 and standard deviation 25.56 MeV/c², and no
-sign of the peak until it was counted in bins. (~2 min)
+**Do:** read the four numbers first.
+**Ask:** what do the four tables look like?
+**Say:** after the click: a line with scatter, a curve, a line with one point off it, and ten points at one x with a single point that makes the whole slope. The mean 7.16 °C is one such number.
+(~2 min)
 -->
 
 ---
@@ -206,12 +206,11 @@ hideInToc: true
 
 # A First **Plot**
 
-Four tables with the same numbers were told apart only by a plot. Matplotlib makes that plot from the arrays NumPy already holds, one call for each part.
+Matplotlib draws the lists that `weather.py` reads, one call for each part.
 
 <!--
-Speaker: Matplotlib from its first line, on the two files the room already has:
-the pendulum table and the mass column of D0_KPi.csv. Run each slide live in
-VS Code and open the saved picture beside the script. (~0.5 min)
+**Say:** Matplotlib from its first line, on the hourly log of Lecture 5.
+(~0.5 min)
 -->
 
 ---
@@ -224,12 +223,12 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🧩 **Matplotlib draws arrays**
+## 🧩 **Matplotlib draws lists**
 
 - `import matplotlib.pyplot as plt` loads the library under the short name `plt`
 - `fig, ax = plt.subplots()` makes a **Figure**, the whole picture, and one **Axes**, the region with an x-axis and a y-axis
 - A call on `ax` adds an **artist**: `ax.plot` draws points or a line, `ax.hist` bars, `ax.set_xlabel` a text
-- `fig.savefig("plot.png")` writes the picture to a file
+- `fig.savefig("results/month_means.png")` writes the picture to a file
 
 </div>
 
@@ -243,43 +242,40 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Matplotlib is a Python library, installed into the project's environment with `conda install matplotlib-base=3.11`, as Seminar 8 does. Shorter calls such as `plt.plot(x, y)` exist and draw into the figure that was made last. A call on `ax` names the axes it draws into, which stays clear when a script makes several figures.
+Matplotlib is a package from conda-forge, installed into the project's environment with `conda install matplotlib-base=3.11`. Shorter calls such as `plt.plot(x, y)` draw into the figure made last; a call on `ax` names the axes it draws into.
 
 </div>
 
 <!--
-Speaker: the Figure is the sheet, the
-Axes is one plot on it, and everything drawn is an artist that a call on ax put
-there. NumPy holds the numbers, Matplotlib draws them. (~2 min)
+**Say:** the Figure is the sheet, the Axes one plot on it, and everything drawn is an artist that a call on `ax` put there. Lecture 5 drew four hours this way.
+**If asked:** the twelve points are the monthly means of the ten years; the hands-on section computes them.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Plot the Pendulum Table: `ax.plot`
+# Plot Every Hour: `ax.plot`
 
 <div class="grid-2 mt-sm gap-md">
 
 <div>
 
-```python {all|1-2|4-7|9|10|11|all}
-import numpy as np
+```python {all|1-2|4|6-7|8|all}
 import matplotlib.pyplot as plt
+import weather
 
-data = np.loadtxt("data/processed/pendulum.csv",
-                  delimiter=",", skiprows=1)
-length = data[:, 0]    # cm
-t10 = data[:, 1]       # s
+values = weather.temps("data/raw/weather.csv")
 
 fig, ax = plt.subplots()
-ax.plot(length, t10)
-fig.savefig("results/pendulum_plot.png")
+ax.plot(values)
+fig.savefig("results/every_hour.png")
 ```
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Lines 2, 9, 10 and 11 are Matplotlib. `ax.plot(x, y)` takes two arrays of equal length and joins the points with straight lines. The ending of the file name sets the format.
+`weather.temps` is the function of Lecture 5: the 87 552 temperatures of the file, without the −999 rows. Given one list, `ax.plot` draws it against 0, 1, 2, …, its positions in the list, and joins the points with straight lines. The ending of the file name sets the format.
 
 </div>
 
@@ -287,46 +283,101 @@ Lines 2, 9, 10 and 11 are Matplotlib. `ax.plot(x, y)` takes two arrays of equal 
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_pendulum_default.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_handson_hours_default.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-⚠️ **The output.** Nine measurements drawn as one line. No axis says what it shows or in which unit, and the axes begin just below the smallest values, 20 and 9.02.
+⚠️ **The output.** Ten summers and ten winters. The x-axis counts list positions, not time, and no axis says what it shows or in which unit.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the table is the pendulum table of Lecture 7: nine lengths in cm and
-the time of 10 swings in s. np.loadtxt is from Lecture 7. Save the script as
-scripts/plot_pendulum.py, run it and open results/pendulum_plot.png in VS
-Code. Ask what is missing, next to the picture of the opening slide. (~2 min)
+**Ask:** what can be read already, and what is missing?
+**If asked:** after 2019-07-21T23:00 the next value is 2019-07-27T00:00: the 120 hours the sensor did not record are left out, so every later position is 120 hours early.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Add Points, Labels and **Units**
+# The Time of Each Hour: `weather.hours`
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+def temps(path):
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            result.append(temp)
+    return result
+```
+```py {1,2,7,9}
+def hours(path):
+    times = []
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            times.append(datetime.fromisoformat(line[0:16]))
+            result.append(temp)
+    return times, result
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🕐 **A time as an object**
+
+```text
+>>> from datetime import datetime
+>>> datetime.fromisoformat("2016-01-01T00:00")
+datetime.datetime(2016, 1, 1, 0, 0)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">In <code>weather.py</code>, beside <code>temps</code>, with <code>from datetime import datetime</code> at its top. <code>line[0:16]</code> is the time column. <code>hours</code> returns two lists of equal length; <code>times, values = weather.hours(path)</code> names both, as <code>fig, ax</code> does.</div>
+
+<!--
+**Do:** first step: `temps` of Lecture 5; click: the four lines that change.
+**Say:** `datetime` is in the standard library; a `datetime` object knows its year, month, day and hour, and Matplotlib puts years on an axis of them.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Plot Every Hour at Its **Time**
 
 <div class="grid-2 mt-sm gap-md">
 
 <div>
 
-```python {all|2|3-4|5-6|7|all}
+```python {all|1|3|4|5-6|all}
+times, values = weather.hours("data/raw/weather.csv")
 fig, ax = plt.subplots()
-ax.plot(length, t10, "o")
-ax.set_xlabel("length (cm)")
-ax.set_ylabel("time of 10 swings (s)")
-ax.set_xlim(0, 110)
-ax.set_ylim(0, 22)
-fig.savefig("results/pendulum_plot.png", dpi=150)
+ax.plot(times, values, linewidth=0.2)
+ax.set_xlabel("time")
+ax.set_ylabel("temperature (°C)")
+fig.savefig("results/every_hour.png", dpi=150)
 ```
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-- `"o"` draws a circle at each point and no line. A line would claim values between the nine lengths
+- With two lists, `ax.plot(x, y)` puts each value at its own time
+- `linewidth=0.2` draws a hairline: 87 552 values on one axis
 - A label names the quantity and gives the unit in brackets
-- Both axes start at 0, so the bend shows: 5 times the length takes 2.2 times the time
 - `dpi=150` saves 150 pixels per inch: 960 × 720 pixels
 
 </div>
@@ -335,20 +386,18 @@ fig.savefig("results/pendulum_plot.png", dpi=150)
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_pendulum_points.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_handson_hours_dates.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **The output.** Nine points, two axes with a name and a unit, both from zero: the picture of slide 3, now made by a script.
-
-</div>
+✅ **The output.** Years on x, read from the `datetime` objects, and a unit on y. Winters reach −16.3 °C, summers 32.4 °C.
 
 </div>
 
-<div class="note-text mt-sm"><code>ax.set(xlabel="length (cm)", xlim=(0, 110))</code> sets several of these in one call.</div>
+</div>
 
 <!--
-Speaker: four changes, each one line. The figure is saved under the same name,
-so the picture in VS Code changes when the script runs again. 20.01 / 9.02 is
-2.22, and the square root of 5 is 2.24. (~2 min)
+**Say:** three changes, each one line. The figure is saved under the same name, so the old picture is replaced.
+**If asked:** the 120 missing hours of July 2019 are now a straight piece five days long, too short to see at this width.
+(~2 min)
 -->
 
 ---
@@ -361,21 +410,21 @@ hideInToc: true
 
 <div>
 
-```python {all|1-2|4|5|6|all}
-m = np.loadtxt("data/raw/D0_KPi.csv", delimiter=",",
-               skiprows=1, usecols=0)
+```python {all|1|3|4|5|all}
+values = weather.temps("data/raw/weather.csv")
 
 fig, ax = plt.subplots()
-ax.hist(m)
-fig.savefig("results/mass_hist.png")
+ax.hist(values)
+fig.savefig("results/temp_hist.png")
 ```
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-`m` holds the 91 583 values of column `M`: the mass of each K⁻π⁺ pair in MeV/c². `ax.hist(m)` cuts the range from the smallest to the largest value into 10 bins of equal width, counts the values in each bin and draws one bar per bin. `np.histogram(m)` returns the same counts:
+`ax.hist` cuts the range from the smallest to the largest value into 10 bins of equal width, counts the values in each bin and draws one bar per bin. The counts, which `ax.hist` also returns:
 
 ```text
-14575  69648  7359  0  0  0  0  0  0  1
+337  3173  12733  17255  13892
+14619  13466  8797  2948  332
 ```
 
 </div>
@@ -384,22 +433,19 @@ fig.savefig("results/mass_hist.png")
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_mass_default.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_handson_temp_default.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-⚠️ **The output.** The values run from 1766.2 to 2453.7, the minimum and maximum of Lecture 7, so a bin is 68.7 MeV/c² wide. Three bars hold all rows but one, and the peak is inside the second bar.
+⚠️ **The output.** From −16.3 to 32.4 °C in 10 bins: 4.87 °C each, with edges at −16.3, −11.43, … The fullest bin, −1.69 to 3.18 °C, holds 17 255 hours.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the second running example, the file from Lecture 7. One row is one
-candidate, so there is nothing to plot against: the question is how often each
-value occurs. np.histogram is from Lecture 7; ax.hist counts in the same way and
-draws. Lecture 7 chose 20 bins from 1815 to 1915; given only the column,
-ax.hist chooses 10 bins over the full range. Ask why the x-axis runs to 2450:
-Lecture 7 printed M.max() = 2453.66, 23 standard deviations above the mean of
-1864.10. (~2 min)
+**Say:** one value is one hour, so there is nothing to plot it against: the question is how often each temperature occurs.
+**Ask:** where would you put the edges? On whole degrees.
+**If asked:** (32.4 − (−16.3)) / 10 = 4.87.
+(~2 min)
 -->
 
 ---
@@ -412,40 +458,38 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-📏 **Range.** `((m > 1810) & (m < 1920)).sum()` gives 91 579. Four of the 91 583 values lie outside 1810 to 1920 MeV/c², and one of them, 2453.7, makes the default range six times as wide.
+📏 **Range.** −17 to 33 °C holds all 87 552 hours, from the coldest, −16.3, to the warmest, 32.4, and puts the edges on whole degrees.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-📐 **Bin width.** The peak is 16 MeV/c² wide at half its height. A bin is several times narrower than that, and wide enough that neighbouring bins do not differ by chance.
+📐 **Bin width.** The station records tenths of a degree. A bin holds several recorded values, and enough hours that neighbouring bins do not differ by chance.
 
 </div>
 
 </div>
 
-<img class="fig" src="/figures/viz_handson_mass_binwidths.svg" style="display:block;margin:0.6rem auto 0;max-height:220px;">
+<img class="fig" src="/figures/viz_handson_temp_binwidths.svg" style="display:block;margin:0.6rem auto 0;max-height:220px;">
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-✅ **2 MeV/c² per bin.** Eight bins across the peak. A count *N* scatters by about √*N*: a flat bin holds about 1460 ± 38, and two neighbours differ by about √2 × 38 = 54, or 4 %. At 0.2 per bin: 146 ± 12, and 17, or 12 %. More noise, nothing new.
+✅ **1 °C per bin.** At 10 °C one hump; at 1 °C two peaks. At 0.05 °C only 21 values occur between 0 and 2 °C, 0.0, 0.1, …, 2.0, so 19 of the 40 bins are empty.
 
 </div>
 
 <!--
-Speaker: two decisions, each with a number. The range comes from a mask and a
-count. The width comes from the feature to be shown: with 10 per bin the peak is
-one bar with a step on each side, with 0.2 per bin it is 80 bars that jump.
-Lecture 7's 5 MeV/c² put three bins across the peak. The √N rule is stated
-here and used as given; the arithmetic is √1460 = 38.2, √2 × 38.2 = 54,
-54 / 1460 = 3.7 %, and √146 = 12.1, √2 × 12.1 = 17, 17 / 146 = 11.7 %. (~3 min)
+**Ask:** before the figure: what will bins of 10 °C show?
+**Say:** a bin narrower than the steps of the data counts the rounding, not the weather.
+**If asked:** in ten years the station recorded 477 different values, every tenth of a degree that occurred.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Mass Column as a **Histogram**
+# The Temperatures as a **Histogram**
 
 <div class="grid-2 mt-sm gap-md">
 
@@ -453,17 +497,16 @@ hideInToc: true
 
 ```python {all|2|3-4|5|all}
 fig, ax = plt.subplots()
-ax.hist(m, bins=55, range=(1810, 1920))
-ax.set_xlabel(r"$K^-\pi^+$ mass $M$ (MeV/$c^2$)")
-ax.set_ylabel(r"candidates per 2 MeV/$c^2$")
-fig.savefig("results/mass_hist.png", dpi=150)
+ax.hist(values, bins=50, range=(-17, 33))
+ax.set_xlabel("temperature (°C)")
+ax.set_ylabel("hours per 1 °C")
+fig.savefig("results/temp_hist.png", dpi=150)
 ```
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-- 55 bins from 1810 to 1920: 110 / 55 = 2 MeV/c² per bin
+- 50 bins from −17 to 33: 50 / 50 = 1 °C per bin
 - The y-label states the bin width. A count per bin has no meaning without it
-- Text between `$` signs is set as a formula: `^` raises the next character and `\pi` is π. The `r` before the quote keeps the backslash as typed
 - Both choices came from a number, and both are written on the figure and kept in the script
 
 </div>
@@ -472,21 +515,18 @@ fig.savefig("results/mass_hist.png", dpi=150)
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_mass_hist.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_handson_temp_hist.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **The output.** A peak near 1865 MeV/c² on a flat background of about 1400 per bin. The tallest bin, 1862 to 1864, holds 3746 candidates.
+✅ **The output.** Two peaks: 3848 hours at −1 to 0 °C, 3032 at 11 to 12 °C. Between them, at 7 to 8 °C, 2706 hours: the mean lies in the dip.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the same call with two more arguments, and two labels. The peak is the
-D0 meson: pairs that come from its decay have its mass, 1865 MeV/c², and the
-others have any mass in the window. The window itself, about 1815 to 1915, was
-set when the file was made. This answers the opening slide: the pendulum
-picture is the script of "Add Points, Labels and Units", the 20 counts are one
-ax.hist call, and the choices in both were made from numbers. (~2 min)
+**Ask:** back to the opening slide: more hours near the mean, or fewer?
+**Say:** fewer than at either peak. The mean, 7.16 °C, is the temperature between winter and summer, not a typical hour: Tukey's quote at the start.
+(~2 min)
 -->
 
 ---
@@ -499,8 +539,8 @@ hideInToc: true
 Both plots put every number on a position along an axis. Position is one channel among several, and the channels are not read equally well.
 
 <!--
-Speaker: the parts of a plot before the kinds of plot: which channel carries
-the number, what a legend is for, how the axes change what is read. (~0.5 min)
+**Say:** the parts of a plot before the kinds of plot: which channel carries the number, what a legend is for, how the axes change what is read.
+(~0.5 min)
 -->
 
 ---
@@ -511,7 +551,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎨 A plot assigns each variable to one channel: position on x or y, colour, shape, size, line width, line type. In the pendulum plot the length is the position on x, the time the position on y.
+🎨 A plot assigns each variable to one channel: position on x or y, colour, shape, size, line width, line type. In the ten-year plot the time is the position on x, the temperature the position on y.
 
 </div>
 
@@ -566,8 +606,8 @@ Cleveland and McGill (1984) asked people to judge quantities shown in different 
 </div>
 
 <!--
-Speaker: the two plots of the last section used the first channel only: a
-position on x and a position on y. (~1 min)
+**Say:** the plots of the last section used the first channel only: a position on x and a position on y.
+(~1 min)
 -->
 
 ---
@@ -588,9 +628,9 @@ hideInToc: true
 <div class="note-text mt-sm">Example values. The bar on each point is the uncertainty of the count: ± √N for a count of N.</div>
 
 <!--
-Click through: frame → axes with units → the data → its uncertainty → the
-annotation → the title that states the finding. An element that carries no
-information is left out.
+**Do:** click through: frame, axes with units, the data, its uncertainty, the annotation, the title that states the finding.
+**Say:** an element that carries no information is left out.
+(~2 min)
 -->
 
 <style>
@@ -656,8 +696,8 @@ hideInToc: true
 <img class="fig fig-light" src="/figures/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
 
 <!--
-Speaker: show the plot alone and ask which line is which country, and in which
-unit. Then click for the card. (~1 min)
+**Ask:** before the click: which line is which country, and in which unit?
+(~1 min)
 -->
 
 ---
@@ -682,7 +722,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The pendulum plot took the same step with `ax.set_xlabel` and `ax.set_ylabel`.
+🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The ten-year plot took the same step with `ax.set_xlabel` and `ax.set_ylabel`.
 
 </div>
 
@@ -758,9 +798,8 @@ hideInToc: true
 Position is read most accurately. Which chart puts a comparison on position follows from what is compared: amounts, a distribution, parts of a whole, two variables, a change over time.
 
 <!--
-Speaker: the families of charts: amounts, distributions, proportions,
-associations, trends, uncertainty. For each one the usual chart, the usual
-mistake and its correction. (~0.5 min)
+**Say:** amounts, distributions, proportions, associations, trends, uncertainty: for each the usual chart, the usual mistake and its correction.
+(~0.5 min)
 -->
 
 ---
@@ -806,9 +845,9 @@ hideInToc: true
 <img class="fig" src="/figures/viz_proportional_ink_truncated_bar_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
 
 <!--
-Speaker: show the bars alone and ask how many times better the first school
-is than the last. Then click for the working: 10.2 / 1.1 is about 9, and
-58.2 / 49.1 is 1.19. (~1 min)
+**Ask:** before the click: how many times better is the first school than the last?
+**Say:** 10.2 / 1.1 is about 9, and 58.2 / 49.1 is 1.19.
+(~1 min)
 -->
 
 ---
@@ -840,8 +879,8 @@ hideInToc: true
 <img class="fig fig-light" src="/figures/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:350px;">
 
 <!--
-Speaker: the previous slides sorted the films by value. Show this plot alone
-and ask whether the same rule fits here. Then click for the card. (~1 min)
+**Ask:** before the click: the films were sorted by value. Does the same rule fit here?
+(~1 min)
 -->
 
 ---
@@ -964,7 +1003,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📏 The same ages with bins of 0.5, 5 and 20 years: the choice made for the mass column with 0.2, 2 and 10 MeV/c². With 0.5 years the bars jump between a few people and thirty. With 20 years the shape is four bars.
+📏 The same ages with bins of 0.5, 5 and 20 years: the choice made for the temperatures with 0.05, 1 and 10 °C. With 0.5 years the bars jump between a few people and thirty. With 20 years the shape is four bars.
 
 </div>
 
@@ -974,30 +1013,28 @@ hideInToc: true
 hideInToc: true
 ---
 
-# A Peak on a Flat Background, **Live**
+# Choose the Bin Width, **Live**
 
-```python {monaco-run} {autorun:false}
-import numpy as np, matplotlib.pyplot as plt
-rng = np.random.default_rng(7)          # random numbers, the same on every run
-flat = rng.uniform(1810, 1920, 3000)    # 3000 values spread evenly over the window
-peak = rng.normal(1865, 7, 1000)        # 1000 values around 1865, 16 wide at half height
-m = np.concatenate([flat, peak])
-BINS = 55                               # <-- try 5, 55, 550
+```py {monaco-run} {autorun:false}
+import random, matplotlib.pyplot as plt
+random.seed(7)                            # the same numbers on every run
+values = []
+for i in range(3000):                     # 3000 times
+    values.append(random.gauss(-1, 4))    # near -1 °C, like a winter hour
+    values.append(random.gauss(13, 5))    # near 13 °C, like a summer hour
+BINS = 5                                  # <-- try 5, 55, 1100
 fig, ax = plt.subplots()
-ax.hist(m, bins=BINS, range=(1810, 1920))
-ax.set(xlabel="mass (MeV/c²)", ylabel="count", title=f"bins = {BINS}")
+ax.hist(values, bins=BINS, range=(-20, 35))
+ax.set(xlabel="temperature (°C)", ylabel="values per bin")
 plt.show()
 ```
 
 <!--
-Speaker: a made-up mass column shaped like the real one, because the browser
-cannot read the file on the laptop. rng.uniform spreads 3000 values evenly
-between 1810 and 1920; rng.normal(1865, 7, 1000) scatters 1000 values around
-1865, and a spread of 7 is 2.355 × 7 = 16.5 wide at half height. With 5 bins
-(22 per bin) the peak is one bar; with 55 (2 per bin) it has its shape; with
-550 (0.2 per bin) a flat bin holds about 5 values and the bars jump.
-plt.show() draws the figure under the code. In a script on a laptop it opens
-a window instead. (~2 min)
+**Say:** the browser cannot read the file on the laptop, so `random.gauss(-1, 4)` draws a number near −1 with a spread of 4, and `random.gauss(13, 5)` one near 13: two seasons, 6000 values.
+**Do:** press ▶ with 5, then 55, then 1100: bins of 11 °C, 1 °C and 0.05 °C.
+**Ask:** with 1100 bins, why do the bars jump? A bin holds 5 or 6 values on average.
+**If asked:** `plt.show()` draws the figure under the code; in a script on a laptop it opens a window.
+(~2 min)
 -->
 
 ---
@@ -1045,11 +1082,9 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: on the mass column the quartiles are 1845.99, 1864.08 and 1881.53
-MeV/c², so the box is 35.5 long, twice the width of the peak, and nothing in
-it says peak or background; the value 2453.66 of "A Histogram Counts Values
-in Bins" would be a single point far above the upper whisker. Ask the room
-which of the three charts would show the peak. (~2 min)
+**Say:** on the 87 552 hours the quartiles are −0.2, 6.7 and 14.2 °C: the box runs across both seasons and the dip between them, and nothing in it says two peaks.
+**Ask:** which of the three charts would show them?
+(~2 min)
 -->
 
 ---
@@ -1405,9 +1440,8 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: the standard deviation is np.std from Lecture 7. Nine timings with a
-standard deviation of 0.3 s have a mean with a standard error of 0.3 / 3 =
-0.1 s. A resampled copy draws N rows from the table at random, with repeats.
+**Say:** the standard deviation is the typical distance of a value from the mean. Nine values with a standard deviation of 0.3 °C have a mean with a standard error of 0.3 / √9 = 0.1 °C.
+**If asked:** a resampled copy draws N rows from the table at random, with repeats.
 (~2 min)
 -->
 
@@ -1483,7 +1517,7 @@ hideInToc: true
 The chart follows from what is compared. How it is drawn, its ink, its colours and its scale, decides whether the comparison can still be read.
 
 <!--
-Speaker: from which chart to how it is drawn: ink, colour, scales, panels.
+**Say:** from which chart to how it is drawn: ink, colour, scales, panels.
 (~0.5 min)
 -->
 
@@ -1528,8 +1562,7 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: ask the room to name the ink that shows no data in a plot drawn with
-the defaults. The defaults of plotting programs are a common source of it.
+**Ask:** which ink in a plot drawn with the defaults shows no data?
 (~1 min)
 -->
 
@@ -1698,11 +1731,8 @@ hideInToc: true
 <img class="fig" src="/figures/viz_proportional_ink_log_scale.svg" style="display:block;margin:0 auto;max-height:350px;">
 
 <!--
-Speaker: the course file has a column like this. IPCHI2 in the rows with a
-valid TAU runs from 0.0000136 to 891 711 with a median of 6.29, the numbers
-Lecture 7 printed. Cut into 100 bins of equal width on a linear axis, the
-first bin holds 99.1 % of the rows. Ask the room what that histogram would
-look like. (~1 min)
+**Say:** 540 / 46 000 = 1.2 %: on the linear axis the third paper sits at a hundredth of the height. On the logarithmic axis each value is 9 to 12 times the one before, so the five are almost evenly spaced.
+(~1 min)
 -->
 
 ---
@@ -1711,23 +1741,26 @@ hideInToc: true
 
 # Linear or Logarithmic, **Live**
 
-```python {monaco-run} {autorun:false}
-import numpy as np, matplotlib.pyplot as plt
-x = np.arange(1, 60)
-y = 5 * np.exp(0.18 * x)       # exponential growth
-
-SCALE = "linear"               # <-- try "log"
+```py {monaco-run} {autorun:false}
+import matplotlib.pyplot as plt
+days = []
+counts = []
+for day in range(1, 60):           # 1, 2, ..., 59
+    days.append(day)
+    counts.append(5 * 1.2 ** day)  # 20 % more every day
+SCALE = "linear"                   # <-- try "log"
 fig, ax = plt.subplots()
-ax.plot(x, y, "o-", ms=3)
+ax.plot(days, counts, "o-", ms=3)
 ax.set_yscale(SCALE)
-ax.set(xlabel="x", ylabel="y", title=f"y-scale: {SCALE}")
+ax.set(xlabel="day", ylabel="count", title="y-scale: " + SCALE)
 plt.show()
 ```
 
 <!--
-Speaker: "o-" draws a circle at each point and a line between them, ms is the
-marker size. On the logarithmic axis the exponential is a straight line: each
-step in x multiplies y by the same factor, exp(0.18) = 1.20. (~2 min)
+**Do:** press ▶, then change `"linear"` to `"log"` and run again.
+**Say:** on the logarithmic axis the growth is a straight line: every day multiplies the count by the same factor, 1.2.
+**If asked:** `"o-"` draws a circle at each point and a line between them; `ms` is the marker size. `1.2 ** day` is 1.2 to the power `day`.
+(~2 min)
 -->
 
 ---
@@ -1745,8 +1778,8 @@ hideInToc: true
 <img class="fig" src="/figures/viz_coordinates_axes_sqrt_scale.svg" style="display:block;margin:0 auto;max-height:320px;">
 
 <!--
-Speaker: the half unit in one line. The square root of N + √N is about
-√N + 1/2: for N = 100, the square root of 110 is 10.49. (~1 min)
+**If asked:** the half unit in one line: √(N + √N) ≈ √N + ½; for N = 100, √110 = 10.49.
+(~1 min)
 -->
 
 ---
@@ -1805,8 +1838,7 @@ hideInToc: true
 A figure with little ink, a palette that fits and the right scale is correct, and the reader can still miss what it shows.
 
 <!--
-Speaker: a correct figure can still leave the reader to work out what it
-shows. Four means: the title, direct labels, an annotation, a reference line.
+**Say:** four means: the title, direct labels, an annotation, a reference line.
 (~0.5 min)
 -->
 
@@ -1930,44 +1962,105 @@ hideInToc: true
 Each rule of the last four sections is one call on `ax`.
 
 <!--
-Speaker: back to code. (~0.5 min)
+**Say:** back to code, on the weather log: per year, per month.
+(~0.5 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# A Minimal **Bar Chart**
+# The Temperatures of Each Year: `weather.group`
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+def group(path, start, stop):
+    groups = {}
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp == MISSING:
+            continue
+        key = line[start:stop]
+        if key not in groups:
+            groups[key] = []
+        groups[key].append(temp)
+    return groups
+```
+```py
+years = weather.group("data/raw/weather.csv", 0, 4)
+print(len(years))                # 10
+print(list(years))               # ['2016', '2017', ..., '2025']
+print(len(years["2019"]))        # 8640
+print(weather.mean(years["2025"]))   # 5.982077625570776
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔑 **Keys of `2016-01-01T00:00`**
+
+| `start, stop` | key | groups |
+| --- | --- | --- |
+| `0, 4` | `2016` | 10 years |
+| `5, 7` | `01` | 12 months |
+| `11, 13` | `00` | 24 hours |
+| `0, 10` | `2016-01-01` | 3648 days |
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>list(years)</code> gives the keys.</div>
+
+<!--
+**Do:** first step: the function; click: what it gives for the years.
+**Ask:** why 8640 hours in 2019, not 8760? The 120 missing hours of July.
+**If asked:** 3653 days in ten years; the five days of July 2019 without a single measured hour have no key.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Hours Below 0 °C per Year: `ax.bar`
 
 <div class="grid-2 mt-sm gap-md">
 
 <div>
 
-```python {all|1|3-4|6-9|11-15|all}
-import matplotlib.pyplot as plt
-
-days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
-sales = [22, 25, 31, 28, 36]
+```python {all|1-6|8-9|10-14|all}
+frost = []
+for year in years:
+    count = 0
+    for temp in years[year]:
+        if temp < 0:
+            count = count + 1
+    frost.append(count)
 
 fig, ax = plt.subplots(figsize=(6, 3.2))
-ax.bar(days, sales, color="#56B4E9", width=0.7)
-ax.set(xlabel="weekday", ylabel="sales (M USD)",
-       ylim=(0, 40))
-
+ax.bar(list(years), frost, color="#56B4E9", width=0.7)
+ax.set(xlabel="year", ylabel="hours below 0 °C", ylim=(0, 3000))
 ax.yaxis.grid(True, color="#b0bec5", linewidth=0.6)
 ax.set_axisbelow(True)
 for side in ("top", "right", "left"):
     ax.spines[side].set_visible(False)
-fig.savefig("sales.svg", bbox_inches="tight")
+fig.savefig("results/frost_hours.svg", bbox_inches="tight")
 ```
 
 </div>
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_bar_minimal.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_handson_frost_bars.svg" style="display:block;margin:0 auto;max-height:200px;">
 
-✅ **The output.** One colour, bars from zero, a grid on y only, no box
+✅ **The output.** One colour, bars from zero, a grid on y only, no box. From 1845 hours in 2023 to 2677 in 2025.
 
 </div>
 
@@ -1975,111 +2068,96 @@ fig.savefig("sales.svg", bbox_inches="tight")
 
 <div class="note-text mt-sm"><code>figsize</code> is the size in inches. The four <code>ax.spines</code> are the lines of the box around the plot. <code>set_axisbelow(True)</code> draws the grid behind the bars.</div>
 
----
-hideInToc: true
----
-
-# Points and a **Formula Curve**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1-6|8-9|11-15|16-20|all}
-import numpy as np
-import matplotlib.pyplot as plt
-
-data = np.loadtxt("data/processed/pendulum.csv",
-                  delimiter=",", skiprows=1)
-length, t10 = data[:, 0], data[:, 1]
-
-L = np.linspace(0, 110, 200)      # 200 lengths, cm
-formula = 10 * 2 * np.pi * np.sqrt(L / 100 / 9.81)
-
-fig, ax = plt.subplots(figsize=(5.2, 3.6))
-ax.plot(L, formula, color="#D55E00",
-        label="formula, g = 9.81 m/s²")
-ax.plot(length, t10, "o", color="#56B4E9",
-        label="measured")
-ax.set(xlabel="length (cm)",
-       ylabel="time of 10 swings (s)",
-       xlim=(0, 110), ylim=(0, 22))
-ax.legend(frameon=False, loc="lower right")
-fig.savefig("results/pendulum_curve.png", dpi=150)
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_pendulum_curve.svg" style="display:block;margin:0 auto;max-height:250px;">
-
-✅ **The output.** The curve is T = 2π√(L/g), times 10, at 200 lengths. The points are the nine measurements. No fit is made: g is put in as 9.81 m/s². The curve is the reference line of the pendulum
-
-</div>
-
-</div>
-
 <!--
-Speaker: two calls of ax.plot on the same axes give two layers. Each gets a
-label, and ax.legend collects the labels. np.linspace and the arithmetic on a
-whole array are from Lecture 7. L / 100 turns cm into m. The curve does for
-the pendulum what y = x did for the genes on "A Reference Line": a point off it
-would be the result. At 100 cm the formula gives 20.06 s, the measurement
-20.01 s. (~2 min)
+**Say:** a count has a true zero, so its bars start at zero; the years keep their own order.
+**If asked:** 22 352 of the 87 552 hours were below 0 °C, a quarter.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Counts with **Error Bars**
+# Yearly Means and the Mean of All **Hours**
 
 <div class="grid-2 mt-sm gap-md">
 
 <div>
 
-```python {all|1-8|10-12|13-16|17-21|all}
-import numpy as np
-import matplotlib.pyplot as plt
+```python {all|1-3|5-6|7-8|9-10|all}
+means = []
+for year in years:
+    means.append(weather.mean(years[year]))
 
-m = np.loadtxt("data/raw/D0_KPi.csv", delimiter=",",
-               skiprows=1, usecols=0)
-counts, edges = np.histogram(m, bins=110,
-                             range=(1810, 1920))
-centres = (edges[:-1] + edges[1:]) / 2
-
-fig, ax = plt.subplots(figsize=(5.6, 3.6))
-ax.errorbar(centres, counts, yerr=np.sqrt(counts),
-            fmt="o", ms=3, color="#56B4E9")
-arrow = {"arrowstyle": "->", "color": "#D55E00"}
-ax.annotate("$D^0$", xy=(1870, 1650),
-            xytext=(1885, 1900), color="#D55E00",
-            arrowprops=arrow)
-ax.set(xlabel=r"$K^-\pi^+$ mass $M$ (MeV/$c^2$)",
-       ylabel=r"candidates per 1 MeV/$c^2$",
-       ylim=(0, 2100))
-ax.set_title(r"A peak at 1865 MeV/$c^2$")
-fig.savefig("results/mass_peak.png", dpi=150)
+fig, ax = plt.subplots(figsize=(5.2, 3.6))
+ax.axhline(7.16, color="#D55E00", label="2016–2025: 7.16 °C")
+ax.plot(list(years), means, "o", color="#56B4E9",
+        label="one year")
+ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
+ax.legend(frameon=False, loc="lower left")
+fig.savefig("results/year_means.png", dpi=150)
 ```
 
 </div>
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_mass_errorbars.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_handson_year_means.svg" style="display:block;margin:0 auto;max-height:250px;">
 
-✅ **The output.** The parts of a figure from the Mechanics section, on the mass column. A count *N* scatters by about √*N*, so the bar on each point is ± √*N*: 1916 ± 44 at the top, about 700 ± 26 in the flat part
+✅ **The output.** Ten points around the line: 2023 the warmest, 8.31 °C, 2025 the coldest, 5.98 °C.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the parts of the figure from the Mechanics section, one call each:
-the data with its uncertainty (errorbar), the annotation (annotate: a text at
-xytext and an arrow to xy), axes with units, a title that states the finding.
-The counts come from np.histogram, with 1 MeV/c² per bin. (~2 min)
+**Say:** two calls on the same axes give two layers; each gets a `label`, and `ax.legend` collects them. The line does for the years what y = x did for the genes: a point off it is the result.
+**Ask:** is it getting warmer? Ten points scatter by about 1 °C around 7.16, and the last year is the coldest: ten years do not say.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Monthly Means, Annotated
+
+<div class="grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1-4|6-7|8-10|11-13|all}
+months = weather.group("data/raw/weather.csv", 5, 7)
+means = []
+for month in months:
+    means.append(weather.mean(months[month]))
+
+fig, ax = plt.subplots(figsize=(5.6, 3.6))
+ax.plot(list(months), means, "o-", color="#56B4E9")
+arrow = {"arrowstyle": "->", "color": "#D55E00"}
+ax.annotate("July, 18.5 °C", xy=("07", 18.53), xytext=("09", 19.5),
+            color="#D55E00", arrowprops=arrow)
+ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
+ax.set_title("July is 22.4 °C warmer than January")
+fig.savefig("results/month_means.png", dpi=150)
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_month_annotated.svg" style="display:block;margin:0 auto;max-height:240px;">
+
+✅ **The output.** An annotation, axes with units, a title that states the finding: 18.53 − (−3.87) = 22.40 °C.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the parts of a figure from the Mechanics section, one call each. `annotate` writes a text at `xytext` and draws an arrow to `xy`; on this axis a month is named by its key, `"07"`.
+**Ask:** why a line between the points here, and none between the years? The months follow each other in a cycle; the yearly means are ten separate values.
+(~2 min)
 -->
 
 ---
@@ -2113,6 +2191,11 @@ mpl.rcParams.update({
 })
 ```
 
+<!--
+**Say:** the eight Okabe–Ito colours stay distinct for the colour-blind. The style lives in one place, for example in `weather.py`, and every script that imports it draws alike.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -2144,8 +2227,8 @@ hideInToc: true
 ## 🔁 **Save SVG and PNG**
 
 ```python
-for ext in ("svg", "png"):
-    fig.savefig(f"results/mass_hist.{ext}", dpi=150, bbox_inches="tight")
+fig.savefig("results/temp_hist.svg", bbox_inches="tight")
+fig.savefig("results/temp_hist.png", dpi=150, bbox_inches="tight")
 ```
 
 </div>
@@ -2163,7 +2246,7 @@ hideInToc: true
 
 # **Wrap-up**
 
-The two figures of the first section now carry a reference curve, error bars and a title that states the finding, and each is made again by its script.
+Every choice in the two figures of the first section, ten years as a line and the hours as a histogram, with the number behind it.
 
 <!--
 (~0.5 min)
@@ -2217,6 +2300,10 @@ A "no" means the figure is not finished.
 
 </div>
 
+<!--
+(~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -2227,23 +2314,21 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **The pendulum figure**
+## 📈 **Ten years, hour by hour**
 
-- `"o"`: nine measurements are nine points, with no line between them
-- Both axes from zero, so the bend shows: 5 times the length takes 2.22 times the time, and √5 = 2.24
-- Each axis names its quantity and unit: length (cm), time of 10 swings (s)
-- The curve of T = 2π√(L/g) with g = 9.81 m/s² as the reference
+- `weather.hours`: each temperature at its own time, so the hours after the gap of July 2019 keep their dates
+- `linewidth=0.2`: 87 552 values as one hairline
+- Each axis names its quantity and unit: years on x, temperature (°C) on y
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📊 **The mass histogram**
+## 📊 **The hours as a histogram**
 
-- The range 1810 to 1920 MeV/c² holds 91&nbsp;579 of the 91&nbsp;583 values. The default stretched to 2453.7
-- 2 MeV/c² per bin puts eight bins across a peak 16 wide, and neighbours differ by 4 %
-- The y-label states the bin width: candidates per 2 MeV/c²
-- The title states the finding: a peak at 1865 MeV/c²
+- −17 to 33 °C holds every hour, −16.3 to 32.4, with edges on whole degrees
+- 1 °C per bin shows two seasons; 10 °C one hump; 0.05 °C the rounding of the station
+- The y-label states the bin width: hours per 1 °C
 
 </div>
 
@@ -2251,15 +2336,15 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Given only the column, `ax.hist` chose 10 bins of 68.7 MeV/c² and hid the peak inside one bar. The 20 bins of Lecture 7 were chosen by a person too. Every choice that shows the peak comes from a number, is written on the figure and is kept in the script.
+✅ Given only the list, `ax.hist` chose 10 bins of 4.87 °C. The 1 °C bins show that the mean, 7.16 °C, lies in the dip between winter and summer: 2706 hours at 7 to 8 °C, 3848 at −1 to 0 °C. Every choice that shows it comes from a number and is kept in the script.
 
 </div>
 
 <!--
-Speaker: the answer to the opening slide, in the room's own numbers. Point at
-each line and ask which slide it came from. The first histogram also showed
-the one value nobody expected, at 2453.7: Tukey's quote at the start.
-Do not cut this slide. (~2 min)
+**Say:** the answer to the opening slide, in the room's own numbers.
+**Ask:** point at each line: which slide did it come from?
+**Do:** do not cut this slide.
+(~2 min)
 -->
 
 ---
@@ -2272,7 +2357,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Make a figure with **Matplotlib**: `plt.subplots`, `ax.plot`, `ax.hist`, labels with units, `fig.savefig`
+✅ Make a figure with **Matplotlib** from lists: `plt.subplots`, `ax.plot`, `ax.hist`, `ax.bar`, labels with units, `fig.savefig`
 
 </div>
 
@@ -2309,8 +2394,8 @@ hideInToc: true
 </div>
 
 <!--
-Speaker: one line per card, with the pendulum plot and the mass histogram as
-the two examples for each. (~1 min)
+**Say:** one line per card, with the ten-year line and the histogram as the two examples for each.
+(~1 min)
 -->
 
 ---
@@ -2375,6 +2460,38 @@ hideInToc: true
 ---
 
 <MCQ
+  question="The mean of ten years of hourly temperatures is 7.16 °C. With 1 °C bins, 7 to 8 °C holds 2706 hours, −1 to 0 °C 3848 and 11 to 12 °C 3032. What does this say about the mean?"
+  :options="[
+    'Most hours lie near 7 °C, since the mean is the most common value',
+    'The hours fall into two seasons, and the mean lies between them, where fewer hours are',
+    'The histogram is wrong, since a mean lies under the highest bar',
+    'Nothing: 1 °C bins are too narrow to show a shape'
+  ]"
+  :correct="1"
+  explanation="A mean is the balance point of the values, not the most common one. The hours form two peaks, near −1 °C in winter and near 12 °C in summer, and their mean falls in the dip between them. Only the histogram shows it."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A sensor records tenths of a degree: 0.0, 0.1, 0.2, … A histogram of its values uses bins 0.05 °C wide. What does it show?"
+  :options="[
+    'A smoother shape than with 1 °C bins',
+    'About every other bin empty, since no value lies between two tenths',
+    'The same shape as with 1 °C bins, with more detail',
+    'One bar per measurement'
+  ]"
+  :correct="1"
+  explanation="From 0 to 2 °C the sensor can record 21 values, 0.0 to 2.0, and 40 bins of 0.05 °C cover that range: a bin with a value is followed by one without. The bars show the rounding of the sensor, not the weather. A bin holds several recorded values."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
   question="Two bars show the values 50 and 52. The value axis starts at 48. How does the second bar look next to the first?"
   :options="[
     '1.04 times as long, like the values',
@@ -2407,15 +2524,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Nine timings of a pendulum have a standard deviation of 0.3 s. What is the standard error of their mean?"
+  question="Nine measurements of a temperature have a standard deviation of 0.3 °C. What is the standard error of their mean?"
   :options="[
-    '0.3 s',
-    '0.1 s',
-    '0.033 s',
-    '2.7 s'
+    '0.3 °C',
+    '0.1 °C',
+    '0.033 °C',
+    '2.7 °C'
   ]"
   :correct="1"
-  explanation="The standard error of a mean of N values is their standard deviation divided by √N: 0.3 s / √9 = 0.1 s. An error bar of ± one standard error on the mean is 0.2 s long from end to end."
+  explanation="The standard error of a mean of N values is their standard deviation divided by √N: 0.3 °C / √9 = 0.1 °C. An error bar of ± one standard error on the mean is 0.2 °C long from end to end."
 />
 
 ---

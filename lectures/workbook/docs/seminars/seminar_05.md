@@ -1458,7 +1458,7 @@ A package from conda lives in the environment's folder. `environment.yml` lists 
         ```
 
 2. JupyterLab came from conda into this environment; NumPy is not
-   installed (Seminar 7 adds it).
+   installed (Seminar 8 adds it).
 
     ```text
     $ python -c "import jupyterlab; print(jupyterlab.__version__)"

@@ -1,29 +1,36 @@
-# Seminar 7 · NumPy
+# Seminar 7 · Visualisation
 
-**Paired lecture:** 07 Python for Data & NumPy · **Format:** type-along tutorial, in class
+**Paired lecture:** 07 Data Visualisation · **Format:** type-along tutorial, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's question:** Is it getting warmer?
+**Today's question:** What do ten years of weather look like?
 
-**Today's goal:** every student makes today's conda environment from the
-folder's `environment.yml`, adds NumPy to it and to the file; reads
-`weather.csv` with functions and then as one NumPy array; finds the coldest
-day and the mean of each year, and writes the answer to a file.
+**Today's goal:** every student makes today's conda environment, adds Matplotlib to it, adds a function
+`group` to the module `weather.py`, and writes one script,
+`scripts/figures.py`, that draws five figures of `weather.csv` into
+`results/`: ten years day by day, the year's cycle, the day's cycle, the
+yearly means and a histogram; then deletes the figures and draws them all
+again with one line.
 
-Everything is typed in VS Code: the scripts in the editor, the commands in
+Everything is typed in VS Code: the script in the editor, the commands in
 its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
-in both). In the blocks, a line that starts with `$` is typed in the
-terminal, a line that starts with `>>>` is typed at Python's prompt, and
-every other line is what comes back; `...` stands for lines left out.
+in both). Each figure opens in VS Code from the Explorer. In the blocks, a
+line that starts with `$` is typed in the terminal, a line that starts with
+`>>>` is typed at Python's prompt, and every other line is what comes back;
+`...` stands for lines left out.
 
-**If time runs short:** stop after section 12; sections 14 to 17 are optional.
+**If time runs short:** skip the Tasks of Parts 2 and 3, but keep
+section 11, which draws every figure again with one line; sections 13 to
+15 are optional.
 
 ??? info "Before the session"
     - **Room:** Miniforge and VS Code with its Python extension on every
-      laptop (the [Setup](../setup.md) page), internet for the download and
-      for conda (Python about 30 MB, NumPy about 9 MB, less when conda has
-      them already). Nothing from earlier seminars is needed.
+      laptop (the [Setup](../setup.md) page), internet for the download
+      (0.6 MB) and for conda: Python about 25 MB on a Mac and 37 MB on
+      Windows, Matplotlib with what it needs about 55 MB more on a Mac and
+      160 MB on Windows, less when conda has them already. Nothing from
+      earlier seminars is needed.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
       `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
       extension: [Setup, step 7](../setup.md#extensions).
@@ -34,13 +41,13 @@ every other line is what comes back; `...` stands for lines left out.
 
 ---
 
-## Part 1 · An environment for the project { #part-1 }
+## Part 1 · Matplotlib in the environment { #part-1 }
 
-<!-- 0:00 to 0:25 -->
+<!-- 0:00 to 0:35 -->
 
-NumPy is not part of Python. It goes into the project's environment, and into the file that lists it.
+Matplotlib draws figures from Python. It goes into the project's environment, then a first figure shows how its pieces fit.
 
-Further reading: [conda, Managing environments](https://docs.conda.io/projects/conda/en/stable/user-guide/tasks/manage-environments.html).
+Further reading: [Matplotlib, Quick start guide](https://matplotlib.org/stable/users/explain/quick_start.html).
 
 ---
 
@@ -48,7 +55,7 @@ Further reading: [conda, Managing environments](https://docs.conda.io/projects/c
 
 <!-- 0:00 · 10 min -->
 
-Today's folder holds the data, the scripts that come with it and `environment.yml`, the list from which conda makes today's environment.
+Today's folder holds the data, the module `weather.py` and `environment.yml`, the list from which conda makes today's environment: Python alone.
 
 1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
    under **Assets**, click `weather-s07.zip`. Open VS Code, then the
@@ -59,7 +66,7 @@ Today's folder holds the data, the scripts that come with it and `environment.ym
     Archive:  /Users/smilte/Downloads/weather-s07.zip
        creating: /Users/smilte/weather-s07/
     ...
-      inflating: /Users/smilte/weather-s07/scripts/rebuild.sh
+      inflating: /Users/smilte/weather-s07/scripts/weather.py
     $ cd ~/weather-s07
     $ ls
     README.md  data  environment.yml  results  scripts
@@ -68,10 +75,8 @@ Today's folder holds the data, the scripts that come with it and `environment.ym
     Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s07 ~`
     instead.
 
-2. **File** > **Open Folder...** > `weather-s07` > **Open**. The terminal
-   now starts in it.
-3. The list for today's environment: a name, where packages come from,
-   and what goes in. Only Python, so far.
+2. **File** > **Open Folder...** > `weather-s07` > **Open**.
+3. The list for today's environment.
 
     ```text
     $ cat environment.yml
@@ -82,8 +87,8 @@ Today's folder holds the data, the scripts that come with it and `environment.ym
       - python=3.14
     ```
 
-4. Make the environment from it. A **conda environment** is a folder with
-   its own Python and packages, here `miniforge3/envs/s07`.
+4. Make the environment from it, then switch it on: the prompt starts
+   with `(s07)`.
 
     ```text
     $ conda env create -n s07 -f environment.yml
@@ -91,83 +96,62 @@ Today's folder holds the data, the scripts that come with it and `environment.ym
      - conda-forge
     ...
     #     $ conda activate s07
+    $ conda activate s07
     ```
 
     `conda: command not found`: install Miniforge as on the
     [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
-5. Switch it on: the prompt starts with `(s07)`, and `python` is the
-   environment's Python.
-
-    ```text
-    $ conda activate s07
-    $ python --version
-    Python 3.14.8
-    ```
-
-6. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
+5. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
    Interpreter`, pick the entry with `envs/s07` in its path. The Status
-   Bar, bottom right, shows `3.14.8` and `s07`; a new terminal starts with
-   `(s07)`.
+   Bar shows `s07`.
 
 **Check:** `(s07)` at the start of the prompt, `s07` in the Status Bar.
 
 ---
 
-### 2. Add NumPy to the environment { #install }
+### 2. Install Matplotlib, write it down { #install }
 
-<!-- 0:10 · 5 min -->
+<!-- 0:10 · 10 min -->
 
-Activating an environment puts its folder first on `PATH`; `conda install` adds a package to the active one.
+A new package goes into the active environment, never into `base`, and into the file that lists it, or the next laptop cannot run the script.
 
-1. NumPy is not in it yet.
+1. Matplotlib is not in it yet.
 
     ```text
-    $ python -c "import numpy"
-    ModuleNotFoundError: No module named 'numpy'
+    $ python -c "import matplotlib"
+    ModuleNotFoundError: No module named 'matplotlib'
     ```
 
-2. Install it, with the version written in. conda shows its plan, then a
-   list of packages:
+2. Install it, with its version.
 
     ```text
-    $ conda install numpy=2.5
+    $ conda install matplotlib-base=3.11
     ## Package Plan ##
 
       environment location: /Users/smilte/miniforge3/envs/s07
 
       added / updated specs:
-        - numpy=2.5
+        - matplotlib-base=3.11
     ```
 
-3. At `Proceed ([y]/n)?` press `Enter`. It ends with `done`. Ask for the
-   version.
+    `matplotlib-base` is Matplotlib without a window library of several
+    hundred MB; the scripts write their figures to files.
+
+3. At `Proceed ([y]/n)?` press `Enter`. Then ask for the version.
 
     ```text
-    $ python -c "import numpy; print(numpy.__version__)"
-    2.5.4
+    $ python -c "import matplotlib; print(matplotlib.__version__)"
+    3.11.2
     ```
 
-**Check:** `2.5.4`, with `(s07)` in the prompt.
-
-!!! warning "`ModuleNotFoundError` after the install"
-    The prompt says `(base)`: `conda activate s07`, then again.
-
----
-
-### 3. Write it down: `environment.yml` { #yml }
-
-<!-- 0:15 · 10 min -->
-
-The file lists what was asked for; any laptop makes the same environment from it. NumPy goes in too.
-
-1. Export what was asked for, over the file from the zip.
+4. Export the list again, delete its last line, `prefix: ...`, save.
 
     ```text
     $ conda env export --from-history -f environment.yml
     ```
 
-2. Open `environment.yml`. NumPy is the new last dependency.
+5. Open `environment.yml`: Matplotlib is the new last line.
 
     ```text
     name: s07
@@ -175,583 +159,623 @@ The file lists what was asked for; any laptop makes the same environment from it
       - conda-forge
     dependencies:
       - python=3.14
-      - numpy=2.5
-    prefix: /Users/smilte/miniforge3/envs/s07
+      - matplotlib-base=3.11
     ```
 
-3. Delete the last line, `prefix: ...`: it names a folder on this laptop.
-   Save.
+**Check:** `3.11.2`, and `- matplotlib-base=3.11` at the end of
+`environment.yml`.
 
-**Check:** `environment.yml` ends with `- numpy=2.5`.
-
-!!! question "Task: does the file make the environment?"
-    Make a second environment, `s07-check`, from `environment.yml`.
-    Ask it for its NumPy version without activating it, then remove it.
-
-??? success "Answer"
-    ```text
-    $ conda env create -n s07-check -f environment.yml
-    ```
-
-    It ends with `#     $ conda activate s07-check`. The packages come
-    from conda's cache, so it takes a minute.
-
-    ```text
-    $ conda run -n s07-check python -c "import numpy; print(numpy.__version__)"
-    2.5.4
-    $ conda env remove -n s07-check
-    ```
+!!! warning "`ModuleNotFoundError: No module named 'matplotlib'`"
+    The prompt says `(base)`: `conda activate s07`, then again. VS Code's
+    Status Bar must show `s07` too (section 1, step 5).
 
 ---
 
-## Part 2 · Functions and the csv module { #part-2 }
+### 3. A first figure { #first }
 
-<!-- 0:25 to 0:55 -->
+<!-- 0:20 · 15 min -->
 
-The mean becomes a function, as `temp_of` and `mean` were in Seminar 5, and the csv module reads the file.
+A **Figure** is the whole image; an **Axes** is one plot area in it, with its two axes; `ax.plot` draws a line on the Axes; `fig.savefig` writes the image to a file.
 
-Further reading: [The Python Tutorial, Defining functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions).
-
----
-
-### 4. A function for the mean { #function }
-
-<!-- 0:25 · 10 min -->
-
-As in Seminar 5: `def` gives a block a name and inputs; `return` hands a value back.
-
-1. New file `scripts/column_mean.py`. Type, save.
+1. Four numbers first. New file `scripts/first_figure.py`, the first four
+   hours of the log. Type, save.
 
     ```python
-    def mean_valid(values):
-        """The mean of the values that are not -999."""
-        valid = [v for v in values if v != -999]
-        return sum(valid) / len(valid)
+    import matplotlib.pyplot as plt
 
-    print(mean_valid([1.0, -999, 3.0]))
-    result = mean_valid([20.5, 21.5])
-    print(result)
+    hours = [0, 1, 2, 3]
+    temps = [-4.4, -4.8, -5.5, -6.0]
+    fig, ax = plt.subplots()
+    print(type(fig), type(ax))
+    ax.plot(hours, temps)
+    fig.savefig("results/first.png")
     ```
+
+    `plt.subplots()` makes a Figure with one Axes and hands back both.
+    `fig.savefig` writes a file, where `plt.show()` would open a window.
 
 2. Run it.
 
     ```text
-    $ python scripts/column_mean.py
-    2.0
-    21.0
+    $ python scripts/first_figure.py
+    <class 'matplotlib.figure.Figure'> <class 'matplotlib.axes._axes.Axes'>
     ```
 
-    The `-999` of the first list is left out: (1 + 3) / 2.
-    `[v for v in values if v != -999]` makes a new list of the values that
-    are not −999: a **list comprehension**, a `for` and an `if` in one line.
+3. In the Explorer, click `results/first.png`: one line falling from −4.4
+   to −6.0 over the hours 0 to 3. Matplotlib chose the axis ranges from the
+   data.
 
-**Check:** `2.0` and `21.0`.
+4. Open `scripts/weather.py`, which came with the folder: a **module**, a
+   file of definitions that a script loads with `import weather`.
+   `MISSING` is the station's mark for an hour without a temperature,
+   `-999`; `read_lines(path)` gives the lines of a file without its
+   header, `temp_of(line)` the temperature of one line, `temps(path)`
+   every temperature that is not `MISSING`, and `mean(values)` the mean
+   of a list.
 
----
-
-### 5. A column with the csv module { #csv }
-
-<!-- 0:35 · 10 min -->
-
-`csv.reader` cuts every line into a list of strings; `with` closes the file at the end of the block.
-
-1. At the top of the file, add one line.
+5. New file `scripts/figures.py`: every hour of the log, `-999` included.
+   Type, save.
 
     ```python
-    import csv
+    import matplotlib.pyplot as plt
+
+    import weather
+
+    PATH = "data/raw/weather.csv"
+
+    every = []
+    for line in weather.read_lines(PATH):
+        every.append(weather.temp_of(line))
+    print(len(every), min(every), max(every))
+
+    fig, ax = plt.subplots()
+    ax.plot(every)
+    fig.savefig("results/every_hour.png")
     ```
 
-2. Under `mean_valid`, add a second function.
-
-    ```python
-    def read_column(path, index):
-        """One column of a CSV file with a header line, as floats."""
-        values = []
-        with open(path, newline="") as f:
-            reader = csv.reader(f)
-            header = next(reader)
-            print(header)
-            for row in reader:
-                values.append(float(row[index]))
-        return values
-    ```
-
-3. Replace the three lines at the bottom with these, save.
-
-    ```python
-    temp = read_column("data/raw/weather.csv", 1)
-    print(len(temp), temp[:3])
-    print(f"mean {mean_valid(temp):.5f} °C")
-    ```
-
-4. Run it.
-
-    ```text
-    $ python scripts/column_mean.py
-    ['time', 'temp_c', 'humidity_pct', 'wind_ms']
-    87672 [-4.4, -4.8, -5.5]
-    mean 7.15997 °C
-    ```
-
-    `next(reader)` takes the header line; the loop gets the rest.
-
-**Check:** `mean 7.15997 °C`, from two functions.
-
----
-
-### 6. A path that works from any folder { #pathlib }
-
-<!-- 0:45 · 10 min -->
-
-A relative path starts at the terminal's folder, not at the script's.
-
-1. Run the script from the folder `scripts`.
-
-    ```text
-    $ cd scripts
-    $ python column_mean.py
-    ...
-      File "/Users/smilte/weather-s07/scripts/column_mean.py", line 13, in read_column
-        with open(path, newline="") as f:
-             ~~~~^^^^^^^^^^^^^^^^^^
-    FileNotFoundError: [Errno 2] No such file or directory: 'data/raw/weather.csv'
-    ```
-
-2. Under `import csv`, add two lines.
-
-    ```python
-    from pathlib import Path
-
-    ROOT = Path(__file__).resolve().parent.parent
-    ```
-
-    `__file__` is the script's path; two `.parent` up is the project folder.
-
-3. In `read_column`, replace the two lines `header = next(reader)` and
-   `print(header)` with one, `next(reader)`. Replace the three lines at the
-   bottom with these, save.
-
-    ```python
-    print(ROOT)
-    temp = read_column(ROOT / "data/raw/weather.csv", 1)
-    print(f"mean {mean_valid(temp):.5f} °C")
-    ```
-
-4. Run it again from `scripts`, then go back.
-
-    ```text
-    $ python column_mean.py
-    /Users/smilte/weather-s07
-    mean 7.15997 °C
-    $ cd ..
-    ```
-
-**Check:** the same mean from `scripts` and from the project folder.
-
-!!! question "Task: humidity and wind"
-    Add two lines to `column_mean.py` that print the mean of
-    `humidity_pct` (column 2) and of `wind_ms` (column 3), with two decimals.
-
-??? success "Answer"
-    ```python
-    print(f"humidity {mean_valid(read_column(ROOT / 'data/raw/weather.csv', 2)):.2f} %")
-    print(f"wind {mean_valid(read_column(ROOT / 'data/raw/weather.csv', 3)):.2f} m/s")
-    ```
-
-    ```text
-    humidity 79.10 %
-    wind 3.50 m/s
-    ```
-
-    A name for the path, `path = ROOT / "data/raw/weather.csv"`, makes
-    both lines shorter.
-
----
-
-## Part 3 · The file as one array { #part-3 }
-
-<!-- 0:55 to 1:25 -->
-
-A NumPy array holds numbers of one type, and computes on all of them at once.
-
-Further reading: [NumPy: the absolute basics for beginners](https://numpy.org/doc/stable/user/absolute_beginners.html).
-
----
-
-### 7. Arrays at the prompt, then the file into an array { #loadtxt }
-
-<!-- 0:55 · 20 min -->
-
-An **array** is a block of numbers of one type; arithmetic and comparisons work on every number at once. `np.loadtxt` reads a table of numbers into a two-dimensional array.
-
-1. Start Python in the terminal (`python`), import NumPy under the short
-   name `np`, and make an array from a list of four hours. Every element is
-   a `float64`; `shape` says how many there are.
-
-    ```pycon
-    >>> import numpy as np
-    >>> temps = [-4.4, -4.8, -999.0, -5.5]
-    >>> a = np.array(temps)
-    >>> a
-    array([  -4.4,   -4.8, -999. ,   -5.5])
-    >>> a.dtype
-    dtype('float64')
-    >>> a.shape
-    (4,)
-    ```
-
-2. Arithmetic on an array works on each element. On a list, `*` repeats
-   the list instead.
-
-    ```pycon
-    >>> a * 9 / 5 + 32
-    array([   24.08,    23.36, -1766.2 ,    22.1 ])
-    >>> temps * 2
-    [-4.4, -4.8, -999.0, -5.5, -4.4, -4.8, -999.0, -5.5]
-    >>> a * 2
-    array([   -8.8,    -9.6, -1998. ,   -11. ])
-    ```
-
-3. A comparison gives an array of `True` and `False`, a **mask**. An array
-   indexed with a mask keeps the elements where the mask is `True`.
-
-    ```pycon
-    >>> a != -999
-    array([ True,  True, False,  True])
-    >>> a[a != -999]
-    array([-4.4, -4.8, -5.5])
-    >>> a[a != -999].mean()
-    np.float64(-4.8999999999999995)
-    ```
-
-    `np.float64` is NumPy's float; the tail is the float rounding of any
-    sum, (−4.4 − 4.8 − 5.5) / 3 = −4.9.
-
-4. An array can have rows and columns. `axis=1` works along each row,
-   `axis=0` down each column. Then leave Python.
-
-    ```pycon
-    >>> b = np.array([[1, 2, 3], [4, 5, 6]])
-    >>> b.shape
-    (2, 3)
-    >>> b.mean(axis=1)
-    array([2., 5.])
-    >>> b.mean(axis=0)
-    array([2.5, 3.5, 4.5])
-    >>> exit()
-    ```
-
-5. Now the file. New file `scripts/coldest_day.py`. Type, save.
-
-    ```python
-    from pathlib import Path
-
-    import numpy as np
-
-    ROOT = Path(__file__).resolve().parent.parent
-    path = ROOT / "data/raw/weather.csv"
-
-    data = np.loadtxt(path, delimiter=",", skiprows=1, usecols=(1, 2, 3))
-    print(data.shape, data.dtype)
-    print(data[0])
-    print(data[:3, 0])
-    ```
+    Given one list, `ax.plot` puts each value at its position: 0, 1, 2, …
 
 6. Run it.
 
     ```text
-    $ python scripts/coldest_day.py
-    (87672, 3) float64
-    [-4.4 93.   2.5]
-    [-4.4 -4.8 -5.5]
+    $ python scripts/figures.py
+    87672 -999.0 32.4
     ```
 
-    87 672 rows, 3 columns. `data[0]` is the first row; `data[:3, 0]` the
-    first three rows of column 0, `temp_c`.
+7. In the Explorer, click `results/every_hour.png`: a wavy band near 0,
+   and one line straight down to −999 at about hour 31 000.
 
-**Check:** `(87672, 3) float64`.
+**Check:** the drop to −999: the five days of July 2019 without a
+temperature.
 
-!!! warning "`ValueError: could not convert string '2016-01-01T00:00' to float64`"
-    `usecols` is missing: the time column is not a number.
+!!! warning "`FileNotFoundError: ... 'data/raw/weather.csv'`"
+    The terminal is not in the project folder: `cd ~/weather-s07`, then
+    run again.
+
+!!! question "Task: the humidity, drawn the same way"
+    In `figures.py`, append the third value of each line,
+    `float(line.split(",")[2])`, instead of `weather.temp_of(line)`. Run,
+    look at the figure. Is there a spike? When is the air driest? Change
+    it back.
+
+??? success "Answer"
+    ```text
+    $ python scripts/figures.py
+    87672 34.0 100.0
+    ```
+
+    No spike: `humidity_pct` has no `-999`; its hours run from 34 to
+    100 %. The deepest dips lie where the temperature has its warm humps:
+    of the 831 hours below 55 %, 774 are in May to September, 702 between
+    12:00 and 18:00. Of the 2540 hours at 100 %, 2155 are in November to
+    March.
 
 ---
 
-### 8. A mask for `-999` { #mask }
+## Part 2 · Ten years, day by day { #part-2 }
+
+<!-- 0:35 to 1:05 -->
+
+One missing value can hide everything else in a figure. A mean per day leaves the missing hours out and puts a date under each point.
+
+---
+
+### 4. Group the hours by day: `group` { #group }
+
+<!-- 0:35 · 10 min -->
+
+A **dictionary of lists**: one key per day, and under it the list of that day's temperatures.
+
+1. At the end of `scripts/weather.py`, add a fifth function, save.
+
+    ```python
+    def group(path, start, stop):
+        """The temperatures of each line[start:stop]: 0, 4 the year,
+        5, 7 the month, 11, 13 the hour of the day, 0, 10 the day."""
+        groups = {}
+        for line in read_lines(path):
+            temp = temp_of(line)
+            if temp == MISSING:
+                continue
+            key = line[start:stop]
+            if key not in groups:
+                groups[key] = []
+            groups[key].append(temp)
+        return groups
+    ```
+
+    `line[0:10]` is the date of a line, `2016-01-01`. The first time a key
+    turns up, `groups[key] = []` gives it an empty list; `append` adds each
+    temperature to the list of its key; `continue` skips the hours marked
+    `-999`.
+
+2. Try it at `>>>`. Python finds `weather.py` in the terminal's folder, so
+   start it in `scripts`; the data is then one folder up, `..`.
+
+    ```pycon
+    $ cd scripts
+    $ python
+    >>> import weather
+    >>> days = weather.group("../data/raw/weather.csv", 0, 10)
+    >>> len(days)
+    3648
+    >>> days["2016-01-01"][0:4]
+    [-4.4, -4.8, -5.5, -6.0]
+    >>> len(days["2016-01-01"])
+    24
+    >>> "2019-07-22" in days
+    False
+    >>> exit()
+    $ cd ..
+    ```
+
+    3653 days from 2016 to 2025, less the five days of July 2019 whose
+    hours are all `-999`. The first four values are the four hours of
+    `first_figure.py`.
+
+**Check:** `3648` keys, and `False` for 22 July 2019.
+
+---
+
+### 5. One mean per day, the date on the x-axis { #days }
+
+<!-- 0:45 · 10 min -->
+
+`datetime.fromisoformat` turns a text such as `2016-01-01` into a date; Matplotlib writes the years under an axis of dates.
+
+1. Replace `figures.py` with this. The first line is new: `datetime`
+   comes with Python, no install. The lines from `days = ...` replace the
+   lines from `every = []`.
+
+    ```python
+    from datetime import datetime
+
+    import matplotlib.pyplot as plt
+
+    import weather
+
+    PATH = "data/raw/weather.csv"
+
+    days = weather.group(PATH, 0, 10)
+    dates = []
+    day_means = []
+    for day in days:
+        dates.append(datetime.fromisoformat(day))
+        day_means.append(weather.mean(days[day]))
+    print(len(dates), dates[0])
+
+    fig, ax = plt.subplots()
+    ax.plot(dates, day_means)
+    fig.savefig("results/daily_temp.png")
+    ```
+
+    A dictionary keeps its keys in the order they came in: the order of
+    the file, from 2016-01-01.
+
+2. Run it. `print` writes a date with its time, midnight.
+
+    ```text
+    $ python scripts/figures.py
+    3648 2016-01-01 00:00:00
+    ```
+
+3. Open `results/daily_temp.png`: the years 2016 to 2026 under the axis,
+   ten summers and ten winters, from about −13 to 27 °C.
+
+**Check:** no spike, and the years under the x-axis.
+
+---
+
+### 6. Size, label, a title that says the finding { #labels }
+
+<!-- 0:55 · 10 min -->
+
+A figure needs a unit on its axis and a title that says what to see.
+
+1. Replace the three lines from `fig, ax = ...` to `fig.savefig(...)`.
+
+    ```python
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(dates, day_means, linewidth=0.6)
+    ax.set_ylabel("Daily mean temperature (°C)")
+    ax.set_title("The same cycle every year, from -13 °C to 27 °C")
+    fig.savefig("results/daily_temp.png", dpi=150)
+    ```
+
+    `figsize` is in inches, 10 wide and 4 high; `dpi=150` gives 1500 by
+    600 pixels. The thin line shows the days.
+
+2. Save, run, look.
+
+    ```text
+    $ python scripts/figures.py
+    3648 2016-01-01 00:00:00
+    ```
+
+**Check:** a wide figure, a y-axis label with °C, the title on top.
+
+!!! question "Task: 2025 alone"
+    Draw only the days of 2025 into `results/daily_2025.png`. Hint: a
+    second loop over `days` that keeps a day when `day[0:4]` is `"2025"`.
+
+??? success "Answer"
+    At the end of `figures.py`:
+
+    ```python
+    dates_2025 = []
+    means_2025 = []
+    for day in days:
+        if day[0:4] == "2025":
+            dates_2025.append(datetime.fromisoformat(day))
+            means_2025.append(weather.mean(days[day]))
+    print(len(dates_2025), f"{min(means_2025):.1f} {max(means_2025):.1f}")
+
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(dates_2025, means_2025)
+    ax.set_ylabel("Daily mean temperature (°C)")
+    fig.savefig("results/daily_2025.png", dpi=150)
+    ```
+
+    ```text
+    $ python scripts/figures.py
+    3648 2016-01-01 00:00:00
+    365 -13.0 24.0
+    ```
+
+    365 days, from −13.0 °C on 7 January to 24.0 °C on 29 July: the
+    weather moves the days up and down by several degrees around the
+    cycle.
+
+---
+
+## Part 3 · The year's cycle and the day's cycle { #part-3 }
+
+<!-- 1:05 to 1:30 -->
+
+Ten years of hours averaged by month and by hour of the day: the two cycles, without the weather of single days.
+
+---
+
+### 7. One point per month { #monthly }
 
 <!-- 1:05 · 10 min -->
 
-The mask of section 7, on the whole column of 87 672 temperatures.
+The same `group`, with the month as key, `line[5:7]`: twelve lists, a mean for each.
 
-1. At the end of the file, add these lines, save.
+1. At the end of `figures.py`, add these lines, save, run.
 
     ```python
-    temp = data[:, 0]
-    valid = temp != -999
-    print(valid[:3], valid.sum(), (~valid).sum())
-    print(f"all rows   {temp.mean():.5f}")
-    print(f"valid rows {temp[valid].mean():.5f}")
+    months = weather.group(PATH, 5, 7)
+    month_keys = []
+    month_means = []
+    for month in months:
+        month_keys.append(month)
+        month_means.append(weather.mean(months[month]))
+    print(month_keys)
+    print(f"{min(month_means):.1f} {max(month_means):.1f}")
     ```
-
-2. Run it.
 
     ```text
-    $ python scripts/coldest_day.py
-    ...
-    [ True  True  True] 87552 120
-    all rows   5.78280
-    valid rows 7.15997
+    $ python scripts/figures.py
+    3648 2016-01-01 00:00:00
+    ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    -3.9 18.5
     ```
 
-    `sum` counts the `True`; `~` turns the mask round.
+    The keys come in the order of the file, January first.
 
-**Check:** 120 rows of `-999`, and 7.15997 without them.
+2. Under them, the figure. A list of texts on the x-axis puts each text
+   under its point, in the order of the list.
+
+    ```python
+    fig, ax = plt.subplots()
+    ax.plot(month_keys, month_means, "o-")
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
+    ax.set_title("July is 22.4 °C warmer than January")
+    fig.savefig("results/monthly_temp.png", dpi=150)
+    ```
+
+    `"o-"` draws a point at each value and a line between neighbours: the
+    months follow each other round the year.
+
+3. Save, run, open `results/monthly_temp.png`.
+
+**Check:** a hill with its top at `07`, 18.5 °C, and its bottom at `01`,
+−3.9 °C.
 
 ---
 
-### 9. One row per day: `reshape` { #reshape }
+### 8. The day's cycle: one mean per hour { #daily-cycle }
 
-<!-- 1:15 · 10 min -->
+<!-- 1:15 · 15 min -->
 
-87 672 hours are 3653 days of 24 hours; `reshape` cuts the column into those rows.
+The hour of the day is `line[11:13]`: 24 lists, each holding one hour of every day of ten years.
 
-1. Add these lines, save.
+1. At the end of `figures.py`, add these lines, save.
 
     ```python
-    days = temp.reshape(3653, 24)
-    day_means = days.mean(axis=1)
-    print(days.shape, day_means[:3])
-    dates = np.arange("2016-01-01", "2026-01-01", dtype="datetime64[D]")
-    print(dates[:2], dates[-1])
+    by_hour = weather.group(PATH, 11, 13)
+    hour_keys = []
+    hour_means = []
+    for hour in by_hour:
+        hour_keys.append(hour)
+        hour_means.append(weather.mean(by_hour[hour]))
+    print(f"{min(hour_means):.1f} {max(hour_means):.1f}")
+
+    fig, ax = plt.subplots()
+    ax.plot(hour_keys, hour_means, "o-")
+    ax.set_xticks(["00", "03", "06", "09", "12", "15", "18", "21"])
+    ax.set_xlabel("Hour of the day")
+    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
+    ax.set_title("Coldest at 03:00, warmest at 15:00, 7 °C apart")
+    fig.savefig("results/day_cycle.png", dpi=150)
     ```
+
+    `set_xticks` writes a label only under the keys it is given: every
+    third hour, so the 24 labels do not crowd.
 
 2. Run it.
 
     ```text
-    $ python scripts/coldest_day.py
+    $ python scripts/figures.py
     ...
-    (3653, 24) [-4.87083333 -5.13333333 -3.14166667]
-    ['2016-01-01' '2016-01-02'] 2025-12-31
+    -3.9 18.5
+    3.7 10.7
     ```
 
-    `axis=1` averages along each row: one mean per day. `dates` holds the
-    3653 days, in the same order.
+3. Open `results/day_cycle.png`: lowest at 03:00, 3.7 °C, highest at
+   15:00, 10.7 °C.
 
-3. The sensor failure covers whole days, so their mean is exactly `-999`.
-   Add a mask for the days, then the coldest day.
+**Check:** one curve with 24 points, its bottom at `03`, its top at `15`.
 
-    ```python
-    ok = day_means != -999
-    print(ok.sum(), dates[~ok])
-    i = day_means[ok].argmin()
-    print("coldest day", dates[ok][i], f"{day_means[ok][i]:.2f}")
-    ```
-
-4. Run it.
-
-    ```text
-    $ python scripts/coldest_day.py
-    ...
-    3648 ['2019-07-22' '2019-07-23' '2019-07-24' '2019-07-25' '2019-07-26']
-    coldest day 2019-01-26 -13.00
-    ```
-
-    `argmin` gives the position of the smallest value. The same mask on
-    `dates` keeps the days in step.
-
-**Check:** `coldest day 2019-01-26 -13.00`.
-
-!!! question "Task: the warmest day, and the frost days"
-    Add lines that print the warmest day and its mean, and the number of
-    days whose mean is below 0 °C.
+!!! question "Task: January and July"
+    Draw the day's cycle of January and of July as two lines in one
+    figure, `results/day_cycle_jan_jul.png`. Give each `ax.plot` a
+    `label="January"` (or `"July"`) and call `ax.legend()` before
+    `fig.savefig`: the legend lists the labels. Which day swings more?
+    Hint: `group` mixes all months; copy its loop into `figures.py` and
+    keep only the lines whose `line[5:7]` is the month.
 
 ??? success "Answer"
+    A dictionary gives each month's name; the outer loop runs once per
+    month and draws one line.
+
     ```python
-    j = day_means[ok].argmax()
-    print("warmest day", dates[ok][j], f"{day_means[ok][j]:.2f}")
-    print("days below 0 °C", (day_means[ok] < 0).sum())
+    names = {"01": "January", "07": "July"}
+    fig, ax = plt.subplots()
+    for month in names:
+        cycle = {}
+        for line in weather.read_lines(PATH):
+            temp = weather.temp_of(line)
+            if temp != weather.MISSING and line[5:7] == month:
+                hour = line[11:13]
+                if hour not in cycle:
+                    cycle[hour] = []
+                cycle[hour].append(temp)
+        means = []
+        for hour in cycle:
+            means.append(weather.mean(cycle[hour]))
+        print(names[month], f"{min(means):.1f} {max(means):.1f}")
+        ax.plot(hour_keys, means, "o-", label=names[month])
+    ax.set_xticks(["00", "03", "06", "09", "12", "15", "18", "21"])
+    ax.set_xlabel("Hour of the day")
+    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
+    ax.set_title("A July day swings 10 °C, a January day 4 °C")
+    ax.legend()
+    fig.savefig("results/day_cycle_jan_jul.png", dpi=150)
     ```
 
     ```text
-    warmest day 2018-06-18 26.93
-    days below 0 °C 922
+    $ python scripts/figures.py
+    ...
+    January -5.9 -1.8
+    July 13.5 23.6
     ```
+
+    July by far: about 10 °C between 03:00 and 15:00, January about 4 °C.
+    Both lines are lowest at 03:00 and highest at 15:00.
 
 ---
 
-## Part 4 · Is it getting warmer? { #part-4 }
+## Part 4 · Is it getting warmer, as a figure { #part-4 }
 
-<!-- 1:25 to 2:00 -->
+<!-- 1:30 to 2:00 -->
 
-Ten years of the same station: compare the mean of each year.
-
----
-
-### 10. The year of every row { #year }
-
-<!-- 1:25 · 5 min -->
-
-The year is the first four characters of `time`.
-
-1. New file `scripts/yearly_means.py`. Type, save.
-
-    ```python
-    from pathlib import Path
-
-    import numpy as np
-
-    ROOT = Path(__file__).resolve().parent.parent
-    path = ROOT / "data/raw/weather.csv"
-
-    temp = np.loadtxt(path, delimiter=",", skiprows=1, usecols=1)
-    time = np.loadtxt(path, delimiter=",", skiprows=1, usecols=0, dtype=str)
-    valid = temp != -999
-    year = np.array([int(t[:4]) for t in time])
-    print(time[:2], year[:2], year[-2:])
-    ```
-
-2. Run it.
-
-    ```text
-    $ python scripts/yearly_means.py
-    ['2016-01-01T00:00' '2016-01-01T01:00'] [2016 2016] [2025 2025]
-    ```
-
-**Check:** `2016` at the start, `2025` at the end.
+The mean of each of the ten years, and the 87 552 hours behind them.
 
 ---
 
-### 11. A mean for each year { #yearly }
+### 9. Ten points, a reference line, a legend { #yearly }
 
 <!-- 1:30 · 10 min -->
 
-`&` joins two masks: this year, and not `-999`.
+Points, not bars: the y-axis does not start at zero, and the eye compares the points with the line.
 
-1. Replace the `print` line with a loop, save.
+1. At the end of `figures.py`, add these lines, save.
 
     ```python
-    for y in range(2016, 2026):
-        m = (year == y) & valid
-        print(y, f"{temp[m].mean():.2f}", m.sum())
+    by_year = weather.group(PATH, 0, 4)
+    years = []
+    year_means = []
+    for year in by_year:
+        years.append(year)
+        year_means.append(weather.mean(by_year[year]))
+    temps = weather.temps(PATH)
+    all_mean = weather.mean(temps)
+    print(len(temps), f"{all_mean:.2f}")
+
+    fig, ax = plt.subplots()
+    ax.plot(years, year_means, "o", label="mean of the year")
+    ax.axhline(all_mean, color="grey", linewidth=1, label="mean of all hours")
+    ax.set_ylim(5, 9)
+    ax.set_xlabel("Year")
+    ax.set_ylabel("Mean temperature (°C)")
+    ax.set_title("Ten years around 7.16 °C, the last one the coldest")
+    ax.legend()
+    fig.savefig("results/yearly_temp.png", dpi=150)
     ```
 
 2. Run it.
 
     ```text
-    $ python scripts/yearly_means.py
-    2016 7.60 8784
-    2017 6.51 8760
-    2018 7.97 8760
-    2019 7.27 8640
-    2020 6.83 8784
-    2021 7.25 8760
-    2022 6.60 8760
-    2023 8.31 8760
-    2024 7.27 8784
-    2025 5.98 8760
+    $ python scripts/figures.py
+    ...
+    3.7 10.7
+    87552 7.16
     ```
 
-3. Read it: the years go up and down by up to 2.3 °C, in no order. 2019
-   has 120 hours fewer, the five summer days of the failure.
+3. Open `results/yearly_temp.png`. `"o"` draws points without a line:
+   ten separate years, nothing measured between them;
+   `axhline` the grey line at 7.16 °C; `label=` names each, and
+   `ax.legend()` lists the names in a box.
 
-**Check:** ten means between 5.98 and 8.31.
+**Check:** ten points above and below the line, the last one, 2025, lowest.
 
 ---
 
-### 12. Write the answer to a file { #answer }
+### 10. A histogram of the hours { #histogram }
 
-<!-- 1:40 · 15 min -->
+<!-- 1:40 · 10 min -->
 
-The script writes its answer to `results/`, and writes it again, the same, at every run.
+`ax.hist` cuts a range into bins of equal width, counts the values in each bin and draws one bar per bin.
 
-1. Replace the loop with these lines, save.
+1. At the end of `figures.py`, add these lines, save, run.
 
     ```python
-    lines = []
-    for y in range(2016, 2026):
-        m = (year == y) & valid
-        lines.append(f"{y}  {temp[m].mean():.2f}  {m.sum()}")
-
-    first = (year <= 2020) & valid
-    last = (year >= 2021) & valid
-    lines.append(f"2016-2020  {temp[first].mean():.2f}")
-    lines.append(f"2021-2025  {temp[last].mean():.2f}")
-
-    text = "\n".join(lines) + "\n"
-    print(text, end="")
-    (ROOT / "results").mkdir(exist_ok=True)
-    (ROOT / "results/yearly_temp.txt").write_text(text)
+    fig, ax = plt.subplots()
+    ax.hist(temps)
+    ax.set_xlabel("Hourly temperature (°C)")
+    ax.set_ylabel("Hours")
+    fig.savefig("results/temp_hist.png", dpi=150)
     ```
 
-2. Run it.
+2. Open `results/temp_hist.png`: ten bars, one wide hill. By default
+   `hist` cuts the range from the smallest value, −16.3, to the largest,
+   32.4, into 10 bins of 4.87 °C.
 
-    ```text
-    $ python scripts/yearly_means.py
-    ...
-    2016-2020  7.24
-    2021-2025  7.08
+3. Bins of 1 °C: 50 of them from −17 to 33. Replace the three lines from
+   `ax.hist(temps)` to `ax.set_ylabel("Hours")` with these four, save,
+   run.
+
+    ```python
+    ax.hist(temps, bins=50, range=(-17, 33))
+    ax.set_xlabel("Hourly temperature (°C)")
+    ax.set_ylabel("Hours per 1 °C")
+    ax.set_title("Two peaks: winter near -1 °C, summer near 12 °C")
     ```
 
-    The answer: not warmer. The second five years are 0.16 °C colder,
-    less than the step from one year to the next.
+    The y-label states the bin width: a count per bin means nothing
+    without it.
 
-3. The file.
+4. Open the figure again. The tallest bar, −1 to 0 °C, holds 3848 hours:
+   the winter hours near freezing. The second peak is highest at 11 to
+   12 °C, 3032 hours. Between them, the bar of 7 to 8 °C, where the mean
+   7.16 lies, holds 2706: fewer hours are near the mean than near either
+   peak.
 
-    ```text
-    $ tail -n 2 results/yearly_temp.txt
-    2016-2020  7.24
-    2021-2025  7.08
-    ```
+**Check:** two peaks, 50 bars of 1 °C from −17 to 33.
 
-**Check:** `results/yearly_temp.txt`, twelve lines: ten years and the two halves.
-
-!!! question "Task: the warmest and the coldest month"
-    Add the month of every row (`t[5:7]`) and print the mean temperature of
-    each month over the ten years.
+!!! question "Task: other bin widths"
+    Draw the histogram with bins of 0.05 °C and of 10 °C. What does each
+    show, and what does it hide?
 
 ??? success "Answer"
     ```python
-    month = np.array([int(t[5:7]) for t in time])
-    for mo in range(1, 13):
-        m = (month == mo) & valid
-        print(mo, f"{temp[m].mean():.2f}")
+    ax.hist(temps, bins=1000, range=(-17, 33))
     ```
 
-    ```text
-    1 -3.87
-    2 -2.45
-    3 1.19
-    4 6.39
-    5 12.16
-    6 17.25
-    7 18.53
-    8 16.12
-    9 13.01
-    10 6.94
-    11 2.64
-    12 -2.30
+    ```python
+    ax.hist(temps, bins=6, range=(-20, 40))
     ```
 
-    July is the warmest, 18.53 °C; January the coldest, −3.87 °C.
+    0.05 °C: a comb, thin bars with gaps between them; 523 of the 1000
+    bins are empty. The station writes tenths of a degree, so a bin of
+    0.05 °C between two tenths stays empty: the figure shows how the
+    values were written down, not the weather. 10 °C: six bars and one
+    hump; the two peaks are gone. 1 °C is narrow enough for the shape and
+    wide enough for smooth counts.
 
 ---
 
-### 13. Wrap up { #wrap-up }
+### 11. Draw every figure again { #redraw }
+
+<!-- 1:50 · 5 min -->
+
+The script draws all five figures again in a few seconds, so the script, not the figures, is what is kept and described.
+
+1. Delete the figures, run the script, list what it made.
+
+    ```text
+    $ rm results/*.png
+    $ python scripts/figures.py
+    3648 2016-01-01 00:00:00
+    ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    -3.9 18.5
+    3.7 10.7
+    87552 7.16
+    $ ls -1 results
+    daily_temp.png
+    day_cycle.png
+    monthly_temp.png
+    temp_hist.png
+    yearly_temp.png
+    ```
+
+    `-1`: one name per line. `first.png` and `every_hour.png` do not come
+    back: `figures.py` no longer draws them. Lines of a Task left in
+    `figures.py` print and draw theirs too.
+
+2. In `README.md`, at the end of **How to rebuild**, add two lines and
+   save: how anyone draws the figures again.
+
+    ```text
+    The figures: `python scripts/figures.py` draws five PNG files into
+    `results/`, with the environment of `environment.yml`.
+    ```
+
+**Check:** five figures in `results`, and the README says which line makes
+them.
+
+---
+
+### 12. Wrap up { #wrap-up }
 
 <!-- 1:55 · 5 min -->
 
+The lines of today, by what they do.
 
 | To | Type |
 |--|--|
-| make the environment of a folder | `conda env create -n s07 -f environment.yml` |
-| switch it on | `conda activate s07` |
-| add a package to it | `conda install numpy=2.5` |
-| write it down | `conda env export --from-history -f environment.yml` |
-| name a block of steps | `def name(inputs):` ... `return value` |
-| read a CSV file | `csv.reader(f)`, `next(reader)` for the header |
-| a path from the project folder | `Path(__file__).resolve().parent.parent` |
-| an array from a list | `a = np.array(values)`, then `a * 2`, `a.mean()` |
-| a table into an array | `np.loadtxt(path, delimiter=",", skiprows=1, usecols=...)` |
-| select rows | `temp[temp != -999]`, masks joined with `&` |
+| make the environment of a folder | `conda env create -n s07 -f environment.yml`, `conda activate s07` |
+| add a package | `conda install NAME=VERSION` |
+| write it down | `conda env export --from-history -f environment.yml`, delete `prefix:` |
+| group the hours by a part of the time | `weather.group(PATH, 5, 7)`: one list per month |
+| a text into a date | `datetime.fromisoformat("2016-01-01")` |
+| a figure | `fig, ax = plt.subplots()`, `ax.plot(x, y)`, `fig.savefig(PATH, dpi=150)` |
+| points, a line, a legend | `ax.plot(x, y, "o")`, `"o-"`, `ax.axhline(y)`, `label=...`, `ax.legend()` |
+| labels | `ax.set_xlabel`, `ax.set_ylabel` with the unit, `ax.set_title` with the finding |
+| a histogram | `ax.hist(values, bins=50, range=(-17, 33))` |
 
 ---
 
@@ -759,251 +783,206 @@ The script writes its answer to `results/`, and writes it again, the same, at ev
 
 ---
 
-### 14. Loop against array: time both { #timing }
+### 13. A heatmap of one year { #heatmap }
 
 <!-- — · 10 min -->
 
-`time.perf_counter()` is a clock in seconds; the difference of two readings is the time between them.
+Colour as the third axis: the 24 hours across, the 365 days of 2025 down.
 
-1. New file `scripts/time_both.py`: the column once as an array and once
-   as a plain list (`tolist`). Type, save.
-
-    ```python
-    import time
-
-    import numpy as np
-
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",", skiprows=1, usecols=1)
-    temps = temp.tolist()
-    ```
-
-2. Under them, the mean twice, each between two clock readings. Save.
+1. At the end of `figures.py`, add these lines, save, run.
 
     ```python
-    t0 = time.perf_counter()
-    total = 0.0
-    count = 0
-    for t in temps:
-        if t != -999:
-            total = total + t
-            count = count + 1
-    t1 = time.perf_counter()
-    array_mean = temp[temp != -999].mean()
-    t2 = time.perf_counter()
+    grid = []
+    for day in days:
+        if day[0:4] == "2025":
+            grid.append(days[day])
+    print(len(grid), len(grid[0]))
 
-    print(f"loop  {total / count:.5f} in {(t1 - t0) * 1000:.1f} ms")
-    print(f"array {array_mean:.5f} in {(t2 - t1) * 1000:.1f} ms")
+    fig, ax = plt.subplots(figsize=(6, 8))
+    im = ax.imshow(grid, aspect="auto")
+    fig.colorbar(im, ax=ax, label="Temperature (°C)")
+    ax.set_xlabel("Hour of the day")
+    ax.set_ylabel("Day of 2025")
+    ax.set_title("2025: warmest on summer afternoons")
+    fig.savefig("results/heatmap_2025.png", dpi=150)
     ```
-
-3. Run it, twice.
 
     ```text
-    $ python scripts/time_both.py
-    loop  7.15997 in 6.2 ms
-    array 7.15997 in 0.4 ms
+    $ python scripts/figures.py
+    ...
+    365 24
     ```
 
-    Your times differ.
+    `grid` is a list of 365 lists of 24 temperatures; `imshow` draws one
+    coloured square per value, the first list at the top.
+    `aspect="auto"` lets the squares stretch to fill the figure.
 
-**Check:** the same mean, the array about 15 times faster.
+**Check:** a yellow patch in the middle rows, between the hours 10 and 18.
 
 ---
 
-### 15. Count in bins: `np.histogram` { #histogram }
+### 14. One style for all figures { #style }
 
 <!-- — · 5 min -->
 
-A histogram counts the values that fall into each bin.
+Settings in `plt.rcParams` hold for every figure the script draws after them.
 
-1. At the end of `coldest_day.py`, add these lines, save.
+1. Under the `import` lines, add these lines, save, run.
 
     ```python
-    counts, edges = np.histogram(temp[valid], bins=np.arange(-20, 40, 5))
-    print(edges)
-    print(counts)
+    plt.rcParams.update({
+        "savefig.bbox": "tight",
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+    })
     ```
 
-2. Run it.
+2. Open the figures: no frame line at the top and the right, and no white
+   border around the plot.
 
-    ```text
-    $ python scripts/coldest_day.py
-    ...
-    [-20 -15 -10  -5   0   5  10  15  20  25  30  35]
-    [   12   686  5589 16065 16582 14050 14880 12261  6111  1230    86]
-    ```
-
-    Twelve edges make eleven bins: 12 hours from −20 to −15 °C, 86 from
-    30 to 35 °C.
-
-**Check:** the counts add up to 87 552.
+**Check:** every figure changed, by three lines in one place.
 
 ---
 
-### 16. Skip a bad row: `try` and `except` { #except }
-
-<!-- — · 10 min -->
-
-`try` runs a block; if it raises the error named after `except`, that block runs instead.
-
-1. New file `scripts/export_values.py`, for the spreadsheet export with
-   `;` and decimal commas. Type, save.
-
-    ```python
-    import csv
-
-    values = []
-    with open("data/raw/daily_export.csv", newline="") as f:
-        reader = csv.reader(f, delimiter=";")
-        next(reader)
-        for row in reader:
-            try:
-                nr = int(row[0])
-            except ValueError:
-                print("skipped:", row)
-                continue
-            values.append(float(row[2].replace(",", ".")))
-    ```
-
-2. At the end, two lines, not indented. Save, run.
-
-    ```python
-    print(len(values), values)
-    print(f"mean {sum(values) / len(values):.2f}")
-    ```
-
-    ```text
-    $ python scripts/export_values.py
-    skipped: ['', 'mean', '7,97']
-    9 [6.3, 5.0, 5.6, 7.0, 9.4, 10.4, 9.2, 9.0, 9.8]
-    mean 7.97
-    ```
-
-    The last line of the export has no `nr`: `int('')` raises
-    `ValueError`, and the row is skipped.
-
-**Check:** nine values, the mean the spreadsheet wrote, 7.97.
-
-### 17. Advanced tasks { #advanced }
+### 15. Advanced tasks { #advanced }
 
 <!-- — · 25 min -->
 
-Harder questions on the same arrays, for a room that is done early. Each answer is folded under its task.
+Harder figures from the same script, for a room that is done early. Each answer is folded under its task; add the lines at the end of `figures.py`.
 
-!!! question "Advanced task: a straight line through the ten years"
-    `np.polyfit(x, y, 1)` fits a straight line and returns its slope and
-    intercept. Fit one through the ten yearly means of `yearly_means.py`.
-    How many °C per year is the slope, and is it large next to how much
-    the years scatter (`means.std()`)?
+!!! question "Advanced task: hours below 0 °C, per year"
+    Count the hours below 0 °C in each year and draw them as bars,
+    `ax.bar(years, counts)`. Which year had the most? Does it fit the
+    yearly means of section 9?
 
 ??? success "Answer"
-    At the end of `yearly_means.py`:
+    `by_year` and `years` come from section 9.
 
     ```python
-    years = np.arange(2016, 2026)
-    means = np.array([temp[(year == y) & valid].mean() for y in years])
-    slope, intercept = np.polyfit(years, means, 1)
-    print(f"slope {slope:.3f} °C per year")
-    print(f"spread of the years {means.std():.2f} °C")
+    frost = []
+    for year in by_year:
+        count = 0
+        for temp in by_year[year]:
+            if temp < 0:
+                count = count + 1
+        frost.append(count)
+    print(frost)
+
+    fig, ax = plt.subplots()
+    ax.bar(years, frost)
+    ax.set_ylabel("Hours below 0 °C")
+    ax.set_title("2025 had the most hours below 0 °C, 2023 the fewest")
+    fig.savefig("results/frost_hours.png", dpi=150)
     ```
 
     ```text
-    $ python scripts/yearly_means.py
+    $ python scripts/figures.py
     ...
-    slope -0.056 °C per year
-    spread of the years 0.67 °C
+    [2112, 2419, 1953, 2443, 2230, 2110, 2314, 1845, 2249, 2677]
     ```
 
-    −0.056 °C per year is 0.56 °C per decade, less than the 0.67 °C by
-    which single years scatter: ten points cannot show a trend this small.
+    2025, 2677 hours: also the coldest year, 5.98 °C. 2023, the warmest
+    year at 8.31 °C, had the fewest, 1845. Bars start at zero, so their
+    heights compare. The 120 missing hours of 2019 do not change its
+    count: no July hour of the log is below 0 °C, the coldest is 5.7 °C.
 
-!!! question "Advanced task: the day's cycle in one line"
-    `days` has one row per day and one column per hour. Which hour of the
-    day is the coldest on average, and which the warmest?
+!!! question "Advanced task: humidity against temperature"
+    Plot every hour as a point, temperature across and humidity up
+    (`ax.scatter(x, y)`). First check `humidity_pct` for a missing mark,
+    and leave out the hours whose temperature is `-999`. 87 552 points
+    cover each other: what makes the dense part visible?
 
 ??? success "Answer"
-    `axis=0` averages down each column: one mean per hour. At the end of
-    `coldest_day.py`:
+    `humidity_pct` runs from 34 to 100 (Task of Part 1): no mark. Tiny,
+    almost transparent points: `s=1` is their size, `alpha=0.05` their
+    opacity, so only places with many points look dark.
 
     ```python
-    hour_means = days[ok].mean(axis=0)
-    print(np.round(hour_means, 1))
-    print("coldest hour", hour_means.argmin(), "warmest hour", hour_means.argmax())
+    x = []
+    y = []
+    for line in weather.read_lines(PATH):
+        temp = weather.temp_of(line)
+        if temp != weather.MISSING:
+            x.append(temp)
+            y.append(float(line.split(",")[2]))
+
+    fig, ax = plt.subplots()
+    ax.scatter(x, y, s=1, alpha=0.05)
+    ax.set_xlabel("Temperature (°C)")
+    ax.set_ylabel("Humidity (%)")
+    ax.set_title("Humid when cold, drier when warm")
+    fig.savefig("results/humidity_vs_temp.png", dpi=150)
+    ```
+
+    A falling cloud: of the 22 352 hours below 0 °C, 83 % are above 80 %
+    humidity; of the 1251 hours above 25 °C, 82 % lie between 45 and
+    65 %. The humidity is a whole number, so the points stand in rows.
+
+!!! question "Advanced task: mark the warmest and the coldest month"
+    On the figure of section 7, write the month and its mean next to the
+    highest and the lowest point, with an arrow:
+    `ax.annotate(text, xy=(x, y), xytext=(30, 0), textcoords="offset points", arrowprops={"arrowstyle": "->"})`.
+    `xy` is the point; `xytext` puts the text 30 points to the right of
+    it.
+
+??? success "Answer"
+    `month_means.index(value)` gives the position of a value in the list.
+
+    ```python
+    warm = month_means.index(max(month_means))
+    cold = month_means.index(min(month_means))
+    fig, ax = plt.subplots()
+    ax.plot(month_keys, month_means, "o-")
+    for i in [warm, cold]:
+        text = f"{month_keys[i]}: {month_means[i]:.1f} °C"
+        ax.annotate(text, xy=(month_keys[i], month_means[i]),
+                    xytext=(30, 0), textcoords="offset points",
+                    arrowprops={"arrowstyle": "->"})
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
+    ax.set_title("July is 22.4 °C warmer than January")
+    fig.savefig("results/monthly_annotated.png", dpi=150)
+    ```
+
+    `07: 18.5 °C` beside the top of the hill, `01: -3.9 °C` beside its
+    lowest point. A label on the figure saves the reader from reading the
+    value off the axis.
+
+!!! question "Advanced task: PNG, SVG or PDF?"
+    Save the figure of section 6 also as `.svg` and `.pdf` (the format
+    follows the file name). Compare the three sizes, and open each:
+    which stays sharp when you zoom in?
+
+??? success "Answer"
+    Under `fig.savefig("results/daily_temp.png", dpi=150)` of section 6:
+
+    ```python
+    fig.savefig("results/daily_temp.svg")
+    fig.savefig("results/daily_temp.pdf")
     ```
 
     ```text
-    $ python scripts/coldest_day.py
+    $ python scripts/figures.py
     ...
-    [ 4.7  4.1  3.8  3.7  3.8  4.1  4.7  5.4  6.2  7.2  8.1  8.9  9.6 10.2
-     10.5 10.7 10.5 10.2  9.6  8.9  8.1  7.2  6.3  5.4]
-    coldest hour 3 warmest hour 15
+    $ wc -c results/daily_temp.*
+     42249 results/daily_temp.pdf
+    128588 results/daily_temp.png
+     95191 results/daily_temp.svg
+    266028 total
     ```
 
-    03:00 and 15:00, 7 °C apart.
-
-!!! question "Advanced task: the day with the largest swing"
-    For each day, the warmest hour minus the coldest. Which day swung the
-    most, and how much does a day swing on average?
-
-??? success "Answer"
-    ```python
-    swing = days[ok].max(axis=1) - days[ok].min(axis=1)
-    k = swing.argmax()
-    print("largest swing", dates[ok][k], f"{swing[k]:.1f}", days[ok][k].min(), days[ok][k].max())
-    print(f"mean swing {swing.mean():.1f}")
-    ```
-
-    ```text
-    $ python scripts/coldest_day.py
-    ...
-    largest swing 2016-08-03 14.4 11.6 26.0
-    mean swing 7.6
-    ```
-
-    3 August 2016: from 11.6 °C at night to 26.0 °C in the afternoon.
-
-!!! question "Advanced task: the longest frost"
-    The longest run of hours in a row below 0 °C: how long, and from when
-    to when? A loop over the mask that counts the current run is enough.
-
-??? success "Answer"
-    New file `scripts/frost.py`:
-
-    ```python
-    import numpy as np
-
-    path = "data/raw/weather.csv"
-    temp = np.loadtxt(path, delimiter=",", skiprows=1, usecols=1)
-    time = np.loadtxt(path, delimiter=",", skiprows=1, usecols=0, dtype=str)
-
-    frost = (temp < 0) & (temp != -999)
-    longest = 0
-    run = 0
-    for i in range(len(frost)):
-        if frost[i]:
-            run = run + 1
-        else:
-            run = 0
-        if run > longest:
-            longest = run
-            end = i
-    start = end - longest + 1
-    print(longest, "hours,", time[start], "to", time[end])
-    ```
-
-    ```text
-    $ python scripts/frost.py
-    1172 hours, 2024-12-31T16:00 to 2025-02-18T11:00
-    ```
-
-    About 49 days without a thaw, in the winter of 2025.
+    Your sizes may differ a little; macOS pads the numbers differently.
+    PNG is pixels: zoomed in, the line turns into steps. SVG and PDF
+    store the line itself and stay sharp at any size, for a report or a
+    poster; PNG is for a web page or a slide.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** `environment.yml` makes the same environment on
-  any laptop; the answer is a file the script writes again at any time.
-- 🔧 **Tool-agnostic:** the same `conda` and `python` lines on macOS and
-  Windows; a path from `Path(__file__)` works from any folder.
-- 📁 **Files:** the file read two ways (csv, NumPy) to the same
-  7.15997; made files go to `results/`, and the scripts make them again.
+- ♻️ **Reproducibility:** one script draws every figure from the raw data;
+  `environment.yml` lists the package it needs, with its version.
+- 📁 **Files:** the figures in `results/` are drawn by the script;
+  the script is what is kept and described.
+- ⚙️ **Automation:** five figures in one run, again after every change;
+  one function, `group`, groups the hours by day, month, hour and year.

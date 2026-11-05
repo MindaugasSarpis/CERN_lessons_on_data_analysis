@@ -1040,7 +1040,7 @@ print(df.round(3).head(6))
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Lecture 7 computed these nine values of g as an array, 9.70 to 9.93. Here they are a column with a name, next to the length and the time they came from. With `length_cm` in the formula the last column reads 970 to 993, a hundred times g: the unit stands in the name.
+Lecture 8 computed these nine values of g as an array, 9.70 to 9.93. Here they are a column with a name, next to the length and the time they came from. With `length_cm` in the formula the last column reads 970 to 993, a hundred times g: the unit stands in the name.
 
 </div>
 
@@ -1230,7 +1230,7 @@ max     2453.658400  64509.950000      0.578799  891711.060000
 
 <div class="card card-warning card-glass pad-compact">
 
-**TAU**: median 0.000272, mean −0.0525, minimum −100: the code of Lecture 7, still in the column.
+**TAU**: median 0.000272, mean −0.0525, minimum −100: the code of Lecture 8, still in the column.
 
 </div>
 
@@ -1240,7 +1240,7 @@ max     2453.658400  64509.950000      0.578799  891711.060000
 Speaker: print(df.describe()) is the first thing to run on any table. Read it
 row by row with the room. Half of the masses lie between 1845.99 and 1881.53.
 A mean far from the median means a few values far from the rest; the room
-knows the 49 rows of -100 from Lecture 7. (~3 min)
+knows the 49 rows of -100 from Lecture 8. (~3 min)
 -->
 
 ---
@@ -1267,11 +1267,11 @@ histogram with one bar far from all the others is the picture of a code.
 hideInToc: true
 ---
 
-# Lecture 7's Mask, Kept in the **Table**
+# Lecture 8's Mask, Kept in the **Table**
 
 <div class="note-text mt-sm">
 
-Lecture 7: `TAU.mean()` gave −0.0525 ns with the code and `TAU[mask].mean()` 0.000982 ns without it. The mask went into every calculation, and the 49 rows left the array with their other three values.
+Lecture 8: `TAU.mean()` gave −0.0525 ns with the code and `TAU[mask].mean()` 0.000982 ns without it. The mask went into every calculation, and the 49 rows left the array with their other three values.
 
 </div>
 
@@ -1708,7 +1708,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-Q1 and Q3 are the `25%` and `75%` rows of `describe()`. IQR = Q3 − Q1. The fences are Q1 − 1.5 IQR and Q3 + 1.5 IQR. For `M`: 1881.53 − 1845.99 = 35.54, fences 1792.68 and 1934.84, 2 rows outside. Lecture 8's box plot draws its whiskers to the last masses inside the fences, 1808.14 and 1920.35.
+Q1 and Q3 are the `25%` and `75%` rows of `describe()`. IQR = Q3 − Q1. The fences are Q1 − 1.5 IQR and Q3 + 1.5 IQR. For `M`: 1881.53 − 1845.99 = 35.54, fences 1792.68 and 1934.84, 2 rows outside. Lecture 7's box plot draws its whiskers to the last masses inside the fences, 1808.14 and 1920.35.
 
 </div>
 

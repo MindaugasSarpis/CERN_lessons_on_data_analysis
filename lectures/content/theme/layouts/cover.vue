@@ -186,7 +186,7 @@ onMounted(() => {
 }
 .cover-root.is-mounted :deep(.w) { transform: translateY(0); }
 
-/* ##### aims badge (and any extra line such as L08's "Inspired by") */
+/* ##### aims badge (and any extra line such as L07's "Inspired by") */
 .cover-root :deep(.cover-content h3),
 .cover-root :deep(.cover-content h5),
 .cover-root :deep(.cover-content p) {

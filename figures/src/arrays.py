@@ -1,4 +1,4 @@
-"""Figures of Lecture 07: Python for Data & NumPy.
+"""Figures of Lecture 08: Python for Data & NumPy.
 
 Schematics of how a list and an array lie in memory, of indexing, masks,
 broadcasting and `axis`; the measured loop-against-array timings; and the

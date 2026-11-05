@@ -1018,3 +1018,66 @@ of lectures, make them look good."
 - Seminar 6: let pairs try the shared repository (one invites the other)
   and a fork + pull request? Forks of `MindaugasSarpis/weather-project`
   would open pull requests on the lecturer's public repository.
+
+## 2026-11-05 · Data Visualisation becomes Lecture 7, released
+
+**Planned:** the lecturer, remote: "Deploy data visualisation as next
+lecture"; asked how, chose "swap + rework": Data Visualisation becomes
+Lecture and Seminar 7, Python for Data & NumPy Lecture and Seminar 8, and
+the visualisation week uses no NumPy. Then: "Unify style, unslop, carefully
+check flow, consistency, structure a nice seminar. Go to completion".
+Spec: `docs/superpowers/specs/2026-11-05-visualisation-before-numpy-design.md`.
+
+**Changed**
+
+- Weeks 7 and 8 swapped: decks, slugs (`07-data-visualisation`,
+  `08-python-for-data-and-numpy`), workbook pages, nav, home page, seminar
+  start folders, the combined authoring entry (its stale 05/06 paths
+  fixed too), the review page's topic map, and every cross-reference in
+  Lectures 08–16 and their pages. Block B is renamed "Programming for
+  Data" and holds both weeks, so the landing page lists the decks in
+  delivery order.
+- Lecture 7 rebuilt on the weather project with plain lists: it opens on
+  the mean of 87 552 hours, 7.16 °C, and asks whether more or fewer hours
+  lie between 7 and 8 °C than in any other degree; *A First Plot* draws
+  every hour (`weather.temps`, then `weather.hours` with `datetime` for a
+  time axis) and the temperatures as a histogram: default bins of
+  4.87 °C, then 1 °C from −17 to 33, which shows two peaks (3848 hours at
+  −1 to 0 °C, 3032 at 11 to 12 °C) with the mean in the dip (2706 hours at
+  7 to 8 °C); 10 °C bins draw one hump, 0.05 °C bins leave 19 of 40 empty
+  between 0 and 2 °C because the station records tenths. The hands-on
+  section uses `weather.group(path, start, stop)`: hours below 0 °C per
+  year as bars, yearly means against the mean of all hours, monthly means
+  with an annotation and the finding as title (July 22.4 °C warmer than
+  January). The two live runner blocks use `random` and a loop instead of
+  NumPy. Notes in the form of convention 13. Two new quizzes (the mean in
+  the dip; bins narrower than the sensor's step). 100 slides, ~142 min
+  for slides 1–89; figures from `figures/src/handson.py`, whose
+  pendulum and mass figures are gone except the one Lecture 9 still shows.
+- Seminar 7 rewritten without NumPy: the zip brings `weather.py` with
+  Lecture 5's four functions; the room adds Matplotlib, then `group`, and
+  draws ten years day by day, the year's and the day's cycle, the yearly
+  means against the mean of all hours, and a histogram with bins of 1 °C;
+  every output replayed in a fresh unzip. Unified with the lecture: `"o-"`
+  for the cycles, the y-label of a histogram states its bin width, the same
+  titles and numbers. `weather-s07.zip` and `weather-s08.zip` rebuilt and
+  uploaded to `seminar-files`.
+- `pnpm release 7`: Lectures 1 to 7 live.
+
+**Decided by the builder, for the lecturer to check:**
+
+- The home page says "This week: 10 November", the next Tuesday. Correct it
+  if the date differs.
+- The seminar's `weather.py` gets `group` only; `hours` (the hourly time
+  axis) is shown in the lecture, the seminar plots daily means against
+  dates.
+- On Windows, Matplotlib from conda-forge pulls NumPy with MKL: about
+  160 MB per laptop, 55 MB on a Mac. A room on a slow network may want the
+  packages fetched before the session.
+
+**Open:**
+
+- Lectures 8 to 16 still use the pendulum table and `D0_KPi.csv`. Lecture
+  9 opens on the D⁰ histogram with error bars, which is no longer in
+  Lecture 7; its references now say "the opening figure". Lecture 8 can
+  now plot with Matplotlib.

@@ -178,7 +178,7 @@ The sum of column `M`, the K⁻π⁺ mass, over all 91&nbsp;583 rows. Divided by
 
 ## ⏱️ **The stopwatch**
 
-`time.perf_counter()` is the stopwatch of Lecture 07: a time in seconds, finer than a microsecond. Here it surrounds the sum only, not the reading of the file.
+`time.perf_counter()` is the stopwatch of Lecture 08: a time in seconds, finer than a microsecond. Here it surrounds the sum only, not the reading of the file.
 
 </div>
 
@@ -285,7 +285,7 @@ numpy     0.018 ms  170720289.9134
 | NumPy `M.sum()` | 0.018 ms |
 | Ratio | 85 |
 
-Lecture 07 showed medians of 51 runs and found factors of 47 to 70. The smallest of five is less disturbed by other programs. For this sum it gives 85.
+Lecture 08 showed medians of 51 runs and found factors of 47 to 70. The smallest of five is less disturbed by other programs. For this sum it gives 85.
 
 </div>
 
@@ -331,7 +331,7 @@ The clock of this processor ticks about 3.5 × 10⁹ times a second. One cycle l
 ## 🔍 **Where 60 cycles go**
 
 - The addition itself is one instruction
-- Around it, for every row, Python follows a reference to the next 24-byte float object (Lecture 07), checks its type, reads its value, makes a new object for the result and updates the counters of both
+- Around it, for every row, Python follows a reference to the next 24-byte float object (Lecture 08), checks its type, reads its value, makes a new object for the result and updates the counters of both
 - NumPy does none of this per row. The array holds only the 8-byte values, all of one type. One compiled loop adds them, more than one per cycle
 
 </div>
@@ -970,7 +970,7 @@ hideInToc: true
 ## 🔍 **Why**
 
 - Near 1.7 × 10⁸ the step from one float64 to the next is 3.0&nbsp;×&nbsp;10⁻⁸ (Lecture 03, the steps between floats)
-- Every addition rounds its result to the nearest float. Another order of additions rounds at other places. Lecture 07 met this for the mean
+- Every addition rounds its result to the nearest float. Another order of additions rounds at other places. Lecture 08 met this for the mean
 - The loop ends 2.8 × 10⁻⁶ below the exact sum: 1.6&nbsp;parts in&nbsp;10¹⁴
 
 </div>
@@ -1199,7 +1199,7 @@ print(table.shape, table.dtype, table.nbytes)
 | the text file | 10.7 | 3.9 MB |
 | Python lists of floats | 32 | 11.7 MB |
 
-Lecture 07 took the list apart: an object of 24 bytes for every value, and a reference of 8 bytes to it.
+Lecture 08 took the list apart: an object of 24 bytes for every value, and a reference of 8 bytes to it.
 
 </div>
 

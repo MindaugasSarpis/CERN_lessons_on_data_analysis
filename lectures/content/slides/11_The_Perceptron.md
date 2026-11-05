@@ -2191,7 +2191,7 @@ Measured: 140 of 150 training points correct, 93.3 %, and 46 of 50 test points, 
 <!--
 Speaker: permutation gives the numbers 0 to 199 in a random order, fixed by
 the seed. An array of indices in square brackets selects those rows, like the
-masks of Lecture 07. A model with three parameters cannot learn 150 points by
+masks of Lecture 08. A model with three parameters cannot learn 150 points by
 heart, so the two accuracies are close. (~3 min)
 -->
 

@@ -182,7 +182,7 @@ g = 9.84 +- 0.06 m/s^2
 
 The same lines in both shells; on macOS the program is `python3`. Then `results/report.md` is opened in the editor and the number is typed in.
 
-`plot.py` does the work of Lecture 8's `plot_pendulum.py`, named after its stage. Each script names its files in the code. The order of the three commands is in nobody's files.
+`plot.py` draws the figure and is named after its stage. Each script names its files in the code. The order of the three commands is in nobody's files.
 
 </div>
 
@@ -660,7 +660,7 @@ plot.py: error: argument --dpi: invalid int value: 'high'
 </div>
 
 <!--
-Speaker: plot.py draws what plot_pendulum.py of Lecture 8 drew: nine points,
+Speaker: plot.py draws the pendulum table: nine points,
 both axis labels with units, 150 dpi, which is now the default of --dpi. It
 reads the table with pandas, draws a smaller figure with a grid, and takes
 its file names as arguments in place of names typed in the code.

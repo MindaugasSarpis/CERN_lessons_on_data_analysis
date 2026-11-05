@@ -1200,7 +1200,7 @@ print(t10.sum())     # 32.68
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-`conda` installs the library into the project's environment from conda-forge, as Seminar 7 does; the line is the same in both shells. `np` is the name everyone gives the library on import.
+`conda` installs the library into the project's environment from conda-forge, as Seminar 8 does; the line is the same in both shells. `np` is the name everyone gives the library on import.
 
 </div>
 

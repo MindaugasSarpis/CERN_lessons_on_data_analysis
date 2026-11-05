@@ -44,19 +44,19 @@ src: slides/04_Command_Line_and_Files.md
 ---
 
 ---
-src: slides/05_Version_Control.md
+src: slides/05_Python_Foundations.md
 ---
 
 ---
-src: slides/06_Python_Foundations.md
+src: slides/06_Version_Control.md
 ---
 
 ---
-src: slides/07_Python_for_Data_and_NumPy.md
+src: slides/07_Data_Visualisation.md
 ---
 
 ---
-src: slides/08_Data_Visualisation.md
+src: slides/08_Python_for_Data_and_NumPy.md
 ---
 
 ---

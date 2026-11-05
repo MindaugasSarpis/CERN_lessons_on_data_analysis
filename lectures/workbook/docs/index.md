@@ -6,12 +6,12 @@ in every session from the second on. The lectures
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
 
-## This week: 27 October
+## This week: 10 November
 
 | | Page |
 |--|--|
-| Lecture | [06 Version Control with Git](lectures/lecture_6.md): what `git add`, `git commit` and `git push` each do, history and undo, working together in one shared repository or through a fork and a pull request |
-| Seminar | [Seminar 6 · Git](seminars/seminar_06.md): clone the weather project, find the commit that changed its mean, take it back, commit your own work and push it to your own GitHub repository |
+| Lecture | [07 Data Visualisation](lectures/lecture_7.md): ten years of hourly temperatures drawn with Matplotlib from lists, a histogram whose bin width decides what it shows, which chart for which question, axes, colour and a title that states the finding |
+| Seminar | [Seminar 7 · Visualisation](seminars/seminar_07.md): add Matplotlib to the environment and write one script that draws five figures of the weather log into `results/`, and draws them all again with one line |
 
 ## Setup
 
@@ -38,8 +38,8 @@ The seminar pages are in the **Seminars** section of the navigation.
 4. [Command Line & File Handling](lectures/lecture_4.md)
 5. [Python Foundations](lectures/lecture_5.md)
 6. [Version Control with Git](lectures/lecture_6.md)
-7. [Python for Data & NumPy](lectures/lecture_7.md)
-8. [Data Visualisation](lectures/lecture_8.md)
+7. [Data Visualisation](lectures/lecture_7.md)
+8. [Python for Data & NumPy](lectures/lecture_8.md)
 9. [Probability & Statistics](lectures/lecture_9.md)
 10. [Data Fitting from First Principles](lectures/lecture_10.md)
 11. [The Perceptron](lectures/lecture_11.md)

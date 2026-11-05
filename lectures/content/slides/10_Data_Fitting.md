@@ -262,7 +262,7 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-The same nine rows, plotted twice. A straight line has two parameters and can be fitted by hand. The dashed curves are the theory with $g = 9.81$ m/s², put in as Lecture 08 did. Today the data set $g$.
+The same nine rows, plotted twice. A straight line has two parameters and can be fitted by hand. The dashed curves are the theory with $g = 9.81$ m/s², put in by hand. Today the data set $g$.
 
 </div>
 
@@ -839,7 +839,7 @@ $$\sigma_a^2 = \sum_i c_i^2\,\sigma_i^2 = \frac{1}{\Delta^2}\sum_i \frac{(S\,x_i
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-If the nine times were measured again, each $y_i$ would come out a little different, and so would $\hat a$. $\sigma_a$ is the width of that scatter, the spread that Lecture 08's band of 400 resampled lines drew.
+If the nine times were measured again, each $y_i$ would come out a little different, and so would $\hat a$. $\sigma_a$ is the width of that scatter, the spread that Lecture 07's band of 400 resampled lines drew.
 
 </div>
 
@@ -1702,7 +1702,7 @@ For large $n$ the Poisson distribution is close to a Gaussian, so $\chi^2$ appli
 
 ## 📊 **In this histogram**
 
-| Bin (Lecture 08) | n | √n | relative |
+| Bin | n | √n | relative |
 | --- | --- | --- | --- |
 | smallest | 1310 | 36.2 | 2.8 % |
 | largest | 3746 | 61.2 | 1.6 % |

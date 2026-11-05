@@ -158,7 +158,7 @@ The earlier deck opened with a tour of the hardware: the parts of a
 processor, memory modules, hard disks and SSDs with photographs, the memory
 hierarchy, input and output devices. Lecture 03 now covers the processor and
 the hierarchy, and this deck refers back to it. Also gone are the slides on
-vectorisation, which is Lecture 07, and on file formats (CSV, Parquet, HDF5,
+vectorisation, which is Lecture 08, and on file formats (CSV, Parquet, HDF5,
 ROOT, compression), which are Lectures 03 and 12. They are in the Git
 history of `lectures/content/slides/15_Computing_Infrastructure.md` before
 the rework of October 2026. The photographs are still in

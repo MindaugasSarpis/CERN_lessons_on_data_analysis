@@ -250,7 +250,7 @@ A **DataFrame** is a table: named columns, numbered rows. One column of it is a 
     np.float64(-4.4)
     ```
 
-    pandas keeps numbers as NumPy's (Seminar 7): `np.float64(-4.4)` is the
+    pandas keeps numbers as NumPy's (Seminar 8): `np.float64(-4.4)` is the
     value −4.4.
 
 4. A comparison on a column gives a Series of `True` and `False`, a

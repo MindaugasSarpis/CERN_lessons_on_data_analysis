@@ -9,7 +9,7 @@ again with Pandas, as rules about what a column holds. The new script gives
 the same 97 bytes as Lecture 4's on the first file and 9 rows on the second.
 The method is then used on the file with 91 583 rows, and the lecture closes
 on the second file with five checks and a count for each. The new tool is
-Pandas. NumPy arrays, masks and `np.loadtxt` are known from Lecture 7 and are
+Pandas. NumPy arrays, masks and `np.loadtxt` are known from Lecture 8 and are
 used without introduction.
 
 ## What the lecture covers
@@ -28,7 +28,7 @@ used without introduction.
    column computed from others; sorting and summary numbers, and why g has
    three uncertainties in Lectures 9, 10 and 12.
 3. **A real file** — `D0_KPi.csv` read, its types and its size in memory;
-   `describe()`; the code −100 of Lecture 7 in a histogram, then turned into
+   `describe()`; the code −100 of Lecture 8 in a histogram, then turned into
    NaN and kept in the table; how NaN behaves in a mean and in a comparison;
    which rows have the gap, and three reasons a value can be missing.
 4. **Data quality** — a documented case of a spreadsheet error; impossible
@@ -144,7 +144,7 @@ room to read. To jump, type the slide number and press Enter.
   values here, 9.80 ± 0.04 weighted in Lecture 9, 9.84 ± 0.09 from the fit
   in Lecture 10. Three methods, three uncertainties.
 - **Slide 32**: ask which of the four means changes before showing the
-  output. Only `TAU`, from −0.0525 to 0.000982, the numbers of Lecture 7.
+  output. Only `TAU`, from −0.0525 to 0.000982, the numbers of Lecture 8.
 - **Slide 35**: ask for the number of rows of `df[df["TAU"] >= 0]` before
   showing it. The answer, 91 531, is 52 fewer than the file and not 3.
 - **The runnable fences** (slides 18, 21–26, 34, 43, 45, 47, 56–59) load

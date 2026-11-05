@@ -59,8 +59,8 @@ nav:
       - 04 Command Line & File Handling: lectures/lecture_4.md
       - 05 Python Foundations: lectures/lecture_5.md
       - 06 Version Control with Git: lectures/lecture_6.md
-      - 07 Python for Data & NumPy: lectures/lecture_7.md
-      - 08 Data Visualisation: lectures/lecture_8.md
+      - 07 Data Visualisation: lectures/lecture_7.md
+      - 08 Python for Data & NumPy: lectures/lecture_8.md
       - 09 Probability & Statistics: lectures/lecture_9.md
       - 10 Data Fitting from First Principles: lectures/lecture_10.md
       - 11 The Perceptron: lectures/lecture_11.md
@@ -78,8 +78,8 @@ nav:
       - S4 · Install Python and Git: seminars/install_python_git.md
       - S5 Python: seminars/seminar_05.md
       - S6 Git: seminars/seminar_06.md
-      - S7 NumPy: seminars/seminar_07.md
-      - S8 Visualisation: seminars/seminar_08.md
+      - S7 Visualisation: seminars/seminar_07.md
+      - S8 NumPy: seminars/seminar_08.md
       - S9 Statistics: seminars/seminar_09.md
       - S10 Fitting: seminars/seminar_10.md
       - S11 Perceptron: seminars/seminar_11.md

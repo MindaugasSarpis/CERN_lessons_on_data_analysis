@@ -12,7 +12,7 @@
   "presenter": "Dr. Mindaugas Šarpis",
   "blocks": {
     "A": "Foundations & Tooling",
-    "B": "Programming",
+    "B": "Programming for Data",
     "C": "Data Analysis Core",
     "D": "Practical Data Work",
     "E": "Further Topics"
@@ -24,8 +24,8 @@
     {"slug": "04-command-line-and-files", "title": "Command Line & File Handling", "block": "A", "srcs": ["04_Command_Line_and_Files.md"], "optional": false, "draft": false},
     {"slug": "05-python-foundations", "title": "Python Foundations", "block": "A", "srcs": ["05_Python_Foundations.md"], "optional": false, "draft": false, "split": {"lecture": 105, "seminar": 135}},
     {"slug": "06-version-control", "title": "Version Control with Git", "block": "A", "srcs": ["06_Version_Control.md"], "optional": false, "draft": false},
-    {"slug": "07-python-for-data-and-numpy", "title": "Python for Data & NumPy", "block": "B", "srcs": ["07_Python_for_Data_and_NumPy.md"], "optional": false, "draft": true},
-    {"slug": "08-data-visualisation", "title": "Data Visualisation", "block": "C", "srcs": ["08_Data_Visualisation.md"], "optional": false, "draft": true},
+    {"slug": "07-data-visualisation", "title": "Data Visualisation", "block": "B", "srcs": ["07_Data_Visualisation.md"], "optional": false, "draft": false},
+    {"slug": "08-python-for-data-and-numpy", "title": "Python for Data & NumPy", "block": "B", "srcs": ["08_Python_for_Data_and_NumPy.md"], "optional": false, "draft": true},
     {"slug": "09-probability-and-statistics", "title": "Probability & Statistics", "block": "C", "srcs": ["09_Probability_and_Statistics.md"], "optional": false, "draft": true},
     {"slug": "10-data-fitting", "title": "Data Fitting from First Principles", "block": "C", "srcs": ["10_Data_Fitting.md"], "optional": false, "draft": true},
     {"slug": "11-the-perceptron", "title": "The Perceptron", "block": "C", "srcs": ["11_The_Perceptron.md"], "optional": false, "draft": true},

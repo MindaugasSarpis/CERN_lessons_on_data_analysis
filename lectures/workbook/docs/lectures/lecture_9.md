@@ -1,12 +1,11 @@
 # 9: Probability & Statistics
 
-Lecture 8 drew the data: the pendulum table as points and the mass column as
-a histogram, with a bar of ± √N on every bin taken as given. Lecture 9 opens
-on that figure and four questions: which one number stands for the 91 583
-masses, how far a single value lies from it, how well that number is known,
-and why the bar on a count is √N. It derives how a quantity that comes out
-differently every time is described, ends with the likelihood, and closes on
-the four answers.
+Lecture 9 opens on the mass column of `D0_KPi.csv` as a histogram, with a
+bar of ± √N on every bin taken as given, and on four questions: which one
+number stands for the 91 583 masses, how far a single value lies from it,
+how well that number is known, and why the bar on a count is √N. It
+derives how a quantity that comes out differently every time is described,
+ends with the likelihood, and closes on the four answers.
 
 ## What the lecture covers
 
@@ -26,7 +25,7 @@ the four answers.
    counting; its mean np and variance np(1 − p) from the rules for sums; the
    Poisson distribution as its limit, derived and then computed for
    n = 1000, p = 0.003 against λ = 3; a count as N ± √N, the bar of
-   Lecture 8, checked on 14 bins of the mass histogram; sums of uniform
+   the opening figure, checked on 14 bins of the mass histogram; sums of uniform
    numbers that turn into a bell, the central limit theorem; the bell named
    as the Gaussian, with its 68.3 %, 95.4 %, 99.7 %.
 4. **Samples and the standard error** — sample mean x̄ and standard
@@ -69,7 +68,7 @@ project folder, or from a seeded simulation.
 |--|--|
 | Rows in the peak window 1855 < M < 1875 | 31 132, P(W) = 0.340 |
 | Share in the window for PT above / below its median | 0.403 / 0.277 |
-| Top bar of the Lecture 8 histogram (1 MeV/c² bins) | 1916 ± 44 |
+| Top bar of the opening histogram (1 MeV/c² bins) | 1916 ± 44 |
 | Mass column, 91 583 rows: mean ± standard error | 1864.10 ± 0.08 MeV/c² |
 | Mass column: standard deviation | 25.57 MeV/c² |
 | 14 flat bins of 2 MeV/c²: mean count, scatter, √N | 1461, 34, 38 |
@@ -86,7 +85,7 @@ The lecture is slides 1–65; when time is short, skip the slides of the
 second table. Slides 66–73 are the self-check quizzes and take no lecture
 time. To jump, type the slide number and press Enter.
 
-The opening slide (3) asks four questions about last week's histogram.
+The opening slide (3) asks four questions about the mass histogram.
 
 | Slides | Part |
 |--|--|

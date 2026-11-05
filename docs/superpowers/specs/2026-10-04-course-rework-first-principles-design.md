@@ -46,6 +46,10 @@ are numbered in delivery order.
 | 15 | extra | Computing Infrastructure & HPC | E | seminar_15 |
 | 16 | extra | Machine Learning & AI | E | seminar_16 |
 
+Since 5 Nov 2026 weeks 7 and 8 are swapped: Data Visualisation is Lecture 07,
+Python for Data & NumPy Lecture 08, both in block B, and the visualisation
+week uses no NumPy (`2026-11-05-visualisation-before-numpy-design.md`).
+
 Lectures 01–03 are delivered and live. 04–16 are drafts. Block E is material
 for when there is time; it is not scheduled.
 
