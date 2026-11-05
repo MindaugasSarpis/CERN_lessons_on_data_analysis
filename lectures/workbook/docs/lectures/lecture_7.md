@@ -5,8 +5,9 @@ Lecture 5 ended with a module, `weather.py`, and one number: the mean of the
 hours, pictures first and code after. It opens on the mean and asks whether
 more or fewer hours lie near it than in any other degree; Anscombe's quartet
 shows why a number is not enough, and two figures answer the question: every
-hour at its time, and the hours in bins of 1 °C, which fall into two seasons
-with the mean in the dip between them. Then the decisions that hold for a
+hour at its time, and the hours in bins of 1 °C, which pile up in two peaks,
+the cold months near −1 °C and the warm months near 12 °C, with the mean in
+the dip between them. Then the decisions that hold for a
 figure made with any program, on a gallery of examples: which channel, which
 chart, which ink, colours and scale, which title. Only then the code: the two
 figures of the start made with Matplotlib from the plain lists `weather.py`
@@ -40,7 +41,7 @@ LHCb data with its projections.
    `weather.hours` and `datetime`, so each hour stands at its time; the
    temperatures as a histogram with the default binning, then with a range
    (−17 to 33 °C) and a bin width (1 °C, 50 bins) chosen from the numbers:
-   10 °C draws one hump, 1 °C two seasons, 0.05 °C the rounding of the
+   10 °C draws one hump, 1 °C two peaks, 0.05 °C the rounding of the
    station; the bin width changed live in the browser.
 7. **Hands-on Matplotlib**: `weather.group`, the temperatures of each year,
    month or hour of the day; the hours below 0 °C per year as bars; the
@@ -57,7 +58,7 @@ LHCb data with its projections.
 
 ## Statistics used before Lecture 9
 
-Statistics is the subject of the next lecture. This lecture uses five of its
+Statistics is the subject of Lecture 9. This lecture uses five of its
 terms, and each is defined in one sentence on the slide that uses it.
 
 | Term | Slide | As defined there |
@@ -115,9 +116,11 @@ and press Enter.
   script with the figure it makes; nothing is opened beside the deck. Slide
   67 builds `weather.hours` from `temps` in one click, and slide 70 is the
   reasoning between the default histogram and the chosen one.
-- **Slides 4, 12, 20 and 22** show the figure first and the explanation on
-  the next click: ask the room before clicking. Ask the question of slide 3
-  for a show of hands; slide 6 answers it.
+- **Slides 12, 20 and 22** show the figure first and the explanation on
+  the next click, and slide 4 the four numbers first and the four plots on
+  the click: ask the room before clicking. Slide 70 shows the three bin
+  widths on the first click and the conclusion on the second. Ask the
+  question of slide 3 for a show of hands; slide 6 answers it.
 - **Slide 10** (The Parts of a Figure) builds up in five clicks. The figure
   uses example values, not the course file.
 - **Slides 71 and 78** run Python in the browser, the figure beside the code.
@@ -155,8 +158,9 @@ questions, with their answers:
 4. The mean of ten years of hourly temperatures is 7.16 °C. With 1 °C bins,
    7 to 8 °C holds 2706 hours, −1 to 0 °C 3848 and 11 to 12 °C 3032. What
    does this say about the mean?
-   *The hours fall into two seasons, near −1 °C and near 12 °C, and the mean
-   lies between them, in the dip, where fewer hours are. A mean is the
+   *The hours form two peaks, near −1 °C from November to March and near
+   12 °C from April to October, and the mean lies between them, in the dip,
+   where fewer hours are. A mean is the
    balance point of the values, not the most common one.*
 5. A sensor records tenths of a degree. A histogram of its values uses bins
    0.05 °C wide. What does it show?
@@ -216,7 +220,7 @@ can be read with
 | Learning Objectives; What a Figure Is For | Parked (5 Nov 2026) | Preambles without data (lecturer: "Some preambles?"); the deck opens on its question, as Lectures 4 to 6 do |
 | Plot the Pendulum Table; Add Points, Labels and Units | Replaced by slides 66–68 | Every hour of the weather log, then at its time with `datetime`, with labels and units |
 | A Histogram Counts Values in Bins; The Range and the Bin Width; The Mass Column as a Histogram | Rebuilt on the temperatures, slides 69, 70 and 72 | The bin widths are 10, 1 and 0.05 °C; the last one shows the rounding of the station |
-| A Peak on a Flat Background, Live | Replaced by slide 71, Choose the Bin Width, Live | It used NumPy; `random.gauss` draws two seasons, and the figure is drawn beside the code |
+| A Peak on a Flat Background, Live | Replaced by slide 71, Choose the Bin Width, Live | It used NumPy; `random.gauss` draws cold and warm hours in tenths, and the figure is drawn beside the code |
 | A Minimal Bar Chart | Replaced by slide 75 | The hours below 0 °C per year: a count, with a true zero |
 | Points and a Formula Curve | Replaced by slide 76 | The yearly means against the mean of all hours: two layers and a legend |
 | Counts with Error Bars | Replaced by slide 77 | The monthly means with an annotation and a title that states the finding |
@@ -255,8 +259,8 @@ can be read with
 - The range and the bin width of a histogram are chosen from the numbers:
   edges on round values, bins narrow enough to show the shape and wider than
   the steps in which the data are recorded.
-- A mean can describe no single value: the mean of two seasons lies in the
-  dip between them.
+- A mean can describe no single value: the mean of the cold and the warm
+  months lies in the dip between their two peaks.
 - Position on a common scale is read most accurately, then length, then
   angle and area, then colour.
 - Bars show a value by their length, so their axis starts at zero. Dots show

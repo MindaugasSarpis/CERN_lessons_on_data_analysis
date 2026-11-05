@@ -272,8 +272,8 @@ def _iris_densities_filled():
         peak = np.argmax(dens)
         ax.plot(xs[peak], dens[peak], "o", ms=5, color=color, zorder=4)
         ax.annotate(sp.capitalize(), xy=(xs[peak], dens[peak]),
-                    xytext=(xs[peak], dens[peak] * 1.08 + 0.02),
-                    color=style.FG, fontsize=10, ha="center")
+                    xytext=(8, -4), textcoords="offset points",
+                    color=style.FG, fontsize=10, ha="left", va="top")
     ax.set_xlabel("Petal length (cm)")
     ax.set_ylabel("Density")
     ax.set_title("Iris Petal Length — Filled")

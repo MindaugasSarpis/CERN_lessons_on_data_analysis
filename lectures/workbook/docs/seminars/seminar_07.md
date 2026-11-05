@@ -20,7 +20,7 @@ line that starts with `$` is typed in the terminal, a line that starts with
 `>>>` is typed at Python's prompt, and every other line is what comes back;
 `...` stands for lines left out.
 
-**If time runs short:** skip the Tasks of Parts 2 and 3, but keep
+**If time runs short:** skip the Tasks of Parts 2 to 4, but keep
 section 11, which draws every figure again with one line; sections 13 to
 15 are optional.
 
@@ -75,7 +75,9 @@ Today's folder holds the data, the module `weather.py` and `environment.yml`, th
     Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s07 ~`
     instead.
 
-2. **File** > **Open Folder...** > `weather-s07` > **Open**.
+2. **File** > **Open Folder...** > `weather-s07` > **Open**. The window
+   reloads: open the terminal again (**View** > **Terminal**); it starts in
+   the folder.
 3. The list for today's environment.
 
     ```text
@@ -120,6 +122,8 @@ A new package goes into the active environment, never into `base`, and into the 
 
     ```text
     $ python -c "import matplotlib"
+    Traceback (most recent call last):
+    ...
     ModuleNotFoundError: No module named 'matplotlib'
     ```
 
@@ -127,12 +131,15 @@ A new package goes into the active environment, never into `base`, and into the 
 
     ```text
     $ conda install matplotlib-base=3.11
+    ...
     ## Package Plan ##
 
       environment location: /Users/smilte/miniforge3/envs/s07
 
       added / updated specs:
         - matplotlib-base=3.11
+    ...
+    Proceed ([y]/n)?
     ```
 
     `matplotlib-base` is Matplotlib without a window library of several
@@ -145,13 +152,14 @@ A new package goes into the active environment, never into `base`, and into the 
     3.11.2
     ```
 
-4. Export the list again, delete its last line, `prefix: ...`, save.
+4. Export the list again.
 
     ```text
     $ conda env export --from-history -f environment.yml
     ```
 
-5. Open `environment.yml`: Matplotlib is the new last line.
+5. Open `environment.yml`, delete its last line, `prefix: ...` (a folder on
+   this laptop), save: Matplotlib is the new last line.
 
     ```text
     name: s07
@@ -200,6 +208,9 @@ A **Figure** is the whole image; an **Axes** is one plot area in it, with its tw
     $ python scripts/first_figure.py
     <class 'matplotlib.figure.Figure'> <class 'matplotlib.axes._axes.Axes'>
     ```
+
+    The first run on a laptop may print `Matplotlib is building the font
+    cache; this may take a moment.` before it: once, then never again.
 
 3. In the Explorer, click `results/first.png`: one line falling from −4.4
    to −6.0 over the hours 0 to 3. Matplotlib chose the axis ranges from the
@@ -312,7 +323,7 @@ A **dictionary of lists**: one key per day, and under it the list of that day's 
 2. Try it at `>>>`. Python finds `weather.py` in the terminal's folder, so
    start it in `scripts`; the data is then one folder up, `..`.
 
-    ```pycon
+    ```text
     $ cd scripts
     $ python
     >>> import weather
@@ -343,8 +354,8 @@ A **dictionary of lists**: one key per day, and under it the list of that day's 
 
 `datetime.fromisoformat` turns a text such as `2016-01-01` into a date; Matplotlib writes the years under an axis of dates.
 
-1. Replace `figures.py` with this. The first line is new: `datetime`
-   comes with Python, no install. The lines from `days = ...` replace the
+1. Replace `figures.py` with this. The first line is new: from the module
+   `datetime`, which comes with Python, it takes the type of the same name. The lines from `days = ...` replace the
    lines from `every = []`.
 
     ```python
@@ -554,8 +565,10 @@ The hour of the day is `line[11:13]`: 24 lists, each holding one hour of every d
     figure, `results/day_cycle_jan_jul.png`. Give each `ax.plot` a
     `label="January"` (or `"July"`) and call `ax.legend()` before
     `fig.savefig`: the legend lists the labels. Which day swings more?
-    Hint: `group` mixes all months; copy its loop into `figures.py` and
-    keep only the lines whose `line[5:7]` is the month.
+    Hint: `group` mixes all months; copy its loop into `figures.py`, write
+    `weather.` in front of `read_lines`, `temp_of` and `MISSING`, keep only
+    the lines whose `line[5:7]` is the month, and use `line[11:13]` as the
+    key.
 
 ??? success "Answer"
     A dictionary gives each month's name; the outer loop runs once per
@@ -648,7 +661,10 @@ Points, not bars: the y-axis does not start at zero, and the eye compares the po
 3. Open `results/yearly_temp.png`. `"o"` draws points without a line:
    ten separate years, nothing measured between them;
    `axhline` the grey line at 7.16 °C; `label=` names each, and
-   `ax.legend()` lists the names in a box.
+   `ax.legend()` lists the names in a box. `set_ylim(5, 9)` fixes the
+   y-axis from 5 to 9 °C, so the ten points spread over the height. Ten
+   years do not say whether it is getting warmer: the points scatter by
+   about 1 °C, and the last one is the coldest.
 
 **Check:** ten points above and below the line, the last one, 2025, lowest.
 
@@ -670,7 +686,8 @@ Points, not bars: the y-axis does not start at zero, and the eye compares the po
     fig.savefig("results/temp_hist.png", dpi=150)
     ```
 
-2. Open `results/temp_hist.png`: ten bars, one wide hill. By default
+2. Open `results/temp_hist.png`: ten bars, a tall one near 0 °C and a
+   broad shoulder, too coarse to show the shape. By default
    `hist` cuts the range from the smallest value, −16.3, to the largest,
    32.4, into 10 bins of 4.87 °C.
 
@@ -682,37 +699,41 @@ Points, not bars: the y-axis does not start at zero, and the eye compares the po
     ax.hist(temps, bins=50, range=(-17, 33))
     ax.set_xlabel("Hourly temperature (°C)")
     ax.set_ylabel("Hours per 1 °C")
-    ax.set_title("Two peaks: winter near -1 °C, summer near 12 °C")
+    ax.set_title("Two peaks: Nov–Mar near -1 °C, Apr–Oct near 12 °C")
     ```
 
     The y-label states the bin width: a count per bin means nothing
     without it.
 
-4. Open the figure again. The tallest bar, −1 to 0 °C, holds 3848 hours:
-   the winter hours near freezing. The second peak is highest at 11 to
-   12 °C, 3032 hours. Between them, the bar of 7 to 8 °C, where the mean
+4. Open the figure again. The tallest bar, −1 to 0 °C, holds 3848 hours,
+   nine in ten of them from November to March, near freezing. The second
+   peak is highest at 11 to 12 °C, 3032 hours, nearly all from April to
+   October, where spring, summer and autumn overlap. Between them, the bar of 7 to 8 °C, where the mean
    7.16 lies, holds 2706: fewer hours are near the mean than near either
    peak.
 
 **Check:** two peaks, 50 bars of 1 °C from −17 to 33.
 
 !!! question "Task: other bin widths"
-    Draw the histogram with bins of 0.05 °C and of 10 °C. What does each
-    show, and what does it hide?
+    Draw the histogram with bins of 0.05 °C and of 10 °C: change the
+    `ax.hist` line and the y-label, run, look; then put both back for
+    section 11. What does each show, and what does it hide?
 
 ??? success "Answer"
     ```python
     ax.hist(temps, bins=1000, range=(-17, 33))
+    ax.set_ylabel("Hours per 0.05 °C")
     ```
 
     ```python
-    ax.hist(temps, bins=6, range=(-20, 40))
+    ax.hist(temps, bins=5, range=(-17, 33))
+    ax.set_ylabel("Hours per 10 °C")
     ```
 
     0.05 °C: a comb, thin bars with gaps between them; 523 of the 1000
     bins are empty. The station writes tenths of a degree, so a bin of
     0.05 °C between two tenths stays empty: the figure shows how the
-    values were written down, not the weather. 10 °C: six bars and one
+    values were written down, not the weather. 10 °C: five bars and one
     hump; the two peaks are gone. 1 °C is narrow enough for the shape and
     wide enough for smooth counts.
 
@@ -746,15 +767,17 @@ The script draws all five figures again in a few seconds, so the script, not the
     back: `figures.py` no longer draws them. Lines of a Task left in
     `figures.py` print and draw theirs too.
 
-2. In `README.md`, at the end of **How to rebuild**, add two lines and
+2. In `README.md`, at the end of **How to rebuild**, add three lines and
    save: how anyone draws the figures again.
 
     ```text
-    The figures: `python scripts/figures.py` draws five PNG files into
-    `results/`, with the environment of `environment.yml`.
+    The figures need Matplotlib, listed in `environment.yml`: in that
+    environment, `python scripts/figures.py` draws five PNG files into
+    `results/`.
     ```
 
-**Check:** five figures in `results`, and the README says which line makes
+**Check:** five figures in `results` (one more for each Task left in
+`figures.py`), and the README says which line makes
 them.
 
 ---
@@ -814,7 +837,8 @@ Colour as the third axis: the 24 hours across, the 365 days of 2025 down.
     ```
 
     `grid` is a list of 365 lists of 24 temperatures; `imshow` draws one
-    coloured square per value, the first list at the top.
+    coloured square per value, the first list at the top. `fig.colorbar`
+    draws the scale of the colours beside the plot.
     `aspect="auto"` lets the squares stretch to fill the figure.
 
 **Check:** a yellow patch in the middle rows, between the hours 10 and 18.
@@ -837,8 +861,8 @@ Settings in `plt.rcParams` hold for every figure the script draws after them.
     })
     ```
 
-2. Open the figures: no frame line at the top and the right, and no white
-   border around the plot.
+2. Open the figures: no frame line at the top and the right, and only a
+   narrow margin around the plot.
 
 **Check:** every figure changed, by three lines in one place.
 

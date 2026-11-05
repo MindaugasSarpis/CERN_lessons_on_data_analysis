@@ -70,19 +70,18 @@ def _cleveland_dot_plot():
 # Life expectancy: ~20 countries, synthetic-but-plausible values clustered in
 # 60-82 years (per brief). Real country names for relatability; values are a
 # seeded synthetic draw, not real statistics.
-COUNTRIES = [
-    "Norway", "Japan", "Spain", "France", "Canada", "Germany", "Argentina",
-    "Thailand", "Mexico", "Brazil", "Vietnam", "Peru", "Russia", "Egypt",
-    "India", "Kenya", "Denmark", "Nigeria", "Haiti", "Chad",
-]
+# Life expectancy at birth, years, rounded: approximate values for about 2019
+# (WHO Global Health Observatory), so that the order of the countries is real.
+LIFE_EXPECTANCY = {
+    "Japan": 84, "Norway": 83, "France": 83, "Denmark": 81, "Germany": 81,
+    "Argentina": 77, "Brazil": 76, "Russia": 73, "India": 71, "Kenya": 66,
+    "Nigeria": 63, "Chad": 60,
+}
+COUNTRIES = list(LIFE_EXPECTANCY)
 
 
 def _lifeexp_data():
-    rng = np.random.default_rng(2024)
-    baseline = np.linspace(81, 61, len(COUNTRIES))
-    noise = rng.normal(0, 1.6, len(COUNTRIES))
-    values = np.clip(baseline + noise, 60, 82).round(1)
-    return COUNTRIES, values
+    return COUNTRIES, np.array([LIFE_EXPECTANCY[c] for c in COUNTRIES], dtype=float)
 
 
 def _lifeexp_alpha_order_bad():
@@ -94,7 +93,7 @@ def _lifeexp_alpha_order_bad():
     y = np.arange(len(countries))
     ax.plot(values, y, "o", ms=7, color=style.BAD, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries, fontsize=8)  # 20 rows in a panel 3 in high
+    ax.set_yticklabels(countries)
     ax.invert_yaxis()
     ax.set_xlim(58, 85)
     ax.set_xlabel("Life expectancy (years)")
@@ -112,7 +111,7 @@ def _lifeexp_bars_bad():
     y = np.arange(len(countries))
     ax.barh(y, values, color=style.BAD, height=0.6, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries, fontsize=8)  # 20 rows in a panel 3 in high
+    ax.set_yticklabels(countries)
     ax.invert_yaxis()
     ax.set_xlim(0, 85)
     ax.set_xlabel("Life expectancy (years)")
@@ -130,7 +129,7 @@ def _lifeexp_dot_plot():
     y = np.arange(len(countries))
     ax.plot(values, y, "o", ms=7, color=style.ACCENT, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries, fontsize=8)  # 20 rows in a panel 3 in high
+    ax.set_yticklabels(countries)
     ax.invert_yaxis()
     ax.set_xlim(58, 85)  # honest truncation is fine for dots, not bars
     ax.set_xlabel("Life expectancy (years)")

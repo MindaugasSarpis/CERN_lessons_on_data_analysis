@@ -2894,7 +2894,7 @@ L 351.786423 199.479905
    </g>
    <g id="text_16">
     <!-- Setosa -->
-    <g style="fill: #e6edf6" transform="translate(82.686443 21.68849) scale(0.1 -0.1)">
+    <g style="fill: #e6edf6" transform="translate(107.461443 49.967615) scale(0.1 -0.1)">
      <defs>
       <path id="SpaceGrotesk-Light-16" d="M 2016 -90 
 Q 1536 -90 1158 80 
@@ -3039,7 +3039,7 @@ L 351.786423 199.479905
    </g>
    <g id="text_17">
     <!-- Versicolor -->
-    <g style="fill: #e6edf6" transform="translate(206.225145 138.99739) scale(0.1 -0.1)">
+    <g style="fill: #e6edf6" transform="translate(237.974363 158.586966) scale(0.1 -0.1)">
      <defs>
       <path id="SpaceGrotesk-Light-19" d="M 1619 0 
 L 179 4480 
@@ -3136,7 +3136,7 @@ L 351.786423 198.554904
    </g>
    <g id="text_18">
     <!-- Virginica -->
-    <g style="fill: #e6edf6" transform="translate(253.885276 150.860951) scale(0.1 -0.1)">
+    <g style="fill: #e6edf6" transform="translate(282.445433 169.571745) scale(0.1 -0.1)">
      <use xlink:href="#SpaceGrotesk-Light-19"/>
      <use xlink:href="#SpaceGrotesk-Light-26" transform="translate(62 0)"/>
      <use xlink:href="#SpaceGrotesk-Light-2f" transform="translate(85.59375 0)"/>

@@ -46,12 +46,12 @@ def _stage(n: int):
                     ecolor=style.DIM, elinewidth=1, zorder=2)
     if n >= 5:
         ax.axvline(1865, color=style.CYCLE[1], lw=1.2, ls="--")
-        ax.annotate(r"$D^0$ peak (~1865 MeV)", xy=(1865, counts.max() * 1.02),
+        ax.annotate(r"$D^0$ peak, 1865 MeV/$c^2$", xy=(1865, counts.max() * 1.02),
                     xytext=(1890, counts.max() * 1.12), color=style.CYCLE[1],
                     arrowprops=dict(arrowstyle="->", color=style.CYCLE[1]))
     if n >= 6:
         # Stage 6 = the title as the FINDING, not a description of the axes.
-        ax.set_title(r"A clear $D^0$ peak at 1865 MeV above a flat background")
+        ax.set_title(r"A clear $D^0$ peak at 1865 MeV/$c^2$ above a flat background")
     style.save(fig, f"viz_anatomy_stage{n}", opaque=True, tight=False)
 
 FIGURES = {f"viz_anatomy_stage{n}": (lambda n=n: _stage(n)) for n in range(1, 7)}

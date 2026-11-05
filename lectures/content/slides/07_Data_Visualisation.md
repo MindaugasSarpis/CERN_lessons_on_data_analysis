@@ -15,7 +15,7 @@ title: "Data Visualisation"
 
 <!--
 **Ask:** who has had to read a figure whose axes had no labels?
-**Say:** two parts: how a figure is made with Matplotlib, and how to decide what it shows.
+**Say:** pictures first, what a figure should show and how to choose it; then the code that makes it with Matplotlib; then figures of more than two variables.
 (~1 min)
 -->
 
@@ -64,13 +64,13 @@ $ python scripts/mean_temp.py
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-❓ The mean of the 87 552 hours is 7.16 °C. Do more hours lie between 7 and 8 °C than in any other degree, or fewer?
+❓ The mean of the 87 552 hours is 7.16 °C. Is 7 to 8 °C, the degree of the mean, the fullest degree, or do the degrees around it hold more hours?
 
 </div>
 
 <!--
 **Say:** the script of Lecture 5: every hour of the station without the −999 rows, and their mean.
-**Ask:** hands up for more, hands up for fewer. The answer comes with the first histogram.
+**Ask:** hands up for the fullest, hands up for not. The answer comes with the first histogram.
 (~2 min)
 -->
 
@@ -83,7 +83,7 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Four tables of 11 points (Anscombe, 1973). In each one the mean of x is 9.0, the mean of y is 7.5, and the closest straight line is y = 3.00 + 0.50x. Each has r = 0.82, where r measures how near the points lie to a straight line: 1 on a rising line, 0 with no trend. What do the four tables look like?
+⚠️ Four tables of 11 points (Anscombe, 1973). In each one the mean of x is 9.0, the mean of y is 7.5, and the closest straight line is y = 3.00 + 0.50x. Each has r = 0.82, where r measures how near the points lie to a straight line: 1 on a rising line, −1 on a falling one, 0 with no trend. What do the four tables look like?
 
 </div>
 
@@ -132,15 +132,15 @@ class: fill
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-📊 Two peaks: 3848 hours at −1 to 0 °C, 3032 at 11 to 12 °C. Between them, at 7 to 8 °C, 2706: the hours fall into two seasons, and the mean lies in the dip.
+📊 Two peaks: 3848 hours at −1 to 0 °C, nine in ten of them from November to March; 3032 at 11 to 12 °C, nearly all from April to October. Between them, at 7 to 8 °C, 2706: the mean lies in the dip.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_handson_temp_view.svg">
 
 <!--
-**Ask:** the opening question: more hours near the mean, or fewer?
-**Say:** fewer than at either peak. The mean, 7.16 °C, is the temperature between winter and summer, not a typical hour: Tukey's quote at the start.
+**Ask:** the opening question: is 7 to 8 °C the fullest degree?
+**Say:** no: it lies in the dip, with fewer hours than either peak. The mean, 7.16 °C, falls between the cold months and the warm months and describes neither: Tukey's quote at the start.
 (~2 min)
 -->
 
@@ -183,7 +183,7 @@ hideInToc: true
 
 ## 👁️ **Channels are not read equally well**
 
-Cleveland and McGill (1984) asked people to judge quantities shown in different ways, and Heer and Bostock (2010) repeated the tests with more people. The list runs from the most to the least accurate channel. The most important variable gets the highest channel that is free.
+Cleveland and McGill (1984), and Heer and Bostock (2010) with more people, measured how exactly each channel is read, from the most to the least accurate. The most important variable gets the highest channel that is free.
 
 </div>
 
@@ -374,7 +374,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧭 Data that repeat after a full turn can be drawn on a circle: days of a year, hours of a day, compass bearings. On the circle the three maxima are seen to lie 120° apart.
+🧭 Data that repeat after a full turn can be drawn on a circle: days of a year, hours of a day, compass bearings. On the circle the end meets the start, 360° is 0°, and the pattern closes on itself: three maxima, 120° apart.
 
 </div>
 
@@ -564,7 +564,7 @@ class: fill
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-✅ Life expectancy in 20 countries (example values) as dots, sorted, on an axis from 60 to 85 years. As bars from zero every bar would be long and the differences would fill only the last quarter of the axis; as dots they use the full width, and the ranking is read from top to bottom.
+✅ Life expectancy in 12 countries (approximate values, about 2019) as dots, sorted, on an axis from 60 to 85 years. As bars from zero every bar would be long and the differences would fill only the last third of the axis; as dots they use the full width, and the ranking is read from top to bottom.
 
 </div>
 
@@ -617,7 +617,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_distributions_ii_mpg_boxplot.svg">
 
-📦 **Boxplot**: five numbers per group. It hides a second peak
+📦 **Boxplot**: five numbers per group. It would hide a second peak
 
 </div>
 
@@ -625,7 +625,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_distributions_ii_mpg_violin.svg">
 
-🎻 **Violin**: a density curve and its mirror image. It shows a second peak
+🎻 **Violin**: a density curve and its mirror image. It would show a second peak
 
 </div>
 
@@ -962,7 +962,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_uncertainty_error_bars.svg">
 
-📏 **Error bars**: a mean ± its standard error, which is the standard deviation of the *N* values divided by √*N*
+📏 **Error bars**: a mean ± its standard error: the standard deviation of the *N* values, their typical distance from the mean, divided by √*N*
 
 </div>
 
@@ -1281,14 +1281,14 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 The citations of five papers: 5, 60, 540, 4900 and 46 000. On a linear axis the three smallest lie in the lowest 1 % of the axis. On a logarithmic axis equal distances are equal factors, and all five are apart. The values are drawn as dots: a bar would need a zero, and a logarithmic axis has none.
+📐 The citations of five papers: 5, 60, 540, 4900 and 46 000. On a linear axis the three smallest lie in the lowest 2 % of the axis. On a logarithmic axis equal distances are equal factors, and all five are apart. The values are drawn as dots: a bar would need a zero, and a logarithmic axis has none.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_proportional_ink_log_scale.svg">
 
 <!--
-**Say:** 540 / 46 000 = 1.2 %: on the linear axis the third paper sits at a hundredth of the height. On the logarithmic axis each value is 9 to 12 times the one before, so the five are almost evenly spaced.
+**Say:** 540 / 50 000 = 1.1 %: on the linear axis, which runs to 50 000, the third paper sits at about a hundredth of its height. On the logarithmic axis each value is 9 to 12 times the one before, so the five are almost evenly spaced.
 (~1 min)
 -->
 
@@ -1301,7 +1301,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-√ For counts. A count *N* scatters by about √*N* from one repetition of a measurement to the next: 100 ± 10, 2000 ± 45. On a square-root axis this scatter has the same length at every height, half a unit. A count of zero stays on the axis, which a logarithmic axis cannot show.
+√ For counts. A count *N* scatters by about √*N* from one repetition of a measurement to the next: 48 ± 7, 3 ± 1.7, the bars drawn here. On a square-root axis this scatter has the same length at every height, half a unit. A count of zero stays on the axis, which a logarithmic axis cannot show.
 
 </div>
 
@@ -1498,7 +1498,7 @@ hideInToc: true
 The two figures of the start, drawn by Matplotlib from the lists that `weather.py` reads, one call for each part.
 
 <!--
-**Say:** from here on, code: Matplotlib from its first line, on the hourly log of Lecture 5, until it draws the two figures of the start.
+**Say:** from here on, code: Matplotlib again, from the four hours of Lecture 5 to the two figures of the start.
 (~0.5 min)
 -->
 
@@ -1532,13 +1532,13 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Matplotlib is a package from conda-forge, installed into the project's environment with `conda install matplotlib-base=3.11`. Shorter calls such as `plt.plot(x, y)` draw into the figure made last; a call on `ax` names the axes it draws into.
+Matplotlib is a package from conda-forge, installed into the project's environment with `conda install matplotlib-base=3.11`.
 
 </div>
 
 <!--
 **Say:** the Figure is the sheet, the Axes one plot on it, and everything drawn is an artist that a call on `ax` put there. Lecture 5 drew four hours this way.
-**If asked:** the twelve points are the monthly means of the ten years.
+**If asked:** the twelve points are the monthly means of the ten years. Shorter calls such as `plt.plot(x, y)` draw into the figure made last; a call on `ax` names the axes it draws into.
 (~2 min)
 -->
 
@@ -1566,7 +1566,7 @@ fig.savefig("results/every_hour.png")
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-`weather.temps` is the function of Lecture 5: the 87 552 temperatures of the file, without the −999 rows. Given one list, `ax.plot` draws it against 0, 1, 2, …, its positions in the list, and joins the points with straight lines. The ending of the file name sets the format.
+`weather.temps` is the function of Lecture 5: the 87 552 temperatures of the file, without the −999 rows. Given one list, `ax.plot` draws it against 0, 1, 2, …, its positions in the list, and joins the points with straight lines.
 
 </div>
 
@@ -1687,7 +1687,7 @@ fig.savefig("results/every_hour.png", dpi=150)
 </div>
 
 <!--
-**Say:** three changes, each one line. The figure is saved under the same name, so the old picture is replaced.
+**Say:** five lines changed: the time on x, a hairline, two labels, the resolution. The figure is saved under the same name, so the old picture is replaced.
 **If asked:** the 120 missing hours of July 2019 are now a straight piece five days long, too short to see at this width.
 (~2 min)
 -->
@@ -1764,9 +1764,9 @@ class: fill
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_handson_temp_binwidths.svg">
+<img v-click class="fig fig-fill mt-sm" src="/figures/viz_handson_temp_binwidths.svg">
 
-<div class="card card-success card-glass pad-compact mt-sm">
+<div v-click class="card card-success card-glass pad-compact mt-sm">
 
 ✅ **1 °C per bin.** At 10 °C one hump; at 1 °C two peaks. At 0.05 °C only 21 values occur between 0 and 2 °C, 0.0, 0.1, …, 2.0, so 19 of the 40 bins are empty.
 
@@ -1791,8 +1791,10 @@ import random, matplotlib.pyplot as plt
 random.seed(7)                  # same numbers every run
 values = []
 for i in range(3000):           # 3000 times
-    values.append(random.gauss(-1, 4))   # a winter hour
-    values.append(random.gauss(13, 5))   # a summer hour
+    cold = random.gauss(-1, 4)  # an hour, Nov to Mar
+    warm = random.gauss(13, 5)  # an hour, Apr to Oct
+    values.append(round(cold, 1))   # in tenths, as the
+    values.append(round(warm, 1))   # station writes them
 BINS = 5                        # <-- try 5, 55, 1100
 fig, ax = plt.subplots(figsize=(5, 4.6),
                        layout="constrained")
@@ -1803,9 +1805,9 @@ plt.show()
 ```
 
 <!--
-**Say:** the browser cannot read the file on the laptop, so `random.gauss(-1, 4)` draws a number near −1 with a spread of 4, and `random.gauss(13, 5)` one near 13: two seasons, 6000 values.
+**Say:** the browser cannot read the file on the laptop, so `random.gauss(-1, 4)` draws a number near −1 with a spread of 4, and `random.gauss(13, 5)` one near 13: cold and warm months, 6000 values, rounded to tenths. `range(3000)` counts 0 to 2999, so the loop runs 3000 times.
 **Do:** press ▶ with 5, then 55, then 1100: bins of 11 °C, 1 °C and 0.05 °C.
-**Ask:** with 1100 bins, why do the bars jump? A bin holds 5 or 6 values on average.
+**Ask:** with 1100 bins, why is every other bar missing where the values are dense? The values are tenths, and a bin of 0.05 °C between two tenths stays empty, as on the slide before.
 **If asked:** `plt.show()` draws the figure under the code; in a script on a laptop it opens a window.
 (~2 min)
 -->
@@ -1833,7 +1835,6 @@ fig.savefig("results/temp_hist.png", dpi=150)
 
 - 50 bins from −17 to 33: 50 / 50 = 1 °C per bin
 - The y-label states the bin width. A count per bin has no meaning without it
-- Both choices came from a number, and both are written on the figure and kept in the script
 
 </div>
 
@@ -1850,7 +1851,7 @@ fig.savefig("results/temp_hist.png", dpi=150)
 </div>
 
 <!--
-**Say:** the histogram of the start, made by five lines. Both choices came from numbers: the range holds every hour, and 1 °C shows the two seasons.
+**Say:** the histogram of the start, made by five lines. Both choices came from numbers: the range holds every hour, and 1 °C shows the two peaks.
 (~2 min)
 -->
 
@@ -1861,10 +1862,10 @@ hideInToc: true
 
 # Hands-on **Matplotlib**
 
-Each rule of the design sections is one call on `ax`.
+Bars, a reference line, a legend, an annotation, a style: one call on `ax` each.
 
 <!--
-**Say:** back to code, on the weather log: per year, per month.
+**Say:** the same module, per year and per month.
 (~0.5 min)
 -->
 
@@ -1918,7 +1919,7 @@ print(weather.mean(years["2025"]))   # 5.982077625570776
 
 </div>
 
-<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>list(years)</code> gives the keys.</div>
+<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>key not in groups</code> is <code>True</code> the first time a key turns up; <code>for year in years</code> runs over the keys, and <code>list(years)</code> lists them.</div>
 
 <!--
 **Do:** first step: the function; click: what it gives for the years.
@@ -1994,7 +1995,8 @@ for year in years:
     means.append(weather.mean(years[year]))
 
 fig, ax = plt.subplots(figsize=(5.2, 3.6))
-ax.axhline(7.16, color="#D55E00", label="2016–2025: 7.16 °C")
+all_hours = weather.mean(weather.temps("data/raw/weather.csv"))
+ax.axhline(all_hours, color="#D55E00", label="2016–2025: 7.16 °C")
 ax.plot(range(2016, 2026), means, "o", color="#56B4E9",
         label="one year")
 ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
@@ -2015,7 +2017,8 @@ fig.savefig("results/year_means.png", dpi=150)
 </div>
 
 <!--
-**Say:** two calls on the same axes give two layers; each gets a `label`, and `ax.legend` collects them. The line does for the years what y = x did for the genes: a point off it is the result.
+**Say:** two calls on the same axes give two layers; each gets a `label`, and `ax.legend` collects them. The line is the reference: each year reads as warmer or colder than the ten-year mean.
+**If asked:** `range(2016, 2026)` gives 2016 to 2025, the years as numbers, so Matplotlib chooses which to label. `"o"` draws a point at each value and no line.
 **Ask:** is it getting warmer? Ten points scatter by about 1 °C around 7.16, and the last year is the coldest: ten years do not say.
 (~2 min)
 -->
@@ -2040,7 +2043,7 @@ for month in months:
 fig, ax = plt.subplots(figsize=(5.6, 3.6))
 ax.plot(list(months), means, "o-", color="#56B4E9")
 arrow = {"arrowstyle": "->", "color": "#D55E00"}
-ax.annotate("July, 18.5 °C", xy=("07", 18.53), xytext=("09", 19.5),
+ax.annotate("July, 18.5 °C", xy=("07", means[6]), xytext=("09", 19.5),
             color="#D55E00", arrowprops=arrow)
 ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
 ax.set_title("July is 22.4 °C warmer than January")
@@ -2053,7 +2056,7 @@ fig.savefig("results/month_means.png", dpi=150)
 
 <img class="fig" src="/figures/viz_handson_month_annotated.svg">
 
-✅ **The output.** An annotation, axes with units, a title that states the finding: 18.53 − (−3.87) = 22.40 °C.
+✅ **The output.** An annotation, axes with units, a title that states the finding: 18.53 − (−3.87) ≈ 22.4 °C.
 
 </div>
 
@@ -2061,7 +2064,7 @@ fig.savefig("results/month_means.png", dpi=150)
 
 <!--
 **Say:** the parts of a figure from the Mechanics section, one call each. `annotate` writes a text at `xytext` and draws an arrow to `xy`; on this axis a month is named by its key, `"07"`.
-**Ask:** why a line between the points here, and none between the years? The months follow each other in a cycle; the yearly means are ten separate values.
+**If asked:** `"o-"` draws a point at each value and joins the points by lines, which shows the order of the twelve months; `means[6]` is the seventh mean, July's.
 (~2 min)
 -->
 
@@ -2182,7 +2185,7 @@ hideInToc: true
 
 # Beyond Two **Axes**
 
-A plane has two positions. Colour, a third axis, motion and side panels each carry one more variable, and each is read less exactly than a position.
+A plane has two positions. Colour, a third axis and motion each carry one more variable, read less exactly than a position.
 
 <!--
 **Say:** five figures that show three, four or more variables at once, with the call that makes each.
@@ -2198,7 +2201,7 @@ class: fill
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-🌡️ The ten-year mean of every hour of every day of the year: days across, hours up, the temperature as colour, diverging at 0 °C. July afternoons reach 25.3 °C, January nights −7.9 °C. `ax.imshow(grid, aspect="auto", cmap="RdBu_r")`
+🌡️ The ten-year mean of every hour of every day of the year: days across, hours up, the temperature as colour, diverging at 0 °C. July afternoons reach 25.3 °C, January nights −7.9 °C. `ax.imshow(grid, aspect="auto", origin="lower", cmap="RdBu_r", vmin=-30, vmax=30)`
 
 </div>
 
@@ -2227,7 +2230,7 @@ class: fill
 <img class="fig fig-fill mt-sm" src="/figures/viz_beyond_surface.svg">
 
 <!--
-**Say:** the same numbers as the heatmap, with the temperature as height too. A surface shows a shape; for values the flat heatmap is better, for the reason of the bars in three dimensions.
+**Say:** the same numbers as the heatmap, with the temperature as height too. A surface shows a shape; for values the flat heatmap is better, because perspective makes far values look smaller and hides some of them.
 **If asked:** `ax.plot_surface(x, y, grid, cmap="RdBu_r")`, and `ax.view_init(elev=32, azim=-42)` turns the view.
 (~2 min)
 -->
@@ -2270,7 +2273,7 @@ class: fill
 <img class="fig fig-fill mt-sm" src="/figures/viz_beyond_month_hist.gif">
 
 <!--
-**Say:** this answers why the year has two peaks: the winter months are narrow and pile up near 0 °C, the summer months are wide and spread from 10 to 25 °C.
+**Say:** this answers why the year has two peaks: the months from November to March are narrow and pile up near 0 °C; April to October are wide, and where spring, summer and autumn overlap, near 11 to 12 °C, they make the second peak.
 **If asked:** `draw(i)` sets the bar heights of month `i`; `ani.save("months.gif", writer=PillowWriter(fps=1.5))` writes the file. A video or a GIF goes on a slide or a web page, not into a printed paper.
 (~2 min)
 -->
@@ -2293,7 +2296,7 @@ class: fill
 <!--
 **Say:** the standard figure of a particle physics analysis: two variables as positions, their count as colour, and each variable alone on the side, so that nothing is hidden.
 **Ask:** why a logarithmic colour scale? The cells hold from 1 to 178 candidates; on a linear scale every cell with a few candidates, which is most cells of high momentum, would be the same dark colour.
-**If asked:** there are no candidates below 2500 MeV/c: the selection that made the file removed them. The panels share their axes through `plt.subplot_mosaic`.
+**If asked:** a candidate is a K⁻ and a π⁺ whose combined mass is computed; those from a D⁰ decay have its mass, the others any. Almost none lie below 2500 MeV/c: the selection that made the file cut there. `plt.subplot_mosaic` lays out the three panels, and `sharex`, `sharey` tie their axes.
 (~2 min)
 -->
 
@@ -2385,7 +2388,7 @@ hideInToc: true
 ## 📊 **The hours as a histogram**
 
 - −17 to 33 °C holds every hour, −16.3 to 32.4, with edges on whole degrees
-- 1 °C per bin shows two seasons; 10 °C one hump; 0.05 °C the rounding of the station
+- 1 °C per bin shows two peaks; 10 °C one hump; 0.05 °C the rounding of the station
 - The y-label states the bin width: hours per 1 °C
 
 </div>
@@ -2394,14 +2397,13 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-✅ Given only the list, `ax.hist` chose 10 bins of 4.87 °C. The 1 °C bins show that the mean, 7.16 °C, lies in the dip between winter and summer: 2706 hours at 7 to 8 °C, 3848 at −1 to 0 °C. Every choice that shows it comes from a number and is kept in the script.
+✅ Given only the list, `ax.hist` chose 10 bins of 4.87 °C. Every choice that shows the mean in the dip comes from a number and is kept in the script.
 
 </div>
 
 <!--
 **Say:** the answer to the opening slide, in the room's own numbers.
 **Ask:** point at each line: which slide did it come from?
-**Do:** do not cut this slide.
 (~2 min)
 -->
 
@@ -2415,7 +2417,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Make a figure with **Matplotlib** from lists: `plt.subplots`, `ax.plot`, `ax.hist`, `ax.bar`, labels with units, `fig.savefig`
+✅ Make a figure with **Matplotlib** from lists: `plt.subplots`, `ax.plot`, `ax.hist`, labels with units, `fig.savefig`
 
 </div>
 
@@ -2521,12 +2523,12 @@ hideInToc: true
   question="The mean of ten years of hourly temperatures is 7.16 °C. With 1 °C bins, 7 to 8 °C holds 2706 hours, −1 to 0 °C 3848 and 11 to 12 °C 3032. What does this say about the mean?"
   :options="[
     'Most hours lie near 7 °C, since the mean is the most common value',
-    'The hours fall into two seasons, and the mean lies between them, where fewer hours are',
+    'The hours fall into a cold and a warm part of the year, and the mean lies between them, where fewer hours are',
     'The histogram is wrong, since a mean lies under the highest bar',
     'Nothing: 1 °C bins are too narrow to show a shape'
   ]"
   :correct="1"
-  explanation="A mean is the balance point of the values, not the most common one. The hours form two peaks, near −1 °C in winter and near 12 °C in summer, and their mean falls in the dip between them. Only the histogram shows it."
+  explanation="A mean is the balance point of the values, not the most common one. The hours form two peaks, near −1 °C from November to March and near 12 °C from April to October, and their mean falls in the dip between them. Only the histogram shows it."
 />
 
 ---

@@ -276,7 +276,7 @@ def _year_means():
     all_hours = mean(temps(PATH))
 
     fig, ax = plt.subplots(figsize=(5.2, 3.6))
-    ax.axhline(round(all_hours, 2), color="#D55E00", label="2016–2025: 7.16 °C")
+    ax.axhline(all_hours, color="#D55E00", label="2016–2025: 7.16 °C")
     ax.plot(range(2016, 2026), means, "o", color="#56B4E9",
             label="one year")
     ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
@@ -291,7 +291,7 @@ def _month_annotated():
     fig, ax = plt.subplots(figsize=(5.6, 3.6))
     ax.plot(names, means, "o-", color="#56B4E9")
     arrow = {"arrowstyle": "->", "color": "#D55E00"}
-    ax.annotate("July, 18.5 °C", xy=("07", 18.53), xytext=("09", 19.5),
+    ax.annotate("July, 18.5 °C", xy=("07", means[6]), xytext=("09", 19.5),
                 color="#D55E00", arrowprops=arrow)
     ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
     ax.set_title("July is 22.4 °C warmer than January")

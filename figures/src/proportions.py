@@ -65,12 +65,14 @@ def _side_by_side_bars():
     sorted_vals = vals[order]
     # One colour: position on the common axis carries the value, so a
     # per-category hue would only be redundant ink.
+    # horizontal, so that every name is written in full and level
     fig, ax = style.new_fig(7.2, 4.4)
-    bars = ax.bar(labels, sorted_vals, color=style.ACCENT, width=0.62)
+    bars = ax.barh(labels, sorted_vals, color=style.ACCENT, height=0.62)
+    ax.invert_yaxis()
     ax.bar_label(bars, fmt="%d%%", padding=3, color=style.FG, fontsize=10)
-    ax.set_ylabel("Share of respondents (%)")
-    ax.set_ylim(0, max(sorted_vals) * 1.22)
-    ax.grid(axis="x", visible=False)  # keep only the horizontal (y) gridlines
+    ax.set_xlabel("Share of respondents (%)")
+    ax.set_xlim(0, max(sorted_vals) * 1.3)
+    ax.grid(axis="y", visible=False)  # keep only the vertical (x) gridlines
     style.save(fig, "viz_proportions_proportions_side_by_side_bars")
 
 
