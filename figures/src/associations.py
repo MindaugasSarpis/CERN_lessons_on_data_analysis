@@ -133,7 +133,7 @@ def _mtcars_corr_heatmap():
     norm = mcolors.Normalize(vmin=-1, vmax=1)
 
     fig, ax = style.new_fig(6.6, 5.8)
-    im = ax.imshow(corr.values, cmap=cmap, norm=norm)
+    im = ax.imshow(corr.values, cmap=cmap, norm=norm, aspect="auto")
     ax.set_xticks(range(len(cols)))
     ax.set_xticklabels([short[c] for c in cols], rotation=40, ha="right")
     ax.set_yticks(range(len(cols)))
@@ -183,7 +183,7 @@ def _correlogram():
                 ax.set_ylabel(labels[i], fontsize=9)
             else:
                 ax.set_yticklabels([])
-    fig.suptitle("Pair Plot — Three Penguin Measurements", y=1.02)
+    fig.suptitle("Pair Plot — Three Penguin Measurements")
     style.save(fig, "viz_multi_panel_correlogram")
 
 
@@ -216,7 +216,7 @@ def _small_multiples_gapminder():
         ax.set_xlabel("Year", fontsize=9)
     for ax in axes[:, 0]:
         ax.set_ylabel("GDP / capita\n(synthetic $)", fontsize=9)
-    fig.suptitle("Small Multiples — Same Scale, Six Panels", y=1.02)
+    fig.suptitle("Small Multiples — Same Scale, Six Panels")
     style.save(fig, "viz_multi_panel_small_multiples_gapminder")
 
 
@@ -250,16 +250,18 @@ def _keeling_curve():
 def _keeling_decomposition():
     years, observed, trend, seasonal, noise = _keeling_series()
     seasonal_resid = seasonal + noise
-    fig, axes = plt.subplots(3, 1, figsize=(7.6, 6.6), sharex=True)
+    # three panels side by side: the slide shows it full width
+    fig, axes = plt.subplots(1, 3, figsize=(12, 3.6), sharex=True)
     axes[0].plot(years, observed, color=style.ACCENT, lw=1.1)
-    axes[0].set_ylabel("Observed")
-    axes[0].set_title("Decomposing the Keeling Curve")
+    axes[0].set_title("Observed")
+    axes[0].set_ylabel("CO$_2$ (ppm)")
     axes[1].plot(years, trend, color=style.CYCLE[1], lw=1.8)
-    axes[1].set_ylabel("Trend")
+    axes[1].set_title("Trend")
     axes[2].plot(years, seasonal_resid, color=style.CYCLE[2], lw=0.9)
     axes[2].axhline(0, color=style.DIM, lw=0.8, ls="--")
-    axes[2].set_ylabel("Seasonal + residual")
-    axes[2].set_xlabel("Year")
+    axes[2].set_title("Seasonal + residual")
+    for ax in axes:
+        ax.set_xlabel("Year")
     style.save(fig, "viz_trends_keeling_decomposition")
 
 

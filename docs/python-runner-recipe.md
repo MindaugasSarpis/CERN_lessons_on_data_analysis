@@ -92,6 +92,15 @@ fence instead: `{autorun:false, outputHeight:'4.8rem'}`. A height of
 box; 4.8rem is four rows. The fixed height also holds before ▶, so
 `pnpm qa` measures the slide at its full height.
 
+A block that draws a figure worth seeing large (L07, "Choose the Bin Width,
+Live" and "Linear or Logarithmic, Live") puts its output beside the code:
+`class: runner-side` in the slide's frontmatter (lecturer, 5 Nov 2026: "we
+want to see large figure"). The cell then takes the height under the title,
+the code the left half (about 58 characters a line), the output the right
+half at full height, and the figure is made near-square,
+`plt.subplots(figsize=(5, 4.6), layout="constrained")` (the layout keeps the axis labels inside the figure), up to 22rem high. The layout is in
+`theme/styles/monaco.css` (RUNNER-SIDE).
+
 ## What lives where
 
 | Piece | File |

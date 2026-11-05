@@ -52,8 +52,8 @@ def _pie_bad():
         vals, colors=colors, startangle=90, counterclock=False,
         wedgeprops=dict(edgecolor=BG, linewidth=1.5),
     )
-    ax.set_title("Preferred Analysis Tool — Survey (n=240)")
-    ax.legend(wedges, TRIO_LABELS, loc="center left", bbox_to_anchor=(1.0, 0.5))
+    ax.legend(wedges, TRIO_LABELS, loc="upper center", bbox_to_anchor=(0.5, 0.0),
+              ncol=3)
     style.save(fig, "viz_proportions_pie_bad")
 
 
@@ -71,7 +71,6 @@ def _side_by_side_bars():
     ax.set_ylabel("Share of respondents (%)")
     ax.set_ylim(0, max(sorted_vals) * 1.22)
     ax.grid(axis="x", visible=False)  # keep only the horizontal (y) gridlines
-    ax.set_title("Preferred Analysis Tool — Same Data as Bars")
     style.save(fig, "viz_proportions_proportions_side_by_side_bars")
 
 
@@ -92,10 +91,9 @@ def _stacked_bar():
     ax.set_yticks([])
     ax.set_xlabel("Share of respondents (%)")
     ax.grid(False)  # the single bar covers the whole axes — gridlines add nothing
-    ax.set_title("Preferred Analysis Tool — One Stacked Bar")
     handles = [Patch(facecolor=TRIO_COLORS[l], label=l) for l in TRIO_LABELS]
-    ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.32),
-              ncol=3)
+    ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.28),
+              ncol=2)
     style.save(fig, "viz_proportions_proportions_stacked_bar")
 
 
@@ -200,7 +198,7 @@ def _treemap():
     group_order = sorted(groups, key=lambda g: sum(groups[g].values()), reverse=True)
     total_all = sum(sum(v.values()) for v in groups.values())
 
-    W, H = 20.0, 11.0
+    W, H = 28.0, 10.0  # the shape of its box on the slide
     k = (W * H) / total_all  # scale factor: value -> area, exact by construction
 
     group_totals = [sum(groups[g].values()) * k for g in group_order]

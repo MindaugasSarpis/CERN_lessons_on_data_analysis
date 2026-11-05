@@ -1,5 +1,5 @@
 <!--
-Parked slides from slides/07_Python_for_Data_and_NumPy.md.
+Parked slides from slides/08_Python_for_Data_and_NumPy.md (Lecture 07 until 5 Nov 2026).
 
 This file is not in decks.json: it is not built, not gated and not deployed.
 To put a slide back, move it into the lecture file.

@@ -612,6 +612,49 @@
   border-radius: var(--radius-sm);
 }
 
+/* FILL - a figure that takes the rest of the slide (lecturer, 5 Nov 2026:
+   "figures need to fill the rest of the slide ... more 16:9 format").
+   The slide gets `class: fill` in its frontmatter and becomes a column; the
+   one block marked `fig-fill` (a lone img.fig, or the div or grid that holds
+   the figures) takes the height left under the title and the caption. Each
+   img.fig in it fills its box and keeps its aspect. The scripted SVGs are
+   drawn at the size of their box (figures/src/sizes.json, written by
+   scripts/measure-figures.mjs), so the frame and the figure coincide. */
+.slidev-layout.fill {
+  display: flex;
+  flex-direction: column;
+}
+.slidev-layout.fill > .fig-fill {
+  flex: 1 1 0;
+  min-height: 0;
+}
+.slidev-layout.fill > div.fig-fill:not([class*="grid-"]),
+.fig-fill > div:not(.card),
+.fig-fill .card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.slidev-layout.fill > .fig-fill[class*="grid-"] {
+  grid-template-rows: minmax(0, 1fr);
+}
+.slidev-layout.fill > img.fig.fig-fill,
+.fig-fill > img.fig,
+.fig-fill > div > img.fig,
+.fig-fill .card > img.fig {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  object-fit: contain;
+}
+/* A raster on a white backing hugs its picture instead of the box, so no
+   white bars show beside it. */
+.slidev-layout.fill > img.fig-light.fig-fill {
+  width: auto;
+  max-width: 100%;
+  align-self: center;
+}
+
 
 /* ============================================
    RENDERED-MD - what a Markdown preview shows

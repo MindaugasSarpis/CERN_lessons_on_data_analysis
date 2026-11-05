@@ -94,11 +94,10 @@ def _lifeexp_alpha_order_bad():
     y = np.arange(len(countries))
     ax.plot(values, y, "o", ms=7, color=style.BAD, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries, fontsize=12)  # tall figure is downscaled on the slide
+    ax.set_yticklabels(countries, fontsize=8)  # 20 rows in a panel 3 in high
     ax.invert_yaxis()
     ax.set_xlim(58, 85)
-    ax.set_xlabel("Life expectancy (years)", fontsize=13)
-    ax.tick_params(axis="x", labelsize=12)
+    ax.set_xlabel("Life expectancy (years)")
     ax.set_title("Life Expectancy — Alphabetical Order")
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_alpha_order_bad")
@@ -113,11 +112,10 @@ def _lifeexp_bars_bad():
     y = np.arange(len(countries))
     ax.barh(y, values, color=style.BAD, height=0.6, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries, fontsize=12)  # tall figure is downscaled on the slide
+    ax.set_yticklabels(countries, fontsize=8)  # 20 rows in a panel 3 in high
     ax.invert_yaxis()
     ax.set_xlim(0, 85)
-    ax.set_xlabel("Life expectancy (years)", fontsize=13)
-    ax.tick_params(axis="x", labelsize=12)
+    ax.set_xlabel("Life expectancy (years)")
     ax.set_title("Life Expectancy — Bars (Sorted, Still Bad)")
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_bars_bad")
@@ -132,11 +130,10 @@ def _lifeexp_dot_plot():
     y = np.arange(len(countries))
     ax.plot(values, y, "o", ms=7, color=style.ACCENT, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries, fontsize=12)  # tall figure is downscaled on the slide
+    ax.set_yticklabels(countries, fontsize=8)  # 20 rows in a panel 3 in high
     ax.invert_yaxis()
     ax.set_xlim(58, 85)  # honest truncation is fine for dots, not bars
-    ax.set_xlabel("Life expectancy (years)", fontsize=13)
-    ax.tick_params(axis="x", labelsize=12)
+    ax.set_xlabel("Life expectancy (years)")
     ax.set_title("Life Expectancy — Sorted by Value")
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_dot_plot")
@@ -216,7 +213,7 @@ def _students_stacked_bars():
     ax.set_ylabel("Students enrolled")
     ax.set_title("Enrolment by Year and Programme")
     ax.grid(axis="x", visible=False)
-    ax.legend(loc="upper left", ncol=3, bbox_to_anchor=(0, 1.16))
+    ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1.0))
     style.save(fig, "viz_amounts_students_stacked_bars")
 
 

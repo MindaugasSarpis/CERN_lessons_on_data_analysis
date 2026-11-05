@@ -68,6 +68,10 @@ _STATES = [
     "Louisiana", "Kentucky", "Oregon", "Oklahoma", "Connecticut", "Utah",
 ]
 _HIGHLIGHT = {"Utah": 13.8, "Texas": 11.4, "Florida": 10.6}
+_CODES = dict(zip(_STATES, [
+    "CA", "TX", "FL", "NY", "PA", "IL", "OH", "GA", "NC", "MI", "NJ", "VA",
+    "WA", "AZ", "MA", "TN", "IN", "MO", "MD", "WI", "CO", "MN", "SC", "AL",
+    "LA", "KY", "OR", "OK", "CT", "UT"]))
 
 
 def _popgrowth_highlight():
@@ -76,31 +80,33 @@ def _popgrowth_highlight():
     for state, value in _HIGHLIGHT.items():
         growth[_STATES.index(state)] = value
 
-    order = np.argsort(growth)
+    # vertical bars, highest first, each state by its two-letter code: the
+    # slide shows the figure full width
+    order = np.argsort(growth)[::-1]
     states = [_STATES[i] for i in order]
     values = growth[order]
 
-    fig, ax = plt.subplots(figsize=(7.6, 7.4))
-    y = np.arange(len(states))
+    fig, ax = plt.subplots(figsize=(12, 4))
+    x = np.arange(len(states))
     colors = [style.ACCENT if s in _HIGHLIGHT else style.DIM for s in states]
-    ax.barh(y, values, color=colors, height=0.72, zorder=3)
-    ax.axvline(0, color=style.DIM, lw=0.8)
-    ax.set_yticks(y)
-    ax.set_yticklabels(states, fontsize=11)  # must survive the slide's downscale
-    for label in ax.get_yticklabels():
-        if label.get_text() in _HIGHLIGHT:
+    ax.bar(x, values, color=colors, width=0.72, zorder=3)
+    ax.axhline(0, color=style.DIM, lw=0.8)
+    ax.set_xticks(x)
+    ax.set_xticklabels([_CODES[s] for s in states])
+    for label, s in zip(ax.get_xticklabels(), states):
+        if s in _HIGHLIGHT:
             label.set_color(style.ACCENT)
             label.set_fontweight("bold")
         else:
             label.set_color(style.DIM)
     for i, s in enumerate(states):
         if s in _HIGHLIGHT:
-            ax.text(values[i] + 0.35, i, f"+{values[i]:.1f}%", color=style.ACCENT,
-                     va="center", fontsize=11, fontweight="bold")
-    ax.set_xlabel("Growth rate (%)")
+            ax.text(i, values[i] + 0.4, f"+{values[i]:.1f}%", color=style.ACCENT,
+                    ha="center", va="bottom", fontweight="bold")
+    ax.set_ylabel("Growth rate (%)")
     ax.set_title("Population Growth by State")
-    ax.yaxis.grid(False)
-    ax.xaxis.grid(True)
+    ax.xaxis.grid(False)
+    ax.yaxis.grid(True)
     style.save(fig, "viz_color_popgrowth_us_highlight")
 
 

@@ -176,8 +176,8 @@ def _bar_3d_bad():
     ax.set_zlabel("Units sold (thousands)")
     ax.set_title("Quarterly Sales by Product — 3D Bars")
     _style_3d_axes(ax)
-    ax.text2D(0.02, 0.95, "perspective hides that these are\nnearly identical values",
-              transform=ax.transAxes, color=style.BAD, fontsize=9.5)
+    fig.text(0.03, 0.5, "perspective hides that these are\nnearly identical values",
+             color=style.BAD, va="center")
     style.save(fig, "viz_no_3d_jitter_bar_3d_bad")
 
 

@@ -24,7 +24,8 @@ def _anscombes_quartet():
         "III": (x_common, np.array([7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73])),
         "IV": (x4, np.array([6.58, 5.76, 7.71, 8.84, 8.47, 12.50, 7.04, 5.25, 5.56, 7.91, 6.89])),
     }
-    fig, axes = plt.subplots(2, 2, figsize=(7.4, 6.0), sharex=True, sharey=True)
+    # one row of four: the slide shows it full width under its caption
+    fig, axes = plt.subplots(1, 4, figsize=(12, 3.4), sharex=True, sharey=True)
     xs_line = np.array([2, 20])
     for ax, (label, (x, y)) in zip(axes.flat, datasets.items()):
         m, b = np.polyfit(x, y, 1)
@@ -36,10 +37,9 @@ def _anscombes_quartet():
                 transform=ax.transAxes, fontsize=8.5, color=style.DIM, va="top")
         ax.set_xlim(2, 20)
         ax.set_ylim(2, 14)
-    for ax in axes[-1, :]:
+    for ax in axes:
         ax.set_xlabel("x")
-    for ax in axes[:, 0]:
-        ax.set_ylabel("y")
+    axes[0].set_ylabel("y")
     style.save(fig, "viz_distributions_i_anscombes_quartet")
 
 

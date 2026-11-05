@@ -1081,3 +1081,54 @@ Spec: `docs/superpowers/specs/2026-11-05-visualisation-before-numpy-design.md`.
   9 opens on the D⁰ histogram with error bars, which is no longer in
   Lecture 7; its references now say "the opening figure". Lecture 8 can
   now plot with Matplotlib.
+
+## 2026-11-05 · Lecture 7 after the lecturer's first look: figures fill the slide, pictures first, plots of more variables
+
+**What happened:** the lecturer, on the released Lecture 7: "Lec7, slide 3
+(and similar) what are these? Some preambles?"; on slide 6 (Anscombe):
+"figures need to fill the rest of the slide, now there is a lot of
+whitespace and figures small. Apply to all such slides (so more 16:9
+format)"; on the bin-width runner: "a super cool interactive slide, but we
+want to see large figure, can scroll a bit"; then: "Overall this is my
+favorite lecture, really nice. Do a full scan again on the flow, clarity,
+maybe we don't want to start immediately with code blocks? A bit more
+visual approach first, then of course interactive code blocks, then we
+need a few examples of very advanced plotting (4D, something like that)".
+
+**Changed in response:**
+
+- Every figure fills the slide under its caption: slide class `fill`, block
+  class `fig-fill` (theme `custom-slides.css`); the scripted SVGs are drawn
+  at the size of their box, measured by `scripts/measure-figures.mjs` into
+  `figures/src/sizes.json` and applied in `style.save`. Figures laid out
+  for a tall box were redrawn wide: Anscombe in one row of four, the Keeling
+  decomposition side by side, population growth as vertical bars with state
+  codes, the treemap in its box's shape; titles that repeated the card
+  labels left the three proportion figures.
+- The two live runners draw their figure beside the code, at the full height
+  of the slide (slide class `runner-side`, theme `monaco.css`).
+- Pictures first: after the question, Anscombe and two full-width figures
+  (every hour; the hours in bins of 1 °C with the mean drawn in, which
+  answers the question), then the design sections, then the code, which
+  now makes the two figures of the start; both runners moved into the code
+  part.
+- A section *Beyond Two Axes* (`figures/src/beyond.py`): the ten-year mean of
+  every hour of every day as a heatmap (warmest 28 July 15:00, 25.3 °C;
+  coldest 15 January 03:00, −7.9 °C) and as a surface; temperature,
+  humidity, wind and month in one 3D scatter (below 0 °C: 86.5 %, 4.0 m/s;
+  above 20 °C: 67.6 %, 2.8 m/s); the histogram of each month as an
+  animated GIF, whose twelve bumps add up to the two peaks of the year; the
+  D⁰ of LHCb as a 2D histogram of mass and momentum with its projections
+  (90 753 candidates). One quiz more.
+- Parked: Learning Objectives and What a Figure Is For (the preambles), and,
+  to stay in the time band, five slides of the skip list (legends for
+  colour, size and shape; life expectancy alphabetical and as bars; the
+  treemap; trend and seasonal cycle). 102 slides, ~144 min for 1–90.
+
+**Decided by the builder, for the lecturer to check:**
+
+- Block B holds both weeks 7 and 8 and is called "Programming for Data".
+- The 3D surface and scatter keep their own canvas inside their box (hand-
+  placed 3D axes crop their labels when resized).
+- The gallery figures were regenerated with seaborn 0.13.2 from a scratch
+  environment; none of the course environments has seaborn.

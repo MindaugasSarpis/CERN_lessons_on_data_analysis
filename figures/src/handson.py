@@ -6,6 +6,8 @@ Every figure is drawn from the weather station's hourly log,
 lecture's module `weather.py` (copied below, so the data reach Matplotlib as
 the same plain lists the slides make). Two groups of figures.
 
+- The opening, before any code: every hour at its time and the hours in
+  bins of 1 °C with the mean as a line, drawn full width in the course style.
 - The section "A First Plot": every hour as one line, with the default
   geometry and with the time on x; the 87 552 temperatures as a histogram
   with the default binning, with three bin widths, and with the binning the
@@ -205,15 +207,51 @@ def _temp_hist():
 
 
 # ---------------------------------------------------------------------------
+# The opening: the two figures shown before any code, full width
+# ---------------------------------------------------------------------------
+
+def _hours_view():
+    """Every measured hour at its time, the coldest and the warmest marked."""
+    times, values = hours(PATH)
+    cold = values.index(min(values))
+    warm = values.index(max(values))
+    fig, ax = plt.subplots(figsize=(9, 3.8))
+    ax.plot(times, values, linewidth=0.25, color=style.ACCENT)
+    ax.set_ylabel(TEMP_LABEL)
+    ax.xaxis.grid(False)
+    arrow = {"arrowstyle": "->", "color": style.CYCLE[1]}
+    ax.annotate(f"{values[cold]} °C, 7 Jan 2025", xy=(times[cold], values[cold]),
+                xytext=(-150, -2), textcoords="offset points", va="center",
+                color=style.CYCLE[1], arrowprops=arrow)
+    ax.annotate(f"{values[warm]} °C, 18 Jun 2018", xy=(times[warm], values[warm]),
+                xytext=(40, -4), textcoords="offset points", va="center",
+                color=style.CYCLE[1], arrowprops=arrow)
+    ax.set_ylim(-22, 38)
+    style.save(fig, "viz_handson_hours_view")
+
+
+def _temp_view():
+    """The hours in bins of 1 °C, the mean as a line in the dip."""
+    values = temps(PATH)
+    m = mean(values)
+    fig, ax = plt.subplots(figsize=(9, 3.8))
+    ax.hist(values, bins=50, range=(-17, 33), color=style.ACCENT)
+    ax.axvline(m, color=style.CYCLE[1], linewidth=1.6)
+    ax.annotate(f"mean {m:.2f} °C", xy=(m, 3300), xytext=(10, 0),
+                textcoords="offset points", color=style.CYCLE[1], va="center")
+    ax.set(xlabel=TEMP_LABEL, ylabel="hours per 1 °C", xlim=(-17, 33))
+    ax.xaxis.grid(False)
+    style.save(fig, "viz_handson_temp_view")
+
+
+# ---------------------------------------------------------------------------
 # Hands-on Matplotlib
 # ---------------------------------------------------------------------------
 
 def _frost_bars():
     years = group(PATH, 0, 4)
-    names = []
     frost = []
     for year in years:
-        names.append(year)
         count = 0
         for temp in years[year]:
             if temp < 0:
@@ -221,7 +259,7 @@ def _frost_bars():
         frost.append(count)
 
     fig, ax = plt.subplots(figsize=(6, 3.2))
-    ax.bar(names, frost, color="#56B4E9", width=0.7)
+    ax.bar(range(2016, 2026), frost, color="#56B4E9", width=0.7)
     ax.set(xlabel="year", ylabel="hours below 0 °C", ylim=(0, 3000))
 
     ax.yaxis.grid(True, color="#b0bec5", linewidth=0.6)
@@ -239,7 +277,7 @@ def _year_means():
 
     fig, ax = plt.subplots(figsize=(5.2, 3.6))
     ax.axhline(round(all_hours, 2), color="#D55E00", label="2016–2025: 7.16 °C")
-    ax.plot(names, means, "o", color="#56B4E9",
+    ax.plot(range(2016, 2026), means, "o", color="#56B4E9",
             label="one year")
     ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
     ax.legend(frameon=False, loc="lower left")
@@ -284,6 +322,8 @@ def _mass_errorbars():
 
 
 FIGURES = {
+    "viz_handson_hours_view": _hours_view,
+    "viz_handson_temp_view": _temp_view,
     "viz_handson_figure_axes": _figure_axes,
     "viz_handson_hours_default": _hours_default,
     "viz_handson_hours_dates": _hours_dates,

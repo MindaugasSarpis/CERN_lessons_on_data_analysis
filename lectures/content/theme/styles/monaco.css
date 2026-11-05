@@ -180,3 +180,48 @@
   margin: 0 auto;
   border-radius: 4px;
 }
+
+/* RUNNER-SIDE - a plotting cell with its output beside the code, as tall as
+   the rest of the slide, so the figure is drawn large (lecturer, 5 Nov 2026,
+   on the bin-width runner of Lecture 7: "we want to see large figure"). The
+   slide gets `class: runner-side` in its frontmatter; the cell takes the
+   height under the title, the header strip spans both columns, the code
+   keeps to about 58 characters a line and the figure is made near-square,
+   `plt.subplots(figsize=(5, 4.6), layout="constrained")`. Under it the
+   output may scroll. */
+.slidev-layout.runner-side {
+  display: flex;
+  flex-direction: column;
+}
+.slidev-layout.runner-side > .slidev-monaco-container {
+  flex: 1 1 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.slidev-layout.runner-side > .slidev-monaco-container::before {
+  grid-column: 1 / -1;
+}
+.slidev-layout.runner-side .slidev-monaco-container-inner {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+.slidev-layout.runner-side .slidev-monaco-container > .border-t {
+  grid-column: 2;
+  grid-row: 2;
+  min-height: 0;
+  border-top: 0;
+  border-left: 1px solid var(--hair);
+}
+.slidev-layout.runner-side .slidev-monaco-container > .border-t > .text-sm.text-center {
+  margin: auto 0;
+}
+.slidev-layout.runner-side .slidev-runner-output {
+  max-height: none;
+  height: 100%;
+}
+.slidev-layout.runner-side .slidev-python-figures canvas[id$="canvas"] {
+  max-height: 22rem;
+}

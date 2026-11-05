@@ -76,104 +76,7 @@ $ python scripts/mean_temp.py
 
 ---
 hideInToc: true
----
-
-# Learning **Objectives**
-
-<div class="stack-tight mt-sm">
-
-<div class="card card-info card-glass pad-compact">
-
-🐍 Make a figure with **Matplotlib** from lists: ten years as a line, a histogram, a file in `results/`
-
-</div>
-
-<div class="card card-primary card-glass pad-compact">
-
-📊 Choose the **chart type** for amounts, distributions, proportions, associations and trends
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-👁️ Put the data on the most accurate **visual channel**: position before angle and area
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-🏷️ Label **axes** with units and choose the scale: from zero, logarithmic or square-root
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-🎨 Remove **ink** that shows no data, and choose a palette that fits the variable
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-✍️ State the **finding** in the title, label directly, and keep the script that makes the figure
-
-</div>
-
-</div>
-
-<!--
-**Say:** six abilities: the first is new code, the other five are decisions that hold for any plotting program.
-(~1 min)
--->
-
----
-hideInToc: true
----
-
-# What a **Figure** Is For
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-tight">
-
-## 👁️ **Reading**
-
-A column of 87 552 temperatures cannot be read, and its mean, 7.16 °C, does not say how the hours are spread. Counts drawn as bars are read in a few seconds.
-
-</div>
-
-<div class="card card-secondary card-glass pad-tight">
-
-## 🔍 **Finding**
-
-A figure shows groups, trends, gaps and single points away from the rest. A mean and a standard deviation show none of these.
-
-</div>
-
-<div class="card card-accent card-glass pad-tight">
-
-## 📢 **Reporting**
-
-A reader looks at the figures before the text, and often at nothing else. The figure has to carry the result without the text.
-
-</div>
-
-<div class="card card-info card-glass pad-tight">
-
-## ⚠️ **Checking**
-
-The rules for an honest figure are the rules by which a misleading one is recognised: bars that do not start at zero, an axis without a unit.
-
-</div>
-
-</div>
-
-<!--
-**Say:** one sentence per card.
-(~1 min)
--->
-
----
-hideInToc: true
+class: fill
 ---
 
 # Anscombe's **Quartet**
@@ -184,9 +87,9 @@ hideInToc: true
 
 </div>
 
-<div v-click>
+<div class="fig-fill mt-sm" v-click>
 
-<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg" style="display:block;margin:0 auto;max-height:290px;">
+<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg">
 
 <div class="note-text mt-sm text-center">Only the plot tells the four apart.</div>
 
@@ -200,331 +103,43 @@ hideInToc: true
 -->
 
 ---
-layout: section
 hideInToc: true
+class: fill
 ---
 
-# A First **Plot**
+# Every Hour from 2016 to **2025**
 
-Matplotlib draws the lists that `weather.py` reads, one call for each part.
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+📈 The 87 552 measured hours, each at its time: ten winters, ten summers. The coldest hour, −16.3 °C, was on 7 January 2025; the warmest, 32.4 °C, on 18 June 2018.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_handson_hours_view.svg">
 
 <!--
-**Say:** Matplotlib from its first line, on the hourly log of Lecture 5.
-(~0.5 min)
--->
-
----
-hideInToc: true
----
-
-# Figure, Axes, **Artists**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🧩 **Matplotlib draws lists**
-
-- `import matplotlib.pyplot as plt` loads the library under the short name `plt`
-- `fig, ax = plt.subplots()` makes a **Figure**, the whole picture, and one **Axes**, the region with an x-axis and a y-axis
-- A call on `ax` adds an **artist**: `ax.plot` draws points or a line, `ax.hist` bars, `ax.set_xlabel` a text
-- `fig.savefig("results/month_means.png")` writes the picture to a file
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_handson_figure_axes.svg" style="display:block;margin:0 auto;max-height:290px;">
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Matplotlib is a package from conda-forge, installed into the project's environment with `conda install matplotlib-base=3.11`. Shorter calls such as `plt.plot(x, y)` draw into the figure made last; a call on `ax` names the axes it draws into.
-
-</div>
-
-<!--
-**Say:** the Figure is the sheet, the Axes one plot on it, and everything drawn is an artist that a call on `ax` put there. Lecture 5 drew four hours this way.
-**If asked:** the twelve points are the monthly means of the ten years; the hands-on section computes them.
+**Ask:** what can be read here that the mean, 7.16 °C, does not say?
+**Say:** the cycle of the year, how far each winter and summer reach, and that no year looks very different from the others.
 (~2 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# Plot Every Hour: `ax.plot`
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1-2|4|6-7|8|all}
-import matplotlib.pyplot as plt
-import weather
-
-values = weather.temps("data/raw/weather.csv")
-
-fig, ax = plt.subplots()
-ax.plot(values)
-fig.savefig("results/every_hour.png")
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-`weather.temps` is the function of Lecture 5: the 87 552 temperatures of the file, without the −999 rows. Given one list, `ax.plot` draws it against 0, 1, 2, …, its positions in the list, and joins the points with straight lines. The ending of the file name sets the format.
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_hours_default.svg" style="display:block;margin:0 auto;max-height:250px;">
-
-⚠️ **The output.** Ten summers and ten winters. The x-axis counts list positions, not time, and no axis says what it shows or in which unit.
-
-</div>
-
-</div>
-
-<!--
-**Ask:** what can be read already, and what is missing?
-**If asked:** after 2019-07-21T23:00 the next value is 2019-07-27T00:00: the 120 hours the sensor did not record are left out, so every later position is 120 hours early.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Time of Each Hour: `weather.hours`
-
-<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
-
-<div>
-
-````md magic-move {lines: true}
-```py
-def temps(path):
-    result = []
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp != MISSING:
-            result.append(temp)
-    return result
-```
-```py {1,2,7,9}
-def hours(path):
-    times = []
-    result = []
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp != MISSING:
-            times.append(datetime.fromisoformat(line[0:16]))
-            result.append(temp)
-    return times, result
-```
-````
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🕐 **A time as an object**
-
-```text
->>> from datetime import datetime
->>> datetime.fromisoformat("2016-01-01T00:00")
-datetime.datetime(2016, 1, 1, 0, 0)
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">In <code>weather.py</code>, beside <code>temps</code>, with <code>from datetime import datetime</code> at its top. <code>line[0:16]</code> is the time column. <code>hours</code> returns two lists of equal length; <code>times, values = weather.hours(path)</code> names both, as <code>fig, ax</code> does.</div>
-
-<!--
-**Do:** first step: `temps` of Lecture 5; click: the four lines that change.
-**Say:** `datetime` is in the standard library; a `datetime` object knows its year, month, day and hour, and Matplotlib puts years on an axis of them.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# Plot Every Hour at Its **Time**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1|3|4|5-6|all}
-times, values = weather.hours("data/raw/weather.csv")
-fig, ax = plt.subplots()
-ax.plot(times, values, linewidth=0.2)
-ax.set_xlabel("time")
-ax.set_ylabel("temperature (°C)")
-fig.savefig("results/every_hour.png", dpi=150)
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-- With two lists, `ax.plot(x, y)` puts each value at its own time
-- `linewidth=0.2` draws a hairline: 87 552 values on one axis
-- A label names the quantity and gives the unit in brackets
-- `dpi=150` saves 150 pixels per inch: 960 × 720 pixels
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_hours_dates.svg" style="display:block;margin:0 auto;max-height:250px;">
-
-✅ **The output.** Years on x, read from the `datetime` objects, and a unit on y. Winters reach −16.3 °C, summers 32.4 °C.
-
-</div>
-
-</div>
-
-<!--
-**Say:** three changes, each one line. The figure is saved under the same name, so the old picture is replaced.
-**If asked:** the 120 missing hours of July 2019 are now a straight piece five days long, too short to see at this width.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Histogram Counts Values in **Bins**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1|3|4|5|all}
-values = weather.temps("data/raw/weather.csv")
-
-fig, ax = plt.subplots()
-ax.hist(values)
-fig.savefig("results/temp_hist.png")
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-`ax.hist` cuts the range from the smallest to the largest value into 10 bins of equal width, counts the values in each bin and draws one bar per bin. The counts, which `ax.hist` also returns:
-
-```text
-337  3173  12733  17255  13892
-14619  13466  8797  2948  332
-```
-
-</div>
-
-</div>
-
-<div class="card card-warning card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_temp_default.svg" style="display:block;margin:0 auto;max-height:250px;">
-
-⚠️ **The output.** From −16.3 to 32.4 °C in 10 bins: 4.87 °C each, with edges at −16.3, −11.43, … The fullest bin, −1.69 to 3.18 °C, holds 17 255 hours.
-
-</div>
-
-</div>
-
-<!--
-**Say:** one value is one hour, so there is nothing to plot it against: the question is how often each temperature occurs.
-**Ask:** where would you put the edges? On whole degrees.
-**If asked:** (32.4 − (−16.3)) / 10 = 4.87.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Range and the **Bin Width**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-📏 **Range.** −17 to 33 °C holds all 87 552 hours, from the coldest, −16.3, to the warmest, 32.4, and puts the edges on whole degrees.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-📐 **Bin width.** The station records tenths of a degree. A bin holds several recorded values, and enough hours that neighbouring bins do not differ by chance.
-
-</div>
-
-</div>
-
-<img class="fig" src="/figures/viz_handson_temp_binwidths.svg" style="display:block;margin:0.6rem auto 0;max-height:220px;">
+# The Same Hours Counted in Bins of 1 **°C**
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-✅ **1 °C per bin.** At 10 °C one hump; at 1 °C two peaks. At 0.05 °C only 21 values occur between 0 and 2 °C, 0.0, 0.1, …, 2.0, so 19 of the 40 bins are empty.
+📊 Two peaks: 3848 hours at −1 to 0 °C, 3032 at 11 to 12 °C. Between them, at 7 to 8 °C, 2706: the hours fall into two seasons, and the mean lies in the dip.
 
 </div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_handson_temp_view.svg">
 
 <!--
-**Ask:** before the figure: what will bins of 10 °C show?
-**Say:** a bin narrower than the steps of the data counts the rounding, not the weather.
-**If asked:** in ten years the station recorded 477 different values, every tenth of a degree that occurred.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Temperatures as a **Histogram**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|2|3-4|5|all}
-fig, ax = plt.subplots()
-ax.hist(values, bins=50, range=(-17, 33))
-ax.set_xlabel("temperature (°C)")
-ax.set_ylabel("hours per 1 °C")
-fig.savefig("results/temp_hist.png", dpi=150)
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-- 50 bins from −17 to 33: 50 / 50 = 1 °C per bin
-- The y-label states the bin width. A count per bin has no meaning without it
-- Both choices came from a number, and both are written on the figure and kept in the script
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_temp_hist.svg" style="display:block;margin:0 auto;max-height:250px;">
-
-✅ **The output.** Two peaks: 3848 hours at −1 to 0 °C, 3032 at 11 to 12 °C. Between them, at 7 to 8 °C, 2706 hours: the mean lies in the dip.
-
-</div>
-
-</div>
-
-<!--
-**Ask:** back to the opening slide: more hours near the mean, or fewer?
+**Ask:** the opening question: more hours near the mean, or fewer?
 **Say:** fewer than at either peak. The mean, 7.16 °C, is the temperature between winter and summer, not a typical hour: Tukey's quote at the start.
 (~2 min)
 -->
@@ -545,6 +160,7 @@ Both plots put every number on a position along an axis. Position is one channel
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Visual **Channels**
@@ -555,7 +171,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg">
 
 ---
 hideInToc: true
@@ -606,23 +222,24 @@ Cleveland and McGill (1984) asked people to judge quantities shown in different 
 </div>
 
 <!--
-**Say:** the plots of the last section used the first channel only: a position on x and a position on y.
+**Say:** the two figures of the start used the first channel only: a position on x and a position on y.
 (~1 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Parts of a **Figure**
 
-<div class="anatomy-stack mt-md">
+<div class="fig-fill anatomy-stack mt-sm">
   <img src="/figures/viz_anatomy_stage1.svg" alt="">
-  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage2.svg" alt="">
-  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage3.svg" alt="">
-  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage4.svg" alt="">
-  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage5.svg" alt="">
-  <img v-click class="anatomy-layer" src="/figures/viz_anatomy_stage6.svg" alt="">
+  <img v-click src="/figures/viz_anatomy_stage2.svg" alt="">
+  <img v-click src="/figures/viz_anatomy_stage3.svg" alt="">
+  <img v-click src="/figures/viz_anatomy_stage4.svg" alt="">
+  <img v-click src="/figures/viz_anatomy_stage5.svg" alt="">
+  <img v-click src="/figures/viz_anatomy_stage6.svg" alt="">
 </div>
 
 <div class="note-text mt-sm">Example values. The bar on each point is the uncertainty of the count: ± √N for a count of N.</div>
@@ -634,9 +251,8 @@ hideInToc: true
 -->
 
 <style>
-.anatomy-stack { position: relative; max-width: 76%; margin-inline: auto; }
-.anatomy-stack img { width: 100%; display: block; }
-.anatomy-layer { position: absolute; inset: 0; }
+.anatomy-stack { position: relative; }
+.anatomy-stack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 </style>
 
 ---
@@ -683,6 +299,7 @@ A legend lists the colours, shapes and sizes used in a plot and says which group
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # A Legend Without **Samples**
@@ -693,7 +310,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig fig-light" src="/figures/data_vis_legend_error_1.png" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-fill mt-sm fig-light" src="/figures/data_vis_legend_error_1.png">
 
 <!--
 **Ask:** before the click: which line is which country, and in which unit?
@@ -702,34 +319,22 @@ hideInToc: true
 
 ---
 hideInToc: true
----
-
-# Legends for Colour, Size and **Shape**
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Fuel efficiency of cars against displacement. Colour is power, size is weight, shape is the number of cylinders. Each has a legend with a title, and all three stand in an empty corner.
-
-</div>
-
-<img class="fig fig-light" src="/figures/data_vis_legend_1.png" style="display:block;margin:0 auto;max-height:350px;">
-
----
-hideInToc: true
+class: fill
 ---
 
 # Axis Labels with **Units**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The ten-year plot took the same step with `ax.set_xlabel` and `ax.set_ylabel`.
+🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The ten-year plot names the temperature and its unit on y; years on x need no more.
 
 </div>
 
-<img class="fig" src="/figures/viz_coordinates_axes_axes_labels_bad_good.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_axes_labels_bad_good.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Axis Labels: **Size**
@@ -740,11 +345,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_small_axis_labels_aus_athletes_too_small.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_small_axis_labels_aus_athletes_too_small.svg">
 
 🚫 **Too small**: unreadable from 5 m
 
@@ -752,7 +357,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_small_axis_labels_aus_athletes_balanced.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_small_axis_labels_aus_athletes_balanced.svg">
 
 ✅ **Readable**: labels in proportion to the plot
 
@@ -762,6 +367,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Coordinate System**
@@ -772,10 +378,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_coordinates_axes_polar_vs_cartesian.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_polar_vs_cartesian.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Aspect Ratio**
@@ -786,7 +393,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_coordinates_axes_houston_temps_aspect_ratios.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_houston_temps_aspect_ratios.svg">
 
 ---
 layout: section
@@ -804,6 +411,7 @@ Position is read most accurately. Which chart puts a comparison on position foll
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Long Labels on **Vertical Bars**
@@ -814,10 +422,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_boxoffice_rotated_bad.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_boxoffice_rotated_bad.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Same Bars, **Horizontal**
@@ -828,10 +437,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_boxoffice_horizontal.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_boxoffice_horizontal.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Bars That Do Not **Start at Zero**
@@ -842,7 +452,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_proportional_ink_truncated_bar_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_proportional_ink_truncated_bar_bad.svg">
 
 <!--
 **Ask:** before the click: how many times better is the first school than the last?
@@ -852,6 +462,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Same Bars **from Zero**
@@ -862,10 +473,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_proportional_ink_truncated_bar_fixed.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_proportional_ink_truncated_bar_fixed.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Median Income by **Age Group**
@@ -876,7 +488,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig fig-light" src="/figures/data_vis_bar_chart_error_3.png" style="display:block;margin:0 auto;max-height:350px;">
+<img class="fig fig-fill mt-sm fig-light" src="/figures/data_vis_bar_chart_error_3.png">
 
 <!--
 **Ask:** before the click: the films were sorted by value. Does the same rule fit here?
@@ -885,6 +497,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # **Stacked** Bars
@@ -895,10 +508,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_students_stacked_bars.svg" style="display:block;margin:0 auto;max-height:350px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_students_stacked_bars.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Bars in **Three Dimensions**
@@ -909,10 +523,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_no_3d_jitter_bar_3d_bad.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_no_3d_jitter_bar_3d_bad.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Same Bars in **Two Dimensions**
@@ -923,10 +538,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_no_3d_jitter_bar_2d_fixed.svg" style="display:block;margin:0 auto;max-height:370px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_no_3d_jitter_bar_2d_fixed.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Dot Plot**
@@ -937,52 +553,26 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_cleveland_dot_plot.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_cleveland_dot_plot.svg">
 
 ---
 hideInToc: true
----
-
-# Life Expectancy in **Alphabetical Order**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Life expectancy in 20 countries (example values), listed alphabetically. The order of the rows says nothing about the values: the highest, the lowest and the spread have to be searched for.
-
-</div>
-
-<img class="fig" src="/figures/viz_amounts_lifeexp_alpha_order_bad.svg" style="display:block;margin:0 auto;max-height:360px;">
-
----
-hideInToc: true
----
-
-# Life Expectancy as **Sorted Bars**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Sorted, as bars from zero. All values lie between 60 and 82 years, so every bar is long, and the differences take up only the right-hand quarter of the plot.
-
-</div>
-
-<img class="fig" src="/figures/viz_amounts_lifeexp_bars_bad.svg" style="display:block;margin:0 auto;max-height:360px;">
-
----
-hideInToc: true
+class: fill
 ---
 
 # Life Expectancy as **Sorted Dots**
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-✅ The same values as dots, sorted, on an axis from 60 to 85 years. The differences now use the full width, and the ranking is read from top to bottom.
+✅ Life expectancy in 20 countries (example values) as dots, sorted, on an axis from 60 to 85 years. As bars from zero every bar would be long and the differences would fill only the last quarter of the axis; as dots they use the full width, and the ranking is read from top to bottom.
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_lifeexp_dot_plot.svg" style="display:block;margin:0 auto;max-height:360px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_lifeexp_dot_plot.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # **Density**: a Smoothed Histogram
@@ -993,52 +583,26 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_distributions_i_titanic_density.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_i_titanic_density.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Bin Widths of 0.5, 5 and 20 **Years**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📏 The same ages with bins of 0.5, 5 and 20 years: the choice made for the temperatures with 0.05, 1 and 10 °C. With 0.5 years the bars jump between a few people and thirty. With 20 years the shape is four bars.
+📏 The same ages with bins of 0.5, 5 and 20 years. With 0.5 years the bars jump between a few people and thirty. With 20 years the shape is four bars.
 
 </div>
 
-<img class="fig" src="/figures/viz_distributions_i_titanic_hist_binwidth.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_i_titanic_hist_binwidth.svg">
 
 ---
 hideInToc: true
----
-
-# Choose the Bin Width, **Live**
-
-```py {monaco-run} {autorun:false}
-import random, matplotlib.pyplot as plt
-random.seed(7)                            # the same numbers on every run
-values = []
-for i in range(3000):                     # 3000 times
-    values.append(random.gauss(-1, 4))    # near -1 °C, like a winter hour
-    values.append(random.gauss(13, 5))    # near 13 °C, like a summer hour
-BINS = 5                                  # <-- try 5, 55, 1100
-fig, ax = plt.subplots()
-ax.hist(values, bins=BINS, range=(-20, 35))
-ax.set(xlabel="temperature (°C)", ylabel="values per bin")
-plt.show()
-```
-
-<!--
-**Say:** the browser cannot read the file on the laptop, so `random.gauss(-1, 4)` draws a number near −1 with a spread of 4, and `random.gauss(13, 5)` one near 13: two seasons, 6000 values.
-**Do:** press ▶ with 5, then 55, then 1100: bins of 11 °C, 1 °C and 0.05 °C.
-**Ask:** with 1100 bins, why do the bars jump? A bin holds 5 or 6 values on average.
-**If asked:** `plt.show()` draws the figure under the code; in a script on a laptop it opens a window.
-(~2 min)
--->
-
----
-hideInToc: true
+class: fill
 ---
 
 <div class="card card-info card-glass pad-compact">
@@ -1047,11 +611,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-3 mt-sm gap-md">
+<div class="fig-fill grid-3 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_distributions_ii_mpg_boxplot.svg" style="display:block;margin:0 auto;max-height:160px;">
+<img class="fig" src="/figures/viz_distributions_ii_mpg_boxplot.svg">
 
 📦 **Boxplot**: five numbers per group. It hides a second peak
 
@@ -1059,7 +623,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_distributions_ii_mpg_violin.svg" style="display:block;margin:0 auto;max-height:160px;">
+<img class="fig" src="/figures/viz_distributions_ii_mpg_violin.svg">
 
 🎻 **Violin**: a density curve and its mirror image. It shows a second peak
 
@@ -1067,7 +631,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_distributions_ii_mpg_strip_jitter.svg" style="display:block;margin:0 auto;max-height:160px;">
+<img class="fig" src="/figures/viz_distributions_ii_mpg_strip_jitter.svg">
 
 〰️ **Strip**: every value as a point, shifted sideways at random
 
@@ -1089,6 +653,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Empirical **CDF**
@@ -1099,10 +664,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_distributions_i_titanic_ecdf.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_i_titanic_ecdf.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Ridgeline** Plot
@@ -1113,10 +679,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_distributions_ii_ridgeline.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_ii_ridgeline.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Overlaid Densities: Lines or **Fill**
@@ -1127,11 +694,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_avoid_line_drawings_iris_densities_lines.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_avoid_line_drawings_iris_densities_lines.svg">
 
 🚫 **Lines and a legend**
 
@@ -1139,7 +706,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_avoid_line_drawings_iris_densities_filled.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_avoid_line_drawings_iris_densities_filled.svg">
 
 ✅ **Fill and direct labels**
 
@@ -1149,6 +716,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Temperatures as a **Heatmap**
@@ -1159,10 +727,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_aesthetic_mapping_temp_normals_heatmap.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_aesthetic_mapping_temp_normals_heatmap.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Visualising **Proportions**
@@ -1175,11 +744,11 @@ The shares of six tools in a survey of 240 people, as a pie, as one stacked bar 
 
 </div>
 
-<div class="grid-3 mt-md gap-md">
+<div class="fig-fill grid-3 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_pie_bad.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_proportions_pie_bad.svg">
 
 🥧 **Pie**: compared by angle
 
@@ -1187,7 +756,7 @@ The shares of six tools in a survey of 240 people, as a pie, as one stacked bar 
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_proportions_stacked_bar.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_proportions_proportions_stacked_bar.svg">
 
 📚 **Stacked bar**: compared by length
 
@@ -1195,7 +764,7 @@ The shares of six tools in a survey of 240 people, as a pie, as one stacked bar 
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_proportions_side_by_side_bars.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_proportions_proportions_side_by_side_bars.svg">
 
 📊 **Separate bars**: compared by position
 
@@ -1205,6 +774,7 @@ The shares of six tools in a survey of 240 people, as a pie, as one stacked bar 
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # When a **Pie Chart** Works
@@ -1215,11 +785,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_marketshare_pies_bad.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_proportions_marketshare_pies_bad.svg">
 
 ❌ **Three pies**: a share that changes from year to year cannot be followed across circles
 
@@ -1227,7 +797,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_proportions_bundestag_pie_good.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_proportions_bundestag_pie_good.svg">
 
 ✅ **One pie**: one whole, three parts, one share to read
 
@@ -1237,20 +807,7 @@ hideInToc: true
 
 ---
 hideInToc: true
----
-
-# The **Treemap**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🗂️ For parts that have parts of their own. The area of a rectangle is proportional to its value, and the rectangles of one group share a colour. Here the 200 hours of a research month.
-
-</div>
-
-<img class="fig" src="/figures/viz_proportions_treemap.svg" style="display:block;margin:0 auto;max-height:340px;">
-
----
-hideInToc: true
+class: fill
 ---
 
 # Visualising **Associations**
@@ -1263,10 +820,11 @@ Each point is one observation with two measured values: here one penguin, with t
 
 </div>
 
-<img class="fig" src="/figures/viz_associations_blue_jays_scatter.svg" style="display:block;margin:0 auto;max-height:310px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_associations_blue_jays_scatter.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Bubble** Chart
@@ -1277,10 +835,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_associations_blue_jays_bubble.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_associations_blue_jays_bubble.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # When **Points Overlap**
@@ -1293,10 +852,11 @@ Two answers on a scale from 0 to 10, from 3000 people (synthetic). The answers a
 
 </div>
 
-<img class="fig" src="/figures/viz_no_3d_jitter_overplot_jitter_alpha.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_no_3d_jitter_overplot_jitter_alpha.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Many Points: **Hexagonal Bins**
@@ -1307,11 +867,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_overlapping_points_nycflights_points.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_overlapping_points_nycflights_points.svg">
 
 🚫 **Points**: the centre is one solid area
 
@@ -1319,7 +879,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_overlapping_points_nycflights_hex_bins.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_overlapping_points_nycflights_hex_bins.svg">
 
 ✅ **Hexagonal bins**: colour is the number of flights per cell
 
@@ -1329,6 +889,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Correlation** Heatmap
@@ -1339,10 +900,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_associations_mtcars_corr_heatmap.svg" style="display:block;margin:0 auto;max-height:350px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_associations_mtcars_corr_heatmap.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Pair** Plot
@@ -1353,10 +915,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_multi_panel_correlogram.svg" style="display:block;margin:0 auto;max-height:390px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_multi_panel_correlogram.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Slopegraph**
@@ -1367,10 +930,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_associations_co2_slopegraph.svg" style="display:block;margin:0 auto;max-height:330px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_associations_co2_slopegraph.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Visualising **Trends**
@@ -1383,33 +947,20 @@ Daily temperatures (synthetic) as a thin grey line, and their mean over 21 days 
 
 </div>
 
-<img class="fig" src="/figures/viz_trends_lincoln_temps_raw_smooth.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_trends_lincoln_temps_raw_smooth.svg">
 
 ---
 hideInToc: true
----
-
-# Trend and **Seasonal Cycle**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🔬 A series shaped like the CO₂ record of Mauna Loa (synthetic). Top: the series. Middle: its slow rise, the trend. Bottom: what remains, a yearly cycle and noise.
-
-</div>
-
-<img class="fig" src="/figures/viz_trends_keeling_decomposition.svg" style="display:block;margin:0 auto;max-height:330px;">
-
----
-hideInToc: true
+class: fill
 ---
 
 # Visualising **Uncertainty**
 
-<div class="grid-3 mt-sm gap-md">
+<div class="fig-fill grid-3 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_uncertainty_error_bars.svg" style="display:block;margin:0 auto;max-height:140px;">
+<img class="fig" src="/figures/viz_uncertainty_error_bars.svg">
 
 📏 **Error bars**: a mean ± its standard error, which is the standard deviation of the *N* values divided by √*N*
 
@@ -1417,7 +968,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_uncertainty_ci_band.svg" style="display:block;margin:0 auto;max-height:140px;">
+<img class="fig" src="/figures/viz_uncertainty_ci_band.svg">
 
 🎗️ **Band**: the closest straight line, redrawn for 400 resampled copies of the data. The band holds 95 % of the lines
 
@@ -1425,7 +976,7 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_uncertainty_hop_demo.svg" style="display:block;margin:0 auto;max-height:140px;">
+<img class="fig" src="/figures/viz_uncertainty_hop_demo.svg">
 
 🎰 **Many lines**: 28 such lines drawn one by one. Their spread is the uncertainty of the line
 
@@ -1568,6 +1119,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Same Scatter with **Less Ink**
@@ -1578,7 +1130,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_balance_data_context_grid_vs_no_grid.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_balance_data_context_grid_vs_no_grid.svg">
 
 ---
 hideInToc: true
@@ -1624,6 +1176,7 @@ About 8 % of men and 0.5 % of women see colours differently, most of them with r
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Red and Green, **Simulated**
@@ -1634,15 +1187,16 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_pitfalls_of_color_use_red_green_cvd_sim.svg" style="display:block;margin:0 auto;max-height:350px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_pitfalls_of_color_use_red_green_cvd_sim.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Palette Follows the Kind of **Variable**
 
-<div style="display:grid; grid-template-columns: 1fr 2fr; align-items:center; column-gap: 1.5rem; row-gap: 1rem; margin-top: 1.2rem;">
+<div class="fig-fill mt-md" style="display:grid; grid-template-columns: 1fr 2fr; grid-template-rows: repeat(3, minmax(0, 1fr)); align-items:center; column-gap: 1.5rem; row-gap: 1rem;">
 
 <div>
 
@@ -1650,7 +1204,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_color_palette_qualitative.svg" style="width:100%;max-height:70px;">
+<img class="fig" src="/figures/viz_color_palette_qualitative.svg" style="height:100%">
 
 <div>
 
@@ -1658,7 +1212,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_color_palette_sequential.svg" style="width:100%;max-height:70px;">
+<img class="fig" src="/figures/viz_color_palette_sequential.svg" style="height:100%">
 
 <div>
 
@@ -1666,12 +1220,13 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_color_palette_diverging.svg" style="width:100%;max-height:55px;">
+<img class="fig" src="/figures/viz_color_palette_diverging.svg" style="height:100%">
 
 </div>
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Rainbow and **Viridis**
@@ -1682,11 +1237,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_bad.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_bad.svg">
 
 🚫 **Rainbow**: sharp colour steps where the values change smoothly
 
@@ -1694,7 +1249,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_fix.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_pitfalls_of_color_use_rainbow_fix.svg">
 
 ✅ **Viridis**: lightness rises with the value, also when printed in grey
 
@@ -1704,6 +1259,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Colour to **Highlight**
@@ -1714,10 +1270,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_color_popgrowth_us_highlight.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_color_popgrowth_us_highlight.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Logarithmic** Scale
@@ -1728,7 +1285,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_proportional_ink_log_scale.svg" style="display:block;margin:0 auto;max-height:350px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_proportional_ink_log_scale.svg">
 
 <!--
 **Say:** 540 / 46 000 = 1.2 %: on the linear axis the third paper sits at a hundredth of the height. On the logarithmic axis each value is 9 to 12 times the one before, so the five are almost evenly spaced.
@@ -1737,34 +1294,7 @@ hideInToc: true
 
 ---
 hideInToc: true
----
-
-# Linear or Logarithmic, **Live**
-
-```py {monaco-run} {autorun:false}
-import matplotlib.pyplot as plt
-days = []
-counts = []
-for day in range(1, 60):           # 1, 2, ..., 59
-    days.append(day)
-    counts.append(5 * 1.2 ** day)  # 20 % more every day
-SCALE = "linear"                   # <-- try "log"
-fig, ax = plt.subplots()
-ax.plot(days, counts, "o-", ms=3)
-ax.set_yscale(SCALE)
-ax.set(xlabel="day", ylabel="count", title="y-scale: " + SCALE)
-plt.show()
-```
-
-<!--
-**Do:** press ▶, then change `"linear"` to `"log"` and run again.
-**Say:** on the logarithmic axis the growth is a straight line: every day multiplies the count by the same factor, 1.2.
-**If asked:** `"o-"` draws a circle at each point and a line between them; `ms` is the marker size. `1.2 ** day` is 1.2 to the power `day`.
-(~2 min)
--->
-
----
-hideInToc: true
+class: fill
 ---
 
 # The **Square-Root** Scale
@@ -1775,7 +1305,7 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_coordinates_axes_sqrt_scale.svg" style="display:block;margin:0 auto;max-height:320px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_sqrt_scale.svg">
 
 <!--
 **If asked:** the half unit in one line: √(N + √N) ≈ √N + ½; for N = 100, √110 = 10.49.
@@ -1784,6 +1314,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Small **Multiples**
@@ -1794,10 +1325,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_multi_panel_small_multiples_gapminder.svg" style="display:block;margin:0 auto;max-height:360px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_multi_panel_small_multiples_gapminder.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Small Multiples: a **Shared Axis**
@@ -1808,11 +1340,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_bad.svg" style="display:block;margin:0 auto;max-height:290px;">
+<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_bad.svg">
 
 🚫 **An axis per panel**: three panels that look alike
 
@@ -1820,7 +1352,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_good.svg" style="display:block;margin:0 auto;max-height:290px;">
+<img class="fig" src="/figures/viz_balance_data_context_titanic_survival_good.svg">
 
 ✅ **One shared axis**: third class is seen to differ
 
@@ -1844,6 +1376,7 @@ A figure with little ink, a palette that fits and the right scale is correct, an
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Title as the **Finding**
@@ -1854,11 +1387,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-secondary card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_telling_a_story_story_titles_captions.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_telling_a_story_story_titles_captions.svg">
 
 📖 **Title, subtitle, caption**
 
@@ -1866,7 +1399,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_telling_a_story_title_as_finding.svg" style="display:block;margin:0 auto;max-height:230px;">
+<img class="fig" src="/figures/viz_telling_a_story_title_as_finding.svg">
 
 ✅ **A description and a finding** over the same plot
 
@@ -1876,6 +1409,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Direct **Labels**
@@ -1886,11 +1420,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_redundant_coding_tech_stocks_bad_legend.svg" style="display:block;margin:0 auto;max-height:220px;">
+<img class="fig" src="/figures/viz_redundant_coding_tech_stocks_bad_legend.svg">
 
 🚫 **A legend at the side**
 
@@ -1898,7 +1432,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_redundant_coding_tech_stocks_good_no_legend.svg" style="display:block;margin:0 auto;max-height:220px;">
+<img class="fig" src="/figures/viz_redundant_coding_tech_stocks_good_no_legend.svg">
 
 ✅ **Names at the ends of the lines**
 
@@ -1908,6 +1442,7 @@ hideInToc: true
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # **Annotations**
@@ -1918,10 +1453,11 @@ hideInToc: true
 
 </div>
 
-<img class="fig" src="/figures/viz_telling_a_story_annotated_vs_plain.svg" style="display:block;margin:0 auto;max-height:340px;">
+<img class="fig fig-fill mt-sm" src="/figures/viz_telling_a_story_annotated_vs_plain.svg">
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # A **Reference** Line
@@ -1932,11 +1468,11 @@ hideInToc: true
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_balance_data_context_gene_expression_bad.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_balance_data_context_gene_expression_bad.svg">
 
 🚫 **No reference**
 
@@ -1944,7 +1480,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_balance_data_context_gene_expression_good.svg" style="display:block;margin:0 auto;max-height:210px;">
+<img class="fig" src="/figures/viz_balance_data_context_gene_expression_good.svg">
 
 ✅ **The line y = x**: the points off it have changed
 
@@ -1957,9 +1493,375 @@ layout: section
 hideInToc: true
 ---
 
+# A First **Plot**
+
+The two figures of the start, drawn by Matplotlib from the lists that `weather.py` reads, one call for each part.
+
+<!--
+**Say:** from here on, code: Matplotlib from its first line, on the hourly log of Lecture 5, until it draws the two figures of the start.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Figure, Axes, **Artists**
+
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧩 **Matplotlib draws lists**
+
+- `import matplotlib.pyplot as plt` loads the library under the short name `plt`
+- `fig, ax = plt.subplots()` makes a **Figure**, the whole picture, and one **Axes**, the region with an x-axis and a y-axis
+- A call on `ax` adds an **artist**: `ax.plot` draws points or a line, `ax.hist` bars, `ax.set_xlabel` a text
+- `fig.savefig("results/month_means.png")` writes the picture to a file
+
+</div>
+
+<div>
+
+<img class="fig" src="/figures/viz_handson_figure_axes.svg">
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Matplotlib is a package from conda-forge, installed into the project's environment with `conda install matplotlib-base=3.11`. Shorter calls such as `plt.plot(x, y)` draw into the figure made last; a call on `ax` names the axes it draws into.
+
+</div>
+
+<!--
+**Say:** the Figure is the sheet, the Axes one plot on it, and everything drawn is an artist that a call on `ax` put there. Lecture 5 drew four hours this way.
+**If asked:** the twelve points are the monthly means of the ten years.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Plot Every Hour: `ax.plot`
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1-2|4|6-7|8|all}
+import matplotlib.pyplot as plt
+import weather
+
+values = weather.temps("data/raw/weather.csv")
+
+fig, ax = plt.subplots()
+ax.plot(values)
+fig.savefig("results/every_hour.png")
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`weather.temps` is the function of Lecture 5: the 87 552 temperatures of the file, without the −999 rows. Given one list, `ax.plot` draws it against 0, 1, 2, …, its positions in the list, and joins the points with straight lines. The ending of the file name sets the format.
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_hours_default.svg">
+
+⚠️ **The output.** Ten summers and ten winters. The x-axis counts list positions, not time, and no axis says what it shows or in which unit.
+
+</div>
+
+</div>
+
+<!--
+**Ask:** what can be read already, and what is missing?
+**If asked:** after 2019-07-21T23:00 the next value is 2019-07-27T00:00: the 120 hours the sensor did not record are left out, so every later position is 120 hours early.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Time of Each Hour: `weather.hours`
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+def temps(path):
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            result.append(temp)
+    return result
+```
+```py {1,2,7,9}
+def hours(path):
+    times = []
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            times.append(datetime.fromisoformat(line[0:16]))
+            result.append(temp)
+    return times, result
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🕐 **A time as an object**
+
+```text
+>>> from datetime import datetime
+>>> datetime.fromisoformat("2016-01-01T00:00")
+datetime.datetime(2016, 1, 1, 0, 0)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">In <code>weather.py</code>, beside <code>temps</code>, with <code>from datetime import datetime</code> at its top. <code>line[0:16]</code> is the time column. <code>hours</code> returns two lists of equal length; <code>times, values = weather.hours(path)</code> names both, as <code>fig, ax</code> does.</div>
+
+<!--
+**Do:** first step: `temps` of Lecture 5; click: the four lines that change.
+**Say:** `datetime` is in the standard library; a `datetime` object knows its year, month, day and hour, and Matplotlib puts years on an axis of them.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Plot Every Hour at Its **Time**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1|3|4|5-6|all}
+times, values = weather.hours("data/raw/weather.csv")
+fig, ax = plt.subplots()
+ax.plot(times, values, linewidth=0.2)
+ax.set_xlabel("time")
+ax.set_ylabel("temperature (°C)")
+fig.savefig("results/every_hour.png", dpi=150)
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+- With two lists, `ax.plot(x, y)` puts each value at its own time
+- `linewidth=0.2` draws a hairline: 87 552 values on one axis
+- A label names the quantity and gives the unit in brackets
+- `dpi=150` saves 150 pixels per inch: 960 × 720 pixels
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_hours_dates.svg">
+
+✅ **The output.** Years on x, read from the `datetime` objects, and a unit on y. Winters reach −16.3 °C, summers 32.4 °C.
+
+</div>
+
+</div>
+
+<!--
+**Say:** three changes, each one line. The figure is saved under the same name, so the old picture is replaced.
+**If asked:** the 120 missing hours of July 2019 are now a straight piece five days long, too short to see at this width.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Histogram Counts Values in **Bins**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1|3|4|5|all}
+values = weather.temps("data/raw/weather.csv")
+
+fig, ax = plt.subplots()
+ax.hist(values)
+fig.savefig("results/temp_hist.png")
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+`ax.hist` cuts the range from the smallest to the largest value into 10 bins of equal width, counts the values in each bin and draws one bar per bin. The counts, which `ax.hist` also returns:
+
+```text
+337  3173  12733  17255  13892
+14619  13466  8797  2948  332
+```
+
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_temp_default.svg">
+
+⚠️ **The output.** From −16.3 to 32.4 °C in 10 bins: 4.87 °C each, with edges at −16.3, −11.43, … The fullest bin, −1.69 to 3.18 °C, holds 17 255 hours.
+
+</div>
+
+</div>
+
+<!--
+**Say:** one value is one hour, so there is nothing to plot it against: the question is how often each temperature occurs.
+**Ask:** where would you put the edges? On whole degrees.
+**If asked:** (32.4 − (−16.3)) / 10 = 4.87.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Range and the **Bin Width**
+
+<div class="grid-2 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+📏 **Range.** −17 to 33 °C holds all 87 552 hours, from the coldest, −16.3, to the warmest, 32.4, and puts the edges on whole degrees.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+📐 **Bin width.** The station records tenths of a degree. A bin holds several recorded values, and enough hours that neighbouring bins do not differ by chance.
+
+</div>
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_handson_temp_binwidths.svg">
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+✅ **1 °C per bin.** At 10 °C one hump; at 1 °C two peaks. At 0.05 °C only 21 values occur between 0 and 2 °C, 0.0, 0.1, …, 2.0, so 19 of the 40 bins are empty.
+
+</div>
+
+<!--
+**Ask:** before the figure: what will bins of 10 °C show?
+**Say:** a bin narrower than the steps of the data counts the rounding, not the weather.
+**If asked:** in ten years the station recorded 477 different values, every tenth of a degree that occurred.
+(~3 min)
+-->
+
+---
+hideInToc: true
+class: runner-side
+---
+
+# Choose the Bin Width, **Live**
+
+```py {monaco-run} {autorun:false}
+import random, matplotlib.pyplot as plt
+random.seed(7)                  # same numbers every run
+values = []
+for i in range(3000):           # 3000 times
+    values.append(random.gauss(-1, 4))   # a winter hour
+    values.append(random.gauss(13, 5))   # a summer hour
+BINS = 5                        # <-- try 5, 55, 1100
+fig, ax = plt.subplots(figsize=(5, 4.6),
+                       layout="constrained")
+ax.hist(values, bins=BINS, range=(-20, 35))
+ax.set_xlabel("temperature (°C)")
+ax.set_ylabel("values per bin")
+plt.show()
+```
+
+<!--
+**Say:** the browser cannot read the file on the laptop, so `random.gauss(-1, 4)` draws a number near −1 with a spread of 4, and `random.gauss(13, 5)` one near 13: two seasons, 6000 values.
+**Do:** press ▶ with 5, then 55, then 1100: bins of 11 °C, 1 °C and 0.05 °C.
+**Ask:** with 1100 bins, why do the bars jump? A bin holds 5 or 6 values on average.
+**If asked:** `plt.show()` draws the figure under the code; in a script on a laptop it opens a window.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Temperatures as a **Histogram**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|2|3-4|5|all}
+fig, ax = plt.subplots()
+ax.hist(values, bins=50, range=(-17, 33))
+ax.set_xlabel("temperature (°C)")
+ax.set_ylabel("hours per 1 °C")
+fig.savefig("results/temp_hist.png", dpi=150)
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+- 50 bins from −17 to 33: 50 / 50 = 1 °C per bin
+- The y-label states the bin width. A count per bin has no meaning without it
+- Both choices came from a number, and both are written on the figure and kept in the script
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_temp_hist.svg">
+
+✅ **The output.** Two peaks: 3848 hours at −1 to 0 °C, 3032 at 11 to 12 °C. Between them, at 7 to 8 °C, 2706 hours: the mean lies in the dip.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the histogram of the start, made by five lines. Both choices came from numbers: the range holds every hour, and 1 °C shows the two seasons.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
 # Hands-on **Matplotlib**
 
-Each rule of the last four sections is one call on `ax`.
+Each rule of the design sections is one call on `ax`.
 
 <!--
 **Say:** back to code, on the weather log: per year, per month.
@@ -2027,11 +1929,12 @@ print(weather.mean(years["2025"]))   # 5.982077625570776
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Hours Below 0 °C per Year: `ax.bar`
 
-<div class="grid-2 mt-sm gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md">
 
 <div>
 
@@ -2045,7 +1948,7 @@ for year in years:
     frost.append(count)
 
 fig, ax = plt.subplots(figsize=(6, 3.2))
-ax.bar(list(years), frost, color="#56B4E9", width=0.7)
+ax.bar(range(2016, 2026), frost, color="#56B4E9", width=0.7)
 ax.set(xlabel="year", ylabel="hours below 0 °C", ylim=(0, 3000))
 ax.yaxis.grid(True, color="#b0bec5", linewidth=0.6)
 ax.set_axisbelow(True)
@@ -2058,7 +1961,7 @@ fig.savefig("results/frost_hours.svg", bbox_inches="tight")
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_frost_bars.svg" style="display:block;margin:0 auto;max-height:200px;">
+<img class="fig" src="/figures/viz_handson_frost_bars.svg">
 
 ✅ **The output.** One colour, bars from zero, a grid on y only, no box. From 1845 hours in 2023 to 2677 in 2025.
 
@@ -2066,7 +1969,7 @@ fig.savefig("results/frost_hours.svg", bbox_inches="tight")
 
 </div>
 
-<div class="note-text mt-sm"><code>figsize</code> is the size in inches. The four <code>ax.spines</code> are the lines of the box around the plot. <code>set_axisbelow(True)</code> draws the grid behind the bars.</div>
+<div class="note-text mt-sm"><code>range(2016, 2026)</code> puts the years on x as numbers, so Matplotlib chooses which to label. <code>figsize</code> is the size in inches. The four <code>ax.spines</code> are the lines of the box around the plot; <code>set_axisbelow(True)</code> draws the grid behind the bars.</div>
 
 <!--
 **Say:** a count has a true zero, so its bars start at zero; the years keep their own order.
@@ -2076,11 +1979,12 @@ fig.savefig("results/frost_hours.svg", bbox_inches="tight")
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Yearly Means and the Mean of All **Hours**
 
-<div class="grid-2 mt-sm gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md">
 
 <div>
 
@@ -2091,7 +1995,7 @@ for year in years:
 
 fig, ax = plt.subplots(figsize=(5.2, 3.6))
 ax.axhline(7.16, color="#D55E00", label="2016–2025: 7.16 °C")
-ax.plot(list(years), means, "o", color="#56B4E9",
+ax.plot(range(2016, 2026), means, "o", color="#56B4E9",
         label="one year")
 ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
 ax.legend(frameon=False, loc="lower left")
@@ -2102,7 +2006,7 @@ fig.savefig("results/year_means.png", dpi=150)
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_year_means.svg" style="display:block;margin:0 auto;max-height:250px;">
+<img class="fig" src="/figures/viz_handson_year_means.svg">
 
 ✅ **The output.** Ten points around the line: 2023 the warmest, 8.31 °C, 2025 the coldest, 5.98 °C.
 
@@ -2118,11 +2022,12 @@ fig.savefig("results/year_means.png", dpi=150)
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Monthly Means, Annotated
 
-<div class="grid-2 mt-sm gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md">
 
 <div>
 
@@ -2146,7 +2051,7 @@ fig.savefig("results/month_means.png", dpi=150)
 
 <div class="card card-success card-glass pad-compact text-center">
 
-<img class="fig" src="/figures/viz_handson_month_annotated.svg" style="display:block;margin:0 auto;max-height:240px;">
+<img class="fig" src="/figures/viz_handson_month_annotated.svg">
 
 ✅ **The output.** An annotation, axes with units, a title that states the finding: 18.53 − (−3.87) = 22.40 °C.
 
@@ -2157,6 +2062,37 @@ fig.savefig("results/month_means.png", dpi=150)
 <!--
 **Say:** the parts of a figure from the Mechanics section, one call each. `annotate` writes a text at `xytext` and draws an arrow to `xy`; on this axis a month is named by its key, `"07"`.
 **Ask:** why a line between the points here, and none between the years? The months follow each other in a cycle; the yearly means are ten separate values.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: runner-side
+---
+
+# Linear or Logarithmic, **Live**
+
+```py {monaco-run} {autorun:false}
+import matplotlib.pyplot as plt
+days = []
+counts = []
+for day in range(1, 60):           # 1, 2, ..., 59
+    days.append(day)
+    counts.append(5 * 1.2 ** day)  # 20 % more every day
+SCALE = "linear"                   # <-- try "log"
+fig, ax = plt.subplots(figsize=(5, 4.6),
+                       layout="constrained")
+ax.plot(days, counts, "o-", ms=3)
+ax.set_yscale(SCALE)
+ax.set(xlabel="day", ylabel="count")
+ax.set_title("y-scale: " + SCALE)
+plt.show()
+```
+
+<!--
+**Do:** press ▶, then change `"linear"` to `"log"` and run again.
+**Say:** on the logarithmic axis the growth is a straight line: every day multiplies the count by the same factor, 1.2.
+**If asked:** `"o-"` draws a circle at each point and a line between them; `ms` is the marker size. `1.2 ** day` is 1.2 to the power `day`.
 (~2 min)
 -->
 
@@ -2244,9 +2180,131 @@ layout: section
 hideInToc: true
 ---
 
+# Beyond Two **Axes**
+
+A plane has two positions. Colour, a third axis, motion and side panels each carry one more variable, and each is read less exactly than a position.
+
+<!--
+**Say:** five figures that show three, four or more variables at once, with the call that makes each.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Day, Hour and Temperature on One Plane: `imshow`
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+🌡️ The ten-year mean of every hour of every day of the year: days across, hours up, the temperature as colour, diverging at 0 °C. July afternoons reach 25.3 °C, January nights −7.9 °C. `ax.imshow(grid, aspect="auto", cmap="RdBu_r")`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_heatmap.svg">
+
+<!--
+**Say:** three variables on a plane: two positions and a colour. 366 × 24 cells, each the mean of 10 hours or fewer. Both cycles at once: the year from left to right, the day from bottom to top.
+**Ask:** where is the day-night difference largest? In summer: a July day swings 10 °C, a January day 4 °C.
+**If asked:** the grid comes from `weather.group(path, 5, 13)`: the key `07-28T15` is a day and an hour.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Same Grid as a Surface: `plot_surface`
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+⛰️ The 8784 means as a landscape: a ridge of summer afternoons, a valley of winter nights, a daily ripple deeper in summer. The shape is seen at once; no value can be read off, and the far side is hidden. `ax = fig.add_subplot(projection="3d")`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_surface.svg">
+
+<!--
+**Say:** the same numbers as the heatmap, with the temperature as height too. A surface shows a shape; for values the flat heatmap is better, for the reason of the bars in three dimensions.
+**If asked:** `ax.plot_surface(x, y, grid, cmap="RdBu_r")`, and `ax.view_init(elev=32, azim=-42)` turns the view.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Temperature, Humidity, Wind and **Month**
+
+<div class="card card-accent card-glass pad-compact mt-sm">
+
+🧭 One point per day, 3648 days: three measurements on three axes, the month as colour, December beside January. Cold days are humid and windy, warm days dry and calm: below 0 °C 86.5 % and 4.0 m/s on average, above 20 °C 67.6 % and 2.8 m/s. `ax.scatter(temp, hum, wind, c=month)`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_scatter4d.svg">
+
+<!--
+**Say:** four variables in one figure: three positions and a colour. The groups are seen; single points are not read.
+**Ask:** which pair of the three measurements moves together most? Temperature and humidity: r = −0.73.
+**If asked:** the palette is cyclic, built from the course colours, so the year closes on itself.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Time as One More Variable: an **Animation**
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+🎞️ The hours of each month as a histogram, January to December, over the outline of all hours ÷ 12. Each month is one bump, from −3.9 °C in January to 18.5 °C in July and back; the twelve bumps add up to the two peaks of the year. `FuncAnimation(fig, draw, frames=12)`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_month_hist.gif">
+
+<!--
+**Say:** this answers why the year has two peaks: the winter months are narrow and pile up near 0 °C, the summer months are wide and spread from 10 to 25 °C.
+**If asked:** `draw(i)` sets the bar heights of month `i`; `ani.save("months.gif", writer=PillowWriter(fps=1.5))` writes the file. A video or a GIF goes on a slide or a web page, not into a printed paper.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A 2D Histogram with Its **Projections**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⚛️ 90 753 K⁻π⁺ candidates from LHCb: mass across, transverse momentum up, the count of each cell as colour on a logarithmic scale; above and to the right, the histogram of each variable alone. The D⁰ is the band at 1865 MeV/c², at every momentum. `ax.hist2d(m, pt, norm=LogNorm())`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_d0_hist2d.svg">
+
+<!--
+**Say:** the standard figure of a particle physics analysis: two variables as positions, their count as colour, and each variable alone on the side, so that nothing is hidden.
+**Ask:** why a logarithmic colour scale? The cells hold from 1 to 178 candidates; on a linear scale every cell with a few candidates, which is most cells of high momentum, would be the same dark colour.
+**If asked:** there are no candidates below 2500 MeV/c: the selection that made the file removed them. The panels share their axes through `plt.subplot_mosaic`.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
 # **Wrap-up**
 
-Every choice in the two figures of the first section, ten years as a line and the hours as a histogram, with the number behind it.
+Every choice in the two figures of the start, ten years as a line and the hours as a histogram, with the number behind it.
 
 <!--
 (~0.5 min)
@@ -2369,7 +2427,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Choose the **chart** for amounts, distributions, proportions, associations and trends
+✅ Choose the **chart** for amounts, distributions, proportions, associations, trends, and more than two variables
 
 </div>
 
@@ -2485,6 +2543,22 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="From 0 to 2 °C the sensor can record 21 values, 0.0 to 2.0, and 40 bins of 0.05 °C cover that range: a bin with a value is followed by one without. The bars show the rounding of the sensor, not the weather. A bin holds several recorded values."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A figure shows the days of the year across, the hours of the day up, and the mean temperature of each cell as a colour. How many variables does it show, and which is read least exactly?"
+  :options="[
+    'Two: the day and the hour',
+    'Three; the temperature, because it is a colour',
+    'Three; the day, because it runs along the longer axis',
+    'Four, counting the colour bar'
+  ]"
+  :correct="1"
+  explanation="Two positions and a colour: three variables. A colour is read less exactly than a position, so the temperature of one cell is the hardest to read. What the heatmap shows well is the pattern across many cells: warm summer afternoons, cold winter nights."
 />
 
 ---

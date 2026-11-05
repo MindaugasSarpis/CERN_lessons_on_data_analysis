@@ -3,6 +3,7 @@
 Dark-transparent figures for the dark slide theme. Colorblind-safe cycle:
 Okabe-Ito brightened for dark backgrounds, with the course cyan first.
 """
+import json
 from pathlib import Path
 
 import matplotlib as mpl
@@ -12,6 +13,14 @@ import matplotlib.pyplot as plt
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "lectures" / "content" / "public" / "figures"
 FONTS = Path(__file__).resolve().parents[1] / "fonts"
+
+# The size in inches of each figure that fills the rest of its slide (the
+# slide has `class: fill`): its box on the slide, measured by
+# scripts/measure-figures.mjs. save() draws a listed figure at that size, so
+# it fills its box; constrained layout re-flows it. Unlisted figures keep the
+# figsize their module gives them.
+SIZES_FILE = Path(__file__).resolve().parent / "sizes.json"
+SIZES = json.loads(SIZES_FILE.read_text()) if SIZES_FILE.exists() else {}
 
 FG = "#e6edf6"      # light text/strokes
 DIM = "#8b97a6"     # secondary text, ticks
@@ -54,6 +63,8 @@ def save(fig, name: str, *, opaque: bool = False, tight: bool = True) -> None:
     cover the layer below). tight=False: keep the full fixed canvas (for
     stage sets that must align pixel-perfectly when stacked)."""
     OUT.mkdir(parents=True, exist_ok=True)
+    if name in SIZES:
+        fig.set_size_inches(*SIZES[name])
     kw = {"format": "svg", "metadata": {"Date": None}}
     if tight:
         kw["bbox_inches"] = "tight"
