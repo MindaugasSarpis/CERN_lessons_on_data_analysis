@@ -1132,3 +1132,30 @@ need a few examples of very advanced plotting (4D, something like that)".
   placed 3D axes crop their labels when resized).
 - The gallery figures were regenerated with seaborn 0.13.2 from a scratch
   environment; none of the course environments has seaborn.
+
+## 2026-11-07 · Lecture 7: single plots beside their caption, four good-and-bad pairs
+
+**What happened:** the lecturer, on the reworked Lecture 7: "Nice slides,
+maybe to a once over, give a few more good and bad examples of plotting and
+the 16x9 kind of diminished some of the visuality in plots borrowed from
+wilke"; then "run to completion i'm away".
+
+**Changed in response:**
+
+- A single plot of the gallery now stands beside its caption (`grid-side`,
+  a box of about 3:2, near the shape the Wilke figures were designed in);
+  figures of several panels stay full width under their caption. 17 slides
+  changed layout; the figures were measured and redrawn for their boxes.
+- Four good-and-bad pairs from the weather log (`figures/src/goodbad.py`):
+  a line drawn through the 120 missing hours of July 2019 against a gap;
+  ten yearly lines in ten colours against nine in grey and 2025 in colour
+  (January and February 2025, −5.8 °C, the coldest of the ten years); two
+  y-axes against two panels for the monthly temperature and humidity (87 %
+  in January, 72 % in July); 2017 to 2023 picked with the axis cut (+1.8 °C)
+  against all ten years and their mean. One quiz more.
+- Once-over fixes: the 3D bars lost the warning text that lay on the bars,
+  the pie of the shares got its legend beside it, the caption of the
+  correlation heatmap reworded.
+- Parked, to stay at 145 min: Life Expectancy as Sorted Dots, The Ridgeline
+  Plot and Temperatures as a Heatmap, synthetic examples that a figure of
+  the weather log now covers.

@@ -185,6 +185,23 @@
   gap: var(--gap-md);
 }
 
+/* A caption beside its figure: a single plot keeps a shape near the one it
+   was designed in (about 3:2) and still fills the slide (lecturer, 7 Nov
+   2026: the wide 16:9 panels "diminished some of the visuality" of the
+   Wilke figures). With `fig-fill` on a `class: fill` slide the row takes the
+   height left under the title; the caption sits at the top of the left
+   column, the figure fills the right one. */
+.grid-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr);
+  gap: var(--gap-md);
+  align-items: start;
+}
+.grid-side > img.fig {
+  align-self: stretch;
+  height: 100%;
+}
+
 /* Content Spacing */
 .mt-xs { margin-top: 0.3rem; }
 .mt-sm { margin-top: 0.5rem; }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="277pt" height="148.09104pt" viewBox="0 0 277 148.09104" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="234.47952pt" height="125.120145pt" viewBox="0 0 234.47952 125.120145" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -20,75 +20,75 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 148.09104 
-L 277 148.09104 
-L 277 0 
+   <path d="M 0 125.120145 
+L 234.47952 125.120145 
+L 234.47952 0 
 L 0 0 
-L 0 148.09104 
+L 0 125.120145 
 z
 " style="fill: none"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 170.106994 34.909428 
-C 166.995377 29.249418 162.419797 24.527785 156.860318 21.239919 
-C 151.300838 17.952052 144.958938 16.217104 138.5 16.217104 
-L 138.5 52.28552 
+    <path d="M 101.369994 41.224138 
+C 97.549269 34.274266 91.930959 28.476619 85.104528 24.43948 
+C 78.278098 20.40234 70.490939 18.272014 62.560072 18.272014 
+L 62.560072 62.560072 
 z
 " style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
-    <path d="M 164.792744 76.97605 
-C 170.006061 71.42443 173.329503 64.361757 174.284006 56.806091 
-C 175.238508 49.250425 173.775894 41.583133 170.106994 34.909428 
-L 138.5 52.28552 
+    <path d="M 94.844677 92.877334 
+C 101.24606 86.060555 105.326881 77.388367 106.498906 68.110838 
+C 107.67093 58.833309 105.875 49.418715 101.369994 41.224138 
+L 62.560072 62.560072 
 z
 " style="fill: #f5b95f; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
-    <path d="M 123.142815 84.921199 
-C 130.033723 88.163814 137.777724 89.142108 145.258547 87.715065 
-C 152.73937 86.288022 159.579426 82.527669 164.792744 76.97605 
-L 138.5 52.28552 
+    <path d="M 43.703135 102.633105 
+C 52.164413 106.614681 61.673197 107.81592 70.858827 106.063667 
+C 80.044457 104.311415 88.443295 99.694114 94.844677 92.877334 
+L 62.560072 62.560072 
 z
 " style="fill: #66d9ab; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
-    <path d="M 103.56474 61.25537 
-C 104.885065 66.397699 107.324645 71.185643 110.708808 75.276394 
-C 114.092971 79.367144 118.338976 82.660683 123.142815 84.921199 
-L 138.5 52.28552 
+    <path d="M 19.663405 73.574065 
+C 21.28462 79.88828 24.280156 85.76735 28.435537 90.790343 
+C 32.590918 95.813336 37.804547 99.857441 43.703135 102.633105 
+L 62.560072 62.560072 
 z
 " style="fill: #e88bc4; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
-    <path d="M 110.708808 29.294646 
-C 107.080786 33.680172 104.541833 38.862819 103.300228 44.417439 
-C 102.058624 49.972058 102.149273 55.742491 103.56474 61.25537 
-L 138.5 52.28552 
+    <path d="M 28.435537 34.329802 
+C 23.980724 39.714746 20.863169 46.078469 19.338614 52.898932 
+C 17.81406 59.719395 17.925367 66.804854 19.663405 73.574065 
+L 62.560072 62.560072 
 z
 " style="fill: #8f9dfb; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
-    <path d="M 138.5 16.217104 
-C 133.190876 16.217104 127.946655 17.389326 123.142815 19.649841 
-C 118.338976 21.910357 114.092971 25.203896 110.708808 29.294646 
-L 138.5 52.28552 
+    <path d="M 62.560073 18.272014 
+C 56.04105 18.272014 49.601722 19.711375 43.703135 22.48704 
+C 37.804547 25.262704 32.590918 29.306809 28.435537 34.329802 
+L 62.560072 62.560072 
 z
 " style="fill: #f0e07a; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
    </g>
    <g id="legend_1">
     <g id="patch_8">
-     <path d="M 11.2 116.21104 
-L 31.2 116.21104 
-L 31.2 109.21104 
-L 11.2 109.21104 
+     <path d="M 126.920145 21.620072 
+L 146.920145 21.620072 
+L 146.920145 14.620072 
+L 126.920145 14.620072 
 z
 " style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_1">
      <!-- Python -->
-     <g style="fill: #e6edf6" transform="translate(39.2 116.21104) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 21.620072) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-13" d="M 550 0 
 L 550 4480 
@@ -244,16 +244,16 @@ z
      </g>
     </g>
     <g id="patch_9">
-     <path d="M 11.2 133.97104 
-L 31.2 133.97104 
-L 31.2 126.97104 
-L 11.2 126.97104 
+     <path d="M 126.920145 39.380072 
+L 146.920145 39.380072 
+L 146.920145 32.380072 
+L 126.920145 32.380072 
 z
 " style="fill: #f5b95f; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_2">
      <!-- R -->
-     <g style="fill: #e6edf6" transform="translate(39.2 133.97104) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 39.380072) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-15" d="M 550 0 
 L 550 4480 
@@ -292,16 +292,16 @@ z
      </g>
     </g>
     <g id="patch_10">
-     <path d="M 94.370312 116.21104 
-L 114.370312 116.21104 
-L 114.370312 109.21104 
-L 94.370312 109.21104 
+     <path d="M 126.920145 57.140072 
+L 146.920145 57.140072 
+L 146.920145 50.140072 
+L 126.920145 50.140072 
 z
 " style="fill: #66d9ab; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_3">
      <!-- Excel / Sheets -->
-     <g style="fill: #e6edf6" transform="translate(122.370312 116.21104) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 57.140072) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-8" d="M 550 0 
 L 550 4480 
@@ -506,16 +506,16 @@ z
      </g>
     </g>
     <g id="patch_11">
-     <path d="M 94.370312 133.97104 
-L 114.370312 133.97104 
-L 114.370312 126.97104 
-L 94.370312 126.97104 
+     <path d="M 126.920145 74.900072 
+L 146.920145 74.900072 
+L 146.920145 67.900072 
+L 126.920145 67.900072 
 z
 " style="fill: #e88bc4; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_4">
      <!-- MATLAB -->
-     <g style="fill: #e6edf6" transform="translate(122.370312 133.97104) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 74.900072) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-10" d="M 550 0 
 L 550 4480 
@@ -628,16 +628,16 @@ z
      </g>
     </g>
     <g id="patch_12">
-     <path d="M 210.729687 116.21104 
-L 230.729687 116.21104 
-L 230.729687 109.21104 
-L 210.729687 109.21104 
+     <path d="M 126.920145 92.660072 
+L 146.920145 92.660072 
+L 146.920145 85.660072 
+L 126.920145 85.660072 
 z
 " style="fill: #8f9dfb; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_5">
      <!-- Julia -->
-     <g style="fill: #e6edf6" transform="translate(238.729687 116.21104) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 92.660072) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-d" d="M 1670 -90 
 Q 1030 -90 656 278 
@@ -750,16 +750,16 @@ z
      </g>
     </g>
     <g id="patch_13">
-     <path d="M 210.729687 133.97104 
-L 230.729687 133.97104 
-L 230.729687 126.97104 
-L 210.729687 126.97104 
+     <path d="M 126.920145 110.420072 
+L 146.920145 110.420072 
+L 146.920145 103.420072 
+L 126.920145 103.420072 
 z
 " style="fill: #f0e07a; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_6">
      <!-- Other -->
-     <g style="fill: #e6edf6" transform="translate(238.729687 133.97104) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 110.420072) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-12" d="M 2131 -90 
 Q 1344 -90 877 374 

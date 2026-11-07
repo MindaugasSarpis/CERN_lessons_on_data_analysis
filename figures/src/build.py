@@ -14,7 +14,7 @@ import style
 FAMILIES = ["anatomy", "amounts", "distributions", "associations",
             "coordinates", "emphasis", "color", "proportions", "story", "ml",
             "fitting",
-            "handson", "beyond",
+            "handson", "beyond", "goodbad",
             "arrays", "probability", "perceptron", "cleaning",
             "concepts", "computing", "git"]
 

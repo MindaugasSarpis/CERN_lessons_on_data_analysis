@@ -232,3 +232,54 @@ class: fill
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_proportions_treemap.svg">
+
+<!-- Parked 2026-11-07 from Lecture 07, section Chart Families, after 'The Dot Plot': on the skip list; its synthetic example is covered by a figure of the weather log (the Beyond Two Axes heatmap, the month histograms, the films dot plot), and four good-and-bad pairs came in -->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Life Expectancy as **Sorted Dots**
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+✅ Life expectancy in 12 countries (approximate values, about 2019) as dots, sorted, on an axis from 60 to 85 years. As bars from zero every bar would be long and the differences would fill only the last third of the axis; as dots they use the full width, and the ranking is read from top to bottom.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_lifeexp_dot_plot.svg">
+
+<!-- Parked 2026-11-07 from Lecture 07, section Chart Families, after 'The Empirical CDF': on the skip list; its synthetic example is covered by a figure of the weather log (the Beyond Two Axes heatmap, the month histograms, the films dot plot), and four good-and-bad pairs came in -->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Ridgeline** Plot
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎢 One density curve per group, each shifted up by a fixed step. Here the temperatures of twelve months (synthetic): the peak moves to the right until July and back. On one baseline the curves would hide each other.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_ii_ridgeline.svg">
+
+<!-- Parked 2026-11-07 from Lecture 07, section Chart Families, after 'Overlaid Densities: Lines or Fill': on the skip list; its synthetic example is covered by a figure of the weather log (the Beyond Two Axes heatmap, the month histograms, the films dot plot), and four good-and-bad pairs came in -->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Temperatures as a **Heatmap**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🌡️ Six places by twelve months: 72 mean temperatures (example values). Colour stands for the value, on a sequential palette from dark for cold to light for warm. Whole rows are compared at once: Death Valley is the lightest row, Anchorage the darkest. A single value is read less accurately from a colour than from a position.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_aesthetic_mapping_temp_normals_heatmap.svg">

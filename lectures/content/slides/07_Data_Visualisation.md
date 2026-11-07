@@ -304,13 +304,18 @@ class: fill
 
 # A Legend Without **Samples**
 
-<div v-click class="card card-warning card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div v-click class="card card-warning card-glass pad-compact">
 
 ⚠️ The legend names two countries and shows no sample of either line: nothing says which colour is which. The y-axis has no unit.
 
 </div>
 
-<img class="fig fig-fill mt-sm fig-light" src="/figures/data_vis_legend_error_1.png">
+<img class="fig fig-light" src="/figures/data_vis_legend_error_1.png">
+
+</div>
+
 
 <!--
 **Ask:** before the click: which line is which country, and in which unit?
@@ -416,13 +421,18 @@ class: fill
 
 # Long Labels on **Vertical Bars**
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
 
 ⚠️ Five films and their opening-weekend gross (invented titles). The titles do not fit under vertical bars and have to be rotated. Rotated text is read slowly.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_boxoffice_rotated_bad.svg">
+<img class="fig" src="/figures/viz_amounts_boxoffice_rotated_bad.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -431,13 +441,18 @@ class: fill
 
 # The Same Bars, **Horizontal**
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
 
-🎬 The same five values. The bars are horizontal, start at zero and are sorted by value. Every title is written horizontally, and the order of the bars is the ranking of the films.
+<div class="card card-info card-glass pad-compact">
+
+🎬 The same five values as horizontal bars: every title is written level, and the order of the bars is the ranking of the films.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_boxoffice_horizontal.svg">
+<img class="fig" src="/figures/viz_amounts_boxoffice_horizontal.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -446,13 +461,18 @@ class: fill
 
 # Bars That Do Not **Start at Zero**
 
-<div v-click class="card card-warning card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div v-click class="card card-warning card-glass pad-compact">
 
 ⚠️ Pass rates from 58.2 % down to 49.1 %. The axis starts at 48, so the first bar is 10.2 units long and the last 1.1: nine times as long, for a value 1.19 times as large.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_proportional_ink_truncated_bar_bad.svg">
+<img class="fig" src="/figures/viz_proportional_ink_truncated_bar_bad.svg">
+
+</div>
+
 
 <!--
 **Ask:** before the click: how many times better is the first school than the last?
@@ -467,13 +487,18 @@ class: fill
 
 # The Same Bars **from Zero**
 
-<div class="card card-success card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-success card-glass pad-compact">
 
 ✅ The axis starts at zero. The length of each bar is proportional to its value, and the five schools are seen to differ by less than a fifth.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_proportional_ink_truncated_bar_fixed.svg">
+<img class="fig" src="/figures/viz_proportional_ink_truncated_bar_fixed.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -482,13 +507,18 @@ class: fill
 
 # Median Income by **Age Group**
 
-<div v-click class="card card-warning card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div v-click class="card card-warning card-glass pad-compact">
 
 ⚠️ Median income by age group, sorted by income. Age groups are **ordinal**: they have an order of their own, and sorting by value breaks it. Sort by value only when the categories have no order.
 
 </div>
 
-<img class="fig fig-fill mt-sm fig-light" src="/figures/data_vis_bar_chart_error_3.png">
+<img class="fig fig-light" src="/figures/data_vis_bar_chart_error_3.png">
+
+</div>
+
 
 <!--
 **Ask:** before the click: the films were sorted by value. Does the same rule fit here?
@@ -502,13 +532,18 @@ class: fill
 
 # **Stacked** Bars
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
 
 📊 A bar is a total and a segment a part of it. The totals and the bottom segments share a baseline and are compared by position. The upper segments are compared by length only, which is less accurate.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_students_stacked_bars.svg">
+<img class="fig" src="/figures/viz_amounts_students_stacked_bars.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -517,13 +552,18 @@ class: fill
 
 # Bars in **Three Dimensions**
 
-<div class="card card-warning card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
 
 ⚠️ Sales of five products: 61, 57, 63, 59 and 60 thousand units. In perspective the bars at the back look smaller, and no bar top can be read against the axis.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_no_3d_jitter_bar_3d_bad.svg">
+<img class="fig" src="/figures/viz_no_3d_jitter_bar_3d_bad.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -532,13 +572,18 @@ class: fill
 
 # The Same Bars in **Two Dimensions**
 
-<div class="card card-success card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-success card-glass pad-compact">
 
 ✅ Flat bars in one colour, with the value written on each. The five values are read directly. They differ by 6 thousand at most.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_no_3d_jitter_bar_2d_fixed.svg">
+<img class="fig" src="/figures/viz_no_3d_jitter_bar_2d_fixed.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -547,28 +592,18 @@ class: fill
 
 # The **Dot Plot**
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
 
 🎯 One dot per category on a common scale (Cleveland). Less ink than bars, and readable for many categories. A dot shows its value by position, not by a length, so its axis need not start at zero.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_cleveland_dot_plot.svg">
-
----
-hideInToc: true
-class: fill
----
-
-# Life Expectancy as **Sorted Dots**
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Life expectancy in 12 countries (approximate values, about 2019) as dots, sorted, on an axis from 60 to 85 years. As bars from zero every bar would be long and the differences would fill only the last third of the axis; as dots they use the full width, and the ranking is read from top to bottom.
+<img class="fig" src="/figures/viz_amounts_cleveland_dot_plot.svg">
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_lifeexp_dot_plot.svg">
 
 ---
 hideInToc: true
@@ -577,13 +612,18 @@ class: fill
 
 # **Density**: a Smoothed Histogram
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
 
 📈 The ages of 714 passengers of the Titanic. A kernel density estimate replaces each value by a small bell-shaped bump and adds the bumps up. The y-axis is scaled so that the area under the curve is 1. The width of the bumps, the bandwidth, is chosen by the author, as a bin width is.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_i_titanic_density.svg">
+<img class="fig" src="/figures/viz_distributions_i_titanic_density.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -658,28 +698,18 @@ class: fill
 
 # The Empirical **CDF**
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
 
-📈 The empirical cumulative distribution function: at each value *x* the curve gives the fraction of observations that are ≤ *x*. Every observation is one step up, and no bin width is chosen. The median is where the curve crosses 0.5, at 28 years for the Titanic passengers. The quartiles are where it crosses 0.25 and 0.75.
+<div class="card card-info card-glass pad-compact">
 
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_i_titanic_ecdf.svg">
-
----
-hideInToc: true
-class: fill
----
-
-# The **Ridgeline** Plot
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🎢 One density curve per group, each shifted up by a fixed step. Here the temperatures of twelve months (synthetic): the peak moves to the right until July and back. On one baseline the curves would hide each other.
+📈 The empirical cumulative distribution function: at each value *x* the curve gives the fraction of observations that are ≤ *x*. Every observation is one step up, and no bin width is chosen. The median is where the curve crosses 0.5, at 28 years for the Titanic passengers.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_ii_ridgeline.svg">
+<img class="fig" src="/figures/viz_distributions_i_titanic_ecdf.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -713,21 +743,6 @@ class: fill
 </div>
 
 </div>
-
----
-hideInToc: true
-class: fill
----
-
-# Temperatures as a **Heatmap**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🌡️ Six places by twelve months: 72 mean temperatures (example values). Colour stands for the value, on a sequential palette from dark for cold to light for warm. Whole rows are compared at once: Death Valley is the lightest row, Anchorage the darkest. A single value is read less accurately from a colour than from a position.
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_aesthetic_mapping_temp_normals_heatmap.svg">
 
 ---
 hideInToc: true
@@ -812,15 +827,20 @@ class: fill
 
 # Visualising **Associations**
 
-<div class="card card-info card-glass pad-tight mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-tight">
 
 ## 🔵 **The scatter plot**
 
-Each point is one observation with two measured values: here one penguin, with the length and the depth of its bill. Look for a trend, for the spread around it, for groups and for single points away from the rest. Colour adds a third variable, the species, and shows that the three groups are three species.
+Each point is one penguin, with the length and the depth of its bill. Look for a trend, the spread around it, groups, and single points away from the rest. Colour adds a third variable, the species: the three groups are three species.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_associations_blue_jays_scatter.svg">
+<img class="fig" src="/figures/viz_associations_blue_jays_scatter.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -829,13 +849,18 @@ class: fill
 
 # The **Bubble** Chart
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
 
 🫧 A third numeric variable as the size of the marker, here the body mass. Area is read less accurately than position, so size is for the variable that matters least. The area is proportional to the value, not the radius.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_associations_blue_jays_bubble.svg">
+<img class="fig" src="/figures/viz_associations_blue_jays_bubble.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -848,7 +873,7 @@ class: fill
 
 ## 🫧 **Three ways to draw 3000 points**
 
-Two answers on a scale from 0 to 10, from 3000 people (synthetic). The answers are whole numbers, so many points lie on top of each other. Left: plain points. Centre: each point shifted by a small random amount (jitter) and made transparent. Right: the plane cut into cells, coloured by the number of points in each.
+Two answers on a scale from 0 to 10, from 3000 people (synthetic): whole numbers, so many points lie on top of each other. Left: plain points. Centre: each shifted a little at random (jitter) and made transparent. Right: cells coloured by the number of points.
 
 </div>
 
@@ -863,7 +888,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🫘 20 000 flights (synthetic): arrival delay against departure delay. Beyond about 10 000 points transparency no longer helps, because the centre of the cloud is solid. Hexagonal bins count the points in each cell and show the count as a colour: a histogram in two dimensions.
+🫘 20 000 flights (synthetic): arrival delay against departure delay. Beyond about 10 000 points transparency no longer helps: the centre is solid. Hexagonal bins show the count of each cell as a colour, a histogram in two dimensions.
 
 </div>
 
@@ -894,13 +919,18 @@ class: fill
 
 # The **Correlation** Heatmap
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
 
-🔥 The correlation coefficient *r* of two columns is a number from −1 to +1: +1 when the points lie on a rising straight line, −1 on a falling one, 0 with no straight-line trend. The heatmap shows *r* for every pair among seven columns of a table of cars, on a diverging palette centred at 0.
+<div class="card card-info card-glass pad-compact">
+
+🔥 The correlation *r*, from −1 on a falling line to +1 on a rising one, for every pair among seven columns of a table of cars, on a diverging palette centred at 0.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_associations_mtcars_corr_heatmap.svg">
+<img class="fig" src="/figures/viz_associations_mtcars_corr_heatmap.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -909,13 +939,18 @@ class: fill
 
 # The **Pair** Plot
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
 
 🔲 Every pair of columns as a scatter plot, with the histogram of each column on the diagonal. Here three measurements of penguins. It is a first look at a table with several numeric columns.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_multi_panel_correlogram.svg">
+<img class="fig" src="/figures/viz_multi_panel_correlogram.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -924,13 +959,18 @@ class: fill
 
 # The **Slopegraph**
 
-<div class="card card-info card-glass pad-compact mt-sm">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
 
 📈 One value per group at two dates, joined by a line. Here tonnes of CO₂ per person in 2000 and 2020 (approximate). The slope is the change: the USA falls from 20.5 to 14.2, China rises from 2.7 to 7.4.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_associations_co2_slopegraph.svg">
+<img class="fig" src="/figures/viz_associations_co2_slopegraph.svg">
+
+</div>
+
 
 ---
 hideInToc: true
@@ -948,6 +988,45 @@ Daily temperatures (synthetic) as a thin grey line, and their mean over 21 days 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_trends_lincoln_temps_raw_smooth.svg">
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Line Through Missing **Data**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🕳️ 19 to 29 July 2019, hour by hour. The sensor recorded nothing for 120 hours; a line drawn over them invents five days near 22 °C.
+
+</div>
+
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_gap_bad.svg">
+
+🚫 **Joined**: a straight line across five days
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_gap_good.svg">
+
+✅ **A gap**: the missing hours stay missing
+
+</div>
+
+</div>
+
+<!--
+**Ask:** what was the weather on 24 July? Nobody knows: the line on the left is drawn, not measured.
+**Say:** `weather.hours` leaves the −999 rows out, so `ax.plot` joins the hours on either side. With `float("nan")` in their place, Matplotlib leaves the gap.
+(~2 min)
+-->
 
 ---
 hideInToc: true
@@ -1277,6 +1356,45 @@ hideInToc: true
 class: fill
 ---
 
+# Ten Lines or One in **Colour**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🍝 The daily mean of every day, one line per year. In ten colours no year can be followed; in grey with one year in colour, that year is read against the others.
+
+</div>
+
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_spaghetti_bad.svg">
+
+🚫 **Ten colours and a legend**
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_highlight_good.svg">
+
+✅ **Nine in grey, 2025 in colour**
+
+</div>
+
+</div>
+
+<!--
+**Say:** the rule of the highlighted states: colour for the one thing the figure is about, grey for the comparison.
+**If asked:** January and February 2025 averaged −5.8 °C; the next coldest, 2017, −5.2 °C.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
 # The **Logarithmic** Scale
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -1359,6 +1477,45 @@ class: fill
 </div>
 
 </div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# Two Y-Axes or Two **Panels**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📊 The monthly means of temperature and humidity. On two y-axes, where the curves cross depends on two ranges chosen by hand; in two panels, each curve is read on its own scale.
+
+</div>
+
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_two_axes_bad.svg">
+
+🚫 **Two y-axes**: the curves cross where the ranges put them
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_two_axes_good.svg">
+
+✅ **Two panels, one x-axis**: the months line up
+
+</div>
+
+</div>
+
+<!--
+**Ask:** in which months is the humidity above the temperature? The question has no meaning: the units differ, and `set_ylim(68, 90)` on the right axis alone moves the crossings.
+**If asked:** over the twelve months the two move against each other, r = −0.99.
+(~2 min)
+-->
 
 ---
 layout: section
@@ -1487,6 +1644,45 @@ class: fill
 </div>
 
 </div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Window Chosen for Its **Story**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+✂️ The yearly means. From the cold 2017 to the warm 2023, with the axis cut close: +1.8 °C in six years. All ten years against their mean: no trend to read.
+
+</div>
+
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_window_bad.svg">
+
+🚫 **Two ends picked, the axis cut**: a trend made by the choice
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_goodbad_window_good.svg">
+
+✅ **All the years, a reference line**
+
+</div>
+
+</div>
+
+<!--
+**Ask:** from 2023 to 2025, what would the same trick give? −2.3 °C in two years.
+**Say:** choose the window before looking at the result, and show the whole series.
+(~2 min)
+-->
 
 ---
 layout: section
@@ -2561,6 +2757,22 @@ hideInToc: true
   ]"
   :correct="1"
   explanation="Two positions and a colour: three variables. A colour is read less exactly than a position, so the temperature of one cell is the hardest to read. What the heatmap shows well is the pattern across many cells: warm summer afternoons, cold winter nights."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="From the cold 2017 to the warm 2023 the yearly mean of the station rose by 1.8 °C. What should a figure of its yearly means show?"
+  :options="[
+    'Only 2017 to 2023, with the axis from 6.4 to 8.4 °C, so that the rise is clear',
+    'All ten years, with the mean of all hours as a reference line',
+    'Only 2023 to 2025, to balance the rise with a fall',
+    'The two end years as two bars'
+  ]"
+  :correct="1"
+  explanation="Two years picked for their values make any trend: 2017 to 2023 gives +1.8 °C, 2023 to 2025 gives −2.3 °C. All ten years against their mean show what the data hold: values that scatter by about 1 °C, and no trend to read."
 />
 
 ---

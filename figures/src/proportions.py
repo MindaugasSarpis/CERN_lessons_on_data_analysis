@@ -52,8 +52,7 @@ def _pie_bad():
         vals, colors=colors, startangle=90, counterclock=False,
         wedgeprops=dict(edgecolor=BG, linewidth=1.5),
     )
-    ax.legend(wedges, TRIO_LABELS, loc="upper center", bbox_to_anchor=(0.5, 0.0),
-              ncol=3)
+    ax.legend(wedges, TRIO_LABELS, loc="center left", bbox_to_anchor=(1.0, 0.5))
     style.save(fig, "viz_proportions_pie_bad")
 
 
