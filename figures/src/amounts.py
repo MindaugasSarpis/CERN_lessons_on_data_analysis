@@ -3,6 +3,8 @@ categories (deck 10, "Visualizing Amounts" + "Proportional Ink" sections).
 Data are synthetic-but-plausible (seeded RNGs) or small hardcoded arrays reused
 identically across "good" vs "bad" variants of the same story.
 """
+import textwrap
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -51,6 +53,23 @@ def _boxoffice_rotated_bad():
     style.save(fig, "viz_amounts_boxoffice_rotated_bad")
 
 
+def _boxoffice_wide():
+    """The vertical bars spread over the width of the slide: each title has
+    room under its bar, level, wrapped onto two lines."""
+    fig, ax = style.new_fig(9.4, 3.3)
+    x = np.arange(len(FILMS))
+    ax.bar(x, GROSS, color=style.ACCENT, width=0.5, zorder=3)
+    ax.set_xticks(x)
+    ax.set_xticklabels([textwrap.fill(f, 14) for f in FILMS], fontsize=11)
+    ax.set_ylim(0, max(GROSS) * 1.15)
+    ax.set_ylabel("Opening weekend gross ($M)")
+    ax.set_title("Opening-Weekend Box Office")
+    ax.grid(axis="x", visible=False)
+    for xi, v in zip(x, GROSS):
+        ax.text(xi, v + 1.5, f"${v:.0f}M", ha="center", va="bottom", color=style.DIM, fontsize=9)
+    style.save(fig, "viz_amounts_boxoffice_wide")
+
+
 def _cleveland_dot_plot():
     fig, ax = style.new_fig(7, 4.2)
     y = np.arange(len(FILMS))
@@ -67,14 +86,14 @@ def _cleveland_dot_plot():
 
 
 # ---------------------------------------------------------------------------
-# Life expectancy: ~20 countries, synthetic-but-plausible values clustered in
-# 60-82 years (per brief). Real country names for relatability; values are a
-# seeded synthetic draw, not real statistics.
 # Life expectancy at birth, years, rounded: approximate values for about 2019
 # (WHO Global Health Observatory), so that the order of the countries is real.
 LIFE_EXPECTANCY = {
-    "Japan": 84, "Norway": 83, "France": 83, "Denmark": 81, "Germany": 81,
-    "Argentina": 77, "Brazil": 76, "Russia": 73, "India": 71, "Kenya": 66,
+    "Japan": 84, "Switzerland": 83, "Spain": 83, "Australia": 83, "Italy": 83,
+    "Norway": 83, "France": 83, "Sweden": 82, "Canada": 82, "Germany": 81,
+    "United Kingdom": 81, "Denmark": 81, "Chile": 81, "United States": 79,
+    "Poland": 78, "China": 77, "Argentina": 77, "Mexico": 76, "Brazil": 76,
+    "Russia": 73, "Egypt": 72, "India": 71, "Kenya": 66, "South Africa": 65,
     "Nigeria": 63, "Chad": 60,
 }
 COUNTRIES = list(LIFE_EXPECTANCY)
@@ -91,11 +110,11 @@ def _lifeexp_alpha_order_bad():
     values = values[order]
     fig, ax = style.new_fig(7, 6.6)
     y = np.arange(len(countries))
-    ax.plot(values, y, "o", ms=7, color=style.BAD, zorder=3)
+    ax.plot(values, y, "o", ms=6, color=style.BAD, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries)
+    ax.set_yticklabels(countries, fontsize=9)
     ax.invert_yaxis()
-    ax.set_xlim(58, 85)
+    ax.set_xlim(58, 86)
     ax.set_xlabel("Life expectancy (years)")
     ax.set_title("Life Expectancy — Alphabetical Order")
     ax.grid(axis="y", visible=False)
@@ -109,11 +128,11 @@ def _lifeexp_bars_bad():
     values = values[order]
     fig, ax = style.new_fig(7, 6.6)
     y = np.arange(len(countries))
-    ax.barh(y, values, color=style.BAD, height=0.6, zorder=3)
+    ax.barh(y, values, color=style.BAD, height=0.65, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries)
+    ax.set_yticklabels(countries, fontsize=9)
     ax.invert_yaxis()
-    ax.set_xlim(0, 85)
+    ax.set_xlim(0, 86)
     ax.set_xlabel("Life expectancy (years)")
     ax.set_title("Life Expectancy — Bars (Sorted, Still Bad)")
     ax.grid(axis="y", visible=False)
@@ -127,11 +146,11 @@ def _lifeexp_dot_plot():
     values = values[order]
     fig, ax = style.new_fig(7, 6.6)
     y = np.arange(len(countries))
-    ax.plot(values, y, "o", ms=7, color=style.ACCENT, zorder=3)
+    ax.plot(values, y, "o", ms=6, color=style.ACCENT, zorder=3)
     ax.set_yticks(y)
-    ax.set_yticklabels(countries)
+    ax.set_yticklabels(countries, fontsize=9)
     ax.invert_yaxis()
-    ax.set_xlim(58, 85)  # honest truncation is fine for dots, not bars
+    ax.set_xlim(58, 86)  # honest truncation is fine for dots, not bars
     ax.set_xlabel("Life expectancy (years)")
     ax.set_title("Life Expectancy — Sorted by Value")
     ax.grid(axis="y", visible=False)
@@ -196,6 +215,42 @@ ENROLMENT = {
     "Master": [64, 70, 75, 81],
     "PhD": [18, 21, 23, 26],
 }
+
+
+# ---------------------------------------------------------------------------
+# Median household income by age of the householder, USA 2016 (US Census
+# Bureau, the example of Wilke, Fundamentals of Data Visualization, ch. 6), in
+# thousand dollars, rounded. The age groups are ordinal.
+AGE_GROUPS = ["15–24", "25–34", "35–44", "45–54", "55–64", "65–74", "75+"]
+INCOME = [42, 61, 74, 77, 65, 49, 31]
+
+
+def _income_bars(order, name, bad):
+    groups = [AGE_GROUPS[i] for i in order]
+    values = [INCOME[i] for i in order]
+    fig, ax = style.new_fig(5.1, 3.4)
+    x = np.arange(len(groups))
+    ax.bar(x, values, color=style.ACCENT, width=0.65, zorder=3)
+    ax.set_xticks(x, groups)
+    if bad:
+        for lbl in ax.get_xticklabels():
+            lbl.set_color(style.BAD)   # the flaw is the order of the labels
+    for xi, v in zip(x, values):
+        ax.text(xi, v + 1.5, f"{v}", ha="center", va="bottom", color=style.DIM, fontsize=9)
+    ax.set_ylim(0, 88)
+    ax.set_xlabel("age of the householder (years)")
+    ax.set_ylabel("median income (thousand $)")
+    ax.grid(axis="x", visible=False)
+    style.save(fig, name)
+
+
+def _income_by_value_bad():
+    _income_bars(sorted(range(len(INCOME)), key=lambda i: -INCOME[i]),
+                 "viz_amounts_income_by_value_bad", bad=True)
+
+
+def _income_by_age_good():
+    _income_bars(range(len(INCOME)), "viz_amounts_income_by_age_good", bad=False)
 
 
 def _students_stacked_bars():
@@ -283,12 +338,15 @@ def _log_scale():
 FIGURES = {
     "viz_amounts_boxoffice_horizontal": _boxoffice_horizontal,
     "viz_amounts_boxoffice_rotated_bad": _boxoffice_rotated_bad,
+    "viz_amounts_boxoffice_wide": _boxoffice_wide,
     "viz_amounts_cleveland_dot_plot": _cleveland_dot_plot,
     "viz_amounts_lifeexp_alpha_order_bad": _lifeexp_alpha_order_bad,
     "viz_amounts_lifeexp_bars_bad": _lifeexp_bars_bad,
     "viz_amounts_lifeexp_dot_plot": _lifeexp_dot_plot,
     "viz_amounts_health_heatmap": _health_heatmap,
     "viz_amounts_students_stacked_bars": _students_stacked_bars,
+    "viz_amounts_income_by_value_bad": _income_by_value_bad,
+    "viz_amounts_income_by_age_good": _income_by_age_good,
     "viz_proportional_ink_truncated_bar_bad": _truncated_bar_bad,
     "viz_proportional_ink_truncated_bar_fixed": _truncated_bar_fixed,
     "viz_proportional_ink_log_scale": _log_scale,

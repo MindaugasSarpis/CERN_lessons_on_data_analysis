@@ -1187,3 +1187,34 @@ examples towards the end (some complicated plotting (4D or smth))".
   main path had to be parked. Moving one in means parking another.
 - The humidity contours use a running mean over 15 days (a cell holds about
   10 hours, too noisy for lines); the slide note says so.
+
+## 2026-11-08 · Lecture 7: long labels in three steps, income by age redrawn, the busier dot plot, labels off the curves
+
+**What happened:** the lecturer, on the live deck: after the rotated film
+titles "show that labels can be horizontal on a spread out bar chart and only
+then that the entire chart can be horizontal"; slide 22 (income by age, a
+borrowed PNG) "needs to be recreated in a good style, and also show correct
+way"; "dot plot was much more busy and had a few variants going from bad to
+good"; on 31 "direct labels overlap the curves and are not visible".
+
+**Changed in response:**
+
+- New slide 19, Long Labels Level Under Wider Bars: the five films on a
+  chart as wide as the slide, titles level on two lines; the horizontal bars
+  follow, their caption saying what they add (one line per title, a row per
+  film).
+- Slide 23, Median Income by Age Group: redrawn in the course style
+  (`figures/src/amounts.py`, US Census 2016 as in Wilke, in thousand
+  dollars), sorted by income on the left, in the order of age on the right
+  after a click.
+- The dot plot in three steps, slides 27–29, on the life expectancy of 26
+  countries (WHO, about 2019, whole years): alphabetical, sorted bars from
+  zero, sorted dots. The five-film dot plot is parked.
+- Slide 34: the names of the iris species stand in open space with a
+  hairline to their peak, no longer on the curves.
+
+**Decided by the builder, for the lecturer to check:**
+
+- The deck now estimates 151 min (HEAVY; the gate fails only under 105).
+  Nothing was parked to make room; the skip list absorbs it. Ordered
+  categories (slide 23) stays on the skip list.

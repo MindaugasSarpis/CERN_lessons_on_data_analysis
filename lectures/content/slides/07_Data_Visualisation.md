@@ -439,13 +439,29 @@ hideInToc: true
 class: fill
 ---
 
+# Long Labels Level Under **Wider Bars**
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+📏 The same five films on a chart as wide as the slide: each title has room under its bar, on two lines, and is read level. With more films or longer titles the room runs out again.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_boxoffice_wide.svg">
+
+
+---
+hideInToc: true
+class: fill
+---
+
 # The Same Bars, **Horizontal**
 
 <div class="fig-fill grid-side mt-sm">
 
 <div class="card card-info card-glass pad-compact">
 
-🎬 The same five values as horizontal bars: every title is written level, and the order of the bars is the ranking of the films.
+🎬 The same five values as horizontal bars: each title level on one line, however long, and one film more adds a row, not width. The order of the bars is the ranking of the films.
 
 </div>
 
@@ -507,22 +523,36 @@ class: fill
 
 # Median Income by **Age Group**
 
-<div class="fig-fill grid-side mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div v-click class="card card-warning card-glass pad-compact">
-
-⚠️ Median income by age group, sorted by income. Age groups are **ordinal**: they have an order of their own, and sorting by value breaks it. Sort by value only when the categories have no order.
+👥 Median household income by age of the householder, USA 2016, in thousand dollars. Age groups are **ordinal**: they have an order of their own. Sort by value only when the categories have none.
 
 </div>
 
-<img class="fig fig-light" src="/figures/data_vis_bar_chart_error_3.png">
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_amounts_income_by_value_bad.svg">
+
+🚫 **Sorted by income**: the ages jump back and forth
 
 </div>
 
+<div v-click class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_amounts_income_by_age_good.svg">
+
+✅ **In the order of age**: the income rises to 45–54, then falls
+
+</div>
+
+</div>
 
 <!--
 **Ask:** before the click: the films were sorted by value. Does the same rule fit here?
-(~1 min)
+**Say:** in the order of age the shape is read at once: 42 thousand at 15–24, 77 at 45–54, 31 after 75. Sorted by income, the reader has to put the ages back in order first.
+(~2 min)
 -->
 
 ---
@@ -590,19 +620,73 @@ hideInToc: true
 class: fill
 ---
 
+# Life Expectancy in **Alphabetical Order**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
+
+⚠️ Life expectancy at birth in 26 countries, about 2019, in alphabetical order. The order of the rows says nothing about the values: the highest, the lowest and the groups have to be searched for.
+
+</div>
+
+<img class="fig" src="/figures/viz_amounts_lifeexp_alpha_order_bad.svg">
+
+</div>
+
+<!--
+**Ask:** which countries live longest, and how many lie below 70 years? The eye has to visit every row.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Life Expectancy as **Sorted Bars**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
+
+⚠️ Sorted now, but as bars from zero. Every value lies between 60 and 84 years, so every bar is long, and the differences fill only the last 24 years of an 86-year axis.
+
+</div>
+
+<img class="fig" src="/figures/viz_amounts_lifeexp_bars_bad.svg">
+
+</div>
+
+<!--
+**Say:** the ranking is there, but the ink goes to the 60 years that every country shares. A bar must start at zero, so the bar is the wrong mark here.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
 # The **Dot Plot**
 
 <div class="fig-fill grid-side mt-sm">
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-🎯 One dot per category on a common scale (Cleveland). Less ink than bars, and readable for many categories. A dot shows its value by position, not by a length, so its axis need not start at zero.
+🎯 One dot per country on a common scale (Cleveland), sorted. A dot shows its value by position, not by length, so the axis need not start at zero and the values use its full width: 13 countries at 81 to 84 years, 4 at 60 to 66.
+
+</div>
+
+<img class="fig" src="/figures/viz_amounts_lifeexp_dot_plot.svg">
 
 </div>
 
-<img class="fig" src="/figures/viz_amounts_cleveland_dot_plot.svg">
-
-</div>
+<!--
+**Say:** the same 26 numbers, third try: sorted, and on an axis from 58 to 86 years. Less ink than bars, and it stays readable for many categories.
+**If asked:** values from the WHO Global Health Observatory, rounded to whole years; the order of the countries is real.
+(~1 min)
+-->
 
 
 ---
@@ -720,7 +804,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🎨 Petal length of three iris species. Lines have to be followed one by one and matched to a legend. A transparent fill shows each group as an area, and a name on the area replaces the legend.
+🎨 Petal length of three iris species. Lines have to be followed one by one and matched to a legend. A transparent fill shows each group as an area, and a name beside each area replaces the legend.
 
 </div>
 

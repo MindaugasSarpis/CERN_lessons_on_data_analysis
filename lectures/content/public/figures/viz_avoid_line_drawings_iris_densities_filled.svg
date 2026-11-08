@@ -2892,9 +2892,14 @@ L 351.786423 199.479905
 L 351.786423 199.479905 
 " clip-path="url(#p026edbd7af)" style="fill: none; stroke: #7dd3fc; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
+   <g id="patch_5">
+    <path d="M 127.432189 48.711939 
+Q 113.446816 42.419777 99.461443 36.127615 
+" style="fill: none; stroke: #7dd3fc; stroke-linecap: round"/>
+   </g>
    <g id="text_16">
     <!-- Setosa -->
-    <g style="fill: #e6edf6" transform="translate(107.461443 49.967615) scale(0.1 -0.1)">
+    <g style="fill: #e6edf6" transform="translate(131.754192 62.76442) scale(0.11 -0.11)">
      <defs>
       <path id="SpaceGrotesk-Light-16" d="M 2016 -90 
 Q 1536 -90 1158 80 
@@ -3037,9 +3042,14 @@ L 351.786423 199.479905
 L 351.786423 199.479905 
 " clip-path="url(#p026edbd7af)" style="fill: none; stroke: #f5b95f; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
+   <g id="patch_6">
+    <path d="M 184.071927 130.361145 
+Q 207.023145 137.554056 229.974363 144.746966 
+" style="fill: none; stroke: #f5b95f; stroke-linecap: round"/>
+   </g>
    <g id="text_17">
     <!-- Versicolor -->
-    <g style="fill: #e6edf6" transform="translate(237.974363 158.586966) scale(0.1 -0.1)">
+    <g style="fill: #e6edf6" transform="translate(126.963843 124.456779) scale(0.11 -0.11)">
      <defs>
       <path id="SpaceGrotesk-Light-19" d="M 1619 0 
 L 179 4480 
@@ -3134,9 +3144,14 @@ L 351.786423 198.554904
 L 351.786423 198.554904 
 " clip-path="url(#p026edbd7af)" style="fill: none; stroke: #66d9ab; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
+   <g id="patch_7">
+    <path d="M 304.476997 144.434779 
+Q 289.461215 150.083262 274.445433 155.731745 
+" style="fill: none; stroke: #66d9ab; stroke-linecap: round"/>
+   </g>
    <g id="text_18">
     <!-- Virginica -->
-    <g style="fill: #e6edf6" transform="translate(282.445433 169.571745) scale(0.1 -0.1)">
+    <g style="fill: #e6edf6" transform="translate(308.642848 138.166193) scale(0.11 -0.11)">
      <use xlink:href="#SpaceGrotesk-Light-19"/>
      <use xlink:href="#SpaceGrotesk-Light-26" transform="translate(62 0)"/>
      <use xlink:href="#SpaceGrotesk-Light-2f" transform="translate(85.59375 0)"/>

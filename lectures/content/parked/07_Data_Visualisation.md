@@ -172,40 +172,6 @@ hideInToc: true
 class: fill
 ---
 
-# Life Expectancy in **Alphabetical Order**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Life expectancy in 20 countries (example values), listed alphabetically. The order of the rows says nothing about the values: the highest, the lowest and the spread have to be searched for.
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_lifeexp_alpha_order_bad.svg">
-
-<!-- Parked 2026-11-05 from Lecture 07, section Chart Families, after 'Life Expectancy in Alphabetical Order': on the skip list already; out to keep the deck in its time band after the section Beyond Two Axes came in -->
-
----
-hideInToc: true
-class: fill
----
-
-# Life Expectancy as **Sorted Bars**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Sorted, as bars from zero. All values lie between 60 and 82 years, so every bar is long, and the differences take up only the right-hand quarter of the plot.
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_lifeexp_bars_bad.svg">
-
-<!-- Parked 2026-11-05 from Lecture 07, section Chart Families, after 'Visualising Trends': on the skip list already; out to keep the deck in its time band after the section Beyond Two Axes came in -->
-
----
-hideInToc: true
-class: fill
----
-
 # Trend and **Seasonal Cycle**
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -240,23 +206,6 @@ hideInToc: true
 class: fill
 ---
 
-# Life Expectancy as **Sorted Dots**
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-✅ Life expectancy in 12 countries (approximate values, about 2019) as dots, sorted, on an axis from 60 to 85 years. As bars from zero every bar would be long and the differences would fill only the last third of the axis; as dots they use the full width, and the ranking is read from top to bottom.
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_amounts_lifeexp_dot_plot.svg">
-
-<!-- Parked 2026-11-07 from Lecture 07, section Chart Families, after 'The Empirical CDF': on the skip list; its synthetic example is covered by a figure of the weather log (the Beyond Two Axes heatmap, the month histograms, the films dot plot), and four good-and-bad pairs came in -->
-
----
-hideInToc: true
-class: fill
----
-
 # The **Ridgeline** Plot
 
 <div class="card card-info card-glass pad-compact mt-sm">
@@ -283,3 +232,23 @@ class: fill
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_aesthetic_mapping_temp_normals_heatmap.svg">
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Dot Plot**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+🎯 One dot per category on a common scale (Cleveland). Less ink than bars, and readable for many categories. A dot shows its value by position, not by a length, so its axis need not start at zero.
+
+</div>
+
+<img class="fig" src="/figures/viz_amounts_cleveland_dot_plot.svg">
+
+</div>
+<!-- Parked 2026-11-08 from Lecture 07, section Chart Families, after 'The Same Bars in Two Dimensions': replaced by the life expectancy of 26 countries in three steps, alphabetical, sorted bars, sorted dots (lecturer: "dot plot was much more busy and had a few variants going from bad to good") -->

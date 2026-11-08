@@ -261,6 +261,11 @@ def _iris_densities_lines():
     style.save(fig, "viz_avoid_line_drawings_iris_densities_lines")
 
 
+# Where each name of the filled version stands: x, y in data units, alignment.
+IRIS_LABELS = {"setosa": (2.2, 2.05, "left"), "versicolor": (3.3, 1.15, "right"),
+               "virginica": (6.3, 0.95, "left")}
+
+
 def _iris_densities_filled():
     species, xs, curves = _iris_petal_kdes()
     fig, ax = style.new_fig(6.8, 4.0)
@@ -270,10 +275,14 @@ def _iris_densities_filled():
         ax.fill_between(xs, dens, color=color, alpha=0.35, zorder=2)
         ax.plot(xs, dens, color=color, lw=1.6, zorder=3)
         peak = np.argmax(dens)
+        # Each name in open space beside its peak, with a hairline to it, so
+        # no label lies on a curve or an area.
+        tx, ty, ha = IRIS_LABELS[sp]
+        ax.annotate(sp.capitalize(), xy=(xs[peak], dens[peak]), xytext=(tx, ty),
+                    textcoords="data", color=style.FG, fontsize=11, ha=ha, va="center",
+                    arrowprops=dict(arrowstyle="-", color=color, lw=1.0,
+                                    shrinkA=3, shrinkB=0))
         ax.plot(xs[peak], dens[peak], "o", ms=5, color=color, zorder=4)
-        ax.annotate(sp.capitalize(), xy=(xs[peak], dens[peak]),
-                    xytext=(8, -4), textcoords="offset points",
-                    color=style.FG, fontsize=10, ha="left", va="top")
     ax.set_xlabel("Petal length (cm)")
     ax.set_ylabel("Density")
     ax.set_title("Iris Petal Length — Filled")
