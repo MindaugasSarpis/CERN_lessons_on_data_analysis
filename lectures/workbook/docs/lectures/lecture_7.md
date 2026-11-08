@@ -59,6 +59,12 @@ LHCb data with its projections.
    mass and momentum with its two projections.
 9. **Wrap-up**: a checklist for a figure; every choice in the two figures,
    each with the number that justified it; the recap.
+10. **For the curious**, after the recap and outside the lecture time:
+   temperature as colour with humidity as contour lines; all ten years
+   stacked as planes in 3D, then the same hours as ten flat panels, where
+   the gap of July 2019 shows; five variables of each day as parallel
+   coordinates; the four columns of the LHCb file as a corner plot; the
+   four-variable scatter turning, depth from motion.
 
 ## Statistics used before Lecture 9
 
@@ -76,8 +82,10 @@ terms, and each is defined in one sentence on the slide that uses it.
 ## The lecture, part by part
 
 The lecture is slides 1–91. They estimate about 145 min, so in the two-hour
-slot **plan to skip the slides of the second table**. Slides 92–104 are the
-self-check quizzes and take no lecture time. To jump, type the slide number
+slot **plan to skip the slides of the second table**. Slides 92–98 are the
+optional section For the Curious, advanced figures of four and five
+variables, and slides 99–111 the self-check quizzes; neither takes lecture
+time. To jump, type the slide number
 and press Enter.
 
 | Slides | Part |
@@ -135,6 +143,10 @@ and press Enter.
 - **Slides 67, 69, 70, 73 and 76–78** highlight the code in steps; slide 75
   goes from the function to its output in one click.
 - **Slide 86** is an animation: it plays by itself, one month every 0.66 s.
+- **Slides 92–98** (For the Curious) are for time left at the end or for
+  students afterwards. Slides 94 and 95 are a pair: the ten years stacked in
+  3D hide the gap of July 2019, the ten flat panels show it. Slide 98 turns
+  by itself, once every 3 s.
 
 Before the session, start the local copy of the slides: `node
 scripts/serve-local.mjs 8123`, then open
@@ -143,7 +155,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 92–104: twelve quiz slides for students to try afterwards. The same
+slides 99–111: twelve quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. Four tables give the same mean of x, the same mean of y, the same closest

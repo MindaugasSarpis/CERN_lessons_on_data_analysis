@@ -29,9 +29,9 @@ const PX_PER_IN = 90;
 const PX_PER_IN_SMALL = 75;   // boxes narrower than SMALL_W
 const SMALL_W = 420;
 // Figures whose 3D axes are placed by hand for their own canvas (figures/src/
-// beyond.py): resized, they crop their axis labels. They keep their figsize
+// beyond.py, advanced.py): resized, they crop their axis labels. They keep their figsize
 // and sit centred in their box.
-const KEEP_OWN_SIZE = new Set(['viz_beyond_surface', 'viz_beyond_scatter4d']);
+const KEEP_OWN_SIZE = new Set(['viz_beyond_surface', 'viz_beyond_scatter4d', 'viz_advanced_slices']);
 
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.json': 'application/json' };

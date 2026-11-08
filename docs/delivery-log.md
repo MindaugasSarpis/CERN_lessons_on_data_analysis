@@ -1159,3 +1159,31 @@ wilke"; then "run to completion i'm away".
 - Parked, to stay at 145 min: Life Expectancy as Sorted Dots, The Ridgeline
   Plot and Temperatures as a Heatmap, synthetic examples that a figure of
   the weather log now covers.
+
+## 2026-11-08 · Lecture 7: advanced figures of four and five variables, for the curious
+
+**What happened:** the lecturer, on Lecture 7: "Need some more advanced
+examples towards the end (some complicated plotting (4D or smth))".
+
+**Changed in response:**
+
+- The deck already sits at 145 min, the top of the band, so the new figures
+  form the section For the Curious after the Recap (slides 92–98, 0 min in
+  `timing:check`), shown when time is left or read afterwards. Six figures
+  from `figures/src/advanced.py`, each with the call that makes it:
+  temperature as colour and humidity as contour lines (70 % around summer
+  afternoons, r = −0.81 over the 8784 cells); all 87 552 hours as ten planes
+  stacked in 3D, where the gap of July 2019 cannot be found, against the same
+  hours as ten flat panels, where it shows; five variables of 3648 days as
+  parallel coordinates (daily range and temperature r = +0.82, temperature
+  and humidity r = −0.73); the four columns of `D0_KPi.csv` as a corner plot
+  (τ and log χ²_IP the only related pair, r = 0.35); the four-variable
+  scatter turning once every 3 s (GIF).
+- The quizzes move to slides 99–111; the workbook page says so.
+
+**Decided by the builder, for the lecturer to check:**
+
+- Placed after the Recap rather than in Beyond Two Axes, so no slide of the
+  main path had to be parked. Moving one in means parking another.
+- The humidity contours use a running mean over 15 days (a cell holds about
+  10 hours, too noisy for lines); the slide note says so.

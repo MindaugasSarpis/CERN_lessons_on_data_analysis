@@ -2659,6 +2659,158 @@ layout: section
 hideInToc: true
 ---
 
+# For the **Curious**
+
+Four and five variables in one figure, made with the calls of this lecture: figures for exploring data, read slowly.
+
+<!--
+**Say:** optional, for the time left or for after the lecture. Each figure shows what a plot of two variables cannot, and what it costs.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Temperature as Colour, Humidity as **Contour Lines**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+🗺️ Day, hour, the mean temperature as colour, the mean humidity as lines of equal value, like heights on a map. The 70 % line closes around summer afternoons; January nights pass 90 %. `cs = ax.contour(x, y, hum, levels=[70, 80, 90])`, `ax.clabel(cs)`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_contours.svg">
+
+<!--
+**Say:** two fields on one plane: colour for one, lines for the other. Where the colour is warm the lines show dry air; humidity falls as the air warms, r = −0.81 over the 8784 cells.
+**Ask:** at what time of day is the air driest? Mid-afternoon: in July 62.8 % at 15:00 against 81.3 % at 03:00, in January 78.0 % against 94.8 %.
+**If asked:** each cell is the mean of about 10 hours, too noisy for smooth lines, so the humidity is a running mean over 15 days before `contour` draws it. The driest cell, 20 June at 15:00, holds 61.5 %.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Year, Day, Hour and Temperature in **3D**
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+🧱 All 87 552 hours, one plane per year from 2016 to 2025: three positions and a colour. Each summer is seen, but each plane hides most of the one below: the 120 missing hours of July 2019 cannot be found. `ax.plot_surface(x, y, z, facecolors=cmap(norm(grid)))` per year
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_slices.svg">
+
+<!--
+**Ask:** which year had the warmest summer? The planes above cover the planes below, and perspective shrinks the far ones; the figure cannot answer.
+**If asked:** each plane is a flat surface at the height of its year, coloured cell by cell with `facecolors`; a missing hour gets a transparent colour.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Same Hours as Ten **Panels**
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+🧩 The same four variables, the year as a panel instead of a height: nothing hidden, one colour scale for all ten. The dark line in 2019 is 22–26 July, the 120 missing hours. `fig, axs = plt.subplots(2, 5, sharex=True, sharey=True)`, one `imshow` per panel
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_multiples.svg">
+
+<!--
+**Say:** small multiples again: when a third axis hides data, a row of flat panels usually shows it all.
+**Ask:** which year was warmest? 2023, mean 8.31 °C; the coldest 2025, 5.98 °C. A colour difference of 2 °C is hard to see, so the number still goes into the text or a separate plot.
+**If asked:** the warmest hour, 32.4 °C, was 18 June 2018 at 15:00. `extent=(0, 365, 0, 24)` puts every year on the same axis, a leap year has one column more.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Five Variables of Each Day: **Parallel Coordinates**
+
+<div class="card card-accent card-glass pad-compact mt-sm">
+
+🪢 One line per day, 3648 days with all 24 hours, through four axes, each from its own minimum to maximum; the month as colour. Lines that run level: the two move together, warm days swing more (r = +0.82). Lines that cross: they move against each other, warm days are dry (r = −0.73).
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_parallel.svg">
+
+<!--
+**Say:** any number of variables, each on its own vertical axis. The order of the axes decides which pairs can be compared: only neighbours.
+**Ask:** what does a July day look like? A daily range of 10.4 °C on average, 71.9 % humidity, 2.89 m/s; a January day 4.9 °C, 86.8 %, 4.32 m/s.
+**If asked:** `LineCollection` draws the 3648 lines in one call, `set_array(month)` colours them; drawn in a random order, so no month lies on top of the rest.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Four Columns of the LHCb File: a **Corner Plot**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+⚛️ Every pair of `M`, `PT`, `TAU` and `IPCHI2` as a 2D histogram, each column alone on the diagonal: the 91 534 candidates with a measured τ, nothing projected away. The D⁰ is the band at 1865 MeV/c² in every panel of the mass column. `plt.subplots(4, 4)`, the upper triangle hidden
+
+</div>
+
+<img class="fig" src="/figures/viz_advanced_corner.svg">
+
+</div>
+
+<!--
+**Say:** the standard first look at a physics data set: n columns give n(n − 1)/2 pairs, here six. It is the pair plot of the gallery with 2D histograms in place of points, because 91 534 points would cover each other.
+**Ask:** which pair moves together? τ and log χ²_IP, r = 0.35: both grow when the D⁰ flies further from the collision before it decays. Every other pair has |r| ≤ 0.07.
+**If asked:** 49 rows have `TAU` = −100, a missing value, and are left out. χ²_IP spans eight decades, so its axis is log₁₀. The horizontal edge at 0.15 ps in the τ panels is a cut of the selection that made the file.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Four-Variable Scatter, **Turning**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
+
+🌀 Temperature, humidity, wind and month of 3648 days, turning once every 3 s. A still 3D scatter shows one view and leaves the depth to guess; turned, points near each other move together. A screen shows it, paper does not. `ax.view_init(elev=18, azim=a)` in each frame of `FuncAnimation`
+
+</div>
+
+<img class="fig" src="/figures/viz_advanced_rotate.gif">
+
+</div>
+
+<!--
+**Say:** motion is one more channel, for depth. For a paper, pick the one view that shows the finding, or use flat panels.
+**If asked:** 36 frames, 10° apart, at 12 frames per second, written with `PillowWriter`; in a notebook or with `plt.show()` the mouse turns the figure.
+(~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
 # Check **Yourself**
 
 Questions on this lecture, for after it. They are not part of the lecture time.
