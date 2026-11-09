@@ -1,40 +1,49 @@
-# Seminar 9 · Statistics
+# Seminar 9 · NumPy
 
-**Paired lecture:** 09 Probability & Statistics · **Format:** follow-along, in class
+**Paired lecture:** 09 Parameter Estimation and Fitting · **Format:** type-along tutorial, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** How sure is 7.16? Every student gives the mean temperature of the weather
-project with an honest uncertainty, 7.16 ± 0.22 °C, and the probability of
-a frost hour in each month, and writes the first into the README.
+**Today's question:** Is it getting warmer?
 
-Everything is typed in VS Code: the scripts in the editor, the runs in its
-terminal (zsh on macOS, Git Bash on Windows, with today's environment
-`s09` switched on). In the blocks, a line that starts with `$` is
-typed in the terminal, a line that starts with `>>>` or `...` is typed at
-Python's prompt, and every other line is what comes back.
+**Today's goal:** every student finds NumPy in the `analysis` environment,
+turns a column of `weather.csv` into a NumPy array and computes on it
+whole, fits a straight line through the ten yearly means by the five sums
+and with `np.polyfit` (−0.56 ± 0.77 °C per decade), draws the points, the
+line and the residuals, and fits a line to a file of their own.
 
-**If time runs short:** leave out section 8 and the Task of Part 3;
-section 11 stays.
+Everything is typed in VS Code: the script in the editor, the commands in
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
+in both). In the blocks, a line that starts with `$` is typed in the
+terminal, a line that starts with `>>>` is typed at Python's prompt, and
+every other line is what comes back; `...` stands for lines left out.
+
+**If time runs short:** skip the Tasks; keep section 12, the figure, and
+Part 4, your own data. Sections 15 and 16 are optional.
 
 ??? info "Before the session"
-    - **Room:** VS Code and Miniforge on every laptop (Seminar 4, or the
-      [Setup](../setup.md) page), and internet: today's folder and its
-      packages download in section 1, about 170 MB the first time.
+    - **Room:** Miniforge and VS Code with its Python extension on every
+      laptop (the [Setup](../setup.md) page), internet for the zip (0.6 MB)
+      and, for a student without the `analysis` environment, for conda:
+      Python, Matplotlib and pandas, pandas about 20 MB more than Seminar
+      7's Python and Matplotlib. Nothing from earlier seminars is needed.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
       `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
       extension: [Setup, step 7](../setup.md#extensions).
-    - **You:** nothing to prepare. Today's folder is the same for everyone,
-      so every number on this page is the number in the room.
-    - **Keys** are written for Windows, macOS in brackets.
+    - **Your project:** students with a data file of their own bring it
+      (a CSV file with two number columns is enough).
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · The hours as a distribution { #part-1 }
+## Part 1 · NumPy is already installed { #part-1 }
 
-<!-- 0:00 to 0:40 -->
+<!-- 0:00 to 0:15 -->
 
-87 552 hours of `temp_c`, described by a few numbers and a picture.
+Today's package is in the environment already: Matplotlib and pandas both need it.
+
+Further reading: [NumPy: the absolute basics for beginners](https://numpy.org/doc/stable/user/absolute_beginners.html).
 
 ---
 
@@ -42,12 +51,11 @@ section 11 stays.
 
 <!-- 0:00 · 5 min -->
 
-Today's folder holds the data, the scripts so far and `environment.yml`; nothing from an earlier seminar is needed.
+Today's folder holds the data, the scripts of the project and `environment.yml`, the list of the `analysis` environment.
 
-1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
-   of the course repository, under **Assets**, click `weather-s09.zip`.
-2. Open VS Code, then **View** > **Terminal**. Unpack the zip into the
-   home folder and go there. Git Bash shows `/c/Users/smilte/...`.
+1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
+   under **Assets**, click `weather-s09.zip`. Open VS Code, then the
+   terminal (**View** > **Terminal**), and unzip it into the home folder.
 
     ```text
     $ unzip ~/Downloads/weather-s09.zip -d ~
@@ -56,560 +64,629 @@ Today's folder holds the data, the scripts so far and `environment.yml`; nothing
     ...
       inflating: /Users/smilte/weather-s09/scripts/weather.py
     $ cd ~/weather-s09
+    $ ls
+    README.md  data  environment.yml  results  scripts
     ```
 
-    Safari unpacks a download by itself: then type
-    `mv ~/Downloads/weather-s09 ~` instead of `unzip`.
+    Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s09 ~`
+    instead.
 
-3. **File** > **Open Folder...** > `weather-s09`. VS Code opens a new
-   window; **View** > **Terminal** there starts in the folder.
-4. Make today's environment from `environment.yml`: Python, NumPy,
-   Matplotlib and JupyterLab, in the versions the file names. conda keeps
-   what it downloads, so the next seminar's environment is quicker.
+2. **File** > **Open Folder...** > `weather-s09` > **Open**. The window
+   reloads: open the terminal again (**View** > **Terminal**); it starts in
+   the folder.
+
+**Check:** `ls` shows `README.md  data  environment.yml  results  scripts`.
+
+---
+
+### 2. Switch on `analysis`, or make it { #env }
+
+<!-- 0:05 · 5 min -->
+
+One conda environment, `analysis`, serves weeks 8 to 12. Whoever made it in Seminar 8 switches it on; everyone else makes it from the folder's list.
+
+1. The list of the environment:
 
     ```text
-    $ conda env create -n s09 -f environment.yml
+    $ cat environment.yml
+    name: analysis
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14
+      - matplotlib-base=3.11
+      - pandas=3.1
+    ```
+
+2. Is `analysis` on this laptop? Conda lists its environments; yours may
+   hold more lines (`weather`, `s07`, ...).
+
+    ```text
+    $ conda env list
+    # conda environments:
+    #
+    base                 * /Users/smilte/miniforge3
+    analysis               /Users/smilte/miniforge3/envs/analysis
+    ```
+
+3. No `analysis` line: make it from the list. It takes a few minutes.
+
+    ```text
+    $ conda env create -f environment.yml
     Channels:
      - conda-forge
     ...
-    #     $ conda activate s09
+    #     $ conda activate analysis
     ```
 
-    `conda: command not found`: install Miniforge as on the
-    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
-
-5. Switch it on. The prompt then starts with `(s09)`.
+4. Switch it on: the prompt starts with `(analysis)`.
 
     ```text
-    $ conda activate s09
-    $ python -c "import numpy, matplotlib; print(numpy.__version__, matplotlib.__version__)"
-    2.5.4 3.11.2
+    $ conda activate analysis
     ```
 
-**Check:** `(s09)` in the prompt, and `2.5.4 3.11.2`.
+5. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
+   Interpreter`, pick the entry with `envs/analysis` in its path. The
+   Status Bar shows `analysis`.
+
+**Check:** `(analysis)` at the start of the prompt, `analysis` in the Status Bar.
+
+!!! warning "`CondaValueError: prefix already exists`"
+    `analysis` is there already: skip step 3, `conda activate analysis`.
 
 ---
 
-### 2. Read the temperature column { #read }
+### 3. NumPy is already there: a dependency { #dependency }
 
-<!-- 0:05 · 10 min -->
+<!-- 0:10 · 5 min -->
 
-One array of all hours, then the hours without `-999`.
+Matplotlib and pandas are both built on NumPy, so conda installed NumPy with them, unasked. A package that another package needs is a **dependency**.
 
-1. **File** > **New File...**, name it `scripts/distribution.py`. Type and
-   save. `usecols=1` is the second column, `temp_c` (columns count from
-   0); `skiprows=1` skips the header line.
-
-    ```python
-    import numpy as np
-    import matplotlib.pyplot as plt
-
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
-    valid = temp[temp != -999]
-    print("hours", len(temp), "valid", len(valid))
-    ```
-
-2. Run it. `temp != -999` is an array of `True` and `False`, one per
-   hour; `temp[...]` keeps the hours where it is `True`.
+1. The list names three packages, and no NumPy. Ask conda for it anyway.
 
     ```text
-    $ python scripts/distribution.py
-    hours 87672 valid 87552
+    $ conda list numpy
+    # packages in environment at /Users/smilte/miniforge3/envs/analysis:
+    #
+    # Name                    Version                   Build  Channel
+    numpy                     2.5.4           py314hd3a7d6b_0  conda-forge
     ```
 
-**Check:** 120 hours fewer in `valid`: the five days of July 2019.
+    The build, third column, differs from laptop to laptop.
+
+2. Python finds it, with its version:
+
+    ```text
+    $ python -c "import numpy; print(numpy.__version__)"
+    2.5.4
+    ```
+
+**Check:** `2.5.4` (the last digit may be higher), and no NumPy line in `environment.yml`.
 
 ---
 
-### 3. Mean, standard deviation, percentiles { #summaries }
+## Part 2 · Arrays { #part-2 }
+
+<!-- 0:15 to 0:45 -->
+
+A NumPy **array** holds numbers of one type, and arithmetic on it works on all of them at once.
+
+---
+
+### 4. An array, and arithmetic on all of it { #array }
 
 <!-- 0:15 · 10 min -->
 
-The mean says where the values are, the standard deviation how far they spread around it.
+`np.array` turns a list into an array; `+`, `-`, `*`, `/` and `**` then work on every element.
 
-1. First by hand, on the first five hours of 2016. Start `python` in the
-   terminal. The mean is the sum divided by the count.
-
-    ```pycon
-    $ python
-    >>> t = [-4.4, -4.8, -5.5, -6.0, -5.9]
-    >>> m = sum(t) / len(t)
-    >>> m
-    -5.32
-    ```
-
-2. The **standard deviation** s: square each distance from the mean, add
-   them, divide by N − 1, take the square root. N − 1, not N, because the
-   mean was taken from the same five values.
-
-    ```pycon
-    >>> total = 0
-    >>> for x in t:
-    ...     total = total + (x - m) ** 2
-    ...
-    >>> total / (len(t) - 1)
-    0.48699999999999993
-    >>> (total / (len(t) - 1)) ** 0.5
-    0.697853852894716
-    ```
-
-3. NumPy does the same in one call each. `ddof=1` asks for N − 1; without
-   it NumPy divides by N.
+1. Start Python in the terminal, `python`, import NumPy under its usual
+   short name, and make an array of the four hours of 21 July 2019, 20:00 to
+   23:00.
 
     ```pycon
     >>> import numpy as np
-    >>> a = np.array(t)
-    >>> print(a.mean(), a.std(ddof=1))
-    -5.32 0.697853852894716
-    >>> print(a.std())
-    0.6241794613730893
+    >>> hours = np.array([27.3, 25.6, 24.6, 23.6])
+    >>> hours
+    array([27.3, 25.6, 24.6, 23.6])
+    >>> hours.size
+    4
+    >>> hours.mean()
+    np.float64(25.275)
     ```
 
-4. The **median** is the middle value once sorted; a **percentile** is the
-   value below which that share of the values lies. Then `exit()`.
+    `np.float64` is NumPy's float. `size` counts the elements, `mean()`
+    averages them.
+
+2. The four hours in °F, one line for all four. A list does something else
+   with `*`: it repeats itself.
 
     ```pycon
-    >>> print(np.median(a))
-    -5.5
-    >>> print(np.percentile(a, [25, 75]))
-    [-5.9 -4.8]
+    >>> hours * 9 / 5 + 32
+    array([81.14, 78.08, 76.28, 74.48])
+    >>> [27.3, 25.6] * 2
+    [27.3, 25.6, 27.3, 25.6]
+    >>> hours * 2
+    array([54.6, 51.2, 49.2, 47.2])
+    ```
+
+3. The misses from the mean, their squares and their sum: the sum of
+   squares S of the lecture, at its lowest point.
+
+    ```pycon
+    >>> miss = hours - hours.mean()
+    >>> miss
+    array([ 2.025,  0.325, -0.675, -1.675])
+    >>> miss ** 2
+    array([4.100625, 0.105625, 0.455625, 2.805625])
+    >>> (miss ** 2).sum()
+    np.float64(7.467499999999997)
+    ```
+
+    7.467499999999997 is 7.4675: a float stores most decimals a little
+    off, as `0.1 + 0.2` gives `0.30000000000000004`.
+
+**Check:** `7.4675` up to the float tail; Python still running for section 5.
+
+---
+
+### 5. A mask keeps some of the values { #mask }
+
+<!-- 0:25 · 5 min -->
+
+A comparison on an array gives an array of `True` and `False`, a **mask**; the array indexed with a mask keeps the elements where it is `True`.
+
+1. The six hours of that evening, the last two marked `-999`: the sensor
+   failed. Then leave Python.
+
+    ```pycon
+    >>> six = np.array([27.3, 25.6, 24.6, 23.6, -999, -999])
+    >>> six.mean()
+    np.float64(-316.15000000000003)
+    >>> ok = six != -999
+    >>> ok
+    array([ True,  True,  True,  True, False, False])
+    >>> six[ok]
+    array([27.3, 25.6, 24.6, 23.6])
+    >>> six[ok].mean()
+    np.float64(25.275)
+    >>> ok.sum()
+    np.int64(4)
     >>> exit()
     ```
 
-5. Now on all hours. Add at the end of `distribution.py`, save.
+    `ok.sum()` counts the `True` values: `True` adds as 1.
 
-    ```python
-
-    m = valid.mean()
-    s = valid.std(ddof=1)
-    print(f"mean {m:.2f}, standard deviation {s:.2f}")
-    print("median", np.median(valid))
-    print("5 % and 95 %:", np.percentile(valid, [5, 95]))
-    ```
-
-6. Run it again: `↑`, then `Enter`. 5 % of the hours are colder than
-   −6.0 °C, 5 % warmer than 21.8 °C.
-
-    ```text
-    $ python scripts/distribution.py
-    hours 87672 valid 87552
-    mean 7.16, standard deviation 8.85
-    median 6.7
-    5 % and 95 %: [-6.  21.8]
-    ```
-
-**Check:** mean 7.16, standard deviation 8.85.
+**Check:** −316.15 with the marks, 25.275 without them.
 
 ---
 
-### 4. The histogram { #histogram }
+### 6. A column of the file as an array { #column }
 
-<!-- 0:25 · 10 min -->
+<!-- 0:30 · 15 min (Task: 5 min) -->
 
-A **histogram** counts the values in bins: here one bin per 1 °C, from −17 to 34 °C.
+pandas reads `weather.csv` into a table, a **DataFrame**; `df["temp_c"]` is one column, and `.to_numpy()` turns it into a NumPy array.
 
-1. Add at the end, save.
-
-    ```python
-
-    fig, ax = plt.subplots()
-    ax.hist(valid, bins=np.arange(-17, 34, 1))
-    ax.set_xlabel("temp_c (°C)")
-    ax.set_ylabel("hours per 1 °C bin")
-    fig.savefig("results/temp_distribution.png", dpi=150)
-    ```
-
-2. Run it. It prints the same four lines and writes the figure.
-
-    ```text
-    $ python scripts/distribution.py
-    ```
-
-3. Open `results/temp_distribution.png` from the Explorer. Two humps: the
-   winter hours near 0 °C (the tallest bin, −1 to 0 °C, holds 3848 hours)
-   and the summer hours near 12 °C.
-
-**Check:** the figure has two humps. It is not a Gaussian, the single
-symmetric bell that many formulas assume.
-
-!!! question "Task: how far from a Gaussian?"
-    1. A Gaussian has 68.3 % of its values within mean ± s. What share of
-       the hours lies there?
-    2. Between which two temperatures lie 98 % of the hours?
-
-??? success "Answer"
-    Add at the end of `distribution.py`:
-
-    ```python
-
-    inside = (valid > m - s) & (valid < m + s)
-    print(f"within mean ± s: {inside.mean():.3f}")
-    print("1 % and 99 %:", np.percentile(valid, [1, 99]))
-    ```
-
-    The last two lines of the run:
-
-    ```text
-    within mean ± s: 0.626
-    1 % and 99 %: [-9.6 25.8]
-    ```
-
-    1. 62.6 %, not 68.3 %. `&` is "and" for arrays; the mean of `True`
-       and `False` is the share of `True`. 2. From −9.6 °C to 25.8 °C.
-
----
-
-## Part 2 · How sure is 7.16? { #part-2 }
-
-<!-- 0:40 to 1:20 -->
-
-The **standard error** s/√N says how far the mean of N values would move if the measurement were repeated; it holds only when the values are independent.
-
----
-
-### 5. The standard error { #standard-error }
-
-<!-- 0:40 · 5 min -->
-
-s/√N: the more values, the closer their mean to the true one.
-
-1. New file `scripts/mean_error.py`. Type and save. `dtype=str` reads
-   the `time` column as text; section 7 needs it.
+1. New file `scripts/trend.py`. Type, save.
 
     ```python
     import numpy as np
+    import pandas as pd
 
-    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=0, dtype=str)
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
+    df = pd.read_csv("data/raw/weather.csv")
+    temp = df["temp_c"].to_numpy()
+    print(type(temp), temp.size, temp[:3])
     ok = temp != -999
-    valid = temp[ok]
-    n = len(valid)
-    s = valid.std(ddof=1)
-    print(f"mean {valid.mean():.3f} ± {s / np.sqrt(n):.3f}")
+    print(ok.sum(), temp[ok].mean())
     ```
 
-2. Run it. 8.85/√87552 = 0.030.
+    `temp[:3]` is the first three elements, as for a list.
+
+2. Run it.
 
     ```text
-    $ python scripts/mean_error.py
-    mean 7.160 ± 0.030
+    $ python scripts/trend.py
+    <class 'numpy.ndarray'> 87672 [-4.4 -4.8 -5.5]
+    87552 7.1599655062134495
     ```
 
-**Check:** 7.160 ± 0.030 °C, if the 87 552 hours were independent.
+    87 672 hours, 87 552 of them measured; their mean, 7.16 °C, in one
+    line and without a loop.
+
+**Check:** `87552 7.1599655062134495`.
+
+!!! warning "`FileNotFoundError: ... 'data/raw/weather.csv'`"
+    The terminal is not in the project folder: `cd ~/weather-s09`, then
+    run again.
+
+!!! question "Task: the hours below 0 °C"
+    How many measured hours were below 0 °C, and what share of all
+    measured hours is that? Hint: `temp[ok] < 0` is a mask too.
+
+??? success "Answer"
+    At the end of `trend.py`, two lines; take them out again afterwards.
+
+    ```python
+    frost = temp[ok] < 0
+    print(frost.sum(), f"{frost.sum() / ok.sum():.3f}")
+    ```
+
+    ```text
+    $ python scripts/trend.py
+    ...
+    22352 0.255
+    ```
+
+    22 352 hours, a quarter of the ten years.
 
 ---
 
-### 6. One hour and the next { #correlation }
+## Part 3 · Is it getting warmer? { #part-3 }
+
+<!-- 0:45 to 1:35 -->
+
+A straight line through the ten yearly means: its slope is the change per year, and its ± says whether the change is real.
+
+---
+
+### 7. The ten yearly means { #yearly }
 
 <!-- 0:45 · 10 min -->
 
-The **correlation coefficient** r is +1 when two series rise and fall together, 0 when one says nothing about the other.
+The year of each hour is the first four characters of its time; `&` joins two masks, "measured and in this year".
 
-1. Add at the end, save. `valid[:-1]` is every hour but the last,
-   `valid[1:]` every hour but the first: each hour beside the next.
+1. At the end of `trend.py`, add these lines, save.
 
     ```python
 
-    r1 = np.corrcoef(valid[:-1], valid[1:])[0, 1]
-    r24 = np.corrcoef(valid[:-24], valid[24:])[0, 1]
-    print(f"one hour apart {r1:.3f}, one day apart {r24:.3f}")
+    year = df["time"].str[:4].astype(int).to_numpy()
+    years = np.arange(2016, 2026)
+    means = []
+    for k in years:
+        means.append(temp[ok & (year == k)].mean())
+    y = np.array(means)
+    print(y.round(2))
     ```
+
+    `.str[:4]` cuts the first four characters of each time,
+    `.astype(int)` turns `"2016"` into the number 2016.
+    `np.arange(2016, 2026)` is the years 2016 to 2025: the end is left out,
+    as in `range`. `round(2)` shows two decimals.
 
 2. Run it.
 
     ```text
-    $ python scripts/mean_error.py
-    mean 7.160 ± 0.030
-    one hour apart 0.996, one day apart 0.978
+    $ python scripts/trend.py
+    ...
+    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
     ```
 
-**Check:** 0.996. An hour nearly repeats the hour before; the hours are
-not independent.
+**Check:** ten means, from 5.98 (2025) to 8.31 (2023).
 
 ---
 
-### 7. The mean of each year { #years }
+### 8. The five sums, the slope and the intercept { #sums }
 
 <!-- 0:55 · 10 min -->
 
-Ten years are ten nearly independent means; their scatter shows how sure one mean is.
+The best line y = a x + b, with x the years since 2016, comes from five sums of the data: N, Σx, Σy, Σx² and Σxy.
 
-1. Add at the end, save. `t[:4]` is the first four characters of a time:
-   the year.
+1. Add these lines, save, run.
 
     ```python
 
-    year = np.array([int(t[:4]) for t in time])
-    means = []
-    for y in range(2016, 2026):
-        means.append(temp[ok & (year == y)].mean())
-    means = np.array(means)
-    print(means.round(2))
-    sy = means.std(ddof=1)
-    print(f"years scatter by {sy:.2f}")
-    print(f"mean {means.mean():.2f} ± {sy / np.sqrt(10):.2f}")
+    x = years - 2016
+    n = x.size
+    sx, sy = x.sum(), y.sum()
+    sxx, sxy = (x * x).sum(), (x * y).sum()
+    print(n, sx, round(sy, 2), sxx, round(sxy, 2))
     ```
-
-2. Run it. The standard error of ten yearly means is their scatter
-   divided by √10.
 
     ```text
-    $ python scripts/mean_error.py
-    mean 7.160 ± 0.030
-    one hour apart 0.996, one day apart 0.978
-    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
-    years scatter by 0.70
-    mean 7.16 ± 0.22
+    $ python scripts/trend.py
+    ...
+    10 45 71.6 285 317.62
     ```
 
-**Check:** 7.16 ± 0.22 °C: an uncertainty seven times larger than 0.030.
+    `x * y` multiplies year by year; `sum()` adds the ten products.
+
+2. Then the slope and the intercept. Add, save, run.
+
+    ```python
+    d = n * sxx - sx ** 2
+    a = (n * sxy - sx * sy) / d
+    b = (sxx * sy - sx * sxy) / d
+    print(f"a = {a:.4f} °C per year, b = {b:.2f} °C")
+    print(f"{10 * a:.2f} °C per decade")
+    ```
+
+    ```text
+    $ python scripts/trend.py
+    ...
+    a = -0.0555 °C per year, b = 7.41 °C
+    -0.56 °C per decade
+    ```
+
+    `{a:.4f}` writes `a` with four decimals. b is the line's value in 2016,
+    where x = 0.
+
+**Check:** a = −0.0555 °C per year, b = 7.41 °C.
 
 ---
 
-### 8. Random hours against hours in a row { #simulation }
+### 9. `np.polyfit` gives the same line { #polyfit }
 
-<!-- 1:05 · 10 min -->
+<!-- 1:05 · 5 min -->
 
-A **simulation** repeats a measurement on the computer: 2000 times the mean of 1000 hours drawn at random, and of 1000 hours in a row.
+`np.polyfit(x, y, 1)` fits a polynomial of degree 1, a straight line, by least squares, and returns its slope and intercept.
 
-1. Add at the end, save. `rng.choice(valid, 1000)` draws 1000 hours at
-   random; `valid[k:k + 1000]` takes 1000 hours in a row from a random
-   start `k`.
+1. Add one line, save, run.
+
+    ```python
+    print(np.polyfit(x, y, 1))
+    ```
+
+    ```text
+    $ python scripts/trend.py
+    ...
+    [-0.05552739  7.40992628]
+    ```
+
+**Check:** the a and b of section 8, with more digits.
+
+---
+
+### 10. The uncertainty of the slope { #uncertainty }
+
+<!-- 1:10 · 10 min -->
+
+Each yearly mean is uncertain by σ, the scatter of the ten years; the slope inherits σ_a = σ √(N / Δ).
+
+1. Add these lines, save, run.
 
     ```python
 
-    rng = np.random.default_rng(1)
-    random_means = []
-    row_means = []
-    for i in range(2000):
-        random_means.append(rng.choice(valid, 1000).mean())
-        k = rng.integers(0, n - 1000)
-        row_means.append(valid[k:k + 1000].mean())
-    print(f"s / sqrt(1000)      {s / np.sqrt(1000):.2f}")
-    print(f"1000 random hours   {np.std(random_means):.2f}")
-    print(f"1000 hours in a row {np.std(row_means):.2f}")
+    s = y.std(ddof=1)
+    print(f"scatter of the years {s:.2f} °C")
+    sigma = 0.70
+    sa = sigma * np.sqrt(n / d)
+    print(f"slope {10 * a:.2f} ± {10 * sa:.2f} °C per decade")
     ```
-
-2. Run it. The last three lines are new; the seed `1` makes every laptop
-   draw the same hours.
 
     ```text
-    $ python scripts/mean_error.py
+    $ python scripts/trend.py
     ...
-    s / sqrt(1000)      0.28
-    1000 random hours   0.28
-    1000 hours in a row 7.84
+    scatter of the years 0.70 °C
+    slope -0.56 ± 0.77 °C per decade
     ```
 
-**Check:** s/√N holds for random hours (0.28), not for hours in a row
-(7.84).
+    `std(ddof=1)` is the standard deviation with N − 1 in the denominator,
+    the scatter of a sample. `sigma` keeps it to two digits, 0.70.
 
-!!! question "Task: one year alone"
-    1. Compute the mean of 2025 with s/√N of its own 8760 hours.
-    2. Compare that ± with how much the ten years scatter.
-    3. How many years would give the decade's mean to ± 0.1 °C?
+**Check:** −0.56 ± 0.77 °C per decade: zero lies inside one σ. Ten years do not show a trend.
+
+---
+
+### 11. The residuals { #residuals }
+
+<!-- 1:20 · 5 min -->
+
+A **residual** is a point minus the line: what the model leaves over. Divided by σ, squared and added, they give χ².
+
+1. Add these lines, save, run.
+
+    ```python
+
+    r = y - (a * x + b)
+    print(r.round(2))
+    print(f"chi2 {((r / sigma) ** 2).sum():.2f} for {n - 2} degrees of freedom")
+    ```
+
+    ```text
+    $ python scripts/trend.py
+    ...
+    [ 0.19 -0.85  0.68  0.03 -0.36  0.12 -0.48  1.29  0.31 -0.93]
+    chi2 8.56 for 8 degrees of freedom
+    ```
+
+    χ² near the degrees of freedom, 10 points − 2 parameters, is what a
+    right model gives. Here it is no test: σ came from the scatter of
+    these same ten points, so χ² lands near 8 whatever the model.
+
+**Check:** the largest residual, 1.29 °C, is 2023; χ² 8.56.
+
+---
+
+### 12. Points, line and residuals in one figure { #figure }
+
+<!-- 1:25 · 10 min (Task: 5 min) -->
+
+Two panels, one above the other with a shared x-axis: the data with the line, and under it what the line leaves.
+
+1. Under `import numpy as np` at the top of `trend.py`, add one line.
+
+    ```python
+    import matplotlib.pyplot as plt
+    ```
+
+2. At the end, add these lines, save, run.
+
+    ```python
+
+    fig, (top, bottom) = plt.subplots(2, 1, figsize=(6, 5), sharex=True)
+    top.plot(years, y, "o", label="yearly mean")
+    top.plot(years, a * x + b, label="fitted line")
+    top.set_ylabel("Mean temperature (°C)")
+    top.legend()
+    bottom.plot(years, r, "o")
+    bottom.axhline(0, color="grey")
+    bottom.set_xlabel("Year")
+    bottom.set_ylabel("Residual (°C)")
+    fig.savefig("results/trend.png", dpi=150)
+    ```
+
+    `plt.subplots(2, 1, ...)` makes two Axes in one column;
+    `sharex=True` gives them one x-axis. `"o"` draws points, no line.
+
+3. In the Explorer, click `results/trend.png`: ten points around a slightly
+   falling line, and below it ten residuals scattered around zero, 2023
+   highest and 2025 lowest.
+
+4. At the end of `README.md`, add the answer and save.
+
+    ```text
+
+    ## Trend
+
+    A straight line through the ten yearly means, `scripts/trend.py`:
+    −0.56 ± 0.77 °C per decade (σ = 0.70 °C per year, from their scatter).
+    Ten years cannot tell whether it is getting warmer.
+    ```
+
+**Check:** `results/trend.png` with two panels, and the trend in the README.
+
+!!! question "Task: one year less"
+    Fit the line without 2025, the coldest year: what slope do 2016 to
+    2024 give? Hint: `keep = x != 9` is a mask; fit `x[keep]` and `y[keep]`
+    with `np.polyfit`.
 
 ??? success "Answer"
-    Add at the end of `mean_error.py`:
+    At the end of `trend.py`:
 
     ```python
-
-    t25 = temp[year == 2025]
-    print(f"2025: {t25.mean():.2f} ± {t25.std(ddof=1) / np.sqrt(len(t25)):.2f}")
+    keep = x != 9
+    print(f"{10 * np.polyfit(x[keep], y[keep], 1)[0]:.2f} °C per decade")
     ```
 
     ```text
-    2025: 5.98 ± 0.10
+    $ python scripts/trend.py
+    ...
+    0.22 °C per decade
     ```
 
-    1. 5.98 ± 0.10 °C. 2. The years scatter by 0.70 °C, seven times more.
-    3. 0.70/√N = 0.1 gives N = (0.70/0.1)² = 49 years.
+    +0.22 without 2025, against −0.56 with it: one year turns the sign. That
+    is what ± 0.77 says: the slope of ten years is not known to better than
+    about 0.8 °C per decade.
 
 ---
 
-## Part 3 · How often does it freeze? { #part-3 }
+## Part 4 · Your project { #part-4 }
 
-<!-- 1:20 to 1:45 -->
+<!-- 1:35 to 1:55 -->
 
-A probability as a frequency: the share of hours below 0 °C.
+The same steps on a file of your own: two columns, a line, its slope in the README. Without a file yet, use the humidity and temperature of `weather.csv`.
 
 ---
 
-### 9. A frost hour, month by month { #frost }
+### 13. A straight line through your own data { #project }
 
-<!-- 1:20 · 10 min -->
+<!-- 1:35 · 20 min -->
 
-P(frost) is the number of frost hours divided by the number of hours: the mean of an array of `True` (1) and `False` (0).
+Any two columns of numbers go through the same lines; only the file and the column names change.
 
-1. New file `scripts/frost_hours.py`. Type and save. `-999` is below 0
-   too, hence `frost[ok]`; `t[5:7]` is the month.
+1. Open your project's folder in VS Code (**File** > **Open Folder...**),
+   with your data file in `data/raw`. No folder yet: make one, then copy
+   your file into `data/raw`.
+
+    ```text
+    $ mkdir -p ~/myproject/data/raw ~/myproject/scripts ~/myproject/results
+    ```
+
+2. New file `scripts/fit.py`. Type, with your file's name, save, run: the
+   names of its columns.
 
     ```python
     import numpy as np
+    import pandas as pd
 
-    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=0, dtype=str)
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
-    ok = temp != -999
-    frost = temp < 0
-    print(f"P(frost) = {frost[ok].mean():.3f}")
-
-    month = np.array([int(t[5:7]) for t in time])
-    for k in range(1, 13):
-        print(k, f"{frost[ok & (month == k)].mean():.3f}")
+    df = pd.read_csv("data/raw/YOUR_FILE.csv")
+    print(df.columns)
     ```
 
-2. Run it.
+    Without your own data: in `weather-s09`, `data/raw/weather.csv`.
 
     ```text
-    $ python scripts/frost_hours.py
-    P(frost) = 0.255
-    1 0.852
-    2 0.747
-    3 0.373
-    4 0.068
-    5 0.001
-    6 0.000
-    7 0.000
-    8 0.000
-    9 0.000
-    10 0.053
-    11 0.259
-    12 0.727
+    $ python scripts/fit.py
+    Index(['time', 'temp_c', 'humidity_pct', 'wind_ms'], dtype='str')
     ```
 
-**Check:** one hour in four freezes; in January 85 % of the hours.
-
----
-
-### 10. Frost given the hour before { #conditional }
-
-<!-- 1:30 · 10 min -->
-
-P(A | B), "A given B", is the share of A among the cases where B happened. A and B are **independent** when P(A | B) = P(A); only then P(A and B) = P(A) P(B).
-
-1. Add at the end, save. `a[b]` keeps the hours whose hour before froze.
+3. Pick the column across (x) and the column up (y). Add these lines with
+   your names, save, run. `dropna` leaves out the rows where either is
+   missing; `na_values=[-999]` turns the station's mark into "missing".
 
     ```python
 
-    f = frost[ok]
-    a = f[1:]       # A: frost in this hour
-    b = f[:-1]      # B: frost in the hour before
-    print(f"P(A) = {a.mean():.3f}, P(B) = {b.mean():.3f}")
-    print(f"P(A | B) = {a[b].mean():.3f}")
-    print(f"P(A and B) = {(a & b).mean():.3f}")
-    print(f"P(A) P(B)  = {a.mean() * b.mean():.3f}")
+    df = pd.read_csv("data/raw/YOUR_FILE.csv", na_values=[-999])
+    df = df.dropna(subset=["YOUR_X", "YOUR_Y"])
+    x = df["YOUR_X"].to_numpy()
+    y = df["YOUR_Y"].to_numpy()
+    a, b = np.polyfit(x, y, 1)
+    r = y - (a * x + b)
+    print(x.size, f"slope {a:.4g}, intercept {b:.4g}, residual sd {r.std(ddof=2):.3g}")
     ```
 
-2. Run it. The last four lines are new.
+    With `temp_c` across and `humidity_pct` up:
 
     ```text
-    $ python scripts/frost_hours.py
-    ...
-    P(A) = 0.255, P(B) = 0.255
-    P(A | B) = 0.956
-    P(A and B) = 0.244
-    P(A) P(B)  = 0.065
+    $ python scripts/fit.py
+    Index(['time', 'temp_c', 'humidity_pct', 'wind_ms'], dtype='str')
+    87552 slope -0.8484, intercept 85.19, residual sd 7.6
     ```
 
-**Check:** P(A | B) = 0.956 is far from P(A) = 0.255: the events are not
-independent, and 0.244 is not 0.065.
+    `{a:.4g}` writes four significant digits, whatever the size of the
+    number. Humidity falls by 0.85 % per °C.
 
-!!! question "Task: frost tomorrow morning"
-    Each day has 24 rows, so `temp.reshape(-1, 24)` has one row per day.
-    Compute P(frost at 06:00), and the same given that 18:00 the evening
-    before was below 2 °C, and given that it was not.
-
-??? success "Answer"
-    Add at the end of `frost_hours.py`:
+4. The figure of section 12 for your columns. Put
+   `import matplotlib.pyplot as plt` at the top of `fit.py`, add these
+   lines at the end with your names and units, save, run, and open
+   `results/fit.png`.
 
     ```python
 
-    days = temp.reshape(-1, 24)
-    evening = days[:-1, 18]
-    morning = days[1:, 6]
-    pair = (evening != -999) & (morning != -999)
-    cold = morning[pair] < 0
-    print(f"P(frost at 06:00) = {cold.mean():.3f}")
-    chilly = evening[pair] < 2
-    print(f"... if 18:00 was below 2 °C: {cold[chilly].mean():.3f}")
-    print(f"... if not: {cold[~chilly].mean():.3f}")
+    fig, (top, bottom) = plt.subplots(2, 1, figsize=(6, 5), sharex=True)
+    top.plot(x, y, ".", label="data")
+    top.plot(x, a * x + b, label="fitted line")
+    top.set_ylabel("YOUR_Y (unit)")
+    top.legend()
+    bottom.plot(x, r, ".")
+    bottom.axhline(0, color="grey")
+    bottom.set_xlabel("YOUR_X (unit)")
+    bottom.set_ylabel("Residual (unit)")
+    fig.savefig("results/fit.png", dpi=150)
     ```
 
-    ```text
-    P(frost at 06:00) = 0.337
-    ... if 18:00 was below 2 °C: 0.984
-    ... if not: 0.108
-    ```
+    `"."` draws small dots, for many points. With the humidity, the
+    residuals end on a straight edge at the top: humidity stops at 100 %,
+    which a straight line does not know.
 
-    `~` turns `True` into `False`. Seminar 11 builds a predictor on this.
+5. In your README: the two columns, the number of points, the slope with
+   its unit, and the script that computed it.
+
+**Check:** a slope with its unit in your README, and a figure in `results`.
+
+!!! warning "`df.columns` shows one long name with `;` in it"
+    The file uses `;` between columns and a comma for decimals, as a
+    spreadsheet with Lithuanian settings saves it: read it with
+    `pd.read_csv("data/raw/YOUR_FILE.csv", sep=";", decimal=",")`.
 
 ---
 
-## Part 4 · Write it down { #part-4 }
-
-<!-- 1:45 to 2:00 -->
-
-The numbers go into the README, with the scripts that make them.
-
----
-
-### 11. Write the answer into the README { #commit }
-
-<!-- 1:45 · 10 min -->
-
-The number goes into the README with the script that makes it.
-
-1. At the end of `README.md`, add and save:
-
-    ```text
-
-    ## How sure is the mean
-
-    7.16 ± 0.22 °C. The ± is the standard error from the ten yearly means
-    (they scatter by 0.70 °C). The hours are not independent: one hour and
-    the next correlate by 0.996, so s/√N = 0.03 °C is too small.
-    `scripts/mean_error.py` computes it.
-    ```
-
-2. Check that the script still gives every number of the paragraph:
-   the README is only true as long as the script says the same.
-
-    ```text
-    $ python scripts/mean_error.py
-    mean 7.160 ± 0.030
-    one hour apart 0.996, one day apart 0.978
-    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
-    years scatter by 0.70
-    mean 7.16 ± 0.22
-    ...
-    ```
-
-**Check:** the README ends with **How sure is the mean**, and its numbers
-are the ones the script prints.
-
----
-
-### 12. Wrap up { #wrap-up }
+### 14. Wrap up { #wrap-up }
 
 <!-- 1:55 · 5 min -->
 
-The lines of today, for the next time they are needed.
+The lines of today, by what they do.
 
 | To | Type |
 |--|--|
-| mean, standard deviation | `x.mean()`, `x.std(ddof=1)` |
-| median, percentiles | `np.median(x)`, `np.percentile(x, [5, 95])` |
-| standard error, if independent | `s / np.sqrt(n)` |
-| correlation of neighbours | `np.corrcoef(x[:-1], x[1:])[0, 1]` |
-| a probability from data | `(x < 0).mean()` |
-| P(A given B) | `a[b].mean()` |
-
-Seminar 10 fits the yearly cycle to the same hours.
+| see if a package is in the environment | `conda list numpy` |
+| an array from a list, or from a column | `np.array([...])`, `df["temp_c"].to_numpy()` |
+| arithmetic on every element | `a * 2`, `a - a.mean()`, `(a ** 2).sum()` |
+| keep some elements | `a[a != -999]`, masks joined with `&` |
+| count the `True` of a mask | `mask.sum()` |
+| a straight line by hand | the five sums, `d = n * sxx - sx ** 2` |
+| the same in one call | `np.polyfit(x, y, 1)` |
+| the scatter of a sample | `y.std(ddof=1)` |
+| two panels, one x-axis | `plt.subplots(2, 1, sharex=True)` |
 
 ---
 
@@ -617,176 +694,210 @@ Seminar 10 fits the yearly cycle to the same hours.
 
 ---
 
-### 13. Is 2025 a cold year? { #cold-year }
-
-<!-- — · 10 min -->
-
-z is the distance from the other years in units of their scatter; the **p-value** is the chance of a z at least that far from 0 if nothing special happened.
-
-1. Add at the end of `mean_error.py`, save. `math.erfc(abs(z) / math.sqrt(2))`
-   is the two-sided p-value of a Gaussian.
-
-    ```python
-
-    import math
-    other = means[:-1]
-    z = (means[-1] - other.mean()) / other.std(ddof=1)
-    print(f"2025: z = {z:.2f}, p = {math.erfc(abs(z) / math.sqrt(2)):.3f}")
-    ```
-
-2. Run it. The last line:
-
-    ```text
-    $ python scripts/mean_error.py
-    ...
-    2025: z = -2.17, p = 0.030
-    ```
-
-**Check:** p = 0.030. But 2025 was picked because it looked cold. With ten
-years to pick from, the chance that one of them reaches p ≤ 0.03 is
-1 − 0.97¹⁰ = 0.26.
-
----
-
-### 14. 2023 against 2025 { #difference }
-
-<!-- — · 5 min -->
-
-The uncertainty of a difference of two values with the same σ is σ√2.
-
-1. Add at the end, save.
-
-    ```python
-
-    diff = means[7] - means[9]
-    sd = math.sqrt(2) * sy
-    print(f"2023 - 2025 = {diff:.2f} ± {sd:.2f}, z = {diff / sd:.2f}")
-    print(f"p = {math.erfc(diff / sd / math.sqrt(2)):.3f}")
-    ```
-
-2. Run it. The last two lines:
-
-    ```text
-    $ python scripts/mean_error.py
-    ...
-    2023 - 2025 = 2.33 ± 0.99, z = 2.34
-    p = 0.019
-    ```
-
-**Check:** 2.33 ± 0.99 °C between the warmest and the coldest year of ten,
-chosen after looking.
-
----
-
-### 15. Advanced tasks { #advanced }
+### 15. SciPy and the yearly cycle { #scipy }
 
 <!-- — · 20 min -->
 
-Harder and open: each in a new script, with its solution folded.
+The cycle of the seasons, T = c − A cos(2π(d − d₀)/365.25), has d₀ inside the cosine; `curve_fit` of **SciPy**, a library of scientific methods built on NumPy, finds it by walking downhill from starting values.
 
-!!! question "Advanced task: how long must a block be?"
-    Cut `valid` into blocks of 1 hour, 1 day, 1 week, 30 days and 365 days,
-    take the mean of each block, and compute the standard error of the
-    block means (their scatter / √number of blocks). How does the ± change
-    with the block length? Why do 30-day blocks give the largest ±?
+1. Install SciPy into `analysis`, with its version. At `Proceed ([y]/n)?`
+   press `Enter`.
 
-??? success "Answer"
-    ```python
-    import numpy as np
+    ```text
+    $ conda install scipy=1.18
+    ...
+    ## Package Plan ##
 
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
-    valid = temp[temp != -999]
-    for hours in [1, 24, 24 * 7, 24 * 30, 24 * 365]:
-        k = len(valid) // hours
-        blocks = valid[:k * hours].reshape(k, hours).mean(axis=1)
-        print(f"blocks of {hours:5d} h: {k:6d} blocks, "
-              f"± {blocks.std(ddof=1) / np.sqrt(k):.2f}")
+      environment location: /Users/smilte/miniforge3/envs/analysis
+
+      added / updated specs:
+        - scipy=1.18
+    ...
+    Proceed ([y]/n)?
+    $ python -c "import scipy; print(scipy.__version__)"
+    1.18.1
+    ```
+
+2. Write the list again, then open `environment.yml`, delete its last
+   line, `prefix: ...` (a folder on this laptop), save.
+
+    ```text
+    $ conda env export --from-history -f environment.yml
     ```
 
     ```text
-    blocks of     1 h:  87552 blocks, ± 0.03
-    blocks of    24 h:   3648 blocks, ± 0.14
-    blocks of   168 h:    521 blocks, ± 0.36
-    blocks of   720 h:    121 blocks, ± 0.72
-    blocks of  8760 h:      9 blocks, ± 0.20
+    name: analysis
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14
+      - matplotlib-base=3.11
+      - pandas=3.1
+      - scipy=1.18
     ```
 
-    The ± grows while neighbouring blocks are still alike. 30-day blocks
-    are not alike for another reason: a January block and a July block
-    differ by the season, so their scatter measures the yearly cycle, not
-    chance. Only blocks of a whole year are alike, and they give ± 0.20,
-    close to the 0.22 of section 7.
+    SciPy, the package just installed, is the last line; the lines above
+    it may come in another order.
 
-!!! question "Advanced task: the longest frost"
-    Find the longest run of frost hours in a row, with the times it
-    started and ended. Count without NumPy tricks: walk through the hours
-    with a counter that grows on a frost hour and goes back to 0 otherwise.
+3. New file `scripts/cycle.py`: the 87 672 hours as 3653 rows of 24, one
+   row per day, and the mean of each row. Type, save, run.
 
-??? success "Answer"
     ```python
     import numpy as np
+    import pandas as pd
 
-    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=0, dtype=str)
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
-    frost = (temp < 0) & (temp != -999)
-    run, longest, end = 0, 0, 0
-    for i in range(len(frost)):
-        if frost[i]:
-            run = run + 1
-        else:
-            run = 0
-        if run > longest:
-            longest, end = run, i
-    print(f"{longest} hours: {time[end - longest + 1]} to {time[end]}")
+    df = pd.read_csv("data/raw/weather.csv", na_values=[-999])
+    days = df["temp_c"].to_numpy().reshape(-1, 24)
+    T = days.mean(axis=1)
+    d = np.arange(T.size)
+    good = ~np.isnan(T)
+    print(days.shape, good.sum())
     ```
 
     ```text
-    1172 hours: 2024-12-31T16:00 to 2025-02-18T11:00
+    $ python scripts/cycle.py
+    (3653, 24) 3648
     ```
 
-    49 days without an hour above 0 °C, in the winter of the coldest year.
+    `reshape(-1, 24)` cuts the column into rows of 24; `mean(axis=1)`
+    averages each row. A day with a missing hour has the mean `nan`, not a
+    number; `~np.isnan(T)` keeps the other 3648. `d` counts the days from
+    1 January 2016.
 
-!!! question "Advanced task: frost by the hour of the day"
-    In March, P(frost) depends on the time of day. Compute it for each of
-    the 24 hours (`t[11:13]` is the hour) and find the hour with the most
-    and the least frost.
+4. The model as a function, and the fit from the values read off a plot:
+   level 7, amplitude 11, coldest day 15. Add, save, run.
 
-??? success "Answer"
     ```python
-    import numpy as np
 
-    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=0, dtype=str)
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
-    ok = temp != -999
-    month = np.array([int(t[5:7]) for t in time])
-    hour = np.array([int(t[11:13]) for t in time])
-    march = np.array([(temp[ok & (month == 3) & (hour == h)] < 0).mean()
-                      for h in range(24)])
-    print("most frost at", march.argmax(), "h:", march.max().round(2))
-    print("least frost at", march.argmin(), "h:", march.min().round(2))
+    from scipy.optimize import curve_fit
+
+
+    def cycle(d, c, amp, d0):
+        return c - amp * np.cos(2 * np.pi * (d - d0) / 365.25)
+
+
+    popt, pcov = curve_fit(cycle, d[good], T[good], p0=[7, 11, 15])
+    print(popt.round(2))
     ```
 
     ```text
-    most frost at 3 h: 0.68
-    least frost at 14 h: 0.11
+    $ python scripts/cycle.py
+    (3653, 24) 3648
+    [ 7.18 11.18 15.92]
     ```
 
-    The 37 % of March in section 9 hides 68 % before dawn and 11 % in the
-    afternoon: a probability depends on what it is conditioned on.
+    `popt` holds the best c, A and d₀: 7.18 °C, 11.18 °C, day 15.92, the
+    16th of January.
+
+**Check:** `[ 7.18 11.18 15.92]`, and `scipy=1.18` in `environment.yml`.
+
+!!! question "Task: start in summer"
+    Start from `p0=[7, 11, 200]`. Is the curve different?
+
+??? success "Answer"
+    ```text
+    [  7.18 -11.18 198.54]
+    ```
+
+    The same curve: a negative amplitude turns the cosine over, and day
+    198.54 is the warmest day, 17 July, half a year after 15.92.
+
+---
+
+### 16. Advanced tasks { #advanced }
+
+<!-- — · 20 min -->
+
+Harder questions on `trend.py`, for a room that is done early. Each answer is folded under its task.
+
+!!! question "Advanced task: the ± of the slope from χ²"
+    The slopes whose best line has a χ² at most 1 above the minimum lie
+    within ± σ_a. Try slopes t from −0.3 to 0.2 in steps of 0.001; for
+    each, the best intercept is `(sy - t * sx) / n`. Which slopes keep χ²
+    within 1 of the minimum?
+
+??? success "Answer"
+    At the end of `trend.py`:
+
+    ```python
+
+    chi2_min = ((r / sigma) ** 2).sum()
+    inside = []
+    for t in np.arange(-0.3, 0.2, 0.001):
+        rt = y - (t * x + (sy - t * sx) / n)
+        if ((rt / sigma) ** 2).sum() <= chi2_min + 1:
+            inside.append(t)
+    print(f"from {min(inside):.3f} to {max(inside):.3f}")
+    ```
+
+    ```text
+    $ python scripts/trend.py
+    ...
+    from -0.132 to 0.021
+    ```
+
+    Half the width, (0.021 + 0.132) / 2 = 0.077 °C per year: σ_a of
+    section 10. For a model whose χ² is not a parabola, this scan is how a
+    ± is found.
+
+!!! question "Advanced task: leave each year out"
+    Fit the slope ten times, each time without one year. How much does the
+    trend per decade depend on a single year?
+
+??? success "Answer"
+    ```python
+
+    for k in range(10):
+        keep = x != k
+        slope = np.polyfit(x[keep], y[keep], 1)[0]
+        print(2016 + k, f"{10 * slope:.2f}")
+    ```
+
+    ```text
+    $ python scripts/trend.py
+    ...
+    2016 -0.39
+    2017 -1.03
+    2018 -0.31
+    2019 -0.55
+    2020 -0.58
+    2021 -0.56
+    2022 -0.46
+    2023 -1.03
+    2024 -0.73
+    2025 0.22
+    ```
+
+    From −1.03 to +0.22 °C per decade: the spread of one σ, 0.77.
+
+!!! question "Advanced task: the same line as a matrix"
+    Put a column of the x and a column of ones side by side,
+    `A = np.column_stack([x, np.ones(n)])`, and solve least squares with
+    `np.linalg.lstsq(A, y)`. Same a and b?
+
+??? success "Answer"
+    ```python
+
+    A = np.column_stack([x, np.ones(n)])
+    print(np.linalg.lstsq(A, y)[0])
+    ```
+
+    ```text
+    $ python scripts/trend.py
+    ...
+    [-0.05552739  7.40992628]
+    ```
+
+    The same. `A` has one row per year and one column per parameter; any
+    model that is a sum of columns times parameters is solved this way.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** every number comes from a script, and the README
-  says which one; today's folder and `environment.yml` give everyone the
-  same start.
-- 🔧 **Tool-agnostic:** the same `python` lines in zsh on macOS and in Git
-  Bash on Windows.
-- 📁 **Files:** figures go to `results/`, programs to `scripts/`, the
-  answers into the README.
+- ♻️ **Reproducibility:** one script turns the raw file into the slope,
+  its ± and the figure; the README says which script and which σ.
+- 🔧 **Tool-agnostic:** the same line by five sums and by `np.polyfit`,
+  the same numbers.
+- 📁 **Files:** the figure in `results/`, the answer in the README, the
+  package list in `environment.yml`.

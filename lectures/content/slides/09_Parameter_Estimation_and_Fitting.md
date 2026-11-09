@@ -1,29 +1,6 @@
 ---
 layout: cover
 title: "Parameter Estimation and Fitting"
-# slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md).
-# The prelude holds the pendulum arrays of the slide "The Same in NumPy", so
-# every later runner works without that slide having been run first, and the
-# 45 bins of the D0 mass histogram of the slide "Counts and Their Uncertainty"
-# (1820 to 1910 MeV/c^2 in bins of 2 MeV; the browser cannot read D0_KPi.csv).
-python:
-  installs: ["numpy", "scipy"]
-  prelude: |
-    import numpy as np
-    from scipy.optimize import curve_fit
-    t10 = np.array([9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01])
-    x = np.arange(20, 101, 10) / 100
-    T = t10 / 10
-    y = T**2
-    sy = 2 * T * 0.01
-    n = np.array([1443, 1477, 1419, 1480, 1426, 1505, 1430, 1444, 1534, 1471, 1456, 1494,
-                  1611, 1611, 1774, 1868, 2068, 2454, 2749, 3068, 3426, 3746, 3605, 3499,
-                  3220, 2824, 2515, 2254, 2027, 1768, 1658, 1506, 1484, 1419, 1473, 1338,
-                  1386, 1321, 1421, 1324, 1363, 1340, 1359, 1312, 1310])
-    m = np.arange(1821, 1910, 2.0)
-    s = np.sqrt(n)
-  loadPackagesFromImports: true
-  suppressDeprecationWarnings: true
 ---
 
 # Dr. Mindaugas Šarpis
@@ -31,60 +8,13 @@ python:
 # Best Research and Data Analysis Practices from CERN
 
 ## Parameter Estimation and Fitting
-##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
+
+##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducibility</span>
 
 <!--
-Speaker: the lecture opens on the table Lecture 09 left on the mass column and
-answers it with a fit. The fit is built on the nine pendulum rows first, where
-every step can be done with a calculator, in NumPy and with SciPy. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Which Number Would You **Report**?
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## 📋 **Lecture 09: the mean of column `M`**
-
-| Rows with | $N$ | mean (MeV/c²) |
-| --- | --- | --- |
-| all | 91 583 | 1864.10 ± 0.08 |
-| 1840 < $M$ < 1890 | 56 577 | 1864.71 ± 0.05 |
-| 1850 < $M$ < 1880 | 41 090 | 1864.79 ± 0.04 |
-| 1855 < $M$ < 1875 | 31 132 | 1864.81 ± 0.03 |
-
-</div>
-
-<div class="stack-tight" style="margin-top:0;">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🤔 **The four means disagree**
-
-Each mean has a small standard error, yet the four lie up to 0.71 MeV/c² apart, more than twenty times the smallest error. The D⁰ mass is 1864.84 ± 0.05 MeV/c² (Particle Data Group).
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-Lecture 09 named the reason: the rows are a peak on a flat part that is not D⁰. A mean cannot tell the two apart. A **model** of peak and flat part can.
-
-</div>
-
-</div>
-
-</div>
-
-<!--
-Speaker: the table is the one of Lecture 09, "What the Standard Error Does Not
-Cover". Ask the room which row they would write into a report, and take a vote.
-Most pick the last row because it is nearest the PDG value. Write the vote
-on the board and leave it open. (~3 min)
+**Ask:** who has drawn a trend line in a spreadsheet? Where did its two numbers come from?
+**Say:** today a fit is worked out by hand: what a model is, which numbers fit best, how sure they are, how a computer walks to them, and how to tell a good fit from a bad one. Everything on the weather log.
+(~1 min)
 -->
 
 ---
@@ -92,94 +22,55 @@ hideInToc: true
 layout: quote
 ---
 
-# The goal of this lecture is to derive the fit of a model to data from the **likelihood**, and to carry it out three times: by hand, in **NumPy** and with **SciPy**
+# All models are wrong but some are **useful**.
+George E. P. Box, *Robustness in the Strategy of Scientific Model Building* (1979)
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# Learning **Objectives**
+# Is It Getting **Warmer**?
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
 
 <div class="card card-primary card-glass pad-compact">
 
-📐 Derive **χ²** from the Gaussian likelihood
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-🧮 Fit a **straight line** in closed form, from five sums
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-📏 Get parameter **uncertainties** and their covariance from the curvature of χ²
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-⛰️ Minimise χ² by **gradient descent**, and say what the learning rate does
+📈 The mean of each year of the weather log, 2016 to 2025.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-🐍 Fit a nonlinear model with **`scipy.optimize.curve_fit`**
+2017 → 2023: **+1.80 °C**
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-🔍 Judge a fit by **χ² per degree of freedom**, residuals and pulls
+2023 → 2025: **−2.33 °C**
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+❓ Which number answers the question?
 
 </div>
 
 </div>
 
----
-hideInToc: true
----
-
-# What Lecture 09 **Established**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🎲 **Likelihood**
-
-The likelihood $L(\theta)$ is the probability of the measured data, read as a function of the parameters $\theta$.
-
-The maximum-likelihood estimate $\hat\theta$ is the value of $\theta$ at which $L(\theta)$ is largest.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⚖️ **The weighted mean**
-
-$N$ measurements $y_i \pm \sigma_i$ of one quantity $\mu$, with Gaussian scatter. The likelihood is largest at
-
-$$\hat\mu = \frac{\sum_i y_i/\sigma_i^2}{\sum_i 1/\sigma_i^2}, \qquad \sigma_{\hat\mu}^2 = \frac{1}{\sum_i 1/\sigma_i^2}$$
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-On the nine pendulum rows it gave $g = 9.80 \pm 0.04$ m/s², with $T^2 = 4\pi^2\ell/g$ taken as exact. Today the measured quantity changes with a second quantity $x$, and a model $f(x;\theta)$ says how. The steps stay the same: write the likelihood, find its maximum, find the uncertainty of the result.
+<img class="fig" src="/figures/viz_fitting_year_means.svg">
 
 </div>
 
 <!--
-Speaker: write the two formulas of the weighted mean on the board and leave
-them there. Nothing in Lecture 09 tested
-the formula of the pendulum: the fit of today does. (~2 min)
+**Ask:** hands up: warmer, colder, cannot tell?
+**Say:** two years picked from ten give any answer we like. A line through all ten gives one number, and the lecture ends with that number and how sure it is.
+**If asked:** the dashed line is the mean of all 87 552 hours, 7.16 °C.
+(~2 min)
 -->
 
 ---
@@ -187,197 +78,370 @@ layout: section
 hideInToc: true
 ---
 
-# What a **Fit** Is
+# A Model Has **Parameters**
 
-A mean takes the formula behind the data on trust. A fit puts the formula in, as a model with free parameters, and lets the data set them.
-
----
-hideInToc: true
----
-
-# The Pendulum **Table**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## 📄 **`pendulum.csv`, with two columns added**
-
-| ℓ (cm) | t₁₀ (s) | T (s) | T² (s²) |
-| --- | --- | --- | --- |
-| 20 | 9.02 | 0.902 | 0.8136 |
-| 30 | 11.05 | 1.105 | 1.2210 |
-| 40 | 12.61 | 1.261 | 1.5901 |
-| 50 | 14.23 | 1.423 | 2.0249 |
-| 60 | 15.49 | 1.549 | 2.3994 |
-| 70 | 16.84 | 1.684 | 2.8359 |
-| 80 | 17.90 | 1.790 | 3.2041 |
-| 90 | 19.10 | 1.910 | 3.6481 |
-| 100 | 20.01 | 2.001 | 4.0040 |
-
-</div>
-
-<div class="stack-tight" style="margin-top:0;">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⏱️ **What was measured**
-
-Nine lengths $\ell$ and the time $t_{10}$ of 10 swings. One period is $T = t_{10}/10$.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 📐 **What theory says**
-
-$$T = 2\pi\sqrt{\frac{\ell}{g}} \quad\Longrightarrow\quad T^2 = \frac{4\pi^2}{g}\,\ell$$
-
-$T^2$ against $\ell$ is a straight line through the origin with slope $4\pi^2/g$. For $g = 9.81$ m/s² the slope is 4.024 s²/m.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-The length is written $\ell$ today. The letter $L$ is the likelihood.
-
-</div>
-
-</div>
-
-</div>
+A formula with numbers left open. The data set them.
 
 <!--
-Speaker: the table is the 97-byte pendulum.csv of the workbook's data folder.
-Ask the room what they would plot to
-get g. (~2 min)
+**Say:** first the simplest model, one number for a handful of values, and the tool that finds the best number: the derivative.
+(~0.5 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# From a Curve to a **Straight Line**
+# Three Models of the Weather **Log**
 
-<div class="note-text mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-The same nine rows, plotted twice. A straight line has two parameters and can be fitted by hand. The dashed curves are the theory with $g = 9.81$ m/s², put in by hand. Today the data set $g$.
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_pendulum_data.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:345px;">
-
----
-hideInToc: true
----
-
-# The Uncertainties We **Assume**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="stack-tight" style="margin-top:0;">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✋ **One assumption**
-
-The stopwatch is worked by hand. Take $\sigma_{t_{10}} = 0.1$ s for every row. Then $\sigma_T = \sigma_{t_{10}}/10 = 0.01$ s.
+🧩 Parameters: one, μ; two, a and b; three, c, A and d₀. **Fitting** finds the values that match the data best.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
-
-## ➡️ **Propagated to T²**
-
-By error propagation (Lecture 09):
-
-$$\sigma_{T^2} = \left|\frac{d(T^2)}{dT}\right|\sigma_T = 2\,T\,\sigma_T$$
-
-First row: 2 × 0.902 × 0.01 = 0.0180 s².
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-The length is taken as exact. An error of 1 mm in $\ell$ moves $T^2$ by 0.004 s², less than a quarter of the smallest $\sigma_{T^2}$.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact table-compact">
-
-## 📏 **The data of the fit**
-
-| x = ℓ (m) | y = T² (s²) | σ (s²) |
-| --- | --- | --- |
-| 0.2 | 0.8136 | 0.0180 |
-| 0.3 | 1.2210 | 0.0221 |
-| 0.4 | 1.5901 | 0.0252 |
-| 0.5 | 2.0249 | 0.0285 |
-| 0.6 | 2.3994 | 0.0310 |
-| 0.7 | 2.8359 | 0.0337 |
-| 0.8 | 3.2041 | 0.0358 |
-| 0.9 | 3.6481 | 0.0382 |
-| 1.0 | 4.0040 | 0.0400 |
-
-</div>
-
-</div>
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_three_models.svg">
 
 <!--
-Speaker: the 0.1 s is an assumption, and the lecture says so every time it is
-used. The uncertainties are not equal: the
-long pendulum has twice the uncertainty in T squared. (~2 min)
+**Say:** a parameter is a number the formula leaves open. x is the year counted from 2016, d the day counted from 1 January 2016.
+**Ask:** in the middle panel, what do a and b mean? a: °C per year; b: the value of the line in 2016.
+(~2 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The Three Parts of a **Fit**
 
-<div class="grid-3 mt-sm gap-md">
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧩 A model with open parameters, data with their scatter, a measure of the miss. The fit: the parameter values with the **smallest miss**.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_parts.svg">
+
+<!--
+**Say:** every fit in physics, finance or machine learning has these three parts. Today: which measure of the miss, why, how to find its lowest point, and how sure that point is.
+**If asked:** σ = 0.70 °C is how much the ten yearly means scatter around their mean (Lecture 8).
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Reading the **Formulas**
+
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
+
+| Symbol | Read | The four hours of 21 July 2019 |
+| --- | --- | --- |
+| $y_i$ | value number i | $y_1$ = 27.3, $y_4$ = 23.6 |
+| $\sum_{i=1}^{N} y_i$ | add the values, i from 1 to N | 27.3 + 25.6 + 24.6 + 23.6 = 101.1 |
+| $\prod_{i=1}^{N} p_i$ | multiply them | the likelihood L of ten years |
+| $\hat\mu$ | the value the data choose, "mu hat" | 25.275 |
+| $\hat y_i$ | the model's value for point i | 7.41 for 2016, on the best line |
+| $\sigma$ | the scatter of one value | 0.70 °C for a yearly mean |
+
+</div>
+
+<!--
+**Say:** the symbols of the lecture, each once, with the four hours where a number fits.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Which μ Fits Four **Hours**?
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📐 **A model**
+## 🌡️ **21 July 2019, 20:00 to 23:00**
 
-A function $f(x;\theta)$ with parameters $\theta$. Here $f(x; a, b) = a\,x + b$, with $x = \ell$ and $y = T^2$.
+27.3, 25.6, 24.6, 23.6 °C
+
+Model: every hour is μ. A miss: $y_i - \mu$.
+
+$$S(\mu) = \sum_{i=1}^{4} (y_i - \mu)^2$$
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📏 **Data with uncertainties**
+## 🧮 **μ = 25**
 
-$N$ points $(x_i, y_i)$ with uncertainties $\sigma_i$, $i = 1 \dots N$. Here $N = 9$.
+<div v-click>
 
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🎯 **A measure of mismatch**
-
-One number that says how far the model with parameters $\theta$ is from the data. The fit is the $\theta$ that makes it smallest.
+misses: 2.3, 0.6, −0.4, −1.4
 
 </div>
 
-</div>
+<div v-click>
 
-<div class="note-text mt-sm">
-
-Three lines chosen by eye. At full scale they look alike. With $4\ell$ subtracted they differ by a few 0.01 s², the size of the error bars. The measure has to rank them, and it has to use the $\sigma_i$.
+squares: 5.29, 0.36, 0.16, 1.96
 
 </div>
 
-<img class="fig" src="/figures/viz_fitting_candidates.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:215px;">
+<div v-click>
+
+$S(25) = 7.77$
+
+</div>
+
+</div>
+
+</div>
 
 <!--
-Speaker: ask for a vote on A, B or C before going on. The slope a gives
-g = 4 pi squared over a. The intercept b tests the theory, which demands
-b = 0. The right panel is the data with one known line subtracted, so that
-differences of 0.01 s squared become visible. (~3 min)
+**Say:** the evening of 21 July 2019, the four hours before the sensor failed. One number for all four: which one?
+**Do:** three clicks: the misses, their squares, the sum.
+**Ask:** which μ would give a smaller S?
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# S Is Smallest at the **Mean**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+| μ (°C) | S(μ) (°C²) |
+| --- | --- |
+| 24 | 13.97 |
+| 25 | 7.77 |
+| **25.275** | **7.47** |
+| 26 | 9.57 |
+
+The lowest point: 101.1 / 4 = **25.275**, the mean.
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_sum_squares.svg">
+
+</div>
+
+<!--
+**Say:** S is a parabola in μ, with one lowest point. It lies at 25.275, the mean of the four hours.
+**If asked:** S(μ) = 7.4675 + 4 (μ − 25.275)²: four hours, so the parabola rises four times as fast as one square.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why the **Squares**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## ➕ **Plain misses**
+
+$\sum (y_i - \mu)$
+
+μ = 100 gives −298.9: no lowest point.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **Sizes of misses**
+
+$\sum |y_i - \mu|$
+
+4.7 for every μ from 24.6 to 25.6: no single answer.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ◻️ **Squares**
+
+$\sum (y_i - \mu)^2$
+
+One lowest point. A large miss counts more: 2.3² = 5.29, 0.6² = 0.36.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Gaussian scatter, too, leads to the squares.
+
+</div>
+
+<!--
+**Say:** the plain sum can be pushed as low as we like, so it ranks nothing. The sum of sizes is flat between the two middle values: any μ from 24.6 to 25.6 ties, the median's range. The squares give one answer.
+**If asked:** the sum of sizes is the right measure for scatter with long tails; it is minimised by the median.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Derivative**: How Fast S Changes
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-primary card-glass pad-compact">
+
+Nudge μ by a small h:
+
+$$\frac{dS}{d\mu} \approx \frac{S(\mu + h) - S(\mu)}{h}$$
+
+At μ = 25, h = 0.001:
+
+(7.767804 − 7.770000) / 0.001 = **−2.196**
+
+Negative: S falls as μ grows. Zero: the bottom.
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_tangent.svg">
+
+</div>
+
+<!--
+**Say:** the derivative is the slope of the curve at one point: how much S changes per unit of μ, for a very small step. The orange line touches the curve at 25 with slope −2.2; at the mean the touching line is flat.
+**If asked:** S(25.001) = 7.767804. Smaller h gives −2.1996, −2.19996: the limit is −2.2.
+(~2.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Derivative of a **Square**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **One term,** $d = y - \mu$
+
+$$(d - h)^2 - d^2 = -2dh + h^2$$
+
+Divide by h: $-2d + h$. Let h shrink:
+
+$$\frac{d}{d\mu}(y - \mu)^2 = -2\,(y - \mu)$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **Checked**
+
+<div v-click>
+
+y = 27.3, μ = 25: d = 2.3
+
+(2.29² − 2.3²) / 0.01 = −4.59 = −4.6 + 0.01
+
+</div>
+
+<div v-click>
+
+All four hours:
+
+$$\frac{dS}{d\mu} = -2\sum_i (y_i - \mu) = -2 \times 1.1 = -2.2$$
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+**Say:** raising μ by h shrinks every miss by h. The square changes by −2dh plus h², and the h² vanishes as h shrinks. A sum of terms has the sum of their derivatives.
+**Do:** two clicks: one hour by the nudge, then all four by the rule; the nudge of the previous slide gave −2.196.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Mean Is the **Least-Squares** Value
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🎯 **At the bottom the derivative is zero**
+
+$$\frac{dS}{d\mu} = -2\sum_{i=1}^{N} (y_i - \hat\mu) = 0 \quad\Longrightarrow\quad \sum_i y_i = N\hat\mu \quad\Longrightarrow\quad \hat\mu = \frac{1}{N}\sum_i y_i$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🌡️ **Four hours**
+
+$\hat\mu$ = 101.1 / 4 = **25.275 °C**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📅 **Ten years**
+
+$\hat\mu$ = 71.60 / 10 = **7.16 °C**
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+$\hat\mu$, "mu hat": the value the data choose. The mean is the number with the smallest sum of squared misses.
+
+</div>
+
+<!--
+**Say:** setting the derivative to zero turns "find the lowest point" into an equation. Its solution is the mean, for any data. The yearly means give 7.16, the mean of the log.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Slope of S by Formula and by **Nudge**
+
+```py {monaco-run} {autorun:false}
+y = [27.3, 25.6, 24.6, 23.6]            # 21 July 2019, 20:00 to 23:00
+def S(mu):                              # the sum of squared deviations
+    total = 0
+    for v in y:
+        total = total + (v - mu) ** 2
+    return total
+h = 0.001                               # a small nudge
+for mu in [24, 25, 26]:
+    slope = -2 * (sum(y) - 4 * mu)      # the formula
+    print(mu, round(slope, 3), round((S(mu + h) - S(mu)) / h, 3))   # 25 -2.2 -2.196
+```
+
+<!--
+**Do:** press ▶. Each row: μ, the slope by the formula, the slope by the nudge.
+**Say:** the two columns agree to the third decimal; the rest is the h² of the previous slide. A derivative worked out on paper is checked this way before a program uses it.
+**Ask:** where does the sign change? Between 25 and 26: at 25.275.
+(~2 min)
 -->
 
 ---
@@ -387,65 +451,150 @@ hideInToc: true
 
 # From Likelihood to **χ²**
 
-Ranking lines needs one number that uses the uncertainty of every point, and the likelihood of Lecture 09 supplies it.
+Where the squares come from: the Gaussian of Lecture 8.
+
+<!--
+**Say:** the ten yearly means now. Each scatters around the model; the Gaussian says how probable each value is, and the most probable model has the smallest sum of squares.
+(~0.5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# The Gaussian Scatter of One **Point**
+# Where σ = 0.70 °C Comes **From**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="stack-tight" style="margin-top:0;">
+<div class="card card-success card-glass pad-compact">
 
-<div class="card card-primary card-glass pad-compact">
+## 📅 **The scatter of the ten yearly means**
 
-## 📍 **The assumption**
-
-If the model is right, the measured $y_i$ scatters around the model value $f(x_i;\theta)$ as a Gaussian of width $\sigma_i$:
-
-$$p(y_i \mid \theta) = \frac{1}{\sqrt{2\pi}\,\sigma_i}\,\exp\!\left[-\frac{\big(y_i - f(x_i;\theta)\big)^2}{2\sigma_i^2}\right]$$
+$$s = \sqrt{\frac{\sum_i (y_i - \bar y)^2}{N - 1}} = \sqrt{\frac{4.451}{9}} = 0.70\ \text{°C}$$
 
 </div>
 
-<div class="card card-info card-glass pad-compact">
+<div class="card card-warning card-glass pad-compact">
 
-The Gaussian of Lecture 09, with $f(x_i;\theta)$ in the place of the mean $\mu$. Three assumptions are in it: the scatter is Gaussian, the $\sigma_i$ are known, and the $x_i$ are exact.
+## ⏱️ **Not from the hours**
+
+8.85 / √8760 = 0.09 °C: too small, since neighbouring hours are alike.
+
+</div>
 
 </div>
 
+<div class="card card-info card-glass pad-compact mt-md">
+
+σ: the uncertainty of **one yearly mean**, the same for every year.
+
 </div>
 
-<img class="fig" src="/figures/viz_fitting_likelihood.svg" style="display:block;width:100%;">
+<!--
+**Say:** Lecture 8 found both numbers: the hours scatter by 8.85 °C, but a year of hours is not 8760 independent values, and the yearly means themselves scatter by 0.70 °C. That is the σ of each point of today's fit.
+**If asked:** the 120 missing hours of July 2019 lower its mean by about 0.14 °C: filled with the 17.46 °C of 22–26 July in the other years, 2019 would be 7.41 instead of 7.27; well inside 0.70.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Ten Years Around a Flat **Line**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📊 Model: 7.16 °C every year. Each yearly mean scatters around it as a Gaussian of σ = 0.70 °C, the scatter of the ten (Lecture 8).
 
 </div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_gauss.svg">
+
+<!--
+**Say:** each orange bell is the probability density of a yearly mean if the model is right. The dotted line from each point to its bell is that density: high near the line, low for 2023 and 2025.
+(~1.5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# The Likelihood of All **Points**
+# How Probable Is **2016**?
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## ✖️ **A fourth assumption: independent points, so the probabilities multiply**
+## 🔔 **The Gaussian, the model in place of its mean**
 
-$$L(\theta) = \prod_{i=1}^{N} \frac{1}{\sqrt{2\pi}\,\sigma_i}\,\exp\!\left[-\frac{\big(y_i - f(x_i;\theta)\big)^2}{2\sigma_i^2}\right]$$
+$$p(y \mid \mu) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-(y - \mu)^2 / 2\sigma^2}$$
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 
-## 🪵 **Take the logarithm**
+## 🔢 **y = 7.605, μ = 7.16, σ = 0.70**
 
-The logarithm turns the product into a sum, and it is largest at the same $\theta$ as $L$ itself:
+<div v-click>
 
-$$\ln L(\theta) = -\frac{1}{2}\sum_{i=1}^{N}\frac{\big(y_i - f(x_i;\theta)\big)^2}{\sigma_i^2} \;-\; \sum_{i=1}^{N}\ln\!\big(\sqrt{2\pi}\,\sigma_i\big)$$
-
-The second sum does not contain $\theta$. It is a constant.
+(7.605 − 7.16) / 0.70 = 0.64 standard deviations
 
 </div>
+
+<div v-click>
+
+$e^{-0.64^2/2}$ = 0.82, and $0.70\sqrt{2\pi}$ = 1.75
+
+</div>
+
+<div v-click>
+
+p = 0.82 / 1.75 = **0.47 per °C**
+
+</div>
+
+</div>
+
+<!--
+**Say:** a density, not a probability: 0.47 per °C means that a window 0.1 °C wide around 7.6 holds a chance of about 0.047.
+**Do:** three clicks, one step each.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Likelihood of Ten **Years**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ✖️ **Independent years: the densities multiply**
+
+$$L(\mu) = \prod_{i=1}^{10} p(y_i \mid \mu)$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md table-compact">
+
+| 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0.47 | 0.37 | 0.29 | 0.56 | 0.51 | 0.57 | 0.41 | 0.15 | 0.56 | 0.14 |
+
+L(7.16) = 0.47 × 0.37 × … × 0.14 ≈ **4 × 10⁻⁵**
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+**Maximum likelihood**: the parameters that make L largest.
+
+</div>
+
+<!--
+**Say:** L is the probability density of all ten values at once, read as a function of the model's parameters. A tiny number, and that is normal: ten densities below 1 multiplied.
+**Ask:** which two years pull L down most? 2023 and 2025, the farthest from the line.
+(~2 min)
+-->
 
 ---
 hideInToc: true
@@ -453,68 +602,64 @@ hideInToc: true
 
 # Maximum Likelihood Is Minimum **χ²**
 
-<div class="card card-info card-glass pad-compact mt-md">
+<div class="card card-primary card-glass pad-compact mt-md">
 
-$$-2\ln L(\theta) = \chi^2(\theta) + \text{const}, \qquad \chi^2(\theta) = \sum_{i=1}^{N}\frac{\big(y_i - f(x_i;\theta)\big)^2}{\sigma_i^2}$$
+## 🪵 **The logarithm: a product becomes a sum**
 
-</div>
+$\ln(ab) = \ln a + \ln b$ and $\ln e^u = u$, so
 
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔁 **The same estimate**
-
-$L$ is largest where $\chi^2$ is smallest. With Gaussian uncertainties, maximum likelihood is the method of **least squares**.
+$$-2\ln L = \sum_{i} \frac{\big(y_i - f(x_i)\big)^2}{\sigma^2} + \text{const} = \chi^2 + \text{const}$$
 
 </div>
+
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📏 **One term**
+## 🔢 **Line at 7.16**
 
-The residual $y_i - f(x_i;\theta)$, divided by $\sigma_i$, is the **pull**. $\chi^2$ is the sum of the squared pulls. A point 1σ from the model adds 1. A point 3σ away adds 9.
+−2 ln L = 20.33 = **9.08** + 11.25
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-## ⚖️ **Equal uncertainties**
+## 🎯 **Least squares**
 
-If every $\sigma_i$ is the same $\sigma$, then $\chi^2 = \frac{1}{\sigma^2}\sum_i (y_i - f)^2$. The minimum is where the plain sum of squares is smallest.
+Largest L, smallest χ²: the same parameters.
 
 </div>
 
 </div>
 
 <!--
-Speaker: this is the central step of the lecture. The measure of mismatch was
-not chosen. It follows from the Gaussian and from independence. (~3 min)
+**Say:** f(x_i) is what the model says for point i: here 7.16 every year, or a line. The constant is 20 ln(0.70 √2π) = 11.25, the same for every model, so it never moves the minimum. With Gaussian scatter, the most probable model is the one with the smallest χ², "chi-squared".
+**If asked:** with a different σ_i for each point, each term keeps its own σ_i²: a precise point counts more.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# χ² of Lines A, B and **C**
+# χ² of the Flat Line, Year by **Year**
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact table-compact">
 
-## 🧮 **Line A:** $a = 4$, $b = 0$
-
-| ℓ | y | y − 4ℓ | σ | pull | pull² |
-| --- | --- | --- | --- | --- | --- |
-| 0.2 | 0.8136 | 0.0136 | 0.0180 | 0.75 | 0.57 |
-| 0.3 | 1.2210 | 0.0210 | 0.0221 | 0.95 | 0.91 |
-| 0.4 | 1.5901 | −0.0099 | 0.0252 | −0.39 | 0.15 |
-| 0.5 | 2.0249 | 0.0249 | 0.0285 | 0.88 | 0.77 |
-| 0.6 | 2.3994 | −0.0006 | 0.0310 | −0.02 | 0.00 |
-| 0.7 | 2.8359 | 0.0359 | 0.0337 | 1.06 | 1.13 |
-| 0.8 | 3.2041 | 0.0041 | 0.0358 | 0.11 | 0.01 |
-| 0.9 | 3.6481 | 0.0481 | 0.0382 | 1.26 | 1.59 |
-| 1.0 | 4.0040 | 0.0040 | 0.0400 | 0.10 | 0.01 |
+| Year | y (°C) | y − 7.16 | pull | pull² |
+| --- | --- | --- | --- | --- |
+| 2016 | 7.605 | 0.445 | 0.64 | 0.40 |
+| 2017 | 6.508 | −0.652 | −0.93 | 0.87 |
+| 2018 | 7.975 | 0.815 | 1.16 | 1.35 |
+| 2019 | 7.270 | 0.110 | 0.16 | 0.02 |
+| 2020 | 6.831 | −0.329 | −0.47 | 0.22 |
+| 2021 | 7.248 | 0.088 | 0.13 | 0.02 |
+| 2022 | 6.600 | −0.560 | −0.80 | 0.64 |
+| 2023 | 8.310 | 1.150 | 1.64 | 2.70 |
+| 2024 | 7.273 | 0.113 | 0.16 | 0.03 |
+| 2025 | 5.982 | −1.178 | −1.68 | 2.83 |
 
 </div>
 
@@ -522,27 +667,23 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact">
 
+## 📏 **The pull**
+
+$\dfrac{y_i - f(x_i)}{\sigma}$: the miss in units of σ = 0.70.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
 ## ➕ **The sum**
 
-$\chi^2 = 0.57 + 0.91 + \dots + 0.01 = 5.14$
+χ² = 0.40 + 0.87 + … + 2.83 = **9.08**
 
 </div>
 
-<div class="card card-accent card-glass pad-compact table-compact">
+<div class="card card-warning card-glass pad-compact">
 
-## 🏁 **The three candidates**
-
-| Line | a | b | χ² |
-| --- | --- | --- | --- |
-| A | 4.0 | 0 | 5.14 |
-| B | 3.9 | 0.05 | 13.11 |
-| C | 4.1 | −0.05 | 12.28 |
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-A is the best of the three. The fit asks for the best of all lines: the $(a, b)$ at which $\chi^2$ is smallest.
+2023 and 2025 give 5.53 of the 9.08.
 
 </div>
 
@@ -551,8 +692,59 @@ A is the best of the three. The fit asks for the best of all lines: the $(a, b)$
 </div>
 
 <!--
-Speaker: do the first row on the board. 0.8136 minus 0.8 is 0.0136; divided by
-0.0180 it is 0.75; squared, 0.57. (~2 min)
+**Say:** a point one σ away adds 1, two σ away adds 4. The squares make the far points count most.
+**Do:** first row on the board: 7.605 − 7.16 = 0.445; / 0.70 = 0.64; squared, 0.40.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Two Guessed **Lines**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📐 $f(x) = a\,x + b$, x = years since 2016. The sticks are the misses. Which line is best of all?
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_guesses.svg">
+
+<!--
+**Say:** the grey sticks are the misses; χ² adds up their squares in units of σ. B misses 2025 by 1.62 °C, 2.3 σ: 5.34 of its 12.64.
+**Ask:** where would you move line B to lower its χ²?
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Your Line, **Live**
+
+```py {monaco-run} {autorun:false}
+y = [7.6045, 6.5078, 7.9745, 7.2697, 6.8314, 7.2478, 6.5997, 8.3102, 7.2729, 5.9821]
+a, b = 0.1, 6.7                         # <-- try your own line
+chi2 = 0
+for x in range(10):                     # x = years since 2016
+    pull = (y[x] - (a * x + b)) / 0.70
+    chi2 = chi2 + pull ** 2
+print(round(chi2, 2))                   # 12.64
+```
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+❓ Who can beat **9.08**, the flat line?
+
+</div>
+
+<!--
+**Do:** press ▶: 12.64, line B. Then take two or three lines from the room, change a and b, run each.
+**Say:** the list holds the ten yearly means, 2016 first. Guessing works, slowly.
+**If asked:** a = 0, b = 7.16 gives 9.08; the best line, a = −0.0555, b = 7.41, gives 8.56.
+(~3 min)
 -->
 
 ---
@@ -560,37 +752,48 @@ layout: section
 hideInToc: true
 ---
 
-# The Straight Line in **Closed Form**
+# The Best Line in **Closed Form**
 
-The best line is the lowest point of χ², and for a straight line that point can be solved for.
+Two parameters, two derivatives, both set to zero.
+
+<!--
+**Say:** the derivative of the first section, now for two parameters at once. The answer is a formula: five sums of the data, pushed through by hand.
+(~0.5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Two Derivatives Set to **Zero**
+# The Derivatives of χ² for a **Line**
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## 📐 **χ² of the straight line**
+## 📐 **χ² of a line**
 
-$$\chi^2(a,b) = \sum_{i=1}^{N}\frac{(y_i - a\,x_i - b)^2}{\sigma_i^2}$$
+$$\chi^2(a, b) = \frac{1}{\sigma^2}\sum_{i=1}^{N} (y_i - a\,x_i - b)^2$$
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 
-## 0️⃣ **At the minimum both partial derivatives vanish**
+## 🧭 **Partial derivatives: one parameter moves, the other stays**
 
-$$\frac{\partial\chi^2}{\partial a} = -2\sum_i \frac{x_i\,(y_i - a\,x_i - b)}{\sigma_i^2} = 0, \qquad \frac{\partial\chi^2}{\partial b} = -2\sum_i \frac{y_i - a\,x_i - b}{\sigma_i^2} = 0$$
+$$\frac{\partial\chi^2}{\partial a} = -\frac{2}{\sigma^2}\sum_i x_i\,(y_i - a\,x_i - b), \qquad \frac{\partial\chi^2}{\partial b} = -\frac{2}{\sigma^2}\sum_i (y_i - a\,x_i - b)$$
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A partial derivative is the derivative with respect to one parameter while the other is held fixed. $\chi^2$ is a quadratic function of $a$ and $b$, a bowl with one lowest point, so the point where both derivatives are zero is the minimum.
+Raising a by h moves the miss of point i by $x_i h$: hence the extra $x_i$. At the lowest point both are **zero**.
 
 </div>
+
+<!--
+**Say:** the rule of the square again: −2 times the miss, times how fast the miss changes with the parameter: x_i for a, 1 for b.
+**If asked:** for line A (a = 0, b = 7.16), ∂χ²/∂a = 18.69; a nudge of 0.0001 gives 18.75. Positive: a smaller slope lowers χ².
+(~2.5 min)
+-->
 
 ---
 hideInToc: true
@@ -600,280 +803,82 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## ➕ **Five sums over the data**
+## 🟰 **Both derivatives zero, multiplied out (σ cancels)**
 
-$$S = \sum_i \frac{1}{\sigma_i^2},\quad S_x = \sum_i \frac{x_i}{\sigma_i^2},\quad S_y = \sum_i \frac{y_i}{\sigma_i^2},\quad S_{xx} = \sum_i \frac{x_i^2}{\sigma_i^2},\quad S_{xy} = \sum_i \frac{x_i\,y_i}{\sigma_i^2}$$
+$$a\sum x_i^2 + b\sum x_i = \sum x_i y_i \qquad\qquad a\sum x_i + b\,N = \sum y_i$$
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 
-## 🟰 **The two conditions, written with the sums**
+## ➕ **The data enter through five numbers**
 
-$$a\,S_{xx} + b\,S_x = S_{xy} \qquad\qquad a\,S_x + b\,S = S_y$$
+$$N, \qquad \sum x_i, \qquad \sum y_i, \qquad \sum x_i^2, \qquad \sum x_i y_i$$
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Two linear equations for two unknowns. They are called the **normal equations**. The data enter only through the five sums, whatever the number of points.
+Two equations, two unknowns: the **normal equations**. Ten points or a million, still five sums.
 
 </div>
 
 <!--
-Speaker: derive the first equation on the board: multiply out x times the
-bracket, split the sum into three, and name each sum. (~3 min)
+**Do:** on the board, the second one: Σ(y_i − a x_i − b) = 0 splits into Σy_i − aΣx_i − N b = 0.
+**Say:** σ is the same for every year, so it divides out: the best line does not depend on σ. Its uncertainty will.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Slope and Intercept in **Closed Form**
+# Slope and Intercept from the **Sums**
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## ✂️ **Eliminate b**
+## ✂️ **Solve the two equations**
 
-Multiply the first equation by $S$, the second by $S_x$, and subtract:
+$$\Delta = N\sum x_i^2 - \Big(\sum x_i\Big)^2$$
 
-$$a\,\big(S\,S_{xx} - S_x^2\big) = S\,S_{xy} - S_x S_y$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## ✅ **The solution**
-
-$$\Delta = S\,S_{xx} - S_x^2, \qquad \hat a = \frac{S\,S_{xy} - S_x S_y}{\Delta}, \qquad \hat b = \frac{S_{xx}\,S_y - S_x S_{xy}}{\Delta}$$
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-accent card-glass pad-compact">
-
-The second equation, divided by $S$, reads $\bar y = \hat a\,\bar x + \hat b$ with $\bar x = S_x/S$, $\bar y = S_y/S$. The line passes through the weighted mean point.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-With equal $\sigma_i$ the formula for the slope becomes $\hat a = \dfrac{N\sum x_i y_i - \sum x_i \sum y_i}{N\sum x_i^2 - (\sum x_i)^2}$, the one built into every spreadsheet.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# The Pendulum: Five **Sums**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| x = ℓ | w = 1/σ² | w·x | w·y | w·x² | w·x·y |
-| --- | --- | --- | --- | --- | --- |
-| 0.2 | 3072.75 | 614.55 | 2500.00 | 122.91 | 500.00 |
-| 0.3 | 2047.46 | 614.24 | 2500.00 | 184.27 | 750.00 |
-| 0.4 | 1572.21 | 628.88 | 2500.00 | 251.55 | 1000.00 |
-| 0.5 | 1234.61 | 617.31 | 2500.00 | 308.65 | 1250.00 |
-| 0.6 | 1041.93 | 625.16 | 2500.00 | 375.09 | 1500.00 |
-| 0.7 | 881.57 | 617.10 | 2500.00 | 431.97 | 1750.00 |
-| 0.8 | 780.25 | 624.20 | 2500.00 | 499.36 | 2000.00 |
-| 0.9 | 685.29 | 616.76 | 2500.00 | 555.08 | 2250.00 |
-| 1.0 | 624.38 | 624.38 | 2500.00 | 624.38 | 2500.00 |
-| **Sum** | $S$ = 11 940.44 | $S_x$ = 5582.56 | $S_y$ = 22 500.00 | $S_{xx}$ = 3353.27 | $S_{xy}$ = 13 500.00 |
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Every $w\,y$ is 2500 because $\sigma_i = 2\,T_i\,\sigma_T$: then $y_i/\sigma_i^2 = T_i^2/(4\,T_i^2\,\sigma_T^2) = 1/(4 \times 0.01^2)$. The rows are rounded; the sums were taken before rounding.
-
-</div>
-
-<!--
-Speaker: let the room compute one row. Row 1: 1 over 0.01804 squared is
-3072.75; times 0.2 is 614.55; times 0.8136 is 2500. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Pendulum: Slope and **Intercept**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔢 **The denominator**
-
-```text
-Δ = S·Sxx − Sx²
-  = 11 940.44 × 3353.27 − 5582.56²
-  = 40 039 519 − 31 164 976
-  = 8 874 543
-```
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📈 **Slope and intercept**
-
-```text
-a = (S·Sxy − Sx·Sy) / Δ
-  = (161 195 940 − 125 607 600) / Δ
-  = 35 588 340 / 8 874 543 = 4.0102 s²/m
-
-b = (Sxx·Sy − Sx·Sxy) / Δ
-  = (75 448 575 − 75 364 560) / Δ
-  = 84 015 / 8 874 543     = 0.0095 s²
-```
-
-</div>
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-success card-glass pad-compact">
-
-$g = 4\pi^2/a = 39.4784 / 4.01018 = 9.845$ m/s². What this number is worth depends on the uncertainty of $a$.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-⚠️ $b$ is the difference of two numbers that agree in their first three digits. Sums rounded to four digits give a wrong $b$. Keep all digits until the end.
-
-</div>
-
-</div>
-
-<!--
-Speaker: with the sums to all digits, NumPy gives 8 874 453 for the denominator,
-a = 4.010181 and b = 0.009455. The calculator values on the slide agree with
-them to the four decimals shown. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Fitted **Line**
-
-<div class="note-text mt-sm">
-
-$T^2 = 4.010\,\ell + 0.009$ with $\chi^2 = 2.65$, lower than line A (5.14), B and C. Left: the line through the nine points. Right: what is left of each point after the line is subtracted, the **residual**, with its error bar $\sigma_i$.
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_pendulum_fit.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:345px;">
-
----
-hideInToc: true
----
-
-# The Same in **NumPy**
-
-```python {monaco-run} {autorun:false}
-import numpy as np
-x   = np.arange(20, 101, 10) / 100                 # length in m
-t10 = np.array([9.02, 11.05, 12.61, 14.23, 15.49, 16.84, 17.90, 19.10, 20.01])
-T   = t10 / 10                                     # one period in s
-y   = T**2
-sy  = 2 * T * 0.01                                 # uncertainty of T squared
-
-w = 1 / sy**2
-S, Sx, Sy = w.sum(), (w * x).sum(), (w * y).sum()
-Sxx, Sxy  = (w * x * x).sum(), (w * x * y).sum()
-D = S * Sxx - Sx**2
-a = (S * Sxy - Sx * Sy) / D
-b = (Sxx * Sy - Sx * Sxy) / D
-print(f"a = {a:.6f}   b = {b:.6f}   g = {4 * np.pi**2 / a:.4f}")
-```
-
-<!--
-Speaker: prints a = 4.010181, b = 0.009455, g = 9.8445. The nine numbers are
-typed in here because the browser has no file to read. In a script the two
-columns come from np.loadtxt on pendulum.csv. (~2 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Uncertainties of the **Parameters**
-
-Without its uncertainty, g = 9.845 m/s² cannot be compared with 9.81, nor with the 9.80 of Lecture 09.
-
----
-hideInToc: true
----
-
-# The Slope Is a Sum over the **Data**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## ➕ **â is linear in the yᵢ**
-
-$S_{xy}$ and $S_y$ are sums over the $y_i$. Nothing else in $\hat a$ contains them:
-
-$$\hat a = \frac{S\,S_{xy} - S_x S_y}{\Delta} = \sum_i c_i\,y_i, \qquad c_i = \frac{S\,x_i - S_x}{\sigma_i^2\,\Delta}$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## ➡️ **Error propagation for a sum of independent terms (Lecture 09)**
-
-$$\sigma_a^2 = \sum_i c_i^2\,\sigma_i^2 = \frac{1}{\Delta^2}\sum_i \frac{(S\,x_i - S_x)^2}{\sigma_i^2} = \frac{S^2 S_{xx} - 2\,S\,S_x^2 + S_x^2\,S}{\Delta^2} = \frac{S\,\Delta}{\Delta^2} = \frac{S}{\Delta}$$
+$$\hat a = \frac{N\sum x_i y_i - \sum x_i \sum y_i}{\Delta} \qquad\qquad \hat b = \frac{\sum x_i^2 \sum y_i - \sum x_i \sum x_i y_i}{\Delta}$$
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-If the nine times were measured again, each $y_i$ would come out a little different, and so would $\hat a$. $\sigma_a$ is the width of that scatter, the spread that Lecture 07's band of 400 resampled lines drew.
+📋 The formula behind a spreadsheet's trend line.
 
 </div>
 
 <!--
-Speaker: the middle step: square the bracket, sum term by term, and recognise
-S squared times Sxx, S times Sx squared twice with a minus, and Sx squared
-times S. (~3 min)
+**Say:** multiply the second equation by Σx_i, the first by N, subtract: b drops out and â is left. The same for b̂.
+**If asked:** Δ is zero only when all x_i are equal: then no line is defined.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Two Uncertainties and a **Covariance**
+# The Ten Years in a **Table**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="grid-2 mt-sm gap-md">
 
-The same steps for $\hat b$, and for the product of the two:
+<div class="card card-primary card-glass pad-compact table-compact">
 
-$$\sigma_a^2 = \frac{S}{\Delta}, \qquad \sigma_b^2 = \frac{S_{xx}}{\Delta}, \qquad \operatorname{cov}(a,b) = -\frac{S_x}{\Delta}$$
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧮 **The pendulum**
-
-```text
-σa  = √(11 940.44 / 8 874 543) = 0.0367 s²/m
-σb  = √( 3353.27 / 8 874 543)  = 0.0194 s²
-cov = −5582.56 / 8 874 543     = −0.000629
-ρ   = cov / (σa σb)            = −0.88
-```
+| Year | x | y (°C) | x² | x·y |
+| --- | --- | --- | --- | --- |
+| 2016 | 0 | 7.605 | 0 | 0 |
+| 2017 | 1 | 6.508 | 1 | 6.508 |
+| 2018 | 2 | 7.975 | 4 | 15.950 |
+| 2019 | 3 | 7.270 | 9 | 21.810 |
+| 2020 | 4 | 6.831 | 16 | 27.324 |
+| 2021 | 5 | 7.248 | 25 | 36.240 |
+| 2022 | 6 | 6.600 | 36 | 39.600 |
+| 2023 | 7 | 8.310 | 49 | 58.170 |
+| 2024 | 8 | 7.273 | 64 | 58.184 |
+| 2025 | 9 | 5.982 | 81 | 53.838 |
 
 </div>
 
@@ -881,192 +886,354 @@ cov = −5582.56 / 8 874 543     = −0.000629
 
 <div class="card card-success card-glass pad-compact">
 
-$a = 4.010 \pm 0.037$ s²/m, $\quad b = 0.009 \pm 0.019$ s²
+## ➕ **The five sums**
+
+N = 10
+
+Σx = 45
+
+Σy = 71.60
+
+Σx² = 285
+
+Σxy = 317.62
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-$\hat a$ and $\hat b$ come from the same nine $y_i$, so they are not independent. Covariance and $\rho$ are those of Lecture 09.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-The three formulas contain the $x_i$ and $\sigma_i$ and no $y_i$. The uncertainties are known before the measurement is made.
+x = years since 2016. y: three decimals.
 
 </div>
 
 </div>
 
 </div>
+
+<!--
+**Say:** x counts the years from 2016, so the numbers stay small: Σx = 0 + 1 + … + 9 = 45, Σx² = 285.
+**Do:** let the room check one row: 2018, x = 2: x² = 4, x·y = 15.950.
+(~2 min)
+-->
 
 ---
 hideInToc: true
+---
+
+# The Sums Pushed **Through**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## Δ
+
+Δ = 10 × 285 − 45² = 2850 − 2025 = **825**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md" v-click>
+
+## Slope â
+
+â = (10 × 317.62 − 45 × 71.60) / 825 = (3176.2 − 3222.0) / 825 = **−0.056 °C a year**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md" v-click>
+
+## Intercept b̂
+
+b̂ = (285 × 71.60 − 45 × 317.62) / 825 = (20 406.0 − 14 292.9) / 825 = **7.41 °C**
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md" v-click>
+
+**−0.56 °C per decade**, starting from 7.41 °C in 2016.
+
+</div>
+
+<!--
+**Do:** one click per line; the room can follow on a calculator.
+**Say:** the slope is a small difference of two large numbers, 3176.2 and 3222.0: keep every digit of the sums until the end.
+(~2.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Best **Line**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-success card-glass pad-compact">
+
+📉 **χ² = 8.56**, below A (9.08) and B (12.64).
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+Through (4.5, 7.16): the middle year and the mean. 7.41 − 0.056 × 4.5 = 7.16.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_best_line.svg">
+
+</div>
+
+<!--
+**Say:** no other line has a smaller χ². The dashed lines are the two guesses. The second normal equation, divided by N, says the line passes through the mean point.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Five Sums in **Python**
+
+```py {monaco-run} {autorun:false}
+y = [7.6045, 6.5078, 7.9745, 7.2697, 6.8314, 7.2478, 6.5997, 8.3102, 7.2729, 5.9821]
+n, sx, sy, sxx, sxy = 10, 0, 0, 0, 0
+for x in range(10):                     # x = years since 2016
+    sx, sy = sx + x, sy + y[x]
+    sxx, sxy = sxx + x * x, sxy + x * y[x]
+d = n * sxx - sx ** 2
+a = (n * sxy - sx * sy) / d
+b = (sxx * sy - sx * sxy) / d
+print(round(sx), round(sy, 2), sxx, round(sxy, 2), d)   # 45 71.6 285 317.62 825
+print(round(a, 3), round(b, 2))                         # -0.056 7.41
+```
+
+<!--
+**Do:** press ▶: the five sums, Δ, then the slope and the intercept of the previous slides.
+**Say:** a loop, five running totals, two formulas. Nothing in it knows about weather: any two columns of numbers go through the same lines.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why x Counts from **2016**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📅 **x = the year itself**
+
+Δ = 10 × 40 824 285 − 20 205² = 408 242 850 − 408 242 025 = 825
+
+b̂ = **119.35 °C**: the line in the year 0
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 📍 **x = years since 2016**
+
+Δ = 2850 − 2025 = 825
+
+b̂ = **7.41 °C**: the line in 2016
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The same line, the same slope. The intercept is the line at **x = 0**: choose where x = 0 means something.
+
+</div>
+
+<!--
+**Say:** with the calendar year, Δ is the difference of two nine-digit numbers that agree in their first six digits: a computer keeps enough digits, a calculator may not. And the intercept, 119 °C two thousand years ago, means nothing.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Slope as r Times the **Spreads**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 📐 **With x and y measured from their means**
+
+$$\hat a = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sum_i (x_i - \bar x)^2} = r\,\frac{s_y}{s_x}$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **Sums**
+
+−4.581 / 82.5 = **−0.0555 °C a year**
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🔗 **Correlation**
+
+r = −0.239, s_y = 0.703 °C, s_x = 3.03 years:
+
+−0.239 × 0.703 / 3.03 = **−0.0555**
+
+</div>
+
+</div>
+
+<!--
+**Say:** the same slope, a third way: the correlation of Lecture 8, scaled from standard deviations of x to standard deviations of y. A weak correlation, −0.24, and a slope to match.
+**If asked:** the five-sum formula is this one multiplied out.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# How Sure Is the **Slope**?
+
+Another ten years would give another slope. How far could it lie?
+
+<!--
+**Say:** the uncertainty of a fitted parameter, from the shape of χ² around its lowest point.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
 ---
 
 # χ² Around Its **Minimum**
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="fig-fill grid-side mt-sm">
 
-## 🥣 **A quadratic bowl**
-
-$\chi^2(a,b)$ is quadratic in $a$ and $b$. Around its minimum $(\hat a, \hat b)$ it is exactly
-
-$$\chi^2(a,b) = \chi^2_{\min} + S_{xx}\,(a-\hat a)^2 + 2\,S_x\,(a-\hat a)(b-\hat b) + S\,(b-\hat b)^2$$
-
-The coefficients are half the second derivatives of $\chi^2$.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔻 **Move a, and let b follow**
-
-For a given $a$ the lowest $\chi^2$ is at $b = \hat b - (S_x/S)\,(a - \hat a)$. Along that path
-
-$$\chi^2(a) = \chi^2_{\min} + \Big(S_{xx} - \frac{S_x^2}{S}\Big)(a-\hat a)^2 = \chi^2_{\min} + \frac{(a-\hat a)^2}{\sigma_a^2}$$
-
-</div>
-
-<!--
-Speaker: Sxx minus Sx squared over S is Delta over S, and that is one over
-sigma a squared. The uncertainty found by error propagation is the width of
-the bowl. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Rule **Δχ² = 1**
-
-<div class="grid-2 mt-sm gap-md">
+<div class="stack-tight" style="margin-top:0;">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📏 **One σ raises χ² by 1**
-
-At $a = \hat a \pm \sigma_a$, with the other parameters re-minimised, $\chi^2 = \chi^2_{\min} + 1$. Pendulum: 2.647 at the minimum, 3.647 at $a = 3.974$ and at $a = 4.047$.
+📈 For each slope, the best intercept; then χ².
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔔 **Why 1**
-
-$L \propto e^{-\chi^2/2} = \text{const} \times e^{-(a-\hat a)^2/2\sigma_a^2}$. The likelihood is a Gaussian in $a$ of width $\sigma_a$. A sharp minimum of $\chi^2$ means a small uncertainty.
-
-</div>
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_chi2_curvature.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:300px;">
-
-<!--
-Speaker: dashed parabola: b held at its best value. chi2 then rises by 1 at
-plus or minus 0.017, the uncertainty a would have if b were known exactly.
-Right: the contour of chi2 min plus 1 touches the lines a hat plus or minus
-sigma a and b hat plus or minus sigma b. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Covariance **Matrix**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## 🥣 **Curvature of χ²**
-
-$$\frac{1}{2}\begin{pmatrix} \dfrac{\partial^2\chi^2}{\partial a^2} & \dfrac{\partial^2\chi^2}{\partial a\,\partial b}\\[2.5mm] \dfrac{\partial^2\chi^2}{\partial a\,\partial b} & \dfrac{\partial^2\chi^2}{\partial b^2}\end{pmatrix} = \begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix}$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔄 **Its inverse**
-
-$$V = \begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix}^{-1} = \frac{1}{\Delta}\begin{pmatrix} S & -S_x\\ -S_x & S_{xx}\end{pmatrix} = \begin{pmatrix}\sigma_a^2 & \operatorname{cov}(a,b)\\ \operatorname{cov}(a,b) & \sigma_b^2\end{pmatrix}$$
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The covariance matrix of the parameters is the inverse of the curvature matrix of $\chi^2$ at its minimum. This holds for any number of parameters, and it is how a fitting program computes uncertainties.
-
-</div>
-
----
-hideInToc: true
----
-
-# Why Slope and Intercept Are **Correlated**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ↔️ **ρ = −0.88**
-
-The line passes through $(\bar x, \bar y) = (0.468\ \text{m},\ 1.884\ \text{s}^2)$, and all points lie to the right of $x = 0$. A steeper line through that point meets the axis $x = 0$ lower: a larger $a$ goes with a smaller $b$.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🎯 **A result that uses both**
-
-The fitted $T^2$ at $\ell = 0.5$ m is $f = 0.5\,a + b = 2.0145$ s². By error propagation for two correlated quantities:
-
-$$\sigma_f^2 = x^2\sigma_a^2 + \sigma_b^2 + 2\,x\operatorname{cov}(a,b)$$
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-```text
-with the covariance:     0.000336 + 0.000378 − 0.000629 = 0.000085     σf = 0.0092 s²
-without the covariance:  0.000336 + 0.000378            = 0.000714     σf = 0.0267 s²
-```
-
-Without the covariance the uncertainty is three times too large. When two fitted parameters enter one result, their covariance enters too.
-
-</div>
-
----
-hideInToc: true
----
-
-# The Uncertainty of **g**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ➡️ **Propagate σₐ**
-
-$$g = \frac{4\pi^2}{a}, \qquad \sigma_g = \left|\frac{dg}{da}\right|\sigma_a = g\,\frac{\sigma_a}{a}$$
-
-```text
-g  = 39.4784 / 4.01018        = 9.845
-σg = 9.845 × 0.0367 / 4.0102  = 0.090
-```
+A parabola: **8.56** at −0.56, **9.56** at −0.56 ± 0.77 °C per decade.
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-## ✅ **The result**
-
-$$g = 9.84 \pm 0.09\ \text{m/s}^2$$
-
-A relative uncertainty of 0.9 %. The value 9.81 m/s² lies 0.4σ below. Only $a$ enters $g$: no covariance term.
+The rule: **one σ raises χ² by 1**.
 
 </div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_chi2_slope.svg">
+
+</div>
+
+<!--
+**Say:** move the slope away from its best value, let the intercept follow, and χ² climbs. Where it has risen by 1 lies one standard deviation of the slope. A narrow parabola means a well-known slope.
+**Ask:** where does the parabola cross the dashed line of no trend? At 9.08, the flat line: less than 1 above the minimum.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why **Δχ² = 1**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🔔 **Near the minimum χ² is a parabola, so L is a Gaussian in a**
+
+$$\chi^2(a) = \chi^2_{\min} + \frac{(a - \hat a)^2}{\sigma_a^2} \quad\Longrightarrow\quad L \propto e^{-\chi^2/2} \propto e^{-(a - \hat a)^2 / 2\sigma_a^2}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔢 **At â ± σₐ**
+
+$\left(\sigma_a / \sigma_a\right)^2 = 1$: χ² = 8.56 + 1 = **9.56**
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The width of that Gaussian is the uncertainty of the slope, σₐ.
+
+</div>
+
+<!--
+**Say:** the likelihood of the slope is a Gaussian, the bell of Lecture 8; its σ is read off where χ² has risen by 1. Two σ raise χ² by 4.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# σₐ in Closed **Form**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 📏 **Equal σ for every point**
+
+$$\sigma_a = \frac{\sigma}{\sqrt{\sum_i (x_i - \bar x)^2}} = \sigma\sqrt{\frac{N}{\Delta}}$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔢 **The ten years**
+
+σₐ = 0.70 × √(10 / 825) = 0.70 × 0.110 = **0.077 °C a year** = 0.77 °C per decade
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+σ = 0.70 °C: the yearly means about their mean. No y in it: σ and the spread of the years decide it.
+
+</div>
+
+<!--
+**Say:** Σ(x_i − x̄)² = 82.5 for the ten years: the farther apart the years, the better the slope is known. Doubling σ doubles σ_a.
+**If asked:** â = Σ c_i y_i, a weighted sum of the ten y_i; the variances of independent terms add, so σ_a² = σ² Σ c_i² = σ² N / Δ.
+**If asked:** σ from the residuals about the line instead, with n − 2 = 8: 0.72 °C and ± 0.80 per decade, the textbook error of a least-squares slope. The conclusion stays.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Intercept and Its **±**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 📏 **The same way, for b**
+
+$$\sigma_b = \sigma\sqrt{\frac{\sum x_i^2}{\Delta}} = 0.70 \times \sqrt{\frac{285}{825}} = 0.70 \times 0.588 = 0.41\ \text{°C}$$
 
 </div>
 
@@ -1074,27 +1241,185 @@ A relative uncertainty of 0.9 %. The value 9.81 m/s² lies 0.4σ below. Only $a$
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🧪 **The intercept tests the theory**
+## 📉 **Slope**
 
-$b = 0.009 \pm 0.019$ s² is 0.5σ from zero. The data agree with a line through the origin.
+â = −0.056 ± 0.077 °C a year
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-## 🔒 **With b fixed at 0**
+## 📍 **Intercept**
 
-One parameter: $a = S_{xy}/S_{xx} = 4.026 \pm 0.017$ and $g = 9.806 \pm 0.042$ m/s², where Lecture 09's weighted mean gave 9.80 ± 0.04. The free intercept doubles $\sigma_g$. That is the price of the test.
+b̂ = 7.41 ± 0.41 °C, the line in 2016
 
 </div>
 
 </div>
 
 <!--
-Speaker: Lecture 09's weighted mean of the nine values was 9.8047, with 1 mm
-on each length; with the lengths exact, as today, it is 9.8045. The fit
-through the origin gives 9.8061. They are the same analysis up to the linear
-approximation in the error propagation. (~3 min)
+**Say:** b is known less well than the mean of the ten years, ± 0.22, because 2016 lies at the edge of the data: the line pivots around its middle.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Line's Value for **2026**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🔮 **The line, one year past the data**
+
+7.4099 − 0.0555 × 10 = 6.854 ≈ **6.85 °C**
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 📏 **Its ±: the mean, and the slope times the distance from 2020.5**
+
+$$\sigma_f^2 = \frac{\sigma^2}{N} + (x - \bar x)^2\,\sigma_a^2 = 0.049 + 5.5^2 \times 0.0059 = 0.23, \qquad \sigma_f = 0.48$$
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+One year scatters by 0.70 around the line: √(0.23 + 0.49) = 0.85. **2026: 6.0 to 7.7 °C.**
+
+</div>
+
+<!--
+**Say:** the farther from the middle of the data, the more the uncertain slope matters: the band around a fitted line widens at both ends. A single year adds its own scatter on top.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Ten Years Cannot Show This **Trend**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-success card-glass pad-compact">
+
+**−0.56 ± 0.77 °C per decade**, σ = 0.70 °C from the scatter of the yearly means
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+Zero lies 0.7 σ away.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+Within one σ: from −1.3 to +0.2: falling and rising lines alike.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_band.svg">
+
+</div>
+
+<!--
+**Say:** the answer to the opening question, for this station: ten years do not say. Every line in the fan fits within one σ, and they all pass near the mean point.
+**Ask:** is it then not getting warmer? Not shown either way: "cannot tell" is a result.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# What **± 0.77** Means
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-primary card-glass pad-compact">
+
+🔔 The slope's likelihood: a Gaussian of σₐ = 0.77 °C per decade.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+**68 %**: −0.56 ± 0.77, from −1.3 to +0.2
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+**95 %**: −0.56 ± 1.54, from −2.1 to +1.0
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+Zero, no trend, lies inside both.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_slope_gauss.svg">
+
+</div>
+
+<!--
+**Say:** the 68/95 rule of Lecture 8, now for a fitted slope. Repeating the ten years many times, about two in three slopes would fall within one σ of the true one.
+**If asked:** with only 8 degrees of freedom and σ taken from the data, the ranges are a little wider still (Student's t); the conclusion stays.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The ± with More **Years**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-primary card-glass pad-compact">
+
+σₐ falls as $N^{-3/2}$: more years, and farther apart.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+| Years | σₐ (°C per decade) |
+| --- | --- |
+| 10 | 0.77 |
+| 20 | 0.27 |
+| 40 | 0.10 |
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_years_needed.svg">
+
+</div>
+
+<!--
+**Say:** with the same σ = 0.70 a year, 20 years would put a slope of 0.56 per decade two σ from zero; 40 years would measure 0.2 per decade.
+**If asked:** for N years one apart, Σ(x_i − x̄)² = N(N² − 1)/12.
+(~1.5 min)
 -->
 
 ---
@@ -1102,136 +1427,26 @@ layout: section
 hideInToc: true
 ---
 
-# The Same in **Matrix Form**
+# Walking **Downhill**
 
-The five sums gave the parameters, and the curvature of χ² their covariance. Written with matrices, both steps hold for any number of parameters.
+When the derivatives cannot be solved, follow them a step at a time.
+
+<!--
+**Say:** the closed form needed a model whose derivatives can be solved by hand. Most cannot. A computer then walks downhill: the same idea that trains every neural network.
+(~0.5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# One Equation for All **Points**
+# No Closed Form for the **Cycle**
 
 <div class="card card-primary card-glass pad-compact mt-md">
 
-## 🧱 **The design matrix**
+## 🌊 **The yearly cycle, three parameters**
 
-$$\underbrace{\begin{pmatrix} y_1\\ y_2\\ \vdots\\ y_N\end{pmatrix}}_{\mathbf y} \approx \underbrace{\begin{pmatrix} x_1 & 1\\ x_2 & 1\\ \vdots & \vdots\\ x_N & 1\end{pmatrix}}_{A}\, \underbrace{\begin{pmatrix} a\\ b\end{pmatrix}}_{\boldsymbol\theta}, \qquad W = \begin{pmatrix} 1/\sigma_1^2 & & \\ & \ddots & \\ & & 1/\sigma_N^2\end{pmatrix}, \qquad \chi^2 = (\mathbf y - A\boldsymbol\theta)^{\mathsf T}\,W\,(\mathbf y - A\boldsymbol\theta)$$
-
-$A$ has one row per point and one column per parameter.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🟰 **All derivatives set to zero at once**
-
-$$A^{\mathsf T} W A\;\hat{\boldsymbol\theta} = A^{\mathsf T} W\,\mathbf y, \qquad V = \big(A^{\mathsf T} W A\big)^{-1}$$
-
-The normal equations and the covariance matrix, for any number of parameters. For the pendulum $A^{\mathsf T} W A$ is the matrix of the five sums, and $V$ holds $\sigma_a^2 = 0.001345$, $\sigma_b^2 = 0.000378$ and $\operatorname{cov}(a,b) = -0.000629$, the numbers found before.
-
-</div>
-
----
-hideInToc: true
----
-
-# Linear in the **Parameters**
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The matrix form used only that $f$ is a sum of known functions of $x$, each multiplied by one parameter:
-
-$$f(x;\theta) = \theta_1\,g_1(x) + \theta_2\,g_2(x) + \dots + \theta_k\,g_k(x)$$
-
-Column $j$ of the design matrix holds $g_j(x_i)$. Everything else stays as it is.
-
-</div>
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **Linear**
-
-- $a\,x + b$
-- $c\,x^2 + a\,x + b$: a curve in $x$, linear in $a, b, c$
-- $A\sin\omega t + B\cos\omega t$ with $\omega$ known
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## ❌ **Not linear**
-
-- $N_0\,e^{-t/\tau}$: $\tau$ is in the exponent
-- A Gaussian peak: position and width
-- $A\sin\omega t$ with $\omega$ unknown
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 🧪 **A third column**
-
-Pendulum with columns $x^2$, $x$, 1: $c = 0.03 \pm 0.16$ s²/m², and $\chi^2$ falls from 2.65 to 2.60. The data do not ask for a curve.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# `np.linalg.lstsq` and `np.polyfit`
-
-```python
-# x, y, sy: the pendulum arrays of the slide "The Same in NumPy"
-A = np.column_stack([x, np.ones_like(x)])     # design matrix: 9 rows, 2 columns
-Aw, yw = A / sy[:, None], y / sy              # every row divided by its sigma
-
-theta, *rest = np.linalg.lstsq(Aw, yw, rcond=None)
-V = np.linalg.inv(Aw.T @ Aw)                  # covariance matrix
-print("lstsq  ", theta, np.sqrt(np.diag(V)))
-
-p, C = np.polyfit(x, y, 1, w=1 / sy, cov="unscaled")
-print("polyfit", p, np.sqrt(np.diag(C)))
-```
-
-```text
-lstsq   [4.01018132 0.00945546] [0.03668084 0.01943853]
-polyfit [4.01018132 0.00945546] [0.03668084 0.01943853]
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-`lstsq` minimises the plain sum of squares of `Aw @ theta - yw`. Every row divided by its $\sigma_i$ makes that sum $\chi^2$. `@` is the matrix product, `.T` the transpose. `polyfit` takes `w` as $1/\sigma$, not $1/\sigma^2$; `cov="unscaled"` keeps the $\sigma_i$ as given.
-
-</div>
-
----
-layout: section
-hideInToc: true
----
-
-# Models That Are **Not Linear**
-
-The matrix form needs a model that is a sum of known functions, each times one parameter. The position and the width of a peak sit inside an exponential.
-
----
-hideInToc: true
----
-
-# No Closed **Form**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## ⛰️ **A peak:** $f(x;\,A,\mu,\sigma) = A\,e^{-(x-\mu)^2/2\sigma^2}$
-
-The derivative of $\chi^2$ with respect to the position $\mu$ of the peak:
-
-$$\frac{\partial\chi^2}{\partial\mu} = -2\sum_i \frac{y_i - A\,e^{-(x_i-\mu)^2/2\sigma^2}}{\sigma_i^2}\;\frac{x_i-\mu}{\sigma^2}\;A\,e^{-(x_i-\mu)^2/2\sigma^2} = 0$$
+$$T(d) = c - A\cos\frac{2\pi\,(d - d_0)}{365.25}$$
 
 </div>
 
@@ -1239,9 +1454,9 @@ $$\frac{\partial\chi^2}{\partial\mu} = -2\sum_i \frac{y_i - A\,e^{-(x_i-\mu)^2/2
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🚫 **No normal equations**
+## 🚫 **d₀ inside the cosine**
 
-$\mu$ stands inside an exponential in every term. No rearrangement isolates it, and no five sums summarise the data.
+$\partial\chi^2 / \partial d_0 = 0$ cannot be solved for d₀.
 
 </div>
 
@@ -1249,47 +1464,16 @@ $\mu$ stands inside an exponential in every term. No rearrangement isolates it, 
 
 ## 👣 **What is left**
 
-$\chi^2(\theta)$ and its derivatives can be computed for any $\theta$. Start from a guess and walk downhill, one step at a time.
+χ² and its slope at any point. Step downhill, repeat.
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">
-
-Here $\sigma$ without an index is the width of the peak, a parameter. $\sigma_i$ is the uncertainty of point $i$.
-
-</div>
-
----
-hideInToc: true
----
-
-# The **Gradient**
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## 🧭 **All partial derivatives in one vector**
-
-$$\nabla\chi^2 = \left(\frac{\partial\chi^2}{\partial\theta_1},\ \dots,\ \frac{\partial\chi^2}{\partial\theta_k}\right), \qquad \frac{\partial\chi^2}{\partial\theta_j} = -2\sum_{i=1}^{N}\frac{y_i - f(x_i;\theta)}{\sigma_i^2}\;\frac{\partial f(x_i;\theta)}{\partial\theta_j}$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 📈 **A small step δ changes χ² by**
-
-$$\chi^2(\theta + \delta) \approx \chi^2(\theta) + \nabla\chi^2\cdot\delta$$
-
-This is the first-order expansion that gave the error-propagation formula in Lecture 09.
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Each term is the **chain rule**: the derivative of the square, $-2\,(y_i - f)/\sigma_i^2$, times the derivative of $f$. Among all small steps of one length, the step along $\nabla\chi^2$ raises $\chi^2$ the most, and the opposite step lowers it the most. The gradient points uphill.
-
-</div>
+<!--
+**Say:** d is the day, counted from 1 January 2016; c is the level, A the amplitude, d₀ the coldest day. The derivative with respect to d₀ has d₀ inside a cosine, and no rearranging gets it out.
+(~1.5 min)
+-->
 
 ---
 hideInToc: true
@@ -1301,618 +1485,550 @@ hideInToc: true
 
 ## 👣 **Gradient descent**
 
-$$\theta \;\leftarrow\; \theta - \eta\,\nabla\chi^2$$
-
-$\eta$ is the **learning rate**: a small positive number, chosen by hand, that sets the length of the step.
+$$\theta \;\leftarrow\; \theta - \eta\,\frac{dS}{d\theta}$$
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-secondary card-glass pad-compact">
 
-## ⬇️ **Why χ² goes down**
+## θ
 
-Put $\delta = -\eta\,\nabla\chi^2$ into the expansion:
-
-$$\chi^2(\theta - \eta\nabla\chi^2) \approx \chi^2(\theta) - \eta\,\big|\nabla\chi^2\big|^2$$
-
-The change is negative until the gradient is zero. The expansion holds for small steps only.
+the parameter: μ, a, b, d₀
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-## 📐 **For the straight line**
+## η
 
-The gradient is known from the normal equations:
+the **step size** (learning rate), chosen by hand
 
-$$\frac{\partial\chi^2}{\partial a} = -2\,(S_{xy} - a\,S_{xx} - b\,S_x)$$
+</div>
 
-$$\frac{\partial\chi^2}{\partial b} = -2\,(S_y - a\,S_x - b\,S)$$
+<div class="card card-info card-glass pad-compact">
+
+## −dS/dθ
+
+downhill; it shrinks near the bottom
 
 </div>
 
 </div>
 
 <!--
-Speaker: the rule is three symbols long and is the whole algorithm. Repeat it
-until chi2 stops falling. (~2 min)
+**Say:** where the slope is negative, θ grows; where positive, θ shrinks: always downhill. The steps shorten on their own, because the slope goes to zero at the bottom.
+**If asked:** "gradient" is the list of all partial derivatives; for one parameter it is the derivative.
+**If asked:** machine learning calls the number it minimises the loss; here it is S.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Gradient Descent by **Hand**
+# Three Steps by **Hand**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="stack-tight" style="margin-top:0;">
-
 <div class="card card-primary card-glass pad-compact">
 
-## 1️⃣ **The first step**
+## 🌡️ **The four hours**
 
-Start at $a = 3$, $b = 0$ with $\eta = 3 \times 10^{-5}$.
+$\dfrac{dS}{d\mu} = -2\,(101.1 - 4\mu)$
 
-```text
-∂χ²/∂a = −2 (13 500 − 3 × 3353.27)
-       = −6880.4
-∂χ²/∂b = −2 (22 500 − 3 × 5582.56)
-       = −11 504.6
-
-a ← 3 + 0.00003 × 6880.4   = 3.2064
-b ← 0 + 0.00003 × 11 504.6 = 0.3451
-```
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-After 500 steps the result is that of the closed formulas: $a = 4.0102$, $b = 0.0095$, $\chi^2 = 2.65$.
-
-</div>
+Start μ = 20, η = 0.1.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact table-compact">
 
-## 📋 **Step by step**
-
-| Step | a | b | χ² |
+| Step | μ | dS/dμ | μ − 0.1 × dS/dμ |
 | --- | --- | --- | --- |
-| 0 | 3.0000 | 0.0000 | 3532.26 |
-| 1 | 3.2064 | 0.3451 | 502.01 |
-| 2 | 3.2557 | 0.3739 | 427.36 |
-| 3 | 3.2854 | 0.3655 | 396.58 |
-| 4 | 3.3120 | 0.3532 | 368.53 |
-| 5 | 3.3373 | 0.3408 | 342.49 |
-| 50 | 3.8824 | 0.0724 | 14.90 |
-| 100 | 3.9900 | 0.0194 | 2.95 |
-| 200 | 4.0097 | 0.0097 | 2.65 |
-| 500 | 4.0102 | 0.0095 | 2.65 |
+| 1 | 20 | −42.2 | **24.22** |
+| 2 | 24.22 | −8.44 | **25.064** |
+| 3 | 25.064 | −1.688 | **25.233** |
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+The gap to 25.275 shrinks fivefold each step: 5.275, 1.055, 0.211, 0.042.
+
+</div>
+
+<!--
+**Do:** the first row on the board: −2 × (101.1 − 80) = −42.2; 20 + 0.1 × 42.2 = 24.22.
+**Say:** each step closes four fifths of the gap, without knowing where the bottom is.
+(~2.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Step That Is Too **Large**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ η = 0.3: each step overshoots, and the gap grows 1.4 times. η = 0.25: 20 → 30.55 → 20 … forever. A step works only for η < 2 / 8 = 0.25.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_descent_hours.svg">
+
+<!--
+**Say:** 8 is how fast the slope changes, the second derivative of S: twice the four hours. A step longer than twice the distance to the bottom lands higher on the other side.
+**Ask:** a step that is too small: safe, but how slow? η = 0.01 closes only 8 % of the gap per step.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Each Step Multiplies the Gap by **1 − 8η**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ✏️ **One step, the gap to the mean**
+
+$\dfrac{dS}{d\mu} = -2N\,(\hat\mu - \mu)$, so
+
+$$\mu_{\text{new}} - \hat\mu = (1 - 2N\eta)\,(\mu - \hat\mu) = (1 - 8\eta)\,(\mu - \hat\mu)$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md table-compact">
+
+| η | 0.01 | 0.1 | 0.25 | 0.3 |
+| --- | --- | --- | --- | --- |
+| 1 − 8η | 0.92 | 0.2 | −1 | −1.4 |
+| each step | creeps | settles | swings forever | flies off |
+
+</div>
+
+<!--
+**Say:** the whole behaviour in one factor. Between 0 and 1: steady approach. Between −1 and 0: overshoot that still settles. −1: a swing that never ends. Beyond: each step lands farther away.
+**Do:** check η = 0.1 against the table of three steps: the gap 5.275, then 1.055, 0.211.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Choose the Step Size, **Live**
+
+```py {monaco-run} {autorun:false}
+y = [27.3, 25.6, 24.6, 23.6]            # 21 July 2019, 20:00 to 23:00
+mu, eta = 20.0, 0.1                     # <-- try eta = 0.25, 0.3, 0.01
+for step in range(1, 6):
+    slope = -2 * (sum(y) - 4 * mu)      # dS/dmu
+    mu = mu - eta * slope
+    print(step, round(mu, 3))           # 1 24.22 2 25.064 3 25.233 4 25.267 5 25.273
+```
+
+<div class="grid-2 mt-md gap-md" v-click>
+
+<div class="card card-warning card-glass pad-compact">
+
+η = 0.3: 32.66, 14.936, 39.75, 5.011, 53.645
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+η = 0.01: 20.422, 20.81, 21.167, 21.496, 21.798
 
 </div>
 
 </div>
 
 <!--
-Speaker: have the room do step 1 on the calculator. The first step removes six
-sevenths of chi2. Then the progress is slow.
+**Do:** press ▶ with 0.1, then change eta to 0.3, 0.25 and 0.01, pressing ▶ each time; the click shows two of the runs, for a room without the network.
+**Ask:** before each run: will it settle, swing or fly off?
+(~2.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Update Rule for a **Line**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 👣 **One step for each, with** $\hat y_i = a\,x_i + b$ **and** $S = \sum (\hat y_i - y_i)^2$
+
+$$a \leftarrow a - \eta \sum_i 2\,(\hat y_i - y_i)\,x_i \qquad\qquad b \leftarrow b - \eta \sum_i 2\,(\hat y_i - y_i)$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔢 **From a = 0, b = 7, η = 0.003**
+
+<div v-click>
+
+slopes: ∂S/∂a = −5.24, ∂S/∂b = −3.20
+
+</div>
+
+<div v-click>
+
+a = 0 + 0.003 × 5.24 = **0.0157**, b = 7 + 0.003 × 3.20 = **7.0096**
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+The miss of the model, times the input: one term per point.
+
+</div>
+
+<!--
+**Say:** S is χ² without the σ, which does not move the minimum. ŷ is what the model predicts, y the data; their difference times x_i drives the slope, the difference alone drives the intercept.
+(~2.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Gradient Descent on Ten **Years**
+
+```py {monaco-run} {autorun:false}
+y = [7.6045, 6.5078, 7.9745, 7.2697, 6.8314, 7.2478, 6.5997, 8.3102, 7.2729, 5.9821]
+a, b, eta = 0.0, 7.0, 0.003             # the start and the step size
+for step in range(1, 501):
+    ga, gb = 0, 0
+    for x in range(10):                 # x = years since 2016
+        r = a * x + b - y[x]            # the model minus the data
+        ga, gb = ga + 2 * r * x, gb + 2 * r
+    a, b = a - eta * ga, b - eta * gb
+    if step in (1, 2, 3, 100, 500):
+        print(step, round(a, 4), round(b, 3))   # ... 500 -0.0555 7.41
+```
+
+<!--
+**Do:** press ▶: steps 1, 2, 3, 100, 500. Then set eta = 0.004 and run again.
+**Say:** after 500 steps the closed form: −0.0555 and 7.41. With 0.004 the steps grow instead.
+**If asked:** the first steps swing the slope up and down: 0.0157, 0.0020, 0.0105.
 (~3 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# A Learning Rate That Is Too **Large**
+# The Path **Downhill**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-warning card-glass pad-compact table-compact">
-
-## 💥 **The same start,** $\eta = 1 \times 10^{-4}$
-
-| Step | a | b | χ² |
-| --- | --- | --- | --- |
-| 0 | 3.0000 | 0.0000 | 3532 |
-| 1 | 3.6880 | 1.1505 | 11 792 |
-| 2 | 2.6301 | −1.2147 | 43 144 |
-| 3 | 4.9224 | 3.2495 | 161 144 |
-| 4 | 0.6931 | −5.5066 | 604 495 |
-| 5 | 9.0764 | 11.3698 | 2 269 656 |
+🗺️ The contours of S(a, b), the path from (0, 7). A zigzag across a narrow valley, then along it: 500 steps to (−0.56 per decade, 7.41).
 
 </div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_descent_line.svg">
+
+<!--
+**Say:** across the valley S is steep, along it nearly flat: the steepness differs 103 times, and one η has to suit both. Right: how far S still is from its minimum, falling tenfold every 60 steps or so.
+(~1.5 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# A **Curve**: the Yearly Cycle
+
+Three parameters, one of them inside a cosine.
+
+<!--
+**Say:** the same steps on a model that is not a line: the cycle of the seasons, fitted to the daily means.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Daily Means of Ten **Years**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📅 3648 days with 24 measured hours (five days of July 2019 are missing). Ten waves: no line can follow this.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_daily.svg">
+
+<!--
+**Ask:** read the waves: about where is the middle, how high is the summer above it, when is the coldest day?
+**Say:** these three readings are the three parameters of the model.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Cosine with Three **Parameters**
+
+<div class="fig-fill grid-side mt-sm">
 
 <div class="stack-tight" style="margin-top:0;">
 
 <div class="card card-primary card-glass pad-compact">
 
-## ↔️ **Each step overshoots**
-
-The step is in the right direction and too long. It crosses the valley and lands higher on the other side. $\chi^2$ grows nearly fourfold per step.
+$$T(d) = c - A\cos\frac{2\pi(d - d_0)}{365.25}$$
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 📏 **The limit for this χ²**
+**c**: the level. **A**: the amplitude, half of summer minus winter. **d₀**: the coldest day.
 
-The descent converges only for $\eta$ below $6.8 \times 10^{-5}$, which is 2 divided by the largest curvature of $\chi^2$.
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_cycle_parts.svg">
+
+</div>
+
+<!--
+**Say:** the ten years folded onto one, each day at its place in the year. At d = d₀ the cosine is 1 and T = c − A, the coldest; half a year later it is −1 and T = c + A.
+**If asked:** 365.25 days per turn, so the leap days keep the cycle in step.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Two Days Pushed **Through**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 👁️ **Read off the plot:** c = 7, A = 11, d₀ = 15
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ❄️ **16 January 2016, d = 15**
+
+2π (15 − 15) / 365.25 = 0, cos 0 = 1
+
+T = 7 − 11 × 1 = **−4 °C**
+
+</div>
+
+<div class="card card-accent card-glass pad-compact" v-click>
+
+## ☀️ **17 July 2016, d = 198**
+
+2π (198 − 15) / 365.25 = 3.148, cos = −1.000
+
+T = 7 + 11 = **18 °C**
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+With these values the misses of 3648 days: **2.952 °C** root mean square.
+
+</div>
+
+<!--
+**Say:** starting values read off a plot are good enough when they put the curve near the data; the descent does the rest.
+**If asked:** root mean square: the square root of the mean squared miss, a typical miss in °C.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Descent from the Starting **Values**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+| Step | c | A | d₀ | rms miss |
+| --- | --- | --- | --- | --- |
+| 0 | 7.00 | 11.00 | 15.0 | 2.952 |
+| 1 | 7.18 | 11.09 | 15.0 | 2.944 |
+| 10 | 7.18 | 11.18 | 15.2 | 2.943 |
+| 100 | 7.18 | 11.18 | 15.8 | 2.941 |
+| 300 | 7.18 | 11.18 | 15.9 | 2.941 |
+
+</div>
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-secondary card-glass pad-compact">
+
+The update rule, three derivatives at once, η = 0.5.
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-A rate that is too small is safe and slow: $\eta = 3 \times 10^{-6}$ needs ten times as many steps.
+c settles in 1 step, A in 10, d₀ in 300: the misses change little along d₀.
 
 </div>
 
 </div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Descent Paths for Two Learning **Rates**
-
-<div class="note-text mt-sm">
-
-Contours of $\chi^2$ in the $(a, b)$ plane with the path of the descent. The star is the minimum. Right: $\chi^2$ against the step number, on a logarithmic scale.
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_descent.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:335px;">
-
----
-hideInToc: true
----
-
-# Gradient Descent in **NumPy**
-
-```python {monaco-run} {autorun:false}
-# x, y, sy: the pendulum arrays of the slide "The Same in NumPy"
-def chi2_at(a, b):
-    return np.sum(((y - a * x - b) / sy) ** 2)
-
-a, b, eta = 3.0, 0.0, 3e-5                    # start and learning rate
-for step in range(501):
-    r = (y - a * x - b) / sy**2               # residuals divided by sigma squared
-    grad_a, grad_b = -2 * np.sum(r * x), -2 * np.sum(r)
-    if step in (0, 1, 2, 5, 50, 100, 200, 500):
-        print(f"{step:4d}  a = {a:.4f}  b = {b:.4f}  chi2 = {chi2_at(a, b):.2f}")
-    a, b = a - eta * grad_a, b - eta * grad_b
-```
-
-<!--
-Speaker: run it, then set eta to 1e-4 and run it again. The two gradient
-lines are the general formula with df/da = x and
-df/db = 1. Nothing in the loop knows that the model is a straight line except
-those two lines and chi2_at. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# Why the Descent Is Slow, and the **Remedy**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🏞️ **A long, narrow valley**
-
-$\chi^2$ fell from 3532 to 502 in one step and needed 200 more for the rest. Across the valley $\chi^2$ is steep, along it nearly flat: the curvatures differ by a factor of 24. One $\eta$, small enough for the steep direction, creeps along the flat one. The valley is narrow because $a$ and $b$ are correlated.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🎯 **Use the curvature too**
-
-Newton's step solves
-
-$$\begin{pmatrix} S_{xx} & S_x\\ S_x & S\end{pmatrix}\delta = -\tfrac{1}{2}\nabla\chi^2$$
-
-From $(3, 0)$ it lands on $(4.0102,\ 0.0095)$ in one step. For a model linear in its parameters, Newton's step is the normal equations.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-For a nonlinear model the curvature changes from place to place, and the step is repeated. The **Levenberg–Marquardt** method takes short gradient steps far from the minimum and Newton steps near it. `scipy.optimize.curve_fit` uses it.
-
-</div>
-
----
-hideInToc: true
----
-
-# `curve_fit`: the **Call**
-
-<div class="note-text mt-sm">
-
-SciPy is a library of numerical methods on NumPy arrays, imported part by part. Its `curve_fit` minimises $\chi^2$ with the Levenberg–Marquardt method, for a model given as a Python function.
-
-</div>
-
-```python
-from scipy.optimize import curve_fit
-popt, pcov = curve_fit(f, xdata, ydata, p0=[...], sigma=..., absolute_sigma=True)
-```
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| Argument | Meaning |
-| --- | --- |
-| `f` | The model, a function `f(x, a, b, ...)`: `x` first, then one argument for each parameter |
-| `xdata`, `ydata` | The arrays of the $x_i$ and $y_i$ |
-| `p0` | Starting values, one for each parameter. Left out, every parameter starts at 1 |
-| `sigma` | The array of the $\sigma_i$. Left out, all points count equally |
-| `absolute_sigma=True` | The $\sigma_i$ are uncertainties in the units of $y$ |
-| `bounds=(lower, upper)` | Optional limits for the parameters |
-
-</div>
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-`popt`: the estimates $\hat\theta$, in the order of the arguments of `f`.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-`pcov`: the covariance matrix $V$. The uncertainties are `np.sqrt(np.diag(pcov))`.
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# `absolute_sigma`: the Default **Rescales**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact">
-
-## ⚠️ **Without `absolute_sigma=True`**
-
-`curve_fit` treats `sigma` as relative weights. It multiplies `pcov` by $\chi^2_{\min}/(N-k)$, with $k$ the number of parameters, as if the points scattered exactly as much as their $\sigma_i$ say.
-
-</div>
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## 🧮 **On the pendulum**
-
-| | $\sigma_a$ | $\sigma_b$ |
-| --- | --- | --- |
-| Closed formulas | 0.0367 | 0.0194 |
-| `absolute_sigma=True` | 0.0367 | 0.0194 |
-| Default | 0.0226 | 0.0120 |
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Here $\chi^2_{\min}/(N-k) = 2.647/7 = 0.378$, and the default shrinks both uncertainties by $\sqrt{0.378} = 0.61$. The default is the right choice only when the $\sigma_i$ are unknown and the model is trusted. Then the scatter of the points sets the uncertainties, and $\chi^2$ can no longer test the model.
-
-</div>
-
----
-hideInToc: true
----
-
-# Closed Formulas, `polyfit` and `curve_fit` **Agree**
-
-```python {monaco-run} {autorun:false}
-from scipy.optimize import curve_fit
-def line(x, a, b):                            # x, y, sy: the pendulum arrays
-    return a * x + b
-
-popt, pcov = curve_fit(line, x, y, p0=[3.0, 0.0], sigma=sy, absolute_sigma=True)
-a, b = popt
-sa, sb = np.sqrt(np.diag(pcov))
-g, sg = 4 * np.pi**2 / a, 4 * np.pi**2 / a**2 * sa
-print(f"a = {a:.6f} +- {sa:.6f}   b = {b:.6f} +- {sb:.6f}")
-print(f"cov(a, b) = {pcov[0, 1]:.6f}   g = {g:.3f} +- {sg:.3f}")
-```
-
-<div class="card card-success card-glass pad-compact table-compact mt-sm">
-
-| Method | $a$ | $\sigma_a$ | $b$ | $\sigma_b$ | cov($a$, $b$) |
-| --- | --- | --- | --- | --- | --- |
-| Closed formulas | 4.010181 | 0.036681 | 0.009455 | 0.019439 | −0.000629 |
-| `np.polyfit` | 4.010181 | 0.036681 | 0.009455 | 0.019439 | −0.000629 |
-| `curve_fit` | 4.010181 | 0.036681 | 0.009455 | 0.019439 | −0.000629 |
 
 </div>
 
 <!--
-Speaker: the three agree in all six decimals, and g = 9.845 plus or minus 0.090
-from each. curve_fit got there by iteration from a = 3, b = 0, the start of
-the hand descent. (~3 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# The D⁰ **Peak**
-
-The masses are a peak on a flat part. A mean cannot tell the two apart; a model of both can.
-
----
-hideInToc: true
----
-
-# The D⁰ Mass Peak: the **Data**
-
-<div class="note-text mt-sm">
-
-Column `M` of `D0_KPi.csv`: 91 583 K⁻π⁺ masses, selected between about 1815 and 1915 MeV/c². The fit uses 1820 to 1910: 84 680 rows in 45 bins of 2 MeV.
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_d0_data.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:335px;">
-
-<!--
-Speaker: the model has to hold over the whole window. At the edges of the file
-the counts drop for a reason that has nothing to do with the D0, so the window
-stays away from them. (~2 min)
+**Say:** the descent minimised the mean squared miss of the 3648 days, so η can be 0.5. A shift of the coldest day by one day changes the misses very little: the slow direction.
+**If asked:** a fitting program also uses the curvature, and takes larger steps where the valley is flat: the Newton and Levenberg–Marquardt methods.
+(~2 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# Counts and Their **Uncertainty**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🎲 **A bin count is a Poisson variable**
-
-Its variance equals its mean (Lecture 09). With the observed count $n$ as the estimate of the mean:
-
-$$\sigma_n = \sqrt{n}$$
-
-For large $n$ the Poisson distribution is close to a Gaussian, so $\chi^2$ applies.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 📊 **In this histogram**
-
-| Bin | n | √n | relative |
-| --- | --- | --- | --- |
-| smallest | 1310 | 36.2 | 2.8 % |
-| largest | 3746 | 61.2 | 1.6 % |
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-```python
-M = np.loadtxt("data/raw/D0_KPi.csv", delimiter=",", skiprows=1, usecols=0)
-n, edges = np.histogram(M, bins=45, range=(1820, 1910))
-m = (edges[:-1] + edges[1:]) / 2          # bin centres
-s = np.sqrt(n)                            # Poisson uncertainty of each count
-```
-
-</div>
-
----
-hideInToc: true
----
-
-# The Model: a Gaussian on a **Line**
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-$$f(m;\,A,\mu,\sigma,c_0,c_1) = A\,\exp\!\left[-\frac{(m-\mu)^2}{2\sigma^2}\right] + c_0 + c_1\,(m - 1865)$$
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## 🔤 **Five parameters**
-
-| | Meaning | Unit |
-| --- | --- | --- |
-| A | height of the peak above the background | entries per bin |
-| μ | position of the peak | MeV/c² |
-| σ | width of the peak | MeV/c² |
-| c₀ | background at m = 1865 | entries per bin |
-| c₁ | slope of the background | entries per bin per MeV/c² |
-
-</div>
-
-<div class="stack-tight" style="margin-top:0;">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🤔 **Why this shape**
-
-The detector measures each mass with a random error, which smears a sharp mass into a bell. Under the peak lie random K⁻π⁺ pairs whose number changes slowly with $m$.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-Not linear in $\mu$ and $\sigma$: no closed form. The line is written around 1865, the middle of the window. Written as $c_0 + c_1 m$, its two parameters would be correlated with $\rho = -0.9998$.
-
-</div>
-
-</div>
-
-</div>
-
----
-hideInToc: true
----
-
-# Starting Values from the **Plot**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## 👁️ **Read off the histogram**
-
-| | Start | Read from |
-| --- | --- | --- |
-| c₀ | 1400 | the level left and right of the peak |
-| c₁ | 0 | the two sides are nearly level |
-| A | 2300 | the top, 3700, minus 1400 |
-| μ | 1865 | where the peak is highest |
-| σ | 8 | the width at half height, 17 MeV |
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 📐 **From the width at half height to σ**
-
-A Gaussian falls to half its height where
-
-$$e^{-d^2/2\sigma^2} = \tfrac{1}{2} \quad\Longrightarrow\quad d = \sigma\sqrt{2\ln 2} = 1.177\,\sigma$$
-
-The full width at half maximum is $2d = 2.355\,\sigma$.
-
-Half height above the background is at 1400 + 1150 = 2550 entries. The peak is 17 MeV wide there: $\sigma \approx 17/2.355 = 7.2$. A start of 8 is near enough.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The starting values need not be good. They have to put the model near the data, so that downhill leads to the right minimum.
-
-</div>
-
----
-hideInToc: true
----
-
-# The Fit in **Code**
-
-```py {monaco-run} {autorun:false}
-from scipy.optimize import curve_fit      # m, n, s: the 45 bins of "Counts and Their Uncertainty"
-def model(m, A, mu, sigma, c0, c1):
-    peak = A * np.exp(-(m - mu)**2 / (2 * sigma**2))
-    return peak + c0 + c1 * (m - 1865)
-
-popt, pcov = curve_fit(model, m, n, p0=[2300, 1865, 8, 1400, 0], sigma=s, absolute_sigma=True)
-err = np.sqrt(np.diag(pcov))
-chi2 = np.sum(((n - model(m, *popt)) / s)**2)
-print(f"mu    = {popt[1]:.3f} +- {err[1]:.3f}")     # mu    = 1864.472 +- 0.096
-print(f"sigma = {popt[2]:.3f} +- {err[2]:.3f}")     # sigma = 7.645 +- 0.099
-print(f"chi2  = {chi2:.1f}, ndf = {len(m) - 5}")    # chi2  = 53.4, ndf = 40
-```
-
-<!--
-Speaker: the 45 counts are typed into the page because the browser has no
-file to read; in a script they come from the np.histogram line of "Counts and
-Their Uncertainty". The fit also returns A = 2190.9, c0 = 1414.1 and
-c1 = -1.508. *popt passes the five values as five arguments. curve_fit evaluated
-the model 31 times. Plain gradient descent with one learning rate for the
-five parameters is at chi2 = 57.6 after 100 000 steps. Ask the room before
-running: from the starting values, where will mu land? (~3 min)
--->
----
-hideInToc: true
----
-
-# The Fit and Its **Pulls**
-
-<img class="fig" src="/figures/viz_fitting_d0_fit.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:420px;">
-
----
-hideInToc: true
----
-
-# What the Result **Says**
+# The Fitted **Cycle**
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-$$\mu = 1864.47 \pm 0.10\ \text{MeV}/c^2, \qquad \sigma = 7.65 \pm 0.10\ \text{MeV}/c^2, \qquad \chi^2/\text{ndf} = 53.4/40$$
+🌊 c = **7.18 °C**, A = **11.18 °C**, d₀ = **15.9**: the coldest day 16 January (−4.00 °C), the warmest 17 July (18.36 °C).
 
 </div>
 
-<div class="grid-2 mt-sm gap-md">
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_cycle_fit.svg">
 
-<div class="card card-primary card-glass pad-compact table-compact">
+<!--
+**Say:** one curve with three numbers describes 3648 days to within about 3 °C. Summer and winter differ by 2A = 22.4 °C.
+**Ask:** where does the curve miss most? In cold spells, January 2017, 2019 and 2025, up to 9.5 °C below it, and the warm Junes of 2018 and 2019, up to 10.4 °C above.
+(~1.5 min)
+-->
 
-## 🔁 **Move the window**
+---
+layout: section
+hideInToc: true
+---
 
-| Number | Window (MeV/c²) | μ (MeV/c²) |
-| --- | --- | --- |
-| mean of the rows | 1855 to 1875 | 1864.81 ± 0.03 |
-| mean of the rows | 1854 to 1874 | 1864.06 ± 0.03 |
-| fit | 1816 to 1906 | 1864.45 ± 0.10 |
-| fit | 1820 to 1910 | 1864.47 ± 0.10 |
-| fit | 1824 to 1914 | 1864.50 ± 0.10 |
+# **Residuals**: What the Model Leaves
 
-</div>
+A good model leaves only scatter.
+
+<!--
+**Say:** a fit always returns numbers. Whether to believe them is read from what is left over: the residuals, and χ².
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Residuals of the **Line**
+
+<div class="fig-fill grid-side mt-sm">
 
 <div class="stack-tight" style="margin-top:0;">
 
+<div class="card card-primary card-glass pad-compact">
+
+$r_i = y_i - \hat y_i$: what the line leaves.
+
+</div>
+
 <div class="card card-secondary card-glass pad-compact">
 
-## ✅ **The opening table, answered**
-
-A window moved by 1 MeV moves the mean by 0.75. Everything in it, the flat part and the tails of the peak, pulls the mean towards the centre of the window. Lecture 09's windows were all centred on 1865, so their means were pulled towards 1865 and came near 1864.84. A fit window moved by 4 MeV moves μ by 0.03. Report the fit.
+They add up to **0**. The largest, 2023: +1.29 °C, 1.8 σ.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-0.10 is the statistical uncertainty. The PDG value lies 0.37 above, nearly four times as far.
+No pattern: up and down, no run.
 
 </div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_line_resid.svg">
+
+</div>
+
+<!--
+**Say:** the residuals sum to zero because of the second normal equation. Seven of ten lie within ±σ, as a Gaussian would have it.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The **Pulls** of the Line
+
+<div class="card card-primary card-glass pad-compact mt-md table-compact">
+
+| 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0.28 | −1.21 | 0.97 | 0.04 | −0.51 | 0.17 | −0.68 | 1.84 | 0.44 | −1.33 |
+
+pull = residual / σ, σ = 0.70 °C
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🎯 **Around 0**
+
+They add up to 0.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📏 **Two in three within ±1**
+
+Here 7 of 10.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## ⚠️ **One in 20 beyond ±2**
+
+Here none.
 
 </div>
 
 </div>
 
 <!--
-Speaker: go back to the vote on the opening slide. The room's favourite, the
-last row, was near the PDG value by the choice of its window. Bins of 1 MeV
-give 1864.48, bins of 3 MeV 1864.50: less than the uncertainty. sigma is the
-mass resolution of the detector; the natural width of the D0 is a billion
-times smaller. (~3 min)
+**Say:** pulls have no unit, so points with different σ can be compared on one scale. These three checks describe a Gaussian of width 1: what a right model with the right σ leaves.
+(~1.5 min)
 -->
----
-layout: section
-hideInToc: true
----
-
-# Goodness of **Fit**
-
-Each fit ended on a χ²: 2.65 for the line through nine points, 53.4 for the peak in 45 bins. Whether a χ² is good depends on what it should be.
 
 ---
 hideInToc: true
@@ -1924,9 +2040,9 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 1️⃣ **One per point**
+## ➕ **One per point**
 
-If the model and the $\sigma_i$ are right, each pull is a Gaussian number of mean 0 and width 1. Its square is 1 on average. $N$ points give $\chi^2 \approx N$.
+A right model: each pull² averages 1.
 
 </div>
 
@@ -1934,7 +2050,7 @@ If the model and the $\sigma_i$ are right, each pull is a Gaussian number of mea
 
 ## ➖ **Minus one per parameter**
 
-The fit moves the curve towards the points. Each of the $k$ fitted parameters lowers $\chi^2$ by 1 on average. A line through $N = 2$ points has $\chi^2 = 0$ every time.
+Each fitted parameter takes about 1 off χ².
 
 </div>
 
@@ -1942,85 +2058,43 @@ The fit moves the curve towards the points. Each of the $k$ fitted parameters lo
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-$$\langle\chi^2\rangle = N - k = \text{ndf}, \qquad \text{standard deviation of } \chi^2 = \sqrt{2\,\text{ndf}}$$
-
-ndf is the number of **degrees of freedom**.
+$$\langle\chi^2\rangle = N - k = \text{ndf}, \qquad \text{the degrees of freedom}$$
 
 </div>
 
-<div class="card card-accent card-glass pad-compact table-compact mt-md">
+<div class="card card-success card-glass pad-compact mt-md">
 
-| Fit | N | k | ndf | Expected χ² | Observed χ² |
-| --- | --- | --- | --- | --- | --- |
-| Pendulum, straight line | 9 | 2 | 7 | 7 ± 3.7 | 2.65 |
-| D⁰ peak, Gaussian on a line | 45 | 5 | 40 | 40 ± 8.9 | 53.4 |
-
-</div>
-
----
-hideInToc: true
----
-
-# The χ² Distribution and the **p-value**
-
-<img class="fig" src="/figures/viz_fitting_chi2_dist.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:300px;">
-
-<div class="grid-2 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-The **p-value** of Lecture 09, now for $\chi^2$: the probability of a $\chi^2$ as large as the observed one or larger, if the model and the $\sigma_i$ are right. 0.08 means: 1 correct fit in 13 looks this bad or worse.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-```python
-from scipy.stats import chi2
-chi2.sf(2.65, 7)     # 0.915
-chi2.sf(53.4, 40)    # 0.076
-```
-
-</div>
+The line: N = 10, k = 2, ndf = 8. χ² = 8.56: **1.07 per degree of freedom**.
 
 </div>
 
 <!--
-Speaker: sf is the survival function, one minus the cumulative distribution.
-A p-value of 0.001 would say that the model or the uncertainties are wrong.
-A p-value near 1 says the points lie closer to the curve than their
-uncertainties allow for. (~3 min)
+**Say:** a line through two points always has χ² = 0: two parameters, no freedom left. So the expected χ² counts only the points the parameters did not use up.
+**If asked:** χ² for a right model scatters around ndf by √(2 ndf), 4 for ndf = 8.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Reading **χ²/ndf**
+# When χ² Is Not a **Test**
 
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-success card-glass pad-compact">
-
-## ✅ **Near 1**
-
-The points scatter around the model as much as their $\sigma_i$ say.
-
-</div>
+<div class="grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact">
 
-## ⬆️ **Far above 1**
+## 🔁 **σ = 0.70 came from these ten points**
 
-The model misses structure in the data, or the $\sigma_i$ are too small.
+The flat line: χ² = 9.08 for ndf = 9, by construction.
 
 </div>
 
-<div class="card card-accent card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-## ⬇️ **Far below 1**
+## 🔬 **A test needs σ from elsewhere**
 
-The $\sigma_i$ are too large, or the model has parameters that follow the noise.
+The instrument's stated error, or repeated measurements.
 
 </div>
 
@@ -2028,122 +2102,104 @@ The $\sigma_i$ are too large, or the model has parameters that follow the noise.
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-How near is near? The standard deviation of $\chi^2/\text{ndf}$ is $\sqrt{2/\text{ndf}}$: 0.53 for 7 degrees of freedom, 0.22 for 40.
+χ² far above ndf: a missed pattern or σ too small. Far below: σ too large.
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🕰️ **Pendulum: 2.65/7 = 0.38**
-
-1.2 standard deviations below 1. With $\sigma_{t_{10}} = 0.06$ s instead of 0.1 s it would be about 1. Seven degrees of freedom cannot tell the two apart.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⛰️ **D⁰: 53.4/40 = 1.33**
-
-1.5 standard deviations above 1. Acceptable, and a hint that one Gaussian is not the exact shape of the peak.
-
-</div>
-
-</div>
+<!--
+**Say:** σ was the scatter of the yearly means around their mean. Then χ² of the flat line is (N − 1) s²/σ², 9 up to the rounding of σ: it cannot fail. Honest, but no test.
+(~2 min)
+-->
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# Residuals and **Pulls**
+# The Residuals of the **Cycle**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact">
-
-## 📏 **Two definitions**
-
-$$r_i = y_i - f(x_i;\hat\theta), \qquad \text{pull}_i = \frac{r_i}{\sigma_i}$$
-
-The residual has the unit of $y$. The pull has none: pulls of points with different $\sigma_i$ can be compared.
+🌀 sd **2.94 °C**. Runs of warm and cold weeks: a day's residual predicts the next day's, **r = 0.875**.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_cycle_resid.svg">
 
-## ✅ **In a good fit the pulls**
+<!--
+**Say:** left: 2024, day by day; the weather stays warm or cold for a week or two. Right: every day's residual against the next day's: a tight cloud along the diagonal. r is the correlation of Lecture 8.
+(~1.5 min)
+-->
 
-- scatter around 0 with a standard deviation near 1
-- show no pattern along $x$
-- lie beyond ±2 in about 1 case in 20
+---
+hideInToc: true
+class: fill
+---
+
+# Neighbouring Days Are **Alike**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-warning card-glass pad-compact">
+
+📉 Days taken as independent: A = 11.18 **± 0.07** °C
 
 </div>
 
-</div>
+<div class="card card-success card-glass pad-compact">
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-accent card-glass pad-compact">
-
-## ⛰️ **D⁰: 45 pulls**
-
-Mean 0.01, standard deviation 1.09. Three lie beyond ±2, where two are expected. The largest is 2.9.
+📅 One fit per year: 10.41 to 12.60, mean 11.20, scatter 0.79: **± 0.25** °C
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-## 🕰️ **Pendulum: 9 pulls**
-
-0.12, 0.39, −0.93, 0.36, −0.52, 0.57, −0.38, 0.77, −0.39. All within ±1.
+0.79 / √10 = 0.25: 3.6 times the ± of the fit. As 7.16 ± 0.03 against ± 0.22 in Lecture 8.
 
 </div>
 
 </div>
 
-<div class="card card-warning card-glass pad-compact mt-md">
-
-$\chi^2$ is one number and does not say where the misfit is. The pull plot does. Draw it under every fit.
+<img class="fig" src="/figures/viz_fitting_amplitudes.svg">
 
 </div>
+
+<!--
+**Say:** 3648 days are not 3648 independent measurements: a warm week counts seven times. Ten separate years are close to independent, and their scatter gives the honest ±.
+(~2 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# A Model with Too Few **Terms**
+# The Same Trend from 3648 **Days**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🌊 **The cycle plus a slope k**
+
+$$T(d) = c - A\cos\frac{2\pi(d - d_0)}{365.25} + k\,\frac{d}{3652.5}$$
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact table-compact">
+<div class="card card-warning card-glass pad-compact">
 
-## ⛰️ **Four models for the D⁰ histogram**
+## 📉 **Days taken as independent**
 
-| Model | k | χ² | ndf | χ²/ndf |
-| --- | --- | --- | --- | --- |
-| Straight line | 2 | 8337.0 | 43 | 193.9 |
-| Gaussian on a constant | 4 | 99.4 | 41 | 2.42 |
-| Gaussian on a line | 5 | 53.4 | 40 | 1.33 |
-| Two Gaussians on a line | 7 | 37.4 | 38 | 0.98 |
+k = **−0.57 ± 0.17 °C per decade**: 3.4 σ from zero?
 
 </div>
 
-<div class="stack-tight" style="margin-top:0;">
+<div class="card card-success card-glass pad-compact">
 
-<div class="card card-secondary card-glass pad-compact">
+## 📅 **The ten yearly means**
 
-## 📉 **Is the added parameter needed?**
-
-A parameter the data do not need lowers $\chi^2$ by about 1. The slope $c_1$ lowers it by 46.0. It is needed.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-A second Gaussian with the same $\mu$ lowers $\chi^2$ by 16.0 for two parameters: the peak has wider tails than one Gaussian. $\mu$ moves to 1864.45.
-
-</div>
+−0.56 **± 0.77**: the same slope, a ± more than four times larger.
 
 </div>
 
@@ -2151,44 +2207,55 @@ A second Gaussian with the same $\mu$ lowers $\chi^2$ by 16.0 for two parameters
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A model with too few terms **underfits**: $\chi^2/\text{ndf}$ is far above 1 and the pulls show a pattern. The pattern says which term is missing.
+Many alike points give a small ± that is wrong: a common false discovery.
 
 </div>
 
+<!--
+**Say:** the daily means hold the same information about the trend as the yearly means, and the fit agrees on the slope. Only the ± differs: the daily fit counts each warm or cold spell many times over.
+(~2 min)
+-->
+
 ---
 hideInToc: true
+class: fill
 ---
 
-# Too Few Terms: the **Pulls**
+# Too Few **Parameters**
 
-<img class="fig" src="/figures/viz_fitting_d0_models.svg" style="display:block;margin:0.4rem auto 0;max-width:100%;max-height:425px;">
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ A constant leaves the whole cycle in its residuals. A second cosine (k = 5) gains nothing: 2.94 °C again.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_too_few.svg">
 
 <!--
-Speaker: top: the pulls are the peak itself. Middle: positive on the left,
-negative on the right, a tilt that a constant background cannot follow.
-Bottom: no pattern. (~2 min)
+**Say:** a pattern left in the residuals names the missing term: here a wave of one year. Once the residuals look like scatter, a further term gains almost nothing: 2.942 to 2.936 °C.
+(~1.5 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# A Model with Too Many **Terms**
+# Too Many **Parameters**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact table-compact">
 
-## 🕰️ **Polynomials through the pendulum points**
+## 📈 **Polynomials through the ten years**
 
-| Degree | k | χ² | ndf | T² at 1.2 m |
+| Degree | k | χ² | ndf | 2026 (°C) |
 | --- | --- | --- | --- | --- |
-| 0 | 1 | 11 954.89 | 8 | 1.88 |
-| 1 | 2 | 2.65 | 7 | 4.82 |
-| 2 | 3 | 2.60 | 6 | 4.83 |
-| 4 | 5 | 2.16 | 4 | 4.62 |
-| 6 | 7 | 1.38 | 2 | 2.18 |
-| 8 | 9 | 0.00 | 0 | −63.37 |
+| 0 | 1 | 9.08 | 9 | 7.16 |
+| 1 | 2 | 8.56 | 8 | 6.85 |
+| 3 | 4 | 6.83 | 6 | 5.18 |
+| 5 | 6 | 4.03 | 4 | −1.42 |
+| 8 | 9 | 0.53 | 1 | 93.25 |
+| 9 | 10 | 0.00 | 0 | 306.66 |
 
 </div>
 
@@ -2196,17 +2263,181 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🎢 **Degree 8**
+## 🎢 **Every term lowers χ²**
 
-Nine parameters for nine points: the curve passes through every point, $\chi^2 = 0$, and no degree of freedom is left to test anything. At 1.2 m it predicts $T^2 = -63$ s²; the line, 4.82.
+and the forecast for 2026 goes wild.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-From degree 1 to 2 (the third column of "Linear in the Parameters"), $\chi^2$ falls by 0.04, and each further term buys less than 1. The line is enough.
+## 🧵 **Degree 9**
+
+Ten parameters, ten points: χ² = 0, nothing left to test.
 
 </div>
+
+</div>
+
+</div>
+
+<!--
+**Say:** a polynomial of degree 9 has ten free numbers and passes through every point. It follows the weather of each year, not the climate, and its next value is nonsense.
+**Ask:** which model would you use for 2026? The constant or the line: their forecasts, 7.16 and 6.85, differ by less than one year's scatter.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Curve Through Every **Point**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-warning card-glass pad-compact">
+
+🎢 Degree 9 hits all ten years and says **307 °C** for 2026.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+The line says 6.85 °C.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_too_many.svg">
+
+</div>
+
+<!--
+**Say:** between the points the curve swings wildly, and beyond the last one it shoots off. Fitting the noise is called overfitting.
+(~1 min)
+-->
+
+---
+hideInToc: true
+---
+
+# How Many **Parameters**?
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ⚖️ **χ² near ndf, with the fewest parameters**
+
+A parameter earns its place by lowering χ² by clearly more than 1.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-success card-glass pad-compact">
+
+## 🌊 **The cycle**
+
+A constant to a cosine: sd 8.43 → 2.94 °C. Needed.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 📉 **The slope of ten years**
+
+χ² 9.08 → 8.56: **−0.52**. Not needed yet.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the slope lowered χ² by less than 1: the data do not ask for it. The same answer as −0.56 ± 0.77: a trend cannot be told from zero.
+**If asked:** a parameter that the data do not need lowers χ² by about 1 on average, from the scatter alone.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Reading the **Residuals**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact">
+
+## 🌊 **A pattern**
+
+A term is missing. A constant through the daily means leaves the whole cycle: sd 8.43 °C.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔗 **Runs**
+
+The points are not independent: next-day r = 0.875. The ± is too small.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 📍 **One point far off**
+
+Check its source. 2019 typed as 2.27: pull −6.2, χ² = 52.5 for 8, slope +0.35.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ⚖️ **χ² far from ndf**
+
+A wrong model, or a wrong σ.
+
+</div>
+
+</div>
+
+<!--
+**Say:** four things a residual plot shows that the fitted numbers hide. One mistyped value, 2.27 for 7.27, flips the slope to +0.35 per decade, and only its pull of −6 gives it away.
+**If asked:** a point is corrected or removed only with a reason found in its source, never because it fits badly.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A Shift the Fit Cannot **See**
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+## 🔧 **Suppose a new sensor from 2021 reads 0.5 °C high**
+
+The five later years rise by 0.5 °C; the fit runs as before.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📉 **As measured**
+
+−0.56 ± 0.77 °C per decade, χ² = 8.56
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📈 **With the shift**
+
+**+0.20** ± 0.77 °C per decade, χ² = 9.50: still a good fit
 
 </div>
 
@@ -2214,183 +2445,56 @@ From degree 1 to 2 (the third column of "Linear in the Parameters"), $\chi^2$ fa
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A model with too many terms **overfits**: it follows the scatter of these nine points and fails on the next one. The aim is a $\chi^2$ near ndf with the fewest parameters, not the smallest $\chi^2$.
+The ± is **statistical**: the scatter of the points. An error shared by many points is **systematic**: found in the station's records, not in χ².
 
 </div>
 
----
-hideInToc: true
----
-
-# Three Pendulum Models and Their **Pulls**
-
-<div class="note-text mt-sm">
-
-Left: a straight line through $T$ against $\ell$, the wrong model. The pulls form an arch. Middle: the line through $T^2$. Right: the polynomial of degree 8, with $4\ell$ subtracted.
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_overfit.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:335px;">
+<!--
+**Say:** a step of 0.5 °C, smaller than one year's scatter, turns the sign of the trend, and neither χ² nor the residuals raise an alarm. This is why stations keep a log of every sensor change, and why physicists list their systematic uncertainties next to the statistical one.
+**If asked:** the weights of 2021 to 2025 in the slope add to 0.152; 0.5 × 0.152 = 0.076 °C a year, 0.76 per decade.
+(~2 min)
+-->
 
 ---
 layout: section
 hideInToc: true
 ---
 
-# What Goes **Wrong**
+# **Wrap-up**
 
-χ² and the pulls test a model against the scatter of its points. A fit can still go wrong in ways that neither of them shows.
-
----
-hideInToc: true
----
-
-# Starting **Values**
-
-<div class="card card-primary card-glass pad-compact table-compact mt-sm">
-
-| `p0`: A, μ, σ, c₀, c₁ | Result | χ² | Message |
-| --- | --- | --- | --- |
-| 2300, 1865, 8, 1400, 0 | μ = 1864.47 ± 0.10 | 53.4 | none |
-| 2300, 1850, 3, 1400, 0 | μ = 1864.47 ± 0.10 | 53.4 | none |
-| 2300, 1840, 2, 1400, 0 | μ = 1827.57 ± 0.28, A = −2876 | 3285.3 | none |
-| not given: all 1 | nothing moved but the line | 8337.0 | covariance could not be estimated |
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_start_values.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:190px;">
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ The third fit ends in a local minimum, reports small uncertainties and raises no warning. Plot the model at `p0` over the data before fitting.
-
-</div>
+A fit is a number, its ±, its χ², and the model behind it.
 
 <!--
-Speaker: a Gaussian of width 2 at 1840 does not overlap the peak at 1865. The
-derivative of chi2 with respect to mu is nearly zero there, so the descent has
-no direction to the peak and fits a wide negative Gaussian instead. Ask the
-room first: which number on the output says that something is wrong? chi2 =
-3285 for 40 degrees of freedom, and a negative height A. To show it live,
-change p0 in the runner of "The Fit in Code" to [2300, 1840, 2, 1400, 0].
-(~3 min)
+(~0.5 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Errors That Are Not Gaussian: Small **Counts**
+# The Same Line by Every **Method**
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary card-glass pad-compact table-compact mt-md">
 
-<div class="card card-primary card-glass pad-compact">
-
-## 🔢 **Four bins: 2, 4, 6, 8**
-
-Fit a constant with $\sigma_i^2 = n_i$. The weighted mean becomes
-
-$$\hat\mu = \frac{\sum_i n_i/n_i}{\sum_i 1/n_i} = \frac{4}{\tfrac12 + \tfrac14 + \tfrac16 + \tfrac18} = 3.84$$
-
-The mean of the counts is 5. A bin that came out low gets a small $\sigma$, a large weight, and pulls the fit down.
-
-</div>
-
-<div class="stack-tight" style="margin-top:0;">
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ⛰️ **The D⁰ bins above 1886**
-
-The same fit gives 1362.1; the mean of the 12 counts is 1363.8. At 1400 entries per bin the effect is 0.1 %.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 0️⃣ **An empty bin**
-
-$\sigma = \sqrt{0} = 0$ divides by zero. With the window 1800 to 1930 and its 8 empty bins, `curve_fit` returns the starting values and infinite uncertainties.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The remedy is the likelihood of the right distribution. For Poisson counts, $-2\ln L = 2\sum_i \big(f_i - n_i \ln f_i\big) + \text{const}$ with $f_i = f(x_i;\theta)$. Minimising $-2\ln L$ works for every distribution. It gives $\chi^2$ only for the Gaussian.
-
-</div>
-
----
-hideInToc: true
----
-
-# Errors That Are Not Gaussian: an **Outlier**
-
-<div class="note-text mt-sm">
-
-One value of the pendulum table typed with two digits exchanged: 16.21 in place of 12.61. The fit gives $g = 10.09 \pm 0.09$ m/s² with $\chi^2 = 884.7$ for 7 degrees of freedom. The pull of that point is 28.
-
-</div>
-
-<img class="fig" src="/figures/viz_fitting_outlier.svg" style="display:block;margin:0.5rem auto 0;max-width:100%;max-height:300px;">
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-The square in $\chi^2$ gives a point 28σ away the weight of 800 ordinary points. Find it in the pull plot, go back to the source of the number, and correct it or remove it with the reason written down. A point is never removed only because it fits badly.
-
-</div>
-
----
-hideInToc: true
----
-
-# What χ² Cannot **See**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## 📏 **An error common to all points**
-
-| The table | g (m/s²) | χ² |
+| Method | a (°C a year) | b (°C) |
 | --- | --- | --- |
-| as measured | 9.845 ± 0.090 | 2.647 |
-| every length 1 % too long | 9.943 ± 0.091 | 2.647 |
-| every t₁₀ 0.2 s too long | 9.707 ± 0.089 | 2.581 |
+| The five sums, by hand | −0.056 | 7.41 |
+| The five sums, a loop in Python | −0.056 | 7.41 |
+| Gradient descent from (0, 7), 500 steps | −0.0555 | 7.410 |
 
 </div>
 
-<div class="stack-tight" style="margin-top:0;">
+<div class="card card-success card-glass pad-compact mt-md">
 
-<div class="card card-warning card-glass pad-compact">
-
-## 🙈 **The fit stays good**
-
-A stretched tape measure moves $g$ by 0.10, more than its uncertainty, and leaves $\chi^2$ unchanged in every digit.
+🔧 A spreadsheet's trend line or a fitting library gives the same two numbers: least squares has one answer. A different answer means a different model, σ or data.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
-
-## 📣 **Statistical and systematic**
-
-The uncertainty from a fit is **statistical**: it comes from the scatter of the points and shrinks with more points. An error shared by all points is **systematic**. It is estimated and reported separately.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-With every $t_{10}$ 0.2 s too long, the intercept becomes $0.036 \pm 0.020$ s², 1.8σ from zero. The free intercept is the one place where this error leaves a trace.
-
-</div>
+<!--
+**Say:** the method is a tool and can be swapped; the model, the data and σ decide the result. That is what tool-agnostic means for a fit.
+**If asked:** a spreadsheet's SLOPE and INTERCEPT use the formula of the five sums.
+(~1.5 min)
+-->
 
 ---
 hideInToc: true
@@ -2405,13 +2509,12 @@ hideInToc: true
 ## 📝 **What a reader needs**
 
 1. The model, as a formula
-2. The data, and where the $\sigma_i$ come from
-3. The method and the starting values
-4. Each parameter as value ± uncertainty, with its unit
-5. The correlation, if a result uses two parameters
-6. $\chi^2$ and the number of degrees of freedom
-7. A figure of data and model, with the pulls below
-8. What the uncertainty does not include
+2. The data, and where σ comes from
+3. The method
+4. Each parameter: value ± uncertainty, unit
+5. χ² and ndf
+6. A figure: data, model, residuals
+7. What the ± leaves out
 
 </div>
 
@@ -2419,17 +2522,282 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-## 🕰️ **The pendulum, in two sentences**
+## 📉 **The trend**
 
-"A weighted least-squares fit of $T^2 = a\,\ell + b$ to nine points, with 0.1 s assumed on the time of 10 swings, gives $a = 4.010 \pm 0.037$ s²/m and $b = 0.009 \pm 0.019$ s² ($\rho = -0.88$), with $\chi^2 = 2.65$ for 7 degrees of freedom. From the slope, $g = 9.84 \pm 0.09$ m/s² (statistical)."
+"A least-squares line through the ten yearly means, 2016–2025, σ = 0.70 °C each from their scatter: −0.56 ± 0.77 °C per decade, χ² = 8.56 for 8."
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 🌊 **The cycle**
+
+"A cosine fitted to 3648 daily means: A = 11.18 ± 0.25 °C (scatter of one-year fits), coldest on 16 January."
+
+</div>
+
+</div>
+
+</div>
+
+<!--
+**Say:** two sentences hold everything another person needs to check the number or redo it. The ± of the cycle is the one from ten separate years; the fit's own ± 0.07 leaves out that neighbouring days are alike.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# A **Checklist** for a Fit
+
+<div class="stack-tight mt-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+✅ Is the **model** chosen from a plot of the data, with the fewest parameters?
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+✅ Is **σ** stated, with where it comes from?
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+✅ Do the **residuals** look like scatter: no pattern, no runs?
 
 </div>
 
 <div class="card card-info card-glass pad-compact">
 
-A number without an uncertainty cannot be compared with anything. An uncertainty without its assumptions cannot be checked.
+✅ Is **χ²** near ndf, and is σ from outside the fitted points?
 
 </div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Is the **±** honest: independent points, systematic errors named?
+
+</div>
+
+</div>
+
+<!--
+**Say:** each line is a slide of today: the yearly cycle chosen from the waves, σ = 0.70 from the scatter, the runs in the residuals of the cycle, χ² against ndf, the ± 0.07 that should be ± 0.25, and the sensor shift.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Is It Getting Warmer: the **Answer**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="stack-tight" style="margin-top:0;">
+
+<div class="card card-warning card-glass pad-compact">
+
+Two picked years: +1.80 or −2.33 °C.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+All ten, fitted: **−0.56 ± 0.77 °C per decade**. Ten years cannot tell.
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+20 years would measure ± 0.27; 40 years ± 0.10.
+
+</div>
+
+</div>
+
+<img class="fig" src="/figures/viz_fitting_band.svg">
+
+</div>
+
+<!--
+**Say:** back to the opening slide. Every year counts once, the scatter sets the ±, and the honest answer for this station is "not yet measurable".
+**Ask:** what would you need to answer it? More years, from the same station and the same sensor.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# **Recap**: You Can Now…
+
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Name a model's **parameters**, and find the mean as the **least-squares** value
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Take a **derivative**, and check it with a small nudge
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Derive **χ²** from the Gaussian likelihood, and compute it point by point
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Fit a **straight line** from five sums, with its **uncertainty** from Δχ² = 1
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Walk downhill by **gradient descent**, and choose a step size that works
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+✅ Read **residuals** and χ², and spot too few or too many **parameters**
+
+</div>
+
+</div>
+
+<!--
+**Say:** one line per section, each with a number from today: 25.275, −2.2, 9.08, −0.56 ± 0.77, η < 0.25, 307 °C.
+(~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# For the **Curious**
+
+Derivations, matrices, faster minimisers, and two fits from physics.
+
+<!--
+**Say:** optional: for the time left, or to read after the lecture.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# σₐ, **Derived**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## ➕ **â is a weighted sum of the yᵢ**
+
+$$\hat a = \sum_i c_i\,y_i, \qquad c_i = \frac{N x_i - \sum x_j}{\Delta}: \quad -0.0545,\ -0.0424,\ \dots,\ 0.0545$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## ➡️ **Independent yᵢ, each with σ: the variances add**
+
+$$\sigma_a^2 = \sigma^2 \sum_i c_i^2 = \sigma^2\,\frac{N}{\Delta} = 0.49 \times 0.01212 = 0.00594, \qquad \sigma_a = 0.077$$
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Σcᵢ² = (N²Σx² − 2N(Σx)² + N(Σx)²) / Δ² = N / Δ. The weights are largest for the first and the last year.
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# Slope and Intercept Are **Correlated**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🔗 cov(a, b) = −σ² Σx / Δ = −0.0267, ρ = −0.84: a steeper line through (4.5, 7.16) starts higher. Count x from mid-2020 and ρ = 0, b = **7.16 ± 0.22**: the mean of Lecture 8.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_ellipse.svg">
+
+---
+hideInToc: true
+---
+
+# The Normal Equations as **Matrices**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🧱 **The ten years**
+
+$$\begin{pmatrix} 285 & 45 \\ 45 & 10 \end{pmatrix} \begin{pmatrix} a \\ b \end{pmatrix} = \begin{pmatrix} 317.62 \\ 71.60 \end{pmatrix} \quad\Longrightarrow\quad a = -0.0555, \; b = 7.410$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 📐 **Any model linear in its parameters**
+
+$$A^{\mathsf T}\!A\,\hat\theta = A^{\mathsf T}\mathbf y, \qquad V = \sigma^2 \big(A^{\mathsf T}\!A\big)^{-1}$$
+
+A: one row per point, one column per parameter: here $(x_i, 1)$.
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+V for the ten years: σₐ² = 0.0059, σ_b² = 0.169, cov = −0.0267, the numbers of the last slides.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Cycle as a Linear **Model**
+
+<div class="card card-primary card-glass pad-compact mt-md">
+
+## 🔀 **cos(u − v) = cos u cos v + sin u sin v**
+
+$$c - A\cos\big(\omega(d - d_0)\big) = c + \alpha\cos\omega d + \beta\sin\omega d, \qquad \omega = \frac{2\pi}{365.25}$$
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧮 **Linear in c, α, β**
+
+Three columns: 1, cos ωd, sin ωd. Normal equations, no descent: c = 7.177, α = −10.763, β = −3.023.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ↩️ **Back to A and d₀**
+
+A = √(α² + β²) = 11.18. d₀ from the angle of (−α, −β): 15.9.
 
 </div>
 
@@ -2439,40 +2807,25 @@ A number without an uncertainty cannot be compared with anything. An uncertainty
 hideInToc: true
 ---
 
-# The Number to **Report**
+# Newton's Step and **Levenberg–Marquardt**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-primary card-glass pad-compact table-compact">
+<div class="card card-primary card-glass pad-compact">
 
-## ⛰️ **One histogram, four models**
+## 🏞️ **Why the descent is slow**
 
-| Model, 1820 to 1910 | k | χ²/ndf | p | μ (MeV/c²) |
-| --- | --- | --- | --- | --- |
-| Gaussian on a constant | 4 | 99.4/41 | 9 × 10⁻⁷ | 1864.34 ± 0.09 |
-| Gaussian on a line | 5 | 53.4/40 | 0.08 | 1864.47 ± 0.10 |
-| Gaussian on a parabola | 6 | 43.3/39 | 0.29 | 1864.46 ± 0.10 |
-| Two Gaussians on a line | 7 | 37.4/38 | 0.50 | 1864.45 ± 0.10 |
+The curvature of S across the valley is 103 times that along it. One η, small enough across, creeps along.
 
 </div>
 
-<div class="stack-tight" style="margin-top:0;">
+<div class="card card-secondary card-glass pad-compact">
 
-<div class="card card-warning card-glass pad-compact">
+## 🎯 **Newton: use the curvature too**
 
-## 📏 **The model moves μ**
+$$\delta = -H^{-1}\,\nabla S$$
 
-A background with no slope moves μ by 0.13, more than the statistical uncertainty. χ² rejects that model. The three models it accepts agree within 0.02.
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-## 📝 **The sentence for the report**
-
-"The peak is at μ = 1864.47 ± 0.10 (stat) MeV/c²: a Gaussian on a linear background, fitted from 1820 to 1910 MeV/c², χ² = 53.4 for 40 degrees of freedom."
-
-</div>
+From (0, 7), one step lands on (−0.0555, 7.410).
 
 </div>
 
@@ -2480,75 +2833,84 @@ A background with no slope moves μ by 0.13, more than the statistical uncertain
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-No window and no model on these slides reaches the PDG value 1864.84. The gap of 0.37 stays open, and the report says so: its uncertainty is statistical only.
+H: the second derivatives, $2\begin{pmatrix} 285 & 45 \\ 45 & 10 \end{pmatrix}$. **Levenberg–Marquardt** takes short downhill steps far away and Newton steps near the bottom: what fitting programs use.
 
 </div>
-
-<!--
-Speaker: this answers the opening slide. Ask the room again which number they
-would report: not one of the four means, but the fit, with its model, its
-window and its chi2. The constant background is the middle panel of "Too Few
-Terms: the Pulls": the tilt in its pulls is the slope it misses. (~3 min)
--->
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# **Recap** — You Can Now…
+# The χ² Distribution and the **p-value**
 
-<div class="grid-2 gap-md mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-success card-glass pad-compact">
-
-✅ Derive **χ²** as $-2\ln L$ for Gaussian errors, and minimise $-2\ln L$ itself for other errors
+🎲 If model and σ are right, χ² follows this curve. p: the chance of a χ² this large or larger. The line: 8.56 for 8, p = 0.38. The D⁰ peak of LHCb: 53.4 for 40, p = 0.08.
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_chi2_dist.svg">
 
-✅ Fit a **straight line** from five sums, by hand and in NumPy
+---
+hideInToc: true
+class: fill
+---
 
-</div>
+# The Pendulum's **g**
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-✅ Get **uncertainties** and the covariance from the curvature of χ², with $\Delta\chi^2 = 1$
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-✅ Minimise χ² by **gradient descent**: $\theta \leftarrow \theta - \eta\,\nabla\chi^2$
+🕰️ Nine lengths and the time of 10 swings, 0.1 s assumed on each. $T^2 = (4\pi^2/g)\,\ell$: slope 4.010 ± 0.037 s²/m, so **g = 9.84 ± 0.09 m/s²**; χ² = 2.65 for 7.
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_pendulum_fit.svg">
 
-✅ Fit a nonlinear model with **`curve_fit`**, with starting values and `absolute_sigma=True`
+---
+hideInToc: true
+class: fill
+---
 
-</div>
+# The D⁰ Mass Peak of **LHCb**
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-✅ Judge a fit by **χ²/ndf** and the pulls, and say what its uncertainty leaves out
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-tight mt-md">
-
-## 🔬 **The two results of today**
-
-Pendulum: $g = 9.84 \pm 0.09$ m/s², $\chi^2/\text{ndf} = 2.65/7$, and $b = 0.009 \pm 0.019$ s² passes the test of the formula. D⁰ peak: $\mu = 1864.47 \pm 0.10$ MeV/c², from a fit and not from a mean over a window, $\chi^2/\text{ndf} = 53.4/40$. Both uncertainties are statistical.
+⚛️ 91&nbsp;583 K⁻π⁺ masses: a peak, the D⁰ meson, on a flat part of random pairs. The fit takes 1820 to 1910 MeV/c², 45 bins, σ = √n.
 
 </div>
 
-<!--
-Speaker: every line of this recap was derived or computed today on one of two
-files. (~1 min)
--->
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_d0_data.svg">
+
+---
+hideInToc: true
+class: fill
+---
+
+# The D⁰ Peak, **Fitted**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⚛️ A Gaussian on a straight line, five parameters, fitted by Levenberg–Marquardt: **μ = 1864.47 ± 0.10 MeV/c²**, χ² = 53.4 for 40.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_d0_fit.svg">
+
+---
+hideInToc: true
+class: fill
+---
+
+# Too Few Terms on the D⁰ **Peak**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📉 A line leaves the peak in its pulls; a flat background leaves a tilt; a sloped one leaves scatter. The slope lowers χ² by 46.0: needed.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_fitting_d0_models.svg">
 
 ---
 layout: section
@@ -2557,22 +2919,22 @@ hideInToc: true
 
 # Check **Yourself**
 
-Questions on this lecture, for after it. They are not part of the lecture time.
+Questions on this lecture, for after it.
 
 ---
 hideInToc: true
 ---
 
 <MCQ
-  question="Three points have residuals 0.2, −0.3 and 0.1 from a model. Each has σ = 0.1. What is χ²?"
+  question="Which value of μ makes the sum of squared misses Σ(y − μ)² smallest for the three values 2, 4 and 9?"
   :options="[
-    '6',
-    '14',
-    '0.14',
-    '1.4'
+    '4, the middle value',
+    '5, the mean',
+    '5.5, halfway between the smallest and the largest',
+    '9, the largest'
   ]"
   :correct="1"
-  explanation="The pulls are 2, −3 and 1. Their squares are 4, 9 and 1, and the sum is 14. The point 3σ away contributes 9 of the 14."
+  explanation="The derivative −2Σ(y − μ) is zero where Σy = 3μ: μ = 15 / 3 = 5, the mean. The middle value, 4, makes the sum of the sizes |y − μ| smallest instead."
 />
 
 ---
@@ -2580,15 +2942,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A histogram with 30 bins is fitted with a Gaussian on a parabola: six parameters. How many degrees of freedom does the fit have?"
+  question="Three points have residuals 0.2, −0.3 and 0.1 from a model, each with σ = 0.1. What is χ²?"
   :options="[
-    '30',
-    '36',
-    '24',
-    '6'
+    '0.14',
+    '1.4',
+    '6',
+    '14'
   ]"
-  :correct="2"
-  explanation="ndf = N − k = 30 − 6 = 24. If the model and the uncertainties are right, χ² is expected at 24, with a standard deviation of √48 = 6.9."
+  :correct="3"
+  explanation="The pulls are 2, −3 and 1. Their squares are 4, 9 and 1, and the sum is 14. The point 3σ away gives 9 of the 14."
 />
 
 ---
@@ -2596,15 +2958,31 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A fit with one parameter has χ² = 12.0 at its minimum, θ = 5.00. At θ = 5.20, χ² is 13.0. What is the uncertainty of θ?"
+  question="Three points: x = 0, 1, 2 and y = 1, 3, 4. What is the slope of the least-squares line?"
+  :options="[
+    '1.5',
+    '2',
+    '1.17',
+    '3'
+  ]"
+  :correct="0"
+  explanation="N = 3, Σx = 3, Σy = 8, Σx² = 5, Σxy = 11. Δ = 3 × 5 − 3² = 6. The slope is (3 × 11 − 3 × 8) / 6 = 9 / 6 = 1.5, and the intercept (5 × 8 − 3 × 11) / 6 = 7 / 6 = 1.17."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A fit with one parameter has χ² = 12.0 at its minimum, θ = 5.00. At θ = 5.20 the χ² is 13.0. What is the uncertainty of θ?"
   :options="[
     '1.0',
     '0.04',
-    '13.0',
-    '0.20'
+    '0.20',
+    '13.0'
   ]"
-  :correct="3"
-  explanation="The uncertainty is the distance from the minimum at which χ² has risen by 1. Here that is 5.20 − 5.00 = 0.20. At θ = 5.40, two σ away, χ² would be 12 + 4 = 16."
+  :correct="2"
+  explanation="One σ raises χ² by 1: σ = 5.20 − 5.00 = 0.20. At θ = 5.40, two σ away, χ² would be 12 + 4 = 16."
 />
 
 ---
@@ -2612,7 +2990,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Gradient descent on χ²(θ) = (θ − 3)² starts at θ = 0 with the learning rate η = 0.25. Where is θ after one step?"
+  question="Gradient descent on S(θ) = (θ − 3)² starts at θ = 0 with the step size η = 0.25. Where is θ after one step?"
   :options="[
     '1.5',
     '3',
@@ -2620,7 +2998,7 @@ hideInToc: true
     '0.75'
   ]"
   :correct="0"
-  explanation="The derivative at θ = 0 is 2 × (0 − 3) = −6. The step is θ − η × (−6) = 0 + 1.5 = 1.5. With η = 0.5 one step lands on the minimum. With η = 1 it lands on 6, as far from 3 as the start, and for any larger η the distance grows."
+  explanation="The derivative at θ = 0 is −2 × (3 − 0) = −6. The step: θ = 0 − 0.25 × (−6) = 1.5. With η = 0.5 one step lands on 3; with η = 1 it lands on 6, as far away as the start."
 />
 
 ---
@@ -2628,29 +3006,45 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A fit of 27 points with 2 parameters gives χ² = 100. The model is known to be right. By what factor were the σ of the points too small?"
+  question="A cosine with three parameters is fitted to 365 daily means. How many degrees of freedom does the fit have?"
   :options="[
-    '4',
-    '2',
-    '16',
-    'They were too large, not too small'
-  ]"
-  :correct="1"
-  explanation="ndf = 27 − 2 = 25 and χ²/ndf = 4. Each term of χ² contains 1/σ², so doubling every σ divides χ² by 4 and brings it to 25. The estimates of the parameters stay the same; their uncertainties double."
-/>
-
----
-hideInToc: true
----
-
-<MCQ
-  question="A straight-line fit of T² against the length of a pendulum gives the slope a = 3.95 ± 0.04 s²/m. What is g = 4π²/a?"
-  :options="[
-    '9.99 ± 0.04 m/s²',
-    '9.99 ± 0.01 m/s²',
-    '9.99 ± 0.10 m/s²',
-    '9.81 ± 0.10 m/s²'
+    '365',
+    '368',
+    '362',
+    '3'
   ]"
   :correct="2"
-  explanation="g = 39.478 / 3.95 = 9.99. The relative uncertainty of g equals that of a, 0.04 / 3.95 = 1.0 %, so σ = 9.99 × 0.0101 = 0.10 m/s²."
+  explanation="ndf = N − k = 365 − 3 = 362. If the model and the σ are right, χ² is expected near 362."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A polynomial with ten parameters is fitted to ten yearly means. What happens?"
+  :options="[
+    'It finds the true trend more exactly than a line',
+    'It passes through every point: χ² = 0, nothing is left to test, and its forecast is unreliable',
+    'χ² equals 10, one per point',
+    'It gives the same forecast as the mean'
+  ]"
+  :correct="1"
+  explanation="Ten free numbers can match ten points exactly. The curve follows each year's weather, and for the yearly means of the weather log it forecasts 307 °C for 2026."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A fit takes 3648 days as independent and gives A = 11.18 ± 0.07 °C, but neighbouring days correlate, r = 0.875. The honest ± is…"
+  :options="[
+    'smaller than 0.07, since there are many days',
+    'exactly 0.07',
+    'larger than 0.07: alike neighbours carry less information than independent days',
+    'zero, since the cycle repeats every year'
+  ]"
+  :correct="2"
+  explanation="A warm week counts seven times. Ten separate one-year fits scatter by 0.79 °C, which gives ± 0.25 °C for their mean: 3.6 times the ± of the fit."
 />
