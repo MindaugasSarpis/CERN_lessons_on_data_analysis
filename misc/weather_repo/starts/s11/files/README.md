@@ -38,9 +38,6 @@ the temperature sensor was down.
 Mean `temp_c`, 2016 to 2025: **7.16 °C**, over 87 552 hours. The 120 hours
 marked `-999` are left out. The script writes it to `results/temp_c.txt`.
 
-Checked in Python, `scripts/mean_temp.py`: 7.16 °C over 87 552 hours.
-The coldest hour, `scripts/coldest_hour.py`: 2025-01-07T05:00, -16.3 °C.
-
 ## How to rebuild
 
 In the project folder, in zsh on macOS or Git Bash on Windows, with Python
@@ -52,24 +49,12 @@ It writes `data/processed/weather_valid.csv`, `weather.csv` without the
 120 rows marked `-999` (87 553 lines), and `data/processed/daily.csv`, the
 cleaned export (148 bytes).
 
-## Licence
+## The months in words
 
-Data: CC0, from the station's operator. Scripts and text: MIT, see
-`LICENSE`.
+    python scripts/sentences.py
 
-## How sure is the mean
-
-7.16 ± 0.22 °C. The ± is the standard error from the ten yearly means
-(they scatter by 0.70 °C). The hours are not independent: one hour and
-the next correlate by 0.996, so s/√N = 0.03 °C is too small.
-`scripts/mean_error.py` computes it.
-
-## The yearly cycle
-
-Daily means fitted with c − A cos(2π(d − d0)/365.25) by
-`scripts/fit_cycle.py`: A = 11.18 °C, coldest on day 15.9 (16 January).
-The fit's ± 0.07 °C is too small: the residuals of neighbouring days
-correlate by 0.875.
-
-Trend of the ten yearly means, `scripts/fit_trend.py`: −0.6 ± 0.8 °C per
-decade, compatible with zero.
+writes `data/processed/months.txt`, one sentence per month from its mean
+temperature over 2016 to 2025 (`in july it was warm .`), and
+`data/processed/months_by_year.txt`, one sentence for each of the 120
+months. The word is `weather.word_for` of the mean: below 0 °C cold, below
+10 °C cool, below 15 °C mild, else warm.

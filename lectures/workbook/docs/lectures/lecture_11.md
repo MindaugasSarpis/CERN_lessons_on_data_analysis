@@ -1,188 +1,240 @@
-# 11: The Perceptron
+# 11: From Neurons to Language Models
 
-Lecture 10 fitted a number: it wrote the likelihood of the data, took its
-logarithm times −2, got χ² plus a constant, and minimised it in closed form or by gradient
-descent. Lecture 11 applies the same three steps to a label that is 0 or 1.
-The model is one artificial neuron. The lecture builds it completely: what
-it computes, two ways to train it, where its loss comes from, and the one
-problem it cannot solve.
+Lecture 10 ended on one neuron and its limit: no single line separates the
+four points of XOR. Lecture 11 goes from there to the language models that
+write text, so that what a chat model does with a prompt is no longer a
+black box. It opens on twelve true sentences about the weather station, one
+per month, and five sentences that a program wrote after counting them,
+three of them false. Two layers of neurons solve XOR; the chain rule trains
+them, one step with numbers on a frost evening of the log. Then text becomes
+numbers: words get ids, the simplest language model counts which word
+follows which, and it writes fluent sentences that are often false, because
+it sees one word of context. Words become vectors, softmax turns scores
+into probabilities at a temperature, and attention weighs the earlier words
+so that "july" decides the word after "in july it was". A large language
+model is that loop with a very large network, pretrained on a very large
+text and tuned on instructions. The last part draws the consequences for
+prompting: give the context, an example, the format and the constraints;
+ask for a test and run it; paste no personal data; say where a model was
+used.
 
 ## What the lecture covers
 
-1. **From a number to a class** — the data of the lecture, 200 generated
-   points with two inputs and a label; a threshold on one input is right for
-   177 of them, a line for 185, and the question of the lecture is how that
-   line was found; a fit and a classification side by side as the plan.
-2. **One neuron** — the weighted sum, the bias and the step; AND, OR and NOT
-   with weights set by hand, and XOR left open as a puzzle; the decision
-   boundary *z* = 0 is a line; the
-   weight vector is its normal; the distance of a point from it is
-   *z* / ‖**w**‖; what turning **w**, changing *b* and scaling both do.
-3. **Rosenblatt's learning rule** — the rule and why it moves *z* the right
-   way; the AND gate worked through in 24 steps and 10 updates; the same in
-   Python; linearly separable sets and the margin; the perceptron convergence
-   theorem with its four assumptions and the bound *R*²/γ²; the idea of the
-   proof in three slides; what the theorem does not say.
-4. **From the step to the sigmoid** — counting errors has no slope; the
-   sigmoid and its derivative σ(1 − σ), derived; the output as a probability
-   and *z* as the logarithm of the odds; the sigmoid as the exact answer for
-   two Gaussian classes.
-5. **The loss: from likelihood to cross-entropy** — the Bernoulli likelihood
-   of one point and of all points; its negative logarithm is the
-   cross-entropy; the loss of four points by hand; the gradient by the chain
-   rule in three parts, (ŷ − *y*) **x**; the gradient checked against a
-   difference quotient in Python; the update rule beside Rosenblatt's and the
-   straight-line fit, which answers why his rule has the form it has; one
-   minimum.
-6. **Training in NumPy** — the loop read line by line against the formulas;
-   the loop run on the 200 points, which finds the line of 185 from the
-   opening; the boundary moving; the weights against the exact ones of the
-   generator.
-7. **Training in practice** — the learning rate; inputs on different scales
-   and standardising; a training and a test set; the uncertainty of an
-   accuracy.
-8. **The limit: XOR** — the puzzle of the gates slide settled: four
-   inequalities that no weights satisfy; two lines
-   and a third neuron; the 2-2-1 network verified for all four inputs; the
-   hidden layer as a change of coordinates; what is missing.
-9. **History in three dates** — 1958, 1969, 1986, each with its source, and
-   what the press expected of the 1958 machine; what a modern network keeps
-   of this unit.
+1. **The question**: twelve sentences from the ten-year mean of each month
+   (*in july it was warm .*), and five sentences a program wrote after
+   counting them, three false.
+2. **Two layers solve XOR**: XOR as "OR but not AND", two lines; a 2-2-1
+   network of step neurons with nine weights set by hand; the four inputs
+   pushed through it, on the slide and in Python; the hidden layer as a
+   change of coordinates.
+3. **Training a network**: gradient descent needs a slope, so the step
+   becomes a sigmoid; one evening of the log (12 April 2025, 2.0 °C at
+   18:00, frost by 06:00) through two neurons; the chain rule, checked by a
+   nudge; the backward pass one link at a time, with the whole chain as a
+   picture; the nudge check of one derivative, the slope of the loss drawn;
+   one step of gradient descent (ŷ from 0.386 to 0.692, the loss from 0.951
+   to 0.369), and the same in Python; XOR learned from random weights, the
+   hidden neurons ending near OR and AND; three of twelve random starts that
+   stop on a plateau.
+4. **Text as numbers**: the 20 words of the text as ids; which word follows
+   which; next-word probabilities from counts (after "was": 3, 4, 2, 3 of
+   12); the counting in Python, a dictionary of lists as `weather.group`;
+   generating text by drawing; what the model wrote: 38 of 144 sentences
+   true, and month by month only as often as the month's word follows
+   "was"; one word of context is not enough, and a table of every context
+   cannot be built.
+5. **Words as vectors**: each month described by the weather words it came
+   with in the 120 sentences of 2016–2025, twelve small bar charts; the dot
+   product and the cosine, with numbers; the similarity of the twelve months
+   as a picture, four seasons from the text alone; vectors in a language
+   model are learned, a row of a table per token.
+6. **Scores into probabilities**: softmax of three scores (0.659, 0.242,
+   0.099), the sigmoid as softmax of two; a temperature, at 0.5 (0.864) and
+   at 2 (0.502); what the temperature does to text, with ten draws at each
+   temperature.
+7. **Context and attention**: which earlier word decides; attention as a
+   weighted average with softmax weights (0.909 on "july", warm 0.932 in
+   place of 0.25); where the scores come from, a dot product; the same in
+   Python; attention in a large model, the transformer.
+8. **A large language model**: the loop from a prompt to the next token;
+   tokens, and a vocabulary of pieces built by counting pairs of letters in
+   the twelve sentences; pretraining, the loss of Lecture 10 at every token (1.358 against
+   0.069 on the twelve weather words); the number of parameters, from 4 to
+   1.75 × 10¹¹; instruction tuning, and a chat as one text; what it is not:
+   a database, a calculator, a view of your data, the same twice.
+9. **Prompting, from how it works**: what a prompt gives the model; one
+   request without and with context; a test with a known answer, which fails
+   on a correct function because of a float; a question only the data can
+   answer (22 352 hours below 0 °C); what to check and how; where a model
+   helps in an analysis; what never to paste; saying where it was used;
+   keeping the work reproducible.
+10. **Wrap-up**: what an LLM does with a prompt, in five steps with the
+    lecture's numbers; the recap.
+11. **For the curious**, after the recap and outside the lecture time: why
+    two layers without a bent function are one; backpropagation for the
+    2-2-1 network in eight lines; the ten years as text; three dates (1948,
+    1986, 2017). k-means, the ROC curve and cross-validation stay in the
+    optional Lecture 16.
 
 ## The numbers of the lecture
 
-Every number on the slides was computed:
+Every number on the slides is computed by `figures/src/language.py`; run
+`python figures/src/language.py` to print them all.
 
 | Where | Result |
 |--|--|
-| AND by Rosenblatt's rule, from zero weights, η = 1, points in the order (0,0), (0,1), (1,0), (1,1) | 10 updates in 5 epochs, then **w** = (2, 1), *b* = −2. The bound of the theorem is 51 |
-| The same rule on the 200 overlapping points | 16 to 24 updates in every epoch, for 100 epochs |
-| The logistic neuron on the 200 points, η = 0.5, 1000 epochs | loss from 0.6931 to 0.1616, 185 of 200 correct (92.5 %), **w** = (2.10, 2.26), *b* = −4.31 |
-| The best possible rule for these data | **w** = (2, 2), *b* = −4, right for 92.1 % of new points on average |
-| 150 training and 50 test points | 93.3 % and 92.0 %; the test accuracy is 92 % ± 4 % |
-| XOR by three step neurons | hidden weights (1, 1) with biases −0.5 and −1.5, output weights (1, −1) with bias −0.5 |
+| The text | One sentence per month from its mean temperature, 2016–2025: below 0 °C cold, below 10 °C cool, below 15 °C mild, else warm. 12 sentences, 72 words, 20 different words |
+| After "was" | cold 3, cool 4, mild 2, warm 3 of 12 |
+| A drawn sentence is true | 38 / 144 = 0.264; 2655 of 10 000 draws |
+| The tiny network, 12 April 2025 | *x* = 2.0, *y* = 1 (−3.8 °C at 06:00); *v* = −1, *c* = 1, *w* = 2, *b* = −1: ŷ = 0.386, loss 0.951; one step with η = 1: ŷ = 0.6915, loss 0.3689 |
+| XOR from `random.Random(0)` | η = 2, 2000 steps: loss 0.696 → 0.003; all four right from step 205; 9 of 12 starts learn it |
+| The month vectors, 120 sentences | January (9, 1, 0, 0), July (0, 0, 0, 10); cosine of January with February 0.994, with March 0.220, with July 0 |
+| Softmax of (2.0, 1.0, 0.1) | *T* = 1: 0.659, 0.242, 0.099; *T* = 0.5: 0.864, 0.117, 0.019; *T* = 2: 0.502, 0.304, 0.194; ten draws from `random.Random(1)`: warm 10 times at *T* = 0.5, 5 times at *T* = 2 |
+| Pieces counted in the twelve sentences | the most frequent pairs of letters: w + a 15 times, i + n 12, i + t 12, wa + s 12, c + o 7; after 8 merges `in`, `it`, `was`, `cool` are single pieces, `january` is still letters |
+| Attention on "july it was" | scores 3, 0, 0; weights 0.909, 0.045, 0.045; warm 0.932 |
+| Hours below 0 °C | 22 352 of 87 552 |
 
 ## The lecture, part by part
 
-The lecture is slides 1–67; when time is short, skip the slides of the
-second table. Slides 68–74 are the self-check quizzes and take no lecture
+The lecture is slides 1–67 and estimates about 123 min (the speaker notes add
+up to about 128), so in the two-hour slot **plan to skip the slides of the
+second table** (about 16 min). Slides 68–72 are the optional section For
+the Curious, and slides 73–81 the self-check quizzes; neither takes lecture
 time. To jump, type the slide number and press Enter.
 
 | Slides | Part |
 |--|--|
-| 1–7 | The data, the question of the lecture, a fit and a classification |
-| 8–13 | The neuron, AND and OR, the XOR puzzle, the boundary, its normal, the distance |
-| 15–17, 27 | Rosenblatt's rule, AND for two epochs, what the rule cannot do |
-| 28, 30–32 | The sigmoid, its derivative, the output as a probability |
-| 34–36, 39–41, 43 | Likelihood, cross-entropy, the gradient, the update rule |
-| 45, 47, 49 | The training loop, run: the line of slide 6 found |
-| 50, 53 | Standardising the inputs |
-| 56–61 | XOR: the puzzle settled, two lines, the network verified |
-| 65, 67 | Three publications, Recap |
+| 1–3 | The question: twelve true sentences, five written by a program, three false |
+| 4–9 | Two layers solve XOR: OR but not AND, the 2-2-1 network with weights set by hand, the four inputs on the slide and in Python, the change of coordinates |
+| 10–19 | Training: a slope, one evening through two neurons, the chain rule, backward one link at a time, the nudge, one step, XOR learned from random weights |
+| 20–29 | Text as numbers: ids, the counts after each word, probabilities, the counting in Python, generating text, what the model wrote, the chance of the true word month by month, one word of context |
+| 30–35 | Words as vectors: the months by their weather words, the dot product and the cosine, the twelve months as a picture, vectors in a language model |
+| 36–40 | Softmax, the temperature with its three panels, its effect on text |
+| 41–47 | Context and attention: the word that decides, the weighted average, where the scores come from, attention in a large model |
+| 48–54 | A large language model: the loop, tokens, pretraining, parameters, instruction tuning, what it is not |
+| 55–64 | Prompting: what a prompt gives, without and with context, a test with a known answer, a question only the data can answer, what to check, where a model helps, what never to paste, saying where it was used, reproducibility |
+| 65–67 | What an LLM does with a prompt; recap |
 
 | Skip | Slides |
 |--|--|
-| What **w** and *b* Do | 14 |
-| AND, epochs 3 to 6, and the ten updates as lines | 18–20 |
-| The Rule in Python | 21 |
-| Linearly separable, the theorem and its proof | 22–26 |
-| Gradient Descent Needs a Slope | 29 |
-| Where the Sigmoid Comes From | 33 |
-| What the Loss Charges, The Loss of Four Points | 37–38 |
-| The Gradient, Checked with Numbers | 42 |
-| The Loss Has One Minimum | 44 |
-| Reading the Loop, The Boundary Moves | 46, 48 |
-| The Learning Rate, Inputs on Different Scales | 51–52 |
-| Train and Test, How Sure Is an Accuracy? | 54–55 |
-| The Hidden Layer Changes the Coordinates, What Is Missing | 62–63 |
-| The History section slide, What a Modern Network Keeps | 64, 66 |
+| Check one derivative by a nudge; the step in Python | 15, 17 |
+| Not every start learns XOR | 19 |
+| The chance of the true word, month by month | 28 |
+| The dot product in Python | 34 |
+| Softmax in Python | 39 |
+| Where the scores come from | 44 |
+| The number of parameters | 52 |
+| Where an LLM helps in an analysis | 61 |
 
-- **Do not cut** slide 6 (the question of the lecture), slides 11–13 (the
-  boundary, its normal, the distance), 16–17 (the rule and its first two
-  epochs), 35–36 and 39–41 (the likelihood, the loss, the gradient), 47 and
-  49 (the loop that finds the line of slide 6, and what it means), 58–61
-  (XOR) or the closing slide 67 (Recap), whose bottom card answers slide 6.
-- **Slide 10 sets a puzzle**: find **w** and *b* for XOR. One minute,
-  collect two or three attempts, check one row of each aloud, and leave it
-  open. Slides 57–58 settle it.
-- **Slides 17–19 are done with the room.** Steps 1 to 6 on the board, each
-  number said aloud. If the clock is behind, the run stops after epoch 2: say
-  its end, ten updates and then **w** = (2, 1), *b* = −2.
-- **Slide 27** (What the Theorem Does Not Say): say aloud that Rosenblatt
-  wrote his rule down and did not derive it. Slide 43 derives it from the
-  Bernoulli likelihood.
-- **Slides 21, 42, 47 and 61 run Python in the browser.** Select the play
-  button at the top right of the code. The first run on a slide loads Python
-  and takes some seconds. Run each once before the session.
-- **Slide 21** (The Rule in Python): after the run, change `y` to
-  `[0, 1, 1, 1]` and run again: OR, four updates, `w [1. 1.]  b 0.0`.
-- **Slide 47** (The Training Loop): after the run, set `eta` to `0.05` and
-  to `20`. This replaces slide 51 when it is skipped.
-- **Slides 24–26** (the proof): if they are skipped, say what the theorem
-  bounds, the number of updates, and that slide 27 shows what happens
-  without its assumption.
-- **Slides 52 and 54–55** are repeated in the seminar on its own file:
-  the loop that prints `nan`, the split, the uncertainty of the accuracy.
+- **Do not cut** slide 3 (the question), slides 22–27 and 29 (the counting
+  model, which answers it) or slide 43 (attention as a weighted average):
+  slide 66 answers the opening with their numbers.
+- **Do not cut** slides 54 and 56–58 (what a model is not, what a prompt
+  gives, a prompt with context, the test) or 62–63 (what never to paste,
+  saying where a model was used): the seminar applies them.
+- **Slides 8, 17, 24, 26, 34, 39, 46 and 58** run Python in the browser,
+  plain Python without libraries. The first run downloads the Python
+  runtime, so run one block before the lecture. Slide 26 prints the five
+  sentences of slide 3 (`random.seed(38)`); slide 58 shows a test that
+  fails on a correct function, because 25.275 comes out as
+  25.275000000000002.
+- **Slide 14** builds the backward pass in five clicks, one factor of the
+  chain rule per click, and shows the whole chain on the sixth; **slide 43**
+  the attention weights in three clicks, then the weighted average.
+- **Slides 18 and 19** are the training of slide 16 repeated: nine weights,
+  four points, 2000 steps; the hidden neurons it finds are an OR and an
+  AND, the solution of slide 6.
+- **Slides 68–72** (For the Curious) are for time left at the end or for
+  students afterwards.
+
+Before the session, start the local copy of the slides: `node
+scripts/serve-local.mjs 8123`, then open
+`http://localhost:8123/11-neurons-to-language-models/`.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 68–74: six quiz slides for students to try afterwards. The same
+slides 73–81: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
-1. A neuron with a step has **w** = (2, −3) and *b* = 1. What are *z* and
-   the output for **x** = (1, 2)?
-   *z = 2 − 6 + 1 = −3, so the output is 0.*
-2. A neuron has **w** = (6, 8) and *b* = −5. How far is **x** = (2, 1) from
-   its boundary?
-   *z = 15 and ‖**w**‖ = 10, so the distance is 1.5, on the side of class 1.*
-3. Rosenblatt's rule with η = 1. The weights are **w** = (1, −1), *b* = 0,
-   and the next point is **x** = (0, 1) with target 1. What are the weights
-   after this step?
-   *z = −1, the output is 0, the error is +1. The rule adds the point:
-   **w** = (1, 0), b = 1.*
-4. A logistic neuron gives ŷ = 0.8 for a point with label 0. What is its
-   cross-entropy loss?
-   *−ln(1 − 0.8) = −ln 0.2 = 1.609.*
-5. For **x** = (2, −1) with label 1 a logistic neuron gives ŷ = 0.3. What
-   is the gradient of the loss with respect to the weights?
-   *(ŷ − y) **x** = −0.7 · (2, −1) = (−1.4, 0.7).*
-6. XNOR is 1 when the two inputs are equal. Can one neuron compute it?
-   *No. The conditions are b > 0, w₁ + b ≤ 0, w₂ + b ≤ 0 and
-   w₁ + w₂ + b > 0. The middle two add to w₁ + w₂ + 2b ≤ 0, the outer two
-   to w₁ + w₂ + 2b > 0.*
+1. A network computes *h*₁ = step(*x*₁ + *x*₂ − 0.5), *h*₂ = step(*x*₁ +
+   *x*₂ − 1.5) and ŷ = step(*h*₁ − *h*₂ − 0.5). What is ŷ for the input
+   (1, 1)?
+   *0: z₁ = 1.5 and z₂ = 0.5, so both hidden neurons give 1, and
+   1 − 1 − 0.5 = −0.5 gives 0. The AND neuron turns OR into XOR.*
+2. *f* = *a*² and *a* = 3*t* + 1. What is d*f*/d*t* at *t* = 2?
+   *42: a = 7, df/da = 2a = 14, da/dt = 3. A nudge to t = 2.001 gives
+   (49.042009 − 49) / 0.001 = 42.009.*
+3. In a text the word "was" is followed 3 times by cold, 4 times by cool,
+   2 times by mild and 3 times by warm. What probability does a model that
+   counts word pairs give to "mild" after "was"?
+   *2 / 12 = 0.167.*
+4. What is the dot product of **a** = (1, 2, 0) and **b** = (2, 0, 3)?
+   *1 · 2 + 2 · 0 + 0 · 3 = 2: one number.*
+5. Softmax turns the scores (2.0, 1.0, 0.1) into (0.659, 0.242, 0.099) at
+   *T* = 1. What happens to the first probability at *T* = 0.5?
+   *It rises to 0.864: the scores are doubled to (4, 2, 0.2), and the
+   likely word becomes more likely.*
+6. Two earlier words get the attention scores 2 and 0, and their vectors
+   are (1, 0) and (0, 1). What is the weighted average?
+   *(0.881, 0.119): softmax of (2, 0) gives the weights 0.881 and 0.119.*
+7. A chat model gives you a reference with authors, journal, year and DOI.
+   What follows from how the reply was made?
+   *It is a likely continuation of the text and may not exist: open the DOI
+   and read the paper. Asking again only draws again.*
+8. A model wrote a correct function and the test `assert mean_valid(hours)
+   == 25.275`, which gives an `AssertionError`. Why?
+   *The mean comes out as 25.275000000000002: the decimals are not exact in
+   binary. `round(mean_valid(hours), 3) == 25.275` passes. A test is code
+   too, and is checked by running it.*
 
 ## Paired seminar
 
-[Seminar 11 · Perceptron](../seminars/seminar_11.md) works on the weather project of Lectures 1
-to 5. Every student writes a neuron that predicts frost at 06:00 from the
-temperature and humidity at 18:00 the evening before, trains it on 2016 to
-2022, tests it on 2023 to 2025 (95.9 ± 0.6 % right), compares it with a
-one-line rule, and writes the answer into the README.
+[Seminar 11 · A Language Model by Hand](../seminars/seminar_11.md) builds the
+counting model of slides 21–27 in plain Python from today's folder: a
+script writes the twelve sentences from `weather.csv`, the students count
+the word pairs in a dictionary as `weather.group` does, turn the counts into
+probabilities, write sentences with `random.choice`, and compute softmax at
+three temperatures. Then they ask a chat model on a free account to explain
+`weather.word_for` and to write a test for it, run the test, check that it
+fails on a changed function, and add a note on the use of the model to the
+README; in the last part the same on a function of their own project.
+
+## Further reading
+
+- **C. E. Shannon**, *A Mathematical Theory of Communication*, Bell System
+  Technical Journal 27 (1948): English-like text, each word drawn by how
+  often it follows the one before it in a book.
+- **D. Rumelhart, G. Hinton, R. Williams**, *Learning representations by
+  back-propagating errors*, Nature 323 (1986): the chain rule through the
+  hidden layers.
+- **A. Vaswani et al.**, *Attention Is All You Need* (2017): the transformer.
+- **J. R. Firth**, *A Synopsis of Linguistic Theory, 1930–1955* (1957): the
+  quote of slide 2.
+- The optional Lecture 16 derives backpropagation for any number of hidden
+  units, trains networks in NumPy and measures them (confusion matrix, ROC
+  curve, cross-validation, leakage), and adds k-means.
 
 ## Take-aways
 
-- A neuron computes *z* = **w** · **x** + *b* and compares it with zero. Its
-  decision boundary is the line *z* = 0, **w** is the normal of that line,
-  and *z* / ‖**w**‖ is the distance of a point from it.
-- Rosenblatt's rule changes the weights only at a point that is wrong, by
-  the error times the input. On a linearly separable set it stops after at
-  most *R*²/γ² updates. On any other set it never stops.
-- The sigmoid turns *z* into a probability, and its derivative is
-  σ(1 − σ).
-- The loss is not chosen. It is the negative logarithm of the Bernoulli
-  likelihood, as χ² was, up to a factor 2 and a constant, that of the
-  Gaussian likelihood.
-- The gradient of the cross-entropy is the error times the input,
-  (ŷ − *y*) **x**. The update has the same form as Rosenblatt's rule and as
-  the gradient of a least-squares line.
-- The training loop is four lines of NumPy: the outputs, the loss, the step
-  in **w**, the step in *b*.
-- Inputs are standardised before training, with the mean and standard
-  deviation of the training set. Those two numbers per column belong to the
-  model.
-- A result is judged on points that were held back, and an accuracy on *N*
-  points has the binomial uncertainty √(*p*(1 − *p*)/*N*).
-- One neuron draws one line. XOR needs two lines, and a hidden layer of two
-  neurons supplies them: it gives the output neuron new coordinates in
-  which one line is enough.
+- A layer of neurons computes new coordinates; in them, one line separates
+  what no line separated before. Without a bent function between the
+  layers, two layers are one.
+- Training is the step of Lectures 9 and 10 for every weight: the chain rule
+  passes the error back one link at a time, and a nudge checks the result.
+- A language model gives every possible next word a probability. The
+  simplest one counts which word follows which; it writes grammatical text
+  that is often false, because it sees one word of context.
+- Words become vectors; the dot product and the cosine measure how alike two
+  are. Words used alike get similar vectors, from text alone.
+- Softmax turns scores into probabilities; the temperature sharpens or
+  flattens them, which is why a reply can differ each time.
+- Attention is a weighted average over the earlier words, with weights from
+  softmax: it lets the word that decides count most.
+- A large language model predicts the next token with a very large network,
+  pretrained on a very large text and tuned on instructions. It is not a
+  database, not a calculator, and has not seen your data.
+- A prompt gives the context, an example, the format and the constraints.
+  Every reply is checked: code by a test with a known answer, numbers by
+  computing them, references by opening them. Personal data stay out, and
+  the README says where a model was used.
