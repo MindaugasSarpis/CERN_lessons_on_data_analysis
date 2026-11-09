@@ -97,6 +97,7 @@ LIFE_EXPECTANCY = {
     "Nigeria": 63, "Chad": 60,
 }
 COUNTRIES = list(LIFE_EXPECTANCY)
+LIFE_TITLE = "Life expectancy at birth, 26 countries, about 2019"
 
 
 def _lifeexp_data():
@@ -110,13 +111,13 @@ def _lifeexp_alpha_order_bad():
     values = values[order]
     fig, ax = style.new_fig(7, 6.6)
     y = np.arange(len(countries))
-    ax.plot(values, y, "o", ms=6, color=style.BAD, zorder=3)
+    ax.barh(y, values, color=style.BAD, height=0.65, zorder=3)
     ax.set_yticks(y)
     ax.set_yticklabels(countries, fontsize=9)
     ax.invert_yaxis()
-    ax.set_xlim(58, 86)
+    ax.set_xlim(0, 86)
     ax.set_xlabel("Life expectancy (years)")
-    ax.set_title("Life Expectancy — Alphabetical Order")
+    ax.set_title(LIFE_TITLE)
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_alpha_order_bad")
 
@@ -134,7 +135,7 @@ def _lifeexp_bars_bad():
     ax.invert_yaxis()
     ax.set_xlim(0, 86)
     ax.set_xlabel("Life expectancy (years)")
-    ax.set_title("Life Expectancy — Bars (Sorted, Still Bad)")
+    ax.set_title(LIFE_TITLE)
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_bars_bad")
 
@@ -152,7 +153,7 @@ def _lifeexp_dot_plot():
     ax.invert_yaxis()
     ax.set_xlim(58, 86)  # honest truncation is fine for dots, not bars
     ax.set_xlabel("Life expectancy (years)")
-    ax.set_title("Life Expectancy — Sorted by Value")
+    ax.set_title(LIFE_TITLE)
     ax.grid(axis="y", visible=False)
     style.save(fig, "viz_amounts_lifeexp_dot_plot")
 
@@ -267,7 +268,8 @@ def _students_stacked_bars():
     ax.set_ylabel("Students enrolled")
     ax.set_title("Enrolment by Year and Programme")
     ax.grid(axis="x", visible=False)
-    ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1.0))
+    h, l = ax.get_legend_handles_labels()   # legend in the order of the stack
+    ax.legend(h[::-1], l[::-1], loc="upper left", bbox_to_anchor=(1.01, 1.0))
     style.save(fig, "viz_amounts_students_stacked_bars")
 
 
@@ -331,7 +333,7 @@ def _log_scale():
     ax2.set_ylim(2, 120000)
     ax2.set_ylabel("Citations (log scale)")
 
-    fig.suptitle("Same Data, Two Y-Axes", color=style.FG, fontweight="bold")
+    fig.suptitle("Same Data, Linear and Logarithmic", color=style.FG, fontweight="bold")
     style.save(fig, "viz_proportional_ink_log_scale")
 
 

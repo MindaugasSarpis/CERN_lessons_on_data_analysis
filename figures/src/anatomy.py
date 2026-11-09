@@ -38,7 +38,7 @@ def _stage(n: int):
         ax.grid(False)
     if n >= 2:
         ax.set_xlabel(r"$m(K^-\pi^+)$ [MeV/$c^2$]")
-        ax.set_ylabel(f"Candidates / {(HI-LO)//NBINS} MeV")
+        ax.set_ylabel(f"Candidates / ({(HI-LO)//NBINS} MeV/$c^2$)")
     if n >= 3:
         ax.plot(centers, counts, "o", ms=3.5, color=style.ACCENT, zorder=3)
     if n >= 4:

@@ -20,13 +20,11 @@ def _labels_bad_good():
     for ax, good in ((ax1, False), (ax2, True)):
         ax.plot(x, y, color=style.ACCENT if good else style.BAD)
         if good:
-            ax.set_xlabel("time of day [h]")
-            ax.set_ylabel("temperature [°C]")
-            ax.set_title("labeled, with units", color=style.FG)
+            ax.set_xlabel("time of day (h)")
+            ax.set_ylabel("temperature (°C)")
         else:
             ax.set_xlabel("x")
             ax.set_ylabel("val")
-            ax.set_title("cryptic labels, no units", color=style.BAD)
     style.save(fig, "viz_coordinates_axes_axes_labels_bad_good")
 
 
@@ -37,15 +35,15 @@ def _aspect_ratios():
     # three boxes of different shape in one row: wide, square, tall
     fig, (ax_wide, ax_sq, ax_tall) = plt.subplots(
         1, 3, figsize=(12, 3.6), width_ratios=[3.2, 1, 0.5])
-    for ax, label, box in ((ax_wide, "wide — day-to-day change readable", 0.31),
-                           (ax_sq, "square", 1.0),
-                           (ax_tall, "tall — slopes\nexaggerated", 2.0)):
+    for ax, label, box in ((ax_wide, "wide: shallow slopes", 0.31),
+                           (ax_sq, "square: slopes\nnear 45°", 1.0),
+                           (ax_tall, "tall: steep\nslopes", 2.0)):
         ax.plot(x, y, lw=1.1, color=style.ACCENT)
         ax.set_box_aspect(box)
-        ax.set_title(label, fontsize=10, color=style.DIM)
+        ax.set_title(label, fontsize=12, color=style.FG)
         ax.set_xticks([0, 180, 365])
-        ax.set_xlabel("day", fontsize=9)
-    ax_wide.set_ylabel("temperature (°C)", fontsize=9)
+        ax.set_xlabel("day of the year")
+    ax_wide.set_ylabel("temperature (°C)")
     style.save(fig, "viz_coordinates_axes_houston_temps_aspect_ratios")
 
 
@@ -57,12 +55,12 @@ def _polar_vs_cartesian():
     fig.clf()
     ax1 = fig.add_subplot(1, 2, 1)
     ax1.plot(np.degrees(theta), r, color=style.ACCENT)
-    ax1.set_xlabel("angle [deg]")
-    ax1.set_ylabel("r")
-    ax1.set_title("cartesian", color=style.FG)
+    ax1.set_xlabel("angle (°)")
+    ax1.set_ylabel("value")
+    ax1.set_title("on a straight axis: 0° and 360° far apart", color=style.FG)
     ax2 = fig.add_subplot(1, 2, 2, projection="polar")
     ax2.plot(theta, r, color=style.CYCLE[1])
-    ax2.set_title("polar — periodicity is visible", color=style.FG)
+    ax2.set_title("on a circle: 360° meets 0°", color=style.FG)
     ax2.tick_params(colors=style.DIM, labelsize=8)
     ax2.grid(color=style.GRID)
     style.save(fig, "viz_coordinates_axes_polar_vs_cartesian")

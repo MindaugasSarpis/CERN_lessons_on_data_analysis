@@ -185,7 +185,7 @@ def _temp_binwidths():
     values = temps(PATH)
     panels = [(6, (-20, 40), "10 °C per bin: 6 bins", style.BAD),
               (50, (-17, 33), "1 °C per bin: 50 bins", style.FG),
-              (40, (0, 2), "0.05 °C per bin, 0 to 2 °C", style.BAD)]
+              (41, (-0.025, 2.025), "0.05 °C per bin, 0 to 2 °C", style.BAD)]
     fig, axes = plt.subplots(1, 3, figsize=(10.4, 3.3))
     for ax, (bins, span, title, color) in zip(axes, panels):
         ax.hist(values, bins=bins, range=span, color=style.ACCENT)

@@ -36,7 +36,7 @@ def _anscombes_quartet():
         ax.text(0.04, 0.92, f"r = {r:.2f}   y = {b:.2f} + {m:.2f}x",
                 transform=ax.transAxes, fontsize=8.5, color=style.DIM, va="top")
         ax.set_xlim(2, 20)
-        ax.set_ylim(2, 14)
+        ax.set_ylim(2, 16)
     for ax in axes:
         ax.set_xlabel("x")
     axes[0].set_ylabel("y")

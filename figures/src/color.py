@@ -76,7 +76,8 @@ _CODES = dict(zip(_STATES, [
 
 def _popgrowth_highlight():
     rng = np.random.default_rng(30)
-    growth = rng.normal(4.2, 3.0, len(_STATES))
+    # the highlighted three are the three highest: no grey bar above them
+    growth = np.minimum(rng.normal(4.2, 3.0, len(_STATES)), 9.5)
     for state, value in _HIGHLIGHT.items():
         growth[_STATES.index(state)] = value
 

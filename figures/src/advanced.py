@@ -58,7 +58,7 @@ VIEW_SL, BOX_SL, ZOOM_SL = (22, -64), (3.6, 1.2, 1.9), 1.2
 AX_SL, CBAR_SL = [-0.03, 0.07, 0.88, 0.98], 0.8
 
 # The corner plot: each column, its label, the transform drawn and the range.
-# TAU is in ns in the file; 52 rows carry -100, a missing value, and are left
+# TAU is in ns in the file; 49 rows carry -100, a missing value, and are left
 # out of the panels that use TAU. IPCHI2 spans eight decades: log10.
 CORNER = [
     ("M", r"$M$ (MeV/$c^2$)", lambda v: v, (1810, 1920)),
@@ -247,7 +247,7 @@ def _parallel():
     lc.set_array(month)
     ax.add_collection(lc)
     for x, ((label, _, ticks), (lo, hi)) in enumerate(zip(PARALLEL, lims)):
-        ax.axvline(x, color=style.FG, linewidth=1.2, zorder=3)
+        ax.plot([x, x], [0, 1], color=style.FG, linewidth=1.2, zorder=3)
         for t in ticks:
             yv = (t - lo) / (hi - lo)
             ax.plot([x - 0.025, x], [yv, yv], color=style.FG, linewidth=1.2, zorder=3)

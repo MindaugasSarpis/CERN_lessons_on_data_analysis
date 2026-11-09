@@ -3,11 +3,11 @@
 Lecture 5 ended with a module, `weather.py`, and one number: the mean of the
 87 552 measured hours of the weather station, 7.16 °C. Lecture 7 draws the
 hours, pictures first and code after. It opens on the mean and asks whether
-more or fewer hours lie near it than in any other degree; Anscombe's quartet
-shows why a number is not enough, and two figures answer the question: every
-hour at its time, and the hours in bins of 1 °C, which pile up in two peaks,
-the cold months near −1 °C and the warm months near 12 °C, with the mean in
-the dip between them. Then the decisions that hold for a
+more or fewer hours lie near it than in any other degree. Two figures answer
+the question: every hour at its time, and the hours in bins of 1 °C, which
+pile up in two peaks, the cold months near −1 °C and the warm months near
+12 °C, with the mean in the dip between them; Anscombe's quartet then shows
+that this is general: a few numbers cannot stand for the data. Then the decisions that hold for a
 figure made with any program, on a gallery of examples: which channel, which
 chart, which ink, colours and scale, which title. Only then the code: the two
 figures of the start made with Matplotlib from the plain lists `weather.py`
@@ -19,10 +19,11 @@ LHCb data with its projections.
 
 ## What the lecture covers
 
-1. **Why a figure**: the mean of 87 552 hours and the question of the
-   lecture; Anscombe's quartet: four tables with the same means, the same
-   closest line and the same *r*, told apart only by a plot; every hour from
-   2016 to 2025; the hours in bins of 1 °C, which answer the question.
+1. **Why a figure**: the mean of 87 552 hours, computed in six lines of
+   Python, and the question of the lecture; every hour from 2016 to 2025;
+   the hours in bins of 1 °C, which answer the question; Anscombe's quartet:
+   four tables with the same means, the same closest line and the same *r*,
+   told apart only by a plot.
 2. **Mechanics of a figure**: the visual channels and their ranking; the
    parts of a figure; the legend; axis labels with units and their size; the
    coordinate system; the aspect ratio.
@@ -73,7 +74,7 @@ terms, and each is defined in one sentence on the slide that uses it.
 
 | Term | Slide | As defined there |
 |--|--|--|
-| Correlation *r* | 4, 41 | How near the points lie to a straight line: +1 on a rising line, −1 on a falling one, 0 with no trend |
+| Correlation *r* | 6, 41 | How near the points lie to a straight line: +1 on a rising line, −1 on a falling one, 0 with no trend |
 | Scatter of a count | 10, 58 | A count *N* scatters by about √*N* when the measurement is repeated |
 | Kernel density | 30 | Each value replaced by a small bell-shaped bump, and the bumps added up |
 | Median, quartiles, IQR | 32 | Half of the values lie below the median, a quarter below the first quartile, three quarters below the third; the IQR is the length of the box |
@@ -90,7 +91,7 @@ and press Enter.
 
 | Slides | Part |
 |--|--|
-| 1–6 | The mean of 87 552 hours (the question of the lecture), Anscombe's quartet, every hour from 2016 to 2025, the hours in bins of 1 °C. Slide 6 answers the question |
+| 1–6 | The mean of 87 552 hours, computed on the slide (the question of the lecture), every hour from 2016 to 2025, the hours in bins of 1 °C, which answer the question on slide 5, then Anscombe's quartet: four tables that their numbers cannot tell apart |
 | 7–10, 13 | Visual channels and their ranking, the parts of a figure, axis labels with units |
 | 17–22, 27–29 | Amounts: long labels under vertical, wider and horizontal bars, bars from zero, the dot plot from alphabetical order to sorted dots |
 | 30–32 | Distributions: density, bin width, boxplot and its terms |
@@ -114,7 +115,7 @@ and press Enter.
 | Linear or Logarithmic, Live | 82 |
 | One style for all figures | 83 |
 
-- **Do not cut** slides 3–6 (the question and the two figures that answer
+- **Do not cut** slides 3–5 (the question and the two figures that answer
   it) or slides 68–76, which make the same figures in code. The seminar
   draws the same file with the same calls: `subplots`, `plot`, `hist`,
   `savefig`, and the module `weather.py`.
@@ -131,10 +132,10 @@ and press Enter.
 - **Slides 45, 56, 61 and 67** are pairs drawn from the weather log: the
   mistake on the left, the repair on the right.
 - **Slides 12, 21 and 23** show the figure first and the explanation on the
-  next click, and slide 4 the four numbers first and the four plots on the
+  next click, and slide 6 the four numbers first and the four plots on the
   click: ask the room before clicking. Slide 74 shows the three bin widths
   on the first click and the conclusion on the second. Ask the question of
-  slide 3 for a show of hands; slide 6 answers it.
+  slide 3 for a show of hands; slide 5 answers it.
 - **Slide 10** (The Parts of a Figure) builds up in five clicks. The figure
   uses example values, not the course file.
 - **Slides 75 and 82** run Python in the browser, the figure beside the code.
@@ -168,14 +169,14 @@ questions, with their answers:
    bin?
    *5 units: the range of 200 units is cut into 40 bins.*
 3. A column holds 20 000 values between 200 and 300, with a peak about 8
-   units wide. Which binning shows the peak: 5 bins of 20, 50 bins of 2,
+   units wide. Which binning shows the shape of the peak: 5 bins of 20, 50 bins of 2,
    10 000 bins of 0.01, or 10 bins between 0 and 1000?
    *50 bins of 2 units. The peak covers 4 bins and a bin holds 400 values on
    average. Wider bins swallow the peak, and bins of 0.01 hold 2 values each
    and show chance.*
 4. The mean of ten years of hourly temperatures is 7.16 °C. With 1 °C bins,
-   7 to 8 °C holds 2706 hours, −1 to 0 °C 3848 and 11 to 12 °C 3032. What
-   does this say about the mean?
+   3848 hours lie at −1 to 0 °C, 2706 at 7 to 8 °C and 3032 at 11 to 12 °C.
+   What does this say about the mean?
    *The hours form two peaks, near −1 °C from November to March and near
    12 °C from April to October, and the mean lies between them, in the dip,
    where fewer hours are. A mean is the
@@ -200,7 +201,7 @@ questions, with their answers:
    does the second bar look next to the first?
    *Twice as long: the bars are 2 and 4 units long. The values differ by
    4 %.*
-9. Measured values run from 10 to 10 000 000. Which y-axis keeps the small
+9. Measured values run from 10 to 10 000 000 across categories. Which y-axis keeps the small
    and the large values apart?
    *A logarithmic axis. Each factor of ten takes the same length. On a linear
    axis everything below 100 000 lies in the lowest hundredth.*
@@ -239,7 +240,7 @@ can be read with
 
 | Earlier slide | What happened | Reason |
 |--|--|--|
-| The Pendulum Plot and the Mass Counts | Replaced by slide 3, The Mean of 87 552 Hours | The opening is a question about the room's own number; slide 6 answers it |
+| The Pendulum Plot and the Mass Counts | Replaced by slide 3, The Mean Temperature of Ten Years | The opening is a question about the room's own number; slide 5 answers it |
 | Learning Objectives; What a Figure Is For | Parked (5 Nov 2026) | Preambles without data (lecturer: "Some preambles?"); the deck opens on its question, as Lectures 4 to 6 do |
 | Plot the Pendulum Table; Add Points, Labels and Units | Replaced by slides 70–72 | Every hour of the weather log, then at its time with `datetime`, with labels and units |
 | A Histogram Counts Values in Bins; The Range and the Bin Width; The Mass Column as a Histogram | Rebuilt on the temperatures, slides 73, 74 and 76 | The bin widths are 10, 1 and 0.05 °C; the last one shows the rounding of the station |

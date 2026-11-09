@@ -31,13 +31,13 @@ John W. Tukey, *Exploratory Data Analysis* (1977)
 hideInToc: true
 ---
 
-# The Mean of 87 552 **Hours**
+# The Mean Temperature of Ten **Years**
 
-<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📄 **The first and the last lines of `weather.csv`**
+## 📄 **`weather.csv`: a station's log, one row per hour**
 
 ```text
 time,temp_c,humidity_pct,wind_ms
@@ -47,14 +47,24 @@ time,temp_c,humidity_pct,wind_ms
 2025-12-31T23:00,-11.3,100,4.2
 ```
 
+87 672 rows. The 120 hours of 22–26 July 2019 hold −999: the sensor failed, so they are left out.
+
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 💻 **zsh · Git Bash**
+## 🐍 **The mean of the measured hours**
+
+```python
+temps = []
+for line in open("weather.csv").readlines()[1:]:
+    t = float(line.split(",")[1])   # temp_c
+    if t != -999:
+        temps.append(t)
+print(len(temps), sum(temps) / len(temps))
+```
 
 ```text
-$ python scripts/mean_temp.py
 87552 7.15996550621345
 ```
 
@@ -64,41 +74,14 @@ $ python scripts/mean_temp.py
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-❓ The mean of the 87 552 hours is 7.16 °C. Is 7 to 8 °C, the degree of the mean, the fullest degree, or do the degrees around it hold more hours?
+❓ Count the hours in each whole degree: −1 to 0 °C, 0 to 1 °C, and so on. Is 7 to 8 °C, where the mean lies, the degree with the most hours?
 
 </div>
 
 <!--
-**Say:** the script of Lecture 5: every hour of the station without the −999 rows, and their mean.
-**Ask:** hands up for the fullest, hands up for not. The answer comes with the first histogram.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# Anscombe's **Quartet**
-
-<div class="card card-warning card-glass pad-compact mt-sm">
-
-⚠️ Four tables of 11 points (Anscombe, 1973). In each one the mean of x is 9.0, the mean of y is 7.5, and the closest straight line is y = 3.00 + 0.50x. Each has r = 0.82, where r measures how near the points lie to a straight line: 1 on a rising line, −1 on a falling one, 0 with no trend. What do the four tables look like?
-
-</div>
-
-<div class="fig-fill mt-sm" v-click>
-
-<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg">
-
-<div class="note-text mt-sm text-center">Only the plot tells the four apart.</div>
-
-</div>
-
-<!--
-**Do:** read the four numbers first.
-**Ask:** what do the four tables look like?
-**Say:** after the click: a line with scatter, a curve, a line with one point off it, and ten points at one x with a single point that makes the whole slope. The mean 7.16 °C is one such number.
+**Say:** ten years of one weather station, hour by hour, and one number for all of it: 7.16 °C. The rest of the lecture looks at the hours themselves.
+**Ask:** hands up for "yes, the most hours", hands up for "no". The histogram of the hours answers it.
+**If asked:** the same loop is the function `mean` of `weather.py` from Lecture 5; `readlines()[1:]` skips the header row.
 (~2 min)
 -->
 
@@ -145,13 +128,41 @@ class: fill
 -->
 
 ---
+hideInToc: true
+class: fill
+---
+
+# Anscombe's **Quartet**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ Four tables of 11 points (Anscombe, 1973). In each one the mean of x is 9.0, the mean of y is 7.5, and the closest straight line is y = 3.00 + 0.50x. Each has r = 0.82, where r measures how near the points lie to a straight line: 1 on a rising line, −1 on a falling one, 0 with no trend. What do the four tables look like?
+
+</div>
+
+<div class="fig-fill mt-sm" v-click>
+
+<img class="fig" src="/figures/viz_distributions_i_anscombes_quartet.svg">
+
+<div class="note-text mt-sm text-center">Only the plot tells the four apart.</div>
+
+</div>
+
+<!--
+**Do:** read the four numbers first.
+**Ask:** what do the four tables look like?
+**Say:** after the click: a line with scatter, a curve, a line with one point off it, and ten points at one x with a single point that makes the whole slope. The mean 7.16 °C was one such number: it hid the two peaks.
+(~2 min)
+-->
+
+---
 layout: section
 hideInToc: true
 ---
 
 # Mechanics of a **Figure**
 
-Both plots put every number on a position along an axis. Position is one channel among several, and the channels are not read equally well.
+The two plots of the weather log put every number on a position along an axis. Position is one channel among several, and the channels are not read equally well.
 
 <!--
 **Say:** the parts of a plot before the kinds of plot: which channel carries the number, what a legend is for, how the axes change what is read.
@@ -181,9 +192,9 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-tight mt-sm">
 
-## 👁️ **Channels are not read equally well**
+## 👁️ **Measured accuracy, best first**
 
-Cleveland and McGill (1984), and Heer and Bostock (2010) with more people, measured how exactly each channel is read, from the most to the least accurate. The most important variable gets the highest channel that is free.
+Cleveland and McGill (1984), and Heer and Bostock (2010) online with many more people, measured how exactly each channel is read, from the most to the least accurate. The most important variable gets the highest channel that is free.
 
 </div>
 
@@ -209,13 +220,13 @@ Cleveland and McGill (1984), and Heer and Bostock (2010) with more people, measu
 
 <div class="card card-accent card-glass pad-compact">
 
-**Angle, slope, area**: pie chart, bubble chart
+4️⃣ **Angle, slope, area**: pie chart, bubble chart
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-**Colour saturation and hue**: heatmap. For a third variable, or when position is taken
+5️⃣ **Colour saturation and hue**: heatmap. For a third variable, or when position is taken
 
 </div>
 
@@ -242,7 +253,7 @@ class: fill
   <img v-click src="/figures/viz_anatomy_stage6.svg" alt="">
 </div>
 
-<div class="note-text mt-sm">Example values. The bar on each point is the uncertainty of the count: ± √N for a count of N.</div>
+<div class="note-text mt-sm">Example values: pairs of a K⁻ and a π⁺ counted by their combined mass, in bins of 2 MeV/c². The peak at 1865 MeV/c² is the D⁰ particle, which decays into such a pair. The bar on each point is ± √N for a count of N.</div>
 
 <!--
 **Do:** click through: frame, axes with units, the data, its uncertainty, the annotation, the title that states the finding.
@@ -331,7 +342,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C. The ten-year plot names the temperature and its unit on y; years on x need no more.
+🏷️ The same curve twice. On the left the axes are called `x` and `val`. On the right they name the quantity and its unit: the time of day in hours, the temperature in °C.
 
 </div>
 
@@ -394,7 +405,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 One temperature series over 365 days (example values), drawn in three shapes. A tall, narrow plot makes the slopes steep, a wide plot makes them shallow. Slopes are compared most accurately when they lie near 45° (Cleveland).
+📐 One temperature series over 365 days (example values), drawn in three shapes. A tall, narrow plot makes the slopes steep, a wide one shallow. Slopes are compared most accurately near 45° (Cleveland): here, the square plot.
 
 </div>
 
@@ -407,7 +418,7 @@ hideInToc: true
 
 # Chart **Families**
 
-Position is read most accurately. Which chart puts a comparison on position follows from what is compared: amounts, a distribution, parts of a whole, two variables, a change over time.
+Position is read most accurately. What is compared decides the chart: amounts, a distribution, parts of a whole, two variables, a change over time.
 
 <!--
 **Say:** amounts, distributions, proportions, associations, trends, uncertainty: for each the usual chart, the usual mistake and its correction.
@@ -425,7 +436,7 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact">
 
-⚠️ Five films and their opening-weekend gross (invented titles). The titles do not fit under vertical bars and have to be rotated. Rotated text is read slowly.
+⚠️ Five films and their opening-weekend gross. The titles do not fit under vertical bars and have to be rotated. Rotated text is read slowly.
 
 </div>
 
@@ -461,7 +472,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact">
 
-🎬 The same five values as horizontal bars: each title level on one line, however long, and one film more adds a row, not width. The order of the bars is the ranking of the films.
+🎬 The same five values as horizontal bars: each title level on one line, however long, and one film more adds a row, not width. Sorted by value, the order of the bars is the ranking.
 
 </div>
 
@@ -566,7 +577,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact">
 
-📊 A bar is a total and a segment a part of it. The totals and the bottom segments share a baseline and are compared by position. The upper segments are compared by length only, which is less accurate.
+📊 Students enrolled per year, split by programme: a bar is a total and a segment a part of it. The totals and the bottom segments share a baseline and are compared by position. The upper segments are compared by length only, which is less accurate.
 
 </div>
 
@@ -683,7 +694,7 @@ class: fill
 </div>
 
 <!--
-**Say:** the same 26 numbers, third try: sorted, and on an axis from 58 to 86 years. Less ink than bars, and it stays readable for many categories.
+**Say:** the same 26 numbers, third try: dots in place of bars, on an axis from 58 to 86 years. Less ink than bars, and it stays readable for many categories.
 **If asked:** values from the WHO Global Health Observatory, rounded to whole years; the order of the countries is real.
 (~1 min)
 -->
@@ -718,7 +729,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📏 The same ages with bins of 0.5, 5 and 20 years. With 0.5 years the bars jump between a few people and thirty. With 20 years the shape is four bars.
+📏 The same ages with bins of 0.5, 5 and 20 years. With 0.5 years the bars jump between a few people and thirty: ages are whole years, so every second bin is nearly empty. With 20 years the shape is four bars.
 
 </div>
 
@@ -741,7 +752,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_distributions_ii_mpg_boxplot.svg">
 
-📦 **Boxplot**: five numbers per group. It would hide a second peak
+📦 **Boxplot**: five numbers per group, and the points beyond the whiskers
 
 </div>
 
@@ -749,7 +760,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_distributions_ii_mpg_violin.svg">
 
-🎻 **Violin**: a density curve and its mirror image. It would show a second peak
+🎻 **Violin**: a density curve and its mirror image, so a second peak shows
 
 </div>
 
@@ -957,7 +968,7 @@ class: fill
 
 ## 🫧 **Three ways to draw 3000 points**
 
-Two answers on a scale from 0 to 10, from 3000 people (synthetic): whole numbers, so many points lie on top of each other. Left: plain points. Centre: each shifted a little at random (jitter) and made transparent. Right: cells coloured by the number of points.
+Two answers on a scale from 0 to 10, from 3000 people: whole numbers, so many points lie on top of each other. Left: plain points. Centre: each shifted a little at random (jitter) and made transparent. Right: cells coloured by the number of points.
 
 </div>
 
@@ -972,7 +983,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🫘 20 000 flights (synthetic): arrival delay against departure delay. Beyond about 10 000 points transparency no longer helps: the centre is solid. Hexagonal bins show the count of each cell as a colour, a histogram in two dimensions.
+🫘 20 000 flights: arrival delay against departure delay. Drawn as points, the centre is one solid area. Hexagonal bins show the count of each cell as a colour, a histogram in two dimensions.
 
 </div>
 
@@ -1007,7 +1018,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact">
 
-🔥 The correlation *r*, from −1 on a falling line to +1 on a rising one, for every pair among seven columns of a table of cars, on a diverging palette centred at 0.
+🔥 The correlation *r* says how close two columns lie to a straight line: +1 all points on a rising line, −1 on a falling one, 0 no straight-line trend. Every pair of seven columns of a table of cars; red below 0, blue above.
 
 </div>
 
@@ -1067,7 +1078,7 @@ class: fill
 
 ## 📉 **The data and the trend together**
 
-Daily temperatures (synthetic) as a thin grey line, and their mean over 21 days as a thick one. Both are drawn, so the reader sees what the smoothing removed.
+The daily means of 2024 and 2025 from the weather log as a thin grey line, and their mean over 21 days as a thick one. Both are drawn, so the reader sees what the smoothing removed.
 
 </div>
 
@@ -1082,7 +1093,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🕳️ 19 to 29 July 2019, hour by hour. The sensor recorded nothing for 120 hours; a line drawn over them invents five days near 22 °C.
+🕳️ 19 to 29 July 2019, hour by hour. For 120 hours, 22 to 26 July, the file holds −999 in place of the temperature; a line drawn over them invents five days near 22 °C.
 
 </div>
 
@@ -1133,7 +1144,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_uncertainty_ci_band.svg">
 
-🎗️ **Band**: the closest straight line, redrawn for 400 resampled copies of the data. The band holds 95 % of the lines
+🎗️ **Band**: the straight line closest to the points, redrawn for 400 copies of the data, each 60 points drawn at random with repeats. The band holds 95 % of the lines
 
 </div>
 
@@ -1141,7 +1152,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_uncertainty_hop_demo.svg">
 
-🎰 **Many lines**: 28 such lines drawn one by one. Their spread is the uncertainty of the line
+🎰 **Many lines**: 28 of these lines drawn together. Where they fan out, the line is least certain
 
 </div>
 
@@ -1245,7 +1256,7 @@ hideInToc: true
 
 ## 📐 **Edward Tufte, 1983**
 
-> "Above all else show the data." The **data-ink ratio** is the ink that shows data divided by all the ink of the figure. Ink that can be erased without losing information is erased.
+> “Above all else show the data.” The **data-ink ratio** is the ink that shows data divided by all the ink of the figure. Ink that can be erased without losing information is erased.
 
 </div>
 
@@ -1319,7 +1330,7 @@ About 8 % of men and 0.5 % of women see colours differently, most of them with r
 
 <div class="card card-secondary card-glass pad-compact">
 
-🚫 Red against green as the **only** difference between two groups
+🚫 **Avoid**: red against green as the **only** difference between two groups
 
 </div>
 
@@ -1503,7 +1514,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-√ For counts. A count *N* scatters by about √*N* from one repetition of a measurement to the next: 48 ± 7, 3 ± 1.7, the bars drawn here. On a square-root axis this scatter has the same length at every height, half a unit. A count of zero stays on the axis, which a logarithmic axis cannot show.
+√ For counts. A count *N* scatters by about √*N* from one repetition of a measurement to the next: 48 ± 7, 3 ± 1.7, the bars drawn here. On a square-root axis, which spaces 0, 1, 4, 9, 16 evenly, every bar has about the same length. A count of zero stays on the axis, which a logarithmic axis cannot show.
 
 </div>
 
@@ -1523,7 +1534,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧩 Six regions, one panel each, all with the same axes (synthetic). In each panel one curve is in colour and the other five grey. In a single panel six coloured curves would cover each other.
+🧩 Six regions, one panel each, all with the same axes. In each panel one curve is in colour and the other five grey. In a single panel six coloured curves would cover each other.
 
 </div>
 
@@ -1705,7 +1716,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧬 The abundance of mRNA in a mutant against the wild type, on logarithmic axes (synthetic). Most genes are unchanged and lie where y&nbsp;=&nbsp;x. Without that line the reader has to estimate it. With it, the genes off the line are the result, and here they also have a second colour.
+🧬 The abundance of mRNA in a mutant against the wild type, on logarithmic axes. Most genes are unchanged and lie where y&nbsp;=&nbsp;x. Without that line the reader has to estimate it. With it, the genes off the line are the result, and here they also have a second colour.
 
 </div>
 
@@ -1950,7 +1961,7 @@ fig.savefig("results/every_hour.png", dpi=150)
 - With two lists, `ax.plot(x, y)` puts each value at its own time
 - `linewidth=0.2` draws a hairline: 87 552 values on one axis
 - A label names the quantity and gives the unit in brackets
-- `dpi=150` saves 150 pixels per inch: 960 × 720 pixels
+- `dpi=150` saves 150 pixels per inch: the default 6.4 × 4.8 in gives 960 × 720 pixels
 
 </div>
 
@@ -2048,7 +2059,7 @@ class: fill
 
 <div v-click class="card card-success card-glass pad-compact mt-sm">
 
-✅ **1 °C per bin.** At 10 °C one hump; at 1 °C two peaks. At 0.05 °C only 21 values occur between 0 and 2 °C, 0.0, 0.1, …, 2.0, so 19 of the 40 bins are empty.
+✅ **1 °C per bin.** At 10 °C one hump; at 1 °C two peaks. At 0.05 °C only 21 values occur between 0 and 2 °C, 0.0, 0.1, …, 2.0, so 20 of the 41 bins, every other one, are empty.
 
 </div>
 
@@ -2073,12 +2084,12 @@ values = []
 for i in range(3000):           # 3000 times
     cold = random.gauss(-1, 4)  # an hour, Nov to Mar
     warm = random.gauss(13, 5)  # an hour, Apr to Oct
-    values.append(round(cold, 1))   # in tenths, as the
-    values.append(round(warm, 1))   # station writes them
+    values.append(round(cold, 1))  # tenths, as the
+    values.append(round(warm, 1))  # station writes
 BINS = 5                        # <-- try 5, 55, 1100
 fig, ax = plt.subplots(figsize=(5, 4.6),
                        layout="constrained")
-ax.hist(values, bins=BINS, range=(-20, 35))
+ax.hist(values, bins=BINS, range=(-20.025, 34.975))
 ax.set_xlabel("temperature (°C)")
 ax.set_ylabel("values per bin")
 plt.show()
@@ -2089,6 +2100,7 @@ plt.show()
 **Do:** press ▶ with 5, then 55, then 1100: bins of 11 °C, 1 °C and 0.05 °C.
 **Ask:** with 1100 bins, why is every other bar missing where the values are dense? The values are tenths, and a bin of 0.05 °C between two tenths stays empty, as on the slide before.
 **If asked:** `plt.show()` draws the figure under the code; in a script on a laptop it opens a window.
+**If asked:** the range starts at −20.025, half a narrow bin below −20, so every tenth lies in the middle of a bin and never on an edge, where rounding would decide its side.
 (~2 min)
 -->
 
@@ -2113,7 +2125,7 @@ fig.savefig("results/temp_hist.png", dpi=150)
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-- 50 bins from −17 to 33: 50 / 50 = 1 °C per bin
+- 50 bins from −17 to 33 °C: (33 − (−17)) / 50 = 1 °C per bin
 - The y-label states the bin width. A count per bin has no meaning without it
 
 </div>
@@ -2142,7 +2154,7 @@ hideInToc: true
 
 # Hands-on **Matplotlib**
 
-Bars, a reference line, a legend, an annotation, a style: one call on `ax` each.
+Bars, a reference line, a legend and an annotation, one call on `ax` each, then one style for every figure.
 
 <!--
 **Say:** the same module, per year and per month.
@@ -2503,7 +2515,7 @@ class: fill
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
-⛰️ The 8784 means as a landscape: a ridge of summer afternoons, a valley of winter nights, a daily ripple deeper in summer. The shape is seen at once; no value can be read off, and the far side is hidden. `ax = fig.add_subplot(projection="3d")`
+⛰️ The 8784 means as a landscape: a ridge of summer afternoons, a valley of winter nights, a daily ripple deeper in summer. The shape is seen at once; no value can be read off, and the far side is hidden. `ax = fig.add_subplot(projection="3d")`, `ax.plot_surface(x, y, grid, cmap="RdBu_r")`
 
 </div>
 
@@ -2524,7 +2536,7 @@ class: fill
 
 <div class="card card-accent card-glass pad-compact mt-sm">
 
-🧭 One point per day, 3648 days: three measurements on three axes, the month as colour, December beside January. Cold days are humid and windy, warm days dry and calm: below 0 °C 86.5 % and 4.0 m/s on average, above 20 °C 67.6 % and 2.8 m/s. `ax.scatter(temp, hum, wind, c=month)`
+🧭 3648 days: three daily means on three axes, the month as colour. Days below 0 °C: 86.5 % and 4.0 m/s on average; above 20 °C: 67.6 % and 2.8 m/s. `ax.scatter(temp, hum, wind, c=month)`
 
 </div>
 
@@ -2567,7 +2579,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-⚛️ 90 753 K⁻π⁺ candidates from LHCb: mass across, transverse momentum up, the count of each cell as colour on a logarithmic scale; above and to the right, the histogram of each variable alone. The D⁰ is the band at 1865 MeV/c², at every momentum. `ax.hist2d(m, pt, norm=LogNorm())`
+⚛️ LHCb pairs of a K⁻ and a π⁺, the 90 753 with transverse momentum from 2.5 to 9 GeV/c: their combined mass across, the momentum up, the count per cell as colour (log scale); above and right, each variable alone. Pairs from a D⁰ decay make the band at 1865 MeV/c². `ax.hist2d(m, pt, norm=LogNorm())`
 
 </div>
 
@@ -2587,7 +2599,7 @@ hideInToc: true
 
 # **Wrap-up**
 
-Every choice in the two figures of the start, ten years as a line and the hours as a histogram, with the number behind it.
+A figure is finished when every choice in it has a number behind it.
 
 <!--
 (~0.5 min)
@@ -2659,7 +2671,7 @@ hideInToc: true
 
 - `weather.hours`: each temperature at its own time, so the hours after the gap of July 2019 keep their dates
 - `linewidth=0.2`: 87 552 values as one hairline
-- Each axis names its quantity and unit: years on x, temperature (°C) on y
+- Each axis names its quantity: time on x, with the years as ticks, temperature (°C) on y
 
 </div>
 
@@ -2703,7 +2715,7 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Choose the **range and bin width** of a histogram, and state them on the axis
+✅ Choose the **range and bin width** of a histogram, and state the bin width on the axis
 
 </div>
 
@@ -2745,7 +2757,7 @@ hideInToc: true
 
 # For the **Curious**
 
-Four and five variables in one figure, made with the calls of this lecture: figures for exploring data, read slowly.
+Four and five variables in one figure: figures for exploring data, read slowly.
 
 <!--
 **Say:** optional, for the time left or for after the lecture. Each figure shows what a plot of two variables cannot, and what it costs.
@@ -2783,7 +2795,7 @@ class: fill
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
-🧱 All 87 552 hours, one plane per year from 2016 to 2025: three positions and a colour. Each summer is seen, but each plane hides most of the one below: the 120 missing hours of July 2019 cannot be found. `ax.plot_surface(x, y, z, facecolors=cmap(norm(grid)))` per year
+🧱 All 87 552 hours, one plane per year from 2016 to 2025: three positions and a colour. Each plane hides most of the one below: the 120 missing hours of July 2019 cannot be found. `ax.plot_surface(x, y, z, facecolors=cmap(norm(grid)))` per year
 
 </div>
 
@@ -2826,7 +2838,7 @@ class: fill
 
 <div class="card card-accent card-glass pad-compact mt-sm">
 
-🪢 One line per day, 3648 days with all 24 hours, through four axes, each from its own minimum to maximum; the month as colour. Lines that run level: the two move together, warm days swing more (r = +0.82). Lines that cross: they move against each other, warm days are dry (r = −0.73).
+🪢 3648 days, one line each, through four axes on their own scales; the month as colour. From daily range to temperature the lines run level: warm days swing more (r = +0.82). From temperature to humidity they cross: warm days are dry (r = −0.73).
 
 </div>
 
@@ -2850,7 +2862,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact">
 
-⚛️ Every pair of `M`, `PT`, `TAU` and `IPCHI2` as a 2D histogram, each column alone on the diagonal: the 91 534 candidates with a measured τ, nothing projected away. The D⁰ is the band at 1865 MeV/c² in every panel of the mass column. `plt.subplots(4, 4)`, the upper triangle hidden
+⚛️ Every pair of `M`, `PT`, `TAU` and `IPCHI2` as a 2D histogram, each column alone on the diagonal: 91 534 candidates. The D⁰ is the band at 1865 MeV/c² in the mass column. `plt.subplots(4, 4)`, the upper triangle hidden
 
 </div>
 
@@ -2861,7 +2873,7 @@ class: fill
 <!--
 **Say:** the standard first look at a physics data set: n columns give n(n − 1)/2 pairs, here six. It is the pair plot of the gallery with 2D histograms in place of points, because 91 534 points would cover each other.
 **Ask:** which pair moves together? τ and log χ²_IP, r = 0.35: both grow when the D⁰ flies further from the collision before it decays. Every other pair has |r| ≤ 0.07.
-**If asked:** 49 rows have `TAU` = −100, a missing value, and are left out. χ²_IP spans eight decades, so its axis is log₁₀. The horizontal edge at 0.15 ps in the τ panels is a cut of the selection that made the file.
+**If asked:** 49 rows have `TAU` = −100, a missing value, and are left out. χ²_IP runs from 10⁻⁵ to 10⁶, so its axis is log₁₀. The horizontal edge at 0.15 ps in the τ panels is a cut of the selection that made the file.
 (~2 min)
 -->
 
@@ -2876,7 +2888,7 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact">
 
-🌀 Temperature, humidity, wind and month of 3648 days, turning once every 3 s. A still 3D scatter shows one view and leaves the depth to guess; turned, points near each other move together. A screen shows it, paper does not. `ax.view_init(elev=18, azim=a)` in each frame of `FuncAnimation`
+🌀 Temperature, humidity, wind and month of 3648 days, turning once every 3 s. A still 3D scatter leaves the depth to guess; turning, points in front move one way and points behind the other. `ax.view_init(elev=18, azim=a)` in each frame of `FuncAnimation`
 
 </div>
 
@@ -2897,7 +2909,7 @@ hideInToc: true
 
 # Check **Yourself**
 
-Questions on this lecture, for after it. They are not part of the lecture time.
+Questions on this lecture, for after it.
 
 ---
 hideInToc: true
@@ -2936,7 +2948,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A column holds 20 000 values between 200 and 300, with a peak about 8 units wide. Which binning shows the peak?"
+  question="A column holds 20 000 values between 200 and 300, with a peak about 8 units wide. Which binning shows the shape of the peak?"
   :options="[
     '5 bins of 20 units',
     '50 bins of 2 units',
@@ -2952,7 +2964,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="The mean of ten years of hourly temperatures is 7.16 °C. With 1 °C bins, 7 to 8 °C holds 2706 hours, −1 to 0 °C 3848 and 11 to 12 °C 3032. What does this say about the mean?"
+  question="The mean of ten years of hourly temperatures is 7.16 °C. With 1 °C bins, 3848 hours lie at −1 to 0 °C, 2706 at 7 to 8 °C and 3032 at 11 to 12 °C. What does this say about the mean?"
   :options="[
     'Most hours lie near 7 °C, since the mean is the most common value',
     'The hours fall into a cold and a warm part of the year, and the mean lies between them, where fewer hours are',
@@ -2976,7 +2988,7 @@ hideInToc: true
     'One bar per measurement'
   ]"
   :correct="1"
-  explanation="From 0 to 2 °C the sensor can record 21 values, 0.0 to 2.0, and 40 bins of 0.05 °C cover that range: a bin with a value is followed by one without. The bars show the rounding of the sensor, not the weather. A bin holds several recorded values."
+  explanation="From 0 to 2 °C the sensor can record 21 values, 0.0 to 2.0, and 40 bins of 0.05 °C cover that range: a bin with a value is followed by one without. The bars show the rounding of the sensor, not the weather."
 />
 
 ---
@@ -3000,7 +3012,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="From the cold 2017 to the warm 2023 the yearly mean of the station rose by 1.8 °C. What should a figure of its yearly means show?"
+  question="From the cold 2017 to the warm 2023 the yearly mean of the station rose by 1.8 °C. What should a figure of its yearly means show?"
   :options="[
     'Only 2017 to 2023, with the axis from 6.4 to 8.4 °C, so that the rise is clear',
     'All ten years, with the mean of all hours as a reference line',

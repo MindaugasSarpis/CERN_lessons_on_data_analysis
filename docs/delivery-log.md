@@ -1218,3 +1218,38 @@ good"; on 31 "direct labels overlap the curves and are not visible".
 - The deck now estimates 151 min (HEAVY; the gate fails only under 105).
   Nothing was parked to make room; the skip list absorbs it. Ordered
   categories (slide 23) stays on the skip list.
+
+## 2026-11-09 · Lecture 7: a self-contained opening and a review of every slide, the day before delivery
+
+**What happened:** the lecturer: "I don't like slide 1 of data
+visualization, should be self-contained now it's confusing. Review and
+improve the content, clarity, of this lecture. I am delivering it tomorrow."
+
+**Changed in response:**
+
+- The opening slide, now The Mean Temperature of Ten Years, shows the file
+  (87 672 rows, 120 of them −999), the six lines of Python that compute the
+  mean and their output, and asks plainly whether 7 to 8 °C is the degree
+  with the most hours. Anscombe's quartet moved after the histogram that
+  answers it (slide 6), so the question is answered at once.
+- Four reviews of the deck (slides checked against the data and the figure
+  scripts). Errors fixed: the 0.05 °C histograms (figure and live block) put
+  the tenths on bin edges and drew an uneven comb, now half a bin shifted;
+  the gap of July 2019 lost its temperature only, not every measurement; the
+  many-lines panel is drawn at once, from the same 60 points as the band; the
+  highlighted states are the three highest; the pair plot's count ticks no
+  longer stand beside "Bill length (mm)"; a quiz explanation (Q5) claimed
+  several values per 0.05 °C bin; the aspect-ratio panels praised the wide
+  plot against the caption's 45°.
+- Clarity: the life expectancy steps change one thing each (alphabetical
+  bars, sorted bars, sorted dots); the Trends slide draws 2024–2025 from the
+  weather log; the parts-of-a-figure caption says what K⁻π⁺ and the D⁰ are;
+  axis labels with units in round brackets; legends outside the data; titles
+  inside figures that repeated the slide title replaced; the "synthetic"
+  labels removed; captions of For the Curious shortened.
+
+**Decided by the builder, for the lecturer to check:**
+
+- Not done tonight: a repaired figure for A Legend Without Samples (the
+  repair is said aloud), a weather-log boxplot and violin for slide 33,
+  real Census values for Colour to Highlight. The deck estimates 153 min.

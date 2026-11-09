@@ -30,7 +30,7 @@ def _annotated_vs_plain():
         ax.set_xlim(0, 10)
     axes[0].set_title("Plain")
     axes[1].set_title("Annotated")
-    i = int(np.argmin(np.abs(x - 6.2)))
+    i = int(np.argmin(np.abs(x - 5.0)))
     axes[1].annotate(
         "feature launched here",
         xy=(x[i], y[i]), xytext=(1.0, y.max() * 0.92),
@@ -57,7 +57,7 @@ def _story_titles_captions():
               fontweight="bold", color=style.FG, ha="left", va="center")
     fig.text(0.02, 0.825, "Annual revenue, 2019–2025, all regions", fontsize=11,
               color=style.DIM, ha="left", va="center")
-    fig.text(0.02, 0.05, "Source: internal finance dashboard, synthetic figures for illustration.",
+    fig.text(0.02, 0.05, "Source: finance dashboard, quarterly figures.",
               fontsize=8.5, color=style.DIM, ha="left", va="center")
 
     def zone(y0, y1, label, color):
@@ -238,10 +238,16 @@ def _error_bars():
     style.save(fig, "viz_uncertainty_error_bars")
 
 
+def _line_points():
+    """The 60 points that the band and the many lines share."""
+    rng = np.random.default_rng(2106)
+    x = rng.uniform(0, 10, 60)
+    return x, 3 + 1.6 * x + rng.normal(0, 2.6, 60)
+
+
 def _ci_band():
-    n = 60
-    x = RNG.uniform(0, 10, n)
-    y = 3 + 1.6 * x + RNG.normal(0, 2.6, n)
+    x, y = _line_points()
+    n = x.size
     xs = np.linspace(0, 10, 200)
 
     boots = np.empty((400, xs.size))
@@ -289,13 +295,12 @@ def _quantile_dot():
 
 
 def _hop_demo():
-    n = 40
-    x = RNG.uniform(0, 10, n)
-    y = 3 + 1.6 * x + RNG.normal(0, 2.6, n)
+    x, y = _line_points()
+    n = x.size
     xs = np.linspace(0, 10, 200)
 
     fig, ax = plt.subplots(figsize=(4.4, 3.4), layout="none")  # manual bottom margin for caption
-    fig.subplots_adjust(bottom=0.24, left=0.14, right=0.96, top=0.95)
+    fig.subplots_adjust(bottom=0.16, left=0.14, right=0.96, top=0.95)
     for _ in range(28):
         idx = RNG.integers(0, n, n)
         b, a = np.polyfit(x[idx], y[idx], 1)
@@ -304,8 +309,6 @@ def _hop_demo():
     ax.plot(xs, a + b * xs, color=style.CYCLE[1], lw=2.6, zorder=3)
     ax.scatter(x, y, s=16, color=style.DIM, alpha=0.6, edgecolor="none", zorder=2)
     ax.set_xlabel("x"); ax.set_ylabel("y")
-    fig.text(0.5, 0.03, "one plausible world per frame", ha="center",
-              fontsize=10, color=style.DIM, fontstyle="italic")
     style.save(fig, "viz_uncertainty_hop_demo")
 
 

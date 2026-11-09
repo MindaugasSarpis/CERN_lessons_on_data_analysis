@@ -130,40 +130,8 @@ z
       </g>
      </g>
      <g id="text_3">
-      <!-- IL -->
-      <g style="fill: #8b97a6" transform="translate(114.696032 238.03952) scale(0.1 -0.1)">
-       <defs>
-        <path id="SpaceGrotesk-Light-c" d="M 550 0 
-L 550 4480 
-L 960 4480 
-L 960 0 
-L 550 0 
-z
-" transform="scale(0.015625)"/>
-        <path id="SpaceGrotesk-Light-f" d="M 550 0 
-L 550 4480 
-L 960 4480 
-L 960 371 
-L 3315 371 
-L 3315 0 
-L 550 0 
-z
-" transform="scale(0.015625)"/>
-       </defs>
-       <use xlink:href="#SpaceGrotesk-Light-c"/>
-       <use xlink:href="#SpaceGrotesk-Light-f" transform="translate(23.59375 0)"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_4">
-     <g id="line2d_4">
-      <g>
-       <use xlink:href="#madc9e67ae6" x="138.028079" y="221.19952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="text_4">
       <!-- FL -->
-      <g style="fill: #7dd3fc" transform="translate(132.582767 238.03952) scale(0.1 -0.1)">
+      <g style="fill: #7dd3fc" transform="translate(113.165564 238.03952) scale(0.1 -0.1)">
        <defs>
         <path id="SpaceGrotesk-Light-9" d="M 550 0 
 L 550 4480 
@@ -178,9 +146,41 @@ L 960 0
 L 550 0 
 z
 " transform="scale(0.015625)"/>
+        <path id="SpaceGrotesk-Light-f" d="M 550 0 
+L 550 4480 
+L 960 4480 
+L 960 371 
+L 3315 371 
+L 3315 0 
+L 550 0 
+z
+" transform="scale(0.015625)"/>
        </defs>
        <use xlink:href="#SpaceGrotesk-Light-9"/>
        <use xlink:href="#SpaceGrotesk-Light-f" transform="translate(54.203125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#madc9e67ae6" x="138.028079" y="221.19952" style="fill: #8b97a6; stroke: #8b97a6; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <!-- IL -->
+      <g style="fill: #8b97a6" transform="translate(134.113236 238.03952) scale(0.1 -0.1)">
+       <defs>
+        <path id="SpaceGrotesk-Light-c" d="M 550 0 
+L 550 4480 
+L 960 4480 
+L 960 0 
+L 550 0 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#SpaceGrotesk-Light-c"/>
+       <use xlink:href="#SpaceGrotesk-Light-f" transform="translate(23.59375 0)"/>
       </g>
      </g>
     </g>
@@ -1638,24 +1638,24 @@ z
    <g id="patch_7">
     <path d="M 111.620683 203.103413 
 L 125.601069 203.103413 
-L 125.601069 67.03488 
-L 111.620683 67.03488 
+L 125.601069 75.3198 
+L 111.620683 75.3198 
 z
-" clip-path="url(#p20f751e8a1)" style="fill: #8b97a6"/>
+" clip-path="url(#p20f751e8a1)" style="fill: #7dd3fc"/>
    </g>
    <g id="patch_8">
     <path d="M 131.037886 203.103413 
 L 145.018272 203.103413 
-L 145.018272 75.3198 
-L 131.037886 75.3198 
+L 145.018272 88.580363 
+L 131.037886 88.580363 
 z
-" clip-path="url(#p20f751e8a1)" style="fill: #7dd3fc"/>
+" clip-path="url(#p20f751e8a1)" style="fill: #8b97a6"/>
    </g>
    <g id="patch_9">
     <path d="M 150.455089 203.103413 
 L 164.435476 203.103413 
-L 164.435476 87.1057 
-L 150.455089 87.1057 
+L 164.435476 88.580363 
+L 150.455089 88.580363 
 z
 " clip-path="url(#p20f751e8a1)" style="fill: #8b97a6"/>
    </g>
@@ -1946,7 +1946,7 @@ z
    </g>
    <g id="text_42">
     <!-- +10.6% -->
-    <g style="fill: #7dd3fc" transform="translate(121.732767 67.577776) scale(0.1 -0.1)">
+    <g style="fill: #7dd3fc" transform="translate(102.315564 67.577776) scale(0.1 -0.1)">
      <use xlink:href="#SpaceGrotesk-Light-13d"/>
      <use xlink:href="#SpaceGrotesk-Light-39" transform="translate(62 0)"/>
      <use xlink:href="#SpaceGrotesk-Light-38" transform="translate(102.40625 0)"/>

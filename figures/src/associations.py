@@ -55,7 +55,7 @@ def _blue_jays_bubble():
     ax.set_xlabel("Bill length (mm)")
     ax.set_ylabel("Bill depth (mm)")
     ax.set_title("+ Body Mass as Bubble Size")
-    ax.legend(title="Body mass", loc="upper right", labelspacing=1.6, borderpad=1.1,
+    ax.legend(title="Body mass", loc="upper left", bbox_to_anchor=(1.01, 1), labelspacing=1.6, borderpad=1.1,
                handletextpad=1.4)
     style.save(fig, "viz_associations_blue_jays_bubble")
 
@@ -122,9 +122,9 @@ def _co2_slopegraph():
 def _mtcars_corr_heatmap():
     cols = ["mpg", "cylinders", "displacement", "horsepower", "weight",
             "acceleration", "model_year"]
-    short = {"mpg": "mpg", "cylinders": "cyl", "displacement": "disp",
-             "horsepower": "hp", "weight": "weight", "acceleration": "accel",
-             "model_year": "year"}
+    short = {"mpg": "mpg", "cylinders": "cylinders", "displacement": "displacement",
+             "horsepower": "horsepower", "weight": "weight",
+             "acceleration": "acceleration", "model_year": "year"}
     df = sns.load_dataset("mpg").dropna(subset=cols)
     corr = df[cols].corr()
 
@@ -171,6 +171,7 @@ def _correlogram():
             ax = axes[i, j]
             if i == j:
                 ax.hist(df[varz[i]], bins=16, color=style.ACCENT, alpha=0.85)
+                ax.set_yticks([])   # counts beside a label in mm would be misread
             else:
                 ax.scatter(df[varz[j]], df[varz[i]], s=10, color=style.ACCENT,
                            alpha=0.5, edgecolor="none")
@@ -270,21 +271,21 @@ def _keeling_decomposition():
 # --------------------------------------------------------------------------
 
 def _lincoln_temps_raw_smooth():
-    rng = np.random.default_rng(68508)
-    days = np.arange(730)  # two years, daily
-    doy = days % 365
-    seasonal = 12 + 14 * np.sin(2 * np.pi * (doy - 80) / 365)
-    noise = rng.normal(0, 4.0, days.size)
-    temp = seasonal + noise
+    """The daily means of 2024 and 2025 from the weather log, and their
+    running mean over 21 days (centred)."""
+    from datetime import datetime
+    from handson import PATH, group, mean
+    days = group(PATH, 0, 10)
+    keys = [d for d in sorted(days) if d[:4] in ("2024", "2025")]
+    dates = [datetime.fromisoformat(d) for d in keys]
+    temp = np.array([mean(days[d]) for d in keys])
     smooth = pd.Series(temp).rolling(21, center=True, min_periods=1).mean().to_numpy()
 
     fig, ax = style.new_fig(7.6, 4.4)
-    ax.plot(days, temp, color=style.DIM, lw=0.8, alpha=0.7, label="Daily mean (raw)")
-    ax.plot(days, smooth, color=style.ACCENT, lw=2.4, label="21-day rolling mean")
-    ax.set_xlabel("Day")
-    ax.set_ylabel("Temperature (°C, synthetic)")
-    ax.set_title("Raw Series + Smoothed Trend")
-    ax.legend(loc="upper right")
+    ax.plot(dates, temp, color=style.DIM, lw=0.8, alpha=0.8, label="daily mean")
+    ax.plot(dates, smooth, color=style.ACCENT, lw=2.4, label="mean over 21 days")
+    ax.set_ylabel("temperature (°C)")
+    ax.legend(loc="upper left")
     style.save(fig, "viz_trends_lincoln_temps_raw_smooth")
 
 

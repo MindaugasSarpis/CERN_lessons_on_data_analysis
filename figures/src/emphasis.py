@@ -76,7 +76,7 @@ def _overplot_points():
 def _overplot_hexbin():
     dep, arr = _flight_delays()
     fig, ax = style.new_fig(7, 5)
-    hb = ax.hexbin(dep, arr, gridsize=42, cmap=SEQ_CMAP, mincnt=1,
+    hb = ax.hexbin(dep, arr, gridsize=42, cmap=SEQ_CMAP, mincnt=1, bins="log",
                     extent=(-30, 150, -60, 180), linewidths=0.15,
                     edgecolors=style.GRID)
     cb = fig.colorbar(hb, ax=ax, pad=0.02)
@@ -130,10 +130,11 @@ def _three_fixes():
     hb = ax.hexbin(x, y, gridsize=14, cmap=SEQ_CMAP, mincnt=1,
                     extent=(-0.5, 10.5, -0.5, 10.5), linewidths=0.15,
                     edgecolors=style.GRID)
-    ax.set_title("2-D density", fontsize=13)
+    ax.set_title("Hexagonal bins", fontsize=13)
     ax.set_xlabel("Question A")
-    fig.colorbar(hb, ax=ax, pad=0.03, fraction=0.06).ax.yaxis.set_tick_params(
-        color=style.DIM, labelcolor=style.DIM)
+    cb = fig.colorbar(hb, ax=ax, pad=0.03, fraction=0.06)
+    cb.set_label("people per cell", color=style.FG)
+    cb.ax.yaxis.set_tick_params(color=style.DIM, labelcolor=style.DIM)
 
     for ax in axes:
         ax.set_xlim(-0.5, 10.5)
@@ -174,7 +175,7 @@ def _bar_3d_bad():
     ax.set_xticklabels(products, rotation=12, ha="right")
     ax.set_yticks([])
     ax.set_zlabel("Units sold (thousands)")
-    ax.set_title("Quarterly Sales by Product — 3D Bars")
+    ax.set_title("Units sold per product in one quarter")
     _style_3d_axes(ax)
     style.save(fig, "viz_no_3d_jitter_bar_3d_bad")
 
@@ -190,7 +191,7 @@ def _bar_2d_fixed():
                     ha="center", color=style.FG, fontsize=10)
     ax.set_ylim(0, values.max() * 1.25)
     ax.set_ylabel("Units sold (thousands)")
-    ax.set_title("Quarterly Sales by Product — Flat 2D Bars")
+    ax.set_title("Units sold per product in one quarter")
     ax.tick_params(axis="x", rotation=0)
     ax.xaxis.grid(False)  # category gridlines read as stray lines rising off the bars
     style.save(fig, "viz_no_3d_jitter_bar_2d_fixed")
