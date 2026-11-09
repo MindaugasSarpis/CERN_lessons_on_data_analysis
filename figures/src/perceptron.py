@@ -92,9 +92,17 @@ def z_of(x, w, b):
     return w[0] * x[0] + w[1] * x[1] + b
 
 
+def says_frost(z):
+    """z > 0, decided on z rounded to 9 decimals: an evening exactly on the
+    line (z = 0 in exact arithmetic, a few 1e-16 in floating point, as
+    29 Mar 2021 under w = (-1, 4), b = 0.6) is "no frost", as the slides and
+    PerceptronPlayground count it."""
+    return round(z, 9) > 0
+
+
 def predict(x, w, b):
     """The neuron with a step: 1 (frost) when z > 0, else 0."""
-    return 1 if z_of(x, w, b) > 0 else 0
+    return 1 if says_frost(z_of(x, w, b)) else 0
 
 
 def right(xs, ys, w, b):
@@ -147,7 +155,7 @@ def rosenblatt_updates(xs, ys, epochs):
         for i in range(len(xs)):
             x = xs[i]
             z = z_of(x, w, b)
-            error = ys[i] - (1 if z > 0 else 0)
+            error = ys[i] - (1 if says_frost(z) else 0)
             if error != 0:
                 w = [w[0] + error * x[0], w[1] + error * x[1]]
                 b = b + error
@@ -241,7 +249,7 @@ class Perceptron:
 
     def predict(self, x):
         z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
-        if z > 0:
+        if says_frost(z):
             return 1
         return 0
 
@@ -355,7 +363,7 @@ def report():
     print("== AND and OR with w = (1, 1)")
     for name, bb, target in (("AND", -1.5, AND), ("OR", -0.5, OR)):
         zs = [g[0] + g[1] + bb for g in GATE]
-        outs = [1 if z > 0 else 0 for z in zs]
+        outs = [1 if says_frost(z) else 0 for z in zs]
         assert outs == target
         print(f"  {name}: b = {bb}, z = {zs}, out = {outs}")
 
@@ -375,7 +383,7 @@ def report():
         for g, t in zip(GATE, AND):
             step += 1
             z = z_of(g, wa, ba)
-            out = 1 if z > 0 else 0
+            out = 1 if says_frost(z) else 0
             e = t - out
             wa = [wa[0] + e * g[0], wa[1] + e * g[1]]
             ba = ba + e
@@ -517,7 +525,7 @@ def report():
         print(f"    at {thr}: caught {caught}, missed {missed}, false alarms {alarms}, right "
               f"{(len(xte) - missed - alarms) / len(xte):.4f}")
     w1, b1 = train_logistic_1([xx[0] for xx in xtr], ytr)
-    r1 = sum(1 for i in range(len(xte)) if (w1 * xte[i][0] + b1 > 0) == (yte[i] == 1))
+    r1 = sum(1 for i in range(len(xte)) if says_frost(w1 * xte[i][0] + b1) == (yte[i] == 1))
     print(f"  temperature alone: w = {w1:.4f}, b = {b1:.4f}, threshold {-b1 / w1:.2f} °C, "
           f"test {r1} = {r1 / len(xte):.4f}")
     rule_te = sum(1 for r in test if (r[1] < best_tr[0]) == (r[3] == 1))
@@ -557,9 +565,6 @@ def report():
 
 
 # ------------------------------------------------------------------ helpers
-_DPI = 200               # resolution of the rasterized point clouds
-
-
 def _np(rows):
     X = np.array([inputs(r) for r in rows])
     y = np.array([r[3] for r in rows])
@@ -567,14 +572,12 @@ def _np(rows):
 
 
 def _scatter(ax, X, y, ms=3.2, alpha=0.55, labels=True):
-    """The evenings as points. Rasterized: thousands of vector markers would
-    bloat the SVG; the figure's dpi (_DPI) keeps them sharp."""
-    ax.figure.set_dpi(_DPI)
+    """The evenings as points, as vector markers (no raster: crisp at any size)."""
     n1, n0 = int(y.sum()), int(len(y) - y.sum())
     ax.plot(X[y == 0, 0], X[y == 0, 1], "o", ms=ms, color=C0, alpha=alpha, mec="none",
-            label=f"no frost at 06:00 ({n0})" if labels else None, rasterized=True)
+            label=f"no frost at 06:00 ({n0})" if labels else None)
     ax.plot(X[y == 1, 0], X[y == 1, 1], "^", ms=ms + 0.6, color=C1, alpha=alpha, mec="none",
-            label=f"frost at 06:00 ({n1})" if labels else None, rasterized=True)
+            label=f"frost at 06:00 ({n1})" if labels else None)
 
 
 def _boundary(ax, w, b, xlim, ylim, **kw):
@@ -720,26 +723,6 @@ def _unit():
     style.save(fig, "viz_perceptron_unit")
 
 
-def _boundary_fig():
-    rows = evenings()
-    X, y = _np(rows)
-    xlim, ylim = (-6, 14), (0.38, 1.03)
-    fig, axes = plt.subplots(1, 2, figsize=(9.4, 3.4), sharey=True)
-    for ax, (w, b) in zip(axes, (THRESHOLD_NEURON, TILTED_NEURON)):
-        _shade(ax, w, b, xlim, ylim)
-        _scatter(ax, X, y, ms=3.0, alpha=0.5, labels=False)
-        _boundary(ax, w, b, xlim, ylim, color=LINE, lw=2.2)
-        n_right = int(np.sum(((X @ np.array(w) + b) > 0) == (y == 1)))
-        wtxt = f"$w$ = ({w[0]:g}, {w[1]:g}),  $b$ = {b:g}".replace("-", "−")
-        ax.set_title(f"{wtxt}:  {n_right} right", fontsize=12.5, fontweight="normal")
-        ax.text(xlim[0] + 0.4, 0.42, "$z$ > 0: frost", color=C1, fontsize=11.5)
-        ax.text(xlim[1] - 0.4, 0.42, "$z$ < 0: no frost", color=C0, fontsize=11.5,
-                ha="right")
-        _evening_frame(ax, xlim, ylim)
-    axes[1].set_ylabel("")
-    style.save(fig, "viz_perceptron_boundary")
-
-
 def _gates():
     fig, axes = plt.subplots(2, 1, figsize=(5.4, 5.1))
     lim = (-0.6, 1.8)
@@ -821,7 +804,7 @@ def _step_loss():
     train, _ = split(rows)
     X, y = _np(train)
     bs = np.linspace(-4, 12, 1601)
-    wrong = [int(np.sum(((b - X[:, 0]) > 0) != (y == 1))) for b in bs]
+    wrong = [int(np.sum((np.round(b - X[:, 0], 9) > 0) != (y == 1))) for b in bs]
     z = bs[:, None] - X[None, :, 0]
     ce = np.mean(np.logaddexp(0, z) - y[None, :] * z, axis=1)
     fig, axes = plt.subplots(1, 2, figsize=(9.4, 3.3))
@@ -1046,7 +1029,7 @@ def _xor_lines():
     fig, ax = style.new_fig(4.7, 4.6)
     tries = [([1.0, 1.0], -0.5, PINK), ([1.0, -1.0], -0.5, GREEN), ([1.0, 0.0], -0.5, VIOLET)]
     for w, b, col in tries:
-        wrong = sum(1 for g, t in zip(GATE, XOR) if (z_of(g, w, b) > 0) != (t == 1))
+        wrong = sum(1 for g, t in zip(GATE, XOR) if says_frost(z_of(g, w, b)) != (t == 1))
         _gate_boundary(ax, w, b, lim, color=col, lw=2, label=f"{wrong} wrong")
     _xor_frame(ax, lim)
     ax.legend(loc="upper right", fontsize=10)
@@ -1331,7 +1314,6 @@ FIGURES = {
     "viz_perceptron_evenings": _evenings_fig,
     "viz_perceptron_threshold": _threshold_fig,
     "viz_perceptron_unit": _unit,
-    "viz_perceptron_boundary": _boundary_fig,
     "viz_perceptron_gates": _gates,
     "viz_perceptron_and_run": _and_run,
     "viz_perceptron_rule_evenings": _rule_evenings,

@@ -386,13 +386,12 @@ $$
 
 ## 🔢 **$x = (2.6,\ 0.85)$**
 
-<v-clicks>
-
-- $z = (-1)(2.6) + (0)(0.85) + 3.8$
-- $z = -2.6 + 0 + 3.8 = 1.2$
-- $\hat{y} = \text{step}(1.2) = 1$: frost
-
-</v-clicks>
+<FormulaSteps steps="
+  z = w_1 x_1 + w_2 x_2 + b
+  = (-1)(2.6) + (0)(0.85) + 3.8
+  = -2.6 + 0 + 3.8
+  = 1.2
+" />
 
 </div>
 
@@ -400,12 +399,12 @@ $$
 
 <div v-click class="card card-success card-glass pad-compact mt-md">
 
-✅ 06:00: −2.0 °C, so $y = 1$: right. On all 3646 evenings this neuron is right 3490 times, as the rule.
+✅ $\hat{y} = \text{step}(1.2) = 1$: frost. At 06:00 −2.0 °C, so $y = 1$: right. On all 3646 evenings this neuron is right 3490 times, as the rule.
 
 </div>
 
 <!--
-**Do:** click through: each product, the sum, the step.
+**Do:** click through: the numbers in place of the letters, each product, the sum; the last click, the step and what happened.
 **Say:** the humidity has weight 0, so this neuron does not look at it: it is the rule "below 3.8 °C".
 (~2 min)
 -->
@@ -495,16 +494,18 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 Shaded: $z > 0$, frost. Upright at 3.8 °C, 3490 evenings right; tilted by $w_2 = 4$, 3493: the humidity moves three evenings of 3646.
+📐 Drag $w_1$, $w_2$ and $b$; tap an evening. Upright at 3.8 °C: 3490 of 3646 right; tilted, $w = (-1, 4)$ and $b = 0.6$: 3494, the humidity moves four evenings.
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_boundary.svg">
+<PerceptronPlayground class="fig-fill mt-sm" />
 
 <!--
-**Say:** whatever its three numbers, a neuron cuts the plane in two with a straight line. That is all it can do.
-**Ask:** can any straight line put every cyan point on one side and every orange point on the other? No: the clouds overlap.
-(~2 min)
+**Do:** it opens on w = (−1, 0), b = 3.8 and 8 Dec 2025: z = 1.2, frost; the line stands at 3.8 °C, 3490 right, 95.7 %. Press never frost: 66.3 %, the baseline. Press reset.
+**Do:** tilt it: click the w₂ slider and press PageUp four times (4.00); click b, PageDown three times and ↓ twice (0.6): 3494 right, 95.8 %. Then tap 6 Dec 2025, the ringed point near 1 °C: frost said, none came.
+**Say:** whatever its three numbers, a neuron cuts the plane in two with a straight line; tilting it moves four evenings of 3646.
+**Ask:** can any line put every cyan point on one side and every orange point on the other? No: the clouds overlap.
+(~3 min)
 -->
 
 ---

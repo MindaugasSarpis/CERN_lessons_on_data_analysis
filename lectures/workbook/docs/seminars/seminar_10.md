@@ -280,9 +280,9 @@ The **accuracy** is the share of evenings on which `predict` says what happened.
     w = [-1.0, 4.0], b = 0.6: 0.958
     ```
 
-    3.8 is the best threshold; the weight on the humidity changes three
-    evenings of 3646. Finding three numbers by trying gets slow: the next
-    part lets the evenings choose them.
+    3.8 is the best threshold; the weight on the humidity moves the score
+    from 0.957 to 0.958, a few evenings of 3646. Finding three numbers by
+    trying gets slow: the next part lets the evenings choose them.
 
 ---
 

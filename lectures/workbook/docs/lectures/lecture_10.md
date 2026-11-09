@@ -31,7 +31,8 @@ the code is plain Python on lists.
 3. **One neuron** (11–17): z = w₁x₁ + w₂x₂ + b and a step; the evening of
    8 December 2025 pushed through it; the neuron in five lines of Python;
    where the output changes, a straight line, and how its three numbers
-   set it; AND and OR from one neuron, and the XOR puzzle.
+   set it, moved by hand over all 3646 evenings (upright at 3.8 °C 3490
+   right, tilted 3494); AND and OR from one neuron, and the XOR puzzle.
 4. **Rosenblatt's rule** (18–27): why not try every line (8.1 million lines
    for three numbers); the rule and why it moves z the right way; one
    update with the numbers of 1 January 2016; AND by hand, epochs 1 and 2,
@@ -82,7 +83,7 @@ slide number and press Enter.
 |--|--|
 | 1–4 | The question: 8 December in ten years, then the 3646 evenings as two overlapping clouds |
 | 5–9 | Inputs, label and output; the list; the baseline never frost; the best threshold, 3.8 °C |
-| 11–17 | The neuron, one evening through it, in Python, its line, AND and OR |
+| 11–17 | The neuron, one evening through it, in Python, its line (live), AND and OR |
 | 18, 20–22, 24–27 | Rosenblatt's rule, one update, AND by hand, the rule live, separable or not, the rule on the evenings and what it does not give |
 | 28–40 | No slope in a count, frost by counting, the sigmoid, the probability, the likelihood and the cross-entropy, the gradient checked and one step |
 | 42 | One update for three models |
@@ -105,18 +106,26 @@ slide number and press Enter.
   the board with the room), 33–34 (the likelihood and the loss), 38–40
   (the slope, its check and one step) or 55–57 (the class): Seminar 10
   builds the same class, `Perceptron`, with the same lines.
+- **Slide 16 is an interactive figure** that works offline: the neuron on
+  all 3646 evenings. It opens on "below 3.8 °C" (3490 right) with 8 December
+  2025 pushed through z; press never frost (66.3 %) and reset, tilt the
+  line with the keys (w₂ PageUp ×4, b PageDown ×3 and ↓ ×2: 3494 right),
+  tap an evening to push it through z. Use it on the projected window, not
+  in the presenter view.
 - **Seven slides run Python in the browser**: 10, 14, 24, 36, 39, 49 and
   57. The first ▶ downloads the Python runtime, so run one block before
   the lecture. Slides 24 and 57 show the output beside the code. On slide
   49 type this evening's 18:00 temperature and humidity, from any weather
   service, and run: the neuron's probability of frost for tonight.
-- **Clicks:** slide 3 holds the answer back for one click; slides 13, 15,
-  19, 21, 32, 38 and 40 add one line of numbers per click; slide 47
+- **Clicks:** slide 3 holds the answer back for one click; slide 13 builds
+  the sum one step per click; slides 15, 19, 21, 32, 38 and 40 add one line
+  of numbers per click; slide 47
   highlights the code in steps; slide 56 builds the class one method per
   click.
 - **Every figure fills its slide** and is drawn from the weather log by
   `figures/src/perceptron.py`, which also prints every number the slides
-  state (`python figures/src/perceptron.py`).
+  state (`python figures/src/perceptron.py`); the evenings of slide 16 come
+  from `figures/src/interactive_data.py`.
 - **One symbol per meaning:** x₁, x₂ the inputs, y the label, ŷ the
   output, w₁, w₂ the weights, b the bias, z the weighted sum, η the
   learning rate, L the likelihood; the loss is written "loss", and the
