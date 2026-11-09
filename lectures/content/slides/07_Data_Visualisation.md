@@ -82,7 +82,7 @@ print(len(temps), sum(temps) / len(temps))
 <!--
 **Say:** ten years of one weather station, hour by hour, and one number for all of it: 7.16 °C. The rest of the lecture looks at the hours themselves.
 **Ask:** hands up for "yes, the most hours", hands up for "no". The histogram of the hours answers it.
-**If asked:** the 120 hours of −999 are 22–26 July 2019, when the sensor failed. The same steps are `weather.temps` and `weather.mean` of Lecture 5; `lines[1:]` skips the header row.
+**If asked:** the 120 hours of −999 are 22–26 July 2019, when the sensor failed. The same steps are kept as `weather.temps` and `weather.mean` in `weather.py`, used from slide 69 on; `lines[1:]` skips the header row.
 (~2 min)
 -->
 
@@ -1880,7 +1880,7 @@ hideInToc: true
 The figures of the start, in a few lines of Matplotlib.
 
 <!--
-**Say:** now the code: Matplotlib again, from the four hours of Lecture 5 to the figures of the start, drawn from the lists that `weather.py` reads, one call for each part. Every hour at its time, with dates on x, is in the reference section after the lecture.
+**Say:** now the code: the figures of the start, drawn from the lists that `weather.py` reads (the opening slide's loop, kept as functions), one call for each part. Every hour at its time, with dates on x, is in the reference section after the lecture.
 (~0.5 min)
 -->
 
@@ -1948,7 +1948,7 @@ fig.savefig("results/every_hour.png")
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-- `weather.temps`: the 87 552 temperatures of Lecture 5
+- `weather.temps`: the opening slide's loop, as a function in `weather.py` beside the script: 87 552 temperatures
 - One list: drawn against its positions 0, 1, 2, …
 
 </div>
@@ -2845,7 +2845,7 @@ datetime.datetime(2016, 1, 1, 0, 0)
 <div class="note-text mt-sm">In <code>weather.py</code>, beside <code>temps</code>, with <code>from datetime import datetime</code> at its top. <code>line[0:16]</code> is the time column. <code>hours</code> returns two lists of equal length; <code>times, values = weather.hours(path)</code> names both, as <code>fig, ax</code> does.</div>
 
 <!--
-**Do:** first step: `temps` of Lecture 5; click: the four lines that change.
+**Do:** first step: `temps`, the opening slide's loop as a function; click: the four lines that change.
 **Say:** `datetime` is in the standard library; a `datetime` object knows its year, month, day and hour, and Matplotlib puts years on an axis of them.
 (~2 min)
 -->
