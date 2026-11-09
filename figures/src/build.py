@@ -31,6 +31,7 @@ def main() -> int:
     style.use()
     total = 0
     failed = []
+    refused = []
     for fam in wanted:
         try:
             mod = importlib.import_module(fam)
@@ -40,13 +41,27 @@ def main() -> int:
             continue
         print(f"[{fam}] {len(mod.FIGURES)} figure(s)")
         for name, fn in mod.FIGURES.items():
-            fn()
+            try:
+                fn()
+            except style.FidelityError as e:  # nothing written: the old SVG stays
+                print(f"  ! {e}", file=sys.stderr)
+                refused.append(name)
+                continue
             total += 1
     print(f"Done: {total} figure(s) → {style.OUT}")
+    shown = []
+    if refused:
+        slides = "\n".join(p.read_text(encoding="utf-8") for p in
+                           (style.ROOT / "lectures" / "content" / "slides").glob("*.md"))
+        shown = [n for n in refused if f"/figures/{n}.svg" in slides]
+        print(f"REFUSED, would embed a bitmap; their old SVGs stay: {', '.join(refused)}",
+              file=sys.stderr)
+        if shown:
+            print(f"... and a deck shows {', '.join(shown)}: draw them as vector",
+                  file=sys.stderr)
     if failed:
         print(f"FAILED families: {', '.join(failed)}", file=sys.stderr)
-        return 1
-    return 0
+    return 1 if failed or shown else 0
 
 if __name__ == "__main__":
     sys.exit(main())

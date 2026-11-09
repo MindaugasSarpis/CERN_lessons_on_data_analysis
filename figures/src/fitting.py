@@ -555,7 +555,7 @@ def numbers():
 # =============================================================================
 
 C0, C1, C2, C3 = style.CYCLE[0], style.CYCLE[1], style.CYCLE[2], style.CYCLE[3]
-BOX = dict(boxstyle="round,pad=0.2", facecolor="#0b0e14", edgecolor="none", alpha=0.75)
+BOX = dict(boxstyle="round,pad=0.2", facecolor=style.BG, edgecolor="none", alpha=0.75)
 TEMP = "temperature (°C)"
 YEAR_MEAN = "yearly mean (°C)"
 YEARS = np.arange(2016, 2026)

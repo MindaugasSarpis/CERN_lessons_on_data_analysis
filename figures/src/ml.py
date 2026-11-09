@@ -38,7 +38,7 @@ DATA = style.ROOT / "lectures" / "workbook" / "docs" / "data"
 
 C1 = style.ACCENT        # class 1
 C0 = style.CYCLE[1]      # class 0
-BG = "#0b0e14"
+BG = style.BG
 
 
 # =============================================================================

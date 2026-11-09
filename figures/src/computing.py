@@ -170,7 +170,7 @@ def backfill():
         ax.add_patch(Rectangle((x, y), w, h, facecolor=color if fill else "none",
                                edgecolor=color, alpha=alpha, lw=1.8, ls=ls))
         ax.text(x + w / 2, y + h / 2, text, ha="center", va="center",
-                fontsize=10.5, color="#0b0e14" if fill else color,
+                fontsize=10.5, color=style.BG if fill else color,
                 fontweight="bold")
 
     box(0, 0, 2, 4, CYAN, "A  running\n4 cores, 2 h left")

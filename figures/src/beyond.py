@@ -38,7 +38,7 @@ DATA = style.ROOT / "lectures" / "workbook" / "docs" / "data"
 PATH = DATA / "weather.csv"
 D0 = DATA / "D0_KPi.csv"
 
-BG = "#0b0e14"          # opaque slide background (GIF has no alpha)
+BG = style.BG            # the slide background
 SIZE = (9, 3.8)         # a wide 16:9-slide panel
 MONTHS = [calendar.month_abbr[m] for m in range(1, 13)]
 TEMP_LABEL = "temperature (°C)"

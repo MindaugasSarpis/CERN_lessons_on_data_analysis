@@ -265,7 +265,7 @@ def _histogram():
     colours = [style.ACCENT] * len(counts)
     colours[i] = AMBER
     ax.bar(edges[:-1], counts, width=np.diff(edges), align="edge", color=colours,
-           edgecolor="#0b0e14", linewidth=1.0)
+           edgecolor=style.BG, linewidth=1.0)
     ax.text(edges[i] + 2.5, counts[i] + 200, f"counts[{i}] = {counts[i]}", ha="center",
             color=AMBER, fontsize=10.5, family=MONO)
     ax.annotate("", xy=(edges[2], 4500), xytext=(edges[3], 4500),

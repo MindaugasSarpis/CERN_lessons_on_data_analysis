@@ -936,7 +936,7 @@ def _bowl():
     cs = ax.contour(W1, B, L, levels=levels, colors=[C1], linewidths=1.2, alpha=0.9)
     ax.clabel(cs, fmt=lambda v: f"{v:g}", fontsize=9, colors=[LINE])
     ax.plot(w1m, bm, "o", color=LINE, ms=7, zorder=6)
-    back = {"boxstyle": "round,pad=0.25", "fc": "#0b0e14", "ec": "none", "alpha": 0.9}
+    back = {"boxstyle": "round,pad=0.25", "fc": style.BG, "ec": "none", "alpha": 0.9}
     ax.annotate(f"lowest: $w_1$ = {w1m:.2f}, $b$ = {bm:.2f}".replace("-", "−"),
                 xy=(w1m, bm), xytext=(-2.1, 6.6), color=LINE, fontsize=11, bbox=back,
                 arrowprops={"arrowstyle": "-", "color": LINE, "lw": 1.0})

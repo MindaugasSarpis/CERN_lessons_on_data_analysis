@@ -687,7 +687,7 @@ def _xor_network():
             mx, my = p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])
             ax.text(mx, my + (0.16 if hy == y else 0.0), "1", color=C0, fontsize=13,
                     ha="center", va="bottom" if hy == y else "center",
-                    bbox=dict(fc="#0b0e14", ec="none", pad=1.5) if hy != y else None)
+                    bbox=dict(fc=style.BG, ec="none", pad=1.5) if hy != y else None)
     for hx, hy, *_ in hid:
         p = (hx + 0.55, hy + (-0.12 if hy > 2 else 0.12))
         q = (out[0] - 0.54, out[1] + (0.2 if hy > 2 else -0.2))
@@ -904,7 +904,7 @@ def _similarity():
             v = grid[i][j]
             if 0.005 < v < 0.995:
                 ax.text(j + 0.5, i + 0.5, f"{v:.2f}".lstrip("0"), ha="center", va="center",
-                        fontsize=7.5, color="#0b0e14" if v > 0.6 else FG)
+                        fontsize=7.5, color=style.BG if v > 0.6 else FG)
     cb = fig.colorbar(mesh, ax=ax, fraction=0.046, pad=0.03)
     cb.solids.set_rasterized(False)
     cb.solids.set_edgecolor("face")

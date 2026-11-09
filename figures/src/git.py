@@ -19,8 +19,11 @@ from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch, Polygon
 import style
 
 FONTS = Path(__file__).resolve().parents[1] / "fonts" / "git"
-SANS = FontProperties(fname=FONTS / "SpaceGrotesk-Medium.ttf")
-BOLD = FontProperties(fname=FONTS / "SpaceGrotesk-Bold.ttf")
+# Space Grotesk by family and weight: style.use() registers each weight under
+# its own name. The static files of fonts/git/ all say "SpaceGrotesk-Light",
+# so in one SVG their bold drew with the Medium outlines.
+SANS = FontProperties(family=style.SANS, weight="medium")
+BOLD = FontProperties(family=style.SANS, weight="bold")
 MONO = FontProperties(fname=FONTS / "SpaceMono-Regular.ttf")
 MONOB = FontProperties(fname=FONTS / "SpaceMono-Bold.ttf")
 

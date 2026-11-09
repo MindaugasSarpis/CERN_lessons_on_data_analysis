@@ -41,7 +41,7 @@ import style
 
 RAW = Path(__file__).resolve().parents[1] / "data" / "gallery"
 SIZE = (9.41, 3.56)
-BG = "#0b0e14"                      # the slide background, for gaps and halos
+BG = style.BG                       # the slide background, for gaps and halos
 
 
 def _rows(name):
