@@ -501,14 +501,21 @@ def _tau_ipchi2():
     xb = np.logspace(np.log10(1.2e-4), np.log10(3e-2), 70)
     yb = np.logspace(-2, 4, 70)
     h, _, _ = np.histogram2d(tau, ip, bins=[xb, yb])
-    mesh = ax.pcolormesh(xb, yb, np.ma.masked_equal(h.T, 0), cmap="viridis",
-                         norm="log", rasterized=True)
+    # Vector cells, each edge in its own colour so no hairline seams show
+    # between them. pcolor, not pcolormesh: it leaves the empty cells out,
+    # which pcolormesh writes into the SVG as 1726 invisible paths.
+    mesh = ax.pcolor(xb, yb, np.ma.masked_equal(h.T, 0), cmap="viridis",
+                     norm="log", edgecolors="face", linewidth=0.5)
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set(xlabel="decay time TAU (units of the file)", ylabel="IPCHI2")
     ax.grid(False)
     ax.text(1.4e-4, 2500, f"rank correlation {rho:.2f}", color=style.FG, fontsize=12)
     cbar = fig.colorbar(mesh, ax=ax, pad=0.02)
+    # Matplotlib draws a colour bar of many colours as an image; keep it vector,
+    # each cell's edge in its own colour
+    cbar.solids.set_rasterized(False)
+    cbar.solids.set_edgecolor("face")
     cbar.outline.set_visible(False)
     cbar.ax.tick_params(colors=style.DIM, labelsize=9)
     cbar.set_label("candidates per cell", color=style.DIM, fontsize=9.5)

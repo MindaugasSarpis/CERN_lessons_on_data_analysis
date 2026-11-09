@@ -206,9 +206,7 @@ hideInToc: true
 
 <div>
 
-<a href="https://datamanagement.hms.harvard.edu/" target="_blank"><img src="/figures/RDM_Lifecycle.png" style="display:block;margin:0 auto;width:350px;height:350px;"></a>
-
-<div class="note-text" style="text-align:center;">Figure: Harvard Medical School</div>
+<img src="/figures/viz_lifecycle_rdm.svg" alt="The six stages as a cycle" style="display:block;margin:0 auto;width:100%;">
 
 </div>
 
@@ -231,6 +229,8 @@ hideInToc: true
 </div>
 
 </div>
+
+<div class="note-text mt-sm">After the research data lifecycle of <a href="https://datamanagement.hms.harvard.edu/" target="_blank">Harvard Medical School</a></div>
 
 <!--
 **Say:** every project passes these stages. Most trouble comes from a skipped stage: analysing before cleaning, or deciding before writing down where the data came from.
@@ -1671,7 +1671,7 @@ hideInToc: true
 
 <div class="rendered-md">
 <p><a href="https://climate.copernicus.eu">Copernicus</a></p>
-<p><img src="/figures/RDM_Lifecycle.png" alt="The lifecycle" style="width:150px;"></p>
+<p><img src="/figures/viz_lifecycle_rdm.svg" alt="The lifecycle" style="width:150px;"></p>
 </div>
 
 </div>

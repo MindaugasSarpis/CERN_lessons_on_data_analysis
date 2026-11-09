@@ -1,0 +1,19 @@
+{
+  "about": "Bitmaps that scripts/check-fidelity.mjs lets through, each with the reason it is a bitmap by nature (a photo, a screenshot, a picture about pixels). A chart or a diagram never belongs here: draw it as SVG.",
+  "bitmaps": {
+    "figures/elf_1bit.png": "L03: a picture about pixels, the same image at 1 bit per pixel",
+    "figures/elf_2bit.png": "L03: a picture about pixels, 2 bits per pixel",
+    "figures/elf_3bit.png": "L03: a picture about pixels, 3 bits per pixel",
+    "figures/elf_4bit.png": "L03: a picture about pixels, 4 bits per pixel",
+    "figures/elf_24bit.jpg": "L03: a picture about pixels, 24 bits per pixel",
+    "figures/light_bulb_off.png": "L03: a photo, a bit as a switch",
+    "figures/light_bulb_on.png": "L03: a photo, a bit as a switch",
+    "figures/git_vscode_branch.png": "L06: a screenshot of VS Code",
+    "figures/git_vscode_init.png": "L06: a screenshot of VS Code",
+    "figures/git_vscode_publish.png": "L06: a screenshot of VS Code",
+    "figures/git_weather_changes.png": "L06: a screenshot of VS Code",
+    "figures/git_weather_conflict.png": "L06: a screenshot of VS Code",
+    "figures/git_weather_diff.png": "L06: a screenshot of VS Code",
+    "figures/gpu1.webp": "L15: a photo of a graphics card, its VRAM chips outlined; 1500 x 900 px, 3.4x its 440 x 264 on a 1280 x 720 slide"
+  }
+}
