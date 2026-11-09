@@ -532,3 +532,12 @@ interactivity, visuals, style, overall feel (has to be incredible)."
   library) and the outreach talks' theme are surveyed for what Lecture 1
   and other lectures could inherit, "to keep things uniform all across";
   proposals go to the lecturer first.
+- **Interactive figures in Lecture 7 too, and back to the toolkit
+  (decided).** The lecturer: "Can also do interactive ones for the lecture
+  tomorrow (at least some) and feed this back to tools", then "it's a good
+  feature to have". Lecture 7 gets `BinWidthExplorer` (the 87 552 hours at
+  bin widths from 0.05 to 10 °C), `AxisStartBars` (where a bar axis starts),
+  `PaletteHeatmap` (palettes on the day-and-hour grid) and, if ready,
+  `SmoothingWindow`. Once proven in the course, the components go to the
+  toolkit `slidev-videos` on a worktree branch (its main checkout never
+  changes branch), for the lecturer to approve before a release.
