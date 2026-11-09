@@ -21,7 +21,9 @@ const deckLabel = computed(() => {
   const i = manifest.decks.findIndex((d: { title: string }) => d.title === title)
   if (i < 0) return ''
   const d = manifest.decks[i]
-  const n = String(i + 1).padStart(2, '0')
+  // The number in the slug, as the landing shows it (gen-landing.mjs), so an
+  // unused number (no deck 13 since 9 Nov 2026) does not shift the later ones.
+  const n = d.slug.split('-')[0]
   return `Lecture ${n} · Block ${d.block}`
 })
 // Same text as the landing's top-right corner (scripts/gen-landing.mjs).

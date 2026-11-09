@@ -1832,110 +1832,6 @@ The script `scripts/figures.py` sits beside `weather.py` and runs with `$ python
 
 ---
 hideInToc: true
----
-
-# The Time of Each Hour: `weather.hours`
-
-<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
-
-<div>
-
-````md magic-move {lines: true}
-```py
-def temps(path):
-    result = []
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp != MISSING:
-            result.append(temp)
-    return result
-```
-```py {1,2,7,9}
-def hours(path):
-    times = []
-    result = []
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp != MISSING:
-            times.append(datetime.fromisoformat(line[0:16]))
-            result.append(temp)
-    return times, result
-```
-````
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🕐 **A time as an object**
-
-```text
->>> from datetime import datetime
->>> datetime.fromisoformat("2016-01-01T00:00")
-datetime.datetime(2016, 1, 1, 0, 0)
-```
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">In <code>weather.py</code>, beside <code>temps</code>, with <code>from datetime import datetime</code> at its top. <code>line[0:16]</code> is the time column. <code>hours</code> returns two lists of equal length; <code>times, values = weather.hours(path)</code> names both, as <code>fig, ax</code> does.</div>
-
-<!--
-**Do:** first step: `temps` of Lecture 5; click: the four lines that change.
-**Say:** `datetime` is in the standard library; a `datetime` object knows its year, month, day and hour, and Matplotlib puts years on an axis of them.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# Plot Every Hour at Its **Time**
-
-<div class="fig-fill grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1|3|4|5-6|all}
-times, values = weather.hours("data/raw/weather.csv")
-fig, ax = plt.subplots()
-ax.plot(times, values, linewidth=0.2)
-ax.set_xlabel("time")
-ax.set_ylabel("temperature (°C)")
-fig.savefig("results/every_hour.png", dpi=150)
-```
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-- With two lists, `ax.plot(x, y)` puts each value at its own time
-- `linewidth=0.2` draws a hairline: 87 552 values on one axis
-- A label names the quantity and gives the unit in brackets
-- `dpi=150` saves 150 pixels per inch: the default 6.4 × 4.8 in gives 960 × 720 pixels
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_hours_dates.svg">
-
-✅ **The output.** Years on x, read from the `datetime` objects, and a unit on y. Winters reach −16.3 °C, summers 32.4 °C.
-
-</div>
-
-</div>
-
-<!--
-**Say:** five lines changed: the time on x, a hairline, two labels, the resolution. The figure is saved under the same name, so the old picture is replaced.
-**If asked:** the 120 missing hours of July 2019 are now a straight piece five days long, too short to see at this width.
-(~2 min)
--->
-
----
-hideInToc: true
 class: fill
 ---
 
@@ -2099,286 +1995,6 @@ fig.savefig("results/temp_hist.png", dpi=150)
 -->
 
 ---
-layout: section
-hideInToc: true
----
-
-# Hands-on **Matplotlib**
-
-Each new element of a figure is one more call on `ax`.
-
-<!--
-**Say:** the same module, per year and per month.
-(~0.5 min)
--->
-
----
-hideInToc: true
----
-
-# The Temperatures of Each Year: `weather.group`
-
-<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
-
-<div>
-
-````md magic-move {lines: true}
-```py
-def group(path, start, stop):
-    groups = {}
-    for line in read_lines(path):
-        temp = temp_of(line)
-        if temp == MISSING:
-            continue
-        key = line[start:stop]
-        if key not in groups:
-            groups[key] = []
-        groups[key].append(temp)
-    return groups
-```
-```py
-by_year = weather.group("data/raw/weather.csv", 0, 4)
-print(len(by_year))                # 10
-print(list(by_year))               # ['2016', '2017', ..., '2025']
-print(len(by_year["2019"]))        # 8640
-print(weather.mean(by_year["2025"]))   # 5.982077625570776
-```
-````
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact table-compact">
-
-## 🔑 **Keys of `2016-01-01T00:00`**
-
-| `start, stop` | key | groups |
-| --- | --- | --- |
-| `0, 4` | `2016` | 10 years |
-| `5, 7` | `01` | 12 months |
-| `11, 13` | `00` | 24 hours |
-| `0, 10` | `2016-01-01` | 3648 days |
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>key not in groups</code> is <code>True</code> the first time a key turns up; <code>for year in by_year</code> runs over the keys, and <code>list(by_year)</code> lists them.</div>
-
-<!--
-**Do:** first step: the function; click: what it gives for the years.
-**Ask:** why 8640 hours in 2019, not 8760? The 120 missing hours of July.
-**If asked:** 3653 days in ten years; the five days of July 2019 without a single measured hour have no key.
-(~3 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# Hours Below 0 °C per Year: `ax.bar`
-
-<div class="fig-fill grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1-6|8-9|10-14|all}
-frost = []
-for year in by_year:
-    count = 0
-    for temp in by_year[year]:
-        if temp < 0:
-            count = count + 1
-    frost.append(count)
-
-fig, ax = plt.subplots(figsize=(6, 3.2))
-ax.bar(range(2016, 2026), frost, color="#56B4E9", width=0.7)
-ax.set(xlabel="year", ylabel="hours below 0 °C", ylim=(0, 3000))
-ax.yaxis.grid(True, color="#b0bec5", linewidth=0.6)
-ax.set_axisbelow(True)
-for side in ("top", "right", "left"):
-    ax.spines[side].set_visible(False)
-fig.savefig("results/frost_hours.svg", bbox_inches="tight")
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_frost_bars.svg">
-
-✅ **The output.** One colour, bars from zero, a grid on y only, no box. From 1845 hours in 2023 to 2677 in 2025.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm"><code>range(2016, 2026)</code> puts the years on x as numbers, so Matplotlib chooses which to label. <code>figsize</code> is the size in inches. The four <code>ax.spines</code> are the lines of the box around the plot; <code>set_axisbelow(True)</code> draws the grid behind the bars.</div>
-
-<!--
-**Say:** a count has a true zero, so its bars start at zero; the years keep their own order.
-**If asked:** 22 352 of the 87 552 hours were below 0 °C, a quarter.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# Yearly Means and the Mean of All **Hours**
-
-<div class="fig-fill grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1-3|5-6|7-8|9-10|all}
-year_means = []
-for year in by_year:
-    year_means.append(weather.mean(by_year[year]))
-
-fig, ax = plt.subplots(figsize=(5.2, 3.6))
-all_mean = weather.mean(weather.temps("data/raw/weather.csv"))
-ax.axhline(all_mean, color="#D55E00", label="2016–2025: 7.16 °C")
-ax.plot(list(by_year), year_means, "o",   # "o": a point each
-        color="#56B4E9", label="one year")
-ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
-ax.legend(loc="lower left")
-fig.savefig("results/year_means.png", dpi=150)
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_year_means.svg">
-
-✅ **The output.** Ten points around the line: 2023 the warmest, 8.31 °C, 2025 the coldest, 5.98 °C.
-
-</div>
-
-</div>
-
-<!--
-**Say:** two calls on the same axes give two layers; each gets a `label`, and `ax.legend` collects them. The line is the reference: each year reads as warmer or colder than the ten-year mean.
-**If asked:** `list(by_year)` is the ten keys of the dictionary, `"2016"` to `"2025"`, in the order of the file; `"o"` draws a point at each value and no line.
-**Ask:** is it getting warmer? Ten points scatter by about 1 °C around 7.16, and the last year is the coldest: ten years do not say.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# The Monthly Means, Annotated
-
-<div class="fig-fill grid-2 mt-sm gap-md">
-
-<div>
-
-```python {all|1-4|6-7|8-10|11-13|all}
-months = weather.group("data/raw/weather.csv", 5, 7)
-month_means = []
-for month in months:
-    month_means.append(weather.mean(months[month]))
-
-fig, ax = plt.subplots(figsize=(5.6, 3.6))
-ax.plot(list(months), month_means, "o-", color="#56B4E9")
-arrow = {"arrowstyle": "->", "color": "#D55E00"}
-ax.annotate("July, 18.5 °C", xy=("07", month_means[6]), xytext=("09", 19.5),
-            color="#D55E00", arrowprops=arrow)
-ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
-ax.set_title("July is 22.4 °C warmer than January")
-fig.savefig("results/month_means.png", dpi=150)
-```
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_handson_month_annotated.svg">
-
-✅ **The output.** An annotation, axes with units, a title that states the finding: 18.53 − (−3.87) ≈ 22.4 °C.
-
-</div>
-
-</div>
-
-<!--
-**Say:** the parts of a figure from the Mechanics section, one call each. `annotate` writes a text at `xytext` and draws an arrow to `xy`; on this axis a month is named by its key, `"07"`.
-**If asked:** `"o-"` draws a point at each value and joins the points by lines, which shows the order of the twelve months; `month_means[6]` is the seventh mean, July's.
-(~2 min)
--->
-
----
-hideInToc: true
-class: runner-side
----
-
-# Linear or Logarithmic, **Live**
-
-```py {monaco-run} {autorun:false}
-import matplotlib.pyplot as plt
-days = []
-counts = []
-for day in range(1, 60):           # 1, 2, ..., 59
-    days.append(day)
-    counts.append(5 * 1.2 ** day)  # 20 % more every day
-SCALE = "linear"                   # <-- try "log"
-fig, ax = plt.subplots(figsize=(5, 4.6),
-                       layout="constrained")
-ax.plot(days, counts, "o-", ms=3)
-ax.set_yscale(SCALE)
-ax.set(xlabel="day", ylabel="count")
-ax.set_title("y-scale: " + SCALE)
-plt.show()
-```
-
-<!--
-**Do:** press ▶, then change `"linear"` to `"log"` and run again.
-**Say:** on the logarithmic axis the growth is a straight line: every day multiplies the count by the same factor, 1.2.
-**If asked:** `"o-"` draws a circle at each point and a line between them; `ms` is the marker size. `1.2 ** day` is 1.2 to the power `day`.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# One **Style** for All Figures
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-## 🎨 **`rcParams`: the defaults of Matplotlib**
-
-Colours, fonts and line widths that would be repeated in every script are set once. `plt.rcParams.update({...})` at the top of a script changes the defaults for every figure made after it.
-
-</div>
-
-```python {all|1-5|7-14|all}
-import matplotlib.pyplot as plt
-
-OKABE_ITO = ["#000000", "#E69F00", "#56B4E9", "#009E73",
-             "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
-
-plt.rcParams.update({
-    "font.family": ["Helvetica", "Arial", "DejaVu Sans"],
-    "axes.prop_cycle": plt.cycler(color=OKABE_ITO),  # the colours of successive lines
-    "axes.spines.top":   False,
-    "axes.spines.right": False,
-    "axes.axisbelow":    True,
-    "savefig.dpi":       150,
-    "savefig.bbox":      "tight",
-})
-```
-
-<!--
-**Say:** the eight Okabe–Ito colours stay distinct for the colour-blind. The style lives in one place, for example in `weather.py`, and every script that imports it draws alike.
-(~1 min)
--->
-
----
 hideInToc: true
 ---
 
@@ -2459,6 +2075,93 @@ class: fill
 **Say:** three variables on a plane: two positions and a colour. 366 × 24 cells, each the mean of 10 hours or fewer. Both cycles at once: the year from left to right, the day from bottom to top.
 **Ask:** where is the day-night difference largest? In summer: a July day swings 10 °C, a January day 4 °C.
 **If asked:** the grid comes from `weather.group(path, 5, 13)`: the key `07-28T15` is a day and an hour.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Temperature as Colour, Humidity as **Contour Lines**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+🗺️ Day, hour, the mean temperature as colour, the mean humidity as lines of equal value, like heights on a map. The 70 % line closes around summer afternoons; January nights pass 90 %. `cs = ax.contour(x, y, hum, levels=[70, 80, 90])`, `ax.clabel(cs)`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_contours.svg">
+
+<!--
+**Say:** two fields on one plane: colour for one, lines for the other. Where the colour is warm the lines show dry air; humidity falls as the air warms, r = −0.81 over the 8784 cells.
+**Ask:** at what time of day is the air driest? Mid-afternoon: in July 62.8 % at 15:00 against 81.3 % at 03:00, in January 78.0 % against 94.8 %.
+**If asked:** each cell is the mean of about 10 hours, too noisy for smooth lines, so the humidity is a running mean over 15 days before `contour` draws it. The driest cell, 20 June at 15:00, holds 61.5 %.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Year, Day, Hour and Temperature in **3D**
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+🧱 All 87 552 hours, one plane per year from 2016 to 2025: three positions and a colour. Each plane hides most of the one below: the 120 missing hours of July 2019 cannot be found. `ax.plot_surface(x, y, z, facecolors=cmap(norm(grid)))` per year
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_slices.svg">
+
+<!--
+**Ask:** which year had the warmest summer? The planes above cover the planes below, and perspective shrinks the far ones; the figure cannot answer.
+**If asked:** each plane is a flat surface at the height of its year, coloured cell by cell with `facecolors`; a missing hour gets a transparent colour.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Same Hours as Ten **Panels**
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+🧩 The same four variables, the year as a panel instead of a height: nothing hidden, one colour scale for all ten. The dark line in 2019 is 22–26 July, the 120 missing hours. `fig, axs = plt.subplots(2, 5, sharex=True, sharey=True)`, one `imshow` per panel
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_multiples.svg">
+
+<!--
+**Say:** small multiples again: when a third axis hides data, a row of flat panels usually shows it all.
+**Ask:** which year was warmest? 2023, mean 8.31 °C; the coldest 2025, 5.98 °C. A colour difference of 2 °C is hard to see, so the number still goes into the text or a separate plot.
+**If asked:** the warmest hour, 32.4 °C, was 18 June 2018 at 15:00. `extent=(0, 365, 0, 24)` puts every year on the same axis, a leap year has one column more.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Five Variables of Each Day: **Parallel Coordinates**
+
+<div class="card card-accent card-glass pad-compact mt-sm">
+
+🪢 3648 days, one line each, through four axes on their own scales; the month as colour. From daily range to temperature the lines run level: warm days swing more (r = +0.82). From temperature to humidity they cross: warm days are dry (r = −0.73).
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_parallel.svg">
+
+<!--
+**Say:** any number of variables, each on its own vertical axis. The order of the axes decides which pairs can be compared: only neighbours.
+**Ask:** what does a July day look like? A daily range of 10.4 °C on average, 71.9 % humidity, 2.89 m/s; a January day 4.9 °C, 86.8 %, 4.32 m/s.
+**If asked:** `LineCollection` draws the 3648 lines in one call, `set_array(month)` colours them; drawn in a random order, so no month lies on top of the rest.
 (~2 min)
 -->
 
@@ -2899,93 +2602,6 @@ hideInToc: true
 class: fill
 ---
 
-# Temperature as Colour, Humidity as **Contour Lines**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-🗺️ Day, hour, the mean temperature as colour, the mean humidity as lines of equal value, like heights on a map. The 70 % line closes around summer afternoons; January nights pass 90 %. `cs = ax.contour(x, y, hum, levels=[70, 80, 90])`, `ax.clabel(cs)`
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_contours.svg">
-
-<!--
-**Say:** two fields on one plane: colour for one, lines for the other. Where the colour is warm the lines show dry air; humidity falls as the air warms, r = −0.81 over the 8784 cells.
-**Ask:** at what time of day is the air driest? Mid-afternoon: in July 62.8 % at 15:00 against 81.3 % at 03:00, in January 78.0 % against 94.8 %.
-**If asked:** each cell is the mean of about 10 hours, too noisy for smooth lines, so the humidity is a running mean over 15 days before `contour` draws it. The driest cell, 20 June at 15:00, holds 61.5 %.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# Year, Day, Hour and Temperature in **3D**
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-🧱 All 87 552 hours, one plane per year from 2016 to 2025: three positions and a colour. Each plane hides most of the one below: the 120 missing hours of July 2019 cannot be found. `ax.plot_surface(x, y, z, facecolors=cmap(norm(grid)))` per year
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_slices.svg">
-
-<!--
-**Ask:** which year had the warmest summer? The planes above cover the planes below, and perspective shrinks the far ones; the figure cannot answer.
-**If asked:** each plane is a flat surface at the height of its year, coloured cell by cell with `facecolors`; a missing hour gets a transparent colour.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# The Same Hours as Ten **Panels**
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-🧩 The same four variables, the year as a panel instead of a height: nothing hidden, one colour scale for all ten. The dark line in 2019 is 22–26 July, the 120 missing hours. `fig, axs = plt.subplots(2, 5, sharex=True, sharey=True)`, one `imshow` per panel
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_multiples.svg">
-
-<!--
-**Say:** small multiples again: when a third axis hides data, a row of flat panels usually shows it all.
-**Ask:** which year was warmest? 2023, mean 8.31 °C; the coldest 2025, 5.98 °C. A colour difference of 2 °C is hard to see, so the number still goes into the text or a separate plot.
-**If asked:** the warmest hour, 32.4 °C, was 18 June 2018 at 15:00. `extent=(0, 365, 0, 24)` puts every year on the same axis, a leap year has one column more.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# Five Variables of Each Day: **Parallel Coordinates**
-
-<div class="card card-accent card-glass pad-compact mt-sm">
-
-🪢 3648 days, one line each, through four axes on their own scales; the month as colour. From daily range to temperature the lines run level: warm days swing more (r = +0.82). From temperature to humidity they cross: warm days are dry (r = −0.73).
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_advanced_parallel.svg">
-
-<!--
-**Say:** any number of variables, each on its own vertical axis. The order of the axes decides which pairs can be compared: only neighbours.
-**Ask:** what does a July day look like? A daily range of 10.4 °C on average, 71.9 % humidity, 2.89 m/s; a January day 4.9 °C, 86.8 %, 4.32 m/s.
-**If asked:** `LineCollection` draws the 3648 lines in one call, `set_array(month)` colours them; drawn in a random order, so no month lies on top of the rest.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
 # Temperature, Humidity, Wind and **Month**
 
 <div class="card card-accent card-glass pad-compact mt-sm">
@@ -3074,6 +2690,390 @@ class: fill
 **Ask:** which pair moves together? τ and log χ²_IP, r = 0.35: both grow when the D⁰ flies further from the collision before it decays. Every other pair has |r| ≤ 0.07.
 **If asked:** 49 rows have `TAU` = −100, a missing value, and are left out. χ²_IP runs from 10⁻⁵ to 10⁶, so its axis is log₁₀. The horizontal edge at 0.15 ps in the τ panels is a cut of the selection that made the file.
 (~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# In **Matplotlib**
+
+The figures of the weather log, call by call.
+
+<!--
+**Say:** reference for after the lecture: each figure with the lines that draw it.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Time of Each Hour: `weather.hours`
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+def temps(path):
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            result.append(temp)
+    return result
+```
+```py {1,2,7,9}
+def hours(path):
+    times = []
+    result = []
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp != MISSING:
+            times.append(datetime.fromisoformat(line[0:16]))
+            result.append(temp)
+    return times, result
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🕐 **A time as an object**
+
+```text
+>>> from datetime import datetime
+>>> datetime.fromisoformat("2016-01-01T00:00")
+datetime.datetime(2016, 1, 1, 0, 0)
+```
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">In <code>weather.py</code>, beside <code>temps</code>, with <code>from datetime import datetime</code> at its top. <code>line[0:16]</code> is the time column. <code>hours</code> returns two lists of equal length; <code>times, values = weather.hours(path)</code> names both, as <code>fig, ax</code> does.</div>
+
+<!--
+**Do:** first step: `temps` of Lecture 5; click: the four lines that change.
+**Say:** `datetime` is in the standard library; a `datetime` object knows its year, month, day and hour, and Matplotlib puts years on an axis of them.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Plot Every Hour at Its **Time**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1|3|4|5-6|all}
+times, values = weather.hours("data/raw/weather.csv")
+fig, ax = plt.subplots()
+ax.plot(times, values, linewidth=0.2)
+ax.set_xlabel("time")
+ax.set_ylabel("temperature (°C)")
+fig.savefig("results/every_hour.png", dpi=150)
+```
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+- With two lists, `ax.plot(x, y)` puts each value at its own time
+- `linewidth=0.2` draws a hairline: 87 552 values on one axis
+- A label names the quantity and gives the unit in brackets
+- `dpi=150` saves 150 pixels per inch: the default 6.4 × 4.8 in gives 960 × 720 pixels
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_hours_dates.svg">
+
+✅ **The output.** Years on x, read from the `datetime` objects, and a unit on y. Winters reach −16.3 °C, summers 32.4 °C.
+
+</div>
+
+</div>
+
+<!--
+**Say:** five lines changed: the time on x, a hairline, two labels, the resolution. The figure is saved under the same name, so the old picture is replaced.
+**If asked:** the 120 missing hours of July 2019 are now a straight piece five days long, too short to see at this width.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Temperatures of Each Year: `weather.group`
+
+<div class="grid-2 mt-sm gap-md" style="grid-template-columns: 3fr 2fr;">
+
+<div>
+
+````md magic-move {lines: true}
+```py
+def group(path, start, stop):
+    groups = {}
+    for line in read_lines(path):
+        temp = temp_of(line)
+        if temp == MISSING:
+            continue
+        key = line[start:stop]
+        if key not in groups:
+            groups[key] = []
+        groups[key].append(temp)
+    return groups
+```
+```py
+by_year = weather.group("data/raw/weather.csv", 0, 4)
+print(len(by_year))                # 10
+print(list(by_year))               # ['2016', '2017', ..., '2025']
+print(len(by_year["2019"]))        # 8640
+print(weather.mean(by_year["2025"]))   # 5.982077625570776
+```
+````
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact table-compact">
+
+## 🔑 **Keys of `2016-01-01T00:00`**
+
+| `start, stop` | key | groups |
+| --- | --- | --- |
+| `0, 4` | `2016` | 10 years |
+| `5, 7` | `01` | 12 months |
+| `11, 13` | `00` | 24 hours |
+| `0, 10` | `2016-01-01` | 3648 days |
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>key not in groups</code> is <code>True</code> the first time a key turns up; <code>for year in by_year</code> runs over the keys, and <code>list(by_year)</code> lists them.</div>
+
+<!--
+**Do:** first step: the function; click: what it gives for the years.
+**Ask:** why 8640 hours in 2019, not 8760? The 120 missing hours of July.
+**If asked:** 3653 days in ten years; the five days of July 2019 without a single measured hour have no key.
+(~3 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Hours Below 0 °C per Year: `ax.bar`
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1-6|8-9|10-14|all}
+frost = []
+for year in by_year:
+    count = 0
+    for temp in by_year[year]:
+        if temp < 0:
+            count = count + 1
+    frost.append(count)
+
+fig, ax = plt.subplots(figsize=(6, 3.2))
+ax.bar(range(2016, 2026), frost, color="#56B4E9", width=0.7)
+ax.set(xlabel="year", ylabel="hours below 0 °C", ylim=(0, 3000))
+ax.yaxis.grid(True, color="#b0bec5", linewidth=0.6)
+ax.set_axisbelow(True)
+for side in ("top", "right", "left"):
+    ax.spines[side].set_visible(False)
+fig.savefig("results/frost_hours.svg", bbox_inches="tight")
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_frost_bars.svg">
+
+✅ **The output.** One colour, bars from zero, a grid on y only, no box. From 1845 hours in 2023 to 2677 in 2025.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm"><code>range(2016, 2026)</code> puts the years on x as numbers, so Matplotlib chooses which to label. <code>figsize</code> is the size in inches. The four <code>ax.spines</code> are the lines of the box around the plot; <code>set_axisbelow(True)</code> draws the grid behind the bars.</div>
+
+<!--
+**Say:** a count has a true zero, so its bars start at zero; the years keep their own order.
+**If asked:** 22 352 of the 87 552 hours were below 0 °C, a quarter.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Yearly Means and the Mean of All **Hours**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1-3|5-6|7-8|9-10|all}
+year_means = []
+for year in by_year:
+    year_means.append(weather.mean(by_year[year]))
+
+fig, ax = plt.subplots(figsize=(5.2, 3.6))
+all_mean = weather.mean(weather.temps("data/raw/weather.csv"))
+ax.axhline(all_mean, color="#D55E00", label="2016–2025: 7.16 °C")
+ax.plot(list(by_year), year_means, "o",   # "o": a point each
+        color="#56B4E9", label="one year")
+ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
+ax.legend(loc="lower left")
+fig.savefig("results/year_means.png", dpi=150)
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_year_means.svg">
+
+✅ **The output.** Ten points around the line: 2023 the warmest, 8.31 °C, 2025 the coldest, 5.98 °C.
+
+</div>
+
+</div>
+
+<!--
+**Say:** two calls on the same axes give two layers; each gets a `label`, and `ax.legend` collects them. The line is the reference: each year reads as warmer or colder than the ten-year mean.
+**If asked:** `list(by_year)` is the ten keys of the dictionary, `"2016"` to `"2025"`, in the order of the file; `"o"` draws a point at each value and no line.
+**Ask:** is it getting warmer? Ten points scatter by about 1 °C around 7.16, and the last year is the coldest: ten years do not say.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Monthly Means, Annotated
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+```python {all|1-4|6-7|8-10|11-13|all}
+months = weather.group("data/raw/weather.csv", 5, 7)
+month_means = []
+for month in months:
+    month_means.append(weather.mean(months[month]))
+
+fig, ax = plt.subplots(figsize=(5.6, 3.6))
+ax.plot(list(months), month_means, "o-", color="#56B4E9")
+arrow = {"arrowstyle": "->", "color": "#D55E00"}
+ax.annotate("July, 18.5 °C", xy=("07", month_means[6]), xytext=("09", 19.5),
+            color="#D55E00", arrowprops=arrow)
+ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
+ax.set_title("July is 22.4 °C warmer than January")
+fig.savefig("results/month_means.png", dpi=150)
+```
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_handson_month_annotated.svg">
+
+✅ **The output.** An annotation, axes with units, a title that states the finding: 18.53 − (−3.87) ≈ 22.4 °C.
+
+</div>
+
+</div>
+
+<!--
+**Say:** the parts of a figure from the Mechanics section, one call each. `annotate` writes a text at `xytext` and draws an arrow to `xy`; on this axis a month is named by its key, `"07"`.
+**If asked:** `"o-"` draws a point at each value and joins the points by lines, which shows the order of the twelve months; `month_means[6]` is the seventh mean, July's.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: runner-side
+---
+
+# Linear or Logarithmic, **Live**
+
+```py {monaco-run} {autorun:false}
+import matplotlib.pyplot as plt
+days = []
+counts = []
+for day in range(1, 60):           # 1, 2, ..., 59
+    days.append(day)
+    counts.append(5 * 1.2 ** day)  # 20 % more every day
+SCALE = "linear"                   # <-- try "log"
+fig, ax = plt.subplots(figsize=(5, 4.6),
+                       layout="constrained")
+ax.plot(days, counts, "o-", ms=3)
+ax.set_yscale(SCALE)
+ax.set(xlabel="day", ylabel="count")
+ax.set_title("y-scale: " + SCALE)
+plt.show()
+```
+
+<!--
+**Do:** press ▶, then change `"linear"` to `"log"` and run again.
+**Say:** on the logarithmic axis the growth is a straight line: every day multiplies the count by the same factor, 1.2.
+**If asked:** `"o-"` draws a circle at each point and a line between them; `ms` is the marker size. `1.2 ** day` is 1.2 to the power `day`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One **Style** for All Figures
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🎨 **`rcParams`: the defaults of Matplotlib**
+
+Colours, fonts and line widths that would be repeated in every script are set once. `plt.rcParams.update({...})` at the top of a script changes the defaults for every figure made after it.
+
+</div>
+
+```python {all|1-5|7-14|all}
+import matplotlib.pyplot as plt
+
+OKABE_ITO = ["#000000", "#E69F00", "#56B4E9", "#009E73",
+             "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+
+plt.rcParams.update({
+    "font.family": ["Helvetica", "Arial", "DejaVu Sans"],
+    "axes.prop_cycle": plt.cycler(color=OKABE_ITO),  # the colours of successive lines
+    "axes.spines.top":   False,
+    "axes.spines.right": False,
+    "axes.axisbelow":    True,
+    "savefig.dpi":       150,
+    "savefig.bbox":      "tight",
+})
+```
+
+<!--
+**Say:** the eight Okabe–Ito colours stay distinct for the colour-blind. The style lives in one place, for example in `weather.py`, and every script that imports it draws alike.
+(~1 min)
 -->
 
 ---
