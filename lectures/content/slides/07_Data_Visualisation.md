@@ -2395,6 +2395,126 @@ layout: section
 hideInToc: true
 ---
 
+# Classics and **Maps**
+
+Many variables on one page, each read where it is drawn
+
+<!--
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Deaths in the Army in the East, 1854–56: **Nightingale's Roses**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🌹 A wedge per month, area = deaths: 17 982 deaths, 14 476 (80.5 %) from preventable disease. January 1855 alone: 2761
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_gallery_nightingale.svg">
+
+<!--
+**Say:** three variables in each rose: the month as the angle, the cause as colour, the deaths as area, each wedge measured from the centre. The radius grows with the square root: a wedge twice as long holds four times the deaths. First year, on the right: 13 294 deaths, 83.9 % from disease; second year, on the left: 4688.
+**If asked:** Florence Nightingale, "Diagram of the causes of mortality in the army in the East", 1858. Data: `Nightingale` of the R package HistData (from Pearson and Short, 2007), as CSV from Rdatasets; GPL; the numbers are historical records. A Sanitary Commission reached the army in March 1855. The file also gives annual rates per 1000 soldiers: the army grew from 8571 (April 1854) to 46 140 (March 1856), so the rates fall further than the counts.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Napoleon's Army in Russia, 1812: **Minard's Map**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+🗺️ Band width = soldiers: 422 000 at Kowno, 100 000 at Moscow, 10 000 back. Coldest: −30 °Réaumur (−37.5 °C), 6 December
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_gallery_minard.svg">
+
+<!--
+**Say:** six variables on one page: the size of the army as the band's width, longitude and latitude, the direction as colour (tan to Moscow, light grey back: Minard drew it black), and below, the temperature on the retreat with its date, joined to the map by thin lines. 422 000 become 10 000, one in 42; the cold of November and December falls on the way back.
+**If asked:** Charles Joseph Minard, 1869; Edward Tufte called it perhaps the best statistical graphic ever drawn. Data: `Minard.troops`, `Minard.cities`, `Minard.temp` of the R package HistData (Lee Wilkinson's transcription), as CSV from Rdatasets; GPL; the numbers are historical records. Minard gave degrees Réaumur: × 1.25 for °C. The date 24 November is empty in the file and follows from its column of days (14 Nov + 10).
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Five Variables of 142 Countries: a **Bubble Chart**
+
+<div class="card card-accent card-glass pad-compact mt-sm">
+
+🫧 x: GDP per person (log scale) · y: life expectancy · area: population · colour: continent · motion: the year
+
+</div>
+
+<BubbleChart class="fig-fill mt-sm" />
+
+<!--
+**Do:** let it play from 1952 (about 20 s). Then drag the year to 1992 and tap Rwanda: 23.6 years. Tap Africa in the corner.
+**Say:** two positions, an area, a colour and motion: five variables, each one readable. Hans Rosling's chart; data: Gapminder Foundation, CC BY 4.0.
+**If asked:** between two data years the bubbles move on straight lines (income on the log scale); a still chart rests on a data year, and only there are the numbers shown.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Maunga Whau as a Surface and as a **Contour Map**
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+⛰️ 87 × 61 heights on a 10 m grid, 94 to 195 m · the same colour for a height in both views
+
+</div>
+
+<TurningSurface class="fig-fill mt-sm" />
+
+<!--
+**Do:** drag to turn and tilt; point at the crater beside the summit. Press MAP: the same heights lie flat, isolines every 10 m. Double-click resets the view.
+**Say:** the surface shows the shape at a glance; the map lets you read a height, and close lines mean steep ground. Data: R's `volcano`, digitised by Ross Ihaka (GPL).
+**If asked:** the surface draws heights twice their true scale, as R's own demo does, and says so under the figure; the map is to scale, with a 100 m bar.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# CERN's Accelerators to Scale and as a **Schematic**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+🧭 The LHC ring is 42 × the PS and 170 × the Booster: to scale, they are dots. The schematic keeps only the order and the four experiments
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_gallery_cern.svg">
+
+<!--
+**Say:** the same five machines twice. To scale, the PS, the Booster and Linac4 sit on the Meyrin site as one dot beside ATLAS. As a schematic, distances and shapes are dropped and the connections kept: Linac4, Booster, PS, SPS, then into the LHC beside ALICE and LHCb, where the two beams enter. Harry Beck's London Underground map of 1933 did the same for a city.
+**If asked:** circumferences: LHC 26 659 m (home.cern, the LHC page); SPS 6.9 km, 11 × the PS (R. Steerenberg, "CERN's accelerator complex", CERN lecture, 27 Feb 2023; home.cern: "nearly 7 kilometres"); PS 628 m (home.cern, the PS page); Booster 157 m, four stacked rings, each a quarter of the PS (CERN's PS Booster operations page; Steerenberg 2023); Linac4 86 m long (home.cern, the Linac4 page). Places: the experiments from their published coordinates, the SPS and the Meyrin site estimated, to a few hundred metres.
+(~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
 # **Wrap-up**
 
 A figure is finished when every choice in it has a number behind it.

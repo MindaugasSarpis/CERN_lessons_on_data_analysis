@@ -68,13 +68,20 @@ weather-log figure, call by call, for after the lecture.
    turning; five variables of each day as parallel coordinates; the
    histogram of each month as an animation, which shows where the two
    peaks of the year come from.
-8. **Wrap-up** (85–88): a checklist for a figure; every choice in the two
+8. **Classics and maps** (85–90): Nightingale's roses of 1858 (month,
+   cause and deaths as area); Minard's map of 1812 (six variables: the
+   army's size as the band's width, place, direction, temperature, date);
+   Rosling's bubble chart of 142 countries from 1952 to 2007, played and
+   tapped live (income, life expectancy, population, continent, the year);
+   Maunga Whau as a surface turned by hand and as a contour map; CERN's
+   accelerators to scale and as a schematic, a topological map.
+9. **Wrap-up** (91–94): a checklist for a figure; every choice in the two
    figures, with both figures on the slide; the recap.
-9. **For the curious** (89–94), after the recap and outside the lecture
+10. **For the curious** (95–100), after the recap and outside the lecture
    time: the empirical CDF, the correlation heatmap, the square-root scale,
    and two figures of the LHCb file: a 2D histogram with its projections
    and a corner plot.
-10. **In Matplotlib** (95–103), for after the lecture: the code of the
+11. **In Matplotlib** (101–109), for after the lecture: the code of the
     weather-log figures, call by call: `weather.hours` and every hour at
     its time; `weather.group`; the hours below 0 °C per year as bars; the
     yearly means against the mean of all hours, with a legend; the monthly
@@ -96,12 +103,12 @@ appear only in the speaker notes and in the section for the curious.
 
 ## The lecture, part by part
 
-The lecture is slides 1–88 and estimates about 108 min, the teaching time of
-the two-hour slot (the speaker notes plan about 112 min); if the room runs
-late, **skip the slides of the second table** (about 5 min). Slides 89–94
-are the optional section For the Curious, slides 95–103 the section In
+The lecture is slides 1–94 and estimates about 114 min, the teaching time of
+the two-hour slot (the speaker notes plan about 118 min); if the room runs
+late, **skip the slides of the second table** (about 5 min). Slides 95–100
+are the optional section For the Curious, slides 101–109 the section In
 Matplotlib, the code of the figures for after the lecture, and slides
-104–116 the self-check quizzes; none of them takes lecture time. To jump,
+110–122 the self-check quizzes; none of them takes lecture time. To jump,
 type the slide number and press Enter.
 
 | Slides | Part |
@@ -116,7 +123,8 @@ type the slide number and press Enter.
 | 61–66 | The finding: title, direct labels, annotation, reference line, a window chosen for its story |
 | 67–74 | A first plot, in code: Figure and Axes, every hour, the histogram, its range and bin width, the bin width live, saving |
 | 75–84 | Beyond two axes: heatmap, surface, contour lines, ten years in 3D and as ten panels, four variables in a 3D scatter, still and turning, parallel coordinates, the animation of the months |
-| 85–88 | Checklist, every choice in the two figures, recap |
+| 85–90 | Classics and maps: Nightingale's roses, Minard's map, the bubble chart (live), Maunga Whau as a surface and a contour map (live), CERN's accelerators to scale and as a schematic |
+| 91–94 | Checklist, every choice in the two figures, recap |
 
 | Skip | Slides |
 |--|--|
@@ -128,7 +136,7 @@ type the slide number and press Enter.
   it) or slides 68–73, which draw the opening figures in code. The seminar
   draws the same file with the same calls: `subplots`, `plot`, `hist`,
   `savefig`, and the module `weather.py`, in a script `scripts/figures.py`.
-- **Do not cut** slide 87 (Every Choice in the Two Figures), the closing
+- **Do not cut** slide 93 (Every Choice in the Two Figures), the closing
   slide: both figures, with the choice behind each part of them.
 - **Do not cut** slides 21–22 (bars from zero), 32 (the boxplot and the
   median) or 44 (error bars and the standard error): Lecture 8 returns to
@@ -152,19 +160,20 @@ type the slide number and press Enter.
   written on the figure.
 - **Slide 10** (The Parts of a Figure) builds the histogram of the hours up
   in five clicks.
-- **Slides 22, 41, 53, 72, 82 and 84 are interactive figures** that work
+- **Slides 22, 41, 53, 72, 82, 84, 88 and 89 are interactive figures** that work
   offline: drag where the bar axis starts (22), the smoothing window (41),
   switch the palette of the day-and-hour grid (53), drag the bin width from
   10 °C to 0.05 °C and press "0 to 2 °C" (72), drag the four-variable scatter
   to turn it (82; it turns slowly by itself until the first drag, a
   double-click brings back the start), step through the months or pause on
-  one (84). Use them on the projected window, not in the presenter view.
+  one (84), let the bubble chart play and drag its year (88), turn Maunga
+  Whau and press MAP (89). Use them on the projected window, not in the presenter view.
 - **Slide 57** runs Python in the browser, the figure beside the code. The
   first run downloads the Python runtime, so run it once before the lecture.
 - **Slides 69, 70 and 73** highlight the code in steps.
-- **Slides 89–94** (For the Curious) are for time left at the end or for
-  students afterwards. **Slides 95–103** (In Matplotlib) are the code of the
-  weather-log figures, for after the lecture: slides 96 and 98 go from the
+- **Slides 95–100** (For the Curious) are for time left at the end or for
+  students afterwards. **Slides 101–109** (In Matplotlib) are the code of the
+  weather-log figures, for after the lecture: slides 102 and 104 go from the
   function to its output in one click, the others highlight their code in
   steps.
 
@@ -175,7 +184,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 105–116: twelve quiz slides for students to try afterwards. The same
+slides 111–122: twelve quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. Four tables give the same mean of x, the same mean of y, the same closest
@@ -239,7 +248,7 @@ questions, with their answers:
 
 [Seminar 7 · Visualisation](../seminars/seminar_07.md) works on the weather
 project. Every student starts from today's folder, adds Matplotlib to its
-environment, adds the function `group` (slide 98) to the module
+environment, adds the function `group` (slide 104) to the module
 `weather.py`, and writes one script, `scripts/figures.py`, that draws five
 figures of `weather.csv` into `results/` from lists: ten years day by day, the year's cycle, the day's cycle, the
 yearly means and a histogram, and draws them all again with one line.
@@ -261,17 +270,17 @@ can be read with
 |--|--|--|
 | The Pendulum Plot and the Mass Counts | Replaced by slide 3, The Mean Temperature of Ten Years | The opening is a question about the room's own number; slide 5 answers it |
 | Learning Objectives; What a Figure Is For | Parked (5 Nov 2026) | Preambles without data (lecturer: "Some preambles?"); the deck opens on its question, as Lectures 4 to 6 do |
-| Plot the Pendulum Table; Add Points, Labels and Units | Replaced by slide 69, and slides 96–97 of In Matplotlib | Every hour of the weather log, then at its time with `datetime`, with labels and units |
+| Plot the Pendulum Table; Add Points, Labels and Units | Replaced by slide 69, and slides 102–103 of In Matplotlib | Every hour of the weather log, then at its time with `datetime`, with labels and units |
 | A Histogram Counts Values in Bins; The Range and the Bin Width; The Mass Column as a Histogram | Rebuilt on the temperatures, slides 70, 71 and 73 | The bin widths are 10, 1 and 0.05 °C; the last one shows the rounding of the station |
 | A Peak on a Flat Background, Live | Replaced by slide 72, Choose the Bin Width, Live | It used NumPy; `random.gauss` draws cold and warm hours in tenths, and the figure is drawn beside the code |
-| A Minimal Bar Chart | Replaced by slide 99 | The hours below 0 °C per year: a count, with a true zero |
-| Points and a Formula Curve | Replaced by slide 100 | The yearly means against the mean of all hours: two layers and a legend |
-| Counts with Error Bars | Replaced by slide 101 | The monthly means with an annotation and a title that states the finding |
+| A Minimal Bar Chart | Replaced by slide 105 | The hours below 0 °C per year: a count, with a true zero |
+| Points and a Formula Curve | Replaced by slide 106 | The yearly means against the mean of all hours: two layers and a legend |
+| Counts with Error Bars | Replaced by slide 107 | The monthly means with an annotation and a title that states the finding |
 | Legends for Colour, Size and Shape; The Treemap; Trend and Seasonal Cycle | Parked (5 Nov 2026) | On the skip list already; out to keep the deck in its time band after *Beyond Two Axes* came in |
 | The Ridgeline Plot; Temperatures as a Heatmap | Parked (7 Nov 2026) | Synthetic examples that a figure of the weather log now covers (the month histograms, the heatmap of day and hour); four good-and-bad pairs came in |
 | The Dot Plot (five films) | Parked (8 Nov 2026) | Replaced by the life expectancy of 26 countries in three steps, alphabetical, sorted bars, sorted dots (slides 27–29): the lecturer asked for the busier dot plot that went from bad to good |
 | Bin widths of ages, the empirical CDF, bubble chart, overlapping points, hexagonal bins, correlation heatmap, pair plot, slopegraph, square-root scale, a reference line (genes); the surface, the 3D scatter and the LHCb 2D histogram | Moved to For the Curious (9 Nov 2026) | Students found the lecture too complicated: new datasets, statistics (*r*, √*N*) and particle physics left the main path, which then estimated 131 min |
-| The code of the hands-on figures: `weather.hours`, `weather.group`, the frost bars, the yearly and the monthly means, one style for all figures | Moved to In Matplotlib, slides 95–103 (9 Nov 2026, evening) | The lecture teaches the idea, the seminar the tool; the code stays as a reference for after the lecture |
+| The code of the hands-on figures: `weather.hours`, `weather.group`, the frost bars, the yearly and the monthly means, one style for all figures | Moved to In Matplotlib, slides 101–109 (9 Nov 2026, evening) | The lecture teaches the idea, the seminar the tool; the code stays as a reference for after the lecture |
 | Visualising Uncertainty | Split into slides 44 (error bars, the standard error computed) and 45 (a band or many lines) (9 Nov 2026, night) | One idea per slide |
 | Bin widths of ages, bubble chart, pair plot, overlapping points, hexagonal bins, slopegraph, a reference line; the surface, the 3D scatter, the scatter turning; Linear or Logarithmic, Live | Back on the main path, slides 30, 37–40, 42, 65, 77, 81, 82 and 57 (9 Nov 2026, night) | The lecturer asked for laconic slides, one line or a few fragments each; these figures, with no new statistics, keep the lecture at its two hours. For the Curious keeps the statistics and the LHCb file |
 | Roadmap for this Lecture | Removed | It repeated the learning objectives |
@@ -280,9 +289,9 @@ can be read with
 | The Seminar Dataset | Removed | The histogram of `weather.csv` is made on slides 70–73 |
 | Practice Exercise | Removed | The room builds the same figures in the seminar |
 | The Mental Model | Replaced by slide 68, in the code section | Matplotlib is introduced before it is used |
-| Scatter with a Fit | Replaced, now by slide 100 | The room has no fitting yet |
+| Scatter with a Fit | Replaced, now by slide 106 | The room has no fitting yet |
 | Histogram + Density Overlay | Replaced, now by slide 73 | It used SciPy |
-| Further Reading | Parked; the list is below | Slide 87 answers the opening slide in its place |
+| Further Reading | Parked; the list is below | Slide 93 answers the opening slide in its place |
 
 ## Further reading
 
