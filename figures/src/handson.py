@@ -231,15 +231,38 @@ def _hours_view():
 
 
 def _temp_view():
-    """The hours in bins of 1 °C, the mean as a line in the dip."""
+    """The hours in bins of 1 °C, the mean as a line in the dip; the two peaks
+    and the mean's degree carry their counts (the answer to the opening
+    question), and the peaks the share of their hours in the cold or the warm
+    months, computed here."""
     values = temps(PATH)
     m = mean(values)
+    counts, edges, _ = plt.hist(values, bins=50, range=(-17, 33))
+    plt.close()
+    month_of = [int(line[5:7]) for line in read_lines(PATH)
+                if temp_of(line) != MISSING]
+
+    def share(lo, months):
+        inside = [mo for v, mo in zip(values, month_of) if lo <= v < lo + 1]
+        return round(100 * sum(mo in months for mo in inside) / len(inside))
+
+    def count(lo):
+        return int(counts[list(edges).index(lo)])
+
+    cold, warm = share(-1, (11, 12, 1, 2, 3)), share(11, range(4, 11))
     fig, ax = plt.subplots(figsize=(9, 3.8))
     ax.hist(values, bins=50, range=(-17, 33), color=style.ACCENT)
     ax.axvline(m, color=style.CYCLE[1], linewidth=1.6)
-    ax.annotate(f"mean {m:.2f} °C", xy=(m, 3300), xytext=(10, 0),
-                textcoords="offset points", color=style.CYCLE[1], va="center")
-    ax.set(xlabel=TEMP_LABEL, ylabel="hours per 1 °C", xlim=(-17, 33))
+    top = 1.45 * count(-1)
+    peak = dict(ha="center", va="bottom", color=style.FG, fontsize=11,
+                linespacing=1.3)
+    ax.text(-0.5, count(-1) + 90, f"{count(-1)} hours\n{cold} % Nov–Mar", **peak)
+    ax.text(11.5, count(11) + 90, f"{count(11)} hours\n{warm} % Apr–Oct", **peak)
+    ax.annotate(f"mean {m:.2f} °C\n7 to 8 °C: {count(7)} hours", xy=(m, top),
+                xytext=(8, -4), textcoords="offset points", ha="left", va="top",
+                color=style.CYCLE[1], fontsize=11, linespacing=1.3)
+    ax.set(xlabel=TEMP_LABEL, ylabel="hours per 1 °C", xlim=(-17, 33),
+           ylim=(0, top))
     ax.xaxis.grid(False)
     style.save(fig, "viz_handson_temp_view")
 

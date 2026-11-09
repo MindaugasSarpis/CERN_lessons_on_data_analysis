@@ -2,154 +2,171 @@
 
 Lecture 5 ended with a module, `weather.py`, and one number: the mean of the
 87 552 measured hours of the weather station, 7.16 °C. Lecture 7 draws the
-hours, pictures first and code after. It opens on the mean and asks whether
-more or fewer hours lie near it than in any other degree. Two figures answer
-the question: every hour at its time, and the hours in bins of 1 °C, which
-pile up in two peaks, the cold months near −1 °C and the warm months near
-12 °C, with the mean in the dip between them; Anscombe's quartet then shows
-that this is general: a few numbers cannot stand for the data. Then the decisions that hold for a
-figure made with any program, on a gallery of examples: which channel, which
-chart, which ink, colours and scale, which title. Only then the code: the two
-figures of the start made with Matplotlib from the plain lists `weather.py`
-reads (NumPy comes in Lecture 8), two live blocks to change the bin width and
-the scale, and hands-on figures of the years and months. It closes on plots
-of more than two variables: a heatmap and a surface of ten years by day and
-hour, four variables in one 3D scatter, an animation, and a 2D histogram of
-LHCb data with its projections.
+hours, pictures first. It opens on the mean and asks whether more or fewer
+hours lie near it than in any other degree. Two figures answer the question:
+every hour at its time, and the hours in bins of 1 °C, which pile up in two
+peaks, the cold months near −1 °C and the warm months near 12 °C, with the
+mean in the dip between them; Anscombe's quartet then shows that this is
+general: a few numbers cannot stand for the data. Then the decisions that
+hold for a figure made with any program, on a gallery of examples: which
+channel, which chart, which ink, colours and scale, which title. Then the
+code, briefly: the figures of the start made with Matplotlib from the
+plain lists `weather.py` reads (NumPy comes later), and two live blocks to
+change the bin width and the scale. It closes on figures of three to five
+variables of the weather log: a heatmap and a surface of ten years by day
+and hour, contour lines, ten years in 3D against ten panels, a 3D scatter,
+still and turning, parallel coordinates and an animation. The slides carry
+one line or a few short fragments each; what the lecturer says is in the
+speaker notes. After the recap come **For the Curious** (a little
+statistics and the LHCb file) and **In Matplotlib**, the code of every
+weather-log figure, call by call, for after the lecture.
 
 ## What the lecture covers
 
-1. **Why a figure**: the mean of 87 552 hours, computed in six lines of
-   Python, and the question of the lecture; every hour from 2016 to 2025;
-   the hours in bins of 1 °C, which answer the question; Anscombe's quartet:
-   four tables with the same means, the same closest line and the same *r*,
+1. **Why a figure** (1–6): the mean of 87 552 hours, computed in six lines
+   of Python, and the question of the lecture; every hour from 2016 to
+   2025; the hours in bins of 1 °C, which answer the question; Anscombe's
+   quartet: four tables with the same means and the same closest line,
    told apart only by a plot.
-2. **Mechanics of a figure**: the visual channels and their ranking; the
-   parts of a figure, built up on the histogram of the hours; the legend, and
-   a legend without samples against names at the lines; axis labels with
-   units and their size; the coordinate system; the aspect ratio.
-3. **Chart families**: amounts (long labels under vertical, wider and
-   horizontal bars; bars from zero; ordered categories; stacked and 3D bars;
-   the dot plot, from alphabetical order through sorted bars to sorted dots);
-   distributions (density, and the hours as a boxplot, a violin and a strip;
-   lines or fill); proportions (pie, stacked bar); the scatter plot; trends,
-   and a line drawn through missing data against a gap (July 2019);
-   uncertainty (error bars, band, many lines).
-4. **Design principles**: the data-ink ratio; colour-vision deficiency; the
-   three kinds of palette; rainbow against viridis; colour to highlight (US
-   census 2010–2020), and ten overlapping yearly lines against one year in
-   colour; the logarithmic scale; small multiples; two y-axes against two
-   panels (monthly temperature and humidity).
-5. **Stating the finding**: the title as the finding; direct labels;
-   annotations; a window of years chosen for its story against all ten
-   years.
-6. **A first plot**, in code: Figure, Axes and artists; every hour in four
-   lines of Matplotlib, drawn against its position in the list;
-   `weather.hours` and `datetime`, so each hour stands at its time; the
+2. **Mechanics of a figure** (7–16): the visual channels and their ranking;
+   the parts of a figure, built up on the histogram of the hours; the
+   legend, and a legend without samples against names at the lines; axis
+   labels with units and their size; the coordinate system; the aspect
+   ratio.
+3. **Chart families** (17–46): amounts (long labels under vertical, wider
+   and horizontal bars; bars from zero; ordered categories; stacked and 3D
+   bars; the dot plot, from alphabetical order through sorted bars to
+   sorted dots); distributions (bin widths of ages, density, the hours as a
+   boxplot, a violin and a strip; lines or fill); proportions (pie, stacked
+   bar, separate bars; when a pie works); associations (the scatter plot,
+   size as a third variable, the pair plot, overlapping points and
+   hexagonal bins); trends (the data and the trend, the slopegraph, a line
+   drawn through missing data against a gap); uncertainty (error bars with
+   the standard error computed, a band or many lines); which chart for
+   which question.
+4. **Design principles** (47–60): the data-ink ratio; colour-vision
+   deficiency; the three kinds of palette; rainbow against viridis; colour
+   to highlight (US census 2010–2020), and ten overlapping yearly lines
+   against one year in colour; the logarithmic scale, and linear against
+   logarithmic live; small multiples and a shared axis; two y-axes against
+   two panels (monthly temperature and humidity).
+5. **Stating the finding** (61–66): the title as the finding; direct
+   labels; annotations; a reference line; a window of years chosen for its
+   story against all ten years.
+6. **A first plot**, in code (67–74): Figure, Axes and artists; every hour
+   in four lines of Matplotlib, drawn against its position in the list; the
    temperatures as a histogram with the default binning, then with a range
    (−17 to 33 °C) and a bin width (1 °C, 50 bins) chosen from the numbers:
    10 °C draws one hump, 1 °C two peaks, 0.05 °C the rounding of the
-   station; the bin width changed live in the browser.
-7. **Hands-on Matplotlib**: `weather.group`, the temperatures of each year,
-   month or hour of the day; the hours below 0 °C per year as bars; the
-   yearly means against the mean of all hours, with a legend; the monthly
-   means with an annotation and a title that states the finding; a linear
-   and a logarithmic axis, live; one style for all figures; file formats.
-8. **Beyond two axes**: the ten-year mean of every hour of every day as a
-   heatmap; the histogram of each month as an animation, which shows where
-   the two peaks of the year come from.
-9. **Wrap-up**: a checklist for a figure; every choice in the two figures,
-   each with the number that justified it; the recap.
-10. **For the curious**, after the recap and outside the lecture time: more
-    chart types (bin widths of ages, the empirical CDF, the bubble chart,
-    overlapping points and hexagonal bins, the correlation heatmap, the pair
-    plot, the slopegraph, the square-root scale, a reference line), then
-    figures of three to five variables (the day-and-hour grid as a surface,
-    temperature with humidity as contour lines, ten years stacked in 3D
-    against ten flat panels, parallel coordinates, a 3D scatter of four
-    variables and the same scatter turning, and two figures of the LHCb
-    file: a 2D histogram with its projections and a corner plot).
+   station; the bin width changed live in the browser; saving as SVG and
+   PNG.
+7. **Beyond two axes** (75–84): the ten-year mean of every hour of every
+   day as a heatmap and as a surface; humidity as contour lines over the
+   temperature; all hours as ten planes stacked in 3D, where the gap of
+   July 2019 hides, against ten flat panels, where it shows; temperature,
+   humidity, wind and month of 3648 days in a 3D scatter, still and
+   turning; five variables of each day as parallel coordinates; the
+   histogram of each month as an animation, which shows where the two
+   peaks of the year come from.
+8. **Wrap-up** (85–88): a checklist for a figure; every choice in the two
+   figures, with both figures on the slide; the recap.
+9. **For the curious** (89–94), after the recap and outside the lecture
+   time: the empirical CDF, the correlation heatmap, the square-root scale,
+   and two figures of the LHCb file: a 2D histogram with its projections
+   and a corner plot.
+10. **In Matplotlib** (95–103), for after the lecture: the code of the
+    weather-log figures, call by call: `weather.hours` and every hour at
+    its time; `weather.group`; the hours below 0 °C per year as bars; the
+    yearly means against the mean of all hours, with a legend; the monthly
+    means with an annotation and a title that states the finding; one style
+    for all figures.
 
-## Statistics used before Lecture 9
+## Statistics used before Lecture 8
 
-Statistics is the subject of Lecture 9. The main path uses three of its
-ideas, each in plain words on the slide that uses it; the others (the
-correlation *r*, the scatter √*N* of a count) appear only in the speaker
-notes and in the section for the curious.
+Statistics is the subject of Lecture 8, Data Quality and Uncertainty. The
+main path uses three of its ideas, each in plain words on the slide that
+uses it; the others (the correlation *r*, the scatter √*N* of a count)
+appear only in the speaker notes and in the section for the curious.
 
 | Term | Slide | As said there |
 |--|--|--|
-| Density | 30 | A smoothed histogram: each value becomes a small bump, and the bumps are added up |
-| Median | 31 | Half of the values lie below it, half above; the box holds the middle half |
-| Standard error | 38 | The standard deviation of the *N* values divided by √*N* |
+| Density | 31 | A smoothed histogram: each age a small bump, the bumps added up; the bump width is chosen, like a bin width |
+| Median | 32 | The box holds the middle half of the values; the line in it is the median, half of the values below, half above |
+| Standard error | 44 | Standard deviation ÷ √*N*: 9 values with a standard deviation of 0.3 °C give 0.3 / √9 = 0.1 °C |
 
 ## The lecture, part by part
 
-The lecture is slides 1–81 and estimates about 131 min, so in the two-hour
-slot **plan to skip the slides of the second table** (about 15 min).
-Slides 82–101 are the optional section For the Curious, more chart types
-and figures of three to five variables, and slides 102–114 the self-check
-quizzes; neither takes lecture time. To jump, type the slide number and
-press Enter.
+The lecture is slides 1–88 and estimates about 108 min, the teaching time of
+the two-hour slot (the speaker notes plan about 112 min); if the room runs
+late, **skip the slides of the second table** (about 5 min). Slides 89–94
+are the optional section For the Curious, slides 95–103 the section In
+Matplotlib, the code of the figures for after the lecture, and slides
+104–116 the self-check quizzes; none of them takes lecture time. To jump,
+type the slide number and press Enter.
 
 | Slides | Part |
 |--|--|
 | 1–6 | The mean of 87 552 hours, computed on the slide (the question of the lecture), every hour from 2016 to 2025, the hours in bins of 1 °C, which answer the question on slide 5, then Anscombe's quartet: four tables that their numbers cannot tell apart |
-| 7–10, 13 | Visual channels and their ranking, the parts of a figure on the histogram of the hours, axis labels with units |
-| 17–22, 27–29 | Amounts: long labels under vertical, wider and horizontal bars, bars from zero, the dot plot from alphabetical order to sorted dots |
-| 30–31 | Distributions: density; the hours as a boxplot, a violin and a strip |
-| 33–39 | Proportions, when a pie works, the scatter plot, trends, a line through missing data, uncertainty, which chart |
-| 40–52 | Design: ink, colour-vision deficiency, palettes, colour to highlight, ten lines or one in colour, the logarithmic scale, small multiples, two y-axes or two panels |
-| 53–57 | The finding: title, direct labels, annotation, a window chosen for its story |
-| 58–66 | A first plot, in code: Figure and Axes, every hour, the time on x, the histogram, its range and bin width, the bin width live |
-| 67, 68, 70, 71, 74 | Hands-on: `weather.group`, yearly means against the mean of all hours, monthly means annotated, saving |
-| 75–77 | Beyond two axes: the heatmap of day and hour, the animation of the months |
-| 78–81 | Checklist, every choice in the two figures, recap |
+| 7–16 | Mechanics: visual channels and their ranking, the parts of a figure on the histogram of the hours, the legend, axis labels with units and their size, the coordinate system, the aspect ratio |
+| 17–29 | Amounts: long labels under vertical, wider and horizontal bars, bars from zero, ordered categories, stacked and 3D bars, the dot plot from alphabetical order to sorted dots |
+| 30–33 | Distributions: bin widths of ages, density, the hours as a boxplot, a violin and a strip, lines or fill |
+| 34–40 | Proportions and associations: pie, stacked bar and separate bars, when a pie works; the scatter plot, the bubble chart, the pair plot, overlapping points, hexagonal bins |
+| 41–46 | Trends and uncertainty: the data and the trend, the slopegraph, a line through missing data, error bars and the standard error, a band or many lines; which chart for which question |
+| 47–60 | Design: ink, colour-vision deficiency, palettes, colour to highlight, ten lines or one in colour, the logarithmic scale (live on slide 57), small multiples, a shared axis, two y-axes or two panels |
+| 61–66 | The finding: title, direct labels, annotation, reference line, a window chosen for its story |
+| 67–74 | A first plot, in code: Figure and Axes, every hour, the histogram, its range and bin width, the bin width live, saving |
+| 75–84 | Beyond two axes: heatmap, surface, contour lines, ten years in 3D and as ten panels, four variables in a 3D scatter, still and turning, parallel coordinates, the animation of the months |
+| 85–88 | Checklist, every choice in the two figures, recap |
 
 | Skip | Slides |
 |--|--|
-| The legend and a legend without samples | 11–12 |
 | Label size, coordinate system, aspect ratio | 14–16 |
-| Ordered categories, stacked bars, bars in three and two dimensions | 23–26 |
-| Lines or fill | 32 |
-| Hours below 0 °C per year as bars | 69 |
-| Linear or Logarithmic, Live | 72 |
-| One style for all figures | 73 |
+| The pair plot | 38 |
+| Many points: hexagonal bins | 40 |
 
 - **Do not cut** slides 3–5 (the question and the two figures that answer
-  it) or slides 59–66, which make the same figures in code. The seminar
+  it) or slides 68–73, which draw the opening figures in code. The seminar
   draws the same file with the same calls: `subplots`, `plot`, `hist`,
   `savefig`, and the module `weather.py`, in a script `scripts/figures.py`.
-- **Do not cut** slide 80 (Every Choice in the Two Figures), the closing
-  slide: it lists every choice of the two figures with the number behind it.
-- **Do not cut** slides 21–22 (bars from zero), 31 (the boxplot) or 38
-  (error bars and the standard error). Lectures 9 and 10 build on them.
+- **Do not cut** slide 87 (Every Choice in the Two Figures), the closing
+  slide: both figures, with the choice behind each part of them.
+- **Do not cut** slides 21–22 (bars from zero), 32 (the boxplot and the
+  median) or 44 (error bars and the standard error): Lecture 8 returns to
+  the histogram, the spread of the values and the standard error.
 - **Every figure fills the slide**: a single plot beside its caption, a
-  figure of several panels under it. Slides 60–66 show each script with the
-  figure it makes; nothing is opened beside the deck. Slide 61 builds
-  `weather.hours` from `temps` in one click, and slide 64 is the reasoning
-  between the default histogram and the chosen one.
-- **Slides 37, 48, 52 and 57** are pairs drawn from the weather log, and
-  slides 12 and 23 pairs of other data: the mistake on the left, the repair
-  on the right.
+  figure of several panels under it. A caption is one line or a few short
+  fragments; the explanations, the code of the advanced figures and the
+  extra numbers are in the speaker notes (`Say:`, `If asked:`). Slides
+  69–73 show each script with the figure it makes; nothing is opened beside
+  the deck. Slide 71 is the reasoning between the default histogram and
+  the chosen one.
+- **Slides 43, 55, 60 and 66** are pairs drawn from the weather log, the
+  mistake on the left, the repair on the right; most pairs of the gallery
+  work the same way. **Slides 79 and 80** are a pair too: the ten years
+  stacked in 3D hide the gap of July 2019, the ten flat panels show it.
 - **Slides 12, 21 and 23** show the mistake first and the repair or the
-  explanation on the next click, and slide 6 the four numbers first and the
-  four plots on the click: ask the room before clicking. Slide 64 shows the
-  three bin widths on the first click and the conclusion on the second. Ask
-  the question of slide 3 for a show of hands; slide 5 answers it.
+  explanation on the next click, and slide 6 the numbers first and the four
+  plots on the click: ask the room before clicking. Slide 71 shows the three
+  bin widths on the first click and the conclusion on the second. Ask the
+  question of slide 3 for a show of hands; slide 5 answers it, the counts
+  written on the figure.
 - **Slide 10** (The Parts of a Figure) builds the histogram of the hours up
   in five clicks.
-- **Slides 65 and 72** run Python in the browser, the figure beside the code.
-  The first run downloads the Python runtime, so run each once before the
-  lecture.
-- **Slides 60, 62, 63, 66, 69–71 and 73** highlight the code in steps;
-  slide 68 goes from the function to its output in one click.
-- **Slide 77** is an animation: it plays by itself, one month every 0.66 s.
-- **Slides 82–101** (For the Curious) are for time left at the end or for
-  students afterwards: 83–92 more chart types, 93–101 figures of three to
-  five variables. Slides 95 and 96 are a pair: the ten years stacked in 3D
-  hide the gap of July 2019, the ten flat panels show it. Slide 99 turns by
-  itself, once every 3 s.
+- **Slides 22, 41, 53 and 72 are interactive figures** that work offline:
+  drag where the bar axis starts (22), the smoothing window (41), switch the
+  palette of the day-and-hour grid (53), drag the bin width from 10 °C to
+  0.05 °C and press "0 to 2 °C" (72). Use them on the projected window, not
+  in the presenter view.
+- **Slide 57** runs Python in the browser, the figure beside the code. The
+  first run downloads the Python runtime, so run it once before the lecture.
+- **Slides 69, 70 and 73** highlight the code in steps.
+- **Slide 82** turns by itself, once every 3 s, and **slide 84** is an
+  animation that plays by itself, one month every 0.66 s.
+- **Slides 89–94** (For the Curious) are for time left at the end or for
+  students afterwards. **Slides 95–103** (In Matplotlib) are the code of the
+  weather-log figures, for after the lecture: slides 96 and 98 go from the
+  function to its output in one click, the others highlight their code in
+  steps.
 
 Before the session, start the local copy of the slides: `node
 scripts/serve-local.mjs 8123`, then open
@@ -158,7 +175,7 @@ scripts/serve-local.mjs 8123`, then open
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 102–114: twelve quiz slides for students to try afterwards. The same
+slides 105–116: twelve quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. Four tables give the same mean of x, the same mean of y, the same closest
@@ -222,7 +239,7 @@ questions, with their answers:
 
 [Seminar 7 · Visualisation](../seminars/seminar_07.md) works on the weather
 project. Every student starts from today's folder, adds Matplotlib to its
-environment, adds the function `group` of slide 68 to the module
+environment, adds the function `group` (slide 98) to the module
 `weather.py`, and writes one script, `scripts/figures.py`, that draws five
 figures of `weather.csv` into `results/` from lists: ten years day by day, the year's cycle, the day's cycle, the
 yearly means and a histogram, and draws them all again with one line.
@@ -244,25 +261,28 @@ can be read with
 |--|--|--|
 | The Pendulum Plot and the Mass Counts | Replaced by slide 3, The Mean Temperature of Ten Years | The opening is a question about the room's own number; slide 5 answers it |
 | Learning Objectives; What a Figure Is For | Parked (5 Nov 2026) | Preambles without data (lecturer: "Some preambles?"); the deck opens on its question, as Lectures 4 to 6 do |
-| Plot the Pendulum Table; Add Points, Labels and Units | Replaced by slides 60–62 | Every hour of the weather log, then at its time with `datetime`, with labels and units |
-| A Histogram Counts Values in Bins; The Range and the Bin Width; The Mass Column as a Histogram | Rebuilt on the temperatures, slides 63, 64 and 66 | The bin widths are 10, 1 and 0.05 °C; the last one shows the rounding of the station |
-| A Peak on a Flat Background, Live | Replaced by slide 65, Choose the Bin Width, Live | It used NumPy; `random.gauss` draws cold and warm hours in tenths, and the figure is drawn beside the code |
-| A Minimal Bar Chart | Replaced by slide 69 | The hours below 0 °C per year: a count, with a true zero |
-| Points and a Formula Curve | Replaced by slide 70 | The yearly means against the mean of all hours: two layers and a legend |
-| Counts with Error Bars | Replaced by slide 71 | The monthly means with an annotation and a title that states the finding |
+| Plot the Pendulum Table; Add Points, Labels and Units | Replaced by slide 69, and slides 96–97 of In Matplotlib | Every hour of the weather log, then at its time with `datetime`, with labels and units |
+| A Histogram Counts Values in Bins; The Range and the Bin Width; The Mass Column as a Histogram | Rebuilt on the temperatures, slides 70, 71 and 73 | The bin widths are 10, 1 and 0.05 °C; the last one shows the rounding of the station |
+| A Peak on a Flat Background, Live | Replaced by slide 72, Choose the Bin Width, Live | It used NumPy; `random.gauss` draws cold and warm hours in tenths, and the figure is drawn beside the code |
+| A Minimal Bar Chart | Replaced by slide 99 | The hours below 0 °C per year: a count, with a true zero |
+| Points and a Formula Curve | Replaced by slide 100 | The yearly means against the mean of all hours: two layers and a legend |
+| Counts with Error Bars | Replaced by slide 101 | The monthly means with an annotation and a title that states the finding |
 | Legends for Colour, Size and Shape; The Treemap; Trend and Seasonal Cycle | Parked (5 Nov 2026) | On the skip list already; out to keep the deck in its time band after *Beyond Two Axes* came in |
 | The Ridgeline Plot; Temperatures as a Heatmap | Parked (7 Nov 2026) | Synthetic examples that a figure of the weather log now covers (the month histograms, the heatmap of day and hour); four good-and-bad pairs came in |
 | The Dot Plot (five films) | Parked (8 Nov 2026) | Replaced by the life expectancy of 26 countries in three steps, alphabetical, sorted bars, sorted dots (slides 27–29): the lecturer asked for the busier dot plot that went from bad to good |
-| Bin widths of ages, the empirical CDF, bubble chart, overlapping points, hexagonal bins, correlation heatmap, pair plot, slopegraph, square-root scale, a reference line (genes); the surface, the 3D scatter and the LHCb 2D histogram | Moved to For the Curious (9 Nov 2026) | Students found the lecture too complicated: new datasets, statistics (*r*, √*N*) and particle physics left the main path, which now estimates 131 min |
+| Bin widths of ages, the empirical CDF, bubble chart, overlapping points, hexagonal bins, correlation heatmap, pair plot, slopegraph, square-root scale, a reference line (genes); the surface, the 3D scatter and the LHCb 2D histogram | Moved to For the Curious (9 Nov 2026) | Students found the lecture too complicated: new datasets, statistics (*r*, √*N*) and particle physics left the main path, which then estimated 131 min |
+| The code of the hands-on figures: `weather.hours`, `weather.group`, the frost bars, the yearly and the monthly means, one style for all figures | Moved to In Matplotlib, slides 95–103 (9 Nov 2026, evening) | The lecture teaches the idea, the seminar the tool; the code stays as a reference for after the lecture |
+| Visualising Uncertainty | Split into slides 44 (error bars, the standard error computed) and 45 (a band or many lines) (9 Nov 2026, night) | One idea per slide |
+| Bin widths of ages, bubble chart, pair plot, overlapping points, hexagonal bins, slopegraph, a reference line; the surface, the 3D scatter, the scatter turning; Linear or Logarithmic, Live | Back on the main path, slides 30, 37–40, 42, 65, 77, 81, 82 and 57 (9 Nov 2026, night) | The lecturer asked for laconic slides, one line or a few fragments each; these figures, with no new statistics, keep the lecture at its two hours. For the Curious keeps the statistics and the LHCb file |
 | Roadmap for this Lecture | Removed | It repeated the learning objectives |
-| Q–Q Plots | Removed | It needs the Normal distribution and quantiles, which Lecture 9 teaches |
-| Quantile Dot Plot | Removed | It needs probability, which Lecture 9 teaches |
-| The Seminar Dataset | Removed | The histogram of `weather.csv` is made on slides 63–66 |
+| Q–Q Plots | Removed | It needs the Normal distribution and quantiles, not taught before Lecture 8 |
+| Quantile Dot Plot | Removed | It needs probability, which Lecture 8 begins |
+| The Seminar Dataset | Removed | The histogram of `weather.csv` is made on slides 70–73 |
 | Practice Exercise | Removed | The room builds the same figures in the seminar |
-| The Mental Model | Replaced by slide 59, in the code section | Matplotlib is introduced before it is used |
-| Scatter with a Fit | Replaced, now by slide 70 | The room has no fitting yet |
-| Histogram + Density Overlay | Replaced, now by slide 66 | It used SciPy |
-| Further Reading | Parked; the list is below | Slide 80 answers the opening slide in its place |
+| The Mental Model | Replaced by slide 68, in the code section | Matplotlib is introduced before it is used |
+| Scatter with a Fit | Replaced, now by slide 100 | The room has no fitting yet |
+| Histogram + Density Overlay | Replaced, now by slide 73 | It used SciPy |
+| Further Reading | Parked; the list is below | Slide 87 answers the opening slide in its place |
 
 ## Further reading
 
