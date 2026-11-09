@@ -2,18 +2,22 @@
 
 # Glossary
 
-The words of the lectures, A–Z, each with the lecture and the slide where it first appears.
+The words of the lectures, A–Z, each with the lecture and the slide where it first appears, and the later lectures that explain it again.
 
 ## A
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| accuracy | The share $p$ of $N$ evenings with $\hat{y} = y$, quoted ± $\sqrt{p\,(1 - p)/N}$. | [Lecture 10, slide 6](lectures/lecture_10.md) |
 | algorithm | A finite list of exact instructions that turns an input into an output. | [Lecture 3, slide 6](lectures/lecture_3.md) |
 | Anscombe's quartet | Four tables with the same means and line, told apart only by a plot. | [Lecture 7, slide 6](lectures/lecture_7.md) |
+| argparse | A module that gives a script's arguments names, a `--help` text and checks. | [Lecture 12, slide 70](lectures/lecture_12.md) |
 | argument | What the program works on, such as a path; it comes after the options. | [Lecture 4, slide 13](lectures/lecture_4.md) |
 | artist | Anything drawn: points, a line, bars, a text; each call on `ax` adds one. | [Lecture 7, slide 68](lectures/lecture_7.md) |
 | ASCII | American Standard Code for Information Interchange: the 7-bit table of 128 characters. | [Lecture 3, slide 56](lectures/lecture_3.md) |
 | aspect ratio | The height of a plot to its width; slopes are compared best near 45°. | [Lecture 7, slide 16](lectures/lecture_7.md) |
+| `assert` | Checks a statement: silent when true; when false, the program stops with `AssertionError`. | [Lecture 12, slide 21](lectures/lecture_12.md) |
+| attention | A weighted average of the earlier words' vectors; softmax turns their scores into the weights. | [Lecture 11, slide 41](lectures/lecture_11.md) |
 | automation | Every step written as a program, not done by hand, so it repeats exactly. | [Lecture 1, slide 8](lectures/lecture_1.md) |
 | `awk` | Runs a small program on every line; prints the lines where a condition is true. | [Lecture 4, slide 28](lectures/lecture_4.md) |
 | Axes | One plot on a Figure, with two axes; calls on `ax` draw into it. | [Lecture 7, slide 68](lectures/lecture_7.md) |
@@ -22,9 +26,14 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| backpropagation | The error at the output, passed back link by link by the chain rule. | [Lecture 11, slide 14](lectures/lecture_11.md) |
+| baseline | A rule that ignores the inputs, "never frost"; its 66.3 % is the number to beat. | [Lecture 10, slide 8](lectures/lecture_10.md) |
+| Bayes' rule | Turns a conditional probability around: $P(B \mid A) = P(A \mid B)\,P(B)/P(A)$. | [Lecture 8, slide 74](lectures/lecture_8.md) |
+| bias | The number $b$ added to $w_1 x_1 + w_2 x_2$; it shifts the line $z = 0$. | [Lecture 10, slide 12](lectures/lecture_10.md) |
 | bin width | The width of each bin: too wide hides the shape, too narrow shows the rounding. | [Lecture 7, slide 30](lectures/lecture_7.md) |
 | binary format | Numbers of fixed size, readable only by a program told their types and order. | [Lecture 2, slide 27](lectures/lecture_2.md) |
 | bit | A binary digit, 0 or 1, held by one switch, off or on. | [Lecture 3, slide 17](lectures/lecture_3.md) |
+| blind analysis | Hiding where a signal would be until the selection and the fit are fixed. | [Lecture 12, slide 62](lectures/lecture_12.md) |
 | block | The lines below a line ending in `:`, indented by 4 spaces. | [Lecture 5, slide 27](lectures/lecture_5.md) |
 | boxplot | A box around the middle half of the values, split at the median. | [Lecture 7, slide 32](lectures/lecture_7.md) |
 | branch | A separate line of commits with a name, such as `main`. | [Lecture 6, slide 17](lectures/lecture_6.md) |
@@ -38,17 +47,35 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | CC BY-SA | A share-alike licence: credit the source; anything made from the data stays equally open. | [Lecture 2, slide 34](lectures/lecture_2.md) |
 | CC0 | A licence with no conditions: the data may be reused, changed and republished. | [Lecture 2, slide 34](lectures/lecture_2.md) |
 | `cd` | Changes the working directory: `cd data` goes into `data`, `cd ..` one folder up. | [Lecture 3, slide 76](lectures/lecture_3.md) |
+| central limit theorem | Means of many independent values come out Gaussian, whatever the values look like. | [Lecture 8, slide 40](lectures/lecture_8.md) |
 | CERN | The European Organization for Nuclear Research, near Geneva; it studies what matter is made of. | [Lecture 1, slide 56](lectures/lecture_1.md) |
+| chain rule | For a function of a function, multiply the slopes of the links: $df/dt = df/da \cdot da/dt$. | [Lecture 11, slide 13](lectures/lecture_11.md) |
+| chat | One text, continued token by token: the provider's instructions, the questions, the replies. | [Lecture 11, slide 53](lectures/lecture_11.md) |
 | checksum | A short number computed from every byte: the same bytes give the same digits. | [Lecture 4, slide 55](lectures/lecture_4.md) |
+| `class` | The type of an object; `Perceptron()` makes one and runs its `__init__` once. | [Lecture 10, slide 55](lectures/lecture_10.md); also [Lecture 12, slide 15](lectures/lecture_12.md) |
+| classifier | A rule that turns the inputs into a class, $\hat{y}$; right when $\hat{y} = y$. | [Lecture 10, slide 6](lectures/lecture_10.md) |
+| closed form | A formula for the best parameters, from the derivatives set to zero and solved. | [Lecture 9, slide 24](lectures/lecture_9.md) |
 | colour-vision deficiency | Seeing colours differently, most often red and green alike: about 8 % of men. | [Lecture 7, slide 50](lectures/lecture_7.md) |
 | commit | A recorded version: every staged file, the commit before it, who, when and why. | [Lecture 6, slide 12](lectures/lecture_6.md) |
+| completeness | The check that every cell holds a value; −999 counts as missing. | [Lecture 8, slide 11](lectures/lecture_8.md) |
 | `conda` | A package manager and an environment manager: installs into one environment at a time. | [Lecture 4, slide 48](lectures/lecture_4.md) |
 | `conda activate` | Puts an environment's folder first on `PATH` and its name in the prompt. | [Lecture 4, slide 49](lectures/lecture_4.md) |
+| `conda env export --from-history` | Writes down what was asked for, not every package that came with it. | [Lecture 12, slide 41](lectures/lecture_12.md) |
+| conditional probability | The share of the cases with $B$ in which $A$ happened: $P(A \mid B) = n(A \text{ and } B)/n(B)$. | [Lecture 8, slide 29](lectures/lecture_8.md) |
 | conflict | Two changes to the same line: Git shows both, and a person decides. | [Lecture 6, slide 6](lectures/lecture_6.md) |
+| consistency | The check of the time steps: every row exactly one hour after the one before. | [Lecture 8, slide 11](lectures/lecture_8.md) |
+| container | A small Linux holding the environment and the project, run anywhere by Docker. | [Lecture 12, slide 74](lectures/lecture_12.md) |
+| context | The earlier words a model sees when it predicts the next one. | [Lecture 11, slide 29](lectures/lecture_11.md) |
 | continuous | Measured quantities that can take any value in a range: −4.4 °C, 2.5 m/s. | [Lecture 2, slide 22](lectures/lecture_2.md) |
+| continuous integration | A server that rebuilds after every push, in a fresh clone and environment. | [Lecture 12, slide 73](lectures/lecture_12.md) |
+| convergence theorem | On linearly separable points, Rosenblatt's rule stops after a finite number of updates. | [Lecture 10, slide 25](lectures/lecture_10.md) |
+| correlation coefficient $r$ | How closely two columns follow a straight line, from −1 to +1: $r = s_{xy}/(s_x\, s_y)$. | [Lecture 8, slide 44](lectures/lecture_8.md) |
+| cosine | The dot product ÷ the lengths: 1 for the same direction, 0 for nothing in common. | [Lecture 11, slide 32](lectures/lecture_11.md) |
+| covariance | How two columns move together: $s_{xy} = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})(y_i - \bar{y})$. | [Lecture 8, slide 43](lectures/lecture_8.md) |
 | `cp` | Copies a file into a folder, replacing one of the same name without asking. | [Lecture 3, slide 77](lectures/lecture_3.md) |
-| CSV | A plain-text table: one line per row, the values separated by commas. | [Lecture 1, slide 9](lectures/lecture_1.md) |
-| CSV | A plain-text table: one line per row, the values separated by commas. | [Lecture 2, slide 27](lectures/lecture_2.md) |
+| cross-entropy | The loss $-\frac{1}{N} \ln L$, the mean of $-\ln P(y_i)$; smallest where $L$ is largest. | [Lecture 10, slide 34](lectures/lecture_10.md) |
+| CSV | A plain-text table: one line per row, the values separated by commas. | [Lecture 1, slide 9](lectures/lecture_1.md); also [Lecture 2, slide 27](lectures/lecture_2.md) |
+| cut | The $\hat{y}$ above which "frost" is said; it trades missed frosts against false alarms. | [Lecture 10, slide 53](lectures/lecture_10.md) |
 
 ## D
 
@@ -58,19 +85,24 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | data lifecycle | The six stages data passes through: collect, store, clean, analyse, decide, share and archive. | [Lecture 2, slide 8](lectures/lecture_2.md) |
 | data-ink ratio | The ink that shows data ÷ all the ink of the figure. | [Lecture 7, slide 48](lectures/lecture_7.md) |
 | `data/processed/` | The folder of cleaned copies written by a script; safe to delete and rebuild. | [Lecture 1, slide 13](lectures/lecture_1.md) |
-| `data/raw` | Files exactly as received, never edited; changes are made on a copy in `data/processed`. | [Lecture 2, slide 36](lectures/lecture_2.md) |
-| `data/raw/` | The folder of files as received, never edited; they cannot be made again. | [Lecture 1, slide 13](lectures/lecture_1.md) |
-| decimal comma | A comma as the decimal sign, `6,3` for 6.3, in spreadsheets with European settings. | [Lecture 1, slide 11](lectures/lecture_1.md) |
-| decimal comma | A comma as the decimal sign, as in `6,3`; then `;` separates the values. | [Lecture 2, slide 28](lectures/lecture_2.md) |
+| `data/raw/` | The folder of files as received, never edited; they cannot be made again. | [Lecture 1, slide 13](lectures/lecture_1.md); also [Lecture 2, slide 36](lectures/lecture_2.md) |
+| decimal comma | A comma as the decimal sign, `6,3` for 6.3, in spreadsheets with European settings. | [Lecture 1, slide 11](lectures/lecture_1.md); also [Lecture 2, slide 28](lectures/lecture_2.md) |
+| decision boundary | The straight line $z = 0$ in the plane of $x_1$ and $x_2$, where $\hat{y}$ changes. | [Lecture 10, slide 15](lectures/lecture_10.md) |
+| degrees of freedom | The points minus the fitted parameters, ndf = N − k: a right model's expected χ². | [Lecture 9, slide 62](lectures/lecture_9.md) |
 | delete and rebuild | The reproducibility test: delete `data/processed/` and `results/`, rebuild both with one command. | [Lecture 1, slide 28](lectures/lecture_1.md) |
 | density | A smoothed histogram: a small bump for each value, the bumps added up. | [Lecture 7, slide 31](lectures/lecture_7.md) |
+| dependency | A package that another package needs, within a range of versions: pandas needs NumPy. | [Lecture 12, slide 35](lectures/lecture_12.md) |
+| derivative | The slope of a curve at one point: $(S(\mu + h) - S(\mu))/h$ for a very small h. | [Lecture 9, slide 11](lectures/lecture_9.md) |
 | derived value | A value computed from others, such as a daily mean from 24 hourly values. | [Lecture 2, slide 26](lectures/lecture_2.md) |
 | detector | Layers around the collision point, each measuring a different property of the particles. | [Lecture 1, slide 59](lectures/lecture_1.md) |
+| deviation | A value minus the mean, $x_i - \bar{x}$; those above the mean cancel those below. | [Lecture 8, slide 18](lectures/lecture_8.md) |
 | `dict` | A dictionary: pairs `key: value` in curly brackets; a value is found by its key. | [Lecture 5, slide 18](lectures/lecture_5.md) |
 | diff | What a change adds and removes, line by line; `git diff` prints it before `git add`. | [Lecture 6, slide 25](lectures/lecture_6.md) |
 | discrete | Counts in whole numbers, such as visitors or goals; they can be averaged. | [Lecture 2, slide 22](lectures/lecture_2.md) |
 | diverging palette | Two hues for values below and above a midpoint, such as 0 °C. | [Lecture 7, slide 52](lectures/lecture_7.md) |
+| docstring | Text in three quotes under a `def`, saying what the function is for. | [Lecture 12, slide 11](lectures/lecture_12.md) |
 | DOI | A record's identifier, opened at `doi.org/`; it keeps working when the portal moves. | [Lecture 2, slide 33](lectures/lecture_2.md) |
+| dot product | Two vectors' matching entries multiplied and added up: $\mathbf{a} \cdot \mathbf{b} = a_1 b_1 + a_2 b_2 + a_3 b_3 + a_4 b_4$. | [Lecture 11, slide 32](lectures/lecture_11.md) |
 
 ## E
 
@@ -78,31 +110,37 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | --- | --- | --- |
 | efficient work with data & files | Knowing which file is which: the one as received, never edited, apart from cleaned copies. | [Lecture 1, slide 8](lectures/lecture_1.md) |
 | encoding | The table from characters to bytes; UTF-8 is the usual one. | [Lecture 3, slide 55](lectures/lecture_3.md) |
-| environment | A folder with one Python and its packages; one per project. | [Lecture 4, slide 48](lectures/lecture_4.md) |
-| environment | A folder with one Python and the packages installed for it; one per project. | [Lecture 5, slide 55](lectures/lecture_5.md) |
-| `environment.yml` | The file that lists the packages and the versions the code ran on. | [Lecture 1, slide 27](lectures/lecture_1.md) |
-| `environment.yml` | The environment written down; `conda env create -f environment.yml` makes it on another laptop. | [Lecture 4, slide 51](lectures/lecture_4.md) |
-| `environment.yml` | An environment written down: Python and packages with pinned versions, to rebuild it elsewhere. | [Lecture 5, slide 56](lectures/lecture_5.md) |
+| environment | A folder with one Python and its packages; one per project. | [Lecture 4, slide 48](lectures/lecture_4.md); also [Lecture 5, slide 55](lectures/lecture_5.md) |
+| `environment.yml` | The file that lists the packages and the versions the code ran on. | [Lecture 1, slide 27](lectures/lecture_1.md); also [Lecture 4, slide 51](lectures/lecture_4.md), [Lecture 5, slide 56](lectures/lecture_5.md) |
+| epoch | One pass of the learning rule over all the evenings. | [Lecture 10, slide 20](lectures/lecture_10.md) |
+| error propagation | A ± carried through a calculation: a factor scales it; for a difference, $\sigma_{x - y} = \sqrt{\sigma_x^2 + \sigma_y^2}$. | [Lecture 8, slide 77](lectures/lecture_8.md) |
+| event | A statement true or false for each hour: “the hour is below 0 °C”. | [Lecture 8, slide 26](lectures/lecture_8.md) |
 | exit status | The number a program ends with, 0 for success; `$?` holds the last one. | [Lecture 4, slide 63](lectures/lecture_4.md) |
 
 ## F
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| FAIR | Findable, Accessible, Interoperable, Reusable: data a stranger or a program can find and use. | [Lecture 12, slide 59](lectures/lecture_12.md) |
 | Figure | The whole picture in Matplotlib; `fig, ax = plt.subplots()` makes it and one Axes. | [Lecture 7, slide 68](lectures/lecture_7.md) |
 | filter | A program that reads its input and passes on part of it. | [Lecture 4, slide 25](lectures/lecture_4.md) |
-| float | Scientific notation in base 2, in a fixed number of bits; some decimals are rounded. | [Lecture 3, slide 49](lectures/lecture_3.md) |
-| `float` | A number with a point, stored in 64 bits and rounded to about 16 digits. | [Lecture 5, slide 9](lectures/lecture_5.md) |
+| `fit` | A model's method: evenings and labels in, its numbers change. | [Lecture 10, slide 55](lectures/lecture_10.md) |
+| fitting | Finding the parameter values with the smallest miss between the model and the data. | [Lecture 9, slide 5](lectures/lecture_9.md) |
+| float | Scientific notation in base 2, in a fixed number of bits; some decimals are rounded. | [Lecture 3, slide 49](lectures/lecture_3.md); also [Lecture 5, slide 9](lectures/lecture_5.md) |
 | `float()` | Makes a number from a text; stops with `ValueError` if the text is not one. | [Lecture 5, slide 15](lectures/lecture_5.md) |
 | float32 | A float in 32 bits: 1 sign, 8 exponent, 23 mantissa; about 7 digits. | [Lecture 3, slide 50](lectures/lecture_3.md) |
 | `for` | Runs the block below it once for each item: `for t in temps:`. | [Lecture 5, slide 27](lectures/lecture_5.md) |
 | fork | Your own copy of someone else's repository on GitHub; you may push to it. | [Lecture 6, slide 52](lectures/lecture_6.md) |
+| forward pass | Computing the values from the input, layer by layer, up to the loss. | [Lecture 11, slide 12](lectures/lecture_11.md) |
+| fresh clone | A new clone: only the committed files, what a colleague gets from GitHub. | [Lecture 12, slide 54](lectures/lecture_12.md) |
+| fresh environment | An environment made from `environment.yml` alone; it shows what the file forgot. | [Lecture 12, slide 43](lectures/lecture_12.md) |
 | function | A step written once with `def`, called by its name; `return` hands the result back. | [Lecture 5, slide 38](lectures/lecture_5.md) |
 
 ## G
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| Gaussian | A curve highest at its centre $\mu$, falling off symmetrically; $\sigma$ is its width. | [Lecture 8, slide 35](lectures/lecture_8.md) |
 | `git add` | Copies a file, as it is saved now, into the staging area. | [Lecture 6, slide 12](lectures/lecture_6.md) |
 | `git clone` | Copies a remote to the laptop: every commit and every committed file. | [Lecture 6, slide 43](lectures/lecture_6.md) |
 | `git commit` | Keeps everything staged as one version, a commit; `-m` gives its message. | [Lecture 6, slide 12](lectures/lecture_6.md) |
@@ -115,6 +153,7 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | `git revert` | Adds a commit with the reverse change of another; safe for pushed commits. | [Lecture 6, slide 33](lectures/lecture_6.md) |
 | `git status` | Says which files are untracked (no version yet), changed or staged; changes nothing. | [Lecture 6, slide 15](lectures/lecture_6.md) |
 | `.gitignore` | A committed file of patterns, one per line, naming the files Git leaves out. | [Lecture 6, slide 22](lectures/lecture_6.md) |
+| gradient descent | Following the derivative downhill a step at a time: $\theta \leftarrow \theta - \eta\,dS/d\theta$. | [Lecture 9, slide 45](lectures/lecture_9.md) |
 | `grep` | Keeps the lines that contain a text; `-c` counts them, `-v` keeps the others. | [Lecture 4, slide 29](lectures/lecture_4.md) |
 
 ## H
@@ -124,16 +163,20 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | hash | A checksum that misses no change, such as SHA-256: 64 hex digits. | [Lecture 3, slide 83](lectures/lecture_3.md) |
 | heatmap | Two positions and a colour: a grid of cells, each coloured by its value. | [Lecture 7, slide 76](lectures/lecture_7.md) |
 | hexadecimal | Base 16, digits 0 to 9 and A to F, four bits per digit. | [Lecture 3, slide 36](lectures/lecture_3.md) |
+| hidden layer | The layer between inputs and output; it gives the output neuron new coordinates. | [Lecture 11, slide 6](lectures/lecture_11.md) |
 | histogram | Values counted in bins of equal width, one bar per bin; drawn by `ax.hist`. | [Lecture 7, slide 70](lectures/lecture_7.md) |
 
 ## I
 
 | Term | Meaning | First on |
 | --- | --- | --- |
-| id | A commit's name: a checksum of all it keeps, the same on every copy. | [Lecture 6, slide 18](lectures/lecture_6.md) |
+| id | A commit's name: a checksum of all it keeps, the same on every copy. | [Lecture 6, slide 18](lectures/lecture_6.md); also [Lecture 11, slide 21](lectures/lecture_11.md) |
 | `if` | Chooses a block: conditions are tried from the top; the first `True` one runs. | [Lecture 5, slide 30](lectures/lecture_5.md) |
 | `import` | Finds a module, runs it once and gives it a name. | [Lecture 5, slide 45](lectures/lecture_5.md) |
+| independent | When $B$ says nothing about $A$: $P(A \mid B) = P(A)$, so $P(A \text{ and } B) = P(A)\,P(B)$. | [Lecture 8, slide 32](lectures/lecture_8.md) |
 | information | What the symbols say once their kind, source, row and unit are known. | [Lecture 2, slide 7](lectures/lecture_2.md) |
+| instruction tuning | More training on instructions with good answers and on people's choices between two answers. | [Lecture 11, slide 53](lectures/lecture_11.md) |
+| intercept | The value of the line at x = 0: b̂ = 7.41 °C, the line in 2016. | [Lecture 9, slide 32](lectures/lecture_9.md) |
 | interpreter | The program `python`, which carries out the lines one by one from the top. | [Lecture 5, slide 6](lectures/lecture_5.md) |
 
 ## J
@@ -152,11 +195,20 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| label | The class that happened, $y$: 1 if below 0 °C at 06:00, else 0. | [Lecture 10, slide 6](lectures/lecture_10.md) |
+| language model | Gives every possible next word a probability; the simplest one counts word pairs. | [Lecture 11, slide 20](lectures/lecture_11.md) |
+| least squares | Choosing the values with the smallest sum of squared misses; for a constant, the mean. | [Lecture 9, slide 13](lectures/lecture_9.md) |
+| Levenberg–Marquardt | The minimiser in fitting programs: short downhill steps far away, Newton steps near the bottom. | [Lecture 9, slide 84](lectures/lecture_9.md) |
 | LF, CRLF | Line breaks: `0A` (LF) on macOS and Linux, `0D 0A` (CRLF) on Windows. | [Lecture 3, slide 62](lectures/lecture_3.md) |
 | LHC | The Large Hadron Collider: CERN's 27 km ring, 100 m underground, where protons collide. | [Lecture 1, slide 57](lectures/lecture_1.md) |
 | library | Modules someone else wrote and tested, such as `statistics` and `math`, used with `import`. | [Lecture 5, slide 47](lectures/lecture_5.md) |
+| likelihood | The densities of the values multiplied, as a function of the parameters: $L(\mu) = \prod_i p(y_i \mid \mu)$. | [Lecture 9, slide 19](lectures/lecture_9.md); also [Lecture 10, slide 34](lectures/lecture_10.md) |
+| linearly separable | Some line has all of class 1 on one side, class 0 on the other. | [Lecture 10, slide 25](lectures/lecture_10.md) |
 | `list` | Values in order, in square brackets; each has a position, counted from 0. | [Lecture 5, slide 13](lectures/lecture_5.md) |
+| LLM | A large language model: next-word prediction by a network, learned from a very large text. | [Lecture 11, slide 48](lectures/lecture_11.md) |
 | logarithmic scale | An axis with 1, 10, 100, 1000 equally far apart; it has no zero. | [Lecture 7, slide 56](lectures/lecture_7.md) |
+| logistic neuron | A neuron with the sigmoid, $\hat{y}$ read as $P(\text{frost} \mid x)$; statisticians call it logistic regression. | [Lecture 10, slide 32](lectures/lecture_10.md) |
+| long-run mean | What very many years of the same climate would average to. | [Lecture 8, slide 3](lectures/lecture_8.md) |
 | `ls` | Lists what is in the working directory, or in a named folder: `ls backup`. | [Lecture 3, slide 76](lectures/lecture_3.md) |
 
 ## M
@@ -164,14 +216,19 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | Term | Meaning | First on |
 | --- | --- | --- |
 | magic number | The first bytes of a file, saying what it is: `%PDF` for a PDF. | [Lecture 3, slide 67](lectures/lecture_3.md) |
+| Make | Makes again only the files that are missing or older than their inputs. | [Lecture 12, slide 72](lectures/lecture_12.md) |
 | mark | A value the logger writes where there was no reading: −999 in `temp_c`. | [Lecture 4, slide 27](lectures/lecture_4.md) |
 | Markdown | Plain text with a few signs for structure: `#` for headings, `-` for lists. | [Lecture 2, slide 47](lectures/lecture_2.md) |
-| median | The middle value: half of the values lie below it, half above. | [Lecture 7, slide 32](lectures/lecture_7.md) |
+| maximum likelihood | Choosing the parameter values that make the likelihood L largest. | [Lecture 9, slide 19](lectures/lecture_9.md) |
+| mean | The sum of the values divided by their count: $\bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i$. | [Lecture 8, slide 17](lectures/lecture_8.md) |
+| median | The middle value: half of the values lie below it, half above. | [Lecture 7, slide 32](lectures/lecture_7.md); also [Lecture 8, slide 22](lectures/lecture_8.md) |
 | merge | Joining two versions from one start; changes to different lines are joined without help. | [Lecture 6, slide 6](lectures/lecture_6.md) |
 | method | A function of an object's type, written after a dot: `line.split(",")`. | [Lecture 5, slide 16](lectures/lecture_5.md) |
 | middle of each day | The value halfway between a day's lowest and highest reading: a common daily mean. | [Lecture 1, slide 6](lectures/lecture_1.md) |
+| midrange | Halfway between the lowest and the highest value: `(min(values) + max(values)) / 2`. | [Lecture 12, slide 65](lectures/lecture_12.md) |
 | missing value | A cell with no value, marked by `-999`, `9999`, `NA` or left empty. | [Lecture 2, slide 17](lectures/lecture_2.md) |
 | `mkdir` | Makes a folder; prints nothing when it works. | [Lecture 3, slide 77](lectures/lecture_3.md) |
+| model | A formula with numbers left open, its parameters; the data set them. | [Lecture 9, slide 4](lectures/lecture_9.md); also [Lecture 12, slide 14](lectures/lecture_12.md) |
 | module | A `.py` file of functions that scripts import, such as `weather.py`. | [Lecture 5, slide 43](lectures/lecture_5.md) |
 | mojibake | Garbled text: the right bytes read by the wrong table, `ą` shown as `Ä…`. | [Lecture 3, slide 61](lectures/lecture_3.md) |
 | `mv` | Moves a file; a new name in the same folder renames it. | [Lecture 3, slide 77](lectures/lecture_3.md) |
@@ -180,7 +237,10 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| network | Neurons in layers: the outputs of one layer are the inputs of the next. | [Lecture 11, slide 6](lectures/lecture_11.md) |
+| neuron | A weighted sum of the inputs plus a bias, $z$, passed through a step. | [Lecture 10, slide 11](lectures/lecture_10.md) |
 | nominal | Categories with no order, such as cities or postcodes: counted, not averaged. | [Lecture 2, slide 22](lectures/lecture_2.md) |
+| normal equations | Both derivatives of χ² set to zero: two equations for a and b. | [Lecture 9, slide 26](lectures/lecture_9.md) |
 
 ## O
 
@@ -189,24 +249,36 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | object | Every value in Python is one; it has a type, a value and methods. | [Lecture 5, slide 16](lectures/lecture_5.md) |
 | open data | Data published so that anyone can check and reuse it, as CERN does. | [Lecture 1, slide 26](lectures/lecture_1.md) |
 | option | A dash and a letter that tell the program how to work: `-n 2`. | [Lecture 4, slide 13](lectures/lecture_4.md) |
-| ordinal | Categories with an order, such as grades from low to high: ranked, not averaged. | [Lecture 2, slide 22](lectures/lecture_2.md) |
-| ordinal | Categories with an order of their own, such as age groups; not sorted by value. | [Lecture 7, slide 23](lectures/lecture_7.md) |
+| ordinal | Categories with an order, such as grades from low to high: ranked, not averaged. | [Lecture 2, slide 22](lectures/lecture_2.md); also [Lecture 7, slide 23](lectures/lecture_7.md) |
+| overfitting | Fitting the noise: too many parameters, a curve through every point, a wild forecast. | [Lecture 9, slide 69](lectures/lecture_9.md) |
 | overflow | A result too large for a fixed-width integer: it wraps around, with no error. | [Lecture 3, slide 48](lectures/lecture_3.md) |
 
 ## P
 
 | Term | Meaning | First on |
 | --- | --- | --- |
-| package | Files with a name and a version, fetched from a repository such as conda-forge. | [Lecture 4, slide 46](lectures/lecture_4.md) |
-| package | A folder of modules, installed together by a package manager: `matplotlib`, `numpy`. | [Lecture 5, slide 49](lectures/lecture_5.md) |
+| p-value | The chance of a χ² this large or larger, if model and σ are right. | [Lecture 9, slide 85](lectures/lecture_9.md) |
+| package | Files with a name and a version, fetched from a repository such as conda-forge. | [Lecture 4, slide 46](lectures/lecture_4.md); also [Lecture 5, slide 49](lectures/lecture_5.md) |
 | package manager | A program that installs a package and its dependencies by name: `brew`, `winget`, `conda`. | [Lecture 4, slide 47](lectures/lecture_4.md) |
-| parameter | The named input of a function: `line` in `def temp_of(line):`. | [Lecture 5, slide 38](lectures/lecture_5.md) |
+| parameter | The named input of a function: `line` in `def temp_of(line):`. | [Lecture 5, slide 38](lectures/lecture_5.md); also [Lecture 9, slide 4](lectures/lecture_9.md) |
 | parametrisation | Describing a thing by a set of numbers: a place by latitude and longitude. | [Lecture 2, slide 21](lectures/lecture_2.md) |
+| partial derivative | The derivative when one parameter moves and the others stay: $\partial\chi^2/\partial a$. | [Lecture 9, slide 25](lectures/lecture_9.md) |
 | `PATH` | The folders the shell searches for a program, in order; the first found runs. | [Lecture 4, slide 45](lectures/lecture_4.md) |
-| pipe | In `A \| B`, the standard output of `A` becomes the standard input of `B`. | [Lecture 4, slide 24](lectures/lecture_4.md) |
+| percentile | The value below which a given share of the values lies: 50 % for the median. | [Lecture 8, slide 24](lectures/lecture_8.md) |
+| perceptron | Rosenblatt's neuron of 1958, with the step: $\hat{y} = 1$ if $z > 0$, else 0. | [Lecture 10, slide 12](lectures/lecture_10.md) |
+| pin | One version only, such as `pandas=2.3.3`: no new release gets in. | [Lecture 12, slide 39](lectures/lecture_12.md) |
+| pipe | In `A | B`, the standard output of `A` becomes the standard input of `B`. | [Lecture 4, slide 24](lectures/lecture_4.md) |
 | plain text | A file readable by eye that opens in any editor and any language. | [Lecture 1, slide 8](lectures/lecture_1.md) |
+| plateau | A flat stretch of the loss that can stop gradient descent before the lowest point. | [Lecture 11, slide 19](lectures/lecture_11.md) |
+| `predict` | A model's method: an evening's inputs in, 0 or 1 out. | [Lecture 10, slide 55](lectures/lecture_10.md) |
+| pretraining | Gradient descent on the mean $-\ln p$ of each next token, over a very large text. | [Lecture 11, slide 51](lectures/lecture_11.md) |
+| probability | The share of cases in which an event $A$ happened: $P(A) = n(A)/N$. | [Lecture 8, slide 26](lectures/lecture_8.md) |
+| probability density | Probability per unit of the value: 0.47 per °C, so about 0.047 in 0.1 °C. | [Lecture 9, slide 18](lectures/lecture_9.md) |
+| prompt | The text you write; the reply is the likely text after it. | [Lecture 11, slide 55](lectures/lecture_11.md) |
 | provenance | Where data came from: source, licence, date, files, and what was done to it. | [Lecture 2, slide 35](lectures/lecture_2.md) |
+| pull | A miss in units of σ, $(y_i - f(x_i))/\sigma$; χ² is the sum of their squares. | [Lecture 9, slide 21](lectures/lecture_9.md) |
 | pull request | A request for the owner to take a branch in, reviewed on GitHub. | [Lecture 6, slide 55](lectures/lecture_6.md) |
+| pytest | A test runner, a package; its exit status is 0 only when every test passed. | [Lecture 12, slide 32](lectures/lecture_12.md) |
 
 ## Q
 
@@ -218,50 +290,71 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| range | Several versions allowed, such as `pandas=2.3`: 2.3.0, 2.3.1, …; it follows new releases. | [Lecture 12, slide 39](lectures/lecture_12.md) |
 | raster | A picture stored as pixels, `.png`: inches × `dpi` pixels on each side. | [Lecture 7, slide 74](lectures/lecture_7.md) |
-| `README.md` | The file that says what the project is and how to rebuild it. | [Lecture 1, slide 27](lectures/lecture_1.md) |
-| `README.md` | The note beside the data: what is where, source, licence, units and every edit. | [Lecture 2, slide 36](lectures/lecture_2.md) |
+| `README.md` | The file that says what the project is and how to rebuild it. | [Lecture 1, slide 27](lectures/lecture_1.md); also [Lecture 2, slide 36](lectures/lecture_2.md) |
 | `rebuild.sh` | The script that rebuilds `data/processed/` and `results/` with one command. | [Lecture 1, slide 27](lectures/lecture_1.md) |
+| recipe | The files written by hand, in Git, that make every result from `data/raw`. | [Lecture 12, slide 7](lectures/lecture_12.md) |
 | record | One dataset in a portal's catalogue, with a stable address, licence, files and description. | [Lecture 2, slide 32](lectures/lecture_2.md) |
 | regular expression | A text with signs in it that describe many texts; regex for short. | [Lecture 4, slide 32](lectures/lecture_4.md) |
 | remote | The same repository on another computer, such as GitHub; usually named `origin`. | [Lecture 6, slide 36](lectures/lecture_6.md) |
 | repository | The project folder together with its `.git` folder, which holds all the commits. | [Lecture 6, slide 14](lectures/lecture_6.md) |
 | reproducibility | Anyone can rebuild the result from the file as received, the code and the versions. | [Lecture 1, slide 8](lectures/lecture_1.md) |
+| residual | What the fitted model leaves: $r_i = y_i - \hat y_i$; a good model leaves only scatter. | [Lecture 9, slide 59](lectures/lecture_9.md) |
 | `results/` | The folder of the scripts' outputs: plots, fits, reports; never edited by hand. | [Lecture 1, slide 27](lectures/lecture_1.md) |
 | `rm` | Deletes a file, or a folder with `-r`, with no Trash and no undo. | [Lecture 3, slide 77](lectures/lecture_3.md) |
+| Rosenblatt's rule | After each evening, $w \leftarrow w + \eta\,(y - \hat{y})\,x$ and $b \leftarrow b + \eta\,(y - \hat{y})$, $\eta$ the learning rate. | [Lecture 10, slide 20](lectures/lecture_10.md) |
 | running mean | The mean over a window around each point; a wider window smooths more. | [Lecture 7, slide 41](lectures/lecture_7.md) |
 
 ## S
 
 | Term | Meaning | First on |
 | --- | --- | --- |
-| script | A program with every step written down once, in the right order. | [Lecture 1, slide 11](lectures/lecture_1.md) |
-| script | Lines of Python kept in a file ending in `.py`. | [Lecture 5, slide 6](lectures/lecture_5.md) |
+| script | A program with every step written down once, in the right order. | [Lecture 1, slide 11](lectures/lecture_1.md); also [Lecture 5, slide 6](lectures/lecture_5.md) |
+| `self` | Inside a method, the object itself; `self.w` keeps a value in it. | [Lecture 10, slide 56](lectures/lecture_10.md); also [Lecture 12, slide 15](lectures/lecture_12.md) |
 | semantic versioning | Version numbers as major.minor.patch: major may break old code, minor adds functions, patch only fixes. | [Lecture 5, slide 53](lectures/lecture_5.md) |
 | separator | The character between the values of a row, such as `,` or `;`. | [Lecture 1, slide 12](lectures/lecture_1.md) |
 | sequential palette | Colours ordered by lightness, for values from low to high, such as `viridis`. | [Lecture 7, slide 52](lectures/lecture_7.md) |
 | `set -e` | As line 2 of a script, stops it at the first line that fails. | [Lecture 4, slide 63](lectures/lecture_4.md) |
-| shell | The program in the terminal that runs each typed line: zsh or Git Bash. | [Lecture 3, slide 73](lectures/lecture_3.md) |
-| shell | A program that reads a typed line and runs what it names: zsh, bash. | [Lecture 4, slide 6](lectures/lecture_4.md) |
+| shell | The program in the terminal that runs each typed line: zsh or Git Bash. | [Lecture 3, slide 73](lectures/lecture_3.md); also [Lecture 4, slide 6](lectures/lecture_4.md) |
+| shell variable | A name the shell keeps a value under: `name=value` sets it, `$name` reads it. | [Lecture 4, slide 14](lectures/lecture_4.md) |
+| sigmoid | A smooth step, $\text{sigmoid}(z) = 1/(1 + e^{-z})$: between 0 and 1, 0.5 at $z = 0$. | [Lecture 10, slide 31](lectures/lecture_10.md) |
+| significant digits | The digits from the first non-zero one; a ± keeps two: 0.0299096 → 0.030. | [Lecture 8, slide 64](lectures/lecture_8.md) |
 | single quotes | Every sign between them reaches the program unchanged: the shell replaces nothing. | [Lecture 4, slide 37](lectures/lecture_4.md) |
 | small multiples | One panel per group, every panel with the same axes. | [Lecture 7, slide 58](lectures/lecture_7.md) |
+| softmax | Turns scores into probabilities that add up to 1: each $e^{s_k}$ divided by their sum. | [Lecture 11, slide 36](lectures/lecture_11.md) |
+| solving the environment | Finding one version of each package inside all its ranges, and taking the newest. | [Lecture 12, slide 37](lectures/lecture_12.md) |
 | staging area | The list of what the next commit will hold, also called the index. | [Lecture 6, slide 12](lectures/lecture_6.md) |
-| standard deviation | The typical distance of a value from the mean. | [Lecture 7, slide 44](lectures/lecture_7.md) |
-| standard error | Errors, on their own stream: to the screen, or into a file with `2>`. | [Lecture 4, slide 23](lectures/lecture_4.md) |
-| standard error | Standard deviation ÷ √*N* for a mean of *N* values, drawn as its error bar. | [Lecture 7, slide 44](lectures/lecture_7.md) |
+| standard deviation | The typical distance of a value from the mean. | [Lecture 7, slide 44](lectures/lecture_7.md); also [Lecture 8, slide 19](lectures/lecture_8.md) |
+| standard error | Standard deviation ÷ √N for a mean of N values, drawn as its error bar. | [Lecture 7, slide 44](lectures/lecture_7.md); also [Lecture 8, slide 52](lectures/lecture_8.md) |
+| standard error (stream) | Errors, on their own stream: to the screen, or into a file with `2>`. | [Lecture 4, slide 23](lectures/lecture_4.md) |
 | standard input | What a program reads: the keyboard, a file given with `<`, or a pipe. | [Lecture 4, slide 24](lectures/lecture_4.md) |
 | standard library | Modules that come with every Python, such as `math`, `json` and `csv`. | [Lecture 5, slide 49](lectures/lecture_5.md) |
 | standard output | What a program prints; `>` writes it into a file, emptying the file first. | [Lecture 4, slide 23](lectures/lecture_4.md) |
+| starting values | The parameter values a descent starts from, read off a plot of the data. | [Lecture 9, slide 56](lectures/lecture_9.md) |
+| statistical uncertainty | The ± from the scatter of the points: the one a fit gives. | [Lecture 9, slide 72](lectures/lecture_9.md) |
+| step size | The learning rate η, chosen by hand: too large overshoots, too small creeps. | [Lecture 9, slide 45](lectures/lecture_9.md) |
 | `str` | Text in quotes: a row of characters with positions counted from 0. | [Lecture 5, slide 9](lectures/lecture_5.md) |
+| sum sign Σ | Adds the term after it, once for each $i$: $\sum_{i=1}^{N} x_i = x_1 + x_2 + \dots + x_N$. | [Lecture 8, slide 16](lectures/lecture_8.md) |
+| systematic error | An error shared by many points, such as a sensor shift; χ² cannot see it. | [Lecture 9, slide 72](lectures/lecture_9.md) |
 
 ## T
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| temperature | Divides the scores before softmax: low $T$ gives the likely word, high $T$ varied text. | [Lecture 11, slide 38](lectures/lecture_11.md) |
 | terminal | The window that shows text and passes what is typed to the shell. | [Lecture 3, slide 73](lectures/lecture_3.md) |
+| test | A function named `test_…` that checks the code against a fact known without it. | [Lecture 12, slide 22](lectures/lecture_12.md) |
+| test of the result | A test of what the rebuild wrote; it catches a wrong file, column or step. | [Lecture 12, slide 27](lectures/lecture_12.md) |
+| test runner | A program that finds every `test_…` function in every `test_….py` file and runs each. | [Lecture 12, slide 32](lectures/lecture_12.md) |
+| test set | Evenings kept out of training, used once at the end to score the result. | [Lecture 10, slide 45](lectures/lecture_10.md) |
 | text editor | A program that shows a file's characters and writes them back, nothing added. | [Lecture 2, slide 42](lectures/lecture_2.md) |
 | tidy table | One observation per row, one variable per column and one value per cell. | [Lecture 2, slide 23](lectures/lecture_2.md) |
+| token | A piece of text: a frequent word, part of a rare word, or a sign. | [Lecture 11, slide 50](lectures/lecture_11.md) |
+| tolerance | How far two floats may differ and still count as equal: `abs(mean(four) - 25.275) < 1e-9`. | [Lecture 12, slide 25](lectures/lecture_12.md) |
 | tool agnosticism | Working independent of platform and tool: every step readable without the author's programs. | [Lecture 1, slide 8](lectures/lecture_1.md) |
+| training set | The evenings the weights and the bias are learned from: 2016 to 2022. | [Lecture 10, slide 45](lectures/lecture_10.md) |
+| transformer | The arrangement of today's language models: attention in each of dozens of layers. | [Lecture 11, slide 47](lectures/lecture_11.md) |
 | trigger | Electronics and a computer farm that choose which LHC collisions are kept. | [Lecture 2, slide 11](lectures/lecture_2.md) |
 | two's complement | Negative numbers counted back from zero: in 4 bits, `1111` is −1. | [Lecture 3, slide 47](lectures/lecture_3.md) |
 | type | What a value is, `int`, `float`, `str` or `bool`; it decides what can be done. | [Lecture 5, slide 9](lectures/lecture_5.md) |
@@ -271,22 +364,26 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | Term | Meaning | First on |
 | --- | --- | --- |
 | Unicode | The table that gives every character of every script a number: its code point. | [Lecture 3, slide 58](lectures/lecture_3.md) |
+| uniqueness | The check that every hour appears once, none twice. | [Lecture 8, slide 11](lectures/lecture_8.md) |
 | UTF-8 | An encoding: each code point in 1 to 4 bytes, ASCII text unchanged. | [Lecture 3, slide 58](lectures/lecture_3.md) |
 
 ## V
 
 | Term | Meaning | First on |
 | --- | --- | --- |
-| variable | A name the shell keeps a value under: `name=value` sets it, `$name` reads it. | [Lecture 4, slide 14](lectures/lecture_4.md) |
+| validity | The check that each value lies in its allowed range: humidity 0 to 100 %. | [Lecture 8, slide 11](lectures/lecture_8.md) |
 | variable | A name with its value; `=` puts the name on the value: `mean = 7.16`. | [Lecture 5, slide 7](lectures/lecture_5.md) |
-| vector | A picture stored as shapes, `.svg` or `.pdf`: sharp at any size. | [Lecture 7, slide 74](lectures/lecture_7.md) |
+| variance | The mean squared distance from the mean: $s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2$. | [Lecture 8, slide 19](lectures/lecture_8.md) |
+| vector | A picture stored as shapes, `.svg` or `.pdf`: sharp at any size. | [Lecture 7, slide 74](lectures/lecture_7.md); also [Lecture 11, slide 30](lectures/lecture_11.md) |
 | version control | Keeping every state a project went through, with who changed what, when and why. | [Lecture 6, slide 2](lectures/lecture_6.md) |
 | visual channel | Position, colour, shape or size showing one variable; position is read most exactly. | [Lecture 7, slide 8](lectures/lecture_7.md) |
+| vocabulary | A model's words or tokens, numbered: tens of thousands in a large model. | [Lecture 11, slide 21](lectures/lecture_11.md) |
 
 ## W
 
 | Term | Meaning | First on |
 | --- | --- | --- |
+| weight | The number $w_1$ or $w_2$ that multiplies one input in $z = w_1 x_1 + w_2 x_2 + b$. | [Lecture 10, slide 12](lectures/lecture_10.md) |
 | working directory | The folder the shell is in; `pwd` prints it, and relative paths start there. | [Lecture 3, slide 75](lectures/lecture_3.md) |
 | working folder | The project's files as you edit and save them. | [Lecture 6, slide 12](lectures/lecture_6.md) |
 
@@ -295,6 +392,25 @@ The words of the lectures, A–Z, each with the lecture and the slide where it f
 | Term | Meaning | First on |
 | --- | --- | --- |
 | `.xlsx` | A spreadsheet file: a zip archive, unreadable without a program that knows the format. | [Lecture 1, slide 9](lectures/lecture_1.md) |
+| XOR | Exclusive or: 1 when the two inputs differ; no single line separates its points. | [Lecture 10, slide 17](lectures/lecture_10.md); also [Lecture 11, slide 5](lectures/lecture_11.md) |
+
+## Z
+
+| Term | Meaning | First on |
+| --- | --- | --- |
+| $z$ | The distance of a value from the mean in units of $s$: $z = (x - \bar{x})/s$. | [Lecture 8, slide 39](lectures/lecture_8.md) |
+
+## Δ
+
+| Term | Meaning | First on |
+| --- | --- | --- |
+| Δχ² = 1 | Moving a fitted parameter by one σ raises χ² by 1 above its minimum. | [Lecture 9, slide 35](lectures/lecture_9.md) |
+
+## Χ
+
+| Term | Meaning | First on |
+| --- | --- | --- |
+| χ² | Chi-squared: $\sum_i (y_i - f(x_i))^2/\sigma^2$; for Gaussian scatter, minimum χ² is maximum likelihood. | [Lecture 9, slide 20](lectures/lecture_9.md) |
 
 ## 0–9 and symbols
 
