@@ -364,7 +364,7 @@ function beforeLeave(el) {
   margin: 0 0.1em;
   font-size: 0.92em;
 }
-.fs :deep(.fs-frac > span) { padding: 0 0.18em; line-height: 1.25; }
+.fs :deep(.fs-frac > span) { padding: 0 0.18em; line-height: 1.25; align-self: stretch; text-align: center; } /* the bar spans the wider of the two */
 .fs :deep(.fs-frac > span:first-child) { border-bottom: 0.06em solid currentColor; padding-bottom: 0.06em; }
 .fs :deep(.fs-frac > span:last-child) { padding-top: 0.06em; }
 .fs :deep(.fs-sqrt) { display: inline-flex; align-items: flex-start; }

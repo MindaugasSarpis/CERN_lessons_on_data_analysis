@@ -720,30 +720,23 @@ class: fill
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Your Line, **Live**
 
-```py {monaco-run} {autorun:false}
-y = [7.6045, 6.5078, 7.9745, 7.2697, 6.8314, 7.2478, 6.5997, 8.3102, 7.2729, 5.9821]
-a, b = 0.1, 6.7                         # <-- try your own line
-chi2 = 0
-for x in range(10):                     # x = years since 2016
-    pull = (y[x] - (a * x + b)) / 0.70
-    chi2 = chi2 + pull ** 2
-print(round(chi2, 2))                   # 12.64
-```
+<div class="card card-warning card-glass pad-compact mt-sm">
 
-<div class="card card-warning card-glass pad-compact mt-md">
-
-❓ Who can beat **9.08**, the flat line?
+❓ Drag the line or its ends; tap a year. Who can beat **9.08**, the flat line?
 
 </div>
 
+<FitLine class="fig-fill mt-sm" slope-first />
+
 <!--
-**Do:** press ▶: 12.64, line B. Then take two or three lines from the room, change a and b, run each.
-**Say:** the list holds the ten yearly means, 2016 first. Guessing works, slowly.
-**If asked:** a = 0, b = 7.16 gives 9.08; the best line, a = −0.0555, b = 7.41, gives 8.56.
+**Do:** drag the line up and down, then one end, while the room watches χ² and the bar of ten terms; tap 2023 and 2025, the largest terms. Take two lines from the room. Last, press "best fit": a = −0.056, b = 7.41, least squares 8.56.
+**Say:** no line beats 8.56; it is the lowest point of χ², and it can be found without guessing.
+**If asked:** "best fit" rounds the line to −0.056 and 7.41, so that line's own χ² reads 8.57; the exact minimum is the "least squares" mark, 8.56.
 (~3 min)
 -->
 

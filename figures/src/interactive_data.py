@@ -10,9 +10,13 @@ any Python:
 
 Components and the numbers they rely on:
 
-  FitLine               the ten yearly means (two decimals, as the slides
-                        show them) -> public/data/yearly_means.json; the
-                        least-squares line, chi-square with sigma = 0.70
+  FitLine               the ten yearly means to six decimals, so that the
+                        component prints Lecture 9's chi-squares 9.08 (the
+                        flat line) and 8.56 (least squares): rounded to two,
+                        three or four decimals they print 9.07/8.55,
+                        9.09/8.57 or 9.08/8.57, the minimum being 8.56499
+                        -> public/data/yearly_means.json; the least-squares
+                        line, chi-square with sigma = 0.70
   PerceptronPlayground  every evening as Lecture 10 has it: x1 the
                         temperature at 18:00, x2 the humidity as a fraction,
                         frost at 06:00 the next morning; about 300 of the
@@ -62,8 +66,8 @@ def yearly_means(times, temp):
         vals = [t for s, t in zip(times, temp) if s.startswith(str(y)) and t != MISSING]
         m = sum(vals) / len(vals)
         full.append(m)
-        shown.append(round(m, 2))
-        print(f"  {y}: {len(vals)} hours, mean {m:.4f} -> {m:.2f}")
+        shown.append(round(m, 6))
+        print(f"  {y}: {len(vals)} hours, mean {m:.6f}")
     n = len(shown)
     ybar = sum(shown) / n
     sd = math.sqrt(sum((v - ybar) ** 2 for v in shown) / (n - 1))
@@ -104,7 +108,7 @@ def yearly_means(times, temp):
     print(f"  one point pushed through, 2023: ({yy:.2f} - {a:.2f} - ({b:.3f})*7)^2 / {sigma:.2f}^2"
           f" = {r:.3f}^2 / {sigma ** 2:.2f} = {r * r / sigma ** 2:.3f}")
     write("yearly_means.json", {
-        "about": "Yearly mean temperature (degC) of the weather log, -999 left out, two decimals as on the slides. figures/src/interactive_data.py",
+        "about": "Yearly mean temperature (degC) of the weather log, -999 left out, six decimals, so that chi-square prints as on Lecture 9's slides. figures/src/interactive_data.py",
         "years": years,
         "means": shown,
         "sigma": sigma,

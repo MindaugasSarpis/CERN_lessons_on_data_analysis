@@ -4,6 +4,8 @@
     <FitLine />                                   the ten yearly means, σ = 0.70
     <FitLine :a="7.16" :b="0" :year="2023" />     the starting line and year
     <FitLine class="fig-fill" />                  on a `class: fill` slide: takes the rest of it
+    <FitLine slope-first />                       the line written a·x + b (a the slope,
+                                                  b the line in x0), Lecture 9's letters
 
   χ² = Σ (yᵢ − a − b·xᵢ)² / σ², with x = year − x0 (x0 = 2016, so a is the
   line in 2016 and b its change per year). Drag the line or its two end
@@ -55,6 +57,9 @@ const props = defineProps({
   year: { type: Number, default: 2023 },
   // Two FitLines on one slide need different ids (presenter ↔ audience sync).
   syncId: { type: String, default: '' },
+  // Display only: write the line as a·x + b (a the slope, b the line in x0),
+  // as Lecture 9 does, instead of a + b·x. The numbers do not change.
+  slopeFirst: { type: Boolean, default: false },
 })
 
 const B_MAX = 0.4                       // the b slider runs from −0.4 to 0.4 °C a year
@@ -267,20 +272,21 @@ function onUp(e) {
 function onLeave() { if (!drag) cursor.value = 'default' }
 
 // ---- sliders (pointer anywhere on the row; keys when focused with Tab) --------------
-const sliders = computed(() => [
-  {
-    key: 'a', label: 'a', unit: '°C', hint: `the line in ${props.x0}`,
+const sliders = computed(() => {
+  const level = {
+    key: 'a', label: props.slopeFirst ? 'b' : 'a', unit: '°C', hint: `the line in ${props.x0}`,
     min: yd.value[0], max: yd.value[1], step: 0.01,
     value: a.value, text: fmt(a.value, 2),
     set: (v) => { a.value = qa(clamp(v, yd.value[0], yd.value[1])) },
-  },
-  {
-    key: 'b', label: 'b', unit: '°C a year', hint: '',
+  }
+  const slope = {
+    key: 'b', label: props.slopeFirst ? 'a' : 'b', unit: '°C a year', hint: 'change per year',
     min: -B_MAX, max: B_MAX, step: 0.001,
     value: b.value, text: fmt(b.value, 3),
     set: (v) => { b.value = qb(clamp(v, -B_MAX, B_MAX)) },
-  },
-])
+  }
+  return props.slopeFirst ? [slope, level] : [level, slope]
+})
 const frac = (s) => (s.value - s.min) / (s.max - s.min)
 
 function sliderDown(e, s) {
@@ -436,7 +442,7 @@ onBeforeUnmount(() => {
         :height="H"
         :style="{ cursor }"
         role="img"
-        :aria-label="ready ? `The ${ys.length} points and the line a = ${fmt(a, 2)}, b = ${fmt(b, 3)}; chi-square ${fmt(chi2, 2)}` : 'Loading'"
+        :aria-label="ready ? `The ${ys.length} points and the line ${slopeFirst ? `a = ${fmt(b, 3)} a year, b = ${fmt(a, 2)}` : `a = ${fmt(a, 2)}, b = ${fmt(b, 3)}`}; chi-square ${fmt(chi2, 2)}` : 'Loading'"
         @pointerdown="onDown"
         @pointermove="onMove"
         @pointerup="onUp"
@@ -510,13 +516,13 @@ onBeforeUnmount(() => {
 
     <aside class="ifl-side">
       <div class="ifl-math ifl-expr">
-        <i>χ</i><sup>2</sup> = <span class="ifl-sum">Σ</span><span class="ifl-frac"><span>(<i>y</i><sub><i>i</i></sub> − <i class="ifl-k">a</i> − <i class="ifl-k">b</i>·<i>x</i><sub><i>i</i></sub>)<sup>2</sup></span><span><i>σ</i><sup>2</sup></span></span>
+        <i>χ</i><sup>2</sup> = <span class="ifl-sum">Σ</span><span class="ifl-frac"><span v-if="slopeFirst">(<i>y</i><sub><i>i</i></sub> − <i class="ifl-k">a</i>·<i>x</i><sub><i>i</i></sub> − <i class="ifl-k">b</i>)<sup>2</sup></span><span v-else>(<i>y</i><sub><i>i</i></sub> − <i class="ifl-k">a</i> − <i class="ifl-k">b</i>·<i>x</i><sub><i>i</i></sub>)<sup>2</sup></span><span><i>σ</i><sup>2</sup></span></span>
       </div>
 
       <div v-if="push" class="ifl-push">
         <div class="ifl-label"><span class="ifl-on">{{ push.year }}</span> · <i class="ifl-var">x</i> = {{ push.year }} − {{ x0 }} = {{ push.x }}</div>
         <div class="ifl-math ifl-line1">
-          <span class="ifl-frac"><span>({{ push.y }} − <span class="ifl-k">{{ push.a }}</span> − <span class="ifl-k">{{ push.bNeg ? `(${push.b})` : push.b }}</span>·{{ push.x }})<sup>2</sup></span><span>{{ push.s }}<sup>2</sup></span></span>
+          <span class="ifl-frac"><span v-if="slopeFirst">({{ push.y }} − <span class="ifl-k">{{ push.bNeg ? `(${push.b})` : push.b }}</span>·{{ push.x }} − <span class="ifl-k">{{ push.a }}</span>)<sup>2</sup></span><span v-else>({{ push.y }} − <span class="ifl-k">{{ push.a }}</span> − <span class="ifl-k">{{ push.bNeg ? `(${push.b})` : push.b }}</span>·{{ push.x }})<sup>2</sup></span><span>{{ push.s }}<sup>2</sup></span></span>
           = <span class="ifl-frac"><span>{{ push.rNeg ? `(${push.r})` : push.r }}<sup>2</sup></span><span>{{ push.s2 }}</span></span>
           = <b class="ifl-on">{{ push.term }}</b>
         </div>
@@ -546,7 +552,7 @@ onBeforeUnmount(() => {
           class="ifl-slider"
           role="slider"
           tabindex="0"
-          :aria-label="s.key === 'a' ? `a, ${s.hint}` : 'b, change per year'"
+          :aria-label="`${s.label}, ${s.hint}`"
           :aria-valuemin="s.min"
           :aria-valuemax="s.max"
           :aria-valuenow="s.value"

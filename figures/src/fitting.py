@@ -555,7 +555,6 @@ def numbers():
 # =============================================================================
 
 C0, C1, C2, C3 = style.CYCLE[0], style.CYCLE[1], style.CYCLE[2], style.CYCLE[3]
-RASTER_DPI = 200                   # point clouds are embedded as images at this dpi
 BOX = dict(boxstyle="round,pad=0.2", facecolor="#0b0e14", edgecolor="none", alpha=0.75)
 TEMP = "temperature (°C)"
 YEAR_MEAN = "yearly mean (°C)"
@@ -616,7 +615,7 @@ def _three_models():
     ax = axes[2]
     sel = d < 3 * 365.25
     dates = [day_of(v) for v in d[sel]]
-    ax.plot(dates, T[sel], ".", color=style.FG, ms=2.2, alpha=0.8, rasterized=True)
+    ax.plot(dates, T[sel], ".", color=style.FG, ms=2.2, alpha=0.8)
     dd = np.linspace(0, 3 * 365.25, 600)
     ax.plot([day_of(v) for v in dd], cycle(dd, cf["c"], cf["amp"], cf["d0"]), color=C2, lw=2.2)
     ax.set_title(r"$T = c - A\cos\frac{2\pi(d - d_0)}{365.25}$: three", fontsize=12.5,
@@ -626,7 +625,6 @@ def _three_models():
     ax.set_xticklabels(["2016", "2017", "2018", "2019"])
     for a in axes:
         a.xaxis.grid(False)
-    fig.set_dpi(RASTER_DPI)
     style.save(fig, "viz_fitting_three_models")
 
 
@@ -937,10 +935,9 @@ def _daily_fig():
     """The 3648 daily means, ten waves."""
     d, T = daily_means()
     fig, ax = plt.subplots(figsize=(9.4, 3.3))
-    ax.plot([day_of(v) for v in d], T, ".", color=C0, ms=2.4, alpha=0.9, rasterized=True)
+    ax.plot([day_of(v) for v in d], T, ".", color=C0, ms=2.4, alpha=0.9)
     ax.set(ylabel="daily mean (°C)", ylim=(-16, 30))
     ax.xaxis.grid(False)
-    fig.set_dpi(RASTER_DPI)
     style.save(fig, "viz_fitting_daily")
 
 
@@ -950,7 +947,7 @@ def _cycle_parts_fig():
     cf = cycle_fit(d, T)
     doy = d % 365.25
     fig, ax = plt.subplots(figsize=(6.2, 4.3))
-    ax.plot(doy, T, ".", color=style.DIM, ms=1.8, alpha=0.55, rasterized=True)
+    ax.plot(doy, T, ".", color=style.DIM, ms=1.8, alpha=0.55)
     t = np.linspace(0, 365.25, 400)
     ax.plot(t, cycle(t, cf["c"], cf["amp"], cf["d0"]), color=C2, lw=2.6)
     ax.axhline(cf["c"], color=C0, lw=1.4, ls="--")
@@ -968,7 +965,6 @@ def _cycle_parts_fig():
     ax.set_xticks([0, 91, 182, 274, 365])
     ax.set_xticklabels(["1 Jan", "1 Apr", "1 Jul", "1 Oct", "31 Dec"])
     ax.xaxis.grid(False)
-    fig.set_dpi(RASTER_DPI)
     style.save(fig, "viz_fitting_cycle_parts")
 
 
@@ -977,12 +973,11 @@ def _cycle_fit_fig():
     d, T = daily_means()
     cf = cycle_fit(d, T)
     fig, ax = plt.subplots(figsize=(9.4, 3.3))
-    ax.plot([day_of(v) for v in d], T, ".", color=style.DIM, ms=2.2, alpha=0.7, rasterized=True)
+    ax.plot([day_of(v) for v in d], T, ".", color=style.DIM, ms=2.2, alpha=0.7)
     dd = np.linspace(0, 3653, 3000)
     ax.plot([day_of(v) for v in dd], cycle(dd, cf["c"], cf["amp"], cf["d0"]), color=C2, lw=2.0)
     ax.set(ylabel="daily mean (°C)", ylim=(-16, 30))
     ax.xaxis.grid(False)
-    fig.set_dpi(RASTER_DPI)
     style.save(fig, "viz_fitting_cycle_fit")
 
 
@@ -1020,12 +1015,11 @@ def _cycle_resid_fig():
     ax1.set_xticks([date(2024, m, 1) for m in (1, 3, 5, 7, 9, 11)])
     ax1.set_xticklabels(["Jan", "Mar", "May", "Jul", "Sep", "Nov"])
     ax1.xaxis.grid(False)
-    ax2.plot(r[:-1], r[1:], ".", color=C1, ms=1.6, alpha=0.4, rasterized=True)
+    ax2.plot(r[:-1], r[1:], ".", color=C1, ms=1.6, alpha=0.4)
     ax2.set(xlabel="residual of a day (°C)", ylabel="of the next day (°C)",
             xlim=(-14, 14), ylim=(-14, 14))
     ax2.set_aspect("equal")
     ax2.text(-13, 11.5, f"r = {cf['lag1']:.3f}", color=C1, fontsize=12.5)
-    fig.set_dpi(RASTER_DPI)
     style.save(fig, "viz_fitting_cycle_resid")
 
 
@@ -1038,7 +1032,7 @@ def _too_few_fig():
     for ax, r, title, col in ((axes[0], T - T.mean(), "a constant, k = 1", style.BAD),
                               (axes[1], cf["r"], "the cycle, k = 3", C2)):
         ax.axhline(0, color=style.FG, lw=1.0)
-        ax.plot(doy, r, ".", color=col, ms=1.8, alpha=0.5, rasterized=True)
+        ax.plot(doy, r, ".", color=col, ms=1.8, alpha=0.5)
         ax.set_title(f"{title}:  sd {r.std(ddof=1):.2f} °C", fontsize=12.5,
                      fontweight="normal", color=col, loc="left")
         ax.set(xlabel="day of the year", xlim=(0, 365.25), ylim=(-25, 22))
@@ -1046,7 +1040,6 @@ def _too_few_fig():
         ax.set_xticklabels(["1 Jan", "1 Apr", "1 Jul", "1 Oct", "31 Dec"])
         ax.xaxis.grid(False)
     axes[0].set_ylabel("residual (°C)")
-    fig.set_dpi(RASTER_DPI)
     style.save(fig, "viz_fitting_too_few")
 
 
@@ -1187,7 +1180,12 @@ def _covariance():
     cmap = mcolors.LinearSegmentedColormap.from_list(
         "diverging", [style.CYCLE[1], "#333b4a", style.ACCENT])
     norm = mcolors.Normalize(vmin=-1, vmax=1)
-    im = ax1.imshow(corr, cmap=cmap, norm=norm)
+    # pcolormesh, not imshow: every cell a vector rectangle, each edge in its
+    # own colour so no seam shows between neighbours
+    edges = np.arange(k + 1) - 0.5
+    im = ax1.pcolormesh(edges, edges, corr, cmap=cmap, norm=norm, edgecolors="face",
+                        linewidth=0.5)
+    ax1.set(xlim=(-0.5, k - 0.5), ylim=(k - 0.5, -0.5), aspect="equal")
     ax1.set_xticks(range(k))
     ax1.set_xticklabels(D0_PARAMS, fontsize=12)
     ax1.set_yticks(range(k))
@@ -1203,6 +1201,9 @@ def _covariance():
             ax1.text(j, i, f"{v:+.2f}".replace("-", "−"), ha="center", va="center",
                      fontsize=11, color="#0b0f14" if lum > 0.55 else style.FG)
     cbar = fig.colorbar(im, ax=ax1, shrink=0.8, pad=0.04)
+    # a colour bar of 256 colours is drawn as an image unless told otherwise
+    cbar.solids.set_rasterized(False)
+    cbar.solids.set_edgecolor("face")
     cbar.outline.set_visible(False)
     cbar.ax.tick_params(colors=style.DIM, labelsize=9)
     ax1.set_title(r"Correlation matrix of the $D^0$ fit")

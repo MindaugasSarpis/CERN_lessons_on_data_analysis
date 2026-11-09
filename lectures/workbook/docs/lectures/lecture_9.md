@@ -82,7 +82,7 @@ The lecture teaches each tool once, where it is first needed, with numbers.
 
 ## The lecture, part by part
 
-The lecture is slides 1–78 and estimates about 120 min, so in the two-hour
+The lecture is slides 1–78 and estimates about 118 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 10 min).
 Slides 79–89 are the optional section For the Curious, and slides 90–98 the
 self-check quizzes; neither takes lecture time. To jump, type the slide
@@ -92,7 +92,7 @@ number and press Enter.
 |--|--|
 | 1–3 | The question: is it getting warmer? Two picked pairs of years, +1.80 and −2.33 °C |
 | 4–14 | A model has parameters; S(μ) of four hours; why squares; the derivative and its nudge; the mean as the least-squares value; the slope checked live |
-| 15–23 | σ = 0.70 °C; the Gaussian of one year; the likelihood of ten; minimum χ²; χ² of a flat line year by year; two guessed lines; a line from the room, live |
+| 15–23 | σ = 0.70 °C; the Gaussian of one year; the likelihood of ten; minimum χ²; χ² of a flat line year by year; two guessed lines; a line from the room, dragged live |
 | 24–31 | The derivatives for a line; the normal equations; the formulas; the table of ten years; the sums pushed through; the best line; the same in Python, live |
 | 34–37, 39–41 | χ² around its minimum; Δχ² = 1; σ_a; the value for 2026; −0.56 ± 0.77 °C per decade; what the ± means |
 | 43–47, 49–52 | No closed form for the cycle; the update rule; three steps by hand; a step too large; the step size, live; the rule for a line; descent on ten years, live; its path |
@@ -120,12 +120,16 @@ number and press Enter.
   time: the misses, their squares and S; the nudge and the rule; the
   Gaussian of 2016; Δ, the slope and the intercept; one descent step for the
   line; the summer day of the cycle. Slide 49 shows two runs on its click.
-- **Slides 14, 23, 31, 49 and 51** run plain Python in the browser: the
-  slope of S by formula and by nudge; χ² of a line from the room; the five
-  sums; the step size; gradient descent on ten years. The first run
-  downloads the Python runtime, so run one before the lecture. On slides 23
-  and 49 the room chooses the numbers: a line to beat χ² = 9.08, and the
-  step sizes 0.3, 0.25 and 0.01.
+- **Slide 23 is an interactive figure** that works offline: drag the line or
+  its ends and χ² follows, term by term; tap a year to push its numbers
+  through; take a line from the room to beat the flat line's 9.08, then press
+  "best fit" (least squares 8.56; the rounded line itself reads 8.57). Use it
+  on the projected window, not in the presenter view.
+- **Slides 14, 31, 49 and 51** run plain Python in the browser: the slope of
+  S by formula and by nudge; the five sums; the step size; gradient descent
+  on ten years. The first run downloads the Python runtime, so run one before
+  the lecture. On slide 49 the room chooses the step sizes 0.3, 0.25 and
+  0.01.
 - **Every number** on the slides is printed by
   `python figures/src/fitting.py` from `weather.csv`; the ten yearly means
   are shown with three decimals so that the sums and the slope come out the
