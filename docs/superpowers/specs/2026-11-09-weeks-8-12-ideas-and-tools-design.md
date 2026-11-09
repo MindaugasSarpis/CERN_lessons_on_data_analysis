@@ -541,3 +541,31 @@ interactivity, visuals, style, overall feel (has to be incredible)."
   `SmoothingWindow`. Once proven in the course, the components go to the
   toolkit `slidev-videos` on a worktree branch (its main checkout never
   changes branch), for the lecturer to approve before a release.
+
+## 13. As built, 9 November, night
+
+The five week builders reproduced every number of sections 5 and 7 from the
+weather log, except these, which the decks and pages now use instead:
+
+- **Slope of the yearly means:** −0.56 ± 0.77 °C per decade, with σ = 0.70 °C,
+  the scatter of the yearly means (Lecture 8's s). The residual-based error,
+  σ = 0.72 with n − 2 = 8, gives ± 0.80; Lecture 9 names it in a note.
+  Lecture 12 and Seminar 9 quote ± 0.77.
+- **Best frost threshold:** "below 3.8 °C", 3490 of 3646 evenings (95.7 %).
+  The old 3.6 came from a float of `np.arange` (`< 3.6000000000000005`).
+- **Logistic neuron:** 96.1 ± 0.6 % on the test years 2023–25 (1052/1095),
+  trained evening by evening, η = 0.01, five passes from zero, humidity as a
+  fraction (0.85); against 65.4 % for "never frost". Seminar 10's class
+  `Perceptron` (Rosenblatt's rule, five epochs) scores 95.5 ± 0.6 %.
+- **Lecture 8's order:** correlation before the standard error, so the
+  variance of a sum shows r with numbers.
+- **Symbols across weeks 8–10:** s and x̄ for values computed from data, μ and
+  σ for the Gaussian, L for the likelihood, η for the step size ("learning
+  rate"), "sigmoid" spelled out (σ only ever means a scatter).
+- **Tests** live in `scripts/test_weather.py`, beside the module, so
+  `import weather` works without a pytest setting; there is no `tests/`.
+  Lecture 1's finished-project tree now shows `scripts/rebuild.sh`.
+- **The environment `analysis`:** NumPy arrives with matplotlib-base (a
+  dependency), so pandas adds only itself. `conda env export --from-history`
+  lists the packages in an order that may differ between laptops; the newly
+  installed package is always last, and the pages say so.

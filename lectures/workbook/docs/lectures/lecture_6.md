@@ -59,7 +59,7 @@ commands in **More Commands**, for whoever wants them.
 10. **For the curious** (optional, after the recap): a name computed from
     the content, the blob, the tree, the commit as text, history as a
     graph, a branch as a file of 41 bytes.
-11. **More commands** (optional): `--amend`; rebuilding what a clone
+11. **More commands** (optional): rebuilding what a clone
     lacks; the checksum the edit breaks, the revert that restores it and a
     tag `v1.0`; the map of every command; which data files fit, with
     measured sizes; `.gitattributes`; what `git status --short` says in
@@ -319,7 +319,7 @@ ways to work together. Branches on one laptop (a fast-forward merge of
 the conflict with a pull. Amend, rebuilding a clone, the revert of
 Tomas's edit, the tag, the map of the commands, the data sizes,
 `.gitattributes`, the status table and the error messages moved to More
-Commands.
+Commands; amend has since come back to the main path, under Undoing.
 
 ## Take-aways
 

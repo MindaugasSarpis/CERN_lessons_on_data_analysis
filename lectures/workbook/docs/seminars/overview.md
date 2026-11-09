@@ -63,10 +63,10 @@ weather-sNN/
 |  |- raw/              # files exactly as received, never edited
 |  |- processed/        # made from data/raw by commands and scripts
 |- scripts/             # one script per step
+|  |- rebuild.sh        # one command rebuilds everything (Seminar 4; tests from Seminar 12)
+|  |- test_weather.py   # checks of the results (Seminar 12)
 |- notebooks/           # Jupyter notebooks (Seminar 5)
 |- results/             # numbers and figures the scripts produce
-|- tests/               # checks of the results (Seminar 12)
-|- scripts/rebuild.sh   # one command rebuilds everything (Seminar 4; tests from Seminar 12)
 ```
 
 The same layout is a sound default for your own project.

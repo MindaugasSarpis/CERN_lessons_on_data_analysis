@@ -931,16 +931,16 @@ A finished analysis has this shape, whatever its data.
 
 ```text
 analysis-project/
-├── data/raw/          as received, never edited
-├── data/processed/    written by clean.py
-├── scripts/           clean.py  plot.py  fit.py  report.py
-├── results/           the plot, fit.json, report.md
-├── tests/             checks of the scripts
-├── config.json        the parameters
-├── environment.yml    the packages and versions
-├── run_all.py         the one command
-├── .gitignore         what Git leaves out
-└── README.md          what it is, how to rebuild
+├── data/raw/           as received, never edited
+├── data/processed/     written by clean.py
+├── scripts/            clean.py  plot.py  fit.py  report.py
+├── scripts/rebuild.sh  the one command
+├── results/            the plot, fit.json, report.md
+├── tests/              checks of the scripts
+├── config.json         the parameters
+├── environment.yml     the packages and versions
+├── .gitignore          what Git leaves out
+└── README.md           what it is, how to rebuild
 ```
 
 </div>
@@ -980,7 +980,7 @@ If that works for your project, it is reproducible.
 
 ## 🔒 **The recipe: keep it**
 
-`data/raw/` (it cannot be made again), `scripts/`, `tests/`, `config.json`, `environment.yml`, `run_all.py` and `README.md`.
+`data/raw/` (it cannot be made again), `scripts/` with `rebuild.sh`, `tests/`, `config.json`, `environment.yml` and `README.md`.
 
 </div>
 
@@ -1655,5 +1655,5 @@ hideInToc: true
     'scripts/ and data/processed/'
   ]"
   :correct="1"
-  explanation="data/processed/ and results/ hold only what the scripts write: the cleaned tables, the plot, the fit, the report. data/raw/ cannot be made again, and scripts/ (with run_all.py, config.json, environment.yml and the README) is the recipe. Delete the outputs, run the one command, and the same files and the same numbers come back."
+  explanation="data/processed/ and results/ hold only what the scripts write: the cleaned tables, the plot, the fit, the report. data/raw/ cannot be made again, and scripts/ (with rebuild.sh, the tests, config.json, environment.yml and the README) is the recipe. Delete the outputs, run the one command, and the same files and the same numbers come back."
 />

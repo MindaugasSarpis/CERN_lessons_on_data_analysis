@@ -110,8 +110,8 @@ questions, with their answers:
 5. In a reproducible project, two folders can be deleted at any time and
    rebuilt with one command. Which two?
    *`data/processed/` and `results/`: they hold only what the scripts write.
-   `data/raw/` cannot be made again, and the scripts with `run_all.py`,
-   `config.json`, `environment.yml` and the README are the recipe.*
+   `data/raw/` cannot be made again, and the scripts with `rebuild.sh`,
+   the tests, `config.json`, `environment.yml` and the README are the recipe.*
 
 ## Before the first seminar
 
