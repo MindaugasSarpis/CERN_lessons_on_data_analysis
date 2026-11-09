@@ -79,16 +79,16 @@ z
    </g>
    <g id="legend_1">
     <g id="patch_8">
-     <path d="M 126.920145 21.620072 
-L 146.920145 21.620072 
-L 146.920145 14.620072 
-L 126.920145 14.620072 
+     <path d="M 126.920145 21.620073 
+L 146.920145 21.620073 
+L 146.920145 14.620073 
+L 126.920145 14.620073 
 z
 " style="fill: #7dd3fc; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_1">
      <!-- Python -->
-     <g style="fill: #e6edf6" transform="translate(154.920145 21.620072) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 21.620073) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-13" d="M 550 0 
 L 550 4480 
@@ -244,16 +244,16 @@ z
      </g>
     </g>
     <g id="patch_9">
-     <path d="M 126.920145 39.380072 
-L 146.920145 39.380072 
-L 146.920145 32.380072 
-L 126.920145 32.380072 
+     <path d="M 126.920145 39.380073 
+L 146.920145 39.380073 
+L 146.920145 32.380073 
+L 126.920145 32.380073 
 z
 " style="fill: #f5b95f; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_2">
      <!-- R -->
-     <g style="fill: #e6edf6" transform="translate(154.920145 39.380072) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 39.380073) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-15" d="M 550 0 
 L 550 4480 
@@ -292,16 +292,16 @@ z
      </g>
     </g>
     <g id="patch_10">
-     <path d="M 126.920145 57.140072 
-L 146.920145 57.140072 
-L 146.920145 50.140072 
-L 126.920145 50.140072 
+     <path d="M 126.920145 57.140073 
+L 146.920145 57.140073 
+L 146.920145 50.140073 
+L 126.920145 50.140073 
 z
 " style="fill: #66d9ab; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_3">
      <!-- Excel / Sheets -->
-     <g style="fill: #e6edf6" transform="translate(154.920145 57.140072) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 57.140073) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-8" d="M 550 0 
 L 550 4480 
@@ -506,16 +506,16 @@ z
      </g>
     </g>
     <g id="patch_11">
-     <path d="M 126.920145 74.900072 
-L 146.920145 74.900072 
-L 146.920145 67.900072 
-L 126.920145 67.900072 
+     <path d="M 126.920145 74.900073 
+L 146.920145 74.900073 
+L 146.920145 67.900073 
+L 126.920145 67.900073 
 z
 " style="fill: #e88bc4; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_4">
      <!-- MATLAB -->
-     <g style="fill: #e6edf6" transform="translate(154.920145 74.900072) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 74.900073) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-10" d="M 550 0 
 L 550 4480 
@@ -628,16 +628,16 @@ z
      </g>
     </g>
     <g id="patch_12">
-     <path d="M 126.920145 92.660072 
-L 146.920145 92.660072 
-L 146.920145 85.660072 
-L 126.920145 85.660072 
+     <path d="M 126.920145 92.660073 
+L 146.920145 92.660073 
+L 146.920145 85.660073 
+L 126.920145 85.660073 
 z
 " style="fill: #8f9dfb; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_5">
      <!-- Julia -->
-     <g style="fill: #e6edf6" transform="translate(154.920145 92.660072) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 92.660073) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-d" d="M 1670 -90 
 Q 1030 -90 656 278 
@@ -750,16 +750,16 @@ z
      </g>
     </g>
     <g id="patch_13">
-     <path d="M 126.920145 110.420072 
-L 146.920145 110.420072 
-L 146.920145 103.420072 
-L 126.920145 103.420072 
+     <path d="M 126.920145 110.420073 
+L 146.920145 110.420073 
+L 146.920145 103.420073 
+L 126.920145 103.420073 
 z
 " style="fill: #f0e07a; stroke: #050507; stroke-width: 1.5; stroke-linejoin: miter"/>
     </g>
     <g id="text_6">
      <!-- Other -->
-     <g style="fill: #e6edf6" transform="translate(154.920145 110.420072) scale(0.1 -0.1)">
+     <g style="fill: #e6edf6" transform="translate(154.920145 110.420073) scale(0.1 -0.1)">
       <defs>
        <path id="SpaceGrotesk-Light-12" d="M 2131 -90 
 Q 1344 -90 877 374 

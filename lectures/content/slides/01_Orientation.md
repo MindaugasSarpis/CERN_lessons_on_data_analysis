@@ -532,11 +532,11 @@ hideInToc: true
 
 <div class="stat-grid">
   <div class="stat">
-    <span class="stat-num gradient-text">64</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text">52</span><span class="stat-unit">h</span>
     <div class="stat-label">Contact hours</div>
   </div>
   <div class="stat">
-    <span class="stat-num gradient-text energy">76</span><span class="stat-unit">h</span>
+    <span class="stat-num gradient-text energy">88</span><span class="stat-unit">h</span>
     <div class="stat-label">Self study</div>
   </div>
   <div class="stat">
@@ -559,7 +559,7 @@ hideInToc: true
 
 # **Schedule**
 
-Every **Tuesday**: **2 h lecture** + **2 h seminar**, **8 Sep to 22 Dec 2026**. Week 1 is lecture only; seminars start with the second session. No session on 15 Sep, 22 Sep and 24 Nov.
+Every **Tuesday**: **2 h lecture** + **2 h seminar**, **8 Sep to 22 Dec 2026**. Week 1 is lecture only; seminars start with the second session. No session on 15 Sep, 22 Sep, 3 Nov and 24 Nov.
 
 <div class="grid-2 gap-sm mt-sm">
 
@@ -571,20 +571,19 @@ Every **Tuesday**: **2 h lecture** + **2 h seminar**, **8 Sep to 22 Dec 2026**. 
 | 4 | 13 Oct | **A** · Command Line & File Handling |
 | 5 | 20 Oct | **A** · Python Foundations |
 | 6 | 27 Oct | **A** · Version Control with Git |
-| 7 | 3 Nov | **B** · Python for Data & NumPy |
 
 | | **Tue** | **Lecture** |
 | --- | --- | --- |
-| 8 | 10 Nov | **C** · Data Visualisation |
-| 9 | 17 Nov | **C** · Probability & Statistics |
-| 10 | 1 Dec | **C** · Data Fitting from First Principles |
-| 11 | 8 Dec | **C** · The Perceptron |
-| 12 | 15 Dec | **D** · Pandas & Data Cleaning |
-| 13 | 22 Dec | **D** · Reproducible Workflows & Automation |
+| 7 | 10 Nov | **B** · Data Visualisation |
+| 8 | 17 Nov | **B** · Data Quality and Uncertainty |
+| 9 | 1 Dec | **C** · Parameter Estimation and Fitting |
+| 10 | 8 Dec | **C** · Classification and the Perceptron |
+| 11 | 15 Dec | **C** · From Neurons to Language Models |
+| 12 | 22 Dec | **D** · Code That Lasts |
 
 </div>
 
-<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Programming · <strong>C</strong> Data Analysis Core · <strong>D</strong> Practical Data Work. Block <strong>E</strong>, Further Topics (concepts of data analysis, computing infrastructure, machine learning), is extra material. <strong>Final project presentations</strong> are in the exam session.</div>
+<div class="note-text mt-sm">Blocks: <strong>A</strong> Foundations & Tooling · <strong>B</strong> Data & Uncertainty · <strong>C</strong> Models & Learning · <strong>D</strong> Reproducible Work. Block <strong>E</strong>, Further Topics (concepts of data analysis, computing infrastructure, machine learning), is extra material. <strong>Final project presentations</strong> are in the exam session.</div>
 
 <style scoped>
 table {
@@ -626,8 +625,10 @@ hideInToc: true
 | 03 | What a file is: bytes and text; first commands in a terminal | Files measured, byte by byte |
 | 04 | zsh and Git Bash, package managers, conda environments, checksums | Files made by typed lines, an `environment.yml` |
 | 05 | Python | Scripts of your own |
-| 06–07 | Git, then arrays of numbers | A history of every change |
-| 08–13 | Plots, statistics, fitting, cleaning, one command for all | Results that rebuild |
+| 06 | Git | A history of every change |
+| 07–08 | Figures; data quality and uncertainty | Figures, and numbers with their ± |
+| 09–11 | Fitting, classification, networks, language models | Models understood from the inside |
+| 12 | Modules, objects, tests, one command for all | Results that rebuild |
 
 </div>
 
@@ -1017,9 +1018,10 @@ hideInToc: true
 | **At CERN** | **The skill** | **Lectures** |
 | --- | --- | --- |
 | Petabytes of detector output | Files, formats, folders | 02–04 |
-| Thousands of scientists share one codebase | Version control | 05 |
-| Electronic signals become physics | Python and data analysis | 06–13 |
-| A bump in the data: a discovery or noise? | Statistics | 09–10 |
+| Thousands of scientists share one codebase | Version control | 06 |
+| Electronic signals become physics | Python and data analysis | 05–12 |
+| A bump in the data: a discovery or noise? | Statistics and fitting | 08–09 |
+| Collisions sorted into signal and background | Classification, neural networks | 10–11 |
 
 </div>
 
@@ -1402,7 +1404,7 @@ hideInToc: true
 
 - **European Organization for Nuclear Research**
 - Founded in **1954** by 12 European states
-- Today: **24 member states**, thousands of visiting scientists
+- Today: **25 member states**, thousands of visiting scientists
 - Located at the **French-Swiss border** near Geneva
 
 </div>
@@ -1439,9 +1441,9 @@ hideInToc: true
 ## ⚙️ **The Machine**
 
 - A **27 km** circumference ring situated **100 m** underground
-- Accelerates protons to **99.9999991%** the speed of light
-- Collides particles **~1 billion times per second**
-- Operating temperature: **1.9 K** (about −271.3 °C, colder than outer space)
+- Accelerates protons to **99.99999905 %** of the speed of light
+- Up to **~1 billion** collisions per second; shut down since **29 June 2026** for its upgrade
+- Magnets at **1.9 K** when running (about −271.3 °C, colder than outer space)
 
 </div>
 
