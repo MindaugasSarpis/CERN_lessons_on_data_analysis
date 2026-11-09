@@ -7,5 +7,10 @@ allowBuilds:
   esbuild: true
   playwright-chromium: true
 
+# Local fixes (patches/): the runner's output lines, and the presenter's
+# countdown past its end, "-2:05" instead of "-1:-3:-5" (same code in Slidev
+# 53.1.0; after a Slidev upgrade pnpm stops on the unused patch: move its key
+# to the new version, or drop it once Slidev formats the overtime itself).
 patchedDependencies:
+  '@slidev/client@53.0.0': patches/@slidev__client@53.0.0.patch
   slidev-addon-python-runner@0.1.3: patches/slidev-addon-python-runner@0.1.3.patch

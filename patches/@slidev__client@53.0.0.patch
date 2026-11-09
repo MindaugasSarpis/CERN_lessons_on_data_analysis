@@ -1,0 +1,30 @@
+diff --git a/composables/useTimer.ts b/composables/useTimer.ts
+index cdefd76a1f51e934b1767668013bdf58bfc8684f..5f3253ee3663d2bccb9836ac3832d4441ed5acc8 100644
+--- a/composables/useTimer.ts
++++ b/composables/useTimer.ts
+@@ -29,9 +29,13 @@ export function useTimer() {
+         return { h: '', m: '-', s: '--', ms: '-' }
+     }
+ 
+-    const total = mode.value === 'countdown'
++    const signed = mode.value === 'countdown'
+       ? duration.value * 1000 - passedMs.value
+       : passedMs.value
++    // Past its end a countdown goes negative: show the overtime as "-2:05",
++    // not a minus on every field ("-1:-3:-5").
++    const sign = signed < 0 ? '-' : ''
++    const total = Math.abs(signed)
+ 
+     let h = Math.floor(total / 1000 / 60 / 60).toString()
+     if (h === '0')
+@@ -41,6 +45,10 @@ export function useTimer() {
+       min = min.padStart(2, '0')
+     const sec = Math.floor(total / 1000 % 60).toString().padStart(2, '0')
+     const ms = Math.floor(total % 1000 / 100).toString()
++    if (h)
++      h = sign + h
++    else
++      min = sign + min
+ 
+     return {
+       h,
