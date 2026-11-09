@@ -67,7 +67,42 @@ _STATES = [
     "Maryland", "Wisconsin", "Colorado", "Minnesota", "South Carolina", "Alabama",
     "Louisiana", "Kentucky", "Oregon", "Oklahoma", "Connecticut", "Utah",
 ]
-_HIGHLIGHT = {"Utah": 13.8, "Texas": 11.4, "Florida": 10.6}
+# Resident population at the 2010 and the 2020 census (US Census Bureau),
+# as tabled in the Wikipedia article "2020 United States census".
+_POP_2010_2020 = {
+    "California": (37253956, 39538223),
+    "Texas": (25145561, 29145505),
+    "Florida": (18801310, 21538187),
+    "New York": (19378102, 20201249),
+    "Pennsylvania": (12702379, 13002700),
+    "Illinois": (12830632, 12812508),
+    "Ohio": (11536504, 11799448),
+    "Georgia": (9687653, 10711908),
+    "North Carolina": (9535483, 10439388),
+    "Michigan": (9883640, 10077331),
+    "New Jersey": (8791894, 9288994),
+    "Virginia": (8001024, 8631393),
+    "Washington": (6724540, 7705281),
+    "Arizona": (6392017, 7151502),
+    "Massachusetts": (6547629, 7029917),
+    "Tennessee": (6346105, 6910840),
+    "Indiana": (6483802, 6785528),
+    "Missouri": (5988927, 6154913),
+    "Maryland": (5773552, 6177224),
+    "Wisconsin": (5686986, 5893718),
+    "Colorado": (5029196, 5773714),
+    "Minnesota": (5303925, 5706494),
+    "South Carolina": (4625364, 5118425),
+    "Alabama": (4779736, 5024279),
+    "Louisiana": (4533372, 4657757),
+    "Kentucky": (4339367, 4505836),
+    "Oregon": (3831074, 4237256),
+    "Oklahoma": (3751351, 3959353),
+    "Connecticut": (3574097, 3605944),
+    "Utah": (2763885, 3271616),
+
+}
+_HIGHLIGHT = ("Utah", "Texas", "Colorado")   # the three that grew fastest
 _CODES = dict(zip(_STATES, [
     "CA", "TX", "FL", "NY", "PA", "IL", "OH", "GA", "NC", "MI", "NJ", "VA",
     "WA", "AZ", "MA", "TN", "IN", "MO", "MD", "WI", "CO", "MN", "SC", "AL",
@@ -75,11 +110,9 @@ _CODES = dict(zip(_STATES, [
 
 
 def _popgrowth_highlight():
-    rng = np.random.default_rng(30)
-    # the highlighted three are the three highest: no grey bar above them
-    growth = np.minimum(rng.normal(4.2, 3.0, len(_STATES)), 9.5)
-    for state, value in _HIGHLIGHT.items():
-        growth[_STATES.index(state)] = value
+    # growth from 2010 to 2020, in % of the 2010 population
+    growth = np.array([100 * (_POP_2010_2020[st][1] - _POP_2010_2020[st][0])
+                       / _POP_2010_2020[st][0] for st in _STATES])
 
     # vertical bars, highest first, each state by its two-letter code: the
     # slide shows the figure full width
@@ -102,10 +135,10 @@ def _popgrowth_highlight():
             label.set_color(style.DIM)
     for i, s in enumerate(states):
         if s in _HIGHLIGHT:
-            ax.text(i, values[i] + 0.4, f"+{values[i]:.1f}%", color=style.ACCENT,
+            ax.text(i, values[i] + 0.3, f"+{values[i]:.1f}", color=style.ACCENT, fontsize=9,
                     ha="center", va="bottom", fontweight="bold")
-    ax.set_ylabel("Growth rate (%)")
-    ax.set_title("Population Growth by State")
+    ax.set_ylabel("population growth 2010–2020 (%)")
+    ax.set_title("The 30 most populous states of 2020: growth since 2010")
     ax.xaxis.grid(False)
     ax.yaxis.grid(True)
     style.save(fig, "viz_color_popgrowth_us_highlight")

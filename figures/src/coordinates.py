@@ -90,7 +90,44 @@ def _sqrt_scale():
     style.save(fig, "viz_coordinates_axes_sqrt_scale")
 
 
+# ---------------------------------------------------------------------------
+# A legend without samples, and its repair. GDP growth of China and India,
+# 2010-2014, % per year (World Bank, rounded as first published).
+YEARS_GDP = [2010, 2011, 2012, 2013, 2014]
+GDP = {"China": [10.6, 9.5, 7.9, 7.8, 7.3], "India": [10.3, 6.6, 5.6, 6.6, 7.2]}
+
+
+def _legend_samples_bad():
+    fig, ax = style.new_fig(5.1, 3.4)
+    for (name, v), c in zip(GDP.items(), (style.BAD, "#6f8cff")):
+        ax.plot(YEARS_GDP, v, color=c, lw=1.6)
+    # names only: no line samples beside them
+    ax.legend([plt.Line2D([], [], lw=0)] * 2, list(GDP), loc="upper right",
+              handlelength=0, handletextpad=0, frameon=True, edgecolor=style.DIM)
+    ax.set_xticks(YEARS_GDP)
+    ax.set_ylim(-5, 15)
+    ax.set_xlabel("year")
+    ax.set_ylabel("growth rate")
+    style.save(fig, "viz_legend_samples_bad")
+
+
+def _legend_samples_good():
+    fig, ax = style.new_fig(5.1, 3.4)
+    for (name, v), c in zip(GDP.items(), (style.CYCLE[1], style.ACCENT)):
+        ax.plot(YEARS_GDP, v, color=c, lw=2)
+        ax.text(YEARS_GDP[-1] + 0.12, v[-1] + (0.35 if name == "China" else -0.35),
+                name, color=c, va="center", fontsize=11)
+    ax.set_xticks(YEARS_GDP)
+    ax.set_xlim(2009.8, 2014.9)
+    ax.set_ylim(0, 12)
+    ax.set_xlabel("year")
+    ax.set_ylabel("GDP growth (% per year)")
+    style.save(fig, "viz_legend_samples_good")
+
+
 FIGURES = {
+    "viz_legend_samples_bad": _legend_samples_bad,
+    "viz_legend_samples_good": _legend_samples_good,
     "viz_coordinates_axes_axes_labels_bad_good": _labels_bad_good,
     "viz_coordinates_axes_houston_temps_aspect_ratios": _aspect_ratios,
     "viz_coordinates_axes_polar_vs_cartesian": _polar_vs_cartesian,

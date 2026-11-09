@@ -352,7 +352,7 @@ A **dictionary of lists**: one key per day, and under it the list of that day's 
 
 <!-- 0:45 · 10 min -->
 
-`datetime.fromisoformat` turns a text such as `2016-01-01` into a date; Matplotlib writes the years under an axis of dates.
+The lecture drew every hour at its time with `weather.hours`; here each day gets one point, the mean of its hours, from `weather.group`. `datetime.fromisoformat` turns a text such as `2016-01-01` into a date; Matplotlib writes the years under an axis of dates.
 
 1. Replace `figures.py` with this. The first line is new: from the module
    `datetime`, which comes with Python, it takes the type of the same name. The lines from `days = ...` replace the

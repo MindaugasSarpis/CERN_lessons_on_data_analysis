@@ -216,7 +216,7 @@ def _small_multiples_gapminder():
     for ax in axes[-1, :]:
         ax.set_xlabel("Year", fontsize=9)
     for ax in axes[:, 0]:
-        ax.set_ylabel("GDP / capita\n(synthetic $)", fontsize=9)
+        ax.set_ylabel("GDP / capita ($)", fontsize=9)
     fig.suptitle("Small Multiples — Same Scale, Six Panels")
     style.save(fig, "viz_multi_panel_small_multiples_gapminder")
 
@@ -243,7 +243,7 @@ def _keeling_curve():
     fig, ax = style.new_fig(7.6, 4.4)
     ax.plot(years, observed, color=style.ACCENT, lw=1.3)
     ax.set_xlabel("Year")
-    ax.set_ylabel("CO$_2$ (ppm, synthetic)")
+    ax.set_ylabel("CO$_2$ (ppm)")
     ax.set_title("Keeling-style CO$_2$ Curve, 1958–2024")
     style.save(fig, "viz_trends_keeling_curve")
 

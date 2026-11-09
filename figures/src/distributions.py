@@ -289,6 +289,72 @@ def _iris_densities_filled():
     style.save(fig, "viz_avoid_line_drawings_iris_densities_filled")
 
 
+# ---------------------------------------------------------------------------
+# The hourly temperatures of the weather log as a boxplot, a violin and a
+# strip: the cold months (Nov-Mar), the warm months (Apr-Oct) and all hours.
+# All hours have two peaks; the box hides them, the violin shows them.
+# ---------------------------------------------------------------------------
+
+SEASON_ORDER = ["Nov–Mar", "Apr–Oct", "all hours"]
+SEASON_COLOR = {"Nov–Mar": style.ACCENT, "Apr–Oct": style.CYCLE[1], "all hours": style.CYCLE[4]}
+
+
+def _weather_by_season():
+    from handson import PATH, group
+    months = group(PATH, 5, 7)            # 'MM' -> the hours of that month
+    cold = [t for m, v in months.items() if m in ("11", "12", "01", "02", "03") for t in v]
+    warm = [t for m, v in months.items() if m not in ("11", "12", "01", "02", "03") for t in v]
+    return {"Nov–Mar": cold, "Apr–Oct": warm, "all hours": cold + warm}
+
+
+def _weather_axes(ax):
+    ax.set_xticks(range(len(SEASON_ORDER)), SEASON_ORDER)
+    ax.set_ylabel("temperature (°C)")
+    ax.set_ylim(-20, 36)
+    ax.xaxis.grid(False)
+
+
+def _weather_boxplot():
+    data = _weather_by_season()
+    fig, ax = style.new_fig(4.8, 3.8)
+    bx = ax.boxplot([data[g] for g in SEASON_ORDER], positions=range(3), widths=0.5,
+                    patch_artist=True, medianprops=dict(color=style.FG, lw=1.6),
+                    whiskerprops=dict(color=style.DIM), capprops=dict(color=style.DIM),
+                    flierprops=dict(marker="o", ms=2, markerfacecolor=style.DIM,
+                                    markeredgecolor="none", alpha=0.5))
+    for g, box in zip(SEASON_ORDER, bx["boxes"]):
+        box.set_facecolor(SEASON_COLOR[g]); box.set_alpha(0.55); box.set_edgecolor(SEASON_COLOR[g])
+    _weather_axes(ax)
+    ax.set_title("Boxplot")
+    style.save(fig, "viz_distributions_ii_weather_boxplot")
+
+
+def _weather_violin():
+    data = _weather_by_season()
+    fig, ax = style.new_fig(4.8, 3.8)
+    parts = ax.violinplot([data[g] for g in SEASON_ORDER], positions=range(3), widths=0.8,
+                          showmedians=True, showextrema=False, points=200)
+    for g, body in zip(SEASON_ORDER, parts["bodies"]):
+        body.set_facecolor(SEASON_COLOR[g]); body.set_edgecolor(SEASON_COLOR[g]); body.set_alpha(0.6)
+    parts["cmedians"].set_color(style.FG)
+    _weather_axes(ax)
+    ax.set_title("Violin")
+    style.save(fig, "viz_distributions_ii_weather_violin")
+
+
+def _weather_strip():
+    data = _weather_by_season()
+    rng = np.random.default_rng(7)
+    fig, ax = style.new_fig(4.8, 3.8)
+    for i, g in enumerate(SEASON_ORDER):
+        pick = rng.choice(np.array(data[g]), 400, replace=False)
+        ax.scatter(i + rng.uniform(-0.22, 0.22, pick.size), pick, s=4, alpha=0.6,
+                   color=SEASON_COLOR[g], linewidths=0, rasterized=True)
+    _weather_axes(ax)
+    ax.set_title("Strip, 400 hours each")
+    style.save(fig, "viz_distributions_ii_weather_strip")
+
+
 FIGURES = {
     "viz_distributions_i_anscombes_quartet": _anscombes_quartet,
     "viz_distributions_i_titanic_density": _titanic_density,
@@ -296,6 +362,9 @@ FIGURES = {
     "viz_distributions_i_titanic_ecdf": _titanic_ecdf,
     "viz_distributions_i_qq_plot": _qq_plot,
     "viz_distributions_ii_mpg_boxplot": _mpg_boxplot,
+    "viz_distributions_ii_weather_boxplot": _weather_boxplot,
+    "viz_distributions_ii_weather_violin": _weather_violin,
+    "viz_distributions_ii_weather_strip": _weather_strip,
     "viz_distributions_ii_mpg_strip_jitter": _mpg_strip_jitter,
     "viz_distributions_ii_mpg_violin": _mpg_violin,
     "viz_distributions_ii_ridgeline": _ridgeline,

@@ -1253,3 +1253,51 @@ improve the content, clarity, of this lecture. I am delivering it tomorrow."
 - Not done tonight: a repaired figure for A Legend Without Samples (the
   repair is said aloud), a weather-log boxplot and violin for slide 33,
   real Census values for Colour to Highlight. The deck estimates 153 min.
+
+## 2026-11-09 (evening) · Lecture 7: a gentler main path, and how it sits with Lectures 5, 6 and 8
+
+**What happened:** the lecturer: "go ahead and implement all of the changes
+tonight, also do a once-over, see how this works together with other
+lectures (in terms of style, visuals, clarity). They should still all be
+self contained and quite gradual, people are saying this might be a bit too
+complicated."
+
+**Changed in response:**
+
+- The main path is slides 1–81 and estimates 131 min (was 153). Twelve
+  slides with new datasets, statistics or particle physics moved to For the
+  Curious, which now holds more chart types (83–92) and figures of three to
+  five variables (93–101): bin widths of ages, the empirical CDF, bubble,
+  overlapping points, hexagonal bins, correlation heatmap, pair plot,
+  slopegraph, square-root scale, the gene reference line, the surface, the
+  3D scatter and the LHCb 2D histogram.
+- The Parts of a Figure is built on the histogram of the hours (frame, axes
+  with units, bars, the mean as a reference line, an annotation, a title
+  that states the finding), no more D⁰.
+- Done from the earlier list: A Legend Without Samples redrawn as a pair
+  (China and India, a name at each line); the boxplot, violin and strip
+  drawn from the weather log (cold months, warm months, all hours: the
+  violin of all hours shows the two peaks); Colour to Highlight on the 2010
+  and 2020 census populations (Utah, Texas, Colorado the fastest).
+- Plainer wording: Anscombe without *r* on the slide (note); the boxplot as
+  "the middle half" and the median (quartiles, IQR in the note); the band of
+  uncertainty without resampling (note); the logarithmic axis as steps of
+  ten; the ranking of channels as an experiment; density as a smoothed
+  histogram.
+- With Lecture 5 and Seminar 7: the opening code uses Lecture 5's lines and
+  names; the code slides use the seminar's names (`by_year`, `year_means`,
+  `month_means`, `all_mean`, `plt.rcParams`) and no `range` on the core
+  slide; the first code slide says where the script lives and how it runs
+  (`scripts/figures.py`); Seminar 7 says why it draws daily means where the
+  lecture drew every hour. Every main-path slide has a speaker note now; the
+  recap is titled as in Lectures 4–6.
+
+**Decided by the builder, for the lecturer to check:**
+
+- Not changed: the order "pictures first, code after" (the 5 Nov decision),
+  although a reviewer suggested the code right after the opening.
+- Lecture 8 (draft) does not yet fit the new order: notes that cite
+  Lecture 4 for `D0_KPi.csv`, a Learning Objectives slide, `def`/`return`
+  taught again (slides 5–11), the pendulum and LHCb data where Lecture 7 and
+  Seminar 8 use the weather log, `np.histogram` not linked to `ax.hist`, and
+  the old `Speaker:` note form. To rework before it is released.

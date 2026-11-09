@@ -277,10 +277,10 @@ def _year_means():
 
     fig, ax = plt.subplots(figsize=(5.2, 3.6))
     ax.axhline(all_hours, color="#D55E00", label="2016–2025: 7.16 °C")
-    ax.plot(range(2016, 2026), means, "o", color="#56B4E9",
-            label="one year")
+    ax.plot(list(names), means, "o",   # "o": a point each
+            color="#56B4E9", label="one year")
     ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
-    ax.legend(frameon=False, loc="lower left")
+    ax.legend(loc="lower left")
     style.save(fig, "viz_handson_year_means")
 
 

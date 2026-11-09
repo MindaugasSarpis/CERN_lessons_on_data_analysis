@@ -56,11 +56,12 @@ time,temp_c,humidity_pct,wind_ms
 ## 🐍 **The mean of the measured hours**
 
 ```python
+lines = open("data/raw/weather.csv").read().splitlines()
 temps = []
-for line in open("weather.csv").readlines()[1:]:
-    t = float(line.split(",")[1])   # temp_c
-    if t != -999:
-        temps.append(t)
+for line in lines[1:]:
+    temp = float(line.split(",")[1])   # temp_c
+    if temp != -999:
+        temps.append(temp)
 print(len(temps), sum(temps) / len(temps))
 ```
 
@@ -81,7 +82,7 @@ print(len(temps), sum(temps) / len(temps))
 <!--
 **Say:** ten years of one weather station, hour by hour, and one number for all of it: 7.16 °C. The rest of the lecture looks at the hours themselves.
 **Ask:** hands up for "yes, the most hours", hands up for "no". The histogram of the hours answers it.
-**If asked:** the same loop is the function `mean` of `weather.py` from Lecture 5; `readlines()[1:]` skips the header row.
+**If asked:** the same steps are `weather.temps` and `weather.mean` of Lecture 5; `lines[1:]` skips the header row.
 (~2 min)
 -->
 
@@ -136,7 +137,7 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact mt-sm">
 
-⚠️ Four tables of 11 points (Anscombe, 1973). In each one the mean of x is 9.0, the mean of y is 7.5, and the closest straight line is y = 3.00 + 0.50x. Each has r = 0.82, where r measures how near the points lie to a straight line: 1 on a rising line, −1 on a falling one, 0 with no trend. What do the four tables look like?
+⚠️ Four tables of 11 points (Anscombe, 1973). All four have the same mean of x, 9.0, the same mean of y, 7.5, and the same straight line through them, y = 3.00 + 0.50x. What do the four tables look like?
 
 </div>
 
@@ -152,6 +153,7 @@ class: fill
 **Do:** read the four numbers first.
 **Ask:** what do the four tables look like?
 **Say:** after the click: a line with scatter, a curve, a line with one point off it, and ten points at one x with a single point that makes the whole slope. The mean 7.16 °C was one such number: it hid the two peaks.
+**If asked:** each panel also prints r = 0.82: r says how near the points lie to a straight line, 1 on a rising line, −1 on a falling one, 0 with no trend. All four tables have the same r.
 (~2 min)
 -->
 
@@ -184,6 +186,12 @@ class: fill
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_aesthetic_mapping_common_aesthetics.svg">
 
+<!--
+**Say:** every figure is a set of such choices; the ten-year plot used only the two positions.
+**Ask:** which channel would show a third variable of that plot, the humidity?
+(~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -194,7 +202,7 @@ hideInToc: true
 
 ## 👁️ **Measured accuracy, best first**
 
-Cleveland and McGill (1984), and Heer and Bostock (2010) online with many more people, measured how exactly each channel is read, from the most to the least accurate. The most important variable gets the highest channel that is free.
+People were shown the same values in each channel and asked to read them (Cleveland and McGill, 1984): positions were read most exactly, colours least. The most important variable goes on the best channel still free.
 
 </div>
 
@@ -202,31 +210,31 @@ Cleveland and McGill (1984), and Heer and Bostock (2010) online with many more p
 
 <div class="card card-success card-glass pad-compact">
 
-🥇 **Position on a common scale**: bar chart, scatter plot
+1\. **Position on a common scale**: bar chart, scatter plot
 
 </div>
 
 <div class="card card-primary card-glass pad-compact">
 
-🥈 **Position on identical scales that are not aligned**: small multiples
+2\. **Position on identical scales that are not aligned**: small multiples
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-🥉 **Length**: the segments of a stacked bar
+3\. **Length**: the segments of a stacked bar
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-4️⃣ **Angle, slope, area**: pie chart, bubble chart
+4\. **Angle, slope, area**: pie chart, bubble chart
 
 </div>
 
 <div class="card card-warning card-glass pad-compact">
 
-5️⃣ **Colour saturation and hue**: heatmap. For a third variable, or when position is taken
+5\. **Colour saturation and hue**: heatmap. For a third variable, or when position is taken
 
 </div>
 
@@ -253,10 +261,10 @@ class: fill
   <img v-click src="/figures/viz_anatomy_stage6.svg" alt="">
 </div>
 
-<div class="note-text mt-sm">Example values: pairs of a K⁻ and a π⁺ counted by their combined mass, in bins of 2 MeV/c². The peak at 1865 MeV/c² is the D⁰ particle, which decays into such a pair. The bar on each point is ± √N for a count of N.</div>
+<div class="note-text mt-sm">The histogram of the 87 552 hours, one part per click: the frame, the axes with their units, the data, a reference line, an annotation, a title that states the finding.</div>
 
 <!--
-**Do:** click through: frame, axes with units, the data, its uncertainty, the annotation, the title that states the finding.
+**Do:** click through: frame, axes with units, the data, the mean as a reference line, the annotation, the title that states the finding.
 **Say:** an element that carries no information is left out.
 (~2 min)
 -->
@@ -308,6 +316,11 @@ A legend lists the colours, shapes and sizes used in a plot and says which group
 
 </div>
 
+<!--
+**Ask:** which of the four rules does a plot with one line need? None: it needs no legend.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -315,21 +328,35 @@ class: fill
 
 # A Legend Without **Samples**
 
-<div class="fig-fill grid-side mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div v-click class="card card-warning card-glass pad-compact">
-
-⚠️ The legend names two countries and shows no sample of either line: nothing says which colour is which. The y-axis has no unit.
+📈 The economic growth of China and India, 2010 to 2014.
 
 </div>
 
-<img class="fig fig-light" src="/figures/data_vis_legend_error_1.png">
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_legend_samples_bad.svg">
+
+🚫 **Names without samples**: which line is which? In which unit?
 
 </div>
 
+<div v-click class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_legend_samples_good.svg">
+
+✅ **A name at the end of each line**, and the unit on the axis
+
+</div>
+
+</div>
 
 <!--
 **Ask:** before the click: which line is which country, and in which unit?
+**Say:** with two lines, a name at the end of each line needs no legend at all; the eye does not travel between the legend and the data.
 (~1 min)
 -->
 
@@ -347,6 +374,12 @@ class: fill
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_axes_labels_bad_good.svg">
+
+<!--
+**Ask:** what does the left plot measure, and in what? Nobody can say.
+**Say:** a label names the quantity and its unit in round brackets: `temperature (°C)`.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -381,6 +414,11 @@ class: fill
 
 </div>
 
+<!--
+**Do:** ask the back row to read the left labels.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -396,6 +434,11 @@ class: fill
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_polar_vs_cartesian.svg">
 
+<!--
+**Say:** the same 145 values twice: on a straight axis 0° and 360° lie at the two ends; on a circle they meet.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -410,6 +453,11 @@ class: fill
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_houston_temps_aspect_ratios.svg">
+
+<!--
+**Ask:** in which of the three does the temperature look most dramatic? The tall one, with the same numbers.
+(~1 min)
+-->
 
 ---
 layout: section
@@ -444,6 +492,10 @@ class: fill
 
 </div>
 
+<!--
+**Ask:** which film earned the second most? The eye has to tilt to read the titles.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -460,6 +512,10 @@ class: fill
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_amounts_boxoffice_wide.svg">
 
+<!--
+**Say:** first repair: give the bars more room, and the titles stand level.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -480,6 +536,10 @@ class: fill
 
 </div>
 
+<!--
+**Say:** second repair: turn the chart. A title of any length fits, and a film more adds a row.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -526,6 +586,10 @@ class: fill
 
 </div>
 
+<!--
+**Say:** the same five rates as before; only the axis changed.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -585,6 +649,10 @@ class: fill
 
 </div>
 
+<!--
+**Ask:** did the Master students grow from 2021 to 2024? Hard to say: their segments start at different heights.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -605,6 +673,10 @@ class: fill
 
 </div>
 
+<!--
+**Ask:** which product sold most? 63 thousand, the third bar, which looks no taller than the others.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -625,6 +697,10 @@ class: fill
 
 </div>
 
+<!--
+**Say:** the depth added no information, only distortion; flat bars with their values answer at once.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -711,7 +787,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact">
 
-📈 The ages of 714 passengers of the Titanic. A kernel density estimate replaces each value by a small bell-shaped bump and adds the bumps up. The y-axis is scaled so that the area under the curve is 1. The width of the bumps, the bandwidth, is chosen by the author, as a bin width is.
+📈 The ages of 714 passengers of the Titanic. A density is a smoothed histogram: each age becomes a small bump, and the bumps are added up. How wide the bumps are is chosen by the author, as a bin width is.
 
 </div>
 
@@ -719,71 +795,10 @@ class: fill
 
 </div>
 
-
----
-hideInToc: true
-class: fill
----
-
-# Bin Widths of 0.5, 5 and 20 **Years**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-📏 The same ages with bins of 0.5, 5 and 20 years. With 0.5 years the bars jump between a few people and thirty: ages are whole years, so every second bin is nearly empty. With 20 years the shape is four bars.
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_i_titanic_hist_binwidth.svg">
-
----
-hideInToc: true
-class: fill
----
-
-<div class="card card-info card-glass pad-compact">
-
-📦 The fuel economy of cars with 4, 6 and 8 cylinders, drawn three ways.
-
-</div>
-
-<div class="fig-fill grid-3 mt-sm gap-md">
-
-<div class="card card-primary card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_distributions_ii_mpg_boxplot.svg">
-
-📦 **Boxplot**: five numbers per group, and the points beyond the whiskers
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_distributions_ii_mpg_violin.svg">
-
-🎻 **Violin**: a density curve and its mirror image, so a second peak shows
-
-</div>
-
-<div class="card card-accent card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_distributions_ii_mpg_strip_jitter.svg">
-
-〰️ **Strip**: every value as a point, shifted sideways at random
-
-</div>
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-📐 The **median** has half of the values below it. A quarter lie below the first **quartile** and three quarters below the third. The box runs from the first to the third quartile, and its length is the interquartile range (**IQR**). The line in the box is the median. A whisker ends at the last value within 1.5 × IQR of the box, and values beyond it are drawn one by one.
-
-</div>
-
 <!--
-**Say:** on the 87 552 hours the quartiles are −0.2, 6.7 and 14.2 °C: the box runs across both seasons and the dip between them, and nothing in it says two peaks.
-**Ask:** which of the three charts would show them?
-(~2 min)
+**Say:** a density is drawn like a histogram, from the same values; it hides the bin edges and shows the shape.
+**If asked:** the y-axis is scaled so that the area under the curve is 1; the width of the bumps is called the bandwidth.
+(~1 min)
 -->
 
 ---
@@ -791,20 +806,54 @@ hideInToc: true
 class: fill
 ---
 
-# The Empirical **CDF**
+# Three Ways to Draw a **Distribution**
 
-<div class="fig-fill grid-side mt-sm">
+<div class="card card-info card-glass pad-compact mt-sm">
 
-<div class="card card-info card-glass pad-compact">
-
-📈 The empirical cumulative distribution function: at each value *x* the curve gives the fraction of observations that are ≤ *x*. Every observation is one step up, and no bin width is chosen. The median is where the curve crosses 0.5, at 28 years for the Titanic passengers.
+📦 The hourly temperatures of the weather log: the cold months, the warm months and all hours, drawn three ways.
 
 </div>
 
-<img class="fig" src="/figures/viz_distributions_i_titanic_ecdf.svg">
+<div class="fig-fill grid-3 mt-sm gap-md">
+
+<div class="card card-primary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_distributions_ii_weather_boxplot.svg">
+
+📦 **Boxplot**: the box of all hours spans both seasons and shows one block
 
 </div>
 
+<div class="card card-secondary card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_distributions_ii_weather_violin.svg">
+
+🎻 **Violin**: a density curve and its mirror image: all hours show two peaks
+
+</div>
+
+<div class="card card-accent card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_distributions_ii_weather_strip.svg">
+
+〰️ **Strip**: hours as points, shifted sideways at random
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+📐 The box holds the middle half of the values. The line in it is the **median**: half of the values lie below it, half above. The whiskers reach out to the values that are not unusually far from the box.
+
+</div>
+
+<!--
+**Say:** on all 87 552 hours the quartiles are −0.2, 6.7 and 14.2 °C: the box runs across both seasons and the dip between them, and nothing in it says two peaks. The violin of all hours has the two bumps of the histogram.
+**If asked:** a quarter of the values lie below the box (the first quartile), a quarter above it (the third); the box length is the interquartile range, IQR. A whisker ends at the last value within 1.5 × IQR of the box; values beyond it are drawn one by one.
+**Ask:** which of the three charts shows that all hours are two seasons?
+(~2 min)
+-->
 
 ---
 hideInToc: true
@@ -838,6 +887,11 @@ class: fill
 </div>
 
 </div>
+
+<!--
+**Ask:** which species has the longest petals? On the left, follow a line to the legend; on the right, read the name.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -882,6 +936,11 @@ The shares of six tools in a survey of 240 people, as a pie, as one stacked bar 
 
 </div>
 
+<!--
+**Ask:** which tool is used more, the second or the third? The pie hardly says; the separate bars do.
+(~2 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -915,6 +974,11 @@ class: fill
 
 </div>
 
+<!--
+**Say:** one whole, three parts, one question, whether two parties together hold more than half: then a pie works.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -936,136 +1000,10 @@ Each point is one penguin, with the length and the depth of its bill. Look for a
 
 </div>
 
-
----
-hideInToc: true
-class: fill
----
-
-# The **Bubble** Chart
-
-<div class="fig-fill grid-side mt-sm">
-
-<div class="card card-info card-glass pad-compact">
-
-🫧 A third numeric variable as the size of the marker, here the body mass. Area is read less accurately than position, so size is for the variable that matters least. The area is proportional to the value, not the radius.
-
-</div>
-
-<img class="fig" src="/figures/viz_associations_blue_jays_bubble.svg">
-
-</div>
-
-
----
-hideInToc: true
-class: fill
----
-
-# When **Points Overlap**
-
-<div class="card card-info card-glass pad-tight mt-sm">
-
-## 🫧 **Three ways to draw 3000 points**
-
-Two answers on a scale from 0 to 10, from 3000 people: whole numbers, so many points lie on top of each other. Left: plain points. Centre: each shifted a little at random (jitter) and made transparent. Right: cells coloured by the number of points.
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_no_3d_jitter_overplot_jitter_alpha.svg">
-
----
-hideInToc: true
-class: fill
----
-
-# Many Points: **Hexagonal Bins**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🫘 20 000 flights: arrival delay against departure delay. Drawn as points, the centre is one solid area. Hexagonal bins show the count of each cell as a colour, a histogram in two dimensions.
-
-</div>
-
-<div class="fig-fill grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_overlapping_points_nycflights_points.svg">
-
-🚫 **Points**: the centre is one solid area
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_overlapping_points_nycflights_hex_bins.svg">
-
-✅ **Hexagonal bins**: colour is the number of flights per cell
-
-</div>
-
-</div>
-
----
-hideInToc: true
-class: fill
----
-
-# The **Correlation** Heatmap
-
-<div class="fig-fill grid-side mt-sm">
-
-<div class="card card-info card-glass pad-compact">
-
-🔥 The correlation *r* says how close two columns lie to a straight line: +1 all points on a rising line, −1 on a falling one, 0 no straight-line trend. Every pair of seven columns of a table of cars; red below 0, blue above.
-
-</div>
-
-<img class="fig" src="/figures/viz_associations_mtcars_corr_heatmap.svg">
-
-</div>
-
-
----
-hideInToc: true
-class: fill
----
-
-# The **Pair** Plot
-
-<div class="fig-fill grid-side mt-sm">
-
-<div class="card card-info card-glass pad-compact">
-
-🔲 Every pair of columns as a scatter plot, with the histogram of each column on the diagonal. Here three measurements of penguins. It is a first look at a table with several numeric columns.
-
-</div>
-
-<img class="fig" src="/figures/viz_multi_panel_correlogram.svg">
-
-</div>
-
-
----
-hideInToc: true
-class: fill
----
-
-# The **Slopegraph**
-
-<div class="fig-fill grid-side mt-sm">
-
-<div class="card card-info card-glass pad-compact">
-
-📈 One value per group at two dates, joined by a line. Here tonnes of CO₂ per person in 2000 and 2020 (approximate). The slope is the change: the USA falls from 20.5 to 14.2, China rises from 2.7 to 7.4.
-
-</div>
-
-<img class="fig" src="/figures/viz_associations_co2_slopegraph.svg">
-
-</div>
-
+<!--
+**Ask:** what do you see first: the trend, the three groups, or a single point away from the rest?
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1083,6 +1021,11 @@ The daily means of 2024 and 2025 from the weather log as a thin grey line, and t
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_trends_lincoln_temps_raw_smooth.svg">
+
+<!--
+**Say:** the grey line is every day, the cyan line the mean over three weeks around each day: the season without the day-to-day weather.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1144,7 +1087,7 @@ class: fill
 
 <img class="fig" src="/figures/viz_uncertainty_ci_band.svg">
 
-🎗️ **Band**: the straight line closest to the points, redrawn for 400 copies of the data, each 60 points drawn at random with repeats. The band holds 95 % of the lines
+🎗️ **Band**: where the line could lie, given how far the points scatter. The wider the band, the less certain the line
 
 </div>
 
@@ -1166,7 +1109,7 @@ class: fill
 
 <!--
 **Say:** the standard deviation is the typical distance of a value from the mean. Nine values with a standard deviation of 0.3 °C have a mean with a standard error of 0.3 / √9 = 0.1 °C.
-**If asked:** a resampled copy draws N rows from the table at random, with repeats.
+**If asked:** the band: the straight line is redrawn for 400 copies of the data, each made of 60 points drawn from the 60 at random, with repeats; the band holds 95 % of these lines, and the many lines are 28 of them.
 (~2 min)
 -->
 
@@ -1231,6 +1174,11 @@ hideInToc: true
 A pie is read by angle and area, the fourth of the five ranks of channels. Bars show the same shares by position, the first rank. The exception is one whole with few parts, as in the Bundestag example.
 
 </div>
+
+<!--
+**Say:** the table of this section in one slide; the question decides the chart.
+(~1 min)
+-->
 
 ---
 layout: section
@@ -1306,6 +1254,11 @@ class: fill
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_balance_data_context_grid_vs_no_grid.svg">
 
+<!--
+**Ask:** what is lost on the right? Nothing that carries a value.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 ---
@@ -1348,6 +1301,11 @@ About 8 % of men and 0.5 % of women see colours differently, most of them with r
 
 </div>
 
+<!--
+**Say:** in a room of 40 people, one or two see red and green alike.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -1362,6 +1320,11 @@ class: fill
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_pitfalls_of_color_use_red_green_cvd_sim.svg">
+
+<!--
+**Say:** with deuteranopia the two groups are one; a marker shape or a label would still tell them apart.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1398,6 +1361,11 @@ class: fill
 
 </div>
 
+<!--
+**Say:** the palette follows what is shown: names, an amount, or a distance from a midpoint.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -1431,6 +1399,11 @@ class: fill
 
 </div>
 
+<!--
+**Ask:** where are the sharp edges in the data on the left? There are none: the yellow band is a step of the palette.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -1440,11 +1413,17 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔦 Population growth by state (example values). Three bars are in colour and carry their value, the others are grey. The reader finds the three first, and the grey bars remain as the comparison.
+🔦 Population growth of US states from 2010 to 2020 (census). The three fastest are in colour and carry their value, the others are grey. The reader finds the three first, and the grey bars remain as the comparison.
 
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_color_popgrowth_us_highlight.svg">
+
+<!--
+**Say:** colour for the one thing the figure is about, grey for the rest.
+**If asked:** 2010 and 2020 census populations of the 30 most populous states; Utah grew by 18.4 %, Illinois shrank by 0.1 %.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1494,7 +1473,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📐 The citations of five papers: 5, 60, 540, 4900 and 46 000. On a linear axis the three smallest lie in the lowest 2 % of the axis. On a logarithmic axis equal distances are equal factors, and all five are apart. The values are drawn as dots: a bar would need a zero, and a logarithmic axis has none.
+📐 The citations of five papers: 5, 60, 540, 4900 and 46 000. On a linear axis the three smallest lie in the lowest 2 % of the axis. On a logarithmic axis each step multiplies by ten: 1, 10, 100, 1000 stand equally far apart, and all five are apart. The values are drawn as dots: a bar would need a zero, and a logarithmic axis has none.
 
 </div>
 
@@ -1502,26 +1481,6 @@ class: fill
 
 <!--
 **Say:** 540 / 50 000 = 1.1 %: on the linear axis, which runs to 50 000, the third paper sits at about a hundredth of its height. On the logarithmic axis each value is 9 to 12 times the one before, so the five are almost evenly spaced.
-(~1 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# The **Square-Root** Scale
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-√ For counts. A count *N* scatters by about √*N* from one repetition of a measurement to the next: 48 ± 7, 3 ± 1.7, the bars drawn here. On a square-root axis, which spaces 0, 1, 4, 9, 16 evenly, every bar has about the same length. A count of zero stays on the axis, which a logarithmic axis cannot show.
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_sqrt_scale.svg">
-
-<!--
-**If asked:** the half unit in one line: √(N + √N) ≈ √N + ½; for N = 100, √110 = 10.49.
 (~1 min)
 -->
 
@@ -1539,6 +1498,11 @@ class: fill
 </div>
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_multi_panel_small_multiples_gapminder.svg">
+
+<!--
+**Say:** one panel per group, every panel with the same axes, so the eye compares by position.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1572,6 +1536,11 @@ class: fill
 </div>
 
 </div>
+
+<!--
+**Ask:** before the right panel: do the three classes differ? On their own axes they look alike.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1659,6 +1628,11 @@ class: fill
 
 </div>
 
+<!--
+**Ask:** which title tells you what to look for?
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -1692,6 +1666,11 @@ class: fill
 
 </div>
 
+<!--
+**Say:** a legend makes the eye travel; a name at the line does not.
+(~1 min)
+-->
+
 ---
 hideInToc: true
 class: fill
@@ -1707,38 +1686,10 @@ class: fill
 
 <img class="fig fig-fill mt-sm" src="/figures/viz_telling_a_story_annotated_vs_plain.svg">
 
----
-hideInToc: true
-class: fill
----
-
-# A **Reference** Line
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-🧬 The abundance of mRNA in a mutant against the wild type, on logarithmic axes. Most genes are unchanged and lie where y&nbsp;=&nbsp;x. Without that line the reader has to estimate it. With it, the genes off the line are the result, and here they also have a second colour.
-
-</div>
-
-<div class="fig-fill grid-2 mt-md gap-md">
-
-<div class="card card-warning card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_balance_data_context_gene_expression_bad.svg">
-
-🚫 **No reference**
-
-</div>
-
-<div class="card card-success card-glass pad-compact text-center">
-
-<img class="fig" src="/figures/viz_balance_data_context_gene_expression_good.svg">
-
-✅ **The line y = x**: the points off it have changed
-
-</div>
-
-</div>
+<!--
+**Say:** one arrow and one line of text answer the question the plain plot raises.
+(~1 min)
+-->
 
 ---
 hideInToc: true
@@ -1857,7 +1808,7 @@ fig.savefig("results/every_hour.png")
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-`weather.temps` is the function of Lecture 5: the 87 552 temperatures of the file, without the −999 rows. Given one list, `ax.plot` draws it against 0, 1, 2, …, its positions in the list, and joins the points with straight lines.
+The script `scripts/figures.py` sits beside `weather.py` and runs with `$ python scripts/figures.py`. `weather.temps` is the function of Lecture 5: the 87 552 temperatures, without the −999 rows. Given one list, `ax.plot` draws it against its positions 0, 1, 2, …
 
 </div>
 
@@ -2154,7 +2105,7 @@ hideInToc: true
 
 # Hands-on **Matplotlib**
 
-Bars, a reference line, a legend and an annotation, one call on `ax` each, then one style for every figure.
+Each new element of a figure is one more call on `ax`.
 
 <!--
 **Say:** the same module, per year and per month.
@@ -2186,11 +2137,11 @@ def group(path, start, stop):
     return groups
 ```
 ```py
-years = weather.group("data/raw/weather.csv", 0, 4)
-print(len(years))                # 10
-print(list(years))               # ['2016', '2017', ..., '2025']
-print(len(years["2019"]))        # 8640
-print(weather.mean(years["2025"]))   # 5.982077625570776
+by_year = weather.group("data/raw/weather.csv", 0, 4)
+print(len(by_year))                # 10
+print(list(by_year))               # ['2016', '2017', ..., '2025']
+print(len(by_year["2019"]))        # 8640
+print(weather.mean(by_year["2025"]))   # 5.982077625570776
 ```
 ````
 
@@ -2211,7 +2162,7 @@ print(weather.mean(years["2025"]))   # 5.982077625570776
 
 </div>
 
-<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>key not in groups</code> is <code>True</code> the first time a key turns up; <code>for year in years</code> runs over the keys, and <code>list(years)</code> lists them.</div>
+<div class="note-text mt-sm">A <code>dict</code> of lists in <code>weather.py</code>: one list of temperatures per key, in the order the keys first occur. <code>key not in groups</code> is <code>True</code> the first time a key turns up; <code>for year in by_year</code> runs over the keys, and <code>list(by_year)</code> lists them.</div>
 
 <!--
 **Do:** first step: the function; click: what it gives for the years.
@@ -2233,9 +2184,9 @@ class: fill
 
 ```python {all|1-6|8-9|10-14|all}
 frost = []
-for year in years:
+for year in by_year:
     count = 0
-    for temp in years[year]:
+    for temp in by_year[year]:
         if temp < 0:
             count = count + 1
     frost.append(count)
@@ -2282,17 +2233,17 @@ class: fill
 <div>
 
 ```python {all|1-3|5-6|7-8|9-10|all}
-means = []
-for year in years:
-    means.append(weather.mean(years[year]))
+year_means = []
+for year in by_year:
+    year_means.append(weather.mean(by_year[year]))
 
 fig, ax = plt.subplots(figsize=(5.2, 3.6))
-all_hours = weather.mean(weather.temps("data/raw/weather.csv"))
-ax.axhline(all_hours, color="#D55E00", label="2016–2025: 7.16 °C")
-ax.plot(range(2016, 2026), means, "o", color="#56B4E9",
-        label="one year")
+all_mean = weather.mean(weather.temps("data/raw/weather.csv"))
+ax.axhline(all_mean, color="#D55E00", label="2016–2025: 7.16 °C")
+ax.plot(list(by_year), year_means, "o",   # "o": a point each
+        color="#56B4E9", label="one year")
 ax.set(xlabel="year", ylabel="mean temperature (°C)", ylim=(5, 9))
-ax.legend(frameon=False, loc="lower left")
+ax.legend(loc="lower left")
 fig.savefig("results/year_means.png", dpi=150)
 ```
 
@@ -2310,7 +2261,7 @@ fig.savefig("results/year_means.png", dpi=150)
 
 <!--
 **Say:** two calls on the same axes give two layers; each gets a `label`, and `ax.legend` collects them. The line is the reference: each year reads as warmer or colder than the ten-year mean.
-**If asked:** `range(2016, 2026)` gives 2016 to 2025, the years as numbers, so Matplotlib chooses which to label. `"o"` draws a point at each value and no line.
+**If asked:** `list(by_year)` is the ten keys of the dictionary, `"2016"` to `"2025"`, in the order of the file; `"o"` draws a point at each value and no line.
 **Ask:** is it getting warmer? Ten points scatter by about 1 °C around 7.16, and the last year is the coldest: ten years do not say.
 (~2 min)
 -->
@@ -2328,14 +2279,14 @@ class: fill
 
 ```python {all|1-4|6-7|8-10|11-13|all}
 months = weather.group("data/raw/weather.csv", 5, 7)
-means = []
+month_means = []
 for month in months:
-    means.append(weather.mean(months[month]))
+    month_means.append(weather.mean(months[month]))
 
 fig, ax = plt.subplots(figsize=(5.6, 3.6))
-ax.plot(list(months), means, "o-", color="#56B4E9")
+ax.plot(list(months), month_means, "o-", color="#56B4E9")
 arrow = {"arrowstyle": "->", "color": "#D55E00"}
-ax.annotate("July, 18.5 °C", xy=("07", means[6]), xytext=("09", 19.5),
+ax.annotate("July, 18.5 °C", xy=("07", month_means[6]), xytext=("09", 19.5),
             color="#D55E00", arrowprops=arrow)
 ax.set(xlabel="month", ylabel="mean temperature (°C)", ylim=(-6, 22))
 ax.set_title("July is 22.4 °C warmer than January")
@@ -2356,7 +2307,7 @@ fig.savefig("results/month_means.png", dpi=150)
 
 <!--
 **Say:** the parts of a figure from the Mechanics section, one call each. `annotate` writes a text at `xytext` and draws an arrow to `xy`; on this axis a month is named by its key, `"07"`.
-**If asked:** `"o-"` draws a point at each value and joins the points by lines, which shows the order of the twelve months; `means[6]` is the seventh mean, July's.
+**If asked:** `"o-"` draws a point at each value and joins the points by lines, which shows the order of the twelve months; `month_means[6]` is the seventh mean, July's.
 (~2 min)
 -->
 
@@ -2401,19 +2352,19 @@ hideInToc: true
 
 ## 🎨 **`rcParams`: the defaults of Matplotlib**
 
-Colours, fonts and line widths that would be repeated in every script are set once. `mpl.rcParams.update({...})` at the top of a script changes the defaults for every figure made after it.
+Colours, fonts and line widths that would be repeated in every script are set once. `plt.rcParams.update({...})` at the top of a script changes the defaults for every figure made after it.
 
 </div>
 
 ```python {all|1-5|7-14|all}
-import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 OKABE_ITO = ["#000000", "#E69F00", "#56B4E9", "#009E73",
              "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
 
-mpl.rcParams.update({
+plt.rcParams.update({
     "font.family": ["Helvetica", "Arial", "DejaVu Sans"],
-    "axes.prop_cycle": mpl.cycler(color=OKABE_ITO),  # the colours of successive lines
+    "axes.prop_cycle": plt.cycler(color=OKABE_ITO),  # the colours of successive lines
     "axes.spines.top":   False,
     "axes.spines.right": False,
     "axes.axisbelow":    True,
@@ -2470,6 +2421,11 @@ fig.savefig("results/temp_hist.png", dpi=150, bbox_inches="tight")
 
 </div>
 
+<!--
+**Say:** SVG for slides and papers, PNG for the web; the script makes both again from the file.
+(~1 min)
+-->
+
 ---
 layout: section
 hideInToc: true
@@ -2477,10 +2433,10 @@ hideInToc: true
 
 # Beyond Two **Axes**
 
-A plane has two positions. Colour, a third axis and motion each carry one more variable, read less exactly than a position.
+A plane has two positions. Colour and motion each carry one more variable, read less exactly than a position.
 
 <!--
-**Say:** five figures that show three, four or more variables at once, with the call that makes each.
+**Say:** two figures that show a third variable, as colour and as time; more of them come after the recap.
 (~0.5 min)
 -->
 
@@ -2511,49 +2467,6 @@ hideInToc: true
 class: fill
 ---
 
-# The Same Grid as a Surface: `plot_surface`
-
-<div class="card card-secondary card-glass pad-compact mt-sm">
-
-⛰️ The 8784 means as a landscape: a ridge of summer afternoons, a valley of winter nights, a daily ripple deeper in summer. The shape is seen at once; no value can be read off, and the far side is hidden. `ax = fig.add_subplot(projection="3d")`, `ax.plot_surface(x, y, grid, cmap="RdBu_r")`
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_surface.svg">
-
-<!--
-**Say:** the same numbers as the heatmap, with the temperature as height too. A surface shows a shape; for values the flat heatmap is better, because perspective makes far values look smaller and hides some of them.
-**If asked:** `ax.plot_surface(x, y, grid, cmap="RdBu_r")`, and `ax.view_init(elev=32, azim=-42)` turns the view.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# Temperature, Humidity, Wind and **Month**
-
-<div class="card card-accent card-glass pad-compact mt-sm">
-
-🧭 3648 days: three daily means on three axes, the month as colour. Days below 0 °C: 86.5 % and 4.0 m/s on average; above 20 °C: 67.6 % and 2.8 m/s. `ax.scatter(temp, hum, wind, c=month)`
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_scatter4d.svg">
-
-<!--
-**Say:** four variables in one figure: three positions and a colour. The groups are seen; single points are not read.
-**Ask:** which pair of the three measurements moves together most? Temperature and humidity: r = −0.73.
-**If asked:** the palette is cyclic, built from the course colours, so the year closes on itself.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
 # Time as One More Variable: an **Animation**
 
 <div class="card card-success card-glass pad-compact mt-sm">
@@ -2567,28 +2480,6 @@ class: fill
 <!--
 **Say:** this answers why the year has two peaks: the months from November to March are narrow and pile up near 0 °C; April to October are wide, and where spring, summer and autumn overlap, near 11 to 12 °C, they make the second peak.
 **If asked:** `draw(i)` sets the bar heights of month `i`; `ani.save("months.gif", writer=PillowWriter(fps=1.5))` writes the file. A video or a GIF goes on a slide or a web page, not into a printed paper.
-(~2 min)
--->
-
----
-hideInToc: true
-class: fill
----
-
-# A 2D Histogram with Its **Projections**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-⚛️ LHCb pairs of a K⁻ and a π⁺, the 90 753 with transverse momentum from 2.5 to 9 GeV/c: their combined mass across, the momentum up, the count per cell as colour (log scale); above and right, each variable alone. Pairs from a D⁰ decay make the band at 1865 MeV/c². `ax.hist2d(m, pt, norm=LogNorm())`
-
-</div>
-
-<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_d0_hist2d.svg">
-
-<!--
-**Say:** the standard figure of a particle physics analysis: two variables as positions, their count as colour, and each variable alone on the side, so that nothing is hidden.
-**Ask:** why a logarithmic colour scale? The cells hold from 1 to 178 candidates; on a linear scale every cell with a few candidates, which is most cells of high momentum, would be the same dark colour.
-**If asked:** a candidate is a K⁻ and a π⁺ whose combined mass is computed; those from a D⁰ decay have its mass, the others any. Almost none lie below 2500 MeV/c: the selection that made the file cut there. `plt.subplot_mosaic` lays out the three panels, and `sharex`, `sharey` tie their axes.
 (~2 min)
 -->
 
@@ -2703,7 +2594,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# **Recap**
+# **Recap**: You Can Now…
 
 <div class="grid-2 gap-md mt-sm">
 
@@ -2757,11 +2648,250 @@ hideInToc: true
 
 # For the **Curious**
 
-Four and five variables in one figure: figures for exploring data, read slowly.
+More chart types, and figures of three to five variables: for time left at the end, or to read after the lecture.
 
 <!--
-**Say:** optional, for the time left or for after the lecture. Each figure shows what a plot of two variables cannot, and what it costs.
+**Say:** optional, for the time left or for after the lecture: more ways to show a distribution and two variables, two more scales, then figures of three to five variables, each with what it costs.
 (~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Bin Widths of 0.5, 5 and 20 **Years**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📏 The same ages with bins of 0.5, 5 and 20 years. With 0.5 years the bars jump between a few people and thirty: ages are whole years, so every second bin is nearly empty. With 20 years the shape is four bars.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_distributions_i_titanic_hist_binwidth.svg">
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Empirical **CDF**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+📈 The empirical cumulative distribution function: at each value *x* the curve gives the fraction of observations that are ≤ *x*. Every observation is one step up, and no bin width is chosen. The median is where the curve crosses 0.5, at 28 years for the Titanic passengers.
+
+</div>
+
+<img class="fig" src="/figures/viz_distributions_i_titanic_ecdf.svg">
+
+</div>
+
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Bubble** Chart
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+🫧 A third numeric variable as the size of the marker, here the body mass. Area is read less accurately than position, so size is for the variable that matters least. The area is proportional to the value, not the radius.
+
+</div>
+
+<img class="fig" src="/figures/viz_associations_blue_jays_bubble.svg">
+
+</div>
+
+
+---
+hideInToc: true
+class: fill
+---
+
+# When **Points Overlap**
+
+<div class="card card-info card-glass pad-tight mt-sm">
+
+## 🫧 **Three ways to draw 3000 points**
+
+Two answers on a scale from 0 to 10, from 3000 people: whole numbers, so many points lie on top of each other. Left: plain points. Centre: each shifted a little at random (jitter) and made transparent. Right: cells coloured by the number of points.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_no_3d_jitter_overplot_jitter_alpha.svg">
+
+---
+hideInToc: true
+class: fill
+---
+
+# Many Points: **Hexagonal Bins**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🫘 20 000 flights: arrival delay against departure delay. Drawn as points, the centre is one solid area. Hexagonal bins show the count of each cell as a colour, a histogram in two dimensions.
+
+</div>
+
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_overlapping_points_nycflights_points.svg">
+
+🚫 **Points**: the centre is one solid area
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_overlapping_points_nycflights_hex_bins.svg">
+
+✅ **Hexagonal bins**: colour is the number of flights per cell
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Correlation** Heatmap
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+🔥 The correlation *r* says how close two columns lie to a straight line: +1 all points on a rising line, −1 on a falling one, 0 no straight-line trend. Every pair of seven columns of a table of cars; red below 0, blue above.
+
+</div>
+
+<img class="fig" src="/figures/viz_associations_mtcars_corr_heatmap.svg">
+
+</div>
+
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Pair** Plot
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+🔲 Every pair of columns as a scatter plot, with the histogram of each column on the diagonal. Here three measurements of penguins. It is a first look at a table with several numeric columns.
+
+</div>
+
+<img class="fig" src="/figures/viz_multi_panel_correlogram.svg">
+
+</div>
+
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Slopegraph**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+📈 One value per group at two dates, joined by a line. Here tonnes of CO₂ per person in 2000 and 2020 (approximate). The slope is the change: the USA falls from 20.5 to 14.2, China rises from 2.7 to 7.4.
+
+</div>
+
+<img class="fig" src="/figures/viz_associations_co2_slopegraph.svg">
+
+</div>
+
+
+---
+hideInToc: true
+class: fill
+---
+
+# The **Square-Root** Scale
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+√ For counts. A count *N* scatters by about √*N* from one repetition of a measurement to the next: 48 ± 7, 3 ± 1.7, the bars drawn here. On a square-root axis, which spaces 0, 1, 4, 9, 16 evenly, every bar has about the same length. A count of zero stays on the axis, which a logarithmic axis cannot show.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_coordinates_axes_sqrt_scale.svg">
+
+<!--
+**If asked:** the half unit in one line: √(N + √N) ≈ √N + ½; for N = 100, √110 = 10.49.
+(~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A **Reference** Line
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🧬 The abundance of mRNA in a mutant against the wild type, on logarithmic axes. Most genes are unchanged and lie where y&nbsp;=&nbsp;x. Without that line the reader has to estimate it. With it, the genes off the line are the result, and here they also have a second colour.
+
+</div>
+
+<div class="fig-fill grid-2 mt-md gap-md">
+
+<div class="card card-warning card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_balance_data_context_gene_expression_bad.svg">
+
+🚫 **No reference**
+
+</div>
+
+<div class="card card-success card-glass pad-compact text-center">
+
+<img class="fig" src="/figures/viz_balance_data_context_gene_expression_good.svg">
+
+✅ **The line y = x**: the points off it have changed
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Same Grid as a Surface: `plot_surface`
+
+<div class="card card-secondary card-glass pad-compact mt-sm">
+
+⛰️ The 8784 means as a landscape: a ridge of summer afternoons, a valley of winter nights, a daily ripple deeper in summer. The shape is seen at once; no value can be read off, and the far side is hidden. `ax = fig.add_subplot(projection="3d")`, `ax.plot_surface(x, y, grid, cmap="RdBu_r")`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_surface.svg">
+
+<!--
+**Say:** the same numbers as the heatmap, with the temperature as height too. A surface shows a shape; for values the flat heatmap is better, because perspective makes far values look smaller and hides some of them.
+**If asked:** `ax.plot_surface(x, y, grid, cmap="RdBu_r")`, and `ax.view_init(elev=32, azim=-42)` turns the view.
+(~2 min)
 -->
 
 ---
@@ -2856,24 +2986,20 @@ hideInToc: true
 class: fill
 ---
 
-# The Four Columns of the LHCb File: a **Corner Plot**
+# Temperature, Humidity, Wind and **Month**
 
-<div class="fig-fill grid-side mt-sm">
+<div class="card card-accent card-glass pad-compact mt-sm">
 
-<div class="card card-info card-glass pad-compact">
-
-⚛️ Every pair of `M`, `PT`, `TAU` and `IPCHI2` as a 2D histogram, each column alone on the diagonal: 91 534 candidates. The D⁰ is the band at 1865 MeV/c² in the mass column. `plt.subplots(4, 4)`, the upper triangle hidden
+🧭 3648 days: three daily means on three axes, the month as colour. Days below 0 °C: 86.5 % and 4.0 m/s on average; above 20 °C: 67.6 % and 2.8 m/s. `ax.scatter(temp, hum, wind, c=month)`
 
 </div>
 
-<img class="fig" src="/figures/viz_advanced_corner.svg">
-
-</div>
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_scatter4d.svg">
 
 <!--
-**Say:** the standard first look at a physics data set: n columns give n(n − 1)/2 pairs, here six. It is the pair plot of the gallery with 2D histograms in place of points, because 91 534 points would cover each other.
-**Ask:** which pair moves together? τ and log χ²_IP, r = 0.35: both grow when the D⁰ flies further from the collision before it decays. Every other pair has |r| ≤ 0.07.
-**If asked:** 49 rows have `TAU` = −100, a missing value, and are left out. χ²_IP runs from 10⁻⁵ to 10⁶, so its axis is log₁₀. The horizontal edge at 0.15 ps in the τ panels is a cut of the selection that made the file.
+**Say:** four variables in one figure: three positions and a colour. The groups are seen; single points are not read.
+**Ask:** which pair of the three measurements moves together most? Temperature and humidity: r = −0.73.
+**If asked:** the palette is cyclic, built from the course colours, so the year closes on itself.
 (~2 min)
 -->
 
@@ -2900,6 +3026,54 @@ class: fill
 **Say:** motion is one more channel, for depth. For a paper, pick the one view that shows the finding, or use flat panels.
 **If asked:** 36 frames, 10° apart, at 12 frames per second, written with `PillowWriter`; in a notebook or with `plt.show()` the mouse turns the figure.
 (~1 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A 2D Histogram with Its **Projections**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+⚛️ LHCb pairs of a K⁻ and a π⁺, the 90 753 with transverse momentum from 2.5 to 9 GeV/c: their combined mass across, the momentum up, the count per cell as colour (log scale); above and right, each variable alone. Pairs from a D⁰ decay make the band at 1865 MeV/c². `ax.hist2d(m, pt, norm=LogNorm())`
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_d0_hist2d.svg">
+
+<!--
+**Say:** the standard figure of a particle physics analysis: two variables as positions, their count as colour, and each variable alone on the side, so that nothing is hidden.
+**Ask:** why a logarithmic colour scale? The cells hold from 1 to 178 candidates; on a linear scale every cell with a few candidates, which is most cells of high momentum, would be the same dark colour.
+**If asked:** a candidate is a K⁻ and a π⁺ whose combined mass is computed; those from a D⁰ decay have its mass, the others any. Almost none lie below 2500 MeV/c: the selection that made the file cut there. `plt.subplot_mosaic` lays out the three panels, and `sharex`, `sharey` tie their axes.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Four Columns of the LHCb File: a **Corner Plot**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-info card-glass pad-compact">
+
+⚛️ Every pair of `M`, `PT`, `TAU` and `IPCHI2` as a 2D histogram, each column alone on the diagonal: 91 534 candidates. The D⁰ is the band at 1865 MeV/c² in the mass column. `plt.subplots(4, 4)`, the upper triangle hidden
+
+</div>
+
+<img class="fig" src="/figures/viz_advanced_corner.svg">
+
+</div>
+
+<!--
+**Say:** the standard first look at a physics data set: n columns give n(n − 1)/2 pairs, here six. It is the pair plot of the gallery with 2D histograms in place of points, because 91 534 points would cover each other.
+**Ask:** which pair moves together? τ and log χ²_IP, r = 0.35: both grow when the D⁰ flies further from the collision before it decays. Every other pair has |r| ≤ 0.07.
+**If asked:** 49 rows have `TAU` = −100, a missing value, and are left out. χ²_IP runs from 10⁻⁵ to 10⁶, so its axis is log₁₀. The horizontal edge at 0.15 ps in the τ panels is a cut of the selection that made the file.
+(~2 min)
 -->
 
 ---
