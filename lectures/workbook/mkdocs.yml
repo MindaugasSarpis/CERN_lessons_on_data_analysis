@@ -52,6 +52,7 @@ extra_css:
 nav:
   - Home: index.md
   - Setup: setup.md
+  - Glossary: glossary.md
   - Lecture notes:
       - 01 Orientation & Motivation: lectures/lecture_1.md
       - 02 Introduction to Data: lectures/lecture_2.md

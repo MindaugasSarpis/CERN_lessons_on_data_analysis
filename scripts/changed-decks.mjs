@@ -9,6 +9,8 @@
  * Rules (selectDecks):
  *   - lectures/content/slides/X.md  → every deck listing X in `srcs` (a slide
  *     file no deck lists — the LX template, the combined entry — touches nothing)
+ *   - lectures/content/glossary/NN.md → the deck whose slug starts with NN (its
+ *     glossary slides, scripts/gen-glossary.mjs)
  *   - paths that never reach a rendered deck are ignored: docs/, the workbook,
  *     videos/, misc/, figures/src/ (outputs live in public/figures and DO count),
  *     the non-build scripts (videos.py, timing-report, release, check-runners), editor/agent
@@ -33,6 +35,7 @@ const IGNORE = [
   /^[^/]+\.md$/,
 ];
 const SLIDE = /^lectures\/content\/slides\/([^/]+)$/;
+const GLOSSARY = /^lectures\/content\/glossary\/(\d\d)\.md$/;
 
 /** @returns {{ all: boolean, slugs: string[], reason: string }} */
 export function selectDecks(changed, decks) {
@@ -43,6 +46,11 @@ export function selectDecks(changed, decks) {
     const m = p.match(SLIDE);
     if (m) {
       for (const d of decks) if (d.srcs.includes(m[1])) hit.add(d.slug);
+      continue;
+    }
+    const g = p.match(GLOSSARY);
+    if (g) {
+      for (const d of decks) if (d.slug.startsWith(`${g[1]}-`)) hit.add(d.slug);
       continue;
     }
     widen.push(p);

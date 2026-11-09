@@ -14,17 +14,26 @@
  * `python:` block on runner decks, which the addon reads from slide 1 = that
  * cover); any deck-level key written there is dead once the file is imported
  * (Slidev takes config from the entry's headmatter alone).
+ *
+ * A deck with a glossary (lectures/content/glossary/NN.md) gets its generated
+ * glossary slides, `glossary.<slug>.md` (scripts/gen-glossary.mjs, which also
+ * rewrites the workbook's glossary page), imported AFTER all its srcs: the
+ * glossary is the very end of the deck.
  */
 import { existsSync } from 'node:fs';
 import { readFile, writeFile, readdir, unlink } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { genGlossary } from './gen-glossary.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = join(ROOT, 'lectures', 'content');
 const SEMINARS = join(ROOT, 'lectures', 'workbook', 'docs', 'seminars');
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'decks.json'), 'utf8'));
+
+// slug → generated glossary slides file, for the decks that have a glossary
+const glossaries = await genGlossary(manifest);
 
 // Deck-level headmatter. The FIRST lecture is imported via `src:` inside the
 // headmatter block itself, so the lecture's own cover becomes slide 1 —
@@ -64,8 +73,9 @@ function headmatter(title, firstSrc) {
 
 function entryContent(deck) {
   const [first, ...rest] = deck.srcs;
-  const more = rest
-    .map((s) => `\n---\nsrc: ./slides/${s}\n---\n`)
+  const glossary = glossaries.get(deck.slug);
+  const more = [...rest.map((s) => `./slides/${s}`), ...(glossary ? [`./${glossary}`] : [])]
+    .map((p) => `\n---\nsrc: ${p}\n---\n`)
     .join('');
   return `${headmatter(deck.title, first)}\n${more}`;
 }
@@ -128,4 +138,4 @@ await writeFile(
   'utf8',
 );
 
-console.log(`Generated ${manifest.decks.length} entry files (lectures/content/deck.*.md) + public/lectures.json`);
+console.log(`Generated ${manifest.decks.length} entry files (lectures/content/deck.*.md) + public/lectures.json, ${glossaries.size} glossary file(s) + the workbook's glossary page`);
