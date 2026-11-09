@@ -77,6 +77,7 @@ Verify the **rendered** decks — a `slidev build` only catches compile errors, 
 **Hard requirements (see project memory):** (1) **zero slide overflow**; (2) **videos full-screen** — `VideoPlayer.vue` uses `object-fit: cover`, no letterbox line; (3) **consistent type scale** — sizes follow the markdown level, no arbitrary one-off `font-size`; (4) build every deck through its generated `deck.<slug>.md` entry (co-located with `theme/`), never a bare `slides/NN_*.md`.
 
 To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan out subagents over batches), not all at once: `python3 scripts/contact-sheets.py <slug> [--from N --to M]` puts four slides on one PNG (`.qa-shots/<slug>/sheets/`).
+- **Interactive components** (since 9 Nov 2026: L07's `BinWidthExplorer`, `AxisStartBars`, `PaletteHeatmap`, `SmoothingWindow`; for weeks 8–11 `MeanSpread`, `FitLine`, `PerceptronPlayground`, `SoftmaxTemperature`, and `FormulaSteps` for a formula one step per click) read their data from `public/data/*.json`, written by `figures/src/interactive_l07_data.py` and `interactive_data.py` (no network, no CDN). Each file's header gives its props and its slide form: `<Name class="fig-fill mt-sm" … />` on a `class: fill` slide. A control never takes keyboard focus, so the clicker still turns slides. Gotcha: the theme's FILL rule turns every direct `div` child of a `fig-fill` element into a shrinking flex column, so a component for fill slides has no `div` as a direct child.
 
 ## Architecture
 

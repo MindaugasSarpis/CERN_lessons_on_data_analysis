@@ -1,0 +1,1 @@
+{"about":"Yearly mean temperature (degC) of the weather log, -999 left out, two decimals as on the slides. figures/src/interactive_data.py","years":[2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"means":[7.6,6.51,7.97,7.27,6.83,7.25,6.6,8.31,7.27,5.98],"sigma":0.7,"best":{"a":7.4085,"b":-0.05545,"x0":2016,"chi2":8.547}}
