@@ -152,16 +152,16 @@ type the slide number and press Enter.
   written on the figure.
 - **Slide 10** (The Parts of a Figure) builds the histogram of the hours up
   in five clicks.
-- **Slides 22, 41, 53 and 72 are interactive figures** that work offline:
-  drag where the bar axis starts (22), the smoothing window (41), switch the
-  palette of the day-and-hour grid (53), drag the bin width from 10 °C to
-  0.05 °C and press "0 to 2 °C" (72). Use them on the projected window, not
-  in the presenter view.
+- **Slides 22, 41, 53, 72, 82 and 84 are interactive figures** that work
+  offline: drag where the bar axis starts (22), the smoothing window (41),
+  switch the palette of the day-and-hour grid (53), drag the bin width from
+  10 °C to 0.05 °C and press "0 to 2 °C" (72), drag the four-variable scatter
+  to turn it (82; it turns slowly by itself until the first drag, a
+  double-click brings back the start), step through the months or pause on
+  one (84). Use them on the projected window, not in the presenter view.
 - **Slide 57** runs Python in the browser, the figure beside the code. The
   first run downloads the Python runtime, so run it once before the lecture.
 - **Slides 69, 70 and 73** highlight the code in steps.
-- **Slide 82** turns by itself, once every 3 s, and **slide 84** is an
-  animation that plays by itself, one month every 0.66 s.
 - **Slides 89–94** (For the Curious) are for time left at the end or for
   students afterwards. **Slides 95–103** (In Matplotlib) are the code of the
   weather-log figures, for after the lecture: slides 96 and 98 go from the

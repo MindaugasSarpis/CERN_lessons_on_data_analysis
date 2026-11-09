@@ -2328,20 +2328,21 @@ class: fill
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🌀 **The same days, one turn every 3 s**
+## 🌀 **The same days: drag to turn**
 
 - Still, the depth is guessed
 - Turning, the points in front and behind move apart
 
 </div>
 
-<img class="fig" src="/figures/viz_advanced_rotate.gif">
+<TurningScatter />
 
 </div>
 
 <!--
+**Do:** drag the figure to turn it; stop where the points in front and behind move apart.
 **Say:** motion is one more channel, for depth: points in front move one way, points behind the other. For a paper, pick the one view that shows the finding, or use flat panels.
-**If asked:** `ax.view_init(elev=18, azim=a)` in each frame of `FuncAnimation`: 36 frames, 10° apart, at 12 frames per second, written with `PillowWriter`; in a notebook or with `plt.show()` the mouse turns the figure.
+**If asked:** `ax.view_init(elev=18, azim=-55)` sets the view; with `plt.show()` or in a notebook the mouse turns the figure, and `FuncAnimation` with `PillowWriter` writes a turning GIF.
 (~1 min)
 -->
 
@@ -2380,9 +2381,10 @@ class: fill
 
 </div>
 
-<img class="fig fig-fill mt-sm" src="/figures/viz_beyond_month_hist.gif">
+<MonthHistograms class="fig-fill mt-sm" />
 
 <!--
+**Do:** let the months step by; pause on July, then tap November: one wide bump, one narrow one near 0 °C.
 **Say:** this answers why the year has two peaks: the months from November to March are narrow and pile up near 0 °C; April to October are wide, and where spring, summer and autumn overlap, near 11 to 12 °C, they make the second peak.
 **If asked:** `FuncAnimation(fig, draw, frames=12)`: `draw(i)` sets the bar heights of month `i`; `ani.save("months.gif", writer=PillowWriter(fps=1.5))` writes the file. A video or a GIF goes on a slide or a web page, not into a printed paper.
 (~2 min)

@@ -23,6 +23,7 @@ writes the files (deterministic: the same bytes on every run) and prints every
 number the components show, formatted as the components format them
 (JavaScript's toFixed: halves away from zero; a minus sign; never "-0.0").
 """
+import calendar
 import json
 import sys
 from datetime import date, timedelta
@@ -251,17 +252,83 @@ def report_daily(data):
     print("  window 21 = pandas rolling(21, center=True, min_periods=1), the course figure")
 
 
+# ---------------------------------------------------------------------------
+# TurningScatter: the four-variable scatter of beyond.py (slide 81), turning
+# ---------------------------------------------------------------------------
+
+def scatter4_data():
+    """Every day's mean temperature, humidity and wind (beyond.daily_means, the
+    data of viz_beyond_scatter4d and of the old viz_advanced_rotate.gif), the
+    month of each day, and the twelve month colours of beyond._season_cmap."""
+    days, temp, hum, wind, month = beyond.daily_means()
+    cmap = beyond._season_cmap()
+    return {
+        "labels": [beyond.TEMP_LABEL, "humidity (%)", "wind (m/s)"],
+        "months": list(beyond.MONTHS),
+        "colors": [mpl.colors.to_hex(cmap(i)) for i in range(12)],
+        "temp": [round(float(v), 2) for v in temp],
+        "hum": [round(float(v), 2) for v in hum],
+        "wind": [round(float(v), 2) for v in wind],
+        "month": [int(m) for m in month],
+    }
+
+
+def report_scatter4(data):
+    print("TurningScatter: the days of slide 81")
+    print(f"  {len(data['temp'])} days; month colours {' '.join(data['colors'])}")
+    for key, label in zip(("temp", "hum", "wind"), data["labels"]):
+        v = data[key]
+        print(f"  {label}: {fmt(min(v), 2)} to {fmt(max(v), 2)}")
+
+
+# ---------------------------------------------------------------------------
+# MonthHistograms: the months of beyond.py's animation (slide 84)
+# ---------------------------------------------------------------------------
+
+def month_hist_data():
+    """Each month's hours in 1 °C bins from -17 to 33 °C and all hours ÷ 12,
+    as the old viz_beyond_month_hist.gif drew them (beyond.py before 9 Nov 2026)."""
+    import numpy as np
+    months = beyond.month_temps()
+    keys = sorted(months)
+    every = [t for k in keys for t in months[k]]
+    whole, _ = np.histogram(every, bins=beyond.T_BINS, range=beyond.T_RANGE)
+    counts = [np.histogram(months[k], bins=beyond.T_BINS, range=beyond.T_RANGE)[0] for k in keys]
+    return {
+        "range": list(beyond.T_RANGE),
+        "bins": beyond.T_BINS,
+        "names": [calendar.month_name[int(k)] for k in keys],
+        "means": [float(fmt(sum(months[k]) / len(months[k]), 1).replace("\u2212", "-")) for k in keys],
+        "hours": [len(months[k]) for k in keys],
+        "counts": [[int(c) for c in row] for row in counts],
+        "all": [int(c) for c in whole],
+    }
+
+
+def report_month_hist(data):
+    print("MonthHistograms: the months of slide 84")
+    print(f"  {sum(data['hours'])} hours; fullest bin of one month {max(max(r) for r in data['counts'])}")
+    for name, m, n in zip(data["names"], data["means"], data["hours"]):
+        print(f"  {name}: {n} hours, mean {fmt(m, 1)} °C")
+
+
 def main():
     hist = hist_data()
     heat = heatmap_data()
     daily = daily_data()
+    scatter4 = scatter4_data()
     dump("l07_hist.json", hist)
     dump("l07_heatmap.json", heat)
     dump("l07_daily.json", daily)
+    dump("l07_scatter4.json", scatter4)
+    months = month_hist_data()
+    dump("l07_month_hist.json", months)
     report_hist(hist)
     report_bars()
     report_heatmap(heat)
     report_daily(daily)
+    report_scatter4(scatter4)
+    report_month_hist(months)
 
 
 if __name__ == "__main__":
