@@ -1404,7 +1404,7 @@ hideInToc: true
 
 - **European Organization for Nuclear Research**
 - Founded in **1954** by 12 European states
-- Today: **24 member states**, thousands of visiting scientists
+- Today: **25 member states**, thousands of visiting scientists
 - Located at the **French-Swiss border** near Geneva
 
 </div>
@@ -1441,9 +1441,9 @@ hideInToc: true
 ## ⚙️ **The Machine**
 
 - A **27 km** circumference ring situated **100 m** underground
-- Accelerates protons to **99.9999991%** the speed of light
-- Collides particles **~1 billion times per second**
-- Operating temperature: **1.9 K** (about −271.3 °C, colder than outer space)
+- Accelerates protons to **99.99999905 %** of the speed of light
+- Up to **~1 billion** collisions per second; shut down since **29 June 2026** for its upgrade
+- Magnets at **1.9 K** when running (about −271.3 °C, colder than outer space)
 
 </div>
 
