@@ -309,7 +309,7 @@ class: text-center
 
 # **0**
 
-<img src="/figures/light_bulb_off.png" class="w-auto h-86">
+<img src="/figures/light_bulb_off.png" class="w-auto h-65 mx-auto">
 
 <style>
 h1 {
@@ -326,7 +326,7 @@ class: text-center
 
 # **1**
 
-<img src="/figures/light_bulb_on.png" class="w-auto h-86">
+<img src="/figures/light_bulb_on.png" class="w-auto h-65 mx-auto">
 
 <style>
 h1 {
@@ -357,12 +357,13 @@ hideInToc: true
 
 ---
 hideInToc: true
-layout: image
-image: /figures/first_transistor.jpg
-backgroundSize: contain
+layout: center
+class: text-center
 ---
 
-<div class="note-text" style="position: absolute; left: 0; right: 0; bottom: 1rem; text-align: center; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);">
+<img src="/figures/first_transistor.jpg" class="w-124 mx-auto">
+
+<div class="note-text mt-sm">
 The first transistor, Bell Labs, 1947: the physical switch behind every bit
 </div>
 

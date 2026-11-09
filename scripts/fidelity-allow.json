@@ -6,15 +6,9 @@
     "figures/elf_3bit.png": "L03: a picture about pixels, 3 bits per pixel",
     "figures/elf_4bit.png": "L03: a picture about pixels, 4 bits per pixel",
     "figures/elf_24bit.jpg": "L03: a picture about pixels, 24 bits per pixel",
-    "figures/light_bulb_off.png": "L03: a photo, a bit as a switch; only 512x512 px, below 2x its size: replace with a larger photo",
-    "figures/light_bulb_on.png": "L03: a photo, a bit as a switch",
-    "figures/git_vscode_branch.png": "L06: a screenshot of VS Code",
-    "figures/git_vscode_init.png": "L06: a screenshot of VS Code",
-    "figures/git_vscode_publish.png": "L06: a screenshot of VS Code",
-    "figures/git_weather_changes.png": "L06: a screenshot of VS Code",
-    "figures/git_weather_conflict.png": "L06: a screenshot of VS Code",
-    "figures/git_weather_diff.png": "L06: a screenshot of VS Code",
+    "figures/light_bulb_off.png": "L03: a photo, a bit as a switch; 512 px, shown at h-65 (260 px of the 980-px slide, 510 px on a 1920-px screen): no larger than its pixels",
+    "figures/light_bulb_on.png": "L03: a photo, a bit as a switch; 1200x1600 px, shown at the same height as the off bulb",
     "figures/gpu1.webp": "L15: a photo of a graphics card, its VRAM chips outlined; 1500 x 900 px, 3.4x its 440 x 264 on a 1280 x 720 slide",
-    "figures/first_transistor.jpg": "L03: a photo of the first transistor (1947), full-slide image; only 1000x896 px, below 2x its size: replace with a larger scan"
+    "figures/first_transistor.jpg": "L03: a photo of the first transistor (1947); 1000x896 px, shown 31rem wide (496 px of the 980-px slide, 972 px on a 1920-px screen): no larger than its pixels"
   }
 }

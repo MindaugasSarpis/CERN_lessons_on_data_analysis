@@ -316,7 +316,7 @@ hideInToc: true
 
 # Tracking **Changes**
 
-The weather project of Lecture 4 goes into a repository, one commit at a time.
+The weather project goes into a repository, one commit at a time.
 
 <!--
 **Say:** each step once in the Source Control view and once typed: the button and the command are the same thing.
@@ -371,13 +371,7 @@ hideInToc: true
 
 # Source Control in **VS Code**
 
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_vscode_init.png" style="max-height: 400px; display: inline-block; border-radius: 6px; border: 1px solid var(--hair);">
-
-</div>
+<div class="mt-md">
 
 <div class="card card-primary card-glass pad-tight">
 
@@ -457,13 +451,7 @@ hideInToc: true
 
 # What Git Sees: `git status`
 
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_weather_changes.png" style="max-height: 360px; display: inline-block; border-radius: 6px; border: 1px solid var(--hair);">
-
-</div>
+<div class="mt-md">
 
 <div>
 
@@ -843,19 +831,13 @@ class: live
 
 # A Change, Seen as a **Diff**
 
-<div class="text-center mt-sm">
-
-<img src="/figures/git_weather_diff.png" style="max-height: 200px; display: inline-block; border-radius: 6px; border: 1px solid var(--hair);">
-
-</div>
-
 <div class="grid-2 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-compact">
 
 ## 🖱️ **In Source Control**
 
-Smiltė adds a section **Result** to the README with the mean of Lecture 4. The file gets the letter `M`. Select it and the **diff view** opens: green lines are new, red lines gone.
+Smiltė adds a section **Result** to the README with the mean, 7.16 °C. The file gets the letter `M`. Select it and the **diff view** opens: green lines are new, red lines gone.
 
 </div>
 
@@ -1389,13 +1371,7 @@ hideInToc: true
 
 # Publish from **VS Code**
 
-<div class="grid-2 gap-md mt-md" style="grid-template-columns: 2fr 3fr;">
-
-<div class="text-center">
-
-<img src="/figures/git_vscode_publish.png" style="max-height: 170px; display: inline-block; border-radius: 6px; border: 1px solid var(--hair);">
-
-</div>
+<div class="mt-md">
 
 <div class="card card-primary card-glass pad-compact">
 
@@ -1837,12 +1813,6 @@ hideInToc: true
 
 # Resolve It in the **Editor**
 
-<div class="text-center mt-sm">
-
-<img src="/figures/git_weather_conflict.png" style="max-height: 230px; display: inline-block; border-radius: 6px; border: 1px solid var(--hair);">
-
-</div>
-
 <div class="grid-3 gap-md mt-md">
 
 <div class="card card-primary card-glass pad-compact">
@@ -1996,8 +1966,6 @@ Switched to a new branch 'ranges'
 <div class="card card-secondary card-glass pad-compact">
 
 ## 🖱️ **In VS Code**
-
-<img src="/figures/git_vscode_branch.png" style="width:100%; border-radius: 6px; border: 1px solid var(--hair);">
 
 The branch name at the left of the Status Bar, then **Create new branch...**, `ranges`, Enter.
 
@@ -2440,7 +2408,7 @@ The folder holds 5.03 MB, nearly all of it the four data files. Fifteen copies t
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Git keeps the same four things and stores each content once. The tool is a checksum, as in Lecture 4: a short number computed from all the bytes of a content.
+Git keeps the same four things and stores each content once. The tool is a checksum: a short number computed from all the bytes of a content.
 
 </div>
 
@@ -2478,7 +2446,7 @@ ef0493b275aa2080237f676d2ef6559246f56636
 
 ## 📏 **What the number is**
 
-- 40 hex digits are 160 bits. The hash is **SHA-1**, an older relative of the SHA-256 of Lecture 4, which has 64 digits
+- 40 hex digits are 160 bits. The hash is **SHA-1**, an older relative of SHA-256, which has 64 digits
 - One changed letter changes the whole number
 - Git calls the number the **id** of the content, and stores the content under it
 
@@ -2538,7 +2506,7 @@ The header is the word `blob`, a space, the number of bytes as decimal text, and
 
 </div>
 
-<div class="note-text mt-sm">Read the bytes with the ASCII table of Lecture 3: 62 is b, 20 the space, 36 the digit 6, 37 the digit 7.</div>
+<div class="note-text mt-sm">Each byte is an ASCII code in hex: 62 is b, 20 the space, 36 the digit 6, 37 the digit 7.</div>
 
 <!--
 **Say:** the id is no secret of Git. It is a SHA-1 of bytes that can be written down; the size in the header is 6 or 7.
@@ -2600,7 +2568,7 @@ hideInToc: true
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
-## 📋 **The checksums of `data/raw`, as in Lecture 4**
+## 📋 **The SHA-256 checksums of `data/raw`**
 
 ```text
 $ shasum -a 256 data/raw/*
