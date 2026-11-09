@@ -1,7 +1,7 @@
 # Teachers Workbook
 
 Companion notes for **Best Research and Data Analysis Practices from CERN** — a
-course of 13 scheduled lectures and 3 further topics, with a hands-on seminar
+course of 12 scheduled lectures and 3 further topics, with a hands-on seminar
 in every session from the second on. The lectures
 are delivered as Slidev decks; this workbook holds teaching notes and the
 hands-on **seminar** briefs.
@@ -39,12 +39,11 @@ The seminar pages are in the **Seminars** section of the navigation.
 5. [Python Foundations](lectures/lecture_5.md)
 6. [Version Control with Git](lectures/lecture_6.md)
 7. [Data Visualisation](lectures/lecture_7.md)
-8. [Python for Data & NumPy](lectures/lecture_8.md)
-9. [Probability & Statistics](lectures/lecture_9.md)
-10. [Data Fitting from First Principles](lectures/lecture_10.md)
-11. [The Perceptron](lectures/lecture_11.md)
-12. [Pandas & Data Cleaning](lectures/lecture_12.md)
-13. [Reproducible Workflows & Automation](lectures/lecture_13.md)
+8. [Data Quality and Uncertainty](lectures/lecture_8.md)
+9. [Parameter Estimation and Fitting](lectures/lecture_9.md)
+10. [Classification and the Perceptron](lectures/lecture_10.md)
+11. [From Neurons to Language Models](lectures/lecture_11.md)
+12. [Code That Lasts](lectures/lecture_12.md)
 14. [Concepts of Data Analysis](lectures/lecture_14.md) *(further topic)*
 15. [Computing Infrastructure & HPC](lectures/lecture_15.md) *(further topic)*
 16. [Machine Learning & AI](lectures/lecture_16.md) *(further topic)*

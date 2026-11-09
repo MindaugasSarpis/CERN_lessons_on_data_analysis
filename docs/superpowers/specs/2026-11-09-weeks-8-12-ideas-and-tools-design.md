@@ -518,3 +518,17 @@ interactivity, visuals, style, overall feel (has to be incredible)."
 - **Slidev and the decks' feel**: a research review proposes upgrades and
   interactivity; nothing is upgraded before the lecturer has seen the list.
 
+- **Interactive figures (decided)**: on the proposal "drag a perceptron's
+  weights and watch its line move, change a fit's slope and watch χ²
+  change, or step numbers through a formula click by click", the lecturer:
+  "this sounds like a good idea". Course-wide Vue components, each showing
+  the expression with live numbers pushed through it: `MeanSpread` (week 8,
+  the spread of a mean against s/√N), `FitLine` (week 9, χ² of a line
+  through the ten yearly means), `PerceptronPlayground` (week 10, weights,
+  the boundary, one evening's z and the accuracy), `SoftmaxTemperature`
+  (week 11), and a generic `FormulaSteps`. They go into the decks once those
+  are built; Lecture 7 keeps its live Python block tonight.
+- **The toolkit** (`slidev-videos`: the video addon, the stage, the clip
+  library) and the outreach talks' theme are surveyed for what Lecture 1
+  and other lectures could inherit, "to keep things uniform all across";
+  proposals go to the lecturer first.

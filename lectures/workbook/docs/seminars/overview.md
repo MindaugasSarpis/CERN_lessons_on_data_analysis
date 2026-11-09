@@ -29,8 +29,19 @@ seminar asks one question about it and answers it by the end.
   as a list, then as a short `weather.csv`.
 - **Seminar 6** is Git: the room clones
   [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project)
-  (about 0.5 MB) and publishes it to their own GitHub. Seminar 13 uses Git
+  (about 0.5 MB) and publishes it to their own GitHub. Seminar 12 uses Git
   again; the other seminars do not need it.
+- **Weeks 8 to 12 share one conda environment, `analysis`.** Seminar 8
+  creates it from its folder's `environment.yml`; each later seminar adds
+  the package of the week itself (`conda install`, then the file is written
+  again), so packages and environments are learned one at a time. Whoever
+  missed a week creates it from that week's folder with one command.
+- **One new tool per seminar from week 8:** pandas (8), NumPy (9), a class
+  of your own (10), a language model in plain Python and an LLM (11),
+  pytest (12). The lecture of the week gives the idea; the seminar does it
+  with the tool, step by step.
+- **Your project:** from week 8, the last part of every seminar repeats the
+  day's steps on your own file, nothing new.
 - **The terminal:** zsh on macOS and Git Bash on Windows, in the terminal
   of VS Code. They take the same commands, so a line typed on the projector
   is the line typed on every laptop.
@@ -54,8 +65,8 @@ weather-sNN/
 |- scripts/             # one script per step
 |- notebooks/           # Jupyter notebooks (Seminar 5)
 |- results/             # numbers and figures the scripts produce
-|- tests/               # checks of the results (Seminar 13)
-|- run_all.py           # one command rebuilds everything (Seminar 13)
+|- tests/               # checks of the results (Seminar 12)
+|- scripts/rebuild.sh   # one command rebuilds everything (Seminar 4; tests from Seminar 12)
 ```
 
 The same layout is a sound default for your own project.

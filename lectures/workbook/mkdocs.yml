@@ -60,12 +60,11 @@ nav:
       - 05 Python Foundations: lectures/lecture_5.md
       - 06 Version Control with Git: lectures/lecture_6.md
       - 07 Data Visualisation: lectures/lecture_7.md
-      - 08 Python for Data & NumPy: lectures/lecture_8.md
-      - 09 Probability & Statistics: lectures/lecture_9.md
-      - 10 Data Fitting from First Principles: lectures/lecture_10.md
-      - 11 The Perceptron: lectures/lecture_11.md
-      - 12 Pandas & Data Cleaning: lectures/lecture_12.md
-      - 13 Reproducible Workflows & Automation: lectures/lecture_13.md
+      - 08 Data Quality and Uncertainty: lectures/lecture_8.md
+      - 09 Parameter Estimation and Fitting: lectures/lecture_9.md
+      - 10 Classification and the Perceptron: lectures/lecture_10.md
+      - 11 From Neurons to Language Models: lectures/lecture_11.md
+      - 12 Code That Lasts: lectures/lecture_12.md
       - 14 Concepts of Data Analysis: lectures/lecture_14.md
       - 15 Computing Infrastructure & HPC: lectures/lecture_15.md
       - 16 Machine Learning & AI: lectures/lecture_16.md
@@ -79,12 +78,11 @@ nav:
       - S5 Python: seminars/seminar_05.md
       - S6 Git: seminars/seminar_06.md
       - S7 Visualisation: seminars/seminar_07.md
-      - S8 NumPy: seminars/seminar_08.md
-      - S9 Statistics: seminars/seminar_09.md
-      - S10 Fitting: seminars/seminar_10.md
-      - S11 Perceptron: seminars/seminar_11.md
-      - S12 Pandas: seminars/seminar_12.md
-      - S13 Workflows: seminars/seminar_13.md
+      - S8 pandas: seminars/seminar_08.md
+      - S9 NumPy: seminars/seminar_09.md
+      - S10 A Class of Your Own: seminars/seminar_10.md
+      - S11 A Language Model: seminars/seminar_11.md
+      - S12 pytest: seminars/seminar_12.md
       - S14 Data Analysis: seminars/seminar_14.md
       - S15 Computing: seminars/seminar_15.md
       - S16 Machine Learning: seminars/seminar_16.md
