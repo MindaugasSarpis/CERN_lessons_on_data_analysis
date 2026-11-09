@@ -287,12 +287,31 @@ function groupOf(term) {
   return '0–9 and symbols';
 }
 
+// The workbook's Python-Markdown keeps the backslash of `\|` inside a code span
+// (the deck's markdown-it drops it), and never splits a cell at a pipe inside
+// one: on the page, a pipe in backticks is written bare.
+const mkdocsCell = (s) => s.replace(/(`+)(.+?)\1/g, (_, tics, code) => tics + code.replace(/\\\|/g, '|') + tics);
+
 function workbookPage(entries) {
   const sorted = [...entries].sort(
     (a, b) => sortKey(a.term).localeCompare(sortKey(b.term), 'en') || a.lecture - b.lecture || (a.slide ?? 0) - (b.slide ?? 0),
   );
-  const groups = new Map();
+  // A term in several lectures (`shell` in 3 and 4, `CSV` in 1 and 2) is one
+  // row: the first lecture's term and meaning, then every place it is
+  // explained. The same spelling is taken as the same idea, so a word with two
+  // meanings is told apart in its table (`standard error (stream)` in L04).
+  const merged = new Map();
   for (const e of sorted) {
+    const k = sortKey(e.term).replace(/\/$/, '');
+    if (merged.has(k)) merged.get(k).places.push(e);
+    else merged.set(k, { ...e, places: [e] });
+  }
+  for (const e of merged.values()) {
+    e.places.sort((a, b) => a.lecture - b.lecture || (a.slide ?? 0) - (b.slide ?? 0));
+    Object.assign(e, { term: e.places[0].term, meaning: e.places[0].meaning });
+  }
+  const groups = new Map();
+  for (const e of merged.values()) {
     const g = groupOf(e.term);
     if (!groups.has(g)) groups.set(g, []);
     groups.get(g).push(e);
@@ -307,13 +326,17 @@ function workbookPage(entries) {
     '',
     '# Glossary',
     '',
-    'The words of the lectures, A–Z, each with the lecture and the slide where it first appears.',
+    'The words of the lectures, A–Z, each with the lecture and the slide where it first appears, and the later lectures that explain it again.',
     '',
   ];
   if (!sorted.length) out.push('No lecture has a glossary yet.', '');
   for (const g of order) {
     out.push(`## ${g}`, '', '| Term | Meaning | First on |', '| --- | --- | --- |');
-    for (const e of groups.get(g)) out.push(`| ${e.term} | ${e.meaning} | ${where(e)} |`);
+    for (const e of groups.get(g)) {
+      const [first, ...more] = e.places;
+      const places = where(first) + (more.length ? `; also ${more.map(where).join(', ')}` : '');
+      out.push(`| ${mkdocsCell(e.term)} | ${mkdocsCell(e.meaning)} | ${places} |`);
+    }
     out.push('');
   }
   return out.join('\n');
