@@ -1378,7 +1378,7 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Each number moves against its slope, $\eta$ times the slope, as in Lecture 9:
+Each number moves against its slope, $\eta$ times the slope:
 
 $$
 w_1 \leftarrow w_1 - \eta\,(\hat{y} - y)\,x_1 \qquad w_2 \leftarrow w_2 - \eta\,(\hat{y} - y)\,x_2 \qquad b \leftarrow b - \eta\,(\hat{y} - y)
@@ -1473,7 +1473,7 @@ Downhill, $-\eta\,(\hat{y} - y)\,x$, is $+\eta\,(y - \hat{y})\,x$: Rosenblatt's 
 
 | Model | Output $\hat{y}$ | Loss of one point | Update of $w_1$ | Who moves the line |
 | --- | --- | --- | --- | --- |
-| Straight line, Lecture 9 | $w_1 x_1 + b$ | $\tfrac{1}{2}(\hat{y} - y)^2$ | $\eta\,(y - \hat{y})\,x_1$ | every point, by its residual |
+| Straight line, least squares | $w_1 x_1 + b$ | $\tfrac{1}{2}(\hat{y} - y)^2$ | $\eta\,(y - \hat{y})\,x_1$ | every point, by its residual |
 | Rosenblatt, 1958 | $\text{step}(z)$ | none | $\eta\,(y - \hat{y})\,x_1$ | only wrong points, all by the same amount |
 | Logistic neuron | $\text{sigmoid}(z)$ | $-\ln P(y)$ | $\eta\,(y - \hat{y})\,x_1$ | every point, by its error in probability |
 
@@ -1560,7 +1560,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-✂️ Split by years, not evening by evening at random: neighbouring evenings are alike (Lecture 8), and a test evening would have its own yesterday among the training evenings.
+✂️ Split by years, not evening by evening at random: neighbouring evenings are alike, and a test evening would have its own yesterday among the training evenings.
 
 </div>
 
@@ -1697,7 +1697,7 @@ hideInToc: true
 
 ## 🧮 **A share of $N$ evenings**
 
-Each test evening is right or wrong. The standard error of a share $p$ of $N$ (Lecture 8):
+Each test evening is right or wrong. The standard error of a share $p$ of $N$:
 
 $$
 \sqrt{\frac{p\,(1 - p)}{N}} = \sqrt{\frac{0.961 \cdot 0.039}{1095}} = 0.006

@@ -451,7 +451,7 @@ hideInToc: true
 
 # From Likelihood to **χ²**
 
-Where the squares come from: the Gaussian of Lecture 8.
+Where the squares come from: the Gaussian, the bell curve of a scatter σ.
 
 <!--
 **Say:** the ten yearly means now. Each scatters around the model; the Gaussian says how probable each value is, and the most probable model has the smallest sum of squares.
@@ -505,7 +505,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-📊 Model: 7.16 °C every year. Each yearly mean scatters around it as a Gaussian of σ = 0.70 °C, the scatter of the ten (Lecture 8).
+📊 Model: 7.16 °C every year. Each yearly mean scatters around it as a Gaussian of σ = 0.70 °C, the scatter of the ten.
 
 </div>
 
@@ -2149,7 +2149,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact">
 
-0.79 / √10 = 0.25: 3.6 times the ± of the fit. As 7.16 ± 0.03 against ± 0.22 in Lecture 8.
+0.79 / √10 = 0.25: 3.6 times the ± of the fit. Same for the mean: 7.16 ± 0.03 by the hours, ± 0.22 by the years.
 
 </div>
 
@@ -2726,7 +2726,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🔗 cov(a, b) = −σ² Σx / Δ = −0.0267, ρ = −0.84: a steeper line through (4.5, 7.16) starts higher. Count x from mid-2020 and ρ = 0, b = **7.16 ± 0.22**: the mean of Lecture 8.
+🔗 cov(a, b) = −σ² Σx / Δ = −0.0267, ρ = −0.84: a steeper line through (4.5, 7.16) starts higher. Count x from mid-2020 and ρ = 0, b = **7.16 ± 0.22**: the mean of the ten years, ± 0.70 / √10.
 
 </div>
 

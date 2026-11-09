@@ -118,7 +118,7 @@ Each one deepens a step; none is needed by a later slide.
 
 | Skip if time is short | Slides |
 |--|--|
-| Read the Prompt; The Commands of Lecture 03; Read an Error Message | 10, 11, 16 |
+| Read the Prompt; Commands for Files and Folders; Read an Error Message | 10, 11, 16 |
 | One Line, Byte by Byte; Standard Input | 20, 24 |
 | The Lowest Humidity; Keep Rows by a Condition; Every Year, Every Day, Every Hour | 26, 28, 30 |
 | A Point Fits Any Character | 34 |

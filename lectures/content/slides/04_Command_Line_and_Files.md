@@ -307,7 +307,7 @@ User and computer, `MINGW64`, the folder; `$` on the next line.
 hideInToc: true
 ---
 
-# The Commands of Lecture 03
+# Commands for Files and **Folders**
 
 <div class="card card-primary card-glass pad-compact table-compact mt-sm">
 
@@ -1940,7 +1940,7 @@ $ wc -c data/processed/daily.csv
 
 </div>
 
-<div class="note-text mt-md">The repair done by hand in the editor in Lecture 02, 180 bytes to 148, as one line that runs again on the next export.</div>
+<div class="note-text mt-md">One line instead of a repair by hand in an editor: 180 bytes to 148, and it runs again on the next export.</div>
 
 <!--
 **Say:** header `date,temp_c` and LF: 12 bytes. Eight rows like `2025-10-01,6.3`: 15 each. `2025-10-06,10.4`: 16. 12 + 8 × 15 + 16 = 148.
@@ -2004,7 +2004,7 @@ The 256 bits of SHA-256, computed from all 2 515 215 bytes. The same bytes give 
 
 ## 🧬 **One byte changed**
 
-Another 64 digits, all of them, as with the CRLF copy of Lecture 03; here `6.3` against `6.4` in one row.
+Another 64 digits, all of them, for `6.3` against `6.4` in one row.
 
 </div>
 

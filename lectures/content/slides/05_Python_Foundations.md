@@ -482,7 +482,7 @@ print(round(0.1 + 0.2, 2))     # 0.3
 ```
 ````
 
-<div class="note-text mt-md">A <code>float</code> is stored in 64 bits, about 16 decimal digits (Lecture 03). 0.1 has no end in binary, so the nearest stored number is used and every sum is rounded a little. <code>==</code> asks whether two values are equal; <code>round(x, 2)</code> keeps two decimals, for printing.</div>
+<div class="note-text mt-md">A <code>float</code> is stored in 64 bits, about 16 decimal digits. 0.1 has no end in binary, so the nearest stored number is used and every sum is rounded a little. <code>==</code> asks whether two values are equal; <code>round(x, 2)</code> keeps two decimals, for printing.</div>
 
 <!--
 **Ask:** step 2: is 0.1 + 0.2 equal to 0.3?
@@ -2326,7 +2326,7 @@ lib/python3.11/site-packages/
 
 </div>
 
-<div class="note-text mt-md">An <strong>environment</strong> is a folder with one Python and the packages installed for it. One environment per project, so an upgrade for one project cannot break another. <code>conda activate weather</code> puts its <code>bin</code> first on <code>PATH</code> (Lecture 04): <code>python</code> then means that Python. On Windows: <code>envs\weather\python.exe</code> and <code>Lib\site-packages</code>.</div>
+<div class="note-text mt-md">An <strong>environment</strong> is a folder with one Python and the packages installed for it. One environment per project, so an upgrade for one project cannot break another. <code>conda activate weather</code> puts its <code>bin</code> first on <code>PATH</code>, the folders the shell searches: <code>python</code> then means that Python. On Windows: <code>envs\weather\python.exe</code> and <code>Lib\site-packages</code>.</div>
 
 <!--
 **Say:** Miniforge's own environment is `base`; projects get their own.

@@ -275,7 +275,7 @@ time,pressure_hpa,temp_c,humidity_pct,wind_ms
 
 <div class="card card-warning card-glass pad-compact">
 
-⚠️ **With copies:** one edit per copy. A copy that is missed reads another column and runs without an error, like the humidity's 79.10 of Lecture 1.
+⚠️ **With copies:** one edit per copy. A copy that is missed reads another column and runs without an error, like the humidity column taken by mistake: a mean of 79.10.
 
 </div>
 
@@ -388,7 +388,7 @@ Data and the functions that work on it, kept together.
 hideInToc: true
 ---
 
-# Objects Since **Lecture 5**
+# `str`, `list` and `Figure` Are **Objects**
 
 <div class="card card-primary card-glass pad-tight table-compact mt-md">
 
@@ -411,7 +411,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# The Perceptron of Lecture 10, **One Evening**
+# A Perceptron Predicts Frost for **One Evening**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
@@ -466,7 +466,7 @@ $z = (-1)(2.6) + 0 \cdot 0.85 + 3.8 = 1.2$: frost
 hideInToc: true
 ---
 
-# Lecture 10's Perceptron as a **Class**
+# The Perceptron as a **Class**
 
 ```py {monaco-run} {autorun:false}
 class Perceptron:
@@ -551,8 +551,8 @@ hideInToc: true
 
 | **Model** | **Its numbers** | **`fit` sets them from** | **`predict` gives** |
 | --- | --- | --- | --- |
-| the line of Lecture 9 | slope, intercept: −0.56 °C per decade | the ten yearly means | the mean of a year |
-| the perceptron of Lecture 10 | $w_1$, $w_2$, $b$ | the evenings and their mornings | frost or not |
+| a straight line | slope, intercept: −0.56 °C per decade | the ten yearly means | the mean of a year |
+| the perceptron | $w_1$, $w_2$, $b$ | the evenings and their mornings | frost or not |
 | any model of a library | its own | inputs and their answers | an answer for new inputs |
 
 </div>
@@ -788,7 +788,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">A float keeps about 16 digits (Lecture 3: <code>0.1 + 0.2</code>). The two differ by 3.6 × 10⁻¹⁵; <code>==</code> compares every digit.</div>
+<div class="note-text mt-md">A float keeps about 16 digits. The two differ by 3.6 × 10⁻¹⁵; <code>==</code> compares every digit.</div>
 
 <!--
 **Say:** none of the four temperatures is stored exactly; their sum is rounded once more. 25.275 itself is stored a hair below.
@@ -901,7 +901,7 @@ mean    7.15997
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-❌ Tomas's change of Seminar 6: made from the raw file
+❌ Tomas's change: made from the raw file
 
 ```text
 rows    87672
@@ -975,7 +975,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact">
 
-## 🕵️ **Seminar 6: found by a person**
+## 🕵️ **Without a test: found by a person**
 
 Commit `85e435e`, "Take the mean over all rows of weather.csv": 5.78 in the README. Found by reading the history, then reverted.
 
@@ -1190,7 +1190,7 @@ hideInToc: true
 class: fill
 ---
 
-# The Environment of Weeks 8 to **12**
+# Four Packages and Everything They **Need**
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
@@ -1459,7 +1459,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-# rebuild.sh, as Lecture 4 **Left It**
+# rebuild.sh Before the **Tests**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
@@ -1583,7 +1583,7 @@ $ echo $?
 
 </div>
 
-<div class="note-text mt-md">The file says 5.78 and the rebuild says it failed. In Seminar 6 the same change was found by reading the history.</div>
+<div class="note-text mt-md">The file says 5.78 and the rebuild says it failed. Without the tests, the same change was found only by reading the history.</div>
 
 <!--
 **Say:** the result was written, the check refused it. Without the last line, 5.78 would have gone into the README with nothing said.
@@ -1691,7 +1691,7 @@ ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c
 
 </div>
 
-<div class="note-text mt-md">Every file made again from <code>data/raw</code>, the same bytes: the rule of Lecture 1, kept.</div>
+<div class="note-text mt-md">Every file made again from <code>data/raw</code>, the same bytes: no result was edited by hand.</div>
 
 <!--
 **Do:** click through: the checksums, the delete and the rebuild, the checksums again.
@@ -1826,7 +1826,7 @@ hideInToc: true
 
 </div>
 
-<div class="note-text mt-md">Windows ends each of the 6 lines of <code>temp_c.txt</code> with CRLF (Lecture 4): another checksum, the same mean. The test reads the number, so it passes on both.</div>
+<div class="note-text mt-md">Windows ends each of the 6 lines of <code>temp_c.txt</code> with CRLF, one byte more: another checksum, the same mean. The test reads the number, so it passes on both.</div>
 
 <!--
 **Say:** another person, another computer, a later time: each has a test that takes a minute. The checksums of the two CSV files are the same on every system; the README states those.
@@ -1840,7 +1840,7 @@ hideInToc: true
 
 # The Four **Aims**
 
-FAIR, a checklist for the project, and the question of Lecture 1.
+FAIR, a checklist for the project, and how to check 7.16.
 
 <!--
 (~0.5 min)
@@ -2027,7 +2027,7 @@ LHC experiments hide the region where a signal would be until the selection and 
 
 ## 🔢 **Count the looks**
 
-One file gave seven means in Lecture 1, from 5.78 to 7.29. The one picked after seeing all seven is not a result.
+Seven ways to take the mean of one file give 5.78 to 7.29. The one picked after seeing all seven is not a result.
 
 </div>
 
@@ -2050,12 +2050,12 @@ hideInToc: true
 | --- | --- |
 | 1–3 | the station's operator, received 13 Oct 2026; `./scripts/rebuild.sh`; 7.15997, reported as 7.16 |
 | 4–6 | SHA-256 `3f1ad06d…`; 120 hours of −999, 22 to 26 July 2019; four columns with units |
-| 7–9 | the mean of the measured hours, fixed in Lecture 1; 7.16 ± 0.22 °C (Lecture 8); 3 tests |
-| 10–12 | °C on every axis (Lecture 7); "no trend": −0.56 ± 0.77 °C per decade (Lecture 9); the README |
+| 7–9 | the mean of the measured hours, committed before the number; 7.16 ± 0.22 °C from the ten yearly means; 3 tests |
+| 10–12 | °C on every axis; "no trend": the slope, −0.56 ± 0.77 °C per decade; the README |
 
 </div>
 
-<div class="note-text mt-md">Twelve yes. Each answer points to a file, a number or a lecture.</div>
+<div class="note-text mt-md">Twelve yes. Each answer points to a file or a number.</div>
 
 <!--
 **Say:** the course's own example, run through the checklist: every answer has evidence the reviewer can open. Question 11 is the one most reports fail: ten years of yearly means do not show a trend, and the conclusion says so.

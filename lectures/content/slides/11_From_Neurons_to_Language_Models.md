@@ -142,7 +142,7 @@ class: fill
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-🧠 Each circle is the neuron of Lecture 10: $z = w_1 x_1 + w_2 x_2 + b$, then a step: 1 if $z > 0$, else 0. The output neuron takes $h_1$ and $h_2$ as its inputs. Nine numbers.
+🧠 Each circle is one neuron: $z = w_1 x_1 + w_2 x_2 + b$, then a step: 1 if $z > 0$, else 0. The output neuron takes $h_1$ and $h_2$ as its inputs. Nine numbers.
 
 </div>
 
@@ -275,7 +275,7 @@ Flat on both sides of 0: its slope is 0. A small change of a weight changes noth
 
 <div class="card card-success card-glass pad-compact mt-md table-compact">
 
-## 📈 **The sigmoid of Lecture 10 has a slope everywhere:** $\text{sigmoid}(z)\,(1 - \text{sigmoid}(z))$
+## 📈 **The sigmoid $1/(1 + e^{-z})$ has a slope everywhere:** $\text{sigmoid}(z)\,(1 - \text{sigmoid}(z))$
 
 | $z$ | −1 | 0 | 2 |
 | --- | --- | --- | --- |
@@ -372,7 +372,7 @@ class: fill
 
 <v-clicks>
 
-- Output, as in Lecture 10: $\;\delta = \partial\,\text{loss} / \partial z = \hat{y} - y = 0.386 - 1 = -0.614$
+- Output, loss $-\ln \hat{y}$: $\;\delta = \partial\,\text{loss} / \partial z = -\tfrac{1}{\hat{y}}\,\hat{y}\,(1 - \hat{y}) = \hat{y} - y = 0.386 - 1 = -0.614$
 - Its weight and bias: $\;\partial\,\text{loss} / \partial w = \delta\,h = -0.614 \cdot 0.269 = -0.165$, $\;\;\partial\,\text{loss} / \partial b = \delta = -0.614$
 - Back to the hidden neuron, $z = wh + b$: $\;\partial\,\text{loss} / \partial h = \delta\,w = -0.614 \cdot 2 = -1.227$
 - Through its sigmoid: $\;\partial\,\text{loss} / \partial u = \partial\,\text{loss} / \partial h \cdot h\,(1 - h) = -1.227 \cdot 0.197 = -0.241$
@@ -1118,7 +1118,7 @@ Every $p_i$ is positive, together they make 1, and a larger score gets a larger 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-📈 With two scores, softmax is the sigmoid of Lecture 10: $(2, 0)$ gives $e^{2} / (e^{2} + e^{0}) = 0.881 = \text{sigmoid}(2)$.
+📈 With two scores, softmax is the sigmoid: $(2, 0)$ gives $e^{2} / (e^{2} + e^{0}) = 0.881 = \text{sigmoid}(2)$.
 
 </div>
 
@@ -1561,7 +1561,7 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📉 **The loss of Lecture 10, at every token**
+## 📉 **The loss, at every token**
 
 $$
 \text{loss} = -\ln p\,(\text{the token that came next})
@@ -1841,7 +1841,7 @@ print(round(mean_valid(hours), 3) == 25.275)   # True
 
 <div class="note-text mt-md">
 
-The test fails on a correct function: a float, as in Lecture 3. Run every test, the model's and your own, before trusting it.
+The test fails on a correct function: the float is rounded. Run every test, the model's and your own, before trusting it.
 
 </div>
 
