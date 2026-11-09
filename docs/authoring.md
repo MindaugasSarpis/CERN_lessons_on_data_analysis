@@ -1,0 +1,281 @@
+# Authoring notes: the long form of CLAUDE.md
+
+`CLAUDE.md` is read first by every session and every subagent, so on 9 Nov
+2026 it was cut to its rules in short form. This file keeps the long form:
+each section's full wording as it stood that day, with the reasons, the
+lecturer's words, the dates, which decks follow a rule yet, and the long
+inventories (figure families, handed-out files, the video chain, flags). The
+headings match those of `CLAUDE.md`; notes in [square brackets] were added on
+9 Nov 2026 where the old text had gone stale.
+
+Everything here still holds unless `CLAUDE.md` says otherwise. When a rule
+changes, change it in `CLAUDE.md` and record the why and the date here.
+
+## Project Overview
+
+University-level lecture course "Best Research and Data Analysis Practices from CERN" — a 16-lecture + 16-seminar course [since 9 Nov 2026: 12 scheduled lectures, 01–12, and the optional 14–16; see Lectures] delivered as interactive slide decks using **Slidev**, with a companion student workbook built with **MkDocs**. The course's spine is four aims: 🔧 tool-agnosticism, ♻️ reproducibility, ⚙️ automation, 📁 efficient work with data & files.
+
+**Delivery architecture (blocked per-lecture decks):** the site is a static **landing page** (`dist/index.html`) plus **one independently-built Slidev deck per lecture** at `dist/<slug>/`. This fixes mobile load — a visitor downloads only one lecture (~4–28M) instead of a single 500+-slide monolith. The set of decks is defined by the manifest **`lectures/content/decks.json`**; lectures are grouped into blocks A–E on the landing page (advanced blocks last / optional).
+
+## Commands
+
+The commands block of 9 Nov 2026 with its full comments (`CLAUDE.md` has the short one):
+
+```bash
+pnpm install                 # install dependencies (pnpm version pinned by `packageManager` in package.json; settings in pnpm-workspace.yaml)
+
+pnpm build                   # build ALL decks + landing → dist/ (scripts/build-all.mjs)
+pnpm qa                      # build every deck at base '/' + gate each for overflow (scripts/qa-all.mjs) (includes the landing smoke test)
+pnpm qa --only 06-version-control       # QA just one deck (much faster edit loop)
+pnpm qa --changed-since origin/main     # QA only the decks whose slides changed vs main (CI does this vs the last green main commit; shared-file changes widen to all)
+pnpm qa:shots                # same + write .qa-shots/<slug>/slide-NNN.png for visual review
+pnpm qa:runners --only 03-how-computers-work   # press ▶ on every Python runner block: no unexpected error, slide fits with the output open (needs the Pyodide CDN, not in CI)
+pnpm timing                  # estimate delivery minutes per deck + seminar vs the 2h slot (scripts/timing-report.mjs; decks come from decks.json)
+pnpm timing:check            # same, exit 1 if any week is UNDER the band
+pnpm build:landing          # rebuild only the landing page + its WebGL bundle → dist/
+pnpm release 5               # staged release: lectures 01–05 live, rest draft (scripts/release.mjs; `all` = all live; no arg = show)
+pnpm videos:fetch <url> --name <Name> --used-in LNN   # yt-dlp → videos/raw/ + manifest entry; then videos:encode + videos:publish (needs yt-dlp + ffmpeg)
+pnpm videos:encode-hq        # venue-quality HEVC copy (manifest `hq = true` entries) → public/videos-hq/ (gitignored, never published); `pnpm dev` plays it first, a --keep-videos build uses it offline
+pnpm figures                 # regenerate all scripted lecture figures (figures/src/ → public/figures/viz_*.svg; --only <family> to scope)
+pnpm figures:lhcb            # regenerate the synthetic LHCb D0→K-π+ figures (lhcb_d0_spectrum/fit.png)
+
+pnpm dev 5                   # dev-serve ONE lecture (scripts/dev.mjs; number, slug, or substring — regenerates entries first)
+pnpm dev                     # list all decks
+
+pnpm dev:combined            # dev-serve the combined all-16 authoring deck
+pnpm build:combined          # optional: single "everything" authoring build (not deployed)
+pnpm export                  # export the combined deck to PDF
+cd lectures/workbook && mkdocs serve     # student workbook (needs mkdocs + mkdocs-material, e.g. conda env from env.yaml); deployed at <site>/workbook/ by build-all when mkdocs is on PATH (CI installs it)
+```
+
+### Gates
+
+There are no unit tests or linting; **`pnpm qa` (zero-overflow gate) is the test.** A second gate, **`pnpm timing:check`**, keeps every week's content sized to the 2h lecture + 2h seminar slots (model + band: `docs/superpowers/specs/2026-07-06-course-timing-rebalance-design.md`) — a deck must estimate 105–145 min, a seminar brief must declare ~120 min in its hidden header comment `<!-- ~120 min -->`; slightly over is preferred to under. A mostly hands-on week can move time to the seminar with `"split": {"lecture": 105, "seminar": 135}` on its deck in `decks.json` (week 5: a theory lecture built up gradually, then a live seminar; 90/150 on 18 Oct 2026, 105/135 since 19 Oct when functions, a class and modules joined the lecture; on 21 Oct the class moved to the lecture's For the Curious section and the spreadsheet comparison came in); the deck's band is then scaled (92–127 for 105) and the seminar must declare at least its minutes.
+
+### Build pipeline
+
+- **`lectures/content/decks.json`** — the manifest: `decks[]` (each `{slug, title, block, srcs[], optional, draft}`) + `blocks{}`. **`draft: true` = staged release**: the deck is still built + gated by `pnpm qa` / `pnpm timing:check` (so it can't rot while being edited), but a deploy build skips it (no `dist/<slug>/`, no 404 rewrite), and the landing + in-deck ☰ menu list it greyed/unlinked as "coming soon". Flip to `false` on delivery day and redeploy. `pnpm build --include-drafts` previews the full site locally. Optional **`seminar`** = the number of the workbook page the in-deck ☰ menu links (`seminar_NN.md`); `null` = no link (L01), unset = the deck's own number. The link is only emitted when the page exists, and an explicit `seminar` naming a missing page fails `gen-entries.mjs`.
+- **`scripts/gen-entries.mjs`** — writes one Slidev entry `lectures/content/deck.<slug>.md` per deck (co-located with `theme/` + `public/` so both resolve at build; a bare `slides/NN_*.md` build drops the theme AND can't resolve `/figures/*`). Entries are **generated + gitignored**, never hand-edited, and are the **only** place deck-level config (theme, routerMode, colorSchema, addons, title) lives. Merged lectures list multiple `srcs`. Entries set **`routerMode: hash`** — GitHub Pages has no SPA rewrites, so history-mode slide URLs (`/<slug>/5`) 404 on reload; the landing build also emits a root `404.html` that rewrites old-style `/<slug>/5` links to `/<slug>/#/5` (Pages ignores the per-deck `404.html` copies Slidev emits in subdirectories).
+- **Glossary** (since 9 Nov 2026; students asked for one, and the lecturer: "glossary yes, at the end of the slides") — `lectures/content/glossary/NN.md`, NN = the deck's number: one Markdown table `| Term | Meaning | First on |` and nothing else, 8–25 rows of the terms the lecture explains (common nouns lowercase, names capitalised, code in backticks), a meaning of about 14 words in the lecture's own words, and the plain text of the `# ` title of the slide where the term is first explained (a `## ` card heading, without its emoji, for a slide without a title). `scripts/gen-glossary.mjs` (imported by `gen-entries.mjs`, so every build, `pnpm qa` and `pnpm dev` regenerate it; alone: `pnpm glossary`) writes `lectures/content/glossary.<slug>.md` (gitignored), which the entry imports after the deck's last src: a section slide `# **Glossary**` and table slides of up to nine rows with the slide numbers linked, after `# Check **Yourself**` (0 min: the timing model reads the srcs only). It also writes the workbook's A–Z page `lectures/workbook/docs/glossary.md` (committed; nav entry "Glossary"). A First-on that matches no slide is a warning and the row loses its number: after renaming a slide title, run `pnpm glossary` and fix the table. `changed-decks.mjs` maps `glossary/NN.md` to deck NN.
+- **`scripts/build-all.mjs`** — regenerates entries, builds each deck to `<out>/<slug>/` at base `<prefix>/<slug>/` (absolute `--out`; Slidev resolves a relative `--out` against the entry dir), strips per-deck video copies (`videos/` + `videos-hq/`, served from the remote fallback), then emits the landing via **`scripts/gen-landing.mjs`**. Flags: `--out`, `--base <prefix>`, `--only a,b`, `--flat-base` (base `/` for QA, no landing; always includes drafts), `--include-drafts`, `--keep-videos` (with `VITE_VIDEOS_LOCAL_FIRST=1` in the env the kept copies are played first — an offline backup build). `--review` (CI passes it) also builds the draft decks into `dist/ataskaita/<slug>/` and writes the unlisted, `noindex` page `dist/ataskaita/index.html` (`scripts/gen-review.mjs`, in Lithuanian): every deck, the workbook, the lecturer's material, the questions, the code and the literature, for the report on the university's educational initiative (2025-10-30 – 2026-10-30); its PDFs are assets of the release `ataskaita-2026-10-30`. Nothing links to it, so students keep the weekly release. The report's own files (application, financial report, the centre's letters) stay in the gitignored `misc/description/mokslines_iniciatyvos_paraiska/`.
+- **`landing/` + `scripts/build-landing.mjs`** — the landing page is an Active Theory-style WebGL page: `landing/` (Three.js particle sim + CSS + fonts) is built by Vite to fixed-name assets; `build-landing.mjs` copies them to `<out>/assets/` and calls `gen-landing.mjs`, which still renders all content (hero, lecture rows) from `decks.json` — the page works fully without JS. `qa-all.mjs` smoke-tests it via `scripts/check-landing.mjs` (links, WebGL boot/fallback gating, reveals, zero console errors). **Sound** lives in `landing/src/sound.js` (Web Audio, synthesised, no assets): a low hum (~8 s, once per visit) on the first click/tap/key press that is not a lecture row, or on open when arriving from a deck link, plus a short swoosh under the row-click fade-out. Browsers block audio until a gesture (hover/scroll don't count), so nothing can play on a cold open; reduced motion plays nothing. `check-landing.mjs` passes 5-7 assert both via `?qa` sessionStorage records.
+- **`figures/src/`** — scripted matplotlib pipeline for lecture figures (dark course style via `style.py`; one module per family with a `FIGURES` dict; deterministic output — seeded data, `svg.hashsalt`, no embedded date). Outputs are **committed** as `public/figures/viz_*.svg`; decks never invoke Python at build time. Families by lecture: `git` (06: every diagram of the deck, a canvas in pixels with hairline panels, the deck's cyan for what a step moves, Space Grotesk and Space Mono from `figures/fonts/git/`; since 27 Oct 2026, replacing the Software Carpentry figures and the hand-built `git_flow.svg`), `handson` and the chart families (07: every hands-on figure is drawn from `weather.csv` with the lecture's `weather.py` functions, plain lists; `beyond`, plots of more than two variables, and `goodbad`, four mistakes and their repairs, both from the weather log; `advanced`, the For the Curious figures of four and five variables: contours, 3D slices against small multiples, parallel coordinates, a corner plot of the LHCb file, a turning scatter), `probability` (08), `fitting` (09), `perceptron` (10), `language` (11), `lasting` (12), `arrays` and `cleaning` (the parked NumPy and Pandas decks), `concepts` (14), `computing` (15), `ml` (16); most of these modules also print every number their slides state when run directly (`python figures/src/fitting.py`). Regenerate with the one canonical environment, `~/micromamba/envs/figures/bin/python figures/src/build.py --only <family>` (micromamba, conda-forge: Python 3.14.4, NumPy 2.5.0, Matplotlib 3.11.0, SciPy 1.18.0, pandas, seaborn 0.13.2, scikit-learn; made 9 Nov 2026; `pnpm figures` runs bare `python3`, which lacks seaborn and SciPy). SVGs committed before 9 Nov were drawn with Matplotlib 3.10.7–3.11.0, so the first regeneration of such a family rewrites all its SVGs (version line, glyph ids, sub-pixel shifts): commit those, or `git checkout` the ones you did not mean to change.
+- **`scripts/qa-all.mjs`** — builds all decks `--flat-base` to `.qa-dist/<slug>`, runs `check-slides.mjs` on each; non-zero exit if any deck overflows. `--changed-since <ref>` scopes it to the decks whose slide sources changed (working tree vs merge-base; `scripts/changed-decks.mjs`) — any change to theme, components, setup, `public/`, build/QA scripts, `landing/`, `decks.json`, deps or workflows widens to every deck; zero affected decks still smoke-tests the landing. `qa.yml` passes the last green `main` commit (or the PR base).
+
+### Visual QA
+
+Verify the **rendered** decks — a `slidev build` only catches compile errors, not slides whose content overflows the 16:9 frame (silently clipped in build and PDF export).
+
+`scripts/check-slides.mjs <distDir>` renders every slide of one built deck with parallel workers + client-side navigation, measures overflow (neutralizing decorative backdrops and pre-click transforms), and optionally writes `.qa-shots/slide-NNN.png`. Options: `--workers N`, `--tolerance PX`, `--only 8,76,...`, `--shots <dir>`. `pnpm qa` runs it across all decks. Media requests are aborted during QA so video slides don't stall the check.
+
+`scripts/check-overview.mjs <distDir>` gates the cost of Slidev's all-slides **overview** on a phone (no `<video>` or media request inside the overview, no card blur there, thumbnails `content-visibility: auto`); `pnpm qa` runs it once per run on the first video deck under QA. The guards live in `custom-slides.css` (overview block) and `VideoPlayer.vue` (placeholder outside the `slide`/`presenter` render context).
+
+**Video source chain** (`VideoPlayer.vue`): `pnpm dev` tries `videos-hq/<src>` → `videos/<src>` → GitHub release; a production build tries the release first, then the two local dirs (only present in a `--keep-videos` build — the lecture-day offline fallback); `VITE_VIDEOS_LOCAL_FIRST=1` at build time flips a `--keep-videos` build to local-first. Each `<source>` error advances the chain. Clips autoplay on slide activation; `<VideoPlayer :autoplay="false">` makes one wait for the presenter's click (L01's cold open) — it preloads so the first frame and controls show.
+
+**Figures fill the rest of the slide** (lecturer, 5 Nov 2026: "figures need to fill the rest of the slide ... more 16:9 format"; done for L07): a figure slide gets `class: fill` in its frontmatter and the block that holds its figures the class `fig-fill` (a lone `<img class="fig fig-fill">`, or the div or grid of cards); no inline `max-height` on the image. The CSS (`custom-slides.css`, FILL) gives that block the height left under the title and the caption. The scripted SVGs are drawn at the size of their box: `node scripts/measure-figures.mjs --only <slug>` (after a `--flat-base` build into `.qa-dist`) writes `figures/src/sizes.json`, and `style.save` draws each listed figure at that size, so after a layout change measure, then regenerate the figure families. A figure laid out for a tall box (a 2×2 grid) may need a wide layout (1×4). A single plot stands beside its caption (`grid-side`, about 3:2), a figure of several panels under it (full width), so a figure designed for one shape keeps it (lecturer, 7 Nov 2026). The `figures` env needs seaborn and scipy for the gallery families.
+
+**Hard requirements (see project memory):** (1) **zero slide overflow**; (2) **videos full-screen** — `VideoPlayer.vue` uses `object-fit: cover`, no letterbox line; (3) **consistent type scale** — sizes follow the markdown level, no arbitrary one-off `font-size`; (4) build every deck through its generated `deck.<slug>.md` entry (co-located with `theme/`), never a bare `slides/NN_*.md`.
+
+To review content/style, read the `.qa-shots/**/slide-*.png` in batches (or fan out subagents over batches), not all at once: `python3 scripts/contact-sheets.py <slug> [--from N --to M]` puts four slides on one PNG (`.qa-shots/<slug>/sheets/`).
+
+## Architecture
+
+### Lectures
+
+- **Deck manifest**: `lectures/content/decks.json` (see Build pipeline above) — the source of truth for which decks exist and their order/blocks.
+- **Lecture sources**: `lectures/content/slides/NN_Title.md` — one file per lecture, **numbered 01–16 in delivery order** (the numeric prefix is the authoritative sort key): 01 Orientation, 02 Introduction to Data, 03 How Computers Work, 04 Command Line & Files, 05 Python Foundations, 06 Git, 07 Data Visualisation, 08 Data Quality and Uncertainty, 09 Parameter Estimation and Fitting, 10 Classification and the Perceptron, 11 From Neurons to Language Models, 12 Code That Lasts; there is no deck 13 (since 9 Nov 2026); 14–16 (Concepts of Data Analysis, Computing Infrastructure, Machine Learning & AI) are block E "Further Topics", marked `optional` and not scheduled. The NumPy and Pandas decks of before 9 Nov are parked whole in `lectures/content/parked/decks/`: NumPy and pandas are taught in Seminars 8 and 9. **Since 9 Nov 2026 a lecture teaches the idea and a seminar the tools** (`docs/superpowers/specs/2026-11-09-weeks-8-12-ideas-and-tools-design.md`, which fixes weeks 8–12 and what each may assume): a lecture is a textbook chapter, each idea's mathematical expression followed by a real number or list from the weather log pushed through it (lecturer: "show the mathematical expressions but then always propagate a real number or a list through"), plain Python only, no library calls on a slide; a seminar brings the real library, one per week, step by step for first-time coders. The order and what weeks 1–7 assume are in `docs/superpowers/specs/2026-10-04-course-rework-first-principles-design.md` (weeks 7 and 8 swapped on 5 Nov 2026: `2026-11-05-visualisation-before-numpy-design.md`) — read the specs before reworking a deck. `LX_Python_Interactive.md` is a template (not a lecture) for python-runner slides.
+- **Parked slides**: `lectures/content/parked/NN_Title.md` — slides taken out of a deck (to keep it in the timing band, or after feedback). Not in `decks.json`, so not built, gated or deployed; a header comment says where each slide stood. To restore one, move it back into the lecture file.
+- **Combined authoring entry** (optional, not deployed): `lectures/content/best_research_and_data_analysis_practices_from_CERN.md` (imports all 16) and `staging.md` — single-file "everything" builds for authoring/PDF export (`pnpm build:combined`).
+
+- **Design/plan docs**: `docs/superpowers/specs/` and `docs/superpowers/plans/` — the curriculum spec and the P1–P6 implementation plan.
+
+### Seminars
+
+- **Seminars**: `lectures/workbook/docs/seminars/seminar_NN.md` + `overview.md` — one follow-along page per seminar, read live by the lecturer on a tablet while typing the steps on a laptop in front of the room, with little preparation and taught from the page alone (self-contained): the goal and the starting state at the top (no run-sheet table since 18 Oct 2026: "it clutters the text"), then per section one sentence of purpose (its clock and minutes are an HTML comment `<!-- 0:20 · 10 min -->`: no times visible in the workbook, lecturer 18 Oct 2026), short numbered steps with a light tutorial look like the Python Tutorial and HSF Analysis Essentials (the instruction plus a sentence or two on what to notice, then one block; interpreter work as one ```` ```pycon ```` block with input and output together), one bold **Check:** line, and one **Task** with a folded answer per part; almost no other boxes (since 13 Oct 2026, after "too much text, the steps are not clear, too many boxes"; HSF look since 18 Oct). Layout: `docs/seminar-page-recipe.md`, model `seminar_05.md`. The workbook's **▶ Steps** button (`docs/javascripts/steps.js`) shows a seminar page one step at a time, full screen; ```` ```mermaid ```` blocks are drawn by the same script (class `diagram`, mermaid 11.4.1 from jsDelivr). **Everything happens in class: no homework, no "done at home"** — students do not do it, so no session may depend on it (installing Python and Git included: Seminar 4 does it). **Python comes from Miniforge** (conda plus Python, conda-forge only; installed in Seminar 4), and **a project's environment is a conda environment** written down as `environment.yml` (`conda env export --from-history`): no python.org installer, no venv, no `requirements.txt` (since 12 Oct 2026; a few lines of 14–15 still use venv until they are reworked). A page carries the number of its lecture, except Seminar 1, which pairs with Lecture 02; there is no Seminar 2. **One project, the weather station, for lectures and seminars alike** (lecturer, 13 Oct 2026, replacing the per-seminar sandboxes `books_*`, `inbox_*`, `bikes_*` of 12 Oct): `weather-project` with `data/raw/weather.csv` (hourly, 2016–2025, 120 rows of `-999`), the mean 7.16 °C. **Every seminar is self-contained** (lecturer, 18 Oct 2026: "without carry over of files. Especially if someone skips a seminar, and it's also easier for me"). **Seminars 1–5 download nothing** (lecturer, 20 Oct 2026: "it's best not to have prerequisite files needed (at least up until 5) it's better to define a small list or smth directly"): the student makes the folder and types the data from the page, a Python list or the same six-row `weather.csv` (the real hours 2019-07-21T20:00 to 07-22T01:00, the evening the sensor failed: four temperatures, two `-999`, mean 25.275 without them), plus the 11-line `daily_export.csv` where needed; the recipe holds the table. From Seminar 6 on, section 1 downloads `weather-sNN.zip` from the release `seminar-files` of the small public repository [MindaugasSarpis/weather-project](https://github.com/MindaugasSarpis/weather-project/releases), unzips it to `~/weather-sNN` and, when packages are needed, makes a fresh conda environment `sNN` from its `environment.yml` (weeks 8–12 share one environment, `analysis`: a student without it makes it from the zip's `environment.yml`, the others activate it; spec of 9 Nov 2026, §3.3). The zip holds everything the session needs (data, the finished files of earlier seminars); it is made by `misc/weather_repo/seminar_zips.py` from `misc/weather_repo/starts/sNN/`. No file or environment comes from an earlier session, no `git pull`, no pushes outside the Git seminars. Seminar 6 still clones the repository (made by `misc/weather_repo/build.sh` with fixed authors and dates, so the commit ids on the S6 page are the ids in the room; never rewrite its history once a room has cloned it) and publishes it to the student's GitHub; Seminar 12 also uses Git (its start folder is a repository with one commit). **A lecture deck is self-contained** (since 12 Oct 2026): every step is on its slide with its output, and no slide or note sends the room to the workbook or to a file to open; example names and paths (`data/raw/weather.csv`) are fine when the slide shows everything. Two exceptions, both the lecturer's: a few planned live moments, each marked `**Live:**` in its slide's note and listed on the lecture page, run in a terminal what the slide then shows (L04 has five); and the slide that shows the example's project folder may link its zip from the workbook (`../workbook/data/weather_project.zip`, L04 slide 4). Showing things live is the seminar's job, and seminars name and hand out their files. No "made up" or "generated for the course" labels on slides, pages or handed-out READMEs. Lectures 14–16 still use the pendulum table and the LHCb D⁰ → K⁻π⁺ file (`M, PT, TAU, IPCHI2` only) until they are reworked the same way, and Lectures 08–12 (rebuilt on the weather log on 9 Nov 2026) show them only in For the Curious; Lecture 07 (Data Visualisation) was moved before NumPy and rebuilt on the weather project on 5 Nov 2026 (spec `docs/superpowers/specs/2026-11-05-visualisation-before-numpy-design.md`); every seminar page already uses the weather project (13 Oct 2026). Each student's semester project is separate and entirely their own choice (topic, data, form) — never frame a course example as the course project.
+
+### Theme and assets
+
+- **Custom theme**: `lectures/content/theme/` — local Slidev theme (`@slidev/theme-scienced`). Since 2026-10-05 the decks share **one design system with the landing page** (spec: `docs/superpowers/specs/2026-10-05-decks-match-landing-design.md`): near-black backdrop with grain, Space Grotesk everywhere (Space Mono for code), hairline panels, one cyan accent (amber/teal only for `card-warning`/`card-success`)
+  - `styles/tokens.css` — the design tokens (`--bg`, `--fg`, `--fg-2`, `--dim`, `--accent`, `--hair`, `--warn`, `--ok`, `--ease`, backdrop, grain), **imported by both the theme and `landing/src/style.css`**. Change a colour here, never in a deck or the landing alone. `--dim` is for labels/captions only; body text stays `--fg` (projector contrast)
+  - `styles/fonts.css` — fonts are bundled from `@fontsource` (Slidev font provider `none` in `theme/package.json`), so an offline build needs no network
+  - `styles/layouts.css` — slide backdrop, the heading scale (one place), per-layout defaults; `styles/custom-slides.css` — card system, grid layouts, spacing utilities, tables; `styles/code.css` — code blocks
+  - `styles/mermaid-styles.css` — the light-DOM measuring font for Mermaid labels (node styling is in `setup/mermaid.ts`)
+  - `layouts/` — custom Vue layouts: cover (the landing hero: lecture title as the big uppercase title, `LECTURE NN · BLOCK X` corner read from `decks.json` by deck title [the number from the deck's slug since 9 Nov 2026]), section (numbered kicker, left-aligned), quote, fact, statement, intro, center-bkg
+  - `mermaid-config.md` — reusable Mermaid init blocks and classDef styles
+- **Components**: `lectures/content/components/MCQ.vue` — multiple-choice question component
+- **Static assets**: `lectures/content/public/` — images and backgrounds referenced as `/filename.png` in slides
+
+### Workbook (MkDocs)
+
+- `lectures/workbook/` — MkDocs (Material, dark) site with the seminar briefs + lecture companion notes; built to `dist/workbook/` by `build-all.mjs` when `mkdocs` is on PATH (or `$MKDOCS`), gated by `mkdocs build --strict` in qa.yml, linked from the landing footer
+- `lectures/workbook/mkdocs.yml` — site config and nav
+- `lectures/workbook/docs/lectures/lecture_N.md` — one page per lecture (N = its number, no leading zero): what it covers, the plan as slide numbers and parts with a skip list (no clock or minutes since 18 Oct 2026), "Check yourself", the paired seminar, take-aways. Slide numbers on a page must be recounted whenever its deck gains or loses a slide
+
+### Miscellaneous
+
+- `misc/exams/` — grading/plotting scripts; the grade CSVs they read are **gitignored (student personal data — never commit them)**
+- `misc/python/stable/analysis_example/` — the generator→plot→fit demo chain referenced by the workbook
+- `misc/weather_repo/build.sh` — builds the public repository `MindaugasSarpis/weather-project` that Seminar 6 clones (seven commits, Tomas's `85e435e` changes the mean to 5.78); its STAGE commits and `files/sNN/` are no longer used by the seminars (18 Oct 2026). `misc/weather_repo/seminar_zips.py` builds the starting folder of Seminars 6–16, `weather-sNN.zip` from `starts/sNN/` (manifest + files over the Seminar 4 project); upload with `gh release upload seminar-files misc/weather_repo/release/weather-s*.zip --clobber -R MindaugasSarpis/weather-project`
+- `misc/l05_scratch_repo/build.sh` — rebuilds the scratch Git repository whose outputs (commit, tree and blob ids) are on the L05 slides; rerun it when `cli_clean_pendulum.py` changes
+- `docs/svg-figure-recipe.md` — conventions for hand-built SVG figures in `public/figures/`
+- `docs/seminar-page-recipe.md` — the layout of a seminar page (self-contained, short tutorial steps, all in class)
+- `docs/python-runner-recipe.md` — the style for live Python blocks (`{monaco-run}`): when to use one, how to write the code, room for the output, which file holds which part of the look
+- `docs/delivery-log.md` — one entry per delivered session (planned, what happened, changed in response, open). Append the lecturer's notes after each lecture and read a lecture's entries before reworking it. The repository is public: no student names
+- `lectures/workbook/docs/data/` — files the seminars hand out, named by topic: `pendulum*` (the table cleaned by hand in Seminar 1; `pendulum.csv` is the answer key; `pendulum_plot.py` regenerates the plot and its copy in `public/figures/`), `D0_KPi.csv` (the LHCb file, `root_to_csv.py`), `project_*` + `pendulum_replaced/report/crlf` + `bytes_*` (the checkpoints of the S1/S3 of before 12 Oct 2026, from `project_files.py`; Seminars 5, 6, 8, 9 and 10 still link them; README/report are `.txt` because MkDocs renders any `.md`), `weather_*` (L01–L04: the weather station's hourly log, its spreadsheet export, the cleaned 148-byte table and the `weather-project` zip, all from `weather_files.py`), `books_*` (S1), `inbox_*` (S3), `bikes_*` (S4), `cli_*` (L04 and S4: the handed-out `clean_export.py`, which writes its output with `newline="\n"` on every system, and `column_stats.py`; `cli_clean_pendulum.py` is the older script that S6 and S12 still use), `pendulum_run2*` (L12's second, messier file and the script that writes it), `perceptron_*` (the Seminar 11 of before 9 Nov 2026, with the seeded script that makes the points), `workflows_*` (the Seminar 13 of before 9 Nov 2026: the stage scripts, `run_all.py`, the tests), `concepts_*` (S14), `hpc_*` (S15), `ml_*` (S16). A data file is committed together with the script that makes it
+
+## Slide Authoring Conventions
+
+Each lecture markdown file follows a consistent structure:
+
+1. **Cover frontmatter** — only `layout: cover` + `title: "…"` (same string as the deck's `title` in `decks.json`; `gen-entries.mjs` warns on drift). Decks with `{monaco-run}` Python fences add a `python:` block (installs/prelude) here, because the runner addon reads it from slide 1, which is this cover. **No deck-level config in lecture files** (`theme`, `colorSchema`, `background`, `addons`, `drawings`, `mermaid`, `transition`): it lives only in the generated entry's headmatter (`scripts/gen-entries.mjs`) and is dead once the lecture is imported via `src:` — Slidev takes config from the entry's headmatter alone.
+2. **Cover slide** → **Quote slide** (motivational) → **Motivation slide** (bullet list)
+3. **Section breaks**: `layout: section` + `hideInToc: true` + `# Section **KeyWord**`
+4. **Content slides** use the card system:
+   ```html
+   <div class="card card-primary pad-tight">
+     ## 📊 **Title**
+     Content here
+   </div>
+   ```
+5. **Card colors**: `card-primary`, `card-secondary`, `card-accent`, `card-info`, `card-success`, `card-warning`
+6. **Padding**: `pad-tight` (default), `pad-compact` (dense content), `pad-snug`, `pad-balanced`
+7. **Grid layouts**: `grid-2`, `grid-3` with `gap-md mt-md`
+8. **Emoji format**: Always `## 📊 **Title**` — emoji outside bold
+9. **Slide separators**: `---` with optional YAML frontmatter between them
+10. **Quizzes close the deck, never interrupt it**: `<MCQ>` slides go after the Recap, under a `layout: section` slide titled exactly `# Check **Yourself**`. `timing-report.mjs` counts that section and everything after it as 0 min (self-study, not delivered), so a quiz moved out of the lecture has to be replaced by content, not by nothing. The same questions with answers go on the lecture's workbook page under "Check yourself". Done for L01–L03; L04–L16 still carry inline quizzes until each is reworked. **Inner workings go last, for the curious** (lecturer, 21 Oct 2026: "first schematically show everything … and then towards the end the 'inner workings' but only for curious"): a deck shows what a tool does, simply and with pictures, before how it works inside; the internals (Git's objects in L06, writing a class in L05) sit in an optional section, a `layout: section` slide titled exactly `# For the **Curious**` after the Recap and before `# Check **Yourself**`. `timing-report.mjs` counts it as 0 min too, so the main path alone fills the band and must not need it. Spec: `docs/superpowers/specs/2026-10-21-lectures-5-6-simple-first-design.md`.
+11. **Content standard**: derive, do not assert. A new slide carries a worked example with real numbers (computed, not guessed) and connects to the slide before it, so a section reads like a textbook chapter and not like a list of facts.
+12. **zsh on macOS, Git Bash on Windows** (lecturer, 13 Oct 2026, because zsh and PowerShell diverged in what they can do; Git Bash comes with Git for Windows and runs the same Unix commands; replaces the zsh + PowerShell rule of 6 Oct). A command both shells take stands once, in a card headed `## 💻 **zsh · Git Bash**` with the `$ ` prompt (a Mac shows `%`); a real difference gets a `grid-2` of `## 🍎 **macOS · zsh**` / `## 🪟 **Windows · Git Bash**` or a one-line note: checksums `shasum -a 256` / `sha256sum`, paths `/Users/smilte` / `/c/Users/smilte`, `open` / `start`, `wc` padding (BSD on macOS, GNU in Git Bash). Use only tools both have: `grep -E` (never `-P`), `find` (never `-printf`), `xxd` (Git Bash has no `hexdump`), no `tree`, `jq`, `make`, `rsync`, `man`, `sed -i`, `stat`. `python` on both (Miniforge, after `conda init zsh` / `conda init bash`), never `python3`. Scripts are bash: `#!/usr/bin/env bash`, `set -e`, run as `./scripts/rebuild.sh`. Installs: Homebrew on macOS, `winget` on Windows (typed in the Windows terminal before Git exists), conda on both; VS Code's default terminal profile on Windows is Git Bash. Seminar pages use `=== "macOS"` / `=== "Windows"` tabs only where the systems differ.
+13. **Speaker notes have one form** (L01–L04 since 12 Oct 2026, the model for the rest): `**Live:**` the line typed in the terminal, only at a planned live moment (see the self-contained rule; the slide also gets `class: live` in its frontmatter, which puts a LIVE DEMO tag in its corner, so a presenter who has not read the notes still sees it — L06 since 27 Oct 2026), `**Do:**` something done with the room (the board, a show of hands, a film), never a file or program opened beside the deck, `**Say:**` the one point, `**Ask:**` a question for the room, `**If asked:**` the detail kept off the slide, each one or two short lines and only when it applies, then `(~N min)`. A slide holds one step and about 40 words of prose at most besides code, output and tables; the detail goes into the note.
+14. **Python snippets are live runner blocks**: ` ```py {monaco-run} {autorun:false} `, every result `print`ed with its value in a trailing comment, each line fitting its editor (~50 characters in a `grid-2` card, ~115 full width; `pnpm qa` fails a clipped line), ≲10 lines, self-contained, not wrapped alone in a card, room left under the block for the output. The runner needs internet in the room (Pyodide loads from jsDelivr). The frame, the output box (11rem, then it scrolls) and the colours are set course-wide, so never restyle a block on a slide. Full recipe: `docs/python-runner-recipe.md`; check with `pnpm qa:runners --only <slug>`. Static fences stay for terminal sessions (` ```text `) and code that cannot run in a browser (local files, `input()`, subprocess). Done for L03; the static Python fences of L06–L16 are not swept yet.
+15. **Every line on a slide carries information** (lecturer, 12 Oct 2026): a title says what the slide does or answers (`Change Folder: cd`, `Where Am I: pwd`, `The Columns of weather.csv`) or is left out when the boxes already say it; no slogans or number play (`One Row, Four Values`, `One Shell per System`), no title repeating the card headings, no narration (`the next slide…`, `this course uses…`, `remember this`). Section slides stay, as pauses. Use the project skill `writing-lecture-slides` (`.claude/skills/`) when writing or reviewing a deck or a seminar page. All 16 decks swept on 12 Oct 2026 (Seminar 4 too); the other seminar pages not yet.
+16. **No walls of code or terminal output** (lecturer, 21 Oct 2026, on an eight-line `git rm` session: "very difficult to read in a lecture. If we need them, use shiki magic move to show one line at a time"): a block longer than about five lines is cut to the lines that matter (`...` marks a cut) or built up with magic-move, ` ````md magic-move ` around ` ```text ` steps, one command and its answer added per click, the earlier lines kept (L04 "Change Folder: cd"). Done for L05–L06.
+17. **Laconic slides** (lecturer, 9 Nov 2026: "not too much text, just what's needed. I don't like paragraphs of text on the slides, more laconic style, but important ideas, numbers should of course be relayed"): no paragraph on a slide; a caption is one or two short lines, or two or three fragments with their numbers; the reasons and the how go into the speaker note. Every important number stays on the slide. Lecture 7 follows it since 9 Nov; apply it to every deck touched.
+
+## Slidev Gotchas
+
+- **Monaco runner blocks (`{monaco-run}`)** — four things to know: (1) they **autorun on slide load** unless the fence says `{monaco-run} {autorun:false}` (course convention: always opt out); (2) Monaco highlights at **runtime** via a shiki bundle that only ships Slidev's default languages — `lectures/content/setup/shiki.ts` must list every language used in monaco fences, INCLUDING the exact fence alias (` ```py ` needs `'py'` in the list, not just `'python'`); (3) the runner look (frame, `PYTHON` header with the ▶ button, output box with bounded height + scroll) lives in `theme/styles/monaco.css`, editor options in `setup/monaco.ts`, editor colours in `setup/shiki.ts`'s theme `colors`; the addon's stdout splitting is fixed by `patches/slidev-addon-python-runner@0.1.3.patch` (without it every `print` left a blank row), and `code-runners.ts` trims Pyodide's own frames off tracebacks; (4) **matplotlib figures** reach the runner output only because `lectures/content/setup/code-runners.ts` wraps the addon's Python runner and points `document.pyodideMplTarget` at a per-run container — without it `plt.show()` draws into `document.body`, below the slide frame (the "plot doesn't show" bug). Figure chrome/sizing is styled under `.slidev-python-figures` in `monaco.css`; the output box is capped at 11rem, so a plotting fence should stay ≲10 lines or the box (and the figure) sits below the frame at runtime.
+- **Class names that UnoCSS reads as utilities** — a custom class such as `md-h1` is parsed as "height 0.25rem at the `md` breakpoint" and silently collapses the element. Do not start a class name with a breakpoint prefix (`sm-`, `md-`, `lg-`, `xl-`); the rendered-Markdown boxes of L02 use `rendered-md` / `rendered-title` for that reason.
+- **A slide that just fits on macOS can overflow on CI** — the runner's Linux fonts set some slides 15–20 px taller (seen on a figure slide of L11 and a long quiz question of L13, both green locally and red in `qa.yml`). Leave about 25 px of room at the bottom of a full slide, and keep a quiz question to three lines.
+- **Tables inside cards** render at slide scale and overflow. Add `table-compact` to the card for a reference table on the card's body scale (L02 key sheet).
+- **Markdown inside one-line HTML** — a single-line `<div class="note-text">text with *em* or `code`</div>` is an HTML block: markdown is NOT parsed and prints literal asterisks/backticks. Either use `<em>/<strong>/<code>` inside the div, or put blank lines between the tags and the text (multi-line form) so markdown-it parses it. Same for the `question=` prop of `<MCQ>` — it accepts `code` spans only (the component converts them); no other markdown.
+- **`$$` math blocks inside HTML** — Slidev ≥ 52.19 wraps `$$ … $$` in a KaTeX wrapper component; a `$$` line directly after an opening tag (no blank line), or an empty line inside the math, makes the build fail with `Element is missing end tag`. Always leave a blank line between a tag and `$$`, and keep the math contiguous.
+- **Mermaid 12 defaults are switched off** — mermaid 12 lays flowcharts out with ELK, draws them in the `neo` look (gradient strokes, shadows), wraps labels at 120px and widens every node to 120px. `setup/mermaid.ts` restores `layout: 'dagre'`, `look: 'classic'`, `flowchart.wrappingWidth: 200` and `minNodeWidth: 0`, the settings every diagram was sized with; keep them.
+- **Mermaid styling is global** — the course look for every diagram lives in `lectures/content/setup/mermaid.ts` (`themeVariables` + `themeCSS`); the canonical semantic `classDef`s are in `theme/mermaid-config.md`. Slidev renders each diagram into a **shadow root**, so page CSS (`mermaid-styles.css`) cannot style nodes/edges — it only holds the light-DOM measuring container's label font (same weight as `mermaid.ts`, so labels measure and draw alike). The navy fills that slide `classDef`s spell out are stripped at build time by `setup/transformers.ts` for the semantic class names (`input`, `process`, `output`, `check`, `bad`, … — see `theme/mermaid-config.md`); `themeCSS` colours those classes. Don't add `%%{init: …}%%` colour blocks to fences; layout-only directives (spacing, `showCommitLabel`) are fine.
+- **Git conflict markers inside fenced code blocks** — Slidev's snippet plugin interprets `<<<<<<< HEAD` as a file-import directive and crashes with `ENOENT`. Fenced code is `v-pre`, so the old `{{'<<<<<<< HEAD'}}` trick renders literally — do NOT use it. Show a conflict as a raw HTML block instead: `<pre class="slidev-code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD … &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch</code></pre>` (see L05 "Merge Conflicts — What They Look Like") [since the swap of weeks 5 and 6: L06 "A Merge Conflict", `<pre class="slidev-code conflict-block">`].
+
+## Available Tooling
+
+- **Slidev reference skill**: a full Slidev documentation skill is installed at `.agents/skills/slidev/` (SKILL.md + `references/`). Consult it when authoring advanced slide features (Monaco, magic-move, layouts, etc.).
+
+## Deployment
+
+One branch (`main`) and one GitHub Actions workflow:
+
+- **`.github/workflows/qa.yml`** — on every push to `main` (and on PRs / manual dispatch) runs both gates (`pnpm qa` + `pnpm timing:check`); then, on `main` only, a `build` job (`needs: qa`) builds all decks + landing + workbook and a `deploy` job publishes to GitHub Pages. A push is live ~8 min later **only if the gates are green**; a red run deploys nothing and the previous site stays up.
+- **No second branch.** `git push origin main` is the deploy. Keep unfinished edits to a live deck on a PR branch (gates run there, no deploy); drafts are safe to push. `gh workflow run qa.yml --ref main` redeploys without a commit. `ff2026` (old work branch) and `bs2026` (old deploy branch) are frozen at the 2026-09-06 cutover — nothing deploys from them.
+- **Drafts are gated too.** A deck mid-rework on `main` makes `pnpm qa` or `timing:check` fail, and then nothing deploys. To ship one finished deck meanwhile, put only its files on a worktree of `origin/main` and push that: `git worktree add <dir> -b deploy-x origin/main`, copy the files, commit, `git push origin deploy-x:main`; rebase `main` on it afterwards (9 Nov 2026, Lecture 7 shipped while weeks 8–12 were rebuilt).
+
+## Releasing lectures during the semester
+
+`pnpm release <NN>` marks lectures 01–NN live and the rest draft (`pnpm release all` = all live; no arg = show state) — or edit `"draft"` by hand. On lecture day: `pnpm release NN`, commit on `main`, `git push origin main` — live once `qa.yml` is green (~8 min). Drafts stay fully gated in CI, so keep editing them freely. `pnpm dev <NN>` works on drafts; `pnpm build --include-drafts` builds a full local preview.
+
+## Adding / removing a lecture
+
+The manifest drives everything, so the checklist is short (full walkthrough in README.md):
+
+1. **Add**: create `lectures/content/slides/NN_Title.md` (copy an existing lecture's frontmatter/cover/quote/motivation skeleton), add a `{slug, title, block, srcs}` entry to `decks.json` (delivery order = array order), write the seminar brief `lectures/workbook/docs/seminars/seminar_NN.md` (declare `<!-- ~120 min -->` under its header line), and add the workbook page + `mkdocs.yml` nav line. Then `pnpm dev <NN>` to author, `pnpm qa --only <slug>` + `pnpm timing:check` to gate.
+2. **Remove**: delete the deck's entry from `decks.json`, delete (or park outside `slides/`) the source file, delete its seminar brief and workbook nav line. `timing-report.mjs` only gates files listed in `decks.json`, so nothing ghost-gates after removal.
+
+## Review tools
+
+Added on 9 Nov 2026 (`docs/superpowers/plans/2026-11-09-implement-all.md`,
+batch 2), so that a session's edit-and-check loop is one command.
+
+### pnpm review
+
+`pnpm review <deck> [--since prev|<dir>|<git-ref>] [--from N --to M]
+[--threshold 0.001] [--workers N] [--tolerance PX] [--out <dir>]`
+(`scripts/review.mjs`;
+`<deck>` as for `pnpm dev`: a number, a slug or a piece of one):
+
+1. builds the deck at base `/` into `.qa-dist/<slug>`
+   (`node scripts/build-all.mjs --flat-base --out .qa-dist --only <slug>`).
+   `build-all.mjs` empties its `--out` folder first, other decks' builds
+   included, so a build and the step that reads it (`measure-figures.mjs`
+   reads `.qa-dist`) go in one command; with several sessions on one
+   checkout, `--out .qa-dist-<name>` (gitignored) builds into a folder of
+   your own;
+2. moves the screenshots of the run before to `.qa-shots/<slug>/prev/`;
+3. runs the overflow gate and writes new screenshots
+   (`check-slides.mjs --shots .qa-shots/<slug>`);
+4. makes contact sheets, four slides per PNG (`contact-sheets.py`), in
+   `.qa-shots/<slug>/sheets/`;
+5. prints the deck's timing line (`timing-report.mjs --json`): its estimate
+   and band, and the minutes its seminar page declares;
+6. with `--since`, compares every new screenshot with the older one
+   (`shots-diff.py`): side-by-side PNGs in `.qa-shots/<slug>/diff/`, and
+   contact sheets of the changed slides only in
+   `.qa-shots/<slug>/changed/sheets/`. The older screenshots are `prev` (the
+   run before), any folder of `slide-NNN.png`, or a git ref (`HEAD`,
+   `origin/main`, a sha): the deck as committed there, exported with
+   `git archive` into a temporary folder, built with the checkout's own
+   `node_modules` (linked; the export's `gen-entries.mjs`, then Slidev's
+   binary, never `pnpm`: in a folder without the lockfile pnpm 12 installs
+   before it runs, and through the link that rewrote the checkout's
+   `node_modules` once, on 9 Nov 2026), shot once and kept in
+   `.qa-shots/<slug>/at-<sha>/` (the three newest are kept).
+
+`--from N --to M` limits the sheets and the comparison to those slides; the
+overflow gate always covers the whole deck. The run ends with a summary
+(overflow, timing, changed slides, where the sheets are) and exits 1 if the
+build fails or a slide overflows or does not render. The Python steps need
+Pillow: `$REVIEW_PYTHON`, else `~/micromamba/envs/figures/bin/python`, else
+`~/micromamba/envs/outreach_talks/bin/python`, else `python3`. It builds a
+deck and drives Playwright, so on a machine shared by several sessions run it
+under the machine's render lock.
+
+The loop: `pnpm review 8` once; edit; `pnpm review 8 --since prev`; read
+`changed/sheets/` and `diff/`. What the uncommitted edits did:
+`pnpm review 8 --since HEAD`.
+
+### shots-diff.py
+
+`python3 scripts/shots-diff.py <old_dir> <new_dir> [--threshold 0.001]
+[--out DIR] [--from N] [--to M] [--json]`: per slide, the share of pixels
+that differ (Pillow's `ImageChops`); above the threshold (0.1 % of the
+pixels by default) a slide is changed. A new slide that matches an old slide
+of another number is moved (a slide went in or out before it), a slide put in
+is added, an old slide that matches no new one is removed; moves are listed
+as runs (`13–40 +1`). Side-by-side PNGs (old left, new right, the changed
+area boxed in red) go to `<new_dir>/diff/`. Exit 0 = nothing changed,
+1 = something changed, 2 = error, as for `diff`. Two builds of the same
+slides give pixel-identical screenshots (Lecture 1 on 9 Nov 2026: 65 of 65,
+built from the working tree and from a `git archive` of HEAD), so the default
+threshold only absorbs a stray pixel.
+
+### pnpm week
+
+`pnpm week <N> [--dry-run] [--verify]` (`scripts/week.mjs`). Week N is
+Lecture N, on the Tuesdays of 2026: 8 Sep, 29 Sep, 6 Oct, 13 Oct, 20 Oct,
+27 Oct, 10 Nov, 17 Nov, 1 Dec, 8 Dec, 15 Dec, 22 Dec (weeks 1–12). It
+
+- runs `node scripts/release.mjs <N>` (lectures 01–N live, the rest draft);
+- rewrites the section `## This week: <date>` of
+  `lectures/workbook/docs/index.md`: the lecture row from `decks.json` (number
+  and title), the seminar row from the seminar page's first heading (the
+  deck's `seminar`, else N; week 1 has none). The text after a link is kept
+  when the row already links the same page, so a summary written by hand
+  survives a rerun; a new seminar row takes the page's "Today's question". It
+  stops if the lecture page does not exist (`mkdocs build --strict` would fail
+  on the link);
+- prints what changed (the draft flags, the section's lines) and the next
+  steps: `pnpm qa --only <slug>`, `pnpm timing:check`, commit, push,
+  `pnpm week <N> --verify`.
+
+`--dry-run` prints the same and writes nothing. `--verify`, after the push,
+finds the `qa.yml` run of HEAD on `main` (`gh run list --commit`), waits for
+it (`gh run watch --exit-status`), then expects HTTP 200 (curl, up to six
+tries 20 s apart, with `?v=<sha>` against the CDN's cache) from
+`<site>/<slug>/`, `<site>/workbook/lectures/lecture_<N>/` and
+`<site>/workbook/seminars/seminar_<NN>/`; only then does it say deployed.
+`--verify --dry-run` prints the commands and the URLs.
