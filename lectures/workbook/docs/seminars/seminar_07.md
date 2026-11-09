@@ -170,7 +170,7 @@ A new package goes into the active environment, never into `base`, and into the 
       - matplotlib-base=3.11
     ```
 
-**Check:** `3.11.2`, and `- matplotlib-base=3.11` at the end of
+**Check:** `3.11.2` (the last digit may be higher), and `- matplotlib-base=3.11` at the end of
 `environment.yml`.
 
 !!! warning "`ModuleNotFoundError: No module named 'matplotlib'`"
@@ -181,7 +181,7 @@ A new package goes into the active environment, never into `base`, and into the 
 
 ### 3. A first figure { #first }
 
-<!-- 0:20 · 15 min -->
+<!-- 0:20 · 15 min (Task: 5 min, skip if late) -->
 
 A **Figure** is the whole image; an **Axes** is one plot area in it, with its two axes; `ax.plot` draws a line on the Axes; `fig.savefig` writes the image to a file.
 
@@ -266,8 +266,7 @@ temperature.
 !!! question "Task: the humidity, drawn the same way"
     In `figures.py`, append the third value of each line,
     `float(line.split(",")[2])`, instead of `weather.temp_of(line)`. Run,
-    look at the figure. Is there a spike? When is the air driest? Change
-    it back.
+    look at the figure. Is there a spike? Change it back.
 
 ??? success "Answer"
     ```text
@@ -276,10 +275,7 @@ temperature.
     ```
 
     No spike: `humidity_pct` has no `-999`; its hours run from 34 to
-    100 %. The deepest dips lie where the temperature has its warm humps:
-    of the 831 hours below 55 %, 774 are in May to September, 702 between
-    12:00 and 18:00. Of the 2540 hours at 100 %, 2155 are in November to
-    March.
+    100 %.
 
 ---
 
@@ -301,8 +297,7 @@ A **dictionary of lists**: one key per day, and under it the list of that day's 
 
     ```python
     def group(path, start, stop):
-        """The temperatures of each line[start:stop]: 0, 4 the year,
-        5, 7 the month, 11, 13 the hour of the day, 0, 10 the day."""
+        """A list of temperatures for each key line[start:stop]."""
         groups = {}
         for line in read_lines(path):
             temp = temp_of(line)
@@ -344,7 +339,8 @@ A **dictionary of lists**: one key per day, and under it the list of that day's 
     hours are all `-999`. The first four values are the four hours of
     `first_figure.py`.
 
-**Check:** `3648` keys, and `False` for 22 July 2019.
+**Check:** `3648` keys, `False` for 22 July 2019, and the terminal back in
+`weather-s07` (`cd ..`).
 
 ---
 
@@ -352,11 +348,10 @@ A **dictionary of lists**: one key per day, and under it the list of that day's 
 
 <!-- 0:45 · 10 min -->
 
-The lecture drew every hour at its time with `weather.hours`; here each day gets one point, the mean of its hours, from `weather.group`. `datetime.fromisoformat` turns a text such as `2016-01-01` into a date; Matplotlib writes the years under an axis of dates.
+Each day gets one point, the mean of its hours, from `weather.group`. `datetime.fromisoformat` turns a text such as `2016-01-01` into a date; Matplotlib writes the years under an axis of dates.
 
-1. Replace `figures.py` with this. The first line is new: from the module
-   `datetime`, which comes with Python, it takes the type of the same name. The lines from `days = ...` replace the
-   lines from `every = []`.
+1. Replace `figures.py` with this. `datetime` comes with Python; the
+   first line takes its type of the same name.
 
     ```python
     from datetime import datetime
@@ -494,6 +489,7 @@ The same `group`, with the month as key, `line[5:7]`: twelve lists, a mean for e
     ```
 
     The keys come in the order of the file, January first.
+    `f"{x:.1f}"` writes the number `x` with one decimal.
 
 2. Under them, the figure. A list of texts on the x-axis puts each text
    under its point, in the order of the list.
@@ -504,13 +500,13 @@ The same `group`, with the month as key, `line[5:7]`: twelve lists, a mean for e
     ax.set_xlabel("Month")
     ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
     ax.set_title("July is 22.4 °C warmer than January")
-    fig.savefig("results/monthly_temp.png", dpi=150)
+    fig.savefig("results/month_means.png", dpi=150)
     ```
 
     `"o-"` draws a point at each value and a line between neighbours: the
     months follow each other round the year.
 
-3. Save, run, open `results/monthly_temp.png`.
+3. Save, run, open `results/month_means.png`.
 
 **Check:** a hill with its top at `07`, 18.5 °C, and its bottom at `01`,
 −3.9 °C.
@@ -523,7 +519,7 @@ The same `group`, with the month as key, `line[5:7]`: twelve lists, a mean for e
 
 The hour of the day is `line[11:13]`: 24 lists, each holding one hour of every day of ten years.
 
-1. At the end of `figures.py`, add these lines, save.
+1. At the end of `figures.py`, add these lines, save, run.
 
     ```python
     by_hour = weather.group(PATH, 11, 13)
@@ -533,7 +529,18 @@ The hour of the day is `line[11:13]`: 24 lists, each holding one hour of every d
         hour_keys.append(hour)
         hour_means.append(weather.mean(by_hour[hour]))
     print(f"{min(hour_means):.1f} {max(hour_means):.1f}")
+    ```
 
+    ```text
+    $ python scripts/figures.py
+    ...
+    -3.9 18.5
+    3.7 10.7
+    ```
+
+2. Under them, the figure. Save, run.
+
+    ```python
     fig, ax = plt.subplots()
     ax.plot(hour_keys, hour_means, "o-")
     ax.set_xticks(["00", "03", "06", "09", "12", "15", "18", "21"])
@@ -546,68 +553,48 @@ The hour of the day is `line[11:13]`: 24 lists, each holding one hour of every d
     `set_xticks` writes a label only under the keys it is given: every
     third hour, so the 24 labels do not crowd.
 
-2. Run it.
-
-    ```text
-    $ python scripts/figures.py
-    ...
-    -3.9 18.5
-    3.7 10.7
-    ```
-
 3. Open `results/day_cycle.png`: lowest at 03:00, 3.7 °C, highest at
    15:00, 10.7 °C.
 
 **Check:** one curve with 24 points, its bottom at `03`, its top at `15`.
 
-!!! question "Task: January and July"
-    Draw the day's cycle of January and of July as two lines in one
-    figure, `results/day_cycle_jan_jul.png`. Give each `ax.plot` a
-    `label="January"` (or `"July"`) and call `ax.legend()` before
-    `fig.savefig`: the legend lists the labels. Which day swings more?
-    Hint: `group` mixes all months; copy its loop into `figures.py`, write
-    `weather.` in front of `read_lines`, `temp_of` and `MISSING`, keep only
-    the lines whose `line[5:7]` is the month, and use `line[11:13]` as the
-    key.
+!!! question "Task: does the day of the month matter?"
+    Draw the mean of each day of the month, `weather.group(PATH, 8, 10)`,
+    into `results/day_of_month.png`, as in steps 1 and 2, with
+    `ax.set_xticks(["01", "08", "15", "22", "29"])` and
+    `ax.set_ylim(-5, 20)`.
 
 ??? success "Answer"
-    A dictionary gives each month's name; the outer loop runs once per
-    month and draws one line.
-
     ```python
-    names = {"01": "January", "07": "July"}
+    by_date = weather.group(PATH, 8, 10)
+    date_keys = []
+    date_means = []
+    for date in by_date:
+        date_keys.append(date)
+        date_means.append(weather.mean(by_date[date]))
+    print(len(date_keys), f"{min(date_means):.1f} {max(date_means):.1f}")
+
     fig, ax = plt.subplots()
-    for month in names:
-        cycle = {}
-        for line in weather.read_lines(PATH):
-            temp = weather.temp_of(line)
-            if temp != weather.MISSING and line[5:7] == month:
-                hour = line[11:13]
-                if hour not in cycle:
-                    cycle[hour] = []
-                cycle[hour].append(temp)
-        means = []
-        for hour in cycle:
-            means.append(weather.mean(cycle[hour]))
-        print(names[month], f"{min(means):.1f} {max(means):.1f}")
-        ax.plot(hour_keys, means, "o-", label=names[month])
-    ax.set_xticks(["00", "03", "06", "09", "12", "15", "18", "21"])
-    ax.set_xlabel("Hour of the day")
+    ax.plot(date_keys, date_means, "o-")
+    ax.set_xticks(["01", "08", "15", "22", "29"])
+    ax.set_ylim(-5, 20)
+    ax.set_xlabel("Day of the month")
     ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
-    ax.set_title("A July day swings 10 °C, a January day 4 °C")
-    ax.legend()
-    fig.savefig("results/day_cycle_jan_jul.png", dpi=150)
+    fig.savefig("results/day_of_month.png", dpi=150)
     ```
 
     ```text
     $ python scripts/figures.py
     ...
-    January -5.9 -1.8
-    July 13.5 23.6
+    3.7 10.7
+    31 6.8 8.3
     ```
 
-    July by far: about 10 °C between 03:00 and 15:00, January about 4 °C.
-    Both lines are lowest at 03:00 and highest at 15:00.
+    No: from the 1st to the 28th every mean lies between 6.8 and 7.4 °C,
+    a flat line; the date does not drive the weather. Only the 29th
+    (8.1 °C) and the 30th (8.3 °C) stand higher: cold February has no
+    30th, and a 29th only in 2016, 2020 and 2024, so these two days hold
+    fewer winter hours.
 
 ---
 
@@ -625,7 +612,7 @@ The mean of each of the ten years, and the 87 552 hours behind them.
 
 Points, not bars: the y-axis does not start at zero, and the eye compares the points with the line.
 
-1. At the end of `figures.py`, add these lines, save.
+1. At the end of `figures.py`, add these lines, save, run.
 
     ```python
     by_year = weather.group(PATH, 0, 4)
@@ -637,19 +624,7 @@ Points, not bars: the y-axis does not start at zero, and the eye compares the po
     temps = weather.temps(PATH)
     all_mean = weather.mean(temps)
     print(len(temps), f"{all_mean:.2f}")
-
-    fig, ax = plt.subplots()
-    ax.plot(years, year_means, "o", label="mean of the year")
-    ax.axhline(all_mean, color="grey", linewidth=1, label="mean of all hours")
-    ax.set_ylim(5, 9)
-    ax.set_xlabel("Year")
-    ax.set_ylabel("Mean temperature (°C)")
-    ax.set_title("Ten years around 7.16 °C, the last one the coldest")
-    ax.legend()
-    fig.savefig("results/yearly_temp.png", dpi=150)
     ```
-
-2. Run it.
 
     ```text
     $ python scripts/figures.py
@@ -658,7 +633,21 @@ Points, not bars: the y-axis does not start at zero, and the eye compares the po
     87552 7.16
     ```
 
-3. Open `results/yearly_temp.png`. `"o"` draws points without a line:
+2. Under them, the figure. Save, run.
+
+    ```python
+    fig, ax = plt.subplots()
+    ax.plot(years, year_means, "o", label="mean of the year")
+    ax.axhline(all_mean, color="grey", linewidth=1, label="mean of all hours")
+    ax.set_ylim(5, 9)
+    ax.set_xlabel("Year")
+    ax.set_ylabel("Mean temperature (°C)")
+    ax.set_title("Ten years around 7.16 °C, the last one the coldest")
+    ax.legend()
+    fig.savefig("results/year_means.png", dpi=150)
+    ```
+
+3. Open `results/year_means.png`. `"o"` draws points without a line:
    ten separate years, nothing measured between them;
    `axhline` the grey line at 7.16 °C; `label=` names each, and
    `ax.legend()` lists the names in a box. `set_ylim(5, 9)` fixes the
@@ -715,8 +704,9 @@ Points, not bars: the y-axis does not start at zero, and the eye compares the po
 **Check:** two peaks, 50 bars of 1 °C from −17 to 33.
 
 !!! question "Task: other bin widths"
-    Draw the histogram with bins of 0.05 °C and of 10 °C: change the
-    `ax.hist` line and the y-label, run, look; then put both back for
+    Draw the histogram with bins of 0.05 °C (`bins=1000`) and of 10 °C
+    (`bins=5`): change the `ax.hist` line, the y-label and the title, run,
+    look; then put both back for
     section 11. What does each show, and what does it hide?
 
 ??? success "Answer"
@@ -758,9 +748,9 @@ The script draws all five figures again in a few seconds, so the script, not the
     $ ls -1 results
     daily_temp.png
     day_cycle.png
-    monthly_temp.png
+    month_means.png
     temp_hist.png
-    yearly_temp.png
+    year_means.png
     ```
 
     `-1`: one name per line. `first.png` and `every_hour.png` do not come
@@ -771,7 +761,8 @@ The script draws all five figures again in a few seconds, so the script, not the
    save: how anyone draws the figures again.
 
     ```text
-    The figures need Matplotlib, listed in `environment.yml`: in that
+    Unlike `rebuild.sh`, the figures need Matplotlib, listed in
+    `environment.yml`: in that
     environment, `python scripts/figures.py` draws five PNG files into
     `results/`.
     ```
@@ -971,6 +962,55 @@ Harder figures from the same script, for a room that is done early. Each answer 
     `07: 18.5 °C` beside the top of the hill, `01: -3.9 °C` beside its
     lowest point. A label on the figure saves the reader from reading the
     value off the axis.
+
+!!! question "Advanced task: January and July"
+    Draw the day's cycle of January and of July as two lines in one
+    figure, `results/day_cycle_jan_jul.png`. Give each `ax.plot` a
+    `label="January"` (or `"July"`) and call `ax.legend()` before
+    `fig.savefig`: the legend lists the labels. Which day swings more?
+    Hint: `group` mixes all months; copy its loop into `figures.py`, write
+    `weather.` in front of `read_lines`, `temp_of` and `MISSING`, keep only
+    the lines whose `line[5:7]` is the month, and use `line[11:13]` as the
+    key.
+
+??? success "Answer"
+    A dictionary gives each month's name; the outer loop runs once per
+    month and draws one line.
+
+    ```python
+    names = {"01": "January", "07": "July"}
+    fig, ax = plt.subplots()
+    for month in names:
+        cycle = {}
+        for line in weather.read_lines(PATH):
+            temp = weather.temp_of(line)
+            if temp != weather.MISSING and line[5:7] == month:
+                hour = line[11:13]
+                if hour not in cycle:
+                    cycle[hour] = []
+                cycle[hour].append(temp)
+        means = []
+        for hour in cycle:
+            means.append(weather.mean(cycle[hour]))
+        print(names[month], f"{min(means):.1f} {max(means):.1f}")
+        ax.plot(hour_keys, means, "o-", label=names[month])
+    ax.set_xticks(["00", "03", "06", "09", "12", "15", "18", "21"])
+    ax.set_xlabel("Hour of the day")
+    ax.set_ylabel("Mean temperature, 2016 to 2025 (°C)")
+    ax.set_title("A July day swings 10 °C, a January day 4 °C")
+    ax.legend()
+    fig.savefig("results/day_cycle_jan_jul.png", dpi=150)
+    ```
+
+    ```text
+    $ python scripts/figures.py
+    ...
+    January -5.9 -1.8
+    July 13.5 23.6
+    ```
+
+    July by far: about 10 °C between 03:00 and 15:00, January about 4 °C.
+    Both lines are lowest at 03:00 and highest at 15:00.
 
 !!! question "Advanced task: PNG, SVG or PDF?"
     Save the figure of section 6 also as `.svg` and `.pdf` (the format

@@ -1301,3 +1301,25 @@ complicated."
   taught again (slides 5–11), the pendulum and LHCb data where Lecture 7 and
   Seminar 8 use the weather log, `np.histogram` not linked to `ax.hist`, and
   the old `Speaker:` note form. To rework before it is released.
+
+## 2026-11-09 (night) · Seminar 7 walked through as a student, lightened
+
+**What happened:** the lecturer: "And how is the seminar looking?" A
+reviewer did every step of Sections 1–12 and the optional 13–15 from the
+real `weather-s07.zip`: every command, printed number, file and figure came
+out as written. It judged the page gradual but long for a beginner room.
+
+**Changed in response:**
+
+- Section 8's Task "January and July" (a 22-line nested loop) is now an
+  advanced task in Section 15; in its place a short Task, the mean of each
+  day of the month (`group(PATH, 8, 10)`): a flat line near 7 °C, the 29th
+  and 30th higher because February has no 30th.
+- Sections 8 and 9 split their long first block: the numbers, run, then
+  the figure. Section 3's humidity Task lost a question its figure could
+  not answer; Section 10's Task gives `bins=1000` and `bins=5`.
+- Section 5 says once what to type (no "replace" and "the lines from"
+  together) and no longer refers to the lecture; `f"{x:.1f}"` explained
+  where it first appears; the version Check allows a later last digit; the
+  docstring of `group` is one line; the figure files are named as in the
+  lecture, `month_means.png` and `year_means.png`.
