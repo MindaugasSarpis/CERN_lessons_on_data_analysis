@@ -47,9 +47,9 @@ The answer is written as the README writes it: 7.16 ± 0.22 °C.
 7. **The standard error**: the variance of a sum, checked with two random
    hours (12.52 °C) and two neighbouring hours (17.68 °C); a factor comes out
    squared; the variance of a mean, σ²/N, derived; s/√N checked on random
-   hours; what ± one standard error means, as 50 intervals; how it shrinks
-   with N, live; the standard error of 7.16 if the hours were independent,
-   0.030 °C.
+   hours, and live for N = 1 to 1000; what ± one standard error means, as 50
+   intervals; how it shrinks with N, live; the standard error of 7.16 if the
+   hours were independent, 0.030 °C.
 8. **When hours are not independent**: means of 1000 hours at random (0.28)
    and in a row (7.75 °C); r against the time between two hours; the ten
    yearly means, s = 0.70 °C, and their standard error, 0.22 °C; one year's
@@ -67,9 +67,9 @@ The answer is written as the README writes it: 7.16 ± 0.22 °C.
 
 ## The lecture, part by part
 
-The lecture is slides 1–68 and estimates about 115 min, so in the two-hour
+The lecture is slides 1–69 and estimates about 116 min, so in the two-hour
 slot **plan to skip the slides of the second table** (about 12 min).
-Slides 69–77 are the optional section For the Curious and slides 78–86 the
+Slides 70–78 are the optional section For the Curious and slides 79–87 the
 self-check quizzes; neither takes lecture time. To jump, type the slide
 number and press Enter.
 
@@ -81,9 +81,9 @@ number and press Enter.
 | 25–29, 31–33 | Probability by counting: P(frost), the share settling, frost in each month, conditional probability, frost given the hour before, independence, one day live |
 | 34–35, 37–40 | The Gaussian: the curve, its areas, the hours against it, the check in numbers, means of random hours |
 | 41–48 | Correlation: the scatter of temperature and humidity, covariance, r, r live, pairs of columns, random and neighbouring pairs, r and a curve |
-| 49–56 | The standard error: the variance of a sum, a factor squared, the variance of a mean, the check, what ± means, how it shrinks with N, 0.030 |
-| 57–62, 64 | Not independent: hours in a row, r against the time between hours, the ten yearly means, 0.22, one year's own ±, which ± belongs to 7.16 |
-| 65–68 | The answer in five steps, the README, a checklist, the recap |
+| 49–57 | The standard error: the variance of a sum, a factor squared, the variance of a mean, the check, the mean of N random hours live, what ± means, how it shrinks with N, 0.030 |
+| 58–63, 65 | Not independent: hours in a row, r against the time between hours, the ten yearly means, 0.22, one year's own ±, which ± belongs to 7.16 |
+| 66–69 | The answer in five steps, the README, a checklist, the recap |
 
 | Skip | Slides |
 |--|--|
@@ -93,19 +93,24 @@ number and press Enter.
 | The median in Python | 23 |
 | Frost at 03:00 and at 14:00 in March | 30 |
 | The Gaussian in Python | 36 |
-| Writing a result with its ± | 63 |
+| Writing a result with its ± | 64 |
 
 - **Do not cut** slide 3 (the question, with the counts of the show of
-  hands on the board) or slide 64, which answers it with the four numbers
+  hands on the board) or slide 65, which answers it with the four numbers
   of the opening.
-- **Do not cut** slides 50–56 and 58–61: the one derivation of the lecture,
+- **Do not cut** slides 50–57 and 59–62: the one derivation of the lecture,
   s/√N, and the reason it fails for the hours. The seminar computes the
   same 0.030 and 0.22 with pandas.
-- **Slides 5, 6, 10, 15, 19, 31, 32, 39, 43 and 64** show the question or
+- **Slides 5, 6, 10, 15, 19, 31, 32, 39, 43 and 65** show the question or
   the numbers first and the result on a click; ask the room before
   clicking. **Slide 52** builds the variance of a mean in four clicks, one
-  line of the derivation each.
-- **Slides 20, 23, 33, 36, 45 and 55** run plain Python in the browser,
+  line of the derivation each, and **slide 57** the standard error of 7.16
+  in three: √87 552, then 0.030, then the condition.
+- **Slide 54 is an interactive figure** that works offline: pick N = 1, 4,
+  16, 100 or 1000 hours per mean and read the spread of the 1000 means
+  beside s/√N; at 100 and 1000 press "zoom in". Use it on the projected
+  window, not in the presenter view.
+- **Slides 20, 23, 33, 36, 45 and 56** run plain Python in the browser,
   each pushing a list of the log through the slide's expression. The first
   run downloads the Python runtime and needs internet in the room, so press
   one ▶ before the lecture. The notes of each say what to change and run
@@ -113,16 +118,16 @@ number and press Enter.
 - **Every figure fills its slide** and is drawn from `weather.csv` by
   `figures/src/probability.py`, which also prints every number the slides
   state: `python figures/src/probability.py`.
-- **Slide 54** shows 50 intervals of ± one standard error; 28 of them hold
+- **Slide 55** shows 50 intervals of ± one standard error; 28 of them hold
   the mean, against 67 % of 2000. The note says why 50 is not enough to
   show 68 %.
-- **Slides 69–77** (For the Curious) are for time left at the end or for
+- **Slides 70–78** (For the Curious) are for time left at the end or for
   students afterwards.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 78–86: eight quiz slides for students to try afterwards. The same
+slides 79–87: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
 1. A file holds four temperatures, 10.0, 12.0, −999 and 14.0 °C, where

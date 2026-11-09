@@ -1581,6 +1581,26 @@ hideInToc: true
 class: fill
 ---
 
+# The Mean of N Random Hours, **Live**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🎲 Pick how many hours go into each mean: 1000 such means spread by about s/√N
+
+</div>
+
+<MeanSpread class="fig-fill mt-sm" />
+
+<!--
+**Do:** start at N = 1: each mean is a single hour, so the means keep the two peaks and spread by 8.86 °C, against s/√1 = 8.85. Click 4, 16, 100 and 1000 and read the spread beside s/√N each time: 4.32 against 4.43, 2.25 against 2.21, 0.883 against 0.885, 0.279 against 0.280. At 100 and 1000, press "zoom in" to see the bell.
+**Say:** for hours drawn at random the rule holds at every N: four times the hours, half the spread.
+(~3 min)
+-->
+---
+hideInToc: true
+class: fill
+---
+
 # What ± One Standard Error **Means**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
@@ -1623,17 +1643,20 @@ hideInToc: true
 
 # The Standard Error of **7.16**
 
-$$
-\frac{s}{\sqrt{N}} = \frac{8.85}{\sqrt{87\,552}} = \frac{8.85}{295.9} = 0.030\ ^\circ\mathrm{C}
-$$
+<FormulaSteps steps="
+  \frac{s}{\sqrt{N}} = \frac{8.85}{\sqrt{87\,552}}
+  = \frac{8.85}{295.9}
+  = 0.030 \text{ °C}
+" />
 
-<div class="card card-warning card-glass pad-compact mt-md">
+<div v-click class="card card-warning card-glass pad-compact mt-md">
 
 7.160 ± 0.030 °C, **if the 87 552 hours were independent.**
 
 </div>
 
 <!--
+**Do:** click through: √87 552 = 295.9, then 0.030, then the condition.
 **Say:** if the hours were independent, 7.16 would be known to 0.03 °C, three hundredths of a degree from ten years of one station.
 **Ask:** the hours are not independent: an hour nearly repeats the one before. Is 0.030 too small or too large?
 (~2 min)

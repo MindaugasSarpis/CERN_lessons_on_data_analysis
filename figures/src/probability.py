@@ -391,6 +391,10 @@ def _temp_humidity():
     hb = ax.hexbin(t, h, gridsize=(46, 30), mincnt=1, cmap="viridis", bins="log",
                    linewidths=0)
     cb = fig.colorbar(hb, ax=ax, pad=0.02)
+    # Matplotlib draws a colour bar of many colours as an image; keep it vector,
+    # each cell's edge in its own colour so no hairline seams show between them
+    cb.solids.set_rasterized(False)
+    cb.solids.set_edgecolor("face")
     cb.set_label("hours per cell")
     cb.set_ticks([1, 10, 100])
     cb.set_ticklabels(["1", "10", "100"])
