@@ -1,5 +1,6 @@
-name: s08
+name: analysis
 channels:
   - conda-forge
 dependencies:
+  - matplotlib-base=3.11
   - python=3.14

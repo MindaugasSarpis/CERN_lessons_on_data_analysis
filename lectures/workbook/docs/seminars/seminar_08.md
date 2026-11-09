@@ -1,54 +1,61 @@
-# Seminar 8 · NumPy
+# Seminar 8 · pandas
 
-**Paired lecture:** 08 Python for Data & NumPy · **Format:** type-along tutorial, in class
+**Paired lecture:** 08 Data Quality and Uncertainty · **Format:** type-along tutorial, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's question:** Is it getting warmer?
+**Today's question:** How sure is 7.16?
 
-**Today's goal:** every student makes today's conda environment from the
-folder's `environment.yml`, adds NumPy to it and to the file; reads
-`weather.csv` with functions and then as one NumPy array; finds the coldest
-day and the mean of each year, and writes the answer to a file.
+**Today's goal:** every student makes the conda environment `analysis` from
+today's folder, adds pandas to it and to `environment.yml`, reads
+`weather.csv` into a table, finds its mean with the `-999` marks and without
+them (5.78 and 7.16), its standard deviation and standard error, the mean of
+each month and of each year, writes 7.16 ± 0.22 °C into the README, and then
+reads a data file of their own project the same way.
 
-Everything is typed in VS Code: the scripts in the editor, the commands in
-its terminal (zsh on macOS, Git Bash on Windows; the lines are the same
-in both). In the blocks, a line that starts with `$` is typed in the
-terminal, a line that starts with `>>>` is typed at Python's prompt, and
-every other line is what comes back; `...` stands for lines left out.
+Everything is typed in VS Code: the script in the editor, the commands in
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same in
+both). In the blocks, a line that starts with `$` is typed in the terminal,
+a line that starts with `>>>` is typed at Python's prompt, and every other
+line is what comes back; `...` stands for lines left out.
 
-**If time runs short:** stop after section 12; sections 14 to 17 are optional.
+**If time runs short:** skip the Tasks, but keep section 10, the answer in
+the README, and section 12, your project; sections 13 to 16 are optional.
 
 ??? info "Before the session"
     - **Room:** Miniforge and VS Code with its Python extension on every
-      laptop (the [Setup](../setup.md) page), internet for the download and
-      for conda (Python about 30 MB, NumPy about 9 MB, less when conda has
-      them already). Nothing from earlier seminars is needed.
+      laptop (the [Setup](../setup.md) page), internet for the download
+      (0.6 MB) and for conda: Python and Matplotlib about 80 MB on a Mac and
+      200 MB on Windows, less when conda has them from Seminar 7; pandas
+      about 16 MB more. Nothing from earlier seminars is needed.
+    - **Students with data for their project** bring the file to section
+      12: a CSV file, or a spreadsheet saved as CSV.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
       `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
       extension: [Setup, step 7](../setup.md#extensions).
-    - **You:** if you made `s08` before, remove it (`conda env remove -n
-      s08`) to make it with the room.
+    - **You:** if you made `analysis` before, remove it (`conda env remove
+      -n analysis`) to make it with the room.
     - **Keys** are written for Windows, macOS in brackets. Paths are shown
       for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · An environment for the project { #part-1 }
+## Part 1 · pandas in the environment { #part-1 }
 
 <!-- 0:00 to 0:25 -->
 
-NumPy is not part of Python. It goes into the project's environment, and into the file that lists it.
+pandas reads a table into Python and computes with its columns. It goes into the project's environment, and into the file that lists it.
 
-Further reading: [conda, Managing environments](https://docs.conda.io/projects/conda/en/stable/user-guide/tasks/manage-environments.html).
+Further reading: [pandas, 10 minutes to pandas](https://pandas.pydata.org/docs/user_guide/10min.html);
+[HSF Analysis Essentials, Python](https://hsf-training.github.io/analysis-essentials/python/README.html).
 
 ---
 
-### 1. Get today's folder { #start }
+### 1. Get today's folder, make the environment { #start }
 
-<!-- 0:00 · 10 min -->
+<!-- 0:00 · 15 min -->
 
-Today's folder holds the data, the scripts that come with it and `environment.yml`, the list from which conda makes today's environment.
+Today's folder holds the data, the module `weather.py` and `environment.yml`, the list from which conda makes the environment `analysis`: Python and Matplotlib.
 
 1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
    under **Assets**, click `weather-s08.zip`. Open VS Code, then the
@@ -59,7 +66,7 @@ Today's folder holds the data, the scripts that come with it and `environment.ym
     Archive:  /Users/smilte/Downloads/weather-s08.zip
        creating: /Users/smilte/weather-s08/
     ...
-      inflating: /Users/smilte/weather-s08/scripts/rebuild.sh
+      inflating: /Users/smilte/weather-s08/scripts/weather.py
     $ cd ~/weather-s08
     $ ls
     README.md  data  environment.yml  results  scripts
@@ -68,690 +75,640 @@ Today's folder holds the data, the scripts that come with it and `environment.ym
     Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s08 ~`
     instead.
 
-2. **File** > **Open Folder...** > `weather-s08` > **Open**. The terminal
-   now starts in it.
-3. The list for today's environment: a name, where packages come from,
-   and what goes in. Only Python, so far.
+2. **File** > **Open Folder...** > `weather-s08` > **Open**. The window
+   reloads: open the terminal again (**View** > **Terminal**); it starts in
+   the folder.
+3. The list for the environment: its name, where the packages come from,
+   and what goes in.
 
     ```text
     $ cat environment.yml
-    name: s08
+    name: analysis
     channels:
       - conda-forge
     dependencies:
+      - matplotlib-base=3.11
       - python=3.14
     ```
 
-4. Make the environment from it. A **conda environment** is a folder with
-   its own Python and packages, here `miniforge3/envs/s08`.
+4. Make the environment from it; conda takes its name from the file's
+   first line. Then switch it on: the prompt starts with `(analysis)`.
 
     ```text
-    $ conda env create -n s08 -f environment.yml
+    $ conda env create -f environment.yml
     Channels:
      - conda-forge
     ...
-    #     $ conda activate s08
+    #     $ conda activate analysis
+    $ conda activate analysis
     ```
 
     `conda: command not found`: install Miniforge as on the
     [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
 
-5. Switch it on: the prompt starts with `(s08)`, and `python` is the
-   environment's Python.
+5. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
+   Interpreter`, pick the entry with `envs/analysis` in its path. The
+   Status Bar shows `analysis`.
 
-    ```text
-    $ conda activate s08
-    $ python --version
-    Python 3.14.8
-    ```
-
-6. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
-   Interpreter`, pick the entry with `envs/s08` in its path. The Status
-   Bar, bottom right, shows `3.14.8` and `s08`; a new terminal starts with
-   `(s08)`.
-
-**Check:** `(s08)` at the start of the prompt, `s08` in the Status Bar.
+**Check:** `(analysis)` at the start of the prompt, `analysis` in the
+Status Bar.
 
 ---
 
-### 2. Add NumPy to the environment { #install }
-
-<!-- 0:10 · 5 min -->
-
-Activating an environment puts its folder first on `PATH`; `conda install` adds a package to the active one, as it added Matplotlib in Seminar 7.
-
-1. NumPy is not in it yet.
-
-    ```text
-    $ python -c "import numpy"
-    ModuleNotFoundError: No module named 'numpy'
-    ```
-
-2. Install it, with the version written in. conda shows its plan, then a
-   list of packages:
-
-    ```text
-    $ conda install numpy=2.5
-    ## Package Plan ##
-
-      environment location: /Users/smilte/miniforge3/envs/s08
-
-      added / updated specs:
-        - numpy=2.5
-    ```
-
-3. At `Proceed ([y]/n)?` press `Enter`. It ends with `done`. Ask for the
-   version.
-
-    ```text
-    $ python -c "import numpy; print(numpy.__version__)"
-    2.5.4
-    ```
-
-**Check:** `2.5.4`, with `(s08)` in the prompt.
-
-!!! warning "`ModuleNotFoundError` after the install"
-    The prompt says `(base)`: `conda activate s08`, then again.
-
----
-
-### 3. Write it down: `environment.yml` { #yml }
+### 2. Install pandas, write it down { #install }
 
 <!-- 0:15 · 10 min -->
 
-The file lists what was asked for; any laptop makes the same environment from it. NumPy goes in too.
+A new package goes into the active environment, never into `base`, and into the file that lists it, or the next laptop cannot run the script.
 
-1. Export what was asked for, over the file from the zip.
+1. pandas is not in it yet.
+
+    ```text
+    $ python -c "import pandas"
+    Traceback (most recent call last):
+    ...
+    ModuleNotFoundError: No module named 'pandas'
+    ```
+
+2. Install it, with its version.
+
+    ```text
+    $ conda install pandas=3.1
+    ...
+    ## Package Plan ##
+
+      environment location: /Users/smilte/miniforge3/envs/analysis
+
+      added / updated specs:
+        - pandas=3.1
+    ...
+    Proceed ([y]/n)?
+    ```
+
+3. At `Proceed ([y]/n)?` press `Enter`. Then ask for the version.
+
+    ```text
+    $ python -c "import pandas; print(pandas.__version__)"
+    3.1.1
+    ```
+
+4. Export the list again.
 
     ```text
     $ conda env export --from-history -f environment.yml
     ```
 
-2. Open `environment.yml`. NumPy is the new last dependency.
+5. Open `environment.yml`, delete its last line, `prefix: ...` (a folder
+   on this laptop), save: pandas is the new last line. The lines above it
+   may stand in another order on your laptop.
 
     ```text
-    name: s08
+    name: analysis
     channels:
       - conda-forge
     dependencies:
+      - matplotlib-base=3.11
       - python=3.14
-      - numpy=2.5
-    prefix: /Users/smilte/miniforge3/envs/s08
+      - pandas=3.1
     ```
 
-3. Delete the last line, `prefix: ...`: it names a folder on this laptop.
-   Save.
+**Check:** `3.1.1` (the last digit may be higher), and `- pandas=3.1` at
+the end of `environment.yml`.
 
-**Check:** `environment.yml` ends with `- numpy=2.5`.
-
-!!! question "Task: does the file make the environment?"
-    Make a second environment, `s08-check`, from `environment.yml`.
-    Ask it for its NumPy version without activating it, then remove it.
-
-??? success "Answer"
-    ```text
-    $ conda env create -n s08-check -f environment.yml
-    ```
-
-    It ends with `#     $ conda activate s08-check`. The packages come
-    from conda's cache, so it takes a minute.
-
-    ```text
-    $ conda run -n s08-check python -c "import numpy; print(numpy.__version__)"
-    2.5.4
-    $ conda env remove -n s08-check
-    ```
+!!! warning "`ModuleNotFoundError: No module named 'pandas'`"
+    The prompt says `(base)`: `conda activate analysis`, then again. VS
+    Code's Status Bar must show `analysis` too (section 1, step 5).
 
 ---
 
-## Part 2 · Functions and the csv module { #part-2 }
+## Part 2 · A first look at the table { #part-2 }
 
 <!-- 0:25 to 0:55 -->
 
-The mean becomes a function, as `temp_of` and `mean` were in Seminar 5, and the csv module reads the file.
-
-Further reading: [The Python Tutorial, Defining functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions).
+At Python's prompt: the file as a table, one of its columns, and its mean, twice.
 
 ---
 
-### 4. A function for the mean { #function }
+### 3. Read the file into a table { #read }
 
 <!-- 0:25 · 10 min -->
 
-As in Seminar 5: `def` gives a block a name and inputs; `return` hands a value back.
+`read_csv` reads a CSV file into a **DataFrame**: a table whose columns have names and whose rows have numbers.
 
-1. New file `scripts/column_mean.py`. Type, save.
+1. Start Python in the terminal, in the project folder, and import pandas.
+   `pd` is the short name everyone uses for it.
 
-    ```python
-    def mean_valid(values):
-        """The mean of the values that are not -999."""
-        valid = [v for v in values if v != -999]
-        return sum(valid) / len(valid)
-
-    print(mean_valid([1.0, -999, 3.0]))
-    result = mean_valid([20.5, 21.5])
-    print(result)
+    ```pycon
+    $ python
+    >>> import pandas as pd
     ```
 
-2. Run it.
+2. Read the file, then ask for its size: (rows, columns).
 
-    ```text
-    $ python scripts/column_mean.py
-    2.0
-    21.0
+    ```pycon
+    >>> df = pd.read_csv("data/raw/weather.csv")
+    >>> df.shape
+    (87672, 4)
     ```
 
-    The `-999` of the first list is left out: (1 + 3) / 2.
-    `[v for v in values if v != -999]` makes a new list of the values that
-    are not −999: a **list comprehension**, a `for` and an `if` in one line.
+3. The first five rows. The numbers on the left are the **index**, the
+   name of each row; the names on top come from the header line of the
+   file.
 
-**Check:** `2.0` and `21.0`.
+    ```pycon
+    >>> df.head()
+                   time  temp_c  humidity_pct  wind_ms
+    0  2016-01-01T00:00    -4.4            93      2.5
+    1  2016-01-01T01:00    -4.8            95      2.6
+    2  2016-01-01T02:00    -5.5            95      2.7
+    3  2016-01-01T03:00    -6.0            96      1.9
+    4  2016-01-01T04:00    -5.9            94      2.0
+    ```
+
+**Check:** `(87672, 4)`: one row per hour of ten years, four columns.
 
 ---
 
-### 5. A column with the csv module { #csv }
+### 4. One column and its mean { #column }
 
 <!-- 0:35 · 10 min -->
 
-`csv.reader` cuts every line into a list of strings; `with` closes the file at the end of the block.
+One column of a DataFrame is a **Series**: its values with the index beside them, and methods that work on the whole column.
 
-1. At the top of the file, add one line.
+1. A column by its name, in square brackets. pandas shows the first and the
+   last rows and the length.
 
-    ```python
-    import csv
+    ```pycon
+    >>> df["temp_c"]
+    0        -4.4
+    1        -4.8
+    2        -5.5
+    3        -6.0
+    4        -5.9
+             ...
+    87667    -8.1
+    87668    -8.5
+    87669    -9.5
+    87670    -9.9
+    87671   -11.3
+    Name: temp_c, Length: 87672, dtype: float64
     ```
 
-2. Under `mean_valid`, add a second function.
+2. Its mean and its smallest value.
 
-    ```python
-    def read_column(path, index):
-        """One column of a CSV file with a header line, as floats."""
-        values = []
-        with open(path, newline="") as f:
-            reader = csv.reader(f)
-            header = next(reader)
-            print(header)
-            for row in reader:
-                values.append(float(row[index]))
-        return values
+    ```pycon
+    >>> print(df["temp_c"].mean())
+    5.782796103659092
+    >>> print(df["temp_c"].min())
+    -999.0
     ```
 
-3. Replace the three lines at the bottom with these, save.
+3. `==` compares every value of the column with `-999` and gives `True` or
+   `False` for each; `sum` counts the `True`s.
 
-    ```python
-    temp = read_column("data/raw/weather.csv", 1)
-    print(len(temp), temp[:3])
-    print(f"mean {mean_valid(temp):.5f} °C")
+    ```pycon
+    >>> print((df["temp_c"] == -999).sum())
+    120
     ```
 
-4. Run it.
-
-    ```text
-    $ python scripts/column_mean.py
-    ['time', 'temp_c', 'humidity_pct', 'wind_ms']
-    87672 [-4.4, -4.8, -5.5]
-    mean 7.15997 °C
-    ```
-
-    `next(reader)` takes the header line; the loop gets the rest.
-
-**Check:** `mean 7.15997 °C`, from two functions.
+**Check:** 5.78, and `-999.0` as the minimum: the 120 hours the sensor
+was down are in the mean as temperatures of −999 °C.
 
 ---
 
-### 6. A path that works from any folder { #pathlib }
+### 5. Read `-999` as missing { #missing }
 
-<!-- 0:45 · 10 min -->
+<!-- 0:45 · 10 min (Task: 5 min, skip if late) -->
 
-A relative path starts at the terminal's folder, not at the script's.
+`na_values` names the code that stands for a missing value; pandas reads it as **NaN**, "not a number", and leaves it out of every mean.
 
-1. Run the script from the folder `scripts`.
-
-    ```text
-    $ cd scripts
-    $ python column_mean.py
-    ...
-      File "/Users/smilte/weather-s08/scripts/column_mean.py", line 13, in read_column
-        with open(path, newline="") as f:
-             ~~~~^^^^^^^^^^^^^^^^^^
-    FileNotFoundError: [Errno 2] No such file or directory: 'data/raw/weather.csv'
-    ```
-
-2. Under `import csv`, add two lines.
-
-    ```python
-    from pathlib import Path
-
-    ROOT = Path(__file__).resolve().parent.parent
-    ```
-
-    `__file__` is the script's path; two `.parent` up is the project folder.
-
-3. In `read_column`, replace the two lines `header = next(reader)` and
-   `print(header)` with one, `next(reader)`. Replace the three lines at the
-   bottom with these, save.
-
-    ```python
-    print(ROOT)
-    temp = read_column(ROOT / "data/raw/weather.csv", 1)
-    print(f"mean {mean_valid(temp):.5f} °C")
-    ```
-
-4. Run it again from `scripts`, then go back.
-
-    ```text
-    $ python column_mean.py
-    /Users/smilte/weather-s08
-    mean 7.15997 °C
-    $ cd ..
-    ```
-
-**Check:** the same mean from `scripts` and from the project folder.
-
-!!! question "Task: humidity and wind"
-    Add two lines to `column_mean.py` that print the mean of
-    `humidity_pct` (column 2) and of `wind_ms` (column 3), with two decimals.
-
-??? success "Answer"
-    ```python
-    print(f"humidity {mean_valid(read_column(ROOT / 'data/raw/weather.csv', 2)):.2f} %")
-    print(f"wind {mean_valid(read_column(ROOT / 'data/raw/weather.csv', 3)):.2f} m/s")
-    ```
-
-    ```text
-    humidity 79.10 %
-    wind 3.50 m/s
-    ```
-
-    A name for the path, `path = ROOT / "data/raw/weather.csv"`, makes
-    both lines shorter.
-
----
-
-## Part 3 · The file as one array { #part-3 }
-
-<!-- 0:55 to 1:25 -->
-
-A NumPy array holds numbers of one type, and computes on all of them at once.
-
-Further reading: [NumPy: the absolute basics for beginners](https://numpy.org/doc/stable/user/absolute_beginners.html).
-
----
-
-### 7. Arrays at the prompt, then the file into an array { #loadtxt }
-
-<!-- 0:55 · 20 min -->
-
-An **array** is a block of numbers of one type; arithmetic and comparisons work on every number at once. `np.loadtxt` reads a table of numbers into a two-dimensional array.
-
-1. Start Python in the terminal (`python`), import NumPy under the short
-   name `np`, and make an array from a list of four hours. Every element is
-   a `float64`; `shape` says how many there are.
+1. Read the file again, with the code.
 
     ```pycon
-    >>> import numpy as np
-    >>> temps = [-4.4, -4.8, -999.0, -5.5]
-    >>> a = np.array(temps)
-    >>> a
-    array([  -4.4,   -4.8, -999. ,   -5.5])
-    >>> a.dtype
-    dtype('float64')
-    >>> a.shape
-    (4,)
+    >>> df = pd.read_csv("data/raw/weather.csv", na_values=[-999])
     ```
 
-2. Arithmetic on an array works on each element. On a list, `*` repeats
-   the list instead.
+2. `isna()` is `True` where a value is missing: count them, then take the
+   mean again.
 
     ```pycon
-    >>> a * 9 / 5 + 32
-    array([   24.08,    23.36, -1766.2 ,    22.1 ])
-    >>> temps * 2
-    [-4.4, -4.8, -999.0, -5.5, -4.4, -4.8, -999.0, -5.5]
-    >>> a * 2
-    array([   -8.8,    -9.6, -1998. ,   -11. ])
+    >>> print(df["temp_c"].isna().sum())
+    120
+    >>> print(df["temp_c"].mean())
+    7.1599655062134495
     ```
 
-3. A comparison gives an array of `True` and `False`, a **mask**. An array
-   indexed with a mask keeps the elements where the mask is `True`.
+3. Eight numbers for every numeric column: `describe()` is the first look
+   at any table. `count` leaves the missing values out; `std` is the
+   standard deviation; `25%`, `50%` and `75%` are the values below which
+   that share of the hours lies.
 
     ```pycon
-    >>> a != -999
-    array([ True,  True, False,  True])
-    >>> a[a != -999]
-    array([-4.4, -4.8, -5.5])
-    >>> a[a != -999].mean()
-    np.float64(-4.8999999999999995)
-    ```
-
-    `np.float64` is NumPy's float; the tail is the float rounding of any
-    sum, (−4.4 − 4.8 − 5.5) / 3 = −4.9.
-
-4. An array can have rows and columns. `axis=1` works along each row,
-   `axis=0` down each column. Then leave Python.
-
-    ```pycon
-    >>> b = np.array([[1, 2, 3], [4, 5, 6]])
-    >>> b.shape
-    (2, 3)
-    >>> b.mean(axis=1)
-    array([2., 5.])
-    >>> b.mean(axis=0)
-    array([2.5, 3.5, 4.5])
+    >>> df.describe()
+                 temp_c  humidity_pct       wind_ms
+    count  87552.000000  87672.000000  87672.000000
+    mean       7.159966     79.097409      3.503523
+    std        8.850783     10.695959      1.928826
+    min      -16.300000     34.000000      0.000000
+    25%       -0.200000     72.000000      2.100000
+    50%        6.700000     79.000000      3.500000
+    75%       14.200000     87.000000      4.800000
+    max       32.400000    100.000000     12.000000
     >>> exit()
     ```
 
-5. Now the file. New file `scripts/coldest_day.py`. Type, save.
+**Check:** the mean 7.16, `count` 87552 for `temp_c`, and the minimum a
+winter night, −16.3 °C.
 
-    ```python
-    from pathlib import Path
+!!! question "Task: which hours are missing?"
+    A Series of `True` and `False` in square brackets keeps the rows where
+    it is `True`: `df[df["temp_c"].isna()]`. Start `python` again, read the
+    file with `na_values`, and show the rows of the missing hours. From
+    when to when was the sensor down?
 
-    import numpy as np
+??? success "Answer"
+    ```pycon
+    >>> import pandas as pd
+    >>> df = pd.read_csv("data/raw/weather.csv", na_values=[-999])
+    >>> df[df["temp_c"].isna()]
+                       time  temp_c  humidity_pct  wind_ms
+    31152  2019-07-22T00:00     NaN            76      3.2
+    31153  2019-07-22T01:00     NaN            81      3.0
+    31154  2019-07-22T02:00     NaN            80      3.4
+    31155  2019-07-22T03:00     NaN            79      3.2
+    31156  2019-07-22T04:00     NaN            81      2.9
+    ...                 ...     ...           ...      ...
+    31267  2019-07-26T19:00     NaN            55      2.4
+    31268  2019-07-26T20:00     NaN            59      2.3
+    31269  2019-07-26T21:00     NaN            61      1.3
+    31270  2019-07-26T22:00     NaN            65      1.5
+    31271  2019-07-26T23:00     NaN            66      1.9
 
-    ROOT = Path(__file__).resolve().parent.parent
-    path = ROOT / "data/raw/weather.csv"
-
-    data = np.loadtxt(path, delimiter=",", skiprows=1, usecols=(1, 2, 3))
-    print(data.shape, data.dtype)
-    print(data[0])
-    print(data[:3, 0])
+    [120 rows x 4 columns]
     ```
 
-6. Run it.
-
-    ```text
-    $ python scripts/coldest_day.py
-    (87672, 3) float64
-    [-4.4 93.   2.5]
-    [-4.4 -4.8 -5.5]
-    ```
-
-    87 672 rows, 3 columns. `data[0]` is the first row; `data[:3, 0]` the
-    first three rows of column 0, `temp_c`.
-
-**Check:** `(87672, 3) float64`.
-
-!!! warning "`ValueError: could not convert string '2016-01-01T00:00' to float64`"
-    `usecols` is missing: the time column is not a number.
+    From 22 July 2019, 00:00, to 26 July, 23:00: five days. The humidity
+    and the wind were still measured.
 
 ---
 
-### 8. A mask for `-999` { #mask }
+## Part 3 · How sure is 7.16? { #part-3 }
+
+<!-- 0:55 to 1:45 -->
+
+The lines that matter go into a script, `scripts/how_sure.py`, so that one command computes every number again.
+
+---
+
+### 6. The spread, the count and the standard error { #error }
+
+<!-- 0:55 · 10 min -->
+
+The **standard error** s / √n says how far a mean of n independent values typically lies from the long-run mean.
+
+1. In the Explorer, right-click `scripts` > **New File...**, type
+   `how_sure.py`, press `Enter`. Type, save.
+
+    ```python
+    import pandas as pd
+
+    df = pd.read_csv("data/raw/weather.csv", na_values=[-999])
+    temps = df["temp_c"]
+    print(f"missing {temps.isna().sum()}")
+
+    m = temps.mean()
+    s = temps.std()
+    n = temps.count()
+    print(f"mean {m:.2f}, s {s:.2f}, n {n}")
+    print(f"standard error {s / n ** 0.5:.3f}")
+    ```
+
+    The first `print` counts the missing values, as at the prompt.
+    `std()` is the standard deviation s, which divides by n − 1;
+    `count()` counts the values that are not missing (`len(temps)` would
+    count all 87 672 rows); `** 0.5` is the square root. In an f-string,
+    `{m:.2f}` writes `m` with two decimals.
+
+2. Run it.
+
+    ```text
+    $ python scripts/how_sure.py
+    missing 120
+    mean 7.16, s 8.85, n 87552
+    standard error 0.030
+    ```
+
+**Check:** `standard error 0.030`: 8.85 / √87 552, the ± of 7.16 if the
+hours were independent.
+
+---
+
+### 7. The mean of each month: `groupby` { #months }
 
 <!-- 1:05 · 10 min -->
 
-The mask of section 7, on the whole column of 87 672 temperatures.
+`groupby` puts together the rows with the same key, and a method then works on each group.
 
-1. At the end of the file, add these lines, save.
+1. At the end of `how_sure.py`, add these lines, save.
 
     ```python
-    temp = data[:, 0]
-    valid = temp != -999
-    print(valid[:3], valid.sum(), (~valid).sum())
-    print(f"all rows   {temp.mean():.5f}")
-    print(f"valid rows {temp[valid].mean():.5f}")
+
+    month = df["time"].str[5:7]
+    print(df.groupby(month)["temp_c"].mean().round(1))
     ```
 
-2. Run it.
+    `.str[5:7]` cuts characters 5 and 6 out of every time, as `line[5:7]`
+    cuts a line of text: the month, `01` to `12`.
+    `df.groupby(month)["temp_c"].mean()` is the mean temperature of each
+    month; `round(1)` keeps one decimal.
+
+2. Run it. The first three lines come back, then the months.
 
     ```text
-    $ python scripts/coldest_day.py
-    ...
-    [ True  True  True] 87552 120
-    all rows   5.78280
-    valid rows 7.15997
+    $ python scripts/how_sure.py
+    missing 120
+    mean 7.16, s 8.85, n 87552
+    standard error 0.030
+    time
+    01    -3.9
+    02    -2.4
+    03     1.2
+    04     6.4
+    05    12.2
+    06    17.2
+    07    18.5
+    08    16.1
+    09    13.0
+    10     6.9
+    11     2.6
+    12    -2.3
+    Name: temp_c, dtype: float64
     ```
 
-    `sum` counts the `True`; `~` turns the mask round.
-
-**Check:** 120 rows of `-999`, and 7.15997 without them.
+**Check:** January −3.9 °C, July 18.5 °C: 22.4 °C between them.
 
 ---
 
-### 9. One row per day: `reshape` { #reshape }
+### 8. The mean of each year, and an honest ± { #years }
 
 <!-- 1:15 · 10 min -->
 
-87 672 hours are 3653 days of 24 hours; `reshape` cuts the column into those rows.
+An hour nearly repeats the hour before, so the 87 552 hours are not 87 552 independent values, and 0.030 is too small. Ten yearly means are close to independent: their spread divided by √10 is the honest ±.
 
-1. Add these lines, save.
-
-    ```python
-    days = temp.reshape(3653, 24)
-    day_means = days.mean(axis=1)
-    print(days.shape, day_means[:3])
-    dates = np.arange("2016-01-01", "2026-01-01", dtype="datetime64[D]")
-    print(dates[:2], dates[-1])
-    ```
-
-2. Run it.
-
-    ```text
-    $ python scripts/coldest_day.py
-    ...
-    (3653, 24) [-4.87083333 -5.13333333 -3.14166667]
-    ['2016-01-01' '2016-01-02'] 2025-12-31
-    ```
-
-    `axis=1` averages along each row: one mean per day. `dates` holds the
-    3653 days, in the same order.
-
-3. The sensor failure covers whole days, so their mean is exactly `-999`.
-   Add a mask for the days, then the coldest day.
+1. At the end of `how_sure.py`, add these lines, save.
 
     ```python
-    ok = day_means != -999
-    print(ok.sum(), dates[~ok])
-    i = day_means[ok].argmin()
-    print("coldest day", dates[ok][i], f"{day_means[ok][i]:.2f}")
+
+    year = df["time"].str[0:4]
+    means = df.groupby(year)["temp_c"].mean()
+    print(means.round(2))
+    sy = means.std()
+    print(f"years scatter by {sy:.2f}")
+    print(f"mean {means.mean():.2f} ± {sy / len(means) ** 0.5:.2f}")
     ```
 
-4. Run it.
+2. Run it. The last lines are new.
 
     ```text
-    $ python scripts/coldest_day.py
+    $ python scripts/how_sure.py
     ...
-    3648 ['2019-07-22' '2019-07-23' '2019-07-24' '2019-07-25' '2019-07-26']
-    coldest day 2019-01-26 -13.00
+    time
+    2016    7.60
+    2017    6.51
+    2018    7.97
+    2019    7.27
+    2020    6.83
+    2021    7.25
+    2022    6.60
+    2023    8.31
+    2024    7.27
+    2025    5.98
+    Name: temp_c, dtype: float64
+    years scatter by 0.70
+    mean 7.16 ± 0.22
     ```
 
-    `argmin` gives the position of the smallest value. The same mask on
-    `dates` keeps the days in step.
+**Check:** 7.16 ± 0.22 °C, a ± seven times larger than 0.030.
 
-**Check:** `coldest day 2019-01-26 -13.00`.
+---
 
-!!! question "Task: the warmest day, and the frost days"
-    Add lines that print the warmest day and its mean, and the number of
-    days whose mean is below 0 °C.
+### 9. A histogram of the hours { #histogram }
+
+<!-- 1:25 · 10 min -->
+
+A histogram counts the values in bins of equal width and draws one bar per bin; here with the mean and the mean ± s drawn in.
+
+1. Add a first line to `how_sure.py`, above `import pandas as pd`:
+
+    ```python
+    import matplotlib.pyplot as plt
+    ```
+
+2. At the end of the script, add these lines, save, run.
+
+    ```python
+
+    fig, ax = plt.subplots()
+    ax.hist(temps.dropna(), bins=50, range=(-17, 33))
+    ax.axvline(m, color="black")
+    ax.axvline(m - s, color="black", linestyle="--")
+    ax.axvline(m + s, color="black", linestyle="--")
+    ax.set_xlabel("Hourly temperature (°C)")
+    ax.set_ylabel("Hours per 1 °C")
+    ax.set_title("The mean, 7.16 °C, and the mean ± s")
+    fig.savefig("results/temp_hist.png", dpi=150)
+    ```
+
+    `plt.subplots()` makes a figure and its axes; `ax.hist` counts the
+    values in 50 bins of 1 °C from −17 to 33 °C; `dropna()` gives the column
+    without its missing values; `ax.axvline(x)` draws a vertical line at
+    `x`, dashed with `linestyle="--"`; `fig.savefig` writes the figure to a
+    file.
+
+3. In the Explorer, click `results/temp_hist.png`: two peaks, near −1 °C
+   and near 12 °C, the mean in the dip between them, and the dashed lines
+   at −1.7 and 16.0 °C.
+
+**Check:** a solid line at 7.16 and two dashed lines, 8.85 °C to either
+side.
+
+!!! question "Task: how many hours lie within the mean ± s?"
+    A Gaussian holds 68.3 % of its values within the mean ± s. Count the
+    share of the hours there: `temps[(temps > m - s) & (temps < m + s)]`
+    keeps them (`&` is "and" for two Series).
 
 ??? success "Answer"
+    At the end of `how_sure.py`:
+
     ```python
-    j = day_means[ok].argmax()
-    print("warmest day", dates[ok][j], f"{day_means[ok][j]:.2f}")
-    print("days below 0 °C", (day_means[ok] < 0).sum())
+
+    inside = temps[(temps > m - s) & (temps < m + s)]
+    print(f"within the mean ± s: {inside.count() / n:.3f}")
     ```
 
     ```text
-    warmest day 2018-06-18 26.93
-    days below 0 °C 922
-    ```
-
----
-
-## Part 4 · Is it getting warmer? { #part-4 }
-
-<!-- 1:25 to 2:00 -->
-
-Ten years of the same station: compare the mean of each year.
-
----
-
-### 10. The year of every row { #year }
-
-<!-- 1:25 · 5 min -->
-
-The year is the first four characters of `time`.
-
-1. New file `scripts/yearly_means.py`. Type, save.
-
-    ```python
-    from pathlib import Path
-
-    import numpy as np
-
-    ROOT = Path(__file__).resolve().parent.parent
-    path = ROOT / "data/raw/weather.csv"
-
-    temp = np.loadtxt(path, delimiter=",", skiprows=1, usecols=1)
-    time = np.loadtxt(path, delimiter=",", skiprows=1, usecols=0, dtype=str)
-    valid = temp != -999
-    year = np.array([int(t[:4]) for t in time])
-    print(time[:2], year[:2], year[-2:])
-    ```
-
-2. Run it.
-
-    ```text
-    $ python scripts/yearly_means.py
-    ['2016-01-01T00:00' '2016-01-01T01:00'] [2016 2016] [2025 2025]
-    ```
-
-**Check:** `2016` at the start, `2025` at the end.
-
----
-
-### 11. A mean for each year { #yearly }
-
-<!-- 1:30 · 10 min -->
-
-`&` joins two masks: this year, and not `-999`.
-
-1. Replace the `print` line with a loop, save.
-
-    ```python
-    for y in range(2016, 2026):
-        m = (year == y) & valid
-        print(y, f"{temp[m].mean():.2f}", m.sum())
-    ```
-
-2. Run it.
-
-    ```text
-    $ python scripts/yearly_means.py
-    2016 7.60 8784
-    2017 6.51 8760
-    2018 7.97 8760
-    2019 7.27 8640
-    2020 6.83 8784
-    2021 7.25 8760
-    2022 6.60 8760
-    2023 8.31 8760
-    2024 7.27 8784
-    2025 5.98 8760
-    ```
-
-3. Read it: the years go up and down by up to 2.3 °C, in no order. 2019
-   has 120 hours fewer, the five summer days of the failure.
-
-**Check:** ten means between 5.98 and 8.31.
-
----
-
-### 12. Write the answer to a file { #answer }
-
-<!-- 1:40 · 15 min -->
-
-The script writes its answer to `results/`, and writes it again, the same, at every run.
-
-1. Replace the loop with these lines, save.
-
-    ```python
-    lines = []
-    for y in range(2016, 2026):
-        m = (year == y) & valid
-        lines.append(f"{y}  {temp[m].mean():.2f}  {m.sum()}")
-
-    first = (year <= 2020) & valid
-    last = (year >= 2021) & valid
-    lines.append(f"2016-2020  {temp[first].mean():.2f}")
-    lines.append(f"2021-2025  {temp[last].mean():.2f}")
-
-    text = "\n".join(lines) + "\n"
-    print(text, end="")
-    (ROOT / "results").mkdir(exist_ok=True)
-    (ROOT / "results/yearly_temp.txt").write_text(text)
-    ```
-
-2. Run it.
-
-    ```text
-    $ python scripts/yearly_means.py
+    $ python scripts/how_sure.py
     ...
-    2016-2020  7.24
-    2021-2025  7.08
+    within the mean ± s: 0.626
     ```
 
-    The answer: not warmer. The second five years are 0.16 °C colder,
-    less than the step from one year to the next.
-
-3. The file.
-
-    ```text
-    $ tail -n 2 results/yearly_temp.txt
-    2016-2020  7.24
-    2021-2025  7.08
-    ```
-
-**Check:** `results/yearly_temp.txt`, twelve lines: ten years and the two halves.
-
-!!! question "Task: the warmest and the coldest month"
-    Add the month of every row (`t[5:7]`) and print the mean temperature of
-    each month over the ten years.
-
-??? success "Answer"
-    ```python
-    month = np.array([int(t[5:7]) for t in time])
-    for mo in range(1, 13):
-        m = (month == mo) & valid
-        print(mo, f"{temp[m].mean():.2f}")
-    ```
-
-    ```text
-    1 -3.87
-    2 -2.45
-    3 1.19
-    4 6.39
-    5 12.16
-    6 17.25
-    7 18.53
-    8 16.12
-    9 13.01
-    10 6.94
-    11 2.64
-    12 -2.30
-    ```
-
-    July is the warmest, 18.53 °C; January the coldest, −3.87 °C.
+    62.6 %, not 68.3 %: two peaks put fewer hours near the mean than a
+    Gaussian would.
 
 ---
 
-### 13. Wrap up { #wrap-up }
+### 10. Write the answer into the README { #readme }
 
-<!-- 1:55 · 5 min -->
+<!-- 1:35 · 5 min -->
 
+The number goes into the README with its ±, how the ± was found, and the script that computes it.
+
+1. At the end of `README.md`, add and save:
+
+    ```text
+
+    ## How sure is the mean
+
+    7.16 ± 0.22 °C: the standard error of the ten yearly means, which
+    scatter by 0.70 °C. The hours are not independent, so
+    8.85 / √87 552 = 0.030 °C is too small. Left out: 120 hours of
+    -999, 22 to 26 July 2019. `scripts/how_sure.py` computes it.
+    ```
+
+2. Run the script once more and compare: the README is true only as long
+   as the script prints the same.
+
+    ```text
+    $ python scripts/how_sure.py
+    missing 120
+    mean 7.16, s 8.85, n 87552
+    standard error 0.030
+    ...
+    years scatter by 0.70
+    mean 7.16 ± 0.22
+    ```
+
+**Check:** the README ends with **How sure is the mean**, and the script
+prints each of its numbers: 7.16, 0.22, 0.70, 8.85, 0.030 and the 120
+missing hours.
+
+---
+
+### 11. Wrap up { #wrap-up }
+
+<!-- 1:40 · 5 min -->
+
+The lines of today, by what they do.
 
 | To | Type |
 |--|--|
-| make the environment of a folder | `conda env create -n s08 -f environment.yml` |
-| switch it on | `conda activate s08` |
-| add a package to it | `conda install numpy=2.5` |
-| write it down | `conda env export --from-history -f environment.yml` |
-| name a block of steps | `def name(inputs):` ... `return value` |
-| read a CSV file | `csv.reader(f)`, `next(reader)` for the header |
-| a path from the project folder | `Path(__file__).resolve().parent.parent` |
-| an array from a list | `a = np.array(values)`, then `a * 2`, `a.mean()` |
-| a table into an array | `np.loadtxt(path, delimiter=",", skiprows=1, usecols=...)` |
-| select rows | `temp[temp != -999]`, masks joined with `&` |
+| make the environment of a folder | `conda env create -f environment.yml`, `conda activate analysis` |
+| add a package, write it down | `conda install NAME=VERSION`, `conda env export --from-history -f environment.yml`, delete `prefix:` |
+| read a CSV file | `df = pd.read_csv(PATH)`, with `na_values=[-999]` for a code that marks missing values |
+| look at a table | `df.shape`, `df.head()`, `df.describe()` |
+| one column | `df["temp_c"]`, `.mean()`, `.std()`, `.count()`, `.min()` |
+| count | `(df["temp_c"] == -999).sum()`, `df["temp_c"].isna().sum()` |
+| the standard error | `s / n ** 0.5` |
+| a mean per group | `df.groupby(df["time"].str[0:4])["temp_c"].mean()` |
+
+---
+
+## Part 4 · Your project { #part-4 }
+
+<!-- 1:45 to 2:00 -->
+
+The same first steps on a data file of your own project. No data yet: help a neighbour, or go on with section 13.
+
+---
+
+### 12. Your project: read it, look at it, one mean with its ± { #project }
+
+<!-- 1:45 · 15 min -->
+
+Nothing new: the lines of sections 3 to 6, with your file and your column.
+
+1. Your project folder, with the folders `data/raw`, `data/processed`,
+   `scripts` and `results`. If you have none, make one (any name, here
+   `project`), and give it today's `environment.yml`: your project uses
+   `analysis` too.
+
+    ```text
+    $ mkdir -p ~/project/data/raw ~/project/data/processed ~/project/scripts ~/project/results
+    $ cp ~/weather-s08/environment.yml ~/project/
+    ```
+
+2. **File** > **Open Folder...** > `project` > **Open**. Open the terminal
+   again (**View** > **Terminal**): it starts in `project`. Switch the
+   environment on. A folder without a `README.md` gets one: in the
+   Explorer, **New File...**, `README.md`.
+
+    ```text
+    $ conda activate analysis
+    ```
+
+3. Copy your file into `data/raw`, as it arrived: drag it onto `data/raw`
+   in VS Code's Explorer, or `cp ~/Downloads/YOUR_FILE.csv data/raw/`.
+4. Read it at Python's prompt, with your file's name, and look.
+
+    ```pycon
+    $ python
+    >>> import pandas as pd
+    >>> df = pd.read_csv("data/raw/YOUR_FILE.csv")
+    >>> df.shape
+    >>> df.head()
+    >>> df.describe()
+    ```
+
+5. Pick one numeric column: its mean and its standard error.
+
+    ```pycon
+    >>> col = df["YOUR_COLUMN"]
+    >>> m = col.mean()
+    >>> s = col.std()
+    >>> n = col.count()
+    >>> print(f"{m:.2f} ± {s / n ** 0.5:.2f}")
+    ```
+
+6. In your project's `README.md`, a section **A first look at the data**:
+   the file, its rows and columns, the missing values and how the file
+   marks them, and the mean of one column with its ±. Add one sentence on
+   whether the rows are independent: rows in time order rarely are, and
+   then the ± is too small.
+
+**Check:** your README holds one mean with its ± and the sentence on
+independence.
+
+??? tip "One column only, or numbers cut at a comma?"
+    A spreadsheet with European settings writes `;` between the values and
+    a comma in decimals, as `daily_export.csv` of today's folder does. Try
+    it there: `cd ~/weather-s08`, `python`, `import pandas as pd`. Read as a
+    plain CSV, `6,3` is cut in two:
+
+    ```pycon
+    >>> ex = pd.read_csv("data/raw/daily_export.csv")
+    >>> ex.head(3)
+                    nr;date;temp_c
+    1;2025-10-01;6               3
+    2;2025-10-02;5               0
+    3;2025-10-03;5               6
+    ```
+
+    `sep=";"` and `decimal=","` read it right; `dropna()` drops the
+    summary row, which has no `nr`:
+
+    ```pycon
+    >>> ex = pd.read_csv("data/raw/daily_export.csv", sep=";", decimal=",")
+    >>> ex.tail(2)
+        nr        date  temp_c
+    8  9.0  2025-10-09    9.80
+    9  NaN        mean    7.97
+    >>> ex = ex.dropna()
+    >>> print(ex["temp_c"].mean())
+    7.966666666666667
+    ```
+
+    A file that marks missing values with a code reads it with
+    `na_values=[...]`, as `-999` in section 5.
 
 ---
 
@@ -759,251 +716,203 @@ The script writes its answer to `results/`, and writes it again, the same, at ev
 
 ---
 
-### 14. Loop against array: time both { #timing }
+### 13. Correlation: temperature and humidity { #correlation }
 
 <!-- — · 10 min -->
 
-`time.perf_counter()` is a clock in seconds; the difference of two readings is the time between them.
+The correlation coefficient r is +1 when two columns rise together along a straight line, −1 when one falls as the other rises, and 0 with no straight-line relation.
 
-1. New file `scripts/time_both.py`: the column once as an array and once
-   as a plain list (`tolist`). Type, save.
+1. Back to today's folder, start `python` and read the file.
 
-    ```python
-    import time
-
-    import numpy as np
-
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",", skiprows=1, usecols=1)
-    temps = temp.tolist()
+    ```pycon
+    $ cd ~/weather-s08
+    $ python
+    >>> import pandas as pd
+    >>> df = pd.read_csv("data/raw/weather.csv", na_values=[-999])
     ```
 
-2. Under them, the mean twice, each between two clock readings. Save.
+2. r of the temperature and the humidity of the same hours.
 
-    ```python
-    t0 = time.perf_counter()
-    total = 0.0
-    count = 0
-    for t in temps:
-        if t != -999:
-            total = total + t
-            count = count + 1
-    t1 = time.perf_counter()
-    array_mean = temp[temp != -999].mean()
-    t2 = time.perf_counter()
-
-    print(f"loop  {total / count:.5f} in {(t1 - t0) * 1000:.1f} ms")
-    print(f"array {array_mean:.5f} in {(t2 - t1) * 1000:.1f} ms")
+    ```pycon
+    >>> print(df["temp_c"].corr(df["humidity_pct"]))
+    -0.7027079498404432
     ```
 
-3. Run it, twice.
+3. `shift(1)` moves every value one row down: each row then holds the hour
+   before. r of an hour and the hour before:
 
-    ```text
-    $ python scripts/time_both.py
-    loop  7.15997 in 6.2 ms
-    array 7.15997 in 0.4 ms
+    ```pycon
+    >>> df["temp_c"].shift(1).head(3)
+    0    NaN
+    1   -4.4
+    2   -4.8
+    Name: temp_c, dtype: float64
+    >>> print(df["temp_c"].corr(df["temp_c"].shift(1)))
+    0.9960625426692195
     ```
 
-    Your times differ.
-
-**Check:** the same mean, the array about 15 times faster.
+**Check:** −0.70: warm hours are drier. 0.996: an hour nearly repeats the
+hour before, which is why 0.030 was too small.
 
 ---
 
-### 15. Count in bins: `np.histogram` { #histogram }
+### 14. The median and percentiles { #percentiles }
 
 <!-- — · 5 min -->
 
-A histogram counts the values that fall into each bin.
+A percentile is the value below which that share of the values lies; the median is the 50 % point.
 
-1. At the end of `coldest_day.py`, add these lines, save.
+1. At the prompt, with `df` read as in section 13:
 
-    ```python
-    counts, edges = np.histogram(temp[valid], bins=np.arange(-20, 40, 5))
-    print(edges)
-    print(counts)
+    ```pycon
+    >>> temps = df["temp_c"]
+    >>> print(temps.median())
+    6.7
+    >>> temps.quantile([0.05, 0.25, 0.75, 0.95])
+    0.05    -6.0
+    0.25    -0.2
+    0.75    14.2
+    0.95    21.8
+    Name: temp_c, dtype: float64
     ```
 
-2. Run it.
-
-    ```text
-    $ python scripts/coldest_day.py
-    ...
-    [-20 -15 -10  -5   0   5  10  15  20  25  30  35]
-    [   12   686  5589 16065 16582 14050 14880 12261  6111  1230    86]
-    ```
-
-    Twelve edges make eleven bins: 12 hours from −20 to −15 °C, 86 from
-    30 to 35 °C.
-
-**Check:** the counts add up to 87 552.
+**Check:** half the hours lie below 6.7 °C; nine in ten between −6.0 and
+21.8 °C.
 
 ---
 
-### 16. Skip a bad row: `try` and `except` { #except }
+### 15. Frost by counting { #frost }
 
 <!-- — · 10 min -->
 
-`try` runs a block; if it raises the error named after `except`, that block runs instead.
+A probability counted from data is a share: the frost hours divided by all measured hours.
 
-1. New file `scripts/export_values.py`, for the spreadsheet export with
-   `;` and decimal commas. Type, save.
+1. At the same prompt, with `temps` of section 14. P(frost): the mean of
+   `True` and `False` is the share of `True`.
 
-    ```python
-    import csv
-
-    values = []
-    with open("data/raw/daily_export.csv", newline="") as f:
-        reader = csv.reader(f, delimiter=";")
-        next(reader)
-        for row in reader:
-            try:
-                nr = int(row[0])
-            except ValueError:
-                print("skipped:", row)
-                continue
-            values.append(float(row[2].replace(",", ".")))
+    ```pycon
+    >>> frost = temps.dropna() < 0
+    >>> print(frost.sum(), frost.mean())
+    22352 0.25529970760233917
     ```
 
-2. At the end, two lines, not indented. Save, run.
+2. Frost given frost the hour before, over the pairs of hours that were
+   both measured. `notna()` is `True` where a value is there; `~` turns
+   `True` into `False`.
 
-    ```python
-    print(len(values), values)
-    print(f"mean {sum(values) / len(values):.2f}")
+    ```pycon
+    >>> before = temps.shift(1)
+    >>> pairs = temps.notna() & before.notna()
+    >>> now_frost = (temps < 0)[pairs]
+    >>> before_frost = (before < 0)[pairs]
+    >>> print(len(now_frost))
+    87550
+    >>> print(now_frost[before_frost].mean())
+    0.9564672721578453
+    >>> print(now_frost[~before_frost].mean())
+    0.01492354177211307
     ```
 
-    ```text
-    $ python scripts/export_values.py
-    skipped: ['', 'mean', '7,97']
-    9 [6.3, 5.0, 5.6, 7.0, 9.4, 10.4, 9.2, 9.0, 9.8]
-    mean 7.97
-    ```
+**Check:** P(frost) = 0.255; given frost the hour before, 0.956; given
+none, 0.015.
 
-    The last line of the export has no `nr`: `int('')` raises
-    `ValueError`, and the row is skipped.
+---
 
-**Check:** nine values, the mean the spreadsheet wrote, 7.97.
+### 16. Advanced tasks { #advanced }
 
-### 17. Advanced tasks { #advanced }
+<!-- — · 20 min -->
 
-<!-- — · 25 min -->
+Harder and open: each in `how_sure.py`, with its answer folded.
 
-Harder questions on the same arrays, for a room that is done early. Each answer is folded under its task.
-
-!!! question "Advanced task: a straight line through the ten years"
-    `np.polyfit(x, y, 1)` fits a straight line and returns its slope and
-    intercept. Fit one through the ten yearly means of `yearly_means.py`.
-    How many °C per year is the slope, and is it large next to how much
-    the years scatter (`means.std()`)?
+!!! question "Advanced task: the same yearly means in plain Python"
+    `scripts/weather.py`, the module of the earlier seminars, has a
+    function `group(path, start, stop)`: a dictionary with a list of
+    temperatures for each key `line[start:stop]`, the `-999` hours left
+    out. Compute the ten yearly means with it and compare them with
+    `groupby`.
 
 ??? success "Answer"
-    At the end of `yearly_means.py`:
+    `import weather` finds `weather.py` because the script stands in the
+    same folder, `scripts`. At the end of `how_sure.py`:
 
     ```python
-    years = np.arange(2016, 2026)
-    means = np.array([temp[(year == y) & valid].mean() for y in years])
-    slope, intercept = np.polyfit(years, means, 1)
-    print(f"slope {slope:.3f} °C per year")
-    print(f"spread of the years {means.std():.2f} °C")
+
+    import weather
+
+    years = weather.group("data/raw/weather.csv", 0, 4)
+    for key in years:
+        print(key, round(weather.mean(years[key]), 2))
     ```
 
     ```text
-    $ python scripts/yearly_means.py
+    $ python scripts/how_sure.py
     ...
-    slope -0.056 °C per year
-    spread of the years 0.67 °C
+    2016 7.6
+    2017 6.51
+    2018 7.97
+    2019 7.27
+    2020 6.83
+    2021 7.25
+    2022 6.6
+    2023 8.31
+    2024 7.27
+    2025 5.98
     ```
 
-    −0.056 °C per year is 0.56 °C per decade, less than the 0.67 °C by
-    which single years scatter: ten points cannot show a trend this small.
+    The same ten numbers as `groupby`, in a loop over the lines.
 
-!!! question "Advanced task: the day's cycle in one line"
-    `days` has one row per day and one column per hour. Which hour of the
-    day is the coldest on average, and which the warmest?
+!!! question "Advanced task: one year's own ±"
+    Compute the mean of 2025 with s / √n of its own hours. Compare that ±
+    with how much the ten yearly means scatter.
 
 ??? success "Answer"
-    `axis=0` averages down each column: one mean per hour. At the end of
-    `coldest_day.py`:
-
     ```python
-    hour_means = days[ok].mean(axis=0)
-    print(np.round(hour_means, 1))
-    print("coldest hour", hour_means.argmin(), "warmest hour", hour_means.argmax())
+
+    t25 = df[year == "2025"]["temp_c"]
+    print(f"2025: {t25.mean():.2f} ± {t25.std() / t25.count() ** 0.5:.2f}")
     ```
 
     ```text
-    $ python scripts/coldest_day.py
+    $ python scripts/how_sure.py
     ...
-    [ 4.7  4.1  3.8  3.7  3.8  4.1  4.7  5.4  6.2  7.2  8.1  8.9  9.6 10.2
-     10.5 10.7 10.5 10.2  9.6  8.9  8.1  7.2  6.3  5.4]
-    coldest hour 3 warmest hour 15
+    2025: 5.98 ± 0.10
     ```
 
-    03:00 and 15:00, 7 °C apart.
+    The year gives itself ± 0.10, but the years scatter by 0.70: seven
+    times more. Its hours are not independent either.
 
-!!! question "Advanced task: the day with the largest swing"
-    For each day, the warmest hour minus the coldest. Which day swung the
-    most, and how much does a day swing on average?
+!!! question "Advanced task: a mean per day"
+    Group the hours by day (`df["time"].str[0:10]`). How many days, how
+    many with a mean, and what is the ± from the daily means?
 
 ??? success "Answer"
     ```python
-    swing = days[ok].max(axis=1) - days[ok].min(axis=1)
-    k = swing.argmax()
-    print("largest swing", dates[ok][k], f"{swing[k]:.1f}", days[ok][k].min(), days[ok][k].max())
-    print(f"mean swing {swing.mean():.1f}")
+
+    day = df["time"].str[0:10]
+    daily = df.groupby(day)["temp_c"].mean()
+    print(len(daily), daily.count())
+    print(f"days scatter by {daily.std():.2f}, ± {daily.std() / daily.count() ** 0.5:.2f}")
     ```
 
     ```text
-    $ python scripts/coldest_day.py
+    $ python scripts/how_sure.py
     ...
-    largest swing 2016-08-03 14.4 11.6 26.0
-    mean swing 7.6
+    3653 3648
+    days scatter by 8.43, ± 0.14
     ```
 
-    3 August 2016: from 11.6 °C at night to 26.0 °C in the afternoon.
-
-!!! question "Advanced task: the longest frost"
-    The longest run of hours in a row below 0 °C: how long, and from when
-    to when? A loop over the mask that counts the current run is enough.
-
-??? success "Answer"
-    New file `scripts/frost.py`:
-
-    ```python
-    import numpy as np
-
-    path = "data/raw/weather.csv"
-    temp = np.loadtxt(path, delimiter=",", skiprows=1, usecols=1)
-    time = np.loadtxt(path, delimiter=",", skiprows=1, usecols=0, dtype=str)
-
-    frost = (temp < 0) & (temp != -999)
-    longest = 0
-    run = 0
-    for i in range(len(frost)):
-        if frost[i]:
-            run = run + 1
-        else:
-            run = 0
-        if run > longest:
-            longest = run
-            end = i
-    start = end - longest + 1
-    print(longest, "hours,", time[start], "to", time[end])
-    ```
-
-    ```text
-    $ python scripts/frost.py
-    1172 hours, 2024-12-31T16:00 to 2025-02-18T11:00
-    ```
-
-    About 49 days without a thaw, in the winter of 2025.
+    3653 days; 5 have no measured hour, so their mean is NaN. The days
+    scatter almost as much as the hours, 8.43 against 8.85 °C, because
+    neighbouring days are alike: ± 0.14 is still too small against 0.22.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** `environment.yml` makes the same environment on
-  any laptop; the answer is a file the script writes again at any time.
-- 🔧 **Tool-agnostic:** the same `conda` and `python` lines on macOS and
-  Windows; a path from `Path(__file__)` works from any folder.
-- 📁 **Files:** the file read two ways (csv, NumPy) to the same
-  7.15997; made files go to `results/`, and the scripts make them again.
+- ♻️ **Reproducibility:** one script, `how_sure.py`, computes every number
+  of the README from the raw file; `environment.yml` lists pandas with its
+  version.
+- 📁 **Files:** the missing values are declared when the file is read and
+  counted, never edited out of `data/raw`.
+- 🔧 **Tool-agnostic:** the same mean, 7.16, from a loop over the lines
+  and from pandas; the same lines in zsh and in Git Bash.
