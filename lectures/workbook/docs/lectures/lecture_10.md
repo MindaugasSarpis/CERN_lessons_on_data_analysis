@@ -1,208 +1,245 @@
-# 10: Data Fitting from First Principles
+# 10: Classification and the Perceptron
 
-Lecture 9 left two loose ends. Its table of four means of the mass
-column, each with a small standard error, disagreed by 0.7 MeV/c², because
-the rows are a peak on a flat part that is not D⁰. And the nine pendulum rows
-gave g = 9.80 ± 0.04 m/s² with the formula T² = 4π²ℓ/g taken as exact.
-Lecture 10 opens on the first of them, "which of the four numbers would you
-report?", and answers it with a fit. The fit is derived from the same
-likelihood and built on the pendulum table (`pendulum.csv`, 97 bytes, as
-`scripts/clean_pendulum.py` writes it), where every step can be checked with
-a calculator; then it is carried to the D⁰ peak of `D0_KPi.csv`.
+Lectures 8 and 9 estimated numbers from the weather log: a mean with its
+uncertainty, a straight line fitted by least squares and by gradient
+descent. Lecture 10 asks for a class instead of a number: will it freeze
+tonight? Each evening of the log becomes one example, the temperature and
+the humidity at 18:00 as the inputs and frost at 06:00 the next morning as
+the label; 3646 evenings, 1229 of them followed by frost. The lecture
+builds one artificial neuron that answers the question, and pushes the
+numbers of real evenings through every expression: the weighted sum and
+the step, the line it draws, Rosenblatt's rule of 1958, the sigmoid and the
+cross-entropy from the likelihood, whose slope, (ŷ − y)·x, is Rosenblatt's
+rule and the update of Lecture 9's straight line. Trained on 2016 to 2022,
+the neuron is right on 96.1 ± 0.6 % of the evenings of 2023 to 2025, as
+the threshold "below 3.8 °C" it rediscovers, against 65.4 % for "never
+frost". A class `Perceptron` with the methods `predict` and `fit` holds
+its numbers: object-oriented code enters the course here. The lecture
+ends on what one neuron cannot do, XOR. No library is used on a slide;
+the code is plain Python on lists.
 
 ## What the lecture covers
 
-1. **The opening table** — Lecture 9's four means of column `M`, 1864.10 to
-   1864.81 MeV/c², and the question which one to report.
-2. **What a fit is** — the pendulum table as T² against length, a straight
-   line whose slope is 4π²/g; the uncertainty assumed for each point, 0.1 s
-   on the time of ten swings, propagated to T²; the three parts of a fit: a
-   model, data with uncertainties, a measure of mismatch.
-3. **From likelihood to χ²** — one Gaussian per point, the product over all
-   points, the logarithm: −2 ln L = χ² + const. χ² worked out for three lines
-   drawn by eye.
-4. **The straight line in closed form** — two derivatives set to zero, the
-   normal equations, slope and intercept from five sums; the sums of the
-   pendulum table, row by row; the best line beats all three drawn by eye;
-   the same in NumPy.
-5. **Uncertainties of the parameters** — the slope as a weighted sum of the
-   data and its uncertainty by error propagation; χ² around its minimum, the
-   rule Δχ² = 1, the covariance matrix as the inverse of the curvature
-   matrix; why slope and intercept are correlated; g with its uncertainty,
-   and the intercept as the test of the formula.
-6. **The same in matrix form** — the design matrix, the normal equations for
-   any model that is linear in its parameters, `np.linalg.lstsq` and
-   `np.polyfit`.
-7. **Models that are not linear** — the gradient (the chain rule), the update
-   rule θ ← θ − η∇χ², five steps by hand, a learning rate that is too large;
-   why the descent is slow and what Newton's step does; `curve_fit` with its
-   arguments.
-8. **The D⁰ peak** — counts with Poisson uncertainties, a Gaussian on a
-   linear background, starting values from the plot, the fit run on the
-   slide, and the answer to the opening table: a mean follows its window, a
-   fit does not.
-9. **Goodness of fit** — the expected χ², degrees of freedom, the p-value,
-   χ²/ndf, residuals and pulls; a model with too few terms and one with too
-   many.
-10. **What goes wrong** — starting values and a local minimum, small counts,
-    an outlier, an error common to all points; how a fit is reported; the
-    number to report for the peak, with the models that move it.
-
-## The results of the lecture
-
-| Quantity | Value |
-|--|--|
-| Pendulum, slope | a = 4.010 ± 0.037 s²/m |
-| Pendulum, intercept | b = 0.009 ± 0.019 s², correlation with a: −0.88 |
-| Pendulum, g | 9.84 ± 0.09 m/s², with χ² = 2.65 for 7 degrees of freedom |
-| D⁰ peak, position | 1864.47 ± 0.10 MeV/c² |
-| D⁰ peak, width | 7.65 ± 0.10 MeV/c², with χ² = 53.4 for 40 degrees of freedom |
-| Mean of `M`, window 1855–1875 and 1854–1874 | 1864.81 and 1864.06 ± 0.03 MeV/c² |
-| Fit, window moved 4 MeV either way | μ = 1864.45 and 1864.50 MeV/c² |
-| Fit, background without slope (rejected, χ² = 99.4/41) | μ = 1864.34 ± 0.09 MeV/c² |
-| Fit, background parabola; two Gaussians on a line | μ = 1864.46 and 1864.45 MeV/c² |
-
-All uncertainties are statistical. The closed formulas, `np.polyfit` and
-`curve_fit` give the same pendulum numbers to six decimals. The PDG value of
-the D⁰ mass, 1864.84 ± 0.05 MeV/c², lies 0.37 above the fit, and no window or
-model in the table reaches it. The numbers of the first seven rows are printed
-by `python figures/src/fitting.py` in the course repository, which reads
-`pendulum.csv` and `D0_KPi.csv`. The last four rows use the same histogram
-(45 bins of 2 MeV) and the same `curve_fit` call with the window or the model
-changed as named.
+1. **The question** (slides 1–4): 8 December at 18:00 in the ten years of
+   the log, nine of them followed by frost; 2.6 °C and 85 % in 2025, and
+   frost at 06:00; the 3646 evenings as points of temperature and humidity,
+   two clouds that overlap between 0 and 6 °C.
+2. **From a number to a class** (5–10): inputs, label, output and
+   accuracy; the list of evenings; the baseline "never frost", 66.3 %; a
+   threshold on the temperature, best below 3.8 °C, 95.7 %, scored live on
+   ten evenings.
+3. **One neuron** (11–17): z = w₁x₁ + w₂x₂ + b and a step; the evening of
+   8 December 2025 pushed through it; the neuron in five lines of Python;
+   where the output changes, a straight line, and how its three numbers
+   set it; AND and OR from one neuron, and the XOR puzzle.
+4. **Rosenblatt's rule** (18–27): why not try every line (8.1 million lines
+   for three numbers); the rule and why it moves z the right way; one
+   update with the numbers of 1 January 2016; AND by hand, epochs 1 and 2,
+   and the ten updates as lines; the rule in Python, live; linearly
+   separable; on 2551 evenings the rule never stops (95.2 %, 33.3 %,
+   92.3 %, … after each pass); what it does not give.
+5. **From the step to the sigmoid** (28–36): counting errors gives no
+   slope; frost by counting, per degree (62 % of the evenings at 3 to
+   4 °C); the sigmoid; the output as a probability for four evenings of
+   December 2025; the Bernoulli probability of what happened; the
+   likelihood and the loss, the cross-entropy, of the four (1.094); what
+   the loss charges; the loss computed live.
+6. **The gradient** (37–43): the slope of the loss, (ŷ − y)·x, with the
+   numbers of 8 December 2025; checked with a nudge; one step downhill; the
+   mean slope over four evenings; one update for three models (the line of
+   Lecture 9, Rosenblatt's rule, the logistic neuron); the loss as one bowl.
+7. **Train and test** (44–53): seven years to learn from, three to score;
+   five passes over the training evenings (loss from 0.693 to 0.110);
+   Rosenblatt's loop with one change, in plain Python; tonight with a
+   probability, 0.80, and live with this evening's numbers; the ± of an
+   accuracy; four rules on the test years; seen and unseen evenings (a rule
+   that keeps every evening: 98.8 % seen, 93.1 % unseen); missed frosts and
+   false alarms.
+8. **A model as an object** (54–58): what a model holds and does; the same
+   code as a class `Perceptron`, built one method at a time; fit and
+   predict, live, on AND; why the numbers live in the object.
+9. **The limit: XOR** (59–62): no line exists, by four inequalities; what
+   the two rules do on XOR.
+10. **Wrap-up** (63–65): the answers for 8 December 2025, every rule with
+    its test accuracy; the recap.
+11. **For the curious** (66–79), after the recap and outside the lecture
+    time: the convergence theorem and its proof, checked on AND (at most 51
+    updates, 10 needed); w at a right angle to the line, the distance of a
+    point from it, what w and b do; the slope of the sigmoid and the
+    gradient by the chain rule; z as the logarithm of the odds; where the
+    sigmoid comes from (Bayes' rule for two Gaussian classes); the humidity
+    in percent, on which the rule fails; history in three dates (1958,
+    1969, 1986).
 
 ## The lecture, part by part
 
-The lecture is slides 1–72; when time is short, skip the slides of the
-second table. Slides 73–79 are the self-check quizzes and take no lecture
-time. To jump, type the slide number and press Enter.
+The main path is slides 1–65. **Plan to skip the slides of the second
+table** to fit the two-hour slot; slides 66–79 (For the Curious) and
+80–88 (the self-check quizzes) take no lecture time. To jump, type the
+slide number and press Enter.
 
 | Slides | Part |
 |--|--|
-| 1–3, 5 | The opening table and the vote; what Lecture 9 established |
-| 6–10 | The pendulum table, its uncertainties, three lines drawn by eye |
-| 11–15 | From the likelihood to χ² |
-| 16–22 | The straight line in closed form, on the pendulum |
-| 24, 26, 28, 31 | Uncertainties, Δχ² = 1, g and the test of the intercept |
-| 36–41 | The gradient, the update rule, steps by hand, a learning rate too large |
-| 44–45 | Newton's step and the `curve_fit` call |
-| 48–51, 53–55 | The D⁰ peak, the fit run live, the opening table answered |
-| 56–57, 59–61, 63 | Goodness of fit |
-| 65–66, 68–69 | Starting values, an outlier, what χ² cannot see |
-| 71–72 | The number to report, Recap |
+| 1–4 | The question: 8 December in ten years, then the 3646 evenings as two overlapping clouds |
+| 5–9 | Inputs, label and output; the list; the baseline never frost; the best threshold, 3.8 °C |
+| 11–17 | The neuron, one evening through it, in Python, its line, AND and OR |
+| 18, 20–22, 24–27 | Rosenblatt's rule, one update, AND by hand, the rule live, separable or not, the rule on the evenings and what it does not give |
+| 28–40 | No slope in a count, frost by counting, the sigmoid, the probability, the likelihood and the cross-entropy, the gradient checked and one step |
+| 42 | One update for three models |
+| 44–46, 48–52 | Train and test, five passes, tonight with a probability, the ± of an accuracy, four rules, seen and unseen evenings |
+| 54–58 | A model as an object: the class `Perceptron`, live |
+| 59–65 | XOR, the answers, the recap |
 
 | Skip | Slides |
 |--|--|
-| Learning Objectives | 4 |
-| The Same in NumPy | 23 |
-| The Slope Is a Sum over the Data | 25 |
-| χ² Around Its Minimum | 27 |
-| The Covariance Matrix | 29 |
-| Why Slope and Intercept Are Correlated | 30 |
-| The Same in Matrix Form, the whole section | 32–35 |
-| Descent Paths for Two Learning Rates | 42 |
-| Gradient Descent in NumPy | 43 |
-| `absolute_sigma`: the Default Rescales | 46 |
-| Closed Formulas, `polyfit` and `curve_fit` Agree | 47 |
-| Starting Values from the Plot | 52 |
-| The χ² Distribution and the p-value | 58 |
-| Too Few Terms: the Pulls | 62 |
-| Three Pendulum Models and Their Pulls | 64 |
-| Errors That Are Not Gaussian: Small Counts | 67 |
-| Reporting a Fit | 70 |
+| Score a threshold on ten evenings, live | 10 |
+| Why not try every line | 19 |
+| The ten updates of AND as lines | 23 |
+| The mean slope over four evenings; the loss as a bowl | 41, 43 |
+| Rosenblatt's loop with one change | 47 |
+| Missed frosts and false alarms | 53 |
 
-- **Do not cut** slide 2 (the opening table), slides 12–14 (the derivation
-  of χ²), 17–21 (the normal equations and the five sums of the pendulum),
-  26 and 31 (the uncertainties and g), 39–41 (the update rule, the steps by
-  hand, the learning rate that is too large), 53 and 55 (the D⁰ fit and the
-  answer to the opening table), and **71–72, the closing: do not cut**. The
-  seminar computes the five sums on the ten yearly means, and the closing answers the question
-  the lecture opens on.
-- **Slide 2**: take a vote on the four rows and write it on the board. Most
-  pick the last row, nearest the PDG value. Slide 55 answers it: Lecture 9's
-  windows were all centred on 1865, and a window moved by 1 MeV moves the
-  mean by 0.75.
-- **If slide 46 is skipped**, say its one sentence at slide 45: with real
-  uncertainties, `absolute_sigma=True` belongs in every call.
-- **Slide 20** (The Pendulum: Five Sums): let the room compute the first row
-  on a calculator. 1/0.01804² = 3072.75, times 0.2 is 614.55, times 0.8136
-  is 2500.
-- **Slide 21** (Slope and Intercept): the calculator values use the sums
-  rounded to two decimals and give a denominator of 8 874 543. NumPy keeps
-  all digits and gets 8 874 453. Slope and intercept agree to the four
-  decimals shown.
-- **Slide 40** (Gradient Descent by Hand): the room does the first step on
-  the calculator and gets a = 3.2064, b = 0.3451.
-- **Slides 23, 43, 47 and 53** hold code that runs on the slide with the ▶
-  button. The first run loads Python into the browser and takes some
-  seconds. The same code runs in VS Code.
-  On slide 43, set `eta` to `1e-4` and run again to see χ² grow.
-- **Slide 53** (The Fit in Code) fits the D⁰ peak live. The 45 bin counts
-  are typed into the page, because the browser cannot read `D0_KPi.csv`; in
-  a script they come from the `np.histogram` line of slide 50. At slide 66
-  (Starting Values), change `p0` in this runner to `[2300, 1840, 2, 1400, 0]`
-  and run it: μ = 1827.57, A = −2876, χ² = 3285.3, and no warning.
+- **Do not cut** slides 3 and 64: the question and its answer. Slide 3
+  asks for a show of hands before its click.
+- **Do not cut** slides 21–22 (one update and AND by hand: do the steps on
+  the board with the room), 33–34 (the likelihood and the loss), 38–40
+  (the slope, its check and one step) or 55–57 (the class): Seminar 10
+  builds the same class, `Perceptron`, with the same lines.
+- **Seven slides run Python in the browser**: 10, 14, 24, 36, 39, 49 and
+  57. The first ▶ downloads the Python runtime, so run one block before
+  the lecture. Slides 24 and 57 show the output beside the code. On slide
+  49 type this evening's 18:00 temperature and humidity, from any weather
+  service, and run: the neuron's probability of frost for tonight.
+- **Clicks:** slide 3 holds the answer back for one click; slides 13, 15,
+  19, 21, 32, 38 and 40 add one line of numbers per click; slide 47
+  highlights the code in steps; slide 56 builds the class one method per
+  click.
+- **Every figure fills its slide** and is drawn from the weather log by
+  `figures/src/perceptron.py`, which also prints every number the slides
+  state (`python figures/src/perceptron.py`).
+- **One symbol per meaning:** x₁, x₂ the inputs, y the label, ŷ the
+  output, w₁, w₂ the weights, b the bias, z the weighted sum, η the
+  learning rate, L the likelihood; the loss is written "loss", and the
+  sigmoid "sigmoid", since σ is the standard deviation of Lecture 8.
+
+Before the session, start the local copy of the slides: `node
+scripts/serve-local.mjs 8123`, then open
+`http://localhost:8123/10-classification-and-the-perceptron/`.
 
 ## Check yourself
 
 No quiz interrupts the lecture. The deck closes with a self-check section,
-slides 73–79: six quiz slides for students to try afterwards. The same
+slides 80–88: eight quiz slides for students to try afterwards. The same
 questions, with their answers:
 
-1. Three points have residuals 0.2, −0.3 and 0.1 from a model, each with
-   σ = 0.1. What is χ²?
-   *14. The pulls are 2, −3 and 1, and their squares add up to 4 + 9 + 1.*
-2. A histogram with 30 bins is fitted with a Gaussian on a parabola, six
-   parameters. How many degrees of freedom does the fit have?
-   *24, the number of points minus the number of fitted parameters.*
-3. A one-parameter fit has χ² = 12.0 at its minimum θ = 5.00, and 13.0 at
-   θ = 5.20. What is the uncertainty of θ?
-   *0.20, the distance at which χ² has risen by 1.*
-4. Gradient descent on χ²(θ) = (θ − 3)² starts at θ = 0 with η = 0.25.
-   Where is θ after one step?
-   *1.5. The derivative at 0 is −6, and 0 − 0.25 × (−6) = 1.5. With η = 1
-   the step lands on 6, as far from the minimum as the start.*
-5. A fit of 27 points with 2 parameters gives χ² = 100, and the model is
-   known to be right. By what factor were the uncertainties of the points
-   too small?
-   *By 2. χ²/ndf = 100/25 = 4, and doubling every σ divides χ² by 4.*
-6. A straight-line fit gives the slope a = 3.95 ± 0.04 s²/m. What is
-   g = 4π²/a?
-   *9.99 ± 0.10 m/s². The relative uncertainty of g is that of a, 1.0 %.*
+1. A neuron with a step has w₁ = 2, w₂ = −3 and b = 1. What are z and the
+   output for the input x = (1, 2)?
+   *z = 2 · 1 + (−3) · 2 + 1 = −3, and the output is 0: the step gives 1
+   only for z > 0. Forgetting the bias gives −4.*
+2. Of 1000 test evenings, 900 had no frost. A classifier is right on 890
+   of them. What does this say?
+   *It is worse than the rule "never frost", which is right on 900. The
+   baseline comes before any accuracy is praised.*
+3. Rosenblatt's rule with learning rate 1. The numbers are w = (1, −1),
+   b = 0. The next point is x = (0, 1) with label 1. What are the numbers
+   after this step?
+   *w = (1, 0), b = 1: z was −1, so the output was 0 and the error +1;
+   the rule adds x to w and 1 to b.*
+4. A logistic neuron gives ŷ = 0.8 for an evening without frost (y = 0).
+   What is the cross-entropy loss of this evening?
+   *−ln(1 − 0.8) = −ln 0.2 = 1.609. The value 0.223 would be the loss had
+   the frost come.*
+5. One evening has x = (2, −1) and label y = 1, and a logistic neuron gives
+   ŷ = 0.3. What is the slope of its loss in w₁ and w₂?
+   *(ŷ − y) x = (0.3 − 1) · (2, −1) = (−1.4, 0.7), and −0.7 in b.*
+6. A rule is right on 900 of 1000 test evenings. What is its accuracy with
+   its standard error?
+   *90.0 ± 0.9 %: the square root of 0.9 · 0.1 / 1000 is 0.0095.*
+7. After `model = Perceptron()` and `model.fit(xs, ys, 5)`, what has `fit`
+   changed?
+   *`model.w` and `model.b`, the numbers this object holds; another
+   `Perceptron()` keeps its own.*
+8. XNOR is 1 when the two inputs are equal. Can a single neuron compute
+   it?
+   *No: it is XOR with the labels exchanged, and the same four
+   inequalities contradict each other, whatever the training.*
 
 ## Paired seminar
 
-[Seminar 10 · Fitting](../seminars/seminar_10.md) works on the weather project of Lectures 1
-to 5. Every student fits a straight line to the ten yearly means by the
-closed formulas of the lecture (−0.6 ± 0.8 °C per decade) and a cosine to
-the 3648 daily means (amplitude 11.18 °C, coldest on 16 January), reads the
-residuals, and writes both results into the README.
+[Seminar 10 · A Class of Your Own](../seminars/seminar_10.md) works on the
+same evenings in plain Python, for students who write code for the first
+time: one evening through a function `predict`, every evening and the
+accuracy (95.7 % for "below 3.8 °C"), one step of Rosenblatt's rule, the
+loop over five epochs, and then the same lines as a class `Perceptron`,
+one method at a time (`__init__`, `predict`, `fit`, `score`), which is
+right on 95.5 ± 0.6 % of the evenings of 2023 to 2025. Optional: the
+sigmoid in `fit` (the lecture's 96.1 %), and scikit-learn's `Perceptron`
+and `LogisticRegression`, which take the same calls. The last part puts a
+baseline and a threshold to a yes-or-no question about the student's own
+data.
+
+## Slides that left the deck
+
+On 9 November 2026 the lecture moved from week 11 to week 10 and was
+rebuilt on the weather log. Until then it was *The Perceptron*, on 200
+points generated around (0, 0) and (2, 2), trained in NumPy. Parked slides
+are in `lectures/content/parked/10_Classification_and_the_Perceptron.md`;
+the deck before the rebuild can be read with
+`git show 328aba2:lectures/content/slides/11_The_Perceptron.md`.
+
+| Earlier slides | What happened | Reason |
+|--|--|--|
+| The goal quote; Learning Objectives | Parked | Preambles leave every lecture (9 Nov 2026); the deck opens on its question |
+| A Classification Problem; Classify by a Threshold or by a Line | Replaced by slides 3–4 and 8–9 | The question is the room's own: the evenings of the weather log |
+| The fit and the classification side by side | Parked; its last row is slide 42 | The likelihood steps are on slides 33–34 |
+| AND, epochs 3 to 6 | Parked | One pass by hand and the ten updates as lines carry the run |
+| The convergence theorem and its proof; the normal vector and the distance; what w and b do; the derivative of the sigmoid; the gradient in three parts; where the sigmoid comes from | Moved to For the Curious | A derivation on the main path ends in a number; proofs and long derivations wait until after the recap |
+| Training in NumPy, Reading the Loop, The Training Loop | Parked; replaced by slide 47 | No library calls on a lecture slide: the same loop in plain Python |
+| The learning rate; inputs on different scales; standardising | Parked; the scale of the inputs is slide 78 | The humidity as a fraction keeps the inputs on similar scales without standardising |
+| Two lines separate XOR; a network of three neurons; the hidden layer; what is missing; what a modern network keeps | Parked, for Lecture 11 | Two layers are the opening of Lecture 11, From Neurons to Language Models |
+| The quiz on the distance from the line | Parked | The distance is in For the Curious |
+
+## Further reading
+
+- **F. Rosenblatt**, *The Perceptron: A Probabilistic Model for Information
+  Storage and Organization in the Brain*, Psychological Review 65,
+  386–408 (1958): the rule of slides 20–22.
+- **M. Minsky and S. Papert**, *Perceptrons*, MIT Press (1969): what one
+  layer of such units cannot compute.
+- **M. Nielsen**, *Neural Networks and Deep Learning*, free online
+  (neuralnetworksanddeeplearning.com), chapter 1 (perceptrons and sigmoid
+  neurons) and chapter 3 (the cross-entropy).
+- **D. J. C. MacKay**, *Information Theory, Inference, and Learning
+  Algorithms*, free online, chapter 39: the single neuron as a classifier.
+- **C. M. Bishop**, *Pattern Recognition and Machine Learning*, chapter 4:
+  the perceptron and logistic regression, with the convergence theorem.
 
 ## Take-aways
 
-- A fit has three parts: a model, data with uncertainties, and a measure of
-  mismatch. For Gaussian uncertainties the measure follows from the
-  likelihood: −2 ln L = χ² + const.
-- χ² is the sum of the squared pulls. A point 1σ from the model adds 1, a
-  point 3σ away adds 9.
-- For a straight line the minimum of χ² is found in closed form from five
-  sums over the data. The same sums give the uncertainties of slope and
-  intercept and their covariance.
-- Moving a parameter by one uncertainty raises χ² by 1. The covariance
-  matrix is the inverse of the curvature matrix of χ² at its minimum.
-- A quantity computed from fitted parameters gets its uncertainty by
-  propagation. If it uses two parameters, their covariance enters.
-- Gradient descent, θ ← θ − η∇χ², finds the minimum of any χ². A learning
-  rate that is too large makes χ² grow.
-- `curve_fit(f, x, y, p0=..., sigma=..., absolute_sigma=True)` returns the
-  estimates and the covariance matrix. Starting values that put the model
-  near the data lead to the right minimum; others may not.
-- χ² is expected near the number of degrees of freedom, points minus
-  parameters. The pulls show where a model fails. Too few terms leave a
-  pattern in them; too many terms follow the noise.
-- A mean over a window follows the window: moved by 1 MeV, it moves by
-  0.75. A fit of peak and background moves by 0.03 when its window moves by
-  4 MeV. A background model that χ² rejects moves μ by 0.13; the models it
-  accepts agree within 0.02.
-- The uncertainty from a fit is statistical. An error shared by all points
-  changes the result and leaves χ² as it was.
+- A classifier is scored against the rule that ignores its inputs: "never
+  frost" is right on 66.3 % of the evenings before anything is learned.
+- A neuron computes z = w₁x₁ + w₂x₂ + b and says 1 when z > 0. Its
+  boundary is a straight line; the threshold "below 3.8 °C" is the neuron
+  w = (−1, 0), b = 3.8.
+- Rosenblatt's rule adds the error times the input after each wrong
+  example. It stops on classes that one line separates, and never on
+  classes that overlap: there the line it ends on depends on when it is
+  stopped.
+- The sigmoid turns z into a probability. The probability of what
+  happened, multiplied over the examples, is the likelihood; minus its
+  logarithm per example is the cross-entropy, and its slope is
+  (ŷ − y)·x, the error times the input.
+- The same update trains the straight line of Lecture 9, Rosenblatt's
+  perceptron and the logistic neuron; they differ in ŷ.
+- A slope worked out on paper is checked with a nudge before it is
+  trusted.
+- A model is scored on data it has not seen, split so that no test example
+  has its neighbours in training: here by years. An accuracy has a ± like
+  any measured share, √(p(1 − p)/N).
+- A rule that keeps every training example is nearly perfect on them and
+  worse on new ones; three numbers cannot learn 2551 evenings by heart.
+- One accuracy hides two kinds of error. The cut on the probability
+  chooses between missed frosts and false alarms.
+- A model is an object: its numbers inside, `fit` to change them,
+  `predict` to use them. Every library model has the same two calls.
+- One neuron draws one line, and no line computes XOR.

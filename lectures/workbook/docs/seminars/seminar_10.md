@@ -1,53 +1,61 @@
-# Seminar 10 · Fitting
+# Seminar 10 · A Class of Your Own
 
-**Paired lecture:** 10 Fitting from First Principles · **Format:** follow-along, in class
+**Paired lecture:** 10 Classification and the Perceptron · **Format:** type-along tutorial, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** How strong is the yearly cycle? Every student fits a straight line to the ten yearly
-means by five sums (−0.6 ± 0.8 °C per decade) and a cosine to the 3648
-daily means (amplitude 11.18 °C, coldest on 16 January), reads the
-residuals, and writes both results into the README.
+**Today's question:** Will it freeze tonight?
 
-Everything is typed in VS Code: the scripts in the editor, the runs in its
-terminal (zsh on macOS, Git Bash on Windows; today's environment
-`s10`). SciPy is installed in section 1. In the blocks, a line that starts with `$` is
-typed in the terminal, and every other line is what comes back.
+**Today's goal:** every student writes a neuron in plain Python that says
+frost or no frost for an evening at 18:00, scores it on the 3646 evenings
+of the weather log, lets Rosenblatt's rule learn its three numbers from the
+evenings of 2016 to 2022, and then moves the same lines into a class
+`Perceptron` of their own, with the methods `predict`, `fit` and `score`,
+which is right on 95.5 ± 0.6 % of the evenings of 2023 to 2025.
 
-**If time runs short:** leave out section 3 and the Task of Part 3;
-sections 10 and 11 stay.
+Everything is typed in VS Code: the scripts in the editor, the commands in
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same in
+both). In the blocks, a line that starts with `$` is typed in the
+terminal, a line that starts with `>>>` or `...` is typed at Python's
+prompt, and every other line is what comes back; `...` alone stands for
+lines left out.
+
+**If time runs short:** skip the Tasks, but keep sections 6 and 7
+(Rosenblatt's rule) and 8 to 11 (the class). Sections 14 to 17 are
+optional.
 
 ??? info "Before the session"
-    - **Room:** VS Code and Miniforge on every laptop (Seminar 4, or the
-      [Setup](../setup.md) page), and internet: today's folder and its
-      packages download in section 1, about 180 MB the first time.
+    - **Room:** Miniforge and VS Code with its Python extension on every
+      laptop (the [Setup](../setup.md) page); internet for today's folder
+      (0.6 MB), and for conda only on a laptop without the environment
+      `analysis` (section 1). Nothing from earlier seminars is needed.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
       `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
       extension: [Setup, step 7](../setup.md#extensions).
-    - **You:** nothing to prepare. Today's folder is the same for everyone,
-      so every number on this page is the number in the room.
-    - **Keys** are written for Windows, macOS in brackets.
+    - **You:** nothing to prepare: every number on this page is the number
+      in the room.
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · SciPy and the daily means { #part-1 }
+## Part 1 · Today's folder and the evenings { #part-1 }
 
-<!-- 0:00 to 0:30 -->
+<!-- 0:00 to 0:20 -->
 
-A fit needs a model; the model is read off a plot of the data.
+Today's folder brings the weather log and a module `weather.py` that reads it twice a day: the evening and the next morning.
 
 ---
 
-### 1. Get today's folder, install SciPy { #install }
+### 1. Get today's folder { #start }
 
 <!-- 0:00 · 10 min -->
 
-Today's folder holds the data, the scripts so far and `environment.yml`. **SciPy** is the package of scientific methods built on NumPy; its `curve_fit` fits any model. It goes into today's environment and into `environment.yml`.
+Today needs only Python; the environment `analysis` of the last seminars has it.
 
-1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases)
-   of the course repository, under **Assets**, click `weather-s10.zip`.
-2. Open VS Code, then **View** > **Terminal**. Unpack the zip into the
-   home folder and go there. Git Bash shows `/c/Users/smilte/...`.
+1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
+   under **Assets**, click `weather-s10.zip`. Open VS Code, then the
+   terminal (**View** > **Terminal**), and unzip it into the home folder.
 
     ```text
     $ unzip ~/Downloads/weather-s10.zip -d ~
@@ -56,569 +64,659 @@ Today's folder holds the data, the scripts so far and `environment.yml`. **SciPy
     ...
       inflating: /Users/smilte/weather-s10/scripts/weather.py
     $ cd ~/weather-s10
+    $ ls
+    README.md  data  environment.yml  results  scripts
     ```
 
-    Safari unpacks a download by itself: then type
-    `mv ~/Downloads/weather-s10 ~` instead of `unzip`.
+    Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s10 ~`
+    instead.
 
-3. **File** > **Open Folder...** > `weather-s10`. VS Code opens a new
-   window; **View** > **Terminal** there starts in the folder.
-4. Make today's environment from `environment.yml`: Python, NumPy,
-   Matplotlib and JupyterLab, in the versions the file names. Then switch
-   it on: the prompt starts with `(s10)`.
+2. **File** > **Open Folder...** > `weather-s10` > **Open**. The window
+   reloads: open the terminal again (**View** > **Terminal**); it starts in
+   the folder.
+3. Switch on the environment of the last seminars.
 
     ```text
-    $ conda env create -n s10 -f environment.yml
+    $ conda activate analysis
+    ```
+
+    If conda answers that it cannot find `analysis`, make it from the file
+    in today's folder (Python, Matplotlib and pandas, a few minutes), then
+    switch it on:
+
+    ```text
+    $ conda env create -f environment.yml
     Channels:
      - conda-forge
     ...
-    #     $ conda activate s10
-    $ conda activate s10
+    #     $ conda activate analysis
+    $ conda activate analysis
     ```
 
-    `conda: command not found`: install Miniforge as on the
-    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
-
-5. Install SciPy 1.18 from conda-forge. conda shows its plan and asks.
+4. Check the Python, then tell VS Code: `Ctrl+Shift+P` (macOS
+   `Cmd+Shift+P`), `Python: Select Interpreter`, the entry with
+   `envs/analysis` in its path.
 
     ```text
-    $ conda install scipy=1.18
-    ...
-    ## Package Plan ##
-
-      environment location: /Users/smilte/miniforge3/envs/s10
-
-      added / updated specs:
-        - scipy=1.18
-
-    The following NEW packages will be INSTALLED:
-
-      scipy              conda-forge/linux-64::scipy-1.18.1-py314h36f0660_1
-
-    Proceed ([y]/n)?
+    $ python --version
+    Python 3.14.10
     ```
 
-6. Press `Enter`. Your line names your system (`osx-arm64`, `win-64`), and
-   on Windows the folder is `/c/Users/smilte/miniforge3/envs/s10`.
-   Then check:
-
-    ```text
-    $ python -c "import scipy; print(scipy.__version__)"
-    1.18.1
-    ```
-
-7. Write the environment down again. `--from-history` lists only what was
-   asked for, with the versions typed.
-
-    ```text
-    $ conda env export --from-history -f environment.yml
-    ```
-
-8. In `environment.yml`, delete the last line, `prefix: ...` (it names a
-   folder on this laptop only), save. SciPy is the new last line:
-
-    ```text
-    $ cat environment.yml
-    name: s10
-    channels:
-      - conda-forge
-    dependencies:
-      - jupyterlab=4.6
-      - matplotlib-base=3.11
-      - numpy=2.5
-      - python=3.14
-      - scipy=1.18
-    ```
-
-**Check:** `1.18.1`, and `scipy=1.18` in `environment.yml`.
+**Check:** `(analysis)` at the start of the prompt, `analysis` in VS Code's Status Bar, Python 3.14 (the last number may differ).
 
 ---
 
-### 2. The daily means { #daily }
+### 2. The evenings, at `>>>` { #evenings }
 
 <!-- 0:10 · 10 min -->
 
-24 rows make a day: `reshape(-1, 24)` turns the 87 672 hours into 3653 rows of 24, one row per day.
+One **evening** is one row: the date, the temperature and the humidity at 18:00, and `1` if it froze by 06:00 the next morning, else `0`.
 
-1. New file `scripts/fit_cycle.py`. Type and save. `.all(axis=1)` asks of
-   each row whether all its hours are valid; `.mean(axis=1)` averages
-   each row.
-
-    ```python
-    import numpy as np
-    import matplotlib.pyplot as plt
-    from scipy.optimize import curve_fit
-
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
-    days = temp.reshape(-1, 24)
-    good = (days != -999).all(axis=1)
-    T = days[good].mean(axis=1)
-    d = np.arange(len(days))[good]
-    print("days", len(days), "with 24 hours", len(T))
-    ```
-
-2. Run it. `d` is the day number, 0 for 1 January 2016.
+1. Open `scripts/weather.py`. Its last function, `evenings(path)`, goes
+   through the hourly lines 24 at a time: line 18 of each day is 18:00, and
+   12 lines later comes 06:00 of the next day. An evening whose
+   temperature or morning is `-999` is left out.
+2. Try it at `>>>`. Python finds `weather.py` in the terminal's folder, so
+   start it in `scripts`; the data is one folder up, `..`.
 
     ```text
-    $ python scripts/fit_cycle.py
-    days 3653 with 24 hours 3648
+    $ cd scripts
+    $ python
     ```
 
-**Check:** 3648 days: the five days of July 2019 are out.
-
----
-
-### 3. Plot them { #plot }
-
-<!-- 0:20 · 5 min -->
-
-The model is chosen from the picture.
-
-1. Add at the end, save. `"."` draws each day as a dot, `ms=2` small.
-
-    ```python
-
-    fig, ax = plt.subplots(figsize=(8, 3))
-    ax.plot(d, T, ".", ms=2)
-    ax.set_xlabel("day since 2016-01-01")
-    ax.set_ylabel("daily mean (°C)")
-    fig.savefig("results/daily_means.png", dpi=150, bbox_inches="tight")
+    ```pycon
+    >>> import weather
+    >>> rows = weather.evenings("../data/raw/weather.csv")
+    >>> len(rows)
+    3646
+    >>> rows[0]
+    ['2016-01-01', -4.5, 85.0, 1]
+    >>> rows[-1]
+    ['2025-12-30', -9.7, 93.0, 1]
     ```
 
-2. Run it, then open `results/daily_means.png` from the Explorer: ten
-   waves, one per year.
+    `rows[-1]` is the last row. 1 January 2016: −4.5 °C and 85 % at 18:00,
+    and frost the next morning.
 
-    ```text
-    $ python scripts/fit_cycle.py
-    days 3653 with 24 hours 3648
-    ```
+3. Count the evenings followed by frost, then the share without.
 
-**Check:** ten waves, low at the start of each year, high in summer.
-
-!!! question "Task: read the model off the plot"
-    From the plot alone: the mean level, the amplitude (half the distance
-    from winter to summer), and the day of the coldest point. These are the
-    starting values of section 9.
-
-??? success "Answer"
-    Winter about −4 °C, summer about 18 °C: level (18 − 4)/2 ≈ 7 °C,
-    amplitude (18 + 4)/2 ≈ 11 °C, coldest near day 15, mid-January. The fit
-    gives 7.18, 11.18 and 15.9.
-
----
-
-## Part 2 · Is it getting warmer? { #part-2 }
-
-<!-- 0:30 to 1:00 -->
-
-A straight line y = a x + b through the ten yearly means: a is the change per year.
-
----
-
-### 4. Ten yearly means, and how well a line fits { #yearly }
-
-<!-- 0:30 · 5 min -->
-
-**χ²** (chi-squared) adds up each point's distance from the line, in units of its σ, squared: the smaller, the better the line fits.
-
-1. New file `scripts/fit_trend.py`. Type and save. x is the year since
-   2016; σ of each point is 0.70 °C, how much the years scatter
-   (Seminar 9).
-
-    ```python
-    import numpy as np
-
-    time = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=0, dtype=str)
-    temp = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=1)
-    year = np.array([int(t[:4]) for t in time])
-    ok = temp != -999
-    x = np.arange(10)              # years since 2016
-    y = np.array([temp[ok & (year == 2016 + k)].mean() for k in x])
-    sy = np.full(10, 0.70)         # the scatter of the years, Seminar 9
-    print(y.round(2))
-    ```
-
-2. Run it: the ten means of Seminar 9.
-
-    ```text
-    $ python scripts/fit_trend.py
-    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
-    ```
-
-3. Add a function for χ² of any line, and try two lines by guess: a flat
-   one at 7.16 °C, and one rising 0.1 °C per year.
-
-    ```python
-
-    def chi2_of(a, b):
-        return (((y - a * x - b) / sy)**2).sum()
-
-    print(f"flat line at 7.16: chi2 {chi2_of(0, 7.16):.2f}")
-    print(f"slope 0.1 per year: chi2 {chi2_of(0.1, 6.7):.2f}")
-    ```
-
-4. Run it. The rising line fits worse.
-
-    ```text
-    $ python scripts/fit_trend.py
-    [7.6  6.51 7.97 7.27 6.83 7.25 6.6  8.31 7.27 5.98]
-    flat line at 7.16: chi2 9.08
-    slope 0.1 per year: chi2 12.64
-    ```
-
-**Check:** χ² 9.08 for the flat line, 12.64 for the rising one.
-
----
-
-### 5. Five sums, slope and intercept { #sums }
-
-<!-- 0:35 · 10 min -->
-
-Guessing is slow. χ² is smallest where its derivatives by a and by b are both zero; solving those two equations needs five sums of the data, each point weighted by w = 1/σ².
-
-1. Add at the end, save.
-
-    ```python
-
-    w = 1 / sy**2
-    S, Sx, Sy = w.sum(), (w * x).sum(), (w * y).sum()
-    Sxx, Sxy = (w * x * x).sum(), (w * x * y).sum()
-    print(f"S {S:.2f}, Sx {Sx:.2f}, Sy {Sy:.2f}, Sxx {Sxx:.2f}, Sxy {Sxy:.2f}")
-    D = S * Sxx - Sx**2
-    a = (S * Sxy - Sx * Sy) / D
-    b = (Sxx * Sy - Sx * Sxy) / D
-    print(f"a = {a:.4f} °C per year, b = {b:.3f} °C")
-    ```
-
-2. Run it. The last two lines are new.
-
-    ```text
-    $ python scripts/fit_trend.py
+    ```pycon
+    >>> frost = 0
+    >>> for row in rows:
+    ...     frost = frost + row[3]
     ...
-    S 20.41, Sx 91.84, Sy 146.12, Sxx 581.63, Sxy 648.21
-    a = -0.0555 °C per year, b = 7.410 °C
-    ```
-
-**Check:** a = −0.0555 °C per year; b = 7.410 °C, the line's value in 2016.
-
----
-
-### 6. Uncertainties and χ² { #chi2 }
-
-<!-- 0:45 · 10 min -->
-
-The same sums give the uncertainties: σ_a = √(S/D), σ_b = √(Sxx/D), and the covariance of a and b, −Sx/D. χ² near the **degrees of freedom** (points − parameters, here 10 − 2) says the σ match the scatter.
-
-1. Add at the end, save.
-
-    ```python
-
-    sa = np.sqrt(S / D)
-    sb = np.sqrt(Sxx / D)
-    chi2 = (((y - a * x - b) / sy)**2).sum()
-    print(f"a = {a:.3f} ± {sa:.3f}, b = {b:.2f} ± {sb:.2f}, cov {-Sx / D:.4f}")
-    print(f"chi2 = {chi2:.2f} for {len(x) - 2} degrees of freedom")
-    print(f"per decade: {10 * a:.1f} ± {10 * sa:.1f} °C")
-    ```
-
-2. Run it. The last three lines:
-
-    ```text
-    $ python scripts/fit_trend.py
-    ...
-    a = -0.056 ± 0.077, b = 7.41 ± 0.41, cov -0.0267
-    chi2 = 8.56 for 8 degrees of freedom
-    per decade: -0.6 ± 0.8 °C
-    ```
-
-**Check:** −0.6 ± 0.8 °C per decade: less than one σ from zero. Ten years
-show no trend. χ² 8.56 is below both guesses of section 4.
-
-!!! question "Task: the same with `np.polyfit`, then with x centred"
-    1. Fit the same line with `np.polyfit(x, y, 1, w=1 / sy,
-       cov="unscaled")`: `w=1 / sy` weights each point by 1/σ,
-       `cov="unscaled"` takes the σ as given. Same numbers?
-    2. Fit again with `x - 4.5` in place of `x`. What happens to the
-       intercept, its ± and the covariance?
-
-??? success "Answer"
-    Add at the end of `fit_trend.py`:
-
-    ```python
-
-    p, C = np.polyfit(x, y, 1, w=1 / sy, cov="unscaled")
-    print("polyfit", p, np.sqrt(np.diag(C)))
-    p, C = np.polyfit(x - 4.5, y, 1, w=1 / sy, cov="unscaled")
-    print("centred", p, np.sqrt(np.diag(C)), f"cov {C[0, 1]:.4f}")
+    >>> frost
+    1229
+    >>> (len(rows) - frost) / len(rows)
+    0.6629182665935272
+    >>> exit()
     ```
 
     ```text
-    polyfit [-0.05552739  7.40992628] [0.07706746 0.41142767]
-    centred [-0.05552739  7.16005304] [0.07706746 0.22135944] cov -0.0000
+    $ cd ..
     ```
 
-    1. The same a, b and ±. 2. With x centred the intercept is the mean
-       of the decade, 7.16 ± 0.22 °C (Seminar 9), and the covariance is
-       zero (it may print `0.0000`).
+    Press `Enter` once more after the indented line to end the loop. A rule
+    that always says "no frost" is right on 2417 of 3646 evenings, 66.3 %:
+    the number every rule today has to beat.
+
+**Check:** 3646 evenings, 1229 with frost, 0.663, and the terminal back in `weather-s10` (`cd ..`).
 
 ---
 
-## Part 3 · The yearly cycle { #part-3 }
+## Part 2 · A neuron as a function { #part-2 }
 
-<!-- 1:00 to 1:35 -->
+<!-- 0:20 to 0:40 -->
 
-T = c + a cos ωd + b sin ωd, with ω = 2π/365.25 known: a cosine and a sine of the day, each with its own weight.
+A **neuron** multiplies each input by a **weight**, adds a **bias** `b`, and says 1 (frost) when the sum `z` is above 0: z = w₁x₁ + w₂x₂ + b.
 
 ---
 
-### 7. A cosine and a sine column { #lstsq }
+### 3. One evening through `predict` { #predict }
 
-<!-- 1:00 · 10 min -->
+<!-- 0:20 · 10 min -->
 
-The model is linear in c, a and b, so it is solved like the straight line: one column per parameter in a **design matrix** A, and `np.linalg.lstsq` finds the weights with the smallest sum of squares.
+The inputs of an evening are a list `x`: the temperature, and the humidity as a fraction (85 % is 0.85). The weights are a list `w`.
 
-1. Add at the end of `fit_cycle.py`, save. `np.column_stack` puts three
-   columns side by side: ones (for c), cos ωd, sin ωd.
+1. New file `scripts/frost.py`. Type, save.
 
     ```python
+    def predict(x, w, b):
+        z = w[0] * x[0] + w[1] * x[1] + b
+        if z > 0:
+            return 1
+        return 0
 
-    om = 2 * np.pi / 365.25
-    A = np.column_stack([np.ones(len(d)), np.cos(om * d), np.sin(om * d)])
-    theta, *rest = np.linalg.lstsq(A, T, rcond=None)
-    c, a, b = theta
-    print(f"c = {c:.3f}, a = {a:.3f}, b = {b:.3f}")
+
+    x = [2.6, 0.85]      # 8 December 2025 at 18:00: 2.6 °C, 85 %
+    w = [-1.0, 0.0]      # the rule "frost below 3.8 °C"
+    b = 3.8
+    z = w[0] * x[0] + w[1] * x[1] + b
+    print(round(z, 2), predict(x, w, b))
     ```
+
+    With `w = [-1.0, 0.0]` the humidity counts for nothing and
+    z = 3.8 − x₁: above 0 exactly when the temperature is below 3.8 °C.
 
 2. Run it.
 
     ```text
-    $ python scripts/fit_cycle.py
-    days 3653 with 24 hours 3648
-    c = 7.177, a = -10.763, b = -3.023
+    $ python scripts/frost.py
+    1.2 1
     ```
 
-**Check:** c = 7.177 °C, near the mean of Seminar 9.
+    z = −2.6 + 0 + 3.8 = 1.2, so `predict` says 1: frost. It came: −2.0 °C
+    at 06:00 on 9 December 2025. `round(z, 2)` hides the float's last
+    digits, 1.1999999999999997.
+
+**Check:** `1.2 1`.
 
 ---
 
-### 8. Amplitude and the coldest day { #amplitude }
+### 4. Every evening and the accuracy { #accuracy }
 
-<!-- 1:10 · 10 min -->
+<!-- 0:30 · 10 min (Task: 5 min, skip if late) -->
 
-A cosine and a sine of the same period add up to one shifted cosine: a cos ωd + b sin ωd = A cos(ωd − φ), with A = √(a² + b²) and φ = atan2(b, a). The minimum is half a period after φ.
+The **accuracy** is the share of evenings on which `predict` says what happened.
 
-1. Add at the end, save. `np.hypot(a, b)` is √(a² + b²).
+1. At the top of `frost.py`, add the first line, `import weather`; at the
+   end, these lines. Save, run.
 
     ```python
-
-    amp = np.hypot(a, b)
-    d0 = (np.arctan2(b, a) + np.pi) / om
-    print(f"amplitude {amp:.2f} °C, coldest on day {d0:.1f}")
+    rows = weather.evenings("data/raw/weather.csv")
+    xs = []
+    ys = []
+    for row in rows:
+        xs.append([row[1], row[2] / 100])
+        ys.append(row[3])
+    print(len(xs), xs[0], ys[0])
     ```
-
-2. Run it. The last line:
 
     ```text
-    $ python scripts/fit_cycle.py
-    ...
-    amplitude 11.18 °C, coldest on day 15.9
+    $ python scripts/frost.py
+    1.2 1
+    3646 [-4.5, 0.85] 1
     ```
 
-**Check:** 11.18 °C; day 15.9 is 16 January.
+    `xs` holds the inputs of every evening, `ys` what happened, in the same
+    order: `xs[0]` and `ys[0]` are 1 January 2016.
+
+2. Under `predict`, add a second function. `range(len(xs))` counts the
+   positions 0, 1, …, 3645, one per evening.
+
+    ```python
+    def accuracy(xs, ys, w, b):
+        right = 0
+        for i in range(len(xs)):
+            if predict(xs[i], w, b) == ys[i]:
+                right = right + 1
+        return right / len(xs)
+    ```
+
+3. At the end of the file, one line more. `f"{...:.3f}"` writes the number
+   with three decimals. Save, run.
+
+    ```python
+    print(f"{accuracy(xs, ys, w, b):.3f}")
+    ```
+
+    ```text
+    $ python scripts/frost.py
+    1.2 1
+    3646 [-4.5, 0.85] 1
+    0.957
+    ```
+
+**Check:** 0.957: the rule "below 3.8 °C" is right on 95.7 % of the evenings, against 66.3 % for "never frost".
+
+!!! question "Task: other numbers"
+    Change `b` to 2.0, then 3.0 and 5.0, and run. Then try `w = [-1.0, 4.0]`
+    with `b = 0.6`, which gives the humidity a weight. Which numbers do
+    best? Put back `w = [-1.0, 0.0]` and `b = 3.8`.
+
+??? success "Answer"
+    ```text
+    b = 2.0: 0.916    b = 3.0: 0.947    b = 5.0: 0.944
+    w = [-1.0, 4.0], b = 0.6: 0.958
+    ```
+
+    3.8 is the best threshold; the weight on the humidity changes three
+    evenings of 3646. Finding three numbers by trying gets slow: the next
+    part lets the evenings choose them.
 
 ---
 
-### 9. The same with `curve_fit` { #curve-fit }
+## Part 3 · Rosenblatt's rule { #part-3 }
+
+<!-- 0:40 to 1:05 -->
+
+A neuron can learn its numbers from examples: after each wrong evening, the rule of 1958 moves them a little towards the right answer.
+
+---
+
+### 5. Training years and test years { #split }
+
+<!-- 0:40 · 5 min -->
+
+The numbers are learned from 2016 to 2022 only; the evenings of 2023 to 2025 are kept back to score the result.
+
+1. At the end of `frost.py`, four empty lists: the inputs and the labels of
+   the training years, and of the test years.
+
+    ```python
+    train_xs = []
+    train_ys = []
+    test_xs = []
+    test_ys = []
+    ```
+
+2. Under them, a loop that puts each evening into one pair of lists. Save,
+   run.
+
+    ```python
+    for row in rows:
+        year = int(row[0][0:4])
+        x = [row[1], row[2] / 100]
+        if year <= 2022:
+            train_xs.append(x)
+            train_ys.append(row[3])
+        else:
+            test_xs.append(x)
+            test_ys.append(row[3])
+    print(len(train_xs), len(test_xs))
+    ```
+
+    `row[0][0:4]` is the year of the date, as text; `int` turns `"2016"`
+    into the number 2016.
+
+    ```text
+    $ python scripts/frost.py
+    ...
+    0.957
+    2551 1095
+    ```
+
+**Check:** 2551 + 1095 = 3646.
+
+---
+
+### 6. One learning step { #step }
+
+<!-- 0:45 · 10 min -->
+
+**Rosenblatt's rule:** compute the error, `y − ŷ`, what happened minus what `predict` said: 0 when right, +1 or −1 when wrong. Add the error times each input to its weight, and the error to `b`.
+
+1. At the end of `frost.py`, add these lines. They start from zero
+   weights and take one step on the first training evening. Save, run.
+
+    ```python
+    w = [0.0, 0.0]
+    b = 0.0
+    x = train_xs[0]
+    error = train_ys[0] - predict(x, w, b)
+    w[0] = w[0] + error * x[0]
+    w[1] = w[1] + error * x[1]
+    b = b + error
+    print(error, w, b, predict(x, w, b))
+    ```
+
+    ```text
+    $ python scripts/frost.py
+    ...
+    2551 1095
+    1 [-4.5, 0.85] 1.0 1
+    ```
+
+    With zero weights z = 0 and `predict` says 0; frost came, so the error
+    is 1. The step adds the evening's inputs to `w` and 1 to `b`: now z =
+    20.25 + 0.72 + 1 = 21.97 and `predict` says 1.
+
+**Check:** `1 [-4.5, 0.85] 1.0 1`: one wrong evening, one step, and it is right.
+
+---
+
+### 7. The loop: five epochs { #loop }
+
+<!-- 0:55 · 10 min -->
+
+One pass over all training evenings is an **epoch**. The loop takes the step of section 6 on every evening, five times over, and prints the accuracy after each pass.
+
+1. At the end of `frost.py`, add these lines. Save, run.
+
+    ```python
+    w = [0.0, 0.0]
+    b = 0.0
+    for epoch in range(5):
+        for i in range(len(train_xs)):
+            x = train_xs[i]
+            error = train_ys[i] - predict(x, w, b)
+            w[0] = w[0] + error * x[0]
+            w[1] = w[1] + error * x[1]
+            b = b + error
+        print(epoch + 1, f"{accuracy(train_xs, train_ys, w, b):.3f}")
+    print(round(w[0], 2), round(w[1], 2), b)
+    ```
+
+    ```text
+    $ python scripts/frost.py
+    ...
+    1 [-4.5, 0.85] 1.0 1
+    1 0.952
+    2 0.333
+    3 0.923
+    4 0.886
+    5 0.952
+    -1.2 1.09 3.0
+    ```
+
+    `range(5)` counts 0 to 4, so `epoch + 1` prints 1 to 5. The rule never
+    stops: frost and no-frost evenings overlap between 0 and 6 °C, so some
+    evening is always wrong and moves the numbers. After the second pass
+    every evening says "frost", 33.3 %.
+
+**Check:** 0.952 after the first and the fifth pass, 0.333 after the second; `w` = −1.2 and 1.09, `b` = 3.0.
+
+---
+
+## Part 4 · A class of your own { #part-4 }
+
+<!-- 1:05 to 1:40 -->
+
+`w` and `b` belong together, and every function needs them. A **class** keeps the numbers inside an **object**, with the functions that use them.
+
+---
+
+### 8. A class and its numbers: `__init__` { #init }
+
+<!-- 1:05 · 10 min -->
+
+A **class** is a new type, like `list` or `str`. `Perceptron()` makes an **object** of it and runs its `__init__` once; `self` is that new object, and `self.w` keeps a value in it.
+
+1. New file `scripts/perceptron.py`, a module with only the class. Type,
+   save.
+
+    ```python
+    class Perceptron:
+        def __init__(self):
+            self.w = [0.0, 0.0]
+            self.b = 0.0
+    ```
+
+2. New file `scripts/forecast.py`. `from perceptron import Perceptron`
+   takes the class out of the module, as `import weather` took the module.
+   Type, save, run.
+
+    ```python
+    from perceptron import Perceptron
+
+    model = Perceptron()
+    print(model.w, model.b)
+    print(type(model))
+
+    other = Perceptron()
+    other.b = -5.0
+    print(model.b, other.b)
+    ```
+
+    ```text
+    $ python scripts/forecast.py
+    [0.0, 0.0] 0.0
+    <class 'perceptron.Perceptron'>
+    0.0 -5.0
+    ```
+
+    `model.w` reads a value kept in the object. Two objects of one class
+    keep their own numbers: changing `other.b` leaves `model.b` alone.
+
+**Check:** `0.0 -5.0`: two objects, two biases.
+
+---
+
+### 9. The method `predict` { #method-predict }
+
+<!-- 1:15 · 5 min -->
+
+A **method** is a `def` inside the class. Python passes the object before the dot as `self`, so `model.predict(x)` takes the numbers of `model`.
+
+1. In `perceptron.py`, under `__init__`, add the method; it is `predict`
+   of section 3 with `self.w` and `self.b` in place of `w` and `b`. Save.
+
+    ```python
+        def predict(self, x):
+            z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+            if z > 0:
+                return 1
+            return 0
+    ```
+
+    The `def` is indented by four spaces, as `def __init__` is: inside
+    the class.
+
+2. At the end of `forecast.py`, add these lines. Save, run.
+
+    ```python
+    model.w = [-1.0, 0.0]
+    model.b = 3.8
+    print(model.predict([2.6, 0.85]), other.predict([2.6, 0.85]))
+    ```
+
+    ```text
+    $ python scripts/forecast.py
+    [0.0, 0.0] 0.0
+    <class 'perceptron.Perceptron'>
+    0.0 -5.0
+    1 0
+    ```
+
+**Check:** `1 0`: the same evening, one answer from each object's numbers.
+
+---
+
+### 10. The method `fit` { #method-fit }
 
 <!-- 1:20 · 10 min -->
 
-Written as c − A cos(ω(d − d0)), the model is not linear in d0. `curve_fit` then searches: it starts from guessed values `p0` and improves them step by step.
+`fit` is the loop of section 7, inside the class: it changes `self.w` and `self.b`, the numbers of the object it is called on.
 
-1. Add at the end, save. No `sigma`: the daily means have no σ of their
-   own, so `curve_fit` takes the scatter of the points around the curve
-   as σ.
+1. In `perceptron.py`, under `predict`, add the method. Save.
 
     ```python
-
-    def cycle(d, c, amp, d0):
-        return c - amp * np.cos(om * (d - d0))
-
-    popt, pcov = curve_fit(cycle, d, T, p0=[7, 11, 15])
-    err = np.sqrt(np.diag(pcov))
-    print(f"c   = {popt[0]:.3f} ± {err[0]:.3f}")
-    print(f"amp = {popt[1]:.3f} ± {err[1]:.3f}")
-    print(f"d0  = {popt[2]:.2f} ± {err[2]:.2f}")
+        def fit(self, xs, ys, epochs):
+            for epoch in range(epochs):
+                for i in range(len(xs)):
+                    x = xs[i]
+                    error = ys[i] - self.predict(x)
+                    self.w[0] = self.w[0] + error * x[0]
+                    self.w[1] = self.w[1] + error * x[1]
+                    self.b = self.b + error
     ```
 
-2. Run it. `popt` holds the best values, `pcov` their covariance matrix,
-   whose diagonal holds the σ².
+2. Check it on four points whose answer is known: AND, 1 only for (1, 1).
+   At the end of `forecast.py`, add these lines. Save, run.
+
+    ```python
+    gate = Perceptron()
+    gate.fit([[0, 0], [0, 1], [1, 0], [1, 1]], [0, 0, 0, 1], 6)
+    print(gate.w, gate.b)
+    ```
 
     ```text
-    $ python scripts/fit_cycle.py
+    $ python scripts/forecast.py
     ...
-    c   = 7.177 ± 0.049
-    amp = 11.179 ± 0.069
-    d0  = 15.92 ± 0.36
+    1 0
+    [2.0, 1.0] -2.0
     ```
 
-**Check:** the numbers of sections 7 and 8, now with a ±.
+    w = (2, 1) and b = −2: the numbers the lecture found by hand for AND,
+    in six epochs.
 
-!!! question "Task: other starting values"
-    1. Start from `p0=[7, 11, 200]`, the warm side of the year.
-    2. Leave `p0` out.
-    Is the curve different?
+**Check:** `[2.0, 1.0] -2.0`.
+
+---
+
+### 11. Train, then score on the unseen years { #train-test }
+
+<!-- 1:30 · 10 min (Task: 5 min, skip if late) -->
+
+A fourth method, `score`, is `accuracy` of section 4 inside the class. Then the class does the work of Part 3 in two calls, `fit` and `score`.
+
+1. In `perceptron.py`, under `fit`, add the method. Save.
+
+    ```python
+        def score(self, xs, ys):
+            right = 0
+            for i in range(len(xs)):
+                if self.predict(xs[i]) == ys[i]:
+                    right = right + 1
+            return right / len(xs)
+    ```
+
+2. Replace everything in `forecast.py` with these lines. Then, under
+   them, copy from `frost.py` the lines of section 5, from `train_xs = []`
+   to the last `test_ys.append(row[3])`, without the `print`.
+
+    ```python
+    import weather
+    from perceptron import Perceptron
+
+    rows = weather.evenings("data/raw/weather.csv")
+    ```
+
+3. At the end, the two calls and the result with its ±, the standard error
+   of a share p of n evenings, √(p (1 − p) / n): `** 0.5` is the square
+   root. `test_ys.count(0)` counts the evenings without frost. Save, run.
+
+    ```python
+    model = Perceptron()
+    model.fit(train_xs, train_ys, 5)
+    print(round(model.w[0], 2), round(model.w[1], 2), model.b)
+    p = model.score(test_xs, test_ys)
+    n = len(test_xs)
+    print(f"right on {p:.3f} ± {(p * (1 - p) / n) ** 0.5:.3f} of {n} test evenings")
+    print(f"never frost: {test_ys.count(0) / n:.3f}")
+    ```
+
+    ```text
+    $ python scripts/forecast.py
+    -1.2 1.09 3.0
+    right on 0.955 ± 0.006 of 1095 test evenings
+    never frost: 0.654
+    ```
+
+    The same numbers as the loop of section 7: the class is the same code.
+    On three winters it has never seen, the neuron is right on 95.5 ± 0.6 %
+    of the evenings; "never frost" on 65.4 %.
+
+**Check:** `0.955 ± 0.006`, against 0.654.
+
+!!! question "Task: how many epochs?"
+    Fit new objects with 1, 2, 3 and 10 epochs and print `score` on the
+    training and the test evenings for each. Which would you report?
 
 ??? success "Answer"
-    1. `amp = -11.179 ± 0.069` and `d0 = 198.54 ± 0.36`: the warmest
-       day, with the sign of the amplitude turned. 198.54 − 365.25/2 =
-       15.92: the same curve.
-    2. Every parameter starts at 1; here it still finds 11.179 and 15.92.
-       On other data a bad start can end in a wrong minimum.
-
----
-
-## Part 4 · The residuals { #part-4 }
-
-<!-- 1:35 to 1:50 -->
-
-A **residual** is a point minus the curve: what the model leaves over.
-
----
-
-### 10. Residuals { #residuals }
-
-<!-- 1:35 · 10 min -->
-
-What the curve leaves over, and whether one day's residual predicts the next.
-
-1. Add at the end, save. `*popt` passes the three values as three
-   arguments.
+    At the end of `forecast.py`:
 
     ```python
-
-    res = T - cycle(d, *popt)
-    print(f"residuals: std {res.std(ddof=3):.2f}, "
-          f"next day {np.corrcoef(res[:-1], res[1:])[0, 1]:.3f}")
-    fig, (top, bottom) = plt.subplots(2, 1, figsize=(8, 5), sharex=True)
-    top.plot(d, T, ".", ms=2)
-    top.plot(d, cycle(d, *popt), "-")
-    top.set_ylabel("daily mean (°C)")
-    bottom.plot(d, res, ".", ms=2)
-    bottom.axhline(0, color="black")
-    bottom.set_xlabel("day since 2016-01-01")
-    bottom.set_ylabel("residual (°C)")
-    fig.savefig("results/cycle_fit.png", dpi=150, bbox_inches="tight")
+    for epochs in [1, 2, 3, 10]:
+        trial = Perceptron()
+        trial.fit(train_xs, train_ys, epochs)
+        print(epochs, f"{trial.score(train_xs, train_ys):.3f}",
+              f"{trial.score(test_xs, test_ys):.3f}")
     ```
-
-2. Run it. The last line:
 
     ```text
-    $ python scripts/fit_cycle.py
-    ...
-    residuals: std 2.94, next day 0.875
+    1 0.952 0.957
+    2 0.333 0.346
+    3 0.923 0.916
+    10 0.949 0.952
     ```
 
-3. Open `results/cycle_fit.png`: the curve through the points, and below
-   it the residuals in runs of warm and cold weeks.
+    The rule jumps from pass to pass, so the number of epochs is a choice.
+    It is made on the training years (0.952 after 1 and 5 epochs, 0.949
+    after 10), never on the test years: a number chosen by the test score
+    uses the test years up, and nothing unseen is left to score it.
 
-**Check:** a day's residual correlates with the next by 0.875: the 3648
-points are not independent, so ± 0.069 is too small.
+---
 
-!!! question "Task: the trend from the daily means"
-    Add a term `k * d / 3652.5` (k in °C per decade) to the model and fit
-    it with `curve_fit`. Compare k with section 6.
+## Part 5 · Your project { #part-5 }
 
-??? success "Answer"
-    Add at the end of `fit_cycle.py`:
+<!-- 1:40 to 2:00 -->
+
+The same two numbers for a yes-or-no question about your own data: the baseline, and a threshold on one column.
+
+---
+
+### 12. A baseline for a yes-or-no question { #project }
+
+<!-- 1:40 · 15 min -->
+
+Skip this section if your project has no data file yet. Otherwise choose a question your file answers with yes or no for each row, and one column that might tell in advance.
+
+1. New file `scripts/baseline.py` in your project folder. Change the file
+   name, the two column numbers and the yes-rule to yours. Save, run.
 
     ```python
-
-    def cycle_trend(d, c, amp, d0, k):
-        return cycle(d, c, amp, d0) + k * d / 3652.5
-
-    p4, c4 = curve_fit(cycle_trend, d, T, p0=[7, 11, 15, 0])
-    print(f"trend {p4[3]:.2f} ± {np.sqrt(c4[3, 3]):.2f} °C per decade")
+    lines = open("data/raw/MY_FILE.csv").read().splitlines()[1:]
+    values = []
+    labels = []
+    for line in lines:
+        parts = line.split(",")
+        values.append(float(parts[1]))     # the column that might tell
+        if float(parts[2]) > 100:          # the yes-or-no question
+            labels.append(1)
+        else:
+            labels.append(0)
+    yes = sum(labels)
+    print(len(labels), yes, max(yes, len(labels) - yes) / len(labels))
     ```
 
-    ```text
-    trend -0.57 ± 0.17 °C per decade
+    The last number is the baseline: the share right by always giving the
+    more common answer.
+
+2. A threshold: at the end, try every value of the column as `c` and keep
+   the best rule "yes when the value is below `c`". With more than about
+   10 000 rows, write `for c in values[::100]:`, every 100th value.
+
+    ```python
+    best_c = values[0]
+    best = 0
+    for c in values:
+        right = 0
+        for i in range(len(values)):
+            if (values[i] < c) == (labels[i] == 1):
+                right = right + 1
+        if right > best:
+            best_c = c
+            best = right
+    print(best_c, best / len(values))
     ```
 
-    The same slope as the yearly means (−0.6), with a ± 4.5 times
-    smaller: 3.4 σ from zero. It counts 3648 correlated days as
-    independent. The ten yearly means give the honest ± 0.8.
+    `(values[i] < c) == (labels[i] == 1)` is `True` when the rule and the
+    answer agree. If yes goes with large values, write `>` in place of `<`.
+
+3. In your project's `README.md`, write the question, the baseline and the
+   best threshold with its share, and which script gives them.
+
+**Check:** two shares in the README: the baseline and the threshold rule, the second larger, or a sentence saying that the column does not tell.
 
 ---
 
-## Part 5 · Write it down { #part-5 }
-
-<!-- 1:50 to 2:00 -->
-
-The two results go into the README, with the scripts that make them.
-
----
-
-### 11. Write the results into the README { #commit }
-
-<!-- 1:50 · 5 min -->
-
-The two results, with the scripts that make them.
-
-1. At the end of `README.md`, add and save:
-
-    ```text
-
-    ## The yearly cycle
-
-    Daily means fitted with c − A cos(2π(d − d0)/365.25) by
-    `scripts/fit_cycle.py`: A = 11.18 °C, coldest on day 15.9 (16 January).
-    The fit's ± 0.07 °C is too small: the residuals of neighbouring days
-    correlate by 0.875.
-
-    Trend of the ten yearly means, `scripts/fit_trend.py`: −0.6 ± 0.8 °C per
-    decade, compatible with zero.
-    ```
-
-2. Run both scripts once more: every number of the paragraph is in their
-   output.
-
-    ```text
-    $ python scripts/fit_trend.py
-    ...
-    per decade: -0.6 ± 0.8 °C
-    $ python scripts/fit_cycle.py
-    days 3653 with 24 hours 3648
-    c = 7.177, a = -10.763, b = -3.023
-    amplitude 11.18 °C, coldest on day 15.9
-    ...
-    residuals: std 2.94, next day 0.875
-    ```
-
-**Check:** the README ends with **The yearly cycle**, and
-`environment.yml` lists `scipy=1.18`.
-
----
-
-### 12. Wrap up { #wrap-up }
+### 13. Wrap up { #wrap-up }
 
 <!-- 1:55 · 5 min -->
 
-The lines of today, for the next time they are needed.
+The lines of today, by what they do.
 
 | To | Type |
 |--|--|
-| a straight line by hand | the five sums, `D = S * Sxx - Sx**2` |
-| the same in one call | `np.polyfit(x, y, 1, w=1 / sy, cov="unscaled")` |
-| a model linear in its parameters | `np.linalg.lstsq(A, T, rcond=None)` |
-| any model | `curve_fit(f, x, y, p0=[…])` |
-| the uncertainties | `np.sqrt(np.diag(pcov))` |
-| check the fit | residuals, and their correlation |
-| add a package | `conda install NAME=VERSION`, then `conda env export --from-history -f environment.yml` |
-
-Seminar 11 predicts frost from the evening's weather.
+| the evenings of the log | `weather.evenings(path)`: `[date, temperature, humidity, frost]` |
+| a neuron | `z = w[0] * x[0] + w[1] * x[1] + b`, 1 if `z > 0` |
+| one step of Rosenblatt's rule | `error = y - predict(x, w, b)`, each `w[i]` plus `error * x[i]`, `b` plus `error` |
+| a class | `class Perceptron:` with `def __init__(self):` and `self.w = ...` |
+| a method | a `def` inside the class, first argument `self` |
+| an object | `model = Perceptron()`, then `model.fit(xs, ys, 5)`, `model.score(xs, ys)` |
+| take a class from a module | `from perceptron import Perceptron` |
+| a share with its ± | `(p * (1 - p) / n) ** 0.5` |
 
 ---
 
@@ -626,178 +724,273 @@ Seminar 11 predicts frost from the evening's weather.
 
 ---
 
-### 13. The amplitude year by year { #by-year }
+### 14. A smooth output: the sigmoid in `fit` { #sigmoid }
 
 <!-- — · 10 min -->
 
-Ten fits, one per year: their scatter gives an honest ± for the amplitude.
+The lecture's logistic neuron: the step in the error becomes the **sigmoid** 1 / (1 + e^−z), a probability, and each change is multiplied by a small learning rate η. The rule then settles instead of jumping.
 
-1. Add at the end of `fit_cycle.py`, save. Each year's fit starts from
-   the coldest day of that year, `15 + 365.25 * y`.
+1. In `perceptron.py`, add `import math` as the first line, and a method
+   under `score`. Save.
 
     ```python
-
-    amps = []
-    for y in range(10):
-        sel = (d >= 365.25 * y) & (d < 365.25 * (y + 1))
-        p, cv = curve_fit(cycle, d[sel], T[sel], p0=[7, 11, 15 + 365.25 * y])
-        amps.append(p[1])
-    amps = np.array(amps)
-    print(amps.round(2))
-    print(f"amplitude {amps.mean():.2f} ± {amps.std(ddof=1) / np.sqrt(10):.2f}")
+        def fit_smooth(self, xs, ys, epochs, eta):
+            for epoch in range(epochs):
+                for i in range(len(xs)):
+                    x = xs[i]
+                    z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+                    error = ys[i] - 1 / (1 + math.exp(-z))
+                    self.w[0] = self.w[0] + eta * error * x[0]
+                    self.w[1] = self.w[1] + eta * error * x[1]
+                    self.b = self.b + eta * error
     ```
 
-2. Run it. The last two lines:
+    `math.exp(-z)` is e^−z.
+
+2. At the end of `forecast.py`, add these lines. Save, run.
+
+    ```python
+    smooth = Perceptron()
+    smooth.fit_smooth(train_xs, train_ys, 5, 0.01)
+    print(round(smooth.w[0], 3), round(smooth.w[1], 3), round(smooth.b, 3))
+    p = smooth.score(test_xs, test_ys)
+    print(f"right on {p:.3f} ± {(p * (1 - p) / n) ** 0.5:.3f} of {n} test evenings")
+    ```
 
     ```text
-    $ python scripts/fit_cycle.py
+    $ python scripts/forecast.py
     ...
-    [11.18 11.   10.63 12.6  10.42 10.41 10.71 11.48 11.06 12.49]
-    amplitude 11.20 ± 0.25
+    never frost: 0.654
+    -0.877 1.704 2.227
+    right on 0.961 ± 0.006 of 1095 test evenings
     ```
 
-**Check:** ± 0.25 °C, 3.6 times the ± 0.069 of section 9.
+**Check:** −0.877, 1.704 and 2.227, the numbers of the lecture's training, and 0.961 on the test years.
 
 ---
 
-### 14. The daily cycle { #daily-cycle }
+### 15. scikit-learn: the same two calls { #sklearn }
+
+<!-- — · 15 min -->
+
+**scikit-learn** is the Python library of machine learning. Its models are classes, with the methods `fit`, `predict` and `score`: today's class, written by others.
+
+1. Install it into the environment, with its version, and write it down.
+
+    ```text
+    $ conda install scikit-learn=1.9
+    ...
+    Proceed ([y]/n)?
+    $ python -c "import sklearn; print(sklearn.__version__)"
+    1.9.1
+    $ conda env export --from-history -f environment.yml
+    ```
+
+    At `Proceed ([y]/n)?` press `Enter`. Open `environment.yml`, delete
+    its last line, `prefix: ...`, save: `- scikit-learn=1.9` is in the
+    list.
+
+2. New file `scripts/library.py`. Copy the lines of `forecast.py` from
+   `rows = ...` to the end of the `for` loop, and put two lines above them.
+
+    ```python
+    from sklearn.linear_model import LogisticRegression, Perceptron
+
+    import weather
+    ```
+
+3. At the end, the library's two models, each with `fit` and `score`.
+   `coef_` and `intercept_` are the library's names for `w` and `b`.
+   Save, run.
+
+    ```python
+    model = Perceptron()
+    model.fit(train_xs, train_ys)
+    print(model.coef_, model.intercept_, f"{model.score(test_xs, test_ys):.3f}")
+
+    model = LogisticRegression()
+    model.fit(train_xs, train_ys)
+    print(model.coef_, model.intercept_, f"{model.score(test_xs, test_ys):.3f}")
+    print(model.predict_proba([[2.6, 0.85]]))
+    ```
+
+    ```text
+    $ python scripts/library.py
+    [[-8.5  15.37]] [23.] 0.959
+    [[-1.04818444 -0.01586714]] [4.16986212] 0.961
+    [[0.19292805 0.80707195]]
+    ```
+
+    The library's `Perceptron` shuffles the evenings, stops by itself and
+    scores 0.959. `LogisticRegression` is the logistic neuron, trained
+    close to the lowest point of the loss: frost below about 4.0 °C, and
+    for 8 December 2025 a probability of frost of 0.81, the second number.
+
+**Check:** `1.9.1`, and 0.959 and 0.961 on the test years.
+
+---
+
+### 16. Draw the line { #draw }
 
 <!-- — · 10 min -->
 
-The same model with a period of 24 hours, on the mean of each hour of the day.
+The test evenings as points, and the line where the smooth neuron's z is 0.
 
-1. Add at the end, save. `days[good].mean(axis=0)` averages each column:
-   one mean per hour of the day.
+1. At the end of `forecast.py`, add these lines: the two lists of points
+   first. Save, run.
 
     ```python
-
-    hours = days[good].mean(axis=0)
-    h = np.arange(24)
-    B = np.column_stack([np.ones(24), np.cos(2 * np.pi * h / 24),
-                         np.sin(2 * np.pi * h / 24)])
-    (c24, a24, b24), *rest = np.linalg.lstsq(B, hours, rcond=None)
-    warm = (np.arctan2(b24, a24) / (2 * np.pi / 24)) % 24
-    print(f"daily amplitude {np.hypot(a24, b24):.2f} °C, warmest at {warm:.1f} h")
+    frost_t = []
+    frost_h = []
+    other_t = []
+    other_h = []
+    for i in range(len(test_xs)):
+        if test_ys[i] == 1:
+            frost_t.append(test_xs[i][0])
+            frost_h.append(test_xs[i][1])
+        else:
+            other_t.append(test_xs[i][0])
+            other_h.append(test_xs[i][1])
+    print(len(frost_t), len(other_t))
     ```
-
-2. Run it. The last line:
 
     ```text
-    $ python scripts/fit_cycle.py
+    $ python scripts/forecast.py
     ...
-    daily amplitude 3.50 °C, warmest at 15.0 h
+    379 716
     ```
 
-**Check:** 3.50 °C between the mean and the warmest hour, 15:00.
+2. Then the figure. At humidity h the line is at the temperature
+   −(b + w₂h) / w₁. Add, save, run, open `results/frost_line.png`.
+
+    ```python
+    import matplotlib.pyplot as plt
+
+    w = smooth.w
+    b = smooth.b
+    fig, ax = plt.subplots()
+    ax.plot(frost_t, frost_h, ".", label="frost")
+    ax.plot(other_t, other_h, ".", label="no frost")
+    ax.plot([-(b + w[1] * 0.4) / w[0], -(b + w[1] * 1.0) / w[0]], [0.4, 1.0],
+            "k-", label="z = 0")
+    ax.set_xlabel("temperature at 18:00 (°C)")
+    ax.set_ylabel("humidity at 18:00 (fraction)")
+    ax.legend()
+    fig.savefig("results/frost_line.png", dpi=150)
+    ```
+
+**Check:** a nearly upright line near 4 °C, the frost points left of it, the others right, mixed near the line.
 
 ---
 
-### 15. Advanced tasks { #advanced }
+### 17. Advanced tasks { #advanced }
 
 <!-- — · 20 min -->
 
-Harder and open, with the solutions folded.
+Harder and open, with the answers folded. Add the lines at the end of `forecast.py`.
 
-!!! question "Advanced task: the ± of the slope from χ²"
-    σ_a has a second meaning: the slopes whose best line has a χ² at most
-    1 above the minimum lie within a ± σ_a. Scan slopes from −0.3 to 0.2
-    in steps of 0.001; for each, the best intercept is `(Sy - t * Sx) / S`.
-    Which slopes keep χ² ≤ χ²_min + 1?
+!!! question "Advanced task: missed frosts and false alarms"
+    The smooth neuron's probability is `1 / (1 + math.exp(-z))`. Add a
+    method `probability(self, x)` to the class, and count on the test
+    years the frosts it misses and the false alarms it gives, first saying
+    frost when the probability is above 0.5, then above 0.2.
 
 ??? success "Answer"
-    Add at the end of `fit_trend.py`:
+    In `perceptron.py`:
 
     ```python
+        def probability(self, x):
+            z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+            return 1 / (1 + math.exp(-z))
+    ```
 
-    chi2_min = chi2_of(a, b)
-    slopes = np.arange(-0.3, 0.2, 0.001)
-    chi2s = np.array([chi2_of(t, (Sy - t * Sx) / S) for t in slopes])
-    inside = slopes[chi2s <= chi2_min + 1]
-    print(f"chi2 <= {chi2_min:.2f} + 1 for a from {inside.min():.3f} "
-          f"to {inside.max():.3f}")
+    In `forecast.py`:
+
+    ```python
+    for cut in [0.5, 0.2]:
+        missed = 0
+        alarms = 0
+        for i in range(len(test_xs)):
+            said = smooth.probability(test_xs[i]) > cut
+            if test_ys[i] == 1 and not said:
+                missed = missed + 1
+            if test_ys[i] == 0 and said:
+                alarms = alarms + 1
+        print(cut, missed, alarms)
     ```
 
     ```text
-    chi2 <= 8.56 + 1 for a from -0.132 to 0.021
+    0.5 18 25
+    0.2 5 68
     ```
 
-    Half the width, (0.021 + 0.132)/2 = 0.077: σ_a of section 6. For a
-    model whose χ² is not a parabola, this scan is how the ± is found.
+    At 0.2 the missed frosts fall from 18 to 5 and the false alarms rise
+    from 25 to 68. A gardener chooses 0.2; the cut is a choice of which
+    error costs more, not part of the model.
 
-!!! question "Advanced task: leave one year out"
-    Fit the slope ten times, each time without one of the years. How much
-    does the trend per decade depend on a single year?
+!!! question "Advanced task: any number of inputs"
+    `predict` and `fit` name `w[0]` and `w[1]`. Write a class `Neuron`
+    whose `__init__(self, n)` makes `n` weights (`[0.0] * n` is a list of
+    `n` zeros) and whose methods loop over the inputs. Check that
+    `Neuron(2)` gives the numbers of `Perceptron`, then train `Neuron(1)` on
+    the temperature alone.
 
 ??? success "Answer"
-    Add at the end of `fit_trend.py`:
+    ```python
+    class Neuron:
+        def __init__(self, n):
+            self.w = [0.0] * n
+            self.b = 0.0
+
+        def predict(self, x):
+            z = self.b
+            for j in range(len(x)):
+                z = z + self.w[j] * x[j]
+            if z > 0:
+                return 1
+            return 0
+
+        def fit(self, xs, ys, epochs):
+            for epoch in range(epochs):
+                for i in range(len(xs)):
+                    x = xs[i]
+                    error = ys[i] - self.predict(x)
+                    for j in range(len(x)):
+                        self.w[j] = self.w[j] + error * x[j]
+                    self.b = self.b + error
+    ```
 
     ```python
+    two = Neuron(2)
+    two.fit(train_xs, train_ys, 5)
+    print(round(two.w[0], 2), round(two.w[1], 2), two.b)
 
-    for k in range(10):
-        keep = x != k
-        p = np.polyfit(x[keep], y[keep], 1, w=1 / sy[keep])
-        print(2016 + k, f"{10 * p[0]:.2f}")
+    temp_xs = []
+    for x in train_xs:
+        temp_xs.append([x[0]])
+    one = Neuron(1)
+    one.fit(temp_xs, train_ys, 5)
+    print(one.w, one.b)
     ```
 
     ```text
-    2016 -0.39
-    2017 -1.03
-    2018 -0.31
-    2019 -0.55
-    2020 -0.58
-    2021 -0.56
-    2022 -0.46
-    2023 -1.03
-    2024 -0.73
-    2025 0.22
+    -1.2 1.09 3.0
+    [-0.49999999999999867] 8.0
     ```
 
-    From −1.03 to +0.22 °C per decade: without the cold 2025 the sign
-    turns. The spread is the size of the ± 0.8 of section 6, as it should
-    be.
-
-!!! question "Advanced task: the yearly cycle of humidity"
-    Fit the same c + a cos ωd + b sin ωd to the daily mean humidity
-    (column 2) of the good days. What is its amplitude, and on which day
-    is the air most humid? Compare with the coldest day.
-
-??? success "Answer"
-    A new script, `scripts/fit_humidity.py`. The most humid day is where
-    the cosine peaks: atan2(b, a)/ω.
-
-    ```python
-    import numpy as np
-
-    data = np.loadtxt("data/raw/weather.csv", delimiter=",",
-                      skiprows=1, usecols=(1, 2))
-    temp = data[:, 0].reshape(-1, 24)
-    hum = data[:, 1].reshape(-1, 24)
-    good = (temp != -999).all(axis=1)
-    H = hum[good].mean(axis=1)
-    d = np.arange(len(temp))[good]
-    om = 2 * np.pi / 365.25
-    A = np.column_stack([np.ones(len(d)), np.cos(om * d), np.sin(om * d)])
-    (c, a, b), *rest = np.linalg.lstsq(A, H, rcond=None)
-    peak = (np.arctan2(b, a) / om) % 365.25
-    print(f"mean {c:.1f} %, amplitude {np.hypot(a, b):.1f} %, "
-          f"most humid on day {peak:.0f}")
-    ```
-
-    ```text
-    $ python scripts/fit_humidity.py
-    mean 79.1 %, amplitude 7.1 %, most humid on day 16
-    ```
-
-    Day 16, the coldest day of section 8: the two cycles are opposite.
-    Cold air holds less water, so the same water is a higher relative
-    humidity.
+    `Neuron(2)` repeats `Perceptron`. With the temperature alone the rule
+    ends at z = 8 − 0.5 x₁, frost below 16 °C: right on 63 % of the
+    training evenings, against 95 % with both inputs. Where Rosenblatt's
+    rule stops depends on its inputs and their order, not only on the
+    evenings.
 
 ---
 
 ## Aims practised
 
-- ♻️ **Reproducibility:** SciPy is written into `environment.yml`, so
-  `conda env create -f environment.yml` makes the same environment.
-- 🔧 **Tool-agnostic:** the same fit three ways (five sums, `polyfit`,
-  `curve_fit`), the same numbers.
-- ⚙️ **Automation:** each number in the README comes from one script run.
+- 🔧 **Tool-agnostic:** a neuron, its learning rule and a class in plain
+  Python, then the same two calls, `fit` and `predict`, in a library.
+- ♻️ **Reproducibility:** the split is by years, written in the script, so
+  every laptop learns from the same evenings and gets 0.955.
+- ⚙️ **Automation:** five passes over 2551 evenings in a loop; one object
+  that holds its numbers and does the work in two calls.

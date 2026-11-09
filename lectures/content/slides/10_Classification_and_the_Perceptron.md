@@ -1,13 +1,6 @@
 ---
 layout: cover
 title: "Classification and the Perceptron"
-# slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
-python:
-  installs: ["numpy"]
-  prelude: |
-    import numpy as np
-  loadPackagesFromImports: true
-  suppressDeprecationWarnings: true
 ---
 
 # Dr. Mindaugas Šarpis
@@ -15,13 +8,12 @@ python:
 # Best Research and Data Analysis Practices from CERN
 
 ## Classification and the Perceptron
-##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
+
+##### <span class="aims-badge">🔧 tool-agnostic · ⚙️ automation · ♻️ reproducibility</span>
 
 <!--
-Speaker: Lecture 10 fitted a number: a slope, a mass, a width. Today the thing
-to predict is a class, 0 or 1. The whole lecture builds one unit, the artificial
-neuron, and every formula in it is derived from what Lectures 09 and 10
-established: likelihood, the chain rule, gradient descent. (~1 min)
+**Say:** one question, will it freeze tonight, and one artificial neuron that answers it: what it computes, how it learns from ten years of evenings, how sure its answer is, and what it cannot do.
+(~1 min)
 -->
 
 ---
@@ -29,51 +21,92 @@ hideInToc: true
 layout: quote
 ---
 
-# The goal of this lecture is to build **one artificial neuron** from first principles: what it computes, how it is trained, and what it cannot do
+# The Navy revealed the embryo of an electronic computer today that it expects will be able to walk, talk, see, write, reproduce itself and be **conscious of its existence**.
+The New York Times, 8 July 1958, on Frank Rosenblatt's perceptron
+
+<!--
+**Say:** what Rosenblatt showed that day was one artificial neuron. It draws one straight line.
+(~0.5 min)
+-->
 
 ---
 hideInToc: true
 ---
 
-# Learning **Objectives**
+# Will It Freeze **Tonight**?
 
-<div class="stack-tight mt-sm">
+<div class="grid-2 mt-sm gap-md">
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-📐 Compute the output of a neuron, draw its **decision boundary**, and give the distance of a point from it
+## 📅 **8 December, 18:00, in the weather log**
 
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-✏️ Apply **Rosenblatt's learning rule** by hand, and state when it stops and when it never does
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-📉 Derive the **cross-entropy loss** from the Bernoulli likelihood, and its gradient $(\hat{y} - y)\,\mathbf{x}$ by the chain rule
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-🐍 Write the **training loop** in NumPy, and judge the result on points the neuron has not seen
+| Year | 18:00 | Humidity | 06:00 next day |
+|--|--|--|--|
+| 2016 | 0.7 °C | 76 % | −2.1 °C |
+| 2017 | 3.1 °C | 79 % | +1.3 °C |
+| 2018 | −3.9 °C | 81 % | −7.1 °C |
+| 2019 | −2.6 °C | 75 % | −4.7 °C |
+| 2020 | 1.6 °C | 75 % | −3.2 °C |
+| 2021 | 1.2 °C | 67 % | −1.6 °C |
+| 2022 | −2.7 °C | 80 % | −6.0 °C |
+| 2023 | 1.1 °C | 79 % | −1.9 °C |
+| 2024 | −0.2 °C | 82 % | −3.4 °C |
 
 </div>
+
+<div>
 
 <div class="card card-warning card-glass pad-compact">
 
-🚧 Show that one neuron cannot compute **XOR**, and that two neurons in a hidden layer can
+## ❓ **2025: 2.6 °C and 85 % at 18:00**
+
+Below 0 °C by 06:00?
+
+</div>
+
+<div v-click class="card card-success card-glass pad-compact mt-md">
+
+✅ 06:00 on 9 December 2025: **−2.0 °C**, frost.
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+📊 The log holds **3646** such evenings, 2016 to 2025. **1229** were followed by frost.
+
+</div>
 
 </div>
 
 </div>
 
 <!--
-Speaker: five objectives, five parts of one argument. Nothing today needs a
-library beyond NumPy. (~1 min)
+**Ask:** hands up for frost, hands up for no frost. Eight of the nine earlier years froze; 2017, at 3.1 °C, did not, and 2025 is warmer than all the others but 2017.
+**Say:** after the click: it froze. The lecture builds a rule from all 3646 evenings that gives this answer, and says how sure it is.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The 3646 Evenings of the **Log**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+📈 Each evening is a point: $x_1$ the temperature at 18:00, $x_2$ the humidity at 18:00 as a fraction (85 % → 0.85); its colour, the next morning. From 0 to 6 °C the two clouds overlap: 824 evenings, 568 of them with frost.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_evenings.svg">
+
+<!--
+**Say:** an evening is 18:00 of one day beside 06:00 of the next: 3652 pairs, and the six that touch the 120 missing hours of July 2019 are left out.
+**Ask:** where would you draw the border between the colours?
+**If asked:** the warmest evening followed by frost was 7.8 °C (30 September 2017), the coldest without frost −0.4 °C (15 February 2016).
+(~2 min)
 -->
 
 ---
@@ -83,114 +116,197 @@ hideInToc: true
 
 # From a Number to a **Class**
 
-A fit returns a number with an uncertainty. A classifier returns one of two labels. The method stays the same: a model with parameters, a likelihood, a loss to minimise.
+A mean and a slope are numbers. Frost or no frost is a class: 1 or 0.
 
 <!--
-Speaker: this section sets the problem, the data and the question of the
-lecture. (~1 min)
+**Say:** Lectures 8 and 9 estimated numbers; today's answer is one of two labels, and every idea of those lectures comes back: counting, a likelihood, a loss, a slope, a step downhill.
+(~0.5 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# A Classification **Problem**
+# One Evening as **Numbers**
 
-<div class="grid-2 mt-sm gap-md">
-
-<div>
+<div class="grid-3 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 📋 **The data**
+## 🌡️ **Inputs**
 
-- 200 points, generated with a fixed seed
-- Each point has two **inputs**, $x_1$ and $x_2$
-- Each point has a **label** $y$: 0 or 1
-- 100 points of class 0 lie around (0, 0), 100 of class 1 around (2, 2)
+Temperature at 18:00: $x_1 = 2.6$ °C
 
-</div>
+Humidity at 18:00: $x_2 = 0.85$
 
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🎯 **The task**
-
-Find a rule that gives the label of a point from its two inputs. The rule has to be found from the 200 examples, and it has to work on a point that is not among them.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_points.svg" style="display:block;margin:0 auto;max-height:400px;">
-
-</div>
-
-</div>
-
-<!--
-Speaker: think of two measured properties of an object and a yes-or-no question
-about it. The two clouds overlap: no rule will be right for every point, and the
-lecture computes how many it can get right. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Classify by a Threshold or by a **Line**
-
-<img class="fig" src="/figures/viz_perceptron_threshold_vs_line.svg" style="display:block;margin:0 auto;max-height:330px;">
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-**A threshold on $x_1$.** Of all thresholds, $x_1 > 1.39$ is right most often: for 177 of the 200 points, 88.5 %. It has one parameter.
+Together: $x = (2.6,\ 0.85)$
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**A line.** The line on the right is correct for 185 points, 92.5 %. It uses both inputs and has three parameters: $w_1 x_1 + w_2 x_2 + b = 0$.
+## 🏷️ **Label**
+
+$y = 1$: below 0 °C at 06:00, frost
+
+$y = 0$: no frost
+
+8 Dec 2025: $y = 1$
 
 </div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🎯 **Output**
+
+$\hat{y}$: what a rule says, 1 or 0
+
+Right when $\hat{y} = y$
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A **classifier** turns the inputs into a class. Its **accuracy**: the share of evenings with $\hat{y} = y$.
 
 </div>
 
 <!--
-Speaker: the threshold was found by trying every value. The line was found by
-the method of this lecture. The question of the lecture is how. (~2 min)
+**Say:** the hat marks what the rule says; $y$ without a hat is what happened. One letter, one meaning, for the whole lecture.
+**If asked:** the humidity is written as a fraction so that both inputs are numbers of a few units or less; with 85 in place of 0.85 the learning rule of this lecture fails (For the Curious).
+(~1.5 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-<div class="card card-info card-glass pad-compact table-compact">
+# Every Evening as One **Row**
 
-| | **A fit** (Lecture 10) | **A classification** (this lecture) |
-| --- | --- | --- |
-| The data | points $(x_i, y_i)$, with $y_i$ a measured number | points $(\mathbf{x}_i, y_i)$, with $y_i$ either 0 or 1 |
-| The model | a curve $f(x; \theta)$ | a function of $\mathbf{w} \cdot \mathbf{x} + b$ |
-| The parameters | $\theta$: slope, intercept, mass, width | the weights $\mathbf{w}$ and the bias $b$ |
-| The probability of the data | Gaussian around the curve | Bernoulli: $y = 1$ with probability $\hat{y}$ |
-| The loss, from the likelihood $\mathcal{L}$ | $-2 \ln \mathcal{L} = \chi^2 + \text{const}$ | $-\frac{1}{N} \ln \mathcal{L}$, the cross-entropy |
-| How it is minimised | in closed form, or $\theta \leftarrow \theta - \eta \nabla \chi^2$ | $\mathbf{w} \leftarrow \mathbf{w} - \eta \nabla L$ |
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📋 **The first and the last rows**
+
+`[date, temperature, humidity, frost]`
+
+```text
+['2016-01-01', -4.5, 85.0, 1]
+['2016-01-02', -2.6, 82.0, 1]
+...
+['2025-12-29', -6.6, 85.0, 1]
+['2025-12-30', -9.7, 93.0, 1]
+```
 
 </div>
 
-<div class="card card-primary card-glass pad-compact mt-md">
+<div class="card card-secondary card-glass pad-compact">
 
-Only two things are new: the output is a class, and the probability that describes a class is not a Gaussian. An index $i$ numbers the points, $i = 1 \ldots N$; an index 1 or 2 numbers the inputs.
+## 🔗 **Made from `weather.csv`**
+
+- 18:00 of each day beside 06:00 of the next
+- 3652 pairs; 6 touch the −999 hours of July 2019
+- **3646** rows: 1229 with $y = 1$, 2417 with $y = 0$
+
+</div>
 
 </div>
 
 <!--
-Speaker: read the table as the plan for the question of the last slide, how
-the line of 185 was found. Each row of the right column is derived today. The
-last row is the same line of mathematics in both columns. (~2 min)
+**Say:** the hourly log of Lectures 5 and 7, read twice a day: the evening as the inputs, the next morning as the label.
+**If asked:** the last row is the evening of 30 December 2025; 31 December has no next morning in the log.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Baseline: **Never Frost**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🧮 **A rule that ignores the inputs**
+
+$\hat{y} = 0$ on every evening. It is right on every evening without frost:
+
+$$
+\frac{2417}{3646} = 66.3\,\%
+$$
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## ⚠️ **The number to beat**
+
+"Always frost" is right on 1229, 33.7 %.
+
+A rule that is right 66 % of the time has learned nothing about frost.
+
+</div>
+
+</div>
+
+<!--
+**Ask:** a forecaster says "I am right two times in three". Good?
+**Say:** two evenings in three have no frost: "never frost" already scores 66.3 %. Every rule of the lecture is compared with it.
+(~1.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# A Threshold on the **Temperature**
+
+<div class="card card-success card-glass pad-compact mt-sm">
+
+📊 The rule "frost if $x_1 < c$", scored for every $c$ from −6 to 14 °C in steps of 0.1 °C: best below 3.8 °C, right on 3490 of 3646 evenings, 95.7 %.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_threshold.svg">
+
+<!--
+**Say:** left, the temperatures of the frost evenings and of the others; their overlap is where any threshold errs. Right, each threshold scored by counting.
+**Ask:** why does the curve fall on both sides? Too low a threshold misses frosts; too high a threshold calls frosts that do not come.
+**If asked:** below 2 °C is right on 91.6 %, below 0 °C on 84.1 %.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Score a Threshold on Ten Evenings, **Live**
+
+```py {monaco-run} {autorun:false}
+# 8 December 2016 to 2025: [temperature at 18:00, frost at 06:00]
+evenings = [[0.7, 1], [3.1, 0], [-3.9, 1], [-2.6, 1], [1.6, 1],
+            [1.2, 1], [-2.7, 1], [1.1, 1], [-0.2, 1], [2.6, 1]]
+c = 3.8                              # <-- try 3, 2, 0
+right = 0
+for e in evenings:
+    if e[0] < c:
+        guess = 1
+    else:
+        guess = 0
+    if guess == e[1]:
+        right = right + 1
+print(right, "of", len(evenings))    # 9 of 10
+```
+
+<!--
+**Do:** run it with 3.8, then 3, 2 and 0: 9, 10, 9 and 5 of 10.
+**Ask:** on these ten evenings 3 °C is best. Why not use 3 °C? Ten evenings choose the number that fits them; 3646 evenings choose 3.8 °C.
+(~2 min)
 -->
 
 ---
@@ -200,89 +316,226 @@ hideInToc: true
 
 # One **Neuron**
 
-The line that put 185 of 200 points on the right side has three parameters: two weights and a bias. One neuron computes with exactly these three, and everything about its line can be read off them.
+A weighted sum of the inputs, a bias and a step. The threshold rule is one of them.
 
 <!--
-Speaker: no learning yet. The weights are set by hand in this section, so that
-the geometry is clear before anything moves. (~1 min)
+**Say:** three numbers decide what a neuron says; in this section they are set by hand.
+(~0.5 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # Weighted Sum, Bias, **Step**
 
-<img class="fig" src="/figures/viz_perceptron_unit_step.svg" style="display:block;margin:0 auto;max-height:215px;">
-
-<div class="grid-2 mt-md gap-md">
+<div class="grid-2 mt-sm gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🧮 **Two operations**
+## ➕ **The weighted sum**
 
 $$
-z = \mathbf{w} \cdot \mathbf{x} + b = w_1 x_1 + w_2 x_2 + b
-$$
-
-$$
-\hat{y} = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{if } z \le 0 \end{cases}
+z = w_1 x_1 + w_2 x_2 + b
 $$
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔢 **With numbers**
+## 🪜 **The step**
 
-$\mathbf{w} = (2, -1)$, $b = -1$.
+$$
+\hat{y} = \text{step}(z) = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{if } z \le 0 \end{cases}
+$$
 
-- $\mathbf{x} = (3, 2)$: $z = 6 - 2 - 1 = 3$, so $\hat{y} = 1$
-- $\mathbf{x} = (1, 2)$: $z = 2 - 2 - 1 = -1$, so $\hat{y} = 0$
+</div>
 
 </div>
 
-</div>
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_unit.svg">
 
 <!--
-Speaker: bold letters are vectors, and w . x is the dot product. The hat on y
-marks what the model says, as the hat on theta marked an estimate in Lecture
-10. This unit with the step is the perceptron. The bias is drawn as a
-weight on a constant input 1. On the
-convention: z exactly 0 gives 0 here. Other books choose 1. It matters only for
-points exactly on the line. (~2 min)
+**Say:** a weight $w_1$, $w_2$ for each input and a bias $b$: three numbers. With the step this unit is Rosenblatt's perceptron.
+**If asked:** $w_1 x_1 + w_2 x_2$ is often written short as $w \cdot x$, the dot product. At exactly $z = 0$ the output here is 0; some books choose 1.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# A Neuron Computes **AND** and **OR**
+# 8 December 2025 Through the **Neuron**
 
-<div class="grid-2 mt-sm gap-md">
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⚙️ **The threshold rule as a neuron**
+
+$w_1 = -1$, $w_2 = 0$, $b = 3.8$:
+
+$$
+z = 3.8 - x_1 > 0 \quad\text{exactly when}\quad x_1 < 3.8
+$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **$x = (2.6,\ 0.85)$**
+
+<v-clicks>
+
+- $z = (-1)(2.6) + (0)(0.85) + 3.8$
+- $z = -2.6 + 0 + 3.8 = 1.2$
+- $\hat{y} = \text{step}(1.2) = 1$: frost
+
+</v-clicks>
+
+</div>
+
+</div>
+
+<div v-click class="card card-success card-glass pad-compact mt-md">
+
+✅ 06:00: −2.0 °C, so $y = 1$: right. On all 3646 evenings this neuron is right 3490 times, as the rule.
+
+</div>
+
+<!--
+**Do:** click through: each product, the sum, the step.
+**Say:** the humidity has weight 0, so this neuron does not look at it: it is the rule "below 3.8 °C".
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Neuron in **Python**
+
+```py {monaco-run} {autorun:false}
+def predict(x, w, b):
+    z = w[0] * x[0] + w[1] * x[1] + b
+    if z > 0:
+        return 1
+    return 0
+
+w = [-1.0, 0.0]                      # the rule "below 3.8 °C"
+b = 3.8
+print(predict([2.6, 0.85], w, b))    # 8 Dec 2025, 1: frost came
+print(predict([2.8, 0.81], w, b))    # 7 Dec 2025, 1: none came
+print(predict([5.4, 0.75], w, b))    # 1 Nov 2024, 0: frost came
+```
+
+<div class="note-text mt-sm">Inputs in a list <code>x</code>, the weights in a list <code>w</code>: <code>x[0]</code> is the temperature, <code>x[1]</code> the humidity. The last two evenings lie near 4 °C, where the clouds overlap: the neuron is wrong on both.</div>
+
+<!--
+**Do:** run it; then set `w = [-1.0, 4.0]` and `b = 0.6` and run again: 1, 1, 0.
+**Say:** three numbers and five lines of Python are the whole model so far.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Where the Output **Changes**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **Solve $z = 0$ for $x_1$**
+
+$$
+w_1 x_1 + w_2 x_2 + b = 0 \;\Longrightarrow\; x_1 = -\frac{b + w_2 x_2}{w_1}
+$$
+
+A straight line in the plane of $x_1$ and $x_2$: the **decision boundary**.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **A weight on the humidity: $w = (-1, 4)$, $b = 0.6$**
+
+<v-clicks>
+
+- $x_2 = 0.5$: $x_1 = -(0.6 + 2.0)/(-1) = 2.6$ °C
+- $x_2 = 1.0$: $x_1 = -(0.6 + 4.0)/(-1) = 4.6$ °C
+- 8 Dec 2025: $z = -2.6 + 3.4 + 0.6 = 1.4$, frost
+
+</v-clicks>
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+$w_1$ and $w_2$ set the direction of the line, $b$ shifts it. With $w_2 = 0$ it stands upright, at $x_1 = 3.8$ °C.
+
+</div>
+
+<!--
+**Say:** this neuron says frost below 2.6 °C on a dry evening and below 4.6 °C on a humid one.
+**Ask:** what happens to the line if $w_1$, $w_2$ and $b$ are all doubled? Nothing: $z = 0$ at the same places.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Decision Boundary Is a **Line**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📐 Shaded: $z > 0$, frost. Upright at 3.8 °C, 3490 evenings right; tilted by $w_2 = 4$, 3493: the humidity moves three evenings of 3646.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_boundary.svg">
+
+<!--
+**Say:** whatever its three numbers, a neuron cuts the plane in two with a straight line. That is all it can do.
+**Ask:** can any straight line put every cyan point on one side and every orange point on the other? No: the clouds overlap.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# One Neuron Computes **AND** and **OR**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
 
 <div>
 
 <div class="card card-primary card-glass pad-compact table-compact">
 
-## 🔌 **Weights set by hand: $\mathbf{w} = (1, 1)$**
+## 🔌 **$w = (1, 1)$, inputs 0 or 1**
 
-| $x_1$ | $x_2$ | $z$ with $b = -1.5$ | AND | $z$ with $b = -0.5$ | OR |
+| $x_1$ | $x_2$ | $z$, $b = -1.5$ | AND | $z$, $b = -0.5$ | OR |
 | --- | --- | --- | --- | --- | --- |
 | 0 | 0 | −1.5 | 0 | −0.5 | 0 |
 | 0 | 1 | −0.5 | 0 | 0.5 | 1 |
 | 1 | 0 | −0.5 | 0 | 0.5 | 1 |
 | 1 | 1 | 0.5 | 1 | 1.5 | 1 |
 
-The same weights give both gates. Only the bias differs: it sets how large the sum $x_1 + x_2$ must be.
-
-NOT needs one input: $w = -1$, $b = 0.5$ gives $z = 0.5$ for 0 and $z = -0.5$ for 1.
+The bias sets how large $x_1 + x_2$ must be.
 
 </div>
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-🧩 **XOR** is 1 when the two inputs differ: for (0, 1) and (1, 0). Find $\mathbf{w}$ and $b$.
+🧩 **XOR** is 1 when the inputs differ: (0, 1) and (1, 0). Find $w_1$, $w_2$ and $b$.
 
 </div>
 
@@ -290,211 +543,16 @@ NOT needs one input: $w = -1$, $b = 0.5$ gives $z = 0.5$ for 0 and $z = -0.5$ fo
 
 <div>
 
-<img class="fig" src="/figures/viz_perceptron_gates.svg" style="display:block;margin:0 auto;width:100%;">
+<img class="fig" src="/figures/viz_perceptron_gates.svg">
 
 </div>
 
 </div>
 
 <!--
-Speaker: these are the truth tables of Lecture 03, now computed by a weighted
-sum and a threshold. Let the room check one row of each. In the pictures the
-shaded side is where z is positive. Then the puzzle: one minute, collect two or
-three attempts and check one row of each aloud. Every attempt gets a row wrong.
-Leave it open. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Decision Boundary Is a **Line**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✏️ **Where the output changes**
-
-The output changes where $z = 0$:
-
-$$
-w_1 x_1 + w_2 x_2 + b = 0 \quad\Longrightarrow\quad x_2 = -\frac{w_1}{w_2}\,x_1 - \frac{b}{w_2}
-$$
-
-This is a straight line with slope $-w_1 / w_2$.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔢 **$\mathbf{w} = (3, 4)$, $b = -10$**
-
-$x_2 = -0.75\,x_1 + 2.5$. The line meets the axes at $x_2 = 2.5$ and at $x_1 = 3.33$.
-
-On one side $z > 0$ and the output is 1. On the other side $z < 0$ and the output is 0.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_line.svg" style="display:block;margin:0 auto;width:100%;">
-
-</div>
-
-</div>
-
-<!--
-Speaker: the neuron cuts the plane in two with a straight line. This is all it
-can do. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Weight Vector Is the **Normal**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⊥ **$\mathbf{w}$ is perpendicular to the line**
-
-Take two points $\mathbf{p}$ and $\mathbf{q}$ on the line:
-
-$$
-\begin{aligned}
-\mathbf{w} \cdot \mathbf{p} + b &= 0 \\
-\mathbf{w} \cdot \mathbf{q} + b &= 0 \\
-\text{subtract:}\quad \mathbf{w} \cdot (\mathbf{p} - \mathbf{q}) &= 0
-\end{aligned}
-$$
-
-$\mathbf{p} - \mathbf{q}$ is a direction along the line. Its dot product with $\mathbf{w}$ is zero, so $\mathbf{w}$ is perpendicular to the line.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## ➡️ **$\mathbf{w}$ points to the side of class 1**
-
-A step along $\mathbf{w}$ from $\mathbf{x}$ to $\mathbf{x} + t\,\mathbf{w}$ changes $z$ by $t\,\mathbf{w} \cdot \mathbf{w} = t\,\lVert \mathbf{w} \rVert^2$, which is positive.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_line.svg" style="display:block;margin:0 auto;width:100%;">
-
-</div>
-
-</div>
-
-<!--
-Speaker: check it on the picture. Along the line, 4 to the right means 3 down:
-the direction (4, -3). Its dot product with (3, 4) is 12 - 12 = 0. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The **Distance** of a Point from the Boundary
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📏 **Derivation**
-
-Go from the point $\mathbf{x}$ straight to the line, to $\mathbf{x}_0$. The way is along the unit vector $\mathbf{w} / \lVert \mathbf{w} \rVert$, with a length $d$:
-
-$$
-\mathbf{x} = \mathbf{x}_0 + d\,\frac{\mathbf{w}}{\lVert \mathbf{w} \rVert}
-$$
-
-Take the dot product with $\mathbf{w}$, add $b$, and use $\mathbf{w} \cdot \mathbf{x}_0 + b = 0$:
-
-$$
-\mathbf{w} \cdot \mathbf{x} + b = d\,\lVert \mathbf{w} \rVert \quad\Longrightarrow\quad d = \frac{z}{\lVert \mathbf{w} \rVert}
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔢 **$\mathbf{x} = (4, 2)$**
-
-$z = 12 + 8 - 10 = 10$ and $\lVert \mathbf{w} \rVert = \sqrt{9 + 16} = 5$, so $d = 2$. For $(1, 0.5)$: $z = -5$ and $d = -1$, on the other side.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_line.svg" style="display:block;margin:0 auto;width:100%;">
-
-</div>
-
-</div>
-
-<!--
-Speaker: z is the distance from the line, in units of the length of w, with a
-sign that says which side. The origin has z = b = -10, so it lies 2 from the
-line on the side of class 0. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# What $\mathbf{w}$ and $b$ **Do**
-
-<img class="fig" src="/figures/viz_perceptron_wb.svg" style="display:block;margin:0 auto;max-height:245px;">
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-The **direction** of $\mathbf{w}$ sets the direction of the line.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-$b$ shifts the line without turning it. The line lies $\lvert b \rvert / \lVert \mathbf{w} \rVert$ from the origin.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-Multiplying $\mathbf{w}$ and $b$ by 2 leaves the line where it is. Every $z$ doubles.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-With $n$ inputs the neuron has $n + 1$ parameters, and the boundary $z = 0$ is a plane or a hyperplane. $\mathbf{w}$ is still its normal and $z / \lVert \mathbf{w} \rVert$ the distance.
-
-</div>
-
-<!--
-Speaker: the line fixes the weights only up to a common factor. The step
-ignores that factor. (~2 min)
+**Say:** the truth tables of Lecture 3, computed by a weighted sum and a threshold. The same weights give both gates; only the bias differs.
+**Do:** one minute for the XOR puzzle; collect two or three attempts and check one row of each aloud. Every attempt gets a row wrong. Leave it open.
+(~3 min)
 -->
 
 ---
@@ -502,14 +560,56 @@ layout: section
 hideInToc: true
 ---
 
-# Rosenblatt's **Learning Rule**
+# Rosenblatt's Learning **Rule**
 
-The rule of 1958 finds the weights from labelled examples, one point at a time.
+The weights so far were set by hand. The rule of 1958 finds them from labelled examples, one at a time.
 
 <!--
-Speaker: the section has three parts. The rule and why it moves the line the
-right way. One complete run by hand. Then the theorem that says when the run
-ends. (~1 min)
+**Say:** the rule, one update with the numbers of a real evening, one pass over AND, then the rule on ten years of evenings.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why Not Try Every **Line**?
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔢 **One number: 201 tries**
+
+The threshold was found by trying every $c$ from −6 to 14 °C in steps of 0.1: 201 values, each scored on 3646 evenings.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 💥 **Three numbers: 8 million lines**
+
+<v-clicks>
+
+- $w_1$, $w_2$, $b$ on the same grid: $201^3 = 8\,120\,601$ lines
+- each scored on 3646 evenings: $3.0 \times 10^{10}$ values of $z$
+- ten numbers: $201^{10} = 1.1 \times 10^{23}$ lines
+
+</v-clicks>
+
+</div>
+
+</div>
+
+<div v-click class="card card-success card-glass pad-compact mt-md">
+
+✅ A learning rule never looks at most lines: it starts somewhere and moves the numbers a little, evening by evening, where the errors point.
+
+</div>
+
+<!--
+**Say:** three numbers already take about half an hour of plain Python on a laptop; ten would outlast the universe. A network has thousands of numbers, a language model billions.
+(~2 min)
 -->
 
 ---
@@ -520,10 +620,10 @@ hideInToc: true
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Take the points one after another. For each point compute $\hat{y}$, then change the weights, with $\eta$ the learning rate of Lecture 10:
+Take the evenings in turn. For each, compute $\hat{y}$; then change the numbers by the error $y - \hat{y}$, with a **learning rate** $\eta$:
 
 $$
-\mathbf{w} \leftarrow \mathbf{w} + \eta\,(y - \hat{y})\,\mathbf{x} \qquad\qquad b \leftarrow b + \eta\,(y - \hat{y})
+w_1 \leftarrow w_1 + \eta\,(y - \hat{y})\,x_1 \qquad w_2 \leftarrow w_2 + \eta\,(y - \hat{y})\,x_2 \qquad b \leftarrow b + \eta\,(y - \hat{y})
 $$
 
 </div>
@@ -534,43 +634,79 @@ $$
 
 ## 🔀 **Three cases**
 
-| $y$ | $\hat{y}$ | $y - \hat{y}$ | What happens |
+| $y$ | $\hat{y}$ | $y - \hat{y}$ | the numbers |
 | --- | --- | --- | --- |
-| equal | | 0 | nothing |
-| 1 | 0 | +1 | $\eta\,\mathbf{x}$ is added to $\mathbf{w}$, $\eta$ to $b$ |
-| 0 | 1 | −1 | $\eta\,\mathbf{x}$ is subtracted, $\eta$ from $b$ |
+| equal | | 0 | stay |
+| 1 | 0 | +1 | $w$ gains $\eta\,x$, $b$ gains $\eta$ |
+| 0 | 1 | −1 | $w$ loses $\eta\,x$, $b$ loses $\eta$ |
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## ✅ **Why this is the right direction**
+## ✅ **$z$ moves the right way**
 
-Compute $z$ for the same point with the new weights:
+For the same evening, after the update:
 
 $$
-\begin{aligned}
-z_{\text{new}} &= \bigl(\mathbf{w} + \eta\,(y - \hat{y})\,\mathbf{x}\bigr) \cdot \mathbf{x} + b + \eta\,(y - \hat{y}) \\
-&= z + \eta\,(y - \hat{y})\,\bigl(\lVert \mathbf{x} \rVert^2 + 1\bigr)
-\end{aligned}
+z_{\text{new}} = z + \eta\,(y - \hat{y})\,(x_1^2 + x_2^2 + 1)
 $$
 
-$z$ was too small: it rises. $z$ was too large: it falls.
+The bracket is positive: a frost evening called "no frost" gets a larger $z$.
 
 </div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-One pass through all points is an **epoch**. One update need not make its point right, and it can make another point wrong. The passes are repeated until a whole epoch goes by without an update.
 
 </div>
 
 <!--
-Speaker: derive the right card on the board. The bracket is never negative,
-so the sign of the change is the sign of y minus y-hat. With eta = 1 and the
-point (1, 1) the change of z is 2 + 1 = 3. (~3 min)
+**Say:** only a wrong evening changes anything. One pass over all evenings is an **epoch**.
+**If asked:** $\eta$ is the learning rate of Lecture 9's gradient descent. Started from zero weights, this rule draws the same lines for every $\eta$: each number is a multiple of $\eta$. With $\eta = 1$ it adds or subtracts $x$ itself.
+(~3 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Update, with **Numbers**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📅 **1 January 2016, the first evening**
+
+$x = (-4.5,\ 0.85)$; 06:00: −8.3 °C, so $y = 1$.
+
+Start: $w = (0, 0)$, $b = 0$, $\eta = 1$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+<v-clicks>
+
+- $z = 0 \cdot (-4.5) + 0 \cdot 0.85 + 0 = 0$, so $\hat{y} = 0$: wrong
+- $y - \hat{y} = +1$: $x$ is added to $w$, 1 to $b$
+- $w = (-4.5,\ 0.85)$, $b = 1$
+- $z_{\text{new}} = 20.25 + 0.72 + 1 = 21.97$: frost, right
+
+</v-clicks>
+
+</div>
+
+</div>
+
+<div v-click class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ One update need not be enough: on 10 January 2016, $x = (1.5,\ 0.89)$ with frost, $z$ rises from −4.99 to −0.95, still "no frost".
+
+</div>
+
+<!--
+**Do:** click through, each number said aloud.
+**Say:** $z_{\text{new}} = z + (x_1^2 + x_2^2 + 1) = 0 + 20.25 + 0.72 + 1$: the formula of the slide before. On 10 January the bracket is 4.04, too small to lift $z$ from −4.99 past 0.
+(~2 min)
 -->
 
 ---
@@ -581,13 +717,13 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-Start: $\mathbf{w} = (0, 0)$, $b = 0$, $\eta = 1$. Order of the points: (0, 0), (0, 1), (1, 0), (1, 1). Targets: 0, 0, 0, 1.
+Start: $w = (0, 0)$, $b = 0$, $\eta = 1$. The points in the order (0, 0), (0, 1), (1, 0), (1, 1); the labels 0, 0, 0, 1.
 
 </div>
 
 <div class="card card-primary card-glass pad-compact mt-sm table-compact">
 
-| Step | $\mathbf{x}$ | $y$ | $\mathbf{w}$ before | $b$ before | $z$ | $\hat{y}$ | $y - \hat{y}$ | $\mathbf{w}$ after | $b$ after |
+| Step | $x$ | $y$ | $w$ before | $b$ before | $z$ | $\hat{y}$ | $y - \hat{y}$ | $w$ after | $b$ after |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | (0, 0) | 0 | (0, 0) | 0 | 0 | 0 | 0 | (0, 0) | 0 |
 | 2 | (0, 1) | 0 | (0, 0) | 0 | 0 | 0 | 0 | (0, 0) | 0 |
@@ -602,144 +738,68 @@ Start: $\mathbf{w} = (0, 0)$, $b = 0$, $\eta = 1$. Order of the points: (0, 0), 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-Step 4 makes (1, 1) right: $z$ goes from 0 to $0 + (2 + 1) = 3$. It also makes the other three points wrong, and epoch 2 has to repair that.
+Step 4 makes (1, 1) right and the three other points wrong; epoch 2 repairs two of them. Four more epochs end at $w = (2, 1)$, $b = -2$: ten updates in all.
 
 </div>
 
 <!--
-Speaker: do steps 1 to 6 on the board with the room, each number said aloud.
-With all weights zero the neuron says 0 for everything, so the three points of
-class 0 are right by accident. (~4 min)
+**Do:** steps 1 to 6 on the board with the room, each number said aloud; then let the room do 7 and 8.
+**Say:** with all numbers zero the neuron says 0 everywhere, so the three points of class 0 are right by accident.
+(~4 min)
 -->
 
 ---
 hideInToc: true
----
-
-# AND by the Rule: Epochs **3 and 4**
-
-<div class="card card-primary card-glass pad-compact mt-sm table-compact">
-
-| Step | $\mathbf{x}$ | $y$ | $\mathbf{w}$ before | $b$ before | $z$ | $\hat{y}$ | $y - \hat{y}$ | $\mathbf{w}$ after | $b$ after |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 9 | (0, 0) | 0 | (2, 1) | 0 | 0 | 0 | 0 | (2, 1) | 0 |
-| 10 | (0, 1) | 0 | (2, 1) | 0 | 1 | 1 | **−1** | **(2, 0)** | **−1** |
-| 11 | (1, 0) | 0 | (2, 0) | −1 | 1 | 1 | **−1** | **(1, 0)** | **−2** |
-| 12 | (1, 1) | 1 | (1, 0) | −2 | −1 | 0 | **+1** | **(2, 1)** | **−1** |
-| 13 | (0, 0) | 0 | (2, 1) | −1 | −1 | 0 | 0 | (2, 1) | −1 |
-| 14 | (0, 1) | 0 | (2, 1) | −1 | 0 | 0 | 0 | (2, 1) | −1 |
-| 15 | (1, 0) | 0 | (2, 1) | −1 | 1 | 1 | **−1** | **(1, 1)** | **−2** |
-| 16 | (1, 1) | 1 | (1, 1) | −2 | 0 | 0 | **+1** | **(2, 2)** | **−1** |
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-Epochs 2 and 3 have three updates each, epoch 4 has two. The bias has fallen from 1 to −1: the line moves away from the origin, towards the corner (1, 1).
-
-</div>
-
-<!--
-Speaker: give the room steps 13 to 16 to do on paper, then show the rows. The
-number of updates per epoch is 1, 3, 3, 2 so far. It does not fall steadily.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# AND by the Rule: Epochs **5 and 6**
-
-<div class="card card-primary card-glass pad-compact mt-sm table-compact">
-
-| Step | $\mathbf{x}$ | $y$ | $\mathbf{w}$ before | $b$ before | $z$ | $\hat{y}$ | $y - \hat{y}$ | $\mathbf{w}$ after | $b$ after |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 17 | (0, 0) | 0 | (2, 2) | −1 | −1 | 0 | 0 | (2, 2) | −1 |
-| 18 | (0, 1) | 0 | (2, 2) | −1 | 1 | 1 | **−1** | **(2, 1)** | **−2** |
-| 19 | (1, 0) | 0 | (2, 1) | −2 | 0 | 0 | 0 | (2, 1) | −2 |
-| 20 | (1, 1) | 1 | (2, 1) | −2 | 1 | 1 | 0 | (2, 1) | −2 |
-| 21 | (0, 0) | 0 | (2, 1) | −2 | −2 | 0 | 0 | (2, 1) | −2 |
-| 22 | (0, 1) | 0 | (2, 1) | −2 | −1 | 0 | 0 | (2, 1) | −2 |
-| 23 | (1, 0) | 0 | (2, 1) | −2 | 0 | 0 | 0 | (2, 1) | −2 |
-| 24 | (1, 1) | 1 | (2, 1) | −2 | 1 | 1 | 0 | (2, 1) | −2 |
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-✅ Step 18 is the last update, the tenth. Epoch 6 goes through all four points without a change, so the run has ended: $\mathbf{w} = (2, 1)$, $b = -2$. The neuron computes AND.
-
-</div>
-
-<!--
-Speaker: ten updates in 24 steps. The result is not the hand-set (1, 1) and
--1.5 of the earlier slide. Many lines separate these four points, and the rule
-stops at the first one it reaches. (~2 min)
--->
-
----
-hideInToc: true
+class: fill
 ---
 
 # The Ten Updates as **Lines**
 
-<img class="fig" src="/figures/viz_perceptron_and_run.svg" style="display:block;margin:0 auto;max-height:325px;">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-Each panel shows the line **after** one update. The red ring marks the point that was wrong and caused it. The shaded side is where $\hat{y} = 1$.
+✏️ The line after each update; the red ring marks the point that was wrong. After the tenth, epoch 6 changes nothing: $w = (2, 1)$, $b = -2$ computes AND.
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
-
-⚠️ In the last panel the point (1, 0) lies exactly on the line: $z = 0$. The rule stops as soon as no point is wrong. It does not look for a line with room to spare.
-
-</div>
-
-</div>
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_and_run.svg">
 
 <!--
-Speaker: panel 1 has every point on the positive side: the line is outside the
-square. Follow the line as it turns and shifts until the corner (1, 1) is alone
-on its side. (~2 min)
+**Say:** in panel 1 every point is on the frost side: the line is outside the square. It turns and shifts until the corner (1, 1) is alone on its side.
+**Say:** the result is not the hand-set $w = (1, 1)$, $b = -1.5$: many lines separate these four points, and the rule stops at the first one it reaches. In the last panel (1, 0) lies exactly on the line, $z = 0$.
+(~2 min)
 -->
 
 ---
 hideInToc: true
+class: runner-side
 ---
 
-# The Rule in **Python**
-
-<div class="note-text mt-sm">
-
-`w @ x` is the dot product of two arrays.
-
-</div>
+# The Rule in Python, **Live**
 
 ```py {monaco-run} {autorun:false}
-import numpy as np
-X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-y = np.array([0, 0, 0, 1])                    # AND
-w, b, eta = np.zeros(2), 0.0, 1.0
+def predict(x, w, b):
+    if w[0] * x[0] + w[1] * x[1] + b > 0:
+        return 1
+    return 0
+
+xs = [[0, 0], [0, 1], [1, 0], [1, 1]]
+ys = [0, 0, 0, 1]                    # AND
+w = [0, 0]
+b = 0
 for epoch in range(1, 7):
-    updates = 0
-    for x, target in zip(X, y):
-        y_hat = int(w @ x + b > 0)            # the neuron
-        w = w + eta * (target - y_hat) * x    # the rule
-        b = b + eta * (target - y_hat)
-        updates += int(y_hat != target)
-    print("epoch", epoch, " w", w, " b", b, " updates", updates)
+    for i in range(4):
+        error = ys[i] - predict(xs[i], w, b)
+        w[0] = w[0] + error * xs[i][0]
+        w[1] = w[1] + error * xs[i][1]
+        b = b + error
+    print("epoch", epoch, " w", w, " b", b)
 ```
 
 <!--
-Speaker: run it. Six lines of output, one per epoch: 1, 3, 3, 2, 1 and 0
-updates, and at the end w [2. 1.] and b -2.0. Then change y to [0, 1, 1, 1],
-which is OR, and run again: four updates, w [1. 1.] and b 0.0. The two lines
-marked "the rule" are the formula of the slide The Rule, nothing more. (~3 min)
+**Do:** run it: after epoch 1 `w [1, 1]`, `b 1`; after epochs 5 and 6 `w [2, 1]`, `b -2`.
+**Do:** change `ys` to `[0, 1, 1, 1]`, OR, and run again: from epoch 3 on `w [1, 1]`, `b 0`.
+**Say:** the three lines in the inner loop are the rule of the slide, nothing more. `range(1, 7)` counts 1 to 6, `range(4)` 0 to 3.
+(~2 min)
 -->
 
 ---
@@ -748,297 +808,102 @@ hideInToc: true
 
 # Linearly **Separable**
 
-<img class="fig" src="/figures/viz_perceptron_separable.svg" style="display:block;margin:0 auto;max-height:265px;">
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📖 **Definition**
-
-A set of labelled points is **linearly separable** if some $\mathbf{w}$ and $b$ give $z_i > 0$ for every point with $y_i = 1$ and $z_i < 0$ for every point with $y_i = 0$. In the plane: a straight line with all of class 1 on one side and all of class 0 on the other.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ↔️ **The margin $\gamma$**
-
-The distance of the closest point from a separating line. For the line on the left it is 0.92. The 200 points on the right are not separable: the best line found leaves 15 on the wrong side.
-
-</div>
-
-</div>
-
-<!--
-Speaker: AND and OR are separable. The four points were separated by hand
-earlier. The data of this lecture are not: the clouds overlap. The margin
-measures how much room a separable set leaves. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Perceptron **Convergence Theorem**
-
 <div class="card card-info card-glass pad-compact mt-sm">
 
-Write the bias as a weight on a constant input 1: $\tilde{\mathbf{x}} = (1, x_1, x_2)$ and $\tilde{\mathbf{w}} = (b, w_1, w_2)$ give $z = \tilde{\mathbf{w}} \cdot \tilde{\mathbf{x}}$. Write the targets as signs: $t_i = 2 y_i - 1$ is $+1$ or $-1$.
+📖 Labelled points are **linearly separable** when some line has every point of class 1 on one side and every point of class 0 on the other.
 
 </div>
 
 <div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📜 **Assumed**
-
-1. The training set is finite
-2. It is separable with a margin: there is a vector $\tilde{\mathbf{w}}^*$ of length 1 and a number $\gamma > 0$ with $t_i\,(\tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{x}}_i) \ge \gamma$ for every point
-3. No point is longer than $R$: $\lVert \tilde{\mathbf{x}}_i \rVert \le R$
-4. The rule starts from $\tilde{\mathbf{w}} = 0$
-
-</div>
 
 <div class="card card-success card-glass pad-compact">
 
-## ✅ **Then**
+## ✅ **AND: yes**
 
-The rule makes at most
-
-$$
-k \le \frac{R^2}{\gamma^2}
-$$
-
-updates, in any order of the points and for any $\eta > 0$. After the last update every point is classified correctly.
+$w = (1, 1)$, $b = -1.5$ puts (1, 1) alone on its side. On separable points the rule stops after a finite number of updates: the **convergence theorem** (Novikoff, 1962).
 
 </div>
 
-</div>
+<div class="card card-warning card-glass pad-compact">
 
-<div class="note-text mt-sm">
+## 🚫 **The evenings: no**
 
-Bounded is the number of **updates**. The theorem is silent on sets that are not separable. This form of the bound is due to A. Novikoff, 1962.
-
-</div>
-
-<!--
-Speaker: read the four assumptions slowly. The theorem counts mistakes, not
-epochs and not seconds. A wide margin and short points give a small bound.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Proof, Part 1: Each Update Turns $\tilde{\mathbf{w}}$ **Towards $\tilde{\mathbf{w}}^*$**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-An update happens only at a point that is wrong, and there $y - \hat{y} = t$. So every update is $\;\tilde{\mathbf{w}} \leftarrow \tilde{\mathbf{w}} + \eta\,t\,\tilde{\mathbf{x}}$.
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📈 **One update**
-
-Take the dot product with $\tilde{\mathbf{w}}^*$:
-
-$$
-\tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}}_{\text{new}} = \tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}} + \eta\,t\,(\tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{x}})
-$$
-
-By assumption 2 the last bracket times $t$ is at least $\gamma$:
-
-$$
-\tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}}_{\text{new}} \ge \tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}} + \eta\,\gamma
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔁 **After $k$ updates**
-
-The start is $\tilde{\mathbf{w}} = 0$, and each update adds at least $\eta\,\gamma$:
-
-$$
-\tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}}_k \ge k\,\eta\,\gamma
-$$
-
-The part of $\tilde{\mathbf{w}}$ that points along the solution grows at least in proportion to the number of updates.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-**In the AND run**, with $\tilde{\mathbf{w}}^* = (-3, 2, 2) / \sqrt{17}$, $\gamma = 0.243$ and $\eta = 1$: after the first update $\tilde{\mathbf{w}} = (1, 1, 1)$ and $\tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}} = 1 / \sqrt{17} = 0.243$. After the tenth $\tilde{\mathbf{w}} = (-2, 2, 1)$ and $\tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}} = 12 / \sqrt{17} = 2.91$, above $10\,\gamma = 2.43$.
-
-</div>
-
-<!--
-Speaker: check y - y-hat = t for the two wrong cases. Target 1 and output 0
-give +1. Target 0 and output 1 give -1. The solution vector w-star is not
-known to the rule. It appears only in the proof. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# Proof, Part 2: The Length Grows **Slowly**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📏 **One update**
-
-The squared length after an update:
-
-$$
-\lVert \tilde{\mathbf{w}}_{\text{new}} \rVert^2 = \lVert \tilde{\mathbf{w}} \rVert^2 + 2\,\eta\,t\,(\tilde{\mathbf{w}} \cdot \tilde{\mathbf{x}}) + \eta^2\,\lVert \tilde{\mathbf{x}} \rVert^2
-$$
-
-The point was wrong, so $t\,(\tilde{\mathbf{w}} \cdot \tilde{\mathbf{x}}) \le 0$: the middle term is not positive. By assumption 3 the last term is at most $\eta^2 R^2$:
-
-$$
-\lVert \tilde{\mathbf{w}}_{\text{new}} \rVert^2 \le \lVert \tilde{\mathbf{w}} \rVert^2 + \eta^2 R^2
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔁 **After $k$ updates**
-
-$$
-\lVert \tilde{\mathbf{w}}_k \rVert^2 \le k\,\eta^2 R^2 \quad\Longrightarrow\quad \lVert \tilde{\mathbf{w}}_k \rVert \le \sqrt{k}\;\eta\,R
-$$
-
-The length grows at most like $\sqrt{k}$.
-
-**Wrong means $t\,z \le 0$.** A point of class 1 is wrong when $z \le 0$, with $t = 1$. A point of class 0 is wrong when $z > 0$, with $t = -1$.
-
-</div>
-
-</div>
-
-<div class="card card-accent card-glass pad-compact mt-md">
-
-**In the AND run** the longest point is $(1, 1, 1)$, so $R^2 = 3$. After the first update $\lVert \tilde{\mathbf{w}} \rVert^2 = 3$, equal to the bound $1 \cdot 3$. After the tenth, $\tilde{\mathbf{w}} = (-2, 2, 1)$ has $\lVert \tilde{\mathbf{w}} \rVert^2 = 9$, below $10 \cdot 3 = 30$.
-
-</div>
-
-<!--
-Speaker: the first line is (a + b) squared for vectors. The whole proof rests
-on the sign of the middle term: the rule changes the weights only when the
-point is on the wrong side, and exactly then the term cannot be positive.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# Proof, Part 3: The Two Bounds **Meet**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🤝 **Combine**
-
-A dot product is at most the product of the lengths, and $\tilde{\mathbf{w}}^*$ has length 1:
-
-$$
-k\,\eta\,\gamma \;\le\; \tilde{\mathbf{w}}^* \cdot \tilde{\mathbf{w}}_k \;\le\; \lVert \tilde{\mathbf{w}}_k \rVert \;\le\; \sqrt{k}\;\eta\,R
-$$
-
-Divide the two ends by $\sqrt{k}\,\eta\,\gamma$:
-
-$$
-\sqrt{k} \le \frac{R}{\gamma} \quad\Longrightarrow\quad k \le \frac{R^2}{\gamma^2}
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔢 **For AND**
-
-$\gamma^2 = 1/17$ and $R^2 = 3$: the bound is $3 \cdot 17 = 51$ updates. The run needed 10.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_proof.svg" style="display:block;margin:0 auto;width:100%;">
-
-<div class="note-text mt-sm">
-
-The markers are the ten updates of the run, with $\eta = 1$. They stay between the two bounds.
-
-</div>
+A frost evening at 7.8 °C (30 Sep 2017), an evening without frost at −0.4 °C (15 Feb 2016), and 824 evenings between 0 and 6 °C of both kinds.
 
 </div>
 
 </div>
 
 <!--
-Speaker: a quantity that grows like k cannot stay below one that grows like
-the square root of k for ever. Where the two curves cross, the updates must
-have ended. What is left out: that this w-star has the largest margin of all,
-which was found numerically. Any separating w-star gives a valid bound. (~3 min)
+**Say:** the theorem also says how many updates at most; its proof, three lines of vectors, is for the curious.
+**Ask:** with frost and no frost mixed at every temperature from 0 to 6 °C, can a line have all frost evenings on one side? No line can.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Rule on 2551 Evenings Never **Stops**
+
+<div class="card card-warning card-glass pad-compact mt-sm">
+
+⚠️ The evenings of 2016 to 2022, in the order of the log, from zero weights. After each pass: 95.2 %, 33.3 %, 92.3 %, 88.6 %, 95.2 % right. In 30 epochs every pass makes 158 to 176 updates.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_rule_evenings.svg">
+
+<!--
+**Say:** the clouds overlap: no line has every evening on its side, so some evening is always wrong and the rule always moves. After epoch 2 the line has left the clouds: every evening is "frost", 33.3 %, worse than "never frost".
+**If asked:** when one line does separate the classes, the rule stops after a finite number of updates: the convergence theorem, with its proof, for the curious.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# What the Theorem Does **Not** Say
-
-<img class="fig" src="/figures/viz_perceptron_rule_overlap.svg" style="display:block;margin:0 auto;max-height:290px;">
+# What the Rule Does Not **Give**
 
 <div class="grid-3 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact">
 
-**Not separable: no end.** On the 200 points the rule makes 16 to 24 updates in every epoch, for 100 epochs.
+## 🔁 **An end**
+
+On overlapping classes it never stops. Where it is stopped decides the line: 95.2 % after the first pass, 33.3 % after the second.
 
 </div>
 
 <div class="card card-primary card-glass pad-compact">
 
-**No best line.** The rule stops at the first line without errors. Which one depends on the start and the order.
+## 📏 **A best line**
+
+On separable points it stops at the first line without errors: for AND, $(2, 1)$ and −2, a line that touches (1, 0).
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-**No degree of belief.** The output is 0 or 1, as far from the line as next to it.
+## 🎲 **How sure**
+
+The output is 1 or 0: an evening at 3.7 °C and one at −10 °C both get 1.
 
 </div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Rosenblatt wrote the rule down; he did not derive it. Why the error times the input?
 
 </div>
 
 <!--
-Speaker: the same rule, the points in a shuffled order, 100 epochs. After each
-epoch between 14 and 26 points are on the wrong side, and the line of epoch 98
-is not the line of epoch 100. Real data overlap. One more thing is open:
-Rosenblatt wrote the rule down, he did not derive it. Why the error times the
-input? (~2 min)
+**Say:** three gaps, and one question. A smooth output in place of the step closes all three and answers the question.
+(~2 min)
 -->
 
 ---
@@ -1048,64 +913,107 @@ hideInToc: true
 
 # From the Step to the **Sigmoid**
 
-On the 200 overlapping points Rosenblatt's rule never stops, and its output is only 0 or 1. Lecture 10 minimised a loss by following its slope, and the step has none. A smooth function in its place gives one, and turns the output into a probability.
+A smooth output: a probability, a loss with a slope everywhere, and an update that follows from it.
 
 <!--
-Speaker: one change to the neuron, and everything of Lecture 10 becomes
-available. (~1 min)
+**Say:** one change to the neuron, and the method of Lecture 9 applies: a likelihood, a loss, its slope, a step downhill.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Counting Errors Gives No **Slope**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+📉 With $w = (-1, 0)$ the bias $b$ is the threshold. Wrong evenings: flat between jumps, no slope to follow. The cross-entropy: a slope at every $b$, lowest at $b = 3.97$.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_step_loss.svg">
+
+<!--
+**Say:** Lecture 9 moved a parameter against the slope of its loss. A staircase has no slope: between two jumps a small change of $b$ changes nothing.
+**If asked:** the inset zooms into 2.5 to 5 °C: the count jumps only where an evening's temperature lies, and is flat in between.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Gradient Descent Needs a **Slope**
+# Frost by Counting, per **Degree**
 
-<img class="fig" src="/figures/viz_perceptron_step_loss.svg" style="display:block;margin:0 auto;max-height:300px;">
+<div class="grid-2 mt-sm gap-md">
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-primary card-glass pad-compact table-compact">
 
-<div class="card card-warning card-glass pad-compact">
+## 🔢 **All 3646 evenings, by the temperature at 18:00**
 
-**Counting errors.** Lecture 10: $\theta \leftarrow \theta - \eta\,\nabla(\text{loss})$. The number of errors changes only when the line crosses a point. Between the jumps its slope is zero, and a slope of zero gives no direction.
+| 18:00 | Evenings | Frost | Share |
+| --- | --- | --- | --- |
+| −1 to 0 °C | 152 | 151 | 0.99 |
+| 0 to 1 °C | 156 | 151 | 0.97 |
+| 1 to 2 °C | 148 | 139 | 0.94 |
+| 2 to 3 °C | 155 | 134 | 0.86 |
+| 3 to 4 °C | 134 | 83 | 0.62 |
+| 4 to 5 °C | 121 | 39 | 0.32 |
+| 5 to 6 °C | 110 | 22 | 0.20 |
+| 6 to 7 °C | 98 | 10 | 0.10 |
+| 7 to 8 °C | 105 | 2 | 0.02 |
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div>
 
-**A smooth loss.** The curve on the right is computed on the same 200 points. It has a slope at every $b$, and one lowest point, at $b = -3.99$.
+<div class="card card-secondary card-glass pad-compact">
+
+## 📉 **No jump at 3.8 °C**
+
+The share falls smoothly, from 0.99 to 0.02 over eight degrees. Between 3 and 4 °C, 83 of 134 evenings froze: P(frost) = 0.62.
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+A step says 1 or 0. The evenings say "62 % of the time".
+
+</div>
 
 </div>
 
 </div>
 
 <!--
-Speaker: both curves are along one parameter, the bias, with the weights fixed
-at (2, 2). The left curve is what the step gives. (~2 min)
+**Say:** the conditional probability of Lecture 8, by counting: P(frost | 3 to 4 °C) = 83/134. A smooth curve through these shares is what the neuron should give.
+(~2 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # The **Sigmoid**
 
-<div class="grid-2 mt-sm gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md">
 
 <div>
 
 <div class="card card-primary card-glass pad-compact">
 
-## 〰️ **Definition**
+## 〰️ **A smooth step**
 
 $$
-\sigma(z) = \frac{1}{1 + e^{-z}}
+\text{sigmoid}(z) = \frac{1}{1 + e^{-z}}
 $$
 
-- Between 0 and 1 for every $z$
-- $\sigma(0) = 0.5$
-- $\sigma(-z) = 1 - \sigma(z)$
-- For large $\lvert z \rvert$ it agrees with the step
+- between 0 and 1 for every $z$
+- $\text{sigmoid}(0) = 0.5$
+- far from 0, the step
 
 </div>
 
@@ -1113,13 +1021,7 @@ $$
 
 | $z$ | −4 | −2 | −1 | 0 | 1 | 2 | 4 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| $\sigma(z)$ | 0.018 | 0.119 | 0.269 | 0.5 | 0.731 | 0.881 | 0.982 |
-
-</div>
-
-<div class="note-text mt-sm">
-
-In this lecture $\sigma$ is the sigmoid. It is not a standard deviation.
+| sigmoid | 0.018 | 0.119 | 0.269 | 0.5 | 0.731 | 0.881 | 0.982 |
 
 </div>
 
@@ -1127,68 +1029,16 @@ In this lecture $\sigma$ is the sigmoid. It is not a standard deviation.
 
 <div>
 
-<img class="fig" src="/figures/viz_perceptron_sigmoid.svg" style="display:block;margin:0 auto;max-height:400px;">
+<img class="fig" src="/figures/viz_perceptron_sigmoid.svg">
 
 </div>
 
 </div>
 
 <!--
-Speaker: compute sigma of 2 on the board: e to the minus 2 is 0.135, and 1
-over 1.135 is 0.881. The symmetry gives sigma of minus 2 as 0.119 without a
-calculator. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Derivative of the **Sigmoid**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✏️ **Chain rule**
-
-Write $\sigma = u^{-1}$ with $u = 1 + e^{-z}$:
-
-$$
-\begin{aligned}
-\sigma'(z) &= -u^{-2} \cdot \frac{du}{dz} = -u^{-2} \cdot (-e^{-z}) \\[4pt]
-&= \frac{e^{-z}}{(1 + e^{-z})^2} \\[4pt]
-&= \frac{1}{1 + e^{-z}} \cdot \frac{e^{-z}}{1 + e^{-z}}
-\end{aligned}
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🧩 **The second factor**
-
-$$
-1 - \sigma(z) = \frac{1 + e^{-z} - 1}{1 + e^{-z}} = \frac{e^{-z}}{1 + e^{-z}}
-$$
-
-So the derivative needs no exponential of its own:
-
-$$
-\sigma'(z) = \sigma(z)\,\bigl(1 - \sigma(z)\bigr)
-$$
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-$\sigma'(0) = 0.5 \cdot 0.5 = 0.25$, the largest value. $\sigma'(2) = 0.881 \cdot 0.119 = 0.105$. $\sigma'(4) = 0.018$. The slope is never zero, and it is small where the neuron is sure.
-
-</div>
-
-<!--
-Speaker: do it on the board in these four lines. (~3 min)
+**Do:** compute sigmoid(1.2) on the board: $e^{-1.2} = 0.301$, and $1/1.301 = 0.769$.
+**Say:** σ is the standard deviation in this course, so the sigmoid keeps its name in the formulas.
+(~2 min)
 -->
 
 ---
@@ -1197,173 +1047,46 @@ hideInToc: true
 
 # The Output Is a **Probability**
 
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🎲 **The model**
-
-$$
-\hat{y} = \sigma(\mathbf{w} \cdot \mathbf{x} + b) = P(y = 1 \mid \mathbf{x})
-$$
-
-The output is read as the probability that the point belongs to class 1. Class 0 has probability $1 - \hat{y}$.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 📐 **What $z$ means now**
-
-Solve $\hat{y} = 1/(1 + e^{-z})$ for $z$:
-
-$$
-z = \ln \frac{\hat{y}}{1 - \hat{y}}
-$$
-
-$z$ is the logarithm of the odds. The model says that it is linear in the inputs. $\hat{y} > 0.5$ exactly when $z > 0$: the boundary is the same line as before.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_probmap.svg" style="display:block;margin:0 auto;max-height:400px;">
-
-</div>
-
-</div>
-
-<!--
-Speaker: on the line the neuron says 0.5. Since z is the distance times the
-length of w, the lines of equal probability are parallel to the boundary. Here
-the length of w is 3.08, so the output goes from 0.12 to 0.88 over a distance
-of 4 / 3.08 = 1.3. Doubling w and b keeps the line and halves that distance:
-with the sigmoid the common factor of the weights matters. Statisticians call
-this model logistic regression. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# Where the Sigmoid **Comes From**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 🔔 **Two Gaussian classes**
-
-One input. Class 0 is Gaussian around $\mu_0$, class 1 around $\mu_1$, both of width 1 and equally frequent. Bayes' theorem of Lecture 09:
-
-$$
-P(1 \mid x) = \frac{p(x \mid 1)}{p(x \mid 1) + p(x \mid 0)} = \frac{1}{1 + \dfrac{p(x \mid 0)}{p(x \mid 1)}}
-$$
-
-The ratio of two Gaussians of equal width is
-
-$$
-\frac{p(x \mid 0)}{p(x \mid 1)} = e^{-\frac{(x - \mu_0)^2}{2} + \frac{(x - \mu_1)^2}{2}} = e^{-z}
-$$
-
-with $z = (\mu_1 - \mu_0)\,x - \tfrac{1}{2}(\mu_1^2 - \mu_0^2)$.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_posterior.svg" style="display:block;margin:0 auto;max-height:330px;">
-
-<div class="card card-success card-glass pad-compact mt-sm">
-
-The squares of $x$ cancel, so $z$ is linear in $x$ and $P(1 \mid x) = \sigma(z)$ exactly. For $\mu_0 = 0$, $\mu_1 = 2$: $z = 2x - 2$.
-
-</div>
-
-</div>
-
-</div>
-
-<!--
-Speaker: the sigmoid is not an arbitrary smooth step. For two Gaussian clouds
-of the same width it is the exact answer, with a weight equal to the distance
-of the centres. The 200 points of this lecture are such clouds in two
-dimensions: there the exact weights are (2, 2) and the bias is -4. (~3 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# The Loss: From Likelihood to **Cross-Entropy**
-
-The output is now a probability, so every label has one, and the 200 labels have a likelihood. Lecture 10 turned the Gaussian likelihood into $\chi^2$. The same three steps, applied to labels that are 0 or 1, give the loss of the logistic neuron and its gradient.
-
-<!--
-Speaker: this is the centre of the lecture. Nothing in it is chosen for
-convenience: the loss follows from the model, and the gradient follows from the
-loss. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# The Likelihood of **One Point**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-The recipe of Lecture 10: write the likelihood of the data, take $-\ln$, minimise. For Gaussian errors $-2\ln$ of the likelihood was $\chi^2$ plus a constant. A label is not a number with a Gaussian error. It is one of two outcomes.
-
-</div>
-
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🎲 **The Bernoulli distribution**
-
-A variable that is 1 with probability $\hat{y}$ and 0 with probability $1 - \hat{y}$. It is the binomial distribution of Lecture 09 with one trial.
-
-Both cases in one formula:
+## 🎲 **The logistic neuron**
 
 $$
-P(y) = \hat{y}^{\,y}\,(1 - \hat{y})^{1 - y}
+\hat{y} = \text{sigmoid}(w_1 x_1 + w_2 x_2 + b)
 $$
+
+$\hat{y}$ is read as P(frost | $x$). Above 0.5 exactly when $z > 0$: the same line as the step.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🔍 **Check both cases**
+## 🔢 **$w = (-1, 0)$, $b = 3.8$, December 2025**
 
-- $y = 1$: $\;\hat{y}^1 (1 - \hat{y})^0 = \hat{y}$
-- $y = 0$: $\;\hat{y}^0 (1 - \hat{y})^1 = 1 - \hat{y}$
+<v-clicks>
 
-With $\hat{y} = 0.9$: a point of class 1 has probability 0.9, a point of class 0 has 0.1.
+- 6 Dec, 1.1 °C: $z = 2.7$, $\hat{y} = 0.94$
+- 7 Dec, 2.8 °C: $z = 1.0$, $\hat{y} = 0.73$
+- 8 Dec, 2.6 °C: $z = 1.2$, $\hat{y} = 0.77$
+- 9 Dec, 0.4 °C: $z = 3.4$, $\hat{y} = 0.97$
+
+</v-clicks>
 
 </div>
 
 </div>
 
-<div class="note-text mt-sm">
+<div v-click class="card card-info card-glass pad-compact mt-md">
 
-$P(y)$ is the probability that the neuron gives to the label the point really has. A good neuron makes it large for every point.
+06:00 the next morning: +0.4 °C after the 6th and +0.1 °C after the 7th, no frost; −2.0 °C after the 8th and −4.8 °C after the 9th, frost.
 
 </div>
 
 <!--
-Speaker: the formula looks artificial and is only bookkeeping. Anything to the
-power 0 is 1. Ask the room for P when y-hat is 0.2 and the label is 0: 0.8.
+**Say:** the step said 1 for all four. The sigmoid says how sure: 0.94 for the 6th, which did not freeze.
+**If asked:** P(frost | $x$) reads "the probability of frost given the inputs", as the conditional probabilities counted in Lecture 8. Statisticians call this model logistic regression.
 (~2 min)
 -->
 
@@ -1371,224 +1094,33 @@ power 0 is 1. Ask the room for P when y-hat is 0.2 and the label is 0: 0.8.
 hideInToc: true
 ---
 
-# The Likelihood of **All Points**
-
-<div class="card card-primary card-glass pad-compact mt-sm">
-
-**Step 1.** The points are independent, so the probabilities multiply. The likelihood is written $\mathcal{L}$ here, and $L$ is kept for the loss:
-
-$$
-\mathcal{L}(\mathbf{w}, b) = \prod_{i=1}^{N} \hat{y}_i^{\,y_i}\,(1 - \hat{y}_i)^{1 - y_i} \qquad \text{with } \hat{y}_i = \sigma(\mathbf{w} \cdot \mathbf{x}_i + b)
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-**Step 2.** The logarithm turns the product into a sum and the exponents into factors:
-
-$$
--\ln \mathcal{L} = -\sum_{i=1}^{N} \Bigl[\, y_i \ln \hat{y}_i + (1 - y_i) \ln (1 - \hat{y}_i) \Bigr]
-$$
-
-</div>
-
-<div class="card card-success card-glass pad-compact mt-md">
-
-**The loss** is this sum divided by $N$, the mean over the points. It is called the **cross-entropy**:
-
-$$
-L(\mathbf{w}, b) = -\frac{1}{N} \sum_{i=1}^{N} \Bigl[\, y_i \ln \hat{y}_i + (1 - y_i) \ln (1 - \hat{y}_i) \Bigr]
-$$
-
-</div>
-
-<!--
-Speaker: dividing by N does not move the minimum. It makes the loss of 200
-points comparable with the loss of 2000. Of the two terms in the bracket, only
-one is non-zero for each point. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# What the Loss **Charges**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 1️⃣ **One point**
-
-$$
-\ell = \begin{cases} -\ln \hat{y} & \text{if } y = 1 \\ -\ln (1 - \hat{y}) & \text{if } y = 0 \end{cases}
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md table-compact">
-
-## 🔢 **A point of class 1**
-
-| $\hat{y}$ | 0.99 | 0.9 | 0.5 | 0.1 | 0.01 |
-| --- | --- | --- | --- | --- | --- |
-| $\ell$ | 0.010 | 0.105 | 0.693 | 2.303 | 4.605 |
-
-- Right and sure costs almost nothing
-- Undecided costs $\ln 2 = 0.693$
-- Wrong and sure costs most, without limit
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_cross_entropy.svg" style="display:block;margin:0 auto;width:100%;">
-
-</div>
-
-</div>
-
-<!--
-Speaker: every factor of 10 in the probability given to the true label adds
-2.3 to the loss. A neuron that says 0.01 for a point of class 1 has claimed
-that such a point occurs once in a hundred. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Loss of Four Points, **by Hand**
-
-<div class="note-text mt-sm">
-
-A neuron with $\mathbf{w} = (1, 1)$ and $b = -2$, and four labelled points.
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-sm table-compact">
-
-| $\mathbf{x}$ | $y$ | $z = x_1 + x_2 - 2$ | $\hat{y} = \sigma(z)$ | $P(y)$ | $\ell = -\ln P(y)$ |
-| --- | --- | --- | --- | --- | --- |
-| (0, 0.5) | 0 | −1.5 | 0.182 | 0.818 | 0.201 |
-| (1, 2) | 1 | 1 | 0.731 | 0.731 | 0.313 |
-| (3, 1.5) | 1 | 2.5 | 0.924 | 0.924 | 0.079 |
-| (0.5, 1) | 1 | −0.5 | 0.378 | 0.378 | 0.974 |
-
-</div>
+# The Probability of What **Happened**
 
 <div class="grid-2 mt-md gap-md">
 
-<div class="card card-secondary card-glass pad-compact">
-
-**Likelihood:** $0.818 \cdot 0.731 \cdot 0.924 \cdot 0.378 = 0.209$
-
-**Loss:** $(0.201 + 0.313 + 0.079 + 0.974) / 4 = 0.392$
-
-Check: $-\ln 0.209 = 1.568 = 4 \cdot 0.392$.
-
-</div>
-
-<div class="card card-info card-glass pad-compact">
-
-The fourth point is on the wrong side of the line, and it alone gives 62 % of the loss. For the first point $P(y)$ is $1 - \hat{y}$, because its label is 0.
-
-</div>
-
-</div>
-
-<!--
-Speaker: let the room compute the row of (1, 2): z = 1, sigma of 1 is 0.731
-from the table of the sigmoid, minus the logarithm is 0.313. With all weights
-zero every y-hat would be 0.5 and the loss ln 2 = 0.693. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Gradient, Part 1: The **Chain**
-
-<div class="card card-info card-glass pad-compact mt-sm">
-
-Gradient descent needs $\partial L / \partial w_1$, $\partial L / \partial w_2$ and $\partial L / \partial b$. The loss is a mean over the points, so it is enough to differentiate the loss $\ell$ of one point.
-
-</div>
-
-<div class="card card-primary card-glass pad-compact mt-md">
-
-## 🔗 **Three functions, one inside the other**
-
-$$
-w_j \;\longrightarrow\; z = \mathbf{w} \cdot \mathbf{x} + b \;\longrightarrow\; \hat{y} = \sigma(z) \;\longrightarrow\; \ell = -\bigl[\, y \ln \hat{y} + (1 - y) \ln (1 - \hat{y}) \bigr]
-$$
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## ⛓️ **The chain rule**
-
-$$
-\frac{\partial \ell}{\partial w_j} = \frac{\partial \ell}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial z} \cdot \frac{\partial z}{\partial w_j}
-$$
-
-Three factors, each the derivative of one arrow.
-
-</div>
-
-<!--
-Speaker: a weight acts on the loss only through z, and z only through y-hat.
-The same chain for the bias, with the last factor changed. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# The Gradient, Part 2: The **Three Factors**
-
-<div class="grid-3 mt-md gap-md">
-
 <div class="card card-primary card-glass pad-compact">
 
-## 1️⃣ **Loss by output**
+## 🎲 **One evening: frost with probability $\hat{y}$**
 
 $$
-\begin{aligned}
-\frac{\partial \ell}{\partial \hat{y}} &= -\frac{y}{\hat{y}} + \frac{1 - y}{1 - \hat{y}} \\[6pt]
-&= \frac{\hat{y} - y}{\hat{y}\,(1 - \hat{y})}
-\end{aligned}
+P(y) = \hat{y}^{\,y}\,(1 - \hat{y})^{\,1 - y}
 $$
+
+- $y = 1$: $\hat{y}^1 (1 - \hat{y})^0 = \hat{y}$
+- $y = 0$: $\hat{y}^0 (1 - \hat{y})^1 = 1 - \hat{y}$
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact table-compact">
 
-## 2️⃣ **Output by sum**
+## 🔢 **6 to 9 December 2025**
 
-The derivative of the sigmoid:
-
-$$
-\frac{\partial \hat{y}}{\partial z} = \hat{y}\,(1 - \hat{y})
-$$
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-## 3️⃣ **Sum by weight**
-
-$z = w_1 x_1 + w_2 x_2 + b$, so
-
-$$
-\frac{\partial z}{\partial w_j} = x_j \qquad \frac{\partial z}{\partial b} = 1
-$$
+| Evening | $\hat{y}$ | $y$ | $P(y)$ |
+| --- | --- | --- | --- |
+| 6 Dec | 0.937 | 0 | 0.063 |
+| 7 Dec | 0.731 | 0 | 0.269 |
+| 8 Dec | 0.769 | 1 | 0.769 |
+| 9 Dec | 0.968 | 1 | 0.968 |
 
 </div>
 
@@ -1596,602 +1128,560 @@ $$
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-## 🔍 **The first factor, term by term**
-
-$\ell = -y \ln \hat{y} - (1 - y) \ln (1 - \hat{y})$, and the derivative of $\ln u$ is $1/u$.
-
-- The first term gives $-y / \hat{y}$
-- The second gives $-(1 - y) \cdot \dfrac{1}{1 - \hat{y}} \cdot (-1)$: the last factor is the derivative of $1 - \hat{y}$
-- Over the common denominator the numerator is $-y\,(1 - \hat{y}) + (1 - y)\,\hat{y} = \hat{y} - y$
+$P(y)$ is the probability the neuron gave to what really happened. A good neuron makes it large on every evening.
 
 </div>
 
 <!--
-Speaker: the first factor is the only one with work in it. The second was
-derived in the last section, and the third is read off the definition of z.
-(~3 min)
+**Say:** the formula is bookkeeping: anything to the power 0 is 1, so only one of the two factors is left.
+**If asked:** a variable that is 1 with probability $\hat{y}$ and 0 otherwise is a Bernoulli variable, a coin with a bias.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Gradient, Part 3: The **Product**
+# From the Likelihood to the **Loss**
 
 <div class="card card-primary card-glass pad-compact mt-sm">
 
-Multiply the first two factors. The term $\hat{y}\,(1 - \hat{y})$ cancels:
+**The likelihood.** Taken as independent, the evenings' probabilities multiply:
 
 $$
-\frac{\partial \ell}{\partial z} = \frac{\hat{y} - y}{\hat{y}\,(1 - \hat{y})} \cdot \hat{y}\,(1 - \hat{y}) = \hat{y} - y
+L = \prod_{i=1}^{N} P(y_i)
 $$
+
+Four evenings: $L = 0.063 \cdot 0.269 \cdot 0.769 \cdot 0.968 = 0.0126$.
 
 </div>
 
-<div class="grid-2 mt-md gap-md">
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+**The loss.** Minus the logarithm of $L$, per evening: the product becomes a sum, the **cross-entropy**:
+
+$$
+\text{loss} = -\frac{1}{N} \ln L = -\frac{1}{N} \sum_{i=1}^{N} \ln P(y_i)
+$$
+
+Four evenings: $(2.765 + 1.313 + 0.263 + 0.033)/4 = 1.094$.
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+The largest likelihood is the smallest loss: the numbers that make what happened most probable.
+
+</div>
+
+<!--
+**Say:** Lecture 9 took the same steps with the Gaussian and arrived at χ². ∏ is the product, as ∑ is the sum.
+**Say:** the logarithm turns the product into a sum, $\ln(ab) = \ln a + \ln b$. At the start of training, 2551 factors of 0.5 make $10^{-768}$, too small for a float, whose smallest is about $10^{-308}$; the sum of logarithms is −1768.
+**If asked:** neighbouring evenings are alike (Lecture 8), so "independent" is an assumption; it makes the numbers less certain, not the line wrong.
+(~3 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# What the Loss **Charges**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+<div class="card card-primary card-glass pad-compact table-compact">
+
+## 🔢 **A frost evening, $y = 1$**
+
+| $\hat{y}$ | 0.99 | 0.9 | 0.5 | 0.1 | 0.01 |
+| --- | --- | --- | --- | --- | --- |
+| $-\ln \hat{y}$ | 0.010 | 0.105 | 0.693 | 2.303 | 4.605 |
+
+</div>
+
+<div class="stack-tight">
 
 <div class="card card-success card-glass pad-compact">
 
-## 🎯 **One point**
+✅ Right and sure: almost nothing
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+⚖️ Undecided, 0.5: $\ln 2 = 0.693$
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+⚠️ Wrong and sure: the most, without limit
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<img class="fig" src="/figures/viz_perceptron_cross_entropy.svg">
+
+</div>
+
+</div>
+
+<!--
+**Say:** the 6th costs 2.77: the neuron was 94 % sure of frost, and none came. Every factor of 10 lost in the probability of what happened adds 2.3 to the loss.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Loss of Four Evenings, **Live**
+
+```py {monaco-run} {autorun:false}
+import math
+
+def sigmoid(z):
+    return 1 / (1 + math.exp(-z))
+
+# 6 to 9 December 2025: [temperature, humidity, frost]
+evenings = [[1.1, 0.65, 0], [2.8, 0.81, 0], [2.6, 0.85, 1], [0.4, 0.86, 1]]
+w = [-1.0, 0.0]
+b = 3.8                                   # <-- try 3.0
+total = 0
+for e in evenings:
+    y_hat = sigmoid(w[0] * e[0] + w[1] * e[1] + b)
+    if e[2] == 1:
+        total = total - math.log(y_hat)
+    else:
+        total = total - math.log(1 - y_hat)
+print(round(total / len(evenings), 3))    # 1.094
+```
+
+<!--
+**Do:** run it: 1.094. Then `b = 3.0`: 0.856, a lower loss. The two evenings without frost wanted a lower threshold.
+**Say:** `math.log` is the natural logarithm, ln; `math.exp(-z)` is $e^{-z}$.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# The **Gradient**
+
+The slope of the loss in each number, and a step downhill.
+
+<!--
+**Say:** the derivative of Lecture 9, now in three numbers at once.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Slope of the Loss: $(\hat{y} - y)\,x$
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+For one evening, the loss $-\ln P(y)$ changes with each number as
 
 $$
-\frac{\partial \ell}{\partial \mathbf{w}} = (\hat{y} - y)\,\mathbf{x} \qquad \frac{\partial \ell}{\partial b} = \hat{y} - y
+\frac{\partial\,\text{loss}}{\partial w_1} = (\hat{y} - y)\,x_1 \qquad \frac{\partial\,\text{loss}}{\partial w_2} = (\hat{y} - y)\,x_2 \qquad \frac{\partial\,\text{loss}}{\partial b} = \hat{y} - y
 $$
 
 The error times the input.
 
 </div>
 
+<div class="grid-2 mt-md gap-md">
+
 <div class="card card-secondary card-glass pad-compact">
 
-## 📊 **All $N$ points**
+## 🔢 **8 Dec 2025, $w = (-1, 0)$, $b = 3.8$**
 
-$$
-\frac{\partial L}{\partial \mathbf{w}} = \frac{1}{N} \sum_{i=1}^{N} (\hat{y}_i - y_i)\,\mathbf{x}_i \qquad \frac{\partial L}{\partial b} = \frac{1}{N} \sum_{i=1}^{N} (\hat{y}_i - y_i)
-$$
+$\hat{y} - y = 0.769 - 1 = -0.231$
+
+<v-clicks>
+
+- $\partial\,\text{loss}/\partial w_1 = -0.231 \cdot 2.6 = -0.602$
+- $\partial\,\text{loss}/\partial w_2 = -0.231 \cdot 0.85 = -0.197$
+- $\partial\,\text{loss}/\partial b = -0.231$
+
+</v-clicks>
 
 </div>
 
+<div class="card card-accent card-glass pad-compact">
+
+## 🧭 **What the signs say**
+
+All three are negative: raising $w_1$, $w_2$ or $b$ lowers this evening's loss.
+
+An evening the neuron has right and sure, $\hat{y} \approx y$, hardly pulls; one it has wrong and sure pulls most.
+
 </div>
-
-<div class="note-text mt-sm">
-
-$\partial \ell / \partial \mathbf{w}$ is the vector of the derivatives by $w_1$ and $w_2$. With the squared error $\tfrac{1}{2}(\hat{y} - y)^2$ as the loss, the term $\hat{y}\,(1 - \hat{y})$ would not cancel: for $y = 1$ and $\hat{y} = 0.01$ the derivative by $z$ would be $-0.0098$ in place of $-0.99$.
 
 </div>
 
 <!--
-Speaker: this is the result of the lecture. No logarithm and no exponential is
-left in it. A point that the neuron has right, with y-hat close to y, hardly
-moves the weights. A point it has wrong moves them most. (~3 min)
+**Say:** $\partial$ is the derivative of Lecture 9 with the other numbers held fixed. No logarithm and no exponential is left in the result.
+**If asked:** the derivation, by the chain rule through $z$ and the sigmoid, is in the section for the curious.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The Gradient, **Checked with Numbers**
+# The Slope, Checked with a **Nudge**
+
+```py {monaco-run} {autorun:false}
+import math
+
+def loss(w1):                         # 8 Dec 2025: x = (2.6, 0.85), y = 1
+    z = w1 * 2.6 + 0.0 * 0.85 + 3.8
+    return -math.log(1 / (1 + math.exp(-z)))
+
+print(round((loss(-1.0 + 0.001) - loss(-1.0)) / 0.001, 4))   # -0.6012
+y_hat = 1 / (1 + math.exp(-1.2))
+print(round((y_hat - 1) * 2.6, 4))                           # -0.6018
+```
+
+<div class="note-text mt-sm">
+
+Raise $w_1$ by 0.001 and compute the loss again: it changes by −0.6012 per unit of $w_1$. The formula gives −0.6018. A slope worked out on paper is checked this way before a program trusts it.
+
+</div>
+
+<!--
+**Do:** run it; then change the nudge to 0.0001 in both places: the two numbers agree to more digits.
+**Say:** the small difference is the bend of the loss over the step of 0.001.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# One Step **Downhill**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Each number moves against its slope, $\eta$ times the slope, as in Lecture 9:
+
+$$
+w_1 \leftarrow w_1 - \eta\,(\hat{y} - y)\,x_1 \qquad w_2 \leftarrow w_2 - \eta\,(\hat{y} - y)\,x_2 \qquad b \leftarrow b - \eta\,(\hat{y} - y)
+$$
+
+</div>
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## 🧮 **By the formula**
+## 🔢 **8 Dec 2025, $\eta = 0.1$**
 
-$\mathbf{w} = (0.5, -0.3)$, $b = 0.1$, one point $\mathbf{x} = (2, 1)$ with $y = 1$.
+<v-clicks>
 
-- $z = 1.0 - 0.3 + 0.1 = 0.8$
-- $\hat{y} = \sigma(0.8) = 0.690$
-- $\ell = -\ln 0.690 = 0.3711$
-- $\hat{y} - y = -0.310$
-- $\partial \ell / \partial \mathbf{w} = -0.310 \cdot (2, 1) = (-0.620, -0.310)$
-- $\partial \ell / \partial b = -0.310$
+- $w_1 = -1 - 0.1 \cdot (-0.602) = -0.940$
+- $w_2 = 0 - 0.1 \cdot (-0.197) = 0.020$
+- $b = 3.8 - 0.1 \cdot (-0.231) = 3.823$
 
-</div>
-
-<div>
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-def sigmoid(z):
-    return 1 / (1 + np.exp(-z))
-x = np.array([2.0, 1.0])            # label y = 1
-w, b = np.array([0.5, -0.3]), 0.1
-def loss(w):
-    return -np.log(sigmoid(w @ x + b))
-grad = (sigmoid(w @ x + b) - 1) * x
-print(grad.round(4))         # [-0.6201 -0.31  ]
-d = loss(w + [0.001, 0]) - loss(w)
-print(round(d / 0.001, 4))   # -0.6196
-```
+</v-clicks>
 
 </div>
 
+<div class="card card-success card-glass pad-compact">
+
+## 📉 **The same evening again**
+
+<v-clicks>
+
+- $z = -0.940 \cdot 2.6 + 0.020 \cdot 0.85 + 3.823 = 1.396$
+- $\hat{y} = 0.802$, up from 0.769
+- loss 0.221, down from 0.263
+
+</v-clicks>
+
 </div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The last two lines raise $w_1$ by 0.001 and compute the loss again. The difference quotient, −0.6196, agrees with the formula, −0.6201. A derivative worked out on paper is checked this way before it is trusted in a program.
 
 </div>
 
 <!--
-Speaker: run it. The two printed numbers agree to within 0.001; the small
-difference is the curvature of the loss over a step of 0.001. The gradient is
-negative in w1, so raising w1 lowers the loss, and the update raises it: one
-update with eta = 0.5 gives w = (0.810, -0.145) and b = 0.255, z = 1.730,
-y-hat = 0.849, and the loss falls from 0.371 to 0.163. (~3 min)
+**Do:** click through the three new numbers, then the evening again.
+**Say:** the humidity, ignored so far, gets its first weight from this one evening.
+**If asked:** the same step raises the loss of the two evenings without frost, 6 and 7 December; the next steps, on them, pull back. Over many evenings the line settles where the pulls balance.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# The **Update Rule**
+# The Mean Slope over Four **Evenings**
+
+<div class="card card-primary card-glass pad-compact mt-sm table-compact">
+
+## 🔢 **$w = (-1, 0)$, $b = 3.8$: each evening's slope, then the mean**
+
+| Evening | $y$ | $\hat{y} - y$ | $(\hat{y} - y)\,x_1$ | $(\hat{y} - y)\,x_2$ |
+| --- | --- | --- | --- | --- |
+| 6 Dec, 1.1 °C, 0.65 | 0 | 0.937 | 1.031 | 0.609 |
+| 7 Dec, 2.8 °C, 0.81 | 0 | 0.731 | 2.047 | 0.592 |
+| 8 Dec, 2.6 °C, 0.85 | 1 | −0.231 | −0.602 | −0.197 |
+| 9 Dec, 0.4 °C, 0.86 | 1 | −0.032 | −0.013 | −0.028 |
+| **Mean** | | **0.351** | **0.616** | **0.244** |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+📉 The mean is the slope of the loss of all four. One step, $\eta = 0.1$: $w = (-1.062,\ -0.024)$, $b = 3.765$; the loss of the four falls from 1.094 to 1.040.
+
+</div>
+
+<!--
+**Say:** the two evenings without frost pull the threshold down, the two with frost pull it up; the mean decides. This is Lecture 9's way: one step per pass, from the mean slope of all points.
+**If asked:** after the step the 6th has ŷ = 0.93 and the 7th 0.68: both a little closer to 0.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Rosenblatt's Rule Follows from the **Loss**
 
 <div class="card card-success card-glass pad-compact mt-sm">
 
-Gradient descent, $\mathbf{w} \leftarrow \mathbf{w} - \eta\,\partial \ell / \partial \mathbf{w}$, with the gradient just derived:
-
-$$
-\mathbf{w} \leftarrow \mathbf{w} + \eta\,(y - \hat{y})\,\mathbf{x} \qquad\qquad b \leftarrow b + \eta\,(y - \hat{y})
-$$
+Downhill, $-\eta\,(\hat{y} - y)\,x$, is $+\eta\,(y - \hat{y})\,x$: Rosenblatt's rule, letter for letter.
 
 </div>
 
 <div class="card card-primary card-glass pad-compact mt-md table-compact">
 
-| | **Output $\hat{y}$** | **Loss of one point** | **Update of $\mathbf{w}$** | **Which points move the weights** |
+| Model | Output $\hat{y}$ | Loss of one point | Update of $w_1$ | Who moves the line |
 | --- | --- | --- | --- | --- |
-| Straight-line fit, Lecture 10 | $\mathbf{w} \cdot \mathbf{x} + b$ | $\tfrac{1}{2}(\hat{y} - y)^2$ | $\eta\,(y - \hat{y})\,\mathbf{x}$ | all, in proportion to the residual |
-| Perceptron, Rosenblatt | step of $z$ | none | $\eta\,(y - \hat{y})\,\mathbf{x}$ | only the wrong ones, each by the same amount |
-| Logistic neuron | $\sigma(z)$ | cross-entropy | $\eta\,(y - \hat{y})\,\mathbf{x}$ | all, in proportion to the error in probability |
+| Straight line, Lecture 9 | $w_1 x_1 + b$ | $\tfrac{1}{2}(\hat{y} - y)^2$ | $\eta\,(y - \hat{y})\,x_1$ | every point, by its residual |
+| Rosenblatt, 1958 | $\text{step}(z)$ | none | $\eta\,(y - \hat{y})\,x_1$ | only wrong points, all by the same amount |
+| Logistic neuron | $\text{sigmoid}(z)$ | $-\ln P(y)$ | $\eta\,(y - \hat{y})\,x_1$ | every point, by its error in probability |
 
 </div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-This is the rule of the slide **The Rule**, letter for letter: Rosenblatt wrote it down in 1958, and here it follows from the Bernoulli likelihood. The difference is in $\hat{y}$: it is now a number between 0 and 1, so $y - \hat{y}$ is never exactly zero and every point pulls on the line.
+The answer to "why the error times the input": it is the slope of the loss. With the sigmoid, $y - \hat{y}$ is never exactly 0, so every evening pulls a little.
 
 </div>
 
 <!--
-Speaker: this answers the question left on What the Theorem Does Not Say:
-why the error times the input. The first row is the least-squares line written
-in today's symbols, with all errors equal. Its gradient is the residual times
-the input. Three models, one update. (~2 min)
+**Say:** the first row is the straight line of Lecture 9 in today's letters: the slope of the squared residual is the residual times the input. Three models, one update.
+**If asked:** the squared residual with a sigmoid output would give the slope an extra factor $\hat{y}(1 - \hat{y})$: a sure and wrong evening would hardly pull.
+(~2 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
-# The Loss Has One **Minimum**
+# The Loss Has One Lowest **Point**
 
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⌣ **The loss curves upward everywhere**
-
-Differentiate $\partial \ell / \partial z = \hat{y} - y$ once more:
-
-$$
-\frac{\partial^2 \ell}{\partial z^2} = \hat{y}\,(1 - \hat{y}) > 0
-$$
-
-$z$ is linear in $\mathbf{w}$ and $b$, so the loss is a bowl in the parameters. It has no second valley in which gradient descent could end.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ **Separable data: no minimum.** On AND the loss falls for as long as the loop runs: 0.035 after 1000 epochs with $\mathbf{w} = (6.0, 6.0)$, 0.0034 after 10 000 with $(10.7, 10.7)$. A larger $\mathbf{w}$ on the same line is always better.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_starts.svg" style="display:block;margin:0 auto;width:100%;">
-
-<div class="note-text mt-sm">
-
-The 200 points, three starting values, $\eta = 0.5$. All three runs end at the same loss, 0.1616.
-
-</div>
-
-</div>
-
-</div>
-
-<!--
-Speaker: compare with the fits of Lecture 10 that depended on their starting
-values. Here the start changes the way, never the end. The warning is the
-third panel of the slide on w and b again: with a sigmoid, scaling the weights
-sharpens the output, and on separable data sharper is always better. (~3 min)
--->
-
----
-layout: section
-hideInToc: true
----
-
-# Training in **NumPy**
-
-The loss has one minimum, and its gradient is a mean of $(\hat{y} - y)\,\mathbf{x}$ over the points. NumPy computes that mean for all 200 points in one line, and the whole training loop is a dozen lines.
-
-<!--
-Speaker: first the notation for all points at once, then the loop, then what
-it does to the 200 points. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# Reading the **Loop**
-
-<div class="card card-primary card-glass pad-compact mt-sm table-compact">
-
-| Line of the loop | Formula | Derived on the slide |
-| --- | --- | --- |
-| `y_hat = 1 / (1 + np.exp(-(X @ w + b)))` | $\hat{y}_i = \sigma(\mathbf{w} \cdot \mathbf{x}_i + b)$ | The Output Is a Probability |
-| `loss = -np.mean(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))` | $L = -\frac{1}{N} \sum \bigl[ y_i \ln \hat{y}_i + (1 - y_i) \ln (1 - \hat{y}_i) \bigr]$ | The Likelihood of All Points |
-| `w = w - eta * X.T @ (y_hat - y) / len(y)` | $\mathbf{w} \leftarrow \mathbf{w} - \eta\,\frac{1}{N} \sum (\hat{y}_i - y_i)\,\mathbf{x}_i$ | The Gradient, Part 3 |
-| `b = b - eta * np.mean(y_hat - y)` | $b \leftarrow b - \eta\,\frac{1}{N} \sum (\hat{y}_i - y_i)$ | The Gradient, Part 3 |
-
-</div>
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-secondary card-glass pad-compact">
-
-**All points at once.** `X` has one row per point. `X @ w` is the dot product of every row with `w`: 200 values of $z$ without a loop. `X.T @ (y_hat - y)` is the sum $\sum_i (\hat{y}_i - y_i)\,\mathbf{x}_i$.
-
-</div>
+<div class="fig-fill grid-side mt-sm">
 
 <div class="card card-info card-glass pad-compact">
 
-**An epoch** is one pass of the loop: all points are used once, and the weights change once. Rosenblatt's rule changed them after every single point.
+⌣ The loss of the 2551 training evenings for every $w_1$ and $b$, with $w_2 = 0$: one bowl, no second valley. Its lowest point, $w_1 = -1.05$, $b = 4.17$, is the threshold $4.17 / 1.05 = 3.97$ °C.
+
+Downhill from any start ends there.
 
 </div>
 
-</div>
-
-<!--
-Speaker: four lines of code, four formulas, each derived in the last half
-hour. X.T is X with rows and columns exchanged. The loss is not needed for the
-update: the loop computes it only to print it. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Training **Loop**
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-rng = np.random.default_rng(11)
-X = np.vstack([rng.normal((0, 0), 1, (100, 2)),     # class 0
-               rng.normal((2, 2), 1, (100, 2))])    # class 1
-y = np.repeat([0, 1], 100)
-w, b, eta = np.zeros(2), 0.0, 0.5
-for epoch in range(1001):
-    y_hat = 1 / (1 + np.exp(-(X @ w + b)))
-    loss = -np.mean(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))
-    if epoch % 250 == 0:
-        print(epoch, round(loss, 4), np.mean((y_hat > 0.5) == y))
-    w = w - eta * X.T @ (y_hat - y) / len(y)
-    b = b - eta * np.mean(y_hat - y)
-print("w", w.round(3), "b", round(b, 3))
-```
-
-<!--
-Speaker: run it. Each line of output is the epoch, the loss and the share of
-points classified correctly. Measured: 0.6931 and 0.5 at epoch 0, 0.1651 and
-0.92 at epoch 250, 0.1616 and 0.925 at epoch 1000, then w [2.1 2.257] and b
--4.315. 0.925 of 200 is 185: this is the line of the slide Classify by a
-Threshold or by a Line, found. Change eta to 0.05 and run again: the loss at
-epoch 1000 is 0.1809, not yet at the minimum. Why 0.6931 at the start: with
-w = 0 and b = 0 every y-hat is 0.5, and each point costs ln 2. The loss falls
-at every epoch, the accuracy does not: 93.5 % at epoch 50, 92.5 % at 100, 92 %
-at 200. The loop minimises the loss, and the accuracy only follows it roughly.
-(~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Boundary **Moves**
-
-<img class="fig" src="/figures/viz_perceptron_training.svg" style="display:block;margin:0 auto;max-height:330px;">
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-**After 1 update** the weights are $(0.259, 0.255)$ and the bias is still 0. The direction is nearly right at once. The line passes through the origin, the centre of class 0.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-**From then on** the bias falls, to −1.1 after 20 updates and −4.3 after 1000, and the line moves between the two clouds. The weights grow from 0.26 to 2.1 and 2.3.
-
-</div>
+<img class="fig" src="/figures/viz_perceptron_bowl.svg">
 
 </div>
 
 <!--
-Speaker: the first update is eta times the mean of (y - 0.5) x. That is one
-eighth of the difference of the two class centres, so the first w already
-points from one cloud to the other. The bias starts at zero because the two
-classes have equal size. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# What the Result **Means**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## ⚖️ **The weights**
-
-| | $w_1$ | $w_2$ | $b$ |
-| --- | --- | --- | --- |
-| After 1000 epochs | 2.10 | 2.26 | −4.31 |
-| At the minimum | 2.13 | 2.28 | −4.37 |
-| Exact, from the two Gaussians | 2 | 2 | −4 |
-
-The exact values follow from the slide Where the Sigmoid Comes From: $\mathbf{w}$ is the difference of the centres, $(2, 2) - (0, 0)$.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🎯 **The accuracy**
-
-- The trained neuron: 185 of 200, 92.5 %. Six points of class 0 and nine of class 1 are on the wrong side
-- The exact line $x_1 + x_2 = 2$ on the same points: 184 of 200
-- The exact line on new points from the same generator: 92.1 % on average
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The line of the slide **Classify by a Threshold or by a Line**, right for 185 of 200, is this neuron. It has recovered the rule that made the data, to within what 200 points allow. No rule does better than 92.1 % on new points: the clouds overlap.
-
-</div>
-
-<!--
-Speaker: 92.1 % is the probability that a Gaussian value lies less than the
-square root of 2 above its mean: the centres are 2.83 apart, the line is half
-way, 1.41 from each. The fitted weights differ from the exact ones as a fitted
-slope differs from the true one: by the scatter of a finite sample. (~3 min)
+**Say:** contour lines, as on a map: each joins the numbers with the same loss. The threshold neuron, the square, sits near the bottom: loss 0.1086 against 0.1080 at the lowest point.
+**If asked:** the loss curves upward in every direction, so a step downhill never ends in a false valley. Networks with hidden layers lose this.
+(~2 min)
 -->
 
 ---
 layout: section
-hideInToc: true
----
-
-# Training in **Practice**
-
-The loop recovered the line of the generator, on 200 points whose inputs are of order 1 and with a learning rate that suits them. Other data need three decisions: the learning rate, the scale of the inputs, and the points on which the result is judged.
-
-<!--
-Speaker: nothing new is derived in this section. It is the same loop under
-other conditions, each run and measured. (~1 min)
--->
-
----
-hideInToc: true
----
-
-# The **Learning Rate**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_eta.svg" style="display:block;margin:0 auto;width:100%;">
-
-</div>
-
-<div>
-
-<div class="card card-primary card-glass pad-compact table-compact">
-
-## 🔢 **The same loop, four values of $\eta$**
-
-| $\eta$ | Loss after 1000 epochs | |
-| --- | --- | --- |
-| 0.01 | 0.2742 | too slow |
-| 0.1 | 0.1674 | not yet there |
-| 1 | 0.1616 | at the minimum |
-| 20 | 0.2049 | jumps to and fro |
-
-</div>
-
-<div class="card card-warning card-glass pad-compact mt-md">
-
-⚠️ With $\eta = 20$ the loop prints `nan` for the first epochs. The weights jump so far that some $\hat{y}$ is exactly 0 or 1 in floating point, and the line of the loss computes $0 \cdot \ln 0$.
-
-</div>
-
-</div>
-
-</div>
-
-<!--
-Speaker: as in Lecture 10. Too small a step wastes epochs. Too large a step
-jumps across the valley and never settles: from epoch 100 on the red curve
-swings between 0.20 and 0.24. Try 0.1, 1 and 20 in the runner of the training
-loop. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# Inputs on **Different Scales**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## 📏 **The same points in other units**
-
-Multiply $x_2$ by 100, as if metres were written in centimetres. The points and the classes are the same. The loop is not:
-
-- $\eta = 0.5$: the loss is `nan` from the first epoch, and after 1000 epochs 74.5 % are correct
-- $\eta = 0.0001$: stable, and after 1000 epochs the loss is 0.477, with 74.5 % correct
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 🔍 **Why**
-
-$\partial L / \partial w_2$ is a mean of $(\hat{y}_i - y_i)\,x_{i2}$, so it is 100 times larger than before. One $\eta$ serves both weights: it is either too large for $w_2$ or too small for $w_1$ and $b$.
-
-</div>
-
-</div>
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_scaling.svg" style="display:block;margin:0 auto;width:100%;">
-
-<div class="note-text mt-sm">
-
-The red curve is computed in a form that cannot overflow. Its values lie between 4 and 1100.
-
-</div>
-
-</div>
-
-</div>
-
-<!--
-Speaker: no physics has changed, only the unit of one column. A method whose
-result depends on the unit of a column needs a remedy. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# **Standardising** the Inputs
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ⚖️ **Mean 0 and standard deviation 1**
-
-For each column, subtract its mean and divide by its standard deviation:
-
-```python
-m = X.mean(axis=0)     # [1.057 1.032]
-s = X.std(axis=0)      # [1.414 1.403]
-Z = (X - m) / s
-```
-
-`Z` is the same whatever the units of `X` were. Trained on `Z` with $\eta = 0.5$, the loop reaches loss 0.1616 and 92.5 %, also for the file with $x_2$ times 100.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## ↩️ **Back to the units of the data**
-
-The neuron trained on `Z` has weights $\mathbf{w}'$ and bias $b'$. Insert $z_j = (x_j - m_j) / s_j$:
-
-$$
-w_j = \frac{w'_j}{s_j} \qquad b = b' - \sum_j \frac{w'_j\,m_j}{s_j}
-$$
-
-Here $\mathbf{w}' = (3.00, 3.20)$ and $b' = 0.23$ give $\mathbf{w} = (2.12, 2.28)$ and $b = -4.36$: the same line as before.
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-A new point is transformed with the **same** `m` and `s` before it is given to the neuron. They are part of the model, like the weights.
-
-</div>
-
-<!--
-Speaker: the standard deviation of each column is 1.41, the square root of 2:
-variance 1 inside a class plus 1 from the distance of the two centres. On
-standardised inputs the loss passes 0.162 after 327 epochs instead of 523.
-(~3 min)
--->
-
----
 hideInToc: true
 ---
 
 # Train and **Test**
 
+A rule is scored on evenings it has not seen.
+
+<!--
+**Say:** the update of the last section, run over seven years of evenings, and scored on three others.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Train on 2016–2022, Test on **2023–2025**
+
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-## ✂️ **Hold some points back**
+## 🏋️ **Training: 2016 to 2022**
 
-The task was a rule for points that are not among the examples. So some examples are kept out of the training and used only to judge the result.
-
-- **Training set**: 150 points, drawn at random. The loop sees only these
-- **Test set**: the other 50. Used once, at the end
-- The mean and standard deviation for standardising come from the training set alone
+2551 evenings, 850 of them with frost. The numbers $w_1$, $w_2$, $b$ are learned from these alone.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-## 🐍 **In NumPy**
+## 🧪 **Test: 2023 to 2025**
 
-After the lines that make `X` and `y`:
+1095 evenings, 379 with frost. Used once, at the end, to score the result.
 
-```python
-order = np.random.default_rng(11).permutation(200)
-train, test = order[:150], order[150:]
-m = X[train].mean(axis=0)
-s = X[train].std(axis=0)
-Z = (X - m) / s
+</div>
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+✂️ Split by years, not evening by evening at random: neighbouring evenings are alike (Lecture 8), and a test evening would have its own yesterday among the training evenings.
+
+</div>
+
+<!--
+**Ask:** why not score on the training evenings? A rule can fit the evenings it has seen; the question is the next winter.
+**Say:** the threshold 3.8 °C was found on all evenings, the test years included. Chosen on the training years alone it is again 3.8 °C: 95.6 % there.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Five Passes over the Training **Evenings**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+📉 The update after each evening, $\eta = 0.01$, from zero, in the order of the log. The loss falls from ln 2 = 0.693 to 0.130 after one pass and to 0.110 after five; right on 95.5 % of the training evenings.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_training.svg">
+
+<!--
+**Say:** from zero numbers every $\hat{y}$ is 0.5 and each evening costs ln 2. After five passes $w = (-0.877, 1.704)$, $b = 2.227$: frost below 3.5 °C at humidity 0.5 and below 4.5 °C at 1.0. More passes hardly move the line: 0.1085 after twenty.
+**If asked:** the update after each evening is Rosenblatt's way; the mean of the slopes over all evenings, one step per pass, is Lecture 9's way. Both go downhill.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Training Loop in Plain **Python**
+
+```python {all|4|5-7|all}
+for epoch in range(5):
+    for i in range(len(xs)):
+        x = xs[i]
+        error = ys[i] - sigmoid(w[0] * x[0] + w[1] * x[1] + b)
+        w[0] = w[0] + 0.01 * error * x[0]
+        w[1] = w[1] + 0.01 * error * x[1]
+        b = b + 0.01 * error
 ```
 
-The loop then runs on `Z[train]` and `y[train]`, 1000 epochs.
+<div class="grid-2 mt-md gap-md">
 
-Measured: 140 of 150 training points correct, 93.3 %, and 46 of 50 test points, 92.0 %.
+<div class="card card-primary card-glass pad-compact table-compact">
+
+| After epoch | 0 | 1 | 2 | 3 | 4 | 5 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Loss | 0.693 | 0.130 | 0.117 | 0.113 | 0.111 | 0.110 |
+| Right | 66.7 % | 95.5 % | 95.6 % | 95.5 % | 95.5 % | 95.5 % |
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+The step's `predict` became a `sigmoid`, and each change is $\eta = 0.01$ times as large. `xs`: the 2551 training evenings as $[x_1, x_2]$; `ys`: their labels.
 
 </div>
 
 </div>
 
 <!--
-Speaker: permutation gives the numbers 0 to 199 in a random order, fixed by
-the seed. An array of indices in square brackets selects those rows, like the
-masks of Lecture 08. A model with three parameters cannot learn 150 points by
-heart, so the two accuracies are close. (~3 min)
+**Say:** the AND runner, line for line: `predict` in the error line became the sigmoid, and each change is multiplied by η = 0.01. Seven lines train the neuron.
+**Say:** epoch 0 is the start: every ŷ = 0.5, so "never frost" by the 0.5 cut, 66.7 % of the training evenings.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# P(frost) from the Trained **Neuron**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-success card-glass pad-compact">
+
+🎲 The trained neuron at humidity 0.85: P(frost) 0.94 at 1 °C, 0.74 at 3 °C, 0.33 at 5 °C.
+
+8 December 2025, 2.6 °C: **0.80**.
+
+The dots count the test evenings: the share with frost per 1 °C, with its ±.
+
+</div>
+
+<img class="fig" src="/figures/viz_perceptron_probability.svg">
+
+</div>
+
+<!--
+**Say:** the neuron's curve against counting, as Lecture 8 counted probabilities: it runs through the shares within their ±, on evenings it never saw.
+**Ask:** at 0.80, do you cover the plants tonight?
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Tonight's Evening Through the Neuron, **Live**
+
+```py {monaco-run} {autorun:false}
+import math
+w = [-0.877, 1.704]           # learned from the evenings of 2016 to 2022
+b = 2.227
+temp = 2.6                    # <-- tonight at 18:00, °C
+humidity = 0.85               # <-- tonight at 18:00, 0 to 1
+z = w[0] * temp + w[1] * humidity + b
+print(round(z, 3), round(1 / (1 + math.exp(-z)), 2))   # 1.395 0.8
+```
+
+<div class="note-text mt-sm">Three numbers learned from seven years of evenings, and one evening's two inputs: the whole forecast.</div>
+
+<!--
+**Do:** type this evening's 18:00 temperature and humidity (from any weather service), then ▶.
+**Ask:** frost or not, and how sure? Check tomorrow at 06:00.
+(~2 min)
 -->
 
 ---
@@ -2200,35 +1690,332 @@ hideInToc: true
 
 # How Sure Is an **Accuracy**?
 
-<img class="fig" src="/figures/viz_perceptron_split.svg" style="display:block;margin:0 auto;max-height:262px;">
-
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact">
 
-**A count has an uncertainty.** Each test point is right or wrong: a binomial count, Lecture 09. With $p = 0.92$ and $N = 50$:
+## 🧮 **A share of $N$ evenings**
+
+Each test evening is right or wrong. The standard error of a share $p$ of $N$ (Lecture 8):
 
 $$
-\sqrt{p\,(1 - p) / N} = 0.038
+\sqrt{\frac{p\,(1 - p)}{N}} = \sqrt{\frac{0.961 \cdot 0.039}{1095}} = 0.006
 $$
-
-The test accuracy is 92 % ± 4 %.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-success card-glass pad-compact">
 
-**Twenty splits** of the same 200 points, with the seeds 0 to 19, give test accuracies from 88 % to 98 %, with a mean of 93.6 %. The band is the binomial ±3.5 % around that mean. A difference of 2 % between two models on 50 test points says nothing.
+## 🎯 **The logistic neuron, 2023 to 2025**
+
+1052 of 1095 test evenings right:
+
+$$
+96.1 \pm 0.6\,\%
+$$
+
+"Never frost" on the same evenings: 716, 65.4 ± 1.4 %.
 
 </div>
 
 </div>
 
 <!--
-Speaker: left, the split of the previous slide: the test points are drawn
-large. Right, the same procedure with 20 seeds. An accuracy is a
-measurement and is quoted with its uncertainty like any other. To halve the
-uncertainty the test set must be four times as large. (~2 min)
+**Say:** an accuracy is a measurement and is quoted with its ± like any other. $p(1 - p)$ is the variance of a 0-or-1 value.
+**Say:** to halve the ±, the test set must be four times as large.
+(~2 min)
+-->
+
+---
+hideInToc: true
+class: fill
+---
+
+# Four Rules on the Test **Years**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+🏁 The 1095 evenings of 2023 to 2025. The three rules that use the temperature differ by less than their ±; the neuron and the threshold rule agree on 1087 evenings.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_test.svg">
+
+<!--
+**Say:** the neuron learned the threshold rule: its line stands near 4 °C, nearly upright. Bars from zero, as in Lecture 7.
+**If asked:** a neuron with the temperature alone learns the threshold 3.93 °C and is also right on 1052: the humidity adds nothing these evenings can show.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Accuracy on Seen and Unseen **Evenings**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+| Rule | Numbers it keeps | 2016–2022, seen | 2023–2025, unseen |
+| --- | --- | --- | --- |
+| Logistic neuron | 3 | 95.5 % | 96.1 % |
+| Frost if most years froze on that date | 366 | 91.9 % | 89.5 % |
+| Frost if the nearest training evening froze | 7653 | 98.8 % | 93.1 % |
+
+</div>
+
+<div class="card card-warning card-glass pad-compact mt-md">
+
+⚠️ The rule that keeps every training evening scores best on those and worse on new ones. Only unseen evenings tell how good a rule is.
+
+</div>
+
+<!--
+**Say:** the nearest-evening rule keeps all 2551 evenings, three numbers each, and answers like the most similar one. On its own evenings it is nearly always right; on 2023 to 2025 it is worse than three numbers.
+**If asked:** the date rule keeps one answer for each of the 366 dates of the year.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Missed Frosts and False **Alarms**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+The 379 frost evenings and 716 others of 2023 to 2025, with "frost" said when $\hat{y}$ is above a cut:
+
+| Cut on $\hat{y}$ | Frosts caught | Frosts missed | False alarms | Right |
+| --- | --- | --- | --- | --- |
+| 0.5 | 361 | 18 | 25 | 96.1 % |
+| 0.3 | 369 | 10 | 52 | 94.3 % |
+| 0.2 | 374 | 5 | 68 | 93.3 % |
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+🌱 A gardener who loses the plants to a missed frost takes 0.2: a quarter of the misses, nearly three times the alarms, a lower accuracy. The cut is a choice of which error costs more.
+
+</div>
+
+<!--
+**Ask:** which cut would a road service choose, which a gardener?
+**Say:** one accuracy hides two kinds of error; the probability lets each user choose.
+(~2 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# A Model as an **Object**
+
+Three numbers, and two things done with them: predict and fit.
+
+<!--
+**Say:** the trained neuron is three numbers; a program that uses it needs those numbers and two functions. Python keeps them together in an object.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# What a Model Holds and **Does**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🗃️ **It holds its numbers**
+
+$w_1 = -0.877$, $w_2 = 1.704$, $b = 2.227$: the whole trained logistic neuron.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## ⚙️ **It does two things**
+
+- **predict**: inputs in, 0 or 1 out
+- **fit**: evenings and labels in, its numbers change
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+🧩 Values kept together with the functions that use them form an **object**; its type is a **class**. A `str` keeps its text and has `split`; a `list` keeps its values and has `append`.
+
+</div>
+
+<!--
+**Say:** Lecture 5 called `line.split(",")` a method: a function that belongs to the value before the dot. A model is the same idea with numbers inside.
+**If asked:** Lecture 5's section for the curious wrote a class `Hour`, with a time, a temperature and a method `is_missing()`.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Same Code as a Class: `Perceptron`
+
+<div class="code-beside mt-sm">
+
+````md magic-move {lines: true}
+```py
+def predict(x, w, b):
+    z = w[0] * x[0] + w[1] * x[1] + b
+    if z > 0:
+        return 1
+    return 0
+```
+```py
+class Perceptron:
+    def __init__(self):
+        self.w = [0.0, 0.0]
+        self.b = 0.0
+```
+```py {6-10}
+class Perceptron:
+    def __init__(self):
+        self.w = [0.0, 0.0]
+        self.b = 0.0
+
+    def predict(self, x):
+        z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+        if z > 0:
+            return 1
+        return 0
+```
+```py {12-18}
+class Perceptron:
+    def __init__(self):
+        self.w = [0.0, 0.0]
+        self.b = 0.0
+
+    def predict(self, x):
+        z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+        if z > 0:
+            return 1
+        return 0
+
+    def fit(self, xs, ys, epochs):
+        for epoch in range(epochs):
+            for i in range(len(xs)):
+                error = ys[i] - self.predict(xs[i])
+                self.w[0] = self.w[0] + error * xs[i][0]
+                self.w[1] = self.w[1] + error * xs[i][1]
+                self.b = self.b + error
+```
+````
+
+<div class="card card-info card-glass pad-compact">
+
+- `Perceptron()` makes an object and runs `__init__` once
+- `self` is that object; `self.w` keeps a value in it
+- a `def` inside the class is a **method**: `predict` reads `self.w`, `fit` changes it
+
+</div>
+
+</div>
+
+<style>
+.code-beside { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: var(--gap-md); align-items: start; }
+</style>
+
+<!--
+**Do:** four steps: the function of the slide before; the class with its two numbers; `predict` moved in, `w` and `b` now `self.w` and `self.b`; `fit`, the loop of the AND runner.
+**Say:** nothing new is computed: the same lines, with the numbers kept in the object instead of passed around.
+(~3 min)
+-->
+
+---
+hideInToc: true
+class: runner-side
+---
+
+# Fit and Predict, **Live**
+
+```py {monaco-run} {autorun:false}
+class Perceptron:
+    def __init__(self):
+        self.w = [0, 0]
+        self.b = 0
+    def predict(self, x):
+        z = self.w[0] * x[0] + self.w[1] * x[1] + self.b
+        if z > 0:
+            return 1
+        return 0
+    def fit(self, xs, ys, epochs):
+        for epoch in range(epochs):
+            for i in range(len(xs)):
+                error = ys[i] - self.predict(xs[i])
+                self.w[0] = self.w[0] + error * xs[i][0]
+                self.w[1] = self.w[1] + error * xs[i][1]
+                self.b = self.b + error
+
+xs = [[0, 0], [0, 1], [1, 0], [1, 1]]
+model = Perceptron()
+model.fit(xs, [0, 0, 0, 1], 6)       # AND, six epochs
+print(model.w, model.b)              # [2, 1] -2
+print(model.predict([1, 1]))         # 1
+```
+
+<!--
+**Do:** run it: `[2, 1] -2`, the numbers of the table by hand, and 1 for (1, 1).
+**Do:** add `other = Perceptron()` and `print(other.w)`: `[0, 0]`. Each object keeps its own numbers.
+**Say:** fit on the 2551 training evenings, five passes, the same class gives $w = (-1.2, 1.09)$, $b = 3$, and 95.5 % on the test years.
+(~2 min)
+-->
+
+---
+hideInToc: true
+---
+
+# Why the Numbers Live in the **Object**
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 👯 **Two models, side by side**
+
+`frost = Perceptron()` and `gate = Perceptron()` each keep their own `w` and `b`: one trained on the evenings, one on AND.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🧳 **Nothing to carry**
+
+`model.predict(x)` needs only the evening: the numbers travel with the model.
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 🔄 **Change inside, same calls**
+
+Training with the sigmoid changes the inside of `fit`. Code that calls `fit` and `predict` stays as it is.
+
+</div>
+
+</div>
+
+<div class="card card-info card-glass pad-compact mt-md">
+
+Every model of a machine-learning library is such an object, with the same two calls: fit on training data, predict on new data.
+
+</div>
+
+<!--
+**Say:** this is why the libraries of the seminars are built from classes: a model is numbers plus methods.
+(~2 min)
 -->
 
 ---
@@ -2238,20 +2025,21 @@ hideInToc: true
 
 # The Limit: **XOR**
 
-XOR has four points that no single line separates.
+Four points that no single line separates.
 
 <!--
-Speaker: the last part of the argument. A proof that something is impossible,
-then the smallest construction that makes it possible. (~1 min)
+**Say:** back to the puzzle of the gates slide.
+(~0.5 min)
 -->
 
 ---
 hideInToc: true
+class: fill
 ---
 
 # **XOR**
 
-<div class="grid-2 mt-md gap-md">
+<div class="fig-fill grid-2 mt-sm gap-md">
 
 <div>
 
@@ -2266,13 +2054,11 @@ hideInToc: true
 | 1 | 0 | 0 | 1 | 1 |
 | 1 | 1 | 1 | 1 | 0 |
 
-XOR is 1 when exactly one input is 1: when the two inputs differ.
-
 </div>
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 
-In the plane the two points of class 1 lie on one diagonal of the square and the two points of class 0 on the other.
+Class 1 lies on one diagonal of the square, class 0 on the other. Each line tried leaves a point on the wrong side; that is not yet a proof.
 
 </div>
 
@@ -2280,37 +2066,30 @@ In the plane the two points of class 1 lie on one diagonal of the square and the
 
 <div>
 
-<img class="fig" src="/figures/viz_perceptron_xor_lines.svg" style="display:block;margin:0 auto;max-height:340px;">
-
-<div class="note-text mt-sm">
-
-Each line tried, as at the puzzle of the gates slide, leaves at least one point on the wrong side. That is not yet a proof.
-
-</div>
+<img class="fig" src="/figures/viz_perceptron_xor_lines.svg">
 
 </div>
 
 </div>
 
 <!--
-Speaker: back to the puzzle of the gates slide. Every attempt the room made
-left a point on the wrong side. Trying lines shows nothing: there are
-infinitely many. (~2 min)
+**Say:** every attempt of the room at the puzzle left a point on the wrong side. Trying lines proves nothing: there are infinitely many.
+(~2 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# No Line Exists: The **Four Inequalities**
+# No Line Exists: Four **Inequalities**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-primary card-glass pad-compact table-compact">
 
-## 📝 **What a neuron for XOR must satisfy**
+## 📝 **What a neuron for XOR needs**
 
-| Point | Target | Needed | Condition |
+| Point | Label | Needed | Condition |
 | --- | --- | --- | --- |
 | (0, 0) | 0 | $z \le 0$ | $b \le 0$ |
 | (1, 0) | 1 | $z > 0$ | $w_1 + b > 0$ |
@@ -2335,7 +2114,7 @@ $$
 w_1 + w_2 + 2b \le 0
 $$
 
-The same quantity would have to be positive and not positive.
+The same number cannot be both.
 
 </div>
 
@@ -2343,198 +2122,37 @@ The same quantity would have to be positive and not positive.
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-🚧 No numbers $w_1$, $w_2$, $b$ satisfy all four conditions: XOR is not linearly separable. Run on XOR, Rosenblatt's rule repeats the same four updates from epoch 3 on and never stops. The logistic neuron ends at $\mathbf{w} = 0$, $b = 0$: $\hat{y} = 0.5$ for every input, loss $\ln 2$.
+🚧 No $w_1$, $w_2$, $b$ satisfy all four: XOR is not **linearly separable**. One neuron draws one line.
 
 </div>
 
 <!--
-Speaker: write the four conditions with the room: each is z for that point.
-Then add. The result is about every possible line and does not depend on how
-the neuron is trained. Both rules behave as their theory says: the theorem
-assumed a separable set, and the one minimum of the cross-entropy is here the
-neuron that knows nothing. (~3 min)
+**Do:** write the four conditions with the room: each is $z$ of that point. Then add.
+**Say:** the result holds for every line and every way of training.
+(~3 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-# Two Lines Separate **XOR**
-
-<div class="grid-2 mt-sm gap-md">
-
-<div>
-
-<img class="fig" src="/figures/viz_perceptron_xor_strip.svg" style="display:block;margin:0 auto;max-height:400px;">
-
-</div>
-
-<div>
-
-<div class="card card-primary card-glass pad-compact">
-
-## ✌️ **XOR is "OR, but not AND"**
-
-Both lines were on the slide of the gates:
-
-- $h_1$: the OR neuron, $x_1 + x_2 - 0.5 > 0$
-- $h_2$: the AND neuron, $x_1 + x_2 - 1.5 > 0$
-
-The points of class 1 lie between the two lines: above the first and not above the second.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact mt-md">
-
-## 3️⃣ **A third neuron combines them**
-
-It takes $h_1$ and $h_2$ as its inputs and fires for "$h_1$ and not $h_2$":
-
-$$
-\hat{y} = \text{step}(h_1 - h_2 - 0.5)
-$$
-
-</div>
-
-</div>
-
-</div>
-
-<!--
-Speaker: one line cannot cut out a strip. Two lines can, and
-a third neuron has to say "between". Its inputs are the outputs of the first
-two. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# A Network of **Three Neurons**
-
-<img class="fig" src="/figures/viz_perceptron_network.svg" style="display:block;margin:0 auto;max-height:280px;">
-
-<div class="grid-3 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-**$h_1$** has weights $(1, 1)$ and bias $-0.5$. It computes OR.
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-**$h_2$** has weights $(1, 1)$ and bias $-1.5$. It computes AND.
-
-</div>
-
-<div class="card card-accent card-glass pad-compact">
-
-**The output** has weights $(1, -1)$ and bias $-0.5$, on the inputs $h_1$ and $h_2$.
-
-</div>
-
-</div>
-
-<div class="note-text mt-sm">
-
-Two inputs, two neurons in between, one output: a 2-2-1 network. The layer in between is called **hidden**, because its outputs are neither inputs nor the result. The network has $3 + 3 + 3 = 9$ parameters, all set by hand here.
-
-</div>
-
-<!--
-Speaker: every circle is the neuron of the second section: a weighted sum, a
-bias, a step. Nothing new has been added except that the output of one neuron
-is the input of another. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# All Four Inputs, **Verified**
-
-<div class="card card-primary card-glass pad-compact mt-sm table-compact">
-
-| $x_1$ | $x_2$ | $z_1 = x_1 + x_2 - 0.5$ | $h_1$ | $z_2 = x_1 + x_2 - 1.5$ | $h_2$ | $z_{\text{out}} = h_1 - h_2 - 0.5$ | $\hat{y}$ | XOR |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 0 | 0 | −0.5 | 0 | −1.5 | 0 | −0.5 | 0 | 0 |
-| 0 | 1 | 0.5 | 1 | −0.5 | 0 | 0.5 | 1 | 1 |
-| 1 | 0 | 0.5 | 1 | −0.5 | 0 | 0.5 | 1 | 1 |
-| 1 | 1 | 1.5 | 1 | 0.5 | 1 | −0.5 | 0 | 0 |
-
-</div>
-
-```py {monaco-run} {autorun:false}
-import numpy as np
-def step(z):
-    return (z > 0).astype(int)
-X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-W1 = np.array([[1, 1], [1, 1]])     # one row per hidden neuron
-b1 = np.array([-0.5, -1.5])
-w2, b2 = np.array([1, -1]), -0.5
-H = step(X @ W1.T + b1)             # hidden outputs h1, h2
-print(H.tolist(), step(H @ w2 + b2))
-```
-
-<!--
-Speaker: the table by hand, then the same in nine lines. The output is
-[[0, 0], [1, 0], [1, 0], [1, 1]] for the hidden layer and [0 1 1 0] for the
-network. Change b1 to [-0.5, -0.5] and see the network fail. (~3 min)
--->
-
----
-hideInToc: true
----
-
-# The Hidden Layer Changes the **Coordinates**
-
-<img class="fig" src="/figures/viz_perceptron_xor_hidden.svg" style="display:block;margin:0 auto;max-height:300px;">
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-**From $(x_1, x_2)$ to $(h_1, h_2)$.** The output neuron does not see the inputs. It sees the two hidden outputs: (0, 0) goes to (0, 0), both (0, 1) and (1, 0) go to (1, 0), and (1, 1) goes to (1, 1).
-
-</div>
-
-<div class="card card-success card-glass pad-compact">
-
-In these coordinates there are three points, and the line $h_1 - h_2 = 0.5$ separates them. The hidden layer has turned a problem that is not linearly separable into one that is.
-
-</div>
-
-</div>
-
-<!--
-Speaker: this is the one idea to take from the last section. A layer of
-neurons computes new coordinates, and in the new coordinates a line is enough.
-(~2 min)
--->
-
----
-hideInToc: true
----
-
-# What Is **Missing**
+# What the Two Rules Do on **XOR**
 
 <div class="grid-2 mt-md gap-md">
 
 <div class="card card-warning card-glass pad-compact">
 
-## ✋ **The nine numbers were set by hand**
+## 🔁 **Rosenblatt's rule**
 
-That was possible because XOR is known in advance to be "OR, but not AND". For data, nobody knows which hidden neurons are needed.
+From zero: 2, 3, then 4 updates in every epoch, the same four for ever. The convergence theorem assumes a separating line; there is none.
 
 </div>
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact">
 
-## 🚫 **Neither rule of this lecture trains them**
+## 〰️ **The logistic neuron**
 
-- Rosenblatt's rule needs a target for every neuron. The data give a target for the output only, and none for $h_1$ and $h_2$
-- Gradient descent needs a slope, and a hidden **step** has none
+The lowest loss is at $w = (0, 0)$, $b = 0$: $\hat{y} = 0.5$ for all four points, loss $\ln 2 = 0.693$. The best one line can do is to know nothing.
 
 </div>
 
@@ -2542,13 +2160,13 @@ That was possible because XOR is known in advance to be "OR, but not AND". For d
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-With sigmoid units in the hidden layer the loss does have a slope in every weight, and the chain rule of this lecture gives it: one more factor for every layer between a weight and the loss.
+Both behave as their mathematics says. A second line, and a neuron that combines two, solve XOR.
 
 </div>
 
 <!--
-Speaker: the lecture stops here, with one neuron understood completely and the
-reason why more are needed. (~2 min)
+**Say:** from any start the logistic neuron ends at zero: by symmetry, any tilt helps two points and hurts the other two by as much.
+(~2 min)
 -->
 
 ---
@@ -2556,94 +2174,41 @@ layout: section
 hideInToc: true
 ---
 
-# **History** in Three Dates
+# **Wrap-up**
 
-Three publications mark what was found, what was shown to be impossible, and how hidden layers came to be trained.
+The answer for 8 December 2025, and how sure it is.
 
 <!--
-Speaker: three dates, each with its source. (~1 min)
+(~0.5 min)
 -->
 
 ---
 hideInToc: true
 ---
 
-<div class="stack-tight">
+# Will It Freeze Tonight: the **Answers**
 
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-## 1958 · **The perceptron**
-
-F. Rosenblatt, *The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain*, Psychological Review 65, 386–408. A unit with adjustable weights that are found from examples: the rule of the third section. The New York Times, 8 July 1958: “The Navy revealed the embryo of an electronic computer today that it expects will be able to walk, talk, see, write, reproduce itself and be conscious of its existence.” It drew one line.
-
-</div>
-
-<div class="card card-warning card-glass pad-compact">
-
-## 1969 · **The limits**
-
-M. Minsky and S. Papert, *Perceptrons: An Introduction to Computational Geometry*, MIT Press. A mathematical study of what a single layer of such units can and cannot compute. XOR, in general the parity of the inputs, is among the things it cannot.
+| Rule | Learned from | Test evenings right, 2023–2025 | 8 Dec 2025: 2.6 °C, 0.85 |
+| --- | --- | --- | --- |
+| Never frost | nothing | 65.4 ± 1.4 % | no frost |
+| Frost below 3.8 °C | every threshold, tried on 2016–2022 | 96.1 ± 0.6 % | frost |
+| Rosenblatt's rule, 5 epochs | 2016–2022 | 95.5 ± 0.6 % | frost, $z = 0.81$ |
+| Logistic neuron, 5 passes | 2016–2022 | 96.1 ± 0.6 % | frost, P = 0.80 |
 
 </div>
 
-<div class="card card-success card-glass pad-compact">
+<div class="card card-success card-glass pad-compact mt-md">
 
-## 1986 · **Training hidden layers**
-
-D. Rumelhart, G. Hinton and R. Williams, *Learning representations by back-propagating errors*, Nature 323, 533–536. Gradient descent for networks with hidden layers of smooth units, by the chain rule.
-
-</div>
+✅ 06:00 on 9 December 2025: −2.0 °C. Every rule that looks at the temperature said frost; the logistic neuron also said how sure.
 
 </div>
 
 <!--
-Speaker: Rosenblatt worked at the Cornell Aeronautical Laboratory. The
-convergence bound of this lecture is from 1962, between the first two dates.
-Seventeen years lie between the proof of the limit and the method that passed
-it. (~2 min)
--->
-
----
-hideInToc: true
----
-
-# What a Modern Network **Keeps**
-
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
-
-## ♻️ **Unchanged**
-
-- The unit: a weighted sum, a bias, then a fixed function of $z$
-- The loss: minus the logarithm of a likelihood
-- The training: the gradient of the loss by the chain rule, and steps of size $\eta$ against it
-- For two classes, the last unit of a network is the logistic neuron of this lecture, with the cross-entropy as its loss
-
-</div>
-
-<div class="card card-secondary card-glass pad-compact">
-
-## 🔄 **Changed**
-
-- The number of units: from 1 here to millions, in layers
-- The function after the sum: the step is gone. Smooth or piecewise-linear functions took its place, such as $\max(0, z)$
-- The number of parameters: 3 in this lecture, more than $10^9$ in large networks
-- The points per update: a random part of the data in place of all of it
-
-</div>
-
-</div>
-
-<div class="card card-info card-glass pad-compact mt-md">
-
-The neuron of this lecture is the building block. What was derived for it, the likelihood, the loss and the gradient, is what is computed for every unit of a large network.
-
-</div>
-
-<!--
-Speaker: the mathematics of this lecture has not been replaced. It is repeated
-many times over. (~2 min)
+**Say:** the opening question in the room's own numbers.
+**Ask:** point at each row: which slide did it come from?
+(~2 min)
 -->
 
 ---
@@ -2656,37 +2221,146 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Compute $z = \mathbf{w} \cdot \mathbf{x} + b$, draw the line $z = 0$, and give the distance $z / \lVert \mathbf{w} \rVert$ of a point from it
+✅ Score a classifier against the **baseline** "never frost" and a **threshold** rule
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Run Rosenblatt's rule by hand, and say what the convergence theorem assumes and what it bounds
+✅ Push an evening through a **neuron**, $z = w_1 x_1 + w_2 x_2 + b$, and draw its **line**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Derive $\sigma' = \sigma\,(1 - \sigma)$, the cross-entropy from the Bernoulli likelihood, and the gradient $(\hat{y} - y)\,\mathbf{x}$
+✅ Apply **Rosenblatt's rule** by hand, and say why it never stops on overlapping classes
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Write the training loop in NumPy, standardise the inputs, and quote a test accuracy with its uncertainty
+✅ Turn $z$ into a probability with the **sigmoid**, and the likelihood into the **cross-entropy**
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Prove from four inequalities that one neuron cannot compute XOR
+✅ Take a step downhill with $(\hat{y} - y)\,x$, and quote a **test accuracy** with its ±
 
 </div>
 
 <div class="card card-success card-glass pad-compact">
 
-✅ Build XOR from three neurons and check it for all four inputs
+✅ Keep a model's numbers in an **object** with `fit` and `predict`, and show that no line computes **XOR**
+
+</div>
+
+</div>
+
+<!--
+**Say:** one card per section of the lecture, each with its numbers from the weather log.
+(~1 min)
+-->
+
+---
+layout: section
+hideInToc: true
+---
+
+# For the **Curious**
+
+When the rule stops, the distance from the line, the slope by the chain rule, where the sigmoid comes from, and three dates.
+
+<!--
+**Say:** optional, for time left at the end or for after the lecture.
+(~0.5 min)
+-->
+
+---
+hideInToc: true
+---
+
+# The Perceptron Convergence **Theorem**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+Write the bias as a weight on a constant input 1: $\tilde{x} = (1, x_1, x_2)$ and $\tilde{w} = (b, w_1, w_2)$ give $z = \tilde{w} \cdot \tilde{x}$. Write the labels as signs: $t = 2y - 1$ is $+1$ or $-1$.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📜 **Assumed**
+
+1. The training set is finite
+2. It is separable with a margin: some $\tilde{w}^*$ of length 1 and some $\gamma > 0$ give $t_i\,(\tilde{w}^* \cdot \tilde{x}_i) \ge \gamma$ for every point
+3. No point is longer than $R$: $\lVert \tilde{x}_i \rVert \le R$
+4. The rule starts from $\tilde{w} = 0$
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## ✅ **Then**
+
+The rule makes at most
+
+$$
+k \le \frac{R^2}{\gamma^2}
+$$
+
+updates, in any order of the points and for any $\eta > 0$. After the last one every point is right.
+
+</div>
+
+</div>
+
+<div class="note-text mt-sm">
+
+The theorem bounds the number of updates, not epochs, and says nothing about classes that overlap. This form of the bound is A. Novikoff's, 1962.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# Proof, Part 1: Each Update Turns $\tilde{w}$ Towards $\tilde{w}^*$
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+An update happens only at a wrong point, and there $y - \hat{y} = t$. So every update is $\tilde{w} \leftarrow \tilde{w} + \eta\,t\,\tilde{x}$.
+
+</div>
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📈 **One update**
+
+The dot product with $\tilde{w}^*$, and assumption 2:
+
+$$
+\begin{aligned}
+\tilde{w}^* \cdot \tilde{w}_{\text{new}} &= \tilde{w}^* \cdot \tilde{w} + \eta\,t\,(\tilde{w}^* \cdot \tilde{x}) \\
+&\ge \tilde{w}^* \cdot \tilde{w} + \eta\,\gamma
+\end{aligned}
+$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **After $k$ updates**
+
+From $\tilde{w} = 0$, each update adds at least $\eta\,\gamma$:
+
+$$
+\tilde{w}^* \cdot \tilde{w}_k \ge k\,\eta\,\gamma
+$$
 
 </div>
 
@@ -2694,17 +2368,431 @@ hideInToc: true
 
 <div class="card card-accent card-glass pad-compact mt-md">
 
-## 🧭 **How the line of 185 was found**
-
-1000 steps against the gradient of the Bernoulli likelihood, the mean of $(\hat{y} - y)\,\mathbf{x}$ over the 200 points: loss from 0.6931 to 0.1616, 185 of 200 right, where no line does better than 92.1 % on new points. Rosenblatt's rule is the same $(y - \hat{y})\,\mathbf{x}$ with a step in place of $\sigma$, one point at a time, and no single line computes XOR.
+**AND**, with $\tilde{w}^* = (-3, 2, 2)/\sqrt{17}$, $\gamma = 1/\sqrt{17} = 0.243$, $\eta = 1$: after the tenth update $\tilde{w} = (-2, 2, 1)$ and $\tilde{w}^* \cdot \tilde{w} = 12/\sqrt{17} = 2.91$, above $10\,\gamma = 2.43$.
 
 </div>
 
-<!--
-Speaker: one neuron, fully understood: its geometry, two ways to train it,
-where the second way comes from, and its limit. The bottom card answers the
-question of the slide Classify by a Threshold or by a Line. (~1 min)
--->
+---
+hideInToc: true
+---
+
+# Proof, Part 2: The Length Grows **Slowly**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **One update**
+
+$$
+\begin{aligned}
+\lVert \tilde{w}_{\text{new}} \rVert^2 &= \lVert \tilde{w} \rVert^2 + 2\,\eta\,t\,(\tilde{w} \cdot \tilde{x}) \\
+&\quad + \eta^2\,\lVert \tilde{x} \rVert^2 \\
+&\le \lVert \tilde{w} \rVert^2 + \eta^2 R^2
+\end{aligned}
+$$
+
+The point was wrong, so $t\,(\tilde{w} \cdot \tilde{x}) \le 0$: the middle term is not positive.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔁 **After $k$ updates**
+
+$$
+\begin{aligned}
+\lVert \tilde{w}_k \rVert^2 &\le k\,\eta^2 R^2 \\
+\lVert \tilde{w}_k \rVert &\le \sqrt{k}\;\eta\,R
+\end{aligned}
+$$
+
+The length grows at most like $\sqrt{k}$.
+
+</div>
+
+</div>
+
+<div class="card card-accent card-glass pad-compact mt-md">
+
+**AND**: the longest point is $(1, 1, 1)$, $R^2 = 3$. After the tenth update $\tilde{w} = (-2, 2, 1)$ has $\lVert \tilde{w} \rVert^2 = 9$, below $10 \cdot 3 = 30$.
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# Proof, Part 3: The Two Bounds **Meet**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🤝 **Combine**
+
+A dot product is at most the product of the lengths, and $\tilde{w}^*$ has length 1:
+
+$$
+k\,\eta\,\gamma \le \tilde{w}^* \cdot \tilde{w}_k \le \lVert \tilde{w}_k \rVert \le \sqrt{k}\;\eta\,R
+$$
+
+so $\sqrt{k} \le R/\gamma$, and $k \le R^2/\gamma^2$.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## 🔢 **AND**
+
+$\gamma^2 = 1/17$, $R^2 = 3$: at most $3 \cdot 17 = 51$ updates. The run needed 10.
+
+</div>
+
+</div>
+
+<div>
+
+<img class="fig" src="/figures/viz_perceptron_proof.svg">
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# $w$ Stands at a Right Angle to the **Line**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## ⊥ **Two points $q_1$, $q_2$ on the line**
+
+$$
+\begin{aligned}
+w \cdot q_1 + b &= 0 \\
+w \cdot q_2 + b &= 0 \\
+\text{subtract:}\quad w \cdot (q_1 - q_2) &= 0
+\end{aligned}
+$$
+
+$q_1 - q_2$ runs along the line, so $w$ is at a right angle to it.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+## ➡️ **$w$ points to the side of class 1**
+
+A step from $x$ to $x + s\,w$ changes $z$ by $s\,\lVert w \rVert^2$, which is positive.
+
+</div>
+
+</div>
+
+<div>
+
+<img class="fig" src="/figures/viz_perceptron_line.svg">
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The **Distance** of a Point from the Line
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📏 **Derivation**
+
+From $x$ straight to the line, to $x_0$, along $w/\lVert w \rVert$, a length $d$:
+
+$$
+x = x_0 + d\,\frac{w}{\lVert w \rVert}
+$$
+
+Dot product with $w$, add $b$, use $w \cdot x_0 + b = 0$:
+
+$$
+z = d\,\lVert w \rVert \quad\Longrightarrow\quad d = \frac{z}{\lVert w \rVert}
+$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **$w = (3, 4)$, $b = -10$**
+
+$x = (4, 2)$: $z = 12 + 8 - 10 = 10$ and $\lVert w \rVert = \sqrt{9 + 16} = 5$, so $d = 2$.
+
+$x = (1, 0.5)$: $z = -5$ and $d = -1$, on the other side.
+
+8 Dec 2025 under the trained neuron: $z = 1.395$, $\lVert w \rVert = 1.917$, $d = 0.73$.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# What $w$ and $b$ **Do**
+
+<div class="card card-info card-glass pad-compact mt-sm">
+
+The direction of $w$ sets the direction of the line; $b$ shifts it, to $\lvert b \rvert / \lVert w \rVert$ from the origin; $w$ and $b$ times 2 leave it where it is, and double every $z$.
+
+</div>
+
+<img class="fig fig-fill mt-sm" src="/figures/viz_perceptron_wb.svg">
+
+---
+hideInToc: true
+class: fill
+---
+
+# The Slope of the **Sigmoid**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## ✏️ **Chain rule, $u = 1 + e^{-z}$**
+
+$$
+\begin{aligned}
+\frac{d}{dz}\,u^{-1} &= -u^{-2} \cdot (-e^{-z}) \\[4pt]
+&= \frac{1}{1 + e^{-z}} \cdot \frac{e^{-z}}{1 + e^{-z}} \\[4pt]
+&= \text{sigmoid}(z)\,\bigl(1 - \text{sigmoid}(z)\bigr)
+\end{aligned}
+$$
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact mt-md">
+
+At $z = 0$: $0.5 \cdot 0.5 = 0.25$, the largest. At $z = 2$: $0.881 \cdot 0.119 = 0.105$. Never zero; small where the neuron is sure.
+
+</div>
+
+</div>
+
+<div>
+
+<img class="fig" src="/figures/viz_perceptron_sigmoid_slope.svg">
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+---
+
+# The Slope of the Loss by the **Chain Rule**
+
+<div class="card card-primary card-glass pad-compact mt-sm">
+
+$$
+w_1 \;\to\; z \;\to\; \hat{y} = \text{sigmoid}(z) \;\to\; \text{loss} = -\bigl[\,y \ln \hat{y} + (1 - y) \ln (1 - \hat{y})\bigr]
+$$
+
+so
+
+$$
+\frac{\partial\,\text{loss}}{\partial w_1} = \frac{\partial\,\text{loss}}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial z} \cdot \frac{\partial z}{\partial w_1}
+$$
+
+</div>
+
+<div class="grid-3 mt-md gap-md">
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 📉 **Loss by output**
+
+$$
+\begin{aligned}
+&-\frac{y}{\hat{y}} + \frac{1 - y}{1 - \hat{y}} \\[4pt]
+&= \frac{\hat{y} - y}{\hat{y}\,(1 - \hat{y})}
+\end{aligned}
+$$
+
+</div>
+
+<div class="card card-accent card-glass pad-compact">
+
+## 〰️ **Output by sum**
+
+$$
+\hat{y}\,(1 - \hat{y})
+$$
+
+the slope of the sigmoid
+
+</div>
+
+<div class="card card-info card-glass pad-compact">
+
+## ➕ **Sum by weight**
+
+$$
+\frac{\partial z}{\partial w_1} = x_1, \quad \frac{\partial z}{\partial b} = 1
+$$
+
+</div>
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+The product: $\hat{y}\,(1 - \hat{y})$ cancels, and $\partial\,\text{loss}/\partial w_1 = (\hat{y} - y)\,x_1$. With the squared residual $\tfrac{1}{2}(\hat{y} - y)^2$ it would not cancel: for $y = 1$, $\hat{y} = 0.01$ the slope by $z$ would be −0.0098 in place of −0.99.
+
+</div>
+
+---
+hideInToc: true
+---
+
+# $z$ Is the Logarithm of the **Odds**
+
+<div class="grid-2 mt-md gap-md">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 📐 **Solve $\hat{y} = 1/(1 + e^{-z})$ for $z$**
+
+$$
+z = \ln \frac{\hat{y}}{1 - \hat{y}}
+$$
+
+$\hat{y}/(1 - \hat{y})$ is the **odds** of frost. The model says: the log-odds are a straight function of the inputs.
+
+</div>
+
+<div class="card card-secondary card-glass pad-compact">
+
+## 🔢 **The trained neuron**
+
+8 Dec 2025: $\hat{y} = 0.80$, odds $0.80/0.20 = 4$, $\ln 4 = 1.39 = z$.
+
+One degree warmer: $z$ falls by $w_1 = 0.877$, the odds by a factor $e^{0.877} = 2.4$.
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# Where the Sigmoid **Comes From**
+
+<div class="fig-fill grid-2 mt-sm gap-md">
+
+<div>
+
+<div class="card card-primary card-glass pad-compact">
+
+## 🔔 **Two Gaussian classes**
+
+One input; class 0 Gaussian around $\mu_0$, class 1 around $\mu_1$, both of width 1, equally frequent. Bayes' rule:
+
+$$
+P(1 \mid x) = \frac{p(x \mid 1)}{p(x \mid 1) + p(x \mid 0)} = \frac{1}{1 + e^{-z}}
+$$
+
+with $z = (\mu_1 - \mu_0)\,x - \tfrac{1}{2}(\mu_1^2 - \mu_0^2)$: the squares of $x$ cancel, $z$ is a straight function of $x$.
+
+</div>
+
+<div class="card card-success card-glass pad-compact mt-md">
+
+For $\mu_0 = 0$, $\mu_1 = 2$: $z = 2x - 2$.
+
+</div>
+
+</div>
+
+<div>
+
+<img class="fig" src="/figures/viz_perceptron_posterior.svg">
+
+</div>
+
+</div>
+
+---
+hideInToc: true
+class: fill
+---
+
+# Humidity in Percent: the Rule **Fails**
+
+<div class="fig-fill grid-side mt-sm">
+
+<div class="card card-warning card-glass pad-compact">
+
+⚠️ The same rule with $x_2 = 85$ in place of 0.85. One update changes $w_2$ by about 80 and $b$ by 1: $w_2 x_2$ outgrows everything, and after every epoch the neuron says frost on every evening, 33.3 %. The fraction keeps the inputs and the bias on similar scales.
+
+</div>
+
+<img class="fig" src="/figures/viz_perceptron_percent.svg">
+
+</div>
+
+---
+hideInToc: true
+---
+
+# **History** in Three Dates
+
+<div class="stack-tight">
+
+<div class="card card-primary card-glass pad-compact">
+
+## 1958 · **The perceptron**
+
+F. Rosenblatt, *The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain*, Psychological Review 65, 386–408. Weights found from examples by the rule of this lecture; the press of the quote at the start. It drew one line.
+
+</div>
+
+<div class="card card-warning card-glass pad-compact">
+
+## 1969 · **The limits**
+
+M. Minsky and S. Papert, *Perceptrons*, MIT Press: what one layer of such units can and cannot compute. XOR, and in general the parity of the inputs, it cannot.
+
+</div>
+
+<div class="card card-success card-glass pad-compact">
+
+## 1986 · **Training hidden layers**
+
+D. Rumelhart, G. Hinton and R. Williams, *Learning representations by back-propagating errors*, Nature 323, 533–536: the slope of the loss by the chain rule, through layers of smooth units.
+
+</div>
+
+</div>
 
 ---
 layout: section
@@ -2713,14 +2801,14 @@ hideInToc: true
 
 # Check **Yourself**
 
-Questions on this lecture, for after it. They are not part of the lecture time.
+Questions on this lecture, for after it.
 
 ---
 hideInToc: true
 ---
 
 <MCQ
-  question="A neuron with a step has weights w = (2, −3) and bias b = 1. What are z and the output for the input x = (1, 2)?"
+  question="A neuron with a step has w1 = 2, w2 = −3 and b = 1. What are z and the output for the input x = (1, 2)?"
   :options="[
     'z = 9, output 1',
     'z = −3, output 0',
@@ -2736,15 +2824,15 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A neuron has w = (6, 8) and b = −5. How far is the point x = (2, 1) from its decision boundary?"
+  question="Of 1000 test evenings, 900 had no frost. A classifier is right on 890 of them. What does this say?"
   :options="[
-    '15',
-    '0.5',
-    '1.5',
-    '3'
+    'It is good: 89 % right',
+    'It is worse than the rule never frost, which is right on 900',
+    'Nothing, without the training accuracy',
+    'It is right on 890 of the 100 frost evenings'
   ]"
-  :correct="2"
-  explanation="z = 12 + 8 − 5 = 15 and the length of w is the square root of 36 + 64, which is 10. The distance is z divided by the length of w: 1.5. It is positive, so the point is on the side of class 1."
+  :correct="1"
+  explanation="Never frost is right on every evening without frost: 900 of 1000, 90 %. A classifier at 89 % does worse than a rule that ignores its inputs. The baseline comes before any accuracy is praised."
 />
 
 ---
@@ -2752,7 +2840,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="Rosenblatt's rule with learning rate 1. The weights are w = (1, −1), b = 0. The next point is x = (0, 1) with target 1. What are the weights after this step?"
+  question="Rosenblatt's rule with learning rate 1. The numbers are w = (1, −1), b = 0. The next point is x = (0, 1) with label 1. What are the numbers after this step?"
   :options="[
     'w = (1, −1), b = 0: the point is already right',
     'w = (1, −2), b = −1',
@@ -2760,7 +2848,7 @@ hideInToc: true
     'w = (1, 0), b = 1'
   ]"
   :correct="3"
-  explanation="z = 1 · 0 + (−1) · 1 + 0 = −1, so the output is 0 and the target is 1: y − ŷ = +1. The rule adds x to w and 1 to b: w = (1, 0), b = 1. For the same point z is now 1."
+  explanation="z = 1 · 0 + (−1) · 1 + 0 = −1, so the output is 0 and the label is 1: y − ŷ = +1. The rule adds x to w and 1 to b: w = (1, 0), b = 1. For the same point z is now 1."
 />
 
 ---
@@ -2768,7 +2856,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="A logistic neuron gives ŷ = 0.8 for a point whose label is 0. What is the cross-entropy loss of this point?"
+  question="A logistic neuron gives ŷ = 0.8 for an evening without frost (y = 0). What is the cross-entropy loss of this evening?"
   :options="[
     '1.609',
     '0.223',
@@ -2776,7 +2864,7 @@ hideInToc: true
     '0.64'
   ]"
   :correct="0"
-  explanation="For y = 0 the loss is −ln(1 − ŷ) = −ln 0.2 = 1.609. The value 0.223 is −ln 0.8, the loss if the label were 1. The neuron gave the true label a probability of 0.2."
+  explanation="For y = 0 the loss is −ln(1 − ŷ) = −ln 0.2 = 1.609. The value 0.223 is −ln 0.8, the loss had the frost come. The neuron gave what happened a probability of 0.2."
 />
 
 ---
@@ -2784,7 +2872,7 @@ hideInToc: true
 ---
 
 <MCQ
-  question="For one point x = (2, −1) with label 1, a logistic neuron gives ŷ = 0.3. What is the gradient of the loss with respect to the weights?"
+  question="One evening has x = (2, −1) and label y = 1, and a logistic neuron gives ŷ = 0.3. What is the slope of its loss in w1 and w2?"
   :options="[
     '(1.4, −0.7)',
     '(0.6, −0.3)',
@@ -2792,7 +2880,39 @@ hideInToc: true
     '(−0.7, −0.7)'
   ]"
   :correct="2"
-  explanation="The gradient is (ŷ − y) x = (0.3 − 1) · (2, −1) = (−1.4, 0.7), and −0.7 with respect to the bias. Gradient descent subtracts it, so w1 rises and w2 falls, and z for this point rises."
+  explanation="The slope is (ŷ − y) x = (0.3 − 1) · (2, −1) = (−1.4, 0.7), and −0.7 in b. A step downhill subtracts it: w1 rises, w2 falls, and z of this evening rises."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="A rule is right on 900 of 1000 test evenings. What is its accuracy with its standard error?"
+  :options="[
+    '90.0 ± 0.9 %',
+    '90.0 ± 9 %',
+    '90.0 ± 0.09 %',
+    '90.0 ± 3 %'
+  ]"
+  :correct="0"
+  explanation="The standard error of a share p of N is the square root of p(1 − p)/N: the square root of 0.9 · 0.1 / 1000 is 0.0095, so 90.0 ± 0.9 %. A second rule at 90.5 % on the same evenings is not shown to be better."
+/>
+
+---
+hideInToc: true
+---
+
+<MCQ
+  question="After `model = Perceptron()` and `model.fit(xs, ys, 5)`, what has `fit` changed?"
+  :options="[
+    'The lists xs and ys',
+    'model.w and model.b, the numbers the object holds',
+    'Nothing: fit returns new numbers, which have to be stored',
+    'The class Perceptron, for every model made from it'
+  ]"
+  :correct="1"
+  explanation="fit runs the rule over the examples and changes self.w and self.b, the numbers of this one object. Another Perceptron() keeps its own numbers, and predict uses the ones of the object before the dot."
 />
 
 ---
@@ -2803,10 +2923,10 @@ hideInToc: true
   question="XNOR is 1 when the two inputs are equal: for (0, 0) and (1, 1). Can a single neuron compute it?"
   :options="[
     'Yes, with negative weights',
-    'No: it is XOR with the two classes exchanged, and the same four inequalities contradict each other',
+    'No: it is XOR with the labels exchanged, and the same four inequalities contradict each other',
     'Yes, if it is trained for enough epochs',
     'Only with a sigmoid in place of the step'
   ]"
   :correct="1"
-  explanation="The conditions are b > 0, w1 + b ≤ 0, w2 + b ≤ 0 and w1 + w2 + b > 0. The middle two add to w1 + w2 + 2b ≤ 0, the outer two to w1 + w2 + 2b > 0. No weights exist, whatever the training and whatever the function after the sum."
+  explanation="The conditions are b > 0, w1 + b ≤ 0, w2 + b ≤ 0 and w1 + w2 + b > 0. The middle two add to w1 + w2 + 2b ≤ 0, the outer two to w1 + w2 + 2b > 0. No numbers exist, whatever the training and whatever the function after the sum."
 />
