@@ -15,8 +15,6 @@ after its Recap.
 - `viz_advanced_corner`: the four columns of the LHCb file `D0_KPi.csv` as a
   corner plot: every pair as a 2D histogram, every column alone on the
   diagonal.
-- `viz_advanced_rotate.gif`: the four-variable scatter of beyond.py turning
-  about its vertical axis: depth from motion.
 
 The weather figures read `weather.csv` with the functions of beyond.py (the
 lecture's `weather.py` with the column as a parameter); the 120 hours of
@@ -31,14 +29,13 @@ from datetime import date
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.collections import LineCollection
 from matplotlib.colors import BoundaryNorm, LogNorm, Normalize
 
 import style
-from beyond import (BG, D0, HUMIDITY, MONTHS, PATH, TEMP, WIND, _dark_3d,
-                    _month_starts, _season_cmap, _temp_norm, daily_means,
-                    day_hour_grid, group, mean)
+from beyond import (BG, CRISP, D0, HUMIDITY, MONTHS, PATH, TEMP, WIND, PlaneCells,
+                    _dark_3d, _month_starts, _season_cmap, _temp_norm, as_cells,
+                    daily_means, day_hour_grid, finish, group, mean, vector_colorbar)
 
 SIZE = (9.4, 3.3)
 YEARS = list(range(2016, 2026))
@@ -52,7 +49,6 @@ HUM_LEVELS = [70, 80, 90]
 
 # The 3D slices: view, box aspect, zoom, Axes rect and colorbar x, as in
 # beyond.py (a 3D Axes is placed by hand and saved on its full canvas).
-DPI_3D = 200
 SLICE_SIZE = (9.4, 3.9)
 VIEW_SL, BOX_SL, ZOOM_SL = (22, -64), (3.6, 1.2, 1.9), 1.2
 AX_SL, CBAR_SL = [-0.03, 0.07, 0.88, 0.98], 0.8
@@ -69,9 +65,6 @@ CORNER = [
 CORNER_BINS = 55
 SIGNAL = (1845, 1885)                      # MeV/c^2, about +-20 around 1865
 SIDEBANDS = ((1810, 1830), (1900, 1920))   # 40 MeV/c^2 of background
-
-# The rotating scatter: one turn in ROT_FRAMES frames.
-ROT_FRAMES, ROT_FPS = 36, 12
 
 
 # ---------------------------------------------------------------------------
@@ -148,15 +141,17 @@ def _contours():
     fig, ax = plt.subplots(figsize=SIZE)
     im = ax.imshow(temp, aspect="auto", origin="lower", cmap="RdBu_r",
                    norm=_temp_norm(temp), interpolation="none")
+    as_cells(im, "temperature")
     cs = ax.contour(np.arange(len(days)), np.arange(24), hum, levels=HUM_LEVELS,
                     colors=BG, linewidths=1.4)
     ax.clabel(cs, fmt="%d %%", fontsize=11, inline_spacing=6)
-    fig.colorbar(im, ax=ax, label="mean temperature (°C)", pad=0.015)
+    vector_colorbar(fig.colorbar(im, ax=ax, label="mean temperature (°C)", pad=0.015))
     ax.set_xticks(_month_starts(days), MONTHS)
     ax.set_yticks([0, 6, 12, 18], HOURS)
     ax.set(xlabel="day of the year", ylabel="hour of the day")
     ax.grid(False)
     style.save(fig, "viz_advanced_contours")
+    finish("viz_advanced_contours")
 
 
 # ---------------------------------------------------------------------------
@@ -167,20 +162,28 @@ def _slices():
     grids = year_grids()
     norm = Normalize(-30, 30)
     cmap = plt.get_cmap("RdBu_r")
-    fig = plt.figure(figsize=SLICE_SIZE, dpi=DPI_3D, layout="none")
+    fig = plt.figure(figsize=SLICE_SIZE, layout="none")
     ax = fig.add_axes(AX_SL, projection="3d")
+    below = []
     for year in YEARS:
         g = grids[year]
+        colours = cmap(norm(g), bytes=True)
+        colours[np.isnan(g)] = 0                  # an hour not measured: a hole
         x, y = np.meshgrid(np.arange(g.shape[1] + 1), np.arange(25))
-        colours = cmap(norm(g))
-        colours[np.isnan(g)] = (0, 0, 0, 0)
-        ax.plot_surface(x, y, np.full(x.shape, year), facecolors=colours,
-                        rcount=25, ccount=g.shape[1] + 1, linewidth=0,
-                        antialiased=False, shade=False, rasterized=True,
-                        clip_on=False)
+        had_data = ax.has_data()
+        # each year a plane of vector cells: its outline smooth, its cells
+        # crisp; the cells hidden under the plane above are left out
+        plane = [PlaneCells(x[0], y[:, 0], year, colours, outline=True, clip_on=False),
+                 PlaneCells(x[0], y[:, 0], year, colours, clip_on=False, gid=CRISP + str(year))]
+        for p in plane:
+            ax.add_collection(p, autolim=False)
+        for p in below:
+            p.above = plane[1]
+        below = plane
+        ax.auto_scale_xyz(x, y, np.full(x.shape, year), had_data)   # as plot_surface does
     sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
-    fig.colorbar(sm, cax=fig.add_axes([CBAR_SL, 0.2, 0.012, 0.6]),
-                 label="temperature (°C)")
+    vector_colorbar(fig.colorbar(sm, cax=fig.add_axes([CBAR_SL, 0.2, 0.012, 0.6]),
+                                 label="temperature (°C)"))
     ax.view_init(elev=VIEW_SL[0], azim=VIEW_SL[1])
     ax.set_box_aspect(BOX_SL, zoom=ZOOM_SL)
     ax.set_xticks(MONTH_DAYS[::3], MONTHS[::3])
@@ -192,6 +195,7 @@ def _slices():
     ax.set_zlabel("year", labelpad=8)
     _dark_3d(ax)
     style.save(fig, "viz_advanced_slices", tight=False)
+    finish("viz_advanced_slices")
 
 
 # ---------------------------------------------------------------------------
@@ -206,14 +210,16 @@ def _multiples():
         g = grids[year]
         im = ax.imshow(g, aspect="auto", origin="lower", cmap="RdBu_r", norm=norm,
                        interpolation="none", extent=(0, g.shape[1], 0, 24))
+        as_cells(im, str(year))
         ax.set_title(str(year), fontsize=11, pad=3)
         ax.grid(False)
     for ax in axs[1]:
         ax.set_xticks(MONTH_DAYS[::3], MONTHS[::3])
     for ax in axs[:, 0]:
         ax.set_yticks([0, 12], ["00:00", "12:00"])
-    fig.colorbar(im, ax=axs, label="temperature (°C)", pad=0.015, aspect=25)
+    vector_colorbar(fig.colorbar(im, ax=axs, label="temperature (°C)", pad=0.015, aspect=25))
     style.save(fig, "viz_advanced_multiples")
+    finish("viz_advanced_multiples")
 
 
 # ---------------------------------------------------------------------------
@@ -242,8 +248,7 @@ def _parallel():
     norm = BoundaryNorm(np.arange(0.5, 13), cmap.N)
 
     fig, ax = plt.subplots(figsize=SIZE)
-    lc = LineCollection(segs, cmap=cmap, norm=norm, linewidths=0.35, alpha=0.3,
-                        rasterized=True)
+    lc = LineCollection(segs, cmap=cmap, norm=norm, linewidths=0.35, alpha=0.3)
     lc.set_array(month)
     ax.add_collection(lc)
     for x, ((label, _, ticks), (lo, hi)) in enumerate(zip(PARALLEL, lims)):
@@ -261,7 +266,9 @@ def _parallel():
     bar.set_ticks(range(1, 13), labels=MONTHS)
     bar.ax.tick_params(labelsize=9)
     bar.solids.set_alpha(1)
+    vector_colorbar(bar)
     style.save(fig, "viz_advanced_parallel")
+    finish("viz_advanced_parallel")
 
 
 # ---------------------------------------------------------------------------
@@ -294,8 +301,8 @@ def _corner():
             else:
                 *_, im = ax.hist2d(cols[j], cols[i], bins=CORNER_BINS,
                                    range=[CORNER[j][3], CORNER[i][3]],
-                                   cmap="viridis", norm=LogNorm(vmin=1, vmax=1000),
-                                   rasterized=True)
+                                   cmap="viridis", norm=LogNorm(vmin=1, vmax=1000))
+                as_cells(im, f"{i}{j}")
             ax.set_xlim(CORNER[j][3])
             if i == n - 1:
                 ax.set_xlabel(CORNER[j][1], fontsize=10)
@@ -309,46 +316,15 @@ def _corner():
     axs[0, 2].set_visible(True)
     axs[0, 2].axis("off")
     cax = axs[0, 2].inset_axes([0.25, 0.35, 1.7, 0.14])
-    fig.colorbar(im, cax=cax, orientation="horizontal", label="candidates per bin")
+    vector_colorbar(fig.colorbar(im, cax=cax, orientation="horizontal",
+                                 label="candidates per bin"))
     style.save(fig, "viz_advanced_corner")
+    finish("viz_advanced_corner")
 
 
 # ---------------------------------------------------------------------------
 # 6. The four-variable scatter, turning
 # ---------------------------------------------------------------------------
-
-def _rotate():
-    _, temp, hum, wind, month = daily_means()
-    cmap = _season_cmap()
-    norm = BoundaryNorm(np.arange(0.5, 13), cmap.N)
-    size = style.SIZES.get("viz_advanced_rotate", (6.2, 4.3))
-    fig = plt.figure(figsize=size, dpi=100, layout="none")
-    fig.patch.set_facecolor(BG)
-    ax = fig.add_axes([0.02, 0.0, 0.8, 1.0], projection="3d")
-    ax.set_facecolor(BG)
-    pts = ax.scatter(temp, hum, wind, c=month, cmap=cmap, norm=norm, s=3,
-                     linewidths=0, alpha=0.9, depthshade=False)
-    bar = fig.colorbar(pts, cax=fig.add_axes([0.86, 0.12, 0.018, 0.76]), label="month")
-    bar.set_ticks(range(1, 13), labels=MONTHS)
-    bar.ax.tick_params(labelsize=9)
-    ax.set_box_aspect((1.6, 1.2, 1.0), zoom=0.92)
-    ax.set_xlabel("temperature (°C)", labelpad=4)
-    ax.set_ylabel("humidity (%)", labelpad=4)
-    ax.set_zlabel("wind (m/s)", labelpad=2)
-    _dark_3d(ax)
-
-    def draw(i):
-        ax.view_init(elev=18, azim=-55 + 360 * i / ROT_FRAMES)
-        return (pts,)
-
-    ani = FuncAnimation(fig, draw, frames=ROT_FRAMES)
-    style.OUT.mkdir(parents=True, exist_ok=True)
-    out = style.OUT / "viz_advanced_rotate.gif"
-    ani.save(out, writer=PillowWriter(fps=ROT_FPS),
-             savefig_kwargs={"transparent": False, "facecolor": BG})
-    plt.close(fig)
-    print(f"  + {out.name}")
-
 
 FIGURES = {
     "viz_advanced_contours": _contours,
@@ -356,7 +332,6 @@ FIGURES = {
     "viz_advanced_multiples": _multiples,
     "viz_advanced_parallel": _parallel,
     "viz_advanced_corner": _corner,
-    "viz_advanced_rotate": _rotate,
 }
 
 

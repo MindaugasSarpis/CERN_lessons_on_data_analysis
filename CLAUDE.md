@@ -15,7 +15,7 @@ pnpm install                  # pnpm pinned in package.json (`packageManager`); 
 pnpm dev 5                    # dev-serve ONE deck (number, slug or substring); `pnpm dev` lists the decks
 pnpm review 7                 # one deck: build, overflow gate, screenshots, contact sheets, timing line
 pnpm review 7 --since prev    # + what changed since the run before (or a folder, or a git ref); --from N --to M
-pnpm qa                       # every deck at base '/' + overflow gate + landing smoke test (scripts/qa-all.mjs)
+pnpm qa                       # every deck at base '/' + overflow gate + fidelity gate (check-fidelity.mjs) + landing smoke test
 pnpm qa --only 06-version-control        # one deck
 pnpm qa --changed-since origin/main      # decks whose slides changed (CI: vs the last green main)
 pnpm qa:shots                 # same + .qa-shots/<slug>/slide-NNN.png

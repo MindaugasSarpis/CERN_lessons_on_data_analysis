@@ -133,7 +133,12 @@ def _mtcars_corr_heatmap():
     norm = mcolors.Normalize(vmin=-1, vmax=1)
 
     fig, ax = style.new_fig(6.6, 5.8)
-    im = ax.imshow(corr.values, cmap=cmap, norm=norm, aspect="auto")
+    # the cells where imshow would put them, as vector cells (an image inside
+    # the SVG turns grainy on the projector), each edged in its own colour
+    n = len(cols)
+    im = ax.pcolormesh(np.arange(n + 1) - 0.5, np.arange(n + 1) - 0.5, corr.values,
+                       cmap=cmap, norm=norm, edgecolors="face")
+    ax.set(xlim=(-0.5, n - 0.5), ylim=(n - 0.5, -0.5))
     ax.set_xticks(range(len(cols)))
     ax.set_xticklabels([short[c] for c in cols], rotation=40, ha="right")
     ax.set_yticks(range(len(cols)))
@@ -150,6 +155,9 @@ def _mtcars_corr_heatmap():
             ax.text(j, i, f"{v:.2f}", ha="center", va="center",
                     fontsize=8.5, color=txt_color)
     cbar = fig.colorbar(im, ax=ax, shrink=0.85, pad=0.03)
+    # a colour bar of many colours is an image in matplotlib's SVG; keep it vector
+    cbar.solids.set_rasterized(False)
+    cbar.solids.set_edgecolor("face")
     cbar.outline.set_visible(False)
     cbar.ax.tick_params(colors=style.DIM, labelsize=8)
     ax.set_title("Correlation Matrix — mpg Dataset")

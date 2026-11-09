@@ -38,12 +38,52 @@ L 7.2 84.71952
 z
 " style="fill: none"/>
    </g>
-   <g clip-path="url(#p59dd0ff60a)">
-    <image xlink:href="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAlIAAABPCAYAAAAgCCsfAAABr0lEQVR4nO3WsQ2BYQBF0Z8RdDpbGEBrCTGBToNEYRW9VczAFBJ2uPk65wzwilfd2en5+U4MdXzvPTrYYbX16UDXx9Kfg90Xa58OtttcfDrY63zz6WDz0YMAAP9CSAEAREIKACASUgAAkZACAIiEFABAJKQAACIhBQAQCSkAgEhIAQBEQgoAIBJSAACRkAIAiIQUAEAkpAAAIiEFABAJKQCASEgBAERCCgAgElIAAJGQAgCIhBQAQCSkAAAiIQUAEAkpAIBISAEAREIKACASUgAAkZACAIiEFABAJKQAACIhBQAQCSkAgEhIAQBEQgoAIBJSAACRkAIAiIQUAEAkpAAAIiEFABAJKQCASEgBAERCCgAgElIAAJGQAgCIhBQAQCSkAAAiIQUAEAkpAIBISAEAREIKACASUgAAkZACAIiEFABAJKQAACIhBQAQCSkAgEhIAQBEQgoAIBJSAACRkAIAiIQUAEAkpAAAIiEFABAJKQCASEgBAERCCgAgElIAAJGQAgCIhBQAQCSkAAAiIQUAEAkpAIBISAEAREIKACASUgAAkZACAIiEFADA1PwAp1QL0DGaGTAAAAAASUVORK5CYII=" id="image971484e6cc" transform="scale(1 -1) translate(0 -56.88)" x="7.2" y="-27.83952" width="427.68" height="56.88"/>
-   </g>
    <g id="matplotlib.axis_1"/>
    <g id="matplotlib.axis_2"/>
+   <g id="QuadMesh_1">
+    <path d="M 7.2 27.992 
+L 68.262789 27.992 
+L 68.262789 84.71952 
+L 7.2 84.71952 
+L 7.2 27.992 
+" clip-path="url(#p59dd0ff60a)" style="fill: #7dd3fc; stroke: #7dd3fc; stroke-width: 0.8"/>
+    <path d="M 68.262789 27.992 
+L 129.325577 27.992 
+L 129.325577 84.71952 
+L 68.262789 84.71952 
+L 68.262789 27.992 
+" clip-path="url(#p59dd0ff60a)" style="fill: #f5b95f; stroke: #f5b95f; stroke-width: 0.8"/>
+    <path d="M 129.325577 27.992 
+L 190.388366 27.992 
+L 190.388366 84.71952 
+L 129.325577 84.71952 
+L 129.325577 27.992 
+" clip-path="url(#p59dd0ff60a)" style="fill: #66d9ab; stroke: #66d9ab; stroke-width: 0.8"/>
+    <path d="M 190.388366 27.992 
+L 251.451154 27.992 
+L 251.451154 84.71952 
+L 190.388366 84.71952 
+L 190.388366 27.992 
+" clip-path="url(#p59dd0ff60a)" style="fill: #e88bc4; stroke: #e88bc4; stroke-width: 0.8"/>
+    <path d="M 251.451154 27.992 
+L 312.513943 27.992 
+L 312.513943 84.71952 
+L 251.451154 84.71952 
+L 251.451154 27.992 
+" clip-path="url(#p59dd0ff60a)" style="fill: #8f9dfb; stroke: #8f9dfb; stroke-width: 0.8"/>
+    <path d="M 312.513943 27.992 
+L 373.576731 27.992 
+L 373.576731 84.71952 
+L 312.513943 84.71952 
+L 312.513943 27.992 
+" clip-path="url(#p59dd0ff60a)" style="fill: #f0e07a; stroke: #f0e07a; stroke-width: 0.8"/>
+    <path d="M 373.576731 27.992 
+L 434.63952 27.992 
+L 434.63952 84.71952 
+L 373.576731 84.71952 
+L 373.576731 27.992 
+" clip-path="url(#p59dd0ff60a)" style="fill: #d55e00; stroke: #d55e00; stroke-width: 0.8"/>
+   </g>
    <g id="text_1">
     <!-- Categorical — unordered -->
     <g style="fill: #e6edf6" transform="translate(143.452963 19.992) scale(0.13 -0.13)">

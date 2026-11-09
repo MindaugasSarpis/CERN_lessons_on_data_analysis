@@ -349,7 +349,7 @@ def _weather_strip():
     for i, g in enumerate(SEASON_ORDER):
         pick = rng.choice(np.array(data[g]), 400, replace=False)
         ax.scatter(i + rng.uniform(-0.22, 0.22, pick.size), pick, s=4, alpha=0.6,
-                   color=SEASON_COLOR[g], linewidths=0, rasterized=True)
+                   color=SEASON_COLOR[g], linewidths=0)
     _weather_axes(ax)
     ax.set_title("Strip, 400 hours each")
     style.save(fig, "viz_distributions_ii_weather_strip")

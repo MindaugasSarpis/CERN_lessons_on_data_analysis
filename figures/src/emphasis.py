@@ -17,6 +17,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.patches import PathPatch
+from matplotlib.path import Path
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3D projection)
 
 import style
@@ -26,6 +28,27 @@ RNG = np.random.default_rng(2024)
 # Single-hue sequential ramp for hex/density bins: near-invisible on the dark
 # canvas at low count, up to full course-cyan at the top of the range.
 SEQ_CMAP = LinearSegmentedColormap.from_list("course_seq", ["#111a26", style.ACCENT])
+
+
+def _dots(ax, x, y, size, color) -> None:
+    """An opaque scatter of one colour as one vector path of round dots: each
+    point a stroke of length 0 with round caps, as wide as the marker
+    (sqrt(size) points). It draws what ax.scatter(x, y, s=size, color=color,
+    linewidths=0) draws, vector (an image inside the SVG turns grainy on the
+    projector) but in one path, not one <use> per point: the 20,000 flights
+    take 1 MB instead of 1.7 MB. A point given twice is one dot."""
+    pts = np.unique(np.column_stack([x, y]), axis=0)
+    path = Path(np.repeat(pts, 2, axis=0), np.tile([Path.MOVETO, Path.LINETO], len(pts)))
+    path.should_simplify = False    # keep the zero-length strokes
+    ax.add_patch(PathPatch(path, facecolor="none", edgecolor=color,
+                           linewidth=np.sqrt(size), capstyle="round"))
+
+
+def _vector_colorbar(cb) -> None:
+    """A colour bar of many colours is an image in matplotlib's SVG; keep its
+    cells vector, each edged in its own colour so no seam shows."""
+    cb.solids.set_rasterized(False)
+    cb.solids.set_edgecolor("face")
 
 
 def _style_3d_axes(ax) -> None:
@@ -58,9 +81,7 @@ def _flight_delays(n: int = 20_000):
 def _overplot_points():
     dep, arr = _flight_delays()
     fig, ax = style.new_fig(7, 5)
-    fig.set_dpi(150)  # rasterized point cloud needs real resolution
-    ax.scatter(dep, arr, s=6, color=style.ACCENT, alpha=1.0, linewidths=0,
-               rasterized=True)  # 20k vector <use> tags would bloat the SVG
+    _dots(ax, dep, arr, 6, style.ACCENT)
     ax.set_xlim(-30, 150)
     ax.set_ylim(-60, 180)
     ax.set_xlabel("Departure delay (min)")
@@ -80,6 +101,7 @@ def _overplot_hexbin():
                     extent=(-30, 150, -60, 180), linewidths=0.15,
                     edgecolors=style.GRID)
     cb = fig.colorbar(hb, ax=ax, pad=0.02)
+    _vector_colorbar(cb)
     cb.set_label("Flights per bin", color=style.FG)
     cb.ax.yaxis.set_tick_params(color=style.DIM, labelcolor=style.DIM)
     cb.outline.set_edgecolor(style.GRID)
@@ -109,11 +131,9 @@ def _survey_grid(n: int = 3000):
 def _three_fixes():
     x, y = _survey_grid()
     fig, axes = plt.subplots(1, 3, figsize=(11.5, 4.2))
-    fig.set_dpi(150)  # rasterized scatter panels need real resolution
 
     ax = axes[0]
-    ax.scatter(x, y, s=26, color=style.ACCENT, alpha=1.0, linewidths=0,
-               rasterized=True)
+    _dots(ax, x, y, 26, style.ACCENT)
     ax.set_title("Raw scatter", fontsize=13)
     ax.set_xlabel("Question A")
     ax.set_ylabel("Question B")
@@ -121,8 +141,7 @@ def _three_fixes():
     ax = axes[1]
     jx = x + RNG.uniform(-0.35, 0.35, x.size)
     jy = y + RNG.uniform(-0.35, 0.35, y.size)
-    ax.scatter(jx, jy, s=18, color=style.ACCENT, alpha=0.12, linewidths=0,
-               rasterized=True)
+    ax.scatter(jx, jy, s=18, color=style.ACCENT, alpha=0.12, linewidths=0)
     ax.set_title("Jitter + alpha", fontsize=13)
     ax.set_xlabel("Question A")
 
@@ -133,6 +152,7 @@ def _three_fixes():
     ax.set_title("Hexagonal bins", fontsize=13)
     ax.set_xlabel("Question A")
     cb = fig.colorbar(hb, ax=ax, pad=0.03, fraction=0.06)
+    _vector_colorbar(cb)
     cb.set_label("people per cell", color=style.FG)
     cb.ax.yaxis.set_tick_params(color=style.DIM, labelcolor=style.DIM)
 

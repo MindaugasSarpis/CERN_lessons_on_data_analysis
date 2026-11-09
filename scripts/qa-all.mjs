@@ -63,6 +63,13 @@ for (const d of decks) {
   else summary.push(`✓ ${d.slug}`);
 }
 
+// 2b) Fidelity gate (scripts/check-fidelity.mjs): every figure the decks show
+//     is vector; a bitmap only when scripts/fidelity-allow.json says why.
+if (decks.length) {
+  const fid = spawnSync('node', [join(ROOT, 'scripts', 'check-fidelity.mjs'), '--only', decks.map((d) => d.slug).join(',')], { cwd: ROOT, stdio: 'inherit' });
+  if (fid.status !== 0) { bad++; summary.push('✗ fidelity'); } else summary.push('✓ fidelity');
+}
+
 // 3) Overview gate (scripts/check-overview.mjs) — once per run, on the first
 //    deck under QA that embeds videos (else the first deck): proves the theme +
 //    VideoPlayer keep Slidev's all-slides overview cheap on phones.

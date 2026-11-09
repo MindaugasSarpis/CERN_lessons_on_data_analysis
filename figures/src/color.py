@@ -25,10 +25,19 @@ def _strip_axes(ax) -> None:
 
 # --- color_palette_* : the three kinds of palette, each its own swatch strip ---
 
+def _swatch_row(ax, values, **kw):
+    """One row of colour cells where imshow([values]) would put them, as
+    vector cells (an image inside the SVG turns grainy on the projector),
+    each edged in its own colour so no seam shows between two."""
+    n = len(values)
+    ax.pcolormesh(np.arange(n + 1) - 0.5, [-0.5, 0.5], [values], edgecolors="face", **kw)
+    ax.set(xlim=(-0.5, n - 0.5), ylim=(0.5, -0.5))
+
+
 def _palette_qualitative():
     fig, ax = plt.subplots(figsize=(7.4, 1.15))
     n = len(style.CYCLE)
-    ax.imshow([list(range(n))], cmap=ListedColormap(style.CYCLE), aspect="auto")
+    _swatch_row(ax, list(range(n)), cmap=ListedColormap(style.CYCLE))
     _strip_axes(ax)
     ax.set_title("Categorical — unordered", color=style.FG, fontsize=13, pad=8)
     style.save(fig, "viz_color_palette_qualitative")
@@ -36,8 +45,7 @@ def _palette_qualitative():
 
 def _palette_sequential():
     fig, ax = plt.subplots(figsize=(7.4, 1.15))
-    gradient = np.linspace(0, 1, 256).reshape(1, -1)
-    ax.imshow(gradient, aspect="auto", cmap="cividis")
+    _swatch_row(ax, np.linspace(0, 1, 256), cmap="cividis")
     _strip_axes(ax)
     ax.set_xticks([0, 255])
     ax.set_xticklabels(["low", "high"], color=style.DIM)
@@ -48,8 +56,7 @@ def _palette_sequential():
 
 def _palette_diverging():
     fig, ax = plt.subplots(figsize=(7.4, 1.0))
-    gradient = np.linspace(-1, 1, 256).reshape(1, -1)
-    ax.imshow(gradient, aspect="auto", cmap="RdBu_r", vmin=-1, vmax=1)
+    _swatch_row(ax, np.linspace(-1, 1, 256), cmap="RdBu_r", vmin=-1, vmax=1)
     _strip_axes(ax)
     ax.set_xticks([0, 127.5, 255])
     ax.set_xticklabels(["−1", "0", "+1"], color=style.DIM)

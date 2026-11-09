@@ -9,7 +9,7 @@
  * `imshow`) turns grainy on a projector.
  *
  * For each deck of decks.json (or --only a,b), every image its slide files
- * reference (`src="/…"`, `![…](/…)`) is checked:
+ * reference (`src="/…"`, `![…](/…)`, a frontmatter `image:` or `background:`) is checked:
  *   - an SVG must not contain an <image> (an embedded or linked bitmap);
  *   - a GIF, PNG, JPG or WebP fails, unless scripts/fidelity-allow.json lists
  *     it with the reason it is a bitmap by nature (a photo, a screenshot, a
@@ -40,6 +40,7 @@ for (const deck of manifest.decks.filter((d) => !only || only.includes(d.slug)))
     const md = readFileSync(join(CONTENT, 'slides', src), 'utf8');
     for (const m of md.matchAll(/src="(\/[^"#?]+)"/g)) refs.add(m[1]);
     for (const m of md.matchAll(/!\[[^\]]*\]\((\/[^)\s#?]+)/g)) refs.add(m[1]);
+    for (const m of md.matchAll(/^(?:image|background):\s*['"]?(\/[^'"\s#?]+)/gm)) refs.add(m[1]);
   }
   const bad = [];
   for (const ref of [...refs].sort()) {
