@@ -1,14 +1,13 @@
 ---
 layout: cover
-title: "Reproducible Workflows & Automation"
+title: "Code That Lasts"
 ---
 
 # Dr. Mindaugas Šarpis
 
 # Best Research and Data Analysis Practices from CERN
 
-## Reproducible Workflows & Automation
-
+## Code That Lasts
 ##### <span class="aims-badge">♻️ reproducibility · ⚙️ automation · 🔧 tool-agnostic · 📁 data & files</span>
 
 <!--

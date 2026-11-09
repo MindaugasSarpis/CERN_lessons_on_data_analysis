@@ -1,20 +1,13 @@
 {
   "course": "Best Research and Data Analysis Practices from CERN",
-  "titleLines": [
-    "Best Research",
-    "and Data Analysis",
-    "Practices",
-    "from CERN"
-  ],
-  "site": {
-    "url": "https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis"
-  },
+  "titleLines": ["Best Research", "and Data Analysis", "Practices", "from CERN"],
+  "site": {"url": "https://mindaugassarpis.github.io/CERN_lessons_on_data_analysis"},
   "presenter": "Dr. Mindaugas Šarpis",
   "blocks": {
     "A": "Foundations & Tooling",
-    "B": "Programming for Data",
-    "C": "Data Analysis Core",
-    "D": "Practical Data Work",
+    "B": "Data & Uncertainty",
+    "C": "Models & Learning",
+    "D": "Reproducible Work",
     "E": "Further Topics"
   },
   "decks": [
@@ -25,12 +18,11 @@
     {"slug": "05-python-foundations", "title": "Python Foundations", "block": "A", "srcs": ["05_Python_Foundations.md"], "optional": false, "draft": false, "split": {"lecture": 105, "seminar": 135}},
     {"slug": "06-version-control", "title": "Version Control with Git", "block": "A", "srcs": ["06_Version_Control.md"], "optional": false, "draft": false},
     {"slug": "07-data-visualisation", "title": "Data Visualisation", "block": "B", "srcs": ["07_Data_Visualisation.md"], "optional": false, "draft": false},
-    {"slug": "08-python-for-data-and-numpy", "title": "Python for Data & NumPy", "block": "B", "srcs": ["08_Python_for_Data_and_NumPy.md"], "optional": false, "draft": true},
-    {"slug": "09-probability-and-statistics", "title": "Probability & Statistics", "block": "C", "srcs": ["09_Probability_and_Statistics.md"], "optional": false, "draft": true},
-    {"slug": "10-data-fitting", "title": "Data Fitting from First Principles", "block": "C", "srcs": ["10_Data_Fitting.md"], "optional": false, "draft": true},
-    {"slug": "11-the-perceptron", "title": "The Perceptron", "block": "C", "srcs": ["11_The_Perceptron.md"], "optional": false, "draft": true},
-    {"slug": "12-pandas-and-data-cleaning", "title": "Pandas & Data Cleaning", "block": "D", "srcs": ["12_Pandas_and_Data_Cleaning.md"], "optional": false, "draft": true},
-    {"slug": "13-reproducible-workflows", "title": "Reproducible Workflows & Automation", "block": "D", "srcs": ["13_Reproducible_Workflows.md"], "optional": false, "draft": true},
+    {"slug": "08-data-quality-and-uncertainty", "title": "Data Quality and Uncertainty", "block": "B", "srcs": ["08_Data_Quality_and_Uncertainty.md"], "optional": false, "draft": true},
+    {"slug": "09-parameter-estimation-and-fitting", "title": "Parameter Estimation and Fitting", "block": "C", "srcs": ["09_Parameter_Estimation_and_Fitting.md"], "optional": false, "draft": true},
+    {"slug": "10-classification-and-the-perceptron", "title": "Classification and the Perceptron", "block": "C", "srcs": ["10_Classification_and_the_Perceptron.md"], "optional": false, "draft": true},
+    {"slug": "11-neurons-to-language-models", "title": "From Neurons to Language Models", "block": "C", "srcs": ["11_From_Neurons_to_Language_Models.md"], "optional": false, "draft": true},
+    {"slug": "12-code-that-lasts", "title": "Code That Lasts", "block": "D", "srcs": ["12_Code_That_Lasts.md"], "optional": false, "draft": true},
     {"slug": "14-concepts-of-data-analysis", "title": "Concepts of Data Analysis", "block": "E", "srcs": ["14_Concepts_of_Data_Analysis.md"], "optional": true, "draft": true},
     {"slug": "15-computing-infrastructure", "title": "Computing Infrastructure & HPC", "block": "E", "srcs": ["15_Computing_Infrastructure.md"], "optional": true, "draft": true},
     {"slug": "16-machine-learning", "title": "Machine Learning & AI", "block": "E", "srcs": ["16_Machine_Learning_and_AI.md"], "optional": true, "draft": true}

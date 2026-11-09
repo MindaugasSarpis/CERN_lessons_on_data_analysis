@@ -1,6 +1,6 @@
 ---
 layout: cover
-title: "Data Fitting from First Principles"
+title: "Parameter Estimation and Fitting"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md).
 # The prelude holds the pendulum arrays of the slide "The Same in NumPy", so
 # every later runner works without that slide having been run first, and the
@@ -30,8 +30,7 @@ python:
 
 # Best Research and Data Analysis Practices from CERN
 
-## Data Fitting from First Principles
-
+## Parameter Estimation and Fitting
 ##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
 
 <!--

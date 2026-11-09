@@ -1,6 +1,6 @@
 ---
 layout: cover
-title: "Probability & Statistics"
+title: "Data Quality and Uncertainty"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
   installs: ["numpy"]
@@ -14,7 +14,7 @@ python:
 
 # Best Research and Data Analysis Practices from CERN
 
-## Probability and Statistics
+## Data Quality and Uncertainty
 
 ##### <span class="aims-badge">🔧 tool-agnostic · ♻️ reproducibility</span>
 

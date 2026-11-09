@@ -1,6 +1,6 @@
 ---
 layout: cover
-title: "The Perceptron"
+title: "Classification and the Perceptron"
 # slidev-addon-python-runner reads this block from slide 1 = this cover (see CLAUDE.md)
 python:
   installs: ["numpy"]
@@ -14,8 +14,7 @@ python:
 
 # Best Research and Data Analysis Practices from CERN
 
-## The Perceptron
-
+## Classification and the Perceptron
 ##### <span class="aims-badge">⚙️ automation · 🔧 tool-agnostic</span>
 
 <!--

@@ -1,6 +1,7 @@
 # Weeks 8–12: the lecture teaches the idea, the seminar the tools
 
-Date: 9 November 2026. Status: draft, for the lecturer's approval.
+Date: 9 November 2026. Status: approved ("Implement and deploy", 9 Nov,
+evening), with the decisions of section 12.
 
 This brief replaces, for weeks 8 to 13, the order and the per-lecture
 paragraphs of `2026-10-04-course-rework-first-principles-design.md`
@@ -478,3 +479,42 @@ figures, the worked numbers (computed by script), the text sample of week
 11, the environment's name, file names and slugs, which old seminar pages
 are parked, and the wording of every page under `CLAUDE.md` and the
 `writing-lecture-slides` skill.
+
+## 12. Decisions of 9 November, evening
+
+The lecturer, after the outline above: "So having these ideas in mind,
+review the style, flow, content of all lectures. See if the ordering is
+correct. Make sure lectures are more theoretical, seminars are more
+hands-on. Implement and deploy. I am giving the data visualization lecture
+tomorrow, make sure it's really good, the slides should be pleasant to look
+at, not too much text, just what's needed. I don't like paragraphs of text
+on the slides, more laconic style, but important ideas, numbers should of
+course be relayed." Then: "Also see if I can squeeze out anything good from
+new slidev version or any other version. Suggest improvements to
+interactivity, visuals, style, overall feel (has to be incredible)."
+
+- **Laconic slides, every lecture (decided).** No paragraphs on a slide: a
+  caption is one or two short lines, or two or three fragments with their
+  numbers; the reasons and the how go into the speaker note. Every
+  important number stays on the slide.
+- **Lecture 7 (10 Nov) follows the rule tonight**: the code slides that
+  only show calls (`weather.hours`, the hands-on section) moved to a
+  reference section `# In **Matplotlib**` after For the Curious; the four-
+  variable figures (contours, 3D slices against ten panels, parallel
+  coordinates) joined the main path.
+- **Files** (builder's calls, made): decks `08_Data_Quality_and_Uncertainty`,
+  `09_Parameter_Estimation_and_Fitting`, `10_Classification_and_the_
+  Perceptron`, `11_From_Neurons_to_Language_Models`, `12_Code_That_Lasts`;
+  the NumPy and Pandas decks parked whole in `lectures/content/parked/decks/`;
+  the optional decks keep their numbers 14–16 (no deck 13), and the cover
+  takes its number from the slug, as the landing does. Blocks: A
+  Foundations & Tooling (01–06), B Data & Uncertainty (07–08), C Models &
+  Learning (09–11), D Reproducible Work (12), E Further Topics.
+- **The environment of weeks 8–12** is called `analysis`; each start
+  folder's `environment.yml` lists what the earlier weeks added (week 8:
+  Python and Matplotlib-base; week 9 onward: also pandas).
+- **The one command** stays `scripts/rebuild.sh` (the room has it since
+  week 4); week 12 adds the tests to it as its last line. No `run_all.py`.
+- **Slidev and the decks' feel**: a research review proposes upgrades and
+  interactivity; nothing is upgraded before the lecturer has seen the list.
+

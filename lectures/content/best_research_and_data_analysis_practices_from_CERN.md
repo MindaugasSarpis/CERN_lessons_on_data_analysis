@@ -56,28 +56,25 @@ src: slides/07_Data_Visualisation.md
 ---
 
 ---
-src: slides/08_Python_for_Data_and_NumPy.md
+src: slides/08_Data_Quality_and_Uncertainty.md
 ---
 
 ---
-src: slides/09_Probability_and_Statistics.md
+src: slides/09_Parameter_Estimation_and_Fitting.md
 ---
 
 ---
-src: slides/10_Data_Fitting.md
+src: slides/10_Classification_and_the_Perceptron.md
 ---
 
 ---
-src: slides/11_The_Perceptron.md
+src: slides/11_From_Neurons_to_Language_Models.md
 ---
 
 ---
-src: slides/12_Pandas_and_Data_Cleaning.md
+src: slides/12_Code_That_Lasts.md
 ---
 
----
-src: slides/13_Reproducible_Workflows.md
----
 
 ---
 src: slides/14_Concepts_of_Data_Analysis.md
