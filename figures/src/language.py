@@ -877,36 +877,40 @@ def _tree():
 
 
 def _similarity():
+    """The cosine of every pair of month vectors, drawn as vector cells (no
+    embedded raster): pcolormesh for the grid, the colorbar's cells kept as
+    vectors too."""
     mv = month_vectors()
     short = [m[:3] for m in NAMES]
     grid = [[cosine(mv[a], mv[b]) for b in NAMES] for a in NAMES]
     fig, ax = plt.subplots(figsize=(6.2, 4.3))
-    im = ax.imshow(grid, cmap="viridis", vmin=0, vmax=1)
-    ax.set_xticks(range(12))
-    ax.set_yticks(range(12))
+    edges = list(range(13))
+    mesh = ax.pcolormesh(edges, edges, grid, cmap="viridis", vmin=0, vmax=1,
+                         edgecolors="face", linewidth=0.4, rasterized=False)
+    ax.set_xlim(0, 12)
+    ax.set_ylim(12, 0)                      # January at the top, as a table reads
+    ax.set_aspect("equal")
+    centres = [i + 0.5 for i in range(12)]
+    ax.set_xticks(centres)
+    ax.set_yticks(centres)
     ax.set_xticklabels(short, fontsize=9.5, rotation=90)
     ax.set_yticklabels(short, fontsize=9.5)
+    ax.tick_params(length=0)
     ax.grid(False)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     for i in range(12):
         for j in range(12):
             v = grid[i][j]
             if 0.005 < v < 0.995:
-                ax.text(j, i, f"{v:.2f}".lstrip("0"), ha="center", va="center", fontsize=7.5,
-                        color="#0b0e14" if v > 0.6 else FG)
-    cb = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.03)
+                ax.text(j + 0.5, i + 0.5, f"{v:.2f}".lstrip("0"), ha="center", va="center",
+                        fontsize=7.5, color="#0b0e14" if v > 0.6 else FG)
+    cb = fig.colorbar(mesh, ax=ax, fraction=0.046, pad=0.03)
+    cb.solids.set_rasterized(False)
+    cb.solids.set_edgecolor("face")
     cb.set_label("cosine of the two vectors")
     cb.outline.set_visible(False)
     style.save(fig, "viz_language_similarity")
-
-
-def _softmax():
-    fig, axes = plt.subplots(1, 3, figsize=(9.4, 3.3), sharey=True)
-    for ax, T in zip(axes, (0.5, 1.0, 2.0)):
-        p = softmax(SCORES, T)[0]
-        _bars(ax, SCORE_WORDS, p, [C1, VIOLET, PINK], top=1.0, size=11.5)
-        ax.set_title(f"$T$ = {T:g}", fontsize=13)
-    axes[0].set_ylabel("probability")
-    style.save(fig, "viz_language_softmax")
 
 
 def _attention():
@@ -1126,7 +1130,6 @@ FIGURES = {
     "viz_language_next_word": _next_word,
     "viz_language_tree": _tree,
     "viz_language_similarity": _similarity,
-    "viz_language_softmax": _softmax,
     "viz_language_attention": _attention,
     "viz_language_llm": _llm,
     "viz_language_sizes": _sizes,

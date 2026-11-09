@@ -445,8 +445,8 @@ Softmax: e to the power of each score, divided by the sum of these powers. `math
 
     def softmax(scores, T):
         e = []
-        for z in scores:
-            e.append(math.exp(z / T))
+        for s in scores:
+            e.append(math.exp(s / T))
         total = sum(e)
         p = []
         for x in e:

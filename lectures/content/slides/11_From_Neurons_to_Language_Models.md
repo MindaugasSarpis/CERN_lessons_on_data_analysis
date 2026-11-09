@@ -1094,10 +1094,10 @@ hideInToc: true
 ## 🔢 **Scores to probabilities**
 
 $$
-p_k = \frac{e^{z_k}}{e^{z_1} + e^{z_2} + \dots + e^{z_K}}
+p_i = \frac{e^{s_i}}{e^{s_1} + e^{s_2} + \dots + e^{s_K}}
 $$
 
-Every $p_k$ is positive, together they make 1, and a larger score gets a larger probability.
+Every $p_i$ is positive, together they make 1, and a larger score gets a larger probability.
 
 </div>
 
@@ -1105,7 +1105,7 @@ Every $p_k$ is positive, together they make 1, and a larger score gets a larger 
 
 ## 🧮 **Three scores**
 
-| word | $z$ | $e^{z}$ | $p$ |
+| word | $s$ | $e^{s}$ | $p$ |
 | --- | --- | --- | --- |
 | warm | 2.0 | 7.389 | **0.659** |
 | mild | 1.0 | 2.718 | **0.242** |
@@ -1135,32 +1135,16 @@ class: fill
 
 # Softmax with a **Temperature**
 
-<div class="fig-fill grid-side mt-sm">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
-<div class="card card-primary card-glass pad-compact table-compact">
-
-$$
-p_k = \frac{e^{z_k / T}}{\sum_j e^{z_j / T}}
-$$
-
-The scores divided by $T$ first. At $T = 0.5$ they double:
-
-| word | $z / T$ | $e^{z/T}$ | $p$ |
-| --- | --- | --- | --- |
-| warm | 4.0 | 54.598 | **0.864** |
-| mild | 2.0 | 7.389 | **0.117** |
-| cool | 0.2 | 1.221 | **0.019** |
-| sum | | 63.209 | 1 |
+🌡️ The scores divided by $T$ first: $T = 0.5$ doubles them, $T = 2$ halves them. Drag a score, move $T$, press “draw”.
 
 </div>
 
-<img class="fig" src="/figures/viz_language_softmax.svg">
-
-</div>
+<SoftmaxTemperature class="fig-fill mt-sm" prompt="in july it was" :words="['warm', 'mild', 'cool']" :scores="[2.0, 1.0, 0.1]" :t="0.5" />
 
 <!--
-**Say:** T = 1 is softmax as before. Halving T doubles every score: the gap between warm and cool grows from 1.9 to 3.8, and warm takes 86 % instead of 66 %. At T = 2 the scores are halved and warm keeps 50 %: cool rises from 0.019 to 0.194.
-**Ask:** what happens as T goes to 0? The top word takes everything: the model writes the most likely word every time.
+**Do:** at T = 0.5 read the row of warm: s/T = 4, e⁴ = 54.60, Σ = 63.21, p = 0.864. Press the chip 1: warm 0.659, the slide before; the chip 2: warm 0.502, cool up from 0.019 to 0.194; the chip 3: 0.445, 0.319, 0.236. Press 0.1, then ×20: warm, 1.000 to three decimals. At T = 1 drag the score of mild from 1.0 to 2.0: warm and mild 0.465 each.
 (~3 min)
 -->
 
@@ -1174,8 +1158,8 @@ hideInToc: true
 import math
 def softmax(scores, T):
     e = []
-    for z in scores:
-        e.append(math.exp(z / T))
+    for s in scores:
+        e.append(math.exp(s / T))
     p = []
     for x in e:
         p.append(round(x / sum(e), 3))

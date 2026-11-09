@@ -49,9 +49,9 @@ used.
    as a picture, four seasons from the text alone; vectors in a language
    model are learned, a row of a table per token.
 6. **Scores into probabilities**: softmax of three scores (0.659, 0.242,
-   0.099), the sigmoid as softmax of two; a temperature, at 0.5 (0.864) and
-   at 2 (0.502); what the temperature does to text, with ten draws at each
-   temperature.
+   0.099), the sigmoid as softmax of two; a temperature, live: the scores
+   dragged, *T* from 0.1 to 3, words drawn (0.864 at 0.5, 0.502 at 2); what
+   the temperature does to text, with ten draws at each temperature.
 7. **Context and attention**: which earlier word decides; attention as a
    weighted average with softmax weights (0.909 on "july", warm 0.932 in
    place of 0.25); where the scores come from, a dot product; the same in
@@ -109,7 +109,7 @@ time. To jump, type the slide number and press Enter.
 | 10–19 | Training: a slope, one evening through two neurons, the chain rule, backward one link at a time, the nudge, one step, XOR learned from random weights |
 | 20–29 | Text as numbers: ids, the counts after each word, probabilities, the counting in Python, generating text, what the model wrote, the chance of the true word month by month, one word of context |
 | 30–35 | Words as vectors: the months by their weather words, the dot product and the cosine, the twelve months as a picture, vectors in a language model |
-| 36–40 | Softmax, the temperature with its three panels, its effect on text |
+| 36–40 | Softmax, the temperature live (drag the scores, *T* from 0.1 to 3, draw words), its effect on text |
 | 41–47 | Context and attention: the word that decides, the weighted average, where the scores come from, attention in a large model |
 | 48–54 | A large language model: the loop, tokens, pretraining, parameters, instruction tuning, what it is not |
 | 55–64 | Prompting: what a prompt gives, without and with context, a test with a known answer, a question only the data can answer, what to check, where a model helps, what never to paste, saying where it was used, reproducibility |
@@ -138,6 +138,10 @@ time. To jump, type the slide number and press Enter.
   sentences of slide 3 (`random.seed(38)`); slide 58 shows a test that
   fails on a correct function, because 25.275 comes out as
   25.275000000000002.
+- **Slide 38 is an interactive figure** that works offline: at *T* = 0.5
+  read the row of warm (e⁴ = 54.60, Σ = 63.21, *p* = 0.864), press the
+  chips 1, 2 and 3, drag the score of mild sideways, press "draw" or
+  "×20". Use it on the projected window, not in the presenter view.
 - **Slide 14** builds the backward pass in five clicks, one factor of the
   chain rule per click, and shows the whole chain on the sixth; **slide 43**
   the attention weights in three clicks, then the weighted average.
