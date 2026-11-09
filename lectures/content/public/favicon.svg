@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- tab icon of the decks: the bg and accent tokens of theme/styles/tokens.css -->
+  <rect width="32" height="32" rx="7" fill="#050507"/>
+  <circle cx="16" cy="16" r="10" fill="none" stroke="#7dd3fc" stroke-opacity=".5" stroke-width="2"/>
+  <circle cx="16" cy="16" r="4.5" fill="#7dd3fc"/>
+</svg>

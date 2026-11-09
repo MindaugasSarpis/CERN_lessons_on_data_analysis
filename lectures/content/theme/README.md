@@ -18,6 +18,17 @@ theme/
     └── mermaid-styles.css   # Mermaid diagram styles
 ```
 
+## Deck defaults (`package.json`)
+
+`slidev.defaults` holds the settings every deck shares: the fonts (bundled,
+provider `none`), the tab title `%s · Best Research and Data Analysis Practices
+from CERN` (`%s` is the deck's title from `decks.json`), the tab icon
+`../public/favicon.svg`, and a countdown timer in presenter mode (`timer:
+countdown`; each deck's `duration` is written into its entry by
+`scripts/gen-entries.mjs`). They sit here rather than in the generated entries
+because every key of an entry's headmatter also lands in the frontmatter of
+every slide of the deck's first lecture.
+
 ## Usage
 
 ### Cards

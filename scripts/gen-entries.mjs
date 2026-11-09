@@ -8,8 +8,10 @@
  * slides/L0X.md build drops the theme AND can't resolve /figures/* — see
  * project memory). The `deck.` prefix keeps cleanup from ever touching the
  * hand-authored entries (lessons_…, staging.md). Each entry carries ALL the
- * deck-level config (theme, router, colour scheme, addons, title) — this is the
- * ONLY place it lives — then imports its lecture source file(s) with `src:`.
+ * deck-level config (theme, router, colour scheme, addons, title, duration) —
+ * this is the ONLY place it lives, besides what every deck shares in the
+ * theme's `slidev.defaults` (fonts, tab title and icon, timer mode;
+ * theme/package.json) — then imports its lecture source file(s) with `src:`.
  * A lecture file's cover frontmatter is just `layout: cover` + `title:` (+ a
  * `python:` block on runner decks, which the addon reads from slide 1 = that
  * cover); any deck-level key written there is dead once the file is imported
@@ -25,6 +27,7 @@ import { readFile, writeFile, readdir, unlink } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { genGlossary } from './gen-glossary.mjs';
+import { estimateDeck } from './timing-model.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = join(ROOT, 'lectures', 'content');
@@ -39,7 +42,7 @@ const glossaries = await genGlossary(manifest);
 // headmatter block itself, so the lecture's own cover becomes slide 1 —
 // otherwise the headmatter block renders as an empty slide 1 and the cover
 // slips to slide 2.
-function headmatter(title, firstSrc) {
+function headmatter(title, firstSrc, minutes) {
   return [
     '---',
     'theme: ./theme',
@@ -66,18 +69,34 @@ function headmatter(title, firstSrc) {
     // flicker on each first slide switch. Videos stay lazy either way
     // (VideoPlayer sets preload="none" and only sets src once active).
     `title: ${JSON.stringify(title)}`,
+    // What presenter mode counts down from (the theme's default `timer:
+    // countdown`). A deck-level key: like `theme` or `routerMode` it also
+    // lands in the frontmatter of every slide of the first lecture, where
+    // nothing reads it (Slidev 53; no slide, layout or component uses it).
+    `duration: ${minutes}min`,
     `src: ./slides/${firstSrc}`,
     '---',
   ].join('\n');
 }
 
-function entryContent(deck) {
+// The minutes a deck is planned to take: the lecture part of its `split`
+// when decks.json gives one, else the timing model's estimate of its main
+// path (scripts/timing-model.mjs, the numbers `pnpm timing` prints).
+async function plannedMinutes(deck) {
+  if (deck.split) return deck.split.lecture;
+  let minutes = 0;
+  for (const src of deck.srcs)
+    minutes += estimateDeck(await readFile(join(CONTENT, 'slides', src), 'utf8')).minutes;
+  return minutes;
+}
+
+function entryContent(deck, minutes) {
   const [first, ...rest] = deck.srcs;
   const glossary = glossaries.get(deck.slug);
   const more = [...rest.map((s) => `./slides/${s}`), ...(glossary ? [`./${glossary}`] : [])]
     .map((p) => `\n---\nsrc: ${p}\n---\n`)
     .join('');
-  return `${headmatter(deck.title, first)}\n${more}`;
+  return `${headmatter(deck.title, first, minutes)}\n${more}`;
 }
 
 // Clean out stale generated entries (only deck.*.md — never the hand-authored ones).
@@ -96,7 +115,7 @@ async function coverTitle(src) {
 }
 
 for (const deck of manifest.decks) {
-  await writeFile(join(CONTENT, `deck.${deck.slug}.md`), entryContent(deck), 'utf8');
+  await writeFile(join(CONTENT, `deck.${deck.slug}.md`), entryContent(deck, await plannedMinutes(deck)), 'utf8');
   const t = await coverTitle(deck.srcs[0]);
   if (t !== deck.title)
     console.warn(`⚠ ${deck.srcs[0]}: cover title ${t === null ? 'missing' : JSON.stringify(t)} ≠ decks.json ${JSON.stringify(deck.title)}`);
