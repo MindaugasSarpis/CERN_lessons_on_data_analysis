@@ -1,0 +1,5871 @@
+{
+ "fetched": "2026-11-09",
+ "how": "micromamba create --dry-run -c conda-forge --override-channels",
+ "counts": {
+  "osx-arm64": {
+   "python": 18,
+   "python+pandas": 32,
+   "python+matplotlib": 80,
+   "analysis": 81,
+   "analysis+pytest": 89,
+   "python+pandas=2.3": 33,
+   "python3.11+pandas": 33
+  },
+  "win-64": {
+   "python": 20,
+   "python+pandas": 36,
+   "python+matplotlib": 79,
+   "analysis": 80,
+   "analysis+pytest": 88,
+   "python+pandas=2.3": 37,
+   "python3.11+pandas": 37
+  },
+  "linux-64": {
+   "python": 23,
+   "python+pandas": 34,
+   "python+matplotlib": 86,
+   "analysis": 87,
+   "analysis+pytest": 95,
+   "python+pandas=2.3": 35,
+   "python3.11+pandas": 38
+  }
+ },
+ "packages": {
+  "osx-arm64": {
+   "python": [
+    [
+     "bzip2",
+     "1.0.8",
+     []
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     []
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     []
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     []
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     []
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     []
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     []
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 h281bc5c_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "python+pandas": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "llvm-openmp >=9.0.1"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     []
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "libcxx",
+     "23.1.5",
+     []
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     []
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     []
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 hdb7a957_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     []
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     []
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0",
+      "llvm-openmp >=21.1.8"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     []
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     []
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libcxx >=21",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "libcxx >=21",
+      "numpy >=1.25,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 h281bc5c_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "analysis+pytest": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "llvm-openmp >=9.0.1"
+     ]
+    ],
+    [
+     "brotli",
+     "1.2.1",
+     [
+      "brotli-bin 1.2.1 he4a93e4_0",
+      "libbrotlidec 1.2.1 h5295a6a_0",
+      "libbrotlienc 1.2.1 h2ddc9cb_0"
+     ]
+    ],
+    [
+     "brotli-bin",
+     "1.2.1",
+     [
+      "libbrotlidec 1.2.1 h5295a6a_0",
+      "libbrotlienc 1.2.1 h2ddc9cb_0"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     []
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "cairo",
+     "1.18.6",
+     [
+      "fontconfig >=2.18.3,<3.0a0",
+      "fonts-conda-ecosystem",
+      "icu >=79.1,<80.0a0",
+      "libcxx >=21",
+      "libexpat >=2.9.0,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libglib >=2.90.0,<3.0a0",
+      "libpng >=1.6.59,<1.7.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "pixman >=0.46.4,<1.0a0"
+     ]
+    ],
+    [
+     "colorama",
+     "0.4.6",
+     [
+      "python >=3.9"
+     ]
+    ],
+    [
+     "contourpy",
+     "1.4.0",
+     [
+      "libcxx >=21",
+      "numpy >=2.0",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "cycler",
+     "0.12.1",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "exceptiongroup",
+     "1.3.1",
+     [
+      "python >=3.10",
+      "typing_extensions >=4.6.0"
+     ]
+    ],
+    [
+     "font-ttf-dejavu-sans-mono",
+     "2.37",
+     []
+    ],
+    [
+     "font-ttf-inconsolata",
+     "3.000",
+     []
+    ],
+    [
+     "font-ttf-source-code-pro",
+     "2.038",
+     []
+    ],
+    [
+     "font-ttf-ubuntu",
+     "0.83",
+     []
+    ],
+    [
+     "fontconfig",
+     "2.18.3",
+     [
+      "libexpat >=2.8.1,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libintl >=0.25.1,<1.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "fonts-conda-ecosystem",
+     "1",
+     [
+      "fonts-conda-forge"
+     ]
+    ],
+    [
+     "fonts-conda-forge",
+     "1",
+     [
+      "font-ttf-dejavu-sans-mono",
+      "font-ttf-inconsolata",
+      "font-ttf-source-code-pro",
+      "font-ttf-ubuntu"
+     ]
+    ],
+    [
+     "fonttools",
+     "4.68.0",
+     [
+      "brotli",
+      "munkres",
+      "python >=3.14,<3.15.0a0",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "freetype",
+     "2.14.3",
+     [
+      "libfreetype 2.14.3 hce30654_2",
+      "libfreetype6 2.14.3 h2ed5691_2"
+     ]
+    ],
+    [
+     "fribidi",
+     "1.0.18",
+     []
+    ],
+    [
+     "graphite2",
+     "1.3.15",
+     [
+      "libcxx >=19"
+     ]
+    ],
+    [
+     "icu",
+     "79.1",
+     []
+    ],
+    [
+     "iniconfig",
+     "2.3.1",
+     [
+      "python >=3.11"
+     ]
+    ],
+    [
+     "kiwisolver",
+     "1.5.1",
+     [
+      "libcxx >=21",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "lcms2",
+     "2.20",
+     [
+      "libjpeg-turbo >=3.2.1,<4.0a0",
+      "libtiff >=4.7.2,<4.8.0a0"
+     ]
+    ],
+    [
+     "lerc",
+     "4.3.0",
+     [
+      "libcxx >=21"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libbrotlicommon",
+     "1.2.1",
+     []
+    ],
+    [
+     "libbrotlidec",
+     "1.2.1",
+     [
+      "libbrotlicommon 1.2.1 h1dcdb26_0"
+     ]
+    ],
+    [
+     "libbrotlienc",
+     "1.2.1",
+     [
+      "libbrotlicommon 1.2.1 h1dcdb26_0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "libcxx",
+     "23.1.5",
+     []
+    ],
+    [
+     "libdeflate",
+     "1.26",
+     []
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     []
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     []
+    ],
+    [
+     "libfreetype",
+     "2.14.3",
+     [
+      "libfreetype6 >=2.14.3"
+     ]
+    ],
+    [
+     "libfreetype6",
+     "2.14.3",
+     [
+      "libpng >=1.6.58,<1.7.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 hdb7a957_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "libglib",
+     "2.90.0",
+     [
+      "libffi >=3.7.0,<3.8.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "libintl >=0.25.1,<1.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "pcre2 >=10.47,<10.48.0a0"
+     ]
+    ],
+    [
+     "libharfbuzz",
+     "15.1.0",
+     [
+      "cairo >=1.18.6,<2.0a0",
+      "graphite2 >=1.3.15,<2.0a0",
+      "icu >=79.1,<80.0a0",
+      "libcxx >=21",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libglib >=2.90.0,<3.0a0",
+      "libpng >=1.6.59,<1.7.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libiconv",
+     "1.18",
+     []
+    ],
+    [
+     "libintl",
+     "0.25.1",
+     [
+      "libiconv >=1.18,<2.0a0"
+     ]
+    ],
+    [
+     "libjpeg-turbo",
+     "3.2.1",
+     []
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     []
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     []
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0",
+      "llvm-openmp >=21.1.8"
+     ]
+    ],
+    [
+     "libpng",
+     "1.6.59",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     []
+    ],
+    [
+     "libraqm",
+     "0.11.0",
+     [
+      "fribidi >=1.0.16,<2.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libharfbuzz >=14.2.1"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "icu >=79.1,<80.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libtiff",
+     "4.7.2",
+     [
+      "lerc >=4.3.0,<5.0a0",
+      "libcxx >=21",
+      "libdeflate >=1.26,<1.27.0a0",
+      "libjpeg-turbo >=3.2.1,<4.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libwebp-base >=1.6.0,<2.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "libwebp-base",
+     "1.6.0",
+     []
+    ],
+    [
+     "libxcb",
+     "1.17.0",
+     [
+      "pthread-stubs",
+      "xorg-libxau >=1.0.12,<2.0a0",
+      "xorg-libxdmcp >=1.1.5,<2.0a0"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     []
+    ],
+    [
+     "matplotlib-base",
+     "3.11.2",
+     [
+      "contourpy >=1.0.1",
+      "cycler >=0.10",
+      "fonttools >=4.28.2",
+      "freetype",
+      "kiwisolver >=1.3.1",
+      "libcxx >=21",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libraqm >=0.11.0,<0.12.0a0",
+      "numpy >=1.25",
+      "numpy >=1.25,<3",
+      "packaging >=20.0",
+      "pillow >=9",
+      "pyparsing >=3",
+      "python >=3.14,<3.15.0a0",
+      "python-dateutil >=2.7",
+      "python_abi 3.14.* *_cp314",
+      "qhull >=2020.2,<2020.3.0a0"
+     ]
+    ],
+    [
+     "munkres",
+     "1.1.4",
+     [
+      "python >=3.9"
+     ]
+    ],
+    [
+     "ncurses",
+     "6.6",
+     []
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libcxx >=21",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "openjpeg",
+     "2.5.4",
+     [
+      "libcxx >=21",
+      "libpng >=1.6.58,<1.7.0a0",
+      "libtiff >=4.7.2,<4.8.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates"
+     ]
+    ],
+    [
+     "packaging",
+     "26.3",
+     [
+      "python",
+      "python >=3.9"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "libcxx >=21",
+      "numpy >=1.25,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "pcre2",
+     "10.47",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "pillow",
+     "13.0.0",
+     [
+      "lcms2 >=2.19.1,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libjpeg-turbo >=3.2.0,<4.0a0",
+      "libtiff >=4.7.2,<4.8.0a0",
+      "libwebp-base >=1.6.0,<2.0a0",
+      "libxcb >=1.17.0,<2.0a0",
+      "openjpeg >=2.5.4,<3.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "tk >=8.6.13,<8.7.0a0",
+      "zlib-ng >=2.3.3,<2.4.0a0"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "pixman",
+     "0.46.4",
+     [
+      "libcxx >=19"
+     ]
+    ],
+    [
+     "pluggy",
+     "1.7.0",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "pthread-stubs",
+     "0.4",
+     []
+    ],
+    [
+     "pygments",
+     "2.21.0",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "pyparsing",
+     "3.3.3",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "pytest",
+     "9.2.0",
+     [
+      "colorama",
+      "exceptiongroup >=1",
+      "iniconfig >=2",
+      "packaging >=24",
+      "pluggy >=1.6,<2",
+      "pygments >=2.15",
+      "python",
+      "python >=3.10",
+      "tomli >=2"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 h281bc5c_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "qhull",
+     "2020.2",
+     [
+      "libcxx >=21"
+     ]
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tomli",
+     "2.5.0",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "typing_extensions",
+     "4.16.0",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "xorg-libxau",
+     "1.0.12",
+     []
+    ],
+    [
+     "xorg-libxdmcp",
+     "1.1.5",
+     []
+    ],
+    [
+     "zlib-ng",
+     "2.3.3",
+     [
+      "libcxx >=21"
+     ]
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "python+pandas=2.3": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "llvm-openmp >=9.0.1"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     []
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "libcxx",
+     "23.1.5",
+     []
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     []
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     []
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 hdb7a957_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     []
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     []
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0",
+      "llvm-openmp >=21.1.8"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     []
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     []
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libcxx >=21",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates"
+     ]
+    ],
+    [
+     "pandas",
+     "2.3.3",
+     [
+      "libcxx >=19",
+      "numpy >=1.22.4",
+      "numpy >=1.23,<3",
+      "python >=3.14,<3.15.0a0",
+      "python >=3.14,<3.15.0a0 *_cp314",
+      "python-dateutil >=2.8.2",
+      "python-tzdata >=2022.7",
+      "python_abi 3.14.* *_cp314",
+      "pytz >=2020.1"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 h281bc5c_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "pytz",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "python3.11+pandas": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "llvm-openmp >=9.0.1"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     []
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "libcxx",
+     "23.1.5",
+     []
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     []
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     []
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 hdb7a957_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h51639a9_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     []
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0",
+      "llvm-openmp >=21.1.8"
+     ]
+    ],
+    [
+     "libpython",
+     "3.11.18",
+     []
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     []
+    ],
+    [
+     "numpy",
+     "2.4.6",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libcxx >=19",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.11.* *_cp311"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates"
+     ]
+    ],
+    [
+     "packaging",
+     "26.3",
+     [
+      "python",
+      "python >=3.9"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "libcxx >=21",
+      "numpy >=1.23,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python_abi 3.11.* *_cp311"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.11,<3.13.0a0",
+      "setuptools",
+      "wheel"
+     ]
+    ],
+    [
+     "python",
+     "3.11.18",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libpython 3.11.18 h0677fcb_0_cpython",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.11",
+     []
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "setuptools",
+     "84.2.1",
+     [
+      "python >=3.11"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "wheel",
+     "0.48.0",
+     [
+      "packaging >=24.0",
+      "python >=3.10"
+     ]
+    ]
+   ]
+  },
+  "win-64": {
+   "python": [
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hc6187dd_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "ucrt",
+     "10.0.26100.0",
+     []
+    ],
+    [
+     "vc",
+     "14.5",
+     [
+      "vc14_runtime >=14.51.36247"
+     ]
+    ],
+    [
+     "vc14_runtime",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0",
+      "vcomp14 14.51.36247 habf1de7_42"
+     ]
+    ],
+    [
+     "vcomp14",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0"
+     ]
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ]
+   ],
+   "python+pandas": [
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "icu",
+     "78.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "mkl >=2026.1.0,<2027.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libhwloc",
+     "2.15.0",
+     [
+      "libwinpthread >=12.0.0.r4.gg4f2fc60ca",
+      "libxml2",
+      "libxml2-16 >=2.15.4",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libiconv",
+     "1.18",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libwinpthread",
+     "12.0.0.r688.g6b2176247.1",
+     []
+    ],
+    [
+     "libxml2",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libxml2-16 2.15.4 h3cfd58e_1",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libxml2-16",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "mkl",
+     "2026.1.0",
+     [
+      "llvm-openmp >=22.1.8",
+      "tbb >=2023.0.0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "numpy >=1.25,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python-tzdata",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hc6187dd_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "tbb",
+     "2023.1.0",
+     [
+      "libhwloc >=2.15.0,<2.15.1.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "ucrt",
+     "10.0.26100.0",
+     []
+    ],
+    [
+     "vc",
+     "14.5",
+     [
+      "vc14_runtime >=14.51.36247"
+     ]
+    ],
+    [
+     "vc14_runtime",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0",
+      "vcomp14 14.51.36247 habf1de7_42"
+     ]
+    ],
+    [
+     "vcomp14",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0"
+     ]
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ]
+   ],
+   "analysis+pytest": [
+    [
+     "brotli",
+     "1.2.1",
+     [
+      "brotli-bin 1.2.1 hd477307_0",
+      "libbrotlidec 1.2.1 h84f9c24_0",
+      "libbrotlienc 1.2.1 he2a975b_0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "brotli-bin",
+     "1.2.1",
+     [
+      "libbrotlidec 1.2.1 h84f9c24_0",
+      "libbrotlienc 1.2.1 he2a975b_0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "cairo",
+     "1.18.6",
+     [
+      "fontconfig >=2.18.3,<3.0a0",
+      "fonts-conda-ecosystem",
+      "icu >=78.3,<79.0a0",
+      "libexpat >=2.8.1,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libglib >=2.90.0,<3.0a0",
+      "libpng >=1.6.58,<1.7.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "pixman >=0.46.4,<1.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "colorama",
+     "0.4.6",
+     [
+      "python >=3.9"
+     ]
+    ],
+    [
+     "contourpy",
+     "1.4.0",
+     [
+      "numpy >=2.0",
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "cycler",
+     "0.12.1",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "exceptiongroup",
+     "1.3.1",
+     [
+      "python >=3.10",
+      "typing_extensions >=4.6.0"
+     ]
+    ],
+    [
+     "font-ttf-dejavu-sans-mono",
+     "2.37",
+     []
+    ],
+    [
+     "font-ttf-inconsolata",
+     "3.000",
+     []
+    ],
+    [
+     "font-ttf-source-code-pro",
+     "2.038",
+     []
+    ],
+    [
+     "font-ttf-ubuntu",
+     "0.83",
+     []
+    ],
+    [
+     "fontconfig",
+     "2.18.3",
+     [
+      "libexpat >=2.8.1,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libiconv >=1.18,<2.0a0",
+      "libintl >=0.22.5,<1.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "fonts-conda-ecosystem",
+     "1",
+     [
+      "fonts-conda-forge"
+     ]
+    ],
+    [
+     "fonts-conda-forge",
+     "1",
+     [
+      "font-ttf-dejavu-sans-mono",
+      "font-ttf-inconsolata",
+      "font-ttf-source-code-pro",
+      "font-ttf-ubuntu"
+     ]
+    ],
+    [
+     "fonttools",
+     "4.68.0",
+     [
+      "brotli",
+      "munkres",
+      "python >=3.14,<3.15.0a0",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "freetype",
+     "2.14.3",
+     [
+      "libfreetype 2.14.3 h57928b3_2",
+      "libfreetype6 2.14.3 hdbac1cb_2",
+      "zlib"
+     ]
+    ],
+    [
+     "fribidi",
+     "1.0.18",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "graphite2",
+     "1.3.15",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "icu",
+     "78.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "iniconfig",
+     "2.3.1",
+     [
+      "python >=3.11"
+     ]
+    ],
+    [
+     "kiwisolver",
+     "1.5.1",
+     [
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "lcms2",
+     "2.20",
+     [
+      "libjpeg-turbo >=3.2.1,<4.0a0",
+      "libtiff >=4.7.2,<4.8.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "lerc",
+     "4.3.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "mkl >=2026.1.0,<2027.0a0"
+     ]
+    ],
+    [
+     "libbrotlicommon",
+     "1.2.1",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libbrotlidec",
+     "1.2.1",
+     [
+      "libbrotlicommon 1.2.1 hf02afa3_0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libbrotlienc",
+     "1.2.1",
+     [
+      "libbrotlicommon 1.2.1 hf02afa3_0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "libdeflate",
+     "1.26",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libfreetype",
+     "2.14.3",
+     [
+      "libfreetype6 >=2.14.3"
+     ]
+    ],
+    [
+     "libfreetype6",
+     "2.14.3",
+     [
+      "libpng >=1.6.58,<1.7.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libglib",
+     "2.90.1",
+     [
+      "libffi >=3.7.0,<3.8.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "libintl >=0.22.5,<1.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "pcre2 >=10.47,<10.48.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libharfbuzz",
+     "15.0.0",
+     [
+      "cairo >=1.18.6,<2.0a0",
+      "graphite2 >=1.3.15,<2.0a0",
+      "icu >=78.3,<79.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libglib >=2.90.1,<3.0a0",
+      "libpng >=1.6.59,<1.7.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libhwloc",
+     "2.15.0",
+     [
+      "libwinpthread >=12.0.0.r4.gg4f2fc60ca",
+      "libxml2",
+      "libxml2-16 >=2.15.4",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libiconv",
+     "1.18",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libintl",
+     "0.22.5",
+     [
+      "libiconv >=1.18,<2.0a0"
+     ]
+    ],
+    [
+     "libjpeg-turbo",
+     "3.2.1",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libpng",
+     "1.6.59",
+     [
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libraqm",
+     "0.11.0",
+     [
+      "fribidi >=1.0.16,<2.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libharfbuzz >=14.2.1",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libtiff",
+     "4.7.2",
+     [
+      "lerc >=4.3.0,<5.0a0",
+      "libdeflate >=1.26,<1.27.0a0",
+      "libjpeg-turbo >=3.2.1,<4.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "libwebp-base",
+     "1.6.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libwinpthread",
+     "12.0.0.r688.g6b2176247.1",
+     []
+    ],
+    [
+     "libxml2",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libxml2-16 2.15.4 h3cfd58e_1",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libxml2-16",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "matplotlib-base",
+     "3.11.2",
+     [
+      "contourpy >=1.0.1",
+      "cycler >=0.10",
+      "fonttools >=4.28.2",
+      "freetype",
+      "kiwisolver >=1.3.1",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libraqm >=0.11.0,<0.12.0a0",
+      "numpy >=1.25",
+      "numpy >=1.25,<3",
+      "packaging >=20.0",
+      "pillow >=9",
+      "pyparsing >=3",
+      "python >=3.14,<3.15.0a0",
+      "python-dateutil >=2.7",
+      "python_abi 3.14.* *_cp314",
+      "qhull >=2020.2,<2020.3.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "mkl",
+     "2026.1.0",
+     [
+      "llvm-openmp >=22.1.8",
+      "tbb >=2023.0.0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "munkres",
+     "1.1.4",
+     [
+      "python >=3.9"
+     ]
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "openjpeg",
+     "2.5.4",
+     [
+      "libpng >=1.6.58,<1.7.0a0",
+      "libtiff >=4.7.2,<4.8.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "packaging",
+     "26.3",
+     [
+      "python",
+      "python >=3.9"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "numpy >=1.25,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python-tzdata",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pcre2",
+     "10.47",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pillow",
+     "13.0.0",
+     [
+      "lcms2 >=2.19.1,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libjpeg-turbo >=3.2.0,<4.0a0",
+      "libtiff >=4.7.2,<4.8.0a0",
+      "libwebp-base >=1.6.0,<2.0a0",
+      "openjpeg >=2.5.4,<3.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "tk >=8.6.13,<8.7.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208",
+      "zlib-ng >=2.3.3,<2.4.0a0"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "pixman",
+     "0.46.4",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pluggy",
+     "1.7.0",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "pygments",
+     "2.21.0",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "pyparsing",
+     "3.3.3",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "pytest",
+     "9.2.0",
+     [
+      "colorama",
+      "exceptiongroup >=1",
+      "iniconfig >=2",
+      "packaging >=24",
+      "pluggy >=1.6,<2",
+      "pygments >=2.15",
+      "python",
+      "python >=3.10",
+      "tomli >=2"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hc6187dd_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "qhull",
+     "2020.2",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tbb",
+     "2023.1.0",
+     [
+      "libhwloc >=2.15.0,<2.15.1.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tomli",
+     "2.5.0",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "typing_extensions",
+     "4.16.0",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "ucrt",
+     "10.0.26100.0",
+     []
+    ],
+    [
+     "vc",
+     "14.5",
+     [
+      "vc14_runtime >=14.51.36247"
+     ]
+    ],
+    [
+     "vc14_runtime",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0",
+      "vcomp14 14.51.36247 habf1de7_42"
+     ]
+    ],
+    [
+     "vcomp14",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0"
+     ]
+    ],
+    [
+     "zlib",
+     "1.3.2",
+     [
+      "libzlib 1.3.2 hfd05255_3",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "zlib-ng",
+     "2.3.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ]
+   ],
+   "python+pandas=2.3": [
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "icu",
+     "78.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "mkl >=2026.1.0,<2027.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libhwloc",
+     "2.15.0",
+     [
+      "libwinpthread >=12.0.0.r4.gg4f2fc60ca",
+      "libxml2",
+      "libxml2-16 >=2.15.4",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libiconv",
+     "1.18",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libwinpthread",
+     "12.0.0.r688.g6b2176247.1",
+     []
+    ],
+    [
+     "libxml2",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libxml2-16 2.15.4 h3cfd58e_1",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libxml2-16",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "mkl",
+     "2026.1.0",
+     [
+      "llvm-openmp >=22.1.8",
+      "tbb >=2023.0.0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pandas",
+     "2.3.3",
+     [
+      "numpy >=1.22.4",
+      "numpy >=1.23,<3",
+      "python >=3.14,<3.15.0a0",
+      "python-dateutil >=2.8.2",
+      "python-tzdata >=2022.7",
+      "python_abi 3.14.* *_cp314",
+      "pytz >=2020.1",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hc6187dd_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "pytz",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "tbb",
+     "2023.1.0",
+     [
+      "libhwloc >=2.15.0,<2.15.1.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "ucrt",
+     "10.0.26100.0",
+     []
+    ],
+    [
+     "vc",
+     "14.5",
+     [
+      "vc14_runtime >=14.51.36247"
+     ]
+    ],
+    [
+     "vc14_runtime",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0",
+      "vcomp14 14.51.36247 habf1de7_42"
+     ]
+    ],
+    [
+     "vcomp14",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0"
+     ]
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ]
+   ],
+   "python3.11+pandas": [
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "icu",
+     "78.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "mkl >=2026.1.0,<2027.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libhwloc",
+     "2.15.0",
+     [
+      "libwinpthread >=12.0.0.r4.gg4f2fc60ca",
+      "libxml2",
+      "libxml2-16 >=2.15.4",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libiconv",
+     "1.18",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h8455456_mkl"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libpython",
+     "3.11.18",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libwinpthread",
+     "12.0.0.r688.g6b2176247.1",
+     []
+    ],
+    [
+     "libxml2",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libxml2-16 2.15.4 h3cfd58e_1",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libxml2-16",
+     "2.15.4",
+     [
+      "icu >=78.3,<79.0a0",
+      "libiconv >=1.18,<2.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "llvm-openmp",
+     "23.1.5",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "mkl",
+     "2026.1.0",
+     [
+      "llvm-openmp >=22.1.8",
+      "tbb >=2023.0.0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "numpy",
+     "2.4.6",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "liblapack >=3.9.0,<4.0a0",
+      "python",
+      "python_abi 3.11.* *_cp311",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "packaging",
+     "26.3",
+     [
+      "python",
+      "python >=3.9"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "numpy >=1.23,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python-tzdata",
+      "python_abi 3.11.* *_cp311",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.11,<3.13.0a0",
+      "setuptools",
+      "wheel"
+     ]
+    ],
+    [
+     "python",
+     "3.11.18",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libpython 3.11.18 hfb4101e_0_cpython",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.11",
+     []
+    ],
+    [
+     "setuptools",
+     "84.2.1",
+     [
+      "python >=3.11"
+     ]
+    ],
+    [
+     "tbb",
+     "2023.1.0",
+     [
+      "libhwloc >=2.15.0,<2.15.1.0a0",
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "ucrt >=10.0.20348.0",
+      "vc >=14.3,<15",
+      "vc14_runtime >=14.44.35208"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "ucrt",
+     "10.0.26100.0",
+     []
+    ],
+    [
+     "vc",
+     "14.5",
+     [
+      "vc14_runtime >=14.51.36247"
+     ]
+    ],
+    [
+     "vc14_runtime",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0",
+      "vcomp14 14.51.36247 habf1de7_42"
+     ]
+    ],
+    [
+     "vcomp14",
+     "14.51.36247",
+     [
+      "ucrt >=10.0.20348.0"
+     ]
+    ],
+    [
+     "wheel",
+     "0.48.0",
+     [
+      "packaging >=24.0",
+      "python >=3.10"
+     ]
+    ]
+   ]
+  },
+  "linux-64": {
+   "python": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "libgomp >=7.5.0"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "ld_impl_linux-64",
+     "2.46.1",
+     [
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex >=4.5"
+     ]
+    ],
+    [
+     "libgomp",
+     "16.2.0",
+     []
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libuuid",
+     "2.42.4",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "ld_impl_linux-64 >=2.36.1",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "libgcc >=15",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hd51c5da_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libuuid >=2.42.4,<3.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "libgcc >=15",
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "python+pandas": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "libgomp >=7.5.0"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "ld_impl_linux-64",
+     "2.46.1",
+     [
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex >=4.5"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 h6b99dfc_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "libgomp",
+     "16.2.0",
+     []
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libstdcxx",
+     "16.2.0",
+     [
+      "libgcc 16.2.0 ha9f2e26_7"
+     ]
+    ],
+    [
+     "libuuid",
+     "2.42.4",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libgcc >=15",
+      "liblapack >=3.9.0,<4.0a0",
+      "libstdcxx >=15",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15",
+      "numpy >=1.25,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "ld_impl_linux-64 >=2.36.1",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "libgcc >=15",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hd51c5da_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libuuid >=2.42.4,<3.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "libgcc >=15",
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "analysis+pytest": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "libgomp >=7.5.0"
+     ]
+    ],
+    [
+     "brotli",
+     "1.2.1",
+     [
+      "brotli-bin 1.2.1 h9908984_0",
+      "libbrotlidec 1.2.1 ha411449_0",
+      "libbrotlienc 1.2.1 h018ffa1_0",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "brotli-bin",
+     "1.2.1",
+     [
+      "libbrotlidec 1.2.1 ha411449_0",
+      "libbrotlienc 1.2.1 h018ffa1_0",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "cairo",
+     "1.18.6",
+     [
+      "fontconfig >=2.18.3,<3.0a0",
+      "fonts-conda-ecosystem",
+      "icu >=79.1,<80.0a0",
+      "libexpat >=2.9.0,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libgcc >=15",
+      "libglib >=2.90.0,<3.0a0",
+      "libpng >=1.6.59,<1.7.0a0",
+      "libstdcxx >=15",
+      "libxcb >=1.17.0,<2.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "pixman >=0.46.4,<1.0a0",
+      "xorg-libice >=1.1.2,<2.0a0",
+      "xorg-libsm >=1.2.6,<2.0a0",
+      "xorg-libx11 >=1.8.14,<2.0a0",
+      "xorg-libxext >=1.3.7,<2.0a0",
+      "xorg-libxrender >=0.9.13,<0.10.0a0"
+     ]
+    ],
+    [
+     "colorama",
+     "0.4.6",
+     [
+      "python >=3.9"
+     ]
+    ],
+    [
+     "contourpy",
+     "1.4.0",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15",
+      "numpy >=2.0",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "cycler",
+     "0.12.1",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "exceptiongroup",
+     "1.3.1",
+     [
+      "python >=3.10",
+      "typing_extensions >=4.6.0"
+     ]
+    ],
+    [
+     "font-ttf-dejavu-sans-mono",
+     "2.37",
+     []
+    ],
+    [
+     "font-ttf-inconsolata",
+     "3.000",
+     []
+    ],
+    [
+     "font-ttf-source-code-pro",
+     "2.038",
+     []
+    ],
+    [
+     "font-ttf-ubuntu",
+     "0.83",
+     []
+    ],
+    [
+     "fontconfig",
+     "2.18.3",
+     [
+      "libexpat >=2.8.1,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libgcc >=15",
+      "libuuid >=2.42.2,<3.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "fonts-conda-ecosystem",
+     "1",
+     [
+      "fonts-conda-forge"
+     ]
+    ],
+    [
+     "fonts-conda-forge",
+     "1",
+     [
+      "font-ttf-dejavu-sans-mono",
+      "font-ttf-inconsolata",
+      "font-ttf-source-code-pro",
+      "font-ttf-ubuntu"
+     ]
+    ],
+    [
+     "fonttools",
+     "4.68.0",
+     [
+      "brotli",
+      "libgcc >=15",
+      "munkres",
+      "python >=3.14,<3.15.0a0",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "freetype",
+     "2.14.3",
+     [
+      "libfreetype 2.14.3 ha770c72_2",
+      "libfreetype6 2.14.3 h5e6c136_2"
+     ]
+    ],
+    [
+     "fribidi",
+     "1.0.18",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "graphite2",
+     "1.3.15",
+     [
+      "libgcc >=14",
+      "libstdcxx >=14"
+     ]
+    ],
+    [
+     "icu",
+     "79.1",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15"
+     ]
+    ],
+    [
+     "iniconfig",
+     "2.3.1",
+     [
+      "python >=3.11"
+     ]
+    ],
+    [
+     "kiwisolver",
+     "1.5.1",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "lcms2",
+     "2.20",
+     [
+      "libgcc >=15",
+      "libjpeg-turbo >=3.2.1,<4.0a0",
+      "libtiff >=4.7.2,<4.8.0a0"
+     ]
+    ],
+    [
+     "ld_impl_linux-64",
+     "2.46.1",
+     [
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "lerc",
+     "4.3.0",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libbrotlicommon",
+     "1.2.1",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libbrotlidec",
+     "1.2.1",
+     [
+      "libbrotlicommon 1.2.1 h39a168f_0",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libbrotlienc",
+     "1.2.1",
+     [
+      "libbrotlicommon 1.2.1 h39a168f_0",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "libdeflate",
+     "1.26",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libfreetype",
+     "2.14.3",
+     [
+      "libfreetype6 >=2.14.3"
+     ]
+    ],
+    [
+     "libfreetype6",
+     "2.14.3",
+     [
+      "libgcc >=15",
+      "libpng >=1.6.58,<1.7.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex >=4.5"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 h6b99dfc_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "libglib",
+     "2.90.1",
+     [
+      "libffi >=3.7.0,<3.8.0a0",
+      "libgcc >=15",
+      "libiconv >=1.18,<2.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "pcre2 >=10.47,<10.48.0a0"
+     ]
+    ],
+    [
+     "libgomp",
+     "16.2.0",
+     []
+    ],
+    [
+     "libharfbuzz",
+     "15.1.0",
+     [
+      "cairo >=1.18.6,<2.0a0",
+      "graphite2 >=1.3.15,<2.0a0",
+      "icu >=79.1,<80.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libgcc >=15",
+      "libglib >=2.90.0,<3.0a0",
+      "libpng >=1.6.59,<1.7.0a0",
+      "libstdcxx >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libiconv",
+     "1.18",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libjpeg-turbo",
+     "3.2.1",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0"
+     ]
+    ],
+    [
+     "libpng",
+     "1.6.59",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libraqm",
+     "0.11.0",
+     [
+      "fribidi >=1.0.16,<2.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libgcc >=14",
+      "libharfbuzz >=14.2.1"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "icu >=79.1,<80.0a0",
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libstdcxx",
+     "16.2.0",
+     [
+      "libgcc 16.2.0 ha9f2e26_7"
+     ]
+    ],
+    [
+     "libtiff",
+     "4.7.2",
+     [
+      "lerc >=4.3.0,<5.0a0",
+      "libdeflate >=1.26,<1.27.0a0",
+      "libgcc >=15",
+      "libjpeg-turbo >=3.2.1,<4.0a0",
+      "liblzma >=5.8.3,<6.0a0",
+      "libstdcxx >=15",
+      "libwebp-base >=1.6.0,<2.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "libuuid",
+     "2.42.4",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libwebp-base",
+     "1.6.0",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libxcb",
+     "1.17.0",
+     [
+      "libgcc >=15",
+      "pthread-stubs",
+      "xorg-libxau >=1.0.12,<2.0a0",
+      "xorg-libxdmcp >=1.1.5,<2.0a0"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "matplotlib-base",
+     "3.11.2",
+     [
+      "contourpy >=1.0.1",
+      "cycler >=0.10",
+      "fonttools >=4.28.2",
+      "freetype",
+      "kiwisolver >=1.3.1",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libgcc >=15",
+      "libraqm >=0.11.0,<0.12.0a0",
+      "libstdcxx >=15",
+      "numpy >=1.25",
+      "numpy >=1.25,<3",
+      "packaging >=20.0",
+      "pillow >=9",
+      "pyparsing >=3",
+      "python >=3.14,<3.15.0a0",
+      "python-dateutil >=2.7",
+      "python_abi 3.14.* *_cp314",
+      "qhull >=2020.2,<2020.3.0a0",
+      "tk >=8.6.13,<8.7.0a0"
+     ]
+    ],
+    [
+     "munkres",
+     "1.1.4",
+     [
+      "python >=3.9"
+     ]
+    ],
+    [
+     "ncurses",
+     "6.6",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libgcc >=15",
+      "liblapack >=3.9.0,<4.0a0",
+      "libstdcxx >=15",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "openjpeg",
+     "2.5.4",
+     [
+      "libgcc >=15",
+      "libpng >=1.6.58,<1.7.0a0",
+      "libstdcxx >=15",
+      "libtiff >=4.7.2,<4.8.0a0",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "packaging",
+     "26.3",
+     [
+      "python",
+      "python >=3.9"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15",
+      "numpy >=1.25,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "pcre2",
+     "10.47",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "pillow",
+     "13.0.0",
+     [
+      "lcms2 >=2.19.1,<3.0a0",
+      "libfreetype >=2.14.3",
+      "libfreetype6 >=2.14.3",
+      "libgcc >=15",
+      "libjpeg-turbo >=3.2.0,<4.0a0",
+      "libtiff >=4.7.2,<4.8.0a0",
+      "libwebp-base >=1.6.0,<2.0a0",
+      "libxcb >=1.17.0,<2.0a0",
+      "openjpeg >=2.5.4,<3.0a0",
+      "python",
+      "python_abi 3.14.* *_cp314",
+      "tk >=8.6.13,<8.7.0a0",
+      "zlib-ng >=2.3.3,<2.4.0a0"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "pixman",
+     "0.46.4",
+     [
+      "libgcc >=14",
+      "libstdcxx >=14"
+     ]
+    ],
+    [
+     "pluggy",
+     "1.7.0",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "pthread-stubs",
+     "0.4",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "pygments",
+     "2.21.0",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "pyparsing",
+     "3.3.3",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "pytest",
+     "9.2.0",
+     [
+      "colorama",
+      "exceptiongroup >=1",
+      "iniconfig >=2",
+      "packaging >=24",
+      "pluggy >=1.6,<2",
+      "pygments >=2.15",
+      "python",
+      "python >=3.10",
+      "tomli >=2"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "ld_impl_linux-64 >=2.36.1",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "libgcc >=15",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hd51c5da_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libuuid >=2.42.4,<3.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "qhull",
+     "2020.2",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15"
+     ]
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "libgcc >=15",
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tomli",
+     "2.5.0",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "typing_extensions",
+     "4.16.0",
+     [
+      "python",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "xorg-libice",
+     "1.1.2",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "xorg-libsm",
+     "1.2.6",
+     [
+      "libgcc >=14",
+      "libuuid >=2.42.2,<3.0a0",
+      "xorg-libice >=1.1.2,<2.0a0"
+     ]
+    ],
+    [
+     "xorg-libx11",
+     "1.8.14",
+     [
+      "libgcc >=15",
+      "libxcb >=1.17.0,<2.0a0"
+     ]
+    ],
+    [
+     "xorg-libxau",
+     "1.0.12",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "xorg-libxdmcp",
+     "1.1.5",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "xorg-libxext",
+     "1.3.7",
+     [
+      "libgcc >=15",
+      "xorg-libx11 >=1.8.13,<2.0a0"
+     ]
+    ],
+    [
+     "xorg-libxrender",
+     "0.9.13",
+     [
+      "libgcc >=15",
+      "xorg-libx11 >=1.8.13,<2.0a0"
+     ]
+    ],
+    [
+     "zlib-ng",
+     "2.3.3",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15"
+     ]
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "python+pandas=2.3": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "libgomp >=7.5.0"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "ld_impl_linux-64",
+     "2.46.1",
+     [
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex >=4.5"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 h6b99dfc_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "libgomp",
+     "16.2.0",
+     []
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libmpdec",
+     "4.0.0",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0"
+     ]
+    ],
+    [
+     "libpython",
+     "3.14.10",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libstdcxx",
+     "16.2.0",
+     [
+      "libgcc 16.2.0 ha9f2e26_7"
+     ]
+    ],
+    [
+     "libuuid",
+     "2.42.4",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "numpy",
+     "2.5.4",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libgcc >=15",
+      "liblapack >=3.9.0,<4.0a0",
+      "libstdcxx >=15",
+      "python",
+      "python_abi 3.14.* *_cp314"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "pandas",
+     "2.3.3",
+     [
+      "libgcc >=14",
+      "libstdcxx >=14",
+      "numpy >=1.22.4",
+      "numpy >=1.23,<3",
+      "python >=3.14,<3.15.0a0",
+      "python-dateutil >=2.8.2",
+      "python-tzdata >=2022.7",
+      "python_abi 3.14.* *_cp314",
+      "pytz >=2020.1"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.13.0a0"
+     ]
+    ],
+    [
+     "python",
+     "3.14.10",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "ld_impl_linux-64 >=2.36.1",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "libgcc >=15",
+      "liblzma >=5.8.3,<6.0a0",
+      "libmpdec >=4.0.0,<5.0a0",
+      "libpython 3.14.10 hd51c5da_100_cp314",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libuuid >=2.42.4,<3.0a0",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "python_abi 3.14.* *_cp314",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata",
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.14",
+     []
+    ],
+    [
+     "pytz",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "libgcc >=15",
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ],
+   "python3.11+pandas": [
+    [
+     "_openmp_mutex",
+     "4.5",
+     [
+      "libgomp >=7.5.0"
+     ]
+    ],
+    [
+     "bzip2",
+     "1.0.8",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "ca-certificates",
+     "2026.10.23",
+     []
+    ],
+    [
+     "ld_impl_linux-64",
+     "2.46.1",
+     [
+      "zstd >=1.5.7,<1.6.0a0"
+     ]
+    ],
+    [
+     "libblas",
+     "3.11.0",
+     [
+      "libopenblas >=0.3.34,<0.3.35.0a0",
+      "libopenblas >=0.3.34,<1.0a0"
+     ]
+    ],
+    [
+     "libcblas",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "libexpat",
+     "2.9.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libffi",
+     "3.7.0",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libgcc",
+     "16.2.0",
+     [
+      "_openmp_mutex >=4.5"
+     ]
+    ],
+    [
+     "libgfortran",
+     "16.2.0",
+     [
+      "libgfortran5 16.2.0 h6b99dfc_7"
+     ]
+    ],
+    [
+     "libgfortran5",
+     "16.2.0",
+     [
+      "libgcc >=16.2.0"
+     ]
+    ],
+    [
+     "libgomp",
+     "16.2.0",
+     []
+    ],
+    [
+     "liblapack",
+     "3.11.0",
+     [
+      "libblas 3.11.0 12_h4a7cf45_openblas"
+     ]
+    ],
+    [
+     "liblzma",
+     "5.8.3",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libnsl",
+     "2.0.1",
+     [
+      "libgcc >=13"
+     ]
+    ],
+    [
+     "libopenblas",
+     "0.3.34",
+     [
+      "libgcc >=15",
+      "libgfortran",
+      "libgfortran5 >=15.3.0"
+     ]
+    ],
+    [
+     "libpython",
+     "3.11.18",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libsqlite",
+     "3.54.1",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "libstdcxx",
+     "16.2.0",
+     [
+      "libgcc 16.2.0 ha9f2e26_7"
+     ]
+    ],
+    [
+     "libuuid",
+     "2.42.4",
+     [
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "libxcrypt",
+     "4.4.38",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "libzlib",
+     "1.3.2",
+     []
+    ],
+    [
+     "ncurses",
+     "6.6",
+     [
+      "libgcc >=14"
+     ]
+    ],
+    [
+     "numpy",
+     "2.4.6",
+     [
+      "libblas >=3.9.0,<4.0a0",
+      "libcblas >=3.9.0,<4.0a0",
+      "libgcc >=14",
+      "liblapack >=3.9.0,<4.0a0",
+      "libstdcxx >=14",
+      "python",
+      "python_abi 3.11.* *_cp311"
+     ]
+    ],
+    [
+     "openssl",
+     "3.6.5",
+     [
+      "ca-certificates",
+      "libgcc >=15"
+     ]
+    ],
+    [
+     "packaging",
+     "26.3",
+     [
+      "python",
+      "python >=3.9"
+     ]
+    ],
+    [
+     "pandas",
+     "3.1.1",
+     [
+      "libgcc >=15",
+      "libstdcxx >=15",
+      "numpy >=1.23,<3",
+      "numpy >=2.0.2",
+      "python",
+      "python-dateutil >=2.9.0",
+      "python_abi 3.11.* *_cp311"
+     ]
+    ],
+    [
+     "pip",
+     "26.2.2",
+     [
+      "ca-certificates >=2026.10.19",
+      "python >=3.11,<3.13.0a0",
+      "setuptools",
+      "wheel"
+     ]
+    ],
+    [
+     "python",
+     "3.11.18",
+     [
+      "bzip2 >=1.0.8,<2.0a0",
+      "ld_impl_linux-64 >=2.36.1",
+      "libexpat >=2.8.5,<3.0a0",
+      "libffi >=3.7.0,<3.8.0a0",
+      "libgcc >=15",
+      "liblzma >=5.8.3,<6.0a0",
+      "libnsl >=2.0.1,<2.1.0a0",
+      "libpython 3.11.18 ha57cdbe_0_cpython",
+      "libsqlite >=3.54.1,<4.0a0",
+      "libuuid >=2.42.4,<3.0a0",
+      "libxcrypt >=4.4.38",
+      "libzlib >=1.3.2,<2.0a0",
+      "ncurses >=6.6,<7.0a0",
+      "openssl >=3.5.9,<4.0a0",
+      "pip",
+      "readline >=8.3,<9.0a0",
+      "tk >=8.6.13,<8.7.0a0",
+      "tzdata"
+     ]
+    ],
+    [
+     "python-dateutil",
+     "4.0.0",
+     [
+      "python",
+      "python >=3.11",
+      "python-tzdata"
+     ]
+    ],
+    [
+     "python-tzdata",
+     "2026.6",
+     [
+      "python",
+      "python >=3.11"
+     ]
+    ],
+    [
+     "python_abi",
+     "3.11",
+     []
+    ],
+    [
+     "readline",
+     "8.3",
+     [
+      "libgcc >=15",
+      "ncurses >=6.6,<7.0a0"
+     ]
+    ],
+    [
+     "setuptools",
+     "84.2.1",
+     [
+      "python >=3.11"
+     ]
+    ],
+    [
+     "tk",
+     "8.6.13",
+     [
+      "libgcc >=15",
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ],
+    [
+     "tzdata",
+     "2026e",
+     []
+    ],
+    [
+     "wheel",
+     "0.48.0",
+     [
+      "packaging >=24.0",
+      "python >=3.10"
+     ]
+    ],
+    [
+     "zstd",
+     "1.5.7",
+     [
+      "libzlib >=1.3.2,<2.0a0"
+     ]
+    ]
+   ]
+  }
+ },
+ "releases": {
+  "pandas": [
+   [
+    "2.0.0",
+    "2023-04-03"
+   ],
+   [
+    "2.0.1",
+    "2023-04-24"
+   ],
+   [
+    "2.0.2",
+    "2023-05-29"
+   ],
+   [
+    "2.0.3",
+    "2023-06-29"
+   ],
+   [
+    "2.1.0",
+    "2023-08-30"
+   ],
+   [
+    "2.1.1",
+    "2023-09-20"
+   ],
+   [
+    "2.1.2",
+    "2023-10-27"
+   ],
+   [
+    "2.1.3",
+    "2023-11-11"
+   ],
+   [
+    "2.1.4",
+    "2023-12-08"
+   ],
+   [
+    "2.2.0",
+    "2024-01-20"
+   ],
+   [
+    "2.2.1",
+    "2024-02-23"
+   ],
+   [
+    "2.2.2",
+    "2024-04-10"
+   ],
+   [
+    "2.2.3",
+    "2024-09-20"
+   ],
+   [
+    "2.3.0",
+    "2025-06-05"
+   ],
+   [
+    "2.3.1",
+    "2025-07-09"
+   ],
+   [
+    "2.3.2",
+    "2025-08-21"
+   ],
+   [
+    "2.3.3",
+    "2025-09-30"
+   ],
+   [
+    "3.0.0",
+    "2026-01-22"
+   ],
+   [
+    "3.0.1",
+    "2026-02-18"
+   ],
+   [
+    "3.0.2",
+    "2026-03-31"
+   ],
+   [
+    "3.0.3",
+    "2026-05-12"
+   ],
+   [
+    "3.0.5",
+    "2026-07-23"
+   ],
+   [
+    "3.0.6",
+    "2026-09-19"
+   ],
+   [
+    "3.1.0",
+    "2026-10-22"
+   ],
+   [
+    "3.1.1",
+    "2026-11-04"
+   ]
+  ],
+  "numpy": [
+   [
+    "1.25.0",
+    "2023-06-18"
+   ],
+   [
+    "1.25.1",
+    "2023-07-09"
+   ],
+   [
+    "1.25.2",
+    "2023-08-03"
+   ],
+   [
+    "1.26.0",
+    "2023-09-17"
+   ],
+   [
+    "1.26.2",
+    "2023-11-25"
+   ],
+   [
+    "1.26.3",
+    "2024-01-03"
+   ],
+   [
+    "1.26.4",
+    "2024-02-06"
+   ],
+   [
+    "2.0.0",
+    "2024-06-17"
+   ],
+   [
+    "2.0.1",
+    "2024-07-26"
+   ],
+   [
+    "2.0.2",
+    "2024-08-27"
+   ],
+   [
+    "2.1.0",
+    "2024-08-19"
+   ],
+   [
+    "2.1.1",
+    "2024-09-04"
+   ],
+   [
+    "2.1.2",
+    "2024-10-06"
+   ],
+   [
+    "2.1.3",
+    "2024-11-02"
+   ],
+   [
+    "2.2.0",
+    "2024-12-08"
+   ],
+   [
+    "2.2.1",
+    "2024-12-22"
+   ],
+   [
+    "2.2.2",
+    "2025-01-20"
+   ],
+   [
+    "2.2.3",
+    "2025-02-13"
+   ],
+   [
+    "2.2.4",
+    "2025-03-17"
+   ],
+   [
+    "2.2.5",
+    "2025-04-20"
+   ],
+   [
+    "2.2.6",
+    "2025-05-18"
+   ],
+   [
+    "2.3.0",
+    "2025-06-09"
+   ],
+   [
+    "2.3.1",
+    "2025-07-01"
+   ],
+   [
+    "2.3.2",
+    "2025-07-24"
+   ],
+   [
+    "2.3.3",
+    "2025-09-10"
+   ],
+   [
+    "2.3.4",
+    "2025-10-22"
+   ],
+   [
+    "2.3.5",
+    "2025-11-17"
+   ],
+   [
+    "2.4.0",
+    "2025-12-22"
+   ],
+   [
+    "2.4.1",
+    "2026-01-10"
+   ],
+   [
+    "2.4.2",
+    "2026-02-02"
+   ],
+   [
+    "2.4.3",
+    "2026-03-18"
+   ],
+   [
+    "2.4.4",
+    "2026-05-13"
+   ],
+   [
+    "2.4.5",
+    "2026-05-16"
+   ],
+   [
+    "2.4.6",
+    "2026-05-19"
+   ],
+   [
+    "2.5.0",
+    "2026-06-22"
+   ],
+   [
+    "2.5.1",
+    "2026-07-04"
+   ],
+   [
+    "2.5.2",
+    "2026-08-10"
+   ],
+   [
+    "2.5.3",
+    "2026-09-06"
+   ],
+   [
+    "2.5.4",
+    "2026-10-10"
+   ]
+  ],
+  "pytest": [
+   [
+    "8.0.0",
+    "2024-01-28"
+   ],
+   [
+    "8.0.1",
+    "2024-02-20"
+   ],
+   [
+    "8.0.2",
+    "2024-02-25"
+   ],
+   [
+    "8.1.1",
+    "2024-03-09"
+   ],
+   [
+    "8.1.2",
+    "2024-04-26"
+   ],
+   [
+    "8.2.0",
+    "2024-04-28"
+   ],
+   [
+    "8.2.1",
+    "2024-05-20"
+   ],
+   [
+    "8.2.2",
+    "2024-06-04"
+   ],
+   [
+    "8.3.1",
+    "2024-07-20"
+   ],
+   [
+    "8.3.2",
+    "2024-07-25"
+   ],
+   [
+    "8.3.3",
+    "2024-09-10"
+   ],
+   [
+    "8.3.4",
+    "2024-12-01"
+   ],
+   [
+    "8.3.5",
+    "2025-03-02"
+   ],
+   [
+    "8.4.0",
+    "2025-06-02"
+   ],
+   [
+    "8.4.1",
+    "2025-06-18"
+   ],
+   [
+    "8.4.2",
+    "2025-09-04"
+   ],
+   [
+    "9.0.0",
+    "2025-11-08"
+   ],
+   [
+    "9.0.1",
+    "2025-11-13"
+   ],
+   [
+    "9.0.2",
+    "2025-12-06"
+   ],
+   [
+    "9.0.3",
+    "2026-04-08"
+   ],
+   [
+    "9.1.0",
+    "2026-06-16"
+   ],
+   [
+    "9.1.1",
+    "2026-06-19"
+   ],
+   [
+    "9.2.0",
+    "2026-10-28"
+   ]
+  ]
+ }
+}

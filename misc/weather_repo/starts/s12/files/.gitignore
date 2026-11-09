@@ -1,0 +1,4 @@
+data/processed/
+results/
+__pycache__/
+.pytest_cache/

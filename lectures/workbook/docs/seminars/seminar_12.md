@@ -1,881 +1,759 @@
-# Seminar 12 · Pandas
+# Seminar 12 · pytest
 
-**Paired lecture:** 12 Pandas & Data Cleaning · **Format:** type-along tutorial, in class
+**Paired lecture:** 12 Code That Lasts · **Format:** type-along tutorial, in class
 
 <!-- ~120 min: the length pnpm timing:check reads -->
 
-**Today's goal:** How cold is the hill? Every student reads a second station's messy export with
-pandas, cleans it rule by rule with a count for each rule, compares it day
-by day with the valley station, and writes the result into the README.
+**Today's question:** Will the result come out the same next year, on another laptop?
 
-Everything is typed in VS Code's terminal (zsh on macOS, Git Bash on
-Windows), in today's folder `weather-s12`. In the blocks, a line that
-starts with `$` is typed in the terminal, a line that starts with `>>>` or
-`...` is typed at Python's prompt, and every other line is what comes back.
+**Today's goal:** every student adds pytest to the environment `analysis`
+and writes it down, writes three tests for `weather.py` and for the mean
+7.16, makes `scripts/rebuild.sh` run them as its last line, pins the exact
+versions, deletes the results and makes them again, and rebuilds a fresh
+clone of the folder: the same checksums.
 
-**If time runs short:** skip section 9 at the prompt; the script of
-section 10 holds the same lines. Sections 13 to 15 are optional.
+Everything is typed in VS Code: the test file in the editor, the commands in
+its terminal (zsh on macOS, Git Bash on Windows; the lines are the same in
+both, except the checksum command). In the blocks, a line that starts with
+`$` is typed in the terminal, a line that starts with `>>>` is typed at
+Python's prompt, and every other line is what comes back; `...` stands for
+lines left out.
+
+**If time runs short:** skip the Tasks, but keep sections 9 and 10, the
+delete and the fresh clone; sections 13 to 15 are optional.
 
 ??? info "Before the session"
-    - **Room:** VS Code, Miniforge (`conda`) and internet: section 1
-      downloads today's folder and makes its conda environment (about 200
-      packages, a few minutes the first time). Nothing from an earlier
-      seminar is needed.
+    - **Room:** Miniforge, VS Code with its Python extension, and Git with a
+      name and an e-mail on every laptop (the [Setup](../setup.md) page);
+      internet for the download (1.1 MB) and for pytest (8 packages,
+      1.4 MB). Nothing from earlier seminars is needed: a laptop without the
+      environment `analysis` makes it from today's folder.
     - **Missing a tool?** VS Code: [Setup, step 1](../setup.md#vscode);
-      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); the Python
-      extension: [Setup, step 7](../setup.md#extensions).
-    - **You:** nothing to prepare. Today's folder is
-      [`weather-s12.zip`](https://github.com/MindaugasSarpis/weather-project/releases)
-      on the course repository's Releases page; it holds the valley's log,
-      the hill station's export and `environment.yml`.
-    - **Keys** are written for Windows, macOS in brackets. Every line typed
-      is the same on macOS and Windows.
+      `conda` (Miniforge): [Setup, steps 2–4](../setup.md#shell); your name
+      for Git: [Setup, step 6](../setup.md#github).
+    - **You:** nothing to prepare. Today's folder is a Git repository with
+      one commit, the same on every laptop; the ids of commits made today
+      differ on every laptop, the checksums do not.
+    - **Keys** are written for Windows, macOS in brackets. Paths are shown
+      for a Mac (`/Users/smilte/...`); Git Bash shows `/c/Users/smilte/...`.
 
 ---
 
-## Part 1 · pandas and the new file { #part-1 }
+## Part 1 · pytest in the environment { #part-1 }
 
 <!-- 0:00 to 0:20 -->
 
-A second station stands on a hill 4 km from the valley station, 180 m higher. Its operator sent the hourly export of 2025.
+**pytest** runs tests: small functions that check a number. It goes into the environment, and into the file that lists it.
 
-Further reading: [pandas, 10 minutes to pandas](https://pandas.pydata.org/docs/user_guide/10min.html);
-[HSF Analysis Essentials, Pandas](https://hsf-training.github.io/analysis-essentials/python/README.html).
+Further reading: [pytest, Get started](https://docs.pytest.org/en/stable/getting-started.html).
 
 ---
 
-### 1. Today's folder, its environment and pandas { #install }
+### 1. Get today's folder { #start }
 
 <!-- 0:00 · 10 min -->
 
-Everything for today is in one zip. **pandas**, which reads and cleans tables, is a package: it goes into the folder's conda environment and into `environment.yml`.
+Today's folder holds the data, the module `weather.py`, the rebuild script and `environment.yml`.
 
-1. On the course repository's
-   [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
-   under **Assets**, click `weather-s12.zip`. In VS Code, **View** >
-   **Terminal**, then unpack it into the home folder and go in.
+1. On the [Releases page](https://github.com/MindaugasSarpis/weather-project/releases),
+   under **Assets**, click `weather-s12.zip`. Open VS Code, then the
+   terminal (**View** > **Terminal**), and unzip it into the home folder.
 
     ```text
     $ unzip ~/Downloads/weather-s12.zip -d ~
     Archive:  /Users/smilte/Downloads/weather-s12.zip
        creating: /Users/smilte/weather-s12/
     ...
+      inflating: /Users/smilte/weather-s12/scripts/weather.py
     $ cd ~/weather-s12
     $ ls
     README.md  data  environment.yml  results  scripts
     ```
 
-    Safari unpacks a download by itself: then type
-    `mv ~/Downloads/weather-s12 ~` instead of `unzip`.
+    Safari unpacks a zip by itself: then `mv ~/Downloads/weather-s12 ~`
+    instead.
 
-2. **File** > **Open Folder...** > `weather-s12`, then **View** >
-   **Terminal** again: the terminal now starts in the folder.
-
-3. Make the conda environment `s12` from the folder's `environment.yml`:
-   Python 3.14 with NumPy, Matplotlib and SciPy. It ends with the line to
-   switch it on; type it. The prompt then starts with `(s12)`.
+2. **File** > **Open Folder...** > `weather-s12` > **Open**. The window
+   reloads: open the terminal again (**View** > **Terminal**); it starts in
+   the folder.
+3. The folder is a Git repository with one commit, and nothing changed.
 
     ```text
-    $ conda env create -n s12 -f environment.yml
+    $ git log --oneline
+    618d3f0 The starting folder of the seminar
+    $ git status
+    On branch main
+    nothing to commit, working tree clean
+    ```
+
+4. The environment of weeks 8 to 12 is `analysis`. Switch it on: the
+   prompt starts with `(analysis)`.
+
+    ```text
+    $ conda activate analysis
+    ```
+
+    `EnvironmentNameNotFound: Could not find conda environment: analysis`:
+    this laptop does not have it yet. Make it from the folder's list (a
+    few minutes), then switch it on.
+
+    ```text
+    $ conda env create -f environment.yml
     ...
-    #     $ conda activate s12
-    $ conda activate s12
+    #     $ conda activate analysis
+    $ conda activate analysis
     ```
 
-    `conda: command not found`: install Miniforge as on the
-    [Setup page, steps 2–4](../setup.md#shell), then open a new terminal.
+5. VS Code too: `Ctrl+Shift+P` (macOS `Cmd+Shift+P`), `Python: Select
+   Interpreter`, pick the entry with `envs/analysis` in its path. The
+   Status Bar shows `analysis`.
 
-4. pandas is not there yet. `python -c` runs one line of Python from the
-   shell.
+**Check:** `(analysis)` at the start of the prompt, `618d3f0` in the log.
+
+---
+
+### 2. Install pytest, write it down { #install }
+
+<!-- 0:10 · 10 min -->
+
+A new package goes into the active environment and into `environment.yml`, or the next laptop cannot run the tests.
+
+1. pytest is not there yet. `python -m pytest` runs pytest as a module of
+   this Python, so the answer names that Python.
 
     ```text
-    $ python -c "import pandas"
-    Traceback (most recent call last):
-      File "<string>", line 1, in <module>
-        import pandas
-    ModuleNotFoundError: No module named 'pandas'
+    $ python -m pytest --version
+    /Users/smilte/miniforge3/envs/analysis/bin/python: No module named pytest
     ```
 
-5. Install pandas 3.0.6 from conda-forge. conda shows its plan and asks;
-   press `Enter` at `Proceed ([y]/n)?`. Then check the version.
+2. Install it, with its version.
 
     ```text
-    $ conda install pandas=3.0.6
+    $ conda install pytest=9.2
+    ...
       added / updated specs:
-        - pandas=3.0.6
+        - pytest=9.2
     ...
-    $ python -c "import pandas; print(pandas.__version__)"
-    3.0.6
+    The following NEW packages will be INSTALLED:
+
+      colorama           conda-forge/noarch::colorama-0.4.6-pyhd8ed1ab_1
+      exceptiongroup     conda-forge/noarch::exceptiongroup-1.3.1-pyhd8ed1ab_0
+      iniconfig          conda-forge/noarch::iniconfig-2.3.1-pyhd8ed1ab_0
+      pluggy             conda-forge/noarch::pluggy-1.7.0-pyh5ded981_0
+      pygments           conda-forge/noarch::pygments-2.21.0-pyhcf101f3_0
+      pytest             conda-forge/noarch::pytest-9.2.0-pyhc364b38_1
+      tomli              conda-forge/noarch::tomli-2.5.0-pyh5ded981_0
+      typing_extensions  conda-forge/noarch::typing_extensions-4.16.0-pyhcf101f3_0
+
+    Proceed ([y]/n)?
     ```
 
-6. Write the environment down again. `--from-history` lists only what was
-   asked for, with the versions typed.
+    Eight packages: pytest and the seven it needs, 1.4 MB.
+
+3. At `Proceed ([y]/n)?` press `Enter`. Then ask for the version.
+
+    ```text
+    $ python -m pytest --version
+    pytest 9.2.0
+    ```
+
+4. Export the list again.
 
     ```text
     $ conda env export --from-history -f environment.yml
     ```
 
-7. In `environment.yml`, delete the last line, `prefix: ...` (it names a
-   folder on this laptop only), save, and look at the file.
+5. Open `environment.yml`, delete its last line, `prefix: ...` (a folder on
+   this laptop), save: pytest is the new last line.
 
     ```text
-    $ cat environment.yml
-    name: s12
+    name: analysis
     channels:
       - conda-forge
     dependencies:
-      - jupyterlab=4.6
+      - pandas=3.1
       - matplotlib-base=3.11
-      - numpy=2.5
       - python=3.14
-      - scipy=1.18
-      - pandas=3.0.6
+      - pytest=9.2
     ```
 
-**Check:** `(s12)` in the prompt, `3.0.6`, and `environment.yml` ends with
-`- pandas=3.0.6`.
+    The order of the first three lines differs from laptop to laptop, and
+    a package you added in an earlier week is listed too.
 
-!!! warning "`conda install` ran with `(base)` in the prompt"
-    pandas went into `base`. Run `conda remove pandas`, then
-    `conda activate s12` and install it again.
+**Check:** `pytest 9.2.0`, and `- pytest=9.2` at the end of
+`environment.yml`.
+
+!!! warning "`No module named pytest` after the install"
+    The prompt says `(base)`: `conda activate analysis`, then again.
 
 ---
 
-### 2. The hill station's file { #file }
+## Part 2 · Tests of `weather.py` { #part-2 }
 
-<!-- 0:10 · 10 min -->
+<!-- 0:20 to 0:50 -->
 
-The hill's export is `data/raw/hill_station.csv`, next to the valley's `weather.csv`. First a look in the shell.
-
-1. The first lines. Look at what separates the values and how a decimal
-   is written.
-
-    ```text
-    $ head -n 4 data/raw/hill_station.csv
-    time;temp;unit;humidity
-    01.01.2025 00:00;-3,9;C;100
-    01.01.2025 01:00;-4,1;C;100
-    01.01.2025 02:00;-4,7;C;100
-    ```
-
-2. The number of lines. On macOS `wc` pads the number with spaces on the
-   left.
-
-    ```text
-    $ wc -l data/raw/hill_station.csv
-    8741 data/raw/hill_station.csv
-    ```
-
-**Check:** `;` between the values, a decimal comma, the day before the
-month, a column `unit`. 8 741 lines: the header and 8 740 rows, for the
-8 760 hours of 2025.
-
-!!! question "Task: two odd days"
-    Print the lines of 26 October 2025 from 01:00 to 05:00, then those of
-    30 March 2025. What is odd, and why?
-
-??? success "Answer"
-    ```text
-    $ grep -n '^26\.10\.2025 0[1-5]' data/raw/hill_station.csv
-    7110:26.10.2025 01:00;-1,7;C;98
-    7111:26.10.2025 02:00;-2,3;C;97
-    7112:26.10.2025 03:00;-3,1;C;100
-    7113:26.10.2025 03:00;-2,8;C;100
-    7114:26.10.2025 04:00;-3,4;C;100
-    7115:26.10.2025 05:00;-3,2;C;100
-    $ grep -n '^30\.03\.2025 0[1-5]' data/raw/hill_station.csv
-    2071:30.03.2025 01:00;5,3;C;98
-    2072:30.03.2025 02:00;5,0;C;95
-    2073:30.03.2025 04:00;4,5;C;99
-    2074:30.03.2025 05:00;4,8;C;100
-    ```
-
-    03:00 comes twice on 26 October and not at all on 30 March. The logger
-    writes the local clock: summer time ended at 04:00 on 26 October
-    (back to 03:00) and began at 03:00 on 30 March (on to 04:00). The
-    valley's `weather.csv` has 87 672 = 3 653 × 24 rows, no hour twice and
-    none missing: it keeps winter time all year.
+A test states a fact known without the code: worked out by hand, or counted in the data's description.
 
 ---
 
-## Part 2 · Read it { #part-2 }
+### 3. A fact, stated with `assert` { #assert }
 
-<!-- 0:20 to 0:55 -->
+<!-- 0:20 · 10 min -->
 
-First a table of three rows typed by hand, then the valley's clean file, then the hill's messy one: every option of `read_csv` answers one thing seen in its first lines.
+`assert` and a statement: nothing happens when the statement is true; Python stops with `AssertionError` when it is false.
 
----
-
-### 3. A table in pandas: DataFrame and Series { #frame }
-
-<!-- 0:20 · 15 min -->
-
-A **DataFrame** is a table: named columns, numbered rows. One column of it is a **Series**.
-
-1. Start Python. Every line up to section 9 is typed at its prompt `>>>`.
-   `import pandas as pd` is the usual short name.
+1. Python finds `weather.py` in the terminal's folder, so start it in
+   `scripts`. One line of the log, the evening of 21 July 2019, into
+   `temp_of`:
 
     ```pycon
+    $ cd scripts
     $ python
-    >>> import pandas as pd
+    >>> import weather
+    >>> weather.temp_of("2019-07-21T20:00,27.3,63,4.5")
+    27.3
     ```
 
-2. A table of the first three hours of the valley's log, typed as a
-   dictionary: each key is a column name, each value the column's list.
+2. The same as two statements. The true one prints nothing; the false one
+   stops.
 
     ```pycon
-    >>> df = pd.DataFrame({"time": ["2016-01-01T00:00", "2016-01-01T01:00", "2016-01-01T02:00"], "temp_c": [-4.4, -4.8, -5.5]})
-    >>> df
-                   time  temp_c
-    0  2016-01-01T00:00    -4.4
-    1  2016-01-01T01:00    -4.8
-    2  2016-01-01T02:00    -5.5
-    >>> df.shape
-    (3, 2)
+    >>> assert weather.temp_of("2019-07-21T20:00,27.3,63,4.5") == 27.3
+    >>> assert weather.temp_of("2019-07-21T20:00,27.3,63,4.5") == 25.6
+    Traceback (most recent call last):
+      ...
+    AssertionError
     ```
 
-    The numbers on the left are the **index**, the name of each row.
-    `shape` is (rows, columns).
-
-3. A column by its name, in square brackets: a Series, with the index
-   beside each value. A Series has methods for the whole column.
+3. The four measured hours of that evening: by hand, (27.3 + 25.6 + 24.6
+   + 23.6) / 4 = 101.1 / 4 = 25.275. And `mean`:
 
     ```pycon
-    >>> df["temp_c"]
-    0   -4.4
-    1   -4.8
-    2   -5.5
-    Name: temp_c, dtype: float64
-    >>> df["temp_c"].max()
-    np.float64(-4.4)
-    ```
-
-    pandas keeps numbers as NumPy's (Seminar 8): `np.float64(-4.4)` is the
-    value −4.4.
-
-4. A comparison on a column gives a Series of `True` and `False`, a
-   **mask**. A mask in square brackets keeps the rows where it is `True`.
-
-    ```pycon
-    >>> df["temp_c"] < -4.5
-    0    False
-    1     True
-    2     True
-    Name: temp_c, dtype: bool
-    >>> df[df["temp_c"] < -4.5]
-                   time  temp_c
-    1  2016-01-01T01:00    -4.8
-    2  2016-01-01T02:00    -5.5
-    ```
-
-5. `df.loc[rows, column]` picks cells, and with `=` changes them: here the
-   cells of the masked rows in `temp_c`.
-
-    ```pycon
-    >>> df.loc[df["temp_c"] < -4.5, "temp_c"] = -5.0
-    >>> df
-                   time  temp_c
-    0  2016-01-01T00:00    -4.4
-    1  2016-01-01T01:00    -5.0
-    2  2016-01-01T02:00    -5.0
-    ```
-
-6. A file becomes a DataFrame with `read_csv`. The valley's log is a clean
-   CSV, so no option is needed.
-
-    ```pycon
-    >>> v = pd.read_csv("data/raw/weather.csv")
-    >>> v.shape
-    (87672, 4)
-    >>> v.head(3)
-                   time  temp_c  humidity_pct  wind_ms
-    0  2016-01-01T00:00    -4.4            93      2.5
-    1  2016-01-01T01:00    -4.8            95      2.6
-    2  2016-01-01T02:00    -5.5            95      2.7
-    >>> v.dtypes
-    time                str
-    temp_c          float64
-    humidity_pct      int64
-    wind_ms         float64
-    dtype: object
-    ```
-
-    `dtypes` is the type of each column: text (`str`), floats, integers.
-
-7. The −999 hours are in it as numbers: a mask and `sum` count them
-   (`True` counts as 1).
-
-    ```pycon
-    >>> v["temp_c"].min()
-    np.float64(-999.0)
-    >>> (v["temp_c"] == -999).sum()
-    np.int64(120)
-    ```
-
-**Check:** `(87672, 4)`, and 120 rows of −999.
-
----
-
-### 4. Separator and decimal comma { #read }
-
-<!-- 0:35 · 10 min -->
-
-`read_csv` assumes `,` between values and `.` as the decimal sign. The hill's file has neither.
-
-1. Name the file, read it with no options, and ask for its size.
-
-    ```pycon
-    >>> RAW = "data/raw/hill_station.csv"
-    >>> df = pd.read_csv(RAW)
-    >>> df.shape
-    (8740, 1)
-    >>> df.columns
-    Index(['time;temp;unit;humidity'], dtype='str')
-    ```
-
-    One column: pandas found no `,` in the header, so the whole line is
-    one name.
-
-2. Read it with the separator.
-
-    ```pycon
-    >>> df = pd.read_csv(RAW, sep=";")
-    >>> df.dtypes
-    time            str
-    temp            str
-    unit            str
-    humidity    float64
-    dtype: object
-    ```
-
-    `temp` is text: `-3,9` is not a number to pandas.
-
-3. Read it with the decimal comma too.
-
-    ```pycon
-    >>> df = pd.read_csv(RAW, sep=";", decimal=",")
-    >>> df.dtypes
-    time            str
-    temp        float64
-    unit            str
-    humidity    float64
-    dtype: object
-    >>> df.head(3)
-                   time  temp unit  humidity
-    0  01.01.2025 00:00  -3.9    C     100.0
-    1  01.01.2025 01:00  -4.1    C     100.0
-    2  01.01.2025 02:00  -4.7    C     100.0
-    ```
-
-**Check:** `temp` and `humidity` are `float64`; 8 740 rows.
-
----
-
-### 5. -999 and empty cells { #missing }
-
-<!-- 0:45 · 10 min -->
-
-A missing value must be `NaN` ("not a number"), the value pandas leaves out of every mean.
-
-1. Eight numbers per column: `describe` is the first look at any table.
-
-    ```pycon
-    >>> df.describe()
-                  temp     humidity
-    count  8731.000000  8710.000000
-    mean      3.192005    84.451206
-    std      46.800672    10.998819
-    min    -999.000000    49.000000
-    25%      -2.650000    76.000000
-    50%       4.500000    85.000000
-    75%      12.300000    94.000000
-    max      73.600000   100.000000
-    ```
-
-    `min` is −999, the mark for a failed reading. `count` is below 8 740:
-    the empty cells are already `NaN`.
-
-2. Read again, with −999 as missing, and count the missing values in each
-   column.
-
-    ```pycon
-    >>> df = pd.read_csv(RAW, sep=";", decimal=",", na_values=["-999"])
-    >>> df.isna().sum()
-    time         0
-    temp        27
-    unit         0
-    humidity    30
-    dtype: int64
-    ```
-
-3. The temperature again.
-
-    ```pycon
-    >>> df["temp"].describe()
-    count    8713.000000
-    mean        5.262412
-    std        10.740471
-    min       -17.400000
-    25%        -2.600000
-    50%         4.500000
-    75%        12.400000
-    max        73.600000
-    Name: temp, dtype: float64
-    ```
-
-    The minimum is a winter night now. The maximum, 73.6, is not a
-    temperature on a Lithuanian hill in °C.
-
-**Check:** 27 missing temperatures, 30 missing humidities, and `max 73.6`.
-
-!!! question "Task: where are the missing values?"
-    1. Of the 27 missing temperatures, how many were `-999` in the file
-       and how many were empty cells? Count in a second terminal (**+** in
-       the terminal panel), with `grep -c`.
-    2. From which hour to which hour is the humidity missing?
-
-??? success "Answer"
-    1. 18 and 9; 18 + 9 = 27.
-
-        ```text
-        $ grep -c ';-999;' data/raw/hill_station.csv
-        18
-        $ grep -c ';;' data/raw/hill_station.csv
-        9
-        ```
-
-    2. From 2 September 12:00 to 3 September 17:00, 30 hours in a row.
-
-        ```pycon
-        >>> df[df["humidity"].isna()]["time"].iloc[[0, -1]]
-        5823    02.09.2025 12:00
-        5852    03.09.2025 17:00
-        Name: time, dtype: str
-        ```
-
----
-
-## Part 3 · Clean it { #part-3 }
-
-<!-- 0:55 to 1:25 -->
-
-Each rule is a mask or a method, and each one is counted.
-
----
-
-### 6. Two units in one column { #units }
-
-<!-- 0:55 · 10 min -->
-
-The column `unit` says how each value is written: the 73.6 is in °F.
-
-1. Count the units, then make a mask for the rows in °F and look at the
-   first of them.
-
-    ```pycon
-    >>> df["unit"].value_counts()
-    unit
-    C    8668
-    F      72
-    Name: count, dtype: int64
-    >>> f = df["unit"] == "F"
-    >>> df[f].head(3)
-                      time  temp unit  humidity
-    4477  08.07.2025 10:00  63.5    F      86.0
-    4478  08.07.2025 11:00  65.8    F      82.0
-    4479  08.07.2025 12:00  67.8    F      78.0
-    ```
-
-2. Convert those rows, °C = (°F − 32) × 5 / 9, and say so in `unit`. The
-   arithmetic runs on the whole masked column at once.
-
-    ```pycon
-    >>> df.loc[f, "temp"] = ((df.loc[f, "temp"] - 32) * 5 / 9).round(1)
-    >>> df.loc[f, "unit"] = "C"
-    >>> df[f].head(3)
-                      time  temp unit  humidity
-    4477  08.07.2025 10:00  17.5    C      86.0
-    4478  08.07.2025 11:00  18.8    C      82.0
-    4479  08.07.2025 12:00  19.9    C      78.0
-    ```
-
-    63.5 °F: (63.5 − 32) × 5 / 9 = 17.5 °C.
-
-3. The largest value now.
-
-    ```pycon
-    >>> df["temp"].max()
-    np.float64(28.4)
-    ```
-
-**Check:** 72 rows converted, the maximum 28.4 °C.
-
----
-
-### 7. Rows twice, and the hour twice { #duplicates }
-
-<!-- 1:05 · 10 min -->
-
-A row exported twice is dropped; an hour that happened twice is kept.
-
-1. Rows that are exact copies of an earlier row, then rows whose time
-   came before.
-
-    ```pycon
-    >>> print(df.duplicated().sum())
-    24
-    >>> print(df.duplicated(subset="time").sum())
-    25
-    ```
-
-2. One more by time: the 03:00 of 26 October, a real second hour (the
-   Task of Part 1).
-
-    ```pycon
-    >>> df[df["time"] == "26.10.2025 03:00"]
-                      time  temp unit  humidity
-    7110  26.10.2025 03:00  -3.1    C     100.0
-    7111  26.10.2025 03:00  -2.8    C     100.0
-    ```
-
-3. Which day was exported twice: the first and the last copied row.
-
-    ```pycon
-    >>> df[df.duplicated()]["time"].iloc[[0, -1]]
-    7732    20.11.2025 00:00
-    7755    20.11.2025 23:00
-    Name: time, dtype: str
-    ```
-
-4. Drop the exact copies only.
-
-    ```pycon
-    >>> df = df.drop_duplicates()
-    >>> len(df)
-    8716
-    ```
-
-**Check:** 8 740 − 24 = 8 716 rows; both 03:00 rows of 26 October are still there.
-
----
-
-### 8. Times and daily means { #daily }
-
-<!-- 1:15 · 10 min -->
-
-The valley is compared day by day, so the hours become days.
-
-1. Turn the text into times; the format says where the day and the month
-   are (`%d.%m.%Y %H:%M`).
-
-    ```pycon
-    >>> df["time"] = pd.to_datetime(df["time"], format="%d.%m.%Y %H:%M")
-    >>> df.head(3)
-                     time  temp unit  humidity
-    0 2025-01-01 00:00:00  -3.9    C     100.0
-    1 2025-01-01 01:00:00  -4.1    C     100.0
-    2 2025-01-01 02:00:00  -4.7    C     100.0
-    ```
-
-2. The temperature, indexed by time; then one row per day with
-   `resample("D")`: the mean, and the number of hours it is made of.
-
-    ```pycon
-    >>> temp = df.set_index("time")["temp"]
-    >>> day = temp.resample("D").agg(hill="mean", hours="count")
-    >>> day.head(3)
-                    hill  hours
-    time
-    2025-01-01 -3.416667     24
-    2025-01-02 -5.441667     24
-    2025-01-03 -6.995833     24
-    ```
-
-3. How many days, and which have fewer than 20 hours.
-
-    ```pycon
-    >>> len(day)
-    365
-    >>> day[day["hours"] < 20]
-                     hill  hours
-    time
-    2025-02-11 -11.935714     14
-    2025-02-12        NaN      0
-    2025-02-13 -11.521429     14
-    2025-04-14  -3.850000      6
-    ```
-
-    The logger was off from 11 February 14:00 to 13 February 09:00. On
-    14 April only the six night hours are left, so that mean is too cold.
-
-**Check:** 365 days, four of them with fewer than 20 hours.
-
-!!! question "Task: 23 and 25 hours"
-    How many hours do 30 March and 26 October have in `day`? Which other
-    days do not have 24, and why?
-
-??? success "Answer"
-    ```pycon
-    >>> day.loc["2025-10-26"]
-    hill     -0.396
-    hours    25.000
-    Name: 2025-10-26 00:00:00, dtype: float64
-    ```
-
-    30 March has 23 hours, 26 October 25: the summer-time days.
-
-    ```pycon
-    >>> day[day["hours"] != 24]
-                     hill  hours
-    time
-    2025-01-26  -4.752174     23
-    2025-02-09  -9.047826     23
-    2025-02-11 -11.935714     14
-    2025-02-12        NaN      0
-    2025-02-13 -11.521429     14
-    2025-03-30   8.795652     23
-    2025-04-11  -0.673913     23
-    2025-04-14  -3.850000      6
-    2025-04-22   1.143478     23
-    2025-06-22  12.773913     23
-    2025-08-13  10.908696     23
-    2025-10-03   4.560870     23
-    2025-10-22   6.308696     23
-    2025-10-26  -0.396000     25
-    2025-12-22  -8.600000     23
-    ```
-
-    The other days with 23 hours each hold one of the 9 empty cells:
-    `count` counts only values that are not `NaN`.
-
----
-
-## Part 4 · Compare, by script { #part-4 }
-
-<!-- 1:25 to 2:00 -->
-
-The valley's daily means, joined to the hill's by date; then the lines of the prompt go into a script.
-
----
-
-### 9. Join with the valley { #join }
-
-<!-- 1:25 · 10 min -->
-
-`merge` keeps the dates both tables have.
-
-1. The valley station again, now with −999 as missing and `time` read as
-   times; then its daily means.
-
-    ```pycon
-    >>> v = pd.read_csv("data/raw/weather.csv", na_values=["-999"], parse_dates=["time"])
-    >>> valley = v.set_index("time")["temp_c"].resample("D").mean()
-    >>> len(valley)
-    3653
-    ```
-
-2. Join the two by date, then keep the days with 20 hours or more.
-
-    ```pycon
-    >>> both = pd.merge(valley, day, on="time")
-    >>> len(both)
-    365
-    >>> both = both[both["hours"] >= 20]
-    >>> len(both)
-    361
-    ```
-
-    3 653 days and 365 days give 365: only 2025 is in both.
-
-3. Hill minus valley, on average. Then leave Python.
-
-    ```pycon
-    >>> diff = both["hill"] - both["temp_c"]
-    >>> print(round(diff.mean(), 2))
-    -1.19
+    >>> weather.mean([27.3, 25.6, 24.6, 23.6])
+    25.275000000000002
     >>> exit()
+    $ cd ..
     ```
 
-**Check:** −1.19 °C over 361 days. Air cools by about 6.5 °C per km of
-height: 0.18 km × 6.5 = 1.17 °C.
+    The tail of digits is a float's binary rounding, as in `0.1 + 0.2`.
+
+**Check:** `AssertionError` for 25.6, `25.275000000000002` for the mean,
+and the terminal back in `weather-s12` (`cd ..`).
 
 ---
 
-### 10. The script { #script }
+### 4. A test file, run by pytest { #test-file }
 
-<!-- 1:35 · 15 min -->
+<!-- 0:30 · 10 min -->
 
-The lines of sections 4 to 9 in one file, with a count for every rule.
+pytest runs every function whose name starts with `test_`, in files whose names start with `test_`.
 
 1. In the Explorer, right-click `scripts` > **New File...**, type
-   `clean_hill.py`. Write its first part: the files, the reading, two counts.
+   `test_weather.py`, press `Enter`. It stands beside `weather.py`, so
+   `import weather` finds the module. Type, save:
 
     ```python
-    """Clean the hill station's export; compare it with the valley, day by day.
+    import weather
 
-    Run from the project folder:  python scripts/clean_hill.py
-    """
-    import os
 
-    import pandas as pd
+    def test_temp_of():
+        assert weather.temp_of("2019-07-21T20:00,27.3,63,4.5") == 27.3
 
-    HILL = "data/raw/hill_station.csv"
-    VALLEY = "data/raw/weather.csv"
-    OUT = "data/processed/hill_daily.csv"
 
-    df = pd.read_csv(HILL, sep=";", decimal=",", na_values=["-999"])
-    print("rows read      ", len(df))
-    print("temp missing   ", df["temp"].isna().sum())
+    def test_mean_of_four_hours():
+        assert weather.mean([27.3, 25.6, 24.6, 23.6]) == 25.275
     ```
 
-2. Under it, the rules of sections 6 and 7, each with a count.
-
-    ```python
-    f = df["unit"] == "F"
-    df.loc[f, "temp"] = ((df.loc[f, "temp"] - 32) * 5 / 9).round(1)
-    df.loc[f, "unit"] = "C"
-    print("rows in F      ", f.sum())
-
-    print("duplicate rows ", df.duplicated().sum())
-    df = df.drop_duplicates()
-    ```
-
-3. Under it, the days and the comparison of sections 8 and 9. Save.
-
-    ```python
-    df["time"] = pd.to_datetime(df["time"], format="%d.%m.%Y %H:%M")
-    temp = df.set_index("time")["temp"]
-    day = temp.resample("D").agg(hill="mean", hours="count")
-    print("days < 20 hours", (day["hours"] < 20).sum())
-    day = day[day["hours"] >= 20]
-    os.makedirs("data/processed", exist_ok=True)
-    day["hill"].round(2).to_csv(OUT, date_format="%Y-%m-%d", lineterminator="\n")
-
-    v = pd.read_csv(VALLEY, na_values=["-999"], parse_dates=["time"])
-    valley = v.set_index("time")["temp_c"].resample("D").mean()
-    both = pd.merge(valley, day, on="time")
-    diff = both["hill"] - both["temp_c"]
-    print("days compared  ", len(both))
-    print("hill - valley  ", round(diff.mean(), 2))
-    ```
-
-4. Run it. (`lineterminator="\n"` makes `hill_daily.csv` end its lines
-   the same way on macOS and Windows, so it has the same checksum on
-   both.)
+2. Run pytest from the project folder. It finds the file, runs both
+   functions, and prints one character per test: `.` passed, `F` failed.
 
     ```text
-    $ python scripts/clean_hill.py
-    rows read       8740
-    temp missing    27
-    rows in F       72
-    duplicate rows  24
-    days < 20 hours 4
-    days compared   361
-    hill - valley   -1.19
+    $ python -m pytest
+    ============================= test session starts ==============================
+    platform darwin -- Python 3.14.10, pytest-9.2.0, pluggy-1.7.0
+    rootdir: /Users/smilte/weather-s12
+    collected 2 items
+
+    scripts/test_weather.py .F                                               [100%]
+    ...
+    ========================= 1 failed, 1 passed in 0.02s ==========================
     ```
 
-5. The file it wrote.
+    On Windows the second line says `platform win32`.
 
-    ```text
-    $ head -n 3 data/processed/hill_daily.csv
-    time,hill
-    2025-01-01,-3.42
-    2025-01-02,-5.44
-    $ wc -l data/processed/hill_daily.csv
-    362 data/processed/hill_daily.csv
-    ```
-
-**Check:** the seven lines of the log, and 362 lines in `hill_daily.csv`:
-the header and 361 days.
+**Check:** `.F` and `1 failed, 1 passed`.
 
 ---
 
-### 11. Rebuild and README { #readme }
+### 5. Read the failure, compare within a tolerance { #tolerance }
 
-<!-- 1:50 · 10 min -->
+<!-- 0:40 · 10 min (Task: 5 min, skip if late) -->
 
-The rebuild script runs the new script too, and the README says what it found.
+A failure names the test, the line and the values; a computed float is compared within a tolerance, never exactly.
 
-1. In `scripts/rebuild.sh`, add a last line and save. `>` writes what the
-   script prints into a file.
+1. The lines in the middle of the output, which `...` cut above:
 
     ```text
-    python scripts/clean_hill.py > results/hill.txt
+    ___________________________ test_mean_of_four_hours ____________________________
+
+        def test_mean_of_four_hours():
+    >       assert weather.mean([27.3, 25.6, 24.6, 23.6]) == 25.275
+    E       assert 25.275000000000002 == 25.275
+    ...
+    scripts/test_weather.py:9: AssertionError
     ```
 
-2. Rebuild, then read the new result.
+    Which test: its name, between the underscores. Which line: the one
+    marked `>`, line 9. Which values: the line marked `E`, the mean on the
+    left, the number of the test on the right.
+
+2. `mean` is right; the test asks for more digits than a float keeps.
+   Allow a tiny difference: `abs` is the distance without its sign, and
+   `1e-9` is 0.000000001. Change the second test, save:
+
+    ```python
+    def test_mean_of_four_hours():
+        m = weather.mean([27.3, 25.6, 24.6, 23.6])
+        assert abs(m - 25.275) < 1e-9
+    ```
+
+3. Run again.
+
+    ```text
+    $ python -m pytest
+    ...
+    scripts/test_weather.py ..                                               [100%]
+
+    ============================== 2 passed in 0.01s ===============================
+    ```
+
+**Check:** `2 passed`.
+
+!!! question "Task: see the test catch a mistake"
+    In `weather.py`, change the last line of `mean` to
+    `return sum(values) / (len(values) - 1)`, save, run pytest. Which value
+    does the failure show? Then put the line back.
+
+??? success "Answer"
+    ```text
+    $ python -m pytest
+    ...
+    >       assert abs(m - 25.275) < 1e-9
+    E       assert 8.425000000000004 < 1e-09
+    E        +  where 8.425000000000004 = abs((33.7 - 25.275))
+    ...
+    ========================= 1 failed, 1 passed in 0.02s ==========================
+    ```
+
+    The broken `mean` gives 101.1 / 3 = 33.7, 8.425 away from 25.275. A
+    test that has been seen to fail checks something. With the line put
+    back: `2 passed`.
+
+---
+
+## Part 3 · One command that rebuilds and tests { #part-3 }
+
+<!-- 0:50 to 1:16 -->
+
+`scripts/rebuild.sh` makes `data/processed` and `results` from `data/raw`. Today its last line runs the tests.
+
+---
+
+### 6. A test of the result { #result }
+
+<!-- 0:50 · 10 min -->
+
+The second kind of test reads what the rebuild wrote: 87 552 rows, from the README's 87 672 hours less 120 marked `-999`, and the mean 7.16.
+
+1. Run the rebuild as it is, then read the file it wrote.
 
     ```text
     $ ./scripts/rebuild.sh
     9 rows written to data/processed/daily.csv
-    $ cat results/hill.txt
-    rows read       8740
-    temp missing    27
-    rows in F       72
-    duplicate rows  24
-    days < 20 hours 4
-    days compared   361
-    hill - valley   -1.19
+    $ cat results/temp_c.txt
+    file    data/processed/weather_valid.csv
+    column  temp_c
+    rows    87552
+    min     -16.3
+    max     32.4
+    mean    7.15997
     ```
 
-3. In `README.md`, above `## How to rebuild`, add and save:
+2. At the end of `scripts/test_weather.py`, a third test, save. The loop
+   puts each line's two words into a dict: `stats["rows"]` is `"87552"`;
+   the README says 7.16, so half of its last digit, 0.005, is the
+   tolerance.
+
+    ```python
+
+
+    def test_mean_temperature():
+        stats = {}
+        for line in open("results/temp_c.txt").read().splitlines():
+            parts = line.split()
+            stats[parts[0]] = parts[1]
+        assert stats["rows"] == "87552"
+        assert abs(float(stats["mean"]) - 7.16) < 0.005
+    ```
+
+3. Run the tests.
 
     ```text
-    ## Hill station
+    $ python -m pytest
+    ...
+    scripts/test_weather.py ...                                              [100%]
 
-    `scripts/clean_hill.py` cleans `data/raw/hill_station.csv` (2025, 4 km
-    away, 180 m higher). Over 361 days the hill is 1.19 °C colder than the
-    valley. The counts of each rule are in `results/hill.txt`. Rebuild with
-    the environment `s12` active: `clean_hill.py` needs pandas.
+    ============================== 3 passed in 0.01s ===============================
     ```
 
-4. Look at it: right-click `README.md` > **Open Preview**.
+**Check:** `3 passed`.
 
-**Check:** `results/hill.txt` holds the seven lines of the log, and the
-README's preview shows the **Hill station** section.
+---
 
-!!! question "Task: what if the units were left as they are?"
-    Put `#` before the two lines of `clean_hill.py` that convert the °F rows
-    (`df.loc[f, …]`), run the script, read the last line. Then remove the
-    two `#` again and save.
+### 7. The tests as the last line of `rebuild.sh` { #last-line }
+
+<!-- 1:00 · 8 min -->
+
+The tests read what the lines above them wrote, so they come last.
+
+1. Open `scripts/rebuild.sh`, add one line at its end, save:
+
+    ```text
+    python -m pytest -q
+    ```
+
+    `-q` is the short output: one line of dots and the summary.
+
+2. The one command now makes every file, then checks it. `echo $?` prints
+   its exit status: 0 when every line worked.
+
+    ```text
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    ...                                                                      [100%]
+    3 passed in 0.00s
+    $ echo $?
+    0
+    ```
+
+3. Commit the three changed files. `??` is a file Git does not know yet.
+
+    ```text
+    $ git status --short
+     M environment.yml
+     M scripts/rebuild.sh
+    ?? scripts/test_weather.py
+    $ git add environment.yml scripts/rebuild.sh scripts/test_weather.py
+    $ git commit -m "Test the module and the mean at the end of rebuild.sh"
+    [main 08cade2] Test the module and the mean at the end of rebuild.sh
+     3 files changed, 23 insertions(+), 2 deletions(-)
+     create mode 100644 scripts/test_weather.py
+    ```
+
+    Your id differs, and so may the count of insertions and deletions.
+
+**Check:** `3 passed`, `0`, and the commit.
+
+---
+
+### 8. A wrong mean stops the rebuild { #wrong }
+
+<!-- 1:08 · 8 min -->
+
+Tomas's change of Seminar 6 again: the mean taken from the raw file, `-999` rows and all.
+
+1. In `scripts/rebuild.sh`, on the `column_stats.py` line, change
+   `data/processed/weather_valid.csv` to `data/raw/weather.csv`. Save, run.
+
+    ```text
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    ..F                                                                      [100%]
+    ...
+    >       assert stats["rows"] == "87552"
+    E       AssertionError: assert '87672' == '87552'
+    ...
+    1 failed, 2 passed in 0.01s
+    $ echo $?
+    1
+    ```
+
+2. The file holds the wrong mean, and the rebuild says it failed.
+
+    ```text
+    $ tail -n 1 results/temp_c.txt
+    mean    5.7828
+    ```
+
+3. Take the change back with Git, and rebuild.
+
+    ```text
+    $ git restore scripts/rebuild.sh
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    ...                                                                      [100%]
+    3 passed in 0.00s
+    ```
+
+**Check:** `1 failed` and `1` with the change, `3 passed` after the
+restore.
+
+---
+
+## Part 4 · The same result in a fresh folder { #part-4 }
+
+<!-- 1:16 to 1:43 -->
+
+Exact versions in the file, then the proof: the results deleted and made again, and a fresh clone that has only what was committed.
+
+---
+
+### 9. Pin the versions, delete, rebuild { #pin }
+
+<!-- 1:16 · 12 min -->
+
+`pandas=3.1` means any 3.1.x on the day of the install; `pandas=3.1.1` means the same on every day.
+
+1. The exact versions of the four packages the file names. `"^(...)$"`
+   means exactly one of these names.
+
+    ```text
+    $ conda list "^(python|matplotlib-base|pandas|pytest)$"
+    # packages in environment at /Users/smilte/miniforge3/envs/analysis:
+    #
+    # Name                     Version          Build               Channel
+    matplotlib-base            3.11.2           py314heb334b3_1     conda-forge
+    pandas                     3.1.1            np2py314h78ec565_0  conda-forge
+    pytest                     9.2.0            pyhc364b38_1        conda-forge
+    python                     3.14.10          h0ae1c2c_100_cp314  conda-forge
+    ```
+
+    The **Build** column differs between macOS and Windows, and your last
+    digits may be higher: write yours.
+
+2. In `environment.yml`, give each line its full version, save. Commit.
+
+    ```text
+    name: analysis
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.14.10
+      - matplotlib-base=3.11.2
+      - pandas=3.1.1
+      - pytest=9.2.0
+    ```
+
+    ```text
+    $ git commit -am "Pin the exact versions"
+    [main e1c56e7] Pin the exact versions
+     1 file changed, 4 insertions(+), 4 deletions(-)
+    ```
+
+3. The checksums of the three files the rebuild makes.
+
+    === "macOS"
+
+        ```text
+        $ shasum -a 256 data/processed/*.csv results/temp_c.txt
+        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+        85b1f38d0df905a9232078d97c6bb21455e87239ea8754faceda0d868b564881  data/processed/weather_valid.csv
+        ade2805b90fe64a0053fa65e28329eee616ad0389f9ca55db86400b1c7a9a18b  results/temp_c.txt
+        ```
+
+    === "Windows"
+
+        ```text
+        $ sha256sum data/processed/*.csv results/temp_c.txt
+        33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+        85b1f38d0df905a9232078d97c6bb21455e87239ea8754faceda0d868b564881  data/processed/weather_valid.csv
+        1dadaacc2e6f6666fb53d1c6e0c89084fd495e8d064e6d3cafbf194ee72a5382  results/temp_c.txt
+        ```
+
+    `temp_c.txt` differs: Python on Windows ends each of its 6 lines with
+    CRLF, 119 bytes instead of 113. The test reads the numbers, which are
+    the same.
+
+4. Delete both folders of results, rebuild, and take the checksums again
+   (`shasum -a 256` on macOS).
+
+    ```text
+    $ rm -r data/processed results
+    $ ls data
+    raw
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    ...                                                                      [100%]
+    3 passed in 0.00s
+    $ sha256sum data/processed/*.csv results/temp_c.txt
+    33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+    85b1f38d0df905a9232078d97c6bb21455e87239ea8754faceda0d868b564881  data/processed/weather_valid.csv
+    ...
+    ```
+
+**Check:** the same three checksums before and after the delete.
+
+---
+
+### 10. A fresh clone, rebuilt { #clone }
+
+<!-- 1:28 · 15 min -->
+
+A stranger gets the repository and its README, nothing else. A clone into a second folder is that stranger, on this laptop.
+
+1. In `README.md`, replace everything from `## How to rebuild` to the end
+   of the file with this, save:
+
+    ```text
+    ## How to rebuild
+
+    In the project folder, in zsh on macOS or Git Bash on Windows, with
+    Miniforge:
+
+        conda env create -f environment.yml
+        conda activate analysis
+        ./scripts/rebuild.sh
+
+    It makes `data/processed` and `results` from `data/raw`, then runs the
+    tests: `3 passed`.
+    ```
+
+2. Commit it. Git now holds everything the stranger needs.
+
+    ```text
+    $ git commit -am "How to rebuild: the environment, then one command"
+    [main 6439d91] How to rebuild: the environment, then one command
+     1 file changed, 6 insertions(+), 5 deletions(-)
+    ```
+
+3. Clone the folder into `weather-check`, next to it in the home folder.
+   A clone has only what was committed: no `data/processed`, no `results`.
+
+    ```text
+    $ cd ~
+    $ git clone weather-s12 weather-check
+    Cloning into 'weather-check'...
+    done.
+    $ cd weather-check
+    $ ls
+    README.md  data  environment.yml  scripts
+    $ ls data
+    raw
+    ```
+
+4. The one command, then the checksums (`shasum -a 256` on macOS).
+
+    ```text
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    ...                                                                      [100%]
+    3 passed in 0.01s
+    $ sha256sum data/processed/*.csv results/temp_c.txt
+    33fe5e77a97900b6e8f94776f266da4d6e3c96590088d21bc9842987f705483d  data/processed/daily.csv
+    85b1f38d0df905a9232078d97c6bb21455e87239ea8754faceda0d868b564881  data/processed/weather_valid.csv
+    ...
+    ```
+
+5. Back to the project.
+
+    ```text
+    $ cd ~/weather-s12
+    ```
+
+**Check:** `3 passed` in `weather-check`, and the same three checksums as
+in section 9.
+
+!!! question "Task: a file left out"
+    In `weather-check`, what would `./scripts/rebuild.sh` print if
+    `scripts/test_weather.py` had never been committed? Think first, then
+    look.
 
 ??? success "Answer"
+    The clone would have no test file, and pytest finds no test:
+
     ```text
-    $ python scripts/clean_hill.py
-    rows read       8740
-    temp missing    27
-    rows in F       72
-    duplicate rows  24
-    days < 20 hours 4
-    days compared   361
-    hill - valley   -0.81
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+
+    no tests ran in 0.00s
+    $ echo $?
+    5
     ```
 
-    The four days of 8 to 11 July read 16 to 45 °C warmer than the valley
-    and pull the mean from −1.19 to −0.81 °C. The script ran without an
-    error.
+    pytest's exit status 5 means "no tests collected", and `set -e` stops
+    the rebuild. On the author's laptop it said `3 passed`: only a fresh
+    clone shows what was never committed.
+
+---
+
+## Part 5 · Your project { #part-5 }
+
+<!-- 1:43 to 2:00 -->
+
+The same steps on your own project. Skip this part if your project has no data yet.
+
+---
+
+### 11. Tests and one command for your project { #project }
+
+<!-- 1:43 · 15 min -->
+
+One fact about your data, known without your code, checked on every rebuild.
+
+1. **File** > **Open Folder...** > your project's folder. In its terminal,
+   switch on its environment (`conda activate analysis`, or your project's
+   own) and install pytest there if `python -m pytest --version` does not
+   find it (section 2).
+2. One fact known without the code: the number of data rows of your raw
+   file, from its source, or counted with `wc -l` (minus the header line).
+   Make `scripts/test_project.py` with your file name and your number:
+
+    ```python
+    def test_rows():
+        lines = open("data/raw/YOUR_FILE.csv").read().splitlines()
+        assert len(lines) - 1 == 1234
+    ```
+
+3. `python -m pytest` in the project folder: `1 passed`. Change the
+   number once, see it fail, put it back.
+4. `python -m pytest -q` as the last line of your `scripts/rebuild.sh`. If
+   the project has no rebuild script yet, make one with the lines that make
+   your results, and the tests last:
+
+    ```bash
+    #!/usr/bin/env bash
+    set -e
+    python scripts/YOUR_SCRIPT.py
+    python -m pytest -q
+    ```
+
+    On macOS, once: `chmod +x scripts/rebuild.sh`.
+
+5. Exact versions in your `environment.yml` (section 9), then commit. If
+   the project is on GitHub, `git push`, and clone it from there into a
+   second folder: `git clone https://github.com/YOUR_NAME/YOUR_PROJECT
+   project-check`. Rebuild in the clone.
+
+**Check:** `passed` in your project, and a fresh clone that rebuilds it.
 
 ---
 
 ### 12. Wrap up { #wrap-up }
 
-<!-- 1:55 · 5 min -->
+<!-- 1:58 · 2 min -->
+
+The lines of today, by what they do.
 
 | To | Type |
 |--|--|
-| make a table by hand | `pd.DataFrame({"col": [...], ...})` |
-| one column, as a Series | `df["temp"]` |
-| keep the rows of a mask | `df[df["temp"] < 0]` |
-| read a European export | `pd.read_csv(FILE, sep=";", decimal=",")` |
-| turn a mark into a missing value | `na_values=["-999"]` |
-| count missing values | `df.isna().sum()` |
-| change the rows of a mask | `df.loc[mask, "col"] = …` |
-| drop exact copies | `df.drop_duplicates()` |
-| text into times | `pd.to_datetime(col, format="%d.%m.%Y %H:%M")` |
-| hours into days | `.resample("D").agg(hill="mean", hours="count")` |
-| join two tables by a key | `pd.merge(a, b, on="time")` |
-
-Seminar 13 makes the whole project from `data/raw` with one command.
+| add a package, and write it down | `conda install pytest=9.2`, `conda env export --from-history -f environment.yml`, delete `prefix:` |
+| state a fact | `assert value == 27.3`; a float: `assert abs(m - 25.275) < 1e-9` |
+| run every test | `python -m pytest` (`-q` for the short form) |
+| rebuild and test | `./scripts/rebuild.sh`, its last line `python -m pytest -q` |
+| did every line work? | `echo $?`: 0 |
+| the exact versions | `conda list "^(python|pandas)$"` |
+| the bytes of a file | `shasum -a 256 FILE` (macOS), `sha256sum FILE` (Windows) |
+| what a stranger gets | `git clone weather-s12 weather-check` |
 
 ---
 
@@ -883,109 +761,98 @@ Seminar 13 makes the whole project from `data/raw` with one command.
 
 ---
 
-### 13. The summer-time hour in winter time { #timezone }
-
-<!-- — · 15 min -->
-
-Hour by hour, the hill's summer clock is one hour ahead of the valley's.
-
-1. Start Python and run the script inside it with `exec`: its tables
-   (`df`, `temp`, `v`, `diff`) stay at the prompt.
-
-    ```pycon
-    $ python
-    >>> exec(open("scripts/clean_hill.py").read())
-    rows read       8740
-    temp missing    27
-    rows in F       72
-    duplicate rows  24
-    days < 20 hours 4
-    days compared   361
-    hill - valley   -1.19
-    ```
-
-2. Join hour by hour, and take the spread (standard deviation) of the
-   difference.
-
-    ```pycon
-    >>> hourly = v.set_index("time")["temp_c"]
-    >>> h = pd.merge(hourly, temp, on="time")
-    >>> print(round((h["temp"] - h["temp_c"]).std(), 2))
-    0.82
-    ```
-
-3. The 03:00 of 26 October is still there twice, so the index is not
-   unique.
-
-    ```pycon
-    >>> temp.index.is_unique
-    False
-    ```
-
-4. Say which clock the times are on, then move them to winter time,
-   UTC+2 (written `Etc/GMT-2`). `ambiguous="infer"` sorts out the two
-   03:00 hours by their order.
-
-    ```pycon
-    >>> local = temp.index.tz_localize("Europe/Vilnius", ambiguous="infer")
-    >>> temp.index = local.tz_convert("Etc/GMT-2").tz_localize(None)
-    >>> temp.index.is_unique
-    True
-    ```
-
-5. Join again.
-
-    ```pycon
-    >>> h = pd.merge(hourly, temp, on="time")
-    >>> print(round((h["temp"] - h["temp_c"]).std(), 2))
-    0.44
-    ```
-
-**Check:** the spread halves, from 0.82 to 0.44 °C: in summer the old join
-set each hill hour beside the valley hour one hour later.
-
----
-
-### 14. The difference month by month { #month }
+### 13. A fresh environment from the pinned file { #fresh-env }
 
 <!-- — · 10 min -->
 
-`groupby` splits the 361 differences by month and takes each mean.
+The clone was a fresh folder; an environment made from `environment.yml` alone is a fresh laptop.
 
-1. At the prompt of section 13:
+1. In `weather-check`, make an environment `check` from the pinned file,
+   switch it on, and rebuild.
 
-    ```pycon
-    >>> month = diff.groupby(diff.index.month).mean().round(2)
-    >>> month
-    time
-    1    -0.84
-    2    -0.92
-    3    -0.97
-    4    -1.23
-    5    -1.37
-    6    -1.50
-    7    -1.57
-    8    -1.63
-    9    -1.29
-    10   -1.12
-    11   -1.03
-    12   -0.82
-    dtype: float64
+    ```text
+    $ cd ~/weather-check
+    $ conda env create -n check -f environment.yml
+    ...
+    $ conda activate check
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    ...                                                                      [100%]
+    3 passed in 0.00s
     ```
 
-2. As a bar chart, saved into `results`.
+    `-n check` gives it another name; `analysis` is taken on this laptop.
+    Most packages come from conda's cache, so it takes seconds.
 
-    ```pycon
-    >>> import matplotlib.pyplot as plt
-    >>> month.plot.bar(xlabel="month", ylabel="hill - valley (°C)")
-    <Axes: xlabel='month', ylabel='hill - valley (°C)'>
-    >>> plt.savefig("results/hill_by_month.png")
+2. Remove it again, and go back. Press `Enter` at the first question,
+   `y` and `Enter` at the second.
+
+    ```text
+    $ conda activate analysis
+    $ conda env remove -n check
+    ...
+    Proceed ([y]/n)?
+    ...
+    Everything found within the environment (/Users/smilte/miniforge3/envs/check), including any conda environment configurations and any non-conda files, will be deleted. Do you wish to continue?
+     (y/[n])? y
+    $ cd ~/weather-s12
     ```
 
-3. Open `results/hill_by_month.png` in the Explorer.
+**Check:** `3 passed` in an environment that only the file made.
 
-**Check:** twelve bars, the shortest in December (−0.82), the longest in
-August (−1.63). In winter, cold air settles in the valley.
+!!! question "Task: a package never written down"
+    What would the rebuild print in `check` if `environment.yml` had no
+    line `- pytest=9.2.0`?
+
+??? success "Answer"
+    The environment would lack pytest, and the last line of the rebuild
+    stops:
+
+    ```text
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    /Users/smilte/miniforge3/envs/check/bin/python: No module named pytest
+    $ echo $?
+    1
+    ```
+
+    On the laptop where pytest was installed by hand, everything runs; only
+    an environment made from the file alone shows what the file forgot.
+
+---
+
+### 14. Ben's way, with its test { #midrange }
+
+<!-- — · 10 min -->
+
+Lecture 1's Ben took each day's midrange, halfway between its lowest and highest hour. One more function, tested on the four hours like `mean`.
+
+1. At the end of `scripts/weather.py`, add, save:
+
+    ```python
+    def midrange(values):
+        return (min(values) + max(values)) / 2
+    ```
+
+2. By hand: (23.6 + 27.3) / 2 = 25.45. At the end of
+   `scripts/test_weather.py`, add, save, run the one command:
+
+    ```python
+
+
+    def test_midrange_of_four_hours():
+        m = weather.midrange([27.3, 25.6, 24.6, 23.6])
+        assert abs(m - 25.45) < 1e-9
+    ```
+
+    ```text
+    $ ./scripts/rebuild.sh
+    9 rows written to data/processed/daily.csv
+    ....                                                                     [100%]
+    4 passed in 0.01s
+    ```
+
+**Check:** `4 passed`.
 
 ---
 
@@ -993,82 +860,70 @@ August (−1.63). In winter, cold air settles in the valley.
 
 <!-- — · 20 min -->
 
-Harder questions on the same files, for a room that is done early. Each answer is one way; others are fine.
+Harder checks on the same project, for a room that is done early. Each answer is one way; others are fine.
 
-!!! question "Advanced task: find the °F rows without the column `unit`"
-    Suppose the export had no column `unit`. Find the 72 rows in °F from
-    the temperatures alone. Hint: from one hour to the next, the air does
-    not warm by 40 °C.
-
-??? success "Answer"
-    `diff()` is each value minus the one before it. The jump into °F and
-    the jump back out of it are the only two jumps above 10 °C:
-
-    ```pycon
-    >>> raw = pd.read_csv("data/raw/hill_station.csv", sep=";", decimal=",", na_values=["-999"]).drop_duplicates()
-    >>> raw["time"] = pd.to_datetime(raw["time"], format="%d.%m.%Y %H:%M")
-    >>> t = raw.set_index("time")["temp"]
-    >>> jump = t.diff().abs()
-    >>> t[jump > 10]
-    time
-    2025-07-08 10:00:00    63.5
-    2025-07-11 10:00:00    17.0
-    Name: temp, dtype: float64
-    ```
-
-    The °F rows run from 8 July 10:00 up to, not including, 11 July 10:00:
-    3 days × 24 = 72 hours. A rule like this finds a fault no column
-    announces; it would also flag a real front passing, so look at what it
-    finds before acting on it.
-
-!!! question "Advanced task: the humidity, the same way"
-    Is the hill more or less humid than the valley? Use the hill's
-    `humidity` and the valley's `humidity_pct`, day by day, on the days
-    with at least 20 hours of humidity.
+!!! question "Advanced task: a test for the export"
+    Add a test: `data/processed/daily.csv` has 10 lines, and its first row
+    is 1 October 2025.
 
 ??? success "Answer"
-    After `exec(open("scripts/clean_hill.py").read())` (section 13, step 1):
-
-    ```pycon
-    >>> hum = df.set_index("time")["humidity"].resample("D").agg(hill="mean", hours="count")
-    >>> vh = v.set_index("time")["humidity_pct"].resample("D").mean()
-    >>> b = pd.merge(vh, hum, on="time")
-    >>> b = b[b["hours"] >= 20]
-    >>> print(len(b), round((b["hill"] - b["humidity_pct"]).mean(), 2))
-    360 4.55
+    ```python
+    def test_daily_export():
+        lines = open("data/processed/daily.csv").read().splitlines()
+        assert len(lines) == 10
+        assert lines[1].startswith("2025-10-01,")
     ```
 
-    On 360 days, the hill's air is 4.55 percentage points more humid:
-    colder air holds less water, so the same water is a higher relative
-    humidity. Five days have fewer than 20 hours of humidity: the three
-    days of February when the logger was off, and 2 and 3 September (12
-    and 6 hours), the 30 missing hours.
+    `./scripts/rebuild.sh` then ends with `4 passed` (5 with section 14).
 
-!!! question "Advanced task: is there a daily cycle?"
-    After section 13 (winter-time hours), take the mean of hill minus
-    valley for each hour of the day. At which hour is the difference
-    largest, at which smallest, and is that a cycle worth reporting?
+!!! question "Advanced task: the raw file is the file received"
+    The SHA-256 of `data/raw/weather.csv`, as it was received, starts with
+    `3f1ad06d` (Lecture 4). Write a test that computes it with Python's
+    `hashlib` and compares.
 
 ??? success "Answer"
-    ```pycon
-    >>> d = h["temp"] - h["temp_c"]
-    >>> by_hour = d.groupby(d.index.hour).mean().round(2)
-    >>> print(by_hour.idxmin(), by_hour.min(), by_hour.idxmax(), by_hour.max())
-    2 -1.21 11 -1.16
+    ```python
+    import hashlib
+
+
+    def test_raw_file_unchanged():
+        data = open("data/raw/weather.csv", "rb").read()
+        digest = hashlib.sha256(data).hexdigest()
+        assert digest.startswith("3f1ad06d")
     ```
 
-    From −1.21 °C at 02:00 to −1.16 °C at 11:00: 0.05 °C apart, against
-    a spread of 0.44 °C for single hours. There is no daily cycle to
-    report; the difference is the same at every hour.
+    `"rb"` reads the bytes as they are, without turning them into text. An
+    edit of one value in the raw file now stops the rebuild.
+
+!!! question "Advanced task: pytest's own tolerance"
+    pytest has a short form for "equal within a tolerance":
+    `assert m == pytest.approx(25.275)`, with `import pytest` at the top
+    of the file. Use it in `test_mean_of_four_hours`. How close must `m`
+    be?
+
+??? success "Answer"
+    ```python
+    import pytest
+
+    import weather
+
+
+    def test_mean_of_four_hours():
+        m = weather.mean([27.3, 25.6, 24.6, 23.6])
+        assert m == pytest.approx(25.275)
+    ```
+
+    `pytest.approx` accepts a difference of one part in a million of the
+    expected value: 25.275 × 10⁻⁶, about 0.000025. `pytest.approx(7.16,
+    abs=0.005)` sets the tolerance by hand.
 
 ---
 
 ## Aims practised
 
-- 📁 **Files:** a European export read as it is, with every fault named,
-  counted and fixed by a rule; the raw file is never edited.
-- ♻️ **Reproducibility:** the script and its log rebuild the comparison,
-  the README holds the number it prints, and `environment.yml` says what
-  the script needs.
-- 🔧 **Tool-agnostic:** the same pandas lines at the prompt and in the
-  script, the same lines in zsh on macOS and Git Bash on Windows.
+- ♻️ **Reproducibility:** pinned versions, and a fresh clone that gives the
+  same checksums; the tests say which number broke and where.
+- ⚙️ **Automation:** one command makes every file from `data/raw` and then
+  checks it; its exit status says whether the result can be trusted.
+- 🔧 **Tool-agnostic:** the same `./scripts/rebuild.sh` on macOS and
+  Windows; `environment.yml` names versions, not a laptop.
