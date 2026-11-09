@@ -29,12 +29,12 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
 
 ## Batch 2 — invisible improvements
 
-- [ ] Mobile load: `lectures/content/vite.config.ts` chunk override (tested
+- [x] Mobile load: `lectures/content/vite.config.ts` chunk override (tested
       in the research scratch build: L07's first load 3.69 → 0.20 MB).
-- [ ] Theme defaults in `theme/package.json` `slidev.defaults`: `titleTemplate`,
+- [x] Theme defaults in `theme/package.json` `slidev.defaults`: `titleTemplate`,
       a local favicon, `timer: countdown`; per-deck `duration` from the timing
       estimate in `gen-entries.mjs`.
-- [ ] Tools: `pnpm review`, `pnpm week`, `scripts/shots-diff.py`; CLAUDE.md
+- [x] Tools: `pnpm review`, `pnpm week`, `scripts/shots-diff.py`; CLAUDE.md
       trimmed to ~14 KB with `docs/authoring.md`.
 
 ## Batch 3 — visible changes, each with before/after screenshots
@@ -50,7 +50,7 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       named slots; a conversion script; proof by pixel-identical screenshots.
 - [ ] KaTeX click-stepping for formulas with numbers (`$$ {1|1-2|...}`, the
       substituted values in the accent colour) in decks 08–12.
-- [ ] Figures baseline: every family redrawn once with the canonical
+- [x] Figures baseline: every family redrawn once with the canonical
       `figures` environment; screenshots compared.
 - [ ] Lecture 1 (and 02, 03, 15): the toolkit's video addon and library clips
       (H.264, no freeze after ~10 clips); L03's HEVC clip re-encoded.
@@ -61,13 +61,33 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
 
 ## Batch 4 — weeks 8–12 and the interactive components
 
-- [ ] Integrate the five week builders' decks, seminar pages, lecture pages
+- [x] Integrate the five week builders' decks, seminar pages, lecture pages
       and start folders; QA and timing for every deck.
-- [ ] `MeanSpread` (8), `FitLine` (9), `PerceptronPlayground` (10),
+- [x] `MeanSpread` (8), `FitLine` (9), `PerceptronPlayground` (10),
       `SoftmaxTemperature` (11) on their slides.
 - [ ] Zips `weather-s08`…`s12` uploaded to the release `seminar-files`.
-- [ ] Deploy (drafts stay drafts); release week 8 on 16 Nov with `pnpm week 8`.
+- [x] Deploy (drafts stay drafts), 9–10 Nov.
+- [ ] Release week 8 on 16 Nov with `pnpm week 8`.
 - [ ] The interactive components back to the toolkit `slidev-videos` on a
       worktree branch, for the lecturer's approval.
 - [ ] Seminar pages machine-checkable (a marker per code block) and a replay
       command.
+
+## Added on the night of 9–10 November (the lecturer's requests)
+
+- [x] Glossary at the end of every deck (`lectures/content/glossary/NN.md`,
+      `scripts/gen-glossary.mjs`) and the workbook's A–Z page.
+- [x] Fidelity: every figure vector (no `rasterized=True`, no `imshow`, no
+      GIF/PNG plots); `scripts/check-fidelity.mjs` in `pnpm qa` and CI; Lecture 7's
+      turning scatter and month animation as SVG components; Lecture 6's VS
+      Code screenshots removed; Lecture 3's photos shown no larger than their
+      pixels.
+- [x] Figure style v2 (real font weights, the tokens' colours, a CVD-checked
+      palette, projector sizes, `save()` refuses bitmaps); every family
+      redrawn with the canonical environment.
+- [x] Lecture 7, Classics and Maps (slides 85–90): Nightingale, Minard,
+      Rosling's bubble chart, Maunga Whau, CERN to scale and as a schematic.
+- [x] Every slide self-contained: no visible "of Lecture N" (decks 4–12).
+- [ ] Open: John Snow's cholera map (not drawn); Lecture 3's bulb and
+      transistor photos at a higher resolution; `preloadImages` off for phones;
+      the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload).
