@@ -15,15 +15,17 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
 
 ## Batch 1 — tonight, for the lecture of 10 Nov
 
-- [ ] Lecture 7 laconic: every main-path caption one or two lines, reasons in
+- [x] Lecture 7 laconic: every main-path caption one or two lines, reasons in
       the notes; code slides in `# In **Matplotlib**` after For the Curious;
       the four-variable figures on the main path; `lecture_7.md` recounted.
-- [ ] Lecture 7 interactive: `BinWidthExplorer`, `AxisStartBars`,
+- [x] Lecture 7 interactive: `BinWidthExplorer`, `AxisStartBars`,
       `PaletteHeatmap`, `SmoothingWindow` (if ready) on their slides.
 - [x] Lecture 1: the twelve Tuesdays; CERN facts of Nov 2026.
 - [x] Cover number from the slug.
-- [ ] Ship from the worktree `deploy-l07` (origin/main + only these files);
-      verify; rebase `main` on it.
+- [x] Ship from the worktree `deploy-l07` (origin/main + only these files);
+      verify; rebase `main` on it. Deployed 9 Nov, 21:50 (cb908e2, run
+      42685082670 green; the four interactive slides checked on the live
+      site: no failed request, no console error).
 
 ## Batch 2 — invisible improvements
 
