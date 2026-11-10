@@ -16,6 +16,7 @@
       "titleTemplate": "%s · Best Research and Data Analysis Practices from CERN",
       "favicon": "/favicon.svg",
       "timer": "countdown",
+      "transition": "fade",
       "fonts": {
         "sans": "Space Grotesk",
         "serif": "Space Grotesk",

@@ -208,7 +208,8 @@ hideInToc: true
 ```text
 % echo $SHELL
 /bin/zsh
-% /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+% /bin/bash -c "$(curl -fsSL \
+  https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ==> Installation successful!
 % brew install git
 % brew install --cask miniforge
@@ -263,9 +264,7 @@ hideInToc: true
 
 # Read the **Prompt**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact mt-md">
 
 ## 🍎 **macOS · zsh**
 
@@ -278,7 +277,7 @@ User and computer, the folder, `%`.
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
+<div class="card card-secondary card-glass pad-compact mt-sm">
 
 ## 🪟 **Windows · Git Bash**
 
@@ -289,8 +288,6 @@ README.md  data/  results/  scripts/
 ```
 
 User and computer, `MINGW64`, the folder; `$` on the next line.
-
-</div>
 
 </div>
 

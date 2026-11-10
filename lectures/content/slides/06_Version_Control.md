@@ -792,10 +792,10 @@ $ git commit -m "Add the data and the scripts"
 
 <div class="card card-secondary card-glass pad-compact mt-sm">
 
-- `git add .` stages everything in the present folder that is not ignored: the **+** on the **Changes** header
-- Read the list before the commit: `!!` marks the ignored folder
+- `git add .` stages all that is not ignored: the **+** on the **Changes** header
+- `!!` marks the ignored folder
 - One purpose, one commit: the scripts read the data
-- 87 673 of the 87 798 new lines are `weather.csv`
+- 87 673 of 87 798 new lines: `weather.csv`
 
 </div>
 
@@ -805,7 +805,7 @@ $ git commit -m "Add the data and the scripts"
 
 <!--
 **Do:** stop after `git status` and let the room check the list against the Explorer.
-**Say:** five files staged, one commit, as in the picture.
+**Say:** five files staged, one commit, as in the picture. `git add .` acts on the present folder; read the list before the commit.
 **If asked:** the commit also prints one `create mode` line per file; they are cut here.
 (~3 min)
 -->
@@ -1121,7 +1121,7 @@ $ git log --oneline -2
 
 ## 🔁 **A new commit replaces the old**
 
-The README names a file `LICENSE` that did not exist yet: Smiltė saves the MIT licence text under that name. `--amend` makes a new commit with the corrected message, `2eab6b2`, and `c2422af` leaves the history.
+`--amend` makes a new commit with the corrected message, `2eab6b2`, and `c2422af` leaves the history.
 
 In the view: the arrow on **Commit**, then **Commit (Amend)**.
 
@@ -1136,7 +1136,7 @@ In the view: the arrow on **Commit**, then **Commit (Amend)**.
 </div>
 
 <!--
-**Say:** the id is computed from the whole commit, message included, so a corrected commit is another commit with another id.
+**Say:** the README names a file `LICENSE` that did not exist yet: Smiltė saves the MIT licence text under that name. The id is computed from the whole commit, message included, so a corrected commit is another commit with another id.
 **If asked:** the MIT text is copied from choosealicense.com, with the year and the name.
 (~2 min)
 -->
@@ -1655,7 +1655,8 @@ hideInToc: true
 
 ```text
 $ git add data/raw/daily_export.csv
-$ git commit -m "Correct 1 October to 6,4" -m "The station's paper log says 6,4 for 1 October 2025."
+$ git commit -m "Correct 1 October to 6,4" \
+  -m "The station's paper log says 6,4 for 1 October 2025."
 [main f2546ed] Correct 1 October to 6,4
 ...
 $ git push
@@ -1665,7 +1666,9 @@ $ git push
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact mt-sm">
+<div class="grid-2 gap-md mt-sm">
+
+<div class="card card-secondary card-glass pad-compact">
 
 ## ⬇️ **Smiltė pulls**
 
@@ -1679,7 +1682,9 @@ Fast-forward
 
 </div>
 
-<div class="note-text mt-sm">A second <code>-m</code> adds the why below the first line. <code>git pull</code> brings Tomas's commit to Smiltė's laptop and into her files. Pull before you start to work, push when you stop.</div>
+<div class="note-text">A second <code>-m</code> adds the why below the first line. <code>git pull</code> brings Tomas's commit to Smiltė's laptop and into her files. Pull before you start to work, push when you stop.</div>
+
+</div>
 
 <!--
 **Say:** a second `-m` gives the message a body, below an empty line: the reason. `2eb3b1c..f2546ed` is the old and the new last commit.
@@ -2820,8 +2825,8 @@ a9f65a6cc855739979919aae1a861f1a0bc8d58e
 
 ```text
 $ git add README.md
-$ git commit -m "Give the mean temperature in the README"
-[main 15505c4] Give the mean temperature in the README
+$ git commit -m "Give the mean …"
+[main 15505c4] Give the mean …
 ...
 $ cat .git/refs/heads/main
 15505c482d25129590a630d023046267f7abb020
@@ -2838,6 +2843,7 @@ $ cat .git/refs/heads/main
 <!--
 **Do:** on the board, draw the four commits, write "main" beside the newest, and move it when you draw a fifth.
 **Say:** the word branch suggests a line of commits. What Git stores is one name on one commit.
+**If asked:** the message is cut with … here; in full, "Give the mean temperature in the README".
 (~2 min)
 -->
 
@@ -3016,13 +3022,13 @@ $ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
 ```text
 $ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
 $ git log --oneline -2
-4119ca1 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 October to 6,4"
+4119ca1 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 Oct…"
 2c8f8b0 Merge pull request #1 from ruta-example/ranges
 ```
 ```text
 $ git tag -a v1.0 -m "Data as received; mean 7.16 °C"
 $ git log --oneline -2
-4119ca1 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 October to 6,4"
+4119ca1 (HEAD -> main, tag: v1.0, origin/main, origin/HEAD) Revert "Correct 1 Oct…"
 2c8f8b0 Merge pull request #1 from ruta-example/ranges
 $ git push origin v1.0
 ...
@@ -3054,6 +3060,7 @@ Tag the commit behind every result that leaves the project: a mean in an e-mail,
 
 <!--
 **Say:** the 7.16 of Lecture 1, sent as one number, now comes with a name that fixes every file behind it.
+**If asked:** the log line is cut with …; the commit is Revert "Correct 1 October to 6,4".
 (~2 min)
 -->
 
@@ -3128,9 +3135,7 @@ hideInToc: true
 
 # The Same Bytes on Every Laptop: **`.gitattributes`**
 
-<div class="grid-2 gap-md mt-md">
-
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact mt-sm">
 
 ## 📄 **`.gitattributes`**
 
@@ -3149,20 +3154,16 @@ $ git commit -m "Keep the committed bytes of every file on checkout"
 
 </div>
 
-<div class="card card-warning card-glass pad-compact">
+<div class="card card-warning card-glass pad-compact mt-md">
 
 ## 🪟 **Without it, on Windows**
 
-`core.autocrlf false` acts only on the laptop where it was typed. Git for Windows comes with `true`, and there a clone gets `0d 0a` at the end of each of the 87 673 lines of `weather.csv`: 87 673 bytes more, and `sha256sum` no longer gives `3f1ad06d…`.
-
-`* -text` says: no file of this project is text to convert. It travels with the repository, on every laptop that clones it.
-
-</div>
+Git for Windows comes with `core.autocrlf true`: a clone gets `0d 0a` at the end of each of the 87 673 lines of `weather.csv`, 87 673 bytes more, and `sha256sum` no longer gives `3f1ad06d…`. `* -text`: no file of this project is text to convert, on every laptop that clones it.
 
 </div>
 
 <!--
-**Say:** Smiltė committed this file right after `.gitignore`, as `ef28e40`. The global setting acts on one laptop; this file acts on every clone.
+**Say:** Smiltė committed this file right after `.gitignore`, as `ef28e40`. The global setting `core.autocrlf false` acts only on the laptop where it was typed; this file travels with the repository and acts on every clone.
 **If asked:** `git status` stays clean even with the extra bytes, because Git takes the `0d` out again when it reads. Only the checksum shows it.
 (~3 min)
 -->
@@ -3230,7 +3231,7 @@ The terminal is not in the project folder. `pwd` says where it is, and `cd` goes
 <div class="card card-warning card-glass pad-compact">
 
 ```text
- ! [rejected]        main -> main (fetch first)
+ ! [rejected]  main -> main (fetch first)
 error: failed to push some refs to '…'
 ```
 
@@ -3241,9 +3242,9 @@ The remote has a commit that this laptop lacks. Fetch and merge it with <code st
 <div class="card card-warning card-glass pad-compact">
 
 ```text
-Your branch and 'origin/main' have diverged,
-and have 1 and 1 different commits each,
-respectively.
+Your branch and 'origin/main' have
+diverged, and have 1 and 1 different
+commits each, respectively.
 ```
 
 `git status` after such a fetch. Both sides have a commit of their own. The same pull joins them.

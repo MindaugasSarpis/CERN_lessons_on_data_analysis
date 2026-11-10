@@ -2511,9 +2511,7 @@ hideInToc: true
 
 # SHA-256, a **Hash**
 
-<div class="grid-2 mt-md gap-md">
-
-<div class="card card-primary card-glass pad-compact">
+<div class="card card-primary card-glass pad-compact mt-md">
 
 ## 🍎 **macOS · zsh**
 
@@ -2526,20 +2524,7 @@ b68430c5…721a899e  data/processed/daily_crlf.csv
 
 </div>
 
-<div class="card card-secondary card-glass pad-compact">
-
-## 🪟 **Windows · Git Bash**
-
-```text
-$ sha256sum data/processed/daily.csv
-33fe5e77…f705483d  data/processed/daily.csv
-$ sha256sum data/processed/daily_crlf.csv
-b68430c5…721a899e  data/processed/daily_crlf.csv
-```
-
-</div>
-
-</div>
+<div class="note-text mt-sm">Windows · Git Bash: <code>sha256sum</code> in place of <code>shasum -a 256</code>, the same two hashes.</div>
 
 <div class="card card-info card-glass pad-compact mt-md">
 

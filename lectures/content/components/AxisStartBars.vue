@@ -6,7 +6,12 @@
 // "Bars That Do Not Start at Zero" / "The Same Bars from Zero");
 // figures/src/interactive_l07_data.py checks them and prints the ratios.
 // Lengths are computed in tenths, so 58.2 - 48 is 10.2, not 10.200000000000003.
+// The plot has the look of the static figures (figures/src/style.py): STIX
+// type, a closed frame, ticks pointing in on all four sides, minor ticks on
+// the value axis, bars as a light fill edged in their colour
+// (./figure-look/figure-look.css).
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   values: { type: Array, default: () => [58.2, 54.7, 51.9, 50.3, 49.1] },
@@ -75,14 +80,33 @@ const geo = computed(() => {
   for (let v = Math.ceil(lo / step) * step; v <= props.top + 1e-9; v += step) {
     if (v - lo >= step / 2) ticks.push({ v, y: y(v), label: fmt(v, 0) })
   }
+  // Ticks pointing in on all four sides (style.py): major at the labels,
+  // minor between them on the value axis, as Matplotlib's AutoMinorLocator
+  // (five steps, four when the major step is a 2).
+  const TL = 6.25
+  const TM = 3.125
+  const lead = step / 10 ** Math.floor(Math.log10(step) + 1e-9)
+  const ms = step / (Math.abs(lead - 2) < 1e-9 ? 4 : 5)
+  let minor = ''
+  for (let k = Math.ceil(lo / ms - 1e-9); k * ms <= props.top + 1e-9; k++) {
+    const v = k * ms
+    if (Math.abs(v - lo) < 1e-9 || Math.abs(v / step - Math.round(v / step)) < 1e-9) continue
+    minor += `M${M.l} ${y(v)}h${TM}M${w - M.r} ${y(v)}h${-TM}`
+  }
+  let major = ''
+  for (const t of ticks) major += `M${M.l} ${t.y}h${TL}M${w - M.r} ${t.y}h${-TL}`
   const slot = pw / props.values.length
   const bw = Math.min(slot * 0.56, 90)
   const bars = props.values.map((v, i) => {
     const cx = M.l + slot * (i + 0.5)
     const yt = y(v)
-    return { cx, x: cx - bw / 2, w: bw, y: yt, h: y(lo) - yt, value: fmt(v, 1), label: props.labels[i] ?? '' }
+    // The value above its bar, or inside the bar's top when the frame's top
+    // side would cross it (a bar that nearly reaches the top of the axis).
+    const ly = yt - 18 < M.t + 3 ? yt + 17 : yt - 8
+    return { cx, x: cx - bw / 2, w: bw, y: yt, ly, h: y(lo) - yt, value: fmt(v, 1), label: props.labels[i] ?? '' }
   })
-  return { w, h, pw, ph, ticks, bars, base: y(lo) }
+  for (const b of bars) major += `M${b.cx} ${y(lo)}v${-TL}M${b.cx} ${M.t}v${TL}`
+  return { w, h, pw, ph, ticks, bars, base: y(lo), major, minor }
 })
 
 // ---- interaction (see BinWidthExplorer.vue) ---------------------------------
@@ -113,26 +137,26 @@ onBeforeUnmount(() => ro?.disconnect())
   <div class="ix-wrap">
     <section class="ix asb">
       <div ref="plot" class="ix-plot">
-        <svg v-if="geo" class="ix-svg" :viewBox="`0 0 ${geo.w} ${geo.h}`" role="img"
+        <svg v-if="geo" class="ix-svg ixf" :viewBox="`0 0 ${geo.w} ${geo.h}`" role="img"
           :aria-label="`Bar chart, value axis from ${axis} to ${top}`">
-          <g class="ix-grid">
-            <line v-for="t in geo.ticks" :key="`g${t.v}`" :x1="M.l" :x2="geo.w - M.r" :y1="t.y" :y2="t.y" />
-          </g>
-          <g class="ix-ticks ix-yticks">
-            <text v-for="t in geo.ticks" :key="`y${t.v}`" :x="M.l - 8" :y="t.y" dy="0.35em"
-              :class="{ 'asb-start': t.start && axis > 0 }">{{ t.label }}</text>
-          </g>
           <g class="asb-bars">
             <rect v-for="b in geo.bars" :key="b.label" :x="b.x" :y="b.y" :width="b.w" :height="Math.max(b.h, 0)" />
           </g>
+          <rect class="ixf-frame" :x="M.l" :y="M.t" :width="geo.pw" :height="geo.ph" />
+          <path class="ixf-minor" :d="geo.minor" />
+          <path class="ixf-ticks" :d="geo.major" />
+          <line v-if="axis > 0" class="asb-cut" :x1="M.l" :x2="geo.w - M.r" :y1="geo.base" :y2="geo.base" />
+          <g class="ix-yticks">
+            <text v-for="t in geo.ticks" :key="`y${t.v}`" class="ixf-tl" :x="M.l - 6.25" :y="t.y" dy="0.33em"
+              :class="{ 'asb-start': t.start && axis > 0 }">{{ t.label }}</text>
+          </g>
           <g class="asb-values">
-            <text v-for="b in geo.bars" :key="`v${b.label}`" :x="b.cx" :y="b.y - 8">{{ b.value }}</text>
+            <text v-for="b in geo.bars" :key="`v${b.label}`" class="ixf-text" :x="b.cx" :y="b.ly">{{ b.value }}</text>
           </g>
-          <line class="ix-axis" :class="{ 'asb-cut': axis > 0 }" :x1="M.l" :x2="geo.w - M.r" :y1="geo.base" :y2="geo.base" />
-          <g class="ix-ticks ix-xticks">
-            <text v-for="b in geo.bars" :key="`x${b.label}`" :x="b.cx" :y="geo.base + 22">{{ b.label }}</text>
+          <g class="ix-xticks">
+            <text v-for="b in geo.bars" :key="`x${b.label}`" class="ixf-tl" :x="b.cx" :y="geo.base + 16">{{ b.label }}</text>
           </g>
-          <text class="ix-axis-label" :transform="`translate(15 ${M.t + geo.ph / 2}) rotate(-90)`">{{ ylabel }}</text>
+          <text class="ixf-label ix-axis-label" :transform="`translate(15 ${M.t + geo.ph / 2}) rotate(-90)`">{{ ylabel }}</text>
         </svg>
       </div>
 
@@ -180,7 +204,8 @@ onBeforeUnmount(() => ro?.disconnect())
 </template>
 
 <style scoped>
-/* The course look (theme/styles/tokens.css); nothing moves on its own. */
+/* The course look (theme/styles/tokens.css); nothing moves on its own. The
+   plot's type, frame and ticks: ./figure-look/figure-look.css. */
 /* The root takes `fig-fill` (the rest of a `class: fill` slide). The theme
    makes every direct div child of a .fig-fill a flex column, so the layout
    lives in one <section> inside the root, out of reach of that rule. */
@@ -209,23 +234,20 @@ onBeforeUnmount(() => ro?.disconnect())
   width: 100%;
   height: 100%;
   overflow: visible;
-  font-family: var(--font-sans);
 }
-.ix-grid line { stroke: var(--hair); stroke-width: 1; }
-.ix-axis { stroke: var(--dim); stroke-width: 1; }
-.ix-axis.asb-cut { stroke: var(--warn); stroke-width: 1.5; }
-.ix-ticks text { fill: var(--dim); font-size: 13px; font-variant-numeric: tabular-nums; }
+/* The bottom side in the warning colour while the axis does not start at 0. */
+.asb-cut { stroke: var(--warn); stroke-width: 1.5; }
 .ix-yticks text { text-anchor: end; }
 .ix-yticks text.asb-start { fill: var(--warn); }
-.ix-xticks text { text-anchor: middle; fill: var(--fg-2); }
-.ix-axis-label { fill: var(--fg-2); font-size: 14px; text-anchor: middle; }
-.asb-bars rect { fill: var(--accent); }
-.asb-values text {
-  fill: var(--fg);
-  font-size: 14px;
-  text-anchor: middle;
-  font-variant-numeric: tabular-nums;
+.ix-xticks text { text-anchor: middle; }
+.ix-axis-label { text-anchor: middle; }
+/* A bar as the static figures draw it: a light fill edged in its colour. */
+.asb-bars rect {
+  fill: color-mix(in srgb, var(--accent) 45%, transparent);
+  stroke: var(--accent);
+  stroke-width: 1.125;
 }
+.asb-values text { fill: var(--fg); text-anchor: middle; }
 
 .asb-panel {
   display: flex;

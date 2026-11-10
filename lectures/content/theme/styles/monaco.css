@@ -94,10 +94,11 @@
   background: rgba(255, 255, 255, 0.025);
   color: var(--fg-2);
   font-family: var(--font-mono);
-  /* the editor's own size (Monaco: 11.5px, 17px lines), so code and its
-     output read as one block — not relative to the card, whose scale varies */
-  font-size: 11.5px;
-  line-height: 17px;
+  /* the editor's own size (theme/setup/monaco.ts: 13px, 20px lines), so code
+     and its output read as one block — not relative to the card, whose scale
+     varies */
+  font-size: 13px;
+  line-height: 20px;
 }
 
 /* one printed line = one row, like a terminal. Slidev spaces rows apart
@@ -107,7 +108,7 @@
    keeps its height. */
 .slidev-layout .slidev-runner-output .output-line {
   margin: 0;
-  min-height: 17px;
+  min-height: 20px;
 }
 
 .slidev-layout .slidev-runner-output .highlighted > pre.shiki,

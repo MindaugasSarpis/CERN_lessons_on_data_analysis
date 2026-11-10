@@ -15,6 +15,11 @@
   keyboard focus and a drag never moves the slide. In presenter mode the
   audience window follows (BroadcastChannel).
 
+  The text has the look of the static figures (figures/src/style.py): STIX
+  type, tick and axis labels in the text colour, ticks 1 px; the box edges
+  stay faint, as the panes of the static 3D figure (beyond.py, _dark_3d)
+  (./figure-look/figure-look.css).
+
   Data: public/data/l07_scatter4.json (figures/src/interactive_l07_data.py).
 -->
 <script>
@@ -50,6 +55,7 @@ const ELEV = [-5, 75]            // the tilt is clamped to this, degrees
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   azim: { type: Number, default: -55 },
@@ -394,7 +400,7 @@ onBeforeUnmount(() => {
   <section ref="root" class="tsc" :class="{ 'tsc-grab': grabbing }">
     <svg
       v-if="W > 0 && H > 0"
-      class="tsc-svg"
+      class="tsc-svg ixf"
       :width="W"
       :height="H"
       :viewBox="`0 0 ${W} ${H}`"
@@ -417,19 +423,19 @@ onBeforeUnmount(() => {
         <g v-for="ax in box.axes" :key="'a' + ax.k" class="tsc-axis">
           <g v-for="t in ax.ticks" :key="t.t">
             <line class="tsc-tick" :x1="t.x" :y1="t.y" :x2="t.x + ax.ox * 5" :y2="t.y + ax.oy * 5" />
-            <text :x="t.lx" :y="t.ly" :text-anchor="ax.anchor" dominant-baseline="central">{{ fmt(t.t, 0) }}</text>
+            <text class="ixf-tl" :x="t.lx" :y="t.ly" :text-anchor="ax.anchor" dominant-baseline="central">{{ fmt(t.t, 0) }}</text>
           </g>
-          <text class="tsc-name" :x="ax.name.x" :y="ax.name.y" :text-anchor="ax.name.anchor" dominant-baseline="central">{{ D.labels[ax.k] }}</text>
+          <text class="tsc-name ixf-label" :x="ax.name.x" :y="ax.name.y" :text-anchor="ax.name.anchor" dominant-baseline="central">{{ D.labels[ax.k] }}</text>
         </g>
         <g v-if="legend" class="tsc-legend">
-          <text class="tsc-legtitle" :x="legend.x" :y="legend.titleY" dominant-baseline="central">month</text>
+          <text class="tsc-legtitle ixf-text" :x="legend.x" :y="legend.titleY" dominant-baseline="central">month</text>
           <g v-for="it in legend.items" :key="it.name">
             <rect :x="legend.x" :y="it.y + 1" width="11" :height="Math.max(1, it.h - 2)" rx="1.5" :fill="it.color" />
-            <text :x="legend.x + 18" :y="it.y + it.h / 2" dominant-baseline="central">{{ it.name }}</text>
+            <text class="ixf-text" :x="legend.x + 18" :y="it.y + it.h / 2" dominant-baseline="central">{{ it.name }}</text>
           </g>
         </g>
       </template>
-      <text v-else-if="loadError" class="tsc-msg" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
+      <text v-else-if="loadError" class="tsc-msg ixf-text" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
     </svg>
     <footer class="tsc-bar">
       <button
@@ -451,7 +457,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* A <section>: the theme's FILL rule turns a .fig-fill's direct <div>
+/* The plot's type: ./figure-look/figure-look.css (STIX, 13.75 px tick
+   labels and legend, 15.625 px axis names), the button keeps the slides'.
+   A <section>: the theme's FILL rule turns a .fig-fill's direct <div>
    children into shrinking flex columns. In a grid-side row it stretches to
    the row's height; anywhere else it keeps 20rem. */
 .tsc {
@@ -477,12 +485,10 @@ onBeforeUnmount(() => {
 }
 .tsc-grab .tsc-svg { cursor: grabbing; }
 .tsc-edges line { stroke: var(--hair-strong); stroke-width: 1; }
-.tsc-tick { stroke: var(--dim); stroke-width: 1; }
-.tsc-axis text { fill: var(--dim); font-size: 12px; font-variant-numeric: tabular-nums; }
-.tsc-axis .tsc-name { fill: var(--fg-2); font-size: 13px; }
-.tsc-legend text { fill: var(--dim); font-size: 11.5px; }
-.tsc-legend .tsc-legtitle { fill: var(--fg-2); font-size: 13px; }
-.tsc-msg { fill: var(--warn); font-size: 13px; }
+.tsc-tick { stroke: var(--fg); stroke-width: 1; }
+.tsc-axis text { fill: var(--fg); }
+.tsc-legend text { fill: var(--fg); }
+.tsc-msg { fill: var(--warn); }
 
 .tsc-bar {
   position: absolute;

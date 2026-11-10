@@ -1,12 +1,15 @@
 /* Code blocks (shiki <pre>) — the landing's hairline panel.
-   Inline code lives in layouts.css. Size stays on Slidev's code scale
-   (12px / 18px): Space Mono advances 0.61em vs PT Mono's 0.60em, so line
-   widths match the old blocks within ~2% and dense decks keep their fit.
+   Inline code lives in layouts.css. Size: 14px on 21px lines (Slidev's
+   default is 12px / 18px; raised on 10 Nov 2026 for the projector and
+   phones, with the card text, custom-slides.css CARD TYPOGRAPHY). Space Mono
+   advances 0.61em, so a line of 50 characters is 427px wide.
    Token colours: the course theme in setup/shiki.ts.
    html.dark:root outranks Slidev's own `html.dark` code variables. */
 
 :root,
 html.dark:root {
+  --slidev-code-font-size: 14px;
+  --slidev-code-line-height: 21px;
   --slidev-code-background: rgba(255, 255, 255, 0.025);
   --slidev-code-foreground: var(--fg);
   --slidev-code-font-family: var(--font-mono);

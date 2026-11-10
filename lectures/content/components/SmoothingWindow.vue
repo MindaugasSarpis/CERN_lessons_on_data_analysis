@@ -23,7 +23,11 @@ function loadJson(url) {
 // two ends, which is pandas' rolling(window, center=True, min_periods=1).
 // figures/src/interactive_l07_data.py sums the windows in the same order and
 // prints the same lowest and highest values.
+// The plot has the look of the static figures (figures/src/style.py): STIX
+// type, a closed frame, ticks pointing in on all four sides, minor ticks every
+// 2 °C and at the first of every month (./figure-look/figure-look.css).
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   // The window shown first, in days: an odd number from 1 to 61.
@@ -101,16 +105,36 @@ const geo = computed(() => {
   for (let v = Math.ceil(lo / 10) * 10; v <= hi; v += 10) yTicks.push({ y: y(v), label: fmt(v, 0) })
   const y0 = Number(d.first.slice(0, 4))
   const xTicks = []
+  const months = [] // the first of every other month: minor ticks
   for (let yr = y0; ; yr++) {
     let done = false
-    for (const m of [1, 4, 7, 10]) {
+    for (let m = 1; m <= 12; m++) {
       const i = dayIndex(d.first, `${yr}-${String(m).padStart(2, '0')}-01`)
       if (i >= n) { done = true; break }
-      if (i >= 0) xTicks.push({ x: x(i), label: m === 1 ? `Jan ${yr}` : MONTHS[m - 1] })
+      if (i < 0) continue
+      if (m % 3 === 1) xTicks.push({ x: x(i), label: m === 1 ? `Jan ${yr}` : MONTHS[m - 1] })
+      else months.push(x(i))
     }
     if (done || yr > y0 + 50) break
   }
-  return { w, h, pw, ph, x, y, yTicks, xTicks }
+  // Ticks pointing in on all four sides (style.py): major at the labels,
+  // minor every 2 °C (Matplotlib's five steps of a major step of 10) and at
+  // the first of each month between the quarters.
+  const TL = 6.25
+  const TM = 3.125
+  const top = M.t
+  const bottom = M.t + ph
+  const right = M.l + pw
+  let major = ''
+  let minor = ''
+  for (const t of yTicks) major += `M${M.l} ${t.y}h${TL}M${right} ${t.y}h${-TL}`
+  for (const t of xTicks) major += `M${t.x} ${bottom}v${-TL}M${t.x} ${top}v${TL}`
+  for (let v = Math.ceil(lo / 2) * 2; v <= hi; v += 2) {
+    if (v <= lo || v >= hi || v % 10 === 0) continue
+    minor += `M${M.l} ${y(v)}h${TM}M${right} ${y(v)}h${-TM}`
+  }
+  for (const mx of months) minor += `M${mx} ${bottom}v${-TM}M${mx} ${top}v${TM}`
+  return { w, h, pw, ph, x, y, yTicks, xTicks, major, minor }
 })
 
 function pathOf(values, g) {
@@ -192,21 +216,20 @@ onBeforeUnmount(() => ro?.disconnect())
       </div>
 
       <div ref="plot" class="ix-plot">
-        <svg v-if="geo" class="ix-svg" :viewBox="`0 0 ${geo.w} ${geo.h}`" role="img"
+        <svg v-if="geo" class="ix-svg ixf" :viewBox="`0 0 ${geo.w} ${geo.h}`" role="img"
           :aria-label="`Daily means of 2024 and 2025 and their mean over ${days} days`">
-          <g class="ix-grid">
-            <line v-for="t in geo.yTicks" :key="`g${t.label}`" :x1="M.l" :x2="geo.w - M.r" :y1="t.y" :y2="t.y" />
-          </g>
-          <g class="ix-ticks ix-yticks">
-            <text v-for="t in geo.yTicks" :key="`y${t.label}`" :x="M.l - 8" :y="t.y" dy="0.35em">{{ t.label }}</text>
-          </g>
-          <g class="ix-ticks ix-xticks">
-            <line v-for="t in geo.xTicks" :key="`l${t.label}${t.x}`" :x1="t.x" :x2="t.x" :y1="M.t + geo.ph" :y2="M.t + geo.ph + 4" />
-            <text v-for="t in geo.xTicks" :key="`x${t.label}${t.x}`" :x="t.x" :y="M.t + geo.ph + 19">{{ t.label }}</text>
-          </g>
           <path class="smw-raw" :d="rawPath" />
           <path class="smw-smooth" :d="smoothPath" />
-          <text class="ix-axis-label" :transform="`translate(15 ${M.t + geo.ph / 2}) rotate(-90)`">temperature (°C)</text>
+          <rect class="ixf-frame" :x="M.l" :y="M.t" :width="geo.pw" :height="geo.ph" />
+          <path class="ixf-minor" :d="geo.minor" />
+          <path class="ixf-ticks" :d="geo.major" />
+          <g class="ix-yticks">
+            <text v-for="t in geo.yTicks" :key="`y${t.label}`" class="ixf-tl" :x="M.l - 6.25" :y="t.y" dy="0.33em">{{ t.label }}</text>
+          </g>
+          <g class="ix-xticks">
+            <text v-for="t in geo.xTicks" :key="`x${t.label}${t.x}`" class="ixf-tl" :x="t.x" :y="M.t + geo.ph + 16">{{ t.label }}</text>
+          </g>
+          <text class="ixf-label ix-axis-label" :transform="`translate(15 ${M.t + geo.ph / 2}) rotate(-90)`">temperature (°C)</text>
         </svg>
       </div>
     </section>
@@ -214,7 +237,8 @@ onBeforeUnmount(() => ro?.disconnect())
 </template>
 
 <style scoped>
-/* The course look (theme/styles/tokens.css); nothing moves on its own. */
+/* The course look (theme/styles/tokens.css); nothing moves on its own. The
+   plot's type, frame and ticks: ./figure-look/figure-look.css. */
 /* The root takes `fig-fill` (the rest of a `class: fill` slide). The theme
    makes every direct div child of a .fig-fill a flex column, so the layout
    lives in one <section> inside the root, out of reach of that rule. */
@@ -341,14 +365,10 @@ onBeforeUnmount(() => ro?.disconnect())
   width: 100%;
   height: 100%;
   overflow: visible;
-  font-family: var(--font-sans);
 }
-.ix-grid line { stroke: var(--hair); stroke-width: 1; }
-.ix-ticks text { fill: var(--dim); font-size: 13px; font-variant-numeric: tabular-nums; }
-.ix-ticks line { stroke: var(--dim); stroke-width: 1; }
 .ix-yticks text { text-anchor: end; }
 .ix-xticks text { text-anchor: middle; }
-.ix-axis-label { fill: var(--fg-2); font-size: 14px; text-anchor: middle; }
+.ix-axis-label { text-anchor: middle; }
 .smw-raw { fill: none; stroke: var(--dim); stroke-width: 1; stroke-linejoin: round; }
 .smw-smooth { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
 </style>

@@ -13,6 +13,11 @@
   keyboard focus and a drag never moves the slide. In presenter mode the
   audience window follows (BroadcastChannel).
 
+  The plot has the look of the static figures (figures/src/style.py): STIX
+  type, a closed frame, ticks pointing in on all four sides with minor ticks,
+  the month as a light fill under a thin outline (handson.py's _paper_hist)
+  (./figure-look/figure-look.css).
+
   Data: public/data/l07_month_hist.json (figures/src/interactive_l07_data.py).
 -->
 <script>
@@ -37,6 +42,7 @@ const fmt = (v, d) => {
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   // The month at the start, 0 = January.
@@ -105,16 +111,44 @@ const yticks = computed(() => {
   for (let c = 0; c <= ymax.value; c += 250) out.push(c)
   return out
 })
-const bars = computed(() => {
+// The month as Matplotlib's histtype "step": along the top of each bin, down
+// to zero at both ends. Closed, it is the light fill ("stepfilled").
+const monthPath = computed(() => {
   const d = D.value
-  if (!d || !W.value) return []
+  if (!d || !W.value || !heights.value.length) return ''
   const w = (d.range[1] - d.range[0]) / d.bins
-  return Array.from(heights.value, (c, i) => {
-    const x0 = sx(d.range[0] + i * w)
-    const x1 = sx(d.range[0] + (i + 1) * w)
-    const y = sy(c)
-    return { i, x: x0 + 0.5, w: Math.max(0, x1 - x0 - 1), y, h: Math.max(0, H.value - M.b - y) }
+  let path = `M${sx(d.range[0]).toFixed(1)},${sy(0).toFixed(1)}`
+  heights.value.forEach((c, i) => {
+    path += `V${sy(c).toFixed(1)}H${sx(d.range[0] + (i + 1) * w).toFixed(1)}`
   })
+  return `${path}V${sy(0).toFixed(1)}`
+})
+// Ticks pointing in on all four sides (style.py), minor ticks as Matplotlib's
+// AutoMinorLocator: every 2 °C (five steps of 10), every 50 hours (five
+// steps of 250).
+const TL = 6.25
+const TM = 3.125
+const frameTicks = computed(() => {
+  const d = D.value
+  if (!d || !W.value) return { major: '', minor: '' }
+  const [lo, hi] = d.range
+  const left = M.l
+  const right = W.value - M.r
+  const top = M.t
+  const bottom = H.value - M.b
+  let major = ''
+  let minor = ''
+  for (const t of xticks) major += `M${sx(t)} ${bottom}v${-TL}M${sx(t)} ${top}v${TL}`
+  for (const c of yticks.value) major += `M${left} ${sy(c)}h${TL}M${right} ${sy(c)}h${-TL}`
+  for (let t = Math.ceil(lo / 2) * 2; t < hi; t += 2) {
+    if (t <= lo || t % 10 === 0) continue
+    minor += `M${sx(t)} ${bottom}v${-TM}M${sx(t)} ${top}v${TM}`
+  }
+  for (let c = 50; c < ymax.value; c += 50) {
+    if (c % 250 === 0) continue
+    minor += `M${left} ${sy(c)}h${TM}M${right} ${sy(c)}h${-TM}`
+  }
+  return { major, minor }
 })
 const outline = computed(() => {
   const d = D.value
@@ -268,26 +302,24 @@ onBeforeUnmount(() => {
       </span>
     </header>
     <figure ref="box" class="imh-plot">
-      <svg v-if="W > 0 && H > 0 && D" class="imh-svg" :width="W" :height="H" :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="`${D.names[m]}: the hours in 1 °C bins over all hours divided by 12`">
-        <g class="imh-grid">
-          <line v-for="c in yticks" :key="'g' + c" :x1="M.l" :x2="W - M.r" :y1="sy(c)" :y2="sy(c)" />
-        </g>
-        <g class="imh-bars">
-          <rect v-for="b in bars" :key="b.i" :x="b.x" :y="b.y" :width="b.w" :height="b.h" />
-        </g>
+      <svg v-if="W > 0 && H > 0 && D" class="imh-svg ixf" :width="W" :height="H" :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="`${D.names[m]}: the hours in 1 °C bins over all hours divided by 12`">
+        <path class="imh-fill" :d="monthPath" />
+        <path class="imh-step" :d="monthPath" />
         <path class="imh-outline" :d="outline" />
-        <line class="imh-axis" :x1="M.l" :x2="W - M.r" :y1="sy(0)" :y2="sy(0)" />
+        <rect class="ixf-frame" :x="M.l" :y="M.t" :width="W - M.l - M.r" :height="H - M.t - M.b" />
+        <path class="ixf-minor" :d="frameTicks.minor" />
+        <path class="ixf-ticks" :d="frameTicks.major" />
         <g class="imh-ticks">
-          <text v-for="t in xticks" :key="'x' + t" :x="sx(t)" :y="H - M.b + 16" text-anchor="middle" dominant-baseline="central">{{ fmt(t, 0) }}</text>
-          <text v-for="c in yticks" :key="'y' + c" :x="M.l - 8" :y="sy(c)" text-anchor="end" dominant-baseline="central">{{ c }}</text>
-          <text class="imh-label" :x="M.l + (W - M.l - M.r) / 2" :y="H - 6" text-anchor="middle">temperature (°C)</text>
-          <text class="imh-label" text-anchor="middle" :transform="`translate(14 ${M.t + (H - M.t - M.b) / 2}) rotate(-90)`">hours per 1 °C</text>
+          <text v-for="t in xticks" :key="'x' + t" class="ixf-tl" :x="sx(t)" :y="H - M.b + 16" text-anchor="middle">{{ fmt(t, 0) }}</text>
+          <text v-for="c in yticks" :key="'y' + c" class="ixf-tl" :x="M.l - 6.25" :y="sy(c)" dy="0.33em" text-anchor="end">{{ c }}</text>
+          <text class="ixf-label" :x="M.l + (W - M.l - M.r) / 2" :y="H - 6" text-anchor="middle">temperature (°C)</text>
+          <text class="ixf-label" text-anchor="middle" :transform="`translate(14 ${M.t + (H - M.t - M.b) / 2}) rotate(-90)`">hours per 1 °C</text>
         </g>
         <g class="imh-legend" :transform="`translate(${M.l + 14} ${M.t + 8})`">
-          <rect x="0" y="0" width="14" height="10" rx="1.5" class="imh-legbar" />
-          <text x="22" y="5" dominant-baseline="central">this month</text>
-          <line x1="0" x2="14" y1="25" y2="25" class="imh-outline" />
-          <text x="22" y="25" dominant-baseline="central">all hours ÷ 12</text>
+          <rect x="0.75" y="0.75" width="14" height="10" class="imh-legbar" />
+          <text class="ixf-text" x="22" y="5.75" dy="0.33em">this month</text>
+          <line x1="0" x2="15.5" y1="25" y2="25" class="imh-outline" />
+          <text class="ixf-text" x="22" y="25" dy="0.33em">all hours ÷ 12</text>
         </g>
       </svg>
     </figure>
@@ -358,14 +390,13 @@ onBeforeUnmount(() => {
   overflow: hidden;
 }
 .imh-svg { position: absolute; inset: 0; display: block; }
-.imh-grid line { stroke: var(--hair); stroke-width: 1; }
-.imh-bars rect { fill: var(--accent); }
-.imh-outline { fill: none; stroke: var(--dim); stroke-width: 1.4; }
-.imh-axis { stroke: var(--dim); stroke-width: 1; }
-.imh-ticks text { fill: var(--dim); font-size: 13px; font-variant-numeric: tabular-nums; }
-.imh-ticks .imh-label { fill: var(--fg-2); font-size: 14px; }
-.imh-legend text { fill: var(--fg-2); font-size: 13px; }
-.imh-legbar { fill: var(--accent); }
+/* The plot's type, frame and ticks: ./figure-look/figure-look.css. The month
+   as a light fill under a thin outline, as the static histograms. */
+.imh-fill { fill: var(--accent); fill-opacity: 0.3; stroke: none; }
+.imh-step { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+.imh-outline { fill: none; stroke: var(--dim); stroke-width: 1.5; }
+.imh-legend text { fill: var(--fg); }
+.imh-legbar { fill: color-mix(in srgb, var(--accent) 30%, transparent); stroke: var(--accent); stroke-width: 1.5; }
 
 @media (prefers-reduced-motion: reduce) {
   .imh-btn,

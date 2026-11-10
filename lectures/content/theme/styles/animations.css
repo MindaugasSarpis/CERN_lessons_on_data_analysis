@@ -7,6 +7,19 @@
    in individual lecture files (e.g. L06).
    ============================================================ */
 
+/* ---------- Slide change: a 0.25 s fade ----------
+   `transition: fade` is a deck default (theme/package.json, slidev.defaults),
+   never a lecture's frontmatter. Slidev's own fade runs 0.5 s on `ease`; here
+   it is 0.25 s on the landing's ease (tokens.css --ease), the curve of the
+   landing's hover and reveal transitions. The old and the new slide are both
+   absolutely placed (.slidev-page), so the two cross-fade without a shift.
+   Print/PDF export and the overview have no transition (Slidev skips it). */
+:root { --slidev-transition-duration: 0.25s; }
+#slideshow > .fade-enter-active,
+#slideshow > .fade-leave-active {
+  transition: opacity var(--slidev-transition-duration) var(--ease);
+}
+
 /* ---------- Accent text (formerly gradient / kinetic / glow) ----------
    One design system with the landing: one accent, no gradients, no glow.
    The class names stay so slide sources need no edit. */
@@ -83,6 +96,7 @@
 @media (max-width: 768px), (pointer: coarse) {
 }
 @media (prefers-reduced-motion: reduce) {
+  #slideshow > .fade-enter-active, #slideshow > .fade-leave-active { transition: none; }
   .reveal-left, .reveal-up, .reveal-scale, .reveal-blur { transition: opacity 0.3s ease; }
   .reveal-left.slidev-vclick-hidden, .reveal-up.slidev-vclick-hidden,
   .reveal-scale.slidev-vclick-hidden, .reveal-blur.slidev-vclick-hidden { transform: none; filter: none; }

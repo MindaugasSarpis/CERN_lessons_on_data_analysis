@@ -21,6 +21,11 @@
   the isolines (each in the colour of its middle height), the isolines
   every 10 m (heavier every 50 m), their heights, and a 100 m bar.
 
+  The text and the colour key have the look of the static figures
+  (figures/src/style.py): STIX type in the text colour, the key edged 1 px,
+  its ticks pointing in on the side of its labels, minor ticks every 5 m
+  (./figure-look/figure-look.css).
+
   Data: public/data/l07_volcano.json (figures/src/interactive_l07_gallery_data.py
   from figures/data/gallery/volcano.csv): R's `volcano`, digitised by Ross
   Ihaka; isolines and bands by contourpy. In presenter mode the audience window
@@ -55,6 +60,7 @@ const r1 = (v) => Math.round(v * 10) / 10
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   src: { type: String, default: 'data/l07_volcano.json' },
@@ -534,12 +540,25 @@ const key = computed(() => {
   const top = 34
   const bottom = H.value - 22
   const y = (h) => bottom - ((h - d.min) / (d.max - d.min)) * (bottom - top)
+  const x = W.value - KEY_W + 16
+  const LABELS = [100, 120, 140, 160, 180]
+  // Ticks pointing in from the side of the labels (style.py): major at the
+  // labels, minor every 5 m (Matplotlib's AutoMinorLocator for a step of 20).
+  const xr = x + 10
+  let major = ''
+  let minor = ''
+  for (const h of LABELS) major += `M${xr} ${y(h)}h-6.25`
+  for (let h = Math.ceil(d.min / 5) * 5; h < d.max; h += 5) {
+    if (h > d.min && !LABELS.includes(h)) minor += `M${xr} ${y(h)}h-3.125`
+  }
   return {
-    x: W.value - KEY_W + 16,
+    x,
     top,
     bottom,
+    major,
+    minor,
     stops: d.palette.map((col, k) => ({ off: k / (d.palette.length - 1), col })),
-    labels: [100, 120, 140, 160, 180].map((h) => ({ h, y: y(h) })),
+    labels: LABELS.map((h) => ({ h, y: y(h) })),
     marks: d.levels.map((h) => ({ h, y: y(h), light: lightLine(d, h) })),
     steps: d.bands.map((b) => ({
       y: y(b.hi),
@@ -604,7 +623,7 @@ onBeforeUnmount(() => {
     <figure ref="box" class="tsf-plot">
       <svg
         ref="svgRef"
-        class="tsf-svg"
+        class="tsf-svg ixf"
         :viewBox="`0 0 ${Math.max(W, 1)} ${Math.max(H, 1)}`"
         :width="Math.max(W, 1)"
         :height="Math.max(H, 1)"
@@ -632,23 +651,27 @@ onBeforeUnmount(() => {
             v-for="l in isoLabels"
             :key="'t' + l.level"
             :transform="`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)}) rotate(${l.ang.toFixed(1)})`"
+            class="ixf-text"
             dominant-baseline="central"
             text-anchor="middle"
           >{{ l.level }}</text>
           <g v-if="scaleBar" class="tsf-bar">
             <path :d="`M${scaleBar.x} ${scaleBar.y - 5}V${scaleBar.y}H${scaleBar.x + scaleBar.w}V${scaleBar.y - 5}`" />
-            <text :x="scaleBar.x + scaleBar.w + 8" :y="scaleBar.y" dominant-baseline="central">100 m</text>
+            <text class="ixf-text" :x="scaleBar.x + scaleBar.w + 8" :y="scaleBar.y" dominant-baseline="central">100 m</text>
           </g>
         </g>
 
         <g v-if="key" class="tsf-key">
-          <text class="tsf-keyhead" :x="key.x + 5" :y="key.top - 16" text-anchor="middle">height</text>
+          <text class="tsf-keyhead ixf-label" :x="key.x + 5" :y="key.top - 16" text-anchor="middle">height</text>
           <rect :x="key.x" :y="key.top" width="10" :height="key.bottom - key.top" :fill="`url(#${gid})`" />
           <rect v-for="(k, n) in key.steps" :key="'s' + n" class="tsf-step" :class="{ on: mapShown }" :x="key.x" :y="k.y" width="10" :height="k.h" :fill="k.fill" />
           <line v-for="k in key.marks" :key="'m' + k.h" :x1="key.x" :x2="key.x + 10" :y1="k.y" :y2="k.y" class="tsf-mark" :class="{ on: mapShown, light: k.light }" />
-          <text v-for="k in key.labels" :key="'k' + k.h" :x="key.x + 16" :y="k.y" dominant-baseline="central">{{ k.h }} m</text>
+          <rect class="ixf-frame" :x="key.x" :y="key.top" width="10" :height="key.bottom - key.top" />
+          <path class="ixf-minor" :d="key.minor" />
+          <path class="ixf-ticks" :d="key.major" />
+          <text v-for="k in key.labels" :key="'k' + k.h" class="ixf-tl" :x="key.x + 16.25" :y="k.y" dominant-baseline="central">{{ k.h }} m</text>
         </g>
-        <text v-if="loadError" class="tsf-msg" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
+        <text v-if="loadError" class="tsf-msg ixf-text" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
       </svg>
     </figure>
 
@@ -678,7 +701,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* The root takes `fig-fill` on a `class: fill` slide. The theme turns every
+/* The plot's type, the key's edge and ticks: ./figure-look/figure-look.css;
+   the buttons and the note keep the slides' type.
+   The root takes `fig-fill` on a `class: fill` slide. The theme turns every
    direct div child of a .fig-fill into a flex column, so the parts are a
    <figure> and a <nav>, out of reach of that rule. */
 .tsf {
@@ -702,7 +727,6 @@ onBeforeUnmount(() => {
   display: block;
   touch-action: none;
   -webkit-tap-highlight-color: transparent;
-  font-family: var(--font-sans);
 }
 .tsf-svg:active { cursor: grabbing; }
 .tsf-mesh path { stroke: none; }
@@ -717,7 +741,6 @@ onBeforeUnmount(() => {
 .tsf-step.on { opacity: 1; }
 .tsf-iso text {
   fill: var(--fg);
-  font-size: 14px;
   font-weight: 600;
   paint-order: stroke;
   stroke: var(--bg);
@@ -725,13 +748,12 @@ onBeforeUnmount(() => {
   stroke-linejoin: round;
 }
 .tsf-iso .tsf-bar path { fill: none; stroke: var(--fg); stroke-opacity: 1; stroke-width: 1.6; }
-.tsf-iso .tsf-bar text { font-weight: 500; }
-.tsf-key text { fill: var(--dim); font-size: 14px; }
-.tsf-key .tsf-keyhead { fill: var(--fg-2); font-size: 14px; }
+.tsf-iso .tsf-bar text { font-weight: 400; }
+.tsf-key text { fill: var(--fg); }
 .tsf-mark { stroke: var(--bg); stroke-width: 1; opacity: 0; transition: opacity 0.5s var(--ease); }
 .tsf-mark.on { opacity: 0.7; }
 .tsf-mark.light { stroke: var(--fg); }
-.tsf-msg { fill: var(--warn); font-size: 13px; }
+.tsf-msg { fill: var(--warn); }
 
 /* ---- controls ---- */
 /* The buttons and the note sit in the free column at the left of the hill. */

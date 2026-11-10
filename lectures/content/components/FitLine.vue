@@ -17,6 +17,11 @@
   Data: public/data/yearly_means.json (figures/src/interactive_data.py), or
   the `years` / `means` props. In presenter mode the audience window follows
   the presenter's line (BroadcastChannel, same browser).
+
+  The plot has the look of the static figures (figures/src/style.py): STIX
+  type, a closed frame, ticks pointing in on all four sides with minor ticks
+  on the °C axis, error bars with caps (./figure-look/figure-look.css). The
+  formulas beside it stay in KaTeX's type, as on the slides.
 -->
 <script>
 // Module scope (runs once per page): every FitLine shares one fetch of a file.
@@ -40,6 +45,7 @@ function fmt(v, d) {
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useSlideContext } from '@slidev/client'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   // The points: by default the ten yearly means of the weather log.
@@ -178,6 +184,28 @@ const yTicks = computed(() => {
   const out = []
   for (let t = Math.ceil(yd.value[0]); t <= yd.value[1] + 1e-9; t++) out.push(t)
   return out
+})
+// Ticks pointing in on all four sides (style.py): a major tick at each whole
+// degree and each year, minor ticks every 0.2 °C (Matplotlib's
+// AutoMinorLocator for a step of 1); none between the years, which are
+// fixed positions.
+const TL = 6.25
+const TM = 3.125
+const tickPaths = computed(() => {
+  if (!ready.value) return { major: '', minor: '' }
+  const l = M.l
+  const r = W.value - M.r
+  const t = M.t
+  const b = H.value - M.b
+  let major = ''
+  let minor = ''
+  for (const v of yTicks.value) major += `M${l} ${sy(v)}h${TL}M${r} ${sy(v)}h${-TL}`
+  for (const x of X.value) major += `M${sx(x)} ${b}v${-TL}M${sx(x)} ${t}v${TL}`
+  for (let k = Math.ceil(yd.value[0] * 5 + 1e-9); k < yd.value[1] * 5 - 1e-9; k++) {
+    if (k % 5 === 0) continue
+    minor += `M${l} ${sy(k / 5)}h${TM}M${r} ${sy(k / 5)}h${-TM}`
+  }
+  return { major, minor }
 })
 const labelEvery = computed(() => {
   const step = (W.value - M.l - M.r) / (xd.value[1] - xd.value[0])
@@ -437,7 +465,7 @@ onBeforeUnmount(() => {
       <svg
         v-if="W > 0 && H > 0"
         ref="svgRef"
-        class="ifl-svg"
+        class="ifl-svg ixf"
         :width="W"
         :height="H"
         :style="{ cursor }"
@@ -450,27 +478,13 @@ onBeforeUnmount(() => {
         @pointerleave="onLeave"
       >
         <template v-if="ready">
-          <g class="ifl-grid">
-            <line v-for="t in yTicks" :key="'g' + t" :x1="M.l" :x2="W - M.r" :y1="sy(t)" :y2="sy(t)" />
-          </g>
-          <g class="ifl-ticks">
-            <text v-for="t in yTicks" :key="'y' + t" :x="M.l - 9" :y="sy(t)" text-anchor="end" dominant-baseline="central">{{ t }}</text>
-            <text :x="M.l - 9" :y="M.t - 12" text-anchor="end" dominant-baseline="central" class="ifl-unit">°C</text>
-            <template v-for="(yr, i) in years" :key="'x' + yr">
-              <line class="ifl-tickmark" :x1="sx(X[i])" :x2="sx(X[i])" :y1="H - M.b" :y2="H - M.b + 4" />
-              <text
-                v-if="i === sel || i % labelEvery === 0"
-                :x="sx(X[i])"
-                :y="H - M.b + 17"
-                text-anchor="middle"
-                dominant-baseline="central"
-                :class="{ 'ifl-on': i === sel }"
-              >{{ yr }}</text>
-            </template>
-          </g>
-          <!-- ±σ of each point -->
+          <!-- ±σ of each point, with caps as the static figures draw them -->
           <g class="ifl-err">
-            <line v-for="(y, i) in ys" :key="'e' + i" :x1="sx(X[i])" :x2="sx(X[i])" :y1="sy(y - sigma)" :y2="sy(y + sigma)" />
+            <path
+              v-for="(y, i) in ys"
+              :key="'e' + i"
+              :d="`M${sx(X[i])} ${sy(y - sigma)}V${sy(y + sigma)}M${sx(X[i]) - 3.75} ${sy(y - sigma)}h7.5M${sx(X[i]) - 3.75} ${sy(y + sigma)}h7.5`"
+            />
           </g>
           <!-- residuals: the gap between each point and the line -->
           <g class="ifl-res">
@@ -487,14 +501,13 @@ onBeforeUnmount(() => {
           <!-- the chosen residual, with the number the expression squares -->
           <text
             v-if="push"
-            class="ifl-rlab"
+            class="ifl-rlab ixf-text"
             :x="sx(X[sel]) + (sel === ys.length - 1 ? -10 : 10)"
             :y="(sy(ys[sel]) + sy(lineAt(X[sel]))) / 2"
             :text-anchor="sel === ys.length - 1 ? 'end' : 'start'"
             dominant-baseline="central"
           >{{ push.r }}</text>
           <line class="ifl-line" :x1="lineEnds.x1" :y1="lineEnds.y1" :x2="lineEnds.x2" :y2="lineEnds.y2" />
-          <text class="ifl-trend" :x="W - M.r" :y="M.t - 12" text-anchor="end" dominant-baseline="central">{{ perDecade }}</text>
           <g class="ifl-pts">
             <circle
               v-for="(y, i) in ys"
@@ -509,8 +522,26 @@ onBeforeUnmount(() => {
             <circle :cx="sx(xL)" :cy="sy(lineAt(xL))" r="7" />
             <circle :cx="sx(xR)" :cy="sy(lineAt(xR))" r="7" />
           </g>
+          <rect class="ixf-frame" :x="M.l" :y="M.t" :width="W - M.l - M.r" :height="H - M.t - M.b" />
+          <path class="ixf-minor" :d="tickPaths.minor" />
+          <path class="ixf-ticks" :d="tickPaths.major" />
+          <g class="ifl-ticks">
+            <text v-for="t in yTicks" :key="'y' + t" class="ixf-tl" :x="M.l - 6.25" :y="sy(t)" text-anchor="end" dy="0.33em">{{ t }}</text>
+            <text class="ixf-tl" :x="M.l - 6.25" :y="M.t - 12" text-anchor="end" dy="0.33em">°C</text>
+            <template v-for="(yr, i) in years" :key="'x' + yr">
+              <text
+                v-if="i === sel || i % labelEvery === 0"
+                class="ixf-tl"
+                :x="sx(X[i])"
+                :y="H - M.b + 16"
+                text-anchor="middle"
+                :class="{ 'ifl-on': i === sel }"
+              >{{ yr }}</text>
+            </template>
+          </g>
+          <text class="ifl-trend ixf-text" :x="W - M.r" :y="M.t - 12" text-anchor="end" dy="0.33em">{{ perDecade }}</text>
         </template>
-        <text v-else-if="loadError" class="ifl-msg" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
+        <text v-else-if="loadError" class="ifl-msg ixf-text" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
       </svg>
     </figure>
 
@@ -610,13 +641,9 @@ onBeforeUnmount(() => {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ---- plot ---- */
-.ifl-grid line { stroke: var(--hair); stroke-width: 1; }
-.ifl-ticks text { fill: var(--dim); font-size: 14px; }
-.ifl-ticks text.ifl-on { fill: var(--accent); font-weight: 600; }
-.ifl-ticks .ifl-tickmark { stroke: var(--hair-strong); }
-.ifl-unit { letter-spacing: 0.04em; }
-.ifl-err line { stroke: var(--dim); stroke-width: 1.2; opacity: 0.55; }
+/* ---- plot: type, frame and ticks in ./figure-look/figure-look.css ---- */
+.ifl-ticks text.ifl-on { fill: var(--accent); font-weight: 700; }
+.ifl-err path { fill: none; stroke: var(--dim); stroke-width: 1.2; opacity: 0.55; }
 .ifl-res line {
   stroke: var(--fg-2);
   stroke-width: 1.6;
@@ -630,8 +657,8 @@ onBeforeUnmount(() => {
   opacity: 1;
 }
 .ifl-line { stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; }
-.ifl-rlab { fill: var(--accent); font-size: 13px; font-weight: 500; }
-.ifl-trend { fill: var(--accent); font-size: 14px; font-weight: 500; }
+.ifl-rlab { fill: var(--accent); }
+.ifl-trend { fill: var(--accent); }
 .ifl-pts circle { fill: var(--fg); stroke: var(--bg); stroke-width: 1.5; }
 .ifl-pts circle.ifl-on { fill: var(--accent); stroke: var(--fg); stroke-width: 1.5; }
 .ifl-handles circle {
@@ -641,7 +668,7 @@ onBeforeUnmount(() => {
   transition: r 0.25s var(--ease);
 }
 .ifl-plot:hover .ifl-handles circle { r: 8.5; }
-.ifl-msg { fill: var(--warn); font-size: 13px; }
+.ifl-msg { fill: var(--warn); }
 
 /* ---- side panel ---- */
 .ifl-side {

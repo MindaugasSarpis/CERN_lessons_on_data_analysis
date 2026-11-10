@@ -11,6 +11,7 @@ theme/
 ├── layoutHelper.ts          # Layout helper utilities
 ├── package.json             # Theme package configuration
 ├── layouts/                 # Custom slide layouts
+├── setup/monaco.ts          # Runner editor type size (merged with the deck's setup)
 └── styles/
     ├── index.ts             # Style imports (entry point)
     ├── layouts.css          # Layout-specific styles
@@ -23,11 +24,21 @@ theme/
 `slidev.defaults` holds the settings every deck shares: the fonts (bundled,
 provider `none`), the tab title `%s · Best Research and Data Analysis Practices
 from CERN` (`%s` is the deck's title from `decks.json`), the tab icon
-`../public/favicon.svg`, and a countdown timer in presenter mode (`timer:
+`../public/favicon.svg`, a countdown timer in presenter mode (`timer:
 countdown`; each deck's `duration` is written into its entry by
-`scripts/gen-entries.mjs`). They sit here rather than in the generated entries
+`scripts/gen-entries.mjs`), and the slide change `transition: fade` (0.25 s on
+the landing's ease; the rule is in `styles/animations.css`). They sit here rather than in the generated entries
 because every key of an entry's headmatter also lands in the frontmatter of
 every slide of the deck's first lecture.
+
+## Type sizes
+
+On the 980 × 552 slide (10 Nov 2026, for the projector and phones): card text
+16 px (`--card-text` in `styles/custom-slides.css`; card titles 1.12 ×, compact
+tables 0.94 ×), code 14 px on 21 px lines (`styles/code.css`), the Monaco
+runner 13 px on 20 px lines (`setup/monaco.ts`, merged by Slidev with the
+deck's own `setup/monaco.ts`) and its output the same (`styles/monaco.css`).
+The slide-level scale (h1 36 px, body 17.6 px) is in `styles/layouts.css`.
 
 ## Usage
 

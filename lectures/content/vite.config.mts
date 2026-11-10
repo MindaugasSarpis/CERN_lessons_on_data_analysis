@@ -18,11 +18,64 @@
 //
 // The two rules kept are Slidev's: the icons in one chunk, Vue and file-saver
 // each in their own. Compare with Slidev's function after a Slidev upgrade.
-import { defineConfig } from 'vite'
+//
+// The second part, figureHash(): every figure URL a built deck holds carries
+// the figure's content hash, `/figures/viz_x.svg?v=1a2b3c4d`. A file in
+// public/ keeps its name when its content changes, and GitHub Pages lets a
+// browser keep a file for 10 minutes (max-age=600): after the deploy of
+// 10 Nov 2026 a browser in the lecture room showed an old figure in a new
+// layout. With the hash in the URL a changed figure is a new URL, and the
+// chunk that names it changes its own hashed name with it. Slide sources keep
+// `/figures/viz_x.svg`; dev (`pnpm dev`) is left as it is.
+import { createHash } from 'node:crypto'
+import { existsSync, readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { defineConfig, type Plugin } from 'vite'
 
 const OWN_CHUNK = ['file-saver', 'vue', '@vue']
 
+const FIGURES = join(dirname(fileURLToPath(import.meta.url)), 'public', 'figures')
+// A figure URL as it stands in a built chunk: `<base>figures/<name>.<ext>`
+// closed by a quote, a backtick, a parenthesis, a space or a `#`. One that
+// already has a query is left alone.
+const FIGURE_URL = /\/figures\/([\w\-./]+?\.(?:svg|png|jpe?g|jfif|gif|webp|avif))(?=[`'"\s)#])/g
+
+function figureHash(): Plugin {
+  const hashes = new Map<string, string | null>()
+  const hashOf = (name: string) => {
+    if (!hashes.has(name)) {
+      const file = join(FIGURES, name)
+      hashes.set(name, !name.includes('..') && existsSync(file)
+        ? createHash('sha256').update(readFileSync(file)).digest('hex').slice(0, 8)
+        : null)
+    }
+    return hashes.get(name)
+  }
+  return {
+    name: 'course:figure-hash',
+    apply: 'build',
+    // after Vite's own asset plugin, which writes the base into public URLs
+    enforce: 'post',
+    buildStart() { hashes.clear() },
+    // the slides' code
+    renderChunk(code) {
+      const out = withHashes(code)
+      return out === code ? null : { code: out, map: null }
+    },
+    // index.html: Slidev's <link rel="preload" as="image"> of every figure
+    transformIndexHtml: { order: 'post', handler: withHashes },
+  }
+  function withHashes(code: string) {
+    return code.replace(FIGURE_URL, (url, name: string) => {
+      const h = hashOf(name)
+      return h ? `${url}?v=${h}` : url
+    })
+  }
+}
+
 export default defineConfig({
+  plugins: [figureHash()],
   build: {
     rollupOptions: {
       output: {

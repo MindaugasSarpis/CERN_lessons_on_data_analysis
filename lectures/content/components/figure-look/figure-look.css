@@ -1,0 +1,71 @@
+/*
+ * The look of the static figures (figures/src/style.py) for the plots that
+ * the interactive components draw as SVG in the page. Each component imports
+ * this file (`import './figure-look/figure-look.css'`) and puts these classes
+ * on its own SVG elements; its panel of controls keeps the slides' type.
+ *
+ * Type: STIX General, the face of the static figures, as the web font
+ * "Figure Serif": FigureSerif-{Regular,Italic,Bold}.woff2 beside this file,
+ * written by figures/src/web_fonts.py from Matplotlib's STIX General with the
+ * completion style.py gives it (thin spaces, subscript digits, the italic's
+ * upright symbols), cut to Latin, Greek, punctuation and mathematical signs.
+ * Licence: SIL Open Font License 1.1 (OFL.txt beside this file); STIX Fonts
+ * copyright 2001-2010 by the STI Pub Companies, Reserved Font Names "STIX
+ * Fonts" and "TM Math", hence the new family name of the cut-down copies.
+ * Vite emits the three files with the deck's own assets (hashed names), so
+ * the face loads offline and from no other host.
+ *
+ * Sizes: an inch of a static figure is 90 px of the 980 px slide canvas
+ * (scripts/measure-figures.mjs), so 1 pt = 1.25 px, and an SVG unit of a
+ * component is a canvas pixel. Tick labels 11 pt = 13.75 px, axis labels
+ * 12.5 pt = 15.625 px; the frame 0.8 pt = 1 px; ticks pointing in, major
+ * 5 pt = 6.25 px long and 1 px wide, minor 2.5 pt = 3.125 px and 0.875 px,
+ * labels 5 pt = 6.25 px off the frame; all in the text colour of the tokens.
+ */
+@font-face {
+  font-family: 'Figure Serif';
+  src: url('./FigureSerif-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Figure Serif';
+  src: url('./FigureSerif-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Figure Serif';
+  src: url('./FigureSerif-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  --font-figure: 'Figure Serif', 'STIX Two Text', 'Times New Roman', serif;
+  --fig-tick-label: 13.75px;
+  --fig-axis-label: 15.625px;
+  --fig-tick-major: 6.25px;
+  --fig-tick-minor: 3.125px;
+}
+
+/* On the <svg>: every text of the plot in the figures' face. */
+.ixf {
+  font-family: var(--font-figure);
+  font-weight: 400;
+  font-variant-numeric: normal;
+  letter-spacing: 0;
+}
+/* The four sides of the plotting area. */
+.ixf-frame { fill: none; stroke: var(--fg); stroke-width: 1px; }
+/* Tick marks (one path each, major and minor). */
+.ixf-ticks { fill: none; stroke: var(--fg); stroke-width: 1px; }
+.ixf-minor { fill: none; stroke: var(--fg); stroke-width: 0.875px; }
+/* Tick labels, axis labels and text inside the plot. */
+.ixf-tl { fill: var(--fg); font-size: var(--fig-tick-label); }
+.ixf-label { fill: var(--fg); font-size: var(--fig-axis-label); }
+.ixf-text { font-size: var(--fig-tick-label); }
+.ixf-it { font-style: italic; }

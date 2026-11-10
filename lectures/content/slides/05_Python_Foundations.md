@@ -1028,8 +1028,9 @@ hideInToc: true
 {"latitude": 54.68259,
  "longitude": 25.273773,
  ...
- "current": {"time": "2026-10-18T10:30",
-             "temperature_2m": 8.7, ...}}
+ "current": {
+   "time": "2026-10-18T10:30",
+   "temperature_2m": 8.7, ...}}
 ```
 
 </div>

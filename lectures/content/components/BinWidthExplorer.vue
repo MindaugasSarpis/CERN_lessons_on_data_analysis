@@ -24,7 +24,12 @@ function loadJson(url) {
 // Bins of 0.05 and 0.1 °C are centred on the tenths, so between two tenths a
 // bin of 0.05 °C stays empty; wider bins start at -17 °C and a tenth on an
 // edge belongs to the bin on its right, as in np.histogram.
+// The plot has the look of the static figures (figures/src/style.py): STIX
+// type, a closed frame, ticks pointing in on all four sides with minor ticks,
+// the histogram as a light fill under a thin outline (handson.py's
+// _paper_hist) (./figure-look/figure-look.css).
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   // The bin width shown first, °C: 0.05, 0.1, 0.5, 1, 2, 5 or 10.
@@ -138,20 +143,40 @@ const geo = computed(() => {
   const xTicks = []
   const [t0, t1, dt] = zoomed.value ? [0, 80, 20] : [-600, 1200, 200] // fortieths
   for (let t = t0; t <= t1; t += dt) xTicks.push({ x: x(t), label: deg(t) })
-  return { w, h, pw, ph, x, y, yTicks, xTicks, lo, hi, bottom: y(0) }
+  // Ticks pointing in on all four sides; minor ticks as Matplotlib's
+  // AutoMinorLocator puts them (five steps, four when the major step is a 2).
+  const TL = 6.25
+  const TM = 3.125
+  const lead = step / 10 ** Math.floor(Math.log10(step) + 1e-9)
+  const yMinor = step / (Math.abs(lead - 2) < 1e-9 ? 4 : 5)
+  const xMinor = dt / 5 // 5 °C or 0.5 °C: steps of 1 or 0.1 °C
+  let major = ''
+  let minor = ''
+  for (const t of yTicks) major += `M${M.l} ${t.y}h${TL}M${w - M.r} ${t.y}h${-TL}`
+  for (const t of xTicks) major += `M${t.x} ${y(0)}v${-TL}M${t.x} ${M.t}v${TL}`
+  for (let k = 1; k * yMinor < top - 1e-9; k++) {
+    if (Math.abs((k * yMinor) / step - Math.round((k * yMinor) / step)) < 1e-9) continue
+    minor += `M${M.l} ${y(k * yMinor)}h${TM}M${w - M.r} ${y(k * yMinor)}h${-TM}`
+  }
+  for (let e = Math.ceil(lo / xMinor) * xMinor; e <= hi; e += xMinor) {
+    if (e <= lo || e >= hi || ((e - t0) % dt === 0 && e >= t0 && e <= t1)) continue
+    minor += `M${x(e)} ${y(0)}v${-TM}M${x(e)} ${M.t}v${TM}`
+  }
+  return { w, h, pw, ph, x, y, yTicks, xTicks, lo, hi, bottom: y(0), major, minor }
 })
 
-const barsPath = computed(() => {
+// The histogram as Matplotlib's histtype "step": along the top of each bin,
+// down to zero at both ends. Closed, it is the light fill ("stepfilled").
+const stepPath = computed(() => {
   const g = geo.value
-  if (!g) return ''
-  const parts = []
-  for (const [a, b, c] of view.value) {
-    if (!c) continue
-    let xa = g.x(Math.max(a, g.lo))
-    let xb = g.x(Math.min(b, g.hi))
-    if (xb - xa > 4) { xa += 0.6; xb -= 0.6 } // a dark seam between wide bars
-    parts.push(`M${xa.toFixed(2)} ${g.y(c).toFixed(2)}H${xb.toFixed(2)}V${g.bottom.toFixed(2)}H${xa.toFixed(2)}Z`)
+  const v = view.value
+  if (!g || !v.length) return ''
+  const y0 = g.bottom.toFixed(2)
+  const parts = [`M${g.x(Math.max(v[0][0], g.lo)).toFixed(2)} ${y0}`]
+  for (const [a, b, c] of v) {
+    parts.push(`V${g.y(c).toFixed(2)}H${g.x(Math.min(b, g.hi)).toFixed(2)}`)
   }
+  parts.push(`V${y0}`)
   return parts.join('')
 })
 
@@ -263,25 +288,25 @@ onBeforeUnmount(() => ro?.disconnect())
       </div>
 
       <div ref="plot" class="ix-plot">
-        <svg v-if="geo" class="ix-svg" :viewBox="`0 0 ${geo.w} ${geo.h}`" role="img"
+        <svg v-if="geo" class="ix-svg ixf" :viewBox="`0 0 ${geo.w} ${geo.h}`" role="img"
           :aria-label="`Histogram of the hours, ${widthLabel} °C per bin`">
-          <g class="ix-grid">
-            <line v-for="t in geo.yTicks" :key="`g${t.label}`" :x1="M.l" :x2="geo.w - M.r" :y1="t.y" :y2="t.y" />
-          </g>
-          <g class="ix-ticks ix-yticks">
-            <text v-for="t in geo.yTicks" :key="`y${t.label}`" :x="M.l - 8" :y="t.y" dy="0.35em">{{ t.label }}</text>
-          </g>
-          <g class="ix-ticks ix-xticks">
-            <text v-for="t in geo.xTicks" :key="`x${t.label}`" :x="t.x" :y="geo.bottom + 20">{{ t.label }}</text>
-          </g>
-          <path class="bwx-bars" :d="barsPath" />
-          <line class="ix-axis" :x1="M.l" :x2="geo.w - M.r" :y1="geo.bottom" :y2="geo.bottom" />
+          <path class="bwx-fill" :d="stepPath" />
+          <path class="bwx-step" :d="stepPath" />
           <g v-if="mean" class="bwx-mean">
             <line :x1="mean.x" :x2="mean.x" :y1="M.t - 24" :y2="geo.bottom" />
-            <text :x="mean.x + 7" :y="M.t - 12">{{ mean.label }}</text>
+            <text class="ixf-text" :x="mean.x + 7" :y="M.t - 12">{{ mean.label }}</text>
           </g>
-          <text class="ix-axis-label" :x="M.l + geo.pw / 2" :y="geo.h - 6">temperature (°C)</text>
-          <text class="ix-axis-label" :transform="`translate(16 ${M.t + geo.ph / 2}) rotate(-90)`">hours per {{ widthLabel }} °C</text>
+          <rect class="ixf-frame" :x="M.l" :y="M.t" :width="geo.pw" :height="geo.ph" />
+          <path class="ixf-minor" :d="geo.minor" />
+          <path class="ixf-ticks" :d="geo.major" />
+          <g class="ix-yticks">
+            <text v-for="t in geo.yTicks" :key="`y${t.label}`" class="ixf-tl" :x="M.l - 6.25" :y="t.y" dy="0.33em">{{ t.label.replace('\u00a0', '\u2009') }}</text>
+          </g>
+          <g class="ix-xticks">
+            <text v-for="t in geo.xTicks" :key="`x${t.label}`" class="ixf-tl" :x="t.x" :y="geo.bottom + 16">{{ t.label }}</text>
+          </g>
+          <text class="ixf-label ix-axis-label" :x="M.l + geo.pw / 2" :y="geo.h - 6">temperature (°C)</text>
+          <text class="ixf-label ix-axis-label" :transform="`translate(16 ${M.t + geo.ph / 2}) rotate(-90)`">hours per {{ widthLabel }} °C</text>
         </svg>
       </div>
     </section>
@@ -290,7 +315,8 @@ onBeforeUnmount(() => ro?.disconnect())
 
 <style scoped>
 /* The course look (theme/styles/tokens.css): hairlines, Space Grotesk, the
-   cyan accent for the data, --warn for the marked mean. No motion. */
+   cyan accent for the data, --warn for the marked mean. No motion. The
+   plot's type, frame and ticks: ./figure-look/figure-look.css. */
 /* The root takes `fig-fill` (the rest of a `class: fill` slide). The theme
    makes every direct div child of a .fig-fill a flex column, so the layout
    lives in one <section> inside the root, out of reach of that rule. */
@@ -430,15 +456,13 @@ onBeforeUnmount(() => ro?.disconnect())
   width: 100%;
   height: 100%;
   overflow: visible;
-  font-family: var(--font-sans);
 }
-.ix-grid line { stroke: var(--hair); stroke-width: 1; }
-.ix-axis { stroke: var(--dim); stroke-width: 1; }
-.ix-ticks text { fill: var(--dim); font-size: 13px; font-variant-numeric: tabular-nums; }
 .ix-yticks text { text-anchor: end; }
 .ix-xticks text { text-anchor: middle; }
-.ix-axis-label { fill: var(--fg-2); font-size: 14px; text-anchor: middle; }
-.bwx-bars { fill: var(--accent); }
+.ix-axis-label { text-anchor: middle; }
+/* A light fill under a thin outline, as the static histograms. */
+.bwx-fill { fill: var(--accent); fill-opacity: 0.3; stroke: none; }
+.bwx-step { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linejoin: miter; }
 .bwx-mean line { stroke: var(--warn); stroke-width: 1.6; }
-.bwx-mean text { fill: var(--warn); font-size: 14px; }
+.bwx-mean text { fill: var(--warn); }
 </style>

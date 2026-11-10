@@ -613,7 +613,11 @@ First half of the file: 1864.51 ± 0.14. Second half: 1864.43 ± 0.14. Bins of 1
 
 </div>
 
-<div class="note-text mt-sm">A check is another way to the same number that could have failed. The list of checks is written before the result is known.</div>
+<div class="note-text mt-sm">A check is another way to the same number that could have failed.</div>
+
+<!--
+Speaker: the list of checks is written before the result is known.
+-->
 
 ---
 hideInToc: true

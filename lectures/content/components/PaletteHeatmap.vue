@@ -20,11 +20,20 @@ function loadJson(url) {
 // (across), 24 x 366 cells as in the slide "Day, Hour and Temperature as a
 // Heatmap" (figures/src/beyond.py, day_hour_grid), in one of four palettes
 // sampled from Matplotlib: viridis, jet, RdBu_r centred on 0 °C, gray. A tap
-// (or the mouse) on a cell reads its value. The cells are drawn one pixel each
-// on a 366 x 24 canvas and scaled up without smoothing, as Matplotlib's
-// imshow(interpolation="none") does; the colour of a value is
-// palette[floor((value - lo) / (hi - lo) * 256)], clipped, as in Matplotlib.
-import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+// (or the mouse) on a cell reads its value. The cells are SVG, a unit square
+// each in a 366 x 24 viewBox stretched over the plot, one path per colour
+// (the runs of a row that share a colour joined), drawn with crisp edges so
+// that no seam shows between two cells, as Matplotlib's pcolormesh with
+// edgecolors="face"; vector, so the slide's scaling keeps them sharp. The
+// colour of a value is palette[floor((value - lo) / (hi - lo) * 256)],
+// clipped, as in Matplotlib. The colour bar: 256 such cells.
+// The frame, the ticks and the type have the look of the static figures
+// (figures/src/style.py): STIX type, a closed frame with ticks pointing in on
+// all four sides at the month starts and the hours, the colour bar outlined
+// with its ticks pointing in, minor ticks every 2 °C
+// (./figure-look/figure-look.css).
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   // The palette shown first: 'viridis', 'jet', 'diverging' or 'greys'.
@@ -90,45 +99,35 @@ function swatch(key) {
 }
 
 // ---- drawing ------------------------------------------------------------------
-const canvas = ref(null)
-const bar = ref(null)
+const cellsEl = ref(null)
+const hexOf = (lut, i) => `#${[lut[3 * i], lut[3 * i + 1], lut[3 * i + 2]].map((c) => c.toString(16).padStart(2, '0')).join('')}`
 
-function draw() {
+// One path per colour index: each run of cells of that colour in a row is a
+// rectangle one cell high, row 0 at the top (hour 23), hour 0 at the bottom.
+const cells = computed(() => {
   const d = data.value
   const lut = luts.value?.[pal.value]
-  if (!d || !lut) return
-  const c = canvas.value
-  if (c) {
-    const ctx = c.getContext('2d')
-    const img = ctx.createImageData(NDAYS, NHOURS)
-    for (let h = 0; h < NHOURS; h++) {
-      const row = NHOURS - 1 - h // hour 0 at the bottom
-      for (let x = 0; x < NDAYS; x++) {
-        const i = indexOf(d.cells[h * NDAYS + x] / 10) * 3
-        const p = (row * NDAYS + x) * 4
-        img.data[p] = lut[i]
-        img.data[p + 1] = lut[i + 1]
-        img.data[p + 2] = lut[i + 2]
-        img.data[p + 3] = 255
-      }
+  if (!d || !lut) return []
+  const paths = new Map()
+  for (let h = 0; h < NHOURS; h++) {
+    const row = NHOURS - 1 - h
+    let x = 0
+    while (x < NDAYS) {
+      const i = indexOf(d.cells[h * NDAYS + x] / 10)
+      let end = x + 1
+      while (end < NDAYS && indexOf(d.cells[h * NDAYS + end] / 10) === i) end++
+      paths.set(i, (paths.get(i) ?? '') + `M${x} ${row}h${end - x}v1h${x - end}z`)
+      x = end
     }
-    ctx.putImageData(img, 0, 0)
   }
-  const b = bar.value
-  if (b) {
-    const ctx = b.getContext('2d')
-    const img = ctx.createImageData(1, 256)
-    for (let r = 0; r < 256; r++) {
-      const i = (255 - r) * 3 // the highest value at the top
-      img.data[r * 4] = lut[i]
-      img.data[r * 4 + 1] = lut[i + 1]
-      img.data[r * 4 + 2] = lut[i + 2]
-      img.data[r * 4 + 3] = 255
-    }
-    ctx.putImageData(img, 0, 0)
-  }
-}
-watch([data, pal], draw, { flush: 'post' })
+  return [...paths].map(([i, path]) => ({ i, d: path, fill: hexOf(lut, i) }))
+})
+// The colour bar, the highest value at the top: 256 cells.
+const barCells = computed(() => {
+  const lut = luts.value?.[pal.value]
+  if (!lut) return []
+  return Array.from({ length: 256 }, (_, r) => ({ y: r, fill: hexOf(lut, 255 - r) }))
+})
 
 // ---- geometry ---------------------------------------------------------------
 const plot = ref(null)
@@ -157,7 +156,24 @@ const geo = computed(() => {
   const vy = (v) => M.t + (1 - (v - lo) / (hi - lo)) * ph
   const barTicks = []
   for (let v = lo; v <= hi; v += 10) barTicks.push({ y: vy(v), label: fmt(v, 0) })
-  return { w, h, pw, ph, cw, chh, xTicks, yTicks, bx, barTicks, vy }
+  // Ticks pointing in on all four sides of the cells, at the labels (fixed
+  // positions: no minor ticks, as style.py); on the colour bar, on the side
+  // of its labels, minor every 2 °C (Matplotlib's five steps of 10).
+  const TL = 6.25
+  const TM = 3.125
+  const right = M.l + pw
+  const bottom = M.t + ph
+  let major = ''
+  for (const t of xTicks) major += `M${t.x} ${bottom}v${-TL}M${t.x} ${M.t}v${TL}`
+  for (const t of yTicks) major += `M${M.l} ${t.y}h${TL}M${right} ${t.y}h${-TL}`
+  const bxr = bx + BAR.w
+  for (const t of barTicks) major += `M${bxr} ${t.y}h${-TL}`
+  let minor = ''
+  for (let k = 1; lo + 2 * k < hi; k++) {
+    if ((2 * k) % 10 === 0) continue
+    minor += `M${bxr} ${vy(lo + 2 * k)}h${-TM}`
+  }
+  return { w, h, pw, ph, cw, chh, xTicks, yTicks, bx, barTicks, vy, major, minor }
 })
 
 const marker = computed(() => {
@@ -188,7 +204,7 @@ const readout = computed(() => {
 // button clicked with the pointer gives the focus back (Slidev's keys are off
 // while a button has it).
 function cellAt(e) {
-  const r = canvas.value.getBoundingClientRect()
+  const r = cellsEl.value.getBoundingClientRect()
   const fx = (e.clientX - r.left) / r.width
   const fy = (e.clientY - r.top) / r.height
   if (!(fx >= 0 && fx < 1 && fy >= 0 && fy < 1)) return null
@@ -247,40 +263,45 @@ onBeforeUnmount(() => ro?.disconnect())
       </div>
 
       <div ref="plot" class="ix-plot">
-        <canvas
-          ref="canvas"
+        <svg
+          ref="cellsEl"
           class="phm-cells"
-          :width="NDAYS"
-          :height="NHOURS"
+          :viewBox="`0 0 ${NDAYS} ${NHOURS}`"
+          preserveAspectRatio="none"
           :style="geo ? { left: `${M.l}px`, top: `${M.t}px`, width: `${geo.pw}px`, height: `${geo.ph}px` } : { display: 'none' }"
           role="img"
           aria-label="Mean temperature of each hour of each day of the year"
           @pointerdown.stop="onDown"
           @pointermove="onMove"
-        />
-        <canvas
-          ref="bar"
+        >
+          <path v-for="c in cells" :key="c.i" :d="c.d" :fill="c.fill" />
+        </svg>
+        <svg
           class="phm-bar"
-          width="1"
-          height="256"
+          viewBox="0 0 1 256"
+          preserveAspectRatio="none"
           :style="geo ? { left: `${geo.bx}px`, top: `${M.t}px`, width: `${BAR.w}px`, height: `${geo.ph}px` } : { display: 'none' }"
           aria-hidden="true"
-        />
-        <svg v-if="geo" class="ix-svg" :viewBox="`0 0 ${geo.w} ${geo.h}`" aria-hidden="true">
-          <rect class="phm-frame" :x="M.l - 0.5" :y="M.t - 0.5" :width="geo.pw + 1" :height="geo.ph + 1" />
-          <g class="ix-ticks ix-xticks">
-            <text v-for="t in geo.xTicks" :key="t.label" :x="t.x" :y="M.t + geo.ph + 18">{{ t.label }}</text>
+        >
+          <rect v-for="c in barCells" :key="c.y" x="0" :y="c.y" width="1" height="1" :fill="c.fill" />
+        </svg>
+        <svg v-if="geo" class="ix-svg ixf" :viewBox="`0 0 ${geo.w} ${geo.h}`" aria-hidden="true">
+          <rect class="ixf-frame" :x="M.l" :y="M.t" :width="geo.pw" :height="geo.ph" />
+          <rect class="ixf-frame" :x="geo.bx" :y="M.t" :width="BAR.w" :height="geo.ph" />
+          <path class="ixf-minor" :d="geo.minor" />
+          <path class="ixf-ticks" :d="geo.major" />
+          <g class="ix-xticks">
+            <text v-for="t in geo.xTicks" :key="t.label" class="ixf-tl" :x="t.x" :y="M.t + geo.ph + 16">{{ t.label }}</text>
           </g>
-          <g class="ix-ticks ix-yticks">
-            <text v-for="t in geo.yTicks" :key="t.label" :x="M.l - 8" :y="t.y" dy="0.35em">{{ t.label }}</text>
+          <g class="ix-yticks">
+            <text v-for="t in geo.yTicks" :key="t.label" class="ixf-tl" :x="M.l - 6.25" :y="t.y" dy="0.33em">{{ t.label }}</text>
           </g>
-          <g class="ix-ticks phm-barticks">
-            <line v-for="t in geo.barTicks" :key="`l${t.label}`" :x1="geo.bx + BAR.w" :x2="geo.bx + BAR.w + 4" :y1="t.y" :y2="t.y" />
-            <text v-for="t in geo.barTicks" :key="`t${t.label}`" :x="geo.bx + BAR.w + 7" :y="t.y" dy="0.35em">{{ t.label }}</text>
+          <g class="phm-barticks">
+            <text v-for="t in geo.barTicks" :key="`t${t.label}`" class="ixf-tl" :x="geo.bx + BAR.w + 6.25" :y="t.y" dy="0.33em">{{ t.label }}</text>
           </g>
-          <text class="ix-axis-label" :x="M.l + geo.pw / 2" :y="geo.h - 6">day of the year</text>
-          <text class="ix-axis-label" :transform="`translate(16 ${M.t + geo.ph / 2}) rotate(-90)`">hour of the day</text>
-          <text class="ix-axis-label" :transform="`translate(${geo.w - 8} ${M.t + geo.ph / 2}) rotate(90)`">mean temperature (°C)</text>
+          <text class="ixf-label ix-axis-label" :x="M.l + geo.pw / 2" :y="geo.h - 6">day of the year</text>
+          <text class="ixf-label ix-axis-label" :transform="`translate(16 ${M.t + geo.ph / 2}) rotate(-90)`">hour of the day</text>
+          <text class="ixf-label ix-axis-label" :transform="`translate(${geo.w - 8} ${M.t + geo.ph / 2}) rotate(90)`">mean temperature (°C)</text>
           <g v-if="marker" class="phm-marker">
             <rect :x="marker.x - 1" :y="marker.y - 1" :width="geo.cw + 2" :height="geo.chh + 2" />
             <line :x1="geo.bx - 5" :x2="geo.bx + BAR.w + 1" :y1="marker.vy" :y2="marker.vy" />
@@ -293,7 +314,8 @@ onBeforeUnmount(() => ro?.disconnect())
 </template>
 
 <style scoped>
-/* The course look (theme/styles/tokens.css); nothing moves on its own. */
+/* The course look (theme/styles/tokens.css); nothing moves on its own. The
+   plot's type, frame and ticks: ./figure-look/figure-look.css. */
 /* The root takes `fig-fill` (the rest of a `class: fill` slide). The theme
    makes every direct div child of a .fig-fill a flex column, so the layout
    lives in one <section> inside the root, out of reach of that rule. */
@@ -364,15 +386,12 @@ onBeforeUnmount(() => ro?.disconnect())
 .phm-bar {
   position: absolute;
   display: block;
+  overflow: hidden;
+  shape-rendering: crispEdges; /* no seam between two cells */
 }
 .phm-cells {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
   touch-action: none;
   cursor: crosshair;
-}
-@supports (image-rendering: pixelated) {
-  .phm-cells { image-rendering: pixelated; }
 }
 .ix-svg {
   position: absolute;
@@ -380,16 +399,12 @@ onBeforeUnmount(() => ro?.disconnect())
   width: 100%;
   height: 100%;
   overflow: visible;
-  font-family: var(--font-sans);
   pointer-events: none;
 }
-.phm-frame { fill: none; stroke: var(--hair); stroke-width: 1; }
-.ix-ticks text { fill: var(--dim); font-size: 13px; font-variant-numeric: tabular-nums; }
 .ix-yticks text { text-anchor: end; }
 .ix-xticks text { text-anchor: middle; }
-.phm-barticks line { stroke: var(--dim); stroke-width: 1; }
 .phm-barticks text { text-anchor: start; }
-.ix-axis-label { fill: var(--fg-2); font-size: 14px; text-anchor: middle; }
+.ix-axis-label { text-anchor: middle; }
 .phm-marker rect { fill: none; stroke: var(--fg); stroke-width: 1.5; }
 .phm-marker line { stroke: var(--fg); stroke-width: 1.5; }
 .phm-marker path { fill: var(--fg); }

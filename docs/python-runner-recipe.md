@@ -39,8 +39,9 @@ print(0.1 + 0.2 == 0.3)   # False
    and the run confirms it. Compute the value, don't guess it.
 3. **Every line fits its editor.** Monaco scrolls sideways instead of
    wrapping, so a long line is cut off at the frame on the projector.
-   In a half-width card (`grid-2`) that is about **50 characters**, full
-   width in a card about **115**, and about 120 with no card around it.
+   In a half-width card (`grid-2`) that is about **44 characters**, full
+   width in a card about **100**, and about 105 with no card around it
+   (Monaco at 13 px since 10 Nov 2026).
    `pnpm qa` fails a slide whose code is wider than its editor. Shorten the
    comment first.
 4. **About 10 lines at most.** A plotting block (matplotlib) also keeps to
@@ -79,24 +80,24 @@ before the lecture starts so that Pyodide is already loaded.
 
 `pnpm qa` measures a slide before anything runs. At that point the runner
 shows a status row (`CLICK THE PLAY BUTTON TO RUN THE CODE`, 1.25rem). After
-▶, the output replaces that row: 0.9rem of padding plus 17px (1.06rem) for
+▶, the output replaces that row: 0.9rem of padding plus 20px (1.25rem) for
 each printed line, the same line height as the code. The box stops growing
-at 11rem and scrolls after that. Leave that room under the block, or the
+at 11rem (8 rows) and scrolls after that. Leave that room under the block, or the
 output pushes the slide's last card past the frame. `pnpm qa:runners` runs
 every block and fails a slide that overflows with its output open.
 
 A block that fills the slide (the two 18-line blocks of L16, "The Training
 Loop in NumPy" and "Generating Text") gets a fixed output height on the
 fence instead: `{autorun:false, outputHeight:'4.8rem'}`. A height of
-0.45rem + N × 17px + 1px shows N whole rows, and the rest scroll inside the
-box; 4.8rem is four rows. The fixed height also holds before ▶, so
+0.45rem + N × 20px + 1px shows N whole rows, and the rest scroll inside the
+box; 4.25rem is three rows, 5.5rem four. The fixed height also holds before ▶, so
 `pnpm qa` measures the slide at its full height.
 
 A block that draws a figure worth seeing large (L07, "Choose the Bin Width,
 Live" and "Linear or Logarithmic, Live") puts its output beside the code:
 `class: runner-side` in the slide's frontmatter (lecturer, 5 Nov 2026: "we
 want to see large figure"). The cell then takes the height under the title,
-the code the left half (about 58 characters a line), the output the right
+the code the left half (about 52 characters a line), the output the right
 half at full height, and the figure is made near-square,
 `plt.subplots(figsize=(5, 4.6), layout="constrained")` (the layout keeps the axis labels inside the figure), up to 22rem high. The layout is in
 `theme/styles/monaco.css` (RUNNER-SIDE).
@@ -107,6 +108,7 @@ half at full height, and the figure is made near-square,
 |---|---|
 | Frame, header label, ▶ position, output box (11rem cap, scroll), error colour | `lectures/content/theme/styles/monaco.css` |
 | Editor behaviour: no hover or suggestion pop-ups, current line only while typing, thin scrollbars | `lectures/content/setup/monaco.ts` |
+| Editor type: 13 px on 20 px lines, the same on every system | `lectures/content/theme/setup/monaco.ts` |
 | Code colours, cursor, selection and scrollbar colours | `lectures/content/setup/shiki.ts` |
 | matplotlib figures in the output; tracebacks trimmed to the student's frames | `lectures/content/setup/code-runners.ts` |
 | One output row per printed line (upstream added a blank row after each `print`) | `patches/slidev-addon-python-runner@0.1.3.patch` |

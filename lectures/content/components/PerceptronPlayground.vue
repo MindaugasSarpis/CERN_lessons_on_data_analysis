@@ -21,6 +21,12 @@
 
   Data: public/data/frost_evenings.json (figures/src/interactive_data.py).
   In presenter mode the audience window follows (BroadcastChannel).
+
+  The plot and its key have the look of the static figures
+  (figures/src/style.py): STIX type, x₁ and x₂ in its italic, a closed frame,
+  ticks pointing in on all four sides with minor ticks
+  (./figure-look/figure-look.css). The formulas beside it stay in KaTeX's
+  type, as on the slides.
 -->
 <script>
 const files = new Map()
@@ -47,6 +53,7 @@ function niceDate(iso) {
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useSlideContext } from '@slidev/client'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   // The starting neuron: Lecture 10's "below 3.8 °C".
@@ -169,6 +176,30 @@ const sx = (t) => M.l + ((t - TD[0]) / (TD[1] - TD[0])) * (W.value - M.l - M.r)
 const sy = (h) => H.value - M.b - ((h - HD[0]) / (HD[1] - HD[0])) * (H.value - M.t - M.b)
 const tTicks = [-10, 0, 10, 20, 30]
 const hTicks = [0.4, 0.6, 0.8, 1]
+// Ticks pointing in on all four sides (style.py); minor ticks as Matplotlib's
+// AutoMinorLocator: every 2 °C (major step 10), every 0.05 (major step 0.2).
+const TL = 6.25
+const TM = 3.125
+const tickPaths = computed(() => {
+  if (!W.value) return { major: '', minor: '' }
+  const l = M.l
+  const r = W.value - M.r
+  const t = M.t
+  const bt = H.value - M.b
+  let major = ''
+  let minor = ''
+  for (const v of tTicks) major += `M${sx(v)} ${bt}v${-TL}M${sx(v)} ${t}v${TL}`
+  for (const v of hTicks) major += `M${l} ${sy(v)}h${TL}M${r} ${sy(v)}h${-TL}`
+  for (let k = TD[0] / 2 + 1; k < TD[1] / 2; k++) {
+    if (k % 5 === 0) continue
+    minor += `M${sx(2 * k)} ${bt}v${-TM}M${sx(2 * k)} ${t}v${TM}`
+  }
+  for (let k = 9; k < 20; k++) { // 0.45 … 0.95
+    if (k % 4 === 0) continue
+    minor += `M${l} ${sy(k / 20)}h${TM}M${r} ${sy(k / 20)}h${-TM}`
+  }
+  return { major, minor }
+})
 
 // The side z > 0 of the plot: the rectangle clipped by the half-plane.
 const f = (T, Hh) => w1.value * T + w2.value * Hh + b.value
@@ -392,7 +423,7 @@ onBeforeUnmount(() => {
       <svg
         v-if="W > 0 && H > 0"
         ref="svgRef"
-        class="ipp-svg"
+        class="ipp-svg ixf"
         :width="W"
         :height="H"
         :style="{ cursor }"
@@ -402,18 +433,8 @@ onBeforeUnmount(() => {
         @pointermove="onMove"
       >
         <path v-if="regionPath" class="ipp-region" :d="regionPath" />
-        <g class="ipp-grid">
-          <line v-for="t in tTicks" :key="'gx' + t" :x1="sx(t)" :x2="sx(t)" :y1="M.t" :y2="H - M.b" />
-          <line v-for="h in hTicks" :key="'gy' + h" :x1="M.l" :x2="W - M.r" :y1="sy(h)" :y2="sy(h)" />
-        </g>
-        <g class="ipp-ticks">
-          <text v-for="t in tTicks" :key="'tx' + t" :x="sx(t)" :y="H - M.b + 16" text-anchor="middle" dominant-baseline="central">{{ fmt(t, 0) }}</text>
-          <text v-for="h in hTicks" :key="'ty' + h" :x="M.l - 8" :y="sy(h)" text-anchor="end" dominant-baseline="central">{{ fmt(h, 1) }}</text>
-          <text class="ipp-axis" :x="(M.l + W - M.r) / 2" :y="H - 9" text-anchor="middle"><tspan class="ipp-axvar">x</tspan><tspan class="ipp-axsub" dy="3">1</tspan><tspan dy="-3"> temperature at 18:00 (°C)</tspan></text>
-          <text class="ipp-axis" :x="M.l - 8" :y="M.t - 12" text-anchor="start" dominant-baseline="central"><tspan class="ipp-axvar">x</tspan><tspan class="ipp-axsub" dy="3">2</tspan><tspan dy="-3"> humidity at 18:00</tspan></text>
-        </g>
         <template v-if="ready">
-          <text v-for="l in labels" :key="l.text" class="ipp-lab" :class="l.cls" :x="l.x" :y="l.y" text-anchor="middle" dominant-baseline="central">{{ l.text }}</text>
+          <text v-for="l in labels" :key="l.text" class="ipp-lab ixf-label" :class="l.cls" :x="l.x" :y="l.y" text-anchor="middle" dy="0.33em">{{ l.text }}</text>
           <g class="ipp-pts">
             <circle
               v-for="p in pts"
@@ -431,7 +452,16 @@ onBeforeUnmount(() => {
             <circle :cx="sx(pts[sel].t)" :cy="sy(pts[sel].h)" r="8.5" />
           </g>
         </template>
-        <text v-else-if="loadError" class="ipp-msg" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
+        <rect class="ixf-frame" :x="M.l" :y="M.t" :width="W - M.l - M.r" :height="H - M.t - M.b" />
+        <path class="ixf-minor" :d="tickPaths.minor" />
+        <path class="ixf-ticks" :d="tickPaths.major" />
+        <g class="ipp-ticks">
+          <text v-for="t in tTicks" :key="'tx' + t" class="ixf-tl" :x="sx(t)" :y="H - M.b + 16" text-anchor="middle">{{ fmt(t, 0) }}</text>
+          <text v-for="h in hTicks" :key="'ty' + h" class="ixf-tl" :x="M.l - 6.25" :y="sy(h)" text-anchor="end" dy="0.33em">{{ fmt(h, 1) }}</text>
+          <text class="ixf-label" :x="(M.l + W - M.r) / 2" :y="H - 9" text-anchor="middle"><tspan class="ixf-it">x</tspan>₁ temperature at 18:00 (°C)</text>
+          <text class="ixf-label" :x="M.l" :y="M.t - 12" text-anchor="start" dy="0.33em"><tspan class="ixf-it">x</tspan>₂ humidity at 18:00</text>
+        </g>
+        <text v-if="!ready && loadError" class="ipp-msg ixf-text" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
       </svg>
       </div>
       <figcaption class="ipp-key">
@@ -543,22 +573,10 @@ onBeforeUnmount(() => {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ---- plot ---- */
+/* ---- plot: type, frame and ticks in ./figure-look/figure-look.css ---- */
 .ipp-region { fill: var(--accent); opacity: 0.075; }
-.ipp-grid line { stroke: var(--hair); stroke-width: 1; }
-.ipp-ticks text { fill: var(--dim); font-size: 14px; }
-.ipp-ticks .ipp-axis { font-size: 13px; letter-spacing: 0.04em; }
-.ipp-ticks .ipp-axvar { font-family: KaTeX_Math, 'Times New Roman', serif; font-style: italic; font-size: 15px; letter-spacing: 0; }
-.ipp-ticks .ipp-axsub { font-size: 10px; letter-spacing: 0; }
 .ipp-label sub { font-size: 0.75em; line-height: 0; }
-.ipp-lab {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  opacity: 0.8;
-  pointer-events: none;
-}
+.ipp-lab { opacity: 0.8; pointer-events: none; }
 .ipp-lab-yes { fill: var(--accent); }
 .ipp-lab-no { fill: var(--warn); }
 .ipp-pts circle { stroke: none; opacity: 0.62; }
@@ -568,18 +586,19 @@ onBeforeUnmount(() => {
 .ipp-boundary { stroke: var(--fg); stroke-width: 2.2; stroke-linecap: round; }
 .ipp-sel circle { fill: none; stroke: var(--fg); stroke-width: 1.6; }
 .ipp-guide { stroke: var(--fg-2); stroke-width: 1; stroke-dasharray: 3 4; opacity: 0.7; }
-.ipp-msg { fill: var(--warn); font-size: 13px; }
+.ipp-msg { fill: var(--warn); }
 
+/* The key belongs to the plot: the figures' type, as a legend there. */
 .ipp-key {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem 1rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  color: var(--dim);
+  font-family: var(--font-figure);
+  font-size: var(--fig-tick-label);
+  color: var(--fg);
 }
-.ipp-key .ipp-shown { margin-left: auto; }
+.ipp-key .ipp-shown { margin-left: auto; color: var(--dim); }
 .ipp-dot {
   display: inline-block;
   width: 9px;

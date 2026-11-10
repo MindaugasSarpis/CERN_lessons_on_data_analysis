@@ -152,14 +152,15 @@ def loop_sum(values):
         total += v
     return total
 
-M = np.loadtxt("data/raw/D0_KPi.csv", delimiter=",",
-               skiprows=1, usecols=0)
+M = np.loadtxt("data/raw/D0_KPi.csv",
+               delimiter=",", skiprows=1,
+               usecols=0)
 masses = M.tolist()
-
 start = time.perf_counter()
 total = loop_sum(masses)
 elapsed = time.perf_counter() - start
-print(f"loop {elapsed * 1000:8.3f} ms  {total!r}")
+ms = elapsed * 1000
+print(f"loop {ms:8.3f} ms  {total!r}")
 ```
 
 </div>
@@ -666,12 +667,13 @@ if __name__ == "__main__":
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The limit of one core per process comes from a lock inside Python, the global interpreter lock. A compiled loop of NumPy also runs on one core for a sum. More cores are reached with more processes, and that works on every system.
+One core per process: a lock inside Python, the global interpreter lock, sets the limit. More cores are reached with more processes, on every system.
 
 </div>
 
 <!--
-Speaker: Python 3.13 added a build without the lock. It is not the default,
+Speaker: a compiled loop of NumPy also runs on one core for a sum. Python
+3.13 added a build without the lock. It is not the default,
 and most libraries assume the lock is there. `with Pool(4) as pool` closes the
 pool at the end of the block, as `with open(...)` closes a file. (~2.5 min)
 -->
@@ -843,9 +845,9 @@ hideInToc: true
 
 $T(N) = T_s + T_p / N$ has two unknowns.
 
-$T(1) - T(2) = T_p / 2$, so $T_p = 2 \times 0.920 = 1.840$ s
+$T(1) - T(2) = T_p / 2$, so $T_p = 2 \times 0.920 = 1.840\ \text{s}$
 
-$T_s = T(1) - T_p = 0.124$ s, and $s = 0.124 / 1.964 = 6.3\,\%$
+$T_s = T(1) - T_p = 0.124\ \text{s}$, and $s = 0.124 / 1.964 = 6.3\,\%$
 
 </div>
 
@@ -873,14 +875,15 @@ $T_s = T(1) - T_p = 0.124$ s, and $s = 0.124 / 1.964 = 6.3\,\%$
 
 <div class="card card-info card-glass pad-compact mt-sm">
 
-For four workers the prediction is right to 2 ms. The serial 0.124 s is the start of the workers and their reading of the file. With $s = 6.3\,\%$ no number of cores gives more than $1/s = 16$.
+Four workers: right to 2 ms. With $s = 6.3\,\%$ no number of cores gives more than $1/s = 16$.
 
 </div>
 
 <!--
 Speaker: this is the method of the whole course in small: a model with two
 parameters, fixed by two measurements, tested on a third. It passes at N = 4
-and fails at 8 and 12. (~3 min)
+and fails at 8 and 12. The serial 0.124 s is the start of the workers and
+their reading of the file. (~3 min)
 -->
 
 ---
@@ -1064,11 +1067,11 @@ hideInToc: true
 | --- | --- | --- |
 | Model | Apple M2 Pro, 2023 | Nvidia RTX 4090, 2022 |
 | Cores | 12 | 16&nbsp;384 |
-| A core | fast, runs any program | slow and simple |
-| Good at | a long chain of different steps | one step on millions of numbers |
+| A core | fast, runs<br>any program | slow and simple |
+| Good at | a long chain of<br>different steps | one step on millions of numbers |
 | Memory | shares the 16 GB | 24 GB of its own |
 
-A graphics card is a computer inside the computer. It has its own cores and its own memory, and a slot connects it to the rest. What it computes on has to be copied into that memory first.
+A computer inside the computer, with its own cores and memory; its data is copied there first.
 
 </div>
 
@@ -1078,7 +1081,7 @@ A graphics card is a computer inside the computer. It has its own cores and its 
 
 <div class="card card-secondary card-glass pad-compact mt-md">
 
-GPU stands for graphics processing unit: built to compute the millions of pixels of one picture at the same time. The chips marked VRAM are the memory of the card.
+GPU: graphics processing unit, built for the millions of pixels of one picture at once. The chips marked VRAM are its memory.
 
 </div>
 
@@ -1088,12 +1091,13 @@ GPU stands for graphics processing unit: built to compute the millions of pixels
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-A GPU core does not run Python. A library takes an array and an operation, sends both to the card, and the card applies the operation to all elements at once. It is the array operation of NumPy on other hardware.
+A GPU core does not run Python: a library sends an array and an operation to the card, which applies it to all elements at once, the array operation of NumPy on other hardware.
 
 </div>
 
 <!--
-Speaker: CuPy offers the functions of NumPy computed on a GPU, and PyTorch
+Speaker: a slot connects the card to the rest of the computer. CuPy offers
+the functions of NumPy computed on a GPU, and PyTorch
 does the same for neural networks. Neither is needed in this course. (~2 min)
 -->
 
@@ -1649,19 +1653,19 @@ hideInToc: true
 
 <div class="card card-primary card-glass pad-compact">
 
-**Standard output** carries what `print` writes. **Standard error** carries error messages and tracebacks. Both go to the terminal.
+**Standard output**: what `print` writes. **Standard error**: error messages and tracebacks.
 
 </div>
 
 <div class="card card-secondary card-glass pad-compact">
 
-`> file` sends standard output into a file instead (Lecture 04). Standard error still goes to the terminal.
+`> file` sends standard output into a file. Standard error still goes to the terminal.
 
 </div>
 
 <div class="card card-accent card-glass pad-compact">
 
-`2>&1` sends stream 2, standard error, to where stream 1, standard output, goes. It stands after `> file`.
+`2>&1` sends stream 2, standard error, where stream 1, standard output, goes: after `> file`.
 
 </div>
 
@@ -1685,15 +1689,17 @@ FileNotFoundError: data/raw/missing.csv not found.
 
 <div class="card card-success card-glass pad-compact mt-md">
 
-After the first command the log is empty: the error went to the terminal. After the second it is in the log, where it will be found the next morning.
+After the first command the log is empty: the error went to the terminal. After the second it is in the log.
 
 </div>
 
 <!--
-Speaker: the `...` stands for nine lines of traceback. The file name is wrong
+Speaker: both streams go to the terminal unless redirected. The `...` stands
+for nine lines of traceback. The file name is wrong
 on purpose. `>` and `2>&1` mean the same in zsh and in PowerShell 7, and `cat`
 is a PowerShell name for Get-Content. A job that fails at night has nobody
-at the terminal, so the error has to be in the file. (~2.5 min)
+at the terminal, so the error has to be in the file, where it is found the
+next morning. (~2.5 min)
 -->
 
 ---
@@ -2124,7 +2130,7 @@ echo "$(date +%H:%M:%S)  done"
 
 ## 📝 **A script for bash**
 
-The script is `scripts/job.sh`, a script for bash, the shell of the Linux machines of a cluster, with the request in its first lines.
+`scripts/job.sh`: a script for bash, the shell of a cluster's Linux machines.
 
 </div>
 
@@ -2132,14 +2138,15 @@ The script is `scripts/job.sh`, a script for bash, the shell of the Linux machin
 
 ## 💡 **Comments for bash, a request for Slurm**
 
-A line that starts with `#` is a comment for bash, so the script also runs on a Mac in bash. Slurm reads the `#SBATCH` lines and sets the two `$SLURM_…` variables.
+`#` starts a comment for bash, so the script also runs on a Mac. Slurm reads the `#SBATCH` lines.
 
 </div>
 
 </div>
 
 <!--
-Speaker: the script was run on a Mac with
+Speaker: the request stands in the first lines of the script; Slurm reads it
+and sets the two $SLURM_… variables. The script was run on a Mac with
 `SLURM_JOB_ID=1 SLURM_CPUS_PER_TASK=4 bash scripts/job.sh` and printed the
 start line, the sum with its time, and the done line. The folder `logs` has to
 exist before the job is submitted. Stdout and stderr both go into the one log.
@@ -2265,7 +2272,7 @@ hideInToc: true
 
 <div class="card card-warning card-glass pad-compact">
 
-**D asks for 4 cores and 4 hours.** Started now it would hold its cores when B is due. It waits until B has ended, 5 hours from now.
+**D asks for 4 cores and 4 hours.** Started now, it would hold cores B needs: it waits until B ends, 5 hours from now.
 
 </div>
 
@@ -2453,7 +2460,7 @@ hideInToc: true
 
 | What is rented | Priced per | List price, Amazon Web Services, US East, 2025 |
 | --- | --- | --- |
-| A virtual machine with 2 vCPUs and 8 GiB of memory | hour | USD 0.096 |
+| A virtual machine, 2 vCPUs, 8 GiB memory | hour | USD 0.096 |
 | Storage | GB and month | USD 0.023 |
 | Data sent out to the internet | GB | USD 0.09 |
 | Data sent in | | free |
@@ -2466,7 +2473,7 @@ hideInToc: true
 
 ## 🖥️ **A virtual machine**
 
-It behaves like a computer of its own, with its own system and disk. Many of them share one server. A **vCPU** is one hardware thread of that server's processor: on most servers half a core.
+Its own system and disk; many share one server. A **vCPU** is one hardware thread of the server's processor: on most, half a core.
 
 </div>
 
@@ -2474,7 +2481,7 @@ It behaves like a computer of its own, with its own system and disk. Many of the
 
 ## ⏳ **By the hour**
 
-Nothing is bought, and nothing waits in a queue. A thousand machines are started within minutes and given back an hour later. The bill is for what ran and for what is stored.
+Nothing bought, no queue: a thousand machines start within minutes and go back an hour later. The bill: what ran, what is stored.
 
 </div>
 
@@ -2482,12 +2489,13 @@ Nothing is bought, and nothing waits in a queue. A thousand machines are started
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The cloud is servers of a company, rented by the hour over the internet. The prices are those of the machine type m5.large and of the storage S3 Standard. Every provider has its own names for the same three things: machines, storage, traffic.
+The cloud: servers of a company, rented by the hour over the internet. Prices of the machine type m5.large and the storage S3 Standard.
 
 </div>
 
 <!--
-Speaker: the three large providers are Amazon, Microsoft and Google. Prices
+Speaker: every provider has its own names for the same three things:
+machines, storage, traffic. The three large providers are Amazon, Microsoft and Google. Prices
 change, and they differ between regions. The structure does not: time,
 stored gigabytes, gigabytes out. (~2 min)
 -->
@@ -2635,7 +2643,7 @@ The table does not fit: 32 GB, and 96 GB with room to work. Column `M` as float3
 
 ## 🗺️ **The plan**
 
-Convert column `M` once, in pieces, into a binary file: about 3 minutes, nearly all of it parsing text. After that every run reads 4&nbsp;GB from the SSD in a second and sums it in 0.2 s.
+Convert column `M` once, in pieces, into a binary file: about 3 minutes, nearly all parsing. A run then reads 4&nbsp;GB in a second and sums it in 0.2 s.
 
 </div>
 
@@ -2643,12 +2651,13 @@ Convert column `M` once, in pieces, into a binary file: about 3 minutes, nearly 
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-If all four columns are needed at once, the job needs a machine with 128 GB of memory: a job script with `--mem=100G`, and the same code.
+All four columns at once need a machine with 128 GB: a job script with `--mem=100G`, the same code.
 
 </div>
 
 <!--
-Speaker: nothing on this slide was run. Every line is a product of two
+Speaker: a run reads the 4 GB from the SSD. Nothing on this slide was run.
+Every line is a product of two
 numbers measured earlier in the lecture. That is the point: the plan exists
 before the first long run. (~2.5 min)
 -->
@@ -2664,7 +2673,7 @@ hideInToc: true
 | The job | Machine | Started with |
 | --- | --- | --- |
 | Fits in memory three times over, takes minutes | laptop | `python scripts/…` |
-| Fits, but takes hours | a machine that stays on: a workstation, a server of the group | `nohup … &` and a log |
+| Fits, but takes hours | a machine that stays on:<br>a workstation, a server of the group | `nohup … &` and a log |
 | Needs more memory than any machine at hand, or is hundreds of independent pieces | cluster | a job script, a job array |
 | Reads the data of an LHC experiment | grid | the submission system of the experiment |
 | A burst of work, no cluster, the data small or already there | cloud | rented machines |

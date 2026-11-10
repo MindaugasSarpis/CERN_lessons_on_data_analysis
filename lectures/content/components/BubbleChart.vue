@@ -15,6 +15,11 @@
   a continent to highlight it. Bubbles are drawn big to small, so the small ones stay
   on top.
 
+  The plot has the look of the static figures (figures/src/style.py): STIX
+  type, a closed frame, ticks pointing in on all four sides with minor ticks
+  (2 to 9 times each power of ten on the log axis), no grid
+  (./figure-look/figure-look.css).
+
   Data: public/data/l07_gapminder.json (figures/src/interactive_l07_gallery_data.py
   from figures/data/gallery/gapminder.csv): Gapminder Foundation, CC BY 4.0.
   In presenter mode the audience window follows the presenter's buttons,
@@ -58,6 +63,7 @@ function people(p) {
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
+import './figure-look/figure-look.css'
 
 const props = defineProps({
   src: { type: String, default: 'data/l07_gapminder.json' },
@@ -127,6 +133,37 @@ const rMax = computed(() => Math.max(12, Math.min(ph.value * 0.1, pw.value * 0.0
 const rOf = (pop) => Math.max(1.6, rMax.value * Math.sqrt(pop / POP_MAX))
 const xTicks = computed(() => X_TICKS.map((g) => ({ x: sx(g), label: `$${thin(g)}` })))
 const yTicks = computed(() => Y_TICKS.map((v) => ({ y: sy(v), label: String(v) })))
+// Ticks pointing in on all four sides (style.py): major at the labels; minor
+// at 2 to 9 times each power of ten on the log axis (Matplotlib's
+// LogLocator), every 2 years on the life axis (AutoMinorLocator: five steps
+// of a major step of 10).
+const TL = 6.25
+const TM = 3.125
+const tickPaths = computed(() => {
+  const x0 = M.l
+  const x1 = M.l + pw.value
+  const y0 = M.t + ph.value
+  const y1 = M.t
+  let major = ''
+  let minor = ''
+  for (const tk of xTicks.value) major += `M${tk.x} ${y0}v${-TL}M${tk.x} ${y1}v${TL}`
+  for (const tk of yTicks.value) major += `M${x0} ${tk.y}h${TL}M${x1} ${tk.y}h${-TL}`
+  const [lo, hi] = X_DOMAIN.map((v) => 10 ** v)
+  for (let dec = 10 ** Math.floor(X_DOMAIN[0]); dec < hi; dec *= 10) {
+    for (let k = 2; k <= 9; k++) {
+      const g = k * dec
+      if (g <= lo * (1 + 1e-9) || g >= hi || X_TICKS.includes(g)) continue
+      const x = sx(g)
+      minor += `M${x} ${y0}v${-TM}M${x} ${y1}v${TM}`
+    }
+  }
+  for (let v = Y_DOMAIN[0] + 2; v < Y_DOMAIN[1]; v += 2) {
+    if (Y_TICKS.includes(v)) continue
+    const y = sy(v)
+    minor += `M${x0} ${y}h${TM}M${x1} ${y}h${-TM}`
+  }
+  return { major, minor }
+})
 
 // Each country at time t: straight lines between data years (GDP on the log scale).
 function seg(time) {
@@ -423,7 +460,7 @@ onBeforeUnmount(() => {
       <svg
         v-if="W > 0 && H > 0"
         ref="svgRef"
-        class="bub-svg"
+        class="bub-svg ixf"
         :viewBox="`0 0 ${W} ${H}`"
         :width="W"
         :height="H"
@@ -436,24 +473,14 @@ onBeforeUnmount(() => {
         @pointerleave="onLeave"
       >
         <text class="bub-year" :x="M.l + pw / 2" :y="M.t + ph / 2" :style="{ fontSize: `${Math.round(Math.min(ph * 0.5, pw * 0.27))}px` }">{{ yearLabel }}</text>
-        <g class="bub-grid">
-          <line v-for="tk in xTicks" :key="'gx' + tk.label" :x1="tk.x" :x2="tk.x" :y1="M.t" :y2="M.t + ph" />
-          <line v-for="tk in yTicks" :key="'gy' + tk.label" :x1="M.l" :x2="M.l + pw" :y1="tk.y" :y2="tk.y" />
-        </g>
-        <g class="bub-ticks">
-          <text v-for="tk in xTicks" :key="'x' + tk.label" :x="tk.x" :y="M.t + ph + 18" text-anchor="middle">{{ tk.label }}</text>
-          <text v-for="tk in yTicks" :key="'y' + tk.label" :x="M.l - 9" :y="tk.y" text-anchor="end" dominant-baseline="central">{{ tk.label }}</text>
-        </g>
-        <text class="bub-axis" :x="M.l + pw / 2" :y="H - 6" text-anchor="middle">GDP per person (US$, inflation-adjusted), log scale</text>
-        <text class="bub-axis" :transform="`translate(15 ${M.t + ph / 2}) rotate(-90)`" text-anchor="middle">life expectancy (years)</text>
 
         <template v-if="ready">
           <!-- size key: 1 billion and 100 million people at their true areas -->
           <g v-if="sizeKey" class="bub-size">
             <circle :cx="sizeKey.cx" :cy="sizeKey.base - sizeKey.r1" :r="sizeKey.r1" />
             <circle :cx="sizeKey.cx" :cy="sizeKey.base - sizeKey.r2" :r="sizeKey.r2" />
-            <text :x="sizeKey.cx - sizeKey.r1 - 7" :y="sizeKey.base - 2 * sizeKey.r1 + 5" text-anchor="end">1 billion</text>
-            <text :x="sizeKey.cx - sizeKey.r1 - 7" :y="sizeKey.base - 2 * sizeKey.r2 + 5" text-anchor="end">100 million</text>
+            <text class="ixf-text" :x="sizeKey.cx - sizeKey.r1 - 7" :y="sizeKey.base - 2 * sizeKey.r1 + 5" text-anchor="end">1 billion</text>
+            <text class="ixf-text" :x="sizeKey.cx - sizeKey.r1 - 7" :y="sizeKey.base - 2 * sizeKey.r2 + 5" text-anchor="end">100 million</text>
           </g>
           <!-- colour key: the continents named in their colours; tap one to highlight it -->
           <g class="bub-legend">
@@ -463,6 +490,7 @@ onBeforeUnmount(() => {
               :x="M.l + pw - 8"
               :y="M.t + ph - 12 - (D.continents.length - 1 - c) * 21"
               text-anchor="end"
+              class="ixf-text"
               :class="{ off: hi >= 0 && hi !== c }"
               :style="{ fill: COLORS[c] }"
               @pointerdown.stop.prevent="pickContinent(c)"
@@ -486,6 +514,20 @@ onBeforeUnmount(() => {
               :style="{ fill: COLORS[b.c] }"
             />
           </g>
+        </template>
+
+        <!-- the frame and its ticks over the bubbles, the text over all -->
+        <rect class="ixf-frame" :x="M.l" :y="M.t" :width="pw" :height="ph" />
+        <path class="ixf-minor" :d="tickPaths.minor" />
+        <path class="ixf-ticks" :d="tickPaths.major" />
+        <g class="bub-ticks">
+          <text v-for="tk in xTicks" :key="'x' + tk.label" class="ixf-tl" :x="tk.x" :y="M.t + ph + 16" text-anchor="middle">{{ tk.label }}</text>
+          <text v-for="tk in yTicks" :key="'y' + tk.label" class="ixf-tl" :x="M.l - 6.25" :y="tk.y" text-anchor="end" dy="0.33em">{{ tk.label }}</text>
+        </g>
+        <text class="ixf-label" :x="M.l + pw / 2" :y="H - 6" text-anchor="middle">GDP per person (US$, inflation-adjusted), log scale</text>
+        <text class="ixf-label" :transform="`translate(15 ${M.t + ph / 2}) rotate(-90)`" text-anchor="middle">life expectancy (years)</text>
+
+        <template v-if="ready">
           <g class="bub-labels">
             <text
               v-for="l in labels"
@@ -493,11 +535,12 @@ onBeforeUnmount(() => {
               :x="l.x"
               :y="l.y"
               :text-anchor="l.anchor"
+              class="ixf-text"
               :class="{ dim: l.dim, on: l.on }"
             >{{ l.text }}<tspan v-if="l.sub" class="bub-sub" :x="l.x" dy="18">{{ l.sub }}</tspan></text>
           </g>
         </template>
-        <text v-else-if="loadError" class="bub-msg" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
+        <text v-else-if="loadError" class="bub-msg ixf-text" :x="W / 2" :y="H / 2" text-anchor="middle">{{ loadError }}</text>
       </svg>
     </figure>
 
@@ -542,7 +585,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* The root takes `fig-fill` on a `class: fill` slide. The theme turns every
+/* The plot's type, frame and ticks: ./figure-look/figure-look.css; the
+   controls under it keep the slides' type.
+   The root takes `fig-fill` on a `class: fill` slide. The theme turns every
    direct div child of a .fig-fill into a flex column, so the parts are a
    <figure> and a <nav>, out of reach of that rule. */
 .bub {
@@ -570,7 +615,6 @@ onBeforeUnmount(() => {
   overflow: visible;
   touch-action: none;
   -webkit-tap-highlight-color: transparent;
-  font-family: var(--font-sans);
 }
 .bub-year {
   fill: var(--fg);
@@ -581,9 +625,6 @@ onBeforeUnmount(() => {
   dominant-baseline: central;
   pointer-events: none;
 }
-.bub-grid line { stroke: var(--hair); stroke-width: 1; }
-.bub-ticks text { fill: var(--dim); font-size: 14px; }
-.bub-axis { fill: var(--fg-2); font-size: 14px; }
 .bub-dots circle {
   fill-opacity: 0.9;
   stroke: var(--bg);
@@ -594,8 +635,6 @@ onBeforeUnmount(() => {
 .bub-dots circle.on { stroke: var(--fg); stroke-width: 2; fill-opacity: 1; }
 .bub-labels text {
   fill: var(--fg);
-  font-size: 15px;
-  font-weight: 500;
   paint-order: stroke;
   stroke: var(--bg);
   stroke-width: 3.5px;
@@ -608,16 +647,14 @@ onBeforeUnmount(() => {
 .bub-trail path { fill: none; stroke-width: 1.6; stroke-opacity: 0.75; stroke-linejoin: round; }
 .bub-trail circle { stroke: none; fill-opacity: 0.85; }
 .bub-legend text {
-  font-size: 15px;
-  font-weight: 500;
   cursor: pointer;
   transition: opacity 0.3s var(--ease);
 }
 .bub-legend text.off { opacity: 0.35; }
 .bub-size circle { fill: none; stroke: var(--dim); stroke-width: 1; }
-.bub-size text { fill: var(--dim); font-size: 13px; }
-.bub-labels .bub-sub { fill: var(--fg); font-size: 14px; font-weight: 400; }
-.bub-msg { fill: var(--warn); font-size: 13px; }
+.bub-size text { fill: var(--fg); }
+.bub-labels .bub-sub { fill: var(--fg); }
+.bub-msg { fill: var(--warn); }
 
 /* ---- controls ---- */
 .bub-controls {

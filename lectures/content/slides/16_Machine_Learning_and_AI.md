@@ -483,14 +483,16 @@ A larger $h_1$ would lower the loss. A larger $h_2$ would raise it, because $w_2
 
 <div class="card card-info card-glass pad-compact mt-md">
 
-The error $\delta$ goes back along each connection and is multiplied by the weight of that connection. This step gives the method its name: **backpropagation** of the error.
+$\delta$ goes back along each connection, times its weight: the **backpropagation** of the error.
 
 </div>
 
 <img class="fig" src="/figures/viz_ml_backprop_step2.svg" style="display:block;margin:0.8rem auto 0;max-height:165px;">
 
 <!--
-Speaker: h is not a parameter, so nothing is updated here. The derivative with
+Speaker: the error delta goes back along each connection and is multiplied by
+the weight of that connection; this step gives the method its name. h is not
+a parameter, so nothing is updated here. The derivative with
 respect to h is an intermediate result. (~2 min)
 -->
 
@@ -506,7 +508,7 @@ hideInToc: true
 
 ## 3️⃣ **From $h_j$ to $u_j$**
 
-$h_j = \sigma(u_j)$, so $\partial h_j / \partial u_j = h_j\,(1 - h_j)$. One more factor:
+$h_j = \sigma(u_j)$, so $\partial h_j / \partial u_j = h_j\,(1 - h_j)$:
 
 $$
 \delta_j = \frac{\partial L}{\partial u_j} = \delta\,w_j\,h_j\,(1 - h_j)
@@ -533,7 +535,7 @@ h2 (1 - h2) = 0.4502 · 0.5498 = 0.2475
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-⚠️ The factor $h_j\,(1 - h_j)$ is at most 0.25. A saturated hidden unit, with $h_j$ near 0 or 1, passes almost no error back.
+⚠️ $h_j\,(1 - h_j) \le 0.25$: a saturated unit, $h_j$ near 0 or 1, passes almost no error back.
 
 </div>
 
@@ -614,12 +616,13 @@ hideInToc: true
 
 <div class="note-text mt-sm">
 
-The backward pass uses the values of the forward pass, $h_j$ and $\hat{y}$. These eight lines are the whole method for one hidden layer.
+These eight lines are the whole method for one hidden layer.
 
 </div>
 
 <!--
-Speaker: blue numbers above each circle are the forward values, orange numbers
+Speaker: the backward pass uses the values of the forward pass, h_j and y-hat.
+Blue numbers above each circle are the forward values, orange numbers
 below are the derivatives of the loss with respect to that quantity. Read the
 figure once from left to right and once from right to left. (~3 min)
 -->
@@ -774,12 +777,10 @@ hideInToc: true
 
 # The Training Loop in **NumPy**
 
-```py {monaco-run} {autorun:false, outputHeight:'4.8rem'}
+```py {monaco-run} {autorun:false, outputHeight:'4.25rem'}
 import numpy as np
-X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-y = np.array([0, 1, 1, 0])
-def sigma(z):
-    return 1 / (1 + np.exp(-z))
+X, y = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]), np.array([0, 1, 1, 0])
+def sigma(z): return 1 / (1 + np.exp(-z))
 rng = np.random.default_rng(0)                   # the seed
 V, c = rng.normal(0, 1, (2, 2)), np.zeros(2)     # hidden layer
 w, b, eta = rng.normal(0, 1, 2), 0.0, 1.0        # output neuron
@@ -860,14 +861,15 @@ hideInToc: true
 
 <div class="card card-success card-glass pad-compact">
 
-The run found the split that was set by hand, OR and AND, with the units in the other order. Its lines are $x_1 + x_2 = 1.53$ and $0.46$; by hand they were 1.5 and 0.5. Seed 2 ends elsewhere: one unit is high for (0, 1) only, the other for (1, 0) only. Both networks compute XOR. The weights that solve a problem are not unique.
+The run found the split set by hand, OR and AND, the units swapped: lines $x_1 + x_2 = 1.53$ and $0.46$, by hand 1.5 and 0.5. Seed 2 finds another split that also computes XOR: the weights are not unique.
 
 </div>
 
 </div>
 
 <!--
-Speaker: left panel, the two hidden units as lines in the plane of the inputs.
+Speaker: seed 2 ends with one unit high for (0, 1) only, the other for (1, 0)
+only. Left panel, the two hidden units as lines in the plane of the inputs.
 Right panel, where the four points land in the plane of h1 and h2, and the
 line of the output neuron. The picture of Lecture 11, now with trained weights.
 (~3 min)
@@ -1118,17 +1120,14 @@ def predict(p, X):
     return sigma(sigma(X @ V.T + c) @ w + b)
 
 p = fit(Z[train], y[train], H=4)
-print(np.mean((predict(p, Z[train]) > 0.5) == y[train]))    # 0.9555...
+print(np.mean((predict(p, Z[train]) > 0.5) == y[train]))    # 0.9555..., 344 of 360
 ```
 
-<div class="note-text mt-sm">
-
-The loop of the XOR slide with three changes: `H` hidden units, `len(y)` rows, and the nine or more numbers returned as `p`. With four hidden units, 344 of the 360 training rows are right.
-
-</div>
-
 <!--
-Speaker: nothing in the mathematics changed between four points and 360 rows.
+Speaker: the loop of the XOR slide with three changes: H hidden units, len(y)
+rows, and the nine or more numbers returned as p. With four hidden units, 344
+of the 360 training rows are right.
+Nothing in the mathematics changed between four points and 360 rows.
 The training takes less than a second. (~2 min)
 -->
 
@@ -1224,7 +1223,7 @@ The training loss falls with every added unit. The validation loss is lowest at 
 
 ## 🎓 **The test rows, once**
 
-The 2-4-1 network on the 120 test rows: 114 right, an accuracy of 0.950. Its uncertainty, as in Lecture 11:
+The 2-4-1 network on the 120 test rows: 114 right, an accuracy of 0.950. Its uncertainty:
 
 $$
 \sqrt{\frac{0.95 \cdot 0.05}{120}} = 0.020
@@ -1238,7 +1237,7 @@ The result is $0.95 \pm 0.02$. The validation rows gave 110 of 120. A difference
 
 <div class="card card-warning card-glass pad-compact mt-md">
 
-**What “once” means.** No choice is made after the test rows have been looked at. If the test result leads to a change of the model, the test rows have become validation rows, and the number is no longer a test. And 120 rows cannot show a difference of 0.01: for an uncertainty of 0.01 at this accuracy, $0.95 \cdot 0.05 / 0.01^2 = 475$ test rows are needed.
+**What “once” means.** No choice after the test rows have been looked at: a change made for the test result turns them into validation rows. 120 rows cannot show a difference of 0.01: that needs $0.95 \cdot 0.05 / 0.01^2 = 475$ test rows.
 
 </div>
 
@@ -2212,12 +2211,10 @@ hideInToc: true
 
 # Generating **Text**
 
-```py {monaco-run} {autorun:false, outputHeight:'4.8rem'}
+```py {monaco-run} {autorun:false, outputHeight:'4.25rem'}
 import numpy as np
-text = """the kaon has a mass of 494 MeV .
-the pion has a mass of 140 MeV .
-the D0 has a mass of 1865 MeV .
-the pendulum has a length of 60 cm ."""
+text = """the kaon has a mass of 494 MeV . the pion has a mass of 140 MeV .
+the D0 has a mass of 1865 MeV . the pendulum has a length of 60 cm ."""
 words = text.split()
 follow = {}                              # word -> the words seen after it
 for a, b in zip(words, words[1:]):
