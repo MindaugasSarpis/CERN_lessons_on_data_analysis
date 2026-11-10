@@ -92,10 +92,10 @@ An environment is a folder with its own Python and its own packages; today's is 
     ```text
     $ conda activate s07
     $ python --version
-    Python 3.14.8
+    Python 3.14.10
     ```
 
-**Check:** `(s07)` at the start of the prompt, and a Python `3.14` (the last digit may be higher).
+**Check:** `(s07)` at the start of the prompt, and a Python `3.14` (the last number may be higher).
 
 ---
 
@@ -473,7 +473,7 @@ A reference line gives every point something to be compared with. The script com
     ax.set_xlabel("Month")
     ax.set_ylabel("Mean temperature (°C)")
     ax.set_title("July is the warmest month, January the coldest")
-    ax.legend(frameon=False, loc="upper left")
+    ax.legend(frameon=False)
     fig.savefig("month_means.png", dpi=150)
     fig.savefig("month_means.svg")
     plt.show()
@@ -482,7 +482,7 @@ A reference line gives every point something to be compared with. The script com
     - `sum(temps) / len(temps)`: the sum of the values divided by their number, the mean.
     - `ax.axhline(mean, ...)`: a horizontal line across the plot, at the height `mean`.
     - `label=f"mean: {mean:.1f}"`: the line's text in the legend; `{mean:.1f}` puts the value in, with one decimal.
-    - `ax.legend(frameon=False, loc="upper left")`: draws the legend, without a frame, in the upper left corner.
+    - `ax.legend(frameon=False)`: draws the legend, without a frame, where it covers the least of the drawing: here, the upper right corner.
 
 2. Save, run, look, close the window.
 
@@ -525,7 +525,7 @@ An annotation is a text in the plot with an arrow to one point. The script finds
     ax.set_xlabel("Month")
     ax.set_ylabel("Mean temperature (°C)")
     ax.set_title("July is the warmest month, January the coldest")
-    ax.legend(frameon=False, loc="upper left")
+    ax.legend(frameon=False)
     fig.savefig("month_means.png", dpi=150)
     fig.savefig("month_means.svg")
     plt.show()
@@ -753,7 +753,7 @@ Everything under `read_csv` moves into a second function, `draw(path, out)`: the
    `out` in `savefig`. The SVG line and `plt.show()` are deleted: the script
    writes a file and stops.
 
-    ```python hl_lines="16 17 18 19 20 21 34 37"
+    ```python hl_lines="16 17 18 19 20 21 24 26 27 34 37"
     import matplotlib.pyplot as plt
 
 
@@ -786,7 +786,7 @@ Everything under `read_csv` moves into a second function, `draw(path, out)`: the
         ax.set_xlabel("Month")
         ax.set_ylabel("Mean temperature (°C)")
         ax.set_title("July is the warmest month, January the coldest")
-        ax.legend(frameon=False, loc="upper left")
+        ax.legend(frameon=False)
         fig.savefig(out, dpi=150)
 
 
@@ -1117,7 +1117,7 @@ The file is the mean air temperature of each month at Nottingham Castle, 1920 to
 
 2. In `read_csv`, count the columns from the end.
 
-    ```python hl_lines="2 9 10"
+    ```python hl_lines="2 8 9"
     def read_csv(path):
         """The labels and the values: the last two columns of a CSV file."""
         lines = open(path).read().splitlines()
@@ -1217,7 +1217,7 @@ The unit differs between the files, so the y label leaves the function too.
         ax.set_xlabel(xlabel)
         ax.set_ylabel(ylabel)
         ax.set_title(title)
-        ax.legend(frameon=False, loc="upper left")
+        ax.legend(frameon=False)
         fig.savefig(out, dpi=150)
 
 

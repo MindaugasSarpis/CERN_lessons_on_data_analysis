@@ -177,6 +177,29 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       no name differs; Lecture 7, which changed: 312 of 640), so a push
       that changes only the workbook leaves an open deck as it is. A push
       that changes a deck still waits for the end of the lecture.
+- [x] The new Seminar 7 page live, 10 November, 15:07:39 EET (commit
+      `f36e11a`, pushed 14:56:08). The deploy job hung again (in progress
+      for about 6 minutes); it was cancelled and re-run with
+      `gh run rerun <id> --failed`. The build logs of `1c53580` and
+      `f36e11a` list the same file names for every deck, Lecture 7
+      included, so the deck open in the room was not replaced.
+- [x] Seminar 7, a second reading of the live page during the lecture,
+      10 November: every fenced block taken out of the page and compared
+      with the scripts of the stages, and every stage from section 11 on
+      run again. Four corrections. The marked lines of section 16 (lines
+      24, 26 and 27 change too) and of section 23 (lines 8 and 9, not 9
+      and 10). `Python 3.14.10` in section 1, as conda-forge gives today.
+      The legend: `ax.legend(frameon=False, loc="upper left")` covered the
+      peak of 1921 on the Nottingham figure, and no fixed place is free on
+      all three figures (months, years, Nottingham). The page now types
+      `ax.legend(frameon=False)`: Matplotlib 3.11.2 takes the first of its
+      ten places that covers no line and no text (upper right for the
+      months, upper left for the years, lower left for Nottingham). On
+      the monthly figure the legend stands close to the right of the
+      label `Jul: 18.5` and does not touch it. Set aside: a new section in
+      Part 7 that takes `loc` out again (a renumbering shortly before the
+      session), and another offset of the label (its 30 points clear the
+      peaks of 1935).
 - [ ] Open: John Snow's cholera map (not drawn); Lecture 3's bulb and
       transistor photos at a higher resolution; `preloadImages` off for phones;
       the zips `weather-s08`…`s12` (need the lecturer's go-ahead to upload);
@@ -195,11 +218,14 @@ While drafts are mid-rework on `main`, a batch ships from a worktree of
       A remedy: a content hash in the figure's URL at build time
       (`viz_x.svg?v=<hash>`), written by `scripts/gen-entries.mjs` or a
       Vite plugin.
-- [ ] Open, Seminar 7: the conda lines of sections 1 and 2 and the window
-      of `plt.show()` with `matplotlib-base` on macOS and Windows were not
-      run on this machine (no conda, no display); on the Nottingham figure
-      the legend lies over the peak of 1921; the licence line names R's
-      licence, because the data's own is stated nowhere definitive;
+- [ ] Open, Seminar 7: conda's own lines of sections 1 and 2 were not run
+      (this machine has micromamba, no conda; their forms are those of
+      Seminar 5's page, taught in October). The window of `plt.show()`
+      with `matplotlib-base` was seen on this machine only (Linux, Tk);
+      conda-forge's `matplotlib-base` 3.11.2 packages for macOS hold the
+      `macosx` backend and the one for Windows holds `tkagg`, but no Mac
+      or Windows laptop was tried. The licence line names R's licence,
+      because the data's own is stated nowhere definitive.
       `misc/weather_repo/starts/s07/` and `weather-s07.zip` are no longer
       used by the page and were left as they are.
 - [ ] Open: Seminars 8–12 still start from `weather-sNN.zip`. Each needs
